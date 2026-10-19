@@ -16,3 +16,6 @@ jobs:
           [ -n "$CLOUDFLARE_API_TOKEN" ] && echo "token present" || { echo "::error title=Secret::CLOUDFLARE_API_TOKEN is empty"; exit 1; }
           [ -n "$CLOUDFLARE_ACCOUNT_ID" ] && echo "account id present" || { echo "::error title=Secret::CLOUDFLARE_ACCOUNT_ID is empty"; exit 1; }
           out=$(npx --yes wrangler@4 r2 bucket list 2>&1 | tr '\n' ' ' | cut -c1-400); echo "::notice title=Buckets::$out"
+          v=$(curl -s -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" https://api.cloudflare.com/client/v4/user/tokens/verify | tr -d '\n' | cut -c1-300); echo "::notice title=Verify::$v"
+          a=$(curl -s -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/r2/buckets" | tr -d '\n' | cut -c1-300); echo "::notice title=R2::$a"
+          echo "token length ${#CLOUDFLARE_API_TOKEN}, account id length ${#CLOUDFLARE_ACCOUNT_ID}" | sed 's/^/::notice title=Lengths::/'
