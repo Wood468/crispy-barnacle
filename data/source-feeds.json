@@ -1,0 +1,37 @@
+{
+  "how_to_use": "Feeds that scripts/source-watch.mjs reads for shiny / costume / form news. Add { id, name, url, trust } to the list. trust: official | community | tip (tip = player report, verify against an official page before changing data). weak:true also keeps titles with debut/asset/icon (for game-file commit feeds). A feed that fails is skipped and recorded, never fatal.",
+  "feeds": [
+    {
+      "id": "hub",
+      "name": "Pokémon GO Hub",
+      "url": "https://pokemongohub.net/feed/",
+      "trust": "community"
+    },
+    {
+      "id": "miners-assets",
+      "name": "PokeMiners pogo_assets commits",
+      "url": "https://github.com/PokeMiners/pogo_assets/commits/master.atom",
+      "trust": "community",
+      "weak": true
+    },
+    {
+      "id": "miners-gm",
+      "name": "PokeMiners game_masters commits",
+      "url": "https://github.com/PokeMiners/game_masters/commits/master.atom",
+      "trust": "community",
+      "weak": true
+    },
+    {
+      "id": "reddit-silph",
+      "name": "r/TheSilphRoad shiny/costume",
+      "url": "https://www.reddit.com/r/TheSilphRoad/search.rss?q=shiny+OR+costume&restrict_sr=1&sort=new&t=month",
+      "trust": "tip"
+    },
+    {
+      "id": "youtube-pogo",
+      "name": "Pokémon GO (YouTube, @pokemongo)",
+      "url": "https://www.youtube.com/feeds/videos.xml?channel_id=UCA698bls2pjQyiqP9N-iaeg",
+      "trust": "official"
+    }
+  ]
+}

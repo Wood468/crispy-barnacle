@@ -1,0 +1,47 @@
+name: Job health
+
+on:
+  schedule:
+    - cron: "40 */6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: read
+
+concurrency:
+  group: health
+
+jobs:
+  health:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Check the background jobs
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          TELEGRAM_GROUP_ID: ${{ secrets.TELEGRAM_GROUP_ID }}
+          TELEGRAM_TOPIC_EVENTS: ${{ secrets.TELEGRAM_TOPIC_EVENTS || secrets.TELEGRAM_TOPICS_EVENTS }}
+          TELEGRAM_TOPIC_PICTURES: ${{ secrets.TELEGRAM_TOPIC_PICTURES || secrets.TELEGRAM_TOPICS_PICTURES }}
+          TELEGRAM_TOPIC_CHANGES: ${{ secrets.TELEGRAM_TOPIC_CHANGES || secrets.TELEGRAM_TOPICS_CHANGES }}
+          TELEGRAM_TOPIC_SYSTEM: ${{ secrets.TELEGRAM_TOPIC_SYSTEM || secrets.TELEGRAM_TOPICS_SYSTEM }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          node scripts/health.mjs
+          git add -- public/health.json data/health-state.json
+          if ! git diff --cached --quiet; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git commit -m "Job health: update [skip ci]"
+            git pull -q --rebase origin main
+            git push origin HEAD:main
+          fi

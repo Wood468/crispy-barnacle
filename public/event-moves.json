@@ -1,0 +1,20 @@
+{
+  "updated": "2026-10-17T08:13:32.144Z",
+  "note": "Limited-time moves from events. Never part of a Pokémon's normal moveset; the app shows them only while the window is open. Written by scripts/event-moves.mjs.",
+  "moves": [
+    {
+      "id": "zorua:zorua:zoroark:sucker-punch",
+      "eventId": "zorua",
+      "eventName": "Zorua Community Day",
+      "pokemon": "Zorua",
+      "evolutionTarget": "Zoroark",
+      "move": "Sucker Punch",
+      "moveKind": "fast",
+      "acquisition": "EVOLVE",
+      "windowStart": "2026-10-10T14:00",
+      "windowEnd": "2026-10-10T21:00",
+      "evolveProject": true,
+      "text": "Evolve Zorua during the event or up to 4 hours after to get Zoroark with the exclusive Fast Attack Sucker Punch."
+    }
+  ]
+}

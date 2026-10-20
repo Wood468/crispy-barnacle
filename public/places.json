@@ -1,0 +1,805 @@
+{
+  "updated": "2026-10-14",
+  "how_to_update": "Add an entry to places[]. A place needs a name, city, country, lat, lng, type, tags, at least one source with a link and what it vouches for, a coordinates source, and a verified date (YYYY-MM-DD). Add a route only when you hold the source's own GPX file: route: {file, label, author, url, verified}. Never add raid-hotspot or busy-ness claims without a named source and date. Tags allowed: Raids, Gyms, PokéStops, Community Day, Event venue. events[] entries are {name, from, to}: an event links to a place only when its name matches exactly and its dates overlap from..to. Community-reported hotspot entries are general area pins only. Their presence never means raids are live or lobbies are currently full; refresh source and verification date when maintaining them.",
+  "tags": [
+    "Event venue",
+    "Community Day",
+    "Raids",
+    "Gyms",
+    "PokéStops"
+  ],
+  "places": [
+    {
+      "id": "queen-street-mall-brisbane",
+      "name": "Queen Street Mall",
+      "city": "Brisbane",
+      "region": "Queensland",
+      "country": "Australia",
+      "lat": -27.4696,
+      "lng": 153.0252,
+      "type": "City Safari hub",
+      "role": "City Safari Hub, 26 and 27 Sep 2026, 9 am to 6 pm; also the rain backup for the Saturday community photo",
+      "tags": [
+        "Event venue"
+      ],
+      "sources": [
+        {
+          "label": "Pokémon GO Hub",
+          "url": "https://pokemongohub.net/post/event/pokemon-go-city-safari-2026-brisbane-australia/",
+          "vouches": "Role as the hub, its hours and dates",
+          "trust": "community"
+        }
+      ],
+      "coords": {
+        "label": "Wikipedia, article “Queen Street Mall”",
+        "url": "https://en.wikipedia.org/wiki/Queen_Street_Mall",
+        "note": "Marks the mall (Wikipedia gives -27.4696, 153.0252). Not an official event pin"
+      },
+      "verified": "2026-10-10",
+      "route": null,
+      "events": [
+        {
+          "name": "City Safari: Brisbane",
+          "from": "2026-09-26",
+          "to": "2026-09-27"
+        }
+      ]
+    },
+    {
+      "id": "king-george-square-brisbane",
+      "name": "King George Square",
+      "city": "Brisbane",
+      "region": "Queensland",
+      "country": "Australia",
+      "lat": -27.4683,
+      "lng": 153.0243,
+      "type": "Community photo and trade hour",
+      "role": "Community photo 12 pm and trade hour 4 pm, Sunday 27 Sep 2026",
+      "tags": [
+        "Event venue"
+      ],
+      "sources": [
+        {
+          "label": "Pokémon GO Hub",
+          "url": "https://pokemongohub.net/post/event/pokemon-go-city-safari-2026-brisbane-australia/",
+          "vouches": "Role, times and date",
+          "trust": "community"
+        }
+      ],
+      "coords": {
+        "label": "Wikipedia, article “King George Square”",
+        "url": "https://en.wikipedia.org/wiki/King_George_Square",
+        "note": "Taken from the article's map link (-27.468333, 153.024313), rounded to 4 places. Marks the square, not an official event pin"
+      },
+      "verified": "2026-10-10",
+      "route": null,
+      "events": [
+        {
+          "name": "City Safari: Brisbane",
+          "from": "2026-09-27",
+          "to": "2026-09-27"
+        }
+      ]
+    },
+    {
+      "id": "changi-airport-t3-singapore",
+      "name": "Changi Airport, Terminal 3",
+      "city": "Singapore",
+      "country": "Singapore",
+      "lat": 1.35917,
+      "lng": 103.98944,
+      "type": "Event venue (booth)",
+      "role": "PokéXciting! booth and Singapore stamp, 7 and 8 Nov 2026, 10 am to 10 pm",
+      "tags": [
+        "Event venue"
+      ],
+      "timeZone": "Asia/Singapore",
+      "sources": [
+        {
+          "label": "Pokémon GO (official): Singapore 30th anniversary",
+          "url": "https://pokemongo.com/news/event-singapore-30th-anniversary-2026",
+          "vouches": "Terminal 3 booth, sticker and stamp rally; dates and hours",
+          "trust": "official"
+        }
+      ],
+      "coords": {
+        "label": "Wikipedia, article “Changi Airport”",
+        "url": "https://en.wikipedia.org/wiki/Changi_Airport",
+        "note": "Marks Changi Airport as a whole (Wikipedia gives 1.35917, 103.98944). Wikipedia gives the airport's point; it does not pin the terminal. Not an official event pin."
+      },
+      "verified": "2026-10-14",
+      "route": null,
+      "events": [
+        {
+          "name": "PokéXciting! lands at Changi Airport and Jewel — get ready, Singapore!",
+          "from": "2026-11-07",
+          "to": "2026-11-08"
+        }
+      ]
+    },
+    {
+      "id": "jewel-changi-airport-singapore",
+      "name": "Jewel Changi Airport",
+      "city": "Singapore",
+      "country": "Singapore",
+      "lat": 1.3644,
+      "lng": 103.9915,
+      "type": "Event venue (stamp rally)",
+      "role": "Part of the five-stamp regional GO Stamp Rally with Changi Airport, 7 and 8 Nov 2026; the page names no spot inside Jewel",
+      "tags": [
+        "Event venue"
+      ],
+      "timeZone": "Asia/Singapore",
+      "sources": [
+        {
+          "label": "Pokémon GO (official): Singapore 30th anniversary",
+          "url": "https://pokemongo.com/news/event-singapore-30th-anniversary-2026",
+          "vouches": "Jewel is part of the stamp rally; dates",
+          "trust": "official"
+        }
+      ],
+      "coords": {
+        "label": "Wikipedia, article “Jewel Changi Airport”",
+        "url": "https://en.wikipedia.org/wiki/Jewel_Changi_Airport",
+        "note": "Wikipedia gives 1.3644, 103.9915 for Jewel. The airport article's point is a few hundred metres away, so treat this as approximate. Not an official event pin."
+      },
+      "verified": "2026-10-14",
+      "route": null,
+      "events": [
+        {
+          "name": "PokéXciting! lands at Changi Airport and Jewel — get ready, Singapore!",
+          "from": "2026-11-07",
+          "to": "2026-11-08"
+        }
+      ]
+    },
+    {
+      "id": "field-museum-chicago",
+      "name": "The Field Museum",
+      "city": "Chicago",
+      "region": "Illinois",
+      "country": "United States",
+      "lat": 41.86611,
+      "lng": -87.61694,
+      "type": "Event venue (museum)",
+      "role": "Pokémon Fossil Museum exhibition, 22 May 2026 to 11 Apr 2027, 9 am to 9 pm",
+      "tags": [
+        "Event venue"
+      ],
+      "timeZone": "America/Chicago",
+      "sources": [
+        {
+          "label": "Pokémon GO (official): Pokémon Fossil Museum, Chicago",
+          "url": "https://pokemongo.com/en/news/pgo-pokemon-fossil-musuem-chicago-2026",
+          "vouches": "Venue is the Field Museum; dates and hours",
+          "trust": "official"
+        }
+      ],
+      "coords": {
+        "label": "Wikipedia, article “Field Museum of Natural History”",
+        "url": "https://en.wikipedia.org/wiki/Field_Museum_of_Natural_History",
+        "note": "Marks the museum (Wikipedia gives 41.86611, -87.61694). Not an official event pin."
+      },
+      "verified": "2026-10-14",
+      "route": null,
+      "events": [
+        {
+          "name": "Pokemon Fossil Museum 2026",
+          "from": "2026-05-22",
+          "to": "2027-04-11"
+        },
+        {
+          "name": "Pokémon Fossil Museum 2026",
+          "from": "2026-05-22",
+          "to": "2027-04-11"
+        }
+      ]
+    },
+    {
+      "id": "science-museum-london",
+      "name": "Science Museum",
+      "city": "London",
+      "region": "England",
+      "country": "United Kingdom",
+      "lat": 51.4975,
+      "lng": -0.17472,
+      "type": "Event venue (museum)",
+      "role": "Pokémon GO x ESA in-person gameplay, 4 Oct 2026 to 30 Apr 2027",
+      "tags": [
+        "Event venue"
+      ],
+      "timeZone": "Europe/London",
+      "sources": [
+        {
+          "label": "Pokémon GO (official): European Space Agency event",
+          "url": "https://pokemongo.com/en/news/european-space-agency-event",
+          "vouches": "Named as a participating museum; dates",
+          "trust": "official"
+        }
+      ],
+      "coords": {
+        "label": "Wikipedia, article “Science Museum, London”",
+        "url": "https://en.wikipedia.org/wiki/Science_Museum,_London",
+        "note": "Marks the museum (Wikipedia gives 51.49750, -0.17472). Not an official event pin."
+      },
+      "verified": "2026-10-14",
+      "route": null,
+      "events": [
+        {
+          "name": "Pokémon GO partners with the European Space Agency",
+          "from": "2026-10-04",
+          "to": "2027-04-30"
+        },
+        {
+          "name": "Pokemon GO x ESA",
+          "from": "2026-10-04",
+          "to": "2027-04-30"
+        },
+        {
+          "name": "Pokémon GO x ESA",
+          "from": "2026-10-04",
+          "to": "2027-04-30"
+        }
+      ]
+    },
+    {
+      "id": "deutsches-museum-nuernberg",
+      "name": "Deutsches Museum Nürnberg (Zukunftsmuseum)",
+      "city": "Nuremberg",
+      "region": "Bavaria",
+      "country": "Germany",
+      "lat": 49.45417,
+      "lng": 11.07528,
+      "type": "Event venue (museum)",
+      "role": "Pokémon GO x ESA in-person gameplay, 4 Oct 2026 to 30 Apr 2027",
+      "tags": [
+        "Event venue"
+      ],
+      "timeZone": "Europe/Berlin",
+      "sources": [
+        {
+          "label": "Pokémon GO (official): European Space Agency event",
+          "url": "https://pokemongo.com/en/news/european-space-agency-event",
+          "vouches": "Named as a participating museum; dates",
+          "trust": "official"
+        }
+      ],
+      "coords": {
+        "label": "German Wikipedia, article “Augustinerhof”",
+        "url": "https://de.wikipedia.org/wiki/Augustinerhof",
+        "note": "Marks the Augustinerhof, which houses the Deutsches Museum Nürnberg (German Wikipedia gives 49.45417, 11.07528). Not an official event pin."
+      },
+      "verified": "2026-10-14",
+      "route": null,
+      "events": [
+        {
+          "name": "Pokémon GO partners with the European Space Agency",
+          "from": "2026-10-04",
+          "to": "2027-04-30"
+        },
+        {
+          "name": "Pokemon GO x ESA",
+          "from": "2026-10-04",
+          "to": "2027-04-30"
+        },
+        {
+          "name": "Pokémon GO x ESA",
+          "from": "2026-10-04",
+          "to": "2027-04-30"
+        }
+      ]
+    },
+    {
+      "id": "museu-ciencies-valencia",
+      "name": "Museu de les Ciències Príncipe Felipe",
+      "city": "València",
+      "region": "Valencian Community",
+      "country": "Spain",
+      "lat": 39.4558,
+      "lng": -0.3515,
+      "type": "Event venue (museum)",
+      "role": "Pokémon GO x ESA in-person gameplay, 4 Oct 2026 to 30 Apr 2027",
+      "tags": [
+        "Event venue"
+      ],
+      "timeZone": "Europe/Madrid",
+      "sources": [
+        {
+          "label": "Pokémon GO (official): European Space Agency event",
+          "url": "https://pokemongo.com/en/news/european-space-agency-event",
+          "vouches": "Named as a participating museum; dates",
+          "trust": "official"
+        }
+      ],
+      "coords": {
+        "label": "Wikipedia, article “Museu de les Ciències Príncipe Felipe”",
+        "url": "https://en.wikipedia.org/wiki/Museu_de_les_Ci%C3%A8ncies_Pr%C3%ADncipe_Felipe",
+        "note": "Marks the museum (Wikipedia gives 39.4558, -0.3515). Not an official event pin."
+      },
+      "verified": "2026-10-14",
+      "route": null,
+      "events": [
+        {
+          "name": "Pokémon GO partners with the European Space Agency",
+          "from": "2026-10-04",
+          "to": "2027-04-30"
+        },
+        {
+          "name": "Pokemon GO x ESA",
+          "from": "2026-10-04",
+          "to": "2027-04-30"
+        },
+        {
+          "name": "Pokémon GO x ESA",
+          "from": "2026-10-04",
+          "to": "2027-04-30"
+        }
+      ]
+    },
+    {
+      "id": "space-expo-noordwijk",
+      "name": "Space Expo (ESTEC)",
+      "city": "Noordwijk",
+      "region": "South Holland",
+      "country": "Netherlands",
+      "lat": 52.21915,
+      "lng": 4.42044,
+      "type": "Event venue (museum)",
+      "role": "Pokémon GO x ESA in-person gameplay, 4 Oct 2026 to 30 Apr 2027",
+      "tags": [
+        "Event venue"
+      ],
+      "timeZone": "Europe/Amsterdam",
+      "sources": [
+        {
+          "label": "Pokémon GO (official): European Space Agency event",
+          "url": "https://pokemongo.com/en/news/european-space-agency-event",
+          "vouches": "Named as a participating museum; dates",
+          "trust": "official"
+        }
+      ],
+      "coords": {
+        "label": "Wikipedia, article “European Space Research and Technology Centre”",
+        "url": "https://en.wikipedia.org/wiki/European_Space_Research_and_Technology_Centre",
+        "note": "Marks the ESTEC campus, where Wikipedia says Space Expo is the visitor centre (it gives ESTEC at 52.21915, 4.42044). Not the Space Expo entrance and not an official event pin."
+      },
+      "verified": "2026-10-14",
+      "route": null,
+      "events": [
+        {
+          "name": "Pokémon GO partners with the European Space Agency",
+          "from": "2026-10-04",
+          "to": "2027-04-30"
+        },
+        {
+          "name": "Pokemon GO x ESA",
+          "from": "2026-10-04",
+          "to": "2027-04-30"
+        },
+        {
+          "name": "Pokémon GO x ESA",
+          "from": "2026-10-04",
+          "to": "2027-04-30"
+        }
+      ]
+    },
+    {
+      "id": "euro-space-center-transinne",
+      "name": "Euro Space Center",
+      "city": "Transinne",
+      "region": "Wallonia",
+      "country": "Belgium",
+      "lat": 50.00833,
+      "lng": 5.21931,
+      "type": "Event venue (museum)",
+      "role": "Pokémon GO x ESA in-person gameplay, 4 Oct 2026 to 30 Apr 2027",
+      "tags": [
+        "Event venue"
+      ],
+      "timeZone": "Europe/Brussels",
+      "sources": [
+        {
+          "label": "Pokémon GO (official): European Space Agency event",
+          "url": "https://pokemongo.com/en/news/european-space-agency-event",
+          "vouches": "Named as a participating museum; dates",
+          "trust": "official"
+        }
+      ],
+      "coords": {
+        "label": "Wikipedia, article “Euro Space Center”",
+        "url": "https://en.wikipedia.org/wiki/Euro_Space_Center",
+        "note": "Marks the centre (Wikipedia gives 50.00833, 5.21931). Not an official event pin."
+      },
+      "verified": "2026-10-14",
+      "route": null,
+      "events": [
+        {
+          "name": "Pokémon GO partners with the European Space Agency",
+          "from": "2026-10-04",
+          "to": "2027-04-30"
+        },
+        {
+          "name": "Pokemon GO x ESA",
+          "from": "2026-10-04",
+          "to": "2027-04-30"
+        },
+        {
+          "name": "Pokémon GO x ESA",
+          "from": "2026-10-04",
+          "to": "2027-04-30"
+        }
+      ]
+    },
+    {
+      "id": "haneda-airport-tokyo",
+      "name": "Haneda Airport (Terminals 2 and 3)",
+      "city": "Tokyo",
+      "region": "Tokyo",
+      "country": "Japan",
+      "lat": 35.55333,
+      "lng": 139.78111,
+      "type": "Event venue (airport)",
+      "role": "Pokémon Jet Red collaboration, phase 1 Timed Research, 28 Jul 2026 to 31 Aug 2027",
+      "tags": [
+        "Event venue"
+      ],
+      "timeZone": "Asia/Tokyo",
+      "sources": [
+        {
+          "label": "Pokémon GO (official): ANA Jet Red collaboration",
+          "url": "https://pokemongo.com/news/2026_ana_red",
+          "vouches": "Named as a phase 1 airport; dates",
+          "trust": "official"
+        }
+      ],
+      "coords": {
+        "label": "Wikipedia, article “Haneda Airport”",
+        "url": "https://en.wikipedia.org/wiki/Haneda_Airport",
+        "note": "Marks the airport (Wikipedia gives 35.55333, 139.78111). Wikipedia gives the airport's point; it does not pin the terminal. Not an official event pin."
+      },
+      "verified": "2026-10-14",
+      "route": null,
+      "events": [
+        {
+          "name": "Pokemon Jet Red Collaboration Event",
+          "from": "2026-07-28",
+          "to": "2027-08-31"
+        },
+        {
+          "name": "Pokémon Jet Red collaboration",
+          "from": "2026-07-28",
+          "to": "2027-08-31"
+        }
+      ]
+    },
+    {
+      "id": "narita-airport-chiba",
+      "name": "Narita Airport (Terminal 1)",
+      "city": "Narita",
+      "region": "Chiba",
+      "country": "Japan",
+      "lat": 35.76528,
+      "lng": 140.38556,
+      "type": "Event venue (airport)",
+      "role": "Pokémon Jet Red collaboration, phase 1 Timed Research, 28 Jul 2026 to 31 Aug 2027",
+      "tags": [
+        "Event venue"
+      ],
+      "timeZone": "Asia/Tokyo",
+      "sources": [
+        {
+          "label": "Pokémon GO (official): ANA Jet Red collaboration",
+          "url": "https://pokemongo.com/news/2026_ana_red",
+          "vouches": "Named as a phase 1 airport; dates",
+          "trust": "official"
+        }
+      ],
+      "coords": {
+        "label": "Wikipedia, article “Narita International Airport”",
+        "url": "https://en.wikipedia.org/wiki/Narita_International_Airport",
+        "note": "Marks the airport (Wikipedia gives 35.76528, 140.38556). Wikipedia gives the airport's point; it does not pin the terminal. Not an official event pin."
+      },
+      "verified": "2026-10-14",
+      "route": null,
+      "events": [
+        {
+          "name": "Pokemon Jet Red Collaboration Event",
+          "from": "2026-07-28",
+          "to": "2027-08-31"
+        },
+        {
+          "name": "Pokémon Jet Red collaboration",
+          "from": "2026-07-28",
+          "to": "2027-08-31"
+        }
+      ]
+    },
+    {
+      "id": "new-chitose-airport",
+      "name": "New Chitose Airport",
+      "city": "Chitose",
+      "region": "Hokkaido",
+      "country": "Japan",
+      "lat": 42.77528,
+      "lng": 141.6925,
+      "type": "Event venue (airport)",
+      "role": "Pokémon Jet Red collaboration, phase 1 Timed Research, 28 Jul 2026 to 31 Aug 2027",
+      "tags": [
+        "Event venue"
+      ],
+      "timeZone": "Asia/Tokyo",
+      "sources": [
+        {
+          "label": "Pokémon GO (official): ANA Jet Red collaboration",
+          "url": "https://pokemongo.com/news/2026_ana_red",
+          "vouches": "Named as a phase 1 airport; dates",
+          "trust": "official"
+        }
+      ],
+      "coords": {
+        "label": "Wikipedia, article “New Chitose Airport”",
+        "url": "https://en.wikipedia.org/wiki/New_Chitose_Airport",
+        "note": "Marks the airport (Wikipedia gives 42.77528, 141.6925). Wikipedia gives the airport's point; it does not pin the terminal. Not an official event pin."
+      },
+      "verified": "2026-10-14",
+      "route": null,
+      "events": [
+        {
+          "name": "Pokemon Jet Red Collaboration Event",
+          "from": "2026-07-28",
+          "to": "2027-08-31"
+        },
+        {
+          "name": "Pokémon Jet Red collaboration",
+          "from": "2026-07-28",
+          "to": "2027-08-31"
+        }
+      ]
+    },
+    {
+      "id": "hakodate-airport",
+      "name": "Hakodate Airport",
+      "city": "Hakodate",
+      "region": "Hokkaido",
+      "country": "Japan",
+      "lat": 41.77,
+      "lng": 140.82194,
+      "type": "Event venue (airport)",
+      "role": "Pokémon Jet Red collaboration, phase 1 Timed Research, 28 Jul 2026 to 31 Aug 2027",
+      "tags": [
+        "Event venue"
+      ],
+      "timeZone": "Asia/Tokyo",
+      "sources": [
+        {
+          "label": "Pokémon GO (official): ANA Jet Red collaboration",
+          "url": "https://pokemongo.com/news/2026_ana_red",
+          "vouches": "Named as a phase 1 airport; dates",
+          "trust": "official"
+        }
+      ],
+      "coords": {
+        "label": "Wikipedia, article “Hakodate Airport”",
+        "url": "https://en.wikipedia.org/wiki/Hakodate_Airport",
+        "note": "Marks the airport (Wikipedia gives 41.77, 140.82194). Wikipedia gives the airport's point; it does not pin the terminal. Not an official event pin."
+      },
+      "verified": "2026-10-14",
+      "route": null,
+      "events": [
+        {
+          "name": "Pokemon Jet Red Collaboration Event",
+          "from": "2026-07-28",
+          "to": "2027-08-31"
+        },
+        {
+          "name": "Pokémon Jet Red collaboration",
+          "from": "2026-07-28",
+          "to": "2027-08-31"
+        }
+      ]
+    },
+    {
+      "id": "akita-airport",
+      "name": "Akita Airport",
+      "city": "Akita",
+      "region": "Akita",
+      "country": "Japan",
+      "lat": 39.61556,
+      "lng": 140.21861,
+      "type": "Event venue (airport)",
+      "role": "Pokémon Jet Red collaboration, phase 1 Timed Research, 28 Jul 2026 to 31 Aug 2027",
+      "tags": [
+        "Event venue"
+      ],
+      "timeZone": "Asia/Tokyo",
+      "sources": [
+        {
+          "label": "Pokémon GO (official): ANA Jet Red collaboration",
+          "url": "https://pokemongo.com/news/2026_ana_red",
+          "vouches": "Named as a phase 1 airport; dates",
+          "trust": "official"
+        }
+      ],
+      "coords": {
+        "label": "Wikipedia, article “Akita Airport”",
+        "url": "https://en.wikipedia.org/wiki/Akita_Airport",
+        "note": "Marks the airport (Wikipedia gives 39.61556, 140.21861). Wikipedia gives the airport's point; it does not pin the terminal. Not an official event pin."
+      },
+      "verified": "2026-10-14",
+      "route": null,
+      "events": [
+        {
+          "name": "Pokemon Jet Red Collaboration Event",
+          "from": "2026-07-28",
+          "to": "2027-08-31"
+        },
+        {
+          "name": "Pokémon Jet Red collaboration",
+          "from": "2026-07-28",
+          "to": "2027-08-31"
+        }
+      ]
+    },
+    {
+      "id": "sendai-airport",
+      "name": "Sendai Airport",
+      "city": "Natori",
+      "region": "Miyagi",
+      "country": "Japan",
+      "lat": 38.13972,
+      "lng": 140.91694,
+      "type": "Event venue (airport)",
+      "role": "Pokémon Jet Red collaboration, phase 1 Timed Research, 28 Jul 2026 to 31 Aug 2027",
+      "tags": [
+        "Event venue"
+      ],
+      "timeZone": "Asia/Tokyo",
+      "sources": [
+        {
+          "label": "Pokémon GO (official): ANA Jet Red collaboration",
+          "url": "https://pokemongo.com/news/2026_ana_red",
+          "vouches": "Named as a phase 1 airport; dates",
+          "trust": "official"
+        }
+      ],
+      "coords": {
+        "label": "Wikipedia, article “Sendai Airport”",
+        "url": "https://en.wikipedia.org/wiki/Sendai_Airport",
+        "note": "Marks the airport (Wikipedia gives 38.13972, 140.91694). Wikipedia gives the airport's point; it does not pin the terminal. Not an official event pin."
+      },
+      "verified": "2026-10-14",
+      "route": null,
+      "events": [
+        {
+          "name": "Pokemon Jet Red Collaboration Event",
+          "from": "2026-07-28",
+          "to": "2027-08-31"
+        },
+        {
+          "name": "Pokémon Jet Red collaboration",
+          "from": "2026-07-28",
+          "to": "2027-08-31"
+        }
+      ]
+    },
+    {
+      "id": "sendai-wild-area",
+      "name": "Sendai (GO Wild Area event area)",
+      "city": "Sendai",
+      "region": "Miyagi",
+      "country": "Japan",
+      "lat": 38.26822,
+      "lng": 140.86942,
+      "type": "Event area (no venue published)",
+      "role": "GO Wild Area 2026, 6 to 8 Nov, 10 am to 6 pm JST: gameplay across Miyagi Prefecture centred on Sendai. The official page names no venue",
+      "tags": [
+        "Event venue"
+      ],
+      "timeZone": "Asia/Tokyo",
+      "sources": [
+        {
+          "label": "Pokémon GO (official): GO Wild Area Sendai",
+          "url": "https://pokemongo.com/en/gowildarea/sendai",
+          "vouches": "City and region; no venue is named",
+          "trust": "official"
+        }
+      ],
+      "coords": {
+        "label": "Wikipedia, article “Sendai”",
+        "url": "https://en.wikipedia.org/wiki/Sendai",
+        "note": "Marks the city (Wikipedia gives 38.26822, 140.86942). An area pin, not an event site: no venue has been published."
+      },
+      "verified": "2026-10-14",
+      "route": null,
+      "events": [
+        {
+          "name": "GO Wild Area 2026 Sendai Tohoku",
+          "from": "2026-11-06",
+          "to": "2026-11-08"
+        },
+        {
+          "name": "GO Wild Area 2026: Sendai and Tohoku",
+          "from": "2026-11-06",
+          "to": "2026-11-08"
+        }
+      ]
+    },
+    {
+      "id": "mexico-city-wild-area",
+      "name": "Mexico City (GO Wild Area event area)",
+      "city": "Mexico City",
+      "country": "Mexico",
+      "lat": 19.433,
+      "lng": -99.133,
+      "type": "Event area (no venue published)",
+      "role": "GO Wild Area 2026, 6 to 8 Nov, 10 am to 6 pm (GMT−6): gameplay across the metropolitan area. The official page names no venue",
+      "tags": [
+        "Event venue"
+      ],
+      "timeZone": "America/Mexico_City",
+      "sources": [
+        {
+          "label": "Pokémon GO (official): GO Wild Area Mexico City",
+          "url": "https://pokemongo.com/en/gowildarea/mexico-city",
+          "vouches": "City; no venue is named",
+          "trust": "official"
+        }
+      ],
+      "coords": {
+        "label": "Wikipedia, article “Mexico City”",
+        "url": "https://en.wikipedia.org/wiki/Mexico_City",
+        "note": "Marks the city (Wikipedia gives 19.433, -99.133). An area pin, not an event site: no venue has been published."
+      },
+      "verified": "2026-10-14",
+      "route": null,
+      "events": [
+        {
+          "name": "GO Wild Area 2026 Mexico City",
+          "from": "2026-11-06",
+          "to": "2026-11-08"
+        },
+        {
+          "name": "GO Wild Area 2026: Mexico City",
+          "from": "2026-11-06",
+          "to": "2026-11-08"
+        }
+      ]
+    },
+    {
+      "id": "kaohsiung-go-tour-2027",
+      "name": "Kaohsiung (GO Tour 2027 event area)",
+      "city": "Kaohsiung",
+      "country": "Taiwan",
+      "lat": 22.615,
+      "lng": 120.2975,
+      "type": "Event area (no venue published)",
+      "role": "Pokémon GO Tour 2027, 19 to 21 Feb 2027 (a Los Angeles Tour is also announced). The page names no venue",
+      "tags": [
+        "Event venue"
+      ],
+      "timeZone": "Asia/Taipei",
+      "sources": [
+        {
+          "label": "Pokémon GO (official): Save the Date, GO Tour 2027",
+          "url": "https://pokemongo.com/news/save-the-date-go-tour-2027",
+          "vouches": "City and dates; no venue is named",
+          "trust": "official"
+        }
+      ],
+      "coords": {
+        "label": "Wikipedia, article “Kaohsiung”",
+        "url": "https://en.wikipedia.org/wiki/Kaohsiung",
+        "note": "Marks the city seat (Wikipedia gives 22.61500, 120.29750). An area pin, not an event site: no venue has been published."
+      },
+      "verified": "2026-10-14",
+      "route": null,
+      "events": [
+        {
+          "name": "Save the Date: Pokémon GO Tour 2027",
+          "from": "2027-02-19",
+          "to": "2027-02-21"
+        }
+      ]
+    }
+  ]
+}

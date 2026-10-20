@@ -1,0 +1,84 @@
+name: Event details importer
+
+on:
+  schedule:
+    # Every 3 hours (about a minute per run). GitHub schedules use UTC and can be delayed.
+    - cron: "20 */3 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: event-importer
+  cancel-in-progress: false
+
+env:   # the secret names are spelled CLOUDFARE_* in GitHub (typo kept on purpose); scripts/r2-sync.sh reads these
+  CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFARE_API_TOKEN }}
+  CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFARE_ACCOUNT_ID }}
+
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 1
+      - name: Restore pictures from R2
+        run: bash scripts/r2-sync.sh restore
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Check the importer code
+        run: node --test test/importer.test.mjs test/dedupe.test.mjs
+      - name: Read the sources and compare them
+        run: node scripts/importer/run.mjs
+      - name: Join events listed twice and write the duplicate report
+        run: node scripts/dup-audit.mjs --apply
+      - name: Tell me on Telegram about newly found events
+        continue-on-error: true
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          TELEGRAM_GROUP_ID: ${{ secrets.TELEGRAM_GROUP_ID }}
+          TELEGRAM_TOPIC_EVENTS: ${{ secrets.TELEGRAM_TOPIC_EVENTS || secrets.TELEGRAM_TOPICS_EVENTS }}
+          TELEGRAM_TOPIC_PICTURES: ${{ secrets.TELEGRAM_TOPIC_PICTURES || secrets.TELEGRAM_TOPICS_PICTURES }}
+          TELEGRAM_TOPIC_CHANGES: ${{ secrets.TELEGRAM_TOPIC_CHANGES || secrets.TELEGRAM_TOPICS_CHANGES }}
+          TELEGRAM_TOPIC_SYSTEM: ${{ secrets.TELEGRAM_TOPIC_SYSTEM || secrets.TELEGRAM_TOPICS_SYSTEM }}
+        run: node scripts/event-news.mjs
+      - name: Find moves that events hand out for a limited time
+        run: node scripts/event-moves.mjs
+      - name: Find pictures for costume Pokémon
+        run: node scripts/costumes.mjs
+      - name: Check our dates against Leek Duck's events list
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          TELEGRAM_GROUP_ID: ${{ secrets.TELEGRAM_GROUP_ID }}
+          TELEGRAM_TOPIC_EVENTS: ${{ secrets.TELEGRAM_TOPIC_EVENTS || secrets.TELEGRAM_TOPICS_EVENTS }}
+          TELEGRAM_TOPIC_PICTURES: ${{ secrets.TELEGRAM_TOPIC_PICTURES || secrets.TELEGRAM_TOPICS_PICTURES }}
+          TELEGRAM_TOPIC_CHANGES: ${{ secrets.TELEGRAM_TOPIC_CHANGES || secrets.TELEGRAM_TOPICS_CHANGES }}
+          TELEGRAM_TOPIC_SYSTEM: ${{ secrets.TELEGRAM_TOPIC_SYSTEM || secrets.TELEGRAM_TOPICS_SYSTEM }}
+        run: node scripts/schedule-audit.mjs
+      - name: Keep our own copy of pictures taken from other sites
+        run: |
+          node scripts/mirror-images.mjs
+          bash scripts/r2-sync.sh save
+      - name: Commit when something changed
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- data/seen-events.json public/event-details.json public/world-events.json data/importer-report.json data/importer-lines.json public/costumes.json data/schedule-audit.json data/audit-alerted.json data/dup-audit.json data/event-aliases.json public/season.json public/account.js public/dash.js public/event-info.json public/data.json public/event-moves.json
+          if git diff --cached --quiet; then echo "No changes."; exit 0; fi
+          # The "updated" stamp alone is not worth a deploy: only commit when the facts changed.
+          if [ -n "$(git diff --cached --name-only -- public/img public/costumes.json public/season.json public/account.js public/dash.js public/event-info.json public/data.json public/event-moves.json)" ] || git diff --cached -U0 -- public/event-details.json public/world-events.json | grep -E '^[+-] ' | grep -vqE '"updated"'; then
+            git commit -m "Event details: refresh from sources"
+          else
+            git commit -m "Event details: refresh stamp [skip ci]"
+          fi
+          git pull -q --rebase origin main
+          git push origin HEAD:main

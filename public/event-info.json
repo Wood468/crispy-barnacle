@@ -1,0 +1,965 @@
+{
+  "version": 1,
+  "how_to_update": "Details come only from a named source. Anything the source does not say is status 'not-published'. Tickets and passes are defined under 'passes'; prices live in prices.json.",
+  "events": {
+    "zorua": {
+      "source": {
+        "label": "pokemongo.com news post",
+        "trust": "official",
+        "url": "https://pokemongo.com/news/communityday-october-2026-zorua",
+        "observed": "2026-10-09"
+      },
+      "info": [
+        {
+          "k": "Spawns",
+          "status": "published",
+          "text": "Zorua appears more often in the wild. With a regular Lure, Zorua is very likely at PokéStops from 2 to 9 pm."
+        },
+        {
+          "k": "Raids",
+          "status": "not-published",
+          "text": "No raids are listed for this event.",
+          "note": "Not the same as none. Shown until a source says."
+        },
+        {
+          "k": "Eggs",
+          "status": "not-published",
+          "text": "No egg changes are listed."
+        },
+        {
+          "k": "Research",
+          "status": "published",
+          "text": "Zorua Field Research gives Stardust, Ultra Balls and extra Zorua encounters. Special Research is a paid ticket, below.",
+          "note": "The specific Field Research tasks are not published yet."
+        },
+        {
+          "k": "Shiny",
+          "status": "published",
+          "text": "Shiny Zorua is possible. Lured Zorua have a higher Shiny chance.",
+          "note": "Odds are not published yet."
+        },
+        {
+          "k": "Exclusive move",
+          "status": "published",
+          "text": "Evolve Zorua during the event, or within 4 hours after, for a Zoroark with Sucker Punch.",
+          "moves": [
+            {
+              "name": "Sucker Punch",
+              "type": "Dark"
+            }
+          ]
+        },
+        {
+          "k": "New forms",
+          "status": "published",
+          "text": "Special Background Zorua are possible but rare.",
+          "note": "Chances are not published yet."
+        },
+        {
+          "k": "Other",
+          "status": "partial",
+          "text": "Community Ambassador check-in unlocks Timed Research with more Special Background Zorua.",
+          "note": "Dates and places of those events are not published yet."
+        }
+      ],
+      "tickets": [
+        "zorua-cd-research",
+        "zorua-cd-ultrabox"
+      ],
+      "alsoRunning": [
+        "go-pass-oct-free",
+        "go-pass-oct-deluxe"
+      ],
+      "names": [
+        "Zorua Community Day"
+      ],
+      "scheduleNotes": [
+        "Community Day runs from 2:00–5:00 p.m. local time. Regular Lure Modules can continue attracting Zorua until 9:00 p.m. local time; that extended window is separate from the main event hours.",
+        "The three-hour Incense bonus excludes Daily Adventure Incense, and the one-hour Lure bonus excludes Golden Lure Modules."
+      ]
+    },
+    "trek": {
+      "source": {
+        "label": "Pokémon GO official announcement",
+        "trust": "official",
+        "url": "https://pokemongo.com/news/fall-marathon-buddy-trek-2026",
+        "observed": "2026-09-30"
+      },
+      "infographics": [
+        {
+          "label": "Fall Marathon: Buddy Trek infographic",
+          "url": "/img/ext/4aa21432-0cfc-4c93-b3eb-0c15f322389d-0119b088.webp",
+          "source": "PokeCoord",
+          "sourceUrl": "https://pokecoord.com/articles/fall-marathon-buddy-trek-2026/",
+          "alt": "Fall Marathon: Buddy Trek 2026 infographic with event dates, Bramblin debut, event bonuses, wild and Incense encounters, research and features."
+        },
+        {
+          "label": "Infographic · G47IX",
+          "url": "/infographics/g47ix/discord-1558796039035682828.webp",
+          "source": "G47IX",
+          "sourceUrl": "https://discord.com/channels/@me/1558793395198099618/1558796039035682828",
+          "alt": "Fall Marathon: Buddy Trek infographic"
+        }
+      ],
+      "names": [
+        "Fall Marathon: Buddy Trek"
+      ],
+      "tickets": [],
+      "info": []
+    },
+    "yveltal-oct-2026": {
+      "names": [
+        "Yveltal in 5-Star Raid Battles",
+        "Yveltal in 5-star Raid Battles"
+      ],
+      "infographics": [
+        {
+          "label": "Yveltal raid guide",
+          "url": "/img/ext/2026-10-06-Yveltal-Raid-Guide-2f8d08b9.jpg",
+          "source": "Leek Duck",
+          "sourceUrl": "https://leekduck.com/events/yveltal-in-5-star-raid-battles-october-2026/",
+          "alt": "Yveltal raid guide graphic from Leek Duck"
+        },
+        {
+          "label": "Infographic · G47IX",
+          "url": "/infographics/g47ix/discord-1559125750257549383.jpg",
+          "source": "G47IX",
+          "sourceUrl": "https://discord.com/channels/@me/1558793395198099618/1559125750257549383",
+          "alt": "Yveltal in 5-star Raid Battles infographic"
+        }
+      ],
+      "tickets": [],
+      "info": [],
+      "source": {
+        "label": "Leek Duck event page",
+        "trust": "community",
+        "url": "https://leekduck.com/events/yveltal-in-5-star-raid-battles-october-2026/",
+        "observed": "2026-10-11"
+      }
+    },
+    "mega-blastoise-oct-2026": {
+      "names": [
+        "Mega Blastoise in Mega Raids"
+      ],
+      "source": {
+        "label": "Pokebattler raid guide",
+        "trust": "community",
+        "url": "https://www.pokebattler.com/raids/guides/BLASTOISE_MEGA",
+        "observed": "2026-10-11"
+      },
+      "infographics": [
+        {
+          "label": "Mega Blastoise raid guide",
+          "url": "/img/ext/Mega-Blastoise-Raid-Guide4-d0e94d17.jpg",
+          "source": "Pokebattler · CaptGoldfish",
+          "sourceUrl": "https://www.pokebattler.com/raids/guides/BLASTOISE_MEGA",
+          "alt": "Mega Blastoise raid guide infographic by CaptGoldfish"
+        },
+        {
+          "label": "Infographic · G47IX",
+          "url": "/infographics/g47ix/tg-aqadbbjrgx4-afz.jpg",
+          "source": "G47IX",
+          "sourceUrl": "",
+          "alt": "Mega Blastoise in Mega Raids infographic"
+        }
+      ],
+      "tickets": [],
+      "info": []
+    },
+    "minior": {
+      "names": [
+        "Orionids Meteor Shower: Minior Debut"
+      ],
+      "source": {
+        "label": "G47IX",
+        "trust": "community",
+        "url": "https://discord.com/channels/@me/1558793395198099618/1558805865321201783",
+        "observed": "2026-10-12"
+      },
+      "tickets": [],
+      "info": [],
+      "infographics": [
+        {
+          "label": "Infographic · G47IX",
+          "url": "/infographics/g47ix/discord-1558805865321201783.png",
+          "source": "G47IX",
+          "sourceUrl": "https://discord.com/channels/@me/1558793395198099618/1558805865321201783",
+          "alt": "Orionids Meteor Shower: Minior Debut infographic"
+        },
+        {
+          "label": "Infographic · G47IX",
+          "url": "/infographics/g47ix/discord-1561413791298752732.jpg",
+          "source": "G47IX",
+          "sourceUrl": "https://discord.com/channels/@me/1558793395198099618/1561413791298752732",
+          "alt": "Orionids Meteor Shower: Minior Debut infographic"
+        }
+      ]
+    },
+    "sandile": {
+      "names": [
+        "Sandile Hatch Day"
+      ],
+      "source": {
+        "label": "G47IX",
+        "trust": "community",
+        "url": "https://discord.com/channels/@me/1558793395198099618/1558797600608747571",
+        "observed": "2026-10-12"
+      },
+      "tickets": [],
+      "info": [],
+      "infographics": [
+        {
+          "label": "Infographic · G47IX",
+          "url": "/infographics/g47ix/discord-1558797600608747571.png",
+          "source": "G47IX",
+          "sourceUrl": "https://discord.com/channels/@me/1558793395198099618/1558797600608747571",
+          "alt": "Sandile Hatch Day infographic"
+        },
+        {
+          "label": "Infographic · G47IX",
+          "url": "/infographics/g47ix/discord-1560178079878479925.png",
+          "source": "G47IX",
+          "sourceUrl": "https://discord.com/channels/@me/1558793395198099618/1560178079878479925",
+          "alt": "Sandile Hatch Day infographic"
+        }
+      ]
+    },
+    "sendai": {
+      "names": [
+        "GO Wild Area: Sendai"
+      ],
+      "source": {
+        "label": "G47IX",
+        "trust": "community",
+        "url": "https://discord.com/channels/@me/1558793395198099618/1559125836571877451",
+        "observed": "2026-10-13"
+      },
+      "tickets": [],
+      "info": [],
+      "infographics": [
+        {
+          "label": "Infographic · G47IX",
+          "url": "/infographics/g47ix/discord-1559125836571877451.jpg",
+          "source": "G47IX",
+          "sourceUrl": "https://discord.com/channels/@me/1558793395198099618/1559125836571877451",
+          "alt": "GO Wild Area: Sendai infographic"
+        }
+      ]
+    },
+    "cur:wag": {
+      "names": [
+        "GO Wild Area: Global"
+      ],
+      "source": {
+        "label": "G47IX",
+        "trust": "community",
+        "url": "https://discord.com/channels/@me/1558793395198099618/1559125836571877451",
+        "observed": "2026-10-13"
+      },
+      "tickets": [],
+      "info": [],
+      "infographics": [
+        {
+          "label": "Infographic · G47IX",
+          "url": "/infographics/g47ix/discord-1559125836571877451.jpg",
+          "source": "G47IX",
+          "sourceUrl": "https://discord.com/channels/@me/1558793395198099618/1559125836571877451",
+          "alt": "GO Wild Area: Global infographic"
+        },
+        {
+          "label": "Infographic · G47IX",
+          "url": "/infographics/g47ix/discord-1558797282634236005.webp",
+          "source": "G47IX",
+          "sourceUrl": "https://discord.com/channels/@me/1558793395198099618/1558797282634236005",
+          "alt": "GO Wild Area: Global infographic"
+        },
+        {
+          "label": "Infographic · G47IX",
+          "url": "/infographics/g47ix/discord-1558797419636985940.webp",
+          "source": "G47IX",
+          "sourceUrl": "https://discord.com/channels/@me/1558793395198099618/1558797419636985940",
+          "alt": "GO Wild Area: Global infographic"
+        },
+        {
+          "label": "Infographic · G47IX",
+          "url": "/infographics/g47ix/discord-1561441160554094703.webp",
+          "source": "G47IX",
+          "sourceUrl": "https://discord.com/channels/@me/1558793395198099618/1561441160554094703",
+          "alt": "GO Wild Area: Global infographic"
+        }
+      ]
+    },
+    "leekduck:pokemon-go-wild-area-2026-global": {
+      "names": [
+        "Pokémon GO Wild Area 2026: Global"
+      ],
+      "source": {
+        "label": "G47IX",
+        "trust": "community",
+        "url": "https://discord.com/channels/@me/1558793395198099618/1559125836571877451",
+        "observed": "2026-10-13"
+      },
+      "tickets": [],
+      "info": [],
+      "infographics": [
+        {
+          "label": "Infographic · G47IX",
+          "url": "/infographics/g47ix/discord-1559125836571877451.jpg",
+          "source": "G47IX",
+          "sourceUrl": "https://discord.com/channels/@me/1558793395198099618/1559125836571877451",
+          "alt": "Pokémon GO Wild Area 2026: Global infographic"
+        }
+      ]
+    },
+    "leekduck:pokemon-go-wild-area-2026-mexico-city": {
+      "names": [
+        "Pokémon GO Wild Area 2026: Mexico City"
+      ],
+      "source": {
+        "label": "G47IX",
+        "trust": "community",
+        "url": "https://discord.com/channels/@me/1558793395198099618/1559125836571877451",
+        "observed": "2026-10-13"
+      },
+      "tickets": [],
+      "info": [],
+      "infographics": [
+        {
+          "label": "Infographic · G47IX",
+          "url": "/infographics/g47ix/discord-1559125836571877451.jpg",
+          "source": "G47IX",
+          "sourceUrl": "https://discord.com/channels/@me/1558793395198099618/1559125836571877451",
+          "alt": "Pokémon GO Wild Area 2026: Mexico City infographic"
+        }
+      ]
+    },
+    "leekduck:halloween-2026-part-1": {
+      "names": [
+        "Pokémon GO Halloween 2026 Part I"
+      ],
+      "source": {
+        "label": "G47IX",
+        "trust": "community",
+        "url": "https://discord.com/channels/@me/1558793395198099618/1559125714090065931",
+        "observed": "2026-10-13"
+      },
+      "tickets": [],
+      "info": [],
+      "infographics": [
+        {
+          "label": "Infographic · G47IX",
+          "url": "/infographics/g47ix/discord-1559125714090065931.jpg",
+          "source": "G47IX",
+          "sourceUrl": "https://discord.com/channels/@me/1558793395198099618/1559125714090065931",
+          "alt": "Pokémon GO Halloween 2026 Part I infographic"
+        }
+      ]
+    },
+    "leekduck:halloween-2026-part-2": {
+      "names": [
+        "Pokémon GO Halloween 2026 Part II"
+      ],
+      "source": {
+        "label": "G47IX",
+        "trust": "community",
+        "url": "https://discord.com/channels/@me/1558793395198099618/1559125906088398879",
+        "observed": "2026-10-13"
+      },
+      "tickets": [],
+      "info": [],
+      "infographics": [
+        {
+          "label": "Infographic · G47IX",
+          "url": "/infographics/g47ix/discord-1559125906088398879.jpg",
+          "source": "G47IX",
+          "sourceUrl": "https://discord.com/channels/@me/1558793395198099618/1559125906088398879",
+          "alt": "Pokémon GO Halloween 2026 Part II infographic"
+        }
+      ]
+    },
+    "leekduck:pokemon-night-out-2026-twitch-drops": {
+      "names": [
+        "Twitch Drops for Pokémon Night Out 2026"
+      ],
+      "source": {
+        "label": "G47IX",
+        "trust": "community",
+        "url": "",
+        "observed": "2026-10-13"
+      },
+      "tickets": [],
+      "info": [],
+      "infographics": [
+        {
+          "label": "Infographic · G47IX",
+          "url": "/infographics/g47ix/tg-aqad6xfrgx4-afz.jpg",
+          "source": "G47IX",
+          "sourceUrl": "",
+          "alt": "Twitch Drops for Pokémon Night Out 2026 infographic"
+        }
+      ]
+    },
+    "leekduck:shadow-landorus-incarnate-forme-in-shadow-raids-october-2026": {
+      "names": [
+        "Shadow Landorus (Incarnate Forme) in Shadow Raids"
+      ],
+      "source": {
+        "label": "G47IX",
+        "trust": "community",
+        "url": "",
+        "observed": "2026-10-13"
+      },
+      "tickets": [],
+      "info": [],
+      "infographics": [
+        {
+          "label": "Infographic · G47IX",
+          "url": "/infographics/g47ix/tg-aqad7bfrgx4-afz.jpg",
+          "source": "G47IX",
+          "sourceUrl": "",
+          "alt": "Shadow Landorus (Incarnate Forme) in Shadow Raids infographic"
+        }
+      ]
+    },
+    "leekduck:mega-dragonite-in-mega-raids-october-2026": {
+      "names": [
+        "Mega Dragonite in Mega Raids"
+      ],
+      "source": {
+        "label": "G47IX",
+        "trust": "community",
+        "url": "https://discord.com/channels/@me/1558793395198099618/1559619613635907710",
+        "observed": "2026-10-14"
+      },
+      "tickets": [],
+      "info": [],
+      "infographics": [
+        {
+          "label": "Infographic · G47IX",
+          "url": "/infographics/g47ix/discord-1559619613635907710.png",
+          "source": "G47IX",
+          "sourceUrl": "https://discord.com/channels/@me/1558793395198099618/1559619613635907710",
+          "alt": "Mega Dragonite in Mega Raids infographic"
+        },
+        {
+          "label": "Infographic · G47IX",
+          "url": "/infographics/g47ix/discord-1559738893870571582.jpg",
+          "source": "G47IX",
+          "sourceUrl": "https://discord.com/channels/@me/1558793395198099618/1559738893870571582",
+          "alt": "Mega Dragonite in Mega Raids infographic"
+        }
+      ]
+    },
+    "leekduck:dialga-in-5-star-raid-battles-october-2026": {
+      "names": [
+        "Dialga in 5-star Raid Battles"
+      ],
+      "source": {
+        "label": "G47IX",
+        "trust": "community",
+        "url": "https://discord.com/channels/@me/1558793395198099618/1559619652097679394",
+        "observed": "2026-10-14"
+      },
+      "tickets": [],
+      "info": [],
+      "infographics": [
+        {
+          "label": "Infographic · G47IX",
+          "url": "/infographics/g47ix/discord-1559619652097679394.png",
+          "source": "G47IX",
+          "sourceUrl": "https://discord.com/channels/@me/1558793395198099618/1559619652097679394",
+          "alt": "Dialga in 5-star Raid Battles infographic"
+        }
+      ]
+    },
+    "smr1": {
+      "names": [
+        "Super Mega Raid Day"
+      ],
+      "source": {
+        "label": "G47IX",
+        "trust": "community",
+        "url": "https://discord.com/channels/@me/1558793395198099618/1559738893530832969",
+        "observed": "2026-10-14"
+      },
+      "tickets": [],
+      "info": [],
+      "infographics": [
+        {
+          "label": "Infographic · G47IX",
+          "url": "/infographics/g47ix/discord-1559738893530832969.jpg",
+          "source": "G47IX",
+          "sourceUrl": "https://discord.com/channels/@me/1558793395198099618/1559738893530832969",
+          "alt": "Super Mega Raid Day infographic"
+        },
+        {
+          "label": "Infographic · G47IX",
+          "url": "/infographics/g47ix/discord-1559666456134815897.webp",
+          "source": "G47IX",
+          "sourceUrl": "https://discord.com/channels/@me/1558793395198099618/1559666456134815897",
+          "alt": "Super Mega Raid Day infographic"
+        }
+      ]
+    },
+    "leekduck:season-24-twilight-trails": {
+      "names": [
+        "Twilight Trails"
+      ],
+      "source": {
+        "label": "G47IX",
+        "trust": "community",
+        "url": "https://discord.com/channels/@me/1558793395198099618/1559125018619805807",
+        "observed": "2026-10-14"
+      },
+      "tickets": [],
+      "info": [],
+      "infographics": [
+        {
+          "label": "Infographic · G47IX",
+          "url": "/infographics/g47ix/discord-1559125018619805807.webp",
+          "source": "G47IX",
+          "sourceUrl": "https://discord.com/channels/@me/1558793395198099618/1559125018619805807",
+          "alt": "Twilight Trails infographic"
+        }
+      ]
+    },
+    "leekduck:dynamax-uxie-mesprit-azelf-max-battle-day-2026": {
+      "names": [
+        "Dynamax Uxie, Mesprit, and Azelf Max Battle Day"
+      ],
+      "source": {
+        "label": "G47IX",
+        "trust": "community",
+        "url": "https://discord.com/channels/@me/1558793395198099618/1558805792956620800",
+        "observed": "2026-10-14"
+      },
+      "tickets": [],
+      "info": [],
+      "infographics": [
+        {
+          "label": "Infographic · G47IX",
+          "url": "/infographics/g47ix/discord-1558805792956620800.webp",
+          "source": "G47IX",
+          "sourceUrl": "https://discord.com/channels/@me/1558793395198099618/1558805792956620800",
+          "alt": "Dynamax Uxie, Mesprit, and Azelf Max Battle Day infographic"
+        },
+        {
+          "label": "Infographic · G47IX",
+          "url": "/infographics/g47ix/discord-1559125971003777094.webp",
+          "source": "G47IX",
+          "sourceUrl": "https://discord.com/channels/@me/1558793395198099618/1559125971003777094",
+          "alt": "Dynamax Uxie, Mesprit, and Azelf Max Battle Day infographic"
+        }
+      ]
+    },
+    "leekduck:go-pass-october-2026": {
+      "names": [
+        "GO Pass: October"
+      ],
+      "source": {
+        "label": "G47IX",
+        "trust": "community",
+        "url": "https://discord.com/channels/@me/1558793395198099618/1559124879431835669",
+        "observed": "2026-10-14"
+      },
+      "tickets": [],
+      "info": [],
+      "infographics": [
+        {
+          "label": "Infographic · G47IX",
+          "url": "/infographics/g47ix/discord-1559124879431835669.webp",
+          "source": "G47IX",
+          "sourceUrl": "https://discord.com/channels/@me/1558793395198099618/1559124879431835669",
+          "alt": "GO Pass: October infographic"
+        }
+      ]
+    },
+    "raid:dialga:2026-10-14": {
+      "names": [
+        "Dialga 5-star raids"
+      ],
+      "source": {
+        "label": "G47IX",
+        "trust": "community",
+        "url": "https://discord.com/channels/@me/1558793395198099618/1559878109744996384",
+        "observed": "2026-10-14"
+      },
+      "tickets": [],
+      "info": [],
+      "infographics": [
+        {
+          "label": "Infographic · G47IX",
+          "url": "/infographics/g47ix/discord-1559878109744996384.jpg",
+          "source": "G47IX",
+          "sourceUrl": "https://discord.com/channels/@me/1558793395198099618/1559878109744996384",
+          "alt": "Dialga 5-star raids infographic"
+        }
+      ]
+    },
+    "leekduck:pokemonspotlighthour2026-10-15": {
+      "names": [
+        "Stufful Spotlight Hour"
+      ],
+      "source": {
+        "label": "G47IX",
+        "trust": "community",
+        "url": "https://discord.com/channels/@me/1558793395198099618/1560091967126507540",
+        "observed": "2026-10-15"
+      },
+      "tickets": [],
+      "info": [],
+      "infographics": [
+        {
+          "label": "Infographic · G47IX",
+          "url": "/infographics/g47ix/discord-1560091967126507540.jpg",
+          "source": "G47IX",
+          "sourceUrl": "https://discord.com/channels/@me/1558793395198099618/1560091967126507540",
+          "alt": "Stufful Spotlight Hour infographic"
+        }
+      ]
+    },
+    "w-into-the-wild": {
+      "names": [
+        "Into the Wild"
+      ],
+      "source": {
+        "label": "G47IX",
+        "trust": "community",
+        "url": "https://discord.com/channels/@me/1558793395198099618/1559980489480077383",
+        "observed": "2026-10-15"
+      },
+      "tickets": [],
+      "info": [],
+      "infographics": [
+        {
+          "label": "Infographic · G47IX",
+          "url": "/infographics/g47ix/discord-1559980489480077383.webp",
+          "source": "G47IX",
+          "sourceUrl": "https://discord.com/channels/@me/1558793395198099618/1559980489480077383",
+          "alt": "Into the Wild infographic"
+        },
+        {
+          "label": "Infographic · G47IX",
+          "url": "/infographics/g47ix/discord-1561441119789650044.webp",
+          "source": "G47IX",
+          "sourceUrl": "https://discord.com/channels/@me/1558793395198099618/1561441119789650044",
+          "alt": "Into the Wild infographic"
+        }
+      ]
+    },
+    "w-pok-mon-run-30-kaohsiung": {
+      "names": [
+        "Pokémon RUN 30: Kaohsiung"
+      ],
+      "source": {
+        "label": "G47IX",
+        "trust": "community",
+        "url": "https://discord.com/channels/@me/1558793395198099618/1560468502077374585",
+        "observed": "2026-10-17"
+      },
+      "tickets": [],
+      "info": [],
+      "infographics": [
+        {
+          "label": "Infographic · G47IX",
+          "url": "/infographics/g47ix/discord-1560468502077374585.jpg",
+          "source": "G47IX",
+          "sourceUrl": "https://discord.com/channels/@me/1558793395198099618/1560468502077374585",
+          "alt": "Pokémon RUN 30: Kaohsiung infographic"
+        }
+      ]
+    },
+    "w-pok-mon-run-30-taichung": {
+      "names": [
+        "Pokémon RUN 30: Taichung"
+      ],
+      "source": {
+        "label": "G47IX",
+        "trust": "community",
+        "url": "https://discord.com/channels/@me/1558793395198099618/1560468502077374585",
+        "observed": "2026-10-17"
+      },
+      "tickets": [],
+      "info": [],
+      "infographics": [
+        {
+          "label": "Infographic · G47IX",
+          "url": "/infographics/g47ix/discord-1560468502077374585.jpg",
+          "source": "G47IX",
+          "sourceUrl": "https://discord.com/channels/@me/1558793395198099618/1560468502077374585",
+          "alt": "Pokémon RUN 30: Taichung infographic"
+        }
+      ]
+    },
+    "w-pok-mon-run-30-singapore": {
+      "names": [
+        "Pokémon RUN 30: Singapore"
+      ],
+      "source": {
+        "label": "G47IX",
+        "trust": "community",
+        "url": "https://discord.com/channels/@me/1558793395198099618/1560468502077374585",
+        "observed": "2026-10-17"
+      },
+      "tickets": [],
+      "info": [],
+      "infographics": [
+        {
+          "label": "Infographic · G47IX",
+          "url": "/infographics/g47ix/discord-1560468502077374585.jpg",
+          "source": "G47IX",
+          "sourceUrl": "https://discord.com/channels/@me/1558793395198099618/1560468502077374585",
+          "alt": "Pokémon RUN 30: Singapore infographic"
+        }
+      ]
+    },
+    "w-pok-mon-run-30-new-taipei": {
+      "names": [
+        "Pokémon RUN 30: New Taipei"
+      ],
+      "source": {
+        "label": "G47IX",
+        "trust": "community",
+        "url": "https://discord.com/channels/@me/1558793395198099618/1560468502077374585",
+        "observed": "2026-10-17"
+      },
+      "tickets": [],
+      "info": [],
+      "infographics": [
+        {
+          "label": "Infographic · G47IX",
+          "url": "/infographics/g47ix/discord-1560468502077374585.jpg",
+          "source": "G47IX",
+          "sourceUrl": "https://discord.com/channels/@me/1558793395198099618/1560468502077374585",
+          "alt": "Pokémon RUN 30: New Taipei infographic"
+        }
+      ]
+    },
+    "w-pok-mon-run-30-kuala-lumpur": {
+      "names": [
+        "Pokémon RUN 30: Kuala Lumpur"
+      ],
+      "source": {
+        "label": "G47IX",
+        "trust": "community",
+        "url": "https://discord.com/channels/@me/1558793395198099618/1560468502077374585",
+        "observed": "2026-10-17"
+      },
+      "tickets": [],
+      "info": [],
+      "infographics": [
+        {
+          "label": "Infographic · G47IX",
+          "url": "/infographics/g47ix/discord-1560468502077374585.jpg",
+          "source": "G47IX",
+          "sourceUrl": "https://discord.com/channels/@me/1558793395198099618/1560468502077374585",
+          "alt": "Pokémon RUN 30: Kuala Lumpur infographic"
+        }
+      ]
+    },
+    "w-pok-mon-run-30-jakarta": {
+      "names": [
+        "Pokémon RUN 30: Jakarta"
+      ],
+      "source": {
+        "label": "G47IX",
+        "trust": "community",
+        "url": "https://discord.com/channels/@me/1558793395198099618/1560468502077374585",
+        "observed": "2026-10-17"
+      },
+      "tickets": [],
+      "info": [],
+      "infographics": [
+        {
+          "label": "Infographic · G47IX",
+          "url": "/infographics/g47ix/discord-1560468502077374585.jpg",
+          "source": "G47IX",
+          "sourceUrl": "https://discord.com/channels/@me/1558793395198099618/1560468502077374585",
+          "alt": "Pokémon RUN 30: Jakarta infographic"
+        }
+      ]
+    },
+    "w-pok-mon-run-30-bangkok": {
+      "names": [
+        "Pokémon RUN 30: Bangkok"
+      ],
+      "source": {
+        "label": "G47IX",
+        "trust": "community",
+        "url": "https://discord.com/channels/@me/1558793395198099618/1560468502077374585",
+        "observed": "2026-10-17"
+      },
+      "tickets": [],
+      "info": [],
+      "infographics": [
+        {
+          "label": "Infographic · G47IX",
+          "url": "/infographics/g47ix/discord-1560468502077374585.jpg",
+          "source": "G47IX",
+          "sourceUrl": "https://discord.com/channels/@me/1558793395198099618/1560468502077374585",
+          "alt": "Pokémon RUN 30: Bangkok infographic"
+        }
+      ]
+    },
+    "w-pok-mon-run-30-hong-kong": {
+      "names": [
+        "Pokémon RUN 30: Hong Kong"
+      ],
+      "source": {
+        "label": "G47IX",
+        "trust": "community",
+        "url": "https://discord.com/channels/@me/1558793395198099618/1560468502077374585",
+        "observed": "2026-10-17"
+      },
+      "tickets": [],
+      "info": [],
+      "infographics": [
+        {
+          "label": "Infographic · G47IX",
+          "url": "/infographics/g47ix/discord-1560468502077374585.jpg",
+          "source": "G47IX",
+          "sourceUrl": "https://discord.com/channels/@me/1558793395198099618/1560468502077374585",
+          "alt": "Pokémon RUN 30: Hong Kong infographic"
+        }
+      ]
+    },
+    "w-save-the-date-pok-mon-go-tour-2027": {
+      "names": [
+        "Pokémon GO Tour 2027: Kaohsiung"
+      ],
+      "source": {
+        "label": "G47IX",
+        "trust": "community",
+        "url": "https://discord.com/channels/@me/1558793395198099618/1561441170037411973",
+        "observed": "2026-10-19"
+      },
+      "tickets": [],
+      "info": [],
+      "infographics": [
+        {
+          "label": "Infographic · G47IX",
+          "url": "/infographics/g47ix/discord-1561441170037411973.webp",
+          "source": "G47IX",
+          "sourceUrl": "https://discord.com/channels/@me/1558793395198099618/1561441170037411973",
+          "alt": "Pokémon GO Tour 2027: Kaohsiung infographic"
+        }
+      ]
+    }
+  },
+  "passes": {
+    "zorua-cd-research": {
+      "name": "Special Research ticket",
+      "sub": "Zorua Community Day",
+      "product": "zorua-cd-research",
+      "unlocks": [
+        "3 encounters with Special Background Zorua",
+        "More Zorua encounters",
+        "1 Premium Battle Pass and 1 Rare Candy XL",
+        {
+          "text": "“Even more goodies”",
+          "unpublished": true
+        }
+      ],
+      "optional": "Yes. Every bonus above is free.",
+      "buyBy": null,
+      "releaseTime": null,
+      "facts": [
+        [
+          "Good to know",
+          "No story or medal. Gift to Great Friends or higher. Non-refundable."
+        ]
+      ],
+      "source": {
+        "label": "pokemongo.com news post",
+        "trust": "official",
+        "url": "https://pokemongo.com/news/communityday-october-2026-zorua",
+        "observed": "2026-10-09"
+      }
+    },
+    "zorua-cd-ultrabox": {
+      "name": "Community Day Ultra Box",
+      "sub": "Web Store · ticket plus items",
+      "product": "zorua-cd-ultrabox",
+      "unlocks": [
+        "The event ticket (same as above)",
+        "5 Ultra Balls"
+      ],
+      "optional": "Yes",
+      "buyBy": null,
+      "releaseTime": null,
+      "facts": [
+        [
+          "Status",
+          "“Available soon”"
+        ]
+      ],
+      "source": {
+        "label": "pokemongo.com news post",
+        "trust": "official",
+        "url": "https://pokemongo.com/news/communityday-october-2026-zorua",
+        "observed": "2026-10-09"
+      }
+    },
+    "go-pass-oct-free": {
+      "name": "GO Pass: October",
+      "sub": "Free pass · 6 Oct to 3 Nov",
+      "free": true,
+      "unlocks": [
+        "Kyogre encounter, Rare Candy XL, Premium Battle Pass, Lucky Egg and more",
+        "Milestone bonuses at Ranks 1, 25, 50 and 75"
+      ],
+      "optional": "Free to take part",
+      "buyBy": "Nothing to buy",
+      "expires": [
+        [
+          "Rewards expire",
+          "5 Nov, 10 am local"
+        ]
+      ],
+      "source": {
+        "label": "Leek Duck, GO Pass: October",
+        "trust": "community",
+        "url": "https://leekduck.com/events/go-pass-october-2026/",
+        "observed": "2026-10-09"
+      }
+    },
+    "go-pass-oct-deluxe": {
+      "name": "GO Pass Deluxe",
+      "sub": "Paid upgrade, bought any time",
+      "product": "go-pass-oct-deluxe",
+      "unlocks": [
+        "Lucky Trinket as the final reward",
+        "1 Super Incubator and extra Pokémon encounters",
+        "Stronger Rank 25 gift bonuses"
+      ],
+      "optional": "Yes",
+      "buyBy": "No cut-off stated; upgrade any time and still claim earlier rewards",
+      "expires": [
+        [
+          "Rewards expire",
+          "5 Nov, 10 am local"
+        ],
+        [
+          "Lucky Trinket expires",
+          "8 Nov, 11:59 pm local"
+        ]
+      ],
+      "variants": [
+        {
+          "label": "Deluxe + 10 Ranks",
+          "product": "go-pass-oct-deluxe-10"
+        },
+        {
+          "label": "Deluxe Ultra Box",
+          "product": "go-pass-oct-ultrabox"
+        }
+      ],
+      "source": {
+        "label": "Leek Duck, GO Pass: October",
+        "trust": "community",
+        "url": "https://leekduck.com/events/go-pass-october-2026/",
+        "observed": "2026-10-09"
+      }
+    }
+  }
+}

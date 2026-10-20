@@ -1,0 +1,49 @@
+name: Discord infographic sync
+
+on:
+  schedule:
+    # GitHub Actions cron is UTC; runs every eight hours.
+    - cron: "0 */8 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: discord-infographic-sync
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Test scraper
+        run: python -m unittest discover -s test -p 'test_discord_scraper_sync.py'
+      - name: Fetch latest mirrored infographic
+        env:
+          DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
+          CHANNEL_ID: ${{ secrets.CHANNEL_ID }}
+        run: python discord_scraper.py
+      - name: Commit changes only if infographics.json changed
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ -z "$(git status --porcelain -- infographics.json)" ]]; then
+            echo "infographics.json is unchanged; nothing to commit."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- infographics.json
+          git commit -m "chore: sync latest Discord infographic [skip ci]"
+          git push origin HEAD:main

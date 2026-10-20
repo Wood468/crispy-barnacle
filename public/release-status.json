@@ -1,0 +1,50 @@
+{
+  "version": 1,
+  "updated": "2026-10-10",
+  "source": "Curated from announced Pokémon GO releases; absence from this list does not guarantee availability.",
+  "unreleased": [
+    {
+      "name": "Mega Meganium",
+      "type": "form"
+    },
+    {
+      "name": "Mega Feraligatr",
+      "type": "form"
+    },
+    {
+      "name": "Bramblin",
+      "type": "pokemon",
+      "available": "2026-10-13"
+    },
+    {
+      "name": "Minior (Meteor Form)",
+      "type": "form",
+      "available": "2026-10-19"
+    },
+    {
+      "name": "Gigantamax Duraludon",
+      "type": "form",
+      "available": "2026-11-14"
+    },
+    {
+      "name": "Dynamax Dialga",
+      "type": "form",
+      "available": "2026-11-14"
+    },
+    {
+      "name": "Dynamax Palkia",
+      "type": "form",
+      "available": "2026-11-15"
+    },
+    {
+      "name": "Hisuian Sliggoo",
+      "type": "form",
+      "available": "2026-11-06"
+    },
+    {
+      "name": "Hisuian Goodra",
+      "type": "form",
+      "available": "2026-11-06"
+    }
+  ]
+}

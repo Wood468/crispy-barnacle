@@ -1,0 +1,8 @@
+{
+  "how_to_use": "Event write-ups the importer reads on every run even when they are no longer linked from a news list page (a series announced months ago, such as a multi-city tour). Add { \"url\": \"https://pokemongo.com/news/...\", \"note\": \"why\" }. Only pokemongo.com, leekduck.com and pokemongohub.net pages are read. Remove an entry once the event is over.",
+  "pages": [
+    { "url": "https://pokemongo.com/ja/news/202610aeonmall-halloween", "note": "AEON MALL Halloween, Japan, Oct 19 to Nov 1 2026 (remove after Nov 15)" },
+    { "url": "https://pokemongo.com/news/pokemon-run-30-2026", "note": "Pokémon RUN 30, Asia-Pacific series, Oct 2026 to Jan 2027" },
+    { "url": "https://pokemongo.com/news/save-the-date-go-tour-2027", "note": "Pokémon GO Tour 2027: Kaohsiung and Los Angeles Feb 19-21, Global Feb 27-28" }
+  ]
+}

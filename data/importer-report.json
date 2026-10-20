@@ -1,0 +1,326 @@
+{
+ "runAt": "2026-10-20T00:26:55.110Z",
+ "sources": {
+  "official": {
+   "listed": 24,
+   "error": ""
+  },
+  "leekduck": {
+   "listed": 59,
+   "error": ""
+  },
+  "hub": {
+   "listed": 10,
+   "error": ""
+  }
+ },
+ "pagesRead": 80,
+ "events": 77,
+ "worldEvents": 34,
+ "worldUndated": [],
+ "unmatchedPages": [
+  {
+   "source": "official",
+   "title": "Celebrate the Pokémon Night Out events in Pokémon GO!",
+   "url": "https://pokemongo.com/news/pokemon-night-out-irl-details2026/"
+  },
+  {
+   "source": "official",
+   "title": "PokéXciting! lands at Changi Airport and Jewel — get ready, Singapore! — Pokémon GO",
+   "url": "https://pokemongo.com/news/event-singapore-30th-anniversary-2026/"
+  },
+  {
+   "source": "official",
+   "title": "Get codes for exclusive Timed Research during the Pokémon Night Out Twitch broadcast! — Pokémon GO",
+   "url": "https://pokemongo.com/news/pokemon-night-out-twitch-drops2026/"
+  },
+  {
+   "source": "official",
+   "title": "Explore by starlight during meteor showers for a chance to encounter Minior! — Pokémon GO",
+   "url": "https://pokemongo.com/news/minior-meteor-showers-2026/"
+  },
+  {
+   "source": "official",
+   "title": "Celebrate the Festival of Lights with the return of Pikachu wearing a saree and Pikachu wearing a kurta! — Pokémon GO",
+   "url": "https://pokemongo.com/news/festival-of-lights-2026/"
+  },
+  {
+   "source": "official",
+   "title": "Save the Date: Pokémon GO Tour 2027",
+   "url": "https://pokemongo.com/news/save-the-date-go-tour-2027/"
+  },
+  {
+   "source": "official",
+   "title": "Pokémon GO joins Pokémon 30th Anniversary Mall Exploration!",
+   "url": "https://pokemongo.com/news/apac-mall-exploration-2026/"
+  },
+  {
+   "source": "official",
+   "title": "Pokémon GO partners with the European Space Agency",
+   "url": "https://pokemongo.com/news/european-space-agency-event/"
+  },
+  {
+   "source": "official",
+   "title": "Pokémon GO City Safari: Brisbane – Know Before You GO!",
+   "url": "https://pokemongo.com/news/city-safari-brisbane-know-before-you-go/"
+  },
+  {
+   "source": "official",
+   "title": "Pokémon GO City Safaris in Europe: Venues and Activities",
+   "url": "https://pokemongo.com/news/city-safaris-europe-2026/"
+  },
+  {
+   "source": "official",
+   "title": "Fireball of fury as Gigantamax Cinderace storms into Max Battle Day! — Pokémon GO",
+   "url": "https://pokemongo.com/news/gigantamax-cinderace-max-battle-day-2026/"
+  }
+ ],
+ "intl": {
+  "ja": {
+   "listed": 27,
+   "error": ""
+  },
+  "ko": {
+   "listed": 28,
+   "error": ""
+  },
+  "zh_hant": {
+   "listed": 28,
+   "error": ""
+  },
+  "de": {
+   "listed": 27,
+   "error": ""
+  },
+  "fr": {
+   "listed": 28,
+   "error": ""
+  },
+  "es": {
+   "listed": 28,
+   "error": ""
+  },
+  "it": {
+   "listed": 27,
+   "error": ""
+  },
+  "pt_br": {
+   "listed": 28,
+   "error": ""
+  },
+  "th": {
+   "listed": 27,
+   "error": ""
+  }
+ },
+ "serebiiSkipped": [
+  "Gameday in AZ | October 11th 2026 | Arizona",
+  "GO Fest 2026 Copenhagen | June 12th - 14th 2026 | Copenhagen, Denmark$30",
+  "NFL 2026 Season | December 21st 2025 | US",
+  "City Safari - Miami | December 13th - December 14th 2025 | Miami, US",
+  "Dia de Muertos 2025 | October 27th - November 2nd 2024 | Latin America",
+  "Pokemon GO at Jeju Island | October 2nd - October 26th 2025 | Jeju Island",
+  "Pokemon World Championships 2025 | August 15th 2025 - August 17th 2025 | Anaheim California",
+  "Pokemon Fossil Museum | March 8th - December 28th 2025 | Fukui",
+  "Carnival of Friends | March 3rd - March 7th 2025 | Latin America",
+  "PokeStop Challenge | November 11th - 16th 2024",
+  "Dia de Muertos 2024 | November 1st - 4th 2024 | Latian America",
+  "MLB - Marlins | September 7th 2024 | Miami",
+  "Pokemon World Championships 2024 | August 16th 2024 - August 18th 2024 | Honolulu, Hawaii",
+  "A New LATAM Adventure | May 5th - June 15th 2024 | Latin America",
+  "Pokemon North America International Championships 2023 | June 30th- July 2nd 2023 | Colombus, Ohio",
+  "Summer Games Fest | June 9th - 11th 2023 | San Diego, US",
+  "Safari Zone Goyang | September 23rd - 25th 2022 | Goyang",
+  "Old Friends, New Beginnings Poland | August 24th - September 20th | Poland",
+  "Gencon | August 4th - 7th 2022 | Indianapolis",
+  "Old Friends, New Beginnings | July 14th - July 21st | Turkey",
+  "Pokemon North America International Championships | June 23rd - 26th 2022 | Columbus, US",
+  "Safari Zone Seville | May 13th - May 15th 2022 | Seville, Spain",
+  "Pokemon Regional Championships 2022 | May 6th - June 2022 | Indianapolis, US",
+  "Children's Day | April 29th - 30 2022 | Latin America",
+  "Pokemon European International Championships 2022 | April 22nd - April 24th 2022 | Frankfurt, Germany",
+  "Special Weekend November 2020 US | November 7th - 8th 2020 | US",
+  "Safari Zone Liverpool | April 17th - 19th 2020 Repeat: October 15th - 17th 2021 | Liverpool, United Kingdom",
+  "Pokemon World Championships 2019 | August 16th 2019 - August 18th 2019 | Walter E Washington Convention Center, Washington D.C.",
+  "GO Fest Dortmund 2019 | July 4th - 7th 2019 | Westfalen Park - Dortmund, Germany",
+  "Pokemon Go in Sanriku | July 1st - 11th 2019 | Iwate Prefecture"
+ ],
+ "gaps": [
+  {
+   "event": "Super Mega Raid Day",
+   "field": "bonuses",
+   "missingFrom": [
+    "leekduck"
+   ]
+  },
+  {
+   "event": "Super Mega Raid Day",
+   "field": "research",
+   "missingFrom": [
+    "leekduck"
+   ]
+  },
+  {
+   "event": "Pokémon GO City Safari: Boston (Rescheduled)",
+   "field": "featured",
+   "missingFrom": [
+    "official",
+    "official",
+    "official"
+   ]
+  },
+  {
+   "event": "Pokémon GO City Safari: Boston (Rescheduled)",
+   "field": "eggs",
+   "missingFrom": [
+    "official",
+    "official",
+    "official"
+   ]
+  },
+  {
+   "event": "Pokémon GO City Safari: Boston (Rescheduled)",
+   "field": "research",
+   "missingFrom": []
+  },
+  {
+   "event": "Pokémon GO City Safari: Boston (Rescheduled)",
+   "field": "costumes",
+   "missingFrom": []
+  },
+  {
+   "event": "Pokémon GO City Safari: Boston (Rescheduled)",
+   "field": "tickets",
+   "missingFrom": [
+    "official",
+    "official",
+    "official"
+   ]
+  },
+  {
+   "event": "Pokémon GO City Safari: Boston (Rescheduled)",
+   "field": "dates",
+   "missingFrom": []
+  },
+  {
+   "event": "Twilight Trails",
+   "field": "bonuses",
+   "missingFrom": [
+    "official"
+   ]
+  },
+  {
+   "event": "Twilight Trails",
+   "field": "featured",
+   "missingFrom": [
+    "official"
+   ]
+  },
+  {
+   "event": "Twilight Trails",
+   "field": "eggs",
+   "missingFrom": [
+    "official"
+   ]
+  },
+  {
+   "event": "Twilight Trails",
+   "field": "research",
+   "missingFrom": [
+    "official"
+   ]
+  },
+  {
+   "event": "Twilight Trails",
+   "field": "tickets",
+   "missingFrom": [
+    "official"
+   ]
+  },
+  {
+   "event": "Into the Wild",
+   "field": "bonuses",
+   "missingFrom": []
+  },
+  {
+   "event": "Into the Wild",
+   "field": "featured",
+   "missingFrom": []
+  },
+  {
+   "event": "Into the Wild",
+   "field": "research",
+   "missingFrom": []
+  },
+  {
+   "event": "Into the Wild",
+   "field": "moves",
+   "missingFrom": []
+  },
+  {
+   "event": "Into the Wild",
+   "field": "costumes",
+   "missingFrom": []
+  },
+  {
+   "event": "Into the Wild",
+   "field": "tickets",
+   "missingFrom": []
+  },
+  {
+   "event": "Into the Wild",
+   "field": "dates",
+   "missingFrom": []
+  },
+  {
+   "event": "Sandile Hatch Day",
+   "field": "bonuses",
+   "missingFrom": [
+    "leekduck"
+   ]
+  },
+  {
+   "event": "Sandile Hatch Day",
+   "field": "featured",
+   "missingFrom": [
+    "hub"
+   ]
+  },
+  {
+   "event": "Sandile Hatch Day",
+   "field": "research",
+   "missingFrom": [
+    "leekduck"
+   ]
+  },
+  {
+   "event": "Sandile Hatch Day",
+   "field": "tickets",
+   "missingFrom": [
+    "hub"
+   ]
+  },
+  {
+   "event": "Sandile Hatch Day",
+   "field": "dates",
+   "missingFrom": [
+    "hub"
+   ]
+  },
+  {
+   "event": "Super Mega Raid Day",
+   "field": "bonuses",
+   "missingFrom": [
+    "leekduck"
+   ]
+  },
+  {
+   "event": "Super Mega Raid Day",
+   "field": "research",
+   "missingFrom": [
+    "leekduck"
+   ]
+  }
+ ],
+ "errors": []
+}

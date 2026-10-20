@@ -1,0 +1,36 @@
+name: Best attackers by type
+
+on:
+  schedule:
+    - cron: "30 19 * * 1"   # weekly, Monday morning in Melbourne
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node scripts/best-by-type.mjs
+      - name: Commit when the list changed
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- public/best-by-type.json
+          if git diff --cached -U0 | grep -E '^[+-] ' | grep -vqE '"generated"'; then
+            git commit -m "Best attackers by type: refresh"
+          else
+            echo "No changes."; exit 0
+          fi
+          git pull -q --rebase origin main
+          git push origin HEAD:main

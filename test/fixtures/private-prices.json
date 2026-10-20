@@ -1,0 +1,53 @@
+{
+ "version": 1,
+ "note": "Synthetic test fixture. The real file lives in R2 (private/prices.json).",
+ "fx": {
+  "from": "IDR",
+  "to": "AUD",
+  "rate": 8.001e-05,
+  "source": "Wise mid-market rate",
+  "url": "https://www.wise.com/gb/currency-converter/idr-to-aud-rate",
+  "observed": "2026-10-10",
+  "note": "The source page shows no timestamp, so this is the date the rate was read."
+ },
+ "rp_per_usd": {
+  "typical": 5000,
+  "low": 5000,
+  "high": 5000,
+  "pairs": 3,
+  "how": "fixture"
+ },
+ "tiers_idr": {
+  "0.99": {
+   "idr": 4950,
+   "basis": "seen",
+   "seen": "fixture"
+  },
+  "1.99": {
+   "idr": 10000,
+   "basis": "seen",
+   "seen": "fixture"
+  },
+  "4.99": {
+   "idr": 24950,
+   "basis": "seen",
+   "seen": "fixture"
+  },
+  "9.99": {
+   "idr": 49950,
+   "basis": "seen",
+   "seen": "fixture"
+  }
+ },
+ "prices": [
+  {
+   "product": "fixture-item",
+   "currency": "IDR",
+   "amount": 25000,
+   "region": "ID",
+   "source": "fixture",
+   "url": "https://example.invalid",
+   "observed": "2026-10-12"
+  }
+ ]
+}

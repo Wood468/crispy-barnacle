@@ -1,0 +1,48 @@
+name = "go-field-notes"
+main = "src/worker.js"
+compatibility_date = "2026-09-01"
+
+# Friendly address (michaelpuff.com is on Cloudflare). The workers.dev address keeps working too.
+routes = [{ pattern = "pogo.michaelpuff.com", custom_domain = true }]
+
+# The site (public/) is served as static files; only /api/* runs the Worker.
+[assets]
+directory = "./public"
+binding = "ASSETS"
+run_worker_first = ["/api/*"]
+
+# Keeps your Own / Hundo marks. No database_id: Cloudflare creates the database the first time this deploys.
+[[d1_databases]]
+binding = "DB"
+database_name = "go-field-notes"
+
+# Pictures from other sites and community infographics (served by the Worker from /infographics/* and /img/ext/*).
+[[r2_buckets]]
+binding = "MEDIA"
+bucket_name = "go-field-notes-images"
+
+# Secret (set in the Cloudflare dashboard, never here): SYNC_PIN, the PIN that unlocks syncing your marks.
+
+# Datamine watch: 20:30 UTC daily (7:30 am Melbourne during AEDT; 6:30 am during AEST).
+[triggers]
+# One hourly schedule is declared (at :30 UTC); the nightly work and the Monday summary are picked out of it by the hour.
+# Only one schedule is declared: the free Workers plan allows 5 cron triggers per account, and a second one made deploys fail
+# with error 10072. When discovery and alerts are switched on they run from this nightly cron. To check every six hours instead, add
+# "0 */6 * * *" back here once there is a free cron slot or the account is on Workers Paid.
+crons = ["30 * * * *"]
+
+# ---------------------------------------------------------------------------
+# Preview deployments (any branch except main). Previews do NOT inherit the bindings, secrets or triggers above, so
+# everything a preview may touch is declared here. It gets its own staging database and no production secrets.
+# It does not take over the production route/custom domain, and Cron Triggers never run in a preview.
+[previews.vars]
+ENVIRONMENT = "preview"
+
+[[previews.r2_buckets]]
+binding = "MEDIA"
+bucket_name = "go-field-notes-images"
+
+[[previews.d1_databases]]
+binding = "DB"
+database_name = "go-field-notes-staging"
+database_id = "7f87b97f-5042-4407-92bf-4ef01275ea13"

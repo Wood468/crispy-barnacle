@@ -1,0 +1,57 @@
+import test from "node:test";
+import assert from "node:assert/strict";
+import { createRequire } from "node:module";
+import { collapseWorld } from "../scripts/importer/world.mjs";
+import { audit } from "../scripts/dup-audit.mjs";
+const dd = createRequire(import.meta.url)("../public/dedupe.js");
+const ev = (id, name, place, start, end) => ({ id, name, place, start, end, scope: "regional", sources: [{ id: "s", name: "S", url: "u:" + id }] });
+const verdict = (a, b, gaz) => dd.same(a, b, gaz).verdict;
+
+test("the doubles Dylan reported are joined", () => {
+  assert.equal(verdict(ev("1", "City Safari - Boston", "Boston, USA", "2026-10-24", "2026-10-25"), ev("2", "Pokémon GO City Safari: Boston Update", "Boston, USA", "2026-10-24", "2026-10-25")), "same");
+  assert.equal(verdict(ev("1", "Orionids Meteor Shower: Minior Debut", "", "2026-10-19T17:00", "2026-10-24T23:59"), ev("2", "Explore by starlight during meteor showers for a chance to encounter Minior!", "", "2026-10-19", "2026-10-24")), "same");
+  assert.equal(verdict(ev("1", "Pokemon GO Lab...Big Adventure", "Tokyo, Japan", "2026-10-07", "2026-10-07"), ev("2", "Pokémon GO Lab: Big Adventure", "Tokyo, Japan", "2026-10-07", "2026-10-07")), "same");
+  assert.equal(verdict(ev("1", "Pokémon GO partners with the European Space Agency", "Europe", "2026-10-04", "2027-04-30"), ev("2", "Pokemon GO x ESA", "London, UK", "2026-10-04", "2076-04-30")), "same");
+});
+
+test("different events are kept apart", () => {
+  const gaz = { mexico: 1, sendai: 1, tohoku: 1 };
+  assert.equal(verdict(ev("1", "GO Wild Area 2026 Mexico City", "Mexico City, Mexico", "2026-11-06", "2026-11-08"), ev("2", "GO Wild Area 2026 Sendai Tohoku", "Sendai and Tohoku, Japan", "2026-11-06", "2026-11-08")), "different");
+  assert.equal(verdict({ name: "GO Wild Area: Sendai", start: "2026-11-06", end: "2026-11-08" }, ev("2", "GO Wild Area 2026 Mexico City", "Mexico City, Mexico", "2026-11-06", "2026-11-08"), gaz), "different");
+  assert.equal(verdict({ name: "GO Wild Area: Sendai", start: "2026-11-06", end: "2026-11-08" }, ev("2", "GO Wild Area 2026 Sendai Tohoku", "Sendai and Tohoku, Japan", "2026-11-06", "2026-11-08"), gaz), "same");
+  assert.equal(verdict(ev("1", "Halloween 2026, Part One", "", "2026-10-27", "2026-11-01"), ev("2", "Halloween 2026, Part Two", "", "2026-11-01", "2026-11-05")), "different"); // different days
+  assert.equal(verdict(ev("1", "Minior Showers: Leonids", "", "2026-11-14", "2026-11-19"), ev("2", "Minior Showers: Geminids", "", "2026-12-11", "2026-12-16")), "different");
+  assert.equal(verdict(ev("1", "Super Mega Raid Day", "", "2026-10-31", "2026-10-31"), ev("2", "Super Mega Raid Day", "", "2026-11-28", "2026-11-28")), "different");
+});
+
+test("rulings override the rule both ways", () => {
+  const a = ev("a", "Harvest Festival", "", "2026-10-01", "2026-10-05"), b = ev("b", "Rescue Shadow Zekrom during Harvest Festival", "", "2026-10-02", "2026-10-05");
+  assert.equal(dd.judge(a, b, { different: [["a", "b"]] }).verdict, "different");
+  assert.equal(dd.judge(ev("x", "One", "", "2026-01-01", "2026-01-02"), ev("y", "Totally other", "", "2026-01-01", "2026-01-02"), { same: [["x", "y"]] }).verdict, "same");
+});
+
+test("collapseWorld joins duplicates, merges sources and fixes a typo end year", () => {
+  const { events, merged } = collapseWorld([
+    ev("w-pokemon-go-x-esa", "Pokemon GO x ESA", "London, UK", "2026-10-04", "2076-04-30"),
+    ev("w-partners-esa", "Pokémon GO partners with the European Space Agency", "Europe", "2026-10-04", "2027-04-30"),
+    ev("w-other", "Something else entirely", "Paris, France", "2026-10-04", "2026-10-05"),
+  ]);
+  assert.equal(events.length, 2); assert.equal(merged.length, 1);
+  const esa = events.find(e => /esa|partners/.test(e.id));
+  assert.equal(esa.end, "2027-04-30"); assert.equal(esa.sources.length, 2);
+});
+
+test("audit reports odd dates and lists both-list matches separately", () => {
+  const r = audit([ev("w1", "GO Wild Area 2026 Sendai Tohoku", "Sendai and Tohoku, Japan", "2026-11-06", "2026-11-08"), ev("w2", "Long thing", "X", "2026-10-01", "2036-10-01")], [{ id: "sendai", t: "GO Wild Area: Sendai", s: "2026-11-06T10:00", e: "2026-11-08T18:00" }], null, "2026-10-15");
+  assert.equal(r.crossList.length, 1); assert.equal(r.same.length, 0); assert.equal(r.odd.length, 1);
+});
+
+test("a country-level stop and the city-level stop of the same series and dates are one event", () => {
+  const w = [
+    { id: "a", name: "Pokémon RUN 30", place: "Malaysia", start: "2026-11-21", end: "2026-11-22", sources: [{ url: "1" }] },
+    { id: "b", name: "Pokémon RUN 30: Kuala Lumpur", place: "Kuala Lumpur, Malaysia (KLCC)", start: "2026-11-21", end: "2026-11-22", sources: [{ url: "2" }] },
+    { id: "c", name: "Pokémon RUN 30: Singapore", place: "Singapore", start: "2026-11-07", end: "2026-11-08", sources: [{ url: "3" }] },
+  ];
+  const r = collapseWorld(w, null);
+  assert.equal(r.events.length, 2);
+});

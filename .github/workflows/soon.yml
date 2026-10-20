@@ -1,0 +1,49 @@
+name: Starting soon
+
+# Runs on the Worker now (src/jobs.js, hourly), which costs no GitHub minutes. This workflow is only for running it by hand.
+on:
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Only print, do not send"
+        default: "true"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: soon
+
+jobs:
+  soon:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Tell me what starts within the hour
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          TELEGRAM_GROUP_ID: ${{ secrets.TELEGRAM_GROUP_ID }}
+          TELEGRAM_TOPIC_EVENTS: ${{ secrets.TELEGRAM_TOPIC_EVENTS || secrets.TELEGRAM_TOPICS_EVENTS }}
+          TELEGRAM_TOPIC_PICTURES: ${{ secrets.TELEGRAM_TOPIC_PICTURES || secrets.TELEGRAM_TOPICS_PICTURES }}
+          TELEGRAM_TOPIC_CHANGES: ${{ secrets.TELEGRAM_TOPIC_CHANGES || secrets.TELEGRAM_TOPICS_CHANGES }}
+          TELEGRAM_TOPIC_SYSTEM: ${{ secrets.TELEGRAM_TOPIC_SYSTEM || secrets.TELEGRAM_TOPICS_SYSTEM }}
+          DRY_RUN: ${{ github.event.inputs.dry_run || 'false' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          node scripts/soon.mjs
+          git add -- data/soon-state.json 2>/dev/null || true
+          if ! git diff --cached --quiet; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git commit -m "Starting soon: remember what was announced [skip ci]"
+            git pull -q --rebase origin main
+            git push origin HEAD:main
+          fi

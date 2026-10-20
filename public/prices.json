@@ -1,0 +1,559 @@
+{
+ "version": 1,
+ "how_to_update": "Public prices only: verified Australian prices {product, currency:'AUD', amount, region:'AU', verified:true, source, url, observed}. Indonesian (Rp) prices and the Rp to A$ rate live in src/private-prices.json and are shown only to the owner (/api/prices-private). Store items: product starting 'store-' with 'label' and 'group' on both entries.",
+ "prices": [
+  {
+   "product": "zorua-cd-research",
+   "currency": "USD",
+   "amount": 1.99,
+   "region": "global",
+   "source": "pokemongo.com news post",
+   "url": "https://pokemongo.com/news/communityday-october-2026-zorua",
+   "observed": "2026-10-09",
+   "note": "Published as US$1.99 or the equivalent local pricing tier"
+  },
+  {
+   "product": "zorua-cd-ultrabox",
+   "currency": "USD",
+   "amount": 1.99,
+   "region": "global",
+   "source": "pokemongo.com news post",
+   "url": "https://pokemongo.com/news/communityday-october-2026-zorua",
+   "observed": "2026-10-09",
+   "note": "Published as US$1.99 or the equivalent local pricing tier"
+  },
+  {
+   "product": "go-pass-oct-deluxe",
+   "currency": "USD",
+   "amount": 7.99,
+   "region": "global",
+   "source": "Leek Duck, GO Pass: October",
+   "url": "https://leekduck.com/events/go-pass-october-2026/",
+   "observed": "2026-10-09",
+   "note": "US dollars or the equivalent local pricing tier"
+  },
+  {
+   "product": "go-pass-oct-deluxe-10",
+   "currency": "USD",
+   "amount": 9.99,
+   "region": "global",
+   "source": "Leek Duck, GO Pass: October",
+   "url": "https://leekduck.com/events/go-pass-october-2026/",
+   "observed": "2026-10-09",
+   "note": "Deluxe plus 10 Ranks"
+  },
+  {
+   "product": "safari-brisbane-2day",
+   "currency": "AUD",
+   "amount": 17.0,
+   "region": "AU",
+   "verified": true,
+   "source": "Pokémon GO Hub, City Safari: Brisbane",
+   "url": "https://pokemongohub.net/post/event/pokemon-go-city-safari-2026-brisbane-australia/",
+   "observed": "2026-10-09",
+   "note": "Plus applicable taxes and fees"
+  },
+  {
+   "product": "safari-brisbane-1day",
+   "currency": "AUD",
+   "amount": 12.0,
+   "region": "AU",
+   "verified": true,
+   "source": "Pokémon GO Hub, City Safari: Brisbane",
+   "url": "https://pokemongohub.net/post/event/pokemon-go-city-safari-2026-brisbane-australia/",
+   "observed": "2026-10-09",
+   "note": "Plus applicable taxes and fees"
+  },
+  {
+   "product": "go-pass-oct-deluxe",
+   "currency": "AUD",
+   "amount": 12.99,
+   "region": "AU",
+   "verified": true,
+   "source": "Pokémon GO Web Store (Australian storefront)",
+   "url": "https://store.pokemongo.com/",
+   "observed": "2026-10-11",
+   "note": "Read from the store while browsing from Australia"
+  },
+  {
+   "product": "go-pass-oct-deluxe-10",
+   "currency": "AUD",
+   "amount": 14.99,
+   "region": "AU",
+   "verified": true,
+   "source": "Pokémon GO Web Store (Australian storefront)",
+   "url": "https://store.pokemongo.com/",
+   "observed": "2026-10-11",
+   "note": "Read from the store while browsing from Australia"
+  },
+  {
+   "product": "go-pass-oct-ultrabox",
+   "currency": "AUD",
+   "amount": 22.99,
+   "region": "AU",
+   "verified": true,
+   "source": "Pokémon GO Web Store (Australian storefront)",
+   "url": "https://store.pokemongo.com/",
+   "observed": "2026-10-11",
+   "note": "GO Pass Deluxe: October Ultra Box, limited time, one purchase each"
+  },
+  {
+   "product": "go-pass-fall-deluxe",
+   "currency": "AUD",
+   "amount": 7.99,
+   "region": "AU",
+   "verified": true,
+   "source": "Pokémon GO Web Store (Australian storefront)",
+   "url": "https://store.pokemongo.com/",
+   "observed": "2026-10-11",
+   "note": "GO Pass Deluxe: Fall Marathon, limited time, one purchase each"
+  },
+  {
+   "product": "go-pass-fall-deluxe-6",
+   "currency": "AUD",
+   "amount": 10.99,
+   "region": "AU",
+   "verified": true,
+   "source": "Pokémon GO Web Store (Australian storefront)",
+   "url": "https://store.pokemongo.com/",
+   "observed": "2026-10-11",
+   "note": "GO Pass Deluxe: Fall Marathon + 6 Ranks, limited time, one purchase each"
+  },
+  {
+   "product": "go-pass-fall-ultrabox",
+   "currency": "AUD",
+   "amount": 13.99,
+   "region": "AU",
+   "verified": true,
+   "source": "Pokémon GO Web Store (Australian storefront)",
+   "url": "https://store.pokemongo.com/",
+   "observed": "2026-10-11",
+   "note": "GO Pass Deluxe: Fall Marathon Ultra Box, limited time, one purchase each"
+  },
+  {
+   "product": "wild-area-2026-global-ultra-box",
+   "currency": "AUD",
+   "amount": 17.99,
+   "region": "AU",
+   "verified": true,
+   "source": "Pokémon GO Web Store (Australian storefront)",
+   "url": "https://store.pokemongo.com/",
+   "observed": "2026-10-11",
+   "note": "Pokémon GO Wild Area 2026: Global Ultra Ticket Box, limited time, one purchase each"
+  },
+  {
+   "product": "go-pass-oct-deluxe",
+   "currency": "AUD",
+   "amount": 12.99,
+   "region": "AU",
+   "verified": true,
+   "source": "Pokémon GO web store (Australia), store screenshot",
+   "url": "https://store.pokemongo.com",
+   "observed": "2026-10-12"
+  },
+  {
+   "product": "go-pass-oct-deluxe-10",
+   "currency": "AUD",
+   "amount": 14.99,
+   "region": "AU",
+   "verified": true,
+   "source": "Pokémon GO web store (Australia), store screenshot",
+   "url": "https://store.pokemongo.com",
+   "observed": "2026-10-12"
+  },
+  {
+   "product": "go-pass-oct-ultrabox",
+   "currency": "AUD",
+   "amount": 22.99,
+   "region": "AU",
+   "verified": true,
+   "source": "Pokémon GO web store (Australia), store screenshot",
+   "url": "https://store.pokemongo.com",
+   "observed": "2026-10-12"
+  },
+  {
+   "product": "go-pass-fall-deluxe",
+   "currency": "AUD",
+   "amount": 7.99,
+   "region": "AU",
+   "verified": true,
+   "source": "Pokémon GO web store (Australia), store screenshot",
+   "url": "https://store.pokemongo.com",
+   "observed": "2026-10-12"
+  },
+  {
+   "product": "go-pass-fall-deluxe-6",
+   "currency": "AUD",
+   "amount": 10.99,
+   "region": "AU",
+   "verified": true,
+   "source": "Pokémon GO web store (Australia), store screenshot",
+   "url": "https://store.pokemongo.com",
+   "observed": "2026-10-12"
+  },
+  {
+   "product": "go-pass-fall-ultrabox",
+   "currency": "AUD",
+   "amount": 13.99,
+   "region": "AU",
+   "verified": true,
+   "source": "Pokémon GO web store (Australia), store screenshot",
+   "url": "https://store.pokemongo.com",
+   "observed": "2026-10-12"
+  },
+  {
+   "product": "store-ultra-training-box",
+   "label": "Ultra Training Box",
+   "group": "Boxes",
+   "currency": "AUD",
+   "amount": 46.99,
+   "region": "AU",
+   "verified": true,
+   "source": "Pokémon GO web store (Australia), store screenshot",
+   "url": "https://store.pokemongo.com",
+   "observed": "2026-10-12"
+  },
+  {
+   "product": "store-raid-commander-box",
+   "label": "Raid Commander Box",
+   "group": "Boxes",
+   "currency": "AUD",
+   "amount": 62.99,
+   "region": "AU",
+   "verified": true,
+   "source": "Pokémon GO web store (Australia), store screenshot",
+   "url": "https://store.pokemongo.com",
+   "observed": "2026-10-12"
+  },
+  {
+   "product": "store-rocket-pursuit-pack",
+   "label": "Rocket Pursuit Pack",
+   "group": "Boxes",
+   "currency": "AUD",
+   "amount": 12.99,
+   "region": "AU",
+   "verified": true,
+   "source": "Pokémon GO web store (Australia), store screenshot",
+   "url": "https://store.pokemongo.com",
+   "observed": "2026-10-12"
+  },
+  {
+   "product": "store-lucky-egg-x8",
+   "label": "Lucky Egg x8",
+   "group": "Items",
+   "currency": "AUD",
+   "amount": 7.99,
+   "region": "AU",
+   "verified": true,
+   "source": "Pokémon GO web store (Australia), store screenshot",
+   "url": "https://store.pokemongo.com",
+   "observed": "2026-10-12"
+  },
+  {
+   "product": "store-star-piece-x8",
+   "label": "Star Piece x8",
+   "group": "Items",
+   "currency": "AUD",
+   "amount": 9.99,
+   "region": "AU",
+   "verified": true,
+   "source": "Pokémon GO web store (Australia), store screenshot",
+   "url": "https://store.pokemongo.com",
+   "observed": "2026-10-12"
+  },
+  {
+   "product": "store-remote-raid-pass-x2",
+   "label": "Remote Raid Pass x2",
+   "group": "Items",
+   "currency": "AUD",
+   "amount": 4.49,
+   "region": "AU",
+   "verified": true,
+   "source": "Pokémon GO web store (Australia), store screenshot",
+   "url": "https://store.pokemongo.com",
+   "observed": "2026-10-12"
+  },
+  {
+   "product": "store-pokemon-storage-1",
+   "label": "Pokémon Storage +1",
+   "group": "Items",
+   "currency": "AUD",
+   "amount": 2.99,
+   "region": "AU",
+   "verified": true,
+   "source": "Pokémon GO web store (Australia), store screenshot",
+   "url": "https://store.pokemongo.com",
+   "observed": "2026-10-12"
+  },
+  {
+   "product": "store-item-bag-1",
+   "label": "Item Bag +1",
+   "group": "Items",
+   "currency": "AUD",
+   "amount": 2.99,
+   "region": "AU",
+   "verified": true,
+   "source": "Pokémon GO web store (Australia), store screenshot",
+   "url": "https://store.pokemongo.com",
+   "observed": "2026-10-12"
+  },
+  {
+   "product": "store-egg-incubator-x3",
+   "label": "Egg Incubator x3",
+   "group": "Items",
+   "currency": "AUD",
+   "amount": 4.49,
+   "region": "AU",
+   "verified": true,
+   "source": "Pokémon GO web store (Australia), store screenshot",
+   "url": "https://store.pokemongo.com",
+   "observed": "2026-10-12"
+  },
+  {
+   "product": "store-600-link-charge-3-remote-raid-pass",
+   "label": "600 Link Charge + 3 Remote Raid Pass",
+   "group": "Items",
+   "currency": "AUD",
+   "amount": 12.99,
+   "region": "AU",
+   "verified": true,
+   "source": "Pokémon GO web store (Australia), store screenshot",
+   "url": "https://store.pokemongo.com",
+   "observed": "2026-10-12"
+  },
+  {
+   "product": "store-super-incubator-x2",
+   "label": "Super Incubator x2",
+   "group": "Items",
+   "currency": "AUD",
+   "amount": 4.49,
+   "region": "AU",
+   "verified": true,
+   "source": "Pokémon GO web store (Australia), store screenshot",
+   "url": "https://store.pokemongo.com",
+   "observed": "2026-10-12"
+  },
+  {
+   "product": "store-max-revive-x15",
+   "label": "Max Revive x15",
+   "group": "Items",
+   "currency": "AUD",
+   "amount": 2.99,
+   "region": "AU",
+   "verified": true,
+   "source": "Pokémon GO web store (Australia), store screenshot",
+   "url": "https://store.pokemongo.com",
+   "observed": "2026-10-12"
+  },
+  {
+   "product": "store-600-link-charge",
+   "label": "600 Link Charge",
+   "group": "Items",
+   "currency": "AUD",
+   "amount": 4.49,
+   "region": "AU",
+   "verified": true,
+   "source": "Pokémon GO web store (Australia), store screenshot",
+   "url": "https://store.pokemongo.com",
+   "observed": "2026-10-12"
+  },
+  {
+   "product": "store-premium-battle-pass-x3",
+   "label": "Premium Battle Pass x3",
+   "group": "Items",
+   "currency": "AUD",
+   "amount": 4.49,
+   "region": "AU",
+   "verified": true,
+   "source": "Pokémon GO web store (Australia), store screenshot",
+   "url": "https://store.pokemongo.com",
+   "observed": "2026-10-12"
+  },
+  {
+   "product": "store-max-particle-pack-x6",
+   "label": "Max Particle Pack x6",
+   "group": "Items",
+   "currency": "AUD",
+   "amount": 12.99,
+   "region": "AU",
+   "verified": true,
+   "source": "Pokémon GO web store (Australia), store screenshot",
+   "url": "https://store.pokemongo.com",
+   "observed": "2026-10-12"
+  },
+  {
+   "product": "store-max-mushroom-x3",
+   "label": "Max Mushroom x3",
+   "group": "Items",
+   "currency": "AUD",
+   "amount": 14.99,
+   "region": "AU",
+   "verified": true,
+   "source": "Pokémon GO web store (Australia), store screenshot",
+   "url": "https://store.pokemongo.com",
+   "observed": "2026-10-12"
+  },
+  {
+   "product": "store-3-max-particle-pack-3-remote-raid-pass",
+   "label": "3 Max Particle Pack + 3 Remote Raid Pass",
+   "group": "Items",
+   "currency": "AUD",
+   "amount": 12.99,
+   "region": "AU",
+   "verified": true,
+   "source": "Pokémon GO web store (Australia), store screenshot",
+   "url": "https://store.pokemongo.com",
+   "observed": "2026-10-12"
+  },
+  {
+   "product": "store-max-particle-pack-remote-raid-pass",
+   "label": "Max Particle Pack + Remote Raid Pass",
+   "group": "Items",
+   "currency": "AUD",
+   "amount": 4.49,
+   "region": "AU",
+   "verified": true,
+   "source": "Pokémon GO web store (Australia), store screenshot",
+   "url": "https://store.pokemongo.com",
+   "observed": "2026-10-12"
+  },
+  {
+   "product": "store-silver-pinap-berries-x10",
+   "label": "Silver Pinap Berries x10",
+   "group": "Items",
+   "currency": "AUD",
+   "amount": 2.99,
+   "region": "AU",
+   "verified": true,
+   "source": "Pokémon GO web store (Australia), store screenshot",
+   "url": "https://store.pokemongo.com",
+   "observed": "2026-10-12"
+  },
+  {
+   "product": "store-golden-razz-berries-x15",
+   "label": "Golden Razz Berries x15",
+   "group": "Items",
+   "currency": "AUD",
+   "amount": 2.99,
+   "region": "AU",
+   "verified": true,
+   "source": "Pokémon GO web store (Australia), store screenshot",
+   "url": "https://store.pokemongo.com",
+   "observed": "2026-10-12"
+  },
+  {
+   "product": "store-max-potions-x10",
+   "label": "Max Potions x10",
+   "group": "Items",
+   "currency": "AUD",
+   "amount": 2.99,
+   "region": "AU",
+   "verified": true,
+   "source": "Pokémon GO web store (Australia), store screenshot",
+   "url": "https://store.pokemongo.com",
+   "observed": "2026-10-12"
+  },
+  {
+   "product": "store-110-pokecoins",
+   "label": "110 PokéCoins",
+   "group": "PokéCoins",
+   "currency": "AUD",
+   "amount": 1.59,
+   "region": "AU",
+   "verified": true,
+   "source": "Pokémon GO web store (Australia), store screenshot",
+   "url": "https://store.pokemongo.com",
+   "observed": "2026-10-12"
+  },
+  {
+   "product": "store-600-pokecoins",
+   "label": "600 PokéCoins",
+   "group": "PokéCoins",
+   "currency": "AUD",
+   "amount": 7.99,
+   "region": "AU",
+   "verified": true,
+   "source": "Pokémon GO web store (Australia), store screenshot",
+   "url": "https://store.pokemongo.com",
+   "observed": "2026-10-12"
+  },
+  {
+   "product": "store-1-300-pokecoins",
+   "label": "1,300 PokéCoins",
+   "group": "PokéCoins",
+   "currency": "AUD",
+   "amount": 14.99,
+   "region": "AU",
+   "verified": true,
+   "source": "Pokémon GO web store (Australia), store screenshot",
+   "url": "https://store.pokemongo.com",
+   "observed": "2026-10-12"
+  },
+  {
+   "product": "store-2-700-pokecoins",
+   "label": "2,700 PokéCoins",
+   "group": "PokéCoins",
+   "currency": "AUD",
+   "amount": 30.99,
+   "region": "AU",
+   "verified": true,
+   "source": "Pokémon GO web store (Australia), store screenshot",
+   "url": "https://store.pokemongo.com",
+   "observed": "2026-10-12"
+  },
+  {
+   "product": "store-5-600-pokecoins",
+   "label": "5,600 PokéCoins",
+   "group": "PokéCoins",
+   "currency": "AUD",
+   "amount": 62.99,
+   "region": "AU",
+   "verified": true,
+   "source": "Pokémon GO web store (Australia), store screenshot",
+   "url": "https://store.pokemongo.com",
+   "observed": "2026-10-12"
+  },
+  {
+   "product": "store-15-500-pokecoins",
+   "label": "15,500 PokéCoins",
+   "group": "PokéCoins",
+   "currency": "AUD",
+   "amount": 159.99,
+   "region": "AU",
+   "verified": true,
+   "source": "Pokémon GO web store (Australia), store screenshot",
+   "url": "https://store.pokemongo.com",
+   "observed": "2026-10-12"
+  }
+ ],
+ "tiers_au": {
+  "note": "Australian store price for each US price tier. 'verified' means a US$ price and the A$ price in the Australian store were both seen for the same product. 'tier' means the same tier is used by other Australian store items but this exact pair has not been seen.",
+  "map": {
+   "4.99": {
+    "aud": 7.99,
+    "basis": "verified",
+    "seen": "GO Pass: Fall, seen in the Australian store at A$7.99"
+   },
+   "6.99": {
+    "aud": 10.99,
+    "basis": "verified",
+    "seen": "GO Pass: Fall +6 Ranks, seen at A$10.99"
+   },
+   "7.99": {
+    "aud": 12.99,
+    "basis": "verified",
+    "seen": "GO Pass: October, seen at A$12.99"
+   },
+   "9.99": {
+    "aud": 14.99,
+    "basis": "verified",
+    "seen": "GO Pass: October +10 Ranks, seen at A$14.99"
+   },
+   "1.99": {
+    "aud": 2.99,
+    "basis": "tier",
+    "seen": "same tier as other A$2.99 items in the Australian store; Zorua ticket itself not yet seen"
+   }
+  }
+ }
+}

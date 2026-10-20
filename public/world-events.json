@@ -1,0 +1,739 @@
+{
+ "updated": "2026-10-20T00:26:55.108Z",
+ "events": [
+  {
+   "id": "w-pokemon-fossil-museum-2026",
+   "name": "Pokemon Fossil Museum 2026",
+   "place": "Chicago, USA",
+   "area": "Americas",
+   "scope": "regional",
+   "start": "2026-05-22",
+   "end": "2027-04-11",
+   "datesKnown": true,
+   "sources": [
+    {
+     "id": "serebii",
+     "name": "Serebii",
+     "url": "https://www.serebii.net/pokemongo/reallifeevents.shtml"
+    }
+   ],
+   "status": "single",
+   "seen": "2026-10-20"
+  },
+  {
+   "id": "w-pokemon-jet-red-collaboration-event",
+   "name": "Pokemon Jet Red Collaboration Event",
+   "place": "Sendai and Tohoku, Japan",
+   "area": "Asia",
+   "scope": "regional",
+   "start": "2026-07-28",
+   "end": "2027-08-31",
+   "datesKnown": true,
+   "sources": [
+    {
+     "id": "serebii",
+     "name": "Serebii",
+     "url": "https://www.serebii.net/pokemongo/reallifeevents.shtml"
+    }
+   ],
+   "status": "single",
+   "seen": "2026-10-20"
+  },
+  {
+   "id": "w-pikachu-s-autumn-adventure",
+   "name": "Pikachu's Autumn Adventure",
+   "place": "South Korea",
+   "area": "Asia",
+   "scope": "regional",
+   "start": "2026-09-18",
+   "end": "2026-10-11",
+   "datesKnown": true,
+   "sources": [
+    {
+     "id": "serebii",
+     "name": "Serebii",
+     "url": "https://www.serebii.net/pokemongo/reallifeevents.shtml"
+    }
+   ],
+   "status": "single",
+   "seen": "2026-10-20"
+  },
+  {
+   "id": "w-pokemon-x-adidas",
+   "name": "Pokemon X Adidas",
+   "place": "Japan",
+   "area": "Asia",
+   "scope": "regional",
+   "start": "2026-09-25",
+   "end": "2027-01-15",
+   "datesKnown": true,
+   "sources": [
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "url": "https://pokemongo.com/ja/news/pokemon-x-adidas-2026/"
+    },
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "url": "https://pokemongo.com/ko/news/pokemon-x-adidas-2026/"
+    }
+   ],
+   "status": "official",
+   "seen": "2026-10-19"
+  },
+  {
+   "id": "w-pok-mon-go-partners-with-the-european-space-agency",
+   "name": "Pokémon GO partners with the European Space Agency",
+   "place": "Europe",
+   "area": "Europe",
+   "scope": "regional",
+   "start": "2026-10-04",
+   "end": "2027-04-30",
+   "datesKnown": true,
+   "sources": [
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "url": "https://pokemongo.com/news/european-space-agency-event/"
+    },
+    {
+     "id": "serebii",
+     "name": "Serebii",
+     "url": "https://www.serebii.net/pokemongo/reallifeevents.shtml"
+    }
+   ],
+   "status": "official",
+   "seen": "2026-10-20"
+  },
+  {
+   "id": "w-pokemon-go-x-esa-london",
+   "name": "Pokémon GO x ESA: London",
+   "place": "London, England (Science Museum)",
+   "area": "Europe",
+   "scope": "regional",
+   "start": "2026-10-04",
+   "end": "2027-04-30",
+   "datesKnown": true,
+   "sources": [
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "url": "https://pokemongo.com/news/european-space-agency-event/"
+    },
+    {
+     "id": "serebii",
+     "name": "Serebii",
+     "url": "https://serebii.net/pokemongo/reallifeevents/pokemongoxesa.shtml"
+    },
+    {
+     "id": "serebii",
+     "name": "Serebii",
+     "url": "https://www.serebii.net/pokemongo/reallifeevents.shtml"
+    }
+   ],
+   "status": "official",
+   "seen": "2026-10-19"
+  },
+  {
+   "id": "w-hangul-day-2026",
+   "name": "Hangul Day 2026",
+   "place": "Tokyo, Japan",
+   "area": "Asia",
+   "scope": "regional",
+   "start": "2026-10-06",
+   "end": "2026-10-09",
+   "datesKnown": true,
+   "sources": [
+    {
+     "id": "serebii",
+     "name": "Serebii",
+     "url": "https://www.serebii.net/pokemongo/reallifeevents.shtml"
+    }
+   ],
+   "status": "single",
+   "seen": "2026-10-20"
+  },
+  {
+   "id": "w-pokemon-go-lab-big-adventure",
+   "name": "Pokemon GO Lab...Big Adventure",
+   "place": "Tokyo, Japan",
+   "area": "Asia",
+   "scope": "regional",
+   "start": "2026-10-07",
+   "end": "2026-10-07",
+   "datesKnown": true,
+   "sources": [
+    {
+     "id": "serebii",
+     "name": "Serebii",
+     "url": "https://www.serebii.net/pokemongo/reallifeevents.shtml"
+    }
+   ],
+   "status": "single",
+   "seen": "2026-10-20"
+  },
+  {
+   "id": "w-pokexciting-taipei",
+   "name": "PokeXciting Taipei",
+   "place": "Taipei, Taiwan",
+   "area": "Asia",
+   "scope": "regional",
+   "start": "2026-10-10",
+   "end": "2026-10-11",
+   "datesKnown": true,
+   "sources": [
+    {
+     "id": "serebii",
+     "name": "Serebii",
+     "url": "https://www.serebii.net/pokemongo/reallifeevents.shtml"
+    }
+   ],
+   "status": "single",
+   "seen": "2026-10-20"
+  },
+  {
+   "id": "w-pok-mon-run-30-taichung",
+   "name": "Pokémon RUN 30: Taichung",
+   "place": "Taichung, Taiwan",
+   "area": "Asia",
+   "scope": "regional",
+   "start": "2026-10-17",
+   "end": "2026-10-18",
+   "datesKnown": true,
+   "sources": [
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "url": "https://pokemongo.com/news/pokemon-run-30-2026/"
+    }
+   ],
+   "status": "official",
+   "seen": "2026-10-19"
+  },
+  {
+   "id": "w-explore-by-starlight-during-meteor-showers-for-a-c",
+   "name": "Explore by starlight during meteor showers for a chance to encounter Minior!",
+   "place": "",
+   "area": "Worldwide",
+   "scope": "global",
+   "start": "2026-10-19",
+   "end": "2026-10-24",
+   "datesKnown": true,
+   "sources": [
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "url": "https://pokemongo.com/news/minior-meteor-showers-2026/"
+    }
+   ],
+   "status": "official",
+   "seen": "2026-10-20"
+  },
+  {
+   "id": "w-aeon-mall-halloween",
+   "name": "AEON MALL Halloween",
+   "place": "Participating AEON Malls, Japan",
+   "area": "Asia",
+   "scope": "regional",
+   "start": "2026-10-19",
+   "end": "2026-11-01",
+   "datesKnown": true,
+   "sources": [
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "url": "https://pokemongo.com/ja/news/202610aeonmall-halloween"
+    }
+   ],
+   "status": "official",
+   "seen": "2026-10-19"
+  },
+  {
+   "id": "w-celebrate-the-pok-mon-night-out-events-in-pok-mon-",
+   "name": "Celebrate the Pokémon Night Out events in Pokémon GO!",
+   "place": "Los Angeles, USA",
+   "area": "Americas",
+   "scope": "global",
+   "start": "2026-10-24",
+   "end": "2026-11-10",
+   "datesKnown": true,
+   "sources": [
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "url": "https://pokemongo.com/news/pokemon-night-out-irl-details2026/"
+    },
+    {
+     "id": "serebii",
+     "name": "Serebii",
+     "url": "https://www.serebii.net/pokemongo/reallifeevents.shtml"
+    },
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "url": "https://pokemongo.com/news/pokemon-night-out-twitch-drops2026/"
+    }
+   ],
+   "status": "official",
+   "seen": "2026-10-20"
+  },
+  {
+   "id": "w-fc-seoul",
+   "name": "Fc Seoul",
+   "place": "South Korea",
+   "area": "Asia",
+   "scope": "regional",
+   "start": "2026-10-24",
+   "end": "2026-10-24",
+   "datesKnown": true,
+   "sources": [
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "url": "https://pokemongo.com/ko/news/fc-seoul-2026/"
+    }
+   ],
+   "status": "official",
+   "seen": "2026-10-19"
+  },
+  {
+   "id": "w-pok-mon-go-city-safari-boston-update",
+   "name": "Pokémon GO City Safari: Boston Update",
+   "place": "Boston, USA",
+   "area": "Americas",
+   "scope": "regional",
+   "start": "2026-10-24",
+   "end": "2026-10-25",
+   "datesKnown": true,
+   "sources": [
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "url": "https://pokemongo.com/news/city-safari-boston-rescheduled/"
+    },
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "url": "https://pokemongo.com/news/city-safari-boston-update/"
+    },
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "url": "https://leekduck.com/events/pokemon-go-city-safari-boston-2026-rescheduled/"
+    },
+    {
+     "id": "serebii",
+     "name": "Serebii",
+     "url": "https://www.serebii.net/pokemongo/reallifeevents.shtml"
+    }
+   ],
+   "status": "official",
+   "seen": "2026-10-14"
+  },
+  {
+   "id": "w-pok-mon-run-30-kaohsiung",
+   "name": "Pokémon RUN 30: Kaohsiung",
+   "place": "Kaohsiung, Taiwan (Dream Mall)",
+   "area": "Asia",
+   "scope": "regional",
+   "start": "2026-10-31",
+   "end": "2026-11-01",
+   "datesKnown": true,
+   "sources": [
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "url": "https://pokemongo.com/news/pokemon-run-30-2026"
+    },
+    {
+     "id": "g47ix",
+     "name": "G47IX infographic",
+     "url": "https://www.g47ix.pro",
+     "auto": true
+    }
+   ],
+   "status": "official",
+   "seen": "2026-10-17"
+  },
+  {
+   "id": "w-celebrate-the-festival-of-lights-with-the-return-o",
+   "name": "Celebrate the Festival of Lights with the return of Pikachu wearing a saree and Pikachu wearing a kurta!",
+   "place": "India",
+   "area": "Asia",
+   "scope": "regional",
+   "start": "2026-11-06",
+   "end": "2026-11-08",
+   "datesKnown": true,
+   "sources": [
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "url": "https://pokemongo.com/news/festival-of-lights-2026/"
+    }
+   ],
+   "status": "official",
+   "seen": "2026-10-20"
+  },
+  {
+   "id": "w-go-wild-area-2026-mexico-city",
+   "name": "GO Wild Area 2026 Mexico City",
+   "place": "Mexico City, Mexico",
+   "area": "Americas",
+   "scope": "regional",
+   "start": "2026-11-06",
+   "end": "2026-11-08",
+   "datesKnown": true,
+   "sources": [
+    {
+     "id": "serebii",
+     "name": "Serebii",
+     "url": "https://www.serebii.net/pokemongo/reallifeevents.shtml"
+    }
+   ],
+   "status": "single",
+   "seen": "2026-10-20"
+  },
+  {
+   "id": "w-go-wild-area-2026-sendai-tohoku",
+   "name": "GO Wild Area 2026 Sendai Tohoku",
+   "place": "Sendai and Tohoku, Japan",
+   "area": "Asia",
+   "scope": "regional",
+   "start": "2026-11-06",
+   "end": "2026-11-08",
+   "datesKnown": true,
+   "sources": [
+    {
+     "id": "serebii",
+     "name": "Serebii",
+     "url": "https://www.serebii.net/pokemongo/reallifeevents.shtml"
+    }
+   ],
+   "status": "single",
+   "seen": "2026-10-20"
+  },
+  {
+   "id": "w-pok-xciting-lands-at-changi-airport-and-jewel-get-",
+   "name": "PokéXciting! lands at Changi Airport and Jewel — get ready, Singapore!",
+   "place": "Singapore",
+   "area": "Asia",
+   "scope": "regional",
+   "start": "2026-11-07",
+   "end": "2026-11-08",
+   "datesKnown": true,
+   "sources": [
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "url": "https://pokemongo.com/news/event-singapore-30th-anniversary-2026/"
+    }
+   ],
+   "status": "official",
+   "seen": "2026-10-20"
+  },
+  {
+   "id": "w-pok-mon-run-30-singapore",
+   "name": "Pokémon RUN 30: Singapore",
+   "place": "Singapore",
+   "area": "Asia",
+   "scope": "regional",
+   "start": "2026-11-07",
+   "end": "2026-11-08",
+   "datesKnown": true,
+   "sources": [
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "url": "https://pokemongo.com/news/pokemon-run-30-2026/"
+    }
+   ],
+   "status": "official",
+   "seen": "2026-10-19"
+  },
+  {
+   "id": "w-pok-mon-go-joins-pok-mon-30th-anniversary-mall-exp",
+   "name": "Pokémon GO joins Pokémon 30th Anniversary Mall Exploration!",
+   "place": "Malaysia",
+   "area": "Asia",
+   "scope": "regional",
+   "start": "2026-11-09",
+   "end": "2027-01-03",
+   "datesKnown": true,
+   "sources": [
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "url": "https://pokemongo.com/news/apac-mall-exploration-2026/"
+    }
+   ],
+   "status": "official",
+   "seen": "2026-10-20"
+  },
+  {
+   "id": "w-into-the-wild",
+   "name": "Into the Wild",
+   "place": "Play from anywhere",
+   "area": "Worldwide",
+   "scope": "global",
+   "start": "2026-11-09",
+   "end": "2026-11-13",
+   "datesKnown": true,
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "url": "https://leekduck.com/events/into-the-wild-2026/",
+     "auto": true
+    }
+   ],
+   "status": "single",
+   "seen": "2026-10-15"
+  },
+  {
+   "id": "w-pok-mon-run-30-new-taipei",
+   "name": "Pokémon RUN 30: New Taipei",
+   "place": "New Taipei, Taiwan (New Taipei Metropolitan Park)",
+   "area": "Asia",
+   "scope": "regional",
+   "start": "2026-11-14",
+   "end": "2026-11-15",
+   "datesKnown": true,
+   "sources": [
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "url": "https://pokemongo.com/news/pokemon-run-30-2026"
+    },
+    {
+     "id": "g47ix",
+     "name": "G47IX infographic",
+     "url": "https://www.g47ix.pro",
+     "auto": true
+    }
+   ],
+   "status": "official",
+   "seen": "2026-10-17"
+  },
+  {
+   "id": "w-dynamax-trails",
+   "name": "Dynamax Trails",
+   "place": "",
+   "area": "Worldwide",
+   "scope": "global",
+   "start": "2026-11-16",
+   "end": "2026-11-23",
+   "datesKnown": true,
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "url": "https://leekduck.com/events/dynamax-trails-2026/",
+     "auto": true
+    }
+   ],
+   "status": "single",
+   "seen": "2026-10-19"
+  },
+  {
+   "id": "w-pok-mon-run-30-kuala-lumpur",
+   "name": "Pokémon RUN 30: Kuala Lumpur",
+   "place": "Kuala Lumpur, Malaysia (KLCC Plaza, Petronas)",
+   "area": "Asia",
+   "scope": "regional",
+   "start": "2026-11-21",
+   "end": "2026-11-22",
+   "datesKnown": true,
+   "sources": [
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "url": "https://pokemongo.com/news/pokemon-run-30-2026"
+    },
+    {
+     "id": "g47ix",
+     "name": "G47IX infographic",
+     "url": "https://www.g47ix.pro",
+     "auto": true
+    },
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "url": "https://pokemongo.com/news/pokemon-run-30-2026/"
+    }
+   ],
+   "status": "official",
+   "seen": "2026-10-17"
+  },
+  {
+   "id": "w-twilight-wishes",
+   "name": "Twilight Wishes",
+   "place": "",
+   "area": "Worldwide",
+   "scope": "global",
+   "start": "2026-11-24",
+   "end": "2026-11-30",
+   "datesKnown": true,
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "url": "https://leekduck.com/events/twilight-wishes-2026/",
+     "auto": true
+    }
+   ],
+   "status": "single",
+   "seen": "2026-10-19"
+  },
+  {
+   "id": "w-minior-showers-geminids",
+   "name": "Minior Showers: Geminids",
+   "place": "Play from anywhere",
+   "area": "Worldwide",
+   "scope": "global",
+   "start": "2026-12-11",
+   "end": "2026-12-16",
+   "datesKnown": true,
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "url": "https://leekduck.com/events/minior-showers-geminids-2026/",
+     "auto": true
+    }
+   ],
+   "status": "single",
+   "seen": "2026-10-14"
+  },
+  {
+   "id": "w-pok-mon-run-30-jakarta",
+   "name": "Pokémon RUN 30: Jakarta",
+   "place": "Jakarta, Indonesia",
+   "area": "Asia",
+   "scope": "regional",
+   "start": "2026-12-12",
+   "end": "2026-12-13",
+   "datesKnown": true,
+   "sources": [
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "url": "https://pokemongo.com/news/pokemon-run-30-2026/"
+    }
+   ],
+   "status": "official",
+   "seen": "2026-10-19"
+  },
+  {
+   "id": "w-pok-mon-run-30-bangkok",
+   "name": "Pokémon RUN 30: Bangkok",
+   "place": "Bangkok, Thailand (Outdoor plaza, Central World)",
+   "area": "Asia",
+   "scope": "regional",
+   "start": "2027-01-09",
+   "end": "2027-01-10",
+   "datesKnown": true,
+   "sources": [
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "url": "https://pokemongo.com/news/pokemon-run-30-2026"
+    },
+    {
+     "id": "g47ix",
+     "name": "G47IX infographic",
+     "url": "https://www.g47ix.pro",
+     "auto": true
+    },
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "url": "https://pokemongo.com/news/pokemon-run-30-2026/"
+    }
+   ],
+   "status": "official",
+   "seen": "2026-10-17"
+  },
+  {
+   "id": "w-pok-mon-run-30-hong-kong",
+   "name": "Pokémon RUN 30: Hong Kong",
+   "place": "Hong Kong",
+   "area": "Asia",
+   "scope": "regional",
+   "start": "2027-01-23",
+   "end": "2027-01-24",
+   "datesKnown": true,
+   "sources": [
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "url": "https://pokemongo.com/news/pokemon-run-30-2026/"
+    }
+   ],
+   "status": "official",
+   "seen": "2026-10-19"
+  },
+  {
+   "id": "w-save-the-date-pok-mon-go-tour-2027",
+   "name": "Save the Date: Pokémon GO Tour 2027",
+   "place": "Kaohsiung, Taiwan",
+   "area": "Asia",
+   "scope": "regional",
+   "start": "2027-02-19",
+   "end": "2027-02-21",
+   "datesKnown": true,
+   "sources": [
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "url": "https://pokemongo.com/news/save-the-date-go-tour-2027/"
+    },
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "url": "https://pokemongo.com/ko/news/save-the-date-go-tour-2027/"
+    }
+   ],
+   "status": "official",
+   "seen": "2026-10-20"
+  },
+  {
+   "id": "w-pokemon-go-tour-2027-los-angeles",
+   "name": "Pokémon GO Tour 2027: Los Angeles",
+   "place": "Los Angeles, USA",
+   "area": "Americas",
+   "scope": "regional",
+   "start": "2027-02-19",
+   "end": "2027-02-21",
+   "datesKnown": true,
+   "sources": [
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "url": "https://pokemongo.com/news/save-the-date-go-tour-2027/"
+    }
+   ],
+   "status": "official",
+   "seen": "2026-10-18"
+  },
+  {
+   "id": "w-pokemon-go-tour-2027-global",
+   "name": "Pokémon GO Tour 2027: Global",
+   "place": "Worldwide",
+   "area": "Worldwide",
+   "scope": "global",
+   "start": "2027-02-27",
+   "end": "2027-02-28",
+   "datesKnown": true,
+   "sources": [
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "url": "https://pokemongo.com/news/save-the-date-go-tour-2027/"
+    }
+   ],
+   "status": "official",
+   "seen": "2026-10-18"
+  }
+ ]
+}

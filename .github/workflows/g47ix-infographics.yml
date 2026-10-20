@@ -1,0 +1,203 @@
+name: G47IX infographic discovery
+
+on:
+  schedule:
+    # Six-hour cadence (saves Actions minutes). GitHub schedules use UTC and can be delayed during load.
+    - cron: "0 */6 * * *"
+  workflow_dispatch:
+    inputs:
+      lookback_days:
+        description: "Also read posts from this many days back (0 = newest only; 90 = three months of history)"
+        default: "0"
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: g47ix-infographic-discovery
+  cancel-in-progress: false
+
+env:   # the secret names are spelled CLOUDFARE_* in GitHub (typo kept on purpose); scripts/r2-sync.sh reads these
+  CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFARE_API_TOKEN }}
+  CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFARE_ACCOUNT_ID }}
+
+jobs:
+  discover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 1
+      - name: Restore pictures from R2
+        run: bash scripts/r2-sync.sh restore
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Validate discovery and matching code
+        run: |
+          node --check scripts/g47ix-infographics.mjs
+          node --check scripts/g47ix-review.mjs
+          node --check scripts/g47ix-publish.mjs
+          node --check scripts/g47ix-apply.mjs
+          node --test test/g47ix-infographics.test.mjs test/g47ix-publish.test.mjs
+      - name: Discover G47IX image posts and match app events
+        env:
+          G47IX_LOOKBACK_DAYS: ${{ github.event.inputs.lookback_days || '0' }}
+          G47IX_X_BEARER_TOKEN: ${{ secrets.G47IX_X_BEARER_TOKEN }}
+          G47IX_INSTAGRAM_USER_ID: ${{ vars.G47IX_INSTAGRAM_USER_ID }}
+          G47IX_INSTAGRAM_ACCESS_TOKEN: ${{ secrets.G47IX_INSTAGRAM_ACCESS_TOKEN }}
+          G47IX_FACEBOOK_PAGE_ID: ${{ vars.G47IX_FACEBOOK_PAGE_ID }}
+          G47IX_FACEBOOK_PAGE_ACCESS_TOKEN: ${{ secrets.G47IX_FACEBOOK_PAGE_ACCESS_TOKEN }}
+        run: node scripts/g47ix-infographics.mjs
+      - name: Commit review registry only when changed
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ -n "$(git status --porcelain -- data/g47ix-infographics-review.json)" ]]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add -- data/g47ix-infographics-review.json
+            git commit -m "chore: update G47IX infographic review queue [skip ci]"
+            git push origin HEAD:main
+          else
+            echo "No new candidates; persistent review registry unchanged."
+          fi
+      - name: Publish pictures approved in the app
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p public/infographics/g47ix data/tg-inbox
+          node scripts/g47ix-apply.mjs
+          bash scripts/r2-sync.sh save   # pictures first, then the data that points at them
+          if [[ -n "$(git status --porcelain -- public data)" ]]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add -- public/event-info.json public/infographic-queue.json data/g47ix-infographics-review.json
+            git commit -m "Publish infographics approved in the app"
+            git pull -q --rebase --autostash origin main
+            git push origin HEAD:main
+          else
+            echo "No decisions to apply."
+          fi
+      - name: Read the last months of the Discord channel
+        continue-on-error: true
+        env:
+          DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
+          CHANNEL_ID: ${{ secrets.CHANNEL_ID }}
+          DISCORD_HISTORY_DAYS: ${{ github.event.inputs.lookback_days != '' && github.event.inputs.lookback_days != '0' && github.event.inputs.lookback_days || '90' }}
+        run: python3 discord_scraper.py
+      - name: Collect pictures sent to the Telegram bot
+        continue-on-error: true
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+        run: node scripts/tg-inbox.mjs
+      - name: Read new graphics, queue unsure ones, propose confident matches
+        id: publish
+        shell: bash
+        env:
+          DISCORD_CREATOR: ${{ vars.DISCORD_CREATOR }}
+        run: |
+          set -euo pipefail
+          sudo apt-get update -qq && sudo apt-get install -y -qq tesseract-ocr imagemagick >/dev/null
+          mkdir -p public/infographics/g47ix data/tg-inbox
+          node scripts/g47ix-publish.mjs
+          bash scripts/r2-sync.sh save
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          # The review list and the pictures behind it go straight to main: nothing is shown on an event until it is approved.
+          git add -- public/infographic-queue.json public/weekly.json data/g47ix-infographics-review.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Update infographic review list"
+            git pull -q --rebase --autostash origin main
+            git push origin HEAD:main
+          fi
+          # Confident matches (several signals agree) are proposed as a pull request.
+          if [[ -n "$(git status --porcelain -- public/event-info.json)" ]]; then
+            git checkout -q -b "g47ix/proposed-$(date +%Y%m%d-%H%M)"
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Open a pull request for the owner to review
+        if: steps.publish.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          git add -- public/event-info.json
+          git commit -m "Propose G47IX infographics matched to events"
+          git push origin HEAD
+          gh pr create --base main --head "$(git branch --show-current)" --title "Review: new G47IX infographics matched to events" --body "Several signals agreed (caption, the picture's text, a date inside the event, a featured Pokémon). Check each image shows the right event, then merge. Close the PR to reject. Unsure pictures wait in the app's Infographic review list instead."
+      - name: Upload review queue
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: g47ix-infographic-review
+          path: artifacts/g47ix-candidates.json
+          if-no-files-found: warn
+          retention-days: 30
+
+  notify:
+    needs: discover
+    if: ${{ always() }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    concurrency:
+      group: nudge
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Tell me on Telegram about new infographics
+        continue-on-error: true
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          TELEGRAM_GROUP_ID: ${{ secrets.TELEGRAM_GROUP_ID }}
+          TELEGRAM_TOPIC_EVENTS: ${{ secrets.TELEGRAM_TOPIC_EVENTS || secrets.TELEGRAM_TOPICS_EVENTS }}
+          TELEGRAM_TOPIC_PICTURES: ${{ secrets.TELEGRAM_TOPIC_PICTURES || secrets.TELEGRAM_TOPICS_PICTURES }}
+          TELEGRAM_TOPIC_CHANGES: ${{ secrets.TELEGRAM_TOPIC_CHANGES || secrets.TELEGRAM_TOPICS_CHANGES }}
+          TELEGRAM_TOPIC_SYSTEM: ${{ secrets.TELEGRAM_TOPIC_SYSTEM || secrets.TELEGRAM_TOPICS_SYSTEM }}
+          NUDGE_ONLY: queue
+        shell: bash
+        run: |
+          set -euo pipefail
+          node scripts/nudge.mjs
+          git add -- data/nudge-state.json 2>/dev/null || true
+          if ! git diff --cached --quiet; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git commit -m "Nudge: remember infographics already announced [skip ci]"
+            git pull -q --rebase origin main
+            git push origin HEAD:main
+          fi
+      - name: Send the weekly picture to Telegram
+        continue-on-error: true
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          TELEGRAM_GROUP_ID: ${{ secrets.TELEGRAM_GROUP_ID }}
+          TELEGRAM_TOPIC_EVENTS: ${{ secrets.TELEGRAM_TOPIC_EVENTS || secrets.TELEGRAM_TOPICS_EVENTS }}
+          TELEGRAM_TOPIC_PICTURES: ${{ secrets.TELEGRAM_TOPIC_PICTURES || secrets.TELEGRAM_TOPICS_PICTURES }}
+          TELEGRAM_TOPIC_CHANGES: ${{ secrets.TELEGRAM_TOPIC_CHANGES || secrets.TELEGRAM_TOPICS_CHANGES }}
+          TELEGRAM_TOPIC_SYSTEM: ${{ secrets.TELEGRAM_TOPIC_SYSTEM || secrets.TELEGRAM_TOPICS_SYSTEM }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          git pull -q --rebase origin main
+          node scripts/weekly-pic.mjs
+          git add -- data/weekly-pic-state.json 2>/dev/null || true
+          if ! git diff --cached --quiet; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git commit -m "Weekly picture: remember what was sent [skip ci]"
+            git pull -q --rebase origin main
+            git push origin HEAD:main
+          fi

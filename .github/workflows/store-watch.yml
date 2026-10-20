@@ -1,0 +1,59 @@
+name: Web store watch
+
+on:
+  schedule:
+    - cron: "15 */12 * * *"
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Only print what would be sent and do not save the state"
+        default: "true"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: store-watch
+
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install a browser
+        run: |
+          pip install playwright
+          python -m playwright install --with-deps chromium
+      - name: Read the store
+        run: python scripts/store_snapshot.py /tmp/store-snapshot.json
+      - name: Tell me about anything new
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          TELEGRAM_GROUP_ID: ${{ secrets.TELEGRAM_GROUP_ID }}
+          TELEGRAM_TOPIC_EVENTS: ${{ secrets.TELEGRAM_TOPIC_EVENTS || secrets.TELEGRAM_TOPICS_EVENTS }}
+          TELEGRAM_TOPIC_PICTURES: ${{ secrets.TELEGRAM_TOPIC_PICTURES || secrets.TELEGRAM_TOPICS_PICTURES }}
+          TELEGRAM_TOPIC_CHANGES: ${{ secrets.TELEGRAM_TOPIC_CHANGES || secrets.TELEGRAM_TOPICS_CHANGES }}
+          TELEGRAM_TOPIC_SYSTEM: ${{ secrets.TELEGRAM_TOPIC_SYSTEM || secrets.TELEGRAM_TOPICS_SYSTEM }}
+          DRY_RUN: ${{ github.event.inputs.dry_run || 'false' }}
+        run: node scripts/store-watch.mjs /tmp/store-snapshot.json
+      - name: Remember what was seen
+        shell: bash
+        run: |
+          set -euo pipefail
+          git add -- data/store-state.json public/store-log.json 2>/dev/null || true
+          if git diff --cached --quiet; then exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Store watch: remember what was seen [skip ci]"
+          git pull -q --rebase origin main
+          git push origin HEAD:main

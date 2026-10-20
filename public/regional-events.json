@@ -1,0 +1,99 @@
+{
+ "updated": "2026-10-11",
+ "note": "Dates are as listed by the source. The end of the ESA collaboration is listed as ongoing, so 31 Dec 2026 is a placeholder end.",
+ "source": {
+  "label": "Serebii.net, Pokémon GO real-life events",
+  "url": "https://www.serebii.net/pokemongo/reallifeevents.shtml",
+  "observed": "2026-10-11"
+ },
+ "events": [
+  {
+   "id": "rg-mexico-wild-area",
+   "name": "GO Wild Area 2026: Mexico City",
+   "place": "Mexico City, Mexico",
+   "area": "Americas",
+   "start": "2026-11-06",
+   "end": "2026-11-08"
+  },
+  {
+   "id": "rg-sendai-wild-area",
+   "name": "GO Wild Area 2026: Sendai and Tohoku",
+   "place": "Sendai and Tohoku, Japan",
+   "area": "Asia",
+   "start": "2026-11-06",
+   "end": "2026-11-08"
+  },
+  {
+   "id": "rg-boston-safari",
+   "name": "City Safari: Boston",
+   "place": "Boston, USA",
+   "area": "Americas",
+   "start": "2026-10-24",
+   "end": "2026-10-25"
+  },
+  {
+   "id": "rg-taipei-pokexciting",
+   "name": "PokeXciting Taipei",
+   "place": "Taipei, Taiwan",
+   "area": "Asia",
+   "start": "2026-10-10",
+   "end": "2026-10-11"
+  },
+  {
+   "id": "rg-tokyo-lab",
+   "name": "Pokémon GO Lab: Big Adventure",
+   "place": "Tokyo, Japan",
+   "area": "Asia",
+   "start": "2026-10-07",
+   "end": "2026-10-07"
+  },
+  {
+   "id": "rg-tokyo-hangul",
+   "name": "Hangul Day 2026",
+   "place": "Tokyo, Japan",
+   "area": "Asia",
+   "start": "2026-10-06",
+   "end": "2026-10-09"
+  },
+  {
+   "id": "rg-esa",
+   "name": "Pokémon GO x ESA",
+   "place": "London, Toulouse, Nuremberg, Valencia, Noordwijk, Transinne",
+   "area": "Europe",
+   "start": "2026-10-04",
+   "end": "2026-12-31"
+  },
+  {
+   "id": "rg-indonesia-patterns",
+   "name": "Patterns of the Wild",
+   "place": "Indonesia",
+   "area": "Asia",
+   "start": "2026-10-02",
+   "end": "2026-10-02"
+  },
+  {
+   "id": "rg-korea-autumn",
+   "name": "Pikachu's Autumn Adventure",
+   "place": "South Korea",
+   "area": "Asia",
+   "start": "2026-09-18",
+   "end": "2026-10-11"
+  },
+  {
+   "id": "rg-japan-jetred",
+   "name": "Pokémon Jet Red collaboration",
+   "place": "Japanese airports",
+   "area": "Asia",
+   "start": "2026-07-28",
+   "end": "2027-08-31"
+  },
+  {
+   "id": "rg-chicago-fossil",
+   "name": "Pokémon Fossil Museum 2026",
+   "place": "Chicago, USA",
+   "area": "Americas",
+   "start": "2026-05-22",
+   "end": "2027-04-11"
+  }
+ ]
+}

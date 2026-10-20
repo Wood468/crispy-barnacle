@@ -1,0 +1,2122 @@
+{
+  "schemaVersion": 2,
+  "creator": "G47IX",
+  "sourceAccount": "Reddit u/g47onik",
+  "updatedAt": "2026-10-12T02:48:25.926Z",
+  "policy": "Review registry only. Candidates are never published to the app automatically.",
+  "eventImages": {},
+  "candidates": [
+    {
+      "id": "discord:1561837953591025684",
+      "source": "discord",
+      "creator": "",
+      "title": "NOV CONTENT G47IX",
+      "url": "https://discord.com/channels/@me/1558793395198099618/1561837953591025684",
+      "publishedAt": "2026-10-19T20:26:25.682000+00:00",
+      "imageUrl": "https://cdn.discordapp.com/attachments/886998693897719819/1561833025350795375/NOV_CONTENT_G47IX.png?ex=6ad7c9da&is=6ad6785a&hm=f91ef2abad8e5557a50da55b5225954b75d6e3fa115932d6a87ee705ddf6d7a6&",
+      "reviewStatus": "weekly",
+      "decision": "pending",
+      "ocrChecked": true,
+      "ocrText": "if Fe xy N OVE M B E R A Research Breakthrough Complete Field Research and unlock encounters wy with Season-themed Pokémon each week. as in Pokémon GO! m y Ma || Showcase ( WY Wednesday c GO Battle \\f PS Friendship r Scenic 7 KN Monday ©. Tuesday 4 Raid Hour Thursday SW Friday ct, Sunday One Rare Candy XL Featuring up to 20 One Rare Candy XL Complete a total of up to 3 Special Trades More Pokémon in the for completing in-person different Categories for completing 50 GBL Battles 2 Candy XL from trade wild and Boosted incense on Routes Max Battles. Enter up to 5 Showcases in-person Raid Battles. 4x Win Stardust Incr. chance of Lucky Trade Encounter Mateo 3x a a+ ie t+ + t+ ++ ++ t+ Vas t+ yA ay koh ; Kak we iV dente oO ‘ vA RAIDS 4a¥s “9 13 16 24 25 NOV NOV NOV NOV NOV NOV NOV DEC \\ vz t+ ++ t+ t+ ++ ++ t+ piel vA tC eZ RAID 10 it 25 f ee HOUR NOV Nov NOV yf NOV rs i Ho ae 5 =e ye woe ef eR, wa i +4 Ov NOV NO MAX MONDAY aD & <p G ap EL | Sy: be a: DMAX Nov NOV re NO’ MAX NOV HOUR BATTLES wf a oy Vag © SPOTLIGHT HOUR ax <¢ a a MEGA (pt: a 16 24 25 2x Evolution XP xP) 2* Catch Candy = RAIDS oct [| Nov NOV NOV NO DEC ea € ey Halloween GO Wild as EVENTS f www.pokemongo.com/ events Pt. Il Area Global Lad N15 Nov || Nov Into the Duce Se Wild Metal Trails =@ ae Son TT, Twilight fy Super Meg: ie) Wishes Raid Da vy fF 11.202 Follow for more G47|X £) (oC) & X ie) ao www.g47ix.pro RAIS",
+      "eventMatch": {
+        "eventId": "into",
+        "eventTitle": "Into the Wild",
+        "score": 0.799,
+        "confidence": "high",
+        "matchedTerms": [
+          "wild",
+          "raids",
+          "raid",
+          "hour",
+          "nov",
+          "max",
+          "battles",
+          "com"
+        ],
+        "alternatives": [
+          {
+            "eventId": "into",
+            "eventTitle": "Into the Wild",
+            "score": 0.799
+          },
+          {
+            "eventId": "wag",
+            "eventTitle": "GO Wild Area: Global",
+            "score": 0.799
+          },
+          {
+            "eventId": "smr1",
+            "eventTitle": "Super Mega Raid Day",
+            "score": 0.606
+          }
+        ],
+        "method": "title-to-public/data.json heuristic",
+        "requiresHumanVerification": true
+      },
+      "reviewNote": "Two events look alike. Please choose.",
+      "signals": [
+        "picture text names the event",
+        "posted around the event"
+      ],
+      "matchScore": 4,
+      "stagedPath": "/infographics/g47ix/discord-1561837953591025684.webp"
+    },
+    {
+      "id": "discord:1561627671799140372",
+      "source": "discord",
+      "creator": "",
+      "title": "https://cdn.discordapp.com/attachments/886998693897719819/1561481980409938040/GO_Weekly_TT.png?ex=6ad682eb&is=6ad5316b&hm=b80847b3a73a37bf8271dc17ac0923dd54d242ed995ab8265b1c1fd8776a8ffa&",
+      "url": "https://discord.com/channels/@me/1558793395198099618/1561627671799140372",
+      "publishedAt": "2026-10-19T06:30:50.596000+00:00",
+      "imageUrl": "https://cdn.discordapp.com/attachments/886998693897719819/1561481980409938040/GO_Weekly_TT.png?ex=6ad682eb&is=6ad5316b&hm=b80847b3a73a37bf8271dc17ac0923dd54d242ed995ab8265b1c1fd8776a8ffa&",
+      "reviewStatus": "weekly",
+      "decision": "",
+      "ocrChecked": true,
+      "ocrText": "PAE © x GOW-L/, 19-25 OCTOBER MONDAY TUESDAY WEDNESDAY THURSDAY FRIDAY SATURDAY SUNDAY —— 200cT || 210CT )( 220cT )( 230cT )( 240CT )( 250CT ——- i} GS 8 = ~G 22 Max Showc ase Raid ae eecs Scenic =—_ Monday Tuesday Hour Thursday Friday Sunday Qu ga One Rare Candy XL One Rare Candy XL Up to 3 Special Trades More Pokémon in the for completing Enter up to for completing 50 battles/day wild and Boosted in-person 5 Showcases in-person Candy XL from trade 2 guaranteed incense on Routes Max Battles. Raid Battles. 4x Stardust Encounter Mateo 3x from win rewards Increased chance of Lucky Trade RAIDS > ¥ ANN ms me vf @ «6: 200 pm Or oy oe oy Spotlight Hour MONDAY 2x Catch Stardust ROTATION @ Op © 5:00 pm @ 11:59 pm J MINIOR SHOWERS: ORIONIDS Oo ©) INESO) HIANR RENTING / Local and exclusive events a9) TCG 30th Pokémon G BOSTON ow Qexay FC SEOUL gs | Celebration Sy Halloween SAFARI EVENT Best Buy, Target, Game! Aeon Malls MAK aa Seoul WC Stadiui = until oct 20 until NOV 1 OCT 24-25 CITY SAFAR] 24 OCT, 7:30 PM PD Ea 240cT j20R6) or = APAC Cross-Region Pokémon ADIDAS collab Mall Ex, @esa Six museums Cay Stamp Rally Until 2029 Observatory Eh until Dec'6 Until January 2027) Until Dec Malaysia/Phi Until 30 APR 2027 across Europe ° Ps = ek Pokémon Center Pokémon Jet UK NATIONAL until Aug 2027 until Aug 2027 [e] TRUST SITES Until Dec 31 KANTO ao | IGHT G4A7IX 90 4®xla are RAIS, Follow for more g47ix.pro",
+      "eventMatch": {
+        "eventId": "into",
+        "eventTitle": "Into the Wild",
+        "score": 0.796,
+        "confidence": "high",
+        "matchedTerms": [
+          "wild",
+          "raids",
+          "raid",
+          "hour",
+          "nov",
+          "max",
+          "battles",
+          "until",
+          "https",
+          "com"
+        ],
+        "alternatives": [
+          {
+            "eventId": "into",
+            "eventTitle": "Into the Wild",
+            "score": 0.796
+          },
+          {
+            "eventId": "tcg30",
+            "eventTitle": "Pokémon TCG: 30th Celebration (at stores)",
+            "score": 0.676
+          },
+          {
+            "eventId": "minior2",
+            "eventTitle": "Minior Showers: Leonids",
+            "score": 0.535
+          }
+        ],
+        "method": "title-to-public/data.json heuristic",
+        "requiresHumanVerification": true
+      },
+      "reviewNote": "Two events look alike. Please choose.",
+      "signals": [
+        "picture text names the event"
+      ],
+      "matchScore": 2,
+      "stagedPath": "/infographics/g47ix/discord-1561627671799140372.webp",
+      "overview": "week",
+      "publishedEvents": []
+    },
+    {
+      "id": "discord:1561597506389942377",
+      "source": "discord",
+      "creator": "",
+      "title": "@Infographics Notify",
+      "url": "https://discord.com/channels/@me/1558793395198099618/1561597506389942377",
+      "publishedAt": "2026-10-19T04:30:58.602000+00:00",
+      "imageUrl": "https://pbs.twimg.com/media/HU8bWenXkAA49xX.jpg",
+      "reviewStatus": "rejected",
+      "decision": "rejected",
+      "ocrChecked": true,
+      "ocrText": "GOW-£/, | 19-25 OCTOBER MONDAY TUESDAY WEDNESDAY THURSDAY FRIDAY SATURDAY SUNDAY (1goct )( 200cT )( 210cT )( 220cT )( 230cT (24 0CT (250cT ) ® ( we | Qo, Vv 3 — ae a2 =e Monday Tuesday Hour Raid Go Battle Thursday iephip Sunday Seenie a a2 Upto Spel odes One R let dy XL Enter upto Candy XL pe SO baties/day wid and Boosted 1ore Pokémon inthe Max Bates, imperson 5 Showcases Battles. “Stardust candy ove Encounter Mateo 3 incense on Routes from win rewards =. “Ty ete (2) s ae Oo, = iA) anne 2* Catch Stordust Ss ‘Bho @ 18x @ (ea) o9 ie © 5:00 pm ©.11:59 pm & MINIOR SHOWERS: ORIONIDS ‘«) ©@) ALSO HAPPENING / toca! and excsive events BOSTON Celebration Pokémon Halloween SAFARI eke est By, ore, ‘Aeon Malls Seoul WC Ea 2s0cr 1 vasil oct 20 vot Nov sy Sheervetory ADIDAS collab ‘Gosa Smaseums Th emtoees Until Jenvary 2027] = at 0 aPa2027 mu UENATIONAL | “mam = Until Dee 31 G47IX 90@xa Follow for more g47ix.pro",
+      "eventMatch": {
+        "eventId": "minior2",
+        "eventTitle": "Minior Showers: Leonids",
+        "score": 0.529,
+        "confidence": "medium",
+        "matchedTerms": [
+          "minior",
+          "showers",
+          "stardust",
+          "day"
+        ],
+        "alternatives": [
+          {
+            "eventId": "minior2",
+            "eventTitle": "Minior Showers: Leonids",
+            "score": 0.529
+          },
+          {
+            "eventId": "minior3",
+            "eventTitle": "Minior Showers: Geminids",
+            "score": 0.529
+          },
+          {
+            "eventId": "zorua",
+            "eventTitle": "Zorua Community Day",
+            "score": 0.411
+          }
+        ],
+        "method": "title-to-public/data.json heuristic",
+        "requiresHumanVerification": true
+      },
+      "reviewNote": "Match is not strong enough (medium).",
+      "signals": [
+        "picture text names the event"
+      ],
+      "matchScore": 2,
+      "stagedPath": "/infographics/g47ix/discord-1561597506389942377.jpg",
+      "publishedEvents": []
+    },
+    {
+      "id": "discord:1561487268382904360",
+      "source": "discord",
+      "creator": "",
+      "title": "GO Weekly Update",
+      "url": "https://discord.com/channels/@me/1558793395198099618/1561487268382904360",
+      "publishedAt": "2026-10-18T21:12:55.813000+00:00",
+      "imageUrl": "https://cdn.discordapp.com/attachments/886998693897719819/1561481980409938040/GO_Weekly_TT.png?ex=6ad682eb&is=6ad5316b&hm=b80847b3a73a37bf8271dc17ac0923dd54d242ed995ab8265b1c1fd8776a8ffa&",
+      "reviewStatus": "weekly",
+      "decision": "pending",
+      "ocrChecked": true,
+      "ocrText": "PAE © x GOW-L/, 19-25 OCTOBER MONDAY TUESDAY WEDNESDAY THURSDAY FRIDAY SATURDAY SUNDAY —— 200cT || 210CT )( 220cT )( 230cT )( 240CT )( 250CT ——- i} GS 8 = ~G 22 Max Showc ase Raid ae eecs Scenic =—_ Monday Tuesday Hour Thursday Friday Sunday Qu ga One Rare Candy XL One Rare Candy XL Up to 3 Special Trades More Pokémon in the for completing Enter up to for completing 50 battles/day wild and Boosted in-person 5 Showcases in-person Candy XL from trade 2 guaranteed incense on Routes Max Battles. Raid Battles. 4x Stardust Encounter Mateo 3x from win rewards Increased chance of Lucky Trade RAIDS > ¥ ANN ms me vf @ «6: 200 pm Or oy oe oy Spotlight Hour MONDAY 2x Catch Stardust ROTATION @ Op © 5:00 pm @ 11:59 pm J MINIOR SHOWERS: ORIONIDS Oo ©) INESO) HIANR RENTING / Local and exclusive events a9) TCG 30th Pokémon G BOSTON ow Qexay FC SEOUL gs | Celebration Sy Halloween SAFARI EVENT Best Buy, Target, Game! Aeon Malls MAK aa Seoul WC Stadiui = until oct 20 until NOV 1 OCT 24-25 CITY SAFAR] 24 OCT, 7:30 PM PD Ea 240cT j20R6) or = APAC Cross-Region Pokémon ADIDAS collab Mall Ex, @esa Six museums Cay Stamp Rally Until 2029 Observatory Eh until Dec'6 Until January 2027) Until Dec Malaysia/Phi Until 30 APR 2027 across Europe ° Ps = ek Pokémon Center Pokémon Jet UK NATIONAL until Aug 2027 until Aug 2027 [e] TRUST SITES Until Dec 31 KANTO ao | IGHT G4A7IX 90 4®xla are RAIS, Follow for more g47ix.pro",
+      "eventMatch": {
+        "eventId": "into",
+        "eventTitle": "Into the Wild",
+        "score": 0.794,
+        "confidence": "high",
+        "matchedTerms": [
+          "wild",
+          "raids",
+          "raid",
+          "hour",
+          "nov",
+          "max",
+          "battles",
+          "until"
+        ],
+        "alternatives": [
+          {
+            "eventId": "into",
+            "eventTitle": "Into the Wild",
+            "score": 0.794
+          },
+          {
+            "eventId": "tcg30",
+            "eventTitle": "Pokémon TCG: 30th Celebration (at stores)",
+            "score": 0.675
+          },
+          {
+            "eventId": "minior2",
+            "eventTitle": "Minior Showers: Leonids",
+            "score": 0.532
+          }
+        ],
+        "method": "title-to-public/data.json heuristic",
+        "requiresHumanVerification": true
+      },
+      "reviewNote": "Two events look alike. Please choose.",
+      "signals": [
+        "picture text names the event"
+      ],
+      "matchScore": 2,
+      "stagedPath": "/infographics/g47ix/discord-1561487268382904360.webp"
+    },
+    {
+      "id": "discord:1561441170037411973",
+      "source": "discord",
+      "creator": "",
+      "title": "GOTour dates",
+      "url": "https://discord.com/channels/@me/1558793395198099618/1561441170037411973",
+      "publishedAt": "2026-10-18T18:09:45.111000+00:00",
+      "imageUrl": "https://cdn.discordapp.com/attachments/1552678263279849622/1552678435556565123/GOTour_dates.png?ex=6ad61ffa&is=6ad4ce7a&hm=d335d6b6037ead899966c05335cfeaf32c6086984bd67a5efd961e291693f646&",
+      "reviewStatus": "published",
+      "decision": "approved",
+      "ocrChecked": true,
+      "ocrText": "KK PALS Vy <i T ou R Peal ‘ aa! ah, ets 1 +c Pia Ea feat! y == Te 7‘! f lobal a 4 19! 21 27128 19/91 _FEB = Sa \"4 | ae iT i",
+      "eventMatch": null,
+      "reviewNote": "No event name found in the caption or image text.",
+      "signals": [],
+      "matchScore": 0,
+      "stagedPath": "/infographics/g47ix/discord-1561441170037411973.webp",
+      "aiMatch": [
+        {
+          "eventId": "w-save-the-date-pok-mon-go-tour-2027",
+          "eventTitle": "Pokémon GO Tour 2027: Kaohsiung"
+        },
+        {
+          "eventId": "w-pokemon-go-tour-2027-los-angeles",
+          "eventTitle": "Pokémon GO Tour 2027: Los Angeles"
+        },
+        {
+          "eventId": "w-pokemon-go-tour-2027-global",
+          "eventTitle": "Pokémon GO Tour 2027: Global"
+        }
+      ],
+      "publishedEvent": "w-save-the-date-pok-mon-go-tour-2027",
+      "publishedEvents": [
+        "w-save-the-date-pok-mon-go-tour-2027"
+      ]
+    },
+    {
+      "id": "discord:1561441160554094703",
+      "source": "discord",
+      "creator": "",
+      "title": "GOWILD 2026 2",
+      "url": "https://discord.com/channels/@me/1558793395198099618/1561441160554094703",
+      "publishedAt": "2026-10-18T18:09:42.850000+00:00",
+      "imageUrl": "https://cdn.discordapp.com/attachments/1552678263279849622/1552678630658805841/GOWILD_2026-2.png?ex=6ad62028&is=6ad4cea8&hm=6b6096bdd9f7c349c382f507efbc4685667356655f3ffa0a778b5ebd4bcf44ef&",
+      "reviewStatus": "published",
+      "decision": "approved",
+      "ocrChecked": true,
+      "ocrText": "local time GO CRD ++ 14°15 WILD. .., ++ L NOV NOV AREA i \" Y Ng 10:00 am - 6:00 pm each day 2026 7 \\r 15 14, Machamp New wearing a modern jacket NOV NOV kn Dynamax ZA (both days) he P Mu le ‘Ne oR) \\ ne (geo \\ &® 2 acs ) Event themed MP collection limit 8h Up to 3 free Raid 3 event snapshots Mighty Pokémon Passes per day Field Research encounter per day increased to 1600 Party Play on Routes Mighty Canbe mmm More likely to aa More difficult More likely to * Pokémon shiny gumue have high IVs be XL or XXL & & a are back! ee! to catch Za Y ®, —_2 of iths cok ited | GO Safari Ball 7 willbe available @ 2 (2% «abi ey o ee. © + ERE py ts dd dk a t+ et gt ++ it ek x Oegne é_k ai he Ge (a ae eee * A+ ¥ “ w — z= © Ticket holders exclusives — s 11.99 Featured bo PAY Increased Max Particle Me Up to 6 Special Attacks ay Shiny 2x Catch & A) collection limit trades each day and reduced Karate Chop + chance from Gyms each day Up to 6 Raid Passes candy VU increasedto 3200 4 Sd trade cost Choose your path Special Research Six event Increased Chance cs J Lure Module ) More MP from Power Spots 2x Indense whe snapshot of 10 km eggs re will last 2h k and exploration & Duration & encounters per day from Stops/Gyms Earth Power Meteor Mash Magnet Bomb eng Wht Ticket Holders (Exc. Daily Supply Balloons Na, Oy Incense Spawns Bx oO ss Oe ay! he ee Adventure Incense) with Safari Balls Gigaton > Breaking Swipe Brutal Swing Hammer Daily Discoveries paused www.g47ix.pro Follow for more G471X £) (CO) @Ox | Q",
+      "eventMatch": {
+        "eventId": "into",
+        "eventTitle": "Into the Wild",
+        "score": 0.797,
+        "confidence": "high",
+        "matchedTerms": [
+          "wild",
+          "2026",
+          "raid",
+          "nov",
+          "dynamax",
+          "max",
+          "limit",
+          "shiny",
+          "daily",
+          "discoveries"
+        ],
+        "alternatives": [
+          {
+            "eventId": "into",
+            "eventTitle": "Into the Wild",
+            "score": 0.797
+          },
+          {
+            "eventId": "novcd",
+            "eventTitle": "November Community Day",
+            "score": 0.792
+          },
+          {
+            "eventId": "sendai",
+            "eventTitle": "GO Wild Area: Sendai",
+            "score": 0.549
+          }
+        ],
+        "method": "title-to-public/data.json heuristic",
+        "requiresHumanVerification": true
+      },
+      "reviewNote": "Two events look alike. Please choose.",
+      "signals": [
+        "picture text names the event",
+        "date in the picture is inside the event"
+      ],
+      "matchScore": 4,
+      "stagedPath": "/infographics/g47ix/discord-1561441160554094703.webp",
+      "aiMatch": [
+        {
+          "eventId": "wag",
+          "eventTitle": "GO Wild Area: Global"
+        }
+      ],
+      "publishedEvent": "wag",
+      "publishedEvents": [
+        "wag"
+      ]
+    },
+    {
+      "id": "discord:1561441119789650044",
+      "source": "discord",
+      "creator": "",
+      "title": "INTO THE WILD 26",
+      "url": "https://discord.com/channels/@me/1558793395198099618/1561441119789650044",
+      "publishedAt": "2026-10-18T18:09:33.131000+00:00",
+      "imageUrl": "https://cdn.discordapp.com/attachments/1552678263279849622/1560358167878303854/INTO_THE_WILD_26.png?ex=6ad660c9&is=6ad50f49&hm=7ed80cadd1b767cd925e8bcb0b37dbd77ab0bba87e206752080095f4259b2f08&",
+      "reviewStatus": "published",
+      "decision": "approved",
+      "ocrChecked": true,
+      "ocrText": "local time = Cq' INTO 9 13 Ky ny} NOV NOV THE WILD ws pokemongo.com/gowildarea 10:00am 8:00pm ¥ Shiny Gimmighoul Remote Raid No Remote and Meltan Mystery Box limit 30 Raid Limit will be available cooldown Nov 9 - 13 Nov 14- 15 until November 15 reduced es B&B R @ we) Saye =) ewed ++ Bt ow Bit ied Ae ‘ DOr x* 12 13 73 os NOV Ky NOV ++ ++ ey tH pit RAID 10 * iets HOUR NOV NOV wank a wi Pokémon appearing in 5* Raids and Max Battles will be available throughout the event. They will also be featured during Raid Hours or Max Battle Hours from 6:00 to 7:00 p.m. on the dates shown to their left. t+ aN + =: iL GED Go) Gia) Gm Wild Area-themed Wild Global Challenge Field Research tasks New Special Background will be available will be available will be available wD, '©| GO Pass: Into the Wild B FREE DELUXE Qcum + Ce * w\\e © Major Milestone Bonuses: Additional XP, Candy and Candy XL Major Milestone Bonuse: 1/2 Hatch Distance from Raids and Max Battles, 3/4 Max Particle cost for unlocking AND MORE AND MORE and powering up Max Movese AV There’s no limit to the number of GO Points you can G47IXQ @®X Follow for more g47ix.pro 1S earn on November 14 and 15!",
+      "eventMatch": {
+        "eventId": "into",
+        "eventTitle": "Into the Wild",
+        "score": 0.822,
+        "confidence": "high",
+        "matchedTerms": [
+          "wild",
+          "raids",
+          "raid",
+          "hour",
+          "nov",
+          "max",
+          "battles",
+          "meltan",
+          "pass",
+          "remote",
+          "limit",
+          "shiny"
+        ],
+        "alternatives": [
+          {
+            "eventId": "into",
+            "eventTitle": "Into the Wild",
+            "score": 0.822
+          },
+          {
+            "eventId": "wag",
+            "eventTitle": "GO Wild Area: Global",
+            "score": 0.8
+          },
+          {
+            "eventId": "sendai",
+            "eventTitle": "GO Wild Area: Sendai",
+            "score": 0.545
+          }
+        ],
+        "method": "title-to-public/data.json heuristic",
+        "requiresHumanVerification": true
+      },
+      "reviewNote": "Two events look alike. Please choose.",
+      "signals": [
+        "caption names the event",
+        "picture text names the event",
+        "date in the picture is inside the event"
+      ],
+      "matchScore": 6,
+      "stagedPath": "/infographics/g47ix/discord-1561441119789650044.webp",
+      "aiMatch": [
+        {
+          "eventId": "into",
+          "eventTitle": "Into the Wild"
+        }
+      ],
+      "publishedEvent": "into",
+      "publishedEvents": [
+        "into"
+      ]
+    },
+    {
+      "id": "discord:1561413791298752732",
+      "source": "discord",
+      "creator": "",
+      "title": "@Infographics Notify",
+      "url": "https://discord.com/channels/@me/1558793395198099618/1561413791298752732",
+      "publishedAt": "2026-10-18T16:20:57.511000+00:00",
+      "imageUrl": "https://pbs.twimg.com/media/HU7N3ZyXUAAhoxE.jpg",
+      "reviewStatus": "published",
+      "decision": "approved",
+      "ocrChecked": true,
+      "ocrText": "+ PA —> “x | | MINIOR SHOWERS i) - ba & 19 124 | OCcT OCcT ORIONIDS . 5:00 pm_ 11:5! : Pe He aL Meteor Form Red Core OrangeCore YellowCore GreenCore BlueCore IndigoCore Violet Core You might find one in its Meteor Form in the wild during the following meteor showers each year and you'll receive increased sa ae for Eatching Minior : ° * EXPLORE BY STARLIGHT From 5:00 pm to 9:00 pm local time the in-game sky will be lit by shooting stars! BATTLE FORM Increased Increased Stardust METEOR FORM bast BELOW 50% HP Minior encounters for catching Minior Lower Attack Higher Defense Lower Defense e i o Higher Attack @ Follow for more G471X (f) iG} ax 0 Qo Minior will not be eligible for the 2027 LAIC www.g47ix.pro",
+      "eventMatch": {
+        "eventId": "into",
+        "eventTitle": "Into the Wild",
+        "score": 0.784,
+        "confidence": "high",
+        "matchedTerms": [
+          "wild"
+        ],
+        "alternatives": [
+          {
+            "eventId": "into",
+            "eventTitle": "Into the Wild",
+            "score": 0.784
+          },
+          {
+            "eventId": "minior2",
+            "eventTitle": "Minior Showers: Leonids",
+            "score": 0.557
+          },
+          {
+            "eventId": "minior3",
+            "eventTitle": "Minior Showers: Geminids",
+            "score": 0.557
+          }
+        ],
+        "method": "title-to-public/data.json heuristic",
+        "requiresHumanVerification": true
+      },
+      "reviewNote": "Only one signal agrees.",
+      "signals": [
+        "picture text names the event"
+      ],
+      "matchScore": 2,
+      "stagedPath": "/infographics/g47ix/discord-1561413791298752732.jpg",
+      "aiMatch": [
+        {
+          "eventId": "minior",
+          "eventTitle": "Orionids Meteor Shower: Minior Debut"
+        }
+      ],
+      "publishedEvent": "minior",
+      "publishedEvents": [
+        "minior"
+      ]
+    },
+    {
+      "id": "discord:1560902861989347389",
+      "source": "discord",
+      "creator": "",
+      "title": "https://cdn.discordapp.com/attachments/886998693897719819/1555266258344345610/MINION.png?backend=b2&ex=6ac7cf13&is=6ac67d93&hm=fcce256f4cbc8a86ff0646c7184d113d12a7e76a6c07eec7e0d945575b4f3936&",
+      "url": "https://discord.com/channels/@me/1558793395198099618/1560902861989347389",
+      "publishedAt": "2026-10-17T06:30:42.471000+00:00",
+      "imageUrl": "https://cdn.discordapp.com/attachments/886998693897719819/1555266258344345610/MINION.png?backend=b2&ex=6ad45553&is=6ad303d3&hm=4de790001a5f2e03e6224249b5d3feaf5c7698b5d25abebb243d2e92aadb1366&",
+      "reviewStatus": "rejected",
+      "decision": "rejected",
+      "ocrChecked": true,
+      "ocrText": "& “ds MINIOR SHOWERS ] ~~ allele Debut Na eg ge Meteor Form Red Core Yellow Core ee Core BlueCore IndigoCore VioletCore Green Core You might find one in its Meteor Form in the wild during the following meteor showers each year and you'll re receive increased Stardust for catching Minior | . | | 19 124 a ETA AQUARIIDS OCcT OCcT ORIONIDS 2027 e SOUTHERN 14119 LEONIDS 281 2 DELTA AQUARIIDS NOV NOV JULY AUG 2027 GEMINIDS PERSEIDS 2027 yo EXPLORE BY STARLIGHT the in-game sky will be lit by shooting stars! From 5:00 pm to 9:00 pm local time | @ BATTLE FORM Increased METEOR FORM BELOW 50% HP Minior encounters for catching Minior Increased Stardust Higher Defense ae Lower Defense o i Lower Attack ei Higher Attack ® Follow formore G47|X £) (0) @x | oo Minior will not be eligible for the 2027 LAIC www.g47ix.pro",
+      "eventMatch": {
+        "eventId": "minior2",
+        "eventTitle": "Minior Showers: Leonids",
+        "score": 0.815,
+        "confidence": "high",
+        "matchedTerms": [
+          "minior",
+          "showers",
+          "leonids",
+          "meteor",
+          "form",
+          "wild",
+          "stardust",
+          "catching",
+          "local",
+          "time",
+          "each",
+          "https"
+        ],
+        "alternatives": [
+          {
+            "eventId": "minior2",
+            "eventTitle": "Minior Showers: Leonids",
+            "score": 0.815
+          },
+          {
+            "eventId": "minior3",
+            "eventTitle": "Minior Showers: Geminids",
+            "score": 0.815
+          },
+          {
+            "eventId": "into",
+            "eventTitle": "Into the Wild",
+            "score": 0.793
+          }
+        ],
+        "method": "title-to-public/data.json heuristic",
+        "requiresHumanVerification": true
+      },
+      "reviewNote": "Two events look alike. Please choose.",
+      "signals": [
+        "picture text names the event"
+      ],
+      "matchScore": 3,
+      "stagedPath": "/infographics/g47ix/discord-1560902861989347389.png",
+      "aiMatch": [
+        {
+          "eventId": "minior",
+          "eventTitle": "Orionids Meteor Shower: Minior Debut"
+        },
+        {
+          "eventId": "minior2",
+          "eventTitle": "Minior Showers: Leonids"
+        },
+        {
+          "eventId": "minior3",
+          "eventTitle": "Minior Showers: Geminids"
+        }
+      ],
+      "publishedEvents": []
+    },
+    {
+      "id": "discord:1560468502077374585",
+      "source": "discord",
+      "creator": "",
+      "title": "@Infographics Notify",
+      "url": "https://discord.com/channels/@me/1558793395198099618/1560468502077374585",
+      "publishedAt": "2026-10-16T01:44:42.998000+00:00",
+      "imageUrl": "https://pbs.twimg.com/media/HUtqesXWMAAYcD4.jpg",
+      "reviewStatus": "published",
+      "decision": "approved",
+      "ocrChecked": true,
+      "ocrText": "\\ebes ul) @ 3° . K 4 me y's wy Ss 7 @A \\@® bo yy) <a. we ee) hj RP @ ha",
+      "eventMatch": null,
+      "reviewNote": "No event name found in the caption or image text.",
+      "signals": [],
+      "matchScore": 0,
+      "stagedPath": "/infographics/g47ix/discord-1560468502077374585.jpg",
+      "aiMatch": [
+        {
+          "eventId": "w-pok-mon-run-30-taichung",
+          "eventTitle": "Pokémon RUN 30: Taichung"
+        },
+        {
+          "eventId": "w-pok-mon-run-30-kaohsiung",
+          "eventTitle": "Pokémon RUN 30: Kaohsiung"
+        },
+        {
+          "eventId": "w-pok-mon-run-30-singapore",
+          "eventTitle": "Pokémon RUN 30: Singapore"
+        },
+        {
+          "eventId": "w-pok-mon-run-30-new-taipei",
+          "eventTitle": "Pokémon RUN 30: New Taipei"
+        },
+        {
+          "eventId": "w-pok-mon-run-30-kuala-lumpur",
+          "eventTitle": "Pokémon RUN 30: Kuala Lumpur"
+        },
+        {
+          "eventId": "w-pok-mon-run-30-jakarta",
+          "eventTitle": "Pokémon RUN 30: Jakarta"
+        },
+        {
+          "eventId": "w-pok-mon-run-30-bangkok",
+          "eventTitle": "Pokémon RUN 30: Bangkok"
+        },
+        {
+          "eventId": "w-pok-mon-run-30-hong-kong",
+          "eventTitle": "Pokémon RUN 30: Hong Kong"
+        }
+      ],
+      "publishedEvent": "w-pok-mon-run-30-kaohsiung",
+      "publishedEvents": [
+        "w-pok-mon-run-30-kaohsiung",
+        "w-pok-mon-run-30-taichung",
+        "w-pok-mon-run-30-singapore",
+        "w-pok-mon-run-30-new-taipei",
+        "w-pok-mon-run-30-kuala-lumpur",
+        "w-pok-mon-run-30-jakarta",
+        "w-pok-mon-run-30-bangkok",
+        "w-pok-mon-run-30-hong-kong"
+      ]
+    },
+    {
+      "id": "discord:1560460726949117953",
+      "source": "discord",
+      "creator": "",
+      "title": "THE RUN",
+      "url": "https://discord.com/channels/@me/1558793395198099618/1560460726949117953",
+      "publishedAt": "2026-10-16T01:13:49.263000+00:00",
+      "imageUrl": "https://cdn.discordapp.com/attachments/886998693897719819/1560455204217028650/THE_RUN.png?ex=6ad36f68&is=6ad21de8&hm=b0a99e835d0284fd861275df9f4849721e54cb835592ebed622768028d19120c&",
+      "reviewStatus": "rejected",
+      "decision": "rejected",
+      "ocrChecked": true,
+      "ocrText": "GQ) 00 8 q ® 8 8 > Wo yt Ig a de one E P. a) o } 1 & Lod b 23 JK bg rT) PERE WT hi AY oo oi & {ge {Yue Z i @ _~_ om o”* @ mK q ‘oy P @ fal all",
+      "eventMatch": null,
+      "reviewNote": "No event name found in the caption or image text.",
+      "signals": [],
+      "matchScore": 0,
+      "stagedPath": "/infographics/g47ix/discord-1560460726949117953.webp",
+      "aiMatch": [
+        {
+          "eventId": "w-pok-mon-run-30-taichung",
+          "eventTitle": "Pokémon RUN 30: Taichung"
+        },
+        {
+          "eventId": "w-pok-mon-run-30-kaohsiung",
+          "eventTitle": "Pokémon RUN 30: Kaohsiung"
+        },
+        {
+          "eventId": "w-pok-mon-run-30-singapore",
+          "eventTitle": "Pokémon RUN 30: Singapore"
+        },
+        {
+          "eventId": "w-pok-mon-run-30-new-taipei",
+          "eventTitle": "Pokémon RUN 30: New Taipei"
+        },
+        {
+          "eventId": "w-pok-mon-run-30-kuala-lumpur",
+          "eventTitle": "Pokémon RUN 30: Kuala Lumpur"
+        },
+        {
+          "eventId": "w-pok-mon-run-30-jakarta",
+          "eventTitle": "Pokémon RUN 30: Jakarta"
+        },
+        {
+          "eventId": "w-pok-mon-run-30-bangkok",
+          "eventTitle": "Pokémon RUN 30: Bangkok"
+        },
+        {
+          "eventId": "w-pok-mon-run-30-hong-kong",
+          "eventTitle": "Pokémon RUN 30: Hong Kong"
+        }
+      ],
+      "publishedEvents": []
+    },
+    {
+      "id": "discord:1560178079878479925",
+      "source": "discord",
+      "creator": "",
+      "title": "https://cdn.discordapp.com/attachments/886998693897719819/1552732970115268768/Hatch_event.png?ex=6ab6aec4&is=6ab55d44&hm=900b1e0682657c7539a15c578b9ba9631e5c71333dcad9bb6e35b0f907d2e59e&",
+      "url": "https://discord.com/channels/@me/1558793395198099618/1560178079878479925",
+      "publishedAt": "2026-10-15T06:30:40.950000+00:00",
+      "imageUrl": "https://cdn.discordapp.com/attachments/886998693897719819/1552732970115268768/Hatch_event.png?ex=6ad1b584&is=6ad06404&hm=7ac68e5e780833b7d1e46bafb08e76b9dbe24e4a24ce8fa5b544130bbcd4fbc2&",
+      "reviewStatus": "published",
+      "decision": "approved",
+      "ocrChecked": true,
+      "ocrText": "of 17 1! Y Ms = 4.22 Sandile HATCH DAY + + Free Timed Sandile will hatch more 592 CP frequently from 2 km eggs Research a+ g a °©e + 2x Candy from 1/2 Egg Increased chance Increased chance hatching Eggs Hatch Distance of receiving 2 km Eggs of hatching Shiny @® OPTIONAL This Timed Research will challenge 1/4 Hatch you to walk 1 km to earn: 2 USD a Distance and more ae",
+      "eventMatch": {
+        "eventId": "sandile",
+        "eventTitle": "Sandile Hatch Day",
+        "score": 0.847,
+        "confidence": "high",
+        "matchedTerms": [
+          "sandile",
+          "hatch",
+          "day",
+          "shiny",
+          "more",
+          "eggs",
+          "candy",
+          "egg",
+          "distance",
+          "https",
+          "com"
+        ],
+        "alternatives": [
+          {
+            "eventId": "sandile",
+            "eventTitle": "Sandile Hatch Day",
+            "score": 0.847
+          },
+          {
+            "eventId": "zorua",
+            "eventTitle": "Zorua Community Day",
+            "score": 0.427
+          },
+          {
+            "eventId": "novcd",
+            "eventTitle": "November Community Day",
+            "score": 0.396
+          }
+        ],
+        "method": "title-to-public/data.json heuristic",
+        "requiresHumanVerification": true
+      },
+      "reviewNote": "Creator not set. Set the DISCORD_CREATOR variable to credit the right person.",
+      "signals": [
+        "picture text names the event",
+        "shows sandile",
+        "posted around the event"
+      ],
+      "matchScore": 5,
+      "stagedPath": "/infographics/g47ix/discord-1560178079878479925.png",
+      "aiMatch": [
+        {
+          "eventId": "sandile",
+          "eventTitle": "Sandile Hatch Day"
+        }
+      ],
+      "publishedEvent": "sandile",
+      "publishedEvents": [
+        "sandile"
+      ]
+    },
+    {
+      "id": "discord:1560091967126507540",
+      "source": "discord",
+      "creator": "",
+      "title": "@Infographics Notify",
+      "url": "https://discord.com/channels/@me/1558793395198099618/1560091967126507540",
+      "publishedAt": "2026-10-15T00:48:30.070000+00:00",
+      "imageUrl": "https://pbs.twimg.com/media/HUoQ7ptXMAAlDhY.jpg",
+      "reviewStatus": "published",
+      "decision": "approved",
+      "ocrChecked": true,
+      "ocrText": "(local time) YY is 6:00 - 7:00 pm at STU Oe CS \" me | Vv 0/15/14 vi 18 oS Transfer y Gg 0/14/15 Ivi30 andy Clear your storage! n Note: this bonus Trade Pokémon for extra candy applies to all Pokémon and then transfer all on this Spotlight. Prepare #tag with all Pokémon that you want fo transfer to save time. aetna aie | Spacial Roar ” Rend 2 of Time Freeze Mega Evolve for bonuses Shock Shiny is available $ Op in Future Please note - shiny rate is not boosted during Spotlight Hour 686% ao & Sight* Followformore GA7IXQOaXHE www.g47ix.pro",
+      "eventMatch": null,
+      "reviewNote": "No event name found in the caption or image text.",
+      "signals": [],
+      "matchScore": 0,
+      "stagedPath": "/infographics/g47ix/discord-1560091967126507540.jpg",
+      "aiMatch": [
+        {
+          "eventId": "cur:spot-2026-10-15",
+          "eventTitle": "Stufful Spotlight Hour"
+        }
+      ],
+      "publishedEvent": "leekduck:pokemonspotlighthour2026-10-15",
+      "publishedEvents": [
+        "leekduck:pokemonspotlighthour2026-10-15"
+      ]
+    },
+    {
+      "id": "discord:1560078968453988473",
+      "source": "discord",
+      "creator": "",
+      "title": "SH Transfer 2025",
+      "url": "https://discord.com/channels/@me/1558793395198099618/1560078968453988473",
+      "publishedAt": "2026-10-14T23:56:50.945000+00:00",
+      "imageUrl": "https://cdn.discordapp.com/attachments/886998693897719819/1560073752547696640/SH_Transfer_2025.png?ex=6ad16367&is=6ad011e7&hm=b3d76bd803656417240ea4f1215ac175da2fc3bcbbe1a760397bfb31f489595d&",
+      "reviewStatus": "rejected",
+      "decision": "rejected",
+      "ocrChecked": true,
+      "ocrText": "(local time) 6:00 - 7:00 pm fe ant Tae = = 2! © \" a | Vv 0/15/14 v1 18 oS Transfer “ y Gg 0/14/15 lvi30 andy Clear your storage! Note: this bonus Trade Pokémon for extra candy applies to all Pokémon and then transfer all on this Spotlight. Prepare #tag with all Pokémon that you want to transfer to save time. Thee Ae 7, Spacial Roar Rend of Time Freeze Ice Mega Evolve for bonuses Shock Shiny is available a bis Burn Future Please note - shiny rate is not boosted during Spotlight Hour 686e wo Sight* Follow formore GA7ZIX @O aX EG www.g47ix.pro",
+      "eventMatch": null,
+      "reviewNote": "No event name found in the caption or image text.",
+      "signals": [],
+      "matchScore": 0,
+      "stagedPath": "/infographics/g47ix/discord-1560078968453988473.png",
+      "aiMatch": [
+        {
+          "eventId": "cur:spot-2026-10-15",
+          "eventTitle": "Stufful Spotlight Hour"
+        }
+      ],
+      "publishedEvents": []
+    },
+    {
+      "id": "discord:1559980489480077383",
+      "source": "discord",
+      "creator": "",
+      "title": "INTO THE WILD 26",
+      "url": "https://discord.com/channels/@me/1558793395198099618/1559980489480077383",
+      "publishedAt": "2026-10-14T17:25:31.728000+00:00",
+      "imageUrl": "https://cdn.discordapp.com/attachments/886998693897719819/1559975609915023480/INTO_THE_WILD_26.png?ex=6ad10800&is=6acfb680&hm=fabd1127f762a7c67f03509f50e57c1560bc025f4082ce9a0c5581ddb4e8ebd4&",
+      "reviewStatus": "published",
+      "decision": "approved",
+      "ocrChecked": true,
+      "ocrText": "local time = Cq' INTO 9 13 Ky ny} NOV NOV THE WILD ws pokemongo.com/gowildarea 10:00am 8:00pm ¥ Shiny Gimmighoul Remote Raid No Remote and Meltan Mystery Box limit 30 Raid Limit will be available cooldown Nov 9 - 13 Nov 14- 15 until November 15 reduced es B&B R @ we) Saye =) ewed ++ Bt ow Bit ied Ae ‘ DOr x* 12 13 73 os NOV Ky NOV ++ ++ ey tH pit RAID 10 * iets HOUR NOV NOV wank a wi Pokémon appearing in 5* Raids and Max Battles will be available throughout the event. They will also be featured during Raid Hours or Max Battle Hours from 6:00 to 7:00 p.m. on the dates shown to their left. t+ aN + =: iL GED Go) Gia) Gm Wild Area-themed Wild Global Challenge Field Research tasks New Special Background will be available will be available will be available wD, '©| GO Pass: Into the Wild B FREE DELUXE Qcum + Ce * w\\e © Major Milestone Bonuses: Additional XP, Candy and Candy XL Major Milestone Bonuse: 1/2 Hatch Distance from Raids and Max Battles, 3/4 Max Particle cost for unlocking AND MORE AND MORE and powering up Max Movese AV There’s no limit to the number of GO Points you can G47IXQ @®X Follow for more g47ix.pro 1S earn on November 14 and 15!",
+      "eventMatch": {
+        "eventId": "wag",
+        "eventTitle": "GO Wild Area: Global",
+        "score": 0.8,
+        "confidence": "high",
+        "matchedTerms": [
+          "wild",
+          "area",
+          "global",
+          "background",
+          "raids",
+          "max",
+          "battles",
+          "nov"
+        ],
+        "alternatives": [
+          {
+            "eventId": "wag",
+            "eventTitle": "GO Wild Area: Global",
+            "score": 0.8
+          },
+          {
+            "eventId": "sendai",
+            "eventTitle": "GO Wild Area: Sendai",
+            "score": 0.545
+          },
+          {
+            "eventId": "novcd",
+            "eventTitle": "November Community Day",
+            "score": 0.402
+          }
+        ],
+        "method": "title-to-public/data.json heuristic",
+        "requiresHumanVerification": true
+      },
+      "reviewNote": "Creator not set. Set the DISCORD_CREATOR variable to credit the right person.",
+      "signals": [
+        "caption names the event",
+        "picture text names the event",
+        "date in the picture is inside the event"
+      ],
+      "matchScore": 6,
+      "stagedPath": "/infographics/g47ix/discord-1559980489480077383.webp",
+      "aiMatch": [
+        {
+          "eventId": "w-into-the-wild",
+          "eventTitle": "Into the Wild"
+        },
+        {
+          "eventId": "wag",
+          "eventTitle": "GO Wild Area: Global"
+        }
+      ],
+      "publishedEvent": "w-into-the-wild",
+      "publishedEvents": [
+        "w-into-the-wild"
+      ]
+    },
+    {
+      "id": "discord:1559979942471536661",
+      "source": "discord",
+      "creator": "",
+      "title": "@Infographics Notify",
+      "url": "https://discord.com/channels/@me/1558793395198099618/1559979942471536661",
+      "publishedAt": "2026-10-14T17:23:21.311000+00:00",
+      "imageUrl": "https://pbs.twimg.com/media/HUm1qmuXUAAmTEh.jpg",
+      "reviewStatus": "rejected",
+      "decision": "rejected",
+      "ocrChecked": true,
+      "ocrText": "local time INTO 9 13 SY © THE WILD NOV « pokemongo.com/gowildarea 10:00am 8:00pm Remote Raid No Remote Shiny Gimmighoul Mystery Box _ limit 30 Raid Limit and Meltan cooldown & Nov 9-13 B Nov 14-15 until November 15 will be available reduced a Q eve fenvucarey 7 RAID aes Fe i HOUR Be OLE BL Bye They will also be featured during Raid Hours or Max Battle Hours from 6:00 to 7:00 p.m. on the dates shown to their left. Pokémon appearing in 5* Raids and Max Battles will be available throughout the event. i ef (ta AA Leh, (ou GED CED? GD? GEE Wild Area-themed yy Wild Global Challenge Field Research tasks New Ba will be available will be available vailal GO Pass: Into the Wild Re D +. of aa . a FREE DELUXE S * wl\\e [Majer Milestone Bonuses: ‘Adéiionol¥8, Condy and Candy ‘Major Milestone Bonuse: 1/2 Hatch Distonce eof from Roids and Max Boies, AND MORE AND MORE ‘and powering up Max Movese 3/4 Max Pati cost fr unlocking There’s no limit to the number of GO Points you can G47IXO @X Follow for more g47ix.pro arn on November 14 and 15!",
+      "eventMatch": {
+        "eventId": "wag",
+        "eventTitle": "GO Wild Area: Global",
+        "score": 0.797,
+        "confidence": "high",
+        "matchedTerms": [
+          "wild",
+          "area",
+          "global",
+          "raids",
+          "max",
+          "battles",
+          "nov"
+        ],
+        "alternatives": [
+          {
+            "eventId": "wag",
+            "eventTitle": "GO Wild Area: Global",
+            "score": 0.797
+          },
+          {
+            "eventId": "sendai",
+            "eventTitle": "GO Wild Area: Sendai",
+            "score": 0.539
+          },
+          {
+            "eventId": "novcd",
+            "eventTitle": "November Community Day",
+            "score": 0.402
+          }
+        ],
+        "method": "title-to-public/data.json heuristic",
+        "requiresHumanVerification": true
+      },
+      "reviewNote": "Creator not set. Set the DISCORD_CREATOR variable to credit the right person.",
+      "signals": [
+        "picture text names the event",
+        "date in the picture is inside the event"
+      ],
+      "matchScore": 5,
+      "stagedPath": "/infographics/g47ix/discord-1559979942471536661.jpg",
+      "aiMatch": [
+        {
+          "eventId": "w-into-the-wild",
+          "eventTitle": "Into the Wild"
+        },
+        {
+          "eventId": "wag",
+          "eventTitle": "GO Wild Area: Global"
+        }
+      ],
+      "publishedEvents": []
+    },
+    {
+      "id": "discord:1559878109744996384",
+      "source": "discord",
+      "creator": "",
+      "title": "@Infographics Notify",
+      "url": "https://discord.com/channels/@me/1558793395198099618/1559878109744996384",
+      "publishedAt": "2026-10-14T10:38:42.497000+00:00",
+      "imageUrl": "https://pbs.twimg.com/media/HUjKmWdXcAEZluh.jpg",
+      "reviewStatus": "published",
+      "decision": "approved",
+      "ocrChecked": true,
+      "ocrText": "200CT kam #483 D>) 7.\\ie7.\\ 53394 CP / je ) “A Pokémon spoken of in legend. It is said that time began moving when Dialga was born.” Weakness a me Difficulty: 2+ trainers needed y @x2 307 CPY%ws2884 CP Boost & Windy §] ‘@ Counter (5 @ Force Palm (2 all nN ‘@ Counter @ Low Kick @ Dynamic Punch| @ Aura Sphere ‘@ Aura Sphere @ Secret Sword = @ Mud Shot ‘@ Counter (5 ‘@ Low Kick ‘@ Counter 5 @ Sacred Sword ‘@ Focus Blast @ Precipice Blades ie **. . 3 — we @ Med Shot @ Double Kick @ Prec @ Earth Power (3 @ Sacred Swor: = ie @ : aN Remember to use proper counters, Party Play and Zacian’s Adventure Effect if needed. @ Ga7ixGOex | g47ix.pro",
+      "eventMatch": {
+        "eventId": "raid:dialga:2026-10-14",
+        "eventTitle": "Dialga 5-star raids",
+        "score": 0.6,
+        "via": "dialga",
+        "alternatives": [
+          {
+            "eventId": "raid:dialga:2026-10-14",
+            "eventTitle": "Dialga 5-star raids",
+            "score": 0.6,
+            "via": "dialga"
+          }
+        ]
+      },
+      "reviewNote": "No event name in the picture, but it shows dialga. Check these events.",
+      "signals": [],
+      "matchScore": 0,
+      "stagedPath": "/infographics/g47ix/discord-1559878109744996384.jpg",
+      "publishedEvent": "raid:dialga:2026-10-14",
+      "publishedEvents": [
+        "raid:dialga:2026-10-14"
+      ]
+    },
+    {
+      "id": "discord:1559738893870571582",
+      "source": "discord",
+      "creator": "",
+      "title": "@Infographics Notify",
+      "url": "https://discord.com/channels/@me/1558793395198099618/1559738893870571582",
+      "publishedAt": "2026-10-14T01:25:30.846000+00:00",
+      "imageUrl": "https://pbs.twimg.com/media/HUjJ4lUXcAAfUWY.jpg",
+      "reviewStatus": "published",
+      "decision": "approved",
+      "ocrChecked": true,
+      "ocrText": "= = D 1 RAGONITE Th. 48947 CP > | its home somewhere in the ws of shipwrecks to shore. — Weakness @ ee —— 1+ trainers needed =] 2 a ES 2167 CP ws 2709 CP | Boost x] nt Windy ‘ 7 @® Ice Fang @ Psycho Cut ® Dragon Tail @® Powder Snow @ Ice Burn (2 @ Ice Beam @ Freeze Shock (5) @ Avalanche my “as Hh l A © Dragon Tail ® Dragon Tail ~ @ Charm @ Powder Snow © Breaking Swipe nN © Dynamax Cannon (5 @® Weather Ball Ce @ Triple —_- 2 = >, \\ a = LG ® Dragon Tail @ Frost Breath ® Dragon Tail @ co Shard av f a ® Breaking Swipe v @ Weather Ball | ® Gutrage+ @ Triple Axel >: on Remember to use proper counters, Party Play Follow for more: and Zacian’s Adventure Effect if needed. G47IX @@ @ X @ | g47ix.pro Ld",
+      "eventMatch": null,
+      "reviewNote": "No event name found in the caption or image text.",
+      "signals": [],
+      "matchScore": 0,
+      "stagedPath": "/infographics/g47ix/discord-1559738893870571582.jpg",
+      "publishedEvent": "leekduck:mega-dragonite-in-mega-raids-october-2026",
+      "publishedEvents": [
+        "leekduck:mega-dragonite-in-mega-raids-october-2026"
+      ]
+    },
+    {
+      "id": "discord:1559738893530832969",
+      "source": "discord",
+      "creator": "",
+      "title": "@Infographics Notify",
+      "url": "https://discord.com/channels/@me/1558793395198099618/1559738893530832969",
+      "publishedAt": "2026-10-14T01:25:30.765000+00:00",
+      "imageUrl": "https://pbs.twimg.com/media/HUiXP6sWkAACzjJ.jpg",
+      "reviewStatus": "published",
+      "decision": "approved",
+      "ocrChecked": true,
+      "ocrText": "y 31 OCcT Ay WW 2:00 - 5:00 pm pm a Chandelure ‘a | Use Mega Pokémon . to break shields Raid Day tyre G® _— weakness GOOAD @ 1867 CP/2335 CP ++ SoS SF we Up to 5 additional Remote Raid limit Increased chance Chandelure will QS daily Raid Passes will be increased to encounter have one Mega from Gyms to 20 Shiny Level unlocked An additional An additional Increased Event ticket Up to 8 additional chance to daily Raid Passes 5,000 XP from 5,000 stardust 5 USD from Gyms Raids Super Mega from Super * get Rare 2:00 pm - 5:00 pm (deily total of 14) i Mega Raids Candy XL ee $ Super Mega Raids may New Mega Level: Use Dynamic Punch+ = only appear at certain Adventure Effect Gyms, check them at: Super Max to break pokemongo.com/map. two shields C= Complete Raids to unlock Based on the Global Challenge results, Mega Chandelure will receive = Global Challenge rewards a damage boost for Ominous Wind+ and a CP boost from November 2-15. Follow formore GA7|X eo0oaxte www.g47ix.pro",
+      "eventMatch": {
+        "eventId": "smr2",
+        "eventTitle": "Super Mega Raid Day",
+        "score": 0.799,
+        "confidence": "high",
+        "matchedTerms": [
+          "super",
+          "mega",
+          "raid",
+          "day",
+          "raids",
+          "com",
+          "november"
+        ],
+        "alternatives": [
+          {
+            "eventId": "smr2",
+            "eventTitle": "Super Mega Raid Day",
+            "score": 0.799
+          },
+          {
+            "eventId": "smr1",
+            "eventTitle": "Super Mega Raid Day",
+            "score": 0.797
+          },
+          {
+            "eventId": "novcd",
+            "eventTitle": "November Community Day",
+            "score": 0.791
+          }
+        ],
+        "method": "title-to-public/data.json heuristic",
+        "requiresHumanVerification": true
+      },
+      "reviewNote": "Two events look alike. Please choose.",
+      "signals": [
+        "picture text names the event"
+      ],
+      "matchScore": 3,
+      "stagedPath": "/infographics/g47ix/discord-1559738893530832969.jpg",
+      "publishedEvent": "smr1",
+      "publishedEvents": [
+        "smr1",
+        "smr2"
+      ]
+    },
+    {
+      "id": "discord:1559666456134815897",
+      "source": "discord",
+      "creator": "",
+      "title": "M Chandelure RD",
+      "url": "https://discord.com/channels/@me/1558793395198099618/1559666456134815897",
+      "publishedAt": "2026-10-13T20:37:40.344000+00:00",
+      "imageUrl": "https://cdn.discordapp.com/attachments/886998693897719819/1559661315147038820/M_Chandelure_RD.png?ex=6acfe34a&is=6ace91ca&hm=844ab62b85156284dfd6f629e9b17f6946b0ded8c34e6b5b6aec3cefc5611420&",
+      "reviewStatus": "published",
+      "decision": "approved",
+      "reviewNote": "Two events look alike. Please choose.",
+      "ocrChecked": true,
+      "ocrText": "x ef am Ay na 2:00 - 5:00 pm pm apa ue ; < Chandelure if ys haar Mega Pokémon to break shields Raid Day re @@ = weakness @OQAD S) 1867 CP/2335 CP ® iA + A+ ++ So SF ef) S$ Up to 5 additional Remote Raid limit Increased chance Chandelure will Cs) Bar S daily Raid Passes will be increased to encounter have one Mega from Gyms to 20 Shiny Level unlocked OPTIONAL An additional An additional Increased Event ticket Up to 8 additional 5,000 XP from 5,000 stardust chance to daily Raid Passes 5 USD from Gyms Super Mega from Super get Rare 2:00 pm - 5:00 pm (daily total of 14) Raids Mega Raids < Candy XL oe $ Super Mega Raids may New Mega Level Use Dynamic Puncht+ a only appear at certain Super Max Adventure Effect Gyms, check them at: to break = pokemongo.com/map two shields ear es RR, Complete Raids to unlock Based on the Global Challenge results, Mega Chandelure will receive Global Challenge rewards a damage boost for Ominous Wind+ and a CP boost from November 2-15. www.g47ix.pro Follow for more G4A71X £) (co) @ X i) oo",
+      "eventMatch": {
+        "eventId": "smr2",
+        "eventTitle": "Super Mega Raid Day",
+        "score": 0.8,
+        "confidence": "high",
+        "matchedTerms": [
+          "super",
+          "mega",
+          "raid",
+          "day",
+          "raids",
+          "com",
+          "november"
+        ],
+        "alternatives": [
+          {
+            "eventId": "smr2",
+            "eventTitle": "Super Mega Raid Day",
+            "score": 0.8
+          },
+          {
+            "eventId": "smr1",
+            "eventTitle": "Super Mega Raid Day",
+            "score": 0.797
+          },
+          {
+            "eventId": "novcd",
+            "eventTitle": "November Community Day",
+            "score": 0.791
+          }
+        ],
+        "method": "title-to-public/data.json heuristic",
+        "requiresHumanVerification": true
+      },
+      "signals": [
+        "picture text names the event"
+      ],
+      "matchScore": 3,
+      "stagedPath": "/infographics/g47ix/discord-1559666456134815897.webp",
+      "publishedEvent": "smr2",
+      "publishedEvents": [
+        "smr2"
+      ]
+    },
+    {
+      "id": "discord:1559619652097679394",
+      "source": "discord",
+      "creator": "",
+      "title": "Counter Dialga ",
+      "url": "https://discord.com/channels/@me/1558793395198099618/1559619652097679394",
+      "publishedAt": "2026-10-13T17:31:41.392000+00:00",
+      "imageUrl": "https://cdn.discordapp.com/attachments/1087756541668630638/1559615419726434375/Counter_Dialga_.png?ex=6acfb88c&is=6ace670c&hm=92f2a5e65297e1bec1705802db32225af61e19fb3f7b3fc803ac8ddfc93d1a2e&",
+      "reviewStatus": "published",
+      "decision": "approved",
+      "ocrChecked": true,
+      "ocrText": "= _——— um ee tt DIALGA 53394 CP “A Pokémon spoken of in legend. It is said that (i time began moving when Dialga was born.” \\ Weakness a Difficulty: 2+ trainers needed 2 rN Uy, 2307 C P%ws 2884 CP Boost & Rh Snow Windy y= @ Counter @ Force Palm (2 yh @ Counter @ Low Kick =) @ Dynamic Punch: @ Aura Sphere @ Aura Sphere @ Secret Sword @ Mud Shot @ Counter @ LowKick @ Counter @ Precipice Blades @ Brick Break+ @ Sacred Sword @ Focus Blast if a , ae > lud ot @ Mud Shot @ Double Kick @ Force Palm {5 ice Bla @ Earth Power @ Sacred Swor @ Aura Sphere § a “2 q Remember to use proper counters, Party Play Follow for more: and Zacian’s Adventure Effect if needed. GA7IX 9@ @X @ | g47ix.pro",
+      "eventMatch": null,
+      "reviewNote": "No event name found in the caption or image text.",
+      "signals": [],
+      "matchScore": 0,
+      "stagedPath": "/infographics/g47ix/discord-1559619652097679394.png",
+      "publishedEvent": "leekduck:dialga-in-5-star-raid-battles-october-2026",
+      "publishedEvents": [
+        "leekduck:dialga-in-5-star-raid-battles-october-2026"
+      ]
+    },
+    {
+      "id": "discord:1559619613635907710",
+      "source": "discord",
+      "creator": "",
+      "title": "Counter M Dragonite v2",
+      "url": "https://discord.com/channels/@me/1558793395198099618/1559619613635907710",
+      "publishedAt": "2026-10-13T17:31:32.222000+00:00",
+      "imageUrl": "https://cdn.discordapp.com/attachments/1087756541668630638/1559615377078624388/Counter_M_Dragonite_v2.png?ex=6acfb882&is=6ace6702&hm=9f93317b029a33116e2a6e5b4d80225dec9457e2398c401d9db2302decc80c58&",
+      "reviewStatus": "published",
+      "decision": "approved",
+      "ocrChecked": true,
+      "ocrText": "fy DRAGONITE ve Pa | 48947 CP MM, ke its home somewhere in the 9 es crews of shipwrecks to shore. te Ei, Weakness eee 42 5ee@ a x2 <r Seal = ™ y: 1+ trainers needed — ee. ——— — aia sacs SAN: 3 Pw 4 4 Bpoost q) Windy 2 2167 CP we 2709 CP | Ne ~ ® Ice Fang © Psycho Cut ® Dragon Tail @ Powder Snow a) @ Ice Burn (5 @ Ice Beam @® Freeze Shock (© @ Avalanche LOG “as q é A ee \\ fo | Sa ® Dragon Tail a Dragon Tail \\ \\ @ Charm @ Powder Snow =) cy Breaking Swipe 6 Dynamax Cannon ae —- @ Triple Axe! @ Weather Ball ~ as “\\ y/ << €. , ot @ Dragon Tail W @ Frost ~.. @ Ice Shard ® Dragon Tail @ Breaking Swipe @ Weather Ball ry Outrage+ @ Triple Axel \" eg =p “@ Remember to use proper counters, Party Play Follow for more: and Zacian’s Adventure Effect if needed. mat Sy) Ga47Ix @O@0@X@B | g47ix.pro",
+      "eventMatch": null,
+      "reviewNote": "No event name found in the caption or image text.",
+      "signals": [],
+      "matchScore": 0,
+      "stagedPath": "/infographics/g47ix/discord-1559619613635907710.png",
+      "publishedEvent": "leekduck:mega-dragonite-in-mega-raids-october-2026",
+      "publishedEvents": [
+        "leekduck:mega-dragonite-in-mega-raids-october-2026"
+      ]
+    },
+    {
+      "id": "tg:AQAD7BFrGx4_aFZ-",
+      "source": "telegram",
+      "creator": "",
+      "title": "Picture sent from Telegram",
+      "url": "",
+      "publishedAt": "2026-10-13T07:27:42.507Z",
+      "imageUrl": "local:data/tg-inbox/tg-AQAD7BFrGx4_aFZ-.jpg",
+      "reviewStatus": "published",
+      "decision": "approved",
+      "ocrChecked": true,
+      "ocrText": "i 7 0CT-3NOV Shedaiie ~ Incarna #645) ANDORL S oo J 47444 cP “From the forces of lightning and wind, it creates energy to give nui ts te oil and make the land abundant.” “h a Woakiers cy Difficulty: 2+ trainers needed -O- ue % bw ha 2050 CP ws 2563 CP Boost R] ows @ Sunny SS, @ Ice Fang @ Psycho Cut © Waterfall @ Powder Snow 6 @ @ Kee Burn (3 @ Ice Beam @ Avalanche ® Avalanche q \\ @® Ice Shard Ye ® Dragon Tail ® Weather Ball @® Powder Snow @ Hidden Pow. @ Triple Axel y @ Freeze Shock (=) @ Liquidation i CFs i PX @ Waterfall @ Ice Fang @ Ice Fang @ Frost Breath @ Avalanche @ Avalanche ® Avalanche 4 @ Avalanche oe i LA, and Zacian’s Adventure Effect if needed. Remember to use gems, proper counters, Party Play Follow for mot ae @ Ge G47IX 9©@ @ X B | g47ix.pro",
+      "eventMatch": null,
+      "reviewNote": "No event name found in the caption or image text.",
+      "signals": [],
+      "matchScore": 0,
+      "stagedPath": "/infographics/g47ix/tg-aqad7bfrgx4-afz.jpg",
+      "publishedEvent": "leekduck:shadow-landorus-incarnate-forme-in-shadow-raids-october-2026",
+      "publishedEvents": [
+        "leekduck:shadow-landorus-incarnate-forme-in-shadow-raids-october-2026"
+      ]
+    },
+    {
+      "id": "tg:AQAD6xFrGx4_aFZ-",
+      "source": "telegram",
+      "creator": "",
+      "title": "Picture sent from Telegram",
+      "url": "",
+      "publishedAt": "2026-10-13T07:27:41.913Z",
+      "imageUrl": "local:data/tg-inbox/tg-AQAD6xFrGx4_aFZ-.jpg",
+      "reviewStatus": "published",
+      "decision": "approved",
+      "ocrChecked": true,
+      "ocrText": "— % SPOKE Noy, Startin. Ly 7.30 pi 24 Io Cw k Get exclusive A. a W aseball jersey 0 Open this link and log in | using your PTC account @ Scroll down and click \\e ey Or go to: trainer.pokemon.com/rewards trainer.pokemon.com/rewards/my-rewards Open Pokémon channel and watch This account doesn’t have to be connected to your Pokémon GO account. twitch.tv/ pokemon Once you get required watch time, go to 4) ) ( Go back to PTC Rewards TRAINER page to claim your code G) CENTRAL | www.twitch.tv/drops/inventory trainer.pokemon.com/rewards/my-rewards and claim your Twitch Drop (<) Redeem your code: qwitlion we store.pokemongo.com/ offer-redemption Codes are unique, so you have to watch the stream to receive them. Follow for more G471X Cf) @x () @ = www.g47ix.pro",
+      "eventMatch": null,
+      "reviewNote": "No event name found in the caption or image text.",
+      "signals": [],
+      "matchScore": 0,
+      "stagedPath": "/infographics/g47ix/tg-aqad6xfrgx4-afz.jpg",
+      "publishedEvent": "leekduck:pokemon-night-out-2026-twitch-drops",
+      "publishedEvents": [
+        "leekduck:pokemon-night-out-2026-twitch-drops"
+      ]
+    },
+    {
+      "id": "tg:AQADBBJrGx4_aFZ-",
+      "source": "telegram",
+      "creator": "",
+      "title": "Picture sent from Telegram",
+      "url": "",
+      "publishedAt": "2026-10-13T07:27:41.385Z",
+      "imageUrl": "local:data/tg-inbox/tg-AQADBBJrGx4_aFZ-.jpg",
+      "reviewStatus": "published",
+      "decision": "approved",
+      "ocrChecked": true,
+      "ocrText": "A page? Th Re i Meg Tis \"4 #009 BLASTOISE a 42017 CP Se 2 td \\ “Once it takes aim at its enemy, it blasts out water with even more force than a fire hose. = x Bae > Weakness a oO Difficulty: 2+ trainers needed @ * 1409 cP %we 1761 CP Boost Rainy Past J @ Thunder Shock @ Thunder Shock @ Vine Whip @® Hidden Pow, @ Zap Cannon+ @ Volt Tackle+ @ Seed Bom! © Crush Gri Thunder Shock @ Thunder Fang @ Razor Leaf @ Wild Charge @ Wild Charge @ Plasma = @ Leaf Blade er, Thunder Shoei @ Thunde: @ Vine Whip @ Thunder SI harg @ Discharge @ Frenzy Plant (2 @ Thunder Cage (5 a pu A Remember to use proper counters, Party Play Follow for more: and Zacian’s or Mewtwo X Adventure Effect if needed. G47IX 9© @ X @ | g47ix.pro",
+      "eventMatch": null,
+      "reviewNote": "No event name found in the caption or image text.",
+      "signals": [],
+      "matchScore": 0,
+      "stagedPath": "/infographics/g47ix/tg-aqadbbjrgx4-afz.jpg",
+      "publishedEvent": "leekduck:mega-blastoise-in-mega-raids-october-2026",
+      "publishedEvents": [
+        "leekduck:mega-blastoise-in-mega-raids-october-2026"
+      ]
+    },
+    {
+      "id": "discord:1559233804244222065",
+      "source": "discord",
+      "creator": "",
+      "title": "@Infographics Notify",
+      "url": "https://discord.com/channels/@me/1558793395198099618/1559233804244222065",
+      "publishedAt": "2026-10-12T15:58:28.095000+00:00",
+      "imageUrl": "https://pbs.twimg.com/media/HUI45gpWIAARbNR.jpg",
+      "reviewStatus": "rejected",
+      "decision": "rejected",
+      "ocrChecked": true,
+      "ocrText": "' Quality-of-Life Updates available now A Zygarde Cells will now be received as a reward when The Compass and Weather you complete the Route. You don’t need have been combined into a single dynamic to collect them from the map! icon that adjusts based on your actions. Hundo transfer warning www ey Trainers will now receive a confirmation = prompt before transferring any ° Pokémon that has maxed-out stats. 0 vou really wan this 100% p, t to transfer okémon? ag ° S ) (s) st oO Checking In to CA Meetups: Q Trainers can now check in to a meetup directly from the in-game map or a web browser. — * > Open the in-game map from the Nearby menu © Hosta sd > Find the purple Meetup pin on the map Zorua Community Day > Verify the event is listed as “Hosted by a Community Ambassador” > Tap Check In Map View Display Improvements The Map View spacing has been enhanced to reduce overlap between wild Pokémon encounters, Gyms, Power Spots, and PokéStops, making it easier to tap on specific encounters. Follow formore GA7ZIXQOaXl & www.g47ix.pro",
+      "eventMatch": {
+        "eventId": "zorua",
+        "eventTitle": "Zorua Community Day",
+        "score": 0.793,
+        "confidence": "high",
+        "matchedTerms": [
+          "zorua",
+          "day",
+          "wild",
+          "can",
+          "poke",
+          "mon"
+        ],
+        "alternatives": [
+          {
+            "eventId": "zorua",
+            "eventTitle": "Zorua Community Day",
+            "score": 0.793
+          },
+          {
+            "eventId": "novcd",
+            "eventTitle": "November Community Day",
+            "score": 0.397
+          },
+          {
+            "eventId": "tcg30",
+            "eventTitle": "Pokémon TCG: 30th Celebration (at stores)",
+            "score": 0.273
+          }
+        ],
+        "method": "title-to-public/data.json heuristic",
+        "requiresHumanVerification": true
+      },
+      "reviewNote": "Creator not set. Set the DISCORD_CREATOR variable to credit the right person.",
+      "signals": [
+        "picture text names the event",
+        "shows zorua",
+        "posted around the event"
+      ],
+      "matchScore": 5,
+      "stagedPath": "/infographics/g47ix/discord-1559233804244222065.jpg",
+      "publishedEvents": []
+    },
+    {
+      "id": "discord:1559125971003777094",
+      "source": "discord",
+      "creator": "",
+      "title": "Dmax LAKE",
+      "url": "https://discord.com/channels/@me/1558793395198099618/1559125971003777094",
+      "publishedAt": "2026-10-12T08:49:58.647000+00:00",
+      "imageUrl": "https://cdn.discordapp.com/attachments/1558793395198099618/1559125970588536852/Dmax_LAKE.png?ex=6acfeaf6&is=6ace9976&hm=c05f07274c8ea4904d6c41b03d29f2ad2c9c4f4babeee770962f664e3866f47c&",
+      "reviewStatus": "published",
+      "decision": "approved",
+      "reviewNote": "Match is not strong enough (low).",
+      "ocrChecked": true,
+      "ocrText": "local time Europe, the Middle East, Africa, and India Nort = a (D G _— 2:00 pm to 5:00 pm oo + ao Asia-Pacific region ++ Vv) ee a Ww Americas Remote Limit and Greenland increased to 20 DY NIANIAX Lake Trio Max Battle Day === All Power Spots will Be Upto3 Max Particle The following bonus host Max Battles re Vv Special Trades 8x MP from will be active from ¥ and will refresh more Az ie ) collection limit increased to 1,600 (OR) Power Spots 12:00 am to 5:00 pm frequently Si for the day. local time 2x Max Particles A from exploring Paid 2x XP from 1/4 adventuring 3 Timed Max Battles distance to receive USD Research 25,000 XP xP oh Max Particles Follow for more G4A7|X 6) OF.:) xX | > | www.g47ix.pro",
+      "eventMatch": {
+        "eventId": "zorua",
+        "eventTitle": "Zorua Community Day",
+        "score": 0.406,
+        "confidence": "low",
+        "matchedTerms": [
+          "day",
+          "special",
+          "more",
+          "bonus"
+        ],
+        "alternatives": [
+          {
+            "eventId": "zorua",
+            "eventTitle": "Zorua Community Day",
+            "score": 0.406
+          },
+          {
+            "eventId": "novcd",
+            "eventTitle": "November Community Day",
+            "score": 0.394
+          },
+          {
+            "eventId": "sandile",
+            "eventTitle": "Sandile Hatch Day",
+            "score": 0.272
+          }
+        ],
+        "method": "title-to-public/data.json heuristic",
+        "requiresHumanVerification": true
+      },
+      "signals": [
+        "posted around the event"
+      ],
+      "matchScore": 1,
+      "stagedPath": "/infographics/g47ix/discord-1559125971003777094.webp",
+      "publishedEvent": "leekduck:dynamax-uxie-mesprit-azelf-max-battle-day-2026",
+      "publishedEvents": [
+        "leekduck:dynamax-uxie-mesprit-azelf-max-battle-day-2026"
+      ]
+    },
+    {
+      "id": "discord:1559125906088398879",
+      "source": "discord",
+      "creator": "",
+      "title": "HUH7E8JWwAAiodY",
+      "url": "https://discord.com/channels/@me/1558793395198099618/1559125906088398879",
+      "publishedAt": "2026-10-12T08:49:43.170000+00:00",
+      "imageUrl": "https://pbs.twimg.com/media/HUH7E8JWwAAiodY.jpg",
+      "reviewStatus": "published",
+      "decision": "approved",
+      "ocrChecked": true,
+      "ocrText": "° =e y 4 = = He Ovi 10:00am 8:00 pm New Shiny 03 Se OG Halloween + Event-themed Encounters map & decorations SUPER MAX DEBUT fw: eéé 2x Catch Candy 2x Catch Stardust af GO Pass Deluxe $ a mi ~G47ix.pro Follow forme GA7IXQOaXPE dy Aremix of the Lavender Town music will be playing nightly during this year’s Halloween event. J",
+      "eventMatch": null,
+      "reviewNote": "No event name found in the caption or image text.",
+      "signals": [],
+      "matchScore": 0,
+      "stagedPath": "/infographics/g47ix/discord-1559125906088398879.jpg",
+      "publishedEvent": "leekduck:halloween-2026-part-2",
+      "publishedEvents": [
+        "leekduck:halloween-2026-part-2"
+      ]
+    },
+    {
+      "id": "discord:1559125836571877451",
+      "source": "discord",
+      "creator": "",
+      "title": "<@&1478228335795634331>",
+      "url": "https://discord.com/channels/@me/1558793395198099618/1559125836571877451",
+      "publishedAt": "2026-10-12T08:49:26.596000+00:00",
+      "imageUrl": "https://pbs.twimg.com/media/HUCyQpXWoAESGSs.jpg",
+      "reviewStatus": "published",
+      "decision": "approved",
+      "ocrChecked": true,
+      "ocrText": "++ WILD SENDAI MEXICO AREA \\ Sa* 2026 -” ‘i i Me DURALUDON DEBUT SEN XICO | DAI/ME ++ 4 ve es Crowned Energy available for everyone Saturday Sunday SPECIAL BACKGROUNDS | | LOCATION BACKGROUNDS | | bayer ce PL oa) Location Background are only available from in-person Raids and Max Battles th Wr at Follow for more G47|X Cf) Ox 00) Qo www.g47ix.pro",
+      "eventMatch": {
+        "eventId": "sendai",
+        "eventTitle": "GO Wild Area: Sendai",
+        "score": 0.851,
+        "confidence": "high",
+        "matchedTerms": [
+          "sendai",
+          "wild",
+          "area",
+          "2026",
+          "person",
+          "debut",
+          "background",
+          "duraludon",
+          "location",
+          "backgrounds",
+          "special"
+        ],
+        "alternatives": [
+          {
+            "eventId": "sendai",
+            "eventTitle": "GO Wild Area: Sendai",
+            "score": 0.851
+          },
+          {
+            "eventId": "wag",
+            "eventTitle": "GO Wild Area: Global",
+            "score": 0.591
+          },
+          {
+            "eventId": "halloween1",
+            "eventTitle": "Halloween 2026, Part One",
+            "score": 0.201
+          }
+        ],
+        "method": "title-to-public/data.json heuristic",
+        "requiresHumanVerification": true
+      },
+      "reviewNote": "Only one signal agrees.",
+      "signals": [
+        "picture text names the event"
+      ],
+      "matchScore": 3,
+      "stagedPath": "/infographics/g47ix/discord-1559125836571877451.jpg",
+      "publishedEvent": "sendai",
+      "publishedEvents": [
+        "sendai",
+        "cur:wag",
+        "leekduck:pokemon-go-wild-area-2026-global",
+        "leekduck:pokemon-go-wild-area-2026-mexico-city"
+      ]
+    },
+    {
+      "id": "discord:1559125785426792479",
+      "source": "discord",
+      "creator": "",
+      "title": "<@&1478228335795634331>",
+      "url": "https://discord.com/channels/@me/1558793395198099618/1559125785426792479",
+      "publishedAt": "2026-10-12T08:49:14.402000+00:00",
+      "imageUrl": "https://pbs.twimg.com/media/HT-AXyVW8AAUWKL.jpg",
+      "reviewStatus": "rejected",
+      "decision": "rejected",
+      "ocrChecked": true,
+      "ocrText": "3 NOV @ 70CT hedow = —_ Incarnate For rme en © #645 ANDO! US 47444 cP “From the forces of lightning and wind, it creates energy to give nutrients to the soil and make the land abundant.” = Weakness o Difficulty: 2+ trainers needed O- @ % 2050 cp¥ws 2563 CP Boost y ®@ Ice Fang @ Psycho Cut @ Powder Sni @ Ice Burn (> @ Ice Beam ® Avalanche @ Avalanche Rt \\\\ @ Ice Shard ® Dragon Tail @® Powder Snow @ Hidden Pow: @ Triple Axel Ye @ Freeze Shock (5! @® Weather Ball @ Liquidation ns % mm N 7 A @ Waterfall oe. ® Ice Fang ® Ice Fang ® Frost Breath ® Avalanche @ Avalanche © @ Avalanche Ss @ Avalanche iy i LA, Remember to use gems, proper counters, Party Play Follow for more ae @ and Zacian’s Adventure Effect if needed. 2) G47IX@@@ X @ | g47ix.pro",
+      "eventMatch": null,
+      "reviewNote": "No event name found in the caption or image text.",
+      "signals": [],
+      "matchScore": 0,
+      "stagedPath": "/infographics/g47ix/discord-1559125785426792479.jpg",
+      "publishedEvents": []
+    },
+    {
+      "id": "discord:1559125750257549383",
+      "source": "discord",
+      "creator": "",
+      "title": "<@&1478228335795634331>",
+      "url": "https://discord.com/channels/@me/1558793395198099618/1559125750257549383",
+      "publishedAt": "2026-10-12T08:49:06.017000+00:00",
+      "imageUrl": "https://pbs.twimg.com/media/HT6EeJQWEAElekS.jpg",
+      "reviewStatus": "published",
+      "decision": "approved",
+      "ocrChecked": true,
+      "ocrText": "#717 BA ¥; 45899 CP “When its life comes to an end, it absorbs the life energy of 1 “a every living thing and turns into a cocoon once more.” Weakness a cy ca + Difficulty: 2+ trainers needed @ & 2160 CP %we 2701 CP Boost Fog Windy V/ @ Thunder Shock @ Thunder Shock 4 ® Ice Fang ® Dragon Tail @ Zap Cannon+ @ Volt Tackle+ @ Ice Burn (2 @ Freeze Shock (3! e re) Synge 2 @ Rock Throw 6 @ Thunder Shock ®@ charm @ Smack Down, @ Rock Slide @ Wild Charge @ Dazzling Gle @ Rock Wrecks ie ¥ © Metal Claw \\_ -~~ew, @ Thunder Shock @ Thunder Fang © Thunder shod = @ Play Rough @ Wild charge = ® Wild charge @ Discharge es bi) @ - Remember to use proper counters, Party Play Follow for more: and Zacian’s Adventure Effect if needed. ) i G471IXQOOMXB| g47ix.pro ‘alr",
+      "eventMatch": null,
+      "reviewNote": "No event name found in the caption or image text.",
+      "signals": [],
+      "matchScore": 0,
+      "stagedPath": "/infographics/g47ix/discord-1559125750257549383.jpg",
+      "publishedEvent": "leekduck:yveltal-in-5-star-raid-battles-october-2026",
+      "publishedEvents": [
+        "leekduck:yveltal-in-5-star-raid-battles-october-2026"
+      ]
+    },
+    {
+      "id": "discord:1559125714090065931",
+      "source": "discord",
+      "creator": "",
+      "title": "<@&1478228335795634331>",
+      "url": "https://discord.com/channels/@me/1558793395198099618/1559125714090065931",
+      "publishedAt": "2026-10-12T08:48:57.394000+00:00",
+      "imageUrl": "https://pbs.twimg.com/media/HT4edKqWYAA66OF.jpg",
+      "reviewStatus": "published",
+      "decision": "approved",
+      "ocrChecked": true,
+      "ocrText": "(@¢ oP Ha/Owitip, 10:00 am 10:00 am a) Of - New Costumed eae et =e ) Pokémon! 4 TRICK OR TREAT! PIKACHU ZUBAT SINISTEA RARE Tap spooky surprises in the wild CANDY CANDY CANDY @ CANDY + for encounters and Candy € } } he us On + hd Q< oon Halloween Event-themed ma New items 7 ad Encounters © decorations Skirt / Shorts / Socks / Boots [ ® Gi 2x Catch Candy 2x Catch Stardust s) ba GO Pass Deluxe GO Pass wy $7.99 + Follow formore GAZIXQ@O aXe www.g47ix.pro 4 J A remix of the Lavender Town music will be playing nightly during this year’s Halloween event. ‘ds 4 es",
+      "eventMatch": null,
+      "reviewNote": "No event name found in the caption or image text.",
+      "signals": [],
+      "matchScore": 0,
+      "stagedPath": "/infographics/g47ix/discord-1559125714090065931.jpg",
+      "publishedEvent": "leekduck:halloween-2026-part-1",
+      "publishedEvents": [
+        "leekduck:halloween-2026-part-1"
+      ]
+    },
+    {
+      "id": "discord:1559125018619805807",
+      "source": "discord",
+      "creator": "",
+      "title": "SEASON TT",
+      "url": "https://discord.com/channels/@me/1558793395198099618/1559125018619805807",
+      "publishedAt": "2026-10-12T08:46:11.581000+00:00",
+      "imageUrl": "https://cdn.discordapp.com/attachments/1558793395198099618/1559125018276007998/SEASON_TT.png?ex=6acfea13&is=6ace9893&hm=3698c950e2b2db0a2fc82fdbe1583e7419ceef300347e02dc5d0b4c53c303ad3&",
+      "reviewStatus": "published",
+      "decision": "approved",
+      "reviewNote": "Match is not strong enough (medium).",
+      "ocrChecked": true,
+      "ocrText": "—— & 2026 WELCOME To WS OCA Ms N f IL HT Ne 8 L = SEP DEC Gee an Re LES v7 10:00 AM 10:00 AM 1\\ SENDAI/MEXICO GLOBAL New Research Breakthrough Complete Field Research and unlock encounters Co with Season-themed Pokémon each week \\ 2026 “a or Pokémon New Mega aad + yy ie vy ita Debut Pokémon Debut 4 Maschiff Mabosstiff Staraptor Chandelure t+ Pot + Cot + bot, + % % + mS DK New Max Battle Dynamax Day od is ae Showcase GO Battle Scenic KZ ry Wednesday © Friendship ct, 7 EN Monday Tuesday @ Raid Hour Thursday Se Friday Sunday One Rare Candy XL Featuring up to 20 One Rare Candy XL Complete a total of up to 3 Special Trades More Pokémon in the for completing different Categories for completing 50 GBL Battles 2 Candy XL from trade wild and Boosted Max Battles. in-person Enter up to 5 Showcases in-person Raid Battles. 4x Win Stardust incense on Routes Incr. chance of Lucky Trade Encounter Mateo 3x VD, aoe). SFT Rank 1 Rank 25 Rank 50 Rank 75 GO PASS One additional Candy and Increased gift 2 Daily Adventure Increased XP and i BONUSES Candy XL for trading Pokémon limits Incense duration Stardust from = hatching Eggs + ++ ++ + ++ ++ -- eae — a a ++ Dx at Adventure ee aa Be Adventure Sync Sync Follow for more Route Mateo 7km Rewards GA7IXOO axl eggs rr ¥ a + www.g47ix.pro",
+      "eventMatch": {
+        "eventId": "smr2",
+        "eventTitle": "Super Mega Raid Day",
+        "score": 0.596,
+        "confidence": "medium",
+        "matchedTerms": [
+          "mega",
+          "raid",
+          "day",
+          "2026",
+          "season"
+        ],
+        "alternatives": [
+          {
+            "eventId": "smr2",
+            "eventTitle": "Super Mega Raid Day",
+            "score": 0.596
+          },
+          {
+            "eventId": "smr1",
+            "eventTitle": "Super Mega Raid Day",
+            "score": 0.594
+          },
+          {
+            "eventId": "sendai",
+            "eventTitle": "GO Wild Area: Sendai",
+            "score": 0.548
+          }
+        ],
+        "method": "title-to-public/data.json heuristic",
+        "requiresHumanVerification": true
+      },
+      "signals": [
+        "picture text names the event"
+      ],
+      "matchScore": 2,
+      "stagedPath": "/infographics/g47ix/discord-1559125018619805807.webp",
+      "publishedEvent": "leekduck:season-24-twilight-trails",
+      "publishedEvents": [
+        "leekduck:season-24-twilight-trails"
+      ]
+    },
+    {
+      "id": "discord:1559124953125756971",
+      "source": "discord",
+      "creator": "",
+      "title": "https://cdn.discordapp.com/attachments/886998693897719819/1550193114378014830/OCT_CONTENT_G47IX.png?ex=6aae1a17&is=6aacc897&hm=f5d011b2f331e71c3d7b8cd0ecd76bcddd27ac42cbfcd737e47fd665c96f1aff&",
+      "url": "https://discord.com/channels/@me/1558793395198099618/1559124953125756971",
+      "publishedAt": "2026-10-12T08:45:55.966000+00:00",
+      "imageUrl": "https://cdn.discordapp.com/attachments/886998693897719819/1550193114378014830/OCT_CONTENT_G47IX.png?ex=6ad1b297&is=6ad06117&hm=77b76b09d1113738dc57b9ab6bb888a9574b66d77e81e29c4d624ad73d91dd85&",
+      "reviewStatus": "weekly",
+      "decision": "",
+      "reviewNote": "Two events look alike. Please choose.",
+      "ocrChecked": true,
+      "ocrText": "~) wr. Research Breakthrough ®) OCTOBER Complete Field Research and unlock encounters 4.2 SEP 8 DEC 1 with Season-themed Pokémon each week. in Pokémon GO! r | Showcase | [ c Scenic wy ~Max ©. Wednesday ) f GO Battle ¢ fS Friendship ct, 7 KN Monday Tuesday @ Raid Hour Thursday SW Friday Sunday One Rare Candy XL Featuring up to 20 One Rare Candy XL Complete a total of up to 3 Special Trades More Pokémon in the wild and Boosted for completing in-person different Categories for completing 50 GBL Battles 2 Candy XL from trade incense on Routes Max Battles. Enter up to 5 Showcases in-person Raid Battles 4x Win Stardust Incr. chance of Lucky Trade Encounter Mateo 3x a ( t+ Aa f + bot S, ma vo 4, a = _ \\\\ — ry Peart Mt £ i i = SHADOW 3016 7 13 14420 21 127 2813 RAIDS RAIDS SEP OcT OcT OcT OcT OcT OcT OcT OcT NOV ++ t+ an a RAID J aN fea 23 HOUR ay ene # ih y <= ++ “t {+4 t+ t+ ve ~ S MEGA 3056 14120 21 527 28 RAIDS SEP OcT OcT OcT OcT OcT OcT OcT OcT NOV ey { L \\ ey, mS om OcT MAX 9 Vee ro) ace! a) MONDAY 4 ~~ @ + ( > © SPOTLIGHT 29 HOUR He & a Aw 4 2x Catch XP 2x Catch Candy tardu © 2x Transfer Candy © 2 Evolution XP © Harvest Taken a= EVENTS 10 Berry ee www.pokemongo.com/events Festival OcT OCT Ove OcT OCT SAL CS Fall Marathon Hatch Gor\" 24 SENT a” S Buddy Trek Day OcT He \\@) Halloween Halloween 27 31 Super Mega a OocT ocT Pt. 1 Bo Raid Day NOV NOV Pt. Il ~! A 4 s \\penfollow formore G47IX QC ® X@ @ www.g47ix.pro es 10.2026",
+      "eventMatch": {
+        "eventId": "trek",
+        "eventTitle": "Fall Marathon: Buddy Trek",
+        "score": 0.82,
+        "confidence": "high",
+        "matchedTerms": [
+          "trek",
+          "fall",
+          "marathon",
+          "buddy",
+          "2026",
+          "candy",
+          "boosted",
+          "incense",
+          "oct",
+          "wild",
+          "encounters",
+          "more"
+        ],
+        "alternatives": [
+          {
+            "eventId": "trek",
+            "eventTitle": "Fall Marathon: Buddy Trek",
+            "score": 0.82
+          },
+          {
+            "eventId": "smr1",
+            "eventTitle": "Super Mega Raid Day",
+            "score": 0.803
+          },
+          {
+            "eventId": "smr2",
+            "eventTitle": "Super Mega Raid Day",
+            "score": 0.797
+          }
+        ],
+        "method": "title-to-public/data.json heuristic",
+        "requiresHumanVerification": true
+      },
+      "signals": [
+        "picture text names the event",
+        "posted around the event"
+      ],
+      "matchScore": 4,
+      "publishedEvents": [],
+      "overview": "month",
+      "stagedPath": "/infographics/g47ix/discord-1559124953125756971.webp"
+    },
+    {
+      "id": "discord:1559124879431835669",
+      "source": "discord",
+      "creator": "",
+      "title": "https://cdn.discordapp.com/attachments/886998693897719819/1555904768327553056/Trinket_GOPass.png?backend=b2&ex=6ac77ebc&is=6ac62d3c&hm=2b830c4e04f8444832fe42387f52dccd0185e606ced2f73751ea8c9c36c2c4ab&",
+      "url": "https://discord.com/channels/@me/1558793395198099618/1559124879431835669",
+      "publishedAt": "2026-10-12T08:45:38.396000+00:00",
+      "imageUrl": "https://cdn.discordapp.com/attachments/886998693897719819/1555904768327553056/Trinket_GOPass.png?backend=b2&ex=6ad0107c&is=6acebefc&hm=554e0560827f5925d9857fc4e025257977b1729548e8a3911237c477c07db14a&",
+      "reviewStatus": "published",
+      "decision": "approved",
+      "reviewNote": "Only one signal agrees.",
+      "ocrChecked": true,
+      "ocrText": "ry | y, Starting al o 2 GO Pass: . ] [| October oo FREE DELUXE —— A a Kyogre Lucky Trinket oe Additional encounters _— * N AND MORE AND MORE Tier 1 - Rank 1 | One additional Candy and one guaranteed Candy XL* for trading Pokémon Tier 2 - Rank 25 Tier 2 - Rank 25 Open up to 40 Gifts per day Open up to 50 Gifts per day ‘a Receive up to 125 Gifts per day Receive up to 150 Gifts per day Hold 10 more Gifts Hold 20 more Gifts Tier 3 - Rank 50 | 2x Daily Adventure Incense duration Tier 4 - Rank 75 | Increased Stardust and XP from hatching Eggs Lig = —— From October 31 to November 1, there’s no daily limit on the number of GO Points you can earn! Follow for more G47|X £) Ox i L > | *for Trainers level 31 and above www.g47ix.pro",
+      "eventMatch": {
+        "eventId": "novcd",
+        "eventTitle": "November Community Day",
+        "score": 0.794,
+        "confidence": "high",
+        "matchedTerms": [
+          "november",
+          "day",
+          "poke",
+          "mon"
+        ],
+        "alternatives": [
+          {
+            "eventId": "novcd",
+            "eventTitle": "November Community Day",
+            "score": 0.794
+          },
+          {
+            "eventId": "zorua",
+            "eventTitle": "Zorua Community Day",
+            "score": 0.42
+          },
+          {
+            "eventId": "sandile",
+            "eventTitle": "Sandile Hatch Day",
+            "score": 0.287
+          }
+        ],
+        "method": "title-to-public/data.json heuristic",
+        "requiresHumanVerification": true
+      },
+      "signals": [
+        "picture text names the event"
+      ],
+      "matchScore": 2,
+      "stagedPath": "/infographics/g47ix/discord-1559124879431835669.webp",
+      "publishedEvent": "leekduck:go-pass-october-2026",
+      "publishedEvents": [
+        "leekduck:go-pass-october-2026"
+      ]
+    },
+    {
+      "id": "discord:1559077596786991185",
+      "source": "discord",
+      "creator": "",
+      "title": "tr GO Weekly TT october",
+      "url": "https://discord.com/channels/@me/1558793395198099618/1559077596786991185",
+      "publishedAt": "2026-10-12T05:37:45.335000+00:00",
+      "imageUrl": "https://cdn.discordapp.com/attachments/1498664407423516752/1559077560862769162/tr_GO_Weekly_TT_october.png?ex=6acfbde0&is=6ace6c60&hm=bf6d916c38fdf9bab23cb50684ff5c684cff30d80e89cb1bd63f6d84f4a3abe9&",
+      "reviewStatus": "weekly",
+      "decision": "pending",
+      "reviewNote": "Match is not strong enough (medium).",
+      "ocrChecked": true,
+      "ocrText": "PAG © x) GOM-L/, 12-18 OCTOBER MONDAY TUESDAY WEDNESDAY THURSDAY FRIDAY SATURDAY SUNDAY 12 OCT 13 OCT 14 OCT 15 OCT 16 OCT 17 OCT 18 OCT re ( x) (ee es ers a a 'O Battle eo Scenic —~un Monday mre es sday sae Thursday Friday Sunday qa Up to 3 Special Trades One Rare Candy XL One Rare Candy XL 50 battles/day More Pokémon in the for completing Enter up to for completing 2 guaranteed wild and Boosted in-person 5 Showcases in-person 4x Stardust Candy XL from trade incense on Routes Max Battles. Raid Battles. from win rewards Increased chance Encounter Mateo 3* of Lucky Trade it Ul Mi q y eo ra Oy Spotlight Hour MONDA’ @ ROVATION 7) 2x Transfer Candy HATCH DAY is } yp Se (@) INESO) FANRRENIING / Local and exclusive events TCG 30th Celebration Best Buy, Target, Gar == until oct 20 APAC Cross-Region Pokémon Mall E> 6.2 Six museums Stamp Rally Observatory ADIDAS collab Mal @esa across Europe Until 2029 ED until Dec 6 Pes Until January 2027) Until Dec: Until 30 APR 2027 Pokémon Center Pokémon Jet UK NATIONAL until Aug 2027 until Aug 2027 TRUST SITES ANTO ay @ Le] Until Dec 31 alo | ENE. LIGHT G47IX 90 @xVea NIE R Follow for more g47ix.pro a",
+      "eventMatch": {
+        "eventId": "tcg30",
+        "eventTitle": "Pokémon TCG: 30th Celebration (at stores)",
+        "score": 0.676,
+        "confidence": "medium",
+        "matchedTerms": [
+          "poke",
+          "mon",
+          "tcg",
+          "30th",
+          "celebration",
+          "target",
+          "best",
+          "buy",
+          "more",
+          "oct",
+          "local",
+          "rewards"
+        ],
+        "alternatives": [
+          {
+            "eventId": "tcg30",
+            "eventTitle": "Pokémon TCG: 30th Celebration (at stores)",
+            "score": 0.676
+          },
+          {
+            "eventId": "sandile",
+            "eventTitle": "Sandile Hatch Day",
+            "score": 0.535
+          },
+          {
+            "eventId": "zorua",
+            "eventTitle": "Zorua Community Day",
+            "score": 0.416
+          }
+        ],
+        "method": "title-to-public/data.json heuristic",
+        "requiresHumanVerification": true
+      },
+      "signals": [
+        "picture text names the event",
+        "date in the picture is inside the event",
+        "posted around the event"
+      ],
+      "matchScore": 5,
+      "stagedPath": "/infographics/g47ix/discord-1559077596786991185.webp"
+    },
+    {
+      "id": "discord:1558972794673307799",
+      "source": "discord",
+      "creator": "",
+      "title": "GO Weekly Update",
+      "url": "https://discord.com/channels/@me/1558793395198099618/1558972794673307799",
+      "publishedAt": "2026-10-11T22:41:18.564000+00:00",
+      "imageUrl": "https://cdn.discordapp.com/attachments/886998693897719819/1558967503818850435/tr_GO_Weekly_TT_october.png?ex=6ad00021&is=6aceaea1&hm=7378562d8859a1d4bcdddf40d2940e98a8d8f900c8a598dad936ac92608733b1&",
+      "reviewStatus": "weekly",
+      "decision": "pending",
+      "reviewNote": "Match is not strong enough (medium).",
+      "ocrChecked": true,
+      "ocrText": "PAG © x) GOM-L/, 12-18 OCTOBER MONDAY TUESDAY WEDNESDAY THURSDAY FRIDAY SATURDAY SUNDAY 12 OCT 13 OCT 14 OCT 15 OCT 16 OCT 17 OCT 18 OCT re ( x) (ee es ers a a 'O Battle eo Scenic —~un Monday mre es sday sae Thursday Friday Sunday qa Up to 3 Special Trades One Rare Candy XL One Rare Candy XL 50 battles/day More Pokémon in the for completing Enter up to for completing 2 guaranteed wild and Boosted in-person 5 Showcases in-person 4x Stardust Candy XL from trade incense on Routes Max Battles. Raid Battles. from win rewards Increased chance Encounter Mateo 3* of Lucky Trade it Ul Mi q y eo ra Oy Spotlight Hour MONDA’ @ ROVATION 7) 2x Transfer Candy HATCH DAY is } yp Se (@) INESO) FANRRENIING / Local and exclusive events TCG 30th Celebration Best Buy, Target, Gar == until oct 20 APAC Cross-Region Pokémon Mall E> 6.2 Six museums Stamp Rally Observatory ADIDAS collab Mal @esa across Europe Until 2029 ED until Dec 6 Pes Until January 2027) Until Dec: Until 30 APR 2027 Pokémon Center Pokémon Jet UK NATIONAL until Aug 2027 until Aug 2027 TRUST SITES ANTO ay @ Le] Until Dec 31 alo | ENE. LIGHT G47IX 90 @xVea NIE R Follow for more g47ix.pro a",
+      "eventMatch": {
+        "eventId": "tcg30",
+        "eventTitle": "Pokémon TCG: 30th Celebration (at stores)",
+        "score": 0.676,
+        "confidence": "medium",
+        "matchedTerms": [
+          "poke",
+          "mon",
+          "tcg",
+          "30th",
+          "celebration",
+          "target",
+          "best",
+          "buy",
+          "more",
+          "oct",
+          "local",
+          "rewards"
+        ],
+        "alternatives": [
+          {
+            "eventId": "tcg30",
+            "eventTitle": "Pokémon TCG: 30th Celebration (at stores)",
+            "score": 0.676
+          },
+          {
+            "eventId": "sandile",
+            "eventTitle": "Sandile Hatch Day",
+            "score": 0.535
+          },
+          {
+            "eventId": "zorua",
+            "eventTitle": "Zorua Community Day",
+            "score": 0.416
+          }
+        ],
+        "method": "title-to-public/data.json heuristic",
+        "requiresHumanVerification": true
+      },
+      "signals": [
+        "picture text names the event",
+        "date in the picture is inside the event",
+        "posted around the event"
+      ],
+      "matchScore": 5,
+      "stagedPath": "/infographics/g47ix/discord-1558972794673307799.webp"
+    },
+    {
+      "id": "discord:1558805865321201783",
+      "source": "discord",
+      "creator": "",
+      "title": "MINION",
+      "url": "https://discord.com/channels/@me/1558793395198099618/1558805865321201783",
+      "publishedAt": "2026-10-11T11:37:59.505000+00:00",
+      "imageUrl": "https://cdn.discordapp.com/attachments/1558793395198099618/1558805865069412382/MINION.png?ex=6accc697&is=6acb7517&hm=3ab3fdfcab68c135c2fa995ec1ccbc177bde70d940edfa8488f2c407ad9b51e5&",
+      "reviewStatus": "published",
+      "decision": "approved",
+      "ocrChecked": true,
+      "ocrText": "& “ds MINIOR SHOWERS ] ~~ allele Debut Na eg ge Meteor Form Red Core Yellow Core ee Core BlueCore IndigoCore VioletCore Green Core You might find one in its Meteor Form in the wild during the following meteor showers each year and you'll re receive increased Stardust for catching Minior | . | | 19 124 a ETA AQUARIIDS OCcT OCcT ORIONIDS 2027 e SOUTHERN 14119 LEONIDS 281 2 DELTA AQUARIIDS NOV NOV JULY AUG 2027 GEMINIDS PERSEIDS 2027 yo EXPLORE BY STARLIGHT the in-game sky will be lit by shooting stars! From 5:00 pm to 9:00 pm local time | @ BATTLE FORM Increased METEOR FORM BELOW 50% HP Minior encounters for catching Minior Increased Stardust Higher Defense ae Lower Defense o i Lower Attack ei Higher Attack ® Follow formore G47|X £) (0) @x | oo Minior will not be eligible for the 2027 LAIC www.g47ix.pro",
+      "eventMatch": {
+        "eventId": "minior",
+        "eventTitle": "Orionids Meteor Shower: Minior Debut",
+        "score": 0.643,
+        "confidence": "medium",
+        "matchedTerms": [
+          "minior",
+          "orionids",
+          "meteor",
+          "debut",
+          "form",
+          "stardust"
+        ],
+        "alternatives": [
+          {
+            "eventId": "minior",
+            "eventTitle": "Orionids Meteor Shower: Minior Debut",
+            "score": 0.643
+          },
+          {
+            "eventId": "sendai",
+            "eventTitle": "GO Wild Area: Sendai",
+            "score": 0.276
+          },
+          {
+            "eventId": "wag",
+            "eventTitle": "GO Wild Area: Global",
+            "score": 0.269
+          }
+        ],
+        "method": "title-to-public/data.json heuristic",
+        "requiresHumanVerification": true
+      },
+      "reviewNote": "Match is not strong enough (medium).",
+      "signals": [
+        "picture text names the event",
+        "posted around the event"
+      ],
+      "matchScore": 4,
+      "stagedPath": "/infographics/g47ix/discord-1558805865321201783.png",
+      "publishedEvent": "minior"
+    },
+    {
+      "id": "discord:1558805792956620800",
+      "source": "discord",
+      "creator": "",
+      "title": "Dmax LAKE",
+      "url": "https://discord.com/channels/@me/1558793395198099618/1558805792956620800",
+      "publishedAt": "2026-10-11T11:37:42.252000+00:00",
+      "imageUrl": "https://cdn.discordapp.com/attachments/1558793395198099618/1558805792604426290/Dmax_LAKE.png?ex=6ad01246&is=6acec0c6&hm=a24858390e48964bd4dfb51adbfa726bfdeae7f8a2dca1e12dc2e882fe2db6ef&",
+      "reviewStatus": "published",
+      "decision": "approved",
+      "reviewNote": "Match is not strong enough (low).",
+      "ocrChecked": true,
+      "ocrText": "local time Europe, the Middle East, Africa, and India Nort = a (D G _— 2:00 pm to 5:00 pm oo + ao Asia-Pacific region ++ Vv) ee a Ww Americas Remote Limit and Greenland increased to 20 DY NIANIAX Lake Trio Max Battle Day === All Power Spots will Be Upto3 Max Particle The following bonus host Max Battles re Vv Special Trades 8x MP from will be active from ¥ and will refresh more Az ie ) collection limit increased to 1,600 (OR) Power Spots 12:00 am to 5:00 pm frequently Si for the day. local time 2x Max Particles A from exploring Paid 2x XP from 1/4 adventuring 3 Timed Max Battles distance to receive USD Research 25,000 XP xP oh Max Particles Follow for more G4A7|X 6) OF.:) xX | > | www.g47ix.pro",
+      "eventMatch": {
+        "eventId": "zorua",
+        "eventTitle": "Zorua Community Day",
+        "score": 0.406,
+        "confidence": "low",
+        "matchedTerms": [
+          "day",
+          "special",
+          "more",
+          "bonus"
+        ],
+        "alternatives": [
+          {
+            "eventId": "zorua",
+            "eventTitle": "Zorua Community Day",
+            "score": 0.406
+          },
+          {
+            "eventId": "novcd",
+            "eventTitle": "November Community Day",
+            "score": 0.394
+          },
+          {
+            "eventId": "sandile",
+            "eventTitle": "Sandile Hatch Day",
+            "score": 0.272
+          }
+        ],
+        "method": "title-to-public/data.json heuristic",
+        "requiresHumanVerification": true
+      },
+      "signals": [
+        "posted around the event"
+      ],
+      "matchScore": 1,
+      "stagedPath": "/infographics/g47ix/discord-1558805792956620800.webp",
+      "publishedEvent": "leekduck:dynamax-uxie-mesprit-azelf-max-battle-day-2026",
+      "publishedEvents": [
+        "leekduck:dynamax-uxie-mesprit-azelf-max-battle-day-2026"
+      ]
+    },
+    {
+      "id": "discord:1558797600608747571",
+      "source": "discord",
+      "creator": "",
+      "title": "Hatch event",
+      "url": "https://discord.com/channels/@me/1558793395198099618/1558797600608747571",
+      "publishedAt": "2026-10-11T11:05:09.044000+00:00",
+      "imageUrl": "https://cdn.discordapp.com/attachments/1558793395198099618/1558797600159965184/Hatch_event.png?ex=6acd67a4&is=6acc1624&hm=3cb116d450fbd62cee086aee6ea894aea93b8df3953d8800f5ecc8928113f5ca&",
+      "reviewStatus": "published",
+      "decision": "approved",
+      "ocrChecked": true,
+      "ocrText": "of 17 1! Y Ms = 4.22 Sandile HATCH DAY + + Free Timed Sandile will hatch more 592 CP frequently from 2 km eggs Research a+ g a °©e + 2x Candy from 1/2 Egg Increased chance Increased chance hatching Eggs Hatch Distance of receiving 2 km Eggs of hatching Shiny @® OPTIONAL This Timed Research will challenge 1/4 Hatch you to walk 1 km to earn: 2 USD a Distance and more ae",
+      "eventMatch": {
+        "eventId": "sandile",
+        "eventTitle": "Sandile Hatch Day",
+        "score": 0.859,
+        "confidence": "high",
+        "matchedTerms": [
+          "sandile",
+          "hatch",
+          "day",
+          "shiny",
+          "more",
+          "eggs",
+          "candy",
+          "egg",
+          "distance"
+        ],
+        "alternatives": [
+          {
+            "eventId": "sandile",
+            "eventTitle": "Sandile Hatch Day",
+            "score": 0.859
+          },
+          {
+            "eventId": "zorua",
+            "eventTitle": "Zorua Community Day",
+            "score": 0.425
+          },
+          {
+            "eventId": "novcd",
+            "eventTitle": "November Community Day",
+            "score": 0.399
+          }
+        ],
+        "method": "title-to-public/data.json heuristic",
+        "requiresHumanVerification": true
+      },
+      "reviewNote": "Creator not set. Set the DISCORD_CREATOR variable to credit the right person.",
+      "signals": [
+        "caption names the event",
+        "picture text names the event",
+        "shows sandile",
+        "posted around the event"
+      ],
+      "matchScore": 6,
+      "stagedPath": "/infographics/g47ix/discord-1558797600608747571.png",
+      "publishedEvent": "sandile"
+    },
+    {
+      "id": "discord:1558797419636985940",
+      "source": "discord",
+      "creator": "",
+      "title": "GOWILD 2026 2",
+      "url": "https://discord.com/channels/@me/1558793395198099618/1558797419636985940",
+      "publishedAt": "2026-10-11T11:04:25.897000+00:00",
+      "imageUrl": "https://cdn.discordapp.com/attachments/1558793395198099618/1558797419351904287/GOWILD_2026-2.png?ex=6ad00a79&is=6aceb8f9&hm=949f9021d44d6316e88364591f3d83793d9553b669339136379270be0341bdc7&",
+      "reviewStatus": "published",
+      "decision": "approved",
+      "reviewNote": "Only one signal agrees.",
+      "ocrChecked": true,
+      "ocrText": "local time GO CRD ++ 14°15 WILD. .., ++ L NOV NOV AREA i \" Y Ng 10:00 am - 6:00 pm each day 2026 7 \\r 15 14, Machamp New wearing a modern jacket NOV NOV kn Dynamax ZA (both days) he P Mu le ‘Ne oR) \\ ne (geo \\ &® 2 acs ) Event themed MP collection limit 8h Up to 3 free Raid 3 event snapshots Mighty Pokémon Passes per day Field Research encounter per day increased to 1600 Party Play on Routes Mighty Canbe mmm More likely to aa More difficult More likely to * Pokémon shiny gumue have high IVs be XL or XXL & & a are back! ee! to catch Za Y ®, —_2 of iths cok ited | GO Safari Ball 7 willbe available @ 2 (2% «abi ey o ee. © + ERE py ts dd dk a t+ et gt ++ it ek x Oegne é_k ai he Ge (a ae eee * A+ ¥ “ w — z= © Ticket holders exclusives — s 11.99 Featured bo PAY Increased Max Particle Me Up to 6 Special Attacks ay Shiny 2x Catch & A) collection limit trades each day and reduced Karate Chop + chance from Gyms each day Up to 6 Raid Passes candy VU increasedto 3200 4 Sd trade cost Choose your path Special Research Six event Increased Chance cs J Lure Module ) More MP from Power Spots 2x Indense whe snapshot of 10 km eggs re will last 2h k and exploration & Duration & encounters per day from Stops/Gyms Earth Power Meteor Mash Magnet Bomb eng Wht Ticket Holders (Exc. Daily Supply Balloons Na, Oy Incense Spawns Bx oO ss Oe ay! he ee Adventure Incense) with Safari Balls Gigaton > Breaking Swipe Brutal Swing Hammer Daily Discoveries paused www.g47ix.pro Follow for more G471X £) (CO) @Ox | Q",
+      "eventMatch": {
+        "eventId": "novcd",
+        "eventTitle": "November Community Day",
+        "score": 0.792,
+        "confidence": "high",
+        "matchedTerms": [
+          "november",
+          "day",
+          "2026",
+          "nov",
+          "featured",
+          "poke",
+          "mon"
+        ],
+        "alternatives": [
+          {
+            "eventId": "novcd",
+            "eventTitle": "November Community Day",
+            "score": 0.792
+          },
+          {
+            "eventId": "sendai",
+            "eventTitle": "GO Wild Area: Sendai",
+            "score": 0.549
+          },
+          {
+            "eventId": "wag",
+            "eventTitle": "GO Wild Area: Global",
+            "score": 0.537
+          }
+        ],
+        "method": "title-to-public/data.json heuristic",
+        "requiresHumanVerification": true
+      },
+      "signals": [
+        "picture text names the event"
+      ],
+      "matchScore": 2,
+      "stagedPath": "/infographics/g47ix/discord-1558797419636985940.webp",
+      "publishedEvent": "wag",
+      "publishedEvents": [
+        "wag"
+      ]
+    },
+    {
+      "id": "discord:1558797282634236005",
+      "source": "discord",
+      "creator": "",
+      "title": "image",
+      "url": "https://discord.com/channels/@me/1558793395198099618/1558797282634236005",
+      "publishedAt": "2026-10-11T11:03:53.233000+00:00",
+      "imageUrl": "https://cdn.discordapp.com/attachments/1558793395198099618/1558797282302758952/image.png?ex=6ad00a59&is=6aceb8d9&hm=e41754fc9ed1d8ccb0a7255abcdcdf591b834b68e1c02544641985224a45aa64&",
+      "reviewStatus": "published",
+      "decision": "approved",
+      "reviewNote": "Only one signal agrees.",
+      "ocrChecked": true,
+      "ocrText": "WILD sa MEXICO eal [a | ra GO AREA NY \" iL eo. 7 & 2 2026 ii N\\ G-MAX DURALUDON i DEBUT 6\" 8 NOV NOV Al/M GLOBAL eer a ++ anes | ++ +. t+ ++ f+ Oe = tag gy Crowned Energy bvailable for everyone Saturday Sunday LOCATION BACKGROUNDS | [ SPECIAL BACKGROUNDS | yy, BR Ly ¥ dak a Location Background are only available a, from in-person Raids and Max Battles we . “ Follow for more G471X £) ax qo o www.g47ix.pro",
+      "eventMatch": {
+        "eventId": "wag",
+        "eventTitle": "GO Wild Area: Global",
+        "score": 0.857,
+        "confidence": "high",
+        "matchedTerms": [
+          "wild",
+          "area",
+          "global",
+          "2026",
+          "debut",
+          "background",
+          "raids",
+          "duraludon",
+          "max",
+          "battles",
+          "saturday",
+          "sunday"
+        ],
+        "alternatives": [
+          {
+            "eventId": "wag",
+            "eventTitle": "GO Wild Area: Global",
+            "score": 0.857
+          },
+          {
+            "eventId": "sendai",
+            "eventTitle": "GO Wild Area: Sendai",
+            "score": 0.579
+          },
+          {
+            "eventId": "raid:xerneas:2026-09-30",
+            "eventTitle": "Xerneas 5-star raids",
+            "score": 0.272
+          }
+        ],
+        "method": "title-to-public/data.json heuristic",
+        "requiresHumanVerification": true
+      },
+      "signals": [
+        "picture text names the event"
+      ],
+      "matchScore": 3,
+      "stagedPath": "/infographics/g47ix/discord-1558797282634236005.webp",
+      "publishedEvent": "wag",
+      "publishedEvents": [
+        "wag"
+      ]
+    },
+    {
+      "id": "discord:1558796039035682828",
+      "source": "discord",
+      "creator": "",
+      "title": "https://cdn.discordapp.com/attachments/886998693897719819/1552411694138007612/TREK_.png?ex=6ab5838e&is=6ab4320e&hm=76f744af4d296ec698e8d1b12f83095feef68323ed656971db4f5342903c8617&",
+      "url": "https://discord.com/channels/@me/1558793395198099618/1558796039035682828",
+      "publishedAt": "2026-10-11T10:58:56.736000+00:00",
+      "imageUrl": "https://cdn.discordapp.com/attachments/886998693897719819/1552411694138007612/TREK_.png?ex=6acfe18e&is=6ace900e&hm=8030ee820a9f2c71a017e502e0d6dd0d10598f4d4b6b89d6d6c0beb3e47199d1&",
+      "reviewStatus": "published",
+      "decision": "approved",
+      "reviewNote": "Match is not strong enough (low).",
+      "ocrChecked": true,
+      "ocrText": "SS = oN yl 7 BUDDY BUF TREK } 10:00 am 8:00 pm POKEMON DEBUT a@ BRAMBLIN Ng a + Y | y MAX SeBuT Shiny Boost ny Boost Ip g- bi =i . Ss ++ P @), +. be ae Incense > £m: Encounters (excl. Daily Incense) ++. fs va Wig t+ Ws \\7 @ ++ Pz] \\ ay A eA, + alll re AL SS A GO Pa",
+      "eventMatch": {
+        "eventId": "trek",
+        "eventTitle": "Fall Marathon: Buddy Trek",
+        "score": 0.475,
+        "confidence": "low",
+        "matchedTerms": [
+          "trek",
+          "buddy",
+          "debut",
+          "shiny",
+          "bramblin",
+          "incense",
+          "encounters",
+          "max",
+          "https",
+          "com"
+        ],
+        "alternatives": [
+          {
+            "eventId": "trek",
+            "eventTitle": "Fall Marathon: Buddy Trek",
+            "score": 0.475
+          },
+          {
+            "eventId": "minior",
+            "eventTitle": "Orionids Meteor Shower: Minior Debut",
+            "score": 0.19
+          },
+          {
+            "eventId": "tcg30",
+            "eventTitle": "Pokémon TCG: 30th Celebration (at stores)",
+            "score": 0.034
+          }
+        ],
+        "method": "title-to-public/data.json heuristic",
+        "requiresHumanVerification": true
+      },
+      "signals": [
+        "picture text names the event",
+        "posted around the event"
+      ],
+      "matchScore": 3,
+      "stagedPath": "/infographics/g47ix/discord-1558796039035682828.webp",
+      "publishedEvent": "trek",
+      "publishedEvents": [
+        "trek"
+      ]
+    },
+    {
+      "id": "reddit:1wuvscq",
+      "source": "reddit",
+      "creator": "G47IX",
+      "title": "Harvest Festival New Leaders Lineup",
+      "url": "https://www.reddit.com/r/TheSilphRoad/comments/1wuvscq/harvest_festival_new_leaders_lineup/",
+      "publishedAt": "2026-10-01T10:22:31.000Z",
+      "imageUrl": "https://preview.redd.it/3tr2udlo0ush1.png?auto=webp&s=1985f20472071382f5a66cb3d30a05daf244bfe1",
+      "discoveredAt": "2026-10-12T02:48:25.921Z",
+      "eventMatch": null,
+      "reviewStatus": "rejected",
+      "supersedesCandidateId": null,
+      "reviewNote": "No event name found in the caption or image text.",
+      "decision": "rejected",
+      "ocrChecked": true,
+      "ocrText": "a HAR ™— i TAKEN 910 CP an a 1500 CP RRS Sy a. a 6/14/13 STARTING 2 OCT OVE F 6/14/13 oy — (~—» ON Be Mt t ek f ww ww U pix Ss? t+ inh) > ¢ A t ied 4 4 Pw rN %. @ » 6a ae e. Se Le Ae 309 CP 335 CP 229 CP =& 510 CP & 553 CP 0: 378 CP Follow for more G47|X £16) ax oo Twill I Licht www.g47ix.pro RAIS",
+      "signals": [],
+      "matchScore": 0,
+      "stagedPath": "/infographics/g47ix/reddit-1wuvscq.png"
+    },
+    {
+      "id": "reddit:1v3w5rf",
+      "source": "reddit",
+      "creator": "G47IX",
+      "title": "New Pokémon/CP background opacity in 421",
+      "url": "https://www.reddit.com/r/TheSilphRoad/comments/1v3w5rf/new_pok%C3%A9moncp_background_opacity_in_421/",
+      "publishedAt": "2026-07-22T23:00:57.000Z",
+      "imageUrl": "https://preview.redd.it/muhsskk33veh1.png?auto=webp&s=c0dad2d36adf8e10a8c236e2ccaea66be159a938",
+      "history": true,
+      "discoveredAt": "2026-10-12T02:48:25.921Z",
+      "eventMatch": null,
+      "reviewStatus": "rejected",
+      "supersedesCandidateId": null,
+      "reviewNote": "No event name found in the caption or image text.",
+      "decision": "rejected",
+      "ocrChecked": true,
+      "ocrText": "& Totodile ce/0 © Pikachu cP376 na | Y",
+      "signals": [],
+      "matchScore": 0,
+      "stagedPath": "/infographics/g47ix/reddit-1v3w5rf.png"
+    }
+  ]
+}

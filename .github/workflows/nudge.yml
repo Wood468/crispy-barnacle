@@ -1,0 +1,86 @@
+name: Daily nudge
+
+on:
+  schedule:
+    - cron: "30 20 * * *"   # about 7:30 am in Melbourne
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Only print the message, do not send it"
+        default: "true"
+      find_chat_id:
+        description: "Set to true to print your Telegram chat ID (send your bot a message first)"
+        default: "false"
+      link_buttons:
+        description: "Set to true (once) so Approve / Reject buttons under infographics work; false does nothing, unlink removes them"
+        default: "false"
+      send_test:
+        description: "Set to true to send one test message to your chat"
+        default: "false"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: nudge
+
+env:   # the secret names are spelled CLOUDFARE_* in GitHub (typo kept on purpose); scripts/r2-sync.sh reads these
+  CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFARE_API_TOKEN }}
+  CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFARE_ACCOUNT_ID }}
+
+jobs:
+  nudge:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Restore pictures from R2
+        run: bash scripts/r2-sync.sh restore
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Find my chat ID
+        if: ${{ github.event.inputs.find_chat_id == 'true' }}
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+        run: node scripts/telegram-tools.mjs find
+      - name: Link the Approve / Reject buttons
+        if: ${{ github.event.inputs.link_buttons == 'true' || github.event.inputs.link_buttons == 'unlink' }}
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+        run: node scripts/telegram-tools.mjs ${{ github.event.inputs.link_buttons == 'unlink' && 'unlink' || 'link' }}
+      - name: Send a test message
+        if: ${{ github.event.inputs.send_test == 'true' }}
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          TELEGRAM_GROUP_ID: ${{ secrets.TELEGRAM_GROUP_ID }}
+          TELEGRAM_TOPIC_EVENTS: ${{ secrets.TELEGRAM_TOPIC_EVENTS || secrets.TELEGRAM_TOPICS_EVENTS }}
+          TELEGRAM_TOPIC_PICTURES: ${{ secrets.TELEGRAM_TOPIC_PICTURES || secrets.TELEGRAM_TOPICS_PICTURES }}
+          TELEGRAM_TOPIC_CHANGES: ${{ secrets.TELEGRAM_TOPIC_CHANGES || secrets.TELEGRAM_TOPICS_CHANGES }}
+          TELEGRAM_TOPIC_SYSTEM: ${{ secrets.TELEGRAM_TOPIC_SYSTEM || secrets.TELEGRAM_TOPICS_SYSTEM }}
+        run: node scripts/telegram-tools.mjs test
+      - name: Send the note when there is something new
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          TELEGRAM_GROUP_ID: ${{ secrets.TELEGRAM_GROUP_ID }}
+          TELEGRAM_TOPIC_EVENTS: ${{ secrets.TELEGRAM_TOPIC_EVENTS || secrets.TELEGRAM_TOPICS_EVENTS }}
+          TELEGRAM_TOPIC_PICTURES: ${{ secrets.TELEGRAM_TOPIC_PICTURES || secrets.TELEGRAM_TOPICS_PICTURES }}
+          TELEGRAM_TOPIC_CHANGES: ${{ secrets.TELEGRAM_TOPIC_CHANGES || secrets.TELEGRAM_TOPICS_CHANGES }}
+          TELEGRAM_TOPIC_SYSTEM: ${{ secrets.TELEGRAM_TOPIC_SYSTEM || secrets.TELEGRAM_TOPICS_SYSTEM }}
+          DRY_RUN: ${{ github.event.inputs.dry_run || 'false' }}
+        run: node scripts/nudge.mjs
+      - name: Remember what was sent
+        shell: bash
+        run: |
+          set -euo pipefail
+          git add -- data/nudge-state.json 2>/dev/null || true
+          if git diff --cached --quiet; then exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Nudge: remember what was sent [skip ci]"
+          git pull -q --rebase origin main
+          git push origin HEAD:main

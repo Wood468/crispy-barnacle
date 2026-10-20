@@ -1,0 +1,185 @@
+{
+ "items": [
+  {
+   "id": "season:24",
+   "label": "Season",
+   "name": "Twilight Trails",
+   "s": "2026-09-08T10:00",
+   "e": "2026-12-01T10:00",
+   "img": "/img/ext/season-24-twilight-trails-99c978ed.jpg",
+   "url": "https://leekduck.com/events/season-24-twilight-trails/",
+   "notes": [
+    "Daily Discoveries: Max Monday, Raid Hour on Wednesdays and Friendship Friday trades.",
+    "Mega debuts include Staraptor and Chandelure; Dynamax Rhyhorn, Sneasel and Sizzlipede join Max Battles.",
+    "Dynamax Uxie, Mesprit and Azelf appear on a dedicated Max Battle Day.",
+    "Community Days: 12 September, 10 October, 21 November."
+   ],
+   "milestones": [
+    {
+     "rank": 1,
+     "items": [
+      "One extra Candy per trade.",
+      "A guaranteed Candy XL from trades with Trainers level 31 and above."
+     ]
+    },
+    {
+     "rank": 25,
+     "items": [
+      "Higher limits for opening Gifts, receiving Gifts from PokéStops and Gym Photo Discs, and storing Gifts."
+     ]
+    },
+    {
+     "rank": 50,
+     "items": [
+      "Daily Adventure Incense lasts twice as long."
+     ]
+    },
+    {
+     "rank": 75,
+     "items": [
+      "More XP and Stardust from hatching Eggs."
+     ]
+    }
+   ],
+   "sections": [
+    {
+     "t": "Debuts",
+     "icon": "/ico/g/event.webp",
+     "items": [
+      "Paldea Pokémon arrive, starting with Maschiff and Mabosstiff.",
+      "Mega Evolution debuts include Staraptor and Chandelure, with more to come."
+     ]
+    },
+    {
+     "t": "Max Battles",
+     "icon": "/ico/g/raid.webp",
+     "items": [
+      "Dynamax Rhyhorn, Dynamax Sneasel and Dynamax Sizzlipede appear in Max Battles through the Season; more show up at Power Spots.",
+      "Dynamax Uxie, Dynamax Mesprit and Dynamax Azelf appear on a dedicated Max Battle Day."
+     ]
+    },
+    {
+     "t": "New this Season",
+     "icon": "/ico/pass.webp",
+     "items": [
+      "Daily Discoveries: Max Monday, Raid Hour on Wednesdays and Friendship Friday for in-person trades.",
+      "GO Pass and GO Pass Deluxe: earn GO Points from Pass Tasks to climb ranks. Deluxe is the paid track.",
+      "Research Breakthrough: Field Research can unlock encounters with Season-themed Pokémon.",
+      "New boxes are planned for the Web Store."
+     ]
+    },
+    {
+     "t": "Community Days",
+     "icon": "/ico/g/event.webp",
+     "items": [
+      "12 September, 10 October and 21 November."
+     ]
+    }
+   ],
+   "img_credit": "Leek Duck"
+  },
+  {
+   "id": "season:pass-oct",
+   "label": "GO Pass",
+   "name": "GO Pass: October",
+   "s": "2026-10-06T10:00",
+   "e": "2026-11-03T10:00",
+   "img": "/img/ext/go-pass-october-2026-01ad36e2.jpg",
+   "url": "https://leekduck.com/events/go-pass-october-2026/",
+   "notes": [
+    "Kyogre encounter at Rank 100; the Deluxe track adds the Lucky Trinket.",
+    "Unlimited GO Points on 31 October and 1 November.",
+    "Unclaimed rewards expire 5 November, 10:00 am."
+   ],
+   "sections": [
+    {
+     "t": "Highlights",
+     "icon": "/ico/g/mythical.webp",
+     "items": [
+      "Kyogre encounter at Rank 100 (Level 20).",
+      "The Lucky Trinket returns as the final reward on the Deluxe track."
+     ]
+    },
+    {
+     "t": "Dates",
+     "icon": "/ico/g/event.webp",
+     "items": [
+      "Runs 6 October, 10:00 am to 3 November, 10:00 am (local time).",
+      "Unlimited GO Points: 31 October 12:00 am to 1 November 11:59 pm.",
+      "Unclaimed rewards expire 5 November, 10:00 am; the Deluxe Lucky Trinket expires 8 November, 11:59 pm."
+     ]
+    },
+    {
+     "t": "Deluxe extras",
+     "icon": "/ico/g/powerup.webp",
+     "items": [
+      "Lucky Trinket at Rank 100 and a Super Incubator at Rank 99.",
+      "Extra Pokémon encounters, such as Komala, Furfrou, Ampharos, Chansey, Porygon, Snom, Rockruff and Orthworm.",
+      "Larger totals of Stardust, XP, Candy, Rare Candy, Max Particles and Poké Balls."
+     ]
+    },
+    {
+     "t": "Web Store",
+     "icon": "/ico/g/event.webp",
+     "items": [
+      "Deluxe: gift of 10 Ultra Balls, 5 Max Revives, 1 Premium Battle Pass and 5 Max Potions.",
+      "Deluxe + 10 Ranks: the same, with 2 Premium Battle Passes.",
+      "Web-exclusive Ultra Box: 20 Ultra Balls, 10 Max Revives, 10 Max Potions and 5 Premium Battle Passes."
+     ]
+    },
+    {
+     "t": "Lucky Trinket",
+     "icon": "/ico/trade.webp",
+     "items": [
+      "A one-time item that makes you and a friend Lucky Friends, even if you are not Best Friends yet.",
+      "Your next trade with that friend makes both Pokémon Lucky.",
+      "Needs the friend to be at least Great Friends; you cannot use it on a current Lucky Friend. Trading distance is unchanged."
+     ]
+    }
+   ],
+   "points": [
+    [
+     "Catch 75 Pokémon",
+     200,
+     "Weekly"
+    ],
+    [
+     "Win a raid",
+     150,
+     "Weekly"
+    ],
+    [
+     "Make 20 Great Throws",
+     150,
+     "Weekly"
+    ],
+    [
+     "Hatch 3 Eggs",
+     150,
+     "Weekly"
+    ],
+    [
+     "Earn 10 buddy hearts",
+     150,
+     "Weekly"
+    ],
+    [
+     "Spin 25 PokéStops or Gyms",
+     100,
+     "Weekly"
+    ],
+    [
+     "Use 20 Berries",
+     100,
+     "Weekly"
+    ],
+    [
+     "Catch 15 Pokémon",
+     200,
+     "Daily"
+    ]
+   ],
+   "img_credit": "Leek Duck"
+  }
+ ]
+}

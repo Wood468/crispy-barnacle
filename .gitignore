@@ -1,0 +1,6 @@
+# Pictures live in the R2 bucket, not in git. Workflows restore them at the start of a run and save new ones at the end (scripts/r2-sync.sh).
+public/infographics/
+public/img/ext/
+data/tg-inbox/
+node_modules/
+private/

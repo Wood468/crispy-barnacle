@@ -1,0 +1,85 @@
+{
+ "updated": "2026-10-20T00:26:55.205Z",
+ "joinedThisRun": [],
+ "same": [],
+ "crossList": [
+  {
+   "keep": {
+    "id": "minior",
+    "name": "Orionids Meteor Shower: Minior Debut",
+    "place": "",
+    "start": "2026-10-19",
+    "end": "2026-10-24",
+    "list": "curated"
+   },
+   "dupe": {
+    "id": "w-explore-by-starlight-during-meteor-showers-for-a-c",
+    "name": "Explore by starlight during meteor showers for a chance to encounter Minior!",
+    "place": "",
+    "start": "2026-10-19",
+    "end": "2026-10-24",
+    "list": "world"
+   },
+   "why": "same dates, 3 shared words (75%)"
+  },
+  {
+   "keep": {
+    "id": "sendai",
+    "name": "GO Wild Area: Sendai",
+    "place": "",
+    "start": "2026-11-06",
+    "end": "2026-11-08",
+    "list": "curated"
+   },
+   "dupe": {
+    "id": "w-go-wild-area-2026-sendai-tohoku",
+    "name": "GO Wild Area 2026 Sendai Tohoku",
+    "place": "Sendai and Tohoku, Japan",
+    "start": "2026-11-06",
+    "end": "2026-11-08",
+    "list": "world"
+   },
+   "why": "same dates, 3 shared words (100%)"
+  },
+  {
+   "keep": {
+    "id": "into",
+    "name": "Into the Wild",
+    "place": "",
+    "start": "2026-11-09",
+    "end": "2026-11-13",
+    "list": "curated"
+   },
+   "dupe": {
+    "id": "w-into-the-wild",
+    "name": "Into the Wild",
+    "place": "Play from anywhere",
+    "start": "2026-11-09",
+    "end": "2026-11-13",
+    "list": "world"
+   },
+   "why": "same dates, short matching titles"
+  },
+  {
+   "keep": {
+    "id": "minior3",
+    "name": "Minior Showers: Geminids",
+    "place": "",
+    "start": "2026-12-11",
+    "end": "2026-12-16",
+    "list": "curated"
+   },
+   "dupe": {
+    "id": "w-minior-showers-geminids",
+    "name": "Minior Showers: Geminids",
+    "place": "Play from anywhere",
+    "start": "2026-12-11",
+    "end": "2026-12-16",
+    "list": "world"
+   },
+   "why": "same dates, 3 shared words (100%)"
+  }
+ ],
+ "maybe": [],
+ "odd": []
+}

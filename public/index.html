@@ -1,0 +1,405 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>GO Field Notes</title>
+<meta name="description" content="Pokémon GO events, raids, Megas and a best-attackers checklist.">
+<meta name="theme-color" content="#0C0F14">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="GO Notes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/icon-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&family=Hanken+Grotesk:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/styles.css?v=20261014a">
+<link rel="stylesheet" href="/dash.css?v=20261015e">
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div><h1>GO Field Notes</h1>
+    <p class="date" id="today"></p></div>
+    <div class="hbtns">
+      <button type="button" class="hbtn" id="hwatch" aria-label="Watchlist"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5l2.6 5.4 5.9.8-4.3 4.1 1 5.9L12 16.9 6.8 19.7l1-5.9L3.5 9.7l5.9-.8z"/></svg><span class="hbd" id="wlcount" hidden></span></button>
+      <button type="button" class="hbtn" id="hmenu" aria-label="Menu"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="5" cy="12" r="1.3"/><circle cx="12" cy="12" r="1.3"/><circle cx="19" cy="12" r="1.3"/></svg></button>
+    </div>
+  </header>
+  <p class="fresh-line" id="fresh-line" hidden></p>
+  <div id="envbar" class="envbar" hidden></div>
+
+  <nav class="tabs" aria-label="Sections"><div class="row" role="tablist" id="tabs"></div></nav>
+
+  <main>
+    <!-- NOW -->
+    <section class="panel" id="tab-now" role="tabpanel">
+      <div id="prio" class="legacy-test-hook" aria-live="polite" aria-hidden="true"></div>
+      <details class="dd" id="shdd" hidden><summary>Shiny hunting <span class="cnt" id="shcnt"></span></summary><div class="body"><label><input type="checkbox" id="shhide" checked> Hide ones I already have as a shiny</label><div id="shlist" class="dexlist"></div></div></details>
+      <section class="agenda-section" id="foryou-sec" aria-labelledby="foryou-title" hidden>
+        <h2 class="sec2" id="foryou-title">For you</h2>
+        <p class="sub" style="margin:0 0 8px">Live and upcoming events with Pokémon you still need or follow.</p>
+        <div id="foryou" class="event-agenda"></div>
+      </section>
+      <section class="agenda-section" id="buy-sec" hidden>
+        <details class="buyplan"><summary>Purchase planner <small>tickets and passes in the web store</small></summary><div id="buy-body"></div></details>
+      </section>
+      <section class="agenda-section" id="weekly-sec" aria-labelledby="weekly-title" hidden>
+        <h2 class="sec2" id="weekly-title">At a glance</h2>
+        <div id="weekly" class="weekly-row"></div>
+      </section>
+      <section class="agenda-section" aria-labelledby="agenda-now-title">
+        <h2 class="sec2" id="agenda-now-title">Happening now</h2>
+        <div id="home-now" class="event-agenda"></div>
+      </section>
+      <section class="agenda-section" aria-labelledby="agenda-week-title">
+        <h2 class="sec2" id="agenda-week-title">This week</h2>
+        <div id="week" class="event-agenda"></div>
+      </section>
+      <section class="agenda-section" aria-labelledby="agenda-next-title">
+        <h2 class="sec2" id="agenda-next-title">Next week</h2>
+        <div id="spot" class="event-agenda"></div>
+      </section>
+      <section class="agenda-section" aria-labelledby="agenda-later-title">
+        <h2 class="sec2" id="agenda-later-title">Later this month</h2>
+        <div id="home-later" class="event-agenda"></div>
+      </section>
+
+      <p class="note">Times are local to wherever you are playing.</p>
+    </section>
+
+    <!-- RAIDS -->
+    <section class="panel" id="tab-raids" role="tabpanel" hidden>
+      <div id="rotnow" class="rotnow"></div>
+      <details class="dd" id="pvpdd">
+        <summary>PvP rankings <span class="cnt" id="pvpcnt"></span></summary>
+        <div class="body">
+          <p class="sub" style="margin:0" id="pvpnote"></p>
+          <select id="pvplg" aria-label="League"><option value="great">Great League (1500 CP)</option><option value="ultra">Ultra League (2500 CP)</option><option value="master">Master League (no limit)</option></select>
+          <div id="pvplist" class="dexlist"></div>
+        </div>
+      </details>
+      <p class="note">Shadow Raids run on weekends. Raid Hour is every Wednesday from 6 pm to 7 pm. Super Mega Raid Days fall on Oct 31 and Nov 28, with no boss details published in the sources I checked.</p>
+    </section>
+
+    <!-- EVENTS -->
+    <section class="panel" id="tab-events" role="tabpanel" hidden>
+      <div class="subnav" id="subnav-events" role="group" aria-label="Events views"></div>
+            <section class="panel" id="sub-timeline">
+        <div class="subnav inner" id="mode-events-timeline" hidden role="group" aria-label="Timeline filter"></div>
+        <div id="tl-all">
+        <div class="evsearch"><input type="search" id="evq" placeholder="Search events or Pokémon" aria-label="Search events or Pokémon" autocomplete="off"></div>
+        <div class="chips" id="evtypes" aria-label="Filter by kind"></div>
+        <div class="weekstrip" id="weekstrip" aria-label="This week"></div>
+        <div id="evtimeline"></div>
+        <p class="note" id="evsource"></p>
+      </div>
+        <div id="tl-more" hidden>
+        <section class="panel" id="tab-person">
+        <p class="intro">Ticketed events that happen in a real place. Most also have a global version you can play from home.</p>
+        <div class="grid" id="inperson" style="grid-template-columns:repeat(auto-fit,minmax(min(100%,22rem),1fr))"></div>
+        <div>
+          <h2 class="sec" style="margin-bottom:14px">Already over this year</h2>
+          <div class="tablewrap" tabindex="0" role="region" aria-label="GO Fest 2026 in person locations"><table>
+            <thead><tr><th>GO Fest 2026</th><th>Dates</th><th>Venue</th></tr></thead>
+            <tbody id="fests"></tbody></table></div>
+        </div>
+        <div>
+          <h2 class="sec" style="margin-bottom:14px">Around the world</h2>
+          <div id="world"></div>
+          <p class="note" id="worldnote"></p>
+        </div>
+      </section>
+        <div id="tl-debut">
+        <div>
+          <h2 class="sec" style="margin-bottom:14px">Announced</h2>
+          <div class="grid" id="up-announced" style="grid-template-columns:repeat(auto-fit,minmax(min(100%,20rem),1fr))"></div>
+        </div>
+          <p class="note">Only announced items are shown here. Anything found in game files but not announced is under Leaks.</p>
+        </div>
+        </div>
+      </section>
+      <section class="panel" id="sub-calendar" hidden>
+        <div class="calhead"><button type="button" class="calnav" id="calprev" aria-label="Previous month">‹</button><h2 class="sec2" id="calttl"></h2><button type="button" class="calnav" id="calnext" aria-label="Next month">›</button></div>
+        <div class="evtypes" id="calreg" role="group" aria-label="Region and range"></div>
+        <div class="calgrid" id="calgrid"></div>
+        <div id="calday"></div>
+      </section>
+      <section class="panel" id="sub-leaks" hidden>
+
+        <p class="intro">Not announced. These come from game files and datamine posts. They may change, be delayed or never ship. They are not events: nothing here has a date, a countdown or an alert.</p>
+        <p class="lkkey"><span class="lkswatch" aria-hidden="true"></span>Amber hatched with a dashed edge means datamined or not announced. Solid means announced or already in the game.</p>
+        <div id="up-watch" style="display:grid;gap:12px"></div>
+        <div id="up-dd" style="display:grid;gap:12px"></div>
+        <p class="note" id="up-updated"></p>
+            </section>
+
+            <!-- IN PERSON -->
+            <!-- UPCOMING -->
+          </section>
+
+    <!-- COLLECT -->
+    <section class="panel" id="tab-collect" role="tabpanel" hidden>
+      <div class="subnav" id="subnav-collect" role="group" aria-label="Collection views"></div>
+            <section class="panel" id="sub-opps">
+        <p class="intro">Upcoming events matched to the Pokémon you still need and the ones you follow. Only events from the schedule count; nothing here is a rumour.</p>
+        <div id="opps"></div>
+      </section>
+      <section class="panel" id="sub-mydex" hidden>
+        <div class="subnav inner" id="mode-collect-dex" role="group" aria-label="My Dex views"></div>
+        <section class="panel" id="tab-dex">
+        <details class="dd dexhow"><summary>How this works</summary><div class="body"><p class="sub" style="margin:0">Every Pokémon, #1 to #1025. Tick what you have, then shiny, lucky, shadow, purified and 100% IV. Anything you mark is counted as owned. Marks sync with your PIN, the same as on the Best Pokémon tab.</p></div></details>
+        <div class="prog">
+          <div class="nums">
+            <div><div class="n"><span id="dOwn">0</span><small> / <span id="dTotal">0</span></small></div><div class="l">OWNED IN POKÉMON GO</div></div>
+            <div style="text-align:right"><div class="n" id="dShiny">0</div><div class="l">SHINY</div></div>
+          </div>
+          <div class="bar" aria-hidden="true"><i id="dBar"></i></div>
+          <div class="dmini" id="dMini"></div>
+        </div>
+        <p class="sync" id="dsync" role="status" style="margin-top:-24px"></p>
+        <details class="dd" id="regdd">
+          <summary>Regional finder <span class="cnt" id="regcnt"></span></summary>
+          <div class="body">
+            <p class="sub" id="regnote" style="margin:0"></p>
+            <div class="tools"><select id="rsel" aria-label="Show regionals"><option value="mel">Catchable from Melbourne</option><option value="miss">Catchable from Melbourne, not owned</option><option value="all">All regional Pokémon</option></select></div>
+            <div id="reglist" class="dexlist"></div>
+          </div>
+        </details>
+        <div class="dexbar"><div class="tools">
+          <input type="search" id="dq" placeholder="Search name or number" aria-label="Search name or number">
+          <select id="dgen" aria-label="Generation"><option value="0">All generations</option></select>
+          <select id="dstat" aria-label="Show">
+            <option value="all">All</option>
+            <option value="missing">Need (confirmed generations)</option><option value="untracked">Not tracked</option>
+            <option value="own">Owned</option>
+            <option value="noshiny">No shiny yet</option>
+            <option value="shiny">Shiny</option>
+            <option value="nolucky">No lucky yet</option>
+            <option value="nohundo">No 100% yet</option>
+          </select>
+        </div>
+        <div class="genchips" id="genchips" role="group" aria-label="Jump to generation"></div></div>
+        <label class="dchk"><input type="checkbox" id="dunrel"> Show Pokémon that are not in Pokémon GO yet</label>
+        <div id="dexlist" class="dexlist"></div>
+        <p class="note" id="dnone" hidden>No Pokémon match.</p>
+        <button type="button" class="pill all" id="dmore" hidden style="justify-self:center">Show more</button>
+      </section>
+        <section class="panel" id="sub-forms" hidden>
+        <p class="intro">Regional forms, Mega, Primal and Gigantamax. These are the forms the main series has; not every one is in GO yet. Tap <b>Have</b> or <b>Need</b> only for ones you know. Nothing is assumed.</p>
+        <div class="tools"><input type="search" id="formq" placeholder="Search a Pokémon (e.g. Vulpix)" aria-label="Search forms" autocomplete="off"></div>
+        <div class="chips" id="formgrp" role="group" aria-label="Form type"></div>
+        <p class="sync" id="formsum" role="status"></p>
+        <div id="formlist" class="frows"></div>
+      </section>
+        <section class="panel" id="sub-import" hidden>
+        <p class="intro">Add Pokémon to your Dex from screenshots of your storage or Pokédex. The reading happens on this phone and the pictures are never uploaded. Nothing is applied until you approve it, a screenshot can only ever add <b>Have</b>, and it can never mark anything as missing.</p>
+        <div class="imp-box">
+          <label class="pill all imp-pick">Choose screenshots<input type="file" id="impfiles" class="imp-file-input" accept="image/*" multiple></label>
+          <p class="note">First use downloads a text-reading library (about 10 MB). Or paste names below.</p>
+          <textarea id="imptext" rows="3" placeholder="Or paste names, one per line" aria-label="Pasted Pokémon names"></textarea>
+          <button type="button" class="pill" id="impgo">Read it</button>
+        </div>
+        <p class="sync" id="impstat" role="status"></p>
+        <div id="impq"></div>
+        <div id="impbatches"></div>
+      </section>
+      </section>
+      <section class="panel" id="sub-megas" hidden>
+        <p class="intro">Track your Mega collection, Super Max progress and preparation for future Mega releases. Your status is personal; anything unmarked stays unknown.</p>
+        <div class="mega-summary" id="mega-summary"></div>
+        <div class="mega-controls">
+          <input type="search" id="mega-search" placeholder="Search Mega Pokémon" aria-label="Search Mega Pokémon">
+          <select id="mega-filter" aria-label="Filter Mega Pokémon">
+            <option value="all">All Mega forms</option><option value="released">Released in GO</option><option value="future">Not released in GO</option><option value="supermax">Super Max achieved</option><option value="move">Additional move eligible</option><option value="maxlevel">Maxed out</option><option value="nomax">Not max level yet</option><option value="hundo">Hundo ready</option><option value="shundo">Shundo ready</option><option value="unprepared">Needs preparation</option>
+          </select>
+        </div>
+        <div class="mega-goal" role="group" aria-label="Future Mega preparation goal">
+          <span>Preparation goal</span>
+          <label><input type="radio" name="mega-goal" value="hundo" checked> Hundo</label>
+          <label><input type="radio" name="mega-goal" value="shundo"> Shundo</label>
+          <label><input type="radio" name="mega-goal" value="both"> Both</label>
+        </div>
+        <div id="mega-list" class="mega-list"></div>
+        <p class="note">Release status and extra-attack eligibility are kept separate from your personal ownership marks. Check official in-game details before spending Mega Energy.</p>
+      </section>
+      <section class="panel" id="sub-guides" hidden>
+        <div class="subnav inner" id="mode-collect-guides" role="group" aria-label="Guides"></div>
+        <section class="panel" id="tab-best">
+        <p class="intro">The ten strongest raid attackers for each attack type, with the moves that make them strong. Mark which you have, which are shiny, hundo or maxed out, and track Elite TM and legacy moves you are still chasing. Your marks save to your account.</p>
+        <div class="prog">
+          <div class="nums">
+            <div><div class="n"><span id="cOwn">0</span><small> / <span id="cAll">0</span></small></div><div class="l">OWNED</div></div>
+            <div style="text-align:right"><div class="n" id="cHundo">0</div><div class="l">HUNDOS</div></div>
+          </div>
+          <div class="bar" aria-hidden="true"><i id="barOwn"></i></div>
+        </div>
+        <p class="sync" id="btSum" style="margin:0 0 6px"></p>
+        <p class="sync" id="sync" role="status" style="margin-top:-24px"></p>
+        <form id="pinform" class="pinform" hidden>
+          <label class="label" for="pin">Sync PIN</label>
+          <input id="pin" type="password" autocomplete="current-password" placeholder="Enter your sync PIN" aria-label="Sync PIN">
+          <button type="submit" class="pill all">Sync</button>
+        </form>
+        <div id="acct" class="acct"></div>
+        <div class="tools">
+          <input type="search" id="q" placeholder="Search Pokémon or move" aria-label="Search Pokémon or move">
+          <select id="status" aria-label="Show">
+            <option value="all">All</option>
+            <option value="missing">Need (confirmed generations)</option><option value="untracked">Not tracked</option>
+            <option value="own">Obtained</option>
+            <option value="nohundo">No hundo yet</option>
+            <option value="hundo">Hundos</option>
+            <option value="noshiny">Obtained, no shiny yet</option><option value="shiny">Shiny obtained</option>
+            <option value="notmaxed">Obtained, not maxed out</option><option value="maxed">Maxed out</option>
+            <option value="moveneeded">Still needs its Elite TM or legacy move</option><option value="movewait">Waiting on a move</option>
+          </select>
+        </div>
+        <div class="chips" id="typechips" aria-label="Filter by type"></div>
+        <div id="list" style="display:flex;flex-direction:column;gap:28px"></div>
+        <p class="empty" id="none" hidden>Nothing matches those filters.</p>
+        <p class="note" id="bnote">Ranked by estimated damage per second and bulk. Mega and Primal forms only help while they are active.</p>
+      </section>
+        <section class="panel" id="tab-hundo" hidden>
+        <p class="intro">A hundo is a Pokémon with perfect hidden stats. It is the most sought-after kind to keep for raids and Master League battles.</p>
+        <div class="guide">
+          <div class="block">
+            <h3>What the numbers mean</h3>
+            <div class="stat3" aria-label="15, 15, 15"><span>15</span><span>15</span><span>15</span></div>
+            <p>Every Pokémon has three hidden values called IVs: Attack, Defense and HP. Each runs from 0 to 15. A hundo has all three at 15, which the game shows as 100%.</p>
+            <p>The in-game appraisal calls it a 4-star Pokémon, with every stat bar full.</p>
+          </div>
+          <div class="block">
+            <h3>Where the odds come from</h3>
+            <dl class="odds">
+              <dt>Wild catch, no boost</dt><dd>1 in 4,096</dd>
+              <dt>Weather-boosted wild catch (floor of 4)</dt><dd>1 in 1,728</dd>
+              <dt>Raid, egg, research or Rocket reward (floor of 10)</dt><dd>1 in 216</dd>
+              <dt>Lucky Pokémon (floor of 12)</dt><dd>1 in 64</dd>
+            </dl>
+            <p class="muted">Standard game mechanics, not taken from the sources above. The "floor" is the lowest each stat can roll.</p>
+          </div>
+          <div class="block">
+            <h3>Slang you will see</h3>
+            <ul class="plain">
+              <li><b>Hundo:</b> 15/15/15, 100% IV.</li>
+              <li><b>Shundo:</b> a shiny hundo.</li>
+              <li><b>Nundo:</b> 0/0/0, the opposite extreme.</li>
+              <li><b>4-star:</b> the appraisal tier a hundo falls in, along with a few near-perfect ones.</li>
+            </ul>
+          </div>
+          <div class="block">
+            <h3>When it is worth chasing</h3>
+            <ul class="plain">
+              <li>Raids and gyms: a hundo adds a little extra damage and bulk, so it matters less than the right moves.</li>
+              <li>Master League: high IVs are the goal, so hundos are the standard.</li>
+              <li>Great and Ultra League: a low Attack with high Defense and HP often ranks better than 15/15/15.</li>
+              <li>Collecting: a hundo with a special background or shiny is a trophy.</li>
+            </ul>
+          </div>
+        </div>
+        <p class="note">Mark hundos on the Best Pokémon tab. Raid, egg and research rewards give you the best odds.</p>
+      </section>
+      </section>
+
+                  <!-- POKEDEX -->
+            <!-- BEST -->
+            <!-- HUNDO -->
+          </section>
+
+    <!-- SAVED -->
+    <section class="panel" id="tab-saved" role="tabpanel" hidden>
+      <div class="subnav" id="subnav-saved" role="group" aria-label="Settings: watchlist and menu"></div>
+      <section class="panel" id="sub-watch">
+        <p class="intro">Events you starred and Pokémon you follow. They sync between your devices once your sync PIN is entered.</p>
+      <div>
+        <h2 class="sec2">Followed Pokémon</h2>
+        <form id="followform" class="followform"><input type="search" id="followq" list="followdl" placeholder="Add a Pokémon to follow" aria-label="Pokémon to follow" autocomplete="off"><datalist id="followdl"></datalist><button type="submit" class="pill all">Follow</button></form>
+        <div id="followed"></div>
+      </div>
+      <div>
+        <h2 class="sec2">Saved events</h2>
+        <div id="savedev"></div>
+      </div>
+      </section>
+      <section class="panel" id="sub-menu" hidden>
+      <button type="button" class="dd-link" id="menu-leaks">Leaks <span aria-hidden="true">›</span><small>Datamined and not announced. Not events.</small></button>
+      <button type="button" class="dd-link" id="menu-places" data-places="">Places <span aria-hidden="true">›</span><small>Sourced venues and routes. No map.</small></button>
+      <p class="sync" id="usstat" role="status"></p>
+      <details class="dd" id="pindd">
+        <summary>Sync PIN <span class="cnt" id="pinstate"></span></summary>
+        <div class="body">
+          <p class="sub" style="margin:0">The PIN unlocks syncing your marks and saved events between devices. It is set once in Cloudflare (the secret SYNC_PIN); here you tell this device what it is.</p>
+          <form class="pinform" autocomplete="off"><input id="pinnew" type="password" placeholder="Enter or replace the PIN on this device" aria-label="Sync PIN to save on this device" autocomplete="off"><button type="submit" class="pill">Save</button></form>
+          <div class="pinshow"><button type="button" class="pill" id="pinshowbtn">Show saved PIN</button> <code id="pinshowval" hidden></code></div>
+          <button type="button" class="pill" id="pinrm">Remove from this device</button>
+        </div>
+      </details>
+      <details class="dd" id="kindsdd">
+        <summary>Event types to show</summary>
+        <div class="body"><p class="sub" style="margin:0">Tap a type to hide or show it in Week ahead, the Events list and the calendar. Battle League starts hidden.</p><div class="evtypes" id="kindsbox" role="group" aria-label="Event types to show"></div></div>
+      </details>
+      <details class="dd" id="alertsdd">
+        <summary>Alerts <span class="cnt" id="alertsum"></span></summary>
+        <div class="body" id="alerts"></div>
+      </details>
+      <details class="dd" id="calcard">
+        <summary>Add events to your calendar</summary>
+        <div class="body">
+          <p class="sub" style="margin:0">A calendar that updates itself with events, Spotlight Hours, Raid Hours and the weekly Max Battle Pokémon. Timed ones have a reminder 30 minutes before. Times show in your phone's local time.</p>
+          <ol class="sub" style="margin:0;padding-left:1.2rem;display:grid;gap:6px">
+            <li>On iPhone, tap <b>Subscribe</b>. If it asks, choose Subscribe, then Done.</li>
+            <li>Or in Settings: Calendar, Accounts, Add Account, Other, Add Subscribed Calendar, and paste the address below.</li>
+          </ol>
+          <a class="pill all" id="calsub" href="#" style="justify-self:start;text-decoration:none">Subscribe</a>
+          <input type="text" id="calurl" readonly aria-label="Calendar address" style="width:100%">
+        </div>
+      </details>
+      <details class="dd" id="srcdd">
+        <summary>Sources and freshness <span class="cnt" id="srcsum"></span></summary>
+        <div class="body" id="srcbody"><p class="sub">Loading…</p></div>
+      </details>
+      </section>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>Unofficial fan tool, not affiliated with Niantic, Scopely, Nintendo or The Pokémon Company. Pokémon names and artwork belong to their owners. Events as of <span id="asof"></span>. Confirm times in the game before a big outing.</p>
+    <details class="dd foot-dd">
+      <summary>Sources and credits</summary>
+      <div class="body">
+        <p>Infographics are the work of their named creators and link back to the original post. Costume pictures appear once the game files for them are published; until then you may see the plain Pokémon. If the live feed is unavailable the app falls back to its saved snapshot.</p>
+        <p><a href="/event-methodology.html">Sources, methodology &amp; data notes</a></p>
+        <ul>
+      <li><a href="https://pokemongohub.net/post/news/ultra-necrozma-ultra-burst-raid-datamine/">Pokémon GO Hub: Ultra Burst datamine (Sep 26)</a></li>
+      <li><a href="https://pokemongohub.net/post/news/new-additional-charged-attacks-for-every-mega-evolution-datamined/">Pokémon GO Hub: Mega Charged Attacks datamine (Oct 1)</a></li>
+      <li><a href="https://pokemongohub.net/post/event/october-2026-events/">Pokémon GO Hub: October 2026 events</a></li>
+      <li><a href="https://pokemongohub.net/post/event/save-the-dates-for-next-seasons-community-days-and-events/">Pokémon GO Hub: season save the dates</a></li>
+      <li><a href="https://leekduck.com/events/october-communityday2026/">Leek Duck: Zorua Community Day</a></li>
+      <li><a href="https://leekduck.com/events/pokemon-go-wild-area-2026-sendai-japan/">Leek Duck: GO Wild Area Sendai</a></li>
+      <li><a href="https://leekduck.com/events/pokemon-go-wild-area-2026-global/">Leek Duck: GO Wild Area Global</a></li>
+      <li><a href="https://pokemongo.com/post/save-the-date-go-fest-2026">Pokémon GO: GO Fest 2026 save the date</a></li>
+      <li><a href="https://www.poketools.com/pokemon-go-best-attackers">Poketools: best raid attackers</a></li>
+    </ul>
+      </div>
+    </details>
+  </footer>
+</div>
+
+<script src="/imgerr.js?v=20261015a"></script>
+<script src="/lib.js?v=20261012n"></script>
+<script src="/move.js?v=20261012n"></script>
+<script src="/account.js?v=20261012n"></script>
+<script src="/dedupe.js?v=20261015f"></script>
+<script src="/app.js?v=20261020a"></script>
+<script src="/store.js?v=20261015a"></script>
+<script src="/season.js?v=20261015a"></script>
+<script src="/weekly.js?v=20261014c"></script>
+<script src="/pin.js?v=20261015a"></script>
+<script src="/whatsnew.js?v=20261015c"></script>
+<script src="/pwa.js"></script>
+</body>
+</html>

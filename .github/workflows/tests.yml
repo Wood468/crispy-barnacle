@@ -1,0 +1,97 @@
+name: Tests
+
+permissions:
+  contents: read
+
+# Changes that only touch data files (the importer, AI checks and bots commit these all day) skip the tests: no code changed.
+# The fast checks (JavaScript and Python) run on every other push. The slow browser checks cost most of the minutes, so they only run
+# when started by hand: Actions > Tests > Run workflow.
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - "data/**"
+      - "public/*.json"
+      - "infographics.json"
+      - "**/*.md"
+  pull_request:
+    branches: [main]
+    paths-ignore:
+      - "data/**"
+      - "public/*.json"
+      - "infographics.json"
+      - "**/*.md"
+  workflow_dispatch:
+
+concurrency:
+  group: tests-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  javascript:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Run JavaScript regression tests
+        run: node --test test/*.test.mjs
+
+  python:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Run Discord scraper regression tests
+        run: python -m unittest discover -s test -p 'test_discord_scraper_sync.py'
+
+  browser:
+    if: ${{ github.event_name == 'workflow_dispatch' || (github.event_name == 'pull_request' && github.event.pull_request.head.ref == 'fix/pwa-install-offline-audit') }}
+    # Three parallel shards of test/ui_checks.py (UI_SHARD a, b, c), so a change waits for a third of the checks.
+    runs-on: ubuntu-latest
+    timeout-minutes: 30   # a stuck browser run once burned about 650 minutes before failing
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [a, b, c]
+    env:
+      UI_SHARD: ${{ matrix.shard }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Cache Playwright browser
+        id: pw
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-chromium-${{ runner.os }}-v2
+      - name: Install Playwright
+        run: |
+          pip install playwright
+          if [ "${{ steps.pw.outputs.cache-hit }}" = "true" ]; then python -m playwright install-deps chromium; python -m playwright install chromium; else python -m playwright install --with-deps chromium; fi
+      - name: Start static app server
+        run: |
+          python -m http.server 8791 --directory public > /tmp/go-field-notes-http.log 2>&1 &
+          for i in $(seq 1 20); do
+            if curl --silent --fail http://127.0.0.1:8791/ > /dev/null; then exit 0; fi
+            sleep 1
+          done
+          cat /tmp/go-field-notes-http.log
+          exit 1
+      - name: Run browser regression tests
+        shell: bash
+        run: |
+          set +e
+          python test/ui_checks.py 2>&1 | tee /tmp/ui-checks.log
+          rc=${PIPESTATUS[0]}
+          # Failed checks show up as annotations on the run, so they can be read without opening the log.
+          grep -E '^FAIL' /tmp/ui-checks.log | cut -c1-300 | head -20 | while read -r l; do echo "::error::$l"; done
+          tail -n 12 /tmp/ui-checks.log | cut -c1-300 | while read -r l; do echo "::error::tail: $l"; done
+          exit $rc

@@ -1,0 +1,81 @@
+{
+ "updated": "2026-10-19T22:21:28.874Z",
+ "state": "ok",
+ "scrapedDuckEvents": 66,
+ "missingHere": [
+  {
+   "name": "Pokémon Night Out 2026 - London",
+   "type": "event",
+   "start": "2026-11-10T18:00:00.000Z",
+   "link": "https://leekduck.com/events/pokemon-night-out-london-2026/"
+  }
+ ],
+ "missingThere": [
+  {
+   "id": "w-pokemon-fossil-museum-2026",
+   "name": "Pokemon Fossil Museum 2026",
+   "start": "2026-05-22"
+  },
+  {
+   "id": "w-pokemon-jet-red-collaboration-event",
+   "name": "Pokemon Jet Red Collaboration Event",
+   "start": "2026-07-28"
+  },
+  {
+   "id": "w-pok-mon-go-partners-with-the-european-space-agency",
+   "name": "Pokémon GO partners with the European Space Agency",
+   "start": "2026-10-04"
+  },
+  {
+   "id": "w-pokemon-go-x-esa-london",
+   "name": "Pokémon GO x ESA: London",
+   "start": "2026-10-04"
+  },
+  {
+   "id": "w-aeon-mall-halloween",
+   "name": "AEON MALL Halloween",
+   "start": "2026-10-19"
+  },
+  {
+   "id": "w-fc-seoul",
+   "name": "Fc Seoul",
+   "start": "2026-10-24"
+  },
+  {
+   "id": "w-pok-mon-run-30-kaohsiung",
+   "name": "Pokémon RUN 30: Kaohsiung",
+   "start": "2026-10-31"
+  },
+  {
+   "id": "w-celebrate-the-festival-of-lights-with-the-return-o",
+   "name": "Celebrate the Festival of Lights with the return of Pikachu wearing a saree and Pikachu wearing a kurta!",
+   "start": "2026-11-06"
+  },
+  {
+   "id": "w-pok-xciting-lands-at-changi-airport-and-jewel-get-",
+   "name": "PokéXciting! lands at Changi Airport and Jewel — get ready, Singapore!",
+   "start": "2026-11-07"
+  },
+  {
+   "id": "w-pok-mon-run-30-singapore",
+   "name": "Pokémon RUN 30: Singapore",
+   "start": "2026-11-07"
+  },
+  {
+   "id": "w-pok-mon-go-joins-pok-mon-30th-anniversary-mall-exp",
+   "name": "Pokémon GO joins Pokémon 30th Anniversary Mall Exploration!",
+   "start": "2026-11-09"
+  },
+  {
+   "id": "w-pok-mon-run-30-new-taipei",
+   "name": "Pokémon RUN 30: New Taipei",
+   "start": "2026-11-14"
+  },
+  {
+   "id": "w-pok-mon-run-30-kuala-lumpur",
+   "name": "Pokémon RUN 30: Kuala Lumpur",
+   "start": "2026-11-21"
+  }
+ ],
+ "shinyDisagree": []
+}

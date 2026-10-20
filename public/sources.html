@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex"><title>Sources · GO Field Notes</title>
+<style>
+:root{color-scheme:dark;--bg:#0f1218;--card:#181d27;--line:#262d3b;--tx:#e8ecf3;--mu:#8d97aa;--ok:#4ade80;--warn:#fbbf24;--bad:#f87171;--blue:#60a5fa;--vio:#a78bfa}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.4 -apple-system,system-ui,sans-serif;padding:16px 16px calc(24px + env(safe-area-inset-bottom))}
+h1{font-size:20px;margin:0 0 2px}h2{font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--mu);margin:22px 0 8px}
+p.s{color:var(--mu);margin:0 0 6px;font-size:13px}a{color:var(--blue)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin:8px 0}
+.row{display:flex;justify-content:space-between;gap:10px;align-items:baseline}.n{font-weight:600}.mu{color:var(--mu);font-size:13px}
+.chip{display:inline-block;border-radius:99px;padding:1px 9px;font-size:12px;font-weight:600;border:1px solid}
+.healthy,.official_confirmed{color:var(--ok);border-color:#1f6b3d}.stale,.degraded,.community_reported{color:var(--warn);border-color:#7a5b10}
+.failing,.conflicting{color:var(--bad);border-color:#7f2d2d}.never,.datamined{color:var(--vio);border-color:#4b3d8a}
+.tags{margin-top:6px;display:flex;flex-wrap:wrap;gap:5px}.tag{background:#222a39;border-radius:8px;padding:1px 8px;font-size:12px;color:#c4cce0}
+select{background:var(--card);color:var(--tx);border:1px solid var(--line);border-radius:10px;padding:8px;font-size:15px;margin:4px 0}
+.err{color:var(--bad)}
+#env{position:sticky;top:0;z-index:5;margin:-16px -16px 14px;padding:calc(10px + env(safe-area-inset-top)) 16px 10px;text-align:center;font-weight:800;letter-spacing:.04em;font-size:15px;text-transform:uppercase;background:#fbbf24;color:#1a1200;border-bottom:3px solid #b45309}
+#env small{display:block;font-weight:600;font-size:12px;letter-spacing:0;text-transform:none;margin-top:2px}
+#env.prod{position:static;background:#222a39;color:var(--mu);border-bottom:1px solid var(--line);font-size:12px;padding:8px 16px;text-transform:none;font-weight:600}
+#env.unk{background:#7f2d2d;color:#fff;border-color:#f87171}
+</style></head><body>
+<div id="env" class="unk">Checking environment…</div>
+<h1>Source pipeline <span class="chip never">review</span></h1>
+<p class="s">Read-only. Phase 1 check of where events come from and how far to trust them. Nothing here changes your data.</p>
+<div id="out"><p class="mu">Loading…</p></div>
+<script src="/sources.js?v=20261015a"></script></body></html>

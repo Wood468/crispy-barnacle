@@ -1,0 +1,148 @@
+import test from "node:test";
+import assert from "node:assert/strict";
+import { decide, addToEventInfo, distinctiveTokens } from "../scripts/g47ix-publish.mjs";
+
+const events = [{ id: "kyogre-oct", t: "Kyogre in 5-star Raid Battles" }, { id: "zorua-cd", t: "Zorua Community Day" }];
+test("confident only when the image text names the event", () => {
+  const a = decide({ title: "Kyogre in 5-star Raid Battles" }, "KYOGRE RAID GUIDE counters weakness", events);
+  assert.equal(a.confident, true); assert.equal(a.event.id, "kyogre-oct");
+  const b = decide({ title: "Kyogre in 5-star Raid Battles" }, "", events);
+  assert.equal(b.confident, false);
+});
+test("unrelated text finds no match", () => {
+  const r = decide({ title: "Weekend vibes" }, "hello world", events);
+  assert.equal(r.confident, false); assert.equal(r.match, null);
+});
+test("adds to an existing entry by name, or makes one, never duplicates", () => {
+  const info = { events: { x: { names: ["Zorua Community Day"], infographics: [] } } };
+  const g = { url: "/infographics/g47ix/a.png", sourceUrl: "https://example.test/p", observed: "2026-10-11", alt: "a" };
+  assert.equal(addToEventInfo(info, events[1], g), true);
+  assert.equal(addToEventInfo(info, events[1], g), false);
+  assert.equal(info.events.x.infographics[0].source, "G47IX");
+  addToEventInfo(info, events[0], { ...g, url: "/infographics/g47ix/b.png" });
+  assert.deepEqual(info.events["kyogre-oct"].tickets, []);
+});
+test("distinctive tokens drop filler words", () => assert.deepEqual(distinctiveTokens("Kyogre in 5-star Raid Battles"), ["kyogre", "star"]));
+
+import { discordCandidate } from "../scripts/g47ix-publish.mjs";
+test("discord image becomes a candidate; creator stays blank unless named", () => {
+  const d = { message_id: "1", channel_id: "2", title: "Hatch_event.png", text: "", image_url: "https://cdn.discordapp.com/a.png", timestamp: "2026-10-11T11:05:09Z" };
+  const c = discordCandidate(d, "");
+  assert.equal(c.id, "discord:1"); assert.equal(c.title, "Hatch event"); assert.equal(c.creator, "");
+  assert.equal(discordCandidate(d, "G47IX").creator, "G47IX");
+  assert.equal(discordCandidate({}, "x"), null);
+});
+
+import { datesIn } from "../scripts/g47ix-publish.mjs";
+test("dates written in a picture are read both ways round", () => {
+  assert.deepEqual(datesIn("Starts 13th Oct and ends October 19"), [[9, 13], [9, 19]]);
+  assert.deepEqual(datesIn("no dates here"), []);
+});
+test("several signals together make a confident match; a lone caption does not", () => {
+  const evs = [{ id: "fm", t: "Fall Marathon: Buddy Trek", s: "2026-10-13T10:00", e: "2026-10-19T20:00", art: [{ n: "Bramblin" }] }, { id: "zc", t: "Zorua Community Day", s: "2026-10-10T14:00", e: "2026-10-10T17:00", art: [{ n: "Zorua" }] }];
+  const good = decide({ title: "Fall Marathon Buddy Trek", publishedAt: "2026-10-12T00:00:00Z" }, "FALL MARATHON BUDDY TREK 13 Oct - 19 Oct Bramblin debut", evs);
+  assert.equal(good.confident, true); assert.ok(good.signals.length >= 3);
+  const weak = decide({ title: "Fall Marathon Buddy Trek" }, "", evs);
+  assert.equal(weak.confident, false);
+});
+
+import { applyDecisions } from "../scripts/g47ix-apply.mjs";
+test("an approved decision attaches the staged picture to the chosen event; rejected ones are dropped", () => {
+  const reg = { candidates: [{ id: "discord:1", stagedPath: "/infographics/g47ix/discord-1.png", url: "https://x.test/p", reviewStatus: "needs_review" }, { id: "discord:2", stagedPath: "/infographics/g47ix/discord-2.png", reviewStatus: "unmatched" }] };
+  const info = { events: {} };
+  const r = applyDecisions(reg, info, [{ id: "discord:1", status: "approved", eventId: "fm", eventTitle: "Fall Marathon: Buddy Trek" }, { id: "discord:2", status: "rejected" }, { id: "nope", status: "approved", eventId: "x" }], "2026-10-12");
+  assert.equal(r.published.length, 1); assert.equal(r.rejected.length, 1); assert.equal(r.skipped.length, 1);
+  assert.equal(info.events.fm.infographics[0].url, "/infographics/g47ix/discord-1.png");
+  assert.equal(reg.candidates[0].reviewStatus, "published");
+  assert.equal(applyDecisions(reg, info, [{ id: "discord:1", status: "approved", eventId: "fm" }]).published.length, 0);
+});
+
+import { mergeHistory } from "../scripts/g47ix-publish.mjs";
+test("history adds older pictures for review, keeps them newest first, and refreshes expired links", () => {
+  const now = Date.parse("2026-10-12T00:00:00Z");
+  const rec = (id, ts, url) => ({ message_id: id, image_url: url, timestamp: ts, text: "Event " + id, channel_id: "1" });
+  const reg = { candidates: [{ id: "discord:2", source: "discord", imageUrl: "https://old/2", publishedAt: "2026-09-01T00:00:00Z" }] };
+  const n = mergeHistory(reg, { items: [rec("1", "2026-08-01T00:00:00Z", "https://c/1"), rec("2", "2026-09-01T00:00:00Z", "https://new/2"), rec("3", "2026-10-11T00:00:00Z", "https://c/3")] }, "G47IX", now);
+  assert.equal(n, 2);
+  assert.deepEqual(reg.candidates.map(c => c.id), ["discord:3", "discord:2", "discord:1"]);
+  assert.equal(reg.candidates[1].imageUrl, "https://new/2");
+  assert.equal(reg.candidates[2].history, true); assert.ok(!reg.candidates[0].history);
+});
+
+test("one picture can sit on several events, and later be unlinked from one or discarded everywhere", () => {
+  const reg = { candidates: [{ id: "d:1", stagedPath: "/infographics/g47ix/d1.png", reviewStatus: "needs_review" }] };
+  const info = { events: {} };
+  applyDecisions(reg, info, [{ id: "d:1", status: "approved", eventId: "a,b", eventTitle: "Event A | Event B" }], "2026-10-12");
+  assert.equal(info.events.a.infographics.length, 1); assert.equal(info.events.b.infographics.length, 1);
+  const r = applyDecisions(reg, info, [{ id: "d:1", status: "approved", eventId: "b", eventTitle: "Event B" }]);
+  assert.equal(r.changed.length, 1); assert.equal(info.events.a.infographics, undefined); assert.equal(info.events.b.infographics.length, 1);
+  applyDecisions(reg, info, [{ id: "d:1", status: "unlinked" }]);
+  assert.equal(info.events.b.infographics, undefined); assert.equal(reg.candidates[0].reviewStatus, "needs_review");
+  applyDecisions(reg, info, [{ id: "d:1", status: "approved", eventId: "a", eventTitle: "Event A" }]);
+  applyDecisions(reg, info, [{ id: "d:1", status: "rejected" }]);
+  assert.equal(info.events.a.infographics, undefined); assert.equal(reg.candidates[0].reviewStatus, "rejected");
+});
+
+import { raidSlots } from "../scripts/g47ix-publish.mjs";
+test("rotating raid bosses are linkable like events", () => {
+  const s = raidSlots([{ s: "2026-10-07T10:00", e: "2026-10-14T10:00", five: "Yveltal", mega: "Mega Blastoise", shadow: "Shadow Landorus (Incarnate), to Oct 13" }], Date.parse("2026-10-12"));
+  assert.deepEqual(s.map(x => x.id), ["raid:yveltal:2026-10-07", "raid:mega-blastoise:2026-10-07", "raid:shadow-landorus-incarnate:2026-10-07"]);
+  assert.equal(s[0].t, "Yveltal 5-star raids");
+  assert.equal(raidSlots([{ s: "2026-08-01T10:00", e: "2026-08-08T10:00", five: "X" }], Date.parse("2026-10-12")).length, 0);
+});
+
+import { monGuesses } from "../scripts/g47ix-publish.mjs";
+test("a stat card with only a Pokémon name suggests the events that feature it", () => {
+  const now = Date.parse("2026-10-14T00:00:00Z");
+  const evs = [
+    { id: "a", t: "Dialga raids", kind: "raid", s: "2026-10-10T00:00:00Z", e: "2026-10-20T00:00:00Z" },
+    { id: "b", t: "Some Community Day", s: "2026-10-12T00:00:00Z", e: "2026-10-20T23:00:00Z", art: [{ n: "Blastoise" }] },
+    { id: "c", t: "Old Dialga event", s: "2026-01-01T00:00:00Z", e: "2026-01-05T00:00:00Z", art: [{ n: "Dialga" }] },
+  ];
+  const g = monGuesses("= DIALGA 53394 CP Weakness", evs, now);
+  assert.equal(g.length, 1); assert.equal(g[0].eventId, "a");
+  const d = decide({ title: "Weekend" }, "BLASTOISE 42017 CP", [evs[1]]);
+  assert.ok(!d.confident); assert.ok(d.guess && d.guess.alternatives.length >= 1);
+});
+
+import { buildWeekly, isWeekly } from "../scripts/g47ix-publish.mjs";
+test("the weekly picture goes to the home page list, newest first, and old ones drop out", () => {
+  const now = Date.parse("2026-10-14T00:00:00Z");
+  const reg = { candidates: [
+    { id: "d:1", title: "GO Weekly Update", stagedPath: "/infographics/g47ix/a.png", publishedAt: "2026-10-11T22:00:00Z", url: "https://discord.com/x" },
+    { id: "d:2", title: "tr GO Weekly TT october", stagedPath: "/infographics/g47ix/b.png", publishedAt: "2026-10-12T05:00:00Z" },
+    { id: "d:3", title: "GO Weekly Update", stagedPath: "/infographics/g47ix/c.png", publishedAt: "2026-09-20T00:00:00Z" },
+    { id: "d:4", title: "Dmax LAKE", stagedPath: "/infographics/g47ix/d.png", publishedAt: "2026-10-12T00:00:00Z" },
+    { id: "d:5", title: "GO Weekly", publishedAt: "2026-10-12T00:00:00Z" },
+  ] };
+  const w = buildWeekly(reg, now);
+  assert.deepEqual(w.items.map(i => i.id), ["d:2"], "one picture per button: the newest replaces the older ones");
+  assert.equal(w.items[0].title, "GO Weekly TT october");
+  assert.ok(isWeekly(reg.candidates[0]) && !isWeekly(reg.candidates[3]));
+});
+import { isMonthly } from "../scripts/g47ix-publish.mjs";
+test("the monthly overview is found by its file name and kept on the home page list as 'month'", () => {
+  const now = Date.parse("2026-10-14T00:00:00Z");
+  const m = { id: "d:m", title: "https://cdn.discordapp.com/attachments/1/2/OCT_CONTENT_G47IX.png?ex=1", imageUrl: "https://cdn.discordapp.com/attachments/1/2/OCT_CONTENT_G47IX.png?ex=2", stagedPath: "/infographics/g47ix/m.webp", publishedAt: "2026-10-12T08:00:00Z" };
+  assert.ok(isMonthly(m) && !isMonthly({ title: "TREK_.png" }) && !isMonthly({ title: "Dmax LAKE" }));
+  const w = buildWeekly({ candidates: [m, { id: "d:w", title: "GO Weekly Update", stagedPath: "/infographics/g47ix/w.webp", publishedAt: "2026-10-11T00:00:00Z" }] }, now);
+  assert.deepEqual(w.items.map(i => [i.kind, i.title]), [["week", "GO Weekly Update"], ["month", "Month overview: Oct"]]);
+});
+
+import { withAi } from "../scripts/g47ix-publish.mjs";
+test("a match made by reading the picture goes first", () => {
+  const g = withAi({ aiMatch: [{ eventId: "w-into-the-wild", eventTitle: "Into the Wild" }] }, [{ eventId: "wag", eventTitle: "GO Wild Area: Global", score: 0.8 }]);
+  assert.equal(g[0].eventId, "w-into-the-wild"); assert.equal(g.length, 2);
+  assert.deepEqual(withAi({}, []), []);
+});
+
+test("a newer chosen picture replaces the older chosen one on each button", () => {
+  const now = Date.parse("2026-10-20T00:00:00Z");
+  const reg = { candidates: [
+    { id: "w-old", overview: "week", title: "x", stagedPath: "/infographics/g47ix/1.webp", publishedAt: "2026-10-12T00:00:00Z" },
+    { id: "w-new", overview: "week", title: "y", stagedPath: "/infographics/g47ix/2.webp", publishedAt: "2026-10-19T00:00:00Z" },
+    { id: "m-old", overview: "month", title: "OCT_CONTENT", stagedPath: "/infographics/g47ix/3.webp", publishedAt: "2026-09-29T00:00:00Z" },
+    { id: "m-new", overview: "month", title: "NOV_CONTENT", stagedPath: "/infographics/g47ix/4.webp", publishedAt: "2026-10-19T00:00:00Z" },
+  ] };
+  assert.deepEqual(buildWeekly(reg, now).items.map(i => i.id), ["w-new", "m-new"]);
+});

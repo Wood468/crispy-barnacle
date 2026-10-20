@@ -1,0 +1,1939 @@
+{
+  "asOf": "13 Oct 2026",
+  "events": [
+    {
+      "id": "space",
+      "t": "World Space Week",
+      "s": "2026-10-04T00:00",
+      "e": "2026-10-10T23:59",
+      "tags": [
+        "Raids",
+        "Costume"
+      ],
+      "p": [
+        "Astronaut Pikachu, a new costumed Pokémon, appears in raids.",
+        "Free Timed Research runs all week."
+      ],
+      "art": [
+        {
+          "n": "Pikachu",
+          "costume": 1,
+          "label": "Astronaut"
+        }
+      ],
+      "sourceUrl": "https://pokemongo.com/news/world-space-week-2026",
+      "source": "Official Pokémon GO announcement"
+    },
+    {
+      "id": "zorua",
+      "t": "Zorua Community Day",
+      "s": "2026-10-10T14:00",
+      "e": "2026-10-10T17:00",
+      "tags": [
+        "Community Day",
+        "Shiny",
+        "Background"
+      ],
+      "p": [
+        "3x catch XP, 2x catch Candy and boosted Zorua spawns.",
+        "Evolve Zorua during the event or up to 4 hours after to get Zoroark with the exclusive Fast Attack Sucker Punch.",
+        "Lure and Special Trade bonuses run until 9 pm.",
+        "Wild Zorua can carry a special background."
+      ],
+      "art": [
+        "Zorua",
+        {
+          "n": "Zorua",
+          "shiny": 1
+        },
+        "Zoroark"
+      ],
+      "bonuses": [
+        "3x Catch XP",
+        "2x Catch Candy",
+        "More Zorua spawns",
+        "Lure bonus until 9 pm",
+        "Special Trade bonus until 9 pm"
+      ],
+      "sourceUrl": "https://pokemongo.com/news/communityday-october-2026-zorua",
+      "source": "Official Pokémon GO announcement"
+    },
+    {
+      "id": "trek",
+      "t": "Fall Marathon: Buddy Trek",
+      "s": "2026-10-13T10:00",
+      "e": "2026-10-19T20:00",
+      "tags": [
+        "Debut",
+        "Shiny"
+      ],
+      "highlights": [
+        {
+          "type": "debut",
+          "label": "DEBUT · Bramblin"
+        },
+        {
+          "type": "debut",
+          "label": "DEBUT · Brambleghast (evolve Bramblin: 50 candy + 20 km as buddy; Leek Duck, not in the official post)"
+        },
+        {
+          "type": "boosted-shiny",
+          "label": "BOOSTED SHINY · Electrike"
+        },
+        {
+          "type": "boosted-shiny",
+          "label": "BOOSTED SHINY · Hisuian Growlithe (Incense, Oct 16–19)"
+        },
+        {
+          "type": "wild-encounters",
+          "label": "WILD ENCOUNTERS · Ponyta, Doduo, Electrike, Blitzle + more"
+        },
+        {
+          "type": "incense-encounters",
+          "label": "INCENSE · Rotating encounters; Bramblin included"
+        }
+      ],
+      "p": [
+        "Bramblin debuts.",
+        "Brambleghast can also be had by evolving Bramblin. Leek Duck lists 50 Bramblin Candy and 20 km walked as your buddy; the official post does not mention it, and Pokémon GO Hub said it was unconfirmed.",
+        "Mega Manectric gets a Super Max Level and the Charged Attack Discharge+.",
+        "Higher chance of Shiny Electrike.",
+        "Boosted Shiny Hisuian Growlithe from Incense starts Oct 16 at 10 am."
+      ],
+      "art": [
+        "Bramblin",
+        "Brambleghast",
+        "Mega Manectric",
+        "Electrike",
+        {
+          "n": "Electrike",
+          "shiny": 1,
+          "label": "Boosted odds"
+        },
+        {
+          "n": "Hisuian Growlithe",
+          "shiny": 1,
+          "label": "Boosted from Oct 16"
+        },
+        {
+          "n": "Pikachu",
+          "costume": 1,
+          "label": "Marathon visor"
+        }
+      ],
+      "bonuses": [
+        "Boosted shiny Electrike odds",
+        "Incense: boosted shiny Hisuian Growlithe from Oct 16"
+      ],
+      "sourceUrl": "https://pokemongo.com/news/fall-marathon-buddy-trek-2026",
+      "source": "Official Pokémon GO announcement"
+    },
+    {
+      "id": "sandile",
+      "t": "Sandile Hatch Day",
+      "s": "2026-10-17T11:00",
+      "e": "2026-10-17T17:00",
+      "tags": [
+        "Shiny"
+      ],
+      "p": [
+        "Sandile hatches more often from 2 km Eggs, with boosted shiny odds.",
+        "Double Hatch Candy and half Egg Hatch Distance."
+      ],
+      "art": [
+        "Sandile",
+        {
+          "n": "Sandile",
+          "shiny": 1,
+          "label": "Boosted odds"
+        }
+      ],
+      "bonuses": [
+        "More Sandile from 2 km eggs",
+        "2x Hatch Candy",
+        "Half egg hatch distance",
+        "Boosted shiny odds"
+      ],
+      "sourceUrl": "https://pokemongo.com/news/sandile-hatch-day-2026",
+      "source": "Official Pokémon GO announcement"
+    },
+    {
+      "id": "tcg30",
+      "t": "Pokémon TCG: 30th Celebration (at stores)",
+      "s": "2026-09-27T10:00",
+      "e": "2026-10-20T22:00",
+      "tags": ["Raids"],
+      "p": [
+        "Only at Target, Best Buy and GameStop: open Pokémon GO in store for Timed Research with Gastly, Haunter and Gengar encounters.",
+        "Mega Gengar appears more often in Mega Raids at those stores, and its Gengar can be Shiny.",
+        "Start the research by Oct 20, 10 pm local time. Claim rewards before Nov 20."
+      ],
+      "art": ["Gengar"],
+      "sourceUrl": "https://leekduck.com/events/pokemon-tcg-30th-celebration/",
+      "source": "Leek Duck"
+    },
+    {
+      "id": "minior",
+      "t": "Orionids Meteor Shower: Minior Debut",
+      "s": "2026-10-19T17:00",
+      "e": "2026-10-24T23:59",
+      "tags": [
+        "Debut"
+      ],
+      "p": [
+        "Minior debuts in Meteor Form.",
+        "Extra Stardust for catches, best from 5 pm to 9 pm daily.",
+        "Runs Oct 19 at 5 pm to Oct 24 at 11:59 pm local time."
+      ],
+      "art": [
+        "Minior"
+      ],
+      "bonuses": [
+        "Extra Stardust for catches",
+        "Best 5 pm to 9 pm daily"
+      ],
+      "status": "conflicting",
+      "source": "Official announcement, matches Leek Duck",
+      "sourceUrl": "https://leekduck.com/events/minior-showers-orionids-2026/"
+    },
+    {
+      "id": "spirits",
+      "t": "Dynamax Uxie, Mesprit and Azelf",
+      "s": "2026-10-24T14:00",
+      "e": "2026-10-24T17:00",
+      "tags": [
+        "Max Battles",
+        "Debut"
+      ],
+      "p": [
+        "Max Battle Day for the Dynamax Lake Spirits.",
+        "Power Spots refresh more often and the Max Particle limit rises."
+      ],
+      "art": [
+        "Uxie",
+        "Mesprit",
+        "Azelf"
+      ],
+      "bonuses": [
+        "Higher Max Particle limit",
+        "Power Spots refresh more often"
+      ],
+      "sourceUrl": "https://pokemongo.com/news/dynamax-uxie-mesprit-azelf-max-battle-day-2026",
+      "source": "Official Pokémon GO announcement"
+    },
+    {
+      "id": "halloween1",
+      "t": "Halloween 2026, Part One",
+      "s": "2026-10-27T10:00",
+      "e": "2026-11-01T10:00",
+      "tags": [
+        "Costume"
+      ],
+      "p": [
+        "Costumed Pikachu (hat and capelet), Zubat (top hat) and Sinistea (bow) arrive, plus Piplup and Drifblim in Halloween Mischief costumes in the wild. All can be shiny."
+      ],
+      "art": [
+        {
+          "n": "Pikachu",
+          "costume": 1,
+          "label": "Hat and capelet"
+        },
+        {
+          "n": "Zubat",
+          "costume": 1,
+          "label": "Top hat"
+        },
+        {
+          "n": "Sinistea",
+          "costume": 1,
+          "label": "Bow"
+        },
+        {
+          "n": "Piplup",
+          "costume": 1,
+          "label": "Halloween Mischief"
+        },
+        {
+          "n": "Drifblim",
+          "costume": 1,
+          "label": "Halloween Mischief"
+        }
+      ],
+      "sourceUrl": "https://pokemongo.com/news/halloween-part-1-2026",
+      "source": "Official Pokémon GO announcement"
+    },
+    {
+      "id": "smr1",
+      "t": "Super Mega Raid Day",
+      "s": "2026-10-31T14:00",
+      "e": "2026-10-31T17:00",
+      "tags": [
+        "Raids"
+      ],
+      "highlights": [
+        {
+          "type": "debut",
+          "label": "DEBUT · Mega Chandelure"
+        },
+        {
+          "type": "boosted-shiny",
+          "label": "BOOSTED SHINY · Chandelure"
+        }
+      ],
+      "p": [
+        "Chandelure is the Super Mega Raid boss, and Mega Chandelure debuts.",
+        "Chandelure caught from Super Mega Raids has Mega Level 1 unlocked. Increased chance of Shiny Chandelure.",
+        "Up to 14 Raid Passes a day from Gym Photo Discs. Remote Raid limit is 20 from Fri Oct 30, 5 pm to Sat Oct 31, 8 pm (Pacific time).",
+        "The ticket (US$4.99 tier) adds extra bonuses; the official post says it will be in the web store soon."
+      ],
+      "art": [
+        "Chandelure",
+        "Mega Chandelure"
+      ],
+      "sourceUrl": "https://pokemongo.com/news/chandelure-super-mega-raid-day-2026/"
+    },
+    {
+      "id": "halloween2",
+      "t": "Halloween 2026, Part Two",
+      "s": "2026-11-01T10:00",
+      "e": "2026-11-05T20:00",
+      "tags": [
+        "Costume",
+        "Shiny"
+      ],
+      "p": [
+        "GO Pass progression runs Oct 27, 10 am to Nov 5, 8 pm local time. Rank 10 unlocks 2x Candy (3x with GO Pass Deluxe); Rank 20 unlocks 2x Stardust (3x with Deluxe).",
+        "Shiny Greavard debuts (wild, GO Pass and Field Research), and Houndstone evolves from it with 50 Candy. More Rowlet, Greavard and Litwick in the wild; Gengar is rare.",
+        "Mega Sableye can reach Super Max Level and gains Night Shade+ while Mega Evolved."
+      ],
+      "art": [
+        {
+          "n": "Greavard",
+          "shiny": 1,
+          "label": "Shiny debut"
+        },
+        {
+          "n": "Rowlet",
+          "costume": 1,
+          "label": "Halloween costume"
+        },
+        {
+          "n": "Gengar",
+          "costume": 1,
+          "label": "Spooky Festival"
+        }
+      ],
+      "sourceUrl": "https://leekduck.com/events/halloween-2026-part-2/"
+    },
+    {
+      "id": "sendai",
+      "t": "GO Wild Area: Sendai",
+      "s": "2026-11-06T10:00",
+      "e": "2026-11-08T18:00",
+      "tags": [
+        "In person",
+        "Debut",
+        "Background"
+      ],
+      "p": [
+        "Ticketed, in Sendai, Japan. You pick one of the three days.",
+        "Gigantamax Duraludon, Dynamax Dialga and Palkia, and Hisuian Sliggoo and Goodra debut.",
+        "Location backgrounds for ticket holders."
+      ],
+      "art": [
+        "Gigantamax Duraludon",
+        "Dialga"
+      ],
+      "bonuses": [
+        "Up to 10 free Raid Passes a day",
+        "2x Candy",
+        "Up to 6 Special Trades at half cost",
+        "Higher shiny chance"
+      ]
+    },
+    {
+      "id": "into",
+      "t": "Into the Wild",
+      "s": "2026-11-09T10:00",
+      "e": "2026-11-13T20:00",
+      "tags": ["Event", "Raids", "Debut"],
+      "p": [
+        "Crowned Sword Zacian and Crowned Shield Zamazenta in five-star raids, with Raid Hour at 6 pm on Nov 9 (Zacian) and Nov 10 (Zamazenta).",
+        "Dynamax Regidrago debuts in five-star Max Battles on Nov 12; Registeel Nov 11, Latias and Latios Nov 13. Dynamax Meltan debuts in GO Pass.",
+        "Remote Raid limit 30 (Nov 9 to 13). Shiny Gimmighoul from the Coin Bag and shiny Meltan from the Mystery Box until Nov 15, 6 pm. Daily Discoveries pause Nov 9 to 15."
+      ],
+      "art": ["Zacian", "Zamazenta", "Regidrago"],
+      "sourceUrl": "https://leekduck.com/events/into-the-wild-2026/",
+      "source": "Leek Duck"
+    },
+    {
+      "id": "wag",
+      "t": "GO Wild Area: Global",
+      "s": "2026-11-14T10:00",
+      "e": "2026-11-15T18:00",
+      "tags": [
+        "Debut",
+        "Background",
+        "Raids"
+      ],
+      "p": [
+        "Gigantamax Duraludon debuts in six-star Max Battles. Dynamax Dialga on Saturday, Dynamax Palkia on Sunday.",
+        "Five-star raids: Zekrom and White Kyurem on Saturday, Reshiram and Black Kyurem on Sunday.",
+        "Optional ticket (A$ price not confirmed). Daily Discoveries pause Nov 9 to 15."
+      ],
+      "art": [
+        "Gigantamax Duraludon",
+        "Dialga",
+        "Palkia"
+      ]
+    },
+    {
+      "id": "minior2",
+      "t": "Minior Showers: Leonids",
+      "s": "2026-11-14T17:00",
+      "e": "2026-11-19T23:59",
+      "tags": ["Event"],
+      "p": [
+        "Minior in Meteor Form in the wild, with extra Stardust for catching it.",
+        "Best from 5 pm to 9 pm local time each day."
+      ],
+      "art": ["Minior"],
+      "sourceUrl": "https://leekduck.com/events/minior-showers-leonids-2026/",
+      "source": "Leek Duck"
+    },
+    {
+      "id": "minior3",
+      "t": "Minior Showers: Geminids",
+      "s": "2026-12-11T17:00",
+      "e": "2026-12-16T23:59",
+      "tags": ["Event"],
+      "p": [
+        "Minior in Meteor Form in the wild, with extra Stardust for catching it.",
+        "Best from 5 pm to 9 pm local time each day."
+      ],
+      "art": ["Minior"],
+      "sourceUrl": "https://leekduck.com/events/minior-showers-geminids-2026/",
+      "source": "Leek Duck"
+    },
+    {
+      "id": "novcd",
+      "t": "November Community Day",
+      "s": "2026-11-21T14:00",
+      "e": "2026-11-21T17:00",
+      "tags": [
+        "Community Day"
+      ],
+      "p": [
+        "Saturday, Nov 21, 2 pm to 5 pm. Featured Pokémon not announced in my sources."
+      ]
+    },
+    {
+      "id": "smr2",
+      "t": "Super Mega Raid Day",
+      "s": "2026-11-28T14:00",
+      "e": "2026-11-28T17:00",
+      "tags": [
+        "Raids"
+      ],
+      "p": [
+        "Listed on the season calendar."
+      ],
+      "sourceUrl": "https://leekduck.com/events/super-mega-raid-day-november-2026/"
+    }
+  ],
+  "spotlight": [
+    {
+      "d": "2026-10-08",
+      "n": "Elgyem",
+      "b": "2x catch Candy"
+    },
+    {
+      "d": "2026-10-15",
+      "n": "Stufful",
+      "b": "2x transfer Candy"
+    },
+    {
+      "d": "2026-10-22",
+      "n": "Morelull",
+      "b": "2x catch Stardust"
+    },
+    {
+      "d": "2026-10-29",
+      "n": "Gastly",
+      "b": "2x evolution XP"
+    }
+  ],
+  "raidHour": [
+    {
+      "d": "2026-10-14",
+      "n": "Dialga"
+    },
+    {
+      "d": "2026-10-21",
+      "n": "Palkia"
+    },
+    {
+      "d": "2026-10-28",
+      "n": "Origin Forme Giratina"
+    }
+  ],
+  "week": [
+    [
+      "Sun",
+      "Scenic Sunday: more wild spawns and Route bonuses"
+    ],
+    [
+      "Mon",
+      "Max Monday: more Power Spots, Rare Candy XL for Max Battles"
+    ],
+    [
+      "Tue",
+      "Showcase Tuesday: more PokéStop Showcases"
+    ],
+    [
+      "Wed",
+      "Raid Wednesday: Raid Hour 6 to 7 pm"
+    ],
+    [
+      "Thu",
+      "GO Battle Thursday: Spotlight Hour 6 to 7 pm"
+    ],
+    [
+      "Fri",
+      "Friendship Friday: extra special trades, better Lucky Trade odds"
+    ],
+    [
+      "Sat",
+      "Weekend events: Community Day, Super Mega Raid Day"
+    ]
+  ],
+  "rotation": [
+    {
+      "s": "2026-09-30T10:00",
+      "e": "2026-10-07T10:00",
+      "five": "Xerneas",
+      "mega": "Mega Victreebel",
+      "shadow": "Shadow Thundurus (Incarnate), to Oct 6",
+      "rh": "Not listed"
+    },
+    {
+      "s": "2026-10-07T10:00",
+      "e": "2026-10-14T10:00",
+      "five": "Yveltal",
+      "mega": "Mega Blastoise",
+      "shadow": "Shadow Landorus (Incarnate)",
+      "low": { "one": ["Astronaut Pikachu"], "three": ["Starmie", "Umbreon", "Gothitelle"], "observed": "2026-10-07", "source": "Dexerto current raid bosses" },
+      "rh": "Yveltal"
+    },
+    {
+      "s": "2026-10-14T10:00",
+      "e": "2026-10-21T10:00",
+      "five": "Dialga",
+      "mega": "Mega Dragonite",
+      "shadow": "Shadow Landorus (Incarnate)",
+      "low": {
+        "one": ["Clefairy", "Teddiursa", "Elgyem", "Amaura"],
+        "three": ["Starmie", "Umbreon", "Gothitelle"],
+        "observed": "2026-10-14",
+        "source": "Dexerto current raid bosses (the page lists no dates)"
+      },
+      "rh": "Dialga"
+    },
+    {
+      "s": "2026-10-21T10:00",
+      "e": "2026-10-28T10:00",
+      "five": "Palkia",
+      "mega": "Mega Charizard X and Y",
+      "shadow": "Shadow Landorus (Incarnate)",
+      "rh": "Palkia"
+    },
+    {
+      "s": "2026-10-28T10:00",
+      "e": "2026-11-04T10:00",
+      "five": "Origin Forme Giratina",
+      "mega": "Mega Sableye",
+      "shadow": "Shadow Landorus (Incarnate), to Nov 3",
+      "rh": "Origin Forme Giratina"
+    }
+  ],
+  "maxBattles": [
+    [
+      "2026-09-28",
+      "2026-10-04",
+      "Sobble"
+    ],
+    [
+      "2026-10-05",
+      "2026-10-11",
+      "Sizzlipede"
+    ],
+    [
+      "2026-10-12",
+      "2026-10-18",
+      "Rookidee"
+    ],
+    [
+      "2026-10-19",
+      "2026-10-25",
+      "Sneasel"
+    ],
+    [
+      "2026-10-26",
+      "2026-11-01",
+      "Sableye"
+    ]
+  ],
+  "best": {
+    "Normal": [
+      "Shadow Porygon-Z|Lock-On|Tri Attack|17.8",
+      "Mega Lopunny|Pound|Hyper Beam|15.9",
+      "Meloetta|Quick Attack|Hyper Beam|14.5",
+      "Xerneas|Tackle|Giga Impact|14.7",
+      "Shadow Ursaluna|Tackle|Swift|14.3"
+    ],
+    "Fighting": [
+      "Mega Mewtwo X|Counter|Focus Blast|23.3",
+      "Mega Lucario|Force Palm|Aura Sphere|25.3",
+      "Mega Blaziken|Counter|Aura Sphere|24.5",
+      "Mega Mewtwo Y|Counter|Focus Blast|19.5",
+      "Shadow Blaziken|Counter|Aura Sphere|22.7"
+    ],
+    "Flying": [
+      "Mega Rayquaza|Air Slash|Hurricane|19.7",
+      "Shadow Moltres|Wing Attack|Fly|20.6",
+      "Shadow Toucannon|Peck|Beak Blast|21.5",
+      "Shadow Staraptor|Gust|Fly|20.4",
+      "Yveltal|Gust|Oblivion Wing|17.0"
+    ],
+    "Poison": [
+      "Eternatus|Poison Jab|Sludge Bomb|17.5",
+      "Mega Beedrill|Poison Jab|Sludge Bomb|19.0",
+      "Nihilego|Poison Jab|Sludge Bomb|15.7",
+      "Naganadel|Poison Jab|Sludge Bomb|16.8",
+      "Mega Victreebel|Acid|Sludge Bomb|16.0"
+    ],
+    "Ground": [
+      "Primal Groudon|Mud Shot|Precipice Blades|21.3",
+      "Mega Garchomp|Mud Shot|Earth Power|18.6",
+      "Shadow Groudon|Mud Shot|Precipice Blades|18.8",
+      "Shadow Garchomp|Mud Shot|Earth Power|18.1",
+      "Landorus (Therian)|Mud Shot|Sandsear Storm|18.1"
+    ],
+    "Rock": [
+      "Shadow Rhyperior|Smack Down|Rock Wrecker|18.7",
+      "Mega Tyranitar|Smack Down|Stone Edge|16.1",
+      "Shadow Rampardos|Smack Down|Rock Slide|20.9",
+      "Mega Diancie|Rock Throw|Rock Slide|18.6",
+      "Mega Aerodactyl|Rock Throw|Rock Slide|16.8"
+    ],
+    "Bug": [
+      "Mega Heracross|Fury Cutter|Megahorn|18.4",
+      "Mega Pinsir|Fury Cutter|X-Scissor|17.0",
+      "Mega Scizor|Fury Cutter|X-Scissor|15.7",
+      "Shadow Vikavolt|Bug Bite|X-Scissor|17.6",
+      "Mega Beedrill|Bug Bite|X-Scissor|17.1"
+    ],
+    "Ghost": [
+      "Mega Gengar|Lick|Shadow Ball|22.4",
+      "Mega Banette|Shadow Claw|Shadow Ball|19.6",
+      "Shadow Chandelure|Hex|Shadow Ball|20.0",
+      "Shadow Gengar|Lick|Shadow Ball|20.6",
+      "Lunala|Shadow Claw|Shadow Ball|16.3"
+    ],
+    "Steel": [
+      "Mega Metagross|Bullet Punch|Meteor Mash|19.3",
+      "Shadow Metagross|Bullet Punch|Meteor Mash|21.0",
+      "Mega Lucario|Bullet Punch|Meteor Mash|20.9",
+      "Shadow Dialga|Metal Claw|Iron Head|18.0",
+      "Metagross|Bullet Punch|Meteor Mash|17.0"
+    ],
+    "Fire": [
+      "Mega Delphox|Fire Spin|Blast Burn|22.0",
+      "Mega Charizard Y|Fire Spin|Blast Burn|21.6",
+      "Mega Blaziken|Fire Spin|Blast Burn|22.5",
+      "Shadow Reshiram|Fire Fang|Fusion Flare|21.8",
+      "Blacephalon|Incinerate|Mind Blown|23.3"
+    ],
+    "Water": [
+      "Primal Kyogre|Waterfall|Origin Pulse|20.9",
+      "Mega Swampert|Water Gun|Hydro Cannon|19.2",
+      "Mega Greninja|Water Shuriken|Hydro Cannon|20.7",
+      "Shadow Kyogre|Waterfall|Origin Pulse|19.5",
+      "Mega Gyarados|Waterfall|Hydro Pump|16.4"
+    ],
+    "Grass": [
+      "Mega Sceptile|Bullet Seed|Frenzy Plant|20.6",
+      "Mega Chesnaught|Vine Whip|Frenzy Plant|17.1",
+      "Mega Venusaur|Vine Whip|Frenzy Plant|17.2",
+      "Kartana|Razor Leaf|Leaf Blade|19.1",
+      "Zarude|Vine Whip|Power Whip|16.3"
+    ],
+    "Electric": [
+      "Shadow Zekrom|Charge Beam|Wild Charge|20.2",
+      "Mega Raichu Y|Thunder Shock|Wild Charge|20.9",
+      "Zeraora|Volt Switch|Plasma Fists|18.8",
+      "Shadow Raikou|Thunder Shock|Wild Charge|19.0",
+      "Shadow Electivire|Thunder Shock|Wild Charge|19.6"
+    ],
+    "Psychic": [
+      "Mega Mewtwo Y|Confusion|Psystrike|26.6",
+      "Mega Mewtwo X|Psycho Cut|Psystrike|25.7",
+      "Shadow Mewtwo|Psycho Cut|Psystrike|24.6",
+      "Mega Alakazam|Confusion|Psychic|22.2",
+      "Mewtwo|Psycho Cut|Psystrike|20.0"
+    ],
+    "Ice": [
+      "Shadow Mamoswine|Powder Snow|Avalanche|18.3",
+      "Shadow Weavile|Ice Shard|Avalanche|17.4",
+      "Baxcalibur|Ice Fang|Avalanche|15.4",
+      "Mega Abomasnow|Powder Snow|Weather Ball|15.0",
+      "Galarian Darmanitan (Standard)|Ice Fang|Avalanche|16.2"
+    ],
+    "Dragon": [
+      "Eternatus|Dragon Tail|Dynamax Cannon|24.5",
+      "Mega Rayquaza|Dragon Tail|Breaking Swipe|24.3",
+      "Mega Garchomp|Dragon Tail|Breaking Swipe|21.5",
+      "Shadow Haxorus|Dragon Tail|Breaking Swipe|23.1",
+      "Shadow Garchomp|Dragon Tail|Breaking Swipe|20.5"
+    ],
+    "Dark": [
+      "Mega Tyranitar|Bite|Brutal Swing|18.8",
+      "Shadow Tyranitar|Bite|Brutal Swing|19.3",
+      "Shadow Hydreigon|Bite|Brutal Swing|19.8",
+      "Mega Absol|Snarl|Brutal Swing|21.1",
+      "Shadow Darkrai|Snarl|Dark Pulse|19.5"
+    ],
+    "Fairy": [
+      "Mega Gardevoir|Charm|Dazzling Gleam|19.0",
+      "Shadow Gardevoir|Charm|Dazzling Gleam|16.9",
+      "Enamorus|Fairy Wind|Dazzling Gleam|16.6",
+      "Xerneas|Geomancy|Moonblast|13.9",
+      "Shadow Granbull|Charm|Play Rough|16.0"
+    ]
+  },
+  "raidNow": {
+    "Yveltal": "5-star raid Oct 7 to 13",
+    "Mega Charizard Y": "Mega raid Oct 21 to 27"
+  },
+  "inPerson": [
+    {
+      "tags": [
+        "In person",
+        "Debut",
+        "Background"
+      ],
+      "title": "GO Wild Area: Sendai, Japan",
+      "placesQ": "Sendai",
+      "when": "Nov 6, 7 or 8 · 10 am to 6 pm JST · across Miyagi Prefecture",
+      "art": [
+        "Gigantamax Duraludon",
+        "Dialga",
+        "Palkia"
+      ],
+      "bullets": [
+        "Ticket ¥4,000 for one day. Registration ran Sep 11 to 15, so check for resale or extra days.",
+        "Debuts: Gigantamax Duraludon, Dynamax Dialga and Palkia, Hisuian Sliggoo and Goodra.",
+        "Raids: Crowned Sword Zacian and Crowned Shield Zamazenta in 5-star raids.",
+        "Up to 10 free Raid Passes a day, higher shiny chance, 2x Candy, up to 6 Special Trades at half cost.",
+        "Sendai location backgrounds for people on site."
+      ]
+    },
+    {
+      "tags": [
+        "Debut",
+        "Raids",
+        "Max Battles"
+      ],
+      "title": "GO Wild Area: Global",
+      "when": "Sat Nov 14 and Sun Nov 15 · 10 am to 6 pm local",
+      "art": [
+        "Gigantamax Duraludon",
+        "Reshiram",
+        "Zekrom"
+      ],
+      "bullets": [
+        "Free for everyone. Optional ticket (A$ price not confirmed) adds bonuses and Special Research.",
+        "Six-star Max Battles for Gigantamax Duraludon, plus Dynamax Dialga and Palkia.",
+        "Steel and Dragon types rotate hourly in habitats.",
+        "Mighty Latias and Latios by Incense for ticket holders."
+      ]
+    }
+  ],
+  "pastFests": [
+    [
+      "Tokyo",
+      "May 29 to Jun 1",
+      "Tokyo at Bay Area"
+    ],
+    [
+      "Chicago",
+      "Jun 5 to 7",
+      "Grant Park"
+    ],
+    [
+      "Copenhagen",
+      "Jun 12 to 14",
+      "Fælledparken"
+    ]
+  ],
+  "upcoming": {
+    "announced": [
+      {
+        "kind": "Debut",
+        "name": "Minior",
+        "when": "Oct 19 to 24",
+        "note": "Minior debuts in Meteor Form during the Orionids Meteor Shower.",
+        "art": [
+          "Minior"
+        ]
+      },
+      {
+        "kind": "Debut",
+        "name": "Bramblin",
+        "when": "Oct 13 to 19",
+        "note": "Bramblin debuts during Fall Marathon: Buddy Trek. Brambleghast follows by evolving it: 50 candy and 20 km as buddy (Leek Duck; not in the official post).",
+        "art": [
+          "Bramblin"
+        ]
+      },
+      {
+        "kind": "Gigantamax",
+        "name": "Gigantamax Duraludon",
+        "when": "Nov 6 to 8 (Sendai) · Nov 14 to 15 (global)",
+        "note": "Debuts at GO Wild Area. Six-star Max Battles in the global event.",
+        "art": [
+          "Gigantamax Duraludon"
+        ]
+      },
+      {
+        "kind": "Dynamax",
+        "name": "Dynamax Dialga and Palkia",
+        "when": "Nov 6 to 8 · Nov 14 to 15",
+        "note": "Debut at GO Wild Area. Dialga on Saturday, Palkia on Sunday in the global event.",
+        "art": [
+          "Dialga",
+          "Palkia"
+        ]
+      },
+      {
+        "kind": "Dynamax",
+        "name": "Dynamax Uxie, Mesprit and Azelf",
+        "when": "Sat Oct 24 · 2 pm to 5 pm",
+        "note": "Max Battle Day. They debut together.",
+        "art": [
+          "Uxie",
+          "Mesprit",
+          "Azelf"
+        ]
+      },
+      {
+        "kind": "Mega",
+        "name": "Mega Dragonite",
+        "when": "Oct 14 to 20",
+        "note": "Mega raid.",
+        "art": [
+          "Mega Dragonite"
+        ]
+      },
+      {
+        "kind": "Mega",
+        "name": "Mega Charizard X and Y",
+        "when": "Oct 21 to 27",
+        "note": "Mega raid. A returning boss, not a debut.",
+        "art": [
+          "Mega Charizard X",
+          "Mega Charizard Y"
+        ]
+      },
+      {
+        "kind": "Mega",
+        "name": "Mega Sableye",
+        "when": "Oct 28 to Nov 3",
+        "note": "Mega raid.",
+        "art": [
+          "Mega Sableye"
+        ]
+      },
+      {
+        "kind": "Dynamax",
+        "name": "Dynamax Sneasel, then Sableye",
+        "when": "Oct 19 to 25 · Oct 26 to Nov 1",
+        "note": "Weekly Max Battle rotation. Both can be shiny.",
+        "art": [
+          "Sneasel",
+          {
+            "n": "Sneasel",
+            "shiny": 1
+          },
+          "Sableye",
+          {
+            "n": "Sableye",
+            "shiny": 1
+          }
+        ]
+      },
+      {
+        "kind": "Mega",
+        "name": "Super Mega Raid Days",
+        "when": "Sat Oct 31 · Sat Nov 28",
+        "note": "On the calendar, but no bosses are announced yet.",
+        "art": []
+      }
+    ],
+    "gigaReleased": [
+      [
+        "Venusaur",
+        "Oct 2024"
+      ],
+      [
+        "Charizard",
+        "Oct 2024"
+      ],
+      [
+        "Blastoise",
+        "Oct 2024"
+      ],
+      [
+        "Gengar",
+        "Oct 2024"
+      ],
+      [
+        "Toxtricity",
+        "Nov 2024"
+      ],
+      [
+        "Lapras",
+        "Dec 2024"
+      ],
+      [
+        "Kingler",
+        "Feb 2025"
+      ],
+      [
+        "Snorlax",
+        "Apr 2025"
+      ],
+      [
+        "Machamp",
+        "May 2025"
+      ],
+      [
+        "Rillaboom",
+        "May 2025"
+      ],
+      [
+        "Cinderace",
+        "Jun 2025"
+      ],
+      [
+        "Inteleon",
+        "Jun 2025"
+      ],
+      [
+        "Butterfree",
+        "Aug 2025"
+      ],
+      [
+        "Garbodor",
+        "Nov 2025"
+      ],
+      [
+        "Grimmsnarl",
+        "Nov 2025"
+      ],
+      [
+        "Meowth",
+        "Feb 2026"
+      ],
+      [
+        "Pikachu",
+        "Mar 2026"
+      ]
+    ],
+    "gigaMissing": [
+      "Corviknight",
+      "Orbeetle",
+      "Drednaw",
+      "Coalossal",
+      "Flapple",
+      "Appletun",
+      "Sandaconda",
+      "Centiskorch",
+      "Hatterene",
+      "Alcremie",
+      "Copperajah",
+      "Urshifu"
+    ],
+    "megaCandidates": [
+      "Meganium",
+      "Feraligatr",
+      "Typhlosion",
+      "Skarmory",
+      "Starmie",
+      "Clefable",
+      "Hawlucha",
+      "Dragalge",
+      "Barbaracle",
+      "Pyroar",
+      "Scolipede",
+      "Excadrill",
+      "Chandelure",
+      "Emboar",
+      "Eelektross",
+      "Scrafty",
+      "Froslass",
+      "Drampa",
+      "Zygarde"
+    ],
+    "megaNote": "This list comes from one source that may be out of date, and I dropped any Pokémon that already has a Mega in the ranking data. The Mega Dimension DLC added more Megas, and I could not find a reliable list by name. Mega Baxcalibur is only a projection.",
+    "dd": [
+      {
+        "id": "dynamax",
+        "title": "Dynamax",
+        "blurb": "Dynamax Max Battle bosses. Dynamax is the size-up form from Sword and Shield, and Pokémon GO adds species a few at a time.",
+        "groups": [
+          {
+            "status": "Announced",
+            "items": [
+              {
+                "n": "Uxie",
+                "note": "Max Battle Day, Oct 24",
+                "art": "Uxie"
+              },
+              {
+                "n": "Mesprit",
+                "note": "Max Battle Day, Oct 24",
+                "art": "Mesprit"
+              },
+              {
+                "n": "Azelf",
+                "note": "Max Battle Day, Oct 24",
+                "art": "Azelf"
+              },
+              {
+                "n": "Sneasel",
+                "note": "Max Battles from Oct 19 (Weavile listed with it by one source)",
+                "art": "Sneasel"
+              },
+              {
+                "n": "Dialga",
+                "note": "GO Wild Area, Nov 6 to 8 and Nov 14 to 15"
+              },
+              {
+                "n": "Palkia",
+                "note": "GO Wild Area, Nov 6 to 8 and Nov 14 to 15"
+              }
+            ]
+          },
+          {
+            "status": "Datamined",
+            "items": [],
+            "empty": "Nothing datamined found. I checked Pokémon GO Hub's datamine posts up to Oct 2, 2026. Reddit and the PokéMiners Discord weren't reachable."
+          }
+        ]
+      },
+      {
+        "id": "giga",
+        "title": "Gigantamax",
+        "blurb": "Gigantamax forms from Sword and Shield. 18 are in Pokémon GO or announced.",
+        "groups": [
+          {
+            "status": "Announced",
+            "items": [
+              {
+                "n": "Gigantamax Duraludon",
+                "note": "Debuts at GO Wild Area, Nov 6 to 8 (Sendai), six-star Max Battles Nov 14 to 15"
+              }
+            ]
+          },
+          {
+            "status": "Datamined",
+            "items": [],
+            "empty": "Nothing datamined found. I checked Pokémon GO Hub's datamine posts up to Oct 2, 2026. Reddit and the PokéMiners Discord weren't reachable."
+          },
+          {
+            "status": "Not announced",
+            "blurb": "Exist in the main games, no date for GO.",
+            "items": [
+              {
+                "n": "Gigantamax Corviknight",
+                "note": "Dynamax already in GO"
+              },
+              {
+                "n": "Gigantamax Hatterene",
+                "note": "Dynamax already in GO"
+              },
+              {
+                "n": "Gigantamax Orbeetle"
+              },
+              {
+                "n": "Gigantamax Coalossal"
+              },
+              {
+                "n": "Gigantamax Flapple"
+              },
+              {
+                "n": "Gigantamax Appletun"
+              },
+              {
+                "n": "Gigantamax Sandaconda"
+              },
+              {
+                "n": "Gigantamax Centiskorch",
+                "note": "Sizzlipede got Dynamax in October"
+              },
+              {
+                "n": "Gigantamax Drednaw",
+                "note": "Species not in GO yet"
+              },
+              {
+                "n": "Gigantamax Alcremie",
+                "note": "Species not in GO yet"
+              },
+              {
+                "n": "Gigantamax Copperajah",
+                "note": "Species not in GO yet"
+              },
+              {
+                "n": "Gigantamax Eevee",
+                "note": "Not on the list I read"
+              },
+              {
+                "n": "Gigantamax Melmetal",
+                "note": "Not on the list I read"
+              },
+              {
+                "n": "Urshifu",
+                "note": "Gigantamax in the games, one source says GO only has its forms"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "unreleased",
+        "title": "Unreleased Pokémon",
+        "blurb": "Pokémon from the main games that are not in Pokémon GO yet. Mega Evolutions are at the bottom.",
+        "groups": [
+          {
+            "status": "Announced",
+            "items": [
+              {
+                "n": "Minior",
+                "note": "Orionids shower Oct 19 to 24. More on Nov 14 to 19 and Dec 11 to 16, with seven Core colours over time"
+              },
+              {
+                "n": "Bramblin",
+                "note": "Fall Marathon, Oct 13 to 19"
+              },
+              {
+                "n": "Spooky Mega",
+                "note": "An unnamed Mega arrives on Super Mega Raid Day, Oct 31",
+                "art": []
+              }
+            ]
+          },
+          {
+            "status": "Datamined",
+            "items": [
+              {
+                "n": "Ultra Necrozma",
+                "note": "Two new Ultra Burst raid tiers found in the latest app files. Linked to Ultra Necrozma, unconfirmed. Pokémon GO Hub, Sep 26 2026, found by PokéMiners.",
+                "art": "Necrozma"
+              },
+              {
+                "n": "Wishiwashi",
+                "note": "Entries for switching between Solo and School form in battle. The species isn't in GO yet. Pokémon GO Hub, Sep 26 2026.",
+                "art": "Wishiwashi"
+              }
+            ],
+            "groups": [
+              {
+                "label": "Megas named in the Oct 1 datamine",
+                "blurb": "Pokémon GO Hub, Oct 1 2026: extra Charged Attacks were found for nearly every Mega, including ones not in GO yet. These seven were named with moves not yet revealed. Unconfirmed.",
+                "items": [
+                  {
+                    "n": "Mega Chandelure"
+                  },
+                  {
+                    "n": "Mega Froslass"
+                  },
+                  {
+                    "n": "Mega Scrafty"
+                  },
+                  {
+                    "n": "Mega Zygarde"
+                  },
+                  {
+                    "n": "Mega Magearna"
+                  },
+                  {
+                    "n": "Mega Floette"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "status": "Not announced",
+            "groups": [
+              {
+                "label": "Sinnoh",
+                "items": [
+                  {
+                    "n": "Phione"
+                  },
+                  {
+                    "n": "Manaphy"
+                  },
+                  {
+                    "n": "Arceus"
+                  }
+                ]
+              },
+              {
+                "label": "Alola",
+                "items": [
+                  {
+                    "n": "Pyukumuku"
+                  },
+                  {
+                    "n": "Type: Null"
+                  },
+                  {
+                    "n": "Silvally"
+                  },
+                  {
+                    "n": "Magearna"
+                  }
+                ]
+              },
+              {
+                "label": "Galar and Hisui",
+                "items": [
+                  {
+                    "n": "Chewtle"
+                  },
+                  {
+                    "n": "Drednaw"
+                  },
+                  {
+                    "n": "Milcery"
+                  },
+                  {
+                    "n": "Alcremie"
+                  },
+                  {
+                    "n": "Pincurchin"
+                  },
+                  {
+                    "n": "Eiscue"
+                  },
+                  {
+                    "n": "Cufant"
+                  },
+                  {
+                    "n": "Copperajah"
+                  },
+                  {
+                    "n": "Dracozolt"
+                  },
+                  {
+                    "n": "Arctozolt"
+                  },
+                  {
+                    "n": "Dracovish"
+                  },
+                  {
+                    "n": "Arctovish"
+                  },
+                  {
+                    "n": "Glastrier"
+                  },
+                  {
+                    "n": "Spectrier"
+                  },
+                  {
+                    "n": "Calyrex"
+                  },
+                  {
+                    "n": "Basculegion"
+                  }
+                ]
+              },
+              {
+                "label": "Paldea",
+                "items": [
+                  {
+                    "n": "Brambleghast"
+                  },
+                  {
+                    "n": "Capsakid"
+                  },
+                  {
+                    "n": "Scovillain"
+                  },
+                  {
+                    "n": "Rellor"
+                  },
+                  {
+                    "n": "Rabsca"
+                  },
+                  {
+                    "n": "Finizen"
+                  },
+                  {
+                    "n": "Palafin"
+                  },
+                  {
+                    "n": "Cyclizar"
+                  },
+                  {
+                    "n": "Veluza"
+                  },
+                  {
+                    "n": "Farigiraf"
+                  },
+                  {
+                    "n": "Archaludon"
+                  },
+                  {
+                    "n": "Terapagos"
+                  },
+                  {
+                    "n": "Pecharunt"
+                  },
+                  {
+                    "n": "Ogerpon"
+                  },
+                  {
+                    "n": "Okidogi"
+                  },
+                  {
+                    "n": "Munkidori"
+                  },
+                  {
+                    "n": "Fezandipiti"
+                  },
+                  {
+                    "n": "Wo-Chien"
+                  },
+                  {
+                    "n": "Chien-Pao"
+                  },
+                  {
+                    "n": "Ting-Lu"
+                  },
+                  {
+                    "n": "Chi-Yu"
+                  },
+                  {
+                    "n": "Koraidon"
+                  },
+                  {
+                    "n": "Miraidon"
+                  }
+                ]
+              },
+              {
+                "label": "Paradox",
+                "items": [
+                  {
+                    "n": "Great Tusk"
+                  },
+                  {
+                    "n": "Scream Tail"
+                  },
+                  {
+                    "n": "Brute Bonnet"
+                  },
+                  {
+                    "n": "Flutter Mane"
+                  },
+                  {
+                    "n": "Slither Wing"
+                  },
+                  {
+                    "n": "Sandy Shocks"
+                  },
+                  {
+                    "n": "Iron Treads"
+                  },
+                  {
+                    "n": "Iron Bundle"
+                  },
+                  {
+                    "n": "Iron Hands"
+                  },
+                  {
+                    "n": "Iron Jugulis"
+                  },
+                  {
+                    "n": "Iron Moth"
+                  },
+                  {
+                    "n": "Iron Thorns"
+                  },
+                  {
+                    "n": "Roaring Moon"
+                  },
+                  {
+                    "n": "Iron Valiant"
+                  },
+                  {
+                    "n": "Walking Wake"
+                  },
+                  {
+                    "n": "Iron Leaves"
+                  },
+                  {
+                    "n": "Gouging Fire"
+                  },
+                  {
+                    "n": "Raging Bolt"
+                  },
+                  {
+                    "n": "Iron Boulder"
+                  },
+                  {
+                    "n": "Iron Crown"
+                  }
+                ]
+              },
+              {
+                "label": "Mega Evolutions",
+                "blurb": "From Pokémon Legends: Z-A. One source, may be out of date. The Mega Dimension DLC may add more.",
+                "items": [
+                  {
+                    "n": "Mega Meganium"
+                  },
+                  {
+                    "n": "Mega Feraligatr"
+                  },
+                  {
+                    "n": "Mega Typhlosion"
+                  },
+                  {
+                    "n": "Mega Skarmory"
+                  },
+                  {
+                    "n": "Mega Starmie"
+                  },
+                  {
+                    "n": "Mega Clefable"
+                  },
+                  {
+                    "n": "Mega Hawlucha"
+                  },
+                  {
+                    "n": "Mega Dragalge"
+                  },
+                  {
+                    "n": "Mega Barbaracle"
+                  },
+                  {
+                    "n": "Mega Pyroar"
+                  },
+                  {
+                    "n": "Mega Scolipede"
+                  },
+                  {
+                    "n": "Mega Excadrill"
+                  },
+                  {
+                    "n": "Mega Emboar"
+                  },
+                  {
+                    "n": "Mega Eelektross"
+                  },
+                  {
+                    "n": "Mega Drampa"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "costumeNote": "Costume and shiny pictures: a Costume tag means a costumed Pokémon. Costume artwork is shown once the game files are published; until then you see the plain Pokémon with the tag.",
+  "worldNote": "Dates and places only, no costs. Nothing is on in Australia or Oceania right now: City Safari Brisbane (Sep 26 to 27) and the LEGO collaboration have already ended. Events marked \"Play from anywhere\" can be played from Melbourne. The list comes from Serebii and Leek Duck and is not always complete. New Leek Duck events are added automatically each night.",
+  "regionals": [
+    [
+      83,
+      "Farfetch'd",
+      "Eastern Asia",
+      "no"
+    ],
+    [
+      115,
+      "Kangaskhan",
+      "Australia",
+      "yes"
+    ],
+    [
+      122,
+      "Mr. Mime",
+      "Europe",
+      "no"
+    ],
+    [
+      128,
+      "Tauros",
+      "North America",
+      "no"
+    ],
+    [
+      128,
+      "Combat Breed Tauros (Paldean)",
+      "Iberian Peninsula",
+      "no"
+    ],
+    [
+      128,
+      "Blaze Breed Tauros (Paldean)",
+      "Eastern Hemisphere",
+      "yes"
+    ],
+    [
+      128,
+      "Aqua Breed Tauros (Paldean)",
+      "Western Hemisphere",
+      "no"
+    ],
+    [
+      214,
+      "Heracross",
+      "Mexico, Central and South America",
+      "no"
+    ],
+    [
+      222,
+      "Corsola",
+      "Tropical regions",
+      "no"
+    ],
+    [
+      313,
+      "Volbeat",
+      "Europe, Asia, Australia",
+      "yes"
+    ],
+    [
+      314,
+      "Illumise",
+      "Americas, Africa",
+      "no"
+    ],
+    [
+      324,
+      "Torkoal",
+      "South Asia",
+      "no"
+    ],
+    [
+      335,
+      "Zangoose",
+      "Europe, Asia, Australia",
+      "yes"
+    ],
+    [
+      336,
+      "Seviper",
+      "Americas, Africa",
+      "no"
+    ],
+    [
+      337,
+      "Lunatone",
+      "Western Hemisphere",
+      "no"
+    ],
+    [
+      338,
+      "Solrock",
+      "Eastern Hemisphere",
+      "yes"
+    ],
+    [
+      357,
+      "Tropius",
+      "Africa, the Levant, Malta, southern Spain",
+      "no"
+    ],
+    [
+      369,
+      "Relicanth",
+      "Oceania in UTC+13 (New Zealand, Fiji). Melbourne is UTC+10 or +11, so no.",
+      "no"
+    ],
+    [
+      417,
+      "Pachirisu",
+      "Northern Arctic countries",
+      "no"
+    ],
+    [
+      422,
+      "West Sea Shellos",
+      "Western Hemisphere",
+      "no"
+    ],
+    [
+      422,
+      "East Sea Shellos",
+      "Eastern Hemisphere",
+      "yes"
+    ],
+    [
+      439,
+      "Mime Jr.",
+      "Eggs picked up in Europe",
+      "no"
+    ],
+    [
+      441,
+      "Chatot",
+      "Southern Hemisphere",
+      "yes"
+    ],
+    [
+      455,
+      "Carnivine",
+      "Southeastern US",
+      "no"
+    ],
+    [
+      480,
+      "Uxie",
+      "Asia-Pacific",
+      "likely"
+    ],
+    [
+      481,
+      "Mesprit",
+      "Europe, Middle East, Africa, India",
+      "no"
+    ],
+    [
+      482,
+      "Azelf",
+      "Americas, Greenland",
+      "no"
+    ],
+    [
+      511,
+      "Pansage",
+      "Asia-Pacific",
+      "likely"
+    ],
+    [
+      513,
+      "Pansear",
+      "Europe, Middle East, Africa, India",
+      "no"
+    ],
+    [
+      515,
+      "Panpour",
+      "Americas, Greenland",
+      "no"
+    ],
+    [
+      538,
+      "Throh",
+      "Americas, Africa",
+      "no"
+    ],
+    [
+      539,
+      "Sawk",
+      "Europe, Asia, Australia",
+      "yes"
+    ],
+    [
+      550,
+      "Red-striped Basculin",
+      "Eastern Hemisphere",
+      "yes"
+    ],
+    [
+      550,
+      "Blue-striped Basculin",
+      "Western Hemisphere",
+      "no"
+    ],
+    [
+      556,
+      "Maractus",
+      "Southern US, Mexico, Central and South America, Caribbean",
+      "no"
+    ],
+    [
+      561,
+      "Sigilyph",
+      "Egypt, Greece",
+      "no"
+    ],
+    [
+      626,
+      "Bouffalant",
+      "New York and surrounding areas",
+      "no"
+    ],
+    [
+      631,
+      "Heatmor",
+      "Europe, Asia, Australia",
+      "yes"
+    ],
+    [
+      632,
+      "Durant",
+      "Americas, Africa",
+      "no"
+    ],
+    [
+      669,
+      "Blue Flabébé",
+      "Asia-Pacific",
+      "likely"
+    ],
+    [
+      669,
+      "Red Flabébé",
+      "Europe, Middle East, Africa, India",
+      "no"
+    ],
+    [
+      669,
+      "Yellow Flabébé",
+      "Americas, Greenland",
+      "no"
+    ],
+    [
+      701,
+      "Hawlucha",
+      "Mexico",
+      "no"
+    ],
+    [
+      707,
+      "Klefki",
+      "France",
+      "no"
+    ],
+    [
+      741,
+      "Oricorio (Baile Style)",
+      "Europe, Middle East, Africa, India",
+      "no"
+    ],
+    [
+      741,
+      "Oricorio (Pom-Pom Style)",
+      "Americas, Greenland",
+      "no"
+    ],
+    [
+      741,
+      "Oricorio (Pa'u Style)",
+      "African, Asian, Pacific and Caribbean islands",
+      "no"
+    ],
+    [
+      741,
+      "Oricorio (Sensu Style)",
+      "Asia-Pacific",
+      "likely"
+    ],
+    [
+      764,
+      "Comfey",
+      "Hawaii",
+      "no"
+    ],
+    [
+      797,
+      "Celesteela",
+      "Southern Hemisphere",
+      "yes"
+    ],
+    [
+      798,
+      "Kartana",
+      "Northern Hemisphere",
+      "no"
+    ],
+    [
+      805,
+      "Stakataka",
+      "Eastern Hemisphere",
+      "yes"
+    ],
+    [
+      806,
+      "Blacephalon",
+      "Western Hemisphere",
+      "no"
+    ],
+    [
+      874,
+      "Stonjourner",
+      "United Kingdom",
+      "no"
+    ],
+    [
+      978,
+      "Tatsugiri (Curly)",
+      "Europe, Middle East, Africa",
+      "no"
+    ],
+    [
+      978,
+      "Tatsugiri (Droopy)",
+      "Americas, Greenland",
+      "no"
+    ],
+    [
+      978,
+      "Tatsugiri (Stretchy)",
+      "Asia-Pacific",
+      "likely"
+    ]
+  ],
+  "regionalNote": "From the Pokémon GO fandom wiki, which gives no update date. \"Likely\" means the region is Asia-Pacific, which should include Melbourne but the source does not say so outright. Regional Pokémon also show up worldwide in some events, so check the Now tab. Melbourne is east of the date line and in the Southern Hemisphere.",
+  "worldEvents": [
+    {
+      "t": "GO Wild Area: Sendai and Tohoku",
+      "where": "Sendai and the Tohoku region, Japan",
+      "region": "Asia",
+      "s": "2026-11-06",
+      "e": "2026-11-08",
+      "link": "https://leekduck.com/events/pokemon-go-wild-area-2026-sendai-japan/",
+      "note": "Ticketed in person event.",
+      "kind": "event"
+    },
+    {
+      "t": "GO Wild Area: Mexico City",
+      "where": "Mexico City, Mexico",
+      "region": "Americas",
+      "s": "2026-11-06",
+      "e": "2026-11-08",
+      "link": "https://leekduck.com/events/pokemon-go-wild-area-2026-mexico-city/",
+      "note": "Ticketed in person event.",
+      "kind": "event"
+    },
+    {
+      "t": "GO Wild Area: Global",
+      "where": "Play from anywhere",
+      "region": "Global",
+      "s": "2026-11-14",
+      "e": "2026-11-15",
+      "link": "https://leekduck.com/events/pokemon-go-wild-area-2026-global/",
+      "note": "Free to play from home.",
+      "kind": "event"
+    },
+    {
+      "t": "City Safari: Boston",
+      "where": "Boston, USA",
+      "region": "Americas",
+      "s": "2026-10-24",
+      "e": "2026-10-25",
+      "link": "",
+      "note": "",
+      "kind": "event"
+    },
+    {
+      "t": "PokeXciting Taipei",
+      "where": "Taipei, Taiwan",
+      "region": "Asia",
+      "s": "2026-10-10",
+      "e": "2026-10-11",
+      "link": "",
+      "note": "",
+      "kind": "event"
+    },
+    {
+      "t": "Hangul Day 2026",
+      "where": "Tokyo, Japan",
+      "region": "Asia",
+      "s": "2026-10-06",
+      "e": "2026-10-09",
+      "link": "",
+      "note": "",
+      "kind": "event"
+    },
+    {
+      "t": "Pikachu's Autumn Adventure",
+      "where": "South Korea",
+      "region": "Asia",
+      "s": "2026-09-18",
+      "e": "2026-10-11",
+      "link": "",
+      "note": "",
+      "kind": "event"
+    },
+    {
+      "t": "GO Tour: Alola, Kaohsiung",
+      "where": "Kaohsiung, Taiwan",
+      "region": "Asia",
+      "s": "2027-02-19",
+      "e": "2027-02-21",
+      "link": "https://leekduck.com/events/pokemon-go-tour-alola-kaohsiung-2027/",
+      "note": "Ticketed in person event.",
+      "kind": "event"
+    },
+    {
+      "t": "GO Tour: Alola, Los Angeles",
+      "where": "Los Angeles, USA",
+      "region": "Americas",
+      "s": "2027-02-19",
+      "e": "2027-02-21",
+      "link": "https://leekduck.com/events/pokemon-go-tour-alola-los-angeles-2027/",
+      "note": "Ticketed in person event.",
+      "kind": "event"
+    },
+    {
+      "t": "GO Tour: Alola, Global",
+      "where": "Play from anywhere",
+      "region": "Global",
+      "s": "2027-02-27",
+      "e": "2027-02-28",
+      "link": "https://leekduck.com/events/pokemon-go-tour-alola-global-2027/",
+      "note": "Play from home.",
+      "kind": "event"
+    },
+    {
+      "t": "Pokémon GO x ESA",
+      "where": "London, Toulouse, Nuremberg, Valencia, Noordwijk and Transinne",
+      "region": "Europe",
+      "s": "2026-10-04",
+      "e": "",
+      "link": "",
+      "note": "Space agency partnership with events at ESA sites. No end date.",
+      "kind": "long"
+    },
+    {
+      "t": "Pokémon Fossil Museum 2026",
+      "where": "Chicago, USA",
+      "region": "Americas",
+      "s": "2026-05-22",
+      "e": "2027-04-11",
+      "link": "",
+      "note": "",
+      "kind": "long"
+    },
+    {
+      "t": "Pokémon Jet Red collaboration",
+      "where": "Japan airports: New Chitose, Hakodate, Akita, Sendai, Haneda, Narita",
+      "region": "Asia",
+      "s": "2026-07-28",
+      "e": "2027-08-31",
+      "link": "",
+      "note": "",
+      "kind": "long"
+    }
+  ]
+}

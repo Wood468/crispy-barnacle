@@ -1,0 +1,74 @@
+{
+ "updated": "2026-10-14",
+ "note": "Test fixture. Real list lives in R2 (private/places.json).",
+ "places": [
+  {
+   "id": "shinjuku-kabukicho-tokyo",
+   "name": "Shinjuku Station & Kabukicho",
+   "city": "Tokyo",
+   "region": "Tokyo",
+   "country": "Japan",
+   "lat": 35.69384,
+   "lng": 139.703549,
+   "type": "Community-reported raid hotspot",
+   "role": "Dense central Tokyo area recommended in community discussions for raids and high-stop-density play. Gym activity and lobby fill rates vary by time; current raid activity and lobby fill are not live-verified.",
+   "tags": [
+    "Raids",
+    "Gyms",
+    "PokéStops"
+   ],
+   "sources": [
+    {
+     "label": "Pokémon GO Coordinates — Hotspots",
+     "url": "https://pokemongocoordinates.com/hotspots/",
+     "vouches": "Location recommendation and published coordinates; not live raid activity",
+     "trust": "community"
+    }
+   ],
+   "coords": {
+    "label": "Pokémon GO Coordinates — Hotspots",
+    "url": "https://pokemongocoordinates.com/hotspots/",
+    "note": "Coordinates identify the general hotspot area, not a specific gym."
+   },
+   "verified": "2026-10-10",
+   "timeZone": "Asia/Tokyo"
+  },
+  {
+   "id": "bryant-park-new-york",
+   "name": "Bryant Park & Times Square",
+   "city": "New York City",
+   "region": "New York",
+   "country": "United States",
+   "lat": 40.753733,
+   "lng": -73.983569,
+   "type": "Community-reported raid hotspot",
+   "role": "Compact Manhattan hotspot often recommended for raids and dense stops. Raid lobbies are not guaranteed to fill; current raid activity and lobby fill are not live-verified.",
+   "tags": [
+    "Raids",
+    "Gyms",
+    "PokéStops"
+   ],
+   "sources": [
+    {
+     "label": "Pokémon GO Coordinates — Hotspots",
+     "url": "https://pokemongocoordinates.com/hotspots/",
+     "vouches": "Location recommendation and published coordinates; not live raid activity",
+     "trust": "community"
+    },
+    {
+     "label": "Pokémon GO spoofing community discussion",
+     "url": "https://www.reddit.com/r/PoGoAndroidSpoofing/comments/1waevsd/what_are_the_current_raiding_hotspots/",
+     "vouches": "Recent community discussion of Bryant Park raid activity; reports are anecdotal",
+     "trust": "community"
+    }
+   ],
+   "coords": {
+    "label": "Pokémon GO Coordinates — Hotspots",
+    "url": "https://pokemongocoordinates.com/hotspots/",
+    "note": "Coordinates identify the general hotspot area, not a specific gym."
+   },
+   "verified": "2026-10-10",
+   "timeZone": "America/New_York"
+  }
+ ]
+}

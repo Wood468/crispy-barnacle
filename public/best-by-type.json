@@ -1,0 +1,2784 @@
+{
+ "generated": "2026-10-12",
+ "method": "Estimated damage per second of the best fast + charged cycle against a neutral target at level 50 with 15 IVs, weighted by the attacker's bulk. Our own estimate from game-master data, not a battle simulation.",
+ "sources": [
+  "PvPoke game master (Pokémon, move pools, Elite TM moves)",
+  "PokeMiners game master (PvE move power, energy, timing)"
+ ],
+ "types": {
+  "Bug": [
+   {
+    "name": "Mega Heracross",
+    "dex": 214,
+    "fast": "Fury Cutter",
+    "charged": "Megahorn",
+    "charged2": "Close Combat",
+    "dps": 17.3,
+    "score": 236.1
+   },
+   {
+    "name": "Mega Pinsir",
+    "dex": 127,
+    "fast": "Bug Bite",
+    "charged": "X-Scissor",
+    "charged2": "Close Combat",
+    "dps": 15.2,
+    "score": 201.1
+   },
+   {
+    "name": "Mega Beedrill",
+    "dex": 15,
+    "fast": "Bug Bite",
+    "charged": "X-Scissor",
+    "charged2": "Sludge Bomb",
+    "dps": 15.2,
+    "score": 181.4,
+    "needs": [
+     {
+      "move": "Bug Bite",
+      "kind": "elite"
+     }
+    ],
+    "without": {
+     "fast": "Poison Jab",
+     "charged": "X-Scissor",
+     "dps": 15
+    }
+   },
+   {
+    "name": "Shadow Vikavolt",
+    "dex": 738,
+    "fast": "Bug Bite",
+    "charged": "X-Scissor",
+    "charged2": "Fly",
+    "dps": 15.2,
+    "score": 181
+   },
+   {
+    "name": "Volcarona",
+    "dex": 637,
+    "fast": "Fire Spin",
+    "charged": "Bug Buzz",
+    "charged2": "Overheat",
+    "dps": 13.5,
+    "score": 178.9
+   },
+   {
+    "name": "Mega Scizor",
+    "dex": 212,
+    "fast": "Fury Cutter",
+    "charged": "X-Scissor",
+    "charged2": "Iron Head",
+    "dps": 13,
+    "score": 178
+   },
+   {
+    "name": "Shadow Scizor",
+    "dex": 212,
+    "fast": "Fury Cutter",
+    "charged": "X-Scissor",
+    "charged2": "Iron Head",
+    "dps": 14.5,
+    "score": 175.1
+   },
+   {
+    "name": "Genesect",
+    "dex": 649,
+    "fast": "Metal Claw",
+    "charged": "X-Scissor",
+    "charged2": "Techno Blast Normal",
+    "dps": 13.3,
+    "score": 173.1,
+    "needs": [
+     {
+      "move": "Techno Blast Normal",
+      "kind": "elite"
+     }
+    ],
+    "without": {
+     "fast": "Metal Claw",
+     "charged": "X-Scissor",
+     "dps": 13.3
+    }
+   },
+   {
+    "name": "Shadow Pinsir",
+    "dex": 127,
+    "fast": "Fury Cutter",
+    "charged": "X-Scissor",
+    "charged2": "Close Combat",
+    "dps": 14.5,
+    "score": 173.1
+   },
+   {
+    "name": "Pheromosa",
+    "dex": 795,
+    "fast": "Bug Bite",
+    "charged": "Bug Buzz",
+    "charged2": "Focus Blast",
+    "dps": 15.9,
+    "score": 170.3
+   }
+  ],
+  "Dark": [
+   {
+    "name": "Mega Tyranitar",
+    "dex": 248,
+    "fast": "Smack Down",
+    "charged": "Brutal Swing",
+    "charged2": "Stone Edge",
+    "dps": 15.8,
+    "score": 234.7,
+    "needs": [
+     {
+      "move": "Smack Down",
+      "kind": "elite"
+     }
+    ],
+    "without": {
+     "fast": "Bite",
+     "charged": "Brutal Swing",
+     "dps": 15.6
+    }
+   },
+   {
+    "name": "Shadow Darkrai",
+    "dex": 491,
+    "fast": "Snarl",
+    "charged": "Foul Play",
+    "charged2": "Shadow Ball",
+    "dps": 17.5,
+    "score": 216.8
+   },
+   {
+    "name": "Shadow Tyranitar",
+    "dex": 248,
+    "fast": "Smack Down",
+    "charged": "Brutal Swing",
+    "charged2": "Stone Edge",
+    "dps": 15.6,
+    "score": 207.6,
+    "needs": [
+     {
+      "move": "Smack Down",
+      "kind": "elite"
+     }
+    ],
+    "without": {
+     "fast": "Bite",
+     "charged": "Brutal Swing",
+     "dps": 15.4
+    }
+   },
+   {
+    "name": "Mega Greninja",
+    "dex": 658,
+    "fast": "Water Shuriken",
+    "charged": "Brutal Swing",
+    "charged2": "Hydro Cannon",
+    "dps": 16.3,
+    "score": 206.9,
+    "needs": [
+     {
+      "move": "Hydro Cannon",
+      "kind": "elite"
+     }
+    ],
+    "without": {
+     "fast": "Water Shuriken",
+     "charged": "Brutal Swing",
+     "dps": 16.3
+    }
+   },
+   {
+    "name": "Mega Absol",
+    "dex": 359,
+    "fast": "Snarl",
+    "charged": "Brutal Swing",
+    "charged2": "Payback",
+    "dps": 17.5,
+    "score": 203,
+    "needs": [
+     {
+      "move": "Brutal Swing",
+      "kind": "elite"
+     }
+    ],
+    "without": {
+     "fast": "Snarl",
+     "charged": "Payback",
+     "dps": 16.1
+    }
+   },
+   {
+    "name": "Shadow Hydreigon",
+    "dex": 635,
+    "fast": "Bite",
+    "charged": "Brutal Swing",
+    "charged2": "Fly",
+    "dps": 15.6,
+    "score": 199.1,
+    "needs": [
+     {
+      "move": "Brutal Swing",
+      "kind": "elite"
+     }
+    ],
+    "without": {
+     "fast": "Bite",
+     "charged": "Dark Pulse",
+     "dps": 13.9
+    }
+   },
+   {
+    "name": "Mega Houndoom",
+    "dex": 229,
+    "fast": "Snarl",
+    "charged": "Foul Play",
+    "charged2": "Fire Blast",
+    "dps": 15.2,
+    "score": 197.5
+   },
+   {
+    "name": "Darkrai",
+    "dex": 491,
+    "fast": "Snarl",
+    "charged": "Foul Play",
+    "charged2": "Shadow Ball",
+    "dps": 15,
+    "score": 194
+   },
+   {
+    "name": "Tyranitar",
+    "dex": 248,
+    "fast": "Bite",
+    "charged": "Brutal Swing",
+    "charged2": "Stone Edge",
+    "dps": 13.9,
+    "score": 193.7
+   },
+   {
+    "name": "Mega Gyarados",
+    "dex": 130,
+    "fast": "Waterfall",
+    "charged": "Crunch",
+    "charged2": "Hydro Pump",
+    "dps": 13.3,
+    "score": 191.7
+   }
+  ],
+  "Dragon": [
+   {
+    "name": "Mega Rayquaza",
+    "dex": 384,
+    "fast": "Dragon Tail",
+    "charged": "Breaking Swipe",
+    "charged2": "Dragon Ascent",
+    "dps": 20,
+    "score": 280.6,
+    "needs": [
+     {
+      "move": "Breaking Swipe",
+      "kind": "elite"
+     },
+     {
+      "move": "Dragon Ascent",
+      "kind": "elite"
+     }
+    ],
+    "without": {
+     "fast": "Dragon Tail",
+     "charged": "Outrage",
+     "dps": 19.2
+    }
+   },
+   {
+    "name": "Mega Garchomp",
+    "dex": 445,
+    "fast": "Dragon Tail",
+    "charged": "Breaking Swipe",
+    "charged2": "Earthquake",
+    "dps": 18.5,
+    "score": 265
+   },
+   {
+    "name": "Dialga (Origin)",
+    "dex": 483,
+    "fast": "Metal Claw",
+    "charged": "Roar of Time",
+    "charged2": "Draco Meteor",
+    "dps": 17.9,
+    "score": 248.7,
+    "needs": [
+     {
+      "move": "Roar of Time",
+      "kind": "legacy"
+     }
+    ],
+    "without": {
+     "fast": "Metal Claw",
+     "charged": "Draco Meteor",
+     "dps": 15.4
+    }
+   },
+   {
+    "name": "Mega Salamence",
+    "dex": 373,
+    "fast": "Dragon Tail",
+    "charged": "Draco Meteor",
+    "charged2": "Fly",
+    "dps": 17.1,
+    "score": 246.2
+   },
+   {
+    "name": "Shadow Dialga",
+    "dex": 483,
+    "fast": "Metal Claw",
+    "charged": "Draco Meteor",
+    "charged2": "Iron Head",
+    "dps": 18.7,
+    "score": 243.8
+   },
+   {
+    "name": "Mega Dragonite",
+    "dex": 149,
+    "fast": "Dragon Tail",
+    "charged": "Draco Meteor",
+    "charged2": "Outrage",
+    "dps": 16.8,
+    "score": 241.6,
+    "needs": [
+     {
+      "move": "Draco Meteor",
+      "kind": "elite"
+     }
+    ],
+    "without": {
+     "fast": "Dragon Tail",
+     "charged": "Outrage",
+     "dps": 15.9
+    }
+   },
+   {
+    "name": "Shadow Palkia",
+    "dex": 484,
+    "fast": "Dragon Tail",
+    "charged": "Draco Meteor",
+    "charged2": "Hydro Pump",
+    "dps": 18.5,
+    "score": 238.7
+   },
+   {
+    "name": "Shadow Reshiram",
+    "dex": 643,
+    "fast": "Fire Fang",
+    "charged": "Draco Meteor",
+    "charged2": "Fusion Flare",
+    "dps": 18.2,
+    "score": 237.2,
+    "needs": [
+     {
+      "move": "Fusion Flare",
+      "kind": "elite"
+     }
+    ],
+    "without": {
+     "fast": "Fire Fang",
+     "charged": "Draco Meteor",
+     "dps": 18.2
+    }
+   },
+   {
+    "name": "Palkia (Origin)",
+    "dex": 484,
+    "fast": "Dragon Tail",
+    "charged": "Spacial Rend",
+    "charged2": "Draco Meteor",
+    "dps": 17.3,
+    "score": 235.3,
+    "needs": [
+     {
+      "move": "Spacial Rend",
+      "kind": "legacy"
+     }
+    ],
+    "without": {
+     "fast": "Dragon Tail",
+     "charged": "Draco Meteor",
+     "dps": 15.7
+    }
+   },
+   {
+    "name": "Shadow Salamence",
+    "dex": 373,
+    "fast": "Dragon Tail",
+    "charged": "Draco Meteor",
+    "charged2": "Fly",
+    "dps": 18.5,
+    "score": 231.9
+   }
+  ],
+  "Electric": [
+   {
+    "name": "Shadow Zekrom",
+    "dex": 644,
+    "fast": "Charge Beam",
+    "charged": "Fusion Bolt",
+    "charged2": "Wild Charge",
+    "dps": 18.9,
+    "score": 247.2,
+    "needs": [
+     {
+      "move": "Fusion Bolt",
+      "kind": "elite"
+     }
+    ],
+    "without": {
+     "fast": "Dragon Breath",
+     "charged": "Wild Charge",
+     "dps": 17.6
+    }
+   },
+   {
+    "name": "Regieleki",
+    "dex": 894,
+    "fast": "Lock On",
+    "charged": "Thunder Cage",
+    "charged2": "Zap Cannon",
+    "dps": 19.6,
+    "score": 234.3,
+    "needs": [
+     {
+      "move": "Thunder Cage",
+      "kind": "elite"
+     }
+    ],
+    "without": {
+     "fast": "Lock On",
+     "charged": "Zap Cannon",
+     "dps": 13.4
+    }
+   },
+   {
+    "name": "Zekrom",
+    "dex": 644,
+    "fast": "Charge Beam",
+    "charged": "Fusion Bolt",
+    "charged2": "Wild Charge",
+    "dps": 16,
+    "score": 218.1,
+    "needs": [
+     {
+      "move": "Fusion Bolt",
+      "kind": "elite"
+     }
+    ],
+    "without": {
+     "fast": "Dragon Breath",
+     "charged": "Wild Charge",
+     "dps": 14.7
+    }
+   },
+   {
+    "name": "Thundurus (Therian)",
+    "dex": 642,
+    "fast": "Volt Switch",
+    "charged": "Wildbolt Storm",
+    "charged2": "Thunderbolt",
+    "dps": 17.3,
+    "score": 217.8,
+    "needs": [
+     {
+      "move": "Wildbolt Storm",
+      "kind": "elite"
+     }
+    ],
+    "without": {
+     "fast": "Volt Switch",
+     "charged": "Thunderbolt",
+     "dps": 14.5
+    }
+   },
+   {
+    "name": "Mega Raichu Y",
+    "dex": 26,
+    "fast": "Thunder Shock",
+    "charged": "Wild Charge",
+    "charged2": "Volt Tackle",
+    "dps": 18,
+    "score": 216
+   },
+   {
+    "name": "Shadow Raikou",
+    "dex": 243,
+    "fast": "Thunder Shock",
+    "charged": "Wild Charge",
+    "charged2": "Aura Sphere",
+    "dps": 16.2,
+    "score": 208.8
+   },
+   {
+    "name": "Shadow Zapdos",
+    "dex": 145,
+    "fast": "Thunder Shock",
+    "charged": "Zap Cannon",
+    "charged2": "Drill Peck",
+    "dps": 16.1,
+    "score": 204.3,
+    "needs": [
+     {
+      "move": "Thunder Shock",
+      "kind": "elite"
+     }
+    ],
+    "without": {
+     "fast": "Charge Beam",
+     "charged": "Zap Cannon",
+     "dps": 14.7
+    }
+   },
+   {
+    "name": "Mega Ampharos",
+    "dex": 181,
+    "fast": "Volt Switch",
+    "charged": "Zap Cannon",
+    "charged2": "Brutal Swing",
+    "dps": 15,
+    "score": 203.8
+   },
+   {
+    "name": "Mega Manectric",
+    "dex": 310,
+    "fast": "Thunder Fang",
+    "charged": "Wild Charge",
+    "charged2": "Overheat",
+    "dps": 15.7,
+    "score": 198.8
+   },
+   {
+    "name": "Shadow Electivire",
+    "dex": 466,
+    "fast": "Thunder Shock",
+    "charged": "Wild Charge",
+    "charged2": "Thunder",
+    "dps": 16.6,
+    "score": 198.1
+   }
+  ],
+  "Fairy": [
+   {
+    "name": "Zacian (Crowned Sword)",
+    "dex": 888,
+    "fast": "Metal Claw",
+    "charged": "Play Rough",
+    "charged2": "Behemoth Blade",
+    "dps": 17.4,
+    "score": 241.1,
+    "needs": [
+     {
+      "move": "Behemoth Blade",
+      "kind": "legacy"
+     }
+    ],
+    "without": {
+     "fast": "Metal Claw",
+     "charged": "Play Rough",
+     "dps": 17.4
+    }
+   },
+   {
+    "name": "Mega Gardevoir",
+    "dex": 282,
+    "fast": "Confusion",
+    "charged": "Dazzling Gleam",
+    "charged2": "Psychic",
+    "dps": 16.6,
+    "score": 220.8
+   },
+   {
+    "name": "Mega Diancie",
+    "dex": 719,
+    "fast": "Rock Throw",
+    "charged": "Moonblast",
+    "charged2": "Rock Slide",
+    "dps": 16.2,
+    "score": 206.8
+   },
+   {
+    "name": "Tapu Lele",
+    "dex": 786,
+    "fast": "Confusion",
+    "charged": "Nature's Madness",
+    "charged2": "Moonblast",
+    "dps": 15.4,
+    "score": 201.2,
+    "needs": [
+     {
+      "move": "Nature's Madness",
+      "kind": "elite"
+     }
+    ],
+    "without": {
+     "fast": "Confusion",
+     "charged": "Moonblast",
+     "dps": 12.9
+    }
+   },
+   {
+    "name": "Tapu Koko",
+    "dex": 785,
+    "fast": "Volt Switch",
+    "charged": "Nature's Madness",
+    "charged2": "Brave Bird",
+    "dps": 14.5,
+    "score": 184.1,
+    "needs": [
+     {
+      "move": "Nature's Madness",
+      "kind": "elite"
+     }
+    ],
+    "without": {
+     "fast": "Volt Switch",
+     "charged": "Dazzling Gleam",
+     "dps": 12.3
+    }
+   },
+   {
+    "name": "Shadow Gardevoir",
+    "dex": 282,
+    "fast": "Confusion",
+    "charged": "Dazzling Gleam",
+    "charged2": "Psychic",
+    "dps": 14.7,
+    "score": 180.8
+   },
+   {
+    "name": "Tapu Bulu",
+    "dex": 787,
+    "fast": "Bullet Seed",
+    "charged": "Nature's Madness",
+    "charged2": "Grass Knot",
+    "dps": 13.6,
+    "score": 178.9,
+    "needs": [
+     {
+      "move": "Nature's Madness",
+      "kind": "elite"
+     }
+    ],
+    "without": {
+     "fast": "Bullet Seed",
+     "charged": "Dazzling Gleam",
+     "dps": 11.7
+    }
+   },
+   {
+    "name": "Xerneas",
+    "dex": 716,
+    "fast": "Geomancy",
+    "charged": "Moonblast",
+    "charged2": "Giga Impact",
+    "dps": 12.7,
+    "score": 176,
+    "needs": [
+     {
+      "move": "Geomancy",
+      "kind": "elite"
+     }
+    ],
+    "without": {
+     "fast": "Zen Headbutt",
+     "charged": "Moonblast",
+     "dps": 10.9
+    }
+   },
+   {
+    "name": "Gardevoir",
+    "dex": 282,
+    "fast": "Confusion",
+    "charged": "Dazzling Gleam",
+    "charged2": "Psychic",
+    "dps": 12.5,
+    "score": 160.1
+   },
+   {
+    "name": "Togekiss",
+    "dex": 468,
+    "fast": "Charm",
+    "charged": "Dazzling Gleam",
+    "charged2": "Aura Sphere",
+    "dps": 11.6,
+    "score": 158.9,
+    "needs": [
+     {
+      "move": "Aura Sphere",
+      "kind": "elite"
+     }
+    ],
+    "without": {
+     "fast": "Charm",
+     "charged": "Dazzling Gleam",
+     "dps": 11.6
+    }
+   }
+  ],
+  "Fighting": [
+   {
+    "name": "Mega Mewtwo X",
+    "dex": 150,
+    "fast": "Counter",
+    "charged": "Focus Blast",
+    "charged2": "Psystrike",
+    "dps": 20.7,
+    "score": 291.8,
+    "needs": [
+     {
+      "move": "Counter",
+      "kind": "legacy"
+     },
+     {
+      "move": "Psystrike",
+      "kind": "elite"
+     }
+    ],
+    "without": {
+     "fast": "Psycho Cut",
+     "charged": "Focus Blast",
+     "dps": 20.5
+    }
+   },
+   {
+    "name": "Mega Lucario",
+    "dex": 448,
+    "fast": "Force Palm",
+    "charged": "Aura Sphere",
+    "charged2": "Meteor Mash",
+    "dps": 21.5,
+    "score": 270.4,
+    "needs": [
+     {
+      "move": "Force Palm",
+      "kind": "elite"
+     }
+    ],
+    "without": {
+     "fast": "Counter",
+     "charged": "Aura Sphere",
+     "dps": 18.9
+    }
+   },
+   {
+    "name": "Mega Blaziken",
+    "dex": 257,
+    "fast": "Counter",
+    "charged": "Aura Sphere",
+    "charged2": "Blast Burn",
+    "dps": 20.3,
+    "score": 259.4,
+    "needs": [
+     {
+      "move": "Blast Burn",
+      "kind": "elite"
+     }
+    ],
+    "without": {
+     "fast": "Counter",
+     "charged": "Aura Sphere",
+     "dps": 20.3
+    }
+   },
+   {
+    "name": "Mega Gallade",
+    "dex": 475,
+    "fast": "Psycho Cut",
+    "charged": "Sacred Sword",
+    "charged2": "Psychic",
+    "dps": 18.4,
+    "score": 245.9
+   },
+   {
+    "name": "Mega Heracross",
+    "dex": 214,
+    "fast": "Counter",
+    "charged": "Close Combat",
+    "charged2": "Megahorn",
+    "dps": 16.6,
+    "score": 226.5
+   },
+   {
+    "name": "Shadow Blaziken",
+    "dex": 257,
+    "fast": "Counter",
+    "charged": "Aura Sphere",
+    "charged2": "Blast Burn",
+    "dps": 18.4,
+    "score": 215.6,
+    "needs": [
+     {
+      "move": "Blast Burn",
+      "kind": "elite"
+     }
+    ],
+    "without": {
+     "fast": "Counter",
+     "charged": "Aura Sphere",
+     "dps": 18.4
+    }
+   },
+   {
+    "name": "Shadow Gallade",
+    "dex": 475,
+    "fast": "Psycho Cut",
+    "charged": "Sacred Sword",
+    "charged2": "Psychic",
+    "dps": 17.2,
+    "score": 211.4
+   },
+   {
+    "name": "Shadow Conkeldurr",
+    "dex": 534,
+    "fast": "Force Palm",
+    "charged": "Focus Blast",
+    "charged2": "Dynamic Punch",
+    "dps": 16.4,
+    "score": 206.8
+   },
+   {
+    "name": "Lucario",
+    "dex": 448,
+    "fast": "Force Palm",
+    "charged": "Aura Sphere",
+    "charged2": "Meteor Mash",
+    "dps": 16.8,
+    "score": 201.7,
+    "needs": [
+     {
+      "move": "Force Palm",
+      "kind": "elite"
+     }
+    ],
+    "without": {
+     "fast": "Counter",
+     "charged": "Aura Sphere",
+     "dps": 15.1
+    }
+   },
+   {
+    "name": "Terrakion",
+    "dex": 639,
+    "fast": "Double Kick",
+    "charged": "Sacred Sword",
+    "charged2": "Close Combat",
+    "dps": 14.9,
+    "score": 200.5,
+    "needs": [
+     {
+      "move": "Sacred Sword",
+      "kind": "elite"
+     }
+    ],
+    "without": {
+     "fast": "Smack Down",
+     "charged": "Close Combat",
+     "dps": 12.9
+    }
+   }
+  ],
+  "Fire": [
+   {
+    "name": "Mega Delphox",
+    "dex": 655,
+    "fast": "Fire Spin",
+    "charged": "Blast Burn",
+    "charged2": "Psychic",
+    "dps": 19,
+    "score": 258.3,
+    "needs": [
+     {
+      "move": "Blast Burn",
+      "kind": "elite"
+     }
+    ],
+    "without": {
+     "fast": "Fire Spin",
+     "charged": "Mystical Fire",
+     "dps": 17.1
+    }
+   },
+   {
+    "name": "Shadow Reshiram",
+    "dex": 643,
+    "fast": "Fire Fang",
+    "charged": "Fusion Flare",
+    "charged2": "Draco Meteor",
+    "dps": 19.6,
+    "score": 255.4,
+    "needs": [
+     {
+      "move": "Fusion Flare",
+      "kind": "elite"
+     }
+    ],
+    "without": {
+     "fast": "Fire Fang",
+     "charged": "Overheat",
+     "dps": 18.2
+    }
+   },
+   {
+    "name": "Mega Blaziken",
+    "dex": 257,
+    "fast": "Counter",
+    "charged": "Blast Burn",
+    "charged2": "Aura Sphere",
+    "dps": 19,
+    "score": 241.8,
+    "needs": [
+     {
+      "move": "Blast Burn",
+      "kind": "elite"
+     }
+    ],
+    "without": {
+     "fast": "Counter",
+     "charged": "Overheat",
+     "dps": 18
+    }
+   },
+   {
+    "name": "Mega Charizard Y",
+    "dex": 6,
+    "fast": "Fire Spin",
+    "charged": "Blast Burn",
+    "charged2": "Overheat",
+    "dps": 18,
+    "score": 241,
+    "needs": [
+     {
+      "move": "Blast Burn",
+      "kind": "elite"
+     }
+    ],
+    "without": {
+     "fast": "Fire Spin",
+     "charged": "Overheat",
+     "dps": 17
+    }
+   },
+   {
+    "name": "Primal Groudon",
+    "dex": 383,
+    "fast": "Dragon Tail",
+    "charged": "Fire Blast",
+    "charged2": "Precipice Blades",
+    "dps": 16.2,
+    "score": 237.9,
+    "needs": [
+     {
+      "move": "Precipice Blades",
+      "kind": "elite"
+     }
+    ],
+    "without": {
+     "fast": "Dragon Tail",
+     "charged": "Fire Blast",
+     "dps": 16.2
+    }
+   },
+   {
+    "name": "Reshiram",
+    "dex": 643,
+    "fast": "Fire Fang",
+    "charged": "Fusion Flare",
+    "charged2": "Draco Meteor",
+    "dps": 16.3,
+    "score": 223.3,
+    "needs": [
+     {
+      "move": "Fusion Flare",
+      "kind": "elite"
+     }
+    ],
+    "without": {
+     "fast": "Fire Fang",
+     "charged": "Overheat",
+     "dps": 15.1
+    }
+   },
+   {
+    "name": "Blacephalon",
+    "dex": 806,
+    "fast": "Incinerate",
+    "charged": "Mind Blown",
+    "charged2": "Shadow Ball",
+    "dps": 19.3,
+    "score": 223.3,
+    "needs": [
+     {
+      "move": "Mind Blown",
+      "kind": "elite"
+     }
+    ],
+    "without": {
+     "fast": "Incinerate",
+     "charged": "Overheat",
+     "dps": 16.7
+    }
+   },
+   {
+    "name": "Shadow Heatran",
+    "dex": 485,
+    "fast": "Fire Spin",
+    "charged": "Magma Storm",
+    "charged2": "Fire Blast",
+    "dps": 16.4,
+    "score": 216.3,
+    "needs": [
+     {
+      "move": "Magma Storm",
+      "kind": "elite"
+     }
+    ],
+    "without": {
+     "fast": "Fire Spin",
+     "charged": "Fire Blast",
+     "dps": 15.6
+    }
+   },
+   {
+    "name": "Shadow Chandelure",
+    "dex": 609,
+    "fast": "Fire Spin",
+    "charged": "Overheat",
+    "charged2": "Shadow Ball",
+    "dps": 18,
+    "score": 213.2
+   },
+   {
+    "name": "Mega Charizard X",
+    "dex": 6,
+    "fast": "Fire Spin",
+    "charged": "Blast Burn",
+    "charged2": "Overheat",
+    "dps": 15.9,
+    "score": 212.3,
+    "needs": [
+     {
+      "move": "Blast Burn",
+      "kind": "elite"
+     }
+    ],
+    "without": {
+     "fast": "Fire Spin",
+     "charged": "Overheat",
+     "dps": 15.1
+    }
+   }
+  ],
+  "Flying": [
+   {
+    "name": "Mega Rayquaza",
+    "dex": 384,
+    "fast": "Dragon Tail",
+    "charged": "Dragon Ascent",
+    "charged2": "Breaking Swipe",
+    "dps": 23.2,
+    "score": 325.2,
+    "needs": [
+     {
+      "move": "Dragon Ascent",
+      "kind": "elite"
+     },
+     {
+      "move": "Breaking Swipe",
+      "kind": "elite"
+     }
+    ],
+    "without": {
+     "fast": "Dragon Tail",
+     "charged": "Aerial Ace",
+     "dps": 17
+    }
+   },
+   {
+    "name": "Mega Salamence",
+    "dex": 373,
+    "fast": "Dragon Tail",
+    "charged": "Fly",
+    "charged2": "Draco Meteor",
+    "dps": 18.1,
+    "score": 260.6
+   },
+   {
+    "name": "Shadow Salamence",
+    "dex": 373,
+    "fast": "Dragon Tail",
+    "charged": "Fly",
+    "charged2": "Draco Meteor",
+    "dps": 19.5,
+    "score": 245.4
+   },
+   {
+    "name": "Rayquaza",
+    "dex": 384,
+    "fast": "Dragon Tail",
+    "charged": "Dragon Ascent",
+    "charged2": "Breaking Swipe",
+    "dps": 17.9,
+    "score": 235.3,
+    "needs": [
+     {
+      "move": "Dragon Ascent",
+      "kind": "elite"
+     },
+     {
+      "move": "Breaking Swipe",
+      "kind": "elite"
+     }
+    ],
+    "without": {
+     "fast": "Dragon Tail",
+     "charged": "Aerial Ace",
+     "dps": 13.2
+    }
+   },
+   {
+    "name": "Shadow Moltres",
+    "dex": 146,
+    "fast": "Fire Spin",
+    "charged": "Fly",
+    "charged2": "Sky Attack",
+    "dps": 17.8,
+    "score": 224.4,
+    "needs": [
+     {
+      "move": "Sky Attack",
+      "kind": "elite"
+     }
+    ],
+    "without": {
+     "fast": "Fire Spin",
+     "charged": "Fly",
+     "dps": 17.8
+    }
+   },
+   {
+    "name": "Mega Dragonite",
+    "dex": 149,
+    "fast": "Dragon Tail",
+    "charged": "Hurricane",
+    "charged2": "Draco Meteor",
+    "dps": 15.6,
+    "score": 224.2,
+    "needs": [
+     {
+      "move": "Draco Meteor",
+      "kind": "elite"
+     }
+    ],
+    "without": {
+     "fast": "Dragon Tail",
+     "charged": "Hurricane",
+     "dps": 15.6
+    }
+   },
+   {
+    "name": "Mega Staraptor",
+    "dex": 398,
+    "fast": "Gust",
+    "charged": "Fly",
+    "charged2": "Brave Bird",
+    "dps": 16.4,
+    "score": 220.8,
+    "needs": [
+     {
+      "move": "Gust",
+      "kind": "elite"
+     }
+    ],
+    "without": {
+     "fast": "Quick Attack",
+     "charged": "Fly",
+     "dps": 16.1
+    }
+   },
+   {
+    "name": "Shadow Ho-Oh",
+    "dex": 250,
+    "fast": "Incinerate",
+    "charged": "Brave Bird",
+    "charged2": "Sacred Fire",
+    "dps": 16,
+    "score": 218.4,
+    "needs": [
+     {
+      "move": "Sacred Fire",
+      "kind": "elite"
+     }
+    ],
+    "without": {
+     "fast": "Incinerate",
+     "charged": "Brave Bird",
+     "dps": 16
+    }
+   },
+   {
+    "name": "Salamence",
+    "dex": 373,
+    "fast": "Dragon Tail",
+    "charged": "Fly",
+    "charged2": "Draco Meteor",
+    "dps": 16.5,
+    "score": 216.3
+   },
+   {
+    "name": "Mega Skarmory",
+    "dex": 227,
+    "fast": "Steel Wing",
+    "charged": "Brave Bird",
+    "charged2": "Sky Attack",
+    "dps": 16,
+    "score": 211.8
+   }
+  ],
+  "Ghost": [
+   {
+    "name": "Necrozma (Dawn Wings)",
+    "dex": 800,
+    "fast": "Psycho Cut",
+    "charged": "Moongeist Beam",
+    "charged2": "Outrage",
+    "dps": 21,
+    "score": 288.2
+   },
+   {
+    "name": "Mega Gengar",
+    "dex": 94,
+    "fast": "Lick",
+    "charged": "Shadow Ball",
+    "charged2": "Sludge Bomb",
+    "dps": 18.7,
+    "score": 235.8,
+    "needs": [
+     {
+      "move": "Lick",
+      "kind": "elite"
+     }
+    ],
+    "without": {
+     "fast": "Shadow Claw",
+     "charged": "Shadow Ball",
+     "dps": 18.1
+    }
+   },
+   {
+    "name": "Shadow Chandelure",
+    "dex": 609,
+    "fast": "Fire Spin",
+    "charged": "Shadow Ball",
+    "charged2": "Overheat",
+    "dps": 18,
+    "score": 212.5
+   },
+   {
+    "name": "Lunala",
+    "dex": 792,
+    "fast": "Shadow Claw",
+    "charged": "Shadow Ball",
+    "charged2": "Psychic",
+    "dps": 14.2,
+    "score": 201.7
+   },
+   {
+    "name": "Shadow Gengar",
+    "dex": 94,
+    "fast": "Lick",
+    "charged": "Shadow Ball",
+    "charged2": "Sludge Bomb",
+    "dps": 17.5,
+    "score": 198.2,
+    "needs": [
+     {
+      "move": "Lick",
+      "kind": "elite"
+     }
+    ],
+    "without": {
+     "fast": "Shadow Claw",
+     "charged": "Shadow Ball",
+     "dps": 17.2
+    }
+   },
+   {
+    "name": "Giratina (Origin)",
+    "dex": 487,
+    "fast": "Dragon Tail",
+    "charged": "Shadow Force",
+    "charged2": "Shadow Ball",
+    "dps": 13.6,
+    "score": 195.7,
+    "needs": [
+     {
+      "move": "Shadow Force",
+      "kind": "elite"
+     }
+    ],
+    "without": {
+     "fast": "Dragon Tail",
+     "charged": "Shadow Ball",
+     "dps": 12.7
+    }
+   },
+   {
+    "name": "Mega Banette",
+    "dex": 354,
+    "fast": "Hex",
+    "charged": "Shadow Ball",
+    "charged2": "Dazzling Gleam",
+    "dps": 16.1,
+    "score": 195
+   },
+   {
+    "name": "Shadow Annihilape",
+    "dex": 979,
+    "fast": "Counter",
+    "charged": "Shadow Ball",
+    "charged2": "Rage Fist",
+    "dps": 14.9,
+    "score": 194.7,
+    "needs": [
+     {
+      "move": "Rage Fist",
+      "kind": "elite"
+     }
+    ],
+    "without": {
+     "fast": "Counter",
+     "charged": "Shadow Ball",
+     "dps": 14.9
+    }
+   },
+   {
+    "name": "Blacephalon",
+    "dex": 806,
+    "fast": "Incinerate",
+    "charged": "Shadow Ball",
+    "charged2": "Mind Blown",
+    "dps": 16.7,
+    "score": 193.8,
+    "needs": [
+     {
+      "move": "Mind Blown",
+      "kind": "elite"
+     }
+    ],
+    "without": {
+     "fast": "Incinerate",
+     "charged": "Shadow Ball",
+     "dps": 16.7
+    }
+   },
+   {
+    "name": "Dragapult",
+    "dex": 887,
+    "fast": "Dragon Tail",
+    "charged": "Shadow Ball",
+    "charged2": "Breaking Swipe",
+    "dps": 14.4,
+    "score": 187.7
+   }
+  ],
+  "Grass": [
+   {
+    "name": "Mega Sceptile",
+    "dex": 254,
+    "fast": "Fury Cutter",
+    "charged": "Frenzy Plant",
+    "charged2": "Breaking Swipe",
+    "dps": 18.4,
+    "score": 235.4,
+    "needs": [
+     {
+      "move": "Frenzy Plant",
+      "kind": "elite"
+     }
+    ],
+    "without": {
+     "fast": "Fury Cutter",
+     "charged": "Leaf Blade",
+     "dps": 15.9
+    }
+   },
+   {
+    "name": "Mega Chesnaught",
+    "dex": 652,
+    "fast": "Low Kick",
+    "charged": "Frenzy Plant",
+    "charged2": "Solar Beam",
+    "dps": 14,
+    "score": 204.9,
+    "needs": [
+     {
+      "move": "Frenzy Plant",
+      "kind": "elite"
+     }
+    ],
+    "without": {
+     "fast": "Low Kick",
+     "charged": "Solar Beam",
+     "dps": 13.1
+    }
+   },
+   {
+    "name": "Kartana",
+    "dex": 798,
+    "fast": "Razor Leaf",
+    "charged": "Leaf Blade",
+    "charged2": "Sacred Sword",
+    "dps": 16.2,
+    "score": 195.3
+   },
+   {
+    "name": "Mega Venusaur",
+    "dex": 3,
+    "fast": "Vine Whip",
+    "charged": "Frenzy Plant",
+    "charged2": "Solar Beam",
+    "dps": 14,
+    "score": 195.1,
+    "needs": [
+     {
+      "move": "Frenzy Plant",
+      "kind": "elite"
+     }
+    ],
+    "without": {
+     "fast": "Vine Whip",
+     "charged": "Solar Beam",
+     "dps": 13.1
+    }
+   },
+   {
+    "name": "Shadow Sceptile",
+    "dex": 254,
+    "fast": "Fury Cutter",
+    "charged": "Frenzy Plant",
+    "charged2": "Leaf Blade",
+    "dps": 16.1,
+    "score": 192.4,
+    "needs": [
+     {
+      "move": "Frenzy Plant",
+      "kind": "elite"
+     }
+    ],
+    "without": {
+     "fast": "Fury Cutter",
+     "charged": "Leaf Blade",
+     "dps": 13.9
+    }
+   },
+   {
+    "name": "Shadow Tangrowth",
+    "dex": 465,
+    "fast": "Vine Whip",
+    "charged": "Power Whip",
+    "charged2": "Solar Beam",
+    "dps": 14.8,
+    "score": 191.5
+   },
+   {
+    "name": "Shadow Alolan Exeggutor",
+    "dex": 103,
+    "fast": "Dragon Tail",
+    "charged": "Solar Beam",
+    "charged2": "Draco Meteor",
+    "dps": 15.5,
+    "score": 190.7,
+    "needs": [
+     {
+      "move": "Draco Meteor",
+      "kind": "elite"
+     }
+    ],
+    "without": {
+     "fast": "Dragon Tail",
+     "charged": "Solar Beam",
+     "dps": 15.5
+    }
+   },
+   {
+    "name": "Shadow Exeggutor",
+    "dex": 103,
+    "fast": "Confusion",
+    "charged": "Solar Beam",
+    "charged2": "Psychic",
+    "dps": 15.5,
+    "score": 189
+   },
+   {
+    "name": "Zarude",
+    "dex": 893,
+    "fast": "Vine Whip",
+    "charged": "Power Whip",
+    "charged2": "Dark Pulse",
+    "dps": 13.2,
+    "score": 186.9
+   },
+   {
+    "name": "Mega Victreebel",
+    "dex": 71,
+    "fast": "Magical Leaf",
+    "charged": "Solar Beam",
+    "charged2": "Sludge Bomb",
+    "dps": 14.4,
+    "score": 186.4,
+    "needs": [
+     {
+      "move": "Magical Leaf",
+      "kind": "elite"
+     }
+    ],
+    "without": {
+     "fast": "Razor Leaf",
+     "charged": "Solar Beam",
+     "dps": 14
+    }
+   }
+  ],
+  "Ground": [
+   {
+    "name": "Primal Groudon",
+    "dex": 383,
+    "fast": "Mud Shot",
+    "charged": "Precipice Blades",
+    "charged2": "Earthquake",
+    "dps": 18.2,
+    "score": 266.6,
+    "needs": [
+     {
+      "move": "Precipice Blades",
+      "kind": "elite"
+     }
+    ],
+    "without": {
+     "fast": "Dragon Tail",
+     "charged": "Earthquake",
+     "dps": 16.7
+    }
+   },
+   {
+    "name": "Mega Garchomp",
+    "dex": 445,
+    "fast": "Dragon Tail",
+    "charged": "Earthquake",
+    "charged2": "Breaking Swipe",
+    "dps": 18,
+    "score": 257.9
+   },
+   {
+    "name": "Shadow Groudon",
+    "dex": 383,
+    "fast": "Mud Shot",
+    "charged": "Precipice Blades",
+    "charged2": "Earthquake",
+    "dps": 17.4,
+    "score": 230.9,
+    "needs": [
+     {
+      "move": "Precipice Blades",
+      "kind": "elite"
+     }
+    ],
+    "without": {
+     "fast": "Dragon Tail",
+     "charged": "Earthquake",
+     "dps": 16.2
+    }
+   },
+   {
+    "name": "Shadow Garchomp",
+    "dex": 445,
+    "fast": "Dragon Tail",
+    "charged": "Earthquake",
+    "charged2": "Breaking Swipe",
+    "dps": 16.7,
+    "score": 221.5
+   },
+   {
+    "name": "Landorus (Therian)",
+    "dex": 645,
+    "fast": "Mud Shot",
+    "charged": "Sandsear Storm",
+    "charged2": "Earthquake",
+    "dps": 16.8,
+    "score": 220.7,
+    "needs": [
+     {
+      "move": "Sandsear Storm",
+      "kind": "elite"
+     }
+    ],
+    "without": {
+     "fast": "Mud Shot",
+     "charged": "Earthquake",
+     "dps": 14.8
+    }
+   },
+   {
+    "name": "Mega Swampert",
+    "dex": 260,
+    "fast": "Mud Shot",
+    "charged": "Earthquake",
+    "charged2": "Hydro Cannon",
+    "dps": 14.6,
+    "score": 205.5,
+    "needs": [
+     {
+      "move": "Hydro Cannon",
+      "kind": "elite"
+     }
+    ],
+    "without": {
+     "fast": "Mud Shot",
+     "charged": "Earthquake",
+     "dps": 14.6
+    }
+   },
+   {
+    "name": "Shadow Ursaluna",
+    "dex": 901,
+    "fast": "Scratch",
+    "charged": "High Horsepower",
+    "charged2": "Play Rough",
+    "dps": 14.8,
+    "score": 200.2,
+    "needs": [
+     {
+      "move": "High Horsepower",
+      "kind": "elite"
+     }
+    ]
+   },
+   {
+    "name": "Shadow Rhyperior",
+    "dex": 464,
+    "fast": "Smack Down",
+    "charged": "Earthquake",
+    "charged2": "Rock Wrecker",
+    "dps": 15,
+    "score": 200.2,
+    "needs": [
+     {
+      "move": "Rock Wrecker",
+      "kind": "elite"
+     }
+    ],
+    "without": {
+     "fast": "Smack Down",
+     "charged": "Earthquake",
+     "dps": 15
+    }
+   },
+   {
+    "name": "Groudon",
+    "dex": 383,
+    "fast": "Dragon Tail",
+    "charged": "Precipice Blades",
+    "charged2": "Earthquake",
+    "dps": 14.3,
+    "score": 198.4,
+    "needs": [
+     {
+      "move": "Precipice Blades",
+      "kind": "elite"
+     }
+    ],
+    "without": {
+     "fast": "Dragon Tail",
+     "charged": "Earthquake",
+     "dps": 13.3
+    }
+   },
+   {
+    "name": "Shadow Mamoswine",
+    "dex": 473,
+    "fast": "Mud Slap",
+    "charged": "High Horsepower",
+    "charged2": "Avalanche",
+    "dps": 15.9,
+    "score": 198.2
+   }
+  ],
+  "Ice": [
+   {
+    "name": "Shadow Mamoswine",
+    "dex": 473,
+    "fast": "Mud Slap",
+    "charged": "Avalanche",
+    "charged2": "High Horsepower",
+    "dps": 15.7,
+    "score": 195.5
+   },
+   {
+    "name": "Shadow Weavile",
+    "dex": 461,
+    "fast": "Snarl",
+    "charged": "Avalanche",
+    "charged2": "Triple Axel",
+    "dps": 16,
+    "score": 191.5
+   },
+   {
+    "name": "Kyurem",
+    "dex": 646,
+    "fast": "Dragon Breath",
+    "charged": "Glaciate",
+    "charged2": "Draco Meteor",
+    "dps": 13.7,
+    "score": 186.3,
+    "needs": [
+     {
+      "move": "Glaciate",
+      "kind": "elite"
+     }
+    ],
+    "without": {
+     "fast": "Dragon Breath",
+     "charged": "Blizzard",
+     "dps": 12
+    }
+   },
+   {
+    "name": "Baxcalibur",
+    "dex": 998,
+    "fast": "Dragon Breath",
+    "charged": "Blizzard",
+    "charged2": "Avalanche",
+    "dps": 13.8,
+    "score": 184
+   },
+   {
+    "name": "Weavile",
+    "dex": 461,
+    "fast": "Snarl",
+    "charged": "Avalanche",
+    "charged2": "Triple Axel",
+    "dps": 13.7,
+    "score": 171.1
+   },
+   {
+    "name": "Mega Abomasnow",
+    "dex": 460,
+    "fast": "Razor Leaf",
+    "charged": "Weather Ball (Ice)",
+    "charged2": "Blizzard",
+    "dps": 12.6,
+    "score": 169.1
+   },
+   {
+    "name": "Mamoswine",
+    "dex": 473,
+    "fast": "Mud Slap",
+    "charged": "Avalanche",
+    "charged2": "High Horsepower",
+    "dps": 12.9,
+    "score": 169
+   },
+   {
+    "name": "Mega Glalie",
+    "dex": 362,
+    "fast": "Powder Snow",
+    "charged": "Avalanche",
+    "charged2": "Shadow Ball",
+    "dps": 12.8,
+    "score": 163.2
+   },
+   {
+    "name": "Galarian Darmanitan",
+    "dex": 555,
+    "fast": "Ice Fang",
+    "charged": "Avalanche",
+    "charged2": "Overheat",
+    "dps": 13.2,
+    "score": 161.8
+   },
+   {
+    "name": "Glaceon",
+    "dex": 471,
+    "fast": "Frost Breath",
+    "charged": "Avalanche",
+    "charged2": "Ice Beam",
+    "dps": 12.3,
+    "score": 159
+   }
+  ],
+  "Normal": [
+   {
+    "name": "Shadow Regigigas",
+    "dex": 486,
+    "fast": "Zen Headbutt",
+    "charged": "Crush Grip",
+    "charged2": "Giga Impact",
+    "dps": 22.3,
+    "score": 296,
+    "needs": [
+     {
+      "move": "Crush Grip",
+      "kind": "elite"
+     }
+    ],
+    "without": {
+     "fast": "Zen Headbutt",
+     "charged": "Giga Impact",
+     "dps": 18.1
+    }
+   },
+   {
+    "name": "Regigigas",
+    "dex": 486,
+    "fast": "Zen Headbutt",
+    "charged": "Crush Grip",
+    "charged2": "Giga Impact",
+    "dps": 18.1,
+    "score": 252.3,
+    "needs": [
+     {
+      "move": "Crush Grip",
+      "kind": "elite"
+     }
+    ],
+    "without": {
+     "fast": "Zen Headbutt",
+     "charged": "Giga Impact",
+     "dps": 14.8
+    }
+   },
+   {
+    "name": "Mega Lopunny",
+    "dex": 428,
+    "fast": "Pound",
+    "charged": "Hyper Beam",
+    "charged2": "Focus Blast",
+    "dps": 15.2,
+    "score": 198
+   },
+   {
+    "name": "Shadow Porygon-Z",
+    "dex": 474,
+    "fast": "Lock On",
+    "charged": "Hyper Beam",
+    "charged2": "Tri Attack",
+    "dps": 16.3,
+    "score": 195.6,
+    "needs": [
+     {
+      "move": "Tri Attack",
+      "kind": "elite"
+     }
+    ],
+    "without": {
+     "fast": "Lock On",
+     "charged": "Hyper Beam",
+     "dps": 16.3
+    }
+   },
+   {
+    "name": "Porygon-Z",
+    "dex": 474,
+    "fast": "Lock On",
+    "charged": "Hyper Beam",
+    "charged2": "Solar Beam",
+    "dps": 14,
+    "score": 175.5
+   },
+   {
+    "name": "Shadow Snorlax",
+    "dex": 143,
+    "fast": "Psywave",
+    "charged": "Hyper Beam",
+    "charged2": "Skull Bash",
+    "dps": 12.3,
+    "score": 170.6
+   },
+   {
+    "name": "Shadow Ursaring",
+    "dex": 217,
+    "fast": "Counter",
+    "charged": "Hyper Beam",
+    "charged2": "Play Rough",
+    "dps": 14.2,
+    "score": 169.9
+   },
+   {
+    "name": "Shadow Ursaluna",
+    "dex": 901,
+    "fast": "Scratch",
+    "charged": "Swift",
+    "charged2": "High Horsepower",
+    "dps": 12.3,
+    "score": 166.2,
+    "needs": [
+     {
+      "move": "High Horsepower",
+      "kind": "elite"
+     }
+    ],
+    "without": {
+     "fast": "Scratch",
+     "charged": "Swift",
+     "dps": 12.3
+    }
+   },
+   {
+    "name": "Shadow Porygon2",
+    "dex": 233,
+    "fast": "Lock On",
+    "charged": "Hyper Beam",
+    "charged2": "Tri Attack",
+    "dps": 13,
+    "score": 162.3
+   },
+   {
+    "name": "Shadow Unfezant",
+    "dex": 521,
+    "fast": "Air Slash",
+    "charged": "Hyper Beam",
+    "charged2": "Sky Attack",
+    "dps": 13.5,
+    "score": 159.1
+   }
+  ],
+  "Poison": [
+   {
+    "name": "Mega Gengar",
+    "dex": 94,
+    "fast": "Lick",
+    "charged": "Sludge Bomb",
+    "charged2": "Shadow Ball",
+    "dps": 17.9,
+    "score": 226.9,
+    "needs": [
+     {
+      "move": "Lick",
+      "kind": "elite"
+     }
+    ],
+    "without": {
+     "fast": "Shadow Claw",
+     "charged": "Sludge Bomb",
+     "dps": 17.5
+    }
+   },
+   {
+    "name": "Eternatus",
+    "dex": 890,
+    "fast": "Dragon Tail",
+    "charged": "Sludge Bomb",
+    "charged2": "Dragon Pulse",
+    "dps": 15.1,
+    "score": 214.6
+   },
+   {
+    "name": "Mega Beedrill",
+    "dex": 15,
+    "fast": "Bug Bite",
+    "charged": "Sludge Bomb",
+    "charged2": "X-Scissor",
+    "dps": 16.6,
+    "score": 198.4,
+    "needs": [
+     {
+      "move": "Bug Bite",
+      "kind": "elite"
+     }
+    ],
+    "without": {
+     "fast": "Poison Jab",
+     "charged": "Sludge Bomb",
+     "dps": 16.2
+    }
+   },
+   {
+    "name": "Shadow Gengar",
+    "dex": 94,
+    "fast": "Lick",
+    "charged": "Sludge Bomb",
+    "charged2": "Shadow Ball",
+    "dps": 16.9,
+    "score": 191,
+    "needs": [
+     {
+      "move": "Lick",
+      "kind": "elite"
+     }
+    ],
+    "without": {
+     "fast": "Shadow Claw",
+     "charged": "Sludge Bomb",
+     "dps": 16.7
+    }
+   },
+   {
+    "name": "Nihilego",
+    "dex": 793,
+    "fast": "Poison Jab",
+    "charged": "Sludge Bomb",
+    "charged2": "Gunk Shot",
+    "dps": 13.3,
+    "score": 188.4
+   },
+   {
+    "name": "Mega Victreebel",
+    "dex": 71,
+    "fast": "Magical Leaf",
+    "charged": "Sludge Bomb",
+    "charged2": "Solar Beam",
+    "dps": 13.8,
+    "score": 178.9,
+    "needs": [
+     {
+      "move": "Magical Leaf",
+      "kind": "elite"
+     }
+    ],
+    "without": {
+     "fast": "Razor Leaf",
+     "charged": "Sludge Bomb",
+     "dps": 13.6
+    }
+   },
+   {
+    "name": "Naganadel",
+    "dex": 804,
+    "fast": "Poison Jab",
+    "charged": "Sludge Bomb",
+    "charged2": "Dragon Claw",
+    "dps": 14.3,
+    "score": 177.7
+   },
+   {
+    "name": "Mega Venusaur",
+    "dex": 3,
+    "fast": "Vine Whip",
+    "charged": "Sludge Bomb",
+    "charged2": "Frenzy Plant",
+    "dps": 12.7,
+    "score": 176.5,
+    "needs": [
+     {
+      "move": "Frenzy Plant",
+      "kind": "elite"
+     }
+    ],
+    "without": {
+     "fast": "Vine Whip",
+     "charged": "Sludge Bomb",
+     "dps": 12.7
+    }
+   },
+   {
+    "name": "Gengar",
+    "dex": 94,
+    "fast": "Lick",
+    "charged": "Sludge Bomb",
+    "charged2": "Shadow Ball",
+    "dps": 14,
+    "score": 165.6,
+    "needs": [
+     {
+      "move": "Lick",
+      "kind": "elite"
+     }
+    ],
+    "without": {
+     "fast": "Shadow Claw",
+     "charged": "Sludge Bomb",
+     "dps": 14
+    }
+   },
+   {
+    "name": "Shadow Muk",
+    "dex": 89,
+    "fast": "Poison Jab",
+    "charged": "Gunk Shot",
+    "charged2": "Sludge Wave",
+    "dps": 12.8,
+    "score": 164.8
+   }
+  ],
+  "Psychic": [
+   {
+    "name": "Mega Mewtwo Y",
+    "dex": 150,
+    "fast": "Psycho Cut",
+    "charged": "Psystrike",
+    "charged2": "Psychic",
+    "dps": 22.8,
+    "score": 324.7,
+    "needs": [
+     {
+      "move": "Psystrike",
+      "kind": "elite"
+     }
+    ],
+    "without": {
+     "fast": "Confusion",
+     "charged": "Psychic",
+     "dps": 21.3
+    }
+   },
+   {
+    "name": "Mega Mewtwo X",
+    "dex": 150,
+    "fast": "Psycho Cut",
+    "charged": "Psystrike",
+    "charged2": "Psychic",
+    "dps": 22.4,
+    "score": 315,
+    "needs": [
+     {
+      "move": "Psystrike",
+      "kind": "elite"
+     }
+    ],
+    "without": {
+     "fast": "Psycho Cut",
+     "charged": "Psychic",
+     "dps": 20.7
+    }
+   },
+   {
+    "name": "Shadow Mewtwo",
+    "dex": 150,
+    "fast": "Confusion",
+    "charged": "Psystrike",
+    "charged2": "Psychic",
+    "dps": 20.2,
+    "score": 257.9,
+    "needs": [
+     {
+      "move": "Psystrike",
+      "kind": "elite"
+     }
+    ],
+    "without": {
+     "fast": "Confusion",
+     "charged": "Psychic",
+     "dps": 19
+    }
+   },
+   {
+    "name": "Mega Alakazam",
+    "dex": 65,
+    "fast": "Confusion",
+    "charged": "Psychic",
+    "charged2": "Shadow Ball",
+    "dps": 19.1,
+    "score": 241,
+    "needs": [
+     {
+      "move": "Psychic",
+      "kind": "elite"
+     }
+    ]
+   },
+   {
+    "name": "Mega Latios",
+    "dex": 381,
+    "fast": "Dragon Breath",
+    "charged": "Psychic",
+    "charged2": "Aura Sphere",
+    "dps": 17.2,
+    "score": 238.4
+   },
+   {
+    "name": "Mega Delphox",
+    "dex": 655,
+    "fast": "Fire Spin",
+    "charged": "Psychic",
+    "charged2": "Blast Burn",
+    "dps": 17.5,
+    "score": 238.3,
+    "needs": [
+     {
+      "move": "Blast Burn",
+      "kind": "elite"
+     }
+    ],
+    "without": {
+     "fast": "Fire Spin",
+     "charged": "Psychic",
+     "dps": 17.5
+    }
+   },
+   {
+    "name": "Mewtwo",
+    "dex": 150,
+    "fast": "Psycho Cut",
+    "charged": "Psystrike",
+    "charged2": "Psychic",
+    "dps": 17.2,
+    "score": 230,
+    "needs": [
+     {
+      "move": "Psystrike",
+      "kind": "elite"
+     }
+    ],
+    "without": {
+     "fast": "Confusion",
+     "charged": "Psychic",
+     "dps": 15.9
+    }
+   },
+   {
+    "name": "Mega Gallade",
+    "dex": 475,
+    "fast": "Confusion",
+    "charged": "Psychic",
+    "charged2": "Sacred Sword",
+    "dps": 17.1,
+    "score": 227.9
+   },
+   {
+    "name": "Mega Gardevoir",
+    "dex": 282,
+    "fast": "Confusion",
+    "charged": "Psychic",
+    "charged2": "Dazzling Gleam",
+    "dps": 17.1,
+    "score": 227.6
+   },
+   {
+    "name": "Mega Metagross",
+    "dex": 376,
+    "fast": "Fury Cutter",
+    "charged": "Psychic",
+    "charged2": "Meteor Mash",
+    "dps": 15.5,
+    "score": 224,
+    "needs": [
+     {
+      "move": "Meteor Mash",
+      "kind": "elite"
+     }
+    ],
+    "without": {
+     "fast": "Fury Cutter",
+     "charged": "Psychic",
+     "dps": 15.5
+    }
+   }
+  ],
+  "Rock": [
+   {
+    "name": "Shadow Gigalith",
+    "dex": 526,
+    "fast": "Lock On",
+    "charged": "Meteor Beam",
+    "charged2": "Rock Slide",
+    "dps": 17.6,
+    "score": 225.1,
+    "needs": [
+     {
+      "move": "Meteor Beam",
+      "kind": "elite"
+     }
+    ],
+    "without": {
+     "fast": "Smack Down",
+     "charged": "Rock Slide",
+     "dps": 13.1
+    }
+   },
+   {
+    "name": "Mega Tyranitar",
+    "dex": 248,
+    "fast": "Smack Down",
+    "charged": "Stone Edge",
+    "charged2": "Brutal Swing",
+    "dps": 14.5,
+    "score": 215.7,
+    "needs": [
+     {
+      "move": "Smack Down",
+      "kind": "elite"
+     }
+    ],
+    "without": {
+     "fast": "Bite",
+     "charged": "Stone Edge",
+     "dps": 14.1
+    }
+   },
+   {
+    "name": "Mega Diancie",
+    "dex": 719,
+    "fast": "Rock Throw",
+    "charged": "Rock Slide",
+    "charged2": "Moonblast",
+    "dps": 16.3,
+    "score": 208.9
+   },
+   {
+    "name": "Shadow Tyrantrum",
+    "dex": 697,
+    "fast": "Dragon Tail",
+    "charged": "Meteor Beam",
+    "charged2": "Outrage",
+    "dps": 16.6,
+    "score": 208.8
+   },
+   {
+    "name": "Shadow Rhyperior",
+    "dex": 464,
+    "fast": "Mud Slap",
+    "charged": "Rock Wrecker",
+    "charged2": "Earthquake",
+    "dps": 15.5,
+    "score": 207.4,
+    "needs": [
+     {
+      "move": "Rock Wrecker",
+      "kind": "elite"
+     }
+    ],
+    "without": {
+     "fast": "Smack Down",
+     "charged": "Stone Edge",
+     "dps": 14.2
+    }
+   },
+   {
+    "name": "Gigalith",
+    "dex": 526,
+    "fast": "Lock On",
+    "charged": "Meteor Beam",
+    "charged2": "Rock Slide",
+    "dps": 15.1,
+    "score": 203,
+    "needs": [
+     {
+      "move": "Meteor Beam",
+      "kind": "elite"
+     }
+    ],
+    "without": {
+     "fast": "Lock On",
+     "charged": "Rock Slide",
+     "dps": 11.2
+    }
+   },
+   {
+    "name": "Mega Aerodactyl",
+    "dex": 142,
+    "fast": "Rock Throw",
+    "charged": "Rock Slide",
+    "charged2": "Brutal Swing",
+    "dps": 14.6,
+    "score": 196.1
+   },
+   {
+    "name": "Shadow Rampardos",
+    "dex": 409,
+    "fast": "Smack Down",
+    "charged": "Rock Slide",
+    "charged2": "Outrage",
+    "dps": 17,
+    "score": 194.1
+   },
+   {
+    "name": "Shadow Tyranitar",
+    "dex": 248,
+    "fast": "Smack Down",
+    "charged": "Stone Edge",
+    "charged2": "Brutal Swing",
+    "dps": 14.4,
+    "score": 191.8,
+    "needs": [
+     {
+      "move": "Smack Down",
+      "kind": "elite"
+     }
+    ],
+    "without": {
+     "fast": "Bite",
+     "charged": "Stone Edge",
+     "dps": 14
+    }
+   },
+   {
+    "name": "Glimmora",
+    "dex": 970,
+    "fast": "Rock Throw",
+    "charged": "Meteor Beam",
+    "charged2": "Power Gem",
+    "dps": 14.2,
+    "score": 184
+   }
+  ],
+  "Steel": [
+   {
+    "name": "Zacian (Crowned Sword)",
+    "dex": 888,
+    "fast": "Metal Claw",
+    "charged": "Behemoth Blade",
+    "charged2": "Giga Impact",
+    "dps": 21.9,
+    "score": 303.2,
+    "needs": [
+     {
+      "move": "Behemoth Blade",
+      "kind": "legacy"
+     }
+    ]
+   },
+   {
+    "name": "Zamazenta (Crowned Shield)",
+    "dex": 889,
+    "fast": "Metal Claw",
+    "charged": "Behemoth Bash",
+    "charged2": "Giga Impact",
+    "dps": 20.6,
+    "score": 299.6,
+    "needs": [
+     {
+      "move": "Behemoth Bash",
+      "kind": "legacy"
+     }
+    ]
+   },
+   {
+    "name": "Necrozma (Dusk Mane)",
+    "dex": 800,
+    "fast": "Psycho Cut",
+    "charged": "Sunsteel Strike",
+    "charged2": "Iron Head",
+    "dps": 21,
+    "score": 288.2
+   },
+   {
+    "name": "Mega Metagross",
+    "dex": 376,
+    "fast": "Fury Cutter",
+    "charged": "Meteor Mash",
+    "charged2": "Psychic",
+    "dps": 17.6,
+    "score": 254.2,
+    "needs": [
+     {
+      "move": "Meteor Mash",
+      "kind": "elite"
+     }
+    ],
+    "without": {
+     "fast": "Fury Cutter",
+     "charged": "Flash Cannon",
+     "dps": 13.4
+    }
+   },
+   {
+    "name": "Mega Lucario",
+    "dex": 448,
+    "fast": "Force Palm",
+    "charged": "Meteor Mash",
+    "charged2": "Aura Sphere",
+    "dps": 19.6,
+    "score": 246.3,
+    "needs": [
+     {
+      "move": "Force Palm",
+      "kind": "elite"
+     }
+    ],
+    "without": {
+     "fast": "Counter",
+     "charged": "Meteor Mash",
+     "dps": 17.8
+    }
+   },
+   {
+    "name": "Shadow Metagross",
+    "dex": 376,
+    "fast": "Fury Cutter",
+    "charged": "Meteor Mash",
+    "charged2": "Psychic",
+    "dps": 18.1,
+    "score": 236.6,
+    "needs": [
+     {
+      "move": "Meteor Mash",
+      "kind": "elite"
+     }
+    ],
+    "without": {
+     "fast": "Zen Headbutt",
+     "charged": "Flash Cannon",
+     "dps": 14.3
+    }
+   },
+   {
+    "name": "Metagross",
+    "dex": 376,
+    "fast": "Fury Cutter",
+    "charged": "Meteor Mash",
+    "charged2": "Psychic",
+    "dps": 15.6,
+    "score": 213.6,
+    "needs": [
+     {
+      "move": "Meteor Mash",
+      "kind": "elite"
+     }
+    ],
+    "without": {
+     "fast": "Fury Cutter",
+     "charged": "Flash Cannon",
+     "dps": 12.2
+    }
+   },
+   {
+    "name": "Shadow Dialga",
+    "dex": 483,
+    "fast": "Metal Claw",
+    "charged": "Iron Head",
+    "charged2": "Draco Meteor",
+    "dps": 16.1,
+    "score": 210.9
+   },
+   {
+    "name": "Tinkaton",
+    "dex": 959,
+    "fast": "Fairy Wind",
+    "charged": "Gigaton Hammer",
+    "charged2": "Play Rough",
+    "dps": 14.9,
+    "score": 199.2,
+    "needs": [
+     {
+      "move": "Gigaton Hammer",
+      "kind": "elite"
+     }
+    ],
+    "without": {
+     "fast": "Fairy Wind",
+     "charged": "Heavy Slam",
+     "dps": 7.8
+    }
+   },
+   {
+    "name": "Shadow Heatran",
+    "dex": 485,
+    "fast": "Fire Spin",
+    "charged": "Iron Head",
+    "charged2": "Magma Storm",
+    "dps": 14.6,
+    "score": 191.8,
+    "needs": [
+     {
+      "move": "Magma Storm",
+      "kind": "elite"
+     }
+    ],
+    "without": {
+     "fast": "Fire Spin",
+     "charged": "Iron Head",
+     "dps": 14.6
+    }
+   }
+  ],
+  "Water": [
+   {
+    "name": "Primal Kyogre",
+    "dex": 382,
+    "fast": "Waterfall",
+    "charged": "Origin Pulse",
+    "charged2": "Hydro Pump",
+    "dps": 18.9,
+    "score": 276.8,
+    "needs": [
+     {
+      "move": "Origin Pulse",
+      "kind": "elite"
+     }
+    ],
+    "without": {
+     "fast": "Waterfall",
+     "charged": "Hydro Pump",
+     "dps": 17.5
+    }
+   },
+   {
+    "name": "Shadow Kyogre",
+    "dex": 382,
+    "fast": "Waterfall",
+    "charged": "Origin Pulse",
+    "charged2": "Hydro Pump",
+    "dps": 17.4,
+    "score": 232.1,
+    "needs": [
+     {
+      "move": "Origin Pulse",
+      "kind": "elite"
+     }
+    ],
+    "without": {
+     "fast": "Waterfall",
+     "charged": "Hydro Pump",
+     "dps": 16.2
+    }
+   },
+   {
+    "name": "Mega Swampert",
+    "dex": 260,
+    "fast": "Mud Shot",
+    "charged": "Hydro Cannon",
+    "charged2": "Earthquake",
+    "dps": 16.4,
+    "score": 231.4,
+    "needs": [
+     {
+      "move": "Hydro Cannon",
+      "kind": "elite"
+     }
+    ],
+    "without": {
+     "fast": "Mud Shot",
+     "charged": "Surf",
+     "dps": 14
+    }
+   },
+   {
+    "name": "Mega Greninja",
+    "dex": 658,
+    "fast": "Water Shuriken",
+    "charged": "Hydro Cannon",
+    "charged2": "Brutal Swing",
+    "dps": 18.1,
+    "score": 229.7,
+    "needs": [
+     {
+      "move": "Hydro Cannon",
+      "kind": "elite"
+     }
+    ],
+    "without": {
+     "fast": "Water Shuriken",
+     "charged": "Hydro Pump",
+     "dps": 15.4
+    }
+   },
+   {
+    "name": "Shadow Palkia",
+    "dex": 484,
+    "fast": "Dragon Tail",
+    "charged": "Hydro Pump",
+    "charged2": "Draco Meteor",
+    "dps": 17.7,
+    "score": 228.3
+   },
+   {
+    "name": "Mega Gyarados",
+    "dex": 130,
+    "fast": "Waterfall",
+    "charged": "Hydro Pump",
+    "charged2": "Aqua Tail",
+    "dps": 14.7,
+    "score": 211.9,
+    "needs": [
+     {
+      "move": "Aqua Tail",
+      "kind": "elite"
+     }
+    ],
+    "without": {
+     "fast": "Waterfall",
+     "charged": "Hydro Pump",
+     "dps": 14.7
+    }
+   },
+   {
+    "name": "Mega Blastoise",
+    "dex": 9,
+    "fast": "Water Gun",
+    "charged": "Hydro Cannon",
+    "charged2": "Hydro Pump",
+    "dps": 14.9,
+    "score": 204.6,
+    "needs": [
+     {
+      "move": "Hydro Cannon",
+      "kind": "elite"
+     }
+    ],
+    "without": {
+     "fast": "Water Gun",
+     "charged": "Hydro Pump",
+     "dps": 13
+    }
+   },
+   {
+    "name": "Palkia (Origin)",
+    "dex": 484,
+    "fast": "Dragon Tail",
+    "charged": "Hydro Pump",
+    "charged2": "Spacial Rend",
+    "dps": 15,
+    "score": 204.4,
+    "needs": [
+     {
+      "move": "Spacial Rend",
+      "kind": "legacy"
+     }
+    ],
+    "without": {
+     "fast": "Dragon Tail",
+     "charged": "Hydro Pump",
+     "dps": 15
+    }
+   },
+   {
+    "name": "Kyogre",
+    "dex": 382,
+    "fast": "Waterfall",
+    "charged": "Origin Pulse",
+    "charged2": "Hydro Pump",
+    "dps": 14.6,
+    "score": 202.7,
+    "needs": [
+     {
+      "move": "Origin Pulse",
+      "kind": "elite"
+     }
+    ],
+    "without": {
+     "fast": "Waterfall",
+     "charged": "Hydro Pump",
+     "dps": 13.5
+    }
+   },
+   {
+    "name": "Shadow Empoleon",
+    "dex": 395,
+    "fast": "Metal Claw",
+    "charged": "Hydro Cannon",
+    "charged2": "Hydro Pump",
+    "dps": 16,
+    "score": 201.3,
+    "needs": [
+     {
+      "move": "Hydro Cannon",
+      "kind": "elite"
+     }
+    ],
+    "without": {
+     "fast": "Metal Claw",
+     "charged": "Hydro Pump",
+     "dps": 14.2
+    }
+   }
+  ]
+ }
+}
