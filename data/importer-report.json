@@ -1,5 +1,5 @@
 {
- "runAt": "2026-10-20T19:22:28.648Z",
+ "runAt": "2026-10-20T23:14:49.380Z",
  "sources": {
   "official": {
    "listed": 24,
@@ -15,15 +15,10 @@
   }
  },
  "pagesRead": 80,
- "events": 77,
+ "events": 78,
  "worldEvents": 34,
  "worldUndated": [],
  "unmatchedPages": [
-  {
-   "source": "official",
-   "title": "Earn PokéCoins for progressing in GO Pass: November! — Pokémon GO",
-   "url": "https://pokemongo.com/news/go-pass-november-2026/"
-  },
   {
    "source": "official",
    "title": "Celebrate the Pokémon Night Out events in Pokémon GO!",
@@ -73,11 +68,6 @@
    "source": "official",
    "title": "Pokémon GO City Safaris in Europe: Venues and Activities",
    "url": "https://pokemongo.com/news/city-safaris-europe-2026/"
-  },
-  {
-   "source": "leekduck",
-   "title": "GO Pass: November",
-   "url": "https://leekduck.com/events/go-pass-november-2026/"
   }
  ],
  "intl": {
