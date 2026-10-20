@@ -6,22 +6,15 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - uses: actions/setup-node@v4
-        with: { node-version: 22 }
       - name: Check
         env:   # secret names are spelled CLOUDFARE_* in GitHub (typo kept on purpose)
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFARE_ACCOUNT_ID }}
         run: |
-          [ -n "$CLOUDFLARE_API_TOKEN" ] && echo "token present" || { echo "::error title=Secret::CLOUDFLARE_API_TOKEN is empty"; exit 1; }
-          [ -n "$CLOUDFLARE_ACCOUNT_ID" ] && echo "account id present" || { echo "::error title=Secret::CLOUDFLARE_ACCOUNT_ID is empty"; exit 1; }
-          out=$(npx --yes wrangler@4 r2 bucket list 2>&1 | tr '\n' ' ' | cut -c1-400); echo "::notice title=Buckets::$out"
-          v=$(curl -s -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" https://api.cloudflare.com/client/v4/user/tokens/verify | tr -d '\n' | cut -c1-300); echo "::notice title=Verify::$v"
-          a=$(curl -s -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/r2/buckets" | tr -d '\n' | cut -c1-300); echo "::notice title=R2::$a"
-          echo "token length ${#CLOUDFLARE_API_TOKEN}, account id length ${#CLOUDFLARE_ACCOUNT_ID}" | sed 's/^/::notice title=Lengths::/'
+          id=$(curl -s -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/tokens/verify" | python3 -c "import sys,json;print(json.load(sys.stdin)['result']['id'])")
+          export AWS_ACCESS_KEY_ID="$id" AWS_SECRET_ACCESS_KEY=$(printf %s "$CLOUDFLARE_API_TOKEN" | sha256sum | cut -d' ' -f1) AWS_DEFAULT_REGION=auto
+          EP="https://$CLOUDFLARE_ACCOUNT_ID.r2.cloudflarestorage.com"
           echo ok > /tmp/ok.txt
-          put=$(npx --yes wrangler@4 r2 object put go-field-notes-images/_check/ok.txt --file /tmp/ok.txt --content-type text/plain --remote 2>&1 | tr '\n' ' ' | cut -c1-400); echo "::notice title=Put::$put"
-          del=$(npx --yes wrangler@4 r2 object delete go-field-notes-images/_check/ok.txt --remote 2>&1 | tr '\n' ' ' | cut -c1-300); echo "::notice title=Delete::$del"
-          av=$(curl -s -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/tokens/verify" | tr -d '\n' | cut -c1-300); echo "::notice title=AccountVerify::$av"
-          cp=$(curl -s -o /dev/null -w "%{http_code}" -X PUT -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" --data-binary ok "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/r2/buckets/go-field-notes-images/objects/_check/rest.txt"); echo "::notice title=RestPut::http $cp"
-          echo "::notice title=Prefix::${CLOUDFLARE_API_TOKEN:0:4}"
+          r=$(aws s3 cp /tmp/ok.txt s3://go-field-notes-images/_check/ok.txt --endpoint-url "$EP" 2>&1 | tr '\n' ' ' | cut -c1-300); echo "::notice title=S3Put::$r"
+          l=$(aws s3 ls s3://go-field-notes-images/_check/ --endpoint-url "$EP" 2>&1 | tr '\n' ' ' | cut -c1-300); echo "::notice title=S3List::$l"
+          d=$(aws s3 rm s3://go-field-notes-images/_check/ok.txt --endpoint-url "$EP" 2>&1 | tr '\n' ' ' | cut -c1-300); echo "::notice title=S3Rm::$d"
