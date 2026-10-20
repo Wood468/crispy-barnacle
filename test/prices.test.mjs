@@ -1,5 +1,5 @@
 import test from 'node:test';
-import { readPrivate } from "./_private.mjs";
+import { readPrivate, hasPrivate } from "./_private.mjs";
 import assert from 'node:assert/strict';
 import { createRequire } from 'node:module';
 import fs from 'node:fs';
@@ -47,7 +47,7 @@ test('stale rate is flagged', () => {
   const idr = { product: 'p', currency: 'IDR', region: 'ID', amount: 100000, source: 'store', observed: '2026-10-10' };
   assert.match(LIB.priceView({ prices: [idr], fx }, 'p', '2026-10-20').note, /more than 3 days old/);
 });
-test('shipped prices.json: no invented Rp price and a sourced, dated rate', () => {
+test('shipped prices.json: no invented Rp price and a sourced, dated rate', { skip: !hasPrivate('prices.json') && 'needs the real private prices (kept in R2)' }, () => {
   assert.ok(real.prices.every(p => p.source && p.url && /^\d{4}-\d\d-\d\d$/.test(p.observed)));
   assert.ok(real.prices.filter(p => p.currency === 'IDR').every(p => p.region === 'ID' && p.amount > 0 && p.source && p.url));
   assert.ok(real.fx.rate > 0 && real.fx.url && real.fx.observed);
@@ -60,7 +60,7 @@ test('shipped event-info.json: every ticket exists and unpublished items are lab
   for (const e of Object.values(info.events)) for (const id of [...e.tickets, ...(e.alsoRunning || [])]) assert.ok(info.passes[id], id);
   for (const e of Object.values(info.events)) assert.ok(e.info.every(i => ['published', 'not-published', 'partial'].includes(i.status)) && (e.source.url || e.info.length === 0)); // an entry that only carries an approved infographic has no written source to link
 });
-test('every store- item has an Rp and a verified A$ price and converts', () => {
+test('every store- item has an Rp and a verified A$ price and converts', { skip: !hasPrivate('prices.json') && 'needs the real private prices (kept in R2)' }, () => {
   const ids = [...new Set(real.prices.filter(p => /^store-/.test(p.product)).map(p => p.product))];
   assert.ok(ids.length >= 27);
   for (const id of ids) {

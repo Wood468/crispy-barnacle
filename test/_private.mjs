@@ -5,3 +5,4 @@ export function readPrivate(name, fixture) {
   const real = new URL("../private/" + name, import.meta.url);
   return JSON.parse(readFileSync(existsSync(real) ? real : new URL("./fixtures/" + fixture, import.meta.url), "utf8"));
 }
+export const hasPrivate = name => existsSync(new URL("../private/" + name, import.meta.url));
