@@ -54,15 +54,13 @@
   var info = null, msg = '';
   function pv(k) { var v = S.get('pref:notify.' + k); return v === undefined ? NS[k] : v; }
   function api(path, method) { return fetch(path, { method: method || 'GET', headers: { 'x-pin': S.pin() } }).then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) { j.__status = r.status; return j; }); }); }
-  function isMember() { return !S.pin() && !!(window.GOACCT && window.GOACCT.email && window.GOACCT.email()); }
-  function loadInfo() { if (isMember()) { info = {}; renderAlerts(); return; } if (!S.pin()) { info = null; renderAlerts(); return; } api('/api/notify/status').then(function (j) { info = j; renderAlerts(); }).catch(function () { info = null; renderAlerts(); }); }
+  function loadInfo() { if (!S.pin()) { info = null; renderAlerts(); return; } api('/api/notify/status').then(function (j) { info = j; renderAlerts(); }).catch(function () { info = null; renderAlerts(); }); }
   function tog(k, label, note) { return '<label class="al-row"><span><b>' + label + '</b>' + (note ? '<small>' + note + '</small>' : '') + '</span><input type="checkbox" data-pref="' + k + '"' + (pv(k) ? ' checked' : '') + '></label>'; }
   function renderAlerts() {
     var el = $('alerts'); if (!el) return;
     $('alertsum').textContent = pv('on') ? 'On' : 'Off';
     var h = '';
-    if (isMember()) h += '<div class="notice">You will get a short alert on this device when an event is announced or changes, checked once a day. On iPhone, add the site to your Home Screen first.</div>';
-    else if (!S.pin()) h += '<div class="notice">Enter your sync PIN first (Dex tab). Alerts are sent from the server, so they need it.</div>';
+    if (!S.pin()) h += '<div class="notice">Enter your sync PIN first (Dex tab). Alerts are sent from the server, so they need it.</div>';
     else if (info && info.__status === 404) h += '<div class="notice">Sync is not switched on for this site.</div>';
     else if (info && info.__status === 401) h += '<div class="notice">That sync PIN was not accepted.</div>';
     else if (info && !info.tablesCreated) h += '<div class="notice"><b>One-time setup.</b> The server tables for sync, events and alerts have not been created yet. This only adds new tables.<br><button type="button" class="pill all" id="alinit">Create them now</button></div>';
@@ -71,11 +69,6 @@
     h += tog('announced', 'New announced events', 'Official or community reported only.');
     h += tog('changed', 'Date or time changes', 'For events already announced.');
     h += tog('starting', 'Starting soon', 'Only events with a confirmed start time.');
-    if (isMember()) {
-      h += tog('missing', 'Pokémon you follow', 'Within 48 hours of an event.');
-            h += '<button type="button" class="pill all" id="alpush">Turn on for this device</button>';
-      el.innerHTML = h; return;
-    }
     h += tog('missing', 'Pokémon you need or follow', 'Within 48 hours of an event. Needs Dex marks or follows.');
     h += tog('datamine', 'Datamine finds', 'Always labelled NOT ANNOUNCED. Never urgent.');
     h += '<label class="al-row"><span><b>"Starting soon" window</b><small>Hours before the start. The server checks every six hours, so keep this at 6 or more.</small></span><select data-pref="lead">' + [6, 8, 12, 24].map(function (n) { return '<option' + (pv('lead') === n ? ' selected' : '') + '>' + n + '</option>'; }).join('') + '</select></label>';
@@ -84,7 +77,6 @@
     if (info && info.telegramConfigured) h += '<button type="button" class="pill" id="altest">Send a test message</button>';
     h += tog('push', 'This phone (browser push)', info ? ('Devices registered: ' + (info.pushDevices || 0) + '. On iPhone, add the site to your Home Screen first.') : '');
     h += '<button type="button" class="pill" id="alpush">Turn on for this device</button>';
-    if (info && info.memberDevices !== undefined) h += '<h3 class="sec3">Invited people</h3><p class="note">' + info.memberPeople + ' ' + (info.memberPeople === 1 ? 'person' : 'people') + ' with alerts on (' + info.memberDevices + ' device' + (info.memberDevices === 1 ? '' : 's') + '). Alerts sent in the last 7 days: ' + info.memberSent7d + '.</p>';
     if (info && info.recent && info.recent.length) h += '<h3 class="sec3">Recently sent</h3><ul class="al-log">' + info.recent.map(function (r) { return '<li><b>' + esc(r.title) + '</b><small>' + esc(new Date(r.created_at).toLocaleString()) + ' · ' + esc(r.level === 'info' ? 'not urgent' : 'alert') + '</small></li>'; }).join('') + '</ul>';
     el.innerHTML = h;
   }
@@ -102,13 +94,13 @@
     if (!('serviceWorker' in navigator) || !('PushManager' in window)) { msg = 'This browser can’t do push. On iPhone, add the site to your Home Screen and open it from there.'; return renderAlerts(); }
     Notification.requestPermission().then(function (perm) {
       if (perm !== 'granted') throw new Error('Permission was not given.');
-      return isMember() ? fetch('/api/member-push/key').then(function (r) { return r.json(); }) : api('/api/notify/push-key', 'POST');
+      return api('/api/notify/push-key', 'POST');
     }).then(function (k) {
       if (!k.publicKey) throw new Error(k.error || 'Push keys are not available yet. Create the tables first.');
       var raw = atob(k.publicKey.replace(/-/g, '+').replace(/_/g, '/')), key = new Uint8Array(raw.length); for (var i = 0; i < raw.length; i++) key[i] = raw.charCodeAt(i);
       return navigator.serviceWorker.register('/sw.js').then(function () { return navigator.serviceWorker.ready; }).then(function (reg) { return reg.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: key }); });
     }).then(function (sub) {
-      return fetch(isMember() ? '/api/member-push/subscribe' : '/api/notify/subscribe', { method: 'POST', headers: { 'x-pin': S.pin(), 'content-type': 'application/json' }, body: JSON.stringify({ endpoint: sub.endpoint }) }).then(function (r) { if (!r.ok) throw new Error('The server did not accept this device.'); });
+      return fetch('/api/notify/subscribe', { method: 'POST', headers: { 'x-pin': S.pin(), 'content-type': 'application/json' }, body: JSON.stringify({ endpoint: sub.endpoint }) }).then(function (r) { if (!r.ok) throw new Error('The server did not accept this device.'); });
     }).then(function () { msg = 'This device is registered for alerts.'; loadInfo(); }).catch(function (err) { msg = 'Could not turn on push: ' + err.message; renderAlerts(); });
   }
   $('alertsdd').addEventListener('toggle', function () { if ($('alertsdd').open) loadInfo(); });
