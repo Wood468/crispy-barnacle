@@ -59,7 +59,7 @@ async function workerRow() {
 }
 // The scheduled AI checks end by leaving a dated marker (ai-hb-<name>-<time>); its date is when they last finished.
 export const AI_TASKS = [
-  { id: "ai-heartbeat-event-check", name: "AI event check", everyH: 24 },
+  { id: "ai-heartbeat-event-check", name: "AI event check", everyH: 168 },
   { id: "ai-heartbeat-pipeline", name: "AI picture matching", everyH: 6 },
   { id: "ai-heartbeat-shiny", name: "AI shiny and costume check", everyH: 96 },
 ];
