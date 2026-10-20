@@ -1,12 +1,12 @@
 {
- "runAt": "2026-10-20T14:23:18.055Z",
+ "runAt": "2026-10-20T19:22:28.648Z",
  "sources": {
   "official": {
    "listed": 24,
    "error": ""
   },
   "leekduck": {
-   "listed": 59,
+   "listed": 60,
    "error": ""
   },
   "hub": {
@@ -19,6 +19,11 @@
  "worldEvents": 34,
  "worldUndated": [],
  "unmatchedPages": [
+  {
+   "source": "official",
+   "title": "Earn PokéCoins for progressing in GO Pass: November! — Pokémon GO",
+   "url": "https://pokemongo.com/news/go-pass-november-2026/"
+  },
   {
    "source": "official",
    "title": "Celebrate the Pokémon Night Out events in Pokémon GO!",
@@ -70,9 +75,9 @@
    "url": "https://pokemongo.com/news/city-safaris-europe-2026/"
   },
   {
-   "source": "official",
-   "title": "Fireball of fury as Gigantamax Cinderace storms into Max Battle Day! — Pokémon GO",
-   "url": "https://pokemongo.com/news/gigantamax-cinderace-max-battle-day-2026/"
+   "source": "leekduck",
+   "title": "GO Pass: November",
+   "url": "https://leekduck.com/events/go-pass-november-2026/"
   }
  ],
  "intl": {
@@ -81,11 +86,11 @@
    "error": ""
   },
   "ko": {
-   "listed": 28,
+   "listed": 27,
    "error": ""
   },
   "zh_hant": {
-   "listed": 28,
+   "listed": 27,
    "error": ""
   },
   "de": {
@@ -93,11 +98,11 @@
    "error": ""
   },
   "fr": {
-   "listed": 28,
+   "listed": 27,
    "error": ""
   },
   "es": {
-   "listed": 28,
+   "listed": 27,
    "error": ""
   },
   "it": {
@@ -105,11 +110,11 @@
    "error": ""
   },
   "pt_br": {
-   "listed": 28,
+   "listed": 27,
    "error": ""
   },
   "th": {
-   "listed": 27,
+   "listed": 26,
    "error": ""
   }
  },
