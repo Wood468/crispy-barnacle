@@ -275,6 +275,17 @@ Promise.all([fetch('/data.json').then(function(r){return r.json()}),fetch('/art/
   var firstTab=null;
   try{var st=localStorage.getItem('gofn-tab');if(st){var pp=st.split('/');firstTab=[pp[0],pp[1],pp[2]]}}catch(e){}
   if(firstTab&&(LEGACY[firstTab[0]]||$('tab-'+firstTab[0])))showTab(firstTab[0],firstTab[1],firstTab[2]);else showTab('now');
+  /* Deep links: #planner opens the Purchase planner; #tab=events/calendar (or just #tab=saved) opens that tab. */
+  function deepLink(){
+    var h=location.hash||'',m=/^#tab=([a-z]+)(?:\/([a-z]+))?(?:\/([a-z]+))?$/.exec(h);
+    if(m&&(LEGACY[m[1]]||$('tab-'+m[1])))showTab(m[1],m[2],m[3]);
+    else if(h==='#planner'){
+      showTab('now');
+      var n=0,t=setInterval(function(){var sec=$('buy-sec');
+        if((sec&&!sec.hidden)||++n>40){clearInterval(t);if(sec&&!sec.hidden){var d=sec.querySelector('details');if(d)d.open=true;sec.scrollIntoView({block:'start'})}}},250);
+    }
+  }
+  deepLink();window.addEventListener('hashchange',deepLink);
 
   /* ---------- events ---------- */
   var EVENTS=D.events;
@@ -834,7 +845,16 @@ Promise.all([fetch('/data.json').then(function(r){return r.json()}),fetch('/art/
   function markOwn(ids){var m=dm('own'),added=[];ids.forEach(function(id){if(!m[id]){m[id]=1;added.push(id)}});if(added.length){persist();renderDex()}return added}
   function unmarkOwn(ids){var m=dm('own');ids.forEach(function(id){delete m[id]});persist();renderDex()}
   window.GO={refreshDex:function(){if(DEXLIST.length)renderDex()},markOwn:markOwn,unmarkOwn:unmarkOwn,D:D,MAN:MAN,esc:esc,art:art,fig:fig,bonusRow:bonusRow,bonusChip:bonusChip,MON:MON,DOW:DOW,dex:function(){return dex},showTab:showTab,HERO:HERO,TAGKEY:TAGKEY,tagHtml:tagHtml};
-  var ds=document.createElement('script');ds.src='/dash.js?v=20261020a';document.body.appendChild(ds);
+  var ds=document.createElement('script');ds.src='/dash.js?v=20261020b';document.body.appendChild(ds);
 })();
 
 }).catch(function(e){var m=document.getElementById('prio');if(m)m.innerHTML='<p class="empty">Could not load the event data. Reload to try again.</p>'});
+
+/* Offline / connection notice: the app keeps working from its saved copy; say so, and say when it is back. */
+(function(){
+  function bar(){var b=document.getElementById('netbar');if(b)return b;b=document.createElement('div');b.id='netbar';b.className='envbar';b.hidden=true;b.setAttribute('role','status');var e=document.getElementById('envbar');if(e&&e.parentNode)e.parentNode.insertBefore(b,e.nextSibling);else document.body.insertBefore(b,document.body.firstChild);return b}
+  function upd(){var b=bar();if(navigator.onLine===false){b.hidden=false;b.innerHTML='<b>You are offline</b><span>Showing the last saved copy. Changes you make sync when you are back online.</span>'}else if(!b.hasAttribute('data-fail'))b.hidden=true}
+  window.GONET={fail:function(msg){var b=bar();b.setAttribute('data-fail','1');b.hidden=false;b.innerHTML='<b>'+msg+'</b><button type="button" class="pill" data-netretry>Try again</button>'}};
+  document.addEventListener('click',function(e){if(e.target.closest&&e.target.closest('[data-netretry]'))location.reload()});
+  window.addEventListener('online',upd);window.addEventListener('offline',upd);upd();
+})();

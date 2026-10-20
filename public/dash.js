@@ -1193,6 +1193,7 @@
   ]).then(function (a) { return a[0] && a[1] ? { pokemon: a[0], cpms: a[1] } : null; }).catch(function () { return null; });
   Promise.all([dexP, apiP, cpP]).then(function (R) {
     var api = R[1];
+    if (!api && window.GONET && navigator.onLine !== false) window.GONET.fail('Could not load the latest events. Showing the saved copy.');
     if (api && api.enabled && api.events && api.events.length >= 10) { var m = dedupeLive(fromApi(api.events)); if (m.length >= 10) { EV = mergeLiveAndCurated(m, fromData()); usingApi = true; usingReadOnly = api.readOnly === true; } }
     start(R[0], R[2]);
   });
