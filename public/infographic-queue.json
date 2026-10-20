@@ -1,40 +1,6 @@
 {
- "updated": "2026-10-20T09:02:39.399Z",
+ "updated": "2026-10-20T14:36:30.121Z",
  "items": [
-  {
-   "linked": false,
-   "id": "discord:1561923057688252440",
-   "title": "@Infographics Notify",
-   "image": "/infographics/g47ix/discord-1561923057688252440.jpg",
-   "post": "https://discord.com/channels/@me/1558793395198099618/1561923057688252440",
-   "creator": "",
-   "publishedAt": "2026-10-20T02:04:36.080000+00:00",
-   "note": "Two events look alike. Please choose.",
-   "history": false,
-   "signals": [
-    "picture text names the event",
-    "date in the picture is inside the event",
-    "posted around the event"
-   ],
-   "text": "fi ® i NOVEMBER Research Breakthrough Complete Field Research and unlock encounters a in Pokémon GO! with Season-themed Pokémon each week. a ia . 7 es Showcase Wednesday 2@ Friendship -. € Monday 6 Tu",
-   "guesses": [
-    {
-     "eventId": "into",
-     "eventTitle": "Into the Wild",
-     "score": 0.798
-    },
-    {
-     "eventId": "wag",
-     "eventTitle": "GO Wild Area: Global",
-     "score": 0.798
-    },
-    {
-     "eventId": "sendai",
-     "eventTitle": "GO Wild Area: Sendai",
-     "score": 0.538
-    }
-   ]
-  },
   {
    "linked": true,
    "id": "discord:1561441170037411973",
