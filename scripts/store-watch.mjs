@@ -25,11 +25,22 @@ export function kindOf(name, section = "") {
   return { emoji: "🛒", label: "Store item" };
 }
 
+// The store shows a rounded countdown ("4 hours left"). Turn it into an estimated end time, and keep the earlier estimate while a
+// new reading still agrees with it to within one unit, so the saved time does not wobble every hour (and so the site is not redeployed).
+const UNIT = { day: 864e5, hour: 36e5, minute: 6e4 };
+export function endsAtFrom(left, nowIso, prev) {
+  const m = /(\d+)\s*(day|hour|minute)s?\s*left/i.exec(String(left || ""));
+  if (!m) return prev || null;
+  const unit = UNIT[m[2].toLowerCase()], est = Date.parse(nowIso) + Number(m[1]) * unit;
+  if (prev && Math.abs(est - Date.parse(prev)) <= unit) return prev;
+  return new Date(est).toISOString();
+}
+
 export function diffStore(prev, snap, nowIso) {
   const old = (prev && prev.items) || {}, next = {}, added = [], changed = [], gone = [];
   for (const i of snap.items) {
     const k = key(i), o = old[k];
-    next[k] = { name: i.name, price: i.price, section: i.section, tag: i.tag, limit: i.limit, firstSeen: o ? o.firstSeen : nowIso, lastSeen: nowIso };
+    next[k] = { name: i.name, price: i.price, section: i.section, tag: i.tag, limit: i.limit, firstSeen: o ? o.firstSeen : nowIso, lastSeen: nowIso, endsAt: endsAtFrom(i.left, nowIso, o && o.endsAt) };
     if (!o) added.push(i); else if (o.price !== i.price) changed.push({ ...i, was: o.price });
   }
   const history = { ...((prev && prev.gone) || {}) };
@@ -59,7 +70,7 @@ export function buildMessages(d) {
 
 // The public log the Purchase planner reads: only tickets, passes and boxes, with when each was first and last seen.
 export function storeLog(state) {
-  const row = (k, o) => ({ name: o.name, price: o.price, section: o.section || "", slug: slugOf({ href: k.startsWith("/") ? k : "", name: o.name }), firstSeen: o.firstSeen, lastSeen: o.lastSeen, goneAt: o.goneAt || null });
+  const row = (k, o) => ({ name: o.name, price: o.price, section: o.section || "", slug: slugOf({ href: k.startsWith("/") ? k : "", name: o.name }), href: k.startsWith("/") ? k : "", endsAt: o.endsAt || null, firstSeen: o.firstSeen, lastSeen: o.lastSeen, goneAt: o.goneAt || null });
   const items = [...Object.entries(state.items || {}).map(([k, o]) => row(k, o)), ...Object.entries(state.gone || {}).map(([k, o]) => row(k, o))];
   return { watchStart: state.watchStart || null, updated: state.updated, items: items.filter(i => isTicketOrPass(i.name) || /box|bundle/i.test(i.name)) };
 }

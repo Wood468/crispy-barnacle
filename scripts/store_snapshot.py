@@ -10,6 +10,7 @@ JS = """() => [...document.querySelectorAll('.catalog__section')].flatMap(sec =>
     price: ((c.querySelector('[data-testid="sku-card.cta.price-with-or-without-discount"]') || {}).innerText || '').trim().split('\\n').pop(),
     tag: ((c.querySelector('[data-testid="sku-card.tag-primary"]') || {}).innerText || '').trim(),
     limit: ((c.querySelector('[data-testid="sku-card.tag-purchase-limit"]') || {}).innerText || '').trim(),
+    left: ((/(\\d+)\\s*(day|hour|minute)s?\\s*left/i.exec(c.innerText || '')) || [''])[0],
     imgs: [...c.querySelectorAll('img')].filter(i => !i.closest('.badge')).map(i => i.currentSrc || i.src).filter(Boolean).slice(0, 3),
     href: (c.querySelector('a[href*="/purchase/"]') ? c.querySelector('a[href*="/purchase/"]').getAttribute('href') : ''),
   })))"""

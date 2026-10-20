@@ -817,3 +817,9 @@ svg.ci{width:22px;height:22px}
 .evd-lead{display:flex;align-items:center;gap:8px;margin:6px 16px;font-size:13px}
 .evd-lead[hidden]{display:none}
 .evd-lead select{background:var(--card,#181d27);color:inherit;border:1px solid var(--line,#2a3140);border-radius:8px;padding:4px 8px;font:inherit}
+.by-end{font-weight:700;opacity:1!important}
+.by-urgent{color:var(--warn,#ffb020)}
+.by-acts{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;margin-top:4px}
+.by-lnk{font-weight:700;min-height:44px;display:inline-flex;align-items:center}
+.by-acts .pill{min-height:44px}
+.by-done{opacity:.6}
