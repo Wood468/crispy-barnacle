@@ -1,10 +1,10 @@
 {
- "updated": "2026-10-19T22:21:28.646Z",
+ "updated": "2026-10-20T11:37:41.102Z",
  "status": [
   {
    "id": "hub",
    "state": "ok",
-   "items": 6
+   "items": 5
   },
   {
    "id": "miners-assets",
@@ -217,18 +217,6 @@
    "summary": "<table> <tr><td> <a href=\"https://www.reddit.com/r/TheSilphRoad/comments/1x1yig1/costumed_zubat_have_been_reverted/\"> <img src=\"https://preview.redd.it/b52u4y6hmiuh1.jpeg?width=640&amp;crop=smart&amp;",
    "pokemon": [
     "Zubat"
-   ],
-   "notInOurData": []
-  },
-  {
-   "source": "hub",
-   "trust": "community",
-   "title": "Zorua Community Day (October 2026)",
-   "link": "https://pokemongohub.net/post/event/zorua-community-day-october-2026/",
-   "date": "2026-10-09T11:55:38.000Z",
-   "summary": "The October 2026 Community Day features the sneaky Zorua, the Tricky Fox Pokémon! Join the event on Saturday, October 10, 2026, from 2:00 p.m. to 5:00 p.m. local time to enjoy 3× XP for catching Pokém",
-   "pokemon": [
-    "Zorua"
    ],
    "notInOurData": []
   }

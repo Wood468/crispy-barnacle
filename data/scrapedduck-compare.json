@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-19T22:21:28.874Z",
+ "updated": "2026-10-20T11:37:41.280Z",
  "state": "ok",
  "scrapedDuckEvents": 66,
  "missingHere": [
@@ -38,7 +38,7 @@
   },
   {
    "id": "w-fc-seoul",
-   "name": "Fc Seoul",
+   "name": "FC Seoul",
    "start": "2026-10-24"
   },
   {
@@ -48,12 +48,12 @@
   },
   {
    "id": "w-celebrate-the-festival-of-lights-with-the-return-o",
-   "name": "Celebrate the Festival of Lights with the return of Pikachu wearing a saree and Pikachu wearing a kurta!",
+   "name": "Festival of Lights",
    "start": "2026-11-06"
   },
   {
    "id": "w-pok-xciting-lands-at-changi-airport-and-jewel-get-",
-   "name": "PokéXciting! lands at Changi Airport and Jewel — get ready, Singapore!",
+   "name": "PokéXciting! lands at Changi Airport and Jewel",
    "start": "2026-11-07"
   },
   {
@@ -63,7 +63,7 @@
   },
   {
    "id": "w-pok-mon-go-joins-pok-mon-30th-anniversary-mall-exp",
-   "name": "Pokémon GO joins Pokémon 30th Anniversary Mall Exploration!",
+   "name": "Pokémon GO joins Pokémon 30th Anniversary Mall Exploration",
    "start": "2026-11-09"
   },
   {
