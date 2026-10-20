@@ -72,6 +72,18 @@ export function seriesName(t) {
 }
 export function cleanTitle(t) { return String(t || "").replace(/\s*[—–|-]\s*Pok[eé]mon GO\s*$/i, "").replace(/\s+/g, " ").trim(); }
 
+// Official news headlines make long names ("Celebrate the Festival of Lights with the return of Pikachu...!"). Keep the part that names the event.
+export function tidyName(name) {
+  let t = String(name || "").replace(/\s+/g, " ").trim();
+  if (t.length <= 38) return t;
+  const before = t;
+  t = t.replace(/^(?:Celebrate|Join)\s+(?:the\s+)?/i, "");
+  t = t.split(/\s+[—–]\s+|\s+for a chance\b|\s+with the return of\b|\s+and get\b/i)[0];
+  t = t.replace(/[!.\s]+$/, "").trim();
+  if (t.length < 8) return before;
+  return t.charAt(0).toUpperCase() + t.slice(1);
+}
+
 // One write-up -> one world-events entry, or null when it is not a regional or new event.
 export function fromPage(page, today = new Date().toISOString().slice(0, 10)) {
   const title = seriesName(cleanTitle(page.title));

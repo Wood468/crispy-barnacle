@@ -1,0 +1,6 @@
+{
+ "how_to_use": "Display names for world events: { \"<event id>\": \"Name\" }. The importer applies these last, so a name set here is never overwritten.",
+ "names": {
+  "w-fc-seoul": "FC Seoul"
+ }
+}
