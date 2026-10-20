@@ -235,3 +235,29 @@ export async function runHourly(env, when = new Date()) {
   return out;
 }
 export const heartbeat = env => getState(env.DB, "heartbeat", null);
+
+// Member "Report a problem / suggest an event": goes to the owner's Telegram. At most 5 a day per person (kept in job_state, no new table).
+export const FEEDBACK_PER_DAY = 5;
+export function cleanFeedback(body) {
+  const kind = body && body.kind === "event" ? "event" : "problem";
+  const text = String((body && body.text) || "").replace(/\s+/g, " ").trim().slice(0, 600);
+  const page = String((body && body.page) || "").replace(/[^\w#/.\-?=&]/g, "").slice(0, 80);
+  return { kind, text, page };
+}
+export function feedbackAllowed(times, nowMs, max = FEEDBACK_PER_DAY) {
+  const recent = (Array.isArray(times) ? times : []).filter(t => Number.isFinite(t) && nowMs - t < 864e5);
+  return recent.length >= max ? { ok: false, times: recent } : { ok: true, times: [...recent, nowMs] };
+}
+export async function sendFeedback(env, who, body, opts = {}) {
+  const fb = cleanFeedback(body);
+  if (fb.text.length < 3) return { status: 400, error: "Write a few words first." };
+  if (!env.TELEGRAM_BOT_TOKEN || !env.TELEGRAM_CHAT_ID) return { status: 503, error: "Messages are not switched on." };
+  const key = "feedback:" + who.uid, nowMs = opts.now || Date.now();
+  const gate = feedbackAllowed(await getState(env.DB, key, []), nowMs);
+  if (!gate.ok) return { status: 429, error: "That is enough for today. Try again tomorrow." };
+  const f = routed(env, "events", opts.fetch || fetch);
+  const text = (fb.kind === "event" ? "💡 Event suggestion" : "🐞 Problem report") + " from " + (who.email || "you") + (fb.page ? " (" + fb.page + ")" : "") + "\n\n" + fb.text;
+  if (!(await tg(env, "sendMessage", { text, disable_web_page_preview: true }, f))) return { status: 502, error: "Could not send it. Try again in a minute." };
+  await setState(env.DB, key, gate.times);
+  return { status: 200, ok: true };
+}
