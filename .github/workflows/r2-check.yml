@@ -19,3 +19,6 @@ jobs:
           v=$(curl -s -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" https://api.cloudflare.com/client/v4/user/tokens/verify | tr -d '\n' | cut -c1-300); echo "::notice title=Verify::$v"
           a=$(curl -s -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/r2/buckets" | tr -d '\n' | cut -c1-300); echo "::notice title=R2::$a"
           echo "token length ${#CLOUDFLARE_API_TOKEN}, account id length ${#CLOUDFLARE_ACCOUNT_ID}" | sed 's/^/::notice title=Lengths::/'
+          echo ok > /tmp/ok.txt
+          put=$(npx --yes wrangler@4 r2 object put go-field-notes-images/_check/ok.txt --file /tmp/ok.txt --content-type text/plain --remote 2>&1 | tr '\n' ' ' | cut -c1-400); echo "::notice title=Put::$put"
+          del=$(npx --yes wrangler@4 r2 object delete go-field-notes-images/_check/ok.txt --remote 2>&1 | tr '\n' ' ' | cut -c1-300); echo "::notice title=Delete::$del"
