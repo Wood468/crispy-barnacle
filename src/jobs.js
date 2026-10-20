@@ -191,12 +191,44 @@ export async function runWatchdog(env, opts = {}) {
   return { stale: s.stale, last: s.last };
 }
 
+// Last chance: store items you ticked in the Purchase planner ("pref:buy:<item>" = "plan", not "bought") that end within the next 6 hours.
+// The end time is the watcher's estimate in /store-log.json. One message per item per day; items you marked bought stay quiet.
+export const STORE = "https://store.pokemongo.com";
+export function lastChance(log, marks, nowMs, hours = 6) {
+  const out = [];
+  for (const i of (log && log.items) || []) {
+    if (i.goneAt || !i.endsAt) continue;
+    const end = Date.parse(i.endsAt), left = end - nowMs;
+    if (!(left > 0 && left <= hours * 36e5) || marks["pref:buy:" + i.slug] !== "plan") continue;
+    const h = Math.round(left / 36e5), when = left < 36e5 ? "in under an hour" : "in about " + h + (h === 1 ? " hour" : " hours");
+    out.push({ key: "last:" + i.slug + ":" + String(i.endsAt).slice(0, 10), text: "⏳ Last chance: " + i.name + " ends " + when + ". It is on your buying list.\n" + STORE + (i.href || "") });
+  }
+  return out;
+}
+export async function runLastChance(env, opts = {}) {
+  const f = routed(env, "changes", opts.fetch || fetch), nowMs = (opts.now || new Date()).getTime();
+  const log = await env.ASSETS.fetch(new Request(APP + "/store-log.json")).then(r => r.ok ? r.json() : null).catch(() => null);
+  if (!log) return { sent: [], note: "no store log" };
+  const rows = await userstate.readAll(env.DB, 0, "").catch(() => ({}));
+  const marks = {};
+  for (const k of Object.keys(rows)) if (k.startsWith("pref:buy:")) marks[k] = rows[k].v;
+  const state = await getState(env.DB, "lastchance", { sent: [] });
+  const todo = lastChance(log, marks, nowMs).filter(x => !(state.sent || []).includes(x.key));
+  if (!todo.length) return { sent: [], note: "nothing you planned is ending soon" };
+  if (opts.dry || !env.TELEGRAM_BOT_TOKEN || !env.TELEGRAM_CHAT_ID) return { sent: [], would: todo.map(t => t.text) };
+  const sent = [];
+  for (const x of todo) if (await tg(env, "sendMessage", { text: x.text, disable_web_page_preview: true }, f)) { state.sent = [...(state.sent || []), x.key].slice(-100); sent.push(x.key); }
+  if (sent.length) await setState(env.DB, "lastchance", state);
+  return { sent };
+}
+
 // Called every hour at :30 UTC by the cron trigger.
 export async function runHourly(env, when = new Date()) {
   const out = {}, utcDay = when.getUTCDay(), utcHour = when.getUTCHours();
   try { out.saved = await runSaved(env, { now: when }); } catch (e) { out.saved = { error: String(e && e.message || e) }; }
   try { out.discord = await runDiscord(env); } catch (e) { out.discord = { error: String(e && e.message || e) }; }
   try { out.soon = await runSoon(env, { now: when }); } catch (e) { out.soon = { error: String(e && e.message || e) }; }
+  try { out.lastChance = await runLastChance(env, { now: when }); } catch (e) { out.lastChance = { error: String(e && e.message || e) }; }
   try { out.watchdog = await runWatchdog(env, { now: when }); } catch (e) { out.watchdog = { error: String(e && e.message || e) }; }
   if (utcDay === 0 && utcHour === 20) { try { out.weekly = await runWeekly(env, { now: when }); } catch (e) { out.weekly = { error: String(e && e.message || e) }; } }
   try { await setState(env.DB, "heartbeat", { at: new Date().toISOString(), failed: Object.keys(out).filter(x => out[x] && out[x].error) }); } catch { /* best effort */ }
