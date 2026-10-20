@@ -950,6 +950,12 @@ async function notifyStatus(request, env) {
     out.pushKeyInDatabase = !!(await env.DB.prepare("SELECT 1 AS x FROM notif_state WHERE k='vapid'").first());
     out.pushDevices = (await env.DB.prepare("SELECT COUNT(*) AS n FROM push_subs").first()).n;
     out.recent = (await env.DB.prepare("SELECT kind, level, title, created_at, telegram, push FROM notif_sent ORDER BY created_at DESC LIMIT 10").all()).results;
+    if (await nt.memberReady(env.DB)) {
+      const wk = Date.now() - 7 * 864e5;
+      out.memberDevices = (await env.DB.prepare("SELECT COUNT(*) AS n FROM member_push_subs").first()).n;
+      out.memberPeople = (await env.DB.prepare("SELECT COUNT(DISTINCT uid) AS n FROM member_push_subs").first()).n;
+      out.memberSent7d = (await env.DB.prepare("SELECT COUNT(*) AS n FROM member_notif_sent WHERE dedupe LIKE 'digest|%' AND created_at > ?").bind(wk).first()).n;
+    }
     const lr = await env.DB.prepare("SELECT v FROM notif_state WHERE k='last_run'").first(); out.lastRun = lr ? Number(lr.v) : null;
   }
   return json(out);

@@ -84,6 +84,7 @@
     if (info && info.telegramConfigured) h += '<button type="button" class="pill" id="altest">Send a test message</button>';
     h += tog('push', 'This phone (browser push)', info ? ('Devices registered: ' + (info.pushDevices || 0) + '. On iPhone, add the site to your Home Screen first.') : '');
     h += '<button type="button" class="pill" id="alpush">Turn on for this device</button>';
+    if (info && info.memberDevices !== undefined) h += '<h3 class="sec3">Invited people</h3><p class="note">' + info.memberPeople + ' ' + (info.memberPeople === 1 ? 'person' : 'people') + ' with alerts on (' + info.memberDevices + ' device' + (info.memberDevices === 1 ? '' : 's') + '). Alerts sent in the last 7 days: ' + info.memberSent7d + '.</p>';
     if (info && info.recent && info.recent.length) h += '<h3 class="sec3">Recently sent</h3><ul class="al-log">' + info.recent.map(function (r) { return '<li><b>' + esc(r.title) + '</b><small>' + esc(new Date(r.created_at).toLocaleString()) + ' · ' + esc(r.level === 'info' ? 'not urgent' : 'alert') + '</small></li>'; }).join('') + '</ul>';
     el.innerHTML = h;
   }
