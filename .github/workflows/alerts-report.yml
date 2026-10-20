@@ -1,0 +1,22 @@
+name: Security alerts report
+
+# Lists open code-scanning and secret-scanning alerts as run annotations (so they can be read without opening the Security tab).
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  security-events: read
+  secret-scanning-alerts: read
+
+jobs:
+  report:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: List alerts
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh api "repos/$GITHUB_REPOSITORY/code-scanning/alerts?state=open&per_page=100" --jq '.[]|"::warning title=CodeQL \(.number) \(.rule.severity) \(.rule.id)::\(.most_recent_instance.location.path):\(.most_recent_instance.location.start_line) \(.rule.description)"' || echo "::notice::code scanning alerts not readable"
+          gh api "repos/$GITHUB_REPOSITORY/secret-scanning/alerts?state=open&per_page=100" --jq '.[]|"::error title=Secret \(.number)::\(.secret_type_display_name)"' || echo "::notice::secret scanning alerts not readable"
