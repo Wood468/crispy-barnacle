@@ -81,6 +81,7 @@ const handler = {
       if (url.pathname === "/api/notify/run") return notifyRun(request, env);
       if (url.pathname === "/api/notify/push-key") return pushKey(request, env);
       if (url.pathname === "/api/notify/subscribe") return pushSubscribe(request, env);
+      if (url.pathname.startsWith("/api/member-push/")) return memberPush(request, env, url);
       if (url.pathname === "/api/notify/latest" && request.method === "GET") return notifyLatest(env, url);
       if (url.pathname.startsWith("/api/")) return json({ error: "Not found." }, 404);
     } catch (err) {
@@ -912,7 +913,34 @@ async function userstate(request, env, url) {
 // ---------------------------------------------------------------- Phase 5: notifications
 
 async function notifyNow(env) {
-  return nt.runNotify(env, env.DB, Date.now(), (u, o) => fetch(u, o), { listEvents: pipe.listEvents, dexList: (await assetData(env, "dex.json")) || [] });
+  const deps = { listEvents: pipe.listEvents, dexList: (await assetData(env, "dex.json")) || [] }, f = (u, o) => fetch(u, o), now = Date.now();
+  const owner = await nt.runNotify(env, env.DB, now, f, deps);
+  const members = await nt.runMemberNotify(env, env.DB, now, f, deps).catch((e) => ({ error: String(e && e.message || e) }));
+  return { ...owner, members };
+}
+// Invited members: browser push for new and changed events, set up by the member themselves (session cookie, no PIN).
+async function memberPush(request, env, url) {
+  if (!env.DB || !env.SYNC_PIN) return json({ error: "Not switched on." }, 404);
+  if (request.headers.get("x-pin")) return json({ error: "Members only. Owners use the Alerts settings." }, 400);
+  const who = await whoIs(request, env); if (who.denied) return who.denied;
+  if (!(await nt.notifyReady(env.DB))) return json({ error: "Alerts are not set up yet." }, 409);
+  const p = url.pathname.replace("/api/member-push/", "");
+  if (p === "key" && request.method === "GET") {
+    let k = await nt.vapidKeys(env, env.DB);
+    if (!k) k = await nt.vapidCreate(env.DB);
+    return json({ publicKey: k ? k.pub : null });
+  }
+  if (p === "subscribe" && request.method === "POST") {
+    if (!(await nt.memberReady(env.DB))) await pipe.migrate(env.DB, Date.now());
+    let b; try { b = await request.json(); } catch { return json({ error: "Bad request." }, 400); }
+    if (!nt.okPushEndpoint(b && b.endpoint)) return json({ error: "That push address isn't from a known push service." }, 400);
+    const id = [...new Uint8Array(await crypto.subtle.digest("SHA-256", new TextEncoder().encode(b.endpoint)))].map((x) => x.toString(16).padStart(2, "0")).join("");
+    const mine = (await env.DB.prepare("SELECT id FROM member_push_subs WHERE uid = ? ORDER BY created_at").bind(who.uid).all()).results;
+    if (mine.length >= nt.MEMBER_MAX_DEVICES && !mine.some((r) => r.id === id)) await env.DB.prepare("DELETE FROM member_push_subs WHERE id = ?").bind(mine[0].id).run();
+    await env.DB.prepare("INSERT INTO member_push_subs (id, uid, endpoint, created_at) VALUES (?, ?, ?, ?) ON CONFLICT(id) DO UPDATE SET uid = excluded.uid, endpoint = excluded.endpoint, fail_count = 0").bind(id, who.uid, b.endpoint, Date.now()).run();
+    return json({ ok: true });
+  }
+  return json({ error: "Not found." }, 404);
 }
 async function notifyStatus(request, env) {
   const denied = await pinned(request, env); if (denied) return denied;
@@ -957,7 +985,13 @@ async function pushSubscribe(request, env) {
 async function notifyLatest(env, url) {
   const s = url.searchParams.get("s") || "";
   if (!env.DB || !/^[0-9a-f]{64}$/.test(s) || !(await nt.notifyReady(env.DB))) return json({ error: "Not found." }, 404);
-  if (!(await env.DB.prepare("SELECT 1 AS x FROM push_subs WHERE id = ?").bind(s).first())) return json({ error: "Not found." }, 404);
+  if (!(await env.DB.prepare("SELECT 1 AS x FROM push_subs WHERE id = ?").bind(s).first())) {
+    // an invited member's phone: show the newest message meant for that person only
+    const m = (await nt.memberReady(env.DB)) ? await env.DB.prepare("SELECT uid FROM member_push_subs WHERE id = ?").bind(s).first() : null;
+    if (!m) return json({ error: "Not found." }, 404);
+    const r2 = await env.DB.prepare("SELECT title, body, url FROM member_notif_sent WHERE uid = ? AND created_at > ? ORDER BY created_at DESC, rowid DESC LIMIT 1").bind(m.uid, Date.now() - 6 * 3600 * 1000).first();
+    return json(r2 || { title: "GO Field Notes", body: "Something changed. Open the app.", url: null });
+  }
   const r = await env.DB.prepare("SELECT title, body, url, created_at FROM notif_sent WHERE created_at > ? ORDER BY created_at DESC LIMIT 1").bind(Date.now() - 6 * 3600 * 1000).first();
   return json(r || { title: "GO Field Notes", body: "Something changed. Open the app.", url: null });
 }
