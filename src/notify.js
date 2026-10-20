@@ -148,12 +148,9 @@ export async function vapidJwt(keys, audience, subject, now) {
   return input + "." + b64u(sig);
 }
 export async function sendPush(env, db, fetcher, now) {
-  const subs = (await db.prepare("SELECT id, endpoint, fail_count FROM push_subs").all()).results;
-  return sendPushTo(env, db, fetcher, now, subs, "push_subs");
-}
-export async function sendPushTo(env, db, fetcher, now, subs, table) {
   const keys = await vapidKeys(env, db);
   if (!keys) return { status: "skipped", why: "push not set up" };
+  const subs = (await db.prepare("SELECT id, endpoint, fail_count FROM push_subs").all()).results;
   if (!subs.length) return { status: "skipped", why: "no subscriptions" };
   let ok = 0, bad = 0;
   for (const s of subs) {
@@ -161,62 +158,12 @@ export async function sendPushTo(env, db, fetcher, now, subs, table) {
     try {
       const jwt = await vapidJwt(keys, new URL(s.endpoint).origin, env.VAPID_SUBJECT || "https://pogo.michaelpuff.com", now);
       const r = await fetcher(s.endpoint, { method: "POST", headers: { authorization: `vapid t=${jwt}, k=${keys.pub}`, ttl: "7200", urgency: "normal" } });
-      if (r.ok) { ok++; await db.prepare(`UPDATE ${table} SET last_ok = ?, fail_count = 0 WHERE id = ?`).bind(now, s.id).run(); }
-      else if (r.status === 404 || r.status === 410) { await db.prepare(`DELETE FROM ${table} WHERE id = ?`).bind(s.id).run(); bad++; } // the browser unsubscribed
-      else { bad++; await db.prepare(`UPDATE ${table} SET fail_count = fail_count + 1 WHERE id = ?`).bind(s.id).run(); }
+      if (r.ok) { ok++; await db.prepare("UPDATE push_subs SET last_ok = ?, fail_count = 0 WHERE id = ?").bind(now, s.id).run(); }
+      else if (r.status === 404 || r.status === 410) { await db.prepare("DELETE FROM push_subs WHERE id = ?").bind(s.id).run(); bad++; } // the browser unsubscribed
+      else { bad++; await db.prepare("UPDATE push_subs SET fail_count = fail_count + 1 WHERE id = ?").bind(s.id).run(); }
     } catch { bad++; }
   }
   return ok ? { status: "sent" } : { status: "failed", why: `push failed for ${bad}` };
-}
-
-// ---- invited members: browser push only, one short message per run, never Telegram ----
-export const MEMBER_MAX_DEVICES = 5;
-// Pure: one message for everything new. Each member's own alert settings decide what counts.
-export function memberDigest(cands) {
-  const n = cands.length;
-  if (!n) return null;
-  if (n === 1) return { title: cands[0].title, body: cands[0].body, url: cands[0].url || null };
-  return { title: n + " event updates", body: cands.slice(0, 3).map((c) => c.title).join(" · ") + (n > 3 ? " and " + (n - 3) + " more" : ""), url: null };
-}
-export async function memberReady(db) {
-  try { return !!(await db.prepare("SELECT 1 AS x FROM sqlite_master WHERE type='table' AND name='member_push_subs'").first()); } catch { return false; }
-}
-export async function runMemberNotify(env, db, now, fetcher, deps) {
-  if (!(await notifyReady(db)) || !(await memberReady(db))) return { skipped: "tables not created" };
-  const subs = (await db.prepare("SELECT id, uid, endpoint, created_at FROM member_push_subs").all()).results;
-  if (!subs.length) return { skipped: "no member devices" };
-  const b = await db.prepare("SELECT v FROM notif_state WHERE k='baseline'").first();
-  if (!b) return { skipped: "no baseline yet" };
-  const { events } = await deps.listEvents(db, now);
-  const dexByName = new Map((deps.dexList || []).map((x) => [String(x[1]).toLowerCase(), x[0]]));
-  const byUid = new Map();
-  for (const s of subs) { if (!byUid.has(s.uid)) byUid.set(s.uid, []); byUid.get(s.uid).push(s); }
-  const log = { members: byUid.size, sent: 0, failed: 0 };
-  for (const [uid, list] of byUid) {
-    const entries = await readAll(db, 0, uid);
-    const prefs = { ...prefsFrom(entries), datamine: false, push: true };
-    if (!prefs.on) continue;
-    // Only things announced after this member turned alerts on, so a new device never gets a flood.
-    const baseline = Math.max(Number(b.v), Math.min(...list.map((x) => x.created_at)));
-    const follows = new Set();
-    for (const [k, e] of Object.entries(entries)) if (e.v !== null && k.startsWith("follow:")) follows.add(k.slice(7).toLowerCase());
-    const cands = buildCandidates({ events, now, baseline, prefs, follows, forms: {}, ownDex: new Set(), haveMarks: false, confirmedGens: new Set(), newDatamine: [], dexByName });
-    const seen = new Set(), fresh = [];
-    for (const c of cands) {
-      if (seen.has(c.dedupe)) continue; seen.add(c.dedupe);
-      if (!(await db.prepare("SELECT 1 AS x FROM member_notif_sent WHERE uid = ? AND dedupe = ?").bind(uid, c.dedupe).first())) fresh.push(c);
-    }
-    fresh.sort((x, y) => x.at - y.at);
-    const batch = fresh.slice(0, MAX_PER_RUN), msg = memberDigest(batch);
-    if (!msg) continue;
-    const keys = batch.map((c) => c.dedupe).concat("digest|" + now);
-    for (const c of batch) await db.prepare("INSERT OR IGNORE INTO member_notif_sent (uid, dedupe, title, body, url, created_at) VALUES (?, ?, ?, ?, ?, ?)").bind(uid, c.dedupe, c.title, c.body, c.url || null, now).run();
-    await db.prepare("INSERT OR IGNORE INTO member_notif_sent (uid, dedupe, title, body, url, created_at) VALUES (?, ?, ?, ?, ?, ?)").bind(uid, "digest|" + now, msg.title, msg.body, msg.url, now).run();
-    const r = await sendPushTo(env, db, fetcher, now, list, "member_push_subs");
-    if (r.status === "sent") log.sent++;
-    else { log.failed++; for (const k of keys) await db.prepare("DELETE FROM member_notif_sent WHERE uid = ? AND dedupe = ?").bind(uid, k).run(); } // retry next run
-  }
-  return log;
 }
 
 // ---- the run ----
