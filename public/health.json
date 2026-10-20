@@ -1,12 +1,12 @@
 {
- "updated": "2026-10-20T03:21:09.256Z",
+ "updated": "2026-10-20T08:51:16.513Z",
  "jobs": [
   {
    "id": "event-importer.yml",
    "name": "Event importer",
    "everyH": 1,
-   "lastSuccess": null,
-   "state": "never"
+   "lastSuccess": "2026-10-20T08:44:26.000Z",
+   "state": "fresh"
   },
   {
    "id": "g47ix-infographics.yml",
@@ -18,9 +18,9 @@
   {
    "id": "store-watch.yml",
    "name": "Store watcher",
-   "everyH": 6,
-   "lastSuccess": null,
-   "state": "never"
+   "everyH": 1,
+   "lastSuccess": "2026-10-20T05:46:49.000Z",
+   "state": "fresh"
   },
   {
    "id": "nudge.yml",
@@ -54,21 +54,21 @@
    "id": "worker-cron",
    "name": "Worker hourly jobs",
    "everyH": 1,
-   "lastSuccess": "2026-10-20T02:30:46.580Z",
+   "lastSuccess": "2026-10-20T08:30:47.728Z",
    "state": "fresh",
    "detail": ""
   },
   {
    "id": "ai-heartbeat-event-check",
    "name": "AI event check",
-   "everyH": 24,
+   "everyH": 168,
    "lastSuccess": null,
    "state": "never"
   },
   {
    "id": "ai-heartbeat-pipeline",
    "name": "AI picture matching",
-   "everyH": 6,
+   "everyH": 24,
    "lastSuccess": null,
    "state": "never"
   },
