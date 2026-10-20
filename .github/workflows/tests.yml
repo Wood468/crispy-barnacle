@@ -4,8 +4,7 @@ permissions:
   contents: read
 
 # Changes that only touch data files (the importer, AI checks and bots commit these all day) skip the tests: no code changed.
-# The fast checks (JavaScript and Python) run on every other push. The slow browser checks cost most of the minutes, so they only run
-# when started by hand: Actions > Tests > Run workflow.
+# JavaScript, Python and the browser checks all run on every other push (the repo is public, so minutes are free).
 on:
   push:
     branches: [main]
@@ -51,7 +50,6 @@ jobs:
         run: python -m unittest discover -s test -p 'test_discord_scraper_sync.py'
 
   browser:
-    if: ${{ github.event_name == 'workflow_dispatch' || (github.event_name == 'pull_request' && github.event.pull_request.head.ref == 'fix/pwa-install-offline-audit') }}
     # Three parallel shards of test/ui_checks.py (UI_SHARD a, b, c), so a change waits for a third of the checks.
     runs-on: ubuntu-latest
     timeout-minutes: 30   # a stuck browser run once burned about 650 minutes before failing
