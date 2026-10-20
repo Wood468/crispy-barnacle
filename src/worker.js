@@ -73,7 +73,6 @@ const handler = {
       if (url.pathname === "/api/jobs/run" && request.method === "POST") return jobsRun(request, env, url);
       if (url.pathname === "/api/telegram/hook" && request.method === "POST") return telegramHook(request, env);
       if (url.pathname.startsWith("/api/auth/")) return authRoutes(request, env, url);
-      if (url.pathname === "/api/feedback" && request.method === "POST") return feedbackPost(request, env);
       if (url.pathname === "/api/userstate") return userstate(request, env, url);
       if (url.pathname === "/api/userstate/init") return userstateInit(request, env);
       if (url.pathname === "/api/notify/status") return notifyStatus(request, env);
@@ -884,13 +883,6 @@ async function userstateInit(request, env) {
   const denied = await pinned(request, env); if (denied) return denied;
   await pipe.migrate(env.DB, Date.now()); // additive migrations only
   return json({ ok: true });
-}
-async function feedbackPost(request, env) {
-  if (!env.DB || !env.SYNC_PIN) return json({ error: "Not switched on." }, 404);
-  const who = await whoIs(request, env); if (who.denied) return who.denied;
-  let body; try { body = await request.json(); } catch { return json({ error: "Bad request." }, 400); }
-  const r = await jobs.sendFeedback(env, who, body);
-  return json(r.error ? { error: r.error } : { ok: true }, r.status);
 }
 async function userstate(request, env, url) {
   if (request.method !== "GET" && request.method !== "PUT") return json({ error: "Method not allowed." }, 405);
