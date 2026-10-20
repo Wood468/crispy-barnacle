@@ -199,9 +199,21 @@ export const isMonthly = c => {
   return new RegExp("(?:^|[^a-z])(?:" + MONTH_NAMES + ")[ _-]*content", "i").test(t) || /\bmonthly\b/i.test(t);
 };
 export const isOverview = c => isWeekly(c) || isMonthly(c);
+// A monthly overview named for a LATER month (the November picture, posted in October) waits until that month starts.
+const MONTH_ORDER = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"];
+export function monthOfPicture(c) {
+  const m = String((c && c.title) || "").concat(" ", String((c && c.imageUrl) || "").split("?")[0]).match(new RegExp("(" + MONTH_NAMES + ")[ _-]*content", "i"));
+  return m ? MONTH_ORDER.indexOf(m[1].slice(0, 3).toLowerCase()) : -1;
+}
+export function comingMonth(c, now) {
+  const idx = monthOfPicture(c); if (idx < 0) return false;
+  const cur = Number(new Intl.DateTimeFormat("en-AU", { timeZone: "Australia/Melbourne", month: "numeric" }).format(new Date(now))) - 1;
+  const ahead = (idx - cur + 12) % 12;
+  return ahead >= 1 && ahead <= 6;
+}
 export function buildWeekly(reg, now = Date.now()) {
   const clean = t => String(t || "").replace(/^tr\s+/i, "").replace(/\s+/g, " ").trim().slice(0, 80);
-  const pick = (test, days, max, kind, label) => (reg.candidates || []).filter(c => c.stagedPath && c.decision !== "rejected" && (c.overview === kind || (test(c) && !c.overview && Date.parse(c.publishedAt || "") > now - days * 864e5)))
+  const pick = (test, days, max, kind, label) => (reg.candidates || []).filter(c => c.stagedPath && c.decision !== "rejected" && !(kind === "month" && comingMonth(c, now)) && (c.overview === kind || (test(c) && !c.overview && Date.parse(c.publishedAt || "") > now - days * 864e5)))
     .sort((a, b) => (b.overview === kind) - (a.overview === kind) || Date.parse(b.publishedAt) - Date.parse(a.publishedAt)).slice(0, max)
     .map(c => ({ id: c.id, kind, title: kind === "month" ? label(c) : clean(c.title), image: c.stagedPath, post: c.url || "", publishedAt: c.publishedAt }));
   const monthName = c => { const m = String(c.title || "").concat(" ", String(c.imageUrl || "").split("?")[0]).match(new RegExp("(" + MONTH_NAMES + ")[ _-]*content", "i")); return m ? "Month overview: " + m[1].slice(0, 1).toUpperCase() + m[1].slice(1).toLowerCase() : "Month overview"; };

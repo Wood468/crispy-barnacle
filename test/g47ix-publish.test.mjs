@@ -144,7 +144,8 @@ test("a newer chosen picture replaces the older chosen one on each button", () =
     { id: "m-old", overview: "month", title: "OCT_CONTENT", stagedPath: "/infographics/g47ix/3.webp", publishedAt: "2026-09-29T00:00:00Z" },
     { id: "m-new", overview: "month", title: "NOV_CONTENT", stagedPath: "/infographics/g47ix/4.webp", publishedAt: "2026-10-19T00:00:00Z" },
   ] };
-  assert.deepEqual(buildWeekly(reg, now).items.map(i => i.id), ["w-new", "m-new"]);
+  assert.deepEqual(buildWeekly(reg, Date.parse("2026-11-02T00:00:00Z")).items.map(i => i.id), ["w-new", "m-new"], "in November the November picture takes over");
+  assert.deepEqual(buildWeekly(reg, now).items.map(i => i.id), ["w-new", "m-old"], "in October the November picture waits, even if chosen early");
 });
 
 test("world and in-person events are suggested from the picture text, never auto-proposed", async () => {
