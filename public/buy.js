@@ -6,7 +6,7 @@
   var esc = function (s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
   var DAY = 864e5, MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   var STOP = /^(ultra|ticket|tickets|box|deluxe|pass|go|pokemon|the|and|of|day|ranks?|global|bundle|pack|\d+|20\d\d)$/;
-  var KEY = 'gofn-buyplan', plan = {}, LOG = null, DET = {}, PR = null, EXT = [];
+  var KEY = 'gofn-buyplan', plan = {}, LOG = null, PR = null;
   /* Store item name -> product id in prices.json. Prices shown are always A$: the Rp price converted when this device has the owner's
      private prices, otherwise the verified Australian price or Australian tier. US$ is never shown. */
   function productFor(name) {
@@ -42,20 +42,13 @@
     return bs >= 0.5 ? best : null;
   }
   function build(evs, now) {
-    var watch = LOG.watchStart ? Date.parse(LOG.watchStart) : 0, rows = [], used = {};
+    var watch = LOG.watchStart ? Date.parse(LOG.watchStart) : 0, rows = [];
     LOG.items.filter(function (i) { return !i.goneAt; }).forEach(function (i) {
       var ev = matchEvent(i.name, evs, now), first = Date.parse(i.firstSeen), precise = first > watch + 3600e3;
-      if (ev) used[ev.id] = 1;
       rows.push({ id: i.slug, name: i.name, price: i.price, aud: audOf({ name: i.name, price: i.price }), ev: ev, first: first, precise: precise, lead: ev && precise ? Math.round((ev.start.getTime() - first) / DAY) : null });
     });
     rows.sort(function (a, b) { return (a.ev ? a.ev.start : 9e15) - (b.ev ? b.ev.start : 9e15); });
-    var soon = evs.filter(function (e) {
-      if (used[e.id] || e.start.getTime() < now || e.start.getTime() > now + 50 * DAY || e.scope === 'global' && false) return false;
-      var d = DET[e.id] || DET[String(e.id).replace(/^cur:/, '')]; if (!d || !d.fields) return false;
-      return ['tickets', 'dates', 'bonuses'].some(function (k) { return (d.fields[k] || []).some(function (t) { return /(event|ultra|battle day|go pass deluxe)[^.]*ticket|ticket box|ultra box|pass deluxe/i.test(t.text); }); });
-    }).sort(function (a, b) { return a.start - b.start; });
-    var gone = LOG.items.filter(function (i) { return i.goneAt; });
-    return { rows: rows, soon: soon, gone: gone, watch: watch };
+    return { rows: rows, watch: watch };
   }
   function render(host, m, now) {
     var leads = m.rows.filter(function (r) { return r.lead != null; }).map(function (r) { return r.lead; }).sort(function (a, b) { return a - b; });
@@ -67,21 +60,16 @@
     }).join('') + '</div>';
     if (!m.rows.length) h = '<p class="note">Nothing from the store is logged yet.</p>';
     var bar = '<div class="by-tot"><b>' + (sel.length ? sel.length + ' selected · ≈ A$' + tot.toFixed(2) + (unp ? ' + ' + unp + ' unpriced' : '') : 'Tick items to plan one buying session') + '</b>' + (sel.length ? '<span>' + sel.map(function (r) { return esc(r.name); }).join(' + ') + '</span><a class="by-go" href="https://store.pokemongo.com" target="_blank" rel="noopener">Open store</a>' : '') + '</div>';
-    var s = '';
-    if (m.soon.length) s += '<h4>Announced, not in the store yet</h4><div class="by-list">' + m.soon.map(function (e) { return '<div class="by-r by-soon"><span class="by-t"><b>' + esc(e.name) + '</b><small>Starts ' + dstr(e.start) + ' · the official post mentions a ticket or paid pass; it is not listed in the store yet</small></span></div>'; }).join('') + '</div>';
     var stat = leads.length >= 3 ? 'Listed a median of ' + leads[Math.floor(leads.length / 2)] + ' days before the event (' + leads.length + ' measured, range ' + leads[0] + '–' + leads[leads.length - 1] + ').'
       : 'Lead times build up as the watcher sees new items appear' + (leads.length ? ' (' + leads.length + ' measured so far).' : '.');
-    var g = m.gone.length ? '<p class="note">Left the store: ' + m.gone.slice(0, 6).map(function (i) { return esc(i.name) + ' (' + dstr(Date.parse(i.goneAt)) + ')'; }).join(', ') + '</p>' : '';
-    var ext = EXT.length ? '<h4>Bought on the Niantic ticketing site, not in the web store</h4><div class="by-list">' + EXT.map(function (x) {
-      return '<div class="by-r by-ext"><span class="by-t"><b>' + esc(x.name) + '</b><small>' + esc(x.when) + ' · ' + esc(x.price) + '</small><small>' + esc(x.note || '') + '</small><a class="by-go" href="' + esc(x.url) + '" target="_blank" rel="noopener">Open ticket site</a></span></div>';
-    }).join('') + '</div><p class="note">These prices are in local currency and are not in the A$ total above.</p>' : '';
-    host.innerHTML = bar + h + s + ext + '<p class="note">' + esc(stat) + ' All prices in A$. Checked ' + esc(new Date(LOG.updated).toLocaleString('en-AU', { day: 'numeric', month: 'short', hour: 'numeric', minute: '2-digit' })) + '.</p>' + g;
+    host.innerHTML = bar + h + '<p class="note">' + esc(stat) + ' All prices in A$. Checked ' + esc(new Date(LOG.updated).toLocaleString('en-AU', { day: 'numeric', month: 'short', hour: 'numeric', minute: '2-digit' })) + '.</p>';
     host.querySelectorAll('[data-by]').forEach(function (c) { c.addEventListener('change', function () { if (c.checked) plan[c.dataset.by] = 1; else delete plan[c.dataset.by]; save(); render(host, m, now); }); });
   }
   function go() {
     var host = document.getElementById('buy-body'); if (!host) return; load();
-    Promise.all([(window.GOLIB ? GOLIB.loadPrices() : Promise.resolve(null)).then(function (d) { PR = d; }).catch(function () { }).then(function () { return fetch('/store-log.json', { cache: 'no-cache' }).then(function (r) { return r.ok ? r.json() : null; }); }), fetch('/tickets-external.json').then(function (r) { return r.ok ? r.json() : null; }).then(function (j) { EXT = (j && j.items) || []; }).catch(function () { }).then(function () { return fetch('/event-details.json'); }).then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; })]).then(function (a) {
-      if (!a[0] || !a[0].items) return; LOG = a[0]; DET = (a[1] && a[1].events) || {};
+    (window.GOLIB ? GOLIB.loadPrices() : Promise.resolve(null)).then(function (d) { PR = d; }).catch(function () { })
+      .then(function () { return fetch('/store-log.json', { cache: 'no-cache' }).then(function (r) { return r.ok ? r.json() : null; }); }).then(function (log) {
+      if (!log || !log.items) return; LOG = log;
       var n = 0, t = setInterval(function () {
         var evs = window.GODASH && GODASH.events ? GODASH.events() : null;
         if (evs && evs.length || ++n > 40) { clearInterval(t); var now = Date.now(); render(host, build(evs || [], now), now); document.getElementById('buy-sec').hidden = false; }
