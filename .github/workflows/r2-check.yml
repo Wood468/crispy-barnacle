@@ -22,3 +22,6 @@ jobs:
           echo ok > /tmp/ok.txt
           put=$(npx --yes wrangler@4 r2 object put go-field-notes-images/_check/ok.txt --file /tmp/ok.txt --content-type text/plain --remote 2>&1 | tr '\n' ' ' | cut -c1-400); echo "::notice title=Put::$put"
           del=$(npx --yes wrangler@4 r2 object delete go-field-notes-images/_check/ok.txt --remote 2>&1 | tr '\n' ' ' | cut -c1-300); echo "::notice title=Delete::$del"
+          av=$(curl -s -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/tokens/verify" | tr -d '\n' | cut -c1-300); echo "::notice title=AccountVerify::$av"
+          cp=$(curl -s -o /dev/null -w "%{http_code}" -X PUT -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" --data-binary ok "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/r2/buckets/go-field-notes-images/objects/_check/rest.txt"); echo "::notice title=RestPut::http $cp"
+          echo "::notice title=Prefix::${CLOUDFLARE_API_TOKEN:0:4}"
