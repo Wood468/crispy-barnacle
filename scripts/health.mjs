@@ -7,12 +7,12 @@ import { routed } from "../src/tgroute.js";
 
 const HOUR = 36e5;
 export const JOBS = [
-  { id: "event-importer.yml", name: "Event importer", everyH: 3 },
-  { id: "g47ix-infographics.yml", name: "Infographic check", everyH: 6 },
-  { id: "store-watch.yml", name: "Store watcher", everyH: 12 },
+  { id: "event-importer.yml", name: "Event importer", everyH: 1 },
+  { id: "g47ix-infographics.yml", name: "Infographic check", everyH: 2 },
+  { id: "store-watch.yml", name: "Store watcher", everyH: 6 },
   { id: "nudge.yml", name: "Daily nudge", everyH: 24 },
   { id: "best-by-type.yml", name: "Best-by-type rankings", everyH: 168 },
-  { id: "discord_sync.yml", name: "Discord reader", everyH: 8 },
+  { id: "discord_sync.yml", name: "Discord reader", everyH: 2 },
   { id: "data-report.yml", name: "Weekly data report", everyH: 168 },
 ];
 const readJson = async (p, d) => { try { return JSON.parse(await readFile(p, "utf8")); } catch { return d; } };

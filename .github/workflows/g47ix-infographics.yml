@@ -3,7 +3,7 @@ name: G47IX infographic discovery
 on:
   schedule:
     # Six-hour cadence (saves Actions minutes). GitHub schedules use UTC and can be delayed during load.
-    - cron: "0 */6 * * *"
+    - cron: "0 */2 * * *"
   workflow_dispatch:
     inputs:
       lookback_days:

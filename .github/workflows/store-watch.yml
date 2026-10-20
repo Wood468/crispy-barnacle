@@ -2,7 +2,7 @@ name: Web store watch
 
 on:
   schedule:
-    - cron: "15 */12 * * *"
+    - cron: "15 */6 * * *"
   workflow_dispatch:
     inputs:
       dry_run:

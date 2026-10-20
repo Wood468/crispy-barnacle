@@ -2,8 +2,8 @@ name: Discord infographic sync
 
 on:
   schedule:
-    # GitHub Actions cron is UTC; runs every eight hours.
-    - cron: "0 */8 * * *"
+    # GitHub Actions cron is UTC; runs every two hours.
+    - cron: "0 */2 * * *"
   workflow_dispatch:
 
 permissions:

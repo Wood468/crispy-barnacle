@@ -3,7 +3,7 @@ name: Event details importer
 on:
   schedule:
     # Every 3 hours (about a minute per run). GitHub schedules use UTC and can be delayed.
-    - cron: "20 */3 * * *"
+    - cron: "20 * * * *"
   workflow_dispatch:
 
 permissions:
