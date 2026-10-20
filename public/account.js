@@ -15,7 +15,7 @@
       .then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) { return { ok: r.ok, j: j }; }); });
   }
   function wipeLocal() { try { ['gofn-dex-v1', 'gofn-stamp', 'gofn-us-v1'].forEach(function (k) { localStorage.removeItem(k); }); } catch (e) { } }
-  var fbMsg = '', mode = 'in', msg = '', invite = '', made = '';
+  var mode = 'in', msg = '', invite = '', made = '';
   function pinHdr() { try { return { 'content-type': 'application/json', 'x-pin': localStorage.getItem('gofn-pin') || '' }; } catch (e) { return { 'content-type': 'application/json' }; } }
   function loadUsers() {
     fetch('/api/auth/users', { method: 'POST', headers: pinHdr(), body: '{}' }).then(function (r) { return r.ok ? r.json() : null; }).then(function (j) {
@@ -27,11 +27,7 @@
     var host = document.getElementById('acct'); if (!host) return;
     var email = get();
     if (email && !pinned()) {
-      host.innerHTML = '<p class="note" style="margin:0">Signed in as <b>' + esc(email) + '</b>. Your marks are private to this account. <button type="button" class="pill" data-acct="out">Sign out</button></p>'
-        + '<details class="acctbox"' + (fbMsg ? ' open' : '') + '><summary>Report a problem or suggest an event</summary><form class="acct-f" data-acct-form="fb">'
-        + '<label>What is it about?<select name="kind"><option value="problem">Something is wrong</option><option value="event">An event is missing</option></select></label>'
-        + '<label>Tell me in a few words<textarea name="text" rows="3" maxlength="600" required></textarea></label>'
-        + '<button type="submit" class="pill all">Send</button></form>' + (fbMsg ? '<p class="igr-msg" role="status">' + esc(fbMsg) + '</p>' : '') + '</details>';
+      host.innerHTML = '<p class="note" style="margin:0">Signed in as <b>' + esc(email) + '</b>. Your marks are private to this account. <button type="button" class="pill" data-acct="out">Sign out</button></p>';
       return;
     }
     if (pinned()) {
@@ -65,13 +61,6 @@
     var v = {}; Array.prototype.forEach.call(f.elements, function (el) { if (el.name) v[el.name] = el.value; });
     if (f.getAttribute('data-acct-form') === 'create') { fetch('/api/auth/create', { method: 'POST', headers: pinHdr(), body: JSON.stringify(v) }).then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); }).then(function (r) { made = r.ok ? (r.j.created ? 'Added ' : 'New password set for ') + r.j.email + '.' : (r.j.error || 'That did not work.'); render(); var d = document.querySelector('.acctbox'); if (d) d.open = true; }); return; }
     if (f.getAttribute('data-acct-form') === 'invite') { fetch('/api/auth/invite', { method: 'POST', headers: pinHdr(), body: JSON.stringify({ note: v.note }) }).then(function (r) { return r.ok ? r.json() : null; }).then(function (j) { invite = j && j.code || ''; render(); var d = document.querySelector('.acctbox'); if (d) d.open = true; }); return; }
-    if (f.getAttribute('data-acct-form') === 'fb') {
-      fetch('/api/feedback', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ kind: v.kind, text: v.text, page: location.hash || '/' }) })
-        .then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) { return { ok: r.ok, j: j }; }); })
-        .then(function (r) { fbMsg = r.ok ? 'Sent. Thank you!' : (r.j.error || 'That did not work. Try again.'); render(); })
-        .catch(function () { fbMsg = 'Could not reach the server. Try again.'; render(); });
-      return;
-    }
     post(f.getAttribute('data-acct-form') === 'up' ? 'register' : 'login', v).then(function (r) {
       if (!r.ok) { msg = (r.j && r.j.error) || 'That did not work. Try again.'; render(); return; }
       wipeLocal(); put(r.j.email || v.email); location.reload();
@@ -118,7 +107,7 @@
     var d = dash(); if (!d || document.getElementById('goprof')) return;
     var w = who(), team = w.team;
     var o = document.createElement('div'); o.id = 'goprof'; o.className = 'goprof'; o.setAttribute('role', 'dialog'); o.setAttribute('aria-modal', 'true'); o.setAttribute('aria-label', 'Your trainer profile');
-    o.innerHTML = '<form class="goprof-p"><h2>' + (force ? 'Your trainer profile' : 'Welcome, Trainer') + '</h2><p class="note" style="margin:0">Pick the name and team you play as. It shows under the title and stays with your account.' + (force ? '' : ' Tip: tap events to save them, and use the account box to report a problem or suggest an event.') + '</p>'
+    o.innerHTML = '<form class="goprof-p"><h2>' + (force ? 'Your trainer profile' : 'Welcome, Trainer') + '</h2><p class="note" style="margin:0">Pick the name and team you play as. It shows under the title and stays with your account.</p>'
       + '<label>Trainer name<input name="name" maxlength="20" autocomplete="nickname" value="' + esc(w.name) + '" placeholder="Your in-game name" required></label>'
       + '<div class="goprof-t" role="radiogroup" aria-label="Team">' + Object.keys(TEAMS).map(function (k) { return '<button type="button" role="radio" data-team="' + k + '" aria-checked="' + (team === k) + '" style="--tc:' + TEAMS[k][1] + '">' + emblem(k, 36) + TEAMS[k][0] + '<small>' + TEAMS[k][2] + '</small></button>'; }).join('') + '</div>'
       + '<div class="goprof-b"><button type="submit" class="pill all">Save</button><button type="button" class="pill" data-skip>' + (force ? 'Cancel' : 'Not now') + '</button></div></form>';
