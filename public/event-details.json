@@ -1,9 +1,9 @@
 {
- "updated": "2026-10-20T04:45:32.878Z",
+ "updated": "2026-10-20T08:44:15.613Z",
  "events": {
   "smr1": {
    "name": "Super Mega Raid Day",
-   "updated": "2026-10-20T04:45:32.878Z",
+   "updated": "2026-10-20T08:44:15.613Z",
    "sources": [
     {
      "id": "official",
@@ -251,7 +251,7 @@
   },
   "leekduck:halloween-2026-part-1": {
    "name": "Pokémon GO Halloween 2026 Part I",
-   "updated": "2026-10-20T04:45:32.878Z",
+   "updated": "2026-10-20T08:44:15.613Z",
    "sources": [
     {
      "id": "official",
@@ -606,7 +606,7 @@
   },
   "halloween1": {
    "name": "Halloween 2026, Part One",
-   "updated": "2026-10-20T04:45:32.878Z",
+   "updated": "2026-10-20T08:44:15.613Z",
    "sources": [
     {
      "id": "official",
@@ -835,7 +835,7 @@
   },
   "leekduck:pokemon-go-city-safari-boston-2026-rescheduled": {
    "name": "Pokémon GO City Safari: Boston (Rescheduled)",
-   "updated": "2026-10-20T04:45:32.878Z",
+   "updated": "2026-10-20T08:44:15.613Z",
    "sources": [
     {
      "id": "official",
@@ -1070,7 +1070,7 @@
   },
   "spirits": {
    "name": "Dynamax Uxie, Mesprit and Azelf",
-   "updated": "2026-10-20T04:45:32.878Z",
+   "updated": "2026-10-20T08:44:15.613Z",
    "sources": [
     {
      "id": "official",
@@ -1311,7 +1311,7 @@
   },
   "leekduck:pokemon-tcg-30th-celebration": {
    "name": "Pokémon TCG: 30th Celebration",
-   "updated": "2026-10-20T04:45:32.878Z",
+   "updated": "2026-10-20T08:44:15.613Z",
    "sources": [
     {
      "id": "official",
@@ -1376,7 +1376,7 @@
   },
   "sandile": {
    "name": "Sandile Hatch Day",
-   "updated": "2026-10-20T04:45:32.878Z",
+   "updated": "2026-10-20T08:44:15.613Z",
    "sources": [
     {
      "id": "official",
@@ -1535,13 +1535,19 @@
   },
   "trek": {
    "name": "Fall Marathon: Buddy Trek",
-   "updated": "2026-10-20T04:45:32.878Z",
+   "updated": "2026-10-20T08:44:15.613Z",
    "sources": [
     {
      "id": "official",
      "name": "Pokémon GO (official)",
      "trust": "official",
      "url": "https://pokemongo.com/news/fall-marathon-buddy-trek-2026/"
+    },
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/fall-marathon-buddy-trek-2026/"
     }
    ],
    "fields": {
@@ -1561,6 +1567,13 @@
       "status": "official"
      },
      {
+      "text": "Reach these GO Pass ranks to unlock event bonuses.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
       "text": "Rank 10: Incense (excluding Daily Adventure Incense) activated during the event will last for two hours.",
       "sources": [
        "official"
@@ -1576,6 +1589,14 @@
      }
     ],
     "featured": [
+     {
+      "text": "You may encounter event-themed Pokémon in the wild, including Ponyta*, Doduo*, Electrike*, Blitzle*, and more! You might even encounter Skarmory*!",
+      "sources": [
+       "official",
+       "leekduck"
+      ],
+      "status": "confirmed"
+     },
      {
       "text": "For the first time in Pokémon GO, you’ll be able to encounter Bramblin—if you’re lucky! You may encounter Bramblin when you complete GO Pass tasks or use Incense.",
       "sources": [
@@ -1619,13 +1640,6 @@
       "status": "official"
      },
      {
-      "text": "You may encounter event-themed Pokémon in the wild, including Ponyta*, Doduo*, Electrike*, Blitzle*, and more! You might even encounter Skarmory*!",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
       "text": "The following Pokémon will be attracted to Incense (excluding Daily Adventure Incense) during the event on the following days.",
       "sources": [
        "official"
@@ -1645,6 +1659,20 @@
        "official"
       ],
       "status": "official"
+     },
+     {
+      "text": "Bramblin, the Tumbleweed Pokémon, will make its Pokémon GO debut!",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "You may encounter Bramblin through GO Pass tasks, Incense, and event-themed Field Research.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
      }
     ],
     "raids": [],
@@ -1653,9 +1681,10 @@
      {
       "text": "Event-themed Field Research tasks will be available.",
       "sources": [
-       "official"
+       "official",
+       "leekduck"
       ],
-      "status": "official"
+      "status": "confirmed"
      },
      {
       "text": "There will be a free Timed Research opportunity available.",
@@ -1677,15 +1706,58 @@
        "official"
       ],
       "status": "official"
+     },
+     {
+      "text": "Earn a Candy exploring with your buddy POSSIBLE REWARDS Bramblin Max CP 375 Min CP 343 Electrike Max CP 413 Min CP 380",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Explore 1 km POSSIBLE REWARDS Cacnea Max CP 532 Min CP 493 Doduo Max CP 514 Min CP 477 Electrike Max CP 413 Min CP 380",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Explore 3 km POSSIBLE REWARDS ×25 Manectric Mega Energy ×25 ×1 Rare Candy ×1",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Use an Incense — 50 GO Points",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Explore 1 km — 50 GO Points",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
      }
     ],
     "shiny": [
      {
       "text": "Increased chance to encounter Shiny Electrike.",
       "sources": [
-       "official"
+       "official",
+       "leekduck"
       ],
-      "status": "official"
+      "status": "confirmed"
+     },
+     {
+      "text": "You will have an increased chance of encountering Shiny Electrike throughout the event.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
      }
     ],
     "moves": [],
@@ -1693,12 +1765,21 @@
      {
       "text": "An encounter with Pikachu wearing a marathon visor",
       "sources": [
-       "official"
+       "official",
+       "leekduck"
       ],
-      "status": "official"
+      "status": "confirmed"
      }
     ],
     "tickets": [
+     {
+      "text": "Rewards unlocked in the GO Pass will expire on Wednesday, October 21, 2026, at 8:00 p.m. local time, so be sure to claim your rewards before they’re gone!",
+      "sources": [
+       "official",
+       "leekduck"
+      ],
+      "status": "confirmed"
+     },
      {
       "text": "From Tuesday, October 13, at 10:00 a.m. to Monday, October 19, 2026, at 8:00 p.m. local time, the GO Pass and GO Pass Deluxe for Fall Marathon: Buddy Trek will be available in Pokémon GO!",
       "sources": [
@@ -1728,27 +1809,56 @@
       "status": "official"
      },
      {
-      "text": "Rewards unlocked in the GO Pass will expire on Wednesday, October 21, 2026, at 8:00 p.m. local time, so be sure to claim your rewards before they’re gone!",
+      "text": "Availability of event tickets and the GO Pass Deluxe may vary by region.",
       "sources": [
        "official"
       ],
       "status": "official"
      },
      {
-      "text": "Availability of event tickets and the GO Pass Deluxe may vary by region.",
+      "text": "GO Pass: Fall Marathon is a free progression track. Complete Pass Tasks to collect GO Points, increase your rank, and unlock rewards.",
       "sources": [
-       "official"
+       "leekduck"
       ],
-      "status": "official"
+      "status": "single"
+     },
+     {
+      "text": "Trainers will receive the pass automatically on October 13 at 10:00 a.m. local time . Earn points and rank up until October 19, 2026, at 8:00 p.m. local time .",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Upgrade to GO Pass Deluxe for US$4.99 * for upgraded rewards and faster progression. The GO Pass Deluxe + 6 Ranks option costs US$6.99 * and grants enough GO Points to reach Rank 7 immediately.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Deluxe includes rewards from both tracks. You can upgrade during the event and claim rewards for ranks you have already reached.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Each rank requires 100 GO Points . Complete Rank 30 to unlock bonus ranks, with additional rewards through Rank 60.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
      }
     ],
     "dates": [
      {
       "text": "Tuesday, October 13, at 10:00 a.m. to Monday, October 19, 2026, at 8:00 p.m. local time",
       "sources": [
-       "official"
+       "official",
+       "leekduck"
       ],
-      "status": "official"
+      "status": "confirmed"
      },
      {
       "text": "Rewards unlocked in the GO Pass will expire on Wednesday, October 21, 2026, at 8:00 p.m. local time, so be sure to claim your rewards before they’re gone!",
@@ -1764,7 +1874,7 @@
   },
   "leekduck:go-pass-october-2026": {
    "name": "GO Pass: October",
-   "updated": "2026-10-20T04:45:32.878Z",
+   "updated": "2026-10-20T08:44:15.613Z",
    "sources": [
     {
      "id": "official",
@@ -2066,7 +2176,7 @@
   },
   "zorua": {
    "name": "Zorua Community Day",
-   "updated": "2026-10-20T04:45:32.878Z",
+   "updated": "2026-10-20T08:44:15.613Z",
    "sources": [
     {
      "id": "official",
@@ -2245,7 +2355,7 @@
   },
   "leekduck:season-24-twilight-trails": {
    "name": "Twilight Trails",
-   "updated": "2026-10-20T04:45:32.878Z",
+   "updated": "2026-10-20T08:44:15.613Z",
    "sources": [
     {
      "id": "official",
@@ -2508,238 +2618,9 @@
     }
    ]
   },
-  "leekduck:fall-marathon-buddy-trek-2026": {
-   "name": "Fall Marathon: Buddy Trek",
-   "updated": "2026-10-20T04:45:32.878Z",
-   "sources": [
-    {
-     "id": "leekduck",
-     "name": "Leek Duck",
-     "trust": "community",
-     "url": "https://leekduck.com/events/fall-marathon-buddy-trek-2026/"
-    }
-   ],
-   "fields": {
-    "bonuses": [
-     {
-      "text": "Reach these GO Pass ranks to unlock event bonuses.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ],
-    "featured": [
-     {
-      "text": "Bramblin, the Tumbleweed Pokémon, will make its Pokémon GO debut!",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "You may encounter Bramblin through GO Pass tasks, Incense, and event-themed Field Research.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "You can evolve Bramblin into Brambleghast using 50 Bramblin Candy after walking 20 km with Bramblin as your buddy .",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "These event-themed Pokémon may appear in the wild, along with others.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "You might also encounter Skarmory!",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Incense will attract the following Pokémon during each period. Daily Adventure Incense is excluded.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "The free track includes:",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Additional rewards",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "GO Pass Deluxe also offers:",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Manectric Mega Energy",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ],
-    "raids": [],
-    "eggs": [],
-    "research": [
-     {
-      "text": "Complete event-themed Field Research tasks to earn Pokémon encounters, Manectric Mega Energy , or Rare Candy .",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Earn a Candy exploring with your buddy POSSIBLE REWARDS Bramblin Max CP 375 Min CP 343 Electrike Max CP 413 Min CP 380",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Explore 1 km POSSIBLE REWARDS Cacnea Max CP 532 Min CP 493 Doduo Max CP 514 Min CP 477 Electrike Max CP 413 Min CP 380",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Explore 3 km POSSIBLE REWARDS ×25 Manectric Mega Energy ×25 ×1 Rare Candy ×1",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Use an Incense — 50 GO Points",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Explore 1 km — 50 GO Points",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ],
-    "shiny": [
-     {
-      "text": "You will have an increased chance of encountering Shiny Electrike throughout the event.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "The increased chance of encountering Shiny Hisuian Growlithe applies to Incense encounters from October 16 at 10:00 a.m. to October 19, 2026, at 8:00 p.m. local time . Daily Adventure Incense is excluded.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ],
-    "moves": [],
-    "costumes": [
-     {
-      "text": "Free Timed Research will reward 16,800 XP and an encounter with Marathon Visor Pikachu . Explore up to 42 km to complete the research.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ],
-    "tickets": [
-     {
-      "text": "GO Pass: Fall Marathon is a free progression track. Complete Pass Tasks to collect GO Points, increase your rank, and unlock rewards.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Trainers will receive the pass automatically on October 13 at 10:00 a.m. local time . Earn points and rank up until October 19, 2026, at 8:00 p.m. local time .",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Upgrade to GO Pass Deluxe for US$4.99 * for upgraded rewards and faster progression. The GO Pass Deluxe + 6 Ranks option costs US$6.99 * and grants enough GO Points to reach Rank 7 immediately.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Deluxe includes rewards from both tracks. You can upgrade during the event and claim rewards for ranks you have already reached.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Claim all unlocked GO Pass rewards before they expire on Wednesday, October 21, 2026, at 8:00 p.m. local time .",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Each rank requires 100 GO Points . Complete Rank 30 to unlock bonus ranks, with additional rewards through Rank 60.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ],
-    "dates": [
-     {
-      "text": "The event runs from Tuesday, October 13, at 10:00 a.m. to Monday, October 19, 2026, at 8:00 p.m. local time .",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "The increased chance of encountering Shiny Hisuian Growlithe applies to Incense encounters from October 16 at 10:00 a.m. to October 19, 2026, at 8:00 p.m. local time . Daily Adventure Incense is excluded.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ]
-   },
-   "conflicts": [],
-   "gaps": []
-  },
   "leekduck:max-mondays-2026-10-19": {
    "name": "Dynamax Sneasel during Max Monday",
-   "updated": "2026-10-20T04:45:32.878Z",
+   "updated": "2026-10-20T08:44:15.613Z",
    "sources": [
     {
      "id": "leekduck",
@@ -2816,7 +2697,7 @@
   },
   "tcg30": {
    "name": "Pokémon TCG: 30th Celebration (at stores)",
-   "updated": "2026-10-20T04:45:32.878Z",
+   "updated": "2026-10-20T08:44:15.613Z",
    "sources": [
     {
      "id": "leekduck",
@@ -2902,7 +2783,7 @@
   },
   "leekduck:dialga-in-5-star-raid-battles-october-2026": {
    "name": "Dialga in 5-star Raid Battles",
-   "updated": "2026-10-20T04:45:32.878Z",
+   "updated": "2026-10-20T08:44:15.613Z",
    "sources": [
     {
      "id": "leekduck",
@@ -2966,7 +2847,7 @@
   },
   "leekduck:mega-dragonite-in-mega-raids-october-2026": {
    "name": "Mega Dragonite in Mega Raids",
-   "updated": "2026-10-20T04:45:32.878Z",
+   "updated": "2026-10-20T08:44:15.613Z",
    "sources": [
     {
      "id": "leekduck",
@@ -3030,7 +2911,7 @@
   },
   "leekduck:raidhour20261021": {
    "name": "Palkia Raid Hour",
-   "updated": "2026-10-20T04:45:32.878Z",
+   "updated": "2026-10-20T08:44:15.613Z",
    "sources": [
     {
      "id": "leekduck",
@@ -3072,7 +2953,7 @@
   },
   "leekduck:pokemonspotlighthour2026-10-22": {
    "name": "Morelull Spotlight Hour",
-   "updated": "2026-10-20T04:45:32.878Z",
+   "updated": "2026-10-20T08:44:15.613Z",
    "sources": [
     {
      "id": "leekduck",
@@ -3106,7 +2987,7 @@
   },
   "leekduck:dynamax-uxie-mesprit-azelf-max-battle-day-2026": {
    "name": "Dynamax Uxie, Mesprit, and Azelf Max Battle Day",
-   "updated": "2026-10-20T04:45:32.878Z",
+   "updated": "2026-10-20T08:44:15.613Z",
    "sources": [
     {
      "id": "leekduck",
@@ -3277,7 +3158,7 @@
   },
   "leekduck:pokemon-night-out-2026-twitch-drops": {
    "name": "Twitch Drops for Pokémon Night Out 2026",
-   "updated": "2026-10-20T04:45:32.878Z",
+   "updated": "2026-10-20T08:44:15.613Z",
    "sources": [
     {
      "id": "leekduck",
@@ -3325,7 +3206,7 @@
   },
   "leekduck:pokemon-night-out-los-angeles-2026": {
    "name": "Pokémon Night Out 2026 - Los Angeles",
-   "updated": "2026-10-20T04:45:32.878Z",
+   "updated": "2026-10-20T08:44:15.613Z",
    "sources": [
     {
      "id": "leekduck",
@@ -3441,7 +3322,7 @@
   },
   "minior": {
    "name": "Orionids Meteor Shower: Minior Debut",
-   "updated": "2026-10-20T04:45:32.878Z",
+   "updated": "2026-10-20T08:44:15.613Z",
    "sources": [
     {
      "id": "leekduck",
@@ -3569,7 +3450,7 @@
   },
   "leekduck:max-mondays-2026-10-26": {
    "name": "Dynamax Sableye during Max Monday",
-   "updated": "2026-10-20T04:45:32.878Z",
+   "updated": "2026-10-20T08:44:15.613Z",
    "sources": [
     {
      "id": "leekduck",
@@ -3646,7 +3527,7 @@
   },
   "leekduck:mega-charizard-x-mega-charizard-y-in-mega-raids-october-2026": {
    "name": "Mega Charizard X and Mega Charizard Y in Mega Raids",
-   "updated": "2026-10-20T04:45:32.878Z",
+   "updated": "2026-10-20T08:44:15.613Z",
    "sources": [
     {
      "id": "leekduck",
@@ -3710,7 +3591,7 @@
   },
   "leekduck:palkia-in-5-star-raid-battles-october-2026": {
    "name": "Palkia in 5-star Raid Battles",
-   "updated": "2026-10-20T04:45:32.878Z",
+   "updated": "2026-10-20T08:44:15.613Z",
    "sources": [
     {
      "id": "leekduck",
@@ -3774,7 +3655,7 @@
   },
   "leekduck:raidhour20261028": {
    "name": "Giratina (Origin Forme) Raid Hour",
-   "updated": "2026-10-20T04:45:32.878Z",
+   "updated": "2026-10-20T08:44:15.613Z",
    "sources": [
     {
      "id": "leekduck",
@@ -3816,7 +3697,7 @@
   },
   "leekduck:pokemonspotlighthour2026-10-29": {
    "name": "Gastly Spotlight Hour",
-   "updated": "2026-10-20T04:45:32.878Z",
+   "updated": "2026-10-20T08:44:15.613Z",
    "sources": [
     {
      "id": "leekduck",
@@ -3850,7 +3731,7 @@
   },
   "leekduck:max-mondays-2026-11-02": {
    "name": "Dynamax Machop during Max Monday",
-   "updated": "2026-10-20T04:45:32.878Z",
+   "updated": "2026-10-20T08:44:15.613Z",
    "sources": [
     {
      "id": "leekduck",
@@ -3927,7 +3808,7 @@
   },
   "leekduck:shadow-landorus-incarnate-forme-in-shadow-raids-october-2026": {
    "name": "Shadow Landorus (Incarnate Forme) in Shadow Raids",
-   "updated": "2026-10-20T04:45:32.878Z",
+   "updated": "2026-10-20T08:44:15.613Z",
    "sources": [
     {
      "id": "leekduck",
@@ -3977,7 +3858,7 @@
   },
   "leekduck:giratina-origin-forme-in-5-star-raid-battles-october-2026": {
    "name": "Giratina (Origin Forme) in 5-star Raid Battles",
-   "updated": "2026-10-20T04:45:32.878Z",
+   "updated": "2026-10-20T08:44:15.613Z",
    "sources": [
     {
      "id": "leekduck",
@@ -4041,7 +3922,7 @@
   },
   "leekduck:raidhour20261104": {
    "name": "Giratina (Altered Forme) Raid Hour",
-   "updated": "2026-10-20T04:45:32.878Z",
+   "updated": "2026-10-20T08:44:15.613Z",
    "sources": [
     {
      "id": "leekduck",
@@ -4083,7 +3964,7 @@
   },
   "leekduck:pokemonspotlighthour2026-11-05": {
    "name": "Teddiursa wearing a witch hat Spotlight Hour",
-   "updated": "2026-10-20T04:45:32.878Z",
+   "updated": "2026-10-20T08:44:15.613Z",
    "sources": [
     {
      "id": "leekduck",
@@ -4139,7 +4020,7 @@
   },
   "halloween2": {
    "name": "Halloween 2026, Part Two",
-   "updated": "2026-10-20T04:45:32.878Z",
+   "updated": "2026-10-20T08:44:15.613Z",
    "sources": [
     {
      "id": "leekduck",
@@ -4383,7 +4264,7 @@
   },
   "leekduck:pokemon-go-wild-area-2026-sendai-japan": {
    "name": "Pokémon GO Wild Area 2026: Sendai • Tohoku",
-   "updated": "2026-10-20T04:45:32.878Z",
+   "updated": "2026-10-20T08:44:15.613Z",
    "sources": [
     {
      "id": "leekduck",
@@ -4733,7 +4614,7 @@
   },
   "leekduck:pokemon-go-wild-area-2026-mexico-city": {
    "name": "Pokémon GO Wild Area 2026: Mexico City",
-   "updated": "2026-10-20T04:45:32.878Z",
+   "updated": "2026-10-20T08:44:15.613Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5090,7 +4971,7 @@
   },
   "leekduck:mega-sableye-in-mega-raids-october-2026": {
    "name": "Mega Sableye in Mega Raids",
-   "updated": "2026-10-20T04:45:32.878Z",
+   "updated": "2026-10-20T08:44:15.613Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5147,7 +5028,7 @@
   },
   "leekduck:giratina-altered-forme-in-5-star-raid-battles-november-2026": {
    "name": "Giratina (Altered Forme) in 5-star Raid Battles",
-   "updated": "2026-10-20T04:45:32.878Z",
+   "updated": "2026-10-20T08:44:15.613Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5218,7 +5099,7 @@
   },
   "leekduck:shadow-tornadus-incarnate-forme-in-shadow-raids-november-4-2026": {
    "name": "Shadow Tornadus (Incarnate Forme) in Shadow Raids",
-   "updated": "2026-10-20T04:45:32.878Z",
+   "updated": "2026-10-20T08:44:15.613Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5266,7 +5147,7 @@
   },
   "leekduck:pokemon-night-out-london-2026": {
    "name": "Pokémon Night Out 2026 - London",
-   "updated": "2026-10-20T04:45:32.878Z",
+   "updated": "2026-10-20T08:44:15.613Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5374,7 +5255,7 @@
   },
   "into": {
    "name": "Into the Wild",
-   "updated": "2026-10-20T04:45:32.878Z",
+   "updated": "2026-10-20T08:44:15.613Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5631,7 +5512,7 @@
   },
   "leekduck:pokemon-go-wild-area-2026-global": {
    "name": "Pokémon GO Wild Area 2026: Global",
-   "updated": "2026-10-20T04:45:32.878Z",
+   "updated": "2026-10-20T08:44:15.613Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5919,7 +5800,7 @@
   },
   "leekduck:max-mondays-2026-11-16": {
    "name": "Max Monday: Pokémon to be announced",
-   "updated": "2026-10-20T04:45:32.878Z",
+   "updated": "2026-10-20T08:44:15.613Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5960,7 +5841,7 @@
   },
   "leekduck:raidhour20261118": {
    "name": "Cresselia and Darkrai Raid Hour",
-   "updated": "2026-10-20T04:45:32.878Z",
+   "updated": "2026-10-20T08:44:15.613Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6002,7 +5883,7 @@
   },
   "minior2": {
    "name": "Minior Showers: Leonids",
-   "updated": "2026-10-20T04:45:32.878Z",
+   "updated": "2026-10-20T08:44:15.613Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6093,7 +5974,7 @@
   },
   "leekduck:november-communityday2026": {
    "name": "November Community Day",
-   "updated": "2026-10-20T04:45:32.878Z",
+   "updated": "2026-10-20T08:44:15.613Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6127,7 +6008,7 @@
   },
   "leekduck:dynamax-trails-2026": {
    "name": "Dynamax Trails",
-   "updated": "2026-10-20T04:45:32.878Z",
+   "updated": "2026-10-20T08:44:15.613Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6169,7 +6050,7 @@
   },
   "leekduck:max-mondays-2026-11-23": {
    "name": "Dynamax Espurr during Max Monday",
-   "updated": "2026-10-20T04:45:32.878Z",
+   "updated": "2026-10-20T08:44:15.613Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6246,7 +6127,7 @@
   },
   "leekduck:cresselia-darkrai-in-5-star-raid-battles-november-2026": {
    "name": "Cresselia and Darkrai in 5-star Raid Battles",
-   "updated": "2026-10-20T04:45:32.878Z",
+   "updated": "2026-10-20T08:44:15.613Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6317,7 +6198,7 @@
   },
   "leekduck:mega-banette-in-mega-raids-november-2026": {
    "name": "Mega Banette in Mega Raids",
-   "updated": "2026-10-20T04:45:32.878Z",
+   "updated": "2026-10-20T08:44:15.613Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6381,7 +6262,7 @@
   },
   "leekduck:raidhour20261125": {
    "name": "Deoxys (Normal, Defense, Attack, and Speed Formes) Raid Hour",
-   "updated": "2026-10-20T04:45:32.878Z",
+   "updated": "2026-10-20T08:44:15.613Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6423,7 +6304,7 @@
   },
   "leekduck:pokemonspotlighthour2026-11-26": {
    "name": "Noibat Spotlight Hour",
-   "updated": "2026-10-20T04:45:32.878Z",
+   "updated": "2026-10-20T08:44:15.613Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6457,7 +6338,7 @@
   },
   "smr2": {
    "name": "Super Mega Raid Day",
-   "updated": "2026-10-20T04:45:32.878Z",
+   "updated": "2026-10-20T08:44:15.613Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6499,7 +6380,7 @@
   },
   "leekduck:twilight-wishes-2026": {
    "name": "Twilight Wishes",
-   "updated": "2026-10-20T04:45:32.878Z",
+   "updated": "2026-10-20T08:44:15.613Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6533,7 +6414,7 @@
   },
   "leekduck:max-mondays-2026-11-30": {
    "name": "Dynamax Cryogonal during Max Monday",
-   "updated": "2026-10-20T04:45:32.878Z",
+   "updated": "2026-10-20T08:44:15.613Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6610,7 +6491,7 @@
   },
   "leekduck:deoxys-normal-defense-attack-speed-formes-in-5-star-raid-battles-november-2026": {
    "name": "Deoxys (Normal, Defense, Attack, and Speed Formes) in 5-star Raid Battles",
-   "updated": "2026-10-20T04:45:32.878Z",
+   "updated": "2026-10-20T08:44:15.613Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6709,7 +6590,7 @@
   },
   "leekduck:mega-metagross-in-mega-raids-november-2026": {
    "name": "Mega Metagross in Mega Raids",
-   "updated": "2026-10-20T04:45:32.878Z",
+   "updated": "2026-10-20T08:44:15.613Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6780,7 +6661,7 @@
   },
   "minior3": {
    "name": "Minior Showers: Geminids",
-   "updated": "2026-10-20T04:45:32.878Z",
+   "updated": "2026-10-20T08:44:15.613Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6871,7 +6752,7 @@
   },
   "leekduck:pokemon-x-adidas-2026": {
    "name": "adidas × Pokémon Timed Research",
-   "updated": "2026-10-20T04:45:32.878Z",
+   "updated": "2026-10-20T08:44:15.613Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6949,7 +6830,7 @@
   },
   "leekduck:pokemon-go-tour-alola-kaohsiung-2027": {
    "name": "Pokémon GO Tour: Alola - Kaohsiung 2027",
-   "updated": "2026-10-20T04:45:32.878Z",
+   "updated": "2026-10-20T08:44:15.613Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6983,7 +6864,7 @@
   },
   "leekduck:pokemon-go-tour-alola-los-angeles-2027": {
    "name": "Pokémon GO Tour: Alola - Los Angeles 2027",
-   "updated": "2026-10-20T04:45:32.878Z",
+   "updated": "2026-10-20T08:44:15.613Z",
    "sources": [
     {
      "id": "leekduck",
@@ -7017,7 +6898,7 @@
   },
   "leekduck:pokemon-go-tour-alola-global-2027": {
    "name": "Pokémon GO Tour: Alola - Global 2027",
-   "updated": "2026-10-20T04:45:32.878Z",
+   "updated": "2026-10-20T08:44:15.613Z",
    "sources": [
     {
      "id": "leekduck",
@@ -7039,6 +6920,235 @@
     "dates": [
      {
       "text": "Dates: February 27–28, 2027 Location: Worldwide Event hours: To be announced",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ]
+   },
+   "conflicts": [],
+   "gaps": []
+  },
+  "leekduck:fall-marathon-buddy-trek-2026": {
+   "name": "Fall Marathon: Buddy Trek",
+   "updated": "2026-10-20T04:45:32.878Z",
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/fall-marathon-buddy-trek-2026/"
+    }
+   ],
+   "fields": {
+    "bonuses": [
+     {
+      "text": "Reach these GO Pass ranks to unlock event bonuses.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "featured": [
+     {
+      "text": "Bramblin, the Tumbleweed Pokémon, will make its Pokémon GO debut!",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "You may encounter Bramblin through GO Pass tasks, Incense, and event-themed Field Research.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "You can evolve Bramblin into Brambleghast using 50 Bramblin Candy after walking 20 km with Bramblin as your buddy .",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "These event-themed Pokémon may appear in the wild, along with others.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "You might also encounter Skarmory!",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Incense will attract the following Pokémon during each period. Daily Adventure Incense is excluded.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "The free track includes:",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Additional rewards",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "GO Pass Deluxe also offers:",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Manectric Mega Energy",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "raids": [],
+    "eggs": [],
+    "research": [
+     {
+      "text": "Complete event-themed Field Research tasks to earn Pokémon encounters, Manectric Mega Energy , or Rare Candy .",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Earn a Candy exploring with your buddy POSSIBLE REWARDS Bramblin Max CP 375 Min CP 343 Electrike Max CP 413 Min CP 380",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Explore 1 km POSSIBLE REWARDS Cacnea Max CP 532 Min CP 493 Doduo Max CP 514 Min CP 477 Electrike Max CP 413 Min CP 380",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Explore 3 km POSSIBLE REWARDS ×25 Manectric Mega Energy ×25 ×1 Rare Candy ×1",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Use an Incense — 50 GO Points",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Explore 1 km — 50 GO Points",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "shiny": [
+     {
+      "text": "You will have an increased chance of encountering Shiny Electrike throughout the event.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "The increased chance of encountering Shiny Hisuian Growlithe applies to Incense encounters from October 16 at 10:00 a.m. to October 19, 2026, at 8:00 p.m. local time . Daily Adventure Incense is excluded.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "moves": [],
+    "costumes": [
+     {
+      "text": "Free Timed Research will reward 16,800 XP and an encounter with Marathon Visor Pikachu . Explore up to 42 km to complete the research.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "tickets": [
+     {
+      "text": "GO Pass: Fall Marathon is a free progression track. Complete Pass Tasks to collect GO Points, increase your rank, and unlock rewards.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Trainers will receive the pass automatically on October 13 at 10:00 a.m. local time . Earn points and rank up until October 19, 2026, at 8:00 p.m. local time .",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Upgrade to GO Pass Deluxe for US$4.99 * for upgraded rewards and faster progression. The GO Pass Deluxe + 6 Ranks option costs US$6.99 * and grants enough GO Points to reach Rank 7 immediately.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Deluxe includes rewards from both tracks. You can upgrade during the event and claim rewards for ranks you have already reached.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Claim all unlocked GO Pass rewards before they expire on Wednesday, October 21, 2026, at 8:00 p.m. local time .",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Each rank requires 100 GO Points . Complete Rank 30 to unlock bonus ranks, with additional rewards through Rank 60.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "dates": [
+     {
+      "text": "The event runs from Tuesday, October 13, at 10:00 a.m. to Monday, October 19, 2026, at 8:00 p.m. local time .",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "The increased chance of encountering Shiny Hisuian Growlithe applies to Incense encounters from October 16 at 10:00 a.m. to October 19, 2026, at 8:00 p.m. local time . Daily Adventure Incense is excluded.",
       "sources": [
        "leekduck"
       ],
