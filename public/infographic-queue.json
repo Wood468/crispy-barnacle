@@ -1,6 +1,41 @@
 {
- "updated": "2026-10-20T19:46:35.221Z",
+ "updated": "2026-10-20T22:51:48.870Z",
  "items": [
+  {
+   "linked": false,
+   "id": "discord:1562196937434726410",
+   "title": "Charizard",
+   "image": "/infographics/g47ix/discord-1562196937434726410.png",
+   "post": "https://discord.com/channels/@me/1558793395198099618/1562196937434726410",
+   "creator": "",
+   "publishedAt": "2026-10-20T20:12:54.100000+00:00",
+   "note": "No event name found in the caption or image text.",
+   "history": false,
+   "signals": [],
+   "text": "i 21-27 0CT Ta M #006 fea ¥ e 47739 CP “It is said that Charizard’s fire burns hotter if it has ~ experienced harsh battles.” = » a r eae aS Weakness e @e v Difficulty: 1+ trainers needed i ye ae o<¢ ",
+   "guesses": []
+  },
+  {
+   "linked": false,
+   "id": "discord:1562196923555913858",
+   "title": "Palkia",
+   "image": "/infographics/g47ix/discord-1562196923555913858.png",
+   "post": "https://discord.com/channels/@me/1558793395198099618/1562196923555913858",
+   "creator": "",
+   "publishedAt": "2026-10-20T20:12:50.791000+00:00",
+   "note": "No event name in the picture, but it shows palkia. Check these events.",
+   "history": false,
+   "signals": [],
+   "text": "try PALKIA A > 54793 CP —y y “It is said to live in a gap in the spatial dimension parallel to ours. It appears in mythology.” Weakness 2@ ») Difficulty: 2+ trainers needed ry A Pw 4 4 2280 CP%’ws 285",
+   "guesses": [
+    {
+     "eventId": "raid:palkia:2026-10-21",
+     "eventTitle": "Palkia 5-star raids",
+     "score": 0.6,
+     "via": "palkia"
+    }
+   ]
+  },
   {
    "linked": true,
    "id": "discord:1561441170037411973",

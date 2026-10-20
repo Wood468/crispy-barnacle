@@ -7,6 +7,55 @@
   "eventImages": {},
   "candidates": [
     {
+      "id": "discord:1562196937434726410",
+      "source": "discord",
+      "creator": "",
+      "title": "Charizard",
+      "url": "https://discord.com/channels/@me/1558793395198099618/1562196937434726410",
+      "publishedAt": "2026-10-20T20:12:54.100000+00:00",
+      "imageUrl": "https://cdn.discordapp.com/attachments/1087756541668630638/1562192718854357012/tr_Counter_M_CharizardY.png?ex=6ad918d8&is=6ad7c758&hm=2dc363ccdd32475dccf16ceac409a9ca79a4072e1f13739e39230ed61ee9a33d&",
+      "reviewStatus": "unmatched",
+      "decision": "pending",
+      "ocrChecked": true,
+      "ocrText": "i 21-27 0CT Ta M #006 fea ¥ e 47739 CP “It is said that Charizard’s fire burns hotter if it has ~ experienced harsh battles.” = » a r eae aS Weakness e @e v Difficulty: 1+ trainers needed i ye ae o<¢ Vor care) | @» 1651 CP ws 2064 CP Boost Sunny Windy Ie) AY Ly WJ : nN \\y i¢ YF A\\d @ smack Down ( 4, \\” @ Rock Slide \\a ie ~ on i “fy is AZ @ smack Down @ Rock Throw @ Rock Wrecker @ Meteor Beam WJ / nN \\y i¢ Remember to use proper counters, Party Play Follow for more: and Zacian’s or Mewtwo X Adventure Effect if needed. e; w/}) GA7IX 9@ @ X @ | g47ix.pro we",
+      "eventMatch": null,
+      "reviewNote": "No event name found in the caption or image text.",
+      "signals": [],
+      "matchScore": 0,
+      "stagedPath": "/infographics/g47ix/discord-1562196937434726410.png"
+    },
+    {
+      "id": "discord:1562196923555913858",
+      "source": "discord",
+      "creator": "",
+      "title": "Palkia",
+      "url": "https://discord.com/channels/@me/1558793395198099618/1562196923555913858",
+      "publishedAt": "2026-10-20T20:12:50.791000+00:00",
+      "imageUrl": "https://cdn.discordapp.com/attachments/1087756541668630638/1562192758507307038/tr_Counter_Palkia_.png?ex=6ad918e1&is=6ad7c761&hm=ddf3de2aeed2ed62b8f79df761255a5e8f9f3529f37d6f84bff5034e87482ede&",
+      "reviewStatus": "needs_review",
+      "decision": "pending",
+      "ocrChecked": true,
+      "ocrText": "try PALKIA A > 54793 CP —y y “It is said to live in a gap in the spatial dimension parallel to ours. It appears in mythology.” Weakness 2@ ») Difficulty: 2+ trainers needed ry A Pw 4 4 2280 CP%’ws 2850 CP Boost J %] Rainy Windy ® Dragon Tail ® Dragon Tail = | ® Dragon Tail ® Dragon Tail 6 Dynamax Cannon XO » ® Breaking Swipe 5 @ Outrage ® Breaking Swi Je Zi YAS ® Dragon Tail 4 NL 4 a ‘ ® Draco Meteor gt 6 Dragon Tail ® Dragon Breath @ Charm = e @ Freeze Shock (5 ® Roar of Time @ Dazzling Gle A m ) Follow for more: and Zacian’s Adventure Effect if needed. Remember to use proper counters, Party Play oO GA7IX @@ @ X @ | g47ix.pro",
+      "eventMatch": {
+        "eventId": "raid:palkia:2026-10-21",
+        "eventTitle": "Palkia 5-star raids",
+        "score": 0.6,
+        "via": "palkia",
+        "alternatives": [
+          {
+            "eventId": "raid:palkia:2026-10-21",
+            "eventTitle": "Palkia 5-star raids",
+            "score": 0.6,
+            "via": "palkia"
+          }
+        ]
+      },
+      "reviewNote": "No event name in the picture, but it shows palkia. Check these events.",
+      "signals": [],
+      "matchScore": 0,
+      "stagedPath": "/infographics/g47ix/discord-1562196923555913858.png"
+    },
+    {
       "id": "discord:1561923057688252440",
       "source": "discord",
       "creator": "",
