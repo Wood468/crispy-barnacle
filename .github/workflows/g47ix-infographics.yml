@@ -134,7 +134,7 @@ jobs:
           gh pr create --base main --head "$(git branch --show-current)" --title "Review: new G47IX infographics matched to events" --body "Several signals agreed (caption, the picture's text, a date inside the event, a featured Pokémon). Check each image shows the right event, then merge. Close the PR to reject. Unsure pictures wait in the app's Infographic review list instead."
       - name: Upload review queue
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: g47ix-infographic-review
           path: artifacts/g47ix-candidates.json
