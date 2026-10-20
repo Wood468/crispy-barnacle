@@ -33,9 +33,13 @@ jobs:
               b = p.chromium.launch()
               for name, vp in [("phone", {"width": 390, "height": 844}), ("desktop", {"width": 1280, "height": 900})]:
                   pg = b.new_page(viewport=vp)
-                  pg.goto(URL, wait_until="networkidle", timeout=60000)
-                  pg.wait_for_timeout(1500)
-                  pg.screenshot(path=f"shots/{name}-home.png", full_page=True)
+                  try:
+                      pg.goto(URL, wait_until="load", timeout=60000)
+                      pg.wait_for_timeout(4000)
+                      pg.screenshot(path=f"shots/{name}-home.png", full_page=True)
+                  except Exception as e:
+                      print("::error title=Screenshot::" + name + ": " + str(e).replace("\n", " ")[:300])
+                      raise
                   pg.close()
               b.close()
           PY
