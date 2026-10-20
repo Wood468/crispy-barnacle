@@ -19,8 +19,8 @@ async function load(src) {
 }
 const title = id => id.toLowerCase().split("_").map(w => w[0].toUpperCase() + w.slice(1)).join(" ")
   .replace(/^X Scissor$/, "X-Scissor").replace(/^Power Up Punch$/, "Power-Up Punch").replace(/^Freeze Dry$/, "Freeze-Dry")
-  .replace(/^Lands Wrath$/, "Land's Wrath").replace(/^Vise Grip$/, "Vice Grip").replace(/^Trailblaze$/, "Trailblaze").replace(/^Super Power$/, "Superpower")
-  .replace(/^Solar Blade$/, "Solar Blade").replace(/^Futuresight$/, "Future Sight").replace(/^Roar Of Time$/, "Roar of Time").replace(/^Natures Madness$/, "Nature's Madness").replace(/^Weather Ball (.+)$/, "Weather Ball ($1)");
+  .replace(/^Lands Wrath$/, "Land's Wrath").replace(/^Vise Grip$/, "Vice Grip").replace(/^Super Power$/, "Superpower")
+  .replace(/^Futuresight$/, "Future Sight").replace(/^Roar Of Time$/, "Roar of Time").replace(/^Natures Madness$/, "Nature's Madness").replace(/^Weather Ball (.+)$/, "Weather Ball ($1)");
 const TYPE = t => t.replace("POKEMON_TYPE_", "").toLowerCase();
 const cap = s => s[0].toUpperCase() + s.slice(1);
 

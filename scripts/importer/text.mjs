@@ -27,7 +27,7 @@ export function htmlToLines(html) {
       seg.split(/<\/(?:div|li|p|span|figcaption|td)>|<br\s*\/?>/i).map(clean).filter(x => x.length >= 6 && x.length <= 200).forEach(x => out.push({ t: "li", text: x }));
       continue;
     }
-    const text = clean(inner).replace(/(\s*\|\s*)+$/, "").replace(/^\|\s*/, "");
+    const text = clean(inner).replace(/\s*\|[\s|]*$/, "").replace(/^\|\s*/, "");
     if (!text || text.length < 2) continue;
     if (tag[0] === "h") out.push({ t: "h", level: +tag[1], text });
     else out.push({ t: tag === "li" ? "li" : "p", text });

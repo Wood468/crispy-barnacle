@@ -7,6 +7,7 @@
   function $(id) { return document.getElementById(id); }
   function now() { return new Date(); }
   function safeUrl(u) { return typeof u === 'string' && (/^https:\/\//.test(u) || /^\/img\/ext\/[\w.-]+$/.test(u)) ? u : ''; }
+  function isOfficialUrl(u) { try { var h = new URL(String(u || '')).hostname.toLowerCase(); return h === 'pokemongo.com' || /\.pokemongo\.com$/.test(h); } catch (e) { return false; } }
 
   /* Raid hundo CP reference data (PvPoke Game Master, MIT); only exact known species/forms are labelled. */
   var CP_STATS = {}, CPMS = [], CP_READY = false;
@@ -176,8 +177,8 @@
   function fromApi(list) {
     return list.map(function (x) {
       var link = safeUrl(x.link); (x.reports || []).forEach(function (r) { if (!link && safeUrl(r.link)) link = r.link; });
-      var officialLink = String(link || '').toLowerCase().indexOf('pokemongo.com/') > -1;
-      var reportedOfficial = (x.reports || []).some(function (r) { return r && String(r.link || '').toLowerCase().indexOf('pokemongo.com/') > -1; });
+      var officialLink = isOfficialUrl(link);
+      var reportedOfficial = (x.reports || []).some(function (r) { return r && isOfficialUrl(r.link); });
       var kind = PIPE_KIND[x.type] || 'event';
       var featured = Array.isArray(x.featured) ? x.featured : [];
       var bonuses = Array.isArray(x.bonuses) ? x.bonuses : [];
