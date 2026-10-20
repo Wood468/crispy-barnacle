@@ -823,3 +823,8 @@ svg.ci{width:22px;height:22px}
 .by-lnk{font-weight:700;min-height:44px;display:inline-flex;align-items:center}
 .by-acts .pill{min-height:44px}
 .by-done{opacity:.6}
+.by-chip{font-weight:700;opacity:1!important}
+.by-st-open{color:var(--ok,#4cd964)}
+.by-st-soon{color:var(--warn,#ffb020)}
+.by-st-closed{opacity:.8!important}
+.by-ext{border-style:dashed}

@@ -1,14 +1,18 @@
 {
- "note": "Tickets that are NOT sold in the Pokémon GO web store. Each entry cites where the price and the buying place came from.",
+ "note": "Tickets that are NOT sold in the Pokémon GO web store. Each entry cites where the price and the buying place came from. eventStart/eventEnd and the optional saleStart/saleEnd are YYYY-MM-DD; an entry disappears from the planner the day after eventEnd.",
  "items": [
   {
    "id": "wild-area-sendai",
    "name": "GO Wild Area: Sendai · Tohoku",
    "when": "Nov 6, 7 or 8 (choose one day)",
+   "eventStart": "2026-11-06",
+   "eventEnd": "2026-11-08",
    "price": "¥4,000 for one day, taxes included",
    "where": "Niantic ticketing site",
+   "saleStart": "2026-09-11",
+   "saleEnd": "2026-09-15",
    "url": "https://tickets.nianticlabs.com/events/#/eventlisting?appId=pgo",
-   "note": "Registration ran Sep 11 to 15, so check for resale or extra days. Add-ons can be bought after the first order.",
+   "note": "Add-ons can be bought after the first order.",
    "sources": [
     "https://pokemongo.com/en/gowildarea",
     "https://pokemongo.com/en/gowildarea/sendai"
@@ -19,6 +23,8 @@
    "id": "wild-area-mexico-city",
    "name": "GO Wild Area: Mexico City",
    "when": "Nov 6, 7 or 8 (choose one day)",
+   "eventStart": "2026-11-06",
+   "eventEnd": "2026-11-08",
    "price": "MXN$350 for one day, plus taxes and fees",
    "where": "Niantic ticketing site",
    "url": "https://tickets.nianticlabs.com/events/#/eventlisting?appId=pgo",

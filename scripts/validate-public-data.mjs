@@ -88,6 +88,27 @@ if (weekly != null) {
   }
 }
 
+// Tickets sold outside the web store: the planner hides an entry the day after eventEnd and works out "on sale / closed" from saleStart and saleEnd.
+const ext = parsed.get("public/tickets-external.json");
+if (ext) {
+  const day = /^\d{4}-\d\d-\d\d$/;
+  if (!Array.isArray(ext.items)) fail("public/tickets-external.json", "expected an items array");
+  else {
+    const seen = new Set();
+    for (const [i, x] of ext.items.entries()) {
+      const where = `public/tickets-external.json items[${i}]`;
+      if (!x || typeof x !== "object") { fail(where, "not an object"); continue; }
+      if (!x.id || seen.has(x.id)) fail(where, "needs a unique id"); else seen.add(x.id);
+      for (const k of ["name", "when", "price"]) if (!x[k]) fail(where, `${k} is required`);
+      try { if (new URL(x.url).protocol !== "https:") fail(where, "url must use HTTPS"); } catch { fail(where, "url is not a valid URL"); }
+      if (!day.test(x.eventEnd || "")) fail(where, "eventEnd must be YYYY-MM-DD, or the entry would never expire");
+      for (const k of ["eventStart", "saleStart", "saleEnd"]) if (x[k] && !day.test(x[k])) fail(where, `${k} must be YYYY-MM-DD`);
+      if (x.saleStart && x.saleEnd && x.saleStart > x.saleEnd) fail(where, "saleStart is after saleEnd");
+      if (x.eventStart && x.eventEnd && x.eventStart > x.eventEnd) fail(where, "eventStart is after eventEnd");
+    }
+  }
+}
+
 if (errors.length) {
   console.error(`Data validation failed with ${errors.length} error(s):`);
   for (const e of errors) console.error("::error::" + e);

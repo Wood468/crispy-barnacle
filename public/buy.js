@@ -6,7 +6,7 @@
   var esc = function (s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
   var DAY = 864e5, MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   var STOP = /^(ultra|ticket|tickets|box|deluxe|pass|go|pokemon|the|and|of|day|ranks?|global|bundle|pack|\d+|20\d\d)$/;
-  var KEY = 'gofn-buyplan', plan = {}, LOG = null, PR = null;
+  var KEY = 'gofn-buyplan', plan = {}, LOG = null, PR = null, EXT = [];
   /* Store item name -> product id in prices.json. Prices shown are always A$: the Rp price converted when this device has the owner's
      private prices, otherwise the verified Australian price or Australian tier. US$ is never shown. */
   function productFor(name) {
@@ -61,6 +61,20 @@
     });
     return bs >= 0.5 ? best : null;
   }
+  /* Tickets sold outside the web store (/tickets-external.json). An entry disappears the day after its event ends. The optional sale window
+     decides the chip: opens soon, on sale, or closed. Dates are plain days, read as the player's own day. */
+  function dayMs(s) { var m = /^(\d{4})-(\d\d)-(\d\d)$/.exec(s || ''); return m ? new Date(+m[1], +m[2] - 1, +m[3]).getTime() : null; }
+  function extEntries(items, now) {
+    return (items || []).map(function (x) {
+      var e0 = dayMs(x.eventStart), e1 = dayMs(x.eventEnd), s0 = dayMs(x.saleStart), s1 = dayMs(x.saleEnd), status, chip;
+      if (e1 != null && now >= e1 + DAY) return null;
+      if (s0 != null && now < s0) { status = 'soon'; chip = 'Sale opens ' + dstr(s0); }
+      else if (s1 != null && now >= s1 + DAY) { status = 'closed'; chip = 'Sale closed ' + dstr(s1) + ' · check for resale or extra days'; }
+      else if (s0 != null || s1 != null) { status = 'open'; chip = 'On sale now' + (s1 != null ? ' · until ' + dstr(s1) : ''); }
+      else { status = 'unknown'; chip = 'Check the ticket site for availability'; }
+      return { x: x, status: status, chip: chip, sort: e0 != null ? e0 : e1 != null ? e1 : 9e15 };
+    }).filter(Boolean).sort(function (a, b) { return a.sort - b.sort; });
+  }
   function build(evs, now) {
     var watch = LOG.watchStart ? Date.parse(LOG.watchStart) : 0, rows = [];
     LOG.items.filter(function (i) { return !i.goneAt; }).forEach(function (i) {
@@ -83,13 +97,19 @@
     var bar = '<div class="by-tot"><b>' + (sel.length ? sel.length + ' selected · ≈ A$' + tot.toFixed(2) + (unp ? ' + ' + unp + ' unpriced' : '') : 'Tick items to plan one buying session') + (bought ? ' · ' + bought + ' bought' : '') + '</b>' + (sel.length ? '<span>' + sel.map(function (r) { return esc(r.name); }).join(' + ') + '</span><a class="by-go" href="https://store.pokemongo.com" target="_blank" rel="noopener">Open store</a>' : '') + '</div>';
     var stat = leads.length >= 3 ? 'Listed a median of ' + leads[Math.floor(leads.length / 2)] + ' days before the event (' + leads.length + ' measured, range ' + leads[0] + '–' + leads[leads.length - 1] + ').'
       : 'Lead times build up as the watcher sees new items appear' + (leads.length ? ' (' + leads.length + ' measured so far).' : '.');
-    host.innerHTML = bar + h + '<p class="note">' + esc(stat) + ' All prices in A$. Store list last changed ' + esc(new Date(LOG.updated).toLocaleString('en-AU', { day: 'numeric', month: 'short', hour: 'numeric', minute: '2-digit' })) + '.</p>';
+    var ex = extEntries(EXT, now);
+    var ext = ex.length ? '<h4>Sold on the Niantic ticketing site</h4><p class="note">Not in the web store, so not in the A$ total. Prices are in local currency.</p><div class="by-list">' + ex.map(function (r) {
+      var x = r.x;
+      return '<div class="by-r by-ext"><span class="by-t"><b>' + esc(x.name) + '</b><small class="by-chip by-st-' + r.status + '">' + esc(r.chip) + '</small><small>' + esc(x.when) + ' · ' + esc(x.price) + '</small>' + (x.note ? '<small>' + esc(x.note) + '</small>' : '') + '<a class="by-lnk" href="' + esc(x.url) + '" target="_blank" rel="noopener">Open ticket site</a></span></div>';
+    }).join('') + '</div>' : '';
+    host.innerHTML = bar + h + ext + '<p class="note">' + esc(stat) + ' All prices in A$. Store list last changed ' + esc(new Date(LOG.updated).toLocaleString('en-AU', { day: 'numeric', month: 'short', hour: 'numeric', minute: '2-digit' })) + '.</p>';
     host.querySelectorAll('[data-by]').forEach(function (c) { c.addEventListener('change', function () { setMark(c.dataset.by, c.checked ? 'plan' : ''); render(host, m, now); }); });
     host.querySelectorAll('[data-bought]').forEach(function (b) { b.addEventListener('click', function (e) { e.preventDefault(); var id = b.dataset.bought; setMark(id, mark(id) === 'bought' ? '' : 'bought'); render(host, m, now); }); });
   }
   function go() {
     var host = document.getElementById('buy-body'); if (!host) return; load();
     (window.GOLIB ? GOLIB.loadPrices() : Promise.resolve(null)).then(function (d) { PR = d; }).catch(function () { })
+      .then(function () { return fetch('/tickets-external.json').then(function (r) { return r.ok ? r.json() : null; }).then(function (j) { EXT = (j && j.items) || []; }).catch(function () { }); })
       .then(function () { return fetch('/store-log.json', { cache: 'no-cache' }).then(function (r) { return r.ok ? r.json() : null; }); }).then(function (log) {
       if (!log || !log.items) return; LOG = log;
       var n = 0, t = setInterval(function () {
@@ -98,6 +118,7 @@
       }, 300);
     }).catch(function () { });
   }
+  window.GOBUY = { extEntries: extEntries, untilStr: untilStr };
   document.addEventListener('gofn-state', function () { if (VIEW && LOG) render(VIEW.host, VIEW.m, Date.now()); });
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', go); else go();
 })();
