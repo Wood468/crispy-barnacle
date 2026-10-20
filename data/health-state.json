@@ -1,7 +1,4 @@
 {
- "alerted": [
-  "g47ix-infographics.yml",
-  "discord_sync.yml"
- ],
+ "alerted": [],
  "unmatched": []
 }
