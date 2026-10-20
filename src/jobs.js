@@ -160,12 +160,44 @@ export async function runDiscord(env, opts = {}) {
   return { sent };
 }
 
+// Watchdog. The importer, store watch, site check and the rest run as GitHub scheduled jobs, so nothing inside GitHub can tell you they
+// stopped. This runs on the Worker's own cron instead: it looks at when GitHub last started ANY scheduled run and tells you once when
+// that is more than 3 hours ago (the site check alone should fire every 15 minutes), and once more when they are back.
+export const WATCHDOG_HOURS = 3;
+export function scheduleStatus(runs, nowMs, hours = WATCHDOG_HOURS) {
+  const last = (runs || []).map(r => Date.parse(r && r.created_at)).filter(Number.isFinite).sort((a, b) => b - a)[0];
+  return { last: last ? new Date(last).toISOString() : null, stale: !last || nowMs - last > hours * 36e5 };
+}
+export async function runWatchdog(env, opts = {}) {
+  if (!env.TELEGRAM_BOT_TOKEN || !env.TELEGRAM_CHAT_ID) return { note: "Telegram is not set up" };
+  const f = routed(env, "system", opts.fetch || fetch), now = opts.now || new Date();
+  const headers = { accept: "application/vnd.github+json", "user-agent": "go-field-notes-watchdog" };
+  if (env.GITHUB_TOKEN) headers.authorization = "Bearer " + env.GITHUB_TOKEN;
+  const r = await f("https://api.github.com/repos/" + (env.GITHUB_REPO || "Wood468/crispy-barnacle") + "/actions/runs?event=schedule&per_page=5", { headers });
+  if (!r.ok) return { note: "GitHub answered HTTP " + r.status + ", so not judging" };
+  const s = scheduleStatus(((await r.json()) || {}).workflow_runs, now.getTime());
+  const state = await getState(env.DB, "watchdog", { alerted: false });
+  if (s.stale && !state.alerted) {
+    const since = s.last ? "The last one started " + new Date(s.last).toLocaleString("en-AU", { timeZone: "Australia/Melbourne", day: "numeric", month: "short", hour: "numeric", minute: "2-digit" }) + "." : "None has started yet.";
+    const text = "⚠️ GitHub's scheduled jobs have stopped. " + since + "\nThe event importer, store watch, site check and health check are not running. Open the repo's Actions tab, check that scheduled workflows are enabled, and run one by hand.";
+    if (opts.dry || !(await tg(env, "sendMessage", { text, disable_web_page_preview: true }, f))) return { alerted: false, would: text };
+    await setState(env.DB, "watchdog", { alerted: true, at: now.toISOString() });
+    return { alerted: true };
+  }
+  if (!s.stale && state.alerted) {
+    if (!opts.dry && await tg(env, "sendMessage", { text: "✅ GitHub's scheduled jobs are running again.", disable_web_page_preview: true }, f)) await setState(env.DB, "watchdog", { alerted: false });
+    return { recovered: true };
+  }
+  return { stale: s.stale, last: s.last };
+}
+
 // Called every hour at :30 UTC by the cron trigger.
 export async function runHourly(env, when = new Date()) {
   const out = {}, utcDay = when.getUTCDay(), utcHour = when.getUTCHours();
   try { out.saved = await runSaved(env, { now: when }); } catch (e) { out.saved = { error: String(e && e.message || e) }; }
   try { out.discord = await runDiscord(env); } catch (e) { out.discord = { error: String(e && e.message || e) }; }
   try { out.soon = await runSoon(env, { now: when }); } catch (e) { out.soon = { error: String(e && e.message || e) }; }
+  try { out.watchdog = await runWatchdog(env, { now: when }); } catch (e) { out.watchdog = { error: String(e && e.message || e) }; }
   if (utcDay === 0 && utcHour === 20) { try { out.weekly = await runWeekly(env, { now: when }); } catch (e) { out.weekly = { error: String(e && e.message || e) }; } }
   try { await setState(env.DB, "heartbeat", { at: new Date().toISOString(), failed: Object.keys(out).filter(x => out[x] && out[x].error) }); } catch { /* best effort */ }
   return out;

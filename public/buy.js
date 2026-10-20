@@ -62,7 +62,7 @@
     var bar = '<div class="by-tot"><b>' + (sel.length ? sel.length + ' selected · ≈ A$' + tot.toFixed(2) + (unp ? ' + ' + unp + ' unpriced' : '') : 'Tick items to plan one buying session') + '</b>' + (sel.length ? '<span>' + sel.map(function (r) { return esc(r.name); }).join(' + ') + '</span><a class="by-go" href="https://store.pokemongo.com" target="_blank" rel="noopener">Open store</a>' : '') + '</div>';
     var stat = leads.length >= 3 ? 'Listed a median of ' + leads[Math.floor(leads.length / 2)] + ' days before the event (' + leads.length + ' measured, range ' + leads[0] + '–' + leads[leads.length - 1] + ').'
       : 'Lead times build up as the watcher sees new items appear' + (leads.length ? ' (' + leads.length + ' measured so far).' : '.');
-    host.innerHTML = bar + h + '<p class="note">' + esc(stat) + ' All prices in A$. Checked ' + esc(new Date(LOG.updated).toLocaleString('en-AU', { day: 'numeric', month: 'short', hour: 'numeric', minute: '2-digit' })) + '.</p>';
+    host.innerHTML = bar + h + '<p class="note">' + esc(stat) + ' All prices in A$. Store list last changed ' + esc(new Date(LOG.updated).toLocaleString('en-AU', { day: 'numeric', month: 'short', hour: 'numeric', minute: '2-digit' })) + '.</p>';
     host.querySelectorAll('[data-by]').forEach(function (c) { c.addEventListener('change', function () { if (c.checked) plan[c.dataset.by] = 1; else delete plan[c.dataset.by]; save(); render(host, m, now); }); });
   }
   function go() {
