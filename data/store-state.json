@@ -7,7 +7,8 @@
    "tag": "LIMITED-TIME ONLY",
    "limit": "Can only be purchased 1 time.",
    "firstSeen": "2026-10-13T06:44:45.476Z",
-   "lastSeen": "2026-10-20T05:46:44.587Z"
+   "lastSeen": "2026-10-20T11:38:51.041Z",
+   "endsAt": null
   },
   "/purchase/item/web-event-pass-plusrank-october-26": {
    "name": "GO Pass Deluxe: October + 10 Ranks",
@@ -16,7 +17,8 @@
    "tag": "LIMITED-TIME ONLY",
    "limit": "Can only be purchased 1 time.",
    "firstSeen": "2026-10-13T06:44:45.476Z",
-   "lastSeen": "2026-10-20T05:46:44.587Z"
+   "lastSeen": "2026-10-20T11:38:51.041Z",
+   "endsAt": null
   },
   "/purchase/item/web-lake-guardians-max-battle-ultra": {
    "name": "Dynamax Uxie, Mesprit, and Azelf Max Battle Day Ultra Ticket Box",
@@ -25,7 +27,8 @@
    "tag": "LIMITED-TIME ONLY",
    "limit": "Can only be purchased 1 time.",
    "firstSeen": "2026-10-19T18:44:49.297Z",
-   "lastSeen": "2026-10-20T05:46:44.587Z"
+   "lastSeen": "2026-10-20T11:38:51.041Z",
+   "endsAt": "2026-10-25T11:38:51.041Z"
   },
   "/purchase/item/web-event-pass-plusrank-october-26-ultra": {
    "name": "GO Pass Deluxe: October Ultra Box",
@@ -34,7 +37,8 @@
    "tag": "LIMITED-TIME ONLY",
    "limit": "Can only be purchased 1 time.",
    "firstSeen": "2026-10-13T06:44:45.476Z",
-   "lastSeen": "2026-10-20T05:46:44.587Z"
+   "lastSeen": "2026-10-20T11:38:51.041Z",
+   "endsAt": null
   },
   "/purchase/item/web-gowa-global-2026-ticket": {
    "name": "Pokémon GO Wild Area 2026: Global Ultra Ticket Box",
@@ -43,7 +47,8 @@
    "tag": "LIMITED-TIME ONLY",
    "limit": "Can only be purchased 1 time.",
    "firstSeen": "2026-10-13T06:44:45.476Z",
-   "lastSeen": "2026-10-20T05:46:44.587Z"
+   "lastSeen": "2026-10-20T11:38:51.041Z",
+   "endsAt": null
   },
   "/purchase/item/web-luckyegg-bundle-8": {
    "name": "Lucky Egg",
@@ -52,7 +57,8 @@
    "tag": "",
    "limit": "",
    "firstSeen": "2026-10-13T06:44:45.476Z",
-   "lastSeen": "2026-10-20T05:46:44.587Z"
+   "lastSeen": "2026-10-20T11:38:51.041Z",
+   "endsAt": null
   },
   "/purchase/item/web-starpiece-bundle": {
    "name": "Star Piece",
@@ -61,7 +67,8 @@
    "tag": "",
    "limit": "",
    "firstSeen": "2026-10-13T06:44:45.476Z",
-   "lastSeen": "2026-10-20T05:46:44.587Z"
+   "lastSeen": "2026-10-20T11:38:51.041Z",
+   "endsAt": null
   },
   "/purchase/item/web-remote-raidpass-bundle": {
    "name": "Remote Raid Pass",
@@ -70,7 +77,8 @@
    "tag": "POPULAR",
    "limit": "",
    "firstSeen": "2026-10-13T06:44:45.476Z",
-   "lastSeen": "2026-10-20T05:46:44.587Z"
+   "lastSeen": "2026-10-20T11:38:51.041Z",
+   "endsAt": null
   },
   "/purchase/item/web-pokemon-storage-bundle": {
    "name": "Pokémon Storage",
@@ -79,7 +87,8 @@
    "tag": "POPULAR",
    "limit": "",
    "firstSeen": "2026-10-13T06:44:45.476Z",
-   "lastSeen": "2026-10-20T05:46:44.587Z"
+   "lastSeen": "2026-10-20T11:38:51.041Z",
+   "endsAt": null
   },
   "/purchase/item/web-item-storage-bundle": {
    "name": "Item Bag",
@@ -88,7 +97,8 @@
    "tag": "POPULAR",
    "limit": "",
    "firstSeen": "2026-10-13T06:44:45.476Z",
-   "lastSeen": "2026-10-20T05:46:44.587Z"
+   "lastSeen": "2026-10-20T11:38:51.041Z",
+   "endsAt": null
   },
   "/purchase/item/web-basic-incubator-3pack": {
    "name": "Egg Incubator",
@@ -97,7 +107,8 @@
    "tag": "",
    "limit": "",
    "firstSeen": "2026-10-13T06:44:45.476Z",
-   "lastSeen": "2026-10-20T05:46:44.587Z"
+   "lastSeen": "2026-10-20T11:38:51.041Z",
+   "endsAt": null
   },
   "/purchase/item/web-nc-600-rrp-3": {
    "name": "600 Link Charge + 3 Remote Raid Pass",
@@ -106,7 +117,8 @@
    "tag": "",
    "limit": "",
    "firstSeen": "2026-10-13T06:44:45.476Z",
-   "lastSeen": "2026-10-20T05:46:44.587Z"
+   "lastSeen": "2026-10-20T11:38:51.041Z",
+   "endsAt": null
   },
   "/purchase/item/web-super-incubator-2pack": {
    "name": "Super Incubator",
@@ -115,7 +127,8 @@
    "tag": "",
    "limit": "",
    "firstSeen": "2026-10-13T06:44:45.476Z",
-   "lastSeen": "2026-10-20T05:46:44.587Z"
+   "lastSeen": "2026-10-20T11:38:51.041Z",
+   "endsAt": null
   },
   "/purchase/item/web-max-revive-6": {
    "name": "Max Revive",
@@ -124,7 +137,8 @@
    "tag": "",
    "limit": "",
    "firstSeen": "2026-10-13T06:44:45.476Z",
-   "lastSeen": "2026-10-20T05:46:44.587Z"
+   "lastSeen": "2026-10-20T11:38:51.041Z",
+   "endsAt": null
   },
   "/purchase/item/web-nc-600": {
    "name": "600 Link Charge",
@@ -133,7 +147,8 @@
    "tag": "",
    "limit": "",
    "firstSeen": "2026-10-13T06:44:45.476Z",
-   "lastSeen": "2026-10-20T05:46:44.587Z"
+   "lastSeen": "2026-10-20T11:38:51.041Z",
+   "endsAt": null
   },
   "/purchase/item/web-premium-battle-pass-3": {
    "name": "Premium Battle Pass",
@@ -142,7 +157,8 @@
    "tag": "",
    "limit": "",
    "firstSeen": "2026-10-13T06:44:45.476Z",
-   "lastSeen": "2026-10-20T05:46:44.587Z"
+   "lastSeen": "2026-10-20T11:38:51.041Z",
+   "endsAt": null
   },
   "/purchase/item/web-mp-pack.6": {
    "name": "Max Particle Pack",
@@ -151,7 +167,8 @@
    "tag": "",
    "limit": "",
    "firstSeen": "2026-10-13T06:44:45.476Z",
-   "lastSeen": "2026-10-20T05:46:44.587Z"
+   "lastSeen": "2026-10-20T11:38:51.041Z",
+   "endsAt": null
   },
   "/purchase/item/web-max-mushroom-3": {
    "name": "Max Mushroom",
@@ -160,7 +177,8 @@
    "tag": "",
    "limit": "",
    "firstSeen": "2026-10-13T06:44:45.476Z",
-   "lastSeen": "2026-10-20T05:46:44.587Z"
+   "lastSeen": "2026-10-20T11:38:51.041Z",
+   "endsAt": null
   },
   "/purchase/item/web-3mp-3rrp-bundle": {
    "name": "3 Max Particle Pack + 3 Remote Raid Pass",
@@ -169,7 +187,8 @@
    "tag": "",
    "limit": "",
    "firstSeen": "2026-10-13T06:44:45.476Z",
-   "lastSeen": "2026-10-20T05:46:44.587Z"
+   "lastSeen": "2026-10-20T11:38:51.041Z",
+   "endsAt": null
   },
   "/purchase/item/web-1mp-1rrp-bundle": {
    "name": "Max Particle Pack + Remote Raid Pass",
@@ -178,7 +197,8 @@
    "tag": "",
    "limit": "",
    "firstSeen": "2026-10-13T06:44:45.476Z",
-   "lastSeen": "2026-10-20T05:46:44.587Z"
+   "lastSeen": "2026-10-20T11:38:51.041Z",
+   "endsAt": null
   },
   "/purchase/item/web-10-silver-pinap": {
    "name": "Silver Pinap Berries",
@@ -187,7 +207,8 @@
    "tag": "",
    "limit": "",
    "firstSeen": "2026-10-13T06:44:45.476Z",
-   "lastSeen": "2026-10-20T05:46:44.587Z"
+   "lastSeen": "2026-10-20T11:38:51.041Z",
+   "endsAt": null
   },
   "/purchase/item/web-15-gold-razz": {
    "name": "Golden Razz Berries",
@@ -196,7 +217,8 @@
    "tag": "",
    "limit": "",
    "firstSeen": "2026-10-13T06:44:45.476Z",
-   "lastSeen": "2026-10-20T05:46:44.587Z"
+   "lastSeen": "2026-10-20T11:38:51.041Z",
+   "endsAt": null
   },
   "/purchase/item/web-10-max-potions": {
    "name": "Max Potions",
@@ -205,7 +227,8 @@
    "tag": "",
    "limit": "",
    "firstSeen": "2026-10-13T06:44:45.476Z",
-   "lastSeen": "2026-10-20T05:46:44.587Z"
+   "lastSeen": "2026-10-20T11:38:51.041Z",
+   "endsAt": null
   },
   "/purchase/item/coin-bundle-xxsmall": {
    "name": "110 PokéCoins",
@@ -214,7 +237,8 @@
    "tag": "",
    "limit": "",
    "firstSeen": "2026-10-13T06:44:45.476Z",
-   "lastSeen": "2026-10-20T05:46:44.587Z"
+   "lastSeen": "2026-10-20T11:38:51.041Z",
+   "endsAt": null
   },
   "/purchase/item/coin-bundle-xsmall": {
    "name": "600 PokéCoins",
@@ -223,7 +247,8 @@
    "tag": "",
    "limit": "",
    "firstSeen": "2026-10-13T06:44:45.476Z",
-   "lastSeen": "2026-10-20T05:46:44.587Z"
+   "lastSeen": "2026-10-20T11:38:51.041Z",
+   "endsAt": null
   },
   "/purchase/item/coin-bundle-small_v2": {
    "name": "1,300 PokéCoins",
@@ -232,7 +257,8 @@
    "tag": "",
    "limit": "",
    "firstSeen": "2026-10-13T06:44:45.476Z",
-   "lastSeen": "2026-10-20T05:46:44.587Z"
+   "lastSeen": "2026-10-20T11:38:51.041Z",
+   "endsAt": null
   },
   "/purchase/item/coin-bundle-medium_v2": {
    "name": "2,700 PokéCoins",
@@ -241,7 +267,8 @@
    "tag": "",
    "limit": "",
    "firstSeen": "2026-10-13T06:44:45.476Z",
-   "lastSeen": "2026-10-20T05:46:44.587Z"
+   "lastSeen": "2026-10-20T11:38:51.041Z",
+   "endsAt": null
   },
   "/purchase/item/coin-bundle-large-v2": {
    "name": "5,600 PokéCoins",
@@ -250,7 +277,8 @@
    "tag": "",
    "limit": "",
    "firstSeen": "2026-10-13T06:44:45.476Z",
-   "lastSeen": "2026-10-20T05:46:44.587Z"
+   "lastSeen": "2026-10-20T11:38:51.041Z",
+   "endsAt": null
   },
   "/purchase/item/coin-bundle-xlarge": {
    "name": "15,500 PokéCoins",
@@ -259,7 +287,8 @@
    "tag": "",
    "limit": "",
    "firstSeen": "2026-10-13T06:44:45.476Z",
-   "lastSeen": "2026-10-20T05:46:44.587Z"
+   "lastSeen": "2026-10-20T11:38:51.041Z",
+   "endsAt": null
   }
  },
  "gone": {
@@ -305,5 +334,5 @@
   }
  },
  "watchStart": "2026-10-13T06:44:45.476Z",
- "updated": "2026-10-20T05:46:44.587Z"
+ "updated": "2026-10-20T11:38:51.041Z"
 }

@@ -1,14 +1,16 @@
 {
  "watchStart": "2026-10-13T06:44:45.476Z",
- "updated": "2026-10-20T05:46:44.587Z",
+ "updated": "2026-10-20T11:38:51.041Z",
  "items": [
   {
    "name": "GO Pass Deluxe: October",
    "price": "$7.99",
    "section": "LIMITED_TIME",
    "slug": "web-event-pass-base-october-26",
+   "href": "/purchase/item/web-event-pass-base-october-26",
+   "endsAt": null,
    "firstSeen": "2026-10-13T06:44:45.476Z",
-   "lastSeen": "2026-10-20T05:46:44.587Z",
+   "lastSeen": "2026-10-20T11:38:51.041Z",
    "goneAt": null
   },
   {
@@ -16,8 +18,10 @@
    "price": "$9.99",
    "section": "LIMITED_TIME",
    "slug": "web-event-pass-plusrank-october-26",
+   "href": "/purchase/item/web-event-pass-plusrank-october-26",
+   "endsAt": null,
    "firstSeen": "2026-10-13T06:44:45.476Z",
-   "lastSeen": "2026-10-20T05:46:44.587Z",
+   "lastSeen": "2026-10-20T11:38:51.041Z",
    "goneAt": null
   },
   {
@@ -25,8 +29,10 @@
    "price": "$4.99",
    "section": "LIMITED_TIME",
    "slug": "web-lake-guardians-max-battle-ultra",
+   "href": "/purchase/item/web-lake-guardians-max-battle-ultra",
+   "endsAt": "2026-10-25T11:38:51.041Z",
    "firstSeen": "2026-10-19T18:44:49.297Z",
-   "lastSeen": "2026-10-20T05:46:44.587Z",
+   "lastSeen": "2026-10-20T11:38:51.041Z",
    "goneAt": null
   },
   {
@@ -34,8 +40,10 @@
    "price": "$14.99",
    "section": "LIMITED_TIME",
    "slug": "web-event-pass-plusrank-october-26-ultra",
+   "href": "/purchase/item/web-event-pass-plusrank-october-26-ultra",
+   "endsAt": null,
    "firstSeen": "2026-10-13T06:44:45.476Z",
-   "lastSeen": "2026-10-20T05:46:44.587Z",
+   "lastSeen": "2026-10-20T11:38:51.041Z",
    "goneAt": null
   },
   {
@@ -43,8 +51,10 @@
    "price": "$11.99",
    "section": "LIMITED_TIME",
    "slug": "web-gowa-global-2026-ticket",
+   "href": "/purchase/item/web-gowa-global-2026-ticket",
+   "endsAt": null,
    "firstSeen": "2026-10-13T06:44:45.476Z",
-   "lastSeen": "2026-10-20T05:46:44.587Z",
+   "lastSeen": "2026-10-20T11:38:51.041Z",
    "goneAt": null
   },
   {
@@ -52,6 +62,8 @@
    "price": "$8.99",
    "section": "LIMITED_TIME",
    "slug": "web-event-pass-plusrank-fall-marathon-26-ultra",
+   "href": "/purchase/item/web-event-pass-plusrank-fall-marathon-26-ultra",
+   "endsAt": null,
    "firstSeen": "2026-10-13T06:44:45.476Z",
    "lastSeen": "2026-10-19T18:44:49.297Z",
    "goneAt": "2026-10-20T05:46:44.587Z"
@@ -61,6 +73,8 @@
    "price": "$4.99",
    "section": "LIMITED_TIME",
    "slug": "web-event-pass-base-fall-marathon-26",
+   "href": "/purchase/item/web-event-pass-base-fall-marathon-26",
+   "endsAt": null,
    "firstSeen": "2026-10-13T06:44:45.476Z",
    "lastSeen": "2026-10-19T18:44:49.297Z",
    "goneAt": "2026-10-20T05:46:44.587Z"
@@ -70,6 +84,8 @@
    "price": "$6.99",
    "section": "LIMITED_TIME",
    "slug": "web-event-pass-plusrank-fall-marathon-26",
+   "href": "/purchase/item/web-event-pass-plusrank-fall-marathon-26",
+   "endsAt": null,
    "firstSeen": "2026-10-13T06:44:45.476Z",
    "lastSeen": "2026-10-19T18:44:49.297Z",
    "goneAt": "2026-10-20T05:46:44.587Z"
@@ -79,6 +95,8 @@
    "price": "$1.99",
    "section": "LIMITED_TIME",
    "slug": "web-sandile-hatch-day-ultra",
+   "href": "/purchase/item/web-sandile-hatch-day-ultra",
+   "endsAt": null,
    "firstSeen": "2026-10-13T06:44:45.476Z",
    "lastSeen": "2026-10-17T15:37:47.773Z",
    "goneAt": "2026-10-18T04:36:46.344Z"
