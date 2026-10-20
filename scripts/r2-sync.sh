@@ -12,7 +12,7 @@ id=$(printf %s "$v" | python3 -c "import sys,json;print(json.load(sys.stdin)['re
 export AWS_ACCESS_KEY_ID="$id" AWS_SECRET_ACCESS_KEY="$(printf %s "$CLOUDFLARE_API_TOKEN" | sha256sum | cut -d' ' -f1)" AWS_DEFAULT_REGION=auto
 EP="https://$CLOUDFLARE_ACCOUNT_ID.r2.cloudflarestorage.com"
 # key prefix -> folder
-PAIRS="infographics:public/infographics img/ext:public/img/ext tg-inbox:data/tg-inbox"
+PAIRS="infographics:public/infographics img/ext:public/img/ext tg-inbox:data/tg-inbox archive:data/archive"
 for pair in $PAIRS; do
   prefix="${pair%%:*}"; dir="${pair##*:}"
   case "$mode" in

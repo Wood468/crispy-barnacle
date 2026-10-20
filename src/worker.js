@@ -13,6 +13,7 @@
 //   The pipeline's nightly run is OFF unless the PIPELINE variable is "1"; the tables are only created by the PIN-protected run.
 // A daily cron compares the PokeMiners game master with the last copy it saw and reads Pokémon GO Hub's datamine feed.
 
+import { runBackup } from "./backup.js";
 import * as pipe from "./pipeline.js";
 import * as us from "./userstate.js";
 import * as nt from "./notify.js";
@@ -96,6 +97,7 @@ const handler = {
     const nightly = !event.cron || event.cron === "30 20 * * *" || when.getUTCHours() === 20;
     if (env.DB) ctx.waitUntil(jobs.runHourly(env, when).then((r) => console.log("jobs", JSON.stringify(r))).catch((e) => console.error("jobs", e)));
     if (env.DB && nightly) ctx.waitUntil(runDatamine(env).catch((e) => console.error("datamine", e)));
+    if (nightly) ctx.waitUntil(runBackup(env, when).then((r) => console.log("backup", JSON.stringify(r))).catch((e) => console.error("backup", e)));
     if (nightly) ctx.waitUntil((async () => {
       try {
         if (env.DB && env.PIPELINE === "1") await runPipelineNow(env);

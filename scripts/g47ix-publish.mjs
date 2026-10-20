@@ -210,6 +210,15 @@ export function buildWeekly(reg, now = Date.now()) {
   return { updated: new Date(now).toISOString(), items };
 }
 
+// World and in-person events (public/world-events.json) as the same shape the matcher reads. They are only ever used for suggestions a person confirms.
+export function worldAsEvents(world) {
+  return ((world && world.events) || []).filter(w => w && w.id && w.name).map(w => ({ id: w.id, t: w.name, s: (w.start || "") + "T00:00", e: (w.end || w.start || "") + "T23:59", p: [w.place || "", w.area || ""] }));
+}
+export function worldGuess(c, worldEvents) {
+  const m = matchEvent({ title: [c.title, c.ocrText].filter(Boolean).join(" ") }, worldEvents);
+  return m && m.score >= 0.5 && m.nameOverlap !== 0 ? { ...m, method: "picture text to world and in-person events", confidence: m.confidence } : null;
+}
+
 // A match made by reading the picture (the scheduled AI check writes c.aiMatch = [{ eventId, eventTitle }]) goes first and is never overwritten by the OCR matcher.
 export function withAi(c, guesses) {
   const ai = (Array.isArray(c.aiMatch) ? c.aiMatch : []).filter(g => g && g.eventId).map(g => ({ eventId: String(g.eventId), eventTitle: String(g.eventTitle || g.eventId), score: 1 }));
@@ -233,6 +242,8 @@ async function main() {
   const info = JSON.parse(await readFile(INFO, "utf8"));
   const dataJson = JSON.parse(await readFile(DATA, "utf8"));
   const events = [...(dataJson.events || []), ...raidSlots(dataJson.rotation)];
+  let worldEvents = [];
+  try { worldEvents = worldAsEvents(JSON.parse(await readFile(process.env.WORLD_FILE || "public/world-events.json", "utf8"))); } catch { /* optional */ }
   const proposed = [];
   try {
     const dc = discordCandidate(JSON.parse(await readFile(DISCORD_FILE, "utf8")), process.env.DISCORD_CREATOR || "");
@@ -242,6 +253,8 @@ async function main() {
   await mkdir(IMG_DIR, { recursive: true });
   for (const c of reg.candidates || []) { // read earlier, left without any suggestion: try the Pokémon-based guess
     if (!c.ocrChecked || c.eventMatch || c.decision === "rejected" || c.reviewStatus !== "unmatched") continue;
+    const wg = worldGuess(c, worldEvents);
+    if (wg) { c.eventMatch = wg; c.reviewStatus = "needs_review"; c.reviewNote = "The picture text matches a world or in-person event. Check it."; continue; }
     const g = monGuesses(c.ocrText, events); if (!g.length) continue;
     c.eventMatch = { ...g[0], alternatives: g }; c.reviewStatus = "needs_review"; c.reviewNote = "No event name in the picture, but it shows " + g[0].via + ". Check these events.";
   }
@@ -257,7 +270,7 @@ async function main() {
       c.ocrChecked = true; c.ocrText = text.slice(0, 1500);
       const d = decide(c, text, events);
       if (c.history && d.confident) { d.confident = false; d.reason = "An older post: check the match yourself. " + d.reason; } // history is always for the owner to review
-      c.eventMatch = d.match || d.guess || c.eventMatch || null;
+      c.eventMatch = d.match || d.guess || c.eventMatch || (!d.confident ? worldGuess({ ...c, ocrText: text }, worldEvents) : null) || null;
       c.reviewNote = d.reason; c.signals = d.signals || []; c.matchScore = d.score || 0;
       if (d.confident && c.source === "discord" && !c.creator) { d.confident = false; d.reason = "Creator not set. Set the DISCORD_CREATOR variable to credit the right person."; c.reviewNote = d.reason; }
       // Every checked picture is kept next to the site so it can be reviewed in the app, even when the match is unsure.
@@ -266,7 +279,7 @@ async function main() {
       await writeFile(join(IMG_DIR, name), small.buf);
       c.stagedPath = "/" + IMG_DIR.replace(/^public\//, "") + "/" + name;
       if (isOverview(c)) { c.reviewStatus = "weekly"; continue; } // shown on the home page instead
-      if (!d.confident) { c.reviewStatus = d.match || d.guess ? "needs_review" : "unmatched"; continue; }
+      if (!d.confident) { c.reviewStatus = d.match || d.guess || c.eventMatch ? "needs_review" : "unmatched"; continue; }
       const added = addToEventInfo(info, d.event, { url: c.stagedPath, sourceUrl: c.url, observed: new Date().toISOString().slice(0, 10), alt: (d.event.t || "Event") + " infographic", creator: c.creator });
       if (added) { c.reviewStatus = "proposed"; proposed.push(d.event.t + " ← " + c.url); }
     } catch (err) { c.reviewNote = "Could not check image: " + err.message; }

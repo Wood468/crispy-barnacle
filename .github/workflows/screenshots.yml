@@ -1,0 +1,46 @@
+name: Daily screenshots
+
+# Takes a picture of the live site (phone and desktop, home and calendar) once a day and keeps it for 30 days as a downloadable
+# artifact, so a layout problem can be compared against an earlier day.
+on:
+  schedule:
+    - cron: "0 20 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  shots:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install Playwright
+        run: |
+          pip install playwright
+          python -m playwright install --with-deps chromium
+      - name: Take screenshots
+        run: |
+          mkdir -p shots
+          python - <<'PY'
+          from playwright.sync_api import sync_playwright
+          URL = "https://pogo.michaelpuff.com/"
+          with sync_playwright() as p:
+              b = p.chromium.launch()
+              for name, vp in [("phone", {"width": 390, "height": 844}), ("desktop", {"width": 1280, "height": 900})]:
+                  pg = b.new_page(viewport=vp)
+                  pg.goto(URL, wait_until="networkidle", timeout=60000)
+                  pg.wait_for_timeout(1500)
+                  pg.screenshot(path=f"shots/{name}-home.png", full_page=True)
+                  pg.close()
+              b.close()
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: site-screenshots-${{ github.run_id }}
+          path: shots
+          retention-days: 30

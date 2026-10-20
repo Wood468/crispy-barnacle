@@ -1,0 +1,38 @@
+name: Weekly link check and announcement archive
+
+# Link check: which source links no longer open (Telegram System topic hears about it).
+# Archive: a text copy of every pokemongo.com announcement we cite, kept in R2 (not in git).
+on:
+  schedule:
+    - cron: "15 19 * * 0"   # Sunday evening UTC, Monday morning in Melbourne
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:   # the secret names are spelled CLOUDFARE_* in GitHub (typo kept on purpose); scripts/r2-sync.sh reads these
+  CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFARE_API_TOKEN }}
+  CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFARE_ACCOUNT_ID }}
+
+jobs:
+  weekly:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Link check
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          TELEGRAM_GROUP_ID: ${{ secrets.TELEGRAM_GROUP_ID }}
+          TELEGRAM_TOPIC_SYSTEM: ${{ secrets.TELEGRAM_TOPIC_SYSTEM || secrets.TELEGRAM_TOPICS_SYSTEM }}
+        run: node scripts/link-check.mjs
+      - name: Restore the archive from R2
+        run: bash scripts/r2-sync.sh restore
+      - name: Save new announcements
+        run: node scripts/archive-posts.mjs
+      - name: Upload the archive to R2
+        run: bash scripts/r2-sync.sh save

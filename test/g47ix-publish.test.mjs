@@ -146,3 +146,13 @@ test("a newer chosen picture replaces the older chosen one on each button", () =
   ] };
   assert.deepEqual(buildWeekly(reg, now).items.map(i => i.id), ["w-new", "m-new"]);
 });
+
+test("world and in-person events are suggested from the picture text, never auto-proposed", async () => {
+  const { worldAsEvents, worldGuess } = await import("../scripts/g47ix-publish.mjs");
+  const world = { events: [{ id: "w-aeon", name: "AEON MALL Halloween", place: "Participating AEON Malls, Japan", start: "2026-10-19", end: "2026-11-01" }, { id: "w-other", name: "Pokemon Fossil Museum 2026", start: "2026-05-22", end: "2027-04-11" }] };
+  const list = worldAsEvents(world);
+  assert.equal(list.length, 2); assert.equal(list[0].t, "AEON MALL Halloween");
+  const g = worldGuess({ title: "Infographic", ocrText: "AEON MALL Halloween Pokémon GO 19 Oct to 1 Nov" }, list);
+  assert.equal(g && g.eventId, "w-aeon");
+  assert.equal(worldGuess({ title: "x", ocrText: "Raid Hour Thursday Max Battles" }, list), null);
+});
