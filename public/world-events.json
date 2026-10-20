@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-20T03:22:34.676Z",
+ "updated": "2026-10-20T04:45:32.875Z",
  "events": [
   {
    "id": "w-pokemon-fossil-museum-2026",
@@ -213,7 +213,7 @@
   },
   {
    "id": "w-explore-by-starlight-during-meteor-showers-for-a-c",
-   "name": "Explore by starlight during meteor showers for a chance to encounter Minior!",
+   "name": "Explore by starlight during meteor showers",
    "place": "",
    "area": "Worldwide",
    "scope": "global",
@@ -251,7 +251,7 @@
   },
   {
    "id": "w-celebrate-the-pok-mon-night-out-events-in-pok-mon-",
-   "name": "Celebrate the Pokémon Night Out events in Pokémon GO!",
+   "name": "Pokémon Night Out events in Pokémon GO",
    "place": "Los Angeles, USA",
    "area": "Americas",
    "scope": "global",
@@ -280,7 +280,7 @@
   },
   {
    "id": "w-fc-seoul",
-   "name": "Fc Seoul",
+   "name": "FC Seoul",
    "place": "South Korea",
    "area": "Asia",
    "scope": "regional",
@@ -358,7 +358,7 @@
   },
   {
    "id": "w-celebrate-the-festival-of-lights-with-the-return-o",
-   "name": "Celebrate the Festival of Lights with the return of Pikachu wearing a saree and Pikachu wearing a kurta!",
+   "name": "Festival of Lights",
    "place": "India",
    "area": "Asia",
    "scope": "regional",
@@ -415,7 +415,7 @@
   },
   {
    "id": "w-pok-xciting-lands-at-changi-airport-and-jewel-get-",
-   "name": "PokéXciting! lands at Changi Airport and Jewel — get ready, Singapore!",
+   "name": "PokéXciting! lands at Changi Airport and Jewel",
    "place": "Singapore",
    "area": "Asia",
    "scope": "regional",
@@ -453,7 +453,7 @@
   },
   {
    "id": "w-pok-mon-go-joins-pok-mon-30th-anniversary-mall-exp",
-   "name": "Pokémon GO joins Pokémon 30th Anniversary Mall Exploration!",
+   "name": "Pokémon GO joins Pokémon 30th Anniversary Mall Exploration",
    "place": "Malaysia",
    "area": "Asia",
    "scope": "regional",
@@ -687,6 +687,11 @@
      "id": "official",
      "name": "Pokémon GO (official)",
      "url": "https://pokemongo.com/news/save-the-date-go-tour-2027/"
+    },
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "url": "https://pokemongo.com/ko/news/save-the-date-go-tour-2027/"
     }
    ],
    "status": "official",
