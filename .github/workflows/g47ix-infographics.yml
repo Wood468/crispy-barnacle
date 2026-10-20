@@ -28,7 +28,7 @@ jobs:
     timeout-minutes: 8
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           ref: main
           fetch-depth: 1
@@ -149,7 +149,7 @@ jobs:
     concurrency:
       group: nudge
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           ref: main
       - uses: actions/setup-node@v4
