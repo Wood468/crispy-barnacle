@@ -35,8 +35,8 @@ export function cleanName(s) {
   return n;
 }
 const NAME = /^[A-Za-zÀ-ÿ][A-Za-zÀ-ÿ0-9'’.:\- ()♀♂]{1,38}$/;
-const NOT_A_NAME = /\b(current|bosses|boss|raids?|guide|counters?|stars?|tier)\b/i; // a heading or label, not a Pokémon
-const isHeading = l => /\bBosses\b/i.test(l) || /^Current\b/i.test(l) || /\bRaids?\b\s*:?$/i.test(l) || /^Shadow\b.*Raids?/i.test(l) || /\bShadow Raids?\s*:?$/i.test(l) || /^(Last update|Updated)\b/i.test(l) || /^Raid (Hour|Boss)/i.test(l);
+const NOT_A_NAME = /\b(current|bosses|boss|raids?|guide|guides|related|counters?|stars?|tier)\b|:$/i; // a heading or label, not a Pokémon
+const isHeading = l => /\bBosses\b/i.test(l) || /^Current\b/i.test(l) || /\bRaids?\b\s*:?$/i.test(l) || /^Shadow\b.*Raids?/i.test(l) || /\bShadow Raids?\s*:?$/i.test(l) || /^(Last update|Updated|Related|Read more|See also|Share)\b/i.test(l) || /^Raid (Hour|Boss)/i.test(l);
 
 // { one: [...], three: [...], five: [...], mega: [...] } from the headings "1-Star Raids", "3-Star Raids", "5-Star Raids", "Mega Raids".
 export function parseTiers(html) {
