@@ -85,3 +85,11 @@ test("Shadow 1-star and 3-star raids are read under their own headings, and alwa
   assert.deepEqual(parseTiers(LISTS).shadowOne, [], "a page with no Shadow 1-star list gives none");
   assert.ok(!sameLow({ one: ["Axew"], three: ["Alolan Muk"] }, { one: ["Axew"], three: ["Alolan Muk"], shadowOne: ["Shadow Gastly"] }), "adding shadow bosses counts as a change");
 });
+
+test("Shadow headings written '3-Star Shadow Raids' (Hub's wording) are read too", () => {
+  const html = '<h2>5-Star Raids</h2><ul><li>Palkia</li></ul><h2>3-Star Raids</h2><ul><li>Alola Muk</li></ul><h2>1-Star Raids</h2><ul><li>Axew</li></ul>'
+    + '<h2>5-Star Shadow Raids</h2><ul><li>Shadow Landorus</li></ul><h2>3-Star Shadow Raids</h2><ul><li>Shadow Primeape</li><li>Shadow Kirlia</li></ul><h2>1-Star Shadow Raids</h2><ul><li>Shadow Gastly</li></ul>';
+  const t = parseTiers(html);
+  assert.deepEqual(t.shadowThree, ["Shadow Primeape", "Shadow Kirlia"]); assert.deepEqual(t.shadowOne, ["Shadow Gastly"]);
+  assert.deepEqual(t.five, ["Palkia"]); assert.deepEqual(t.one, ["Axew"]);
+});
