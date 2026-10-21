@@ -1,4 +1,6 @@
 {
- "alerted": [],
+ "alerted": [
+  "store-watch.yml"
+ ],
  "unmatched": []
 }
