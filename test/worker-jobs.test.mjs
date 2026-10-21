@@ -134,6 +134,8 @@ test("the Worker heartbeat is judged fresh, failing or stale", () => {
   assert.equal(judgeWorker({ at: "2026-10-15T09:35:00Z", failed: ["discord"] }, now).state, "failing");
   assert.equal(judgeWorker({ at: "2026-10-15T05:00:00Z", failed: [] }, now).state, "stale");
   assert.equal(judgeWorker(null, now).state, "never");
+  const j = judgeWorker({ at: "2026-10-15T09:35:00Z", failed: [], discord: "Discord is not set up on the Worker" }, now);
+  assert.equal(j.state, "fresh"); assert.equal(j.detail, "Discord forwarding: Discord is not set up on the Worker", "why Discord forwarding did nothing is visible");
 });
 
 import { savedThisWeek } from "../src/jobs.js";
