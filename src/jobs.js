@@ -197,7 +197,7 @@ export async function runWatchdog(env, opts = {}) {
   const state = await getState(env.DB, "watchdog", { alerted: false });
   if (s.stale && !state.alerted) {
     const since = s.last ? "The last one started " + new Date(s.last).toLocaleString("en-AU", { timeZone: "Australia/Melbourne", day: "numeric", month: "short", hour: "numeric", minute: "2-digit" }) + "." : "None has started yet.";
-    const text = "⚠️ GitHub's scheduled jobs have stopped. " + since + "\nThe event importer, store watch, site check and health check are not running. Open the repo's Actions tab, check that scheduled workflows are enabled, and run one by hand.";
+    const text = "⚠️ GitHub's scheduled jobs have stopped. " + since + "\nImporter, store watch, site check and health check are paused. In the repo's Actions tab, check scheduled workflows are on, then run one by hand.";
     if (opts.dry || !(await tg(env, "sendMessage", { text, disable_web_page_preview: true }, f))) return { alerted: false, would: text };
     await setState(env.DB, "watchdog", { alerted: true, at: now.toISOString() });
     return { alerted: true };
