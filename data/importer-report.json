@@ -1,5 +1,5 @@
 {
- "runAt": "2026-10-21T07:47:28.585Z",
+ "runAt": "2026-10-21T13:55:27.365Z",
  "sources": {
   "official": {
    "listed": 24,
@@ -16,7 +16,7 @@
  },
  "pagesRead": 80,
  "events": 78,
- "worldEvents": 34,
+ "worldEvents": 35,
  "worldUndated": [],
  "unmatchedPages": [
   {
@@ -68,6 +68,11 @@
    "source": "official",
    "title": "Pokémon GO City Safaris in Europe: Venues and Activities",
    "url": "https://pokemongo.com/news/city-safaris-europe-2026/"
+  },
+  {
+   "source": "leekduck",
+   "title": "Mega Dragonite in Mega Raids",
+   "url": "https://leekduck.com/events/mega-dragonite-in-mega-raids-october-2026/"
   }
  ],
  "intl": {
@@ -196,6 +201,48 @@
    "event": "Pokémon GO City Safari: Boston (Rescheduled)",
    "field": "dates",
    "missingFrom": []
+  },
+  {
+   "event": "Pokémon TCG: 30th Celebration (at stores)",
+   "field": "bonuses",
+   "missingFrom": [
+    "official"
+   ]
+  },
+  {
+   "event": "Pokémon TCG: 30th Celebration (at stores)",
+   "field": "featured",
+   "missingFrom": [
+    "leekduck"
+   ]
+  },
+  {
+   "event": "Pokémon TCG: 30th Celebration (at stores)",
+   "field": "raids",
+   "missingFrom": [
+    "official"
+   ]
+  },
+  {
+   "event": "Pokémon TCG: 30th Celebration (at stores)",
+   "field": "research",
+   "missingFrom": [
+    "leekduck"
+   ]
+  },
+  {
+   "event": "Pokémon TCG: 30th Celebration (at stores)",
+   "field": "shiny",
+   "missingFrom": [
+    "official"
+   ]
+  },
+  {
+   "event": "Pokémon TCG: 30th Celebration (at stores)",
+   "field": "tickets",
+   "missingFrom": [
+    "leekduck"
+   ]
   },
   {
    "event": "Twilight Trails",

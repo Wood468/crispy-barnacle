@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-21T07:47:28.583Z",
+ "updated": "2026-10-21T13:55:27.362Z",
  "events": [
   {
    "id": "w-pokemon-fossil-museum-2026",
@@ -187,6 +187,25 @@
      "id": "serebii",
      "name": "Serebii",
      "url": "https://www.serebii.net/pokemongo/reallifeevents.shtml"
+    }
+   ],
+   "status": "single",
+   "seen": "2026-10-21"
+  },
+  {
+   "id": "w-mega-dragonite-in-mega-raids",
+   "name": "Mega Dragonite in Mega Raids",
+   "place": "",
+   "area": "Worldwide",
+   "scope": "global",
+   "start": "2026-10-14",
+   "end": "2026-10-20",
+   "datesKnown": true,
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "url": "https://leekduck.com/events/mega-dragonite-in-mega-raids-october-2026/"
     }
    ],
    "status": "single",
@@ -687,11 +706,6 @@
      "id": "official",
      "name": "Pokémon GO (official)",
      "url": "https://pokemongo.com/news/save-the-date-go-tour-2027/"
-    },
-    {
-     "id": "official",
-     "name": "Pokémon GO (official)",
-     "url": "https://pokemongo.com/ko/news/save-the-date-go-tour-2027/"
     }
    ],
    "status": "official",
