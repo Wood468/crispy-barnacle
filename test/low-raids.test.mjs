@@ -93,3 +93,11 @@ test("Shadow headings written '3-Star Shadow Raids' (Hub's wording) are read too
   assert.deepEqual(t.shadowThree, ["Shadow Primeape", "Shadow Kirlia"]); assert.deepEqual(t.shadowOne, ["Shadow Gastly"]);
   assert.deepEqual(t.five, ["Palkia"]); assert.deepEqual(t.one, ["Axew"]);
 });
+
+test("a 'Related guides:' label after the last list is not read as a Pokémon", () => {
+  const html = '<h2>5-Star Raids</h2><ul><li>Palkia</li></ul><h2>3-Star Raids</h2><ul><li>Muk</li></ul><h2>1-Star Raids</h2><ul><li>Axew</li></ul><h2>3-Star Shadow Raids</h2><ul><li>Shadow Kirlia</li></ul><h2>1-Star Shadow Raids</h2><ul><li>Shadow Gastly</li><li>Shadow Gible</li></ul><p>Related guides:</p>';
+  const t = parseTiers(html);
+  assert.deepEqual(t.shadowOne, ["Shadow Gastly", "Shadow Gible"]);
+  const h2 = html.replace("<p>Related guides:</p>", "").replace("<li>Shadow Kirlia</li>", "<li>Shadow Kirlia</li><li>Shadow Related guides:</li>");
+  assert.deepEqual(parseTiers(h2).shadowThree, ["Shadow Kirlia"]);
+});
