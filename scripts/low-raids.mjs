@@ -56,8 +56,8 @@ export const sane = t => t.one.length >= 1 && t.one.length <= 8 && t.three.lengt
 const norm = s => String(s || "").toLowerCase().replace(/\(.*?\)/g, "").replace(/\b(forme?|form|mega|primal|shadow)\b/g, "").replace(/[^a-z0-9]+/g, " ").trim();
 // The rotation (current or upcoming) whose 5-star boss is one of the page's 5-star bosses.
 export function pickRotation(rotation, five, nowMs = Date.now()) {
-  const want = five.map(norm).filter(Boolean);
-  const hits = (rotation || []).filter(r => Date.parse(r.e) > nowMs - 864e5).filter(r => { const f = norm(r.five); return f && want.some(w => w === f || w.includes(f) || f.includes(w)); });
+  const want = five.map(norm).filter(Boolean), today = new Date(nowMs).toISOString().slice(0, 10); // compared as dates, so the machine's time zone does not matter
+  const hits = (rotation || []).filter(r => String(r.e || "").slice(0, 10) >= today).filter(r => { const f = norm(r.five); return f && want.some(w => w === f || w.includes(f) || f.includes(w)); });
   return hits.length === 1 ? hits[0] : null; // none, or ambiguous: do nothing
 }
 
