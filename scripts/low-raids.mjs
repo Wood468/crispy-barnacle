@@ -18,7 +18,10 @@ const decode = s => String(s).replace(/&#(\d+);/g, (_, n) => String.fromCodePoin
 export function toLines(html) {
   const t = String(html || "")
     .replace(/<(script|style|noscript|svg)\b[\s\S]*?<\/\1>/gi, " ")
-    .replace(/<img\b[^>]*\balt\s*=\s*"([^"]*)"[^>]*>/gi, "\n$1\n")
+    .replace(/<img\b[^>]*\balt\s*=\s*"([^"]*)"[^>]*>/gi, (_, alt) => { // "Sprite of Axew from Pokémon GO" means Axew; "Dragon type icon", "Mega Raid Egg icon" and the like are decoration
+      const a = decode(alt).trim(), sp = /^Sprite of (.+?) from Pok[eé]mon GO$/i.exec(a);
+      return sp ? "\n" + sp[1] + "\n" : /\bicon\b|\blogo\b|\bbadge\b/i.test(a) ? "\n" : "\n" + a + "\n";
+    })
     .replace(/<\/(p|li|h[1-6]|div|tr|td|th|ul|ol|section|article|figcaption|a|span|strong|b)>/gi, "\n")
     .replace(/<br\s*\/?>/gi, "\n")
     .replace(/<[^>]+>/g, " ");
