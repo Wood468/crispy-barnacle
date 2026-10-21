@@ -32,8 +32,8 @@
       "url": "https://discord.com/channels/@me/1558793395198099618/1562287413798375506",
       "publishedAt": "2026-10-21T02:12:25.346000+00:00",
       "imageUrl": "https://pbs.twimg.com/media/HVGWLhFXsAEAFbQ.jpg",
-      "reviewStatus": "needs_review",
-      "decision": "pending",
+      "reviewStatus": "published",
+      "decision": "approved",
       "ocrChecked": true,
       "ocrText": "#a PALKIA 54793 CP ay y] yy “It is said to live in a gap in the spatial dimension parallel to ours. It appears in mythology.” — Weakness o@ yoy Difficulty: 2+ trainers needed Y) ay J @ % 2280 cP#we2850 CP Boost Rainy Windy Zz > ragon Tail n Te rail c ® Dynamax Cannon / @ Breal ipe > @ Outrage+ ® Breal = A ~ A (® Dra Ww Z = ® Dragon Tail ® Dragon Breath yy @ Freeze Shock (=! ® Roar of Time 4 Hf a Remember to use proper counters, Party Play Follow for more: and Zacian’s Adventure Effect if needed. G47IX @@@X @ | g47ix.pro ‘er",
       "eventMatch": {
@@ -53,7 +53,11 @@
       "reviewNote": "No event name in the picture, but it shows palkia. Check these events.",
       "signals": [],
       "matchScore": 0,
-      "stagedPath": "/infographics/g47ix/discord-1562287413798375506.jpg"
+      "stagedPath": "/infographics/g47ix/discord-1562287413798375506.jpg",
+      "publishedEvent": "raid:palkia:2026-10-21",
+      "publishedEvents": [
+        "raid:palkia:2026-10-21"
+      ]
     },
     {
       "id": "discord:1562196937434726410",
