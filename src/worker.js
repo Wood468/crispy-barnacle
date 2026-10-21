@@ -404,8 +404,9 @@ async function jobsRun(request, env, url) {
   try {
     if (job === "weekly") return json(await jobs.runWeekly(env, { dry }));
     if (job === "soon") return json(await jobs.runSoon(env, { dry }));
+    if (job === "discord") return json(await jobs.runDiscord(env));
   } catch (e) { return json({ error: String(e && e.message || e) }, 500); }
-  return json({ error: "job must be soon or weekly" }, 400);
+  return json({ error: "job must be soon, weekly or discord" }, 400);
 }
 
 // Owner-only data is kept in the R2 bucket (private/places.json, private/prices.json), never in the public repo.

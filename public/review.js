@@ -120,7 +120,25 @@
       var pk = picks(o); send(it, 'approved', pk.map(function (x) { return x.id; }).join(','), pk.map(function (x) { return x.title; }).join(' | '));
     }
   });
+  /* "Check Discord now": the Worker looks at the Discord channel straight away instead of waiting for the hourly run, and says what it did. */
+  function mountDiscord() {
+    var host = $('igreview'); if (!host || !host.parentNode || $('igdiscord')) return;
+    var p = document.createElement('p'); p.id = 'igdiscord'; p.className = 'note'; p.style.margin = '0 0 10px';
+    p.innerHTML = '<button type="button" class="pill" id="igdiscord-btn">Check Discord now</button> <span id="igdiscord-msg" role="status"></span>';
+    host.parentNode.insertBefore(p, host);
+    $('igdiscord-btn').addEventListener('click', function () {
+      var out = $('igdiscord-msg'), b = $('igdiscord-btn');
+      if (!pin()) { out.textContent = 'Enter your sync PIN first (Dex tab).'; return; }
+      b.disabled = true; out.textContent = 'Checking…';
+      fetch('/api/jobs/run?job=discord', { method: 'POST', headers: { 'x-pin': pin() } })
+        .then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) { return { ok: r.ok, j: j }; }); })
+        .then(function (x) { out.textContent = !x.ok ? 'Could not check: ' + (x.j.error || 'try again') : (x.j.sent && x.j.sent.length ? 'Sent ' + x.j.sent.length + ' picture' + (x.j.sent.length === 1 ? '' : 's') + ' to Telegram.' : 'Nothing to send: ' + (x.j.note || 'no new pictures') + '.'); })
+        .catch(function () { out.textContent = 'Could not reach the site.'; })
+        .then(function () { b.disabled = false; });
+    });
+  }
   function load() {
+    mountDiscord();
     Promise.all([
       fetch('/infographic-queue.json?t=' + Math.floor(Date.now() / 600000)).then(function (r) { return r.ok ? r.json() : { items: [] }; }).catch(function () { return { items: [] }; }),
       fetch('/api/ig-decisions').then(function (r) { return r.ok ? r.json() : { decisions: [] }; }).catch(function () { return { decisions: [] }; })

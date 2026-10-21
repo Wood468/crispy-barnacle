@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import { parseTiers, sane, pickRotation, mayReplace, applyLow, cleanName, sameLow } from "../scripts/low-raids.mjs";
+import { parseTiers, sane, pickRotation, mayReplace, applyLow, cleanName, sameLow, tell } from "../scripts/low-raids.mjs";
 
 const LISTS = `<h2>1-Star Raids</h2><ul><li>Axew</li><li>Goomy</li><li>Jangmo-o</li><li>Frigibax</li></ul>
 <h2>3-Star Raids</h2><ul><li>Alola Ninetales</li><li>Alola Raichu</li><li>Alola Muk</li></ul>
@@ -100,4 +100,9 @@ test("a 'Related guides:' label after the last list is not read as a Pokémon", 
   assert.deepEqual(t.shadowOne, ["Shadow Gastly", "Shadow Gible"]);
   const h2 = html.replace("<p>Related guides:</p>", "").replace("<li>Shadow Kirlia</li>", "<li>Shadow Kirlia</li><li>Shadow Related guides:</li>");
   assert.deepEqual(parseTiers(h2).shadowThree, ["Shadow Kirlia"]);
+});
+
+test("the failure note is only sent when Telegram is set up", async () => {
+  assert.equal(await tell("x", {}), false);
+  assert.equal(await tell("x", { TELEGRAM_BOT_TOKEN: "t", TELEGRAM_CHAT_ID: "1", DRY_RUN: "true" }), false);
 });
