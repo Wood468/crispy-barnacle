@@ -7,7 +7,7 @@ import { discover, get } from "./discover.mjs";
 import { extractFields, hasContent } from "./extract.mjs";
 import { mergeSources } from "./compare.mjs";
 import { pageTitle, htmlToLines } from "./text.mjs";
-import { entriesFromPage, mergeWorld, collapseWorld, parseDateRange, placeOf, cleanTitle, tidyName } from "./world.mjs";
+import { entriesFromPage, mergeWorld, collapseWorld, parseDateRange, placeOf, cleanTitle, tidyName, supersededBySplitPage } from "./world.mjs";
 import { matchEvent } from "../g47ix-review.mjs";
 import { discoverIntl, entryFromIntlPage, INTL_PATTERN } from "./intl.mjs";
 
@@ -87,8 +87,14 @@ async function main() {
     byEvent.set(hit.event.id, arr);
   }
   // Events the live feed does not list: regional, in-person, exclusive and new announcements
-  const entries = [];
-  for (const u of unmatched) { const pg = pages.find(p => p.url === u.url); if (pg) entries.push(...entriesFromPage(pg)); }
+  const entries = [], splitPageUrls = new Set();
+  for (const u of unmatched) {
+    const pg = pages.find(p => p.url === u.url);
+    if (!pg) continue;
+    const found = entriesFromPage(pg);
+    if (found.length > 1) splitPageUrls.add(String(pg.url || "").replace(/\/?$/, "/"));
+    entries.push(...found);
+  }
   // Official pages that exist only in another language (Japan, Korea, Taiwan): in-person events the English lists never show.
   let intlStatus = {};
   try {
@@ -107,7 +113,7 @@ async function main() {
   const today = new Date().toISOString().slice(0, 10), cutoff = new Date(Date.now() - 14 * 864e5).toISOString().slice(0, 10);
   let world = mergeWorld(entries, SOURCE_NAMES).filter(w => !w.start || (w.end || w.start) >= cutoff);
   let oldWorld = []; try { oldWorld = JSON.parse(await readFile(WORLD_OUT, "utf8")).events || []; } catch { /* first run */ }
-  for (const o of oldWorld) if (!world.some(w => w.id === o.id) && (o.sources || []).some(x => /official/i.test(x.name || "") || x.auto) && (o.sources || []).length && !/this week|news this week/i.test(o.name) && (!o.start || (o.end || o.start) >= cutoff) && Date.now() - Date.parse(o.seen || 0) < 30 * 864e5) world.push(o); // keep what a source stopped listing, for a while
+  for (const o of oldWorld) if (!supersededBySplitPage(o, splitPageUrls) && !world.some(w => w.id === o.id) && (o.sources || []).some(x => /official/i.test(x.name || "") || x.auto) && (o.sources || []).length && !/this week|news this week/i.test(o.name) && (!o.start || (o.end || o.start) >= cutoff) && Date.now() - Date.parse(o.seen || 0) < 30 * 864e5) world.push(o); // keep what a source stopped listing, for a while
   let rules = null; try { rules = JSON.parse(await readFile("data/event-aliases.json", "utf8")); } catch { /* no rulings yet */ }
   const collapsed = collapseWorld(world, rules); world = collapsed.events; // one event, one entry, however many sources or old ids
   if (collapsed.merged.length) console.log("Joined duplicate events: " + collapsed.merged.map(m => m.dropped + " into " + m.kept).join("; "));
