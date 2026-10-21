@@ -545,7 +545,7 @@
       "five": "Palkia",
       "mega": "Mega Charizard X and Y",
       "shadow": "Shadow Landorus (Incarnate)",
-      "low": { "one": ["Axew", "Goomy", "Jangmo-o", "Frigibax"], "three": ["Alolan Ninetales", "Alolan Raichu", "Alolan Muk"], "observed": "2026-10-21", "source": "Pokémon GO Hub current raids" },
+      "low": { "one": ["Axew", "Goomy", "Jangmo-o", "Frigibax"], "three": ["Alolan Ninetales", "Alolan Raichu", "Alolan Muk"], "shadowOne": ["Shadow Gastly", "Shadow Totodile", "Shadow Shieldon", "Shadow Gible"], "shadowThree": ["Shadow Primeape", "Shadow Kirlia", "Shadow Drapion", "Shadow Related guides:"], "observed": "2026-10-21", "source": "Pokémon GO Hub current raids" },
       "rh": "Palkia"
     },
     {
