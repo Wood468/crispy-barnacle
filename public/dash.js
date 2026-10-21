@@ -902,7 +902,7 @@
         var f = window.GOTYPES && GOTYPES.facts(n), real = window.GOLIB && GOLIB.raidEventFor(EV, n, label, new Date(r.s).getTime(), new Date(r.e).getTime()), ev = real || raidEvent(n, r);
         var ib = ev ? '<button type="button" class="info-open rc-info" data-infographic="' + esc(ev.id) + '" aria-label="Open infographic for ' + esc(n) + '">▧ Infographic</button>' : '';
         if (real) ib += '<button type="button" class="rc-info rc-details" data-open="' + esc(real.id) + '" aria-label="Open event details for ' + esc(n) + '">ⓘ Details</button>';
-        return '<div class="rc"><div class="rc-form">' + art(n, 'ea') + '<div class="rc-txt"><span class="rl">' + label + '</span><b>' + esc(n) + '</b>' +
+        return '<div class="rc"' + (label === '5★' || label === 'Mega' ? ' data-guide="' + esc(n) + '"' : '') + '><div class="rc-form">' + art(n, 'ea') + '<div class="rc-txt"><span class="rl">' + label + '</span><b>' + esc(n) + '</b>' +
           (f ? '<span class="rtype">' + f.types.map(function (t) { return tico(t); }).join('') + '</span><span class="rweak" title="Weak to">▾ ' + f.weak.map(function (t) { return tico(t); }).join('') + '</span>' : '') + '</div></div>' + ib + '</div>';
       }).join('');
     }
@@ -953,6 +953,26 @@
     el.innerHTML = '<div class="prio-head"><h2 class="sec2">Raid & Max Battle rotation</h2></div>' + tabs +
       (cards ? '<div class="rw-list">' + cards + '</div>' : '<p class="empty">No further rotations are published yet.</p>') +
       '<p class="note">Raid bosses change Wednesdays at 10 am local time. Max Battles feature a new Pokémon on Mondays, 6 am–9 pm local time. Future weeks appear only where schedule data is available.</p>';
+    addGuideLinks(el);
+  }
+  /* A "Counters guide" button on each 5-star and Mega boss, shown only when /api/guide finds the guide (so it never links to a missing page). */
+  var guideCache = {};
+  function addGuideLinks(root) {
+    Array.prototype.forEach.call(root.querySelectorAll('.rc[data-guide]'), function (row) {
+      var boss = row.getAttribute('data-guide');
+      if (!boss) return;
+      var put = function (d) {
+        if (!d || !d.page || !row.isConnected || row.querySelector('.rc-guide')) return;
+        var a = document.createElement('a'); a.className = 'rc-info rc-guide'; a.href = d.page; a.target = '_blank'; a.rel = 'noopener noreferrer';
+        a.textContent = '⚔ Counters guide'; a.setAttribute('aria-label', 'Counters guide for ' + boss + ' on Pokebattler, by CaptGoldfish');
+        row.appendChild(a);
+      };
+      if (guideCache[boss] !== undefined) return put(guideCache[boss]);
+      guideCache[boss] = null;
+      fetch('/api/guide?boss=' + encodeURIComponent(boss)).then(function (r) { return r.ok ? r.json() : null; }).then(function (d) {
+        guideCache[boss] = d && d.url && /^https:\/\/www\.pokebattler\.com\//.test(d.page || '') ? d : null; put(guideCache[boss]);
+      }).catch(function () { guideCache[boss] = null; });
+    });
   }
   document.addEventListener('click', function(e) {
     var b = e.target.closest && e.target.closest('[data-rotweek]');
