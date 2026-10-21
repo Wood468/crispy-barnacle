@@ -36,18 +36,18 @@ export function cleanName(s) {
 }
 const NAME = /^[A-Za-zÀ-ÿ][A-Za-zÀ-ÿ0-9'’.:\- ()♀♂]{1,38}$/;
 const NOT_A_NAME = /\b(current|bosses|boss|raids?|guide|counters?|stars?|tier)\b/i; // a heading or label, not a Pokémon
-const isHeading = l => /\bBosses\b/i.test(l) || /^Current\b/i.test(l) || /\bRaids?\b\s*:?$/i.test(l) || /^Shadow\b.*Raids?/i.test(l) || /^(Last update|Updated)\b/i.test(l) || /^Raid (Hour|Boss)/i.test(l);
+const isHeading = l => /\bBosses\b/i.test(l) || /^Current\b/i.test(l) || /\bRaids?\b\s*:?$/i.test(l) || /^Shadow\b.*Raids?/i.test(l) || /\bShadow Raids?\s*:?$/i.test(l) || /^(Last update|Updated)\b/i.test(l) || /^Raid (Hour|Boss)/i.test(l);
 
 // { one: [...], three: [...], five: [...], mega: [...] } from the headings "1-Star Raids", "3-Star Raids", "5-Star Raids", "Mega Raids".
 export function parseTiers(html) {
   const lines = toLines(html), out = { one: [], three: [], five: [], mega: [], shadowOne: [], shadowThree: [] };
   const key = l => {
-    const s = /^Shadow\s+(?:Tier\s*)?([13])[\s-]*Star Raids?\s*:?$/i.exec(l); if (s) return { 1: "shadowOne", 3: "shadowThree" }[s[1]];
+    const s = /^(?:Shadow\s+(?:Tier\s*)?([13])[\s-]*Star|(?:Tier\s*)?([13])[\s-]*Star\s+Shadow)\s+Raids?\s*:?$/i.exec(l); if (s) return { 1: "shadowOne", 3: "shadowThree" }[s[1] || s[2]];
     const m = /^(?:Tier\s*)?([135])[\s-]*Star Raids?\s*:?$/i.exec(l); if (m) return { 1: "one", 3: "three", 5: "five" }[m[1]]; return /^Mega Raids?\s*:?$/i.test(l) ? "mega" : "";
   };
   for (let i = 0; i < lines.length; i++) {
     let k = key(lines[i]), rest = "";
-    if (!k) { const m = /^((?:Shadow\s+)?(?:Tier\s*)?[135][\s-]*Star Raids?|Mega Raids?)\s*:\s*(.+)$/i.exec(lines[i]); if (m) { k = key(m[1] + ":"); rest = m[2]; } }
+    if (!k) { const m = /^((?:Shadow\s+)?(?:Tier\s*)?[135][\s-]*Star(?:\s+Shadow)?\s+Raids?|Mega Raids?)\s*:\s*(.+)$/i.exec(lines[i]); if (m) { k = key(m[1] + ":"); rest = m[2]; } }
     if (!k || out[k].length) continue; // the first block under each heading only
     const names = [];
     const take = s => { for (const part of String(s).split(/,|·|\|/)) { const n = cleanName(part); if (n && NAME.test(n) && !NOT_A_NAME.test(n) && !/^(none|n\/a|tba|soon)$/i.test(n)) names.push(n); } };
