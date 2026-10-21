@@ -909,8 +909,8 @@
     function lowTier(r) {
       /* 1-3 star bosses, where a source has published them for that rotation. */
       var l = r && r.low; if (!l) return '<p class="muted rw-low">1–3★ raid bosses are not announced for this rotation yet.</p>';
-      return '<div class="rw-low"><span class="rw-label">1–3★ raids' + (l.observed ? ' · as of ' + esc(fmtD(new Date(l.observed + 'T12:00'))) : '') + '</span><div class="rcs rcs-low">' +
-        [['1★', l.one], ['3★', l.three]].map(function (g) { return (g[1] || []).map(function (n) { return cell(g[0], n, r); }).join(''); }).join('') + '</div></div>';
+      return '<div class="rw-low"><span class="rw-label">1–3★ raids' + (l.shadowOne || l.shadowThree ? ' and Shadow raids' : '') + (l.observed ? ' · as of ' + esc(fmtD(new Date(l.observed + 'T12:00'))) : '') + '</span><div class="rcs rcs-low">' +
+        [['1★', l.one], ['3★', l.three], ['Shadow 1★', l.shadowOne], ['Shadow 3★', l.shadowThree]].map(function (g) { return (g[1] || []).map(function (n) { return cell(g[0], n, r); }).join(''); }).join('') + '</div></div>';
     }
     function weekCard(offset) {
       var a = addDay(monday, offset * 7), b = addDay(a, 6), mid = addDay(a, 2); mid.setHours(11, 0, 0, 0);

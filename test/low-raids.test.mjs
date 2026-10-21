@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import { parseTiers, sane, pickRotation, mayReplace, applyLow, cleanName } from "../scripts/low-raids.mjs";
+import { parseTiers, sane, pickRotation, mayReplace, applyLow, cleanName, sameLow } from "../scripts/low-raids.mjs";
 
 const LISTS = `<h2>1-Star Raids</h2><ul><li>Axew</li><li>Goomy</li><li>Jangmo-o</li><li>Frigibax</li></ul>
 <h2>3-Star Raids</h2><ul><li>Alola Ninetales</li><li>Alola Raichu</li><li>Alola Muk</li></ul>
@@ -69,4 +69,19 @@ test("a heading after a list is not read as a Pokémon", () => {
   assert.deepEqual(t.one, ["Axew", "Goomy"]); assert.deepEqual(t.three, ["Alolan Muk"]); assert.deepEqual(t.five, ["Palkia"]);
   // a heading ends the list, and is never kept as a name
   assert.deepEqual(parseTiers('<h2>1-Star Raids</h2><ul><li>Axew</li><li>Current Shadow Raid Bosses</li><li>Goomy</li></ul>').one, ["Axew"]);
+});
+
+test("Shadow 1-star and 3-star raids are read under their own headings, and always named 'Shadow X'", () => {
+  const li = n => '<li><img alt="Sprite of ' + n + ' from Pokémon GO"><span>' + n + '</span><img alt="Fighting type icon"></li>';
+  const html = '<h2>1-Star Raids</h2><ul>' + li("Axew") + '</ul><h2>3-Star Raids</h2><ul>' + li("Alola Muk") + '</ul><h2>5-Star Raids</h2><ul>' + li("Palkia") + '</ul>'
+    + '<h3>Current Shadow Raid Bosses</h3><h2>Shadow 5-Star Raids</h2><ul><li>Incarnate Shadow Landorus</li></ul>'
+    + '<h2>Shadow 3-Star Raids</h2><ul>' + li("Shadow Primeape") + li("Primeape (Shadow)") + "<li>Shadow Kirlia</li><li>Shadow Drapion</li></ul>"
+    + '<h2>Shadow 1-Star Raids</h2><ul><li>Shadow Gastly</li><li>Shadow Totodile</li><li>Shadow Shieldon</li><li>Shadow Gible</li></ul><p>Last update: October 20, 2026</p>';
+  const t = parseTiers(html);
+  assert.deepEqual(t.shadowThree, ["Shadow Primeape", "Shadow Kirlia", "Shadow Drapion"]);
+  assert.deepEqual(t.shadowOne, ["Shadow Gastly", "Shadow Totodile", "Shadow Shieldon", "Shadow Gible"]);
+  assert.deepEqual(t.one, ["Axew"]); assert.deepEqual(t.three, ["Alolan Muk"]); assert.deepEqual(t.five, ["Palkia"]);
+  assert.ok(sane(t));
+  assert.deepEqual(parseTiers(LISTS).shadowOne, [], "a page with no Shadow 1-star list gives none");
+  assert.ok(!sameLow({ one: ["Axew"], three: ["Alolan Muk"] }, { one: ["Axew"], three: ["Alolan Muk"], shadowOne: ["Shadow Gastly"] }), "adding shadow bosses counts as a change");
 });
