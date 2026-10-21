@@ -35,7 +35,8 @@ export function cleanName(s) {
   return n;
 }
 const NAME = /^[A-Za-zÀ-ÿ][A-Za-zÀ-ÿ0-9'’.:\- ()♀♂]{1,38}$/;
-const isHeading = l => /\bRaids?\b\s*:?$/i.test(l) || /^Shadow\b.*Raids?/i.test(l) || /^(Last update|Updated)\b/i.test(l) || /^Raid (Hour|Boss)/i.test(l);
+const NOT_A_NAME = /\b(current|bosses|boss|raids?|guide|counters?|stars?|tier|shadow)\b/i; // a heading or label, not a Pokémon (Shadow bosses are listed under their own headings)
+const isHeading = l => /\bBosses\b/i.test(l) || /^Current\b/i.test(l) || /\bRaids?\b\s*:?$/i.test(l) || /^Shadow\b.*Raids?/i.test(l) || /^(Last update|Updated)\b/i.test(l) || /^Raid (Hour|Boss)/i.test(l);
 
 // { one: [...], three: [...], five: [...], mega: [...] } from the headings "1-Star Raids", "3-Star Raids", "5-Star Raids", "Mega Raids".
 export function parseTiers(html) {
@@ -46,7 +47,7 @@ export function parseTiers(html) {
     if (!k) { const m = /^((?:Tier\s*)?[135][\s-]*Star Raids?|Mega Raids?)\s*:\s*(.+)$/i.exec(lines[i]); if (m) { k = key(m[1] + ":"); rest = m[2]; } }
     if (!k || out[k].length) continue; // the first block under each heading only
     const names = [];
-    const take = s => { for (const part of String(s).split(/,|·|\|/)) { const n = cleanName(part); if (n && NAME.test(n) && !/^(none|n\/a|tba|soon)$/i.test(n)) names.push(n); } };
+    const take = s => { for (const part of String(s).split(/,|·|\|/)) { const n = cleanName(part); if (n && NAME.test(n) && !NOT_A_NAME.test(n) && !/^(none|n\/a|tba|soon)$/i.test(n)) names.push(n); } };
     if (rest) take(rest);
     for (let j = i + 1; j < lines.length && !rest && names.length < 12; j++) { if (key(lines[j]) || isHeading(lines[j])) break; take(lines[j]); }
     out[k] = [...new Set(names)];

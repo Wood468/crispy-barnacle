@@ -61,3 +61,12 @@ test("Hub-style pictures: sprite alt text gives the name, type and egg icons are
   assert.deepEqual(t.three, ["Alolan Ninetales", "Alolan Raichu", "Alolan Muk"]);
   assert.deepEqual(t.five, ["Palkia"]); assert.ok(sane(t));
 });
+
+test("a heading after a list is not read as a Pokémon", () => {
+  const html = '<h2>1-Star Raids</h2><ul><li>Axew</li><li>Goomy</li></ul><h3>Current Shadow Raid Bosses</h3><ul><li>Shadow Gastly</li></ul>'
+    + '<h2>3-Star Raids</h2><ul><li>Alola Muk</li></ul><h4>Current Mega Raid Bosses</h4><h2>5-Star Raids</h2><ul><li>Palkia</li></ul>';
+  const t = parseTiers(html);
+  assert.deepEqual(t.one, ["Axew", "Goomy"]); assert.deepEqual(t.three, ["Alolan Muk"]); assert.deepEqual(t.five, ["Palkia"]);
+  // a heading ends the list, and is never kept as a name
+  assert.deepEqual(parseTiers('<h2>1-Star Raids</h2><ul><li>Axew</li><li>Current Shadow Raid Bosses</li><li>Goomy</li></ul>').one, ["Axew"]);
+});
