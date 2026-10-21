@@ -144,20 +144,38 @@ export async function runDiscord(env, opts = {}) {
   if (!msgs.length) return { sent: [], note: "nothing new" };
   const last = msgs[msgs.length - 1].id;
   if (!state.last) { await setState(env.DB, "discord", { last }); return { sent: [], note: "starting point noted" }; }
-  const sent = [], ids = await getState(env.DB, "discord_msgs", {});
-  for (const m of msgs.slice(-10)) {
-    const img = (m.attachments || []).find(a => /^image\//.test(a.content_type || "") || /\.(png|jpe?g|webp)(\?|$)/i.test(a.url || ""));
-    const url = img ? img.url : ((m.embeds || []).map(e => e.image && e.image.url).find(Boolean) || "");
-    if (!url) continue;
-    const id = "discord:" + m.id, text = String(m.content || "").replace(/\s+/g, " ").trim().slice(0, 300);
-    const body = { chat_id: env.TELEGRAM_CHAT_ID, photo: url, caption: ("New on Discord" + (text ? ": " + text : "") + "\nSuggested events will appear on this message.").slice(0, 900), reply_markup: keyboard({ id, guesses: []}, [], APP) };
-    const ok = await f("https://api.telegram.org/bot" + env.TELEGRAM_BOT_TOKEN + "/sendPhoto", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(body) }).then(async x => (x.ok ? ((await x.json().catch(() => null)) || {}).result || {} : null)).catch(() => null);
-    if (ok) { sent.push(id); if (ok.message_id) ids[id] = ok.message_id; }
+  const sent = [], ids = await getState(env.DB, "discord_msgs", {}), stuck = state.stuck || {};
+  const post = (method, body) => f("https://api.telegram.org/bot" + env.TELEGRAM_BOT_TOKEN + "/" + method, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(body) }).then(async x => (x.ok ? ((await x.json().catch(() => null)) || {}).result || {} : null)).catch(() => null);
+  // The cursor only moves past a message once it was handled. A picture Telegram refuses is tried again next hour (3 tries, then skipped),
+  // and a busy channel is worked through 10 pictures per run instead of dropping the older ones.
+  let cursor = state.last, handled = 0, blocked = null;
+  for (const m of msgs) {
+    if (handled >= 10) break;
+    const { url, text: raw } = discordPicture(m);
+    if (url) {
+      const id = "discord:" + m.id, text = String(raw).replace(/\s+/g, " ").trim().slice(0, 300), caption = ("New on Discord" + (text ? ": " + text : "") + "\nSuggested events will appear on this message.").slice(0, 900), reply_markup = keyboard({ id, guesses: [] }, [], APP);
+      let ok = await post("sendPhoto", { chat_id: env.TELEGRAM_CHAT_ID, photo: url, caption, reply_markup });
+      if (!ok) ok = await post("sendMessage", { chat_id: env.TELEGRAM_CHAT_ID, text: (caption.split("\nSuggested")[0] + "\n" + url + "\nSuggested events will appear on this message.").slice(0, 3900), reply_markup }); // Telegram refused the picture itself (too big, odd shape): send the link instead
+      if (ok) { sent.push(id); if (ok.message_id) ids[id] = ok.message_id; }
+      else { const n = (stuck.id === m.id ? stuck.n : 0) + 1; if (n < 3) { blocked = { id: m.id, n }; break; } }
+      handled++;
+    }
+    cursor = m.id;
   }
   const keep = Object.fromEntries(Object.entries(ids).slice(-100));
   await setState(env.DB, "discord_msgs", keep);
-  await setState(env.DB, "discord", { last });
-  return { sent };
+  await setState(env.DB, "discord", { last: cursor, stuck: blocked || {} });
+  return blocked ? { sent, note: "Telegram refused " + blocked.id + " (try " + blocked.n + " of 3); will retry next hour" } : { sent };
+}
+// The first picture in a Discord message. Forwarded and crossposted posts keep their media under message_snapshots, and some posts carry it only as an embed thumbnail.
+export function discordPicture(m) {
+  const parts = [m, ...(((m && m.message_snapshots) || []).map(s => s && s.message).filter(Boolean))];
+  for (const p of parts) {
+    const img = (p.attachments || []).find(a => a && (/^image\//.test(a.content_type || "") || /\.(png|jpe?g|webp)(\?|$)/i.test(a.url || "")));
+    const url = img ? img.url : ((p.embeds || []).map(e => e && ((e.image && e.image.url) || (e.thumbnail && e.thumbnail.url))).find(Boolean) || "");
+    if (url) return { url, text: String(m.content || p.content || "") };
+  }
+  return { url: "", text: "" };
 }
 
 // Watchdog. The importer, store watch, site check and the rest run as GitHub scheduled jobs, so nothing inside GitHub can tell you they
