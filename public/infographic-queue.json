@@ -2,7 +2,7 @@
  "updated": "2026-10-20T22:51:48.870Z",
  "items": [
   {
-   "linked": false,
+   "linked": true,
    "id": "discord:1562196937434726410",
    "title": "Charizard",
    "image": "/infographics/g47ix/discord-1562196937434726410.png",
@@ -16,7 +16,7 @@
    "guesses": []
   },
   {
-   "linked": false,
+   "linked": true,
    "id": "discord:1562196923555913858",
    "title": "Palkia",
    "image": "/infographics/g47ix/discord-1562196923555913858.png",

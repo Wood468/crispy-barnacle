@@ -844,6 +844,50 @@
           "alt": "Pokémon GO Tour 2027: Kaohsiung infographic"
         }
       ]
+    },
+    "raid:palkia:2026-10-21": {
+      "names": [
+        "Palkia 5-star raids"
+      ],
+      "source": {
+        "label": "G47IX",
+        "trust": "community",
+        "url": "https://discord.com/channels/@me/1558793395198099618/1562196923555913858",
+        "observed": "2026-10-21"
+      },
+      "tickets": [],
+      "info": [],
+      "infographics": [
+        {
+          "label": "Infographic · G47IX",
+          "url": "/infographics/g47ix/discord-1562196923555913858.png",
+          "source": "G47IX",
+          "sourceUrl": "https://discord.com/channels/@me/1558793395198099618/1562196923555913858",
+          "alt": "Palkia 5-star raids infographic"
+        }
+      ]
+    },
+    "leekduck:mega-charizard-x-mega-charizard-y-in-mega-raids-october-2026": {
+      "names": [
+        "Mega Charizard X and Mega Charizard Y in Mega Raids"
+      ],
+      "source": {
+        "label": "G47IX",
+        "trust": "community",
+        "url": "https://discord.com/channels/@me/1558793395198099618/1562196937434726410",
+        "observed": "2026-10-21"
+      },
+      "tickets": [],
+      "info": [],
+      "infographics": [
+        {
+          "label": "Infographic · G47IX",
+          "url": "/infographics/g47ix/discord-1562196937434726410.png",
+          "source": "G47IX",
+          "sourceUrl": "https://discord.com/channels/@me/1558793395198099618/1562196937434726410",
+          "alt": "Mega Charizard X and Mega Charizard Y in Mega Raids infographic"
+        }
+      ]
     }
   },
   "passes": {
