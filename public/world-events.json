@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-20T23:14:49.377Z",
+ "updated": "2026-10-21T01:41:58.026Z",
  "events": [
   {
    "id": "w-pokemon-fossil-museum-2026",
@@ -18,7 +18,7 @@
     }
    ],
    "status": "single",
-   "seen": "2026-10-20"
+   "seen": "2026-10-21"
   },
   {
    "id": "w-pokemon-jet-red-collaboration-event",
@@ -37,7 +37,7 @@
     }
    ],
    "status": "single",
-   "seen": "2026-10-20"
+   "seen": "2026-10-21"
   },
   {
    "id": "w-pikachu-s-autumn-adventure",
@@ -56,7 +56,7 @@
     }
    ],
    "status": "single",
-   "seen": "2026-10-20"
+   "seen": "2026-10-21"
   },
   {
    "id": "w-pokemon-x-adidas",
@@ -104,7 +104,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-10-20"
+   "seen": "2026-10-21"
   },
   {
    "id": "w-pokemon-go-x-esa-london",
@@ -152,7 +152,7 @@
     }
    ],
    "status": "single",
-   "seen": "2026-10-20"
+   "seen": "2026-10-21"
   },
   {
    "id": "w-pokemon-go-lab-big-adventure",
@@ -171,7 +171,7 @@
     }
    ],
    "status": "single",
-   "seen": "2026-10-20"
+   "seen": "2026-10-21"
   },
   {
    "id": "w-pokexciting-taipei",
@@ -190,7 +190,7 @@
     }
    ],
    "status": "single",
-   "seen": "2026-10-20"
+   "seen": "2026-10-21"
   },
   {
    "id": "w-pok-mon-run-30-taichung",
@@ -228,7 +228,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-10-20"
+   "seen": "2026-10-21"
   },
   {
    "id": "w-aeon-mall-halloween",
@@ -276,7 +276,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-10-20"
+   "seen": "2026-10-21"
   },
   {
    "id": "w-fc-seoul",
@@ -373,7 +373,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-10-20"
+   "seen": "2026-10-21"
   },
   {
    "id": "w-go-wild-area-2026-mexico-city",
@@ -392,7 +392,7 @@
     }
    ],
    "status": "single",
-   "seen": "2026-10-20"
+   "seen": "2026-10-21"
   },
   {
    "id": "w-go-wild-area-2026-sendai-tohoku",
@@ -411,7 +411,7 @@
     }
    ],
    "status": "single",
-   "seen": "2026-10-20"
+   "seen": "2026-10-21"
   },
   {
    "id": "w-pok-xciting-lands-at-changi-airport-and-jewel-get-",
@@ -430,7 +430,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-10-20"
+   "seen": "2026-10-21"
   },
   {
    "id": "w-pok-mon-run-30-singapore",
@@ -468,7 +468,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-10-20"
+   "seen": "2026-10-21"
   },
   {
    "id": "w-into-the-wild",
@@ -687,15 +687,10 @@
      "id": "official",
      "name": "Pokémon GO (official)",
      "url": "https://pokemongo.com/news/save-the-date-go-tour-2027/"
-    },
-    {
-     "id": "official",
-     "name": "Pokémon GO (official)",
-     "url": "https://pokemongo.com/ko/news/save-the-date-go-tour-2027/"
     }
    ],
    "status": "official",
-   "seen": "2026-10-20"
+   "seen": "2026-10-21"
   },
   {
    "id": "w-pokemon-go-tour-2027-los-angeles",
