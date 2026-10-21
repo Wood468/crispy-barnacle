@@ -50,3 +50,14 @@ test("editing the real data.json changes only the one rotation's low block", () 
   assert.deepEqual(JSON.parse(again).rotation.find(r => r.s === target.s).low.one, ["Axew"], "a second run replaces the block");
   assert.equal(out.split("\n").length - raw.split("\n").length <= 1, true, "about one line added");
 });
+
+test("Hub-style pictures: sprite alt text gives the name, type and egg icons are ignored", () => {
+  const li = (n, types) => '<li><img src="s.png" alt="Sprite of ' + n + ' from Pokémon GO"><span>' + n.replace("Alola ", "Alolan ") + '</span>' + types.map(t => '<img alt="' + t + ' type icon">').join("") + "</li>";
+  const html = '<h2>1-Star Raids</h2><ul>' + li("Axew", ["Dragon"]) + li("Goomy", ["Dragon"]) + li("Jangmo-o", ["Dragon"]) + li("Frigibax", ["Dragon", "Ice"]) + "</ul>"
+    + '<h2>3-Star Raids</h2><ul>' + li("Alola Ninetales", ["Ice", "Fairy"]) + li("Alola Raichu", ["Electric", "Psychic"]) + li("Alola Muk", ["Poison", "Dark"]) + "</ul>"
+    + '<h2>5-Star Raids</h2><ul>' + li("Palkia", ["Water", "Dragon"]) + '<li><img alt="Mega Raid Egg icon"></li></ul>';
+  const t = parseTiers(html);
+  assert.deepEqual(t.one, ["Axew", "Goomy", "Jangmo-o", "Frigibax"]);
+  assert.deepEqual(t.three, ["Alolan Ninetales", "Alolan Raichu", "Alolan Muk"]);
+  assert.deepEqual(t.five, ["Palkia"]); assert.ok(sane(t));
+});
