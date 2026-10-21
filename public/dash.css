@@ -628,6 +628,7 @@ header.top{display:flex;align-items:flex-start;justify-content:space-between;gap
 .rw-low{margin-top:4px}
 .rw-low .rc .art.ea{width:52px;height:52px}
 .rc-info{flex:none;min-height:34px;padding:6px 12px;border-radius:999px;border:1px solid var(--line);background:var(--bg);color:var(--fg);font:600 .72rem var(--mono);cursor:pointer}
+.rc-guide{display:inline-flex;align-items:center;text-decoration:none}
 .rc-info.info-available{background:var(--inv-bg);color:var(--inv-fg);border-color:transparent}
 /* Buttons sit on their own line under the name, so long names never get squeezed into a narrow column. */
 .rw-raid .rc{flex-wrap:wrap;row-gap:8px}
