@@ -1,6 +1,53 @@
 {
- "updated": "2026-10-21T14:47:29.171Z",
+ "updated": "2026-10-21T19:50:16.132Z",
  "items": [
+  {
+   "linked": false,
+   "id": "discord:1562540565692809337",
+   "title": "@Infographics Notify",
+   "image": "/infographics/g47ix/discord-1562540565692809337.jpg",
+   "post": "https://discord.com/channels/@me/1558793395198099618/1562540565692809337",
+   "creator": "",
+   "publishedAt": "2026-10-21T18:58:21.461000+00:00",
+   "note": "Match is not strong enough (low).",
+   "history": false,
+   "signals": [
+    "picture text names the event",
+    "posted around the event"
+   ],
+   "text": "fy G wo ww hel ee) ~4 \\e \\ ny i) Front 2:00 pm 5:00 pm ALA aie ecial BG +4 Shiny Chance #624 Pawniard ANE Chance ————~, =) oe i a (ex. Daily Adv. Incense Hatch Candy Chance Photobomb Lure Incense) Dis",
+   "guesses": [
+    {
+     "eventId": "smr1",
+     "eventTitle": "Super Mega Raid Day",
+     "score": 0.411
+    },
+    {
+     "eventId": "smr2",
+     "eventTitle": "Super Mega Raid Day",
+     "score": 0.397
+    },
+    {
+     "eventId": "sandile",
+     "eventTitle": "Sandile Hatch Day",
+     "score": 0.277
+    }
+   ]
+  },
+  {
+   "linked": false,
+   "id": "discord:1562517453307650109",
+   "title": "CD NOV 26",
+   "image": "/infographics/g47ix/discord-1562517453307650109.png",
+   "post": "https://discord.com/channels/@me/1558793395198099618/1562517453307650109",
+   "creator": "",
+   "publishedAt": "2026-10-21T17:26:31.039000+00:00",
+   "note": "No event name found in the caption or image text.",
+   "history": false,
+   "signals": [],
+   "text": "\\f Sf UR we re) \\s jeoe 2:00 pm 5:00 pm ‘ir a6 | eco alasic aT epee BG He + Shiny Chance #624 Pawniard mr: Chance +* ~1/35 a ESsee Incense (ex. Daily Adv Distance Hatch Candy Chance Photobomb Lure Inc",
+   "guesses": []
+  },
   {
    "linked": true,
    "id": "discord:1562287413798375506",

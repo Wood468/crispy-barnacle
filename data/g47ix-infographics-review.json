@@ -7,6 +7,77 @@
   "eventImages": {},
   "candidates": [
     {
+      "id": "discord:1562540565692809337",
+      "source": "discord",
+      "creator": "",
+      "title": "@Infographics Notify",
+      "url": "https://discord.com/channels/@me/1558793395198099618/1562540565692809337",
+      "publishedAt": "2026-10-21T18:58:21.461000+00:00",
+      "imageUrl": "https://pbs.twimg.com/media/HVK4SxmXMAApohz.jpg",
+      "reviewStatus": "needs_review",
+      "decision": "pending",
+      "ocrChecked": true,
+      "ocrText": "fy G wo ww hel ee) ~4 \\e \\ ny i) Front 2:00 pm 5:00 pm ALA aie ecial BG +4 Shiny Chance #624 Pawniard ANE Chance ————~, =) oe i a (ex. Daily Adv. Incense Hatch Candy Chance Photobomb Lure Incense) Distance for catching for Candy XL Surprise Modules £50 is OES Kowtow AR BA Cleave set t+ a3 a re) = Pa tr Evolve +1 Special Additional Field 614 ©°0 60 oe between GD Trade lure spawns Research Raid | Mega Evolve Spacial Freeze Ice for Extra Bonuses & & Rend od Shock Burn $ SB Use Adventure Wr ef iss or other Effects D Roar oftime J. Future Sight | low for more Check in 2 Paid G47IX for Additional usD Special Suse ¥ Qo08xB Rewards Research VW",
+      "eventMatch": {
+        "eventId": "smr1",
+        "eventTitle": "Super Mega Raid Day",
+        "score": 0.411,
+        "confidence": "low",
+        "matchedTerms": [
+          "mega",
+          "raid",
+          "shiny",
+          "chance",
+          "extra",
+          "bonuses"
+        ],
+        "alternatives": [
+          {
+            "eventId": "smr1",
+            "eventTitle": "Super Mega Raid Day",
+            "score": 0.411
+          },
+          {
+            "eventId": "smr2",
+            "eventTitle": "Super Mega Raid Day",
+            "score": 0.397
+          },
+          {
+            "eventId": "sandile",
+            "eventTitle": "Sandile Hatch Day",
+            "score": 0.277
+          }
+        ],
+        "method": "title-to-public/data.json heuristic",
+        "requiresHumanVerification": true
+      },
+      "reviewNote": "Match is not strong enough (low).",
+      "signals": [
+        "picture text names the event",
+        "posted around the event"
+      ],
+      "matchScore": 3,
+      "stagedPath": "/infographics/g47ix/discord-1562540565692809337.jpg"
+    },
+    {
+      "id": "discord:1562517453307650109",
+      "source": "discord",
+      "creator": "",
+      "title": "CD NOV 26",
+      "url": "https://discord.com/channels/@me/1558793395198099618/1562517453307650109",
+      "publishedAt": "2026-10-21T17:26:31.039000+00:00",
+      "imageUrl": "https://cdn.discordapp.com/attachments/886998693897719819/1562512076704981042/CD_NOV_26.png?ex=6ada4245&is=6ad8f0c5&hm=d8153a08499689710e3c6a4c3a9222a7e4698e7c81dbfb3d0848948085d23ba9&",
+      "reviewStatus": "unmatched",
+      "decision": "pending",
+      "ocrChecked": true,
+      "ocrText": "\\f Sf UR we re) \\s jeoe 2:00 pm 5:00 pm ‘ir a6 | eco alasic aT epee BG He + Shiny Chance #624 Pawniard mr: Chance +* ~1/35 a ESsee Incense (ex. Daily Adv Distance Hatch Candy Chance Photobomb Lure Incense) for eerthinc for Candy XL Surprise Modules Kowtow fe 2 Cleave 4+ sek % = te Evolve Ts | +1 Special Additional Research ield ce ©° © a between Trade lure spawns Mega Evolve Spacial Freeze Ice for Extra Bonuses Use Adventure & Ri Rend %) Shock Burn Siac Wr i EJee or other Effects BD Roar of Time 2 Future Sight+ ow for more g G47IX \\EENE Check in Paid Try Rewards Community for Additional y Research Special Fuse Oaxe Wi",
+      "eventMatch": null,
+      "reviewNote": "No event name found in the caption or image text.",
+      "signals": [],
+      "matchScore": 0,
+      "stagedPath": "/infographics/g47ix/discord-1562517453307650109.png"
+    },
+    {
       "id": "discord:1562287413902975109",
       "source": "discord",
       "creator": "",
