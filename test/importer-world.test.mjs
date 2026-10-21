@@ -19,6 +19,9 @@ test("splits multi-stop dates and places found in one official paragraph", async
     lines: [{
       t: "p",
       text: "Pokémon Night Out is taking place at Intuit Dome in Los Angeles, USA, on October 24, 2026, and at the O2 Arena in London, England, on November 10, 2026, and attending Trainers will have the opportunity to enjoy additional event bonuses in Pokémon GO!"
+    }, {
+      t: "p",
+      text: "Additional bonuses are available at the event venue."
     }]
   };
   const stops = stopsFromPage(page, "2026-10-22");
