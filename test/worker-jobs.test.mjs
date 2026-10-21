@@ -76,7 +76,7 @@ test("Discord forwarding: refused pictures fall back to a link, retry, then move
   const env = { DB: db, DISCORD_TOKEN: "d", CHANNEL_ID: "1", TELEGRAM_BOT_TOKEN: "t", TELEGRAM_CHAT_ID: "9" };
   let msgs = [{ id: "1000" }], tgMode = "ok";
   const f = async (u, o) => {
-    if (u.includes("discord.com")) return { ok: true, json: async () => msgs };
+    if (new URL(u).hostname === "discord.com") return { ok: true, json: async () => msgs };
     const method = /\/(\w+)$/.exec(u)[1]; sentTo.push(method);
     if (tgMode === "down") return { ok: false, json: async () => ({}) };
     if (tgMode === "photo-refused" && method === "sendPhoto") return { ok: false, json: async () => ({}) };
