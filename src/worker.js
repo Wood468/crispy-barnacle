@@ -180,13 +180,29 @@ export function guideSlug(name) {
   return slug ? slug + (mega ? "_MEGA" : "") : "";
 }
 // Mega X/Y forms have no single known page name, so try the likely ones in order; a miss just means no image.
-export function guideSlugs(name) {
+function baseGuideSlugs(name) {
   const base = guideSlug(name);
   if (!base) return [];
   const xy = /^(?:Mega|Primal)\s+.*\s+([XY])$/i.exec(String(name).trim());
   if (!xy) return [base];
   const b = base.replace(/_MEGA$/, ""), L = xy[1].toUpperCase();
   return [b + "_MEGA_" + L, b + "_" + L + "_MEGA", base];
+}
+// Tries the likely Pokebattler page names in order (a miss just means no image). Handles the cases a plain name gets wrong:
+// "Mega Charizard X and Y" (one slot, two Pokémon: the X guide), named forms ("Zacian (Hero)" is ZACIAN_HERO_FORM, "Origin Forme Giratina"),
+// and Pokémon whose page ends in _RAID (Xurkitree). Shadow bosses are left as they were.
+export function guideSlugs(name) {
+  let n = String(name || "").trim();
+  if (!n || /^shadow\s/i.test(n)) return baseGuideSlugs(n);
+  n = n.replace(/^((?:Mega|Primal)\s+.*?)\s+X\s+and\s+Y$/i, "$1 X");
+  let form = "", m;
+  if ((m = /^(.+?)\s*\(([A-Za-z]{3,12})\)$/.exec(n))) { n = m[1].trim(); form = m[2]; }
+  else if ((m = /^([A-Za-z]{3,12})\s+Forme\s+(.+)$/i.exec(n))) { form = m[1]; n = m[2].trim(); }
+  const base = baseGuideSlugs(n);
+  if (!base.length) return [];
+  if (form) { const b = guideSlug(n), f = form.toUpperCase(); return [b + "_" + f + "_FORM", b + "_" + f]; }
+  const mega = /^(Mega|Primal)\s/i.test(n);
+  return mega ? base : [...base, base[0] + "_RAID"];
 }
 export function guideImage(html) {
   const m = String(html || "").match(/https:\/\/static\.pokebattler\.com\/CaptGoldfish\/[A-Za-z0-9_\-]*Raid_Guide[A-Za-z0-9_\-]*\.(?:jpe?g|png|webp)/i);

@@ -88,6 +88,12 @@ test("Pokebattler guide slugs and image pick-up", () => {
   assert.deepEqual(guideSlugs("Mega Charizard X"), ["CHARIZARD_MEGA_X", "CHARIZARD_X_MEGA", "CHARIZARD_MEGA"]);
   assert.deepEqual(guideSlugs("Mega Blastoise"), ["BLASTOISE_MEGA"]);
   assert.deepEqual(guideSlugs("../etc"), []);
+  assert.deepEqual(guideSlugs("Zacian (Hero)"), ["ZACIAN_HERO_FORM", "ZACIAN_HERO"]);
+  assert.deepEqual(guideSlugs("Origin Forme Giratina"), ["GIRATINA_ORIGIN_FORM", "GIRATINA_ORIGIN"]);
+  assert.deepEqual(guideSlugs("Mega Charizard X and Y"), ["CHARIZARD_MEGA_X", "CHARIZARD_X_MEGA", "CHARIZARD_MEGA"]);
+  assert.deepEqual(guideSlugs("Xurkitree"), ["XURKITREE", "XURKITREE_RAID"]);
+  assert.deepEqual(guideSlugs("Yveltal"), ["YVELTAL", "YVELTAL_RAID"]);
+  assert.deepEqual(guideSlugs("Shadow Landorus (Incarnate)"), []);
   assert.equal(guideImage('<a href="https://static.pokebattler.com/CaptGoldfish/Mega_Blastoise_Raid_Guide4.jpg">x</a><img src="https://static.pokebattler.com/CaptGoldfish/Mega_Blastoise_Article_Thumbnail.jpg">'), "https://static.pokebattler.com/CaptGoldfish/Mega_Blastoise_Raid_Guide4.jpg");
   assert.equal(guideImage("<html></html>"), "");
 });
