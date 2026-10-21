@@ -7,6 +7,55 @@
   "eventImages": {},
   "candidates": [
     {
+      "id": "discord:1562287413902975109",
+      "source": "discord",
+      "creator": "",
+      "title": "@Infographics Notify",
+      "url": "https://discord.com/channels/@me/1558793395198099618/1562287413902975109",
+      "publishedAt": "2026-10-21T02:12:25.371000+00:00",
+      "imageUrl": "https://pbs.twimg.com/media/HVGWaLZWUAAx8XI.jpg",
+      "reviewStatus": "unmatched",
+      "decision": "pending",
+      "ocrChecked": true,
+      "ocrText": "a 21 - 27 OCT = M a ww YS CHARIZARD Y 47739 CP “It is said that Charizard’s fire burns hotter if it has ran experienced harsh battles.” has Weakness @ @o Difficulty: 1+ trainers needed ie: ? ° {e) . Sunny ' Windy Ad 13 CP %ws 2064 CP Boost . > > S ¢ e@ Js @: \\y yy iy @ smack Down @ Rock Slide @ Smack Dows @ Rock Throw ae A 2 @ Rock Wrecke: @ Meteor Beam and Zacian’s or Mewtwo X Adventure Effect if needed. Remember to use proper counters, Party Play Follow for more: ‘yale G47IX @@@X @ | 947ix.pro",
+      "eventMatch": null,
+      "reviewNote": "No event name found in the caption or image text.",
+      "signals": [],
+      "matchScore": 0,
+      "stagedPath": "/infographics/g47ix/discord-1562287413902975109.jpg"
+    },
+    {
+      "id": "discord:1562287413798375506",
+      "source": "discord",
+      "creator": "",
+      "title": "@Infographics Notify",
+      "url": "https://discord.com/channels/@me/1558793395198099618/1562287413798375506",
+      "publishedAt": "2026-10-21T02:12:25.346000+00:00",
+      "imageUrl": "https://pbs.twimg.com/media/HVGWLhFXsAEAFbQ.jpg",
+      "reviewStatus": "needs_review",
+      "decision": "pending",
+      "ocrChecked": true,
+      "ocrText": "#a PALKIA 54793 CP ay y] yy “It is said to live in a gap in the spatial dimension parallel to ours. It appears in mythology.” — Weakness o@ yoy Difficulty: 2+ trainers needed Y) ay J @ % 2280 cP#we2850 CP Boost Rainy Windy Zz > ragon Tail n Te rail c ® Dynamax Cannon / @ Breal ipe > @ Outrage+ ® Breal = A ~ A (® Dra Ww Z = ® Dragon Tail ® Dragon Breath yy @ Freeze Shock (=! ® Roar of Time 4 Hf a Remember to use proper counters, Party Play Follow for more: and Zacian’s Adventure Effect if needed. G47IX @@@X @ | g47ix.pro ‘er",
+      "eventMatch": {
+        "eventId": "raid:palkia:2026-10-21",
+        "eventTitle": "Palkia 5-star raids",
+        "score": 0.6,
+        "via": "palkia",
+        "alternatives": [
+          {
+            "eventId": "raid:palkia:2026-10-21",
+            "eventTitle": "Palkia 5-star raids",
+            "score": 0.6,
+            "via": "palkia"
+          }
+        ]
+      },
+      "reviewNote": "No event name in the picture, but it shows palkia. Check these events.",
+      "signals": [],
+      "matchScore": 0,
+      "stagedPath": "/infographics/g47ix/discord-1562287413798375506.jpg"
+    },
+    {
       "id": "discord:1562196937434726410",
       "source": "discord",
       "creator": "",
