@@ -79,3 +79,15 @@ test('telegram: link several events, unlink one, discard; buttons follow what is
   const kb = keyboard(q.items[0], linkedOf(two.decision)).inline_keyboard.flat().map(b => b.text).join('|');
   assert.match(kb, /Unlink T1/); assert.match(kb, /Discard/); assert.doesNotMatch(kb, /Reject/);
 });
+
+test("pictures the app linked by itself are announced too, but only recent ones", () => {
+  const now = new Date("2026-10-22T00:00:00Z");
+  const queue = { items: [
+    { id: "d:new", linked: true, title: "Pawniard CD", publishedAt: "2026-10-21T10:00:00Z", guesses: [{ eventTitle: "Pawniard Community Day" }] },
+    { id: "d:old", linked: true, title: "Old", publishedAt: "2026-09-01T10:00:00Z" },
+    { id: "d:wait", linked: false, title: "Hatch", publishedAt: "2026-10-21T10:00:00Z" }] };
+  const d = buildDigest({ queue, now, only: "queue" });
+  assert.deepEqual(d.items.map(i => i.id), ["d:new", "d:wait"]);
+  assert.match(d.text, /1 infographic waiting for your approval/); assert.match(d.text, /1 infographic added automatically/);
+  assert.match(captionFor(queue.items[0]), /Added automatically: Pawniard CD\nLinked to: Pawniard Community Day/);
+});

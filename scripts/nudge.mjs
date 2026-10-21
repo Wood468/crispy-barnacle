@@ -32,8 +32,13 @@ export function buildDigest({ queue, details, data, world, state = {}, now = new
   const told = { queue: new Set(state.queue || []), conflicts: new Set(state.conflicts || []), events: new Set(state.events || []) };
   const lines = [], next = { queue: [...told.queue], conflicts: [...told.conflicts], events: [...told.events] };
 
-  const newQ = ((queue && queue.items) || []).filter(i => !told.queue.has(i.id) && !i.linked);
-  if (newQ.length) { lines.push("🖼 " + newQ.length + " infographic" + (newQ.length === 1 ? "" : "s") + " waiting for your approval (Menu → Infographic review)."); next.queue.push(...newQ.map(i => i.id)); }
+  // Pictures the app linked to an event by itself are announced too (recent ones only, so the back catalogue is not replayed), so you know the automatic step ran.
+  const fresh = i => !i.history && now.getTime() - new Date(i.publishedAt || 0).getTime() < 3 * 864e5;
+  const newQ = ((queue && queue.items) || []).filter(i => !told.queue.has(i.id) && (!i.linked || fresh(i)));
+  const waiting = newQ.filter(i => !i.linked).length;
+  if (waiting) lines.push("🖼 " + waiting + " infographic" + (waiting === 1 ? "" : "s") + " waiting for your approval (Menu → Infographic review).");
+  if (newQ.length > waiting) lines.push("✅ " + (newQ.length - waiting) + " infographic" + (newQ.length - waiting === 1 ? "" : "s") + " added automatically.");
+  next.queue.push(...newQ.map(i => i.id));
 
   if (only === "queue") { if (!lines.length) return null; next.queue = next.queue.slice(-400); return { text: lines.join("\n") + "\n\n" + APP, state: next, items: newQ }; }
 
@@ -55,9 +60,10 @@ export function buildDigest({ queue, details, data, world, state = {}, now = new
 }
 
 // A picture with buttons (see keyboard in src/telegram.js): link a suggested event, discard, or open the app for another event.
-export const buttonsFor = item => keyboard(item, [], APP);
+export const buttonsFor = item => item.linked ? { inline_keyboard: [[{ text: "Open app", url: APP }]] } : keyboard(item, [], APP);
 export function captionFor(item) {
   const g = (item.guesses || [])[0];
+  if (item.linked) return ("✅ Added automatically: " + (item.title || "infographic").slice(0, 120) + (g && g.eventTitle ? "\nLinked to: " + g.eventTitle : "") + (item.publishedAt ? "\nPosted " + String(item.publishedAt).slice(0, 10) : "")).slice(0, 1000);
   return ((item.title || "New infographic").slice(0, 160) + (item.publishedAt ? "\nPosted " + String(item.publishedAt).slice(0, 10) : "") + (g && g.eventTitle ? "\nBest guess: " + g.eventTitle : "\nNo event match yet") + (item.note ? "\n" + String(item.note).slice(0, 160) : "")).slice(0, 1000);
 }
 // Pictures the Worker already put in Telegram straight from Discord: { "discord:<id>": message_id }.
