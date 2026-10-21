@@ -1,5 +1,5 @@
 {
- "runAt": "2026-10-21T18:44:42.551Z",
+ "runAt": "2026-10-21T22:27:21.034Z",
  "sources": {
   "official": {
    "listed": 24,
@@ -73,11 +73,6 @@
    "source": "leekduck",
    "title": "Mega Dragonite in Mega Raids",
    "url": "https://leekduck.com/events/mega-dragonite-in-mega-raids-october-2026/"
-  },
-  {
-   "source": "leekduck",
-   "title": "Pawniard Community Day",
-   "url": "https://leekduck.com/events/november-communityday2026/"
   }
  ],
  "intl": {
@@ -151,6 +146,13 @@
   "Pokemon Go in Sanriku | July 1st - 11th 2019 | Iwate Prefecture"
  ],
  "gaps": [
+  {
+   "event": "Pawniard Community Day",
+   "field": "shiny",
+   "missingFrom": [
+    "official"
+   ]
+  },
   {
    "event": "Super Mega Raid Day",
    "field": "bonuses",
