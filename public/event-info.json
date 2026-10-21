@@ -895,6 +895,165 @@
           "alt": "Mega Charizard X and Mega Charizard Y in Mega Raids infographic"
         }
       ]
+    },
+    "leekduck:pokemon-night-out-los-angeles-2026": {
+      "names": [
+        "Pokémon Night Out 2026 - Los Angeles"
+      ],
+      "source": {
+        "label": "pokemongo.com news post",
+        "trust": "official",
+        "url": "https://pokemongo.com/news/pokemon-night-out-irl-details2026/",
+        "observed": "2026-10-21"
+      },
+      "tickets": [],
+      "info": [
+        {
+          "k": "Where and when",
+          "status": "published",
+          "text": "24 Oct 2026 at Intuit Dome.",
+          "note": "Start and end times are not published yet. The in-game bonuses are for Trainers at the concert."
+        },
+        {
+          "k": "Bonuses",
+          "status": "published",
+          "text": "Lure Modules last 1 hour during the event. Golden Lure Modules are not included."
+        },
+        {
+          "k": "Spawns",
+          "status": "published",
+          "text": "Gastly, Voltorb, Alolan Marowak, Hoothoot, Murkrow, Houndour, Electrike, Carvanha, Shinx, Zorua, Joltik, Froakie, Dedenne and Rookidee appear more often at the venue. Any of them can be Shiny."
+        },
+        {
+          "k": "Raids",
+          "status": "published",
+          "text": "1-star raids: Pikachu. 3-star raids: Gengar. Both can be Shiny. Ones you catch get a Los Angeles Location Background."
+        },
+        {
+          "k": "Eggs",
+          "status": "not-published",
+          "text": "No egg changes are listed."
+        },
+        {
+          "k": "Research",
+          "status": "published",
+          "text": "Open Pokémon GO at the venue for up to two Timed Research. Rewards include a chance at Toxtricity (Low Key or Amped Form) and the Pokémon Night Out baseball jersey avatar item. If you already claimed the jersey through the Los Angeles Twitch livestream, you will not get it again.",
+          "note": "The specific tasks and the deadline are not published yet."
+        },
+        {
+          "k": "New forms",
+          "status": "published",
+          "text": "Unown P, N and O can appear at the venue.",
+          "note": "Pokémon GO Hub reports all three can be Shiny. The official post does not say."
+        }
+      ],
+      "infographics": []
+    },
+    "leekduck:pokemon-night-out-london-2026": {
+      "names": [
+        "Pokémon Night Out 2026 - London"
+      ],
+      "source": {
+        "label": "pokemongo.com news post",
+        "trust": "official",
+        "url": "https://pokemongo.com/news/pokemon-night-out-irl-details2026/",
+        "observed": "2026-10-21"
+      },
+      "tickets": [],
+      "info": [
+        {
+          "k": "Where and when",
+          "status": "published",
+          "text": "10 Nov 2026 at The O2 Arena.",
+          "note": "Start and end times are not published yet. The in-game bonuses are for Trainers at the concert."
+        },
+        {
+          "k": "Bonuses",
+          "status": "published",
+          "text": "Lure Modules last 1 hour during the event. Golden Lure Modules are not included."
+        },
+        {
+          "k": "Spawns",
+          "status": "published",
+          "text": "Gastly, Voltorb, Alolan Marowak, Hoothoot, Murkrow, Houndour, Electrike, Carvanha, Shinx, Zorua, Joltik, Froakie, Dedenne and Rookidee appear more often at the venue. Any of them can be Shiny."
+        },
+        {
+          "k": "Raids",
+          "status": "published",
+          "text": "1-star raids: Pikachu. 3-star raids: Gengar. Both can be Shiny. Ones you catch get a London Location Background."
+        },
+        {
+          "k": "Eggs",
+          "status": "not-published",
+          "text": "No egg changes are listed."
+        },
+        {
+          "k": "Research",
+          "status": "published",
+          "text": "Open Pokémon GO at the venue for up to two Timed Research. Rewards include a chance at Toxtricity (Low Key or Amped Form) and the Pokémon Night Out baseball jersey avatar item. If you already claimed the jersey through the Los Angeles Twitch livestream, you will not get it again.",
+          "note": "The specific tasks and the deadline are not published yet."
+        },
+        {
+          "k": "New forms",
+          "status": "published",
+          "text": "Unown P, N and O can appear at the venue.",
+          "note": "Pokémon GO Hub reports all three can be Shiny. The official post does not say."
+        }
+      ],
+      "infographics": []
+    },
+    "w-celebrate-the-pok-mon-night-out-events-in-pok-mon-": {
+      "names": [
+        "Pokémon Night Out events in Pokémon GO"
+      ],
+      "source": {
+        "label": "pokemongo.com news post",
+        "trust": "official",
+        "url": "https://pokemongo.com/news/pokemon-night-out-irl-details2026/",
+        "observed": "2026-10-21"
+      },
+      "tickets": [],
+      "info": [
+        {
+          "k": "Where and when",
+          "status": "published",
+          "text": "Los Angeles: 24 Oct 2026 at Intuit Dome. London: 10 Nov 2026 at The O2 Arena.",
+          "note": "Start and end times are not published yet. The in-game bonuses are for Trainers at the concert."
+        },
+        {
+          "k": "Bonuses",
+          "status": "published",
+          "text": "Lure Modules last 1 hour during the event. Golden Lure Modules are not included."
+        },
+        {
+          "k": "Spawns",
+          "status": "published",
+          "text": "Gastly, Voltorb, Alolan Marowak, Hoothoot, Murkrow, Houndour, Electrike, Carvanha, Shinx, Zorua, Joltik, Froakie, Dedenne and Rookidee appear more often at the venue. Any of them can be Shiny."
+        },
+        {
+          "k": "Raids",
+          "status": "published",
+          "text": "1-star raids: Pikachu. 3-star raids: Gengar. Both can be Shiny. Ones you catch get a Location Background for the city you attend (Los Angeles or London)."
+        },
+        {
+          "k": "Eggs",
+          "status": "not-published",
+          "text": "No egg changes are listed."
+        },
+        {
+          "k": "Research",
+          "status": "published",
+          "text": "Open Pokémon GO at the venue for up to two Timed Research. Rewards include a chance at Toxtricity (Low Key or Amped Form) and the Pokémon Night Out baseball jersey avatar item. If you already claimed the jersey through the Los Angeles Twitch livestream, you will not get it again.",
+          "note": "The specific tasks and the deadline are not published yet."
+        },
+        {
+          "k": "New forms",
+          "status": "published",
+          "text": "Unown P, N and O can appear at the venue.",
+          "note": "Pokémon GO Hub reports all three can be Shiny. The official post does not say."
+        }
+      ],
+      "infographics": []
     }
   },
   "passes": {
