@@ -70,6 +70,36 @@ test("Discord pictures are forwarded once; first run only notes the starting poi
   assert.ok(decideTap({ act: "approve", id: "discord:1020000", n: 0 }, { items: [] }, null).error);
 });
 
+test("Discord forwarding: refused pictures fall back to a link, retry, then move on; forwarded snapshots and busy channels are not dropped", async () => {
+  const rows = new Map(); const sentTo = [];
+  const db = { prepare: sql => ({ run: async () => ({}), bind: (...a) => ({ first: async () => (rows.has(a[0]) ? { value: rows.get(a[0]) } : null), run: async () => { if (/INSERT/.test(sql)) rows.set(a[0], a[1]); return {}; } }) }) };
+  const env = { DB: db, DISCORD_TOKEN: "d", CHANNEL_ID: "1", TELEGRAM_BOT_TOKEN: "t", TELEGRAM_CHAT_ID: "9" };
+  let msgs = [{ id: "1000" }], tgMode = "ok";
+  const f = async (u, o) => {
+    if (new URL(u).hostname === "discord.com") return { ok: true, json: async () => msgs };
+    const method = /\/(\w+)$/.exec(u)[1]; sentTo.push(method);
+    if (tgMode === "down") return { ok: false, json: async () => ({}) };
+    if (tgMode === "photo-refused" && method === "sendPhoto") return { ok: false, json: async () => ({}) };
+    return { ok: true, json: async () => ({ result: { message_id: 7 } }) };
+  };
+  await runDiscord(env, { fetch: f });
+  // a forwarded post keeps its picture under message_snapshots
+  msgs = [{ id: "1010", content: "", message_snapshots: [{ message: { content: "Raid day", attachments: [{ url: "https://cdn.discordapp.com/f.png", content_type: "image/png" }] } }] }];
+  assert.deepEqual((await runDiscord(env, { fetch: f })).sent, ["discord:1010"]);
+  // Telegram refuses the picture: the link goes instead
+  tgMode = "photo-refused"; sentTo.length = 0; msgs = [{ id: "1020", attachments: [{ url: "https://cdn.discordapp.com/big.png", content_type: "image/png" }] }];
+  assert.deepEqual((await runDiscord(env, { fetch: f })).sent, ["discord:1020"]); assert.deepEqual(sentTo, ["sendPhoto", "sendMessage"]);
+  // Telegram down: the cursor stays put and it retries; after 3 tries it moves on
+  tgMode = "down"; msgs = [{ id: "1030", attachments: [{ url: "https://cdn.discordapp.com/x.png", content_type: "image/png" }] }, { id: "1040", attachments: [{ url: "https://cdn.discordapp.com/y.png", content_type: "image/png" }] }];
+  assert.match((await runDiscord(env, { fetch: f })).note, /try 1 of 3/);
+  assert.match((await runDiscord(env, { fetch: f })).note, /try 2 of 3/);
+  tgMode = "ok"; assert.deepEqual((await runDiscord(env, { fetch: f })).sent, ["discord:1030", "discord:1040"]);
+  // a busy channel: 12 new pictures are worked through 10 then 2, none dropped
+  msgs = Array.from({ length: 12 }, (_, i) => ({ id: String(1100 + i), attachments: [{ url: "https://cdn.discordapp.com/p" + i + ".png", content_type: "image/png" }] }));
+  const first = await runDiscord(env, { fetch: f }); assert.equal(first.sent.length, 10);
+  msgs = msgs.slice(10); assert.deepEqual((await runDiscord(env, { fetch: f })).sent, ["discord:1110", "discord:1111"]);
+});
+
 import { savedReminders } from "../src/jobs.js";
 test("saved events: reminders only for the ones the starting-soon ping does not cover, once per day", () => {
   const data = { events: [
