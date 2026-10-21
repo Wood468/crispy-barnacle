@@ -1,16 +1,16 @@
 {
- "runAt": "2026-10-21T13:55:27.365Z",
+ "runAt": "2026-10-21T18:44:42.551Z",
  "sources": {
   "official": {
    "listed": 24,
    "error": ""
   },
   "leekduck": {
-   "listed": 60,
+   "listed": 58,
    "error": ""
   },
   "hub": {
-   "listed": 10,
+   "listed": 11,
    "error": ""
   }
  },
@@ -73,6 +73,11 @@
    "source": "leekduck",
    "title": "Mega Dragonite in Mega Raids",
    "url": "https://leekduck.com/events/mega-dragonite-in-mega-raids-october-2026/"
+  },
+  {
+   "source": "leekduck",
+   "title": "Pawniard Community Day",
+   "url": "https://leekduck.com/events/november-communityday2026/"
   }
  ],
  "intl": {
@@ -109,7 +114,7 @@
    "error": ""
   },
   "th": {
-   "listed": 26,
+   "listed": 27,
    "error": ""
   }
  },
@@ -165,7 +170,6 @@
    "field": "featured",
    "missingFrom": [
     "official",
-    "official",
     "official"
    ]
   },
@@ -174,25 +178,29 @@
    "field": "eggs",
    "missingFrom": [
     "official",
-    "official",
     "official"
    ]
   },
   {
    "event": "Pokémon GO City Safari: Boston (Rescheduled)",
    "field": "research",
-   "missingFrom": []
+   "missingFrom": [
+    "official",
+    "official"
+   ]
   },
   {
    "event": "Pokémon GO City Safari: Boston (Rescheduled)",
    "field": "costumes",
-   "missingFrom": []
+   "missingFrom": [
+    "official",
+    "official"
+   ]
   },
   {
    "event": "Pokémon GO City Safari: Boston (Rescheduled)",
    "field": "tickets",
    "missingFrom": [
-    "official",
     "official",
     "official"
    ]
@@ -200,7 +208,10 @@
   {
    "event": "Pokémon GO City Safari: Boston (Rescheduled)",
    "field": "dates",
-   "missingFrom": []
+   "missingFrom": [
+    "official",
+    "official"
+   ]
   },
   {
    "event": "Pokémon TCG: 30th Celebration (at stores)",
