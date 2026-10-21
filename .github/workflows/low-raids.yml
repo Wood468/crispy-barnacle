@@ -1,0 +1,48 @@
+name: 1-3 star raid bosses
+
+# Reads Pokémon GO Hub's current raids page and fills the 1-3 star bosses for the current rotation in public/data.json.
+# Raids change Wednesdays at 10 am Melbourne (Tuesday 23:00 UTC), so this runs Wednesday afternoon and again Thursday
+# in case the page was late. A run that finds nothing new changes nothing. Run it by hand from the Actions tab any time.
+on:
+  schedule:
+    - cron: "30 2 * * 3,4"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: low-raids
+
+jobs:
+  fill:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: main
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Check the reader
+        run: node --test test/low-raids.test.mjs
+      - name: Read the page and update the raid rotation
+        shell: bash
+        run: |
+          set -euo pipefail
+          node scripts/low-raids.mjs
+          if [[ -z "$(git status --porcelain -- public/data.json)" ]]; then
+            echo "No change to public/data.json."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- public/data.json
+          git commit -m "Raid rotation: 1-3 star bosses from Pokémon GO Hub"
+          for i in 1 2 3; do
+            git pull -q --rebase origin main && git push origin HEAD:main && exit 0
+            sleep 5
+          done
+          echo "::error::Could not push after 3 tries"
+          exit 1
