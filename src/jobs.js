@@ -249,7 +249,7 @@ export async function runHourly(env, when = new Date()) {
   try { out.lastChance = await runLastChance(env, { now: when }); } catch (e) { out.lastChance = { error: String(e && e.message || e) }; }
   try { out.watchdog = await runWatchdog(env, { now: when }); } catch (e) { out.watchdog = { error: String(e && e.message || e) }; }
   if (utcDay === 0 && utcHour === 20) { try { out.weekly = await runWeekly(env, { now: when }); } catch (e) { out.weekly = { error: String(e && e.message || e) }; } }
-  try { await setState(env.DB, "heartbeat", { at: new Date().toISOString(), failed: Object.keys(out).filter(x => out[x] && out[x].error) }); } catch { /* best effort */ }
+  try { await setState(env.DB, "heartbeat", { at: new Date().toISOString(), failed: Object.keys(out).filter(x => out[x] && out[x].error), discord: out.discord ? String(out.discord.error ? "error: " + out.discord.error : (out.discord.sent && out.discord.sent.length ? "sent " + out.discord.sent.length : out.discord.note || "nothing sent")).slice(0, 120) : "" }); } catch { /* best effort */ }
   return out;
 }
 export const heartbeat = env => getState(env.DB, "heartbeat", null);

@@ -52,7 +52,7 @@ export function judgeWorker(hb, now = Date.now()) {
   const at = hb && hb.at ? Date.parse(hb.at) : NaN;
   if (!Number.isFinite(at)) return { ...row, lastSuccess: null, state: "never" };
   const failed = (hb.failed || []).length > 0, old = now - at > 3 * HOUR;
-  return { ...row, lastSuccess: new Date(at).toISOString(), state: old ? "stale" : failed ? "failing" : "fresh", detail: failed ? "failing: " + hb.failed.join(", ") : "" };
+  return { ...row, lastSuccess: new Date(at).toISOString(), state: old ? "stale" : failed ? "failing" : "fresh", detail: failed ? "failing: " + hb.failed.join(", ") : (hb.discord ? "Discord forwarding: " + hb.discord : "") };
 }
 async function workerRow() {
   try { const r = await fetch("https://pogo.michaelpuff.com/api/worker-health"); return judgeWorker(r.ok ? (await r.json()).heartbeat : null); } catch { return null; }
