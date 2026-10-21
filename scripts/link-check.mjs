@@ -29,7 +29,7 @@ export async function main() {
   for (const b of bad) console.log("::warning title=Link::" + b);
   const t = process.env.TELEGRAM_BOT_TOKEN, dest = route(process.env, "system");
   if (bad.length && t && dest.chat) {
-    const text = "Link check: " + bad.length + " of " + list.length + " source links are not opening:\n" + bad.slice(0, 12).join("\n") + (bad.length > 12 ? "\n...and " + (bad.length - 12) + " more (see the run)" : "");
+    const text = "🔗 " + bad.length + " of " + list.length + " source links are not opening\n" + bad.slice(0, 12).map(b => "• " + b).join("\n") + (bad.length > 12 ? "\n+ " + (bad.length - 12) + " more (see the run)" : "");
     await routed(process.env, "system")("https://api.telegram.org/bot" + t + "/sendMessage", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ chat_id: dest.chat, text, disable_web_page_preview: true }) });
   }
   return bad;

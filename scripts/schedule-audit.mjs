@@ -104,7 +104,7 @@ async function alert(res) {
   let done = []; try { done = JSON.parse(await readFile("data/audit-alerted.json", "utf8")); } catch {}
   const fresh = newAlerts(res, done); if (!fresh.length) return;
   if (token && chat) {
-    const r = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ chat_id: chat, text: "Data check\n" + fresh.map(a => "• " + a.text).join("\n") }) });
+    const r = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ chat_id: chat, text: "🔎 Data check\n" + fresh.map(a => "• " + a.text).join("\n") }) });
     if (!r.ok) throw new Error("Telegram " + r.status);
   }
   await writeFile("data/audit-alerted.json", JSON.stringify([...done, ...fresh.map(a => a.key)].slice(-300), null, 1) + "\n");

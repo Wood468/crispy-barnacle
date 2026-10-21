@@ -57,9 +57,9 @@ if (import.meta.url === "file://" + process.argv[1]) {
   const problems = await runChecks(), prev = await previousConclusion();
   if (problems.length) {
     console.log(problems.map(p => "::error::" + p).join("\n"));
-    if (prev !== "failure") await tell("The GO Field Notes site looks down or broken (" + BASE + "):\n" + problems.slice(0, 5).join("\n"));
+    if (prev !== "failure") await tell("🔴 Site is down or broken\n" + problems.slice(0, 5).map(p => "• " + p).join("\n") + "\n\n" + BASE);
     process.exit(1);
   }
   console.log("All checks passed.");
-  if (prev === "failure") await tell("The GO Field Notes site is back to normal.");
+  if (prev === "failure") await tell("🟢 Site is back to normal.");
 }

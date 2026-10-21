@@ -9,14 +9,14 @@ export function buildReport({ audit = {}, importer = {}, commits = [], now = new
   const ago = iso => { const h = Math.round((now - Date.parse(iso)) / 36e5); return isNaN(h) ? "never" : h < 48 ? h + " h ago" : Math.round(h / 24) + " days ago"; };
   const src = Object.entries(importer.sources || {});
   const bad = src.filter(([, v]) => v && v.error).map(([k, v]) => k + " (" + String(v.error).slice(0, 60) + ")");
-  const lines = ["Data report, week to " + now.toISOString().slice(0, 10)];
-  lines.push("Sources: " + (bad.length ? "PROBLEM with " + bad.join(", ") : "all " + src.length + " answered") + (importer.runAt ? ". Last import " + ago(importer.runAt) : ""));
-  lines.push("Date check against Leek Duck: " + (audit.checked ? ago(audit.checked) + ", " + (audit.compared || 0) + " events compared, " + ((audit.problems || []).length) + " date mismatches" : "has not run"));
+  const lines = ["📊 Data report, week to " + now.toISOString().slice(0, 10)];
+  lines.push((bad.length ? "⚠️ " : "✅ ") + "Sources: " + (bad.length ? "PROBLEM with " + bad.join(", ") : "all " + src.length + " answered") + (importer.runAt ? ". Last import " + ago(importer.runAt) : ""));
+  lines.push(((audit.problems || []).length || !audit.checked ? "⚠️ " : "✅ ") + "Dates vs Leek Duck: " + (audit.checked ? ago(audit.checked) + ", " + (audit.compared || 0) + " compared, " + ((audit.problems || []).length) + " date mismatches" : "has not run"));
   const soon = (audit.missing || []).filter(m => Date.parse(m.start) < now.getTime() + 75 * 864e5);
-  lines.push("On Leek Duck but not in the app (next 75 days): " + soon.length + (soon.length ? " - " + soon.slice(0, 5).map(m => m.slug).join(", ") : ""));
-  if ((importer.worldUndated || []).length) lines.push("Events with no dates yet: " + importer.worldUndated.length);
+  lines.push((soon.length ? "🆕 " : "✅ ") + "On Leek Duck, not in the app (next 75 days): " + soon.length + (soon.length ? " - " + soon.slice(0, 5).map(m => m.slug).join(", ") : ""));
+  if ((importer.worldUndated || []).length) lines.push("📅 Events with no dates yet: " + importer.worldUndated.length);
   const fixes = commits.filter(c => /fix|dates|event|picture|infographic|AI|data/i.test(c));
-  lines.push("Changes to the data this week: " + commits.length + (fixes.length ? "\n" + commits.slice(0, 6).map(c => "• " + c.slice(0, 90)).join("\n") : ""));
+  lines.push("📝 Data changes this week: " + commits.length + (fixes.length ? "\n" + commits.slice(0, 6).map(c => "• " + c.slice(0, 90)).join("\n") : ""));
   return lines.join("\n");
 }
 async function main() {
