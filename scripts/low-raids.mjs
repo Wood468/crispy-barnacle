@@ -88,6 +88,16 @@ export function applyLow(raw, rotationStart, low) {
   return raw.slice(0, open) + text + raw.slice(close + 6);
 }
 
+// A note in the Telegram System topic when the job cannot do its work, so a changed page does not fail silently. Skipped without the Telegram secrets.
+export async function tell(text, env = process.env) {
+  const token = env.TELEGRAM_BOT_TOKEN; if (!token || !env.TELEGRAM_CHAT_ID || env.DRY_RUN === "true") return false;
+  try {
+    const { route, routed } = await import("../src/tgroute.js"), dest = route(env, "system"); if (!dest.chat) return false;
+    const r = await routed(env, "system")("https://api.telegram.org/bot" + token + "/sendMessage", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ chat_id: dest.chat, text, disable_web_page_preview: true }) });
+    return r.ok;
+  } catch { return false; }
+}
+
 async function main() {
   const dry = process.env.DRY_RUN === "true";
   const html = process.env.HUB_HTML ? await readFile(process.env.HUB_HTML, "utf8") : await (async () => {
@@ -97,7 +107,7 @@ async function main() {
   })();
   const t = parseTiers(html);
   console.log("Parsed:", JSON.stringify(t));
-  if (!sane(t)) { console.log("::warning::1-3 star raids: the page did not parse into sensible lists (" + JSON.stringify(t) + "). Nothing changed."); process.exitCode = 0; return; }
+  if (!sane(t)) { console.log("::warning::1-3 star raids: the page did not parse into sensible lists (" + JSON.stringify(t) + "). Nothing changed."); await tell("⚠️ The weekly 1–3★ raid job could not read Pokémon GO Hub's raid page (its layout may have changed). This week's 1–3★ and Shadow raid bosses were not updated.\n\nhttps://github.com/Wood468/crispy-barnacle/actions/workflows/low-raids.yml"); process.exitCode = 0; return; }
   const raw = await readFile(DATA, "utf8"), data = JSON.parse(raw);
   const r = pickRotation(data.rotation, t.five);
   if (!r) { console.log("::notice::1-3 star raids: the page's 5-star boss (" + t.five.join(", ") + ") matches no current or upcoming rotation. Nothing changed."); return; }
@@ -113,4 +123,4 @@ async function main() {
   await writeFile(DATA, out);
   console.log("::notice::1-3 star raids set for " + r.five + ": 1★ " + t.one.join(", ") + "; 3★ " + t.three.join(", ") + (t.shadowOne.length || t.shadowThree.length ? "; Shadow 1★ " + t.shadowOne.join(", ") + "; Shadow 3★ " + t.shadowThree.join(", ") : "") + ".");
 }
-if (import.meta.url === "file://" + process.argv[1]) main().catch(e => { console.error("::error::" + e.message); process.exit(1); });
+if (import.meta.url === "file://" + process.argv[1]) main().catch(async e => { console.error("::error::" + e.message); await tell("⚠️ The weekly 1–3★ raid job failed: " + String(e.message).slice(0, 200) + "\n\nhttps://github.com/Wood468/crispy-barnacle/actions/workflows/low-raids.yml"); process.exit(1); });

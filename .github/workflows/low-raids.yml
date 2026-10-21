@@ -29,6 +29,11 @@ jobs:
         run: node --test test/low-raids.test.mjs
       - name: Read the page and update the raid rotation
         shell: bash
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          TELEGRAM_GROUP_ID: ${{ secrets.TELEGRAM_GROUP_ID }}
+          TELEGRAM_TOPIC_SYSTEM: ${{ secrets.TELEGRAM_TOPIC_SYSTEM || secrets.TELEGRAM_TOPICS_SYSTEM }}
         run: |
           set -euo pipefail
           node scripts/low-raids.mjs
