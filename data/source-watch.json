@@ -1,10 +1,10 @@
 {
- "updated": "2026-10-22T04:46:49.038Z",
+ "updated": "2026-10-22T11:53:31.328Z",
  "status": [
   {
    "id": "hub",
    "state": "ok",
-   "items": 6
+   "items": 5
   },
   {
    "id": "miners-assets",
@@ -23,8 +23,8 @@
   },
   {
    "id": "youtube-pogo",
-   "state": "error",
-   "note": "HTTP 404"
+   "state": "ok",
+   "items": 0
   }
  ],
  "gaps": 5,
@@ -139,18 +139,6 @@
     "Gimmighoul",
     "Regidrago",
     "Meltan"
-   ],
-   "notInOurData": []
-  },
-  {
-   "source": "hub",
-   "trust": "community",
-   "title": "Super Mega Chandelure Raid Day",
-   "link": "https://pokemongohub.net/post/event/super-mega-chandelure-raid-day/",
-   "date": "2026-10-13T19:55:32.000Z",
-   "summary": "Mega Chandelure will debut during a special Super Mega Raid Day event on Saturday, October 31, 2026, from 2:00 p.m. to 5:00 p.m. local time. You can look forward to Mega Chandelure in Super Mega Raids",
-   "pokemon": [
-    "Chandelure"
    ],
    "notInOurData": []
   },
