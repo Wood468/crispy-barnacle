@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-21T22:27:21.031Z",
+ "updated": "2026-10-22T01:36:52.881Z",
  "events": [
   {
    "id": "w-pokemon-fossil-museum-2026",
@@ -18,7 +18,7 @@
     }
    ],
    "status": "single",
-   "seen": "2026-10-21"
+   "seen": "2026-10-22"
   },
   {
    "id": "w-pokemon-jet-red-collaboration-event",
@@ -37,7 +37,7 @@
     }
    ],
    "status": "single",
-   "seen": "2026-10-21"
+   "seen": "2026-10-22"
   },
   {
    "id": "w-pikachu-s-autumn-adventure",
@@ -56,7 +56,7 @@
     }
    ],
    "status": "single",
-   "seen": "2026-10-21"
+   "seen": "2026-10-22"
   },
   {
    "id": "w-pokemon-x-adidas",
@@ -104,7 +104,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-10-21"
+   "seen": "2026-10-22"
   },
   {
    "id": "w-pokemon-go-x-esa-london",
@@ -152,26 +152,7 @@
     }
    ],
    "status": "single",
-   "seen": "2026-10-21"
-  },
-  {
-   "id": "w-pokemon-go-lab-big-adventure",
-   "name": "Pokemon GO Lab...Big Adventure",
-   "place": "Tokyo, Japan",
-   "area": "Asia",
-   "scope": "regional",
-   "start": "2026-10-07",
-   "end": "2026-10-07",
-   "datesKnown": true,
-   "sources": [
-    {
-     "id": "serebii",
-     "name": "Serebii",
-     "url": "https://www.serebii.net/pokemongo/reallifeevents.shtml"
-    }
-   ],
-   "status": "single",
-   "seen": "2026-10-21"
+   "seen": "2026-10-22"
   },
   {
    "id": "w-pokexciting-taipei",
@@ -190,7 +171,7 @@
     }
    ],
    "status": "single",
-   "seen": "2026-10-21"
+   "seen": "2026-10-22"
   },
   {
    "id": "w-mega-dragonite-in-mega-raids",
@@ -209,7 +190,7 @@
     }
    ],
    "status": "single",
-   "seen": "2026-10-21"
+   "seen": "2026-10-22"
   },
   {
    "id": "w-pok-mon-run-30-taichung",
@@ -247,7 +228,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-10-21"
+   "seen": "2026-10-22"
   },
   {
    "id": "w-aeon-mall-halloween",
@@ -295,7 +276,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-10-21"
+   "seen": "2026-10-22"
   },
   {
    "id": "w-fc-seoul",
@@ -392,7 +373,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-10-21"
+   "seen": "2026-10-22"
   },
   {
    "id": "w-go-wild-area-2026-mexico-city",
@@ -411,7 +392,7 @@
     }
    ],
    "status": "single",
-   "seen": "2026-10-21"
+   "seen": "2026-10-22"
   },
   {
    "id": "w-go-wild-area-2026-sendai-tohoku",
@@ -430,7 +411,7 @@
     }
    ],
    "status": "single",
-   "seen": "2026-10-21"
+   "seen": "2026-10-22"
   },
   {
    "id": "w-pok-xciting-lands-at-changi-airport-and-jewel-get-",
@@ -449,7 +430,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-10-21"
+   "seen": "2026-10-22"
   },
   {
    "id": "w-pok-mon-run-30-singapore",
@@ -487,7 +468,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-10-21"
+   "seen": "2026-10-22"
   },
   {
    "id": "w-into-the-wild",
@@ -706,10 +687,15 @@
      "id": "official",
      "name": "Pokémon GO (official)",
      "url": "https://pokemongo.com/news/save-the-date-go-tour-2027/"
+    },
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "url": "https://pokemongo.com/ko/news/save-the-date-go-tour-2027/"
     }
    ],
    "status": "official",
-   "seen": "2026-10-21"
+   "seen": "2026-10-22"
   },
   {
    "id": "w-pokemon-go-tour-2027-los-angeles",
