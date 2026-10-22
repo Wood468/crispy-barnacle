@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-21T21:43:33.602Z",
+ "updated": "2026-10-22T04:46:49.038Z",
  "status": [
   {
    "id": "hub",
@@ -23,8 +23,8 @@
   },
   {
    "id": "youtube-pogo",
-   "state": "ok",
-   "items": 0
+   "state": "error",
+   "note": "HTTP 404"
   }
  ],
  "gaps": 5,
