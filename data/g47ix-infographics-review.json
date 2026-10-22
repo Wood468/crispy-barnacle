@@ -7,6 +7,53 @@
   "eventImages": {},
   "candidates": [
     {
+      "id": "discord:1562877846815252562",
+      "source": "discord",
+      "creator": "",
+      "title": "@Infographics Notify",
+      "url": "https://discord.com/channels/@me/1558793395198099618/1562877846815252562",
+      "publishedAt": "2026-10-22T17:18:35.547000+00:00",
+      "imageUrl": "https://pbs.twimg.com/media/HVPXrw3WwAATs42.jpg",
+      "reviewStatus": "needs_review",
+      "decision": "pending",
+      "ocrChecked": true,
+      "ocrText": "Vel Soke Moy, R\\ LOS ANGELES “a A WU Us LONDON Lure Modules (excluding Golden Lure Modules) ‘watch the stream on. If you can’t attend, ey Twitch to get the jersey. Cc activated during the event will last for one hour. > Two Timed Research (Toxtricity and Jersey) when 8 you open Pokémon GO at the event venue. Location Background for Pokémon in raids Seek oO t+ ++ et ++ + ++ ++ a wh mT «a ++ ++ ++ t+ matt r oa 7 eu a iB o (oe. ca of 44 i z) ean poses oe Follow formore GA7IX @ © @ X @ fi ix.pro",
+      "eventMatch": {
+        "eventId": "w-pokemon-go-x-esa-london",
+        "eventTitle": "Pokémon GO x ESA: London",
+        "score": 0.6,
+        "confidence": "medium",
+        "matchedTerms": [
+          "london",
+          "poke",
+          "mon"
+        ],
+        "alternatives": [
+          {
+            "eventId": "w-pokemon-go-x-esa-london",
+            "eventTitle": "Pokémon GO x ESA: London",
+            "score": 0.6
+          },
+          {
+            "eventId": "w-pokemon-go-tour-2027-los-angeles",
+            "eventTitle": "Pokémon GO Tour 2027: Los Angeles",
+            "score": 0.54
+          },
+          {
+            "eventId": "w-celebrate-the-pok-mon-night-out-events-in-pok-mon-",
+            "eventTitle": "Pokémon Night Out events in Pokémon GO",
+            "score": 0.41
+          }
+        ],
+        "method": "picture text to world and in-person events",
+        "requiresHumanVerification": true
+      },
+      "reviewNote": "No event name found in the caption or image text.",
+      "signals": [],
+      "matchScore": 0,
+      "stagedPath": "/infographics/g47ix/discord-1562877846815252562.jpg"
+    },
+    {
       "id": "discord:1562714788373602437",
       "source": "discord",
       "creator": "",
