@@ -1054,6 +1054,50 @@
         }
       ],
       "infographics": []
+    },
+    "leekduck:november-communityday2026": {
+      "names": [
+        "Pawniard Community Day"
+      ],
+      "source": {
+        "label": "G47IX",
+        "trust": "community",
+        "url": "https://discord.com/channels/@me/1558793395198099618/1562540565692809337",
+        "observed": "2026-10-22"
+      },
+      "tickets": [],
+      "info": [],
+      "infographics": [
+        {
+          "label": "Infographic · G47IX",
+          "url": "/infographics/g47ix/discord-1562540565692809337.jpg",
+          "source": "G47IX",
+          "sourceUrl": "https://discord.com/channels/@me/1558793395198099618/1562540565692809337",
+          "alt": "Pawniard Community Day infographic"
+        }
+      ]
+    },
+    "leekduck:pokemonspotlighthour2026-10-22": {
+      "names": [
+        "Morelull Spotlight Hour"
+      ],
+      "source": {
+        "label": "G47IX",
+        "trust": "community",
+        "url": "https://discord.com/channels/@me/1558793395198099618/1562635282564522044",
+        "observed": "2026-10-22"
+      },
+      "tickets": [],
+      "info": [],
+      "infographics": [
+        {
+          "label": "Infographic · G47IX",
+          "url": "/infographics/g47ix/discord-1562635282564522044.jpg",
+          "source": "G47IX",
+          "sourceUrl": "https://discord.com/channels/@me/1558793395198099618/1562635282564522044",
+          "alt": "Morelull Spotlight Hour infographic"
+        }
+      ]
     }
   },
   "passes": {
