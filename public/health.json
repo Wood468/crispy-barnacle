@@ -1,25 +1,25 @@
 {
- "updated": "2026-10-21T17:37:07.918Z",
+ "updated": "2026-10-22T12:19:27.638Z",
  "jobs": [
   {
    "id": "event-importer.yml",
    "name": "Event importer",
    "everyH": 1,
-   "lastSuccess": "2026-10-21T13:55:41.000Z",
-   "state": "fresh"
+   "lastSuccess": "2026-10-22T07:43:21.000Z",
+   "state": "stale"
   },
   {
    "id": "g47ix-infographics.yml",
    "name": "Infographic check",
    "everyH": 2,
-   "lastSuccess": "2026-10-21T14:47:50.000Z",
+   "lastSuccess": "2026-10-22T09:06:38.000Z",
    "state": "fresh"
   },
   {
    "id": "store-watch.yml",
    "name": "Store watcher",
    "everyH": 1,
-   "lastSuccess": "2026-10-21T15:39:06.000Z",
+   "lastSuccess": "2026-10-22T10:12:54.000Z",
    "state": "fresh"
   },
   {
@@ -40,7 +40,7 @@
    "id": "discord_sync.yml",
    "name": "Discord reader",
    "everyH": 2,
-   "lastSuccess": "2026-10-21T16:56:54.000Z",
+   "lastSuccess": "2026-10-22T07:21:34.000Z",
    "state": "fresh"
   },
   {
@@ -54,9 +54,9 @@
    "id": "worker-cron",
    "name": "Worker hourly jobs",
    "everyH": 1,
-   "lastSuccess": "2026-10-21T17:30:49.162Z",
+   "lastSuccess": "2026-10-22T11:30:46.919Z",
    "state": "fresh",
-   "detail": ""
+   "detail": "Discord forwarding: Discord is not set up on the Worker"
   },
   {
    "id": "ai-heartbeat-event-check",
