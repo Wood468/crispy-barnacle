@@ -1,5 +1,5 @@
 {
- "runAt": "2026-10-22T01:36:52.885Z",
+ "runAt": "2026-10-22T07:43:08.030Z",
  "sources": {
   "official": {
    "listed": 24,
@@ -73,6 +73,11 @@
    "source": "leekduck",
    "title": "Mega Dragonite in Mega Raids",
    "url": "https://leekduck.com/events/mega-dragonite-in-mega-raids-october-2026/"
+  },
+  {
+   "source": "leekduck",
+   "title": "Palkia Raid Hour",
+   "url": "https://leekduck.com/events/raidhour20261021/"
   }
  ],
  "intl": {
