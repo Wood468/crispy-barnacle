@@ -1,7 +1,5 @@
 {
- "alerted": [
-  "store-watch.yml"
- ],
+ "alerted": [],
  "unmatched": [
   "discord:1562714788373602437"
  ]
