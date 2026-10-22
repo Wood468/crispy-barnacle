@@ -121,8 +121,14 @@
     }
   });
   /* "Check Discord now": the Worker looks at the Discord channel straight away instead of waiting for the hourly run, and says what it did. */
+  /* The review box lives at the top of the Menu tab; it is created here the first time it is needed (the button must not wait for the picture list to load). */
+  function ensureHost() {
+    var h = $('igreview'); if (h) return h;
+    var m = $('sub-menu'); if (!m) return null;
+    h = document.createElement('div'); h.id = 'igreview'; h.hidden = true; m.insertBefore(h, m.firstChild); return h;
+  }
   function mountDiscord() {
-    var host = $('igreview'); if (!host || !host.parentNode || $('igdiscord')) return;
+    var host = ensureHost(); if (!host || $('igdiscord')) return;
     var p = document.createElement('p'); p.id = 'igdiscord'; p.className = 'note'; p.style.margin = '0 0 10px';
     p.innerHTML = '<button type="button" class="pill" id="igdiscord-btn">Check Discord now</button> <span id="igdiscord-msg" role="status"></span>';
     host.parentNode.insertBefore(p, host);
@@ -144,7 +150,7 @@
       fetch('/api/ig-decisions').then(function (r) { return r.ok ? r.json() : { decisions: [] }; }).catch(function () { return { decisions: [] }; })
     ]).then(function (R) {
       items = R[0].items || []; (R[1].decisions || []).forEach(function (d) { decs[d.id] = d; if (d.status === 'approved' || d.status === 'rejected' || d.status === 'week' || d.status === 'month') decided[d.id] = d.status; });
-      if (!$('igreview')) { var m = $('sub-menu'); if (!m) return; var h = document.createElement('div'); h.id = 'igreview'; h.hidden = true; m.insertBefore(h, m.firstChild); }
+      if (!ensureHost()) return;
       render();
       if (location.hash === '#review') gotoReview();
     });
