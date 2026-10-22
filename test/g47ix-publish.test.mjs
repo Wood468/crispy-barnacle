@@ -157,3 +157,10 @@ test("world and in-person events are suggested from the picture text, never auto
   assert.equal(g && g.eventId, "w-aeon");
   assert.equal(worldGuess({ title: "x", ocrText: "Raid Hour Thursday Max Battles" }, list), null);
 });
+
+test("a Discord message that is only a link is titled by its file name, not the link", () => {
+  const url = "https://cdn.discordapp.com/attachments/1/2/Dmax_LAKE.png?ex=1&hm=2";
+  assert.equal(discordCandidate({ image_url: url, message_id: "9", text: url, title: "" }).title, "Dmax LAKE");
+  assert.equal(discordCandidate({ image_url: url, message_id: "9", text: "", title: "Twitch_2.png" }).title, "Twitch 2");
+  assert.equal(discordCandidate({ image_url: url, message_id: "9", text: "Lake Trio Max Battle Day " + url }).title, "Lake Trio Max Battle Day");
+});

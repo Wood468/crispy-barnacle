@@ -144,7 +144,9 @@ export function mergeHistory(reg, history, creator, now = Date.now()) {
 }
 export function discordCandidate(d, creator) {
   if (!d || !d.image_url || !d.message_id) return null;
-  const caption = String(d.text || "").trim() || String(d.title || "").replace(/\.(png|jpe?g|webp)$/i, "").replace(/[_-]+/g, " ");
+  // A message that is only a link (Discord shows the picture's own address as the text) has no caption: use the file name instead ("Dmax_LAKE.png" becomes "Dmax LAKE").
+  const nice = f => decodeURIComponent(String(f || "").split(/[?#]/)[0].split("/").pop()).replace(/\.(png|jpe?g|webp|gif)$/i, "").replace(/[_-]+/g, " ").trim();
+  const caption = String(d.text || "").replace(/https?:\/\/\S+/gi, " ").replace(/\s+/g, " ").trim() || nice(d.title) || nice(d.image_url);
   return { id: "discord:" + d.message_id, source: "discord", creator: creator || "", title: caption, url: d.message_url || ("https://discord.com/channels/@me/" + d.channel_id + "/" + d.message_id), publishedAt: d.timestamp || null, imageUrl: d.image_url, reviewStatus: "needs_review", decision: "pending" };
 }
 
