@@ -814,6 +814,7 @@ svg.ci{width:22px;height:22px}
 .whatsnew .wn-list{flex:1 1 100%;display:flex;flex-wrap:wrap;gap:4px 12px}
 .whatsnew .wn-list a{color:var(--accent,#60a5fa)}
 .whatsnew .wn-ok{margin-left:auto}
+.whatsnew .wn-h{font-weight:700;opacity:.85}
 
 .evd-lead{display:flex;align-items:center;gap:8px;margin:6px 16px;font-size:13px}
 .evd-lead[hidden]{display:none}
