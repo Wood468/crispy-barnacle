@@ -2,7 +2,7 @@
  "updated": "2026-10-22T23:01:11.409Z",
  "items": [
   {
-   "linked": false,
+   "linked": true,
    "id": "discord:1562877846815252562",
    "title": "@Infographics Notify",
    "image": "/infographics/g47ix/discord-1562877846815252562.jpg",
@@ -32,7 +32,7 @@
    ]
   },
   {
-   "linked": false,
+   "linked": true,
    "id": "discord:1562714788373602437",
    "title": "https://cdn.discordapp.com/attachments/886998693897719819/1555577072062177320/Twitch_2.png?backend=b2&ex=6ac79f0b&is=6ac64d8b&hm=ccbd4a1d9faa0785150aa25c87abde5",
    "image": "/infographics/g47ix/discord-1562714788373602437.png",
@@ -44,36 +44,6 @@
    "signals": [],
    "text": "WF Woke Ney, 24 Startin Sf \\& x 22 OCT 7.30 pm Get exclusive eball jersey o Open this link and log in @ Scroll down and click (3) using your PTC account Or go to: Open Pokémon trainer.pokemon.com/rewa",
    "guesses": []
-  },
-  {
-   "linked": false,
-   "id": "discord:1562714787345997845",
-   "title": "https://cdn.discordapp.com/attachments/886998693897719819/1555310212616032266/Dmax_LAKE.png?backend=b2&ex=6ac7f802&is=6ac6a682&hm=d104b0af3527edeb4b7a8b6cfaa82b",
-   "image": "/infographics/g47ix/discord-1562714787345997845.webp",
-   "post": "https://discord.com/channels/@me/1558793395198099618/1562714787345997845",
-   "creator": "",
-   "publishedAt": "2026-10-22T06:30:39.140000+00:00",
-   "note": "Match is not strong enough (low).",
-   "history": false,
-   "signals": [],
-   "text": "local time Europe, the Middle East, Africa, and India Nort = a (D G _— 2:00 pm to 5:00 pm oo + ao Asia-Pacific region ++ Vv) ee a Ww Americas Remote Limit and Greenland increased to 20 DY NIANIAX Lake",
-   "guesses": [
-    {
-     "eventId": "zorua",
-     "eventTitle": "Zorua Community Day",
-     "score": 0.409
-    },
-    {
-     "eventId": "novcd",
-     "eventTitle": "November Community Day",
-     "score": 0.393
-    },
-    {
-     "eventId": "sandile",
-     "eventTitle": "Sandile Hatch Day",
-     "score": 0.276
-    }
-   ]
   },
   {
    "linked": true,

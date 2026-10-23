@@ -947,7 +947,15 @@
           "note": "Pokémon GO Hub reports all three can be Shiny. The official post does not say."
         }
       ],
-      "infographics": []
+      "infographics": [
+        {
+          "label": "Infographic · G47IX",
+          "url": "/infographics/g47ix/discord-1562714788373602437.png",
+          "source": "G47IX",
+          "sourceUrl": "https://discord.com/channels/@me/1558793395198099618/1562714788373602437",
+          "alt": "Pokémon Night Out 2026 - Los Angeles infographic"
+        }
+      ]
     },
     "leekduck:pokemon-night-out-london-2026": {
       "names": [
@@ -1096,6 +1104,28 @@
           "source": "G47IX",
           "sourceUrl": "https://discord.com/channels/@me/1558793395198099618/1562635282564522044",
           "alt": "Morelull Spotlight Hour infographic"
+        }
+      ]
+    },
+    "w-pokemon-go-tour-2027-los-angeles": {
+      "names": [
+        "Pokémon GO Tour 2027: Los Angeles"
+      ],
+      "source": {
+        "label": "G47IX",
+        "trust": "community",
+        "url": "https://discord.com/channels/@me/1558793395198099618/1562877846815252562",
+        "observed": "2026-10-23"
+      },
+      "tickets": [],
+      "info": [],
+      "infographics": [
+        {
+          "label": "Infographic · G47IX",
+          "url": "/infographics/g47ix/discord-1562877846815252562.jpg",
+          "source": "G47IX",
+          "sourceUrl": "https://discord.com/channels/@me/1558793395198099618/1562877846815252562",
+          "alt": "Pokémon GO Tour 2027: Los Angeles infographic"
         }
       ]
     }

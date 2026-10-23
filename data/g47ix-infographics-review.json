@@ -14,8 +14,8 @@
       "url": "https://discord.com/channels/@me/1558793395198099618/1562877846815252562",
       "publishedAt": "2026-10-22T17:18:35.547000+00:00",
       "imageUrl": "https://pbs.twimg.com/media/HVPXrw3WwAATs42.jpg",
-      "reviewStatus": "needs_review",
-      "decision": "pending",
+      "reviewStatus": "published",
+      "decision": "approved",
       "ocrChecked": true,
       "ocrText": "Vel Soke Moy, R\\ LOS ANGELES “a A WU Us LONDON Lure Modules (excluding Golden Lure Modules) ‘watch the stream on. If you can’t attend, ey Twitch to get the jersey. Cc activated during the event will last for one hour. > Two Timed Research (Toxtricity and Jersey) when 8 you open Pokémon GO at the event venue. Location Background for Pokémon in raids Seek oO t+ ++ et ++ + ++ ++ a wh mT «a ++ ++ ++ t+ matt r oa 7 eu a iB o (oe. ca of 44 i z) ean poses oe Follow formore GA7IX @ © @ X @ fi ix.pro",
       "eventMatch": {
@@ -51,7 +51,11 @@
       "reviewNote": "No event name found in the caption or image text.",
       "signals": [],
       "matchScore": 0,
-      "stagedPath": "/infographics/g47ix/discord-1562877846815252562.jpg"
+      "stagedPath": "/infographics/g47ix/discord-1562877846815252562.jpg",
+      "publishedEvent": "w-pokemon-go-tour-2027-los-angeles",
+      "publishedEvents": [
+        "w-pokemon-go-tour-2027-los-angeles"
+      ]
     },
     {
       "id": "discord:1562714788373602437",
@@ -61,15 +65,19 @@
       "url": "https://discord.com/channels/@me/1558793395198099618/1562714788373602437",
       "publishedAt": "2026-10-22T06:30:39.385000+00:00",
       "imageUrl": "https://cdn.discordapp.com/attachments/886998693897719819/1555577072062177320/Twitch_2.png?backend=b2&ex=6adabccb&is=6ad96b4b&hm=e8d1e793d21688ee18c4941bd8b764a0505a1a321eea5aa38a3f484225dd83bd&",
-      "reviewStatus": "unmatched",
-      "decision": "pending",
+      "reviewStatus": "published",
+      "decision": "approved",
       "ocrChecked": true,
       "ocrText": "WF Woke Ney, 24 Startin Sf \\& x 22 OCT 7.30 pm Get exclusive eball jersey o Open this link and log in @ Scroll down and click (3) using your PTC account Or go to: Open Pokémon trainer.pokemon.com/rewards trainer.pokemon.com/rewards/my-rewards channel and watch This account doesn’t have to be connected twitch.tv/ pokemon to your Pokémon GO account. | POKEMON.. 0 Once you get required watch time, go to 6 Go back to PTC Rewards TRAINER page to claim your code CENTRAL G) i www.twitch.tv/drops/inventory trainer.pokemon.com/rewards/my-rewards and claim your Twitch Drop —_ | © Redeem your code: Whey IU wea store.pokemongo.com/ offer-redemption Codes are unique, so you have to watch the stream to receive them. /p Follow for more G47|X £) @x | G3 www.g47ix.pro",
       "eventMatch": null,
       "reviewNote": "No event name found in the caption or image text.",
       "signals": [],
       "matchScore": 0,
-      "stagedPath": "/infographics/g47ix/discord-1562714788373602437.png"
+      "stagedPath": "/infographics/g47ix/discord-1562714788373602437.png",
+      "publishedEvent": "leekduck:pokemon-night-out-los-angeles-2026",
+      "publishedEvents": [
+        "leekduck:pokemon-night-out-los-angeles-2026"
+      ]
     },
     {
       "id": "discord:1562714787345997845",
@@ -79,8 +87,8 @@
       "url": "https://discord.com/channels/@me/1558793395198099618/1562714787345997845",
       "publishedAt": "2026-10-22T06:30:39.140000+00:00",
       "imageUrl": "https://cdn.discordapp.com/attachments/886998693897719819/1555310212616032266/Dmax_LAKE.png?backend=b2&ex=6adb15c2&is=6ad9c442&hm=56704c6edac6f26d248a8d8addf23dfde1773a41e712b92508878054b97e86dc&",
-      "reviewStatus": "needs_review",
-      "decision": "pending",
+      "reviewStatus": "rejected",
+      "decision": "rejected",
       "ocrChecked": true,
       "ocrText": "local time Europe, the Middle East, Africa, and India Nort = a (D G _— 2:00 pm to 5:00 pm oo + ao Asia-Pacific region ++ Vv) ee a Ww Americas Remote Limit and Greenland increased to 20 DY NIANIAX Lake Trio Max Battle Day === All Power Spots will Be Upto3 Max Particle The following bonus host Max Battles re Vv Special Trades 8x MP from will be active from ¥ and will refresh more Az ie ) collection limit increased to 1,600 (OR) Power Spots 12:00 am to 5:00 pm frequently Si for the day. local time 2x Max Particles A from exploring Paid 2x XP from 1/4 adventuring 3 Timed Max Battles distance to receive USD Research 25,000 XP xP oh Max Particles Follow for more G4A7|X 6) OF.:) xX | > | www.g47ix.pro",
       "eventMatch": {
@@ -119,7 +127,8 @@
       "reviewNote": "Match is not strong enough (low).",
       "signals": [],
       "matchScore": 0,
-      "stagedPath": "/infographics/g47ix/discord-1562714787345997845.webp"
+      "stagedPath": "/infographics/g47ix/discord-1562714787345997845.webp",
+      "publishedEvents": []
     },
     {
       "id": "discord:1562635282564522044",
