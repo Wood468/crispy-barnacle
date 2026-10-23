@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-23T07:40:43.668Z",
+ "updated": "2026-10-23T13:34:08.777Z",
  "events": [
   {
    "id": "w-pokemon-fossil-museum-2026",
@@ -687,11 +687,6 @@
      "id": "official",
      "name": "Pokémon GO (official)",
      "url": "https://pokemongo.com/news/save-the-date-go-tour-2027/"
-    },
-    {
-     "id": "official",
-     "name": "Pokémon GO (official)",
-     "url": "https://pokemongo.com/ko/news/save-the-date-go-tour-2027/"
     }
    ],
    "status": "official",
