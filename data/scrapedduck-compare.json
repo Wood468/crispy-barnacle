@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-23T04:50:09.524Z",
+ "updated": "2026-10-23T11:40:03.089Z",
  "state": "ok",
  "scrapedDuckEvents": 61,
  "missingHere": [
@@ -40,6 +40,11 @@
    "id": "w-fc-seoul",
    "name": "FC Seoul",
    "start": "2026-10-24"
+  },
+  {
+   "id": "w-d-a-de-muertos-2026",
+   "name": "Día de Muertos 2026",
+   "start": "2026-10-31"
   },
   {
    "id": "w-pok-mon-run-30-kaohsiung",
