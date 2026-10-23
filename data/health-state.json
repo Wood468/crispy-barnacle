@@ -1,4 +1,6 @@
 {
- "alerted": [],
+ "alerted": [
+  "event-importer.yml"
+ ],
  "unmatched": []
 }
