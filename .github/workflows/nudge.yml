@@ -38,7 +38,7 @@ jobs:
           ref: main
       - name: Restore pictures from R2
         run: bash scripts/r2-sync.sh restore
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: 22
       - name: Find my chat ID
