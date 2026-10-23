@@ -71,3 +71,16 @@ test("user-state sync: newer tombstone is uploaded so a deletion reaches the ser
   assert.deepEqual(result.upload[key], local[key]);
   assert.equal(result.dirty[key], 1);
 });
+
+test("every key the app writes is one the server accepts (a refused key is re-sent forever and redraws the page each time)", async () => {
+  const { cleanEntries } = await import("../src/userstate.js");
+  const keys = ["saved:e1", "follow:pikachu", "form:x", "pref:team", "pref:gen:3", "hide:cur:abc", "hidekind:pvp", "mega:mega-charizard-x:done"];
+  const { entries, rejected } = cleanEntries({ entries: Object.fromEntries(keys.map(k => [k, { v: true, t: 1 }])) }, Date.now());
+  assert.deepEqual(rejected, []); assert.equal(Object.keys(entries).length, keys.length);
+});
+test("the app only writes key prefixes the server accepts", async () => {
+  const { readFileSync } = await import("node:fs"), { KEY_RE } = await import("../src/userstate.js");
+  const src = readFileSync(new URL("../public/dash.js", import.meta.url), "utf8") + readFileSync(new URL("../public/account.js", import.meta.url), "utf8") + readFileSync(new URL("../public/detail.js", import.meta.url), "utf8");
+  const prefixes = new Set([...src.matchAll(/(?:usSet|GOSTATE\.set)\(\s*'([a-z]+):/g)].map(m => m[1]).concat(["mega"]));
+  for (const p of prefixes) assert.ok(KEY_RE.test(p + ":x"), "the server would refuse keys starting " + p + ":");
+});
