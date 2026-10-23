@@ -1,7 +1,18 @@
 {
  "watchStart": "2026-10-13T06:44:45.476Z",
- "updated": "2026-10-23T15:05:22.224Z",
+ "updated": "2026-10-23T19:14:49.451Z",
  "items": [
+  {
+   "name": "GO Pass Deluxe: Halloween + 10 Ranks",
+   "price": "$9.99",
+   "section": "LIMITED_TIME",
+   "slug": "web-event-pass-plusrank-halloween-26",
+   "href": "/purchase/item/web-event-pass-plusrank-halloween-26",
+   "endsAt": null,
+   "firstSeen": "2026-10-23T19:14:49.451Z",
+   "lastSeen": "2026-10-23T19:14:49.451Z",
+   "goneAt": null
+  },
   {
    "name": "GO Pass Deluxe: October",
    "price": "$7.99",
@@ -10,7 +21,29 @@
    "href": "/purchase/item/web-event-pass-base-october-26",
    "endsAt": null,
    "firstSeen": "2026-10-13T06:44:45.476Z",
-   "lastSeen": "2026-10-23T15:05:22.224Z",
+   "lastSeen": "2026-10-23T19:14:49.451Z",
+   "goneAt": null
+  },
+  {
+   "name": "GO Pass Deluxe: Halloween Ultra Box",
+   "price": "$14.99",
+   "section": "LIMITED_TIME",
+   "slug": "web-event-pass-plusrank-halloween-26-ultra",
+   "href": "/purchase/item/web-event-pass-plusrank-halloween-26-ultra",
+   "endsAt": null,
+   "firstSeen": "2026-10-23T19:14:49.451Z",
+   "lastSeen": "2026-10-23T19:14:49.451Z",
+   "goneAt": null
+  },
+  {
+   "name": "GO Pass Deluxe: Halloween",
+   "price": "$7.99",
+   "section": "LIMITED_TIME",
+   "slug": "web-event-pass-base-halloween-26",
+   "href": "/purchase/item/web-event-pass-base-halloween-26",
+   "endsAt": null,
+   "firstSeen": "2026-10-23T19:14:49.451Z",
+   "lastSeen": "2026-10-23T19:14:49.451Z",
    "goneAt": null
   },
   {
@@ -21,7 +54,7 @@
    "href": "/purchase/item/web-event-pass-plusrank-october-26",
    "endsAt": null,
    "firstSeen": "2026-10-13T06:44:45.476Z",
-   "lastSeen": "2026-10-23T15:05:22.224Z",
+   "lastSeen": "2026-10-23T19:14:49.451Z",
    "goneAt": null
   },
   {
@@ -32,7 +65,7 @@
    "href": "/purchase/item/web-lake-guardians-max-battle-ultra",
    "endsAt": "2026-10-25T11:38:51.041Z",
    "firstSeen": "2026-10-19T18:44:49.297Z",
-   "lastSeen": "2026-10-23T15:05:22.224Z",
+   "lastSeen": "2026-10-23T19:14:49.451Z",
    "goneAt": null
   },
   {
@@ -43,7 +76,7 @@
    "href": "/purchase/item/web-event-pass-plusrank-october-26-ultra",
    "endsAt": null,
    "firstSeen": "2026-10-13T06:44:45.476Z",
-   "lastSeen": "2026-10-23T15:05:22.224Z",
+   "lastSeen": "2026-10-23T19:14:49.451Z",
    "goneAt": null
   },
   {
@@ -54,7 +87,7 @@
    "href": "/purchase/item/web-gowa-global-2026-ticket",
    "endsAt": null,
    "firstSeen": "2026-10-13T06:44:45.476Z",
-   "lastSeen": "2026-10-23T15:05:22.224Z",
+   "lastSeen": "2026-10-23T19:14:49.451Z",
    "goneAt": null
   },
   {
