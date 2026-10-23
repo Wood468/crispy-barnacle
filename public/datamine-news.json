@@ -1,0 +1,25 @@
+{
+ "updated": "2026-10-23T09:50:17.100Z",
+ "seeded": true,
+ "channels": [
+  {
+   "src": "reports",
+   "name": "dm-reports",
+   "state": "ok",
+   "count": 0
+  },
+  {
+   "src": "gamedata",
+   "name": "dm-gamedata",
+   "state": "ok",
+   "count": 0
+  },
+  {
+   "src": "images",
+   "name": "dm-news-images",
+   "state": "ok",
+   "count": 0
+  }
+ ],
+ "items": []
+}
