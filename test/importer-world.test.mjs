@@ -25,7 +25,7 @@ test("splits multi-stop dates and places found in one official paragraph", async
     }]
   };
   const stops = stopsFromPage(page, "2026-10-22");
-  assert.deepEqual(stops.map(s => [s.where.place, s.range.start, s.range.end]), [
+  assert.deepEqual(stops.map(s => [s.place, s.start, s.end]), [
     ["Los Angeles, USA", "2026-10-24", "2026-10-24"],
     ["London, UK", "2026-11-10", "2026-11-10"]
   ]);
