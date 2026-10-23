@@ -1,6 +1,6 @@
 // Synced personal state (Phase 4): form marks, saved events, followed Pokémon, preferences.
 // One row per entry; the newest timestamp wins per entry, so a phone and a laptop never overwrite each other wholesale.
-export const KEY_RE = /^(form|costume|saved|follow|pref|goal|import):[^\u0000-\u001f]{1,100}$/;
+export const KEY_RE = /^(form|costume|saved|follow|pref|goal|import|hide|hidekind|mega):[^\u0000-\u001f]{1,100}$/;
 export const MAX_ENTRIES = 5000, MAX_PER_REQUEST = 500, MAX_VALUE = 600;
 
 export async function stateReady(db) {

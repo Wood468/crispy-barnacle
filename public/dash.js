@@ -333,7 +333,7 @@
   oldList('gofn-follow').forEach(function (n) { if (!US['follow:' + n.toLowerCase()]) US['follow:' + n.toLowerCase()] = { v: n, t: 1 }; });
   function usSave() { try { localStorage.setItem(USKEY, JSON.stringify(US)); } catch (e) { /* private mode: memory only */ } }
   function usGet(k) { var e = US[k]; return e && e.v !== null && e.v !== undefined ? e.v : undefined; }
-  function usSet(k, v) { US[k] = { v: v === undefined ? null : v, t: Date.now() }; usDirty[k] = 1; usSave(); usQueue(); document.dispatchEvent(new Event('gofn-state')); }
+  function usSet(k, v) { usStall = 0; US[k] = { v: v === undefined ? null : v, t: Date.now() }; usDirty[k] = 1; usSave(); usQueue(); document.dispatchEvent(new Event('gofn-state')); }
   function usKeys(prefix) { return Object.keys(US).filter(function (k) { return k.indexOf(prefix) === 0 && US[k].v !== null && US[k].v !== undefined; }); }
   function genAutoComplete(g) {
     var d = marks(), own = (d.m && d.m.own) || {}, legacy = d.have || {}, ids = Object.keys(DEXGEN).filter(function (id) { return DEXGEN[id] === +g; });
@@ -351,7 +351,7 @@
   function pinNow() { try { return localStorage.getItem('gofn-pin') || ''; } catch (e) { return ''; } }
   function usQueue() { clearTimeout(usTimer); usTimer = setTimeout(usSync, 800); }
   function setUsStatus(s) { usStatus = s; var n = $('usstat'); if (n) n.textContent = { local: 'Saved on this device only. Enter your sync PIN (Dex tab) to sync.', synced: 'Synced.', needsinit: 'Sync PIN works, but the server table has not been created yet.', error: 'Could not reach the server. Saved on this device.', badpin: 'That sync PIN was not accepted.', off: 'Sync is not switched on for this site.' }[s] || ''; }
-  var usSyncing = false, usAgain = false;
+  var usSyncing = false, usAgain = false, usStall = 0, usLastSig = '';
   function usSync() {
     var pin = pinNow(), acct = ''; try { acct = localStorage.getItem('gofn-acct') || ''; } catch (e) { }
     if (!pin && !acct) { setUsStatus('local'); return Promise.resolve(); }
@@ -376,7 +376,10 @@
       }).catch(function () { setUsStatus('error'); })
       .then(function () {
         usSyncing = false;
-        if (usAgain || (shouldRetry && Object.keys(usDirty).length)) { usAgain = false; usQueue(); }
+        /* If the same unsynced keys come back round after round (the server will not store them), stop retrying: every round redraws the list and made the pictures flash. The next edit starts syncing again. */
+        var sig = Object.keys(usDirty).sort().join('|');
+        usStall = shouldRetry && sig && sig === usLastSig ? usStall + 1 : 0; usLastSig = shouldRetry ? sig : '';
+        if (usAgain || (shouldRetry && sig && usStall < 3)) { usAgain = false; usQueue(); }
       });
   }
   function isSaved(id) { return usGet('saved:' + id) === true; }
