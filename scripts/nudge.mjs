@@ -61,10 +61,12 @@ export function buildDigest({ queue, details, data, world, state = {}, now = new
 
 // A picture with buttons (see keyboard in src/telegram.js): link a suggested event, discard, or open the app for another event.
 export const buttonsFor = item => item.linked ? { inline_keyboard: [[{ text: "Open app", url: APP }]] } : keyboard(item, [], APP);
+// Discord posts often have no real title: the text is a link or the "@Infographics Notify" ping. Show neither.
+export const niceTitle = (t, fallback = "New infographic") => String(t || "").replace(/https?:\/\/\S+/gi, "").replace(/@\w+(\s+Notify)?/gi, "").replace(/\s+/g, " ").trim() || fallback;
 export function captionFor(item) {
   const g = (item.guesses || [])[0];
-  if (item.linked) return ("✅ Added automatically: " + (item.title || "infographic").slice(0, 120) + (g && g.eventTitle ? "\nLinked to: " + g.eventTitle : "") + (item.publishedAt ? "\nPosted " + String(item.publishedAt).slice(0, 10) : "")).slice(0, 1000);
-  return ((item.title || "New infographic").slice(0, 160) + (item.publishedAt ? "\nPosted " + String(item.publishedAt).slice(0, 10) : "") + (g && g.eventTitle ? "\nBest guess: " + g.eventTitle : "\nNo event match yet") + (item.note ? "\n" + String(item.note).slice(0, 160) : "")).slice(0, 1000);
+  if (item.linked) return ("✅ Added automatically: " + niceTitle(item.title).slice(0, 120) + (g && g.eventTitle ? "\nLinked to: " + g.eventTitle : "") + (item.publishedAt ? "\nPosted " + String(item.publishedAt).slice(0, 10) : "")).slice(0, 1000);
+  return (niceTitle(item.title).slice(0, 160) + (item.publishedAt ? "\nPosted " + String(item.publishedAt).slice(0, 10) : "") + (g && g.eventTitle ? "\nBest guess: " + g.eventTitle : "\nNo event match yet") + (item.note ? "\n" + String(item.note).slice(0, 160) : "")).slice(0, 1000);
 }
 // Pictures the Worker already put in Telegram straight from Discord: { "discord:<id>": message_id }.
 async function alreadyForwarded(token) {

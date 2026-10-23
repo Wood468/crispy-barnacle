@@ -15,6 +15,8 @@ EP="https://$CLOUDFLARE_ACCOUNT_ID.r2.cloudflarestorage.com"
 PAIRS="infographics:public/infographics img/ext:public/img/ext tg-inbox:data/tg-inbox archive:data/archive"
 for pair in $PAIRS; do
   prefix="${pair%%:*}"; dir="${pair##*:}"
+  # R2_ONLY=infographics restores or saves just that one folder (a quick run that only needs the pictures)
+  if [ -n "${R2_ONLY:-}" ] && [ "$prefix" != "$R2_ONLY" ]; then continue; fi
   case "$mode" in
     restore) mkdir -p "$dir"; aws s3 sync "s3://$BUCKET/$prefix" "$dir" --endpoint-url "$EP" --only-show-errors || echo "::warning title=R2::restore of $prefix failed" ;;
     save)    [ -d "$dir" ] && { aws s3 sync "$dir" "s3://$BUCKET/$prefix" --endpoint-url "$EP" --only-show-errors || { echo "::error title=R2::saving $prefix failed"; exit 1; }; } ;;

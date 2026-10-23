@@ -31,7 +31,7 @@ test('NUDGE_ONLY=queue mentions only new infographics and the daily note does no
   assert.ok(!/infographic/.test(daily.text));
 });
 
-import { buttonsFor, captionFor } from "../scripts/nudge.mjs";
+import { buttonsFor, captionFor, niceTitle } from "../scripts/nudge.mjs";
 import { parseTap, decideTap, hookSecret, handleHook, tapData } from "../src/telegram.js";
 test('buttons: one per guess, discard, and an app link; callback data fits 64 bytes', () => {
   const it = { id: 'discord:1558972794673307799', title: 'Zorua CD', guesses: [{ eventId: 'e1', eventTitle: 'Zorua Community Day' }, { eventId: 'e2', eventTitle: 'Other' }] };
@@ -90,4 +90,18 @@ test("pictures the app linked by itself are announced too, but only recent ones"
   assert.deepEqual(d.items.map(i => i.id), ["d:new", "d:wait"]);
   assert.match(d.text, /1 infographic waiting for your approval/); assert.match(d.text, /1 infographic added automatically/);
   assert.match(captionFor(queue.items[0]), /Added automatically: Pawniard CD\nLinked to: Pawniard Community Day/);
+});
+
+test("Telegram captions never show a raw link or the role ping as the title", () => {
+  assert.equal(niceTitle("@Infographics Notify"), "New infographic");
+  assert.equal(niceTitle("https://cdn.discordapp.com/attachments/1/2/Twitch_2.png?ex=1"), "New infographic");
+  assert.equal(niceTitle("Lake Trio"), "Lake Trio");
+  assert.equal(niceTitle("Lake Trio https://x.y/z"), "Lake Trio");
+  assert.match(captionFor({ linked: true, title: "@Infographics Notify", publishedAt: "2026-10-22T01:00:00Z", guesses: [{ eventTitle: "Super Mega Raid Day" }] }), /^✅ Added automatically: New infographic\nLinked to: Super Mega Raid Day\nPosted 2026-10-22$/);
+});
+test("the Telegram picture job restores the pictures from R2 before sending", async () => {
+  const { readFileSync } = await import("node:fs");
+  const y = readFileSync(".github/workflows/g47ix-infographics.yml", "utf8"), notify = y.slice(y.indexOf("  notify:"));
+  assert.ok(notify.indexOf("r2-sync.sh restore") > -1 && notify.indexOf("r2-sync.sh restore") < notify.indexOf("scripts/nudge.mjs"));
+  assert.match(readFileSync("scripts/r2-sync.sh", "utf8"), /R2_ONLY/);
 });

@@ -145,13 +145,18 @@ jobs:
     needs: discover
     if: ${{ always() }}
     runs-on: ubuntu-latest
-    timeout-minutes: 4
+    timeout-minutes: 6
     concurrency:
       group: nudge
     steps:
       - uses: actions/checkout@v7
         with:
           ref: main
+      # The pictures live in R2, not git. Without this the picture file is missing and Telegram only gets the caption as text.
+      - name: Restore pictures from R2
+        env:
+          R2_ONLY: infographics
+        run: bash scripts/r2-sync.sh restore
       - uses: actions/setup-node@v4
         with:
           node-version: 22
