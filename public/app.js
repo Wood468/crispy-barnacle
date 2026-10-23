@@ -431,7 +431,34 @@ Promise.all([fetch('/data.json').then(function(r){return r.json()}),fetch('/art/
     }).join('');
   }
   renderDD();
+  // "This week": what changed in the last 7 days, from the status log, the game-file finds, datamine posts and the Discord datamine feed.
+  var W={};
+  function weekDraw(){
+    if(!W.R&&!W.M&&!W.N)return;
+    var host=$('up-watch');if(!host)return;
+    var now=Date.now(),wk=7*864e5,box=$('up-week');
+    if(!box){box=document.createElement('details');box.id='up-week';box.className='dd';box.open=true;box.innerHTML='<summary>This week <span class="cnt"></span></summary><div class="body"></div>';host.insertBefore(box,host.firstChild)}
+    var ch=((W.R&&W.R.changes)||[]).filter(function(c){return c.at>=now-wk}).sort(function(a,b){return b.at-a.at});
+    var rel=ch.filter(function(c){return c.to==='Released'}),up=ch.filter(function(c){return c.to!=='Released'});
+    var KIND={pokemon:'New Pokémon or form',mega:'New Mega or Primal data',move:'New move'};
+    var finds=((W.M&&W.M.items)||[]).filter(function(x){return x.seen>=now-wk}).sort(function(a,b){return b.seen-a.seen});
+    var posts=[];
+    ((W.M&&W.M.posts)||[]).forEach(function(p){if(p.date&&p.date>=now-wk)posts.push({t:p.title,l:p.link,d:p.date,src:'Pokémon GO Hub'})});
+    ((W.N&&W.N.items)||[]).forEach(function(p){var d=Date.parse(p.date);if(d>=now-wk)posts.push({t:p.title,l:p.link,d:d,src:p.src==='events'?'PokéMiners event info':p.src==='reports'?'PokéMiners report':'PokéMiners game data'})});
+    posts.sort(function(a,b){return b.d-a.d});posts=posts.slice(0,6);
+    function link(u,t){return /^https?:\/\//i.test(u||'')?'<a href="'+esc(u)+'" target="_blank" rel="noopener noreferrer"><b>'+esc(t)+'</b></a>':'<b>'+esc(t)+'</b>'}
+    function sec(title,cls,rows){return rows.length?'<div><h4><span class="st '+cls+'">'+esc(title)+'</span><span class="mono muted">'+rows.length+'</span></h4><ul class="wlist">'+rows.join('')+'</ul></div>':''}
+    var h='<p class="sub" style="margin:0">The last 7 days. Datamined items are unconfirmed and may never ship.</p>';
+    h+=sec('Now in Pokémon GO','st-a',rel.map(function(c){return '<li><b>'+esc(c.n)+'</b><span class="when">'+fmtTs(c.at)+'</span>'+(c.label?'<span class="where">'+esc(c.label)+'</span>':'')+'</li>'}));
+    h+=sec('Moved up','st-n',up.map(function(c){return '<li><b>'+esc(c.n)+'</b><span class="when">'+fmtTs(c.at)+'</span><span class="where">'+esc(c.from)+' to '+esc(c.to)+(c.label?' · '+esc(c.label):'')+'</span></li>'}));
+    h+=sec('New in the game files','st-d',finds.map(function(x){return '<li><b>'+esc(x.name)+'</b><span class="when">'+fmtTs(x.seen)+'</span><span class="where">'+esc(KIND[x.kind]||'New data')+'</span></li>'}));
+    h+=sec('Datamine posts','st-d',posts.map(function(p){return '<li>'+link(p.l,p.t)+'<span class="when">'+fmtTs(p.d)+'</span><span class="where">'+esc(p.src)+'</span></li>'}));
+    var n=rel.length+up.length+finds.length+posts.length;
+    if(!n)h+='<p class="sub">Nothing new this week.</p>';
+    box.querySelector('.cnt').textContent=n+' new';box.querySelector('.body').innerHTML=h;
+  }
   fetch('/api/unreleased').then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(R){
+    W.R=R;weekDraw();
     if(!R.items||!R.items.length)return;
     var open={};Array.prototype.forEach.call(document.querySelectorAll('#up-dd details'),function(d){open[d.dataset.id]=d.open});
     R.items.forEach(function(x){OVER[x.s+'|'+x.n]=x});
@@ -441,6 +468,7 @@ Promise.all([fetch('/data.json').then(function(r){return r.json()}),fetch('/art/
   }).catch(function(){});
   function fmtTs(ms){var d=new Date(ms);return d.getDate()+' '+MON[d.getMonth()]+' '+d.getFullYear()}
   fetch('/api/datamine').then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(M){
+    W.M=M;weekDraw();
     var h='<p class="sub" style="margin:0">Checked automatically every morning: new Pokémon, forms, Megas and moves appearing in the game data the PokéMiners publish, plus Pokémon GO Hub\'s datamine posts. Finding something here does not mean it is coming. All of it is unconfirmed.</p>';
     if(!M.checked)h+='<p class="sub">It has not run yet. The first run records what is in the game data now, then it reports what is new.</p>';
     else{
@@ -460,6 +488,7 @@ Promise.all([fetch('/data.json').then(function(r){return r.json()}),fetch('/art/
   }).catch(function(){});
   // Datamine news: PokeMiners' datamining channels, read from Discord by a GitHub job (community datamining, never announced).
   fetch('/datamine-news.json').then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(N){
+    W.N=N;weekDraw();
     var items=(N&&N.items)||[];if(!items.length)return;
     var SRC=[['all','All'],['events','Events'],['reports','Reports'],['gamedata','Game data']],sel='all',shown=15;
     var el=document.createElement('details');el.className='dd';

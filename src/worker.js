@@ -612,6 +612,29 @@ export function computeStatuses(items, events, posts, fresh, released, nowMs, de
   return out;
 }
 
+// What changed since the last run, for the Leaks tab's "This week". The first ever run records nothing.
+export function statusChanges(prev, tracked, items, nowMs) {
+  if (!prev) return [];
+  const base = new Map(tracked.map((t) => [t.s + "|" + t.n, t.base]));
+  const was = new Map((prev.items || []).map((i) => [i.s + "|" + i.n, i.status]));
+  const out = [];
+  for (const i of items) {
+    const k = i.s + "|" + i.n, before = prev.snap ? prev.snap[k] : (was.get(k) ?? base.get(k));
+    if (before && before !== i.status) out.push({ s: i.s, n: i.n, from: before, to: i.status, at: nowMs, label: i.srcLabel || "" });
+  }
+  return out;
+}
+// Once a Pokémon has been seen as Released it stays Released, even if the event that proved it later drops out of the feeds.
+export function keepReleased(prev, items) {
+  if (!prev) return items;
+  const label = new Map((prev.items || []).map((i) => [i.s + "|" + i.n, i]));
+  for (const i of items) {
+    const k = i.s + "|" + i.n, before = prev.snap ? prev.snap[k] : (label.get(k) || {}).status;
+    if (before === "Released" && i.status !== "Released") { i.status = "Released"; i.srcLabel = (label.get(k) || {}).srcLabel || "In the game"; i.srcUrl = (label.get(k) || {}).srcUrl || ""; }
+  }
+  return items;
+}
+
 async function updateUnreleased(env, now) {
   if (!env.ASSETS) return "unreleased: no assets";
   const data = await (await env.ASSETS.fetch(new Request("https://assets.local/data.json"))).json();
@@ -625,8 +648,12 @@ async function updateUnreleased(env, now) {
   if (wanted.length) await env.DB.prepare("INSERT OR REPLACE INTO dm_state (k, v) VALUES ('world', ?)").bind(JSON.stringify(wanted)).run();
   const shin = shinyList(Array.isArray(events) ? events : [], now);
   if (shin.length) await env.DB.prepare("INSERT OR REPLACE INTO dm_state (k, v) VALUES ('shiny', ?)").bind(JSON.stringify(shin)).run();
-  const items = computeStatuses(trackedItems(data), Array.isArray(events) ? events : [], posts, fresh, released, now, debutedSpecies(data.events, now));
-  await env.DB.prepare("INSERT OR REPLACE INTO dm_state (k, v) VALUES ('unrel', ?)").bind(JSON.stringify({ updated: now, events: events.length, released: released.size, items: items.filter((i) => i.srcLabel || i.status === "Released") })).run();
+  const tracked = trackedItems(data);
+  let prev = null; try { const row = await env.DB.prepare("SELECT v FROM dm_state WHERE k = 'unrel'").first(); if (row) prev = JSON.parse(row.v); } catch { /* first run */ }
+  const items = keepReleased(prev, computeStatuses(tracked, Array.isArray(events) ? events : [], posts, fresh, released, now, debutedSpecies(data.events, now)));
+  const changes = [...statusChanges(prev, tracked, items, now), ...((prev && prev.changes) || [])].filter((c) => c.at > now - 60 * 86400000).slice(0, 100);
+  const snap = Object.fromEntries(items.map((i) => [i.s + "|" + i.n, i.status]));
+  await env.DB.prepare("INSERT OR REPLACE INTO dm_state (k, v) VALUES ('unrel', ?)").bind(JSON.stringify({ updated: now, events: events.length, released: released.size, items: items.filter((i) => i.srcLabel || i.status === "Released"), snap, changes })).run();
   return "unreleased:" + items.length + " (events " + events.length + ", released list " + released.size + ")";
 }
 
@@ -634,7 +661,9 @@ async function unreleasedGet(env) {
   if (!env.DB) return json({ error: "Not switched on." }, 404);
   await ensure(env);
   const row = await env.DB.prepare("SELECT v FROM dm_state WHERE k = 'unrel'").first();
-  const res = json(row ? JSON.parse(row.v) : { updated: 0, items: [] });
+  const body = row ? JSON.parse(row.v) : { updated: 0, items: [] };
+  delete body.snap; // internal: the last status of every tracked item
+  const res = json(body);
   res.headers.set("cache-control", "public, max-age=600");
   return res;
 }

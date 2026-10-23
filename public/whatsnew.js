@@ -1,28 +1,73 @@
-/* "New since your last visit": events that were not in the list the last time you dismissed this note.
-   The list of event ids you have seen lives only in this browser (localStorage); the first visit just records it. */
+/* "New since your last visit" on the first page: events that were not in the list the last time you dismissed this note,
+   plus what changed in the Leaks tab (now in the game, moved up, new in the game files, datamine posts).
+   What you have seen lives only in this browser (localStorage). The first visit just records the events; leaks show the last 7 days. */
 (function () {
   'use strict';
-  var KEY = 'gofn-seen-events', box = null;
+  var KEY = 'gofn-seen-events', LKEY = 'gofn-seen-leaks', DAY = 864e5, box = null;
   function load() { try { var j = JSON.parse(localStorage.getItem(KEY) || 'null'); return j && Array.isArray(j.ids) ? j : null; } catch (e) { return null; } }
   function save(ids) { try { localStorage.setItem(KEY, JSON.stringify({ ids: ids, at: Date.now() })); } catch (e) { } }
+  function loadLeaks() { try { var j = JSON.parse(localStorage.getItem(LKEY) || 'null'); return j && +j.at ? j : null; } catch (e) { return null; } }
+  function saveLeaks() { try { localStorage.setItem(LKEY, JSON.stringify({ at: Date.now() })); } catch (e) { } }
   function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
   function relevant(e) { return e && e.id && !/^cur:(spot|rh)-/.test(e.id) && e.kind !== 'rotation'; }
-  function run(list) {
-    var ids = list.filter(relevant).map(function (e) { return e.id; }), seen = load();
-    if (!seen) { save(ids); return; }
-    var had = {}; seen.ids.forEach(function (i) { had[i] = 1; });
-    var now = Date.now(), fresh = list.filter(function (e) { return relevant(e) && !had[e.id] && (!e.end || +new Date(e.end) > now); });
-    if (!fresh.length) { save(ids); return; }
+  function safe(u) { return /^https?:\/\//i.test(u || '') ? u : ''; }
+
+  // What changed in the Leaks data since `since` (ms). R = /api/unreleased, M = /api/datamine, N = /datamine-news.json (any may be null).
+  function leakGroups(R, M, N, since) {
+    var ch = ((R && R.changes) || []).filter(function (c) { return c.at >= since; });
+    var rel = ch.filter(function (c) { return c.to === 'Released'; }), up = ch.filter(function (c) { return c.to !== 'Released'; });
+    var finds = ((M && M.items) || []).filter(function (x) { return x.seen >= since; });
+    var posts = [];
+    ((M && M.posts) || []).forEach(function (p) { if (p.date && p.date >= since) posts.push({ t: p.title, l: p.link, d: p.date }); });
+    ((N && N.items) || []).forEach(function (p) { var d = Date.parse(p.date); if (d >= since) posts.push({ t: p.title, l: p.link, d: d }); });
+    posts.sort(function (a, b) { return b.d - a.d; });
+    var groups = [];
+    if (rel.length) groups.push({ label: 'Now in Pokémon GO', items: rel.map(function (c) { return { t: c.n }; }) });
+    if (up.length) groups.push({ label: 'Moved up', items: up.map(function (c) { return { t: c.n + ' (' + c.to + ')' }; }) });
+    if (finds.length) groups.push({ label: 'New in the game files', items: finds.map(function (x) { return { t: x.name }; }) });
+    if (posts.length) groups.push({ label: 'Datamine posts', items: posts.slice(0, 4).map(function (p) { return { t: p.t, l: safe(p.l) }; }) });
+    return groups;
+  }
+
+  var st = { evDone: false, ids: [], fresh: [], leaks: null };
+  function render() {
+    if (!st.evDone || st.leaks === null) return;
+    var nLeaks = st.leaks.reduce(function (n, g) { return n + g.items.length; }, 0), total = st.fresh.length + nLeaks;
+    if (!total) { save(st.ids); saveLeaks(); return; }
     var anchor = document.getElementById('fresh-line'); if (!anchor || !anchor.parentNode) return;
     if (!box) { box = document.createElement('div'); box.className = 'whatsnew'; box.setAttribute('role', 'status'); anchor.parentNode.insertBefore(box, anchor.nextSibling); }
-    box.innerHTML = '<b>New since your last visit</b> <span class="wn-n">' + fresh.length + '</span><div class="wn-list">' + fresh.slice(0, 8).map(function (e) { return '<a href="#event=' + encodeURIComponent(e.id) + '">' + esc(e.name || e.id) + '</a>'; }).join('') + (fresh.length > 8 ? '<span>+' + (fresh.length - 8) + ' more</span>' : '') + '</div><button type="button" class="pill wn-ok">Got it</button>';
+    var h = '<b>New since your last visit</b> <span class="wn-n">' + total + '</span>';
+    if (st.fresh.length) h += '<div class="wn-list">' + st.fresh.slice(0, 8).map(function (e) { return '<a href="#event=' + encodeURIComponent(e.id) + '">' + esc(e.name || e.id) + '</a>'; }).join('') + (st.fresh.length > 8 ? '<span>+' + (st.fresh.length - 8) + ' more</span>' : '') + '</div>';
+    st.leaks.forEach(function (g) {
+      h += '<div class="wn-list"><span class="wn-h">' + esc(g.label) + '</span>' + g.items.slice(0, 8).map(function (i) { return i.l ? '<a href="' + esc(i.l) + '" target="_blank" rel="noopener noreferrer">' + esc(i.t) + '</a>' : '<a href="#leaks" class="wn-leaks">' + esc(i.t) + '</a>'; }).join('') + (g.items.length > 8 ? '<span>+' + (g.items.length - 8) + ' more</span>' : '') + '</div>';
+    });
+    box.innerHTML = h + '<button type="button" class="pill wn-ok">Got it</button>';
     box.hidden = false;
-    box.querySelector('.wn-ok').addEventListener('click', function () { save(ids); box.hidden = true; });
+    box.querySelector('.wn-ok').addEventListener('click', function () { save(st.ids); saveLeaks(); box.hidden = true; });
+    Array.prototype.forEach.call(box.querySelectorAll('.wn-leaks'), function (a) { a.addEventListener('click', function (e) { e.preventDefault(); var b = document.getElementById('menu-leaks'); if (b) b.click(); }); });
   }
+  function run(list) {
+    st.ids = list.filter(relevant).map(function (e) { return e.id; });
+    var seen = load();
+    if (!seen) save(st.ids);
+    else {
+      var had = {}; seen.ids.forEach(function (i) { had[i] = 1; });
+      var now = Date.now(); st.fresh = list.filter(function (e) { return relevant(e) && !had[e.id] && (!e.end || +new Date(e.end) > now); });
+    }
+    st.evDone = true; render();
+  }
+  function getJson(u) { return fetch(u).then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; }); }
+  function loadLeakChanges() {
+    var last = loadLeaks(), since = Math.max(last ? last.at : 0, Date.now() - 14 * DAY);
+    if (!last) since = Date.now() - 7 * DAY;
+    return Promise.all([getJson('/api/unreleased'), getJson('/api/datamine'), getJson('/datamine-news.json')]).then(function (r) { st.leaks = leakGroups(r[0], r[1], r[2], since); render(); }).catch(function () { st.leaks = []; render(); });
+  }
+  window.GOWN = { leakGroups: leakGroups };
+  if (typeof fetch === 'function') loadLeakChanges(); else st.leaks = [];
   var tries = 0;
   (function wait() {
     var X = window.GODASH, list = X && X.events ? X.events() : [];
-    if (list && list.length >= 10) { try { run(list); } catch (e) { } return; }
-    if (++tries < 40) setTimeout(wait, 500);
+    if (list && list.length >= 10) { try { run(list); } catch (e) { st.evDone = true; render(); } return; }
+    if (++tries < 40) setTimeout(wait, 500); else { st.evDone = true; render(); }
   })();
 })();
