@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { parseMessage, merge, clean, telegramText } from "../scripts/datamine-news.mjs";
+import { parseMessage, merge, clean, telegramText, isPost } from "../scripts/datamine-news.mjs";
 
 const msg = (o) => ({ id: "100", timestamp: "2026-10-22T03:00:00.000000+00:00", content: "", embeds: [], attachments: [], ...o });
 
@@ -53,4 +53,9 @@ test("Datamine Live is its own Telegram category and the game-data post is label
   assert.deepEqual(route(env, "datamine"), { chat: "-100123", thread: 5 });
   assert.deepEqual(route(env, "datamine_live"), { chat: "-100123", thread: 9 });
   assert.match(telegramText({ src: "gamedata", title: "Game master changed" }), /^PokéMiners game data: Game/);
+});
+test("Discord system notices such as 'channel followed' are not posts", () => {
+  assert.equal(isPost({ type: 12, content: "PokeMiners #new-event-info" }), false);
+  assert.equal(isPost({ type: 0, content: "x" }), true);
+  assert.equal(isPost({ content: "x" }), true);
 });
