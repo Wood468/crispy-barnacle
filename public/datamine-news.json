@@ -1,12 +1,12 @@
 {
- "updated": "2026-10-23T11:29:36.004Z",
+ "updated": "2026-10-23T14:59:31.783Z",
  "seeded": true,
  "channels": [
   {
    "src": "events",
    "name": "dm-events",
    "state": "ok",
-   "count": 1
+   "count": 0
   },
   {
    "src": "reports",
@@ -18,8 +18,18 @@
    "src": "gamedata",
    "name": "dm-gamedata",
    "state": "ok",
-   "count": 2
+   "count": 1
   }
  ],
- "items": []
+ "items": [
+  {
+   "id": "1563165766747168798",
+   "src": "gamedata",
+   "title": "Pawniard, GO Pass: November, Profile Background · sora10pls/holoho...",
+   "text": "New texts: https://github.com/sora10pls/holoholo-text/commit/fcbc13b64409f731da6652f76cf7b9cb2d5d8a5c#diff-a71fd0182b32e8d4b2786e4fd8a33ff746eab69aff0df3c734371b8e24f155ea\n\n@subscriber @miner",
+   "link": "https://github.com/sora10pls/holoholo-text/commit/fcbc13b64409f731da6652f76cf7b9cb2d5d8a5c",
+   "image": "",
+   "date": "2026-10-23T12:22:41.008Z"
+  }
+ ]
 }
