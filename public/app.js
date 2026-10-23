@@ -458,6 +458,29 @@ Promise.all([fetch('/data.json').then(function(r){return r.json()}),fetch('/art/
     var el=document.createElement('details');el.className='dd';el.innerHTML='<summary>Datamine watch <span class="cnt">'+(M.items?M.items.length:0)+' new</span></summary><div class="body">'+h+'</div>';
     $('up-watch').appendChild(el);
   }).catch(function(){});
+  // Datamine news: PokeMiners' datamining channels, read from Discord by a GitHub job (community datamining, never announced).
+  fetch('/datamine-news.json').then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(N){
+    var items=(N&&N.items)||[];if(!items.length)return;
+    var SRC=[['all','All'],['reports','Reports'],['gamedata','Game data'],['images','Images']],sel='all',shown=15;
+    var el=document.createElement('details');el.className='dd';
+    function safe(u){return /^https?:\/\//i.test(u||'')?u:''}
+    function draw(){
+      var list=items.filter(function(i){return sel==='all'||i.src===sel});
+      var chips='<div class="chips" style="display:flex;gap:8px;overflow-x:auto">'+SRC.map(function(c){return '<button type="button" class="fchip" data-dmsrc="'+c[0]+'" aria-pressed="'+(sel===c[0])+'">'+c[1]+'</button>'}).join('')+'</div>';
+      var rows=list.slice(0,shown).map(function(i){
+        var u=safe(i.link),t=u?'<a href="'+esc(u)+'" target="_blank" rel="noopener noreferrer"><b>'+esc(i.title)+'</b></a>':'<b>'+esc(i.title)+'</b>';
+        return '<li>'+t+(i.date?'<span class="when">'+fmtTs(Date.parse(i.date))+'</span>':'')+(i.text?'<span class="where">'+esc(i.text.length>220?i.text.slice(0,220)+'…':i.text)+'</span>':'')+'</li>'}).join('');
+      el.querySelector('.body').innerHTML='<p class="sub" style="margin:0">What the PokéMiners datamining team is finding, read from their update channels. Community datamining: nothing here is announced, and some of it never ships.</p>'+chips
+        +(rows?'<ul class="wlist">'+rows+'</ul>':'<p class="sub">Nothing in this group yet.</p>')
+        +(list.length>shown?'<button type="button" class="fchip" data-dmmore="1">Show more</button>':'');
+    }
+    el.innerHTML='<summary>Datamine news <span class="cnt">'+items.length+'</span></summary><div class="body"></div>';
+    el.addEventListener('click',function(e){
+      var b=e.target.closest&&e.target.closest('button');if(!b)return;
+      if(b.dataset.dmsrc){sel=b.dataset.dmsrc;shown=15;draw()}else if(b.dataset.dmmore){shown+=15;draw()}
+    });
+    draw();$('up-watch').appendChild(el);
+  }).catch(function(){});
   $('asof').textContent=D.asOf;
 
   /* ---------- best pokemon ---------- */
