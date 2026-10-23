@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-23T01:37:23.281Z",
+ "updated": "2026-10-23T07:40:43.668Z",
  "events": [
   {
    "id": "w-pokemon-fossil-museum-2026",
@@ -174,25 +174,6 @@
    "seen": "2026-10-23"
   },
   {
-   "id": "w-mega-dragonite-in-mega-raids",
-   "name": "Mega Dragonite in Mega Raids",
-   "place": "",
-   "area": "Worldwide",
-   "scope": "global",
-   "start": "2026-10-14",
-   "end": "2026-10-20",
-   "datesKnown": true,
-   "sources": [
-    {
-     "id": "leekduck",
-     "name": "Leek Duck",
-     "url": "https://leekduck.com/events/mega-dragonite-in-mega-raids-october-2026/"
-    }
-   ],
-   "status": "single",
-   "seen": "2026-10-23"
-  },
-  {
    "id": "w-pok-mon-run-30-taichung",
    "name": "Pokémon RUN 30: Taichung",
    "place": "Taichung, Taiwan",
@@ -330,6 +311,25 @@
    ],
    "status": "official",
    "seen": "2026-10-14"
+  },
+  {
+   "id": "w-d-a-de-muertos-2026",
+   "name": "Día de Muertos 2026",
+   "place": "Paseo de la Reforma, Mexico City, Mexico",
+   "area": "Americas",
+   "scope": "regional",
+   "start": "2026-10-31",
+   "end": "2026-11-05",
+   "datesKnown": true,
+   "sources": [
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "url": "https://pokemongo.com/es_MX/news/dia-de-muertos-2026"
+    }
+   ],
+   "status": "official",
+   "seen": "2026-10-23"
   },
   {
    "id": "w-pok-mon-run-30-kaohsiung",
@@ -687,6 +687,11 @@
      "id": "official",
      "name": "Pokémon GO (official)",
      "url": "https://pokemongo.com/news/save-the-date-go-tour-2027/"
+    },
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "url": "https://pokemongo.com/ko/news/save-the-date-go-tour-2027/"
     }
    ],
    "status": "official",
