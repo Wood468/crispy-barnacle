@@ -42,3 +42,7 @@ test("Telegram text is short, links the report and says it is not announced", ()
   assert.match(t, /not announced/i);
   assert.equal(clean("<#123> **bold** ~~gone~~"), "bold gone");
 });
+test("the Telegram line names where the post came from", () => {
+  assert.match(telegramText({ src: "events", title: "Sandile Hatch Day research" }), /^PokéMiners event info: Sandile/);
+  assert.match(telegramText({ src: "reports", title: "APK teardown" }), /^PokéMiners report: APK/);
+});

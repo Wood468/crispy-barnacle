@@ -461,7 +461,7 @@ Promise.all([fetch('/data.json').then(function(r){return r.json()}),fetch('/art/
   // Datamine news: PokeMiners' datamining channels, read from Discord by a GitHub job (community datamining, never announced).
   fetch('/datamine-news.json').then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(N){
     var items=(N&&N.items)||[];if(!items.length)return;
-    var SRC=[['all','All'],['reports','Reports'],['gamedata','Game data'],['images','Images']],sel='all',shown=15;
+    var SRC=[['all','All'],['events','Events'],['reports','Reports'],['gamedata','Game data']],sel='all',shown=15;
     var el=document.createElement('details');el.className='dd';
     function safe(u){return /^https?:\/\//i.test(u||'')?u:''}
     function draw(){

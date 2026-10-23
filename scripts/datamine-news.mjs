@@ -57,8 +57,9 @@ export function merge(old, fresh, now = Date.now()) {
   return { items: items.slice(0, KEEP_MAX), added };
 }
 
+const LABEL = { events: "PokéMiners event info", reports: "PokéMiners report" };
 export function telegramText(i) {
-  const bits = ["PokéMiners report: " + i.title];
+  const bits = [(LABEL[i.src] || "PokéMiners") + ": " + i.title];
   if (i.text) bits.push(i.text.replace(/\s+/g, " ").slice(0, 280));
   if (i.link) bits.push(i.link);
   bits.push("Datamined: not announced.");
