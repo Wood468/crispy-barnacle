@@ -1,8 +1,8 @@
 {
- "runAt": "2026-10-22T22:26:31.156Z",
+ "runAt": "2026-10-23T01:37:23.592Z",
  "sources": {
   "official": {
-   "listed": 24,
+   "listed": 25,
    "error": ""
   },
   "leekduck": {
@@ -16,8 +16,10 @@
  },
  "pagesRead": 80,
  "events": 78,
- "worldEvents": 34,
- "worldUndated": [],
+ "worldEvents": 35,
+ "worldUndated": [
+  "Go Wild Area Stamp Rally Details"
+ ],
  "unmatchedPages": [
   {
    "source": "official",
@@ -296,41 +298,6 @@
    "missingFrom": [
     "official"
    ]
-  },
-  {
-   "event": "Into the Wild",
-   "field": "bonuses",
-   "missingFrom": []
-  },
-  {
-   "event": "Into the Wild",
-   "field": "featured",
-   "missingFrom": []
-  },
-  {
-   "event": "Into the Wild",
-   "field": "research",
-   "missingFrom": []
-  },
-  {
-   "event": "Into the Wild",
-   "field": "moves",
-   "missingFrom": []
-  },
-  {
-   "event": "Into the Wild",
-   "field": "costumes",
-   "missingFrom": []
-  },
-  {
-   "event": "Into the Wild",
-   "field": "tickets",
-   "missingFrom": []
-  },
-  {
-   "event": "Into the Wild",
-   "field": "dates",
-   "missingFrom": []
   },
   {
    "event": "Sandile Hatch Day",

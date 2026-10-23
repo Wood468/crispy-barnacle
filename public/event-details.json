@@ -1,9 +1,35 @@
 {
- "updated": "2026-10-22T22:26:31.156Z",
+ "updated": "2026-10-23T01:37:23.592Z",
  "events": {
+  "leekduck:into-the-wild-2026": {
+   "name": "Into the Wild",
+   "updated": "2026-10-23T01:37:23.592Z",
+   "sources": [
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "trust": "official",
+     "url": "https://pokemongo.com/news/go-wild-area-stamp-rally-details-2026/"
+    }
+   ],
+   "fields": {
+    "bonuses": [],
+    "featured": [],
+    "raids": [],
+    "eggs": [],
+    "research": [],
+    "shiny": [],
+    "moves": [],
+    "costumes": [],
+    "tickets": [],
+    "dates": []
+   },
+   "conflicts": [],
+   "gaps": []
+  },
   "leekduck:november-communityday2026": {
    "name": "Pawniard Community Day",
-   "updated": "2026-10-22T22:26:31.156Z",
+   "updated": "2026-10-23T01:37:23.592Z",
    "sources": [
     {
      "id": "official",
@@ -293,7 +319,7 @@
   },
   "leekduck:go-pass-november-2026": {
    "name": "GO Pass: November",
-   "updated": "2026-10-22T22:26:31.156Z",
+   "updated": "2026-10-23T01:37:23.592Z",
    "sources": [
     {
      "id": "official",
@@ -539,7 +565,7 @@
   },
   "smr1": {
    "name": "Super Mega Raid Day",
-   "updated": "2026-10-22T22:26:31.156Z",
+   "updated": "2026-10-23T01:37:23.592Z",
    "sources": [
     {
      "id": "official",
@@ -787,7 +813,7 @@
   },
   "leekduck:halloween-2026-part-1": {
    "name": "Pokémon GO Halloween 2026 Part I",
-   "updated": "2026-10-22T22:26:31.156Z",
+   "updated": "2026-10-23T01:37:23.592Z",
    "sources": [
     {
      "id": "official",
@@ -1142,7 +1168,7 @@
   },
   "halloween1": {
    "name": "Halloween 2026, Part One",
-   "updated": "2026-10-22T22:26:31.156Z",
+   "updated": "2026-10-23T01:37:23.592Z",
    "sources": [
     {
      "id": "official",
@@ -1371,7 +1397,7 @@
   },
   "leekduck:pokemon-go-city-safari-boston-2026-rescheduled": {
    "name": "Pokémon GO City Safari: Boston (Rescheduled)",
-   "updated": "2026-10-22T22:26:31.156Z",
+   "updated": "2026-10-23T01:37:23.592Z",
    "sources": [
     {
      "id": "official",
@@ -1528,7 +1554,7 @@
   },
   "spirits": {
    "name": "Dynamax Uxie, Mesprit and Azelf",
-   "updated": "2026-10-22T22:26:31.156Z",
+   "updated": "2026-10-23T01:37:23.592Z",
    "sources": [
     {
      "id": "official",
@@ -1769,7 +1795,7 @@
   },
   "tcg30": {
    "name": "Pokémon TCG: 30th Celebration (at stores)",
-   "updated": "2026-10-22T22:26:31.156Z",
+   "updated": "2026-10-23T01:37:23.592Z",
    "sources": [
     {
      "id": "official",
@@ -1930,7 +1956,7 @@
   },
   "sandile": {
    "name": "Sandile Hatch Day",
-   "updated": "2026-10-22T22:26:31.156Z",
+   "updated": "2026-10-23T01:37:23.592Z",
    "sources": [
     {
      "id": "official",
@@ -2089,7 +2115,7 @@
   },
   "trek": {
    "name": "Fall Marathon: Buddy Trek",
-   "updated": "2026-10-22T22:26:31.156Z",
+   "updated": "2026-10-23T01:37:23.592Z",
    "sources": [
     {
      "id": "official",
@@ -2318,7 +2344,7 @@
   },
   "leekduck:go-pass-october-2026": {
    "name": "GO Pass: October",
-   "updated": "2026-10-22T22:26:31.156Z",
+   "updated": "2026-10-23T01:37:23.592Z",
    "sources": [
     {
      "id": "official",
@@ -2620,7 +2646,7 @@
   },
   "zorua": {
    "name": "Zorua Community Day",
-   "updated": "2026-10-22T22:26:31.156Z",
+   "updated": "2026-10-23T01:37:23.592Z",
    "sources": [
     {
      "id": "official",
@@ -2799,7 +2825,7 @@
   },
   "leekduck:season-24-twilight-trails": {
    "name": "Twilight Trails",
-   "updated": "2026-10-22T22:26:31.156Z",
+   "updated": "2026-10-23T01:37:23.592Z",
    "sources": [
     {
      "id": "official",
@@ -3064,7 +3090,7 @@
   },
   "leekduck:palkia-in-5-star-raid-battles-october-2026": {
    "name": "Palkia in 5-star Raid Battles",
-   "updated": "2026-10-22T22:26:31.156Z",
+   "updated": "2026-10-23T01:37:23.592Z",
    "sources": [
     {
      "id": "leekduck",
@@ -3134,7 +3160,7 @@
   },
   "leekduck:pokemonspotlighthour2026-10-22": {
    "name": "Morelull Spotlight Hour",
-   "updated": "2026-10-22T22:26:31.156Z",
+   "updated": "2026-10-23T01:37:23.592Z",
    "sources": [
     {
      "id": "leekduck",
@@ -3168,7 +3194,7 @@
   },
   "leekduck:dynamax-uxie-mesprit-azelf-max-battle-day-2026": {
    "name": "Dynamax Uxie, Mesprit, and Azelf Max Battle Day",
-   "updated": "2026-10-22T22:26:31.156Z",
+   "updated": "2026-10-23T01:37:23.592Z",
    "sources": [
     {
      "id": "leekduck",
@@ -3339,7 +3365,7 @@
   },
   "leekduck:pokemon-night-out-2026-twitch-drops": {
    "name": "Twitch Drops for Pokémon Night Out 2026",
-   "updated": "2026-10-22T22:26:31.156Z",
+   "updated": "2026-10-23T01:37:23.592Z",
    "sources": [
     {
      "id": "leekduck",
@@ -3387,7 +3413,7 @@
   },
   "leekduck:pokemon-night-out-los-angeles-2026": {
    "name": "Pokémon Night Out 2026 - Los Angeles",
-   "updated": "2026-10-22T22:26:31.156Z",
+   "updated": "2026-10-23T01:37:23.592Z",
    "sources": [
     {
      "id": "leekduck",
@@ -3503,7 +3529,7 @@
   },
   "minior": {
    "name": "Orionids Meteor Shower: Minior Debut",
-   "updated": "2026-10-22T22:26:31.156Z",
+   "updated": "2026-10-23T01:37:23.592Z",
    "sources": [
     {
      "id": "leekduck",
@@ -3631,7 +3657,7 @@
   },
   "leekduck:max-mondays-2026-10-26": {
    "name": "Dynamax Sableye during Max Monday",
-   "updated": "2026-10-22T22:26:31.156Z",
+   "updated": "2026-10-23T01:37:23.592Z",
    "sources": [
     {
      "id": "leekduck",
@@ -3708,7 +3734,7 @@
   },
   "leekduck:mega-charizard-x-mega-charizard-y-in-mega-raids-october-2026": {
    "name": "Mega Charizard X and Mega Charizard Y in Mega Raids",
-   "updated": "2026-10-22T22:26:31.156Z",
+   "updated": "2026-10-23T01:37:23.592Z",
    "sources": [
     {
      "id": "leekduck",
@@ -3772,7 +3798,7 @@
   },
   "leekduck:raidhour20261028": {
    "name": "Giratina (Origin Forme) Raid Hour",
-   "updated": "2026-10-22T22:26:31.156Z",
+   "updated": "2026-10-23T01:37:23.592Z",
    "sources": [
     {
      "id": "leekduck",
@@ -3814,7 +3840,7 @@
   },
   "leekduck:pokemonspotlighthour2026-10-29": {
    "name": "Gastly Spotlight Hour",
-   "updated": "2026-10-22T22:26:31.156Z",
+   "updated": "2026-10-23T01:37:23.592Z",
    "sources": [
     {
      "id": "leekduck",
@@ -3848,7 +3874,7 @@
   },
   "leekduck:max-mondays-2026-11-02": {
    "name": "Dynamax Machop during Max Monday",
-   "updated": "2026-10-22T22:26:31.156Z",
+   "updated": "2026-10-23T01:37:23.592Z",
    "sources": [
     {
      "id": "leekduck",
@@ -3925,7 +3951,7 @@
   },
   "leekduck:shadow-landorus-incarnate-forme-in-shadow-raids-october-2026": {
    "name": "Shadow Landorus (Incarnate Forme) in Shadow Raids",
-   "updated": "2026-10-22T22:26:31.156Z",
+   "updated": "2026-10-23T01:37:23.592Z",
    "sources": [
     {
      "id": "leekduck",
@@ -3975,7 +4001,7 @@
   },
   "leekduck:giratina-origin-forme-in-5-star-raid-battles-october-2026": {
    "name": "Giratina (Origin Forme) in 5-star Raid Battles",
-   "updated": "2026-10-22T22:26:31.156Z",
+   "updated": "2026-10-23T01:37:23.592Z",
    "sources": [
     {
      "id": "leekduck",
@@ -4039,7 +4065,7 @@
   },
   "leekduck:raidhour20261104": {
    "name": "Giratina (Altered Forme) Raid Hour",
-   "updated": "2026-10-22T22:26:31.156Z",
+   "updated": "2026-10-23T01:37:23.592Z",
    "sources": [
     {
      "id": "leekduck",
@@ -4081,7 +4107,7 @@
   },
   "leekduck:pokemonspotlighthour2026-11-05": {
    "name": "Teddiursa wearing a witch hat Spotlight Hour",
-   "updated": "2026-10-22T22:26:31.156Z",
+   "updated": "2026-10-23T01:37:23.592Z",
    "sources": [
     {
      "id": "leekduck",
@@ -4137,7 +4163,7 @@
   },
   "halloween2": {
    "name": "Halloween 2026, Part Two",
-   "updated": "2026-10-22T22:26:31.156Z",
+   "updated": "2026-10-23T01:37:23.592Z",
    "sources": [
     {
      "id": "leekduck",
@@ -4381,7 +4407,7 @@
   },
   "leekduck:pokemon-go-wild-area-2026-sendai-japan": {
    "name": "Pokémon GO Wild Area 2026: Sendai • Tohoku",
-   "updated": "2026-10-22T22:26:31.156Z",
+   "updated": "2026-10-23T01:37:23.592Z",
    "sources": [
     {
      "id": "leekduck",
@@ -4731,7 +4757,7 @@
   },
   "leekduck:pokemon-go-wild-area-2026-mexico-city": {
    "name": "Pokémon GO Wild Area 2026: Mexico City",
-   "updated": "2026-10-22T22:26:31.156Z",
+   "updated": "2026-10-23T01:37:23.592Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5088,7 +5114,7 @@
   },
   "leekduck:mega-sableye-in-mega-raids-october-2026": {
    "name": "Mega Sableye in Mega Raids",
-   "updated": "2026-10-22T22:26:31.156Z",
+   "updated": "2026-10-23T01:37:23.592Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5145,7 +5171,7 @@
   },
   "leekduck:giratina-altered-forme-in-5-star-raid-battles-november-2026": {
    "name": "Giratina (Altered Forme) in 5-star Raid Battles",
-   "updated": "2026-10-22T22:26:31.156Z",
+   "updated": "2026-10-23T01:37:23.592Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5216,7 +5242,7 @@
   },
   "leekduck:shadow-tornadus-incarnate-forme-in-shadow-raids-november-4-2026": {
    "name": "Shadow Tornadus (Incarnate Forme) in Shadow Raids",
-   "updated": "2026-10-22T22:26:31.156Z",
+   "updated": "2026-10-23T01:37:23.592Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5264,7 +5290,7 @@
   },
   "leekduck:pokemon-night-out-london-2026": {
    "name": "Pokémon Night Out 2026 - London",
-   "updated": "2026-10-22T22:26:31.156Z",
+   "updated": "2026-10-23T01:37:23.592Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5372,7 +5398,7 @@
   },
   "into": {
    "name": "Into the Wild",
-   "updated": "2026-10-22T22:26:31.156Z",
+   "updated": "2026-10-23T01:37:23.592Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5629,7 +5655,7 @@
   },
   "leekduck:pokemon-go-wild-area-2026-global": {
    "name": "Pokémon GO Wild Area 2026: Global",
-   "updated": "2026-10-22T22:26:31.156Z",
+   "updated": "2026-10-23T01:37:23.592Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5917,7 +5943,7 @@
   },
   "leekduck:max-mondays-2026-11-16": {
    "name": "Max Monday: Pokémon to be announced",
-   "updated": "2026-10-22T22:26:31.156Z",
+   "updated": "2026-10-23T01:37:23.592Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5958,7 +5984,7 @@
   },
   "leekduck:raidhour20261118": {
    "name": "Cresselia and Darkrai Raid Hour",
-   "updated": "2026-10-22T22:26:31.156Z",
+   "updated": "2026-10-23T01:37:23.592Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6000,7 +6026,7 @@
   },
   "minior2": {
    "name": "Minior Showers: Leonids",
-   "updated": "2026-10-22T22:26:31.156Z",
+   "updated": "2026-10-23T01:37:23.592Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6091,7 +6117,7 @@
   },
   "leekduck:dynamax-trails-2026": {
    "name": "Dynamax Trails",
-   "updated": "2026-10-22T22:26:31.156Z",
+   "updated": "2026-10-23T01:37:23.592Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6133,7 +6159,7 @@
   },
   "leekduck:max-mondays-2026-11-23": {
    "name": "Dynamax Espurr during Max Monday",
-   "updated": "2026-10-22T22:26:31.156Z",
+   "updated": "2026-10-23T01:37:23.592Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6210,7 +6236,7 @@
   },
   "leekduck:cresselia-darkrai-in-5-star-raid-battles-november-2026": {
    "name": "Cresselia and Darkrai in 5-star Raid Battles",
-   "updated": "2026-10-22T22:26:31.156Z",
+   "updated": "2026-10-23T01:37:23.592Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6281,7 +6307,7 @@
   },
   "leekduck:mega-banette-in-mega-raids-november-2026": {
    "name": "Mega Banette in Mega Raids",
-   "updated": "2026-10-22T22:26:31.156Z",
+   "updated": "2026-10-23T01:37:23.592Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6345,7 +6371,7 @@
   },
   "leekduck:raidhour20261125": {
    "name": "Deoxys (Normal, Defense, Attack, and Speed Formes) Raid Hour",
-   "updated": "2026-10-22T22:26:31.156Z",
+   "updated": "2026-10-23T01:37:23.592Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6387,7 +6413,7 @@
   },
   "leekduck:pokemonspotlighthour2026-11-26": {
    "name": "Noibat Spotlight Hour",
-   "updated": "2026-10-22T22:26:31.156Z",
+   "updated": "2026-10-23T01:37:23.592Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6421,7 +6447,7 @@
   },
   "smr2": {
    "name": "Super Mega Raid Day",
-   "updated": "2026-10-22T22:26:31.156Z",
+   "updated": "2026-10-23T01:37:23.592Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6463,7 +6489,7 @@
   },
   "leekduck:twilight-wishes-2026": {
    "name": "Twilight Wishes",
-   "updated": "2026-10-22T22:26:31.156Z",
+   "updated": "2026-10-23T01:37:23.592Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6497,7 +6523,7 @@
   },
   "leekduck:max-mondays-2026-11-30": {
    "name": "Dynamax Cryogonal during Max Monday",
-   "updated": "2026-10-22T22:26:31.156Z",
+   "updated": "2026-10-23T01:37:23.592Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6574,7 +6600,7 @@
   },
   "leekduck:deoxys-normal-defense-attack-speed-formes-in-5-star-raid-battles-november-2026": {
    "name": "Deoxys (Normal, Defense, Attack, and Speed Formes) in 5-star Raid Battles",
-   "updated": "2026-10-22T22:26:31.156Z",
+   "updated": "2026-10-23T01:37:23.592Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6673,7 +6699,7 @@
   },
   "leekduck:mega-metagross-in-mega-raids-november-2026": {
    "name": "Mega Metagross in Mega Raids",
-   "updated": "2026-10-22T22:26:31.156Z",
+   "updated": "2026-10-23T01:37:23.592Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6744,7 +6770,7 @@
   },
   "minior3": {
    "name": "Minior Showers: Geminids",
-   "updated": "2026-10-22T22:26:31.156Z",
+   "updated": "2026-10-23T01:37:23.592Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6835,7 +6861,7 @@
   },
   "leekduck:pokemon-x-adidas-2026": {
    "name": "adidas × Pokémon Timed Research",
-   "updated": "2026-10-22T22:26:31.156Z",
+   "updated": "2026-10-23T01:37:23.592Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6913,7 +6939,7 @@
   },
   "leekduck:pokemon-go-tour-alola-kaohsiung-2027": {
    "name": "Pokémon GO Tour: Alola - Kaohsiung 2027",
-   "updated": "2026-10-22T22:26:31.156Z",
+   "updated": "2026-10-23T01:37:23.592Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6947,7 +6973,7 @@
   },
   "leekduck:pokemon-go-tour-alola-los-angeles-2027": {
    "name": "Pokémon GO Tour: Alola - Los Angeles 2027",
-   "updated": "2026-10-22T22:26:31.156Z",
+   "updated": "2026-10-23T01:37:23.592Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6981,7 +7007,7 @@
   },
   "leekduck:pokemon-go-tour-alola-global-2027": {
    "name": "Pokémon GO Tour: Alola - Global 2027",
-   "updated": "2026-10-22T22:26:31.156Z",
+   "updated": "2026-10-23T01:37:23.592Z",
    "sources": [
     {
      "id": "leekduck",
@@ -8001,461 +8027,6 @@
    },
    "conflicts": [],
    "gaps": []
-  },
-  "leekduck:into-the-wild-2026": {
-   "name": "Into the Wild",
-   "updated": "2026-10-19T13:33:33.277Z",
-   "sources": [
-    {
-     "id": "hub",
-     "name": "Pokémon GO Hub",
-     "trust": "community",
-     "url": "https://pokemongohub.net/post/event/into-the-wild-2026-event/"
-    },
-    {
-     "id": "hub",
-     "name": "Pokémon GO Hub",
-     "trust": "community",
-     "url": "https://pokemongohub.net/post/news/gigantamax-duraludon-debuts-at-pokemon-go-wild-area/"
-    }
-   ],
-   "fields": {
-    "bonuses": [
-     {
-      "text": "The event features the following bonuses and debuts.",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Remote raid pass limit will increase to 30 from Monday, November 9, to Friday, November 13",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "No limit on Remote Raids during Wild Area from Saturday, November 14, to Sunday, November 15",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "You may encounter a Shiny Gimmighoul when using a Coin Bag",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Dynamax Regidrago and Dynamax Meltan make their Pokémon GO debut",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Daily Raid hour or Max Battle hour from 6-7pm each day featuring Five-Star Bosses",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 25: Half hatch distance for eggs incubated during the event",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     }
-    ],
-    "featured": [
-     {
-      "text": "Dynamax Pokémon Debut",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "The following Pokémon are appearing more frequently in the wild:",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     }
-    ],
-    "raids": [
-     {
-      "text": "The following Dynamax Pokémon will make their debut during the event:",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Regidrago Dynamax",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Meltan Dynamax",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Where to find the new Dynamax Pokémon:",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Pokémon appearing in Five-Star Max Battles will appear in a dedicated hour of Max Battles from 6-7pm on their featured day.",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Crowned Sword Zacian",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Crowned Shield Zamazenta",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Gigantamax Duraludon, will debut in six-star Max Battles only during the global event .",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Gigantamax Duraludon is a Steel and Dragon type Pokémon, making it weak to Ground and Fighting type moves, so get prepping those Dynamax and Gigantamax Counters!",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     }
-    ],
-    "eggs": [],
-    "research": [
-     {
-      "text": "Event-themed Field Research tasks will be available. Complete Field Research tasks to earn encounters with event-themed Pokémon.",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "The tasks depend on the stat being trained.",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Attack: Battle in Gyms and raids, and defeat Team GO Rocket members with your trainee.",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Defense: Play with your trainee, take snapshots, catch Pokémon and power up Pokémon that share its type.",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "HP: Explore with your trainee, spin PokéStops, complete Field Research, hatch Eggs and earn Buddy Candy.",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "The amount of work depends on the Pokémon’s starting IV. A Pokémon going from 14 to 15 only needs one task, while a Pokémon going from 5 to 15 needs ten.",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     }
-    ],
-    "shiny": [
-     {
-      "text": "Expect an increased remote raid limit, GO Pass and GO Pass Deluxe, Shiny Gimmighoul returns to the Coin Bag, and Max Battles Galore! Here’s everything you need to know about the event.",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "You may encounter a Shiny Gimmighoul when using a Coin Bag",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "When you use a Mystery Bag during the event, you’ll be able to encounter Shiny Meltan, if you are lucky!",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Here is what Duraludon looks like in their non-shiny vs shiny forms:",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     }
-    ],
-    "moves": [
-     {
-      "text": "When you catch the following Pokémon during the event, they will know the following featured attacks:",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Registeel will know the Fast Attack Metal Claw",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Latias will know the Charged Attack Mist Ball",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Latios will know the Charged Attack Luster Purge",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Regidrago will know the Fast Attack Dragon Breath",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     }
-    ],
-    "costumes": [
-     {
-      "text": "Machamp wearing a modern jacket",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     }
-    ],
-    "tickets": [
-     {
-      "text": "From Monday, November 9, at 10:00 a.m. to Sunday, November 15, 2026, at 6:00 p.m. local time, the GO Pass and GO Pass Deluxe for Into the Wild 2026 will be available in Pokémon GO.",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "You can collect GO Points and rank up to get additional rewards through Sunday, November 15, 2026, at 6:00 p.m. local time.",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Additionally there is no limit on how many GO Points you can earn between Saturday, November 14 and Sunday, November 15.",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Complete Pass Tasks to rank up your GO Pass to earn the following rewards:",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Encounters with Dynamax Meltan",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Encounters with event themed Pokémon",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "GO Wild Area 2026 Tee (purple) avatar item",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Reach Major Milestones on your event GO Pass to unlock the following bonuses:",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Tier | Rewards",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "For US$14.99 , Trainers can upgrade to the GO Pass Deluxe, a paid version of the GO Pass that offers upgraded rewards and faster progression.",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "For US$19.99 , Trainers can upgrade to the GO Pass Deluxe + 10 Ranks to also automatically earn enough GO Points to reach Rank 10.",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Trainers who upgrade to the GO Pass Deluxe can also earn the following rewards:",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     }
-    ],
-    "dates": [
-     {
-      "text": "Pokémon GO’s Into the Wild event runs from November 9 at 10:00 a.m. to November 13 at 8:00 p.m. local time , bringing two new Dynamax Pokémon: Dynamax Regidrago and Dynamax Meltan!",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Remote raid pass limit will increase to 30 from Monday, November 9, to Friday, November 13",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "No limit on Remote Raids during Wild Area from Saturday, November 14, to Sunday, November 15",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Daily Raid hour or Max Battle hour from 6-7pm each day featuring Five-Star Bosses",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "You will be able to obtain event themed stickers by spinning Pokéstops and gifts from Monday, November 9 at 10:00 local time, until Sunday, November 15, 6:00pm local time.",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "They will also be available to purchase in the in-game shop from Friday November 6, to Sunday, November 15.",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "From Monday, November 9, at 10:00 a.m. to Sunday, November 15, 2026, at 6:00 p.m. local time, the GO Pass and GO Pass Deluxe for Into the Wild 2026 will be available in Pokémon GO.",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rewards unlocked in the GO Pass will expire on Tuesday, November 17, 2026, at 11:59 p.m. local time, so be sure to claim your rewards before they expire.",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Your Silver Bottle Cap obtained from the Deluxe GO Pass will expire on Sunday, November 22 2026, at 11:59pm local time, regardless of when you claimed it, so be sure to use it!",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     }
-    ]
-   },
-   "conflicts": [],
-   "gaps": [
-    {
-     "field": "bonuses",
-     "missingFrom": []
-    },
-    {
-     "field": "featured",
-     "missingFrom": []
-    },
-    {
-     "field": "research",
-     "missingFrom": []
-    },
-    {
-     "field": "moves",
-     "missingFrom": []
-    },
-    {
-     "field": "costumes",
-     "missingFrom": []
-    },
-    {
-     "field": "tickets",
-     "missingFrom": []
-    },
-    {
-     "field": "dates",
-     "missingFrom": []
-    }
-   ]
   },
   "space": {
    "name": "World Space Week",
