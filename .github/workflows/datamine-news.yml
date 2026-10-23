@@ -34,7 +34,7 @@ jobs:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           TELEGRAM_GROUP_ID: ${{ secrets.TELEGRAM_GROUP_ID }}
-          TELEGRAM_TOPIC_DATAMINE: ${{ secrets.TELEGRAM_TOPIC_DATAMINE || secrets.TELEGRAM_TOPICS_DATAMINE }}
+          TELEGRAM_TOPIC_DATAMINE: ${{ secrets.TELEGRAM_TOPIC_DATAMINE || secrets.TELEGRAM_TOPIC_DATAMINE_LEAKS || secrets.TELEGRAM_TOPICS_DATAMINE }}
           TELEGRAM_TOPIC_DATAMINE_LIVE: ${{ secrets.TELEGRAM_TOPIC_DATAMINE_LIVE || secrets.TELEGRAM_TOPICS_DATAMINE_LIVE }}
         run: node scripts/datamine-news.mjs
       - name: Commit when something changed
