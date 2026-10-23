@@ -103,7 +103,7 @@ async function main() {
   } catch (e) { errors.push("intl: " + e.message); }
   let serebiiLeft = [];
   try { const sh = await get(SEREBII); entries.push(...serebiiEvents(sh)); serebiiLeft = serebiiSkipped(sh); } catch (e) { errors.push("serebii: " + e.message); }
-  try { const seed = JSON.parse(await readFile("public/regional-events.json", "utf8")); for (const e of seed.events || []) entries.push({ name: e.name, place: e.place, area: e.area, scope: "regional", start: e.start, end: e.end, datesKnown: true, url: seed.source.url, source: "serebii" }); } catch { /* no seed */ }
+  try { const seed = JSON.parse(await readFile("public/regional-events.json", "utf8")); for (const e of seed.events || []) entries.push({ name: e.name, place: e.place, area: e.area, scope: "regional", start: e.start, end: e.end, datesKnown: true, url: e.url || seed.source.url, source: e.source || "serebii" }); } catch { /* no seed */ }
   const today = new Date().toISOString().slice(0, 10), cutoff = new Date(Date.now() - 14 * 864e5).toISOString().slice(0, 10);
   let world = mergeWorld(entries, SOURCE_NAMES).filter(w => !w.start || (w.end || w.start) >= cutoff);
   let oldWorld = []; try { oldWorld = JSON.parse(await readFile(WORLD_OUT, "utf8")).events || []; } catch { /* first run */ }

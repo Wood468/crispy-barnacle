@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-11",
+ "updated": "2026-10-23",
  "note": "Dates are as listed by the source. The end of the ESA collaboration is listed as ongoing, so 31 Dec 2026 is a placeholder end.",
  "source": {
   "label": "Serebii.net, Pokémon GO real-life events",
@@ -94,6 +94,16 @@
    "area": "Americas",
    "start": "2026-05-22",
    "end": "2027-04-11"
+  },
+  {
+   "id": "rg-dia-de-muertos-mexico-city",
+   "name": "Día de Muertos 2026",
+   "place": "Paseo de la Reforma, Mexico City, Mexico",
+   "area": "Americas",
+   "start": "2026-10-31",
+   "end": "2026-11-05",
+   "url": "https://pokemongo.com/es_MX/news/dia-de-muertos-2026",
+   "source": "official"
   }
  ]
 }
