@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { debutedSpecies, computeStatuses, trackedItems } from "../src/worker.js";
+import { debutedSpecies, computeStatuses, trackedItems, statusChanges, keepReleased } from "../src/worker.js";
 import { readFileSync } from "node:fs";
 
 const NOW = Date.parse("2026-10-23T12:00:00Z");
@@ -57,4 +57,27 @@ test("the owner settings have a Refresh leaks button wired to the datamine run",
   const js = readFileSync("public/extra.js", "utf8");
   assert.match(js, /id="dmrun"/);
   assert.match(js, /\/api\/datamine\/run/);
+});
+
+const tracked = [{ s: "unreleased", n: "Minior", base: "Announced" }, { s: "unreleased", n: "Cufant", base: "Not announced" }];
+test("status changes are logged against the last snapshot, and the first run logs nothing", () => {
+  const now = [{ s: "unreleased", n: "Minior", status: "Released", srcLabel: "Orionids" }, { s: "unreleased", n: "Cufant", status: "Not announced" }];
+  assert.deepEqual(statusChanges(null, tracked, now, NOW), []);
+  const c = statusChanges({ snap: { "unreleased|Minior": "Announced", "unreleased|Cufant": "Not announced" } }, tracked, now, NOW);
+  assert.deepEqual(c.map((x) => [x.n, x.from, x.to, x.at]), [["Minior", "Announced", "Released", NOW]]);
+  // an older stored state without a snapshot falls back to its listed items, then the hand-entered base status
+  const c2 = statusChanges({ items: [] }, tracked, now, NOW);
+  assert.deepEqual(c2.map((x) => x.n), ["Minior"]);
+});
+test("a Pokémon seen as Released stays Released when its proof drops out of the feeds", () => {
+  const prev = { snap: { "unreleased|Minior": "Released" }, items: [{ s: "unreleased", n: "Minior", status: "Released", srcLabel: "Orionids" }] };
+  const items = [{ s: "unreleased", n: "Minior", status: "Announced", srcLabel: "Leonids" }];
+  keepReleased(prev, items);
+  assert.equal(items[0].status, "Released");
+  assert.equal(items[0].srcLabel, "Orionids");
+  assert.deepEqual(statusChanges(prev, tracked, items, NOW), []);
+});
+test("the Leaks tab has a This week card fed by all three sources", () => {
+  const js = readFileSync("public/app.js", "utf8");
+  for (const needle of ["id='up-week'", "W.R=R;weekDraw()", "W.M=M;weekDraw()", "W.N=N;weekDraw()"]) assert.ok(js.includes(needle) || js.includes(needle.replace("'", '"')), needle);
 });
