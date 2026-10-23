@@ -40,3 +40,21 @@ test("with the real data.json, Minior, Bramblin and Brambleghast come out Releas
   for (const n of ["Minior", "Bramblin", "Brambleghast"]) assert.equal(r.find((x) => x.n === n).status, "Released", n);
   assert.notEqual(r.find((x) => x.n === "Spooky Mega").status, "Released");
 });
+
+test("a Pokémon named in an event that has already started is Released, a future event alone is not", () => {
+  const items = [{ s: "unreleased", g: "", n: "Wishiwashi", base: "Datamined" }, { s: "unreleased", g: "", n: "Cufant", base: "Not announced" }];
+  const feed = [
+    { name: "Raid Day", eventType: "raid-day", start: "2026-10-22T10:00:00.000", end: "2026-10-22T13:00:00.000", link: "https://r", extraData: { raidbattles: { bosses: [{ name: "Wishiwashi" }] } } },
+    { name: "Future Spotlight", eventType: "pokemon-spotlight-hour", start: "2026-10-28T18:00:00.000", end: "2026-10-28T19:00:00.000", link: "https://f", extraData: { spotlight: { name: "Cufant" } } },
+  ];
+  const r = computeStatuses(items, feed, [], [], new Set(), NOW);
+  const w = r.find((x) => x.n === "Wishiwashi"), c = r.find((x) => x.n === "Cufant");
+  assert.equal(w.status, "Released");
+  assert.equal(w.srcLabel, "In the game: Raid Day");
+  assert.equal(c.status, "Announced");
+});
+test("the owner settings have a Refresh leaks button wired to the datamine run", () => {
+  const js = readFileSync("public/extra.js", "utf8");
+  assert.match(js, /id="dmrun"/);
+  assert.match(js, /\/api\/datamine\/run/);
+});

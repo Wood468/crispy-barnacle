@@ -78,6 +78,7 @@
     h += tog('push', 'This phone (browser push)', info ? ('Devices registered: ' + (info.pushDevices || 0) + '. On iPhone, add the site to your Home Screen first.') : '');
     h += '<button type="button" class="pill" id="alpush">Turn on for this device</button>';
     if (info && info.recent && info.recent.length) h += '<h3 class="sec3">Recently sent</h3><ul class="al-log">' + info.recent.map(function (r) { return '<li><b>' + esc(r.title) + '</b><small>' + esc(new Date(r.created_at).toLocaleString()) + ' · ' + esc(r.level === 'info' ? 'not urgent' : 'alert') + '</small></li>'; }).join('') + '</ul>';
+    if (S.pin()) h += '<h3 class="sec3">Leaks and Pokémon statuses</h3><p class="sub" style="margin:0">These refresh by themselves every morning. Use this to refresh them now.</p><button type="button" class="pill" id="dmrun">Refresh leaks now</button>';
     el.innerHTML = h;
   }
   document.addEventListener('change', function (e) {
@@ -85,10 +86,11 @@
     var k = t.getAttribute('data-pref'); S.set('pref:notify.' + k, k === 'lead' ? +t.value : t.checked); renderAlerts();
   });
   document.addEventListener('click', function (e) {
-    var b = e.target.closest && e.target.closest('#alinit,#altest,#alpush'); if (!b) return;
+    var b = e.target.closest && e.target.closest('#alinit,#altest,#alpush,#dmrun'); if (!b) return;
     if (b.id === 'alinit') api('/api/userstate/init', 'POST').then(function () { return api('/api/pipeline/run', 'POST'); }).then(function () { msg = 'Tables created and the first event check ran.'; S.sync(); loadInfo(); });
     if (b.id === 'altest') api('/api/notify/test', 'POST').then(function (j) { msg = j.telegram && j.telegram.status === 'sent' ? 'Test message sent. Check Telegram.' : 'Test failed: ' + ((j.telegram && j.telegram.why) || 'unknown'); renderAlerts(); });
     if (b.id === 'alpush') enablePush();
+    if (b.id === 'dmrun') { msg = 'Refreshing leaks…'; renderAlerts(); api('/api/datamine/run', 'POST').then(function (j) { msg = j.ok ? 'Leaks and statuses refreshed. Reload the Leaks tab to see them.' : 'Could not refresh: ' + (j.error || ('error ' + j.__status)); renderAlerts(); }).catch(function () { msg = 'Could not refresh: no connection.'; renderAlerts(); }); }
   });
   function enablePush() {
     if (!('serviceWorker' in navigator) || !('PushManager' in window)) { msg = 'This browser can’t do push. On iPhone, add the site to your Home Screen and open it from there.'; return renderAlerts(); }
