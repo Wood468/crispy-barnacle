@@ -107,13 +107,18 @@ export function stopsFromPage(page, today = new Date().toISOString().slice(0, 10
   if (SKIP_NEWS.test(title) || !(IN_PERSON.test(title) || IN_PERSON.test(text.slice(0, 1500)))) return [];
   const stops = [], seen = new Set();
   for (const l of page.lines || []) {
-    const t = String(l.text || "").trim();
-    if (t.length < 12 || t.length > 220) continue;
-    const range = parseDateRange(t, +today.slice(0, 4)), where = range && placeOfStop(t);
-    if (!where) continue;
-    const key = where.place + "|" + range.start;
-    if (seen.has(key)) continue;
-    seen.add(key); stops.push({ where, range });
+    // Some official announcements put multiple city/date stops in one paragraph.
+    // Split before each "and at" so each stop gets its own date and location.
+    const segments = String(l.text || "").split(/,\s*and\s+at\b/i);
+    for (const segment of segments) {
+      const t = String(segment || "").trim();
+      if (t.length < 12 || t.length > 220) continue;
+      const range = parseDateRange(t, +today.slice(0, 4)), where = range && placeOfStop(t);
+      if (!where) continue;
+      const key = where.place + "|" + range.start;
+      if (seen.has(key)) continue;
+      seen.add(key); stops.push({ where, range });
+    }
   }
   if (stops.length < 2 || new Set(stops.map(s => s.where.place)).size < 2 || new Set(stops.map(s => s.range.start)).size < 2) return [];
   const city = s => s.where.place.split(",")[0], count = {};
@@ -160,4 +165,10 @@ export function collapseWorld(world, rules = null) {
   }
   const events = world.filter(w => !drop.has(w)).map(w => ({ ...w, status: (w.sources || []).some(s => s.id === "official") ? "official" : (w.sources || []).length > 1 ? "confirmed" : w.status || "single" }));
   return { events, merged };
+}
+
+// When a previously combined world event is now represented by separate stops,
+// do not re-add the old aggregate from the previous generated file.
+export function supersededBySplitPage(event, splitUrls) {
+  return (event.sources || []).some(s => splitUrls.has(String(s.url || "").replace(/\/?$/, "/")));
 }
