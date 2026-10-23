@@ -1,5 +1,5 @@
 {
-  "how_to_use": "Channels in the Discord server (the one CHANNEL_ID belongs to) that follow PokeMiners update channels. Found by name, so no extra IDs or secrets are needed; the bot needs View Channel and Read Message History on each. src = the filter chip in the app's Leaks tab. notify = send new items to the Telegram Datamine topic.",
+  "how_to_use": "Channels in the Discord server (the one CHANNEL_ID belongs to) that follow PokeMiners update channels. Found by name, so no extra IDs or secrets are needed; the bot needs View Channel and Read Message History on each. src = the filter chip in the app's Leaks tab. notify = true sends new items to the Telegram Datamine Reports topic, \"live\" sends them silently to Datamine Live.",
   "channels": [
     {
       "name": "dm-events",
@@ -17,7 +17,7 @@
       "name": "dm-gamedata",
       "src": "gamedata",
       "label": "Game data",
-      "notify": false
+      "notify": "live"
     }
   ]
 }

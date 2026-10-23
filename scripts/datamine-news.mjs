@@ -57,7 +57,7 @@ export function merge(old, fresh, now = Date.now()) {
   return { items: items.slice(0, KEEP_MAX), added };
 }
 
-const LABEL = { events: "PokéMiners event info", reports: "PokéMiners report" };
+const LABEL = { events: "PokéMiners event info", reports: "PokéMiners report", gamedata: "PokéMiners game data" };
 export function telegramText(i) {
   const bits = [(LABEL[i.src] || "PokéMiners") + ": " + i.title];
   if (i.text) bits.push(i.text.replace(/\s+/g, " ").slice(0, 280));
@@ -90,27 +90,31 @@ async function main() {
     try {
       const msgs = await discord("/channels/" + ch.id + "/messages?limit=50", token);
       const items = msgs.map((m) => parseMessage(m, c.src)).filter(Boolean);
-      fresh.push(...items.map((i) => ({ ...i, notify: !!c.notify })));
+      fresh.push(...items.map((i) => ({ ...i, notify: c.notify || false })));
       status.push({ src: c.src, name: c.name, state: "ok", count: items.length });
     } catch (e) { status.push({ src: c.src, name: c.name, state: "error", note: e.message + (/40[13]/.test(e.message) ? " (give the bot View Channel and Read Message History)" : "") }); }
   }
   const old = prev && Array.isArray(prev.items) ? prev.items : [];
   const { items, added } = merge(old, fresh.map(({ notify, ...i }) => i));
   // Tell me about new reports only: never on the first run, never about old posts, at most 3 per run.
-  const notifyIds = new Set(fresh.filter((i) => i.notify).map((i) => i.id));
+  const modeOf = new Map(fresh.filter((i) => i.notify).map((i) => [i.id, i.notify === "live" ? "live" : "main"]));
   const first = !(prev && prev.seeded);
-  const toTell = !first ? added.filter((i) => notifyIds.has(i.id) && Date.parse(i.date) > Date.now() - 2 * DAY).slice(0, 3) : [];
+  const fresh2 = (mode, n) => !first ? added.filter((i) => modeOf.get(i.id) === mode && Date.parse(i.date) > Date.now() - 2 * DAY).slice(0, n) : [];
+  // Reports and event info ping the Datamine Reports topic; the busy game-data feed goes silently to Datamine Live, and only when that topic is set.
+  const liveTopic = String(process.env.TELEGRAM_TOPIC_DATAMINE_LIVE || process.env.TELEGRAM_TOPICS_DATAMINE_LIVE || "").trim();
+  const toTell = [...fresh2("main", 3).map((i) => ({ i, cat: "datamine", silent: false })), ...(liveTopic ? fresh2("live", 5).map((i) => ({ i, cat: "datamine_live", silent: true })) : [])];
   const token2 = process.env.TELEGRAM_BOT_TOKEN, chat = process.env.TELEGRAM_CHAT_ID;
-  let told = 0;
-  for (const i of toTell) {
-    if (dry || !token2 || !chat) { console.log("Would tell you:\n" + telegramText(i) + "\n"); continue; }
+  let told = 0, tried = 0;
+  for (const { i, cat, silent } of toTell) {
+    if (dry || !token2 || !chat) { console.log("Would tell you (" + cat + "):\n" + telegramText(i) + "\n"); continue; }
+    tried++;
     try {
-      const f = routed(process.env, "datamine", globalThis.fetch);
-      const r = await f("https://api.telegram.org/bot" + token2 + "/sendMessage", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ chat_id: chat, text: telegramText(i), disable_web_page_preview: true }) });
+      const f = routed(process.env, cat, globalThis.fetch);
+      const r = await f("https://api.telegram.org/bot" + token2 + "/sendMessage", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ chat_id: chat, text: telegramText(i), disable_web_page_preview: true, ...(silent ? { disable_notification: true } : {}) }) });
       if (r.ok) told++;
     } catch {}
   }
-  if (toTell.length && !dry && token2 && chat && !told) { console.error("Telegram did not accept the message; the file is not updated, so the next run tries again"); process.exit(1); }
+  if (tried && !told) { console.error("Telegram did not accept the message; the file is not updated, so the next run tries again"); process.exit(1); }
   const out = { updated: new Date().toISOString(), seeded: first ? status.some((x) => x.state === "ok") : true, channels: status, items };
   if (!dry) await writeFile(OUT, JSON.stringify(out, null, 1) + "\n");
   console.log(status.map((s) => s.src + " (" + s.name + "): " + s.state + (s.count != null ? " " + s.count : " " + (s.note || ""))).join("\n"));

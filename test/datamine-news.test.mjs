@@ -46,3 +46,11 @@ test("the Telegram line names where the post came from", () => {
   assert.match(telegramText({ src: "events", title: "Sandile Hatch Day research" }), /^PokéMiners event info: Sandile/);
   assert.match(telegramText({ src: "reports", title: "APK teardown" }), /^PokéMiners report: APK/);
 });
+test("Datamine Live is its own Telegram category and the game-data post is labelled", async () => {
+  const { route, CATEGORIES } = await import("../src/tgroute.js");
+  assert.ok(CATEGORIES.includes("datamine_live"));
+  const env = { TELEGRAM_GROUP_ID: "-100123", TELEGRAM_TOPIC_DATAMINE: "5", TELEGRAM_TOPIC_DATAMINE_LIVE: "9" };
+  assert.deepEqual(route(env, "datamine"), { chat: "-100123", thread: 5 });
+  assert.deepEqual(route(env, "datamine_live"), { chat: "-100123", thread: 9 });
+  assert.match(telegramText({ src: "gamedata", title: "Game master changed" }), /^PokéMiners game data: Game/);
+});
