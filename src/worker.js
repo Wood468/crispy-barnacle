@@ -570,7 +570,21 @@ export function trackedItems(data) {
   return out;
 }
 
-export function computeStatuses(items, events, posts, fresh, released, nowMs) {
+// Species whose debut event has already started, from our own dated events (data.json events with a Debut tag or DEBUT highlights).
+// The community released list can lag by weeks, and a later event (Minior's next shower) must not turn a Pokémon that is already in the game back into "Announced".
+export function debutedSpecies(events, nowMs) {
+  const out = new Map();
+  for (const e of events || []) {
+    const start = Date.parse(e && e.s);
+    if (!Number.isFinite(start) || start > nowMs) continue;
+    const add = (n) => { const k = lc(speciesOf(String(n))); if (k.length > 2 && !out.has(k)) out.set(k, e.t || "an event"); };
+    for (const h of e.highlights || []) { const m = h && h.type === "debut" && /^\s*DEBUT\s*[·:-]\s*(.+)$/i.exec(String(h.label || "")); if (m) add(m[1].split("(")[0].trim()); }
+    if ((e.tags || []).includes("Debut")) for (const a of e.art || []) add(a);
+  }
+  return out;
+}
+
+export function computeStatuses(items, events, posts, fresh, released, nowMs, debuts = new Map()) {
   const live = events.filter((e) => e.start && Date.parse(e.start) + 3 * 86400000 >= nowMs);
   const out = [];
   for (const it of items) {
@@ -578,6 +592,7 @@ export function computeStatuses(items, events, posts, fresh, released, nowMs) {
     const sp = lc(speciesOf(it.n));
     if (!it.skip && sp.length > 2) {
       const need = it.s === "dynamax" ? /dynamax/i : it.s === "giga" || /^Gigantamax /i.test(it.n) ? /gigantamax/i : /^Mega /i.test(it.n) ? /mega/i : null;
+      if (it.s === "unreleased" && !need && debuts.has(sp)) { rec.status = "Released"; rec.srcLabel = "Debuted in " + debuts.get(sp); out.push(rec); continue; }
       if (it.s === "unreleased" && !/^Mega /i.test(it.n) && released.has(sp)) { rec.status = "Released"; rec.srcLabel = "Listed as released by PoGoAPI"; out.push(rec); continue; }
       const ev = live.find((e) => { const t = eventText(e); return lc(t).includes(sp) && (!need || need.test(t)); });
       const post = posts.find((p) => lc(p.title).includes(sp) && (!need || need.test(p.title)) && p.date > nowMs - 120 * 86400000);
@@ -605,7 +620,7 @@ async function updateUnreleased(env, now) {
   if (wanted.length) await env.DB.prepare("INSERT OR REPLACE INTO dm_state (k, v) VALUES ('world', ?)").bind(JSON.stringify(wanted)).run();
   const shin = shinyList(Array.isArray(events) ? events : [], now);
   if (shin.length) await env.DB.prepare("INSERT OR REPLACE INTO dm_state (k, v) VALUES ('shiny', ?)").bind(JSON.stringify(shin)).run();
-  const items = computeStatuses(trackedItems(data), Array.isArray(events) ? events : [], posts, fresh, released, now);
+  const items = computeStatuses(trackedItems(data), Array.isArray(events) ? events : [], posts, fresh, released, now, debutedSpecies(data.events, now));
   await env.DB.prepare("INSERT OR REPLACE INTO dm_state (k, v) VALUES ('unrel', ?)").bind(JSON.stringify({ updated: now, events: events.length, released: released.size, items: items.filter((i) => i.srcLabel || i.status === "Released") })).run();
   return "unreleased:" + items.length + " (events " + events.length + ", released list " + released.size + ")";
 }
