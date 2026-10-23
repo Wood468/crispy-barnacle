@@ -23,6 +23,9 @@ export function clean(s) {
 }
 const firstUrl = (s) => (String(s || "").match(/https?:\/\/[^\s<>)\]]+/) || [])[0] || "";
 
+// Only ordinary posts count: type 0 (normal), 19 (reply) and 20 (command). Discord also posts system notices such as "channel followed" (type 12).
+export const isPost = (m) => [0, 19, 20].includes(Number(m.type || 0));
+
 // One Discord message (a followed announcement arrives as a webhook message, usually with embeds; forwards keep theirs in message_snapshots).
 export function parseMessage(m, src) {
   const parts = [m, ...((m.message_snapshots || []).map((s) => s && s.message).filter(Boolean))];
@@ -89,7 +92,7 @@ async function main() {
     if (!ch) { status.push({ src: c.src, name: c.name, state: "missing", note: "no channel with this name in the server" }); continue; }
     try {
       const msgs = await discord("/channels/" + ch.id + "/messages?limit=50", token);
-      const items = msgs.map((m) => parseMessage(m, c.src)).filter(Boolean);
+      const items = msgs.filter(isPost).map((m) => parseMessage(m, c.src)).filter(Boolean);
       fresh.push(...items.map((i) => ({ ...i, notify: c.notify || false })));
       status.push({ src: c.src, name: c.name, state: "ok", count: items.length });
     } catch (e) { status.push({ src: c.src, name: c.name, state: "error", note: e.message + (/40[13]/.test(e.message) ? " (give the bot View Channel and Read Message History)" : "") }); }
