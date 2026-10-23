@@ -592,6 +592,11 @@ export function computeStatuses(items, events, posts, fresh, released, nowMs, de
     const sp = lc(speciesOf(it.n));
     if (!it.skip && sp.length > 2) {
       const need = it.s === "dynamax" ? /dynamax/i : it.s === "giga" || /^Gigantamax /i.test(it.n) ? /gigantamax/i : /^Mega /i.test(it.n) ? /mega/i : null;
+      // A Pokémon named in an event that has already started (a spawn, raid boss or hatch) is in the game, whatever any later event says.
+      if (it.s === "unreleased" && !need) {
+        const started = events.find((e) => e.start && Date.parse(e.start) <= nowMs && lc(eventText(e)).includes(sp));
+        if (started) { rec.status = "Released"; rec.srcLabel = "In the game: " + started.name; rec.srcUrl = started.link; out.push(rec); continue; }
+      }
       if (it.s === "unreleased" && !need && debuts.has(sp)) { rec.status = "Released"; rec.srcLabel = "Debuted in " + debuts.get(sp); out.push(rec); continue; }
       if (it.s === "unreleased" && !/^Mega /i.test(it.n) && released.has(sp)) { rec.status = "Released"; rec.srcLabel = "Listed as released by PoGoAPI"; out.push(rec); continue; }
       const ev = live.find((e) => { const t = eventText(e); return lc(t).includes(sp) && (!need || need.test(t)); });
