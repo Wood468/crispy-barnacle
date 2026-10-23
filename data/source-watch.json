@@ -1,10 +1,10 @@
 {
- "updated": "2026-10-22T11:53:31.328Z",
+ "updated": "2026-10-23T04:50:09.366Z",
  "status": [
   {
    "id": "hub",
    "state": "ok",
-   "items": 5
+   "items": 4
   },
   {
    "id": "miners-assets",
@@ -23,8 +23,8 @@
   },
   {
    "id": "youtube-pogo",
-   "state": "ok",
-   "items": 0
+   "state": "error",
+   "note": "HTTP 404"
   }
  ],
  "gaps": 5,
@@ -125,20 +125,6 @@
    "summary": "Sandile Hatch Day takes place in Pokémon GO on Saturday, October 17, 2026, from 11:00 a.m. to 5:00 p.m. local time. Sandile will hatch more frequently from 2 km Eggs collected during the event, with b",
    "pokemon": [
     "Sandile"
-   ],
-   "notInOurData": []
-  },
-  {
-   "source": "hub",
-   "trust": "community",
-   "title": "Into the Wild (2026) Event",
-   "link": "https://pokemongohub.net/post/event/into-the-wild-2026-event/",
-   "date": "2026-10-14T16:56:51.000Z",
-   "summary": "Pokémon GO’s Into the Wild event runs from November 9 at 10:00 a.m. to November 13 at 8:00 p.m. local time, bringing two new Dynamax Pokémon: Dynamax Regidrago and Dynamax Meltan! Expect an increased ",
-   "pokemon": [
-    "Gimmighoul",
-    "Regidrago",
-    "Meltan"
    ],
    "notInOurData": []
   },
