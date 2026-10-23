@@ -64,3 +64,15 @@ test("pages in the new languages: in-person ones become entries, global ones do 
   assert.equal(entryFromIntlPage(pg("fr", "journee-communautaire", "Journée communautaire", "Le 25 octobre 2026, partout dans le monde"), "2026-10-19"), null);
   assert.equal(entryFromIntlPage(pg("es", "dia-de-la-comunidad", "Día de la Comunidad", "El 25 de octubre de 2026 en todo el mundo"), "2026-10-19"), null);
 });
+
+test("the Mexican Spanish news list is read, and 'desde … hasta …' dates with times in between are understood", () => {
+  assert.ok(INTL_PATTERN.test("https://pokemongo.com/es_MX/news/dia-de-muertos-2026"));
+  assert.deepEqual(parseWesternRange("Desde el martes 27 de octubre a las 10:00 a.m. hasta el jueves 5 de noviembre de 2026, hora local", 2026), { start: "2026-10-27", end: "2026-11-05" });
+  assert.deepEqual(parseWesternRange("Desde el sábado 31 de octubre a las 02:00 p.m. hasta el jueves 5 de noviembre de 2026 a las 8:00 p.m.", 2026), { start: "2026-10-31", end: "2026-11-05" });
+});
+test("a Spanish in-person page (a street, a stamp rally) becomes an event; a routine page does not", () => {
+  const page = { url: "https://pokemongo.com/es_MX/news/dia-de-muertos-2026", title: "¡Celebra el espíritu de Día de Muertos en 2026!", lines: [{ text: "Visita la Avenida Paseo de la Reforma. Desde el sábado 31 de octubre a las 02:00 p.m. hasta el jueves 5 de noviembre de 2026 a las 8:00 p.m., hora local. Rally de sellos y exhibición Mexicráneo." }] };
+  const e = entryFromIntlPage(page, "2026-10-23");
+  assert.equal(e.start, "2026-10-31"); assert.equal(e.end, "2026-11-05"); assert.equal(e.area, "Americas"); assert.equal(e.source, "official");
+  assert.equal(entryFromIntlPage({ url: "https://pokemongo.com/es_MX/news/new-season-update", title: "Nueva temporada", lines: [{ text: "Bonificaciones del 1 al 5 de noviembre para todos los entrenadores." }] }, "2026-10-23"), null);
+});

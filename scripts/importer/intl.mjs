@@ -13,14 +13,17 @@ export const INTL = [
   { locale: "de", list: "https://pokemongo.com/de/news", place: "Germany, Austria or Switzerland", area: "Europe" },
   { locale: "fr", list: "https://pokemongo.com/fr/news", place: "France or French-speaking region", area: "Europe" },
   { locale: "es", list: "https://pokemongo.com/es/news", place: "Spain or Latin America", area: "Worldwide" },
+  { locale: "es_mx", list: "https://pokemongo.com/es_MX/news", place: "Mexico", area: "Americas" },
   { locale: "it", list: "https://pokemongo.com/it/news", place: "Italy", area: "Europe" },
   { locale: "pt_br", list: "https://pokemongo.com/pt_br/news", place: "Brazil", area: "Americas" },
   { locale: "th", list: "https://pokemongo.com/th/news", place: "Thailand", area: "Asia" },
 ];
-export const INTL_PATTERN = /^https:\/\/pokemongo\.com\/(ja|ko|zh_hant|de|fr|es|it|pt_br|th)\/news\/([a-z0-9-]{6,})\/?$/i;
+export const INTL_PATTERN = /^https:\/\/pokemongo\.com\/(ja|ko|zh_hant|de|fr|es|es_mx|it|pt_br|th)\/news\/([a-z0-9-]{6,})\/?$/i;
 
 // Words that say "go to a place": malls, stores, venues, stations, airports, nationwide, limited to a region. Slug words are the English ones used in addresses.
 const IN_PERSON_TEXT = /イオン|モール|全国の|店舗|会場|ポケモンセンター|サファリ|空港|駅|商業施設|スタンプラリー|地域限定|日本限定|国内限定|店舗限定|매장|몰에서|쇼핑몰|현장|전국|공항|스탬프 ?랠리|商場|商城|現場|門市|百貨|機場|車站|全台|集章|Einkaufszentrum|Filiale|Veranstaltungsort|Bahnhof|Flughafen|vor Ort|Stempelsammlung|centre commercial|magasin|aéroport|sur place|en personne|centro comercial|tienda|aeropuerto|presencial|en persona|centro commerciale|negozio|aeroporto|stazione|di persona|shopping center|loja|estação|ห้างสรรพสินค้า|ห้าง|สนามบิน|สถานที่จัดงาน|ร้านค้า|ภายในงาน/i;
+// Places and attractions named in the western languages (a street, an exhibition, a parade, a stamp rally): pages for in-person events in Spain, Latin America, France, Germany, Italy and Brazil.
+const IN_PERSON_WESTERN = /\b(?:avenida|paseo de|exposici[oó]n|exhibici[oó]n|desfile|recorrido|rally de sellos|sellos|evento presencial|evento en vivo|exposi[cç][aã]o|exibi[cç][aã]o|avenida|pra[cç]a|evento ao vivo|rallye|exposition|d[eé]fil[eé]|[eé]v[eé]nement sur place|Ausstellung|Umzug|Stadion|Stempelrallye|mostra|sfilata|piazza|evento dal vivo|rally dei timbri)\b/i;
 const IN_PERSON_SLUG = /mall|aeon|safari|station|airport|store|stamp-rally|museum|stadium|venue/i;
 const SKIP_SLUG = /community-day|spotlight|raid-hour|max-monday|battle-league|go-pass|season|maintenance|patch|update-notes|terms|privacy|support/i;
 
@@ -72,12 +75,19 @@ const OF = "(?:\\s*(?:de|d'|of)\\s*|\\s+)?";
 const RANGE_W = new RegExp(`(?:\\b(?:del|dal|de|vom|du|from)\\s+)?${WDAY}${OF}(${MONTH_RE})?${YEAR}\\s*(?:-|–|—|bis|au|al|a|à|até|to|ถึง)\\s*${WDAY}${OF}(${MONTH_RE})${YEAR}`);
 const ONE_W = new RegExp(`${WDAY}${OF}(${MONTH_RE})${YEAR}`);
 const year = y => (+y > 2400 ? +y - 543 : +y); // Thai Buddhist year
+// "Desde el martes 27 de octubre a las 10:00 a.m. hasta el jueves 5 de noviembre de 2026", "Do 27 de outubro às 10h até quinta 5 de novembro": a start, some times and words, then an end.
+const FROM_UNTIL = new RegExp(`(?:desde|de|a partir d[eo]l?|dal|du|vom|from)\\s+(?:el\\s+|le\\s+|il\\s+)?(?:[a-z]+\\s+)?${WDAY}${OF}(${MONTH_RE})?${YEAR}.{0,70}?\\b(?:hasta|ate|jusqu'a|jusqu'au|bis|fino al|fino a)\\s+(?:el\\s+|o\\s+|le\\s+|il\\s+|zum\\s+)?(?:[a-z]+\\s+)?${WDAY}${OF}(${MONTH_RE})${YEAR}`);
 export function parseWesternRange(text, yr = new Date().getFullYear()) {
   const t = strip(text).replace(/\s+/g, " ");
   let m = RANGE_W.exec(t);
   if (m) {
     const m2 = MONTHS[m[5]], m1 = m[2] ? MONTHS[m[2]] : m2, y1 = m[3] ? year(m[3]) : (m[6] && m1 > m2 ? year(m[6]) - 1 : (m[6] ? year(m[6]) : yr)), y2 = m[6] ? year(m[6]) : (m1 > m2 ? y1 + 1 : y1);
     if (+m[1] >= 1 && +m[1] <= 31 && +m[4] >= 1 && +m[4] <= 31) return { start: iso(y1, m1, +m[1]), end: iso(y2, m2, +m[4]) };
+  }
+  m = FROM_UNTIL.exec(t);
+  if (m && +m[1] >= 1 && +m[1] <= 31 && +m[4] >= 1 && +m[4] <= 31) {
+    const m2 = MONTHS[m[5]], m1 = m[2] ? MONTHS[m[2]] : m2, y2 = m[6] ? year(m[6]) : yr, y1 = m[3] ? year(m[3]) : (m1 > m2 ? y2 - 1 : y2);
+    return { start: iso(y1, m1, +m[1]), end: iso(y2, m2, +m[4]) };
   }
   m = ONE_W.exec(t);
   if (m && +m[1] >= 1 && +m[1] <= 31) { const d = iso(m[3] ? year(m[3]) : yr, MONTHS[m[2]], +m[1]); return { start: d, end: d }; }
@@ -91,7 +101,7 @@ export function entryFromIntlPage(page, today = new Date().toISOString().slice(0
   if (!cfg || SKIP_SLUG.test(slug)) return null;
   const text = (page.lines || []).map(l => l.text).join(" ");
   const title = cleanTitle(page.title || "");
-  if (!(IN_PERSON_TEXT.test(title) || IN_PERSON_TEXT.test(text.slice(0, 1500)) || IN_PERSON_SLUG.test(slug))) return null;
+  if (!(IN_PERSON_TEXT.test(title) || IN_PERSON_TEXT.test(text.slice(0, 1500)) || IN_PERSON_WESTERN.test(text.slice(0, 3000)) || IN_PERSON_SLUG.test(slug))) return null;
   const dt = title + " . " + text.slice(0, 3000), range = parseIntlRange(dt, +today.slice(0, 4)) || parseWesternRange(dt, +today.slice(0, 4)), where = placeOf(title, text.slice(0, 1500));
   return { name: prettySlug(slug) || title, place: where ? where.place : cfg.place, area: where ? where.area : cfg.area, scope: "regional", start: range ? range.start : "", end: range ? range.end : "", datesKnown: !!range, url: String(page.url).replace(/\/?$/, "/"), source: "official" };
 }
