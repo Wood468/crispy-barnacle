@@ -1,0 +1,54 @@
+name: Datamine news
+
+# Reads the Discord channels that follow PokeMiners' update channels (data/datamine-channels.json) and writes public/datamine-news.json
+# for the Leaks tab. Community datamining only: it never edits events or any other public data. Costs no Claude credits.
+on:
+  schedule:
+    - cron: "11,41 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: datamine-news
+  cancel-in-progress: false
+
+jobs:
+  read:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: main
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Check the code
+        run: node --test test/datamine-news.test.mjs
+      - name: Read the channels
+        env:
+          DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
+          CHANNEL_ID: ${{ secrets.CHANNEL_ID }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          TELEGRAM_GROUP_ID: ${{ secrets.TELEGRAM_GROUP_ID }}
+          TELEGRAM_TOPIC_DATAMINE: ${{ secrets.TELEGRAM_TOPIC_DATAMINE || secrets.TELEGRAM_TOPICS_DATAMINE }}
+        run: node scripts/datamine-news.mjs
+      - name: Commit when something changed
+        shell: bash
+        run: |
+          set -euo pipefail
+          git add -- public/datamine-news.json
+          if git diff --cached --quiet; then echo "No changes."; exit 0; fi
+          # the timestamp alone is not worth a deploy
+          if git diff --cached -U0 | grep -E '^[+-] ' | grep -vqE '"updated"'; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git commit -m "Datamine news: new posts"
+            git pull -q --rebase origin main
+            git push origin HEAD:main
+          else
+            echo "Only the timestamp changed; not committing."
+          fi

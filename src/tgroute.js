@@ -2,10 +2,11 @@
 //   events   - starting soon, saved-event reminders, the week ahead
 //   pictures - infographics (with the buttons), the weekly picture, pictures forwarded from Discord
 //   changes  - new events found, store changes, the daily nudge, announced-event alerts
+//   datamine - new PokéMiners teardown reports (community datamining, never announced)
 //   system   - data checks, health alerts, the weekly data report
-// Settings (all optional): TELEGRAM_GROUP_ID (the group) and TELEGRAM_TOPIC_EVENTS / _PICTURES / _CHANGES / _SYSTEM (each Topic's id).
+// Settings (all optional): TELEGRAM_GROUP_ID (the group) and TELEGRAM_TOPIC_EVENTS / _PICTURES / _CHANGES / _DATAMINE / _SYSTEM (each Topic's id).
 // A category with no Topic id, or no group, goes to TELEGRAM_CHAT_ID as before, so nothing breaks if only some are set.
-export const CATEGORIES = ["events", "pictures", "changes", "system"];
+export const CATEGORIES = ["events", "pictures", "changes", "datamine", "system"];
 export function route(env, cat) {
   const group = String((env && env.TELEGRAM_GROUP_ID) || "").trim(), U = String(cat).toUpperCase(), topic = String((env && (env["TELEGRAM_TOPIC_" + U] || env["TELEGRAM_TOPICS_" + U])) || "").trim(); // TOPIC_ or TOPICS_ both work
   if (group && /^-?\d+$/.test(group)) return { chat: group, thread: /^\d+$/.test(topic) ? Number(topic) : 0 };
@@ -14,7 +15,7 @@ export function route(env, cat) {
 // Quiet hours per Topic: inside the window a message still arrives, but silently (no sound or buzz), so it is there to read in the morning.
 // Defaults are 22-7 Melbourne time for everything except Pictures, which can ping any time. Change one with QUIET_EVENTS / QUIET_PICTURES /
 // QUIET_CHANGES / QUIET_SYSTEM set to "from-to" in Melbourne hours (e.g. "23-6"), or "off" for never silent.
-const QUIET_DEFAULT = { events: "22-7", pictures: "off", changes: "22-7", system: "22-7" };
+const QUIET_DEFAULT = { events: "22-7", pictures: "off", changes: "22-7", datamine: "22-7", system: "22-7" };
 export function quietWindow(env, cat) {
   const raw = String((env && env["QUIET_" + String(cat).toUpperCase()]) || QUIET_DEFAULT[cat] || "off").trim().toLowerCase();
   const m = /^(\d{1,2})\s*-\s*(\d{1,2})$/.exec(raw);
