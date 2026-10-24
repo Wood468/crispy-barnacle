@@ -1,7 +1,8 @@
 name: Source watch
 
 # Reads the shiny / costume feeds in data/source-feeds.json and re-scores the next 30 days of events.
-# Writes data/source-watch.json and data/shiny-scorecard.json only; it never edits public data.
+# Also lists new Pokémon GO posts on other official Pokémon sites (scripts/site-watch.mjs, Telegram Changes topic).
+# Writes data/source-watch.json, data/shiny-scorecard.json and data/site-watch.json only; it never edits public data.
 on:
   schedule:
     - cron: "17 */3 * * *"
@@ -26,12 +27,18 @@ jobs:
           node-version: 22
       - name: Read feeds and score claims
         shell: bash
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          TELEGRAM_GROUP_ID: ${{ secrets.TELEGRAM_GROUP_ID }}
+          TELEGRAM_TOPIC_CHANGES: ${{ secrets.TELEGRAM_TOPIC_CHANGES || secrets.TELEGRAM_TOPICS_CHANGES }}
         run: |
           set -euo pipefail
           node scripts/source-watch.mjs
           node scripts/shiny-scorecard.mjs
           node scripts/scrapedduck-compare.mjs
-          git add -- data/source-watch.json data/shiny-scorecard.json data/scrapedduck-compare.json
+          node scripts/site-watch.mjs
+          git add -- data/source-watch.json data/shiny-scorecard.json data/scrapedduck-compare.json data/site-watch.json
           # the timestamps alone are not worth a commit
           # (no `grep -q` here: with pipefail it ends the pipe early and the test wrongly fails)
           changed=$(git diff --cached -U0 | grep -E '^[+-] ' | grep -vE '"updated"' | wc -l || true)
