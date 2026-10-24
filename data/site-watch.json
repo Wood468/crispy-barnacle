@@ -1,0 +1,32 @@
+{
+ "updated": "2026-10-24T02:01:12.825Z",
+ "recorded": [
+  "pokemon-us",
+  "pokemon-uk",
+  "pokemon-jp",
+  "pokemon-tw"
+ ],
+ "status": [
+  {
+   "id": "pokemon-us",
+   "state": "ok",
+   "links": 0
+  },
+  {
+   "id": "pokemon-uk",
+   "state": "ok",
+   "links": 0
+  },
+  {
+   "id": "pokemon-jp",
+   "state": "ok",
+   "links": 0
+  },
+  {
+   "id": "pokemon-tw",
+   "state": "ok",
+   "links": 0
+  }
+ ],
+ "seen": {}
+}

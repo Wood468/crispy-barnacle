@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-23T11:40:02.897Z",
+ "updated": "2026-10-24T02:01:11.982Z",
  "status": [
   {
    "id": "hub",
@@ -19,12 +19,12 @@
   {
    "id": "reddit-silph",
    "state": "ok",
-   "items": 10
+   "items": 9
   },
   {
    "id": "youtube-pogo",
-   "state": "ok",
-   "items": 0
+   "state": "error",
+   "note": "HTTP 404"
   }
  ],
  "gaps": 5,
@@ -193,18 +193,6 @@
    "summary": "<!-- SC_OFF --><div class=\"md\"><p>Having Zorua (non-shiny) as your buddy means you can skip the \"Oh?\" animation if you are not fast catching. But no Zorua will show up as shiny. They all show up as no",
    "pokemon": [
     "Zorua"
-   ],
-   "notInOurData": []
-  },
-  {
-   "source": "reddit-silph",
-   "trust": "tip",
-   "title": "Costumed Zubat have been reverted",
-   "link": "https://www.reddit.com/r/TheSilphRoad/comments/1x1yig1/costumed_zubat_have_been_reverted/",
-   "date": "2026-10-09T22:10:04.000Z",
-   "summary": "<table> <tr><td> <a href=\"https://www.reddit.com/r/TheSilphRoad/comments/1x1yig1/costumed_zubat_have_been_reverted/\"> <img src=\"https://preview.redd.it/b52u4y6hmiuh1.jpeg?width=640&amp;crop=smart&amp;",
-   "pokemon": [
-    "Zubat"
    ],
    "notInOurData": []
   }
