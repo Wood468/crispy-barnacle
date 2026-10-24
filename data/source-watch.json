@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-24T20:50:31.276Z",
+ "updated": "2026-10-24T23:15:18.709Z",
  "status": [
   {
    "id": "hub",
@@ -19,7 +19,7 @@
   {
    "id": "reddit-silph",
    "state": "ok",
-   "items": 8
+   "items": 7
   },
   {
    "id": "youtube-pogo",
@@ -169,18 +169,6 @@
    "link": "https://www.reddit.com/r/TheSilphRoad/comments/1x2t2y2/zorua_community_day_lures_after_5pm_not_giving/",
    "date": "2026-10-10T23:25:20.000Z",
    "summary": "<!-- SC_OFF --><div class=\"md\"><p>Looks like this has been picked up by some people, but it appears it was either not possible to get a shiny Zorua from a regular lure after 5PM, or they were complete",
-   "pokemon": [
-    "Zorua"
-   ],
-   "notInOurData": []
-  },
-  {
-   "source": "reddit-silph",
-   "trust": "tip",
-   "title": "What happens if your buddy is shiny zorua and you catch a shiny zorua?",
-   "link": "https://www.reddit.com/r/TheSilphRoad/comments/1x2r8h6/what_happens_if_your_buddy_is_shiny_zorua_and_you/",
-   "date": "2026-10-10T21:57:58.000Z",
-   "summary": "<!-- SC_OFF --><div class=\"md\"><p>Is the animation still there? Is it skipped?</p> </div><!-- SC_ON --> &#32; submitted by &#32; <a href=\"https://www.reddit.com/user/FireTepig\"> /u/FireTepig </a> <br/",
    "pokemon": [
     "Zorua"
    ],
