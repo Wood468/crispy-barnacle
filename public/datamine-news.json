@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-23T14:59:31.783Z",
+ "updated": "2026-10-24T00:34:53.591Z",
  "seeded": true,
  "channels": [
   {
@@ -18,10 +18,28 @@
    "src": "gamedata",
    "name": "dm-gamedata",
    "state": "ok",
-   "count": 1
+   "count": 3
   }
  ],
  "items": [
+  {
+   "id": "1563342580702257207",
+   "src": "gamedata",
+   "title": "Extended settings were for the following forms of Pikachu were renamed to better match existing naming conventions:",
+   "text": "Extended settings were for the following forms of Pikachu were renamed to better match existing naming conventions:\n PokéXciting! Pikachu (Turqoise)\n PokéXciting! Pikachu (Red)\n PokéXciting! Pikachu (Blue)\n PokéXciting! Pikachu (Pink)\n Astronaut Pikachu\n Pikachu wearing a hat and capelet\n\nThanks @JabJabLuszko!",
+   "link": "",
+   "image": "",
+   "date": "2026-10-24T00:05:16.740Z"
+  },
+  {
+   "id": "1563319387405029481",
+   "src": "gamedata",
+   "title": "More Location Backgrounds were updated for the same reasons as before. You get the drill.",
+   "text": "More Location Backgrounds were updated for the same reasons as before. You get the drill.",
+   "link": "",
+   "image": "",
+   "date": "2026-10-23T22:33:07.027Z"
+  },
   {
    "id": "1563165766747168798",
    "src": "gamedata",
