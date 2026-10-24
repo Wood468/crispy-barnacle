@@ -962,7 +962,7 @@ async function userstate(request, env, url) {
 // ---------------------------------------------------------------- Phase 5: notifications
 
 async function notifyNow(env) {
-  return nt.runNotify(env, env.DB, Date.now(), (u, o) => fetch(u, o), { listEvents: pipe.listEvents, dexList: (await assetData(env, "dex.json")) || [] });
+  return nt.runNotify(env, env.DB, Date.now(), (u, o) => fetch(u, o), { listEvents: pipe.listEvents, pageFetch: (u, o) => fetch(u, o), dexList: (await assetData(env, "dex.json")) || [] });
 }
 async function notifyStatus(request, env) {
   const denied = await pinned(request, env); if (denied) return denied;

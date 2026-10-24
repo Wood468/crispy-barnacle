@@ -15,10 +15,11 @@ export function parseVenueTimes(text) {
   if (!d || mo < 0 || !z) return null;
   const at = (h, m, ap) => Date.UTC(+d[3], mo, +d[2]) + mins(h, m, ap) * 6e4 - TZ_OFF[z[1]] * 36e5;
   const pick = re => { const m = new RegExp(re + "\\s*:\\s*" + T + "(?:\\s*(?:to|until|–|-)\\s*" + T + ")?", "i").exec(t); return m && { a: at(m[1], m[2], m[3]), b: m[4] ? at(m[4], m[5], m[6]) : null }; };
-  const show = pick("(?:show starts|event time|start time|starts?)") , doors = pick("doors open"), end = pick("end time");
+  // Hours Pokémon GO itself lists ("Pokémon GO gameplay hours: 7 p.m. to 10 p.m. PDT") beat the show time, which is only a guide.
+  const go = pick("(?:pok[eé]mon go|gameplay|in-game)(?: gameplay)?(?: hours| starts?| start time| time)?"), show = go || pick("(?:show starts|event time|start time|starts?)"), doors = pick("doors open"), end = pick("end time");
   if (!show) return null;
   const venue = (/(?:show starts|event time|start time|starts?)\s*:\s*(\d{1,2}(?::\d\d)?\s*[ap]\.?m\.?)/i.exec(t) || [])[1];
-  return { start: show.a, end: show.b || (end && end.a) || null, doors: doors ? doors.a : null, zone: z[1], venue: venue ? venue.replace(/\./g, "").toLowerCase() : "" };
+  return { start: show.a, end: show.b || (end && end.a) || null, doors: doors ? doors.a : null, zone: z[1], venue: venue ? venue.replace(/\./g, "").toLowerCase() : "", official: !!go };
 }
 // Times a person typed in by hand for pages the importer could not read yet. Same shape; the importer's own reading wins when it has one.
 const MANUAL = {
@@ -50,7 +51,7 @@ export function venueItems(details) {
     const hit = texts.find(t => parseVenueTimes(t)), v = hit && parseVenueTimes(hit);
     const link = ((ev.sources || []).map(x => x && x.url).find(u => /^https:\/\/(www\.)?(leekduck|pokemongo)\.com\//.test(u || ""))) || "";
     // The show time is the best guide to when the in-game bonuses start; say so when the page admits the Pokémon GO hours are not confirmed.
-    if (v) out.push({ id: "v:" + id, name: ev.name || id, ms: v.start, endMs: v.end, doorsMs: v.doors, venueTime: v.venue + " " + v.zone, unconfirmed: /unconfirmed|not (yet )?(been )?confirmed/i.test(hit), link, venue: true });
+    if (v) out.push({ id: "v:" + id, name: ev.name || id, ms: v.start, endMs: v.end, doorsMs: v.doors, venueTime: v.venue + " " + v.zone, unconfirmed: !v.official && /unconfirmed|not (yet )?(been )?confirmed/i.test(hit), link, venue: true });
   }
   return out;
 }

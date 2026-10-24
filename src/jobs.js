@@ -6,7 +6,8 @@ import { keyboard } from "./telegram.js";
 import { routed } from "./tgroute.js";
 import * as userstate from "./userstate.js";
 import { venueItems, describeVenue, venueFor } from "./venue-times.js";
-import { ogImage, OG_HOSTS } from "./og.js";
+import { eventImage } from "./og.js";
+export { eventImage };
 import { APP, buildWeek, formatWeek, pictureUrls, melbourneNow, startingSoon, messageFor, pending, quiet } from "./jobs-core.js";
 
 const SQL_TABLE = "CREATE TABLE IF NOT EXISTS job_state (key TEXT PRIMARY KEY, value TEXT NOT NULL, updated_at TEXT NOT NULL)";
@@ -22,12 +23,6 @@ async function siteData(env) {
   const r = await env.ASSETS.fetch(new Request(APP + "/data.json"));
   if (!r.ok) throw new Error("data.json " + r.status);
   return r.json();
-}
-// The event page's own picture, or "" when there is none. Only leekduck.com / pokemongo.com pages are read.
-export async function eventImage(page, f = fetch) {
-  let u; try { u = new URL(page || ""); } catch { return ""; }
-  if (u.protocol !== "https:" || !OG_HOSTS.includes(u.hostname)) return "";
-  try { const r = await f(u.href, { cf: { cacheTtl: 86400, cacheEverything: true }, headers: { "user-agent": "GO-Field-Notes/1.0 (+https://pogo.michaelpuff.com)" } }); return r.ok ? ogImage((await r.text()).slice(0, 400000)) : ""; } catch { return ""; }
 }
 async function tg(env, method, body, f) {
   const r = await f("https://api.telegram.org/bot" + env.TELEGRAM_BOT_TOKEN + "/" + method, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ chat_id: env.TELEGRAM_CHAT_ID, ...body }) });

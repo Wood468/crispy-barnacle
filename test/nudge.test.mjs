@@ -178,3 +178,26 @@ test("a venue item carries its event page link", () => {
   const v = venueItems({ events: { "x:la": { name: "Pokémon Night Out 2026 - Los Angeles", sources: [{ url: "https://leekduck.com/events/pokemon-night-out-los-angeles-2026/" }], fields: { dates: [{ text: LA }] } } } });
   assert.equal(v[0].link, "https://leekduck.com/events/pokemon-night-out-los-angeles-2026/"); assert.equal(v[0].unconfirmed, true);
 });
+
+test("digest cards carry each event's page so its picture can be sent", () => {
+  const data = { events: [{ id: "d", t: "Dynamax Uxie", s: "2026-10-24T14:00", e: "2026-10-24T17:00", sourceUrl: "https://leekduck.com/events/dynamax-uxie/" }], spotlight: [], raidHour: [] };
+  const d = buildDigest({ data, world: { events: [] }, now: new Date("2026-10-23T22:00:00Z") });
+  assert.equal(d.cards.length, 1); assert.equal(d.cards[0].page, "https://leekduck.com/events/dynamax-uxie/"); assert.match(d.cards[0].line, /^📅 Today: Dynamax Uxie/);
+});
+test("Pokémon GO's own hours replace the show-time guide once the page lists them", () => {
+  const guide = "Date: October 24, 2026 Night Out show starts: 7:30 p.m. PDT (unconfirmed for Pokémon GO)";
+  assert.equal(parseVenueTimes(guide).official, false);
+  const off = parseVenueTimes(guide + " Pokémon GO gameplay hours: 8:00 p.m. to 10:00 p.m. PDT");
+  assert.equal(off.official, true); assert.equal(new Date(off.start).toISOString(), "2026-10-25T03:00:00.000Z"); assert.equal(new Date(off.end).toISOString(), "2026-10-25T05:00:00.000Z");
+  const it = venueItems({ events: { x: { name: "N", fields: { dates: [{ text: guide + " Pokémon GO gameplay hours: 8:00 p.m. to 10:00 p.m. PDT" }] } } } })[0];
+  assert.equal(it.unconfirmed, false);
+});
+test("an alert is sent as a photo with the alert as caption, and falls back to text", async () => {
+  const calls = [], env = { TELEGRAM_BOT_TOKEN: "t", TELEGRAM_CHAT_ID: "1" };
+  const ok = async (u, o) => { calls.push(u.split("/").pop()); return { ok: true }; };
+  const { sendTelegram } = await import("../src/notify.js");
+  assert.equal((await sendTelegram(env, "hi", ok, "events", "https://cdn/x.jpg")).status, "sent"); assert.deepEqual(calls, ["sendPhoto"]);
+  calls.length = 0; const noPhoto = async (u) => { calls.push(u.split("/").pop()); return { ok: !/Photo/.test(u) }; };
+  assert.equal((await sendTelegram(env, "hi", noPhoto, "events", "https://cdn/x.jpg")).status, "sent"); assert.deepEqual(calls, ["sendPhoto", "sendMessage"]);
+  calls.length = 0; await sendTelegram(env, "hi", ok, "events"); assert.deepEqual(calls, ["sendMessage"]);
+});
