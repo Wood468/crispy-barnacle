@@ -251,7 +251,7 @@ test("list lookup: all=1 returns every upcoming venue event with its Melbourne d
   const RealNow = Date.now; Date.now = () => Date.parse("2026-10-24T01:00:00Z");
   try {
     const items = (await (await worker.fetch(new Request("https://x/api/venue-times?all=1"), env, { waitUntil() {} })).json()).items;
-    assert.equal(items.length, 1); assert.equal(items[0].date, "2026-10-25"); assert.equal(items[0].day, "Sun, 25 Oct"); assert.equal(items[0].show, "1:30 pm");
+    assert.equal(items.length, 1); assert.equal(items[0].date, "2026-10-25"); assert.equal(items[0].day, "Sun, 25 Oct"); assert.equal(items[0].show, "1:30 pm"); assert.equal(items[0].ms, Date.parse("2026-10-25T02:30:00Z")); assert.equal(items[0].endMs, 0); assert.equal(items[0].link, "");
     Date.now = () => Date.parse("2026-11-20T01:00:00Z");
     assert.equal((await (await worker.fetch(new Request("https://x/api/venue-times?all=1"), env, { waitUntil() {} })).json()).items.length, 0, "old ones drop out");
   } finally { Date.now = RealNow; }

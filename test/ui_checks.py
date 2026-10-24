@@ -121,14 +121,19 @@ with sync_playwright() as p:
         pg.click('[data-clearday]'); pg.click('.fchip[data-type="cd"]'); pg.wait_for_timeout(150)
         check('type filter keeps only Community Days', all('COMMUNITY DAY' in t.upper() for t in pg.locator('#evtimeline .evc .kind').all_inner_texts()) and pg.locator('#evtimeline .evc').count()>=1)
         # 4b. "Next 24h" chip: lists only what is live or starts within a day; venue bonus times fill into cards
-        VT=json.dumps({'items':[{'name':'Pokémon Night Out 2026 - Los Angeles','date':'2026-10-25','day':'Sun, 25 Oct','show':'1:30 pm','end':'','note':'expected, Pokémon GO hours not confirmed yet'}]})
+        VT=json.dumps({'items':[{'name':'Pokémon Night Out 2026 - Los Angeles','date':'2026-10-10','day':'Sat, 10 Oct','show':'1:30 pm','end':'','note':'expected, Pokémon GO hours not confirmed yet','ms':1791599400000,'endMs':0,'link':'https://leekduck.com/events/n/'}]})
         pg=page(extra={'**/api/venue-times*':(VT,200)}); pg.click('nav.tabs button[data-tab="events"]'); pg.click('#subnav-events button[data-sub="timeline"]'); pg.click('.fchip[data-type="soon"]'); pg.wait_for_timeout(200)
         check('Next 24h chip shows a list or says nothing starts', pg.locator('#evtimeline .evc').count()>=1 or 'Nothing starts in the next 24 hours' in pg.inner_text('#evtimeline'))
         check('Next 24h chip has no page errors', pg.errs==[], pg.errs)
-        pg.evaluate("""()=>{var p=document.createElement('p');p.className='evc-bonus';p.hidden=true;p.setAttribute('data-bn','Pokémon Night Out events in Pokémon GO');p.setAttribute('data-bs','2026-10-24');p.setAttribute('data-be','2026-11-10');p.id='bonus-probe';document.body.appendChild(p);}""")
+        tl=pg.inner_text('#evtimeline').lower()
+        check('Night Out is listed in Next 24h by its bonus time', 'night out 2026 - los angeles' in tl and 'bonuses start sat, 10 oct, 1:30 pm your time' in tl, tl[:300])
+        pg.click('nav.tabs button[data-tab="now"]') if pg.locator('nav.tabs button[data-tab="now"]').count() else None
+        pg.wait_for_timeout(200)
+        check('Today screen has the one-line next-24h summary', pg.locator('.soon-sum').count()==1 and 'starting in the next 24h' in pg.inner_text('.soon-sum'), pg.locator('.soon-sum').count())
+        pg.evaluate("""()=>{var p=document.createElement('p');p.className='evc-bonus';p.hidden=true;p.setAttribute('data-bn','Pokémon Night Out events in Pokémon GO');p.setAttribute('data-bs','2026-10-10');p.setAttribute('data-be','2026-10-10');p.id='bonus-probe';document.body.appendChild(p);}""")
         pg.wait_for_function("document.getElementById('bonus-probe') && !document.getElementById('bonus-probe').hidden", timeout=5000)
         bt=pg.inner_text('#bonus-probe')
-        check('card bonus line says when bonuses start in your time', 'Bonuses start' in bt and 'Sun, 25 Oct, 1:30 pm your time' in bt, bt)
+        check('card bonus line says when bonuses start in your time', 'Bonuses start' in bt and 'Sat, 10 Oct, 1:30 pm your time' in bt, bt)
         # 5. countdown moves with time
         pg=page(); before=pg.locator('#prio .cdn').first.inner_text()
         pg.clock.fast_forward(3*3600*1000); pg.clock.run_for(61000); pg.wait_for_timeout(200)
