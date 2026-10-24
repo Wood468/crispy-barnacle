@@ -17,13 +17,27 @@ const hoursAhead = 36;
 const readJson = async (p, d) => { try { return JSON.parse(await readFile(p, "utf8")); } catch { return d; } };
 const day = s => String(s).slice(0, 10);
 
+// Event times in data.json are written in each player's own local time, which for you is Melbourne/Sydney (the same clock), so they are shown as they are.
+const MON = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+const hasTime = s => /T\d\d:\d\d/.test(String(s || ""));
+const clock = s => { const [h, m] = String(s).slice(11, 16).split(":").map(Number); return (h % 12 || 12) + ":" + String(m).padStart(2, "0") + " " + (h < 12 ? "am" : "pm"); };
+const dateLabel = s => { const [, mo, d] = day(s).split("-").map(Number); return d + " " + MON[mo - 1]; };
+// "2:00 pm–5:00 pm", "all day", "until 31 Oct", or "time not listed" when the source only gave a date.
+export function whenText(i) {
+  if (!hasTime(i.start)) return "time not listed";
+  const multi = i.end && day(i.end) > day(i.start);
+  if (i.start.slice(11, 16) === "00:00") return multi ? "until " + dateLabel(i.end) : "all day";
+  if (i.end && hasTime(i.end) && !multi) return clock(i.start) + "–" + clock(i.end);
+  return "from " + clock(i.start) + (multi ? " until " + dateLabel(i.end) : "");
+}
+
 // Events the app knows about, as { id, name, start } with local start times.
 export function upcoming(data, world, now = new Date()) {
   const items = [];
-  for (const e of data.events || []) if (e.s) items.push({ id: "e:" + e.id, name: e.t, start: e.s });
-  for (const x of data.spotlight || []) items.push({ id: "spot:" + x.d, name: x.n + " Spotlight Hour", start: x.d + "T18:00" });
-  for (const x of data.raidHour || []) items.push({ id: "rh:" + x.d, name: x.n + " Raid Hour", start: x.d + "T18:00" });
-  for (const w of (world && world.events) || []) if (w.start) items.push({ id: w.id, name: w.name + (w.place ? " (" + w.place + ")" : ""), start: w.start + "T00:00", place: w.place });
+  for (const e of data.events || []) if (e.s) items.push({ id: "e:" + e.id, name: e.t, start: e.s, end: e.e });
+  for (const x of data.spotlight || []) items.push({ id: "spot:" + x.d, name: x.n + " Spotlight Hour", start: x.d + "T18:00", end: x.d + "T19:00" });
+  for (const x of data.raidHour || []) items.push({ id: "rh:" + x.d, name: x.n + " Raid Hour", start: x.d + "T18:00", end: x.d + "T19:00" });
+  for (const w of (world && world.events) || []) if (w.start) items.push({ id: w.id, name: w.name + (w.place ? " (" + w.place + ")" : ""), start: w.start + "T00:00", end: w.end, place: w.place, dateOnly: true });
   const t0 = now.getTime(), t1 = t0 + hoursAhead * 36e5;
   return items.filter(i => { const t = new Date(i.start).getTime(); return t >= t0 - 2 * 36e5 && t <= t1; });
 }
@@ -51,7 +65,7 @@ export function buildDigest({ queue, details, data, world, state = {}, now = new
   const soon = upcoming(data, world, now).filter(i => !told.events.has(i.id));
   for (const i of soon.slice(0, 6)) {
     const d = day(i.start), today = day(new Date(now.getTime() + 11 * 36e5).toISOString()); // Melbourne date
-    lines.push("📅 " + (d === today ? "Today" : "Tomorrow") + ": " + i.name);
+    lines.push("📅 " + (d === today ? "Today" : "Tomorrow") + ": " + i.name + " · " + (i.dateOnly ? "time not listed" : whenText(i)));
     next.events.push(i.id);
   }
   if (!lines.length) return null;

@@ -105,3 +105,18 @@ test("the Telegram picture job restores the pictures from R2 before sending", as
   assert.ok(notify.indexOf("r2-sync.sh restore") > -1 && notify.indexOf("r2-sync.sh restore") < notify.indexOf("scripts/nudge.mjs"));
   assert.match(readFileSync("scripts/r2-sync.sh", "utf8"), /R2_ONLY/);
 });
+
+import { whenText } from "../scripts/nudge.mjs";
+test("today's events show your local time", () => {
+  const n = new Date("2026-10-23T22:00:00Z"); // Sat 24 Oct, 9:00 am Melbourne
+  const data = { events: [{ id: "d", t: "Dynamax Uxie, Mesprit and Azelf", s: "2026-10-24T14:00", e: "2026-10-24T17:00" }], spotlight: [{ d: "2026-10-24", n: "Stufful" }], raidHour: [] };
+  const t = buildDigest({ data, world: { events: [] }, now: n }).text;
+  assert.match(t, /Today: Dynamax Uxie, Mesprit and Azelf · 2:00 pm–5:00 pm/);
+  assert.match(t, /Stufful Spotlight Hour · 6:00 pm–7:00 pm/);
+});
+test("time wording for all-day, multi-day and date-only events", () => {
+  assert.equal(whenText({ start: "2026-10-24T00:00", end: "2026-10-24T23:59" }), "all day");
+  assert.equal(whenText({ start: "2026-10-24T00:00", end: "2026-10-30T23:59" }), "until 30 Oct");
+  assert.equal(whenText({ start: "2026-10-24T10:00", end: "2026-10-26T20:00" }), "from 10:00 am until 26 Oct");
+  assert.equal(whenText({ start: "2026-10-24" }), "time not listed");
+});
