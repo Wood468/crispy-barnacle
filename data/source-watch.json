@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-24T15:57:45.873Z",
+ "updated": "2026-10-24T20:50:31.276Z",
  "status": [
   {
    "id": "hub",
@@ -27,7 +27,7 @@
    "items": 0
   }
  ],
- "gaps": 5,
+ "gaps": 6,
  "items": [
   {
    "source": "hub",
@@ -59,6 +59,20 @@
    "notInOurData": [
     "Heracross",
     "Umbreon"
+   ]
+  },
+  {
+   "source": "reddit-silph",
+   "trust": "tip",
+   "title": "Legendary Shadow raids and guaranteed catch.",
+   "link": "https://www.reddit.com/r/TheSilphRoad/comments/1xed70z/legendary_shadow_raids_and_guaranteed_catch/",
+   "date": "2026-10-24T16:34:38.000Z",
+   "summary": "<!-- SC_OFF --><div class=\"md\"><p>Hey I'm curious when they changed it so legendaries (shadow)(non-shiny)can be caught by hitting an excellent throw on the smallest possible circle? I just did a lando",
+   "pokemon": [
+    "Landorus"
+   ],
+   "notInOurData": [
+    "Landorus"
    ]
   },
   {
@@ -105,16 +119,6 @@
    "notInOurData": [
     "Phantump"
    ]
-  },
-  {
-   "source": "reddit-silph",
-   "trust": "tip",
-   "title": "Boosted shiny odds from City Safari Boston - Dynamax & Raids?",
-   "link": "https://www.reddit.com/r/TheSilphRoad/comments/1xebig5/boosted_shiny_odds_from_city_safari_boston/",
-   "date": "2026-10-24T15:26:54.000Z",
-   "summary": "<!-- SC_OFF --><div class=\"md\"><p>Do we know if the boosted shiny odds that were a feature of buying a 2-day safari pass affects just event themed pokemon? Or would it potentially also affect the Lake",
-   "pokemon": [],
-   "notInOurData": []
   },
   {
    "source": "reddit-silph",
