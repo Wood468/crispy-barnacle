@@ -120,6 +120,22 @@ export function leadReminders(data, world, saved, leads, nowMs, venue = [], real
   }
   return out;
 }
+// A sample reminder in the real format, with a real upcoming event's picture, sent to the Events topic so you can check how they look.
+export async function runTestReminder(env, opts = {}) {
+  if (!env.TELEGRAM_BOT_TOKEN || !env.TELEGRAM_CHAT_ID) return { sent: false, why: "Telegram is not set up" };
+  const f = routed(env, "events", opts.fetch || fetch), now = (opts.now || new Date()).getTime();
+  const details = await env.ASSETS.fetch(new Request(APP + "/event-details.json")).then(r => r.ok ? r.json() : {}).catch(() => ({}));
+  const v = venueItems(details).filter(x => x.ms > now).sort((a, b) => a.ms - b.ms)[0];
+  let name, page, line;
+  if (v) { const d = describeVenue(v); name = v.name; page = v.link; line = "Rewards and bonuses start in about 60 min · " + d.show + " your time" + (d.note ? " (" + d.note + ")" : ""); }
+  else { const data = await siteData(env), e = (data.events || []).find(x => x.sourceUrl); if (!e) return { sent: false, why: "No upcoming event with a page to show" }; name = e.t; page = e.sourceUrl; line = "Rewards and bonuses start in about 60 min"; }
+  const text = "🧪 Test reminder (nothing is wrong)\n🔔 " + name + "\n" + line + "\n" + APP;
+  const image = await eventImage(page, opts.pageFetch || fetch);
+  let ok = false;
+  if (image) ok = await tg(env, "sendPhoto", { photo: image, caption: text.slice(0, 1000) }, f);
+  if (!ok) ok = await tg(env, "sendMessage", { text, disable_web_page_preview: true }, f);
+  return { sent: ok, event: name, picture: !!image && ok };
+}
 export async function runSaved(env, opts = {}) {
   const f = routed(env, "events", opts.fetch || fetch), nowMs = melbourneNow(opts.now || new Date());
   const morning = new Date(nowMs).getUTCHours() === 7 || opts.force;

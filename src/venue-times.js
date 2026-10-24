@@ -28,9 +28,9 @@ const MANUAL = {
 
 const TZ = "Australia/Melbourne";
 const fmtTime = ms => new Intl.DateTimeFormat("en-AU", { timeZone: TZ, hour: "numeric", minute: "2-digit", hour12: true }).format(new Date(ms)).replace(/\s?([ap])m/i, (_, x) => " " + x.toLowerCase() + "m");
-// Plain-words times in your zone for one venue item: { show, end, note }.
+// Plain-words times in your zone for one venue item: { day, show, end, note }.
 export function describeVenue(v) {
-  return { show: fmtTime(v.ms), end: v.endMs ? fmtTime(v.endMs) : "", note: v.unconfirmed ? "expected, Pokémon GO hours not confirmed yet" : "" };
+  return { day: new Intl.DateTimeFormat("en-AU", { timeZone: TZ, weekday: "short", day: "numeric", month: "short" }).format(new Date(v.ms)), show: fmtTime(v.ms), end: v.endMs ? fmtTime(v.endMs) : "", note: v.unconfirmed ? "expected, Pokémon GO hours not confirmed yet" : "" };
 }
 // Which venue items belong to a saved event: the same series (first three words of the name) inside the event's dates.
 const words = s => String(s || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9 ]+/g, " ").split(/\s+/).filter(Boolean);

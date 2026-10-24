@@ -21,6 +21,7 @@ import * as tgm from "./telegram.js";
 import * as auth from "./auth.js";
 import * as jobs from "./jobs.js";
 import { ogImage, OG_HOSTS } from "./og.js";
+import { venueItems, venueFor, describeVenue } from "./venue-times.js";
 export { ogImage };
 
 const ART_BASE = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/";
@@ -79,6 +80,8 @@ const handler = {
       if (url.pathname === "/api/userstate/init") return userstateInit(request, env);
       if (url.pathname === "/api/notify/status") return notifyStatus(request, env);
       if (url.pathname === "/api/notify/test") return notifyTest(request, env);
+      if (url.pathname === "/api/notify/test-reminder") return notifyTestReminder(request, env);
+      if (url.pathname === "/api/venue-times" && request.method === "GET") return venueTimesGet(url, env);
       if (url.pathname === "/api/notify/run") return notifyRun(request, env);
       if (url.pathname === "/api/notify/push-key") return pushKey(request, env);
       if (url.pathname === "/api/notify/subscribe") return pushSubscribe(request, env);
@@ -981,6 +984,20 @@ async function notifyTest(request, env) {
   const denied = await pinned(request, env); if (denied) return denied;
   const tg = await nt.sendTelegram(env, "GO Field Notes: test message. If you can read this, Telegram alerts are connected.", (u, o) => fetch(u, o));
   return json({ telegram: tg });
+}
+async function notifyTestReminder(request, env) {
+  if (request.method !== "POST") return json({ error: "Method not allowed." }, 405);
+  const denied = await pinned(request, env); if (denied) return denied;
+  return json(await jobs.runTestReminder(env, { pageFetch: (u, o) => fetch(u, o) }));
+}
+// When the in-game bonuses of an in-person event (Night Out) start, in your time. Public data: the same times the Telegram reminders use.
+async function venueTimesGet(url, env) {
+  const name = (url.searchParams.get("name") || "").slice(0, 200), day = s => /^\d{4}-\d\d-\d\d/.test(s || "") ? s.slice(0, 10) : "";
+  const all = venueFor(name, day(url.searchParams.get("start")), day(url.searchParams.get("end")), venueItems(await assetData(env, "event-details.json")));
+  const own = all.filter(v => v.name.toLowerCase() === name.toLowerCase()), pick = own.length ? own : all;
+  const res = json({ items: pick.slice(0, 4).map(v => ({ name: v.name, ...describeVenue(v) })) });
+  res.headers.set("cache-control", "public, max-age=600");
+  return res;
 }
 async function notifyRun(request, env) {
   if (request.method !== "POST") return json({ error: "Method not allowed." }, 405);
