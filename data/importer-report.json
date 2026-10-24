@@ -1,12 +1,12 @@
 {
- "runAt": "2026-10-23T22:19:23.724Z",
+ "runAt": "2026-10-24T00:50:26.605Z",
  "sources": {
   "official": {
    "listed": 25,
    "error": ""
   },
   "leekduck": {
-   "listed": 55,
+   "listed": 54,
    "error": ""
   },
   "hub": {
@@ -16,7 +16,7 @@
  },
  "pagesRead": 80,
  "events": 78,
- "worldEvents": 35,
+ "worldEvents": 34,
  "worldUndated": [
   "Go Wild Area Stamp Rally Details"
  ],
@@ -73,13 +73,13 @@
   },
   {
    "source": "leekduck",
-   "title": "Palkia Raid Hour",
-   "url": "https://leekduck.com/events/raidhour20261021/"
-  },
-  {
-   "source": "leekduck",
    "title": "Morelull Spotlight Hour",
    "url": "https://leekduck.com/events/pokemonspotlighthour2026-10-22/"
+  },
+  {
+   "source": "hub",
+   "title": "Pokémon GO Dia de Muertos 2026: Mexico Exclusive Event",
+   "url": "https://pokemongohub.net/post/event/pokemon-go-dia-de-muertos-2026-mexico-exclusive-event/"
   }
  ],
  "intl": {

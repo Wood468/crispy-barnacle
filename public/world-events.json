@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-23T22:19:23.722Z",
+ "updated": "2026-10-24T00:50:26.602Z",
  "events": [
   {
    "id": "w-pokemon-fossil-museum-2026",
@@ -18,7 +18,7 @@
     }
    ],
    "status": "single",
-   "seen": "2026-10-23"
+   "seen": "2026-10-24"
   },
   {
    "id": "w-pokemon-jet-red-collaboration-event",
@@ -37,7 +37,7 @@
     }
    ],
    "status": "single",
-   "seen": "2026-10-23"
+   "seen": "2026-10-24"
   },
   {
    "id": "w-pikachu-s-autumn-adventure",
@@ -56,7 +56,7 @@
     }
    ],
    "status": "single",
-   "seen": "2026-10-23"
+   "seen": "2026-10-24"
   },
   {
    "id": "w-pokemon-x-adidas",
@@ -104,7 +104,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-10-23"
+   "seen": "2026-10-24"
   },
   {
    "id": "w-pokemon-go-x-esa-london",
@@ -136,25 +136,6 @@
    "seen": "2026-10-19"
   },
   {
-   "id": "w-hangul-day-2026",
-   "name": "Hangul Day 2026",
-   "place": "Tokyo, Japan",
-   "area": "Asia",
-   "scope": "regional",
-   "start": "2026-10-06",
-   "end": "2026-10-09",
-   "datesKnown": true,
-   "sources": [
-    {
-     "id": "serebii",
-     "name": "Serebii",
-     "url": "https://www.serebii.net/pokemongo/reallifeevents.shtml"
-    }
-   ],
-   "status": "single",
-   "seen": "2026-10-23"
-  },
-  {
    "id": "w-pokexciting-taipei",
    "name": "PokeXciting Taipei",
    "place": "Taipei, Taiwan",
@@ -171,7 +152,7 @@
     }
    ],
    "status": "single",
-   "seen": "2026-10-23"
+   "seen": "2026-10-24"
   },
   {
    "id": "w-pok-mon-run-30-taichung",
@@ -209,7 +190,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-10-23"
+   "seen": "2026-10-24"
   },
   {
    "id": "w-aeon-mall-halloween",
@@ -257,7 +238,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-10-23"
+   "seen": "2026-10-24"
   },
   {
    "id": "w-fc-seoul",
@@ -313,15 +294,20 @@
    "seen": "2026-10-14"
   },
   {
-   "id": "w-d-a-de-muertos-2026",
-   "name": "Día de Muertos 2026",
-   "place": "Paseo de la Reforma, Mexico City, Mexico",
+   "id": "w-pok-mon-go-dia-de-muertos-2026-mexico-exclusive-ev",
+   "name": "Pokémon GO Dia de Muertos 2026: Mexico Exclusive Event",
+   "place": "Mexico",
    "area": "Americas",
    "scope": "regional",
-   "start": "2026-10-31",
+   "start": "2026-10-27",
    "end": "2026-11-05",
    "datesKnown": true,
    "sources": [
+    {
+     "id": "hub",
+     "name": "Pokémon GO Hub",
+     "url": "https://pokemongohub.net/post/event/pokemon-go-dia-de-muertos-2026-mexico-exclusive-event/"
+    },
     {
      "id": "official",
      "name": "Pokémon GO (official)",
@@ -329,7 +315,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-10-23"
+   "seen": "2026-10-24"
   },
   {
    "id": "w-pok-mon-run-30-kaohsiung",
@@ -373,7 +359,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-10-23"
+   "seen": "2026-10-24"
   },
   {
    "id": "w-go-wild-area-2026-mexico-city",
@@ -392,7 +378,7 @@
     }
    ],
    "status": "single",
-   "seen": "2026-10-23"
+   "seen": "2026-10-24"
   },
   {
    "id": "w-go-wild-area-2026-sendai-tohoku",
@@ -411,7 +397,7 @@
     }
    ],
    "status": "single",
-   "seen": "2026-10-23"
+   "seen": "2026-10-24"
   },
   {
    "id": "w-pok-xciting-lands-at-changi-airport-and-jewel-get-",
@@ -430,7 +416,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-10-23"
+   "seen": "2026-10-24"
   },
   {
    "id": "w-pok-mon-run-30-singapore",
@@ -468,7 +454,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-10-23"
+   "seen": "2026-10-24"
   },
   {
    "id": "w-into-the-wild",
@@ -687,10 +673,15 @@
      "id": "official",
      "name": "Pokémon GO (official)",
      "url": "https://pokemongo.com/news/save-the-date-go-tour-2027/"
+    },
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "url": "https://pokemongo.com/ko/news/save-the-date-go-tour-2027/"
     }
    ],
    "status": "official",
-   "seen": "2026-10-23"
+   "seen": "2026-10-24"
   },
   {
    "id": "w-pokemon-go-tour-2027-los-angeles",
