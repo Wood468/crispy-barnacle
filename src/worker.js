@@ -996,7 +996,7 @@ async function venueTimesGet(url, env) {
   let out;
   if (url.searchParams.get("all") === "1") { // every venue event from two days ago on, for the cards in the list (the app matches them to its events)
     const cut = Date.now() - 2 * 864e5, dateOf = ms => new Intl.DateTimeFormat("en-CA", { timeZone: "Australia/Melbourne" }).format(new Date(ms));
-    out = all.filter(v => v.ms > cut).slice(0, 40).map(v => ({ name: v.name, date: dateOf(v.ms), ...describeVenue(v) }));
+    out = all.filter(v => v.ms > cut).slice(0, 40).map(v => ({ name: v.name, date: dateOf(v.ms), ms: v.ms, endMs: v.endMs || 0, link: v.link || "", ...describeVenue(v) }));
   } else {
     const name = (url.searchParams.get("name") || "").slice(0, 200), day = s => /^\d{4}-\d\d-\d\d/.test(s || "") ? s.slice(0, 10) : "";
     const hit = venueFor(name, day(url.searchParams.get("start")), day(url.searchParams.get("end")), all);

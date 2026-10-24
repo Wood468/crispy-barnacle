@@ -585,6 +585,22 @@
     return chips.length ? '<div class="event-signals">' + chips.join('') + '</div>' : '';
   }
   function bday(v) { try { return v ? (typeof v === 'string' ? v.slice(0, 10) : new Date(v).toISOString().slice(0, 10)) : ''; } catch (e) { return ''; } }
+  /* In-person events with a venue time (Night Out): loaded once, shared with the cards (detail.js) and used for "Next 24h" and the Today summary. */
+  var VENUE = [];
+  function venueLive(v, t) { return v.ms <= t && (v.endMs || v.ms + 4 * 36e5) > t; }
+  function venueUp(v, t) { return v.ms > t && v.ms - t <= 864e5; }
+  function venueCard(v, live) {
+    var k = KIND.person;
+    return '<article class="evc cmp ' + (live ? 'live' : 'soon') + '" style="--k:' + k[1] + ';--kf:' + k[2] + '"><div class="evc-main"><div class="evc-top"><span class="kind">' + esc(k[0]) + '</span></div>'
+      + '<div class="evc-title-row"><h3 title="' + esc(v.name) + '">' + esc(v.name) + '</h3></div>'
+      + '<p class="evc-when" style="font-weight:600">🎯 Bonuses ' + (live ? 'started ' : 'start ') + esc(v.day + ', ' + v.show) + ' your time' + (v.note ? ' <small>(' + esc(v.note) + ')</small>' : '') + '</p>'
+      + (/^https:\/\//.test(v.link || '') ? '<div class="evc-foot"><a class="more" href="' + esc(v.link) + '" target="_blank" rel="noopener noreferrer">Event page</a></div>' : '') + '</div></article>';
+  }
+  window.GOVENUE = fetch('/api/venue-times?all=1').then(function (r) { return r.ok ? r.json() : { items: [] }; }).catch(function () { return { items: [] }; }).then(function (d) {
+    VENUE = ((d && d.items) || []).filter(function (i) { return i && i.ms; });
+    if (VENUE.length && EV.length) { renderPrio(); renderTimeline(); }
+    return d;
+  });
   function card(ev, opt) {
     opt = opt || {};
     var k = kindOf(ev), p = phase(ev), saved = isSaved(ev.id);
@@ -623,10 +639,18 @@
     list.sort(function (a, b) { return b.score - a.score || a.ev.start - b.ev.start; });
     return list;
   }
+  /* "2 on now · 3 starting in the next 24h": one tappable line that opens the Next 24h list. Counts the same things that list shows. */
+  function soonSummary(t) {
+    var tn = t.getTime(), live = 0, up = 0, showVenue = !kindHidden('person');
+    EV.forEach(function (e) { if (isHidden(e.id) || kindHidden(e.kind) || !startsSoon(e)) return; if (phase(e, t) === 'live') live++; else up++; });
+    if (showVenue) VENUE.forEach(function (v) { if (venueLive(v, tn)) live++; else if (venueUp(v, tn)) up++; });
+    if (!live && !up) return '';
+    return '<button type="button" class="soon-sum" data-gosoon="1" style="display:block;width:100%;text-align:left;margin:4px 0 10px;padding:10px 12px;border:1px solid currentColor;border-radius:10px;background:none;color:inherit;font:inherit;font-weight:600">⏱ ' + [live ? live + ' on now' : '', up ? up + ' starting in the next 24h' : ''].filter(Boolean).join(' · ') + ' <span aria-hidden="true">›</span></button>';
+  }
   function renderPrio() {
     var box = $('prio'); if (!box) return;
     var t = now(), list = priority(t), top = list.slice(0, 4);
-    var html = '<div class="prio-head"><h2 class="sec2">Priority now</h2><span class="muted mono">' + esc(DOW[t.getDay()] + ' ' + fmtT(t)) + '</span></div>';
+    var html = '<div class="prio-head"><h2 class="sec2">Priority now</h2><span class="muted mono">' + esc(DOW[t.getDay()] + ' ' + fmtT(t)) + '</span></div>' + soonSummary(t);
     if (!top.length) {
       var nx = EV.filter(function (e) { return phase(e, t) === 'soon' && announced(e) && !e.long; }).sort(function (a, b) { return a.start - b.start; })[0];
       html += '<div class="prio-empty"><b>Nothing urgent right now.</b><span>' + (nx ? 'Next up: ' + esc(nx.name) + ', ' + esc(countdown(nx, t).toLowerCase()) + '.' : 'No scheduled events in the data I have.') + '</span></div>';
@@ -703,9 +727,12 @@
         + (res.length ? res.slice(0, 60).map(function (e) { return card(e); }).join('') : '<p class="empty">Nothing live or coming up matches that. Try a Pokémon or part of an event name.</p>'); return;
     }
     if (typeSel === 'soon') { // whatever week is shown, this is about the next 24 hours: what is on now, then what pays out next
-      var sn = EV.filter(function (e) { return !isHidden(e.id) && !(kindHidden(e.kind)) && startsSoon(e); }).sort(function (a, b) { return a.start - b.start; });
-      var lv = sn.filter(function (e) { return phase(e, t) === 'live'; }), up = sn.filter(function (e) { return phase(e, t) !== 'live'; });
-      html = (lv.length ? '<h2 class="sec2">Happening now</h2>' + lv.map(function (e) { return card(e); }).join('') : '') + (up.length ? '<h2 class="sec2 dh">Starting in the next 24 hours</h2>' + up.map(function (e) { return card(e); }).join('') : '');
+      var tn = t.getTime();
+      var sn = EV.filter(function (e) { return !isHidden(e.id) && !(kindHidden(e.kind)) && startsSoon(e); }).map(function (e) { return { at: e.start.getTime(), live: phase(e, t) === 'live', html: card(e) }; });
+      if (!kindHidden('person')) VENUE.forEach(function (v) { if (venueLive(v, tn) || venueUp(v, tn)) sn.push({ at: v.ms, live: venueLive(v, tn), html: venueCard(v, venueLive(v, tn)) }); });
+      sn.sort(function (a, b) { return a.at - b.at; });
+      var lv = sn.filter(function (x) { return x.live; }), up = sn.filter(function (x) { return !x.live; });
+      html = (lv.length ? '<h2 class="sec2">Happening now</h2>' + lv.map(function (x) { return x.html; }).join('') : '') + (up.length ? '<h2 class="sec2 dh">Starting in the next 24 hours</h2>' + up.map(function (x) { return x.html; }).join('') : '');
       el.innerHTML = html || '<p class="empty">Nothing starts in the next 24 hours.</p>'; return;
     }
     if (selDay) {
@@ -1188,6 +1215,14 @@
     if (!isFollowed(v)) toggleFollow(v);
     $('followq').value = '';
   });
+  document.addEventListener('click', function (e) {
+    if (!(e.target.closest && e.target.closest('[data-gosoon]'))) return;
+    var q = document.querySelector('[data-clearq]'); if (q) q.click();
+    typeSel = 'soon'; selDay = ''; evQ = '';
+    var tab = document.querySelector('nav.tabs button[data-tab="events"]'); if (tab) tab.click();
+    var sub = document.querySelector('#subnav-events button[data-sub="timeline"]'); if (sub) sub.click();
+    renderTypes(); renderStrip(); renderTimeline(); window.scrollTo(0, 0);
+  });
   document.addEventListener('gofn-marks', function () { renderPrio(); renderTimeline(); renderOpps(); renderSaved(); });
   setInterval(tick, 60000);
   document.addEventListener('visibilitychange', function () { if (!document.hidden) usSync(); });
@@ -1217,7 +1252,7 @@
     renderCoverage();
     if (window.GO && GO.refreshDex) GO.refreshDex();
     usSync();
-    var inf = document.createElement('script'); inf.src = '/infographic.js?v=20261017b'; document.body.appendChild(inf); var x = document.createElement('script'); x.src = '/extra.js?v=20261024a'; document.body.appendChild(x); var y = document.createElement('script'); y.src = '/detail.js?v=20261024b'; document.body.appendChild(y); var z = document.createElement('script'); z.src = '/places.js?v=20261014p'; document.body.appendChild(z); var w = document.createElement('script'); w.src = '/fresh.js?v=20261014a'; document.body.appendChild(w); var nv = document.createElement('script'); nv.src = '/nudge.js?v=20261014l'; document.body.appendChild(nv); var rv = document.createElement('script'); rv.src = '/review.js?v=20261022b'; document.body.appendChild(rv); var by = document.createElement('script'); by.src = '/buy.js?v=20261020d'; document.body.appendChild(by);
+    var inf = document.createElement('script'); inf.src = '/infographic.js?v=20261017b'; document.body.appendChild(inf); var x = document.createElement('script'); x.src = '/extra.js?v=20261024a'; document.body.appendChild(x); var y = document.createElement('script'); y.src = '/detail.js?v=20261024c'; document.body.appendChild(y); var z = document.createElement('script'); z.src = '/places.js?v=20261014p'; document.body.appendChild(z); var w = document.createElement('script'); w.src = '/fresh.js?v=20261014a'; document.body.appendChild(w); var nv = document.createElement('script'); nv.src = '/nudge.js?v=20261014l'; document.body.appendChild(nv); var rv = document.createElement('script'); rv.src = '/review.js?v=20261022b'; document.body.appendChild(rv); var by = document.createElement('script'); by.src = '/buy.js?v=20261020d'; document.body.appendChild(by);
   }
   envBanner();
   var dexP = fetch('/dex.json').then(function (r) { return r.json(); }).catch(function () { return []; });

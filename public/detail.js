@@ -366,7 +366,7 @@
   function shiftDay(d, n) { return new Date(Date.parse(d + 'T00:00:00Z') + n * 864e5).toISOString().slice(0, 10); }
   function fillBonus() {
     var pend = document.querySelectorAll('.evc-bonus[hidden]:not([data-done])'); if (!pend.length) return;
-    if (!venueAll) venueAll = fetch('/api/venue-times?all=1').then(function (r) { return r.ok ? r.json() : { items: [] }; }).catch(function () { return { items: [] }; });
+    if (!venueAll) venueAll = window.GOVENUE || fetch('/api/venue-times?all=1').then(function (r) { return r.ok ? r.json() : { items: [] }; }).catch(function () { return { items: [] }; });
     venueAll.then(function (d) {
       var items = (d && d.items) || [];
       Array.prototype.forEach.call(document.querySelectorAll('.evc-bonus[hidden]:not([data-done])'), function (p) {
