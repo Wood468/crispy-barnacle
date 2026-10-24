@@ -96,7 +96,7 @@ test("a stat card with only a Pokémon name suggests the events that feature it"
   const now = Date.parse("2026-10-14T00:00:00Z");
   const evs = [
     { id: "a", t: "Dialga raids", kind: "raid", s: "2026-10-10T00:00:00Z", e: "2026-10-20T00:00:00Z" },
-    { id: "b", t: "Some Community Day", s: "2026-10-12T00:00:00Z", e: "2026-10-20T23:00:00Z", art: [{ n: "Blastoise" }] },
+    { id: "b", t: "Some Community Day", s: "2026-10-12T00:00:00Z", e: "2099-01-01T00:00:00Z", art: [{ n: "Blastoise" }] },
     { id: "c", t: "Old Dialga event", s: "2026-01-01T00:00:00Z", e: "2026-01-05T00:00:00Z", art: [{ n: "Dialga" }] },
   ];
   const g = monGuesses("= DIALGA 53394 CP Weakness", evs, now);
