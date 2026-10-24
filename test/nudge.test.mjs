@@ -120,3 +120,23 @@ test("time wording for all-day, multi-day and date-only events", () => {
   assert.equal(whenText({ start: "2026-10-24T10:00", end: "2026-10-26T20:00" }), "from 10:00 am until 26 Oct");
   assert.equal(whenText({ start: "2026-10-24" }), "time not listed");
 });
+
+import { parseVenueTimes, venueItems } from "../scripts/nudge.mjs";
+const LA = "Date: October 24, 2026 Location: Intuit Dome, Los Angeles, USA Night Out show starts: 7:30 p.m. PDT (unconfirmed for Pokémon GO) Doors open: 6:00 p.m. PDT End time: To be announced";
+test("a venue time in PDT is converted to the right instant", () => {
+  const v = parseVenueTimes(LA);
+  assert.equal(new Date(v.start).toISOString(), "2026-10-25T02:30:00.000Z"); // 7:30 pm PDT = 1:30 pm Sun in Melbourne
+  assert.equal(new Date(v.doors).toISOString(), "2026-10-25T01:00:00.000Z"); assert.equal(v.end, null);
+  const l = parseVenueTimes("Date: November 10, 2026 Event time: 6:00 p.m. to 10:30 p.m. GMT");
+  assert.equal(new Date(l.start).toISOString(), "2026-11-10T18:00:00.000Z"); assert.equal(new Date(l.end).toISOString(), "2026-11-10T22:30:00.000Z");
+  assert.equal(parseVenueTimes("Date: October 24, 2026 Doors open: 6 p.m. PDT"), null); // no start time
+  assert.equal(parseVenueTimes("Date: October 24, 2026 Start time: 7:30 p.m. Mars time"), null); // unknown zone
+});
+test("Night Out shows your time and replaces the date-only entry for that city", () => {
+  const details = { events: { "x:la": { name: "Pokémon Night Out 2026 - Los Angeles", fields: { dates: [{ text: LA }] } } } };
+  const world = { events: [{ id: "w", name: "Pokémon Night Out events", place: "Los Angeles, USA", start: "2026-10-24", end: "2026-11-10" }] };
+  const t = buildDigest({ data: { events: [] }, world, details, now: new Date("2026-10-23T23:15:00Z") }).text; // Sat 24 Oct 10:15 am Melbourne
+  assert.match(t, /Tomorrow \(Sun, 25 Oct\): Pokémon Night Out 2026 - Los Angeles · 1:30 pm your time \(doors 12:00 pm\) · 7:30 pm PDT at the venue/);
+  assert.equal((t.match(/Night Out/g) || []).length, 1);
+  assert.equal(venueItems(details).length, 1);
+});
