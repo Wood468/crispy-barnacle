@@ -1,12 +1,12 @@
 {
- "runAt": "2026-10-24T18:14:40.191Z",
+ "runAt": "2026-10-24T20:57:50.545Z",
  "sources": {
   "official": {
    "listed": 25,
    "error": ""
   },
   "leekduck": {
-   "listed": 54,
+   "listed": 53,
    "error": ""
   },
   "hub": {
@@ -72,14 +72,14 @@
    "url": "https://pokemongo.com/news/city-safaris-europe-2026/"
   },
   {
-   "source": "leekduck",
-   "title": "Morelull Spotlight Hour",
-   "url": "https://leekduck.com/events/pokemonspotlighthour2026-10-22/"
-  },
-  {
    "source": "hub",
    "title": "How to beat Dynamax Azelf: Complete Guide",
    "url": "https://pokemongohub.net/post/guide/how-to-beat-dynamax-azelf-complete-guide/"
+  },
+  {
+   "source": "hub",
+   "title": "How to beat Dynamax Uxie: Complete Guide",
+   "url": "https://pokemongohub.net/post/guide/how-to-beat-dynamax-uxie-complete-guide/"
   }
  ],
  "intl": {
