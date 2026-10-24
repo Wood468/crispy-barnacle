@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-24T11:01:34.037Z",
+ "updated": "2026-10-24T15:57:45.873Z",
  "status": [
   {
    "id": "hub",
@@ -109,6 +109,16 @@
   {
    "source": "reddit-silph",
    "trust": "tip",
+   "title": "Boosted shiny odds from City Safari Boston - Dynamax & Raids?",
+   "link": "https://www.reddit.com/r/TheSilphRoad/comments/1xebig5/boosted_shiny_odds_from_city_safari_boston/",
+   "date": "2026-10-24T15:26:54.000Z",
+   "summary": "<!-- SC_OFF --><div class=\"md\"><p>Do we know if the boosted shiny odds that were a feature of buying a 2-day safari pass affects just event themed pokemon? Or would it potentially also affect the Lake",
+   "pokemon": [],
+   "notInOurData": []
+  },
+  {
+   "source": "reddit-silph",
+   "trust": "tip",
    "title": "Are we Trainers or Collectors? The lack of purpose for individual strength seriously undermines the motivation to grind and be the very best",
    "link": "https://www.reddit.com/r/TheSilphRoad/comments/1x92jee/are_we_trainers_or_collectors_the_lack_of_purpose/",
    "date": "2026-10-18T12:55:12.000Z",
@@ -167,18 +177,6 @@
    "link": "https://www.reddit.com/r/TheSilphRoad/comments/1x2r8h6/what_happens_if_your_buddy_is_shiny_zorua_and_you/",
    "date": "2026-10-10T21:57:58.000Z",
    "summary": "<!-- SC_OFF --><div class=\"md\"><p>Is the animation still there? Is it skipped?</p> </div><!-- SC_ON --> &#32; submitted by &#32; <a href=\"https://www.reddit.com/user/FireTepig\"> /u/FireTepig </a> <br/",
-   "pokemon": [
-    "Zorua"
-   ],
-   "notInOurData": []
-  },
-  {
-   "source": "reddit-silph",
-   "trust": "tip",
-   "title": "250+ Catches with Zorua as buddy = 0 shinies.",
-   "link": "https://www.reddit.com/r/TheSilphRoad/comments/1x2gbt2/250_catches_with_zorua_as_buddy_0_shinies/",
-   "date": "2026-10-10T14:13:22.000Z",
-   "summary": "<!-- SC_OFF --><div class=\"md\"><p>Four of us all put Zorua as our buddy about half an hour before the com day started. Location: England.</p> <p>We've now reached 250+ catches and nobody has a shiny.<",
    "pokemon": [
     "Zorua"
    ],
