@@ -201,3 +201,18 @@ test("an alert is sent as a photo with the alert as caption, and falls back to t
   assert.equal((await sendTelegram(env, "hi", noPhoto, "events", "https://cdn/x.jpg")).status, "sent"); assert.deepEqual(calls, ["sendPhoto", "sendMessage"]);
   calls.length = 0; await sendTelegram(env, "hi", ok, "events"); assert.deepEqual(calls, ["sendMessage"]);
 });
+
+test("after a venue event, one note says whether Pokémon GO's own hours were ever listed", () => {
+  const details = { events: { x: { name: "Pokémon Night Out 2026 - Los Angeles", fields: { dates: [{ text: LA }] } } } };
+  const after = new Date("2026-10-25T08:00:00Z"); // show was 02:30Z, so over by 06:30Z
+  const first = buildDigest({ data: { events: [] }, world: { events: [] }, details, now: after });
+  assert.match(first.text, /📝 Pokémon Night Out 2026 - Los Angeles is over\. The page never listed Pokémon GO's own hours, so the reminder used the show time \(1:30 pm your time\)\./);
+  assert.equal(buildDigest({ data: { events: [] }, world: { events: [] }, details, state: first.state, now: after }), null, "only once");
+  assert.equal(buildDigest({ data: { events: [] }, world: { events: [] }, details, now: new Date("2026-10-22T00:00:00Z") }), null, "nothing before it is on");
+});
+test("Starts today / Last day reminders carry the event page, so they get a picture too", async () => {
+  const { savedReminders } = await import("../src/jobs.js");
+  const data = { events: [{ id: "a", t: "Week Long", s: "2026-10-24T00:00", e: "2026-10-30T23:59", sourceUrl: "https://leekduck.com/events/week-long/" }] };
+  const out = savedReminders(data, ["cur:a"], Date.parse("2026-10-24T07:30:00Z"));
+  assert.equal(out[0].page, "https://leekduck.com/events/week-long/");
+});

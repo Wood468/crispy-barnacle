@@ -86,6 +86,13 @@ export function buildDigest({ queue, details, data, world, state = {}, now = new
     lines.push(line); cards.push({ line, page: i.page || i.link });
     next.events.push(i.id);
   }
+  // Once a venue event is over, say once whether its page ever listed Pokémon GO's own hours, so you know how the reminder time was chosen.
+  for (const v of venueItems(details)) {
+    const over = (v.endMs || v.ms + 4 * 36e5), key = "done:" + v.id;
+    if (now.getTime() < over || now.getTime() > over + 36 * 36e5 || told.events.has(key)) continue;
+    lines.push("📝 " + v.name + " is over. " + (v.unconfirmed ? "The page never listed Pokémon GO's own hours, so the reminder used the show time (" + meltime(v.ms) + " your time)." : "The page listed Pokémon GO's own hours, which the reminder used (" + meltime(v.ms) + " your time)."));
+    next.events.push(key);
+  }
   if (!lines.length) return null;
   next.events = next.events.slice(-200); next.queue = next.queue.slice(-400); next.conflicts = next.conflicts.slice(-100);
   return { text: lines.join("\n") + "\n\n" + APP, state: next, cards };
