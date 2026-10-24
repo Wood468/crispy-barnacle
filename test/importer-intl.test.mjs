@@ -76,3 +76,10 @@ test("a Spanish in-person page (a street, a stamp rally) becomes an event; a rou
   assert.equal(e.start, "2026-10-31"); assert.equal(e.end, "2026-11-05"); assert.equal(e.area, "Americas"); assert.equal(e.source, "official");
   assert.equal(entryFromIntlPage({ url: "https://pokemongo.com/es_MX/news/new-season-update", title: "Nueva temporada", lines: [{ text: "Bonificaciones del 1 al 5 de noviembre para todos los entrenadores." }] }, "2026-10-23"), null);
 });
+
+test("the site's own redirect spelling es-MX (hyphen) is read like es_MX", () => {
+  assert.ok(INTL_PATTERN.test("https://pokemongo.com/es-MX/news/dia-de-muertos-2026/"));
+  assert.ok(INTL_PATTERN.test("https://pokemongo.com/pt-BR/news/some-event-2026/"));
+  const e = entryFromIntlPage({ url: "https://pokemongo.com/es-MX/news/dia-de-muertos-2026/", title: "Día de Muertos", lines: [{ text: "Avenida Paseo de la Reforma. Desde el sábado 31 de octubre hasta el jueves 5 de noviembre de 2026." }] }, "2026-10-23");
+  assert.equal(e.area, "Americas"); assert.equal(e.start, "2026-10-31");
+});
