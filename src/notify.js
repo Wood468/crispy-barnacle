@@ -109,8 +109,10 @@ export function buildCandidates(ctx) {
 function hash(s) { let h = 5381; for (let i = 0; i < s.length; i++) h = ((h << 5) + h + s.charCodeAt(i)) | 0; return (h >>> 0).toString(36); }
 
 // ---- senders ----
-export async function sendTelegram(env, text, fetcher0) {
-  const fetcher = routed(env, "changes", fetcher0);
+// "starting soon" and "you are missing it" alerts go to the Events topic; new, changed and datamine alerts go to Changes.
+export const topicFor = (kind) => (kind === "starting" || kind === "missing" ? "events" : "changes");
+export async function sendTelegram(env, text, fetcher0, cat = "changes") {
+  const fetcher = routed(env, cat, fetcher0);
   if (!env.TELEGRAM_BOT_TOKEN || !env.TELEGRAM_CHAT_ID) return { status: "skipped", why: "not configured" };
   try {
     const r = await fetcher(`https://api.telegram.org/bot${env.TELEGRAM_BOT_TOKEN}/sendMessage`, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ chat_id: String(env.TELEGRAM_CHAT_ID), text: text.slice(0, 3900), disable_web_page_preview: true }) });
@@ -202,7 +204,7 @@ export async function runNotify(env, db, now, fetcher, deps) {
   const log = { candidates: cands.length, fresh: fresh.length, sent: 0, failed: 0, held };
   for (const c of batch) {
     const text = `${c.title}\n${c.body}${c.url ? "\n" + c.url : ""}`;
-    const tg = prefs.telegram ? await sendTelegram(env, text, fetcher) : { status: "skipped", why: "off" };
+    const tg = prefs.telegram ? await sendTelegram(env, text, fetcher, topicFor(c.kind)) : { status: "skipped", why: "off" };
     // the push message is the same row the service worker reads back, so write it first
     await db.prepare("INSERT OR IGNORE INTO notif_sent (dedupe, kind, item_id, level, title, body, url, created_at, telegram, push) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'pending')")
       .bind(c.dedupe, c.kind, c.item, c.level, c.title, c.body, c.url, now, tg.status).run();

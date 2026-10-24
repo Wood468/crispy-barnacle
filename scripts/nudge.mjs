@@ -10,6 +10,8 @@ import { readFile, writeFile } from "node:fs/promises";
 import { keyboard, hookSecret } from "../src/telegram.js";
 import { routed } from "../src/tgroute.js";
 import { localToMs, TZ_DEFAULT } from "../src/notify.js";
+import { parseVenueTimes, venueItems } from "../src/venue-times.js";
+export { parseVenueTimes, venueItems };
 
 const APP = "https://pogo.michaelpuff.com";
 const STATE = process.env.NUDGE_STATE || "data/nudge-state.json";
@@ -33,44 +35,10 @@ export function whenText(i) {
 }
 
 
-// ---- events with a venue time (Night Out and similar): "7:30 p.m. PDT" there becomes your time here ----
-const MONTHS = ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"];
-// Hours from UTC for the zone names the event pages use (US zones are the ones in use for in-person events so far).
-const TZ_OFF = { PDT: -7, PST: -8, MDT: -6, MST: -7, CDT: -5, CST: -6, EDT: -4, EST: -5, GMT: 0, UTC: 0, BST: 1, CET: 1, CEST: 2, EET: 2, EEST: 3, JST: 9, KST: 9, SGT: 8, HKT: 8, PHT: 8, ICT: 7, WIB: 7, AEDT: 11, AEST: 10, NZDT: 13, NZST: 12 };
-const T = "(\\d{1,2})(?::(\\d\\d))?\\s*([ap])\\.?m\\.?";
-const mins = (h, m, ap) => ((+h % 12) + (/p/i.test(ap) ? 12 : 0)) * 60 + (+m || 0);
-// "Date: October 24, 2026 ... Night Out show starts: 7:30 p.m. PDT ... Doors open: 6:00 p.m. PDT" -> instants. Null unless it has a date, a start time and a zone it knows.
-export function parseVenueTimes(text) {
-  const t = String(text || "");
-  const d = /\bDate:\s*([A-Za-z]+)\s+(\d{1,2}),?\s*(\d{4})/.exec(t);
-  const z = /\b(PDT|PST|MDT|MST|CDT|CST|EDT|EST|GMT|UTC|BST|CEST|CET|EEST|EET|JST|KST|SGT|HKT|PHT|ICT|WIB|AEDT|AEST|NZDT|NZST)\b/.exec(t);
-  const mo = d && MONTHS.indexOf(d[1].toLowerCase());
-  if (!d || mo < 0 || !z) return null;
-  const at = (h, m, ap) => Date.UTC(+d[3], mo, +d[2]) + mins(h, m, ap) * 6e4 - TZ_OFF[z[1]] * 36e5;
-  const pick = re => { const m = new RegExp(re + "\\s*:\\s*" + T + "(?:\\s*(?:to|until|–|-)\\s*" + T + ")?", "i").exec(t); return m && { a: at(m[1], m[2], m[3]), b: m[4] ? at(m[4], m[5], m[6]) : null }; };
-  const show = pick("(?:show starts|event time|start time|starts?)") , doors = pick("doors open"), end = pick("end time");
-  if (!show) return null;
-  const venue = (/(?:show starts|event time|start time|starts?)\s*:\s*(\d{1,2}(?::\d\d)?\s*[ap]\.?m\.?)/i.exec(t) || [])[1];
-  return { start: show.a, end: show.b || (end && end.a) || null, doors: doors ? doors.a : null, zone: z[1], venue: venue ? venue.replace(/\./g, "").toLowerCase() : "" };
-}
-// Times a person typed in by hand for pages the importer could not read yet. Same shape; the importer's own reading wins when it has one.
-const MANUAL = {
-  "leekduck:pokemon-night-out-london-2026": "Date: November 10, 2026 Event time: 6:00 p.m. to 10:30 p.m. GMT Doors open: 6:00 p.m. GMT"
-};
 const mel = (ms, o) => new Intl.DateTimeFormat("en-AU", { timeZone: TZ_DEFAULT, hour12: true, ...o }).format(new Date(ms)).replace(/\s?([ap])m/i, (_, x) => " " + x.toLowerCase() + "m");
 const meltime = ms => mel(ms, { hour: "numeric", minute: "2-digit" });
 const meldate = ms => day(localDay(ms));
 function localDay(ms) { const p = Object.fromEntries(new Intl.DateTimeFormat("en-CA", { timeZone: TZ_DEFAULT, year: "numeric", month: "2-digit", day: "2-digit" }).formatToParts(new Date(ms)).map(x => [x.type, x.value])); return p.year + "-" + p.month + "-" + p.day; }
-export function venueItems(details) {
-  const out = [];
-  for (const [id, ev] of Object.entries((details && details.events) || {})) {
-    const texts = ((ev.fields && ev.fields.dates) || []).map(x => x.text);
-    if (MANUAL[id]) texts.push(MANUAL[id]);
-    const v = texts.map(parseVenueTimes).find(Boolean);
-    if (v) out.push({ id: "v:" + id, name: ev.name || id, ms: v.start, endMs: v.end, doorsMs: v.doors, venueTime: v.venue + " " + v.zone, venue: true });
-  }
-  return out;
-}
 
 // Events the app knows about, as { id, name, start } with local start times.
 export function upcoming(data, world, now = new Date(), details = null) {
