@@ -5,6 +5,7 @@
 import { keyboard } from "./telegram.js";
 import { routed } from "./tgroute.js";
 import * as userstate from "./userstate.js";
+import { venueItems, describeVenue, venueFor } from "./venue-times.js";
 import { APP, buildWeek, formatWeek, pictureUrls, melbourneNow, startingSoon, messageFor, pending, quiet } from "./jobs-core.js";
 
 const SQL_TABLE = "CREATE TABLE IF NOT EXISTS job_state (key TEXT PRIMARY KEY, value TEXT NOT NULL, updated_at TEXT NOT NULL)";
@@ -93,13 +94,24 @@ export function savedReminders(data, savedIds, nowMs, world = []) {
 }
 // A reminder you set for one event ("pref:lead:<id>" = minutes before, or "off"). All-day events count as starting at 8 am.
 // It is sent at the first hourly run after that moment (outside quiet hours) while the event has not yet started.
-export function leadReminders(data, world, saved, leads, nowMs) {
-  const byId = new Map((data.events || []).map(e => [String(e.id), { t: e.t, s: e.s }]));
-  for (const w of world) if (w && w.id && w.start) byId.set(String(w.id), { t: w.name, s: w.start + "T00:00" });
+export function leadReminders(data, world, saved, leads, nowMs, venue = [], realNow = Date.now()) {
+  const byId = new Map((data.events || []).map(e => [String(e.id), { t: e.t, s: e.s, e: e.e }]));
+  for (const w of world) if (w && w.id && w.start) byId.set(String(w.id), { t: w.name, s: w.start + "T00:00", e: (w.end || w.start) + "T23:59" });
   const out = [];
   for (const sid of saved) {
     const id = String(sid).replace(/^cur:/, ""), mins = Number(leads[sid] ?? leads[id]); const e = byId.get(id);
     if (!e || !e.s || !(mins > 0)) continue;
+    // An in-person event with real venue times (Night Out): remind before the doors open, one reminder per city, saying which event and when in your time.
+    const vs = venueFor(e.t, e.s.slice(0, 10), (e.e || e.s).slice(0, 10), venue);
+    if (vs.length) {
+      for (const v of vs) {
+        const at = v.doorsMs || v.ms, left = Math.max(10, Math.round((at - realNow) / 300000) * 5), d = describeVenue(v);
+        if (at - mins * 60000 <= realNow && at > realNow) out.push({ key: "lead:" + v.id + ":" + mins, title: v.name, link: id.startsWith("w-") ? id : "cur:" + id,
+          text: "🔔 Reminder: " + v.name + "\n" + (v.doorsMs ? "Doors open " : "Starts ") + (mins >= 1440 ? "tomorrow" : "in about " + (left >= 90 ? Math.round(left / 60) + " h" : left + " min")) + " · " + (v.doorsMs ? d.doors : d.show) + " your time"
+            + (v.doorsMs ? "\nShow starts " + d.show + " your time (" + d.venue + " at the venue)" : "\n(" + d.venue + " at the venue)") });
+      }
+      continue;
+    }
     const m = /^(\d{4}-\d\d-\d\d)T(\d\d):(\d\d)/.exec(e.s); if (!m) continue;
     const startMs = Date.parse(m[1] + "T" + (m[2] === "00" && m[3] === "00" ? "08:00" : m[2] + ":" + m[3]) + ":00Z");
     const dueMs = startMs - mins * 60000;
@@ -116,9 +128,10 @@ export async function runSaved(env, opts = {}) {
   const state = await getState(env.DB, "saved", { sent: [] });
   const world = await env.ASSETS.fetch(new Request(APP + "/world-events.json")).then(r => r.ok ? r.json() : {}).then(j => j.events || []).catch(() => []);
   const data = await siteData(env), leads = {};
+  const details = await env.ASSETS.fetch(new Request(APP + "/event-details.json")).then(r => r.ok ? r.json() : {}).catch(() => ({}));
   for (const k of Object.keys(rows)) if (k.startsWith("pref:lead:") && rows[k].v) leads[k.slice(10)] = rows[k].v === "off" ? -1 : rows[k].v;
   const off = new Set(Object.keys(leads).filter(k => leads[k] === -1).map(k => k.replace(/^cur:/, "")));
-  const lead = quiet(nowMs) ? [] : leadReminders(data, world, ids, leads, nowMs);
+  const lead = quiet(nowMs) ? [] : leadReminders(data, world, ids, leads, nowMs, venueItems(details), (opts.now || new Date()).getTime());
   const todo = (morning ? savedReminders(data, ids, nowMs, world).filter(r => !off.has(r.key.split(":")[1])) : []).concat(lead).filter(r => !(state.sent || []).includes(r.key));
   if (!todo.length) return { sent: [], note: "nothing today" };
   if (opts.dry || !env.TELEGRAM_BOT_TOKEN || !env.TELEGRAM_CHAT_ID) return { sent: [], would: todo.map(t => t.text) };

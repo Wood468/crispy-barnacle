@@ -140,3 +140,28 @@ test("Night Out shows your time and replaces the date-only entry for that city",
   assert.equal((t.match(/Night Out/g) || []).length, 1);
   assert.equal(venueItems(details).length, 1);
 });
+
+import { extractFields } from "../scripts/importer/extract.mjs";
+import { leadReminders } from "../src/jobs.js";
+import { describeVenue, venueFor } from "../src/venue-times.js";
+import { topicFor } from "../src/notify.js";
+test("importer keeps in-person event time lines", () => {
+  const f = extractFields([{ t: "p", text: "Event time: 6:00 p.m. GMT" }, { t: "p", text: "Doors open: 6:00 p.m. PDT" }]);
+  assert.equal(f.dates.length, 2);
+});
+test("saved Night Out: reminder names the event and gives doors and show in your time, per city", () => {
+  const details = { events: { "x:la": { name: "Pokémon Night Out 2026 - Los Angeles", fields: { dates: [{ text: LA }] } }, "x:ln": { name: "Pokémon Night Out 2026 - London", fields: { dates: [{ text: "Date: November 10, 2026 Event time: 6:00 p.m. to 10:30 p.m. GMT Doors open: 6:00 p.m. GMT" }] } } } };
+  const venue = venueItems(details);
+  const world = [{ id: "w-no", name: "Pokémon Night Out events in Pokémon GO", place: "Los Angeles, USA", start: "2026-10-24", end: "2026-11-10" }];
+  assert.equal(venueFor(world[0].name, "2026-10-24", "2026-11-10", venue).length, 2);
+  const at = Date.parse("2026-10-25T00:05:00Z"); // 11:05 am Sun in Melbourne, 55 min before doors
+  const out = leadReminders({ events: [] }, world, ["w-no"], { "w-no": "60" }, 0, venue, at);
+  assert.equal(out.length, 1);
+  assert.match(out[0].text, /Reminder: Pokémon Night Out 2026 - Los Angeles\nDoors open in about 55 min · 12:00 pm your time\nShow starts 1:30 pm your time \(7:30 pm PDT at the venue\)/);
+  assert.equal(leadReminders({ events: [] }, world, ["w-no"], { "w-no": "60" }, 0, venue, at - 3 * 36e5).length, 0, "too early");
+  assert.equal(leadReminders({ events: [] }, world, ["w-no"], {}, 0, venue, at).length, 0, "no reminder chosen");
+});
+test("starting-soon alerts go to the Events topic, new and changed ones to Changes", () => {
+  assert.equal(topicFor("starting"), "events"); assert.equal(topicFor("missing"), "events");
+  for (const k of ["announced", "changed", "datamine"]) assert.equal(topicFor(k), "changes");
+});
