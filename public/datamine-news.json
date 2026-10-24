@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-24T00:34:53.591Z",
+ "updated": "2026-10-24T04:59:08.201Z",
  "seeded": true,
  "channels": [
   {
@@ -18,10 +18,19 @@
    "src": "gamedata",
    "name": "dm-gamedata",
    "state": "ok",
-   "count": 3
+   "count": 4
   }
  ],
  "items": [
+  {
+   "id": "1563361610536325165",
+   "src": "gamedata",
+   "title": "Día de Muertos · sora10pls/holoholo-text@26c4687",
+   "text": "New texts: https://github.com/sora10pls/holoholo-text/commit/26c4687ae4f607c9e9decaadca33b401d733e636#diff-a71fd0182b32e8d4b2786e4fd8a33ff746eab69aff0df3c734371b8e24f155ea\n\n@subscriber @miner",
+   "link": "https://github.com/sora10pls/holoholo-text/commit/26c4687ae4f607c9e9decaadca33b401d733e636",
+   "image": "https://opengraph.githubassets.com/3284b99740bb89797a737af1c20ce93c7e5ca9138b7b2f195bfa22b992776bfb/sora10pls/holoholo-text/commit/26c4687ae4f607c9e9decaadca33b401d733e636",
+   "date": "2026-10-24T01:20:53.806Z"
+  },
   {
    "id": "1563342580702257207",
    "src": "gamedata",
