@@ -637,6 +637,7 @@
           + '<div class="pc-art">' + featArts(ev, i === 0 ? 2 : 1) + '</div><div class="pc-main">'
           + '<div class="pc-top"><span class="kind">' + esc(k[0]) + '</span><span class="cdn" data-id="' + esc(ev.id) + '">' + esc(countdown(ev, t)) + '</span></div>'
           + '<h3>' + esc(ev.name) + '</h3><p class="evc-when">' + esc(whenText(ev)) + '</p>'
+          + '<p class="evc-bonus" data-bn="' + esc(ev.name) + '" data-bs="' + esc(bday(ev.start)) + '" data-be="' + esc(bday(ev.end)) + '" hidden></p>'
           + (x.why.length ? '<div class="why">' + x.why.slice(0, 3).map(function (w) { return '<span>' + esc(w) + '</span>'; }).join('') + '</div>' : '')
           + '<div class="pc-foot">' + statusChip(ev) + '<button type="button" class="more" data-open="' + esc(ev.id) + '" aria-label="Details: ' + esc(ev.name) + '">Details</button><button type="button" class="star' + (isSaved(ev.id) ? ' on' : '') + '" data-save="' + esc(ev.id) + '" aria-pressed="' + isSaved(ev.id) + '" aria-label="' + (isSaved(ev.id) ? 'Remove from saved' : 'Save event') + '">' + (isSaved(ev.id) ? '★' : '☆') + '</button></div>'
           + '</div></article>';
@@ -652,7 +653,9 @@
   /* Search: every word typed must appear in the event's name, its featured Pokémon, its bonuses or its kind. */
   function searchText(ev) { return ((ev.name || '') + ' ' + (ev.featured || []).map(function (f) { return f.name; }).join(' ') + ' ' + (ev.bonuses || []).map(function (b) { return typeof b === 'string' ? b : (b && b.text) || ''; }).join(' ') + ' ' + kindOf(ev)[0]).toLowerCase(); }
   function matchesQ(ev) { var h = searchText(ev); return evQ.split(/\s+/).every(function (w) { return h.indexOf(w) > -1; }); }
-  var TYPEFILTERS = [['all', 'All'], ['cd', 'Community Day'], ['raid', 'Raids'], ['max', 'Max Battles'], ['spot', 'Spotlight'], ['pvp', 'Battle League'], ['person', 'In person'], ['event', 'Other'], ['twitch', 'Twitch Drops'], ['mine', 'For me']];
+  var TYPEFILTERS = [['all', 'All'], ['cd', 'Community Day'], ['raid', 'Raids'], ['max', 'Max Battles'], ['spot', 'Spotlight'], ['pvp', 'Battle League'], ['person', 'In person'], ['event', 'Other'], ['twitch', 'Twitch Drops'], ['mine', 'For me'], ['soon', 'Next 24h']];
+  /* "Next 24h": live now, or starting within a day, announced events only (rumours stay out), long-running ones left to their own list. */
+  function startsSoon(ev) { var t = now(); return announced(ev) && !ev.long && (phase(ev, t) === 'live' || (ev.start > t && ev.start - t <= 864e5)); }
   function mine(ev) { return reasonsFor(ev).some(function (w) { return /^You (need|follow)/.test(w); }) || isSaved(ev.id); }
   function filtered(list) {
     return list.filter(function (ev) {
@@ -660,6 +663,7 @@
       if (kindHidden(ev.kind) && typeSel !== ev.kind) return false;
       if (typeSel === 'all') return true;
       if (typeSel === 'mine') return mine(ev);
+      if (typeSel === 'soon') return startsSoon(ev);
       if (typeSel === 'event') return ev.kind === 'event' || ev.kind === 'debut';
       return ev.kind === typeSel;
     });
@@ -697,6 +701,12 @@
       var res = EV.filter(function (e) { return e.end > t && !isHidden(e.id) && matchesQ(e); }).sort(function (a, b) { return a.start - b.start; });
       el.innerHTML = '<div class="dayhead"><h2 class="sec2">' + res.length + (res.length === 1 ? ' result' : ' results') + '</h2><button type="button" class="pill all" data-clearq="1">Clear search</button></div>'
         + (res.length ? res.slice(0, 60).map(function (e) { return card(e); }).join('') : '<p class="empty">Nothing live or coming up matches that. Try a Pokémon or part of an event name.</p>'); return;
+    }
+    if (typeSel === 'soon') { // whatever week is shown, this is about the next 24 hours: what is on now, then what pays out next
+      var sn = EV.filter(function (e) { return !isHidden(e.id) && !(kindHidden(e.kind)) && startsSoon(e); }).sort(function (a, b) { return a.start - b.start; });
+      var lv = sn.filter(function (e) { return phase(e, t) === 'live'; }), up = sn.filter(function (e) { return phase(e, t) !== 'live'; });
+      html = (lv.length ? '<h2 class="sec2">Happening now</h2>' + lv.map(function (e) { return card(e); }).join('') : '') + (up.length ? '<h2 class="sec2 dh">Starting in the next 24 hours</h2>' + up.map(function (e) { return card(e); }).join('') : '');
+      el.innerHTML = html || '<p class="empty">Nothing starts in the next 24 hours.</p>'; return;
     }
     if (selDay) {
       var d = new Date(selDay + 'T12:00'), evs = filtered(dayEvents(d)).sort(function (a, b) { return a.start - b.start; });
