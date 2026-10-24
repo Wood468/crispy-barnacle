@@ -74,7 +74,7 @@
     h += '<label class="al-row"><span><b>"Starting soon" window</b><small>Hours before the start. The server checks every six hours, so keep this at 6 or more.</small></span><select data-pref="lead">' + [6, 8, 12, 24].map(function (n) { return '<option' + (pv('lead') === n ? ' selected' : '') + '>' + n + '</option>'; }).join('') + '</select></label>';
     h += '<h3 class="sec3">Where they go</h3>';
     h += tog('telegram', 'Telegram', info ? (info.telegramConfigured ? 'Connected.' : 'Not connected yet. See the setup steps in docs/phase5-notifications.md.') : '');
-    if (info && info.telegramConfigured) h += '<button type="button" class="pill" id="altest">Send a test message</button>';
+    if (info && info.telegramConfigured) h += '<button type="button" class="pill" id="altest">Send a test message</button> <button type="button" class="pill" id="alreminder">Send a test reminder</button>';
     h += tog('push', 'This phone (browser push)', info ? ('Devices registered: ' + (info.pushDevices || 0) + '. On iPhone, add the site to your Home Screen first.') : '');
     h += '<button type="button" class="pill" id="alpush">Turn on for this device</button>';
     if (info && info.recent && info.recent.length) h += '<h3 class="sec3">Recently sent</h3><ul class="al-log">' + info.recent.map(function (r) { return '<li><b>' + esc(r.title) + '</b><small>' + esc(new Date(r.created_at).toLocaleString()) + ' · ' + esc(r.level === 'info' ? 'not urgent' : 'alert') + '</small></li>'; }).join('') + '</ul>';
@@ -86,9 +86,10 @@
     var k = t.getAttribute('data-pref'); S.set('pref:notify.' + k, k === 'lead' ? +t.value : t.checked); renderAlerts();
   });
   document.addEventListener('click', function (e) {
-    var b = e.target.closest && e.target.closest('#alinit,#altest,#alpush,#dmrun'); if (!b) return;
+    var b = e.target.closest && e.target.closest('#alinit,#altest,#alreminder,#alpush,#dmrun'); if (!b) return;
     if (b.id === 'alinit') api('/api/userstate/init', 'POST').then(function () { return api('/api/pipeline/run', 'POST'); }).then(function () { msg = 'Tables created and the first event check ran.'; S.sync(); loadInfo(); });
     if (b.id === 'altest') api('/api/notify/test', 'POST').then(function (j) { msg = j.telegram && j.telegram.status === 'sent' ? 'Test message sent. Check Telegram.' : 'Test failed: ' + ((j.telegram && j.telegram.why) || 'unknown'); renderAlerts(); });
+    if (b.id === 'alreminder') { msg = 'Sending a test reminder…'; renderAlerts(); api('/api/notify/test-reminder', 'POST').then(function (j) { msg = j.sent ? 'Test reminder sent for ' + j.event + (j.picture ? ' (with its picture)' : ' (no picture found, so text only)') + '. Check the Events topic in Telegram.' : 'Test reminder failed: ' + (j.why || j.error || 'unknown'); renderAlerts(); }).catch(function () { msg = 'Test reminder failed: no connection.'; renderAlerts(); }); }
     if (b.id === 'alpush') enablePush();
     if (b.id === 'dmrun') { msg = 'Refreshing leaks…'; renderAlerts(); api('/api/datamine/run', 'POST').then(function (j) { msg = j.ok ? 'Leaks and statuses refreshed. Reload the Leaks tab to see them.' : 'Could not refresh: ' + (j.error || ('error ' + j.__status)); renderAlerts(); }).catch(function () { msg = 'Could not refresh: no connection.'; renderAlerts(); }); }
   });

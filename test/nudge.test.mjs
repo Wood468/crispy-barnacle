@@ -216,3 +216,30 @@ test("Starts today / Last day reminders carry the event page, so they get a pict
   const out = savedReminders(data, ["cur:a"], Date.parse("2026-10-24T07:30:00Z"));
   assert.equal(out[0].page, "https://leekduck.com/events/week-long/");
 });
+
+test("test reminder: real-format message with the event picture to the Events topic, text if no picture", async () => {
+  const { runTestReminder } = await import("../src/jobs.js");
+  const details = { events: { x: { name: "Pokémon Night Out 2026 - Los Angeles", sources: [{ url: "https://leekduck.com/events/n/" }], fields: { dates: [{ text: LA }] } } } };
+  const env = { TELEGRAM_BOT_TOKEN: "t", TELEGRAM_CHAT_ID: "1", TELEGRAM_GROUP_ID: "-100", TELEGRAM_TOPIC_EVENTS: "7", ASSETS: { fetch: async () => ({ ok: true, json: async () => details }) } };
+  const sent = []; const f = async (u, o) => { sent.push({ m: u.split("/").pop(), b: JSON.parse(o.body) }); return { ok: true }; };
+  const page = async () => ({ ok: true, text: async () => '<meta property="og:image" content="https://cdn.leekduck.com/n.jpg">' });
+  const now = new Date("2026-10-24T01:00:00Z");
+  const r = await runTestReminder(env, { fetch: f, pageFetch: page, now });
+  assert.equal(r.sent, true); assert.equal(r.picture, true);
+  assert.equal(sent[0].m, "sendPhoto"); assert.equal(sent[0].b.message_thread_id, 7); assert.equal(sent[0].b.photo, "https://cdn.leekduck.com/n.jpg");
+  assert.match(sent[0].b.caption, /^🧪 Test reminder \(nothing is wrong\)\n🔔 Pokémon Night Out 2026 - Los Angeles\nRewards and bonuses start in about 60 min · 1:30 pm your time/);
+  sent.length = 0; const r2 = await runTestReminder(env, { fetch: f, pageFetch: async () => ({ ok: false }), now });
+  assert.equal(r2.picture, false); assert.equal(sent[0].m, "sendMessage");
+});
+
+test("event page lookup: a series returns each city, a city page returns only itself", async () => {
+  const worker = (await import("../src/worker.js")).default;
+  const details = { events: { la: { name: "Pokémon Night Out 2026 - Los Angeles", fields: { dates: [{ text: LA }] } }, ln: { name: "Pokémon Night Out 2026 - London", fields: { dates: [{ text: "Date: November 10, 2026 Event time: 6:00 p.m. to 10:30 p.m. GMT (unconfirmed for Pokémon GO)" }] } } } };
+  const env = { ASSETS: { fetch: async () => ({ json: async () => details }) } };
+  const get = async q => (await (await worker.fetch(new Request("https://x/api/venue-times?" + q), env, { waitUntil() {} })).json()).items;
+  const series = await get("name=" + encodeURIComponent("Pokémon Night Out events in Pokémon GO") + "&start=2026-10-24&end=2026-11-10");
+  assert.equal(series.length, 2); assert.equal(series[0].day, "Sun, 25 Oct"); assert.equal(series[0].show, "1:30 pm");
+  const one = await get("name=" + encodeURIComponent("Pokémon Night Out 2026 - London") + "&start=2026-11-10&end=2026-11-10");
+  assert.equal(one.length, 1); assert.equal(one[0].show, "5:00 am");
+  assert.deepEqual(await get("name=Dynamax%20Uxie%20Mesprit"), []);
+});

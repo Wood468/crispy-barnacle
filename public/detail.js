@@ -350,6 +350,16 @@
       hero.parentNode.insertBefore(im, hero);
     }).catch(function () {});
   }
+  /* In-person events with a venue time (Night Out): when the in-game bonuses start, in your time, matching the Telegram reminders. */
+  function addBonusTime(o, ev) {
+    var day = function (v) { return v ? (typeof v === 'string' ? v.slice(0, 10) : new Date(v).toISOString().slice(0, 10)) : ''; };
+    fetch('/api/venue-times?name=' + encodeURIComponent(ev.name || '') + '&start=' + encodeURIComponent(day(ev.start)) + '&end=' + encodeURIComponent(day(ev.end))).then(function (r) { return r.ok ? r.json() : null; }).then(function (d) {
+      var when = o.querySelector('.evc-when'); if (!d || !d.items || !d.items.length || !when || o.hidden || o.querySelector('.evd-bonus')) return;
+      var p = document.createElement('p'); p.className = 'evd-bonus'; p.style.cssText = 'margin:6px 0;font-weight:600';
+      p.innerHTML = d.items.map(function (i) { return '🎯 ' + (d.items.length > 1 ? esc(String(i.name).replace(/^.* - /, '')) + ': ' : 'Bonuses start ') + (d.items.length > 1 ? 'bonuses start ' : '') + esc(i.day + ', ' + i.show) + ' your time' + (i.note ? ' <small>(' + esc(i.note) + ')</small>' : ''); }).join('<br>');
+      when.parentNode.insertBefore(p, when.nextSibling);
+    }).catch(function () {});
+  }
   function open(id, from) {
     var ev = X.events().concat(window.GOSEASON ? window.GOSEASON.events() : []).filter(function (e) { return e.id === id; })[0]; if (!ev) return;
     opener = from || document.activeElement;
@@ -359,6 +369,7 @@
       var ev2 = completeEvent(ev);
       o.innerHTML = '<div class="evd-in">' + render(ev2) + '</div>';
       addBanner(o, ev2);
+      addBonusTime(o, ev2);
       o.hidden = false; document.body.style.overflow = 'hidden'; o.scrollTop = 0;
       if (!wasOpen && window.GONAV) window.GONAV.push();
       var x = $('evd-x'); if (x) { x.addEventListener('click', function () { close(); }); x.focus(); }
