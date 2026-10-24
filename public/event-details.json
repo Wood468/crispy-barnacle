@@ -1,9 +1,9 @@
 {
- "updated": "2026-10-24T20:57:50.545Z",
+ "updated": "2026-10-24T23:22:24.067Z",
  "events": {
   "leekduck:into-the-wild-2026": {
    "name": "Into the Wild",
-   "updated": "2026-10-24T20:57:50.545Z",
+   "updated": "2026-10-24T23:22:24.067Z",
    "sources": [
     {
      "id": "official",
@@ -29,7 +29,7 @@
   },
   "leekduck:november-communityday2026": {
    "name": "Pawniard Community Day",
-   "updated": "2026-10-24T20:57:50.545Z",
+   "updated": "2026-10-24T23:22:24.067Z",
    "sources": [
     {
      "id": "official",
@@ -319,7 +319,7 @@
   },
   "leekduck:go-pass-november-2026": {
    "name": "GO Pass: November",
-   "updated": "2026-10-24T20:57:50.545Z",
+   "updated": "2026-10-24T23:22:24.067Z",
    "sources": [
     {
      "id": "official",
@@ -565,7 +565,7 @@
   },
   "smr1": {
    "name": "Super Mega Raid Day",
-   "updated": "2026-10-24T20:57:50.545Z",
+   "updated": "2026-10-24T23:22:24.067Z",
    "sources": [
     {
      "id": "official",
@@ -813,7 +813,7 @@
   },
   "leekduck:halloween-2026-part-1": {
    "name": "Pokémon GO Halloween 2026 Part I",
-   "updated": "2026-10-24T20:57:50.545Z",
+   "updated": "2026-10-24T23:22:24.067Z",
    "sources": [
     {
      "id": "official",
@@ -1234,7 +1234,7 @@
   },
   "halloween1": {
    "name": "Halloween 2026, Part One",
-   "updated": "2026-10-24T20:57:50.545Z",
+   "updated": "2026-10-24T23:22:24.067Z",
    "sources": [
     {
      "id": "official",
@@ -1505,7 +1505,7 @@
   },
   "leekduck:pokemon-go-city-safari-boston-2026-rescheduled": {
    "name": "Pokémon GO City Safari: Boston (Rescheduled)",
-   "updated": "2026-10-24T20:57:50.545Z",
+   "updated": "2026-10-24T23:22:24.067Z",
    "sources": [
     {
      "id": "official",
@@ -1712,7 +1712,7 @@
   },
   "spirits": {
    "name": "Dynamax Uxie, Mesprit and Azelf",
-   "updated": "2026-10-24T20:57:50.545Z",
+   "updated": "2026-10-24T23:22:24.067Z",
    "sources": [
     {
      "id": "official",
@@ -1953,7 +1953,7 @@
   },
   "tcg30": {
    "name": "Pokémon TCG: 30th Celebration (at stores)",
-   "updated": "2026-10-24T20:57:50.545Z",
+   "updated": "2026-10-24T23:22:24.067Z",
    "sources": [
     {
      "id": "official",
@@ -2018,7 +2018,7 @@
   },
   "sandile": {
    "name": "Sandile Hatch Day",
-   "updated": "2026-10-24T20:57:50.545Z",
+   "updated": "2026-10-24T23:22:24.067Z",
    "sources": [
     {
      "id": "official",
@@ -2177,7 +2177,7 @@
   },
   "trek": {
    "name": "Fall Marathon: Buddy Trek",
-   "updated": "2026-10-24T20:57:50.545Z",
+   "updated": "2026-10-24T23:22:24.067Z",
    "sources": [
     {
      "id": "official",
@@ -2406,7 +2406,7 @@
   },
   "leekduck:go-pass-october-2026": {
    "name": "GO Pass: October",
-   "updated": "2026-10-24T20:57:50.545Z",
+   "updated": "2026-10-24T23:22:24.067Z",
    "sources": [
     {
      "id": "official",
@@ -2708,7 +2708,7 @@
   },
   "zorua": {
    "name": "Zorua Community Day",
-   "updated": "2026-10-24T20:57:50.545Z",
+   "updated": "2026-10-24T23:22:24.067Z",
    "sources": [
     {
      "id": "official",
@@ -2887,7 +2887,7 @@
   },
   "leekduck:season-24-twilight-trails": {
    "name": "Twilight Trails",
-   "updated": "2026-10-24T20:57:50.545Z",
+   "updated": "2026-10-24T23:22:24.067Z",
    "sources": [
     {
      "id": "official",
@@ -3152,7 +3152,7 @@
   },
   "leekduck:dynamax-uxie-mesprit-azelf-max-battle-day-2026": {
    "name": "Dynamax Uxie, Mesprit, and Azelf Max Battle Day",
-   "updated": "2026-10-24T20:57:50.545Z",
+   "updated": "2026-10-24T23:22:24.067Z",
    "sources": [
     {
      "id": "leekduck",
@@ -3316,7 +3316,7 @@
   },
   "leekduck:pokemon-night-out-2026-twitch-drops": {
    "name": "Twitch Drops for Pokémon Night Out 2026",
-   "updated": "2026-10-24T20:57:50.545Z",
+   "updated": "2026-10-24T23:22:24.067Z",
    "sources": [
     {
      "id": "leekduck",
@@ -3364,7 +3364,7 @@
   },
   "leekduck:pokemon-night-out-los-angeles-2026": {
    "name": "Pokémon Night Out 2026 - Los Angeles",
-   "updated": "2026-10-24T20:57:50.545Z",
+   "updated": "2026-10-24T23:22:24.067Z",
    "sources": [
     {
      "id": "leekduck",
@@ -3480,7 +3480,7 @@
   },
   "minior": {
    "name": "Orionids Meteor Shower: Minior Debut",
-   "updated": "2026-10-24T20:57:50.545Z",
+   "updated": "2026-10-24T23:22:24.067Z",
    "sources": [
     {
      "id": "leekduck",
@@ -3608,7 +3608,7 @@
   },
   "leekduck:max-mondays-2026-10-26": {
    "name": "Dynamax Sableye during Max Monday",
-   "updated": "2026-10-24T20:57:50.545Z",
+   "updated": "2026-10-24T23:22:24.067Z",
    "sources": [
     {
      "id": "leekduck",
@@ -3685,7 +3685,7 @@
   },
   "leekduck:mega-charizard-x-mega-charizard-y-in-mega-raids-october-2026": {
    "name": "Mega Charizard X and Mega Charizard Y in Mega Raids",
-   "updated": "2026-10-24T20:57:50.545Z",
+   "updated": "2026-10-24T23:22:24.067Z",
    "sources": [
     {
      "id": "leekduck",
@@ -3749,7 +3749,7 @@
   },
   "leekduck:palkia-in-5-star-raid-battles-october-2026": {
    "name": "Palkia in 5-star Raid Battles",
-   "updated": "2026-10-24T20:57:50.545Z",
+   "updated": "2026-10-24T23:22:24.067Z",
    "sources": [
     {
      "id": "leekduck",
@@ -3813,7 +3813,7 @@
   },
   "leekduck:raidhour20261028": {
    "name": "Giratina (Origin Forme) Raid Hour",
-   "updated": "2026-10-24T20:57:50.545Z",
+   "updated": "2026-10-24T23:22:24.067Z",
    "sources": [
     {
      "id": "leekduck",
@@ -3855,7 +3855,7 @@
   },
   "leekduck:pokemonspotlighthour2026-10-29": {
    "name": "Gastly Spotlight Hour",
-   "updated": "2026-10-24T20:57:50.545Z",
+   "updated": "2026-10-24T23:22:24.067Z",
    "sources": [
     {
      "id": "leekduck",
@@ -3889,7 +3889,7 @@
   },
   "leekduck:max-mondays-2026-11-02": {
    "name": "Dynamax Machop during Max Monday",
-   "updated": "2026-10-24T20:57:50.545Z",
+   "updated": "2026-10-24T23:22:24.067Z",
    "sources": [
     {
      "id": "leekduck",
@@ -3966,7 +3966,7 @@
   },
   "leekduck:shadow-landorus-incarnate-forme-in-shadow-raids-october-2026": {
    "name": "Shadow Landorus (Incarnate Forme) in Shadow Raids",
-   "updated": "2026-10-24T20:57:50.545Z",
+   "updated": "2026-10-24T23:22:24.067Z",
    "sources": [
     {
      "id": "leekduck",
@@ -4016,7 +4016,7 @@
   },
   "leekduck:giratina-origin-forme-in-5-star-raid-battles-october-2026": {
    "name": "Giratina (Origin Forme) in 5-star Raid Battles",
-   "updated": "2026-10-24T20:57:50.545Z",
+   "updated": "2026-10-24T23:22:24.067Z",
    "sources": [
     {
      "id": "leekduck",
@@ -4080,7 +4080,7 @@
   },
   "leekduck:raidhour20261104": {
    "name": "Giratina (Altered Forme) Raid Hour",
-   "updated": "2026-10-24T20:57:50.545Z",
+   "updated": "2026-10-24T23:22:24.067Z",
    "sources": [
     {
      "id": "leekduck",
@@ -4122,7 +4122,7 @@
   },
   "leekduck:pokemonspotlighthour2026-11-05": {
    "name": "Teddiursa wearing a witch hat Spotlight Hour",
-   "updated": "2026-10-24T20:57:50.545Z",
+   "updated": "2026-10-24T23:22:24.067Z",
    "sources": [
     {
      "id": "leekduck",
@@ -4178,7 +4178,7 @@
   },
   "halloween2": {
    "name": "Halloween 2026, Part Two",
-   "updated": "2026-10-24T20:57:50.545Z",
+   "updated": "2026-10-24T23:22:24.067Z",
    "sources": [
     {
      "id": "leekduck",
@@ -4422,7 +4422,7 @@
   },
   "leekduck:pokemon-go-wild-area-2026-sendai-japan": {
    "name": "Pokémon GO Wild Area 2026: Sendai • Tohoku",
-   "updated": "2026-10-24T20:57:50.545Z",
+   "updated": "2026-10-24T23:22:24.067Z",
    "sources": [
     {
      "id": "leekduck",
@@ -4772,7 +4772,7 @@
   },
   "leekduck:pokemon-go-wild-area-2026-mexico-city": {
    "name": "Pokémon GO Wild Area 2026: Mexico City",
-   "updated": "2026-10-24T20:57:50.545Z",
+   "updated": "2026-10-24T23:22:24.067Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5129,7 +5129,7 @@
   },
   "leekduck:mega-sableye-in-mega-raids-october-2026": {
    "name": "Mega Sableye in Mega Raids",
-   "updated": "2026-10-24T20:57:50.545Z",
+   "updated": "2026-10-24T23:22:24.067Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5186,7 +5186,7 @@
   },
   "leekduck:giratina-altered-forme-in-5-star-raid-battles-november-2026": {
    "name": "Giratina (Altered Forme) in 5-star Raid Battles",
-   "updated": "2026-10-24T20:57:50.545Z",
+   "updated": "2026-10-24T23:22:24.067Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5257,7 +5257,7 @@
   },
   "leekduck:shadow-tornadus-incarnate-forme-in-shadow-raids-november-4-2026": {
    "name": "Shadow Tornadus (Incarnate Forme) in Shadow Raids",
-   "updated": "2026-10-24T20:57:50.545Z",
+   "updated": "2026-10-24T23:22:24.067Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5305,7 +5305,7 @@
   },
   "leekduck:pokemon-night-out-london-2026": {
    "name": "Pokémon Night Out 2026 - London",
-   "updated": "2026-10-24T20:57:50.545Z",
+   "updated": "2026-10-24T23:22:24.067Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5413,7 +5413,7 @@
   },
   "into": {
    "name": "Into the Wild",
-   "updated": "2026-10-24T20:57:50.545Z",
+   "updated": "2026-10-24T23:22:24.067Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5670,7 +5670,7 @@
   },
   "leekduck:pokemon-go-wild-area-2026-global": {
    "name": "Pokémon GO Wild Area 2026: Global",
-   "updated": "2026-10-24T20:57:50.545Z",
+   "updated": "2026-10-24T23:22:24.067Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5958,7 +5958,7 @@
   },
   "leekduck:max-mondays-2026-11-16": {
    "name": "Max Monday: Pokémon to be announced",
-   "updated": "2026-10-24T20:57:50.545Z",
+   "updated": "2026-10-24T23:22:24.067Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5999,7 +5999,7 @@
   },
   "leekduck:raidhour20261118": {
    "name": "Cresselia and Darkrai Raid Hour",
-   "updated": "2026-10-24T20:57:50.545Z",
+   "updated": "2026-10-24T23:22:24.067Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6041,7 +6041,7 @@
   },
   "minior2": {
    "name": "Minior Showers: Leonids",
-   "updated": "2026-10-24T20:57:50.545Z",
+   "updated": "2026-10-24T23:22:24.067Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6132,7 +6132,7 @@
   },
   "leekduck:dynamax-trails-2026": {
    "name": "Dynamax Trails",
-   "updated": "2026-10-24T20:57:50.545Z",
+   "updated": "2026-10-24T23:22:24.067Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6174,7 +6174,7 @@
   },
   "leekduck:max-mondays-2026-11-23": {
    "name": "Dynamax Espurr during Max Monday",
-   "updated": "2026-10-24T20:57:50.545Z",
+   "updated": "2026-10-24T23:22:24.067Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6251,7 +6251,7 @@
   },
   "leekduck:cresselia-darkrai-in-5-star-raid-battles-november-2026": {
    "name": "Cresselia and Darkrai in 5-star Raid Battles",
-   "updated": "2026-10-24T20:57:50.545Z",
+   "updated": "2026-10-24T23:22:24.067Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6322,7 +6322,7 @@
   },
   "leekduck:mega-banette-in-mega-raids-november-2026": {
    "name": "Mega Banette in Mega Raids",
-   "updated": "2026-10-24T20:57:50.545Z",
+   "updated": "2026-10-24T23:22:24.067Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6386,7 +6386,7 @@
   },
   "leekduck:raidhour20261125": {
    "name": "Deoxys (Normal, Defense, Attack, and Speed Formes) Raid Hour",
-   "updated": "2026-10-24T20:57:50.545Z",
+   "updated": "2026-10-24T23:22:24.067Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6428,7 +6428,7 @@
   },
   "leekduck:pokemonspotlighthour2026-11-26": {
    "name": "Noibat Spotlight Hour",
-   "updated": "2026-10-24T20:57:50.545Z",
+   "updated": "2026-10-24T23:22:24.067Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6462,7 +6462,7 @@
   },
   "smr2": {
    "name": "Super Mega Raid Day",
-   "updated": "2026-10-24T20:57:50.545Z",
+   "updated": "2026-10-24T23:22:24.067Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6504,7 +6504,7 @@
   },
   "leekduck:twilight-wishes-2026": {
    "name": "Twilight Wishes",
-   "updated": "2026-10-24T20:57:50.545Z",
+   "updated": "2026-10-24T23:22:24.067Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6538,7 +6538,7 @@
   },
   "leekduck:max-mondays-2026-11-30": {
    "name": "Dynamax Cryogonal during Max Monday",
-   "updated": "2026-10-24T20:57:50.545Z",
+   "updated": "2026-10-24T23:22:24.067Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6615,7 +6615,7 @@
   },
   "leekduck:deoxys-normal-defense-attack-speed-formes-in-5-star-raid-battles-november-2026": {
    "name": "Deoxys (Normal, Defense, Attack, and Speed Formes) in 5-star Raid Battles",
-   "updated": "2026-10-24T20:57:50.545Z",
+   "updated": "2026-10-24T23:22:24.067Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6714,7 +6714,7 @@
   },
   "leekduck:mega-metagross-in-mega-raids-november-2026": {
    "name": "Mega Metagross in Mega Raids",
-   "updated": "2026-10-24T20:57:50.545Z",
+   "updated": "2026-10-24T23:22:24.067Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6785,7 +6785,7 @@
   },
   "minior3": {
    "name": "Minior Showers: Geminids",
-   "updated": "2026-10-24T20:57:50.545Z",
+   "updated": "2026-10-24T23:22:24.067Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6876,7 +6876,7 @@
   },
   "leekduck:pokemon-x-adidas-2026": {
    "name": "adidas × Pokémon Timed Research",
-   "updated": "2026-10-24T20:57:50.545Z",
+   "updated": "2026-10-24T23:22:24.067Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6954,7 +6954,7 @@
   },
   "leekduck:pokemon-go-tour-alola-kaohsiung-2027": {
    "name": "Pokémon GO Tour: Alola - Kaohsiung 2027",
-   "updated": "2026-10-24T20:57:50.545Z",
+   "updated": "2026-10-24T23:22:24.067Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6988,7 +6988,7 @@
   },
   "leekduck:pokemon-go-tour-alola-los-angeles-2027": {
    "name": "Pokémon GO Tour: Alola - Los Angeles 2027",
-   "updated": "2026-10-24T20:57:50.545Z",
+   "updated": "2026-10-24T23:22:24.067Z",
    "sources": [
     {
      "id": "leekduck",
@@ -7022,7 +7022,7 @@
   },
   "leekduck:pokemon-go-tour-alola-global-2027": {
    "name": "Pokémon GO Tour: Alola - Global 2027",
-   "updated": "2026-10-24T20:57:50.545Z",
+   "updated": "2026-10-24T23:22:24.067Z",
    "sources": [
     {
      "id": "leekduck",
@@ -7056,7 +7056,7 @@
   },
   "leekduck:minior-showers-eta-aquariids-2027": {
    "name": "Minior Showers: Eta Aquariids 2027",
-   "updated": "2026-10-24T20:57:50.545Z",
+   "updated": "2026-10-24T23:22:24.067Z",
    "sources": [
     {
      "id": "leekduck",
@@ -7154,7 +7154,7 @@
   },
   "leekduck:minior-showers-southern-delta-aquariids-2027": {
    "name": "Minior Showers: Southern Delta Aquariids 2027",
-   "updated": "2026-10-24T20:57:50.545Z",
+   "updated": "2026-10-24T23:22:24.067Z",
    "sources": [
     {
      "id": "leekduck",
@@ -7252,7 +7252,7 @@
   },
   "leekduck:minior-showers-perseids-2027": {
    "name": "Minior Showers: Perseids 2027",
-   "updated": "2026-10-24T20:57:50.545Z",
+   "updated": "2026-10-24T23:22:24.067Z",
    "sources": [
     {
      "id": "leekduck",
