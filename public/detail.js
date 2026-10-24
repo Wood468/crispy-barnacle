@@ -360,6 +360,29 @@
       when.parentNode.insertBefore(p, when.nextSibling);
     }).catch(function () {});
   }
+  /* The same bonus-start time on the cards in the list: cards carry an empty line, filled once the venue times have loaded. */
+  var venueAll = null;
+  function words3(s) { return String(s || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9 ]+/g, ' ').split(/\s+/).filter(Boolean).slice(0, 3).join(' '); }
+  function shiftDay(d, n) { return new Date(Date.parse(d + 'T00:00:00Z') + n * 864e5).toISOString().slice(0, 10); }
+  function fillBonus() {
+    var pend = document.querySelectorAll('.evc-bonus[hidden]:not([data-done])'); if (!pend.length) return;
+    if (!venueAll) venueAll = fetch('/api/venue-times?all=1').then(function (r) { return r.ok ? r.json() : { items: [] }; }).catch(function () { return { items: [] }; });
+    venueAll.then(function (d) {
+      var items = (d && d.items) || [];
+      Array.prototype.forEach.call(document.querySelectorAll('.evc-bonus[hidden]:not([data-done])'), function (p) {
+        p.setAttribute('data-done', '1');
+        var n = p.getAttribute('data-bn') || '', s = p.getAttribute('data-bs') || '', e = p.getAttribute('data-be') || s;
+        var own = items.filter(function (i) { return i.name.toLowerCase() === n.toLowerCase(); });
+        var hit = own.length ? own : (words3(n).split(' ').length < 3 || !s ? [] : items.filter(function (i) { return words3(i.name) === words3(n) && i.date >= shiftDay(s, -1) && i.date <= shiftDay(e || s, 1); }));
+        if (!hit.length) return;
+        p.innerHTML = '🎯 Bonuses start ' + hit.slice(0, 3).map(function (i) { return (hit.length > 1 ? esc(String(i.name).replace(/^.* - /, '')) + ' ' : '') + esc(i.day + ', ' + i.show) + ' your time'; }).join(' · ') + (hit.length === 1 && hit[0].note ? ' <small>(' + esc(hit[0].note) + ')</small>' : '');
+        p.style.cssText = 'margin:4px 0;font-weight:600'; p.hidden = false;
+      });
+    });
+  }
+  var fillTimer = 0;
+  if (window.MutationObserver) new MutationObserver(function () { clearTimeout(fillTimer); fillTimer = setTimeout(fillBonus, 200); }).observe(document.body, { childList: true, subtree: true });
+  fillBonus();
   function open(id, from) {
     var ev = X.events().concat(window.GOSEASON ? window.GOSEASON.events() : []).filter(function (e) { return e.id === id; })[0]; if (!ev) return;
     opener = from || document.activeElement;

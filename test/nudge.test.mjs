@@ -243,3 +243,16 @@ test("event page lookup: a series returns each city, a city page returns only it
   assert.equal(one.length, 1); assert.equal(one[0].show, "5:00 am");
   assert.deepEqual(await get("name=Dynamax%20Uxie%20Mesprit"), []);
 });
+
+test("list lookup: all=1 returns every upcoming venue event with its Melbourne date", async () => {
+  const worker = (await import("../src/worker.js")).default;
+  const details = { events: { la: { name: "Pokémon Night Out 2026 - Los Angeles", fields: { dates: [{ text: LA }] } } } };
+  const env = { ASSETS: { fetch: async () => ({ json: async () => details }) } };
+  const RealNow = Date.now; Date.now = () => Date.parse("2026-10-24T01:00:00Z");
+  try {
+    const items = (await (await worker.fetch(new Request("https://x/api/venue-times?all=1"), env, { waitUntil() {} })).json()).items;
+    assert.equal(items.length, 1); assert.equal(items[0].date, "2026-10-25"); assert.equal(items[0].day, "Sun, 25 Oct"); assert.equal(items[0].show, "1:30 pm");
+    Date.now = () => Date.parse("2026-11-20T01:00:00Z");
+    assert.equal((await (await worker.fetch(new Request("https://x/api/venue-times?all=1"), env, { waitUntil() {} })).json()).items.length, 0, "old ones drop out");
+  } finally { Date.now = RealNow; }
+});
