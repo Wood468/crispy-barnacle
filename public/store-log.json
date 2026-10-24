@@ -1,6 +1,6 @@
 {
  "watchStart": "2026-10-13T06:44:45.476Z",
- "updated": "2026-10-24T16:36:10.681Z",
+ "updated": "2026-10-24T19:37:23.989Z",
  "items": [
   {
    "name": "GO Pass Deluxe: Halloween + 10 Ranks",
@@ -10,7 +10,7 @@
    "href": "/purchase/item/web-event-pass-plusrank-halloween-26",
    "endsAt": null,
    "firstSeen": "2026-10-23T19:14:49.451Z",
-   "lastSeen": "2026-10-24T16:36:10.681Z",
+   "lastSeen": "2026-10-24T19:37:23.989Z",
    "goneAt": null
   },
   {
@@ -21,7 +21,7 @@
    "href": "/purchase/item/web-event-pass-base-october-26",
    "endsAt": null,
    "firstSeen": "2026-10-13T06:44:45.476Z",
-   "lastSeen": "2026-10-24T16:36:10.681Z",
+   "lastSeen": "2026-10-24T19:37:23.989Z",
    "goneAt": null
   },
   {
@@ -32,7 +32,7 @@
    "href": "/purchase/item/web-event-pass-plusrank-halloween-26-ultra",
    "endsAt": null,
    "firstSeen": "2026-10-23T19:14:49.451Z",
-   "lastSeen": "2026-10-24T16:36:10.681Z",
+   "lastSeen": "2026-10-24T19:37:23.989Z",
    "goneAt": null
   },
   {
@@ -43,7 +43,7 @@
    "href": "/purchase/item/web-event-pass-base-halloween-26",
    "endsAt": null,
    "firstSeen": "2026-10-23T19:14:49.451Z",
-   "lastSeen": "2026-10-24T16:36:10.681Z",
+   "lastSeen": "2026-10-24T19:37:23.989Z",
    "goneAt": null
   },
   {
@@ -54,7 +54,29 @@
    "href": "/purchase/item/web-event-pass-plusrank-october-26",
    "endsAt": null,
    "firstSeen": "2026-10-13T06:44:45.476Z",
-   "lastSeen": "2026-10-24T16:36:10.681Z",
+   "lastSeen": "2026-10-24T19:37:23.989Z",
+   "goneAt": null
+  },
+  {
+   "name": "GO Pass Deluxe: October Ultra Box",
+   "price": "$14.99",
+   "section": "LIMITED_TIME",
+   "slug": "web-event-pass-plusrank-october-26-ultra",
+   "href": "/purchase/item/web-event-pass-plusrank-october-26-ultra",
+   "endsAt": null,
+   "firstSeen": "2026-10-13T06:44:45.476Z",
+   "lastSeen": "2026-10-24T19:37:23.989Z",
+   "goneAt": null
+  },
+  {
+   "name": "Pokémon GO Wild Area 2026: Global Ultra Ticket Box",
+   "price": "$11.99",
+   "section": "LIMITED_TIME",
+   "slug": "web-gowa-global-2026-ticket",
+   "href": "/purchase/item/web-gowa-global-2026-ticket",
+   "endsAt": null,
+   "firstSeen": "2026-10-13T06:44:45.476Z",
+   "lastSeen": "2026-10-24T19:37:23.989Z",
    "goneAt": null
   },
   {
@@ -66,29 +88,7 @@
    "endsAt": "2026-10-25T05:18:44.559Z",
    "firstSeen": "2026-10-19T18:44:49.297Z",
    "lastSeen": "2026-10-24T16:36:10.681Z",
-   "goneAt": null
-  },
-  {
-   "name": "GO Pass Deluxe: October Ultra Box",
-   "price": "$14.99",
-   "section": "LIMITED_TIME",
-   "slug": "web-event-pass-plusrank-october-26-ultra",
-   "href": "/purchase/item/web-event-pass-plusrank-october-26-ultra",
-   "endsAt": null,
-   "firstSeen": "2026-10-13T06:44:45.476Z",
-   "lastSeen": "2026-10-24T16:36:10.681Z",
-   "goneAt": null
-  },
-  {
-   "name": "Pokémon GO Wild Area 2026: Global Ultra Ticket Box",
-   "price": "$11.99",
-   "section": "LIMITED_TIME",
-   "slug": "web-gowa-global-2026-ticket",
-   "href": "/purchase/item/web-gowa-global-2026-ticket",
-   "endsAt": null,
-   "firstSeen": "2026-10-13T06:44:45.476Z",
-   "lastSeen": "2026-10-24T16:36:10.681Z",
-   "goneAt": null
+   "goneAt": "2026-10-24T19:37:23.989Z"
   },
   {
    "name": "GO Pass Deluxe: Fall Marathon Ultra Box",
