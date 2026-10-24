@@ -6,6 +6,7 @@ import { keyboard } from "./telegram.js";
 import { routed } from "./tgroute.js";
 import * as userstate from "./userstate.js";
 import { venueItems, describeVenue, venueFor } from "./venue-times.js";
+import { ogImage, OG_HOSTS } from "./og.js";
 import { APP, buildWeek, formatWeek, pictureUrls, melbourneNow, startingSoon, messageFor, pending, quiet } from "./jobs-core.js";
 
 const SQL_TABLE = "CREATE TABLE IF NOT EXISTS job_state (key TEXT PRIMARY KEY, value TEXT NOT NULL, updated_at TEXT NOT NULL)";
@@ -21,6 +22,12 @@ async function siteData(env) {
   const r = await env.ASSETS.fetch(new Request(APP + "/data.json"));
   if (!r.ok) throw new Error("data.json " + r.status);
   return r.json();
+}
+// The event page's own picture, or "" when there is none. Only leekduck.com / pokemongo.com pages are read.
+export async function eventImage(page, f = fetch) {
+  let u; try { u = new URL(page || ""); } catch { return ""; }
+  if (u.protocol !== "https:" || !OG_HOSTS.includes(u.hostname)) return "";
+  try { const r = await f(u.href, { cf: { cacheTtl: 86400, cacheEverything: true }, headers: { "user-agent": "GO-Field-Notes/1.0 (+https://pogo.michaelpuff.com)" } }); return r.ok ? ogImage((await r.text()).slice(0, 400000)) : ""; } catch { return ""; }
 }
 async function tg(env, method, body, f) {
   const r = await f("https://api.telegram.org/bot" + env.TELEGRAM_BOT_TOKEN + "/" + method, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ chat_id: env.TELEGRAM_CHAT_ID, ...body }) });
@@ -80,42 +87,41 @@ export async function runWeekly(env, opts = {}) {
 // At 7:30 am Melbourne you hear about the ones starting today, and the ones ending today.
 export function savedReminders(data, savedIds, nowMs, world = []) {
   const today = new Date(nowMs).toISOString().slice(0, 10), out = [];
-  const byId = new Map((data.events || []).map(e => [String(e.id), e]));
-  for (const w of world) if (w && w.id && w.start) byId.set(String(w.id), { id: w.id, t: w.name, s: w.start + "T00:00", e: (w.end || w.start) + "T23:59" });
+  const byId = new Map((data.events || []).map(e => [String(e.id), { ...e, page: e.sourceUrl }]));
+  for (const w of world) if (w && w.id && w.start) byId.set(String(w.id), { id: w.id, t: w.name, s: w.start + "T00:00", e: (w.end || w.start) + "T23:59", page: ((w.sources || []).find(x => x && /leekduck|pokemongo/.test(x.url || "")) || {}).url });
   for (const sid of savedIds) {
     const id = String(sid).replace(/^cur:/, ""), e = byId.get(id); if (!e || !e.s) continue;
     const s = e.s.slice(0, 10), en = (e.e || e.s).slice(0, 10), timed = !/T00:00/.test(e.s);
     const long = Date.parse(en + "T00:00Z") - Date.parse(s + "T00:00Z") > 864e5 || (e.e && Date.parse(e.e.slice(0, 16) + "Z") - Date.parse(e.s.slice(0, 16) + "Z") > 24 * 36e5);
     if (timed && !long) continue; // covered by the "starting soon" ping
-    if (s === today) out.push({ key: "start:" + id + ":" + s, title: e.t, text: "🔔 Starts today: " + e.t + (en !== s ? " (until " + en.slice(5) + ")" : ""), link: id.startsWith("w-") ? id : "cur:" + id });
-    else if (en === today && s < today) out.push({ key: "end:" + id + ":" + en, title: e.t, text: "⏳ Last day: " + e.t + " ends today", link: id.startsWith("w-") ? id : "cur:" + id });
+    if (s === today) out.push({ key: "start:" + id + ":" + s, title: e.t, text: "🔔 Starts today: " + e.t + (en !== s ? " (until " + en.slice(5) + ")" : ""), link: id.startsWith("w-") ? id : "cur:" + id, page: e.page });
+    else if (en === today && s < today) out.push({ key: "end:" + id + ":" + en, title: e.t, text: "⏳ Last day: " + e.t + " ends today", link: id.startsWith("w-") ? id : "cur:" + id, page: e.page });
   }
   return out;
 }
 // A reminder you set for one event ("pref:lead:<id>" = minutes before, or "off"). All-day events count as starting at 8 am.
 // It is sent at the first hourly run after that moment (outside quiet hours) while the event has not yet started.
 export function leadReminders(data, world, saved, leads, nowMs, venue = [], realNow = Date.now()) {
-  const byId = new Map((data.events || []).map(e => [String(e.id), { t: e.t, s: e.s, e: e.e }]));
-  for (const w of world) if (w && w.id && w.start) byId.set(String(w.id), { t: w.name, s: w.start + "T00:00", e: (w.end || w.start) + "T23:59" });
+  const byId = new Map((data.events || []).map(e => [String(e.id), { t: e.t, s: e.s, e: e.e, page: e.sourceUrl }]));
+  for (const w of world) if (w && w.id && w.start) byId.set(String(w.id), { t: w.name, s: w.start + "T00:00", e: (w.end || w.start) + "T23:59", page: ((w.sources || []).find(x => x && /leekduck|pokemongo/.test(x.url || "")) || {}).url });
   const out = [];
   for (const sid of saved) {
     const id = String(sid).replace(/^cur:/, ""), mins = Number(leads[sid] ?? leads[id]); const e = byId.get(id);
     if (!e || !e.s || !(mins > 0)) continue;
-    // An in-person event with real venue times (Night Out): remind before the doors open, one reminder per city, saying which event and when in your time.
+    // An in-person event with real venue times (Night Out): one reminder per city, when its rewards and bonuses start, in your time.
     const vs = venueFor(e.t, e.s.slice(0, 10), (e.e || e.s).slice(0, 10), venue);
     if (vs.length) {
       for (const v of vs) {
-        const at = v.doorsMs || v.ms, left = Math.max(10, Math.round((at - realNow) / 300000) * 5), d = describeVenue(v);
-        if (at - mins * 60000 <= realNow && at > realNow) out.push({ key: "lead:" + v.id + ":" + mins, title: v.name, link: id.startsWith("w-") ? id : "cur:" + id,
-          text: "🔔 Reminder: " + v.name + "\n" + (v.doorsMs ? "Doors open " : "Starts ") + (mins >= 1440 ? "tomorrow" : "in about " + (left >= 90 ? Math.round(left / 60) + " h" : left + " min")) + " · " + (v.doorsMs ? d.doors : d.show) + " your time"
-            + (v.doorsMs ? "\nShow starts " + d.show + " your time (" + d.venue + " at the venue)" : "\n(" + d.venue + " at the venue)") });
+        const at = v.ms, left = Math.max(10, Math.round((at - realNow) / 300000) * 5), d = describeVenue(v);
+        if (at - mins * 60000 <= realNow && at > realNow) out.push({ key: "lead:" + v.id + ":" + mins, title: v.name, link: id.startsWith("w-") ? id : "cur:" + id, page: v.link,
+          text: "🔔 " + v.name + "\nRewards and bonuses start " + (mins >= 1440 ? "tomorrow" : "in about " + (left >= 90 ? Math.round(left / 60) + " h" : left + " min")) + " · " + d.show + " your time" + (d.note ? " (" + d.note + ")" : "") });
       }
       continue;
     }
     const m = /^(\d{4}-\d\d-\d\d)T(\d\d):(\d\d)/.exec(e.s); if (!m) continue;
     const startMs = Date.parse(m[1] + "T" + (m[2] === "00" && m[3] === "00" ? "08:00" : m[2] + ":" + m[3]) + ":00Z");
     const dueMs = startMs - mins * 60000;
-    if (dueMs <= nowMs && startMs > nowMs) out.push({ key: "lead:" + id + ":" + mins + ":" + e.s, title: e.t, text: "🔔 " + e.t + " starts " + (mins >= 1440 ? "tomorrow" : "in about " + Math.round(Math.max(10, (startMs - nowMs) / 60000) / 5) * 5 + " min") , link: id.startsWith("w-") ? id : "cur:" + id });
+    if (dueMs <= nowMs && startMs > nowMs) out.push({ key: "lead:" + id + ":" + mins + ":" + e.s, title: e.t, text: "🔔 " + e.t + "\nRewards and bonuses start " + (mins >= 1440 ? "tomorrow" : "in about " + Math.round(Math.max(10, (startMs - nowMs) / 60000) / 5) * 5 + " min"), link: id.startsWith("w-") ? id : "cur:" + id, page: e.page });
   }
   return out;
 }
@@ -136,7 +142,13 @@ export async function runSaved(env, opts = {}) {
   if (!todo.length) return { sent: [], note: "nothing today" };
   if (opts.dry || !env.TELEGRAM_BOT_TOKEN || !env.TELEGRAM_CHAT_ID) return { sent: [], would: todo.map(t => t.text) };
   const sent = [];
-  for (const r of todo) if (await tg(env, "sendMessage", { text: r.text + "\n" + APP + "/#event=" + encodeURIComponent(r.link), disable_web_page_preview: true }, f)) { state.sent = [...(state.sent || []), r.key].slice(-300); sent.push(r.key); }
+  for (const r of todo) {
+    const text = r.text + "\n" + APP + "/#event=" + encodeURIComponent(r.link), image = await eventImage(r.page, opts.pageFetch || fetch);
+    let ok = false;
+    if (image) ok = await tg(env, "sendPhoto", { photo: image, caption: text.slice(0, 1000) }, f); // the event's own picture, with the reminder as its caption
+    if (!ok) ok = await tg(env, "sendMessage", { text, disable_web_page_preview: true }, f);
+    if (ok) { state.sent = [...(state.sent || []), r.key].slice(-300); sent.push(r.key); }
+  }
   if (sent.length) await setState(env.DB, "saved", state);
   return { sent };
 }

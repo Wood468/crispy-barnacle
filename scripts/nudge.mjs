@@ -80,7 +80,7 @@ export function buildDigest({ queue, details, data, world, state = {}, now = new
   for (const i of soon.slice(0, 6)) {
     const d = i.venue ? meldate(i.ms) : day(i.start), today = localDay(now.getTime()); // your date
     const label = d === today ? "Today" : "Tomorrow (" + new Intl.DateTimeFormat("en-AU", { timeZone: TZ_DEFAULT, weekday: "short", day: "numeric", month: "short" }).format(new Date(i.ms)) + ")";
-    const when = i.venue ? meltime(i.ms) + (i.endMs ? "–" + meltime(i.endMs) : "") + " your time" + (i.doorsMs ? " (doors " + meltime(i.doorsMs) + ")" : "") + " · " + i.venueTime + " at the venue" : i.dateOnly ? "time not listed" : whenText(i);
+    const when = i.venue ? "bonuses start " + meltime(i.ms) + " your time" + (i.unconfirmed ? " (expected, Pokémon GO hours not confirmed yet)" : "") : i.dateOnly ? "time not listed" : whenText(i);
     lines.push("📅 " + label + ": " + i.name + " · " + when);
     next.events.push(i.id);
   }

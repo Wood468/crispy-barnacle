@@ -22,14 +22,14 @@ export function parseVenueTimes(text) {
 }
 // Times a person typed in by hand for pages the importer could not read yet. Same shape; the importer's own reading wins when it has one.
 const MANUAL = {
-  "leekduck:pokemon-night-out-london-2026": "Date: November 10, 2026 Event time: 6:00 p.m. to 10:30 p.m. GMT Doors open: 6:00 p.m. GMT"
+  "leekduck:pokemon-night-out-london-2026": "Date: November 10, 2026 Event time: 6:00 p.m. to 10:30 p.m. GMT (unconfirmed for Pokémon GO)"
 };
 
 const TZ = "Australia/Melbourne";
 const fmtTime = ms => new Intl.DateTimeFormat("en-AU", { timeZone: TZ, hour: "numeric", minute: "2-digit", hour12: true }).format(new Date(ms)).replace(/\s?([ap])m/i, (_, x) => " " + x.toLowerCase() + "m");
-// Plain-words times in your zone for one venue item: { doors, show, end, venue }.
+// Plain-words times in your zone for one venue item: { show, end, note }.
 export function describeVenue(v) {
-  return { doors: v.doorsMs ? fmtTime(v.doorsMs) : "", show: fmtTime(v.ms), end: v.endMs ? fmtTime(v.endMs) : "", venue: v.venueTime };
+  return { show: fmtTime(v.ms), end: v.endMs ? fmtTime(v.endMs) : "", note: v.unconfirmed ? "expected, Pokémon GO hours not confirmed yet" : "" };
 }
 // Which venue items belong to a saved event: the same series (first three words of the name) inside the event's dates.
 const words = s => String(s || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9 ]+/g, " ").split(/\s+/).filter(Boolean);
@@ -47,8 +47,10 @@ export function venueItems(details) {
   for (const [id, ev] of Object.entries((details && details.events) || {})) {
     const texts = ((ev.fields && ev.fields.dates) || []).map(x => x.text);
     if (MANUAL[id]) texts.push(MANUAL[id]);
-    const v = texts.map(parseVenueTimes).find(Boolean);
-    if (v) out.push({ id: "v:" + id, name: ev.name || id, ms: v.start, endMs: v.end, doorsMs: v.doors, venueTime: v.venue + " " + v.zone, venue: true });
+    const hit = texts.find(t => parseVenueTimes(t)), v = hit && parseVenueTimes(hit);
+    const link = ((ev.sources || []).map(x => x && x.url).find(u => /^https:\/\/(www\.)?(leekduck|pokemongo)\.com\//.test(u || ""))) || "";
+    // The show time is the best guide to when the in-game bonuses start; say so when the page admits the Pokémon GO hours are not confirmed.
+    if (v) out.push({ id: "v:" + id, name: ev.name || id, ms: v.start, endMs: v.end, doorsMs: v.doors, venueTime: v.venue + " " + v.zone, unconfirmed: /unconfirmed|not (yet )?(been )?confirmed/i.test(hit), link, venue: true });
   }
   return out;
 }

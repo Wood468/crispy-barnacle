@@ -20,6 +20,8 @@ import * as nt from "./notify.js";
 import * as tgm from "./telegram.js";
 import * as auth from "./auth.js";
 import * as jobs from "./jobs.js";
+import { ogImage, OG_HOSTS } from "./og.js";
+export { ogImage };
 
 const ART_BASE = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/";
 const POKEAPI = "https://pokeapi.co/api/v2/";
@@ -160,16 +162,6 @@ export function artCandidates(raw) {
 }
 
 // The main picture on an event's own page (its og:image), so an event can show a real image even when no infographic is on file.
-const OG_HOSTS = ["leekduck.com", "www.leekduck.com", "pokemongo.com", "www.pokemongo.com"];
-export function ogImage(html) {
-  const tags = String(html || "").match(/<meta\b[^>]*>/gi) || [];
-  for (const t of tags) {
-    if (!/(?:property|name)\s*=\s*["']og:image["']/i.test(t)) continue;
-    const m = t.match(/content\s*=\s*["']([^"']+)["']/i);
-    if (m && /^https:\/\//i.test(m[1])) return m[1].replace(/&amp;/g, "&");
-  }
-  return "";
-}
 // Pokebattler raid guides: each has a visual guide by CaptGoldfish. Guide pages are /raids/guides/BOSS_NAME, "Mega X" is X_MEGA.
 export function guideSlug(name) {
   let n = String(name || "").trim();
