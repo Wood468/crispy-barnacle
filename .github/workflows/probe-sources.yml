@@ -15,16 +15,6 @@ jobs:
           cat > probe.mjs <<'JS'
           const UA = { "user-agent": "Mozilla/5.0 (compatible; go-field-notes probe)", "accept-language": "en" };
           const pages = [
-            "https://www.pokemon.com/us/pokemon-video-games/pokemon-go",
-            "https://www.pokemon.com/us/pokemon-news",
-            "https://www.pokemon.com/uk/pokemon-news",
-            "https://www.pokemon.co.jp/ex/pokemongo/",
-            "https://www.pokemon.co.jp/info/",
-            "https://www.pokemon.co.kr/",
-            "https://tw.portal-pokemon.com/",
-            "https://www.pokemon.com/es/",
-            "https://pokemongolive.com/",
-            "https://pokemongo.com/en/news",
             "https://pokemongo.com/es_MX/news",
             "https://www.reddit.com/r/pokemongo/new.rss",
             "https://www.youtube.com/@pokemongo",
@@ -33,6 +23,9 @@ jobs:
             "https://www.youtube.com/@PokemonGOLATAM",
             "https://nitter.net/PokemonGoApp/rss",
           ];
+          for (const u of ["https://www.pokemon.com/us/news", "https://www.pokemon.co.jp/info/", "https://tw.portal-pokemon.com/"]) {
+            try { const t = await (await fetch(u, { headers: UA, signal: AbortSignal.timeout(20000) })).text(); const n = (t.match(/Pok[eé]mon GO|ポケモンGO|寶可夢 ?GO|포켓몬 ?GO/gi) || []).length; console.log(`::notice::PROBE GOCOUNT ${u} mentions=${n}`); } catch (e) { console.log(`::notice::PROBE GOCOUNT FAIL ${u}`); }
+          }
           for (const u of pages) {
             try {
               const r = await fetch(u, { headers: UA, redirect: "follow", signal: AbortSignal.timeout(20000) });
