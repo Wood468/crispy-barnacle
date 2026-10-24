@@ -207,7 +207,7 @@ export async function runNotify(env, db, now, fetcher, deps) {
   const log = { candidates: cands.length, fresh: fresh.length, sent: 0, failed: 0, held };
   for (const c of batch) {
     const text = `${c.title}\n${c.body}${c.url ? "\n" + c.url : ""}`;
-    const image = prefs.telegram && c.url && c.level === "alert" ? await eventImage(c.url, deps.pageFetch || fetch) : "";
+    const image = prefs.telegram && c.url && c.level === "alert" && deps.pageFetch ? await eventImage(c.url, deps.pageFetch) : ""; // pictures only when the caller supplies a page fetcher (the Worker does)
     const tg = prefs.telegram ? await sendTelegram(env, text, fetcher, topicFor(c.kind), image) : { status: "skipped", why: "off" };
     // the push message is the same row the service worker reads back, so write it first
     await db.prepare("INSERT OR IGNORE INTO notif_sent (dedupe, kind, item_id, level, title, body, url, created_at, telegram, push) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'pending')")
