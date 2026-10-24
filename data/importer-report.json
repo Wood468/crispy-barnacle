@@ -1,5 +1,5 @@
 {
- "runAt": "2026-10-24T00:50:26.605Z",
+ "runAt": "2026-10-24T06:00:05.303Z",
  "sources": {
   "official": {
    "listed": 25,
@@ -16,7 +16,7 @@
  },
  "pagesRead": 80,
  "events": 78,
- "worldEvents": 34,
+ "worldEvents": 35,
  "worldUndated": [
   "Go Wild Area Stamp Rally Details"
  ],
@@ -78,8 +78,8 @@
   },
   {
    "source": "hub",
-   "title": "Pokémon GO Dia de Muertos 2026: Mexico Exclusive Event",
-   "url": "https://pokemongohub.net/post/event/pokemon-go-dia-de-muertos-2026-mexico-exclusive-event/"
+   "title": "How to beat Dynamax Azelf: Complete Guide",
+   "url": "https://pokemongohub.net/post/guide/how-to-beat-dynamax-azelf-complete-guide/"
   }
  ],
  "intl": {
@@ -176,6 +176,14 @@
    "field": "research",
    "missingFrom": [
     "leekduck"
+   ]
+  },
+  {
+   "event": "Pokémon GO City Safari: Boston (Rescheduled)",
+   "field": "bonuses",
+   "missingFrom": [
+    "official",
+    "official"
    ]
   },
   {

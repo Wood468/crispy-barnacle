@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-24T00:50:26.602Z",
+ "updated": "2026-10-24T06:00:05.300Z",
  "events": [
   {
    "id": "w-pokemon-fossil-museum-2026",
@@ -238,6 +238,25 @@
     }
    ],
    "status": "official",
+   "seen": "2026-10-24"
+  },
+  {
+   "id": "w-how-to-beat-dynamax-azelf-complete-guide",
+   "name": "How to beat Dynamax Azelf: Complete Guide",
+   "place": "",
+   "area": "Worldwide",
+   "scope": "global",
+   "start": "2026-10-24",
+   "end": "2026-10-24",
+   "datesKnown": true,
+   "sources": [
+    {
+     "id": "hub",
+     "name": "Pokémon GO Hub",
+     "url": "https://pokemongohub.net/post/guide/how-to-beat-dynamax-azelf-complete-guide/"
+    }
+   ],
+   "status": "single",
    "seen": "2026-10-24"
   },
   {
@@ -673,11 +692,6 @@
      "id": "official",
      "name": "Pokémon GO (official)",
      "url": "https://pokemongo.com/news/save-the-date-go-tour-2027/"
-    },
-    {
-     "id": "official",
-     "name": "Pokémon GO (official)",
-     "url": "https://pokemongo.com/ko/news/save-the-date-go-tour-2027/"
     }
    ],
    "status": "official",
