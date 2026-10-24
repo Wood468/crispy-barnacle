@@ -584,6 +584,7 @@
     ticketTags(ev).forEach(function (t) { chips.push('<span class="signal signal-ticket" title="' + (t === 'GO Pass' ? 'A GO Pass upgrade is available for this period' : 'A paid ticket is available for this event') + '">' + esc(t) + ' available</span>'); });
     return chips.length ? '<div class="event-signals">' + chips.join('') + '</div>' : '';
   }
+  function bday(v) { try { return v ? (typeof v === 'string' ? v.slice(0, 10) : new Date(v).toISOString().slice(0, 10)) : ''; } catch (e) { return ''; } }
   function card(ev, opt) {
     opt = opt || {};
     var k = kindOf(ev), p = phase(ev), saved = isSaved(ev.id);
@@ -594,6 +595,7 @@
       + '<div class="evc-top"><span class="kind-grp"><span class="kind">' + esc(k[0]) + '</span>' + '' + '</span><span class="cdn" data-id="' + esc(ev.id) + '">' + esc(countdown(ev)) + '</span><button type="button" class="hide-x" data-hide="' + esc(ev.id) + '" aria-label="Hide ' + esc(ev.name) + '" title="Hide this event">✕</button></div>'
       + '<div class="evc-title-row"><h3 title="' + esc(ev.name) + '">' + esc(ev.name) + '</h3></div>'
       + '<p class="evc-when">' + esc(ev.utc || ev.region ? timeMeta(ev) : whenText(ev)) + (ev.long || ev.utc || ev.region ? '' : '') + '</p>'
+      + '<p class="evc-bonus" data-bn="' + esc(ev.name) + '" data-bs="' + esc(bday(ev.start)) + '" data-be="' + esc(bday(ev.end)) + '" hidden></p>'
       + signalChips(ev, 4, false)
       + '<div class="evc-foot">'
       + '<button type="button" class="more" data-open="' + esc(ev.id) + '" aria-label="Details: ' + esc(ev.name) + '">Details</button>'
@@ -1205,7 +1207,7 @@
     renderCoverage();
     if (window.GO && GO.refreshDex) GO.refreshDex();
     usSync();
-    var inf = document.createElement('script'); inf.src = '/infographic.js?v=20261017b'; document.body.appendChild(inf); var x = document.createElement('script'); x.src = '/extra.js?v=20261024a'; document.body.appendChild(x); var y = document.createElement('script'); y.src = '/detail.js?v=20261024a'; document.body.appendChild(y); var z = document.createElement('script'); z.src = '/places.js?v=20261014p'; document.body.appendChild(z); var w = document.createElement('script'); w.src = '/fresh.js?v=20261014a'; document.body.appendChild(w); var nv = document.createElement('script'); nv.src = '/nudge.js?v=20261014l'; document.body.appendChild(nv); var rv = document.createElement('script'); rv.src = '/review.js?v=20261022b'; document.body.appendChild(rv); var by = document.createElement('script'); by.src = '/buy.js?v=20261020d'; document.body.appendChild(by);
+    var inf = document.createElement('script'); inf.src = '/infographic.js?v=20261017b'; document.body.appendChild(inf); var x = document.createElement('script'); x.src = '/extra.js?v=20261024a'; document.body.appendChild(x); var y = document.createElement('script'); y.src = '/detail.js?v=20261024b'; document.body.appendChild(y); var z = document.createElement('script'); z.src = '/places.js?v=20261014p'; document.body.appendChild(z); var w = document.createElement('script'); w.src = '/fresh.js?v=20261014a'; document.body.appendChild(w); var nv = document.createElement('script'); nv.src = '/nudge.js?v=20261014l'; document.body.appendChild(nv); var rv = document.createElement('script'); rv.src = '/review.js?v=20261022b'; document.body.appendChild(rv); var by = document.createElement('script'); by.src = '/buy.js?v=20261020d'; document.body.appendChild(by);
   }
   envBanner();
   var dexP = fetch('/dex.json').then(function (r) { return r.json(); }).catch(function () { return []; });
