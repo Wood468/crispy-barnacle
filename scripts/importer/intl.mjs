@@ -18,7 +18,7 @@ export const INTL = [
   { locale: "pt_br", list: "https://pokemongo.com/pt_br/news", place: "Brazil", area: "Americas" },
   { locale: "th", list: "https://pokemongo.com/th/news", place: "Thailand", area: "Asia" },
 ];
-export const INTL_PATTERN = /^https:\/\/pokemongo\.com\/(ja|ko|zh_hant|de|fr|es|es_mx|it|pt_br|th)\/news\/([a-z0-9-]{6,})\/?$/i;
+export const INTL_PATTERN = /^https:\/\/pokemongo\.com\/(ja|ko|zh[_-]hant|de|fr|es|es[_-]mx|it|pt[_-]br|th)\/news\/([a-z0-9-]{6,})\/?$/i;
 
 // Words that say "go to a place": malls, stores, venues, stations, airports, nationwide, limited to a region. Slug words are the English ones used in addresses.
 const IN_PERSON_TEXT = /イオン|モール|全国の|店舗|会場|ポケモンセンター|サファリ|空港|駅|商業施設|スタンプラリー|地域限定|日本限定|国内限定|店舗限定|매장|몰에서|쇼핑몰|현장|전국|공항|스탬프 ?랠리|商場|商城|現場|門市|百貨|機場|車站|全台|集章|Einkaufszentrum|Filiale|Veranstaltungsort|Bahnhof|Flughafen|vor Ort|Stempelsammlung|centre commercial|magasin|aéroport|sur place|en personne|centro comercial|tienda|aeropuerto|presencial|en persona|centro commerciale|negozio|aeroporto|stazione|di persona|shopping center|loja|estação|ห้างสรรพสินค้า|ห้าง|สนามบิน|สถานที่จัดงาน|ร้านค้า|ภายในงาน/i;
@@ -97,7 +97,7 @@ export function parseWesternRange(text, yr = new Date().getFullYear()) {
 // One page -> a world-events entry when it is about an in-person or regional event, otherwise null.
 export function entryFromIntlPage(page, today = new Date().toISOString().slice(0, 10)) {
   const m = INTL_PATTERN.exec(String(page.url)); if (!m) return null;
-  const cfg = INTL.find(x => x.locale === m[1].toLowerCase()), slug = m[2];
+  const cfg = INTL.find(x => x.locale === m[1].toLowerCase().replace("-", "_")), slug = m[2];
   if (!cfg || SKIP_SLUG.test(slug)) return null;
   const text = (page.lines || []).map(l => l.text).join(" ");
   const title = cleanTitle(page.title || "");
