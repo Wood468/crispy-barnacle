@@ -11,6 +11,7 @@ import { keyboard, hookSecret } from "../src/telegram.js";
 import { routed } from "../src/tgroute.js";
 import { localToMs, TZ_DEFAULT } from "../src/notify.js";
 import { parseVenueTimes, venueItems } from "../src/venue-times.js";
+import { eventImage } from "../src/og.js";
 export { parseVenueTimes, venueItems };
 
 const APP = "https://pogo.michaelpuff.com";
@@ -43,10 +44,10 @@ function localDay(ms) { const p = Object.fromEntries(new Intl.DateTimeFormat("en
 // Events the app knows about, as { id, name, start } with local start times.
 export function upcoming(data, world, now = new Date(), details = null) {
   const items = [];
-  for (const e of data.events || []) if (e.s) items.push({ id: "e:" + e.id, name: e.t, start: e.s, end: e.e });
+  for (const e of data.events || []) if (e.s) items.push({ id: "e:" + e.id, name: e.t, start: e.s, end: e.e, page: e.sourceUrl });
   for (const x of data.spotlight || []) items.push({ id: "spot:" + x.d, name: x.n + " Spotlight Hour", start: x.d + "T18:00", end: x.d + "T19:00" });
   for (const x of data.raidHour || []) items.push({ id: "rh:" + x.d, name: x.n + " Raid Hour", start: x.d + "T18:00", end: x.d + "T19:00" });
-  for (const w of (world && world.events) || []) if (w.start) items.push({ id: w.id, name: w.name + (w.place ? " (" + w.place + ")" : ""), start: w.start + "T00:00", end: w.end, place: w.place, dateOnly: true });
+  for (const w of (world && world.events) || []) if (w.start) items.push({ id: w.id, name: w.name + (w.place ? " (" + w.place + ")" : ""), start: w.start + "T00:00", end: w.end, place: w.place, dateOnly: true, page: ((w.sources || []).find(x => x && /leekduck|pokemongo/.test(x.url || "")) || {}).url });
   // An event with a venue time replaces the date-only entry for the same city; its time is shown in your local time.
   const timed = venueItems(details);
   const cityOf = i => String(i.place || "").split(",")[0].trim().toLowerCase();
@@ -58,7 +59,7 @@ export function upcoming(data, world, now = new Date(), details = null) {
 
 export function buildDigest({ queue, details, data, world, state = {}, now = new Date(), only = "" }) {
   const told = { queue: new Set(state.queue || []), conflicts: new Set(state.conflicts || []), events: new Set(state.events || []) };
-  const lines = [], next = { queue: [...told.queue], conflicts: [...told.conflicts], events: [...told.events] };
+  const lines = [], cards = [], next = { queue: [...told.queue], conflicts: [...told.conflicts], events: [...told.events] };
 
   // Pictures the app linked to an event by itself are announced too (recent ones only, so the back catalogue is not replayed), so you know the automatic step ran.
   const fresh = i => !i.history && now.getTime() - new Date(i.publishedAt || 0).getTime() < 3 * 864e5;
@@ -81,12 +82,13 @@ export function buildDigest({ queue, details, data, world, state = {}, now = new
     const d = i.venue ? meldate(i.ms) : day(i.start), today = localDay(now.getTime()); // your date
     const label = d === today ? "Today" : "Tomorrow (" + new Intl.DateTimeFormat("en-AU", { timeZone: TZ_DEFAULT, weekday: "short", day: "numeric", month: "short" }).format(new Date(i.ms)) + ")";
     const when = i.venue ? "bonuses start " + meltime(i.ms) + " your time" + (i.unconfirmed ? " (expected, Pokémon GO hours not confirmed yet)" : "") : i.dateOnly ? "time not listed" : whenText(i);
-    lines.push("📅 " + label + ": " + i.name + " · " + when);
+    const line = "📅 " + label + ": " + i.name + " · " + when;
+    lines.push(line); cards.push({ line, page: i.page || i.link });
     next.events.push(i.id);
   }
   if (!lines.length) return null;
   next.events = next.events.slice(-200); next.queue = next.queue.slice(-400); next.conflicts = next.conflicts.slice(-100);
-  return { text: lines.join("\n") + "\n\n" + APP, state: next };
+  return { text: lines.join("\n") + "\n\n" + APP, state: next, cards };
 }
 
 // A picture with buttons (see keyboard in src/telegram.js): link a suggested event, discard, or open the app for another event.
@@ -138,8 +140,19 @@ async function main() {
     if (!n) throw new Error("Telegram did not accept any picture");
     await writeFile(STATE, JSON.stringify(digest.state, null, 1) + "\n"); console.log("Sent " + n + " picture(s)."); return;
   }
-  const r = await fetch("https://api.telegram.org/bot" + token + "/sendMessage", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ chat_id: chat, text: digest.text, disable_web_page_preview: true }) });
-  if (!r.ok) throw new Error("Telegram answered HTTP " + r.status);
+  // An event that has a picture goes out as its own photo with its line as the caption; everything else stays in one text message.
+  const asPhoto = new Set(); let text = digest.text;
+  for (const c of (digest.cards || []).slice(0, 6)) {
+    const image = await eventImage(c.page, globalThis.fetch);
+    if (!image) continue;
+    const r = await fetch("https://api.telegram.org/bot" + token + "/sendPhoto", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ chat_id: chat, photo: image, caption: (c.line + "\n" + APP).slice(0, 1000) }) }).catch(() => null);
+    if (r && r.ok) asPhoto.add(c.line);
+  }
+  if (asPhoto.size) text = digest.text.split("\n").filter(l => !asPhoto.has(l)).join("\n");
+  if (text.replace(APP, "").trim()) {
+    const r = await fetch("https://api.telegram.org/bot" + token + "/sendMessage", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ chat_id: chat, text: text.trim(), disable_web_page_preview: true }) });
+    if (!r.ok) throw new Error("Telegram answered HTTP " + r.status);
+  }
   await writeFile(STATE, JSON.stringify(digest.state, null, 1) + "\n");
   console.log("Sent.");
 }

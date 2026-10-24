@@ -1,4 +1,5 @@
 import { routed } from "./tgroute.js";
+import { eventImage } from "./og.js";
 // Phase 5: notifications. Telegram first, then browser push (payload-less, so no message encryption is needed).
 // Rules that are enforced here, not left to the UI:
 //   * Only ANNOUNCED events (official or community reported, not in conflict, with a known start) can produce an alert.
@@ -111,11 +112,13 @@ function hash(s) { let h = 5381; for (let i = 0; i < s.length; i++) h = ((h << 5
 // ---- senders ----
 // "starting soon" and "you are missing it" alerts go to the Events topic; new, changed and datamine alerts go to Changes.
 export const topicFor = (kind) => (kind === "starting" || kind === "missing" ? "events" : "changes");
-export async function sendTelegram(env, text, fetcher0, cat = "changes") {
+export async function sendTelegram(env, text, fetcher0, cat = "changes", image = "") {
   const fetcher = routed(env, cat, fetcher0);
   if (!env.TELEGRAM_BOT_TOKEN || !env.TELEGRAM_CHAT_ID) return { status: "skipped", why: "not configured" };
+  const post = (method, body) => fetcher(`https://api.telegram.org/bot${env.TELEGRAM_BOT_TOKEN}/${method}`, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ chat_id: String(env.TELEGRAM_CHAT_ID), ...body }) });
   try {
-    const r = await fetcher(`https://api.telegram.org/bot${env.TELEGRAM_BOT_TOKEN}/sendMessage`, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ chat_id: String(env.TELEGRAM_CHAT_ID), text: text.slice(0, 3900), disable_web_page_preview: true }) });
+    if (image) { try { const p = await post("sendPhoto", { photo: image, caption: text.slice(0, 1000) }); if (p.ok) return { status: "sent" }; } catch { /* fall back to plain text */ } } // the event's own picture, the alert as its caption
+    const r = await post("sendMessage", { text: text.slice(0, 3900), disable_web_page_preview: true });
     if (!r.ok) return { status: "failed", why: "telegram " + r.status };
     return { status: "sent" };
   } catch (e) { return { status: "failed", why: "telegram unreachable" }; }
@@ -204,7 +207,8 @@ export async function runNotify(env, db, now, fetcher, deps) {
   const log = { candidates: cands.length, fresh: fresh.length, sent: 0, failed: 0, held };
   for (const c of batch) {
     const text = `${c.title}\n${c.body}${c.url ? "\n" + c.url : ""}`;
-    const tg = prefs.telegram ? await sendTelegram(env, text, fetcher, topicFor(c.kind)) : { status: "skipped", why: "off" };
+    const image = prefs.telegram && c.url && c.level === "alert" ? await eventImage(c.url, deps.pageFetch || fetch) : "";
+    const tg = prefs.telegram ? await sendTelegram(env, text, fetcher, topicFor(c.kind), image) : { status: "skipped", why: "off" };
     // the push message is the same row the service worker reads back, so write it first
     await db.prepare("INSERT OR IGNORE INTO notif_sent (dedupe, kind, item_id, level, title, body, url, created_at, telegram, push) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'pending')")
       .bind(c.dedupe, c.kind, c.item, c.level, c.title, c.body, c.url, now, tg.status).run();

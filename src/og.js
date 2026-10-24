@@ -9,3 +9,10 @@ export function ogImage(html) {
   }
   return "";
 }
+
+// The event page's own picture, or "" when there is none. Only leekduck.com / pokemongo.com pages are read.
+export async function eventImage(page, f = fetch) {
+  let u; try { u = new URL(page || ""); } catch { return ""; }
+  if (u.protocol !== "https:" || !OG_HOSTS.includes(u.hostname)) return "";
+  try { const r = await f(u.href, { cf: { cacheTtl: 86400, cacheEverything: true }, headers: { "user-agent": "GO-Field-Notes/1.0 (+https://pogo.michaelpuff.com)" } }); return r.ok ? ogImage((await r.text()).slice(0, 400000)) : ""; } catch { return ""; }
+}
