@@ -88,7 +88,7 @@
   function banner(n) {
     var b = $('igbanner');
     if (!n) { if (b) b.hidden = true; return; }
-    if (!b) { var tab = document.getElementById('tab-now'); if (!tab) return; b = document.createElement('button'); b.type = 'button'; b.id = 'igbanner'; b.className = 'igbanner'; tab.insertBefore(b, tab.firstChild); }
+    if (!b) { var tab = document.getElementById('tab-now'); if (!tab) return; b = document.createElement('button'); b.type = 'button'; b.id = 'igbanner'; b.className = 'igbanner'; tab.appendChild(b); }
     b.hidden = false; b.textContent = '🖼 ' + n + ' infographic' + (n === 1 ? '' : 's') + ' waiting for your review →';
   }
   function gotoReview() {

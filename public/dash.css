@@ -700,7 +700,9 @@ svg.ci{width:22px;height:22px}
 .ssn-card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .ssn-t{position:relative;display:flex;flex-direction:column;justify-content:flex-end;gap:1px;min-height:96px;padding:10px 12px;background:linear-gradient(to top,rgba(0,0,0,.72),rgba(0,0,0,.05) 70%)}
 .ssn-t small{font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;opacity:.85}.ssn-t b{font-size:1rem;line-height:1.15}.ssn-t em{font-style:normal;font-size:.72rem;opacity:.85}
-@media (max-width:420px){.seasonbar{grid-template-columns:1fr}}
+/* Two cards side by side on phones too, with shorter banners; the days left is the biggest thing on each card. */
+.ssn-card,.ssn-t{min-height:88px}.ssn-t{padding:8px 10px}.ssn-t b{font-size:.92rem}.ssn-t em{font-size:.7rem}
+.ssn-d{font-size:1.2rem;font-weight:800;line-height:1}
 
 .ssn-bar{display:block;height:4px;border-radius:3px;background:rgba(255,255,255,.28);margin-top:5px;overflow:hidden}.ssn-bar u{display:block;height:100%;background:#fff;text-decoration:none}
 .weekahead{margin:0 0 14px}
@@ -814,6 +816,8 @@ svg.ci{width:22px;height:22px}
 .whatsnew .wn-list{flex:1 1 100%;display:flex;flex-wrap:wrap;gap:4px 12px}
 .whatsnew .wn-list a{color:var(--accent,#60a5fa)}
 .whatsnew .wn-ok{margin-left:auto}
+/* Compact by default: one slim row, tap to open the list. */
+.whatsnew{flex-wrap:nowrap}.whatsnew .wn-det{flex:1 1 auto;min-width:0}.whatsnew .wn-det summary{min-height:36px;display:flex;align-items:center;gap:8px;cursor:pointer}.whatsnew .wn-det[open] summary{margin-bottom:6px}.whatsnew .wn-det .wn-list{margin-top:4px}
 .whatsnew .wn-h{font-weight:700;opacity:.85}
 
 .evd-lead{display:flex;align-items:center;gap:8px;margin:6px 16px;font-size:13px}
