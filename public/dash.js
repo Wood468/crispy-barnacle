@@ -194,7 +194,7 @@
     var keyOf = function (s) {
       var raw = String(s || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/pok[eé]mon go/g, ' ').replace(/[^a-z0-9]+/g, ' ').trim();
       if (raw.indexOf('orionid') >= 0 && raw.indexOf('minior') >= 0) return 'orionids minior debut';
-      return raw;
+      return window.GODEDUPE ? GODEDUPE.titleKey(s) : raw; /* word order, Part I / Part One, brackets: see dedupe.js */
     };
     var RANK = { official_confirmed: 3, community_reported: 1, conflicting: 0 }, out = [];
     list.forEach(function (x) {
@@ -222,10 +222,11 @@
       if (raw.indexOf('orionid') >= 0 && raw.indexOf('minior') >= 0) return 'orionids minior debut';
       return raw;
     }
+    function same(a, b) { return key(a) === key(b) || (!!window.GODEDUPE && GODEDUPE.titleKey(a) === GODEDUPE.titleKey(b)); }
     /* The same event often has a short curated title and a longer live one ("Dynamax Uxie, Mesprit and Azelf" /
        "... during Max Battle Day"). One title that starts with the other (three or more words) counts as the same event. */
     function sameTitle(x, y) {
-      var a = key(x), b = key(y); if (!a || !b) return false; if (a === b) return true;
+      var a = key(x), b = key(y); if (!a || !b) return false; if (same(x, y)) return true;
       var s = a.length <= b.length ? a : b, l = s === a ? b : a;
       return s.split(' ').length >= 3 && l.indexOf(s + ' ') === 0;
     }
