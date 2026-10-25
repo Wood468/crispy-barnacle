@@ -55,3 +55,23 @@ test("a country-level stop and the city-level stop of the same series and dates 
   const r = collapseWorld(w, null);
   assert.equal(r.events.length, 2);
 });
+
+test("titleKey: the same live event worded two ways gets one key, distinct events keep distinct keys", () => {
+  const k = dd.titleKey;
+  // Part I / Part One, leading "Pokémon GO", comma
+  assert.equal(k("POKÉMON GO HALLOWEEN 2026 PART I"), k("HALLOWEEN 2026, PART ONE"));
+  // word order and brackets
+  assert.equal(k("GIRATINA (ORIGIN FORME) RAID HOUR"), k("ORIGIN FORME GIRATINA RAID HOUR"));
+  // negatives: same slot type, different Pokémon / different part / different series
+  assert.notEqual(k("Pikachu Spotlight Hour"), k("Eevee Spotlight Hour"));
+  assert.notEqual(k("Halloween 2026, Part One"), k("Halloween 2026, Part Two"));
+  assert.notEqual(k("Dynamax Sableye Max Monday"), k("Mega Sableye in Mega Raids"));
+  assert.notEqual(k("Giratina (Altered Forme) Raid Hour"), k("Giratina (Origin Forme) Raid Hour"));
+});
+
+test("the Now tab joins live events by titleKey, not by exact title", async () => {
+  const { readFile } = await import("node:fs/promises");
+  const src = await readFile(new URL("../public/dash.js", import.meta.url), "utf8");
+  assert.match(src, /GODEDUPE\.titleKey\(s\)/);
+  assert.match(src, /GODEDUPE\.titleKey\(a\) === GODEDUPE\.titleKey\(b\)/);
+});

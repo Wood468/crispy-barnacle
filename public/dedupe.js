@@ -21,6 +21,14 @@
     });
     return out;
   }
+  /* A strict, order-free title key for the live feed: "Halloween 2026, Part One" and "Pokémon GO Halloween 2026 Part I" both give
+     "2026 1 halloween part"; "Giratina (Origin Forme) Raid Hour" and "Origin Forme Giratina Raid Hour" give the same key.
+     Only the exact same set of words matches, so "Pikachu Spotlight Hour" and "Eevee Spotlight Hour" stay apart. */
+  var NUM = { i: 1, one: 1, ii: 2, two: 2, iii: 3, three: 3, iv: 4, four: 4, v: 5, five: 5 };
+  function titleKey(name) {
+    var words = fold(name).replace(/pokemon go/g, ' ').replace(/[^a-z0-9]+/g, ' ').trim().split(' ').filter(function (w) { return w && w !== 'the'; });
+    return words.map(function (w) { return NUM[w] ? String(NUM[w]) : w; }).sort().join(' ');
+  }
   function placeTokens(place) {
     var out = {};
     fold(place).replace(/[^a-z0-9]+/g, ' ').trim().split(' ').forEach(function (w) { w = stem(w); if (w.length > 2 && !GENERIC_PLACE[w]) out[w] = 1; });
@@ -110,5 +118,5 @@
     }
     return out;
   }
-  return { same: same, judge: judge, groups: groups, tokens: tokens, placeTokens: placeTokens };
+  return { same: same, judge: judge, groups: groups, tokens: tokens, titleKey: titleKey, placeTokens: placeTokens };
 });
