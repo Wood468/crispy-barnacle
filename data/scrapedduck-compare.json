@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-24T23:15:18.926Z",
+ "updated": "2026-10-25T04:41:54.531Z",
  "state": "ok",
  "scrapedDuckEvents": 59,
  "missingHere": [
@@ -35,11 +35,6 @@
    "id": "w-aeon-mall-halloween",
    "name": "AEON MALL Halloween",
    "start": "2026-10-19"
-  },
-  {
-   "id": "w-fc-seoul",
-   "name": "FC Seoul",
-   "start": "2026-10-24"
   },
   {
    "id": "w-pok-mon-go-dia-de-muertos-2026-mexico-exclusive-ev",

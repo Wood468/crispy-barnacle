@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-24T23:15:18.709Z",
+ "updated": "2026-10-25T04:41:54.384Z",
  "status": [
   {
    "id": "hub",
@@ -19,12 +19,12 @@
   {
    "id": "reddit-silph",
    "state": "ok",
-   "items": 7
+   "items": 6
   },
   {
    "id": "youtube-pogo",
-   "state": "ok",
-   "items": 0
+   "state": "error",
+   "note": "HTTP 404"
   }
  ],
  "gaps": 6,
@@ -160,18 +160,6 @@
    "date": "2026-10-11T10:47:59.000Z",
    "summary": "<!-- SC_OFF --><div class=\"md\"><p>I thought using leekduck, but it doesn’t seem to have an option to only show costume shiny pokemon. And since I only want to make a checklist for costume shiny pokemo",
    "pokemon": [],
-   "notInOurData": []
-  },
-  {
-   "source": "reddit-silph",
-   "trust": "tip",
-   "title": "Zorua Community Day - Lures after 5PM not giving increased shiny boost",
-   "link": "https://www.reddit.com/r/TheSilphRoad/comments/1x2t2y2/zorua_community_day_lures_after_5pm_not_giving/",
-   "date": "2026-10-10T23:25:20.000Z",
-   "summary": "<!-- SC_OFF --><div class=\"md\"><p>Looks like this has been picked up by some people, but it appears it was either not possible to get a shiny Zorua from a regular lure after 5PM, or they were complete",
-   "pokemon": [
-    "Zorua"
-   ],
    "notInOurData": []
   }
  ]
