@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-24T04:59:08.201Z",
+ "updated": "2026-10-25T05:14:53.288Z",
  "seeded": true,
  "channels": [
   {
@@ -18,10 +18,19 @@
    "src": "gamedata",
    "name": "dm-gamedata",
    "state": "ok",
-   "count": 4
+   "count": 5
   }
  ],
  "items": [
+  {
+   "id": "1563750251695710241",
+   "src": "gamedata",
+   "title": "Remote raid limit is back to 10",
+   "text": "Remote raid limit is back to 10",
+   "link": "",
+   "image": "",
+   "date": "2026-10-25T03:05:13.079Z"
+  },
   {
    "id": "1563361610536325165",
    "src": "gamedata",
