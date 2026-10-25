@@ -1,10 +1,10 @@
 {
- "updated": "2026-10-25T04:41:54.384Z",
+ "updated": "2026-10-25T11:30:46.835Z",
  "status": [
   {
    "id": "hub",
    "state": "ok",
-   "items": 4
+   "items": 3
   },
   {
    "id": "miners-assets",
@@ -19,15 +19,15 @@
   {
    "id": "reddit-silph",
    "state": "ok",
-   "items": 6
+   "items": 5
   },
   {
    "id": "youtube-pogo",
-   "state": "error",
-   "note": "HTTP 404"
+   "state": "ok",
+   "items": 0
   }
  ],
- "gaps": 6,
+ "gaps": 5,
  "items": [
   {
    "source": "hub",
@@ -90,21 +90,6 @@
    ]
   },
   {
-   "source": "hub",
-   "trust": "community",
-   "title": "Is Krookodile Worth It? A PvE Analysis on Sandile Hatch Day",
-   "link": "https://pokemongohub.net/post/meta/is-krookodile-worth-it-a-pve-analysis-on-sandile-hatch-day/",
-   "date": "2026-10-16T12:49:23.000Z",
-   "summary": "Hello Trainers! This Saturday, Sandile Hatch Day takes place in Pokémon GO. Sandile, the Desert Croc Pokemon, will be hatching from 2km eggs with boosted shiny odds. Sandile has almost always been ava",
-   "pokemon": [
-    "Krookodile",
-    "Sandile"
-   ],
-   "notInOurData": [
-    "Krookodile"
-   ]
-  },
-  {
    "source": "reddit-silph",
    "trust": "tip",
    "title": "Is Halloween 2026 the weakest Pokémon GO Halloween event in years, or is it just me?",
@@ -149,16 +134,6 @@
    "link": "https://www.reddit.com/r/TheSilphRoad/comments/1x4asv9/theres_a_new_guaranteed_shiny_exploit/",
    "date": "2026-10-12T19:05:40.000Z",
    "summary": "<!-- SC_OFF --><div class=\"md\"><p>In the last few days, there’s been a massive influx of rare PoGo shinies in a bunch of trading communities (XXL shundos and stuff like that). People figured out that ",
-   "pokemon": [],
-   "notInOurData": []
-  },
-  {
-   "source": "reddit-silph",
-   "trust": "tip",
-   "title": "What is the best way to track missing shiny costume pokemon?",
-   "link": "https://www.reddit.com/r/TheSilphRoad/comments/1x355i0/what_is_the_best_way_to_track_missing_shiny/",
-   "date": "2026-10-11T10:47:59.000Z",
-   "summary": "<!-- SC_OFF --><div class=\"md\"><p>I thought using leekduck, but it doesn’t seem to have an option to only show costume shiny pokemon. And since I only want to make a checklist for costume shiny pokemo",
    "pokemon": [],
    "notInOurData": []
   }
