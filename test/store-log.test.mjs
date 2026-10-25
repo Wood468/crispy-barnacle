@@ -82,3 +82,29 @@ test("store watch: state saved before currency was tracked still detects a flip"
   delete d1.state.currency;
   assert.ok(diffStore(d1.state, { items: mk("CA$13.99") }, "2026-10-25T01:00:00Z").held);
 });
+test("store watch: currency is the leading non-digit run only", () => {
+  assert.equal(currencyOf("$9.99 / 2 pack"), "$");
+  assert.equal(currencyOf("CA$ 13.99"), "CA$");
+});
+test("store watch: after 72 hours of another currency it becomes the baseline, once, without price alerts", () => {
+  const d1 = diffStore(null, { items: mk("$9.99") }, "2026-10-25T00:00:00Z");
+  const d2 = diffStore(d1.state, { items: mk("CA$13.99") }, "2026-10-25T01:00:00Z");
+  const d3 = diffStore(d2.state, { items: mk("CA$13.99") }, "2026-10-28T00:59:00Z");
+  assert.ok(d3.held && !d3.reset);
+  const d4 = diffStore(d3.state, { items: mk("CA$13.99") }, "2026-10-28T01:00:00Z");
+  assert.deepEqual(d4.reset, { from: "$", to: "CA$" });
+  assert.equal(d4.held, undefined);
+  assert.equal(buildMessages(d4).length, 0);
+  assert.equal(d4.state.currency, "CA$");
+  assert.equal(d4.state.currencyHold, undefined);
+  assert.equal(Object.values(d4.state.items)[0].price, "CA$13.99");
+  const d5 = diffStore(d4.state, { items: mk("CA$13.99") }, "2026-10-28T02:00:00Z");
+  assert.equal(d5.reset, null);
+});
+test("store watch: one item in another currency is not a price change; its old price is kept", () => {
+  const d1 = diffStore(null, { items: mk("$9.99") }, "2026-10-25T00:00:00Z");
+  const items = mk("$9.99"); items[1].price = "CA$20.99"; items[0].price = "$8.99";
+  const d2 = diffStore(d1.state, { items }, "2026-10-25T01:00:00Z");
+  assert.deepEqual(d2.changed.map(i => i.name), ["Remote Raid Pass"]);
+  assert.equal(d2.state.items["/purchase/item/pass"].price, "$14.99");
+});

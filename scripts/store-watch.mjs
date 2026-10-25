@@ -38,7 +38,8 @@ export function endsAtFrom(left, nowIso, prev) {
 
 // The store picks the displayed currency from where the request seems to come from, and has flipped between "$" and "CA$" for the
 // same items. The currency is the symbol part of the price ("$", "CA$"); a snapshot is judged by its most common one.
-export const currencyOf = price => (/\d/.test(String(price || "")) ? String(price).replace(/[\d.,\s]+/g, "") : "");
+export const currencyOf = price => (/\d/.test(String(price || "")) ? String(price).trim().replace(/[\d.,].*$/s, "").trim() : "");
+const HOLD_MS = 72 * 36e5; // a different currency that lasts this long is taken as the new normal
 export function dominantCurrency(prices) {
   const n = {};
   for (const p of prices) { const c = currencyOf(p); if (c) n[c] = (n[c] || 0) + 1; }
@@ -50,22 +51,25 @@ export function diffStore(prev, snap, nowIso) {
   // baseline) and report nothing; only note once, in state, that the store is showing another currency.
   const base = prev && prev.items ? (prev.currency || dominantCurrency(Object.values(prev.items).map(o => o.price))) : "";
   const cur = dominantCurrency(snap.items.map(i => i.price));
+  let reset = null;
   if (base && cur && cur !== base) {
     const hold = prev.currencyHold || { currency: cur, since: nowIso };
-    return { state: { ...prev, currency: base, currencyHold: hold }, added: [], changed: [], gone: [], first: false, held: { base, cur, since: hold.since, isNew: !prev.currencyHold } };
+    if (Date.parse(nowIso) - Date.parse(hold.since) >= HOLD_MS) reset = { from: base, to: cur }; // stayed put: re-baseline, no price alerts
+    else return { state: { ...prev, currency: base, currencyHold: hold }, added: [], changed: [], gone: [], first: false, held: { base, cur, since: hold.since, isNew: !prev.currencyHold } };
   }
   const old = (prev && prev.items) || {}, next = {}, added = [], changed = [], gone = [];
   for (const i of snap.items) {
     const k = key(i), o = old[k];
-    next[k] = { name: i.name, price: i.price, section: i.section, tag: i.tag, limit: i.limit, firstSeen: o ? o.firstSeen : nowIso, lastSeen: nowIso, endsAt: endsAtFrom(i.left, nowIso, o && o.endsAt) };
-    if (!o) added.push(i); else if (o.price !== i.price) changed.push({ ...i, was: o.price });
+    const mixed = o && !reset && currencyOf(o.price) && currencyOf(i.price) && currencyOf(o.price) !== currencyOf(i.price); // one item in another currency is not a price change
+    next[k] = { name: i.name, price: mixed ? o.price : i.price, section: i.section, tag: i.tag, limit: i.limit, firstSeen: o ? o.firstSeen : nowIso, lastSeen: nowIso, endsAt: endsAtFrom(i.left, nowIso, o && o.endsAt) };
+    if (!o) added.push(i); else if (!mixed && !reset && o.price !== i.price) changed.push({ ...i, was: o.price });
   }
   const history = { ...((prev && prev.gone) || {}) };
   for (const [k, o] of Object.entries(old)) if (!next[k]) { gone.push(o); history[k] = { ...o, goneAt: nowIso }; }
   for (const k of Object.keys(next)) delete history[k]; // back on sale
   const keep = Object.entries(history).sort((a, b) => String(b[1].goneAt).localeCompare(String(a[1].goneAt))).slice(0, 150);
   const watchStart = (prev && prev.watchStart) || (prev && prev.items ? Object.values(prev.items).map(o => o.firstSeen).sort()[0] : nowIso);
-  return { state: { items: next, gone: Object.fromEntries(keep), watchStart, updated: nowIso, currency: cur || base }, added, changed, gone, first: !prev || !prev.items };
+  return { state: { items: next, gone: Object.fromEntries(keep), watchStart, updated: nowIso, currency: cur || base }, added, changed, gone, first: !prev || !prev.items, reset };
 }
 
 // One message per item: { text, photo, slug, url }.
@@ -106,6 +110,11 @@ async function main() {
   if (!snap || !snap.items || snap.items.length < 3) throw new Error("No usable snapshot");
   const prev = await readJson(STATE, null), now = new Date().toISOString();
   const d = diffStore(prev, snap, now), msgs = buildMessages(d);
+  if (d.reset) {
+    console.log("Store has stayed in " + d.reset.to + " for 72 hours; taking it as the new baseline.");
+    const token = process.env.TELEGRAM_BOT_TOKEN, chat = process.env.TELEGRAM_CHAT_ID;
+    if (token && chat && process.env.DRY_RUN !== "true") await routed(process.env, "system")("https://api.telegram.org/bot" + token + "/sendMessage", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ chat_id: chat, text: "🛒 Store watch: the store has stayed in " + d.reset.to + " prices for 72 hours (was " + d.reset.from + "). Baseline reset to " + d.reset.to + "; no price alerts for the switch.", disable_web_page_preview: true }) });
+  }
   if (d.held) {
     console.log("Store is showing " + d.held.cur + " prices instead of " + d.held.base + "; ignoring this reading (no alerts, saved items kept).");
     const token = process.env.TELEGRAM_BOT_TOKEN, chat = process.env.TELEGRAM_CHAT_ID;
