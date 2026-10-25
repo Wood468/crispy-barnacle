@@ -1,9 +1,9 @@
 {
- "updated": "2026-10-25T04:53:52.808Z",
+ "updated": "2026-10-25T09:54:53.399Z",
  "events": {
   "leekduck:into-the-wild-2026": {
    "name": "Into the Wild",
-   "updated": "2026-10-25T04:53:52.808Z",
+   "updated": "2026-10-25T09:54:53.399Z",
    "sources": [
     {
      "id": "official",
@@ -29,7 +29,7 @@
   },
   "leekduck:november-communityday2026": {
    "name": "Pawniard Community Day",
-   "updated": "2026-10-25T04:53:52.808Z",
+   "updated": "2026-10-25T09:54:53.399Z",
    "sources": [
     {
      "id": "official",
@@ -319,7 +319,7 @@
   },
   "leekduck:go-pass-november-2026": {
    "name": "GO Pass: November",
-   "updated": "2026-10-25T04:53:52.808Z",
+   "updated": "2026-10-25T09:54:53.399Z",
    "sources": [
     {
      "id": "official",
@@ -565,7 +565,7 @@
   },
   "smr1": {
    "name": "Super Mega Raid Day",
-   "updated": "2026-10-25T04:53:52.808Z",
+   "updated": "2026-10-25T09:54:53.399Z",
    "sources": [
     {
      "id": "official",
@@ -813,7 +813,7 @@
   },
   "leekduck:halloween-2026-part-1": {
    "name": "Pokémon GO Halloween 2026 Part I",
-   "updated": "2026-10-25T04:53:52.808Z",
+   "updated": "2026-10-25T09:54:53.399Z",
    "sources": [
     {
      "id": "official",
@@ -1234,7 +1234,7 @@
   },
   "halloween1": {
    "name": "Halloween 2026, Part One",
-   "updated": "2026-10-25T04:53:52.808Z",
+   "updated": "2026-10-25T09:54:53.399Z",
    "sources": [
     {
      "id": "official",
@@ -1505,7 +1505,7 @@
   },
   "leekduck:pokemon-go-city-safari-boston-2026-rescheduled": {
    "name": "Pokémon GO City Safari: Boston (Rescheduled)",
-   "updated": "2026-10-25T04:53:52.808Z",
+   "updated": "2026-10-25T09:54:53.399Z",
    "sources": [
     {
      "id": "official",
@@ -1712,13 +1712,19 @@
   },
   "spirits": {
    "name": "Dynamax Uxie, Mesprit and Azelf",
-   "updated": "2026-10-25T04:53:52.808Z",
+   "updated": "2026-10-25T09:54:53.399Z",
    "sources": [
     {
      "id": "official",
      "name": "Pokémon GO (official)",
      "trust": "official",
      "url": "https://pokemongo.com/news/dynamax-uxie-mesprit-azelf-max-battle-day-2026/"
+    },
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/dynamax-uxie-mesprit-azelf-max-battle-day-2026/"
     }
    ],
    "fields": {
@@ -1726,9 +1732,10 @@
      {
       "text": "The following bonuses will be active during the event.",
       "sources": [
-       "official"
+       "official",
+       "leekduck"
       ],
-      "status": "official"
+      "status": "confirmed"
      },
      {
       "text": "Max Particle collection limit increased to 1,600",
@@ -1807,9 +1814,10 @@
      {
       "text": "Saturday, October 24, 2026, from 2:00 p.m. to 5:00 p.m. local time",
       "sources": [
-       "official"
+       "official",
+       "leekduck"
       ],
-      "status": "official"
+      "status": "confirmed"
      },
      {
       "text": "The following Pokémon will make their Pokémon GO Dynamax debut in five-star Max Battles!",
@@ -1852,58 +1860,107 @@
        "official"
       ],
       "status": "official"
+     },
+     {
+      "text": "The Dynamax Uxie, Mesprit, and Azelf Max Battle Day event will take place on October 24, 2026 from 2 pm to 5 pm local time.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Uxie, Mesprit, and Azelf debut in five-star Max Battles in their respective regions:",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Uxie: Asia-Pacific. Mesprit: Europe, the Middle East, Africa, and India. Azelf: the Americas and Greenland.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Max Battles appear at Power Spots and require teamwork. Use the Pokémon GO Map to find active battles and locations where battles may appear during the event.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "You can also check nearby events for community meetups hosted by Community Ambassadors, or find your community to coordinate with other Trainers.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
      }
     ],
     "eggs": [],
     "research": [],
-    "shiny": [],
+    "shiny": [
+     {
+      "text": "You may encounter Shiny Uxie, Mesprit, or Azelf after winning a Max Battle.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
     "moves": [],
     "costumes": [],
     "tickets": [
      {
       "text": "For US$4.99 (or the equivalent pricing tier in your local currency), you’ll be able to access event-exclusive Timed Research.",
       "sources": [
-       "official"
+       "official",
+       "leekduck"
       ],
-      "status": "official"
+      "status": "confirmed"
      },
      {
       "text": "Timed Research rewards include the following.",
       "sources": [
-       "official"
+       "official",
+       "leekduck"
       ],
-      "status": "official"
+      "status": "confirmed"
      },
      {
       "text": "1 Max Mushroom",
       "sources": [
-       "official"
+       "official",
+       "leekduck"
       ],
-      "status": "official"
+      "status": "confirmed"
      },
      {
       "text": "6,400 Max Particles",
       "sources": [
-       "official"
+       "official",
+       "leekduck"
       ],
-      "status": "official"
+      "status": "confirmed"
      },
      {
       "text": "You’ll also receive the following bonus.",
       "sources": [
-       "official"
+       "official",
+       "leekduck"
       ],
-      "status": "official"
-     },
-     {
-      "text": "2× XP from Max Battles",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
+      "status": "confirmed"
      },
      {
       "text": "This Timed Research will be effective on Saturday, October 24, 2026, from 2:00 p.m. to 5:00 p.m. local time.",
+      "sources": [
+       "official",
+       "leekduck"
+      ],
+      "status": "confirmed"
+     },
+     {
+      "text": "2× XP from Max Battles",
       "sources": [
        "official"
       ],
@@ -1935,9 +1992,10 @@
      {
       "text": "Saturday, October 24, 2026, from 2:00 p.m. to 5:00 p.m. local time",
       "sources": [
-       "official"
+       "official",
+       "leekduck"
       ],
-      "status": "official"
+      "status": "confirmed"
      },
      {
       "text": "From October 23 at 5:00 p.m. to October 24 at 8:00 p.m. PDT (GMT −7), the daily Remote Raid Pass limit will increase from 10 to 20",
@@ -1945,15 +2003,35 @@
        "official"
       ],
       "status": "official"
+     },
+     {
+      "text": "The Dynamax Uxie, Mesprit, and Azelf Max Battle Day event will take place on October 24, 2026 from 2 pm to 5 pm local time.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
      }
     ]
    },
    "conflicts": [],
-   "gaps": []
+   "gaps": [
+    {
+     "field": "featured",
+     "missingFrom": [
+      "leekduck"
+     ]
+    },
+    {
+     "field": "shiny",
+     "missingFrom": [
+      "official"
+     ]
+    }
+   ]
   },
   "tcg30": {
    "name": "Pokémon TCG: 30th Celebration (at stores)",
-   "updated": "2026-10-25T04:53:52.808Z",
+   "updated": "2026-10-25T09:54:53.399Z",
    "sources": [
     {
      "id": "official",
@@ -2018,7 +2096,7 @@
   },
   "sandile": {
    "name": "Sandile Hatch Day",
-   "updated": "2026-10-25T04:53:52.808Z",
+   "updated": "2026-10-25T09:54:53.399Z",
    "sources": [
     {
      "id": "official",
@@ -2177,7 +2255,7 @@
   },
   "trek": {
    "name": "Fall Marathon: Buddy Trek",
-   "updated": "2026-10-25T04:53:52.808Z",
+   "updated": "2026-10-25T09:54:53.399Z",
    "sources": [
     {
      "id": "official",
@@ -2406,7 +2484,7 @@
   },
   "leekduck:go-pass-october-2026": {
    "name": "GO Pass: October",
-   "updated": "2026-10-25T04:53:52.808Z",
+   "updated": "2026-10-25T09:54:53.399Z",
    "sources": [
     {
      "id": "official",
@@ -2708,7 +2786,7 @@
   },
   "zorua": {
    "name": "Zorua Community Day",
-   "updated": "2026-10-25T04:53:52.808Z",
+   "updated": "2026-10-25T09:54:53.399Z",
    "sources": [
     {
      "id": "official",
@@ -2887,7 +2965,7 @@
   },
   "leekduck:season-24-twilight-trails": {
    "name": "Twilight Trails",
-   "updated": "2026-10-25T04:53:52.808Z",
+   "updated": "2026-10-25T09:54:53.399Z",
    "sources": [
     {
      "id": "official",
@@ -3150,227 +3228,27 @@
     }
    ]
   },
-  "leekduck:dynamax-uxie-mesprit-azelf-max-battle-day-2026": {
-   "name": "Dynamax Uxie, Mesprit, and Azelf Max Battle Day",
-   "updated": "2026-10-25T04:53:52.808Z",
-   "sources": [
-    {
-     "id": "leekduck",
-     "name": "Leek Duck",
-     "trust": "community",
-     "url": "https://leekduck.com/events/dynamax-uxie-mesprit-azelf-max-battle-day-2026/"
-    }
-   ],
-   "fields": {
-    "bonuses": [
-     {
-      "text": "The following bonuses will be active during the event.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ],
-    "featured": [],
-    "raids": [
-     {
-      "text": "The Dynamax Uxie, Mesprit, and Azelf Max Battle Day event will take place on October 24, 2026 from 2 pm to 5 pm local time.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Uxie, Mesprit, and Azelf debut in five-star Max Battles in their respective regions:",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Uxie: Asia-Pacific. Mesprit: Europe, the Middle East, Africa, and India. Azelf: the Americas and Greenland.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Max Battles appear at Power Spots and require teamwork. Use the Pokémon GO Map to find active battles and locations where battles may appear during the event.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "You can also check nearby events for community meetups hosted by Community Ambassadors, or find your community to coordinate with other Trainers.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Premium Timed Research",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "For US$4.99 (or the equivalent pricing tier in your local currency), you’ll be able to access event-exclusive Timed Research, which rewards 1 Max Mushroom, 25,000 XP, 6,400 Max Particles, and 2× XP from Max Battles.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "The Timed Research is available on Saturday, October 24, 2026, from 2:00 p.m. to 5:00 p.m. local time.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ],
-    "eggs": [],
-    "research": [],
-    "shiny": [
-     {
-      "text": "You may encounter Shiny Uxie, Mesprit, or Azelf after winning a Max Battle.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ],
-    "moves": [],
-    "costumes": [],
-    "tickets": [
-     {
-      "text": "For US$4.99 (or the equivalent pricing tier in your local currency), you’ll be able to access event-exclusive Timed Research.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Timed Research rewards include the following.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "1 Max Mushroom",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "6,400 Max Particles",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "You’ll also receive the following bonus.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "This Timed Research will be effective on Saturday, October 24, 2026, from 2:00 p.m. to 5:00 p.m. local time.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ],
-    "dates": [
-     {
-      "text": "The Dynamax Uxie, Mesprit, and Azelf Max Battle Day event will take place on October 24, 2026 from 2 pm to 5 pm local time.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "The following bonuses will be active on October 24, 2026, from 12:00 a.m. to 5:00 p.m. local time.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "This Timed Research will be effective on Saturday, October 24, 2026, from 2:00 p.m. to 5:00 p.m. local time.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ]
-   },
-   "conflicts": [],
-   "gaps": []
-  },
-  "leekduck:pokemon-night-out-2026-twitch-drops": {
-   "name": "Twitch Drops for Pokémon Night Out 2026",
-   "updated": "2026-10-25T04:53:52.808Z",
+  "leekduck:pokemon-night-out-london-2026": {
+   "name": "Pokémon Night Out 2026 - London",
+   "updated": "2026-10-25T09:54:53.399Z",
    "sources": [
     {
      "id": "leekduck",
      "name": "Leek Duck",
      "trust": "community",
      "url": "https://leekduck.com/events/pokemon-night-out-2026-twitch-drops/"
-    }
-   ],
-   "fields": {
-    "bonuses": [],
-    "featured": [],
-    "raids": [],
-    "eggs": [],
-    "research": [
-     {
-      "text": "Event-exclusive Timed Research",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Watch the broadcast for 30 minutes to unlock this two-step Timed Research. Complete it to earn the Pokémon Night Out Baseball Jersey avatar item, XP, Stardust, and an encounter with Umbreon .",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "The exact completion deadline has not been confirmed. Complete all tasks and claim all rewards before the in-game timer expires.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ],
-    "shiny": [],
-    "moves": [],
-    "costumes": [],
-    "tickets": [],
-    "dates": []
-   },
-   "conflicts": [],
-   "gaps": []
-  },
-  "leekduck:pokemon-night-out-los-angeles-2026": {
-   "name": "Pokémon Night Out 2026 - Los Angeles",
-   "updated": "2026-10-25T04:53:52.808Z",
-   "sources": [
+    },
     {
      "id": "leekduck",
      "name": "Leek Duck",
      "trust": "community",
      "url": "https://leekduck.com/events/pokemon-night-out-los-angeles-2026/"
+    },
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/pokemon-night-out-london-2026/"
     }
    ],
    "fields": {
@@ -3425,6 +3303,27 @@
     "eggs": [],
     "research": [
      {
+      "text": "Event-exclusive Timed Research",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Watch the broadcast for 30 minutes to unlock this two-step Timed Research. Complete it to earn the Pokémon Night Out Baseball Jersey avatar item, XP, Stardust, and an encounter with Umbreon .",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "The exact completion deadline has not been confirmed. Complete all tasks and claim all rewards before the in-game timer expires.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
       "text": "Toxtricity (Low Key Form)",
       "sources": [
        "leekduck"
@@ -3446,14 +3345,7 @@
       "status": "single"
      },
      {
-      "text": "Event-exclusive Timed Research",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Complete this two-step Timed Research to earn the Pokémon Night Out Baseball Jersey avatar item, XP, Stardust, and an encounter with Umbreon .",
+      "text": "Research tasks and completion deadlines have not been announced.",
       "sources": [
        "leekduck"
       ],
@@ -3483,11 +3375,32 @@
     ]
    },
    "conflicts": [],
-   "gaps": []
+   "gaps": [
+    {
+     "field": "bonuses",
+     "missingFrom": []
+    },
+    {
+     "field": "featured",
+     "missingFrom": []
+    },
+    {
+     "field": "raids",
+     "missingFrom": []
+    },
+    {
+     "field": "shiny",
+     "missingFrom": []
+    },
+    {
+     "field": "dates",
+     "missingFrom": []
+    }
+   ]
   },
   "minior": {
    "name": "Orionids Meteor Shower: Minior Debut",
-   "updated": "2026-10-25T04:53:52.808Z",
+   "updated": "2026-10-25T09:54:53.399Z",
    "sources": [
     {
      "id": "leekduck",
@@ -3615,17 +3528,66 @@
   },
   "leekduck:max-mondays-2026-10-26": {
    "name": "Dynamax Sableye during Max Monday",
-   "updated": "2026-10-25T04:53:52.808Z",
+   "updated": "2026-10-25T09:54:53.399Z",
    "sources": [
     {
      "id": "leekduck",
      "name": "Leek Duck",
      "trust": "community",
      "url": "https://leekduck.com/events/max-mondays-2026-10-26/"
+    },
+    {
+     "id": "hub",
+     "name": "Pokémon GO Hub",
+     "trust": "community",
+     "url": "https://pokemongohub.net/post/event/dynamax-sableye-max-monday/"
     }
    ],
    "fields": {
-    "bonuses": [],
+    "bonuses": [
+     {
+      "text": "1 Rare Candy XL for completing in-person Max Battles",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Power Spots will refresh more frequently",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Additional Power Spots will be active on Mondays",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Regular Sprite | Shiny Sprite",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Sableye | Sableye",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Want more tips and tricks for Max Battles? Read this guide .",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     }
+    ],
     "featured": [],
     "raids": [
      {
@@ -3669,12 +3631,147 @@
        "leekduck"
       ],
       "status": "single"
+     },
+     {
+      "text": "The best attackers for defeating Dynamax Sableye are the following Pokémon:",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Dynamax Gardevoir Max Starfall",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Eternatus Dynamax Cannon",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Gigantamax Inteleon G-Max Hydrosnipe",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Gigantamax Gengar G-Max Terror",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Crowned Sword Zacian Behemoth Blade",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
      }
     ],
     "eggs": [],
     "research": [],
-    "shiny": [],
-    "moves": [],
+    "shiny": [
+     {
+      "text": "Regular Sprite | Shiny Sprite",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     }
+    ],
+    "moves": [
+     {
+      "text": "When three lines appear above a Pokémon’s head, it means it is being targeted by the Max Battle Boss. You can dodge the incoming attack by swiping to either the left or the right.",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "You have a 3-second countdown to choose the Pokémon you wish to use in the Max phase. You can pick any eligible Pokémon in your team, depending on which role you are fulfilling in your group.",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Once your Max phase ends, you can immediately switch back to another Pokémon in your team if you wish to.",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "You can enter the Max phase more than once in a Max Battle whenever your Max Meter refills.",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "If all of your Pokémon faint while battling a 3-star or higher level Boss with other Trainers, you can still help your allies by cheering for them so that their meters fill faster.",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "It is also worth communicating with your fellow Trainers to ensure that those who may be less prepared, such as children who don’t have the resources of others, are included in groups that can help carry them through.",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Using Max Guard shields you from incoming damage",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "20 HP for level 1",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "40 HP for level 2",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "60 HP for level 3",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "When stacked to a maximum of 3 shields it gives you:",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "120 HP for level 2",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     }
+    ],
     "costumes": [],
     "tickets": [],
     "dates": [
@@ -3688,11 +3785,36 @@
     ]
    },
    "conflicts": [],
-   "gaps": []
+   "gaps": [
+    {
+     "field": "bonuses",
+     "missingFrom": [
+      "leekduck"
+     ]
+    },
+    {
+     "field": "shiny",
+     "missingFrom": [
+      "leekduck"
+     ]
+    },
+    {
+     "field": "moves",
+     "missingFrom": [
+      "leekduck"
+     ]
+    },
+    {
+     "field": "dates",
+     "missingFrom": [
+      "hub"
+     ]
+    }
+   ]
   },
   "leekduck:mega-charizard-x-mega-charizard-y-in-mega-raids-october-2026": {
    "name": "Mega Charizard X and Mega Charizard Y in Mega Raids",
-   "updated": "2026-10-25T04:53:52.808Z",
+   "updated": "2026-10-25T09:54:53.399Z",
    "sources": [
     {
      "id": "leekduck",
@@ -3756,7 +3878,7 @@
   },
   "leekduck:palkia-in-5-star-raid-battles-october-2026": {
    "name": "Palkia in 5-star Raid Battles",
-   "updated": "2026-10-25T04:53:52.808Z",
+   "updated": "2026-10-25T09:54:53.399Z",
    "sources": [
     {
      "id": "leekduck",
@@ -3820,7 +3942,7 @@
   },
   "leekduck:raidhour20261028": {
    "name": "Giratina (Origin Forme) Raid Hour",
-   "updated": "2026-10-25T04:53:52.808Z",
+   "updated": "2026-10-25T09:54:53.399Z",
    "sources": [
     {
      "id": "leekduck",
@@ -3862,7 +3984,7 @@
   },
   "leekduck:pokemonspotlighthour2026-10-29": {
    "name": "Gastly Spotlight Hour",
-   "updated": "2026-10-25T04:53:52.808Z",
+   "updated": "2026-10-25T09:54:53.399Z",
    "sources": [
     {
      "id": "leekduck",
@@ -3896,7 +4018,7 @@
   },
   "leekduck:max-mondays-2026-11-02": {
    "name": "Dynamax Machop during Max Monday",
-   "updated": "2026-10-25T04:53:52.808Z",
+   "updated": "2026-10-25T09:54:53.399Z",
    "sources": [
     {
      "id": "leekduck",
@@ -3973,7 +4095,7 @@
   },
   "leekduck:shadow-landorus-incarnate-forme-in-shadow-raids-october-2026": {
    "name": "Shadow Landorus (Incarnate Forme) in Shadow Raids",
-   "updated": "2026-10-25T04:53:52.808Z",
+   "updated": "2026-10-25T09:54:53.399Z",
    "sources": [
     {
      "id": "leekduck",
@@ -4023,7 +4145,7 @@
   },
   "leekduck:giratina-origin-forme-in-5-star-raid-battles-october-2026": {
    "name": "Giratina (Origin Forme) in 5-star Raid Battles",
-   "updated": "2026-10-25T04:53:52.808Z",
+   "updated": "2026-10-25T09:54:53.399Z",
    "sources": [
     {
      "id": "leekduck",
@@ -4087,7 +4209,7 @@
   },
   "leekduck:raidhour20261104": {
    "name": "Giratina (Altered Forme) Raid Hour",
-   "updated": "2026-10-25T04:53:52.808Z",
+   "updated": "2026-10-25T09:54:53.399Z",
    "sources": [
     {
      "id": "leekduck",
@@ -4129,7 +4251,7 @@
   },
   "leekduck:pokemonspotlighthour2026-11-05": {
    "name": "Teddiursa wearing a witch hat Spotlight Hour",
-   "updated": "2026-10-25T04:53:52.808Z",
+   "updated": "2026-10-25T09:54:53.399Z",
    "sources": [
     {
      "id": "leekduck",
@@ -4185,7 +4307,7 @@
   },
   "halloween2": {
    "name": "Halloween 2026, Part Two",
-   "updated": "2026-10-25T04:53:52.808Z",
+   "updated": "2026-10-25T09:54:53.399Z",
    "sources": [
     {
      "id": "leekduck",
@@ -4429,7 +4551,7 @@
   },
   "leekduck:pokemon-go-wild-area-2026-sendai-japan": {
    "name": "Pokémon GO Wild Area 2026: Sendai • Tohoku",
-   "updated": "2026-10-25T04:53:52.808Z",
+   "updated": "2026-10-25T09:54:53.399Z",
    "sources": [
     {
      "id": "leekduck",
@@ -4779,7 +4901,7 @@
   },
   "leekduck:pokemon-go-wild-area-2026-mexico-city": {
    "name": "Pokémon GO Wild Area 2026: Mexico City",
-   "updated": "2026-10-25T04:53:52.808Z",
+   "updated": "2026-10-25T09:54:53.399Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5136,7 +5258,7 @@
   },
   "leekduck:mega-sableye-in-mega-raids-october-2026": {
    "name": "Mega Sableye in Mega Raids",
-   "updated": "2026-10-25T04:53:52.808Z",
+   "updated": "2026-10-25T09:54:53.399Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5193,7 +5315,7 @@
   },
   "leekduck:giratina-altered-forme-in-5-star-raid-battles-november-2026": {
    "name": "Giratina (Altered Forme) in 5-star Raid Battles",
-   "updated": "2026-10-25T04:53:52.808Z",
+   "updated": "2026-10-25T09:54:53.399Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5264,7 +5386,7 @@
   },
   "leekduck:shadow-tornadus-incarnate-forme-in-shadow-raids-november-4-2026": {
    "name": "Shadow Tornadus (Incarnate Forme) in Shadow Raids",
-   "updated": "2026-10-25T04:53:52.808Z",
+   "updated": "2026-10-25T09:54:53.399Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5310,117 +5432,9 @@
    "conflicts": [],
    "gaps": []
   },
-  "leekduck:pokemon-night-out-london-2026": {
-   "name": "Pokémon Night Out 2026 - London",
-   "updated": "2026-10-25T04:53:52.808Z",
-   "sources": [
-    {
-     "id": "leekduck",
-     "name": "Leek Duck",
-     "trust": "community",
-     "url": "https://leekduck.com/events/pokemon-night-out-london-2026/"
-    }
-   ],
-   "fields": {
-    "bonuses": [
-     {
-      "text": "Attendees can enjoy the following bonus during the event.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ],
-    "featured": [
-     {
-      "text": "These Pokémon will appear more often in the wild at the event venue.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Alolan Marowak",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "You may also encounter these rarer Pokémon.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ],
-    "raids": [
-     {
-      "text": "Pikachu and Gengar caught from these event raids will have a London Location Background .",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Both raid Pokémon can be Shiny.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ],
-    "eggs": [],
-    "research": [
-     {
-      "text": "Toxtricity (Low Key Form)",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Toxtricity (Amped Form)",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "If you already claimed the avatar item Timed Research through the Los Angeles Twitch livestream , you will not receive that research again.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Research tasks and completion deadlines have not been announced.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ],
-    "shiny": [
-     {
-      "text": "Both raid Pokémon can be Shiny.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ],
-    "moves": [],
-    "costumes": [],
-    "tickets": [],
-    "dates": []
-   },
-   "conflicts": [],
-   "gaps": []
-  },
   "into": {
    "name": "Into the Wild",
-   "updated": "2026-10-25T04:53:52.808Z",
+   "updated": "2026-10-25T09:54:53.399Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5677,7 +5691,7 @@
   },
   "leekduck:pokemon-go-wild-area-2026-global": {
    "name": "Pokémon GO Wild Area 2026: Global",
-   "updated": "2026-10-25T04:53:52.808Z",
+   "updated": "2026-10-25T09:54:53.399Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5965,7 +5979,7 @@
   },
   "leekduck:max-mondays-2026-11-16": {
    "name": "Max Monday: Pokémon to be announced",
-   "updated": "2026-10-25T04:53:52.808Z",
+   "updated": "2026-10-25T09:54:53.399Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6006,7 +6020,7 @@
   },
   "leekduck:raidhour20261118": {
    "name": "Cresselia and Darkrai Raid Hour",
-   "updated": "2026-10-25T04:53:52.808Z",
+   "updated": "2026-10-25T09:54:53.399Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6048,7 +6062,7 @@
   },
   "minior2": {
    "name": "Minior Showers: Leonids",
-   "updated": "2026-10-25T04:53:52.808Z",
+   "updated": "2026-10-25T09:54:53.399Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6139,7 +6153,7 @@
   },
   "leekduck:dynamax-trails-2026": {
    "name": "Dynamax Trails",
-   "updated": "2026-10-25T04:53:52.808Z",
+   "updated": "2026-10-25T09:54:53.399Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6181,7 +6195,7 @@
   },
   "leekduck:max-mondays-2026-11-23": {
    "name": "Dynamax Espurr during Max Monday",
-   "updated": "2026-10-25T04:53:52.808Z",
+   "updated": "2026-10-25T09:54:53.399Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6258,7 +6272,7 @@
   },
   "leekduck:cresselia-darkrai-in-5-star-raid-battles-november-2026": {
    "name": "Cresselia and Darkrai in 5-star Raid Battles",
-   "updated": "2026-10-25T04:53:52.808Z",
+   "updated": "2026-10-25T09:54:53.399Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6329,7 +6343,7 @@
   },
   "leekduck:mega-banette-in-mega-raids-november-2026": {
    "name": "Mega Banette in Mega Raids",
-   "updated": "2026-10-25T04:53:52.808Z",
+   "updated": "2026-10-25T09:54:53.399Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6393,7 +6407,7 @@
   },
   "leekduck:raidhour20261125": {
    "name": "Deoxys (Normal, Defense, Attack, and Speed Formes) Raid Hour",
-   "updated": "2026-10-25T04:53:52.808Z",
+   "updated": "2026-10-25T09:54:53.399Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6435,7 +6449,7 @@
   },
   "leekduck:pokemonspotlighthour2026-11-26": {
    "name": "Noibat Spotlight Hour",
-   "updated": "2026-10-25T04:53:52.808Z",
+   "updated": "2026-10-25T09:54:53.399Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6469,7 +6483,7 @@
   },
   "smr2": {
    "name": "Super Mega Raid Day",
-   "updated": "2026-10-25T04:53:52.808Z",
+   "updated": "2026-10-25T09:54:53.399Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6511,7 +6525,7 @@
   },
   "leekduck:twilight-wishes-2026": {
    "name": "Twilight Wishes",
-   "updated": "2026-10-25T04:53:52.808Z",
+   "updated": "2026-10-25T09:54:53.399Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6545,7 +6559,7 @@
   },
   "leekduck:max-mondays-2026-11-30": {
    "name": "Dynamax Cryogonal during Max Monday",
-   "updated": "2026-10-25T04:53:52.808Z",
+   "updated": "2026-10-25T09:54:53.399Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6622,7 +6636,7 @@
   },
   "leekduck:deoxys-normal-defense-attack-speed-formes-in-5-star-raid-battles-november-2026": {
    "name": "Deoxys (Normal, Defense, Attack, and Speed Formes) in 5-star Raid Battles",
-   "updated": "2026-10-25T04:53:52.808Z",
+   "updated": "2026-10-25T09:54:53.399Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6721,7 +6735,7 @@
   },
   "leekduck:mega-metagross-in-mega-raids-november-2026": {
    "name": "Mega Metagross in Mega Raids",
-   "updated": "2026-10-25T04:53:52.808Z",
+   "updated": "2026-10-25T09:54:53.399Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6792,7 +6806,7 @@
   },
   "minior3": {
    "name": "Minior Showers: Geminids",
-   "updated": "2026-10-25T04:53:52.808Z",
+   "updated": "2026-10-25T09:54:53.399Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6883,7 +6897,7 @@
   },
   "leekduck:pokemon-x-adidas-2026": {
    "name": "adidas × Pokémon Timed Research",
-   "updated": "2026-10-25T04:53:52.808Z",
+   "updated": "2026-10-25T09:54:53.399Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6961,7 +6975,7 @@
   },
   "leekduck:pokemon-go-tour-alola-kaohsiung-2027": {
    "name": "Pokémon GO Tour: Alola - Kaohsiung 2027",
-   "updated": "2026-10-25T04:53:52.808Z",
+   "updated": "2026-10-25T09:54:53.399Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6995,7 +7009,7 @@
   },
   "leekduck:pokemon-go-tour-alola-los-angeles-2027": {
    "name": "Pokémon GO Tour: Alola - Los Angeles 2027",
-   "updated": "2026-10-25T04:53:52.808Z",
+   "updated": "2026-10-25T09:54:53.399Z",
    "sources": [
     {
      "id": "leekduck",
@@ -7029,7 +7043,7 @@
   },
   "leekduck:pokemon-go-tour-alola-global-2027": {
    "name": "Pokémon GO Tour: Alola - Global 2027",
-   "updated": "2026-10-25T04:53:52.808Z",
+   "updated": "2026-10-25T09:54:53.399Z",
    "sources": [
     {
      "id": "leekduck",
@@ -7063,7 +7077,7 @@
   },
   "leekduck:minior-showers-eta-aquariids-2027": {
    "name": "Minior Showers: Eta Aquariids 2027",
-   "updated": "2026-10-25T04:53:52.808Z",
+   "updated": "2026-10-25T09:54:53.399Z",
    "sources": [
     {
      "id": "leekduck",
@@ -7161,7 +7175,7 @@
   },
   "leekduck:minior-showers-southern-delta-aquariids-2027": {
    "name": "Minior Showers: Southern Delta Aquariids 2027",
-   "updated": "2026-10-25T04:53:52.808Z",
+   "updated": "2026-10-25T09:54:53.399Z",
    "sources": [
     {
      "id": "leekduck",
@@ -7259,7 +7273,7 @@
   },
   "leekduck:minior-showers-perseids-2027": {
    "name": "Minior Showers: Perseids 2027",
-   "updated": "2026-10-25T04:53:52.808Z",
+   "updated": "2026-10-25T09:54:53.399Z",
    "sources": [
     {
      "id": "leekduck",
@@ -7338,6 +7352,341 @@
      },
      {
       "text": "Southern Delta Aquariids : July 28–August 2, 2027",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ]
+   },
+   "conflicts": [],
+   "gaps": []
+  },
+  "leekduck:dynamax-uxie-mesprit-azelf-max-battle-day-2026": {
+   "name": "Dynamax Uxie, Mesprit, and Azelf Max Battle Day",
+   "updated": "2026-10-25T04:53:52.808Z",
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/dynamax-uxie-mesprit-azelf-max-battle-day-2026/"
+    }
+   ],
+   "fields": {
+    "bonuses": [
+     {
+      "text": "The following bonuses will be active during the event.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "featured": [],
+    "raids": [
+     {
+      "text": "The Dynamax Uxie, Mesprit, and Azelf Max Battle Day event will take place on October 24, 2026 from 2 pm to 5 pm local time.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Uxie, Mesprit, and Azelf debut in five-star Max Battles in their respective regions:",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Uxie: Asia-Pacific. Mesprit: Europe, the Middle East, Africa, and India. Azelf: the Americas and Greenland.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Max Battles appear at Power Spots and require teamwork. Use the Pokémon GO Map to find active battles and locations where battles may appear during the event.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "You can also check nearby events for community meetups hosted by Community Ambassadors, or find your community to coordinate with other Trainers.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Premium Timed Research",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "For US$4.99 (or the equivalent pricing tier in your local currency), you’ll be able to access event-exclusive Timed Research, which rewards 1 Max Mushroom, 25,000 XP, 6,400 Max Particles, and 2× XP from Max Battles.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "The Timed Research is available on Saturday, October 24, 2026, from 2:00 p.m. to 5:00 p.m. local time.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "eggs": [],
+    "research": [],
+    "shiny": [
+     {
+      "text": "You may encounter Shiny Uxie, Mesprit, or Azelf after winning a Max Battle.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "moves": [],
+    "costumes": [],
+    "tickets": [
+     {
+      "text": "For US$4.99 (or the equivalent pricing tier in your local currency), you’ll be able to access event-exclusive Timed Research.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Timed Research rewards include the following.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "1 Max Mushroom",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "6,400 Max Particles",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "You’ll also receive the following bonus.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "This Timed Research will be effective on Saturday, October 24, 2026, from 2:00 p.m. to 5:00 p.m. local time.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "dates": [
+     {
+      "text": "The Dynamax Uxie, Mesprit, and Azelf Max Battle Day event will take place on October 24, 2026 from 2 pm to 5 pm local time.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "The following bonuses will be active on October 24, 2026, from 12:00 a.m. to 5:00 p.m. local time.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "This Timed Research will be effective on Saturday, October 24, 2026, from 2:00 p.m. to 5:00 p.m. local time.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ]
+   },
+   "conflicts": [],
+   "gaps": []
+  },
+  "leekduck:pokemon-night-out-2026-twitch-drops": {
+   "name": "Twitch Drops for Pokémon Night Out 2026",
+   "updated": "2026-10-25T04:53:52.808Z",
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/pokemon-night-out-2026-twitch-drops/"
+    }
+   ],
+   "fields": {
+    "bonuses": [],
+    "featured": [],
+    "raids": [],
+    "eggs": [],
+    "research": [
+     {
+      "text": "Event-exclusive Timed Research",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Watch the broadcast for 30 minutes to unlock this two-step Timed Research. Complete it to earn the Pokémon Night Out Baseball Jersey avatar item, XP, Stardust, and an encounter with Umbreon .",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "The exact completion deadline has not been confirmed. Complete all tasks and claim all rewards before the in-game timer expires.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "shiny": [],
+    "moves": [],
+    "costumes": [],
+    "tickets": [],
+    "dates": []
+   },
+   "conflicts": [],
+   "gaps": []
+  },
+  "leekduck:pokemon-night-out-los-angeles-2026": {
+   "name": "Pokémon Night Out 2026 - Los Angeles",
+   "updated": "2026-10-25T04:53:52.808Z",
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/pokemon-night-out-los-angeles-2026/"
+    }
+   ],
+   "fields": {
+    "bonuses": [
+     {
+      "text": "Attendees can enjoy the following bonus during the event.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "featured": [
+     {
+      "text": "These Pokémon will appear more often in the wild at the event venue.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Alolan Marowak",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "You may also encounter these rarer Pokémon.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "raids": [
+     {
+      "text": "Pikachu and Gengar caught from these event raids will have a Los Angeles Location Background .",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Both raid Pokémon can be Shiny.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "eggs": [],
+    "research": [
+     {
+      "text": "Toxtricity (Low Key Form)",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Toxtricity (Amped Form)",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "If you already claimed the avatar item Timed Research through the Los Angeles Twitch livestream , you will not receive that research again.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Event-exclusive Timed Research",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Complete this two-step Timed Research to earn the Pokémon Night Out Baseball Jersey avatar item, XP, Stardust, and an encounter with Umbreon .",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "shiny": [
+     {
+      "text": "Both raid Pokémon can be Shiny.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "moves": [],
+    "costumes": [],
+    "tickets": [],
+    "dates": [
+     {
+      "text": "Date: October 24, 2026 Location: Intuit Dome, Los Angeles, USA Night Out show starts: 7:30 p.m. PDT (unconfirmed for Pokémon GO) Doors open: 6:00 p.m. PDT End time: To be announced",
       "sources": [
        "leekduck"
       ],

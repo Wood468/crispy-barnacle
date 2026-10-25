@@ -1,5 +1,5 @@
 {
- "runAt": "2026-10-25T04:53:52.808Z",
+ "runAt": "2026-10-25T09:54:53.399Z",
  "sources": {
   "official": {
    "listed": 25,
@@ -10,13 +10,13 @@
    "error": ""
   },
   "hub": {
-   "listed": 13,
+   "listed": 14,
    "error": ""
   }
  },
  "pagesRead": 80,
  "events": 78,
- "worldEvents": 35,
+ "worldEvents": 34,
  "worldUndated": [
   "Go Wild Area Stamp Rally Details"
  ],
@@ -73,13 +73,8 @@
   },
   {
    "source": "hub",
-   "title": "How to beat Dynamax Azelf: Complete Guide",
-   "url": "https://pokemongohub.net/post/guide/how-to-beat-dynamax-azelf-complete-guide/"
-  },
-  {
-   "source": "hub",
-   "title": "How to beat Dynamax Uxie: Complete Guide",
-   "url": "https://pokemongohub.net/post/guide/how-to-beat-dynamax-uxie-complete-guide/"
+   "title": "This Week in Pokémon GO: October 26 to November 1, 2026",
+   "url": "https://pokemongohub.net/post/event/this-week-in-pokemon-go-october-26-to-november-1-2026/"
   }
  ],
  "intl": {
@@ -235,6 +230,20 @@
    ]
   },
   {
+   "event": "Dynamax Uxie, Mesprit and Azelf",
+   "field": "featured",
+   "missingFrom": [
+    "leekduck"
+   ]
+  },
+  {
+   "event": "Dynamax Uxie, Mesprit and Azelf",
+   "field": "shiny",
+   "missingFrom": [
+    "official"
+   ]
+  },
+  {
    "event": "Twilight Trails",
    "field": "bonuses",
    "missingFrom": [
@@ -267,6 +276,59 @@
    "field": "tickets",
    "missingFrom": [
     "official"
+   ]
+  },
+  {
+   "event": "Pokémon Night Out 2026 - London",
+   "field": "bonuses",
+   "missingFrom": []
+  },
+  {
+   "event": "Pokémon Night Out 2026 - London",
+   "field": "featured",
+   "missingFrom": []
+  },
+  {
+   "event": "Pokémon Night Out 2026 - London",
+   "field": "raids",
+   "missingFrom": []
+  },
+  {
+   "event": "Pokémon Night Out 2026 - London",
+   "field": "shiny",
+   "missingFrom": []
+  },
+  {
+   "event": "Pokémon Night Out 2026 - London",
+   "field": "dates",
+   "missingFrom": []
+  },
+  {
+   "event": "Dynamax Sableye during Max Monday",
+   "field": "bonuses",
+   "missingFrom": [
+    "leekduck"
+   ]
+  },
+  {
+   "event": "Dynamax Sableye during Max Monday",
+   "field": "shiny",
+   "missingFrom": [
+    "leekduck"
+   ]
+  },
+  {
+   "event": "Dynamax Sableye during Max Monday",
+   "field": "moves",
+   "missingFrom": [
+    "leekduck"
+   ]
+  },
+  {
+   "event": "Dynamax Sableye during Max Monday",
+   "field": "dates",
+   "missingFrom": [
+    "hub"
    ]
   },
   {
