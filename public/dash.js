@@ -212,7 +212,7 @@
   }
   var EV = [], usingApi = false, usingReadOnly = false;
   function mergeLiveAndCurated(live, curated) {
-    // Only merge an exact normalised title with a close start time. Token overlap is unsafe:
+    // Only merge titles with the same GODEDUPE.titleKey (or one starting with the other) and a close start time. Token overlap is unsafe:
     // unrelated events can share a Pokémon name ("Zorua Community Day" vs "Zorua Raid Day").
     // Keep near-matches as separate cards rather than risking silent loss or mixed details.
     var used = {}, out = live.slice();
