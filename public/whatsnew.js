@@ -36,12 +36,12 @@
     if (!total) { save(st.ids); saveLeaks(); return; }
     var anchor = document.getElementById('fresh-line'); if (!anchor || !anchor.parentNode) return;
     if (!box) { box = document.createElement('div'); box.className = 'whatsnew'; box.setAttribute('role', 'status'); anchor.parentNode.insertBefore(box, anchor.nextSibling); }
-    var h = '<b>New since your last visit</b> <span class="wn-n">' + total + '</span>';
-    if (st.fresh.length) h += '<div class="wn-list">' + st.fresh.slice(0, 8).map(function (e) { return '<a href="#event=' + encodeURIComponent(e.id) + '">' + esc(e.name || e.id) + '</a>'; }).join('') + (st.fresh.length > 8 ? '<span>+' + (st.fresh.length - 8) + ' more</span>' : '') + '</div>';
+    var h = '<details class="wn-det"><summary><b>New since your last visit</b> <span class="wn-n">' + total + '</span></summary>';
+    if (st.fresh.length) h +='<div class="wn-list">' + st.fresh.slice(0, 8).map(function (e) { return '<a href="#event=' + encodeURIComponent(e.id) + '">' + esc(e.name || e.id) + '</a>'; }).join('') + (st.fresh.length > 8 ? '<span>+' + (st.fresh.length - 8) + ' more</span>' : '') + '</div>';
     st.leaks.forEach(function (g) {
       h += '<div class="wn-list"><span class="wn-h">' + esc(g.label) + '</span>' + g.items.slice(0, 8).map(function (i) { return i.l ? '<a href="' + esc(i.l) + '" target="_blank" rel="noopener noreferrer">' + esc(i.t) + '</a>' : '<a href="#leaks" class="wn-leaks">' + esc(i.t) + '</a>'; }).join('') + (g.items.length > 8 ? '<span>+' + (g.items.length - 8) + ' more</span>' : '') + '</div>';
     });
-    box.innerHTML = h + '<button type="button" class="pill wn-ok">Got it</button>';
+    box.innerHTML = h + '</details><button type="button" class="pill wn-ok">Got it</button>';
     box.hidden = false;
     box.querySelector('.wn-ok').addEventListener('click', function () { save(st.ids); saveLeaks(); box.hidden = true; });
     Array.prototype.forEach.call(box.querySelectorAll('.wn-leaks'), function (a) { a.addEventListener('click', function (e) { e.preventDefault(); var b = document.getElementById('menu-leaks'); if (b) b.click(); }); });

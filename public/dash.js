@@ -1179,7 +1179,12 @@
     var fys = $('foryou-sec'); if (fys) { fys.hidden = !fy.length; }
     if ($('foryou')) $('foryou').innerHTML = fy.map(function (e) { return card(e); }).join('');
     var fyIds = {}; fy.forEach(function (e) { fyIds[e.id] = 1; });
-    fill('home-now', active, 'No events are marked as currently live in the schedule.');
+    /* Today: everything live right now plus anything that starts later today. When there is nothing, say what is next. */
+    var endDay = addDays(start, 1);
+    var today = EV.filter(function (e) { var ph = phase(e, t); return !e.long && !kindHidden(e.kind) && (ph === 'live' || (ph === 'soon' && e.start < endDay)); }).sort(function (a, b) { return a.start - b.start; });
+    var nextUp = EV.filter(function (e) { return phase(e, t) === 'soon' && e.start >= endDay && !e.long && !kindHidden(e.kind); }).sort(function (a, b) { return a.start - b.start; })[0];
+    var tdEl = $('home-now');
+    if (tdEl) tdEl.innerHTML = today.length ? today.map(function (e) { return card(e); }).join('') : '<p class="empty">Nothing is scheduled for today.' + (nextUp ? ' Next up: <b>' + esc(nextUp.name) + '</b>, ' + esc(nextUp.start.toLocaleDateString(undefined, { weekday: 'short', day: 'numeric', month: 'short' }) + ', ' + nextUp.start.toLocaleTimeString(undefined, { hour: 'numeric', minute: '2-digit' })) + '.' : '') + '</p>';
     fill('week', thisWeek, 'No further events are scheduled in the next seven days.');
     fill('spot', nextWeek, 'No events are scheduled for next week yet.');
     fill('home-later', later, 'No later events are scheduled for the rest of this month yet.');
@@ -1252,7 +1257,7 @@
     renderCoverage();
     if (window.GO && GO.refreshDex) GO.refreshDex();
     usSync();
-    var inf = document.createElement('script'); inf.src = '/infographic.js?v=20261017b'; document.body.appendChild(inf); var x = document.createElement('script'); x.src = '/extra.js?v=20261024a'; document.body.appendChild(x); var y = document.createElement('script'); y.src = '/detail.js?v=20261024c'; document.body.appendChild(y); var z = document.createElement('script'); z.src = '/places.js?v=20261014p'; document.body.appendChild(z); var w = document.createElement('script'); w.src = '/fresh.js?v=20261014a'; document.body.appendChild(w); var nv = document.createElement('script'); nv.src = '/nudge.js?v=20261014l'; document.body.appendChild(nv); var rv = document.createElement('script'); rv.src = '/review.js?v=20261022b'; document.body.appendChild(rv); var by = document.createElement('script'); by.src = '/buy.js?v=20261020d'; document.body.appendChild(by);
+    var inf = document.createElement('script'); inf.src = '/infographic.js?v=20261017b'; document.body.appendChild(inf); var x = document.createElement('script'); x.src = '/extra.js?v=20261024a'; document.body.appendChild(x); var y = document.createElement('script'); y.src = '/detail.js?v=20261024c'; document.body.appendChild(y); var z = document.createElement('script'); z.src = '/places.js?v=20261014p'; document.body.appendChild(z); var w = document.createElement('script'); w.src = '/fresh.js?v=20261014a'; document.body.appendChild(w); var nv = document.createElement('script'); nv.src = '/nudge.js?v=20261014l'; document.body.appendChild(nv); var rv = document.createElement('script'); rv.src = '/review.js?v=20261025a'; document.body.appendChild(rv); var by = document.createElement('script'); by.src = '/buy.js?v=20261020d'; document.body.appendChild(by);
   }
   envBanner();
   var dexP = fetch('/dex.json').then(function (r) { return r.json(); }).catch(function () { return []; });

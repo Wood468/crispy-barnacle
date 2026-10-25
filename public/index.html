@@ -16,7 +16,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&family=Hanken+Grotesk:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap">
 <link rel="stylesheet" href="/styles.css?v=20261014a">
-<link rel="stylesheet" href="/dash.css?v=20261021a">
+<link rel="stylesheet" href="/dash.css?v=20261025a">
 </head>
 <body>
 <div class="wrap">
@@ -38,6 +38,15 @@
     <section class="panel" id="tab-now" role="tabpanel">
       <div id="prio" class="legacy-test-hook" aria-live="polite" aria-hidden="true"></div>
       <details class="dd" id="shdd" hidden><summary>Shiny hunting <span class="cnt" id="shcnt"></span></summary><div class="body"><label><input type="checkbox" id="shhide" checked> Hide ones I already have as a shiny</label><div id="shlist" class="dexlist"></div></div></details>
+      <div id="seasonbar" class="seasonbar" hidden></div>
+      <section class="agenda-section" id="weekly-sec" aria-labelledby="weekly-title" hidden>
+        <h2 class="sec2" id="weekly-title">Infographics</h2>
+        <div id="weekly" class="weekly-row"></div>
+      </section>
+      <section class="agenda-section" aria-labelledby="agenda-now-title">
+        <h2 class="sec2" id="agenda-now-title">Today</h2>
+        <div id="home-now" class="event-agenda"></div>
+      </section>
       <section class="agenda-section" id="foryou-sec" aria-labelledby="foryou-title" hidden>
         <h2 class="sec2" id="foryou-title">For you</h2>
         <p class="sub" style="margin:0 0 8px">Live and upcoming events with Pokémon you still need or follow.</p>
@@ -45,14 +54,6 @@
       </section>
       <section class="agenda-section" id="buy-sec" hidden>
         <details class="buyplan"><summary>Purchase planner <small>tickets and passes in the web store</small></summary><div id="buy-body"></div></details>
-      </section>
-      <section class="agenda-section" id="weekly-sec" aria-labelledby="weekly-title" hidden>
-        <h2 class="sec2" id="weekly-title">At a glance</h2>
-        <div id="weekly" class="weekly-row"></div>
-      </section>
-      <section class="agenda-section" aria-labelledby="agenda-now-title">
-        <h2 class="sec2" id="agenda-now-title">Happening now</h2>
-        <div id="home-now" class="event-agenda"></div>
       </section>
       <section class="agenda-section" aria-labelledby="agenda-week-title">
         <h2 class="sec2" id="agenda-week-title">This week</h2>
@@ -394,12 +395,12 @@
 <script src="/move.js?v=20261012n"></script>
 <script src="/account.js?v=20261020z"></script>
 <script src="/dedupe.js?v=20261015f"></script>
-<script src="/app.js?v=20261024d"></script>
+<script src="/app.js?v=20261025a"></script>
 <script src="/store.js?v=20261015a"></script>
-<script src="/season.js?v=20261015a"></script>
+<script src="/season.js?v=20261025a"></script>
 <script src="/weekly.js?v=20261014c"></script>
 <script src="/pin.js?v=20261015a"></script>
-<script src="/whatsnew.js?v=20261023a"></script>
+<script src="/whatsnew.js?v=20261025a"></script>
 <script src="/pwa.js"></script>
 </body>
 </html>
