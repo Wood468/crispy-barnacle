@@ -36,7 +36,24 @@ export function endsAtFrom(left, nowIso, prev) {
   return new Date(est).toISOString();
 }
 
+// The store picks the displayed currency from where the request seems to come from, and has flipped between "$" and "CA$" for the
+// same items. The currency is the symbol part of the price ("$", "CA$"); a snapshot is judged by its most common one.
+export const currencyOf = price => (/\d/.test(String(price || "")) ? String(price).replace(/[\d.,\s]+/g, "") : "");
+export function dominantCurrency(prices) {
+  const n = {};
+  for (const p of prices) { const c = currencyOf(p); if (c) n[c] = (n[c] || 0) + 1; }
+  return Object.entries(n).sort((a, b) => b[1] - a[1])[0]?.[0] || "";
+}
+
 export function diffStore(prev, snap, nowIso) {
+  // A different currency is not a price change. Keep the saved items as they were (so the flip back is compared with the real
+  // baseline) and report nothing; only note once, in state, that the store is showing another currency.
+  const base = prev && prev.items ? (prev.currency || dominantCurrency(Object.values(prev.items).map(o => o.price))) : "";
+  const cur = dominantCurrency(snap.items.map(i => i.price));
+  if (base && cur && cur !== base) {
+    const hold = prev.currencyHold || { currency: cur, since: nowIso };
+    return { state: { ...prev, currency: base, currencyHold: hold }, added: [], changed: [], gone: [], first: false, held: { base, cur, since: hold.since, isNew: !prev.currencyHold } };
+  }
   const old = (prev && prev.items) || {}, next = {}, added = [], changed = [], gone = [];
   for (const i of snap.items) {
     const k = key(i), o = old[k];
@@ -48,7 +65,7 @@ export function diffStore(prev, snap, nowIso) {
   for (const k of Object.keys(next)) delete history[k]; // back on sale
   const keep = Object.entries(history).sort((a, b) => String(b[1].goneAt).localeCompare(String(a[1].goneAt))).slice(0, 150);
   const watchStart = (prev && prev.watchStart) || (prev && prev.items ? Object.values(prev.items).map(o => o.firstSeen).sort()[0] : nowIso);
-  return { state: { items: next, gone: Object.fromEntries(keep), watchStart, updated: nowIso }, added, changed, gone, first: !prev || !prev.items };
+  return { state: { items: next, gone: Object.fromEntries(keep), watchStart, updated: nowIso, currency: cur || base }, added, changed, gone, first: !prev || !prev.items };
 }
 
 // One message per item: { text, photo, slug, url }.
@@ -89,6 +106,13 @@ async function main() {
   if (!snap || !snap.items || snap.items.length < 3) throw new Error("No usable snapshot");
   const prev = await readJson(STATE, null), now = new Date().toISOString();
   const d = diffStore(prev, snap, now), msgs = buildMessages(d);
+  if (d.held) {
+    console.log("Store is showing " + d.held.cur + " prices instead of " + d.held.base + "; ignoring this reading (no alerts, saved items kept).");
+    const token = process.env.TELEGRAM_BOT_TOKEN, chat = process.env.TELEGRAM_CHAT_ID;
+    if (d.held.isNew && token && chat && process.env.DRY_RUN !== "true") await routed(process.env, "system")("https://api.telegram.org/bot" + token + "/sendMessage", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ chat_id: chat, text: "🛒 Store watch: the store is showing " + d.held.cur + " prices instead of " + d.held.base + ". Ignoring that reading, so no price alerts. I will say nothing more unless it stays like this.", disable_web_page_preview: true }) });
+    if (process.env.DRY_RUN !== "true") await writeFile(STATE, JSON.stringify(d.state, null, 1) + "\n");
+    return;
+  }
   globalThis.fetch = routed(process.env, "changes", globalThis.fetch);
   const token = process.env.TELEGRAM_BOT_TOKEN, chat = process.env.TELEGRAM_CHAT_ID;
   if (!msgs.length) console.log("Nothing new to tell you (" + snap.items.length + " items in the store).");

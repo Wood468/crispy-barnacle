@@ -40,3 +40,45 @@ test("store log: carries the item's store link and estimated end", () => {
   const d2 = diffStore(d.state, { items: [{ ...a, left: "1 day left" }] }, "2026-10-02T00:00:00.000Z");
   assert.equal(storeLog(d2.state).items[0].endsAt, "2026-10-03T00:00:00.000Z", "stable while readings agree");
 });
+
+import { currencyOf } from "../scripts/store-watch.mjs";
+import { buildMessages } from "../scripts/store-watch.mjs";
+const mk = (price, extra = {}) => [
+  { name: "Remote Raid Pass", price, section: "ITEMS", href: "/purchase/item/rrp", ...extra },
+  { name: "GO Pass Deluxe", price: price === "$9.99" ? "$14.99" : "CA$20.99", section: "ITEMS", href: "/purchase/item/pass" },
+  { name: "Max Battle Ultra Ticket Box", price: price === "$9.99" ? "$4.99" : "CA$6.99", section: "LIMITED_TIME", href: "/purchase/item/max" },
+];
+test("store watch: reads the currency from the price text", () => {
+  assert.equal(currencyOf("$9.99"), "$");
+  assert.equal(currencyOf("CA$13.99"), "CA$");
+  assert.equal(currencyOf(""), "");
+});
+test("store watch: a real same-currency price change and a new item still alert", () => {
+  const d1 = diffStore(null, { items: mk("$9.99") }, "2026-10-25T00:00:00Z");
+  const items = mk("$9.99"); items[0].price = "$8.99"; items.push({ name: "New Box", price: "$1.99", section: "ITEMS", href: "/purchase/item/new" });
+  const d2 = diffStore(d1.state, { items }, "2026-10-25T01:00:00Z");
+  assert.equal(d2.held, undefined);
+  assert.deepEqual(d2.changed.map(i => [i.name, i.was, i.price]), [["Remote Raid Pass", "$9.99", "$8.99"]]);
+  assert.deepEqual(d2.added.map(i => i.name), ["New Box"]);
+  assert.equal(buildMessages(d2).length, 2);
+});
+test("store watch: a currency flip (and the flip back) does not alert or touch the saved prices", () => {
+  const d1 = diffStore(null, { items: mk("$9.99") }, "2026-10-25T00:00:00Z");
+  const d2 = diffStore(d1.state, { items: mk("CA$13.99") }, "2026-10-25T01:00:00Z");
+  assert.deepEqual([d2.added, d2.changed, d2.gone], [[], [], []]);
+  assert.equal(buildMessages(d2).length, 0);
+  assert.equal(d2.held.isNew, true);
+  assert.deepEqual(Object.values(d2.state.items).map(o => o.price), ["$9.99", "$14.99", "$4.99"]);
+  const d3 = diffStore(d2.state, { items: mk("CA$13.99") }, "2026-10-25T02:00:00Z"); // still flipped: no second note
+  assert.equal(d3.held.isNew, false);
+  const d4 = diffStore(d3.state, { items: mk("$9.99") }, "2026-10-25T03:00:00Z"); // back to normal
+  assert.equal(d4.held, undefined);
+  assert.equal(buildMessages(d4).length, 0);
+  assert.equal(d4.state.currencyHold, undefined);
+  assert.equal(d4.state.currency, "$");
+});
+test("store watch: state saved before currency was tracked still detects a flip", () => {
+  const d1 = diffStore(null, { items: mk("$9.99") }, "2026-10-25T00:00:00Z");
+  delete d1.state.currency;
+  assert.ok(diffStore(d1.state, { items: mk("CA$13.99") }, "2026-10-25T01:00:00Z").held);
+});
