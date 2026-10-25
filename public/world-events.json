@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-24T23:22:24.064Z",
+ "updated": "2026-10-25T04:53:52.805Z",
  "events": [
   {
    "id": "w-pokemon-fossil-museum-2026",
@@ -18,7 +18,7 @@
     }
    ],
    "status": "single",
-   "seen": "2026-10-24"
+   "seen": "2026-10-25"
   },
   {
    "id": "w-pokemon-jet-red-collaboration-event",
@@ -37,7 +37,7 @@
     }
    ],
    "status": "single",
-   "seen": "2026-10-24"
+   "seen": "2026-10-25"
   },
   {
    "id": "w-pikachu-s-autumn-adventure",
@@ -56,7 +56,7 @@
     }
    ],
    "status": "single",
-   "seen": "2026-10-24"
+   "seen": "2026-10-25"
   },
   {
    "id": "w-pokemon-x-adidas",
@@ -104,7 +104,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-10-24"
+   "seen": "2026-10-25"
   },
   {
    "id": "w-pokemon-go-x-esa-london",
@@ -152,7 +152,7 @@
     }
    ],
    "status": "single",
-   "seen": "2026-10-24"
+   "seen": "2026-10-25"
   },
   {
    "id": "w-pok-mon-run-30-taichung",
@@ -190,7 +190,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-10-24"
+   "seen": "2026-10-25"
   },
   {
    "id": "w-aeon-mall-halloween",
@@ -238,7 +238,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-10-24"
+   "seen": "2026-10-25"
   },
   {
    "id": "w-how-to-beat-dynamax-azelf-complete-guide",
@@ -262,12 +262,12 @@
     }
    ],
    "status": "confirmed",
-   "seen": "2026-10-24"
+   "seen": "2026-10-25"
   },
   {
    "id": "w-fc-seoul",
    "name": "FC Seoul",
-   "place": "Seoul, South Korea",
+   "place": "South Korea",
    "area": "Asia",
    "scope": "regional",
    "start": "2026-10-24",
@@ -275,13 +275,18 @@
    "datesKnown": true,
    "sources": [
     {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "url": "https://pokemongo.com/ko/news/fc-seoul-2026/"
+    },
+    {
      "id": "serebii",
      "name": "Serebii",
      "url": "https://www.serebii.net/pokemongo/reallifeevents.shtml"
     }
    ],
-   "status": "single",
-   "seen": "2026-10-24"
+   "status": "official",
+   "seen": "2026-10-25"
   },
   {
    "id": "w-pok-mon-go-city-safari-boston-update",
@@ -383,7 +388,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-10-24"
+   "seen": "2026-10-25"
   },
   {
    "id": "w-go-wild-area-2026-mexico-city",
@@ -402,7 +407,7 @@
     }
    ],
    "status": "single",
-   "seen": "2026-10-24"
+   "seen": "2026-10-25"
   },
   {
    "id": "w-go-wild-area-2026-sendai-tohoku",
@@ -421,7 +426,7 @@
     }
    ],
    "status": "single",
-   "seen": "2026-10-24"
+   "seen": "2026-10-25"
   },
   {
    "id": "w-pok-xciting-lands-at-changi-airport-and-jewel-get-",
@@ -440,7 +445,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-10-24"
+   "seen": "2026-10-25"
   },
   {
    "id": "w-pok-mon-run-30-singapore",
@@ -478,7 +483,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-10-24"
+   "seen": "2026-10-25"
   },
   {
    "id": "w-into-the-wild",
@@ -697,15 +702,10 @@
      "id": "official",
      "name": "Pokémon GO (official)",
      "url": "https://pokemongo.com/news/save-the-date-go-tour-2027/"
-    },
-    {
-     "id": "official",
-     "name": "Pokémon GO (official)",
-     "url": "https://pokemongo.com/ko/news/save-the-date-go-tour-2027/"
     }
    ],
    "status": "official",
-   "seen": "2026-10-24"
+   "seen": "2026-10-25"
   },
   {
    "id": "w-pokemon-go-tour-2027-los-angeles",
