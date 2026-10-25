@@ -1,7 +1,4 @@
 {
- "alerted": [
-  "store-watch.yml",
-  "discord_sync.yml"
- ],
+ "alerted": [],
  "unmatched": []
 }
