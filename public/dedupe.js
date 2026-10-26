@@ -34,7 +34,7 @@
     fold(place).replace(/[^a-z0-9]+/g, ' ').trim().split(' ').forEach(function (w) { w = stem(w); if (w.length > 2 && !GENERIC_PLACE[w]) out[w] = 1; });
     return out;
   }
-  function day(x) { if (typeof x === 'number') return Math.floor(x / 864e5); var m = /^(\d{4})-(\d{2})-(\d{2})/.exec(String(x || '')); return m ? Math.floor(Date.UTC(+m[1], +m[2] - 1, +m[3]) / 864e5) : NaN; }
+  function day(x) { if (x instanceof Date) x = x.getTime(); if (typeof x === 'number') return Math.floor(x / 864e5); var m = /^(\d{4})-(\d{2})-(\d{2})/.exec(String(x || '')); return m ? Math.floor(Date.UTC(+m[1], +m[2] - 1, +m[3]) / 864e5) : NaN; }
   function size(o) { return Object.keys(o).length; }
   function shared(a, b) { var n = 0; for (var k in a) if (b[k]) n++; return n; }
   function dates(a, b) {
@@ -125,7 +125,32 @@
      same title (word order, "Part One" / "Part I", punctuation and case ignored). All matching pictures are pooled. */
   function bareId(id) { return String(id || '').replace(/^[a-z]+:/, '').toLowerCase(); }
   function slugOf(u) { var p = String(u || '').split(/[?#]/)[0].split('/').filter(Boolean); return (p.pop() || '').toLowerCase(); }
-  function findEventInfo(ev, all) {
+  /* The title fallback must not hand one instance of a recurring event the pictures of another ("Super Mega Raid Day" in October vs
+     November, a repeat "Zorua Community Day"). event-info.json entries carry no dates, so two signals are used, and a title match is
+     only accepted when neither says "different instance":
+       1. another event in the list (`others`) owns that entry by its id and its dates do not overlap this card's dates;
+       2. the entry's own id / article address / picture sources name a month and year ("october-2026", "2026-10-14") that is
+          more than a month away from the card's start. */
+  var MONTHS = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
+  function hintOf(k, entry) {
+    var text = [k, entry && entry.source && entry.source.url].concat(((entry && entry.infographics) || []).map(function (g) { return g && g.sourceUrl; })).join(' ').toLowerCase();
+    var m = /(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*[-_ ]+(20\d\d)/.exec(text);
+    if (m) return +m[2] * 12 + MONTHS.indexOf(m[1]);
+    m = /(20\d\d)-(\d\d)-\d\d/.exec(text);
+    return m && +m[2] >= 1 && +m[2] <= 12 ? +m[1] * 12 + (+m[2] - 1) : null;
+  }
+  function monthOf(x) { var d = day(x); if (isNaN(d)) return null; var t = new Date(d * 864e5); return t.getUTCFullYear() * 12 + t.getUTCMonth(); }
+  function otherInstance(ev, k, entry, others) {
+    var h = hintOf(k, entry), m = monthOf(ev.start);
+    if (h != null && m != null && Math.abs(h - m) > 1) return true;
+    var bk = bareId(k);
+    return (others || []).some(function (o) {
+      if (!o || !o.id || o.id === ev.id || (ev.aliasIds || []).indexOf(o.id) > -1) return false;
+      var theirs = [o.id].concat(o.aliasIds || []).some(function (i) { return bareId(i) === bk; });
+      return theirs && dates(ev, o) === 'apart';
+    });
+  }
+  function findEventInfo(ev, all, others) {
     all = all || {}; ev = ev || {};
     var bares = {}; [ev.id].concat(ev.aliasIds || []).forEach(function (i) { if (i) bares[bareId(i)] = 1; });
     var slug = slugOf(ev.link); if (slug.indexOf('-') > 0) bares[slug] = 1;
@@ -134,7 +159,7 @@
     if (!withPics(keys).length && ev.name) {
       var tk = titleKey(ev.name);
       Object.keys(all).forEach(function (k) {
-        if (keys.indexOf(k) < 0 && all[k] && (all[k].names || []).some(function (n) { return titleKey(n) === tk; })) keys.push(k);
+        if (keys.indexOf(k) < 0 && all[k] && (all[k].names || []).some(function (n) { return titleKey(n) === tk; }) && !otherInstance(ev, k, all[k], others)) keys.push(k);
       });
     }
     if (!keys.length) return null;

@@ -36,13 +36,18 @@
   function loadInfo(fresh) {
     if (INFO && !fresh) return Promise.resolve(INFO);
     return Promise.all([
-      fetch('/event-info.json', { cache: fresh ? 'reload' : 'no-cache' }).then(function (r) { return r.ok ? r.json() : {}; }).catch(function () { return {}; }),
+      /* A failed fetch (offline, server error, bad JSON) must not wipe what the page already has: null means "keep the old INFO". */
+      fetch('/event-info.json', { cache: fresh ? 'reload' : 'no-cache' }).then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; }),
       loadPending()
-    ]).then(function (a) { INFO = (a[0] && a[0].events) || {}; return INFO; });
+    ]).then(function (a) { var ev = a[0] && a[0].events; if (ev && typeof ev === 'object') INFO = ev; return INFO || {}; });
+  }
+  /* Every event the page knows, so the title fallback can tell "this is the next instance" from "this is the same event". */
+  function otherEvents() {
+    return [].concat(X.events() || [], X.regionalEvents ? X.regionalEvents() : [], X.worldEvents ? X.worldEvents() : []);
   }
   function eventInfo(ev, all) {
     var bare = String(ev.id || '').replace(/^[a-z]+:/, '');
-    var hit = (window.GODEDUPE && GODEDUPE.findEventInfo ? GODEDUPE.findEventInfo(ev, all) : (all[ev.id] || all[bare])) || {};
+    var hit = (window.GODEDUPE && GODEDUPE.findEventInfo ? GODEDUPE.findEventInfo(ev, all, otherEvents()) : (all[ev.id] || all[bare])) || {};
     var extra = pendingFor(ev);
     if (!extra.length) return hit;
     var have = (hit.infographics || []).map(function (i) { return i.url; });
@@ -57,6 +62,7 @@
     button.disabled = false;
     button.removeAttribute('aria-disabled');
     button.hidden = false;
+    if (thumb && button.getAttribute('data-igbad') === thumb) thumb = ''; /* that picture failed to load: do not try it again */
     if (thumb) {
       button.classList.add('info-available', 'igthumb'); button.classList.remove('igcheck');
       button.removeAttribute('data-igcheck'); button.setAttribute('data-infographic', id);
@@ -65,6 +71,7 @@
       if (!img || img.getAttribute('src') !== thumb) {
         button.innerHTML = '';
         img = document.createElement('img'); img.setAttribute('loading', 'lazy'); img.setAttribute('decoding', 'async'); img.setAttribute('width', '44'); img.setAttribute('height', '44'); img.alt = '';
+        img.addEventListener('error', function () { button.setAttribute('data-igbad', thumb); cardButton(button, ev, id, ''); });
         img.src = thumb; button.appendChild(img);
       }
     } else {
@@ -97,18 +104,25 @@
       button.title = poster ? 'View published infographic' : 'View event picture and summary';
     });
   }
+  /* The button keeps its button role; the result is read out through one hidden status region. */
+  function announce(text) {
+    var r = document.getElementById('iglive');
+    if (!r) { r = document.createElement('div'); r.id = 'iglive'; r.className = 'vh-live'; r.setAttribute('role', 'status'); r.setAttribute('aria-live', 'polite'); document.body.appendChild(r); }
+    r.textContent = text;
+  }
   /* "Check infographic": look again, ignoring everything this page already loaded. Found: open it. Not found: say so on the button. */
   function recheck(button) {
     var id = button.getAttribute('data-igcheck'), ev = evById(id);
     if (!ev || button.getAttribute('data-igbusy') === '1') return;
+    if (button._igTimer) { clearTimeout(button._igTimer); button._igTimer = 0; button.removeAttribute('data-igmsg'); }
     button.setAttribute('data-igbusy', '1'); button.textContent = 'Checking…';
     loadInfo(true).then(function (all) {
       button.removeAttribute('data-igbusy');
       var found = ((eventInfo(ev, all).infographics || []).some(function (i) { return i && safe(i.url); })) || !!safe(ev.infographicUrl || ev.infographic);
       syncButtons(all);
       if (found) { open(id); return; }
-      button.setAttribute('data-igmsg', '1'); button.textContent = 'No infographic found yet'; button.setAttribute('role', 'status');
-      setTimeout(function () { button.removeAttribute('data-igmsg'); button.removeAttribute('role'); button.textContent = 'Check infographic'; }, 3500);
+      button.setAttribute('data-igmsg', '1'); button.textContent = 'No infographic found yet'; announce('No infographic found yet');
+      button._igTimer = setTimeout(function () { button._igTimer = 0; button.removeAttribute('data-igmsg'); button.textContent = 'Check infographic'; announce(''); }, 3500);
     }).catch(function () { button.removeAttribute('data-igbusy'); button.textContent = 'Check infographic'; });
   }
   document.addEventListener('visibilitychange', function () { if (!document.hidden && INFO) loadInfo(true).then(function (all) { syncButtons(all); }); });
