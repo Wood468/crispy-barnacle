@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-25T05:14:53.288Z",
+ "updated": "2026-10-26T01:39:16.630Z",
  "seeded": true,
  "channels": [
   {
@@ -18,10 +18,28 @@
    "src": "gamedata",
    "name": "dm-gamedata",
    "state": "ok",
-   "count": 5
+   "count": 7
   }
  ],
  "items": [
+  {
+   "id": "1564067135523790968",
+   "src": "gamedata",
+   "title": "The fact that he didn't let me report on this one is crazy",
+   "text": "The fact that he didn't let me report on this one is crazy",
+   "link": "",
+   "image": "",
+   "date": "2026-10-26T00:04:24.071Z"
+  },
+  {
+   "id": "1564065789684744293",
+   "src": "gamedata",
+   "title": "Dynamax configurations were updated for Meltan and Melmetal",
+   "text": "Dynamax configurations were updated for Meltan and Melmetal \n\nminor camera and radius settings changed",
+   "link": "",
+   "image": "",
+   "date": "2026-10-25T23:59:03.198Z"
+  },
   {
    "id": "1563750251695710241",
    "src": "gamedata",
