@@ -421,11 +421,26 @@
       "s": "2026-11-21T14:00",
       "e": "2026-11-21T17:00",
       "tags": [
-        "Community Day"
+        "Community Day",
+        "Shiny",
+        "Background"
       ],
       "p": [
-        "Saturday, Nov 21, 2 pm to 5 pm. Featured Pokémon not announced in my sources."
-      ]
+        "Pawniard appears more often in the wild, 2 pm to 5 pm local time. Shiny Pawniard can appear, and wild Pawniard can carry a special background.",
+        "Evolve Bisharp into Kingambit during the event or up to 4 hours after to learn the Charged Attack Kowtow Cleave.",
+        "1/4 Egg hatch distance, 2x catch Candy, 2x chance of Candy XL (level 31+), 3-hour Incense, an extra Special Trade and half-price trades. Lure and Special Trade bonuses run until 9 pm."
+      ],
+      "art": [
+        "Pawniard",
+        {
+          "n": "Pawniard",
+          "shiny": 1
+        },
+        "Bisharp",
+        "Kingambit"
+      ],
+      "sourceUrl": "https://pokemongo.com/news/communityday-november-2026-pawniard",
+      "source": "Official Pokémon GO announcement"
     },
     {
       "id": "smr2",
