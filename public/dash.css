@@ -302,6 +302,7 @@ header.top{display:flex;align-items:flex-start;justify-content:space-between;gap
 button.igthumb{width:44px;height:44px;min-height:44px;padding:0;border-radius:10px;overflow:hidden;flex:none;line-height:0}
 button.igthumb img{width:100%;height:100%;object-fit:cover;object-position:top;display:block;background:var(--bg)}
 button.igcheck{min-height:44px}
+.vh-live{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
 .evc.cmp .evc-foot .more.igthumb{flex:none;width:44px;padding:0}
 .evc.cmp .evc-foot .more.igcheck{white-space:normal;line-height:1.15;font-size:.78rem}
 .goinfo{position:fixed;inset:0;z-index:1200;background:rgba(4,7,15,.94);display:grid;place-items:center;padding:12px;overflow:auto}

@@ -1,6 +1,7 @@
 """Browser checks for the Phase 2 dashboard (needs: pip install playwright; a static server: cd public && python3 -m http.server 8791).
 Run: python3 test/ui_checks.py. Mocks every /api/* call, fixes the clock to Fri 10 Oct 2026 22:45 Melbourne time."""
-import json,sys
+import json,sys,re,base64
+PNG1=base64.b64decode('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==')
 from playwright.sync_api import sync_playwright
 OUT='/tmp/go_ui_'
 def ful(body,ct='application/json'): return lambda route,req: route.fulfill(body=body,content_type=ct)
@@ -21,6 +22,7 @@ with sync_playwright() as p:
         pg.clock.install(time=clock)
         pg.route('**/api/sources',ful(sources or '{"environment":"production","database":true,"enabled":false,"sources":[]}'))
         pg.route('**/api/events',ful(api or '{"enabled":false,"events":[]}'))
+        pg.route(re.compile(r'/(img/ext|infographics)/'),lambda r:r.fulfill(body=PNG1,content_type='image/png'))  # R2 pictures are not in the static folder
         pg.route('**/api/userstate*',lambda r:r.fulfill(status=404,body='{}',content_type='application/json'))
         pg.route('**/api/dex',lambda r:r.fulfill(status=401,body='{}',content_type='application/json'))
         pg.route('**/api/art*',lambda r:r.fulfill(status=404,body=''))
@@ -40,6 +42,7 @@ with sync_playwright() as p:
         check('card with an infographic shows a 44px thumbnail button', pg.locator('[data-infographic="cur:trek"].igthumb img[loading=lazy]').count()==1 and pg.locator('[data-infographic="cur:trek"].igthumb').bounding_box()['width']>=44 and not pg.locator('[data-infographic="cur:trek"]').is_disabled())
         check('card with no infographic shows an always-on Check infographic button (no thumbnail)', pg.locator('[data-igcheck="cur:zorua"]').first.inner_text()=='Check infographic' and not pg.locator('[data-igcheck="cur:zorua"]').first.is_disabled() and pg.locator('[data-igcard="cur:zorua"] img').count()==0)
         check('infographic buttons are accessible', 'Open infographic for' in pg.locator('[data-infographic="cur:trek"]').first.get_attribute('aria-label') and 'infographic' in pg.locator('[data-igcheck="cur:zorua"]').first.get_attribute('aria-label'))
+        check('Check infographic button keeps its button role', pg.locator('[data-igcheck="cur:zorua"]').first.get_attribute('role') is None)
         pg.locator('[data-igcheck="cur:zorua"]').first.click(); pg.wait_for_timeout(600)
         check('Check infographic says so in place when nothing is found', pg.locator('[data-igcheck="cur:zorua"]').first.inner_text()=='No infographic found yet' and not pg.locator('#goinfo:not([hidden])').count())
         check('no event grades are shown', pg.locator('.event-grade, .grade-summary, #grade-settings').count()==0)

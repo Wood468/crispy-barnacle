@@ -106,6 +106,40 @@ test("infographic lookup: genuinely missing stays missing", () => {
   assert.equal(dd.findEventInfo(null, null), null);
 });
 
+test("infographic lookup: a later instance of a recurring event does not inherit the earlier one's pictures", () => {
+  const oct = { id: "cur:smr1", name: "Super Mega Raid Day", start: new Date("2026-10-31T14:00"), end: new Date("2026-10-31T17:00") };
+  const nov = { id: "cur:smr2", name: "Super Mega Raid Day", start: new Date("2026-11-28T14:00"), end: new Date("2026-11-28T17:00"), link: "https://leekduck.com/events/super-mega-raid-day-november-2026/" };
+  const others = [oct, nov];
+  assert.ok(info.smr1.infographics.length >= 2);
+  assert.equal(pics(oct), info.smr1.infographics.length, "October matches smr1 by id");
+  assert.equal(pics(nov), info.smr1.infographics.length, "the old unguarded title fallback is what we are fixing (no list given)");
+  assert.equal(dd.findEventInfo(nov, info, others), null, "November is owned-elsewhere: smr1 belongs to the October card");
+  assert.equal(dd.findEventInfo(oct, info, others).infographics.length, info.smr1.infographics.length);
+  // Even when the October card is no longer listed, a month/year in the entry's own id says it is another instance.
+  const yv = { id: "w-next", name: "Yveltal in 5-Star Raid Battles", start: new Date("2026-12-10T10:00"), end: new Date("2026-12-10T11:00") };
+  assert.equal(dd.findEventInfo(yv, info, []), null, "yveltal-oct-2026 is two months before this card");
+  assert.equal(dd.findEventInfo({ ...yv, start: new Date("2026-10-08T10:00") }, info, []).infographics.length, info["yveltal-oct-2026"].infographics.length, "same month still matches");
+  // A repeat Community Day: the earlier card (id "zorua") owns the entry by id.
+  const zOld = { id: "cur:zorua", name: "Zorua Community Day", start: new Date("2026-10-11T14:00"), end: new Date("2026-10-11T17:00") };
+  const zNew = { id: "cur:zorua2", name: "Zorua Community Day", start: new Date("2027-02-14T14:00"), end: new Date("2027-02-14T17:00") };
+  const fake = { zorua: { names: ["Zorua Community Day"], infographics: [{ url: "/img/ext/z.webp" }] } };
+  assert.equal(dd.findEventInfo(zNew, fake, [zOld, zNew]), null);
+  assert.equal(dd.findEventInfo(zOld, fake, [zOld, zNew]).infographics.length, 1);
+});
+
+test("infographic lookup: genuine title matches still work with the event list given", () => {
+  const h1 = { id: "cur:halloween1", name: "Halloween 2026, Part One", start: new Date("2026-10-27T10:00"), end: new Date("2026-11-01T10:00") };
+  const h2 = { id: "cur:halloween2", name: "Halloween 2026, Part Two", start: new Date("2026-11-01T10:00"), end: new Date("2026-11-05T10:00") };
+  assert.equal(dd.findEventInfo(h1, info, [h1, h2]).infographics.length, info["leekduck:halloween-2026-part-1"].infographics.length);
+  assert.equal(dd.findEventInfo(h2, info, [h1, h2]).infographics.length, info["leekduck:halloween-2026-part-2"].infographics.length);
+  // The live "leekduck:" copy is a separate card with the same dates: it does not block the curated card.
+  const live = { id: "leekduck:halloween-2026-part-1", name: "Pokémon GO Halloween 2026 Part I", start: h1.start, end: h1.end };
+  assert.equal(dd.findEventInfo(h1, info, [h1, live]).infographics.length, info["leekduck:halloween-2026-part-1"].infographics.length);
+  // Wild Area Global pools its four pictures through the alias; no list needed.
+  const wag = { id: "leekduck:pokemon-go-wild-area-2026-global", aliasIds: ["cur:wag"], name: "Pokémon GO Wild Area 2026: Global", start: new Date("2026-11-20"), end: new Date("2026-11-22") };
+  assert.equal(dd.findEventInfo(wag, info, [wag]).infographics.length, 4);
+});
+
 test("infographic card button wiring: thumbnail, Check infographic, merged-card aliases", () => {
   const read = (f) => readFileSync(new URL("../public/" + f, import.meta.url), "utf8");
   const ig = read("infographic.js"), dash = read("dash.js"), css = read("dash.css");
