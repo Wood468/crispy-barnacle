@@ -256,3 +256,10 @@ test("list lookup: all=1 returns every upcoming venue event with its Melbourne d
     assert.equal((await (await worker.fetch(new Request("https://x/api/venue-times?all=1"), env, { waitUntil() {} })).json()).items.length, 0, "old ones drop out");
   } finally { Date.now = RealNow; }
 });
+
+test("a hand-entered Night Out time beats page text that carries another city's date (London showed Los Angeles' date)", () => {
+  const details = { events: { "leekduck:pokemon-night-out-london-2026": { name: "Pokémon Night Out 2026 - London", fields: { dates: [{ text: LA }] } } } };
+  const items = venueItems(details);
+  assert.equal(items.length, 1);
+  assert.equal(new Date(items[0].ms).toISOString(), "2026-11-10T18:00:00.000Z");
+});

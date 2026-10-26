@@ -77,6 +77,7 @@ test("Discord forwarding: refused pictures fall back to a link, retry, then move
   let msgs = [{ id: "1000" }], tgMode = "ok";
   const f = async (u, o) => {
     if (new URL(u).hostname === "discord.com") return { ok: true, json: async () => msgs };
+    if (new URL(u).hostname !== "api.telegram.org") return { ok: false, status: 404 }; // the Discord picture download: not available here
     const method = /\/(\w+)$/.exec(u)[1]; sentTo.push(method);
     if (tgMode === "down") return { ok: false, json: async () => ({}) };
     if (tgMode === "photo-refused" && method === "sendPhoto") return { ok: false, json: async () => ({}) };
@@ -143,4 +144,49 @@ test("the week-ahead message lists starred events that touch the week", () => {
   const data = { events: [{ id: "z", t: "Zorua Community Day", s: "2026-10-20T14:00", e: "2026-10-20T17:00" }, { id: "q", t: "Later", s: "2026-11-20T00:00", e: "2026-11-21T00:00" }] };
   const world = [{ id: "w-x", name: "Into the Wild", start: "2026-10-18", end: "2026-10-22" }];
   assert.deepEqual(savedThisWeek(data, world, ["cur:z", "cur:q", "w-x"], "2026-10-19"), ["⭐ Into the Wild (10-18 to 10-22)", "⭐ Zorua Community Day (10-20)"]);
+});
+
+test("Discord pictures: Telegram refuses the link, the Worker uploads the file; text only as a last resort; Telegram's reason is logged", async () => {
+  const mk = () => { const rows = new Map(); return { prepare: sql => ({ run: async () => ({}), bind: (...a) => ({ first: async () => (rows.has(a[0]) ? { value: rows.get(a[0]) } : null), run: async () => { if (/INSERT/.test(sql)) rows.set(a[0], a[1]); return {}; } }) }) }; };
+  const run = async ({ photoUrlOk, download, uploadOk = true, content = "Raid day" }) => {
+    const env = { DB: mk(), DISCORD_TOKEN: "d", CHANNEL_ID: "1", TELEGRAM_BOT_TOKEN: "SECRET-TOKEN", TELEGRAM_CHAT_ID: "9" }, calls = [], logs = [];
+    let msgs = [{ id: "1000" }];
+    const f = async (u, o) => {
+      const host = new URL(u).hostname;
+      if (host === "discord.com") return { ok: true, json: async () => msgs };
+      if (host === "cdn.discordapp.com") { calls.push({ m: "download" }); if (download === "fail") return { ok: false, status: 404 }; return { ok: true, headers: new Headers({ "content-type": "image/jpeg" }), arrayBuffer: async () => new Uint8Array([1, 2, 3]).buffer }; }
+      const m = /\/(\w+)$/.exec(u)[1], multipart = !!(o.body && typeof o.body.get === "function");
+      calls.push({ m, multipart, body: multipart ? o.body : JSON.parse(o.body) });
+      const good = m === "sendMessage" || (multipart ? uploadOk : photoUrlOk);
+      return good ? { ok: true, json: async () => ({ result: { message_id: 7 } }) } : { ok: false, status: 400, json: async () => ({ description: "Bad Request: wrong file identifier/HTTP URL specified" }) };
+    };
+    const warn = console.warn; console.warn = (...a) => logs.push(a.join(" "));
+    try {
+      await runDiscord(env, { fetch: f });
+      msgs = [{ id: "1010", content, attachments: [{ url: "https://cdn.discordapp.com/a.png", content_type: "image/png" }] }];
+      const r = await runDiscord(env, { fetch: f });
+      return { r, calls, logs };
+    } finally { console.warn = warn; }
+  };
+  // the link works: nothing is downloaded
+  let o = await run({ photoUrlOk: true });
+  assert.deepEqual(o.calls.map(c => c.m), ["sendPhoto"]); assert.equal(o.calls[0].multipart, false); assert.deepEqual(o.r.sent, ["discord:1010"]);
+  // the link is refused: the file is uploaded as multipart form data, and Telegram's reason is logged without the token
+  o = await run({ photoUrlOk: false });
+  assert.deepEqual(o.calls.map(c => c.m), ["sendPhoto", "download", "sendPhoto"]);
+  const up = o.calls[2]; assert.equal(up.multipart, true); assert.equal(up.body.get("chat_id"), "9"); assert.match(up.body.get("caption"), /Raid day/); assert.ok(up.body.get("photo") instanceof Blob); assert.equal(up.body.get("photo").type, "image/jpeg"); assert.ok(JSON.parse(up.body.get("reply_markup")).inline_keyboard);
+  assert.deepEqual(o.r.sent, ["discord:1010"]);
+  assert.ok(o.logs.some(l => /sendPhoto failed: HTTP 400 Bad Request: wrong file identifier/.test(l)), "Telegram's error is logged");
+  assert.ok(!o.logs.some(l => /SECRET-TOKEN|cdn\.discordapp/.test(l)), "no token or picture link in logs");
+  // the download fails: text only, the link appears once
+  o = await run({ photoUrlOk: false, download: "fail" });
+  assert.deepEqual(o.calls.map(c => c.m), ["sendPhoto", "download", "sendMessage"]); assert.deepEqual(o.r.sent, ["discord:1010"]);
+  assert.equal((o.calls[2].body.text.match(/https:\/\/cdn\.discordapp\.com\/a\.png/g) || []).length, 1);
+  assert.ok(o.logs.some(l => /download failed: HTTP 404/.test(l)));
+  // the post text already holds the link: it is not repeated
+  o = await run({ photoUrlOk: false, download: "fail", content: "see https://cdn.discordapp.com/a.png" });
+  assert.equal((o.calls[2].body.text.match(/https:\/\/cdn\.discordapp\.com\/a\.png/g) || []).length, 1);
+  // the upload is refused too: falls to text
+  o = await run({ photoUrlOk: false, uploadOk: false });
+  assert.deepEqual(o.calls.map(c => c.m), ["sendPhoto", "download", "sendPhoto", "sendMessage"]);
 });
