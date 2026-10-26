@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-26T04:48:05.142Z",
+ "updated": "2026-10-26T13:03:49.918Z",
  "status": [
   {
    "id": "hub",
@@ -23,11 +23,11 @@
   },
   {
    "id": "youtube-pogo",
-   "state": "error",
-   "note": "HTTP 404"
+   "state": "ok",
+   "items": 0
   }
  ],
- "gaps": 5,
+ "gaps": 4,
  "items": [
   {
    "source": "hub",
@@ -76,20 +76,6 @@
    ]
   },
   {
-   "source": "hub",
-   "trust": "community",
-   "title": "Pawniard Community Day (November 2026)",
-   "link": "https://pokemongohub.net/post/event/pawniard-community-day-november-2026/",
-   "date": "2026-10-21T16:55:07.000Z",
-   "summary": "The November 2026 Community Day features Pawniard, the Sharp Blade Pokémon! Join the event on Saturday, November 21, 2026, from 2:00 p.m. to 5:00 p.m. local time to enjoy 1/4 Egg Hatch Distance, incre",
-   "pokemon": [
-    "Pawniard"
-   ],
-   "notInOurData": [
-    "Pawniard"
-   ]
-  },
-  {
    "source": "reddit-silph",
    "trust": "tip",
    "title": "Is Halloween 2026 the weakest Pokémon GO Halloween event in years, or is it just me?",
@@ -104,6 +90,18 @@
    "notInOurData": [
     "Phantump"
    ]
+  },
+  {
+   "source": "hub",
+   "trust": "community",
+   "title": "Pawniard Community Day (November 2026)",
+   "link": "https://pokemongohub.net/post/event/pawniard-community-day-november-2026/",
+   "date": "2026-10-21T16:55:07.000Z",
+   "summary": "The November 2026 Community Day features Pawniard, the Sharp Blade Pokémon! Join the event on Saturday, November 21, 2026, from 2:00 p.m. to 5:00 p.m. local time to enjoy 1/4 Egg Hatch Distance, incre",
+   "pokemon": [
+    "Pawniard"
+   ],
+   "notInOurData": []
   },
   {
    "source": "reddit-silph",

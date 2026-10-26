@@ -1,7 +1,7 @@
 {
- "updated": "2026-10-26T04:48:05.272Z",
+ "updated": "2026-10-26T13:03:50.051Z",
  "state": "ok",
- "scrapedDuckEvents": 59,
+ "scrapedDuckEvents": 56,
  "missingHere": [
   {
    "name": "Pokémon Night Out 2026 - London",
@@ -82,15 +82,5 @@
    "start": "2026-11-21"
   }
  ],
- "shinyDisagree": [
-  {
-   "event": "novcd",
-   "name": "November Community Day",
-   "scrapedDuckShinies": [
-    "Pawniard",
-    "Bisharp",
-    "Kingambit"
-   ]
-  }
- ]
+ "shinyDisagree": []
 }
