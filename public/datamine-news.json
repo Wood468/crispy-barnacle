@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-26T01:39:16.630Z",
+ "updated": "2026-10-26T19:55:31.105Z",
  "seeded": true,
  "channels": [
   {
@@ -18,10 +18,19 @@
    "src": "gamedata",
    "name": "dm-gamedata",
    "state": "ok",
-   "count": 7
+   "count": 8
   }
  ],
  "items": [
+  {
+   "id": "1564332618621657100",
+   "src": "gamedata",
+   "title": "AVATARSUBCATEGORYHEADERFORCEREBUILDOPTIMIZATIONFEATUREGATE was rolled out.",
+   "text": "AVATARSUBCATEGORYHEADERFORCEREBUILDOPTIMIZATIONFEATUREGATE was rolled out.",
+   "link": "",
+   "image": "",
+   "date": "2026-10-26T17:39:20.174Z"
+  },
   {
    "id": "1564067135523790968",
    "src": "gamedata",
