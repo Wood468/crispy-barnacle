@@ -1,9 +1,9 @@
 {
- "updated": "2026-10-26T06:23:36.203Z",
+ "updated": "2026-10-26T14:23:19.926Z",
  "events": {
   "leekduck:into-the-wild-2026": {
    "name": "Into the Wild",
-   "updated": "2026-10-26T06:23:36.203Z",
+   "updated": "2026-10-26T14:23:19.926Z",
    "sources": [
     {
      "id": "official",
@@ -27,21 +27,15 @@
    "conflicts": [],
    "gaps": []
   },
-  "leekduck:november-communityday2026": {
-   "name": "Pawniard Community Day",
-   "updated": "2026-10-26T06:23:36.203Z",
+  "novcd": {
+   "name": "November Community Day",
+   "updated": "2026-10-26T14:23:19.926Z",
    "sources": [
     {
      "id": "official",
      "name": "Pokémon GO (official)",
      "trust": "official",
      "url": "https://pokemongo.com/news/communityday-november-2026-pawniard/"
-    },
-    {
-     "id": "leekduck",
-     "name": "Leek Duck",
-     "trust": "community",
-     "url": "https://leekduck.com/events/november-communityday2026/"
     }
    ],
    "fields": {
@@ -101,59 +95,29 @@
        "official"
       ],
       "status": "official"
-     },
-     {
-      "text": "The reduced Egg Hatch Distance applies to Eggs placed in an Incubator during the event.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "The three-hour Incense bonus excludes Daily Adventure Incense and the one-hour Lure bonus excludes Golden Lure Modules.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "From 2:00 p.m. to 9:00 p.m. local time , Pawniard will have a very high chance of appearing at PokéStops with active regular Lure Modules.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Pawniard attracted to regular Lure Modules will still have an increased chance to be Shiny and may have a Special Background. That’s more chances to encounter the featured Pokémon even after the event hours!",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
      }
     ],
     "featured": [
      {
       "text": "Pawniard will appear more frequently in the wild.*",
       "sources": [
-       "official",
-       "leekduck"
+       "official"
       ],
-      "status": "confirmed"
+      "status": "official"
      }
     ],
     "raids": [],
     "eggs": [],
     "research": [
      {
-      "text": "3 encounters with Pawniard that have a Special Background",
+      "text": "For US$1.99 (or the equivalent pricing tier in your local currency), you’ll be able to access the Pawniard Community Day–exclusive Special Research. Complete this research for even more rewards, including the following.",
       "sources": [
-       "official",
-       "leekduck"
+       "official"
       ],
-      "status": "confirmed"
+      "status": "official"
      },
      {
-      "text": "For US$1.99 (or the equivalent pricing tier in your local currency), you’ll be able to access the Pawniard Community Day–exclusive Special Research. Complete this research for even more rewards, including the following.",
+      "text": "3 encounters with Pawniard that have a Special Background",
       "sources": [
        "official"
       ],
@@ -200,53 +164,16 @@
        "official"
       ],
       "status": "official"
-     },
-     {
-      "text": "Catch 3 Pawniard POSSIBLE REWARDS Pawniard Max CP 614 Min CP 574 ×5 Great Ball ×5 ×2 Ultra Ball ×2 +2 ×2 Pinap Berry ×2 ×500 Stardust ×500",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "The following tasks will have encounters with Special Backgrounds.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
      }
     ],
-    "shiny": [
-     {
-      "text": "Pawniard attracted to regular Lure Modules will still have an increased chance to be Shiny and may have a Special Background. That’s more chances to encounter the featured Pokémon even after the event hours!",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Pawniard will appear more frequently in the wild. If you’re lucky, you might encounter a Shiny one or one that has a Special Background!",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Trainers will have an increased chance of encountering Shiny Pawniard during Community Day. Shiny Pawniard can be evolved into Shiny Bisharp and Shiny Kingambit.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ],
+    "shiny": [],
     "moves": [
      {
       "text": "Evolve Bisharp during the event or up to four hours afterwards to get a Kingambit that knows the Charged Attack Kowtow Cleave.",
       "sources": [
-       "official",
-       "leekduck"
+       "official"
       ],
-      "status": "confirmed"
+      "status": "official"
      },
      {
       "text": "Trainer Battles: 75 power",
@@ -268,58 +195,34 @@
      {
       "text": "For US$1.99 (or the equivalent pricing tier in your local currency), you’ll be able to access the Pawniard Community Day–exclusive Special Research. Complete this research for even more rewards, including the following.",
       "sources": [
-       "official",
-       "leekduck"
+       "official"
       ],
-      "status": "confirmed"
+      "status": "official"
      },
      {
       "text": "The Pawniard Community Day Ultra Ticket Box will be available soon for US$1.99 (or the equivalent pricing tier in your local currency) and includes an event ticket and five Ultra Balls at no additional cost!",
       "sources": [
-       "official",
-       "leekduck"
+       "official"
       ],
-      "status": "confirmed"
+      "status": "official"
      }
     ],
     "dates": [
      {
       "text": "Saturday, November 21, 2026, from 2:00 p.m. to 5:00 p.m. local time",
       "sources": [
-       "official",
-       "leekduck"
+       "official"
       ],
-      "status": "confirmed"
-     },
-     {
-      "text": "From 2:00 p.m. to 9:00 p.m. local time , evolve Bisharp into Kingambit after defeating 1 Dark- or Steel-type Raid Boss .",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "From 2:00 p.m. to 9:00 p.m. local time , Pawniard will have a very high chance of appearing at PokéStops with active regular Lure Modules.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
+      "status": "official"
      }
     ]
    },
    "conflicts": [],
-   "gaps": [
-    {
-     "field": "shiny",
-     "missingFrom": [
-      "official"
-     ]
-    }
-   ]
+   "gaps": []
   },
   "leekduck:go-pass-november-2026": {
    "name": "GO Pass: November",
-   "updated": "2026-10-26T06:23:36.203Z",
+   "updated": "2026-10-26T14:23:19.926Z",
    "sources": [
     {
      "id": "official",
@@ -565,7 +468,7 @@
   },
   "smr1": {
    "name": "Super Mega Raid Day",
-   "updated": "2026-10-26T06:23:36.203Z",
+   "updated": "2026-10-26T14:23:19.926Z",
    "sources": [
     {
      "id": "official",
@@ -578,6 +481,12 @@
      "name": "Leek Duck",
      "trust": "community",
      "url": "https://leekduck.com/events/chandelure-super-mega-raid-day-2026/"
+    },
+    {
+     "id": "hub",
+     "name": "Pokémon GO Hub",
+     "trust": "community",
+     "url": "https://pokemongohub.net/post/guide/super-mega-chandelure-raid-guide/"
     }
    ],
    "fields": {
@@ -616,7 +525,8 @@
       "text": "Mega-Evolved Pokémon Debut",
       "sources": [
        "official",
-       "leekduck"
+       "leekduck",
+       "hub"
       ],
       "status": "confirmed"
      },
@@ -627,6 +537,13 @@
        "leekduck"
       ],
       "status": "confirmed"
+     },
+     {
+      "text": "For Mega Pokémon, we recommend the strongest one you have, but any Mega will suffice to break a Shield. Mega Tyranitar is great, as well as Mega Greninja.",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
      }
     ],
     "raids": [
@@ -679,6 +596,41 @@
        "leekduck"
       ],
       "status": "single"
+     },
+     {
+      "text": "The Mega Raid Boss is always catchable in its base form, so the CP ranges are for a regular Chandelure. Chandelure can be caught with the following CP values:",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "From 1784 CP to 1867 CP , with no weather boost",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "From 2231 CP to 2335 CP with Fog and Sunny weather boost",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Once the Mega Pokémon boss activates a shield , a Mega Pokémon from your Raid team will be automatically sent into the battle.",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Your next attack by your Mega Pokémon will be significantly more powerful than usual, allowing you to break down the boss’s shield!",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
      }
     ],
     "eggs": [],
@@ -703,12 +655,35 @@
       "text": "Increased chance of encountering Shiny Chandelure from Super Mega Raids.",
       "sources": [
        "official",
-       "leekduck"
+       "leekduck",
+       "hub"
       ],
       "status": "confirmed"
+     },
+     {
+      "text": "Regular Sprite | Shiny Sprite",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
      }
     ],
-    "moves": [],
+    "moves": [
+     {
+      "text": "Fast moves | Fire Spin Incinerate Hex Astonish",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Charge moves | Flame Charge Shadow Ball Overheat Poltergeist* Energy Ball Ominous Wind+**",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     }
+    ],
     "costumes": [],
     "tickets": [
      {
@@ -800,20 +775,41 @@
     {
      "field": "bonuses",
      "missingFrom": [
-      "leekduck"
+      "leekduck",
+      "hub"
      ]
     },
     {
      "field": "research",
      "missingFrom": [
+      "leekduck",
+      "hub"
+     ]
+    },
+    {
+     "field": "moves",
+     "missingFrom": [
+      "official",
       "leekduck"
+     ]
+    },
+    {
+     "field": "tickets",
+     "missingFrom": [
+      "hub"
+     ]
+    },
+    {
+     "field": "dates",
+     "missingFrom": [
+      "hub"
      ]
     }
    ]
   },
   "leekduck:halloween-2026-part-1": {
    "name": "Pokémon GO Halloween 2026 Part I",
-   "updated": "2026-10-26T06:23:36.203Z",
+   "updated": "2026-10-26T14:23:19.926Z",
    "sources": [
     {
      "id": "official",
@@ -1234,7 +1230,7 @@
   },
   "halloween1": {
    "name": "Halloween 2026, Part One",
-   "updated": "2026-10-26T06:23:36.203Z",
+   "updated": "2026-10-26T14:23:19.926Z",
    "sources": [
     {
      "id": "official",
@@ -1505,7 +1501,7 @@
   },
   "spirits": {
    "name": "Dynamax Uxie, Mesprit and Azelf",
-   "updated": "2026-10-26T06:23:36.203Z",
+   "updated": "2026-10-26T14:23:19.926Z",
    "sources": [
     {
      "id": "official",
@@ -1746,7 +1742,7 @@
   },
   "tcg30": {
    "name": "Pokémon TCG: 30th Celebration (at stores)",
-   "updated": "2026-10-26T06:23:36.203Z",
+   "updated": "2026-10-26T14:23:19.926Z",
    "sources": [
     {
      "id": "official",
@@ -1811,7 +1807,7 @@
   },
   "sandile": {
    "name": "Sandile Hatch Day",
-   "updated": "2026-10-26T06:23:36.203Z",
+   "updated": "2026-10-26T14:23:19.926Z",
    "sources": [
     {
      "id": "official",
@@ -1970,7 +1966,7 @@
   },
   "trek": {
    "name": "Fall Marathon: Buddy Trek",
-   "updated": "2026-10-26T06:23:36.203Z",
+   "updated": "2026-10-26T14:23:19.926Z",
    "sources": [
     {
      "id": "official",
@@ -2199,7 +2195,7 @@
   },
   "leekduck:go-pass-october-2026": {
    "name": "GO Pass: October",
-   "updated": "2026-10-26T06:23:36.203Z",
+   "updated": "2026-10-26T14:23:19.926Z",
    "sources": [
     {
      "id": "official",
@@ -2501,7 +2497,7 @@
   },
   "zorua": {
    "name": "Zorua Community Day",
-   "updated": "2026-10-26T06:23:36.203Z",
+   "updated": "2026-10-26T14:23:19.926Z",
    "sources": [
     {
      "id": "official",
@@ -2680,7 +2676,7 @@
   },
   "leekduck:season-24-twilight-trails": {
    "name": "Twilight Trails",
-   "updated": "2026-10-26T06:23:36.203Z",
+   "updated": "2026-10-26T14:23:19.926Z",
    "sources": [
     {
      "id": "official",
@@ -2945,7 +2941,7 @@
   },
   "minior": {
    "name": "Orionids Meteor Shower: Minior Debut",
-   "updated": "2026-10-26T06:23:36.203Z",
+   "updated": "2026-10-26T14:23:19.926Z",
    "sources": [
     {
      "id": "leekduck",
@@ -3073,7 +3069,7 @@
   },
   "leekduck:max-mondays-2026-10-26": {
    "name": "Dynamax Sableye during Max Monday",
-   "updated": "2026-10-26T06:23:36.203Z",
+   "updated": "2026-10-26T14:23:19.926Z",
    "sources": [
     {
      "id": "leekduck",
@@ -3359,7 +3355,7 @@
   },
   "leekduck:mega-charizard-x-mega-charizard-y-in-mega-raids-october-2026": {
    "name": "Mega Charizard X and Mega Charizard Y in Mega Raids",
-   "updated": "2026-10-26T06:23:36.203Z",
+   "updated": "2026-10-26T14:23:19.926Z",
    "sources": [
     {
      "id": "leekduck",
@@ -3423,7 +3419,7 @@
   },
   "leekduck:palkia-in-5-star-raid-battles-october-2026": {
    "name": "Palkia in 5-star Raid Battles",
-   "updated": "2026-10-26T06:23:36.203Z",
+   "updated": "2026-10-26T14:23:19.926Z",
    "sources": [
     {
      "id": "leekduck",
@@ -3487,7 +3483,7 @@
   },
   "leekduck:raidhour20261028": {
    "name": "Giratina (Origin Forme) Raid Hour",
-   "updated": "2026-10-26T06:23:36.203Z",
+   "updated": "2026-10-26T14:23:19.926Z",
    "sources": [
     {
      "id": "leekduck",
@@ -3529,7 +3525,7 @@
   },
   "leekduck:pokemonspotlighthour2026-10-29": {
    "name": "Gastly Spotlight Hour",
-   "updated": "2026-10-26T06:23:36.203Z",
+   "updated": "2026-10-26T14:23:19.926Z",
    "sources": [
     {
      "id": "leekduck",
@@ -3563,7 +3559,7 @@
   },
   "leekduck:max-mondays-2026-11-02": {
    "name": "Dynamax Machop during Max Monday",
-   "updated": "2026-10-26T06:23:36.203Z",
+   "updated": "2026-10-26T14:23:19.926Z",
    "sources": [
     {
      "id": "leekduck",
@@ -3640,7 +3636,7 @@
   },
   "leekduck:shadow-landorus-incarnate-forme-in-shadow-raids-october-2026": {
    "name": "Shadow Landorus (Incarnate Forme) in Shadow Raids",
-   "updated": "2026-10-26T06:23:36.203Z",
+   "updated": "2026-10-26T14:23:19.926Z",
    "sources": [
     {
      "id": "leekduck",
@@ -3690,7 +3686,7 @@
   },
   "leekduck:giratina-origin-forme-in-5-star-raid-battles-october-2026": {
    "name": "Giratina (Origin Forme) in 5-star Raid Battles",
-   "updated": "2026-10-26T06:23:36.203Z",
+   "updated": "2026-10-26T14:23:19.926Z",
    "sources": [
     {
      "id": "leekduck",
@@ -3754,7 +3750,7 @@
   },
   "leekduck:raidhour20261104": {
    "name": "Giratina (Altered Forme) Raid Hour",
-   "updated": "2026-10-26T06:23:36.203Z",
+   "updated": "2026-10-26T14:23:19.926Z",
    "sources": [
     {
      "id": "leekduck",
@@ -3796,7 +3792,7 @@
   },
   "leekduck:pokemonspotlighthour2026-11-05": {
    "name": "Teddiursa wearing a witch hat Spotlight Hour",
-   "updated": "2026-10-26T06:23:36.203Z",
+   "updated": "2026-10-26T14:23:19.926Z",
    "sources": [
     {
      "id": "leekduck",
@@ -3852,7 +3848,7 @@
   },
   "halloween2": {
    "name": "Halloween 2026, Part Two",
-   "updated": "2026-10-26T06:23:36.203Z",
+   "updated": "2026-10-26T14:23:19.926Z",
    "sources": [
     {
      "id": "leekduck",
@@ -4103,7 +4099,7 @@
   },
   "leekduck:pokemon-go-wild-area-2026-sendai-japan": {
    "name": "Pokémon GO Wild Area 2026: Sendai • Tohoku",
-   "updated": "2026-10-26T06:23:36.203Z",
+   "updated": "2026-10-26T14:23:19.926Z",
    "sources": [
     {
      "id": "leekduck",
@@ -4453,7 +4449,7 @@
   },
   "leekduck:pokemon-go-wild-area-2026-mexico-city": {
    "name": "Pokémon GO Wild Area 2026: Mexico City",
-   "updated": "2026-10-26T06:23:36.203Z",
+   "updated": "2026-10-26T14:23:19.926Z",
    "sources": [
     {
      "id": "leekduck",
@@ -4810,7 +4806,7 @@
   },
   "leekduck:mega-sableye-in-mega-raids-october-2026": {
    "name": "Mega Sableye in Mega Raids",
-   "updated": "2026-10-26T06:23:36.203Z",
+   "updated": "2026-10-26T14:23:19.926Z",
    "sources": [
     {
      "id": "leekduck",
@@ -4867,7 +4863,7 @@
   },
   "leekduck:giratina-altered-forme-in-5-star-raid-battles-november-2026": {
    "name": "Giratina (Altered Forme) in 5-star Raid Battles",
-   "updated": "2026-10-26T06:23:36.203Z",
+   "updated": "2026-10-26T14:23:19.926Z",
    "sources": [
     {
      "id": "leekduck",
@@ -4938,7 +4934,7 @@
   },
   "leekduck:shadow-tornadus-incarnate-forme-in-shadow-raids-november-4-2026": {
    "name": "Shadow Tornadus (Incarnate Forme) in Shadow Raids",
-   "updated": "2026-10-26T06:23:36.203Z",
+   "updated": "2026-10-26T14:23:19.926Z",
    "sources": [
     {
      "id": "leekduck",
@@ -4986,7 +4982,7 @@
   },
   "leekduck:pokemon-night-out-london-2026": {
    "name": "Pokémon Night Out 2026 - London",
-   "updated": "2026-10-26T06:23:36.203Z",
+   "updated": "2026-10-26T14:23:19.926Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5094,7 +5090,7 @@
   },
   "into": {
    "name": "Into the Wild",
-   "updated": "2026-10-26T06:23:36.203Z",
+   "updated": "2026-10-26T14:23:19.926Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5351,7 +5347,7 @@
   },
   "leekduck:pokemon-go-wild-area-2026-global": {
    "name": "Pokémon GO Wild Area 2026: Global",
-   "updated": "2026-10-26T06:23:36.203Z",
+   "updated": "2026-10-26T14:23:19.926Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5639,7 +5635,7 @@
   },
   "leekduck:max-mondays-2026-11-16": {
    "name": "Max Monday: Pokémon to be announced",
-   "updated": "2026-10-26T06:23:36.203Z",
+   "updated": "2026-10-26T14:23:19.926Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5680,7 +5676,7 @@
   },
   "leekduck:raidhour20261118": {
    "name": "Cresselia and Darkrai Raid Hour",
-   "updated": "2026-10-26T06:23:36.203Z",
+   "updated": "2026-10-26T14:23:19.926Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5722,7 +5718,7 @@
   },
   "minior2": {
    "name": "Minior Showers: Leonids",
-   "updated": "2026-10-26T06:23:36.203Z",
+   "updated": "2026-10-26T14:23:19.926Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5811,9 +5807,168 @@
    "conflicts": [],
    "gaps": []
   },
+  "leekduck:november-communityday2026": {
+   "name": "Pawniard Community Day",
+   "updated": "2026-10-26T14:23:19.926Z",
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/november-communityday2026/"
+    }
+   ],
+   "fields": {
+    "bonuses": [
+     {
+      "text": "The reduced Egg Hatch Distance applies to Eggs placed in an Incubator during the event.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "The three-hour Incense bonus excludes Daily Adventure Incense and the one-hour Lure bonus excludes Golden Lure Modules.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "From 2:00 p.m. to 9:00 p.m. local time , Pawniard will have a very high chance of appearing at PokéStops with active regular Lure Modules.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Pawniard attracted to regular Lure Modules will still have an increased chance to be Shiny and may have a Special Background. That’s more chances to encounter the featured Pokémon even after the event hours!",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Catch 3 Pawniard POSSIBLE REWARDS Pawniard Max CP 614 Min CP 574 ×5 Great Ball ×5 ×2 Ultra Ball ×2 +2 ×2 Pinap Berry ×2 ×500 Stardust ×500",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "featured": [
+     {
+      "text": "Pawniard will appear more frequently in the wild. If you’re lucky, you might encounter a Shiny one or one that has a Special Background!",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "raids": [],
+    "eggs": [],
+    "research": [
+     {
+      "text": "Catch 3 Pawniard POSSIBLE REWARDS Pawniard Max CP 614 Min CP 574 ×5 Great Ball ×5 ×2 Ultra Ball ×2 +2 ×2 Pinap Berry ×2 ×500 Stardust ×500",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "The following tasks will have encounters with Special Backgrounds.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Check in at a Community Ambassador event to receive Timed Research with Pawniard encounters featuring a Special Background and other premium item rewards. Find a nearby meetup on the Pokémon GO event map .",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "shiny": [
+     {
+      "text": "Pawniard attracted to regular Lure Modules will still have an increased chance to be Shiny and may have a Special Background. That’s more chances to encounter the featured Pokémon even after the event hours!",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Pawniard will appear more frequently in the wild. If you’re lucky, you might encounter a Shiny one or one that has a Special Background!",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Trainers will have an increased chance of encountering Shiny Pawniard during Community Day. Shiny Pawniard can be evolved into Shiny Bisharp and Shiny Kingambit.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "moves": [
+     {
+      "text": "Evolve Bisharp during the event or up to four hours afterwards to get a Kingambit that knows the Charged Attack Kowtow Cleave.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "costumes": [],
+    "tickets": [
+     {
+      "text": "For US$1.99 (or the equivalent pricing tier in your local currency), you’ll be able to access the Pawniard Community Day–exclusive Special Research. Complete this research for rewards including:",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "The Pawniard Community Day Ultra Ticket Box will be available soon for US$1.99 (or the equivalent pricing tier in your local currency) and includes an event ticket and five Ultra Balls at no additional cost!",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "dates": [
+     {
+      "text": "The event takes place on Saturday, November 21, 2026, from 2:00 p.m. to 5:00 p.m. local time .",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "From 2:00 p.m. to 9:00 p.m. local time , evolve Bisharp into Kingambit after defeating 1 Dark- or Steel-type Raid Boss .",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "From 2:00 p.m. to 9:00 p.m. local time , Pawniard will have a very high chance of appearing at PokéStops with active regular Lure Modules.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ]
+   },
+   "conflicts": [],
+   "gaps": []
+  },
   "leekduck:dynamax-trails-2026": {
    "name": "Dynamax Trails",
-   "updated": "2026-10-26T06:23:36.203Z",
+   "updated": "2026-10-26T14:23:19.926Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5855,7 +6010,7 @@
   },
   "leekduck:max-mondays-2026-11-23": {
    "name": "Dynamax Espurr during Max Monday",
-   "updated": "2026-10-26T06:23:36.203Z",
+   "updated": "2026-10-26T14:23:19.926Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5932,7 +6087,7 @@
   },
   "leekduck:cresselia-darkrai-in-5-star-raid-battles-november-2026": {
    "name": "Cresselia and Darkrai in 5-star Raid Battles",
-   "updated": "2026-10-26T06:23:36.203Z",
+   "updated": "2026-10-26T14:23:19.926Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6003,7 +6158,7 @@
   },
   "leekduck:mega-banette-in-mega-raids-november-2026": {
    "name": "Mega Banette in Mega Raids",
-   "updated": "2026-10-26T06:23:36.203Z",
+   "updated": "2026-10-26T14:23:19.926Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6067,7 +6222,7 @@
   },
   "leekduck:raidhour20261125": {
    "name": "Deoxys (Normal, Defense, Attack, and Speed Formes) Raid Hour",
-   "updated": "2026-10-26T06:23:36.203Z",
+   "updated": "2026-10-26T14:23:19.926Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6109,7 +6264,7 @@
   },
   "leekduck:pokemonspotlighthour2026-11-26": {
    "name": "Noibat Spotlight Hour",
-   "updated": "2026-10-26T06:23:36.203Z",
+   "updated": "2026-10-26T14:23:19.926Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6143,7 +6298,7 @@
   },
   "smr2": {
    "name": "Super Mega Raid Day",
-   "updated": "2026-10-26T06:23:36.203Z",
+   "updated": "2026-10-26T14:23:19.926Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6185,7 +6340,7 @@
   },
   "leekduck:twilight-wishes-2026": {
    "name": "Twilight Wishes",
-   "updated": "2026-10-26T06:23:36.203Z",
+   "updated": "2026-10-26T14:23:19.926Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6219,7 +6374,7 @@
   },
   "leekduck:max-mondays-2026-11-30": {
    "name": "Dynamax Cryogonal during Max Monday",
-   "updated": "2026-10-26T06:23:36.203Z",
+   "updated": "2026-10-26T14:23:19.926Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6296,7 +6451,7 @@
   },
   "leekduck:deoxys-normal-defense-attack-speed-formes-in-5-star-raid-battles-november-2026": {
    "name": "Deoxys (Normal, Defense, Attack, and Speed Formes) in 5-star Raid Battles",
-   "updated": "2026-10-26T06:23:36.203Z",
+   "updated": "2026-10-26T14:23:19.926Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6395,7 +6550,7 @@
   },
   "leekduck:mega-metagross-in-mega-raids-november-2026": {
    "name": "Mega Metagross in Mega Raids",
-   "updated": "2026-10-26T06:23:36.203Z",
+   "updated": "2026-10-26T14:23:19.926Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6466,7 +6621,7 @@
   },
   "minior3": {
    "name": "Minior Showers: Geminids",
-   "updated": "2026-10-26T06:23:36.203Z",
+   "updated": "2026-10-26T14:23:19.926Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6557,7 +6712,7 @@
   },
   "leekduck:pokemon-x-adidas-2026": {
    "name": "adidas × Pokémon Timed Research",
-   "updated": "2026-10-26T06:23:36.203Z",
+   "updated": "2026-10-26T14:23:19.926Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6635,7 +6790,7 @@
   },
   "leekduck:pokemon-go-tour-alola-kaohsiung-2027": {
    "name": "Pokémon GO Tour: Alola - Kaohsiung 2027",
-   "updated": "2026-10-26T06:23:36.203Z",
+   "updated": "2026-10-26T14:23:19.926Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6669,7 +6824,7 @@
   },
   "leekduck:pokemon-go-tour-alola-los-angeles-2027": {
    "name": "Pokémon GO Tour: Alola - Los Angeles 2027",
-   "updated": "2026-10-26T06:23:36.203Z",
+   "updated": "2026-10-26T14:23:19.926Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6703,7 +6858,7 @@
   },
   "leekduck:pokemon-go-tour-alola-global-2027": {
    "name": "Pokémon GO Tour: Alola - Global 2027",
-   "updated": "2026-10-26T06:23:36.203Z",
+   "updated": "2026-10-26T14:23:19.926Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6737,7 +6892,7 @@
   },
   "leekduck:minior-showers-eta-aquariids-2027": {
    "name": "Minior Showers: Eta Aquariids 2027",
-   "updated": "2026-10-26T06:23:36.203Z",
+   "updated": "2026-10-26T14:23:19.926Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6835,7 +6990,7 @@
   },
   "leekduck:minior-showers-southern-delta-aquariids-2027": {
    "name": "Minior Showers: Southern Delta Aquariids 2027",
-   "updated": "2026-10-26T06:23:36.203Z",
+   "updated": "2026-10-26T14:23:19.926Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6933,7 +7088,7 @@
   },
   "leekduck:minior-showers-perseids-2027": {
    "name": "Minior Showers: Perseids 2027",
-   "updated": "2026-10-26T06:23:36.203Z",
+   "updated": "2026-10-26T14:23:19.926Z",
    "sources": [
     {
      "id": "leekduck",

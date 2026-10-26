@@ -1,5 +1,5 @@
 {
- "runAt": "2026-10-26T06:23:36.203Z",
+ "runAt": "2026-10-26T14:23:19.926Z",
  "sources": {
   "official": {
    "listed": 25,
@@ -15,7 +15,7 @@
   }
  },
  "pagesRead": 80,
- "events": 78,
+ "events": 79,
  "worldEvents": 33,
  "worldUndated": [
   "Go Wild Area Stamp Rally Details"
@@ -100,11 +100,6 @@
    "source": "hub",
    "title": "How to beat Dynamax Uxie: Complete Guide",
    "url": "https://pokemongohub.net/post/guide/how-to-beat-dynamax-uxie-complete-guide/"
-  },
-  {
-   "source": "hub",
-   "title": "How to beat Dynamax Mesprit: Complete Guide",
-   "url": "https://pokemongohub.net/post/guide/how-to-beat-dynamax-mesprit-complete-guide/"
   }
  ],
  "intl": {
@@ -183,24 +178,41 @@
  ],
  "gaps": [
   {
-   "event": "Pawniard Community Day",
-   "field": "shiny",
-   "missingFrom": [
-    "official"
-   ]
-  },
-  {
    "event": "Super Mega Raid Day",
    "field": "bonuses",
    "missingFrom": [
-    "leekduck"
+    "leekduck",
+    "hub"
    ]
   },
   {
    "event": "Super Mega Raid Day",
    "field": "research",
    "missingFrom": [
+    "leekduck",
+    "hub"
+   ]
+  },
+  {
+   "event": "Super Mega Raid Day",
+   "field": "moves",
+   "missingFrom": [
+    "official",
     "leekduck"
+   ]
+  },
+  {
+   "event": "Super Mega Raid Day",
+   "field": "tickets",
+   "missingFrom": [
+    "hub"
+   ]
+  },
+  {
+   "event": "Super Mega Raid Day",
+   "field": "dates",
+   "missingFrom": [
+    "hub"
    ]
   },
   {
