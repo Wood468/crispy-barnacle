@@ -1,10 +1,10 @@
 {
- "updated": "2026-10-26T13:03:49.918Z",
+ "updated": "2026-10-26T20:29:37.428Z",
  "status": [
   {
    "id": "hub",
    "state": "ok",
-   "items": 3
+   "items": 2
   },
   {
    "id": "miners-assets",
@@ -19,7 +19,7 @@
   {
    "id": "reddit-silph",
    "state": "ok",
-   "items": 5
+   "items": 4
   },
   {
    "id": "youtube-pogo",
@@ -110,28 +110,6 @@
    "link": "https://www.reddit.com/r/TheSilphRoad/comments/1x92jee/are_we_trainers_or_collectors_the_lack_of_purpose/",
    "date": "2026-10-18T12:55:12.000Z",
    "summary": "<!-- SC_OFF --><div class=\"md\"><p>You buy the ticket, you schedule the event to your calendar, you drive to the meet up and tap away without even looking at the screen. You catch the new shiny thing t",
-   "pokemon": [],
-   "notInOurData": []
-  },
-  {
-   "source": "hub",
-   "trust": "community",
-   "title": "Sandile Hatch Day (October 2026)",
-   "link": "https://pokemongohub.net/post/event/sandile-hatch-day/",
-   "date": "2026-10-16T20:25:45.000Z",
-   "summary": "Sandile Hatch Day takes place in Pokémon GO on Saturday, October 17, 2026, from 11:00 a.m. to 5:00 p.m. local time. Sandile will hatch more frequently from 2 km Eggs collected during the event, with b",
-   "pokemon": [
-    "Sandile"
-   ],
-   "notInOurData": []
-  },
-  {
-   "source": "reddit-silph",
-   "trust": "tip",
-   "title": "There's a new \"guaranteed shiny\" exploit",
-   "link": "https://www.reddit.com/r/TheSilphRoad/comments/1x4asv9/theres_a_new_guaranteed_shiny_exploit/",
-   "date": "2026-10-12T19:05:40.000Z",
-   "summary": "<!-- SC_OFF --><div class=\"md\"><p>In the last few days, there’s been a massive influx of rare PoGo shinies in a bunch of trading communities (XXL shundos and stuff like that). People figured out that ",
    "pokemon": [],
    "notInOurData": []
   }
