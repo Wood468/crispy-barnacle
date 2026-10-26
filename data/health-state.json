@@ -1,7 +1,4 @@
 {
- "alerted": [
-  "event-importer.yml",
-  "store-watch.yml"
- ],
+ "alerted": [],
  "unmatched": []
 }
