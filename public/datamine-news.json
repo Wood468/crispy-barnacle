@@ -1,12 +1,12 @@
 {
- "updated": "2026-10-26T19:55:31.105Z",
+ "updated": "2026-10-26T23:48:48.193Z",
  "seeded": true,
  "channels": [
   {
    "src": "events",
    "name": "dm-events",
    "state": "ok",
-   "count": 0
+   "count": 5
   },
   {
    "src": "reports",
@@ -22,6 +22,51 @@
   }
  ],
  "items": [
+  {
+   "id": "1564399608673603730",
+   "src": "events",
+   "title": "Raid Boss Rotation Update",
+   "text": "Raid Boss Rotation Update\nTime Ranges\n October 27, 2026 at 10:00 a.m. – October 27, 2026 at 8:00 p.m.\nPokémon\n One-Star Raids: Pikachu wearing a hat and capelet, Sinistea wearing a bow\n Three-Star Raids: Alolan Raichu, Alolan Ninetales, Alolan Muk\n Five-Star Raids: Palkia\n Mega Raids: Mega Charizard X, Mega Charizard Y\nEvolution Criteria\n Urshifu (Single Strike Style): 1 Dark-type Pokémon\n Urshifu (Rapid Strike Style): 1 Water-type Pokémon\n Kingambit: 1 Dark- or Steel-type Pokémon",
+   "link": "",
+   "image": "",
+   "date": "2026-10-26T22:05:31.847Z"
+  },
+  {
+   "id": "1564393402592665746",
+   "src": "events",
+   "title": "New image",
+   "text": "",
+   "link": "",
+   "image": "",
+   "date": "2026-10-26T21:40:52.202Z"
+  },
+  {
+   "id": "1564380768271204565",
+   "src": "events",
+   "title": "Win 3 raids - Pikachu",
+   "text": "Win 3 raids - Pikachu\nCatch 13 Ghost-type Pokémon - Headband Noibat, Top Hat Zubat\nWin a raid -Top Hat Zubat, Sinistea\nMake 6 Nice Throws - Small Size Pumpkaboo, Average Size Pumpkaboo, Large Size Pumpkaboo, Super Size Pumpkaboo, Duskull, Misdreavus\nCatch 13 Ghost-type Pokémon - Halloween Mischief Hat Piplup, Headband Noibat, Top Hat Zubat",
+   "link": "",
+   "image": "",
+   "date": "2026-10-26T20:50:39.945Z"
+  },
+  {
+   "id": "1564372374445498390",
+   "src": "events",
+   "title": "New image",
+   "text": "",
+   "link": "",
+   "image": "",
+   "date": "2026-10-26T20:17:18.701Z"
+  },
+  {
+   "id": "1564370210209661041",
+   "src": "events",
+   "title": "New image",
+   "text": "",
+   "link": "",
+   "image": "",
+   "date": "2026-10-26T20:08:42.707Z"
+  },
   {
    "id": "1564332618621657100",
    "src": "gamedata",
