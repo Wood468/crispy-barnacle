@@ -29,31 +29,55 @@
     });
   }
   function pendingFor(ev) {
-    var bare = String(ev.id || '').replace(/^[a-z]+:/, '');
-    return PENDING.filter(function (p) { return p.eventId === ev.id || p.eventId === bare || String(p.eventId).replace(/^[a-z]+:/, '') === bare; }).map(function (p) { return p.img; });
+    var bares = [ev.id].concat(ev.aliasIds || []).map(function (i) { return String(i || '').replace(/^[a-z]+:/, ''); });
+    return PENDING.filter(function (p) { return bares.indexOf(String(p.eventId).replace(/^[a-z]+:/, '')) > -1; }).map(function (p) { return p.img; });
   }
-  function loadInfo() {
-    if (INFO) return Promise.resolve(INFO);
+  /* fresh: ignore what this page already loaded and ask the network again (the "Check infographic" button, and coming back to the app). */
+  function loadInfo(fresh) {
+    if (INFO && !fresh) return Promise.resolve(INFO);
     return Promise.all([
-      fetch('/event-info.json', { cache: 'no-cache' }).then(function (r) { return r.ok ? r.json() : {}; }).catch(function () { return {}; }),
+      fetch('/event-info.json', { cache: fresh ? 'reload' : 'no-cache' }).then(function (r) { return r.ok ? r.json() : {}; }).catch(function () { return {}; }),
       loadPending()
     ]).then(function (a) { INFO = (a[0] && a[0].events) || {}; return INFO; });
   }
   function eventInfo(ev, all) {
-    var bare = String(ev.id || '').replace(/^[a-z]+:/, ''), hit = all[ev.id] || all[bare];
+    var bare = String(ev.id || '').replace(/^[a-z]+:/, '');
+    var hit = (window.GODEDUPE && GODEDUPE.findEventInfo ? GODEDUPE.findEventInfo(ev, all) : (all[ev.id] || all[bare])) || {};
     var extra = pendingFor(ev);
-    if (hit && !extra.length) return hit;
-    if (!hit) Object.keys(all).forEach(function (id) { if ((all[id].names || []).some(function (n) { return String(n).toLowerCase() === String(ev.name).toLowerCase(); })) hit = all[id]; });
-    hit = hit || {};
     if (!extra.length) return hit;
     var have = (hit.infographics || []).map(function (i) { return i.url; });
     return Object.assign({}, hit, { infographics: (hit.infographics || []).concat(extra.filter(function (i) { return have.indexOf(i.url) < 0; })) });
   }
   function evById(id) { return X.events().filter(function (e) { return e.id === id; })[0] || (X.raidSlots ? X.raidSlots().filter(function (e) { return e.id === id; })[0] : null) || (X.worldEvents ? X.worldEvents().filter(function (e) { return e.id === id; })[0] : null) || (X.regionalEvents ? X.regionalEvents().filter(function (e) { return e.id === id; })[0] : null); }
+  /* The card button (data-igcard) shows what we know: a small picture of the infographic when there is one, or an always-on
+     "Check infographic" button when there is not. Other buttons (details page, raid rows) keep the text button. */
+  function cardButton(button, ev, id, thumb) {
+    var name = ev ? ev.name : 'event';
+    button.classList.remove('info-unavailable');
+    button.disabled = false;
+    button.removeAttribute('aria-disabled');
+    button.hidden = false;
+    if (thumb) {
+      button.classList.add('info-available', 'igthumb'); button.classList.remove('igcheck');
+      button.removeAttribute('data-igcheck'); button.setAttribute('data-infographic', id);
+      button.setAttribute('aria-label', 'Open infographic for ' + name); button.title = 'View infographic';
+      var img = button.querySelector('img');
+      if (!img || img.getAttribute('src') !== thumb) {
+        button.innerHTML = '';
+        img = document.createElement('img'); img.setAttribute('loading', 'lazy'); img.setAttribute('decoding', 'async'); img.setAttribute('width', '44'); img.setAttribute('height', '44'); img.alt = '';
+        img.src = thumb; button.appendChild(img);
+      }
+    } else {
+      button.classList.remove('info-available', 'igthumb'); button.classList.add('igcheck');
+      button.removeAttribute('data-infographic'); button.setAttribute('data-igcheck', id);
+      button.setAttribute('aria-label', 'Check for an infographic for ' + name); button.title = 'Look again for an infographic';
+      if (button.getAttribute('data-igmsg') !== '1') button.textContent = 'Check infographic';
+    }
+  }
   function syncButtons(all) {
-    var buttons = document.querySelectorAll('[data-infographic]');
+    var buttons = document.querySelectorAll('[data-infographic], [data-igcard]');
     Array.prototype.forEach.call(buttons, function (button) {
-      var id = button.getAttribute('data-infographic');
+      var id = button.getAttribute('data-igcard') || button.getAttribute('data-infographic');
       var ev = evById(id);
       var extra = ev ? eventInfo(ev, all) : {};
       var images = (extra.infographics || []).filter(function (item) { return item && safe(item.url); });
@@ -61,11 +85,11 @@
       /* Every event opens something real. A published poster (green) when one is on file; otherwise the event's own
          picture from its Leek Duck / pokemongo.com page, with the bonuses and highlights below it. */
       var poster = !!(images.length || direct);
+      if (button.hasAttribute('data-igcard')) { cardButton(button, ev, id, poster ? (images[0] ? images[0].url : direct) : ''); return; }
       if (ev && ev.world) { button.hidden = !poster; if (poster) { button.textContent = '▧'; button.classList.add('info-available'); } return; }
       button.hidden = false;
       button.disabled = false;
       button.classList.toggle('info-available', poster);
-      button.title = poster ? 'Green: a published infographic is on file' : 'Not green: no poster yet. Opens the event\'s own picture and highlights';
       button.classList.remove('info-unavailable');
       button.textContent = '▧ Infographic';
       button.setAttribute('aria-label', 'Open infographic for ' + (ev ? ev.name : 'event'));
@@ -73,7 +97,21 @@
       button.title = poster ? 'View published infographic' : 'View event picture and summary';
     });
   }
-  document.addEventListener('visibilitychange', function () { if (!document.hidden && INFO) loadPending().then(function () { syncButtons(INFO); }); });
+  /* "Check infographic": look again, ignoring everything this page already loaded. Found: open it. Not found: say so on the button. */
+  function recheck(button) {
+    var id = button.getAttribute('data-igcheck'), ev = evById(id);
+    if (!ev || button.getAttribute('data-igbusy') === '1') return;
+    button.setAttribute('data-igbusy', '1'); button.textContent = 'Checking…';
+    loadInfo(true).then(function (all) {
+      button.removeAttribute('data-igbusy');
+      var found = ((eventInfo(ev, all).infographics || []).some(function (i) { return i && safe(i.url); })) || !!safe(ev.infographicUrl || ev.infographic);
+      syncButtons(all);
+      if (found) { open(id); return; }
+      button.setAttribute('data-igmsg', '1'); button.textContent = 'No infographic found yet'; button.setAttribute('role', 'status');
+      setTimeout(function () { button.removeAttribute('data-igmsg'); button.removeAttribute('role'); button.textContent = 'Check infographic'; }, 3500);
+    }).catch(function () { button.removeAttribute('data-igbusy'); button.textContent = 'Check infographic'; });
+  }
+  document.addEventListener('visibilitychange', function () { if (!document.hidden && INFO) loadInfo(true).then(function (all) { syncButtons(all); }); });
   function watchButtons() {
     loadInfo().then(function (all) {
       syncButtons(all);
@@ -83,10 +121,10 @@
              Only rescan when an event card or infographic button is newly inserted. */
           var addedCard = mutations.some(function (mutation) {
             return Array.prototype.some.call(mutation.addedNodes, function (node) {
-              return node.nodeType === 1 && (node.matches('[data-infographic], .pc') || (node.querySelector && node.querySelector('[data-infographic], .pc')));
+              return node.nodeType === 1 && (node.matches('[data-infographic], [data-igcard], .pc') || (node.querySelector && node.querySelector('[data-infographic], [data-igcard], .pc')));
             });
           });
-          if (addedCard) syncButtons(all);
+          if (addedCard) syncButtons(INFO || all);
         });
         window.__goInfoButtonObserver.observe(document.body, { childList: true, subtree: true });
       }
@@ -161,6 +199,8 @@
     var closeBtn = host.querySelector('[data-infoclose]'); if (closeBtn) closeBtn.focus();
   }
   document.addEventListener('click', function (e) {
+    var c = e.target.closest && e.target.closest('[data-igcheck]');
+    if (c) { e.preventDefault(); e.stopPropagation(); recheck(c); return; }
     var b = e.target.closest && e.target.closest('[data-infographic]');
     if (b) { e.preventDefault(); e.stopPropagation(); open(b.getAttribute('data-infographic')); return; }
     if (e.target.closest && e.target.closest('[data-infoclose]')) { close(); return; }
