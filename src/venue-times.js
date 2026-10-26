@@ -21,7 +21,7 @@ export function parseVenueTimes(text) {
   const venue = (/(?:show starts|event time|start time|starts?)\s*:\s*(\d{1,2}(?::\d\d)?\s*[ap]\.?m\.?)/i.exec(t) || [])[1];
   return { start: show.a, end: show.b || (end && end.a) || null, doors: doors ? doors.a : null, zone: z[1], venue: venue ? venue.replace(/\./g, "").toLowerCase() : "", official: !!go };
 }
-// Times a person typed in by hand for pages the importer could not read yet. Same shape; the importer's own reading wins when it has one.
+// Times a person typed in by hand. Same shape; a hand-entered time wins over the page text, which can carry another city's date.
 const MANUAL = {
   "leekduck:pokemon-night-out-london-2026": "Date: November 10, 2026 Event time: 6:00 p.m. to 10:30 p.m. GMT (unconfirmed for Pokémon GO)"
 };
@@ -47,7 +47,7 @@ export function venueItems(details) {
   const out = [];
   for (const [id, ev] of Object.entries((details && details.events) || {})) {
     const texts = ((ev.fields && ev.fields.dates) || []).map(x => x.text);
-    if (MANUAL[id]) texts.push(MANUAL[id]);
+    if (MANUAL[id]) texts.unshift(MANUAL[id]); // first, so a hand-entered time beats a page that carries another city's text
     const hit = texts.find(t => parseVenueTimes(t)), v = hit && parseVenueTimes(hit);
     const link = ((ev.sources || []).map(x => x && x.url).find(u => /^https:\/\/(www\.)?(leekduck|pokemongo)\.com\//.test(u || ""))) || "";
     // The show time is the best guide to when the in-game bonuses start; say so when the page admits the Pokémon GO hours are not confirmed.

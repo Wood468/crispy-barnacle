@@ -181,7 +181,27 @@ export async function runDiscord(env, opts = {}) {
   const last = msgs[msgs.length - 1].id;
   if (!state.last) { await setState(env.DB, "discord", { last }); return { sent: [], note: "starting point noted" }; }
   const sent = [], ids = await getState(env.DB, "discord_msgs", {}), stuck = state.stuck || {};
-  const post = (method, body) => f("https://api.telegram.org/bot" + env.TELEGRAM_BOT_TOKEN + "/" + method, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(body) }).then(async x => (x.ok ? ((await x.json().catch(() => null)) || {}).result || {} : null)).catch(() => null);
+  // Telegram's own reason is logged when it says no (never the token or the picture link).
+  const call = (method, opts) => f("https://api.telegram.org/bot" + env.TELEGRAM_BOT_TOKEN + "/" + method, { method: "POST", ...opts }).then(async x => {
+    const j = await x.json().catch(() => null);
+    if (x.ok) return (j || {}).result || {};
+    console.warn("Telegram " + method + " failed: HTTP " + (x.status || "?") + " " + String((j && j.description) || "no reason given").slice(0, 200));
+    return null;
+  }).catch(e => { console.warn("Telegram " + method + " failed: " + String((e && e.message) || e).slice(0, 200)); return null; });
+  const post = (method, body) => call(method, { headers: { "content-type": "application/json" }, body: JSON.stringify(body) });
+  // Telegram can refuse to fetch a Discord link itself, so the Worker downloads the picture and uploads the file (Telegram allows up to 10 MB).
+  const upload = async (url, fields) => {
+    try {
+      const d = await f(url);
+      if (!d.ok) { console.warn("Discord picture download failed: HTTP " + d.status); return null; }
+      const buf = await d.arrayBuffer();
+      if (!buf.byteLength || buf.byteLength > 10 * 1024 * 1024) { console.warn("Discord picture not uploadable: " + buf.byteLength + " bytes"); return null; }
+      const type = String((d.headers && d.headers.get && d.headers.get("content-type")) || "").split(";")[0] || "image/png", form = new FormData();
+      for (const [k, v] of Object.entries(fields)) form.set(k, typeof v === "string" ? v : JSON.stringify(v));
+      form.set("photo", new Blob([buf], { type }), "picture." + (/jpe?g/.test(type) ? "jpg" : /webp/.test(type) ? "webp" : "png"));
+      return await call("sendPhoto", { body: form });
+    } catch (e) { console.warn("Discord picture download failed: " + String((e && e.message) || e).slice(0, 200)); return null; }
+  };
   // The cursor only moves past a message once it was handled. A picture Telegram refuses is tried again next hour (3 tries, then skipped),
   // and a busy channel is worked through 10 pictures per run instead of dropping the older ones.
   let cursor = state.last, handled = 0, blocked = null;
@@ -191,7 +211,8 @@ export async function runDiscord(env, opts = {}) {
     if (url) {
       const id = "discord:" + m.id, text = String(raw).replace(/\s+/g, " ").trim().slice(0, 300), caption = ("New on Discord" + (text ? ": " + text : "") + "\nSuggested events will appear on this message.").slice(0, 900), reply_markup = keyboard({ id, guesses: [] }, [], APP);
       let ok = await post("sendPhoto", { chat_id: env.TELEGRAM_CHAT_ID, photo: url, caption, reply_markup });
-      if (!ok) ok = await post("sendMessage", { chat_id: env.TELEGRAM_CHAT_ID, text: (caption.split("\nSuggested")[0] + "\n" + url + "\nSuggested events will appear on this message.").slice(0, 3900), reply_markup }); // Telegram refused the picture itself (too big, odd shape): send the link instead
+      if (!ok) ok = await upload(url, { chat_id: env.TELEGRAM_CHAT_ID, caption, reply_markup }); // Telegram could not fetch the link itself: send the picture as a file
+      if (!ok) { const head = caption.split("\nSuggested")[0]; ok = await post("sendMessage", { chat_id: env.TELEGRAM_CHAT_ID, text: (head + (head.includes(url) ? "" : "\n" + url) + "\nSuggested events will appear on this message.").slice(0, 3900), reply_markup }); } // last resort: text, with the link once
       if (ok) { sent.push(id); if (ok.message_id) ids[id] = ok.message_id; }
       else { const n = (stuck.id === m.id ? stuck.n : 0) + 1; if (n < 3) { blocked = { id: m.id, n }; break; } }
       handled++;
