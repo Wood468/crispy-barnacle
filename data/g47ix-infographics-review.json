@@ -78,7 +78,13 @@
       "reviewNote": "No event name found in the caption or image text.",
       "signals": [],
       "matchScore": 0,
-      "stagedPath": "/infographics/g47ix/discord-1564171478423834735.jpg"
+      "stagedPath": "/infographics/g47ix/discord-1564171478423834735.jpg",
+      "aiMatch": [
+        {
+          "eventId": "w-pok-mon-go-dia-de-muertos-2026-mexico-exclusive-ev",
+          "eventTitle": "Pokémon GO Dia de Muertos 2026: Mexico Exclusive Event"
+        }
+      ]
     },
     {
       "id": "discord:1564040306855378946",
