@@ -7,6 +7,62 @@
   "eventImages": {},
   "candidates": [
     {
+      "id": "discord:1564040306855378946",
+      "source": "discord",
+      "creator": "",
+      "title": "Go Weekly Update",
+      "url": "https://discord.com/channels/@me/1558793395198099618/1564040306855378946",
+      "publishedAt": "2026-10-25T22:17:47.618000+00:00",
+      "imageUrl": "https://cdn.discordapp.com/attachments/886998693897719819/1564034875604861068/GO_Weekly_TT.png?ex=6adfcc7c&is=6ade7afc&hm=2193d0a7618c94fd457ad0d6172dda5d4f2d9f068248f32de6b5f5014d2fcea3&",
+      "reviewStatus": "weekly",
+      "decision": "pending",
+      "ocrChecked": true,
+      "ocrText": "Pe i ow GOM-L/, | 26 OCTOBER - 1 NOVEMBER MONDAY TUESDAY WEDNESDAY THURSDAY FRIDAY SATURDAY SUNDAY —— 270cT || 280CcT ){ 290CT | wou ( 310¢cT )( 1NOV i} es ( a» 8 Showcase = ss Raid ( oe Battle aaa sett thin Scenic a —_ uu i) Monday Tuesday Hour Thursday Friday Sunday qa Qu Up to 3 Special Trades One Rare Candy XL One Rare Candy XL 50 battles/day More Pokémon in the for completing Enter up to for completing 2 guaranteed wild and Boosted in-person 5 Showcases in-person 4x Stardust Candy XL from trade incense on Routes Max Battles. Raid Battles. from win rewards Increased chance Encounter Mateo 3x of Lucky Trade o — r- —~ < RAIDS ag MI © 2:00 p: 5:00 pm Ww b Peo d ys jour tty it wt SUPER MEGA MONDAY ‘eo ROVATION A 2x Evolution XP RAID DAY 2s ©.2@ @© 10:00 am PART II oN Ss “\\ ©) INESO) FHANRRENIING / Local and exclusive events ® q Pokémon G Dia de Halloween Muertos agi) 9 @ AEON MALL Paseo de la Reform rad i i until NOV1 @ OCT31-NO ——] = APAC Cross-Region Pokémon Mall Six museums Cay Stamp Rally Observatory ADIDAS collab Mal laysig) @esa across Europe ! ° Until 2029 Eh unitil Dec 6 hs Until January 202: Until Dec Until 30 APR 2027 UK NATIONAL a) until Aug 2027 Pokémon Jet v4 TRUST SITES KANTO Until Dec 31 al | Aine G4A7IX 090 ®xXloa Follow for more g47ix.pro",
+      "eventMatch": {
+        "eventId": "smr1",
+        "eventTitle": "Super Mega Raid Day",
+        "score": 0.795,
+        "confidence": "high",
+        "matchedTerms": [
+          "super",
+          "mega",
+          "raid",
+          "day",
+          "raids",
+          "boosted",
+          "increased",
+          "chance"
+        ],
+        "alternatives": [
+          {
+            "eventId": "smr1",
+            "eventTitle": "Super Mega Raid Day",
+            "score": 0.795
+          },
+          {
+            "eventId": "into",
+            "eventTitle": "Into the Wild",
+            "score": 0.793
+          },
+          {
+            "eventId": "smr2",
+            "eventTitle": "Super Mega Raid Day",
+            "score": 0.791
+          }
+        ],
+        "method": "title-to-public/data.json heuristic",
+        "requiresHumanVerification": true
+      },
+      "reviewNote": "Two events look alike. Please choose.",
+      "signals": [
+        "picture text names the event",
+        "date in the picture is inside the event",
+        "posted around the event"
+      ],
+      "matchScore": 6,
+      "stagedPath": "/infographics/g47ix/discord-1564040306855378946.webp"
+    },
+    {
       "id": "discord:1563817072260026492",
       "source": "discord",
       "creator": "",
