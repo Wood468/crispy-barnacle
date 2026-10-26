@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-25T11:30:47.110Z",
+ "updated": "2026-10-26T04:48:05.272Z",
  "state": "ok",
  "scrapedDuckEvents": 59,
  "missingHere": [
@@ -35,6 +35,11 @@
    "id": "w-aeon-mall-halloween",
    "name": "AEON MALL Halloween",
    "start": "2026-10-19"
+  },
+  {
+   "id": "w-celebrate-the-pok-mon-night-out-events-in-pok-mon-",
+   "name": "Pokémon Night Out events in Pokémon GO",
+   "start": "2026-10-24"
   },
   {
    "id": "w-pok-mon-go-dia-de-muertos-2026-mexico-exclusive-ev",
