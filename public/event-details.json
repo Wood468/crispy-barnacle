@@ -1,9 +1,85 @@
 {
- "updated": "2026-10-26T14:23:19.926Z",
+ "updated": "2026-10-26T20:36:17.551Z",
  "events": {
+  "wag": {
+   "name": "GO Wild Area: Global",
+   "updated": "2026-10-26T20:36:17.551Z",
+   "sources": [
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "trust": "official",
+     "url": "https://pokemongo.com/news/gowa-global-europe-2026/"
+    }
+   ],
+   "fields": {
+    "bonuses": [],
+    "featured": [],
+    "raids": [],
+    "eggs": [],
+    "research": [],
+    "shiny": [],
+    "moves": [],
+    "costumes": [
+     {
+      "text": "Photo opportunities to capture the memories",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Fun activities with local Community Ambassadors and their communities",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Pokémon GO event pins and prints (while supplies last)",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Timed Research when you check in at the official meetup",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "We are also partnering with local Community Ambassadors to add more PokéStops, Gyms, and Powerspots near the event area for these community meetups.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "The best way to experience Pokémon GO Wild Area: Global is in person. We hope to meet you out there, Trainers!",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "—The Pokémon GO team",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     }
+    ],
+    "tickets": [],
+    "dates": []
+   },
+   "conflicts": [],
+   "gaps": []
+  },
   "leekduck:into-the-wild-2026": {
    "name": "Into the Wild",
-   "updated": "2026-10-26T14:23:19.926Z",
+   "updated": "2026-10-26T20:36:17.551Z",
    "sources": [
     {
      "id": "official",
@@ -29,7 +105,7 @@
   },
   "novcd": {
    "name": "November Community Day",
-   "updated": "2026-10-26T14:23:19.926Z",
+   "updated": "2026-10-26T20:36:17.551Z",
    "sources": [
     {
      "id": "official",
@@ -222,7 +298,7 @@
   },
   "leekduck:go-pass-november-2026": {
    "name": "GO Pass: November",
-   "updated": "2026-10-26T14:23:19.926Z",
+   "updated": "2026-10-26T20:36:17.551Z",
    "sources": [
     {
      "id": "official",
@@ -468,7 +544,7 @@
   },
   "smr1": {
    "name": "Super Mega Raid Day",
-   "updated": "2026-10-26T14:23:19.926Z",
+   "updated": "2026-10-26T20:36:17.551Z",
    "sources": [
     {
      "id": "official",
@@ -809,7 +885,7 @@
   },
   "leekduck:halloween-2026-part-1": {
    "name": "Pokémon GO Halloween 2026 Part I",
-   "updated": "2026-10-26T14:23:19.926Z",
+   "updated": "2026-10-26T20:36:17.551Z",
    "sources": [
     {
      "id": "official",
@@ -1040,6 +1116,20 @@
        "leekduck"
       ],
       "status": "single"
+     },
+     {
+      "text": "Complete these daily tasks to earn GO Points:",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Catch 6 Ghost-type Pokémon — 50 GO Points",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
      }
     ],
     "shiny": [
@@ -1205,6 +1295,13 @@
        "leekduck"
       ],
       "status": "single"
+     },
+     {
+      "text": "Rank up to encounter Rotom and Spiritomb and earn Halloween rewards!",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
      }
     ],
     "dates": [
@@ -1230,7 +1327,7 @@
   },
   "halloween1": {
    "name": "Halloween 2026, Part One",
-   "updated": "2026-10-26T14:23:19.926Z",
+   "updated": "2026-10-26T20:36:17.551Z",
    "sources": [
     {
      "id": "official",
@@ -1501,7 +1598,7 @@
   },
   "spirits": {
    "name": "Dynamax Uxie, Mesprit and Azelf",
-   "updated": "2026-10-26T14:23:19.926Z",
+   "updated": "2026-10-26T20:36:17.551Z",
    "sources": [
     {
      "id": "official",
@@ -1742,7 +1839,7 @@
   },
   "tcg30": {
    "name": "Pokémon TCG: 30th Celebration (at stores)",
-   "updated": "2026-10-26T14:23:19.926Z",
+   "updated": "2026-10-26T20:36:17.551Z",
    "sources": [
     {
      "id": "official",
@@ -1807,7 +1904,7 @@
   },
   "sandile": {
    "name": "Sandile Hatch Day",
-   "updated": "2026-10-26T14:23:19.926Z",
+   "updated": "2026-10-26T20:36:17.551Z",
    "sources": [
     {
      "id": "official",
@@ -1966,7 +2063,7 @@
   },
   "trek": {
    "name": "Fall Marathon: Buddy Trek",
-   "updated": "2026-10-26T14:23:19.926Z",
+   "updated": "2026-10-26T20:36:17.551Z",
    "sources": [
     {
      "id": "official",
@@ -2195,7 +2292,7 @@
   },
   "leekduck:go-pass-october-2026": {
    "name": "GO Pass: October",
-   "updated": "2026-10-26T14:23:19.926Z",
+   "updated": "2026-10-26T20:36:17.551Z",
    "sources": [
     {
      "id": "official",
@@ -2497,7 +2594,7 @@
   },
   "zorua": {
    "name": "Zorua Community Day",
-   "updated": "2026-10-26T14:23:19.926Z",
+   "updated": "2026-10-26T20:36:17.551Z",
    "sources": [
     {
      "id": "official",
@@ -2676,7 +2773,7 @@
   },
   "leekduck:season-24-twilight-trails": {
    "name": "Twilight Trails",
-   "updated": "2026-10-26T14:23:19.926Z",
+   "updated": "2026-10-26T20:36:17.551Z",
    "sources": [
     {
      "id": "official",
@@ -2939,137 +3036,9 @@
     }
    ]
   },
-  "minior": {
-   "name": "Orionids Meteor Shower: Minior Debut",
-   "updated": "2026-10-26T14:23:19.926Z",
-   "sources": [
-    {
-     "id": "leekduck",
-     "name": "Leek Duck",
-     "trust": "community",
-     "url": "https://leekduck.com/events/minior-showers-orionids-2026/"
-    }
-   ],
-   "fields": {
-    "bonuses": [
-     {
-      "text": "Event-exclusive Timed Research for very lucky Trainers",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Timed Research tasks must be completed and all rewards claimed by October 24, 2026, at 11:59 p.m. local time .",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ],
-    "featured": [
-     {
-      "text": "Minior (Green Core) , the Meteor Pokémon, will make its Pokémon GO debut during the Orionids meteor shower, beginning October 19, 2026, at 5:00 p.m. local time !",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "You may encounter Minior in its Meteor Form in the wild during the event. You’ll receive 1,000 Stardust for catching Minior .",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Minior encounters are more likely from 5:00 p.m. to 9:00 p.m. local time each day .",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ],
-    "raids": [],
-    "eggs": [],
-    "research": [
-     {
-      "text": "Event-exclusive Timed Research",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Timed Research will be available during the event. Claim a Star Piece , then complete five Use a Star Piece tasks to earn 7,740 Stardust each. Complete all tasks to earn an additional 77,400 Stardust .",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ],
-    "shiny": [],
-    "moves": [],
-    "costumes": [],
-    "tickets": [],
-    "dates": [
-     {
-      "text": "This Minior Shower runs from October 19, 2026 at 5:00 p.m. to October 24, 2026 at 11:59 p.m. local time .",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "From 5:00 p.m. to 9:00 p.m. local time every day during each Minior Shower, shooting stars will light up the in-game sky. During these hours, you’ll have an increased chance of encountering Minior in the wild!",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Leonids : November 14–19, 2026",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Geminids : December 11–16, 2026",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Eta Aquariids : May 3–8, 2027",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Southern Delta Aquariids : July 28–August 2, 2027",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Perseids : August 10–15, 2027",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ]
-   },
-   "conflicts": [],
-   "gaps": []
-  },
   "leekduck:max-mondays-2026-10-26": {
    "name": "Dynamax Sableye during Max Monday",
-   "updated": "2026-10-26T14:23:19.926Z",
+   "updated": "2026-10-26T20:36:17.551Z",
    "sources": [
     {
      "id": "leekduck",
@@ -3355,7 +3324,7 @@
   },
   "leekduck:mega-charizard-x-mega-charizard-y-in-mega-raids-october-2026": {
    "name": "Mega Charizard X and Mega Charizard Y in Mega Raids",
-   "updated": "2026-10-26T14:23:19.926Z",
+   "updated": "2026-10-26T20:36:17.551Z",
    "sources": [
     {
      "id": "leekduck",
@@ -3419,7 +3388,7 @@
   },
   "leekduck:palkia-in-5-star-raid-battles-october-2026": {
    "name": "Palkia in 5-star Raid Battles",
-   "updated": "2026-10-26T14:23:19.926Z",
+   "updated": "2026-10-26T20:36:17.551Z",
    "sources": [
     {
      "id": "leekduck",
@@ -3483,7 +3452,7 @@
   },
   "leekduck:raidhour20261028": {
    "name": "Giratina (Origin Forme) Raid Hour",
-   "updated": "2026-10-26T14:23:19.926Z",
+   "updated": "2026-10-26T20:36:17.551Z",
    "sources": [
     {
      "id": "leekduck",
@@ -3525,7 +3494,7 @@
   },
   "leekduck:pokemonspotlighthour2026-10-29": {
    "name": "Gastly Spotlight Hour",
-   "updated": "2026-10-26T14:23:19.926Z",
+   "updated": "2026-10-26T20:36:17.551Z",
    "sources": [
     {
      "id": "leekduck",
@@ -3559,7 +3528,7 @@
   },
   "leekduck:max-mondays-2026-11-02": {
    "name": "Dynamax Machop during Max Monday",
-   "updated": "2026-10-26T14:23:19.926Z",
+   "updated": "2026-10-26T20:36:17.551Z",
    "sources": [
     {
      "id": "leekduck",
@@ -3636,7 +3605,7 @@
   },
   "leekduck:shadow-landorus-incarnate-forme-in-shadow-raids-october-2026": {
    "name": "Shadow Landorus (Incarnate Forme) in Shadow Raids",
-   "updated": "2026-10-26T14:23:19.926Z",
+   "updated": "2026-10-26T20:36:17.551Z",
    "sources": [
     {
      "id": "leekduck",
@@ -3686,7 +3655,7 @@
   },
   "leekduck:giratina-origin-forme-in-5-star-raid-battles-october-2026": {
    "name": "Giratina (Origin Forme) in 5-star Raid Battles",
-   "updated": "2026-10-26T14:23:19.926Z",
+   "updated": "2026-10-26T20:36:17.551Z",
    "sources": [
     {
      "id": "leekduck",
@@ -3750,7 +3719,7 @@
   },
   "leekduck:raidhour20261104": {
    "name": "Giratina (Altered Forme) Raid Hour",
-   "updated": "2026-10-26T14:23:19.926Z",
+   "updated": "2026-10-26T20:36:17.551Z",
    "sources": [
     {
      "id": "leekduck",
@@ -3792,7 +3761,7 @@
   },
   "leekduck:pokemonspotlighthour2026-11-05": {
    "name": "Teddiursa wearing a witch hat Spotlight Hour",
-   "updated": "2026-10-26T14:23:19.926Z",
+   "updated": "2026-10-26T20:36:17.551Z",
    "sources": [
     {
      "id": "leekduck",
@@ -3848,7 +3817,7 @@
   },
   "halloween2": {
    "name": "Halloween 2026, Part Two",
-   "updated": "2026-10-26T14:23:19.926Z",
+   "updated": "2026-10-26T20:36:17.551Z",
    "sources": [
     {
      "id": "leekduck",
@@ -3952,6 +3921,20 @@
     "research": [
      {
       "text": "Complete event-themed Field Research tasks for encounters with event-themed Pokémon, including Greavard . Specific tasks and the full encounter list have not yet been announced.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Complete these daily tasks to earn GO Points:",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Catch 6 Ghost-type Pokémon — 50 GO Points",
       "sources": [
        "leekduck"
       ],
@@ -4082,6 +4065,13 @@
        "leekduck"
       ],
       "status": "single"
+     },
+     {
+      "text": "Rank up to encounter Rotom and Spiritomb and earn Halloween rewards!",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
      }
     ],
     "dates": [
@@ -4099,7 +4089,7 @@
   },
   "leekduck:pokemon-go-wild-area-2026-sendai-japan": {
    "name": "Pokémon GO Wild Area 2026: Sendai • Tohoku",
-   "updated": "2026-10-26T14:23:19.926Z",
+   "updated": "2026-10-26T20:36:17.551Z",
    "sources": [
     {
      "id": "leekduck",
@@ -4449,7 +4439,7 @@
   },
   "leekduck:pokemon-go-wild-area-2026-mexico-city": {
    "name": "Pokémon GO Wild Area 2026: Mexico City",
-   "updated": "2026-10-26T14:23:19.926Z",
+   "updated": "2026-10-26T20:36:17.551Z",
    "sources": [
     {
      "id": "leekduck",
@@ -4806,7 +4796,7 @@
   },
   "leekduck:mega-sableye-in-mega-raids-october-2026": {
    "name": "Mega Sableye in Mega Raids",
-   "updated": "2026-10-26T14:23:19.926Z",
+   "updated": "2026-10-26T20:36:17.551Z",
    "sources": [
     {
      "id": "leekduck",
@@ -4863,7 +4853,7 @@
   },
   "leekduck:giratina-altered-forme-in-5-star-raid-battles-november-2026": {
    "name": "Giratina (Altered Forme) in 5-star Raid Battles",
-   "updated": "2026-10-26T14:23:19.926Z",
+   "updated": "2026-10-26T20:36:17.551Z",
    "sources": [
     {
      "id": "leekduck",
@@ -4934,7 +4924,7 @@
   },
   "leekduck:shadow-tornadus-incarnate-forme-in-shadow-raids-november-4-2026": {
    "name": "Shadow Tornadus (Incarnate Forme) in Shadow Raids",
-   "updated": "2026-10-26T14:23:19.926Z",
+   "updated": "2026-10-26T20:36:17.551Z",
    "sources": [
     {
      "id": "leekduck",
@@ -4982,7 +4972,7 @@
   },
   "leekduck:pokemon-night-out-london-2026": {
    "name": "Pokémon Night Out 2026 - London",
-   "updated": "2026-10-26T14:23:19.926Z",
+   "updated": "2026-10-26T20:36:17.551Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5090,7 +5080,7 @@
   },
   "into": {
    "name": "Into the Wild",
-   "updated": "2026-10-26T14:23:19.926Z",
+   "updated": "2026-10-26T20:36:17.551Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5347,7 +5337,7 @@
   },
   "leekduck:pokemon-go-wild-area-2026-global": {
    "name": "Pokémon GO Wild Area 2026: Global",
-   "updated": "2026-10-26T14:23:19.926Z",
+   "updated": "2026-10-26T20:36:17.551Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5635,7 +5625,7 @@
   },
   "leekduck:max-mondays-2026-11-16": {
    "name": "Max Monday: Pokémon to be announced",
-   "updated": "2026-10-26T14:23:19.926Z",
+   "updated": "2026-10-26T20:36:17.551Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5676,7 +5666,7 @@
   },
   "leekduck:raidhour20261118": {
    "name": "Cresselia and Darkrai Raid Hour",
-   "updated": "2026-10-26T14:23:19.926Z",
+   "updated": "2026-10-26T20:36:17.551Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5718,7 +5708,7 @@
   },
   "minior2": {
    "name": "Minior Showers: Leonids",
-   "updated": "2026-10-26T14:23:19.926Z",
+   "updated": "2026-10-26T20:36:17.551Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5809,7 +5799,7 @@
   },
   "leekduck:november-communityday2026": {
    "name": "Pawniard Community Day",
-   "updated": "2026-10-26T14:23:19.926Z",
+   "updated": "2026-10-26T20:36:17.551Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5968,7 +5958,7 @@
   },
   "leekduck:dynamax-trails-2026": {
    "name": "Dynamax Trails",
-   "updated": "2026-10-26T14:23:19.926Z",
+   "updated": "2026-10-26T20:36:17.551Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6010,7 +6000,7 @@
   },
   "leekduck:max-mondays-2026-11-23": {
    "name": "Dynamax Espurr during Max Monday",
-   "updated": "2026-10-26T14:23:19.926Z",
+   "updated": "2026-10-26T20:36:17.551Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6087,7 +6077,7 @@
   },
   "leekduck:cresselia-darkrai-in-5-star-raid-battles-november-2026": {
    "name": "Cresselia and Darkrai in 5-star Raid Battles",
-   "updated": "2026-10-26T14:23:19.926Z",
+   "updated": "2026-10-26T20:36:17.551Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6158,7 +6148,7 @@
   },
   "leekduck:mega-banette-in-mega-raids-november-2026": {
    "name": "Mega Banette in Mega Raids",
-   "updated": "2026-10-26T14:23:19.926Z",
+   "updated": "2026-10-26T20:36:17.551Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6222,7 +6212,7 @@
   },
   "leekduck:raidhour20261125": {
    "name": "Deoxys (Normal, Defense, Attack, and Speed Formes) Raid Hour",
-   "updated": "2026-10-26T14:23:19.926Z",
+   "updated": "2026-10-26T20:36:17.551Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6264,7 +6254,7 @@
   },
   "leekduck:pokemonspotlighthour2026-11-26": {
    "name": "Noibat Spotlight Hour",
-   "updated": "2026-10-26T14:23:19.926Z",
+   "updated": "2026-10-26T20:36:17.551Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6298,7 +6288,7 @@
   },
   "smr2": {
    "name": "Super Mega Raid Day",
-   "updated": "2026-10-26T14:23:19.926Z",
+   "updated": "2026-10-26T20:36:17.551Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6340,7 +6330,7 @@
   },
   "leekduck:twilight-wishes-2026": {
    "name": "Twilight Wishes",
-   "updated": "2026-10-26T14:23:19.926Z",
+   "updated": "2026-10-26T20:36:17.551Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6374,7 +6364,7 @@
   },
   "leekduck:max-mondays-2026-11-30": {
    "name": "Dynamax Cryogonal during Max Monday",
-   "updated": "2026-10-26T14:23:19.926Z",
+   "updated": "2026-10-26T20:36:17.551Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6451,7 +6441,7 @@
   },
   "leekduck:deoxys-normal-defense-attack-speed-formes-in-5-star-raid-battles-november-2026": {
    "name": "Deoxys (Normal, Defense, Attack, and Speed Formes) in 5-star Raid Battles",
-   "updated": "2026-10-26T14:23:19.926Z",
+   "updated": "2026-10-26T20:36:17.551Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6550,7 +6540,7 @@
   },
   "leekduck:mega-metagross-in-mega-raids-november-2026": {
    "name": "Mega Metagross in Mega Raids",
-   "updated": "2026-10-26T14:23:19.926Z",
+   "updated": "2026-10-26T20:36:17.551Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6621,7 +6611,7 @@
   },
   "minior3": {
    "name": "Minior Showers: Geminids",
-   "updated": "2026-10-26T14:23:19.926Z",
+   "updated": "2026-10-26T20:36:17.551Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6712,7 +6702,7 @@
   },
   "leekduck:pokemon-x-adidas-2026": {
    "name": "adidas × Pokémon Timed Research",
-   "updated": "2026-10-26T14:23:19.926Z",
+   "updated": "2026-10-26T20:36:17.551Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6790,7 +6780,7 @@
   },
   "leekduck:pokemon-go-tour-alola-kaohsiung-2027": {
    "name": "Pokémon GO Tour: Alola - Kaohsiung 2027",
-   "updated": "2026-10-26T14:23:19.926Z",
+   "updated": "2026-10-26T20:36:17.551Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6824,7 +6814,7 @@
   },
   "leekduck:pokemon-go-tour-alola-los-angeles-2027": {
    "name": "Pokémon GO Tour: Alola - Los Angeles 2027",
-   "updated": "2026-10-26T14:23:19.926Z",
+   "updated": "2026-10-26T20:36:17.551Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6858,7 +6848,7 @@
   },
   "leekduck:pokemon-go-tour-alola-global-2027": {
    "name": "Pokémon GO Tour: Alola - Global 2027",
-   "updated": "2026-10-26T14:23:19.926Z",
+   "updated": "2026-10-26T20:36:17.551Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6892,7 +6882,7 @@
   },
   "leekduck:minior-showers-eta-aquariids-2027": {
    "name": "Minior Showers: Eta Aquariids 2027",
-   "updated": "2026-10-26T14:23:19.926Z",
+   "updated": "2026-10-26T20:36:17.551Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6990,7 +6980,7 @@
   },
   "leekduck:minior-showers-southern-delta-aquariids-2027": {
    "name": "Minior Showers: Southern Delta Aquariids 2027",
-   "updated": "2026-10-26T14:23:19.926Z",
+   "updated": "2026-10-26T20:36:17.551Z",
    "sources": [
     {
      "id": "leekduck",
@@ -7088,7 +7078,7 @@
   },
   "leekduck:minior-showers-perseids-2027": {
    "name": "Minior Showers: Perseids 2027",
-   "updated": "2026-10-26T14:23:19.926Z",
+   "updated": "2026-10-26T20:36:17.551Z",
    "sources": [
     {
      "id": "leekduck",
@@ -7167,6 +7157,134 @@
      },
      {
       "text": "Southern Delta Aquariids : July 28–August 2, 2027",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ]
+   },
+   "conflicts": [],
+   "gaps": []
+  },
+  "minior": {
+   "name": "Orionids Meteor Shower: Minior Debut",
+   "updated": "2026-10-26T14:23:19.926Z",
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/minior-showers-orionids-2026/"
+    }
+   ],
+   "fields": {
+    "bonuses": [
+     {
+      "text": "Event-exclusive Timed Research for very lucky Trainers",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Timed Research tasks must be completed and all rewards claimed by October 24, 2026, at 11:59 p.m. local time .",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "featured": [
+     {
+      "text": "Minior (Green Core) , the Meteor Pokémon, will make its Pokémon GO debut during the Orionids meteor shower, beginning October 19, 2026, at 5:00 p.m. local time !",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "You may encounter Minior in its Meteor Form in the wild during the event. You’ll receive 1,000 Stardust for catching Minior .",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Minior encounters are more likely from 5:00 p.m. to 9:00 p.m. local time each day .",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "raids": [],
+    "eggs": [],
+    "research": [
+     {
+      "text": "Event-exclusive Timed Research",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Timed Research will be available during the event. Claim a Star Piece , then complete five Use a Star Piece tasks to earn 7,740 Stardust each. Complete all tasks to earn an additional 77,400 Stardust .",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "shiny": [],
+    "moves": [],
+    "costumes": [],
+    "tickets": [],
+    "dates": [
+     {
+      "text": "This Minior Shower runs from October 19, 2026 at 5:00 p.m. to October 24, 2026 at 11:59 p.m. local time .",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "From 5:00 p.m. to 9:00 p.m. local time every day during each Minior Shower, shooting stars will light up the in-game sky. During these hours, you’ll have an increased chance of encountering Minior in the wild!",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Leonids : November 14–19, 2026",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Geminids : December 11–16, 2026",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Eta Aquariids : May 3–8, 2027",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Southern Delta Aquariids : July 28–August 2, 2027",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Perseids : August 10–15, 2027",
       "sources": [
        "leekduck"
       ],

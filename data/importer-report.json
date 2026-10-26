@@ -1,21 +1,21 @@
 {
- "runAt": "2026-10-26T14:23:19.926Z",
+ "runAt": "2026-10-26T20:36:17.551Z",
  "sources": {
   "official": {
    "listed": 25,
    "error": ""
   },
   "leekduck": {
-   "listed": 50,
+   "listed": 49,
    "error": ""
   },
   "hub": {
-   "listed": 14,
+   "listed": 13,
    "error": ""
   }
  },
  "pagesRead": 80,
- "events": 79,
+ "events": 80,
  "worldEvents": 33,
  "worldUndated": [
   "Go Wild Area Stamp Rally Details"
@@ -77,11 +77,6 @@
    "url": "https://pokemongo.com/news/city-safari-brisbane-know-before-you-go/"
   },
   {
-   "source": "official",
-   "title": "Pokémon GO City Safaris in Europe: Venues and Activities",
-   "url": "https://pokemongo.com/news/city-safaris-europe-2026/"
-  },
-  {
    "source": "leekduck",
    "title": "Pokémon GO City Safari: Boston (Rescheduled)",
    "url": "https://leekduck.com/events/pokemon-go-city-safari-boston-2026-rescheduled/"
@@ -100,6 +95,11 @@
    "source": "hub",
    "title": "How to beat Dynamax Uxie: Complete Guide",
    "url": "https://pokemongohub.net/post/guide/how-to-beat-dynamax-uxie-complete-guide/"
+  },
+  {
+   "source": "hub",
+   "title": "How to beat Dynamax Mesprit: Complete Guide",
+   "url": "https://pokemongohub.net/post/guide/how-to-beat-dynamax-mesprit-complete-guide/"
   }
  ],
  "intl": {
