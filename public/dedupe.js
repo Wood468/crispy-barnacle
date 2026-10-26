@@ -131,15 +131,26 @@
        1. another event in the list (`others`) owns that entry by its id and its dates do not overlap this card's dates;
        2. the entry's own id / article address / picture sources name a month and year ("october-2026", "2026-10-14") that is
           more than a month away from the card's start. */
-  var MONTHS = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
+  var MONTH_WORDS = { january: 0, jan: 0, february: 1, feb: 1, march: 2, mar: 2, april: 3, apr: 3, may: 4, june: 5, jun: 5, july: 6, jul: 6, august: 7, aug: 7, september: 8, sept: 8, sep: 8, october: 9, oct: 9, november: 10, nov: 10, december: 11, dec: 11 };
+  /* Month and year an entry's id / address / picture sources name. Split on anything that is not a letter or digit and match whole
+     tokens only, so "marvel-2026" is not March and "decorations-2026" is not December. */
   function hintOf(k, entry) {
     var text = [k, entry && entry.source && entry.source.url].concat(((entry && entry.infographics) || []).map(function (g) { return g && g.sourceUrl; })).join(' ').toLowerCase();
-    var m = /(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*[-_ ]+(20\d\d)/.exec(text);
-    if (m) return +m[2] * 12 + MONTHS.indexOf(m[1]);
-    m = /(20\d\d)-(\d\d)-\d\d/.exec(text);
+    var t = text.split(/[^a-z0-9]+/);
+    for (var i = 0; i + 1 < t.length; i++) {
+      if (Object.prototype.hasOwnProperty.call(MONTH_WORDS, t[i]) && /^20\d\d$/.test(t[i + 1])) return +t[i + 1] * 12 + MONTH_WORDS[t[i]];
+    }
+    var m = /(?:^|\D)(20\d\d)-(\d\d)-\d\d(?!\d)/.exec(text);
     return m && +m[2] >= 1 && +m[2] <= 12 ? +m[1] * 12 + (+m[2] - 1) : null;
   }
-  function monthOf(x) { var d = day(x); if (isNaN(d)) return null; var t = new Date(d * 864e5); return t.getUTCFullYear() * 12 + t.getUTCMonth(); }
+  /* Month of a card's start. Cards carry local-time Dates (built from "YYYY-MM-DD" strings in the browser's zone), so a Date or a
+     timestamp is read in local time, the same month the card shows; a date string is read straight from its text. Reading a Date in UTC
+     would turn a 1 December 00:00 start in Melbourne into November. */
+  function monthOf(x) {
+    if (typeof x === 'string') { var m = /^(\d{4})-(\d{2})-\d{2}/.exec(x); return m && +m[2] >= 1 && +m[2] <= 12 ? +m[1] * 12 + (+m[2] - 1) : null; }
+    if (typeof x === 'number') x = new Date(x);
+    return x instanceof Date && !isNaN(x.getTime()) ? x.getFullYear() * 12 + x.getMonth() : null;
+  }
   function otherInstance(ev, k, entry, others) {
     var h = hintOf(k, entry), m = monthOf(ev.start);
     if (h != null && m != null && Math.abs(h - m) > 1) return true;

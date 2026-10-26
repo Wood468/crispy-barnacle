@@ -46,10 +46,11 @@ function setup({ events, info }) {
   const X = { events: () => events, raidSlots: () => [], kindOf: () => ["Event", "#000", "#fff"], whenText: () => "", countdown: () => "" };
   const window = { GODASH: X, GO: { esc: (s) => String(s), art: () => "", bonusChip: () => "" }, GODEDUPE };
   window.window = window;
-  const ctx = vm.createContext({ window, GODEDUPE, document, fetch, console, Promise, setTimeout: (f, ms) => { timers.push({ f, ms }); return timers.length; }, clearTimeout: (n) => { if (timers[n - 1]) timers[n - 1].dead = true; } });
+  const ctx = vm.createContext({ window, GODEDUPE, document, fetch, console, Promise, setTimeout: (f, ms) => { timers.push({ f, ms, dead: false, ran: false }); return timers.length; }, clearTimeout: (n) => { if (timers[n - 1]) timers[n - 1].dead = true; } });
+  const runTimers = (ms) => timers.forEach((t) => { if (!t.dead && !t.ran && (ms == null || t.ms === ms)) { t.ran = true; t.f(); } });
   vm.runInContext(code, ctx);
   const card = (id) => { const b = new El("button"); b.setAttribute("data-igcard", id); buttons.push(b); return b; };
-  return { card, docListeners, timers, net, get live() { return live; }, get fetches() { return fetches; }, click: (b) => docListeners.click({ target: b, preventDefault() {}, stopPropagation() {} }), refresh: () => docListeners.visibilitychange() };
+  return { card, docListeners, timers, runTimers, net, get live() { return live; }, get fetches() { return fetches; }, click: (b) => docListeners.click({ target: b, preventDefault() {}, stopPropagation() {} }), refresh: () => docListeners.visibilitychange() };
 }
 const settle = async () => { for (let i = 0; i < 12; i++) await new Promise((r) => setImmediate(r)); };
 const day = (n) => new Date(Date.UTC(2026, 10, n));
@@ -91,8 +92,25 @@ test("a thumbnail that cannot load turns into Check infographic, once", async ()
   assert.ok(a.classList.contains("igcheck") && a.querySelector("img") === null);
 });
 
+test("a late error from a thumbnail that was already replaced does not break the new one", async () => {
+  const { t, a } = await loaded();
+  const old = a.querySelector("img");
+  t.net.info = { events: { a: { names: ["Alpha"], infographics: [{ url: "https://example.com/a2.jpg", label: "A" }] } } };
+  t.refresh(); await settle();
+  const fresh = a.querySelector("img");
+  assert.ok(fresh && fresh !== old && fresh.getAttribute("src") === "https://example.com/a2.jpg", "thumbnail was replaced");
+  old.on.error();                             // the first picture reports its failure after being replaced
+  assert.ok(a.classList.contains("igthumb") && !a.classList.contains("igcheck"), "working thumbnail stays");
+  assert.equal(a.querySelector("img"), fresh);
+  assert.equal(a.getAttribute("data-igbad"), null);
+  fresh.on.error();                           // the current picture failing still falls back
+  assert.ok(a.classList.contains("igcheck"));
+});
+
 test("Check infographic: keeps button semantics, announces separately, resets on re-tap, ignores taps while checking", async () => {
   const { t, b } = await loaded();
+  assert.ok(t.live && t.live.getAttribute("role") === "status" && t.live.getAttribute("aria-live") === "polite", "live region exists from startup, before any message");
+  assert.equal(t.live.textContent, "");
   assert.equal(b.getAttribute("data-igcheck"), "b");
   const before = t.fetches;
   t.click(b); t.click(b);                      // second tap while the first check is in flight
@@ -101,15 +119,20 @@ test("Check infographic: keeps button semantics, announces separately, resets on
   assert.equal(t.fetches - before, 1, "one network check only");
   assert.equal(b.textContent, "No infographic found yet");
   assert.equal(b.getAttribute("role"), null, "button role is not replaced");
+  assert.equal(t.live.textContent, "", "the message is set on a later tick, after the region was cleared");
+  t.runTimers(50);
   assert.equal(t.live.textContent, "No infographic found yet");
-  assert.equal(t.live.getAttribute("role"), "status");
-  const first = t.timers.length;
-  t.click(b); await settle();                  // tap during the message: old timer cancelled, a fresh check runs
-  assert.ok(t.timers[first - 1].dead, "old reset timer cleared");
+  const resetTimer = t.timers.find((x) => x.ms === 3500); assert.ok(resetTimer && !resetTimer.dead);
+  t.click(b);                                  // tap during the message: old timer cancelled, region cleared so the same text is read again
+  assert.ok(resetTimer.dead, "old reset timer really cancelled");
+  assert.equal(t.live.textContent, "", "live region cleared on re-tap");
+  await settle(); t.runTimers(50);
+  assert.equal(t.live.textContent, "No infographic found yet", "an identical message is announced again");
   assert.equal(b.textContent, "No infographic found yet");
-  t.timers[first - 1].f();                     // a stale timer firing late must not wipe the new message
-  const last = t.timers[t.timers.length - 1]; assert.ok(!last.dead);
-  last.f();
+  const ranBefore = t.timers.filter((x) => x.ran && x.ms === 3500).length; t.runTimers(3500); // fires every timer that is still alive: the cancelled one must not, so only the new one runs
+  assert.equal(t.timers.filter((x) => x.ran && x.ms === 3500).length - ranBefore, 1, "only the new reset timer fired");
+  assert.ok(!resetTimer.ran);
+  assert.equal(b.textContent, "Check infographic");
   assert.equal(b.textContent, "Check infographic");
   assert.equal(b.getAttribute("data-igmsg"), null);
   assert.equal(t.live.textContent, "");

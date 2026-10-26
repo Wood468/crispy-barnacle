@@ -71,7 +71,7 @@
       if (!img || img.getAttribute('src') !== thumb) {
         button.innerHTML = '';
         img = document.createElement('img'); img.setAttribute('loading', 'lazy'); img.setAttribute('decoding', 'async'); img.setAttribute('width', '44'); img.setAttribute('height', '44'); img.alt = '';
-        img.addEventListener('error', function () { button.setAttribute('data-igbad', thumb); cardButton(button, ev, id, ''); });
+        img.addEventListener('error', function () { if (button.querySelector('img') !== img || img.getAttribute('src') !== thumb) return; /* a late error from a picture that was already replaced */ button.setAttribute('data-igbad', thumb); cardButton(button, ev, id, ''); });
         img.src = thumb; button.appendChild(img);
       }
     } else {
@@ -104,17 +104,26 @@
       button.title = poster ? 'View published infographic' : 'View event picture and summary';
     });
   }
-  /* The button keeps its button role; the result is read out through one hidden status region. */
-  function announce(text) {
+  /* The button keeps its button role; the result is read out through one hidden status region. The region is created at startup (a live
+     region added at the moment of the first message is often not announced), and each message is set on a later tick after the text was
+     cleared, so the same message twice in a row is read twice. */
+  var announceTimer = 0;
+  function liveRegion() {
     var r = document.getElementById('iglive');
-    if (!r) { r = document.createElement('div'); r.id = 'iglive'; r.className = 'vh-live'; r.setAttribute('role', 'status'); r.setAttribute('aria-live', 'polite'); document.body.appendChild(r); }
-    r.textContent = text;
+    if (!r && document.body) { r = document.createElement('div'); r.id = 'iglive'; r.className = 'vh-live'; r.setAttribute('role', 'status'); r.setAttribute('aria-live', 'polite'); document.body.appendChild(r); }
+    return r;
+  }
+  function announce(text) {
+    var r = liveRegion(); if (!r) return;
+    if (announceTimer) { clearTimeout(announceTimer); announceTimer = 0; }
+    r.textContent = '';
+    if (text) announceTimer = setTimeout(function () { announceTimer = 0; r.textContent = text; }, 50);
   }
   /* "Check infographic": look again, ignoring everything this page already loaded. Found: open it. Not found: say so on the button. */
   function recheck(button) {
     var id = button.getAttribute('data-igcheck'), ev = evById(id);
     if (!ev || button.getAttribute('data-igbusy') === '1') return;
-    if (button._igTimer) { clearTimeout(button._igTimer); button._igTimer = 0; button.removeAttribute('data-igmsg'); }
+    if (button._igTimer) { clearTimeout(button._igTimer); button._igTimer = 0; button.removeAttribute('data-igmsg'); announce(''); }
     button.setAttribute('data-igbusy', '1'); button.textContent = 'Checking…';
     loadInfo(true).then(function (all) {
       button.removeAttribute('data-igbusy');
@@ -222,6 +231,7 @@
     if (host && e.target === host) close();
   });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+  if (document.body) liveRegion(); else document.addEventListener('DOMContentLoaded', liveRegion);
   watchButtons();
   window.GOINFOGRAPHIC = { open: open, close: close };
 })();
