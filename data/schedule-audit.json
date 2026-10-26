@@ -1,20 +1,8 @@
 {
- "checked": "2026-10-26T00:28:24.442Z",
- "compared": 59,
+ "checked": "2026-10-26T06:23:38.171Z",
+ "compared": 56,
  "problems": [],
  "missing": [
-  {
-   "slug": "pokemon-night-out-los-angeles-2026",
-   "type": "event",
-   "start": "2026-10-25T02:30:00+00:00",
-   "end": "2026-10-25T05:18:00+00:00"
-  },
-  {
-   "slug": "pokemon-night-out-london-2026",
-   "type": "event",
-   "start": "2026-11-10T18:00:00+00:00",
-   "end": "2026-11-10T22:30:00+00:00"
-  },
   {
    "slug": "pokemon-go-tour-alola-kaohsiung-2027",
    "type": "pokémon-go-tour",

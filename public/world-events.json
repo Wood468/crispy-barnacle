@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-26T00:28:22.784Z",
+ "updated": "2026-10-26T06:23:36.200Z",
  "events": [
   {
    "id": "w-pokemon-fossil-museum-2026",
@@ -203,25 +203,6 @@
    "seen": "2026-10-26"
   },
   {
-   "id": "w-fc-seoul",
-   "name": "FC Seoul",
-   "place": "Seoul, South Korea",
-   "area": "Asia",
-   "scope": "regional",
-   "start": "2026-10-24",
-   "end": "2026-10-24",
-   "datesKnown": true,
-   "sources": [
-    {
-     "id": "serebii",
-     "name": "Serebii",
-     "url": "https://www.serebii.net/pokemongo/reallifeevents.shtml"
-    }
-   ],
-   "status": "single",
-   "seen": "2026-10-26"
-  },
-  {
    "id": "w-pok-mon-go-city-safari-boston-update",
    "name": "Pokémon GO City Safari: Boston Update",
    "place": "Boston, USA",
@@ -253,7 +234,60 @@
     }
    ],
    "status": "official",
-   "seen": "2026-10-14"
+   "seen": "2026-10-26"
+  },
+  {
+   "id": "w-how-to-beat-dynamax-azelf-complete-guide",
+   "name": "How to beat Dynamax Azelf: Complete Guide",
+   "place": "Europe",
+   "area": "Europe",
+   "scope": "global",
+   "start": "2026-10-24",
+   "end": "2026-10-24",
+   "datesKnown": true,
+   "sources": [
+    {
+     "id": "hub",
+     "name": "Pokémon GO Hub",
+     "url": "https://pokemongohub.net/post/guide/how-to-beat-dynamax-azelf-complete-guide/"
+    },
+    {
+     "id": "hub",
+     "name": "Pokémon GO Hub",
+     "url": "https://pokemongohub.net/post/guide/how-to-beat-dynamax-uxie-complete-guide/"
+    },
+    {
+     "id": "hub",
+     "name": "Pokémon GO Hub",
+     "url": "https://pokemongohub.net/post/guide/how-to-beat-dynamax-mesprit-complete-guide/"
+    }
+   ],
+   "status": "confirmed",
+   "seen": "2026-10-26"
+  },
+  {
+   "id": "w-fc-seoul",
+   "name": "FC Seoul",
+   "place": "South Korea",
+   "area": "Asia",
+   "scope": "regional",
+   "start": "2026-10-24",
+   "end": "2026-10-24",
+   "datesKnown": true,
+   "sources": [
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "url": "https://pokemongo.com/ko/news/fc-seoul-2026/"
+    },
+    {
+     "id": "serebii",
+     "name": "Serebii",
+     "url": "https://www.serebii.net/pokemongo/reallifeevents.shtml"
+    }
+   ],
+   "status": "official",
+   "seen": "2026-10-26"
   },
   {
    "id": "w-pok-mon-go-dia-de-muertos-2026-mexico-exclusive-ev",
@@ -635,11 +669,6 @@
      "id": "official",
      "name": "Pokémon GO (official)",
      "url": "https://pokemongo.com/news/save-the-date-go-tour-2027/"
-    },
-    {
-     "id": "official",
-     "name": "Pokémon GO (official)",
-     "url": "https://pokemongo.com/ko/news/save-the-date-go-tour-2027/"
     }
    ],
    "status": "official",

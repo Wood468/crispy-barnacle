@@ -1,12 +1,12 @@
 {
- "runAt": "2026-10-26T00:28:22.787Z",
+ "runAt": "2026-10-26T06:23:36.203Z",
  "sources": {
   "official": {
    "listed": 25,
    "error": ""
   },
   "leekduck": {
-   "listed": 53,
+   "listed": 50,
    "error": ""
   },
   "hub": {
@@ -16,7 +16,7 @@
  },
  "pagesRead": 80,
  "events": 78,
- "worldEvents": 32,
+ "worldEvents": 33,
  "worldUndated": [
   "Go Wild Area Stamp Rally Details"
  ],
@@ -38,6 +38,11 @@
   },
   {
    "source": "official",
+   "title": "Pokémon GO City Safari: Boston Update",
+   "url": "https://pokemongo.com/news/city-safari-boston-rescheduled/"
+  },
+  {
+   "source": "official",
    "title": "Explore by starlight during meteor showers for a chance to encounter Minior! — Pokémon GO",
    "url": "https://pokemongo.com/news/minior-meteor-showers-2026/"
   },
@@ -45,6 +50,11 @@
    "source": "official",
    "title": "Celebrate the Festival of Lights with the return of Pikachu wearing a saree and Pikachu wearing a kurta! — Pokémon GO",
    "url": "https://pokemongo.com/news/festival-of-lights-2026/"
+  },
+  {
+   "source": "official",
+   "title": "Event Update: City Safari Boston — Pokémon GO",
+   "url": "https://pokemongo.com/news/city-safari-boston-update/"
   },
   {
    "source": "official",
@@ -72,9 +82,29 @@
    "url": "https://pokemongo.com/news/city-safaris-europe-2026/"
   },
   {
+   "source": "leekduck",
+   "title": "Pokémon GO City Safari: Boston (Rescheduled)",
+   "url": "https://leekduck.com/events/pokemon-go-city-safari-boston-2026-rescheduled/"
+  },
+  {
    "source": "hub",
    "title": "This Week in Pokémon GO: October 26 to November 1, 2026",
    "url": "https://pokemongohub.net/post/event/this-week-in-pokemon-go-october-26-to-november-1-2026/"
+  },
+  {
+   "source": "hub",
+   "title": "How to beat Dynamax Azelf: Complete Guide",
+   "url": "https://pokemongohub.net/post/guide/how-to-beat-dynamax-azelf-complete-guide/"
+  },
+  {
+   "source": "hub",
+   "title": "How to beat Dynamax Uxie: Complete Guide",
+   "url": "https://pokemongohub.net/post/guide/how-to-beat-dynamax-uxie-complete-guide/"
+  },
+  {
+   "source": "hub",
+   "title": "How to beat Dynamax Mesprit: Complete Guide",
+   "url": "https://pokemongohub.net/post/guide/how-to-beat-dynamax-mesprit-complete-guide/"
   }
  ],
  "intl": {
@@ -174,6 +204,69 @@
    ]
   },
   {
+   "event": "Twilight Trails",
+   "field": "bonuses",
+   "missingFrom": [
+    "official"
+   ]
+  },
+  {
+   "event": "Twilight Trails",
+   "field": "featured",
+   "missingFrom": [
+    "official"
+   ]
+  },
+  {
+   "event": "Twilight Trails",
+   "field": "eggs",
+   "missingFrom": [
+    "official"
+   ]
+  },
+  {
+   "event": "Twilight Trails",
+   "field": "research",
+   "missingFrom": [
+    "official"
+   ]
+  },
+  {
+   "event": "Twilight Trails",
+   "field": "tickets",
+   "missingFrom": [
+    "official"
+   ]
+  },
+  {
+   "event": "Dynamax Sableye during Max Monday",
+   "field": "bonuses",
+   "missingFrom": [
+    "leekduck"
+   ]
+  },
+  {
+   "event": "Dynamax Sableye during Max Monday",
+   "field": "shiny",
+   "missingFrom": [
+    "leekduck"
+   ]
+  },
+  {
+   "event": "Dynamax Sableye during Max Monday",
+   "field": "moves",
+   "missingFrom": [
+    "leekduck"
+   ]
+  },
+  {
+   "event": "Dynamax Sableye during Max Monday",
+   "field": "dates",
+   "missingFrom": [
+    "hub"
+   ]
+  },
+  {
    "event": "Pokémon GO City Safari: Boston (Rescheduled)",
    "field": "bonuses",
    "missingFrom": [
@@ -227,108 +320,6 @@
    "missingFrom": [
     "official",
     "official"
-   ]
-  },
-  {
-   "event": "Dynamax Uxie, Mesprit and Azelf",
-   "field": "featured",
-   "missingFrom": [
-    "leekduck"
-   ]
-  },
-  {
-   "event": "Dynamax Uxie, Mesprit and Azelf",
-   "field": "shiny",
-   "missingFrom": [
-    "official"
-   ]
-  },
-  {
-   "event": "Twilight Trails",
-   "field": "bonuses",
-   "missingFrom": [
-    "official"
-   ]
-  },
-  {
-   "event": "Twilight Trails",
-   "field": "featured",
-   "missingFrom": [
-    "official"
-   ]
-  },
-  {
-   "event": "Twilight Trails",
-   "field": "eggs",
-   "missingFrom": [
-    "official"
-   ]
-  },
-  {
-   "event": "Twilight Trails",
-   "field": "research",
-   "missingFrom": [
-    "official"
-   ]
-  },
-  {
-   "event": "Twilight Trails",
-   "field": "tickets",
-   "missingFrom": [
-    "official"
-   ]
-  },
-  {
-   "event": "Pokémon Night Out 2026 - London",
-   "field": "bonuses",
-   "missingFrom": []
-  },
-  {
-   "event": "Pokémon Night Out 2026 - London",
-   "field": "featured",
-   "missingFrom": []
-  },
-  {
-   "event": "Pokémon Night Out 2026 - London",
-   "field": "raids",
-   "missingFrom": []
-  },
-  {
-   "event": "Pokémon Night Out 2026 - London",
-   "field": "shiny",
-   "missingFrom": []
-  },
-  {
-   "event": "Pokémon Night Out 2026 - London",
-   "field": "dates",
-   "missingFrom": []
-  },
-  {
-   "event": "Dynamax Sableye during Max Monday",
-   "field": "bonuses",
-   "missingFrom": [
-    "leekduck"
-   ]
-  },
-  {
-   "event": "Dynamax Sableye during Max Monday",
-   "field": "shiny",
-   "missingFrom": [
-    "leekduck"
-   ]
-  },
-  {
-   "event": "Dynamax Sableye during Max Monday",
-   "field": "moves",
-   "missingFrom": [
-    "leekduck"
-   ]
-  },
-  {
-   "event": "Dynamax Sableye during Max Monday",
-   "field": "dates",
-   "missingFrom": [
-    "hub"
    ]
   },
   {
