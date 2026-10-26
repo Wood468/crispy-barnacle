@@ -7,6 +7,80 @@
   "eventImages": {},
   "candidates": [
     {
+      "id": "discord:1564179495009914925",
+      "source": "discord",
+      "creator": "",
+      "title": "GO Weekly TT",
+      "url": "https://discord.com/channels/@me/1558793395198099618/1564179495009914925",
+      "publishedAt": "2026-10-26T07:30:52.660000+00:00",
+      "imageUrl": "https://cdn.discordapp.com/attachments/886998693897719819/1564034875604861068/GO_Weekly_TT.png?ex=6adfcc7c&is=6ade7afc&hm=2193d0a7618c94fd457ad0d6172dda5d4f2d9f068248f32de6b5f5014d2fcea3&",
+      "reviewStatus": "weekly",
+      "decision": "pending",
+      "ocrChecked": true,
+      "ocrText": "Pe i ow GOM-L/, | 26 OCTOBER - 1 NOVEMBER MONDAY TUESDAY WEDNESDAY THURSDAY FRIDAY SATURDAY SUNDAY —— 270cT || 280CcT ){ 290CT | wou ( 310¢cT )( 1NOV i} es ( a» 8 Showcase = ss Raid ( oe Battle aaa sett thin Scenic a —_ uu i) Monday Tuesday Hour Thursday Friday Sunday qa Qu Up to 3 Special Trades One Rare Candy XL One Rare Candy XL 50 battles/day More Pokémon in the for completing Enter up to for completing 2 guaranteed wild and Boosted in-person 5 Showcases in-person 4x Stardust Candy XL from trade incense on Routes Max Battles. Raid Battles. from win rewards Increased chance Encounter Mateo 3x of Lucky Trade o — r- —~ < RAIDS ag MI © 2:00 p: 5:00 pm Ww b Peo d ys jour tty it wt SUPER MEGA MONDAY ‘eo ROVATION A 2x Evolution XP RAID DAY 2s ©.2@ @© 10:00 am PART II oN Ss “\\ ©) INESO) FHANRRENIING / Local and exclusive events ® q Pokémon G Dia de Halloween Muertos agi) 9 @ AEON MALL Paseo de la Reform rad i i until NOV1 @ OCT31-NO ——] = APAC Cross-Region Pokémon Mall Six museums Cay Stamp Rally Observatory ADIDAS collab Mal laysig) @esa across Europe ! ° Until 2029 Eh unitil Dec 6 hs Until January 202: Until Dec Until 30 APR 2027 UK NATIONAL a) until Aug 2027 Pokémon Jet v4 TRUST SITES KANTO Until Dec 31 al | Aine G4A7IX 090 ®xXloa Follow for more g47ix.pro",
+      "eventMatch": {
+        "eventId": "smr1",
+        "eventTitle": "Super Mega Raid Day",
+        "score": 0.795,
+        "confidence": "high",
+        "matchedTerms": [
+          "super",
+          "mega",
+          "raid",
+          "day",
+          "raids",
+          "boosted",
+          "increased",
+          "chance"
+        ],
+        "alternatives": [
+          {
+            "eventId": "smr1",
+            "eventTitle": "Super Mega Raid Day",
+            "score": 0.795
+          },
+          {
+            "eventId": "into",
+            "eventTitle": "Into the Wild",
+            "score": 0.793
+          },
+          {
+            "eventId": "smr2",
+            "eventTitle": "Super Mega Raid Day",
+            "score": 0.791
+          }
+        ],
+        "method": "title-to-public/data.json heuristic",
+        "requiresHumanVerification": true
+      },
+      "reviewNote": "Two events look alike. Please choose.",
+      "signals": [
+        "picture text names the event",
+        "date in the picture is inside the event",
+        "posted around the event"
+      ],
+      "matchScore": 6,
+      "stagedPath": "/infographics/g47ix/discord-1564179495009914925.webp"
+    },
+    {
+      "id": "discord:1564171478423834735",
+      "source": "discord",
+      "creator": "",
+      "title": "HVhG dYXYAAaPxr",
+      "url": "https://discord.com/channels/@me/1558793395198099618/1564171478423834735",
+      "publishedAt": "2026-10-26T06:59:01.357000+00:00",
+      "imageUrl": "https://cdn.discordapp.com/attachments/1498664407423516752/1564171449785258094/HVhG-dYXYAAaPxr.jpg?ex=6ae04bae&is=6adefa2e&hm=d1530b33439f8426b159338a5c2e215df1bc2a19b87548bcda2ec3c48600a2d0&",
+      "reviewStatus": "unmatched",
+      "decision": "pending",
+      "ocrChecked": true,
+      "ocrText": "ae Y 2.2 ¥x0 1 @ V~ q ot PN H Mexico local time -@°, oN V ty DIA DE 27* 5 DVI FA OCT NOV MUERTOS 10:00am _ 8:00 pm @ AVAILABLE ACROSS MEXICO e sig SPECIAL e@) g eceoe 0a5 AT R 3 BACKGROUND Qe OG 2x Incense 2x Poffin CHANCE Duration Duration @ AVAILABLE AT PASEO DE LA REFORMA fF) ‘+ “Ae LOCATION LOCATION BACKGROUND @ 2) BACKGROUND Max ae CHANCE Visit the exhibit '@ a )) q: é ge) gn Avenida Paseo de la Reforma - Ya Stardust cost for trades Lure Modules 3-hour Catch Assist Chance Increased Buddy Oct 17 - Nov 16 2026 a6 etwe = www.g47ix.pro Follow for more G4A7|X £) (co) & X | ao",
+      "eventMatch": null,
+      "reviewNote": "No event name found in the caption or image text.",
+      "signals": [],
+      "matchScore": 0,
+      "stagedPath": "/infographics/g47ix/discord-1564171478423834735.jpg"
+    },
+    {
       "id": "discord:1564040306855378946",
       "source": "discord",
       "creator": "",
