@@ -112,7 +112,9 @@ test("infographic lookup: a later instance of a recurring event does not inherit
   const others = [oct, nov];
   assert.ok(info.smr1.infographics.length >= 2);
   assert.equal(pics(oct), info.smr1.infographics.length, "October matches smr1 by id");
-  assert.equal(pics(nov), info.smr1.infographics.length, "the old unguarded title fallback is what we are fixing (no list given)");
+  // Known limitation: with no date information at all (no event list, no month in the entry's id) the title fallback cannot tell instances apart.
+  // Once the October card has dropped off the lists, the November card inherits October's pictures until entries carry a date field.
+  assert.equal(dd.findEventInfo(nov, info, [nov]).infographics.length, info.smr1.infographics.length, "documented limitation: earlier instance gone from the lists");
   assert.equal(dd.findEventInfo(nov, info, others), null, "November is owned-elsewhere: smr1 belongs to the October card");
   assert.equal(dd.findEventInfo(oct, info, others).infographics.length, info.smr1.infographics.length);
   // Even when the October card is no longer listed, a month/year in the entry's own id says it is another instance.
@@ -153,4 +155,26 @@ test("infographic card button wiring: thumbnail, Check infographic, merged-card 
   assert.match(ig, /loadInfo\(true\)/);
   assert.match(ig, /cache: fresh \? 'reload'/);
   assert.match(css, /button\.igthumb\{width:44px;height:44px;min-height:44px/);
+});
+
+test("infographic lookup: month hints match whole words only, and the card's month is read as shown", () => {
+  const entry = (id) => ({ [id]: { names: ["Spotlight Hour"], infographics: [{ url: "/img/ext/s.webp" }] } });
+  const oct = { id: "w-x", name: "Spotlight Hour", start: new Date(2026, 9, 14, 10), end: new Date(2026, 9, 14, 11) };
+  // "marvel-2026" is not March 2026 (which would wrongly reject an October card); "october-2026" really is October.
+  assert.equal(dd.findEventInfo(oct, entry("marvel-2026"), []).infographics.length, 1);
+  assert.equal(dd.findEventInfo(oct, entry("decorations-2026"), []).infographics.length, 1);
+  assert.equal(dd.findEventInfo(oct, entry("october-2026"), []).infographics.length, 1);
+  assert.equal(dd.findEventInfo(oct, entry("oct-2026"), []).infographics.length, 1);
+  assert.equal(dd.findEventInfo(oct, entry("march-2026"), []), null);
+  assert.equal(dd.findEventInfo(oct, entry("mar-2026"), []), null);
+  assert.equal(dd.findEventInfo(oct, entry("spotlight-2026-03-10"), []), null, "a full date in the id still counts");
+  assert.equal(dd.findEventInfo(oct, entry("spotlight-12026-03-100"), []).infographics.length, 1, "digits glued to a date are not a date");
+  // Dec 1 at local midnight is December, not November (Date read in local time, as the card displays it).
+  const dec = (start) => ({ id: "w-d", name: "Spotlight Hour", start, end: start });
+  assert.equal(dd.findEventInfo(dec(new Date(2026, 11, 1, 0, 0)), entry("october-2026"), []), null, "December is two months after October");
+  assert.equal(dd.findEventInfo(dec(new Date(2026, 11, 1, 0, 0)), entry("november-2026"), []).infographics.length, 1, "December is next to November");
+  assert.equal(dd.findEventInfo(dec(new Date(2026, 10, 30, 23, 59)), entry("december-2026"), []).infographics.length, 1);
+  // Date-only strings are read from the text.
+  assert.equal(dd.findEventInfo(dec("2026-12-01"), entry("october-2026"), []), null);
+  assert.equal(dd.findEventInfo(dec("2026-12-01"), entry("november-2026"), []).infographics.length, 1);
 });

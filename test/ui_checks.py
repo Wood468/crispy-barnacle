@@ -45,6 +45,10 @@ with sync_playwright() as p:
         check('Check infographic button keeps its button role', pg.locator('[data-igcheck="cur:zorua"]').first.get_attribute('role') is None)
         pg.locator('[data-igcheck="cur:zorua"]').first.click(); pg.wait_for_timeout(600)
         check('Check infographic says so in place when nothing is found', pg.locator('[data-igcheck="cur:zorua"]').first.inner_text()=='No infographic found yet' and not pg.locator('#goinfo:not([hidden])').count())
+        # A thumbnail address that cannot be fetched falls back to the Check infographic button (the rest of this run serves a valid PNG for every picture).
+        pb=page(extra={'**/img/ext/4aa21432-0cfc-4c93-b3eb-0c15f322389d-0119b088.webp':('',404)}); pb.wait_for_timeout(800)
+        check('a thumbnail that fails to load becomes Check infographic', pb.locator('[data-igcheck="cur:trek"]').first.inner_text()=='Check infographic' and pb.locator('[data-igcard="cur:trek"] img').count()==0 and pb.locator('[data-igcard="cur:trek"]').first.get_attribute('data-igbad') is not None)
+        pb.context.close()
         check('no event grades are shown', pg.locator('.event-grade, .grade-summary, #grade-settings').count()==0)
         check('no follow stars next to Pokémon names on event cards', pg.locator('.evc .fbtn, .evc [data-follow]').count()==0)
         trek_highlights = [x.lower() for x in pg.locator('[data-id="cur:trek"] .signal-highlight-debut, [data-id="cur:trek"] .signal-highlight-boosted-shiny').evaluate_all("els=>els.map(e=>e.title)")]
