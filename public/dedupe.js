@@ -118,5 +118,30 @@
     }
     return out;
   }
-  return { same: same, judge: judge, groups: groups, tokens: tokens, titleKey: titleKey, placeTokens: placeTokens };
+  /* Which entries of event-info.json belong to this card? The file is keyed by whatever id the picture was attached under ("trek",
+     "cur:wag", "leekduck:halloween-2026-part-1"), but a card can carry another id: our own "cur:" copy and the live "leekduck:" copy of one
+     event are merged into a single card (the card keeps one id; aliasIds lists the others). So match on every id the card has (with or
+     without a "cur:" / "leekduck:" prefix), on the article address in the card's link, and, when none of those has a picture, on the
+     same title (word order, "Part One" / "Part I", punctuation and case ignored). All matching pictures are pooled. */
+  function bareId(id) { return String(id || '').replace(/^[a-z]+:/, '').toLowerCase(); }
+  function slugOf(u) { var p = String(u || '').split(/[?#]/)[0].split('/').filter(Boolean); return (p.pop() || '').toLowerCase(); }
+  function findEventInfo(ev, all) {
+    all = all || {}; ev = ev || {};
+    var bares = {}; [ev.id].concat(ev.aliasIds || []).forEach(function (i) { if (i) bares[bareId(i)] = 1; });
+    var slug = slugOf(ev.link); if (slug.indexOf('-') > 0) bares[slug] = 1;
+    var keys = Object.keys(all).filter(function (k) { return bares[bareId(k)] && all[k]; });
+    var withPics = function (list) { return list.filter(function (k) { return (all[k].infographics || []).length; }); };
+    if (!withPics(keys).length && ev.name) {
+      var tk = titleKey(ev.name);
+      Object.keys(all).forEach(function (k) {
+        if (keys.indexOf(k) < 0 && all[k] && (all[k].names || []).some(function (n) { return titleKey(n) === tk; })) keys.push(k);
+      });
+    }
+    if (!keys.length) return null;
+    if (keys.length === 1) return all[keys[0]];
+    var seen = {}, pics = [];
+    keys.forEach(function (k) { (all[k].infographics || []).forEach(function (g) { if (g && !seen[g.url]) { seen[g.url] = 1; pics.push(g); } }); });
+    return Object.assign({}, all[keys[0]], { infographics: pics });
+  }
+  return { same: same, judge: judge, groups: groups, tokens: tokens, titleKey: titleKey, placeTokens: placeTokens, findEventInfo: findEventInfo };
 });

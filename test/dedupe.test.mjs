@@ -75,3 +75,48 @@ test("the Now tab joins live events by titleKey, not by exact title", async () =
   assert.match(src, /GODEDUPE\.titleKey\(s\)/);
   assert.match(src, /GODEDUPE\.titleKey\(a\) === GODEDUPE\.titleKey\(b\)/);
 });
+
+// ---- Which infographics belong to a card (GODEDUPE.findEventInfo) ----
+import { readFileSync } from "node:fs";
+const info = JSON.parse(readFileSync(new URL("../public/event-info.json", import.meta.url), "utf8")).events;
+const pics = (card) => (dd.findEventInfo(card, info) || {}).infographics?.length || 0;
+
+test("infographic lookup: real cards that used to show 'no infographic' now find theirs", () => {
+  // Curated copy "cur:halloween1" is filed under the live id "leekduck:halloween-2026-part-1" with a differently worded title.
+  assert.equal(pics({ id: "cur:halloween1", name: "Halloween 2026, Part One" }), info["leekduck:halloween-2026-part-1"].infographics.length);
+  // A merged card keeps the live id but the pictures are filed under the curated id (cur:wag): both are pooled.
+  const merged = { id: "leekduck:pokemon-go-wild-area-2026-global", aliasIds: ["cur:wag"], name: "Pokémon GO Wild Area 2026: Global" };
+  const union = new Set([...info["cur:wag"].infographics, ...info["leekduck:pokemon-go-wild-area-2026-global"].infographics].map((g) => g.url));
+  assert.equal(pics(merged), union.size);
+  assert.ok(union.size > 1);
+  assert.equal(pics({ id: "leekduck:pokemon-go-wild-area-2026-global", name: "Pokémon GO Wild Area 2026: Global" }), 1, "without the alias only the live entry is found");
+  // Pictures filed under the bare slug, card id carries a prefix, and the reverse.
+  assert.equal(pics({ id: "cur:trek", name: "x" }), 2);
+  assert.equal(pics({ id: "leekduck:trek", name: "x" }), 2);
+  // The article address in the card's link joins it to the live entry.
+  assert.equal(pics({ id: "cur:spirits", name: "Nothing alike", link: "https://leekduck.com/events/dynamax-uxie-mesprit-azelf-max-battle-day-2026/" }), 3);
+  // Case and punctuation in titles do not matter.
+  assert.equal(pics({ id: "w-x", name: "YVELTAL IN 5-STAR RAID BATTLES!" }), info["yveltal-oct-2026"].infographics.length);
+});
+
+test("infographic lookup: genuinely missing stays missing", () => {
+  assert.equal(dd.findEventInfo({ id: "cur:space", name: "World Space Week" }, info), null);
+  assert.equal(pics({ id: "cur:zorua", name: "Zorua Community Day" }), 0);
+  assert.equal(dd.findEventInfo({}, {}), null);
+  assert.equal(dd.findEventInfo(null, null), null);
+});
+
+test("infographic card button wiring: thumbnail, Check infographic, merged-card aliases", () => {
+  const read = (f) => readFileSync(new URL("../public/" + f, import.meta.url), "utf8");
+  const ig = read("infographic.js"), dash = read("dash.js"), css = read("dash.css");
+  assert.match(dash, /data-igcard="' \+ esc\(ev\.id\)/);
+  assert.match(dash, /liveEvent\.aliasIds = \(liveEvent\.aliasIds \|\| \[\]\)\.concat\(\[c\.id\]\)/);
+  assert.match(dash, /hit\.aliasIds = /);
+  assert.match(ig, /setAttribute\('loading', 'lazy'\)/);
+  assert.match(ig, /width', '44'/);
+  assert.match(ig, /Check infographic/);
+  assert.match(ig, /No infographic found yet/);
+  assert.match(ig, /loadInfo\(true\)/);
+  assert.match(ig, /cache: fresh \? 'reload'/);
+  assert.match(css, /button\.igthumb\{width:44px;height:44px;min-height:44px/);
+});

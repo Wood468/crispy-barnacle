@@ -206,6 +206,7 @@
       hit.bonuses = Array.from(new Set((hit.bonuses || []).concat(x.bonuses || [])));
       if (!hit.link && x.link) hit.link = x.link;
       if (!hit.infographicUrl && x.infographicUrl) hit.infographicUrl = x.infographicUrl;
+      hit.aliasIds = (hit.aliasIds || []).concat([x.id], x.aliasIds || []); /* so its pictures still find this card: see GODEDUPE.findEventInfo */
       if ((RANK[x.status] || 0) > (RANK[hit.status] || 0)) { hit.status = x.status; hit.source = x.source; }
     });
     return out;
@@ -272,6 +273,8 @@
           if ((old.name || '').toLowerCase() === k) old.costume = true;
         });
       });
+      liveEvent.aliasIds = (liveEvent.aliasIds || []).concat([c.id]); /* the curated copy's id: its infographics are filed under it */
+      if (!liveEvent.infographicUrl && c.infographicUrl) liveEvent.infographicUrl = c.infographicUrl;
       if (c.bonuses && c.bonuses.length) liveEvent.bonuses = Array.from(new Set((liveEvent.bonuses || []).concat(c.bonuses)));
       var liveHasDetail = (liveEvent.featured || []).length > 0 || (liveEvent.bonuses || []).length > 0;
       var cNotes = (c.notes || []).filter(function (t) { return !(liveHasDetail && window.GOLIB && GOLIB.isPlaceholder(t)); });
@@ -616,7 +619,7 @@
       + signalChips(ev, 4, false)
       + '<div class="evc-foot">'
       + '<button type="button" class="more" data-open="' + esc(ev.id) + '" aria-label="Details: ' + esc(ev.name) + '">Details</button>'
-      + '<button type="button" class="more info-open" data-infographic="' + esc(ev.id) + '" aria-label="Open infographic for ' + esc(ev.name) + '">▧ Infographic</button>'
+      + '<button type="button" class="more info-open" data-igcard="' + esc(ev.id) + '" data-infographic="' + esc(ev.id) + '" aria-label="Open infographic for ' + esc(ev.name) + '">▧ Infographic</button>'
       + '<button type="button" class="star' + (saved ? ' on' : '') + '" data-save="' + esc(ev.id) + '" aria-pressed="' + saved + '" aria-label="' + (saved ? 'Remove from saved' : 'Save event and get a Telegram reminder') + '" title="Saved events send you a Telegram reminder">' + (saved ? '★' : '☆') + '</button></div>'
       + (ev.status === 'conflicting' ? '<p class="evc-warn">Sources disagree about the time or place. Check in the game before heading out.</p>' : '')
       + '</div></article>';
@@ -1258,7 +1261,7 @@
     renderCoverage();
     if (window.GO && GO.refreshDex) GO.refreshDex();
     usSync();
-    var inf = document.createElement('script'); inf.src = '/infographic.js?v=20261017b'; document.body.appendChild(inf); var x = document.createElement('script'); x.src = '/extra.js?v=20261024a'; document.body.appendChild(x); var y = document.createElement('script'); y.src = '/detail.js?v=20261024c'; document.body.appendChild(y); var z = document.createElement('script'); z.src = '/places.js?v=20261014p'; document.body.appendChild(z); var w = document.createElement('script'); w.src = '/fresh.js?v=20261014a'; document.body.appendChild(w); var nv = document.createElement('script'); nv.src = '/nudge.js?v=20261014l'; document.body.appendChild(nv); var rv = document.createElement('script'); rv.src = '/review.js?v=20261025a'; document.body.appendChild(rv); var by = document.createElement('script'); by.src = '/buy.js?v=20261020d'; document.body.appendChild(by);
+    var inf = document.createElement('script'); inf.src = '/infographic.js?v=20261026a'; document.body.appendChild(inf); var x = document.createElement('script'); x.src = '/extra.js?v=20261024a'; document.body.appendChild(x); var y = document.createElement('script'); y.src = '/detail.js?v=20261024c'; document.body.appendChild(y); var z = document.createElement('script'); z.src = '/places.js?v=20261014p'; document.body.appendChild(z); var w = document.createElement('script'); w.src = '/fresh.js?v=20261014a'; document.body.appendChild(w); var nv = document.createElement('script'); nv.src = '/nudge.js?v=20261014l'; document.body.appendChild(nv); var rv = document.createElement('script'); rv.src = '/review.js?v=20261025a'; document.body.appendChild(rv); var by = document.createElement('script'); by.src = '/buy.js?v=20261020d'; document.body.appendChild(by);
   }
   envBanner();
   var dexP = fetch('/dex.json').then(function (r) { return r.json(); }).catch(function () { return []; });
