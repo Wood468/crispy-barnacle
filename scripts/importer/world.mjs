@@ -120,8 +120,34 @@ export function stopsFromPage(page, today = new Date().toISOString().slice(0, 10
   for (const s of stops) count[city(s)] = (count[city(s)] || 0) + 1;
   return stops.map(s => ({ name: title + ": " + city(s) + (count[city(s)] > 1 ? " (" + s.range.start + ")" : ""), place: s.where.place, area: s.where.area, scope: "regional", start: s.range.start, end: s.range.end, datesKnown: true, url: page.url, source: page.source }));
 }
+// A venue list with a date range per venue, under country headings:
+//   "Singapore"  /  "Changi Airport: November 7, 2026 – February 28, 2027"  /  "Jewel: November 7, 2026 – January 31, 2027"
+// Each venue becomes its own entry named "<series>: <venue>". Needs two or more venue lines; a heading is a short line that names a place.
+export function venueStopsFromPage(page, today = new Date().toISOString().slice(0, 10)) {
+  const title = cleanTitle(page.title).replace(/^pok[eé]mon go\s+(?:joins|partners with)\s+/i, "").replace(/[!.\s]+$/, "");
+  const text = (page.lines || []).map(l => l.text).join(" ");
+  if (SKIP_NEWS.test(title) || !(IN_PERSON.test(title) || IN_PERSON.test(text.slice(0, 1500)))) return [];
+  const stops = [], seen = new Set();
+  let ctx = null;
+  for (const l of page.lines || []) {
+    const t = String(l.text || "").replace(/^[\s•\-–]+/, "").trim();
+    const head = t.replace(/^\[|\]$/g, "").trim();
+    if (head.length >= 3 && head.length <= 30 && !/[\d:]/.test(head)) { const w = placeOf(head, ""); ctx = w && w.place.toLowerCase().includes(head.toLowerCase().split(/\s+/)[0]) ? w : null; continue; }
+    const m = ctx && /^([^:]{3,50}):\s+(.{6,90})$/.exec(t);
+    if (!m || /\d/.test(m[1])) continue;
+    const range = parseDateRange(m[2], +today.slice(0, 4));
+    if (!range) continue;
+    const venue = /^[^a-z]+$/.test(m[1]) ? m[1].toLowerCase().replace(/\b[a-z]/g, c => c.toUpperCase()) : m[1].trim();
+    const key = ctx.place + "|" + venue;
+    if (seen.has(key)) continue;
+    seen.add(key); stops.push({ name: title + ": " + venue, place: ctx.place + " (" + venue + ")", area: ctx.area, scope: "regional", start: range.start, end: range.end, datesKnown: true, url: page.url, source: page.source });
+  }
+  return stops.length >= 2 ? stops : [];
+}
 // One write-up -> its entries: every stop of a multi-stop event, otherwise the single entry fromPage finds.
 export function entriesFromPage(page, today) {
+  const venues = venueStopsFromPage(page, today);
+  if (venues.length) return venues;
   const stops = stopsFromPage(page, today);
   if (stops.length) return stops;
   const one = fromPage(page, today);
@@ -132,7 +158,7 @@ export function entriesFromPage(page, today) {
 export function mergeWorld(entries, sources) {
   const out = [];
   for (const e of entries) {
-    const hit = out.find(o => similar(o.name, e.name) && (!o.start || !e.start || (o.start <= (e.end || e.start) && e.start <= (o.end || o.start))));
+    const hit = out.find(o => similar(o.name, e.name) && !(o.name !== e.name && o.sources.some(x => x.url === e.url)) && (!o.start || !e.start || (o.start <= (e.end || e.start) && e.start <= (o.end || o.start))));
     const src = { id: e.source, name: sources[e.source] || e.source, url: e.url };
     if (hit) { if (!hit.sources.some(s => s.url === src.url)) hit.sources.push(src); if (!hit.start && e.start) { hit.start = e.start; hit.end = e.end; hit.datesKnown = true; } if (!hit.place && e.place) { hit.place = e.place; hit.area = e.area; } continue; }
     const slug = "w-" + e.name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 50);
@@ -140,6 +166,30 @@ export function mergeWorld(entries, sources) {
     out.push({ id, name: e.name, place: e.place, area: e.area, scope: e.scope, start: e.start, end: e.end, datesKnown: e.datesKnown, sources: [src] });
   }
   return out.map(o => ({ ...o, status: o.sources.some(s => s.id === "official") ? "official" : o.sources.length > 1 ? "confirmed" : "single" }));
+}
+
+// Two entries built from the same write-up in one run are that announcement's separate stops (venues, cities), never one event:
+// returns their id pairs as "different" rulings so the duplicate check cannot join "Mall Exploration: SM Davao" with "...: SM Marikina".
+export function sameWriteupRulings(world) {
+  const out = [];
+  for (let i = 0; i < world.length; i++) for (let j = i + 1; j < world.length; j++) {
+    const a = world[i], b = world[j];
+    if ((a.sources || []).some(x => (b.sources || []).some(y => normUrl(x.url) === normUrl(y.url)))) out.push([a.id, b.id]);
+  }
+  return out;
+}
+
+// Whether an entry from the previous world-events file is kept when this run's sources did not list it.
+// Normally for 30 days after it was last seen; an entry whose official page is on data/watch-pages.json (a hand-added tour leg, say)
+// stays until its own end date passes. `watchUrls` is a Set of normalised page URLs (trailing slash, see normUrl).
+export const normUrl = u => String(u || "").trim().toLowerCase().replace(/\/?$/, "/");
+export function keepOldWorld(o, { cutoff, today, now = Date.now(), watchUrls = new Set(), splitUrls = new Set() }) {
+  const srcs = o.sources || [];
+  if (!srcs.length || !srcs.some(x => /official/i.test(x.name || "") || x.auto) || /this week|news this week/i.test(o.name)) return false;
+  if (o.start && (o.end || o.start) < cutoff) return false;
+  if (srcs.some(x => splitUrls.has(normUrl(x.url)))) return false; // its page now yields separate entries: do not bring the old combined one back
+  if (now - Date.parse(o.seen || 0) < 30 * 864e5) return true;
+  return !!o.start && (o.end || o.start) >= today && srcs.some(x => /official/i.test(x.name || "") && watchUrls.has(normUrl(x.url)));
 }
 
 // The same event kept under two ids (a title changed between runs, two sources worded it differently) becomes one entry.
