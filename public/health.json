@@ -1,25 +1,25 @@
 {
- "updated": "2026-10-27T00:45:51.703Z",
+ "updated": "2026-10-27T20:13:46.955Z",
  "jobs": [
   {
    "id": "event-importer.yml",
    "name": "Event importer",
    "everyH": 1,
-   "lastSuccess": "2026-10-27T00:34:04.000Z",
+   "lastSuccess": "2026-10-27T18:48:34.000Z",
    "state": "fresh"
   },
   {
    "id": "g47ix-infographics.yml",
    "name": "Infographic check",
    "everyH": 2,
-   "lastSuccess": "2026-10-26T16:24:51.000Z",
-   "state": "stale"
+   "lastSuccess": "2026-10-27T15:39:17.000Z",
+   "state": "fresh"
   },
   {
    "id": "store-watch.yml",
    "name": "Store watcher",
    "everyH": 1,
-   "lastSuccess": "2026-10-27T00:26:57.000Z",
+   "lastSuccess": "2026-10-27T18:45:19.000Z",
    "state": "fresh"
   },
   {
@@ -40,7 +40,7 @@
    "id": "discord_sync.yml",
    "name": "Discord reader",
    "everyH": 2,
-   "lastSuccess": "2026-10-26T23:40:00.000Z",
+   "lastSuccess": "2026-10-27T17:47:34.000Z",
    "state": "fresh"
   },
   {
@@ -54,7 +54,7 @@
    "id": "worker-cron",
    "name": "Worker hourly jobs",
    "everyH": 1,
-   "lastSuccess": "2026-10-27T00:30:48.987Z",
+   "lastSuccess": "2026-10-27T19:30:47.340Z",
    "state": "fresh",
    "detail": "Discord forwarding: nothing new"
   },
@@ -62,7 +62,7 @@
    "id": "ai-heartbeat-event-check",
    "name": "AI event check",
    "everyH": 168,
-   "lastSuccess": "2026-10-26T20:44:00.000Z",
+   "lastSuccess": "2026-10-27T02:42:00.000Z",
    "state": "fresh"
   },
   {
