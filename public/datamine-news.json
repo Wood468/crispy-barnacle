@@ -1,12 +1,12 @@
 {
- "updated": "2026-10-27T04:55:26.041Z",
+ "updated": "2026-10-27T20:38:55.256Z",
  "seeded": true,
  "channels": [
   {
    "src": "events",
    "name": "dm-events",
    "state": "ok",
-   "count": 5
+   "count": 6
   },
   {
    "src": "reports",
@@ -18,10 +18,28 @@
    "src": "gamedata",
    "name": "dm-gamedata",
    "state": "ok",
-   "count": 9
+   "count": 10
   }
  ],
  "items": [
+  {
+   "id": "1564733514086224084",
+   "src": "gamedata",
+   "title": "DEPRECATEVERIFYELIGIBILITYFEATUREGATE, USEHALFLEVELSFORCPLIMITERFEATUREGATE, and WAITFORDOWNSCALEDSTATSBEFOREENTERSTATEF",
+   "text": "DEPRECATEVERIFYELIGIBILITYFEATUREGATE, USEHALFLEVELSFORCPLIMITERFEATUREGATE, and WAITFORDOWNSCALEDSTATSBEFOREENTERSTATEFEATUREGATE were rolled out.\n\nThanks @JabJabLuszko for the image, level scaling for Mega-Evolved Pokémon in GO Battle League is now live.\n\n@subscriber @miner",
+   "link": "",
+   "image": "",
+   "date": "2026-10-27T20:12:21.101Z"
+  },
+  {
+   "id": "1564694023283941440",
+   "src": "events",
+   "title": "Raid Boss Rotation Update",
+   "text": "Raid Boss Rotation Update\nTime Ranges\n October 28, 2026 at 6:00 a.m. – November 3, 2026 at 8:00 p.m.\nPokémon\n One-Star Raids: Pikachu wearing a hat and capelet, Sinistea wearing a bow\n Three-Star Raids: Cofagrigus, Trevenant, Dhelmise\n Five-Star Raids: Giratina (Origin Forme)\n Mega Raids: Mega Sableye\nEvolution Criteria\n Urshifu (Single Strike Style): 1 Dark-type Pokémon\n Urshifu (Rapid Strike Style): 0 Water-type Pokémon\n Kingambit: 1 Dark- or Steel-type Pokémon\nNew Rising Star Medal Candidates\n Cofagrigus\n Trevenant",
+   "link": "",
+   "image": "",
+   "date": "2026-10-27T17:35:25.760Z"
+  },
   {
    "id": "1564443233323327602",
    "src": "gamedata",
