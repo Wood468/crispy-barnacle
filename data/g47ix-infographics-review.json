@@ -72,8 +72,8 @@
       "url": "https://discord.com/channels/@me/1558793395198099618/1564171478423834735",
       "publishedAt": "2026-10-26T06:59:01.357000+00:00",
       "imageUrl": "https://cdn.discordapp.com/attachments/1498664407423516752/1564171449785258094/HVhG-dYXYAAaPxr.jpg?ex=6ae04bae&is=6adefa2e&hm=d1530b33439f8426b159338a5c2e215df1bc2a19b87548bcda2ec3c48600a2d0&",
-      "reviewStatus": "unmatched",
-      "decision": "pending",
+      "reviewStatus": "published",
+      "decision": "approved",
       "ocrChecked": true,
       "ocrText": "ae Y 2.2 ¥x0 1 @ V~ q ot PN H Mexico local time -@°, oN V ty DIA DE 27* 5 DVI FA OCT NOV MUERTOS 10:00am _ 8:00 pm @ AVAILABLE ACROSS MEXICO e sig SPECIAL e@) g eceoe 0a5 AT R 3 BACKGROUND Qe OG 2x Incense 2x Poffin CHANCE Duration Duration @ AVAILABLE AT PASEO DE LA REFORMA fF) ‘+ “Ae LOCATION LOCATION BACKGROUND @ 2) BACKGROUND Max ae CHANCE Visit the exhibit '@ a )) q: é ge) gn Avenida Paseo de la Reforma - Ya Stardust cost for trades Lure Modules 3-hour Catch Assist Chance Increased Buddy Oct 17 - Nov 16 2026 a6 etwe = www.g47ix.pro Follow for more G4A7|X £) (co) & X | ao",
       "eventMatch": null,
@@ -86,6 +86,10 @@
           "eventId": "w-pok-mon-go-dia-de-muertos-2026-mexico-exclusive-ev",
           "eventTitle": "Pokémon GO Dia de Muertos 2026: Mexico Exclusive Event"
         }
+      ],
+      "publishedEvent": "w-pok-mon-go-dia-de-muertos-2026-mexico-exclusive-ev",
+      "publishedEvents": [
+        "w-pok-mon-go-dia-de-muertos-2026-mexico-exclusive-ev"
       ]
     },
     {

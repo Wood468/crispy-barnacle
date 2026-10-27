@@ -1142,6 +1142,28 @@
           "alt": "Pokémon GO Tour 2027: Los Angeles infographic"
         }
       ]
+    },
+    "w-pok-mon-go-dia-de-muertos-2026-mexico-exclusive-ev": {
+      "names": [
+        "Pokémon GO Dia de Muertos 2026: Mexico Exclusive Event"
+      ],
+      "source": {
+        "label": "G47IX",
+        "trust": "community",
+        "url": "https://discord.com/channels/@me/1558793395198099618/1564171478423834735",
+        "observed": "2026-10-27"
+      },
+      "tickets": [],
+      "info": [],
+      "infographics": [
+        {
+          "label": "Infographic · G47IX",
+          "url": "/infographics/g47ix/discord-1564171478423834735.jpg",
+          "source": "G47IX",
+          "sourceUrl": "https://discord.com/channels/@me/1558793395198099618/1564171478423834735",
+          "alt": "Pokémon GO Dia de Muertos 2026: Mexico Exclusive Event infographic"
+        }
+      ]
     }
   },
   "passes": {
