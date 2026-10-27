@@ -1,9 +1,9 @@
 {
- "updated": "2026-10-27T06:24:36.524Z",
+ "updated": "2026-10-27T13:21:04.929Z",
  "events": {
   "wag": {
    "name": "GO Wild Area: Global",
-   "updated": "2026-10-27T06:24:36.524Z",
+   "updated": "2026-10-27T13:21:04.929Z",
    "sources": [
     {
      "id": "official",
@@ -79,7 +79,7 @@
   },
   "leekduck:into-the-wild-2026": {
    "name": "Into the Wild",
-   "updated": "2026-10-27T06:24:36.524Z",
+   "updated": "2026-10-27T13:21:04.929Z",
    "sources": [
     {
      "id": "official",
@@ -105,7 +105,7 @@
   },
   "novcd": {
    "name": "November Community Day",
-   "updated": "2026-10-27T06:24:36.524Z",
+   "updated": "2026-10-27T13:21:04.929Z",
    "sources": [
     {
      "id": "official",
@@ -298,7 +298,7 @@
   },
   "leekduck:go-pass-november-2026": {
    "name": "GO Pass: November",
-   "updated": "2026-10-27T06:24:36.524Z",
+   "updated": "2026-10-27T13:21:04.929Z",
    "sources": [
     {
      "id": "official",
@@ -544,7 +544,7 @@
   },
   "smr1": {
    "name": "Super Mega Raid Day",
-   "updated": "2026-10-27T06:24:36.524Z",
+   "updated": "2026-10-27T13:21:04.929Z",
    "sources": [
     {
      "id": "official",
@@ -885,7 +885,7 @@
   },
   "leekduck:halloween-2026-part-1": {
    "name": "Pokémon GO Halloween 2026 Part I",
-   "updated": "2026-10-27T06:24:36.524Z",
+   "updated": "2026-10-27T13:21:04.929Z",
    "sources": [
     {
      "id": "official",
@@ -898,6 +898,12 @@
      "name": "Leek Duck",
      "trust": "community",
      "url": "https://leekduck.com/events/halloween-2026-part-1/"
+    },
+    {
+     "id": "hub",
+     "name": "Pokémon GO Hub",
+     "trust": "community",
+     "url": "https://pokemongohub.net/post/event/halloween-2026-part-one/"
     }
    ],
    "fields": {
@@ -911,10 +917,53 @@
       "status": "confirmed"
      },
      {
+      "text": "These catch bonuses are not active automatically . You must unlock them by reaching the required ranks on GO Pass: Halloween 2026 .",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Pikachu wearing a hat and capelet, Zubat wearing a top hat, and Sinistea wearing a bow make their Pokémon GO debut. All three can be Shiny.",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "A Lavender Town music remix plays nightly, and Halloween decorations appear during both parts of the event.",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Purchasing a Halloween GO Pass Deluxe upgrade through the Pokémon GO Web Store also includes the following gifts with purchase:",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Web Store Offer | Extra Items",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "GO Pass Deluxe: Halloween 2026 | 10 Ultra Balls, 5 Max Revives, 1 Premium Battle Pass, 5 Max Potions",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
       "text": "Rank 10: 2× Candy for catching Pokémon.",
       "sources": [
        "official",
-       "leekduck"
+       "leekduck",
+       "hub"
       ],
       "status": "confirmed"
      },
@@ -956,6 +1005,22 @@
       "sources": [
        "official",
        "leekduck"
+      ],
+      "status": "confirmed"
+     },
+     {
+      "text": "Zubat wearing a top hat",
+      "sources": [
+       "leekduck",
+       "hub"
+      ],
+      "status": "confirmed"
+     },
+     {
+      "text": "Piplup wearing a Halloween Mischief costume",
+      "sources": [
+       "leekduck",
+       "hub"
       ],
       "status": "confirmed"
      },
@@ -1009,21 +1074,7 @@
       "status": "single"
      },
      {
-      "text": "Zubat wearing a top hat",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
       "text": "Sinistea wearing a bow",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Piplup wearing a Halloween Mischief costume",
       "sources": [
        "leekduck"
       ],
@@ -1042,7 +1093,8 @@
       "text": "The following Pokémon will appear in raids.",
       "sources": [
        "official",
-       "leekduck"
+       "leekduck",
+       "hub"
       ],
       "status": "confirmed"
      },
@@ -1050,7 +1102,8 @@
       "text": "One-Star Raids Pikachu wearing a hat and capelet* Sinistea wearing a bow*",
       "sources": [
        "official",
-       "leekduck"
+       "leekduck",
+       "hub"
       ],
       "status": "confirmed"
      }
@@ -1085,7 +1138,32 @@
       "text": "An encounter with Sinistea wearing a bow*",
       "sources": [
        "official",
-       "leekduck"
+       "leekduck",
+       "hub"
+      ],
+      "status": "confirmed"
+     },
+     {
+      "text": "Catch 13 Ghost‑type Pokémon POSSIBLE REWARDS Halloween Piplup Max CP 460 Min CP 426 Headband Noibat Max CP 285 Min CP 258 Zubat wearing a top hat Max CP 285 Min CP 258",
+      "sources": [
+       "leekduck",
+       "hub"
+      ],
+      "status": "confirmed"
+     },
+     {
+      "text": "Win 3 raids REWARD Pikachu wearing a hat and capelet Max CP 402 Min CP 369",
+      "sources": [
+       "leekduck",
+       "hub"
+      ],
+      "status": "confirmed"
+     },
+     {
+      "text": "Claim all rewards before Sunday, November 1, 2026, at 10:00 a.m. local time , before the Timed Research expires.",
+      "sources": [
+       "leekduck",
+       "hub"
       ],
       "status": "confirmed"
      },
@@ -1111,20 +1189,6 @@
       "status": "official"
      },
      {
-      "text": "Catch 13 Ghost‑type Pokémon POSSIBLE REWARDS Halloween Piplup Max CP 460 Min CP 426 Headband Noibat Max CP 285 Min CP 258 Zubat wearing a top hat Max CP 285 Min CP 258",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Win 3 raids REWARD Pikachu wearing a hat and capelet Max CP 402 Min CP 369",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
       "text": "Event-exclusive Timed Research",
       "sources": [
        "leekduck"
@@ -1137,16 +1201,17 @@
        "leekduck"
       ],
       "status": "single"
-     },
-     {
-      "text": "Claim all rewards before Sunday, November 1, 2026, at 10:00 a.m. local time , before the Timed Research expires.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
      }
     ],
     "shiny": [
+     {
+      "text": "An encounter with Pikachu wearing a hat and capelet, which can be Shiny if you’re lucky!",
+      "sources": [
+       "leekduck",
+       "hub"
+      ],
+      "status": "confirmed"
+     },
      {
       "text": "For the first time in Pokémon GO, you’ll be able to encounter Shiny Greavard—if you’re lucky! You may encounter Greavard in the wild or when you complete GO Pass and Field Research tasks.",
       "sources": [
@@ -1162,16 +1227,44 @@
       "status": "single"
      },
      {
-      "text": "An encounter with Pikachu wearing a hat and capelet, which can be Shiny if you’re lucky!",
+      "text": "Pikachu wearing a hat and capelet, Zubat wearing a top hat, and Sinistea wearing a bow will be available in their Shiny variants from their debut!",
       "sources": [
        "leekduck"
       ],
       "status": "single"
      },
      {
-      "text": "Pikachu wearing a hat and capelet, Zubat wearing a top hat, and Sinistea wearing a bow will be available in their Shiny variants from their debut!",
+      "text": "Three costumed Pokémon make their debut during Halloween 2026 Part One. All three can be Shiny if you’re lucky!",
       "sources": [
-       "leekduck"
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "The new costumes are based on adorable Halloween-themed plushies available from the Pokémon Center , so cute!",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "The following Pokémon are among those appearing in the wild during Halloween Part One. All listed Pokémon can be Shiny.",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "If you’re lucky, you may also encounter Drifblim wearing a Halloween Mischief costume in the wild. It can be Shiny too.",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Two of the new costumed Pokémon appear in one-star raids starting October 27 at 10:00 a.m. local time . Both can be Shiny.",
+      "sources": [
+       "hub"
       ],
       "status": "single"
      }
@@ -1190,19 +1283,21 @@
       "text": "One-Star Raids Pikachu wearing a hat and capelet* Sinistea wearing a bow*",
       "sources": [
        "official",
-       "leekduck"
+       "leekduck",
+       "hub"
+      ],
+      "status": "confirmed"
+     },
+     {
+      "text": "Piplup wearing a Halloween Mischief costume",
+      "sources": [
+       "leekduck",
+       "hub"
       ],
       "status": "confirmed"
      },
      {
       "text": "Zubat wearing a top hat",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Piplup wearing a Halloween Mischief costume",
       "sources": [
        "leekduck"
       ],
@@ -1221,9 +1316,38 @@
        "leekduck"
       ],
       "status": "single"
+     },
+     {
+      "text": "Everything you need to know about Halloween Part One, including new costume Pokémon, raids, bonuses, and GO Pass rewards.",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Here’s how to get each new costumed Pokémon during the event:",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "New Costume Pokémon | How to Encounter It",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
      }
     ],
     "tickets": [
+     {
+      "text": "A GO Pass is a free, limited-time progression track available during a specified period. By collecting GO Points, you can increase your rank to earn rewards.",
+      "sources": [
+       "official",
+       "hub"
+      ],
+      "status": "confirmed"
+     },
      {
       "text": "For US$9.99*, Trainers can upgrade to the GO Pass Deluxe + 10 Ranks to also automatically earn enough GO Points to reach Rank 11.",
       "sources": [
@@ -1249,14 +1373,31 @@
       "status": "confirmed"
      },
      {
-      "text": "Remember, Trainers! The previously announced GO Pass: Halloween 2026 is available from Tuesday, October 27, at 10:00 a.m. to Thursday, November 5, 2026, at 8:00 p.m. local time.",
+      "text": "Encounters with event-themed Pokémon",
       "sources": [
-       "official"
+       "leekduck",
+       "hub"
       ],
-      "status": "official"
+      "status": "confirmed"
      },
      {
-      "text": "A GO Pass is a free, limited-time progression track available during a specified period. By collecting GO Points, you can increase your rank to earn rewards.",
+      "text": "Patissier Top and Patissier Pants",
+      "sources": [
+       "leekduck",
+       "hub"
+      ],
+      "status": "confirmed"
+     },
+     {
+      "text": "Premium Battle Passes",
+      "sources": [
+       "leekduck",
+       "hub"
+      ],
+      "status": "confirmed"
+     },
+     {
+      "text": "Remember, Trainers! The previously announced GO Pass: Halloween 2026 is available from Tuesday, October 27, at 10:00 a.m. to Thursday, November 5, 2026, at 8:00 p.m. local time.",
       "sources": [
        "official"
       ],
@@ -1277,28 +1418,7 @@
       "status": "single"
      },
      {
-      "text": "Encounters with event-themed Pokémon",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
       "text": "Additional rewards",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Patissier Top and Patissier Pants",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Premium Battle Passes",
       "sources": [
        "leekduck"
       ],
@@ -1310,6 +1430,356 @@
        "leekduck"
       ],
       "status": "single"
+     },
+     {
+      "text": "Rank 1: Free: 2500 × XP | Deluxe: 5000 × Stardust",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 2: Free: 10 × Poké Ball | Deluxe: 20 × Poké Ball",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 3: Free: 10 × Sableye Candy | Deluxe: Dynamax Sableye",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 4: Free: 1 × Rare Candy | Deluxe: 1 × Rare Candy XL",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 5: Free: Duskull | Deluxe: Duskull",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 6: Free: 10 × Duskull Candy | Deluxe: 3 × Duskull Candy XL",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 7: Free: 2500 × XP | Deluxe: 5000 × Stardust",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 8: Free: 1 × Rare Candy | Deluxe: 1 × Rare Candy XL",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 9: Free: Piplup | Deluxe: Piplup",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 10: Free: 2× Candy for catching Pokémon. | Deluxe: 3× Candy for catching Pokémon.",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 11: Free: 2500 × XP | Deluxe: 5000 × Stardust",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 12: Free: 10 × Great Ball | Deluxe: 1 × Premium Raid Pass",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 13: Free: 10 × Zubat Candy | Deluxe: Zubat Wearing a top hat",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 14: Free: 1 × Rare Candy | Deluxe: 1 × Rare Candy XL",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 15: Free: Misdreavus | Deluxe: 1× Patissier Top",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 16: Free: 10 × Misdreavus Candy | Deluxe: 3 × Misdreavus Candy XL",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 17: Free: 2500 × XP | Deluxe: 5000 × Stardust",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 18: Free: 1 × Rare Candy | Deluxe: 1 × Rare Candy XL",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 19: Free: Noibat | Deluxe: Noibat",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 20: Free: 2× Stardust for catching Pokémon. | Deluxe: 3× Stardust for catching Pokémon.",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 21: Free: 5000 × XP | Deluxe: 7500 × Stardust",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 22: Free: 10 × Great Ball | Deluxe: 1 × Premium Raid Pass",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 23: Free: 10 × Drifloon Candy | Deluxe: Drifblim",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 24: Free: 1 × Rare Candy | Deluxe: 1 × Rare Candy XL",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 25: Free: Sandygast | Deluxe: Sandygast",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 26: Free: 10 × Sandygast Candy | Deluxe: 3 × Sandygast Candy XL",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 27: Free: 5000 × XP | Deluxe: 7500 × Stardust",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 28: Free: 1 × Rare Candy | Deluxe: 1 × Rare Candy XL",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 29: Free: Froakie | Deluxe: Froakie",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 31: Free: 5000 × XP | Deluxe: 7500 × Stardust",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 32: Free: 10 × Ultra Ball | Deluxe: 1 × Premium Raid Pass",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 33: Free: 10 × Zubat Candy | Deluxe: Zubat Wearing a top hat",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 34: Free: 1 × Rare Candy | Deluxe: 1 × Rare Candy XL",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 35: Free: Shuppet | Deluxe: Shuppet",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 36: Free: 10 × Shuppet Candy | Deluxe: 3 × Shuppet Candy XL",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 37: Free: 5000 × XP | Deluxe: 7500 × Stardust",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 38: Free: 1 × Rare Candy | Deluxe: 1 × Rare Candy XL",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 39: Free: Rowlet | Deluxe: Rowlet",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 40: Free: Gengar | Deluxe: Gengar",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 41: Free: 7500 × XP | Deluxe: 10,000 × Stardust",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 42: Free: 10 × Ultra Ball | Deluxe: 1 × Premium Raid Pass",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 43: Free: 10 × Sinistea Candy | Deluxe: Sinistea",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 44: Free: 1 × Rare Candy | Deluxe: 1 × Rare Candy XL",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 45: Free: Greavard | Deluxe: Greavard",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 46: Free: 10 × Greavard Candy | Deluxe: 3 × Greavard Candy XL",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 47: Free: 7500 × XP | Deluxe: 10,000 × Stardust",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 48: Free: 1 × Rare Candy | Deluxe: 1 × Rare Candy XL",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 49: Free: Pikachu Wearing a hat and capelet | Deluxe: Pikachu Wearing a hat and capelet",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 50: Free: Rotom | Deluxe: Rotom",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 108: Free: Spiritomb | Deluxe: Spiritomb",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
      }
     ],
     "dates": [
@@ -1317,7 +1787,8 @@
       "text": "Sunday, November 1, at 10:00 a.m. to Thursday, November 5, 2026, at 8:00 p.m. local time",
       "sources": [
        "official",
-       "leekduck"
+       "leekduck",
+       "hub"
       ],
       "status": "confirmed"
      },
@@ -1335,7 +1806,7 @@
   },
   "halloween1": {
    "name": "Halloween 2026, Part One",
-   "updated": "2026-10-27T06:24:36.524Z",
+   "updated": "2026-10-27T13:21:04.929Z",
    "sources": [
     {
      "id": "official",
@@ -1606,7 +2077,7 @@
   },
   "spirits": {
    "name": "Dynamax Uxie, Mesprit and Azelf",
-   "updated": "2026-10-27T06:24:36.524Z",
+   "updated": "2026-10-27T13:21:04.929Z",
    "sources": [
     {
      "id": "official",
@@ -1847,7 +2318,7 @@
   },
   "tcg30": {
    "name": "Pokémon TCG: 30th Celebration (at stores)",
-   "updated": "2026-10-27T06:24:36.524Z",
+   "updated": "2026-10-27T13:21:04.929Z",
    "sources": [
     {
      "id": "official",
@@ -1912,7 +2383,7 @@
   },
   "sandile": {
    "name": "Sandile Hatch Day",
-   "updated": "2026-10-27T06:24:36.524Z",
+   "updated": "2026-10-27T13:21:04.929Z",
    "sources": [
     {
      "id": "official",
@@ -2071,7 +2542,7 @@
   },
   "trek": {
    "name": "Fall Marathon: Buddy Trek",
-   "updated": "2026-10-27T06:24:36.524Z",
+   "updated": "2026-10-27T13:21:04.929Z",
    "sources": [
     {
      "id": "official",
@@ -2300,7 +2771,7 @@
   },
   "leekduck:go-pass-october-2026": {
    "name": "GO Pass: October",
-   "updated": "2026-10-27T06:24:36.524Z",
+   "updated": "2026-10-27T13:21:04.929Z",
    "sources": [
     {
      "id": "official",
@@ -2602,7 +3073,7 @@
   },
   "zorua": {
    "name": "Zorua Community Day",
-   "updated": "2026-10-27T06:24:36.524Z",
+   "updated": "2026-10-27T13:21:04.929Z",
    "sources": [
     {
      "id": "official",
@@ -2781,7 +3252,7 @@
   },
   "leekduck:season-24-twilight-trails": {
    "name": "Twilight Trails",
-   "updated": "2026-10-27T06:24:36.524Z",
+   "updated": "2026-10-27T13:21:04.929Z",
    "sources": [
     {
      "id": "official",
@@ -3044,9 +3515,9 @@
     }
    ]
   },
-  "leekduck:max-mondays-2026-10-26": {
-   "name": "Dynamax Sableye during Max Monday",
-   "updated": "2026-10-27T06:24:36.524Z",
+  "leekduck:max-mondays-2026-11-02": {
+   "name": "Dynamax Machop during Max Monday",
+   "updated": "2026-10-27T13:21:04.929Z",
    "sources": [
     {
      "id": "leekduck",
@@ -3055,57 +3526,14 @@
      "url": "https://leekduck.com/events/max-mondays-2026-10-26/"
     },
     {
-     "id": "hub",
-     "name": "Pokémon GO Hub",
+     "id": "leekduck",
+     "name": "Leek Duck",
      "trust": "community",
-     "url": "https://pokemongohub.net/post/event/dynamax-sableye-max-monday/"
+     "url": "https://leekduck.com/events/max-mondays-2026-11-02/"
     }
    ],
    "fields": {
-    "bonuses": [
-     {
-      "text": "1 Rare Candy XL for completing in-person Max Battles",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Power Spots will refresh more frequently",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Additional Power Spots will be active on Mondays",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Regular Sprite | Shiny Sprite",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Sableye | Sableye",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Want more tips and tricks for Max Battles? Read this guide .",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     }
-    ],
+    "bonuses": [],
     "featured": [],
     "raids": [
      {
@@ -3149,147 +3577,12 @@
        "leekduck"
       ],
       "status": "single"
-     },
-     {
-      "text": "The best attackers for defeating Dynamax Sableye are the following Pokémon:",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Dynamax Gardevoir Max Starfall",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Gigantamax Inteleon G-Max Hydrosnipe",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Gigantamax Gengar G-Max Terror",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Crowned Sword Zacian Behemoth Blade",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Crowned Shield Zamazenta Metal Claw",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
      }
     ],
     "eggs": [],
     "research": [],
-    "shiny": [
-     {
-      "text": "Regular Sprite | Shiny Sprite",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     }
-    ],
-    "moves": [
-     {
-      "text": "When three lines appear above a Pokémon’s head, it means it is being targeted by the Max Battle Boss. You can dodge the incoming attack by swiping to either the left or the right.",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "You have a 3-second countdown to choose the Pokémon you wish to use in the Max phase. You can pick any eligible Pokémon in your team, depending on which role you are fulfilling in your group.",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Once your Max phase ends, you can immediately switch back to another Pokémon in your team if you wish to.",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "You can enter the Max phase more than once in a Max Battle whenever your Max Meter refills.",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "If all of your Pokémon faint while battling a 3-star or higher level Boss with other Trainers, you can still help your allies by cheering for them so that their meters fill faster.",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "It is also worth communicating with your fellow Trainers to ensure that those who may be less prepared, such as children who don’t have the resources of others, are included in groups that can help carry them through.",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Using Max Guard shields you from incoming damage",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "20 HP for level 1",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "40 HP for level 2",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "60 HP for level 3",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "When stacked to a maximum of 3 shields it gives you:",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "120 HP for level 2",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     }
-    ],
+    "shiny": [],
+    "moves": [],
     "costumes": [],
     "tickets": [],
     "dates": [
@@ -3303,36 +3596,11 @@
     ]
    },
    "conflicts": [],
-   "gaps": [
-    {
-     "field": "bonuses",
-     "missingFrom": [
-      "leekduck"
-     ]
-    },
-    {
-     "field": "shiny",
-     "missingFrom": [
-      "leekduck"
-     ]
-    },
-    {
-     "field": "moves",
-     "missingFrom": [
-      "leekduck"
-     ]
-    },
-    {
-     "field": "dates",
-     "missingFrom": [
-      "hub"
-     ]
-    }
-   ]
+   "gaps": []
   },
   "leekduck:mega-charizard-x-mega-charizard-y-in-mega-raids-october-2026": {
    "name": "Mega Charizard X and Mega Charizard Y in Mega Raids",
-   "updated": "2026-10-27T06:24:36.524Z",
+   "updated": "2026-10-27T13:21:04.929Z",
    "sources": [
     {
      "id": "leekduck",
@@ -3396,7 +3664,7 @@
   },
   "leekduck:palkia-in-5-star-raid-battles-october-2026": {
    "name": "Palkia in 5-star Raid Battles",
-   "updated": "2026-10-27T06:24:36.524Z",
+   "updated": "2026-10-27T13:21:04.929Z",
    "sources": [
     {
      "id": "leekduck",
@@ -3460,7 +3728,7 @@
   },
   "leekduck:raidhour20261028": {
    "name": "Giratina (Origin Forme) Raid Hour",
-   "updated": "2026-10-27T06:24:36.524Z",
+   "updated": "2026-10-27T13:21:04.929Z",
    "sources": [
     {
      "id": "leekduck",
@@ -3502,7 +3770,7 @@
   },
   "leekduck:pokemonspotlighthour2026-10-29": {
    "name": "Gastly Spotlight Hour",
-   "updated": "2026-10-27T06:24:36.524Z",
+   "updated": "2026-10-27T13:21:04.929Z",
    "sources": [
     {
      "id": "leekduck",
@@ -3534,86 +3802,9 @@
    "conflicts": [],
    "gaps": []
   },
-  "leekduck:max-mondays-2026-11-02": {
-   "name": "Dynamax Machop during Max Monday",
-   "updated": "2026-10-27T06:24:36.524Z",
-   "sources": [
-    {
-     "id": "leekduck",
-     "name": "Leek Duck",
-     "trust": "community",
-     "url": "https://leekduck.com/events/max-mondays-2026-11-02/"
-    }
-   ],
-   "fields": {
-    "bonuses": [],
-    "featured": [],
-    "raids": [
-     {
-      "text": "Dynamax Machop may appear in Max Battles from November 2, 2026 through November 8, 2026 .",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "These Dynamax Pokémon may appear in Max Battles throughout this season. Max Battles will be available from 6:00 a.m. to 9:00 p.m. local time on Mondays.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Power Spots will refresh more frequently.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Additional Power Spots will be active on Mondays compared to the rest of the week.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Max Battles will rotate to feature different Dynamax Pokémon.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "On November 2, 2026 , the featured Dynamax Pokémon is Machop .",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ],
-    "eggs": [],
-    "research": [],
-    "shiny": [],
-    "moves": [],
-    "costumes": [],
-    "tickets": [],
-    "dates": [
-     {
-      "text": "These Dynamax Pokémon may appear in Max Battles throughout this season. Max Battles will be available from 6:00 a.m. to 9:00 p.m. local time on Mondays.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ]
-   },
-   "conflicts": [],
-   "gaps": []
-  },
   "leekduck:shadow-landorus-incarnate-forme-in-shadow-raids-october-2026": {
    "name": "Shadow Landorus (Incarnate Forme) in Shadow Raids",
-   "updated": "2026-10-27T06:24:36.524Z",
+   "updated": "2026-10-27T13:21:04.929Z",
    "sources": [
     {
      "id": "leekduck",
@@ -3663,7 +3854,7 @@
   },
   "leekduck:giratina-origin-forme-in-5-star-raid-battles-october-2026": {
    "name": "Giratina (Origin Forme) in 5-star Raid Battles",
-   "updated": "2026-10-27T06:24:36.524Z",
+   "updated": "2026-10-27T13:21:04.929Z",
    "sources": [
     {
      "id": "leekduck",
@@ -3727,7 +3918,7 @@
   },
   "leekduck:raidhour20261104": {
    "name": "Giratina (Altered Forme) Raid Hour",
-   "updated": "2026-10-27T06:24:36.524Z",
+   "updated": "2026-10-27T13:21:04.929Z",
    "sources": [
     {
      "id": "leekduck",
@@ -3769,7 +3960,7 @@
   },
   "leekduck:pokemonspotlighthour2026-11-05": {
    "name": "Teddiursa wearing a witch hat Spotlight Hour",
-   "updated": "2026-10-27T06:24:36.524Z",
+   "updated": "2026-10-27T13:21:04.929Z",
    "sources": [
     {
      "id": "leekduck",
@@ -3825,7 +4016,7 @@
   },
   "halloween2": {
    "name": "Halloween 2026, Part Two",
-   "updated": "2026-10-27T06:24:36.524Z",
+   "updated": "2026-10-27T13:21:04.929Z",
    "sources": [
     {
      "id": "leekduck",
@@ -4097,7 +4288,7 @@
   },
   "leekduck:pokemon-go-wild-area-2026-sendai-japan": {
    "name": "Pokémon GO Wild Area 2026: Sendai • Tohoku",
-   "updated": "2026-10-27T06:24:36.524Z",
+   "updated": "2026-10-27T13:21:04.929Z",
    "sources": [
     {
      "id": "leekduck",
@@ -4447,7 +4638,7 @@
   },
   "leekduck:pokemon-go-wild-area-2026-mexico-city": {
    "name": "Pokémon GO Wild Area 2026: Mexico City",
-   "updated": "2026-10-27T06:24:36.524Z",
+   "updated": "2026-10-27T13:21:04.929Z",
    "sources": [
     {
      "id": "leekduck",
@@ -4804,7 +4995,7 @@
   },
   "leekduck:mega-sableye-in-mega-raids-october-2026": {
    "name": "Mega Sableye in Mega Raids",
-   "updated": "2026-10-27T06:24:36.524Z",
+   "updated": "2026-10-27T13:21:04.929Z",
    "sources": [
     {
      "id": "leekduck",
@@ -4861,7 +5052,7 @@
   },
   "leekduck:giratina-altered-forme-in-5-star-raid-battles-november-2026": {
    "name": "Giratina (Altered Forme) in 5-star Raid Battles",
-   "updated": "2026-10-27T06:24:36.524Z",
+   "updated": "2026-10-27T13:21:04.929Z",
    "sources": [
     {
      "id": "leekduck",
@@ -4932,7 +5123,7 @@
   },
   "leekduck:shadow-tornadus-incarnate-forme-in-shadow-raids-november-4-2026": {
    "name": "Shadow Tornadus (Incarnate Forme) in Shadow Raids",
-   "updated": "2026-10-27T06:24:36.524Z",
+   "updated": "2026-10-27T13:21:04.929Z",
    "sources": [
     {
      "id": "leekduck",
@@ -4980,7 +5171,7 @@
   },
   "leekduck:pokemon-night-out-london-2026": {
    "name": "Pokémon Night Out 2026 - London",
-   "updated": "2026-10-27T06:24:36.524Z",
+   "updated": "2026-10-27T13:21:04.929Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5088,7 +5279,7 @@
   },
   "into": {
    "name": "Into the Wild",
-   "updated": "2026-10-27T06:24:36.524Z",
+   "updated": "2026-10-27T13:21:04.929Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5345,7 +5536,7 @@
   },
   "leekduck:pokemon-go-wild-area-2026-global": {
    "name": "Pokémon GO Wild Area 2026: Global",
-   "updated": "2026-10-27T06:24:36.524Z",
+   "updated": "2026-10-27T13:21:04.929Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5633,7 +5824,7 @@
   },
   "leekduck:max-mondays-2026-11-16": {
    "name": "Max Monday: Pokémon to be announced",
-   "updated": "2026-10-27T06:24:36.524Z",
+   "updated": "2026-10-27T13:21:04.929Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5674,7 +5865,7 @@
   },
   "leekduck:raidhour20261118": {
    "name": "Cresselia and Darkrai Raid Hour",
-   "updated": "2026-10-27T06:24:36.524Z",
+   "updated": "2026-10-27T13:21:04.929Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5716,7 +5907,7 @@
   },
   "minior2": {
    "name": "Minior Showers: Leonids",
-   "updated": "2026-10-27T06:24:36.524Z",
+   "updated": "2026-10-27T13:21:04.929Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5807,7 +5998,7 @@
   },
   "leekduck:november-communityday2026": {
    "name": "Pawniard Community Day",
-   "updated": "2026-10-27T06:24:36.524Z",
+   "updated": "2026-10-27T13:21:04.929Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5966,7 +6157,7 @@
   },
   "leekduck:dynamax-trails-2026": {
    "name": "Dynamax Trails",
-   "updated": "2026-10-27T06:24:36.524Z",
+   "updated": "2026-10-27T13:21:04.929Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6008,7 +6199,7 @@
   },
   "leekduck:max-mondays-2026-11-23": {
    "name": "Dynamax Espurr during Max Monday",
-   "updated": "2026-10-27T06:24:36.524Z",
+   "updated": "2026-10-27T13:21:04.929Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6085,7 +6276,7 @@
   },
   "leekduck:cresselia-darkrai-in-5-star-raid-battles-november-2026": {
    "name": "Cresselia and Darkrai in 5-star Raid Battles",
-   "updated": "2026-10-27T06:24:36.524Z",
+   "updated": "2026-10-27T13:21:04.929Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6156,7 +6347,7 @@
   },
   "leekduck:mega-banette-in-mega-raids-november-2026": {
    "name": "Mega Banette in Mega Raids",
-   "updated": "2026-10-27T06:24:36.524Z",
+   "updated": "2026-10-27T13:21:04.929Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6220,7 +6411,7 @@
   },
   "leekduck:raidhour20261125": {
    "name": "Deoxys (Normal, Defense, Attack, and Speed Formes) Raid Hour",
-   "updated": "2026-10-27T06:24:36.524Z",
+   "updated": "2026-10-27T13:21:04.929Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6262,7 +6453,7 @@
   },
   "leekduck:pokemonspotlighthour2026-11-26": {
    "name": "Noibat Spotlight Hour",
-   "updated": "2026-10-27T06:24:36.524Z",
+   "updated": "2026-10-27T13:21:04.929Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6296,7 +6487,7 @@
   },
   "smr2": {
    "name": "Super Mega Raid Day",
-   "updated": "2026-10-27T06:24:36.524Z",
+   "updated": "2026-10-27T13:21:04.929Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6338,7 +6529,7 @@
   },
   "leekduck:twilight-wishes-2026": {
    "name": "Twilight Wishes",
-   "updated": "2026-10-27T06:24:36.524Z",
+   "updated": "2026-10-27T13:21:04.929Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6372,7 +6563,7 @@
   },
   "leekduck:max-mondays-2026-11-30": {
    "name": "Dynamax Cryogonal during Max Monday",
-   "updated": "2026-10-27T06:24:36.524Z",
+   "updated": "2026-10-27T13:21:04.929Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6449,7 +6640,7 @@
   },
   "leekduck:deoxys-normal-defense-attack-speed-formes-in-5-star-raid-battles-november-2026": {
    "name": "Deoxys (Normal, Defense, Attack, and Speed Formes) in 5-star Raid Battles",
-   "updated": "2026-10-27T06:24:36.524Z",
+   "updated": "2026-10-27T13:21:04.929Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6548,7 +6739,7 @@
   },
   "leekduck:mega-metagross-in-mega-raids-november-2026": {
    "name": "Mega Metagross in Mega Raids",
-   "updated": "2026-10-27T06:24:36.524Z",
+   "updated": "2026-10-27T13:21:04.929Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6619,7 +6810,7 @@
   },
   "minior3": {
    "name": "Minior Showers: Geminids",
-   "updated": "2026-10-27T06:24:36.524Z",
+   "updated": "2026-10-27T13:21:04.929Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6710,7 +6901,7 @@
   },
   "leekduck:pokemon-x-adidas-2026": {
    "name": "adidas × Pokémon Timed Research",
-   "updated": "2026-10-27T06:24:36.524Z",
+   "updated": "2026-10-27T13:21:04.929Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6788,7 +6979,7 @@
   },
   "leekduck:pokemon-go-tour-alola-kaohsiung-2027": {
    "name": "Pokémon GO Tour: Alola - Kaohsiung 2027",
-   "updated": "2026-10-27T06:24:36.524Z",
+   "updated": "2026-10-27T13:21:04.929Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6822,7 +7013,7 @@
   },
   "leekduck:pokemon-go-tour-alola-los-angeles-2027": {
    "name": "Pokémon GO Tour: Alola - Los Angeles 2027",
-   "updated": "2026-10-27T06:24:36.524Z",
+   "updated": "2026-10-27T13:21:04.929Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6856,7 +7047,7 @@
   },
   "leekduck:pokemon-go-tour-alola-global-2027": {
    "name": "Pokémon GO Tour: Alola - Global 2027",
-   "updated": "2026-10-27T06:24:36.524Z",
+   "updated": "2026-10-27T13:21:04.929Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6890,7 +7081,7 @@
   },
   "leekduck:minior-showers-eta-aquariids-2027": {
    "name": "Minior Showers: Eta Aquariids 2027",
-   "updated": "2026-10-27T06:24:36.524Z",
+   "updated": "2026-10-27T13:21:04.929Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6988,7 +7179,7 @@
   },
   "leekduck:minior-showers-southern-delta-aquariids-2027": {
    "name": "Minior Showers: Southern Delta Aquariids 2027",
-   "updated": "2026-10-27T06:24:36.524Z",
+   "updated": "2026-10-27T13:21:04.929Z",
    "sources": [
     {
      "id": "leekduck",
@@ -7086,7 +7277,7 @@
   },
   "leekduck:minior-showers-perseids-2027": {
    "name": "Minior Showers: Perseids 2027",
-   "updated": "2026-10-27T06:24:36.524Z",
+   "updated": "2026-10-27T13:21:04.929Z",
    "sources": [
     {
      "id": "leekduck",
@@ -7174,6 +7365,292 @@
    },
    "conflicts": [],
    "gaps": []
+  },
+  "leekduck:max-mondays-2026-10-26": {
+   "name": "Dynamax Sableye during Max Monday",
+   "updated": "2026-10-27T06:24:36.524Z",
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/max-mondays-2026-10-26/"
+    },
+    {
+     "id": "hub",
+     "name": "Pokémon GO Hub",
+     "trust": "community",
+     "url": "https://pokemongohub.net/post/event/dynamax-sableye-max-monday/"
+    }
+   ],
+   "fields": {
+    "bonuses": [
+     {
+      "text": "1 Rare Candy XL for completing in-person Max Battles",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Power Spots will refresh more frequently",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Additional Power Spots will be active on Mondays",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Regular Sprite | Shiny Sprite",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Sableye | Sableye",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Want more tips and tricks for Max Battles? Read this guide .",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     }
+    ],
+    "featured": [],
+    "raids": [
+     {
+      "text": "Dynamax Sableye may appear in Max Battles from October 26, 2026 through November 1, 2026 .",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "These Dynamax Pokémon may appear in Max Battles throughout this season. Max Battles will be available from 6:00 a.m. to 9:00 p.m. local time on Mondays.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Power Spots will refresh more frequently.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Additional Power Spots will be active on Mondays compared to the rest of the week.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Max Battles will rotate to feature different Dynamax Pokémon.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "On October 26, 2026 , the featured Dynamax Pokémon is Sableye .",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "The best attackers for defeating Dynamax Sableye are the following Pokémon:",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Dynamax Gardevoir Max Starfall",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Gigantamax Inteleon G-Max Hydrosnipe",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Gigantamax Gengar G-Max Terror",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Crowned Sword Zacian Behemoth Blade",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Crowned Shield Zamazenta Metal Claw",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     }
+    ],
+    "eggs": [],
+    "research": [],
+    "shiny": [
+     {
+      "text": "Regular Sprite | Shiny Sprite",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     }
+    ],
+    "moves": [
+     {
+      "text": "When three lines appear above a Pokémon’s head, it means it is being targeted by the Max Battle Boss. You can dodge the incoming attack by swiping to either the left or the right.",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "You have a 3-second countdown to choose the Pokémon you wish to use in the Max phase. You can pick any eligible Pokémon in your team, depending on which role you are fulfilling in your group.",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Once your Max phase ends, you can immediately switch back to another Pokémon in your team if you wish to.",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "You can enter the Max phase more than once in a Max Battle whenever your Max Meter refills.",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "If all of your Pokémon faint while battling a 3-star or higher level Boss with other Trainers, you can still help your allies by cheering for them so that their meters fill faster.",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "It is also worth communicating with your fellow Trainers to ensure that those who may be less prepared, such as children who don’t have the resources of others, are included in groups that can help carry them through.",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Using Max Guard shields you from incoming damage",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "20 HP for level 1",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "40 HP for level 2",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "60 HP for level 3",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "When stacked to a maximum of 3 shields it gives you:",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "120 HP for level 2",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     }
+    ],
+    "costumes": [],
+    "tickets": [],
+    "dates": [
+     {
+      "text": "These Dynamax Pokémon may appear in Max Battles throughout this season. Max Battles will be available from 6:00 a.m. to 9:00 p.m. local time on Mondays.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ]
+   },
+   "conflicts": [],
+   "gaps": [
+    {
+     "field": "bonuses",
+     "missingFrom": [
+      "leekduck"
+     ]
+    },
+    {
+     "field": "shiny",
+     "missingFrom": [
+      "leekduck"
+     ]
+    },
+    {
+     "field": "moves",
+     "missingFrom": [
+      "leekduck"
+     ]
+    },
+    {
+     "field": "dates",
+     "missingFrom": [
+      "hub"
+     ]
+    }
+   ]
   },
   "minior": {
    "name": "Orionids Meteor Shower: Minior Debut",
