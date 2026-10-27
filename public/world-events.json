@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-26T20:36:17.549Z",
+ "updated": "2026-10-27T00:33:45.477Z",
  "events": [
   {
    "id": "w-pokemon-fossil-museum-2026",
@@ -18,7 +18,7 @@
     }
    ],
    "status": "single",
-   "seen": "2026-10-26"
+   "seen": "2026-10-27"
   },
   {
    "id": "w-pokemon-jet-red-collaboration-event",
@@ -37,7 +37,7 @@
     }
    ],
    "status": "single",
-   "seen": "2026-10-26"
+   "seen": "2026-10-27"
   },
   {
    "id": "w-pokemon-x-adidas",
@@ -103,7 +103,7 @@
   },
   {
    "id": "w-pok-mon-go-partners-with-the-european-space-agency",
-   "name": "Pokémon GO partners with the European Space Agency",
+   "name": "Pokémon GO x ESA: all locations",
    "place": "Europe",
    "area": "Europe",
    "scope": "regional",
@@ -123,7 +123,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-10-26"
+   "seen": "2026-10-27"
   },
   {
    "id": "w-pokemon-go-x-esa-london",
@@ -289,7 +289,7 @@
   },
   {
    "id": "w-explore-by-starlight-during-meteor-showers-for-a-c",
-   "name": "Explore by starlight during meteor showers",
+   "name": "Minior Meteor Showers (Orionids)",
    "place": "",
    "area": "Worldwide",
    "scope": "global",
@@ -304,7 +304,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-10-26"
+   "seen": "2026-10-27"
   },
   {
    "id": "w-aeon-mall-halloween",
@@ -371,11 +371,11 @@
     }
    ],
    "status": "official",
-   "seen": "2026-10-26"
+   "seen": "2026-10-27"
   },
   {
    "id": "w-pok-mon-go-city-safari-boston-update",
-   "name": "Pokémon GO City Safari: Boston Update",
+   "name": "City Safari: Boston",
    "place": "Boston, USA",
    "area": "Americas",
    "scope": "regional",
@@ -405,11 +405,11 @@
     }
    ],
    "status": "official",
-   "seen": "2026-10-26"
+   "seen": "2026-10-27"
   },
   {
    "id": "w-how-to-beat-dynamax-azelf-complete-guide",
-   "name": "How to beat Dynamax Azelf: Complete Guide",
+   "name": "Dynamax Uxie, Mesprit and Azelf Max Battle Day",
    "place": "Europe",
    "area": "Europe",
    "scope": "global",
@@ -434,12 +434,12 @@
     }
    ],
    "status": "confirmed",
-   "seen": "2026-10-26"
+   "seen": "2026-10-27"
   },
   {
    "id": "w-fc-seoul",
    "name": "FC Seoul",
-   "place": "South Korea",
+   "place": "Seoul, South Korea",
    "area": "Asia",
    "scope": "regional",
    "start": "2026-10-24",
@@ -447,22 +447,17 @@
    "datesKnown": true,
    "sources": [
     {
-     "id": "official",
-     "name": "Pokémon GO (official)",
-     "url": "https://pokemongo.com/ko/news/fc-seoul-2026/"
-    },
-    {
      "id": "serebii",
      "name": "Serebii",
      "url": "https://www.serebii.net/pokemongo/reallifeevents.shtml"
     }
    ],
-   "status": "official",
-   "seen": "2026-10-26"
+   "status": "single",
+   "seen": "2026-10-27"
   },
   {
    "id": "w-pok-mon-go-dia-de-muertos-2026-mexico-exclusive-ev",
-   "name": "Pokémon GO Dia de Muertos 2026: Mexico Exclusive Event",
+   "name": "Dia de Muertos 2026: Mexico",
    "place": "Mexico",
    "area": "Americas",
    "scope": "regional",
@@ -510,25 +505,6 @@
    "seen": "2026-10-17"
   },
   {
-   "id": "w-dia-de-muertos-2026-paseo-de-la-reforma",
-   "name": "Dia de Muertos 2026: Mexico City (Paseo de la Reforma)",
-   "place": "Mexico City, Mexico (Paseo de la Reforma)",
-   "area": "Americas",
-   "scope": "regional",
-   "start": "2026-10-31",
-   "end": "2026-11-05",
-   "datesKnown": true,
-   "sources": [
-    {
-     "id": "official",
-     "name": "Pokémon GO (official)",
-     "url": "https://pokemongo.com/es_MX/news/dia-de-muertos-2026"
-    }
-   ],
-   "status": "official",
-   "seen": "2026-10-27"
-  },
-  {
    "id": "w-celebrate-the-festival-of-lights-with-the-return-o",
    "name": "Festival of Lights",
    "place": "India",
@@ -545,7 +521,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-10-26"
+   "seen": "2026-10-27"
   },
   {
    "id": "w-go-wild-area-2026-mexico-city",
@@ -558,23 +534,13 @@
    "datesKnown": true,
    "sources": [
     {
-     "id": "official",
-     "name": "Pokémon GO (official)",
-     "url": "https://pokemongo.com/en/gowildarea/mexico-city"
-    },
-    {
-     "id": "official",
-     "name": "Pokémon GO (official)",
-     "url": "https://pokemongo.com/en/gowildarea/mexico-city"
-    },
-    {
      "id": "serebii",
      "name": "Serebii",
      "url": "https://www.serebii.net/pokemongo/reallifeevents.shtml"
     }
    ],
-   "status": "official",
-   "seen": "2026-10-26"
+   "status": "single",
+   "seen": "2026-10-27"
   },
   {
    "id": "w-go-wild-area-2026-sendai-tohoku",
@@ -587,27 +553,17 @@
    "datesKnown": true,
    "sources": [
     {
-     "id": "official",
-     "name": "Pokémon GO (official)",
-     "url": "https://pokemongo.com/en/gowildarea/sendai"
-    },
-    {
-     "id": "official",
-     "name": "Pokémon GO (official)",
-     "url": "https://pokemongo.com/en/gowildarea/sendai"
-    },
-    {
      "id": "serebii",
      "name": "Serebii",
      "url": "https://www.serebii.net/pokemongo/reallifeevents.shtml"
     }
    ],
-   "status": "official",
-   "seen": "2026-10-26"
+   "status": "single",
+   "seen": "2026-10-27"
   },
   {
    "id": "w-pok-xciting-lands-at-changi-airport-and-jewel-get-",
-   "name": "PokéXciting! lands at Changi Airport and Jewel",
+   "name": "PokéXciting! Changi Airport and Jewel",
    "place": "Singapore",
    "area": "Asia",
    "scope": "regional",
@@ -622,7 +578,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-10-26"
+   "seen": "2026-10-27"
   },
   {
    "id": "w-pok-mon-run-30-singapore",
@@ -684,7 +640,7 @@
   {
    "id": "w-pok-mon-go-joins-pok-mon-30th-anniversary-mall-exp",
    "name": "Pokémon 30th Anniversary Mall Exploration: Hong Kong",
-   "place": "Hong Kong (Festival Walk)",
+   "place": "Malaysia",
    "area": "Asia",
    "scope": "regional",
    "start": "2026-11-09",
@@ -698,7 +654,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-10-26"
+   "seen": "2026-10-27"
   },
   {
    "id": "w-into-the-wild",
@@ -752,7 +708,7 @@
    "area": "Europe",
    "scope": "regional",
    "start": "2026-11-14",
-   "end": "2026-11-14",
+   "end": "2026-11-15",
    "datesKnown": true,
    "sources": [
     {
@@ -770,7 +726,7 @@
    "place": "Stockholm, Sweden (Kulturhuset Stadsteatern)",
    "area": "Europe",
    "scope": "regional",
-   "start": "2026-11-15",
+   "start": "2026-11-14",
    "end": "2026-11-15",
    "datesKnown": true,
    "sources": [
@@ -1019,7 +975,7 @@
   },
   {
    "id": "w-save-the-date-pok-mon-go-tour-2027",
-   "name": "Save the Date: Pokémon GO Tour 2027",
+   "name": "Pokémon GO Tour 2027: Kaohsiung",
    "place": "Kaohsiung, Taiwan",
    "area": "Asia",
    "scope": "regional",
@@ -1031,10 +987,15 @@
      "id": "official",
      "name": "Pokémon GO (official)",
      "url": "https://pokemongo.com/news/save-the-date-go-tour-2027/"
+    },
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "url": "https://pokemongo.com/ko/news/save-the-date-go-tour-2027/"
     }
    ],
    "status": "official",
-   "seen": "2026-10-26"
+   "seen": "2026-10-27"
   },
   {
    "id": "w-pokemon-go-tour-2027-los-angeles",
@@ -1114,7 +1075,7 @@
   },
   {
    "id": "w-go-wild-area-stamp-rally-details",
-   "name": "Go Wild Area Stamp Rally Details",
+   "name": "GO Wild Area Stamp Rally",
    "place": "Sendai and Tohoku, Japan",
    "area": "Asia",
    "scope": "regional",
