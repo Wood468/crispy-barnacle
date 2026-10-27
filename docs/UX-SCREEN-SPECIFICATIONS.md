@@ -319,3 +319,48 @@ Resolve by inspecting existing source/data contracts rather than guessing:
 - What is the current role/access-control model for admin operations?
 - Which collection attributes currently have a canonical stored value?
 - Which existing deep links and local preferences must survive the navigation change?
+
+
+## Verified existing functionality: preserve during implementation
+
+### Season and GO Pass
+
+The existing `public/season.js` already calculates and renders both the remaining-day countdown and progress percentage from the season/pass start and end timestamps in `public/season.json`. It also calculates a GO Pass week label. The redesign must preserve this behaviour and improve the visual hierarchy without replacing the countdown with percentage-only progress.
+
+### Infographic approval and publishing — protected workflow
+
+This is a core maintainer capability and is explicitly **not** being removed or reduced to a passive archive.
+
+The current repository includes:
+- `public/infographic.js`: event infographic viewer, public infographic data loading, review-decision loading, and immediate display of approved-but-not-yet-published images.
+- `public/infographic-queue.json`: generated queue consumed by the viewer/review experience.
+- `/api/ig-decisions` in `src/worker.js`: persistent D1 decision storage. Public GET returns decision IDs/status/event names; POST is protected by the existing sync PIN.
+- Decision states include `approved`, `rejected`, `reset`, `unlinked`, `week` and `month`. An approved infographic may be linked to multiple events (up to eight event IDs in the current validator).
+- `scripts/g47ix-apply.mjs`: applies decisions to the staged registry and event-info data, attaches approved images to event records, removes rejected links, and supports unlinking without discarding the candidate.
+- `scripts/g47ix-publish.mjs`: matching/publishing logic, including confidence checks, multi-event linking and weekly/monthly classification.
+- `scripts/g47ix-infographics.mjs` and `.github/workflows/g47ix-infographics.yml`: discovery and scheduled workflow.
+- `data/g47ix-infographics-review.json`: persistent review registry.
+- `test/infographic-ui.test.mjs`, `test/g47ix-infographics.test.mjs` and `test/g47ix-publish.test.mjs`: regression coverage for viewer behaviour, candidate matching, review decisions, publication, linking/unlinking, and weekly/monthly images.
+
+The review workflow must remain a first-class, owner-only **Infographic Review** destination. It should not be buried in ordinary player Settings, and it must not be removed as an apparent admin leftover. It can be placed in a clearly separated Owner tools / Maintenance area reached from the owner menu.
+
+Required review capabilities to preserve:
+1. Show items needing review, unmatched items and possible updates, with clear counts.
+2. Show the image preview, creator/source, original post and discovery date.
+3. Show the suggested event match and why it was suggested; allow manual event search/selection.
+4. Allow explicit approve, reject, reset/reopen and unlink actions where supported by the current decision model.
+5. Allow one infographic to be associated with multiple events where appropriate.
+6. Distinguish a proposed replacement/update from the currently approved image; never silently replace a published image.
+7. Keep weekly and monthly infographic curation as separate supported decisions/views.
+8. Show publication state: awaiting review, approved/pending publication, published, rejected, unmatched or possible update.
+9. Preserve the two-hourly publishing behaviour and ensure approved images can appear immediately while waiting for the next publish cycle.
+10. Preserve the sync-PIN protection for decisions and all current server-side validation. Never weaken access control as part of a visual redesign.
+
+### Discord and Telegram intake
+
+The existing jobs pipeline can forward new Discord channel images to Telegram, and the infographic workflow can use Telegram inbox/forwarded-message metadata. The redesign must not assume that a button labelled "Check Discord now" is the only intake mechanism. Trace the scheduled GitHub Actions and Worker jobs before changing or removing manual refresh controls.
+
+### Other protected collection approval
+
+Screenshot-based Pokédex import also has an explicit review-before-apply flow. The client-side recognition runs on the phone, and the UI states that a screenshot can only add Have and cannot mark a Pokémon as missing. Preserve this safety property and review step.
+
