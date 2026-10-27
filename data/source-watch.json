@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-27T15:22:01.567Z",
+ "updated": "2026-10-27T22:14:50.546Z",
  "status": [
   {
    "id": "hub",
@@ -19,15 +19,15 @@
   {
    "id": "reddit-silph",
    "state": "ok",
-   "items": 0
+   "items": 9
   },
   {
    "id": "youtube-pogo",
    "state": "ok",
-   "items": 0
+   "items": 2
   }
  ],
- "gaps": 1,
+ "gaps": 5,
  "items": [
   {
    "source": "hub",
@@ -46,6 +46,106 @@
    ]
   },
   {
+   "source": "reddit-silph",
+   "trust": "tip",
+   "title": "Lucky Trading Potentially not Working for Yesterday’s Friendship Friday",
+   "link": "https://www.reddit.com/r/TheSilphRoad/comments/1x8a1a0/lucky_trading_potentially_not_working_for/",
+   "date": "2026-10-17T13:17:23.000Z",
+   "summary": "<!-- SC_OFF --><div class=\"md\"><p>Anyone else faced a weird bug which occurred during the second and third special trades, where Pokémon’s dated prior to 2020 weren’t transformed into lucky upon being",
+   "pokemon": [
+    "Heracross",
+    "Umbreon"
+   ],
+   "notInOurData": [
+    "Heracross",
+    "Umbreon"
+   ]
+  },
+  {
+   "source": "reddit-silph",
+   "trust": "tip",
+   "title": "Dia de Muertos Timed Research + Bg Costume Cubone",
+   "link": "https://www.reddit.com/r/TheSilphRoad/comments/1xgx0ak/dia_de_muertos_timed_research_bg_costume_cubone/",
+   "date": "2026-10-27T16:19:59.000Z",
+   "summary": "<table> <tr><td> <a href=\"https://www.reddit.com/r/TheSilphRoad/comments/1xgx0ak/dia_de_muertos_timed_research_bg_costume_cubone/\"> <img src=\"https://preview.redd.it/rfbfr4u4c1yh1.jpeg?width=140&amp;h",
+   "pokemon": [
+    "Cubone"
+   ],
+   "notInOurData": [
+    "Cubone"
+   ]
+  },
+  {
+   "source": "reddit-silph",
+   "trust": "tip",
+   "title": "New costume crobat looks different from normal",
+   "link": "https://www.reddit.com/r/TheSilphRoad/comments/1xgwc8h/new_costume_crobat_looks_different_from_normal/",
+   "date": "2026-10-27T15:55:45.000Z",
+   "summary": "<table> <tr><td> <a href=\"https://www.reddit.com/r/TheSilphRoad/comments/1xgwc8h/new_costume_crobat_looks_different_from_normal/\"> <img src=\"https://preview.redd.it/gfezykk381yh1.jpeg?width=640&amp;cr",
+   "pokemon": [
+    "Crobat"
+   ],
+   "notInOurData": [
+    "Crobat"
+   ]
+  },
+  {
+   "source": "reddit-silph",
+   "trust": "tip",
+   "title": "Legendary Shadow raids and guaranteed catch.",
+   "link": "https://www.reddit.com/r/TheSilphRoad/comments/1xed70z/legendary_shadow_raids_and_guaranteed_catch/",
+   "date": "2026-10-24T16:34:38.000Z",
+   "summary": "<!-- SC_OFF --><div class=\"md\"><p>Hey I'm curious when they changed it so legendaries (shadow)(non-shiny)can be caught by hitting an excellent throw on the smallest possible circle? I just did a lando",
+   "pokemon": [
+    "Landorus"
+   ],
+   "notInOurData": [
+    "Landorus"
+   ]
+  },
+  {
+   "source": "youtube-pogo",
+   "trust": "official",
+   "title": "New costumed Pokémon make their debuts during Halloween 2026 Part I in Pokémon GO!",
+   "link": "https://www.youtube.com/shorts/I6MvdaExyIg",
+   "date": "2026-10-27T17:00:40.000Z",
+   "summary": "",
+   "pokemon": [],
+   "notInOurData": []
+  },
+  {
+   "source": "youtube-pogo",
+   "trust": "official",
+   "title": "New costumed Pokémon make their debuts during Halloween 2026 Part I in Pokémon GO!",
+   "link": "https://www.youtube.com/watch?v=wyN2y-BgpoU",
+   "date": "2026-10-27T17:00:14.000Z",
+   "summary": "",
+   "pokemon": [],
+   "notInOurData": []
+  },
+  {
+   "source": "reddit-silph",
+   "trust": "tip",
+   "title": "shiny costume pikachu confirmed",
+   "link": "https://www.reddit.com/r/TheSilphRoad/comments/1xgrpds/shiny_costume_pikachu_confirmed/",
+   "date": "2026-10-27T12:52:59.000Z",
+   "summary": "<table> <tr><td> <a href=\"https://www.reddit.com/r/TheSilphRoad/comments/1xgrpds/shiny_costume_pikachu_confirmed/\"> <img src=\"https://preview.redd.it/eqcks9phb0yh1.jpeg?width=640&amp;crop=smart&amp;au",
+   "pokemon": [
+    "Pikachu"
+   ],
+   "notInOurData": []
+  },
+  {
+   "source": "reddit-silph",
+   "trust": "tip",
+   "title": "Cleaning Storage",
+   "link": "https://www.reddit.com/r/TheSilphRoad/comments/1xgqc95/cleaning_storage/",
+   "date": "2026-10-27T11:47:31.000Z",
+   "summary": "<!-- SC_OFF --><div class=\"md\"><p>How i clean my Pokemon storage before Big Events and survive on 1500 Storage as F2P Player.</p> <p>4* (check hundos)</p> <p>0attack&amp;0defense&amp;0hp (check nundos",
+   "pokemon": [],
+   "notInOurData": []
+  },
+  {
    "source": "hub",
    "trust": "community",
    "title": "Pokémon GO Halloween 2026: Part One",
@@ -60,6 +160,30 @@
    "notInOurData": []
   },
   {
+   "source": "reddit-silph",
+   "trust": "tip",
+   "title": "Shiny costume Sinistea confirmed",
+   "link": "https://www.reddit.com/r/TheSilphRoad/comments/1xgjsbu/shiny_costume_sinistea_confirmed/",
+   "date": "2026-10-27T05:07:46.000Z",
+   "summary": "<table> <tr><td> <a href=\"https://www.reddit.com/r/TheSilphRoad/comments/1xgjsbu/shiny_costume_sinistea_confirmed/\"> <img src=\"https://preview.redd.it/qitqo9ud0yxh1.jpeg?width=640&amp;crop=smart&amp;a",
+   "pokemon": [
+    "Sinistea"
+   ],
+   "notInOurData": []
+  },
+  {
+   "source": "reddit-silph",
+   "trust": "tip",
+   "title": "Shiny costume zubat is confirmed",
+   "link": "https://www.reddit.com/r/TheSilphRoad/comments/1xggriy/shiny_costume_zubat_is_confirmed/",
+   "date": "2026-10-27T02:31:14.000Z",
+   "summary": "<table> <tr><td> <a href=\"https://www.reddit.com/r/TheSilphRoad/comments/1xggriy/shiny_costume_zubat_is_confirmed/\"> <img src=\"https://preview.redd.it/na3ftvek8xxh1.jpeg?width=640&amp;crop=smart&amp;a",
+   "pokemon": [
+    "Zubat"
+   ],
+   "notInOurData": []
+  },
+  {
    "source": "hub",
    "trust": "community",
    "title": "Pawniard Community Day (November 2026)",
@@ -69,6 +193,16 @@
    "pokemon": [
     "Pawniard"
    ],
+   "notInOurData": []
+  },
+  {
+   "source": "reddit-silph",
+   "trust": "tip",
+   "title": "Are we Trainers or Collectors? The lack of purpose for individual strength seriously undermines the motivation to grind and be the very best",
+   "link": "https://www.reddit.com/r/TheSilphRoad/comments/1x92jee/are_we_trainers_or_collectors_the_lack_of_purpose/",
+   "date": "2026-10-18T12:55:12.000Z",
+   "summary": "<!-- SC_OFF --><div class=\"md\"><p>You buy the ticket, you schedule the event to your calendar, you drive to the meet up and tap away without even looking at the screen. You catch the new shiny thing t",
+   "pokemon": [],
    "notInOurData": []
   }
  ]
