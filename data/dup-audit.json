@@ -1,6 +1,32 @@
 {
- "updated": "2026-10-27T00:33:45.865Z",
- "joinedThisRun": [],
+ "updated": "2026-10-27T06:24:37.047Z",
+ "joinedThisRun": [
+  {
+   "kept": "w-pokemon-fossil-museum-2026",
+   "dropped": "w-pok-mon-fossil-museum-2026",
+   "why": "same event"
+  },
+  {
+   "kept": "w-pok-mon-30th-anniversary-mall-exploration-ombak-kl",
+   "dropped": "w-pok-mon-30th-anniversary-mall-exploration-sm-mall-",
+   "why": "same event"
+  },
+  {
+   "kept": "w-go-wild-area-2026-mexico-city",
+   "dropped": "w-go-wild-area-2026-mexico-city-2026-11-06",
+   "why": "same event"
+  },
+  {
+   "kept": "w-go-wild-area-2026-sendai-tohoku",
+   "dropped": "w-go-wild-area-2026-sendai-and-tohoku",
+   "why": "same event"
+  },
+  {
+   "kept": "w-pok-mon-30th-anniversary-mall-exploration-jewel",
+   "dropped": "w-pok-mon-30th-anniversary-mall-exploration-changi-a",
+   "why": "same event"
+  }
+ ],
  "same": [],
  "crossList": [
   {

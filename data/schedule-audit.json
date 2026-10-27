@@ -1,5 +1,5 @@
 {
- "checked": "2026-10-27T00:33:55.460Z",
+ "checked": "2026-10-27T06:24:40.242Z",
  "compared": 55,
  "problems": [],
  "missing": [
@@ -22,33 +22,6 @@
    "end": "2027-08-15T23:59:00"
   }
  ],
- "worldFixes": [
-  {
-   "id": "w-go-wild-area-global-meetup-karlsruhe",
-   "name": "GO Wild Area Global Meetup: Karlsruhe",
-   "slug": "pokemon-go-wild-area-2026-global",
-   "from": [
-    "2026-11-14",
-    "2026-11-14"
-   ],
-   "to": [
-    "2026-11-14",
-    "2026-11-15"
-   ]
-  },
-  {
-   "id": "w-go-wild-area-global-meetup-stockholm",
-   "name": "GO Wild Area Global Meetup: Stockholm",
-   "slug": "pokemon-go-wild-area-2026-global",
-   "from": [
-    "2026-11-15",
-    "2026-11-15"
-   ],
-   "to": [
-    "2026-11-14",
-    "2026-11-15"
-   ]
-  }
- ],
+ "worldFixes": [],
  "added": []
 }
