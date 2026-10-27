@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-27T20:38:55.256Z",
+ "updated": "2026-10-27T23:59:40.558Z",
  "seeded": true,
  "channels": [
   {
@@ -18,10 +18,46 @@
    "src": "gamedata",
    "name": "dm-gamedata",
    "state": "ok",
-   "count": 10
+   "count": 14
   }
  ],
  "items": [
+  {
+   "id": "1564790460940156938",
+   "src": "gamedata",
+   "title": "The following Pokémon received Shadow configurations: Dudunsparce (Two-Segment Form), Dudunsparce (Three-Segment Form).",
+   "text": "The following Pokémon received Shadow configurations: Dudunsparce (Two-Segment Form), Dudunsparce (Three-Segment Form).\n\nThe following Pokémon received general updates: Chandelure (Mega), Goomy, Sliggoo, Goodra, Sinistea (Phony Form).\n\n@subscriber @miner",
+   "link": "",
+   "image": "",
+   "date": "2026-10-27T23:58:38.289Z"
+  },
+  {
+   "id": "1564771024992477257",
+   "src": "gamedata",
+   "title": "A bunch of stuff was rolled out. If you notice any new behavior, go get yourself some Reddit karma.",
+   "text": "A bunch of stuff was rolled out. If you notice any new behavior, go get yourself some Reddit karma.\n\nBUDDYSWAPPLAYERSNAPSHOTFEATUREGATE\nLOCATIONCARDROLLFEATUREGATE\nTODAYVIEWV3CLAIMRERENDERFEATUREGATE\nTODAYVIEWV3COLLAPSEREDRAWFEATUREGATE\nTODAYVIEWV3DEFERREDTABLOADFEATUREGATE\nTODAYVIEWV3INCREMENTALCLEANUPFEATUREGATE\nTODAYVIEWV3LOADPRESENTATIONFEATUREGATE\nTODAYVIEWV3SWIPEGUARDFEATUREGATE\nTODAYVIEWV3TABRESTOREFEATUREGATE",
+   "link": "",
+   "image": "",
+   "date": "2026-10-27T22:41:24.398Z"
+  },
+  {
+   "id": "1564763736286437459",
+   "src": "gamedata",
+   "title": "Assets for the PokéXciting! Pikachu in Thailand were added.",
+   "text": "Assets for the PokéXciting! Pikachu in Thailand were added.\n\nThe following Pokémon received general updates: Pikachu, Sentret, Furret, Cresselia, Kyurem, Meowstic (Male), Meowstic (Female), Rowlet, Torracat, Incineroar, Toxapex, Duraludon (Gigantamax), Ceruledge.\n\n@subscriber @miner",
+   "link": "",
+   "image": "",
+   "date": "2026-10-27T22:12:26.635Z"
+  },
+  {
+   "id": "1564753096091897933",
+   "src": "gamedata",
+   "title": "In more exciting news the maid gothic outfits are now live",
+   "text": "In more exciting news the maid gothic outfits are now live",
+   "link": "",
+   "image": "",
+   "date": "2026-10-27T21:30:09.815Z"
+  },
   {
    "id": "1564733514086224084",
    "src": "gamedata",
