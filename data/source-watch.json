@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-26T20:29:37.428Z",
+ "updated": "2026-10-27T00:26:00.491Z",
  "status": [
   {
    "id": "hub",
@@ -64,6 +64,20 @@
   {
    "source": "reddit-silph",
    "trust": "tip",
+   "title": "Confused: Gemini says catching a Shiny Empoleon the wild is impossible.",
+   "link": "https://www.reddit.com/r/TheSilphRoad/comments/1xgd1ns/confused_gemini_says_catching_a_shiny_empoleon/",
+   "date": "2026-10-26T23:44:00.000Z",
+   "summary": "<table> <tr><td> <a href=\"https://www.reddit.com/r/TheSilphRoad/comments/1xgd1ns/confused_gemini_says_catching_a_shiny_empoleon/\"> <img src=\"https://preview.redd.it/iyfgcsxmdwxh1.jpeg?width=140&amp;he",
+   "pokemon": [
+    "Empoleon"
+   ],
+   "notInOurData": [
+    "Empoleon"
+   ]
+  },
+  {
+   "source": "reddit-silph",
+   "trust": "tip",
    "title": "Legendary Shadow raids and guaranteed catch.",
    "link": "https://www.reddit.com/r/TheSilphRoad/comments/1xed70z/legendary_shadow_raids_and_guaranteed_catch/",
    "date": "2026-10-24T16:34:38.000Z",
@@ -73,22 +87,6 @@
    ],
    "notInOurData": [
     "Landorus"
-   ]
-  },
-  {
-   "source": "reddit-silph",
-   "trust": "tip",
-   "title": "Is Halloween 2026 the weakest Pokémon GO Halloween event in years, or is it just me?",
-   "link": "https://www.reddit.com/r/TheSilphRoad/comments/1x4e5hb/is_halloween_2026_the_weakest_pokémon_go/",
-   "date": "2026-10-12T21:13:24.000Z",
-   "summary": "<!-- SC_OFF --><div class=\"md\"><p>Halloween has always been one of my favourite Pokémon GO events, but looking at what’s been announced for 2026, I can’t help feeling meh this year .<br/> I compared t",
-   "pokemon": [
-    "Houndstone",
-    "Phantump",
-    "Greavard"
-   ],
-   "notInOurData": [
-    "Phantump"
    ]
   },
   {

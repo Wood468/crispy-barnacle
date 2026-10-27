@@ -1,7 +1,7 @@
 {
- "updated": "2026-10-26T20:29:37.606Z",
+ "updated": "2026-10-27T00:26:00.682Z",
  "state": "ok",
- "scrapedDuckEvents": 56,
+ "scrapedDuckEvents": 55,
  "missingHere": [
   {
    "name": "Pokémon Night Out 2026 - London",
@@ -22,6 +22,16 @@
    "start": "2026-07-28"
   },
   {
+   "id": "w-mall-exploration-malaysia",
+   "name": "Pokémon 30th Anniversary Mall Exploration: Kuala Lumpur",
+   "start": "2026-10-01"
+  },
+  {
+   "id": "w-mall-exploration-sm-mall-of-asia",
+   "name": "Pokémon 30th Anniversary Mall Exploration: SM Mall of Asia",
+   "start": "2026-10-01"
+  },
+  {
    "id": "w-pok-mon-go-partners-with-the-european-space-agency",
    "name": "Pokémon GO partners with the European Space Agency",
    "start": "2026-10-04"
@@ -32,9 +42,44 @@
    "start": "2026-10-04"
   },
   {
+   "id": "w-pokemon-go-x-esa-toulouse",
+   "name": "Pokémon GO x ESA: Toulouse",
+   "start": "2026-10-04"
+  },
+  {
+   "id": "w-pokemon-go-x-esa-nuremberg",
+   "name": "Pokémon GO x ESA: Nuremberg",
+   "start": "2026-10-04"
+  },
+  {
+   "id": "w-pokemon-go-x-esa-valencia",
+   "name": "Pokémon GO x ESA: Valencia",
+   "start": "2026-10-04"
+  },
+  {
+   "id": "w-pokemon-go-x-esa-noordwijk",
+   "name": "Pokémon GO x ESA: Noordwijk",
+   "start": "2026-10-04"
+  },
+  {
+   "id": "w-pokemon-go-x-esa-transinne",
+   "name": "Pokémon GO x ESA: Transinne",
+   "start": "2026-10-04"
+  },
+  {
+   "id": "w-mexicraneo-exhibit-paseo-de-la-reforma",
+   "name": "Mexicráneo Exhibit: Mexico City",
+   "start": "2026-10-17"
+  },
+  {
    "id": "w-aeon-mall-halloween",
    "name": "AEON MALL Halloween",
    "start": "2026-10-19"
+  },
+  {
+   "id": "w-mall-exploration-sm-east-ortigas",
+   "name": "Pokémon 30th Anniversary Mall Exploration: SM East Ortigas",
+   "start": "2026-10-23"
   },
   {
    "id": "w-celebrate-the-pok-mon-night-out-events-in-pok-mon-",
@@ -49,6 +94,11 @@
   {
    "id": "w-pok-mon-run-30-kaohsiung",
    "name": "Pokémon RUN 30: Kaohsiung",
+   "start": "2026-10-31"
+  },
+  {
+   "id": "w-dia-de-muertos-2026-paseo-de-la-reforma",
+   "name": "Dia de Muertos 2026: Mexico City (Paseo de la Reforma)",
    "start": "2026-10-31"
   },
   {
@@ -67,8 +117,18 @@
    "start": "2026-11-07"
   },
   {
+   "id": "w-mall-exploration-singapore-changi",
+   "name": "Pokémon 30th Anniversary Mall Exploration: Changi Airport",
+   "start": "2026-11-07"
+  },
+  {
+   "id": "w-mall-exploration-singapore-jewel",
+   "name": "Pokémon 30th Anniversary Mall Exploration: Jewel",
+   "start": "2026-11-07"
+  },
+  {
    "id": "w-pok-mon-go-joins-pok-mon-30th-anniversary-mall-exp",
-   "name": "Pokémon GO joins Pokémon 30th Anniversary Mall Exploration",
+   "name": "Pokémon 30th Anniversary Mall Exploration: Hong Kong",
    "start": "2026-11-09"
   },
   {
@@ -77,9 +137,19 @@
    "start": "2026-11-14"
   },
   {
+   "id": "w-mall-exploration-sm-southmall",
+   "name": "Pokémon 30th Anniversary Mall Exploration: SM Southmall",
+   "start": "2026-11-20"
+  },
+  {
    "id": "w-pok-mon-run-30-kuala-lumpur",
    "name": "Pokémon RUN 30: Kuala Lumpur",
    "start": "2026-11-21"
+  },
+  {
+   "id": "w-mall-exploration-sm-north-edsa",
+   "name": "Pokémon 30th Anniversary Mall Exploration: SM North EDSA",
+   "start": "2026-12-10"
   }
  ],
  "shinyDisagree": []
