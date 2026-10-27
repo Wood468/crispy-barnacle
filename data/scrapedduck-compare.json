@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-27T00:26:00.682Z",
+ "updated": "2026-10-27T09:00:31.313Z",
  "state": "ok",
  "scrapedDuckEvents": 55,
  "missingHere": [
@@ -22,18 +22,18 @@
    "start": "2026-07-28"
   },
   {
-   "id": "w-mall-exploration-malaysia",
-   "name": "Pokémon 30th Anniversary Mall Exploration: Kuala Lumpur",
-   "start": "2026-10-01"
+   "id": "w-pok-mon-jet-red-collaboration",
+   "name": "Pokémon Jet Red collaboration",
+   "start": "2026-07-28"
   },
   {
-   "id": "w-mall-exploration-sm-mall-of-asia",
-   "name": "Pokémon 30th Anniversary Mall Exploration: SM Mall of Asia",
+   "id": "w-pok-mon-30th-anniversary-mall-exploration-ombak-kl",
+   "name": "Pokémon 30th Anniversary Mall Exploration: Ombak KLCC",
    "start": "2026-10-01"
   },
   {
    "id": "w-pok-mon-go-partners-with-the-european-space-agency",
-   "name": "Pokémon GO partners with the European Space Agency",
+   "name": "Pokémon GO x ESA: all locations",
    "start": "2026-10-04"
   },
   {
@@ -77,7 +77,7 @@
    "start": "2026-10-19"
   },
   {
-   "id": "w-mall-exploration-sm-east-ortigas",
+   "id": "w-pok-mon-30th-anniversary-mall-exploration-sm-east-",
    "name": "Pokémon 30th Anniversary Mall Exploration: SM East Ortigas",
    "start": "2026-10-23"
   },
@@ -88,17 +88,12 @@
   },
   {
    "id": "w-pok-mon-go-dia-de-muertos-2026-mexico-exclusive-ev",
-   "name": "Pokémon GO Dia de Muertos 2026: Mexico Exclusive Event",
+   "name": "Dia de Muertos 2026: Mexico",
    "start": "2026-10-27"
   },
   {
    "id": "w-pok-mon-run-30-kaohsiung",
    "name": "Pokémon RUN 30: Kaohsiung",
-   "start": "2026-10-31"
-  },
-  {
-   "id": "w-dia-de-muertos-2026-paseo-de-la-reforma",
-   "name": "Dia de Muertos 2026: Mexico City (Paseo de la Reforma)",
    "start": "2026-10-31"
   },
   {
@@ -108,7 +103,12 @@
   },
   {
    "id": "w-pok-xciting-lands-at-changi-airport-and-jewel-get-",
-   "name": "PokéXciting! lands at Changi Airport and Jewel",
+   "name": "PokéXciting! Changi Airport and Jewel",
+   "start": "2026-11-07"
+  },
+  {
+   "id": "w-pok-mon-30th-anniversary-mall-exploration-jewel",
+   "name": "Pokémon 30th Anniversary Mall Exploration: Jewel",
    "start": "2026-11-07"
   },
   {
@@ -117,27 +117,12 @@
    "start": "2026-11-07"
   },
   {
-   "id": "w-mall-exploration-singapore-changi",
-   "name": "Pokémon 30th Anniversary Mall Exploration: Changi Airport",
-   "start": "2026-11-07"
-  },
-  {
-   "id": "w-mall-exploration-singapore-jewel",
-   "name": "Pokémon 30th Anniversary Mall Exploration: Jewel",
-   "start": "2026-11-07"
-  },
-  {
-   "id": "w-pok-mon-go-joins-pok-mon-30th-anniversary-mall-exp",
-   "name": "Pokémon 30th Anniversary Mall Exploration: Hong Kong",
-   "start": "2026-11-09"
-  },
-  {
    "id": "w-pok-mon-run-30-new-taipei",
    "name": "Pokémon RUN 30: New Taipei",
    "start": "2026-11-14"
   },
   {
-   "id": "w-mall-exploration-sm-southmall",
+   "id": "w-pok-mon-30th-anniversary-mall-exploration-sm-south",
    "name": "Pokémon 30th Anniversary Mall Exploration: SM Southmall",
    "start": "2026-11-20"
   },
@@ -147,7 +132,7 @@
    "start": "2026-11-21"
   },
   {
-   "id": "w-mall-exploration-sm-north-edsa",
+   "id": "w-pok-mon-30th-anniversary-mall-exploration-sm-north",
    "name": "Pokémon 30th Anniversary Mall Exploration: SM North EDSA",
    "start": "2026-12-10"
   }

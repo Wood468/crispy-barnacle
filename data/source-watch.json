@@ -1,10 +1,10 @@
 {
- "updated": "2026-10-27T00:26:00.491Z",
+ "updated": "2026-10-27T09:00:31.120Z",
  "status": [
   {
    "id": "hub",
    "state": "ok",
-   "items": 2
+   "items": 3
   },
   {
    "id": "miners-assets",
@@ -19,7 +19,7 @@
   {
    "id": "reddit-silph",
    "state": "ok",
-   "items": 4
+   "items": 6
   },
   {
    "id": "youtube-pogo",
@@ -27,7 +27,7 @@
    "items": 0
   }
  ],
- "gaps": 4,
+ "gaps": 3,
  "items": [
   {
    "source": "hub",
@@ -64,20 +64,6 @@
   {
    "source": "reddit-silph",
    "trust": "tip",
-   "title": "Confused: Gemini says catching a Shiny Empoleon the wild is impossible.",
-   "link": "https://www.reddit.com/r/TheSilphRoad/comments/1xgd1ns/confused_gemini_says_catching_a_shiny_empoleon/",
-   "date": "2026-10-26T23:44:00.000Z",
-   "summary": "<table> <tr><td> <a href=\"https://www.reddit.com/r/TheSilphRoad/comments/1xgd1ns/confused_gemini_says_catching_a_shiny_empoleon/\"> <img src=\"https://preview.redd.it/iyfgcsxmdwxh1.jpeg?width=140&amp;he",
-   "pokemon": [
-    "Empoleon"
-   ],
-   "notInOurData": [
-    "Empoleon"
-   ]
-  },
-  {
-   "source": "reddit-silph",
-   "trust": "tip",
    "title": "Legendary Shadow raids and guaranteed catch.",
    "link": "https://www.reddit.com/r/TheSilphRoad/comments/1xed70z/legendary_shadow_raids_and_guaranteed_catch/",
    "date": "2026-10-24T16:34:38.000Z",
@@ -88,6 +74,56 @@
    "notInOurData": [
     "Landorus"
    ]
+  },
+  {
+   "source": "reddit-silph",
+   "trust": "tip",
+   "title": "Field research dilution rant and Sinistea hunting",
+   "link": "https://www.reddit.com/r/TheSilphRoad/comments/1xgn24u/field_research_dilution_rant_and_sinistea_hunting/",
+   "date": "2026-10-27T08:36:32.000Z",
+   "summary": "<!-- SC_OFF --><div class=\"md\"><p>I know there have been posts about this before, but this is getting really frustrating. I'm pretty sure this has been getting much worse since Scopely took over.</p> ",
+   "pokemon": [
+    "Sinistea"
+   ],
+   "notInOurData": []
+  },
+  {
+   "source": "hub",
+   "trust": "community",
+   "title": "Pokémon GO Halloween 2026: Part One",
+   "link": "https://pokemongohub.net/post/event/halloween-2026-part-one/",
+   "date": "2026-10-27T06:55:52.000Z",
+   "summary": "Pokémon GO’s Halloween 2026 Part One event runs from October 27 at 10:00 a.m. to November 1 at 10:00 a.m. local time, bringing three new costume Pokémon: Pikachu wearing a hat and capelet, Zubat weari",
+   "pokemon": [
+    "Sinistea",
+    "Pikachu",
+    "Zubat"
+   ],
+   "notInOurData": []
+  },
+  {
+   "source": "reddit-silph",
+   "trust": "tip",
+   "title": "Shiny costume Sinistea confirmed",
+   "link": "https://www.reddit.com/r/TheSilphRoad/comments/1xgjsbu/shiny_costume_sinistea_confirmed/",
+   "date": "2026-10-27T05:07:46.000Z",
+   "summary": "<table> <tr><td> <a href=\"https://www.reddit.com/r/TheSilphRoad/comments/1xgjsbu/shiny_costume_sinistea_confirmed/\"> <img src=\"https://preview.redd.it/qitqo9ud0yxh1.jpeg?width=640&amp;crop=smart&amp;a",
+   "pokemon": [
+    "Sinistea"
+   ],
+   "notInOurData": []
+  },
+  {
+   "source": "reddit-silph",
+   "trust": "tip",
+   "title": "Shiny costume zubat is confirmed",
+   "link": "https://www.reddit.com/r/TheSilphRoad/comments/1xggriy/shiny_costume_zubat_is_confirmed/",
+   "date": "2026-10-27T02:31:14.000Z",
+   "summary": "<table> <tr><td> <a href=\"https://www.reddit.com/r/TheSilphRoad/comments/1xggriy/shiny_costume_zubat_is_confirmed/\"> <img src=\"https://preview.redd.it/na3ftvek8xxh1.jpeg?width=640&amp;crop=smart&amp;a",
+   "pokemon": [
+    "Zubat"
+   ],
+   "notInOurData": []
   },
   {
    "source": "hub",
