@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-26T23:48:48.193Z",
+ "updated": "2026-10-27T04:55:26.041Z",
  "seeded": true,
  "channels": [
   {
@@ -18,10 +18,19 @@
    "src": "gamedata",
    "name": "dm-gamedata",
    "state": "ok",
-   "count": 8
+   "count": 9
   }
  ],
  "items": [
+  {
+   "id": "1564443233323327602",
+   "src": "gamedata",
+   "title": "Here are the next four Weekly Challenges as currently configured in the game master.",
+   "text": "Here are the next four Weekly Challenges as currently configured in the game master.\n\n - : Hatch 20 Eggs\n - : Catch 500 Pokémon\n - : Spin 150 PokéStops or Gyms\n - : Complete 25 Field Research tasks\n\nEach of them reward the following for completing them:\n 6000 Stardust\n 7 Friendship Points\n 20,000 XP\n An encounter with Tandemaus\n 250 Link Charges\n\n@subscriber @miner",
+   "link": "",
+   "image": "",
+   "date": "2026-10-27T00:58:52.774Z"
+  },
   {
    "id": "1564399608673603730",
    "src": "events",
