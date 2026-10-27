@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-27T09:00:31.120Z",
+ "updated": "2026-10-27T15:22:01.567Z",
  "status": [
   {
    "id": "hub",
@@ -19,7 +19,7 @@
   {
    "id": "reddit-silph",
    "state": "ok",
-   "items": 6
+   "items": 0
   },
   {
    "id": "youtube-pogo",
@@ -27,7 +27,7 @@
    "items": 0
   }
  ],
- "gaps": 3,
+ "gaps": 1,
  "items": [
   {
    "source": "hub",
@@ -46,48 +46,6 @@
    ]
   },
   {
-   "source": "reddit-silph",
-   "trust": "tip",
-   "title": "Lucky Trading Potentially not Working for Yesterday’s Friendship Friday",
-   "link": "https://www.reddit.com/r/TheSilphRoad/comments/1x8a1a0/lucky_trading_potentially_not_working_for/",
-   "date": "2026-10-17T13:17:23.000Z",
-   "summary": "<!-- SC_OFF --><div class=\"md\"><p>Anyone else faced a weird bug which occurred during the second and third special trades, where Pokémon’s dated prior to 2020 weren’t transformed into lucky upon being",
-   "pokemon": [
-    "Heracross",
-    "Umbreon"
-   ],
-   "notInOurData": [
-    "Heracross",
-    "Umbreon"
-   ]
-  },
-  {
-   "source": "reddit-silph",
-   "trust": "tip",
-   "title": "Legendary Shadow raids and guaranteed catch.",
-   "link": "https://www.reddit.com/r/TheSilphRoad/comments/1xed70z/legendary_shadow_raids_and_guaranteed_catch/",
-   "date": "2026-10-24T16:34:38.000Z",
-   "summary": "<!-- SC_OFF --><div class=\"md\"><p>Hey I'm curious when they changed it so legendaries (shadow)(non-shiny)can be caught by hitting an excellent throw on the smallest possible circle? I just did a lando",
-   "pokemon": [
-    "Landorus"
-   ],
-   "notInOurData": [
-    "Landorus"
-   ]
-  },
-  {
-   "source": "reddit-silph",
-   "trust": "tip",
-   "title": "Field research dilution rant and Sinistea hunting",
-   "link": "https://www.reddit.com/r/TheSilphRoad/comments/1xgn24u/field_research_dilution_rant_and_sinistea_hunting/",
-   "date": "2026-10-27T08:36:32.000Z",
-   "summary": "<!-- SC_OFF --><div class=\"md\"><p>I know there have been posts about this before, but this is getting really frustrating. I'm pretty sure this has been getting much worse since Scopely took over.</p> ",
-   "pokemon": [
-    "Sinistea"
-   ],
-   "notInOurData": []
-  },
-  {
    "source": "hub",
    "trust": "community",
    "title": "Pokémon GO Halloween 2026: Part One",
@@ -102,30 +60,6 @@
    "notInOurData": []
   },
   {
-   "source": "reddit-silph",
-   "trust": "tip",
-   "title": "Shiny costume Sinistea confirmed",
-   "link": "https://www.reddit.com/r/TheSilphRoad/comments/1xgjsbu/shiny_costume_sinistea_confirmed/",
-   "date": "2026-10-27T05:07:46.000Z",
-   "summary": "<table> <tr><td> <a href=\"https://www.reddit.com/r/TheSilphRoad/comments/1xgjsbu/shiny_costume_sinistea_confirmed/\"> <img src=\"https://preview.redd.it/qitqo9ud0yxh1.jpeg?width=640&amp;crop=smart&amp;a",
-   "pokemon": [
-    "Sinistea"
-   ],
-   "notInOurData": []
-  },
-  {
-   "source": "reddit-silph",
-   "trust": "tip",
-   "title": "Shiny costume zubat is confirmed",
-   "link": "https://www.reddit.com/r/TheSilphRoad/comments/1xggriy/shiny_costume_zubat_is_confirmed/",
-   "date": "2026-10-27T02:31:14.000Z",
-   "summary": "<table> <tr><td> <a href=\"https://www.reddit.com/r/TheSilphRoad/comments/1xggriy/shiny_costume_zubat_is_confirmed/\"> <img src=\"https://preview.redd.it/na3ftvek8xxh1.jpeg?width=640&amp;crop=smart&amp;a",
-   "pokemon": [
-    "Zubat"
-   ],
-   "notInOurData": []
-  },
-  {
    "source": "hub",
    "trust": "community",
    "title": "Pawniard Community Day (November 2026)",
@@ -135,16 +69,6 @@
    "pokemon": [
     "Pawniard"
    ],
-   "notInOurData": []
-  },
-  {
-   "source": "reddit-silph",
-   "trust": "tip",
-   "title": "Are we Trainers or Collectors? The lack of purpose for individual strength seriously undermines the motivation to grind and be the very best",
-   "link": "https://www.reddit.com/r/TheSilphRoad/comments/1x92jee/are_we_trainers_or_collectors_the_lack_of_purpose/",
-   "date": "2026-10-18T12:55:12.000Z",
-   "summary": "<!-- SC_OFF --><div class=\"md\"><p>You buy the ticket, you schedule the event to your calendar, you drive to the meet up and tap away without even looking at the screen. You catch the new shiny thing t",
-   "pokemon": [],
    "notInOurData": []
   }
  ]
