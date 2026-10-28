@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-28T17:21:11.891Z",
+ "updated": "2026-10-28T21:53:40.986Z",
  "seeded": true,
  "channels": [
   {
@@ -18,10 +18,64 @@
    "src": "gamedata",
    "name": "dm-gamedata",
    "state": "ok",
-   "count": 15
+   "count": 21
   }
  ],
  "items": [
+  {
+   "id": "1565111666478288967",
+   "src": "gamedata",
+   "title": "In a future release of the game, the form button for Ultra Necrozma (Pokedexinfovariantmegaultra) is back. Hopefully thi",
+   "text": "In a future release of the game, the form button for Ultra Necrozma (Pokedexinfovariantmegaultra) is back. Hopefully this time they figure out a way to hide the internal name. If only they had a flag named showLabelInPokedex.",
+   "link": "",
+   "image": "",
+   "date": "2026-10-28T21:14:59.657Z"
+  },
+  {
+   "id": "1565109893025763331",
+   "src": "gamedata",
+   "title": "A new tutorial was added for Weather Boosts. Since I know you're all new to the game, I figured I'd fill you guys in.",
+   "text": "A new tutorial was added for Weather Boosts. Since I know you're all new to the game, I figured I'd fill you guys in.\n\n@subscriber @miner",
+   "link": "",
+   "image": "",
+   "date": "2026-10-28T21:07:56.833Z"
+  },
+  {
+   "id": "1565109649282170974",
+   "src": "gamedata",
+   "title": "A new shared icon for Shadow Pokémon was added.",
+   "text": "A new shared icon for Shadow Pokémon was added.",
+   "link": "",
+   "image": "",
+   "date": "2026-10-28T21:06:58.720Z"
+  },
+  {
+   "id": "1565109112222781530",
+   "src": "gamedata",
+   "title": "The previously reported costume form to un-costumed form conversion table gained a new entry, giving yet another hint to",
+   "text": "The previously reported costume form to un-costumed form conversion table gained a new entry, giving yet another hint towards Paldean Wooper getting a new costume in the future:\n\nForm ID 3370 → WOOPERPALDEA\n\n@subscriber @miner",
+   "link": "",
+   "image": "",
+   "date": "2026-10-28T21:04:50.675Z"
+  },
+  {
+   "id": "1565076899456229449",
+   "src": "gamedata",
+   "title": "Trainer Battles (PvP):",
+   "text": "Trainer Battles (PvP):\nType: Dark\nPower: 75.0\nEnergy: -40\nGyms and Raids (PvE):\nType: Dark\nPower: 85.0\nDuration: 2000 ms (2.00 s)\nStart: 1300 ms (1.30 s)\nEnd: 1900 ms (1.90 s)\nEnergy: -50\n\nLet's see if they got Kowtow Cleave's stats right this time.\n\n@subscriber @miner",
+   "link": "",
+   "image": "",
+   "date": "2026-10-28T18:56:50.553Z"
+  },
+  {
+   "id": "1565061428363264172",
+   "src": "gamedata",
+   "title": "Trainer Battles (PvP):",
+   "text": "Trainer Battles (PvP):\nType: Dark\nPower: 130.0\nEnergy: -60\nGyms and Raids (PvE):\nType: Dark\nPower: 130.0\nDuration: 2000 ms (2.00 s)\nStart: 1300 ms (1.30 s)\nEnd: 1900 ms (1.90 s)\nEnergy: -60\n\nStats for the move Kowtow Cleave have been added to the game master.\n\n@subscriber @miner",
+   "link": "",
+   "image": "",
+   "date": "2026-10-28T17:55:21.957Z"
+  },
   {
    "id": "1565031925574279249",
    "src": "events",
