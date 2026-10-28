@@ -233,7 +233,7 @@
     var sourceChecked = primarySource && (primarySource.observed || primarySource.checked || ev.seen || G.D.asOf) || '';
     var sourceAge = sourceChecked ? Math.max(0, Math.floor((Date.now() - Date.parse(String(sourceChecked).slice(0, 10) + 'T00:00:00Z')) / 864e5)) : null;
     var sourceFresh = sourceAge === null || !Number.isFinite(sourceAge) ? 'Check date unavailable' : sourceAge <= 7 ? 'Recently checked' : sourceAge <= 21 ? 'Worth rechecking' : 'May be out of date';
-    var leekDuckSource = primarySource && /leekduck\\.com$/i.test((function(){try{return new URL(primarySource.url).hostname;}catch(e){return '';}})());
+    var leekDuckSource = primarySource && /leekduck[.]com$/i.test((function(){try{return new URL(primarySource.url).hostname;}catch(e){return '';}})());
     var h = '<div class="evd-bar"><button type="button" class="hbtn" id="evd-x" aria-label="Close event details"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button><span class="tag">EVENT DETAIL</span>'
       + '<button type="button" class="pill info-open" data-infographic="' + esc(ev.id) + '">▧ Infographic</button>'
       + '<button type="button" class="pill" data-evlink="' + esc(ev.id) + '" aria-label="Share a link to this event">🔗 Link</button>'
