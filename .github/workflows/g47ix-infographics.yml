@@ -91,7 +91,7 @@ jobs:
           CHANNEL_ID: ${{ secrets.CHANNEL_ID }}
           DISCORD_HISTORY_DAYS: ${{ github.event.inputs.lookback_days != '' && github.event.inputs.lookback_days != '0' && github.event.inputs.lookback_days || '90' }}
         run: python3 discord_scraper.py
-      - name: Collect pictures sent to the Telegram bot
+      # Telegram Bot API cannot receive messages authored by another bot. Discord-forwarded bot posts\n      # are therefore collected from the source Discord channel above; this inbox is for owner submissions.\n      - name: Collect pictures sent directly to the Telegram bot by the owner
         continue-on-error: true
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
