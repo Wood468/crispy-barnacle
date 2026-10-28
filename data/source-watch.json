@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-28T12:55:31.800Z",
+ "updated": "2026-10-28T20:16:36.720Z",
  "status": [
   {
    "id": "hub",
@@ -19,7 +19,7 @@
   {
    "id": "reddit-silph",
    "state": "ok",
-   "items": 10
+   "items": 9
   },
   {
    "id": "youtube-pogo",
@@ -27,54 +27,8 @@
    "items": 2
   }
  ],
- "gaps": 6,
+ "gaps": 3,
  "items": [
-  {
-   "source": "hub",
-   "trust": "community",
-   "title": "Pokémon Night Out: Location Backgrounds, Toxtricity, and Unown",
-   "link": "https://pokemongohub.net/post/news/pokemon-night-out-location-backgrounds-toxtricity-and-unown/",
-   "date": "2026-10-19T17:39:10.000Z",
-   "summary": "Pokémon Night Out is bringing exclusive in-game bonuses to Los Angeles and London, including Location Backgrounds for Pikachu and Gengar, Timed Research featuring Toxtricity, and rare Shiny Unown enco",
-   "pokemon": [
-    "Toxtricity",
-    "Unown"
-   ],
-   "notInOurData": [
-    "Toxtricity",
-    "Unown"
-   ]
-  },
-  {
-   "source": "reddit-silph",
-   "trust": "tip",
-   "title": "Lucky Trading Potentially not Working for Yesterday’s Friendship Friday",
-   "link": "https://www.reddit.com/r/TheSilphRoad/comments/1x8a1a0/lucky_trading_potentially_not_working_for/",
-   "date": "2026-10-17T13:17:23.000Z",
-   "summary": "<!-- SC_OFF --><div class=\"md\"><p>Anyone else faced a weird bug which occurred during the second and third special trades, where Pokémon’s dated prior to 2020 weren’t transformed into lucky upon being",
-   "pokemon": [
-    "Heracross",
-    "Umbreon"
-   ],
-   "notInOurData": [
-    "Heracross",
-    "Umbreon"
-   ]
-  },
-  {
-   "source": "reddit-silph",
-   "trust": "tip",
-   "title": "Shiney Costumed Noibat Confirmed",
-   "link": "https://www.reddit.com/r/TheSilphRoad/comments/1xhagcw/shiney_costumed_noibat_confirmed/",
-   "date": "2026-10-28T01:02:31.000Z",
-   "summary": "<table> <tr><td> <a href=\"https://www.reddit.com/r/TheSilphRoad/comments/1xhagcw/shiney_costumed_noibat_confirmed/\"> <img src=\"https://preview.redd.it/x3mjhkanx3yh1.png?width=640&amp;crop=smart&amp;au",
-   "pokemon": [
-    "Noibat"
-   ],
-   "notInOurData": [
-    "Noibat"
-   ]
-  },
   {
    "source": "reddit-silph",
    "trust": "tip",
@@ -116,6 +70,30 @@
    "notInOurData": [
     "Landorus"
    ]
+  },
+  {
+   "source": "reddit-silph",
+   "trust": "tip",
+   "title": "Non-costume wild zubat?",
+   "link": "https://www.reddit.com/r/TheSilphRoad/comments/1xhwz6b/noncostume_wild_zubat/",
+   "date": "2026-10-28T18:54:48.000Z",
+   "summary": "<table> <tr><td> <a href=\"https://www.reddit.com/r/TheSilphRoad/comments/1xhwz6b/noncostume_wild_zubat/\"> <img src=\"https://preview.redd.it/96g9mrzx89yh1.jpeg?width=140&amp;height=140&amp;crop=1:1,sma",
+   "pokemon": [
+    "Zubat"
+   ],
+   "notInOurData": []
+  },
+  {
+   "source": "hub",
+   "trust": "community",
+   "title": "Gastly Spotlight Hour (October 2025): Last Minute Guide",
+   "link": "https://pokemongohub.net/post/tips-and-tricks/gastly-spotlight-hour-october-2025-last-minute-guide-2/",
+   "date": "2026-10-28T13:23:13.000Z",
+   "summary": "25 Candy 100 Candy 0 Candy if traded 200/40 Mega Energy Shiny Gastly can be pretty subtle &#8211; look out for its cloud turning a blue colour! The following Pokémon will grant you extra bonuses when ",
+   "pokemon": [
+    "Gastly"
+   ],
+   "notInOurData": []
   },
   {
    "source": "youtube-pogo",

@@ -1,13 +1,19 @@
 {
- "updated": "2026-10-28T12:55:32.013Z",
+ "updated": "2026-10-28T20:16:36.881Z",
  "state": "ok",
- "scrapedDuckEvents": 54,
+ "scrapedDuckEvents": 55,
  "missingHere": [
   {
    "name": "Pokémon Night Out 2026 - London",
    "type": "event",
    "start": "2026-11-10T18:00:00.000Z",
    "link": "https://leekduck.com/events/pokemon-night-out-london-2026/"
+  },
+  {
+   "name": "Eternamax Eternatus Returns",
+   "type": "max-battles",
+   "start": "2026-11-21T11:00:00.000",
+   "link": "https://leekduck.com/events/eternamax-eternatus-max-battles-2026/"
   }
  ],
  "missingThere": [
