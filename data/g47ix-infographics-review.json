@@ -7,6 +7,62 @@
   "eventImages": {},
   "candidates": [
     {
+      "id": "discord:1565053518329684099",
+      "source": "discord",
+      "creator": "",
+      "title": "traiols",
+      "url": "https://discord.com/channels/@me/1558793395198099618/1565053518329684099",
+      "publishedAt": "2026-10-28T17:23:56.058000+00:00",
+      "imageUrl": "https://cdn.discordapp.com/attachments/886998693897719819/1565048046226505760/traiols.png?ex=6ae37c13&is=6ae22a93&hm=7ba4a68c99d385e4c60f54d0dbfd20fc6aad414af98f344d16bf29c43828e3a2&",
+      "reviewStatus": "needs_review",
+      "decision": "pending",
+      "ocrChecked": true,
+      "ocrText": "eee local time we ™ s ob. mt Mach, -* hh _@& Ng ta —— 00 am - 8:00 pm x ©) Uh ow Dvnama~x T el} rey J 4 no, yy iN All Dynamax Pokémon* that have appeared in Pokémon GO may appear hin Max Battle in Max Battles. If you’re lucky you might get Special background ae | \\ Charizard ETERNATUS 21 NOV RETURNS 2x Catch Candy ‘November 21, 1:00 om +200 pm You can't catch it, you'll get Candy and Candy XL ee More Power Spots than 7}. Max Particle usual will be active and ' ) collection limit Y will refresh more frequently. N- willincrease AR Event-themed ———a Pokémon 1 The Remote Raid limit 8x Max Particles rz) will increase to 30 wey from Power Spots A chance to receive Max Particles Any Pokémon* that has previously when catching event-themed Pokémon in the wild or after Max Battles. appeared in Dynamax Max Battles © may appear in the wild Won't work with the Explorer Gadget or a GO Plus. ee DELUXE \"oe r— — GO PASS we FREE ——4 << An encounter with Eternatus «_— Additional encounters with ay ) (or candy if you already have it) even more event-themed Dynamax #e VA Encounters with event-themed Dynamax Pokémon with a Special Background! a ZVA, = Pokémon with a Special Background < Even more Eternatus Candy and Candy XL = Mf Eternatus Candy and Candy XL Silver Pinap Berries = An Rare Candy, Stardust AND MORE Rare Candy XL AND MORE poe. app eet ! A > S— Trainers who claim the first tier of rewards in GO Pass: Into the Wild \\; 9. x will automatically be upgraded to the GO Pass Deluxe for free! ",
+      "eventMatch": {
+        "eventId": "into",
+        "eventTitle": "Into the Wild",
+        "score": 0.798,
+        "confidence": "high",
+        "matchedTerms": [
+          "wild",
+          "raid",
+          "nov",
+          "dynamax",
+          "max",
+          "battles",
+          "pass",
+          "remote",
+          "limit"
+        ],
+        "alternatives": [
+          {
+            "eventId": "into",
+            "eventTitle": "Into the Wild",
+            "score": 0.798
+          },
+          {
+            "eventId": "novcd",
+            "eventTitle": "November Community Day",
+            "score": 0.425
+          },
+          {
+            "eventId": "tcg30",
+            "eventTitle": "Pokémon TCG: 30th Celebration (at stores)",
+            "score": 0.28
+          }
+        ],
+        "method": "title-to-public/data.json heuristic",
+        "requiresHumanVerification": true
+      },
+      "reviewNote": "Creator not set. Set the DISCORD_CREATOR variable to credit the right person.",
+      "signals": [
+        "picture text names the event",
+        "posted around the event"
+      ],
+      "matchScore": 4,
+      "stagedPath": "/infographics/g47ix/discord-1565053518329684099.webp"
+    },
+    {
       "id": "discord:1564819648346726504",
       "source": "discord",
       "creator": "",
