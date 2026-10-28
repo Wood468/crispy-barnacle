@@ -733,6 +733,7 @@
     if (typeSel === 'soon') { // whatever week is shown, this is about the next 24 hours: what is on now, then what pays out next
       var tn = t.getTime();
       var sn = EV.filter(function (e) { return !isHidden(e.id) && !(kindHidden(e.kind)) && startsSoon(e); }).map(function (e) { return { at: e.start.getTime(), live: phase(e, t) === 'live', html: card(e) }; });
+      regList().filter(function (e) { return e.start <= t && e.end > t; }).forEach(function (e) { sn.push({ at: e.start.getTime(), live: true, html: agendaRow(e, true) }); });
       if (!kindHidden('person')) VENUE.forEach(function (v) { if (venueLive(v, tn) || venueUp(v, tn)) sn.push({ at: v.ms, live: venueLive(v, tn), html: venueCard(v, venueLive(v, tn)) }); });
       sn.sort(function (a, b) { return a.at - b.at; });
       var lv = sn.filter(function (x) { return x.live; }), up = sn.filter(function (x) { return !x.live; });
@@ -751,9 +752,10 @@
     if (weekOff === 0) all = all.filter(function (e) { return phase(e, t) !== 'ended'; });
     all.sort(function (a, b) { return a.start - b.start; });
     var live = weekOff === 0 ? all.filter(function (e) { return phase(e, t) === 'live'; }) : [];
+    var regionalLive = weekOff === 0 ? regList().filter(function (e) { return e.start <= t && e.end > t; }) : [];
     var liveShort = live.filter(function (e) { return !e.long; });
     var liveLong = live.filter(function (e) { return e.long; });
-    if (liveShort.length) html += '<h2 class="sec2">Happening now</h2>' + liveShort.map(function (e) { return card(e); }).join('');
+    if (liveShort.length || regionalLive.length) html += '<h2 class="sec2">Happening now</h2>' + liveShort.map(function (e) { return card(e); }).join('') + regionalLive.map(function (e) { return agendaRow(e, true); }).join('');
     if (liveLong.length) html += '<details class="dd" style="margin-top:10px"><summary>Long-running <span class="cnt">' + liveLong.length + '</span></summary><div class="body">' + liveLong.map(function (e) { return card(e, { compact: true }); }).join('') + '</div></details>';
     var rest = all.filter(function (e) { return live.indexOf(e) < 0; });
     var underway = rest.filter(function (e) { return e.start < ws; });
@@ -803,7 +805,7 @@
       GODEDUPE.groups(REG.map(asEv), null).forEach(function (g) { g.dupes.forEach(function (d) { gone[d.event.id] = 1; }); });
       REG = REG.filter(function (x) { return !gone[x.id]; });
     }
-    renderCalendar();
+    renderCalendar(); renderHomeAgenda(); renderTimeline();
   }
   fetch('/world-events.json').then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; }).then(function (j) {
     if (j && (j.events || []).length) return loadWorld(j, false);
@@ -1186,9 +1188,10 @@
     /* Today: everything live right now plus anything that starts later today. When there is nothing, say what is next. */
     var endDay = addDays(start, 1);
     var today = EV.filter(function (e) { var ph = phase(e, t); return !e.long && !kindHidden(e.kind) && (ph === 'live' || (ph === 'soon' && e.start < endDay)); }).sort(function (a, b) { return a.start - b.start; });
+    var regionalToday = regList().filter(function (e) { return e.start <= t && e.end > t; });
     var nextUp = EV.filter(function (e) { return phase(e, t) === 'soon' && e.start >= endDay && !e.long && !kindHidden(e.kind); }).sort(function (a, b) { return a.start - b.start; })[0];
     var tdEl = $('home-now');
-    if (tdEl) tdEl.innerHTML = today.length ? today.map(function (e) { return card(e); }).join('') : '<p class="empty">Nothing is scheduled for today.' + (nextUp ? ' Next up: <b>' + esc(nextUp.name) + '</b>, ' + esc(nextUp.start.toLocaleDateString(undefined, { weekday: 'short', day: 'numeric', month: 'short' }) + ', ' + nextUp.start.toLocaleTimeString(undefined, { hour: 'numeric', minute: '2-digit' })) + '.' : '') + '</p>';
+    if (tdEl) tdEl.innerHTML = today.length || regionalToday.length ? today.map(function (e) { return card(e); }).join('') + regionalToday.map(function (e) { return agendaRow(e, true); }).join('') : '<p class="empty">Nothing is scheduled for today.' + (nextUp ? ' Next up: <b>' + esc(nextUp.name) + '</b>, ' + esc(nextUp.start.toLocaleDateString(undefined, { weekday: 'short', day: 'numeric', month: 'short' }) + ', ' + nextUp.start.toLocaleTimeString(undefined, { hour: 'numeric', minute: '2-digit' })) + '.' : '') + '</p>';
     fill('week', thisWeek, 'No further events are scheduled in the next seven days.');
     fill('spot', nextWeek, 'No events are scheduled for next week yet.');
     fill('home-later', later, 'No later events are scheduled for the rest of this month yet.');
