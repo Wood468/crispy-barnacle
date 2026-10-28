@@ -838,7 +838,7 @@
   }
   function agendaRow(it, isReg) {
     var pl = isReg && window.GOPLACES ? GOPLACES.forEvent(it) : [];  // real-life events with sourced venues get a pin button
-    var pin = pl.length ? '<button type="button" class="agx agpin" data-places="' + (pl.length === 1 ? esc(pl[0].id) : '') + '" data-placesq="' + (pl.length === 1 ? '' : esc(it.name)) + '" aria-label="Venues and coordinates for ' + esc(it.name) + '" title="Venues and coordinates">📍</button>' : '';
+    var pin = pl.length ? '<button type="button" class="agx agpin" data-places="' + (pl.length === 1 ? esc(pl[0].id) : '') + '" data-placesq="' + (pl.length === 1 ? '' : esc(it.name)) + '" aria-label="Location and coordinates for ' + esc(it.name) + '" title="Location and coordinates">📍<span>Coords</span></button>' : '';
     var ig = isReg ? '<button type="button" class="agx agig" data-igcard="' + esc(it.id) + '" data-infographic="' + esc(it.id) + '" aria-label="Open infographic for ' + esc(it.name) + '"></button>' : '';
     return '<div class="agw">' + agendaInner(it, isReg) + '<div class="ag-actions">' + pin + ig + '<button type="button" class="agx" data-hide="' + esc(it.id) + '" aria-label="Hide ' + esc(it.name) + '" title="Hide">✕</button></div></div>';
   }
