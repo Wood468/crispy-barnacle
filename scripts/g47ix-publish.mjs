@@ -279,7 +279,13 @@ async function main() {
   const reg = JSON.parse(await readFile(REG, "utf8"));
   const info = JSON.parse(await readFile(INFO, "utf8"));
   const dataJson = JSON.parse(await readFile(DATA, "utf8"));
-  let eventDetails = {};\n  try { eventDetails = JSON.parse(await readFile(DETAILS, "utf8")); } catch { /* optional on older previews */ }\n  const events = [...(dataJson.events || []), ...detailsAsEvents(eventDetails), ...raidSlots(dataJson.rotation)];
+  let eventDetails = {};\n  try { eventDetails = JSON.parse(await readFile(DETAILS, "utf8")); } catch { /* optional on older previews */ }\n  const eventMap = new Map();
+  for (const event of [...(dataJson.events || []), ...detailsAsEvents(eventDetails), ...raidSlots(dataJson.rotation)]) {
+    if (!event || !event.id) continue;
+    const previous = eventMap.get(event.id);
+    eventMap.set(event.id, previous ? { ...previous, ...event, t: previous.t || event.t, art: previous.art || event.art } : event);
+  }
+  const events = [...eventMap.values()];
   let worldEvents = [];
   try { worldEvents = worldAsEvents(JSON.parse(await readFile(process.env.WORLD_FILE || "public/world-events.json", "utf8"))); } catch { /* optional */ }
   const proposed = [];
