@@ -174,7 +174,7 @@ test("new Leek Duck detail-only events are available to the infographic matcher"
   assert.equal(events[0].id, "leekduck:dynamax-trails-2026");
   assert.equal(events[0].s, "2026-11-16T00:00");
   assert.equal(events[0].e, "2026-11-23T23:59");
-  const result = decide({ title: "Dynamax Trails", publishedAt: "2026-10-28T01:54:37.109Z" }, "DYNAMAX TRAILS NOVEMBER 16 TO NOVEMBER 23", events);
+  const result = decide({ title: "Dynamax Trails", publishedAt: "2026-10-28T01:54:37.109Z" }, "DYNAMAX TRAILS NOVEMBER 16 2026 TO NOVEMBER 23 2026", events);
   assert.equal(result.match.eventId, "leekduck:dynamax-trails-2026");
   assert.equal(result.confident, true);
 });
