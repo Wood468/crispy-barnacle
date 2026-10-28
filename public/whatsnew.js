@@ -55,16 +55,22 @@
     if (history && !total && details) details.open = true;
     box.querySelector('.wn-ok').addEventListener('click', function () {
       save(st.ids); saveLeaks();
-      var current = buildHtml();
-      saveHistory(current, total);
-      box.hidden = true;
+      saveHistory(buildHtml(), total);
+      box.innerHTML = '<button type="button" class="pill wn-reopen">View recent updates</button>';
+      box.hidden = false;
+      box.querySelector('.wn-reopen').addEventListener('click', showHistory);
     });
-    var reopen = box.querySelector('.wn-reopen');
-    if (reopen) reopen.addEventListener('click', function () {
+    function showHistory() {
       var h = loadHistory(); if (!h) return;
+      box.innerHTML = h.html + '<div class="wn-actions"><button type="button" class="pill wn-close">Close updates</button></div>';
+      box.hidden = false;
       var d = box.querySelector('.wn-det'); if (d) d.open = true;
-      reopen.textContent = 'Showing recent updates';
-    });
+      box.querySelector('.wn-close').addEventListener('click', function () {
+        box.innerHTML = '<button type="button" class="pill wn-reopen">View recent updates</button>';
+        box.querySelector('.wn-reopen').addEventListener('click', showHistory);
+      });
+      Array.prototype.forEach.call(box.querySelectorAll('.wn-leaks'), function (link) { link.addEventListener('click', function (e) { e.preventDefault(); var menu = document.getElementById('menu-leaks'); if (menu) menu.click(); }); });
+    }
     Array.prototype.forEach.call(box.querySelectorAll('.wn-leaks'), function (a) { a.addEventListener('click', function (e) { e.preventDefault(); var b = document.getElementById('menu-leaks'); if (b) b.click(); }); });
   }
   function render() {
