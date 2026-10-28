@@ -2,7 +2,7 @@
  "updated": "2026-10-28T07:47:10.133Z",
  "items": [
   {
-   "linked": false,
+   "linked": true,
    "id": "discord:1564819648346726504",
    "title": "<t:1793113200> - <t:1793777400>",
    "image": "/infographics/g47ix/discord-1564819648346726504.png",
@@ -23,7 +23,7 @@
    ]
   },
   {
-   "linked": false,
+   "linked": true,
    "id": "discord:1564819557892366358",
    "title": "<t:1793113200> - <t:1793777400>",
    "image": "/infographics/g47ix/discord-1564819557892366358.webp",

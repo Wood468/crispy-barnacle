@@ -1164,6 +1164,50 @@
           "alt": "Pokémon GO Dia de Muertos 2026: Mexico Exclusive Event infographic"
         }
       ]
+    },
+    "raid:mega-sableye:2026-10-28": {
+      "names": [
+        "Mega Sableye raids"
+      ],
+      "source": {
+        "label": "G47IX",
+        "trust": "community",
+        "url": "https://discord.com/channels/@me/1558793395198099618/1564819648346726504",
+        "observed": "2026-10-28"
+      },
+      "tickets": [],
+      "info": [],
+      "infographics": [
+        {
+          "label": "Infographic · G47IX",
+          "url": "/infographics/g47ix/discord-1564819648346726504.png",
+          "source": "G47IX",
+          "sourceUrl": "https://discord.com/channels/@me/1558793395198099618/1564819648346726504",
+          "alt": "Mega Sableye raids infographic"
+        }
+      ]
+    },
+    "leekduck:giratina-origin-forme-in-5-star-raid-battles-october-2026": {
+      "names": [
+        "Giratina (Origin Forme) in 5-star Raid Battles"
+      ],
+      "source": {
+        "label": "G47IX",
+        "trust": "community",
+        "url": "https://discord.com/channels/@me/1558793395198099618/1564819557892366358",
+        "observed": "2026-10-28"
+      },
+      "tickets": [],
+      "info": [],
+      "infographics": [
+        {
+          "label": "Infographic · G47IX",
+          "url": "/infographics/g47ix/discord-1564819557892366358.webp",
+          "source": "G47IX",
+          "sourceUrl": "https://discord.com/channels/@me/1558793395198099618/1564819557892366358",
+          "alt": "Giratina (Origin Forme) in 5-star Raid Battles infographic"
+        }
+      ]
     }
   },
   "passes": {

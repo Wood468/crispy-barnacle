@@ -14,8 +14,8 @@
       "url": "https://discord.com/channels/@me/1558793395198099618/1564819648346726504",
       "publishedAt": "2026-10-28T01:54:37.109000+00:00",
       "imageUrl": "https://cdn.discordapp.com/attachments/1087756541668630638/1564815620447408158/Counter_M_Sableye.png?ex=6ae2a39c&is=6ae1521c&hm=134924903200a9f51ddce43946fc265c96c918d4438436f48345b548339f2ed4&",
-      "reviewStatus": "needs_review",
-      "decision": "pending",
+      "reviewStatus": "published",
+      "decision": "approved",
       "ocrChecked": true,
       "ocrText": "Wi 3 NOV } = 28 OcT- Ny #302 SABLEYE a 23935 CP “\\t hides in the darkness of caves. 3 Its diet of gems has transformed its eyes into gemstones.” Weakness + Difficulty: 2+ trainers needed @ & 843 cP %we 1054 CP Boost Fog Bee @ Charm ® Dragon Tail © Metal Claw @ Charm @ Dazzling Gle @ Dragon Ascent [5 @ Play Rough @ Zap Cannon+ ™\\ al ry rm a! N/ 7 e@ Fairy Wind @ Dragon Tail @ Volt Switch eA> Tel FJ yi wal> @ Dazzling Gleam= t) Dynamax Cannon @ Natures Madness ZL. 2 4 Dats @ Astonish @ Bullet Seed 244! oa rm © Metal Claw © @ Natures Madness @ Natures Madness taQ oO hd © Behemoth Bash AC fri) © w Remember to use proper counters, Party Play Follow for more: and Zacian’s or Mewtwo X Adventure Effect if needed. ae GA7IX 9@ @ X @ | g47ix.pro",
       "eventMatch": {
@@ -35,7 +35,11 @@
       "reviewNote": "No event name in the picture, but it shows sableye. Check these events.",
       "signals": [],
       "matchScore": 0,
-      "stagedPath": "/infographics/g47ix/discord-1564819648346726504.png"
+      "stagedPath": "/infographics/g47ix/discord-1564819648346726504.png",
+      "publishedEvent": "raid:mega-sableye:2026-10-28",
+      "publishedEvents": [
+        "raid:mega-sableye:2026-10-28"
+      ]
     },
     {
       "id": "discord:1564819557892366358",
@@ -45,15 +49,19 @@
       "url": "https://discord.com/channels/@me/1558793395198099618/1564819557892366358",
       "publishedAt": "2026-10-28T01:54:15.543000+00:00",
       "imageUrl": "https://cdn.discordapp.com/attachments/1087756541668630638/1564815289282207795/Counter_Giratina.png?ex=6ae2a34d&is=6ae151cd&hm=d7165e337a816390a84a2ac5b130cc63c410918a32c886ae2676f4a32d97ec0c&",
-      "reviewStatus": "unmatched",
-      "decision": "pending",
+      "reviewStatus": "published",
+      "decision": "approved",
       "ocrChecked": true,
       "ocrText": "ae — SS mm 28 eal 3 NOV dull Fotme \\. \\ »\\ \\ #487 GIRAT INA if j// . \\ i Hi) t + h\\ 41776 CP \\ 4 ‘as banished for its violence. It silently gazed upon the old world from the Distortion World.” ||| ih | | \\ Lope Weakness © @O @ @ WY DS \\ KK \\ IXEN \\\\ Difficulty: 2+ trainers needed y Pw 44 2105 CP “we 2631 CP Boost ra Windy Fog oe © Snarl @ Dragon Tail ® Dragon Tail ® Dragon Ta © Dynamax Cannon » ® Breaking Swipe (5 ve © Dark Pulse+ @ Outrage+ wv i \\ ig Dr @ Dragon Tail ® Dragon Tail ® Ice Fang Tail ys yy ® Breaking Swi @ Freeze Shock (5 @ Ice Burn (5 reaki ave SS % 7) @ Lik [-) Dragon Tail king ® Spacial Rend @ Shadow Ball iN - Remember to use proper counters, Party Play Follow for more and Zacian’s Adventure Effect if needed. or GA7IX @9@ @ X @ | g47ix.pro",
       "eventMatch": null,
       "reviewNote": "No event name found in the caption or image text.",
       "signals": [],
       "matchScore": 0,
-      "stagedPath": "/infographics/g47ix/discord-1564819557892366358.webp"
+      "stagedPath": "/infographics/g47ix/discord-1564819557892366358.webp",
+      "publishedEvent": "leekduck:giratina-origin-forme-in-5-star-raid-battles-october-2026",
+      "publishedEvents": [
+        "leekduck:giratina-origin-forme-in-5-star-raid-battles-october-2026"
+      ]
     },
     {
       "id": "discord:1564179495009914925",
