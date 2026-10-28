@@ -580,6 +580,10 @@ button.igcheck{min-height:44px}
 .agw{position:relative}.agw .agr{padding-right:38px}
 .agx{position:absolute;top:50%;right:6px;transform:translateY(-50%);width:26px;height:26px;border:0;border-radius:50%;background:transparent;color:var(--muted);font:700 .8rem var(--sans);cursor:pointer}
 .agx:hover,.agx:focus-visible{background:var(--glass);color:var(--body)}
+.agw .agig{right:36px}.agw:has(.agig) .agr{padding-right:68px}
+.agw .agig.igthumb{width:44px;height:44px;padding:0;border-radius:10px;overflow:hidden;line-height:0;background:var(--bg)}
+.agw .agig.igthumb img{display:block;width:100%;height:100%;object-fit:cover;object-position:top}
+.agw:has(.agpin) .agig{right:66px}.agw:has(.agpin):has(.agig) .agr{padding-right:98px}
 .hid{display:flex;gap:10px;align-items:center;justify-content:space-between;padding:6px 0}.hid span{min-width:0;overflow-wrap:anywhere;font-size:.84rem}
 .mega-stat b small{font-size:.9rem;color:var(--muted);font-weight:600;margin-left:1px}
 #mega-summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(104px,1fr));gap:8px}
