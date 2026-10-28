@@ -229,6 +229,7 @@
     if (ev.img) h += '<img class="evd-banner" src="' + esc(ev.img) + '" alt="" referrerpolicy="no-referrer" data-err="rm">';
     h += '<header class="evd-hero" style="--k:' + k[1] + ';--kf:' + k[2] + '"><div class="evd-art">' + X.featArts(ev, 3) + '</div><span class="kind">' + esc(k[0]) + '</span><h2 id="evd-t">' + esc(ev.name) + '</h2>'
       + '<p class="evc-when">' + esc(X.whenText(ev)) + '</p><p class="cdn evd-cd">' + esc(X.countdown(ev)) + '</p>' + X.signalChips(ev, 8, true) + X.cpRows(ev) + '<div class="evd-chips">' + X.statusChip(ev) + '</div></header>';
+    h += '<nav class="evd-jump" aria-label="Jump to event details"><a href="#evd-highlights">Highlights</a><a href="#evd-information">Details</a><a href="#evd-locations">Locations</a><a href="#evd-sources">Sources</a></nav>';
     h += '<p class="evd-fresh">Event data as of ' + esc(G.D.asOf || '') + '</p>';
     var scheduleNotes = e && (e.scheduleNotes || e.scheduleNote);
     if (scheduleNotes) {
@@ -236,10 +237,10 @@
       h += '<aside class="schedule-notes"><b>Schedule notes</b><ul>' + scheduleNotes.filter(Boolean).map(function (n) { return '<li>' + esc(n) + '</li>'; }).join('') + '</ul></aside>';
     }
     h += '<div class="evd-btns"><a class="pill all" download="' + esc(ev.id) + '.ics" href="' + icsFor(ev) + '">Add to calendar</a>' + (link ? '<a class="pill" href="' + esc(link) + '" target="_blank" rel="noopener noreferrer">Open source</a>' : '<span class="npub" data-nolink>No source link published</span>') + '</div>';
-    if (ev.bonuses && ev.bonuses.length) h += '<h3 class="sec2">Bonuses</h3><div class="bonuses">' + ev.bonuses.map(function (b) { var chip = G.bonusChip(b); var img = /max particle/i.test(b) ? X.IMG_PARTICLE : /power spot/i.test(b) ? X.IMG_POWERSPOT : ''; return img ? chip.replace(/<(svg|img)[\s\S]*?(<\/svg>|>)(?=<b>|<span>)/, '<img class="gi gi-pic" src="' + esc(img) + '" alt="" loading="lazy" data-err="rm">') : chip; }).join('') + '</div>';
+    if (ev.bonuses && ev.bonuses.length) h += '<h3 class="sec2" id="evd-highlights">Bonuses</h3><div class="bonuses">' + ev.bonuses.map(function (b) { var chip = G.bonusChip(b); var img = /max particle/i.test(b) ? X.IMG_PARTICLE : /power spot/i.test(b) ? X.IMG_POWERSPOT : ''; return img ? chip.replace(/<(svg|img)[\s\S]*?(<\/svg>|>)(?=<b>|<span>)/, '<img class="gi gi-pic" src="' + esc(img) + '" alt="" loading="lazy" data-err="rm">') : chip; }).join('') + '</div>';
     h += evMovesHtml(ev);
     if (ev.featured && ev.featured.length) h += featuredSections(ev);
-    h += '<h3 class="sec2">What is in this event</h3>';
+    h += '<h3 class="sec2" id="evd-information">What is in this event</h3>';
     if (e && Array.isArray(e.info) && e.info.length) {
       h += '<div class="evd-card">' + e.info.map(infoRow).join('') + '</div>' + srcLine(e.source);
     } else if (ev.notes && ev.notes.length) {
@@ -261,7 +262,7 @@
     h += ev.season ? seasonPage(ev) : sourcesBlock(ev);
     var venues = window.GOPLACES ? window.GOPLACES.forEvent(ev) : [];
     if (venues.length) h += '<h3 class="sec2" id="evd-locations">Locations &amp; routes <span class="m">sourced venues</span></h3><div class="evd-card evd-venues">' + venues.map(function (p) { return '<article class="evd-venue"><div><b>' + esc(p.name) + '</b><small>' + esc([p.city, p.region, p.country].filter(Boolean).join(', ')) + '</small><span class="note">' + esc(p.type || 'Event location') + '</span></div><div class="evd-venue-actions"><button type="button" class="pill" data-copycoord="' + esc(p.lat.toFixed(6) + ',' + p.lng.toFixed(6)) + '">Copy coordinates</button><button type="button" class="pill" data-places="' + esc(p.id) + '">Place details</button>' + (p.route && safe(p.route.file) && safe(p.route.url) && p.route.verified ? '<a class="pill all" href="' + esc(p.route.file) + '" download>Download route GPX</a>' : '') + '</div></article>'; }).join('') + '<div class="evd-venue-foot"><button type="button" class="pill all" data-gpx="' + venues.map(function (p) { return esc(p.id); }).join(',') + '" data-gpxname="' + esc(ev.name) + '"' + (venues.length > 1 ? ' data-gpxorder="1"' : '') + '>Download venue points GPX</button><p class="note">' + (venues.length > 1 ? 'Sourced venue points in this event; this is a list of stops, not a walking route.' : 'A GPX waypoint for this venue, not a walking route.') + '</p></div></div>';
-    h += '<h3 class="sec2">Where this comes from</h3><div class="evd-card"><div class="evd-row"><span class="k">Schedule</span><div class="v"><p>' + X.statusChip(ev) + ' ' + esc(ev.source || '') + '</p></div></div>'
+    h += '<h3 class="sec2" id="evd-sources">Where this comes from</h3><div class="evd-card"><div class="evd-row"><span class="k">Schedule</span><div class="v"><p>' + X.statusChip(ev) + ' ' + esc(ev.source || '') + '</p></div></div>'
       + (e ? '<div class="evd-row"><span class="k">Details</span><div class="v">' + srcLine(e.source) + '</div></div>' : '') + '</div>'
       + '<p class="note">If sources disagree the event is marked Conflicting. Official and community information is never merged.</p>';
     return h;
