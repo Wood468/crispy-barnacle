@@ -1,12 +1,12 @@
 {
- "updated": "2026-10-28T05:30:01.926Z",
+ "updated": "2026-10-28T17:21:11.891Z",
  "seeded": true,
  "channels": [
   {
    "src": "events",
    "name": "dm-events",
    "state": "ok",
-   "count": 6
+   "count": 8
   },
   {
    "src": "reports",
@@ -22,6 +22,24 @@
   }
  ],
  "items": [
+  {
+   "id": "1565031925574279249",
+   "src": "events",
+   "title": "New image",
+   "text": "",
+   "link": "",
+   "image": "",
+   "date": "2026-10-28T15:58:07.944Z"
+  },
+  {
+   "id": "1565031916837539871",
+   "src": "events",
+   "title": "Día de Muertos 2026 Timed Research (1/1) Ends until November 15, 2026 19:00 UTC",
+   "text": "Día de Muertos 2026 Timed Research (1/1) Ends until November 15, 2026 19:00 UTC\nCatch a Pokémon - Sticker STICKERDIADEMUERTOS20234 x 5\nCatch a Pokémon on 2 different days - Poké Ball x 20\nCatch a Pokémon on 3 different days - Sticker STICKERDIADEMUERTOS20233 x 5\nCatch a Pokémon on 4 different days - Incense x 1\nCatch a Pokémon on 5 different days - Sticker STICKERDIADEMUERTOS20231 x 5\n----------------\n[Stage]\nCempasúchil Crown Cubone\n> with a Location Card\n> Shiny Rate: 0.78125% (1/128)\n2026 XP\nStardust x 2026",
+   "link": "",
+   "image": "",
+   "date": "2026-10-28T15:58:05.861Z"
+  },
   {
    "id": "1564814027467657329",
    "src": "gamedata",
