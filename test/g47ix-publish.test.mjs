@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { decide, addToEventInfo, distinctiveTokens } from "../scripts/g47ix-publish.mjs";
+import { decide, addToEventInfo, distinctiveTokens, detailsAsEvents } from "../scripts/g47ix-publish.mjs";
 
 const events = [{ id: "kyogre-oct", t: "Kyogre in 5-star Raid Battles" }, { id: "zorua-cd", t: "Zorua Community Day" }];
 test("confident only when the image text names the event", () => {
@@ -163,4 +163,18 @@ test("a Discord message that is only a link is titled by its file name, not the 
   assert.equal(discordCandidate({ image_url: url, message_id: "9", text: url, title: "" }).title, "Dmax LAKE");
   assert.equal(discordCandidate({ image_url: url, message_id: "9", text: "", title: "Twitch_2.png" }).title, "Twitch 2");
   assert.equal(discordCandidate({ image_url: url, message_id: "9", text: "Lake Trio Max Battle Day " + url }).title, "Lake Trio Max Battle Day");
+});
+
+test("new Leek Duck detail-only events are available to the infographic matcher", () => {
+  const events = detailsAsEvents({ events: { "leekduck:dynamax-trails-2026": {
+    name: "Dynamax Trails", sources: [{ id: "leekduck" }],
+    fields: { dates: [{ text: "The Dynamax Trails event will take place from November 16, 2026 to November 23, 2026. Stay tuned for more details." }] }
+  } } });
+  assert.equal(events.length, 1);
+  assert.equal(events[0].id, "leekduck:dynamax-trails-2026");
+  assert.equal(events[0].s, "2026-11-16T00:00");
+  assert.equal(events[0].e, "2026-11-23T23:59");
+  const result = decide({ title: "Dynamax Trails", publishedAt: "2026-10-28T01:54:37.109Z" }, "DYNAMAX TRAILS NOVEMBER 16 TO NOVEMBER 23", events);
+  assert.equal(result.match.eventId, "leekduck:dynamax-trails-2026");
+  assert.equal(result.confident, true);
 });
