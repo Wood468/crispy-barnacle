@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-27T22:14:50.718Z",
+ "updated": "2026-10-28T05:43:07.516Z",
  "state": "ok",
  "scrapedDuckEvents": 54,
  "missingHere": [
@@ -135,6 +135,11 @@
    "id": "w-pok-mon-30th-anniversary-mall-exploration-sm-north",
    "name": "Pokémon 30th Anniversary Mall Exploration: SM North EDSA",
    "start": "2026-12-10"
+  },
+  {
+   "id": "w-pok-mon-run-30-jakarta",
+   "name": "Pokémon RUN 30: Jakarta",
+   "start": "2026-12-12"
   }
  ],
  "shinyDisagree": []

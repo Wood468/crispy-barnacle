@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-27T22:14:50.546Z",
+ "updated": "2026-10-28T05:43:07.295Z",
  "status": [
   {
    "id": "hub",
@@ -19,15 +19,15 @@
   {
    "id": "reddit-silph",
    "state": "ok",
-   "items": 9
+   "items": 11
   },
   {
    "id": "youtube-pogo",
-   "state": "ok",
-   "items": 2
+   "state": "error",
+   "note": "HTTP 404"
   }
  ],
- "gaps": 5,
+ "gaps": 7,
  "items": [
   {
    "source": "hub",
@@ -59,6 +59,34 @@
    "notInOurData": [
     "Heracross",
     "Umbreon"
+   ]
+  },
+  {
+   "source": "reddit-silph",
+   "trust": "tip",
+   "title": "Shiny Costume Background Cubone confirmed",
+   "link": "https://www.reddit.com/r/TheSilphRoad/comments/1xhcc14/shiny_costume_background_cubone_confirmed/",
+   "date": "2026-10-28T02:31:02.000Z",
+   "summary": "<table> <tr><td> <a href=\"https://www.reddit.com/r/TheSilphRoad/comments/1xhcc14/shiny_costume_background_cubone_confirmed/\"> <img src=\"https://preview.redd.it/phhmdmxfd4yh1.jpeg?width=640&amp;crop=sm",
+   "pokemon": [
+    "Cubone"
+   ],
+   "notInOurData": [
+    "Cubone"
+   ]
+  },
+  {
+   "source": "reddit-silph",
+   "trust": "tip",
+   "title": "Shiney Costumed Noibat Confirmed",
+   "link": "https://www.reddit.com/r/TheSilphRoad/comments/1xhagcw/shiney_costumed_noibat_confirmed/",
+   "date": "2026-10-28T01:02:31.000Z",
+   "summary": "<table> <tr><td> <a href=\"https://www.reddit.com/r/TheSilphRoad/comments/1xhagcw/shiney_costumed_noibat_confirmed/\"> <img src=\"https://preview.redd.it/x3mjhkanx3yh1.png?width=640&amp;crop=smart&amp;au",
+   "pokemon": [
+    "Noibat"
+   ],
+   "notInOurData": [
+    "Noibat"
    ]
   },
   {
@@ -102,26 +130,6 @@
    "notInOurData": [
     "Landorus"
    ]
-  },
-  {
-   "source": "youtube-pogo",
-   "trust": "official",
-   "title": "New costumed Pokémon make their debuts during Halloween 2026 Part I in Pokémon GO!",
-   "link": "https://www.youtube.com/shorts/I6MvdaExyIg",
-   "date": "2026-10-27T17:00:40.000Z",
-   "summary": "",
-   "pokemon": [],
-   "notInOurData": []
-  },
-  {
-   "source": "youtube-pogo",
-   "trust": "official",
-   "title": "New costumed Pokémon make their debuts during Halloween 2026 Part I in Pokémon GO!",
-   "link": "https://www.youtube.com/watch?v=wyN2y-BgpoU",
-   "date": "2026-10-27T17:00:14.000Z",
-   "summary": "",
-   "pokemon": [],
-   "notInOurData": []
   },
   {
    "source": "reddit-silph",
