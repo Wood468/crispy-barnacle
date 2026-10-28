@@ -87,16 +87,19 @@
     send(it, 'approved', list.map(function (l) { return l.id; }).join(','), list.map(function (l) { return l.title; }).join(' | '));
   }
   function banner(n) {
+    var action = $('hireview'), count = $('igcount');
+    if (action) { action.hidden = n < 1; action.classList.toggle('has-pending', n > 0); action.setAttribute('aria-label', n + ' infographic' + (n === 1 ? '' : 's') + ' waiting for review'); action.title = n + ' infographic' + (n === 1 ? '' : 's') + ' waiting for review'; }
+    if (count) { count.hidden = n < 1; count.textContent = n > 99 ? '99+' : String(n); }
     var b = $('igbanner');
     if (!n) { if (b) b.hidden = true; return; }
-    if (!b) { var tab = document.getElementById('tab-now'); if (!tab) return; b = document.createElement('button'); b.type = 'button'; b.id = 'igbanner'; b.className = 'igbanner'; tab.appendChild(b); }
-    b.hidden = false; b.textContent = '🖼 ' + n + ' infographic' + (n === 1 ? '' : 's') + ' waiting for your review →';
+    if (!b) { var tab = document.getElementById('tab-now'); if (!tab) return; b = document.createElement('button'); b.type = 'button'; b.id = 'igbanner'; b.className = 'igbanner'; tab.insertBefore(b, tab.firstChild); }
+    b.hidden = false; b.textContent = '🖼 ' + n + ' infographic' + (n === 1 ? '' : 's') + ' waiting for your review · Review now →';
   }
   function gotoReview() {
     var t = document.querySelector('nav.tabs button[data-tab="saved"]'); if (t) t.click();
     setTimeout(function () { var m = document.querySelector('#subnav-saved [data-sub="menu"]'); if (m) m.click(); setTimeout(function () { var h = $('igreview'); if (h && !h.hidden) h.scrollIntoView({ block: 'start' }); }, 150); }, 80);
   }
-  document.addEventListener('click', function (e) { if (e.target.closest && e.target.closest('#igbanner')) gotoReview(); });
+  document.addEventListener('click', function (e) { if (e.target.closest && (e.target.closest('#igbanner') || e.target.closest('#hireview'))) gotoReview(); });
   window.addEventListener('hashchange', function () { if (location.hash === '#review') gotoReview(); });
   document.addEventListener('click', function (e) {
     if (e.target.closest && e.target.closest('[data-ig-more]')) { shown += 10; return render(); }
