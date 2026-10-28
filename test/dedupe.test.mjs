@@ -142,6 +142,17 @@ test("infographic lookup: genuine title matches still work with the event list g
   assert.equal(dd.findEventInfo(wag, info, [wag]).infographics.length, 4);
 });
 
+test("regional infographic data stays linked to its source event", () => {
+  const world = JSON.parse(readFileSync(new URL("../public/world-events.json", import.meta.url), "utf8"));
+  const mexico = world.events.find((e) => e.id === "w-pok-mon-go-dia-de-muertos-2026-mexico-exclusive-ev");
+  assert.ok(mexico, "Mexico event remains in the regional event feed");
+  assert.ok((mexico.sources || []).some((s) => /^https:\/\//.test(s.url || "")), "regional event retains a source link");
+  assert.ok(Date.parse(mexico.start) <= Date.parse(mexico.end), "regional event date range remains valid");
+  const entry = info[mexico.id];
+  assert.ok(entry, "regional event keeps its infographic metadata");
+  assert.ok(entry.infographics?.some((g) => g.source === "G47IX" && /^\/infographics\//.test(g.url)), "approved infographic remains attached to the exact regional event ID");
+});
+
 test("infographic card button wiring: thumbnail, Check infographic, merged-card aliases", () => {
   const read = (f) => readFileSync(new URL("../public/" + f, import.meta.url), "utf8");
   const ig = read("infographic.js"), dash = read("dash.js"), css = read("dash.css");
