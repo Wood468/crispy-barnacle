@@ -279,7 +279,9 @@ async function main() {
   const reg = JSON.parse(await readFile(REG, "utf8"));
   const info = JSON.parse(await readFile(INFO, "utf8"));
   const dataJson = JSON.parse(await readFile(DATA, "utf8"));
-  let eventDetails = {};\n  try { eventDetails = JSON.parse(await readFile(DETAILS, "utf8")); } catch { /* optional on older previews */ }\n  const eventMap = new Map();
+  let eventDetails = {};
+  try { eventDetails = JSON.parse(await readFile(DETAILS, "utf8")); } catch { /* optional on older previews */ }
+  const eventMap = new Map();
   for (const event of [...(dataJson.events || []), ...detailsAsEvents(eventDetails), ...raidSlots(dataJson.rotation)]) {
     if (!event || !event.id) continue;
     const previous = eventMap.get(event.id);
