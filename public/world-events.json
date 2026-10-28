@@ -475,14 +475,14 @@
    "datesKnown": true,
    "sources": [
     {
-     "id": "hub",
-     "name": "Pokémon GO Hub",
-     "url": "https://pokemongohub.net/post/event/pokemon-go-dia-de-muertos-2026-mexico-exclusive-event/"
-    },
-    {
      "id": "official",
      "name": "Pokémon GO (official)",
      "url": "https://pokemongo.com/es_MX/news/dia-de-muertos-2026"
+    },
+    {
+     "id": "hub",
+     "name": "Pokémon GO Hub",
+     "url": "https://pokemongohub.net/post/event/pokemon-go-dia-de-muertos-2026-mexico-exclusive-event/"
     }
    ],
    "status": "official",
