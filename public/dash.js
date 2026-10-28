@@ -727,8 +727,9 @@
     var t = now(), html = '', ws = weekStart(weekOff), we = addDays(ws, 7);
     if (evQ) { // searching: every live and upcoming event that matches, soonest first, whatever week or kind switch is set
       var res = EV.filter(function (e) { return e.end > t && !isHidden(e.id) && matchesQ(e); }).sort(function (a, b) { return a.start - b.start; });
-      el.innerHTML = '<div class="dayhead"><h2 class="sec2">' + res.length + (res.length === 1 ? ' result' : ' results') + '</h2><button type="button" class="pill all" data-clearq="1">Clear search</button></div>'
-        + (res.length ? res.slice(0, 60).map(function (e) { return card(e); }).join('') : '<p class="empty">Nothing live or coming up matches that. Try a Pokémon or part of an event name.</p>'); return;
+      var regRes = regList().filter(function (e) { return e.end > t && (String(e.name + ' ' + e.place + ' ' + e.area).toLowerCase().indexOf(evQ) >= 0); });
+      el.innerHTML = '<div class="dayhead"><h2 class="sec2">' + (res.length + regRes.length) + ((res.length + regRes.length) === 1 ? ' result' : ' results') + '</h2><button type="button" class="pill all" data-clearq="1">Clear search</button></div>'
+        + (res.length || regRes.length ? res.slice(0, 60).map(function (e) { return card(e); }).join('') + regRes.map(function (e) { return agendaRow(e, true); }).join('') : '<p class="empty">Nothing live or coming up matches that. Try a Pokémon or part of an event name.</p>'); return;
     }
     if (typeSel === 'soon') { // whatever week is shown, this is about the next 24 hours: what is on now, then what pays out next
       var tn = t.getTime();
@@ -742,8 +743,10 @@
     }
     if (selDay) {
       var d = new Date(selDay + 'T12:00'), evs = filtered(dayEvents(d)).sort(function (a, b) { return a.start - b.start; });
+      var dayRegional = regDay(d).filter(function (e) { return regSel === 'all' || regSel === 'global' || e.area === regSel; });
       html += '<div class="dayhead"><h2 class="sec2">' + esc(fmtD(d)) + '</h2><button type="button" class="pill all" data-clearday="1">Show week</button></div>';
-      html += evs.length ? evs.map(function (e) { return card(e); }).join('') : '<p class="empty">Nothing listed for this day.</p>';
+      html += evs.map(function (e) { return card(e); }).join('') + dayRegional.map(function (e) { return agendaRow(e, true); }).join('');
+      if (!evs.length && !dayRegional.length) html += '<p class="empty">Nothing listed for this day.</p>';
       el.innerHTML = html; return;
     }
     /* The week arrows control both the strip and this list. Show every event overlapping
