@@ -1,9 +1,443 @@
 {
- "updated": "2026-10-28T16:43:41.441Z",
+ "updated": "2026-10-28T21:44:36.353Z",
  "events": {
+  "leekduck:dynamax-trails-2026": {
+   "name": "Dynamax Trails",
+   "updated": "2026-10-28T21:44:36.353Z",
+   "sources": [
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "trust": "official",
+     "url": "https://pokemongo.com/news/dynamax-trails-eternamax-eternatus-2026/"
+    },
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/dynamax-trails-2026/"
+    },
+    {
+     "id": "hub",
+     "name": "Pokémon GO Hub",
+     "trust": "community",
+     "url": "https://pokemongohub.net/post/event/dynamax-trails-eternatus-returns/"
+    }
+   ],
+   "fields": {
+    "bonuses": [
+     {
+      "text": "The following bonuses will be active during the event.",
+      "sources": [
+       "official",
+       "leekduck"
+      ],
+      "status": "confirmed"
+     },
+     {
+      "text": "A chance to receive Max Particles when catching event-themed Pokémon in the wild or after Max Battles.",
+      "sources": [
+       "official",
+       "hub"
+      ],
+      "status": "confirmed"
+     },
+     {
+      "text": "More Power Spots than usual will be active.",
+      "sources": [
+       "official",
+       "hub"
+      ],
+      "status": "confirmed"
+     },
+     {
+      "text": "Max Particles cannot be obtained from catches with the Explorer Gadget or a Pokémon GO Plus +.",
+      "sources": [
+       "official",
+       "leekduck",
+       "hub"
+      ],
+      "status": "confirmed"
+     },
+     {
+      "text": "Reach Major Milestones on your event GO Pass to unlock the following bonuses.",
+      "sources": [
+       "official",
+       "leekduck"
+      ],
+      "status": "confirmed"
+     },
+     {
+      "text": "Power Spots will refresh more frequently.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Max Particle collection limit increased to 2,400.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "8× Max Particles from Power Spots.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "From November 20 at 1:00 p.m. to November 21 at 6:00 p.m. PST (GMT −8), the daily Remote Raid limit will increase from 10 to 30.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "The event features the following bonuses:",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Eternatus returns!",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "All Dynamax Pokémon* that have appeared in Pokémon GO may appear in Max Battles",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 15: 2× Catch Stardust",
+      "sources": [
+       "official",
+       "leekduck",
+       "hub"
+      ],
+      "status": "confirmed"
+     },
+     {
+      "text": "Rank 35: 1/2 Candy and Stardust to activate the Dynamax Cannon Adventure Effect",
+      "sources": [
+       "official",
+       "leekduck"
+      ],
+      "status": "confirmed"
+     },
+     {
+      "text": "Rank 55: Additional Candy and Candy XL from Max Battles",
+      "sources": [
+       "official",
+       "leekduck",
+       "hub"
+      ],
+      "status": "confirmed"
+     },
+     {
+      "text": "Rank 55: Additional bonus tasks for this GO Pass will be available during the event.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 35: Half the Stardust required to activate the Dynamax Cannon Adventure Effect Half the Candy required to activate the Dynamax Cannon Adventure Effect",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     }
+    ],
+    "featured": [
+     {
+      "text": "You may encounter event-themed Pokémon in the wild, including any Pokémon* that has debuted in Dynamax Max Battles!",
+      "sources": [
+       "official",
+       "leekduck",
+       "hub"
+      ],
+      "status": "confirmed"
+     },
+     {
+      "text": "Complete Pass Tasks to rank up your GO Pass to earn the following rewards.",
+      "sources": [
+       "official",
+       "leekduck"
+      ],
+      "status": "confirmed"
+     },
+     {
+      "text": "Encounters with event-themed Dynamax Pokémon with a Special Background",
+      "sources": [
+       "official",
+       "leekduck"
+      ],
+      "status": "confirmed"
+     },
+     {
+      "text": "An encounter with Eternatus, or 100 Eternatus Candy if you have already caught Eternatus",
+      "sources": [
+       "official",
+       "leekduck"
+      ],
+      "status": "confirmed"
+     },
+     {
+      "text": "Eternatus Candy and Candy XL",
+      "sources": [
+       "official",
+       "leekduck"
+      ],
+      "status": "confirmed"
+     },
+     {
+      "text": "Event-themed stickers",
+      "sources": [
+       "official",
+       "leekduck"
+      ],
+      "status": "confirmed"
+     },
+     {
+      "text": "Trainers who upgrade to the GO Pass Deluxe can also earn the following rewards.",
+      "sources": [
+       "official",
+       "leekduck"
+      ],
+      "status": "confirmed"
+     },
+     {
+      "text": "Silver Pinap Berries",
+      "sources": [
+       "official",
+       "leekduck"
+      ],
+      "status": "confirmed"
+     },
+     {
+      "text": "Additional rewards",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "raids": [
+     {
+      "text": "Monday, November 16, at 10:00 a.m. to Monday, November 23, 2026, at 8:00 p.m. local time",
+      "sources": [
+       "official",
+       "hub"
+      ],
+      "status": "confirmed"
+     },
+     {
+      "text": "All Dynamax Pokémon* that have appeared in Pokémon GO may appear in Max Battles.",
+      "sources": [
+       "official",
+       "leekduck"
+      ],
+      "status": "confirmed"
+     },
+     {
+      "text": "Prepare for the return of every Dynamax Pokémon seen in Pokémon GO!",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Get ready for a week of Max Battles! Dynamax Pokémon return, Max Particles are surging in the wild, and Eternamax Eternatus returns to Power Spots during Dynamax Trails.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "The Dynamax Trails event will take place from November 16, 2026 at 10 am to November 23, 2026 at 8 pm local time.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Expect more Power Spots active than usual, GO Pass and GO Pass Deluxe, themed wild encounters, and Max Battles galore! Here’s everything you need to know about the event.",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     }
+    ],
+    "eggs": [],
+    "research": [
+     {
+      "text": "Event-themed Field Research tasks will be available! Complete them to earn Stardust, Eternatus Candy, and more!",
+      "sources": [
+       "official",
+       "leekduck",
+       "hub"
+      ],
+      "status": "confirmed"
+     },
+     {
+      "text": "Complete Field Research tasks to earn encounters with event-themed Pokémon.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     }
+    ],
+    "shiny": [],
+    "moves": [],
+    "costumes": [],
+    "tickets": [
+     {
+      "text": "You can collect GO Points and rank up to get additional rewards through Monday, November 23, 2026, at 8:00 p.m. local time.",
+      "sources": [
+       "official",
+       "hub"
+      ],
+      "status": "confirmed"
+     },
+     {
+      "text": "For US$4.99*, Trainers can upgrade to the GO Pass Deluxe, a paid version of the GO Pass that offers upgraded rewards and faster progression.",
+      "sources": [
+       "official",
+       "hub"
+      ],
+      "status": "confirmed"
+     },
+     {
+      "text": "Trainers who claimed the first tier of rewards in GO Pass: Into the Wild will automatically be upgraded to the GO Pass Deluxe, for free!",
+      "sources": [
+       "official",
+       "hub"
+      ],
+      "status": "confirmed"
+     },
+     {
+      "text": "Rewards unlocked in the GO Pass will expire on Wednesday, November 25, 2026, at 8:00 p.m. local time, so be sure to claim your rewards before they’re gone!",
+      "sources": [
+       "official",
+       "leekduck"
+      ],
+      "status": "confirmed"
+     },
+     {
+      "text": "GO Pass is a free, limited-time progression track. Collect GO Points and complete Pass Tasks to rank up and earn rewards.",
+      "sources": [
+       "leekduck",
+       "hub"
+      ],
+      "status": "confirmed"
+     },
+     {
+      "text": "Trainers will automatically receive GO Pass: Dynamax Trails on November 16, 2026, at 10 am local time. GO Points can be collected through November 23, 2026, at 8 pm local time.",
+      "sources": [
+       "leekduck",
+       "hub"
+      ],
+      "status": "confirmed"
+     },
+     {
+      "text": "A GO Pass is a free, limited-time progression track available during a specified period. By collecting GO Points, you can increase your rank to earn rewards.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Trainers who claim Tier 1 rewards (Rank 25) on GO Pass: Into the Wild will receive early access on November 14, 2026, at 10 am local time, and a free upgrade to GO Pass Deluxe: Dynamax Trails .",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "From Monday, November 16, 2026, at 10:00 a.m. to Monday, November 23, 2026, at 8:00 p.m. local time , the GO Pass and GO Pass Deluxe for Dynamax Trails will be available in Pokémon GO.",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Encounters with event-themed Dynamax Pokémon with a Special Background",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "An encounter with Eternatus, or 100 Eternatus Candy if you have already caught Eternatus",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Eternatus Candy and Candy XL",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     }
+    ],
+    "dates": [
+     {
+      "text": "Monday, November 16, at 10:00 a.m. to Monday, November 23, 2026, at 8:00 p.m. local time",
+      "sources": [
+       "official",
+       "leekduck",
+       "hub"
+      ],
+      "status": "confirmed"
+     },
+     {
+      "text": "From November 20 at 1:00 p.m. to November 21 at 6:00 p.m. PST (GMT −8), the daily Remote Raid limit will increase from 10 to 30.",
+      "sources": [
+       "official",
+       "leekduck"
+      ],
+      "status": "confirmed"
+     },
+     {
+      "text": "The Dynamax Trails event will take place from November 16, 2026 at 10 am to November 23, 2026 at 8 pm local time.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Grookey, Scorbunny, and Sobble will be featured during Pokémon Spotlight Hour on November 19, 2026, from 6 pm to 7 pm local time. The bonus will be 2× Catch Candy .",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Trainers who claim Tier 1 rewards (Rank 25) on GO Pass: Into the Wild will receive early access on November 14, 2026, at 10 am local time, and a free upgrade to GO Pass Deluxe: Dynamax Trails .",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ]
+   },
+   "conflicts": [],
+   "gaps": []
+  },
   "wag": {
    "name": "GO Wild Area: Global",
-   "updated": "2026-10-28T16:43:41.441Z",
+   "updated": "2026-10-28T21:44:36.353Z",
    "sources": [
     {
      "id": "official",
@@ -104,7 +538,7 @@
   },
   "leekduck:into-the-wild-2026": {
    "name": "Into the Wild",
-   "updated": "2026-10-28T16:43:41.441Z",
+   "updated": "2026-10-28T21:44:36.353Z",
    "sources": [
     {
      "id": "official",
@@ -130,7 +564,7 @@
   },
   "novcd": {
    "name": "November Community Day",
-   "updated": "2026-10-28T16:43:41.441Z",
+   "updated": "2026-10-28T21:44:36.353Z",
    "sources": [
     {
      "id": "official",
@@ -323,7 +757,7 @@
   },
   "leekduck:go-pass-november-2026": {
    "name": "GO Pass: November",
-   "updated": "2026-10-28T16:43:41.441Z",
+   "updated": "2026-10-28T21:44:36.353Z",
    "sources": [
     {
      "id": "official",
@@ -569,7 +1003,7 @@
   },
   "smr1": {
    "name": "Super Mega Raid Day",
-   "updated": "2026-10-28T16:43:41.441Z",
+   "updated": "2026-10-28T21:44:36.353Z",
    "sources": [
     {
      "id": "official",
@@ -910,7 +1344,7 @@
   },
   "leekduck:halloween-2026-part-1": {
    "name": "Pokémon GO Halloween 2026 Part I",
-   "updated": "2026-10-28T16:43:41.441Z",
+   "updated": "2026-10-28T21:44:36.353Z",
    "sources": [
     {
      "id": "official",
@@ -1831,7 +2265,7 @@
   },
   "halloween1": {
    "name": "Halloween 2026, Part One",
-   "updated": "2026-10-28T16:43:41.441Z",
+   "updated": "2026-10-28T21:44:36.353Z",
    "sources": [
     {
      "id": "official",
@@ -2102,7 +2536,7 @@
   },
   "spirits": {
    "name": "Dynamax Uxie, Mesprit and Azelf",
-   "updated": "2026-10-28T16:43:41.441Z",
+   "updated": "2026-10-28T21:44:36.353Z",
    "sources": [
     {
      "id": "official",
@@ -2343,7 +2777,7 @@
   },
   "tcg30": {
    "name": "Pokémon TCG: 30th Celebration (at stores)",
-   "updated": "2026-10-28T16:43:41.441Z",
+   "updated": "2026-10-28T21:44:36.353Z",
    "sources": [
     {
      "id": "official",
@@ -2408,7 +2842,7 @@
   },
   "sandile": {
    "name": "Sandile Hatch Day",
-   "updated": "2026-10-28T16:43:41.441Z",
+   "updated": "2026-10-28T21:44:36.353Z",
    "sources": [
     {
      "id": "official",
@@ -2567,7 +3001,7 @@
   },
   "trek": {
    "name": "Fall Marathon: Buddy Trek",
-   "updated": "2026-10-28T16:43:41.441Z",
+   "updated": "2026-10-28T21:44:36.353Z",
    "sources": [
     {
      "id": "official",
@@ -2796,7 +3230,7 @@
   },
   "leekduck:go-pass-october-2026": {
    "name": "GO Pass: October",
-   "updated": "2026-10-28T16:43:41.441Z",
+   "updated": "2026-10-28T21:44:36.353Z",
    "sources": [
     {
      "id": "official",
@@ -3098,7 +3532,7 @@
   },
   "zorua": {
    "name": "Zorua Community Day",
-   "updated": "2026-10-28T16:43:41.441Z",
+   "updated": "2026-10-28T21:44:36.353Z",
    "sources": [
     {
      "id": "official",
@@ -3275,357 +3709,9 @@
    "conflicts": [],
    "gaps": []
   },
-  "leekduck:season-24-twilight-trails": {
-   "name": "Twilight Trails",
-   "updated": "2026-10-28T16:43:41.441Z",
-   "sources": [
-    {
-     "id": "official",
-     "name": "Pokémon GO (official)",
-     "trust": "official",
-     "url": "https://pokemongo.com/news/choose-your-path-twilight-trails-2026/"
-    },
-    {
-     "id": "leekduck",
-     "name": "Leek Duck",
-     "trust": "community",
-     "url": "https://leekduck.com/events/season-24-twilight-trails/"
-    }
-   ],
-   "fields": {
-    "bonuses": [
-     {
-      "text": "Rank 1: One guaranteed Candy XL when trading Pokémon for Trainers level 31 and above",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 1: One additional Candy for trading Pokémon",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 25: Increased limits on opening Gifts, receiving Gifts from PokéStop and Gym Photo Discs, and storing Gifts",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 50: 2× Daily Adventure Incense duration",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 75: Increased XP and Stardust from hatching Eggs",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ],
-    "featured": [
-     {
-      "text": "More Pokémon originally discovered in the Paldea region, which was featured in the Pokémon Scarlet and Pokémon Violet games for Nintendo Switch, have been spotted in Pokémon GO!",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Be on the lookout for Maschiff , Mabosstiff , and more!",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Dynamax Rhyhorn , Dynamax Sneasel , Dynamax Sizzlipede , and more will make their way into Max Battles throughout the Season. Keep an eye out for new Dynamax Pokémon at Power Spots!",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Dynamax Uxie , Dynamax Mesprit , and Dynamax Azelf will appear in a Max Battle Day during Twilight Trails.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "As the Seasons change, you may find different Pokémon appearing in your area. Explore during Twilight Trails to see what discoveries await!",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ],
-    "raids": [],
-    "eggs": [
-     {
-      "text": "Here are some of the Pokémon hatching from Eggs this season.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "There are more Pokémon appearing in Eggs than the ones listed.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Regional: Mime Jr. is exclusive to Eggs obtained in Europe.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Indeedee (Male)",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Indeedee (Female)",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Galarian Meowth",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Galarian Zigzagoon",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Galarian Stunfisk",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "This type of Egg is obtained from Mateo’s Gift Exchange at the end of a Route.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Galarian Slowpoke",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Hisuian Sneasel",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Galarian Corsola",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ],
-    "research": [
-     {
-      "text": "Complete Field Research to unlock Research Breakthrough encounters with one of a variety of Season-themed Pokémon. Find out where your trail leads you each week!",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ],
-    "shiny": [],
-    "moves": [],
-    "costumes": [],
-    "tickets": [
-     {
-      "text": "Reach Major Milestones on your GO Pass to unlock the following bonuses. Once unlocked, these bonuses will last until the current GO Pass ends!",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "GO Pass, a limited-time progression track, will be available during Twilight Trails! Complete Pass Tasks to earn GO Points to increase your rank and earn rewards.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "The GO Pass Deluxe , a paid version of the GO Pass, will be available for Trainers looking for upgraded rewards and faster progression.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ],
-    "dates": [
-     {
-      "text": "Wednesday, September 23, at 10:00 a.m. to Monday, September 28, at 8:00 p.m.",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "Spotlight Hour will return from 6:00 p.m. to 7:00 p.m. local time.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ]
-   },
-   "conflicts": [],
-   "gaps": [
-    {
-     "field": "bonuses",
-     "missingFrom": [
-      "official"
-     ]
-    },
-    {
-     "field": "featured",
-     "missingFrom": [
-      "official"
-     ]
-    },
-    {
-     "field": "eggs",
-     "missingFrom": [
-      "official"
-     ]
-    },
-    {
-     "field": "research",
-     "missingFrom": [
-      "official"
-     ]
-    },
-    {
-     "field": "tickets",
-     "missingFrom": [
-      "official"
-     ]
-    }
-   ]
-  },
-  "leekduck:max-mondays-2026-11-02": {
-   "name": "Dynamax Machop during Max Monday",
-   "updated": "2026-10-28T16:43:41.441Z",
-   "sources": [
-    {
-     "id": "leekduck",
-     "name": "Leek Duck",
-     "trust": "community",
-     "url": "https://leekduck.com/events/max-mondays-2026-10-26/"
-    },
-    {
-     "id": "leekduck",
-     "name": "Leek Duck",
-     "trust": "community",
-     "url": "https://leekduck.com/events/max-mondays-2026-11-02/"
-    }
-   ],
-   "fields": {
-    "bonuses": [],
-    "featured": [],
-    "raids": [
-     {
-      "text": "Dynamax Sableye may appear in Max Battles from October 26, 2026 through November 1, 2026 .",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "These Dynamax Pokémon may appear in Max Battles throughout this season. Max Battles will be available from 6:00 a.m. to 9:00 p.m. local time on Mondays.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Power Spots will refresh more frequently.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Additional Power Spots will be active on Mondays compared to the rest of the week.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Max Battles will rotate to feature different Dynamax Pokémon.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "On October 26, 2026 , the featured Dynamax Pokémon is Sableye .",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ],
-    "eggs": [],
-    "research": [],
-    "shiny": [],
-    "moves": [],
-    "costumes": [],
-    "tickets": [],
-    "dates": [
-     {
-      "text": "These Dynamax Pokémon may appear in Max Battles throughout this season. Max Battles will be available from 6:00 a.m. to 9:00 p.m. local time on Mondays.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ]
-   },
-   "conflicts": [],
-   "gaps": []
-  },
   "leekduck:raidhour20261028": {
    "name": "Giratina (Origin Forme) Raid Hour",
-   "updated": "2026-10-28T16:43:41.441Z",
+   "updated": "2026-10-28T21:44:36.353Z",
    "sources": [
     {
      "id": "leekduck",
@@ -3667,7 +3753,7 @@
   },
   "leekduck:pokemonspotlighthour2026-10-29": {
    "name": "Gastly Spotlight Hour",
-   "updated": "2026-10-28T16:43:41.441Z",
+   "updated": "2026-10-28T21:44:36.353Z",
    "sources": [
     {
      "id": "leekduck",
@@ -3699,9 +3785,86 @@
    "conflicts": [],
    "gaps": []
   },
+  "leekduck:max-mondays-2026-11-02": {
+   "name": "Dynamax Machop during Max Monday",
+   "updated": "2026-10-28T21:44:36.353Z",
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/max-mondays-2026-11-02/"
+    }
+   ],
+   "fields": {
+    "bonuses": [],
+    "featured": [],
+    "raids": [
+     {
+      "text": "Dynamax Machop may appear in Max Battles from November 2, 2026 through November 8, 2026 .",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "These Dynamax Pokémon may appear in Max Battles throughout this season. Max Battles will be available from 6:00 a.m. to 9:00 p.m. local time on Mondays.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Power Spots will refresh more frequently.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Additional Power Spots will be active on Mondays compared to the rest of the week.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Max Battles will rotate to feature different Dynamax Pokémon.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "On November 2, 2026 , the featured Dynamax Pokémon is Machop .",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "eggs": [],
+    "research": [],
+    "shiny": [],
+    "moves": [],
+    "costumes": [],
+    "tickets": [],
+    "dates": [
+     {
+      "text": "These Dynamax Pokémon may appear in Max Battles throughout this season. Max Battles will be available from 6:00 a.m. to 9:00 p.m. local time on Mondays.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ]
+   },
+   "conflicts": [],
+   "gaps": []
+  },
   "leekduck:shadow-landorus-incarnate-forme-in-shadow-raids-october-2026": {
    "name": "Shadow Landorus (Incarnate Forme) in Shadow Raids",
-   "updated": "2026-10-28T16:43:41.441Z",
+   "updated": "2026-10-28T21:44:36.353Z",
    "sources": [
     {
      "id": "leekduck",
@@ -3751,7 +3914,7 @@
   },
   "leekduck:giratina-origin-forme-in-5-star-raid-battles-october-2026": {
    "name": "Giratina (Origin Forme) in 5-star Raid Battles",
-   "updated": "2026-10-28T16:43:41.441Z",
+   "updated": "2026-10-28T21:44:36.353Z",
    "sources": [
     {
      "id": "leekduck",
@@ -3815,7 +3978,7 @@
   },
   "leekduck:raidhour20261104": {
    "name": "Giratina (Altered Forme) Raid Hour",
-   "updated": "2026-10-28T16:43:41.441Z",
+   "updated": "2026-10-28T21:44:36.353Z",
    "sources": [
     {
      "id": "leekduck",
@@ -3857,7 +4020,7 @@
   },
   "leekduck:pokemonspotlighthour2026-11-05": {
    "name": "Teddiursa wearing a witch hat Spotlight Hour",
-   "updated": "2026-10-28T16:43:41.441Z",
+   "updated": "2026-10-28T21:44:36.353Z",
    "sources": [
     {
      "id": "leekduck",
@@ -3913,7 +4076,7 @@
   },
   "halloween2": {
    "name": "Halloween 2026, Part Two",
-   "updated": "2026-10-28T16:43:41.441Z",
+   "updated": "2026-10-28T21:44:36.353Z",
    "sources": [
     {
      "id": "leekduck",
@@ -4185,7 +4348,7 @@
   },
   "leekduck:pokemon-go-wild-area-2026-sendai-japan": {
    "name": "Pokémon GO Wild Area 2026: Sendai • Tohoku",
-   "updated": "2026-10-28T16:43:41.441Z",
+   "updated": "2026-10-28T21:44:36.353Z",
    "sources": [
     {
      "id": "leekduck",
@@ -4535,7 +4698,7 @@
   },
   "leekduck:pokemon-go-wild-area-2026-mexico-city": {
    "name": "Pokémon GO Wild Area 2026: Mexico City",
-   "updated": "2026-10-28T16:43:41.441Z",
+   "updated": "2026-10-28T21:44:36.353Z",
    "sources": [
     {
      "id": "leekduck",
@@ -4892,7 +5055,7 @@
   },
   "leekduck:mega-sableye-in-mega-raids-october-2026": {
    "name": "Mega Sableye in Mega Raids",
-   "updated": "2026-10-28T16:43:41.441Z",
+   "updated": "2026-10-28T21:44:36.353Z",
    "sources": [
     {
      "id": "leekduck",
@@ -4949,7 +5112,7 @@
   },
   "leekduck:giratina-altered-forme-in-5-star-raid-battles-november-2026": {
    "name": "Giratina (Altered Forme) in 5-star Raid Battles",
-   "updated": "2026-10-28T16:43:41.441Z",
+   "updated": "2026-10-28T21:44:36.353Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5020,7 +5183,7 @@
   },
   "leekduck:shadow-tornadus-incarnate-forme-in-shadow-raids-november-4-2026": {
    "name": "Shadow Tornadus (Incarnate Forme) in Shadow Raids",
-   "updated": "2026-10-28T16:43:41.441Z",
+   "updated": "2026-10-28T21:44:36.353Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5068,7 +5231,7 @@
   },
   "leekduck:pokemon-night-out-london-2026": {
    "name": "Pokémon Night Out 2026 - London",
-   "updated": "2026-10-28T16:43:41.441Z",
+   "updated": "2026-10-28T21:44:36.353Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5176,7 +5339,7 @@
   },
   "into": {
    "name": "Into the Wild",
-   "updated": "2026-10-28T16:43:41.441Z",
+   "updated": "2026-10-28T21:44:36.353Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5433,7 +5596,7 @@
   },
   "leekduck:pokemon-go-wild-area-2026-global": {
    "name": "Pokémon GO Wild Area 2026: Global",
-   "updated": "2026-10-28T16:43:41.441Z",
+   "updated": "2026-10-28T21:44:36.353Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5721,7 +5884,7 @@
   },
   "leekduck:max-mondays-2026-11-16": {
    "name": "Max Monday: Pokémon to be announced",
-   "updated": "2026-10-28T16:43:41.441Z",
+   "updated": "2026-10-28T21:44:36.353Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5762,7 +5925,7 @@
   },
   "leekduck:raidhour20261118": {
    "name": "Cresselia and Darkrai Raid Hour",
-   "updated": "2026-10-28T16:43:41.441Z",
+   "updated": "2026-10-28T21:44:36.353Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5802,9 +5965,43 @@
    "conflicts": [],
    "gaps": []
   },
+  "leekduck:pokemonspotlighthour2026-11-19": {
+   "name": "Grookey, Scorbunny, and Sobble Spotlight Hour",
+   "updated": "2026-10-28T21:44:36.353Z",
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/pokemonspotlighthour2026-11-19/"
+    }
+   ],
+   "fields": {
+    "bonuses": [],
+    "featured": [
+     {
+      "text": "The following Pokémon will appear more frequently in the wild.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "raids": [],
+    "eggs": [],
+    "research": [],
+    "shiny": [],
+    "moves": [],
+    "costumes": [],
+    "tickets": [],
+    "dates": []
+   },
+   "conflicts": [],
+   "gaps": []
+  },
   "minior2": {
    "name": "Minior Showers: Leonids",
-   "updated": "2026-10-28T16:43:41.441Z",
+   "updated": "2026-10-28T21:44:36.353Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5893,9 +6090,88 @@
    "conflicts": [],
    "gaps": []
   },
+  "leekduck:eternamax-eternatus-max-battles-2026": {
+   "name": "Eternamax Eternatus Returns",
+   "updated": "2026-10-28T21:44:36.353Z",
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/eternamax-eternatus-max-battles-2026/"
+    }
+   ],
+   "fields": {
+    "bonuses": [
+     {
+      "text": "The following bonuses will be active during the event.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "The daily Remote Raid limit will increase from 10 to 30 from November 20 at 1 pm to November 21 at 6 pm PST (GMT −8).",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "featured": [],
+    "raids": [
+     {
+      "text": "Eternamax Eternatus",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "eggs": [],
+    "research": [],
+    "shiny": [],
+    "moves": [],
+    "costumes": [],
+    "tickets": [
+     {
+      "text": "Eternatus is available through GO Pass: Dynamax Trails . Trainers who have already caught Eternatus will receive 100 Eternatus Candy instead of another encounter.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Both the free GO Pass and GO Pass Deluxe provide Eternatus Candy and Candy XL to help power it up.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "dates": [
+     {
+      "text": "Eternamax Eternatus returns during Dynamax Trails , taking over the majority of Power Spots on November 21, 2026, from 11 am to 2 pm local time.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "The daily Remote Raid limit will increase from 10 to 30 from November 20 at 1 pm to November 21 at 6 pm PST (GMT −8).",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ]
+   },
+   "conflicts": [],
+   "gaps": []
+  },
   "leekduck:november-communityday2026": {
    "name": "Pawniard Community Day",
-   "updated": "2026-10-28T16:43:41.441Z",
+   "updated": "2026-10-28T21:44:36.353Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6052,51 +6328,9 @@
    "conflicts": [],
    "gaps": []
   },
-  "leekduck:dynamax-trails-2026": {
-   "name": "Dynamax Trails",
-   "updated": "2026-10-28T16:43:41.441Z",
-   "sources": [
-    {
-     "id": "leekduck",
-     "name": "Leek Duck",
-     "trust": "community",
-     "url": "https://leekduck.com/events/dynamax-trails-2026/"
-    }
-   ],
-   "fields": {
-    "bonuses": [],
-    "featured": [],
-    "raids": [
-     {
-      "text": "The Dynamax Trails event will take place from November 16, 2026 to November 23, 2026. Stay tuned for more details.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ],
-    "eggs": [],
-    "research": [],
-    "shiny": [],
-    "moves": [],
-    "costumes": [],
-    "tickets": [],
-    "dates": [
-     {
-      "text": "The Dynamax Trails event will take place from November 16, 2026 to November 23, 2026. Stay tuned for more details.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ]
-   },
-   "conflicts": [],
-   "gaps": []
-  },
   "leekduck:max-mondays-2026-11-23": {
    "name": "Dynamax Espurr during Max Monday",
-   "updated": "2026-10-28T16:43:41.441Z",
+   "updated": "2026-10-28T21:44:36.353Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6173,7 +6407,7 @@
   },
   "leekduck:cresselia-darkrai-in-5-star-raid-battles-november-2026": {
    "name": "Cresselia and Darkrai in 5-star Raid Battles",
-   "updated": "2026-10-28T16:43:41.441Z",
+   "updated": "2026-10-28T21:44:36.353Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6244,7 +6478,7 @@
   },
   "leekduck:mega-banette-in-mega-raids-november-2026": {
    "name": "Mega Banette in Mega Raids",
-   "updated": "2026-10-28T16:43:41.441Z",
+   "updated": "2026-10-28T21:44:36.353Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6308,7 +6542,7 @@
   },
   "leekduck:raidhour20261125": {
    "name": "Deoxys (Normal, Defense, Attack, and Speed Formes) Raid Hour",
-   "updated": "2026-10-28T16:43:41.441Z",
+   "updated": "2026-10-28T21:44:36.353Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6350,7 +6584,7 @@
   },
   "leekduck:pokemonspotlighthour2026-11-26": {
    "name": "Noibat Spotlight Hour",
-   "updated": "2026-10-28T16:43:41.441Z",
+   "updated": "2026-10-28T21:44:36.353Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6384,7 +6618,7 @@
   },
   "smr2": {
    "name": "Super Mega Raid Day",
-   "updated": "2026-10-28T16:43:41.441Z",
+   "updated": "2026-10-28T21:44:36.353Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6426,7 +6660,7 @@
   },
   "leekduck:twilight-wishes-2026": {
    "name": "Twilight Wishes",
-   "updated": "2026-10-28T16:43:41.441Z",
+   "updated": "2026-10-28T21:44:36.353Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6460,7 +6694,7 @@
   },
   "leekduck:max-mondays-2026-11-30": {
    "name": "Dynamax Cryogonal during Max Monday",
-   "updated": "2026-10-28T16:43:41.441Z",
+   "updated": "2026-10-28T21:44:36.353Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6535,9 +6769,230 @@
    "conflicts": [],
    "gaps": []
   },
+  "leekduck:season-24-twilight-trails": {
+   "name": "Twilight Trails",
+   "updated": "2026-10-28T21:44:36.353Z",
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/season-24-twilight-trails/"
+    }
+   ],
+   "fields": {
+    "bonuses": [
+     {
+      "text": "Rank 1: One guaranteed Candy XL when trading Pokémon for Trainers level 31 and above",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 1: One additional Candy for trading Pokémon",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 25: Increased limits on opening Gifts, receiving Gifts from PokéStop and Gym Photo Discs, and storing Gifts",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 50: 2× Daily Adventure Incense duration",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 75: Increased XP and Stardust from hatching Eggs",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "featured": [
+     {
+      "text": "More Pokémon originally discovered in the Paldea region, which was featured in the Pokémon Scarlet and Pokémon Violet games for Nintendo Switch, have been spotted in Pokémon GO!",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Be on the lookout for Maschiff , Mabosstiff , and more!",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Dynamax Rhyhorn , Dynamax Sneasel , Dynamax Sizzlipede , and more will make their way into Max Battles throughout the Season. Keep an eye out for new Dynamax Pokémon at Power Spots!",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Dynamax Uxie , Dynamax Mesprit , and Dynamax Azelf will appear in a Max Battle Day during Twilight Trails.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "As the Seasons change, you may find different Pokémon appearing in your area. Explore during Twilight Trails to see what discoveries await!",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "raids": [],
+    "eggs": [
+     {
+      "text": "Here are some of the Pokémon hatching from Eggs this season.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "There are more Pokémon appearing in Eggs than the ones listed.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Regional: Mime Jr. is exclusive to Eggs obtained in Europe.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Indeedee (Male)",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Indeedee (Female)",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Galarian Meowth",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Galarian Zigzagoon",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Galarian Stunfisk",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "This type of Egg is obtained from Mateo’s Gift Exchange at the end of a Route.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Galarian Slowpoke",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Hisuian Sneasel",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Galarian Corsola",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "research": [
+     {
+      "text": "Complete Field Research to unlock Research Breakthrough encounters with one of a variety of Season-themed Pokémon. Find out where your trail leads you each week!",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "shiny": [],
+    "moves": [],
+    "costumes": [],
+    "tickets": [
+     {
+      "text": "Reach Major Milestones on your GO Pass to unlock the following bonuses. Once unlocked, these bonuses will last until the current GO Pass ends!",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "GO Pass, a limited-time progression track, will be available during Twilight Trails! Complete Pass Tasks to earn GO Points to increase your rank and earn rewards.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "The GO Pass Deluxe , a paid version of the GO Pass, will be available for Trainers looking for upgraded rewards and faster progression.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "dates": [
+     {
+      "text": "Spotlight Hour will return from 6:00 p.m. to 7:00 p.m. local time.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ]
+   },
+   "conflicts": [],
+   "gaps": []
+  },
   "leekduck:deoxys-normal-defense-attack-speed-formes-in-5-star-raid-battles-november-2026": {
    "name": "Deoxys (Normal, Defense, Attack, and Speed Formes) in 5-star Raid Battles",
-   "updated": "2026-10-28T16:43:41.441Z",
+   "updated": "2026-10-28T21:44:36.353Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6636,7 +7091,7 @@
   },
   "leekduck:mega-metagross-in-mega-raids-november-2026": {
    "name": "Mega Metagross in Mega Raids",
-   "updated": "2026-10-28T16:43:41.441Z",
+   "updated": "2026-10-28T21:44:36.353Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6707,7 +7162,7 @@
   },
   "minior3": {
    "name": "Minior Showers: Geminids",
-   "updated": "2026-10-28T16:43:41.441Z",
+   "updated": "2026-10-28T21:44:36.353Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6798,7 +7253,7 @@
   },
   "leekduck:pokemon-x-adidas-2026": {
    "name": "adidas × Pokémon Timed Research",
-   "updated": "2026-10-28T16:43:41.441Z",
+   "updated": "2026-10-28T21:44:36.353Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6876,7 +7331,7 @@
   },
   "leekduck:pokemon-go-tour-alola-kaohsiung-2027": {
    "name": "Pokémon GO Tour: Alola - Kaohsiung 2027",
-   "updated": "2026-10-28T16:43:41.441Z",
+   "updated": "2026-10-28T21:44:36.353Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6910,7 +7365,7 @@
   },
   "leekduck:pokemon-go-tour-alola-los-angeles-2027": {
    "name": "Pokémon GO Tour: Alola - Los Angeles 2027",
-   "updated": "2026-10-28T16:43:41.441Z",
+   "updated": "2026-10-28T21:44:36.353Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6944,7 +7399,7 @@
   },
   "leekduck:pokemon-go-tour-alola-global-2027": {
    "name": "Pokémon GO Tour: Alola - Global 2027",
-   "updated": "2026-10-28T16:43:41.441Z",
+   "updated": "2026-10-28T21:44:36.353Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6978,7 +7433,7 @@
   },
   "leekduck:minior-showers-eta-aquariids-2027": {
    "name": "Minior Showers: Eta Aquariids 2027",
-   "updated": "2026-10-28T16:43:41.441Z",
+   "updated": "2026-10-28T21:44:36.353Z",
    "sources": [
     {
      "id": "leekduck",
@@ -7076,7 +7531,7 @@
   },
   "leekduck:minior-showers-southern-delta-aquariids-2027": {
    "name": "Minior Showers: Southern Delta Aquariids 2027",
-   "updated": "2026-10-28T16:43:41.441Z",
+   "updated": "2026-10-28T21:44:36.353Z",
    "sources": [
     {
      "id": "leekduck",
@@ -7174,7 +7629,7 @@
   },
   "leekduck:minior-showers-perseids-2027": {
    "name": "Minior Showers: Perseids 2027",
-   "updated": "2026-10-28T16:43:41.441Z",
+   "updated": "2026-10-28T21:44:36.353Z",
    "sources": [
     {
      "id": "leekduck",
@@ -7265,7 +7720,7 @@
   },
   "sendai": {
    "name": "GO Wild Area: Sendai",
-   "updated": "2026-10-28T16:43:41.441Z",
+   "updated": "2026-10-28T21:44:36.353Z",
    "sources": [
     {
      "id": "hub",
