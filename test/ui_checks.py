@@ -49,6 +49,14 @@ with sync_playwright() as p:
         pb=page(extra={'**/img/ext/4aa21432-0cfc-4c93-b3eb-0c15f322389d-0119b088.webp':('',404)}); pb.wait_for_timeout(800)
         check('a thumbnail that fails to load becomes Check infographic', pb.locator('[data-igcheck="cur:trek"]').first.inner_text()=='Check infographic' and pb.locator('[data-igcard="cur:trek"] img').count()==0 and pb.locator('[data-igcard="cur:trek"]').first.get_attribute('data-igbad') is not None)
         pb.context.close()
+        # Regional event infographics must resolve through the same viewer as standard event cards.
+        mexico_id='w-pok-mon-go-dia-de-muertos-2026-mexico-exclusive-ev'
+        pg.wait_for_function("id=>window.GODASH && window.GODASH.regionalEvents().some(e=>e.id===id)",arg=mexico_id)
+        pg.evaluate("id=>window.GOINFOGRAPHIC.open(id)",mexico_id)
+        pg.locator('#goinfo .goinfo-poster img[src*="discord-1564171478423834735.jpg"]').wait_for(state='attached')
+        check('Mexico regional event opens its approved G47IX infographic in the shared viewer', pg.locator('#goinfo .goinfo-poster img[src*="discord-1564171478423834735.jpg"]').count()==1)
+        check('regional infographic preserves creator attribution', pg.locator('#goinfo .goinfo-poster-top').first.inner_text().find('G47IX')>=0)
+        pg.evaluate("window.GOINFOGRAPHIC.close(true)")
         check('no event grades are shown', pg.locator('.event-grade, .grade-summary, #grade-settings').count()==0)
         check('no follow stars next to Pokémon names on event cards', pg.locator('.evc .fbtn, .evc [data-follow]').count()==0)
         trek_highlights = [x.lower() for x in pg.locator('[data-id="cur:trek"] .signal-highlight-debut, [data-id="cur:trek"] .signal-highlight-boosted-shiny').evaluate_all("els=>els.map(e=>e.title)")]
