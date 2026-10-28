@@ -14,6 +14,7 @@ const DISCORD_FILE = process.env.DISCORD_FILE || "infographics.json";
 const REG = process.env.REGISTRY_FILE || "data/g47ix-infographics-review.json";
 const INFO = process.env.EVENT_INFO_FILE || "public/event-info.json";
 const DATA = process.env.EVENTS_FILE || "public/data.json";
+const DETAILS = process.env.EVENT_DETAILS_FILE || "public/event-details.json";
 const QUEUE = process.env.QUEUE_FILE || "public/infographic-queue.json";
 const WEEKLY = process.env.WEEKLY_FILE || "public/weekly.json";
 const IMG_DIR = process.env.IMAGE_DIR || "public/infographics/g47ix";
@@ -78,6 +79,29 @@ export function monGuesses(ocrText, events, now = Date.now()) {
   }
   return out.sort((a, b) => b.score - a.score).slice(0, 3);
 }
+// The event calendar is intentionally compact; event-details.json also contains newly announced
+// Leek Duck events that may not yet have a calendar card. Include those names in matching so a
+// newly discovered infographic can be linked for manual review instead of being marked unmatched.
+const MONTH_NUM = { january: 1, february: 2, march: 3, april: 4, may: 5, june: 6, july: 7, august: 8, september: 9, october: 10, november: 11, december: 12 };
+function eventWindow(details) {
+  const text = (details?.fields?.dates || []).map(x => x.text || "").join(" ");
+  const months = Object.keys(MONTH_NUM).join("|");
+  const re = new RegExp("\\\\b(" + months + ")\\\\s+(\\\\d{1,2}),?\\\\s+(\\\\d{4})\\\\s+(?:to|through|[-–])\\\\s+(?:(" + months + ")\\\\s+)?(\\\\d{1,2}),?\\\\s+(\\\\d{4})\\\\b", "i");
+  const m = re.exec(text);
+  if (!m) return {};
+  const sm = MONTH_NUM[m[1].toLowerCase()], em = MONTH_NUM[(m[4] || m[1]).toLowerCase()];
+  return { s: new Date(Date.UTC(+m[3], sm - 1, +m[2])).toISOString().slice(0, 16), e: new Date(Date.UTC(+m[6], em - 1, +m[5], 23, 59)).toISOString().slice(0, 16) };
+}
+export function detailsAsEvents(details) {
+  const out = [];
+  for (const [id, detail] of Object.entries(details?.events || {})) {
+    const title = String(detail?.name || "").trim();
+    if (!title) continue;
+    out.push({ id, t: title, ...eventWindow(detail), kind: "event", sources: detail.sources || [] });
+  }
+  return out;
+}
+
 export function decide(candidate, ocrText, events) {
   const text = [candidate.title, ocrText].filter(Boolean).join(" ");
   const match = matchEvent({ title: text }, events);
@@ -255,7 +279,7 @@ async function main() {
   const reg = JSON.parse(await readFile(REG, "utf8"));
   const info = JSON.parse(await readFile(INFO, "utf8"));
   const dataJson = JSON.parse(await readFile(DATA, "utf8"));
-  const events = [...(dataJson.events || []), ...raidSlots(dataJson.rotation)];
+  let eventDetails = {};\n  try { eventDetails = JSON.parse(await readFile(DETAILS, "utf8")); } catch { /* optional on older previews */ }\n  const events = [...(dataJson.events || []), ...detailsAsEvents(eventDetails), ...raidSlots(dataJson.rotation)];
   let worldEvents = [];
   try { worldEvents = worldAsEvents(JSON.parse(await readFile(process.env.WORLD_FILE || "public/world-events.json", "utf8"))); } catch { /* optional */ }
   const proposed = [];
