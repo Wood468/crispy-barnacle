@@ -800,6 +800,55 @@
           "to": "2027-02-21"
         }
       ]
+    },
+    {
+      "id": "alameda-central-mexico-city",
+      "name": "Alameda Central",
+      "city": "Mexico City",
+      "region": "Mexico City",
+      "country": "Mexico",
+      "lat": 19.435474,
+      "lng": -99.143903,
+      "type": "Community-reported play area",
+      "role": "Community-recommended Pokémon GO play area near the central event district; not an official Día de Muertos event pin",
+      "tags": [
+        "Raids",
+        "Gyms",
+        "PokéStops"
+      ],
+      "sources": [
+        {
+          "label": "Reddit · r/PokemonGoSpoofing · Día de Muertos 2026",
+          "url": "https://www.reddit.com/r/PokemonGoSpoofing/comments/1xgag6b/d%C3%ADa_de_muertos/",
+          "vouches": "Community-shared coordinates and event discussion",
+          "trust": "community"
+        },
+        {
+          "label": "Pokémon GO (official): Día de Muertos 2026",
+          "url": "https://pokemongo.com/en/news/dia-de-muertos-2026",
+          "vouches": "Confirms Mexico-wide event dates; does not designate Alameda Central as an official event venue",
+          "trust": "official"
+        }
+      ],
+      "coords": {
+        "label": "Reddit community-shared coordinates",
+        "url": "https://www.reddit.com/r/PokemonGoSpoofing/comments/1xgag6b/d%C3%ADa_de_muertos/",
+        "note": "Community-reported pin for Alameda Central. Not an official Niantic event pin; use as a suggested nearby play area."
+      },
+      "verified": "2026-10-28",
+      "route": null,
+      "events": [
+        {
+          "name": "Dia de Muertos 2026: Mexico",
+          "from": "2026-10-27",
+          "to": "2026-11-05"
+        },
+        {
+          "name": "Mexicráneo Exhibit: Mexico City",
+          "from": "2026-10-17",
+          "to": "2026-11-16"
+        }
+      ]
     }
   ]
 }
