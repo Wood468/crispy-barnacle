@@ -244,8 +244,8 @@ export function withAi(c, guesses) {
 export function buildQueue(reg) {
   const items = (reg.candidates || []).filter(c => c.stagedPath && ["needs_review", "unmatched", "published"].includes(c.reviewStatus) && c.decision !== "rejected").map(c => ({
     linked: c.reviewStatus === "published",
-    id: c.id, title: String(c.title || "").slice(0, 160), image: c.stagedPath, post: c.url || "", creator: c.creator || "", publishedAt: c.publishedAt || "",
-    note: c.reviewNote || "", history: !!c.history, signals: c.signals || [], text: String(c.ocrText || "").slice(0, 200),
+    id: c.id, title: String(c.title || "").slice(0, 160), image: c.stagedPath, post: c.url || "", creator: c.creator || "", source: c.source || "unknown", publishedAt: c.publishedAt || "",
+    note: c.reviewNote || "", history: !!c.history, signals: c.signals || [], text: String(c.ocrText || "").slice(0, 700),
     guesses: withAi(c, (c.eventMatch && c.eventMatch.alternatives) || (c.eventMatch ? [{ eventId: c.eventMatch.eventId, eventTitle: c.eventMatch.eventTitle, score: c.eventMatch.score }] : []))
   }));
   return { updated: new Date().toISOString(), items };
