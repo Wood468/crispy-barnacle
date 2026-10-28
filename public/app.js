@@ -169,16 +169,17 @@ Promise.all([fetch('/data.json').then(function(r){return r.json()}),fetch('/art/
 
   /* ---------- tabs: five main sections, some with sub-views ---------- */
   var TABS=[
-    ['now','Now','M12 3l2.6 5.6 6.1.7-4.5 4.2 1.2 6L12 16.5 6.6 19.5l1.2-6L3.3 9.3l6.1-.7z'],
-    ['events','Events','M4 6h16v14H4zM4 10h16M8 3v4M16 3v4'],
-    ['raids','Raids','M12 3l8 3v6c0 4.5-3.4 8-8 9-4.6-1-8-4.5-8-9V6z'],
-    ['collect','Collect','M12 3l8 4.5v9L12 21l-8-4.5v-9zM12 12l8-4.5M12 12L4 7.5M12 12v9'],
-    ['saved','Saved','M6 3h12v18l-6-4-6 4z']
+    ['now','Today','M12 3l2.6 5.6 6.1.7-4.5 4.2 1.2 6L12 16.5 6.6 19.5l1.2-6L3.3 9.3l6.1-.7z'],
+    ['events','Schedule','M4 6h16v14H4zM4 10h16M8 3v4M16 3v4'],
+    ['raids','Battle','M12 3l8 3v6c0 4.5-3.4 8-8 9-4.6-1-8-4.5-8-9V6z'],
+    ['collect','Collection','M12 3l8 4.5v9L12 21l-8-4.5v-9zM12 12l8-4.5M12 12L4 7.5M12 12v9']
   ];
+  /* Saved is a global utility opened from the header, not a fifth destination in the primary navigation. */
+  var PANEL_IDS=['now','events','raids','collect','saved'];
   // Three views per tab. Some views have a second-level filter (MODES) over existing sections.
   var SUBS={
-    events:[['calendar','Calendar','sub-calendar'],['timeline','List','sub-timeline'],['leaks','Leaks','sub-leaks','menu']],
-    collect:[['dex','My Dex','sub-mydex'],['opps','Chances','sub-opps','menu'],['megas','Megas','sub-megas'],['guides','Guides','sub-guides']],
+    events:[['calendar','Calendar','sub-calendar'],['timeline','Timeline','sub-timeline'],['leaks','Discoveries','sub-leaks','menu']],
+    collect:[['dex','My Dex','sub-mydex'],['opps','Opportunities','sub-opps','menu'],['megas','Megas','sub-megas'],['guides','Guides','sub-guides']],
     saved:[['watch','Watchlist','sub-watch'],['menu','Menu','sub-menu']]
   };
   var MODES={
@@ -188,7 +189,7 @@ Promise.all([fetch('/data.json').then(function(r){return r.json()}),fetch('/art/
   // Old saved locations still open the right place.
   var LEGACY={upcoming:['events','leaks'],person:['events','calendar'],dex:['collect','dex','species'],best:['collect','guides','best'],hundo:['collect','guides','hundo']};
   var LEGACYSUB={'events/world':['calendar'],'events/coming':['calendar'],'collect/forms':['dex','forms'],'collect/import':['dex','import'],'collect/best':['guides','best'],'collect/hundo':['guides','hundo']};
-  var tabsEl=$('tabs'),curTab='now',curSub={events:'calendar',collect:'dex',saved:'watch'},curMode={'collect/dex':'species','collect/guides':'best'};
+  var tabsEl=$('tabs'),curTab='now',curSub={events:'timeline',collect:'dex',saved:'watch'},curMode={'collect/dex':'species','collect/guides':'best'};
   TABS.forEach(function(t,i){
     var b=document.createElement('button');
     b.type='button';b.setAttribute('role','tab');b.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="'+t[2]+'"/></svg><span>'+t[1]+'</span>';b.dataset.tab=t[0];
@@ -219,7 +220,7 @@ Promise.all([fetch('/data.json').then(function(r){return r.json()}),fetch('/art/
     if(!$('tab-'+id))id='now';
     curTab=id;if(sub&&SUBS[id]&&SUBS[id].some(function(x){return x[0]===sub}))curSub[id]=sub;
     if(mode&&MODES[id+'/'+curSub[id]])curMode[id+'/'+curSub[id]]=mode;
-    TABS.forEach(function(t){$('tab-'+t[0]).hidden=t[0]!==id});
+    PANEL_IDS.forEach(function(panel){var el=$('tab-'+panel);if(el)el.hidden=panel!==id});
     Array.prototype.forEach.call(tabsEl.children,function(b){b.setAttribute('aria-selected',b.dataset.tab===id?'true':'false')});
     $('hwatch').setAttribute('aria-pressed',id==='saved'&&curSub.saved==='watch'?'true':'false');$('hmenu').setAttribute('aria-pressed',id==='saved'&&curSub.saved==='menu'?'true':'false');
     Object.keys(SUBS).forEach(function(k){
