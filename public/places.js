@@ -94,7 +94,7 @@
     if (out.length) h += '<p><button type="button" class="pill all" data-gpx="' + out.map(function (p) { return esc(p.id); }).join(',') + '" data-gpxname="Places' + (F.city ? ' ' + esc(F.city) : F.country ? ' ' + esc(F.country) : '') + '">⤓ Download these ' + out.length + (out.length === 1 ? ' place' : ' places') + ' (GPX)</button></p>';
     var keys = Object.keys(groups).sort();
     h += keys.length ? keys.map(function (g) { return '<div class="sh2"><h3 class="sec2">' + esc(g) + '</h3><span class="m">' + groups[g].length + (groups[g].length === 1 ? ' place' : ' places') + '</span></div>' + groups[g].map(row).join(''); }).join('') : '<p class="empty" id="plc-none">No sourced place matches. Nothing is guessed to fill the gap.</p>';
-    h += '<p class="note">Community-reported hotspot pins are general areas, not specific gyms. Raid activity and lobby fill are not live-verified. Coordinates help with planning and opening map apps; they do not change the game location.</p>'
+    h += '<p class="note">Community-reported hotspot pins are general areas, not specific gyms. Raid activity and lobby fill are not live-verified. Coordinates can be copied for use in your preferred location app; they do not change the game location.</p>'
       + '<div class="plc-nc"><b>Other countries:</b> filters list a country only once it has at least one sourced place.</div>';
     return h;
   }
@@ -108,7 +108,7 @@
       + '<h3 class="sec2">Route</h3><div class="evd-card">';
     if (p.route && safe(p.route.url) && p.route.file && p.route.verified) h += '<p><b>' + esc(p.route.label || 'Route') + '</b> from <a href="' + esc(p.route.url) + '" target="_blank" rel="noopener noreferrer">' + esc(p.route.author || 'the source') + '</a>, checked ' + day(p.route.verified) + '.</p><a class="pill all" href="' + esc(p.route.file) + '" download>Download GPX</a>';
     else h += '<span class="npub">No verified GPX route</span><p class="note">There is no sourced walking route for this place, and none is made up.</p>';
-    h += '<p><button type="button" class="pill all" data-gpx="' + esc(p.id) + '">⤓ Download venue point (GPX)</button></p><p class="note">One point at the sourced coordinates above, with who vouches for it and when it was checked. Open it in a maps or hiking app.</p>';
+    h += '<p><button type="button" class="pill all" data-gpx="' + esc(p.id) + '">⤓ Download venue point (GPX)</button></p><p class="note">One point at the sourced coordinates above, with who vouches for it and when it was checked. Open it in a compatible GPX app, such as iTools, if supported.</p>';
     h += '</div><h3 class="sec2">Source and verification</h3><div class="evd-card">'
       + (p.role ? '<div class="evd-row"><span class="k">Role</span><div class="v"><p>' + esc(p.role) + ' · ' + p.sources.map(function (s) { return '<a href="' + esc(safe(s.url)) + '" target="_blank" rel="noopener noreferrer">' + esc(s.label) + '</a>' + (s.trust === 'official' ? ' (official)' : ' (community)'); }).join(', ') + '</p></div></div>' : '')
       + (p.coords ? '<div class="evd-row"><span class="k">Coordinates</span><div class="v"><p>' + (safe(p.coords.url) ? '<a href="' + esc(p.coords.url) + '" target="_blank" rel="noopener noreferrer">' + esc(p.coords.label) + '</a>' : esc(p.coords.label)) + '</p></div></div>' : '')
