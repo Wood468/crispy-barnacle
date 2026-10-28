@@ -36,11 +36,6 @@
   function coord(p) { return p.lat.toFixed(4).replace('-', '−') + ', ' + p.lng.toFixed(4).replace('-', '−'); }
   function plain(p) { return p.lat.toFixed(4) + ', ' + p.lng.toFixed(4); }
   function dms(p) { return Math.abs(p.lat).toFixed(4) + '° ' + (p.lat < 0 ? 'S' : 'N') + ', ' + Math.abs(p.lng).toFixed(4) + '° ' + (p.lng < 0 ? 'W' : 'E'); }
-  function links(p) {
-    var ll = p.lat.toFixed(5) + ',' + p.lng.toFixed(5), n = encodeURIComponent(p.name);
-    return [['Apple Maps', 'https://maps.apple.com/?ll=' + ll + '&q=' + n], ['Google Maps', 'https://www.google.com/maps/search/?api=1&query=' + ll], ['OpenStreetMap', 'https://www.openstreetmap.org/?mlat=' + p.lat.toFixed(5) + '&mlon=' + p.lng.toFixed(5) + '#map=17/' + p.lat.toFixed(5) + '/' + p.lng.toFixed(5)]];
-  }
-
   /* ---- GPX of venue points ---- */
   function x(v) { return String(v == null ? '' : v).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&apos;' }[c]; }); }
   function slug(t) { return String(t || 'places').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 50) || 'places'; }
@@ -110,7 +105,6 @@
       + (localClock(p) ? '<div class="evd-card"><b>Local time there</b><p class="note">' + esc(localClock(p)) + ' · ' + esc(p.timeZone) + '</p></div>' : '')
       + '<h3 class="sec2">Coordinates <span class="m">decimal degrees</span></h3><div class="evd-card"><div class="plc-coord">' + coord(p) + '</div><p class="note">' + dms(p) + (p.coords && p.coords.note ? ' · ' + esc(p.coords.note.charAt(0).toLowerCase() + p.coords.note.slice(1)) : '') + '</p>'
       + '<button type="button" class="pill all" data-copy="' + esc(p.id) + '">Copy coordinates</button><p class="note" id="plc-status" role="status" aria-live="polite"></p></div>'
-      + '<h3 class="sec2">Open in your map app <span class="m">leaves this app</span></h3><div class="plc-links">' + links(p).map(function (l) { return '<a class="plc-lk" href="' + esc(l[1]) + '" target="_blank" rel="noopener noreferrer">' + l[0] + ' <span aria-hidden="true">↗</span></a>'; }).join('') + '</div><p class="note">Plain links with the coordinates in them. No map is drawn or embedded here.</p>'
       + '<h3 class="sec2">Route</h3><div class="evd-card">';
     if (p.route && safe(p.route.url) && p.route.file && p.route.verified) h += '<p><b>' + esc(p.route.label || 'Route') + '</b> from <a href="' + esc(p.route.url) + '" target="_blank" rel="noopener noreferrer">' + esc(p.route.author || 'the source') + '</a>, checked ' + day(p.route.verified) + '.</p><a class="pill all" href="' + esc(p.route.file) + '" download>Download GPX</a>';
     else h += '<span class="npub">No verified GPX route</span><p class="note">There is no sourced walking route for this place, and none is made up.</p>';
