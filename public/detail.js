@@ -221,7 +221,11 @@
   }
   function hasDetails(ev) { var d = findDetails(ev); return !!(d && d.fields && Object.keys(d.fields).some(function (k) { return (d.fields[k] || []).length; })); }
   function render(ev) {
-    var k = X.kindOf(ev), I = DATA.info, e = findInfo(ev), saved = X.isSaved(ev.id), link = safe(ev.link) || (e && e.source ? safe(e.source.url) : '');
+    var k = X.kindOf(ev), I = DATA.info, e = findInfo(ev), saved = X.isSaved(ev.id);
+    var eventSources = Array.isArray(ev.sources) ? ev.sources : [];
+    var primarySource = eventSources.filter(function (s) { return s && (s.id === 'official' || /(^|\.)pokemongo\.com\//i.test(s.url || '')); })[0] || eventSources[0] || (e && e.source ? e.source : null);
+    var link = (primarySource && safe(primarySource.url)) || safe(ev.link) || (e && e.source ? safe(e.source.url) : '');
+    var linkLabel = primarySource && primarySource.name ? 'Open ' + primarySource.name : 'Open source';
     var h = '<div class="evd-bar"><button type="button" class="hbtn" id="evd-x" aria-label="Close event details"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button><span class="tag">EVENT DETAIL</span>'
       + '<button type="button" class="pill info-open" data-infographic="' + esc(ev.id) + '">▧ Infographic</button>'
       + '<button type="button" class="pill" data-evlink="' + esc(ev.id) + '" aria-label="Share a link to this event">🔗 Link</button>'
@@ -237,7 +241,7 @@
       if (!Array.isArray(scheduleNotes)) scheduleNotes = [scheduleNotes];
       h += '<aside class="schedule-notes"><b>Schedule notes</b><ul>' + scheduleNotes.filter(Boolean).map(function (n) { return '<li>' + esc(n) + '</li>'; }).join('') + '</ul></aside>';
     }
-    h += '<div class="evd-btns"><a class="pill all" download="' + esc(ev.id) + '.ics" href="' + icsFor(ev) + '">Add to calendar</a>' + (link ? '<a class="pill" href="' + esc(link) + '" target="_blank" rel="noopener noreferrer">Open source</a>' : '<span class="npub" data-nolink>No source link published</span>') + '</div>';
+    h += '<div class="evd-btns"><a class="pill all" download="' + esc(ev.id) + '.ics" href="' + icsFor(ev) + '">Add to calendar</a>' + (link ? '<a class="pill" href="' + esc(link) + '" target="_blank" rel="noopener noreferrer">' + esc(linkLabel) + '</a>' : '<span class="npub" data-nolink>No source link published</span>') + '</div>';
     if (ev.bonuses && ev.bonuses.length) h += '<h3 class="sec2" id="evd-highlights">Bonuses</h3><div class="bonuses">' + ev.bonuses.map(function (b) { var chip = G.bonusChip(b); var img = /max particle/i.test(b) ? X.IMG_PARTICLE : /power spot/i.test(b) ? X.IMG_POWERSPOT : ''; return img ? chip.replace(/<(svg|img)[\s\S]*?(<\/svg>|>)(?=<b>|<span>)/, '<img class="gi gi-pic" src="' + esc(img) + '" alt="" loading="lazy" data-err="rm">') : chip; }).join('') + '</div>';
     h += evMovesHtml(ev);
     if (ev.featured && ev.featured.length) h += featuredSections(ev);
