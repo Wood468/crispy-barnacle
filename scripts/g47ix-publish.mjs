@@ -86,7 +86,7 @@ const MONTH_NUM = { january: 1, february: 2, march: 3, april: 4, may: 5, june: 6
 function eventWindow(details) {
   const text = (details?.fields?.dates || []).map(x => x.text || "").join(" ");
   const months = Object.keys(MONTH_NUM).join("|");
-  const re = new RegExp("\\\\b(" + months + ")\\\\s+(\\\\d{1,2}),?\\\\s+(\\\\d{4})\\\\s+(?:to|through|[-–])\\\\s+(?:(" + months + ")\\\\s+)?(\\\\d{1,2}),?\\\\s+(\\\\d{4})\\\\b", "i");
+  const re = new RegExp("\\b(" + months + ")\\s+(\\d{1,2}),?\\s+(\\d{4})\\s+(?:to|through|[-–])\\s+(?:(" + months + ")\\s+)?(\\d{1,2}),?\\s+(\\d{4})\\b", "i");
   const m = re.exec(text);
   if (!m) return {};
   const sm = MONTH_NUM[m[1].toLowerCase()], em = MONTH_NUM[(m[4] || m[1]).toLowerCase()];
