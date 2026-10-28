@@ -155,7 +155,11 @@
     var links = (d.sources || []).map(function (s) { var u = safe(s.url); return u ? '<a href="' + esc(u) + '" target="_blank" rel="noopener noreferrer">' + esc(s.name) + '</a>' : esc(s.name); }).join(' · ');
     var many = (d.sources || []).length > 1;
     var gaps = (d.gaps || []).length ? '<p class="note">Some sources do not mention: ' + esc(d.gaps.map(function (g) { return g.field; }).filter(function (v, i, a) { return a.indexOf(v) === i; }).join(', ')) + '. Not every write-up covers everything.</p>' : '';
-    return '<h3 class="sec2">Event details</h3><div class="evd-card evd-groups">' + conf + groups + '</div>' + gaps + '<p class="evd-src">' + (many ? 'Compared: ' : 'Source: ') + links + (many ? '' : ' (single source, not cross-checked)') + ' · checked ' + esc(String(d.updated || '').slice(0, 10)) + '</p>';
+    var checkedAt = String(d.updated || '').slice(0, 10), ageDays = checkedAt ? Math.floor((Date.now() - Date.parse(checkedAt + 'T00:00:00Z')) / 864e5) : null;
+    var freshness = ageDays === null || !Number.isFinite(ageDays) ? 'Check date unavailable' : ageDays <= 7 ? 'Recently checked' : ageDays <= 21 ? 'Worth rechecking' : 'May be out of date';
+    var trusted = (d.sources || []).some(function (s) { return /leekduck\\.com$/i.test((function(){try{return new URL(s.url).hostname;}catch(e){return '';}})()); });
+    var sourceNote = trusted ? 'Leek Duck is treated as a trusted Pokémon GO community source; official Niantic announcements remain distinct.' : '';
+    return '<h3 class="sec2">Event details</h3><div class="evd-card evd-groups">' + conf + groups + '</div>' + gaps + '<p class="evd-src">' + (many ? 'Compared: ' : 'Source: ') + links + (many ? '' : ' (single source, not cross-checked)') + ' · checked ' + esc(checkedAt || 'date unknown') + ' · <span class="src-fresh" data-age="' + (ageDays === null ? 'unknown' : ageDays) + '">' + freshness + '</span></p>' + (sourceNote ? '<p class="note">' + sourceNote + '</p>' : '');
   }
 
   /* Seasons and monthly GO Passes: their own layout, in sections with icons. Curated notes come from season.json; rank rows and prices from the compared write-ups. */
