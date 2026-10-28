@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-27T23:59:40.558Z",
+ "updated": "2026-10-28T05:30:01.926Z",
  "seeded": true,
  "channels": [
   {
@@ -18,10 +18,19 @@
    "src": "gamedata",
    "name": "dm-gamedata",
    "state": "ok",
-   "count": 14
+   "count": 15
   }
  ],
  "items": [
+  {
+   "id": "1564814027467657329",
+   "src": "gamedata",
+   "title": "Paid gifts, Max Battle energy bonus · sora10pls/holoholo-text@d9a412c",
+   "text": "New texts: https://github.com/sora10pls/holoholo-text/commit/d9a412ccf7f61730a3f4cac548f9066a526c70c7#diff-a71fd0182b32e8d4b2786e4fd8a33ff746eab69aff0df3c734371b8e24f155ea\n\n@subscriber @miner",
+   "link": "https://github.com/sora10pls/holoholo-text/commit/d9a412ccf7f61730a3f4cac548f9066a526c70c7",
+   "image": "",
+   "date": "2026-10-28T01:32:16.987Z"
+  },
   {
    "id": "1564790460940156938",
    "src": "gamedata",
