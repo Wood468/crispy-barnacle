@@ -1,5 +1,5 @@
 {
- "runAt": "2026-10-28T09:49:49.131Z",
+ "runAt": "2026-10-28T16:43:41.441Z",
  "sources": {
   "official": {
    "listed": 25,
@@ -16,7 +16,7 @@
  },
  "pagesRead": 80,
  "events": 80,
- "worldEvents": 54,
+ "worldEvents": 56,
  "worldUndated": [
   "GO Wild Area Stamp Rally"
  ],
@@ -77,6 +77,16 @@
    "url": "https://pokemongo.com/news/city-safari-brisbane-know-before-you-go/"
   },
   {
+   "source": "leekduck",
+   "title": "Mega Charizard X and Mega Charizard Y in Mega Raids",
+   "url": "https://leekduck.com/events/mega-charizard-x-mega-charizard-y-in-mega-raids-october-2026/"
+  },
+  {
+   "source": "leekduck",
+   "title": "Palkia in 5-star Raid Battles",
+   "url": "https://leekduck.com/events/palkia-in-5-star-raid-battles-october-2026/"
+  },
+  {
    "source": "hub",
    "title": "Trevenant Raid Guide",
    "url": "https://pokemongohub.net/post/guide/trevenant-raid-guide/"
@@ -98,7 +108,7 @@
    "error": ""
   },
   "ko": {
-   "listed": 27,
+   "listed": 28,
    "error": ""
   },
   "zh_hant": {
@@ -114,7 +124,7 @@
    "error": ""
   },
   "es": {
-   "listed": 27,
+   "listed": 28,
    "error": ""
   },
   "es_mx": {

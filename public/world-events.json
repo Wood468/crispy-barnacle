@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-28T09:49:49.129Z",
+ "updated": "2026-10-28T16:43:41.437Z",
  "events": [
   {
    "id": "w-pokemon-fossil-museum-2026",
@@ -326,6 +326,44 @@
    "seen": "2026-10-19"
   },
   {
+   "id": "w-mega-charizard-x-and-mega-charizard-y-in-mega-raid",
+   "name": "Mega Charizard X and Mega Charizard Y in Mega Raids",
+   "place": "",
+   "area": "Worldwide",
+   "scope": "global",
+   "start": "2026-10-21",
+   "end": "2026-10-27",
+   "datesKnown": true,
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "url": "https://leekduck.com/events/mega-charizard-x-mega-charizard-y-in-mega-raids-october-2026/"
+    }
+   ],
+   "status": "single",
+   "seen": "2026-10-28"
+  },
+  {
+   "id": "w-palkia-in-5-star-raid-battles",
+   "name": "Palkia in 5-star Raid Battles",
+   "place": "",
+   "area": "Worldwide",
+   "scope": "global",
+   "start": "2026-10-21",
+   "end": "2026-10-27",
+   "datesKnown": true,
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "url": "https://leekduck.com/events/palkia-in-5-star-raid-battles-october-2026/"
+    }
+   ],
+   "status": "single",
+   "seen": "2026-10-28"
+  },
+  {
    "id": "w-pok-mon-30th-anniversary-mall-exploration-sm-east-",
    "name": "Pokémon 30th Anniversary Mall Exploration: SM East Ortigas",
    "place": "Philippines (SM East Ortigas)",
@@ -405,7 +443,7 @@
   {
    "id": "w-fc-seoul",
    "name": "FC Seoul",
-   "place": "Seoul, South Korea",
+   "place": "South Korea",
    "area": "Asia",
    "scope": "regional",
    "start": "2026-10-24",
@@ -413,12 +451,17 @@
    "datesKnown": true,
    "sources": [
     {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "url": "https://pokemongo.com/ko/news/fc-seoul-2026/"
+    },
+    {
      "id": "serebii",
      "name": "Serebii",
      "url": "https://www.serebii.net/pokemongo/reallifeevents.shtml"
     }
    ],
-   "status": "single",
+   "status": "official",
    "seen": "2026-10-28"
   },
   {
@@ -915,11 +958,6 @@
      "id": "official",
      "name": "Pokémon GO (official)",
      "url": "https://pokemongo.com/news/save-the-date-go-tour-2027/"
-    },
-    {
-     "id": "official",
-     "name": "Pokémon GO (official)",
-     "url": "https://pokemongo.com/ko/news/save-the-date-go-tour-2027/"
     }
    ],
    "status": "official",
@@ -1014,11 +1052,11 @@
     {
      "id": "official",
      "name": "Pokémon GO (official)",
-     "url": "https://pokemongo.com/ja/news/go-wild-area-stamp-rally-details-2026/"
+     "url": "https://pokemongo.com/ko/news/go-wild-area-stamp-rally-details-2026/"
     }
    ],
    "status": "official",
-   "seen": "2026-10-23"
+   "seen": "2026-10-28"
   }
  ]
 }
