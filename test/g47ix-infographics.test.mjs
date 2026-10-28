@@ -3,6 +3,7 @@ import { fileURLToPath } from "node:url";
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { matchEvent, mergeReviewState } from "../scripts/g47ix-review.mjs";
+import { buildQueue } from "../scripts/g47ix-publish.mjs";
 
 test("discovery script has valid Node.js syntax", () => {
   const scriptPath = fileURLToPath(new URL("../scripts/g47ix-infographics.mjs", import.meta.url));
@@ -81,4 +82,15 @@ test("the archive fallback pages by time and wraps posts like Reddit does", asyn
   const pages = [mk(100, 0), mk(30, 1)]; let i = 0; const urls = [];
   const got = await archivePosts(async u => { urls.push(u); return { data: pages[i++] }; }, 90, Date.UTC(2026, 9, 12));
   assert.equal(got.length, 130); assert.ok(got[0].data.id); assert.match(urls[1], /before=/); assert.equal(i, 2);
+});
+
+test("review queue identifies Telegram and Discord and preserves useful OCR context", () => {
+  const q = buildQueue({ candidates: [
+    { id: "tg:1", source: "telegram", title: "Picture sent from Telegram", stagedPath: "/infographics/tg.jpg", reviewStatus: "needs_review", ocrText: "Giratina raid counters", reviewNote: "No exact event match." },
+    { id: "discord:2", source: "discord", title: "Raid guide", stagedPath: "/infographics/d.jpg", reviewStatus: "unmatched", ocrText: "Sableye weakness chart" }
+  ] });
+  assert.equal(q.items[0].source, "telegram");
+  assert.equal(q.items[0].text, "Giratina raid counters");
+  assert.equal(q.items[1].source, "discord");
+  assert.equal(q.items[1].text, "Sableye weakness chart");
 });
