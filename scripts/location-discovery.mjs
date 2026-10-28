@@ -23,7 +23,7 @@ const xmlItems = xml => {
   const blocks = [...xml.matchAll(/<(item|entry)\\b[^>]*>([\\s\\S]*?)<\\/\\1>/gi)];
   return blocks.map(m => {
     const body = m[2];
-    const field = n => decode((body.match(new RegExp("<" + n + "(?:\\\\s[^>]*)?>([\\\\s\\\\S]*?)<\\/" + n + ">","i")) || [,""])[1].replace(/^<!\\[CDATA\\[|\\]\\]>$/g, ""));
+    const field = n => decode((body.match(new RegExp("<" + n + "(?:\\s[^>]*)?>([\\s\\S]*?)<\\/" + n + ">","i")) || [,""])[1].replace(/^<!\\[CDATA\\[|\\]\\]>$/g, ""));
     const href = (body.match(/<link\\b[^>]*href=["']([^"']+)["']/i) || [,""])[1];
     return { title: field("title"), link: field("link") || href, desc: field("description") || field("content") || field("summary") };
   });
