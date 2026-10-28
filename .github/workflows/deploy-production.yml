@@ -1,0 +1,106 @@
+name: Deploy production Worker
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirm_production:
+        description: "I confirm this run should deploy to the production Cloudflare Worker"
+        required: true
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: cloudflare-production-worker
+  cancel-in-progress: false
+
+jobs:
+  javascript:
+    if: github.ref == 'refs/heads/main' && inputs.confirm_production
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Run JavaScript regression tests
+        run: node --test test/*.test.mjs
+
+  python:
+    if: github.ref == 'refs/heads/main' && inputs.confirm_production
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Run Discord scraper regression tests
+        run: python -m unittest discover -s test -p 'test_discord_scraper_sync.py'
+
+  browser:
+    if: github.ref == 'refs/heads/main' && inputs.confirm_production
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [a, b, c]
+    env:
+      UI_SHARD: ${{ matrix.shard }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Cache Playwright browser
+        id: pw
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-chromium-${{ runner.os }}-v2
+      - name: Install Playwright
+        run: |
+          pip install playwright
+          if [ "${{ steps.pw.outputs.cache-hit }}" = "true" ]; then
+            python -m playwright install-deps chromium
+            python -m playwright install chromium
+          else
+            python -m playwright install --with-deps chromium
+          fi
+      - name: Start static app server
+        run: |
+          python -m http.server 8791 --directory public > /tmp/go-field-notes-http.log 2>&1 &
+          for i in $(seq 1 20); do
+            if curl --silent --fail http://127.0.0.1:8791/ > /dev/null; then exit 0; fi
+            sleep 1
+          done
+          cat /tmp/go-field-notes-http.log
+          exit 1
+      - name: Run browser regression tests
+        run: python test/ui_checks.py
+
+  deploy:
+    if: github.ref == 'refs/heads/main' && inputs.confirm_production
+    needs: [javascript, python, browser]
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check required Cloudflare secrets are configured
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          if [ -z "$CLOUDFLARE_API_TOKEN" ] || [ -z "$CLOUDFLARE_ACCOUNT_ID" ]; then
+            echo "::error::Configure CLOUDFLARE_API_TOKEN and CLOUDFLARE_ACCOUNT_ID in GitHub Actions secrets before deploying."
+            exit 1
+          fi
+      - name: Deploy production Worker with Wrangler
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: npx --yes wrangler@4 deploy --config wrangler.toml
