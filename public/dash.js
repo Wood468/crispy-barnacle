@@ -1174,7 +1174,7 @@
   function renderHomeAgenda() {
     var t = now(), start = startOfDay(t), endWeek = addDays(start, 7), endNext = addDays(start, 14);
     var endMonth = new Date(t.getFullYear(), t.getMonth() + 1, 1);
-    var active = EV.filter(function (e) { return phase(e, t) === 'live' && !e.long && !kindHidden(e.kind); }).sort(function (a, b) { return a.start - b.start; });
+    var active = EV.filter(function (e) { return phase(e, t) === 'live' && !kindHidden(e.kind); }).sort(function (a, b) { return a.start - b.start; });
     var thisWeek = EV.filter(function (e) { return phase(e, t) === 'soon' && e.start < endWeek && !kindHidden(e.kind); }).sort(function (a, b) { return a.start - b.start; });
     var nextWeek = EV.filter(function (e) { return phase(e, t) === 'soon' && e.start >= endWeek && e.start < endNext && !kindHidden(e.kind); }).sort(function (a, b) { return a.start - b.start; });
     var later = EV.filter(function (e) { return phase(e, t) === 'soon' && e.start >= endNext && e.start < endMonth && !kindHidden(e.kind); }).sort(function (a, b) { return a.start - b.start; });
