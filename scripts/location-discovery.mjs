@@ -19,9 +19,14 @@ const coords = text => {
   return out;
 };
 const decode = s => clean(s).replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&apos;/g, "'");
-const xmlItems = xml => [...xml.matchAll(/<item>([\s\S]*?)<\/item>/g)].map(m => {
-  const field = n => decode((m[1].match(new RegExp("<" + n + "[^>]*>([\\s\\S]*?)<\/" + n + ">")) || [,""])[1].replace(/^<!\[CDATA\[|\]\]>$/g, ""));
-  return { title: field("title"), link: field("link"), desc: field("description") };
+const xmlItems = xml => {
+  const blocks = [...xml.matchAll(/<(item|entry)\\b[^>]*>([\\s\\S]*?)<\\/\\1>/gi)];
+  return blocks.map(m => {
+    const body = m[2];
+    const field = n => decode((body.match(new RegExp("<" + n + "(?:\\\\s[^>]*)?>([\\\\s\\\\S]*?)<\\/" + n + ">","i")) || [,""])[1].replace(/^<!\\[CDATA\\[|\\]\\]>$/g, ""));
+    const href = (body.match(/<link\\b[^>]*href=["']([^"']+)["']/i) || [,""])[1];
+    return { title: field("title"), link: field("link") || href, desc: field("description") || field("content") || field("summary") };
+  });
 };
 const seen = new Set(DATA.places.map(p => p.id));
 let added = 0, checked = 0, errors = [];
