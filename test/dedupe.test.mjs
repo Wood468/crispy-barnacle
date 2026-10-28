@@ -146,6 +146,8 @@ test("infographic card button wiring: thumbnail, Check infographic, merged-card 
   const read = (f) => readFileSync(new URL("../public/" + f, import.meta.url), "utf8");
   const ig = read("infographic.js"), dash = read("dash.js"), css = read("dash.css");
   assert.match(dash, /data-igcard="' \+ esc\(ev\.id\)/);
+  assert.match(dash, /var ig = isReg \? '<button type="button" class="agx agig" data-igcard=/, "regional agenda rows must be wired to the shared infographic resolver");
+  assert.match(dash, /regionalEvents: function \(\)/, "the infographic resolver must be able to find regional event IDs");
   assert.match(dash, /liveEvent\.aliasIds = \(liveEvent\.aliasIds \|\| \[\]\)\.concat\(\[c\.id\]\)/);
   assert.match(dash, /hit\.aliasIds = /);
   assert.match(ig, /setAttribute\('loading', 'lazy'\)/);
