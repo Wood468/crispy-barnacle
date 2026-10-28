@@ -2,7 +2,7 @@ name: G47IX infographic discovery
 
 on:
   schedule:
-    # Six-hour cadence (saves Actions minutes). GitHub schedules use UTC and can be delayed during load.
+    # Two-hour cadence (saves Actions minutes). GitHub schedules use UTC and can be delayed during load.
     - cron: "0 */2 * * *"
   workflow_dispatch:
     inputs:
@@ -85,7 +85,6 @@ jobs:
             echo "No decisions to apply."
           fi
       - name: Read the last months of the Discord channel
-        continue-on-error: true
         env:
           DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
           CHANNEL_ID: ${{ secrets.CHANNEL_ID }}
