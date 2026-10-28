@@ -176,9 +176,24 @@
   function forEvent(ev) {
     if (!DATA || !ev || !ev.name || !(ev.start instanceof Date) || isNaN(ev.start)) return [];
     var s = ev.start.getTime(), e = (ev.end instanceof Date && !isNaN(ev.end) ? ev.end : ev.start).getTime();
-    return DATA.places.filter(function (p) {
-      return (p.events || []).some(function (x) { return nm(x.name) === nm(ev.name) && s <= new Date(x.to + 'T23:59:59').getTime() && e >= new Date(x.from + 'T00:00:00').getTime(); });
+    function overlaps(p) {
+      return (p.events || []).some(function (x) {
+        return s <= new Date(x.to + 'T23:59:59').getTime() && e >= new Date(x.from + 'T00:00:00').getTime();
+      });
+    }
+    function exact(p) { return (p.events || []).some(function (x) { return nm(x.name) === nm(ev.name); }); }
+    var linked = DATA.places.filter(function (p) { return exact(p) && overlaps(p); });
+    if (linked.length) return linked;
+    // Fallback for regional feeds whose headline differs from the official event name:
+    // only link a place when its city, country or named venue is explicitly present in the event location.
+    var loc = nm(ev.place || ev.location || '');
+    if (!loc) return [];
+    var matched = DATA.places.filter(function (p) {
+      if (!overlaps(p)) return false;
+      var terms = [p.name, p.city, p.country].concat(p.aliases || []).filter(Boolean).map(nm);
+      return terms.some(function (term) { return term.length >= 4 && loc.indexOf(term) >= 0; });
     });
+    return matched;
   }
   load().then(function () { document.dispatchEvent(new Event('goplaces')); });
   window.GOPLACES = { open: open, close: close, load: load, forEvent: forEvent, gpx: gpx };
