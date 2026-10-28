@@ -845,3 +845,27 @@ svg.ci{width:22px;height:22px}
 .by-st-soon{color:var(--warn,#ffb020)}
 .by-st-closed{opacity:.8!important}
 .by-ext{border-style:dashed}
+
+
+/* Regional agenda rows: keep event copy and actions in separate, predictable columns. */
+.agw{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:stretch;gap:8px}
+.agw>.agr{width:100%;min-width:0;grid-template-columns:4px minmax(0,1fr) minmax(56px,auto);padding:10px;gap:9px}
+.agw .agr .agt{min-width:0}
+.agw .agr b{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;line-height:1.22}
+.agw .agr small{display:block;line-height:1.35;overflow-wrap:anywhere}
+.agw .agr em{white-space:normal;text-align:right;max-width:84px;line-height:1.2;overflow-wrap:anywhere}
+.agw .ag-actions{display:flex;flex-direction:column;justify-content:center;align-items:center;gap:5px;min-width:34px}
+.agw .ag-actions .agx{position:static;transform:none;flex:none;width:30px;height:30px;margin:0;display:grid;place-items:center}
+.agw .ag-actions .agig.igthumb{width:42px;height:42px;border-radius:9px;overflow:hidden}
+.agw .ag-actions .agig:not(.igthumb){font-size:0}
+.agw .ag-actions .agig:not(.igthumb)::before{content:"▧";font-size:1.05rem}
+.agw .ag-actions .agpin{font-size:1rem}
+@media(max-width:420px){
+  .agw{gap:5px}
+  .agw>.agr{grid-template-columns:3px minmax(0,1fr);gap:8px;padding:9px}
+  .agw .agr em{grid-column:2;justify-self:start;text-align:left;max-width:100%;font-size:.58rem;letter-spacing:.04em}
+  .agw .agr small{font-size:.7rem}
+  .agw .ag-actions{min-width:30px;gap:3px}
+  .agw .ag-actions .agx{width:28px;height:28px}
+  .agw .ag-actions .agig.igthumb{width:38px;height:38px}
+}
