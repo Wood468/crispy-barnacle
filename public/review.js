@@ -51,8 +51,9 @@
     var g = (it.guesses || []).filter(function (x) { return x.eventId && (!window.GODASH || live[x.eventId] || live[String(x.eventId).replace(/^[a-z]+:/, '')] || liveN[String(x.eventTitle || '').toLowerCase()]); }).slice(0, 3);
     return '<article class="igr" data-id="' + esc(it.id) + '">'
       + '<a class="igr-img" href="' + esc(it.image) + '" target="_blank" rel="noopener"><img src="' + esc(it.image) + '" alt="' + esc(it.title || 'Infographic') + '" loading="lazy"></a>'
-      + '<div class="igr-b"><b>' + esc(it.title || 'Untitled graphic') + '</b>' + (it.publishedAt ? '<small>Posted ' + esc(String(it.publishedAt).slice(0, 10)) + (it.history ? ' · older post' : '') + '</small>' : '')
+      + '<div class="igr-b"><b>' + esc(it.title || 'Untitled graphic') + '</b>' + '<small>' + esc(it.source === 'telegram' ? 'Telegram inbox' : it.source === 'discord' ? 'Discord' : it.source || 'Source unknown') + (it.publishedAt ? ' · Posted ' + esc(String(it.publishedAt).slice(0, 10)) : '') + (it.history ? ' · older post' : '') + '</small>'
       + (it.note ? '<small>' + esc(it.note) + '</small>' : '')
+      + (it.text ? '<details class="igr-ocr"><summary>Read image text</summary><p>' + esc(it.text) + '</p></details>' : '')
       + (it.signals && it.signals.length ? '<div class="igr-s">' + it.signals.map(function (s) { return '<span>' + esc(s) + '</span>'; }).join('') + '</div>' : '')
       + '<div class="igr-g">' + (g.length ? g.map(function (x) { return '<button type="button" class="pill all" data-ig-ok="' + esc(x.eventId) + '" data-t="' + esc(x.eventTitle) + '">Approve: ' + esc(x.eventTitle) + '</button>'; }).join('') : '<small>No likely event found.</small>') + '</div>'
       + '<div class="igr-o"><select aria-label="Choose another event"><option value="">Another event…</option>' + eventOptions() + '</select><button type="button" class="pill" data-ig-pick>Approve</button><button type="button" class="pill" data-ig-no>Discard</button></div>'
@@ -71,7 +72,7 @@
     host.hidden = false;
     var kl = document.getElementById('iglinked'), keepLinked = !!(kl && kl.open);
     host.innerHTML = '<details class="dd" open><summary>Infographic review <span class="cnt">' + open.length + '</span></summary><div class="body">'
-      + '<p class="note" style="margin:0 0 8px">Only pictures the matcher was unsure about appear here. Approve puts the picture on that event within a few hours; nothing shows on an event until you approve it.</p>'
+      + '<p class="note" style="margin:0 0 8px">Discord and Telegram pictures appear here until you link them. Check the image text and date before approving; nothing is attached to an event until you approve it.</p>'
       + (msg ? '<p class="igr-msg" role="status">' + esc(msg) + '</p>' : '') + open.slice(0, shown).map(card).join('') + (open.length > shown ? '<button type="button" class="pill all" data-ig-more="1">Show 10 more (' + (open.length - shown) + ' left)</button>' : '') + '</div></details>'
       + (linked.length ? '<details class="dd"' + (keepLinked ? ' open' : '') + ' id="iglinked"><summary>Linked infographics <span class="cnt">' + linked.length + '</span></summary><div class="body"><p class="note" style="margin:0 0 8px">Tap ✕ to unlink from one event, add more events, or discard. Changes reach the event within a few hours.</p>' + linked.map(linkedCard).join('') + '</div></details>' : '');
   }
