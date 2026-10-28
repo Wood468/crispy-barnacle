@@ -153,6 +153,26 @@ test("regional infographic data stays linked to its source event", () => {
   assert.ok(entry.infographics?.some((g) => g.source === "G47IX" && /^\/infographics\//.test(g.url)), "approved infographic remains attached to the exact regional event ID");
 });
 
+
+test("regional events expose sourced venue coordinates, including community-labelled Mexico hotspot", () => {
+  const places = JSON.parse(readFileSync(new URL("../public/places.json", import.meta.url), "utf8"));
+  const mexico = places.places.find((p) => p.id === "alameda-central-mexico-city");
+  assert.ok(mexico, "Día de Muertos has a suggested Mexico City play location");
+  assert.equal(mexico.lat, 19.435474);
+  assert.equal(mexico.lng, -99.143903);
+  assert.match(mexico.type, /community-reported/i);
+  assert.ok(mexico.sources.some((x) => /reddit\.com/.test(x.url)), "community source is retained");
+  assert.ok(mexico.sources.some((x) => /pokemongo\.com/.test(x.url)), "official event source is retained");
+  assert.ok(mexico.events.some((x) => x.name === "Dia de Muertos 2026: Mexico" && x.from === "2026-10-27" && x.to === "2026-11-05"));
+  const resolver = readFileSync(new URL("../public/places.js", import.meta.url), "utf8");
+  assert.match(resolver, /function forEvent\(ev\)/);
+  assert.match(resolver, /var loc = nm\(ev\.place \|\| ev\.location \|\| ''\)/, "events with differing feed and venue titles can resolve by explicit location text");
+  assert.match(resolver, /terms\.some\(function \(term\) \{ return term\.length >= 4 && loc\.indexOf\(term\) >= 0; \}\)/);
+  const dash = readFileSync(new URL("../public/dash.js", import.meta.url), "utf8");
+  assert.match(dash, /aria-label="Location and coordinates for /);
+  assert.match(dash, /📍<span>Coords<\/span>/, "regional cards label the coordinate action");
+});
+
 test("infographic card button wiring: thumbnail, Check infographic, merged-card aliases", () => {
   const read = (f) => readFileSync(new URL("../public/" + f, import.meta.url), "utf8");
   const ig = read("infographic.js"), dash = read("dash.js"), css = read("dash.css");
