@@ -569,6 +569,7 @@
       "five": "Origin Forme Giratina",
       "mega": "Mega Sableye",
       "shadow": "Shadow Landorus (Incarnate), to Nov 3",
+      "low": { "one": ["Pikachu", "Wearing a hat and capelet", "Antique Sinistea", "Wearing a bow"], "three": ["Cofagrigus", "Trevenant", "Dhelmise"], "shadowOne": ["Shadow Gastly", "Shadow Totodile", "Shadow Shieldon", "Shadow Gible"], "shadowThree": ["Shadow Primeape", "Shadow Kirlia", "Shadow Drapion"], "observed": "2026-10-28", "source": "Pokémon GO Hub current raids" },
       "rh": "Origin Forme Giratina"
     }
   ],
