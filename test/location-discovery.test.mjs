@@ -1,0 +1,36 @@
+import test from "node:test";
+import assert from "node:assert/strict";
+import { spawnSync } from "node:child_process";
+import { fileURLToPath } from "node:url";
+import { coords, xmlItems } from "../scripts/location-discovery-parse.mjs";
+
+const discoveryScript = fileURLToPath(new URL("../scripts/location-discovery.mjs", import.meta.url));
+
+test("community location discovery script passes Node syntax checking", () => {
+  const result = spawnSync(process.execPath, ["--check", discoveryScript], { encoding: "utf8" });
+  assert.equal(result.status, 0, [result.stdout, result.stderr].filter(Boolean).join("\\n"));
+});
+
+test("RSS item parsing preserves title, permalink and CDATA description", () => {
+  const xml = '<rss><channel><item><title>Community meetup</title><link>https://www.reddit.com/r/pokemongo/comments/abc/meetup</link><description><![CDATA[Coordinates: 37.7749, -122.4194 &amp; details]]></description></item></channel></rss>';
+  assert.deepEqual(xmlItems(xml), [{
+    title: "Community meetup",
+    link: "https://www.reddit.com/r/pokemongo/comments/abc/meetup",
+    desc: "Coordinates: 37.7749, -122.4194 & details"
+  }]);
+});
+
+test("Atom entry parsing accepts link href and summary content", () => {
+  const xml = '<feed><entry><title>Sydney community play</title><link href="https://www.reddit.com/r/pokemongo/comments/def/play" rel="alternate"/><summary>Coordinates: -33.8688, 151.2093</summary></entry></feed>';
+  assert.deepEqual(xmlItems(xml), [{
+    title: "Sydney community play",
+    link: "https://www.reddit.com/r/pokemongo/comments/def/play",
+    desc: "Coordinates: -33.8688, 151.2093"
+  }]);
+});
+
+test("coordinate extraction rejects out-of-range, zero and partial-number matches", () => {
+  assert.deepEqual(coords("Valid 37.7749, -122.4194; invalid 91.0000, 181.0000; zero 0.0000, 0.0000"), [
+    { lat: 37.7749, lng: -122.4194 }
+  ]);
+});
