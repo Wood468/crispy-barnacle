@@ -3,37 +3,18 @@
 // into public/places.json only when an event, coordinate pair and source permalink are all present.
 // No API credentials, scraping bypasses, or fabricated coordinates.
 import { readFile, writeFile } from "node:fs/promises";
+import { coords, redditSearchUrl, xmlItems } from "./location-discovery-parse.mjs";
 
 const ROOT = new URL("../public/", import.meta.url);
 const WORLD = JSON.parse(await readFile(new URL("world-events.json", ROOT), "utf8"));
 const FILE = new URL("places.json", ROOT);
 const DATA = JSON.parse(await readFile(FILE, "utf8"));
 const sleep = ms => new Promise(r => setTimeout(r, ms));
-const clean = s => String(s || "").replace(/<[^>]+>/g, " ").replace(/&amp;/g, "&").replace(/&#x2F;/g, "/").replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/\s+/g, " ").trim();
-const coords = text => {
-  const out = [], re = /(-?\d{1,2}\.\d{3,})\s*[,; ]\s*(-?\d{1,3}\.\d{3,})/g; let m;
-  while ((m = re.exec(text)) !== null) {
-    const lat = Number(m[1]), lng = Number(m[2]);
-    if (Math.abs(lat) <= 90 && Math.abs(lng) <= 180 && !(lat === 0 && lng === 0)) out.push({ lat, lng });
-  }
-  return out;
-};
-const decode = s => clean(s).replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&apos;/g, "'");
-const xmlItems = xml => {
-  const blocks = [...xml.matchAll(/<(item|entry)\\b[^>]*>([\\s\\S]*?)<\\/\\1>/gi)];
-  return blocks.map(m => {
-    const body = m[2];
-    const field = n => decode((body.match(new RegExp("<" + n + "(?:\\s[^>]*)?>([\\s\\S]*?)<\\/" + n + ">","i")) || [,""])[1].replace(/^<!\\[CDATA\\[|\\]\\]>$/g, ""));
-    const href = (body.match(/<link\\b[^>]*href=["']([^"']+)["']/i) || [,""])[1];
-    return { title: field("title"), link: field("link") || href, desc: field("description") || field("content") || field("summary") };
-  });
-};
 const seen = new Set(DATA.places.map(p => p.id));
 let added = 0, checked = 0, errors = [];
 const upcoming = (WORLD.events || []).filter(e => e && e.id && e.name && e.place && e.start && !/worldwide|play from anywhere|participating .* malls|airports/i.test(e.place)).slice(0, 80);
 for (const ev of upcoming) {
-  const query = encodeURIComponent('"' + ev.name.slice(0, 70) + '" (coordinates OR coords OR hotspot OR "where to play" OR "best place")');
-  const url = "https://www.reddit.com/search.rss?q=" + query + "&sort=new&t=month";
+  const url = redditSearchUrl(ev.name);
   try {
     const res = await fetch(url, { headers: { "user-agent": "GOFieldNotesLocationDiscovery/1.0 (public event research; contact: project repository)", accept: "application/atom+xml, application/rss+xml" } });
     if (!res.ok) { errors.push("Reddit HTTP " + res.status); continue; }
