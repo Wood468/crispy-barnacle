@@ -626,7 +626,7 @@ button.igcheck{min-height:44px}
 .signal-transfer-candy{border-color:color-mix(in srgb,#35B8C9 65%,var(--ring));background:color-mix(in srgb,#35B8C9 20%,var(--glass))}
 /* Hide: a small corner button, so the footer buttons keep their room */
 .evc-top{align-items:center}
-.hide-x{flex:none;width:26px;height:26px;margin-left:6px;border:0;border-radius:50%;background:transparent;color:var(--muted);font:700 .75rem var(--sans);cursor:pointer;opacity:.7}
+.hide-x{flex:none;width:44px;height:44px;margin-left:-3px;margin-right:-9px;padding:0;display:grid;place-items:center;border:0;border-radius:50%;background:transparent;color:var(--muted);font:700 .75rem/1 var(--sans);cursor:pointer;opacity:.7;touch-action:manipulation}
 .hide-x:hover,.hide-x:focus-visible{background:var(--glass);color:var(--fg);opacity:1}
 /* Dynamax: one animated sprite, drawn big, with no glow behind it */
 .max-art.is-dyn::before{display:none}
