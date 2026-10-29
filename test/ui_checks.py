@@ -85,7 +85,8 @@ with sync_playwright() as p:
             for i in range(10)
         ]
         next_page = page(api=json.dumps({'enabled': True, 'events': next_events}),
-                         extra={'**/world-events.json': ('{"events":[]}', 200),
+                         extra={'**/data.json': ('{"events":[],"spotlight":[],"raidHour":[],"asOf":"2026-10-09"}', 200),
+                                '**/world-events.json': ('{"events":[]}', 200),
                                 '**/regional-events.json': ('{"events":[]}', 200)})
         next_button = next_page.locator('#home-now .today-next-up')
         next_button.wait_for(state='attached', timeout=5000)
