@@ -119,6 +119,29 @@ class DiscordScraperSyncTests(unittest.TestCase):
         self.assertEqual(discord_scraper.image_record([message], "123456789")["image_url"],
                          "https://cdn.discordapp.com/hd.png")
 
+    def test_rejects_wide_supporting_screenshot_snippet(self):
+        message = self.message()
+        message["attachments"][0].update({"width": 1080, "height": 280})
+        self.assertIsNone(discord_scraper.image_record([message], "123456789"))
+
+    def test_rejects_small_low_resolution_screenshot(self):
+        message = self.message()
+        message["attachments"][0].update({"width": 480, "height": 320})
+        self.assertIsNone(discord_scraper.image_record([message], "123456789"))
+
+    def test_accepts_tall_full_size_infographic(self):
+        message = self.message()
+        message["attachments"][0].update({"width": 1080, "height": 1920})
+        self.assertIsNotNone(discord_scraper.image_record([message], "123456789"))
+
+    def test_rejects_embed_thumbnail_but_accepts_full_infographic(self):
+        message = self.message()
+        message["attachments"] = []
+        message["embeds"] = [{"thumbnail": {"url": "https://cdn.discordapp.com/thumb.png", "width": 320, "height": 180}}]
+        self.assertIsNone(discord_scraper.image_record([message], "123456789"))
+        message["embeds"] = [{"image": {"url": "https://cdn.discordapp.com/full.png", "width": 1200, "height": 1800}}]
+        self.assertIsNotNone(discord_scraper.image_record([message], "123456789"))
+
     def test_same_url_does_not_rewrite_file(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "infographics.json"
