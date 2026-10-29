@@ -3,14 +3,13 @@
 // into public/places.json only when an event, coordinate pair and source permalink are all present.
 // No API credentials, scraping bypasses, or fabricated coordinates.
 import { readFile, writeFile } from "node:fs/promises";
+import { coords, xmlItems } from "./location-discovery-parse.mjs";
 
 const ROOT = new URL("../public/", import.meta.url);
 const WORLD = JSON.parse(await readFile(new URL("world-events.json", ROOT), "utf8"));
 const FILE = new URL("places.json", ROOT);
 const DATA = JSON.parse(await readFile(FILE, "utf8"));
 const sleep = ms => new Promise(r => setTimeout(r, ms));
-import { coords, xmlItems } from "./location-discovery-parse.mjs";
-
 const seen = new Set(DATA.places.map(p => p.id));
 let added = 0, checked = 0, errors = [];
 const upcoming = (WORLD.events || []).filter(e => e && e.id && e.name && e.place && e.start && !/worldwide|play from anywhere|participating .* malls|airports/i.test(e.place)).slice(0, 80);
