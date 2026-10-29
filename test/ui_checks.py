@@ -441,7 +441,7 @@ with sync_playwright() as p:
         dt=pg.inner_text('#plc')
         check('places: detail shows coordinates, copy button and no verified route', '−27.4696, 153.0252' in dt and pg.locator('#plc [data-copy]').count()==1 and 'No verified GPX route' in dt and pg.locator('#plc a[download]').count()==0)
         hrefs=pg.evaluate("[...document.querySelectorAll('#plc .plc-lk')].map(a=>a.href)")
-        check('places: Apple, Google and OpenStreetMap links carry the coordinates, https only', len(hrefs)==3 and all(h.startswith('https://') and '-27.4696' in h and '153.0252' in h for h in hrefs), hrefs)
+        check('places: no map-app links are rendered; coordinates remain copyable', len(hrefs)==0 and '−27.4696, 153.0252' in dt and pg.locator('#plc [data-copy]').count()==1, hrefs)
         check('places: raid activity is stated as unknown, never live', 'Unknown. Nothing here says raids happen now.' in dt and 'No live raid evidence' in dt)
         check('places: detail names the source and verified date', 'Wikipedia' in dt and '10 Oct 2026' in dt and 'Pokémon GO Hub' in dt)
         pg.evaluate("window.__clip=null;navigator.clipboard.writeText=function(t){window.__clip=t;return Promise.resolve()}")
