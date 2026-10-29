@@ -8,7 +8,7 @@ const discoveryScript = fileURLToPath(new URL("../scripts/location-discovery.mjs
 
 test("community location discovery script passes Node syntax checking", () => {
   const result = spawnSync(process.execPath, ["--check", discoveryScript], { encoding: "utf8" });
-  assert.equal(result.status, 0, [result.stdout, result.stderr].filter(Boolean).join("\\n"));
+  assert.equal(result.status, 0, [result.stdout, result.stderr].filter(Boolean).join("\n"));
 });
 
 test("RSS item parsing preserves title, permalink and CDATA description", () => {
