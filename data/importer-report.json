@@ -1,5 +1,5 @@
 {
- "runAt": "2026-10-29T16:15:41.377Z",
+ "runAt": "2026-10-29T21:15:19.592Z",
  "sources": {
   "official": {
    "listed": 24,
@@ -173,52 +173,41 @@
  ],
  "gaps": [
   {
-   "event": "Into the Wild",
+   "event": "Super Mega Raid Day",
    "field": "bonuses",
    "missingFrom": [
-    "official"
+    "leekduck",
+    "hub"
    ]
   },
   {
-   "event": "Into the Wild",
-   "field": "featured",
-   "missingFrom": [
-    "official"
-   ]
-  },
-  {
-   "event": "Into the Wild",
-   "field": "raids",
-   "missingFrom": [
-    "official"
-   ]
-  },
-  {
-   "event": "Into the Wild",
+   "event": "Super Mega Raid Day",
    "field": "research",
    "missingFrom": [
-    "official"
+    "leekduck",
+    "hub"
    ]
   },
   {
-   "event": "Into the Wild",
-   "field": "shiny",
+   "event": "Super Mega Raid Day",
+   "field": "moves",
    "missingFrom": [
-    "official"
+    "official",
+    "leekduck"
    ]
   },
   {
-   "event": "Into the Wild",
+   "event": "Super Mega Raid Day",
    "field": "tickets",
    "missingFrom": [
-    "official"
+    "hub"
    ]
   },
   {
-   "event": "Into the Wild",
+   "event": "Super Mega Raid Day",
    "field": "dates",
    "missingFrom": [
-    "official"
+    "hub"
    ]
   },
   {
@@ -376,5 +365,8 @@
    ]
   }
  ],
- "errors": []
+ "errors": [
+  "https://pokemongo.com/ja/news/staraptor-super-mega-raid-day-2026/: The operation was aborted due to timeout",
+  "https://pokemongo.com/ko/news/chandelure-super-mega-raid-day-2026/: The operation was aborted due to timeout"
+ ]
 }
