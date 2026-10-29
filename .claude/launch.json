@@ -1,0 +1,19 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "open-design-preview",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": [
+        "-y",
+        "@feimacode/open-design-agent-kit@0.3.0",
+        "preview",
+        "--no-open",
+        "--root-redirect",
+        "--port",
+        "5317"
+      ],
+      "port": 5317
+    }
+  ]
+}

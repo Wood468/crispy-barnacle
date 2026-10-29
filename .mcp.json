@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "open-design": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@feimacode/open-design-agent-kit-mcp@0.3.0"
+      ]
+    }
+  }
+}
