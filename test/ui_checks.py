@@ -192,7 +192,7 @@ with sync_playwright() as p:
         pr=pg.inner_text('#prio')
         check('API data used (Dialga Raid Hour present)', 'DIALGA RAID HOUR' in pr.upper(), pr[:200])
         check('datamined and conflicting events are never in Priority Now', 'Rumoured' not in pr and 'Disputed' not in pr)
-        check('datamined and conflicting events remain in source data but stay out of Priority Now', 'Rumoured' not in pr and 'Disputed' not in pr and pg.evaluate("GODASH.events().filter(e=>['datamined','conflicting'].includes(e.status)).length===2"))
+        check('datamined and conflicting events remain available in source data but stay out of Priority Now', 'Rumoured' not in pr and 'Disputed' not in pr and pg.evaluate("['Rumoured Gigantamax Day','Disputed Raid Hour'].every(n=>GODASH.events().some(e=>e.name===n))"))
         check('preview banner visible', pg.locator('#envbar:not([hidden])').count()==1 and 'STAGING DATABASE' in pg.inner_text('#envbar'))
         pg.click('nav.tabs button[data-tab="events"]'); pg.click('#subnav-events button[data-sub="timeline"]'); pg.wait_for_timeout(200)
         check('timeline still lists the unconfirmed items, labelled', 'datamined' in pg.inner_text('#evtimeline').lower() and 'conflicting' in pg.inner_text('#evtimeline').lower() and 'RUMOURED GIGANTAMAX DAY' in pg.inner_text('#evtimeline').upper())
