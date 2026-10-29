@@ -7,6 +7,57 @@
   "eventImages": {},
   "candidates": [
     {
+      "id": "discord:1565166706731520082",
+      "source": "discord",
+      "creator": "",
+      "title": "It had been clarified that tier 1 in the Free Pass of GO Pass: Into the wild, will give you the free upgrade to Deluxe GO Pass: Dynamax Trails",
+      "url": "https://discord.com/channels/@me/1558793395198099618/1565166706731520082",
+      "publishedAt": "2026-10-29T00:53:42.276000+00:00",
+      "imageUrl": "https://cdn.discordapp.com/attachments/1021467233127514172/1565162780389286078/Screenshot_2026-10-29-01-16-50-990_com.brave.browser-edit.jpg?ex=6ae3e6ee&is=6ae2956e&hm=5f01fa596173436aa200805311478c8716f944ad009eed66cde6cd06ffd3589d&",
+      "reviewStatus": "needs_review",
+      "decision": "pending",
+      "ocrChecked": true,
+      "ocrText": "Trainers who claimed the first tier of rewards in GO Pass: Into the Wild will automatically be upgraded to the GO Pass Deluxe, for free!",
+      "eventMatch": {
+        "eventId": "into",
+        "eventTitle": "Into the Wild",
+        "score": 0.811,
+        "confidence": "high",
+        "matchedTerms": [
+          "wild",
+          "dynamax",
+          "pass"
+        ],
+        "alternatives": [
+          {
+            "eventId": "into",
+            "eventTitle": "Into the Wild",
+            "score": 0.811
+          },
+          {
+            "eventId": "sendai",
+            "eventTitle": "GO Wild Area: Sendai",
+            "score": 0.302
+          },
+          {
+            "eventId": "wag",
+            "eventTitle": "GO Wild Area: Global",
+            "score": 0.281
+          }
+        ],
+        "method": "title-to-public/data.json heuristic",
+        "requiresHumanVerification": true
+      },
+      "reviewNote": "Creator not set. Set the DISCORD_CREATOR variable to credit the right person.",
+      "signals": [
+        "caption names the event",
+        "picture text names the event",
+        "posted around the event"
+      ],
+      "matchScore": 5,
+      "stagedPath": "/infographics/g47ix/discord-1565166706731520082.jpg"
+    },
+    {
       "id": "discord:1565053518329684099",
       "source": "discord",
       "creator": "",
