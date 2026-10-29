@@ -44,7 +44,8 @@ with sync_playwright() as p:
         # The dashboard only switches to the live API when it contains at least ten valid events.
         touch_events = [touch_event] + [
             ev('touch-future-' + str(i), 'Touch Target Fixture Future ' + str(i), 'pokemon-spotlight-hour',
-               '2026-10-11T10:00:00', '2026-10-11T10:30:00', 'official_confirmed')
+               ('2026-10-10' if i < 4 else '2026-10-11') + 'T10:00:00',
+               ('2026-10-10' if i < 4 else '2026-10-11') + 'T10:30:00', 'official_confirmed')
             for i in range(9)
         ]
         touch_page = page(api=json.dumps({'enabled': True, 'events': touch_events}))
@@ -65,6 +66,25 @@ with sync_playwright() as p:
         after_count = int(after_group.locator('.today-phase-count').inner_text()) if after_group.count() else 0
         check('Today phase count updates after hiding an event',
               after_count == before_count - 1, {'before': before_count, 'after': after_count})
+        tomorrow_group = touch_page.locator('#week .week-day-group[data-week-day="2026-10-10"]')
+        sunday_group = touch_page.locator('#week .week-day-group[data-week-day="2026-10-11"]')
+        check('This Week groups events by start date', tomorrow_group.count() == 1 and sunday_group.count() == 1 and
+              tomorrow_group.locator('.week-day-events [data-id="leekduck:touch-future-0"]').count() == 1 and
+              sunday_group.locator('.week-day-events [data-id="leekduck:touch-future-4"]').count() == 1)
+        check('This Week labels tomorrow clearly and keeps each day count accurate',
+              tomorrow_group.locator('.week-day-label').inner_text() == 'Tomorrow' and
+              all(int(g.locator('.week-day-count').inner_text().split()[0]) == g.locator('.week-day-events .evc').count()
+                  for g in [tomorrow_group, sunday_group]))
+        next_button = touch_page.locator('#home-now .today-next-up')
+        check('Empty Today offers a tappable next event', next_button.count() == 1 and
+              next_button.get_attribute('aria-label') == 'Open details for Touch Target Fixture Future 0')
+        next_button.click()
+        touch_page.locator('#evd').wait_for(state='visible')
+        jump_links = touch_page.locator('#evd .evd-jump a').evaluate_all(
+            "els => els.map(a => ({label: a.textContent.trim(), target: !!document.getElementById(a.getAttribute('href').slice(1))}))")
+        check('Event detail quick links all have rendered targets', all(x['target'] for x in jump_links), jump_links)
+        check('Event detail hides Highlights and Locations when those sections are absent',
+              all(x['label'] not in ['Highlights', 'Locations'] for x in jump_links), jump_links)
         touch_page.context.close()
 
         # 1. no marks: nothing is claimed missing
