@@ -1218,7 +1218,27 @@
     tdEl.innerHTML = today.length || regionalToday.length
       ? phaseGroup('Happening now', liveToday.length + regionalToday.length, liveToday.map(function (e) { return card(e); }).join('') + regionalToday.map(function (e) { return agendaRow(e, true); }).join('')) +
         phaseGroup('Later today', laterToday.length, laterToday.map(function (e) { return card(e); }).join(''))
-      : '<p class="empty">Nothing is scheduled for today.' + (nextUp ? ' Next up: <b>' + esc(nextUp.name) + '</b>, ' + esc(nextUp.start.toLocaleDateString(undefined, { weekday: 'short', day: 'numeric', month: 'short' }) + ', ' + nextUp.start.toLocaleTimeString(undefined, { hour: 'numeric', minute: '2-digit' })) + '.' : '') + '</p>';
+      : '<div class="today-empty"><p class="empty">Nothing is scheduled for today.</p>' +
+        (nextUp
+          ? '<button type="button" class="today-next-up" data-open="' + esc(nextUp.id) + '" aria-label="Open details for ' + esc(nextUp.name) + '"><span class="today-next-kicker">NEXT UP</span><b>' + esc(nextUp.name) + '</b><span class="today-next-time">' + esc(fmtD(nextUp.start) + ' · ' + fmtT(nextUp.start)) + '</span><span class="today-next-action">View event details <span aria-hidden="true">→</span></span></button>'
+          : '<p class="today-empty-note">Check the schedule for upcoming events.</p>') + '</div>';
+  }
+  function renderWeekGroups(list, t) {
+    t = t || now();
+    var groups = [], byDay = {};
+    list.forEach(function (e) {
+      var key = dayKey(e.start), group = byDay[key];
+      if (!group) { group = byDay[key] = { key: key, start: e.start, events: [] }; groups.push(group); }
+      group.events.push(e);
+    });
+    var tomorrowKey = dayKey(addDays(startOfDay(t), 1));
+    return groups.map(function (group) {
+      var tomorrow = group.key === tomorrowKey;
+      return '<section class="week-day-group" data-week-day="' + esc(group.key) + '"><div class="week-day-head"><span class="week-day-label">' + (tomorrow ? 'Tomorrow' : esc(fmtD(group.start))) + '</span>'
+        + (tomorrow ? '<time datetime="' + esc(group.key) + '">' + esc(fmtD(group.start)) + '</time>' : '')
+        + '<span class="week-day-count">' + group.events.length + ' ' + (group.events.length === 1 ? 'event' : 'events') + '</span></div><div class="week-day-events">'
+        + group.events.map(function (e) { return card(e); }).join('') + '</div></section>';
+    }).join('');
   }
   function renderHomeAgenda() {
     var t = now(), start = startOfDay(t), endDay = addDays(start, 1), endWeek = addDays(start, 7), endNext = addDays(start, 14);
@@ -1228,7 +1248,7 @@
     var later = EV.filter(function (e) { return phase(e, t) === 'soon' && e.start >= endNext && e.start < endMonth && !isHidden(e.id) && !kindHidden(e.kind); }).sort(function (a, b) { return a.start - b.start; });
     function fill(id, list, empty, countId) {
       var el = $(id); list = list.filter(function (e) { return !fyIds[e.id]; });
-      if (el) el.innerHTML = list.length ? list.map(function (e) { return card(e); }).join('') : '<p class="empty">' + empty + '</p>';
+      if (el) el.innerHTML = list.length ? (id === 'week' ? renderWeekGroups(list, t) : list.map(function (e) { return card(e); }).join('')) : '<p class="empty">' + empty + '</p>';
       var count = countId && $(countId);
       if (count) count.textContent = list.length + (list.length === 1 ? ' event' : ' events');
     }
@@ -1342,7 +1362,7 @@
     renderCoverage();
     if (window.GO && GO.refreshDex) GO.refreshDex();
     usSync();
-    var inf = document.createElement('script'); inf.src = '/infographic.js?v=20261027a'; document.body.appendChild(inf); var x = document.createElement('script'); x.src = '/extra.js?v=20261024a'; document.body.appendChild(x); var y = document.createElement('script'); y.src = '/detail.js?v=20261029h'; document.body.appendChild(y); var z = document.createElement('script'); z.src = '/places.js?v=20261029a'; document.body.appendChild(z); var w = document.createElement('script'); w.src = '/fresh.js?v=20261014a'; document.body.appendChild(w); var nv = document.createElement('script'); nv.src = '/nudge.js?v=20261014l'; document.body.appendChild(nv); var rv = document.createElement('script'); rv.src = '/review.js?v=20261029c'; document.body.appendChild(rv); var by = document.createElement('script'); by.src = '/buy.js?v=20261020d'; document.body.appendChild(by);
+    var inf = document.createElement('script'); inf.src = '/infographic.js?v=20261027a'; document.body.appendChild(inf); var x = document.createElement('script'); x.src = '/extra.js?v=20261024a'; document.body.appendChild(x); var y = document.createElement('script'); y.src = '/detail.js?v=20261030a'; document.body.appendChild(y); var z = document.createElement('script'); z.src = '/places.js?v=20261029a'; document.body.appendChild(z); var w = document.createElement('script'); w.src = '/fresh.js?v=20261014a'; document.body.appendChild(w); var nv = document.createElement('script'); nv.src = '/nudge.js?v=20261014l'; document.body.appendChild(nv); var rv = document.createElement('script'); rv.src = '/review.js?v=20261029c'; document.body.appendChild(rv); var by = document.createElement('script'); by.src = '/buy.js?v=20261020d'; document.body.appendChild(by);
   }
   envBanner();
   var dexP = fetch('/dex.json').then(function (r) { return r.json(); }).catch(function () { return []; });
