@@ -156,10 +156,10 @@
     var many = (d.sources || []).length > 1;
     var gaps = (d.gaps || []).length ? '<p class="note">Some sources do not mention: ' + esc(d.gaps.map(function (g) { return g.field; }).filter(function (v, i, a) { return a.indexOf(v) === i; }).join(', ')) + '. Not every write-up covers everything.</p>' : '';
     var checkedAt = String(d.updated || '').slice(0, 10), ageDays = checkedAt ? Math.max(0, Math.floor((Date.now() - Date.parse(checkedAt + 'T00:00:00Z')) / 864e5)) : null;
-    var freshness = ageDays === null || !Number.isFinite(ageDays) ? 'Check date unavailable' : ageDays <= 7 ? 'Recently checked' : ageDays <= 21 ? 'Worth rechecking' : 'May be out of date';
+    var freshness = ageDays === null || !Number.isFinite(ageDays) ? 'Update date unavailable' : ageDays <= 7 ? 'Recently updated' : ageDays <= 21 ? 'Update may be due' : 'Data may be out of date';
     var trusted = (d.sources || []).some(function (s) { return /leekduck\.com$/i.test((function(){try{return new URL(s.url).hostname;}catch(e){return '';}})()); });
     var sourceNote = trusted ? 'Leek Duck is treated as a trusted Pokémon GO community source; official Niantic announcements remain distinct.' : '';
-    return '<h3 class="sec2">Event details</h3><div class="evd-card evd-groups">' + conf + groups + '</div>' + gaps + '<p class="evd-src">' + (many ? 'Compared: ' : 'Source: ') + links + (many ? '' : ' (single source, not cross-checked)') + ' · checked ' + esc(checkedAt || 'date unknown') + ' · <span class="src-fresh" data-age="' + (ageDays === null ? 'unknown' : ageDays) + '">' + freshness + '</span></p>' + (sourceNote ? '<p class="note">' + sourceNote + '</p>' : '');
+    return '<h3 class="sec2">Event details</h3><div class="evd-card evd-groups">' + conf + groups + '</div>' + gaps + '<p class="evd-src">' + (many ? 'Compared: ' : 'Source: ') + links + (many ? '' : ' (single source, not cross-checked)') + ' · comparison data updated ' + esc(checkedAt || 'date unknown') + ' · <span class="src-fresh" data-age="' + (ageDays === null ? 'unknown' : ageDays) + '">' + freshness + '</span></p>' + (sourceNote ? '<p class="note">' + sourceNote + '</p>' : '');
   }
 
   /* Seasons and monthly GO Passes: their own layout, in sections with icons. Curated notes come from season.json; rank rows and prices from the compared write-ups. */
@@ -197,7 +197,7 @@
     out += sec('Prices', '/ico/pass.webp', priceHtml);
     out += (si.sections || []).slice(1).map(function (x) { return sec(x.t, x.icon, ul(x.items)); }).join('');
     var links = (d.sources || []).map(function (s) { var u = safe(s.url); return u ? '<a href="' + esc(u) + '" target="_blank" rel="noopener noreferrer">' + esc(s.name) + '</a>' : esc(s.name); }).join(' · ');
-    return '<h3 class="sec2">' + esc(si.label === 'GO Pass' ? 'GO Pass' : 'Season') + ' details</h3><div class="evd-card evd-groups">' + out + '</div><p class="evd-src">Source: ' + (links || '<a href="' + esc(safe(si.url)) + '" target="_blank" rel="noopener noreferrer">Leek Duck</a>') + (d.updated ? ' · checked ' + esc(String(d.updated).slice(0, 10)) : '') + '. Banner picture: Leek Duck.</p>';
+    return '<h3 class="sec2">' + esc(si.label === 'GO Pass' ? 'GO Pass' : 'Season') + ' details</h3><div class="evd-card evd-groups">' + out + '</div><p class="evd-src">Source: ' + (links || '<a href="' + esc(safe(si.url)) + '" target="_blank" rel="noopener noreferrer">Leek Duck</a>') + (d.updated ? ' · comparison data updated ' + esc(String(d.updated).slice(0, 10)) : '') + '. Banner picture: Leek Duck.</p>';
   }
   /* A live (Leek Duck) item can arrive without the curated write-up, pictures or bonuses even though the app holds them. Fill the gaps at display time:
      first from the curated card for the same article or name, then from the compared event write-up (short lines such as "Minior (Red Core)" are Pokémon). */
