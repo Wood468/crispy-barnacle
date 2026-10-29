@@ -129,9 +129,14 @@
         var whole = tidy(it.text);
         (/^rank \d+\b/i.test(whole) ? [whole] : whole.split(/(?<=[.!?])\s+(?=[A-Z])/)).forEach(function (sent) {
           var k = sent.toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
-          if (k.length < 8 || seen[k] || BOILER.test(sent)) return;
-          seen[k] = 1;
-          items.push({ text: sent, sources: it.sources || [], status: it.status || '' });
+          if (k.length < 8 || BOILER.test(sent)) return;
+          if (seen[k]) {
+            (it.sources || []).forEach(function (id) { if (seen[k].sources.indexOf(id) < 0) seen[k].sources.push(id); });
+            if (seen[k].status !== 'official' && it.status === 'official') seen[k].status = 'official';
+            return;
+          }
+          seen[k] = { text: sent, sources: (it.sources || []).slice(), status: it.status || '' };
+          items.push(seen[k]);
         });
       });
       if (!items.length) return '';
