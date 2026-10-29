@@ -2,7 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { spawnSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
-import { coords, xmlItems } from "../scripts/location-discovery-parse.mjs";
+import { coords, redditSearchUrl, xmlItems } from "../scripts/location-discovery-parse.mjs";
 
 const discoveryScript = fileURLToPath(new URL("../scripts/location-discovery.mjs", import.meta.url));
 
@@ -33,4 +33,14 @@ test("coordinate extraction rejects out-of-range, zero and partial-number matche
   assert.deepEqual(coords("Valid 37.7749, -122.4194; invalid 91.0000, 181.0000; zero 0.0000, 0.0000"), [
     { lat: 37.7749, lng: -122.4194 }
   ]);
+});
+
+test("community search URLs keep the Reddit host fixed and encode event names as a query", () => {
+  const url = redditSearchUrl('https://evil.example/?q=bad "event"');
+  assert.equal(url.origin, "https://www.reddit.com");
+  assert.equal(url.pathname, "/search.rss");
+  assert.equal(url.searchParams.get("sort"), "new");
+  assert.equal(url.searchParams.get("t"), "month");
+  assert.match(url.searchParams.get("q"), /https:\/\/evil\.example/);
+  assert.match(url.searchParams.get("q"), /coordinates OR coords OR hotspot/);
 });
