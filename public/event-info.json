@@ -505,6 +505,13 @@
           "source": "G47IX",
           "sourceUrl": "https://discord.com/channels/@me/1558793395198099618/1559666456134815897",
           "alt": "Super Mega Raid Day infographic"
+        },
+        {
+          "label": "Infographic · G47IX",
+          "url": "/infographics/g47ix/discord-1565266679955726382.webp",
+          "source": "G47IX",
+          "sourceUrl": "https://discord.com/channels/@me/1558793395198099618/1565266679955726382",
+          "alt": "Super Mega Raid Day infographic"
         }
       ]
     },
@@ -1206,6 +1213,50 @@
           "source": "G47IX",
           "sourceUrl": "https://discord.com/channels/@me/1558793395198099618/1564819557892366358",
           "alt": "Giratina (Origin Forme) in 5-star Raid Battles infographic"
+        }
+      ]
+    },
+    "leekduck:dynamax-trails-2026": {
+      "names": [
+        "Dynamax Trails"
+      ],
+      "source": {
+        "label": "G47IX",
+        "trust": "community",
+        "url": "https://discord.com/channels/@me/1558793395198099618/1565053518329684099",
+        "observed": "2026-10-29"
+      },
+      "tickets": [],
+      "info": [],
+      "infographics": [
+        {
+          "label": "Infographic · G47IX",
+          "url": "/infographics/g47ix/discord-1565053518329684099.webp",
+          "source": "G47IX",
+          "sourceUrl": "https://discord.com/channels/@me/1558793395198099618/1565053518329684099",
+          "alt": "Dynamax Trails infographic"
+        }
+      ]
+    },
+    "leekduck:pokemonspotlighthour2026-10-29": {
+      "names": [
+        "Gastly Spotlight Hour"
+      ],
+      "source": {
+        "label": "G47IX",
+        "trust": "community",
+        "url": "https://discord.com/channels/@me/1558793395198099618/1565176569872252949",
+        "observed": "2026-10-29"
+      },
+      "tickets": [],
+      "info": [],
+      "infographics": [
+        {
+          "label": "Infographic · G47IX",
+          "url": "/infographics/g47ix/discord-1565176569872252949.png",
+          "source": "G47IX",
+          "sourceUrl": "https://discord.com/channels/@me/1558793395198099618/1565176569872252949",
+          "alt": "Gastly Spotlight Hour infographic"
         }
       ]
     }

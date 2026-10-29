@@ -2,7 +2,7 @@
  "updated": "2026-10-29T07:53:20.605Z",
  "items": [
   {
-   "linked": false,
+   "linked": true,
    "id": "discord:1565266679955726382",
    "title": "M Chandelure RD",
    "image": "/infographics/g47ix/discord-1565266679955726382.webp",
@@ -36,7 +36,7 @@
    ]
   },
   {
-   "linked": false,
+   "linked": true,
    "id": "discord:1565176569872252949",
    "title": "SH XP EVO 2025 2",
    "image": "/infographics/g47ix/discord-1565176569872252949.png",
@@ -69,42 +69,7 @@
    ]
   },
   {
-   "linked": false,
-   "id": "discord:1565166706731520082",
-   "title": "It had been clarified that tier 1 in the Free Pass of GO Pass: Into the wild, will give you the free upgrade to Deluxe GO Pass: Dynamax Trails",
-   "image": "/infographics/g47ix/discord-1565166706731520082.jpg",
-   "post": "https://discord.com/channels/@me/1558793395198099618/1565166706731520082",
-   "creator": "",
-   "source": "discord",
-   "publishedAt": "2026-10-29T00:53:42.276000+00:00",
-   "note": "Creator not set. Set the DISCORD_CREATOR variable to credit the right person.",
-   "history": false,
-   "signals": [
-    "caption names the event",
-    "picture text names the event",
-    "posted around the event"
-   ],
-   "text": "Trainers who claimed the first tier of rewards in GO Pass: Into the Wild will automatically be upgraded to the GO Pass Deluxe, for free!",
-   "guesses": [
-    {
-     "eventId": "into",
-     "eventTitle": "Into the Wild",
-     "score": 0.811
-    },
-    {
-     "eventId": "sendai",
-     "eventTitle": "GO Wild Area: Sendai",
-     "score": 0.302
-    },
-    {
-     "eventId": "wag",
-     "eventTitle": "GO Wild Area: Global",
-     "score": 0.281
-    }
-   ]
-  },
-  {
-   "linked": false,
+   "linked": true,
    "id": "discord:1565053518329684099",
    "title": "traiols",
    "image": "/infographics/g47ix/discord-1565053518329684099.webp",
