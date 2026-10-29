@@ -174,6 +174,28 @@ with sync_playwright() as p:
             check('Today action-centre count matches its Next 24h destination', quick_count==shown_count, (quick_count,shown_count))
             check('Today event shortcut selects the Next 24h filter', quick.locator('#evtypes [data-type="soon"][aria-pressed="true"]').count()==1)
         quick.context.close()
+        # Time-sensitive action counts should refresh when an event leaves the Next 24h window.
+        refresh=page(clock='2026-10-15T17:00:00+11:00')
+        refresh.click('nav.tabs button[data-tab="events"]'); refresh.click('#subnav-events button[data-sub="timeline"]'); refresh.click('.fchip[data-type="soon"]'); refresh.wait_for_timeout(200)
+        target_id='cur:spot-2026-10-15'
+        target_end=refresh.evaluate("id => { const e=window.GODASH.events().find(x=>x.id===id); return e ? e.end.getTime() : 0; }",target_id)
+        before_dest=refresh.locator('#evtimeline .evc[data-id]').count()
+        target_visible=refresh.locator('#evtimeline .evc[data-id="'+target_id+'"]').count()==1
+        now_ms=refresh.evaluate('Date.now()')
+        check('Spotlight Hour fixture is in Next 24h before its end', target_visible and target_end>now_ms, (target_visible,target_end,before_dest,now_ms))
+        if target_visible and target_end>now_ms:
+            refresh.click('nav.tabs button[data-tab="now"]'); refresh.wait_for_timeout(150)
+            before_btn=refresh.locator('#action-centre-items [data-quick-go="events"]')
+            before_action=int(before_btn.locator('.action-count').inner_text()) if before_btn.count() else 0
+            check('Today action-centre count initially matches Next 24h', before_action==before_dest, (before_action,before_dest))
+            refresh.clock.fast_forward(target_end-refresh.evaluate('Date.now()')+61000)
+            refresh.clock.run_for(61000); refresh.wait_for_timeout(150)
+            after_btn=refresh.locator('#action-centre-items [data-quick-go="events"]')
+            after_action=int(after_btn.locator('.action-count').inner_text()) if after_btn.count() else 0
+            refresh.click('nav.tabs button[data-tab="events"]'); refresh.click('#subnav-events button[data-sub="timeline"]'); refresh.click('.fchip[data-type="soon"]'); refresh.wait_for_timeout(200)
+            after_dest=refresh.locator('#evtimeline .evc[data-id]').count()
+            check('Today action-centre count refreshes when an event ends', after_action==after_dest and after_action<before_action, (before_action,after_action,after_dest))
+        refresh.context.close()
         pg.evaluate("""()=>{var p=document.createElement('p');p.className='evc-bonus';p.hidden=true;p.setAttribute('data-bn','Pokémon Night Out events in Pokémon GO');p.setAttribute('data-bs','2026-10-10');p.setAttribute('data-be','2026-10-10');p.id='bonus-probe';document.body.appendChild(p);}""")
         pg.wait_for_function("document.getElementById('bonus-probe') && !document.getElementById('bonus-probe').hidden", timeout=5000)
         bt=pg.inner_text('#bonus-probe')
