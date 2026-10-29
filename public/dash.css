@@ -942,3 +942,50 @@ svg.ci{width:22px;height:22px}
 .src-fresh{display:inline-flex;align-items:center;padding:2px 7px;border:1px solid var(--line,#2a3140);border-radius:999px;font-size:.75rem;white-space:nowrap}.src-fresh[data-age="unknown"]{color:var(--muted)}.src-fresh[data-age="0"],.src-fresh[data-age="1"],.src-fresh[data-age="2"],.src-fresh[data-age="3"],.src-fresh[data-age="4"],.src-fresh[data-age="5"],.src-fresh[data-age="6"],.src-fresh[data-age="7"]{color:#78d6a0;border-color:#35684a}.src-fresh[data-age="22"],.src-fresh[data-age="23"],.src-fresh[data-age="24"],.src-fresh[data-age="25"],.src-fresh[data-age="26"],.src-fresh[data-age="27"],.src-fresh[data-age="28"],.src-fresh[data-age="29"]{color:#e7b76a;border-color:#80602e}
 
 .igr-ocr{margin:7px 0;padding:7px 9px;border:1px solid var(--line,#2a3140);border-radius:9px}.igr-ocr summary{cursor:pointer;color:var(--muted);font-size:.8rem;font-weight:700}.igr-ocr p{margin:7px 0 0;line-height:1.5;font-size:.82rem;color:var(--fg);overflow-wrap:anywhere}
+
+/* Event cards: calmer typography and a clearer action rail on phones. */
+.evc.cmp h3{
+  font:750 1.12rem/1.18 var(--display);
+  letter-spacing:.005em;
+  text-transform:none;
+}
+.evc.cmp .evc-when{
+  font-size:.8rem;
+  line-height:1.4;
+}
+.evc.cmp .cdn{
+  padding:4px 8px;
+  border:1px solid color-mix(in srgb,var(--k) 38%,var(--ring));
+  border-radius:999px;
+  background:color-mix(in srgb,var(--k) 10%,var(--glass));
+  font-size:.72rem;
+}
+.evc.cmp .evc-foot{
+  align-items:stretch;
+  gap:7px;
+}
+.evc.cmp .evc-foot .more{
+  min-height:40px;
+  border-radius:11px;
+}
+@media(max-width:520px){
+  .evc.cmp .evc-foot{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) minmax(0,1fr) 42px;
+    gap:6px;
+  }
+  .evc.cmp .evc-foot .more{
+    min-width:0;
+    width:100%;
+    min-height:42px;
+    padding:0 5px;
+    font-size:.76rem;
+  }
+  .evc.cmp .evc-foot .star{
+    width:42px;
+    min-width:42px;
+    min-height:42px;
+    justify-self:end;
+  }
+}
+
