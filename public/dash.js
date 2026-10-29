@@ -1191,7 +1191,7 @@
     if (briefNote) briefNote.textContent = liveCount || todayCount ? (todayCount ? todayCount + ' more starting today' : 'See what is live and what is next.') : 'No scheduled events today. Here is what is coming up next.';
   }
   /* Refresh only today's list when its visible event phases change. This keeps the rest of the agenda and focused controls intact. */
-  function renderHomeToday(t) {
+  function renderHomeToday(t, force) {
     t = t || now();
     var endDay = addDays(startOfDay(t), 1);
     var today = EV.filter(function (e) {
@@ -1207,7 +1207,7 @@
       regional: regionalToday.map(function (e) { return [e.id, e.start, e.end]; }),
       next: nextUp ? [nextUp.id, nextUp.start.getTime()] : null
     });
-    if (tdEl.getAttribute('data-render-key') === signature) return;
+    if (!force && tdEl.getAttribute('data-render-key') === signature) return;
     tdEl.setAttribute('data-render-key', signature);
     tdEl.innerHTML = today.length || regionalToday.length
       ? today.map(function (e) { return card(e); }).join('') + regionalToday.map(function (e) { return agendaRow(e, true); }).join('')
@@ -1230,7 +1230,7 @@
     if ($('foryou')) $('foryou').innerHTML = fy.map(function (e) { return card(e); }).join('');
     var fyIds = {}; fy.forEach(function (e) { fyIds[e.id] = 1; });
     renderHomeBrief(t);
-    renderHomeToday(t);
+    renderHomeToday(t, true);
     fill('week', thisWeek, 'No further events are scheduled in the next seven days.');
     fill('spot', nextWeek, 'No events are scheduled for next week yet.', 'agenda-next-count');
     fill('home-later', later, 'No later events are scheduled for the rest of this month yet.', 'agenda-later-count');
