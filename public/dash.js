@@ -1177,10 +1177,10 @@
 
   /* ---------- wiring ---------- */
   function renderHomeAgenda() {
-    var t = now(), start = startOfDay(t), endWeek = addDays(start, 7), endNext = addDays(start, 14);
+    var t = now(), start = startOfDay(t), endDay = addDays(start, 1), endWeek = addDays(start, 7), endNext = addDays(start, 14);
     var endMonth = new Date(t.getFullYear(), t.getMonth() + 1, 1);
     var active = EV.filter(function (e) { return phase(e, t) === 'live' && !kindHidden(e.kind); }).sort(function (a, b) { return a.start - b.start; });
-    var thisWeek = EV.filter(function (e) { return phase(e, t) === 'soon' && e.start < endWeek && !kindHidden(e.kind); }).sort(function (a, b) { return a.start - b.start; });
+    var thisWeek = EV.filter(function (e) { return phase(e, t) === 'soon' && e.start >= endDay && e.start < endWeek && !kindHidden(e.kind); }).sort(function (a, b) { return a.start - b.start; });
     var nextWeek = EV.filter(function (e) { return phase(e, t) === 'soon' && e.start >= endWeek && e.start < endNext && !kindHidden(e.kind); }).sort(function (a, b) { return a.start - b.start; });
     var later = EV.filter(function (e) { return phase(e, t) === 'soon' && e.start >= endNext && e.start < endMonth && !kindHidden(e.kind); }).sort(function (a, b) { return a.start - b.start; });
     function fill(id, list, empty, countId) {
@@ -1194,7 +1194,6 @@
     if ($('foryou')) $('foryou').innerHTML = fy.map(function (e) { return card(e); }).join('');
     var fyIds = {}; fy.forEach(function (e) { fyIds[e.id] = 1; });
     /* Today: everything live right now plus anything that starts later today. When there is nothing, say what is next. */
-    var endDay = addDays(start, 1);
     var today = EV.filter(function (e) { var ph = phase(e, t); return !e.long && !kindHidden(e.kind) && (ph === 'live' || (ph === 'soon' && e.start < endDay)); }).sort(function (a, b) { return a.start - b.start; });
     var regionalToday = regList().filter(function (e) { return e.start <= t && e.end > t; });
     var briefTitle = $('day-brief-title'), briefNote = $('day-brief-note');
