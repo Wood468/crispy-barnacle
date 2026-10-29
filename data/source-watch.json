@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-29T00:57:35.017Z",
+ "updated": "2026-10-29T09:58:44.466Z",
  "status": [
   {
    "id": "hub",
@@ -19,16 +19,30 @@
   {
    "id": "reddit-silph",
    "state": "ok",
-   "items": 8
+   "items": 9
   },
   {
    "id": "youtube-pogo",
-   "state": "error",
-   "note": "HTTP 404"
+   "state": "ok",
+   "items": 2
   }
  ],
- "gaps": 3,
+ "gaps": 4,
  "items": [
+  {
+   "source": "reddit-silph",
+   "trust": "tip",
+   "title": "How rare are XXS Pumpkaboo?",
+   "link": "https://www.reddit.com/r/TheSilphRoad/comments/1xi9o8c/how_rare_are_xxs_pumpkaboo/",
+   "date": "2026-10-29T03:50:30.000Z",
+   "summary": "<!-- SC_OFF --><div class=\"md\"><p>Have clicked on 100s of Pumpkaboo and gotten plenty of XXLs &amp; 2 shiny. Have literally not seen a single XXS. Are they supposed to be rarer than the XXL by that la",
+   "pokemon": [
+    "Pumpkaboo"
+   ],
+   "notInOurData": [
+    "Pumpkaboo"
+   ]
+  },
   {
    "source": "reddit-silph",
    "trust": "tip",
@@ -93,6 +107,26 @@
    "pokemon": [
     "Gastly"
    ],
+   "notInOurData": []
+  },
+  {
+   "source": "youtube-pogo",
+   "trust": "official",
+   "title": "New costumed Pokémon make their debuts during Halloween 2026 Part I in Pokémon GO!",
+   "link": "https://www.youtube.com/shorts/I6MvdaExyIg",
+   "date": "2026-10-27T17:00:40.000Z",
+   "summary": "",
+   "pokemon": [],
+   "notInOurData": []
+  },
+  {
+   "source": "youtube-pogo",
+   "trust": "official",
+   "title": "New costumed Pokémon make their debuts during Halloween 2026 Part I in Pokémon GO!",
+   "link": "https://www.youtube.com/watch?v=wyN2y-BgpoU",
+   "date": "2026-10-27T17:00:14.000Z",
+   "summary": "",
+   "pokemon": [],
    "notInOurData": []
   },
   {
