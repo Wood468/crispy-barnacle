@@ -202,18 +202,23 @@ with sync_playwright() as p:
             before_btn=refresh.locator('#action-centre-items [data-quick-go="events"]')
             before_action=int(before_btn.locator('.action-count').inner_text()) if before_btn.count() else 0
             check('Today action-centre count initially matches Next 24h', before_action==before_dest, (before_action,before_dest))
+            today_card_before=refresh.locator('#home-now .evc[data-id="'+target_id+'"]')
+            check('Today agenda shows the event as upcoming before it starts', today_card_before.count()==1 and 'soon' in today_card_before.get_attribute('class'), today_card_before.get_attribute('class') if today_card_before.count() else 'missing')
             # Advance past the event start; the minute tick must refresh the brief without rebuilding the agenda.
             refresh.clock.fast_forward(target_start-refresh.evaluate('Date.now()')+61000)
             refresh.clock.run_for(61000); refresh.wait_for_timeout(150)
             brief_during,expected_during=summary_state()
             phase_during=refresh.evaluate("id => { const e=window.GODASH.events().find(x=>x.id===id),t=Date.now(); return e ? {live:e.start.getTime()<=t&&e.end.getTime()>t,ended:e.end.getTime()<=t} : null; }",target_id)
             check('Today overview refreshes when an event starts', phase_during and phase_during['live'] and brief_during==expected_during and expected_during!=expected_before, (phase_during,brief_during,expected_during,expected_before))
+            today_card_live=refresh.locator('#home-now .evc[data-id="'+target_id+'"]')
+            check('Today agenda updates the card to live when the event starts', today_card_live.count()==1 and 'live' in today_card_live.get_attribute('class'), today_card_live.get_attribute('class') if today_card_live.count() else 'missing')
             # Advance past the event end and verify both the overview and shortcut count settle.
             refresh.clock.fast_forward(target_end-refresh.evaluate('Date.now()')+61000)
             refresh.clock.run_for(61000); refresh.wait_for_timeout(150)
             brief_after,expected_after=summary_state()
             phase_after=refresh.evaluate("id => { const e=window.GODASH.events().find(x=>x.id===id); return e ? e.end.getTime()<=Date.now() : false; }",target_id)
             check('Today overview refreshes when an event ends', phase_after and brief_after==expected_after and expected_after!=expected_during, (phase_after,brief_after,expected_after,expected_during))
+            check('Today agenda removes the ended event without a page reload', refresh.locator('#home-now .evc[data-id="'+target_id+'"]').count()==0)
             after_btn=refresh.locator('#action-centre-items [data-quick-go="events"]')
             after_action=int(after_btn.locator('.action-count').inner_text()) if after_btn.count() else 0
             refresh.click('nav.tabs button[data-tab="events"]'); refresh.click('#subnav-events button[data-sub="timeline"]'); refresh.click('.fchip[data-type="soon"]'); refresh.wait_for_timeout(200)
