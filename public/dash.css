@@ -168,6 +168,12 @@ header.top{display:flex;align-items:flex-start;justify-content:space-between;gap
 .hbtn svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
 .hbtn[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
 .hbd{position:absolute;top:-5px;right:-5px;min-width:20px;height:20px;border-radius:10px;background:var(--fg);color:var(--bg);font:700 12px/20px var(--sans,inherit);text-align:center;padding:0 5px}
+.hbtn[hidden]{display:none}
+.hbtn.ig-action{width:auto;min-width:44px;padding:0 10px;gap:6px;border-color:color-mix(in srgb,var(--gold) 70%,var(--ring));color:var(--gold)}
+.hbtn.ig-action svg{width:18px;height:18px}
+.hbtn.ig-action .ig-label{font:600 .78rem var(--sans,inherit)}
+.hbtn.ig-action.has-pending{background:color-mix(in srgb,var(--gold) 13%,var(--glass));box-shadow:0 0 0 2px color-mix(in srgb,var(--gold) 18%,transparent)}
+.hbtn.ig-action .hbd{background:var(--gold);color:var(--gold-fg)}
 .subnav.inner{margin-top:0}.subnav.inner[hidden]{display:none}
 
 /* event detail */
