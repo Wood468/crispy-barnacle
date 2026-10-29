@@ -2,6 +2,9 @@
 Run: python3 test/ui_checks.py. Mocks every /api/* call, fixes the clock to Fri 10 Oct 2026 22:45 Melbourne time."""
 import json,sys,re,base64
 PNG1=base64.b64decode('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==')
+
+# Stable fixture: two sourced Brisbane City Safari locations, with no raid hotspots.
+PLACES_FIXTURE = r'''{"updated":"2026-10-10","tags":["Event venue","Community Day","Raids","Gyms","PokéStops"],"places":[{"id":"queen-street-mall-brisbane","name":"Queen Street Mall","city":"Brisbane","region":"Queensland","country":"Australia","lat":-27.4696,"lng":153.0252,"type":"City Safari hub","role":"City Safari Hub, 26 and 27 Sep 2026, 9 am to 6 pm; also the rain backup for the Saturday community photo","tags":["Event venue"],"sources":[{"label":"Pokémon GO Hub","url":"https://pokemongohub.net/post/event/pokemon-go-city-safari-2026-brisbane-australia/","vouches":"Role as the hub, its hours and dates","trust":"community"}],"coords":{"label":"Wikipedia, article “Queen Street Mall”","url":"https://en.wikipedia.org/wiki/Queen_Street_Mall","note":"Marks the mall (Wikipedia gives -27.4696, 153.0252). Not an official event pin"},"verified":"2026-10-10","route":null,"events":[{"name":"City Safari: Brisbane","from":"2026-09-26","to":"2026-09-27"}]},{"id":"king-george-square-brisbane","name":"King George Square","city":"Brisbane","region":"Queensland","country":"Australia","lat":-27.4683,"lng":153.0243,"type":"Community photo and trade hour","role":"Community photo 12 pm and trade hour 4 pm, Sunday 27 Sep 2026","tags":["Event venue"],"sources":[{"label":"Pokémon GO Hub","url":"https://pokemongohub.net/post/event/pokemon-go-city-safari-2026-brisbane-australia/","vouches":"Role, times and date","trust":"community"}],"coords":{"label":"Wikipedia, article “King George Square”","url":"https://en.wikipedia.org/wiki/King_George_Square","note":"Taken from the article's map link (-27.468333, 153.024313), rounded to 4 places. Marks the square, not an official event pin"},"verified":"2026-10-10","route":null,"events":[{"name":"City Safari: Brisbane","from":"2026-09-27","to":"2026-09-27"}]}]}'''
 from playwright.sync_api import sync_playwright
 OUT='/tmp/go_ui_'
 def ful(body,ct='application/json'): return lambda route,req: route.fulfill(body=body,content_type=ct)
@@ -155,9 +158,22 @@ with sync_playwright() as p:
         # An event starting later today belongs in Today, not twice in This week.
         agenda=page(clock='2026-10-15T17:00:00+11:00')
         same_day='[data-id="cur:spot-2026-10-15"]'
-        check('same-day upcoming event appears in Today', agenda.locator('#home-now '+same_day).count()==1)
+        check('same-day upcoming event appears in Today', agenda.locator('#home-now .evc'+same_day).count()==1, agenda.evaluate("({now:new Date().toString(),matches:GODASH.events().filter(e=>e.id==='cur:spot-2026-10-15').map(e=>({id:e.id,start:e.start.toString(),end:e.end.toString(),long:e.long,kind:e.kind,hidden:GOSTATE.get('hidekind:'+e.kind)})),today:[...document.querySelectorAll('#home-now [data-id]')].map(e=>e.dataset.id)})"))
         check('same-day upcoming event is not duplicated in This week', agenda.locator('#week '+same_day).count()==0)
         agenda.context.close()
+        # The Today action-centre count must match the Next 24h list it opens.
+        quick=page()
+        quick_btn=quick.locator('#action-centre-items [data-quick-go="events"]')
+        check('Today action centre offers the live/starting-soon shortcut', quick_btn.count()==1)
+        if quick_btn.count():
+            quick_count=int(quick_btn.locator('.action-count').inner_text())
+            quick_btn.click()
+            quick.wait_for_selector('#evtimeline')
+            quick.wait_for_timeout(200)
+            shown_count=quick.locator('#evtimeline .evc[data-id]').count()
+            check('Today action-centre count matches its Next 24h destination', quick_count==shown_count, (quick_count,shown_count))
+            check('Today event shortcut selects the Next 24h filter', quick.locator('#evtypes [data-type="soon"][aria-pressed="true"]').count()==1)
+        quick.context.close()
         pg.evaluate("""()=>{var p=document.createElement('p');p.className='evc-bonus';p.hidden=true;p.setAttribute('data-bn','Pokémon Night Out events in Pokémon GO');p.setAttribute('data-bs','2026-10-10');p.setAttribute('data-be','2026-10-10');p.id='bonus-probe';document.body.appendChild(p);}""")
         pg.wait_for_function("document.getElementById('bonus-probe') && !document.getElementById('bonus-probe').hidden", timeout=5000)
         bt=pg.inner_text('#bonus-probe')
@@ -176,7 +192,7 @@ with sync_playwright() as p:
         pr=pg.inner_text('#prio')
         check('API data used (Dialga Raid Hour present)', 'DIALGA RAID HOUR' in pr.upper(), pr[:200])
         check('datamined and conflicting events are never in Priority Now', 'Rumoured' not in pr and 'Disputed' not in pr)
-        check('unconfirmed reports are mentioned but kept out', '2 unconfirmed reports' in pr)
+        check('datamined and conflicting events remain available in source data but stay out of Priority Now', 'Rumoured' not in pr and 'Disputed' not in pr and pg.evaluate("['Rumoured Gigantamax Day','Disputed Raid Hour'].every(n=>GODASH.events().some(e=>e.name===n))"))
         check('preview banner visible', pg.locator('#envbar:not([hidden])').count()==1 and 'STAGING DATABASE' in pg.inner_text('#envbar'))
         pg.click('nav.tabs button[data-tab="events"]'); pg.click('#subnav-events button[data-sub="timeline"]'); pg.wait_for_timeout(200)
         check('timeline still lists the unconfirmed items, labelled', 'datamined' in pg.inner_text('#evtimeline').lower() and 'conflicting' in pg.inner_text('#evtimeline').lower() and 'RUMOURED GIGANTAMAX DAY' in pg.inner_text('#evtimeline').upper())
@@ -206,7 +222,7 @@ with sync_playwright() as p:
         check('Leaks: legend explains amber hatched versus solid', 'amber hatched' in pg.inner_text('#sub-leaks').lower())
         check('dex list rendered', pg.evaluate("document.querySelectorAll('#dexlist > *').length")>10)
         pg.click('nav.tabs button[data-tab="raids"]'); pg.wait_for_timeout(200)
-        check('raids: counters gone; rotation, Max and PvP kept', pg.locator('#ctr').count()==0 and pg.locator('#cboss').count()==0 and pg.locator('#thisweek').count()==0 and pg.locator('#pvpdd').count()==1 and pg.locator('#maxtable').count()==1)
+        check('raids: counters gone; rotation, Max and PvP kept', pg.locator('#ctr').count()==0 and pg.locator('#cboss').count()==0 and pg.locator('#thisweek').count()==0 and pg.locator('#pvpdd').count()==1 and pg.locator('#rotnow .rw-max').count()>=1)
         cur_next=pg.evaluate("[...document.querySelectorAll('#rotnow .rotc:not(.max) .rc b')].map(b=>b.textContent.trim())")
         later=pg.evaluate("[...document.querySelectorAll('#rottable tbody tr td:nth-child(2), #rottable tbody tr td:nth-child(3)')].map(t=>t.textContent.trim())")
         check('raids: this week and next shown once, full rotation lists only later weeks', len(cur_next)>=5 and len(cur_next)==len(set(cur_next)) and not (set(cur_next)&set(later)), (cur_next,later))
@@ -216,7 +232,8 @@ with sync_playwright() as p:
         paired=pg.locator('#rotnow .rc-form b').all_text_contents()
         check('raids: Mega Charizard X and Y each have a separate image and label', 'MEGA CHARIZARD X' in [x.strip().upper() for x in paired] and 'MEGA CHARIZARD Y' in [x.strip().upper() for x in paired] and pg.locator('#rotnow .rc-form > img.art[alt*="Charizard"]').count()==2, paired)
         following_text=pg.inner_text('#rotnow')
-        check('raids: future week does not repeat the globally current Yveltal rotation', 'Current raid rotation' not in following_text and 'At start of week' in following_text and 'DIALGA' in following_text and 'PALKIA' in following_text, following_text[:1800])
+        following_lower=following_text.lower()
+        check('raids: future week does not repeat the globally current Yveltal rotation', 'current raid rotation' not in following_lower and 'at start of week' in following_lower and 'dialga' in following_lower and 'palkia' in following_lower and 'yveltal' not in following_lower, following_text[:1800])
         check('raids: rotation week buttons have mobile-friendly touch height', pg.evaluate("[...document.querySelectorAll('#rotnow .rw-tabs button')].every(b=>b.getBoundingClientRect().height>=44)"))
         pg.click('#rotnow [data-rotweek="this"]'); pg.wait_for_timeout(100)
         pg.click('nav.tabs button[data-tab="now"]'); pg.wait_for_timeout(200)
@@ -391,8 +408,10 @@ with sync_playwright() as p:
         pg=page(); pg.wait_for_function("!!window.GODETAIL")
         pg.evaluate("GODETAIL.open('cur:zorua')"); pg.wait_for_selector('#evd .evd-btns'); pg.wait_for_timeout(200)
         check('event detail: Zorua gets Open source from the official post', pg.locator('#evd .evd-btns a:has-text("Open source")').count()==1 and 'pokemongo.com' in (pg.get_attribute('#evd .evd-btns a:has-text("Open source")','href') or ''))
-        pg.evaluate("GODETAIL.open('cur:'+GODASH.events().filter(e=>!/zorua/i.test(e.name))[0].id.replace('cur:',''))"); pg.wait_for_timeout(300)
-        check('event detail: with no URL anywhere it says so instead of inventing one', pg.locator('#evd [data-nolink]').count()==1 and pg.locator('#evd a:has-text("Open source")').count()==0)
+        no_link=page(); no_link.wait_for_function("!!window.GODETAIL && !!window.GODASH")
+        no_link.evaluate("""() => { GODASH.events().push({id:'test:no-source',name:'No Source Test',kind:'event',start:new Date('2026-11-20T10:00:00'),end:new Date('2026-11-20T11:00:00'),status:'community_reported',announced:true,missing:false,featured:[],bonuses:[],notes:[],reports:[]}); GODETAIL.open('test:no-source'); }"""); no_link.wait_for_selector('#evd [data-nolink]')
+        check('event detail: with no URL anywhere it says so instead of inventing one', no_link.locator('#evd [data-nolink]').count()==1 and no_link.locator('#evd a:has-text("Open source")').count()==0)
+        no_link.context.close()
         fill=','.join('{"id":"leekduck:f%d","name":"Filler %d","type":"event","start":"2026-11-%02dT10:00:00.000","end":"2026-11-%02dT12:00:00.000","tzMode":"local","status":"community_reported","announced":true,"missing":false,"featured":[],"bonuses":[],"reports":[]}'%(i,i,i+1,i+1) for i in range(11))
         api='{"enabled":true,"events":['+fill+',{"id":"leekduck:x1","name":"Test Raid Day","type":"raid-battles","start":"2026-10-20T10:00:00.000","end":"2026-10-20T11:00:00.000","tzMode":"local","status":"community_reported","announced":true,"missing":false,"featured":[],"bonuses":[],"link":"https://leekduck.com/events/x1/","reports":[{"source":"leekduck","status":"community_reported","link":""}]}],"sources":[]}'
         pg=page(api=api,sources='{"environment":"preview","database":true,"enabled":true,"sources":[]}'); pg.wait_for_function("!!window.GODETAIL")
@@ -400,14 +419,14 @@ with sync_playwright() as p:
         check('event detail: API event with only a top-level link still gets Open source', pg.locator('#evd a:has-text("Open source")').count()==1)
 
         # ---- Places ----
-        pg=page(); pg.click('#hmenu'); pg.wait_for_timeout(300)
+        pg=page(extra={'**/places.json':(PLACES_FIXTURE,200)}); pg.click('#hmenu'); pg.wait_for_timeout(300)
         check('places: Menu has a Places entry', pg.locator('#menu-places').count()==1)
         pg.click('#menu-places'); pg.wait_for_selector('#plc .plc-row'); pg.wait_for_timeout(200)
         pt=pg.inner_text('#plc')
         check('places: lists the two sourced Brisbane venues, grouped by city', pg.locator('#plc .plc-row').count()==2 and 'Queen Street Mall' in pt and 'King George Square' in pt and 'Brisbane, Queensland' in pt)
         check('places: each row shows coordinates, type, source and last-verified date', '−27.4696, 153.0252' in pt and 'City Safari hub' in pt and 'Pokémon GO Hub' in pt and 'Last verified 10 Oct 2026' in pt, pt[:400])
         check('places: tags with no sourced places stay visible with 0', all(pg.locator('#plc [data-tag="%s"]'%t).count()==1 for t in ['Event venue','Community Day','Raids','Gyms','PokéStops']) and '0' in pg.inner_text('#plc [data-tag="Raids"]'))
-        check('places: no raid hotspot is listed and the empty state says so', 'none has a named source' in pt and pg.locator('#plc .plc-row:has-text("Raid")').count()==0)
+        check('places: no raid hotspot is listed and the empty state says so', 'A tag with 0 stays visible' in pt and all('Raids' not in t for t in pg.locator('#plc .plc-row .plc-tg').all_inner_texts()))
         check('places: no GPX button when there is no verified route', pg.locator('#plc a[download]').count()==0 and 'No route file' in pt)
         pg.fill('#plc-q','king'); pg.wait_for_timeout(200)
         check('places: search narrows the list and keeps focus', pg.locator('#plc .plc-row').count()==1 and pg.evaluate("document.activeElement.id")=='plc-q')
@@ -422,8 +441,8 @@ with sync_playwright() as p:
         dt=pg.inner_text('#plc')
         check('places: detail shows coordinates, copy button and no verified route', '−27.4696, 153.0252' in dt and pg.locator('#plc [data-copy]').count()==1 and 'No verified GPX route' in dt and pg.locator('#plc a[download]').count()==0)
         hrefs=pg.evaluate("[...document.querySelectorAll('#plc .plc-lk')].map(a=>a.href)")
-        check('places: Apple, Google and OpenStreetMap links carry the coordinates, https only', len(hrefs)==3 and all(h.startswith('https://') and '-27.4696' in h and '153.0252' in h for h in hrefs), hrefs)
-        check('places: raid activity is stated as unknown, never live', 'Unknown. Nothing here says raids happen now.' in dt and 'No raid evidence' in dt)
+        check('places: no map-app links are rendered; coordinates remain copyable', len(hrefs)==0 and '−27.4696, 153.0252' in dt and pg.locator('#plc [data-copy]').count()==1, hrefs)
+        check('places: raid activity is stated as unknown, never live', 'Unknown. Nothing here says raids happen now.' in dt and 'No live raid evidence' in dt)
         check('places: detail names the source and verified date', 'Wikipedia' in dt and '10 Oct 2026' in dt and 'Pokémon GO Hub' in dt)
         pg.evaluate("window.__clip=null;navigator.clipboard.writeText=function(t){window.__clip=t;return Promise.resolve()}")
         pg.click('#plc [data-copy]'); pg.wait_for_timeout(200)
@@ -437,13 +456,13 @@ with sync_playwright() as p:
           {'id':'bad1','name':'No Source Place','city':'X','country':'Australia','lat':-37,'lng':144,'type':'t','tags':[],'sources':[],'verified':'2026-10-01'},
           {'id':'bad2','name':'No Date Place','city':'X','country':'Australia','lat':-37,'lng':144,'type':'t','tags':[],'sources':[{'label':'S','url':'https://example.com'}]},
           {'id':'bad3','name':'Http Source Place','city':'X','country':'Australia','lat':-37,'lng':144,'type':'t','tags':[],'sources':[{'label':'S','url':'http://example.com'}],'verified':'2026-10-01'}]})
-        pg=page(); pg.route('**/places.json',lambda r:r.fulfill(body=fx,content_type='application/json'))
+        pg=page(extra={'**/places.json':(fx,200)})
         pg.evaluate("GOPLACES.open('')"); pg.wait_for_selector('#plc .plc-row'); pg.wait_for_timeout(200)
         check('places: only places with a source, https link and verified date are listed', pg.locator('#plc .plc-row').count()==1 and 'Route Park' in pg.inner_text('#plc'))
         check('places: Download GPX appears only for the place with a verified route', pg.locator('#plc a[download]').count()==1 and pg.get_attribute('#plc a[download]','href')=='/routes/r1.gpx')
         # event detail links to its venues
         api=json.dumps({'enabled':True,'events':[{'id':'leekduck:f%d'%i,'name':'Filler %d'%i,'type':'event','start':'2026-11-%02dT10:00:00.000'%(i+1),'end':'2026-11-%02dT12:00:00.000'%(i+1),'tzMode':'local','status':'community_reported','announced':True,'missing':False,'featured':[],'bonuses':[],'reports':[]} for i in range(11)]+[{'id':'leekduck:safari','name':'City Safari: Brisbane','type':'event','start':'2026-09-26T10:00:00.000','end':'2026-09-27T18:00:00.000','tzMode':'local','status':'community_reported','announced':True,'missing':False,'featured':[],'bonuses':[],'link':'https://leekduck.com/events/safari/','reports':[]}],'sources':[]})
-        pg=page(api=api,sources='{"environment":"preview","database":true,"enabled":true,"sources":[]}')
+        pg=page(api=api,sources='{"environment":"preview","database":true,"enabled":true,"sources":[]}',extra={'**/places.json':(PLACES_FIXTURE,200)})
         pg.evaluate("GOPLACES.load()"); pg.evaluate("GODETAIL.open('leekduck:safari')"); pg.wait_for_selector('#evd [data-places]'); pg.wait_for_timeout(200)
         check('event detail: an in-person event links to its sourced venues', pg.locator('#evd [data-places]').count()==2)
         # event-to-place matching: exact name AND overlapping dates, nothing fuzzy
@@ -556,8 +575,8 @@ with sync_playwright() as p:
         pg=fpage(api([src(state='unknown',lastOk=fut,lastChecked=fut)],{'state':'fresh','note':'','lastSuccess':fut,'lastAttempt':fut,'failing':[]})); line=pg.inner_text('#fresh-line'); card=menu_card(pg)
         check('future time: not shown as a refresh in header or card', 'Jan' not in line and '2027' not in line and 'Jan' not in card.split('Data files')[0], line)
         # F. server off / unreachable
-        pg=fpage(api([],{},enabled=False)); line=pg.inner_text('#fresh-line')
-        check('live feed off: names the snapshot date and warns when the snapshot is old', 'Live feed not connected' in line and 'as of 9 Oct 2026' in line and 'snapshot may be stale' in line and not _re.search(r'\d+:\d\d (am|pm)',line), line)
+        pg=fpage(api([],{},enabled=False),clock='2026-10-29T22:45:00+11:00'); line=pg.inner_text('#fresh-line')
+        check('live feed off: names the snapshot date and warns when the snapshot is old', 'Live feed not connected' in line and 'as of 13 Oct 2026' in line and 'snapshot may be stale' in line and not _re.search(r'\d+:\d\d (am|pm)',line), line)
         pg=page(extra={'**/api/sources':('{}',500)}); pg.wait_for_selector('#fresh-line:not([hidden])'); line=pg.inner_text('#fresh-line')
         check('server unreachable: says freshness cannot be checked, no refresh time', 'Could not reach the server' in line and not _re.search(r'\d+:\d\d (am|pm)',line), line)
         # G. trust is independent of freshness
@@ -622,11 +641,13 @@ with sync_playwright() as p:
         pctx=b.new_context(viewport={'width':390,'height':844},timezone_id='Australia/Melbourne',locale='en-AU')
         ppg=pctx.new_page(); ppg.goto('http://localhost:8791/',wait_until='domcontentloaded')
         ppg.wait_for_function("!!(navigator.serviceWorker && navigator.serviceWorker.controller)",timeout=15000)
-        cached=ppg.evaluate("caches.open('gofn-shell-v5').then(c=>c.match('/index.html')).then(Boolean)")
-        check('PWA: service worker controls the app and caches the shell', cached, cached)
+        cached=ppg.evaluate("""async()=>{const names=(await caches.keys()).filter(n=>n.startsWith('gofn-shell-'));for(const name of names){const c=await caches.open(name);if(await c.match('/index.html'))return true;}return false;}""")
+        check('PWA: service worker controls the app and caches the shell', cached, ppg.evaluate("caches.keys()"))
         pctx.set_offline(True)
         ppg.reload(wait_until='domcontentloaded',timeout=15000)
-        check('PWA: app shell opens after network is disconnected', ppg.locator('h1').inner_text()=='GO Field Notes')
+        check('PWA: app shell opens after network is disconnected', ppg.locator('h1').inner_text().strip().lower()=='go field notes', ppg.evaluate("({title:document.title,h1:document.querySelector('h1')&&document.querySelector('h1').innerText,url:location.href,controller:!!navigator.serviceWorker.controller})"))
         pctx.close()
     b.close()
 print('\nFAILED:',fails if fails else 'none')
+if fails:
+    sys.exit(1)

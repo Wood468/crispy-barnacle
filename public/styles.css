@@ -283,7 +283,7 @@ nav.tabs button[aria-selected="true"] svg{stroke-width:2.6}
 
 /* Unified weekly raid + Max Battle rotation */
 .rw-tabs{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px}
-.rw-tabs .pill{min-height:40px;padding:8px 15px;background:var(--soft);color:var(--muted);cursor:pointer}
+.rw-tabs .pill{min-height:44px;padding:8px 15px;background:var(--soft);color:var(--muted);cursor:pointer}
 .rw-tabs .pill[aria-selected="true"]{background:var(--inv-bg);color:var(--inv-fg)}
 .rw-list{display:grid;gap:16px}
 .rw-card{padding:18px;display:grid;gap:16px}
