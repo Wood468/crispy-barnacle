@@ -1190,6 +1190,29 @@
     if (briefTitle) briefTitle.textContent = liveCount ? (liveCount === 1 ? 'Something is happening now' : liveCount + ' things happening now') : (todayCount ? 'Your day is coming up' : 'A quieter day in the game');
     if (briefNote) briefNote.textContent = liveCount || todayCount ? (todayCount ? todayCount + ' more starting today' : 'See what is live and what is next.') : 'No scheduled events today. Here is what is coming up next.';
   }
+  /* Refresh only today's list when its visible event phases change. This keeps the rest of the agenda and focused controls intact. */
+  function renderHomeToday(t, force) {
+    t = t || now();
+    var endDay = addDays(startOfDay(t), 1);
+    var today = EV.filter(function (e) {
+      var ph = phase(e, t);
+      return !e.long && !kindHidden(e.kind) && (ph === 'live' || (ph === 'soon' && e.start < endDay));
+    }).sort(function (a, b) { return a.start - b.start; });
+    var regionalToday = regList().filter(function (e) { return e.start <= t && e.end > t; });
+    var nextUp = EV.filter(function (e) { return phase(e, t) === 'soon' && e.start >= endDay && !e.long && !kindHidden(e.kind); }).sort(function (a, b) { return a.start - b.start; })[0];
+    var tdEl = $('home-now'); if (!tdEl) return;
+    var signature = JSON.stringify({
+      day: dayKey(t),
+      events: today.map(function (e) { return [e.id, phase(e, t)]; }),
+      regional: regionalToday.map(function (e) { return [e.id, e.start, e.end]; }),
+      next: nextUp ? [nextUp.id, nextUp.start.getTime()] : null
+    });
+    if (!force && tdEl.getAttribute('data-render-key') === signature) return;
+    tdEl.setAttribute('data-render-key', signature);
+    tdEl.innerHTML = today.length || regionalToday.length
+      ? today.map(function (e) { return card(e); }).join('') + regionalToday.map(function (e) { return agendaRow(e, true); }).join('')
+      : '<p class="empty">Nothing is scheduled for today.' + (nextUp ? ' Next up: <b>' + esc(nextUp.name) + '</b>, ' + esc(nextUp.start.toLocaleDateString(undefined, { weekday: 'short', day: 'numeric', month: 'short' }) + ', ' + nextUp.start.toLocaleTimeString(undefined, { hour: 'numeric', minute: '2-digit' })) + '.' : '') + '</p>';
+  }
   function renderHomeAgenda() {
     var t = now(), start = startOfDay(t), endDay = addDays(start, 1), endWeek = addDays(start, 7), endNext = addDays(start, 14);
     var endMonth = new Date(t.getFullYear(), t.getMonth() + 1, 1);
@@ -1206,14 +1229,8 @@
     var fys = $('foryou-sec'); if (fys) { fys.hidden = !fy.length; }
     if ($('foryou')) $('foryou').innerHTML = fy.map(function (e) { return card(e); }).join('');
     var fyIds = {}; fy.forEach(function (e) { fyIds[e.id] = 1; });
-    /* Today: everything live right now plus anything that starts later today. When there is nothing, say what is next. */
-    var today = EV.filter(function (e) { var ph = phase(e, t); return !e.long && !kindHidden(e.kind) && (ph === 'live' || (ph === 'soon' && e.start < endDay)); }).sort(function (a, b) { return a.start - b.start; });
-    var regionalToday = regList().filter(function (e) { return e.start <= t && e.end > t; });
     renderHomeBrief(t);
-
-    var nextUp = EV.filter(function (e) { return phase(e, t) === 'soon' && e.start >= endDay && !e.long && !kindHidden(e.kind); }).sort(function (a, b) { return a.start - b.start; })[0];
-    var tdEl = $('home-now');
-    if (tdEl) tdEl.innerHTML = today.length || regionalToday.length ? today.map(function (e) { return card(e); }).join('') + regionalToday.map(function (e) { return agendaRow(e, true); }).join('') : '<p class="empty">Nothing is scheduled for today.' + (nextUp ? ' Next up: <b>' + esc(nextUp.name) + '</b>, ' + esc(nextUp.start.toLocaleDateString(undefined, { weekday: 'short', day: 'numeric', month: 'short' }) + ', ' + nextUp.start.toLocaleTimeString(undefined, { hour: 'numeric', minute: '2-digit' })) + '.' : '') + '</p>';
+    renderHomeToday(t, true);
     fill('week', thisWeek, 'No further events are scheduled in the next seven days.');
     fill('spot', nextWeek, 'No events are scheduled for next week yet.', 'agenda-next-count');
     fill('home-later', later, 'No later events are scheduled for the rest of this month yet.', 'agenda-later-count');
@@ -1244,6 +1261,7 @@
     Array.prototype.forEach.call(document.querySelectorAll('.cdn[data-id]'), function (n) { var e = byId[n.getAttribute('data-id')]; if (e) n.textContent = countdown(e, t); });
     Array.prototype.forEach.call(document.querySelectorAll('.cdn[data-rot]'), function (n) { var ms = new Date(n.getAttribute('data-rot')) - t; n.textContent = ms > 0 ? 'Changes in ' + dur(ms) : 'Changed'; });
     renderHomeBrief(t);
+    renderHomeToday(t);
     renderActionCentre();
   }
   document.addEventListener('click', function (ev) {
