@@ -1011,3 +1011,19 @@ svg.ci{width:22px;height:22px}
 .action-copy small{font-size:.72rem;line-height:1.3;color:var(--muted)}
 .action-count{min-width:27px;height:27px;padding:0 7px;display:grid;place-items:center;border-radius:999px;background:var(--soft);font:700 .78rem var(--mono,monospace);font-variant-numeric:tabular-nums}
 .action-arrow{font-size:1.35rem;color:var(--muted)}
+
+
+/* Keep the Today landing screen focused; longer-range dates stay one tap away. */
+#tab-now .agenda-section-fold{margin-top:-8px}
+.agenda-fold{border:1px solid var(--ring);border-radius:16px;background:var(--glass);overflow:hidden}
+.agenda-fold>summary{display:flex;align-items:center;gap:10px;min-height:54px;padding:13px 15px;cursor:pointer;list-style:none;user-select:none}
+.agenda-fold>summary::-webkit-details-marker{display:none}
+.agenda-fold>summary::marker{content:""}
+.agenda-fold-title{font-size:1.03rem;font-weight:750;letter-spacing:-.015em}
+.agenda-fold-count{font-size:.72rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.agenda-fold>summary::after{content:"+";margin-left:auto;display:grid;place-items:center;width:27px;height:27px;border:1px solid var(--ring);border-radius:50%;font-size:1.1rem;line-height:1;color:var(--muted);flex:none}
+.agenda-fold[open]>summary::after{content:"−"}
+.agenda-fold[open]>summary{border-bottom:1px solid var(--ring)}
+.agenda-fold>.event-agenda{padding:12px}
+.agenda-fold>summary:focus-visible{outline:2px solid var(--gold);outline-offset:-3px;border-radius:12px}
+@media(max-width:560px){.agenda-fold>summary{min-height:52px;padding:12px}.agenda-fold>.event-agenda{padding:9px}}
