@@ -129,22 +129,41 @@
         var whole = tidy(it.text);
         (/^rank \d+\b/i.test(whole) ? [whole] : whole.split(/(?<=[.!?])\s+(?=[A-Z])/)).forEach(function (sent) {
           var k = sent.toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
-          if (k.length < 8 || seen[k] || BOILER.test(sent)) return; seen[k] = 1; items.push(sent);
+          if (k.length < 8 || BOILER.test(sent)) return;
+          if (seen[k]) {
+            (it.sources || []).forEach(function (id) { if (seen[k].sources.indexOf(id) < 0) seen[k].sources.push(id); });
+            if (seen[k].status !== 'official' && it.status === 'official') seen[k].status = 'official';
+            return;
+          }
+          seen[k] = { text: sent, sources: (it.sources || []).slice(), status: it.status || '' };
+          items.push(seen[k]);
         });
       });
       if (!items.length) return '';
-      var ranks = items.filter(function (x) { return /^rank \d+\b/i.test(x); }).sort(function (a, b) { return parseInt(a.replace(/\D+/, ''), 10) - parseInt(b.replace(/\D+/, ''), 10); }), rest = items.filter(function (x) { return ranks.indexOf(x) < 0; });
+      var ranks = items.filter(function (x) { return /^rank \d+\b/i.test(x.text); }).sort(function (a, b) { return parseInt(a.text.replace(/\D+/, ''), 10) - parseInt(b.text.replace(/\D+/, ''), 10); }), rest = items.filter(function (x) { return ranks.indexOf(x) < 0; });
       var fmt = function (x) { return window.GORICH(c[0] === 'tickets' ? passPrice(esc(x), ev) : esc(x)); };
+      var attribution = function (it) {
+        var ids = (it.sources || []).filter(function (id, i, a) { return a.indexOf(id) === i; });
+        var labels = ids.map(function (id) {
+          var s = (d.sources || []).filter(function (v) { return v.id === id; })[0];
+          if (!s) return '';
+          var u = safe(s.url);
+          return u ? '<a href="' + esc(u) + '" target="_blank" rel="noopener noreferrer">' + esc(s.name) + '</a>' : esc(s.name);
+        }).filter(Boolean);
+        if (!labels.length) return '';
+        var kind = it.status === 'official' || ids.indexOf('official') > -1 ? 'Official source' : ids.length > 1 ? 'Cross-referenced' : 'Community source';
+        return '<small class="evd-claim-source"><span>' + kind + '</span> · ' + labels.join(' · ') + '</small>';
+      };
       /* "The free track includes:" followed by bare short lines becomes a label with chips. */
       var lis = [], i = 0;
       while (i < rest.length) {
-        var x = rest[i];
-        if (/:$/.test(x)) { var kids = []; i++; while (i < rest.length && /^[^.!?:]{3,60}$/.test(rest[i])) kids.push(rest[i++]); lis.push(kids.length ? '<li class="sub"><span>' + fmt(x) + '</span><span class="chips">' + kids.map(function (k) { return '<em>' + fmt(k) + '</em>'; }).join('') + '</span></li>' : '<li>' + fmt(x) + '</li>'); continue; }
-        lis.push('<li>' + fmt(x) + '</li>'); i++;
+        var item = rest[i], x = item.text;
+        if (/:$/.test(x)) { var kids = []; i++; while (i < rest.length && /^[^.!?:]{3,60}$/.test(rest[i].text)) kids.push(rest[i++].text); lis.push(kids.length ? '<li class="sub"><span>' + fmt(x) + '</span><span class="chips">' + kids.map(function (k) { return '<em>' + fmt(k) + '</em>'; }).join('') + '</span>' + attribution(item) + '</li>' : '<li>' + fmt(x) + attribution(item) + '</li>'); continue; }
+        lis.push('<li>' + fmt(x) + attribution(item) + '</li>'); i++;
       }
       var li = null;
-      var rk = ranks.map(function (x) { var m = /^rank (\d+)\s*(deluxe)?\W*(.*)$/i.exec(x); m = [m[0], m[1], (m[2] ? '(Deluxe) ' : '') + m[3]]; var fd = /^Free: (.*?) \| Deluxe: (.*)$/.exec(m[2]); return '<li class="rk"><b>Rank ' + esc(m[1]) + '</b> ' + (fd ? '<span class="fd"><em>Free</em> ' + window.GORICH(esc(fd[1])) + '</span><span class="fd dx"><em>Deluxe</em> ' + window.GORICH(esc(fd[2])) + '</span>' : window.GORICH(esc(m[2]))) + '</li>'; }).join('');
-      var ico = c[0] === 'dates' ? CLOCK : '<img class="ci" src="' + CATICON[c[0]] + '" alt="" loading="lazy" data-err="rm">';
+      var rk = ranks.map(function (item) { var x = item.text; var m = /^rank (\d+)\s*(deluxe)?\W*(.*)$/i.exec(x); m = [m[0], m[1], (m[2] ? '(Deluxe) ' : '') + m[3]]; var fd = /^Free: (.*?) \| Deluxe: (.*)$/.exec(m[2]); return '<li class="rk"><b>Rank ' + esc(m[1]) + '</b> ' + (fd ? '<span class="fd"><em>Free</em> ' + window.GORICH(esc(fd[1])) + '</span><span class="fd dx"><em>Deluxe</em> ' + window.GORICH(esc(fd[2])) + '</span>' : window.GORICH(esc(m[2]))) + attribution(item) + '</li>'; }).join('');
+            var ico = c[0] === 'dates' ? CLOCK : '<img class="ci" src="' + CATICON[c[0]] + '" alt="" loading="lazy" data-err="rm">';
       var rkBlock = ranks.length > 10 ? '</ul><details class="evd-rk"><summary>All rank rewards (' + ranks.length + ')</summary><ul>' + rk + '</ul></details><ul hidden>' : rk;
       return '<section class="evd-grp"><h4>' + ico + esc(c[1]) + '</h4><ul>' + lis.join('') + rkBlock + '</ul></section>';
     }).join('');

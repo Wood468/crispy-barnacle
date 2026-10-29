@@ -989,3 +989,8 @@ svg.ci{width:22px;height:22px}
   }
 }
 
+
+/* Per-claim source attribution: compact, readable, and linkable without crowding the event facts. */
+.evd-claim-source{display:block;margin-top:4px;color:var(--muted);font-size:.68rem;line-height:1.35;font-weight:500}
+.evd-claim-source span{display:inline-block;margin-right:3px;color:var(--text);font-weight:700}
+.evd-claim-source a{color:inherit;text-decoration:underline;text-decoration-color:var(--ring);text-underline-offset:2px}
