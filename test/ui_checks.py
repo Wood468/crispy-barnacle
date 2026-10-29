@@ -158,7 +158,7 @@ with sync_playwright() as p:
         # An event starting later today belongs in Today, not twice in This week.
         agenda=page(clock='2026-10-15T17:00:00+11:00')
         same_day='[data-id="cur:spot-2026-10-15"]'
-        check('same-day upcoming event appears in Today', agenda.locator('#home-now .pc'+same_day).count()==1, agenda.evaluate("({now:new Date().toString(),matches:GODASH.events().filter(e=>e.id==='cur:spot-2026-10-15').map(e=>({id:e.id,start:e.start.toString(),end:e.end.toString(),long:e.long,kind:e.kind,hidden:GOSTATE.get('hidekind:'+e.kind)})),today:[...document.querySelectorAll('#home-now [data-id]')].map(e=>e.dataset.id)})"))
+        check('same-day upcoming event appears in Today', agenda.locator('#home-now .evc'+same_day).count()==1, agenda.evaluate("({now:new Date().toString(),matches:GODASH.events().filter(e=>e.id==='cur:spot-2026-10-15').map(e=>({id:e.id,start:e.start.toString(),end:e.end.toString(),long:e.long,kind:e.kind,hidden:GOSTATE.get('hidekind:'+e.kind)})),today:[...document.querySelectorAll('#home-now [data-id]')].map(e=>e.dataset.id)})"))
         check('same-day upcoming event is not duplicated in This week', agenda.locator('#week '+same_day).count()==0)
         agenda.context.close()
         # The Today action-centre count must match the Next 24h list it opens.
