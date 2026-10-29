@@ -1,5 +1,5 @@
 {
- "checked": "2026-10-28T21:44:41.709Z",
+ "checked": "2026-10-29T01:52:45.814Z",
  "compared": 55,
  "problems": [],
  "missing": [
@@ -23,26 +23,5 @@
   }
  ],
  "worldFixes": [],
- "added": [
-  {
-   "id": "w-eternamax-eternatus-max-battles",
-   "name": "Eternamax Eternatus Max Battles",
-   "place": "",
-   "area": "Worldwide",
-   "scope": "global",
-   "start": "2026-11-21",
-   "end": "2026-11-21",
-   "datesKnown": true,
-   "sources": [
-    {
-     "id": "leekduck",
-     "name": "Leek Duck",
-     "url": "https://leekduck.com/events/eternamax-eternatus-max-battles-2026/",
-     "auto": true
-    }
-   ],
-   "status": "single",
-   "seen": "2026-10-28"
-  }
- ]
+ "added": []
 }
