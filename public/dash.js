@@ -1183,7 +1183,12 @@
     var thisWeek = EV.filter(function (e) { return phase(e, t) === 'soon' && e.start < endWeek && !kindHidden(e.kind); }).sort(function (a, b) { return a.start - b.start; });
     var nextWeek = EV.filter(function (e) { return phase(e, t) === 'soon' && e.start >= endWeek && e.start < endNext && !kindHidden(e.kind); }).sort(function (a, b) { return a.start - b.start; });
     var later = EV.filter(function (e) { return phase(e, t) === 'soon' && e.start >= endNext && e.start < endMonth && !kindHidden(e.kind); }).sort(function (a, b) { return a.start - b.start; });
-    function fill(id, list, empty) { var el = $(id); list = list.filter(function (e) { return !fyIds[e.id]; }); if (el) el.innerHTML = list.length ? list.map(function (e) { return card(e); }).join('') : '<p class="empty">' + empty + '</p>'; }
+    function fill(id, list, empty, countId) {
+      var el = $(id); list = list.filter(function (e) { return !fyIds[e.id]; });
+      if (el) el.innerHTML = list.length ? list.map(function (e) { return card(e); }).join('') : '<p class="empty">' + empty + '</p>';
+      var count = countId && $(countId);
+      if (count) count.textContent = list.length + (list.length === 1 ? ' event' : ' events');
+    }
     var fy = EV.filter(function (e) { var ph = phase(e, t); return (ph === 'live' || (ph === 'soon' && e.start < endNext)) && reasonsFor(e).some(function (w) { return /^You (need|follow)/.test(w); }); }).sort(function (a, b) { var al = phase(a, t) === 'live' ? 0 : 1, bl = phase(b, t) === 'live' ? 0 : 1; return al - bl || a.start - b.start; }).slice(0, 4);
     var fys = $('foryou-sec'); if (fys) { fys.hidden = !fy.length; }
     if ($('foryou')) $('foryou').innerHTML = fy.map(function (e) { return card(e); }).join('');
@@ -1204,8 +1209,8 @@
     var tdEl = $('home-now');
     if (tdEl) tdEl.innerHTML = today.length || regionalToday.length ? today.map(function (e) { return card(e); }).join('') + regionalToday.map(function (e) { return agendaRow(e, true); }).join('') : '<p class="empty">Nothing is scheduled for today.' + (nextUp ? ' Next up: <b>' + esc(nextUp.name) + '</b>, ' + esc(nextUp.start.toLocaleDateString(undefined, { weekday: 'short', day: 'numeric', month: 'short' }) + ', ' + nextUp.start.toLocaleTimeString(undefined, { hour: 'numeric', minute: '2-digit' })) + '.' : '') + '</p>';
     fill('week', thisWeek, 'No further events are scheduled in the next seven days.');
-    fill('spot', nextWeek, 'No events are scheduled for next week yet.');
-    fill('home-later', later, 'No later events are scheduled for the rest of this month yet.');
+    fill('spot', nextWeek, 'No events are scheduled for next week yet.', 'agenda-next-count');
+    fill('home-later', later, 'No later events are scheduled for the rest of this month yet.', 'agenda-later-count');
   }
   function renderActionCentre() {
     var wrap = $('action-centre'), items = $('action-centre-items'); if (!wrap || !items) return;
