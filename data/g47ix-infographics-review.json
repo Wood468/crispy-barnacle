@@ -7,6 +7,113 @@
   "eventImages": {},
   "candidates": [
     {
+      "id": "discord:1565266679955726382",
+      "source": "discord",
+      "creator": "",
+      "title": "M Chandelure RD",
+      "url": "https://discord.com/channels/@me/1558793395198099618/1565266679955726382",
+      "publishedAt": "2026-10-29T07:30:57.750000+00:00",
+      "imageUrl": "https://cdn.discordapp.com/attachments/886998693897719819/1559661315147038820/M_Chandelure_RD.png?ex=6ae3a9ca&is=6ae2584a&hm=e76ac972a1bc89c763944434eb3154469848ac8bac941959b01c5e0a89be9592&",
+      "reviewStatus": "needs_review",
+      "decision": "pending",
+      "ocrChecked": true,
+      "ocrText": "x ef am Ay na 2:00 - 5:00 pm pm apa ue ; < Chandelure if ys haar Mega Pokémon to break shields Raid Day re @@ = weakness @OQAD S) 1867 CP/2335 CP ® iA + A+ ++ So SF ef) S$ Up to 5 additional Remote Raid limit Increased chance Chandelure will Cs) Bar S daily Raid Passes will be increased to encounter have one Mega from Gyms to 20 Shiny Level unlocked OPTIONAL An additional An additional Increased Event ticket Up to 8 additional 5,000 XP from 5,000 stardust chance to daily Raid Passes 5 USD from Gyms Super Mega from Super get Rare 2:00 pm - 5:00 pm (daily total of 14) Raids Mega Raids < Candy XL oe $ Super Mega Raids may New Mega Level Use Dynamic Puncht+ a only appear at certain Super Max Adventure Effect Gyms, check them at: to break = pokemongo.com/map two shields ear es RR, Complete Raids to unlock Based on the Global Challenge results, Mega Chandelure will receive Global Challenge rewards a damage boost for Ominous Wind+ and a CP boost from November 2-15. www.g47ix.pro Follow for more G4A71X £) (co) @ X i) oo",
+      "eventMatch": {
+        "eventId": "smr1",
+        "eventTitle": "Super Mega Raid Day",
+        "score": 0.836,
+        "confidence": "high",
+        "matchedTerms": [
+          "super",
+          "mega",
+          "raid",
+          "day",
+          "raids",
+          "chandelure",
+          "shiny",
+          "level",
+          "unlocked",
+          "increased",
+          "chance",
+          "passes"
+        ],
+        "alternatives": [
+          {
+            "eventId": "smr1",
+            "eventTitle": "Super Mega Raid Day",
+            "score": 0.836
+          },
+          {
+            "eventId": "novcd",
+            "eventTitle": "November Community Day",
+            "score": 0.814
+          },
+          {
+            "eventId": "leekduck:super-mega-raid-day-october-2026",
+            "eventTitle": "Super Mega Raid Day",
+            "score": 0.805
+          }
+        ],
+        "method": "title-to-public/data.json heuristic",
+        "requiresHumanVerification": true
+      },
+      "reviewNote": "Two events look alike. Please choose.",
+      "signals": [
+        "picture text names the event",
+        "posted around the event"
+      ],
+      "matchScore": 4,
+      "stagedPath": "/infographics/g47ix/discord-1565266679955726382.webp"
+    },
+    {
+      "id": "discord:1565176569872252949",
+      "source": "discord",
+      "creator": "",
+      "title": "SH XP EVO 2025 2",
+      "url": "https://discord.com/channels/@me/1558793395198099618/1565176569872252949",
+      "publishedAt": "2026-10-29T01:32:53.832000+00:00",
+      "imageUrl": "https://cdn.discordapp.com/attachments/886998693897719819/1565171766970556656/SH_XP_EVO_2025_2.png?ex=6ae3ef4c&is=6ae29dcc&hm=25ce3f37dcbcd6eb0e625365178ede8ba5013dfdcf8ea29443155e38fb038b8a&",
+      "reviewStatus": "needs_review",
+      "decision": "pending",
+      "ocrChecked": true,
+      "ocrText": "(local time) F spotight Hour Ps 6:00 - 7:00 pm Gf LY -OmP a ce | | | Evolve Pol kémon that require a | ‘@ Rank 1 PvP for evolving small amount of candies for VY 0/13/13 wi 19.5 evolution to earn a lot of XP Pokémon ‘J 0/15/14 vi 34.5 e Evolution xP New Pokédex entry XP www.goiv.app Remember é 2000 xP 3000 XI about @ 2000 xe @ 6000 xP Lucky Egg! ADVENTURE EFFECTS Spadal Freeze | © Mega Evolve for bonuses | & Rend of Shock Shiny is available Roar Ice of Time Burn boosted during Spotlight Hour Please note - shiny rate is not OSS 3 Future Sight+ Follow formore GA7ZIXQ@OaXP ge www.g47ix.pro",
+      "eventMatch": {
+        "eventId": "leekduck:pokemonspotlighthour2026-10-29",
+        "eventTitle": "Gastly Spotlight Hour",
+        "score": 0.527,
+        "confidence": "medium",
+        "matchedTerms": [
+          "spotlight",
+          "hour"
+        ],
+        "alternatives": [
+          {
+            "eventId": "leekduck:pokemonspotlighthour2026-10-29",
+            "eventTitle": "Gastly Spotlight Hour",
+            "score": 0.527
+          },
+          {
+            "eventId": "leekduck:pokemonspotlighthour2026-11-26",
+            "eventTitle": "Noibat Spotlight Hour",
+            "score": 0.527
+          },
+          {
+            "eventId": "leekduck:pokemonspotlighthour2026-10-22",
+            "eventTitle": "Morelull Spotlight Hour",
+            "score": 0.527
+          }
+        ],
+        "method": "title-to-public/data.json heuristic",
+        "requiresHumanVerification": true
+      },
+      "reviewNote": "Match is not strong enough (medium).",
+      "signals": [
+        "picture text names the event"
+      ],
+      "matchScore": 2,
+      "stagedPath": "/infographics/g47ix/discord-1565176569872252949.png"
+    },
+    {
       "id": "discord:1565166706731520082",
       "source": "discord",
       "creator": "",

@@ -1,6 +1,73 @@
 {
- "updated": "2026-10-29T01:28:12.477Z",
+ "updated": "2026-10-29T07:53:20.605Z",
  "items": [
+  {
+   "linked": false,
+   "id": "discord:1565266679955726382",
+   "title": "M Chandelure RD",
+   "image": "/infographics/g47ix/discord-1565266679955726382.webp",
+   "post": "https://discord.com/channels/@me/1558793395198099618/1565266679955726382",
+   "creator": "",
+   "source": "discord",
+   "publishedAt": "2026-10-29T07:30:57.750000+00:00",
+   "note": "Two events look alike. Please choose.",
+   "history": false,
+   "signals": [
+    "picture text names the event",
+    "posted around the event"
+   ],
+   "text": "x ef am Ay na 2:00 - 5:00 pm pm apa ue ; < Chandelure if ys haar Mega Pokémon to break shields Raid Day re @@ = weakness @OQAD S) 1867 CP/2335 CP ® iA + A+ ++ So SF ef) S$ Up to 5 additional Remote Raid limit Increased chance Chandelure will Cs) Bar S daily Raid Passes will be increased to encounter have one Mega from Gyms to 20 Shiny Level unlocked OPTIONAL An additional An additional Increased Event ticket Up to 8 additional 5,000 XP from 5,000 stardust chance to daily Raid Passes 5 USD from Gyms Super Mega from Super get Rare 2:00 pm - 5:00 pm (daily total of 14) Raids Mega Raids < Candy XL oe $ Super Mega Raids may New Mega Level Use Dynamic Puncht+ a only appear at certain Super Max Adv",
+   "guesses": [
+    {
+     "eventId": "smr1",
+     "eventTitle": "Super Mega Raid Day",
+     "score": 0.836
+    },
+    {
+     "eventId": "novcd",
+     "eventTitle": "November Community Day",
+     "score": 0.814
+    },
+    {
+     "eventId": "leekduck:super-mega-raid-day-october-2026",
+     "eventTitle": "Super Mega Raid Day",
+     "score": 0.805
+    }
+   ]
+  },
+  {
+   "linked": false,
+   "id": "discord:1565176569872252949",
+   "title": "SH XP EVO 2025 2",
+   "image": "/infographics/g47ix/discord-1565176569872252949.png",
+   "post": "https://discord.com/channels/@me/1558793395198099618/1565176569872252949",
+   "creator": "",
+   "source": "discord",
+   "publishedAt": "2026-10-29T01:32:53.832000+00:00",
+   "note": "Match is not strong enough (medium).",
+   "history": false,
+   "signals": [
+    "picture text names the event"
+   ],
+   "text": "(local time) F spotight Hour Ps 6:00 - 7:00 pm Gf LY -OmP a ce | | | Evolve Pol kémon that require a | ‘@ Rank 1 PvP for evolving small amount of candies for VY 0/13/13 wi 19.5 evolution to earn a lot of XP Pokémon ‘J 0/15/14 vi 34.5 e Evolution xP New Pokédex entry XP www.goiv.app Remember é 2000 xP 3000 XI about @ 2000 xe @ 6000 xP Lucky Egg! ADVENTURE EFFECTS Spadal Freeze | © Mega Evolve for bonuses | & Rend of Shock Shiny is available Roar Ice of Time Burn boosted during Spotlight Hour Please note - shiny rate is not OSS 3 Future Sight+ Follow formore GA7ZIXQ@OaXP ge www.g47ix.pro",
+   "guesses": [
+    {
+     "eventId": "leekduck:pokemonspotlighthour2026-10-29",
+     "eventTitle": "Gastly Spotlight Hour",
+     "score": 0.527
+    },
+    {
+     "eventId": "leekduck:pokemonspotlighthour2026-11-26",
+     "eventTitle": "Noibat Spotlight Hour",
+     "score": 0.527
+    },
+    {
+     "eventId": "leekduck:pokemonspotlighthour2026-10-22",
+     "eventTitle": "Morelull Spotlight Hour",
+     "score": 0.527
+    }
+   ]
+  },
   {
    "linked": false,
    "id": "discord:1565166706731520082",
