@@ -9,6 +9,15 @@ const clean = s => String(s || "")
   .replace(/\s+/g, " ")
   .trim();
 
+export const redditSearchUrl = eventName => {
+  const url = new URL("https://www.reddit.com/search.rss");
+  const query = '"' + String(eventName || "").slice(0, 70) + '" (coordinates OR coords OR hotspot OR "where to play" OR "best place")';
+  url.searchParams.set("q", query);
+  url.searchParams.set("sort", "new");
+  url.searchParams.set("t", "month");
+  return url;
+};
+
 export const coords = text => {
   const out = [];
   const re = /(?<![\d.])(-?\d{1,2}\.\d{3,})(?![\d.])\s*[,; ]\s*(?<![\d.])(-?\d{1,3}\.\d{3,})(?![\d.])/g;
