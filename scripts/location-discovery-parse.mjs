@@ -6,12 +6,12 @@ const clean = s => String(s || "")
   .replace(/&#x2F;/g, "/")
   .replace(/&quot;/g, '"')
   .replace(/&#39;/g, "'")
-  .replace(/\\s+/g, " ")
+  .replace(/\s+/g, " ")
   .trim();
 
 export const coords = text => {
   const out = [];
-  const re = /(?<![\\d.])(-?\\d{1,2}\\.\\d{3,})(?![\\d.])\\s*[,; ]\\s*(?<![\\d.])(-?\\d{1,3}\\.\\d{3,})(?![\\d.])/g;
+  const re = /(?<![\d.])(-?\d{1,2}\.\d{3,})(?![\d.])\s*[,; ]\s*(?<![\d.])(-?\d{1,3}\.\d{3,})(?![\d.])/g;
   let m;
   while ((m = re.exec(String(text || ""))) !== null) {
     const lat = Number(m[1]), lng = Number(m[2]);
@@ -23,14 +23,14 @@ export const coords = text => {
 const decode = s => clean(s).replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&apos;/g, "'");
 
 export const xmlItems = xml => {
-  const blocks = [...String(xml || "").matchAll(/<(item|entry)\\b[^>]*>([\\s\\S]*?)<\\/\\1>/gi)];
+  const blocks = [...String(xml || "").matchAll(/<(item|entry)\b[^>]*>([\s\S]*?)<\/\1>/gi)];
   return blocks.map(m => {
     const body = m[2];
     const field = n => {
-      const raw = (body.match(new RegExp("<" + n + "(?:\\\\s[^>]*)?>([\\\\s\\\\S]*?)<\\\\/" + n + ">", "i")) || [, ""])[1];
-      return decode(raw.replace(/^<!\\[CDATA\\[|\\]\\]>$/g, ""));
+      const raw = (body.match(new RegExp("<" + n + "(?:\\s[^>]*)?>([\\s\\S]*?)<\\/" + n + ">", "i")) || [, ""])[1];
+      return decode(raw.replace(/^<!\[CDATA\[|\]\]>$/g, ""));
     };
-    const href = (body.match(/<link\\b[^>]*href=["']([^"']+)["']/i) || [, ""])[1];
+    const href = (body.match(/<link\b[^>]*href=["']([^"']+)["']/i) || [, ""])[1];
     return {
       title: field("title"),
       link: field("link") || href,
