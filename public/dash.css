@@ -305,6 +305,17 @@ header.top{display:flex;align-items:flex-start;justify-content:space-between;gap
 .day-brief-stats span{font:600 .62rem var(--sans);color:var(--muted);text-transform:uppercase;letter-spacing:.07em}
 @media(max-width:420px){.day-brief{padding:14px;gap:8px}.day-brief-copy strong{font-size:1.12rem}.day-brief-stats{gap:5px}.day-brief-stats>div{min-width:46px;padding:6px}}
 
+/* Today page rhythm: keep the daily flow compact without compressing other tabs. */
+#tab-now{gap:24px}
+#tab-now .agenda-section{margin:0 0 4px}
+#tab-now .agenda-section>.sec2{margin-bottom:11px;font-size:1.48rem;letter-spacing:.025em}
+#tab-now .event-agenda{gap:10px}
+#tab-now .event-agenda .evc{margin-bottom:0}
+@media(max-width:560px){
+  #tab-now{gap:20px}
+  #tab-now .agenda-section>.sec2{font-size:1.35rem;margin-bottom:9px}
+  #tab-now .event-agenda{grid-template-columns:minmax(0,1fr);gap:9px}
+}
 .agenda-section { margin: 0 0 28px; }
 .agenda-section > .sec2 { margin: 0 0 14px; }
 .event-agenda { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr)); gap: 14px; }
