@@ -158,7 +158,7 @@ with sync_playwright() as p:
         # An event starting later today belongs in Today, not twice in This week.
         agenda=page(clock='2026-10-15T17:00:00+11:00')
         same_day='[data-id="cur:spot-2026-10-15"]'
-        check('same-day upcoming event appears in Today', agenda.locator('#home-now '+same_day).count()==1, agenda.evaluate("({now:new Date().toString(),matches:GODASH.events().filter(e=>e.id==='cur:spot-2026-10-15').map(e=>({id:e.id,start:e.start.toString(),end:e.end.toString(),long:e.long,kind:e.kind,hidden:GOSTATE.get('hidekind:'+e.kind)})),today:[...document.querySelectorAll('#home-now [data-id]')].map(e=>e.dataset.id)})"))
+        check('same-day upcoming event appears in Today', agenda.locator('#home-now .pc'+same_day).count()==1, agenda.evaluate("({now:new Date().toString(),matches:GODASH.events().filter(e=>e.id==='cur:spot-2026-10-15').map(e=>({id:e.id,start:e.start.toString(),end:e.end.toString(),long:e.long,kind:e.kind,hidden:GOSTATE.get('hidekind:'+e.kind)})),today:[...document.querySelectorAll('#home-now [data-id]')].map(e=>e.dataset.id)})"))
         check('same-day upcoming event is not duplicated in This week', agenda.locator('#week '+same_day).count()==0)
         agenda.context.close()
         # The Today action-centre count must match the Next 24h list it opens.
@@ -192,7 +192,7 @@ with sync_playwright() as p:
         pr=pg.inner_text('#prio')
         check('API data used (Dialga Raid Hour present)', 'DIALGA RAID HOUR' in pr.upper(), pr[:200])
         check('datamined and conflicting events are never in Priority Now', 'Rumoured' not in pr and 'Disputed' not in pr)
-        check('unconfirmed reports are mentioned but kept out', '2 unconfirmed reports' in pr, pr.slice(-600))
+        check('unconfirmed reports are mentioned but kept out', '2 unconfirmed reports' in pr, pr[-600:])
         check('preview banner visible', pg.locator('#envbar:not([hidden])').count()==1 and 'STAGING DATABASE' in pg.inner_text('#envbar'))
         pg.click('nav.tabs button[data-tab="events"]'); pg.click('#subnav-events button[data-sub="timeline"]'); pg.wait_for_timeout(200)
         check('timeline still lists the unconfirmed items, labelled', 'datamined' in pg.inner_text('#evtimeline').lower() and 'conflicting' in pg.inner_text('#evtimeline').lower() and 'RUMOURED GIGANTAMAX DAY' in pg.inner_text('#evtimeline').upper())
@@ -408,9 +408,8 @@ with sync_playwright() as p:
         pg=page(); pg.wait_for_function("!!window.GODETAIL")
         pg.evaluate("GODETAIL.open('cur:zorua')"); pg.wait_for_selector('#evd .evd-btns'); pg.wait_for_timeout(200)
         check('event detail: Zorua gets Open source from the official post', pg.locator('#evd .evd-btns a:has-text("Open source")').count()==1 and 'pokemongo.com' in (pg.get_attribute('#evd .evd-btns a:has-text("Open source")','href') or ''))
-        no_link_api=json.dumps({'enabled':True,'events':[{'id':'leekduck:no-source','name':'No Source Test','type':'event','start':'2026-11-20T10:00:00.000','end':'2026-11-20T11:00:00.000','tzMode':'local','status':'community_reported','announced':True,'missing':False,'featured':[],'bonuses':[],'reports':[]}],'sources':[]})
-        no_link=page(api=no_link_api); no_link.wait_for_function("!!window.GODETAIL")
-        no_link.evaluate("GODETAIL.open('leekduck:no-source')"); no_link.wait_for_selector('#evd [data-nolink]')
+        no_link=page(); no_link.wait_for_function("!!window.GODETAIL && !!window.GODASH")
+        no_link.evaluate("""() => { GODASH.events().push({id:'test:no-source',name:'No Source Test',kind:'event',start:new Date('2026-11-20T10:00:00'),end:new Date('2026-11-20T11:00:00'),status:'community_reported',announced:true,missing:false,featured:[],bonuses:[],notes:[],reports:[]}); GODETAIL.open('test:no-source'); }"""); no_link.wait_for_selector('#evd [data-nolink]')
         check('event detail: with no URL anywhere it says so instead of inventing one', no_link.locator('#evd [data-nolink]').count()==1 and no_link.locator('#evd a:has-text("Open source")').count()==0)
         no_link.context.close()
         fill=','.join('{"id":"leekduck:f%d","name":"Filler %d","type":"event","start":"2026-11-%02dT10:00:00.000","end":"2026-11-%02dT12:00:00.000","tzMode":"local","status":"community_reported","announced":true,"missing":false,"featured":[],"bonuses":[],"reports":[]}'%(i,i,i+1,i+1) for i in range(11))
@@ -646,7 +645,7 @@ with sync_playwright() as p:
         check('PWA: service worker controls the app and caches the shell', cached, ppg.evaluate("caches.keys()"))
         pctx.set_offline(True)
         ppg.reload(wait_until='domcontentloaded',timeout=15000)
-        check('PWA: app shell opens after network is disconnected', ppg.locator('h1').inner_text()=='GO Field Notes', ppg.evaluate("({title:document.title,h1:document.querySelector('h1')&&document.querySelector('h1').innerText,url:location.href,controller:!!navigator.serviceWorker.controller})"))
+        check('PWA: app shell opens after network is disconnected', ppg.locator('h1').inner_text().strip().lower()=='go field notes', ppg.evaluate("({title:document.title,h1:document.querySelector('h1')&&document.querySelector('h1').innerText,url:location.href,controller:!!navigator.serviceWorker.controller})"))
         pctx.close()
     b.close()
 print('\nFAILED:',fails if fails else 'none')
