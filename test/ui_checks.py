@@ -41,7 +41,13 @@ with sync_playwright() as p:
         # an accessible name, and immediately update the Today agenda and its group count.
         touch_event = ev('touch-target', 'Touch Target Test Event', 'pokemon-spotlight-hour',
                          '2026-10-09T23:00:00', '2026-10-09T23:30:00', 'official_confirmed')
-        touch_page = page(api=json.dumps({'enabled': True, 'events': [touch_event]}))
+        # The dashboard only switches to the live API when it contains at least ten valid events.
+        touch_events = [touch_event] + [
+            ev('touch-future-' + str(i), 'Touch Target Fixture Future ' + str(i), 'pokemon-spotlight-hour',
+               '2026-10-11T10:00:00', '2026-10-11T10:30:00', 'official_confirmed')
+            for i in range(9)
+        ]
+        touch_page = page(api=json.dumps({'enabled': True, 'events': touch_events}))
         touch_card = touch_page.locator('#home-now .evc[data-id="leekduck:touch-target"]')
         touch_card.wait_for(state='attached')
         hide_button = touch_card.locator('.hide-x')
