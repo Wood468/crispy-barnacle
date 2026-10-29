@@ -87,6 +87,25 @@ def is_image_attachment(attachment: dict[str, Any]) -> bool:
     return content_type.startswith("image/") or filename.endswith(IMAGE_EXTENSIONS)
 
 
+def is_infographic_attachment(attachment: dict[str, Any]) -> bool:
+    """Keep only full-size, infographic-shaped artwork; reject cropped screenshots/cards.
+
+    G47IX event graphics are tall or near-square, high-resolution images. Discord
+    supplies dimensions for normal uploads and embeds. Unknown/small dimensions are
+    deliberately excluded so incidental screenshots do not enter the approval queue.
+    """
+    try:
+        width = int(attachment.get("width") or 0)
+        height = int(attachment.get("height") or 0)
+    except (TypeError, ValueError):
+        return False
+    if width <= 0 or height <= 0:
+        return False
+    short_edge, long_edge = sorted((width, height))
+    aspect = width / height
+    return short_edge >= 600 and width * height >= 500_000 and 0.35 <= aspect <= 1.5
+
+
 def is_forwarded_message(message: dict[str, Any]) -> bool:
     """Recognise common Followed Channel/crosspost markers without needing source-server access."""
     author = message.get("author") or {}
@@ -118,14 +137,14 @@ def image_record(messages: list[dict[str, Any]], channel_id: str) -> dict[str, A
         for source in sources:
             source_attachments = [
                 item for item in (source.get("attachments") or [])
-                if isinstance(item, dict) and item.get("url") and is_image_attachment(item)
+                if isinstance(item, dict) and item.get("url") and is_image_attachment(item) and is_infographic_attachment(item)
             ]
             for embed in source.get("embeds") or []:
                 if not isinstance(embed, dict):
                     continue
                 image = embed.get("image") or embed.get("thumbnail") or {}
                 url = image.get("url") or image.get("proxy_url")
-                if url:
+                if url and is_infographic_attachment(image):
                     source_attachments.append({
                         "url": url,
                         "filename": url.rsplit("/", 1)[-1].split("?", 1)[0] or "forwarded-image",
