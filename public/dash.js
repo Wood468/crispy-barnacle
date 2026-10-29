@@ -1192,6 +1192,14 @@
     var endDay = addDays(start, 1);
     var today = EV.filter(function (e) { var ph = phase(e, t); return !e.long && !kindHidden(e.kind) && (ph === 'live' || (ph === 'soon' && e.start < endDay)); }).sort(function (a, b) { return a.start - b.start; });
     var regionalToday = regList().filter(function (e) { return e.start <= t && e.end > t; });
+    var briefTitle = $('day-brief-title'), briefNote = $('day-brief-note');
+    var liveCount = active.filter(function (e) { return !e.long; }).length + regionalToday.length;
+    var todayCount = today.filter(function (e) { return e.start > t; }).length;
+    if ($('day-live-count')) $('day-live-count').textContent = String(liveCount);
+    if ($('day-upcoming-count')) $('day-upcoming-count').textContent = String(todayCount);
+    if (briefTitle) briefTitle.textContent = liveCount ? (liveCount === 1 ? 'Something is happening now' : liveCount + ' things happening now') : (todayCount ? 'Your day is coming up' : 'A quieter day in the game');
+    if (briefNote) briefNote.textContent = liveCount || todayCount ? (todayCount ? todayCount + ' more starting today' : 'See what is live and what is next.') : 'No scheduled events today. Here is what is coming up next.';
+
     var nextUp = EV.filter(function (e) { return phase(e, t) === 'soon' && e.start >= endDay && !e.long && !kindHidden(e.kind); }).sort(function (a, b) { return a.start - b.start; })[0];
     var tdEl = $('home-now');
     if (tdEl) tdEl.innerHTML = today.length || regionalToday.length ? today.map(function (e) { return card(e); }).join('') + regionalToday.map(function (e) { return agendaRow(e, true); }).join('') : '<p class="empty">Nothing is scheduled for today.' + (nextUp ? ' Next up: <b>' + esc(nextUp.name) + '</b>, ' + esc(nextUp.start.toLocaleDateString(undefined, { weekday: 'short', day: 'numeric', month: 'short' }) + ', ' + nextUp.start.toLocaleTimeString(undefined, { hour: 'numeric', minute: '2-digit' })) + '.' : '') + '</p>';
