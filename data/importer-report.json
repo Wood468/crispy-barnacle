@@ -1,5 +1,5 @@
 {
- "runAt": "2026-10-29T08:38:36.875Z",
+ "runAt": "2026-10-29T16:15:41.377Z",
  "sources": {
   "official": {
    "listed": 24,
@@ -15,8 +15,8 @@
   }
  },
  "pagesRead": 80,
- "events": 82,
- "worldEvents": 58,
+ "events": 86,
+ "worldEvents": 59,
  "worldUndated": [
   "GO Wild Area Stamp Rally"
  ],
@@ -88,13 +88,13 @@
   },
   {
    "source": "hub",
-   "title": "Trevenant Raid Guide",
-   "url": "https://pokemongohub.net/post/guide/trevenant-raid-guide/"
+   "title": "Pokémon News This Week: Pokémon UNITE Announces Service End, New Merch, New Champions Tournament, Hong Kong Pop-Up",
+   "url": "https://pokemongohub.net/post/news/pokemon-news-this-week-pokemon-unite-announces-service-end-new-merch-new-champions-tournament-hong-kong-pop-up/"
   },
   {
    "source": "hub",
-   "title": "Cofagrigus Raid Guide",
-   "url": "https://pokemongohub.net/post/guide/cofagrigus-raid-guide/"
+   "title": "Pokémon Center BANGKOK Opens: Pokémon GO Thailand Event",
+   "url": "https://pokemongohub.net/post/event/pokemon-center-bangkok-opens-pokemon-go-thailand-event/"
   }
  ],
  "intl": {
@@ -173,38 +173,70 @@
  ],
  "gaps": [
   {
-   "event": "Super Mega Raid Day",
+   "event": "Into the Wild",
    "field": "bonuses",
    "missingFrom": [
-    "leekduck",
-    "hub"
+    "official"
    ]
   },
   {
-   "event": "Super Mega Raid Day",
+   "event": "Into the Wild",
+   "field": "featured",
+   "missingFrom": [
+    "official"
+   ]
+  },
+  {
+   "event": "Into the Wild",
+   "field": "raids",
+   "missingFrom": [
+    "official"
+   ]
+  },
+  {
+   "event": "Into the Wild",
    "field": "research",
    "missingFrom": [
-    "leekduck",
-    "hub"
+    "official"
    ]
   },
   {
-   "event": "Super Mega Raid Day",
+   "event": "Into the Wild",
+   "field": "shiny",
+   "missingFrom": [
+    "official"
+   ]
+  },
+  {
+   "event": "Into the Wild",
+   "field": "tickets",
+   "missingFrom": [
+    "official"
+   ]
+  },
+  {
+   "event": "Into the Wild",
+   "field": "dates",
+   "missingFrom": [
+    "official"
+   ]
+  },
+  {
+   "event": "Chandelure Super Mega Raid Day",
    "field": "moves",
    "missingFrom": [
-    "official",
     "leekduck"
    ]
   },
   {
-   "event": "Super Mega Raid Day",
+   "event": "Chandelure Super Mega Raid Day",
    "field": "tickets",
    "missingFrom": [
     "hub"
    ]
   },
   {
-   "event": "Super Mega Raid Day",
+   "event": "Chandelure Super Mega Raid Day",
    "field": "dates",
    "missingFrom": [
     "hub"

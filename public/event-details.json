@@ -1,9 +1,9 @@
 {
- "updated": "2026-10-29T08:38:36.875Z",
+ "updated": "2026-10-29T16:15:41.377Z",
  "events": {
   "leekduck:dynamax-trails-2026": {
    "name": "Dynamax Trails",
-   "updated": "2026-10-29T08:38:36.875Z",
+   "updated": "2026-10-29T16:15:41.377Z",
    "sources": [
     {
      "id": "official",
@@ -437,7 +437,7 @@
   },
   "wag": {
    "name": "GO Wild Area: Global",
-   "updated": "2026-10-29T08:38:36.875Z",
+   "updated": "2026-10-29T16:15:41.377Z",
    "sources": [
     {
      "id": "official",
@@ -538,33 +538,313 @@
   },
   "leekduck:into-the-wild-2026": {
    "name": "Into the Wild",
-   "updated": "2026-10-29T08:38:36.875Z",
+   "updated": "2026-10-29T16:15:41.377Z",
    "sources": [
     {
      "id": "official",
      "name": "Pokémon GO (official)",
      "trust": "official",
      "url": "https://pokemongo.com/news/go-wild-area-stamp-rally-details-2026/"
+    },
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/into-the-wild-2026/"
     }
    ],
    "fields": {
-    "bonuses": [],
-    "featured": [],
-    "raids": [],
+    "bonuses": [
+     {
+      "text": "Daily Discoveries will not take place from November 9 through November 15, 2026.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Reach these ranks on GO Pass: Into the Wild to unlock the following bonus.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 25: 1/2 Hatch Distance for Eggs placed in Incubators during the event",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "featured": [
+     {
+      "text": "The following Pokémon will appear more frequently in the wild, along with other event-themed Pokémon.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "The free track includes:",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Encounter with Dynamax Meltan",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "GO Wild Area 2026 Tee (Purple)",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Additional rewards",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "GO Pass Deluxe also offers:",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "A Silver Bottle Cap, which can be used to max one stat—Attack, Defense, or HP—on any Pokémon via Hyper Training",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Encounters with Dynamax Meltan",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Duraludon Pants",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Premium items, such as Incense and a Lucky Egg",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "raids": [
+     {
+      "text": "Regidrago will make its Pokémon GO Dynamax debut in five-star Max Battles, and Meltan will make its Dynamax debut in GO Pass: Into the Wild. If you’re lucky, you may encounter a Shiny one!",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Defeating Crowned Sword Zacian or Crowned Shield Zamazenta in raids will earn you Crowned Sword Energy or Crowned Shield Energy, respectively.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "The following Dynamax Pokémon will appear in Max Battles. Pokémon appearing in five-star Max Battles will also be featured in Max Battles from 6:00 p.m. to 7:00 p.m. local time for one day each on the following schedule.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
     "eggs": [],
-    "research": [],
-    "shiny": [],
+    "research": [
+     {
+      "text": "Pokémon GO Wild Area–themed Field Research tasks will be available throughout the event! Complete the research tasks to earn encounters with event-themed Pokémon and other rewards.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "After you give your trainee a Silver Bottle Cap, Hyper Training begins. Each stat has its own set of themed tasks.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Attack: Battle alongside your trainee.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Defense: Strengthen your bond with your Buddy Pokémon trainee by playing together, exploring, and catching Pokémon.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "HP: Explore alongside your trainee as a buddy. This can include spinning PokéStops, earning Buddy Candy, or other adventures.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "You’ll have 365 days after using your Silver Bottle Cap to finish Hyper Training.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "shiny": [
+     {
+      "text": "Regidrago will make its Pokémon GO Dynamax debut in five-star Max Battles, and Meltan will make its Dynamax debut in GO Pass: Into the Wild. If you’re lucky, you may encounter a Shiny one!",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
     "moves": [],
     "costumes": [],
-    "tickets": [],
-    "dates": []
+    "tickets": [
+     {
+      "text": "GO Pass: Into the Wild is a free progression track. Complete Pass Tasks to collect GO Points, increase your rank, and unlock rewards.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Trainers will receive the pass automatically on Monday, November 9, at 10:00 a.m. local time . Earn points and rank up until Sunday, November 15, 2026, at 6:00 p.m. local time .",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "From Monday, November 9, to Friday, November 13, you can collect GO Points up to a daily cap. There’s no limit to the GO Points you can earn on Saturday and Sunday, November 14 to 15!",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Upgrade to GO Pass Deluxe: Into the Wild for US$14.99 * for upgraded rewards. The GO Pass Deluxe: Into the Wild + 10 Ranks option costs US$19.99 * and grants enough GO Points to reach Rank 10.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Deluxe includes rewards from both tracks. You can upgrade at any time and still claim rewards for ranks you have already reached.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Claim all unlocked GO Pass rewards before they expire on Tuesday, November 17, 2026, at 11:59 p.m. local time .",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "dates": [
+     {
+      "text": "The following Dynamax Pokémon will appear in Max Battles. Pokémon appearing in five-star Max Battles will also be featured in Max Battles from 6:00 p.m. to 7:00 p.m. local time for one day each on the following schedule.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Trainers will receive the pass automatically on Monday, November 9, at 10:00 a.m. local time . Earn points and rank up until Sunday, November 15, 2026, at 6:00 p.m. local time .",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "From Monday, November 9, to Friday, November 13, you can collect GO Points up to a daily cap. There’s no limit to the GO Points you can earn on Saturday and Sunday, November 14 to 15!",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ]
    },
    "conflicts": [],
-   "gaps": []
+   "gaps": [
+    {
+     "field": "bonuses",
+     "missingFrom": [
+      "official"
+     ]
+    },
+    {
+     "field": "featured",
+     "missingFrom": [
+      "official"
+     ]
+    },
+    {
+     "field": "raids",
+     "missingFrom": [
+      "official"
+     ]
+    },
+    {
+     "field": "research",
+     "missingFrom": [
+      "official"
+     ]
+    },
+    {
+     "field": "shiny",
+     "missingFrom": [
+      "official"
+     ]
+    },
+    {
+     "field": "tickets",
+     "missingFrom": [
+      "official"
+     ]
+    },
+    {
+     "field": "dates",
+     "missingFrom": [
+      "official"
+     ]
+    }
+   ]
   },
   "novcd": {
    "name": "November Community Day",
-   "updated": "2026-10-29T08:38:36.875Z",
+   "updated": "2026-10-29T16:15:41.377Z",
    "sources": [
     {
      "id": "official",
@@ -757,7 +1037,7 @@
   },
   "leekduck:go-pass-november-2026": {
    "name": "GO Pass: November",
-   "updated": "2026-10-29T08:38:36.875Z",
+   "updated": "2026-10-29T16:15:41.377Z",
    "sources": [
     {
      "id": "official",
@@ -1003,25 +1283,13 @@
   },
   "smr1": {
    "name": "Super Mega Raid Day",
-   "updated": "2026-10-29T08:38:36.875Z",
+   "updated": "2026-10-29T16:15:41.377Z",
    "sources": [
     {
      "id": "official",
      "name": "Pokémon GO (official)",
      "trust": "official",
      "url": "https://pokemongo.com/news/chandelure-super-mega-raid-day-2026/"
-    },
-    {
-     "id": "leekduck",
-     "name": "Leek Duck",
-     "trust": "community",
-     "url": "https://leekduck.com/events/chandelure-super-mega-raid-day-2026/"
-    },
-    {
-     "id": "hub",
-     "name": "Pokémon GO Hub",
-     "trust": "community",
-     "url": "https://pokemongohub.net/post/guide/super-mega-chandelure-raid-guide/"
     }
    ],
    "fields": {
@@ -1059,36 +1327,25 @@
      {
       "text": "Mega-Evolved Pokémon Debut",
       "sources": [
-       "official",
-       "leekduck",
-       "hub"
+       "official"
       ],
-      "status": "confirmed"
+      "status": "official"
      },
      {
       "text": "Mega Chandelure*",
       "sources": [
-       "official",
-       "leekduck"
+       "official"
       ],
-      "status": "confirmed"
-     },
-     {
-      "text": "For Mega Pokémon, we recommend the strongest one you have, but any Mega will suffice to break a Shield. Mega Tyranitar is great, as well as Mega Greninja.",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
+      "status": "official"
      }
     ],
     "raids": [
      {
       "text": "Saturday, October 31, 2026, from 2:00 p.m. to 5:00 p.m. local time",
       "sources": [
-       "official",
-       "leekduck"
+       "official"
       ],
-      "status": "confirmed"
+      "status": "official"
      },
      {
       "text": "Super Mega Raids will take great teamwork and may only appear at certain Gyms, so we’re making it easier to find both these raids and other Trainers to help you take them on!",
@@ -1103,69 +1360,6 @@
        "official"
       ],
       "status": "official"
-     },
-     {
-      "text": "Expected event-exclusive Timed Research",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Timed Research will be available during the event, with rewards including one Premium Battle Pass and an encounter with Tyranitar .",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "The tasks and other rewards below are expected based on Staraptor Super Mega Raid Day and will be confirmed when the event begins.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Complete the Timed Research tasks and claim their rewards before the research expires.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "The Mega Raid Boss is always catchable in its base form, so the CP ranges are for a regular Chandelure. Chandelure can be caught with the following CP values:",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "From 1784 CP to 1867 CP , with no weather boost",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "From 2231 CP to 2335 CP with Fog and Sunny weather boost",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Once the Mega Pokémon boss activates a shield , a Mega Pokémon from your Raid team will be automatically sent into the battle.",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Your next attack by your Mega Pokémon will be significantly more powerful than usual, allowing you to break down the boss’s shield!",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
      }
     ],
     "eggs": [],
@@ -1189,53 +1383,20 @@
      {
       "text": "Increased chance of encountering Shiny Chandelure from Super Mega Raids.",
       "sources": [
-       "official",
-       "leekduck",
-       "hub"
+       "official"
       ],
-      "status": "confirmed"
-     },
-     {
-      "text": "Regular Sprite | Shiny Sprite",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
+      "status": "official"
      }
     ],
-    "moves": [
-     {
-      "text": "Fast moves | Fire Spin Incinerate Hex Astonish",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Charge moves | Flame Charge Shadow Ball Overheat Poltergeist* Energy Ball Ominous Wind+**",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     }
-    ],
+    "moves": [],
     "costumes": [],
     "tickets": [
      {
       "text": "For US$4.99 (or the equivalent pricing tier in your local currency), you can purchase a ticket that grants the following bonuses.*",
       "sources": [
-       "official",
-       "leekduck"
+       "official"
       ],
-      "status": "confirmed"
-     },
-     {
-      "text": "These bonuses will be effective on Saturday, October 31, 2026, from 2:00 p.m. to 5:00 p.m. local time.",
-      "sources": [
-       "official",
-       "leekduck"
-      ],
-      "status": "confirmed"
+      "status": "official"
      },
      {
       "text": "Receive up to 14 Raid Passes from spinning Gym Photo Discs.",
@@ -1259,6 +1420,13 @@
       "status": "official"
      },
      {
+      "text": "These bonuses will be effective on Saturday, October 31, 2026, from 2:00 p.m. to 5:00 p.m. local time.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
       "text": "Check it out in the Pokémon GO Web Store soon! You never know what else you may find.",
       "sources": [
        "official"
@@ -1271,23 +1439,15 @@
        "official"
       ],
       "status": "official"
-     },
-     {
-      "text": "Tickets can be gifted to friends at Great Friends or higher. Purchases, including gifts, are non-refundable, subject to applicable law and the Terms of Service. Tickets cannot be purchased with PokéCoins.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
      }
     ],
     "dates": [
      {
       "text": "Saturday, October 31, 2026, from 2:00 p.m. to 5:00 p.m. local time",
       "sources": [
-       "official",
-       "leekduck"
+       "official"
       ],
-      "status": "confirmed"
+      "status": "official"
      },
      {
       "text": "Based on the results of the Global Challenge, Mega Chandelure will receive the following bonuses from Monday, November 2, at 12:00 p.m. PST until Sunday, November 15, at 12:00 p.m. PST.",
@@ -1295,56 +1455,15 @@
        "official"
       ],
       "status": "official"
-     },
-     {
-      "text": "The completed tiers determine the strength of the following rewards, available from Monday, November 2, at 12:00 p.m. to Sunday, November 15, 2026, at 12:00 p.m. PST :",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
      }
     ]
    },
    "conflicts": [],
-   "gaps": [
-    {
-     "field": "bonuses",
-     "missingFrom": [
-      "leekduck",
-      "hub"
-     ]
-    },
-    {
-     "field": "research",
-     "missingFrom": [
-      "leekduck",
-      "hub"
-     ]
-    },
-    {
-     "field": "moves",
-     "missingFrom": [
-      "official",
-      "leekduck"
-     ]
-    },
-    {
-     "field": "tickets",
-     "missingFrom": [
-      "hub"
-     ]
-    },
-    {
-     "field": "dates",
-     "missingFrom": [
-      "hub"
-     ]
-    }
-   ]
+   "gaps": []
   },
   "leekduck:halloween-2026-part-1": {
    "name": "Pokémon GO Halloween 2026 Part I",
-   "updated": "2026-10-29T08:38:36.875Z",
+   "updated": "2026-10-29T16:15:41.377Z",
    "sources": [
     {
      "id": "official",
@@ -2265,7 +2384,7 @@
   },
   "halloween1": {
    "name": "Halloween 2026, Part One",
-   "updated": "2026-10-29T08:38:36.875Z",
+   "updated": "2026-10-29T16:15:41.377Z",
    "sources": [
     {
      "id": "official",
@@ -2536,7 +2655,7 @@
   },
   "spirits": {
    "name": "Dynamax Uxie, Mesprit and Azelf",
-   "updated": "2026-10-29T08:38:36.875Z",
+   "updated": "2026-10-29T16:15:41.377Z",
    "sources": [
     {
      "id": "official",
@@ -2777,7 +2896,7 @@
   },
   "tcg30": {
    "name": "Pokémon TCG: 30th Celebration (at stores)",
-   "updated": "2026-10-29T08:38:36.875Z",
+   "updated": "2026-10-29T16:15:41.377Z",
    "sources": [
     {
      "id": "official",
@@ -2842,7 +2961,7 @@
   },
   "sandile": {
    "name": "Sandile Hatch Day",
-   "updated": "2026-10-29T08:38:36.875Z",
+   "updated": "2026-10-29T16:15:41.377Z",
    "sources": [
     {
      "id": "official",
@@ -3001,7 +3120,7 @@
   },
   "trek": {
    "name": "Fall Marathon: Buddy Trek",
-   "updated": "2026-10-29T08:38:36.875Z",
+   "updated": "2026-10-29T16:15:41.377Z",
    "sources": [
     {
      "id": "official",
@@ -3230,7 +3349,7 @@
   },
   "leekduck:go-pass-october-2026": {
    "name": "GO Pass: October",
-   "updated": "2026-10-29T08:38:36.875Z",
+   "updated": "2026-10-29T16:15:41.377Z",
    "sources": [
     {
      "id": "official",
@@ -3532,7 +3651,7 @@
   },
   "leekduck:raidhour20261104": {
    "name": "Giratina (Altered Forme) Raid Hour",
-   "updated": "2026-10-29T08:38:36.875Z",
+   "updated": "2026-10-29T16:15:41.377Z",
    "sources": [
     {
      "id": "leekduck",
@@ -3580,7 +3699,7 @@
   },
   "leekduck:pokemonspotlighthour2026-10-29": {
    "name": "Gastly Spotlight Hour",
-   "updated": "2026-10-29T08:38:36.875Z",
+   "updated": "2026-10-29T16:15:41.377Z",
    "sources": [
     {
      "id": "leekduck",
@@ -3612,9 +3731,243 @@
    "conflicts": [],
    "gaps": []
   },
+  "leekduck:chandelure-super-mega-raid-day-2026": {
+   "name": "Chandelure Super Mega Raid Day",
+   "updated": "2026-10-29T16:15:41.377Z",
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/chandelure-super-mega-raid-day-2026/"
+    },
+    {
+     "id": "hub",
+     "name": "Pokémon GO Hub",
+     "trust": "community",
+     "url": "https://pokemongohub.net/post/guide/super-mega-chandelure-raid-guide/"
+    }
+   ],
+   "fields": {
+    "bonuses": [],
+    "featured": [
+     {
+      "text": "Mega Chandelure Debut",
+      "sources": [
+       "leekduck",
+       "hub"
+      ],
+      "status": "confirmed"
+     },
+     {
+      "text": "For Mega Pokémon, we recommend the strongest one you have, but any Mega will suffice to break a Shield. Mega Tyranitar is great, as well as Mega Greninja.",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     }
+    ],
+    "raids": [
+     {
+      "text": "Mega Chandelure makes its Pokémon GO debut during Chandelure Super Mega Raid Day on Saturday, October 31, 2026, from 2:00 p.m. to 5:00 p.m. local time!",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Expected event-exclusive Timed Research",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Timed Research will be available during the event, with rewards including one Premium Battle Pass and an encounter with Tyranitar .",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "The tasks and other rewards below are expected based on Staraptor Super Mega Raid Day and will be confirmed when the event begins.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Complete the Timed Research tasks and claim their rewards before the research expires.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "The Mega Raid Boss is always catchable in its base form, so the CP ranges are for a regular Chandelure. Chandelure can be caught with the following CP values:",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "From 1784 CP to 1867 CP , with no weather boost",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "From 2231 CP to 2335 CP with Fog and Sunny weather boost",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Once the Mega Pokémon boss activates a shield , a Mega Pokémon from your Raid team will be automatically sent into the battle.",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Your next attack by your Mega Pokémon will be significantly more powerful than usual, allowing you to break down the boss’s shield!",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Once you and your fellow Trainers have broken enough shields, the Raid Boss will return to its normal state, and you will be able to do normal damage again.",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "All the best, Trainers!",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     }
+    ],
+    "eggs": [],
+    "research": [],
+    "shiny": [
+     {
+      "text": "Trainers will have an increased chance of encountering Shiny Chandelure from Super Mega Raids.",
+      "sources": [
+       "leekduck",
+       "hub"
+      ],
+      "status": "confirmed"
+     },
+     {
+      "text": "Regular Sprite | Shiny Sprite",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     }
+    ],
+    "moves": [
+     {
+      "text": "Fast moves | Fire Spin Incinerate Hex Astonish",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Charge moves | Flame Charge Shadow Ball Overheat Poltergeist* Energy Ball Ominous Wind+**",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     }
+    ],
+    "costumes": [],
+    "tickets": [
+     {
+      "text": "For US$4.99 (or the equivalent pricing tier in your local currency), you can purchase a ticket that grants the following bonuses.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "These bonuses will be effective on Saturday, October 31, 2026, from 2:00 p.m. to 5:00 p.m. local time.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Tickets can be gifted to friends at Great Friends or higher. Purchases, including gifts, are non-refundable, subject to applicable law and the Terms of Service. Tickets cannot be purchased with PokéCoins.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "dates": [
+     {
+      "text": "Mega Chandelure makes its Pokémon GO debut during Chandelure Super Mega Raid Day on Saturday, October 31, 2026, from 2:00 p.m. to 5:00 p.m. local time!",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "These bonuses will be effective on Saturday, October 31, 2026, from 2:00 p.m. to 5:00 p.m. local time.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Complete Raid Battles alongside Trainers worldwide to finish Global Challenge tiers. The challenge runs from Friday, October 30, at 5:00 p.m. to Saturday, October 31, 2026, at 8:00 p.m. PDT .",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "The completed tiers determine the strength of the following rewards, available from Monday, November 2, at 12:00 p.m. to Sunday, November 15, 2026, at 12:00 p.m. PST :",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ]
+   },
+   "conflicts": [],
+   "gaps": [
+    {
+     "field": "moves",
+     "missingFrom": [
+      "leekduck"
+     ]
+    },
+    {
+     "field": "tickets",
+     "missingFrom": [
+      "hub"
+     ]
+    },
+    {
+     "field": "dates",
+     "missingFrom": [
+      "hub"
+     ]
+    }
+   ]
+  },
   "leekduck:max-mondays-2026-11-02": {
    "name": "Dynamax Machop during Max Monday",
-   "updated": "2026-10-29T08:38:36.875Z",
+   "updated": "2026-10-29T16:15:41.377Z",
    "sources": [
     {
      "id": "leekduck",
@@ -3691,7 +4044,7 @@
   },
   "leekduck:shadow-landorus-incarnate-forme-in-shadow-raids-october-2026": {
    "name": "Shadow Landorus (Incarnate Forme) in Shadow Raids",
-   "updated": "2026-10-29T08:38:36.875Z",
+   "updated": "2026-10-29T16:15:41.377Z",
    "sources": [
     {
      "id": "leekduck",
@@ -3741,7 +4094,7 @@
   },
   "leekduck:giratina-origin-forme-in-5-star-raid-battles-october-2026": {
    "name": "Giratina (Origin Forme) in 5-star Raid Battles",
-   "updated": "2026-10-29T08:38:36.875Z",
+   "updated": "2026-10-29T16:15:41.377Z",
    "sources": [
     {
      "id": "leekduck",
@@ -3805,7 +4158,7 @@
   },
   "leekduck:pokemonspotlighthour2026-11-05": {
    "name": "Teddiursa wearing a witch hat Spotlight Hour",
-   "updated": "2026-10-29T08:38:36.875Z",
+   "updated": "2026-10-29T16:15:41.377Z",
    "sources": [
     {
      "id": "leekduck",
@@ -3859,9 +4212,9 @@
    "conflicts": [],
    "gaps": []
   },
-  "halloween2": {
-   "name": "Halloween 2026, Part Two",
-   "updated": "2026-10-29T08:38:36.875Z",
+  "leekduck:halloween-2026-part-2": {
+   "name": "Pokémon GO Halloween 2026 Part II",
+   "updated": "2026-10-29T16:15:41.377Z",
    "sources": [
     {
      "id": "leekduck",
@@ -4133,7 +4486,7 @@
   },
   "leekduck:pokemon-go-wild-area-2026-sendai-japan": {
    "name": "Pokémon GO Wild Area 2026: Sendai • Tohoku",
-   "updated": "2026-10-29T08:38:36.875Z",
+   "updated": "2026-10-29T16:15:41.377Z",
    "sources": [
     {
      "id": "leekduck",
@@ -4483,7 +4836,7 @@
   },
   "leekduck:pokemon-go-wild-area-2026-mexico-city": {
    "name": "Pokémon GO Wild Area 2026: Mexico City",
-   "updated": "2026-10-29T08:38:36.875Z",
+   "updated": "2026-10-29T16:15:41.377Z",
    "sources": [
     {
      "id": "leekduck",
@@ -4840,7 +5193,7 @@
   },
   "leekduck:mega-sableye-in-mega-raids-october-2026": {
    "name": "Mega Sableye in Mega Raids",
-   "updated": "2026-10-29T08:38:36.875Z",
+   "updated": "2026-10-29T16:15:41.377Z",
    "sources": [
     {
      "id": "leekduck",
@@ -4897,7 +5250,7 @@
   },
   "leekduck:giratina-altered-forme-in-5-star-raid-battles-november-2026": {
    "name": "Giratina (Altered Forme) in 5-star Raid Battles",
-   "updated": "2026-10-29T08:38:36.875Z",
+   "updated": "2026-10-29T16:15:41.377Z",
    "sources": [
     {
      "id": "leekduck",
@@ -4968,19 +5321,13 @@
   },
   "leekduck:shadow-tornadus-incarnate-forme-in-shadow-raids-november-4-2026": {
    "name": "Shadow Tornadus (Incarnate Forme) in Shadow Raids",
-   "updated": "2026-10-29T08:38:36.875Z",
+   "updated": "2026-10-29T16:15:41.377Z",
    "sources": [
     {
      "id": "leekduck",
      "name": "Leek Duck",
      "trust": "community",
      "url": "https://leekduck.com/events/shadow-tornadus-incarnate-forme-in-shadow-raids-november-4-2026/"
-    },
-    {
-     "id": "leekduck",
-     "name": "Leek Duck",
-     "trust": "community",
-     "url": "https://leekduck.com/events/shadow-tornadus-incarnate-forme-in-shadow-raids-november-16-2026/"
     }
    ],
    "fields": {
@@ -5016,7 +5363,7 @@
   },
   "leekduck:pokemon-night-out-london-2026": {
    "name": "Pokémon Night Out 2026 - London",
-   "updated": "2026-10-29T08:38:36.875Z",
+   "updated": "2026-10-29T16:15:41.377Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5122,266 +5469,9 @@
    "conflicts": [],
    "gaps": []
   },
-  "into": {
-   "name": "Into the Wild",
-   "updated": "2026-10-29T08:38:36.875Z",
-   "sources": [
-    {
-     "id": "leekduck",
-     "name": "Leek Duck",
-     "trust": "community",
-     "url": "https://leekduck.com/events/into-the-wild-2026/"
-    }
-   ],
-   "fields": {
-    "bonuses": [
-     {
-      "text": "Daily Discoveries will not take place from November 9 through November 15, 2026.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Reach these ranks on GO Pass: Into the Wild to unlock the following bonus.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 25: 1/2 Hatch Distance for Eggs placed in Incubators during the event",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ],
-    "featured": [
-     {
-      "text": "The following Pokémon will appear more frequently in the wild, along with other event-themed Pokémon.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "The free track includes:",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Encounter with Dynamax Meltan",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "GO Wild Area 2026 Tee (Purple)",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Additional rewards",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "GO Pass Deluxe also offers:",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "A Silver Bottle Cap, which can be used to max one stat—Attack, Defense, or HP—on any Pokémon via Hyper Training",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Encounters with Dynamax Meltan",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Duraludon Pants",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Premium items, such as Incense and a Lucky Egg",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ],
-    "raids": [
-     {
-      "text": "Regidrago will make its Pokémon GO Dynamax debut in five-star Max Battles, and Meltan will make its Dynamax debut in GO Pass: Into the Wild. If you’re lucky, you may encounter a Shiny one!",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Defeating Crowned Sword Zacian or Crowned Shield Zamazenta in raids will earn you Crowned Sword Energy or Crowned Shield Energy, respectively.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "The following Dynamax Pokémon will appear in Max Battles. Pokémon appearing in five-star Max Battles will also be featured in Max Battles from 6:00 p.m. to 7:00 p.m. local time for one day each on the following schedule.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ],
-    "eggs": [],
-    "research": [
-     {
-      "text": "Pokémon GO Wild Area–themed Field Research tasks will be available throughout the event! Complete the research tasks to earn encounters with event-themed Pokémon and other rewards.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "After you give your trainee a Silver Bottle Cap, Hyper Training begins. Each stat has its own set of themed tasks.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Attack: Battle alongside your trainee.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Defense: Strengthen your bond with your Buddy Pokémon trainee by playing together, exploring, and catching Pokémon.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "HP: Explore alongside your trainee as a buddy. This can include spinning PokéStops, earning Buddy Candy, or other adventures.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "You’ll have 365 days after using your Silver Bottle Cap to finish Hyper Training.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ],
-    "shiny": [
-     {
-      "text": "Regidrago will make its Pokémon GO Dynamax debut in five-star Max Battles, and Meltan will make its Dynamax debut in GO Pass: Into the Wild. If you’re lucky, you may encounter a Shiny one!",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ],
-    "moves": [],
-    "costumes": [],
-    "tickets": [
-     {
-      "text": "GO Pass: Into the Wild is a free progression track. Complete Pass Tasks to collect GO Points, increase your rank, and unlock rewards.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Trainers will receive the pass automatically on Monday, November 9, at 10:00 a.m. local time . Earn points and rank up until Sunday, November 15, 2026, at 6:00 p.m. local time .",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "From Monday, November 9, to Friday, November 13, you can collect GO Points up to a daily cap. There’s no limit to the GO Points you can earn on Saturday and Sunday, November 14 to 15!",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Upgrade to GO Pass Deluxe: Into the Wild for US$14.99 * for upgraded rewards. The GO Pass Deluxe: Into the Wild + 10 Ranks option costs US$19.99 * and grants enough GO Points to reach Rank 10.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Deluxe includes rewards from both tracks. You can upgrade at any time and still claim rewards for ranks you have already reached.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Claim all unlocked GO Pass rewards before they expire on Tuesday, November 17, 2026, at 11:59 p.m. local time .",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ],
-    "dates": [
-     {
-      "text": "The following Dynamax Pokémon will appear in Max Battles. Pokémon appearing in five-star Max Battles will also be featured in Max Battles from 6:00 p.m. to 7:00 p.m. local time for one day each on the following schedule.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Trainers will receive the pass automatically on Monday, November 9, at 10:00 a.m. local time . Earn points and rank up until Sunday, November 15, 2026, at 6:00 p.m. local time .",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "From Monday, November 9, to Friday, November 13, you can collect GO Points up to a daily cap. There’s no limit to the GO Points you can earn on Saturday and Sunday, November 14 to 15!",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ]
-   },
-   "conflicts": [],
-   "gaps": []
-  },
   "leekduck:pokemon-go-wild-area-2026-global": {
    "name": "Pokémon GO Wild Area 2026: Global",
-   "updated": "2026-10-29T08:38:36.875Z",
+   "updated": "2026-10-29T16:15:41.377Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5669,7 +5759,7 @@
   },
   "leekduck:max-mondays-2026-11-16": {
    "name": "Max Monday: Pokémon to be announced",
-   "updated": "2026-10-29T08:38:36.875Z",
+   "updated": "2026-10-29T16:15:41.377Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5710,7 +5800,7 @@
   },
   "leekduck:raidhour20261118": {
    "name": "Cresselia and Darkrai Raid Hour",
-   "updated": "2026-10-29T08:38:36.875Z",
+   "updated": "2026-10-29T16:15:41.377Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5752,7 +5842,7 @@
   },
   "leekduck:pokemonspotlighthour2026-11-19": {
    "name": "Grookey, Scorbunny, and Sobble Spotlight Hour",
-   "updated": "2026-10-29T08:38:36.875Z",
+   "updated": "2026-10-29T16:15:41.377Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5784,9 +5874,9 @@
    "conflicts": [],
    "gaps": []
   },
-  "minior2": {
-   "name": "Minior Showers: Leonids",
-   "updated": "2026-10-29T08:38:36.875Z",
+  "leekduck:minior-showers-leonids-2026": {
+   "name": "Minior Showers: Leonids 2026",
+   "updated": "2026-10-29T16:15:41.377Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5877,7 +5967,7 @@
   },
   "leekduck:eternamax-eternatus-max-battles-2026": {
    "name": "Eternamax Eternatus Returns",
-   "updated": "2026-10-29T08:38:36.875Z",
+   "updated": "2026-10-29T16:15:41.377Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5956,7 +6046,7 @@
   },
   "leekduck:november-communityday2026": {
    "name": "Pawniard Community Day",
-   "updated": "2026-10-29T08:38:36.875Z",
+   "updated": "2026-10-29T16:15:41.377Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6115,7 +6205,7 @@
   },
   "leekduck:max-mondays-2026-11-23": {
    "name": "Dynamax Espurr during Max Monday",
-   "updated": "2026-10-29T08:38:36.875Z",
+   "updated": "2026-10-29T16:15:41.377Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6192,7 +6282,7 @@
   },
   "leekduck:cresselia-darkrai-in-5-star-raid-battles-november-2026": {
    "name": "Cresselia and Darkrai in 5-star Raid Battles",
-   "updated": "2026-10-29T08:38:36.875Z",
+   "updated": "2026-10-29T16:15:41.377Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6263,7 +6353,7 @@
   },
   "leekduck:mega-banette-in-mega-raids-november-2026": {
    "name": "Mega Banette in Mega Raids",
-   "updated": "2026-10-29T08:38:36.875Z",
+   "updated": "2026-10-29T16:15:41.377Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6327,7 +6417,7 @@
   },
   "leekduck:raidhour20261125": {
    "name": "Deoxys (Normal, Defense, Attack, and Speed Formes) Raid Hour",
-   "updated": "2026-10-29T08:38:36.875Z",
+   "updated": "2026-10-29T16:15:41.377Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6369,7 +6459,7 @@
   },
   "leekduck:pokemonspotlighthour2026-11-26": {
    "name": "Noibat Spotlight Hour",
-   "updated": "2026-10-29T08:38:36.875Z",
+   "updated": "2026-10-29T16:15:41.377Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6401,9 +6491,9 @@
    "conflicts": [],
    "gaps": []
   },
-  "smr2": {
+  "leekduck:super-mega-raid-day-november-2026": {
    "name": "Super Mega Raid Day",
-   "updated": "2026-10-29T08:38:36.875Z",
+   "updated": "2026-10-29T16:15:41.377Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6445,7 +6535,7 @@
   },
   "leekduck:twilight-wishes-2026": {
    "name": "Twilight Wishes",
-   "updated": "2026-10-29T08:38:36.875Z",
+   "updated": "2026-10-29T16:15:41.377Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6479,7 +6569,7 @@
   },
   "leekduck:max-mondays-2026-11-30": {
    "name": "Dynamax Cryogonal during Max Monday",
-   "updated": "2026-10-29T08:38:36.875Z",
+   "updated": "2026-10-29T16:15:41.377Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6556,7 +6646,7 @@
   },
   "leekduck:season-24-twilight-trails": {
    "name": "Twilight Trails",
-   "updated": "2026-10-29T08:38:36.875Z",
+   "updated": "2026-10-29T16:15:41.377Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6775,9 +6865,51 @@
    "conflicts": [],
    "gaps": []
   },
+  "leekduck:shadow-tornadus-incarnate-forme-in-shadow-raids-november-16-2026": {
+   "name": "Shadow Tornadus (Incarnate Forme) in Shadow Raids",
+   "updated": "2026-10-29T16:15:41.377Z",
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/shadow-tornadus-incarnate-forme-in-shadow-raids-november-16-2026/"
+    }
+   ],
+   "fields": {
+    "bonuses": [],
+    "featured": [],
+    "raids": [
+     {
+      "text": "Shadow Tornadus (Incarnate Forme) will appear in five-star Shadow Raids every weekend from November 16, 2026 to December 1, 2026.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "eggs": [],
+    "research": [],
+    "shiny": [],
+    "moves": [],
+    "costumes": [],
+    "tickets": [],
+    "dates": [
+     {
+      "text": "Shadow Tornadus (Incarnate Forme) will appear in five-star Shadow Raids every weekend from November 16, 2026 to December 1, 2026.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ]
+   },
+   "conflicts": [],
+   "gaps": []
+  },
   "leekduck:deoxys-normal-defense-attack-speed-formes-in-5-star-raid-battles-november-2026": {
    "name": "Deoxys (Normal, Defense, Attack, and Speed Formes) in 5-star Raid Battles",
-   "updated": "2026-10-29T08:38:36.875Z",
+   "updated": "2026-10-29T16:15:41.377Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6876,7 +7008,7 @@
   },
   "leekduck:mega-metagross-in-mega-raids-november-2026": {
    "name": "Mega Metagross in Mega Raids",
-   "updated": "2026-10-29T08:38:36.875Z",
+   "updated": "2026-10-29T16:15:41.377Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6945,9 +7077,9 @@
    "conflicts": [],
    "gaps": []
   },
-  "minior3": {
-   "name": "Minior Showers: Geminids",
-   "updated": "2026-10-29T08:38:36.875Z",
+  "leekduck:minior-showers-geminids-2026": {
+   "name": "Minior Showers: Geminids 2026",
+   "updated": "2026-10-29T16:15:41.377Z",
    "sources": [
     {
      "id": "leekduck",
@@ -7038,7 +7170,7 @@
   },
   "leekduck:pokemon-x-adidas-2026": {
    "name": "adidas × Pokémon Timed Research",
-   "updated": "2026-10-29T08:38:36.875Z",
+   "updated": "2026-10-29T16:15:41.377Z",
    "sources": [
     {
      "id": "leekduck",
@@ -7116,7 +7248,7 @@
   },
   "leekduck:pokemon-go-tour-alola-kaohsiung-2027": {
    "name": "Pokémon GO Tour: Alola - Kaohsiung 2027",
-   "updated": "2026-10-29T08:38:36.875Z",
+   "updated": "2026-10-29T16:15:41.377Z",
    "sources": [
     {
      "id": "leekduck",
@@ -7150,7 +7282,7 @@
   },
   "leekduck:pokemon-go-tour-alola-los-angeles-2027": {
    "name": "Pokémon GO Tour: Alola - Los Angeles 2027",
-   "updated": "2026-10-29T08:38:36.875Z",
+   "updated": "2026-10-29T16:15:41.377Z",
    "sources": [
     {
      "id": "leekduck",
@@ -7184,7 +7316,7 @@
   },
   "leekduck:pokemon-go-tour-alola-global-2027": {
    "name": "Pokémon GO Tour: Alola - Global 2027",
-   "updated": "2026-10-29T08:38:36.875Z",
+   "updated": "2026-10-29T16:15:41.377Z",
    "sources": [
     {
      "id": "leekduck",
@@ -7218,7 +7350,7 @@
   },
   "leekduck:minior-showers-eta-aquariids-2027": {
    "name": "Minior Showers: Eta Aquariids 2027",
-   "updated": "2026-10-29T08:38:36.875Z",
+   "updated": "2026-10-29T16:15:41.377Z",
    "sources": [
     {
      "id": "leekduck",
@@ -7316,7 +7448,7 @@
   },
   "leekduck:minior-showers-southern-delta-aquariids-2027": {
    "name": "Minior Showers: Southern Delta Aquariids 2027",
-   "updated": "2026-10-29T08:38:36.875Z",
+   "updated": "2026-10-29T16:15:41.377Z",
    "sources": [
     {
      "id": "leekduck",
@@ -7414,7 +7546,7 @@
   },
   "leekduck:minior-showers-perseids-2027": {
    "name": "Minior Showers: Perseids 2027",
-   "updated": "2026-10-29T08:38:36.875Z",
+   "updated": "2026-10-29T16:15:41.377Z",
    "sources": [
     {
      "id": "leekduck",
@@ -7505,7 +7637,7 @@
   },
   "sendai": {
    "name": "GO Wild Area: Sendai",
-   "updated": "2026-10-29T08:38:36.875Z",
+   "updated": "2026-10-29T16:15:41.377Z",
    "sources": [
     {
      "id": "hub",
@@ -7529,6 +7661,759 @@
       "text": "The stamp rallies for these events will be active from 10:00 a.m. to 8:00 p.m. local time on your main ticketed event day.",
       "sources": [
        "hub"
+      ],
+      "status": "single"
+     }
+    ]
+   },
+   "conflicts": [],
+   "gaps": []
+  },
+  "halloween2": {
+   "name": "Halloween 2026, Part Two",
+   "updated": "2026-10-29T08:38:36.875Z",
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/halloween-2026-part-2/"
+    }
+   ],
+   "fields": {
+    "bonuses": [
+     {
+      "text": "Reach Major Milestones on GO Pass: Halloween 2026 to unlock these bonuses.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 10: 2× Candy for catching Pokémon",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 10: GO Pass Deluxe: 3× Candy for catching Pokémon",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 20: 2× Stardust for catching Pokémon",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 20: GO Pass Deluxe: 3× Stardust for catching Pokémon",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 20: Look out for additional bonus tasks for the event GO Pass.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "featured": [
+     {
+      "text": "The announced wild encounters include the following Pokémon, with more event-themed encounters to discover. All Pokémon listed here can be Shiny!",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rowlet wearing a Pokémon Halloween costume",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "If you’re lucky, you might also encounter Gengar wearing a Spooky Festival costume !",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "raids": [
+     {
+      "text": "The following Pokémon will appear in one-star raids. Both can be Shiny!",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Pikachu wearing a hat and capelet",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Sinistea wearing a bow",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "eggs": [],
+    "research": [
+     {
+      "text": "Complete event-themed Field Research tasks for encounters with event-themed Pokémon, including Greavard . Specific tasks and the full encounter list have not yet been announced.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Complete these daily tasks to earn GO Points:",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Catch 6 Ghost-type Pokémon — 50 GO Points",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "shiny": [
+     {
+      "text": "Shiny Greavard makes its Pokémon GO debut, and Mega Sableye can reach the new Super Max Mega Level! Halloween continues with costumed Pokémon, themed encounters, and GO Pass bonuses.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "The announced wild encounters include the following Pokémon, with more event-themed encounters to discover. All Pokémon listed here can be Shiny!",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "The following Pokémon will appear in one-star raids. Both can be Shiny!",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Shiny Greavard makes its Pokémon GO debut! You may encounter it in the wild or through GO Pass and Field Research tasks.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Pikachu wearing a hat and capelet and Sinistea wearing a bow can also be Shiny!",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "moves": [],
+    "costumes": [
+     {
+      "text": "Rowlet wearing a Pokémon Halloween costume",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "If you’re lucky, you might also encounter Gengar wearing a Spooky Festival costume !",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Pikachu wearing a hat and capelet",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Sinistea wearing a bow",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "tickets": [
+     {
+      "text": "The free pass includes:",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Encounters with event-themed Pokémon",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Additional rewards",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Patissier Top and Patissier Pants",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Premium Battle Passes",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "For US$9.99 (or the equivalent local pricing tier), GO Pass Deluxe + 10 Ranks also provides enough GO Points to reach Rank 11.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Deluxe includes rewards from both tracks. You can upgrade at any time while the pass is available and claim rewards for ranks you have already reached. Availability may vary by region.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Claim all unlocked rewards by November 7, 2026, at 8:00 p.m. local time , before they expire.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank up to encounter Rotom and Spiritomb and earn Halloween rewards!",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "dates": [
+     {
+      "text": "Halloween 2026 Part II runs from Sunday, November 1, at 10:00 a.m. to Thursday, November 5, 2026, at 8:00 p.m. local time .",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ]
+   },
+   "conflicts": [],
+   "gaps": []
+  },
+  "into": {
+   "name": "Into the Wild",
+   "updated": "2026-10-29T08:38:36.875Z",
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/into-the-wild-2026/"
+    }
+   ],
+   "fields": {
+    "bonuses": [
+     {
+      "text": "Daily Discoveries will not take place from November 9 through November 15, 2026.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Reach these ranks on GO Pass: Into the Wild to unlock the following bonus.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 25: 1/2 Hatch Distance for Eggs placed in Incubators during the event",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "featured": [
+     {
+      "text": "The following Pokémon will appear more frequently in the wild, along with other event-themed Pokémon.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "The free track includes:",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Encounter with Dynamax Meltan",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "GO Wild Area 2026 Tee (Purple)",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Additional rewards",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "GO Pass Deluxe also offers:",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "A Silver Bottle Cap, which can be used to max one stat—Attack, Defense, or HP—on any Pokémon via Hyper Training",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Encounters with Dynamax Meltan",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Duraludon Pants",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Premium items, such as Incense and a Lucky Egg",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "raids": [
+     {
+      "text": "Regidrago will make its Pokémon GO Dynamax debut in five-star Max Battles, and Meltan will make its Dynamax debut in GO Pass: Into the Wild. If you’re lucky, you may encounter a Shiny one!",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Defeating Crowned Sword Zacian or Crowned Shield Zamazenta in raids will earn you Crowned Sword Energy or Crowned Shield Energy, respectively.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "The following Dynamax Pokémon will appear in Max Battles. Pokémon appearing in five-star Max Battles will also be featured in Max Battles from 6:00 p.m. to 7:00 p.m. local time for one day each on the following schedule.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "eggs": [],
+    "research": [
+     {
+      "text": "Pokémon GO Wild Area–themed Field Research tasks will be available throughout the event! Complete the research tasks to earn encounters with event-themed Pokémon and other rewards.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "After you give your trainee a Silver Bottle Cap, Hyper Training begins. Each stat has its own set of themed tasks.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Attack: Battle alongside your trainee.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Defense: Strengthen your bond with your Buddy Pokémon trainee by playing together, exploring, and catching Pokémon.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "HP: Explore alongside your trainee as a buddy. This can include spinning PokéStops, earning Buddy Candy, or other adventures.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "You’ll have 365 days after using your Silver Bottle Cap to finish Hyper Training.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "shiny": [
+     {
+      "text": "Regidrago will make its Pokémon GO Dynamax debut in five-star Max Battles, and Meltan will make its Dynamax debut in GO Pass: Into the Wild. If you’re lucky, you may encounter a Shiny one!",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "moves": [],
+    "costumes": [],
+    "tickets": [
+     {
+      "text": "GO Pass: Into the Wild is a free progression track. Complete Pass Tasks to collect GO Points, increase your rank, and unlock rewards.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Trainers will receive the pass automatically on Monday, November 9, at 10:00 a.m. local time . Earn points and rank up until Sunday, November 15, 2026, at 6:00 p.m. local time .",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "From Monday, November 9, to Friday, November 13, you can collect GO Points up to a daily cap. There’s no limit to the GO Points you can earn on Saturday and Sunday, November 14 to 15!",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Upgrade to GO Pass Deluxe: Into the Wild for US$14.99 * for upgraded rewards. The GO Pass Deluxe: Into the Wild + 10 Ranks option costs US$19.99 * and grants enough GO Points to reach Rank 10.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Deluxe includes rewards from both tracks. You can upgrade at any time and still claim rewards for ranks you have already reached.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Claim all unlocked GO Pass rewards before they expire on Tuesday, November 17, 2026, at 11:59 p.m. local time .",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "dates": [
+     {
+      "text": "The following Dynamax Pokémon will appear in Max Battles. Pokémon appearing in five-star Max Battles will also be featured in Max Battles from 6:00 p.m. to 7:00 p.m. local time for one day each on the following schedule.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Trainers will receive the pass automatically on Monday, November 9, at 10:00 a.m. local time . Earn points and rank up until Sunday, November 15, 2026, at 6:00 p.m. local time .",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "From Monday, November 9, to Friday, November 13, you can collect GO Points up to a daily cap. There’s no limit to the GO Points you can earn on Saturday and Sunday, November 14 to 15!",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ]
+   },
+   "conflicts": [],
+   "gaps": []
+  },
+  "minior2": {
+   "name": "Minior Showers: Leonids",
+   "updated": "2026-10-29T08:38:36.875Z",
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/minior-showers-leonids-2026/"
+    }
+   ],
+   "fields": {
+    "bonuses": [],
+    "featured": [
+     {
+      "text": "You may encounter Minior in its Meteor Form in the wild during the event. You’ll receive 1,000 Stardust for catching Minior .",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Minior encounters are more likely from 5:00 p.m. to 9:00 p.m. local time each day .",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "raids": [],
+    "eggs": [],
+    "research": [],
+    "shiny": [],
+    "moves": [],
+    "costumes": [],
+    "tickets": [],
+    "dates": [
+     {
+      "text": "This Minior Shower runs from November 14, 2026 at 5:00 p.m. to November 19, 2026 at 11:59 p.m. local time .",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "From 5:00 p.m. to 9:00 p.m. local time every day during each Minior Shower, shooting stars will light up the in-game sky. During these hours, you’ll have an increased chance of encountering Minior in the wild!",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Orionids : October 19–24, 2026",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Geminids : December 11–16, 2026",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Eta Aquariids : May 3–8, 2027",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Southern Delta Aquariids : July 28–August 2, 2027",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Perseids : August 10–15, 2027",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ]
+   },
+   "conflicts": [],
+   "gaps": []
+  },
+  "smr2": {
+   "name": "Super Mega Raid Day",
+   "updated": "2026-10-29T08:38:36.875Z",
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/super-mega-raid-day-november-2026/"
+    }
+   ],
+   "fields": {
+    "bonuses": [],
+    "featured": [],
+    "raids": [
+     {
+      "text": "The Super Mega Raid Day event will take place on November 28, 2026 from 2 pm to 5 pm. Stay tuned for more details.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "eggs": [],
+    "research": [],
+    "shiny": [],
+    "moves": [],
+    "costumes": [],
+    "tickets": [],
+    "dates": [
+     {
+      "text": "The Super Mega Raid Day event will take place on November 28, 2026 from 2 pm to 5 pm. Stay tuned for more details.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ]
+   },
+   "conflicts": [],
+   "gaps": []
+  },
+  "minior3": {
+   "name": "Minior Showers: Geminids",
+   "updated": "2026-10-29T08:38:36.875Z",
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/minior-showers-geminids-2026/"
+    }
+   ],
+   "fields": {
+    "bonuses": [],
+    "featured": [
+     {
+      "text": "You may encounter Minior in its Meteor Form in the wild during the event. You’ll receive 1,000 Stardust for catching Minior .",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Minior encounters are more likely from 5:00 p.m. to 9:00 p.m. local time each day .",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "raids": [],
+    "eggs": [],
+    "research": [],
+    "shiny": [],
+    "moves": [],
+    "costumes": [],
+    "tickets": [],
+    "dates": [
+     {
+      "text": "This Minior Shower runs from December 11, 2026 at 5:00 p.m. to December 16, 2026 at 11:59 p.m. local time .",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "From 5:00 p.m. to 9:00 p.m. local time every day during each Minior Shower, shooting stars will light up the in-game sky. During these hours, you’ll have an increased chance of encountering Minior in the wild!",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Orionids : October 19–24, 2026",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Leonids : November 14–19, 2026",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Eta Aquariids : May 3–8, 2027",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Southern Delta Aquariids : July 28–August 2, 2027",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Perseids : August 10–15, 2027",
+      "sources": [
+       "leekduck"
       ],
       "status": "single"
      }
@@ -9968,97 +10853,6 @@
    "conflicts": [],
    "gaps": []
   },
-  "leekduck:minior-showers-geminids-2026": {
-   "name": "Minior Showers: Geminids 2026",
-   "updated": "2026-10-14T23:59:24.390Z",
-   "sources": [
-    {
-     "id": "leekduck",
-     "name": "Leek Duck",
-     "trust": "community",
-     "url": "https://leekduck.com/events/minior-showers-geminids-2026/"
-    }
-   ],
-   "fields": {
-    "bonuses": [],
-    "featured": [
-     {
-      "text": "You may encounter Minior in its Meteor Form in the wild during the event. You’ll receive increased Stardust for catching Minior .",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Minior encounters are more likely from 5:00 p.m. to 9:00 p.m. local time each day .",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ],
-    "raids": [],
-    "eggs": [],
-    "research": [],
-    "shiny": [],
-    "moves": [],
-    "costumes": [],
-    "tickets": [],
-    "dates": [
-     {
-      "text": "This Minior Shower runs from December 11, 2026 at 5:00 p.m. to December 16, 2026 at 11:59 p.m. local time .",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "From 5:00 p.m. to 9:00 p.m. local time every day during each Minior Shower, shooting stars will light up the in-game sky. During these hours, you’ll have an increased chance of encountering Minior in the wild!",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Orionids : October 19–24, 2026",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Leonids : November 14–19, 2026",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Eta Aquariids : May 3–8, 2027",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Southern Delta Aquariids : July 28–August 2, 2027",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Perseids : August 10–15, 2027",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ]
-   },
-   "conflicts": [],
-   "gaps": []
-  },
   "leekduck:super-mega-raid-day-october-2026": {
    "name": "Super Mega Raid Day",
    "updated": "2026-10-14T00:17:00.626Z",
@@ -10620,97 +11414,6 @@
     "dates": [
      {
       "text": "These Dynamax Pokémon may appear in Max Battles throughout this season. Max Battles will be available from 6:00 a.m. to 9:00 p.m. local time on Mondays.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ]
-   },
-   "conflicts": [],
-   "gaps": []
-  },
-  "leekduck:minior-showers-leonids-2026": {
-   "name": "Minior Showers: Leonids 2026",
-   "updated": "2026-10-12T21:18:17.043Z",
-   "sources": [
-    {
-     "id": "leekduck",
-     "name": "Leek Duck",
-     "trust": "community",
-     "url": "https://leekduck.com/events/minior-showers-leonids-2026/"
-    }
-   ],
-   "fields": {
-    "bonuses": [],
-    "featured": [
-     {
-      "text": "You may encounter Minior in its Meteor Form in the wild during the event. You’ll receive increased Stardust for catching Minior .",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Minior encounters are more likely from 5:00 p.m. to 9:00 p.m. local time each day .",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ],
-    "raids": [],
-    "eggs": [],
-    "research": [],
-    "shiny": [],
-    "moves": [],
-    "costumes": [],
-    "tickets": [],
-    "dates": [
-     {
-      "text": "This Minior Shower runs from November 14, 2026 at 5:00 p.m. to November 19, 2026 at 11:59 p.m. local time .",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "From 5:00 p.m. to 9:00 p.m. local time every day during each Minior Shower, shooting stars will light up the in-game sky. During these hours, you’ll have an increased chance of encountering Minior in the wild!",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Orionids : October 19–24, 2026",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Geminids : December 11–16, 2026",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Eta Aquariids : May 3–8, 2027",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Southern Delta Aquariids : July 28–August 2, 2027",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Perseids : August 10–15, 2027",
       "sources": [
        "leekduck"
       ],
