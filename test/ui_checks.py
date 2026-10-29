@@ -174,22 +174,46 @@ with sync_playwright() as p:
             check('Today action-centre count matches its Next 24h destination', quick_count==shown_count, (quick_count,shown_count))
             check('Today event shortcut selects the Next 24h filter', quick.locator('#evtypes [data-type="soon"][aria-pressed="true"]').count()==1)
         quick.context.close()
-        # Time-sensitive action counts should refresh when an event leaves the Next 24h window.
+        # The daily overview should stay aligned with event phases as the clock advances.
         refresh=page(clock='2026-10-15T17:00:00+11:00')
-        refresh.click('nav.tabs button[data-tab="events"]'); refresh.click('#subnav-events button[data-sub="timeline"]'); refresh.click('.fchip[data-type="soon"]'); refresh.wait_for_timeout(200)
         target_id='cur:spot-2026-10-15'
-        target_end=refresh.evaluate("id => { const e=window.GODASH.events().find(x=>x.id===id); return e ? e.end.getTime() : 0; }",target_id)
+        target=refresh.evaluate("id => { const e=window.GODASH.events().find(x=>x.id===id); return e ? {start:e.start.getTime(),end:e.end.getTime()} : null; }",target_id)
+        target_start=target['start'] if target else 0
+        target_end=target['end'] if target else 0
+        def summary_state():
+            actual={'live':int(refresh.locator('#day-live-count').inner_text()),'upcoming':int(refresh.locator('#day-upcoming-count').inner_text())}
+            expected=refresh.evaluate("""() => {
+              const t=new Date(), endDay=new Date(t); endDay.setHours(0,0,0,0); endDay.setDate(endDay.getDate()+1);
+              const events=window.GODASH.events(), visible=e=>!e.long&&!window.GODASH.kindHidden(e.kind);
+              const live=events.filter(e=>visible(e)&&e.start<=t&&e.end>t).length+window.GODASH.regionalEvents().filter(e=>e.start<=t&&e.end>t).length;
+              const today=events.filter(e=>visible(e)&&((e.start<=t&&e.end>t)||(e.start>t&&e.start<endDay)));
+              return {live:live,upcoming:today.filter(e=>e.start>t).length};
+            }""")
+            return actual,expected
+        brief_before,expected_before=summary_state()
+        check('Today overview matches live/upcoming event phases before Spotlight Hour', brief_before==expected_before, (brief_before,expected_before))
+        refresh.click('nav.tabs button[data-tab="events"]'); refresh.click('#subnav-events button[data-sub="timeline"]'); refresh.click('.fchip[data-type="soon"]'); refresh.wait_for_timeout(200)
         before_dest=refresh.locator('#evtimeline .evc[data-id]').count()
         target_visible=refresh.locator('#evtimeline .evc[data-id="'+target_id+'"]').count()==1
         now_ms=refresh.evaluate('Date.now()')
-        check('Spotlight Hour fixture is in Next 24h before its end', target_visible and target_end>now_ms, (target_visible,target_end,before_dest,now_ms))
-        if target_visible and target_end>now_ms:
+        check('Spotlight Hour fixture is in Next 24h before its end', target_visible and target_start>now_ms and target_end>now_ms, (target_visible,target_start,target_end,before_dest,now_ms))
+        if target_visible and target_start>now_ms and target_end>now_ms:
             refresh.click('nav.tabs button[data-tab="now"]'); refresh.wait_for_timeout(150)
             before_btn=refresh.locator('#action-centre-items [data-quick-go="events"]')
             before_action=int(before_btn.locator('.action-count').inner_text()) if before_btn.count() else 0
             check('Today action-centre count initially matches Next 24h', before_action==before_dest, (before_action,before_dest))
+            # Advance past the event start; the minute tick must refresh the brief without rebuilding the agenda.
+            refresh.clock.fast_forward(target_start-refresh.evaluate('Date.now()')+61000)
+            refresh.clock.run_for(61000); refresh.wait_for_timeout(150)
+            brief_during,expected_during=summary_state()
+            phase_during=refresh.evaluate("id => { const e=window.GODASH.events().find(x=>x.id===id),t=Date.now(); return e ? {live:e.start.getTime()<=t&&e.end.getTime()>t,ended:e.end.getTime()<=t} : null; }",target_id)
+            check('Today overview refreshes when an event starts', phase_during and phase_during['live'] and brief_during==expected_during and expected_during!=expected_before, (phase_during,brief_during,expected_during,expected_before))
+            # Advance past the event end and verify both the overview and shortcut count settle.
             refresh.clock.fast_forward(target_end-refresh.evaluate('Date.now()')+61000)
             refresh.clock.run_for(61000); refresh.wait_for_timeout(150)
+            brief_after,expected_after=summary_state()
+            phase_after=refresh.evaluate("id => { const e=window.GODASH.events().find(x=>x.id===id); return e ? e.end.getTime()<=Date.now() : false; }",target_id)
+            check('Today overview refreshes when an event ends', phase_after and brief_after==expected_after and expected_after!=expected_during, (phase_after,brief_after,expected_after,expected_during))
             after_btn=refresh.locator('#action-centre-items [data-quick-go="events"]')
             after_action=int(after_btn.locator('.action-count').inner_text()) if after_btn.count() else 0
             refresh.click('nav.tabs button[data-tab="events"]'); refresh.click('#subnav-events button[data-sub="timeline"]'); refresh.click('.fchip[data-type="soon"]'); refresh.wait_for_timeout(200)

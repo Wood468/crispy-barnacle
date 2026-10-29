@@ -1176,10 +1176,23 @@
   }
 
   /* ---------- wiring ---------- */
+  function renderHomeBrief(t) {
+    t = t || now();
+    var endDay = addDays(startOfDay(t), 1);
+    var liveCount = EV.filter(function (e) { return phase(e, t) === 'live' && !e.long && !kindHidden(e.kind); }).length;
+    var today = EV.filter(function (e) { var ph = phase(e, t); return !e.long && !kindHidden(e.kind) && (ph === 'live' || (ph === 'soon' && e.start < endDay)); });
+    var regionalToday = regList().filter(function (e) { return e.start <= t && e.end > t; });
+    liveCount += regionalToday.length;
+    var todayCount = today.filter(function (e) { return e.start > t; }).length;
+    var briefTitle = $('day-brief-title'), briefNote = $('day-brief-note');
+    if ($('day-live-count')) $('day-live-count').textContent = String(liveCount);
+    if ($('day-upcoming-count')) $('day-upcoming-count').textContent = String(todayCount);
+    if (briefTitle) briefTitle.textContent = liveCount ? (liveCount === 1 ? 'Something is happening now' : liveCount + ' things happening now') : (todayCount ? 'Your day is coming up' : 'A quieter day in the game');
+    if (briefNote) briefNote.textContent = liveCount || todayCount ? (todayCount ? todayCount + ' more starting today' : 'See what is live and what is next.') : 'No scheduled events today. Here is what is coming up next.';
+  }
   function renderHomeAgenda() {
     var t = now(), start = startOfDay(t), endDay = addDays(start, 1), endWeek = addDays(start, 7), endNext = addDays(start, 14);
     var endMonth = new Date(t.getFullYear(), t.getMonth() + 1, 1);
-    var active = EV.filter(function (e) { return phase(e, t) === 'live' && !kindHidden(e.kind); }).sort(function (a, b) { return a.start - b.start; });
     var thisWeek = EV.filter(function (e) { return phase(e, t) === 'soon' && e.start >= endDay && e.start < endWeek && !kindHidden(e.kind); }).sort(function (a, b) { return a.start - b.start; });
     var nextWeek = EV.filter(function (e) { return phase(e, t) === 'soon' && e.start >= endWeek && e.start < endNext && !kindHidden(e.kind); }).sort(function (a, b) { return a.start - b.start; });
     var later = EV.filter(function (e) { return phase(e, t) === 'soon' && e.start >= endNext && e.start < endMonth && !kindHidden(e.kind); }).sort(function (a, b) { return a.start - b.start; });
@@ -1196,13 +1209,7 @@
     /* Today: everything live right now plus anything that starts later today. When there is nothing, say what is next. */
     var today = EV.filter(function (e) { var ph = phase(e, t); return !e.long && !kindHidden(e.kind) && (ph === 'live' || (ph === 'soon' && e.start < endDay)); }).sort(function (a, b) { return a.start - b.start; });
     var regionalToday = regList().filter(function (e) { return e.start <= t && e.end > t; });
-    var briefTitle = $('day-brief-title'), briefNote = $('day-brief-note');
-    var liveCount = active.filter(function (e) { return !e.long; }).length + regionalToday.length;
-    var todayCount = today.filter(function (e) { return e.start > t; }).length;
-    if ($('day-live-count')) $('day-live-count').textContent = String(liveCount);
-    if ($('day-upcoming-count')) $('day-upcoming-count').textContent = String(todayCount);
-    if (briefTitle) briefTitle.textContent = liveCount ? (liveCount === 1 ? 'Something is happening now' : liveCount + ' things happening now') : (todayCount ? 'Your day is coming up' : 'A quieter day in the game');
-    if (briefNote) briefNote.textContent = liveCount || todayCount ? (todayCount ? todayCount + ' more starting today' : 'See what is live and what is next.') : 'No scheduled events today. Here is what is coming up next.';
+    renderHomeBrief(t);
 
     var nextUp = EV.filter(function (e) { return phase(e, t) === 'soon' && e.start >= endDay && !e.long && !kindHidden(e.kind); }).sort(function (a, b) { return a.start - b.start; })[0];
     var tdEl = $('home-now');
@@ -1236,6 +1243,7 @@
     var t = now(), byId = {}; EV.forEach(function (e) { byId[e.id] = e; });
     Array.prototype.forEach.call(document.querySelectorAll('.cdn[data-id]'), function (n) { var e = byId[n.getAttribute('data-id')]; if (e) n.textContent = countdown(e, t); });
     Array.prototype.forEach.call(document.querySelectorAll('.cdn[data-rot]'), function (n) { var ms = new Date(n.getAttribute('data-rot')) - t; n.textContent = ms > 0 ? 'Changes in ' + dur(ms) : 'Changed'; });
+    renderHomeBrief(t);
     renderActionCentre();
   }
   document.addEventListener('click', function (ev) {
