@@ -414,7 +414,7 @@ with sync_playwright() as p:
         no_link.context.close()
         fill=','.join('{"id":"leekduck:f%d","name":"Filler %d","type":"event","start":"2026-11-%02dT10:00:00.000","end":"2026-11-%02dT12:00:00.000","tzMode":"local","status":"community_reported","announced":true,"missing":false,"featured":[],"bonuses":[],"reports":[]}'%(i,i,i+1,i+1) for i in range(11))
         api='{"enabled":true,"events":['+fill+',{"id":"leekduck:x1","name":"Test Raid Day","type":"raid-battles","start":"2026-10-20T10:00:00.000","end":"2026-10-20T11:00:00.000","tzMode":"local","status":"community_reported","announced":true,"missing":false,"featured":[],"bonuses":[],"link":"https://leekduck.com/events/x1/","reports":[{"source":"leekduck","status":"community_reported","link":""}]}],"sources":[]}'
-        pg=page(api=api,sources='{"environment":"preview","database":true,"enabled":true,"sources":[]}'); pg.wait_for_function("!!window.GODETAIL",extra={'**/places.json':(PLACES_FIXTURE,200)})
+        pg=page(api=api,sources='{"environment":"preview","database":true,"enabled":true,"sources":[]}'); pg.wait_for_function("!!window.GODETAIL")
         pg.evaluate("GODETAIL.open('leekduck:x1')"); pg.wait_for_timeout(300)
         check('event detail: API event with only a top-level link still gets Open source', pg.locator('#evd a:has-text("Open source")').count()==1)
 
@@ -462,7 +462,7 @@ with sync_playwright() as p:
         check('places: Download GPX appears only for the place with a verified route', pg.locator('#plc a[download]').count()==1 and pg.get_attribute('#plc a[download]','href')=='/routes/r1.gpx')
         # event detail links to its venues
         api=json.dumps({'enabled':True,'events':[{'id':'leekduck:f%d'%i,'name':'Filler %d'%i,'type':'event','start':'2026-11-%02dT10:00:00.000'%(i+1),'end':'2026-11-%02dT12:00:00.000'%(i+1),'tzMode':'local','status':'community_reported','announced':True,'missing':False,'featured':[],'bonuses':[],'reports':[]} for i in range(11)]+[{'id':'leekduck:safari','name':'City Safari: Brisbane','type':'event','start':'2026-09-26T10:00:00.000','end':'2026-09-27T18:00:00.000','tzMode':'local','status':'community_reported','announced':True,'missing':False,'featured':[],'bonuses':[],'link':'https://leekduck.com/events/safari/','reports':[]}],'sources':[]})
-        pg=page(api=api,sources='{"environment":"preview","database":true,"enabled":true,"sources":[]}')
+        pg=page(api=api,sources='{"environment":"preview","database":true,"enabled":true,"sources":[]}',extra={'**/places.json':(PLACES_FIXTURE,200)})
         pg.evaluate("GOPLACES.load()"); pg.evaluate("GODETAIL.open('leekduck:safari')"); pg.wait_for_selector('#evd [data-places]'); pg.wait_for_timeout(200)
         check('event detail: an in-person event links to its sourced venues', pg.locator('#evd [data-places]').count()==2)
         # event-to-place matching: exact name AND overlapping dates, nothing fuzzy
