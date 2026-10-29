@@ -65,13 +65,17 @@
         <h2 class="sec2" id="agenda-week-title">This week</h2>
         <div id="week" class="event-agenda"></div>
       </section>
-      <section class="agenda-section" aria-labelledby="agenda-next-title">
-        <h2 class="sec2" id="agenda-next-title">Next week</h2>
-        <div id="spot" class="event-agenda"></div>
+      <section class="agenda-section agenda-section-fold" aria-labelledby="agenda-next-title">
+        <details class="agenda-fold" id="agenda-next-fold">
+          <summary><span class="agenda-fold-title" id="agenda-next-title">Next week</span><span class="agenda-fold-count" id="agenda-next-count">Loading events…</span></summary>
+          <div id="spot" class="event-agenda"></div>
+        </details>
       </section>
-      <section class="agenda-section" aria-labelledby="agenda-later-title">
-        <h2 class="sec2" id="agenda-later-title">Later this month</h2>
-        <div id="home-later" class="event-agenda"></div>
+      <section class="agenda-section agenda-section-fold" aria-labelledby="agenda-later-title">
+        <details class="agenda-fold" id="agenda-later-fold">
+          <summary><span class="agenda-fold-title" id="agenda-later-title">Later this month</span><span class="agenda-fold-count" id="agenda-later-count">Loading events…</span></summary>
+          <div id="home-later" class="event-agenda"></div>
+        </details>
       </section>
 
       <p class="note">Times are local to wherever you are playing.</p>
