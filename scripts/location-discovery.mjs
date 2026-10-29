@@ -3,7 +3,7 @@
 // into public/places.json only when an event, coordinate pair and source permalink are all present.
 // No API credentials, scraping bypasses, or fabricated coordinates.
 import { readFile, writeFile } from "node:fs/promises";
-import { coords, xmlItems } from "./location-discovery-parse.mjs";
+import { coords, redditSearchUrl, xmlItems } from "./location-discovery-parse.mjs";
 
 const ROOT = new URL("../public/", import.meta.url);
 const WORLD = JSON.parse(await readFile(new URL("world-events.json", ROOT), "utf8"));
@@ -14,8 +14,7 @@ const seen = new Set(DATA.places.map(p => p.id));
 let added = 0, checked = 0, errors = [];
 const upcoming = (WORLD.events || []).filter(e => e && e.id && e.name && e.place && e.start && !/worldwide|play from anywhere|participating .* malls|airports/i.test(e.place)).slice(0, 80);
 for (const ev of upcoming) {
-  const query = encodeURIComponent('"' + ev.name.slice(0, 70) + '" (coordinates OR coords OR hotspot OR "where to play" OR "best place")');
-  const url = "https://www.reddit.com/search.rss?q=" + query + "&sort=new&t=month";
+  const url = redditSearchUrl(ev.name);
   try {
     const res = await fetch(url, { headers: { "user-agent": "GOFieldNotesLocationDiscovery/1.0 (public event research; contact: project repository)", accept: "application/atom+xml, application/rss+xml" } });
     if (!res.ok) { errors.push("Reddit HTTP " + res.status); continue; }
