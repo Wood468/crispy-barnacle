@@ -1213,11 +1213,11 @@
   }
   function renderActionCentre() {
     var wrap = $('action-centre'), items = $('action-centre-items'); if (!wrap || !items) return;
-    var urgent = priority(now()).length;
+    var next24 = EV.filter(function (e) { return !isHidden(e.id) && !kindHidden(e.kind) && startsSoon(e); }).length;
     var missing = opportunities().filter(function (x) { return x.o.state === 'missing'; }).length;
     var saved = savedList().length;
     var cards = [];
-    if (urgent) cards.push({key:'events',icon:'◷',title:'Events worth checking',detail:urgent + ' live or upcoming priorities',count:urgent,tab:'events'});
+    if (next24) cards.push({key:'events',icon:'◷',title:'Events worth checking',detail:next24 + ' live or starting in the next 24 hours',count:next24,tab:'events'});
     if (missing) cards.push({key:'collect',icon:'◇',title:'Pokémon you still need',detail:missing + ' collection gaps matched to upcoming events',count:missing,tab:'collect'});
     if (saved) cards.push({key:'saved',icon:'☆',title:'Your saved events',detail:saved + ' events in your watchlist',count:saved,tab:'saved'});
     var review = $('igcount');
