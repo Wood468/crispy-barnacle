@@ -1,11 +1,20 @@
 // Pure parsing helpers for the community location discovery workflow.
 // Kept separate from the scheduled network/file-writing script so regressions can be tested safely.
-const clean = s => String(s || "")
+const decodeEntities = s => String(s || "").replace(/&(amp|lt|gt|quot|apos|#x2F|#39);/g, entity => {
+  const name = entity.slice(1, -1);
+  return ({
+    amp: "&",
+    lt: "<",
+    gt: ">",
+    quot: '"',
+    apos: "'",
+    "#x2F": "/",
+    "#39": "'"
+  })[name] ?? entity;
+});
+
+const clean = s => decodeEntities(s)
   .replace(/<[^>]+>/g, " ")
-  .replace(/&amp;/g, "&")
-  .replace(/&#x2F;/g, "/")
-  .replace(/&quot;/g, '"')
-  .replace(/&#39;/g, "'")
   .replace(/\s+/g, " ")
   .trim();
 
@@ -29,15 +38,13 @@ export const coords = text => {
   return out;
 };
 
-const decode = s => clean(s).replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&apos;/g, "'");
-
 export const xmlItems = xml => {
   const blocks = [...String(xml || "").matchAll(/<(item|entry)\b[^>]*>([\s\S]*?)<\/\1>/gi)];
   return blocks.map(m => {
     const body = m[2];
     const field = n => {
       const raw = (body.match(new RegExp("<" + n + "(?:\\s[^>]*)?>([\\s\\S]*?)<\\/" + n + ">", "i")) || [, ""])[1];
-      return decode(raw.replace(/^<!\[CDATA\[|\]\]>$/g, ""));
+      return clean(raw.replace(/^<!\[CDATA\[|\]\]>$/g, ""));
     };
     const href = (body.match(/<link\b[^>]*href=["']([^"']+)["']/i) || [, ""])[1];
     return {
