@@ -29,6 +29,11 @@ test("Atom entry parsing accepts link href and summary content", () => {
   }]);
 });
 
+test("entity decoding is single-pass and does not turn nested entities into markup", () => {
+  const xml = '<rss><channel><item><title>Nested entity</title><link>https://www.reddit.com/r/pokemongo/comments/ghi/nested</link><description>&amp;lt;script&amp;gt;alert(1)&amp;lt;/script&amp;gt;</description></item></channel></rss>';
+  assert.equal(xmlItems(xml)[0].desc, "&lt;script&gt;alert(1)&lt;/script&gt;");
+});
+
 test("coordinate extraction rejects out-of-range, zero and partial-number matches", () => {
   assert.deepEqual(coords("Valid 37.7749, -122.4194; invalid 91.0000, 181.0000; zero 0.0000, 0.0000"), [
     { lat: 37.7749, lng: -122.4194 }
