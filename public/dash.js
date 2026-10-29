@@ -1207,7 +1207,23 @@
     fill('spot', nextWeek, 'No events are scheduled for next week yet.');
     fill('home-later', later, 'No later events are scheduled for the rest of this month yet.');
   }
-  function renderAll() { renderKinds(); renderPrio(); renderHomeAgenda(); renderTypes(); renderStrip(); renderTimeline(); renderCalendar(); renderRot(); renderOpps(); renderSaved(); }
+  function renderActionCentre() {
+    var wrap = $('action-centre'), items = $('action-centre-items'); if (!wrap || !items) return;
+    var urgent = priority(now()).length;
+    var missing = opportunities().filter(function (x) { return x.o.state === 'missing'; }).length;
+    var saved = savedList().length;
+    var cards = [];
+    if (urgent) cards.push({key:'events',icon:'◷',title:'Events worth checking',detail:urgent + ' live or upcoming priorities',count:urgent,tab:'events'});
+    if (missing) cards.push({key:'collect',icon:'◇',title:'Pokémon you still need',detail:missing + ' collection gaps matched to upcoming events',count:missing,tab:'collect'});
+    if (saved) cards.push({key:'saved',icon:'☆',title:'Your saved events',detail:saved + ' events in your watchlist',count:saved,tab:'saved'});
+    var review = $('igcount');
+    if (review && !review.hidden && parseInt(review.textContent,10) > 0) cards.unshift({key:'review',icon:'▤',title:'Infographics to review',detail:review.textContent + ' waiting for your approval',count:parseInt(review.textContent,10),tab:'review'});
+    wrap.hidden = !cards.length;
+    items.innerHTML = cards.map(function (c) {
+      return '<button type="button" class="action-item" data-quick-go="'+c.key+'"><span class="action-icon" aria-hidden="true">'+c.icon+'</span><span class="action-copy"><b>'+esc(c.title)+'</b><small>'+esc(c.detail)+'</small></span><span class="action-count">'+c.count+'</span><span class="action-arrow" aria-hidden="true">›</span></button>';
+    }).join('');
+  }
+  function renderAll() { renderKinds(); renderPrio(); renderHomeAgenda(); renderActionCentre(); renderTypes(); renderStrip(); renderTimeline(); renderCalendar(); renderRot(); renderOpps(); renderSaved(); }
   function tick() { // keep countdowns honest without re-rendering whole views
     var t = now(), byId = {}; EV.forEach(function (e) { byId[e.id] = e; });
     Array.prototype.forEach.call(document.querySelectorAll('.cdn[data-id]'), function (n) { var e = byId[n.getAttribute('data-id')]; if (e) n.textContent = countdown(e, t); });
@@ -1246,7 +1262,16 @@
     var sub = document.querySelector('#subnav-events button[data-sub="timeline"]'); if (sub) sub.click();
     renderTypes(); renderStrip(); renderTimeline(); window.scrollTo(0, 0);
   });
-  document.addEventListener('gofn-marks', function () { renderPrio(); renderTimeline(); renderOpps(); renderSaved(); });
+  document.addEventListener('gofn-marks', function () { renderPrio(); renderTimeline(); renderOpps(); renderSaved(); renderActionCentre(); });
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest && e.target.closest('[data-quick-go]'); if (!b) return;
+    var key = b.getAttribute('data-quick-go');
+    if (key === 'review') { var review = $('hireview'); if (review && !review.hidden) review.click(); return; }
+    var tab = document.querySelector('nav.tabs button[data-tab="' + key + '"]'); if (tab) tab.click();
+    if (key === 'events') { typeSel = 'soon'; selDay = ''; evQ = ''; var sub = document.querySelector('#subnav-events button[data-sub="timeline"]'); if (sub) sub.click(); renderTypes(); renderStrip(); renderTimeline(); }
+    if (key === 'collect') { var subc = document.querySelector('#subnav-collect button[data-sub="opps"]'); if (subc) subc.click(); }
+    window.scrollTo(0, 0);
+  });
   setInterval(tick, 60000);
   document.addEventListener('visibilitychange', function () { if (!document.hidden) usSync(); });
 
