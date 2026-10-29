@@ -161,6 +161,35 @@ with sync_playwright() as p:
         check('same-day upcoming event appears in Today', agenda.locator('#home-now .evc'+same_day).count()==1, agenda.evaluate("({now:new Date().toString(),matches:GODASH.events().filter(e=>e.id==='cur:spot-2026-10-15').map(e=>({id:e.id,start:e.start.toString(),end:e.end.toString(),long:e.long,kind:e.kind,hidden:GOSTATE.get('hidekind:'+e.kind)})),today:[...document.querySelectorAll('#home-now [data-id]')].map(e=>e.dataset.id)})"))
         check('same-day upcoming event is not duplicated in This week', agenda.locator('#week '+same_day).count()==0)
         agenda.context.close()
+        # Hiding a card should also update the Today summary and shortcut count.
+        hidden=page(clock='2026-10-15T17:00:00+11:00')
+        hidden_id='cur:spot-2026-10-15'
+        before_today=int(hidden.locator('#day-upcoming-count').inner_text())
+        action_count=hidden.locator('#action-centre-items [data-quick-go="events"] .action-count')
+        before_action=int(action_count.inner_text()) if action_count.count() else 0
+        check('Today event is visible before using Hide', hidden.locator('#home-now .evc[data-id="'+hidden_id+'"]').count()==1)
+        hidden.locator('#home-now .evc[data-id="'+hidden_id+'"] [data-hide]').click()
+        hidden.wait_for_timeout(100)
+        check('Hide removes an event from Today immediately', hidden.locator('#home-now .evc[data-id="'+hidden_id+'"]').count()==0)
+        after_today=int(hidden.locator('#day-upcoming-count').inner_text())
+        check('Today overview excludes hidden events', after_today==before_today-1, (before_today,after_today))
+        after_action_count=hidden.locator('#action-centre-items [data-quick-go="events"] .action-count')
+        after_action=int(after_action_count.inner_text()) if after_action_count.count() else 0
+        check('Today action-centre count excludes hidden events', before_action>0 and after_action==before_action-1, (before_action,after_action))
+        hidden.context.close()
+        # Hide also removes a future event from its expanded next-week list.
+        future=page(clock='2026-10-15T17:00:00+11:00')
+        future_id='cur:spot-2026-10-22'
+        future_card='#spot .evc[data-id="'+future_id+'"]'
+        before_next=int(__import__('re').match(r'\d+',future.locator('#agenda-next-count').inner_text()).group())
+        check('next-week event is visible before using Hide', future.locator(future_card).count()==1)
+        future.locator('#agenda-next-fold > summary').click()
+        future.locator(future_card+' [data-hide]').click()
+        future.wait_for_timeout(100)
+        check('Hide removes the event from next week immediately', future.locator(future_card).count()==0)
+        after_next=int(__import__('re').match(r'\d+',future.locator('#agenda-next-count').inner_text()).group())
+        check('next-week event count excludes hidden events', after_next==before_next-1, (before_next,after_next))
+        future.context.close()
         # The Today action-centre count must match the Next 24h list it opens.
         quick=page()
         quick_btn=quick.locator('#action-centre-items [data-quick-go="events"]')
