@@ -1209,8 +1209,15 @@
     });
     if (!force && tdEl.getAttribute('data-render-key') === signature) return;
     tdEl.setAttribute('data-render-key', signature);
+    var liveToday = today.filter(function (e) { return phase(e, t) === 'live'; });
+    var laterToday = today.filter(function (e) { return phase(e, t) === 'soon'; });
+    function phaseGroup(label, count, html) {
+      if (!count) return '';
+      return '<section class="today-phase-group"><div class="today-phase-head"><span>' + label + '</span><span class="today-phase-count">' + count + '</span></div><div class="today-phase-cards">' + html + '</div></section>';
+    }
     tdEl.innerHTML = today.length || regionalToday.length
-      ? today.map(function (e) { return card(e); }).join('') + regionalToday.map(function (e) { return agendaRow(e, true); }).join('')
+      ? phaseGroup('Happening now', liveToday.length + regionalToday.length, liveToday.map(function (e) { return card(e); }).join('') + regionalToday.map(function (e) { return agendaRow(e, true); }).join('')) +
+        phaseGroup('Later today', laterToday.length, laterToday.map(function (e) { return card(e); }).join(''))
       : '<p class="empty">Nothing is scheduled for today.' + (nextUp ? ' Next up: <b>' + esc(nextUp.name) + '</b>, ' + esc(nextUp.start.toLocaleDateString(undefined, { weekday: 'short', day: 'numeric', month: 'short' }) + ', ' + nextUp.start.toLocaleTimeString(undefined, { hour: 'numeric', minute: '2-digit' })) + '.' : '') + '</p>';
   }
   function renderHomeAgenda() {
