@@ -1,0 +1,40 @@
+// Pure parsing helpers for the community location discovery workflow.
+// Kept separate from the scheduled network/file-writing script so regressions can be tested safely.
+const clean = s => String(s || "")
+  .replace(/<[^>]+>/g, " ")
+  .replace(/&amp;/g, "&")
+  .replace(/&#x2F;/g, "/")
+  .replace(/&quot;/g, '"')
+  .replace(/&#39;/g, "'")
+  .replace(/\\s+/g, " ")
+  .trim();
+
+export const coords = text => {
+  const out = [];
+  const re = /(?<![\\d.])(-?\\d{1,2}\\.\\d{3,})(?![\\d.])\\s*[,; ]\\s*(?<![\\d.])(-?\\d{1,3}\\.\\d{3,})(?![\\d.])/g;
+  let m;
+  while ((m = re.exec(String(text || ""))) !== null) {
+    const lat = Number(m[1]), lng = Number(m[2]);
+    if (Math.abs(lat) <= 90 && Math.abs(lng) <= 180 && !(lat === 0 && lng === 0)) out.push({ lat, lng });
+  }
+  return out;
+};
+
+const decode = s => clean(s).replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&apos;/g, "'");
+
+export const xmlItems = xml => {
+  const blocks = [...String(xml || "").matchAll(/<(item|entry)\\b[^>]*>([\\s\\S]*?)<\\/\\1>/gi)];
+  return blocks.map(m => {
+    const body = m[2];
+    const field = n => {
+      const raw = (body.match(new RegExp("<" + n + "(?:\\\\s[^>]*)?>([\\\\s\\\\S]*?)<\\\\/" + n + ">", "i")) || [, ""])[1];
+      return decode(raw.replace(/^<!\\[CDATA\\[|\\]\\]>$/g, ""));
+    };
+    const href = (body.match(/<link\\b[^>]*href=["']([^"']+)["']/i) || [, ""])[1];
+    return {
+      title: field("title"),
+      link: field("link") || href,
+      desc: field("description") || field("content") || field("summary")
+    };
+  });
+};
