@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-29T09:58:44.869Z",
+ "updated": "2026-10-29T18:28:58.188Z",
  "state": "ok",
  "scrapedDuckEvents": 54,
  "missingHere": [
@@ -130,6 +130,11 @@
    "id": "w-pok-mon-run-30-kuala-lumpur",
    "name": "Pokémon RUN 30: Kuala Lumpur",
    "start": "2026-11-21"
+  },
+  {
+   "id": "w-pok-mon-center-bangkok-opens-pok-mon-go-thailand-e",
+   "name": "Pokémon Center BANGKOK Opens: Pokémon GO Thailand Event",
+   "start": "2026-12-01"
   },
   {
    "id": "w-pok-mon-30th-anniversary-mall-exploration-sm-north",
