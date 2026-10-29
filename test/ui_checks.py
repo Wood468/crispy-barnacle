@@ -37,6 +37,30 @@ with sync_playwright() as p:
         pg.goto('http://localhost:8791/'); pg.wait_for_selector('.pc, .prio-empty',state='attached'); pg.wait_for_timeout(300)
         return pg
     if on('a'):
+        # A small but important mobile interaction: hiding an event should have a reliable tap target,
+        # an accessible name, and immediately update the Today agenda and its group count.
+        touch_event = ev('touch-target', 'Touch Target Test Event', 'pokemon-spotlight-hour',
+                         '2026-10-09T23:00:00', '2026-10-09T23:30:00', 'official_confirmed')
+        touch_page = page(api=json.dumps({'enabled': True, 'events': [touch_event]}))
+        touch_card = touch_page.locator('#home-now .evc[data-id="leekduck:touch-target"]')
+        touch_card.wait_for(state='attached')
+        hide_button = touch_card.locator('.hide-x')
+        touch_box = hide_button.bounding_box()
+        check('Today hide control is at least 44×44px',
+              touch_box is not None and touch_box['width'] >= 44 and touch_box['height'] >= 44, touch_box)
+        check('Today hide control has an accessible name',
+              hide_button.get_attribute('aria-label') == 'Hide Touch Target Test Event')
+        before_group = touch_card.evaluate("el => el.closest('.today-phase-group').querySelector('.today-phase-head span').textContent")
+        before_count = int(touch_card.evaluate("el => el.closest('.today-phase-group').querySelector('.today-phase-count').textContent"))
+        hide_button.click()
+        check('Hiding a Today event removes it immediately',
+              touch_page.locator('#home-now .evc[data-id="leekduck:touch-target"]').count() == 0)
+        after_group = touch_page.locator('#home-now .today-phase-group').filter(has_text=before_group)
+        after_count = int(after_group.locator('.today-phase-count').inner_text()) if after_group.count() else 0
+        check('Today phase count updates after hiding an event',
+              after_count == before_count - 1, {'before': before_count, 'after': after_count})
+        touch_page.context.close()
+
         # 1. no marks: nothing is claimed missing
         pg=page()
         check('no marks: no "You need" reasons anywhere', pg.locator('text=/You need/').count()==0)
