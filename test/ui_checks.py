@@ -152,6 +152,12 @@ with sync_playwright() as p:
         check('Next week agenda opens from its summary', pg.locator('#agenda-next-fold').evaluate('(el)=>el.open'))
         pg.locator('#agenda-next-fold > summary').click()
         check('Next week agenda collapses again from its summary', pg.locator('#agenda-next-fold').evaluate('(el)=>!el.open'))
+        # An event starting later today belongs in Today, not twice in This week.
+        agenda=page(clock='2026-10-15T17:00:00+11:00')
+        same_day='[data-id="cur:spot-2026-10-15"]'
+        check('same-day upcoming event appears in Today', agenda.locator('#home-now '+same_day).count()==1)
+        check('same-day upcoming event is not duplicated in This week', agenda.locator('#week '+same_day).count()==0)
+        agenda.context.close()
         pg.evaluate("""()=>{var p=document.createElement('p');p.className='evc-bonus';p.hidden=true;p.setAttribute('data-bn','Pokémon Night Out events in Pokémon GO');p.setAttribute('data-bs','2026-10-10');p.setAttribute('data-be','2026-10-10');p.id='bonus-probe';document.body.appendChild(p);}""")
         pg.wait_for_function("document.getElementById('bonus-probe') && !document.getElementById('bonus-probe').hidden", timeout=5000)
         bt=pg.inner_text('#bonus-probe')
