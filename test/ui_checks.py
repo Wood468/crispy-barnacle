@@ -147,7 +147,7 @@ with sync_playwright() as p:
         pg.click('nav.tabs button[data-tab="now"]') if pg.locator('nav.tabs button[data-tab="now"]').count() else None
         pg.wait_for_timeout(200)
         check('Today screen has the one-line next-24h summary', pg.locator('.soon-sum').count()==1 and 'starting in the next 24h' in pg.inner_text('.soon-sum'), pg.locator('.soon-sum').count())
-        check('longer-range Today sections start collapsed and show event counts', pg.locator('#agenda-next-fold').count()==1 and pg.locator('#agenda-later-fold').count()==1 and pg.locator('#agenda-next-fold').evaluate('(el)=>!el.open') and pg.locator('#agenda-later-fold').evaluate('(el)=>!el.open') and __import__('re').fullmatch(r'\\d+ events?', pg.inner_text('#agenda-next-count')) is not None and __import__('re').fullmatch(r'\\d+ events?', pg.inner_text('#agenda-later-count')) is not None)
+        check('longer-range Today sections start collapsed and show event counts', pg.locator('#agenda-next-fold').count()==1 and pg.locator('#agenda-later-fold').count()==1 and pg.locator('#agenda-next-fold').evaluate('(el)=>!el.open') and pg.locator('#agenda-later-fold').evaluate('(el)=>!el.open') and __import__('re').fullmatch(r'\d+ events?', pg.inner_text('#agenda-next-count')) is not None and __import__('re').fullmatch(r'\d+ events?', pg.inner_text('#agenda-later-count')) is not None)
         pg.locator('#agenda-next-fold > summary').click()
         check('Next week agenda opens from its summary', pg.locator('#agenda-next-fold').evaluate('(el)=>el.open'))
         pg.locator('#agenda-next-fold > summary').click()
