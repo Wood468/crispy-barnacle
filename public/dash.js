@@ -1223,6 +1223,10 @@
     var review = $('igcount');
     if (review && !review.hidden && parseInt(review.textContent,10) > 0) cards.unshift({key:'review',icon:'▤',title:'Infographics to review',detail:review.textContent + ' waiting for your approval',count:parseInt(review.textContent,10),tab:'review'});
     wrap.hidden = !cards.length;
+    // Recompute on the minute, but preserve keyboard focus when the summary has not changed.
+    var signature = JSON.stringify(cards.map(function (c) { return [c.key, c.title, c.detail, c.count]; }));
+    if (items.getAttribute('data-render-key') === signature) return;
+    items.setAttribute('data-render-key', signature);
     items.innerHTML = cards.map(function (c) {
       return '<button type="button" class="action-item" data-quick-go="'+c.key+'"><span class="action-icon" aria-hidden="true">'+c.icon+'</span><span class="action-copy"><b>'+esc(c.title)+'</b><small>'+esc(c.detail)+'</small></span><span class="action-count">'+c.count+'</span><span class="action-arrow" aria-hidden="true">›</span></button>';
     }).join('');
@@ -1232,6 +1236,7 @@
     var t = now(), byId = {}; EV.forEach(function (e) { byId[e.id] = e; });
     Array.prototype.forEach.call(document.querySelectorAll('.cdn[data-id]'), function (n) { var e = byId[n.getAttribute('data-id')]; if (e) n.textContent = countdown(e, t); });
     Array.prototype.forEach.call(document.querySelectorAll('.cdn[data-rot]'), function (n) { var ms = new Date(n.getAttribute('data-rot')) - t; n.textContent = ms > 0 ? 'Changes in ' + dur(ms) : 'Changed'; });
+    renderActionCentre();
   }
   document.addEventListener('click', function (ev) {
     var b = ev.target.closest && ev.target.closest('[data-mark],[data-save],[data-hide],[data-unhide],[data-follow],[data-type],[data-kindtog],[data-day],[data-wk],[data-clearday],[data-cday],[data-creg],[data-cscope]'); if (!b) return;
