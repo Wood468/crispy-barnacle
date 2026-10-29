@@ -233,6 +233,9 @@ with sync_playwright() as p:
             check('Today action-centre count initially matches Next 24h', before_action==before_dest, (before_action,before_dest))
             today_card_before=refresh.locator('#home-now .evc[data-id="'+target_id+'"]')
             check('Today agenda shows the event as upcoming before it starts', today_card_before.count()==1 and 'soon' in today_card_before.get_attribute('class'), today_card_before.get_attribute('class') if today_card_before.count() else 'missing')
+            later_group=refresh.locator('#home-now .today-phase-group').filter(has_text='Later today')
+            check('Today agenda groups upcoming events under Later today', later_group.count()==1)
+            check('Later today count matches its visible event cards', later_group.count()==1 and later_group.locator('.evc[data-id]').count()==int(later_group.locator('.today-phase-count').inner_text()) if later_group.count() else False)
             today_save=refresh.locator('#home-now .evc[data-id="'+target_id+'"] [data-save]')
             if today_save.count():
                 today_save.click()
