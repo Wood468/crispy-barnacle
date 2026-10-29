@@ -1,8 +1,8 @@
 {
- "runAt": "2026-10-29T01:52:41.481Z",
+ "runAt": "2026-10-29T08:38:36.875Z",
  "sources": {
   "official": {
-   "listed": 25,
+   "listed": 24,
    "error": ""
   },
   "leekduck": {
@@ -90,6 +90,11 @@
    "source": "hub",
    "title": "Trevenant Raid Guide",
    "url": "https://pokemongohub.net/post/guide/trevenant-raid-guide/"
+  },
+  {
+   "source": "hub",
+   "title": "Cofagrigus Raid Guide",
+   "url": "https://pokemongohub.net/post/guide/cofagrigus-raid-guide/"
   }
  ],
  "intl": {

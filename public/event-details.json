@@ -1,9 +1,9 @@
 {
- "updated": "2026-10-29T01:52:41.481Z",
+ "updated": "2026-10-29T08:38:36.875Z",
  "events": {
   "leekduck:dynamax-trails-2026": {
    "name": "Dynamax Trails",
-   "updated": "2026-10-29T01:52:41.481Z",
+   "updated": "2026-10-29T08:38:36.875Z",
    "sources": [
     {
      "id": "official",
@@ -437,7 +437,7 @@
   },
   "wag": {
    "name": "GO Wild Area: Global",
-   "updated": "2026-10-29T01:52:41.481Z",
+   "updated": "2026-10-29T08:38:36.875Z",
    "sources": [
     {
      "id": "official",
@@ -538,7 +538,7 @@
   },
   "leekduck:into-the-wild-2026": {
    "name": "Into the Wild",
-   "updated": "2026-10-29T01:52:41.481Z",
+   "updated": "2026-10-29T08:38:36.875Z",
    "sources": [
     {
      "id": "official",
@@ -564,7 +564,7 @@
   },
   "novcd": {
    "name": "November Community Day",
-   "updated": "2026-10-29T01:52:41.481Z",
+   "updated": "2026-10-29T08:38:36.875Z",
    "sources": [
     {
      "id": "official",
@@ -757,7 +757,7 @@
   },
   "leekduck:go-pass-november-2026": {
    "name": "GO Pass: November",
-   "updated": "2026-10-29T01:52:41.481Z",
+   "updated": "2026-10-29T08:38:36.875Z",
    "sources": [
     {
      "id": "official",
@@ -1003,7 +1003,7 @@
   },
   "smr1": {
    "name": "Super Mega Raid Day",
-   "updated": "2026-10-29T01:52:41.481Z",
+   "updated": "2026-10-29T08:38:36.875Z",
    "sources": [
     {
      "id": "official",
@@ -1344,7 +1344,7 @@
   },
   "leekduck:halloween-2026-part-1": {
    "name": "Pokémon GO Halloween 2026 Part I",
-   "updated": "2026-10-29T01:52:41.481Z",
+   "updated": "2026-10-29T08:38:36.875Z",
    "sources": [
     {
      "id": "official",
@@ -2265,7 +2265,7 @@
   },
   "halloween1": {
    "name": "Halloween 2026, Part One",
-   "updated": "2026-10-29T01:52:41.481Z",
+   "updated": "2026-10-29T08:38:36.875Z",
    "sources": [
     {
      "id": "official",
@@ -2536,7 +2536,7 @@
   },
   "spirits": {
    "name": "Dynamax Uxie, Mesprit and Azelf",
-   "updated": "2026-10-29T01:52:41.481Z",
+   "updated": "2026-10-29T08:38:36.875Z",
    "sources": [
     {
      "id": "official",
@@ -2777,7 +2777,7 @@
   },
   "tcg30": {
    "name": "Pokémon TCG: 30th Celebration (at stores)",
-   "updated": "2026-10-29T01:52:41.481Z",
+   "updated": "2026-10-29T08:38:36.875Z",
    "sources": [
     {
      "id": "official",
@@ -2842,7 +2842,7 @@
   },
   "sandile": {
    "name": "Sandile Hatch Day",
-   "updated": "2026-10-29T01:52:41.481Z",
+   "updated": "2026-10-29T08:38:36.875Z",
    "sources": [
     {
      "id": "official",
@@ -3001,7 +3001,7 @@
   },
   "trek": {
    "name": "Fall Marathon: Buddy Trek",
-   "updated": "2026-10-29T01:52:41.481Z",
+   "updated": "2026-10-29T08:38:36.875Z",
    "sources": [
     {
      "id": "official",
@@ -3230,7 +3230,7 @@
   },
   "leekduck:go-pass-october-2026": {
    "name": "GO Pass: October",
-   "updated": "2026-10-29T01:52:41.481Z",
+   "updated": "2026-10-29T08:38:36.875Z",
    "sources": [
     {
      "id": "official",
@@ -3530,194 +3530,21 @@
    "conflicts": [],
    "gaps": []
   },
-  "zorua": {
-   "name": "Zorua Community Day",
-   "updated": "2026-10-29T01:52:41.481Z",
-   "sources": [
-    {
-     "id": "official",
-     "name": "Pokémon GO (official)",
-     "trust": "official",
-     "url": "https://pokemongo.com/news/communityday-october-2026-zorua/"
-    }
-   ],
-   "fields": {
-    "bonuses": [
-     {
-      "text": "3× XP for catching Pokémon.",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "2× Candy for catching Pokémon.",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "Incense (excluding Daily Adventure Incense) activated during the event will last for three hours.",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "Take a few snapshots during Community Day for a surprise!",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "Lure Modules will last for one hour and may attract the featured Pokémon.*",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "One additional Special Trade can be made for a maximum of two for the day.*",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "Trades will require 50% less Stardust.*",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     }
-    ],
-    "featured": [
-     {
-      "text": "Zorua will appear more frequently in the wild.*",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     }
-    ],
-    "raids": [],
-    "eggs": [],
-    "research": [
-     {
-      "text": "For US$1.99 (or the equivalent pricing tier in your local currency), you’ll be able to access the Zorua Community Day–exclusive Special Research. Complete this research for even more rewards, including the following.",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "3 encounters with Zorua that have a Special Background",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "Additional encounters with Zorua",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "1 Premium Battle Pass",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "1 Rare Candy XL",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "Stay tuned for when tickets for the Special Research go live.",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "Don’t forget: You’re now able to purchase and gift tickets to any of your friends that you’ve achieved a Friendship level of Great Friends or higher with.",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "To gift a ticket, tap the Special Research ticket in the in-game shop, then tap the Gift button instead of the Buy button.",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "Tickets are nonrefundable (subject to applicable law and the exceptions set forth in the Terms of Service). Please note that this Special Research will not include an in-game medal and will not feature a story.",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     }
-    ],
-    "shiny": [],
-    "moves": [
-     {
-      "text": "Evolve Zorua during the event or up to four hours afterwards to get a Zoroark that knows the Fast Attack Sucker Punch.",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     }
-    ],
-    "costumes": [],
-    "tickets": [
-     {
-      "text": "For US$1.99 (or the equivalent pricing tier in your local currency), you’ll be able to access the Zorua Community Day–exclusive Special Research. Complete this research for even more rewards, including the following.",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "The Community Day Ultra Box will be available soon for US$1.99 (or the equivalent pricing tier in your local currency) and includes an event ticket and five Ultra Balls!",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     }
-    ],
-    "dates": [
-     {
-      "text": "Saturday, October 10, 2026, from 2:00 p.m. to 5:00 p.m. local time",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     }
-    ]
-   },
-   "conflicts": [],
-   "gaps": []
-  },
-  "leekduck:raidhour20261028": {
-   "name": "Giratina (Origin Forme) Raid Hour",
-   "updated": "2026-10-29T01:52:41.481Z",
+  "leekduck:raidhour20261104": {
+   "name": "Giratina (Altered Forme) Raid Hour",
+   "updated": "2026-10-29T08:38:36.875Z",
    "sources": [
     {
      "id": "leekduck",
      "name": "Leek Duck",
      "trust": "community",
      "url": "https://leekduck.com/events/raidhour20261028/"
+    },
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/raidhour20261104/"
     }
    ],
    "fields": {
@@ -3753,7 +3580,7 @@
   },
   "leekduck:pokemonspotlighthour2026-10-29": {
    "name": "Gastly Spotlight Hour",
-   "updated": "2026-10-29T01:52:41.481Z",
+   "updated": "2026-10-29T08:38:36.875Z",
    "sources": [
     {
      "id": "leekduck",
@@ -3787,7 +3614,7 @@
   },
   "leekduck:max-mondays-2026-11-02": {
    "name": "Dynamax Machop during Max Monday",
-   "updated": "2026-10-29T01:52:41.481Z",
+   "updated": "2026-10-29T08:38:36.875Z",
    "sources": [
     {
      "id": "leekduck",
@@ -3864,7 +3691,7 @@
   },
   "leekduck:shadow-landorus-incarnate-forme-in-shadow-raids-october-2026": {
    "name": "Shadow Landorus (Incarnate Forme) in Shadow Raids",
-   "updated": "2026-10-29T01:52:41.481Z",
+   "updated": "2026-10-29T08:38:36.875Z",
    "sources": [
     {
      "id": "leekduck",
@@ -3914,7 +3741,7 @@
   },
   "leekduck:giratina-origin-forme-in-5-star-raid-battles-october-2026": {
    "name": "Giratina (Origin Forme) in 5-star Raid Battles",
-   "updated": "2026-10-29T01:52:41.481Z",
+   "updated": "2026-10-29T08:38:36.875Z",
    "sources": [
     {
      "id": "leekduck",
@@ -3976,51 +3803,9 @@
    "conflicts": [],
    "gaps": []
   },
-  "leekduck:raidhour20261104": {
-   "name": "Giratina (Altered Forme) Raid Hour",
-   "updated": "2026-10-29T01:52:41.481Z",
-   "sources": [
-    {
-     "id": "leekduck",
-     "name": "Leek Duck",
-     "trust": "community",
-     "url": "https://leekduck.com/events/raidhour20261104/"
-    }
-   ],
-   "fields": {
-    "bonuses": [],
-    "featured": [],
-    "raids": [
-     {
-      "text": "A Raid Hour featuring Giratina (Altered Forme) is scheduled from 6:00 p.m. to 7:00 p.m. local time. During this hour there will be an increased number of five-star raids.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ],
-    "eggs": [],
-    "research": [],
-    "shiny": [],
-    "moves": [],
-    "costumes": [],
-    "tickets": [],
-    "dates": [
-     {
-      "text": "A Raid Hour featuring Giratina (Altered Forme) is scheduled from 6:00 p.m. to 7:00 p.m. local time. During this hour there will be an increased number of five-star raids.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ]
-   },
-   "conflicts": [],
-   "gaps": []
-  },
   "leekduck:pokemonspotlighthour2026-11-05": {
    "name": "Teddiursa wearing a witch hat Spotlight Hour",
-   "updated": "2026-10-29T01:52:41.481Z",
+   "updated": "2026-10-29T08:38:36.875Z",
    "sources": [
     {
      "id": "leekduck",
@@ -4076,7 +3861,7 @@
   },
   "halloween2": {
    "name": "Halloween 2026, Part Two",
-   "updated": "2026-10-29T01:52:41.481Z",
+   "updated": "2026-10-29T08:38:36.875Z",
    "sources": [
     {
      "id": "leekduck",
@@ -4348,7 +4133,7 @@
   },
   "leekduck:pokemon-go-wild-area-2026-sendai-japan": {
    "name": "Pokémon GO Wild Area 2026: Sendai • Tohoku",
-   "updated": "2026-10-29T01:52:41.481Z",
+   "updated": "2026-10-29T08:38:36.875Z",
    "sources": [
     {
      "id": "leekduck",
@@ -4698,7 +4483,7 @@
   },
   "leekduck:pokemon-go-wild-area-2026-mexico-city": {
    "name": "Pokémon GO Wild Area 2026: Mexico City",
-   "updated": "2026-10-29T01:52:41.481Z",
+   "updated": "2026-10-29T08:38:36.875Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5055,7 +4840,7 @@
   },
   "leekduck:mega-sableye-in-mega-raids-october-2026": {
    "name": "Mega Sableye in Mega Raids",
-   "updated": "2026-10-29T01:52:41.481Z",
+   "updated": "2026-10-29T08:38:36.875Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5112,7 +4897,7 @@
   },
   "leekduck:giratina-altered-forme-in-5-star-raid-battles-november-2026": {
    "name": "Giratina (Altered Forme) in 5-star Raid Battles",
-   "updated": "2026-10-29T01:52:41.481Z",
+   "updated": "2026-10-29T08:38:36.875Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5183,7 +4968,7 @@
   },
   "leekduck:shadow-tornadus-incarnate-forme-in-shadow-raids-november-4-2026": {
    "name": "Shadow Tornadus (Incarnate Forme) in Shadow Raids",
-   "updated": "2026-10-29T01:52:41.481Z",
+   "updated": "2026-10-29T08:38:36.875Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5231,7 +5016,7 @@
   },
   "leekduck:pokemon-night-out-london-2026": {
    "name": "Pokémon Night Out 2026 - London",
-   "updated": "2026-10-29T01:52:41.481Z",
+   "updated": "2026-10-29T08:38:36.875Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5339,7 +5124,7 @@
   },
   "into": {
    "name": "Into the Wild",
-   "updated": "2026-10-29T01:52:41.481Z",
+   "updated": "2026-10-29T08:38:36.875Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5596,7 +5381,7 @@
   },
   "leekduck:pokemon-go-wild-area-2026-global": {
    "name": "Pokémon GO Wild Area 2026: Global",
-   "updated": "2026-10-29T01:52:41.481Z",
+   "updated": "2026-10-29T08:38:36.875Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5884,7 +5669,7 @@
   },
   "leekduck:max-mondays-2026-11-16": {
    "name": "Max Monday: Pokémon to be announced",
-   "updated": "2026-10-29T01:52:41.481Z",
+   "updated": "2026-10-29T08:38:36.875Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5925,7 +5710,7 @@
   },
   "leekduck:raidhour20261118": {
    "name": "Cresselia and Darkrai Raid Hour",
-   "updated": "2026-10-29T01:52:41.481Z",
+   "updated": "2026-10-29T08:38:36.875Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5967,7 +5752,7 @@
   },
   "leekduck:pokemonspotlighthour2026-11-19": {
    "name": "Grookey, Scorbunny, and Sobble Spotlight Hour",
-   "updated": "2026-10-29T01:52:41.481Z",
+   "updated": "2026-10-29T08:38:36.875Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6001,7 +5786,7 @@
   },
   "minior2": {
    "name": "Minior Showers: Leonids",
-   "updated": "2026-10-29T01:52:41.481Z",
+   "updated": "2026-10-29T08:38:36.875Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6092,7 +5877,7 @@
   },
   "leekduck:eternamax-eternatus-max-battles-2026": {
    "name": "Eternamax Eternatus Returns",
-   "updated": "2026-10-29T01:52:41.481Z",
+   "updated": "2026-10-29T08:38:36.875Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6171,7 +5956,7 @@
   },
   "leekduck:november-communityday2026": {
    "name": "Pawniard Community Day",
-   "updated": "2026-10-29T01:52:41.481Z",
+   "updated": "2026-10-29T08:38:36.875Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6330,7 +6115,7 @@
   },
   "leekduck:max-mondays-2026-11-23": {
    "name": "Dynamax Espurr during Max Monday",
-   "updated": "2026-10-29T01:52:41.481Z",
+   "updated": "2026-10-29T08:38:36.875Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6407,7 +6192,7 @@
   },
   "leekduck:cresselia-darkrai-in-5-star-raid-battles-november-2026": {
    "name": "Cresselia and Darkrai in 5-star Raid Battles",
-   "updated": "2026-10-29T01:52:41.481Z",
+   "updated": "2026-10-29T08:38:36.875Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6478,7 +6263,7 @@
   },
   "leekduck:mega-banette-in-mega-raids-november-2026": {
    "name": "Mega Banette in Mega Raids",
-   "updated": "2026-10-29T01:52:41.481Z",
+   "updated": "2026-10-29T08:38:36.875Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6542,7 +6327,7 @@
   },
   "leekduck:raidhour20261125": {
    "name": "Deoxys (Normal, Defense, Attack, and Speed Formes) Raid Hour",
-   "updated": "2026-10-29T01:52:41.481Z",
+   "updated": "2026-10-29T08:38:36.875Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6584,7 +6369,7 @@
   },
   "leekduck:pokemonspotlighthour2026-11-26": {
    "name": "Noibat Spotlight Hour",
-   "updated": "2026-10-29T01:52:41.481Z",
+   "updated": "2026-10-29T08:38:36.875Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6618,7 +6403,7 @@
   },
   "smr2": {
    "name": "Super Mega Raid Day",
-   "updated": "2026-10-29T01:52:41.481Z",
+   "updated": "2026-10-29T08:38:36.875Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6660,7 +6445,7 @@
   },
   "leekduck:twilight-wishes-2026": {
    "name": "Twilight Wishes",
-   "updated": "2026-10-29T01:52:41.481Z",
+   "updated": "2026-10-29T08:38:36.875Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6694,7 +6479,7 @@
   },
   "leekduck:max-mondays-2026-11-30": {
    "name": "Dynamax Cryogonal during Max Monday",
-   "updated": "2026-10-29T01:52:41.481Z",
+   "updated": "2026-10-29T08:38:36.875Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6771,7 +6556,7 @@
   },
   "leekduck:season-24-twilight-trails": {
    "name": "Twilight Trails",
-   "updated": "2026-10-29T01:52:41.481Z",
+   "updated": "2026-10-29T08:38:36.875Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6992,7 +6777,7 @@
   },
   "leekduck:deoxys-normal-defense-attack-speed-formes-in-5-star-raid-battles-november-2026": {
    "name": "Deoxys (Normal, Defense, Attack, and Speed Formes) in 5-star Raid Battles",
-   "updated": "2026-10-29T01:52:41.481Z",
+   "updated": "2026-10-29T08:38:36.875Z",
    "sources": [
     {
      "id": "leekduck",
@@ -7091,7 +6876,7 @@
   },
   "leekduck:mega-metagross-in-mega-raids-november-2026": {
    "name": "Mega Metagross in Mega Raids",
-   "updated": "2026-10-29T01:52:41.481Z",
+   "updated": "2026-10-29T08:38:36.875Z",
    "sources": [
     {
      "id": "leekduck",
@@ -7162,7 +6947,7 @@
   },
   "minior3": {
    "name": "Minior Showers: Geminids",
-   "updated": "2026-10-29T01:52:41.481Z",
+   "updated": "2026-10-29T08:38:36.875Z",
    "sources": [
     {
      "id": "leekduck",
@@ -7253,7 +7038,7 @@
   },
   "leekduck:pokemon-x-adidas-2026": {
    "name": "adidas × Pokémon Timed Research",
-   "updated": "2026-10-29T01:52:41.481Z",
+   "updated": "2026-10-29T08:38:36.875Z",
    "sources": [
     {
      "id": "leekduck",
@@ -7331,7 +7116,7 @@
   },
   "leekduck:pokemon-go-tour-alola-kaohsiung-2027": {
    "name": "Pokémon GO Tour: Alola - Kaohsiung 2027",
-   "updated": "2026-10-29T01:52:41.481Z",
+   "updated": "2026-10-29T08:38:36.875Z",
    "sources": [
     {
      "id": "leekduck",
@@ -7365,7 +7150,7 @@
   },
   "leekduck:pokemon-go-tour-alola-los-angeles-2027": {
    "name": "Pokémon GO Tour: Alola - Los Angeles 2027",
-   "updated": "2026-10-29T01:52:41.481Z",
+   "updated": "2026-10-29T08:38:36.875Z",
    "sources": [
     {
      "id": "leekduck",
@@ -7399,7 +7184,7 @@
   },
   "leekduck:pokemon-go-tour-alola-global-2027": {
    "name": "Pokémon GO Tour: Alola - Global 2027",
-   "updated": "2026-10-29T01:52:41.481Z",
+   "updated": "2026-10-29T08:38:36.875Z",
    "sources": [
     {
      "id": "leekduck",
@@ -7433,7 +7218,7 @@
   },
   "leekduck:minior-showers-eta-aquariids-2027": {
    "name": "Minior Showers: Eta Aquariids 2027",
-   "updated": "2026-10-29T01:52:41.481Z",
+   "updated": "2026-10-29T08:38:36.875Z",
    "sources": [
     {
      "id": "leekduck",
@@ -7531,7 +7316,7 @@
   },
   "leekduck:minior-showers-southern-delta-aquariids-2027": {
    "name": "Minior Showers: Southern Delta Aquariids 2027",
-   "updated": "2026-10-29T01:52:41.481Z",
+   "updated": "2026-10-29T08:38:36.875Z",
    "sources": [
     {
      "id": "leekduck",
@@ -7629,7 +7414,7 @@
   },
   "leekduck:minior-showers-perseids-2027": {
    "name": "Minior Showers: Perseids 2027",
-   "updated": "2026-10-29T01:52:41.481Z",
+   "updated": "2026-10-29T08:38:36.875Z",
    "sources": [
     {
      "id": "leekduck",
@@ -7720,7 +7505,7 @@
   },
   "sendai": {
    "name": "GO Wild Area: Sendai",
-   "updated": "2026-10-29T01:52:41.481Z",
+   "updated": "2026-10-29T08:38:36.875Z",
    "sources": [
     {
      "id": "hub",
@@ -7744,6 +7529,227 @@
       "text": "The stamp rallies for these events will be active from 10:00 a.m. to 8:00 p.m. local time on your main ticketed event day.",
       "sources": [
        "hub"
+      ],
+      "status": "single"
+     }
+    ]
+   },
+   "conflicts": [],
+   "gaps": []
+  },
+  "zorua": {
+   "name": "Zorua Community Day",
+   "updated": "2026-10-29T01:52:41.481Z",
+   "sources": [
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "trust": "official",
+     "url": "https://pokemongo.com/news/communityday-october-2026-zorua/"
+    }
+   ],
+   "fields": {
+    "bonuses": [
+     {
+      "text": "3× XP for catching Pokémon.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "2× Candy for catching Pokémon.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Incense (excluding Daily Adventure Incense) activated during the event will last for three hours.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Take a few snapshots during Community Day for a surprise!",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Lure Modules will last for one hour and may attract the featured Pokémon.*",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "One additional Special Trade can be made for a maximum of two for the day.*",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Trades will require 50% less Stardust.*",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     }
+    ],
+    "featured": [
+     {
+      "text": "Zorua will appear more frequently in the wild.*",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     }
+    ],
+    "raids": [],
+    "eggs": [],
+    "research": [
+     {
+      "text": "For US$1.99 (or the equivalent pricing tier in your local currency), you’ll be able to access the Zorua Community Day–exclusive Special Research. Complete this research for even more rewards, including the following.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "3 encounters with Zorua that have a Special Background",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Additional encounters with Zorua",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "1 Premium Battle Pass",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "1 Rare Candy XL",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Stay tuned for when tickets for the Special Research go live.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Don’t forget: You’re now able to purchase and gift tickets to any of your friends that you’ve achieved a Friendship level of Great Friends or higher with.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "To gift a ticket, tap the Special Research ticket in the in-game shop, then tap the Gift button instead of the Buy button.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Tickets are nonrefundable (subject to applicable law and the exceptions set forth in the Terms of Service). Please note that this Special Research will not include an in-game medal and will not feature a story.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     }
+    ],
+    "shiny": [],
+    "moves": [
+     {
+      "text": "Evolve Zorua during the event or up to four hours afterwards to get a Zoroark that knows the Fast Attack Sucker Punch.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     }
+    ],
+    "costumes": [],
+    "tickets": [
+     {
+      "text": "For US$1.99 (or the equivalent pricing tier in your local currency), you’ll be able to access the Zorua Community Day–exclusive Special Research. Complete this research for even more rewards, including the following.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "The Community Day Ultra Box will be available soon for US$1.99 (or the equivalent pricing tier in your local currency) and includes an event ticket and five Ultra Balls!",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     }
+    ],
+    "dates": [
+     {
+      "text": "Saturday, October 10, 2026, from 2:00 p.m. to 5:00 p.m. local time",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     }
+    ]
+   },
+   "conflicts": [],
+   "gaps": []
+  },
+  "leekduck:raidhour20261028": {
+   "name": "Giratina (Origin Forme) Raid Hour",
+   "updated": "2026-10-29T01:52:41.481Z",
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/raidhour20261028/"
+    }
+   ],
+   "fields": {
+    "bonuses": [],
+    "featured": [],
+    "raids": [
+     {
+      "text": "A Raid Hour featuring Giratina (Origin Forme) is scheduled from 6:00 p.m. to 7:00 p.m. local time. During this hour there will be an increased number of five-star raids.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "eggs": [],
+    "research": [],
+    "shiny": [],
+    "moves": [],
+    "costumes": [],
+    "tickets": [],
+    "dates": [
+     {
+      "text": "A Raid Hour featuring Giratina (Origin Forme) is scheduled from 6:00 p.m. to 7:00 p.m. local time. During this hour there will be an increased number of five-star raids.",
+      "sources": [
+       "leekduck"
       ],
       "status": "single"
      }
