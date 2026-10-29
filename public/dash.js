@@ -1193,7 +1193,7 @@
     var today = EV.filter(function (e) { var ph = phase(e, t); return !e.long && !kindHidden(e.kind) && (ph === 'live' || (ph === 'soon' && e.start < endDay)); }).sort(function (a, b) { return a.start - b.start; });
     var regionalToday = regList().filter(function (e) { return e.start <= t && e.end > t; });
     var briefTitle = $('day-brief-title'), briefNote = $('day-brief-note');
-    var liveCount = active.length + regionalToday.length;
+    var liveCount = active.filter(function (e) { return !e.long; }).length + regionalToday.length;
     var todayCount = today.filter(function (e) { return e.start > t; }).length;
     if ($('day-live-count')) $('day-live-count').textContent = String(liveCount);
     if ($('day-upcoming-count')) $('day-upcoming-count').textContent = String(todayCount);
