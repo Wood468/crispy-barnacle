@@ -204,6 +204,14 @@ with sync_playwright() as p:
             check('Today action-centre count initially matches Next 24h', before_action==before_dest, (before_action,before_dest))
             today_card_before=refresh.locator('#home-now .evc[data-id="'+target_id+'"]')
             check('Today agenda shows the event as upcoming before it starts', today_card_before.count()==1 and 'soon' in today_card_before.get_attribute('class'), today_card_before.get_attribute('class') if today_card_before.count() else 'missing')
+            today_save=refresh.locator('#home-now .evc[data-id="'+target_id+'"] [data-save]')
+            if today_save.count():
+                today_save.click()
+                check('Today event save state updates immediately', refresh.locator('#home-now .evc[data-id="'+target_id+'"] [data-save][aria-pressed="true"]').count()==1)
+                refresh.locator('#home-now .evc[data-id="'+target_id+'"] [data-save][aria-pressed="true"]').click()
+                check('Today event can be unsaved without reloading', refresh.locator('#home-now .evc[data-id="'+target_id+'"] [data-save][aria-pressed="false"]').count()==1)
+            else:
+                check('Today event card exposes its save control', False)
             # Advance past the event start; the minute tick must refresh the brief without rebuilding the agenda.
             refresh.clock.fast_forward(target_start-refresh.evaluate('Date.now()')+61000)
             refresh.clock.run_for(61000); refresh.wait_for_timeout(150)
