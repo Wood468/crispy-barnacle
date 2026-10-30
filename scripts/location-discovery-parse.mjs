@@ -27,6 +27,12 @@ export const redditSearchUrl = eventName => {
   return url;
 };
 
+// Preserve the source publication day separately from any independent coordinate check.
+export const reportDate = value => {
+  const timestamp = Date.parse(String(value || ""));
+  return Number.isFinite(timestamp) ? new Date(timestamp).toISOString().slice(0, 10) : null;
+};
+
 // Parse Retry-After safely. A missing/invalid header gets a modest cooldown;
 // a server-requested wait longer than five minutes defers this run to the next schedule.
 export const retryAfterMs = (value, now = Date.now()) => {
@@ -86,10 +92,12 @@ export const xmlItems = xml => {
       return clean(raw.replace(/^<!\[CDATA\[|\]\]>$/g, ""));
     };
     const href = (body.match(/<link\b[^>]*href=["']([^"']+)["']/i) || [, ""])[1];
+    const publishedAt = field("pubDate") || field("published") || field("updated");
     return {
       title: field("title"),
       link: field("link") || href,
-      desc: field("description") || field("content") || field("summary")
+      desc: field("description") || field("content") || field("summary"),
+      ...(publishedAt ? { publishedAt } : {})
     };
   });
 };
