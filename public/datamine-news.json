@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-28T21:53:40.986Z",
+ "updated": "2026-10-30T18:49:12.057Z",
  "seeded": true,
  "channels": [
   {
@@ -18,10 +18,19 @@
    "src": "gamedata",
    "name": "dm-gamedata",
    "state": "ok",
-   "count": 21
+   "count": 22
   }
  ],
  "items": [
+  {
+   "id": "1565730387232297084",
+   "src": "gamedata",
+   "title": "PokéXciting! in Thailand, GO Wild Area stamp rallies · sora10pls/...",
+   "text": "New texts: https://github.com/sora10pls/holoholo-text/commit/2e4a8911daa6b990bc1c01aec6d1c9e361956226#diff-a71fd0182b32e8d4b2786e4fd8a33ff746eab69aff0df3c734371b8e24f155ea\n\n@subscriber @miner",
+   "link": "https://github.com/sora10pls/holoholo-text/commit/2e4a8911daa6b990bc1c01aec6d1c9e361956226",
+   "image": "https://opengraph.githubassets.com/c12357d0a78e09bb8aaf4045e6888fae9564ebf4f227325593e4ba2c0a4a679f/sora10pls/holoholo-text/commit/2e4a8911daa6b990bc1c01aec6d1c9e361956226",
+   "date": "2026-10-30T14:13:34.180Z"
+  },
   {
    "id": "1565111666478288967",
    "src": "gamedata",
