@@ -377,7 +377,7 @@
       }).join('') + '</div>';
     }).join('');
   }
-  function close(silent) { var o = $('evd'); if (!o || o.hidden) return; o.hidden = true; document.body.style.overflow = ''; if (opener && opener.focus) opener.focus(); if (silent !== true && window.GONAV) window.GONAV.popped(); }
+  function close(silent) { var o = $('evd'); if (!o || o.hidden) return; o.hidden = true; document.body.style.overflow = ''; if (opener && opener.isConnected && opener.focus) opener.focus(); if (silent !== true && window.GONAV) window.GONAV.popped(); }
   /* The event page's own picture (its og:image), shown at the top when the event has none of its own. */
   function addBanner(o, ev) {
     if (ev.img) return;
@@ -440,7 +440,19 @@
     });
   }
   document.addEventListener('click', function (e) { var b = e.target.closest('[data-open]'); if (b) { e.preventDefault(); open(b.dataset.open, b); } });
-  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+  /* Keep keyboard navigation inside the modal while it is open. */
+  document.addEventListener('keydown', function (e) {
+    var o = $('evd'); if (!o || o.hidden) return;
+    if (e.key === 'Escape') { close(); return; }
+    if (e.key !== 'Tab') return;
+    var items = Array.prototype.slice.call(o.querySelectorAll('a[href],button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea:not([disabled]),summary,[tabindex]:not([tabindex="-1"])')).filter(function (el) {
+      return !el.closest('[hidden],[aria-hidden="true"]') && el.getClientRects().length > 0;
+    });
+    if (!items.length) { e.preventDefault(); var x = $('evd-x'); if (x) x.focus(); return; }
+    var first = items[0], last = items[items.length - 1], active = document.activeElement;
+    if (e.shiftKey && (active === first || !o.contains(active))) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && (active === last || !o.contains(active))) { e.preventDefault(); first.focus(); }
+  });
   window.GOEVD = { close: close };
   document.addEventListener('gofn-state', function () { var o = $('evd'); if (o && !o.hidden) { var s = o.querySelector('[data-save]'); if (s) { var on = X.isSaved(s.dataset.save); s.classList.toggle('on', on); s.textContent = on ? '★' : '☆'; s.setAttribute('aria-pressed', on); var l = o.querySelector('.evd-lead'); if (l) l.hidden = !on; } } });
   document.addEventListener('change', function (e) { var sel = e.target.closest && e.target.closest('select[data-lead]'); if (!sel) return; var v = sel.value; X.usSet('pref:lead:' + sel.getAttribute('data-lead'), v === '' ? null : v); });
