@@ -53,7 +53,8 @@ test("PWA entry page links to the manifest and iOS touch icon and registers the 
   assert.match(html, /lib\.js\?v=20261030a/);
   assert.match(html, /\/pwa\.js/);
   assert.match(app, /dash\.js\?v=20261031a/);
-  assert.match(dash, /detail\.js\?v=20261030f/);\n  assert.match(dash, /places\.js\?v=20261031a/, "the updated Places provenance UI is versioned");
+  assert.match(dash, /detail\.js\?v=20261030f/);
+  assert.match(dash, /places\.js\?v=20261031a/, "the updated Places provenance UI is versioned");
 });
 
 
