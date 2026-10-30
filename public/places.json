@@ -1,6 +1,6 @@
 {
   "updated": "2026-10-14",
-  "how_to_update": "For every international or regional event with a real-world location, add one or more entries to places[]. Include the named venue or city, country, latitude/longitude, a source URL that supports the venue, a separate coordinates source, and verified date (YYYY-MM-DD). Prefer official venue/event sources; use clearly labelled community reports when official pages omit a precise play spot. Never label an approximate city-centre point as an official event pin. Add events[] with the event headline and date range. The app links exact event titles first, then matches a place only when its city, country or venue name appears explicitly in the event location and the dates overlap. For multi-city events add one place per named city/venue. Never invent coordinates or activity claims. Tags allowed: Raids, Gyms, PokéStops, Community Day, Event venue. Community-reported hotspot entries are general area pins only; raid activity and lobby fill are not live-verified.",
+  "how_to_update": "For every international or regional event with a real-world location, add only a named venue or city supported by the event source. Include the event/venue source and a separate coordinates source. Set verified (YYYY-MM-DD) only when the coordinate pair itself has been independently checked against an authoritative venue map or official location source; opening or checking a Wikipedia/Reddit page is not independent coordinate verification. For Reddit/community posts use coordinateStatus: community-reported and set reportedAt only when the original publication timestamp is available from the source. For Wikipedia/Wikimedia coordinate references use coordinateStatus: community-reference; do not invent a report date. Community-sourced coordinates must not carry verified and must never be described as official event pins. Never label an approximate city-centre point as an official event pin. Add events[] with the sourced event headline and date range. The app links exact event titles first, then matches a place only when its city, country or venue name appears explicitly in the event location and the dates overlap. For multi-city events add one place per named city/venue. Never invent coordinates, countries, dates or activity claims. Tags allowed: Raids, Gyms, PokéStops, Community Day, Event venue. Community-reported hotspot entries are general area pins only; raid activity and lobby fill are not live-verified.",
   "tags": [
     "Event venue",
     "Community Day",
@@ -43,7 +43,7 @@
           "to": "2026-09-27"
         }
       ],
-      "coordinateStatus": "community-reported"
+      "coordinateStatus": "community-reference"
     },
     {
       "id": "king-george-square-brisbane",
@@ -79,7 +79,7 @@
           "to": "2026-09-27"
         }
       ],
-      "coordinateStatus": "community-reported"
+      "coordinateStatus": "community-reference"
     },
     {
       "id": "changi-airport-t3-singapore",
@@ -107,7 +107,6 @@
         "url": "https://en.wikipedia.org/wiki/Changi_Airport",
         "note": "Marks Changi Airport as a whole (Wikipedia gives 1.35917, 103.98944). Wikipedia gives the airport's point; it does not pin the terminal. Not an official event pin."
       },
-      "verified": "2026-10-14",
       "route": null,
       "events": [
         {
@@ -115,7 +114,8 @@
           "from": "2026-11-07",
           "to": "2026-11-08"
         }
-      ]
+      ],
+      "coordinateStatus": "community-reference"
     },
     {
       "id": "jewel-changi-airport-singapore",
@@ -143,7 +143,6 @@
         "url": "https://en.wikipedia.org/wiki/Jewel_Changi_Airport",
         "note": "Wikipedia gives 1.3644, 103.9915 for Jewel. The airport article's point is a few hundred metres away, so treat this as approximate. Not an official event pin."
       },
-      "verified": "2026-10-14",
       "route": null,
       "events": [
         {
@@ -151,7 +150,8 @@
           "from": "2026-11-07",
           "to": "2026-11-08"
         }
-      ]
+      ],
+      "coordinateStatus": "community-reference"
     },
     {
       "id": "field-museum-chicago",
@@ -180,7 +180,6 @@
         "url": "https://en.wikipedia.org/wiki/Field_Museum_of_Natural_History",
         "note": "Marks the museum (Wikipedia gives 41.86611, -87.61694). Not an official event pin."
       },
-      "verified": "2026-10-14",
       "route": null,
       "events": [
         {
@@ -193,7 +192,8 @@
           "from": "2026-05-22",
           "to": "2027-04-11"
         }
-      ]
+      ],
+      "coordinateStatus": "community-reference"
     },
     {
       "id": "science-museum-london",
@@ -222,7 +222,6 @@
         "url": "https://en.wikipedia.org/wiki/Science_Museum,_London",
         "note": "Marks the museum (Wikipedia gives 51.49750, -0.17472). Not an official event pin."
       },
-      "verified": "2026-10-14",
       "route": null,
       "events": [
         {
@@ -240,7 +239,8 @@
           "from": "2026-10-04",
           "to": "2027-04-30"
         }
-      ]
+      ],
+      "coordinateStatus": "community-reference"
     },
     {
       "id": "deutsches-museum-nuernberg",
@@ -269,7 +269,6 @@
         "url": "https://de.wikipedia.org/wiki/Augustinerhof",
         "note": "Marks the Augustinerhof, which houses the Deutsches Museum Nürnberg (German Wikipedia gives 49.45417, 11.07528). Not an official event pin."
       },
-      "verified": "2026-10-14",
       "route": null,
       "events": [
         {
@@ -287,7 +286,8 @@
           "from": "2026-10-04",
           "to": "2027-04-30"
         }
-      ]
+      ],
+      "coordinateStatus": "community-reference"
     },
     {
       "id": "museu-ciencies-valencia",
@@ -316,7 +316,6 @@
         "url": "https://en.wikipedia.org/wiki/Museu_de_les_Ci%C3%A8ncies_Pr%C3%ADncipe_Felipe",
         "note": "Marks the museum (Wikipedia gives 39.4558, -0.3515). Not an official event pin."
       },
-      "verified": "2026-10-14",
       "route": null,
       "events": [
         {
@@ -334,7 +333,8 @@
           "from": "2026-10-04",
           "to": "2027-04-30"
         }
-      ]
+      ],
+      "coordinateStatus": "community-reference"
     },
     {
       "id": "space-expo-noordwijk",
@@ -363,7 +363,6 @@
         "url": "https://en.wikipedia.org/wiki/European_Space_Research_and_Technology_Centre",
         "note": "Marks the ESTEC campus, where Wikipedia says Space Expo is the visitor centre (it gives ESTEC at 52.21915, 4.42044). Not the Space Expo entrance and not an official event pin."
       },
-      "verified": "2026-10-14",
       "route": null,
       "events": [
         {
@@ -381,7 +380,8 @@
           "from": "2026-10-04",
           "to": "2027-04-30"
         }
-      ]
+      ],
+      "coordinateStatus": "community-reference"
     },
     {
       "id": "euro-space-center-transinne",
@@ -410,7 +410,6 @@
         "url": "https://en.wikipedia.org/wiki/Euro_Space_Center",
         "note": "Marks the centre (Wikipedia gives 50.00833, 5.21931). Not an official event pin."
       },
-      "verified": "2026-10-14",
       "route": null,
       "events": [
         {
@@ -428,7 +427,8 @@
           "from": "2026-10-04",
           "to": "2027-04-30"
         }
-      ]
+      ],
+      "coordinateStatus": "community-reference"
     },
     {
       "id": "haneda-airport-tokyo",
@@ -457,7 +457,6 @@
         "url": "https://en.wikipedia.org/wiki/Haneda_Airport",
         "note": "Marks the airport (Wikipedia gives 35.55333, 139.78111). Wikipedia gives the airport's point; it does not pin the terminal. Not an official event pin."
       },
-      "verified": "2026-10-14",
       "route": null,
       "events": [
         {
@@ -470,7 +469,8 @@
           "from": "2026-07-28",
           "to": "2027-08-31"
         }
-      ]
+      ],
+      "coordinateStatus": "community-reference"
     },
     {
       "id": "narita-airport-chiba",
@@ -499,7 +499,6 @@
         "url": "https://en.wikipedia.org/wiki/Narita_International_Airport",
         "note": "Marks the airport (Wikipedia gives 35.76528, 140.38556). Wikipedia gives the airport's point; it does not pin the terminal. Not an official event pin."
       },
-      "verified": "2026-10-14",
       "route": null,
       "events": [
         {
@@ -512,7 +511,8 @@
           "from": "2026-07-28",
           "to": "2027-08-31"
         }
-      ]
+      ],
+      "coordinateStatus": "community-reference"
     },
     {
       "id": "new-chitose-airport",
@@ -541,7 +541,6 @@
         "url": "https://en.wikipedia.org/wiki/New_Chitose_Airport",
         "note": "Marks the airport (Wikipedia gives 42.77528, 141.6925). Wikipedia gives the airport's point; it does not pin the terminal. Not an official event pin."
       },
-      "verified": "2026-10-14",
       "route": null,
       "events": [
         {
@@ -554,7 +553,8 @@
           "from": "2026-07-28",
           "to": "2027-08-31"
         }
-      ]
+      ],
+      "coordinateStatus": "community-reference"
     },
     {
       "id": "hakodate-airport",
@@ -583,7 +583,6 @@
         "url": "https://en.wikipedia.org/wiki/Hakodate_Airport",
         "note": "Marks the airport (Wikipedia gives 41.77, 140.82194). Wikipedia gives the airport's point; it does not pin the terminal. Not an official event pin."
       },
-      "verified": "2026-10-14",
       "route": null,
       "events": [
         {
@@ -596,7 +595,8 @@
           "from": "2026-07-28",
           "to": "2027-08-31"
         }
-      ]
+      ],
+      "coordinateStatus": "community-reference"
     },
     {
       "id": "akita-airport",
@@ -625,7 +625,6 @@
         "url": "https://en.wikipedia.org/wiki/Akita_Airport",
         "note": "Marks the airport (Wikipedia gives 39.61556, 140.21861). Wikipedia gives the airport's point; it does not pin the terminal. Not an official event pin."
       },
-      "verified": "2026-10-14",
       "route": null,
       "events": [
         {
@@ -638,7 +637,8 @@
           "from": "2026-07-28",
           "to": "2027-08-31"
         }
-      ]
+      ],
+      "coordinateStatus": "community-reference"
     },
     {
       "id": "sendai-airport",
@@ -667,7 +667,6 @@
         "url": "https://en.wikipedia.org/wiki/Sendai_Airport",
         "note": "Marks the airport (Wikipedia gives 38.13972, 140.91694). Wikipedia gives the airport's point; it does not pin the terminal. Not an official event pin."
       },
-      "verified": "2026-10-14",
       "route": null,
       "events": [
         {
@@ -680,7 +679,8 @@
           "from": "2026-07-28",
           "to": "2027-08-31"
         }
-      ]
+      ],
+      "coordinateStatus": "community-reference"
     },
     {
       "id": "sendai-wild-area",
@@ -709,7 +709,6 @@
         "url": "https://en.wikipedia.org/wiki/Sendai",
         "note": "Marks the city (Wikipedia gives 38.26822, 140.86942). An area pin, not an event site: no venue has been published."
       },
-      "verified": "2026-10-14",
       "route": null,
       "events": [
         {
@@ -722,7 +721,8 @@
           "from": "2026-11-06",
           "to": "2026-11-08"
         }
-      ]
+      ],
+      "coordinateStatus": "community-reference"
     },
     {
       "id": "mexico-city-wild-area",
@@ -750,7 +750,6 @@
         "url": "https://en.wikipedia.org/wiki/Mexico_City",
         "note": "Marks the city (Wikipedia gives 19.433, -99.133). An area pin, not an event site: no venue has been published."
       },
-      "verified": "2026-10-14",
       "route": null,
       "events": [
         {
@@ -763,7 +762,8 @@
           "from": "2026-11-06",
           "to": "2026-11-08"
         }
-      ]
+      ],
+      "coordinateStatus": "community-reference"
     },
     {
       "id": "kaohsiung-go-tour-2027",
@@ -791,7 +791,6 @@
         "url": "https://en.wikipedia.org/wiki/Kaohsiung",
         "note": "Marks the city seat (Wikipedia gives 22.61500, 120.29750). An area pin, not an event site: no venue has been published."
       },
-      "verified": "2026-10-14",
       "route": null,
       "events": [
         {
@@ -799,7 +798,8 @@
           "from": "2027-02-19",
           "to": "2027-02-21"
         }
-      ]
+      ],
+      "coordinateStatus": "community-reference"
     },
     {
       "id": "alameda-central-mexico-city",
