@@ -44,7 +44,8 @@ with sync_playwright() as p:
         # The dashboard only switches to the live API when it contains at least ten valid events.
         touch_events = [touch_event] + [
             ev('touch-future-' + str(i), 'Touch Target Fixture Future ' + str(i), 'pokemon-spotlight-hour',
-               '2026-10-11T10:00:00', '2026-10-11T10:30:00', 'official_confirmed')
+               ('2026-10-10' if i < 4 else '2026-10-11') + 'T10:00:00',
+               ('2026-10-10' if i < 4 else '2026-10-11') + 'T10:30:00', 'official_confirmed')
             for i in range(9)
         ]
         touch_page = page(api=json.dumps({'enabled': True, 'events': touch_events}))
@@ -65,7 +66,93 @@ with sync_playwright() as p:
         after_count = int(after_group.locator('.today-phase-count').inner_text()) if after_group.count() else 0
         check('Today phase count updates after hiding an event',
               after_count == before_count - 1, {'before': before_count, 'after': after_count})
+        tomorrow_group = touch_page.locator('#week .week-day-group[data-week-day="2026-10-10"]')
+        sunday_group = touch_page.locator('#week .week-day-group[data-week-day="2026-10-11"]')
+        check('This Week groups events by start date',
+              tomorrow_group.count() == 1 and sunday_group.count() == 1 and
+              'Touch Target Fixture Future 0' in tomorrow_group.locator('.week-day-events').inner_text() and
+              'Touch Target Fixture Future 4' in sunday_group.locator('.week-day-events').inner_text())
+        check('This Week labels tomorrow clearly and keeps each day count accurate',
+              tomorrow_group.locator('.week-day-label').inner_text() == 'Tomorrow' and
+              all(int(g.locator('.week-day-count').inner_text().split()[0]) == g.locator('.week-day-events .evc').count() and
+                  g.locator('.week-day-events .evc').count() > 0 for g in [tomorrow_group, sunday_group]))
         touch_page.context.close()
+
+        # Isolate the empty Today state from live regional schedules: the next-up card should remain actionable.
+        next_events = [
+            ev('touch-next-' + str(i), 'Next Up Fixture ' + str(i), 'pokemon-spotlight-hour',
+               '2026-10-10T10:00:00', '2026-10-10T10:30:00', 'official_confirmed')
+            for i in range(10)
+        ]
+        next_page = page(api=json.dumps({'enabled': True, 'events': next_events}),
+                         us={'hide:cur:space': True},
+                         extra={'**/world-events.json': ('{"events":[]}', 200),
+                                '**/regional-events.json': ('{"events":[]}', 200)})
+        next_button = next_page.locator('#home-now .today-next-up')
+        next_button.wait_for(state='attached', timeout=5000)
+        check('Empty Today offers a tappable next event', next_button.count() == 1 and
+              next_button.get_attribute('aria-label') == 'Open details for Next Up Fixture 0')
+        next_button.click()
+        next_page.locator('#evd').wait_for(state='visible')
+        jump_links = next_page.locator('#evd .evd-jump a').evaluate_all(
+            "els => els.map(a => ({label: a.textContent.trim(), target: !!document.getElementById(a.getAttribute('href').slice(1))}))")
+        check('Event detail quick links all have rendered targets', all(x['target'] for x in jump_links), jump_links)
+        check('Event detail hides Highlights and Locations when those sections are absent',
+              all(x['label'] not in ['Highlights', 'Locations'] for x in jump_links), jump_links)
+        # Highlights must land on the first real section even when there are no bonuses.
+        highlight_page = page()
+        highlight_page.wait_for_function("window.GODETAIL && window.GODASH", timeout=5000)
+        highlight_page.evaluate("""() => {
+            const events = GODASH.events();
+            events.push(GODASH.mkEvent({
+                id: 'zorua', name: 'Move Highlight Fixture', kind: 'event',
+                s: '2026-10-10T10:00:00', e: '2026-10-10T10:30:00',
+                featured: [], bonuses: [], status: 'official_confirmed', source: 'Fixture'
+            }));
+            events.push(GODASH.mkEvent({
+                id: 'featured-highlight', name: 'Featured Highlight Fixture', kind: 'event',
+                s: '2026-10-10T11:00:00', e: '2026-10-10T11:30:00',
+                featured: [{name: 'Pikachu', role: 'featured'}], bonuses: [],
+                status: 'official_confirmed', source: 'Fixture'
+            }));
+        }""")
+        highlight_page.evaluate("GODETAIL.open('zorua')")
+        highlight_page.locator('#evd').wait_for(state='visible')
+        highlight_page.locator('#evd .evd-jump a[href="#evd-highlights"]').wait_for(state='attached')
+        move_target = highlight_page.locator('#evd-highlights')
+        check('Move-only Highlights shortcut lands on event-only moves',
+              highlight_page.locator('#evd .evd-jump a[href="#evd-highlights"]').count() == 1 and
+              move_target.count() == 1 and move_target.evaluate("(el) => el.textContent.trim()") == 'Event-only moves',
+              {'target_count': move_target.count(), 'target_text': move_target.inner_text() if move_target.count() else '',
+               'event_ids': highlight_page.evaluate("GODASH.events().map(e => e.id).filter(id => id === 'zorua')")})
+        highlight_page.locator('#evd-x').click()
+        highlight_page.locator('#evd').wait_for(state='hidden')
+        highlight_page.evaluate("GODETAIL.open('featured-highlight')")
+        highlight_page.locator('#evd').wait_for(state='visible')
+        highlight_page.locator('#evd .evd-jump a[href="#evd-highlights"]').wait_for(state='attached')
+        featured_target = highlight_page.locator('#evd-highlights')
+        check('Featured-only Highlights shortcut lands on the featured Pokémon section',
+              highlight_page.locator('#evd .evd-jump a[href="#evd-highlights"]').count() == 1 and
+              featured_target.count() == 1 and featured_target.evaluate("(el) => el.textContent.trim()") == 'Featured Pokémon',
+              {'target_count': featured_target.count(), 'target_text': featured_target.inner_text() if featured_target.count() else '',
+               'featured': highlight_page.evaluate("GODASH.events().filter(e => e.id === 'featured-highlight').map(e => e.featured)")})
+        highlight_page.context.close()
+
+        # Keyboard navigation is trapped in the dialog and Escape returns focus to its opener.
+        next_page.keyboard.press('Shift+Tab')
+        wrapped_last = next_page.evaluate("""() => {
+            const d = document.getElementById('evd');
+            const items = [...d.querySelectorAll('a[href],button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea:not([disabled]),summary,[tabindex]:not([tabindex="-1"])')].filter(el => !el.closest('[hidden],[aria-hidden="true"]') && el.getClientRects().length > 0);
+            return items.length > 1 && document.activeElement === items[items.length - 1];
+        }""")
+        check('Event detail Shift+Tab wraps from the first control to the last', wrapped_last)
+        next_page.keyboard.press('Tab')
+        check('Event detail Tab wraps from the last control to the close button',
+              next_page.evaluate("document.activeElement.id === 'evd-x'"))
+        next_page.keyboard.press('Escape')
+        check('Event detail Escape restores focus to the Today next-event card',
+              next_page.evaluate("document.getElementById('evd').hidden && document.activeElement.classList.contains('today-next-up')"))
+        next_page.context.close()
 
         # 1. no marks: nothing is claimed missing
         pg=page()
