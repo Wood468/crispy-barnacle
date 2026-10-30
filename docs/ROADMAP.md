@@ -23,8 +23,8 @@ All merged milestones above passed their post-merge test checks; the latest main
 
 - ✅ **ENG-1** PIN gate accepted the literal "undefined" when `SYNC_PIN` unset (preview deploys) — fixed in #99, verified in deployed Worker.
 - 🔒 **ENG-1b** Preview deployments bind the production R2 bucket (private prices/places, nightly D1 backups). Needs a separate preview bucket and/or Cloudflare Access on previews; old preview versions still run pre-fix code.
-- 🔧 **QA-1** Sign-in/register wiped device-only collection marks — fix: merge into account.
-- 🔧 **QA-2/ENG-4** Dex sync whole-document last-writer-wins loses marks across devices — fix: per-mark merge.
+- 🔧 **QA-1** Sign-in/register wiped device-only collection marks — account transition must preserve and merge local state before clearing or switching identity.
+- 🔧 **QA-2/ENG-4** Dex sync whole-document last-writer-wins loses marks across devices — additive migration 0004 prepares per-mark rows with timestamped tombstones; API/client merge and legacy snapshot import remain required before this is considered fixed.
 
 ## P1 — Major defects / reliability
 
