@@ -8,7 +8,6 @@
   function $(id) { return document.getElementById(id); }
   /* Moves an event hands out for a limited time (public/event-moves.json). Shown only here and only while the window is open; never part of a Pokémon's normal moveset. */
   var EVM = [];
-  try { fetch('/event-moves.json').then(function (r) { return r.ok ? r.json() : null; }).then(function (j) { if (j && j.moves) EVM = j.moves; }).catch(function () {}); } catch (e) {}
   function evMovesHtml(ev, highlightTarget) {
     var L = EVM.filter(function (m) { return m.eventId === ev.id; });
     if (!L.length) return '';
@@ -26,7 +25,7 @@
   function load() {
     if (DATA) return Promise.resolve(DATA);
     function j(u) { return fetch(u, { cache: 'no-cache' }).then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; }); }
-    return Promise.all([j('/event-info.json'), (window.GOLIB ? GOLIB.loadPrices() : j('/prices.json')), window.GOPLACES ? window.GOPLACES.load() : null, j('/event-details.json')]).then(function (a) { DATA = { info: a[0] || { events: {}, passes: {} }, prices: a[1] || { prices: [], fx: null }, details: (a[3] && a[3].events) || {} }; return DATA; });
+    return Promise.all([j('/event-info.json'), (window.GOLIB ? GOLIB.loadPrices() : j('/prices.json')), window.GOPLACES ? window.GOPLACES.load() : null, j('/event-details.json'), j('/event-moves.json')]).then(function (a) { EVM = (a[4] && a[4].moves) || []; DATA = { info: a[0] || { events: {}, passes: {} }, prices: a[1] || { prices: [], fx: null }, details: (a[3] && a[3].events) || {} }; return DATA; });
   }
   function fmtDay(iso) { var d = new Date(iso + 'T12:00'); return isNaN(d) ? esc(iso) : d.getDate() + ' ' + G.MON[d.getMonth()]; }
   function safe(u) { return typeof u === 'string' && (/^https:\/\//.test(u) || /^\/img\/ext\/[\w.-]+$/.test(u)) ? u : ''; }
