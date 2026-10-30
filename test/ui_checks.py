@@ -40,7 +40,7 @@ with sync_playwright() as p:
         if marks: pg.add_init_script("localStorage.setItem('gofn-dex-v1',%s)"%json.dumps(json.dumps(marks)))
         if us: gens=gens or []
         if gens or us: pg.add_init_script("if(!localStorage.getItem('gofn-us-v1'))localStorage.setItem('gofn-us-v1',%s)"%json.dumps(json.dumps(dict({'pref:gen:%d'%g:{'v':True,'t':1} for g in (gens or [])} and {'pref:gen:%d'%g:{'v':True,'t':1} for g in (gens or [])},**{k:{'v':v,'t':1} for k,v in (us or {}).items()}))))
-        pg.goto('http://localhost:8791/'); pg.wait_for_selector('.pc, .prio-empty',state='attached'); pg.wait_for_timeout(300)
+        pg.goto('http://localhost:8791/', wait_until='domcontentloaded' if slow_places else 'load'); pg.wait_for_selector('.pc, .prio-empty',state='attached'); pg.wait_for_timeout(300)
         return pg
     if on('a'):
         # A small but important mobile interaction: hiding an event should have a reliable tap target,
