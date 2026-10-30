@@ -1,6 +1,6 @@
 # GO Field Notes — Completion Roadmap
 
-_Maintained by the lead coordinator. Last consolidated: 31 Oct 2026, including #123 timezone support, #124 source-trust protection, #125 startup recovery, and #127 preview media isolation (finding IDs QA-\*, RES-\*, UX-\*, ENG-\* refer to the audits)._
+_Maintained by the lead coordinator. Last consolidated: 31 Oct 2026, including #123 timezone support, #124 source-trust protection, #125 startup recovery, #127 preview media isolation, #128 community coordinate provenance, and the source-freshness follow-up (finding IDs QA-\*, RES-\*, UX-\*, ENG-\* refer to the audits)._
 
 ## Status legend
 
@@ -17,7 +17,7 @@ _Maintained by the lead coordinator. Last consolidated: 31 Oct 2026, including #
 - ✅ **#123 — venue-local and viewer-local times:** IANA timezone conversion, daylight-saving validation and dual venue/viewer calendar dates are merged. JavaScript, Python, all browser shards, CodeQL and the post-merge Cloudflare Workers production build passed on main `a65ac30` (build `99f13e92-fa44-4594-a1c1-d363fb29b314`).
 - 🔧 **#124 — official-source date protection:** the scheduled audit no longer auto-overwrites a world-event date when an official Pokémon GO source is attached; discrepancies are retained as review alerts. PR and post-merge JavaScript, Python, browser and CodeQL checks passed; the next scheduled audit run remains to be confirmed.
 - ✅ **#125 — resilient startup:** bounded initial data loading and temporary primary navigation are merged; post-merge JavaScript, Python and browser checks pass, with the retry panel retained for recovery.
-- 🔧 **Community coordinate provenance — fresh mainline port:** the former #126 branch was 8 commits behind current main and is not being merged. A new branch from current main carries the provenance/data/discovery/UI regression work, plus a GPX correction so the coordinate link targets `coords.url` while event-source attribution stays separate. All 20 existing Wikipedia/Wikimedia/Reddit coordinate records are explicitly community-sourced and have no `verified` date; only source-backed Reddit publication dates populate `reportedAt`. PR checks pending.
+- ✅ **#128 — community coordinate provenance:** 19 Wikipedia/Wikimedia references and one Reddit report are explicitly community-sourced, with no invented `verified` dates; only source-backed Reddit publication dates populate `reportedAt`. Ambiguous/country-only discovery locations are skipped. GPX coordinate links target `coords.url`, with event-source attribution kept separate. All PR and post-merge checks, the Cloudflare preview build and production Workers build passed.
 - ✅ **#112 — visible data-load recovery:** added an accessible event-data error panel with a retry action; browser regressions and the Cloudflare Workers production build passed.
 - ✅ **#100 — Today attention:** review actions navigate reliably; review counts refresh immediately; empty recent-updates panels disappear; acknowledged updates stay dismissed; meaningful event changes are tracked between visits.
 - ✅ **#101 — curated data refresh:** snapshot moved to 30 Oct 2026; rotations, Raid/Spotlight Hours and Max Monday schedules were extended into early December; event/source URLs and the 1★ boss parsing correction were included. Ongoing freshness monitoring remains a separate task.
@@ -27,7 +27,7 @@ _Maintained by the lead coordinator. Last consolidated: 31 Oct 2026, including #
 - ✅ **#110 — importer date guard:** source-page matches are rejected when known article and event date windows do not overlap; unknown dates remain unknown rather than being guessed.
 - ✅ **Community location discovery:** corrected the Reddit permalink regex, added an explicit Node syntax-check regression test, and confirmed the scheduled discovery workflow ran successfully. Candidate locations remain community-reported, not official event pins.
 
-All merged milestones above passed their post-merge checks. Latest main: `337f76442a409c5e53cb0848eb4f9eb269884716`; post-merge GitHub Tests (JavaScript, Python and all three browser shards) passed. Cloudflare Workers production build `47264438-ea6c-4325-a7be-41af350fa21d` completed successfully (version `22cca5f0-ef7d-41c8-acf4-02b911dfcb7a`).
+All merged milestones above passed their post-merge checks. Latest main: `acc89bd41d8b64de3cf2b3cd3510689cae333e72`; post-merge JavaScript, Python, all three browser shards, CodeQL and public-data validation passed. Cloudflare Workers production build `9561e39e-da23-4c03-88dc-fc904d7207f2` completed successfully (version `919f763e-5bd5-4c83-be87-e6d109b467e0`).
 
 ## P0 — Critical security / data integrity
 
@@ -38,12 +38,12 @@ All merged milestones above passed their post-merge checks. Latest main: `337f76
 
 ## P1 — Major defects / reliability
 
-- 🔧 **RES-1/2/3/4/12** Snapshot refreshed on 30 Oct; rotation/Max/Spotlight/Raid Hour now extend into early Dec and the 1★ boss parsing issue was corrected in #101. Remaining: automated freshness monitoring and a separate consistency check for `raidNow`/`Upcoming`.
+- 🔧 **RES-1/2/3/4/12** Snapshot refreshed on 30 Oct; rotation/Max/Spotlight/Raid Hour now extend into early Dec and the 1★ boss parsing issue was corrected in #101. The `feat/source-freshness-consistency` branch adds health coverage for source-watch, location discovery and 1–3★ raids, plus a read-only `raidNow`/`Upcoming` consistency report. It never auto-corrects event data.
 - ✅ **QA-3/QA-4** #118 audits and precaches every local script/stylesheet URL referenced by the entry page; #120 adds end-to-end browser checks for cached app-shell fallback and the final offline-page fallback. All post-merge browser checks and Workers production builds passed.
 - ✅ **ENG-2** Security headers/CSP are applied by the Worker wrapper to every response, including static assets; the header contract is covered by `test/security.test.mjs`.
 - ✅ **QA-5/RES-5/QA-7** #121 fixes viewer-local calendar-day comparisons for Date/epoch dedupe inputs while keeping `YYYY-MM-DD` date-only values timezone-independent. #123 adds validated IANA venue timezone metadata and venue-local/viewer-local time display; PR, preview and post-merge production checks passed. Official [Sendai](https://pokemongo.com/en/gowildarea/sendai) lists 10:00–18:00 JST; official [Mexico City](https://pokemongo.com/es/gowildarea/mexico-city) lists 10:00–18:00 GMT−6, while an [es-MX variant](https://pokemongo.com/es-MX/gowildarea/mexico-city) also displays conflicting 23:00–07:00 CST text. Do not add Mexico gameplay hours until that source conflict is resolved.
 - ✅ **RES-8** Reject importer source-page matches when known article and event dates do not overlap; retain existing link/title matching when either date is unknown. Covered by focused regression tests and the post-merge production build.
-- 🔧 **RES-9** #124 protects official world-event dates from Leek Duck auto-corrections and emits review alerts; the next scheduled audit execution remains to be confirmed. The community-provenance mainline port removes invented verification dates, retains only source-backed Reddit `reportedAt`, skips ambiguous/country-only locations, and fixes GPX coordinate-source links while keeping event-source attribution separate.
+- ✅ **RES-9** #124 protects official world-event dates from Leek Duck auto-corrections and emits review alerts. #128 separates community coordinate reports from verification, preserves source-backed `reportedAt`, skips ambiguous/country-only locations, and fixes GPX coordinate-source links. The next scheduled audit execution remains to be confirmed.
 - ✅ **UX-1** #112 provides the accessible recovery panel and retry action; #125 adds a bounded timeout and usable primary navigation when the initial data request stalls. Post-merge GitHub checks pass.
 - ✅ **UX-2** Today event-card actions stay within 390px and 320px phone layouts; browser regression and production build verified in #113.
 - ✅ **UX-3** Today live summary separates in-game and in-person activity counts while keeping overseas in-person event cards visible by default; regression, mobile browser and post-merge production checks passed.
@@ -51,7 +51,7 @@ All merged milestones above passed their post-merge checks. Latest main: `337f76
 
 ## P2 — Important UX / functionality / performance
 
-- **ENG-7** Validate public data before bot pushes to main; **RES-14** freshness check, non-zero exit on importer crash, "confirmed" → "corroborated".
+- 🔧 **ENG-7** Public-data validation runs on PRs and pushes; validating generated public data before each bot's direct push to main remains open. **RES-14** This branch makes fatal importer/schedule-audit/source-watch failures and an unreadable raid page exit non-zero; the terminology change from "confirmed" to "corroborated" remains open.
 - ✅ **RES-13** Add `pokemongo.com` and `www.pokemongo.com` to `OFFICIAL_HOSTS`, with exact-host regression coverage; **RES-7** source label by host.
 - **RES-6** Add Mexico City Wild Area; **RES-10** split Pokémon Night Out LA/London; **RES-11** duplicate world events.
 - **UX-5** header badge counts empty-state rows; **UX-6** contrast of live countdowns/in-person pill; **UX-7** This Week actions now meet 44px, but a broader touch-target audit remains.
