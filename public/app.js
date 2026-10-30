@@ -842,8 +842,8 @@ Promise.all([fetch('/data.json').then(function(r){return r.json()}),fetch('/art/
   fetch('/api/shinies').then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(R){SHF=R.items||[];renderShiny()}).catch(function(){});
 
   /* ---------- saving: this device, plus the server when a sync PIN is entered ---------- */
-  var timer=null,writing=false,dirty=false,online=false,pin='',stamp=0,baseUpdated=0;
-  try{pin=localStorage.getItem('gofn-pin')||'';stamp=+localStorage.getItem('gofn-stamp')||0;baseUpdated=+localStorage.getItem('gofn-dex-base-v1')||0}catch(e){}
+  var timer=null,writing=false,dirty=false,online=false,pin='',stamp=0,baseUpdated=0,baselineDex=null;
+  try{pin=localStorage.getItem('gofn-pin')||'';stamp=+localStorage.getItem('gofn-stamp')||0;baseUpdated=+localStorage.getItem('gofn-dex-base-v1')||0;var savedBase=localStorage.getItem('gofn-dex-baseline-v1');if(savedBase)baselineDex=JSON.parse(savedBase)}catch(e){}
   function acct(){try{return localStorage.getItem('gofn-acct')||''}catch(e){return''}}
   function hdr(){var h={'content-type':'application/json'};if(pin)h['x-pin']=pin;return h}
   var MSG={
@@ -860,7 +860,7 @@ Promise.all([fetch('/data.json').then(function(r){return r.json()}),fetch('/art/
     $('pinform').hidden=(k==='synced'||k==='off');
   }
   function has(o){return Object.keys(o.have).length||Object.keys(o.bt||{}).length||Object.keys(o.hundo).length||DEXCATS.some(function(c){return o.m&&o.m[c]&&Object.keys(o.m[c]).length})}
-  function saveLocal(){try{localStorage.setItem('gofn-dex-v1',JSON.stringify(dex));localStorage.setItem('gofn-stamp',String(stamp));localStorage.setItem('gofn-dex-base-v1',String(baseUpdated))}catch(e){}document.dispatchEvent(new Event('gofn-marks'))}
+  function saveLocal(){try{localStorage.setItem('gofn-dex-v1',JSON.stringify(dex));localStorage.setItem('gofn-stamp',String(stamp));localStorage.setItem('gofn-dex-base-v1',String(baseUpdated));if(baselineDex)localStorage.setItem('gofn-dex-baseline-v1',JSON.stringify(baselineDex));else localStorage.removeItem('gofn-dex-baseline-v1')}catch(e){}document.dispatchEvent(new Event('gofn-marks'))}
   function req(method,body){
     return fetch('/api/dex',{method:method,headers:hdr(),body:body?JSON.stringify(body):undefined});
   }
@@ -876,11 +876,13 @@ Promise.all([fetch('/data.json').then(function(r){return r.json()}),fetch('/art/
       var attempts=0;
       while(dirty&&attempts<5){
         dirty=false;attempts++;
-        var r=await req('PUT',{have:dex.have,hundo:dex.hundo,m:dex.m,bt:dex.bt,updated:stamp,baseUpdated:baseUpdated});
+        var sentDex=JSON.parse(JSON.stringify(dex));
+        var r=await req('PUT',{have:sentDex.have,hundo:sentDex.hundo,m:sentDex.m,bt:sentDex.bt,updated:stamp,baseUpdated:baseUpdated});
         if(r.status===409){
           var conflict=await r.json();
           var remote={have:conflict.have||{},hundo:conflict.hundo||{},m:conflict.m||{},bt:conflict.bt||{}};
-          dex=window.GOLOCAL.mergeDexSnapshot(dex,remote,stamp,Number(conflict.updated)||0);
+          dex=window.GOLOCAL.mergeDexSnapshot(dex,remote,stamp,Number(conflict.updated)||0,baselineDex);
+          baselineDex=remote;
           baseUpdated=Number(conflict.updated)||0;
           stamp=Math.max(stamp,Date.now());
           saveLocal();syncRows();renderDex();renderShiny();
@@ -890,6 +892,7 @@ Promise.all([fetch('/data.json').then(function(r){return r.json()}),fetch('/art/
         if(r.status===401){online=false;setSync(pin?'badpin':'signedout');return}
         if(!r.ok)throw new Error('http '+r.status);
         var ack=await r.json();
+        baselineDex=JSON.parse(JSON.stringify(sentDex));
         baseUpdated=Number(ack.updated)||baseUpdated;
         stamp=Math.max(stamp,baseUpdated);
         saveLocal();
@@ -910,9 +913,9 @@ Promise.all([fetch('/data.json').then(function(r){return r.json()}),fetch('/art/
       var d=await r.json();
       online=true;
       var remote={have:d.have||{},hundo:d.hundo||{},m:d.m||{},bt:d.bt||{}};
-      var merged=window.GOLOCAL.mergeDexSnapshot(dex,remote,stamp,Number(d.updated)||0);
+      var merged=window.GOLOCAL.mergeDexSnapshot(dex,remote,stamp,Number(d.updated)||0,baselineDex);
       var needsUpload=JSON.stringify(merged)!==JSON.stringify(remote);
-      dex=merged;baseUpdated=Number(d.updated)||0;stamp=Math.max(stamp,baseUpdated);
+      dex=merged;baselineDex=remote;baseUpdated=Number(d.updated)||0;stamp=Math.max(stamp,baseUpdated);
       saveLocal();syncRows();renderDex();renderShiny();
       if(needsUpload){dirty=true;await flush();return}
       setSync('synced');
