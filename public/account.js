@@ -63,8 +63,11 @@
     if (a === 'm-in' || a === 'm-up') { mode = a === 'm-up' ? 'up' : 'in'; msg = ''; render(); var d = document.querySelector('.acctbox'); if (d) d.open = true; }
     if (a === 'rm') { var em = b.getAttribute('data-email'); if (b.getAttribute('data-sure') !== '1') { b.setAttribute('data-sure', '1'); b.textContent = 'Tap again to delete ' + em + ' and their marks'; return; } fetch('/api/auth/remove', { method: 'POST', headers: pinHdr(), body: JSON.stringify({ email: em }) }).then(loadUsers); }
     if (a === 'out') {
-      if (!switchIdentity('guest', false)) { msg = 'Could not safely switch local marks. Refresh the page and try again.'; render(); return; }
-      post('logout').catch(function () { }).then(function () { put(''); role(); location.reload(); });
+      post('logout').then(function (r) {
+        if (!r.ok) { msg = (r.j && r.j.error) || 'Could not confirm sign-out. Your account is still active on this device.'; render(); return; }
+        if (!switchIdentity('guest', false)) { msg = 'Signed out on the server, but could not safely switch local marks. Refresh the page and try again.'; render(); return; }
+        put(''); role(); location.reload();
+      }).catch(function () { msg = 'Could not reach the server, so your account remains active on this device.'; render(); });
     }
   });
   document.addEventListener('submit', function (e) {
