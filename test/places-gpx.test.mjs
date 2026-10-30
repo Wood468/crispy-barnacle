@@ -16,7 +16,7 @@ test("venue points GPX: one waypoint per sourced place, escaped, with who vouche
   const out = load().gpx([place(), place({ id: "p2", name: "King George Square & Co", lat: -27.4701, lng: 153.0245 })], { name: "City Safari: Brisbane" });
   assert.match(out, /^<\?xml/); assert.equal((out.match(/<wpt /g) || []).length, 2);
   assert.match(out, /lat="-27\.469600" lon="153\.025200"/); assert.match(out, /King George Square &amp; Co/);
-  assert.match(out, /Source: Pokémon GO Hub\. Coordinates: Wikipedia\. Checked 2026-10-10/); assert.match(out, /href="https:\/\/example\.com\/a\?x=1&amp;y=2"/);
+  assert.match(out, /Source: Pokémon GO Hub\. Coordinates: Wikipedia\. Source record checked 10 Oct 2026/); assert.match(out, /href="https:\/\/example\.com\/a\?x=1&amp;y=2"/);
   assert.ok(!/<rte>/.test(out), "no route unless asked");
 });
 test("community coordinate GPX labels report provenance and never emits a legacy verified date", () => {
