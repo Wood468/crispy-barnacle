@@ -51,7 +51,7 @@ with sync_playwright() as p:
     if on('a'):
         # A stalled initial data request must time out, expose a retry, and leave the primary navigation usable.
         boot_ctx=b.new_context(viewport={'width':390,'height':844},device_scale_factor=2,timezone_id='Australia/Melbourne',locale='en-AU',service_workers='block')
-        boot=boot_ctx.new_page(); boot.clock.install(time=clock)
+        boot=boot_ctx.new_page(); boot.clock.install(time='2026-10-09T22:45:00+11:00')
         boot.route('**/data.json',lambda route: None)  # leave the request pending to exercise the timeout
         boot.route('**/art/index.json',ful('{}'))
         boot.goto('http://localhost:8791/',wait_until='domcontentloaded')
