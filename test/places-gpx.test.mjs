@@ -10,14 +10,14 @@ function load() {
   new Function("window", "document", fs.readFileSync(new URL("../public/places.js", import.meta.url), "utf8"))(win, doc);
   return win.GOPLACES;
 }
-const place = (over = {}) => ({ id: "p1", name: "Queen Street Mall", city: "Brisbane", country: "Australia", lat: -27.4696, lng: 153.0252, type: "City Safari hub", verified: "2026-10-10", sources: [{ label: "Pokémon GO Hub", url: "https://example.com/a?x=1&y=2" }], coords: { label: "Wikipedia", url: "https://en.wikipedia.org/wiki/Queen_Street_Mall" }, ...over });
+const place = (over = {}) => ({ id: "p1", name: "Queen Street Mall", city: "Brisbane", country: "Australia", lat: -27.4696, lng: 153.0252, type: "City Safari hub", verified: "2026-10-10", sources: [{ label: "Pokémon GO Hub", url: "https://example.com/a?x=1&y=2" }], coords: { label: "Coordinate reference", url: "https://coords.example.com/queen-street-mall" }, ...over });
 
 test("venue points GPX: one waypoint per sourced place, escaped, with who vouches and when", () => {
   const out = load().gpx([place(), place({ id: "p2", name: "King George Square & Co", lat: -27.4701, lng: 153.0245 })], { name: "City Safari: Brisbane" });
   assert.match(out, /^<\?xml/); assert.equal((out.match(/<wpt /g) || []).length, 2);
   assert.match(out, /lat="-27\.469600" lon="153\.025200"/); assert.match(out, /King George Square &amp; Co/);
-  assert.match(out, /Event source: Pokémon GO Hub\. Coordinates: Wikipedia\. Coordinates independently checked 10 Oct 2026/);
-  assert.match(out, /<link href="https:\/\/en\.wikipedia\.org\/wiki\/Queen_Street_Mall"><text>Coordinates: Wikipedia<\/text><\/link>/);
+  assert.match(out, /Event source: Pokémon GO Hub\. Coordinates: Coordinate reference\. Coordinates independently checked 10 Oct 2026/);
+  assert.match(out, /<link href="https:\/\/coords\.example\.com\/queen-street-mall"><text>Coordinates: Coordinate reference<\/text><\/link>/);
   assert.match(out, /<link href="https:\/\/example\.com\/a\?x=1&amp;y=2"><text>Event source: Pokémon GO Hub<\/text><\/link>/);
   assert.ok(!/<rte>/.test(out), "no route unless asked");
 });
