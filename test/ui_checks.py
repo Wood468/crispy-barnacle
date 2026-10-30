@@ -134,6 +134,7 @@ with sync_playwright() as p:
             metrics = overflow_page.evaluate("""() => {
                 const card = document.querySelector('#home-now .evc[data-id="leekduck:mobile-overflow"]');
                 const rect = card.getBoundingClientRect();
+                const brief = document.querySelector('#day-brief'), briefRect = brief.getBoundingClientRect();
                 const main = card.querySelector('.evc-main');
                 const foot = card.querySelector('.evc-foot');
                 const mainRect = main.getBoundingClientRect();
@@ -153,6 +154,7 @@ with sync_playwright() as p:
                 return {
                     viewport: innerWidth,
                     documentWidth: document.documentElement.scrollWidth,
+                    brief: {left: briefRect.left, right: briefRect.right, width: briefRect.width, scrollWidth: brief.scrollWidth},
                     card: {
                         left: rect.left, right: rect.right, width: rect.width,
                         clientWidth: card.clientWidth, scrollWidth: card.scrollWidth,
@@ -188,6 +190,9 @@ with sync_playwright() as p:
                     buttons
                 };
             }""")
+            check(f'Today overview fits the {width}px viewport',
+                  metrics['brief']['left'] >= -1 and metrics['brief']['right'] <= width + 1 and
+                  metrics['brief']['scrollWidth'] <= metrics['brief']['width'] + 1, metrics['brief'])
             check(f'Today card stays inside the {width}px viewport',
                   metrics['documentWidth'] <= width and metrics['card']['left'] >= -1 and
                   metrics['card']['right'] <= width + 1, metrics)
