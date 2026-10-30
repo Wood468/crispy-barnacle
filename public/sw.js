@@ -6,7 +6,7 @@ const SHELL_URLS = [
   '/imgerr.js', '/whatsnew.js', '/pin.js', '/app.js', '/app.js?v=20261030b', '/dash.js', '/dash.js?v=20261030f', '/detail.js', '/detail.js?v=20261030b', '/fresh.js', '/places.js', '/review.js', '/nudge.js', '/account.js', '/store.js', '/season.js', '/weekly.js', '/buy.js', '/extra.js',
   '/infographic.js', '/manifest.webmanifest', '/icon.svg', '/icon-maskable.svg', '/icon-180.png', '/icon-192.png', '/icon-512.png',
   '/data.json', '/dex.json', '/event-info.json', '/forms.json', '/moves.json',
-  '/places.json', '/event-details.json', '/regional-events.json', '/world-events.json', '/best-by-type.json', '/prices.json', '/pvp.json', '/release-status.json', '/types.json',
+  '/places.json', '/event-details.json', '/event-moves.json', '/regional-events.json', '/world-events.json', '/best-by-type.json', '/prices.json', '/pvp.json', '/release-status.json', '/types.json',
   '/art/index.json'
 ];
 self.addEventListener('install', function (event) {
