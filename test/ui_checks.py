@@ -117,10 +117,11 @@ with sync_playwright() as p:
             'acquisition': 'CATCH', 'windowEnd': '2026-10-10T11:00:00'
         }]}
         highlight_page = page(api=json.dumps({'enabled': True, 'events': highlight_events}),
-                              extra={'**/event-moves.json': (json.dumps(moves_fixture), 200),
+                              extra={'**/event-moves.json*': (json.dumps(moves_fixture), 200),
                                      '**/world-events.json': ('{"events":[]}', 200),
                                      '**/regional-events.json': ('{"events":[]}', 200)})
-        highlight_page.wait_for_function("performance.getEntriesByName(location.origin + '/event-moves.json').length > 0", timeout=5000)
+        highlight_page.wait_for_function("window.GODETAIL && window.GODASH && GODASH.events().some(e => e.id === 'leekduck:move-highlight')", timeout=5000)
+        highlight_page.wait_for_timeout(250)
         highlight_page.evaluate("GODETAIL.open('leekduck:move-highlight')")
         highlight_page.locator('#evd').wait_for(state='visible')
         highlight_page.locator('#evd .evd-jump a[href="#evd-highlights"]').wait_for(state='attached')
@@ -131,7 +132,7 @@ with sync_playwright() as p:
               {'dialog': highlight_page.locator('#evd').inner_text()[:900], 'target_count': move_target.count(),
                'target_text': move_target.inner_text() if move_target.count() else '',
                'event_ids': highlight_page.evaluate("GODASH.events().map(e => e.id).filter(id => id.includes('highlight'))"),
-               'move_feed': highlight_page.evaluate("performance.getEntriesByName(location.origin + '/event-moves.json').length")})
+               'event_ids': highlight_page.evaluate("GODASH.events().map(e => e.id).filter(id => id.includes('highlight'))")})
         highlight_page.locator('#evd-x').click()
         highlight_page.locator('#evd').wait_for(state='hidden')
         highlight_page.evaluate("GODETAIL.open('leekduck:featured-highlight')")
@@ -145,7 +146,7 @@ with sync_playwright() as p:
                'target_text': featured_target.inner_text() if featured_target.count() else '',
                'event_ids': highlight_page.evaluate("GODASH.events().map(e => e.id).filter(id => id.includes('highlight'))"),
                'featured': highlight_page.evaluate("GODASH.events().filter(e => e.id === 'leekduck:featured-highlight').map(e => e.featured)"),
-               'move_feed': highlight_page.evaluate("performance.getEntriesByName(location.origin + '/event-moves.json').length")})
+               'event_ids': highlight_page.evaluate("GODASH.events().map(e => e.id).filter(id => id.includes('highlight'))")})
         highlight_page.context.close()
 
         # Keyboard navigation is trapped in the dialog and Escape returns focus to its opener.
