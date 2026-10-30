@@ -99,6 +99,46 @@ with sync_playwright() as p:
         check('Event detail quick links all have rendered targets', all(x['target'] for x in jump_links), jump_links)
         check('Event detail hides Highlights and Locations when those sections are absent',
               all(x['label'] not in ['Highlights', 'Locations'] for x in jump_links), jump_links)
+        # Highlights must land on the first real section even when there are no bonuses.
+        highlight_events = [
+            ev('move-highlight', 'Move Highlight Fixture', 'pokemon-spotlight-hour',
+               '2026-10-10T10:00:00', '2026-10-10T10:30:00', 'official_confirmed'),
+            ev('featured-highlight', 'Featured Highlight Fixture', 'pokemon-spotlight-hour',
+               '2026-10-10T11:00:00', '2026-10-10T11:30:00', 'official_confirmed',
+               feat=[{'name': 'Pikachu', 'role': 'featured'}])
+        ] + [
+            ev('highlight-future-' + str(i), 'Highlight Fixture Future ' + str(i), 'pokemon-spotlight-hour',
+               '2026-10-10T12:00:00', '2026-10-10T12:30:00', 'official_confirmed')
+            for i in range(8)
+        ]
+        moves_fixture = {'moves': [{
+            'eventId': 'leekduck:move-highlight', 'eventName': 'Move Highlight Fixture',
+            'pokemon': 'Pikachu', 'move': 'Volt Tackle', 'moveKind': 'charged',
+            'acquisition': 'CATCH', 'windowEnd': '2026-10-10T11:00:00'
+        }]}
+        highlight_page = page(api=json.dumps({'enabled': True, 'events': highlight_events}),
+                              extra={'**/event-moves.json': (json.dumps(moves_fixture), 200),
+                                     '**/world-events.json': ('{"events":[]}', 200),
+                                     '**/regional-events.json': ('{"events":[]}', 200)})
+        highlight_page.wait_for_timeout(150)
+        highlight_page.evaluate("GODETAIL.open('leekduck:move-highlight')")
+        highlight_page.locator('#evd').wait_for(state='visible')
+        highlight_page.locator('#evd .evd-jump a[href="#evd-highlights"]').wait_for(state='attached')
+        move_target = highlight_page.locator('#evd-highlights')
+        check('Move-only Highlights shortcut lands on event-only moves',
+              highlight_page.locator('#evd .evd-jump a[href="#evd-highlights"]').count() == 1 and
+              move_target.count() == 1 and move_target.inner_text() == 'Event-only moves')
+        highlight_page.locator('#evd-x').click()
+        highlight_page.locator('#evd').wait_for(state='hidden')
+        highlight_page.evaluate("GODETAIL.open('leekduck:featured-highlight')")
+        highlight_page.locator('#evd').wait_for(state='visible')
+        highlight_page.locator('#evd .evd-jump a[href="#evd-highlights"]').wait_for(state='attached')
+        featured_target = highlight_page.locator('#evd-highlights')
+        check('Featured-only Highlights shortcut lands on the featured Pokémon section',
+              highlight_page.locator('#evd .evd-jump a[href="#evd-highlights"]').count() == 1 and
+              featured_target.count() == 1 and featured_target.inner_text() == 'Featured Pokémon')
+        highlight_page.context.close()
+
         # Keyboard navigation is trapped in the dialog and Escape returns focus to its opener.
         next_page.keyboard.press('Shift+Tab')
         wrapped_last = next_page.evaluate("""() => {
