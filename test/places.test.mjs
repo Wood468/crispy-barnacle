@@ -45,7 +45,7 @@ test("public community coordinate records retain their source-specific provenanc
     assert.ok(p, "preserved community location " + id);
     assert.equal(p.coordinateStatus, status);
     assert.equal(p.verified, undefined, id + " has no independent coordinate-verification date");
-    assert.match(p.coords.note, /not an official event pin/i);
+    assert.match(p.coords.note, /not an official (?:Niantic )?event pin/i);
     if (status === "community-reported") assert.ok(p.reportedAt === undefined || day(p.reportedAt), id + " report date is source-backed when present");
     else assert.equal(p.reportedAt, undefined, id + " has no invented report date");
   }
