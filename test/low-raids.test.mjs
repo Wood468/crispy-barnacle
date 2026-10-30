@@ -106,3 +106,8 @@ test("the failure note is only sent when Telegram is set up", async () => {
   assert.equal(await tell("x", {}), false);
   assert.equal(await tell("x", { TELEGRAM_BOT_TOKEN: "t", TELEGRAM_CHAT_ID: "1", DRY_RUN: "true" }), false);
 });
+
+test("a changed raid page fails the scheduled job instead of reporting stale data as successful", () => {
+  const source = readFileSync("scripts/low-raids.mjs", "utf8");
+  assert.match(source, /if \(!sane\(t\)\)[\s\S]*?process\.exitCode = 1; return;/);
+});
