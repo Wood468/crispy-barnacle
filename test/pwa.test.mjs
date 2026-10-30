@@ -47,7 +47,7 @@ test("PWA entry page links to the manifest and iOS touch icon and registers the 
   assert.match(html, /rel="apple-touch-icon" href="\/icon-180\.png"/);
   assert.match(html, /dash\.css\?v=20261030e/);
   assert.match(html, /styles\.css\?v=20261030b/);
-  assert.match(html, /app\\.js\\?v=20261031a/);
+  assert.match(html, /app\.js\?v=20261031a/);
   assert.match(html, /local-state\.js\?v=20261030a/);
   assert.match(html, /account\.js\?v=20261030a/);
   assert.match(html, /lib\.js\?v=20261030a/);
@@ -84,7 +84,7 @@ test("service worker versions the cache, pre-caches offline fallback, and never 
   assert.ok(sw.includes("'/account.js?v=20261030a'"), 'the refreshed account transition code is available offline');
   assert.match(sw, /'\/event-moves\.json'/, "event-only move data is available to offline event details");
   assert.match(sw, /'\/dash\.css\?v=20261030e'/, "the current dashboard stylesheet is available to the offline shell");
-  assert.match(sw, /'\/app\\.js\\?v=20261031a'/, "the current app bootstrap is available to the offline shell");
+  assert.match(sw, /'\/app\.js\?v=20261031a'/, "the current app bootstrap is available to the offline shell");
   assert.match(sw, /'\/styles\.css\?v=20261030b'/, "the current recovery panel stylesheet is available to the offline shell");
   assert.match(sw, /'\/dash\.js\?v=20261030n'/, "the current dashboard script is available to the offline shell");
   assert.match(sw, /'\/detail\.js\?v=20261030f'/, "the current event detail script is available to the offline shell");
