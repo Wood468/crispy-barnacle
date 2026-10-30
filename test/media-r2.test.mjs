@@ -27,7 +27,9 @@ test("preview configuration keeps staging D1 and omits the production R2 binding
   const config = readFileSync(new URL("../wrangler.toml", import.meta.url), "utf8");
   const previewConfig = config.slice(config.indexOf("[previews.vars]"));
 
-  assert.ok(config.includes('bucket_name = "go-field-notes-images"'), "production bucket remains configured");
+  const productionR2 = config.slice(config.indexOf("[[r2_buckets]]"), config.indexOf("[triggers]"));
+  assert.ok(productionR2.includes('binding = "MEDIA"'), "production MEDIA binding remains configured");
+  assert.ok(productionR2.includes('bucket_name = "go-field-notes-images"'), "production bucket remains configured");
   assert.ok(previewConfig.includes('database_name = "go-field-notes-staging"'), "preview keeps its staging database");
   assert.equal(previewConfig.includes("[[previews.r2_buckets]]"), false, "preview must not declare an R2 bucket");
   assert.equal(previewConfig.includes('binding = "MEDIA"'), false, "preview must not bind MEDIA");
