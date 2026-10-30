@@ -173,6 +173,9 @@ test("trust: community and datamined reports cannot become official without offi
   assert.equal(P.resolveStatus("datamined", { kind: "official", url: "https://evil.example/pokemongolive.com/" }), "datamined");
   assert.equal(P.resolveStatus("datamined", null), "datamined");
   assert.equal(P.resolveStatus("community_reported", { kind: "official", url: "https://pokemongolive.com/post/x" }), "official_confirmed");
+  assert.equal(P.resolveStatus("community_reported", { kind: "official", url: "https://pokemongo.com/news/example" }), "official_confirmed", "official Pokémon GO news host");
+  assert.equal(P.resolveStatus("community_reported", { kind: "official", url: "https://www.pokemongo.com/news/example" }), "official_confirmed", "www official Pokémon GO news host");
+  assert.equal(P.resolveStatus("community_reported", { kind: "official", url: "https://pokemongo.com.evil.example/news" }), "community_reported", "lookalike host");
   assert.equal(P.resolveStatus("datamined", { kind: "official", url: "https://pokemongolive.com/post/x" }), "official_confirmed");
   assert.equal(P.isAnnounced("datamined"), false); assert.equal(P.isAnnounced("community_reported"), true); assert.equal(P.isAnnounced("official_confirmed"), true);
 });

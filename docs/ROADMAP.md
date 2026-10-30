@@ -39,7 +39,7 @@ All merged milestones above passed their post-merge test checks; the latest main
 ## P2 — Important UX / functionality / performance
 
 - **ENG-7** Validate public data before bot pushes to main; **RES-14** freshness check, non-zero exit on importer crash, "confirmed" → "corroborated".
-- **RES-13** Add pokemongo.com to `OFFICIAL_HOSTS`; **RES-7** source label by host.
+- ✅ **RES-13** Add `pokemongo.com` and `www.pokemongo.com` to `OFFICIAL_HOSTS`, with exact-host regression coverage; **RES-7** source label by host.
 - **RES-6** Add Mexico City Wild Area; **RES-10** split Pokémon Night Out LA/London; **RES-11** duplicate world events.
 - **UX-5** header badge counts empty-state rows; **UX-6** contrast of live countdowns/in-person pill; **UX-7** This Week actions now meet 44px, but a broader touch-target audit remains.
 - **UX-8/QA-9** Owner moderation UI shown to visitors; **UX-9** Sync consolidated into one place.
