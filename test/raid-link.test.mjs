@@ -40,6 +40,7 @@ test("best-attacker filters support every known weakness type for a raid boss", 
   assert.equal(selected("Water", ["Fire", "Fighting"]), false);
   assert.match(app, /window\.GOBEST = \{ showTypes:function\(types\)/);
   assert.match(app, /typeSel = valid\.length \? valid : 'All';/);
+  assert.match(app, /\$\('q'\)\.value = ''; \$\('status'\)\.value = 'all';/);
 });
 
 test("raid rows offer in-app Best attackers only from published weakness metadata", () => {
