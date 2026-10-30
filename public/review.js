@@ -79,7 +79,7 @@
   function send(it, status, eventId, title, note) {
     if (!pin()) { msg = 'Enter your sync PIN first (Dex tab) so decisions can be saved.'; render(); return; }
     fetch('/api/ig-decisions', { method: 'POST', headers: { 'content-type': 'application/json', 'x-pin': pin() }, body: JSON.stringify({ id: it.id, status: status, eventId: eventId || '', eventTitle: title || '' }) })
-      .then(function (r) { if (!r.ok) throw new Error(r.status); decided[it.id] = status; decs[it.id] = { id: it.id, status: status, eventId: eventId || '', eventTitle: title || '' }; if (status === 'unlinked') delete decided[it.id]; msg = note || (status === 'approved' ? 'Linked. It will appear on the event after the next scheduled update.' : status === 'unlinked' ? 'Unlinked. It is back in the review list.' : 'Discarded.'); render(); })
+      .then(function (r) { if (!r.ok) throw new Error(r.status); decided[it.id] = status; decs[it.id] = { id: it.id, status: status, eventId: eventId || '', eventTitle: title || '' }; if (status === 'unlinked') delete decided[it.id]; msg = note || (status === 'approved' ? 'Linked. It will appear on the event after the next scheduled update.' : status === 'unlinked' ? 'Unlinked. It is back in the review list.' : 'Discarded.'); render(); document.dispatchEvent(new Event('gofn-review-updated')); })
       .catch(function () { msg = 'Could not save that decision. Check your sync PIN and connection.'; render(); });
   }
   function setLinks(it, list) {
@@ -155,7 +155,7 @@
     ]).then(function (R) {
       items = R[0].items || []; (R[1].decisions || []).forEach(function (d) { decs[d.id] = d; if (d.status === 'approved' || d.status === 'rejected' || d.status === 'week' || d.status === 'month') decided[d.id] = d.status; });
       if (!ensureHost()) return;
-      render();
+      render(); document.dispatchEvent(new Event('gofn-review-updated'));
       if (location.hash === '#review') gotoReview();
     });
   }
