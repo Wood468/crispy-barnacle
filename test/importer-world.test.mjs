@@ -11,7 +11,7 @@ test("tidyName keeps the event part of a long official headline", async () => {
 
 test("splits multiple city/date stops from one official announcement paragraph", async () => {
   const {
-    stopsFromPage, mergeWorld, sameWriteupRulings, collapseWorld, keepOldWorld, normUrl
+    entriesFromPage, mergeWorld, sameWriteupRulings, collapseWorld, keepOldWorld, normUrl
   } = await import("../scripts/importer/world.mjs");
   const page = {
     title: "Celebrate the Pokémon Night Out events in Pokémon GO!",
@@ -23,7 +23,7 @@ test("splits multiple city/date stops from one official announcement paragraph",
     }]
   };
 
-  const stops = stopsFromPage(page, "2026-10-30");
+  const stops = entriesFromPage(page, "2026-10-30");
   assert.deepEqual(stops.map(s => [s.place, s.start, s.end]), [
     ["Los Angeles, USA", "2026-10-24", "2026-10-24"],
     ["London, UK", "2026-11-10", "2026-11-10"]
