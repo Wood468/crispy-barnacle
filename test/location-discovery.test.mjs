@@ -1,8 +1,9 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { spawnSync } from "node:child_process";
+import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
-import { coords, fetchWithRateLimit, redditSearchUrl, retryAfterMs, xmlItems } from "../scripts/location-discovery-parse.mjs";
+import { coords, fetchWithRateLimit, placeParts, redditSearchUrl, reportDate, retryAfterMs, xmlItems } from "../scripts/location-discovery-parse.mjs";
 
 const discoveryScript = fileURLToPath(new URL("../scripts/location-discovery.mjs", import.meta.url));
 
@@ -27,6 +28,37 @@ test("Atom entry parsing accepts link href and summary content", () => {
     link: "https://www.reddit.com/r/pokemongo/comments/def/play",
     desc: "Coordinates: -33.8688, 151.2093"
   }]);
+});
+
+test("RSS and Atom publication timestamps are retained separately from verification", () => {
+  const rss = '<rss><channel><item><title>Community report</title><link>https://www.reddit.com/r/pokemongo/comments/abc/report</link><pubDate>Fri, 30 Oct 2026 06:30:00 GMT</pubDate><description>Coordinates: 37.7749, -122.4194</description></item></channel></rss>';
+  const atom = '<feed><entry><title>Another report</title><link href="https://www.reddit.com/r/pokemongo/comments/def/report"/><published>2026-10-30T07:45:00Z</published><summary>Coordinates: -33.8688, 151.2093</summary></entry></feed>';
+  assert.equal(xmlItems(rss)[0].publishedAt, "Fri, 30 Oct 2026 06:30:00 GMT");
+  assert.equal(xmlItems(atom)[0].publishedAt, "2026-10-30T07:45:00Z");
+  assert.equal(reportDate(xmlItems(rss)[0].publishedAt), "2026-10-30");
+  assert.equal(reportDate(xmlItems(atom)[0].publishedAt), "2026-10-30");
+  assert.equal(reportDate("Fri, 30 Oct 2026 23:30:00 -0700"), "2026-10-30", "preserve the publication day shown by the source, not the UTC-converted day");
+  assert.equal(reportDate("not a publication date"), null);
+  assert.equal(reportDate("October 30, 2026"), null, "unknown date formats stay unknown rather than being timezone-normalized");
+  const updatedOnly = '<feed><entry><title>Edited report</title><updated>2026-10-31T02:00:00Z</updated><summary>Coordinates</summary></entry></feed>';
+  assert.equal(xmlItems(updatedOnly)[0].publishedAt, undefined, "an edit timestamp is not the original report date");
+});
+
+test("discovery records report dates but never assigns a verified date to community coordinates", () => {
+  const source = readFileSync(discoveryScript, "utf8");
+  assert.match(source, /coordinateStatus: "community-reported"/);
+  assert.match(source, /\.\.\.\(reportedAt \? \{ reportedAt \} : \{\}\)/);
+  assert.doesNotMatch(source, /\bverified\s*:/);
+});
+
+test("location discovery only publishes explicitly named city/venue and country pairs", () => {
+  assert.deepEqual(placeParts("Chicago, USA"), { city: "Chicago", country: "United States" });
+  assert.deepEqual(placeParts("London, England (Science Museum)"), { city: "London", country: "United Kingdom" });
+  assert.deepEqual(placeParts("Malaysia (Ombak KLCC)"), { city: "Ombak KLCC", country: "Malaysia" });
+  assert.deepEqual(placeParts("Mexico City, Mexico (Paseo de la Reforma)"), { city: "Mexico City", country: "Mexico" });
+  assert.equal(placeParts("Japan"), null, "country-only events are not location candidates");
+  assert.equal(placeParts("Europe"), null, "regional-only events are not location candidates");
+  assert.equal(placeParts(""), null);
 });
 
 test("entity decoding is single-pass and does not turn nested entities into markup", () => {

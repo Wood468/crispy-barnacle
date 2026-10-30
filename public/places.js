@@ -1,5 +1,5 @@
 /* Places: sourced venues only. Data comes from /places.json (public venues) and /api/places-private (owner-only hotspots). No map is drawn.
-   Rules: a place needs a source, coordinates and a verified date; raid activity is never shown without live evidence;
+   Rules: a place needs a source and coordinates plus either an independent coordinate-check date or an explicit community-source status; Reddit reports and Wikipedia references are never treated as verified; raid activity is never shown without live evidence;
    a route GPX exists only when the place carries its source's own route file. Separately, any sourced place can be saved as a GPX of venue
    points (waypoints made from its sourced coordinates, labelled as such, never drawn up as a walking route). */
 (function () {
@@ -8,6 +8,23 @@
   var esc = G.esc, DATA = null, opener = null, F = { q: '', country: '', region: '', city: '', tag: '' }, current = null;
   function $(id) { return document.getElementById(id); }
   function safe(u) { return typeof u === 'string' && /^https:\/\//.test(u) ? u : ''; }
+  function coordinateProvenance(p) {
+    if (!p) return '';
+    if (p.coordinateStatus === 'community-reported' || /community-reported/i.test(p.type || '')) return 'community-reported';
+    if (p.coordinateStatus === 'community-reference') return 'community-reference';
+    var url = String(p.coords && p.coords.url || '');
+    if (/reddit\.com/i.test(url)) return 'community-reported';
+    if (/(?:wikipedia\.org|wikimedia\.org)/i.test(url)) return 'community-reference';
+    return '';
+  }
+  function isCommunityCoordinates(p) { return !!coordinateProvenance(p); }
+  function validDay(value) { return typeof value === 'string' && /^\d{4}-\d\d-\d\d$/.test(value); }
+  function coordinateLabel(p) {
+    var provenance = coordinateProvenance(p);
+    if (provenance === 'community-reported') return 'Community-reported coordinates' + (validDay(p.reportedAt) ? ' · reported ' + day(p.reportedAt) : ' · report date unavailable') + ' · not independently verified · not an official event pin';
+    if (provenance === 'community-reference') return 'Community-maintained coordinate reference · publication date unavailable · not independently verified · not an official event pin';
+    return 'Coordinates independently checked ' + day(p.verified);
+  }
   function pinHdr() { try { var p = localStorage.getItem('gofn-pin'); return p ? { 'x-pin': p } : {}; } catch (e) { return {}; } }
   // Public venues come from /places.json. Hotspot pins are owner-only: they load from /api/places-private for the PIN or a signed-in person, and are simply absent otherwise.
   function getJson(url, headers) { return fetch(url, { cache: 'no-cache', headers: headers || {} }).then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; }); }
@@ -20,9 +37,12 @@
       DATA.places = DATA.places.filter(valid); return DATA;
     });
   }
-  // A place without a source, coordinates or verified date is not listed at all.
+  // Community coordinates can be listed without a verification date; any legacy verified value is deliberately ignored.
   function valid(p) {
-    return p && p.name && isFinite(p.lat) && isFinite(p.lng) && Math.abs(p.lat) <= 90 && Math.abs(p.lng) <= 180 && p.country && p.verified && /^\d{4}-\d\d-\d\d$/.test(p.verified)
+    if (!p) return false;
+    var community = isCommunityCoordinates(p);
+    var dateOk = community ? (!p.reportedAt || validDay(p.reportedAt)) : validDay(p.verified);
+    return p.name && isFinite(p.lat) && isFinite(p.lng) && Math.abs(p.lat) <= 90 && Math.abs(p.lng) <= 180 && p.country && dateOk
       && Array.isArray(p.sources) && p.sources.some(function (s) { return s && s.label && safe(s.url); })
       && (p.events === undefined || (Array.isArray(p.events) && p.events.every(function (e) { return e && typeof e.name === 'string' && /^\d{4}-\d\d-\d\d$/.test(e.from) && /^\d{4}-\d\d-\d\d$/.test(e.to); })));
   }
@@ -39,16 +59,19 @@
   /* ---- GPX of venue points ---- */
   function x(v) { return String(v == null ? '' : v).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&apos;' }[c]; }); }
   function slug(t) { return String(t || 'places').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 50) || 'places'; }
-  // One <wpt> per sourced place, with who vouches for it and when it was checked. With opts.order and two or more places, the same points are also
+  // One <wpt> per sourced place, with source attribution and an honest coordinate-status label. With opts.order and two or more places, the same points are also
   // listed as an <rte> in the order given; the file says it joins venues and is not a walking route.
   function gpx(places, opts) {
     opts = opts || {};
     var pts = places.filter(valid), name = opts.name || 'GO Field Notes places';
     var out = ['<?xml version="1.0" encoding="UTF-8"?>', '<gpx version="1.1" creator="GO Field Notes" xmlns="http://www.topografix.com/GPX/1/1">',
-      '<metadata><name>' + x(name) + '</name><desc>Venue points from the sourced Places list in GO Field Notes. Each point says who vouches for it and when it was checked. These are planning points, not routes or in-game coordinates.</desc></metadata>'];
+      '<metadata><name>' + x(name) + '</name><desc>Venue points from the sourced Places list in GO Field Notes. Each point identifies its source and any recorded check or report date. Community-sourced coordinates are not independently verified. These are planning points, not routes or in-game coordinates.</desc></metadata>'];
     pts.forEach(function (p) {
-      var src = p.sources[0];
-      out.push('<wpt lat="' + p.lat.toFixed(6) + '" lon="' + p.lng.toFixed(6) + '"><name>' + x(p.name) + '</name><desc>' + x([p.type, p.role].filter(Boolean).join(' · ') + '. Source: ' + src.label + '. Coordinates: ' + (p.coords ? p.coords.label : src.label) + '. Checked ' + p.verified + '. A venue point for planning; check it in the game.') + '</desc><link href="' + x(safe(src.url)) + '"><text>' + x(src.label) + '</text></link></wpt>');
+      var src = p.sources[0], coordinateSource = p.coords && safe(p.coords.url) ? p.coords : null;
+      var coordinateUrl = coordinateSource ? safe(coordinateSource.url) : safe(src.url);
+      var coordinateName = coordinateSource && coordinateSource.label ? coordinateSource.label : src.label;
+      var eventUrl = safe(src.url);
+      out.push('<wpt lat="' + p.lat.toFixed(6) + '" lon="' + p.lng.toFixed(6) + '"><name>' + x(p.name) + '</name><desc>' + x([p.type, p.role].filter(Boolean).join(' · ') + '. Event source: ' + src.label + '. Coordinates: ' + (p.coords ? p.coords.label : src.label) + '. ' + coordinateLabel(p) + '. A venue point for planning; check it in the game.') + '</desc><link href="' + x(coordinateUrl) + '"><text>Coordinates: ' + x(coordinateName) + '</text></link>' + (eventUrl && eventUrl !== coordinateUrl ? '<link href="' + x(eventUrl) + '"><text>Event source: ' + x(src.label) + '</text></link>' : '') + '</wpt>');
     });
     if (opts.order && pts.length > 1) {
       out.push('<rte><name>' + x(name) + ' (venues in order)</name><desc>The venues above joined in the order listed. This is a list of stops, not a walking route.</desc>' + pts.map(function (p) { return '<rtept lat="' + p.lat.toFixed(6) + '" lon="' + p.lng.toFixed(6) + '"><name>' + x(p.name) + '</name></rtept>'; }).join('') + '</rte>');
@@ -77,7 +100,7 @@
   }
   function row(p) {
     return '<article class="plc-row"><button type="button" class="plc-open" data-place="' + esc(p.id) + '"><span class="plc-h"><b>' + esc(p.name) + '</b><span class="note">' + esc([p.city, p.region, p.country].filter(Boolean).join(', ')) + '</span></span>' + (p.tags || []).map(function (t) { return '<span class="plc-tg">' + esc(t) + '</span>'; }).join('') + '</button>'
-      + '<div class="plc-meta">' + coord(p) + (localClock(p) ? '<br>Local time: ' + esc(localClock(p)) : '') + '<br>Type: ' + esc(p.type) + '<br>Source: ' + esc(p.sources[0].label) + (p.coords ? ' · coordinates: ' + esc(p.coords.label.split(',')[0]) : '') + '<br>Last verified ' + day(p.verified) + '</div>'
+      + '<div class="plc-meta">' + coord(p) + (localClock(p) ? '<br>Local time: ' + esc(localClock(p)) : '') + '<br>Type: ' + esc(p.type) + '<br>Source: ' + esc(p.sources[0].label) + (p.coords ? ' · coordinates: ' + esc(p.coords.label.split(',')[0]) : '') + '<br>' + esc(coordinateLabel(p)) + '</div>'
       + '<div class="plc-acts"><button type="button" class="pill" data-copy="' + esc(p.id) + '">Copy coordinates</button>' + (p.route ? '<a class="pill all" href="' + esc(p.route.file) + '" download>Download GPX</a>' : '<span class="npub">No route file</span>') + '</div></article>';
   }
   function listView() {
@@ -101,18 +124,18 @@
   function detailView(p) {
     var h = '<div class="evd-bar"><button type="button" class="hbtn" id="plc-back" aria-label="Back to Places"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button><span class="tag">PLACES › DETAIL</span><span style="width:44px"></span></div>'
       + '<h2 class="plc-t" id="plc-t">' + esc(p.name) + '</h2><p class="note">' + esc([p.city, p.region, p.country].filter(Boolean).join(', ')) + '</p>'
-      + '<div class="plc-chips">' + (p.tags || []).map(function (t) { return '<span class="plc-tg">' + esc(t) + '</span>'; }).join('') + (p.type && /community-reported/i.test(p.type) ? '<span class="npub">Community reported · not live verified</span>' : '<span class="npub">No live raid evidence</span>') + '</div>'
+      + '<div class="plc-chips">' + (p.tags || []).map(function (t) { return '<span class="plc-tg">' + esc(t) + '</span>'; }).join('') + (coordinateProvenance(p) === 'community-reported' ? '<span class="npub">Community reported · not independently verified</span>' : coordinateProvenance(p) === 'community-reference' ? '<span class="npub">Community-maintained reference · not independently verified</span>' : '<span class="npub">No live raid evidence</span>') + '</div>'
       + (localClock(p) ? '<div class="evd-card"><b>Local time there</b><p class="note">' + esc(localClock(p)) + ' · ' + esc(p.timeZone) + '</p></div>' : '')
       + '<h3 class="sec2">Coordinates <span class="m">decimal degrees</span></h3><div class="evd-card"><div class="plc-coord">' + coord(p) + '</div><p class="note">' + dms(p) + (p.coords && p.coords.note ? ' · ' + esc(p.coords.note.charAt(0).toLowerCase() + p.coords.note.slice(1)) : '') + '</p>'
       + '<button type="button" class="pill all" data-copy="' + esc(p.id) + '">Copy coordinates</button><p class="note" id="plc-status" role="status" aria-live="polite"></p></div>'
       + '<h3 class="sec2">Route</h3><div class="evd-card">';
     if (p.route && safe(p.route.url) && p.route.file && p.route.verified) h += '<p><b>' + esc(p.route.label || 'Route') + '</b> from <a href="' + esc(p.route.url) + '" target="_blank" rel="noopener noreferrer">' + esc(p.route.author || 'the source') + '</a>, checked ' + day(p.route.verified) + '.</p><a class="pill all" href="' + esc(p.route.file) + '" download>Download GPX</a>';
     else h += '<span class="npub">No verified GPX route</span><p class="note">There is no sourced walking route for this place, and none is made up.</p>';
-    h += '<p><button type="button" class="pill all" data-gpx="' + esc(p.id) + '">⤓ Download venue point (GPX)</button></p><p class="note">One point at the sourced coordinates above, with who vouches for it and when it was checked. Open it in a compatible GPX app, such as iTools, if supported.</p>';
-    h += '</div><h3 class="sec2">Source and verification</h3><div class="evd-card">'
+    h += '<p><button type="button" class="pill all" data-gpx="' + esc(p.id) + '">⤓ Download venue point (GPX)</button></p><p class="note">One point at the sourced coordinates above, with source attribution and a clear coordinate-status label. Community-sourced coordinates are not independently verified. Open it in a compatible GPX app, such as iTools, if supported.</p>';
+    h += '</div><h3 class="sec2">Source and coordinate status</h3><div class="evd-card">'
       + (p.role ? '<div class="evd-row"><span class="k">Role</span><div class="v"><p>' + esc(p.role) + ' · ' + p.sources.map(function (s) { return '<a href="' + esc(safe(s.url)) + '" target="_blank" rel="noopener noreferrer">' + esc(s.label) + '</a>' + (s.trust === 'official' ? ' (official)' : ' (community)'); }).join(', ') + '</p></div></div>' : '')
       + (p.coords ? '<div class="evd-row"><span class="k">Coordinates</span><div class="v"><p>' + (safe(p.coords.url) ? '<a href="' + esc(p.coords.url) + '" target="_blank" rel="noopener noreferrer">' + esc(p.coords.label) + '</a>' : esc(p.coords.label)) + '</p></div></div>' : '')
-      + '<div class="evd-row"><span class="k">Verified</span><div class="v"><p><b>' + day(p.verified) + '</b> · checked against the source page</p></div></div>'
+      + '<div class="evd-row"><span class="k">Coordinate status</span><div class="v"><p>' + esc(coordinateLabel(p)) + '</p></div></div>'
       + '<div class="evd-row"><span class="k">Raid activity</span><div class="v"><p>Unknown. Nothing here says raids happen now.</p></div></div></div>';
     if (p.events && p.events.length) h += '<h3 class="sec2">Used by</h3>' + p.events.map(function (n) { return '<div class="evd-card"><b>' + esc(n.name) + '</b> <span class="note">' + (n.from === n.to ? day(n.from) : day(n.from) + ' to ' + day(n.to)) + '</span></div>'; }).join('');
     return h;
@@ -190,5 +213,5 @@
     return matched;
   }
   load().then(function () { document.dispatchEvent(new Event('goplaces')); });
-  window.GOPLACES = { open: open, close: close, load: load, forEvent: forEvent, gpx: gpx };
+  window.GOPLACES = { open: open, close: close, load: load, forEvent: forEvent, gpx: gpx, coordinateLabel: coordinateLabel };
 })();
