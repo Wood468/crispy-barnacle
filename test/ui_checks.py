@@ -323,6 +323,28 @@ with sync_playwright() as p:
         check('Check infographic button keeps its button role', pg.locator('[data-igcheck="cur:zorua"]').first.get_attribute('role') is None)
         pg.locator('[data-igcheck="cur:zorua"]').first.click(); pg.wait_for_timeout(600)
         check('Check infographic says so in place when nothing is found', pg.locator('[data-igcheck="cur:zorua"]').first.inner_text()=='No infographic found yet' and not pg.locator('#goinfo:not([hidden])').count())
+        # The event infographic viewer should behave like the event-details dialog: trap keyboard focus and return it to the card.
+        ig_opener = pg.locator('[data-infographic="cur:trek"]').first
+        ig_opener.click()
+        pg.locator('#goinfo:not([hidden])').wait_for(state='visible')
+        check('event infographic viewer initially focuses its close control',
+              pg.evaluate("document.activeElement === document.querySelector('#goinfo [data-infoclose]')"))
+        pg.keyboard.press('Shift+Tab')
+        ig_wrapped_last = pg.evaluate("""() => {
+            const d = document.getElementById('goinfo');
+            const items = [...d.querySelectorAll('a[href],button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea:not([disabled]),summary,[tabindex]:not([tabindex="-1"])')].filter(el => !el.closest('[hidden],[aria-hidden="true"]') && el.getClientRects().length > 0);
+            return items.length > 1 && document.activeElement === items[items.length - 1];
+        }""")
+        check('event infographic Shift+Tab wraps from the close control to the last link', ig_wrapped_last)
+        pg.keyboard.press('Tab')
+        check('event infographic Tab wraps from the last link to the close control',
+              pg.evaluate("document.activeElement === document.querySelector('#goinfo [data-infoclose]')"))
+        pg.keyboard.press('Escape')
+        check('event infographic Escape restores focus to its opening card',
+              pg.evaluate("""() => {
+                  const opener = [...document.querySelectorAll('[data-infographic]')].find(el => el.getAttribute('data-infographic') === 'cur:trek');
+                  return document.getElementById('goinfo').hidden && document.activeElement === opener;
+              }"""))
         # A thumbnail address that cannot be fetched falls back to the Check infographic button (the rest of this run serves a valid PNG for every picture).
         pb=page(extra={'**/img/ext/4aa21432-0cfc-4c93-b3eb-0c15f322389d-0119b088.webp':('',404)}); pb.wait_for_timeout(800)
         check('a thumbnail that fails to load becomes Check infographic', pb.locator('[data-igcheck="cur:trek"]').first.inner_text()=='Check infographic' and pb.locator('[data-igcard="cur:trek"] img').count()==0 and pb.locator('[data-igcard="cur:trek"]').first.get_attribute('data-igbad') is not None)

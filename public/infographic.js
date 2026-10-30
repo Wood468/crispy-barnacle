@@ -7,6 +7,7 @@
   var esc = G.esc;
   function safe(u) { return typeof u === 'string' && (/^https:\/\//.test(u) || /^\/img\/ext\/[\w.-]+$/.test(u) || /^\/infographics\/[\w.\/-]+$/.test(u)) ? u : ''; }
   var INFO = null;
+  var opener = null;
   /* Pictures you approved that the 2-hourly publish has not attached yet. Their image is already on the site and the decision is in
      the database, so they show on the event straight away; once published they come from event-info.json and drop out of this list. */
   var PENDING = [];
@@ -153,16 +154,25 @@
       }
     });
   }
+  function focusable(host) {
+    return Array.prototype.slice.call(host.querySelectorAll('a[href],button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea:not([disabled]),summary,[tabindex]:not([tabindex="-1"])')).filter(function (el) {
+      return !el.closest('[hidden],[aria-hidden="true"]') && el.getClientRects().length > 0;
+    });
+  }
   function close(silent) {
     var o = document.getElementById('goinfo');
     if (!o || o.hidden) return;
     o.hidden = true;
     document.body.style.overflow = '';
+    var returnTo = opener;
+    opener = null;
+    if (returnTo && returnTo.isConnected && returnTo.focus) returnTo.focus();
     if (silent !== true && window.GONAV) window.GONAV.popped();
   }
-  function open(id) {
+  function open(id, from) {
     var ev = evById(id);
     if (!ev) return;
+    opener = from || document.activeElement;
     loadInfo().then(function (allInfo) { return loadPending().then(function () { render(ev, eventInfo(ev, allInfo)); }); });
   }
   function render(ev, extra) {
@@ -225,12 +235,27 @@
     var c = e.target.closest && e.target.closest('[data-igcheck]');
     if (c) { e.preventDefault(); e.stopPropagation(); recheck(c); return; }
     var b = e.target.closest && e.target.closest('[data-infographic]');
-    if (b) { e.preventDefault(); e.stopPropagation(); open(b.getAttribute('data-infographic')); return; }
+    if (b) { e.preventDefault(); e.stopPropagation(); open(b.getAttribute('data-infographic'), b); return; }
     if (e.target.closest && e.target.closest('[data-infoclose]')) { close(); return; }
     var host = document.getElementById('goinfo');
     if (host && e.target === host) close();
   });
-  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+  document.addEventListener('keydown', function (e) {
+    var host = document.getElementById('goinfo');
+    if (!host || host.hidden) return;
+    if (e.key === 'Escape') { close(); return; }
+    if (e.key !== 'Tab') return;
+    var items = focusable(host);
+    if (!items.length) {
+      e.preventDefault();
+      var closeButton = host.querySelector('[data-infoclose]');
+      if (closeButton) closeButton.focus();
+      return;
+    }
+    var first = items[0], last = items[items.length - 1], active = document.activeElement;
+    if (e.shiftKey && (active === first || !host.contains(active))) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && (active === last || !host.contains(active))) { e.preventDefault(); first.focus(); }
+  });
   if (document.body) liveRegion(); else document.addEventListener('DOMContentLoaded', liveRegion);
   watchButtons();
   window.GOINFOGRAPHIC = { open: open, close: close };
