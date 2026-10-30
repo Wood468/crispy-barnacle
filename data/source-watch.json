@@ -1,10 +1,10 @@
 {
- "updated": "2026-10-30T01:00:22.716Z",
+ "updated": "2026-10-30T10:01:41.970Z",
  "status": [
   {
    "id": "hub",
    "state": "ok",
-   "items": 3
+   "items": 2
   },
   {
    "id": "miners-assets",
@@ -19,12 +19,12 @@
   {
    "id": "reddit-silph",
    "state": "ok",
-   "items": 8
+   "items": 9
   },
   {
    "id": "youtube-pogo",
-   "state": "error",
-   "note": "HTTP 404"
+   "state": "ok",
+   "items": 2
   }
  ],
  "gaps": 3,
@@ -74,6 +74,16 @@
   {
    "source": "reddit-silph",
    "trust": "tip",
+   "title": "Trainer Code usage for determining shinies has been patched",
+   "link": "https://www.reddit.com/r/TheSilphRoad/comments/1xj27zc/trainer_code_usage_for_determining_shinies_has/",
+   "date": "2026-10-30T01:22:46.000Z",
+   "summary": "<table> <tr><td> <a href=\"https://www.reddit.com/r/TheSilphRoad/comments/1xj27zc/trainer_code_usage_for_determining_shinies_has/\"> <img src=\"https://preview.redd.it/42b2se53biyh1.jpeg?width=640&amp;cr",
+   "pokemon": [],
+   "notInOurData": []
+  },
+  {
+   "source": "reddit-silph",
+   "trust": "tip",
    "title": "Non-costume wild zubat?",
    "link": "https://www.reddit.com/r/TheSilphRoad/comments/1xhwz6b/noncostume_wild_zubat/",
    "date": "2026-10-28T18:54:48.000Z",
@@ -93,6 +103,26 @@
    "pokemon": [
     "Gastly"
    ],
+   "notInOurData": []
+  },
+  {
+   "source": "youtube-pogo",
+   "trust": "official",
+   "title": "New costumed Pokémon make their debuts during Halloween 2026 Part I in Pokémon GO!",
+   "link": "https://www.youtube.com/shorts/I6MvdaExyIg",
+   "date": "2026-10-27T17:00:40.000Z",
+   "summary": "",
+   "pokemon": [],
+   "notInOurData": []
+  },
+  {
+   "source": "youtube-pogo",
+   "trust": "official",
+   "title": "New costumed Pokémon make their debuts during Halloween 2026 Part I in Pokémon GO!",
+   "link": "https://www.youtube.com/watch?v=wyN2y-BgpoU",
+   "date": "2026-10-27T17:00:14.000Z",
+   "summary": "",
+   "pokemon": [],
    "notInOurData": []
   },
   {
@@ -152,18 +182,6 @@
    "summary": "<table> <tr><td> <a href=\"https://www.reddit.com/r/TheSilphRoad/comments/1xggriy/shiny_costume_zubat_is_confirmed/\"> <img src=\"https://preview.redd.it/na3ftvek8xxh1.jpeg?width=640&amp;crop=smart&amp;a",
    "pokemon": [
     "Zubat"
-   ],
-   "notInOurData": []
-  },
-  {
-   "source": "hub",
-   "trust": "community",
-   "title": "Pawniard Community Day (November 2026)",
-   "link": "https://pokemongohub.net/post/event/pawniard-community-day-november-2026/",
-   "date": "2026-10-21T16:55:07.000Z",
-   "summary": "The November 2026 Community Day features Pawniard, the Sharp Blade Pokémon! Join the event on Saturday, November 21, 2026, from 2:00 p.m. to 5:00 p.m. local time to enjoy 1/4 Egg Hatch Distance, incre",
-   "pokemon": [
-    "Pawniard"
    ],
    "notInOurData": []
   }

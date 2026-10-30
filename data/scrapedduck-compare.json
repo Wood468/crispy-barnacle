@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-30T01:00:22.956Z",
+ "updated": "2026-10-30T10:01:42.161Z",
  "state": "ok",
  "scrapedDuckEvents": 54,
  "missingHere": [
@@ -11,6 +11,11 @@
   }
  ],
  "missingThere": [
+  {
+   "id": "gopassnov",
+   "name": "GO Pass: November",
+   "start": "2026-11-03T10:00"
+  },
   {
    "id": "w-pokemon-fossil-museum-2026",
    "name": "Pokemon Fossil Museum 2026",
