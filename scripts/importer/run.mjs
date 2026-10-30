@@ -58,13 +58,16 @@ function pageDatesOverlapEvent(page, event) {
 
   // Prefer dates extracted under a Dates heading. If none were classified, inspect only
   // early article lines that actually contain a month/day, not arbitrary prose or metadata.
-  const explicit = Array.isArray(page.fields?.dates) ? page.fields.dates.join(" . ") : "";
   const monthDay = /\b(?:jan(?:uary)?|feb(?:ruary)?|mar(?:ch)?|apr(?:il)?|may|june?|july?|aug(?:ust)?|sept?(?:ember)?|oct(?:ober)?|nov(?:ember)?|dec(?:ember)?)\.?\s+\d{1,2}\b|\b\d{1,2}(?:st|nd|rd|th)?\s+(?:jan(?:uary)?|feb(?:ruary)?|mar(?:ch)?|apr(?:il)?|may|june?|july?|aug(?:ust)?|sept?(?:ember)?|oct(?:ober)?|nov(?:ember)?|dec(?:ember)?)\b/i;
-  const lines = (page.lines || []).slice(0, 40).filter(line => monthDay.test(String(line.text || ""))).map(line => line.text).join(" . ");
+  const lineDates = (page.lines || []).slice(0, 40).filter(line => monthDay.test(String(line.text || ""))).map(line => line.text);
+  const dateTexts = [
+    ...(Array.isArray(page.fields?.dates) ? page.fields.dates : []),
+    ...lineDates
+  ].map(value => String(value || "").trim()).filter(Boolean);
   const yearHint = Number(eventStart.slice(0, 4)) || new Date().getUTCFullYear();
-  const range = (explicit && parseDateRange(explicit, yearHint)) || (lines && parseDateRange(lines, yearHint));
-  if (!range) return true; // Missing source dates are unknown, not evidence of a mismatch.
-  return range.start <= eventEnd && range.end >= eventStart;
+  const ranges = dateTexts.map(value => parseDateRange(value, yearHint)).filter(Boolean);
+  if (!ranges.length) return true; // Missing source dates are unknown, not evidence of a mismatch.
+  return ranges.some(range => range.start <= eventEnd && range.end >= eventStart);
 }
 
 export function pickEvent(page, events) {
