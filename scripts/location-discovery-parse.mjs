@@ -27,6 +27,51 @@ export const redditSearchUrl = eventName => {
   return url;
 };
 
+// Preserve the source publication day separately from any independent coordinate check.
+export const reportDate = value => {
+  const raw = String(value || "").trim();
+  if (!raw || !Number.isFinite(Date.parse(raw))) return null;
+  const iso = /^(\d{4}-\d\d-\d\d)/.exec(raw);
+  if (iso) return iso[1];
+  const rfc = /(?:^|,\s*)(\d{1,2})\s+([A-Za-z]{3})\s+(\d{4})/.exec(raw);
+  if (!rfc) return null;
+  const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  const month = months.indexOf(rfc[2]);
+  if (month < 0) return null;
+  return rfc[3] + "-" + String(month + 1).padStart(2, "0") + "-" + String(Number(rfc[1])).padStart(2, "0");
+};
+
+// Extract only an explicitly named city/venue and country from the event's published place string.
+// Country-wide or ambiguous strings are skipped instead of writing incomplete Places records.
+export const placeParts = value => {
+  const raw = String(value || "").trim();
+  if (!raw) return null;
+  let city = "", country = "";
+  if (raw.includes(",")) {
+    const parts = raw.split(",").map(part => part.trim()).filter(Boolean);
+    if (parts.length < 2) return null;
+    country = parts.pop().replace(/\s*\([^)]*\)/g, "").trim();
+    city = parts.join(",").replace(/\s*\([^)]*\)/g, "").trim();
+  } else {
+    const match = /^(.+?)\s*\(([^()]*)\)$/.exec(raw);
+    if (!match) return null;
+    country = match[1].trim();
+    city = match[2].trim();
+  }
+  const aliases = {
+    USA: "United States",
+    US: "United States",
+    UK: "United Kingdom",
+    England: "United Kingdom",
+    Scotland: "United Kingdom",
+    Wales: "United Kingdom",
+    "Northern Ireland": "United Kingdom"
+  };
+  country = aliases[country] || country;
+  if (!city || !country || city.toLowerCase() === country.toLowerCase()) return null;
+  return { city, country };
+};
+
 // Parse Retry-After safely. A missing/invalid header gets a modest cooldown;
 // a server-requested wait longer than five minutes defers this run to the next schedule.
 export const retryAfterMs = (value, now = Date.now()) => {
@@ -86,10 +131,12 @@ export const xmlItems = xml => {
       return clean(raw.replace(/^<!\[CDATA\[|\]\]>$/g, ""));
     };
     const href = (body.match(/<link\b[^>]*href=["']([^"']+)["']/i) || [, ""])[1];
+    const publishedAt = field("pubDate") || field("published");
     return {
       title: field("title"),
       link: field("link") || href,
-      desc: field("description") || field("content") || field("summary")
+      desc: field("description") || field("content") || field("summary"),
+      ...(publishedAt ? { publishedAt } : {})
     };
   });
 };
