@@ -4,6 +4,7 @@
 import { readFile, writeFile, mkdir } from "node:fs/promises";
 import { routed } from "../src/tgroute.js";
 import { OFFICIAL_HOSTS } from "../src/pipeline.js";
+import { failRun } from "./fail-run.mjs";
 
 const SKIP = /^(go-battle-league|max-mondays|raid-battles|twitch-drops|raid-hour|pok.mon-spotlight-hour|go-pass|season|research)$/; // a season, the GO Pass and promo research are not events in the app
 export function parseList(html) {
@@ -147,4 +148,4 @@ export async function main(fetchFn = fetch) {
   console.log(`${theirs.length} events read, ${res.problems.length} dates differ, ${res.missing.length} not listed here`);
   for (const p of res.problems) console.log(`  ${p.name}: ${p.field} ours ${p.ours}, Leek Duck ${p.leekduck}`);
 }
-if (import.meta.url === "file://" + process.argv[1]) main().catch(e => { console.error(e.message); process.exit(0); });
+if (import.meta.url === "file://" + process.argv[1]) main().catch(failRun);
