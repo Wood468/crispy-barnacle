@@ -507,13 +507,15 @@ with sync_playwright() as p:
         target_start=target['start'] if target else 0
         target_end=target['end'] if target else 0
         def summary_state():
-            actual={'live':int(refresh.locator('#day-live-count').inner_text()),'upcoming':int(refresh.locator('#day-upcoming-count').inner_text())}
+            actual={'inGame':int(refresh.locator('#day-live-count').inner_text()),'inPerson':int(refresh.locator('#day-inperson-count').inner_text()),'upcoming':int(refresh.locator('#day-upcoming-count').inner_text())}
             expected=refresh.evaluate("""() => {
               const t=new Date(), endDay=new Date(t); endDay.setHours(0,0,0,0); endDay.setDate(endDay.getDate()+1);
               const events=window.GODASH.events(), visible=e=>!e.long&&!window.GODASH.kindHidden(e.kind);
-              const live=events.filter(e=>visible(e)&&e.start<=t&&e.end>t).length+window.GODASH.regionalEvents().filter(e=>e.start<=t&&e.end>t).length;
+              const live=events.filter(e=>visible(e)&&e.start<=t&&e.end>t);
+              const regional=window.GODASH.regionalEvents().filter(e=>e.start<=t&&e.end>t);
+              const worldwide=window.GODASH.worldEvents().filter(e=>e.start<=t&&e.end>t);
               const today=events.filter(e=>visible(e)&&((e.start<=t&&e.end>t)||(e.start>t&&e.start<endDay)));
-              return {live:live,upcoming:today.filter(e=>e.start>t).length};
+              return {inGame:live.filter(e=>e.kind!=='person').length+worldwide.length,inPerson:live.filter(e=>e.kind==='person').length+regional.length,upcoming:today.filter(e=>e.start>t).length};
             }""")
             return actual,expected
         brief_before,expected_before=summary_state()
