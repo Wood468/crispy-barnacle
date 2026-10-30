@@ -99,6 +99,20 @@ with sync_playwright() as p:
         check('Event detail quick links all have rendered targets', all(x['target'] for x in jump_links), jump_links)
         check('Event detail hides Highlights and Locations when those sections are absent',
               all(x['label'] not in ['Highlights', 'Locations'] for x in jump_links), jump_links)
+        # Keyboard navigation is trapped in the dialog and Escape returns focus to its opener.
+        next_page.keyboard.press('Shift+Tab')
+        wrapped_last = next_page.evaluate("""() => {
+            const d = document.getElementById('evd');
+            const items = [...d.querySelectorAll('a[href],button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea:not([disabled]),summary,[tabindex]:not([tabindex="-1"])')].filter(el => !el.closest('[hidden],[aria-hidden="true"]') && el.getClientRects().length > 0);
+            return items.length > 1 && document.activeElement === items[items.length - 1];
+        }""")
+        check('Event detail Shift+Tab wraps from the first control to the last', wrapped_last)
+        next_page.keyboard.press('Tab')
+        check('Event detail Tab wraps from the last control to the close button',
+              next_page.evaluate("document.activeElement.id === 'evd-x'"))
+        next_page.keyboard.press('Escape')
+        check('Event detail Escape restores focus to the Today next-event card',
+              next_page.evaluate("document.getElementById('evd').hidden && document.activeElement.classList.contains('today-next-up')"))
         next_page.context.close()
 
         # 1. no marks: nothing is claimed missing
