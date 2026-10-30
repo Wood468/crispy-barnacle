@@ -92,7 +92,7 @@ export const xmlItems = xml => {
       return clean(raw.replace(/^<!\[CDATA\[|\]\]>$/g, ""));
     };
     const href = (body.match(/<link\b[^>]*href=["']([^"']+)["']/i) || [, ""])[1];
-    const publishedAt = field("pubDate") || field("published") || field("updated");
+    const publishedAt = field("pubDate") || field("published");
     return {
       title: field("title"),
       link: field("link") || href,
