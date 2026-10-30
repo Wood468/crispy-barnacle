@@ -7,8 +7,14 @@ D.places = D.places.concat(readPrivate("places.json","places-private.json").plac
 const TAGS = ["Raids", "Gyms", "PokéStops", "Community Day", "Event venue"];
 const https = (u) => typeof u === "string" && /^https:\/\/[^\s/]+\.[^\s/]+/.test(u);
 const day = (s) => typeof s === "string" && /^\d{4}-\d\d-\d\d$/.test(s) && !isNaN(new Date(s + "T12:00:00Z"));
-const communityCoordinates = (p) => p.coordinateStatus === "community-reported" || /community-reported/i.test(p.type || "")
-  || (Array.isArray(p.sources) && p.sources.some((s) => s.trust === "community") && /(?:reddit\.com|wikipedia\.org|wikimedia\.org)/i.test(p.coords?.url || ""));
+const coordinateProvenance = (p) => {
+  if (p.coordinateStatus === "community-reported" || /community-reported/i.test(p.type || "")) return "community-reported";
+  if (p.coordinateStatus === "community-reference") return "community-reference";
+  const url = p.coords?.url || "";
+  if (/reddit\.com/i.test(url)) return "community-reported";
+  if (/(?:wikipedia\.org|wikimedia\.org)/i.test(url)) return "community-reference";
+  return "";
+};
 
 test("places.json: every place has the fields the rules require", () => {
   const ids = new Set();
@@ -16,7 +22,7 @@ test("places.json: every place has the fields the rules require", () => {
     assert.ok(p.id && !ids.has(p.id), "unique id " + p.id); ids.add(p.id);
     assert.ok(p.name && p.city && p.country && p.type, p.id + " name/city/country/type");
     assert.ok(Number.isFinite(p.lat) && Math.abs(p.lat) <= 90 && Number.isFinite(p.lng) && Math.abs(p.lng) <= 180, p.id + " coordinates");
-    if (communityCoordinates(p)) {
+    if (coordinateProvenance(p)) {
       assert.equal(p.verified, undefined, p.id + " community coordinates must not carry a verified date");
       assert.ok(p.reportedAt === undefined || day(p.reportedAt), p.id + " report date must be a real source publication day");
     } else {
@@ -28,15 +34,30 @@ test("places.json: every place has the fields the rules require", () => {
   }
 });
 
-test("public community coordinate records are reported, not verified or promoted to official event pins", () => {
+test("public community coordinate records retain their source-specific provenance and are never verified", () => {
   const by = Object.fromEntries(D.places.map((p) => [p.id, p]));
-  for (const id of ["queen-street-mall-brisbane", "king-george-square-brisbane", "alameda-central-mexico-city"]) {
+  for (const [id, status] of [
+    ["queen-street-mall-brisbane", "community-reference"],
+    ["king-george-square-brisbane", "community-reference"],
+    ["alameda-central-mexico-city", "community-reported"]
+  ]) {
     const p = by[id];
     assert.ok(p, "preserved community location " + id);
-    assert.equal(p.coordinateStatus, "community-reported");
-    assert.equal(p.verified, undefined, id + " has no verification date");
-    assert.match(p.coords.note, /not an official (?:Niantic )?event pin/i);
-    assert.ok(p.reportedAt === undefined || day(p.reportedAt), id + " report date is source-backed when present");
+    assert.equal(p.coordinateStatus, status);
+    assert.equal(p.verified, undefined, id + " has no independent coordinate-verification date");
+    assert.match(p.coords.note, /not an official event pin/i);
+    if (status === "community-reported") assert.ok(p.reportedAt === undefined || day(p.reportedAt), id + " report date is source-backed when present");
+    else assert.equal(p.reportedAt, undefined, id + " has no invented report date");
+  }
+});
+
+test("Wikipedia and Reddit coordinate references never receive verified dates based on event-source trust", () => {
+  const sourced = D.places.filter((p) => /(?:reddit\.com|wikipedia\.org|wikimedia\.org)/i.test(p.coords?.url || ""));
+  assert.ok(sourced.length > 0);
+  for (const p of sourced) {
+    assert.equal(p.verified, undefined, p.id + " community-maintained coordinates are not independently verified");
+    if (/reddit\.com/i.test(p.coords.url)) assert.equal(p.coordinateStatus, "community-reported", p.id);
+    else assert.equal(p.coordinateStatus, "community-reference", p.id);
   }
 });
 
@@ -54,7 +75,7 @@ test("places.json: no raid, gym or PokéStop claim without a named source and da
   for (const p of D.places) {
     if (p.tags.some((t) => ["Raids", "Gyms", "PokéStops"].includes(t))) {
       assert.ok(p.sources.length, p.id + " activity tags need a named source");
-      if (communityCoordinates(p)) assert.equal(p.verified, undefined, p.id + " community tags do not imply coordinate verification");
+      if (coordinateProvenance(p)) assert.equal(p.verified, undefined, p.id + " community tags do not imply coordinate verification");
       else assert.ok(day(p.verified), p.id + " sourced venue needs a source-check date");
     }
     if (/community-reported (raid|play) hotspot/i.test(p.type)) {
