@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { spawnSync } from "node:child_process";
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
-import { coords, fetchWithRateLimit, redditSearchUrl, reportDate, retryAfterMs, xmlItems } from "../scripts/location-discovery-parse.mjs";
+import { coords, fetchWithRateLimit, placeParts, redditSearchUrl, reportDate, retryAfterMs, xmlItems } from "../scripts/location-discovery-parse.mjs";
 
 const discoveryScript = fileURLToPath(new URL("../scripts/location-discovery.mjs", import.meta.url));
 
@@ -49,6 +49,16 @@ test("discovery records report dates but never assigns a verified date to commun
   assert.match(source, /coordinateStatus: "community-reported"/);
   assert.match(source, /\.\.\.\(reportedAt \? \{ reportedAt \} : \{\}\)/);
   assert.doesNotMatch(source, /\bverified\s*:/);
+});
+
+test("location discovery only publishes explicitly named city/venue and country pairs", () => {
+  assert.deepEqual(placeParts("Chicago, USA"), { city: "Chicago", country: "United States" });
+  assert.deepEqual(placeParts("London, England (Science Museum)"), { city: "London", country: "United Kingdom" });
+  assert.deepEqual(placeParts("Malaysia (Ombak KLCC)"), { city: "Ombak KLCC", country: "Malaysia" });
+  assert.deepEqual(placeParts("Mexico City, Mexico (Paseo de la Reforma)"), { city: "Mexico City", country: "Mexico" });
+  assert.equal(placeParts("Japan"), null, "country-only events are not location candidates");
+  assert.equal(placeParts("Europe"), null, "regional-only events are not location candidates");
+  assert.equal(placeParts(""), null);
 });
 
 test("entity decoding is single-pass and does not turn nested entities into markup", () => {
