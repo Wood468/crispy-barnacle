@@ -1013,7 +1013,7 @@
       var boss = row.getAttribute('data-boss');
       if (!boss) return;
       var facts = window.GOTYPES && GOTYPES.facts(boss), weak = facts && Array.isArray(facts.weak) ? facts.weak.filter(function (t, i, a) { return typeof t === 'string' && a.indexOf(t) === i; }) : [];
-      if (weak.length && !row.querySelector('.rc-best')) {
+      if (weak.length && window.GOBEST && !row.querySelector('.rc-best')) {
         var best = document.createElement('button'); best.type = 'button'; best.className = 'rc-info rc-best';
         best.textContent = 'Best attackers'; best.setAttribute('data-best-types', weak.join('|'));
         best.setAttribute('aria-label', 'Best attackers for ' + boss + ' (weak to ' + weak.join(', ') + ')');
