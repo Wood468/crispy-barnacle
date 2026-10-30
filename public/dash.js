@@ -608,13 +608,13 @@
   function card(ev, opt) {
     opt = opt || {};
     var k = kindOf(ev), p = phase(ev), saved = isSaved(ev.id);
-    var scope = ev.region ? ev.region : (ev.long ? '' : (ev.utc ? 'Same moment worldwide' : 'Local time'));
+    var timeLabel = ev.utc || ev.region || ev.scope === 'worldwide_local' ? timeMeta(ev) : whenText(ev);
     return '<article class="evc cmp ' + p + '" style="--k:' + k[1] + ';--kf:' + k[2] + '" data-id="' + esc(ev.id) + '">'
       + '<div class="evc-art">' + featArts(ev, 3) + '</div>'
       + '<div class="evc-main">'
       + '<div class="evc-top"><span class="kind-grp"><span class="kind">' + esc(k[0]) + '</span>' + statusChip(ev) + '</span><span class="cdn" data-id="' + esc(ev.id) + '">' + esc(countdown(ev)) + '</span><button type="button" class="hide-x" data-hide="' + esc(ev.id) + '" aria-label="Hide ' + esc(ev.name) + '" title="Hide this event">✕</button></div>'
       + '<div class="evc-title-row"><h3 title="' + esc(ev.name) + '">' + esc(ev.name) + '</h3></div>'
-      + '<p class="evc-when">' + esc(ev.utc || ev.region ? timeMeta(ev) : whenText(ev)) + (ev.long || ev.utc || ev.region ? '' : '') + '</p>'
+      + '<p class="evc-when">' + esc(timeLabel) + '</p>'
       + '<p class="evc-bonus" data-bn="' + esc(ev.name) + '" data-bs="' + esc(bday(ev.start)) + '" data-be="' + esc(bday(ev.end)) + '" hidden></p>'
       + signalChips(ev, 4, false)
       + '<div class="evc-foot">'
