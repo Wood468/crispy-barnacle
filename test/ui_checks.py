@@ -88,6 +88,20 @@ with sync_playwright() as p:
               tomorrow_group.locator('.week-day-label').inner_text() == 'Tomorrow' and
               all(int(g.locator('.week-day-count').inner_text().split()[0]) == g.locator('.week-day-events .evc').count() and
                   g.locator('.week-day-events .evc').count() > 0 for g in [tomorrow_group, sunday_group]))
+        week_card = tomorrow_group.locator('.week-day-events .week-card[data-id="leekduck:touch-future-0"]')
+        check('This Week uses its dedicated card treatment without changing Today',
+              week_card.count() == 1 and touch_page.locator('#home-now .week-card').count() == 0)
+        week_actions = [
+            week_card.locator('button[data-open]'),
+            week_card.locator('button[data-infographic]'),
+            week_card.locator('button[data-save]'),
+            week_card.locator('button[data-hide]')
+        ]
+        week_boxes = [x.bounding_box() for x in week_actions]
+        check('This Week keeps details, infographic, save and hide actions thumb-sized',
+              all(x.count() == 1 for x in week_actions) and
+              all(b is not None and b['width'] >= 44 and b['height'] >= 44 for b in week_boxes),
+              week_boxes)
         worldwide_card_time = touch_page.locator('#week .week-day-group[data-week-day="2026-10-10"] .evc[data-id="leekduck:touch-future-0"] .evc-when').inner_text()
         check('Worldwide-local event cards label the displayed clock as local to each region',
               'Your time:' in worldwide_card_time and 'Local time in each region' in worldwide_card_time,
