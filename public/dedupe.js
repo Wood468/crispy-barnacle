@@ -34,7 +34,13 @@
     fold(place).replace(/[^a-z0-9]+/g, ' ').trim().split(' ').forEach(function (w) { w = stem(w); if (w.length > 2 && !GENERIC_PLACE[w]) out[w] = 1; });
     return out;
   }
-  function day(x) { if (x instanceof Date) x = x.getTime(); if (typeof x === 'number') return Math.floor(x / 864e5); var m = /^(\d{4})-(\d{2})-(\d{2})/.exec(String(x || '')); return m ? Math.floor(Date.UTC(+m[1], +m[2] - 1, +m[3]) / 864e5) : NaN; }
+  function day(x) {
+    // Date objects and timestamps are instants; compare the calendar day the viewer actually sees.
+    // Date-only strings stay timezone-independent and are read directly from their YYYY-MM-DD text.
+    if (typeof x === 'string') { var m = /^(\d{4})-(\d{2})-(\d{2})/.exec(x); return m ? Math.floor(Date.UTC(+m[1], +m[2] - 1, +m[3]) / 864e5) : NaN; }
+    if (typeof x === 'number') x = new Date(x);
+    return x instanceof Date && !isNaN(x.getTime()) ? Math.floor(Date.UTC(x.getFullYear(), x.getMonth(), x.getDate()) / 864e5) : NaN;
+  }
   function size(o) { return Object.keys(o).length; }
   function shared(a, b) { var n = 0; for (var k in a) if (b[k]) n++; return n; }
   function dates(a, b) {

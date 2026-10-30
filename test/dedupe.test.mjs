@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import { createRequire } from "node:module";
 import { collapseWorld } from "../scripts/importer/world.mjs";
 import { audit } from "../scripts/dup-audit.mjs";
+import { spawnSync } from "node:child_process";
 const dd = createRequire(import.meta.url)("../public/dedupe.js");
 const ev = (id, name, place, start, end) => ({ id, name, place, start, end, scope: "regional", sources: [{ id: "s", name: "S", url: "u:" + id }] });
 const verdict = (a, b, gaz) => dd.same(a, b, gaz).verdict;
@@ -22,6 +23,26 @@ test("different events are kept apart", () => {
   assert.equal(verdict(ev("1", "Halloween 2026, Part One", "", "2026-10-27", "2026-11-01"), ev("2", "Halloween 2026, Part Two", "", "2026-11-01", "2026-11-05")), "different"); // different days
   assert.equal(verdict(ev("1", "Minior Showers: Leonids", "", "2026-11-14", "2026-11-19"), ev("2", "Minior Showers: Geminids", "", "2026-12-11", "2026-12-16")), "different");
   assert.equal(verdict(ev("1", "Super Mega Raid Day", "", "2026-10-31", "2026-10-31"), ev("2", "Super Mega Raid Day", "", "2026-11-28", "2026-11-28")), "different");
+});
+
+test("Date and timestamp comparisons use the viewer's calendar day, not the UTC day", () => {
+  const script = `
+    const dd = require("./public/dedupe.js");
+    const instant = new Date("2026-11-06T00:30:00Z");
+    const regional = { name: "GO Wild Area 2026", place: "", start: "2026-11-06", end: "2026-11-08" };
+    const fromDate = dd.same({ name: regional.name, place: "", start: instant, end: instant }, regional).verdict;
+    const fromTimestamp = dd.same({ name: regional.name, place: "", start: +instant, end: +instant }, regional).verdict;
+    console.log(JSON.stringify({ fromDate, fromTimestamp, localDay: instant.getDate() }));
+  `;
+  const run = (tz) => spawnSync(process.execPath, ["-e", script], {
+    cwd: process.cwd(), env: { ...process.env, TZ: tz }, encoding: "utf8"
+  });
+  const losAngeles = run("America/Los_Angeles");
+  const tokyo = run("Asia/Tokyo");
+  assert.equal(losAngeles.status, 0, losAngeles.stderr);
+  assert.equal(tokyo.status, 0, tokyo.stderr);
+  assert.deepEqual(JSON.parse(losAngeles.stdout), { fromDate: "different", fromTimestamp: "different", localDay: 5 });
+  assert.deepEqual(JSON.parse(tokyo.stdout), { fromDate: "same", fromTimestamp: "same", localDay: 6 });
 });
 
 test("rulings override the rule both ways", () => {
