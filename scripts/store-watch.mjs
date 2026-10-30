@@ -40,7 +40,7 @@ export function endsAtFrom(left, nowIso, prev) {
 // a temporary presentation change, not dozens of individual price changes.
 export const currencyOf = price => {
   const value = String(price || "").trim();
-  const firstDigit = value.search(/\\d/);
+  const firstDigit = value.search(/\d/);
   return firstDigit < 0 ? "" : value.slice(0, firstDigit).trim();
 };
 const CURRENCY_HOLD_MS = 72 * 36e5;
@@ -174,7 +174,7 @@ async function main() {
         })
       });
     }
-    if (process.env.DRY_RUN !== "true") await writeFile(STATE, JSON.stringify(d.state, null, 1) + "\\n");
+    if (process.env.DRY_RUN !== "true") await writeFile(STATE, JSON.stringify(d.state, null, 1) + "\n");
     return;
   }
   globalThis.fetch = routed(process.env, "changes", globalThis.fetch);
