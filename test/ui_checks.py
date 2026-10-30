@@ -88,6 +88,10 @@ with sync_playwright() as p:
               tomorrow_group.locator('.week-day-label').inner_text() == 'Tomorrow' and
               all(int(g.locator('.week-day-count').inner_text().split()[0]) == g.locator('.week-day-events .evc').count() and
                   g.locator('.week-day-events .evc').count() > 0 for g in [tomorrow_group, sunday_group]))
+        worldwide_card_time = touch_page.locator('#week .week-day-group[data-week-day="2026-10-10"] .evc[data-id="leekduck:touch-future-0"] .evc-when').inner_text()
+        check('Worldwide-local event cards label the displayed clock as local to each region',
+              'Your time:' in worldwide_card_time and 'Local time in each region' in worldwide_card_time,
+              worldwide_card_time)
         touch_page.context.close()
 
         # Isolate the empty Today state from live regional schedules: the next-up card should remain actionable.
