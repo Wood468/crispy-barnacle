@@ -25,7 +25,8 @@
   function load() {
     if (DATA) return Promise.resolve(DATA);
     function j(u) { return fetch(u, { cache: 'no-cache' }).then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; }); }
-    return Promise.all([j('/event-info.json'), (window.GOLIB ? GOLIB.loadPrices() : j('/prices.json')), window.GOPLACES ? window.GOPLACES.load() : null, j('/event-details.json'), j('/event-moves.json')]).then(function (a) { EVM = (a[4] && a[4].moves) || []; DATA = { info: a[0] || { events: {}, passes: {} }, prices: a[1] || { prices: [], fx: null }, details: (a[3] && a[3].events) || {} }; return DATA; });
+    var placesP = window.GOPLACES_READY ? window.GOPLACES_READY.then(function (places) { return places && places.load ? places.load() : null; }) : (window.GOPLACES ? window.GOPLACES.load() : null);
+    return Promise.all([j('/event-info.json'), (window.GOLIB ? GOLIB.loadPrices() : j('/prices.json')), placesP, j('/event-details.json'), j('/event-moves.json')]).then(function (a) { EVM = (a[4] && a[4].moves) || []; DATA = { info: a[0] || { events: {}, passes: {} }, prices: a[1] || { prices: [], fx: null }, details: (a[3] && a[3].events) || {} }; return DATA; });
   }
   function fmtDay(iso) { var d = new Date(iso + 'T12:00'); return isNaN(d) ? esc(iso) : d.getDate() + ' ' + G.MON[d.getMonth()]; }
   function safe(u) { return typeof u === 'string' && (/^https:\/\//.test(u) || /^\/img\/ext\/[\w.-]+$/.test(u)) ? u : ''; }
