@@ -591,16 +591,23 @@
   function bday(v) { try { return v ? (typeof v === 'string' ? v.slice(0, 10) : new Date(v).toISOString().slice(0, 10)) : ''; } catch (e) { return ''; } }
   /* In-person events with a venue time (Night Out): loaded once, shared with the cards (detail.js) and used for "Next 24h" and the Today summary. */
   var VENUE = [];
+  function venueViewerZone() {
+    try { return Intl.DateTimeFormat().resolvedOptions().timeZone || 'Australia/Melbourne'; }
+    catch (e) { return 'Australia/Melbourne'; }
+  }
   function venueLive(v, t) { return v.ms <= t && (v.endMs || v.ms + 4 * 36e5) > t; }
   function venueUp(v, t) { return v.ms > t && v.ms - t <= 864e5; }
   function venueCard(v, live) {
     var k = KIND.person;
+    var venueClock = v.venueDay && v.venueShow
+      ? '<small class="venue-local-time">Venue: ' + esc(v.venueDay + ', ' + v.venueShow + (v.zone ? ' ' + v.zone : '')) + '</small>' : '';
     return '<article class="evc cmp ' + (live ? 'live' : 'soon') + '" style="--k:' + k[1] + ';--kf:' + k[2] + '"><div class="evc-main"><div class="evc-top"><span class="kind">' + esc(k[0]) + '</span></div>'
       + '<div class="evc-title-row"><h3 title="' + esc(v.name) + '">' + esc(v.name) + '</h3></div>'
       + '<p class="evc-when" style="font-weight:600">🎯 Bonuses ' + (live ? 'started ' : 'start ') + esc(v.day + ', ' + v.show) + ' your time' + (v.note ? ' <small>(' + esc(v.note) + ')</small>' : '') + '</p>'
+      + venueClock
       + (/^https:\/\//.test(v.link || '') ? '<div class="evc-foot"><a class="more" href="' + esc(v.link) + '" target="_blank" rel="noopener noreferrer">Event page</a></div>' : '') + '</div></article>';
   }
-  window.GOVENUE = fetch('/api/venue-times?all=1').then(function (r) { return r.ok ? r.json() : { items: [] }; }).catch(function () { return { items: [] }; }).then(function (d) {
+  window.GOVENUE = fetch('/api/venue-times?all=1&tz=' + encodeURIComponent(venueViewerZone())).then(function (r) { return r.ok ? r.json() : { items: [] }; }).catch(function () { return { items: [] }; }).then(function (d) {
     VENUE = ((d && d.items) || []).filter(function (i) { return i && i.ms; });
     if (VENUE.length && EV.length) { renderPrio(); renderTimeline(); }
     return d;
