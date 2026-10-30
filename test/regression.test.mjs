@@ -129,7 +129,7 @@ test("PWA caches public shell offline but never caches API responses", () => {
   assert.match(sw, /url\.pathname\.startsWith\('\/api\/'\)/, "private and live API responses must bypass service-worker caching");
   assert.match(sw, /request\.mode === 'navigate' \? await cache\.match\(url\.pathname === '\/' \? '\/' : url\.pathname\)/, "offline navigation checks the requested cached path");
   assert.match(sw, /request\.mode === 'navigate' \? await cache\.match\('\/offline\.html'\)/, "offline navigation has a human-readable fallback");
-  assert.match(sw, /gofn-shell-v132/, "shell cache is versioned");
+  assert.match(sw, /gofn-shell-v133/, "shell cache is versioned");
   assert.match(pwa, /serviceWorker\.register\('\/sw\.js'\)/, "the app registers its service worker");
   assert.match(html, /<script src="\/pwa\.js"><\/script>/, "the registration script is loaded");
 });
