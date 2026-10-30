@@ -8,6 +8,9 @@ import { routed } from "../src/tgroute.js";
 const HOUR = 36e5;
 export const JOBS = [
   { id: "event-importer.yml", name: "Event importer", everyH: 1 },
+  { id: "source-watch.yml", name: "Source feed watcher", everyH: 3 },
+  { id: "location-discovery.yml", name: "Community location discovery", everyH: 6 },
+  { id: "low-raids.yml", name: "1–3 star raid rotation", everyH: 84, staleAfterH: 156 },
   { id: "g47ix-infographics.yml", name: "Infographic check", everyH: 2 },
   { id: "store-watch.yml", name: "Store watcher", everyH: 1 },
   { id: "nudge.yml", name: "Daily nudge", everyH: 24 },
@@ -21,7 +24,7 @@ const readJson = async (p, d) => { try { return JSON.parse(await readFile(p, "ut
 // usual gap (at least 3 hours of slack), and "failing" when its latest finished run failed.
 export function judge(job, runs, now = Date.now()) {
   const ok = runs && runs.lastSuccess ? Date.parse(runs.lastSuccess) : NaN;
-  const limit = Math.max(job.everyH * 2.5, job.everyH + 3) * HOUR;
+  const limit = (Number.isFinite(job.staleAfterH) && job.staleAfterH > 0 ? job.staleAfterH : Math.max(job.everyH * 2.5, job.everyH + 3)) * HOUR;
   let state = "fresh";
   if (!Number.isFinite(ok)) state = "never";
   else if (now - ok > limit) state = "stale";
