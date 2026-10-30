@@ -11,6 +11,13 @@ const html = read("../public/index.html");
 const icon = read("../public/icon-maskable.svg");
 const offline = read("../public/offline.html");
 const offlineCss = read("../public/offline.css");
+const dataScripts = [
+  app, dash,
+  read("../public/detail.js"), read("../public/places.js"), read("../public/review.js"),
+  read("../public/fresh.js"), read("../public/whatsnew.js"), read("../public/store.js"),
+  read("../public/season.js"), read("../public/weekly.js"), read("../public/buy.js"),
+  read("../public/extra.js"), read("../public/infographic.js")
+];
 
 test("PWA manifest has stable standalone identity and valid icon files", () => {
   assert.equal(manifest.id, "/");
@@ -56,6 +63,18 @@ test("every local script and stylesheet referenced by the entry page is precache
     .filter((url) => /\.(?:js|css)(?:\?|$)/.test(url));
   assert.ok(assets.length > 0);
   for (const asset of assets) assert.ok(sw.includes("'" + asset + "'"), "offline shell is missing " + asset);
+});
+
+test("static JSON dependencies referenced by first-party scripts are precached", () => {
+  const urls = new Set();
+  for (const source of dataScripts) {
+    for (const match of source.matchAll(/fetch\\(\\s*['"]([^'"]+\\.json(?:\\?[^'"]*)?)['"]/g)) {
+      const url = match[1];
+      if (url.startsWith("/") && !url.startsWith("/api/") && !url.includes("?")) urls.add(url);
+    }
+  }
+  assert.ok(urls.size > 0);
+  for (const url of urls) assert.ok(sw.includes("'" + url + "'"), "offline shell is missing static data " + url);
 });
 
 test("service worker versions the cache, pre-caches offline fallback, and never handles API responses", () => {
