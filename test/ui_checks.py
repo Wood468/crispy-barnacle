@@ -49,6 +49,21 @@ with sync_playwright() as p:
         pg.goto('http://localhost:8791/', wait_until='domcontentloaded' if slow_places else 'load'); pg.wait_for_selector('.pc, .prio-empty',state='attached'); pg.wait_for_timeout(300)
         return pg
     if on('a'):
+        # A stalled initial data request must time out, expose a retry, and leave the primary navigation usable.
+        boot_ctx=b.new_context(viewport={'width':390,'height':844},device_scale_factor=2,timezone_id='Australia/Melbourne',locale='en-AU',service_workers='block')
+        boot=boot_ctx.new_page(); boot.clock.install(time='2026-10-09T22:45:00+11:00')
+        boot.route('**/data.json',lambda route: None)  # leave the request pending to exercise the timeout
+        boot.route('**/art/index.json',ful('{}'))
+        boot.goto('http://localhost:8791/',wait_until='domcontentloaded')
+        boot.clock.fast_forward(13000); boot.clock.run_for(10); boot.wait_for_timeout(100)
+        check('stalled initial data request shows a retryable error',boot.locator('#load-error:not([hidden])').count()==1 and boot.locator('#load-retry').is_visible())
+        check('fallback navigation remains visible when initial data is unavailable',boot.locator('nav.tabs button[data-boot-tab]').count()==4)
+        boot.click('nav.tabs button[data-boot-tab="raids"]')
+        check('fallback navigation can reach Battle without loaded event data',boot.locator('#tab-raids').is_visible() and boot.locator('#tab-now').is_hidden())
+        boot.click('nav.tabs button[data-boot-tab="events"]')
+        check('fallback navigation can return to Schedule',boot.locator('#tab-events').is_visible() and boot.locator('#tab-raids').is_hidden())
+        boot_ctx.close()
+
         # A small but important mobile interaction: hiding an event should have a reliable tap target,
         # an accessible name, and immediately update the Today agenda and its group count.
         touch_event = ev('touch-target', 'Touch Target Test Event', 'pokemon-spotlight-hour',

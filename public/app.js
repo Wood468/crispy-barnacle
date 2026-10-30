@@ -1,5 +1,27 @@
 var MAN={};
-Promise.all([fetch('/data.json').then(function(r){return r.json()}),fetch('/art/index.json').then(function(r){return r.json()}).catch(function(){return {}})]).then(function(R){var D=R[0];MAN=R[1]||{};
+/* Keep the primary destinations usable while the initial data request is pending or unavailable. */
+(function(){
+  var nav=document.getElementById('tabs');if(!nav)return;
+  var items=[['now','Today'],['events','Schedule'],['raids','Battle'],['collect','Collection']];
+  nav.innerHTML=items.map(function(t,i){return '<button type="button" role="tab" data-boot-tab="'+t[0]+'" aria-controls="tab-'+t[0]+'" aria-selected="'+(i===0?'true':'false')+'"><span>'+t[1]+'</span></button>'}).join('');
+  function hide(id){var el=document.getElementById(id);if(el)el.hidden=true}
+  function show(id){
+    ['now','events','raids','collect','saved'].forEach(function(k){var el=document.getElementById('tab-'+k);if(el)el.hidden=k!==id});
+    Array.prototype.forEach.call(nav.querySelectorAll('[data-boot-tab]'),function(b){b.setAttribute('aria-selected',b.getAttribute('data-boot-tab')===id?'true':'false')});
+    if(id==='events'){['sub-calendar','sub-leaks'].forEach(hide);var timeline=document.getElementById('sub-timeline');if(timeline)timeline.hidden=false;}
+    if(id==='collect'){['sub-opps','sub-megas','sub-guides','sub-forms','sub-import','tab-best','tab-hundo'].forEach(hide);var dex=document.getElementById('sub-mydex');if(dex)dex.hidden=false;var species=document.getElementById('tab-dex');if(species)species.hidden=false;}
+    try{localStorage.setItem('gofn-tab',id)}catch(e){}
+    window.scrollTo(0,0);
+  }
+  function click(e){var b=e.target.closest?e.target.closest('[data-boot-tab]'):null;if(!b||!nav.contains(b))return;show(b.getAttribute('data-boot-tab'));}
+  nav.addEventListener('click',click);
+  window.__GOBootNavClear=function(){nav.removeEventListener('click',click);nav.innerHTML='';};
+})();
+function withTimeout(p,ms,label){return new Promise(function(resolve,reject){var timer=setTimeout(function(){reject(new Error(label+' timed out'))},ms);Promise.resolve(p).then(function(value){clearTimeout(timer);resolve(value)},function(error){clearTimeout(timer);reject(error)})})}
+Promise.all([
+  withTimeout(fetch('/data.json').then(function(r){if(!r.ok)throw new Error('data.json HTTP '+r.status);return r.json()}),12000,'Event data'),
+  withTimeout(fetch('/art/index.json').then(function(r){return r.ok?r.json():{}}).catch(function(){return {}}),8000,'Artwork index').catch(function(){return {}})
+]).then(function(R){var D=R[0];MAN=R[1]||{};
 (function(){
   function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
   function $(id){return document.getElementById(id)}
@@ -190,6 +212,7 @@ Promise.all([fetch('/data.json').then(function(r){return r.json()}),fetch('/art/
   var LEGACY={upcoming:['events','leaks'],person:['events','calendar'],dex:['collect','dex','species'],best:['collect','guides','best'],hundo:['collect','guides','hundo']};
   var LEGACYSUB={'events/world':['calendar'],'events/coming':['calendar'],'collect/forms':['dex','forms'],'collect/import':['dex','import'],'collect/best':['guides','best'],'collect/hundo':['guides','hundo']};
   var tabsEl=$('tabs'),curTab='now',curSub={events:'timeline',collect:'dex',saved:'watch'},curMode={'collect/dex':'species','collect/guides':'best'};
+  if(window.__GOBootNavClear)window.__GOBootNavClear();
   TABS.forEach(function(t,i){
     var b=document.createElement('button');
     b.type='button';b.setAttribute('role','tab');b.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="'+t[2]+'"/></svg><span>'+t[1]+'</span>';b.dataset.tab=t[0];
