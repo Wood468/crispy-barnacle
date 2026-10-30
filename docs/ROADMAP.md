@@ -26,7 +26,7 @@ All merged milestones above passed their post-merge test checks; the latest main
 - ✅ **ENG-1** PIN gate accepted the literal "undefined" when `SYNC_PIN` unset (preview deploys) — fixed in #99, verified in deployed Worker.
 - 🔒 **ENG-1b** Preview deployments bind the production R2 bucket (private prices/places, nightly D1 backups). Needs a separate preview bucket and/or Cloudflare Access on previews; old preview versions still run pre-fix code.
 - 🔧 **QA-1** Sign-in/register wiped device-only collection marks — PR #118 partitions local state by identity and merges guest marks into the first account before syncing; awaiting regression and production verification.
-- 🔧 **QA-2/ENG-4** PR #118 adds revision-checked writes and additive reconciliation to the legacy Dex snapshot API, so a stale device cannot replace a newer snapshot. Explicit per-mark deletion tombstones remain a follow-up; PR #114 is separate schema preparation and is not merged or applied.
+- 🔧 **QA-2/ENG-4** PR #118 adds revision-checked writes plus a saved-baseline three-way merge to the legacy Dex snapshot API. Independent additions and deletions are reconciled across devices; concurrent edits to the same mark use the newer snapshot timestamp. PR #114 remains separate, unmerged schema preparation.
 
 ## P1 — Major defects / reliability
 
