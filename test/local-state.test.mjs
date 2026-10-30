@@ -1,3 +1,4 @@
+import fs from "node:fs";
 import test from "node:test";
 import assert from "node:assert/strict";
 import { createRequire } from "node:module";
@@ -84,4 +85,11 @@ test("first activation adopts legacy localStorage without clearing it", () => {
   assert.equal(LOCAL.activate(storage, "guest", false), true);
   assert.deepEqual(read(storage, "gofn-dex-v1").have, { 1: 1 });
   assert.equal(storage.getItem(LOCAL.activeKey), "guest");
+});
+
+test("account transitions no longer wipe the active device marks", () => {
+  const account = fs.readFileSync(new URL("../public/account.js", import.meta.url), "utf8");
+  assert.doesNotMatch(account, /wipeLocal/);
+  assert.match(account, /switchIdentity\(identity\(email\), true\)/);
+  assert.match(account, /switchIdentity\('guest', false\)/);
 });
