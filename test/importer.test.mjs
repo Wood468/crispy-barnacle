@@ -70,6 +70,9 @@ test("date evidence blocks a title or source-link match to a different event win
   const linkedMismatch = { ...mismatch, url: event.link };
   assert.equal(pickEvent(linkedMismatch, events), null, "an explicit URL does not override contradictory known dates");
 
+  const lineMismatch = { ...matching, fields: { dates: [] }, lines: [{ text: "Event date: October 24, 2026" }] };
+  assert.equal(pickEvent(lineMismatch, events), null, "calendar dates in article lines are used when no date field was extracted");
+
   const unknownDate = { url: "https://z.test/p/", title: "Zorua Community Day", fields: { dates: [] }, lines: [] };
   assert.equal(pickEvent(unknownDate, events).event.id, "z", "missing source dates remain unknown, not a false mismatch");
 
