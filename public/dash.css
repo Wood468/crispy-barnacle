@@ -1224,3 +1224,17 @@ select,
 .wd {
   min-width: 44px;
 }
+
+
+/* Live state: keep the urgency cue, but do not use saturated kind colours as small text. */
+.evc.live .cdn,
+.pc.urgent .cdn {
+  color: var(--fg);
+  background: color-mix(in srgb, var(--k) 22%, var(--panel));
+  border: 1px solid color-mix(in srgb, var(--k) 55%, var(--line));
+  border-radius: 999px;
+  padding: 3px 8px;
+  font-weight: 750;
+  line-height: 1.3;
+  white-space: nowrap;
+}

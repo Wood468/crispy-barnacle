@@ -59,8 +59,8 @@
   /* ---------- kinds: colour, label, one place ---------- */
   var KIND = {
     cd: ['Community Day', '#F76B15', '#1A0E04'], raid: ['Raids', '#D7373C', '#FFFFFF'], max: ['Max Battles', '#6E56CF', '#FFFFFF'],
-    spot: ['Spotlight Hour', '#FFD43B', '#1D1700'], pvp: ['Battle League', '#3E63DD', '#FFFFFF'], person: ['In person', '#2B8A9E', '#FFFFFF'],
-    debut: ['Debut', '#12A594', '#031F1B'], twitch: ['Twitch Drops', '#8B5CF6', '#FFFFFF'], event: ['Event', '#5E6A80', '#FFFFFF']
+    spot: ['Spotlight Hour', '#FFD43B', '#1D1700'], pvp: ['Battle League', '#3E63DD', '#FFFFFF'], person: ['In person', '#2B8A9E', '#06171B'],
+    debut: ['Debut', '#12A594', '#031F1B'], twitch: ['Twitch Drops', '#8B5CF6', '#0C0F14'], event: ['Event', '#5E6A80', '#FFFFFF']
   };
   var STATUS = { official_confirmed: 'Official', community_reported: 'Community reported', datamined: 'Datamined', conflicting: 'Conflicting' };
   var PIPE_KIND = { 'community-day': 'cd', 'raid-battles': 'raid', 'raid-hour': 'raid', 'raid-day': 'raid', 'raid-weekend': 'raid', 'elite-raids': 'raid', 'max-battles': 'max', 'max-mondays': 'max',
