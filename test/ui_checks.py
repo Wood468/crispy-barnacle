@@ -1,6 +1,6 @@
 """Browser checks for the Phase 2 dashboard (needs: pip install playwright; a static server: cd public && python3 -m http.server 8791).
 Run: python3 test/ui_checks.py. Mocks every /api/* call, fixes the clock to Fri 10 Oct 2026 22:45 Melbourne time."""
-import json,sys,re,base64,time
+import json,sys,re,base64
 PNG1=base64.b64decode('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==')
 
 # Stable fixture: two sourced Brisbane City Safari locations, with no raid hotspots.
@@ -20,7 +20,7 @@ with sync_playwright() as p:
     b=p.chromium.launch()
     def page(api=None,marks=None,clock='2026-10-09T22:45:00+11:00',sources=None,gens=None,us=None,extra=None,pin=False,slow_places=False):
         ctx=b.new_context(viewport={'width':390,'height':844},device_scale_factor=2,timezone_id='Australia/Melbourne',locale='en-AU',service_workers='block')
-        pg=ctx.new_page(); pg.errs=[]; pg.slow_places_hit=False
+        pg=ctx.new_page(); pg.errs=[]
         pg.on('pageerror',lambda e:pg.errs.append(str(e)))
         pg.clock.install(time=clock)
         pg.route('**/api/sources',ful(sources or '{"environment":"production","database":true,"enabled":false,"sources":[]}'))
@@ -31,11 +31,17 @@ with sync_playwright() as p:
         pg.route('**/api/art*',lambda r:r.fulfill(status=404,body=''))
         for pat,(body,st) in (extra or {}).items(): pg.route(pat,(lambda body,st:(lambda r,req=None:r.fulfill(status=st,body=body,content_type='application/json')))(body,st))
         if slow_places:
-            def delay_places(route):
-                pg.slow_places_hit=True
-                time.sleep(2.0)
-                route.continue_()
-            pg.route('**/places.js*', delay_places)
+            pg.add_init_script("""() => {
+                const append = Node.prototype.appendChild;
+                Node.prototype.appendChild = function (node) {
+                    if (node && node.tagName === 'SCRIPT' && /\/places\.js(?:\?|$)/.test(node.src)) {
+                        window.__gofnPlacesDeferred = true;
+                        setTimeout(() => append.call(this, node), 1500);
+                        return node;
+                    }
+                    return append.call(this, node);
+                };
+            }""")
         if pin: pg.add_init_script("localStorage.setItem('gofn-pin','x')")
         if marks: pg.add_init_script("localStorage.setItem('gofn-dex-v1',%s)"%json.dumps(json.dumps(marks)))
         if us: gens=gens or []
@@ -167,9 +173,9 @@ with sync_playwright() as p:
                                   '**/regional-events.json': ('{"events":[]}', 200),
                                   '**/places.json': (json.dumps(place_fixture), 200)},
                            slow_places=True)
-        places_page.wait_for_function("window.GODETAIL", timeout=5000)
+        places_page.wait_for_function("window.GODETAIL && window.__gofnPlacesDeferred && !window.GOPLACES", timeout=5000)
         check('Event detail loader is ready while the places script is still delayed',
-              places_page.slow_places_hit and places_page.evaluate('!window.GOPLACES && !!window.GOPLACES_READY && typeof window.GOPLACES_READY.then === "function"'))
+              places_page.evaluate('!!window.GOPLACES_READY && typeof window.GOPLACES_READY.then === "function"'))
         places_page.locator('#home-now .today-next-up').click()
         places_page.locator('#evd').wait_for(state='visible', timeout=5000)
         location_link = places_page.locator('#evd .evd-jump a[href="#evd-locations"]')
@@ -560,7 +566,7 @@ with sync_playwright() as p:
             if req.method=='PUT': puts.append(json.loads(req.post_data))
             route.fulfill(content_type='application/json',body=json.dumps({'enabled':True,'now':1,'entries':{'follow:eevee':{'v':'Eevee','t':99},'form:37:alola':{'v':1,'t':5}},'applied':None}))
         ctx=b.new_context(viewport={'width':390,'height':844},timezone_id='Australia/Melbourne')
-        pg=ctx.new_page(); pg.errs=[]; pg.slow_places_hit=False; pg.on('pageerror',lambda e:pg.errs.append(str(e)))
+        pg=ctx.new_page(); pg.errs=[]; pg.on('pageerror',lambda e:pg.errs.append(str(e)))
         pg.route('**/api/sources',ful('{"environment":"production","database":true,"enabled":false,"sources":[]}')); pg.route('**/api/events',ful('{"enabled":false,"events":[]}'))
         pg.route('**/api/dex',lambda r:r.fulfill(status=401,body='{}',content_type='application/json')); pg.route('**/api/art*',lambda r:r.fulfill(status=404,body=''))
         pg.route('**/api/userstate*',us)
@@ -740,7 +746,7 @@ with sync_playwright() as p:
             pg=page()
             return pg
         def mk(moves='real'):
-            ctx=b.new_context(viewport={'width':390,'height':844},timezone_id='Australia/Melbourne',locale='en-AU'); pg=ctx.new_page(); pg.errs=[]; pg.slow_places_hit=False
+            ctx=b.new_context(viewport={'width':390,'height':844},timezone_id='Australia/Melbourne',locale='en-AU'); pg=ctx.new_page(); pg.errs=[]
             pg.on('pageerror',lambda e:pg.errs.append(str(e)))
             pg.route('**/api/sources',ful('{"environment":"production","database":true,"enabled":false,"sources":[]}')); pg.route('**/api/events',ful('{"enabled":false,"events":[]}'))
             pg.route('**/api/userstate*',lambda r:r.fulfill(status=404,body='{}')); pg.route('**/api/dex',lambda r:r.fulfill(status=401,body='{}')); pg.route('**/api/art*',lambda r:r.fulfill(status=404,body=''))
