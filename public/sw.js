@@ -7,7 +7,8 @@ const SHELL_URLS = [
   '/infographic.js', '/manifest.webmanifest', '/icon.svg', '/icon-maskable.svg', '/icon-180.png', '/icon-192.png', '/icon-512.png',
   '/data.json', '/dex.json', '/event-info.json', '/forms.json', '/moves.json',
   '/places.json', '/event-details.json', '/event-moves.json', '/regional-events.json', '/world-events.json', '/best-by-type.json', '/prices.json', '/pvp.json', '/release-status.json', '/types.json',
-  '/art/index.json'
+  '/art/index.json', '/costumes.json', '/datamine-news.json', '/data/cp/cp-multipliers.json', '/data/cp/pokemon.json',
+  '/season.json', '/weekly.json', '/tickets-external.json', '/store-log.json', '/infographic-queue.json'
 ];
 self.addEventListener('install', function (event) {
   event.waitUntil((async function () {
