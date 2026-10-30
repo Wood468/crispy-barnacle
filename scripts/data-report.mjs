@@ -33,7 +33,7 @@ function windowForBoss(rotation, names) {
   return { start: day(hits[0].s), end: previousDay(day(hits[hits.length - 1].e)), contiguous: hits.every((r, i) => i === 0 || day(hits[i - 1].e) === day(r.s)) };
 }
 function artNames(item) {
-  return [...new Set((item.art || []).map(x => typeof x === "string" ? x : x && x.n).filter(Boolean).map(normBoss))];
+  return [...new Set((item.art || []).map(x => typeof x === "string" ? x : x && x.n).filter(Boolean).map(x => String(x).trim()))];
 }
 export function auditRaidUpcoming(data = {}) {
   const asOfYear = Number((/\b(20\d{2})\b/.exec(String(data.asOf || "")) || [])[1]) || new Date().getUTCFullYear();
@@ -60,7 +60,7 @@ export function auditRaidUpcoming(data = {}) {
       const names = artNames(item), ranges = dateRanges(item.when, asOfYear), max = Array.isArray(data.maxBattles) ? data.maxBattles : [];
       if (!names.length || names.length !== ranges.length) { issues.push("Upcoming " + item.name + " does not have one date range per Max Battle boss"); continue; }
       for (let i = 0; i < names.length; i++) {
-        const match = max.find(row => normBoss(row[2]) === names[i] && day(row[0]) === ranges[i].start && day(row[1]) === ranges[i].end);
+        const match = max.find(row => normBoss(row[2]) === normBoss(names[i]) && day(row[0]) === ranges[i].start && day(row[1]) === ranges[i].end);
         if (!match) issues.push("Upcoming Max Battle " + names[i] + " dates do not match maxBattles");
       }
     }
