@@ -20,8 +20,8 @@ export const JOBS = [
 ];
 const readJson = async (p, d) => { try { return JSON.parse(await readFile(p, "utf8")); } catch { return d; } };
 
-// runs: { lastSuccess: ISO|null, lastConclusion: string|null }. A job is "stale" when it has not succeeded for 2.5 times its
-// usual gap (at least 3 hours of slack), and "failing" when its latest finished run failed.
+// runs: { lastSuccess: ISO|null, lastConclusion: string|null }. A job is "stale" after its explicit staleAfterH
+// override or 2.5 times its usual gap (at least 3 hours of slack), and "failing" when its latest run failed.
 export function judge(job, runs, now = Date.now()) {
   const ok = runs && runs.lastSuccess ? Date.parse(runs.lastSuccess) : NaN;
   const limit = (Number.isFinite(job.staleAfterH) && job.staleAfterH > 0 ? job.staleAfterH : Math.max(job.everyH * 2.5, job.everyH + 3)) * HOUR;
