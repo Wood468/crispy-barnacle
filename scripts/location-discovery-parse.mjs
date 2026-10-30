@@ -42,6 +42,30 @@ export const retryAfterMs = (value, now = Date.now()) => {
   return Math.max(1_000, delay);
 };
 
+// Retry a rate-limited request once, using the server's cooldown when available.
+// Dependencies are injectable so the retry path can be tested without network access.
+export const fetchWithRateLimit = async (
+  url,
+  options,
+  fetchImpl = globalThis.fetch,
+  sleepImpl = ms => new Promise(resolve => setTimeout(resolve, ms))
+) => {
+  const first = await fetchImpl(url, options);
+  if (first.status !== 429) return { response: first, rateLimits: 0, deferred: false, reason: null };
+  const header = first.headers && typeof first.headers.get === "function" ? first.headers.get("retry-after") : null;
+  const wait = retryAfterMs(header);
+  if (wait === null) return { response: first, rateLimits: 1, deferred: true, reason: "long-cooldown" };
+  await sleepImpl(wait);
+  const retry = await fetchImpl(url, options);
+  const repeated = retry.status === 429;
+  return {
+    response: retry,
+    rateLimits: repeated ? 2 : 1,
+    deferred: repeated,
+    reason: repeated ? "repeated-429" : null
+  };
+};
+
 export const coords = text => {
   const out = [];
   const re = /(?<![\d.])(-?\d{1,2}\.\d{3,})(?![\d.])\s*[,; ]\s*(?<![\d.])(-?\d{1,3}\.\d{3,})(?![\d.])/g;
