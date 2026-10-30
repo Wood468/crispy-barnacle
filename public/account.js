@@ -76,6 +76,7 @@
     var v = {}; Array.prototype.forEach.call(f.elements, function (el) { if (el.name) v[el.name] = el.value; });
     if (f.getAttribute('data-acct-form') === 'create') { fetch('/api/auth/create', { method: 'POST', headers: pinHdr(), body: JSON.stringify(v) }).then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); }).then(function (r) { made = r.ok ? (r.j.created ? 'Added ' : 'New password set for ') + r.j.email + '.' : (r.j.error || 'That did not work.'); render(); var d = document.querySelector('.acctbox'); if (d) d.open = true; }); return; }
     if (f.getAttribute('data-acct-form') === 'invite') { fetch('/api/auth/invite', { method: 'POST', headers: pinHdr(), body: JSON.stringify({ note: v.note }) }).then(function (r) { return r.ok ? r.json() : null; }).then(function (j) { invite = j && j.code || ''; render(); var d = document.querySelector('.acctbox'); if (d) d.open = true; }); return; }
+    if (!window.GOLOCAL) { msg = 'Please refresh GO Field Notes before signing in so this device’s marks can be preserved.'; render(); return; }
     post(f.getAttribute('data-acct-form') === 'up' ? 'register' : 'login', v).then(function (r) {
       if (!r.ok) { msg = (r.j && r.j.error) || 'That did not work. Try again.'; render(); return; }
       var email = r.j.email || v.email;
