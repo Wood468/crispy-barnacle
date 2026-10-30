@@ -68,7 +68,7 @@ test("every local script and stylesheet referenced by the entry page is precache
 test("static JSON dependencies referenced by first-party scripts are precached", () => {
   const urls = new Set();
   for (const source of dataScripts) {
-    for (const match of source.matchAll(/fetch\\(\\s*['"]([^'"]+\\.json(?:\\?[^'"]*)?)['"]/g)) {
+    for (const match of source.matchAll(/fetch\(\s*['"]([^'"]+\.json(?:\?[^'"]*)?)['"]/g)) {
       const url = match[1];
       if (url.startsWith("/") && !url.startsWith("/api/") && !url.includes("?")) urls.add(url);
     }
