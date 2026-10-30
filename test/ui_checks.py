@@ -107,6 +107,98 @@ with sync_playwright() as p:
               worldwide_card_time)
         touch_page.context.close()
 
+        # Long Today cards must keep their action labels inside the card at common phone widths.
+        overflow_event = ev(
+            'mobile-overflow',
+            'Community Day Fixture With A Deliberately Long Event Title For Narrow Screens',
+            'pokemon-spotlight-hour',
+            '2026-10-09T23:00:00', '2026-10-10T00:30:00', 'official_confirmed',
+            [{'name': 'Pikachu', 'role': 'featured'}]
+        )
+        overflow_events = [overflow_event] + [
+            ev('overflow-future-' + str(i), 'Overflow Fixture Future ' + str(i),
+               'pokemon-spotlight-hour', '2026-10-10T10:00:00', '2026-10-10T10:30:00',
+               'official_confirmed')
+            for i in range(9)
+        ]
+        overflow_page = page(
+            api=json.dumps({'enabled': True, 'events': overflow_events}),
+            extra={'**/world-events.json': ('{"events":[]}', 200),
+                   '**/regional-events.json': ('{"events":[]}', 200)}
+        )
+        overflow_card = overflow_page.locator('#home-now .evc[data-id="leekduck:mobile-overflow"]')
+        overflow_card.wait_for(state='attached')
+        for width in (390, 320):
+            overflow_page.set_viewport_size({'width': width, 'height': 844})
+            overflow_page.wait_for_timeout(50)
+            metrics = overflow_page.evaluate("""() => {
+                const card = document.querySelector('#home-now .evc[data-id="leekduck:mobile-overflow"]');
+                const rect = card.getBoundingClientRect();
+                const main = card.querySelector('.evc-main');
+                const foot = card.querySelector('.evc-foot');
+                const mainRect = main.getBoundingClientRect();
+                const footRect = foot.getBoundingClientRect();
+                const buttons = [...foot.querySelectorAll('button')].map(button => {
+                    const r = button.getBoundingClientRect();
+                    return {
+                        label: button.textContent.trim(),
+                        left: r.left,
+                        right: r.right,
+                        width: r.width,
+                        height: r.height,
+                        clientWidth: button.clientWidth,
+                        scrollWidth: button.scrollWidth
+                    };
+                });
+                return {
+                    viewport: innerWidth,
+                    documentWidth: document.documentElement.scrollWidth,
+                    card: {
+                        left: rect.left, right: rect.right, width: rect.width,
+                        clientWidth: card.clientWidth, scrollWidth: card.scrollWidth,
+                        grid: getComputedStyle(card).gridTemplateColumns
+                    },
+                    main: {
+                        left: mainRect.left, right: mainRect.right, width: mainRect.width,
+                        clientWidth: main.clientWidth, scrollWidth: main.scrollWidth,
+                        minWidth: getComputedStyle(main).minWidth
+                    },
+                    foot: {
+                        left: footRect.left, right: footRect.right, width: footRect.width,
+                        clientWidth: foot.clientWidth, scrollWidth: foot.scrollWidth,
+                        computedWidth: getComputedStyle(foot).width,
+                        maxWidth: getComputedStyle(foot).maxWidth,
+                        display: getComputedStyle(foot).display,
+                        flexWrap: getComputedStyle(foot).flexWrap,
+                        minWidth: getComputedStyle(foot).minWidth,
+                        parentClass: foot.parentElement.className,
+                        parentContains: main.contains(foot),
+                        parentWidth: foot.parentElement.getBoundingClientRect().width,
+                        parentGrid: getComputedStyle(foot.parentElement).gridTemplateColumns
+                    },
+                    children: [...main.children].map(el => {
+                        const r = el.getBoundingClientRect(), s = getComputedStyle(el);
+                        return {
+                            tag: el.tagName, className: el.className, text: (el.textContent || '').trim().slice(0, 100),
+                            left: r.left, right: r.right, width: r.width, clientWidth: el.clientWidth,
+                            scrollWidth: el.scrollWidth, minWidth: s.minWidth, maxWidth: s.maxWidth,
+                            whiteSpace: s.whiteSpace, overflowWrap: s.overflowWrap, display: s.display
+                        };
+                    }),
+                    buttons
+                };
+            }""")
+            check(f'Today card stays inside the {width}px viewport',
+                  metrics['documentWidth'] <= width and metrics['card']['left'] >= -1 and
+                  metrics['card']['right'] <= width + 1, metrics)
+            check(f'Today action labels do not overflow their controls at {width}px',
+                  all(x['scrollWidth'] <= x['clientWidth'] + 1 and x['right'] <= metrics['card']['right'] + 1
+                      for x in metrics['buttons']), metrics['buttons'])
+            check(f'Today action targets stay at least 44px tall at {width}px',
+                  all(x['width'] >= 44 and x['height'] >= 44 for x in metrics['buttons']),
+                  metrics['buttons'])
+        overflow_page.context.close()
+
         # Isolate the empty Today state from live regional schedules: the next-up card should remain actionable.
         next_events = [
             ev('touch-next-' + str(i), 'Next Up Fixture ' + str(i), 'pokemon-spotlight-hour',

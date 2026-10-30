@@ -9,6 +9,7 @@ _Maintained by the lead coordinator. Last consolidated: 30 Oct 2026 from the QA,
 ## Recently completed — 30 Oct 2026
 
 - ✅ **#102 — roadmap and specialist agents:** added the UX, QA, research and engineering workstream definitions and consolidated roadmap.
+- ✅ **#112 — visible data-load recovery:** added an accessible event-data error panel with a retry action; browser regressions and the Cloudflare Workers production build passed.
 - ✅ **#100 — Today attention:** review actions navigate reliably; review counts refresh immediately; empty recent-updates panels disappear; acknowledged updates stay dismissed; meaningful event changes are tracked between visits.
 - ✅ **#101 — curated data refresh:** snapshot moved to 30 Oct 2026; rotations, Raid/Spotlight Hours and Max Monday schedules were extended into early December; event/source URLs and the 1★ boss parsing correction were included. Ongoing freshness monitoring remains a separate task.
 - ✅ **#105 — This Week and event details:** compact week-card treatment; 44px details/save/hide targets; honest unknown-source trust labels; no fabricated source-check date when only the dataset snapshot date is known; PWA asset URLs and service-worker cache version refreshed.
@@ -34,8 +35,8 @@ All merged milestones above passed their post-merge test checks; the latest main
 - ⏳ **QA-5/RES-5/QA-7** In-person events lack a timezone; Sendai/Mexico City merged under one name in some viewer zones.
 - ✅ **RES-8** Reject importer source-page matches when known article and event dates do not overlap; retain existing link/title matching when either date is unknown. Covered by focused regression tests and the post-merge production build.
 - ⏳ **RES-9** Weaker sources can overwrite official data (schedule-audit worldFixes; Reddit coords to public data).
-- 🔧 **UX-1** Replace the invisible data-load failure message with a visible, accessible recovery panel and retry action; verify in browser CI before marking complete.
-- ⏳ **UX-2** Horizontal overflow on Today cards at 390px.
+- ✅ **UX-1** Visible, accessible event-data recovery panel and retry action in #112; browser regression and production build verified.
+- 🔧 **UX-2** Reflow the Today card action row on narrow phones so Details and Infographic labels remain readable and Save can wrap; browser regression covers 390px and 320px.
 - ⏳ **UX-3** Today "Live" count padded with overseas in-person events.
 - ⏳ **ENG-3** PIN brute-force: no global failure ceiling.
 
