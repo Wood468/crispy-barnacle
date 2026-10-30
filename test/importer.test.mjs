@@ -49,10 +49,33 @@ test("discovery reads links and feeds, keeps only event write-ups, and survives 
   assert.equal(r.found.length, 1); assert.equal(r.found[0].source, "leekduck"); assert.match(r.status.official.error, /403/);
 });
 test("a page is tied to an event by its own link first, then a strong title match", () => {
-  const evs = [{ id: "a", t: "Zorua Community Day", link: "https://leekduck.com/events/zorua-community-day/" }, { id: "b", t: "Sandile Hatch Day", link: "" }];
+  const evs = [
+    { id: "a", t: "Zorua Community Day", link: "https://leekduck.com/events/zorua-community-day/", start: "2026-11-20T14:00", end: "2026-11-22T17:00" },
+    { id: "b", t: "Sandile Hatch Day", link: "" }
+  ];
   assert.equal(pickEvent({ url: "https://leekduck.com/events/zorua-community-day/", title: "x" }, evs).how, "linked");
   assert.equal(pickEvent({ url: "https://z.test/p/", title: "Sandile Hatch Day" }, evs).event.id, "b");
   assert.equal(pickEvent({ url: "https://z.test/p/", title: "Weekend vibes" }, evs), null);
+});
+
+test("date evidence blocks a title or source-link match to a different event window", () => {
+  const event = { id: "z", t: "Zorua Community Day", link: "https://leekduck.com/events/zorua-community-day/", start: "2026-11-21T14:00", end: "2026-11-21T17:00" };
+  const events = [event];
+  const matching = { url: "https://z.test/p/", title: "Zorua Community Day", fields: { dates: ["Saturday, November 21, 2026"] } };
+  assert.equal(pickEvent(matching, events).event.id, "z", "same-day source evidence is accepted");
+
+  const mismatch = { ...matching, fields: { dates: ["October 24, 2026"] } };
+  assert.equal(pickEvent(mismatch, events), null, "a high-confidence title is not enough when known dates do not overlap");
+
+  const linkedMismatch = { ...mismatch, url: event.link };
+  assert.equal(pickEvent(linkedMismatch, events), null, "an explicit URL does not override contradictory known dates");
+
+  const unknownDate = { url: "https://z.test/p/", title: "Zorua Community Day", fields: { dates: [] }, lines: [] };
+  assert.equal(pickEvent(unknownDate, events).event.id, "z", "missing source dates remain unknown, not a false mismatch");
+
+  const overlappingRange = { ...matching, fields: { dates: ["November 22, 2026"] } };
+  const multiDay = { ...event, start: "2026-11-20T14:00", end: "2026-11-22T17:00" };
+  assert.equal(pickEvent(overlappingRange, [multiDay]).event.id, "z", "a source date inside a multi-day event range is accepted");
 });
 test("fractions and 'double' are read as the same thing", () => {
   assert.equal(similar("1/4 Hatch Distance", "Quarter hatch distance"), true);
