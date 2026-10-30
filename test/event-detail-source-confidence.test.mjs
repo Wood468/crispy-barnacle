@@ -30,7 +30,7 @@ const detailCss = fs.readFileSync(new URL("../public/dash.css", import.meta.url)
 test("event detail duplicate claims merge attribution before category HTML is rendered", () => {
   const match = detail.match(/function dedupeSourceGroups\(fields\) \{([\s\S]*?)\n  \}/);
   assert.ok(match, "cross-category claim grouping helper exists");
-  const dedupe = new Function("fields", "CATS", "tidy", match[1]);
+  const dedupe = new Function("fields", "CATS", "tidy", "BOILER", match[1]);
   const groups = dedupe({
     bonuses: [
       { text: "2× Catch XP. Incense lasts twice as long.", sources: ["leekduck", "leekduck"], status: "community" }
@@ -42,7 +42,8 @@ test("event detail duplicate claims merge attribution before category HTML is re
       { text: "Shiny chance boosted for event spawns.", sources: ["community"], status: "community" }
     ]
   }, [["bonuses", "Bonuses"], ["raids", "Raids"], ["shiny", "Shiny"]],
-  (t) => String(t).replace(/\s+([.,;:!?])/g, "$1").replace(/\s+/g, " ").trim());
+  (t) => String(t).replace(/\s+([.,;:!?])/g, "$1").replace(/\s+/g, " ").trim(),
+  /^prices are in usd|availability of event tickets|^claim all unlocked/i);
 
   assert.equal(groups.bonuses.length, 2, "separate sentences remain visible");
   assert.deepEqual(groups.bonuses[0].sources, ["leekduck", "niantic"], "duplicate source IDs are collapsed and later sources are retained");
