@@ -8,8 +8,7 @@
   function $(id) { return document.getElementById(id); }
   /* Moves an event hands out for a limited time (public/event-moves.json). Shown only here and only while the window is open; never part of a Pokémon's normal moveset. */
   var EVM = [];
-  try { fetch('/event-moves.json').then(function (r) { return r.ok ? r.json() : null; }).then(function (j) { if (j && j.moves) EVM = j.moves; }).catch(function () {}); } catch (e) {}
-  function evMovesHtml(ev) {
+  function evMovesHtml(ev, highlightTarget) {
     var L = EVM.filter(function (m) { return m.eventId === ev.id; });
     if (!L.length) return '';
     var rows = L.map(function (m) {
@@ -21,12 +20,13 @@
       var tag = m.acquisition === 'EVOLVE' ? '<span class="pill all">Evolve project: have a ' + esc(m.pokemon) + ' ready</span> ' : '';
       return '<div class="evd-row"><div class="v"><p>' + what + (when ? ' <small>' + esc(when) + '</small>' : '') + '</p>' + tag + '</div></div>';
     }).join('');
-    return '<h3 class="sec2">Event-only moves</h3><div class="evd-card">' + rows + '</div><p class="note">Temporary: not part of the normal moveset, and no Elite TM needed while the window is open.</p>';
+    return '<h3 class="sec2"' + (highlightTarget ? ' id="evd-highlights"' : '') + '>Event-only moves</h3><div class="evd-card">' + rows + '</div><p class="note">Temporary: not part of the normal moveset, and no Elite TM needed while the window is open.</p>';
   }
   function load() {
     if (DATA) return Promise.resolve(DATA);
     function j(u) { return fetch(u, { cache: 'no-cache' }).then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; }); }
-    return Promise.all([j('/event-info.json'), (window.GOLIB ? GOLIB.loadPrices() : j('/prices.json')), window.GOPLACES ? window.GOPLACES.load() : null, j('/event-details.json')]).then(function (a) { DATA = { info: a[0] || { events: {}, passes: {} }, prices: a[1] || { prices: [], fx: null }, details: (a[3] && a[3].events) || {} }; return DATA; });
+    var placesP = window.GOPLACES_READY ? window.GOPLACES_READY.then(function (places) { return places && places.load ? places.load() : null; }) : (window.GOPLACES ? window.GOPLACES.load() : null);
+    return Promise.all([j('/event-info.json'), (window.GOLIB ? GOLIB.loadPrices() : j('/prices.json')), placesP, j('/event-details.json'), j('/event-moves.json')]).then(function (a) { EVM = (a[4] && a[4].moves) || []; DATA = { info: a[0] || { events: {}, passes: {} }, prices: a[1] || { prices: [], fx: null }, details: (a[3] && a[3].events) || {} }; return DATA; });
   }
   function fmtDay(iso) { var d = new Date(iso + 'T12:00'); return isNaN(d) ? esc(iso) : d.getDate() + ' ' + G.MON[d.getMonth()]; }
   function safe(u) { return typeof u === 'string' && (/^https:\/\//.test(u) || /^\/img\/ext\/[\w.-]+$/.test(u)) ? u : ''; }
@@ -253,6 +253,13 @@
     var sourceAge = sourceChecked ? Math.max(0, Math.floor((Date.now() - Date.parse(String(sourceChecked).slice(0, 10) + 'T00:00:00Z')) / 864e5)) : null;
     var sourceFresh = sourceAge === null || !Number.isFinite(sourceAge) ? 'Check date unavailable' : sourceAge <= 7 ? 'Recently checked' : sourceAge <= 21 ? 'Worth rechecking' : 'May be out of date';
     var leekDuckSource = primarySource && /leekduck[.]com$/i.test((function(){try{return new URL(primarySource.url).hostname;}catch(e){return '';}})());
+    var venues = window.GOPLACES ? window.GOPLACES.forEvent(ev) : [];
+    var hasBonusHighlights = !!(ev.bonuses && ev.bonuses.length);
+    var hasMoveHighlights = EVM.some(function (m) { return m.eventId === ev.id; });
+    var hasFeaturedHighlights = (ev.featured || []).some(function (f) { return f && f.role !== 'shiny_form'; });
+    var hasHighlights = hasBonusHighlights || hasMoveHighlights || hasFeaturedHighlights;
+    var highlightOnMoves = !hasBonusHighlights && hasMoveHighlights;
+    var highlightOnFeatured = !hasBonusHighlights && !hasMoveHighlights && hasFeaturedHighlights;
     var h = '<div class="evd-bar"><button type="button" class="hbtn" id="evd-x" aria-label="Close event details"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button><span class="tag">EVENT DETAIL</span>'
       + '<button type="button" class="pill info-open" data-infographic="' + esc(ev.id) + '">▧ Infographic</button>'
       + '<button type="button" class="pill" data-evlink="' + esc(ev.id) + '" aria-label="Share a link to this event">🔗 Link</button>'
@@ -260,8 +267,8 @@
     h += '<label class="evd-lead"' + (saved ? '' : ' hidden') + '>🔔 Remind me <select data-lead="' + esc(ev.id) + '" aria-label="When to remind me">' + [['', 'Morning of the event'], ['1440', '1 day before'], ['180', '3 hours before'], ['60', '1 hour before'], ['off', 'Don\'t remind me']].map(function (o) { return '<option value="' + o[0] + '"' + (String(X.usGet('pref:lead:' + ev.id) || '') === o[0] ? ' selected' : '') + '>' + o[1] + '</option>'; }).join('') + '</select></label>';
     if (ev.img) h += '<img class="evd-banner" src="' + esc(ev.img) + '" alt="" referrerpolicy="no-referrer" data-err="rm">';
     h += '<header class="evd-hero" style="--k:' + k[1] + ';--kf:' + k[2] + '"><div class="evd-art">' + X.featArts(ev, 3) + '</div><span class="kind">' + esc(k[0]) + '</span><h2 id="evd-t">' + esc(ev.name) + '</h2>'
-      + '<p class="evc-when">' + esc(X.whenText(ev)) + '</p><p class="cdn evd-cd">' + esc(X.countdown(ev)) + '</p>' + X.signalChips(ev, 8, true) + X.cpRows(ev) + '<div class="evd-chips">' + X.statusChip(ev) + '</div></header>';
-    h += '<nav class="evd-jump" aria-label="Jump to event details"><a href="#evd-highlights">Highlights</a><a href="#evd-information">Details</a><a href="#evd-locations">Locations</a><a href="#evd-sources">Sources</a></nav>';
+      + '<p class="evc-when">' + esc(X.timeMeta(ev)) + '</p><p class="cdn evd-cd">' + esc(X.countdown(ev)) + '</p>' + X.signalChips(ev, 8, true) + X.cpRows(ev) + '<div class="evd-chips">' + X.statusChip(ev) + '</div></header>';
+    h += '<nav class="evd-jump" aria-label="Jump to event details">' + (hasHighlights ? '<a href="#evd-highlights">Highlights</a>' : '') + '<a href="#evd-information">Details</a>' + (venues.length ? '<a href="#evd-locations">Locations</a>' : '') + '<a href="#evd-sources">Sources</a></nav>';
     h += '<p class="evd-fresh">Event data as of ' + esc(G.D.asOf || '') + '</p>';
     var scheduleNotes = e && (e.scheduleNotes || e.scheduleNote);
     if (scheduleNotes) {
@@ -270,8 +277,8 @@
     }
     h += '<div class="evd-btns"><a class="pill all" download="' + esc(ev.id) + '.ics" href="' + icsFor(ev) + '">Add to calendar</a>' + (link ? '<a class="pill" href="' + esc(link) + '" target="_blank" rel="noopener noreferrer">' + esc(linkLabel) + '</a>' : '<span class="npub" data-nolink>No source link published</span>') + '</div>';
     if (ev.bonuses && ev.bonuses.length) h += '<h3 class="sec2" id="evd-highlights">Bonuses</h3><div class="bonuses">' + ev.bonuses.map(function (b) { var chip = G.bonusChip(b); var img = /max particle/i.test(b) ? X.IMG_PARTICLE : /power spot/i.test(b) ? X.IMG_POWERSPOT : ''; return img ? chip.replace(/<(svg|img)[\s\S]*?(<\/svg>|>)(?=<b>|<span>)/, '<img class="gi gi-pic" src="' + esc(img) + '" alt="" loading="lazy" data-err="rm">') : chip; }).join('') + '</div>';
-    h += evMovesHtml(ev);
-    if (ev.featured && ev.featured.length) h += featuredSections(ev);
+    h += evMovesHtml(ev, highlightOnMoves);
+    if (ev.featured && ev.featured.length) h += featuredSections(ev, highlightOnFeatured);
     h += '<h3 class="sec2" id="evd-information">What is in this event</h3>';
     if (e && Array.isArray(e.info) && e.info.length) {
       h += '<div class="evd-card">' + e.info.map(infoRow).join('') + '</div>' + srcLine(e.source);
@@ -292,7 +299,6 @@
       h += '<p class="note">Gigantamax Day, Mega Day and in-person tickets use this same card when an event has one.</p>';
     }
     h += ev.season ? seasonPage(ev) : sourcesBlock(ev);
-    var venues = window.GOPLACES ? window.GOPLACES.forEvent(ev) : [];
     if (venues.length) h += '<h3 class="sec2" id="evd-locations">Locations &amp; routes <span class="m">sourced venues</span></h3><div class="evd-card evd-venues">' + venues.map(function (p) { return '<article class="evd-venue"><div><b>' + esc(p.name) + '</b><small>' + esc([p.city, p.region, p.country].filter(Boolean).join(', ')) + '</small><span class="note">' + esc(p.type || 'Event location') + '</span></div><div class="evd-venue-actions"><button type="button" class="pill" data-copycoord="' + esc(p.lat.toFixed(6) + ',' + p.lng.toFixed(6)) + '">Copy coordinates</button><button type="button" class="pill" data-places="' + esc(p.id) + '">Place details</button>' + (p.route && safeGpx(p.route.file) && safe(p.route.url) && p.route.verified ? '<a class="pill all" href="' + esc(safeGpx(p.route.file)) + '" download>Download route GPX</a>' : '') + '</div></article>'; }).join('') + '<div class="evd-venue-foot"><button type="button" class="pill all" data-gpx="' + venues.map(function (p) { return esc(p.id); }).join(',') + '" data-gpxname="' + esc(ev.name) + '"' + (venues.length > 1 ? ' data-gpxorder="1"' : '') + '>Download venue points GPX</button><p class="note">' + (venues.length > 1 ? 'Sourced venue points in this event; this is a list of stops, not a walking route.' : 'A GPX waypoint for this venue, not a walking route.') + '</p></div></div>';
     h += '<h3 class="sec2" id="evd-sources">Where this comes from</h3><div class="evd-card"><div class="evd-row"><span class="k">Schedule</span><div class="v"><p>' + X.statusChip(ev) + ' ' + esc(ev.source || '') + '</p></div></div>'
       + (e ? '<div class="evd-row"><span class="k">Details</span><div class="v">' + srcLine(e.source) + '</div></div>' : '') + '</div>'
@@ -354,7 +360,7 @@
     var keys = Object.keys(out);
     return { keys: keys, line: line };
   }
-  function featuredSections(ev) {
+  function featuredSections(ev, highlightTarget) {
     var seen = {}, mons = (ev.featured || []).filter(function (f) { if (f.role === 'shiny_form') return false; var k = f.name.toLowerCase() + '|' + (f.costume ? 1 : 0); if (seen[k]) return false; seen[k] = 1; return true; });
     var groups = SECTIONS.map(function (s) { return { title: s[0], keys: s[1], rows: [] }; }), rest = [];
     mons.forEach(function (f) {
@@ -363,14 +369,15 @@
       if (!placed) rest.push(row);
     });
     groups.push({ title: groups.some(function (g) { return g.rows.length; }) ? 'Also featured' : 'Featured Pokémon', keys: [], rows: rest });
-    return groups.filter(function (g) { return g.rows.length; }).map(function (g) {
-      return '<h3 class="sec2">' + esc(g.title) + '</h3><div class="evd-feat">' + g.rows.map(function (r) {
+    var visibleGroups = groups.filter(function (g) { return g.rows.length; });
+    return visibleGroups.map(function (g, index) {
+      return '<h3 class="sec2"' + (highlightTarget && index === 0 ? ' id="evd-highlights"' : '') + '>' + esc(g.title) + '</h3><div class="evd-feat">' + g.rows.map(function (r) {
         var f = r.f, tags = r.sp.keys.map(function (k) { return '<span class="tg tg-' + k + '">' + TAGS[k].i + esc(TAGS[k].t) + '</span>'; }).join('');
         return '<div class="evd-f"><span>' + X.monArt(ev, f, 'ea') + '</span><div class="evd-fm"><b>' + esc(f.name) + '</b>' + (tags ? '<div class="tgs">' + tags + '</div>' : '') + (f.label ? '<small>' + esc(f.label) + '</small>' : '') + (r.sp.line ? '<small class="ln">' + esc(r.sp.line) + '</small>' : '') + '</div>' + ownChip(f.name, f.costume) + '</div>';
       }).join('') + '</div>';
     }).join('');
   }
-  function close(silent) { var o = $('evd'); if (!o || o.hidden) return; o.hidden = true; document.body.style.overflow = ''; if (opener && opener.focus) opener.focus(); if (silent !== true && window.GONAV) window.GONAV.popped(); }
+  function close(silent) { var o = $('evd'); if (!o || o.hidden) return; o.hidden = true; document.body.style.overflow = ''; if (opener && opener.isConnected && opener.focus) opener.focus(); if (silent !== true && window.GONAV) window.GONAV.popped(); }
   /* The event page's own picture (its og:image), shown at the top when the event has none of its own. */
   function addBanner(o, ev) {
     if (ev.img) return;
@@ -433,7 +440,19 @@
     });
   }
   document.addEventListener('click', function (e) { var b = e.target.closest('[data-open]'); if (b) { e.preventDefault(); open(b.dataset.open, b); } });
-  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+  /* Keep keyboard navigation inside the modal while it is open. */
+  document.addEventListener('keydown', function (e) {
+    var o = $('evd'); if (!o || o.hidden) return;
+    if (e.key === 'Escape') { close(); return; }
+    if (e.key !== 'Tab') return;
+    var items = Array.prototype.slice.call(o.querySelectorAll('a[href],button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea:not([disabled]),summary,[tabindex]:not([tabindex="-1"])')).filter(function (el) {
+      return !el.closest('[hidden],[aria-hidden="true"]') && el.getClientRects().length > 0;
+    });
+    if (!items.length) { e.preventDefault(); var x = $('evd-x'); if (x) x.focus(); return; }
+    var first = items[0], last = items[items.length - 1], active = document.activeElement;
+    if (e.shiftKey && (active === first || !o.contains(active))) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && (active === last || !o.contains(active))) { e.preventDefault(); first.focus(); }
+  });
   window.GOEVD = { close: close };
   document.addEventListener('gofn-state', function () { var o = $('evd'); if (o && !o.hidden) { var s = o.querySelector('[data-save]'); if (s) { var on = X.isSaved(s.dataset.save); s.classList.toggle('on', on); s.textContent = on ? '★' : '☆'; s.setAttribute('aria-pressed', on); var l = o.querySelector('.evd-lead'); if (l) l.hidden = !on; } } });
   document.addEventListener('change', function (e) { var sel = e.target.closest && e.target.closest('select[data-lead]'); if (!sel) return; var v = sel.value; X.usSet('pref:lead:' + sel.getAttribute('data-lead'), v === '' ? null : v); });

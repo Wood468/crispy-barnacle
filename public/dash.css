@@ -320,6 +320,29 @@ header.top{display:flex;align-items:flex-start;justify-content:space-between;gap
 .agenda-section > .sec2 { margin: 0 0 14px; }
 .event-agenda { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr)); gap: 14px; }
 .event-agenda > .empty { grid-column: 1 / -1; margin: 0; }
+
+/* The coming week scans by day first, so date context is visible before the event detail. */
+#week .week-day-group{grid-column:1/-1;display:grid;gap:10px}
+.week-day-head{display:flex;align-items:center;gap:9px;min-width:0;padding:3px 2px 0}
+.week-day-label{font-size:.86rem;font-weight:800;letter-spacing:.01em}
+.week-day-head time{font-size:.72rem;color:var(--muted);white-space:nowrap}
+.week-day-head::after{content:"";height:1px;flex:1;min-width:8px;background:var(--ring)}
+.week-day-count{font:600 .66rem var(--mono);color:var(--muted);white-space:nowrap}
+.week-day-events{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,22rem),1fr));gap:12px}
+.week-day-events>.evc{margin:0;height:100%}
+@media(max-width:560px){.week-day-events{grid-template-columns:minmax(0,1fr);gap:9px}.week-day-head{gap:7px}}
+
+/* Empty Today states still give the player a clear next action. */
+.today-empty{display:grid;gap:10px;justify-items:start;padding:2px 0 8px}
+.today-empty>.empty{padding:8px 0;text-align:left}
+.today-next-up{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:4px 12px;width:100%;padding:14px 15px;border:1px solid color-mix(in srgb,var(--gold) 35%,var(--ring));border-radius:16px;background:linear-gradient(135deg,color-mix(in srgb,var(--gold) 8%,var(--glass)),var(--glass) 68%);color:var(--fg);text-align:left;font:inherit;cursor:pointer}
+.today-next-up:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.today-next-kicker{grid-column:1/-1;font:700 .64rem var(--mono);letter-spacing:.12em;color:var(--gold)}
+.today-next-up>b{font-size:.96rem;line-height:1.2;overflow-wrap:anywhere}
+.today-next-time{grid-column:1;font-size:.76rem;color:var(--muted)}
+.today-next-action{grid-column:2;grid-row:2/4;align-self:center;display:flex;align-items:center;gap:5px;color:var(--gold);font-size:.76rem;font-weight:800;white-space:nowrap}
+.today-empty-note{margin:0;color:var(--muted);font-size:.82rem}
+@media(max-width:380px){.today-next-up{gap:4px 8px;padding:12px}.today-next-action{font-size:.7rem}}
 #tab-now .event-agenda .evc { height: 100%; }
 #tab-now .event-agenda .evc-art { min-height: 72px; }
 

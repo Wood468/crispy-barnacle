@@ -18,7 +18,7 @@ def check(name,cond,extra=''):
     if not cond: fails.append(name)
 with sync_playwright() as p:
     b=p.chromium.launch()
-    def page(api=None,marks=None,clock='2026-10-09T22:45:00+11:00',sources=None,gens=None,us=None,extra=None,pin=False):
+    def page(api=None,marks=None,clock='2026-10-09T22:45:00+11:00',sources=None,gens=None,us=None,extra=None,pin=False,slow_places=False):
         ctx=b.new_context(viewport={'width':390,'height':844},device_scale_factor=2,timezone_id='Australia/Melbourne',locale='en-AU',service_workers='block')
         pg=ctx.new_page(); pg.errs=[]
         pg.on('pageerror',lambda e:pg.errs.append(str(e)))
@@ -30,11 +30,23 @@ with sync_playwright() as p:
         pg.route('**/api/dex',lambda r:r.fulfill(status=401,body='{}',content_type='application/json'))
         pg.route('**/api/art*',lambda r:r.fulfill(status=404,body=''))
         for pat,(body,st) in (extra or {}).items(): pg.route(pat,(lambda body,st:(lambda r,req=None:r.fulfill(status=st,body=body,content_type='application/json')))(body,st))
+        if slow_places:
+            pg.add_init_script("""(() => {
+                const append = Node.prototype.appendChild;
+                Node.prototype.appendChild = function (node) {
+                    if (node && node.tagName === 'SCRIPT' && /\/places\.js(?:\?|$)/.test(node.src)) {
+                        window.__gofnPlacesDeferred = true;
+                        setTimeout(() => append.call(this, node), 1500);
+                        return node;
+                    }
+                    return append.call(this, node);
+                };
+            })();""")
         if pin: pg.add_init_script("localStorage.setItem('gofn-pin','x')")
         if marks: pg.add_init_script("localStorage.setItem('gofn-dex-v1',%s)"%json.dumps(json.dumps(marks)))
         if us: gens=gens or []
         if gens or us: pg.add_init_script("if(!localStorage.getItem('gofn-us-v1'))localStorage.setItem('gofn-us-v1',%s)"%json.dumps(json.dumps(dict({'pref:gen:%d'%g:{'v':True,'t':1} for g in (gens or [])} and {'pref:gen:%d'%g:{'v':True,'t':1} for g in (gens or [])},**{k:{'v':v,'t':1} for k,v in (us or {}).items()}))))
-        pg.goto('http://localhost:8791/'); pg.wait_for_selector('.pc, .prio-empty',state='attached'); pg.wait_for_timeout(300)
+        pg.goto('http://localhost:8791/', wait_until='domcontentloaded' if slow_places else 'load'); pg.wait_for_selector('.pc, .prio-empty',state='attached'); pg.wait_for_timeout(300)
         return pg
     if on('a'):
         # A small but important mobile interaction: hiding an event should have a reliable tap target,
@@ -44,7 +56,8 @@ with sync_playwright() as p:
         # The dashboard only switches to the live API when it contains at least ten valid events.
         touch_events = [touch_event] + [
             ev('touch-future-' + str(i), 'Touch Target Fixture Future ' + str(i), 'pokemon-spotlight-hour',
-               '2026-10-11T10:00:00', '2026-10-11T10:30:00', 'official_confirmed')
+               ('2026-10-10' if i < 4 else '2026-10-11') + 'T10:00:00',
+               ('2026-10-10' if i < 4 else '2026-10-11') + 'T10:30:00', 'official_confirmed')
             for i in range(9)
         ]
         touch_page = page(api=json.dumps({'enabled': True, 'events': touch_events}))
@@ -65,7 +78,134 @@ with sync_playwright() as p:
         after_count = int(after_group.locator('.today-phase-count').inner_text()) if after_group.count() else 0
         check('Today phase count updates after hiding an event',
               after_count == before_count - 1, {'before': before_count, 'after': after_count})
+        tomorrow_group = touch_page.locator('#week .week-day-group[data-week-day="2026-10-10"]')
+        sunday_group = touch_page.locator('#week .week-day-group[data-week-day="2026-10-11"]')
+        check('This Week groups events by start date',
+              tomorrow_group.count() == 1 and sunday_group.count() == 1 and
+              'Touch Target Fixture Future 0' in tomorrow_group.locator('.week-day-events').inner_text() and
+              'Touch Target Fixture Future 4' in sunday_group.locator('.week-day-events').inner_text())
+        check('This Week labels tomorrow clearly and keeps each day count accurate',
+              tomorrow_group.locator('.week-day-label').inner_text() == 'Tomorrow' and
+              all(int(g.locator('.week-day-count').inner_text().split()[0]) == g.locator('.week-day-events .evc').count() and
+                  g.locator('.week-day-events .evc').count() > 0 for g in [tomorrow_group, sunday_group]))
+        worldwide_card_time = touch_page.locator('#week .week-day-group[data-week-day="2026-10-10"] .evc[data-id="leekduck:touch-future-0"] .evc-when').inner_text()
+        check('Worldwide-local event cards label the displayed clock as local to each region',
+              'Your time:' in worldwide_card_time and 'Local time in each region' in worldwide_card_time,
+              worldwide_card_time)
         touch_page.context.close()
+
+        # Isolate the empty Today state from live regional schedules: the next-up card should remain actionable.
+        next_events = [
+            ev('touch-next-' + str(i), 'Next Up Fixture ' + str(i), 'pokemon-spotlight-hour',
+               '2026-10-10T10:00:00', '2026-10-10T10:30:00', 'official_confirmed')
+            for i in range(10)
+        ]
+        next_page = page(api=json.dumps({'enabled': True, 'events': next_events}),
+                         us={'hide:cur:space': True},
+                         extra={'**/world-events.json': ('{"events":[]}', 200),
+                                '**/regional-events.json': ('{"events":[]}', 200)})
+        next_button = next_page.locator('#home-now .today-next-up')
+        next_button.wait_for(state='attached', timeout=5000)
+        check('Empty Today offers a tappable next event', next_button.count() == 1 and
+              next_button.get_attribute('aria-label') == 'Open details for Next Up Fixture 0')
+        next_button.click()
+        next_page.locator('#evd').wait_for(state='visible')
+        detail_time = next_page.locator('#evd .evd-hero .evc-when').inner_text()
+        check('Worldwide-local event details keep local-time context visible',
+              'Your time:' in detail_time and 'Local time in each region' in detail_time,
+              detail_time)
+        jump_links = next_page.locator('#evd .evd-jump a').evaluate_all(
+            "els => els.map(a => ({label: a.textContent.trim(), target: !!document.getElementById(a.getAttribute('href').slice(1))}))")
+        check('Event detail quick links all have rendered targets', all(x['target'] for x in jump_links), jump_links)
+        check('Event detail hides Highlights and Locations when those sections are absent',
+              all(x['label'] not in ['Highlights', 'Locations'] for x in jump_links), jump_links)
+        # Highlights must land on the first real section even when there are no bonuses.
+        highlight_page = page()
+        highlight_page.wait_for_function("window.GODETAIL && window.GODASH", timeout=5000)
+        highlight_page.evaluate("""() => {
+            const events = GODASH.events();
+            events.push(GODASH.mkEvent({
+                id: 'zorua', name: 'Move Highlight Fixture', kind: 'event',
+                s: '2026-10-10T10:00:00', e: '2026-10-10T10:30:00',
+                featured: [], bonuses: [], status: 'official_confirmed', source: 'Fixture'
+            }));
+            events.push(GODASH.mkEvent({
+                id: 'featured-highlight', name: 'Featured Highlight Fixture', kind: 'event',
+                s: '2026-10-10T11:00:00', e: '2026-10-10T11:30:00',
+                featured: [{name: 'Pikachu', role: 'featured'}], bonuses: [],
+                status: 'official_confirmed', source: 'Fixture'
+            }));
+        }""")
+        highlight_page.evaluate("GODETAIL.open('zorua')")
+        highlight_page.locator('#evd').wait_for(state='visible')
+        highlight_page.locator('#evd .evd-jump a[href="#evd-highlights"]').wait_for(state='attached')
+        move_target = highlight_page.locator('#evd-highlights')
+        check('Move-only Highlights shortcut lands on event-only moves',
+              highlight_page.locator('#evd .evd-jump a[href="#evd-highlights"]').count() == 1 and
+              move_target.count() == 1 and move_target.evaluate("(el) => el.textContent.trim()") == 'Event-only moves',
+              {'target_count': move_target.count(), 'target_text': move_target.inner_text() if move_target.count() else '',
+               'event_ids': highlight_page.evaluate("GODASH.events().map(e => e.id).filter(id => id === 'zorua')")})
+        highlight_page.locator('#evd-x').click()
+        highlight_page.locator('#evd').wait_for(state='hidden')
+        highlight_page.evaluate("GODETAIL.open('featured-highlight')")
+        highlight_page.locator('#evd').wait_for(state='visible')
+        highlight_page.locator('#evd .evd-jump a[href="#evd-highlights"]').wait_for(state='attached')
+        featured_target = highlight_page.locator('#evd-highlights')
+        check('Featured-only Highlights shortcut lands on the featured Pokémon section',
+              highlight_page.locator('#evd .evd-jump a[href="#evd-highlights"]').count() == 1 and
+              featured_target.count() == 1 and featured_target.evaluate("(el) => el.textContent.trim()") == 'Featured Pokémon',
+              {'target_count': featured_target.count(), 'target_text': featured_target.inner_text() if featured_target.count() else '',
+               'featured': highlight_page.evaluate("GODASH.events().filter(e => e.id === 'featured-highlight').map(e => e.featured)")})
+        highlight_page.context.close()
+
+        # Opening event details immediately must wait for the places script before deciding whether Locations exists.
+        place_fixture = {
+            'updated': '2026-10-09',
+            'places': [{
+                'id': 'test-venue',
+                'name': 'Sourced Test Venue',
+                'city': 'Melbourne',
+                'region': 'Victoria',
+                'country': 'Australia',
+                'lat': -37.8136,
+                'lng': 144.9631,
+                'type': 'Event venue',
+                'verified': '2026-10-09',
+                'sources': [{'label': 'Official event page', 'url': 'https://pokemongo.com/news/test-event', 'trust': 'official'}],
+                'events': [{'name': 'Next Up Fixture 0', 'from': '2026-10-10', 'to': '2026-10-10'}]
+            }]
+        }
+        places_page = page(api=json.dumps({'enabled': True, 'events': next_events}),
+                           us={'hide:cur:space': True},
+                           extra={'**/world-events.json': ('{"events":[]}', 200),
+                                  '**/regional-events.json': ('{"events":[]}', 200),
+                                  '**/places.json': (json.dumps(place_fixture), 200)},
+                           slow_places=True)
+        places_page.wait_for_function("window.GODETAIL && window.__gofnPlacesDeferred && !window.GOPLACES", timeout=5000)
+        check('Event detail loader is ready while the places script is still delayed',
+              places_page.evaluate('!!window.GOPLACES_READY && typeof window.GOPLACES_READY.then === "function"'))
+        places_page.locator('#home-now .today-next-up').click()
+        places_page.locator('#evd').wait_for(state='visible', timeout=5000)
+        location_link = places_page.locator('#evd .evd-jump a[href="#evd-locations"]')
+        check('Event details wait for sourced venues before showing Locations',
+              location_link.count() == 1 and places_page.locator('#evd-locations').count() == 1)
+        places_page.context.close()
+
+        # Keyboard navigation is trapped in the dialog and Escape returns focus to its opener.
+        next_page.keyboard.press('Shift+Tab')
+        wrapped_last = next_page.evaluate("""() => {
+            const d = document.getElementById('evd');
+            const items = [...d.querySelectorAll('a[href],button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea:not([disabled]),summary,[tabindex]:not([tabindex="-1"])')].filter(el => !el.closest('[hidden],[aria-hidden="true"]') && el.getClientRects().length > 0);
+            return items.length > 1 && document.activeElement === items[items.length - 1];
+        }""")
+        check('Event detail Shift+Tab wraps from the first control to the last', wrapped_last)
+        next_page.keyboard.press('Tab')
+        check('Event detail Tab wraps from the last control to the close button',
+              next_page.evaluate("document.activeElement.id === 'evd-x'"))
+        next_page.keyboard.press('Escape')
+        check('Event detail Escape restores focus to the Today next-event card',
+              next_page.evaluate("document.getElementById('evd').hidden && document.activeElement.classList.contains('today-next-up')"))
+        next_page.context.close()
 
         # 1. no marks: nothing is claimed missing
         pg=page()
