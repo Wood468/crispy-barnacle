@@ -38,6 +38,8 @@ test("RSS and Atom publication timestamps are retained separately from verificat
   assert.equal(reportDate(xmlItems(rss)[0].publishedAt), "2026-10-30");
   assert.equal(reportDate(xmlItems(atom)[0].publishedAt), "2026-10-30");
   assert.equal(reportDate("not a publication date"), null);
+  const updatedOnly = '<feed><entry><title>Edited report</title><updated>2026-10-31T02:00:00Z</updated><summary>Coordinates</summary></entry></feed>';
+  assert.equal(xmlItems(updatedOnly)[0].publishedAt, undefined, "an edit timestamp is not the original report date");
 });
 
 test("discovery records report dates but never assigns a verified date to community coordinates", () => {
