@@ -3,6 +3,7 @@
 // for the daily shiny/costume check (and a person) to follow up. A feed that fails is recorded and skipped.
 // Run: node scripts/source-watch.mjs
 import { readFile, writeFile } from "node:fs/promises";
+import { failRun } from "./fail-run.mjs";
 
 const DAY = 864e5, LOOK_DAYS = 14;
 // Strong words must appear for a post to count. "debut" and "assets" are too common, so they only count on feeds marked weak:true (game-file commit lists).
@@ -29,6 +30,8 @@ export function mentioned(str, names) {
   const s = " " + String(str).toLowerCase().replace(/[^a-z0-9é♀♂'’ .-]+/g, " ") + " ";
   return names.filter(n => n.length > 3 && s.includes(" " + n.toLowerCase() + " ")).sort((a, b) => b.length - a.length);
 }
+
+export function allFeedsFailed(status) { return !(status || []).some(s => s && s.state === "ok"); }
 
 export function review({ items, dex, costumes, dataText, now, weak = false }) {
   const names = dex.map(r => r[1]);
@@ -60,5 +63,6 @@ async function main() {
   await writeFile("data/source-watch.json", JSON.stringify({ updated: new Date().toISOString(), status, gaps: hits.filter(h => h.notInOurData.length).length, items: hits.slice(0, 60) }, null, 1) + "\n");
   console.log(status.map(s => `${s.id}: ${s.state}${s.items != null ? " (" + s.items + ")" : " " + s.note}`).join("\n"));
   console.log(`${hits.length} relevant items, ${hits.filter(h => h.notInOurData.length).length} mention a Pokémon our data does not`);
+  if (allFeedsFailed(status)) throw new Error("All source feeds failed; no source freshness result is trustworthy.");
 }
-if (import.meta.url === `file://${process.argv[1]}`) main();
+if (import.meta.url === `file://${process.argv[1]}`) main().catch(failRun);

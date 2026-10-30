@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { parseFeed, review, mentioned } from "../scripts/source-watch.mjs";
+import { parseFeed, review, mentioned, allFeedsFailed } from "../scripts/source-watch.mjs";
 
 const now = Date.parse("2026-10-18T00:00:00Z");
 const rss = `<rss><channel>
@@ -43,4 +43,10 @@ test("drops other games and plain debut posts, keeps them on weak (commit) feeds
 test("names come from the title when it has any", () => {
   const r = review({ items: [{ title: "Shiny Zubat", link: "a", date: now - 1e6, summary: "Rowlet and Bramblin also appear" }], dex, costumes: { pictures: {}, shiny: {}, missing: [] }, dataText: "", now });
   assert.deepEqual(r[0].pokemon, ["Zubat"]);
+});
+
+test("source-watch fails only when every configured feed is unavailable", () => {
+  assert.equal(allFeedsFailed([{ id: "hub", state: "error" }, { id: "reddit", state: "error" }]), true);
+  assert.equal(allFeedsFailed([{ id: "hub", state: "ok" }, { id: "reddit", state: "error" }]), false);
+  assert.equal(allFeedsFailed([]), true);
 });
