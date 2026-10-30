@@ -1,5 +1,5 @@
 /* GO Field Notes offline shell. Never cache /api/*, including private user-state and notification responses. */
-const SHELL_CACHE = 'gofn-shell-v115';
+const SHELL_CACHE = 'gofn-shell-v116';
 const SHELL_URLS = [
   '/', '/index.html', '/offline.html', '/offline.css',
   '/styles.css', '/dash.css', '/dash.css?v=20261030a', '/lib.js', '/dedupe.js', '/move.js',
