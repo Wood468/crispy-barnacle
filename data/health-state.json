@@ -1,5 +1,6 @@
 {
  "alerted": [
+  "discord_sync.yml",
   "ai-heartbeat-pipeline"
  ],
  "unmatched": []
