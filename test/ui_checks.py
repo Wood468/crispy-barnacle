@@ -341,7 +341,10 @@ with sync_playwright() as p:
               pg.evaluate("document.activeElement === document.querySelector('#goinfo [data-infoclose]')"))
         pg.keyboard.press('Escape')
         check('event infographic Escape restores focus to its opening card',
-              pg.evaluate("document.getElementById('goinfo').hidden && document.activeElement === document.querySelector('[data-infographic=\\"cur:trek\\"]')"))
+              pg.evaluate("""() => {
+                  const opener = [...document.querySelectorAll('[data-infographic]')].find(el => el.getAttribute('data-infographic') === 'cur:trek');
+                  return document.getElementById('goinfo').hidden && document.activeElement === opener;
+              }"""))
         # A thumbnail address that cannot be fetched falls back to the Check infographic button (the rest of this run serves a valid PNG for every picture).
         pb=page(extra={'**/img/ext/4aa21432-0cfc-4c93-b3eb-0c15f322389d-0119b088.webp':('',404)}); pb.wait_for_timeout(800)
         check('a thumbnail that fails to load becomes Check infographic', pb.locator('[data-igcheck="cur:trek"]').first.inner_text()=='Check infographic' and pb.locator('[data-igcard="cur:trek"] img').count()==0 and pb.locator('[data-igcard="cur:trek"]').first.get_attribute('data-igbad') is not None)
