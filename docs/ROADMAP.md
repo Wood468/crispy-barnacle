@@ -50,7 +50,7 @@ All merged milestones above passed their post-merge test checks; the latest main
 ## P3 — Premium polish
 
 - Design-token system (type scale, 4px spacing, colour roles, radii, card anatomy) — **UX-15/17/18**.
-- ✅ **UX-13** Source trust/freshness labels in #105; event-detail duplicate claims now merge source attribution before rendering, and every detail category uses a consistent line-icon treatment. **UX-14** raids segmented control + counters link; **UX-16** duplicate navigation.
+- ✅ **UX-13** Source trust/freshness labels in #105; event-detail duplicate claims now merge source attribution before rendering, and every detail category uses a consistent line-icon treatment. 🔧 **UX-14** Raid week selector as a compact mobile segmented control; boss rows link directly to Best attackers filtered to every published weakness; **UX-16** duplicate navigation.
 - **ENG-12** single shared `esc()`; **ENG-13** narrow CSP img-src; **ENG-14** migration consolidation (🔒); **ENG-15** SHA-pinned actions; **ENG-16** robustness; **QA-8** tab keyboard semantics; **QA-11** costume art lookup.
 
 ## P4 — Opportunities

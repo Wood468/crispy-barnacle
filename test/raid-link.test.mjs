@@ -1,5 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import { createRequire } from "node:module";
 const L = createRequire(import.meta.url)("../public/lib.js");
 test("a raid boss on the Raids tab finds its own event page", () => {
@@ -16,4 +17,43 @@ test("a raid boss on the Raids tab finds its own event page", () => {
   assert.equal(L.raidEventFor(E, "Yveltal", "5★", s, e), null, "last week's boss is not this week's");
   assert.equal(L.raidEventFor(E, "Mega Charizard Y", "Mega", d("2026-10-21T10:00"), d("2026-10-28T10:00")).id, "leekduck:mega-charizard-x-mega-charizard-y-in-mega-raids-october-2026");
   assert.equal(L.raidEventFor(E, "Dialga", "Mega", s, e), null);
+});
+
+
+const app = readFileSync(new URL("../public/app.js", import.meta.url), "utf8");
+const dash = readFileSync(new URL("../public/dash.js", import.meta.url), "utf8");
+const dashCss = readFileSync(new URL("../public/dash.css", import.meta.url), "utf8");
+
+test("best-attacker filters support every known weakness type for a raid boss", () => {
+  const match = app.match(/function matchesBestType\(groupType, selected\)\s*\{([\s\S]*?)\n  \}/);
+  assert.ok(match, "multi-type best-attacker matcher exists");
+  const matches = new Function("groupType", "selected", match[1]);
+  assert.equal(matches("Fire", "All"), true);
+  assert.equal(matches("Fire", "Fire"), true);
+  assert.equal(matches("Fighting", ["Fire", "Fighting"]), true);
+  assert.equal(matches("Water", ["Fire", "Fighting"]), false);
+  const selectedMatch = app.match(/function isBestTypeSelected\(type, selected\)\s*\{([\s\S]*?)\n  \}/);
+  assert.ok(selectedMatch, "multi-type chip state helper exists");
+  const selected = new Function("type", "selected", selectedMatch[1]);
+  assert.equal(selected("Fire", "All"), false, "All keeps only the All chip pressed");
+  assert.equal(selected("Fire", ["Fire", "Fighting"]), true);
+  assert.equal(selected("Water", ["Fire", "Fighting"]), false);
+  assert.match(app, /window\.GOBEST = \{ showTypes:function\(types\)/);
+  assert.match(app, /typeSel = valid\.length \? valid : 'All';/);
+  assert.match(app, /\$\('q'\)\.value = ''; \$\('status'\)\.value = 'all';/);
+});
+
+test("raid rows offer in-app Best attackers only from published weakness metadata", () => {
+  assert.match(dash, /data-boss=/);
+  assert.match(dash, /facts && Array\.isArray\(facts\.weak\)/);
+  assert.match(dash, /data-best-types/);
+  assert.match(dash, /GO\.showTab\('collect', 'guides', 'best'\)/);
+  assert.match(dash, /GOBEST\.showTypes\(types\)/);
+});
+
+test("raid week selector is a compact segmented control with phone-width scrolling and 44px actions", () => {
+  assert.match(dashCss, /\.rw-tabs\{display:grid;grid-template-columns:repeat\(4/);
+  assert.match(dashCss, /\.rw-tabs button\[aria-selected="true"\]/);
+  assert.match(dashCss, /@media\(max-width:520px\)[\s\S]*\.rw-tabs\{display:flex;overflow-x:auto/);
+  assert.match(dashCss, /\.rc-info\{[^}]*min-height:44px/);
 });
