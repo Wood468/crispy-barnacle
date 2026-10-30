@@ -107,7 +107,7 @@ async function main() {
   })();
   const t = parseTiers(html);
   console.log("Parsed:", JSON.stringify(t));
-  if (!sane(t)) { console.log("::warning::1-3 star raids: the page did not parse into sensible lists (" + JSON.stringify(t) + "). Nothing changed."); await tell("⚠️ The weekly 1–3★ raid job could not read Pokémon GO Hub's raid page (its layout may have changed). This week's 1–3★ and Shadow raid bosses were not updated.\n\nhttps://github.com/Wood468/crispy-barnacle/actions/workflows/low-raids.yml"); process.exitCode = 0; return; }
+  if (!sane(t)) { console.log("::warning::1-3 star raids: the page did not parse into sensible lists (" + JSON.stringify(t) + "). Nothing changed."); await tell("⚠️ The weekly 1–3★ raid job could not read Pokémon GO Hub's raid page (its layout may have changed). This week's 1–3★ and Shadow raid bosses were not updated.\n\nhttps://github.com/Wood468/crispy-barnacle/actions/workflows/low-raids.yml"); process.exitCode = 1; return; }
   const raw = await readFile(DATA, "utf8"), data = JSON.parse(raw);
   const r = pickRotation(data.rotation, t.five);
   if (!r) { console.log("::notice::1-3 star raids: the page's 5-star boss (" + t.five.join(", ") + ") matches no current or upcoming rotation. Nothing changed."); return; }
