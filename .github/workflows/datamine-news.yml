@@ -42,6 +42,7 @@ jobs:
         run: |
           set -euo pipefail
           git add -- public/datamine-news.json
+          node scripts/validate-public-data.mjs
           if git diff --cached --quiet; then echo "No changes."; exit 0; fi
           # the timestamp alone is not worth a deploy
           if git diff --cached -U0 | grep -E '^[+-] ' | grep -vqE '"updated"'; then
