@@ -45,38 +45,20 @@
   function mount() {
     var anchor = document.getElementById('fresh-line'); if (!anchor || !anchor.parentNode) return;
     if (!box) { box = document.createElement('div'); box.className = 'whatsnew'; box.setAttribute('role', 'region'); box.setAttribute('aria-label', 'Recent updates'); anchor.parentNode.insertBefore(box, anchor.nextSibling); }
-    var history = loadHistory();
     var total = st.fresh.length + st.leaks.reduce(function (n, g) { return n + g.items.length; }, 0);
-    var body = total ? buildHtml() : (history ? history.html : '');
-    if (!body) { box.hidden = true; return; }
-    box.innerHTML = body + '<div class="wn-actions"><button type="button" class="pill wn-ok">Got it</button>' + (history ? '<button type="button" class="pill wn-reopen">View recent updates</button>' : '') + '</div>';
+    if (!total) { box.hidden = true; box.innerHTML = ''; return; }
+    box.innerHTML = buildHtml() + '<div class="wn-actions"><button type="button" class="pill wn-ok">Got it</button></div>';
     box.hidden = false;
-    var details = box.querySelector('.wn-det');
-    if (history && !total && details) details.open = true;
     box.querySelector('.wn-ok').addEventListener('click', function () {
-      save(st.ids); saveLeaks();
-      saveHistory(buildHtml(), total);
-      box.innerHTML = '<button type="button" class="pill wn-reopen">View recent updates</button>';
-      box.hidden = false;
-      box.querySelector('.wn-reopen').addEventListener('click', showHistory);
+      save(st.ids); saveLeaks(); saveHistory(buildHtml(), total);
+      box.hidden = true; box.innerHTML = '';
     });
-    function showHistory() {
-      var h = loadHistory(); if (!h) return;
-      box.innerHTML = h.html + '<div class="wn-actions"><button type="button" class="pill wn-close">Close updates</button></div>';
-      box.hidden = false;
-      var d = box.querySelector('.wn-det'); if (d) d.open = true;
-      box.querySelector('.wn-close').addEventListener('click', function () {
-        box.innerHTML = '<button type="button" class="pill wn-reopen">View recent updates</button>';
-        box.querySelector('.wn-reopen').addEventListener('click', showHistory);
-      });
-      Array.prototype.forEach.call(box.querySelectorAll('.wn-leaks'), function (link) { link.addEventListener('click', function (e) { e.preventDefault(); var menu = document.getElementById('menu-leaks'); if (menu) menu.click(); }); });
-    }
     Array.prototype.forEach.call(box.querySelectorAll('.wn-leaks'), function (a) { a.addEventListener('click', function (e) { e.preventDefault(); var b = document.getElementById('menu-leaks'); if (b) b.click(); }); });
   }
   function render() {
     if (!st.evDone || st.leaks === null) return;
     var total = st.fresh.length + st.leaks.reduce(function (n, g) { return n + g.items.length; }, 0);
-    if (!total && !loadHistory()) { save(st.ids); saveLeaks(); return; }
+    if (!total) { if (box) { box.hidden = true; box.innerHTML = ''; } save(st.ids); saveLeaks(); return; }
     mount();
   }
   function run(list) {
