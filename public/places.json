@@ -35,7 +35,6 @@
         "url": "https://en.wikipedia.org/wiki/Queen_Street_Mall",
         "note": "Marks the mall (Wikipedia gives -27.4696, 153.0252). Not an official event pin"
       },
-      "verified": "2026-10-10",
       "route": null,
       "events": [
         {
@@ -43,7 +42,8 @@
           "from": "2026-09-26",
           "to": "2026-09-27"
         }
-      ]
+      ],
+      "coordinateStatus": "community-reported"
     },
     {
       "id": "king-george-square-brisbane",
@@ -71,7 +71,6 @@
         "url": "https://en.wikipedia.org/wiki/King_George_Square",
         "note": "Taken from the article's map link (-27.468333, 153.024313), rounded to 4 places. Marks the square, not an official event pin"
       },
-      "verified": "2026-10-10",
       "route": null,
       "events": [
         {
@@ -79,7 +78,8 @@
           "from": "2026-09-27",
           "to": "2026-09-27"
         }
-      ]
+      ],
+      "coordinateStatus": "community-reported"
     },
     {
       "id": "changi-airport-t3-singapore",
@@ -835,7 +835,6 @@
         "url": "https://www.reddit.com/r/PokemonGoSpoofing/comments/1xgag6b/d%C3%ADa_de_muertos/",
         "note": "Community-reported pin for Alameda Central. Not an official Niantic event pin; use as a suggested nearby play area."
       },
-      "verified": "2026-10-28",
       "route": null,
       "events": [
         {
@@ -848,7 +847,8 @@
           "from": "2026-10-17",
           "to": "2026-11-16"
         }
-      ]
+      ],
+      "coordinateStatus": "community-reported"
     }
   ]
 }
