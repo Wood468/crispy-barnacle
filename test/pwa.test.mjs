@@ -42,7 +42,7 @@ test("PWA entry page links to the manifest and iOS touch icon and registers the 
   assert.match(html, /app\.js\?v=20261030g/);
   assert.match(html, /\/pwa\.js/);
   assert.match(app, /dash\.js\?v=20261030m/);
-  assert.match(dash, /detail\.js\?v=20261030g/);
+  assert.match(dash, /detail\.js\?v=20261030f/);
 });
 
 test("service worker versions the cache, pre-caches offline fallback, and never handles API responses", () => {
