@@ -42,8 +42,8 @@ test("each person's marks are private; the owner's stay separate", async () => {
     return ck(await call(env, "/api/auth/register", { method: "POST", body: { invite: code, email, password: "a long password" } }));
   };
   const a = await mkUser("a@example.com"), b = await mkUser("b@example.com");
-  await call(env, "/api/dex", { method: "PUT", pin: "1234", body: { have: { 1: 1 }, hundo: {}, m: {}, bt: {}, updated: 5 } });
-  await call(env, "/api/dex", { method: "PUT", cookie: a, body: { have: { 25: 1 }, hundo: {}, m: {}, bt: {}, updated: 6 } });
+  await call(env, "/api/dex", { method: "PUT", pin: "1234", body: { have: { 1: 1 }, hundo: {}, m: {}, bt: {}, updated: 5, baseUpdated: 0 } });
+  await call(env, "/api/dex", { method: "PUT", cookie: a, body: { have: { 25: 1 }, hundo: {}, m: {}, bt: {}, updated: 6, baseUpdated: 0 } });
   const get = async (o) => Object.keys((await (await call(env, "/api/dex", o)).json()).have);
   assert.deepEqual(await get({ pin: "1234" }), ["1"]); assert.deepEqual(await get({ cookie: a }), ["25"]); assert.deepEqual(await get({ cookie: b }), []);
   const put = (o, k) => call(env, "/api/userstate", { method: "PUT", ...o, body: { entries: { [k]: { v: true, t: 10 } } } });
