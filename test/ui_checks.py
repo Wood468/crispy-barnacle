@@ -1045,6 +1045,9 @@ with sync_playwright() as p:
         pctx.set_offline(True)
         ppg.reload(wait_until='domcontentloaded',timeout=15000)
         check('PWA: app shell opens after network is disconnected', ppg.locator('h1').inner_text().strip().lower()=='go field notes', ppg.evaluate("({title:document.title,h1:document.querySelector('h1')&&document.querySelector('h1').innerText,url:location.href,controller:!!navigator.serviceWorker.controller})"))
+        check('PWA: versioned app and local-state scripts execute offline',
+              ppg.evaluate("!!window.GO && !!window.GOLOCAL && !!window.GONET && !!window.GO.dex()"),
+              ppg.evaluate("({app:!!window.GO,localState:!!window.GOLOCAL,network:!!window.GONET})"))
         pctx.close()
     b.close()
 print('\nFAILED:',fails if fails else 'none')
