@@ -10,6 +10,7 @@
     dex: 'gofn-dex-v1',
     stamp: 'gofn-stamp',
     base: 'gofn-dex-base-v1',
+    baseline: 'gofn-dex-baseline-v1',
     us: 'gofn-us-v1',
     saved: 'gofn-saved',
     follow: 'gofn-follow'
@@ -33,32 +34,50 @@
       else storage.setItem(KEYS[name], String(value));
     });
   }
-  function mergeMap(local, remote, preferLocal) {
-    local = local && typeof local === 'object' && !Array.isArray(local) ? local : {};
-    remote = remote && typeof remote === 'object' && !Array.isArray(remote) ? remote : {};
-    var out = {}, k;
-    Object.keys(remote).forEach(function (key) { out[key] = remote[key]; });
-    Object.keys(local).forEach(function (key) {
-      if (!Object.prototype.hasOwnProperty.call(remote, key) || preferLocal) out[key] = local[key];
+  function objectMap(value) { return value && typeof value === 'object' && !Array.isArray(value) ? value : {}; }
+  function has(map, key) { return Object.prototype.hasOwnProperty.call(map, key); }
+  function sameValue(a, b) { return JSON.stringify(a) === JSON.stringify(b); }
+  function mergeMap(local, remote, baseline, preferLocal) {
+    local = objectMap(local); remote = objectMap(remote);
+    if (!baseline) {
+      var additive = {};
+      Object.keys(remote).forEach(function (key) { additive[key] = remote[key]; });
+      Object.keys(local).forEach(function (key) {
+        if (!has(remote, key) || preferLocal) additive[key] = local[key];
+      });
+      return additive;
+    }
+    baseline = objectMap(baseline);
+    var out = {}, keys = {};
+    [local, remote, baseline].forEach(function (map) { Object.keys(map).forEach(function (key) { keys[key] = true; }); });
+    Object.keys(keys).forEach(function (key) {
+      var lh = has(local, key), rh = has(remote, key), bh = has(baseline, key);
+      var lc = lh !== bh || (lh && bh && !sameValue(local[key], baseline[key]));
+      var rc = rh !== bh || (rh && bh && !sameValue(remote[key], baseline[key]));
+      var useLocal = lc && !rc || (lc && rc && preferLocal);
+      var useRemote = rc && !lc || (lc && rc && !preferLocal) || (!lc && !rc && rh);
+      if (useLocal && lh) out[key] = local[key];
+      else if (useRemote && rh) out[key] = remote[key];
     });
     return out;
   }
-  // Legacy Dex snapshots have no per-mark deletion tombstones. Merge additions from both
-  // devices and use the newer snapshot only when both devices changed the same key.
-  function mergeDexSnapshot(local, remote, localUpdated, remoteUpdated) {
+  // Three-way merge against the last server snapshot: additions, edits and deletions made
+  // on either device are retained. When both devices changed the same key, the newer
+  // snapshot timestamp breaks the tie. With no baseline (first sign-in), merge additively.
+  function mergeDexSnapshot(local, remote, localUpdated, remoteUpdated, baseline) {
     local = local || {}; remote = remote || {};
+    baseline = baseline && typeof baseline === 'object' ? baseline : null;
     var preferLocal = Number(localUpdated || 0) > Number(remoteUpdated || 0);
     var out = {
-      have: mergeMap(local.have, remote.have, preferLocal),
-      hundo: mergeMap(local.hundo, remote.hundo, preferLocal),
-      bt: mergeMap(local.bt, remote.bt, preferLocal),
+      have: mergeMap(local.have, remote.have, baseline && baseline.have, preferLocal),
+      hundo: mergeMap(local.hundo, remote.hundo, baseline && baseline.hundo, preferLocal),
+      bt: mergeMap(local.bt, remote.bt, baseline && baseline.bt, preferLocal),
       m: {}
     };
-    var lm = local.m && typeof local.m === 'object' ? local.m : {};
-    var rm = remote.m && typeof remote.m === 'object' ? remote.m : {};
+    var lm = objectMap(local.m), rm = objectMap(remote.m), bm = baseline ? objectMap(baseline.m) : null;
     var categories = {};
-    Object.keys(rm).concat(Object.keys(lm)).forEach(function (key) { categories[key] = true; });
-    Object.keys(categories).forEach(function (key) { out.m[key] = mergeMap(lm[key], rm[key], preferLocal); });
+    Object.keys(rm).concat(Object.keys(lm), bm ? Object.keys(bm) : []).forEach(function (key) { categories[key] = true; });
+    Object.keys(categories).forEach(function (key) { out.m[key] = mergeMap(lm[key], rm[key], bm && bm[key], preferLocal); });
     return out;
   }
   function mergeUserState(local, remote) {
@@ -88,8 +107,9 @@
     var us = mergeUserState(parse(source.us, {}), parse(target.us, {}));
     return {
       dex: JSON.stringify(dex),
-      stamp: String(Math.max(targetStamp, sourceStamp)),
+      stamp: String(Math.max(targetStamp, sourceStamp) + 1),
       base: String(Math.max(Number(target.base || 0), Number(source.base || 0))),
+      baseline: target.baseline || null,
       us: JSON.stringify(us),
       saved: unionLists(target.saved, source.saved),
       follow: unionLists(target.follow, source.follow)
