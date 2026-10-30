@@ -1,15 +1,17 @@
 # GO Field Notes — Completion Roadmap
 
-_Maintained by the lead coordinator. Last consolidated: 30 Oct 2026 from the QA, Research, UX and Engineering audits (finding IDs QA-\*, RES-\*, UX-\*, ENG-\* refer to those reports)._
+_Maintained by the lead coordinator. Last consolidated: 31 Oct 2026, including post-merge verification of #117 and #118 (finding IDs QA-\*, RES-\*, UX-\*, ENG-\* refer to the audits)._
 
 ## Status legend
 
 ✅ merged & verified in production · 🔧 PR open/in progress · ⏳ queued · 🔒 needs owner decision/permission
 
-## Recently completed — 30 Oct 2026
+## Recently completed — 31 Oct 2026
 
 - ✅ **#102 — roadmap and specialist agents:** added the UX, QA, research and engineering workstream definitions and consolidated roadmap.
 - ✅ **#113 — Today mobile actions:** reflowed the compact event-card actions for 390px and 320px phones, preserving readable labels and 44px touch targets; browser regressions and the Cloudflare Workers production build passed.
+- ✅ **#117 — Today activity summary:** separated in-game and in-person live counts while keeping overseas in-person event cards visible in the Happening now agenda; activity-count, narrow-screen and browser regressions passed, with production verification included in #118.
+- ✅ **#118 — collection safety and offline shell:** account-scoped local partitions preserve device-only marks through first sign-in and keep account caches isolated; revision-checked `/api/dex` writes and saved-baseline three-way reconciliation prevent stale whole-snapshot overwrites. Exact entry-page assets are precached, and static responses are covered by the security-header contract. JavaScript, Python, all browser shards, CodeQL and the post-merge Cloudflare Workers production build passed. No D1 migration or R2/infrastructure change was applied.
 - ✅ **#112 — visible data-load recovery:** added an accessible event-data error panel with a retry action; browser regressions and the Cloudflare Workers production build passed.
 - ✅ **#100 — Today attention:** review actions navigate reliably; review counts refresh immediately; empty recent-updates panels disappear; acknowledged updates stay dismissed; meaningful event changes are tracked between visits.
 - ✅ **#101 — curated data refresh:** snapshot moved to 30 Oct 2026; rotations, Raid/Spotlight Hours and Max Monday schedules were extended into early December; event/source URLs and the 1★ boss parsing correction were included. Ongoing freshness monitoring remains a separate task.
@@ -19,26 +21,26 @@ _Maintained by the lead coordinator. Last consolidated: 30 Oct 2026 from the QA,
 - ✅ **#110 — importer date guard:** source-page matches are rejected when known article and event date windows do not overlap; unknown dates remain unknown rather than being guessed.
 - ✅ **Community location discovery:** corrected the Reddit permalink regex, added an explicit Node syntax-check regression test, and confirmed the scheduled discovery workflow ran successfully. Candidate locations remain community-reported, not official event pins.
 
-All merged milestones above passed their post-merge test checks; the latest main commit also passed the Cloudflare Workers production build.
+All merged milestones above passed their post-merge checks. Latest main: `106f97007ec50e5f131ee42d78657638f185e993`; Cloudflare Workers production build `4f50454f-90ec-40de-bd4c-0e7e283cebb9` completed successfully.
 
 ## P0 — Critical security / data integrity
 
 - ✅ **ENG-1** PIN gate accepted the literal "undefined" when `SYNC_PIN` unset (preview deploys) — fixed in #99, verified in deployed Worker.
 - 🔒 **ENG-1b** Preview deployments bind the production R2 bucket (private prices/places, nightly D1 backups). Needs a separate preview bucket and/or Cloudflare Access on previews; old preview versions still run pre-fix code.
-- 🔧 **QA-1** Sign-in/register wiped device-only collection marks — PR #118 partitions local state by identity and merges guest marks into the first account before syncing; awaiting regression and production verification.
-- 🔧 **QA-2/ENG-4** PR #118 adds revision-checked writes plus a saved-baseline three-way merge to the legacy Dex snapshot API. Independent additions and deletions are reconciled across devices; concurrent edits to the same mark use the newer snapshot timestamp. PR #114 remains separate, unmerged schema preparation.
+- ✅ **QA-1** Sign-in/register no longer wipes device-only collection marks — #118 partitions local state by identity and merges guest marks into the first account before syncing; account-transition regressions and post-merge production verification passed.
+- ✅ **QA-2/ENG-4** #118 adds atomic revision-checked writes plus saved-baseline three-way merge to the legacy Dex snapshot API. Independent additions/deletions reconcile across devices; same-mark concurrent edits use the newer snapshot timestamp. Stale writes are rejected and return the current server snapshot. PR #114 remains separate, unmerged additive schema preparation; its migration has not been applied.
 
 ## P1 — Major defects / reliability
 
 - 🔧 **RES-1/2/3/4/12** Snapshot refreshed on 30 Oct; rotation/Max/Spotlight/Raid Hour now extend into early Dec and the 1★ boss parsing issue was corrected in #101. Remaining: automated freshness monitoring and a separate consistency check for `raidNow`/`Upcoming`.
-- 🔧 **QA-3/QA-4** PR #118 audits every local script/stylesheet URL referenced by the entry page against the service-worker shell and adds the missing versioned URLs; the offline navigation redirect/fallback still needs an end-to-end recheck.
+- 🔧 **QA-3/QA-4** #118 audits every local script/stylesheet URL referenced by the entry page against the service-worker shell and adds missing versioned URLs; browser tests confirm the app and local-state helper execute after an offline reload. An uncached-route offline redirect/fallback scenario still needs a separate end-to-end check.
 - ✅ **ENG-2** Security headers/CSP are applied by the Worker wrapper to every response, including static assets; the header contract is covered by `test/security.test.mjs`.
 - ⏳ **QA-5/RES-5/QA-7** In-person events lack a timezone; Sendai/Mexico City merged under one name in some viewer zones.
 - ✅ **RES-8** Reject importer source-page matches when known article and event dates do not overlap; retain existing link/title matching when either date is unknown. Covered by focused regression tests and the post-merge production build.
 - ⏳ **RES-9** Weaker sources can overwrite official data (schedule-audit worldFixes; Reddit coords to public data).
 - ✅ **UX-1** Visible, accessible event-data recovery panel and retry action in #112; browser regression and production build verified.
 - ✅ **UX-2** Today event-card actions stay within 390px and 320px phone layouts; browser regression and production build verified in #113.
-- 🔧 **UX-3** Today live summary separates in-game and in-person activity counts while keeping overseas in-person event cards visible; awaiting regression and production verification.
+- ✅ **UX-3** Today live summary separates in-game and in-person activity counts while keeping overseas in-person event cards visible by default; regression, mobile browser and post-merge production checks passed.
 - ⏳ **ENG-3** PIN brute-force: no global failure ceiling.
 
 ## P2 — Important UX / functionality / performance
