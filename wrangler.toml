@@ -33,14 +33,13 @@ crons = ["30 * * * *"]
 
 # ---------------------------------------------------------------------------
 # Preview deployments (any branch except main). Previews do NOT inherit the bindings, secrets or triggers above, so
-# everything a preview may touch is declared here. It gets its own staging database and no production secrets.
+# everything a preview may touch is declared here. The preview keeps its own staging database and no production secrets.
 # It does not take over the production route/custom domain, and Cron Triggers never run in a preview.
 [previews.vars]
 ENVIRONMENT = "preview"
 
-[[previews.r2_buckets]]
-binding = "MEDIA"
-bucket_name = "go-field-notes-images"
+# Intentionally no previews.r2_buckets binding: production R2 contains private Places/prices and D1 backups.
+# Without MEDIA, media requests fall back to public assets, private-data endpoints return empty data, and backups skip.
 
 [[previews.d1_databases]]
 binding = "DB"
