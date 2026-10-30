@@ -61,7 +61,7 @@ function placeOfStop(t) {
   const hits = PLACES.map(p => ({ p, i: t.search(p.re) })).filter(x => x.i >= 0).sort((a, b) => (b.p.label.includes(",") - a.p.label.includes(",")) || a.i - b.i);
   return hits.length ? { place: hits[0].p.label, area: hits[0].p.area } : null;
 }
-export const IN_PERSON = /pok[eé]mon[ -]run|city safari|safari zone|wild area|go fest|go tour|pok[eé]xciting|airport|in[- ]person|venue|know before you go|anniversary|collaborat|partners? with|museum|stadium|pok[eé]mon center|go lab|\blab\b|tour\b|festival of lights|exclusive|only available in|limited to/i;
+export const IN_PERSON = /pok[eé]mon[ -]run|city safari|safari zone|wild area|go fest|go tour|pok[eé]xciting|airport|in[- ]person|taking place at|venue|know before you go|anniversary|collaborat|partners? with|museum|stadium|pok[eé]mon center|go lab|\blab\b|tour\b|festival of lights|exclusive|only available in|limited to/i;
 export const SKIP_NEWS = /this week in|news this week|weekly roundup|pok[eé]mon news/i;
 const SKIP = /community day|spotlight hour|raid hour|raid day|max monday|battle league|go pass|season |research breakthrough|shadow raid/i;
 
@@ -107,13 +107,18 @@ export function stopsFromPage(page, today = new Date().toISOString().slice(0, 10
   if (SKIP_NEWS.test(title) || !(IN_PERSON.test(title) || IN_PERSON.test(text.slice(0, 1500)))) return [];
   const stops = [], seen = new Set();
   for (const l of page.lines || []) {
-    const t = String(l.text || "").trim();
-    if (t.length < 12 || t.length > 220) continue;
-    const range = parseDateRange(t, +today.slice(0, 4)), where = range && placeOfStop(t);
-    if (!where) continue;
-    const key = where.place + "|" + range.start;
-    if (seen.has(key)) continue;
-    seen.add(key); stops.push({ where, range });
+    // Official announcements sometimes put multiple city/date stops in one paragraph.
+    // Split before applying the per-stop length limit so the full paragraph is not discarded.
+    const segments = String(l.text || "").split(/,\s*and\s+at\b/i);
+    for (const segment of segments) {
+      const t = String(segment || "").trim();
+      if (t.length < 12 || t.length > 220) continue;
+      const range = parseDateRange(t, +today.slice(0, 4)), where = range && placeOfStop(t);
+      if (!where) continue;
+      const key = where.place + "|" + range.start;
+      if (seen.has(key)) continue;
+      seen.add(key); stops.push({ where, range });
+    }
   }
   if (stops.length < 2 || new Set(stops.map(s => s.where.place)).size < 2 || new Set(stops.map(s => s.range.start)).size < 2) return [];
   const city = s => s.where.place.split(",")[0], count = {};
