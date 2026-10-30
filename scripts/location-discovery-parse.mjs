@@ -50,10 +50,10 @@ export const placeParts = value => {
   if (raw.includes(",")) {
     const parts = raw.split(",").map(part => part.trim()).filter(Boolean);
     if (parts.length < 2) return null;
-    country = parts.pop().replace(/\\s*\\([^)]*\\)/g, "").trim();
-    city = parts.join(",").replace(/\\s*\\([^)]*\\)/g, "").trim();
+    country = parts.pop().replace(/\s*\([^)]*\)/g, "").trim();
+    city = parts.join(",").replace(/\s*\([^)]*\)/g, "").trim();
   } else {
-    const match = /^(.+?)\\s*\\(([^()]*)\\)$/.exec(raw);
+    const match = /^(.+?)\s*\(([^()]*)\)$/.exec(raw);
     if (!match) return null;
     country = match[1].trim();
     city = match[2].trim();
