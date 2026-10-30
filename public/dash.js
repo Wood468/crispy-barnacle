@@ -1268,7 +1268,7 @@
     var missing = opportunities().filter(function (x) { return x.o.state === 'missing'; }).length;
     var saved = savedList().length;
     var cards = [];
-    if (next24) cards.push({key:'events',icon:'◷',title:'Events worth checking',detail:next24 + ' live or starting in the next 24 hours',count:next24,tab:'events'});
+    if (next24) cards.push({key:'events',icon:'◷',title:'Live & starting soon',detail:next24 + ' events live or starting in the next 24 hours',count:next24,tab:'events'});
     if (missing) cards.push({key:'collect',icon:'◇',title:'Pokémon you still need',detail:missing + ' collection gaps matched to upcoming events',count:missing,tab:'collect'});
     if (saved) cards.push({key:'saved',icon:'☆',title:'Your saved events',detail:saved + ' events in your watchlist',count:saved,tab:'saved'});
     var review = $('igcount');
@@ -1325,10 +1325,11 @@
     renderTypes(); renderStrip(); renderTimeline(); window.scrollTo(0, 0);
   });
   document.addEventListener('gofn-marks', function () { renderPrio(); renderTimeline(); renderOpps(); renderSaved(); renderActionCentre(); });
+  document.addEventListener('gofn-review-updated', renderActionCentre);
   document.addEventListener('click', function (e) {
     var b = e.target.closest && e.target.closest('[data-quick-go]'); if (!b) return;
     var key = b.getAttribute('data-quick-go');
-    if (key === 'review') { var review = $('hireview'); if (review && !review.hidden) review.click(); return; }
+    if (key === 'review') { var saved = document.querySelector('nav.tabs button[data-tab="saved"]'); if (saved) saved.click(); setTimeout(function () { var menu = document.querySelector('#subnav-saved [data-sub="menu"]'); if (menu) menu.click(); setTimeout(function () { var target = $('igreview'); if (target && !target.hidden) target.scrollIntoView({ block: 'start' }); }, 150); }, 80); return; }
     var tab = document.querySelector('nav.tabs button[data-tab="' + key + '"]'); if (tab) tab.click();
     if (key === 'events') { typeSel = 'soon'; selDay = ''; evQ = ''; var sub = document.querySelector('#subnav-events button[data-sub="timeline"]'); if (sub) sub.click(); renderTypes(); renderStrip(); renderTimeline(); }
     if (key === 'collect') { var subc = document.querySelector('#subnav-collect button[data-sub="opps"]'); if (subc) subc.click(); }
