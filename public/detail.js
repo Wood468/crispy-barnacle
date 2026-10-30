@@ -107,7 +107,7 @@
     return hit;
   }
   function srcName(d, id) { var s = (d.sources || []).filter(function (x) { return x.id === id; })[0]; return s ? s.name : id; }
-  /* Icons for each group: the game's own small pictures where the site has them. */
+  /* Matching line icons keep every event-detail category visually consistent. */
   var CATICON = {
     tickets: 'M3 7h18v3a2 2 0 0 0 0 4v3H3v-3a2 2 0 0 0 0-4V7Z M12 7v10',
     bonuses: 'M12 3l1.8 6.2L20 11l-6.2 1.8L12 19l-1.8-6.2L4 11l6.2-1.8L12 3Z',
