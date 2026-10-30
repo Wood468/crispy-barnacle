@@ -267,7 +267,7 @@
     h += '<label class="evd-lead"' + (saved ? '' : ' hidden') + '>🔔 Remind me <select data-lead="' + esc(ev.id) + '" aria-label="When to remind me">' + [['', 'Morning of the event'], ['1440', '1 day before'], ['180', '3 hours before'], ['60', '1 hour before'], ['off', 'Don\'t remind me']].map(function (o) { return '<option value="' + o[0] + '"' + (String(X.usGet('pref:lead:' + ev.id) || '') === o[0] ? ' selected' : '') + '>' + o[1] + '</option>'; }).join('') + '</select></label>';
     if (ev.img) h += '<img class="evd-banner" src="' + esc(ev.img) + '" alt="" referrerpolicy="no-referrer" data-err="rm">';
     h += '<header class="evd-hero" style="--k:' + k[1] + ';--kf:' + k[2] + '"><div class="evd-art">' + X.featArts(ev, 3) + '</div><span class="kind">' + esc(k[0]) + '</span><h2 id="evd-t">' + esc(ev.name) + '</h2>'
-      + '<p class="evc-when">' + esc(X.whenText(ev)) + '</p><p class="cdn evd-cd">' + esc(X.countdown(ev)) + '</p>' + X.signalChips(ev, 8, true) + X.cpRows(ev) + '<div class="evd-chips">' + X.statusChip(ev) + '</div></header>';
+      + '<p class="evc-when">' + esc(X.timeMeta(ev)) + '</p><p class="cdn evd-cd">' + esc(X.countdown(ev)) + '</p>' + X.signalChips(ev, 8, true) + X.cpRows(ev) + '<div class="evd-chips">' + X.statusChip(ev) + '</div></header>';
     h += '<nav class="evd-jump" aria-label="Jump to event details">' + (hasHighlights ? '<a href="#evd-highlights">Highlights</a>' : '') + '<a href="#evd-information">Details</a>' + (venues.length ? '<a href="#evd-locations">Locations</a>' : '') + '<a href="#evd-sources">Sources</a></nav>';
     h += '<p class="evd-fresh">Event data as of ' + esc(G.D.asOf || '') + '</p>';
     var scheduleNotes = e && (e.scheduleNotes || e.scheduleNote);
