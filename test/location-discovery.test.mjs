@@ -1,8 +1,9 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { spawnSync } from "node:child_process";
+import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
-import { coords, fetchWithRateLimit, redditSearchUrl, retryAfterMs, xmlItems } from "../scripts/location-discovery-parse.mjs";
+import { coords, fetchWithRateLimit, redditSearchUrl, reportDate, retryAfterMs, xmlItems } from "../scripts/location-discovery-parse.mjs";
 
 const discoveryScript = fileURLToPath(new URL("../scripts/location-discovery.mjs", import.meta.url));
 
@@ -27,6 +28,23 @@ test("Atom entry parsing accepts link href and summary content", () => {
     link: "https://www.reddit.com/r/pokemongo/comments/def/play",
     desc: "Coordinates: -33.8688, 151.2093"
   }]);
+});
+
+test("RSS and Atom publication timestamps are retained separately from verification", () => {
+  const rss = '<rss><channel><item><title>Community report</title><link>https://www.reddit.com/r/pokemongo/comments/abc/report</link><pubDate>Fri, 30 Oct 2026 06:30:00 GMT</pubDate><description>Coordinates: 37.7749, -122.4194</description></item></channel></rss>';
+  const atom = '<feed><entry><title>Another report</title><link href="https://www.reddit.com/r/pokemongo/comments/def/report"/><published>2026-10-30T07:45:00Z</published><summary>Coordinates: -33.8688, 151.2093</summary></entry></feed>';
+  assert.equal(xmlItems(rss)[0].publishedAt, "Fri, 30 Oct 2026 06:30:00 GMT");
+  assert.equal(xmlItems(atom)[0].publishedAt, "2026-10-30T07:45:00Z");
+  assert.equal(reportDate(xmlItems(rss)[0].publishedAt), "2026-10-30");
+  assert.equal(reportDate(xmlItems(atom)[0].publishedAt), "2026-10-30");
+  assert.equal(reportDate("not a publication date"), null);
+});
+
+test("discovery records report dates but never assigns a verified date to community coordinates", () => {
+  const source = readFileSync(discoveryScript, "utf8");
+  assert.match(source, /coordinateStatus: "community-reported"/);
+  assert.match(source, /\.\.\.\(reportedAt \? \{ reportedAt \} : \{\}\)/);
+  assert.doesNotMatch(source, /\bverified\s*:/);
 });
 
 test("entity decoding is single-pass and does not turn nested entities into markup", () => {
