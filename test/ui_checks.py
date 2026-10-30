@@ -116,8 +116,6 @@ with sync_playwright() as p:
                 status: 'official_confirmed', source: 'Fixture'
             }));
         }""")
-        # The static event-moves feed is loaded by the detail module; allow its fetch to settle.
-        highlight_page.wait_for_timeout(750)
         highlight_page.evaluate("GODETAIL.open('zorua')")
         highlight_page.locator('#evd').wait_for(state='visible')
         highlight_page.locator('#evd .evd-jump a[href="#evd-highlights"]').wait_for(state='attached')
