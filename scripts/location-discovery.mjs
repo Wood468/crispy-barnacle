@@ -3,7 +3,7 @@
 // into public/places.json only when an event, coordinate pair and source permalink are all present.
 // No API credentials, scraping bypasses, or fabricated coordinates.
 import { readFile, writeFile } from "node:fs/promises";
-import { coords, redditSearchUrl, xmlItems } from "./location-discovery-parse.mjs";
+import { coords, fetchWithRateLimit, redditSearchUrl, xmlItems } from "./location-discovery-parse.mjs";
 
 const ROOT = new URL("../public/", import.meta.url);
 const WORLD = JSON.parse(await readFile(new URL("world-events.json", ROOT), "utf8"));
@@ -11,13 +11,21 @@ const FILE = new URL("places.json", ROOT);
 const DATA = JSON.parse(await readFile(FILE, "utf8"));
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 const seen = new Set(DATA.places.map(p => p.id));
-let added = 0, checked = 0, errors = [];
+let added = 0, checked = 0, rateLimitCount = 0, errors = [];
 const upcoming = (WORLD.events || []).filter(e => e && e.id && e.name && e.place && e.start && !/worldwide|play from anywhere|participating .* malls|airports/i.test(e.place)).slice(0, 80);
 for (const ev of upcoming) {
   const url = redditSearchUrl(ev.name);
   try {
-    const res = await fetch(url, { headers: { "user-agent": "GOFieldNotesLocationDiscovery/1.0 (public event research; contact: project repository)", accept: "application/atom+xml, application/rss+xml" } });
-    if (!res.ok) { errors.push("Reddit HTTP " + res.status); continue; }
+    const result = await fetchWithRateLimit(url, { headers: { "user-agent": "GOFieldNotesLocationDiscovery/1.0 (public event research; contact: project repository)", accept: "application/atom+xml, application/rss+xml" } });
+    const res = result.response;
+    rateLimitCount += result.rateLimits;
+    if (result.deferred) {
+      errors.push(result.reason === "long-cooldown"
+        ? "Reddit requested a long cooldown; deferring to the next scheduled run."
+        : "Reddit remained rate-limited after one retry; deferring remaining events to the next scheduled run.");
+      break;
+    }
+    if (!res.ok) { errors.push("Reddit HTTP " + res.status); await sleep(1200); continue; }
     const xml = await res.text();
     for (const post of xmlItems(xml)) {
       if (!post.link || !/^https:\/\/(www\.)?reddit\.com\//.test(post.link)) continue;
@@ -40,8 +48,15 @@ for (const ev of upcoming) {
       }
     }
     checked++;
+    if (rateLimitCount >= 2) {
+      errors.push("Stopped after repeated Reddit rate limiting; remaining events deferred to the next scheduled run.");
+      break;
+    }
     await sleep(1200);
-  } catch (e) { errors.push(String(e.message || e).slice(0, 160)); }
+  } catch (e) {
+    errors.push(String(e.message || e).slice(0, 160));
+    await sleep(1200);
+  }
 }
 if (added) {
   DATA.updated = new Date().toISOString().slice(0, 10);

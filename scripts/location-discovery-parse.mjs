@@ -27,6 +27,45 @@ export const redditSearchUrl = eventName => {
   return url;
 };
 
+// Parse Retry-After safely. A missing/invalid header gets a modest cooldown;
+// a server-requested wait longer than five minutes defers this run to the next schedule.
+export const retryAfterMs = (value, now = Date.now()) => {
+  const fallback = 15_000;
+  if (value == null || String(value).trim() === "") return fallback;
+  const raw = String(value).trim();
+  const seconds = Number(raw);
+  const delay = Number.isFinite(seconds) && seconds >= 0
+    ? seconds * 1000
+    : Date.parse(raw) - now;
+  if (!Number.isFinite(delay)) return fallback;
+  if (delay > 300_000) return null;
+  return Math.max(1_000, delay);
+};
+
+// Retry a rate-limited request once, using the server's cooldown when available.
+// Dependencies are injectable so the retry path can be tested without network access.
+export const fetchWithRateLimit = async (
+  url,
+  options,
+  fetchImpl = globalThis.fetch,
+  sleepImpl = ms => new Promise(resolve => setTimeout(resolve, ms))
+) => {
+  const first = await fetchImpl(url, options);
+  if (first.status !== 429) return { response: first, rateLimits: 0, deferred: false, reason: null };
+  const header = first.headers && typeof first.headers.get === "function" ? first.headers.get("retry-after") : null;
+  const wait = retryAfterMs(header);
+  if (wait === null) return { response: first, rateLimits: 1, deferred: true, reason: "long-cooldown" };
+  await sleepImpl(wait);
+  const retry = await fetchImpl(url, options);
+  const repeated = retry.status === 429;
+  return {
+    response: retry,
+    rateLimits: repeated ? 2 : 1,
+    deferred: repeated,
+    reason: repeated ? "repeated-429" : null
+  };
+};
+
 export const coords = text => {
   const out = [];
   const re = /(?<![\d.])(-?\d{1,2}\.\d{3,})(?![\d.])\s*[,; ]\s*(?<![\d.])(-?\d{1,3}\.\d{3,})(?![\d.])/g;
