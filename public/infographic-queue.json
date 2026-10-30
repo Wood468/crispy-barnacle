@@ -1,6 +1,39 @@
 {
- "updated": "2026-10-30T01:29:46.536Z",
+ "updated": "2026-10-30T07:56:14.422Z",
  "items": [
+  {
+   "linked": false,
+   "id": "discord:1565629031896846377",
+   "title": "H PT2",
+   "image": "/infographics/g47ix/discord-1565629031896846377.png",
+   "post": "https://discord.com/channels/@me/1558793395198099618/1565629031896846377",
+   "creator": "",
+   "source": "discord",
+   "publishedAt": "2026-10-30T07:30:49.185000+00:00",
+   "note": "Match is not strong enough (low).",
+   "history": false,
+   "signals": [
+    "picture text names the event"
+   ],
+   "text": "ye ae D aq ¢g = 2~ 5 He (Ow ity 10:00 am 8:00 pm New 50 2 Shiny Halloween GS, ag Event-themed map Encounters WY SS a decorations t+ t+ SUPER MAX DEBUT Ee [NIGHT SHADE* 2 im + a 2x Catch Stardust 2x Catch Candy c vy GO Pass Deluxe 3 q+ tl $7.99 A Follow for more G47|1X £) ax | o www.g47ix.pro Ag A remix of the Lavender Town music will be playing nightly during this year’s Halloween event. Be",
+   "guesses": [
+    {
+     "eventId": "leekduck:go-pass-november-2026",
+     "eventTitle": "GO Pass: November",
+     "score": 0.396
+    },
+    {
+     "eventId": "leekduck:go-pass-october-2026",
+     "eventTitle": "GO Pass: October",
+     "score": 0.396
+    },
+    {
+     "eventId": "leekduck:max-mondays-2026-11-02",
+     "eventTitle": "Dynamax Machop during Max Monday",
+     "score": 0.325
+    }
+   ]
+  },
   {
    "linked": true,
    "id": "discord:1565266679955726382",

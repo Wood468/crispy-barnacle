@@ -7,6 +7,112 @@
   "eventImages": {},
   "candidates": [
     {
+      "id": "discord:1565629054319591515",
+      "source": "discord",
+      "creator": "",
+      "title": "NOV CONTENT G47IX",
+      "url": "https://discord.com/channels/@me/1558793395198099618/1565629054319591515",
+      "publishedAt": "2026-10-30T07:30:54.531000+00:00",
+      "imageUrl": "https://cdn.discordapp.com/attachments/886998693897719819/1561833025350795375/NOV_CONTENT_G47IX.png?ex=6ae4f8da&is=6ae3a75a&hm=48e991e438ba747cd6473daef2f345494ff41e707d8bbceef789cb208babb19e&",
+      "reviewStatus": "weekly",
+      "decision": "pending",
+      "ocrChecked": true,
+      "ocrText": "if Fe xy N OVE M B E R A Research Breakthrough Complete Field Research and unlock encounters wy with Season-themed Pokémon each week. as in Pokémon GO! m y Ma || Showcase ( WY Wednesday c GO Battle \\f PS Friendship r Scenic 7 KN Monday ©. Tuesday 4 Raid Hour Thursday SW Friday ct, Sunday One Rare Candy XL Featuring up to 20 One Rare Candy XL Complete a total of up to 3 Special Trades More Pokémon in the for completing in-person different Categories for completing 50 GBL Battles 2 Candy XL from trade wild and Boosted incense on Routes Max Battles. Enter up to 5 Showcases in-person Raid Battles. 4x Win Stardust Incr. chance of Lucky Trade Encounter Mateo 3x a a+ ie t+ + t+ ++ ++ t+ Vas t+ yA ay koh ; Kak we iV dente oO ‘ vA RAIDS 4a¥s “9 13 16 24 25 NOV NOV NOV NOV NOV NOV NOV DEC \\ vz t+ ++ t+ t+ ++ ++ t+ piel vA tC eZ RAID 10 it 25 f ee HOUR NOV Nov NOV yf NOV rs i Ho ae 5 =e ye woe ef eR, wa i +4 Ov NOV NO MAX MONDAY aD & <p G ap EL | Sy: be a: DMAX Nov NOV re NO’ MAX NOV HOUR BATTLES wf a oy Vag © SPOTLIGHT HOUR ax <¢ a a MEGA (pt: a 16 24 25 2x Evolution XP xP) 2* Catch Candy = RAIDS oct [| Nov NOV NOV NO DEC ea € ey Halloween GO Wild as EVENTS f www.pokemongo.com/ events Pt. Il Area Global Lad N15 Nov || Nov Into the Duce Se Wild Metal Trails =@ ae Son TT, Twilight fy Super Meg: ie) Wishes Raid Da vy fF 11.202 Follow for more G47|X £) (oC) & X ie) ao www.g47ix.pro RAIS",
+      "eventMatch": {
+        "eventId": "wag",
+        "eventTitle": "GO Wild Area: Global",
+        "score": 0.808,
+        "confidence": "high",
+        "matchedTerms": [
+          "wild",
+          "area",
+          "global",
+          "raids",
+          "max",
+          "battles",
+          "sunday",
+          "nov",
+          "poke",
+          "mon",
+          "pokemongo",
+          "com"
+        ],
+        "alternatives": [
+          {
+            "eventId": "wag",
+            "eventTitle": "GO Wild Area: Global",
+            "score": 0.808
+          },
+          {
+            "eventId": "into",
+            "eventTitle": "Into the Wild",
+            "score": 0.799
+          },
+          {
+            "eventId": "leekduck:into-the-wild-2026",
+            "eventTitle": "Into the Wild",
+            "score": 0.794
+          }
+        ],
+        "method": "title-to-public/data.json heuristic",
+        "requiresHumanVerification": true
+      },
+      "reviewNote": "Two events look alike. Please choose.",
+      "signals": [
+        "picture text names the event",
+        "posted around the event"
+      ],
+      "matchScore": 4,
+      "stagedPath": "/infographics/g47ix/discord-1565629054319591515.webp"
+    },
+    {
+      "id": "discord:1565629031896846377",
+      "source": "discord",
+      "creator": "",
+      "title": "H PT2",
+      "url": "https://discord.com/channels/@me/1558793395198099618/1565629031896846377",
+      "publishedAt": "2026-10-30T07:30:49.185000+00:00",
+      "imageUrl": "https://cdn.discordapp.com/attachments/886998693897719819/1557800299991924837/H_PT2.png?ex=6ae57656&is=6ae424d6&hm=88fcf7cc78aa29100af7c2f19790bcb5f9e4188df9bfc4afdbdba3157de69813&",
+      "reviewStatus": "needs_review",
+      "decision": "pending",
+      "ocrChecked": true,
+      "ocrText": "ye ae D aq ¢g = 2~ 5 He (Ow ity 10:00 am 8:00 pm New 50 2 Shiny Halloween GS, ag Event-themed map Encounters WY SS a decorations t+ t+ SUPER MAX DEBUT Ee [NIGHT SHADE* 2 im + a 2x Catch Stardust 2x Catch Candy c vy GO Pass Deluxe 3 q+ tl $7.99 A Follow for more G47|1X £) ax | o www.g47ix.pro Ag A remix of the Lavender Town music will be playing nightly during this year’s Halloween event. Be",
+      "eventMatch": {
+        "eventId": "leekduck:go-pass-november-2026",
+        "eventTitle": "GO Pass: November",
+        "score": 0.396,
+        "confidence": "low",
+        "matchedTerms": [
+          "pass"
+        ],
+        "alternatives": [
+          {
+            "eventId": "leekduck:go-pass-november-2026",
+            "eventTitle": "GO Pass: November",
+            "score": 0.396
+          },
+          {
+            "eventId": "leekduck:go-pass-october-2026",
+            "eventTitle": "GO Pass: October",
+            "score": 0.396
+          },
+          {
+            "eventId": "leekduck:max-mondays-2026-11-02",
+            "eventTitle": "Dynamax Machop during Max Monday",
+            "score": 0.325
+          }
+        ],
+        "method": "title-to-public/data.json heuristic",
+        "requiresHumanVerification": true
+      },
+      "reviewNote": "Match is not strong enough (low).",
+      "signals": [
+        "picture text names the event"
+      ],
+      "matchScore": 2,
+      "stagedPath": "/infographics/g47ix/discord-1565629031896846377.png"
+    },
+    {
       "id": "discord:1565266679955726382",
       "source": "discord",
       "creator": "",
