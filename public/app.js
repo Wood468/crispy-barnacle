@@ -886,7 +886,7 @@ Promise.all([fetch('/data.json').then(function(r){return r.json()}),fetch('/art/
           baseUpdated=Number(conflict.updated)||0;
           stamp=Math.max(stamp,Date.now());
           saveLocal();syncRows();renderDex();renderShiny();
-          dirty=true;continue;
+          dirty=JSON.stringify(dex)!==JSON.stringify(remote);continue;
         }
         if(r.status===428){online=false;setSync('update');return}
         if(r.status===401){online=false;setSync(pin?'badpin':'signedout');return}
