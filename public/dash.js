@@ -1197,13 +1197,15 @@
   function renderHomeBrief(t) {
     t = t || now();
     var endDay = addDays(startOfDay(t), 1);
-    var liveCount = EV.filter(function (e) { return phase(e, t) === 'live' && !e.long && !isHidden(e.id) && !kindHidden(e.kind); }).length;
+    var liveEvents = EV.filter(function (e) { return phase(e, t) === 'live' && !e.long && !isHidden(e.id) && !kindHidden(e.kind); });
     var today = EV.filter(function (e) { var ph = phase(e, t); return !e.long && !isHidden(e.id) && !kindHidden(e.kind) && (ph === 'live' || (ph === 'soon' && e.start < endDay)); });
     var regionalToday = regList().filter(function (e) { return e.start <= t && e.end > t; });
-    liveCount += regionalToday.length;
+    var activity = LIB.liveActivityCounts(liveEvents, regionalToday);
+    var liveCount = activity.total;
     var todayCount = today.filter(function (e) { return e.start > t; }).length;
     var briefTitle = $('day-brief-title'), briefNote = $('day-brief-note');
-    if ($('day-live-count')) $('day-live-count').textContent = String(liveCount);
+    if ($('day-live-count')) $('day-live-count').textContent = String(activity.inGame);
+    if ($('day-inperson-count')) $('day-inperson-count').textContent = String(activity.inPerson);
     if ($('day-upcoming-count')) $('day-upcoming-count').textContent = String(todayCount);
     if (briefTitle) briefTitle.textContent = liveCount ? (liveCount === 1 ? 'Something is happening now' : liveCount + ' things happening now') : (todayCount ? 'Your day is coming up' : 'A quieter day in the game');
     if (briefNote) briefNote.textContent = liveCount || todayCount ? (todayCount ? todayCount + ' more starting today' : 'See what is live and what is next.') : 'No scheduled events today. Here is what is coming up next.';
