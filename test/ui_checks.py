@@ -1048,6 +1048,17 @@ with sync_playwright() as p:
         check('PWA: versioned app and local-state scripts execute offline',
               ppg.evaluate("!!window.GO && !!window.GOLOCAL && !!window.GONET && !!window.GO.dex()"),
               ppg.evaluate("({app:!!window.GO,localState:!!window.GOLOCAL,network:!!window.GONET})"))
+        offline_cached=ppg.evaluate("""async()=>{for(const name of (await caches.keys()).filter(n=>n.startsWith('gofn-shell-'))){const c=await caches.open(name);if(await c.match('/offline.html'))return true;}return false;}""")
+        check('PWA: human-readable offline fallback is precached', offline_cached)
+        ppg.goto('http://localhost:8791/__offline_app_shell_probe__',wait_until='domcontentloaded',timeout=15000)
+        check('PWA: uncached offline navigation falls back to the app shell',
+              ppg.locator('h1').inner_text().strip().lower()=='go field notes',
+              ppg.evaluate("({title:document.title,h1:document.querySelector('h1')&&document.querySelector('h1').innerText,url:location.href})"))
+        ppg.evaluate("""async()=>{for(const name of (await caches.keys()).filter(n=>n.startsWith('gofn-shell-'))){const c=await caches.open(name);await c.delete('/');await c.delete('/index.html');}}""")
+        ppg.goto('http://localhost:8791/__offline_fallback_probe__',wait_until='domcontentloaded',timeout=15000)
+        check('PWA: offline page appears when the app shell is unavailable',
+              ppg.title()=="You're offline · GO Field Notes" and ppg.locator('h1').inner_text().strip()=="You're offline",
+              ppg.evaluate("({title:document.title,h1:document.querySelector('h1')&&document.querySelector('h1').innerText,url:location.href})"))
         pctx.close()
     b.close()
 print('\nFAILED:',fails if fails else 'none')
