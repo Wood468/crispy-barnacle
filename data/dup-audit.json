@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-30T07:16:34.362Z",
+ "updated": "2026-10-30T14:18:29.866Z",
  "joinedThisRun": [
   {
    "kept": "w-pokemon-fossil-museum-2026",
@@ -85,8 +85,85 @@
     "list": "world"
    },
    "why": "same dates, 3 shared words (100%)"
+  },
+  {
+   "keep": {
+    "id": "dyntrails",
+    "name": "Dynamax Trails",
+    "place": "",
+    "start": "2026-11-16",
+    "end": "2026-11-23",
+    "list": "curated"
+   },
+   "dupe": {
+    "id": "w-dynamax-trails",
+    "name": "Dynamax Trails",
+    "place": "",
+    "start": "2026-11-16",
+    "end": "2026-11-23",
+    "list": "world"
+   },
+   "why": "same dates, 2 shared words (100%)"
+  },
+  {
+   "keep": {
+    "id": "eternamax",
+    "name": "Eternamax Eternatus Returns",
+    "place": "",
+    "start": "2026-11-21",
+    "end": "2026-11-21",
+    "list": "curated"
+   },
+   "dupe": {
+    "id": "w-eternamax-eternatus-max-battles",
+    "name": "Eternamax Eternatus Max Battles",
+    "place": "",
+    "start": "2026-11-21",
+    "end": "2026-11-21",
+    "list": "world"
+   },
+   "why": "same dates, 2 shared words (100%)"
+  },
+  {
+   "keep": {
+    "id": "twilightwishes",
+    "name": "Twilight Wishes",
+    "place": "",
+    "start": "2026-11-24",
+    "end": "2026-11-30",
+    "list": "curated"
+   },
+   "dupe": {
+    "id": "w-twilight-wishes",
+    "name": "Twilight Wishes",
+    "place": "",
+    "start": "2026-11-24",
+    "end": "2026-11-30",
+    "list": "world"
+   },
+   "why": "same dates, 2 shared words (100%)"
   }
  ],
- "maybe": [],
+ "maybe": [
+  {
+   "a": {
+    "id": "gopassnov",
+    "name": "GO Pass: November",
+    "place": "",
+    "start": "2026-11-03",
+    "end": "2026-12-01",
+    "list": "curated"
+   },
+   "b": {
+    "id": "novcd",
+    "name": "November Community Day",
+    "place": "",
+    "start": "2026-11-21",
+    "end": "2026-11-21",
+    "list": "curated"
+   },
+   "why": "dates fit and 1 shared word"
+  }
+ ],
  "odd": []
 }

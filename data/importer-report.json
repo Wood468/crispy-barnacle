@@ -1,5 +1,5 @@
 {
- "runAt": "2026-10-30T07:16:33.779Z",
+ "runAt": "2026-10-30T14:18:29.486Z",
  "sources": {
   "official": {
    "listed": 24,
@@ -15,8 +15,8 @@
   }
  },
  "pagesRead": 80,
- "events": 86,
- "worldEvents": 59,
+ "events": 89,
+ "worldEvents": 61,
  "worldUndated": [
   "GO Wild Area Stamp Rally"
  ],
@@ -90,6 +90,11 @@
    "source": "leekduck",
    "title": "Gastly Spotlight Hour",
    "url": "https://leekduck.com/events/pokemonspotlighthour2026-10-29/"
+  },
+  {
+   "source": "leekduck",
+   "title": "Shadow Tornadus (Incarnate Forme) in Shadow Raids",
+   "url": "https://leekduck.com/events/shadow-tornadus-incarnate-forme-in-shadow-raids-november-16-2026/"
   },
   {
    "source": "hub",
@@ -177,6 +182,55 @@
   "Pokemon Go in Sanriku | July 1st - 11th 2019 | Iwate Prefecture"
  ],
  "gaps": [
+  {
+   "event": "Into the Wild",
+   "field": "bonuses",
+   "missingFrom": [
+    "official"
+   ]
+  },
+  {
+   "event": "Into the Wild",
+   "field": "featured",
+   "missingFrom": [
+    "official"
+   ]
+  },
+  {
+   "event": "Into the Wild",
+   "field": "raids",
+   "missingFrom": [
+    "official"
+   ]
+  },
+  {
+   "event": "Into the Wild",
+   "field": "research",
+   "missingFrom": [
+    "official"
+   ]
+  },
+  {
+   "event": "Into the Wild",
+   "field": "shiny",
+   "missingFrom": [
+    "official"
+   ]
+  },
+  {
+   "event": "Into the Wild",
+   "field": "tickets",
+   "missingFrom": [
+    "official"
+   ]
+  },
+  {
+   "event": "Into the Wild",
+   "field": "dates",
+   "missingFrom": [
+    "official"
+   ]
+  },
   {
    "event": "Super Mega Raid Day",
    "field": "bonuses",

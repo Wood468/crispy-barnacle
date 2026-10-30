@@ -1,5 +1,5 @@
 {
- "checked": "2026-10-30T07:16:36.273Z",
+ "checked": "2026-10-30T14:18:35.092Z",
  "compared": 54,
  "problems": [],
  "missing": [
@@ -23,5 +23,26 @@
   }
  ],
  "worldFixes": [],
- "added": []
+ "added": [
+  {
+   "id": "w-halloween",
+   "name": "Halloween 2026 Part 2",
+   "place": "",
+   "area": "Worldwide",
+   "scope": "global",
+   "start": "2026-11-01",
+   "end": "2026-11-05",
+   "datesKnown": true,
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "url": "https://leekduck.com/events/halloween-2026-part-2/",
+     "auto": true
+    }
+   ],
+   "status": "single",
+   "seen": "2026-10-30"
+  }
+ ]
 }

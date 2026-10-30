@@ -1,21 +1,15 @@
 {
- "updated": "2026-10-30T07:16:33.779Z",
+ "updated": "2026-10-30T14:18:29.486Z",
  "events": {
-  "leekduck:dynamax-trails-2026": {
+  "dyntrails": {
    "name": "Dynamax Trails",
-   "updated": "2026-10-30T07:16:33.779Z",
+   "updated": "2026-10-30T14:18:29.486Z",
    "sources": [
     {
      "id": "official",
      "name": "Pokémon GO (official)",
      "trust": "official",
      "url": "https://pokemongo.com/news/dynamax-trails-eternamax-eternatus-2026/"
-    },
-    {
-     "id": "leekduck",
-     "name": "Leek Duck",
-     "trust": "community",
-     "url": "https://leekduck.com/events/dynamax-trails-2026/"
     },
     {
      "id": "hub",
@@ -26,14 +20,6 @@
    ],
    "fields": {
     "bonuses": [
-     {
-      "text": "The following bonuses will be active during the event.",
-      "sources": [
-       "official",
-       "leekduck"
-      ],
-      "status": "confirmed"
-     },
      {
       "text": "A chance to receive Max Particles when catching event-themed Pokémon in the wild or after Max Battles.",
       "sources": [
@@ -54,18 +40,16 @@
       "text": "Max Particles cannot be obtained from catches with the Explorer Gadget or a Pokémon GO Plus +.",
       "sources": [
        "official",
-       "leekduck",
        "hub"
       ],
       "status": "confirmed"
      },
      {
-      "text": "Reach Major Milestones on your event GO Pass to unlock the following bonuses.",
+      "text": "The following bonuses will be active during the event.",
       "sources": [
-       "official",
-       "leekduck"
+       "official"
       ],
-      "status": "confirmed"
+      "status": "official"
      },
      {
       "text": "Power Spots will refresh more frequently.",
@@ -96,6 +80,13 @@
       "status": "official"
      },
      {
+      "text": "Reach Major Milestones on your event GO Pass to unlock the following bonuses.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
       "text": "The event features the following bonuses:",
       "sources": [
        "hub"
@@ -120,16 +111,7 @@
       "text": "Rank 15: 2× Catch Stardust",
       "sources": [
        "official",
-       "leekduck",
        "hub"
-      ],
-      "status": "confirmed"
-     },
-     {
-      "text": "Rank 35: 1/2 Candy and Stardust to activate the Dynamax Cannon Adventure Effect",
-      "sources": [
-       "official",
-       "leekduck"
       ],
       "status": "confirmed"
      },
@@ -137,17 +119,16 @@
       "text": "Rank 55: Additional Candy and Candy XL from Max Battles",
       "sources": [
        "official",
-       "leekduck",
        "hub"
       ],
       "status": "confirmed"
      },
      {
-      "text": "Rank 55: Additional bonus tasks for this GO Pass will be available during the event.",
+      "text": "Rank 35: 1/2 Candy and Stardust to activate the Dynamax Cannon Adventure Effect",
       "sources": [
-       "leekduck"
+       "official"
       ],
-      "status": "single"
+      "status": "official"
      },
      {
       "text": "Rank 35: Half the Stardust required to activate the Dynamax Cannon Adventure Effect Half the Candy required to activate the Dynamax Cannon Adventure Effect",
@@ -162,7 +143,6 @@
       "text": "You may encounter event-themed Pokémon in the wild, including any Pokémon* that has debuted in Dynamax Max Battles!",
       "sources": [
        "official",
-       "leekduck",
        "hub"
       ],
       "status": "confirmed"
@@ -170,63 +150,56 @@
      {
       "text": "Complete Pass Tasks to rank up your GO Pass to earn the following rewards.",
       "sources": [
-       "official",
-       "leekduck"
+       "official"
       ],
-      "status": "confirmed"
+      "status": "official"
      },
      {
       "text": "Encounters with event-themed Dynamax Pokémon with a Special Background",
       "sources": [
-       "official",
-       "leekduck"
+       "official"
       ],
-      "status": "confirmed"
+      "status": "official"
      },
      {
       "text": "An encounter with Eternatus, or 100 Eternatus Candy if you have already caught Eternatus",
       "sources": [
-       "official",
-       "leekduck"
+       "official"
       ],
-      "status": "confirmed"
+      "status": "official"
      },
      {
       "text": "Eternatus Candy and Candy XL",
       "sources": [
-       "official",
-       "leekduck"
+       "official"
       ],
-      "status": "confirmed"
+      "status": "official"
      },
      {
       "text": "Event-themed stickers",
       "sources": [
-       "official",
-       "leekduck"
+       "official"
       ],
-      "status": "confirmed"
+      "status": "official"
      },
      {
       "text": "Trainers who upgrade to the GO Pass Deluxe can also earn the following rewards.",
       "sources": [
-       "official",
-       "leekduck"
+       "official"
       ],
-      "status": "confirmed"
+      "status": "official"
      },
      {
       "text": "Silver Pinap Berries",
       "sources": [
-       "official",
-       "leekduck"
+       "official"
       ],
-      "status": "confirmed"
+      "status": "official"
      },
      {
-      "text": "Additional rewards",
+      "text": "(*) Excludes Legendary and Mythical Pokémon.",
       "sources": [
-       "leekduck"
+       "hub"
       ],
       "status": "single"
      }
@@ -241,14 +214,6 @@
       "status": "confirmed"
      },
      {
-      "text": "All Dynamax Pokémon* that have appeared in Pokémon GO may appear in Max Battles.",
-      "sources": [
-       "official",
-       "leekduck"
-      ],
-      "status": "confirmed"
-     },
-     {
       "text": "Prepare for the return of every Dynamax Pokémon seen in Pokémon GO!",
       "sources": [
        "official"
@@ -256,18 +221,11 @@
       "status": "official"
      },
      {
-      "text": "Get ready for a week of Max Battles! Dynamax Pokémon return, Max Particles are surging in the wild, and Eternamax Eternatus returns to Power Spots during Dynamax Trails.",
+      "text": "All Dynamax Pokémon* that have appeared in Pokémon GO may appear in Max Battles.",
       "sources": [
-       "leekduck"
+       "official"
       ],
-      "status": "single"
-     },
-     {
-      "text": "The Dynamax Trails event will take place from November 16, 2026 at 10 am to November 23, 2026 at 8 pm local time.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
+      "status": "official"
      },
      {
       "text": "Expect more Power Spots active than usual, GO Pass and GO Pass Deluxe, themed wild encounters, and Max Battles galore! Here’s everything you need to know about the event.",
@@ -283,7 +241,6 @@
       "text": "Event-themed Field Research tasks will be available! Complete them to earn Stardust, Eternatus Candy, and more!",
       "sources": [
        "official",
-       "leekduck",
        "hub"
       ],
       "status": "confirmed"
@@ -325,30 +282,6 @@
       "status": "confirmed"
      },
      {
-      "text": "Rewards unlocked in the GO Pass will expire on Wednesday, November 25, 2026, at 8:00 p.m. local time, so be sure to claim your rewards before they’re gone!",
-      "sources": [
-       "official",
-       "leekduck"
-      ],
-      "status": "confirmed"
-     },
-     {
-      "text": "GO Pass is a free, limited-time progression track. Collect GO Points and complete Pass Tasks to rank up and earn rewards.",
-      "sources": [
-       "leekduck",
-       "hub"
-      ],
-      "status": "confirmed"
-     },
-     {
-      "text": "Trainers will automatically receive GO Pass: Dynamax Trails on November 16, 2026, at 10 am local time. GO Points can be collected through November 23, 2026, at 8 pm local time.",
-      "sources": [
-       "leekduck",
-       "hub"
-      ],
-      "status": "confirmed"
-     },
-     {
       "text": "A GO Pass is a free, limited-time progression track available during a specified period. By collecting GO Points, you can increase your rank to earn rewards.",
       "sources": [
        "official"
@@ -356,14 +289,21 @@
       "status": "official"
      },
      {
-      "text": "Trainers who claim Tier 1 rewards (Rank 25) on GO Pass: Into the Wild will receive early access on November 14, 2026, at 10 am local time, and a free upgrade to GO Pass Deluxe: Dynamax Trails .",
+      "text": "Rewards unlocked in the GO Pass will expire on Wednesday, November 25, 2026, at 8:00 p.m. local time, so be sure to claim your rewards before they’re gone!",
       "sources": [
-       "leekduck"
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "From Monday, November 16, 2026, at 10:00 a.m. to Monday, November 23, 2026, at 8:00 p.m. local time , the GO Pass and GO Pass Deluxe for Dynamax Trails will be available in Pokémon GO.",
+      "sources": [
+       "hub"
       ],
       "status": "single"
      },
      {
-      "text": "From Monday, November 16, 2026, at 10:00 a.m. to Monday, November 23, 2026, at 8:00 p.m. local time , the GO Pass and GO Pass Deluxe for Dynamax Trails will be available in Pokémon GO.",
+      "text": "Complete Pass Tasks to rank up your GO Pass and earn the following rewards:",
       "sources": [
        "hub"
       ],
@@ -389,6 +329,20 @@
        "hub"
       ],
       "status": "single"
+     },
+     {
+      "text": "Event-themed stickers",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Reach Major Milestones on your event GO Pass to unlock the following bonuses:",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
      }
     ],
     "dates": [
@@ -396,7 +350,6 @@
       "text": "Monday, November 16, at 10:00 a.m. to Monday, November 23, 2026, at 8:00 p.m. local time",
       "sources": [
        "official",
-       "leekduck",
        "hub"
       ],
       "status": "confirmed"
@@ -404,31 +357,9 @@
      {
       "text": "From November 20 at 1:00 p.m. to November 21 at 6:00 p.m. PST (GMT −8), the daily Remote Raid limit will increase from 10 to 30.",
       "sources": [
-       "official",
-       "leekduck"
+       "official"
       ],
-      "status": "confirmed"
-     },
-     {
-      "text": "The Dynamax Trails event will take place from November 16, 2026 at 10 am to November 23, 2026 at 8 pm local time.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Grookey, Scorbunny, and Sobble will be featured during Pokémon Spotlight Hour on November 19, 2026, from 6 pm to 7 pm local time. The bonus will be 2× Catch Candy .",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Trainers who claim Tier 1 rewards (Rank 25) on GO Pass: Into the Wild will receive early access on November 14, 2026, at 10 am local time, and a free upgrade to GO Pass Deluxe: Dynamax Trails .",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
+      "status": "official"
      }
     ]
    },
@@ -437,7 +368,7 @@
   },
   "wag": {
    "name": "GO Wild Area: Global",
-   "updated": "2026-10-30T07:16:33.779Z",
+   "updated": "2026-10-30T14:18:29.486Z",
    "sources": [
     {
      "id": "official",
@@ -538,33 +469,313 @@
   },
   "leekduck:into-the-wild-2026": {
    "name": "Into the Wild",
-   "updated": "2026-10-30T07:16:33.779Z",
+   "updated": "2026-10-30T14:18:29.486Z",
    "sources": [
     {
      "id": "official",
      "name": "Pokémon GO (official)",
      "trust": "official",
      "url": "https://pokemongo.com/news/go-wild-area-stamp-rally-details-2026/"
+    },
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/into-the-wild-2026/"
     }
    ],
    "fields": {
-    "bonuses": [],
-    "featured": [],
-    "raids": [],
+    "bonuses": [
+     {
+      "text": "Daily Discoveries will not take place from November 9 through November 15, 2026.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Reach these ranks on GO Pass: Into the Wild to unlock the following bonus.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 25: 1/2 Hatch Distance for Eggs placed in Incubators during the event",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "featured": [
+     {
+      "text": "The following Pokémon will appear more frequently in the wild, along with other event-themed Pokémon.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "The free track includes:",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Encounter with Dynamax Meltan",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "GO Wild Area 2026 Tee (Purple)",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Additional rewards",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "GO Pass Deluxe also offers:",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "A Silver Bottle Cap, which can be used to max one stat—Attack, Defense, or HP—on any Pokémon via Hyper Training",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Encounters with Dynamax Meltan",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Duraludon Pants",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Premium items, such as Incense and a Lucky Egg",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "raids": [
+     {
+      "text": "Regidrago will make its Pokémon GO Dynamax debut in five-star Max Battles, and Meltan will make its Dynamax debut in GO Pass: Into the Wild. If you’re lucky, you may encounter a Shiny one!",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Defeating Crowned Sword Zacian or Crowned Shield Zamazenta in raids will earn you Crowned Sword Energy or Crowned Shield Energy, respectively.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "The following Dynamax Pokémon will appear in Max Battles. Pokémon appearing in five-star Max Battles will also be featured in Max Battles from 6:00 p.m. to 7:00 p.m. local time for one day each on the following schedule.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
     "eggs": [],
-    "research": [],
-    "shiny": [],
+    "research": [
+     {
+      "text": "Pokémon GO Wild Area–themed Field Research tasks will be available throughout the event! Complete the research tasks to earn encounters with event-themed Pokémon and other rewards.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "After you give your trainee a Silver Bottle Cap, Hyper Training begins. Each stat has its own set of themed tasks.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Attack: Battle alongside your trainee.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Defense: Strengthen your bond with your Buddy Pokémon trainee by playing together, exploring, and catching Pokémon.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "HP: Explore alongside your trainee as a buddy. This can include spinning PokéStops, earning Buddy Candy, or other adventures.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "You’ll have 365 days after using your Silver Bottle Cap to finish Hyper Training.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "shiny": [
+     {
+      "text": "Regidrago will make its Pokémon GO Dynamax debut in five-star Max Battles, and Meltan will make its Dynamax debut in GO Pass: Into the Wild. If you’re lucky, you may encounter a Shiny one!",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
     "moves": [],
     "costumes": [],
-    "tickets": [],
-    "dates": []
+    "tickets": [
+     {
+      "text": "GO Pass: Into the Wild is a free progression track. Complete Pass Tasks to collect GO Points, increase your rank, and unlock rewards.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Trainers will receive the pass automatically on Monday, November 9, at 10:00 a.m. local time . Earn points and rank up until Sunday, November 15, 2026, at 6:00 p.m. local time .",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "From Monday, November 9, to Friday, November 13, you can collect GO Points up to a daily cap. There’s no limit to the GO Points you can earn on Saturday and Sunday, November 14 to 15!",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Upgrade to GO Pass Deluxe: Into the Wild for US$14.99 * for upgraded rewards. The GO Pass Deluxe: Into the Wild + 10 Ranks option costs US$19.99 * and grants enough GO Points to reach Rank 10.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Deluxe includes rewards from both tracks. You can upgrade at any time and still claim rewards for ranks you have already reached.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Claim all unlocked GO Pass rewards before they expire on Tuesday, November 17, 2026, at 11:59 p.m. local time .",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "dates": [
+     {
+      "text": "The following Dynamax Pokémon will appear in Max Battles. Pokémon appearing in five-star Max Battles will also be featured in Max Battles from 6:00 p.m. to 7:00 p.m. local time for one day each on the following schedule.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Trainers will receive the pass automatically on Monday, November 9, at 10:00 a.m. local time . Earn points and rank up until Sunday, November 15, 2026, at 6:00 p.m. local time .",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "From Monday, November 9, to Friday, November 13, you can collect GO Points up to a daily cap. There’s no limit to the GO Points you can earn on Saturday and Sunday, November 14 to 15!",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ]
    },
    "conflicts": [],
-   "gaps": []
+   "gaps": [
+    {
+     "field": "bonuses",
+     "missingFrom": [
+      "official"
+     ]
+    },
+    {
+     "field": "featured",
+     "missingFrom": [
+      "official"
+     ]
+    },
+    {
+     "field": "raids",
+     "missingFrom": [
+      "official"
+     ]
+    },
+    {
+     "field": "research",
+     "missingFrom": [
+      "official"
+     ]
+    },
+    {
+     "field": "shiny",
+     "missingFrom": [
+      "official"
+     ]
+    },
+    {
+     "field": "tickets",
+     "missingFrom": [
+      "official"
+     ]
+    },
+    {
+     "field": "dates",
+     "missingFrom": [
+      "official"
+     ]
+    }
+   ]
   },
   "novcd": {
    "name": "November Community Day",
-   "updated": "2026-10-30T07:16:33.779Z",
+   "updated": "2026-10-30T14:18:29.486Z",
    "sources": [
     {
      "id": "official",
@@ -755,21 +966,15 @@
    "conflicts": [],
    "gaps": []
   },
-  "leekduck:go-pass-november-2026": {
+  "gopassnov": {
    "name": "GO Pass: November",
-   "updated": "2026-10-30T07:16:33.779Z",
+   "updated": "2026-10-30T14:18:29.486Z",
    "sources": [
     {
      "id": "official",
      "name": "Pokémon GO (official)",
      "trust": "official",
      "url": "https://pokemongo.com/news/go-pass-november-2026/"
-    },
-    {
-     "id": "leekduck",
-     "name": "Leek Duck",
-     "trust": "community",
-     "url": "https://leekduck.com/events/go-pass-november-2026/"
     }
    ],
    "fields": {
@@ -777,10 +982,9 @@
      {
       "text": "Reach Major Milestones on your GO Pass to unlock the following bonuses.",
       "sources": [
-       "official",
-       "leekduck"
+       "official"
       ],
-      "status": "confirmed"
+      "status": "official"
      },
      {
       "text": "—The Pokémon GO team",
@@ -792,132 +996,116 @@
      {
       "text": "Rank 1: One additional Candy for trading Pokémon.",
       "sources": [
-       "official",
-       "leekduck"
+       "official"
       ],
-      "status": "confirmed"
+      "status": "official"
      },
      {
       "text": "Rank 1: Trainers level 31 and above will receive one guaranteed Candy XL when trading Pokémon.",
       "sources": [
-       "official",
-       "leekduck"
+       "official"
       ],
-      "status": "confirmed"
+      "status": "official"
      },
      {
       "text": "Rank 25: Open up to 40 Gifts per day.",
       "sources": [
-       "official",
-       "leekduck"
+       "official"
       ],
-      "status": "confirmed"
+      "status": "official"
      },
      {
       "text": "Rank 25: Receive up to 125 Gifts per day from spinning PokéStops and Gym Photo Discs.",
       "sources": [
-       "official",
-       "leekduck"
+       "official"
       ],
-      "status": "confirmed"
+      "status": "official"
      },
      {
       "text": "Rank 25: Hold 10 more Gifts in your Item Bag.",
       "sources": [
-       "official",
-       "leekduck"
+       "official"
       ],
-      "status": "confirmed"
+      "status": "official"
      },
      {
       "text": "Rank 50: 2× Daily Adventure Incense duration.",
       "sources": [
-       "official",
-       "leekduck"
+       "official"
       ],
-      "status": "confirmed"
+      "status": "official"
      },
      {
       "text": "Rank 75: Increased Stardust and XP from hatching Eggs.",
       "sources": [
-       "official",
-       "leekduck"
+       "official"
       ],
-      "status": "confirmed"
+      "status": "official"
      },
      {
       "text": "Rank 25 Deluxe: Open up to 50 Gifts per day.",
       "sources": [
-       "official",
-       "leekduck"
+       "official"
       ],
-      "status": "confirmed"
+      "status": "official"
      },
      {
       "text": "Rank 25 Deluxe: Receive up to 150 Gifts per day from spinning PokéStops and Gym Photo Discs.",
       "sources": [
-       "official",
-       "leekduck"
+       "official"
       ],
-      "status": "confirmed"
+      "status": "official"
      },
      {
       "text": "Rank 25 Deluxe: Hold up to 20 more Gifts in your Item Bag.",
       "sources": [
-       "official",
-       "leekduck"
+       "official"
       ],
-      "status": "confirmed"
+      "status": "official"
      }
     ],
     "featured": [
      {
       "text": "Complete Pass Tasks to rank up your GO Pass to earn the following rewards.",
       "sources": [
-       "official",
-       "leekduck"
+       "official"
       ],
-      "status": "confirmed"
+      "status": "official"
      },
      {
       "text": "Encounter with Groudon*",
       "sources": [
-       "official",
-       "leekduck"
+       "official"
       ],
-      "status": "confirmed"
+      "status": "official"
      },
      {
       "text": "Trainers who upgrade to the GO Pass Deluxe can also earn the following rewards.",
       "sources": [
-       "official",
-       "leekduck"
+       "official"
       ],
-      "status": "confirmed"
+      "status": "official"
      },
      {
       "text": "1,000 additional PokéCoins for a total of 1,400 PokéCoins",
       "sources": [
-       "official",
-       "leekduck"
+       "official"
       ],
-      "status": "confirmed"
+      "status": "official"
      },
      {
       "text": "One Super Incubator",
       "sources": [
-       "official",
-       "leekduck"
+       "official"
       ],
-      "status": "confirmed"
+      "status": "official"
      },
      {
       "text": "Additional encounters with even more Pokémon!",
       "sources": [
-       "official",
-       "leekduck"
+       "official"
       ],
-      "status": "confirmed"
+      "status": "official"
      }
     ],
     "raids": [],
@@ -930,71 +1118,32 @@
      {
       "text": "From Tuesday, November 3, at 10:00 a.m. to Tuesday, December 1, at 10:00 a.m. local time, the GO Pass and GO Pass Deluxe for November will be available in Pokémon GO!",
       "sources": [
-       "official",
-       "leekduck"
+       "official"
       ],
-      "status": "confirmed"
+      "status": "official"
      },
      {
       "text": "Additionally, from Saturday, November 28, at 12:00 a.m. to Sunday, November 29, at 11:59 p.m. local time, there’s no daily limit for how many GO Points you can earn!",
       "sources": [
-       "official",
-       "leekduck"
+       "official"
       ],
-      "status": "confirmed"
-     },
-     {
-      "text": "Earn PokéCoins and encounter Groudon in GO Pass: November!",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "For US$7.99*, Trainers can upgrade to the GO Pass Deluxe, a paid version of the GO Pass that offers upgraded rewards and faster progression.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "For US$9.99*, Trainers can upgrade to the GO Pass Deluxe + 10 Ranks to also automatically earn enough GO Points to reach Rank 11.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rewards unlocked in the GO Pass will expire on Thursday, December 3, at 10:00 a.m. local time, so be sure to claim your rewards before they’re gone!",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
+      "status": "official"
      }
     ],
     "dates": [
      {
       "text": "From Tuesday, November 3, at 10:00 a.m. to Tuesday, December 1, at 10:00 a.m. local time, the GO Pass and GO Pass Deluxe for November will be available in Pokémon GO!",
       "sources": [
-       "official",
-       "leekduck"
+       "official"
       ],
-      "status": "confirmed"
+      "status": "official"
      },
      {
       "text": "Additionally, from Saturday, November 28, at 12:00 a.m. to Sunday, November 29, at 11:59 p.m. local time, there’s no daily limit for how many GO Points you can earn!",
       "sources": [
-       "official",
-       "leekduck"
+       "official"
       ],
-      "status": "confirmed"
-     },
-     {
-      "text": "Rewards unlocked in the GO Pass will expire on Thursday, December 3, at 10:00 a.m. local time, so be sure to claim your rewards before they’re gone!",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
+      "status": "official"
      }
     ]
    },
@@ -1003,7 +1152,7 @@
   },
   "smr1": {
    "name": "Super Mega Raid Day",
-   "updated": "2026-10-30T07:16:33.779Z",
+   "updated": "2026-10-30T14:18:29.486Z",
    "sources": [
     {
      "id": "official",
@@ -1342,21 +1491,1587 @@
     }
    ]
   },
-  "leekduck:halloween-2026-part-1": {
-   "name": "Pokémon GO Halloween 2026 Part I",
-   "updated": "2026-10-30T07:16:33.779Z",
+  "halloween2": {
+   "name": "Halloween 2026, Part Two",
+   "updated": "2026-10-30T14:18:29.486Z",
    "sources": [
     {
      "id": "official",
      "name": "Pokémon GO (official)",
      "trust": "official",
      "url": "https://pokemongo.com/news/halloween-part-2-2026/"
+    }
+   ],
+   "fields": {
+    "bonuses": [
+     {
+      "text": "Reach Major Milestones on your event GO Pass to unlock the following bonuses.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Rank 10: 2× Candy for catching Pokémon.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Rank 10: GO Pass Deluxe: 3× Candy for catching Pokémon.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Rank 20: 2× Stardust for catching Pokémon.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Rank 20: GO Pass Deluxe: 3× Stardust for catching Pokémon.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     }
+    ],
+    "featured": [
+     {
+      "text": "For the first time in Pokémon GO, you’ll be able to encounter Shiny Greavard—if you’re lucky! You may encounter Greavard in the wild or when you complete GO Pass and Field Research tasks.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "May encounter event-themed Pokémon in the wild, including Litwick*, Rowlet wearing a Pokémon Halloween costume*, Greavard*, and more! You might even encounter Gengar wearing a Spooky Festival costume*!",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Complete Pass Tasks to rank up your GO Pass to earn the following rewards.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Trainers who upgrade to the GO Pass Deluxe can also earn the following rewards.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Patissier Pants",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Premium Battle Passes",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     }
+    ],
+    "raids": [
+     {
+      "text": "The following Pokémon will appear in raids.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "One-Star Raids Pikachu wearing a hat and capelet* Sinistea wearing a bow*",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     }
+    ],
+    "eggs": [],
+    "research": [
+     {
+      "text": "There will be a free Timed Research opportunity available.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "The research tasks in this free Timed Research will be automatically completed for all Trainers.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Timed Research rewards include the following.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "6 Rare Candies",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "An encounter with Sinistea wearing a bow*",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Please note that Timed Research expires. The tasks associated with this Timed Research must be completed and their rewards must be claimed before Thursday, November 5, 2026, at 8:00 p.m. local time.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Event-themed Field Research tasks will be available.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     }
+    ],
+    "shiny": [
+     {
+      "text": "For the first time in Pokémon GO, you’ll be able to encounter Shiny Greavard—if you’re lucky! You may encounter Greavard in the wild or when you complete GO Pass and Field Research tasks.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     }
+    ],
+    "moves": [],
+    "costumes": [
+     {
+      "text": "May encounter event-themed Pokémon in the wild, including Litwick*, Rowlet wearing a Pokémon Halloween costume*, Greavard*, and more! You might even encounter Gengar wearing a Spooky Festival costume*!",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "One-Star Raids Pikachu wearing a hat and capelet* Sinistea wearing a bow*",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     }
+    ],
+    "tickets": [
+     {
+      "text": "Remember, Trainers! The previously announced GO Pass: Halloween 2026 is available from Tuesday, October 27, at 10:00 a.m. to Thursday, November 5, 2026, at 8:00 p.m. local time.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "A GO Pass is a free, limited-time progression track available during a specified period. By collecting GO Points, you can increase your rank to earn rewards.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "For US$7.99*, Trainers can upgrade to the GO Pass Deluxe, a paid version of the GO Pass that offers upgraded rewards and faster progression.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "For US$9.99*, Trainers can upgrade to the GO Pass Deluxe + 10 Ranks to also automatically earn enough GO Points to reach Rank 11.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Rewards unlocked in the GO Pass will expire on Saturday, November 7, 2026, at 8:00 p.m. local time, so be sure to claim your rewards before they’re gone!",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Availability of event tickets and the GO Pass Deluxe may vary by region.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     }
+    ],
+    "dates": [
+     {
+      "text": "Sunday, November 1, at 10:00 a.m. to Thursday, November 5, 2026, at 8:00 p.m. local time",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Rewards unlocked in the GO Pass will expire on Saturday, November 7, 2026, at 8:00 p.m. local time, so be sure to claim your rewards before they’re gone!",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     }
+    ]
+   },
+   "conflicts": [],
+   "gaps": []
+  },
+  "halloween1": {
+   "name": "Halloween 2026, Part One",
+   "updated": "2026-10-30T14:18:29.486Z",
+   "sources": [
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "trust": "official",
+     "url": "https://pokemongo.com/news/halloween-part-1-2026/"
+    }
+   ],
+   "fields": {
+    "bonuses": [
+     {
+      "text": "Reach Major Milestones on your event GO Pass to unlock the following bonuses.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Rank 10: 2× Candy for catching Pokémon.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Rank 10: GO Pass Deluxe: 3× Candy for catching Pokémon.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Rank 20: 2× Stardust for catching Pokémon.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Rank 20: GO Pass Deluxe: 3× Stardust for catching Pokémon.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     }
+    ],
+    "featured": [
+     {
+      "text": "New costumed Pokémon will appear during this event!",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Pikachu wearing a hat and capelet*",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Zubat wearing a top hat*",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Sinistea wearing a bow*",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Complete Pass Tasks to rank up your GO Pass to earn the following rewards.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Encounters with event-themed Pokémon",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Trainers who upgrade to the GO Pass Deluxe can also earn the following rewards.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Patissier Pants",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Premium Battle Passes",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     }
+    ],
+    "raids": [
+     {
+      "text": "The following Pokémon will appear in raids.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "One-Star Raids Pikachu wearing a hat and capelet* Sinistea wearing a bow*",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     }
+    ],
+    "eggs": [],
+    "research": [
+     {
+      "text": "There will be a free Timed Research opportunity available.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "The research tasks in this free Timed Research will be automatically completed for all Trainers.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Timed Research rewards include the following.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "6 Rare Candies",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "An encounter with Pikachu wearing a hat and capelet*",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Please note that Timed Research expires. The tasks associated with this Timed Research must be completed and their rewards must be claimed before Sunday, November 1, 2026, at 10:00 a.m. local time.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Event-themed Field Research tasks will be available.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     }
+    ],
+    "shiny": [],
+    "moves": [],
+    "costumes": [
+     {
+      "text": "Pikachu wearing a hat and capelet*",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Zubat wearing a top hat*",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Sinistea wearing a bow*",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     }
+    ],
+    "tickets": [
+     {
+      "text": "From Tuesday, October 27, at 10:00 a.m. to Thursday, November 5, 2026, at 8:00 p.m. local time, the GO Pass and GO Pass Deluxe for Halloween 2026 will be available in Pokémon GO!",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "A GO Pass is a free, limited-time progression track available during a specified period. By collecting GO Points, you can increase your rank to earn rewards.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "For US$7.99*, Trainers can upgrade to the GO Pass Deluxe, a paid version of the GO Pass that offers upgraded rewards and faster progression.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "For US$9.99*, Trainers can upgrade to the GO Pass Deluxe + 10 Ranks to also automatically earn enough GO Points to reach Rank 11.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Rewards unlocked in the GO Pass will expire on Saturday, November 7, 2026, at 8:00 p.m. local time, so be sure to claim your rewards before they’re gone!",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Availability of event tickets and the GO Pass Deluxe may vary by region. *All prices listed are in USD or the equivalent pricing tier in your local currency.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     }
+    ],
+    "dates": [
+     {
+      "text": "Tuesday, October 27, at 10:00 a.m. to Sunday, November 1, 2026, at 10:00 a.m. local time",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Rewards unlocked in the GO Pass will expire on Saturday, November 7, 2026, at 8:00 p.m. local time, so be sure to claim your rewards before they’re gone!",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     }
+    ]
+   },
+   "conflicts": [],
+   "gaps": []
+  },
+  "spirits": {
+   "name": "Dynamax Uxie, Mesprit and Azelf",
+   "updated": "2026-10-30T14:18:29.486Z",
+   "sources": [
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "trust": "official",
+     "url": "https://pokemongo.com/news/dynamax-uxie-mesprit-azelf-max-battle-day-2026/"
+    }
+   ],
+   "fields": {
+    "bonuses": [
+     {
+      "text": "The following bonuses will be active during the event.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Max Particle collection limit increased to 1,600",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "All Power Spots will host Dynamax Battles",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Power Spots will refresh more frequently",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Additional Power Spots will be active",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "8× Max Particles from Power Spots",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Two additional Special Trades can be made for a maximum of three for the day",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "From October 23 at 5:00 p.m. to October 24 at 8:00 p.m. PDT (GMT −7), the daily Remote Raid Pass limit will increase from 10 to 20",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "2× Max Particles from exploring*",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "1/4 Adventuring distance to receive Max Particles**",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     }
+    ],
+    "featured": [
+     {
+      "text": "Dynamax Debut!",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     }
+    ],
+    "raids": [
+     {
+      "text": "Saturday, October 24, 2026, from 2:00 p.m. to 5:00 p.m. local time",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "The following Pokémon will make their Pokémon GO Dynamax debut in five-star Max Battles!",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Dynamax Uxie*: Appearing in the Asia-Pacific region",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Dynamax Mesprit*: Appearing in Europe, the Middle East, Africa, and India",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Dynamax Azelf*: Appearing in the Americas and Greenland",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Max Battles will take great teamwork and only appear at Power Spots that sporadically appear in different locations, so we’re making it easier to find both these battles and other Trainers to help you take them on!",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "You can visit the Map to see the locations where Max Battles might appear during an event, in addition to those in progress.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     }
+    ],
+    "eggs": [],
+    "research": [],
+    "shiny": [],
+    "moves": [],
+    "costumes": [],
+    "tickets": [
+     {
+      "text": "For US$4.99 (or the equivalent pricing tier in your local currency), you’ll be able to access event-exclusive Timed Research.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Timed Research rewards include the following.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "1 Max Mushroom",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "6,400 Max Particles",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "You’ll also receive the following bonus.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "2× XP from Max Battles",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "This Timed Research will be effective on Saturday, October 24, 2026, from 2:00 p.m. to 5:00 p.m. local time.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "The Dynamax Uxie, Mesprit, and Azelf Battle Day Ultra Ticket Box will be available for US$4.99 (or the equivalent pricing tier in your local currency) and includes an event ticket and 800 Max Particles!",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Check it out in the Pokémon GO Web Store soon!",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "—The Pokémon GO team",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     }
+    ],
+    "dates": [
+     {
+      "text": "Saturday, October 24, 2026, from 2:00 p.m. to 5:00 p.m. local time",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "From October 23 at 5:00 p.m. to October 24 at 8:00 p.m. PDT (GMT −7), the daily Remote Raid Pass limit will increase from 10 to 20",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     }
+    ]
+   },
+   "conflicts": [],
+   "gaps": []
+  },
+  "tcg30": {
+   "name": "Pokémon TCG: 30th Celebration (at stores)",
+   "updated": "2026-10-30T14:18:29.486Z",
+   "sources": [
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "trust": "official",
+     "url": "https://pokemongo.com/news/tcg-30th-celebration-event/"
+    }
+   ],
+   "fields": {
+    "bonuses": [],
+    "featured": [
+     {
+      "text": "The following Pokémon will appear more frequently in Mega Raids at participating retail locations.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     }
+    ],
+    "raids": [],
+    "eggs": [],
+    "research": [
+     {
+      "text": "Trainers can get event-themed Timed Research throughout the event by going to one of the participating retail locations and opening Pokémon GO!",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Complete the research tasks to earn Poké Balls, encounters with event-themed Pokémon, and more!",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     }
+    ],
+    "shiny": [],
+    "moves": [],
+    "costumes": [],
+    "tickets": [
+     {
+      "text": "—The Pokémon GO team",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     }
+    ],
+    "dates": [
+     {
+      "text": "Sunday, September 27, at 10:00 a.m. to Tuesday, October 20, 2026, at 10:00 p.m. local time",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     }
+    ]
+   },
+   "conflicts": [],
+   "gaps": []
+  },
+  "sandile": {
+   "name": "Sandile Hatch Day",
+   "updated": "2026-10-30T14:18:29.486Z",
+   "sources": [
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "trust": "official",
+     "url": "https://pokemongo.com/news/sandile-hatch-day-2026/"
+    }
+   ],
+   "fields": {
+    "bonuses": [
+     {
+      "text": "2× Candy from hatching Eggs*",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "1/2 Egg Hatch Distance*",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Increased chance of hatching Shiny Sandile",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Increased chance of receiving 2 km Eggs from spinning PokéStops",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     }
+    ],
+    "featured": [
+     {
+      "text": "Sandile will hatch much more frequently from 2 km Eggs. You’ll also have an increased chance of hatching Shiny Sandile!",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     }
+    ],
+    "raids": [],
+    "eggs": [
+     {
+      "text": "Saturday, October 17, 2026, from 11:00 a.m. to 5:00 p.m. local time",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     }
+    ],
+    "research": [
+     {
+      "text": "Event-exclusive Timed Research awarding an Incubator and XP will be available at no cost!",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Please note that Timed Research expires. The tasks associated with Timed Research must be completed and their rewards must be claimed before Saturday, October 17, 2026, at 5:00 p.m. local time.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "For US$1.99 (or the equivalent pricing tier in your local currency), you’ll be able to access event-exclusive Timed Research. Purchasing this ticket will also grant the following bonus during Sandile Hatch Day.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "1/4 Egg Hatch Distance*",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "This paid Timed Research will challenge you to earn Stardust and explore 1 km to earn the following items.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "One Star Piece",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Two Super Incubators",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Availability of event tickets may vary by region.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "—The Pokémon GO team",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     }
+    ],
+    "shiny": [
+     {
+      "text": "Sandile will hatch much more frequently from 2 km Eggs. You’ll also have an increased chance of hatching Shiny Sandile!",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     }
+    ],
+    "moves": [],
+    "costumes": [],
+    "tickets": [
+     {
+      "text": "For US$1.99 (or the equivalent pricing tier in your local currency), you’ll be able to access event-exclusive Timed Research. Purchasing this ticket will also grant the following bonus during Sandile Hatch Day.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     }
+    ],
+    "dates": [
+     {
+      "text": "Saturday, October 17, 2026, from 11:00 a.m. to 5:00 p.m. local time",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     }
+    ]
+   },
+   "conflicts": [],
+   "gaps": []
+  },
+  "trek": {
+   "name": "Fall Marathon: Buddy Trek",
+   "updated": "2026-10-30T14:18:29.486Z",
+   "sources": [
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "trust": "official",
+     "url": "https://pokemongo.com/news/fall-marathon-buddy-trek-2026/"
+    }
+   ],
+   "fields": {
+    "bonuses": [
+     {
+      "text": "Increased chance to encounter Shiny Electrike.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Reach Major Milestones on your event GO Pass to unlock the following bonuses.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Rank 10: Incense (excluding Daily Adventure Incense) activated during the event will last for two hours.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Rank 20: Earn 5× Mega Energy by exploring with Electrike or Manectric as your buddy after Mega Evolving Manectric at least once.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     }
+    ],
+    "featured": [
+     {
+      "text": "For the first time in Pokémon GO, you’ll be able to encounter Bramblin—if you’re lucky! You may encounter Bramblin when you complete GO Pass tasks or use Incense.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Super Max Debut",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Starting with the Fall Marathon: Buddy Trek event, you’ll be able to increase Mega Manectric’s Mega Level all the way up to Super Max Level for the first time in Pokémon GO! Learn more here .",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Manectric will now be able to use an additional Charged Attack, Discharge+, when it’s Mega Evolved.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Trainer Battles : 50 power",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Raid Battles : 150 power",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "You may encounter event-themed Pokémon in the wild, including Ponyta*, Doduo*, Electrike*, Blitzle*, and more! You might even encounter Skarmory*!",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "The following Pokémon will be attracted to Incense (excluding Daily Adventure Incense) during the event on the following days.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "October 13 at 10:00 a.m. to October 16, 2026, at 10:00 a.m. local time",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Galarian Ponyta*",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     }
+    ],
+    "raids": [],
+    "eggs": [],
+    "research": [
+     {
+      "text": "Event-themed Field Research tasks will be available.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "There will be a free Timed Research opportunity available.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Timed Research rewards include the following.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "An encounter with Pikachu wearing a marathon visor",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     }
+    ],
+    "shiny": [
+     {
+      "text": "Increased chance to encounter Shiny Electrike.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     }
+    ],
+    "moves": [],
+    "costumes": [
+     {
+      "text": "An encounter with Pikachu wearing a marathon visor",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     }
+    ],
+    "tickets": [
+     {
+      "text": "From Tuesday, October 13, at 10:00 a.m. to Monday, October 19, 2026, at 8:00 p.m. local time, the GO Pass and GO Pass Deluxe for Fall Marathon: Buddy Trek will be available in Pokémon GO!",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "A GO Pass is a free, limited-time progression track available during a specified period. By collecting GO Points, you can increase your rank to earn rewards.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "For US$4.99*, Trainers can upgrade to the GO Pass Deluxe, a paid version of the GO Pass that offers upgraded rewards and faster progression.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "For US$6.99*, Trainers can upgrade to the GO Pass Deluxe + 6 Ranks to also automatically earn enough GO Points to reach Rank 7.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Rewards unlocked in the GO Pass will expire on Wednesday, October 21, 2026, at 8:00 p.m. local time, so be sure to claim your rewards before they’re gone!",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Availability of event tickets and the GO Pass Deluxe may vary by region.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     }
+    ],
+    "dates": [
+     {
+      "text": "Tuesday, October 13, at 10:00 a.m. to Monday, October 19, 2026, at 8:00 p.m. local time",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Rewards unlocked in the GO Pass will expire on Wednesday, October 21, 2026, at 8:00 p.m. local time, so be sure to claim your rewards before they’re gone!",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     }
+    ]
+   },
+   "conflicts": [],
+   "gaps": []
+  },
+  "leekduck:go-pass-october-2026": {
+   "name": "GO Pass: October",
+   "updated": "2026-10-30T14:18:29.486Z",
+   "sources": [
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "trust": "official",
+     "url": "https://pokemongo.com/news/go-pass-october-2026/"
     },
     {
      "id": "leekduck",
      "name": "Leek Duck",
      "trust": "community",
+     "url": "https://leekduck.com/events/go-pass-october-2026/"
+    }
+   ],
+   "fields": {
+    "bonuses": [
+     {
+      "text": "Reach Major Milestones on your GO Pass to unlock the following bonuses.",
+      "sources": [
+       "official",
+       "leekduck"
+      ],
+      "status": "confirmed"
+     },
+     {
+      "text": "Rank 1: One additional Candy for trading Pokémon.",
+      "sources": [
+       "official",
+       "leekduck"
+      ],
+      "status": "confirmed"
+     },
+     {
+      "text": "Rank 1: Trainers level 31 and above will receive one guaranteed Candy XL when trading Pokémon.",
+      "sources": [
+       "official",
+       "leekduck"
+      ],
+      "status": "confirmed"
+     },
+     {
+      "text": "Rank 25: Open up to 40 Gifts per day.",
+      "sources": [
+       "official",
+       "leekduck"
+      ],
+      "status": "confirmed"
+     },
+     {
+      "text": "Rank 25: Receive up to 125 Gifts per day from spinning PokéStops and Gym Photo Discs.",
+      "sources": [
+       "official",
+       "leekduck"
+      ],
+      "status": "confirmed"
+     },
+     {
+      "text": "Rank 25: Hold 10 more Gifts in your Item Bag.",
+      "sources": [
+       "official",
+       "leekduck"
+      ],
+      "status": "confirmed"
+     },
+     {
+      "text": "Rank 50: 2× Daily Adventure Incense duration.",
+      "sources": [
+       "official",
+       "leekduck"
+      ],
+      "status": "confirmed"
+     },
+     {
+      "text": "Rank 75: Increased Stardust and XP from hatching Eggs.",
+      "sources": [
+       "official",
+       "leekduck"
+      ],
+      "status": "confirmed"
+     },
+     {
+      "text": "Rank 25 Deluxe: Open up to 50 Gifts per day.",
+      "sources": [
+       "official",
+       "leekduck"
+      ],
+      "status": "confirmed"
+     },
+     {
+      "text": "Rank 25 Deluxe: Receive up to 150 Gifts per day from spinning PokéStops and Gym Photo Discs.",
+      "sources": [
+       "official",
+       "leekduck"
+      ],
+      "status": "confirmed"
+     },
+     {
+      "text": "Rank 25 Deluxe: Hold up to 20 more Gifts in your Item Bag.",
+      "sources": [
+       "official",
+       "leekduck"
+      ],
+      "status": "confirmed"
+     }
+    ],
+    "featured": [
+     {
+      "text": "Complete Pass Tasks to rank up your GO Pass to earn the following rewards.",
+      "sources": [
+       "official",
+       "leekduck"
+      ],
+      "status": "confirmed"
+     },
+     {
+      "text": "Encounter with Kyogre*",
+      "sources": [
+       "official",
+       "leekduck"
+      ],
+      "status": "confirmed"
+     },
+     {
+      "text": "Premium Battle Pass",
+      "sources": [
+       "official",
+       "leekduck"
+      ],
+      "status": "confirmed"
+     },
+     {
+      "text": "Trainers who upgrade to the GO Pass Deluxe can also earn the following rewards.",
+      "sources": [
+       "official",
+       "leekduck"
+      ],
+      "status": "confirmed"
+     },
+     {
+      "text": "A Lucky Trinket",
+      "sources": [
+       "official",
+       "leekduck"
+      ],
+      "status": "confirmed"
+     },
+     {
+      "text": "One Super Incubator",
+      "sources": [
+       "official",
+       "leekduck"
+      ],
+      "status": "confirmed"
+     },
+     {
+      "text": "Additional encounters with even more Pokémon!",
+      "sources": [
+       "official",
+       "leekduck"
+      ],
+      "status": "confirmed"
+     }
+    ],
+    "raids": [],
+    "eggs": [],
+    "research": [],
+    "shiny": [],
+    "moves": [],
+    "costumes": [],
+    "tickets": [
+     {
+      "text": "From Tuesday, October 6, at 10:00 a.m. to Tuesday, November 3, at 10:00 a.m. local time, the GO Pass and GO Pass Deluxe for October will be available in Pokémon GO!",
+      "sources": [
+       "official",
+       "leekduck"
+      ],
+      "status": "confirmed"
+     },
+     {
+      "text": "Trainers will automatically receive GO Pass: October on Tuesday, October 6, at 10:00 a.m. local time. You can collect GO Points and rank up to get additional rewards through Tuesday, November 3, at 10:00 a.m. local time.",
+      "sources": [
+       "official",
+       "leekduck"
+      ],
+      "status": "confirmed"
+     },
+     {
+      "text": "Additionally, from Saturday, October 31, at 12:00 a.m. to Sunday, November 1, at 11:59 p.m. local time , there’s no daily limit for how many GO Points you can earn!",
+      "sources": [
+       "official",
+       "leekduck"
+      ],
+      "status": "confirmed"
+     },
+     {
+      "text": "For US$7.99*, Trainers can upgrade to the GO Pass Deluxe, a paid version of the GO Pass that offers upgraded rewards and faster progression.",
+      "sources": [
+       "official",
+       "leekduck"
+      ],
+      "status": "confirmed"
+     },
+     {
+      "text": "For US$9.99*, Trainers can upgrade to the GO Pass Deluxe + 10 Ranks to also automatically earn enough GO Points to reach Rank 11.",
+      "sources": [
+       "official",
+       "leekduck"
+      ],
+      "status": "confirmed"
+     },
+     {
+      "text": "Rewards unlocked in the GO Pass will expire on Thursday, November 5, at 10:00 a.m. local time, so be sure to claim your rewards before they’re gone!",
+      "sources": [
+       "official",
+       "leekduck"
+      ],
+      "status": "confirmed"
+     },
+     {
+      "text": "Kyogre makes waves and the Lucky Trinket returns in GO Pass: October!",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Trainers will also have access to Weekly Tasks to earn points and increase their rank. The Weekly Tasks are as follows:",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Catch 75 Pokémon - 200 PTS",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Win a raid - 150 PTS",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Make 20 Great Throws - 150 PTS",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Hatch 3 Eggs - 150 PTS",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "dates": [
+     {
+      "text": "From Tuesday, October 6, at 10:00 a.m. to Tuesday, November 3, at 10:00 a.m. local time, the GO Pass and GO Pass Deluxe for October will be available in Pokémon GO!",
+      "sources": [
+       "official",
+       "leekduck"
+      ],
+      "status": "confirmed"
+     },
+     {
+      "text": "Trainers will automatically receive GO Pass: October on Tuesday, October 6, at 10:00 a.m. local time. You can collect GO Points and rank up to get additional rewards through Tuesday, November 3, at 10:00 a.m. local time.",
+      "sources": [
+       "official",
+       "leekduck"
+      ],
+      "status": "confirmed"
+     },
+     {
+      "text": "Additionally, from Saturday, October 31, at 12:00 a.m. to Sunday, November 1, at 11:59 p.m. local time , there’s no daily limit for how many GO Points you can earn!",
+      "sources": [
+       "official",
+       "leekduck"
+      ],
+      "status": "confirmed"
+     },
+     {
+      "text": "Rewards unlocked in the GO Pass will expire on Thursday, November 5, at 10:00 a.m. local time, so be sure to claim your rewards before they’re gone!",
+      "sources": [
+       "official",
+       "leekduck"
+      ],
+      "status": "confirmed"
+     }
+    ]
+   },
+   "conflicts": [],
+   "gaps": []
+  },
+  "leekduck:raidhour20261104": {
+   "name": "Giratina (Altered Forme) Raid Hour",
+   "updated": "2026-10-30T14:18:29.486Z",
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/raidhour20261028/"
+    },
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/raidhour20261104/"
+    }
+   ],
+   "fields": {
+    "bonuses": [],
+    "featured": [],
+    "raids": [
+     {
+      "text": "A Raid Hour featuring Giratina (Origin Forme) is scheduled from 6:00 p.m. to 7:00 p.m. local time. During this hour there will be an increased number of five-star raids.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "eggs": [],
+    "research": [],
+    "shiny": [],
+    "moves": [],
+    "costumes": [],
+    "tickets": [],
+    "dates": [
+     {
+      "text": "A Raid Hour featuring Giratina (Origin Forme) is scheduled from 6:00 p.m. to 7:00 p.m. local time. During this hour there will be an increased number of five-star raids.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ]
+   },
+   "conflicts": [],
+   "gaps": []
+  },
+  "leekduck:halloween-2026-part-1": {
+   "name": "Pokémon GO Halloween 2026 Part I",
+   "updated": "2026-10-30T14:18:29.486Z",
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
      "url": "https://leekduck.com/events/halloween-2026-part-1/"
+    },
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/halloween-2026-part-2/"
     },
     {
      "id": "hub",
@@ -1368,12 +3083,11 @@
    "fields": {
     "bonuses": [
      {
-      "text": "Reach Major Milestones on your event GO Pass to unlock the following bonuses.",
+      "text": "Reach Major Milestones on GO Pass: Halloween 2026 to unlock these bonuses.",
       "sources": [
-       "official",
        "leekduck"
       ],
-      "status": "confirmed"
+      "status": "single"
      },
      {
       "text": "These catch bonuses are not active automatically . You must unlock them by reaching the required ranks on GO Pass: Halloween 2026 .",
@@ -1418,37 +3132,33 @@
       "status": "single"
      },
      {
-      "text": "Rank 10: 2× Candy for catching Pokémon.",
+      "text": "Rank 10: 2× Candy for catching Pokémon",
       "sources": [
-       "official",
        "leekduck",
        "hub"
       ],
       "status": "confirmed"
      },
      {
-      "text": "Rank 10: GO Pass Deluxe: 3× Candy for catching Pokémon.",
+      "text": "Rank 10: GO Pass Deluxe: 3× Candy for catching Pokémon",
       "sources": [
-       "official",
        "leekduck"
       ],
-      "status": "confirmed"
+      "status": "single"
      },
      {
-      "text": "Rank 20: 2× Stardust for catching Pokémon.",
+      "text": "Rank 20: 2× Stardust for catching Pokémon",
       "sources": [
-       "official",
        "leekduck"
       ],
-      "status": "confirmed"
+      "status": "single"
      },
      {
-      "text": "Rank 20: GO Pass Deluxe: 3× Stardust for catching Pokémon.",
+      "text": "Rank 20: GO Pass Deluxe: 3× Stardust for catching Pokémon",
       "sources": [
-       "official",
        "leekduck"
       ],
-      "status": "confirmed"
+      "status": "single"
      },
      {
       "text": "Rank 20: Additional bonus tasks for this GO Pass will be available during the event.",
@@ -1456,17 +3166,16 @@
        "leekduck"
       ],
       "status": "single"
+     },
+     {
+      "text": "Rank 20: Look out for additional bonus tasks for the event GO Pass.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
      }
     ],
     "featured": [
-     {
-      "text": "May encounter event-themed Pokémon in the wild, including Litwick*, Rowlet wearing a Pokémon Halloween costume*, Greavard*, and more! You might even encounter Gengar wearing a Spooky Festival costume*!",
-      "sources": [
-       "official",
-       "leekduck"
-      ],
-      "status": "confirmed"
-     },
      {
       "text": "Zubat wearing a top hat",
       "sources": [
@@ -1482,41 +3191,6 @@
        "hub"
       ],
       "status": "confirmed"
-     },
-     {
-      "text": "For the first time in Pokémon GO, you’ll be able to encounter Shiny Greavard—if you’re lucky! You may encounter Greavard in the wild or when you complete GO Pass and Field Research tasks.",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "Complete Pass Tasks to rank up your GO Pass to earn the following rewards.",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "Trainers who upgrade to the GO Pass Deluxe can also earn the following rewards.",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "Patissier Pants",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "Premium Battle Passes",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
      },
      {
       "text": "The following costumed Pokémon make their Pokémon GO debuts.",
@@ -1540,27 +3214,75 @@
       "status": "single"
      },
      {
+      "text": "The following event-themed Pokémon are appearing in the wild.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
       "text": "Noibat wearing a headband",
       "sources": [
        "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Vulpix wearing a Spooky Festival costume",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Gengar wearing a Tricks & Treats costume",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "The announced wild encounters include the following Pokémon, with more event-themed encounters to discover. All Pokémon listed here can be Shiny!",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rowlet wearing a Pokémon Halloween costume",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "The following Pokémon are among those appearing in the wild during Halloween Part One. All listed Pokémon can be Shiny.",
+      "sources": [
+       "hub"
       ],
       "status": "single"
      }
     ],
     "raids": [
      {
-      "text": "The following Pokémon will appear in raids.",
+      "text": "The following Pokémon will appear in one-star raids.",
       "sources": [
-       "official",
        "leekduck",
        "hub"
       ],
       "status": "confirmed"
      },
      {
-      "text": "One-Star Raids Pikachu wearing a hat and capelet* Sinistea wearing a bow*",
+      "text": "Pikachu wearing a hat and capelet",
       "sources": [
-       "official",
+       "leekduck",
+       "hub"
+      ],
+      "status": "confirmed"
+     },
+     {
+      "text": "Sinistea wearing a bow",
+      "sources": [
        "leekduck",
        "hub"
       ],
@@ -1570,33 +3292,8 @@
     "eggs": [],
     "research": [
      {
-      "text": "The research tasks in this free Timed Research will be automatically completed for all Trainers.",
+      "text": "Complete event-themed Field Research tasks for encounters with Pikachu wearing a hat and capelet, Zubat wearing a top hat, Sinistea wearing a bow, Noibat wearing a headband, and more!",
       "sources": [
-       "official",
-       "leekduck"
-      ],
-      "status": "confirmed"
-     },
-     {
-      "text": "Timed Research rewards include the following.",
-      "sources": [
-       "official",
-       "leekduck"
-      ],
-      "status": "confirmed"
-     },
-     {
-      "text": "6 Rare Candies",
-      "sources": [
-       "official",
-       "leekduck"
-      ],
-      "status": "confirmed"
-     },
-     {
-      "text": "An encounter with Sinistea wearing a bow*",
-      "sources": [
-       "official",
        "leekduck",
        "hub"
       ],
@@ -1627,25 +3324,11 @@
       "status": "confirmed"
      },
      {
-      "text": "There will be a free Timed Research opportunity available.",
+      "text": "Win a raid POSSIBLE REWARDS Zubat wearing a top hat Max CP 285 Min CP 258 Sinistea wearing a bow Max CP 488 Min CP 452",
       "sources": [
-       "official"
+       "leekduck"
       ],
-      "status": "official"
-     },
-     {
-      "text": "Please note that Timed Research expires. The tasks associated with this Timed Research must be completed and their rewards must be claimed before Thursday, November 5, 2026, at 8:00 p.m. local time.",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "Event-themed Field Research tasks will be available.",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
+      "status": "single"
      },
      {
       "text": "Event-exclusive Timed Research",
@@ -1655,7 +3338,42 @@
       "status": "single"
      },
      {
+      "text": "Free Timed Research will be available during the event. Its tasks will be automatically completed for all Trainers.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rewards include:",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "6 Rare Candies",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
       "text": "An encounter with Pikachu wearing a hat and capelet, which can be Shiny if you’re lucky!",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Complete these daily tasks to earn GO Points:",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Complete event-themed Field Research tasks for encounters with event-themed Pokémon, including Greavard . Specific tasks and the full encounter list have not yet been announced.",
       "sources": [
        "leekduck"
       ],
@@ -1672,13 +3390,6 @@
       "status": "confirmed"
      },
      {
-      "text": "For the first time in Pokémon GO, you’ll be able to encounter Shiny Greavard—if you’re lucky! You may encounter Greavard in the wild or when you complete GO Pass and Field Research tasks.",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
       "text": "The celebration continues in Halloween 2026 Part II , featuring Shiny Greavard’s debut and Mega Sableye’s new Super Max level.",
       "sources": [
        "leekduck"
@@ -1687,6 +3398,34 @@
      },
      {
       "text": "Pikachu wearing a hat and capelet, Zubat wearing a top hat, and Sinistea wearing a bow will be available in their Shiny variants from their debut!",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Shiny Greavard makes its Pokémon GO debut, and Mega Sableye can reach the new Super Max Mega Level! Halloween continues with costumed Pokémon, themed encounters, and GO Pass bonuses.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "The announced wild encounters include the following Pokémon, with more event-themed encounters to discover. All Pokémon listed here can be Shiny!",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "The following Pokémon will appear in one-star raids. Both can be Shiny!",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Shiny Greavard makes its Pokémon GO debut! You may encounter it in the wild or through GO Pass and Field Research tasks.",
       "sources": [
        "leekduck"
       ],
@@ -1731,17 +3470,8 @@
     "moves": [],
     "costumes": [
      {
-      "text": "May encounter event-themed Pokémon in the wild, including Litwick*, Rowlet wearing a Pokémon Halloween costume*, Greavard*, and more! You might even encounter Gengar wearing a Spooky Festival costume*!",
+      "text": "Pikachu wearing a hat and capelet",
       "sources": [
-       "official",
-       "leekduck"
-      ],
-      "status": "confirmed"
-     },
-     {
-      "text": "One-Star Raids Pikachu wearing a hat and capelet* Sinistea wearing a bow*",
-      "sources": [
-       "official",
        "leekduck",
        "hub"
       ],
@@ -1763,6 +3493,20 @@
       "status": "single"
      },
      {
+      "text": "Sinistea wearing a bow",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Vulpix wearing a Spooky Festival costume",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
       "text": "Noibat wearing a headband",
       "sources": [
        "leekduck"
@@ -1771,6 +3515,13 @@
      },
      {
       "text": "Gengar wearing a Tricks & Treats costume",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rowlet wearing a Pokémon Halloween costume",
       "sources": [
        "leekduck"
       ],
@@ -1800,38 +3551,6 @@
     ],
     "tickets": [
      {
-      "text": "A GO Pass is a free, limited-time progression track available during a specified period. By collecting GO Points, you can increase your rank to earn rewards.",
-      "sources": [
-       "official",
-       "hub"
-      ],
-      "status": "confirmed"
-     },
-     {
-      "text": "For US$9.99*, Trainers can upgrade to the GO Pass Deluxe + 10 Ranks to also automatically earn enough GO Points to reach Rank 11.",
-      "sources": [
-       "official",
-       "leekduck"
-      ],
-      "status": "confirmed"
-     },
-     {
-      "text": "Rewards unlocked in the GO Pass will expire on Saturday, November 7, 2026, at 8:00 p.m. local time, so be sure to claim your rewards before they’re gone!",
-      "sources": [
-       "official",
-       "leekduck"
-      ],
-      "status": "confirmed"
-     },
-     {
-      "text": "Availability of event tickets and the GO Pass Deluxe may vary by region.",
-      "sources": [
-       "official",
-       "leekduck"
-      ],
-      "status": "confirmed"
-     },
-     {
       "text": "Encounters with event-themed Pokémon",
       "sources": [
        "leekduck",
@@ -1856,20 +3575,6 @@
       "status": "confirmed"
      },
      {
-      "text": "Remember, Trainers! The previously announced GO Pass: Halloween 2026 is available from Tuesday, October 27, at 10:00 a.m. to Thursday, November 5, 2026, at 8:00 p.m. local time.",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "For US$7.99*, Trainers can upgrade to the GO Pass Deluxe, a paid version of the GO Pass that offers upgraded rewards and faster progression.",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
       "text": "The free pass includes:",
       "sources": [
        "leekduck"
@@ -1884,9 +3589,51 @@
       "status": "single"
      },
      {
+      "text": "For US$9.99 (or the equivalent local pricing tier), GO Pass Deluxe + 10 Ranks also provides enough GO Points to reach Rank 11.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Deluxe includes rewards from both tracks. You can upgrade at any time while the pass is available and claim rewards for ranks you have already reached. Availability may vary by region.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Claim all unlocked rewards by November 7, 2026, at 8:00 p.m. local time , before they expire.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
       "text": "Rank up to encounter Rotom and Spiritomb and earn Halloween rewards!",
       "sources": [
        "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "The Halloween 2026 GO Pass and GO Pass Deluxe run from Tuesday, October 27, at 10:00 a.m. to Thursday, November 5, 2026, at 8:00 p.m. local time , spanning both parts of Halloween.",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank | Free Track | Paid Track",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "51 – 107 | 50 × Stardust | 100 × Stardust",
+      "sources": [
+       "hub"
       ],
       "status": "single"
      },
@@ -2243,1335 +3990,12 @@
     ],
     "dates": [
      {
-      "text": "Sunday, November 1, at 10:00 a.m. to Thursday, November 5, 2026, at 8:00 p.m. local time",
+      "text": "Halloween 2026 Part I runs from Tuesday, October 27, at 10:00 a.m. to Sunday, November 1, 2026, at 10:00 a.m. local time .",
       "sources": [
-       "official",
        "leekduck",
        "hub"
       ],
       "status": "confirmed"
-     },
-     {
-      "text": "Rewards unlocked in the GO Pass will expire on Saturday, November 7, 2026, at 8:00 p.m. local time, so be sure to claim your rewards before they’re gone!",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     }
-    ]
-   },
-   "conflicts": [],
-   "gaps": []
-  },
-  "halloween1": {
-   "name": "Halloween 2026, Part One",
-   "updated": "2026-10-30T07:16:33.779Z",
-   "sources": [
-    {
-     "id": "official",
-     "name": "Pokémon GO (official)",
-     "trust": "official",
-     "url": "https://pokemongo.com/news/halloween-part-1-2026/"
-    }
-   ],
-   "fields": {
-    "bonuses": [
-     {
-      "text": "Reach Major Milestones on your event GO Pass to unlock the following bonuses.",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "Rank 10: 2× Candy for catching Pokémon.",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "Rank 10: GO Pass Deluxe: 3× Candy for catching Pokémon.",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "Rank 20: 2× Stardust for catching Pokémon.",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "Rank 20: GO Pass Deluxe: 3× Stardust for catching Pokémon.",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     }
-    ],
-    "featured": [
-     {
-      "text": "New costumed Pokémon will appear during this event!",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "Pikachu wearing a hat and capelet*",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "Zubat wearing a top hat*",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "Sinistea wearing a bow*",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "Complete Pass Tasks to rank up your GO Pass to earn the following rewards.",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "Encounters with event-themed Pokémon",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "Trainers who upgrade to the GO Pass Deluxe can also earn the following rewards.",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "Patissier Pants",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "Premium Battle Passes",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     }
-    ],
-    "raids": [
-     {
-      "text": "The following Pokémon will appear in raids.",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "One-Star Raids Pikachu wearing a hat and capelet* Sinistea wearing a bow*",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     }
-    ],
-    "eggs": [],
-    "research": [
-     {
-      "text": "There will be a free Timed Research opportunity available.",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "The research tasks in this free Timed Research will be automatically completed for all Trainers.",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "Timed Research rewards include the following.",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "6 Rare Candies",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "An encounter with Pikachu wearing a hat and capelet*",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "Please note that Timed Research expires. The tasks associated with this Timed Research must be completed and their rewards must be claimed before Sunday, November 1, 2026, at 10:00 a.m. local time.",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "Event-themed Field Research tasks will be available.",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     }
-    ],
-    "shiny": [],
-    "moves": [],
-    "costumes": [
-     {
-      "text": "Pikachu wearing a hat and capelet*",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "Zubat wearing a top hat*",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "Sinistea wearing a bow*",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     }
-    ],
-    "tickets": [
-     {
-      "text": "From Tuesday, October 27, at 10:00 a.m. to Thursday, November 5, 2026, at 8:00 p.m. local time, the GO Pass and GO Pass Deluxe for Halloween 2026 will be available in Pokémon GO!",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "A GO Pass is a free, limited-time progression track available during a specified period. By collecting GO Points, you can increase your rank to earn rewards.",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "For US$7.99*, Trainers can upgrade to the GO Pass Deluxe, a paid version of the GO Pass that offers upgraded rewards and faster progression.",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "For US$9.99*, Trainers can upgrade to the GO Pass Deluxe + 10 Ranks to also automatically earn enough GO Points to reach Rank 11.",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "Rewards unlocked in the GO Pass will expire on Saturday, November 7, 2026, at 8:00 p.m. local time, so be sure to claim your rewards before they’re gone!",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "Availability of event tickets and the GO Pass Deluxe may vary by region. *All prices listed are in USD or the equivalent pricing tier in your local currency.",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     }
-    ],
-    "dates": [
-     {
-      "text": "Tuesday, October 27, at 10:00 a.m. to Sunday, November 1, 2026, at 10:00 a.m. local time",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "Rewards unlocked in the GO Pass will expire on Saturday, November 7, 2026, at 8:00 p.m. local time, so be sure to claim your rewards before they’re gone!",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     }
-    ]
-   },
-   "conflicts": [],
-   "gaps": []
-  },
-  "spirits": {
-   "name": "Dynamax Uxie, Mesprit and Azelf",
-   "updated": "2026-10-30T07:16:33.779Z",
-   "sources": [
-    {
-     "id": "official",
-     "name": "Pokémon GO (official)",
-     "trust": "official",
-     "url": "https://pokemongo.com/news/dynamax-uxie-mesprit-azelf-max-battle-day-2026/"
-    }
-   ],
-   "fields": {
-    "bonuses": [
-     {
-      "text": "The following bonuses will be active during the event.",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "Max Particle collection limit increased to 1,600",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "All Power Spots will host Dynamax Battles",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "Power Spots will refresh more frequently",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "Additional Power Spots will be active",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "8× Max Particles from Power Spots",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "Two additional Special Trades can be made for a maximum of three for the day",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "From October 23 at 5:00 p.m. to October 24 at 8:00 p.m. PDT (GMT −7), the daily Remote Raid Pass limit will increase from 10 to 20",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "2× Max Particles from exploring*",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "1/4 Adventuring distance to receive Max Particles**",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     }
-    ],
-    "featured": [
-     {
-      "text": "Dynamax Debut!",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     }
-    ],
-    "raids": [
-     {
-      "text": "Saturday, October 24, 2026, from 2:00 p.m. to 5:00 p.m. local time",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "The following Pokémon will make their Pokémon GO Dynamax debut in five-star Max Battles!",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "Dynamax Uxie*: Appearing in the Asia-Pacific region",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "Dynamax Mesprit*: Appearing in Europe, the Middle East, Africa, and India",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "Dynamax Azelf*: Appearing in the Americas and Greenland",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "Max Battles will take great teamwork and only appear at Power Spots that sporadically appear in different locations, so we’re making it easier to find both these battles and other Trainers to help you take them on!",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "You can visit the Map to see the locations where Max Battles might appear during an event, in addition to those in progress.",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     }
-    ],
-    "eggs": [],
-    "research": [],
-    "shiny": [],
-    "moves": [],
-    "costumes": [],
-    "tickets": [
-     {
-      "text": "For US$4.99 (or the equivalent pricing tier in your local currency), you’ll be able to access event-exclusive Timed Research.",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "Timed Research rewards include the following.",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "1 Max Mushroom",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "6,400 Max Particles",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "You’ll also receive the following bonus.",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "2× XP from Max Battles",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "This Timed Research will be effective on Saturday, October 24, 2026, from 2:00 p.m. to 5:00 p.m. local time.",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "The Dynamax Uxie, Mesprit, and Azelf Battle Day Ultra Ticket Box will be available for US$4.99 (or the equivalent pricing tier in your local currency) and includes an event ticket and 800 Max Particles!",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "Check it out in the Pokémon GO Web Store soon!",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "—The Pokémon GO team",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     }
-    ],
-    "dates": [
-     {
-      "text": "Saturday, October 24, 2026, from 2:00 p.m. to 5:00 p.m. local time",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "From October 23 at 5:00 p.m. to October 24 at 8:00 p.m. PDT (GMT −7), the daily Remote Raid Pass limit will increase from 10 to 20",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     }
-    ]
-   },
-   "conflicts": [],
-   "gaps": []
-  },
-  "tcg30": {
-   "name": "Pokémon TCG: 30th Celebration (at stores)",
-   "updated": "2026-10-30T07:16:33.779Z",
-   "sources": [
-    {
-     "id": "official",
-     "name": "Pokémon GO (official)",
-     "trust": "official",
-     "url": "https://pokemongo.com/news/tcg-30th-celebration-event/"
-    }
-   ],
-   "fields": {
-    "bonuses": [],
-    "featured": [
-     {
-      "text": "The following Pokémon will appear more frequently in Mega Raids at participating retail locations.",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     }
-    ],
-    "raids": [],
-    "eggs": [],
-    "research": [
-     {
-      "text": "Trainers can get event-themed Timed Research throughout the event by going to one of the participating retail locations and opening Pokémon GO!",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "Complete the research tasks to earn Poké Balls, encounters with event-themed Pokémon, and more!",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     }
-    ],
-    "shiny": [],
-    "moves": [],
-    "costumes": [],
-    "tickets": [
-     {
-      "text": "—The Pokémon GO team",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     }
-    ],
-    "dates": [
-     {
-      "text": "Sunday, September 27, at 10:00 a.m. to Tuesday, October 20, 2026, at 10:00 p.m. local time",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     }
-    ]
-   },
-   "conflicts": [],
-   "gaps": []
-  },
-  "sandile": {
-   "name": "Sandile Hatch Day",
-   "updated": "2026-10-30T07:16:33.779Z",
-   "sources": [
-    {
-     "id": "official",
-     "name": "Pokémon GO (official)",
-     "trust": "official",
-     "url": "https://pokemongo.com/news/sandile-hatch-day-2026/"
-    }
-   ],
-   "fields": {
-    "bonuses": [
-     {
-      "text": "2× Candy from hatching Eggs*",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "1/2 Egg Hatch Distance*",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "Increased chance of hatching Shiny Sandile",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "Increased chance of receiving 2 km Eggs from spinning PokéStops",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     }
-    ],
-    "featured": [
-     {
-      "text": "Sandile will hatch much more frequently from 2 km Eggs. You’ll also have an increased chance of hatching Shiny Sandile!",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     }
-    ],
-    "raids": [],
-    "eggs": [
-     {
-      "text": "Saturday, October 17, 2026, from 11:00 a.m. to 5:00 p.m. local time",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     }
-    ],
-    "research": [
-     {
-      "text": "Event-exclusive Timed Research awarding an Incubator and XP will be available at no cost!",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "Please note that Timed Research expires. The tasks associated with Timed Research must be completed and their rewards must be claimed before Saturday, October 17, 2026, at 5:00 p.m. local time.",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "For US$1.99 (or the equivalent pricing tier in your local currency), you’ll be able to access event-exclusive Timed Research. Purchasing this ticket will also grant the following bonus during Sandile Hatch Day.",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "1/4 Egg Hatch Distance*",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "This paid Timed Research will challenge you to earn Stardust and explore 1 km to earn the following items.",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "One Star Piece",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "Two Super Incubators",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "Availability of event tickets may vary by region.",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "—The Pokémon GO team",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     }
-    ],
-    "shiny": [
-     {
-      "text": "Sandile will hatch much more frequently from 2 km Eggs. You’ll also have an increased chance of hatching Shiny Sandile!",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     }
-    ],
-    "moves": [],
-    "costumes": [],
-    "tickets": [
-     {
-      "text": "For US$1.99 (or the equivalent pricing tier in your local currency), you’ll be able to access event-exclusive Timed Research. Purchasing this ticket will also grant the following bonus during Sandile Hatch Day.",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     }
-    ],
-    "dates": [
-     {
-      "text": "Saturday, October 17, 2026, from 11:00 a.m. to 5:00 p.m. local time",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     }
-    ]
-   },
-   "conflicts": [],
-   "gaps": []
-  },
-  "trek": {
-   "name": "Fall Marathon: Buddy Trek",
-   "updated": "2026-10-30T07:16:33.779Z",
-   "sources": [
-    {
-     "id": "official",
-     "name": "Pokémon GO (official)",
-     "trust": "official",
-     "url": "https://pokemongo.com/news/fall-marathon-buddy-trek-2026/"
-    }
-   ],
-   "fields": {
-    "bonuses": [
-     {
-      "text": "Increased chance to encounter Shiny Electrike.",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "Reach Major Milestones on your event GO Pass to unlock the following bonuses.",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "Rank 10: Incense (excluding Daily Adventure Incense) activated during the event will last for two hours.",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "Rank 20: Earn 5× Mega Energy by exploring with Electrike or Manectric as your buddy after Mega Evolving Manectric at least once.",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     }
-    ],
-    "featured": [
-     {
-      "text": "For the first time in Pokémon GO, you’ll be able to encounter Bramblin—if you’re lucky! You may encounter Bramblin when you complete GO Pass tasks or use Incense.",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "Super Max Debut",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "Starting with the Fall Marathon: Buddy Trek event, you’ll be able to increase Mega Manectric’s Mega Level all the way up to Super Max Level for the first time in Pokémon GO! Learn more here .",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "Manectric will now be able to use an additional Charged Attack, Discharge+, when it’s Mega Evolved.",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "Trainer Battles : 50 power",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "Raid Battles : 150 power",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "You may encounter event-themed Pokémon in the wild, including Ponyta*, Doduo*, Electrike*, Blitzle*, and more! You might even encounter Skarmory*!",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "The following Pokémon will be attracted to Incense (excluding Daily Adventure Incense) during the event on the following days.",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "October 13 at 10:00 a.m. to October 16, 2026, at 10:00 a.m. local time",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "Galarian Ponyta*",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     }
-    ],
-    "raids": [],
-    "eggs": [],
-    "research": [
-     {
-      "text": "Event-themed Field Research tasks will be available.",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "There will be a free Timed Research opportunity available.",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "Timed Research rewards include the following.",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "An encounter with Pikachu wearing a marathon visor",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     }
-    ],
-    "shiny": [
-     {
-      "text": "Increased chance to encounter Shiny Electrike.",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     }
-    ],
-    "moves": [],
-    "costumes": [
-     {
-      "text": "An encounter with Pikachu wearing a marathon visor",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     }
-    ],
-    "tickets": [
-     {
-      "text": "From Tuesday, October 13, at 10:00 a.m. to Monday, October 19, 2026, at 8:00 p.m. local time, the GO Pass and GO Pass Deluxe for Fall Marathon: Buddy Trek will be available in Pokémon GO!",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "A GO Pass is a free, limited-time progression track available during a specified period. By collecting GO Points, you can increase your rank to earn rewards.",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "For US$4.99*, Trainers can upgrade to the GO Pass Deluxe, a paid version of the GO Pass that offers upgraded rewards and faster progression.",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "For US$6.99*, Trainers can upgrade to the GO Pass Deluxe + 6 Ranks to also automatically earn enough GO Points to reach Rank 7.",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "Rewards unlocked in the GO Pass will expire on Wednesday, October 21, 2026, at 8:00 p.m. local time, so be sure to claim your rewards before they’re gone!",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "Availability of event tickets and the GO Pass Deluxe may vary by region.",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     }
-    ],
-    "dates": [
-     {
-      "text": "Tuesday, October 13, at 10:00 a.m. to Monday, October 19, 2026, at 8:00 p.m. local time",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "Rewards unlocked in the GO Pass will expire on Wednesday, October 21, 2026, at 8:00 p.m. local time, so be sure to claim your rewards before they’re gone!",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     }
-    ]
-   },
-   "conflicts": [],
-   "gaps": []
-  },
-  "leekduck:go-pass-october-2026": {
-   "name": "GO Pass: October",
-   "updated": "2026-10-30T07:16:33.779Z",
-   "sources": [
-    {
-     "id": "official",
-     "name": "Pokémon GO (official)",
-     "trust": "official",
-     "url": "https://pokemongo.com/news/go-pass-october-2026/"
-    },
-    {
-     "id": "leekduck",
-     "name": "Leek Duck",
-     "trust": "community",
-     "url": "https://leekduck.com/events/go-pass-october-2026/"
-    }
-   ],
-   "fields": {
-    "bonuses": [
-     {
-      "text": "Reach Major Milestones on your GO Pass to unlock the following bonuses.",
-      "sources": [
-       "official",
-       "leekduck"
-      ],
-      "status": "confirmed"
-     },
-     {
-      "text": "Rank 1: One additional Candy for trading Pokémon.",
-      "sources": [
-       "official",
-       "leekduck"
-      ],
-      "status": "confirmed"
-     },
-     {
-      "text": "Rank 1: Trainers level 31 and above will receive one guaranteed Candy XL when trading Pokémon.",
-      "sources": [
-       "official",
-       "leekduck"
-      ],
-      "status": "confirmed"
-     },
-     {
-      "text": "Rank 25: Open up to 40 Gifts per day.",
-      "sources": [
-       "official",
-       "leekduck"
-      ],
-      "status": "confirmed"
-     },
-     {
-      "text": "Rank 25: Receive up to 125 Gifts per day from spinning PokéStops and Gym Photo Discs.",
-      "sources": [
-       "official",
-       "leekduck"
-      ],
-      "status": "confirmed"
-     },
-     {
-      "text": "Rank 25: Hold 10 more Gifts in your Item Bag.",
-      "sources": [
-       "official",
-       "leekduck"
-      ],
-      "status": "confirmed"
-     },
-     {
-      "text": "Rank 50: 2× Daily Adventure Incense duration.",
-      "sources": [
-       "official",
-       "leekduck"
-      ],
-      "status": "confirmed"
-     },
-     {
-      "text": "Rank 75: Increased Stardust and XP from hatching Eggs.",
-      "sources": [
-       "official",
-       "leekduck"
-      ],
-      "status": "confirmed"
-     },
-     {
-      "text": "Rank 25 Deluxe: Open up to 50 Gifts per day.",
-      "sources": [
-       "official",
-       "leekduck"
-      ],
-      "status": "confirmed"
-     },
-     {
-      "text": "Rank 25 Deluxe: Receive up to 150 Gifts per day from spinning PokéStops and Gym Photo Discs.",
-      "sources": [
-       "official",
-       "leekduck"
-      ],
-      "status": "confirmed"
-     },
-     {
-      "text": "Rank 25 Deluxe: Hold up to 20 more Gifts in your Item Bag.",
-      "sources": [
-       "official",
-       "leekduck"
-      ],
-      "status": "confirmed"
-     }
-    ],
-    "featured": [
-     {
-      "text": "Complete Pass Tasks to rank up your GO Pass to earn the following rewards.",
-      "sources": [
-       "official",
-       "leekduck"
-      ],
-      "status": "confirmed"
-     },
-     {
-      "text": "Encounter with Kyogre*",
-      "sources": [
-       "official",
-       "leekduck"
-      ],
-      "status": "confirmed"
-     },
-     {
-      "text": "Premium Battle Pass",
-      "sources": [
-       "official",
-       "leekduck"
-      ],
-      "status": "confirmed"
-     },
-     {
-      "text": "Trainers who upgrade to the GO Pass Deluxe can also earn the following rewards.",
-      "sources": [
-       "official",
-       "leekduck"
-      ],
-      "status": "confirmed"
-     },
-     {
-      "text": "A Lucky Trinket",
-      "sources": [
-       "official",
-       "leekduck"
-      ],
-      "status": "confirmed"
-     },
-     {
-      "text": "One Super Incubator",
-      "sources": [
-       "official",
-       "leekduck"
-      ],
-      "status": "confirmed"
-     },
-     {
-      "text": "Additional encounters with even more Pokémon!",
-      "sources": [
-       "official",
-       "leekduck"
-      ],
-      "status": "confirmed"
-     }
-    ],
-    "raids": [],
-    "eggs": [],
-    "research": [],
-    "shiny": [],
-    "moves": [],
-    "costumes": [],
-    "tickets": [
-     {
-      "text": "From Tuesday, October 6, at 10:00 a.m. to Tuesday, November 3, at 10:00 a.m. local time, the GO Pass and GO Pass Deluxe for October will be available in Pokémon GO!",
-      "sources": [
-       "official",
-       "leekduck"
-      ],
-      "status": "confirmed"
-     },
-     {
-      "text": "Trainers will automatically receive GO Pass: October on Tuesday, October 6, at 10:00 a.m. local time. You can collect GO Points and rank up to get additional rewards through Tuesday, November 3, at 10:00 a.m. local time.",
-      "sources": [
-       "official",
-       "leekduck"
-      ],
-      "status": "confirmed"
-     },
-     {
-      "text": "Additionally, from Saturday, October 31, at 12:00 a.m. to Sunday, November 1, at 11:59 p.m. local time , there’s no daily limit for how many GO Points you can earn!",
-      "sources": [
-       "official",
-       "leekduck"
-      ],
-      "status": "confirmed"
-     },
-     {
-      "text": "For US$7.99*, Trainers can upgrade to the GO Pass Deluxe, a paid version of the GO Pass that offers upgraded rewards and faster progression.",
-      "sources": [
-       "official",
-       "leekduck"
-      ],
-      "status": "confirmed"
-     },
-     {
-      "text": "For US$9.99*, Trainers can upgrade to the GO Pass Deluxe + 10 Ranks to also automatically earn enough GO Points to reach Rank 11.",
-      "sources": [
-       "official",
-       "leekduck"
-      ],
-      "status": "confirmed"
-     },
-     {
-      "text": "Rewards unlocked in the GO Pass will expire on Thursday, November 5, at 10:00 a.m. local time, so be sure to claim your rewards before they’re gone!",
-      "sources": [
-       "official",
-       "leekduck"
-      ],
-      "status": "confirmed"
-     },
-     {
-      "text": "Kyogre makes waves and the Lucky Trinket returns in GO Pass: October!",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Trainers will also have access to Weekly Tasks to earn points and increase their rank. The Weekly Tasks are as follows:",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Catch 75 Pokémon - 200 PTS",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Win a raid - 150 PTS",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Make 20 Great Throws - 150 PTS",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Hatch 3 Eggs - 150 PTS",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ],
-    "dates": [
-     {
-      "text": "From Tuesday, October 6, at 10:00 a.m. to Tuesday, November 3, at 10:00 a.m. local time, the GO Pass and GO Pass Deluxe for October will be available in Pokémon GO!",
-      "sources": [
-       "official",
-       "leekduck"
-      ],
-      "status": "confirmed"
-     },
-     {
-      "text": "Trainers will automatically receive GO Pass: October on Tuesday, October 6, at 10:00 a.m. local time. You can collect GO Points and rank up to get additional rewards through Tuesday, November 3, at 10:00 a.m. local time.",
-      "sources": [
-       "official",
-       "leekduck"
-      ],
-      "status": "confirmed"
-     },
-     {
-      "text": "Additionally, from Saturday, October 31, at 12:00 a.m. to Sunday, November 1, at 11:59 p.m. local time , there’s no daily limit for how many GO Points you can earn!",
-      "sources": [
-       "official",
-       "leekduck"
-      ],
-      "status": "confirmed"
-     },
-     {
-      "text": "Rewards unlocked in the GO Pass will expire on Thursday, November 5, at 10:00 a.m. local time, so be sure to claim your rewards before they’re gone!",
-      "sources": [
-       "official",
-       "leekduck"
-      ],
-      "status": "confirmed"
-     }
-    ]
-   },
-   "conflicts": [],
-   "gaps": []
-  },
-  "leekduck:raidhour20261104": {
-   "name": "Giratina (Altered Forme) Raid Hour",
-   "updated": "2026-10-30T07:16:33.779Z",
-   "sources": [
-    {
-     "id": "leekduck",
-     "name": "Leek Duck",
-     "trust": "community",
-     "url": "https://leekduck.com/events/raidhour20261028/"
-    },
-    {
-     "id": "leekduck",
-     "name": "Leek Duck",
-     "trust": "community",
-     "url": "https://leekduck.com/events/raidhour20261104/"
-    }
-   ],
-   "fields": {
-    "bonuses": [],
-    "featured": [],
-    "raids": [
-     {
-      "text": "A Raid Hour featuring Giratina (Origin Forme) is scheduled from 6:00 p.m. to 7:00 p.m. local time. During this hour there will be an increased number of five-star raids.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ],
-    "eggs": [],
-    "research": [],
-    "shiny": [],
-    "moves": [],
-    "costumes": [],
-    "tickets": [],
-    "dates": [
-     {
-      "text": "A Raid Hour featuring Giratina (Origin Forme) is scheduled from 6:00 p.m. to 7:00 p.m. local time. During this hour there will be an increased number of five-star raids.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
      }
     ]
    },
@@ -3580,7 +4004,7 @@
   },
   "leekduck:max-mondays-2026-11-02": {
    "name": "Dynamax Machop during Max Monday",
-   "updated": "2026-10-30T07:16:33.779Z",
+   "updated": "2026-10-30T14:18:29.486Z",
    "sources": [
     {
      "id": "leekduck",
@@ -3657,7 +4081,7 @@
   },
   "leekduck:shadow-landorus-incarnate-forme-in-shadow-raids-october-2026": {
    "name": "Shadow Landorus (Incarnate Forme) in Shadow Raids",
-   "updated": "2026-10-30T07:16:33.779Z",
+   "updated": "2026-10-30T14:18:29.486Z",
    "sources": [
     {
      "id": "leekduck",
@@ -3707,7 +4131,7 @@
   },
   "leekduck:giratina-origin-forme-in-5-star-raid-battles-october-2026": {
    "name": "Giratina (Origin Forme) in 5-star Raid Battles",
-   "updated": "2026-10-30T07:16:33.779Z",
+   "updated": "2026-10-30T14:18:29.486Z",
    "sources": [
     {
      "id": "leekduck",
@@ -3771,7 +4195,7 @@
   },
   "leekduck:pokemonspotlighthour2026-11-05": {
    "name": "Teddiursa wearing a witch hat Spotlight Hour",
-   "updated": "2026-10-30T07:16:33.779Z",
+   "updated": "2026-10-30T14:18:29.486Z",
    "sources": [
     {
      "id": "leekduck",
@@ -3825,281 +4249,9 @@
    "conflicts": [],
    "gaps": []
   },
-  "halloween2": {
-   "name": "Halloween 2026, Part Two",
-   "updated": "2026-10-30T07:16:33.779Z",
-   "sources": [
-    {
-     "id": "leekduck",
-     "name": "Leek Duck",
-     "trust": "community",
-     "url": "https://leekduck.com/events/halloween-2026-part-2/"
-    }
-   ],
-   "fields": {
-    "bonuses": [
-     {
-      "text": "Reach Major Milestones on GO Pass: Halloween 2026 to unlock these bonuses.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 10: 2× Candy for catching Pokémon",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 10: GO Pass Deluxe: 3× Candy for catching Pokémon",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 20: 2× Stardust for catching Pokémon",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 20: GO Pass Deluxe: 3× Stardust for catching Pokémon",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 20: Look out for additional bonus tasks for the event GO Pass.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ],
-    "featured": [
-     {
-      "text": "The announced wild encounters include the following Pokémon, with more event-themed encounters to discover. All Pokémon listed here can be Shiny!",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rowlet wearing a Pokémon Halloween costume",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "If you’re lucky, you might also encounter Gengar wearing a Spooky Festival costume !",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ],
-    "raids": [
-     {
-      "text": "The following Pokémon will appear in one-star raids. Both can be Shiny!",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Pikachu wearing a hat and capelet",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Sinistea wearing a bow",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ],
-    "eggs": [],
-    "research": [
-     {
-      "text": "Complete event-themed Field Research tasks for encounters with event-themed Pokémon, including Greavard . Specific tasks and the full encounter list have not yet been announced.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Complete these daily tasks to earn GO Points:",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Catch 6 Ghost-type Pokémon — 50 GO Points",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ],
-    "shiny": [
-     {
-      "text": "Shiny Greavard makes its Pokémon GO debut, and Mega Sableye can reach the new Super Max Mega Level! Halloween continues with costumed Pokémon, themed encounters, and GO Pass bonuses.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "The announced wild encounters include the following Pokémon, with more event-themed encounters to discover. All Pokémon listed here can be Shiny!",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "The following Pokémon will appear in one-star raids. Both can be Shiny!",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Shiny Greavard makes its Pokémon GO debut! You may encounter it in the wild or through GO Pass and Field Research tasks.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Pikachu wearing a hat and capelet and Sinistea wearing a bow can also be Shiny!",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ],
-    "moves": [],
-    "costumes": [
-     {
-      "text": "Rowlet wearing a Pokémon Halloween costume",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "If you’re lucky, you might also encounter Gengar wearing a Spooky Festival costume !",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Pikachu wearing a hat and capelet",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Sinistea wearing a bow",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ],
-    "tickets": [
-     {
-      "text": "The free pass includes:",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Encounters with event-themed Pokémon",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Additional rewards",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Patissier Top and Patissier Pants",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Premium Battle Passes",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "For US$9.99 (or the equivalent local pricing tier), GO Pass Deluxe + 10 Ranks also provides enough GO Points to reach Rank 11.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Deluxe includes rewards from both tracks. You can upgrade at any time while the pass is available and claim rewards for ranks you have already reached. Availability may vary by region.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Claim all unlocked rewards by November 7, 2026, at 8:00 p.m. local time , before they expire.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank up to encounter Rotom and Spiritomb and earn Halloween rewards!",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ],
-    "dates": [
-     {
-      "text": "Halloween 2026 Part II runs from Sunday, November 1, at 10:00 a.m. to Thursday, November 5, 2026, at 8:00 p.m. local time .",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ]
-   },
-   "conflicts": [],
-   "gaps": []
-  },
   "leekduck:pokemon-go-wild-area-2026-sendai-japan": {
    "name": "Pokémon GO Wild Area 2026: Sendai • Tohoku",
-   "updated": "2026-10-30T07:16:33.779Z",
+   "updated": "2026-10-30T14:18:29.486Z",
    "sources": [
     {
      "id": "leekduck",
@@ -4449,7 +4601,7 @@
   },
   "leekduck:pokemon-go-wild-area-2026-mexico-city": {
    "name": "Pokémon GO Wild Area 2026: Mexico City",
-   "updated": "2026-10-30T07:16:33.779Z",
+   "updated": "2026-10-30T14:18:29.486Z",
    "sources": [
     {
      "id": "leekduck",
@@ -4806,7 +4958,7 @@
   },
   "leekduck:mega-sableye-in-mega-raids-october-2026": {
    "name": "Mega Sableye in Mega Raids",
-   "updated": "2026-10-30T07:16:33.779Z",
+   "updated": "2026-10-30T14:18:29.486Z",
    "sources": [
     {
      "id": "leekduck",
@@ -4863,7 +5015,7 @@
   },
   "leekduck:giratina-altered-forme-in-5-star-raid-battles-november-2026": {
    "name": "Giratina (Altered Forme) in 5-star Raid Battles",
-   "updated": "2026-10-30T07:16:33.779Z",
+   "updated": "2026-10-30T14:18:29.486Z",
    "sources": [
     {
      "id": "leekduck",
@@ -4934,19 +5086,13 @@
   },
   "leekduck:shadow-tornadus-incarnate-forme-in-shadow-raids-november-4-2026": {
    "name": "Shadow Tornadus (Incarnate Forme) in Shadow Raids",
-   "updated": "2026-10-30T07:16:33.779Z",
+   "updated": "2026-10-30T14:18:29.486Z",
    "sources": [
     {
      "id": "leekduck",
      "name": "Leek Duck",
      "trust": "community",
      "url": "https://leekduck.com/events/shadow-tornadus-incarnate-forme-in-shadow-raids-november-4-2026/"
-    },
-    {
-     "id": "leekduck",
-     "name": "Leek Duck",
-     "trust": "community",
-     "url": "https://leekduck.com/events/shadow-tornadus-incarnate-forme-in-shadow-raids-november-16-2026/"
     }
    ],
    "fields": {
@@ -4982,7 +5128,7 @@
   },
   "leekduck:pokemon-night-out-london-2026": {
    "name": "Pokémon Night Out 2026 - London",
-   "updated": "2026-10-30T07:16:33.779Z",
+   "updated": "2026-10-30T14:18:29.486Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5088,266 +5234,9 @@
    "conflicts": [],
    "gaps": []
   },
-  "into": {
-   "name": "Into the Wild",
-   "updated": "2026-10-30T07:16:33.779Z",
-   "sources": [
-    {
-     "id": "leekduck",
-     "name": "Leek Duck",
-     "trust": "community",
-     "url": "https://leekduck.com/events/into-the-wild-2026/"
-    }
-   ],
-   "fields": {
-    "bonuses": [
-     {
-      "text": "Daily Discoveries will not take place from November 9 through November 15, 2026.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Reach these ranks on GO Pass: Into the Wild to unlock the following bonus.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 25: 1/2 Hatch Distance for Eggs placed in Incubators during the event",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ],
-    "featured": [
-     {
-      "text": "The following Pokémon will appear more frequently in the wild, along with other event-themed Pokémon.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "The free track includes:",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Encounter with Dynamax Meltan",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "GO Wild Area 2026 Tee (Purple)",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Additional rewards",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "GO Pass Deluxe also offers:",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "A Silver Bottle Cap, which can be used to max one stat—Attack, Defense, or HP—on any Pokémon via Hyper Training",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Encounters with Dynamax Meltan",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Duraludon Pants",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Premium items, such as Incense and a Lucky Egg",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ],
-    "raids": [
-     {
-      "text": "Regidrago will make its Pokémon GO Dynamax debut in five-star Max Battles, and Meltan will make its Dynamax debut in GO Pass: Into the Wild. If you’re lucky, you may encounter a Shiny one!",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Defeating Crowned Sword Zacian or Crowned Shield Zamazenta in raids will earn you Crowned Sword Energy or Crowned Shield Energy, respectively.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "The following Dynamax Pokémon will appear in Max Battles. Pokémon appearing in five-star Max Battles will also be featured in Max Battles from 6:00 p.m. to 7:00 p.m. local time for one day each on the following schedule.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ],
-    "eggs": [],
-    "research": [
-     {
-      "text": "Pokémon GO Wild Area–themed Field Research tasks will be available throughout the event! Complete the research tasks to earn encounters with event-themed Pokémon and other rewards.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "After you give your trainee a Silver Bottle Cap, Hyper Training begins. Each stat has its own set of themed tasks.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Attack: Battle alongside your trainee.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Defense: Strengthen your bond with your Buddy Pokémon trainee by playing together, exploring, and catching Pokémon.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "HP: Explore alongside your trainee as a buddy. This can include spinning PokéStops, earning Buddy Candy, or other adventures.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "You’ll have 365 days after using your Silver Bottle Cap to finish Hyper Training.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ],
-    "shiny": [
-     {
-      "text": "Regidrago will make its Pokémon GO Dynamax debut in five-star Max Battles, and Meltan will make its Dynamax debut in GO Pass: Into the Wild. If you’re lucky, you may encounter a Shiny one!",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ],
-    "moves": [],
-    "costumes": [],
-    "tickets": [
-     {
-      "text": "GO Pass: Into the Wild is a free progression track. Complete Pass Tasks to collect GO Points, increase your rank, and unlock rewards.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Trainers will receive the pass automatically on Monday, November 9, at 10:00 a.m. local time . Earn points and rank up until Sunday, November 15, 2026, at 6:00 p.m. local time .",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "From Monday, November 9, to Friday, November 13, you can collect GO Points up to a daily cap. There’s no limit to the GO Points you can earn on Saturday and Sunday, November 14 to 15!",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Upgrade to GO Pass Deluxe: Into the Wild for US$14.99 * for upgraded rewards. The GO Pass Deluxe: Into the Wild + 10 Ranks option costs US$19.99 * and grants enough GO Points to reach Rank 10.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Deluxe includes rewards from both tracks. You can upgrade at any time and still claim rewards for ranks you have already reached.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Claim all unlocked GO Pass rewards before they expire on Tuesday, November 17, 2026, at 11:59 p.m. local time .",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ],
-    "dates": [
-     {
-      "text": "The following Dynamax Pokémon will appear in Max Battles. Pokémon appearing in five-star Max Battles will also be featured in Max Battles from 6:00 p.m. to 7:00 p.m. local time for one day each on the following schedule.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Trainers will receive the pass automatically on Monday, November 9, at 10:00 a.m. local time . Earn points and rank up until Sunday, November 15, 2026, at 6:00 p.m. local time .",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "From Monday, November 9, to Friday, November 13, you can collect GO Points up to a daily cap. There’s no limit to the GO Points you can earn on Saturday and Sunday, November 14 to 15!",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ]
-   },
-   "conflicts": [],
-   "gaps": []
-  },
   "leekduck:pokemon-go-wild-area-2026-global": {
    "name": "Pokémon GO Wild Area 2026: Global",
-   "updated": "2026-10-30T07:16:33.779Z",
+   "updated": "2026-10-30T14:18:29.486Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5635,7 +5524,7 @@
   },
   "leekduck:max-mondays-2026-11-16": {
    "name": "Max Monday: Pokémon to be announced",
-   "updated": "2026-10-30T07:16:33.779Z",
+   "updated": "2026-10-30T14:18:29.486Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5676,7 +5565,7 @@
   },
   "leekduck:raidhour20261118": {
    "name": "Cresselia and Darkrai Raid Hour",
-   "updated": "2026-10-30T07:16:33.779Z",
+   "updated": "2026-10-30T14:18:29.486Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5718,7 +5607,7 @@
   },
   "leekduck:pokemonspotlighthour2026-11-19": {
    "name": "Grookey, Scorbunny, and Sobble Spotlight Hour",
-   "updated": "2026-10-30T07:16:33.779Z",
+   "updated": "2026-10-30T14:18:29.486Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5752,7 +5641,7 @@
   },
   "minior2": {
    "name": "Minior Showers: Leonids",
-   "updated": "2026-10-30T07:16:33.779Z",
+   "updated": "2026-10-30T14:18:29.486Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5843,7 +5732,7 @@
   },
   "leekduck:eternamax-eternatus-max-battles-2026": {
    "name": "Eternamax Eternatus Returns",
-   "updated": "2026-10-30T07:16:33.779Z",
+   "updated": "2026-10-30T14:18:29.486Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5922,7 +5811,7 @@
   },
   "leekduck:november-communityday2026": {
    "name": "Pawniard Community Day",
-   "updated": "2026-10-30T07:16:33.779Z",
+   "updated": "2026-10-30T14:18:29.486Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6079,9 +5968,244 @@
    "conflicts": [],
    "gaps": []
   },
+  "leekduck:dynamax-trails-2026": {
+   "name": "Dynamax Trails",
+   "updated": "2026-10-30T14:18:29.486Z",
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/dynamax-trails-2026/"
+    }
+   ],
+   "fields": {
+    "bonuses": [
+     {
+      "text": "The following bonuses will be active during the event.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Max Particles cannot be obtained from catches with the Explorer Gadget or a Pokémon GO Plus +.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Reach the following ranks on your event GO Pass to unlock these bonuses.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 15: 2× Catch Stardust",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 35: 1/2 Candy and Stardust cost to activate the Dynamax Cannon Adventure Effect",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 55: Additional Candy and Candy XL from Max Battles",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 55: Additional bonus tasks for this GO Pass will be available during the event.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "featured": [
+     {
+      "text": "Event-themed Pokémon will appear in the wild, including any Pokémon that has debuted in Dynamax Max Battles, excluding Legendary and Mythical Pokémon.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Complete Pass Tasks to earn:",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Encounters with event-themed Dynamax Pokémon with a Special Background",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "An encounter with Eternatus, or 100 Eternatus Candy if you have already caught Eternatus",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Eternatus Candy and Candy XL",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Event-themed stickers",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Additional rewards",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "GO Pass Deluxe also offers:",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Silver Pinap Berries",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "raids": [
+     {
+      "text": "Get ready for a week of Max Battles! Dynamax Pokémon return, Max Particles are surging in the wild, and Eternamax Eternatus returns to Power Spots during Dynamax Trails.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "The Dynamax Trails event will take place from November 16, 2026 at 10 am to November 23, 2026 at 8 pm local time.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "All Dynamax Pokémon that have previously appeared in Pokémon GO may appear in Max Battles during the event, excluding Legendary and Mythical Pokémon.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "eggs": [],
+    "research": [
+     {
+      "text": "Complete event-themed Field Research tasks to earn Stardust, Eternatus Candy, encounters with event-themed Pokémon, and more.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "shiny": [],
+    "moves": [],
+    "costumes": [],
+    "tickets": [
+     {
+      "text": "GO Pass is a free, limited-time progression track. Collect GO Points and complete Pass Tasks to rank up and earn rewards.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Trainers will automatically receive GO Pass: Dynamax Trails on November 16, 2026, at 10 am local time. GO Points can be collected through November 23, 2026, at 8 pm local time.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Trainers who claim Tier 1 rewards (Rank 25) on GO Pass: Into the Wild will receive early access on November 14, 2026, at 10 am local time, and a free upgrade to GO Pass Deluxe: Dynamax Trails .",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Claim all unlocked rewards by November 25, 2026, at 8 pm local time , before they expire.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "dates": [
+     {
+      "text": "The Dynamax Trails event will take place from November 16, 2026 at 10 am to November 23, 2026 at 8 pm local time.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Eternamax Eternatus will take over the majority of Power Spots on November 21, 2026, from 11 am to 2 pm local time.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "The daily Remote Raid limit will increase from 10 to 30 from November 20 at 1 pm to November 21 at 6 pm PST (GMT −8).",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Grookey, Scorbunny, and Sobble will be featured during Pokémon Spotlight Hour on November 19, 2026, from 6 pm to 7 pm local time. The bonus will be 2× Catch Candy .",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Trainers who claim Tier 1 rewards (Rank 25) on GO Pass: Into the Wild will receive early access on November 14, 2026, at 10 am local time, and a free upgrade to GO Pass Deluxe: Dynamax Trails .",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ]
+   },
+   "conflicts": [],
+   "gaps": []
+  },
   "leekduck:max-mondays-2026-11-23": {
    "name": "Dynamax Espurr during Max Monday",
-   "updated": "2026-10-30T07:16:33.779Z",
+   "updated": "2026-10-30T14:18:29.486Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6158,7 +6282,7 @@
   },
   "leekduck:cresselia-darkrai-in-5-star-raid-battles-november-2026": {
    "name": "Cresselia and Darkrai in 5-star Raid Battles",
-   "updated": "2026-10-30T07:16:33.779Z",
+   "updated": "2026-10-30T14:18:29.486Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6229,7 +6353,7 @@
   },
   "leekduck:mega-banette-in-mega-raids-november-2026": {
    "name": "Mega Banette in Mega Raids",
-   "updated": "2026-10-30T07:16:33.779Z",
+   "updated": "2026-10-30T14:18:29.486Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6293,7 +6417,7 @@
   },
   "leekduck:raidhour20261125": {
    "name": "Deoxys (Normal, Defense, Attack, and Speed Formes) Raid Hour",
-   "updated": "2026-10-30T07:16:33.779Z",
+   "updated": "2026-10-30T14:18:29.486Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6335,7 +6459,7 @@
   },
   "leekduck:pokemonspotlighthour2026-11-26": {
    "name": "Noibat Spotlight Hour",
-   "updated": "2026-10-30T07:16:33.779Z",
+   "updated": "2026-10-30T14:18:29.486Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6369,7 +6493,7 @@
   },
   "smr2": {
    "name": "Super Mega Raid Day",
-   "updated": "2026-10-30T07:16:33.779Z",
+   "updated": "2026-10-30T14:18:29.486Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6409,9 +6533,9 @@
    "conflicts": [],
    "gaps": []
   },
-  "leekduck:twilight-wishes-2026": {
+  "twilightwishes": {
    "name": "Twilight Wishes",
-   "updated": "2026-10-30T07:16:33.779Z",
+   "updated": "2026-10-30T14:18:29.486Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6445,7 +6569,7 @@
   },
   "leekduck:max-mondays-2026-11-30": {
    "name": "Dynamax Cryogonal during Max Monday",
-   "updated": "2026-10-30T07:16:33.779Z",
+   "updated": "2026-10-30T14:18:29.486Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6522,7 +6646,7 @@
   },
   "leekduck:season-24-twilight-trails": {
    "name": "Twilight Trails",
-   "updated": "2026-10-30T07:16:33.779Z",
+   "updated": "2026-10-30T14:18:29.486Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6741,9 +6865,221 @@
    "conflicts": [],
    "gaps": []
   },
+  "leekduck:go-pass-november-2026": {
+   "name": "GO Pass: November",
+   "updated": "2026-10-30T14:18:29.486Z",
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/go-pass-november-2026/"
+    }
+   ],
+   "fields": {
+    "bonuses": [
+     {
+      "text": "Reach Major Milestones on your GO Pass to unlock the following bonuses.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 1: One additional Candy for trading Pokémon",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 1: Trainers level 31 and above will receive one guaranteed Candy XL when trading Pokémon",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 25: Open up to 40 Gifts per day",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 25: Receive up to 125 Gifts per day from spinning PokéStop and Gym Photo Discs",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 25: Hold 10 more Gifts in your Item Bag",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 50: 2× Daily Adventure Incense duration",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 75: Increased XP and Stardust from hatching Eggs",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 25 Deluxe: Open up to 50 Gifts per day",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 25 Deluxe: Receive up to 150 Gifts per day from spinning PokéStop and Gym Photo Discs",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 25 Deluxe: Hold up to 20 more Gifts in your Item Bag",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "featured": [
+     {
+      "text": "Complete Pass Tasks to rank up your GO Pass to earn the following rewards.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Encounter with Groudon*",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Trainers who upgrade to the GO Pass Deluxe can also earn the following rewards.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "1,000 additional PokéCoins for a total of 1,400 PokéCoins",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "One Super Incubator",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Additional encounters with even more Pokémon!",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "raids": [],
+    "eggs": [],
+    "research": [],
+    "shiny": [],
+    "moves": [],
+    "costumes": [],
+    "tickets": [
+     {
+      "text": "Earn PokéCoins and encounter Groudon in GO Pass: November!",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "The GO Pass and GO Pass Deluxe for November will be available from November 3, 2026 at 10:00 am to December 1, 2026 at 10:00 am local time.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Additionally, from Saturday, November 28, at 12:00 a.m. to Sunday, November 29, at 11:59 p.m. local time, there’s no daily limit for how many GO Points you can earn!",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "For US$7.99*, Trainers can upgrade to the GO Pass Deluxe, a paid version of the GO Pass that offers upgraded rewards and faster progression.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "For US$9.99*, Trainers can upgrade to the GO Pass Deluxe + 10 Ranks to also automatically earn enough GO Points to reach Rank 11.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rewards unlocked in the GO Pass will expire on Thursday, December 3, at 10:00 a.m. local time, so be sure to claim your rewards before they’re gone!",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "dates": [
+     {
+      "text": "The GO Pass and GO Pass Deluxe for November will be available from November 3, 2026 at 10:00 am to December 1, 2026 at 10:00 am local time.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Additionally, from Saturday, November 28, at 12:00 a.m. to Sunday, November 29, at 11:59 p.m. local time, there’s no daily limit for how many GO Points you can earn!",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rewards unlocked in the GO Pass will expire on Thursday, December 3, at 10:00 a.m. local time, so be sure to claim your rewards before they’re gone!",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ]
+   },
+   "conflicts": [],
+   "gaps": []
+  },
   "leekduck:deoxys-normal-defense-attack-speed-formes-in-5-star-raid-battles-november-2026": {
    "name": "Deoxys (Normal, Defense, Attack, and Speed Formes) in 5-star Raid Battles",
-   "updated": "2026-10-30T07:16:33.779Z",
+   "updated": "2026-10-30T14:18:29.486Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6842,7 +7178,7 @@
   },
   "leekduck:mega-metagross-in-mega-raids-november-2026": {
    "name": "Mega Metagross in Mega Raids",
-   "updated": "2026-10-30T07:16:33.779Z",
+   "updated": "2026-10-30T14:18:29.486Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6913,7 +7249,7 @@
   },
   "minior3": {
    "name": "Minior Showers: Geminids",
-   "updated": "2026-10-30T07:16:33.779Z",
+   "updated": "2026-10-30T14:18:29.486Z",
    "sources": [
     {
      "id": "leekduck",
@@ -7004,7 +7340,7 @@
   },
   "leekduck:pokemon-x-adidas-2026": {
    "name": "adidas × Pokémon Timed Research",
-   "updated": "2026-10-30T07:16:33.779Z",
+   "updated": "2026-10-30T14:18:29.486Z",
    "sources": [
     {
      "id": "leekduck",
@@ -7082,7 +7418,7 @@
   },
   "leekduck:pokemon-go-tour-alola-kaohsiung-2027": {
    "name": "Pokémon GO Tour: Alola - Kaohsiung 2027",
-   "updated": "2026-10-30T07:16:33.779Z",
+   "updated": "2026-10-30T14:18:29.486Z",
    "sources": [
     {
      "id": "leekduck",
@@ -7116,7 +7452,7 @@
   },
   "leekduck:pokemon-go-tour-alola-los-angeles-2027": {
    "name": "Pokémon GO Tour: Alola - Los Angeles 2027",
-   "updated": "2026-10-30T07:16:33.779Z",
+   "updated": "2026-10-30T14:18:29.486Z",
    "sources": [
     {
      "id": "leekduck",
@@ -7150,7 +7486,7 @@
   },
   "leekduck:pokemon-go-tour-alola-global-2027": {
    "name": "Pokémon GO Tour: Alola - Global 2027",
-   "updated": "2026-10-30T07:16:33.779Z",
+   "updated": "2026-10-30T14:18:29.486Z",
    "sources": [
     {
      "id": "leekduck",
@@ -7184,7 +7520,7 @@
   },
   "leekduck:minior-showers-eta-aquariids-2027": {
    "name": "Minior Showers: Eta Aquariids 2027",
-   "updated": "2026-10-30T07:16:33.779Z",
+   "updated": "2026-10-30T14:18:29.486Z",
    "sources": [
     {
      "id": "leekduck",
@@ -7282,7 +7618,7 @@
   },
   "leekduck:minior-showers-southern-delta-aquariids-2027": {
    "name": "Minior Showers: Southern Delta Aquariids 2027",
-   "updated": "2026-10-30T07:16:33.779Z",
+   "updated": "2026-10-30T14:18:29.486Z",
    "sources": [
     {
      "id": "leekduck",
@@ -7380,7 +7716,7 @@
   },
   "leekduck:minior-showers-perseids-2027": {
    "name": "Minior Showers: Perseids 2027",
-   "updated": "2026-10-30T07:16:33.779Z",
+   "updated": "2026-10-30T14:18:29.486Z",
    "sources": [
     {
      "id": "leekduck",
@@ -7471,7 +7807,7 @@
   },
   "sendai": {
    "name": "GO Wild Area: Sendai",
-   "updated": "2026-10-30T07:16:33.779Z",
+   "updated": "2026-10-30T14:18:29.486Z",
    "sources": [
     {
      "id": "hub",
@@ -7495,6 +7831,297 @@
       "text": "The stamp rallies for these events will be active from 10:00 a.m. to 8:00 p.m. local time on your main ticketed event day.",
       "sources": [
        "hub"
+      ],
+      "status": "single"
+     }
+    ]
+   },
+   "conflicts": [],
+   "gaps": []
+  },
+  "into": {
+   "name": "Into the Wild",
+   "updated": "2026-10-30T07:16:33.779Z",
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/into-the-wild-2026/"
+    }
+   ],
+   "fields": {
+    "bonuses": [
+     {
+      "text": "Daily Discoveries will not take place from November 9 through November 15, 2026.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Reach these ranks on GO Pass: Into the Wild to unlock the following bonus.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 25: 1/2 Hatch Distance for Eggs placed in Incubators during the event",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "featured": [
+     {
+      "text": "The following Pokémon will appear more frequently in the wild, along with other event-themed Pokémon.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "The free track includes:",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Encounter with Dynamax Meltan",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "GO Wild Area 2026 Tee (Purple)",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Additional rewards",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "GO Pass Deluxe also offers:",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "A Silver Bottle Cap, which can be used to max one stat—Attack, Defense, or HP—on any Pokémon via Hyper Training",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Encounters with Dynamax Meltan",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Duraludon Pants",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Premium items, such as Incense and a Lucky Egg",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "raids": [
+     {
+      "text": "Regidrago will make its Pokémon GO Dynamax debut in five-star Max Battles, and Meltan will make its Dynamax debut in GO Pass: Into the Wild. If you’re lucky, you may encounter a Shiny one!",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Defeating Crowned Sword Zacian or Crowned Shield Zamazenta in raids will earn you Crowned Sword Energy or Crowned Shield Energy, respectively.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "The following Dynamax Pokémon will appear in Max Battles. Pokémon appearing in five-star Max Battles will also be featured in Max Battles from 6:00 p.m. to 7:00 p.m. local time for one day each on the following schedule.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "eggs": [],
+    "research": [
+     {
+      "text": "Pokémon GO Wild Area–themed Field Research tasks will be available throughout the event! Complete the research tasks to earn encounters with event-themed Pokémon and other rewards.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "After you give your trainee a Silver Bottle Cap, Hyper Training begins. Each stat has its own set of themed tasks.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Attack: Battle alongside your trainee.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Defense: Strengthen your bond with your Buddy Pokémon trainee by playing together, exploring, and catching Pokémon.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "HP: Explore alongside your trainee as a buddy. This can include spinning PokéStops, earning Buddy Candy, or other adventures.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "You’ll have 365 days after using your Silver Bottle Cap to finish Hyper Training.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "shiny": [
+     {
+      "text": "Regidrago will make its Pokémon GO Dynamax debut in five-star Max Battles, and Meltan will make its Dynamax debut in GO Pass: Into the Wild. If you’re lucky, you may encounter a Shiny one!",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "moves": [],
+    "costumes": [],
+    "tickets": [
+     {
+      "text": "GO Pass: Into the Wild is a free progression track. Complete Pass Tasks to collect GO Points, increase your rank, and unlock rewards.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Trainers will receive the pass automatically on Monday, November 9, at 10:00 a.m. local time . Earn points and rank up until Sunday, November 15, 2026, at 6:00 p.m. local time .",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "From Monday, November 9, to Friday, November 13, you can collect GO Points up to a daily cap. There’s no limit to the GO Points you can earn on Saturday and Sunday, November 14 to 15!",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Upgrade to GO Pass Deluxe: Into the Wild for US$14.99 * for upgraded rewards. The GO Pass Deluxe: Into the Wild + 10 Ranks option costs US$19.99 * and grants enough GO Points to reach Rank 10.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Deluxe includes rewards from both tracks. You can upgrade at any time and still claim rewards for ranks you have already reached.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Claim all unlocked GO Pass rewards before they expire on Tuesday, November 17, 2026, at 11:59 p.m. local time .",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "dates": [
+     {
+      "text": "The following Dynamax Pokémon will appear in Max Battles. Pokémon appearing in five-star Max Battles will also be featured in Max Battles from 6:00 p.m. to 7:00 p.m. local time for one day each on the following schedule.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Trainers will receive the pass automatically on Monday, November 9, at 10:00 a.m. local time . Earn points and rank up until Sunday, November 15, 2026, at 6:00 p.m. local time .",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "From Monday, November 9, to Friday, November 13, you can collect GO Points up to a daily cap. There’s no limit to the GO Points you can earn on Saturday and Sunday, November 14 to 15!",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ]
+   },
+   "conflicts": [],
+   "gaps": []
+  },
+  "leekduck:twilight-wishes-2026": {
+   "name": "Twilight Wishes",
+   "updated": "2026-10-30T07:16:33.779Z",
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/twilight-wishes-2026/"
+    }
+   ],
+   "fields": {
+    "bonuses": [],
+    "featured": [],
+    "raids": [],
+    "eggs": [],
+    "research": [],
+    "shiny": [],
+    "moves": [],
+    "costumes": [],
+    "tickets": [],
+    "dates": [
+     {
+      "text": "The Twilight Wishes event will take place from November 24, 2026 to November 30, 2026. Stay tuned for more details.",
+      "sources": [
+       "leekduck"
       ],
       "status": "single"
      }
