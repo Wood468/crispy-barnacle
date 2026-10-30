@@ -219,5 +219,20 @@
     var t = T[u.toFixed(2)], idr = t ? t.idr : Math.round(u * m.typical / 500) * 500;
     return { idr: idr, aud: Math.round(idr * fx.rate * 100) / 100, basis: t ? 'seen' : 'modelled', seen: t ? t.seen : '' };
   }
-  return { rpEstimate: rpEstimate, raidEventFor: raidEventFor, isPlaceholder: isPlaceholder, audify: audify, setTiers: setTiers, loadPrices: loadPrices, priceView: priceView, fmtRp: fmtRp, buildQueue: buildQueue, parseForm: parseForm, formId: formId, merge: merge, reconcileSync: reconcileSync, norm: norm, lev: lev, matchName: matchName, candidates: candidates };
+  // Split the Today live total into game events and real-world in-person events. Regional
+  // events remain visible; this only makes the summary count more informative.
+  function liveActivityCounts(events, regional) {
+    var inGame = 0, inPerson = 0;
+    (events || []).forEach(function (event) {
+      if (!event) return;
+      if (event.kind === 'person') inPerson++; else inGame++;
+    });
+    (regional || []).forEach(function (event) {
+      if (!event) return;
+      if (event.scope === 'global') inGame++; else inPerson++;
+    });
+    return { inGame: inGame, inPerson: inPerson, total: inGame + inPerson };
+  }
+
+  return { rpEstimate: rpEstimate, raidEventFor: raidEventFor, isPlaceholder: isPlaceholder, audify: audify, setTiers: setTiers, loadPrices: loadPrices, priceView: priceView, fmtRp: fmtRp, buildQueue: buildQueue, parseForm: parseForm, formId: formId, merge: merge, reconcileSync: reconcileSync, norm: norm, lev: lev, matchName: matchName, candidates: candidates, liveActivityCounts: liveActivityCounts };
 }));

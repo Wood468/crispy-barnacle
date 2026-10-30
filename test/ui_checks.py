@@ -134,6 +134,7 @@ with sync_playwright() as p:
             metrics = overflow_page.evaluate("""() => {
                 const card = document.querySelector('#home-now .evc[data-id="leekduck:mobile-overflow"]');
                 const rect = card.getBoundingClientRect();
+                const brief = document.querySelector('#day-brief'), briefRect = brief.getBoundingClientRect();
                 const main = card.querySelector('.evc-main');
                 const foot = card.querySelector('.evc-foot');
                 const mainRect = main.getBoundingClientRect();
@@ -153,6 +154,7 @@ with sync_playwright() as p:
                 return {
                     viewport: innerWidth,
                     documentWidth: document.documentElement.scrollWidth,
+                    brief: {left: briefRect.left, right: briefRect.right, width: briefRect.width, scrollWidth: brief.scrollWidth},
                     card: {
                         left: rect.left, right: rect.right, width: rect.width,
                         clientWidth: card.clientWidth, scrollWidth: card.scrollWidth,
@@ -188,6 +190,9 @@ with sync_playwright() as p:
                     buttons
                 };
             }""")
+            check(f'Today overview fits the {width}px viewport',
+                  metrics['brief']['left'] >= -1 and metrics['brief']['right'] <= width + 1 and
+                  metrics['brief']['scrollWidth'] <= metrics['brief']['width'] + 1, metrics['brief'])
             check(f'Today card stays inside the {width}px viewport',
                   metrics['documentWidth'] <= width and metrics['card']['left'] >= -1 and
                   metrics['card']['right'] <= width + 1, metrics)
@@ -507,13 +512,15 @@ with sync_playwright() as p:
         target_start=target['start'] if target else 0
         target_end=target['end'] if target else 0
         def summary_state():
-            actual={'live':int(refresh.locator('#day-live-count').inner_text()),'upcoming':int(refresh.locator('#day-upcoming-count').inner_text())}
+            actual={'inGame':int(refresh.locator('#day-live-count').inner_text()),'inPerson':int(refresh.locator('#day-inperson-count').inner_text()),'upcoming':int(refresh.locator('#day-upcoming-count').inner_text())}
             expected=refresh.evaluate("""() => {
               const t=new Date(), endDay=new Date(t); endDay.setHours(0,0,0,0); endDay.setDate(endDay.getDate()+1);
               const events=window.GODASH.events(), visible=e=>!e.long&&!window.GODASH.kindHidden(e.kind);
-              const live=events.filter(e=>visible(e)&&e.start<=t&&e.end>t).length+window.GODASH.regionalEvents().filter(e=>e.start<=t&&e.end>t).length;
+              const live=events.filter(e=>visible(e)&&e.start<=t&&e.end>t);
+              const regional=window.GODASH.regionalEvents().filter(e=>e.start<=t&&e.end>t);
+              const worldwide=window.GODASH.worldEvents().filter(e=>e.start<=t&&e.end>t);
               const today=events.filter(e=>visible(e)&&((e.start<=t&&e.end>t)||(e.start>t&&e.start<endDay)));
-              return {live:live,upcoming:today.filter(e=>e.start>t).length};
+              return {inGame:live.filter(e=>e.kind!=='person').length+worldwide.length,inPerson:live.filter(e=>e.kind==='person').length+regional.length,upcoming:today.filter(e=>e.start>t).length};
             }""")
             return actual,expected
         brief_before,expected_before=summary_state()
