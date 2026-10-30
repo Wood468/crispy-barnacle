@@ -82,4 +82,5 @@ jobs:
             git commit -m "Event details: refresh stamp [skip ci]"
           fi
           git pull -q --rebase origin main
+          node scripts/validate-public-data.mjs
           git push origin HEAD:main
