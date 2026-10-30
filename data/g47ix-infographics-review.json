@@ -7,6 +7,108 @@
   "eventImages": {},
   "candidates": [
     {
+      "id": "discord:1565738053157392384",
+      "source": "discord",
+      "creator": "",
+      "title": "GMax Gengar counters v2",
+      "url": "https://discord.com/channels/@me/1558793395198099618/1565738053157392384",
+      "publishedAt": "2026-10-30T14:44:01.879000+00:00",
+      "imageUrl": "https://cdn.discordapp.com/attachments/1087756541668630638/1565733992299495464/GMax_Gengar_counters_v2.png?ex=6ae5fae9&is=6ae4a969&hm=bca346039f5ef577a12b3cebcde5d045248a978c1de4de60cb03c621b318899d&",
+      "reviewStatus": "needs_review",
+      "decision": "pending",
+      "ocrChecked": true,
+      "ocrText": "Y a yY wy \\ *GENGAR nt ~~ Weakness Coom . 1644 cP GO) \\e \\e Vase) see oe oe J BS Se~ W, “ae “4 Al \\i ee © Pounp © METAL CLAW © METAL CLAW © METAL cLaw @ Lock-on @ SAND ATTACK a ge \\fe Way a Vege (ee \\@pe 2 @) i) yr a @ sHADOW CLAW BITE @ PsycHo cuT @ EXTRASENSORY @ ZEN HEAD. @ sHADOW CLAW Use this Unlock Upgrade its For extra help, Tank Te cee Max Spirit Max Attack and use Zacian’s to build RS to take y and heal your use it as your a> H or Eternatus’s 6 energy resisted hits teammates Damage Dealer Adventure Effect Set the right Fast Move because, the type of your Dynamax Swipe to get Keep tapping to — Max Move depends on your Fast Move energy bubbles help your teammates (this doesn’t apply for GMax) ® oy 07\" You can leave and rejoin a Max Battle Follow for more G47|X £) (Cc) & X G www.g47ix.pro RJ toreroll for a different boss moveset.",
+      "eventMatch": {
+        "eventId": "dyntrails",
+        "eventTitle": "Dynamax Trails",
+        "score": 0.399,
+        "confidence": "low",
+        "matchedTerms": [
+          "dynamax",
+          "max",
+          "eternatus"
+        ],
+        "alternatives": [
+          {
+            "eventId": "dyntrails",
+            "eventTitle": "Dynamax Trails",
+            "score": 0.399
+          },
+          {
+            "eventId": "leekduck:dynamax-trails-2026",
+            "eventTitle": "Dynamax Trails",
+            "score": 0.393
+          },
+          {
+            "eventId": "leekduck:dynamax-uxie-mesprit-azelf-max-battle-day-2026",
+            "eventTitle": "Dynamax Uxie, Mesprit, and Azelf Max Battle Day",
+            "score": 0.343
+          }
+        ],
+        "method": "title-to-public/data.json heuristic",
+        "requiresHumanVerification": true
+      },
+      "reviewNote": "Match is not strong enough (low).",
+      "signals": [
+        "picture text names the event",
+        "posted around the event"
+      ],
+      "matchScore": 3,
+      "stagedPath": "/infographics/g47ix/discord-1565738053157392384.png"
+    },
+    {
+      "id": "discord:1565674951699071116",
+      "source": "discord",
+      "creator": "",
+      "title": "Chandelure",
+      "url": "https://discord.com/channels/@me/1558793395198099618/1565674951699071116",
+      "publishedAt": "2026-10-30T10:33:17.319000+00:00",
+      "imageUrl": "https://cdn.discordapp.com/attachments/1087756541668630638/1565670549592613004/HV1k02jXIAAT2q1.jpg?ex=6ae5bfd3&is=6ae46e53&hm=96d8860727064f0276603ee8fcaf0360d6e35b29e333c8438ed6795bd11c4062&",
+      "reviewStatus": "needs_review",
+      "decision": "pending",
+      "ocrChecked": true,
+      "ocrText": "ie Sn #609 unc \"In homes illuminated by Chandelure ¢ iY \\\\ instead of lights, funerals were a constant u eccurrence- or so it’s said.\" ay Weakness @s6eooa Vin a” AA Bring Mega Pokémon to break shields and heal them after every raid! 1867 CP %we 2335 CP Boost NH ©& bPwhg Windy Cloudy \\ WY © Snarl i; © aN Ln @ Water Shuriken © Dark Pulse+ rut utal A @ Surfs — a © Bite rl wy @ Psywave S| © Brutal Swing S| Om r @ Liquidation+ —-< \\\\h _ = r wt Wa ® Bite @ Shadow Cl ®@ Rock Throw Ori @ Moongeist B: © Brutal Swing @ Meteor Beam a Remember to use proper counters, Party Play é Follow for more: x and Zacian’s or Mewtwo X Adventure Effect if needed. oF Wi) G47IX OO @X @ | g47ix.pro",
+      "eventMatch": {
+        "eventId": "leekduck:chandelure-super-mega-raid-day-2026",
+        "eventTitle": "Chandelure Super Mega Raid Day",
+        "score": 0.484,
+        "confidence": "medium",
+        "matchedTerms": [
+          "chandelure",
+          "mega",
+          "raid",
+          "poke",
+          "mon"
+        ],
+        "alternatives": [
+          {
+            "eventId": "leekduck:chandelure-super-mega-raid-day-2026",
+            "eventTitle": "Chandelure Super Mega Raid Day",
+            "score": 0.484
+          },
+          {
+            "eventId": "smr1",
+            "eventTitle": "Super Mega Raid Day",
+            "score": 0.406
+          },
+          {
+            "eventId": "leekduck:super-mega-raid-day-october-2026",
+            "eventTitle": "Super Mega Raid Day",
+            "score": 0.406
+          }
+        ],
+        "method": "title-to-public/data.json heuristic",
+        "requiresHumanVerification": true
+      },
+      "reviewNote": "Match is not strong enough (medium).",
+      "signals": [
+        "caption names the event",
+        "picture text names the event"
+      ],
+      "matchScore": 3,
+      "stagedPath": "/infographics/g47ix/discord-1565674951699071116.jpg"
+    },
+    {
       "id": "discord:1565629054319591515",
       "source": "discord",
       "creator": "",
