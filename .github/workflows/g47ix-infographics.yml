@@ -132,6 +132,7 @@ jobs:
         run: |
           set -euo pipefail
           git add -- public/event-info.json
+          node scripts/validate-public-data.mjs
           git commit -m "Propose G47IX infographics matched to events"
           git push origin HEAD
           gh pr create --base main --head "$(git branch --show-current)" --title "Review: new G47IX infographics matched to events" --body "Several signals agreed (caption, the picture's text, a date inside the event, a featured Pokémon). Check each image shows the right event, then merge. Close the PR to reject. Unsure pictures wait in the app's Infographic review list instead."
