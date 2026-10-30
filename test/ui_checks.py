@@ -1,6 +1,6 @@
 """Browser checks for the Phase 2 dashboard (needs: pip install playwright; a static server: cd public && python3 -m http.server 8791).
 Run: python3 test/ui_checks.py. Mocks every /api/* call, fixes the clock to Fri 10 Oct 2026 22:45 Melbourne time."""
-import json,sys,re,base64
+import json,sys,re,base64,time
 PNG1=base64.b64decode('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==')
 
 # Stable fixture: two sourced Brisbane City Safari locations, with no raid hotspots.
@@ -18,7 +18,7 @@ def check(name,cond,extra=''):
     if not cond: fails.append(name)
 with sync_playwright() as p:
     b=p.chromium.launch()
-    def page(api=None,marks=None,clock='2026-10-09T22:45:00+11:00',sources=None,gens=None,us=None,extra=None,pin=False):
+    def page(api=None,marks=None,clock='2026-10-09T22:45:00+11:00',sources=None,gens=None,us=None,extra=None,pin=False,slow_places=False):
         ctx=b.new_context(viewport={'width':390,'height':844},device_scale_factor=2,timezone_id='Australia/Melbourne',locale='en-AU',service_workers='block')
         pg=ctx.new_page(); pg.errs=[]
         pg.on('pageerror',lambda e:pg.errs.append(str(e)))
@@ -30,6 +30,11 @@ with sync_playwright() as p:
         pg.route('**/api/dex',lambda r:r.fulfill(status=401,body='{}',content_type='application/json'))
         pg.route('**/api/art*',lambda r:r.fulfill(status=404,body=''))
         for pat,(body,st) in (extra or {}).items(): pg.route(pat,(lambda body,st:(lambda r,req=None:r.fulfill(status=st,body=body,content_type='application/json')))(body,st))
+        if slow_places:
+            def delay_places(route):
+                time.sleep(1.5)
+                route.continue_()
+            pg.route('**/places.js*', delay_places)
         if pin: pg.add_init_script("localStorage.setItem('gofn-pin','x')")
         if marks: pg.add_init_script("localStorage.setItem('gofn-dex-v1',%s)"%json.dumps(json.dumps(marks)))
         if us: gens=gens or []
@@ -137,6 +142,37 @@ with sync_playwright() as p:
               {'target_count': featured_target.count(), 'target_text': featured_target.inner_text() if featured_target.count() else '',
                'featured': highlight_page.evaluate("GODASH.events().filter(e => e.id === 'featured-highlight').map(e => e.featured)")})
         highlight_page.context.close()
+
+        # Opening event details immediately must wait for the places script before deciding whether Locations exists.
+        place_fixture = {
+            'updated': '2026-10-09',
+            'places': [{
+                'id': 'test-venue',
+                'name': 'Sourced Test Venue',
+                'city': 'Melbourne',
+                'region': 'Victoria',
+                'country': 'Australia',
+                'lat': -37.8136,
+                'lng': 144.9631,
+                'type': 'Event venue',
+                'verified': '2026-10-09',
+                'sources': [{'label': 'Official event page', 'url': 'https://pokemongo.com/news/test-event', 'trust': 'official'}],
+                'events': [{'name': 'Next Up Fixture 0', 'from': '2026-10-10', 'to': '2026-10-10'}]
+            }]
+        }
+        places_page = page(api=json.dumps({'enabled': True, 'events': next_events}),
+                           us={'hide:cur:space': True},
+                           extra={'**/world-events.json': ('{"events":[]}', 200),
+                                  '**/regional-events.json': ('{"events":[]}', 200),
+                                  '**/places.json': (json.dumps(place_fixture), 200)},
+                           slow_places=True)
+        places_page.wait_for_function("window.GODETAIL && window.GODASH", timeout=5000)
+        places_page.locator('#home-now .today-next-up').click()
+        places_page.locator('#evd').wait_for(state='visible', timeout=5000)
+        location_link = places_page.locator('#evd .evd-jump a[href="#evd-locations"]')
+        check('Event details wait for sourced venues before showing Locations',
+              location_link.count() == 1 and places_page.locator('#evd-locations').count() == 1)
+        places_page.context.close()
 
         # Keyboard navigation is trapped in the dialog and Escape returns focus to its opener.
         next_page.keyboard.press('Shift+Tab')
