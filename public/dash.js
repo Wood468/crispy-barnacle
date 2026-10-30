@@ -953,7 +953,7 @@
         var f = window.GOTYPES && GOTYPES.facts(n), real = window.GOLIB && GOLIB.raidEventFor(EV, n, label, new Date(r.s).getTime(), new Date(r.e).getTime()), ev = real || raidEvent(n, r);
         var ib = ev ? '<button type="button" class="info-open rc-info" data-infographic="' + esc(ev.id) + '" aria-label="Open infographic for ' + esc(n) + '">▧ Infographic</button>' : '';
         if (real) ib += '<button type="button" class="rc-info rc-details" data-open="' + esc(real.id) + '" aria-label="Open event details for ' + esc(n) + '">ⓘ Details</button>';
-        return '<div class="rc"' + (label === '5★' || label === 'Mega' ? ' data-guide="' + esc(n) + '"' : '') + '><div class="rc-form">' + art(n, 'ea') + '<div class="rc-txt"><span class="rl">' + label + '</span><b>' + esc(n) + '</b>' +
+        return '<div class="rc" data-boss="' + esc(n) + '"' + (label === '5★' || label === 'Mega' ? ' data-guide="' + esc(n) + '"' : '') + '><div class="rc-form">' + art(n, 'ea') + '<div class="rc-txt"><span class="rl">' + label + '</span><b>' + esc(n) + '</b>' +
           (f ? '<span class="rtype">' + f.types.map(function (t) { return tico(t); }).join('') + '</span><span class="rweak" title="Weak to">▾ ' + f.weak.map(function (t) { return tico(t); }).join('') + '</span>' : '') + '</div></div>' + ib + '</div>';
       }).join('');
     }
@@ -1009,9 +1009,17 @@
   /* A "Counters guide" button on each 5-star and Mega boss, shown only when /api/guide finds the guide (so it never links to a missing page). */
   var guideCache = {};
   function addGuideLinks(root) {
-    Array.prototype.forEach.call(root.querySelectorAll('.rc[data-guide]'), function (row) {
-      var boss = row.getAttribute('data-guide');
+    Array.prototype.forEach.call(root.querySelectorAll('.rc[data-boss]'), function (row) {
+      var boss = row.getAttribute('data-boss');
       if (!boss) return;
+      var facts = window.GOTYPES && GOTYPES.facts(boss), weak = facts && Array.isArray(facts.weak) ? facts.weak.filter(function (t, i, a) { return typeof t === 'string' && a.indexOf(t) === i; }) : [];
+      if (weak.length && !row.querySelector('.rc-best')) {
+        var best = document.createElement('button'); best.type = 'button'; best.className = 'rc-info rc-best';
+        best.textContent = 'Best attackers'; best.setAttribute('data-best-types', weak.join('|'));
+        best.setAttribute('aria-label', 'Best attackers for ' + boss + ' (weak to ' + weak.join(', ') + ')');
+        row.appendChild(best);
+      }
+      if (!row.hasAttribute('data-guide')) return;
       var put = function (d) {
         if (!d || !d.page || !row.isConnected || row.querySelector('.rc-guide')) return;
         var a = document.createElement('a'); a.className = 'rc-info rc-guide'; a.href = d.page; a.target = '_blank'; a.rel = 'noopener noreferrer';
@@ -1025,6 +1033,16 @@
       }).catch(function () { guideCache[boss] = null; });
     });
   }
+  document.addEventListener('click', function(e) {
+    var b = e.target.closest && e.target.closest('[data-best-types]');
+    if (!b) return;
+    var types = (b.getAttribute('data-best-types') || '').split('|').filter(Boolean);
+    if (!types.length) return;
+    if (window.GO && GO.showTab) GO.showTab('collect', 'guides', 'best');
+    if (window.GOBEST && GOBEST.showTypes) GOBEST.showTypes(types);
+    var target = document.getElementById('tab-best');
+    if (target) target.scrollIntoView({ block: 'start', behavior: 'smooth' });
+  });
   document.addEventListener('click', function(e) {
     var b = e.target.closest && e.target.closest('[data-rotweek]');
     if (!b) return;
