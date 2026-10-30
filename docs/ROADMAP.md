@@ -1,6 +1,6 @@
 # GO Field Notes — Completion Roadmap
 
-_Maintained by the lead coordinator. Last consolidated: 31 Oct 2026, including post-merge verification of #117 and #118 (finding IDs QA-\*, RES-\*, UX-\*, ENG-\* refer to the audits)._
+_Maintained by the lead coordinator. Last consolidated: 31 Oct 2026, including post-merge verification of #117, #118, #120 and #121 (finding IDs QA-\*, RES-\*, UX-\*, ENG-\* refer to the audits)._
 
 ## Status legend
 
@@ -12,6 +12,8 @@ _Maintained by the lead coordinator. Last consolidated: 31 Oct 2026, including p
 - ✅ **#113 — Today mobile actions:** reflowed the compact event-card actions for 390px and 320px phones, preserving readable labels and 44px touch targets; browser regressions and the Cloudflare Workers production build passed.
 - ✅ **#117 — Today activity summary:** separated in-game and in-person live counts while keeping overseas in-person event cards visible in the Happening now agenda; activity-count, narrow-screen and browser regressions passed, with production verification included in #118.
 - ✅ **#118 — collection safety and offline shell:** account-scoped local partitions preserve device-only marks through first sign-in and keep account caches isolated; revision-checked `/api/dex` writes and saved-baseline three-way reconciliation prevent stale whole-snapshot overwrites. Exact entry-page assets are precached, and static responses are covered by the security-header contract. JavaScript, Python, all browser shards, CodeQL and the post-merge Cloudflare Workers production build passed. No D1 migration or R2/infrastructure change was applied.
+- ✅ **#120 — offline navigation fallback:** Playwright verifies the offline page is precached, uncached routes fall back to the app shell, and the human-readable offline page is served if the shell is unavailable. All browser shards and the post-merge Workers production build passed.
+- ✅ **#121 — timezone-stable deduplication:** Date objects and epoch timestamps are compared by the viewer's calendar day; date-only strings remain timezone-independent. LA/Tokyo regression coverage passed. This removes UTC-midnight day shifts from dedupe comparisons without inventing event timezone data.
 - ✅ **#112 — visible data-load recovery:** added an accessible event-data error panel with a retry action; browser regressions and the Cloudflare Workers production build passed.
 - ✅ **#100 — Today attention:** review actions navigate reliably; review counts refresh immediately; empty recent-updates panels disappear; acknowledged updates stay dismissed; meaningful event changes are tracked between visits.
 - ✅ **#101 — curated data refresh:** snapshot moved to 30 Oct 2026; rotations, Raid/Spotlight Hours and Max Monday schedules were extended into early December; event/source URLs and the 1★ boss parsing correction were included. Ongoing freshness monitoring remains a separate task.
@@ -21,7 +23,7 @@ _Maintained by the lead coordinator. Last consolidated: 31 Oct 2026, including p
 - ✅ **#110 — importer date guard:** source-page matches are rejected when known article and event date windows do not overlap; unknown dates remain unknown rather than being guessed.
 - ✅ **Community location discovery:** corrected the Reddit permalink regex, added an explicit Node syntax-check regression test, and confirmed the scheduled discovery workflow ran successfully. Candidate locations remain community-reported, not official event pins.
 
-All merged milestones above passed their post-merge checks. Latest main: `106f97007ec50e5f131ee42d78657638f185e993`; Cloudflare Workers production build `4f50454f-90ec-40de-bd4c-0e7e283cebb9` completed successfully.
+All merged milestones above passed their post-merge checks. Latest main: `7885c54276f62cfddde140c68008585e25802064`; Cloudflare Workers production build `e9109eb9-9808-42fb-a8f7-65b568179c34` completed successfully.
 
 ## P0 — Critical security / data integrity
 
@@ -33,9 +35,9 @@ All merged milestones above passed their post-merge checks. Latest main: `106f97
 ## P1 — Major defects / reliability
 
 - 🔧 **RES-1/2/3/4/12** Snapshot refreshed on 30 Oct; rotation/Max/Spotlight/Raid Hour now extend into early Dec and the 1★ boss parsing issue was corrected in #101. Remaining: automated freshness monitoring and a separate consistency check for `raidNow`/`Upcoming`.
-- 🔧 **QA-3/QA-4** #118 audits every local script/stylesheet URL referenced by the entry page against the service-worker shell and adds missing versioned URLs; browser tests confirm the app and local-state helper execute after an offline reload. An uncached-route offline redirect/fallback scenario still needs a separate end-to-end check.
+- ✅ **QA-3/QA-4** #118 audits and precaches every local script/stylesheet URL referenced by the entry page; #120 adds end-to-end browser checks for cached app-shell fallback and the final offline-page fallback. All post-merge browser checks and Workers production builds passed.
 - ✅ **ENG-2** Security headers/CSP are applied by the Worker wrapper to every response, including static assets; the header contract is covered by `test/security.test.mjs`.
-- 🔧 **QA-5/RES-5/QA-7** PR #121 makes Date/epoch dedupe comparisons use the viewer-local calendar day while keeping `YYYY-MM-DD` date-only values timezone-independent; LA/Tokyo regression coverage is added. Full IANA `timeZone` metadata and dual venue-local/viewer-local time display remain open. Official [Sendai](https://pokemongo.com/en/gowildarea/sendai) lists 10:00–18:00 JST; official [Mexico City](https://pokemongo.com/es/gowildarea/mexico-city) lists 10:00–18:00 GMT−6, while an [es-MX variant](https://pokemongo.com/es-MX/gowildarea/mexico-city) also displays conflicting 23:00–07:00 CST text. Do not add Mexico gameplay hours until that source conflict is resolved.
+- 🔧 **QA-5/RES-5/QA-7** #121 fixes viewer-local calendar-day comparisons for Date/epoch dedupe inputs while keeping `YYYY-MM-DD` date-only values timezone-independent. Full IANA `timeZone` metadata and dual venue-local/viewer-local time display remain open. Official [Sendai](https://pokemongo.com/en/gowildarea/sendai) lists 10:00–18:00 JST; official [Mexico City](https://pokemongo.com/es/gowildarea/mexico-city) lists 10:00–18:00 GMT−6, while an [es-MX variant](https://pokemongo.com/es-MX/gowildarea/mexico-city) also displays conflicting 23:00–07:00 CST text. Do not add Mexico gameplay hours until that source conflict is resolved.
 - ✅ **RES-8** Reject importer source-page matches when known article and event dates do not overlap; retain existing link/title matching when either date is unknown. Covered by focused regression tests and the post-merge production build.
 - ⏳ **RES-9** Weaker sources can overwrite official data (schedule-audit worldFixes; Reddit coords to public data).
 - ✅ **UX-1** Visible, accessible event-data recovery panel and retry action in #112; browser regression and production build verified.
