@@ -1,6 +1,6 @@
 # GO Field Notes — Completion Roadmap
 
-_Maintained by the lead coordinator. Last consolidated: 31 Oct 2026, including #123 timezone work, #124 source-trust protection, and the in-progress #125 startup-recovery work (finding IDs QA-\*, RES-\*, UX-\*, ENG-\* refer to the audits)._
+_Maintained by the lead coordinator. Last consolidated: 31 Oct 2026, including #123 timezone support, #124 source-trust protection, #125 startup recovery, and the community-coordinate provenance follow-up (finding IDs QA-\*, RES-\*, UX-\*, ENG-\* refer to the audits)._
 
 ## Status legend
 
@@ -15,8 +15,8 @@ _Maintained by the lead coordinator. Last consolidated: 31 Oct 2026, including #
 - ✅ **#120 — offline navigation fallback:** Playwright verifies the offline page is precached, uncached routes fall back to the app shell, and the human-readable offline page is served if the shell is unavailable. All browser shards and the post-merge Workers production build passed.
 - ✅ **#121 — timezone-stable deduplication:** Date objects and epoch timestamps are compared by the viewer's calendar day; date-only strings remain timezone-independent. LA/Tokyo regression coverage passed. This removes UTC-midnight day shifts from dedupe comparisons without inventing event timezone data.
 - ✅ **#123 — venue-local and viewer-local times:** IANA timezone conversion, daylight-saving validation and dual venue/viewer calendar dates are merged. JavaScript, Python, all browser shards, CodeQL and the post-merge Cloudflare Workers production build passed on main `a65ac30` (build `99f13e92-fa44-4594-a1c1-d363fb29b314`).
-- 🔧 **#124 — official-source date protection:** the scheduled audit no longer auto-overwrites a world-event date when an official Pokémon GO source is attached; discrepancies are retained as review alerts. PR and post-merge JavaScript, Python, browser and CodeQL checks passed; the next scheduled audit run remains to be confirmed.
-- 🔧 **#125 — resilient startup:** bounded initial data loading and temporary primary navigation are in PR; CI and Cloudflare preview checks are pending.
+- ✅ **#124 — official-source date protection:** the scheduled audit no longer auto-overwrites a world-event date when an official Pokémon GO source is attached; discrepancies are retained as review alerts. PR and post-merge JavaScript, Python, browser and CodeQL checks passed; the next scheduled audit run remains to be confirmed.
+- ✅ **#125 — resilient startup:** bounded initial data loading and temporary primary navigation are merged. PR and post-merge GitHub Tests/CodeQL checks passed; a post-#125 Cloudflare production build is not confirmed in the inspected GitHub workflow history and must be verified before claiming deployment.
 - ✅ **#112 — visible data-load recovery:** added an accessible event-data error panel with a retry action; browser regressions and the Cloudflare Workers production build passed.
 - ✅ **#100 — Today attention:** review actions navigate reliably; review counts refresh immediately; empty recent-updates panels disappear; acknowledged updates stay dismissed; meaningful event changes are tracked between visits.
 - ✅ **#101 — curated data refresh:** snapshot moved to 30 Oct 2026; rotations, Raid/Spotlight Hours and Max Monday schedules were extended into early December; event/source URLs and the 1★ boss parsing correction were included. Ongoing freshness monitoring remains a separate task.
@@ -26,12 +26,12 @@ _Maintained by the lead coordinator. Last consolidated: 31 Oct 2026, including #
 - ✅ **#110 — importer date guard:** source-page matches are rejected when known article and event date windows do not overlap; unknown dates remain unknown rather than being guessed.
 - ✅ **Community location discovery:** corrected the Reddit permalink regex, added an explicit Node syntax-check regression test, and confirmed the scheduled discovery workflow ran successfully. Candidate locations remain community-reported, not official event pins.
 
-All merged milestones above passed their post-merge checks. Latest main: `7885c54276f62cfddde140c68008585e25802064`; Cloudflare Workers production build `e9109eb9-9808-42fb-a8f7-65b568179c34` completed successfully.
+Latest main: `311433a03f9dd64b3bfbc0976d97dce96d71afd2`; GitHub Tests run `41082215040` (run 447) and CodeQL run `41082214912` (run 372) passed. The last recorded Cloudflare production build in this handover is the #123 build `99f13e92-fa44-4594-a1c1-d363fb29b314`; a post-#125 production build still needs independent confirmation.
 
 ## P0 — Critical security / data integrity
 
 - ✅ **ENG-1** PIN gate accepted the literal "undefined" when `SYNC_PIN` unset (preview deploys) — fixed in #99, verified in deployed Worker.
-- 🔒 **ENG-1b** Preview deployments bind the production R2 bucket (private prices/places, nightly D1 backups). Needs a separate preview bucket and/or Cloudflare Access on previews; old preview versions still run pre-fix code.
+- 🔒 **ENG-1b** `wrangler.toml` currently binds preview `MEDIA` to the same `go-field-notes-images` R2 bucket used by production. Preview isolation remains unresolved; a separate bucket, removing preview media access, and/or Cloudflare Access requires owner approval. No infrastructure change has been made.
 - ✅ **QA-1** Sign-in/register no longer wipes device-only collection marks — #118 partitions local state by identity and merges guest marks into the first account before syncing; account-transition regressions and post-merge production verification passed.
 - ✅ **QA-2/ENG-4** #118 adds atomic revision-checked writes plus saved-baseline three-way merge to the legacy Dex snapshot API. Independent additions/deletions reconcile across devices; same-mark concurrent edits use the newer snapshot timestamp. Stale writes are rejected and return the current server snapshot. PR #114 remains separate, unmerged additive schema preparation; its migration has not been applied.
 
@@ -42,8 +42,8 @@ All merged milestones above passed their post-merge checks. Latest main: `7885c5
 - ✅ **ENG-2** Security headers/CSP are applied by the Worker wrapper to every response, including static assets; the header contract is covered by `test/security.test.mjs`.
 - ✅ **QA-5/RES-5/QA-7** #121 fixes viewer-local calendar-day comparisons for Date/epoch dedupe inputs while keeping `YYYY-MM-DD` date-only values timezone-independent. #123 adds validated IANA venue timezone metadata and venue-local/viewer-local time display; PR, preview and post-merge production checks passed. Official [Sendai](https://pokemongo.com/en/gowildarea/sendai) lists 10:00–18:00 JST; official [Mexico City](https://pokemongo.com/es/gowildarea/mexico-city) lists 10:00–18:00 GMT−6, while an [es-MX variant](https://pokemongo.com/es-MX/gowildarea/mexico-city) also displays conflicting 23:00–07:00 CST text. Do not add Mexico gameplay hours until that source conflict is resolved.
 - ✅ **RES-8** Reject importer source-page matches when known article and event dates do not overlap; retain existing link/title matching when either date is unknown. Covered by focused regression tests and the post-merge production build.
-- 🔧 **RES-9** #124 protects official world-event dates from Leek Duck auto-corrections and emits review alerts; next scheduled audit execution remains to be confirmed. Follow-up remains: `location-discovery.mjs` currently gives community coordinates a `verified` date, while the Places UI describes it as independently checked. Separate `reportedAt` from actual verification before promoting new community candidates.
-- 🔧 **UX-1** #112 provides the accessible recovery panel and retry action; #125 adds a bounded timeout and usable primary navigation when the initial data request stalls. PR checks pending.
+- 🔧 **RES-9** #124 protects official world-event dates from Leek Duck auto-corrections and emits review alerts; next scheduled audit execution remains to be confirmed. Community-coordinate provenance is being corrected separately: source publication dates belong in `reportedAt`; community coordinates must not display a `verified` date, must remain explicitly non-official, and must not be promoted to official event pins.
+- ✅ **UX-1** #112 provides the accessible recovery panel and retry action; #125 adds a bounded timeout and usable primary navigation when the initial data request stalls. PR and post-merge GitHub checks passed.
 - ✅ **UX-2** Today event-card actions stay within 390px and 320px phone layouts; browser regression and production build verified in #113.
 - ✅ **UX-3** Today live summary separates in-game and in-person activity counts while keeping overseas in-person event cards visible by default; regression, mobile browser and post-merge production checks passed.
 - ⏳ **ENG-3** PIN brute-force: no global failure ceiling.
