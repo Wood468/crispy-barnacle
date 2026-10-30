@@ -39,6 +39,7 @@ test("RSS and Atom publication timestamps are retained separately from verificat
   assert.equal(reportDate(xmlItems(atom)[0].publishedAt), "2026-10-30");
   assert.equal(reportDate("Fri, 30 Oct 2026 23:30:00 -0700"), "2026-10-30", "preserve the publication day shown by the source, not the UTC-converted day");
   assert.equal(reportDate("not a publication date"), null);
+  assert.equal(reportDate("October 30, 2026"), null, "unknown date formats stay unknown rather than being timezone-normalized");
   const updatedOnly = '<feed><entry><title>Edited report</title><updated>2026-10-31T02:00:00Z</updated><summary>Coordinates</summary></entry></feed>';
   assert.equal(xmlItems(updatedOnly)[0].publishedAt, undefined, "an edit timestamp is not the original report date");
 });
