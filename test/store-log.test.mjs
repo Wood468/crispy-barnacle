@@ -40,3 +40,80 @@ test("store log: carries the item's store link and estimated end", () => {
   const d2 = diffStore(d.state, { items: [{ ...a, left: "1 day left" }] }, "2026-10-02T00:00:00.000Z");
   assert.equal(storeLog(d2.state).items[0].endsAt, "2026-10-03T00:00:00.000Z", "stable while readings agree");
 });
+
+
+// Store currency can change when the storefront guesses the request region. Do not turn that into price alerts.
+import { currencyOf, dominantCurrency, buildMessages } from "../scripts/store-watch.mjs";
+const currencyFixture = (prefix = "$") => [
+  { name: "Remote Raid Pass", price: prefix + "9.99", section: "ITEMS", href: "/purchase/item/rrp" },
+  { name: "GO Pass Deluxe", price: prefix + "14.99", section: "ITEMS", href: "/purchase/item/pass" },
+  { name: "Max Battle Ultra Ticket Box", price: prefix + "4.99", section: "LIMITED_TIME", href: "/purchase/item/max" }
+];
+
+test("store watch: reads currency symbols and codes from price text", () => {
+  assert.equal(currencyOf("$9.99"), "$");
+  assert.equal(currencyOf("CA$13.99"), "CA$");
+  assert.equal(currencyOf("CA$ 13.99"), "CA$");
+  assert.equal(currencyOf("A$1,000.00"), "A$");
+  assert.equal(currencyOf(""), "");
+  assert.equal(dominantCurrency(["$9.99", "$14.99", "CA$4.99"]), "$");
+});
+
+test("store watch: same-currency price changes and new items still alert", () => {
+  const d1 = diffStore(null, { items: currencyFixture("$") }, "2026-10-25T00:00:00Z");
+  const items = currencyFixture("$");
+  items[0].price = "$8.99";
+  items.push({ name: "New Box", price: "$1.99", section: "ITEMS", href: "/purchase/item/new" });
+  const d2 = diffStore(d1.state, { items }, "2026-10-25T01:00:00Z");
+  assert.equal(d2.held, undefined);
+  assert.deepEqual(d2.changed.map(i => [i.name, i.was, i.price]), [["Remote Raid Pass", "$9.99", "$8.99"]]);
+  assert.deepEqual(d2.added.map(i => i.name), ["New Box"]);
+  assert.equal(buildMessages(d2).length, 2);
+});
+
+test("store watch: a currency flip and flip back do not alert or change saved prices", () => {
+  const d1 = diffStore(null, { items: currencyFixture("$") }, "2026-10-25T00:00:00Z");
+  const d2 = diffStore(d1.state, { items: currencyFixture("CA$") }, "2026-10-25T01:00:00Z");
+  assert.deepEqual([d2.added, d2.changed, d2.gone], [[], [], []]);
+  assert.equal(buildMessages(d2).length, 0);
+  assert.equal(d2.held.isNew, true);
+  assert.deepEqual(Object.values(d2.state.items).map(o => o.price), ["$9.99", "$14.99", "$4.99"]);
+  const d3 = diffStore(d2.state, { items: currencyFixture("CA$") }, "2026-10-25T02:00:00Z");
+  assert.equal(d3.held.isNew, false);
+  const d4 = diffStore(d3.state, { items: currencyFixture("$") }, "2026-10-25T03:00:00Z");
+  assert.equal(d4.held, undefined);
+  assert.equal(d4.state.currencyHold, undefined);
+  assert.equal(d4.state.currency, "$");
+  assert.equal(buildMessages(d4).length, 0);
+});
+
+test("store watch: a changed currency restarts the 72-hour hold", () => {
+  const d1 = diffStore(null, { items: currencyFixture("$") }, "2026-10-25T00:00:00Z");
+  const d2 = diffStore(d1.state, { items: currencyFixture("CA$") }, "2026-10-25T01:00:00Z");
+  const d3 = diffStore(d2.state, { items: currencyFixture("A$") }, "2026-10-25T02:00:00Z");
+  assert.equal(d3.held.since, "2026-10-25T02:00:00Z");
+  assert.equal(d3.held.isNew, true);
+  const d4 = diffStore(d3.state, { items: currencyFixture("A$") }, "2026-10-28T02:00:00Z");
+  assert.deepEqual(d4.reset, { from: "$", to: "A$" });
+  assert.equal(d4.state.currency, "A$");
+  assert.equal(d4.state.currencyHold, undefined);
+  assert.equal(d4.changed.length, 0);
+});
+
+test("store watch: an old state without a currency field still detects a flip", () => {
+  const d1 = diffStore(null, { items: currencyFixture("$") }, "2026-10-25T00:00:00Z");
+  delete d1.state.currency;
+  const d2 = diffStore(d1.state, { items: currencyFixture("CA$") }, "2026-10-25T01:00:00Z");
+  assert.ok(d2.held);
+  assert.equal(d2.held.base, "$");
+});
+
+test("store watch: one item in another currency is ignored while real changes still alert", () => {
+  const d1 = diffStore(null, { items: currencyFixture("$") }, "2026-10-25T00:00:00Z");
+  const items = currencyFixture("$");
+  items[1].price = "CA$20.99";
+  items[0].price = "$8.99";
+  const d2 = diffStore(d1.state, { items }, "2026-10-25T01:00:00Z");
+  assert.deepEqual(d2.changed.map(i => i.name), ["Remote Raid Pass"]);
+  assert.equal(d2.state.items["/purchase/item/pass"].price, "$14.99");
+});
