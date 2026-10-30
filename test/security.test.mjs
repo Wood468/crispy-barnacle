@@ -45,8 +45,6 @@ test("no inline scripts or handlers, so script-src can forbid them", async () =>
 
 // An unset SYNC_PIN (e.g. a preview deploy, which gets no secrets but binds the real R2 bucket)
 // must never let "undefined" or an empty x-pin through.
-import { makeDB } from "./helpers.mjs";
-import worker from "../src/worker.js";
 const SECRET = "PRIVATE-R2-SENTINEL";
 const pinEnv = (pin) => { const env = { DB: makeDB(), ASSETS: { fetch: async () => new Response("{}") }, MEDIA: { get: async () => ({ json: async () => ({ secret: SECRET, places: [], prices: [] }) }) } }; if (pin !== undefined) env.SYNC_PIN = pin; return env; };
 let ipN = 0;
