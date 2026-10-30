@@ -50,6 +50,7 @@ jobs:
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
             git commit -m "Datamine news: new posts"
             git pull -q --rebase origin main
+            node scripts/validate-public-data.mjs
             git push origin HEAD:main
           else
             echo "Only the timestamp changed; not committing."
