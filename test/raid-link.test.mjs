@@ -25,14 +25,14 @@ const dash = readFileSync(new URL("../public/dash.js", import.meta.url), "utf8")
 const dashCss = readFileSync(new URL("../public/dash.css", import.meta.url), "utf8");
 
 test("best-attacker filters support every known weakness type for a raid boss", () => {
-  const match = app.match(/function matchesBestType\(groupType, selected\) \{([\s\S]*?)\n  \}/);
+  const match = app.match(/function matchesBestType\(groupType, selected\)\s*\{([\s\S]*?)\n  \}/);
   assert.ok(match, "multi-type best-attacker matcher exists");
   const matches = new Function("groupType", "selected", match[1]);
   assert.equal(matches("Fire", "All"), true);
   assert.equal(matches("Fire", "Fire"), true);
   assert.equal(matches("Fighting", ["Fire", "Fighting"]), true);
   assert.equal(matches("Water", ["Fire", "Fighting"]), false);
-  const selectedMatch = app.match(/function isBestTypeSelected\(type, selected\) \{([\s\S]*?)\n  \}/);
+  const selectedMatch = app.match(/function isBestTypeSelected\(type, selected\)\s*\{([\s\S]*?)\n  \}/);
   assert.ok(selectedMatch, "multi-type chip state helper exists");
   const selected = new Function("type", "selected", selectedMatch[1]);
   assert.equal(selected("Fire", "All"), false, "All keeps only the All chip pressed");
