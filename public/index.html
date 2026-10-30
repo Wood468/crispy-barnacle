@@ -15,7 +15,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&family=Hanken+Grotesk:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="/styles.css?v=20261030a">
+<link rel="stylesheet" href="/styles.css?v=20261030b">
 <link rel="stylesheet" href="/dash.css?v=20261030d">
 </head>
 <body>
@@ -35,6 +35,11 @@
   <nav class="tabs" aria-label="Sections"><div class="row" role="tablist" id="tabs"></div></nav>
 
   <main>
+    <section class="load-error" id="load-error" role="alert" aria-labelledby="load-error-title" hidden>
+      <h2 id="load-error-title">We couldn't load GO Field Notes</h2>
+      <p>Event data isn't available right now. Check your connection and try again. Your saved collection data has not been changed.</p>
+      <button type="button" class="pill" id="load-retry">Try again</button>
+    </section>
     <!-- NOW -->
     <section class="panel" id="tab-now" role="tabpanel">
       <div id="prio" class="legacy-test-hook" aria-live="polite" aria-hidden="true"></div>
@@ -405,7 +410,7 @@
 <script src="/move.js?v=20261012n"></script>
 <script src="/account.js?v=20261020z"></script>
 <script src="/dedupe.js?v=20261027a"></script>
-<script src="/app.js?v=20261030g"></script>
+<script src="/app.js?v=20261030h"></script>
 <script src="/store.js?v=20261015a"></script>
 <script src="/season.js?v=20261025a"></script>
 <script src="/weekly.js?v=20261014c"></script>
