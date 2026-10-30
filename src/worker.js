@@ -362,6 +362,7 @@ function cleanDexMarks(m) {
 // Returns a Response when the PIN check fails, otherwise null. Throttle each source IP independently
 // so one visitor cannot lock every legitimate device out. Store only a SHA-256 digest of the IP.
 async function gate(request, env) {
+  if (!env.SYNC_PIN) return json({ error: "Not switched on." }, 404); // unset secret (e.g. preview deploys): never match "undefined"
   await ensure(env);
   const now = Date.now();
   const ip = request.headers.get("cf-connecting-ip") || "unknown";
@@ -370,7 +371,7 @@ async function gate(request, env) {
   const { n } = await env.DB.prepare("SELECT COUNT(*) AS n FROM pin_fails_ip WHERE ip_hash = ? AND at > ?").bind(ipHash, now - 10 * 60 * 1000).first();
   if (n >= 10) return json({ error: "Too many wrong PINs from this address. Try again in 10 minutes." }, 429);
   const given = String(request.headers.get("x-pin") || "");
-  if (!given || !(await same(given, String(env.SYNC_PIN)))) {
+  if (!given || !(await same(given, env.SYNC_PIN))) {
     await env.DB.batch([
       env.DB.prepare("INSERT INTO pin_fails_ip (ip_hash, at) VALUES (?, ?)").bind(ipHash, now),
       env.DB.prepare("DELETE FROM pin_fails_ip WHERE at < ?").bind(now - 24 * 3600 * 1000),
