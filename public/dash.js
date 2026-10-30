@@ -608,6 +608,10 @@
       + (/^https:\/\//.test(v.link || '') ? '<div class="evc-foot"><a class="more" href="' + esc(v.link) + '" target="_blank" rel="noopener noreferrer">Event page</a></div>' : '') + '</div></article>';
   }
   window.GOVENUE = fetch('/api/venue-times?all=1&tz=' + encodeURIComponent(venueViewerZone())).then(function (r) { return r.ok ? r.json() : { items: [] }; }).catch(function () { return { items: [] }; }).then(function (d) {
+    VENUE = ((d && d.items) || []).filter(function (i) { return i && i.ms; });
+    if (VENUE.length && EV.length) { renderPrio(); renderTimeline(); }
+    return d;
+  });
   function card(ev, opt) {
     opt = opt || {};
     var week = !!opt.week, k = kindOf(ev), p = phase(ev), saved = isSaved(ev.id);
