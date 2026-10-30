@@ -10,6 +10,7 @@ import { pageTitle, htmlToLines } from "./text.mjs";
 import { entriesFromPage, mergeWorld, collapseWorld, parseDateRange, placeOf, cleanTitle, tidyName, keepOldWorld, normUrl, sameWriteupRulings } from "./world.mjs";
 import { matchEvent } from "../g47ix-review.mjs";
 import { discoverIntl, entryFromIntlPage, INTL_PATTERN } from "./intl.mjs";
+import { failRun } from "../fail-run.mjs";
 
 const APP = process.env.APP_URL || "https://pogo.michaelpuff.com";
 const OUT = process.env.OUT_FILE || "public/event-details.json";
@@ -155,4 +156,4 @@ async function main() {
   await writeFile(REPORT, JSON.stringify({ runAt: now, sources: status, pagesRead: pages.length, events: Object.keys(out).length, worldEvents: world.length, worldUndated: world.filter(w => !w.start).map(w => w.name), unmatchedPages: unmatched.slice(0, 40), intl: intlStatus, serebiiSkipped: serebiiLeft.slice(0, 30), gaps: gaps.slice(0, 80), errors: errors.slice(0, 20) }, null, 1) + "\n");
   console.log(`Read ${pages.length} pages for ${byEvent.size} events; ${unmatched.length} pages matched no event; ${errors.length} errors.`);
 }
-if (import.meta.url === "file://" + process.argv[1]) main().catch(e => { console.error(e.message); process.exit(0); });
+if (import.meta.url === "file://" + process.argv[1]) main().catch(failRun);
