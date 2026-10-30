@@ -16,7 +16,7 @@ test("venue points GPX: one waypoint per sourced place, escaped, with who vouche
   const out = load().gpx([place(), place({ id: "p2", name: "King George Square & Co", lat: -27.4701, lng: 153.0245 })], { name: "City Safari: Brisbane" });
   assert.match(out, /^<\?xml/); assert.equal((out.match(/<wpt /g) || []).length, 2);
   assert.match(out, /lat="-27\.469600" lon="153\.025200"/); assert.match(out, /King George Square &amp; Co/);
-  assert.match(out, /Source: Pokémon GO Hub\. Coordinates: Wikipedia\. Source record checked 10 Oct 2026/); assert.match(out, /href="https:\/\/example\.com\/a\?x=1&amp;y=2"/);
+  assert.match(out, /Source: Pokémon GO Hub\. Coordinates: Wikipedia\. Coordinates independently checked 10 Oct 2026/); assert.match(out, /href="https:\/\/example\.com\/a\?x=1&amp;y=2"/);
   assert.ok(!/<rte>/.test(out), "no route unless asked");
 });
 test("community coordinate GPX labels report provenance and never emits a legacy verified date", () => {
@@ -48,6 +48,18 @@ test("community coordinate without a source publication date stays undated and u
   assert.match(label, /not an official event pin/);
   assert.doesNotMatch(label, /2026-10-10/);
 });
+test("Wikipedia coordinate references ignore legacy verified dates even when the event source is official", () => {
+  const p = place({
+    coordinateStatus: "community-reference",
+    verified: "2026-10-10", // legacy source-check dates are not independent coordinate verification
+    sources: [{ label: "Official event source", url: "https://pokemongo.com/en/news/example", trust: "official" }],
+    coords: { label: "Wikipedia reference", url: "https://en.wikipedia.org/wiki/Example" }
+  });
+  const api = load(), out = api.gpx([p]);
+  assert.match(out, /Community-maintained coordinate reference · publication date unavailable · not independently verified · not an official event pin/);
+  assert.doesNotMatch(out, /2026-10-10|Source record checked|Coordinates independently checked/);
+  assert.match(api.coordinateLabel(p), /Community-maintained coordinate reference/);
+});
 test("venue points GPX: a stop list only when asked and with two or more places, and it says it is not a walking route", () => {
   const g = load().gpx, two = [place(), place({ id: "p2", name: "B", lat: -27.47, lng: 153.02 })];
   const r = g(two, { name: "X", order: true }); assert.match(r, /<rte>/); assert.equal((r.match(/<rtept /g) || []).length, 2); assert.match(r, /not a walking route/);
@@ -65,7 +77,7 @@ test("places.json: every place passes the app's own rules, and every named in-pe
   for (const p of d.places) {
     assert.ok(!ids.has(p.id), "duplicate id " + p.id); ids.add(p.id);
     assert.ok(p.name && p.country && Number.isFinite(p.lat) && Number.isFinite(p.lng) && Math.abs(p.lat) <= 90 && Math.abs(p.lng) <= 180, p.id);
-    if (p.coordinateStatus === "community-reported" || /community-reported/i.test(p.type || "")) assert.equal(p.verified, undefined, p.id + " community coordinates are not verified");
+    if (p.coordinateStatus === "community-reported" || p.coordinateStatus === "community-reference" || /community-reported/i.test(p.type || "") || /(?:reddit\.com|wikipedia\.org|wikimedia\.org)/i.test(p.coords?.url || "")) assert.equal(p.verified, undefined, p.id + " community-sourced coordinates are not independently verified");
     else assert.match(p.verified, /^\d{4}-\d\d-\d\d$/, p.id);
     assert.ok(p.sources.some(s => s.label && /^https:\/\//.test(s.url)), p.id + " needs a source");
     for (const e of p.events || []) assert.match(e.from + e.to, /^\d{4}-\d\d-\d\d\d{4}-\d\d-\d\d$/, p.id);
