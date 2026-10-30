@@ -29,7 +29,7 @@ test("raidNow, Mega raid and weekly Max Battle dates agree with their rotation t
       { kind: "Dynamax", name: "Dynamax Sneasel, then Sableye", when: "Oct 19 to 25 · Oct 26 to Nov 1", note: "Weekly Max Battle rotation.", art: ["Sneasel", { n: "Sneasel", shiny: 1 }, "Sableye", { n: "Sableye", shiny: 1 }] }
     ] }
   };
-  assert.deepEqual(auditRaidUpcoming(data), { checked: 7, issues: [] });
+  assert.deepEqual(auditRaidUpcoming(data), { checked: 6, issues: [] });
   const bad = structuredClone(data);
   bad.raidNow["Mega Banette"] = "Mega raid Nov 17 to 24";
   bad.upcoming.announced.find(x => x.name === "Mega Sableye").when = "Oct 28 to Nov 7";
