@@ -456,8 +456,9 @@ button.igcheck{min-height:44px}
 
 
 /* Raid rotation: comfortable mobile controls and a two-column form layout for split mega forms. */
-.rw-tabs{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 14px}
-.rw-tabs button{min-height:48px;min-width:0;padding:12px 16px;touch-action:manipulation}
+.rw-tabs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:3px;margin:10px 0 14px;padding:4px;border:1px solid var(--ring);border-radius:14px;background:var(--glass)}
+.rw-tabs button{min-height:44px;min-width:0;padding:8px 6px;border:0;border-radius:10px;background:transparent;color:var(--muted);font-size:.78rem;font-weight:650;white-space:nowrap;opacity:1;touch-action:manipulation}
+.rw-tabs button[aria-selected="true"]{background:var(--inv-bg);color:var(--inv-fg);box-shadow:0 1px 3px rgba(0,0,0,.18)}
 .rw-tabs button:focus-visible{outline:3px solid var(--accent,#69d7b0);outline-offset:2px}
 .rcs{grid-template-columns:repeat(3,minmax(0,1fr));align-items:stretch}
 .rc{grid-template-columns:minmax(0,1fr);grid-template-rows:auto auto auto;justify-items:center;text-align:center;gap:5px;padding:10px 6px}
@@ -468,8 +469,9 @@ button.igcheck{min-height:44px}
 .rw-week-head{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
 @media(max-width:520px){
   .rotc{padding:12px;border-radius:18px}
-  .rw-tabs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
-  .rw-tabs button{width:100%;min-height:48px;padding:12px 8px}
+  .rw-tabs{display:flex;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scrollbar-width:none}
+  .rw-tabs::-webkit-scrollbar{display:none}
+  .rw-tabs button{flex:0 0 auto;min-width:104px;min-height:44px;padding:10px 12px;scroll-snap-align:start}
   .rcs{gap:6px}
   .rc{padding:8px 4px;border-radius:12px}
   .rc .art.ea{width:clamp(48px,15vw,68px);height:clamp(48px,15vw,68px)}
@@ -700,7 +702,8 @@ button.igcheck{min-height:44px}
 .rw-raid .rc .rweak{color:var(--muted)}
 .rw-low{margin-top:4px}
 .rw-low .rc .art.ea{width:52px;height:52px}
-.rc-info{flex:none;min-height:34px;padding:6px 12px;border-radius:999px;border:1px solid var(--line);background:var(--bg);color:var(--fg);font:600 .72rem var(--mono);cursor:pointer}
+.rc-info{flex:none;min-height:44px;padding:8px 12px;border-radius:999px;border:1px solid var(--line);background:var(--bg);color:var(--fg);font:600 .72rem var(--mono);cursor:pointer}
+.rc-best{border-color:color-mix(in srgb,var(--accent,#69d7b0) 45%,var(--line))}
 .rc-guide{display:inline-flex;align-items:center;text-decoration:none}
 .rc-info.info-available{background:var(--inv-bg);color:var(--inv-fg);border-color:transparent}
 /* Buttons sit on their own line under the name, so long names never get squeezed into a narrow column. */
