@@ -27,10 +27,12 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -- public/best-by-type.json
+          node scripts/validate-public-data.mjs
           if git diff --cached -U0 | grep -E '^[+-] ' | grep -vqE '"generated"'; then
             git commit -m "Best attackers by type: refresh"
           else
             echo "No changes."; exit 0
           fi
           git pull -q --rebase origin main
+          node scripts/validate-public-data.mjs
           git push origin HEAD:main

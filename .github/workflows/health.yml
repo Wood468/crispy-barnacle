@@ -38,10 +38,12 @@ jobs:
           set -euo pipefail
           node scripts/health.mjs
           git add -- public/health.json data/health-state.json
+          node scripts/validate-public-data.mjs
           if ! git diff --cached --quiet; then
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
             git commit -m "Job health: update [skip ci]"
             git pull -q --rebase origin main
+            node scripts/validate-public-data.mjs
             git push origin HEAD:main
           fi

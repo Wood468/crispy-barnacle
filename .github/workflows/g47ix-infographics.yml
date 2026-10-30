@@ -78,8 +78,10 @@ jobs:
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
             git add -- public/event-info.json public/infographic-queue.json data/g47ix-infographics-review.json
+            node scripts/validate-public-data.mjs
             git commit -m "Publish infographics approved in the app"
             git pull -q --rebase --autostash origin main
+            node scripts/validate-public-data.mjs
             git push origin HEAD:main
           else
             echo "No decisions to apply."
@@ -112,9 +114,11 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           # The review list and the pictures behind it go straight to main: nothing is shown on an event until it is approved.
           git add -- public/infographic-queue.json public/weekly.json data/g47ix-infographics-review.json
+          node scripts/validate-public-data.mjs
           if ! git diff --cached --quiet; then
             git commit -m "Update infographic review list"
             git pull -q --rebase --autostash origin main
+            node scripts/validate-public-data.mjs
             git push origin HEAD:main
           fi
           # Confident matches (several signals agree) are proposed as a pull request.
@@ -130,6 +134,7 @@ jobs:
         run: |
           set -euo pipefail
           git add -- public/event-info.json
+          node scripts/validate-public-data.mjs
           git commit -m "Propose G47IX infographics matched to events"
           git push origin HEAD
           gh pr create --base main --head "$(git branch --show-current)" --title "Review: new G47IX infographics matched to events" --body "Several signals agreed (caption, the picture's text, a date inside the event, a featured Pokémon). Check each image shows the right event, then merge. Close the PR to reject. Unsure pictures wait in the app's Infographic review list instead."
