@@ -41,6 +41,7 @@ test("PWA entry page links to the manifest and iOS touch icon and registers the 
   assert.match(html, /dash\.css\?v=20261030e/);
   assert.match(html, /styles\.css\?v=20261030b/);
   assert.match(html, /app\.js\?v=20261030i/);
+  assert.match(html, /lib\.js\?v=20261030a/);
   assert.match(html, /\/pwa\.js/);
   assert.match(app, /dash\.js\?v=20261030n/);
   assert.match(dash, /detail\.js\?v=20261030f/);
@@ -48,6 +49,7 @@ test("PWA entry page links to the manifest and iOS touch icon and registers the 
 
 test("service worker versions the cache, pre-caches offline fallback, and never handles API responses", () => {
   assert.match(sw, /gofn-shell-v129/);
+  assert.ok(sw.includes("'/lib.js?v=20261030a'"), 'the refreshed dashboard helper is available to the offline shell');
   assert.match(sw, /'\/event-moves\.json'/, "event-only move data is available to offline event details");
   assert.match(sw, /'\/dash\.css\?v=20261030e'/, "the current dashboard stylesheet is available to the offline shell");
   assert.match(sw, /'\/app\.js\?v=20261030i'/, "the current app bootstrap is available to the offline shell");
