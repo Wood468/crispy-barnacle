@@ -20,7 +20,7 @@
     try { return raw ? JSON.parse(raw) : fallback; } catch (e) { return fallback; }
   }
   function emptySnapshot() {
-    return { dex: null, stamp: null, base: null, us: null, saved: null, follow: null };
+    return { dex: null, stamp: null, base: null, baseline: null, us: null, saved: null, follow: null };
   }
   function readSnapshot(storage) {
     var out = {};
