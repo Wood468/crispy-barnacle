@@ -330,7 +330,16 @@ header.top{display:flex;align-items:flex-start;justify-content:space-between;gap
 .week-day-count{font:600 .66rem var(--mono);color:var(--muted);white-space:nowrap}
 .week-day-events{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,22rem),1fr));gap:12px}
 .week-day-events>.evc{margin:0;height:100%}
-@media(max-width:560px){.week-day-events{grid-template-columns:minmax(0,1fr);gap:9px}.week-day-head{gap:7px}}
+.week-day-events>.week-card{padding:12px;border-radius:16px;gap:10px;border-left-width:3px;background:linear-gradient(145deg,color-mix(in srgb,var(--k) 13%,var(--glass)),var(--glass) 62%)}
+.week-day-events>.week-card .evc-main{gap:6px}
+.week-day-events>.week-card .evc-top{align-items:flex-start;flex-wrap:wrap}
+.week-day-events>.week-card .evc-title-row h3{font-size:1.28rem;line-height:1.08;letter-spacing:0}
+.week-day-events>.week-card .cdn{padding:4px 8px;border:1px solid var(--ring);border-radius:999px;background:var(--soft)}
+.week-day-events>.week-card .evc-foot{gap:6px}
+.week-day-events>.week-card.evc.cmp .evc-foot .more{min-height:44px;padding-inline:12px}
+.week-day-events>.week-card.evc.cmp .evc-foot .star{margin-left:auto;width:44px;min-width:44px;min-height:44px}
+.week-day-count{padding:3px 8px;border:1px solid var(--ring);border-radius:999px;background:var(--glass)}
+@media(max-width:560px){.week-day-events{grid-template-columns:minmax(0,1fr);gap:9px}.week-day-head{gap:7px}.week-day-events>.week-card{padding:11px}.week-day-events>.week-card .evc-title-row h3{font-size:1.18rem}}
 
 /* Empty Today states still give the player a clear next action. */
 .today-empty{display:grid;gap:10px;justify-items:start;padding:2px 0 8px}

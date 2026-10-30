@@ -607,9 +607,9 @@
   });
   function card(ev, opt) {
     opt = opt || {};
-    var k = kindOf(ev), p = phase(ev), saved = isSaved(ev.id);
+    var week = !!opt.week, k = kindOf(ev), p = phase(ev), saved = isSaved(ev.id);
     var timeLabel = ev.utc || ev.region || ev.scope === 'worldwide_local' ? timeMeta(ev) : whenText(ev);
-    return '<article class="evc cmp ' + p + '" style="--k:' + k[1] + ';--kf:' + k[2] + '" data-id="' + esc(ev.id) + '">'
+    return '<article class="evc cmp' + (week ? ' week-card' : '') + ' ' + p + '" style="--k:' + k[1] + ';--kf:' + k[2] + '" data-id="' + esc(ev.id) + '">'
       + '<div class="evc-art">' + featArts(ev, 3) + '</div>'
       + '<div class="evc-main">'
       + '<div class="evc-top"><span class="kind-grp"><span class="kind">' + esc(k[0]) + '</span>' + statusChip(ev) + '</span><span class="cdn" data-id="' + esc(ev.id) + '">' + esc(countdown(ev)) + '</span><button type="button" class="hide-x" data-hide="' + esc(ev.id) + '" aria-label="Hide ' + esc(ev.name) + '" title="Hide this event">✕</button></div>'
@@ -1237,7 +1237,7 @@
       return '<section class="week-day-group" data-week-day="' + esc(group.key) + '"><div class="week-day-head"><span class="week-day-label">' + (tomorrow ? 'Tomorrow' : esc(fmtD(group.start))) + '</span>'
         + (tomorrow ? '<time datetime="' + esc(group.key) + '">' + esc(fmtD(group.start)) + '</time>' : '')
         + '<span class="week-day-count">' + group.events.length + ' ' + (group.events.length === 1 ? 'event' : 'events') + '</span></div><div class="week-day-events">'
-        + group.events.map(function (e) { return card(e); }).join('') + '</div></section>';
+        + group.events.map(function (e) { return card(e, { week: true }); }).join('') + '</div></section>';
     }).join('');
   }
   function renderHomeAgenda() {
@@ -1363,7 +1363,7 @@
     renderCoverage();
     if (window.GO && GO.refreshDex) GO.refreshDex();
     usSync();
-    var inf = document.createElement('script'); inf.src = '/infographic.js?v=20261027a'; document.body.appendChild(inf); var x = document.createElement('script'); x.src = '/extra.js?v=20261024a'; document.body.appendChild(x); var z = document.createElement('script'); z.src = '/places.js?v=20261029a'; window.GOPLACES_READY = new Promise(function (resolve) { z.onload = function () { resolve(window.GOPLACES || null); }; z.onerror = function () { resolve(null); }; }); var y = document.createElement('script'); y.src = '/detail.js?v=20261030d'; document.body.appendChild(y); document.body.appendChild(z); var w = document.createElement('script'); w.src = '/fresh.js?v=20261014a'; document.body.appendChild(w); var nv = document.createElement('script'); nv.src = '/nudge.js?v=20261014l'; document.body.appendChild(nv); var rv = document.createElement('script'); rv.src = '/review.js?v=20261030a'; document.body.appendChild(rv); var by = document.createElement('script'); by.src = '/buy.js?v=20261020d'; document.body.appendChild(by);
+    var inf = document.createElement('script'); inf.src = '/infographic.js?v=20261027a'; document.body.appendChild(inf); var x = document.createElement('script'); x.src = '/extra.js?v=20261024a'; document.body.appendChild(x); var z = document.createElement('script'); z.src = '/places.js?v=20261029a'; window.GOPLACES_READY = new Promise(function (resolve) { z.onload = function () { resolve(window.GOPLACES || null); }; z.onerror = function () { resolve(null); }; }); var y = document.createElement('script'); y.src = '/detail.js?v=20261030e'; document.body.appendChild(y); document.body.appendChild(z); var w = document.createElement('script'); w.src = '/fresh.js?v=20261014a'; document.body.appendChild(w); var nv = document.createElement('script'); nv.src = '/nudge.js?v=20261014l'; document.body.appendChild(nv); var rv = document.createElement('script'); rv.src = '/review.js?v=20261030a'; document.body.appendChild(rv); var by = document.createElement('script'); by.src = '/buy.js?v=20261020d'; document.body.appendChild(by);
   }
   envBanner();
   var dexP = fetch('/dex.json').then(function (r) { return r.json(); }).catch(function () { return []; });
