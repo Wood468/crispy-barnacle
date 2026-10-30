@@ -425,13 +425,23 @@
       hero.parentNode.insertBefore(im, hero);
     }).catch(function () {});
   }
+  /* Use the viewer's IANA zone; the API also returns the venue's own clock. */
+  function venueTimeQuery() {
+    try { return '&tz=' + encodeURIComponent(Intl.DateTimeFormat().resolvedOptions().timeZone || 'Australia/Melbourne'); }
+    catch (e) { return '&tz=Australia%2FMelbourne'; }
+  }
+  function venueTimeLabel(i) {
+    var viewer = String(i.day || '') + ', ' + String(i.show || '') + ' your time';
+    var venue = i.venueDay && i.venueShow ? ' · venue: ' + i.venueDay + ', ' + i.venueShow + (i.zone ? ' ' + i.zone : '') : '';
+    return esc(viewer + venue);
+  }
   /* In-person events with a venue time (Night Out): when the in-game bonuses start, in your time, matching the Telegram reminders. */
   function addBonusTime(o, ev) {
     var day = function (v) { return v ? (typeof v === 'string' ? v.slice(0, 10) : new Date(v).toISOString().slice(0, 10)) : ''; };
-    fetch('/api/venue-times?name=' + encodeURIComponent(ev.name || '') + '&start=' + encodeURIComponent(day(ev.start)) + '&end=' + encodeURIComponent(day(ev.end))).then(function (r) { return r.ok ? r.json() : null; }).then(function (d) {
+    fetch('/api/venue-times?name=' + encodeURIComponent(ev.name || '') + '&start=' + encodeURIComponent(day(ev.start)) + '&end=' + encodeURIComponent(day(ev.end)) + venueTimeQuery()).then(function (r) { return r.ok ? r.json() : null; }).then(function (d) {
       var when = o.querySelector('.evc-when'); if (!d || !d.items || !d.items.length || !when || o.hidden || o.querySelector('.evd-bonus')) return;
       var p = document.createElement('p'); p.className = 'evd-bonus'; p.style.cssText = 'margin:6px 0;font-weight:600';
-      p.innerHTML = d.items.map(function (i) { return '🎯 ' + (d.items.length > 1 ? esc(String(i.name).replace(/^.* - /, '')) + ': ' : 'Bonuses start ') + (d.items.length > 1 ? 'bonuses start ' : '') + esc(i.day + ', ' + i.show) + ' your time' + (i.note ? ' <small>(' + esc(i.note) + ')</small>' : ''); }).join('<br>');
+      p.innerHTML = d.items.map(function (i) { return '🎯 ' + (d.items.length > 1 ? esc(String(i.name).replace(/^.* - /, '')) + ': ' : 'Bonuses start ') + (d.items.length > 1 ? 'bonuses start ' : '') + venueTimeLabel(i) + (i.note ? ' <small>(' + esc(i.note) + ')</small>' : ''); }).join('<br>');
       when.parentNode.insertBefore(p, when.nextSibling);
     }).catch(function () {});
   }
@@ -441,7 +451,7 @@
   function shiftDay(d, n) { return new Date(Date.parse(d + 'T00:00:00Z') + n * 864e5).toISOString().slice(0, 10); }
   function fillBonus() {
     var pend = document.querySelectorAll('.evc-bonus[hidden]:not([data-done])'); if (!pend.length) return;
-    if (!venueAll) venueAll = window.GOVENUE || fetch('/api/venue-times?all=1').then(function (r) { return r.ok ? r.json() : { items: [] }; }).catch(function () { return { items: [] }; });
+    if (!venueAll) venueAll = window.GOVENUE || fetch('/api/venue-times?all=1' + venueTimeQuery()).then(function (r) { return r.ok ? r.json() : { items: [] }; }).catch(function () { return { items: [] }; });
     venueAll.then(function (d) {
       var items = (d && d.items) || [];
       Array.prototype.forEach.call(document.querySelectorAll('.evc-bonus[hidden]:not([data-done])'), function (p) {
@@ -450,7 +460,7 @@
         var own = items.filter(function (i) { return i.name.toLowerCase() === n.toLowerCase(); });
         var hit = own.length ? own : (words3(n).split(' ').length < 3 || !s ? [] : items.filter(function (i) { return words3(i.name) === words3(n) && i.date >= shiftDay(s, -1) && i.date <= shiftDay(e || s, 1); }));
         if (!hit.length) return;
-        p.innerHTML = '🎯 Bonuses start ' + hit.slice(0, 3).map(function (i) { return (hit.length > 1 ? esc(String(i.name).replace(/^.* - /, '')) + ' ' : '') + esc(i.day + ', ' + i.show) + ' your time'; }).join(' · ') + (hit.length === 1 && hit[0].note ? ' <small>(' + esc(hit[0].note) + ')</small>' : '');
+        p.innerHTML = '🎯 Bonuses start ' + hit.slice(0, 3).map(function (i) { return (hit.length > 1 ? esc(String(i.name).replace(/^.* - /, '')) + ' ' : '') + venueTimeLabel(i); }).join(' · ') + (hit.length === 1 && hit[0].note ? ' <small>(' + esc(hit[0].note) + ')</small>' : '');
         p.style.cssText = 'margin:4px 0;font-weight:600'; p.hidden = false;
       });
     });

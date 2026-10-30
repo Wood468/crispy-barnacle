@@ -1012,18 +1012,32 @@ async function notifyTestReminder(request, env) {
   const denied = await pinned(request, env); if (denied) return denied;
   return json(await jobs.runTestReminder(env, { pageFetch: (u, o) => fetch(u, o) }));
 }
-// When the in-game bonuses of an in-person event (Night Out) start, in your time. Public data: the same times the Telegram reminders use.
+// Return venue and viewer clocks separately. The requested IANA zone is validated; invalid values fall back safely.
+function venueViewerTimeZone(url) {
+  const requested = (url.searchParams.get("tz") || "").trim().slice(0, 64);
+  if (!requested) return "Australia/Melbourne";
+  try { new Intl.DateTimeFormat("en-AU", { timeZone: requested }).format(0); return requested; }
+  catch { return "Australia/Melbourne"; }
+}
 async function venueTimesGet(url, env) {
   const details = await assetData(env, "event-details.json"), all = venueItems(details);
+  const viewerTimeZone = venueViewerTimeZone(url);
   let out;
-  if (url.searchParams.get("all") === "1") { // every venue event from two days ago on, for the cards in the list (the app matches them to its events)
-    const cut = Date.now() - 2 * 864e5, dateOf = ms => new Intl.DateTimeFormat("en-CA", { timeZone: "Australia/Melbourne" }).format(new Date(ms));
-    out = all.filter(v => v.ms > cut).slice(0, 40).map(v => ({ name: v.name, date: dateOf(v.ms), ms: v.ms, endMs: v.endMs || 0, link: v.link || "", ...describeVenue(v) }));
+  if (url.searchParams.get("all") === "1") {
+    const cut = Date.now() - 2 * 864e5;
+    const dateOf = ms => new Intl.DateTimeFormat("en-CA", { timeZone: viewerTimeZone }).format(new Date(ms));
+    out = all.filter(v => v.ms > cut).slice(0, 40).map(v => ({
+      name: v.name, date: dateOf(v.ms), ms: v.ms, endMs: v.endMs || 0, link: v.link || "",
+      ...describeVenue(v, viewerTimeZone)
+    }));
   } else {
     const name = (url.searchParams.get("name") || "").slice(0, 200), day = s => /^\d{4}-\d\d-\d\d/.test(s || "") ? s.slice(0, 10) : "";
-    const hit = venueFor(name, day(url.searchParams.get("start")), day(url.searchParams.get("end")), all);
+    const hit = venueFor(name, day(url.searchParams.get("start")), day(url.searchParams.get("end")), all, viewerTimeZone);
     const own = hit.filter(v => v.name.toLowerCase() === name.toLowerCase());
-    out = (own.length ? own : hit).slice(0, 4).map(v => ({ name: v.name, ...describeVenue(v) }));
+    out = (own.length ? own : hit).slice(0, 4).map(v => ({
+      name: v.name, ms: v.ms, endMs: v.endMs || 0, link: v.link || "",
+      ...describeVenue(v, viewerTimeZone)
+    }));
   }
   const res = json({ items: out });
   res.headers.set("cache-control", "public, max-age=600");
