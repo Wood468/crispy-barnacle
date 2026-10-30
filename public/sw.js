@@ -1,9 +1,9 @@
 /* GO Field Notes offline shell. Never cache /api/*, including private user-state and notification responses. */
-const SHELL_CACHE = 'gofn-shell-v128';
+const SHELL_CACHE = 'gofn-shell-v129';
 const SHELL_URLS = [
   '/', '/index.html', '/offline.html', '/offline.css',
-  '/styles.css', '/dash.css', '/dash.css?v=20261030d', '/lib.js', '/dedupe.js', '/move.js',
-  '/imgerr.js', '/whatsnew.js', '/whatsnew.js?v=20261030a', '/pin.js', '/app.js', '/app.js?v=20261030h', '/styles.css?v=20261030b', '/dash.js', '/dash.js?v=20261030m', '/detail.js', '/detail.js?v=20261030f', '/fresh.js', '/places.js', '/places.js?v=20261029a', '/review.js', '/review.js?v=20261030a', '/nudge.js', '/account.js', '/store.js', '/season.js', '/weekly.js', '/buy.js', '/extra.js',
+  '/styles.css', '/dash.css', '/dash.css?v=20261030e', '/lib.js', '/lib.js?v=20261030a', '/dedupe.js', '/move.js',
+  '/imgerr.js', '/whatsnew.js', '/whatsnew.js?v=20261030a', '/pin.js', '/app.js', '/app.js?v=20261030h', '/styles.css?v=20261030b', '/dash.js', '/dash.js?v=20261030n', '/detail.js', '/detail.js?v=20261030f', '/fresh.js', '/places.js', '/places.js?v=20261029a', '/review.js', '/review.js?v=20261030a', '/nudge.js', '/account.js', '/store.js', '/season.js', '/weekly.js', '/buy.js', '/extra.js',
   '/infographic.js', '/manifest.webmanifest', '/icon.svg', '/icon-maskable.svg', '/icon-180.png', '/icon-192.png', '/icon-512.png',
   '/data.json', '/dex.json', '/event-info.json', '/forms.json', '/moves.json',
   '/places.json', '/event-details.json', '/event-moves.json', '/regional-events.json', '/world-events.json', '/best-by-type.json', '/prices.json', '/pvp.json', '/release-status.json', '/types.json',
