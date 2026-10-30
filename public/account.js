@@ -14,7 +14,7 @@
     return value ? 'account:' + value : 'guest';
   }
   function switchIdentity(target, mergeGuest) {
-    try { if (window.GOLOCAL) window.GOLOCAL.activate(localStorage, target, !!mergeGuest); } catch (e) { }
+    try { return !!(window.GOLOCAL && window.GOLOCAL.activate(localStorage, target, !!mergeGuest)); } catch (e) { return false; }
   }
   // Establish the active partition before app.js reads the Dex and user-state keys.
   switchIdentity(identity(), false);
@@ -62,7 +62,10 @@
     var a = b.getAttribute('data-acct');
     if (a === 'm-in' || a === 'm-up') { mode = a === 'm-up' ? 'up' : 'in'; msg = ''; render(); var d = document.querySelector('.acctbox'); if (d) d.open = true; }
     if (a === 'rm') { var em = b.getAttribute('data-email'); if (b.getAttribute('data-sure') !== '1') { b.setAttribute('data-sure', '1'); b.textContent = 'Tap again to delete ' + em + ' and their marks'; return; } fetch('/api/auth/remove', { method: 'POST', headers: pinHdr(), body: JSON.stringify({ email: em }) }).then(loadUsers); }
-    if (a === 'out') post('logout').catch(function () { }).then(function () { switchIdentity('guest', false); put(''); role(); location.reload(); });
+    if (a === 'out') {
+      if (!switchIdentity('guest', false)) { msg = 'Could not safely switch local marks. Refresh the page and try again.'; render(); return; }
+      post('logout').catch(function () { }).then(function () { put(''); role(); location.reload(); });
+    }
   });
   document.addEventListener('submit', function (e) {
     var f = e.target.closest && e.target.closest('[data-acct-form]'); if (!f) return;
@@ -73,7 +76,11 @@
     post(f.getAttribute('data-acct-form') === 'up' ? 'register' : 'login', v).then(function (r) {
       if (!r.ok) { msg = (r.j && r.j.error) || 'That did not work. Try again.'; render(); return; }
       var email = r.j.email || v.email;
-      switchIdentity(identity(email), true);
+      if (!switchIdentity(identity(email), true)) {
+        post('logout').catch(function () { });
+        msg = 'Could not safely preserve this device’s marks. Refresh the page and try signing in again.';
+        render(); return;
+      }
       put(email); role(); location.reload();
     }).catch(function () { msg = 'Could not reach the server. Try again.'; render(); });
   });
