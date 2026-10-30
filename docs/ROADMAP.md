@@ -1,6 +1,6 @@
 # GO Field Notes — Completion Roadmap
 
-_Maintained by the lead coordinator. Last consolidated: 31 Oct 2026, including #123 timezone support, #124 source-trust protection, #125 startup recovery, #127 preview media isolation, #128 community coordinate provenance, #129 source-freshness and raid-consistency monitoring, and the next reliability follow-ups (finding IDs QA-\*, RES-\*, UX-\*, ENG-\* refer to the audits)._
+_Maintained by the lead coordinator. Last consolidated: 31 Oct 2026, including #123 timezone support, #124 source-trust protection, #125 startup recovery, #127 preview media isolation, #128 community coordinate provenance, #129 source-freshness and raid-consistency monitoring, #130 public-data pre-push validation, #131 the full 44px touch-target audit, #132 Store Watch currency stability, and the next reliability follow-ups (finding IDs QA-\*, RES-\*, UX-\*, ENG-\* refer to the audits)._
 
 ## Status legend
 
@@ -19,6 +19,9 @@ _Maintained by the lead coordinator. Last consolidated: 31 Oct 2026, including #
 - ✅ **#125 — resilient startup:** bounded initial data loading and temporary primary navigation are merged; post-merge JavaScript, Python and browser checks pass, with the retry panel retained for recovery.
 - ✅ **#128 — community coordinate provenance:** 19 Wikipedia/Wikimedia references and one Reddit report are explicitly community-sourced, with no invented `verified` dates; only source-backed Reddit publication dates populate `reportedAt`. Ambiguous/country-only discovery locations are skipped. GPX coordinate links target `coords.url`, with event-source attribution kept separate. All PR and post-merge checks, the Cloudflare preview build and production Workers build passed.
 - ✅ **#129 — source freshness and raid schedule consistency:** the health monitor now covers source-watch, community location discovery and 1–3★ raids; fatal importer/audit errors and total source-feed outages fail non-zero; the weekly report compares raidNow, Mega, Max and rotation windows without changing event data. The production snapshot audit found 0 mismatches across 6 comparisons. PR checks and the post-merge production Workers build passed.
+- ✅ **#130 — public-data pre-push validation:** all 10 generated-public-data commit stages and 9 direct-main push stages across eight workflows validate before publishing, including a second validation after rebasing. Workflow-contract regression tests and post-merge JavaScript, Python, browser and production Workers checks passed.
+- ✅ **#132 — Store Watch currency stability:** whole-store currency flips are held for 72 hours without changing saved prices or generating false price alerts; a changed currency restarts the hold, and a sustained new currency becomes the baseline without price-change alerts. Single-item mismatches are ignored while genuine same-currency changes and new items still alert. Regression, post-merge JavaScript/Python/browser/CodeQL and production Workers checks passed.
+- ✅ **#131 — full 44px touch-target audit:** visible controls across Today, Schedule, Battle, Collection and Saved now meet the 44×44px target, including compact card actions, calendar day buttons, guide toggles and form controls. The offline shell cache was advanced to v134 with the exact dashboard stylesheet URL precached. The Playwright audit passed across all 12 view states; post-merge JavaScript, Python, browser A/B/C, CodeQL and production Workers checks passed.
 - ✅ **#112 — visible data-load recovery:** added an accessible event-data error panel with a retry action; browser regressions and the Cloudflare Workers production build passed.
 - ✅ **#100 — Today attention:** review actions navigate reliably; review counts refresh immediately; empty recent-updates panels disappear; acknowledged updates stay dismissed; meaningful event changes are tracked between visits.
 - ✅ **#101 — curated data refresh:** snapshot moved to 30 Oct 2026; rotations, Raid/Spotlight Hours and Max Monday schedules were extended into early December; event/source URLs and the 1★ boss parsing correction were included. Ongoing freshness monitoring remains a separate task.
@@ -28,7 +31,7 @@ _Maintained by the lead coordinator. Last consolidated: 31 Oct 2026, including #
 - ✅ **#110 — importer date guard:** source-page matches are rejected when known article and event date windows do not overlap; unknown dates remain unknown rather than being guessed.
 - ✅ **Community location discovery:** corrected the Reddit permalink regex, added an explicit Node syntax-check regression test, and confirmed the scheduled discovery workflow ran successfully. Candidate locations remain community-reported, not official event pins.
 
-All merged milestones above passed their post-merge checks. Latest main: `d2ae30dcebe2bd9d6c565f730987b5095c4e9ede`; post-merge JavaScript, Python, all three browser shards and CodeQL passed. Cloudflare Workers production build `66fccde0-961f-43f4-822d-c30ca8256e43` completed successfully.
+All merged milestones above passed their post-merge checks. Latest main: `6b1bce89545d947fcb7e62c47ebce0e502492796`; post-merge JavaScript, Python, all three browser shards and CodeQL passed. Cloudflare Workers production build `92ace779-cee2-401d-83ce-89b6e0f1f9c2` completed successfully.
 
 ## P0 — Critical security / data integrity
 
@@ -52,10 +55,10 @@ All merged milestones above passed their post-merge checks. Latest main: `d2ae30
 
 ## P2 — Important UX / functionality / performance
 
-- 🔧 **ENG-7** PR/push validation already exists; `chore/public-data-prepush-validation` adds `scripts/validate-public-data.mjs` before every generated-public-data commit and again after rebasing before each direct `main` push, with workflow-contract regression tests. Merge and post-merge verification remain pending. **RES-14** The terminology change from "confirmed" to "corroborated" remains open.
+- ✅ **ENG-7** #130 adds `scripts/validate-public-data.mjs` before every generated-public-data commit and again after rebasing before each direct `main` push, with workflow-contract regression tests; post-merge checks and production build passed. **RES-14** The terminology change from "confirmed" to "corroborated" remains open.
 - ✅ **RES-13** Add `pokemongo.com` and `www.pokemongo.com` to `OFFICIAL_HOSTS`, with exact-host regression coverage; **RES-7** source label by host.
 - **RES-6** Add Mexico City Wild Area; **RES-10** split Pokémon Night Out LA/London; **RES-11** duplicate world events.
-- **UX-5** header badge counts empty-state rows; **UX-6** contrast of live countdowns/in-person pill; **UX-7** This Week actions now meet 44px, but a broader touch-target audit remains.
+- **UX-5** header badge counts empty-state rows; **UX-6** contrast of live countdowns/in-person pill; **UX-7** This Week actions and all visible primary controls across Today, Schedule, Battle, Collection and Saved now meet 44×44px, verified by a multi-view Playwright audit.
 - **UX-8/QA-9** Owner moderation UI shown to visitors; **UX-9** Sync consolidated into one place.
 - **UX-10** Desktop layout (2-column Today, calendar names, nav rail); **UX-11** mobile chrome cost; **UX-12** Today strip: Now → Next → Raids & Max today → Ending soon.
 - **ENG-5** `user_state` per-key reads; **ENG-6** DDL on public GETs (🔒 schema); **ENG-8** rate limits on `/api/art`, `/api/guide`; **ENG-9** SW cache caps; **ENG-10** payload & immutable caching; **ENG-11** backups in own bucket (🔒).
