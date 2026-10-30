@@ -1,8 +1,5 @@
 {
  "alerted": [
-  "event-importer.yml",
-  "g47ix-infographics.yml",
-  "store-watch.yml",
   "ai-heartbeat-pipeline"
  ],
  "unmatched": []
