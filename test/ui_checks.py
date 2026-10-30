@@ -100,53 +100,44 @@ with sync_playwright() as p:
         check('Event detail hides Highlights and Locations when those sections are absent',
               all(x['label'] not in ['Highlights', 'Locations'] for x in jump_links), jump_links)
         # Highlights must land on the first real section even when there are no bonuses.
-        highlight_events = [
-            ev('move-highlight', 'Move Highlight Fixture', 'pokemon-spotlight-hour',
-               '2026-10-10T10:00:00', '2026-10-10T10:30:00', 'official_confirmed'),
-            ev('featured-highlight', 'Featured Highlight Fixture', 'pokemon-spotlight-hour',
-               '2026-10-10T11:00:00', '2026-10-10T11:30:00', 'official_confirmed',
-               feat=[{'name': 'Pikachu', 'role': 'featured'}])
-        ] + [
-            ev('highlight-future-' + str(i), 'Highlight Fixture Future ' + str(i), 'pokemon-spotlight-hour',
-               '2026-10-10T12:00:00', '2026-10-10T12:30:00', 'official_confirmed')
-            for i in range(8)
-        ]
-        moves_fixture = {'moves': [{
-            'eventId': 'leekduck:move-highlight', 'eventName': 'Move Highlight Fixture',
-            'pokemon': 'Pikachu', 'move': 'Volt Tackle', 'moveKind': 'charged',
-            'acquisition': 'CATCH', 'windowEnd': '2026-10-10T11:00:00'
-        }]}
-        highlight_page = page(api=json.dumps({'enabled': True, 'events': highlight_events}),
-                              extra={'**/event-moves.json*': (json.dumps(moves_fixture), 200),
-                                     '**/world-events.json': ('{"events":[]}', 200),
-                                     '**/regional-events.json': ('{"events":[]}', 200)})
-        highlight_page.wait_for_function("window.GODETAIL && window.GODASH && GODASH.events().some(e => e.id === 'leekduck:move-highlight')", timeout=5000)
-        highlight_page.wait_for_timeout(250)
-        highlight_page.evaluate("GODETAIL.open('leekduck:move-highlight')")
+        highlight_page = page()
+        highlight_page.wait_for_function("window.GODETAIL && window.GODASH", timeout=5000)
+        highlight_page.evaluate("""() => {
+            const events = GODASH.events();
+            events.push(GODASH.mkEvent({
+                id: 'zorua', name: 'Move Highlight Fixture', kind: 'event',
+                s: '2026-10-10T10:00:00', e: '2026-10-10T10:30:00',
+                featured: [], bonuses: [], status: 'official_confirmed', source: 'Fixture'
+            }));
+            events.push(GODASH.mkEvent({
+                id: 'featured-highlight', name: 'Featured Highlight Fixture', kind: 'event',
+                s: '2026-10-10T11:00:00', e: '2026-10-10T11:30:00',
+                featured: [{name: 'Pikachu', role: 'featured'}], bonuses: [],
+                status: 'official_confirmed', source: 'Fixture'
+            }));
+        }""")
+        # The static event-moves feed is loaded by the detail module; allow its fetch to settle.
+        highlight_page.wait_for_timeout(750)
+        highlight_page.evaluate("GODETAIL.open('zorua')")
         highlight_page.locator('#evd').wait_for(state='visible')
         highlight_page.locator('#evd .evd-jump a[href="#evd-highlights"]').wait_for(state='attached')
         move_target = highlight_page.locator('#evd-highlights')
         check('Move-only Highlights shortcut lands on event-only moves',
               highlight_page.locator('#evd .evd-jump a[href="#evd-highlights"]').count() == 1 and
               move_target.count() == 1 and move_target.inner_text() == 'Event-only moves',
-              {'dialog': highlight_page.locator('#evd').inner_text()[:900], 'target_count': move_target.count(),
-               'target_text': move_target.inner_text() if move_target.count() else '',
-               'event_ids': highlight_page.evaluate("GODASH.events().map(e => e.id).filter(id => id.includes('highlight'))"),
-               'event_ids': highlight_page.evaluate("GODASH.events().map(e => e.id).filter(id => id.includes('highlight'))")})
+              {'target_count': move_target.count(), 'target_text': move_target.inner_text() if move_target.count() else '',
+               'event_ids': highlight_page.evaluate("GODASH.events().map(e => e.id).filter(id => id === 'zorua')")})
         highlight_page.locator('#evd-x').click()
         highlight_page.locator('#evd').wait_for(state='hidden')
-        highlight_page.evaluate("GODETAIL.open('leekduck:featured-highlight')")
+        highlight_page.evaluate("GODETAIL.open('featured-highlight')")
         highlight_page.locator('#evd').wait_for(state='visible')
         highlight_page.locator('#evd .evd-jump a[href="#evd-highlights"]').wait_for(state='attached')
         featured_target = highlight_page.locator('#evd-highlights')
         check('Featured-only Highlights shortcut lands on the featured Pokémon section',
               highlight_page.locator('#evd .evd-jump a[href="#evd-highlights"]').count() == 1 and
               featured_target.count() == 1 and featured_target.inner_text() == 'Featured Pokémon',
-              {'dialog': highlight_page.locator('#evd').inner_text()[:900], 'target_count': featured_target.count(),
-               'target_text': featured_target.inner_text() if featured_target.count() else '',
-               'event_ids': highlight_page.evaluate("GODASH.events().map(e => e.id).filter(id => id.includes('highlight'))"),
-               'featured': highlight_page.evaluate("GODASH.events().filter(e => e.id === 'leekduck:featured-highlight').map(e => e.featured)"),
-               'event_ids': highlight_page.evaluate("GODASH.events().map(e => e.id).filter(id => id.includes('highlight'))")})
+              {'target_count': featured_target.count(), 'target_text': featured_target.inner_text() if featured_target.count() else '',
+               'featured': highlight_page.evaluate("GODASH.events().filter(e => e.id === 'featured-highlight').map(e => e.featured)")})
         highlight_page.context.close()
 
         # Keyboard navigation is trapped in the dialog and Escape returns focus to its opener.
