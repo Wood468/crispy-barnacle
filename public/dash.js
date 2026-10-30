@@ -1268,7 +1268,7 @@
     var missing = opportunities().filter(function (x) { return x.o.state === 'missing'; }).length;
     var saved = savedList().length;
     var cards = [];
-    if (next24) cards.push({key:'events',icon:'◷',title:'Events worth checking',detail:next24 + ' live or starting in the next 24 hours',count:next24,tab:'events'});
+    if (next24) cards.push({key:'events',icon:'◷',title:'Live & starting soon',detail:next24 + ' events live or starting in the next 24 hours',count:next24,tab:'events'});
     if (missing) cards.push({key:'collect',icon:'◇',title:'Pokémon you still need',detail:missing + ' collection gaps matched to upcoming events',count:missing,tab:'collect'});
     if (saved) cards.push({key:'saved',icon:'☆',title:'Your saved events',detail:saved + ' events in your watchlist',count:saved,tab:'saved'});
     var review = $('igcount');
@@ -1325,10 +1325,11 @@
     renderTypes(); renderStrip(); renderTimeline(); window.scrollTo(0, 0);
   });
   document.addEventListener('gofn-marks', function () { renderPrio(); renderTimeline(); renderOpps(); renderSaved(); renderActionCentre(); });
+  document.addEventListener('gofn-review-updated', renderActionCentre);
   document.addEventListener('click', function (e) {
     var b = e.target.closest && e.target.closest('[data-quick-go]'); if (!b) return;
     var key = b.getAttribute('data-quick-go');
-    if (key === 'review') { var review = $('hireview'); if (review && !review.hidden) review.click(); return; }
+    if (key === 'review') { var saved = document.querySelector('nav.tabs button[data-tab="saved"]'); if (saved) saved.click(); setTimeout(function () { var menu = document.querySelector('#subnav-saved [data-sub="menu"]'); if (menu) menu.click(); setTimeout(function () { var target = $('igreview'); if (target && !target.hidden) target.scrollIntoView({ block: 'start' }); }, 150); }, 80); return; }
     var tab = document.querySelector('nav.tabs button[data-tab="' + key + '"]'); if (tab) tab.click();
     if (key === 'events') { typeSel = 'soon'; selDay = ''; evQ = ''; var sub = document.querySelector('#subnav-events button[data-sub="timeline"]'); if (sub) sub.click(); renderTypes(); renderStrip(); renderTimeline(); }
     if (key === 'collect') { var subc = document.querySelector('#subnav-collect button[data-sub="opps"]'); if (subc) subc.click(); }
@@ -1362,7 +1363,7 @@
     renderCoverage();
     if (window.GO && GO.refreshDex) GO.refreshDex();
     usSync();
-    var inf = document.createElement('script'); inf.src = '/infographic.js?v=20261027a'; document.body.appendChild(inf); var x = document.createElement('script'); x.src = '/extra.js?v=20261024a'; document.body.appendChild(x); var z = document.createElement('script'); z.src = '/places.js?v=20261029a'; window.GOPLACES_READY = new Promise(function (resolve) { z.onload = function () { resolve(window.GOPLACES || null); }; z.onerror = function () { resolve(null); }; }); var y = document.createElement('script'); y.src = '/detail.js?v=20261030d'; document.body.appendChild(y); document.body.appendChild(z); var w = document.createElement('script'); w.src = '/fresh.js?v=20261014a'; document.body.appendChild(w); var nv = document.createElement('script'); nv.src = '/nudge.js?v=20261014l'; document.body.appendChild(nv); var rv = document.createElement('script'); rv.src = '/review.js?v=20261029c'; document.body.appendChild(rv); var by = document.createElement('script'); by.src = '/buy.js?v=20261020d'; document.body.appendChild(by);
+    var inf = document.createElement('script'); inf.src = '/infographic.js?v=20261027a'; document.body.appendChild(inf); var x = document.createElement('script'); x.src = '/extra.js?v=20261024a'; document.body.appendChild(x); var z = document.createElement('script'); z.src = '/places.js?v=20261029a'; window.GOPLACES_READY = new Promise(function (resolve) { z.onload = function () { resolve(window.GOPLACES || null); }; z.onerror = function () { resolve(null); }; }); var y = document.createElement('script'); y.src = '/detail.js?v=20261030d'; document.body.appendChild(y); document.body.appendChild(z); var w = document.createElement('script'); w.src = '/fresh.js?v=20261014a'; document.body.appendChild(w); var nv = document.createElement('script'); nv.src = '/nudge.js?v=20261014l'; document.body.appendChild(nv); var rv = document.createElement('script'); rv.src = '/review.js?v=20261030a'; document.body.appendChild(rv); var by = document.createElement('script'); by.src = '/buy.js?v=20261020d'; document.body.appendChild(by);
   }
   envBanner();
   var dexP = fetch('/dex.json').then(function (r) { return r.json(); }).catch(function () { return []; });

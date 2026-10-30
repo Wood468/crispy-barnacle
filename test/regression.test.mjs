@@ -129,7 +129,7 @@ test("PWA caches public shell offline but never caches API responses", () => {
   assert.match(sw, /url\.pathname\.startsWith\('\/api\/'\)/, "private and live API responses must bypass service-worker caching");
   assert.match(sw, /request\.mode === 'navigate' \? await cache\.match\(url\.pathname === '\/' \? '\/' : url\.pathname\)/, "offline navigation checks the requested cached path");
   assert.match(sw, /request\.mode === 'navigate' \? await cache\.match\('\/offline\.html'\)/, "offline navigation has a human-readable fallback");
-  assert.match(sw, /gofn-shell-v122/, "shell cache is versioned");
+  assert.match(sw, /gofn-shell-v123/, "shell cache is versioned");
   assert.match(pwa, /serviceWorker\.register\('\/sw\.js'\)/, "the app registers its service worker");
   assert.match(html, /<script src="\/pwa\.js"><\/script>/, "the registration script is loaded");
 });
@@ -273,4 +273,18 @@ test("best-attacker extras keep only known fields", () => {
 test('own copies of pictures (/img/ext/) pass every address check that guards event pictures', async () => {
   const fs = await import('node:fs');
   for (const f of ['dash.js', 'detail.js', 'infographic.js']) assert.ok(fs.readFileSync(new URL('../public/' + f, import.meta.url), 'utf8').includes('\\/img\\/ext\\/'), f);
+});
+
+
+test("home attention cards navigate, refresh infographic counts, and hide empty update history", () => {
+  const dash = fs.readFileSync(new URL("../public/dash.js", import.meta.url), "utf8");
+  const review = fs.readFileSync(new URL("../public/review.js", import.meta.url), "utf8");
+  const updates = fs.readFileSync(new URL("../public/whatsnew.js", import.meta.url), "utf8");
+  assert.match(dash, /title:'Live & starting soon'/);
+  assert.match(dash, /key === 'review'.*subnav-saved/s, "review action navigates directly rather than clicking a possibly hidden badge");
+  assert.match(dash, /gofn-review-updated/);
+  assert.match(review, /dispatchEvent\(new Event\('gofn-review-updated'\)\)/, "approval changes immediately refresh the home action centre");
+  assert.match(updates, /Event changes/);
+  assert.match(updates, /eventSnapshot/);
+  assert.match(updates, /if \(!total\).*box\.hidden = true/s, "no empty recent-updates card or stale reopen control");
 });
