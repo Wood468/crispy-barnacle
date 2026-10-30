@@ -107,13 +107,18 @@ export function stopsFromPage(page, today = new Date().toISOString().slice(0, 10
   if (SKIP_NEWS.test(title) || !(IN_PERSON.test(title) || IN_PERSON.test(text.slice(0, 1500)))) return [];
   const stops = [], seen = new Set();
   for (const l of page.lines || []) {
-    const t = String(l.text || "").trim();
-    if (t.length < 12 || t.length > 220) continue;
-    const range = parseDateRange(t, +today.slice(0, 4)), where = range && placeOfStop(t);
-    if (!where) continue;
-    const key = where.place + "|" + range.start;
-    if (seen.has(key)) continue;
-    seen.add(key); stops.push({ where, range });
+    // Official announcements sometimes put multiple city/date stops in one paragraph.
+    // Split before applying the per-stop length limit so the full paragraph is not discarded.
+    const segments = String(l.text || "").split(/,\s*and\s+at\b/i);
+    for (const segment of segments) {
+      const t = String(segment || "").trim();
+      if (t.length < 12 || t.length > 220) continue;
+      const range = parseDateRange(t, +today.slice(0, 4)), where = range && placeOfStop(t);
+      if (!where) continue;
+      const key = where.place + "|" + range.start;
+      if (seen.has(key)) continue;
+      seen.add(key); stops.push({ where, range });
+    }
   }
   if (stops.length < 2 || new Set(stops.map(s => s.where.place)).size < 2 || new Set(stops.map(s => s.range.start)).size < 2) return [];
   const city = s => s.where.place.split(",")[0], count = {};
