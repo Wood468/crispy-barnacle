@@ -699,6 +699,69 @@ with sync_playwright() as p:
         check('no horizontal scroll', not pg.evaluate('document.documentElement.scrollWidth>innerWidth'))
         pg.click('nav.tabs button[data-tab="raids"]'); pg.wait_for_timeout(300); pg.screenshot(path=OUT+'raids.png')
 
+    if on('a'):
+        # Audit real, visible controls across the major app views rather than only the Today card.
+        target_page = page()
+
+        def open_details_and_audit(label):
+            target_page.locator('details').evaluate_all(
+                "els => els.forEach(el => { el.open = true; })")
+            target_page.wait_for_timeout(80)
+            undersized = target_page.evaluate("""() => {
+                const selector = 'button, summary, select, a.pill, a.more, [role="tab"], label:has(input[type="checkbox"]), label:has(input[type="radio"])';
+                return [...document.querySelectorAll(selector)]
+                    .filter(el => {
+                        if (el.closest('[hidden],[aria-hidden="true"]')) return false;
+                        const style = getComputedStyle(el), rect = el.getBoundingClientRect();
+                        return style.display !== 'none' && style.visibility !== 'hidden' &&
+                            rect.width > 0 && rect.height > 0;
+                    })
+                    .map(el => {
+                        const r = el.getBoundingClientRect();
+                        return {
+                            tag: el.tagName.toLowerCase(),
+                            id: el.id,
+                            className: String(el.className || '').slice(0, 80),
+                            text: (el.textContent || '').trim().replace(/\\s+/g, ' ').slice(0, 48),
+                            width: Math.round(r.width),
+                            height: Math.round(r.height)
+                        };
+                    })
+                    .filter(x => x.width < 44 || x.height < 44)
+                    .slice(0, 20);
+            }""")
+            check(label + ': visible controls meet the 44×44px target', not undersized, undersized)
+
+        open_details_and_audit('Today')
+        target_page.locator('nav.tabs button[data-tab="events"]').click()
+        target_page.locator('#subnav-events button[data-sub="timeline"]').click()
+        open_details_and_audit('Schedule timeline')
+        target_page.locator('#subnav-events button[data-sub="calendar"]').click()
+        open_details_and_audit('Schedule calendar')
+        target_page.locator('nav.tabs button[data-tab="raids"]').click()
+        open_details_and_audit('Battle')
+        target_page.locator('nav.tabs button[data-tab="collect"]').click()
+        target_page.locator('#subnav-collect button[data-sub="dex"]').click()
+        target_page.locator('#mode-collect-dex button[data-mode="species"]').click()
+        open_details_and_audit('Collection species')
+        target_page.locator('#mode-collect-dex button[data-mode="forms"]').click()
+        open_details_and_audit('Collection forms')
+        target_page.locator('#mode-collect-dex button[data-mode="import"]').click()
+        open_details_and_audit('Collection import')
+        target_page.locator('#subnav-collect button[data-sub="megas"]').click()
+        open_details_and_audit('Collection Megas')
+        target_page.locator('#subnav-collect button[data-sub="guides"]').click()
+        target_page.locator('#mode-collect-guides button[data-mode="best"]').click()
+        open_details_and_audit('Best attackers')
+        target_page.locator('#mode-collect-guides button[data-mode="hundo"]').click()
+        open_details_and_audit('Hundo guide')
+        target_page.locator('#hwatch').click()
+        open_details_and_audit('Saved watchlist')
+        target_page.locator('#hmenu').click()
+        open_details_and_audit('Saved menu')
+        check('touch-target audit adds no page errors', target_page.errs == [], target_page.errs)
+        target_page.context.close()
+
     if on('b'):
         # 8. Phase 3: forms are tracked only when you mark them
         pg=page()
