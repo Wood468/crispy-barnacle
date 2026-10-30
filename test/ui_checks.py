@@ -31,7 +31,7 @@ with sync_playwright() as p:
         pg.route('**/api/art*',lambda r:r.fulfill(status=404,body=''))
         for pat,(body,st) in (extra or {}).items(): pg.route(pat,(lambda body,st:(lambda r,req=None:r.fulfill(status=st,body=body,content_type='application/json')))(body,st))
         if slow_places:
-            pg.add_init_script("""() => {
+            pg.add_init_script("""(() => {
                 const append = Node.prototype.appendChild;
                 Node.prototype.appendChild = function (node) {
                     if (node && node.tagName === 'SCRIPT' && /\/places\.js(?:\?|$)/.test(node.src)) {
@@ -41,7 +41,7 @@ with sync_playwright() as p:
                     }
                     return append.call(this, node);
                 };
-            }""")
+            })();""")
         if pin: pg.add_init_script("localStorage.setItem('gofn-pin','x')")
         if marks: pg.add_init_script("localStorage.setItem('gofn-dex-v1',%s)"%json.dumps(json.dumps(marks)))
         if us: gens=gens or []
