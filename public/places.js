@@ -15,7 +15,7 @@
     return Array.isArray(p.sources) && p.sources.some(function (s) { return s && s.trust === 'community'; })
       && /(?:reddit\.com|wikipedia\.org|wikimedia\.org)/i.test(url);
   }
-  function validDay(value) { return typeof value === 'string' && /^\\d{4}-\\d\\d-\\d\\d$/.test(value); }
+  function validDay(value) { return typeof value === 'string' && /^\d{4}-\d\d-\d\d$/.test(value); }
   function coordinateLabel(p) {
     if (isCommunityCoordinates(p)) return 'Community-reported coordinates' + (validDay(p.reportedAt) ? ' · reported ' + day(p.reportedAt) : ' · report date unavailable') + ' · not independently verified · not an official event pin';
     return 'Source record checked ' + day(p.verified);
