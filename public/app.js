@@ -556,7 +556,7 @@ Promise.all([fetch('/data.json').then(function(r){return r.json()}),fetch('/art/
     b.className='pill '+(t==='All'?'all':'');
     if(t!=='All'){b.style.background=TCOL[t][0];b.style.color=TCOL[t][1]}
     b.innerHTML=(t==='All'?'':'<img class="ti" src="/ico/g/type-'+t.toLowerCase()+'.webp" alt="">')+t;
-    b.setAttribute('aria-pressed',(t==='All' ? typeSel==='All' : matchesBestType(t,typeSel))?'true':'false');
+    b.setAttribute('aria-pressed',(t==='All' ? typeSel==='All' : isBestTypeSelected(t,typeSel))?'true':'false');
     b.addEventListener('click',function(){
       typeSel=t;
       Array.prototype.forEach.call(tc.children,function(c){c.setAttribute('aria-pressed',c===b?'true':'false')});
@@ -612,6 +612,9 @@ Promise.all([fetch('/data.json').then(function(r){return r.json()}),fetch('/art/
     $('barOwn').style.width=(ownN/Object.keys(all).length*100)+'%';
     applyFilters();
   }
+  function isBestTypeSelected(type, selected){
+    return selected!=='All'&&(Array.isArray(selected)?selected.indexOf(type)>-1:type===selected);
+  }
   function matchesBestType(groupType, selected){
     return selected==='All'||(Array.isArray(selected)?selected.indexOf(groupType)>-1:groupType===selected);
   }
@@ -642,7 +645,7 @@ Promise.all([fetch('/data.json').then(function(r){return r.json()}),fetch('/art/
   window.GOBEST = { showTypes:function(types){
     var valid = Array.isArray(types) ? types.filter(function(t,i,a){return TYPES.indexOf(t)>-1&&a.indexOf(t)===i}) : [];
     typeSel = valid.length ? valid : 'All';
-    Array.prototype.forEach.call(tc.children,function(c){var t=c.textContent.trim();c.setAttribute('aria-pressed',(t==='All'?typeSel==='All':matchesBestType(t,typeSel))?'true':'false')});
+    Array.prototype.forEach.call(tc.children,function(c){var t=c.textContent.trim();c.setAttribute('aria-pressed',(t==='All'?typeSel==='All':isBestTypeSelected(t,typeSel))?'true':'false')});
     applyFilters();
   } };
   $('q').addEventListener('input',applyFilters);
