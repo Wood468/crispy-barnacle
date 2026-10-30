@@ -86,9 +86,14 @@
   });
   // If the session ran out (or the cookie was cleared), say so rather than silently syncing nothing.
   if (get() && !pinned()) fetch('/api/auth/me').then(function (r) { return r.ok ? r.json() : null; }).then(function (j) {
-    if (j && j.signedIn === false) { switchIdentity('guest', false); put(''); role(); location.reload(); }
+    if (j && j.signedIn === false) {
+      if (switchIdentity('guest', false)) { put(''); role(); location.reload(); }
+      else { msg = 'Your session expired, but local marks could not be switched safely. Refresh before signing in again.'; render(); }
+    }
   }).catch(function () { });
-  document.addEventListener('gofn-identity-change', function () { switchIdentity(identity(), true); });
+  document.addEventListener('gofn-identity-change', function () {
+    if (!switchIdentity(identity(), true)) { try { localStorage.removeItem('gofn-pin'); } catch (e) { } }
+  });
   /* Trainer name and team: asked once after the first sign-in, shown under the title, editable by tapping it.
      Kept with the rest of your private marks (pref:trainer, pref:team), so it follows the account across devices. */
   var TEAMS = { mystic: ['Mystic', '#3B82F6', 'Blue'], valor: ['Valor', '#EF4444', 'Red'], instinct: ['Instinct', '#FACC15', 'Yellow'] };
