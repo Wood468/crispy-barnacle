@@ -34,6 +34,20 @@ test("community coordinate GPX labels report provenance and never emits a legacy
   assert.doesNotMatch(out, /2026-10-10|Source record checked|Checked/);
   assert.match(api.coordinateLabel(p), /reported 28 Oct 2026/);
 });
+test("community coordinate without a source publication date stays undated and unverified", () => {
+  const p = place({
+    type: "Community-reported play area",
+    coordinateStatus: "community-reported",
+    verified: "2026-10-10", // legacy field is ignored
+    sources: [{ label: "Wikipedia reference", url: "https://en.wikipedia.org/wiki/Example", trust: "community" }],
+    coords: { label: "Wikipedia reference", url: "https://en.wikipedia.org/wiki/Example" }
+  });
+  const label = load().coordinateLabel(p);
+  assert.match(label, /report date unavailable/);
+  assert.match(label, /not independently verified/);
+  assert.match(label, /not an official event pin/);
+  assert.doesNotMatch(label, /2026-10-10/);
+});
 test("venue points GPX: a stop list only when asked and with two or more places, and it says it is not a walking route", () => {
   const g = load().gpx, two = [place(), place({ id: "p2", name: "B", lat: -27.47, lng: 153.02 })];
   const r = g(two, { name: "X", order: true }); assert.match(r, /<rte>/); assert.equal((r.match(/<rtept /g) || []).length, 2); assert.match(r, /not a walking route/);
