@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-29T21:15:19.589Z",
+ "updated": "2026-10-30T01:08:34.631Z",
  "events": [
   {
    "id": "w-pokemon-fossil-museum-2026",
@@ -18,7 +18,7 @@
     }
    ],
    "status": "single",
-   "seen": "2026-10-29"
+   "seen": "2026-10-30"
   },
   {
    "id": "w-pokemon-jet-red-collaboration-event",
@@ -37,7 +37,7 @@
     }
    ],
    "status": "single",
-   "seen": "2026-10-29"
+   "seen": "2026-10-30"
   },
   {
    "id": "w-pok-mon-jet-red-collaboration",
@@ -56,7 +56,7 @@
     }
    ],
    "status": "single",
-   "seen": "2026-10-29"
+   "seen": "2026-10-30"
   },
   {
    "id": "w-pokemon-x-adidas",
@@ -99,7 +99,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-10-29"
+   "seen": "2026-10-30"
   },
   {
    "id": "w-pok-mon-go-partners-with-the-european-space-agency",
@@ -123,7 +123,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-10-29"
+   "seen": "2026-10-30"
   },
   {
    "id": "w-pokemon-go-x-esa-london",
@@ -304,7 +304,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-10-29"
+   "seen": "2026-10-30"
   },
   {
    "id": "w-aeon-mall-halloween",
@@ -342,7 +342,7 @@
     }
    ],
    "status": "single",
-   "seen": "2026-10-29"
+   "seen": "2026-10-30"
   },
   {
    "id": "w-palkia-in-5-star-raid-battles",
@@ -361,7 +361,7 @@
     }
    ],
    "status": "single",
-   "seen": "2026-10-29"
+   "seen": "2026-10-30"
   },
   {
    "id": "w-pok-mon-30th-anniversary-mall-exploration-sm-east-",
@@ -380,7 +380,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-10-29"
+   "seen": "2026-10-30"
   },
   {
    "id": "w-celebrate-the-pok-mon-night-out-events-in-pok-mon-",
@@ -409,7 +409,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-10-29"
+   "seen": "2026-10-30"
   },
   {
    "id": "w-pok-mon-go-city-safari-boston-update",
@@ -438,12 +438,12 @@
     }
    ],
    "status": "official",
-   "seen": "2026-10-29"
+   "seen": "2026-10-30"
   },
   {
    "id": "w-fc-seoul",
    "name": "FC Seoul",
-   "place": "Seoul, South Korea",
+   "place": "South Korea",
    "area": "Asia",
    "scope": "regional",
    "start": "2026-10-24",
@@ -451,13 +451,18 @@
    "datesKnown": true,
    "sources": [
     {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "url": "https://pokemongo.com/ko/news/fc-seoul-2026/"
+    },
+    {
      "id": "serebii",
      "name": "Serebii",
      "url": "https://www.serebii.net/pokemongo/reallifeevents.shtml"
     }
    ],
-   "status": "single",
-   "seen": "2026-10-29"
+   "status": "official",
+   "seen": "2026-10-30"
   },
   {
    "id": "w-pok-mon-go-dia-de-muertos-2026-mexico-exclusive-ev",
@@ -525,7 +530,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-10-29"
+   "seen": "2026-10-30"
   },
   {
    "id": "w-go-wild-area-2026-mexico-city",
@@ -544,7 +549,7 @@
     }
    ],
    "status": "single",
-   "seen": "2026-10-29"
+   "seen": "2026-10-30"
   },
   {
    "id": "w-go-wild-area-2026-sendai-tohoku",
@@ -563,7 +568,7 @@
     }
    ],
    "status": "single",
-   "seen": "2026-10-29"
+   "seen": "2026-10-30"
   },
   {
    "id": "w-pok-xciting-lands-at-changi-airport-and-jewel-get-",
@@ -582,7 +587,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-10-29"
+   "seen": "2026-10-30"
   },
   {
    "id": "w-pok-mon-30th-anniversary-mall-exploration-jewel",
@@ -601,7 +606,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-10-29"
+   "seen": "2026-10-30"
   },
   {
    "id": "w-pok-mon-run-30-singapore",
@@ -761,7 +766,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-10-29"
+   "seen": "2026-10-30"
   },
   {
    "id": "w-pok-mon-run-30-kuala-lumpur",
@@ -850,7 +855,7 @@
     }
    ],
    "status": "single",
-   "seen": "2026-10-29"
+   "seen": "2026-10-30"
   },
   {
    "id": "w-pok-mon-30th-anniversary-mall-exploration-sm-north",
@@ -869,7 +874,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-10-29"
+   "seen": "2026-10-30"
   },
   {
    "id": "w-minior-showers-geminids",
@@ -957,7 +962,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-10-29"
+   "seen": "2026-10-30"
   },
   {
    "id": "w-pok-mon-run-30-hong-kong",
@@ -995,7 +1000,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-10-29"
+   "seen": "2026-10-30"
   },
   {
    "id": "w-save-the-date-pok-mon-go-tour-2027",
@@ -1014,7 +1019,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-10-29"
+   "seen": "2026-10-30"
   },
   {
    "id": "w-pokemon-go-tour-2027-los-angeles",
@@ -1052,7 +1057,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-10-29"
+   "seen": "2026-10-30"
   },
   {
    "id": "w-pokemon-go-tour-2027-global",
@@ -1090,7 +1095,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-10-29"
+   "seen": "2026-10-30"
   },
   {
    "id": "w-go-wild-area-stamp-rally-details",
@@ -1105,11 +1110,11 @@
     {
      "id": "official",
      "name": "Pokémon GO (official)",
-     "url": "https://pokemongo.com/ja/news/go-wild-area-stamp-rally-details-2026/"
+     "url": "https://pokemongo.com/ko/news/go-wild-area-stamp-rally-details-2026/"
     }
    ],
    "status": "official",
-   "seen": "2026-10-29"
+   "seen": "2026-10-30"
   }
  ]
 }

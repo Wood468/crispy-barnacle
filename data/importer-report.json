@@ -1,5 +1,5 @@
 {
- "runAt": "2026-10-29T21:15:19.592Z",
+ "runAt": "2026-10-30T01:08:34.634Z",
  "sources": {
   "official": {
    "listed": 24,
@@ -365,8 +365,5 @@
    ]
   }
  ],
- "errors": [
-  "https://pokemongo.com/ja/news/staraptor-super-mega-raid-day-2026/: The operation was aborted due to timeout",
-  "https://pokemongo.com/ko/news/chandelure-super-mega-raid-day-2026/: The operation was aborted due to timeout"
- ]
+ "errors": []
 }
