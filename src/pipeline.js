@@ -4,7 +4,7 @@
 import { MIGRATIONS } from "./migrations.js";
 
 const HOUR = 3600000, DAY = 86400000;
-export const OFFICIAL_HOSTS = ["pokemongolive.com", "www.pokemongolive.com", "niantic.helpshift.com"];
+export const OFFICIAL_HOSTS = ["pokemongolive.com", "www.pokemongolive.com", "pokemongo.com", "www.pokemongo.com", "niantic.helpshift.com"];
 export const TIER = { official_confirmed: 3, community_reported: 2, datamined: 1 };
 export const LEEKDUCK = {
   id: "leekduck", name: "Leek Duck (via ScrapedDuck)", kind: "community", defaultStatus: "community_reported", minItems: 10,
