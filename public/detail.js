@@ -107,9 +107,24 @@
     return hit;
   }
   function srcName(d, id) { var s = (d.sources || []).filter(function (x) { return x.id === id; })[0]; return s ? s.name : id; }
-  /* Icons for each group: the game's own small pictures where the site has them. */
-  var CATICON = { tickets: '/ico/pass.webp', bonuses: '/ico/xp.webp', featured: '/ico/g/event.webp', raids: '/ico/g/raid.webp', eggs: '/ico/egg.webp', research: '/ico/candy.webp', shiny: '/ico/shiny.webp', moves: '/ico/g/powerup.webp', costumes: '/ico/g/mythical.webp' };
-  var CLOCK = '<svg class="ci" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg>';
+  /* Matching line icons keep every event-detail category visually consistent. */
+  var CATICON = {
+    tickets: 'M3 7h18v3a2 2 0 0 0 0 4v3H3v-3a2 2 0 0 0 0-4V7Z M12 7v10',
+    bonuses: 'M12 3l1.8 6.2L20 11l-6.2 1.8L12 19l-1.8-6.2L4 11l6.2-1.8L12 3Z',
+    featured: 'M12 3l2.7 5.5 6.1.9-4.4 4.3 1 6.1-5.4-2.9-5.4 2.9 1-6.1-4.4-4.3 6.1-.9L12 3Z',
+    raids: 'M5 4l14 16M19 4 5 20M3 3l4 4M17 17l4 4',
+    eggs: 'M12 3c-3.8 0-6.5 5.2-6.5 10a6.5 6.5 0 0 0 13 0c0-4.8-2.7-10-6.5-10Z',
+    research: 'M8 4h8v3h3v13H5V7h3V4Z M9 4h6v4H9z M8 12h8M8 16h6',
+    shiny: 'M12 2v4M12 18v4M2 12h4M18 12h4M5 5l3 3M16 16l3 3M19 5l-3 3M8 16l-3 3',
+    moves: 'M13 2 4 13h7l-1 9 10-13h-7z',
+    costumes: 'M4 10h16l-1 8H5l-1-8Z M7 10a5 5 0 0 1 10 0M10 6a2 2 0 0 1 4 0',
+    dates: 'M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18Z M12 7v5l3 2'
+  };
+  function categoryIcon(key) {
+    var path = CATICON[key] || CATICON.featured;
+    return '<span class="evd-icon" aria-hidden="true"><svg class="ci" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="' + path + '"/></svg></span>';
+  }
+
   /* GO Pass prices: the Australian store price when it has been checked, never a conversion from US dollars. */
   function passPrice(text, ev) {
     return text.replace(/US\$\s?(\d+(?:\.\d\d)?)\*?(\s?\((?:or )?(?:the )?equivalent[^)]*\))?/gi, function (m) {
@@ -122,25 +137,38 @@
   }
   function tidy(t) { return String(t).replace(/\s+([.,;:!?])/g, '$1').replace(/\s+/g, ' ').trim(); }
   var BOILER = /^prices are in usd|availability of event tickets|^claim all unlocked/i;
-  function sourcesBlock(ev) {
-    var d = findDetails(ev); if (!d || !d.fields) return '';
-    var seen = {};
-    var groups = CATS.map(function (c) {
+  // Collect every category before rendering any of them. A claim repeated in a later
+  // category can then add its source attribution to the first occurrence before HTML is built.
+  function dedupeSourceGroups(fields) {
+    var seen = Object.create(null), groups = {};
+    CATS.forEach(function (c) {
       var items = [];
-      (d.fields[c[0]] || []).forEach(function (it) {
+      (fields[c[0]] || []).forEach(function (it) {
+        if (!it || typeof it.text !== 'string') return;
         var whole = tidy(it.text);
         (/^rank \d+\b/i.test(whole) ? [whole] : whole.split(/(?<=[.!?])\s+(?=[A-Z])/)).forEach(function (sent) {
           var k = sent.toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
           if (k.length < 8 || BOILER.test(sent)) return;
+          var ids = (it.sources || []).filter(function (id, i, a) { return typeof id === 'string' && a.indexOf(id) === i; });
           if (seen[k]) {
-            (it.sources || []).forEach(function (id) { if (seen[k].sources.indexOf(id) < 0) seen[k].sources.push(id); });
+            ids.forEach(function (id) { if (seen[k].sources.indexOf(id) < 0) seen[k].sources.push(id); });
             if (seen[k].status !== 'official' && it.status === 'official') seen[k].status = 'official';
             return;
           }
-          seen[k] = { text: sent, sources: (it.sources || []).slice(), status: it.status || '' };
-          items.push(seen[k]);
+          var item = { text: sent, sources: ids, status: it.status || '' };
+          seen[k] = item;
+          items.push(item);
         });
       });
+      groups[c[0]] = items;
+    });
+    return groups;
+  }
+  function sourcesBlock(ev) {
+    var d = findDetails(ev); if (!d || !d.fields) return '';
+    var grouped = dedupeSourceGroups(d.fields);
+    var groups = CATS.map(function (c) {
+      var items = grouped[c[0]] || [];
       if (!items.length) return '';
       var ranks = items.filter(function (x) { return /^rank \d+\b/i.test(x.text); }).sort(function (a, b) { return parseInt(a.text.replace(/\D+/, ''), 10) - parseInt(b.text.replace(/\D+/, ''), 10); }), rest = items.filter(function (x) { return ranks.indexOf(x) < 0; });
       var fmt = function (x) { return window.GORICH(c[0] === 'tickets' ? passPrice(esc(x), ev) : esc(x)); };
@@ -156,7 +184,7 @@
         var records = ids.map(function (id) { return (d.sources || []).filter(function (s) { return s.id === id; })[0]; }).filter(Boolean);
         var official = it.status === 'official' || records.some(function (s) { return s.trust === 'official'; });
         var community = records.some(function (s) { return s.trust === 'community'; });
-        var kind = official ? 'Official source' : ids.length > 1 ? 'Cross-referenced' : community ? 'Community source' : 'Source trust not labelled';
+        var kind = official && community ? 'Official + community' : official ? 'Official source' : ids.length > 1 ? 'Cross-referenced' : community ? 'Community source' : 'Source trust not labelled';
         return '<small class="evd-claim-source"><span>' + kind + '</span> · ' + labels.join(' · ') + '</small>';
       };
       /* "The free track includes:" followed by bare short lines becomes a label with chips. */
@@ -168,7 +196,7 @@
       }
       var li = null;
       var rk = ranks.map(function (item) { var x = item.text; var m = /^rank (\d+)\s*(deluxe)?\W*(.*)$/i.exec(x); m = [m[0], m[1], (m[2] ? '(Deluxe) ' : '') + m[3]]; var fd = /^Free: (.*?) \| Deluxe: (.*)$/.exec(m[2]); return '<li class="rk"><b>Rank ' + esc(m[1]) + '</b> ' + (fd ? '<span class="fd"><em>Free</em> ' + window.GORICH(esc(fd[1])) + '</span><span class="fd dx"><em>Deluxe</em> ' + window.GORICH(esc(fd[2])) + '</span>' : window.GORICH(esc(m[2]))) + attribution(item) + '</li>'; }).join('');
-            var ico = c[0] === 'dates' ? CLOCK : '<img class="ci" src="' + CATICON[c[0]] + '" alt="" loading="lazy" data-err="rm">';
+            var ico = categoryIcon(c[0]);
       var rkBlock = ranks.length > 10 ? '</ul><details class="evd-rk"><summary>All rank rewards (' + ranks.length + ')</summary><ul>' + rk + '</ul></details><ul hidden>' : rk;
       return '<section class="evd-grp"><h4>' + ico + esc(c[1]) + '</h4><ul>' + lis.join('') + rkBlock + '</ul></section>';
     }).join('');

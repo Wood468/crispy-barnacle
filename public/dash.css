@@ -737,8 +737,8 @@ img.art.is-shiny{outline:2px solid var(--gold);outline-offset:2px;border-radius:
 /* Event details: grouped, icon-headed, short bullets; sources only in the footer line */
 .evd-groups{display:grid;gap:18px}
 .evd-grp h4{display:flex;align-items:center;gap:8px;margin:0 0 8px;font:700 .8rem var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
-.evd-grp .ci{width:22px;height:22px;object-fit:contain;flex:none}
-svg.ci{width:22px;height:22px}
+.evd-icon{display:inline-grid;place-items:center;width:28px;height:28px;flex:none;border:1px solid color-mix(in srgb,var(--accent,#69d7b0) 28%,var(--ring));border-radius:9px;background:color-mix(in srgb,var(--accent,#69d7b0) 12%,var(--glass));color:var(--accent,#69d7b0)}
+.evd-grp .ci,.evd-grp svg.ci{display:block;width:15px;height:15px;flex:none}
 .evd-grp ul{margin:0;padding:0;list-style:none;display:grid;gap:8px}
 .evd-grp li{position:relative;padding-left:16px;line-height:1.45}
 .evd-grp li:before{content:"";position:absolute;left:2px;top:.62em;width:6px;height:6px;border-radius:50%;background:var(--accent,#69d7b0)}
