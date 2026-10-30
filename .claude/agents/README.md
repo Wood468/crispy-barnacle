@@ -26,3 +26,7 @@ Project-level [Claude Code subagents](https://docs.anthropic.com/en/docs/claude-
   - "Ask go-field-notes-engineering to review the sync endpoints for security issues."
 - Run `/agents` in Claude Code to list, inspect or edit them.
 - To authorise implementation, say so in the task prompt, e.g. "You may add a regression test on branch `test/qa-dst-fix`; do not merge."
+
+## Invocation note
+
+Project subagents in `.claude/agents/` are loaded at session start. In the session that created them, they were invoked as general-purpose agents that load their role file first. From the next session onward they can be invoked by name (subagent_type `go-field-notes-qa`, `go-field-notes-research`, `go-field-notes-ux`, `go-field-notes-engineering`) or via `/agents`.

@@ -40,7 +40,7 @@ When sources disagree, report the conflict with both URLs and which source wins 
 ## What to verify
 
 - **Events:** names, start/end dates and times, whether times are *local time* (same wall-clock time in every zone, e.g. Community Day 2–5 pm local) or *fixed global* (single UTC instant), bonuses, featured/debut Pokémon, shiny releases and shiny availability, costumes, tickets/prices, research, eggs.
-- **Recurring features:** Spotlight Hours (Tuesdays 6–7 pm local), Raid Hours (Wednesdays 6–7 pm local), Community Days, Max Monday / Max Battle weekends, raid boss rotations by tier (incl. Mega, Shadow, Dynamax/Gigantamax), GO Fest / Safari Zone / city events.
+- **Recurring features:** Spotlight Hours (weekly, 6–7 pm local; Thursdays in 2026 — always confirm the day from the current schedule), Raid Hours (Wednesdays 6–7 pm local — confirm against current schedule), Community Days, Max Monday / Max Battle weekends, raid boss rotations by tier (incl. Mega, Shadow, Dynamax/Gigantamax), GO Fest / Safari Zone / city events.
 - **Worldwide/in-person events:** city, country, venue, coordinates (check lat/lng actually fall in the stated city/venue), event-local timezone, dates per city. Multi-city tours should be separate entries per city/date when that is how they are announced.
 - **Time conversion:** check that a stored instant renders correctly for Melbourne including DST (AEDT UTC+11 from first Sunday in October; AEST UTC+10 from first Sunday in April) and that event-local times for in-person events are not mislabelled as Melbourne time.
 
