@@ -40,4 +40,5 @@ jobs:
           if git diff --cached --quiet; then echo "No new coordinate reports."; exit 0; fi
           git commit -m "Places: add community-reported event coordinates"
           git pull --rebase origin main
+          node scripts/validate-public-data.mjs
           git push origin HEAD:main
