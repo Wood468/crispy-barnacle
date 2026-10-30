@@ -32,8 +32,10 @@
   function safe(u) { return typeof u === 'string' && (/^https:\/\//.test(u) || /^\/img\/ext\/[\w.-]+$/.test(u)) ? u : ''; }
   function safeGpx(u) { return typeof u === 'string' && (/^https:\/\//.test(u) || /^\/(?:gpx|routes|places)\/[\w./-]+\.gpx(?:\?[^#]*)?$/i.test(u)) ? u : ''; }
   function trust(t) {
-    var official = t === 'official';
-    return '<span class="st ' + (official ? 'st-a' : 'st-n') + '">' + (official ? 'Official' : 'Community') + '</span>';
+    var official = t === 'official', community = t === 'community';
+    var cls = official ? 'st-a' : community ? 'st-n' : 'st-u';
+    var label = official ? 'Official' : community ? 'Community' : 'Trust not labelled';
+    return '<span class="st ' + cls + '">' + label + '</span>';
   }
   function srcLine(s) {
     if (!s) return '';
@@ -151,7 +153,10 @@
           return u ? '<a href="' + esc(u) + '" target="_blank" rel="noopener noreferrer">' + esc(s.name) + '</a>' : esc(s.name);
         }).filter(Boolean);
         if (!labels.length) return '';
-        var kind = it.status === 'official' || ids.indexOf('official') > -1 ? 'Official source' : ids.length > 1 ? 'Cross-referenced' : 'Community source';
+        var records = ids.map(function (id) { return (d.sources || []).filter(function (s) { return s.id === id; })[0]; }).filter(Boolean);
+        var official = it.status === 'official' || records.some(function (s) { return s.trust === 'official'; });
+        var community = records.some(function (s) { return s.trust === 'community'; });
+        var kind = official ? 'Official source' : ids.length > 1 ? 'Cross-referenced' : community ? 'Community source' : 'Source trust not labelled';
         return '<small class="evd-claim-source"><span>' + kind + '</span> · ' + labels.join(' · ') + '</small>';
       };
       /* "The free track includes:" followed by bare short lines becomes a label with chips. */
@@ -249,7 +254,8 @@
     var primarySource = eventSources.filter(function (s) { return s && (s.id === 'official' || /(^|\.)pokemongo\.com\//i.test(s.url || '')); })[0] || eventSources[0] || (e && e.source ? e.source : null);
     var link = (primarySource && safe(primarySource.url)) || safe(ev.link) || (e && e.source ? safe(e.source.url) : '');
     var linkLabel = primarySource && primarySource.name ? 'Open ' + primarySource.name : 'Open source';
-    var sourceChecked = primarySource && (primarySource.observed || primarySource.checked || ev.seen || G.D.asOf) || '';
+    // The dataset snapshot date is not evidence that this event's source was checked on that date.
+    var sourceChecked = (primarySource && (primarySource.observed || primarySource.checked)) || ev.seen || '';
     var sourceAge = sourceChecked ? Math.max(0, Math.floor((Date.now() - Date.parse(String(sourceChecked).slice(0, 10) + 'T00:00:00Z')) / 864e5)) : null;
     var sourceFresh = sourceAge === null || !Number.isFinite(sourceAge) ? 'Check date unavailable' : sourceAge <= 7 ? 'Recently checked' : sourceAge <= 21 ? 'Worth rechecking' : 'May be out of date';
     var leekDuckSource = primarySource && /leekduck[.]com$/i.test((function(){try{return new URL(primarySource.url).hostname;}catch(e){return '';}})());
