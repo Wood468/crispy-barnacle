@@ -2,6 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
 import { parseVenueTimes, describeVenue, venueFor, venueItems } from "../src/venue-times.js";
+import worker from "../src/worker.js";
 
 const LA = "Date: October 24, 2026 Location: Intuit Dome, Los Angeles, USA Night Out show starts: 7:30 p.m. PDT (unconfirmed for Pokémon GO) Doors open: 6:00 p.m. PDT End time: To be announced";
 
@@ -57,6 +58,35 @@ test("reviewed manual venue time keeps its unconfirmed label and UTC zone", () =
   assert.equal(item.zone, "GMT");
   assert.equal(item.unconfirmed, true);
   assert.equal(item.ms, Date.parse("2026-11-10T18:00:00.000Z"));
+});
+
+test("venue-times API returns the requested viewer clock alongside the source venue clock", async () => {
+  const details = { events: {
+    "leekduck:pokemon-night-out-london-2026": {
+      name: "Pokémon Night Out 2026 - London",
+      fields: { dates: [] },
+      sources: [{ url: "https://leekduck.com/events/pokemon-night-out-london-2026/" }]
+    }
+  } };
+  const env = { ASSETS: { fetch: async () => new Response(JSON.stringify(details), {
+    headers: { "content-type": "application/json" }
+  }) } };
+  const request = tz => new Request("https://example.test/api/venue-times?name=" +
+    encodeURIComponent("Pokémon Night Out 2026 - London") +
+    "&start=2026-11-10&end=2026-11-10&tz=" + encodeURIComponent(tz));
+  const tokyoResponse = await worker.fetch(request("Asia/Tokyo"), env, {});
+  assert.equal(tokyoResponse.status, 200);
+  const [tokyo] = (await tokyoResponse.json()).items;
+  assert.match(tokyo.venueDay, /10 Nov/);
+  assert.match(tokyo.venueShow, /6:00 pm/i);
+  assert.match(tokyo.day, /11 Nov/);
+  assert.match(tokyo.show, /3:00 am/i);
+  assert.equal(tokyo.timeZone, "Etc/UTC");
+  assert.equal(tokyo.note, "expected, Pokémon GO hours not confirmed yet");
+
+  const fallbackResponse = await worker.fetch(request("not/a-time-zone"), env, {});
+  const [fallback] = (await fallbackResponse.json()).items;
+  assert.match(fallback.show, /5:00 am/i, "invalid viewer zones fall back to the established Melbourne default");
 });
 
 test("Today and event details request viewer-local venue times and display the venue clock", () => {
