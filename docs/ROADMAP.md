@@ -38,7 +38,7 @@ All merged milestones above passed their post-merge test checks; the latest main
 - ⏳ **RES-9** Weaker sources can overwrite official data (schedule-audit worldFixes; Reddit coords to public data).
 - ✅ **UX-1** Visible, accessible event-data recovery panel and retry action in #112; browser regression and production build verified.
 - ✅ **UX-2** Today event-card actions stay within 390px and 320px phone layouts; browser regression and production build verified in #113.
-- ⏳ **UX-3** Today "Live" count padded with overseas in-person events.
+- 🔧 **UX-3** Today live summary separates in-game and in-person activity counts while keeping overseas in-person event cards visible; awaiting regression and production verification.
 - ⏳ **ENG-3** PIN brute-force: no global failure ceiling.
 
 ## P2 — Important UX / functionality / performance
@@ -70,5 +70,5 @@ All merged milestones above passed their post-merge test checks; the latest main
 
 1. Separate preview R2 bucket and/or Cloudflare Access on previews; delete old preview versions (ENG-1b).
 2. Raid rotation boundary time: Leek Duck says 6 am local; data uses 10:00 (RES-2).
-3. Default Today scope: in-game only, with overseas in-person events folded away? (UX-3)
+3. Today scope: owner preference confirmed — keep overseas in-person events visible; distinguish their counts rather than hiding or folding them away.
 4. Approval for D1 schema consolidation (ENG-6/14) and separate backup bucket (ENG-11).
