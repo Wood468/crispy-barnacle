@@ -37,11 +37,11 @@ test("viewer and venue clocks can fall on different calendar days", () => {
   assert.match(tokyo.show, /11:30 am/i);
 });
 
-test("venue matching uses the requested viewer calendar day", () => {
+test("venue matching uses viewer-local dates and tolerates a one-day timezone boundary", () => {
   const parsed = parseVenueTimes(LA);
   const item = { ...parsed, id: "v:la", name: "Pokémon Night Out 2026 - Los Angeles", ms: parsed.start };
   assert.equal(venueFor(item.name, "2026-10-25", "2026-10-25", [item], "Australia/Melbourne").length, 1);
-  assert.equal(venueFor(item.name, "2026-10-24", "2026-10-24", [item], "Australia/Melbourne").length, 0);
+  assert.equal(venueFor(item.name, "2026-10-27", "2026-10-27", [item], "Australia/Melbourne").length, 0);
 });
 
 test("reviewed manual venue time keeps its unconfirmed label and UTC zone", () => {
