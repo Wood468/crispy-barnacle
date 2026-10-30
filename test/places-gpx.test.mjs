@@ -36,14 +36,14 @@ test("community coordinate GPX labels report provenance and never emits a legacy
 });
 test("community coordinate without a source publication date stays undated and unverified", () => {
   const p = place({
-    type: "Community-reported play area",
-    coordinateStatus: "community-reported",
+    type: "Community-maintained coordinate reference",
+    coordinateStatus: "community-reference",
     verified: "2026-10-10", // legacy field is ignored
     sources: [{ label: "Wikipedia reference", url: "https://en.wikipedia.org/wiki/Example", trust: "community" }],
     coords: { label: "Wikipedia reference", url: "https://en.wikipedia.org/wiki/Example" }
   });
   const label = load().coordinateLabel(p);
-  assert.match(label, /report date unavailable/);
+  assert.match(label, /publication date unavailable/);
   assert.match(label, /not independently verified/);
   assert.match(label, /not an official event pin/);
   assert.doesNotMatch(label, /2026-10-10/);
