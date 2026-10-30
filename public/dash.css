@@ -336,8 +336,8 @@ header.top{display:flex;align-items:flex-start;justify-content:space-between;gap
 .week-day-events>.week-card .evc-title-row h3{font-size:1.28rem;line-height:1.08;letter-spacing:0}
 .week-day-events>.week-card .cdn{padding:4px 8px;border:1px solid var(--ring);border-radius:999px;background:var(--soft)}
 .week-day-events>.week-card .evc-foot{gap:6px}
-.week-day-events>.week-card .evc-foot .more{min-height:44px;padding-inline:12px}
-.week-day-events>.week-card .star{margin-left:auto}
+.week-day-events>.week-card.evc.cmp .evc-foot .more{min-height:44px;padding-inline:12px}
+.week-day-events>.week-card.evc.cmp .evc-foot .star{margin-left:auto;width:44px;min-width:44px;min-height:44px}
 .week-day-count{padding:3px 8px;border:1px solid var(--ring);border-radius:999px;background:var(--glass)}
 @media(max-width:560px){.week-day-events{grid-template-columns:minmax(0,1fr);gap:9px}.week-day-head{gap:7px}.week-day-events>.week-card{padding:11px}.week-day-events>.week-card .evc-title-row h3{font-size:1.18rem}}
 
