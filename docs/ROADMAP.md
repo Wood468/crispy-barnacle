@@ -12,6 +12,9 @@ _Maintained by the lead coordinator. Last consolidated: 30 Oct 2026 from the QA,
 - ✅ **#100 — Today attention:** review actions navigate reliably; review counts refresh immediately; empty recent-updates panels disappear; acknowledged updates stay dismissed; meaningful event changes are tracked between visits.
 - ✅ **#101 — curated data refresh:** snapshot moved to 30 Oct 2026; rotations, Raid/Spotlight Hours and Max Monday schedules were extended into early December; event/source URLs and the 1★ boss parsing correction were included. Ongoing freshness monitoring remains a separate task.
 - ✅ **#105 — This Week and event details:** compact week-card treatment; 44px details/save/hide targets; honest unknown-source trust labels; no fabricated source-check date when only the dataset snapshot date is known; PWA asset URLs and service-worker cache version refreshed.
+- ✅ **#108 — event-detail polish:** duplicate claims are shown once while retaining all contributing source attribution; category icons use one consistent line-icon system.
+- ✅ **#109 — raid navigation:** compact mobile raid-week selector; boss rows link to Best attackers using only published weakness metadata; multi-type filters survive data refreshes.
+- ✅ **#110 — importer date guard:** source-page matches are rejected when known article and event date windows do not overlap; unknown dates remain unknown rather than being guessed.
 - ✅ **Community location discovery:** corrected the Reddit permalink regex, added an explicit Node syntax-check regression test, and confirmed the scheduled discovery workflow ran successfully. Candidate locations remain community-reported, not official event pins.
 
 All merged milestones above passed their post-merge test checks; the latest main commit also passed the Cloudflare Workers production build.
@@ -29,7 +32,7 @@ All merged milestones above passed their post-merge test checks; the latest main
 - 🔧 **QA-3/QA-4** Partially addressed in #105: versioned assets are precached and the shell cache is bumped. The offline redirect/fallback behaviour still needs a separate end-to-end recheck.
 - ⏳ **ENG-2** Security headers/CSP not applied to static pages (no `public/_headers`).
 - ⏳ **QA-5/RES-5/QA-7** In-person events lack a timezone; Sendai/Mexico City merged under one name in some viewer zones.
-- 🔧 **RES-8** Reject importer source-page matches when known article and event dates do not overlap; retain existing link/title matching when either date is unknown. Focused regression tests added; awaiting CI and production verification.
+- ✅ **RES-8** Reject importer source-page matches when known article and event dates do not overlap; retain existing link/title matching when either date is unknown. Covered by focused regression tests and the post-merge production build.
 - ⏳ **RES-9** Weaker sources can overwrite official data (schedule-audit worldFixes; Reddit coords to public data).
 - ⏳ **UX-1** Data load failure shows "Loading…" forever and no navigation.
 - ⏳ **UX-2** Horizontal overflow on Today cards at 390px.
@@ -50,7 +53,7 @@ All merged milestones above passed their post-merge test checks; the latest main
 ## P3 — Premium polish
 
 - Design-token system (type scale, 4px spacing, colour roles, radii, card anatomy) — **UX-15/17/18**.
-- ✅ **UX-13** Source trust/freshness labels in #105; event-detail duplicate claims now merge source attribution before rendering, and every detail category uses a consistent line-icon treatment. 🔧 **UX-14** Raid week selector as a compact mobile segmented control; boss rows link directly to Best attackers filtered to every published weakness; **UX-16** duplicate navigation.
+- ✅ **UX-13** Source trust/freshness labels in #105; event-detail duplicate claims now merge source attribution before rendering, and every detail category uses a consistent line-icon treatment. ✅ **UX-14** Raid week selector as a compact mobile segmented control; boss rows link directly to Best attackers filtered to every published weakness; **UX-16** duplicate navigation.
 - **ENG-12** single shared `esc()`; **ENG-13** narrow CSP img-src; **ENG-14** migration consolidation (🔒); **ENG-15** SHA-pinned actions; **ENG-16** robustness; **QA-8** tab keyboard semantics; **QA-11** costume art lookup.
 
 ## P4 — Opportunities
