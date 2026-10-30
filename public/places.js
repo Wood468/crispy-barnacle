@@ -34,9 +34,10 @@
   }
   // Community coordinates can be listed without a verification date; any legacy verified value is deliberately ignored.
   function valid(p) {
+    if (!p) return false;
     var community = isCommunityCoordinates(p);
     var dateOk = community ? (!p.reportedAt || validDay(p.reportedAt)) : validDay(p.verified);
-    return p && p.name && isFinite(p.lat) && isFinite(p.lng) && Math.abs(p.lat) <= 90 && Math.abs(p.lng) <= 180 && p.country && dateOk
+    return p.name && isFinite(p.lat) && isFinite(p.lng) && Math.abs(p.lat) <= 90 && Math.abs(p.lng) <= 180 && p.country && dateOk
       && Array.isArray(p.sources) && p.sources.some(function (s) { return s && s.label && safe(s.url); })
       && (p.events === undefined || (Array.isArray(p.events) && p.events.every(function (e) { return e && typeof e.name === 'string' && /^\d{4}-\d\d-\d\d$/.test(e.from) && /^\d{4}-\d\d-\d\d$/.test(e.to); })));
   }
