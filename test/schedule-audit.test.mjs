@@ -25,9 +25,9 @@ import { auditWorld, newAlerts } from "../scripts/schedule-audit.mjs";
 test("world event dates are corrected from Leek Duck, and alerts are sent once", () => {
   const theirs = [{ slug: "into-the-wild-2026", type: "event", start: "2026-11-09T10:00:00", end: "2026-11-13T20:00:00", local: true }];
   const world = [{ id: "w-x", name: "Into the Wild", start: "2026-11-09", end: "2026-11-15", sources: [{ url: "https://leekduck.com/events/into-the-wild-2026/" }] }];
-  const fixes = auditWorld(world, theirs);
-  assert.deepEqual(fixes[0].to, ["2026-11-09", "2026-11-13"]);
-  const res = { problems: [], worldFixes: fixes, missing: [{ slug: "far", start: "2030-01-01T00:00:00", end: "2030-01-02T00:00:00" }] };
+  const result = auditWorld(world, theirs);
+  assert.deepEqual(result.fixes[0].to, ["2026-11-09", "2026-11-13"]);
+  const res = { problems: [], worldFixes: result.fixes, worldConflicts: result.conflicts, missing: [{ slug: "far", start: "2030-01-01T00:00:00", end: "2030-01-02T00:00:00" }] };
   const a = newAlerts(res, [], new Date("2026-10-15"));
   assert.equal(a.length, 1);
   assert.equal(newAlerts(res, a.map(x => x.key), new Date("2026-10-15")).length, 0);
@@ -51,4 +51,27 @@ test("an event missing from the app is added from Leek Duck's dates, once", () =
   assert.equal(a.length, 1); assert.equal(a[0].name, "Minior Showers Geminids"); assert.equal(a[0].end, "2026-12-16"); assert.equal(a[0].sources[0].auto, true);
   assert.equal(addMissing(world, miss, now).length, 0);
   assert.equal(prettyName("pokemon-go-city-safari-boston-2026-rescheduled"), "Pokémon GO City Safari Boston");
+});
+
+
+test("Leek Duck cannot automatically overwrite dates attached to an official event source", () => {
+  const theirs = [{ slug: "into-the-wild-2026", type: "event", start: "2026-11-09T10:00:00", end: "2026-11-13T20:00:00", local: true }];
+  const world = [{
+    id: "w-into-the-wild",
+    name: "Into the Wild 2026",
+    start: "2026-11-09",
+    end: "2026-11-15",
+    sources: [
+      { id: "official", url: "https://pokemongo.com/news/into-the-wild-2026/" },
+      { id: "leekduck", url: "https://leekduck.com/events/into-the-wild-2026/" }
+    ]
+  }];
+  const result = auditWorld(world, theirs);
+  assert.deepEqual(result.fixes, [], "officially sourced dates are not auto-corrected by a community source");
+  assert.equal(world[0].start, "2026-11-09");
+  assert.equal(world[0].end, "2026-11-15");
+  assert.equal(result.conflicts.length, 1);
+  assert.equal(result.conflicts[0].reason, "official_source_present");
+  const alerts = newAlerts({ problems: [], worldFixes: [], worldConflicts: result.conflicts, missing: [] }, []);
+  assert.match(alerts[0].text, /left unchanged for review/i);
 });

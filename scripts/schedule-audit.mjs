@@ -3,6 +3,7 @@
 // Run: node scripts/schedule-audit.mjs   (needs a network that can reach leekduck.com, such as GitHub Actions)
 import { readFile, writeFile, mkdir } from "node:fs/promises";
 import { routed } from "../src/tgroute.js";
+import { OFFICIAL_HOSTS } from "../src/pipeline.js";
 
 const SKIP = /^(go-battle-league|max-mondays|raid-battles|twitch-drops|raid-hour|pok.mon-spotlight-hour|go-pass|season|research)$/; // a season, the GO Pass and promo research are not events in the app
 export function parseList(html) {
@@ -37,6 +38,14 @@ export function match(ours, theirs) {
   return cands.sort((a, b) => gap(a) - gap(b))[0] || theirs.find(t => fuzzy(ours.t, ours.s, ours.e, t)) || null;
 }
 const min = s => String(s).slice(0, 16);
+function hasOfficialSource(event) {
+  return (event.sources || []).some(source => {
+    try {
+      const url = new URL(String(source && source.url || ""));
+      return url.protocol === "https:" && OFFICIAL_HOSTS.includes(url.hostname);
+    } catch { return false; }
+  });
+}
 // World events (public/world-events.json) carry dates only; a Leek Duck page in their sources identifies them.
 function matchWorld(w, theirs) {
   const hit = (w.sources || []).map(s => theirs.find(t => String(s.url || "").includes("/" + t.slug + "/"))).find(Boolean);
@@ -45,19 +54,25 @@ function matchWorld(w, theirs) {
   return exact || theirs.find(t => fuzzy(w.name, w.start, w.end, t)) || null;
 }
 export function auditWorld(world, theirs, used = new Set()) {
-  const fixes = [];
+  const fixes = [], conflicts = [];
   for (const w of world) {
     const t = matchWorld(w, theirs); if (!t) continue;
     used.add(t.slug);
     if (!t.local) continue;
     const s = String(t.start).slice(0, 10), e = String(t.end).slice(0, 10);
-    if (w.start !== s || w.end !== e) fixes.push({ id: w.id, name: w.name, slug: t.slug, from: [w.start, w.end], to: [s, e] });
+    if (w.start === s && w.end === e) continue;
+    const change = { id: w.id, name: w.name, slug: t.slug, from: [w.start, w.end], to: [s, e] };
+    // Leek Duck is a useful cross-check, but it must not silently overwrite dates
+    // attached to an official Pokémon GO source. Keep the discrepancy for review.
+    if (hasOfficialSource(w)) conflicts.push({ ...change, reason: "official_source_present" });
+    else fixes.push(change);
   }
-  return fixes;
+  return { fixes, conflicts };
 }
 export function audit(events, theirs, world = []) {
   const problems = [], used = new Set();
-  const worldFixes = auditWorld(world, theirs, used);
+  const worldAudit = auditWorld(world, theirs, used);
+  const worldFixes = worldAudit.fixes;
   for (const e of events) {
     const t = match(e, theirs); if (!t) continue;
     used.add(t.slug);
@@ -66,7 +81,7 @@ export function audit(events, theirs, world = []) {
     if (min(e.e) !== min(t.end)) problems.push({ id: e.id, name: e.t, field: "end", ours: e.e, leekduck: t.end, slug: t.slug });
   }
   const missing = theirs.filter(t => !used.has(t.slug) && !SKIP.test(t.type || "")).map(t => ({ slug: t.slug, type: t.type, start: t.start, end: t.end }));
-  return { problems, missing, worldFixes };
+  return { problems, missing, worldFixes, worldConflicts: worldAudit.conflicts };
 }
 // An event on Leek Duck's list that the app lacks is added to the world list straight from that list's own dates.
 // The name comes from the address; the next importer run keeps it (source.auto) and replaces it when a real write-up is read.
@@ -94,6 +109,7 @@ export function newAlerts(res, done = [], now = new Date()) {
   const soon = now.getTime() + 75 * 864e5, out = [];
   for (const p of res.problems) out.push({ key: `p:${p.id}:${p.field}:${p.leekduck}`, text: `Date differs: ${p.name} ${p.field}. App ${p.ours}, Leek Duck ${p.leekduck}` });
   for (const f of res.worldFixes) out.push({ key: `f:${f.id}:${f.to.join(">")}`, text: `Fixed dates: ${f.name} now ${f.to[0]} to ${f.to[1]} (was ${f.from.join(" to ")})` });
+  for (const c of res.worldConflicts || []) out.push({ key: `c:${c.id}:${c.to.join(">")}`, text: `Possible date conflict: ${c.name}. Leek Duck lists ${c.to[0]} to ${c.to[1]}, but an official source is attached; dates were left unchanged for review.` });
   for (const a of res.added || []) out.push({ key: `a:${a.id}`, text: `Added from Leek Duck: ${a.name} (${a.start} to ${a.end}). Name came from the web address, so check it.` });
   for (const m of res.missing) if (Date.parse(m.start) <= soon) out.push({ key: `m:${m.slug}`, text: `On Leek Duck, not in the app: ${m.slug} (${m.start.slice(0, 10)} to ${m.end.slice(0, 10)})` });
   return out.filter(a => !done.includes(a.key));
