@@ -1,5 +1,5 @@
 /* Places: sourced venues only. Data comes from /places.json (public venues) and /api/places-private (owner-only hotspots). No map is drawn.
-   Rules: a place needs a source and coordinates plus either a source-check date or an explicit community-reported status; raid activity is never shown without live evidence;
+   Rules: a place needs a source and coordinates plus either an independent coordinate-check date or an explicit community-source status; Reddit reports and Wikipedia references are never treated as verified; raid activity is never shown without live evidence;
    a route GPX exists only when the place carries its source's own route file. Separately, any sourced place can be saved as a GPX of venue
    points (waypoints made from its sourced coordinates, labelled as such, never drawn up as a walking route). */
 (function () {
@@ -8,17 +8,22 @@
   var esc = G.esc, DATA = null, opener = null, F = { q: '', country: '', region: '', city: '', tag: '' }, current = null;
   function $(id) { return document.getElementById(id); }
   function safe(u) { return typeof u === 'string' && /^https:\/\//.test(u) ? u : ''; }
-  function isCommunityCoordinates(p) {
-    if (!p) return false;
-    if (p.coordinateStatus === 'community-reported' || /community-reported/i.test(p.type || '')) return true;
+  function coordinateProvenance(p) {
+    if (!p) return '';
+    if (p.coordinateStatus === 'community-reported' || /community-reported/i.test(p.type || '')) return 'community-reported';
+    if (p.coordinateStatus === 'community-reference') return 'community-reference';
     var url = String(p.coords && p.coords.url || '');
-    return Array.isArray(p.sources) && p.sources.some(function (s) { return s && s.trust === 'community'; })
-      && /(?:reddit\.com|wikipedia\.org|wikimedia\.org)/i.test(url);
+    if (/reddit\\.com/i.test(url)) return 'community-reported';
+    if (/(?:wikipedia\\.org|wikimedia\\.org)/i.test(url)) return 'community-reference';
+    return '';
   }
-  function validDay(value) { return typeof value === 'string' && /^\d{4}-\d\d-\d\d$/.test(value); }
+  function isCommunityCoordinates(p) { return !!coordinateProvenance(p); }
+  function validDay(value) { return typeof value === 'string' && /^\\d{4}-\\d\\d-\\d\\d$/.test(value); }
   function coordinateLabel(p) {
-    if (isCommunityCoordinates(p)) return 'Community-reported coordinates' + (validDay(p.reportedAt) ? ' · reported ' + day(p.reportedAt) : ' · report date unavailable') + ' · not independently verified · not an official event pin';
-    return 'Source record checked ' + day(p.verified);
+    var provenance = coordinateProvenance(p);
+    if (provenance === 'community-reported') return 'Community-reported coordinates' + (validDay(p.reportedAt) ? ' · reported ' + day(p.reportedAt) : ' · report date unavailable') + ' · not independently verified · not an official event pin';
+    if (provenance === 'community-reference') return 'Community-maintained coordinate reference · publication date unavailable · not independently verified · not an official event pin';
+    return 'Coordinates independently checked ' + day(p.verified);
   }
   function pinHdr() { try { var p = localStorage.getItem('gofn-pin'); return p ? { 'x-pin': p } : {}; } catch (e) { return {}; } }
   // Public venues come from /places.json. Hotspot pins are owner-only: they load from /api/places-private for the PIN or a signed-in person, and are simply absent otherwise.
@@ -60,7 +65,7 @@
     opts = opts || {};
     var pts = places.filter(valid), name = opts.name || 'GO Field Notes places';
     var out = ['<?xml version="1.0" encoding="UTF-8"?>', '<gpx version="1.1" creator="GO Field Notes" xmlns="http://www.topografix.com/GPX/1/1">',
-      '<metadata><name>' + x(name) + '</name><desc>Venue points from the sourced Places list in GO Field Notes. Each point identifies its source and any recorded check or report date. Community-reported coordinates are not independently verified. These are planning points, not routes or in-game coordinates.</desc></metadata>'];
+      '<metadata><name>' + x(name) + '</name><desc>Venue points from the sourced Places list in GO Field Notes. Each point identifies its source and any recorded check or report date. Community-sourced coordinates are not independently verified. These are planning points, not routes or in-game coordinates.</desc></metadata>'];
     pts.forEach(function (p) {
       var src = p.sources[0];
       out.push('<wpt lat="' + p.lat.toFixed(6) + '" lon="' + p.lng.toFixed(6) + '"><name>' + x(p.name) + '</name><desc>' + x([p.type, p.role].filter(Boolean).join(' · ') + '. Source: ' + src.label + '. Coordinates: ' + (p.coords ? p.coords.label : src.label) + '. ' + coordinateLabel(p) + '. A venue point for planning; check it in the game.') + '</desc><link href="' + x(safe(src.url)) + '"><text>' + x(src.label) + '</text></link></wpt>');
@@ -116,7 +121,7 @@
   function detailView(p) {
     var h = '<div class="evd-bar"><button type="button" class="hbtn" id="plc-back" aria-label="Back to Places"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button><span class="tag">PLACES › DETAIL</span><span style="width:44px"></span></div>'
       + '<h2 class="plc-t" id="plc-t">' + esc(p.name) + '</h2><p class="note">' + esc([p.city, p.region, p.country].filter(Boolean).join(', ')) + '</p>'
-      + '<div class="plc-chips">' + (p.tags || []).map(function (t) { return '<span class="plc-tg">' + esc(t) + '</span>'; }).join('') + (isCommunityCoordinates(p) ? '<span class="npub">Community reported · not independently verified</span>' : '<span class="npub">No live raid evidence</span>') + '</div>'
+      + '<div class="plc-chips">' + (p.tags || []).map(function (t) { return '<span class="plc-tg">' + esc(t) + '</span>'; }).join('') + (coordinateProvenance(p) === 'community-reported' ? '<span class="npub">Community reported · not independently verified</span>' : coordinateProvenance(p) === 'community-reference' ? '<span class="npub">Community-maintained reference · not independently verified</span>' : '<span class="npub">No live raid evidence</span>') + '</div>'
       + (localClock(p) ? '<div class="evd-card"><b>Local time there</b><p class="note">' + esc(localClock(p)) + ' · ' + esc(p.timeZone) + '</p></div>' : '')
       + '<h3 class="sec2">Coordinates <span class="m">decimal degrees</span></h3><div class="evd-card"><div class="plc-coord">' + coord(p) + '</div><p class="note">' + dms(p) + (p.coords && p.coords.note ? ' · ' + esc(p.coords.note.charAt(0).toLowerCase() + p.coords.note.slice(1)) : '') + '</p>'
       + '<button type="button" class="pill all" data-copy="' + esc(p.id) + '">Copy coordinates</button><p class="note" id="plc-status" role="status" aria-live="polite"></p></div>'
