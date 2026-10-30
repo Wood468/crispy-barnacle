@@ -2,7 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { spawnSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
-import { coords, redditSearchUrl, retryAfterMs, xmlItems } from "../scripts/location-discovery-parse.mjs";
+import { coords, fetchWithRateLimit, redditSearchUrl, retryAfterMs, xmlItems } from "../scripts/location-discovery-parse.mjs";
 
 const discoveryScript = fileURLToPath(new URL("../scripts/location-discovery.mjs", import.meta.url));
 
@@ -50,6 +50,49 @@ test("Retry-After uses a safe fallback and defers long cooldowns", () => {
   assert.equal(retryAfterMs(null, 0), 15000);
   assert.equal(retryAfterMs("not a date", 0), 15000);
   assert.equal(retryAfterMs("360", 0), null, "do not retry before a server-requested cooldown longer than five minutes");
+});
+
+test("rate-limited community searches wait and retry the same query once", async () => {
+  const calls = [], waits = [];
+  const replies = [
+    { status: 429, headers: { get: () => "2" } },
+    { status: 200, ok: true, headers: { get: () => null } }
+  ];
+  const result = await fetchWithRateLimit("https://www.reddit.com/search.rss?q=event", {}, async url => {
+    calls.push(url);
+    return replies.shift();
+  }, async ms => waits.push(ms));
+  assert.equal(calls.length, 2);
+  assert.equal(calls[0], calls[1], "the same event query is retried after its cooldown");
+  assert.deepEqual(waits, [2000]);
+  assert.equal(result.response.status, 200);
+  assert.equal(result.rateLimits, 1);
+  assert.equal(result.deferred, false);
+});
+
+test("repeated 429 responses stop retrying and defer remaining events", async () => {
+  const waits = [];
+  let calls = 0;
+  const result = await fetchWithRateLimit("https://www.reddit.com/search.rss?q=event", {}, async () => {
+    calls++;
+    return { status: 429, headers: { get: () => "1" } };
+  }, async ms => waits.push(ms));
+  assert.equal(calls, 2);
+  assert.deepEqual(waits, [1000]);
+  assert.equal(result.rateLimits, 2);
+  assert.equal(result.deferred, true);
+  assert.equal(result.reason, "repeated-429");
+});
+
+test("long Retry-After cooldowns defer without sending another request", async () => {
+  let calls = 0;
+  const result = await fetchWithRateLimit("https://www.reddit.com/search.rss?q=event", {}, async () => {
+    calls++;
+    return { status: 429, headers: { get: () => "360" } };
+  }, async () => {});
+  assert.equal(calls, 1);
+  assert.equal(result.deferred, true);
+  assert.equal(result.reason, "long-cooldown");
 });
 
 test("community search URLs keep the Reddit host fixed and encode event names as a query", () => {
