@@ -916,7 +916,7 @@ Promise.all([fetch('/data.json').then(function(r){return r.json()}),fetch('/art/
   var ds=document.createElement('script');ds.src='/dash.js?v=20261030m';document.body.appendChild(ds);
 })();
 
-}).catch(function(e){var m=document.getElementById('prio');if(m)m.innerHTML='<p class="empty">Could not load the event data. Reload to try again.</p>'});
+}).catch(function(){var panel=document.getElementById('load-error');if(panel)panel.hidden=false;var retry=document.getElementById('load-retry');if(retry)retry.addEventListener('click',function(){window.location.reload()},{once:true})});
 
 /* Offline / connection notice: the app keeps working from its saved copy; say so, and say when it is back. */
 (function(){
