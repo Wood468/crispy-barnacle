@@ -73,6 +73,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -- data/seen-events.json public/event-details.json public/world-events.json data/importer-report.json data/importer-lines.json public/costumes.json data/schedule-audit.json data/audit-alerted.json data/dup-audit.json data/event-aliases.json public/season.json public/account.js public/dash.js public/event-info.json public/data.json public/event-moves.json
+          node scripts/validate-public-data.mjs
           if git diff --cached --quiet; then echo "No changes."; exit 0; fi
           # The "updated" stamp alone is not worth a deploy: only commit when the facts changed.
           if [ -n "$(git diff --cached --name-only -- public/img public/costumes.json public/season.json public/account.js public/dash.js public/event-info.json public/data.json public/event-moves.json)" ] || git diff --cached -U0 -- public/event-details.json public/world-events.json | grep -E '^[+-] ' | grep -vqE '"updated"'; then
