@@ -5,6 +5,8 @@ import fs from "node:fs";
 const read = (p) => fs.readFileSync(new URL(p, import.meta.url), "utf8");
 const manifest = JSON.parse(read("../public/manifest.webmanifest"));
 const sw = read("../public/sw.js");
+const app = read("../public/app.js");
+const dash = read("../public/dash.js");
 const html = read("../public/index.html");
 const icon = read("../public/icon-maskable.svg");
 const offline = read("../public/offline.html");
@@ -36,18 +38,20 @@ test("standard PNG icons have the dimensions declared in the manifest", () => {
 test("PWA entry page links to the manifest and iOS touch icon and registers the service worker", () => {
   assert.match(html, /rel="manifest" href="\/manifest\.webmanifest"/);
   assert.match(html, /rel="apple-touch-icon" href="\/icon-180\.png"/);
-  assert.match(html, /dash\.css\?v=20261030a/);
+  assert.match(html, /dash\.css\?v=20261030b/);
   assert.match(html, /app\.js\?v=20261030e/);
   assert.match(html, /\/pwa\.js/);
+  assert.match(app, /dash\.js\?v=20261030k/);
+  assert.match(dash, /detail\.js\?v=20261030e/);
 });
 
 test("service worker versions the cache, pre-caches offline fallback, and never handles API responses", () => {
-  assert.match(sw, /gofn-shell-v123/);
+  assert.match(sw, /gofn-shell-v124/);
   assert.match(sw, /'\/event-moves\.json'/, "event-only move data is available to offline event details");
   assert.match(sw, /'\/dash\.css\?v=20261030a'/, "the current dashboard stylesheet is available to the offline shell");
   assert.match(sw, /'\/app\.js\?v=20261030e'/, "the current app bootstrap is available to the offline shell");
-  assert.match(sw, /'\/dash\.js\?v=20261030j'/, "the current dashboard script is available to the offline shell");
-  assert.match(sw, /'\/detail\.js\?v=20261030d'/, "the current event detail script is available to the offline shell");
+  assert.match(sw, /'\/dash\.js\?v=20261030k'/, "the current dashboard script is available to the offline shell");
+  assert.match(sw, /'\/detail\.js\?v=20261030e'/, "the current event detail script is available to the offline shell");
   assert.match(sw, /'\/places\.js\?v=20261029a'/, "the current sourced venue script is available to the offline shell");
   assert.match(sw, /'\/offline\.html'/);
   assert.match(sw, /cache\.match\('\/offline\.html'\)/);
