@@ -47,7 +47,12 @@ jobs:
           node scripts/validate-public-data.mjs
           git commit -m "Raid rotation: 1-3 star bosses from Pokémon GO Hub"
           for i in 1 2 3; do
-            git pull -q --rebase origin main && git push origin HEAD:main && exit 0
+            if ! git pull -q --rebase origin main; then
+              sleep 5
+              continue
+            fi
+            node scripts/validate-public-data.mjs
+            if git push origin HEAD:main; then exit 0; fi
             sleep 5
           done
           echo "::error::Could not push after 3 tries"
