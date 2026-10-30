@@ -113,6 +113,7 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           # The review list and the pictures behind it go straight to main: nothing is shown on an event until it is approved.
           git add -- public/infographic-queue.json public/weekly.json data/g47ix-infographics-review.json
+          node scripts/validate-public-data.mjs
           if ! git diff --cached --quiet; then
             git commit -m "Update infographic review list"
             git pull -q --rebase --autostash origin main
