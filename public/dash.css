@@ -299,11 +299,11 @@ header.top{display:flex;align-items:flex-start;justify-content:space-between;gap
 .day-brief-kicker{font:700 .66rem var(--mono);letter-spacing:.14em;color:var(--gold)}
 .day-brief-copy strong{font:800 1.28rem/1.1 var(--display);text-transform:uppercase;letter-spacing:.01em}
 .day-brief-copy>span:last-child{font-size:.78rem;color:var(--muted)}
-.day-brief-stats{display:flex;gap:8px;flex:none}
-.day-brief-stats>div{display:grid;justify-items:center;align-content:center;min-width:52px;padding:7px 9px;border-radius:13px;background:color-mix(in srgb,var(--soft) 82%,transparent);border:1px solid var(--ring)}
+.day-brief-stats{display:flex;gap:6px;flex:none}
+.day-brief-stats>div{display:grid;justify-items:center;align-content:center;min-width:48px;padding:7px 6px;border-radius:13px;background:color-mix(in srgb,var(--soft) 82%,transparent);border:1px solid var(--ring)}
 .day-brief-stats b{font:800 1.35rem/1 var(--display);font-variant-numeric:tabular-nums}
-.day-brief-stats span{font:600 .62rem var(--sans);color:var(--muted);text-transform:uppercase;letter-spacing:.07em}
-@media(max-width:420px){.day-brief{padding:14px;gap:8px}.day-brief-copy strong{font-size:1.12rem}.day-brief-stats{gap:5px}.day-brief-stats>div{min-width:46px;padding:6px}}
+.day-brief-stats span{font:600 .58rem var(--sans);color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+@media(max-width:420px){.day-brief{padding:14px;gap:8px}.day-brief-copy strong{font-size:1.12rem}.day-brief-stats{gap:4px}.day-brief-stats>div{min-width:42px;padding:6px 4px}.day-brief-stats span{font-size:.54rem;letter-spacing:0}}
 
 /* Today page rhythm: keep the daily flow compact without compressing other tabs. */
 #tab-now{gap:24px}
