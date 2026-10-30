@@ -5,3 +5,6 @@ data/tg-inbox/
 node_modules/
 private/
 data/archive/
+.claude/worktrees/
+__pycache__/
+*.pyc
