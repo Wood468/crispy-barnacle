@@ -2,7 +2,8 @@ import test from "node:test";
 import { readPrivate } from "./_private.mjs";
 import assert from "node:assert/strict";
 import fs from "node:fs";
-import { withSecurityHeaders, SECURITY_HEADERS } from "../src/worker.js";
+import worker, { withSecurityHeaders, SECURITY_HEADERS } from "../src/worker.js";
+import { makeDB } from "./helpers.mjs";
 
 test("every response gets the browser security headers, including framing and cross-site calls", async () => {
   const r = withSecurityHeaders(new Response("hi", { status: 200, headers: { "content-type": "text/html" } }));
@@ -12,6 +13,14 @@ test("every response gets the browser security headers, including framing and cr
   assert.equal(r.headers.get("x-frame-options"), "DENY");
   assert.equal(r.headers.get("content-type"), "text/html");
   assert.equal(await r.text(), "hi");
+});
+
+
+test("the Worker applies security headers to static asset responses too", async () => {
+  const env = { DB: makeDB(), ASSETS: { fetch: async () => new Response("<html>asset</html>", { headers: { "content-type": "text/html" } }) } };
+  const response = await worker.fetch(new Request("https://x.test/index.html"), env, { waitUntil() {} });
+  for (const key of Object.keys(SECURITY_HEADERS)) assert.ok(response.headers.get(key), key);
+  assert.match(response.headers.get("content-security-policy"), /frame-ancestors 'none'/);
 });
 
 test("hotspot places are not in the public site files and need the PIN or a session", () => {
@@ -36,8 +45,6 @@ test("no inline scripts or handlers, so script-src can forbid them", async () =>
 
 // An unset SYNC_PIN (e.g. a preview deploy, which gets no secrets but binds the real R2 bucket)
 // must never let "undefined" or an empty x-pin through.
-import { makeDB } from "./helpers.mjs";
-import worker from "../src/worker.js";
 const SECRET = "PRIVATE-R2-SENTINEL";
 const pinEnv = (pin) => { const env = { DB: makeDB(), ASSETS: { fetch: async () => new Response("{}") }, MEDIA: { get: async () => ({ json: async () => ({ secret: SECRET, places: [], prices: [] }) }) } }; if (pin !== undefined) env.SYNC_PIN = pin; return env; };
 let ipN = 0;

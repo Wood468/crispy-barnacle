@@ -8,13 +8,22 @@
   function get() { try { return localStorage.getItem(KEY) || ''; } catch (e) { return ''; } }
   function put(v) { try { if (v) localStorage.setItem(KEY, v); else localStorage.removeItem(KEY); } catch (e) { } }
   function pinned() { try { return !!localStorage.getItem('gofn-pin'); } catch (e) { return false; } }
+  function identity(email) {
+    if (pinned()) return 'owner';
+    var value = String(email || get()).trim().toLowerCase();
+    return value ? 'account:' + value : 'guest';
+  }
+  function switchIdentity(target, mergeGuest) {
+    try { return !!(window.GOLOCAL && window.GOLOCAL.activate(localStorage, target, !!mergeGuest)); } catch (e) { return false; }
+  }
+  // Establish the active partition before app.js reads the Dex and user-state keys.
+  switchIdentity(identity(), false);
   function role() { document.documentElement.setAttribute('data-role', get() && !pinned() ? 'member' : 'owner'); }
   role();
   function post(path, body) {
     return fetch('/api/auth/' + path, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(body || {}) })
       .then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) { return { ok: r.ok, j: j }; }); });
   }
-  function wipeLocal() { try { ['gofn-dex-v1', 'gofn-stamp', 'gofn-us-v1'].forEach(function (k) { localStorage.removeItem(k); }); } catch (e) { } }
   var mode = 'in', msg = '', invite = '', made = '';
   function pinHdr() { try { return { 'content-type': 'application/json', 'x-pin': localStorage.getItem('gofn-pin') || '' }; } catch (e) { return { 'content-type': 'application/json' }; } }
   function loadUsers() {
@@ -53,7 +62,13 @@
     var a = b.getAttribute('data-acct');
     if (a === 'm-in' || a === 'm-up') { mode = a === 'm-up' ? 'up' : 'in'; msg = ''; render(); var d = document.querySelector('.acctbox'); if (d) d.open = true; }
     if (a === 'rm') { var em = b.getAttribute('data-email'); if (b.getAttribute('data-sure') !== '1') { b.setAttribute('data-sure', '1'); b.textContent = 'Tap again to delete ' + em + ' and their marks'; return; } fetch('/api/auth/remove', { method: 'POST', headers: pinHdr(), body: JSON.stringify({ email: em }) }).then(loadUsers); }
-    if (a === 'out') post('logout').then(function () { put(''); wipeLocal(); location.reload(); });
+    if (a === 'out') {
+      post('logout').then(function (r) {
+        if (!r.ok) { msg = (r.j && r.j.error) || 'Could not confirm sign-out. Your account is still active on this device.'; render(); return; }
+        if (!switchIdentity('guest', false)) { msg = 'Signed out on the server, but could not safely switch local marks. Refresh the page and try again.'; render(); return; }
+        put(''); role(); location.reload();
+      }).catch(function () { msg = 'Could not reach the server, so your account remains active on this device.'; render(); });
+    }
   });
   document.addEventListener('submit', function (e) {
     var f = e.target.closest && e.target.closest('[data-acct-form]'); if (!f) return;
@@ -61,13 +76,28 @@
     var v = {}; Array.prototype.forEach.call(f.elements, function (el) { if (el.name) v[el.name] = el.value; });
     if (f.getAttribute('data-acct-form') === 'create') { fetch('/api/auth/create', { method: 'POST', headers: pinHdr(), body: JSON.stringify(v) }).then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); }).then(function (r) { made = r.ok ? (r.j.created ? 'Added ' : 'New password set for ') + r.j.email + '.' : (r.j.error || 'That did not work.'); render(); var d = document.querySelector('.acctbox'); if (d) d.open = true; }); return; }
     if (f.getAttribute('data-acct-form') === 'invite') { fetch('/api/auth/invite', { method: 'POST', headers: pinHdr(), body: JSON.stringify({ note: v.note }) }).then(function (r) { return r.ok ? r.json() : null; }).then(function (j) { invite = j && j.code || ''; render(); var d = document.querySelector('.acctbox'); if (d) d.open = true; }); return; }
+    if (!window.GOLOCAL) { msg = 'Please refresh GO Field Notes before signing in so this device’s marks can be preserved.'; render(); return; }
     post(f.getAttribute('data-acct-form') === 'up' ? 'register' : 'login', v).then(function (r) {
       if (!r.ok) { msg = (r.j && r.j.error) || 'That did not work. Try again.'; render(); return; }
-      wipeLocal(); put(r.j.email || v.email); location.reload();
+      var email = r.j.email || v.email;
+      if (!switchIdentity(identity(email), true)) {
+        post('logout').catch(function () { });
+        msg = 'Could not safely preserve this device’s marks. Refresh the page and try signing in again.';
+        render(); return;
+      }
+      put(email); role(); location.reload();
     }).catch(function () { msg = 'Could not reach the server. Try again.'; render(); });
   });
   // If the session ran out (or the cookie was cleared), say so rather than silently syncing nothing.
-  if (get() && !pinned()) fetch('/api/auth/me').then(function (r) { return r.ok ? r.json() : null; }).then(function (j) { if (j && j.signedIn === false) { put(''); role(); render(); } }).catch(function () { });
+  if (get() && !pinned()) fetch('/api/auth/me').then(function (r) { return r.ok ? r.json() : null; }).then(function (j) {
+    if (j && j.signedIn === false) {
+      if (switchIdentity('guest', false)) { put(''); role(); location.reload(); }
+      else { msg = 'Your session expired, but local marks could not be switched safely. Refresh before signing in again.'; render(); }
+    }
+  }).catch(function () { });
+  document.addEventListener('gofn-identity-change', function () {
+    if (!switchIdentity(identity(), true)) { try { localStorage.removeItem('gofn-pin'); } catch (e) { } }
+  });
   /* Trainer name and team: asked once after the first sign-in, shown under the title, editable by tapping it.
      Kept with the rest of your private marks (pref:trainer, pref:team), so it follows the account across devices. */
   var TEAMS = { mystic: ['Mystic', '#3B82F6', 'Blue'], valor: ['Valor', '#EF4444', 'Red'], instinct: ['Instinct', '#FACC15', 'Yellow'] };

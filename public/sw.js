@@ -1,13 +1,14 @@
 /* GO Field Notes offline shell. Never cache /api/*, including private user-state and notification responses. */
-const SHELL_CACHE = 'gofn-shell-v129';
+const SHELL_CACHE = 'gofn-shell-v130';
 const SHELL_URLS = [
   '/', '/index.html', '/offline.html', '/offline.css',
-  '/styles.css', '/dash.css', '/dash.css?v=20261030e', '/lib.js', '/lib.js?v=20261030a', '/dedupe.js', '/move.js',
-  '/imgerr.js', '/whatsnew.js', '/whatsnew.js?v=20261030a', '/pin.js', '/app.js', '/app.js?v=20261030i', '/styles.css?v=20261030b', '/dash.js', '/dash.js?v=20261030n', '/detail.js', '/detail.js?v=20261030f', '/fresh.js', '/places.js', '/places.js?v=20261029a', '/review.js', '/review.js?v=20261030a', '/nudge.js', '/account.js', '/store.js', '/season.js', '/weekly.js', '/buy.js', '/extra.js',
+  '/styles.css', '/dash.css', '/dash.css?v=20261030e', '/lib.js', '/lib.js?v=20261030a', '/dedupe.js', '/dedupe.js?v=20261027a', '/move.js', '/move.js?v=20261012n',
+  '/imgerr.js', '/imgerr.js?v=20261015a', '/whatsnew.js', '/whatsnew.js?v=20261030a', '/pin.js', '/pin.js?v=20261015a', '/local-state.js', '/local-state.js?v=20261030a', '/app.js', '/app.js?v=20261030j', '/styles.css?v=20261030b', '/dash.js', '/dash.js?v=20261030n', '/detail.js', '/detail.js?v=20261030f', '/fresh.js', '/places.js', '/places.js?v=20261029a', '/review.js', '/review.js?v=20261030a', '/nudge.js', '/account.js', '/account.js?v=20261030a', '/store.js', '/store.js?v=20261015a', '/season.js', '/season.js?v=20261025a', '/weekly.js', '/weekly.js?v=20261014c', '/buy.js', '/extra.js', '/pwa.js',
   '/infographic.js', '/manifest.webmanifest', '/icon.svg', '/icon-maskable.svg', '/icon-180.png', '/icon-192.png', '/icon-512.png',
   '/data.json', '/dex.json', '/event-info.json', '/forms.json', '/moves.json',
   '/places.json', '/event-details.json', '/event-moves.json', '/regional-events.json', '/world-events.json', '/best-by-type.json', '/prices.json', '/pvp.json', '/release-status.json', '/types.json',
-  '/art/index.json'
+  '/art/index.json', '/costumes.json', '/datamine-news.json', '/data/cp/cp-multipliers.json', '/data/cp/pokemon.json',
+  '/season.json', '/weekly.json', '/tickets-external.json', '/store-log.json', '/infographic-queue.json'
 ];
 self.addEventListener('install', function (event) {
   event.waitUntil((async function () {

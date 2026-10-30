@@ -450,22 +450,43 @@ async function dex(request, env) {
   if (request.method !== "GET" && request.method !== "PUT") return json({ error: "Method not allowed." }, 405);
   const who = await whoIs(request, env);
   if (who.denied) return who.denied;
-  const now = Date.now();
+  const snapshot = (row) => {
+    if (!row) return { have: {}, hundo: {}, m: cleanDexMarks({}), bt: {}, updated: 0 };
+    let d = {}; try { d = JSON.parse(row.data); } catch { /* ignore */ }
+    return { have: d.have || {}, hundo: d.hundo || {}, m: cleanDexMarks(d.m), bt: cleanBt(d.bt), updated: row.updated || 0 };
+  };
 
   if (request.method === "GET") {
     const row = await env.DB.prepare("SELECT data, updated FROM dex WHERE id = ?").bind(who.uid).first();
-    if (!row) return json({ have: {}, hundo: {}, m: cleanDexMarks({}), bt: {}, updated: 0 });
-    let d = {}; try { d = JSON.parse(row.data); } catch { /* ignore */ }
-    return json({ have: d.have || {}, hundo: d.hundo || {}, m: cleanDexMarks(d.m), bt: cleanBt(d.bt), updated: row.updated });
+    return json(snapshot(row));
   }
 
   let body; try { body = await request.json(); } catch { return json({ error: "Bad request." }, 400); }
+  if (!body || typeof body !== "object" || Array.isArray(body)) return json({ error: "Bad request." }, 400);
+  // New clients send the version returned by GET. Reject old whole-document writes: an old
+  // tab must not overwrite marks saved by a newer device while it was offline.
+  if (!Object.prototype.hasOwnProperty.call(body, "baseUpdated")) return json({ error: "Refresh the app before syncing your marks." }, 428);
+  const baseUpdated = Number(body.baseUpdated);
+  if (!Number.isSafeInteger(baseUpdated) || baseUpdated < 0) return json({ error: "Bad sync version." }, 400);
+
   const have = cleanMarks(body.have), hundo = cleanMarks(body.hundo);
   for (const k of Object.keys(hundo)) have[k] = 1; // a hundo is always owned
-  const updated = Number.isFinite(body.updated) ? Math.min(Math.floor(body.updated), now + 60000) : now;
-  await env.DB.prepare("INSERT INTO dex (id, data, updated) VALUES (?, ?, ?) ON CONFLICT(id) DO UPDATE SET data = excluded.data, updated = excluded.updated")
-    .bind(who.uid, JSON.stringify({ have, hundo, m: cleanDexMarks(body.m), bt: cleanBt(body.bt) }), updated).run();
-  return json({ ok: true, updated });
+  const now = Date.now();
+  const updated = Number.isFinite(body.updated) ? Math.max(1, Math.min(Math.floor(body.updated), now + 60000)) : now;
+  const data = JSON.stringify({ have, hundo, m: cleanDexMarks(body.m), bt: cleanBt(body.bt) });
+  const existing = await env.DB.prepare("SELECT data, updated FROM dex WHERE id = ?").bind(who.uid).first();
+  if (!existing && baseUpdated !== 0) return json({ error: "conflict", ...snapshot(null) }, 409);
+
+  // Compare-and-swap is performed in the upsert itself, not just in a preceding read, so two
+  // devices cannot both write against the same revision. The revision always moves forward.
+  const write = await env.DB.prepare("INSERT INTO dex (id, data, updated) VALUES (?, ?, ?) ON CONFLICT(id) DO UPDATE SET data = excluded.data, updated = MAX(excluded.updated, dex.updated + 1) WHERE dex.updated = ?")
+    .bind(who.uid, data, updated, baseUpdated).run();
+  if (!write.meta || write.meta.changes !== 1) {
+    const current = await env.DB.prepare("SELECT data, updated FROM dex WHERE id = ?").bind(who.uid).first();
+    return json({ error: "conflict", ...snapshot(current) }, 409);
+  }
+  const saved = await env.DB.prepare("SELECT updated FROM dex WHERE id = ?").bind(who.uid).first();
+  return json({ ok: true, updated: saved ? saved.updated : updated });
 }
 
 // ---------------------------------------------------------------- datamine watch

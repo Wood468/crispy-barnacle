@@ -42,8 +42,8 @@ test("each person's marks are private; the owner's stay separate", async () => {
     return ck(await call(env, "/api/auth/register", { method: "POST", body: { invite: code, email, password: "a long password" } }));
   };
   const a = await mkUser("a@example.com"), b = await mkUser("b@example.com");
-  await call(env, "/api/dex", { method: "PUT", pin: "1234", body: { have: { 1: 1 }, hundo: {}, m: {}, bt: {}, updated: 5 } });
-  await call(env, "/api/dex", { method: "PUT", cookie: a, body: { have: { 25: 1 }, hundo: {}, m: {}, bt: {}, updated: 6 } });
+  await call(env, "/api/dex", { method: "PUT", pin: "1234", body: { have: { 1: 1 }, hundo: {}, m: {}, bt: {}, updated: 5, baseUpdated: 0 } });
+  await call(env, "/api/dex", { method: "PUT", cookie: a, body: { have: { 25: 1 }, hundo: {}, m: {}, bt: {}, updated: 6, baseUpdated: 0 } });
   const get = async (o) => Object.keys((await (await call(env, "/api/dex", o)).json()).have);
   assert.deepEqual(await get({ pin: "1234" }), ["1"]); assert.deepEqual(await get({ cookie: a }), ["25"]); assert.deepEqual(await get({ cookie: b }), []);
   const put = (o, k) => call(env, "/api/userstate", { method: "PUT", ...o, body: { entries: { [k]: { v: true, t: 10 } } } });
@@ -51,6 +51,31 @@ test("each person's marks are private; the owner's stay separate", async () => {
   const keys = async o => Object.keys((await (await call(env, "/api/userstate", o)).json()).entries);
   assert.deepEqual(await keys({ pin: "1234" }), ["pref:owner"]); assert.deepEqual(await keys({ cookie: a }), ["pref:a"]); assert.deepEqual(await keys({ cookie: b }), []);
   assert.equal((await call(env, "/api/dex")).status, 401, "signed-out visitors get nothing");
+});
+
+
+test("Dex sync rejects stale whole-snapshot writes and returns the current revision", async () => {
+  const env = mk();
+  const put = body => call(env, "/api/dex", { method: "PUT", pin: "1234", body });
+  const missingVersion = await put({ have: { 9: 1 }, hundo: {}, m: {}, bt: {}, updated: 50 });
+  assert.equal(missingVersion.status, 428, "legacy tabs cannot replace a newer account snapshot");
+
+  const first = await put({ have: { 1: 1 }, hundo: {}, m: {}, bt: {}, updated: 100, baseUpdated: 0 });
+  assert.equal(first.status, 200);
+  const firstAck = await first.json();
+  assert.equal(firstAck.updated, 100);
+
+  const stale = await put({ have: { 2: 1 }, hundo: {}, m: {}, bt: {}, updated: 200, baseUpdated: 0 });
+  assert.equal(stale.status, 409);
+  const conflict = await stale.json();
+  assert.deepEqual(conflict.have, { 1: 1 });
+  assert.equal(conflict.updated, firstAck.updated);
+
+  const merged = await put({ have: { 1: 1, 2: 1 }, hundo: {}, m: {}, bt: {}, updated: 300, baseUpdated: conflict.updated });
+  assert.equal(merged.status, 200);
+  const final = await (await call(env, "/api/dex", { pin: "1234" })).json();
+  assert.deepEqual(final.have, { 1: 1, 2: 1 });
+  assert.ok(final.updated > conflict.updated, "the revision advances monotonically");
 });
 
 test("sign-in tries are throttled, and removing a person deletes their data", async () => {

@@ -11,6 +11,13 @@ const html = read("../public/index.html");
 const icon = read("../public/icon-maskable.svg");
 const offline = read("../public/offline.html");
 const offlineCss = read("../public/offline.css");
+const dataScripts = [
+  app, dash,
+  read("../public/detail.js"), read("../public/places.js"), read("../public/review.js"),
+  read("../public/fresh.js"), read("../public/whatsnew.js"), read("../public/store.js"),
+  read("../public/season.js"), read("../public/weekly.js"), read("../public/buy.js"),
+  read("../public/extra.js"), read("../public/infographic.js")
+];
 
 test("PWA manifest has stable standalone identity and valid icon files", () => {
   assert.equal(manifest.id, "/");
@@ -40,19 +47,44 @@ test("PWA entry page links to the manifest and iOS touch icon and registers the 
   assert.match(html, /rel="apple-touch-icon" href="\/icon-180\.png"/);
   assert.match(html, /dash\.css\?v=20261030e/);
   assert.match(html, /styles\.css\?v=20261030b/);
-  assert.match(html, /app\.js\?v=20261030i/);
+  assert.match(html, /app\.js\?v=20261030j/);
+  assert.match(html, /local-state\.js\?v=20261030a/);
+  assert.match(html, /account\.js\?v=20261030a/);
   assert.match(html, /lib\.js\?v=20261030a/);
   assert.match(html, /\/pwa\.js/);
   assert.match(app, /dash\.js\?v=20261030n/);
   assert.match(dash, /detail\.js\?v=20261030f/);
 });
 
+
+test("every local script and stylesheet referenced by the entry page is precached at its exact URL", () => {
+  const assets = [...html.matchAll(/(?:src|href)=["'](\/[^"'#]+)["']/g)]
+    .map((match) => match[1])
+    .filter((url) => /\.(?:js|css)(?:\?|$)/.test(url));
+  assert.ok(assets.length > 0);
+  for (const asset of assets) assert.ok(sw.includes("'" + asset + "'"), "offline shell is missing " + asset);
+});
+
+test("static JSON dependencies referenced by first-party scripts are precached", () => {
+  const urls = new Set();
+  for (const source of dataScripts) {
+    for (const match of source.matchAll(/fetch\(\s*['"]([^'"]+\.json(?:\?[^'"]*)?)['"]/g)) {
+      const url = match[1];
+      if (url.startsWith("/") && !url.startsWith("/api/") && !url.includes("?")) urls.add(url);
+    }
+  }
+  assert.ok(urls.size > 0);
+  for (const url of urls) assert.ok(sw.includes("'" + url + "'"), "offline shell is missing static data " + url);
+});
+
 test("service worker versions the cache, pre-caches offline fallback, and never handles API responses", () => {
-  assert.match(sw, /gofn-shell-v129/);
+  assert.match(sw, /gofn-shell-v130/);
   assert.ok(sw.includes("'/lib.js?v=20261030a'"), 'the refreshed dashboard helper is available to the offline shell');
+  assert.ok(sw.includes("'/local-state.js?v=20261030a'"), 'account-local state migration is available offline');
+  assert.ok(sw.includes("'/account.js?v=20261030a'"), 'the refreshed account transition code is available offline');
   assert.match(sw, /'\/event-moves\.json'/, "event-only move data is available to offline event details");
   assert.match(sw, /'\/dash\.css\?v=20261030e'/, "the current dashboard stylesheet is available to the offline shell");
-  assert.match(sw, /'\/app\.js\?v=20261030i'/, "the current app bootstrap is available to the offline shell");
+  assert.match(sw, /'\/app\.js\?v=20261030j'/, "the current app bootstrap is available to the offline shell");
   assert.match(sw, /'\/styles\.css\?v=20261030b'/, "the current recovery panel stylesheet is available to the offline shell");
   assert.match(sw, /'\/dash\.js\?v=20261030n'/, "the current dashboard script is available to the offline shell");
   assert.match(sw, /'\/detail\.js\?v=20261030f'/, "the current event detail script is available to the offline shell");

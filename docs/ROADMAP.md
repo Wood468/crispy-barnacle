@@ -25,14 +25,14 @@ All merged milestones above passed their post-merge test checks; the latest main
 
 - ✅ **ENG-1** PIN gate accepted the literal "undefined" when `SYNC_PIN` unset (preview deploys) — fixed in #99, verified in deployed Worker.
 - 🔒 **ENG-1b** Preview deployments bind the production R2 bucket (private prices/places, nightly D1 backups). Needs a separate preview bucket and/or Cloudflare Access on previews; old preview versions still run pre-fix code.
-- 🔧 **QA-1** Sign-in/register wiped device-only collection marks — fix: merge into account.
-- 🔧 **QA-2/ENG-4** Dex sync whole-document last-writer-wins loses marks across devices — fix: per-mark merge.
+- 🔧 **QA-1** Sign-in/register wiped device-only collection marks — PR #118 partitions local state by identity and merges guest marks into the first account before syncing; awaiting regression and production verification.
+- 🔧 **QA-2/ENG-4** PR #118 adds revision-checked writes plus a saved-baseline three-way merge to the legacy Dex snapshot API. Independent additions and deletions are reconciled across devices; concurrent edits to the same mark use the newer snapshot timestamp. PR #114 remains separate, unmerged schema preparation.
 
 ## P1 — Major defects / reliability
 
 - 🔧 **RES-1/2/3/4/12** Snapshot refreshed on 30 Oct; rotation/Max/Spotlight/Raid Hour now extend into early Dec and the 1★ boss parsing issue was corrected in #101. Remaining: automated freshness monitoring and a separate consistency check for `raidNow`/`Upcoming`.
-- 🔧 **QA-3/QA-4** Partially addressed in #105: versioned assets are precached and the shell cache is bumped. The offline redirect/fallback behaviour still needs a separate end-to-end recheck.
-- ⏳ **ENG-2** Security headers/CSP not applied to static pages (no `public/_headers`).
+- 🔧 **QA-3/QA-4** PR #118 audits every local script/stylesheet URL referenced by the entry page against the service-worker shell and adds the missing versioned URLs; the offline navigation redirect/fallback still needs an end-to-end recheck.
+- ✅ **ENG-2** Security headers/CSP are applied by the Worker wrapper to every response, including static assets; the header contract is covered by `test/security.test.mjs`.
 - ⏳ **QA-5/RES-5/QA-7** In-person events lack a timezone; Sendai/Mexico City merged under one name in some viewer zones.
 - ✅ **RES-8** Reject importer source-page matches when known article and event dates do not overlap; retain existing link/title matching when either date is unknown. Covered by focused regression tests and the post-merge production build.
 - ⏳ **RES-9** Weaker sources can overwrite official data (schedule-audit worldFixes; Reddit coords to public data).
