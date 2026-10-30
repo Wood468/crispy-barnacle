@@ -41,7 +41,7 @@ test("Dex snapshot merge keeps marks from both devices and uses the newer snapsh
 
 test("three-way Dex reconciliation propagates deletions and preserves independent additions", () => {
   const baseline = { have: { 25: 1, 26: 1, 27: 1 }, hundo: {}, m: { shiny: { 25: 1, 26: 1 } }, bt: {} };
-  const local = { have: { 25: 2, 27: 1, 28: 1 }, hundo: {}, m: { shiny: { 25: 2 } }, bt: {} };
+  const local = { have: { 25: 2, 26: 1, 27: 1, 28: 1 }, hundo: {}, m: { shiny: { 25: 2, 26: 1 } }, bt: {} };
   const remote = { have: { 25: 0, 26: 1, 29: 1 }, hundo: {}, m: { shiny: { 25: 0, 26: 1 } }, bt: {} };
   const merged = LOCAL.mergeDexSnapshot(local, remote, 300, 200, baseline);
   assert.equal(merged.have[25], 2, "newer local edit wins a same-key conflict");
