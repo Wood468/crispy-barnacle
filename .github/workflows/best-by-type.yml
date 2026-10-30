@@ -34,4 +34,5 @@ jobs:
             echo "No changes."; exit 0
           fi
           git pull -q --rebase origin main
+          node scripts/validate-public-data.mjs
           git push origin HEAD:main
