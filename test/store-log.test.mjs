@@ -98,6 +98,7 @@ test("store watch: a changed currency restarts the 72-hour hold", () => {
   assert.equal(d4.state.currency, "A$");
   assert.equal(d4.state.currencyHold, undefined);
   assert.equal(d4.changed.length, 0);
+  assert.equal(d4.state.items["/purchase/item/rrp"].price, "A$9.99", "the new currency becomes the saved baseline");
 });
 
 test("store watch: an old state without a currency field still detects a flip", () => {
