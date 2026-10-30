@@ -3,7 +3,7 @@
 // into public/places.json only when an event, coordinate pair and source permalink are all present.
 // No API credentials, scraping bypasses, or fabricated coordinates.
 import { readFile, writeFile } from "node:fs/promises";
-import { coords, redditSearchUrl, xmlItems } from "./location-discovery-parse.mjs";
+import { coords, redditSearchUrl, retryAfterMs, xmlItems } from "./location-discovery-parse.mjs";
 
 const ROOT = new URL("../public/", import.meta.url);
 const WORLD = JSON.parse(await readFile(new URL("world-events.json", ROOT), "utf8"));
@@ -11,13 +11,28 @@ const FILE = new URL("places.json", ROOT);
 const DATA = JSON.parse(await readFile(FILE, "utf8"));
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 const seen = new Set(DATA.places.map(p => p.id));
-let added = 0, checked = 0, errors = [];
+let added = 0, checked = 0, rateLimitCount = 0, errors = [];
 const upcoming = (WORLD.events || []).filter(e => e && e.id && e.name && e.place && e.start && !/worldwide|play from anywhere|participating .* malls|airports/i.test(e.place)).slice(0, 80);
 for (const ev of upcoming) {
   const url = redditSearchUrl(ev.name);
   try {
     const res = await fetch(url, { headers: { "user-agent": "GOFieldNotesLocationDiscovery/1.0 (public event research; contact: project repository)", accept: "application/atom+xml, application/rss+xml" } });
-    if (!res.ok) { errors.push("Reddit HTTP " + res.status); continue; }
+    if (res.status === 429) {
+      errors.push("Reddit HTTP 429");
+      rateLimitCount++;
+      if (rateLimitCount >= 2) {
+        errors.push("Stopped after repeated Reddit rate limiting; retrying on the next scheduled run.");
+        break;
+      }
+      const wait = retryAfterMs(res.headers.get("retry-after"));
+      if (wait === null) {
+        errors.push("Reddit requested a long cooldown; deferring to the next scheduled run.");
+        break;
+      }
+      await sleep(wait);
+      continue;
+    }
+    if (!res.ok) { errors.push("Reddit HTTP " + res.status); await sleep(1200); continue; }
     const xml = await res.text();
     for (const post of xmlItems(xml)) {
       if (!post.link || !/^https:\/\/(www\.)?reddit\.com\//.test(post.link)) continue;
@@ -41,7 +56,10 @@ for (const ev of upcoming) {
     }
     checked++;
     await sleep(1200);
-  } catch (e) { errors.push(String(e.message || e).slice(0, 160)); }
+  } catch (e) {
+    errors.push(String(e.message || e).slice(0, 160));
+    await sleep(1200);
+  }
 }
 if (added) {
   DATA.updated = new Date().toISOString().slice(0, 10);
