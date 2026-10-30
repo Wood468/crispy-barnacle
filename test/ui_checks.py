@@ -167,7 +167,7 @@ with sync_playwright() as p:
                                   '**/places.json': (json.dumps(place_fixture), 200)},
                            slow_places=True)
         places_page.wait_for_function("window.GODETAIL && !window.GOPLACES", timeout=1200)
-        check('Event detail loader is ready while the places script is still delayed', bool(places_page.evaluate('window.GOPLACES_READY')))
+        check('Event detail loader is ready while the places script is still delayed', places_page.evaluate('!!window.GOPLACES_READY && typeof window.GOPLACES_READY.then === "function"'))
         places_page.locator('#home-now .today-next-up').click()
         places_page.locator('#evd').wait_for(state='visible', timeout=5000)
         location_link = places_page.locator('#evd .evd-jump a[href="#evd-locations"]')
