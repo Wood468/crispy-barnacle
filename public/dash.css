@@ -1192,3 +1192,35 @@ label:has(input[type="radio"]) {
   display: inline-flex;
   align-items: center;
 }
+
+
+/* Follow-up from the full-view touch audit: component rules below the shared baseline
+   had been narrowing a few card, calendar and compact-guide controls again. */
+.evc.cmp .evc-foot .more {
+  min-height: 44px;
+}
+.evc.cmp .evc-foot .star {
+  width: 44px;
+  min-width: 44px;
+  min-height: 44px;
+  flex: 0 0 44px;
+}
+button.info-open {
+  min-height: 44px;
+}
+button.tg.x {
+  min-width: 44px;
+}
+select,
+.tools select,
+.igr-o select,
+.mega-controls select {
+  min-width: 44px;
+}
+.wk-days {
+  grid-template-columns: repeat(7, minmax(44px, 1fr));
+  gap: 1px;
+}
+.wd {
+  min-width: 44px;
+}
