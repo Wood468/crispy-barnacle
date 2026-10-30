@@ -32,6 +32,12 @@ test("best-attacker filters support every known weakness type for a raid boss", 
   assert.equal(matches("Fire", "Fire"), true);
   assert.equal(matches("Fighting", ["Fire", "Fighting"]), true);
   assert.equal(matches("Water", ["Fire", "Fighting"]), false);
+  const selectedMatch = app.match(/function isBestTypeSelected\(type, selected\) \{([\s\S]*?)\n  \}/);
+  assert.ok(selectedMatch, "multi-type chip state helper exists");
+  const selected = new Function("type", "selected", selectedMatch[1]);
+  assert.equal(selected("Fire", "All"), false, "All keeps only the All chip pressed");
+  assert.equal(selected("Fire", ["Fire", "Fighting"]), true);
+  assert.equal(selected("Water", ["Fire", "Fighting"]), false);
   assert.match(app, /window\.GOBEST = \{ showTypes:function\(types\)/);
   assert.match(app, /typeSel = valid\.length \? valid : 'All';/);
 });
