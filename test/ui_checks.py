@@ -120,14 +120,18 @@ with sync_playwright() as p:
                               extra={'**/event-moves.json': (json.dumps(moves_fixture), 200),
                                      '**/world-events.json': ('{"events":[]}', 200),
                                      '**/regional-events.json': ('{"events":[]}', 200)})
-        highlight_page.wait_for_timeout(150)
+        highlight_page.wait_for_function("performance.getEntriesByName(location.origin + '/event-moves.json').length > 0", timeout=5000)
         highlight_page.evaluate("GODETAIL.open('leekduck:move-highlight')")
         highlight_page.locator('#evd').wait_for(state='visible')
         highlight_page.locator('#evd .evd-jump a[href="#evd-highlights"]').wait_for(state='attached')
         move_target = highlight_page.locator('#evd-highlights')
         check('Move-only Highlights shortcut lands on event-only moves',
               highlight_page.locator('#evd .evd-jump a[href="#evd-highlights"]').count() == 1 and
-              move_target.count() == 1 and move_target.inner_text() == 'Event-only moves')
+              move_target.count() == 1 and move_target.inner_text() == 'Event-only moves',
+              {'dialog': highlight_page.locator('#evd').inner_text()[:900], 'target_count': move_target.count(),
+               'target_text': move_target.inner_text() if move_target.count() else '',
+               'event_ids': highlight_page.evaluate("GODASH.events().map(e => e.id).filter(id => id.includes('highlight'))"),
+               'move_feed': highlight_page.evaluate("performance.getEntriesByName(location.origin + '/event-moves.json').length")})
         highlight_page.locator('#evd-x').click()
         highlight_page.locator('#evd').wait_for(state='hidden')
         highlight_page.evaluate("GODETAIL.open('leekduck:featured-highlight')")
@@ -136,7 +140,12 @@ with sync_playwright() as p:
         featured_target = highlight_page.locator('#evd-highlights')
         check('Featured-only Highlights shortcut lands on the featured Pokémon section',
               highlight_page.locator('#evd .evd-jump a[href="#evd-highlights"]').count() == 1 and
-              featured_target.count() == 1 and featured_target.inner_text() == 'Featured Pokémon')
+              featured_target.count() == 1 and featured_target.inner_text() == 'Featured Pokémon',
+              {'dialog': highlight_page.locator('#evd').inner_text()[:900], 'target_count': featured_target.count(),
+               'target_text': featured_target.inner_text() if featured_target.count() else '',
+               'event_ids': highlight_page.evaluate("GODASH.events().map(e => e.id).filter(id => id.includes('highlight'))"),
+               'featured': highlight_page.evaluate("GODASH.events().filter(e => e.id === 'leekduck:featured-highlight').map(e => e.featured)"),
+               'move_feed': highlight_page.evaluate("performance.getEntriesByName(location.origin + '/event-moves.json').length")})
         highlight_page.context.close()
 
         # Keyboard navigation is trapped in the dialog and Escape returns focus to its opener.
