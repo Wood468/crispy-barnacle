@@ -14,6 +14,14 @@ test("every response gets the browser security headers, including framing and cr
   assert.equal(await r.text(), "hi");
 });
 
+
+test("the Worker applies security headers to static asset responses too", async () => {
+  const env = { DB: makeDB(), ASSETS: { fetch: async () => new Response("<html>asset</html>", { headers: { "content-type": "text/html" } }) } };
+  const response = await worker.fetch(new Request("https://x.test/index.html"), env, { waitUntil() {} });
+  for (const key of Object.keys(SECURITY_HEADERS)) assert.ok(response.headers.get(key), key);
+  assert.match(response.headers.get("content-security-policy"), /frame-ancestors 'none'/);
+});
+
 test("hotspot places are not in the public site files and need the PIN or a session", () => {
   const pub = JSON.parse(fs.readFileSync(new URL("../public/places.json", import.meta.url), "utf8"));
   assert.ok(!pub.places.some(p => /hotspot/i.test(p.type)), "no hotspot in public/places.json");
