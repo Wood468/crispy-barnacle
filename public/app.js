@@ -857,7 +857,7 @@ Promise.all([fetch('/data.json').then(function(r){return r.json()}),fetch('/art/
   };
   function setSync(k){
     $('sync').textContent=MSG[k]||'';$('dsync').textContent=MSG[k]||'';
-    $('pinform').hidden=(k==='synced'||k==='off');
+    $('pinform').hidden=(k==='synced'||k==='off'||k==='update');
   }
   function has(o){return Object.keys(o.have).length||Object.keys(o.bt||{}).length||Object.keys(o.hundo).length||DEXCATS.some(function(c){return o.m&&o.m[c]&&Object.keys(o.m[c]).length})}
   function saveLocal(){try{localStorage.setItem('gofn-dex-v1',JSON.stringify(dex));localStorage.setItem('gofn-stamp',String(stamp));localStorage.setItem('gofn-dex-base-v1',String(baseUpdated));if(baselineDex)localStorage.setItem('gofn-dex-baseline-v1',JSON.stringify(baselineDex));else localStorage.removeItem('gofn-dex-baseline-v1')}catch(e){}document.dispatchEvent(new Event('gofn-marks'))}
