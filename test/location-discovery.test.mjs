@@ -2,7 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { spawnSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
-import { coords, redditSearchUrl, xmlItems } from "../scripts/location-discovery-parse.mjs";
+import { coords, redditSearchUrl, retryAfterMs, xmlItems } from "../scripts/location-discovery-parse.mjs";
 
 const discoveryScript = fileURLToPath(new URL("../scripts/location-discovery.mjs", import.meta.url));
 
@@ -38,6 +38,18 @@ test("coordinate extraction rejects out-of-range, zero and partial-number matche
   assert.deepEqual(coords("Valid 37.7749, -122.4194; invalid 91.0000, 181.0000; zero 0.0000, 0.0000"), [
     { lat: 37.7749, lng: -122.4194 }
   ]);
+});
+
+test("Retry-After accepts seconds and HTTP dates", () => {
+  const now = Date.parse("Fri, 30 Oct 2026 02:30:00 GMT");
+  assert.equal(retryAfterMs("2", now), 2000);
+  assert.equal(retryAfterMs("Fri, 30 Oct 2026 02:31:00 GMT", now), 60000);
+});
+
+test("Retry-After uses a safe fallback and defers long cooldowns", () => {
+  assert.equal(retryAfterMs(null, 0), 15000);
+  assert.equal(retryAfterMs("not a date", 0), 15000);
+  assert.equal(retryAfterMs("360", 0), null, "do not retry before a server-requested cooldown longer than five minutes");
 });
 
 test("community search URLs keep the Reddit host fixed and encode event names as a query", () => {
