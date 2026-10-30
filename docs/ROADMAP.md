@@ -31,7 +31,7 @@ All merged milestones above passed their post-merge test checks; the latest main
 ## P1 — Major defects / reliability
 
 - 🔧 **RES-1/2/3/4/12** Snapshot refreshed on 30 Oct; rotation/Max/Spotlight/Raid Hour now extend into early Dec and the 1★ boss parsing issue was corrected in #101. Remaining: automated freshness monitoring and a separate consistency check for `raidNow`/`Upcoming`.
-- 🔧 **QA-3/QA-4** Versioned assets are precached and the shell cache was bumped in #105, #117 and #118. The offline redirect/fallback behaviour still needs a separate end-to-end recheck.
+- 🔧 **QA-3/QA-4** PR #118 audits every local script/stylesheet URL referenced by the entry page against the service-worker shell and adds the missing versioned URLs; the offline navigation redirect/fallback still needs an end-to-end recheck.
 - ✅ **ENG-2** Security headers/CSP are applied by the Worker wrapper to every response, including static assets; the header contract is covered by `test/security.test.mjs`.
 - ⏳ **QA-5/RES-5/QA-7** In-person events lack a timezone; Sendai/Mexico City merged under one name in some viewer zones.
 - ✅ **RES-8** Reject importer source-page matches when known article and event dates do not overlap; retain existing link/title matching when either date is unknown. Covered by focused regression tests and the post-merge production build.
