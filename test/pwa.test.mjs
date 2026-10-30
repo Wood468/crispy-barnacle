@@ -49,6 +49,15 @@ test("PWA entry page links to the manifest and iOS touch icon and registers the 
   assert.match(dash, /detail\.js\?v=20261030f/);
 });
 
+
+test("every local script and stylesheet referenced by the entry page is precached at its exact URL", () => {
+  const assets = [...html.matchAll(/(?:src|href)=["'](\\/[^"'#]+)["']/g)]
+    .map((match) => match[1])
+    .filter((url) => /\\.(?:js|css)(?:\\?|$)/.test(url));
+  assert.ok(assets.length > 0);
+  for (const asset of assets) assert.ok(sw.includes("'" + asset + "'"), "offline shell is missing " + asset);
+});
+
 test("service worker versions the cache, pre-caches offline fallback, and never handles API responses", () => {
   assert.match(sw, /gofn-shell-v130/);
   assert.ok(sw.includes("'/lib.js?v=20261030a'"), 'the refreshed dashboard helper is available to the offline shell');
