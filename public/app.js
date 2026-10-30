@@ -291,9 +291,11 @@ Promise.all([
   $('hmenu').addEventListener('click',function(){showTab('saved','menu')});
   $('menu-leaks').addEventListener('click',function(){showTab('events','leaks')});
   (function(){
-    function upd(){var n=document.querySelectorAll('#followed > *, #savedev > *').length,c=$('wlcount');
-      var real=document.querySelectorAll('#followed .evc, #followed .drow, #followed .row, #savedev .evc, #savedev article, #savedev .card').length;
-      n=real||n;c.textContent=n;c.hidden=!n;$('hwatch').setAttribute('aria-label','Watchlist'+(n?', '+n+' items':''))}
+    function upd(){
+      var n=document.querySelectorAll('#followed .opp, #savedev .evc').length,c=$('wlcount');
+      c.textContent=n;c.hidden=n===0;
+      $('hwatch').setAttribute('aria-label','Watchlist'+(n?', '+n+' items':''));
+    }
     ['followed','savedev'].forEach(function(id){var el=$(id);if(el)new MutationObserver(upd).observe(el,{childList:true})});upd();
   })();
   var firstTab=null;
