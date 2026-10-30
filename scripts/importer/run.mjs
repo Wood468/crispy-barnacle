@@ -51,11 +51,30 @@ export async function appEvents() {
   try { for (const e of JSON.parse(await readFile("public/data.json", "utf8")).events || []) if (!evs.some(x => x.id === e.id)) evs.push({ id: e.id, t: e.t, link: e.sourceUrl || "", start: e.s, end: e.e }); } catch { /* none */ }
   return evs;
 }
+function pageDatesOverlapEvent(page, event) {
+  const eventStart = String(event.start || "").slice(0, 10);
+  const eventEnd = String(event.end || event.start || "").slice(0, 10);
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(eventStart) || !/^\d{4}-\d{2}-\d{2}$/.test(eventEnd) || eventEnd < eventStart) return true;
+
+  // Prefer dates extracted under a Dates heading. If none were classified, inspect only
+  // early article lines that actually contain a month/day, not arbitrary prose or metadata.
+  const explicit = Array.isArray(page.fields?.dates) ? page.fields.dates.join(" . ") : "";
+  const monthDay = /\b(?:jan(?:uary)?|feb(?:ruary)?|mar(?:ch)?|apr(?:il)?|may|june?|july?|aug(?:ust)?|sept?(?:ember)?|oct(?:ober)?|nov(?:ember)?|dec(?:ember)?)\.?\s+\d{1,2}\b|\b\d{1,2}(?:st|nd|rd|th)?\s+(?:jan(?:uary)?|feb(?:ruary)?|mar(?:ch)?|apr(?:il)?|may|june?|july?|aug(?:ust)?|sept?(?:ember)?|oct(?:ober)?|nov(?:ember)?|dec(?:ember)?)\b/i;
+  const lines = (page.lines || []).slice(0, 40).filter(line => monthDay.test(String(line.text || ""))).map(line => line.text).join(" . ");
+  const yearHint = Number(eventStart.slice(0, 4)) || new Date().getUTCFullYear();
+  const range = (explicit && parseDateRange(explicit, yearHint)) || (lines && parseDateRange(lines, yearHint));
+  if (!range) return true; // Missing source dates are unknown, not evidence of a mismatch.
+  return range.start <= eventEnd && range.end >= eventStart;
+}
+
 export function pickEvent(page, events) {
   const direct = events.find(e => e.link && e.link.replace(/\/?$/, "/") === page.url);
-  if (direct) return { event: direct, how: "linked" };
+  if (direct) return pageDatesOverlapEvent(page, direct) ? { event: direct, how: "linked" } : null;
   const m = matchEvent({ title: page.title || "" }, events);
-  if (m && m.confidence === "high") return { event: events.find(e => e.id === m.eventId), how: "title" };
+  if (m && m.confidence === "high") {
+    const event = events.find(e => e.id === m.eventId);
+    if (event && pageDatesOverlapEvent(page, event)) return { event, how: "title" };
+  }
   return null;
 }
 
