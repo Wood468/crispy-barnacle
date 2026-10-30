@@ -79,7 +79,7 @@ test("static JSON dependencies referenced by first-party scripts are precached",
 });
 
 test("service worker versions the cache, pre-caches offline fallback, and never handles API responses", () => {
-  assert.match(sw, /gofn-shell-v133/);
+  assert.match(sw, /gofn-shell-v134/);
   assert.ok(sw.includes("'/lib.js?v=20261030a'"), 'the refreshed dashboard helper is available to the offline shell');
   assert.ok(sw.includes("'/local-state.js?v=20261030a'"), 'account-local state migration is available offline');
   assert.ok(sw.includes("'/account.js?v=20261030a'"), 'the refreshed account transition code is available offline');
