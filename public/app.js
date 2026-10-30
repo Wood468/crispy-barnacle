@@ -645,6 +645,7 @@ Promise.all([fetch('/data.json').then(function(r){return r.json()}),fetch('/art/
   window.GOBEST = { showTypes:function(types){
     var valid = Array.isArray(types) ? types.filter(function(t,i,a){return TYPES.indexOf(t)>-1&&a.indexOf(t)===i}) : [];
     typeSel = valid.length ? valid : 'All';
+    $('q').value = ''; $('status').value = 'all';
     Array.prototype.forEach.call(tc.children,function(c){var t=c.textContent.trim();c.setAttribute('aria-pressed',(t==='All'?typeSel==='All':isBestTypeSelected(t,typeSel))?'true':'false')});
     applyFilters();
   } };
