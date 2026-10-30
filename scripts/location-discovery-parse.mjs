@@ -27,6 +27,21 @@ export const redditSearchUrl = eventName => {
   return url;
 };
 
+// Parse Retry-After safely. A missing/invalid header gets a modest cooldown;
+// a server-requested wait longer than five minutes defers this run to the next schedule.
+export const retryAfterMs = (value, now = Date.now()) => {
+  const fallback = 15_000;
+  if (value == null || String(value).trim() === "") return fallback;
+  const raw = String(value).trim();
+  const seconds = Number(raw);
+  const delay = Number.isFinite(seconds) && seconds >= 0
+    ? seconds * 1000
+    : Date.parse(raw) - now;
+  if (!Number.isFinite(delay)) return fallback;
+  if (delay > 300_000) return null;
+  return Math.max(1_000, delay);
+};
+
 export const coords = text => {
   const out = [];
   const re = /(?<![\d.])(-?\d{1,2}\.\d{3,})(?![\d.])\s*[,; ]\s*(?<![\d.])(-?\d{1,3}\.\d{3,})(?![\d.])/g;
