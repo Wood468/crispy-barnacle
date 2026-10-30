@@ -3,7 +3,7 @@
 // into public/places.json only when an event, coordinate pair and source permalink are all present.
 // No API credentials, scraping bypasses, or fabricated coordinates.
 import { readFile, writeFile } from "node:fs/promises";
-import { coords, fetchWithRateLimit, redditSearchUrl, xmlItems } from "./location-discovery-parse.mjs";
+import { coords, fetchWithRateLimit, redditSearchUrl, reportDate, xmlItems } from "./location-discovery-parse.mjs";
 
 const ROOT = new URL("../public/", import.meta.url);
 const WORLD = JSON.parse(await readFile(new URL("world-events.json", ROOT), "utf8"));
@@ -31,6 +31,7 @@ for (const ev of upcoming) {
       if (!post.link || !/^https:\/\/(www\.)?reddit\.com\//.test(post.link)) continue;
       const body = post.title + " " + post.desc;
       if (!ev.name.toLowerCase().split(/\W+/).filter(x => x.length > 3).some(t => body.toLowerCase().includes(t))) continue;
+      const reportedAt = reportDate(post.publishedAt);
       for (const point of coords(body)) {
         const id = "reddit-" + ev.id.replace(/[^a-z0-9-]/gi, "-").toLowerCase() + "-" + point.lat.toFixed(4).replace(".", "p") + "-" + point.lng.toFixed(4).replace(".", "p");
         if (seen.has(id)) continue;
@@ -41,7 +42,9 @@ for (const ev of upcoming) {
           tags: ["Raids", "Gyms", "PokéStops"],
           sources: [{ label: "Reddit community report", url: post.link, vouches: "Post/comment contains coordinates in discussion of " + ev.name, trust: "community" }],
           coords: { label: "Reddit community report", url: post.link, note: "Community-reported coordinates. Not an official event pin; confirm the spot before travelling." },
-          verified: new Date().toISOString().slice(0, 10), route: null,
+          coordinateStatus: "community-reported",
+          ...(reportedAt ? { reportedAt } : {}),
+          route: null,
           events: [{ name: ev.name, from: ev.start, to: ev.end || ev.start }]
         });
         seen.add(id); added++;
