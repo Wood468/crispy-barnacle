@@ -13,12 +13,12 @@
     if (p.coordinateStatus === 'community-reported' || /community-reported/i.test(p.type || '')) return 'community-reported';
     if (p.coordinateStatus === 'community-reference') return 'community-reference';
     var url = String(p.coords && p.coords.url || '');
-    if (/reddit\\.com/i.test(url)) return 'community-reported';
-    if (/(?:wikipedia\\.org|wikimedia\\.org)/i.test(url)) return 'community-reference';
+    if (/reddit\.com/i.test(url)) return 'community-reported';
+    if (/(?:wikipedia\.org|wikimedia\.org)/i.test(url)) return 'community-reference';
     return '';
   }
   function isCommunityCoordinates(p) { return !!coordinateProvenance(p); }
-  function validDay(value) { return typeof value === 'string' && /^\\d{4}-\\d\\d-\\d\\d$/.test(value); }
+  function validDay(value) { return typeof value === 'string' && /^\d{4}-\d\d-\d\d$/.test(value); }
   function coordinateLabel(p) {
     var provenance = coordinateProvenance(p);
     if (provenance === 'community-reported') return 'Community-reported coordinates' + (validDay(p.reportedAt) ? ' · reported ' + day(p.reportedAt) : ' · report date unavailable') + ' · not independently verified · not an official event pin';
