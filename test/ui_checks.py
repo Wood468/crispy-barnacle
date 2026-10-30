@@ -110,6 +110,10 @@ with sync_playwright() as p:
               next_button.get_attribute('aria-label') == 'Open details for Next Up Fixture 0')
         next_button.click()
         next_page.locator('#evd').wait_for(state='visible')
+        detail_time = next_page.locator('#evd .evd-hero .evc-when').inner_text()
+        check('Worldwide-local event details keep local-time context visible',
+              'Your time:' in detail_time and 'Local time in each region' in detail_time,
+              detail_time)
         jump_links = next_page.locator('#evd .evd-jump a').evaluate_all(
             "els => els.map(a => ({label: a.textContent.trim(), target: !!document.getElementById(a.getAttribute('href').slice(1))}))")
         check('Event detail quick links all have rendered targets', all(x['target'] for x in jump_links), jump_links)
