@@ -1,15 +1,8 @@
 {
- "updated": "2026-10-30T10:01:42.161Z",
+ "updated": "2026-10-30T18:00:27.531Z",
  "state": "ok",
  "scrapedDuckEvents": 54,
- "missingHere": [
-  {
-   "name": "Pokémon Night Out 2026 - London",
-   "type": "event",
-   "start": "2026-11-10T18:00:00.000Z",
-   "link": "https://leekduck.com/events/pokemon-night-out-london-2026/"
-  }
- ],
+ "missingHere": [],
  "missingThere": [
   {
    "id": "gopassnov",
@@ -85,11 +78,6 @@
    "id": "w-pok-mon-30th-anniversary-mall-exploration-sm-east-",
    "name": "Pokémon 30th Anniversary Mall Exploration: SM East Ortigas",
    "start": "2026-10-23"
-  },
-  {
-   "id": "w-celebrate-the-pok-mon-night-out-events-in-pok-mon-",
-   "name": "Pokémon Night Out events in Pokémon GO",
-   "start": "2026-10-24"
   },
   {
    "id": "w-pok-mon-go-dia-de-muertos-2026-mexico-exclusive-ev",

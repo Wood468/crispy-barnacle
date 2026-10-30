@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-30T10:01:42.936Z",
+ "updated": "2026-10-30T18:00:28.416Z",
  "recorded": [
   "pokemon-us",
   "pokemon-uk",
@@ -10,7 +10,7 @@
   {
    "id": "pokemon-us",
    "state": "ok",
-   "links": 2
+   "links": 1
   },
   {
    "id": "pokemon-uk",

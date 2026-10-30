@@ -1,10 +1,10 @@
 {
- "updated": "2026-10-30T10:01:41.970Z",
+ "updated": "2026-10-30T18:00:27.149Z",
  "status": [
   {
    "id": "hub",
    "state": "ok",
-   "items": 2
+   "items": 3
   },
   {
    "id": "miners-assets",
@@ -19,7 +19,7 @@
   {
    "id": "reddit-silph",
    "state": "ok",
-   "items": 9
+   "items": 10
   },
   {
    "id": "youtube-pogo",
@@ -70,6 +70,28 @@
    "notInOurData": [
     "Landorus"
    ]
+  },
+  {
+   "source": "hub",
+   "trust": "community",
+   "title": "Super Mega Chandelure Raid Day",
+   "link": "https://pokemongohub.net/post/event/super-mega-chandelure-raid-day/",
+   "date": "2026-10-30T17:00:32.000Z",
+   "summary": "Mega Chandelure will debut during a special Super Mega Raid Day event on Saturday, October 31, 2026, from 2:00 p.m. to 5:00 p.m. local time. You can look forward to Mega Chandelure in Super Mega Raids",
+   "pokemon": [
+    "Chandelure"
+   ],
+   "notInOurData": []
+  },
+  {
+   "source": "reddit-silph",
+   "trust": "tip",
+   "title": "How shiny predicting worked",
+   "link": "https://www.reddit.com/r/TheSilphRoad/comments/1xjazpa/how_shiny_predicting_worked/",
+   "date": "2026-10-30T09:45:22.000Z",
+   "summary": "<!-- SC_OFF --><div class=\"md\"><p>Hi all, I was the person who originally found how to predict shinies. It's now been patched, so here's how to do it for everyone curious:</p> <p>```java static boolea",
+   "pokemon": [],
+   "notInOurData": []
   },
   {
    "source": "reddit-silph",
