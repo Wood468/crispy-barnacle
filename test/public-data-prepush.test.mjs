@@ -32,7 +32,7 @@ test("every direct-main push of staged public data revalidates after rebasing", 
   for (const file of files) {
     const lines = (await readFile(new URL(file, workflowDir), "utf8")).split(/\r?\n/);
     for (let i = 0; i < lines.length; i++) {
-      if (!/^\s*git push origin HEAD:main\s*$/.test(lines[i])) continue;
+      if (!/git push origin HEAD:main/.test(lines[i])) continue;
       let addIndex = -1;
       for (let j = i - 1; j >= 0; j--) {
         if (/^\s*git add\b/.test(lines[j])) { addIndex = j; break; }
