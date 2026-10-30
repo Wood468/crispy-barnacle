@@ -762,6 +762,62 @@ with sync_playwright() as p:
         check('touch-target audit adds no page errors', target_page.errs == [], target_page.errs)
         target_page.context.close()
 
+    if on('a'):
+        contrast_page = page()
+        contrast = contrast_page.evaluate("""() => {
+            function rgb(value) {
+                if (value[0] === '#') {
+                    const hex = value.slice(1);
+                    return [0, 2, 4].map(i => parseInt(hex.slice(i, i + 2), 16));
+                }
+                const match = value.match(/rgba?\\(([^)]+)\\)/i);
+                if (match) return match[1].split(',').slice(0, 3).map(Number);
+                const values = (value.match(/[0-9.]+/g) || []).slice(0, 3).map(Number);
+                return value.startsWith('color(srgb') ? values.map(v => v * 255) : values;
+            }
+            function luminance(value) {
+                const c = rgb(value).map(v => {
+                    v /= 255;
+                    return v <= 0.04045 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4);
+                });
+                return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2];
+            }
+            function ratio(fg, bg) {
+                const a = luminance(fg), b = luminance(bg);
+                return (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05);
+            }
+            const kinds = ['cd', 'raid', 'max', 'spot', 'pvp', 'person', 'debut', 'twitch', 'event'];
+            const kindRatios = kinds.map(kind => {
+                const tuple = window.GODASH.kindOf({ kind });
+                const el = document.createElement('span');
+                el.className = 'kind';
+                el.textContent = tuple[0];
+                el.style.setProperty('--k', tuple[1]);
+                el.style.setProperty('--kf', tuple[2]);
+                document.body.appendChild(el);
+                const style = getComputedStyle(el);
+                const result = { kind, ratio: ratio(style.color, style.backgroundColor), fg: style.color, bg: style.backgroundColor };
+                el.remove();
+                return result;
+            });
+            const host = document.createElement('article');
+            host.className = 'evc live';
+            host.style.setProperty('--k', '#D7373C');
+            const countdown = document.createElement('span');
+            countdown.className = 'cdn';
+            countdown.textContent = 'Live · 2h left';
+            host.appendChild(countdown);
+            document.body.appendChild(host);
+            const style = getComputedStyle(countdown);
+            const countdownRatio = { ratio: ratio(style.color, style.backgroundColor), fg: style.color, bg: style.backgroundColor };
+            host.remove();
+            return { kindRatios, countdownRatio };
+        }""")
+        check('all event-kind pills meet 4.5:1 text contrast', all(x['ratio'] >= 4.5 for x in contrast['kindRatios']), contrast['kindRatios'])
+        check('live countdown text meets 4.5:1 contrast', contrast['countdownRatio']['ratio'] >= 4.5, contrast['countdownRatio'])
+        check('contrast audit adds no page errors', contrast_page.errs == [], contrast_page.errs)
+        contrast_page.context.close()
+
     if on('b'):
         # 8. Phase 3: forms are tracked only when you mark them
         pg=page()
