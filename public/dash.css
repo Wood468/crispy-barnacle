@@ -1133,3 +1133,94 @@ img.art.is-shiny{outline:2px solid var(--gold);outline-offset:2px;border-radius:
     margin-left:auto;
   }
 }
+
+
+/* Keep every visible control comfortably tappable across the app, not only on Today. */
+button,
+summary,
+select,
+a.pill,
+a.more {
+  min-height: 44px;
+}
+button[aria-label],
+.star,
+.hbtn,
+.calnav,
+.agw .ag-actions .agx {
+  min-width: 44px;
+}
+.fchip,
+.mk button,
+.tg.x,
+.dtog .tg,
+.info-open,
+.fresh-line button,
+.evd-venue-actions .pill,
+.evd-venue-foot .pill,
+.igr-g .pill,
+.igr-o .pill,
+.igr-o select,
+.whatsnew .wn-det summary,
+.foot-dd summary,
+.storep summary,
+.acctbox summary,
+.evd-lead select {
+  min-height: 44px;
+}
+.agw .ag-actions {
+  min-width: 44px;
+  gap: 4px;
+}
+.agw .ag-actions .agx {
+  width: 44px;
+  height: 44px;
+}
+.agw .ag-actions .agpin {
+  width: 44px;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 5px 3px;
+}
+.agw .ag-actions .agig.igthumb {
+  width: 44px;
+  height: 44px;
+}
+label:has(input[type="checkbox"]),
+label:has(input[type="radio"]) {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
+
+
+/* Follow-up from the full-view touch audit: component rules below the shared baseline
+   had been narrowing a few card, calendar and compact-guide controls again. */
+.evc.cmp .evc-foot .more {
+  min-height: 44px;
+}
+.evc.cmp .evc-foot .star {
+  width: 44px;
+  min-width: 44px;
+  min-height: 44px;
+  flex: 0 0 44px;
+}
+button.info-open {
+  min-height: 44px;
+}
+button.tg.x {
+  min-width: 44px;
+}
+select,
+.tools select,
+.igr-o select,
+.mega-controls select {
+  min-width: 44px;
+}
+.wk-days {
+  grid-template-columns: repeat(7, minmax(44px, 1fr));
+  gap: 1px;
+}
+.wd {
+  min-width: 44px;
+}
