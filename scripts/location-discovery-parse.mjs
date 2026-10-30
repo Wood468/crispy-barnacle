@@ -29,8 +29,16 @@ export const redditSearchUrl = eventName => {
 
 // Preserve the source publication day separately from any independent coordinate check.
 export const reportDate = value => {
-  const timestamp = Date.parse(String(value || ""));
-  return Number.isFinite(timestamp) ? new Date(timestamp).toISOString().slice(0, 10) : null;
+  const raw = String(value || "").trim();
+  if (!raw || !Number.isFinite(Date.parse(raw))) return null;
+  const iso = /^(\\d{4}-\\d\\d-\\d\\d)/.exec(raw);
+  if (iso) return iso[1];
+  const rfc = /(?:^|,\\s*)(\\d{1,2})\\s+([A-Za-z]{3})\\s+(\\d{4})/.exec(raw);
+  if (!rfc) return new Date(Date.parse(raw)).toISOString().slice(0, 10);
+  const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  const month = months.indexOf(rfc[2]);
+  if (month < 0) return null;
+  return rfc[3] + "-" + String(month + 1).padStart(2, "0") + "-" + String(Number(rfc[1])).padStart(2, "0");
 };
 
 // Parse Retry-After safely. A missing/invalid header gets a modest cooldown;
