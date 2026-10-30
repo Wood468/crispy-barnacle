@@ -913,7 +913,7 @@ Promise.all([fetch('/data.json').then(function(r){return r.json()}),fetch('/art/
   function markOwn(ids){var m=dm('own'),added=[];ids.forEach(function(id){if(!m[id]){m[id]=1;added.push(id)}});if(added.length){persist();renderDex()}return added}
   function unmarkOwn(ids){var m=dm('own');ids.forEach(function(id){delete m[id]});persist();renderDex()}
   window.GO={refreshDex:function(){if(DEXLIST.length)renderDex()},markOwn:markOwn,unmarkOwn:unmarkOwn,D:D,MAN:MAN,esc:esc,art:art,fig:fig,bonusRow:bonusRow,bonusChip:bonusChip,MON:MON,DOW:DOW,dex:function(){return dex},showTab:showTab,HERO:HERO,TAGKEY:TAGKEY,tagHtml:tagHtml};
-  var ds=document.createElement('script');ds.src='/dash.js?v=20261030m';document.body.appendChild(ds);
+  var ds=document.createElement('script');ds.src='/dash.js?v=20261030n';document.body.appendChild(ds);
 })();
 
 }).catch(function(){var panel=document.getElementById('load-error');if(panel)panel.hidden=false;var retry=document.getElementById('load-retry');if(retry)retry.addEventListener('click',function(){window.location.reload()},{once:true})});
