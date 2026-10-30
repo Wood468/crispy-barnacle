@@ -1,5 +1,5 @@
 {
-  "asOf": "13 Oct 2026",
+  "asOf": "30 Oct 2026",
   "events": [
     {
       "id": "space",
@@ -283,14 +283,15 @@
       "p": [
         "Chandelure is the Super Mega Raid boss, and Mega Chandelure debuts.",
         "Chandelure caught from Super Mega Raids has Mega Level 1 unlocked. Increased chance of Shiny Chandelure.",
-        "Up to 14 Raid Passes a day from Gym Photo Discs. Remote Raid limit is 20 from Fri Oct 30, 5 pm to Sat Oct 31, 8 pm (Pacific time).",
-        "The ticket (US$4.99 tier) adds extra bonuses; the official post says it will be in the web store soon."
+        "Up to 6 free Raid Passes from spinning Gym Photo Discs, or up to 14 with the ticket. Remote Raid limit is 20 from Fri Oct 30, 5 pm to Sat Oct 31, 8 pm (Pacific time).",
+        "The ticket (US$4.99 or the local equivalent) also adds a higher chance of Rare Candy XL from raids and an extra 5,000 XP and 5,000 Stardust from Super Mega Raids. It is sold in the in-game shop until Sat Oct 31, 5 pm local time."
       ],
       "art": [
         "Chandelure",
         "Mega Chandelure"
       ],
-      "sourceUrl": "https://pokemongo.com/news/chandelure-super-mega-raid-day-2026/"
+      "sourceUrl": "https://pokemongo.com/news/chandelure-super-mega-raid-day-2026/",
+      "source": "Official Pokémon GO announcement"
     },
     {
       "id": "halloween2",
@@ -303,7 +304,7 @@
       ],
       "p": [
         "GO Pass progression runs Oct 27, 10 am to Nov 5, 8 pm local time. Rank 10 unlocks 2x Candy (3x with GO Pass Deluxe); Rank 20 unlocks 2x Stardust (3x with Deluxe).",
-        "Shiny Greavard debuts (wild, GO Pass and Field Research), and Houndstone evolves from it with 50 Candy. More Rowlet, Greavard and Litwick in the wild; Gengar is rare.",
+        "Shiny Greavard debuts: find Greavard in the wild or from GO Pass and Field Research tasks. Litwick, Rowlet in a Halloween costume and Greavard are in the wild, and you might meet Gengar in a Spooky Festival costume. Leek Duck adds that Houndstone evolves from Greavard with 50 Candy (not in the official post).",
         "Mega Sableye can reach Super Max Level and gains Night Shade+ while Mega Evolved."
       ],
       "art": [
@@ -323,7 +324,23 @@
           "label": "Spooky Festival"
         }
       ],
-      "sourceUrl": "https://leekduck.com/events/halloween-2026-part-2/"
+      "sourceUrl": "https://pokemongo.com/news/halloween-part-2-2026",
+      "source": "Official Pokémon GO announcement"
+    },
+    {
+      "id": "gopassnov",
+      "t": "GO Pass: November",
+      "s": "2026-11-03T10:00",
+      "e": "2026-12-01T10:00",
+      "tags": ["Event"],
+      "p": [
+        "Free GO Pass from Tue Nov 3, 10 am to Tue Dec 1, 10 am local time. Free rewards include a Groudon encounter, 400 PokéCoins, a Lucky Egg, a Rare Candy XL and Stardust.",
+        "GO Pass Deluxe (US$7.99) adds 1,000 more PokéCoins, a Super Incubator and extra encounters; Deluxe + 10 Ranks is US$9.99.",
+        "No daily GO Point limit from Sat Nov 28, 12 am to Sun Nov 29, 11:59 pm. Claim rewards by Thu Dec 3, 10 am local time."
+      ],
+      "art": ["Groudon"],
+      "sourceUrl": "https://pokemongo.com/news/go-pass-november-2026",
+      "source": "Official Pokémon GO announcement"
     },
     {
       "id": "sendai",
@@ -349,7 +366,9 @@
         "2x Candy",
         "Up to 6 Special Trades at half cost",
         "Higher shiny chance"
-      ]
+      ],
+      "sourceUrl": "https://pokemongo.com/en/gowildarea/sendai",
+      "source": "Official Pokémon GO announcement"
     },
     {
       "id": "into",
@@ -358,13 +377,13 @@
       "e": "2026-11-13T20:00",
       "tags": ["Event", "Raids", "Debut"],
       "p": [
-        "Crowned Sword Zacian and Crowned Shield Zamazenta in five-star raids, with Raid Hour at 6 pm on Nov 9 (Zacian) and Nov 10 (Zamazenta).",
+        "Crowned Sword Zacian and Crowned Shield Zamazenta in five-star raids, with Raid Hour at 6 pm on Nov 9 (Zacian) and Nov 10 (Zamazenta). Druddigon and Orthworm in three-star raids.",
         "Dynamax Regidrago debuts in five-star Max Battles on Nov 12; Registeel Nov 11, Latias and Latios Nov 13. Dynamax Meltan debuts in GO Pass.",
         "Remote Raid limit 30 (Nov 9 to 13). Shiny Gimmighoul from the Coin Bag and shiny Meltan from the Mystery Box until Nov 15, 6 pm. Daily Discoveries pause Nov 9 to 15."
       ],
       "art": ["Zacian", "Zamazenta", "Regidrago"],
-      "sourceUrl": "https://leekduck.com/events/into-the-wild-2026/",
-      "source": "Leek Duck"
+      "sourceUrl": "https://pokemongo.com/news/into-the-wild-2026",
+      "source": "Official Pokémon GO announcement"
     },
     {
       "id": "wag",
@@ -379,13 +398,15 @@
       "p": [
         "Gigantamax Duraludon debuts in six-star Max Battles. Dynamax Dialga on Saturday, Dynamax Palkia on Sunday.",
         "Five-star raids: Zekrom and White Kyurem on Saturday, Reshiram and Black Kyurem on Sunday.",
-        "Optional ticket (A$ price not confirmed). Daily Discoveries pause Nov 9 to 15."
+        "Optional ticket US$11.99 in the web store. Daily Discoveries pause Nov 9 to 15."
       ],
       "art": [
         "Gigantamax Duraludon",
         "Dialga",
         "Palkia"
-      ]
+      ],
+      "sourceUrl": "https://pokemongo.com/en/gowildarea/global",
+      "source": "Official Pokémon GO announcement"
     },
     {
       "id": "minior2",
@@ -416,6 +437,38 @@
       "source": "Leek Duck"
     },
     {
+      "id": "dyntrails",
+      "t": "Dynamax Trails",
+      "s": "2026-11-16T10:00",
+      "e": "2026-11-23T20:00",
+      "tags": ["Max Battles", "Event"],
+      "p": [
+        "Wild encounters include Pokémon that have debuted in Dynamax Max Battles (not Legendary or Mythical), with a chance of Max Particles from those catches and from Max Battles.",
+        "Max Particle limit 2,400 and 8x Max Particles from Power Spots. Event-themed Field Research.",
+        "Grookey, Scorbunny and Sobble Spotlight Hour on Thu Nov 19, 6 pm to 7 pm, with 2x catch Candy."
+      ],
+      "bonuses": [
+        "Max Particle limit 2,400",
+        "8x Max Particles from Power Spots"
+      ],
+      "sourceUrl": "https://pokemongo.com/news/dynamax-trails-eternamax-eternatus-2026",
+      "source": "Official Pokémon GO announcement"
+    },
+    {
+      "id": "eternamax",
+      "t": "Eternamax Eternatus Returns",
+      "s": "2026-11-21T11:00",
+      "e": "2026-11-21T14:00",
+      "tags": ["Max Battles"],
+      "p": [
+        "Eternamax Eternatus takes over most Power Spots in Max Battles, 11 am to 2 pm local time. It cannot be caught; beating it gives Eternatus Candy and Candy XL.",
+        "Power Spots refresh more often. Remote Raid limit 30 from Fri Nov 20, 1 pm to Sat Nov 21, 6 pm (Pacific time)."
+      ],
+      "art": ["Eternatus"],
+      "sourceUrl": "https://pokemongo.com/news/dynamax-trails-eternamax-eternatus-2026",
+      "source": "Official Pokémon GO announcement"
+    },
+    {
       "id": "novcd",
       "t": "November Community Day",
       "s": "2026-11-21T14:00",
@@ -441,6 +494,19 @@
       ],
       "sourceUrl": "https://pokemongo.com/news/communityday-november-2026-pawniard",
       "source": "Official Pokémon GO announcement"
+    },
+    {
+      "id": "twilightwishes",
+      "t": "Twilight Wishes",
+      "s": "2026-11-24T10:00",
+      "e": "2026-11-30T20:00",
+      "tags": ["Event"],
+      "p": [
+        "Listed by Leek Duck for Nov 24, 10 am to Nov 30, 8 pm local time. No details are announced yet."
+      ],
+      "status": "community_reported",
+      "sourceUrl": "https://leekduck.com/events/twilight-wishes-2026/",
+      "source": "Leek Duck"
     },
     {
       "id": "smr2",
@@ -476,6 +542,21 @@
       "d": "2026-10-29",
       "n": "Gastly",
       "b": "2x evolution XP"
+    },
+    {
+      "d": "2026-11-05",
+      "n": "Teddiursa (witch hat)",
+      "b": "2x evolution XP"
+    },
+    {
+      "d": "2026-11-19",
+      "n": "Grookey, Scorbunny and Sobble",
+      "b": "2x catch Candy"
+    },
+    {
+      "d": "2026-11-26",
+      "n": "Noibat",
+      "b": "2x catch Candy"
     }
   ],
   "raidHour": [
@@ -490,6 +571,26 @@
     {
       "d": "2026-10-28",
       "n": "Origin Forme Giratina"
+    },
+    {
+      "d": "2026-11-04",
+      "n": "Giratina (Altered Forme)"
+    },
+    {
+      "d": "2026-11-09",
+      "n": "Crowned Sword Zacian"
+    },
+    {
+      "d": "2026-11-10",
+      "n": "Crowned Shield Zamazenta"
+    },
+    {
+      "d": "2026-11-18",
+      "n": "Cresselia and Darkrai"
+    },
+    {
+      "d": "2026-11-25",
+      "n": "Deoxys (all four Formes)"
     }
   ],
   "week": [
@@ -569,8 +670,39 @@
       "five": "Origin Forme Giratina",
       "mega": "Mega Sableye",
       "shadow": "Shadow Landorus (Incarnate), to Nov 3",
-      "low": { "one": ["Pikachu", "Wearing a hat and capelet", "Antique Sinistea", "Wearing a bow"], "three": ["Cofagrigus", "Trevenant", "Dhelmise"], "shadowOne": ["Shadow Gastly", "Shadow Totodile", "Shadow Shieldon", "Shadow Gible"], "shadowThree": ["Shadow Primeape", "Shadow Kirlia", "Shadow Drapion"], "observed": "2026-10-28", "source": "Pokémon GO Hub current raids" },
+      "low": { "one": ["Pikachu (hat and capelet)", "Sinistea (bow)"], "three": ["Cofagrigus", "Trevenant", "Dhelmise"], "shadowOne": ["Shadow Gastly", "Shadow Totodile", "Shadow Shieldon", "Shadow Gible"], "shadowThree": ["Shadow Primeape", "Shadow Kirlia", "Shadow Drapion"], "observed": "2026-10-30", "source": "Official Halloween 2026 posts (1-star); Leek Duck raid bosses (3-star and Shadow)" },
       "rh": "Origin Forme Giratina"
+    },
+    {
+      "s": "2026-11-04T10:00",
+      "e": "2026-11-09T10:00",
+      "five": "Giratina (Altered Forme)",
+      "mega": "Mega Sableye",
+      "shadow": "Shadow Tornadus (Incarnate), to Nov 8",
+      "rh": "Giratina (Altered Forme), Wed Nov 4"
+    },
+    {
+      "s": "2026-11-09T10:00",
+      "e": "2026-11-13T20:00",
+      "five": "Crowned Sword Zacian and Crowned Shield Zamazenta",
+      "low": { "three": ["Druddigon", "Orthworm"], "source": "Official Into the Wild announcement" },
+      "rh": "Crowned Sword Zacian, Mon Nov 9 · Crowned Shield Zamazenta, Tue Nov 10"
+    },
+    {
+      "s": "2026-11-16T10:00",
+      "e": "2026-11-25T10:00",
+      "five": "Cresselia and Darkrai",
+      "mega": "Mega Banette",
+      "shadow": "Shadow Tornadus (Incarnate)",
+      "rh": "Cresselia and Darkrai, Wed Nov 18"
+    },
+    {
+      "s": "2026-11-25T10:00",
+      "e": "2026-12-02T10:00",
+      "five": "Deoxys (all four Formes)",
+      "mega": "Mega Metagross",
+      "shadow": "Shadow Tornadus (Incarnate), to Dec 1",
+      "rh": "Deoxys (all four Formes), Wed Nov 25"
     }
   ],
   "maxBattles": [
@@ -598,6 +730,21 @@
       "2026-10-26",
       "2026-11-01",
       "Sableye"
+    ],
+    [
+      "2026-11-02",
+      "2026-11-08",
+      "Machop"
+    ],
+    [
+      "2026-11-23",
+      "2026-11-29",
+      "Espurr"
+    ],
+    [
+      "2026-11-30",
+      "2026-12-06",
+      "Cryogonal"
     ]
   ],
   "best": {
@@ -729,8 +876,8 @@
     ]
   },
   "raidNow": {
-    "Yveltal": "5-star raid Oct 7 to 13",
-    "Mega Charizard Y": "Mega raid Oct 21 to 27"
+    "Mega Banette": "Mega raid Nov 16 to 24",
+    "Mega Metagross": "Mega raid Nov 25 to Dec 1"
   },
   "inPerson": [
     {
@@ -769,7 +916,7 @@
         "Zekrom"
       ],
       "bullets": [
-        "Free for everyone. Optional ticket (A$ price not confirmed) adds bonuses and Special Research.",
+        "Free for everyone. Optional ticket (US$11.99, web store) adds bonuses and Special Research.",
         "Six-star Max Battles for Gigantamax Duraludon, plus Dynamax Dialga and Palkia.",
         "Steel and Dragon types rotate hourly in habitats.",
         "Mighty Latias and Latios by Incense for ticket holders."
@@ -865,7 +1012,7 @@
       {
         "kind": "Mega",
         "name": "Mega Sableye",
-        "when": "Oct 28 to Nov 3",
+        "when": "Oct 28 to Nov 8",
         "note": "Mega raid.",
         "art": [
           "Mega Sableye"
@@ -891,10 +1038,29 @@
       },
       {
         "kind": "Mega",
-        "name": "Super Mega Raid Days",
-        "when": "Sat Oct 31 · Sat Nov 28",
-        "note": "On the calendar, but no bosses are announced yet.",
+        "name": "Super Mega Raid Day",
+        "when": "Sat Nov 28",
+        "note": "On the calendar, but no boss is announced yet.",
         "art": []
+      },
+      {
+        "kind": "Mega",
+        "name": "Mega Chandelure",
+        "when": "Sat Oct 31 · 2 pm to 5 pm",
+        "note": "Mega Chandelure debuts in Super Mega Raids on Chandelure Super Mega Raid Day, with a higher chance of Shiny Chandelure.",
+        "art": [
+          "Mega Chandelure"
+        ]
+      },
+      {
+        "kind": "Dynamax",
+        "name": "Dynamax Regidrago",
+        "when": "Thu Nov 12 · Into the Wild",
+        "note": "Dynamax Regidrago debuts in five-star Max Battles. Dynamax Meltan debuts in the Into the Wild GO Pass (Nov 9 to 15).",
+        "art": [
+          "Regidrago",
+          "Meltan"
+        ]
       }
     ],
     "gigaReleased": [
@@ -994,7 +1160,6 @@
       "Pyroar",
       "Scolipede",
       "Excadrill",
-      "Chandelure",
       "Emboar",
       "Eelektross",
       "Scrafty",
@@ -1039,6 +1204,14 @@
               {
                 "n": "Palkia",
                 "note": "GO Wild Area, Nov 6 to 8 and Nov 14 to 15"
+              },
+              {
+                "n": "Regidrago",
+                "note": "Five-star Max Battles, Into the Wild, Nov 12"
+              },
+              {
+                "n": "Meltan",
+                "note": "Into the Wild GO Pass, Nov 9 to 15"
               }
             ]
           },
@@ -1144,9 +1317,8 @@
                 "note": "Fall Marathon, Oct 13 to 19"
               },
               {
-                "n": "Spooky Mega",
-                "note": "An unnamed Mega arrives on Super Mega Raid Day, Oct 31",
-                "art": []
+                "n": "Mega Chandelure",
+                "note": "Debuts in Super Mega Raids on Super Mega Raid Day, Oct 31 (official)"
               }
             ]
           },
@@ -1167,11 +1339,8 @@
             "groups": [
               {
                 "label": "Megas named in the Oct 1 datamine",
-                "blurb": "Pokémon GO Hub, Oct 1 2026: extra Charged Attacks were found for nearly every Mega, including ones not in GO yet. These seven were named with moves not yet revealed. Unconfirmed.",
+                "blurb": "Pokémon GO Hub, Oct 1 2026: extra Charged Attacks were found for nearly every Mega, including ones not in GO yet. These were named with moves not yet revealed (Mega Chandelure has since been announced). Unconfirmed.",
                 "items": [
-                  {
-                    "n": "Mega Chandelure"
-                  },
                   {
                     "n": "Mega Froslass"
                   },

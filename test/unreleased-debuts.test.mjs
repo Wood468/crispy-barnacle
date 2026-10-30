@@ -38,7 +38,8 @@ test("with the real data.json, Minior, Bramblin and Brambleghast come out Releas
   const data = JSON.parse(readFileSync("public/data.json", "utf8"));
   const r = computeStatuses(trackedItems(data), [], [], [], new Set(), NOW, debutedSpecies(data.events, NOW));
   for (const n of ["Minior", "Bramblin", "Brambleghast"]) assert.equal(r.find((x) => x.n === n).status, "Released", n);
-  assert.notEqual(r.find((x) => x.n === "Spooky Mega").status, "Released");
+  // The announced Mega (formerly the "Spooky Mega" placeholder) debuts Oct 31, after NOW, so it is not Released yet.
+  assert.notEqual(r.find((x) => x.n === "Mega Chandelure" && x.s === "unreleased").status, "Released");
 });
 
 test("a Pokémon named in an event that has already started is Released, a future event alone is not", () => {

@@ -836,8 +836,12 @@ with sync_playwright() as p:
         pg=fpage(api([src(state='unknown',lastOk=fut,lastChecked=fut)],{'state':'fresh','note':'','lastSuccess':fut,'lastAttempt':fut,'failing':[]})); line=pg.inner_text('#fresh-line'); card=menu_card(pg)
         check('future time: not shown as a refresh in header or card', 'Jan' not in line and '2027' not in line and 'Jan' not in card.split('Data files')[0], line)
         # F. server off / unreachable
-        pg=fpage(api([],{},enabled=False),clock='2026-10-29T22:45:00+11:00'); line=pg.inner_text('#fresh-line')
-        check('live feed off: names the snapshot date and warns when the snapshot is old', 'Live feed not connected' in line and 'as of 13 Oct 2026' in line and 'snapshot may be stale' in line and not _re.search(r'\d+:\d\d (am|pm)',line), line)
+        # The snapshot date comes from the real data.json, so this check does not go stale when asOf is bumped.
+        # fresh.js calls a snapshot stale after 72 hours; set the clock 4 days past asOf.
+        _dt=__import__('datetime'); ASOF=json.load(open('public/data.json',encoding='utf-8'))['asOf']
+        old_clock=(_dt.datetime.strptime(ASOF,'%d %b %Y')+_dt.timedelta(days=4,hours=12)).strftime('%Y-%m-%dT%H:%M:%S+11:00')
+        pg=fpage(api([],{},enabled=False),clock=old_clock); line=pg.inner_text('#fresh-line')
+        check('live feed off: names the snapshot date and warns when the snapshot is old', 'Live feed not connected' in line and 'as of '+ASOF in line and 'snapshot may be stale' in line and not _re.search(r'\d+:\d\d (am|pm)',line), line)
         pg=page(extra={'**/api/sources':('{}',500)}); pg.wait_for_selector('#fresh-line:not([hidden])'); line=pg.inner_text('#fresh-line')
         check('server unreachable: says freshness cannot be checked, no refresh time', 'Could not reach the server' in line and not _re.search(r'\d+:\d\d (am|pm)',line), line)
         # G. trust is independent of freshness
