@@ -545,16 +545,18 @@ Promise.all([fetch('/data.json').then(function(r){return r.json()}),fetch('/art/
   document.addEventListener('gomoves',refreshMoves);
   if(window.GOMOVE)GOMOVE.ready.then(function(){setTimeout(refreshMoves,0)});   // covers moves.json finishing before this script ran
   function buildBest(){
+  var previousTypeSel = typeSel;
   TYPES=Object.keys(RAW);all={};
   TYPES.forEach(function(t){RAW[t].forEach(function(r){all[r.split('|')[0]]=1})});
   $('cAll').textContent=Object.keys(all).length;
-  tc.innerHTML='';list.innerHTML='';typeSel='All';
+  tc.innerHTML='';list.innerHTML='';
+  typeSel = previousTypeSel === 'All' ? 'All' : Array.isArray(previousTypeSel) ? previousTypeSel.filter(function(t,i,a){return TYPES.indexOf(t)>-1&&a.indexOf(t)===i}) : (TYPES.indexOf(previousTypeSel)>-1 ? previousTypeSel : 'All');
   ['All'].concat(TYPES).forEach(function(t){
     var b=document.createElement('button');b.type='button';
     b.className='pill '+(t==='All'?'all':'');
     if(t!=='All'){b.style.background=TCOL[t][0];b.style.color=TCOL[t][1]}
     b.innerHTML=(t==='All'?'':'<img class="ti" src="/ico/g/type-'+t.toLowerCase()+'.webp" alt="">')+t;
-    b.setAttribute('aria-pressed',t==='All'?'true':'false');
+    b.setAttribute('aria-pressed',(t==='All' ? typeSel==='All' : matchesBestType(t,typeSel))?'true':'false');
     b.addEventListener('click',function(){
       typeSel=t;
       Array.prototype.forEach.call(tc.children,function(c){c.setAttribute('aria-pressed',c===b?'true':'false')});
@@ -610,10 +612,13 @@ Promise.all([fetch('/data.json').then(function(r){return r.json()}),fetch('/art/
     $('barOwn').style.width=(ownN/Object.keys(all).length*100)+'%';
     applyFilters();
   }
+  function matchesBestType(groupType, selected){
+    return selected==='All'||(Array.isArray(selected)?selected.indexOf(groupType)>-1:groupType===selected);
+  }
   function applyFilters(){
     var q=$('q').value.trim().toLowerCase(),sv=$('status').value,shown=0;
     Array.prototype.forEach.call(document.querySelectorAll('#list .group'),function(g){
-      var vis=0,typeOk=typeSel==='All'||g.dataset.type===typeSel;
+      var vis=0,typeOk=matchesBestType(g.dataset.type,typeSel);
       Array.prototype.forEach.call(g.querySelectorAll('.irow'),function(row){
         var k=row.dataset.key,own=!!dex.have[k],hu=!!dex.hundo[k];
         var ok=typeOk&&(!q||row.dataset.search.indexOf(q)>-1);
@@ -634,6 +639,12 @@ Promise.all([fetch('/data.json').then(function(r){return r.json()}),fetch('/art/
     });
     $('none').hidden=shown>0;
   }
+  window.GOBEST = { showTypes:function(types){
+    var valid = Array.isArray(types) ? types.filter(function(t,i,a){return TYPES.indexOf(t)>-1&&a.indexOf(t)===i}) : [];
+    typeSel = valid.length ? valid : 'All';
+    Array.prototype.forEach.call(tc.children,function(c){var t=c.textContent.trim();c.setAttribute('aria-pressed',(t==='All'?typeSel==='All':matchesBestType(t,typeSel))?'true':'false')});
+    applyFilters();
+  } };
   $('q').addEventListener('input',applyFilters);
   $('status').addEventListener('change',applyFilters);
   function bt(k){return dex.bt[k]||{}}
