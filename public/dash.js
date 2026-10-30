@@ -607,9 +607,9 @@
   });
   function card(ev, opt) {
     opt = opt || {};
-    var k = kindOf(ev), p = phase(ev), saved = isSaved(ev.id);
+    var week = !!opt.week, k = kindOf(ev), p = phase(ev), saved = isSaved(ev.id);
     var timeLabel = ev.utc || ev.region || ev.scope === 'worldwide_local' ? timeMeta(ev) : whenText(ev);
-    return '<article class="evc cmp ' + p + '" style="--k:' + k[1] + ';--kf:' + k[2] + '" data-id="' + esc(ev.id) + '">'
+    return '<article class="evc cmp' + (week ? ' week-card' : '') + ' ' + p + '" style="--k:' + k[1] + ';--kf:' + k[2] + '" data-id="' + esc(ev.id) + '">'
       + '<div class="evc-art">' + featArts(ev, 3) + '</div>'
       + '<div class="evc-main">'
       + '<div class="evc-top"><span class="kind-grp"><span class="kind">' + esc(k[0]) + '</span>' + statusChip(ev) + '</span><span class="cdn" data-id="' + esc(ev.id) + '">' + esc(countdown(ev)) + '</span><button type="button" class="hide-x" data-hide="' + esc(ev.id) + '" aria-label="Hide ' + esc(ev.name) + '" title="Hide this event">✕</button></div>'
@@ -1237,7 +1237,7 @@
       return '<section class="week-day-group" data-week-day="' + esc(group.key) + '"><div class="week-day-head"><span class="week-day-label">' + (tomorrow ? 'Tomorrow' : esc(fmtD(group.start))) + '</span>'
         + (tomorrow ? '<time datetime="' + esc(group.key) + '">' + esc(fmtD(group.start)) + '</time>' : '')
         + '<span class="week-day-count">' + group.events.length + ' ' + (group.events.length === 1 ? 'event' : 'events') + '</span></div><div class="week-day-events">'
-        + group.events.map(function (e) { return card(e); }).join('') + '</div></section>';
+        + group.events.map(function (e) { return card(e, { week: true }); }).join('') + '</div></section>';
     }).join('');
   }
   function renderHomeAgenda() {
