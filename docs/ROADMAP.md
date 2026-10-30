@@ -34,7 +34,7 @@ All merged milestones above passed their post-merge test checks; the latest main
 - ⏳ **QA-5/RES-5/QA-7** In-person events lack a timezone; Sendai/Mexico City merged under one name in some viewer zones.
 - ✅ **RES-8** Reject importer source-page matches when known article and event dates do not overlap; retain existing link/title matching when either date is unknown. Covered by focused regression tests and the post-merge production build.
 - ⏳ **RES-9** Weaker sources can overwrite official data (schedule-audit worldFixes; Reddit coords to public data).
-- ⏳ **UX-1** Data load failure shows "Loading…" forever and no navigation.
+- 🔧 **UX-1** Replace the invisible data-load failure message with a visible, accessible recovery panel and retry action; verify in browser CI before marking complete.
 - ⏳ **UX-2** Horizontal overflow on Today cards at 390px.
 - ⏳ **UX-3** Today "Live" count padded with overseas in-person events.
 - ⏳ **ENG-3** PIN brute-force: no global failure ceiling.
