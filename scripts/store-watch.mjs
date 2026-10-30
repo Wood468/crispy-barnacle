@@ -83,7 +83,7 @@ export function diffStore(prev, snap, nowIso) {
     const k = key(i), o = old[k];
     const oldCurrency = o ? currencyOf(o.price) : "";
     const newCurrency = currencyOf(i.price);
-    const mixed = !!o && oldCurrency !== newCurrency && !!(oldCurrency || newCurrency);
+    const mixed = !!o && !reset && !!oldCurrency && !!newCurrency && oldCurrency !== newCurrency;
     next[k] = {
       name: i.name,
       price: mixed ? o.price : i.price,
