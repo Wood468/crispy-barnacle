@@ -3,7 +3,7 @@
 // into public/places.json only when an event, coordinate pair and source permalink are all present.
 // No API credentials, scraping bypasses, or fabricated coordinates.
 import { readFile, writeFile } from "node:fs/promises";
-import { coords, redditSearchUrl, retryAfterMs, xmlItems } from "./location-discovery-parse.mjs";
+import { coords, fetchWithRateLimit, redditSearchUrl, xmlItems } from "./location-discovery-parse.mjs";
 
 const ROOT = new URL("../public/", import.meta.url);
 const WORLD = JSON.parse(await readFile(new URL("world-events.json", ROOT), "utf8"));
@@ -16,21 +16,14 @@ const upcoming = (WORLD.events || []).filter(e => e && e.id && e.name && e.place
 for (const ev of upcoming) {
   const url = redditSearchUrl(ev.name);
   try {
-    const res = await fetch(url, { headers: { "user-agent": "GOFieldNotesLocationDiscovery/1.0 (public event research; contact: project repository)", accept: "application/atom+xml, application/rss+xml" } });
-    if (res.status === 429) {
-      errors.push("Reddit HTTP 429");
-      rateLimitCount++;
-      if (rateLimitCount >= 2) {
-        errors.push("Stopped after repeated Reddit rate limiting; retrying on the next scheduled run.");
-        break;
-      }
-      const wait = retryAfterMs(res.headers.get("retry-after"));
-      if (wait === null) {
-        errors.push("Reddit requested a long cooldown; deferring to the next scheduled run.");
-        break;
-      }
-      await sleep(wait);
-      continue;
+    const result = await fetchWithRateLimit(url, { headers: { "user-agent": "GOFieldNotesLocationDiscovery/1.0 (public event research; contact: project repository)", accept: "application/atom+xml, application/rss+xml" } });
+    const res = result.response;
+    rateLimitCount += result.rateLimits;
+    if (result.deferred) {
+      errors.push(result.reason === "long-cooldown"
+        ? "Reddit requested a long cooldown; deferring to the next scheduled run."
+        : "Reddit remained rate-limited after one retry; deferring remaining events to the next scheduled run.");
+      break;
     }
     if (!res.ok) { errors.push("Reddit HTTP " + res.status); await sleep(1200); continue; }
     const xml = await res.text();
@@ -55,6 +48,10 @@ for (const ev of upcoming) {
       }
     }
     checked++;
+    if (rateLimitCount >= 2) {
+      errors.push("Stopped after repeated Reddit rate limiting; remaining events deferred to the next scheduled run.");
+      break;
+    }
     await sleep(1200);
   } catch (e) {
     errors.push(String(e.message || e).slice(0, 160));
