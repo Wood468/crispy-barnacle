@@ -2,7 +2,8 @@ import test from "node:test";
 import { readPrivate } from "./_private.mjs";
 import assert from "node:assert/strict";
 import fs from "node:fs";
-import { withSecurityHeaders, SECURITY_HEADERS } from "../src/worker.js";
+import worker, { withSecurityHeaders, SECURITY_HEADERS } from "../src/worker.js";
+import { makeDB } from "./helpers.mjs";
 
 test("every response gets the browser security headers, including framing and cross-site calls", async () => {
   const r = withSecurityHeaders(new Response("hi", { status: 200, headers: { "content-type": "text/html" } }));
