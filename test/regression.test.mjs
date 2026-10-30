@@ -23,7 +23,7 @@ test("dex sync: PIN required, marks round-trip, wrong PIN throttled after 10 att
   const env = mkEnv();
   assert.equal((await call(env, "/api/dex")).status, 401);
   assert.equal((await call(env, "/api/dex", { headers: { "x-pin": "1234" } })).status, 200);
-  const put = await call(env, "/api/dex", { method: "PUT", headers: { "x-pin": "1234" }, body: JSON.stringify({ have: { Mew: 1 }, hundo: { Mewtwo: 1 }, m: { own: { 25: 1 } }, updated: 5 }) });
+  const put = await call(env, "/api/dex", { method: "PUT", headers: { "x-pin": "1234" }, body: JSON.stringify({ have: { Mew: 1 }, hundo: { Mewtwo: 1 }, m: { own: { 25: 1 } }, updated: 5, baseUpdated: 0 }) });
   assert.equal(put.status, 200);
   const got = await (await call(env, "/api/dex", { headers: { "x-pin": "1234" } })).json();
   assert.equal(got.have.Mew, 1); assert.equal(got.have.Mewtwo, 1, "a hundo implies owned"); assert.equal(got.m.own["25"], 1);
