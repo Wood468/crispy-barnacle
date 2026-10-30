@@ -36,19 +36,76 @@ export function endsAtFrom(left, nowIso, prev) {
   return new Date(est).toISOString();
 }
 
+// The store occasionally changes its display currency based on request geography. Treat a whole-store currency flip as
+// a temporary presentation change, not dozens of individual price changes.
+export const currencyOf = price => {
+  const value = String(price || "").trim();
+  const firstDigit = value.search(/\\d/);
+  return firstDigit < 0 ? "" : value.slice(0, firstDigit).trim();
+};
+const CURRENCY_HOLD_MS = 72 * 36e5;
+export function dominantCurrency(prices) {
+  const counts = new Map();
+  for (const price of prices || []) {
+    const currency = currencyOf(price);
+    if (currency) counts.set(currency, (counts.get(currency) || 0) + 1);
+  }
+  return [...counts.entries()].sort((a, b) => b[1] - a[1])[0]?.[0] || "";
+}
+
 export function diffStore(prev, snap, nowIso) {
-  const old = (prev && prev.items) || {}, next = {}, added = [], changed = [], gone = [];
+  const old = (prev && prev.items) || {};
+  const base = prev && prev.items
+    ? (prev.currency || dominantCurrency(Object.values(prev.items).map(o => o.price)))
+    : "";
+  const cur = dominantCurrency((snap.items || []).map(i => i.price));
+  let reset = null;
+
+  if (base && cur && cur !== base) {
+    const previousHold = prev.currencyHold;
+    const hold = previousHold && previousHold.currency === cur && Number.isFinite(Date.parse(previousHold.since))
+      ? previousHold
+      : { currency: cur, since: nowIso };
+    const elapsed = Date.parse(nowIso) - Date.parse(hold.since);
+    if (Number.isFinite(elapsed) && elapsed >= CURRENCY_HOLD_MS) {
+      reset = { from: base, to: cur };
+    } else {
+      return {
+        state: { ...prev, currency: base, currencyHold: hold, updated: nowIso },
+        added: [], changed: [], gone: [], first: false,
+        held: { base, cur, since: hold.since, isNew: !previousHold || previousHold.currency !== cur }
+      };
+    }
+  }
+
+  const next = {}, added = [], changed = [], gone = [];
   for (const i of snap.items) {
     const k = key(i), o = old[k];
-    next[k] = { name: i.name, price: i.price, section: i.section, tag: i.tag, limit: i.limit, firstSeen: o ? o.firstSeen : nowIso, lastSeen: nowIso, endsAt: endsAtFrom(i.left, nowIso, o && o.endsAt) };
-    if (!o) added.push(i); else if (o.price !== i.price) changed.push({ ...i, was: o.price });
+    const oldCurrency = o ? currencyOf(o.price) : "";
+    const newCurrency = currencyOf(i.price);
+    const mixed = !!o && oldCurrency !== newCurrency && !!(oldCurrency || newCurrency);
+    next[k] = {
+      name: i.name,
+      price: mixed ? o.price : i.price,
+      section: i.section,
+      tag: i.tag,
+      limit: i.limit,
+      firstSeen: o ? o.firstSeen : nowIso,
+      lastSeen: nowIso,
+      endsAt: endsAtFrom(i.left, nowIso, o && o.endsAt)
+    };
+    if (!o) added.push(i);
+    else if (!mixed && !reset && o.price !== i.price) changed.push({ ...i, was: o.price });
   }
   const history = { ...((prev && prev.gone) || {}) };
   for (const [k, o] of Object.entries(old)) if (!next[k]) { gone.push(o); history[k] = { ...o, goneAt: nowIso }; }
   for (const k of Object.keys(next)) delete history[k]; // back on sale
   const keep = Object.entries(history).sort((a, b) => String(b[1].goneAt).localeCompare(String(a[1].goneAt))).slice(0, 150);
   const watchStart = (prev && prev.watchStart) || (prev && prev.items ? Object.values(prev.items).map(o => o.firstSeen).sort()[0] : nowIso);
-  return { state: { items: next, gone: Object.fromEntries(keep), watchStart, updated: nowIso }, added, changed, gone, first: !prev || !prev.items };
+  return {
+    state: { items: next, gone: Object.fromEntries(keep), watchStart, updated: nowIso, currency: cur || base },
+    added, changed, gone, first: !prev || !prev.items, reset
+  };
 }
 
 // One message per item: { text, photo, slug, url }.
@@ -89,8 +146,38 @@ async function main() {
   if (!snap || !snap.items || snap.items.length < 3) throw new Error("No usable snapshot");
   const prev = await readJson(STATE, null), now = new Date().toISOString();
   const d = diffStore(prev, snap, now), msgs = buildMessages(d);
-  globalThis.fetch = routed(process.env, "changes", globalThis.fetch);
   const token = process.env.TELEGRAM_BOT_TOKEN, chat = process.env.TELEGRAM_CHAT_ID;
+  if (d.reset) {
+    console.log("Store has stayed in " + d.reset.to + " for 72 hours; taking it as the new baseline.");
+    if (token && chat && process.env.DRY_RUN !== "true") {
+      await routed(process.env, "system")("https://api.telegram.org/bot" + token + "/sendMessage", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({
+          chat_id: chat,
+          text: "🛒 Store watch: the store has stayed in " + d.reset.to + " prices for 72 hours (was " + d.reset.from + "). Baseline reset to " + d.reset.to + "; no price alerts for the switch.",
+          disable_web_page_preview: true
+        })
+      });
+    }
+  }
+  if (d.held) {
+    console.log("Store is showing " + d.held.cur + " prices instead of " + d.held.base + "; ignoring this reading (no alerts, saved prices kept).");
+    if (d.held.isNew && token && chat && process.env.DRY_RUN !== "true") {
+      await routed(process.env, "system")("https://api.telegram.org/bot" + token + "/sendMessage", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({
+          chat_id: chat,
+          text: "🛒 Store watch: the store is showing " + d.held.cur + " prices instead of " + d.held.base + ". Ignoring that reading, so no price alerts. I will say nothing more unless it stays like this.",
+          disable_web_page_preview: true
+        })
+      });
+    }
+    if (process.env.DRY_RUN !== "true") await writeFile(STATE, JSON.stringify(d.state, null, 1) + "\\n");
+    return;
+  }
+  globalThis.fetch = routed(process.env, "changes", globalThis.fetch);
   if (!msgs.length) console.log("Nothing new to tell you (" + snap.items.length + " items in the store).");
   else if (!token || !chat || process.env.DRY_RUN === "true") console.log("Not sending. Messages would be:\n\n" + msgs.map(m => m.text + "\n[" + (m.photo || "no picture") + "]").join("\n\n"));
   else {
