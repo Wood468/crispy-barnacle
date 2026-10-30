@@ -237,7 +237,7 @@ nav.tabs button[aria-selected="true"] svg{stroke-width:2.6}
 .dd .body{padding:0 20px 20px;display:grid;gap:18px}
 .dd h4{display:flex;align-items:center;gap:8px;margin:0 0 4px;font-size:.9rem}
 .st{display:inline-block;border-radius:999px;padding:3px 10px;font:700 .72rem var(--sans);text-transform:uppercase;letter-spacing:.05em}
-.st-a{background:#26833A;color:#fff}.st-d{background:#F59F00;color:#1D1300}.st-n{background:var(--soft);color:var(--fg)}
+.st-a{background:#26833A;color:#fff}.st-d{background:#F59F00;color:#1D1300}.st-n{background:var(--soft);color:var(--fg)}.st-u{background:transparent;color:var(--muted);border:1px dashed var(--ring)}
 .dd .sub{margin:2px 0 8px;font-size:.82rem;color:var(--muted)}
 .dd .lab{font:600 .78rem var(--mono);color:var(--muted);margin:12px 0 6px;text-transform:uppercase}
 .utiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(6.6rem,1fr));gap:8px}
