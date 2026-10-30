@@ -441,16 +441,30 @@ with sync_playwright() as p:
         pg.click('nav.tabs button[data-tab="collect"]'); pg.wait_for_timeout(200); pg.evaluate("document.getElementById('sub-opps').hidden=false")
         check('opportunities: Zorua listed under You still need', 'Zorua'.upper() in pg.inner_text('#opps').upper() and pg.locator('.opp.missing').count()>=1)
         check('unmarked costume/forms are never claimed as have/need', pg.locator('.opp.unknown').count()>=1 and 'not tracked' in pg.inner_text('#opps').lower())
-        # 3. follow + save persist
+        # 3. follow + save persist; the header badge counts actual cards, never empty placeholders or wrappers.
+        check('empty Watchlist does not count its empty-state rows',
+              pg.locator('#wlcount').is_hidden() and pg.locator('#hwatch').get_attribute('aria-label')=='Watchlist',
+              {'badge_hidden':pg.locator('#wlcount').is_hidden(),'aria_label':pg.locator('#hwatch').get_attribute('aria-label')})
         pg.click('nav.tabs button[data-tab="collect"]'); pg.wait_for_timeout(200); pg.evaluate("document.getElementById('sub-opps').hidden=false")
         pg.locator('#opps .fbtn').first.click(); pg.wait_for_timeout(100)
         pg.click('nav.tabs button[data-tab="events"]'); pg.click('#subnav-events button[data-sub="timeline"]'); pg.wait_for_timeout(200)
         pg.locator('#evtimeline .star').first.click(); pg.wait_for_timeout(100)
+        pg.wait_for_function("() => { const b=document.getElementById('wlcount'); return b && !b.hidden && b.textContent==='2'; }")
+        check('Watchlist badge counts one followed Pokémon plus one saved event',
+              pg.locator('#wlcount').inner_text()=='2' and pg.locator('#hwatch').get_attribute('aria-label')=='Watchlist, 2 items')
         ls=pg.evaluate("localStorage.getItem('gofn-us-v1')") or '{}'
         check('follow and save written to local state', 'follow:' in ls and 'saved:' in ls, ls)
         pg.reload(); pg.wait_for_selector('.pc, .prio-empty',state='attached'); pg.click('#hwatch'); pg.wait_for_timeout(300)
-        check('saved + followed survive reload', pg.locator('#savedev .evc').count()>=1 and pg.locator('#followed .opp').count()>=1)
+        check('saved + followed survive reload and badge counts both entries',
+              pg.locator('#savedev .evc').count()>=1 and pg.locator('#followed .opp').count()>=1 and
+              pg.locator('#wlcount').inner_text()=='2' and pg.locator('#hwatch').get_attribute('aria-label')=='Watchlist, 2 items')
         pg.screenshot(path=OUT+'saved.png')
+        pg.locator('#followed .opp .fbtn').first.click()
+        pg.wait_for_function("() => { const b=document.getElementById('wlcount'); return b && !b.hidden && b.textContent==='1'; }")
+        check('unfollowing a Pokémon decrements the Watchlist badge',pg.locator('#wlcount').inner_text()=='1')
+        pg.locator('#savedev .evc [data-save]').first.click()
+        pg.wait_for_function("() => { const b=document.getElementById('wlcount'); return b && b.hidden; }")
+        check('removing the last saved event hides the Watchlist badge',pg.locator('#wlcount').is_hidden())
         # 4. week strip day filter + timeline filter
         pg.click('nav.tabs button[data-tab="events"]'); pg.click('#subnav-events button[data-sub="timeline"]'); pg.wait_for_timeout(200)
         pg.click('.wd[data-day="2026-10-10"]'); pg.wait_for_timeout(150)
