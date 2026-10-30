@@ -61,7 +61,7 @@ function placeOfStop(t) {
   const hits = PLACES.map(p => ({ p, i: t.search(p.re) })).filter(x => x.i >= 0).sort((a, b) => (b.p.label.includes(",") - a.p.label.includes(",")) || a.i - b.i);
   return hits.length ? { place: hits[0].p.label, area: hits[0].p.area } : null;
 }
-export const IN_PERSON = /pok[eé]mon[ -]run|city safari|safari zone|wild area|go fest|go tour|pok[eé]xciting|airport|in[- ]person|venue|know before you go|anniversary|collaborat|partners? with|museum|stadium|pok[eé]mon center|go lab|\blab\b|tour\b|festival of lights|exclusive|only available in|limited to/i;
+export const IN_PERSON = /pok[eé]mon[ -]run|city safari|safari zone|wild area|go fest|go tour|pok[eé]xciting|airport|in[- ]person|taking place at|venue|know before you go|anniversary|collaborat|partners? with|museum|stadium|pok[eé]mon center|go lab|\blab\b|tour\b|festival of lights|exclusive|only available in|limited to/i;
 export const SKIP_NEWS = /this week in|news this week|weekly roundup|pok[eé]mon news/i;
 const SKIP = /community day|spotlight hour|raid hour|raid day|max monday|battle league|go pass|season |research breakthrough|shadow raid/i;
 
