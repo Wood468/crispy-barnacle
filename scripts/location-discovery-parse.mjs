@@ -31,9 +31,9 @@ export const redditSearchUrl = eventName => {
 export const reportDate = value => {
   const raw = String(value || "").trim();
   if (!raw || !Number.isFinite(Date.parse(raw))) return null;
-  const iso = /^(\\d{4}-\\d\\d-\\d\\d)/.exec(raw);
+  const iso = /^(\d{4}-\d\d-\d\d)/.exec(raw);
   if (iso) return iso[1];
-  const rfc = /(?:^|,\\s*)(\\d{1,2})\\s+([A-Za-z]{3})\\s+(\\d{4})/.exec(raw);
+  const rfc = /(?:^|,\s*)(\d{1,2})\s+([A-Za-z]{3})\s+(\d{4})/.exec(raw);
   if (!rfc) return new Date(Date.parse(raw)).toISOString().slice(0, 10);
   const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
   const month = months.indexOf(rfc[2]);
