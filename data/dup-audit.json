@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-30T14:18:29.866Z",
+ "updated": "2026-10-30T19:30:22.675Z",
  "joinedThisRun": [
   {
    "kept": "w-pokemon-fossil-museum-2026",
@@ -29,6 +29,25 @@
  ],
  "same": [],
  "crossList": [
+  {
+   "keep": {
+    "id": "halloween2",
+    "name": "Halloween 2026, Part Two",
+    "place": "",
+    "start": "2026-11-01",
+    "end": "2026-11-05",
+    "list": "curated"
+   },
+   "dupe": {
+    "id": "w-halloween",
+    "name": "Halloween 2026 Part 2",
+    "place": "",
+    "start": "2026-11-01",
+    "end": "2026-11-05",
+    "list": "world"
+   },
+   "why": "same dates, short matching titles"
+  },
   {
    "keep": {
     "id": "sendai",

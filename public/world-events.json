@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-30T14:18:29.484Z",
+ "updated": "2026-10-30T19:30:22.335Z",
  "events": [
   {
    "id": "w-pokemon-fossil-museum-2026",
@@ -457,7 +457,7 @@
   {
    "id": "w-fc-seoul",
    "name": "FC Seoul",
-   "place": "South Korea",
+   "place": "Seoul, South Korea",
    "area": "Asia",
    "scope": "regional",
    "start": "2026-10-24",
@@ -465,17 +465,12 @@
    "datesKnown": true,
    "sources": [
     {
-     "id": "official",
-     "name": "Pokémon GO (official)",
-     "url": "https://pokemongo.com/ko/news/fc-seoul-2026/"
-    },
-    {
      "id": "serebii",
      "name": "Serebii",
      "url": "https://www.serebii.net/pokemongo/reallifeevents.shtml"
     }
    ],
-   "status": "official",
+   "status": "single",
    "seen": "2026-10-30"
   },
   {
@@ -503,6 +498,25 @@
    "seen": "2026-10-24"
   },
   {
+   "id": "w-pok-mon-go-raid-schedule-current-bosses-november-2",
+   "name": "Pokémon GO Raid Schedule & Current Bosses (November 2026)",
+   "place": "",
+   "area": "Worldwide",
+   "scope": "global",
+   "start": "2026-10-28",
+   "end": "2026-11-03",
+   "datesKnown": true,
+   "sources": [
+    {
+     "id": "hub",
+     "name": "Pokémon GO Hub",
+     "url": "https://pokemongohub.net/post/guide/current-go-raids/"
+    }
+   ],
+   "status": "single",
+   "seen": "2026-10-30"
+  },
+  {
    "id": "w-pok-mon-run-30-kaohsiung",
    "name": "Pokémon RUN 30: Kaohsiung",
    "place": "Kaohsiung, Taiwan (Dream Mall)",
@@ -526,6 +540,26 @@
    ],
    "status": "official",
    "seen": "2026-10-17"
+  },
+  {
+   "id": "w-halloween",
+   "name": "Halloween 2026 Part 2",
+   "place": "",
+   "area": "Worldwide",
+   "scope": "global",
+   "start": "2026-11-01",
+   "end": "2026-11-05",
+   "datesKnown": true,
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "url": "https://leekduck.com/events/halloween-2026-part-2/",
+     "auto": true
+    }
+   ],
+   "status": "single",
+   "seen": "2026-10-30"
   },
   {
    "id": "w-celebrate-the-festival-of-lights-with-the-return-o",
@@ -1143,30 +1177,10 @@
     {
      "id": "official",
      "name": "Pokémon GO (official)",
-     "url": "https://pokemongo.com/ko/news/go-wild-area-stamp-rally-details-2026/"
+     "url": "https://pokemongo.com/ja/news/go-wild-area-stamp-rally-details-2026/"
     }
    ],
    "status": "official",
-   "seen": "2026-10-30"
-  },
-  {
-   "id": "w-halloween",
-   "name": "Halloween 2026 Part 2",
-   "place": "",
-   "area": "Worldwide",
-   "scope": "global",
-   "start": "2026-11-01",
-   "end": "2026-11-05",
-   "datesKnown": true,
-   "sources": [
-    {
-     "id": "leekduck",
-     "name": "Leek Duck",
-     "url": "https://leekduck.com/events/halloween-2026-part-2/",
-     "auto": true
-    }
-   ],
-   "status": "single",
    "seen": "2026-10-30"
   }
  ]

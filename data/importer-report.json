@@ -1,5 +1,5 @@
 {
- "runAt": "2026-10-30T14:18:29.486Z",
+ "runAt": "2026-10-30T19:30:22.337Z",
  "sources": {
   "official": {
    "listed": 24,
@@ -10,13 +10,13 @@
    "error": ""
   },
   "hub": {
-   "listed": 15,
+   "listed": 18,
    "error": ""
   }
  },
  "pagesRead": 80,
  "events": 89,
- "worldEvents": 61,
+ "worldEvents": 63,
  "worldUndated": [
   "GO Wild Area Stamp Rally"
  ],
@@ -95,6 +95,21 @@
    "source": "leekduck",
    "title": "Shadow Tornadus (Incarnate Forme) in Shadow Raids",
    "url": "https://leekduck.com/events/shadow-tornadus-incarnate-forme-in-shadow-raids-november-16-2026/"
+  },
+  {
+   "source": "hub",
+   "title": "Pokémon GO Raid Hour Schedule (November 2026)",
+   "url": "https://pokemongohub.net/post/guide/raid-hour-schedule/"
+  },
+  {
+   "source": "hub",
+   "title": "Pokémon GO Raid Schedule & Current Bosses (November 2026)",
+   "url": "https://pokemongohub.net/post/guide/current-go-raids/"
+  },
+  {
+   "source": "hub",
+   "title": "Pokémon GO Spotlight Hours Schedule (November 2026)",
+   "url": "https://pokemongohub.net/post/guide/spotlight-hour-schedule/"
   },
   {
    "source": "hub",
@@ -235,38 +250,35 @@
    "event": "Super Mega Raid Day",
    "field": "bonuses",
    "missingFrom": [
-    "leekduck",
-    "hub"
+    "leekduck"
    ]
   },
   {
    "event": "Super Mega Raid Day",
    "field": "research",
    "missingFrom": [
-    "leekduck",
-    "hub"
-   ]
-  },
-  {
-   "event": "Super Mega Raid Day",
-   "field": "moves",
-   "missingFrom": [
-    "official",
     "leekduck"
    ]
   },
   {
-   "event": "Super Mega Raid Day",
-   "field": "tickets",
+   "event": "Max Monday: Pokémon to be announced",
+   "field": "raids",
    "missingFrom": [
-    "hub"
+    "leekduck"
    ]
   },
   {
-   "event": "Super Mega Raid Day",
-   "field": "dates",
+   "event": "Max Monday: Pokémon to be announced",
+   "field": "shiny",
    "missingFrom": [
-    "hub"
+    "leekduck"
+   ]
+  },
+  {
+   "event": "Max Monday: Pokémon to be announced",
+   "field": "costumes",
+   "missingFrom": [
+    "leekduck"
    ]
   },
   {
