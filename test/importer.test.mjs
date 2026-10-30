@@ -67,6 +67,9 @@ test("date evidence blocks a title or source-link match to a different event win
   const mismatch = { ...matching, fields: { dates: ["October 24, 2026"] } };
   assert.equal(pickEvent(mismatch, events), null, "a high-confidence title is not enough when known dates do not overlap");
 
+  const multipleDates = { ...matching, fields: { dates: ["October 24, 2026", "November 21, 2026"] } };
+  assert.equal(pickEvent(multipleDates, events).event.id, "z", "any extracted event-date range may establish overlap");
+
   const linkedMismatch = { ...mismatch, url: event.link };
   assert.equal(pickEvent(linkedMismatch, events), null, "an explicit URL does not override contradictory known dates");
 
