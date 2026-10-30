@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-30T18:00:27.531Z",
+ "updated": "2026-10-30T22:20:57.321Z",
  "state": "ok",
  "scrapedDuckEvents": 54,
  "missingHere": [],
@@ -83,6 +83,11 @@
    "id": "w-pok-mon-go-dia-de-muertos-2026-mexico-exclusive-ev",
    "name": "Dia de Muertos 2026: Mexico",
    "start": "2026-10-27"
+  },
+  {
+   "id": "w-pok-mon-go-raid-schedule-current-bosses-november-2",
+   "name": "Pokémon GO Raid Schedule & Current Bosses (November 2026)",
+   "start": "2026-10-28"
   },
   {
    "id": "w-pok-mon-run-30-kaohsiung",
