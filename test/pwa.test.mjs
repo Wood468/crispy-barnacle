@@ -36,14 +36,16 @@ test("standard PNG icons have the dimensions declared in the manifest", () => {
 test("PWA entry page links to the manifest and iOS touch icon and registers the service worker", () => {
   assert.match(html, /rel="manifest" href="\/manifest\.webmanifest"/);
   assert.match(html, /rel="apple-touch-icon" href="\/icon-180\.png"/);
+  assert.match(html, /dash\.css\?v=20261030a/);
+  assert.match(html, /app\.js\?v=20261030e/);
   assert.match(html, /\/pwa\.js/);
 });
 
 test("service worker versions the cache, pre-caches offline fallback, and never handles API responses", () => {
-  assert.match(sw, /gofn-shell-v121/);
+  assert.match(sw, /gofn-shell-v122/);
   assert.match(sw, /'\/event-moves\.json'/, "event-only move data is available to offline event details");
   assert.match(sw, /'\/dash\.css\?v=20261030a'/, "the current dashboard stylesheet is available to the offline shell");
-  assert.match(sw, /'\/app\.js\?v=20261030d'/, "the current app bootstrap is available to the offline shell");
+  assert.match(sw, /'\/app\.js\?v=20261030e'/, "the current app bootstrap is available to the offline shell");
   assert.match(sw, /'\/dash\.js\?v=20261030i'/, "the current dashboard script is available to the offline shell");
   assert.match(sw, /'\/detail\.js\?v=20261030d'/, "the current event detail script is available to the offline shell");
   assert.match(sw, /'\/places\.js\?v=20261029a'/, "the current sourced venue script is available to the offline shell");
