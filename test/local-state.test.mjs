@@ -38,6 +38,25 @@ test("Dex snapshot merge keeps marks from both devices and uses the newer snapsh
   assert.equal(remoteWins.have[26], 1, "a mark present only on the local device is retained");
 });
 
+
+test("three-way Dex reconciliation propagates deletions and preserves independent additions", () => {
+  const baseline = { have: { 25: 1, 26: 1, 27: 1 }, hundo: {}, m: { shiny: { 25: 1, 26: 1 } }, bt: {} };
+  const local = { have: { 25: 2, 27: 1, 28: 1 }, hundo: {}, m: { shiny: { 25: 2 } }, bt: {} };
+  const remote = { have: { 25: 0, 26: 1, 29: 1 }, hundo: {}, m: { shiny: { 25: 0, 26: 1 } }, bt: {} };
+  const merged = LOCAL.mergeDexSnapshot(local, remote, 300, 200, baseline);
+  assert.equal(merged.have[25], 2, "newer local edit wins a same-key conflict");
+  assert.equal(merged.have[26], 1, "an unchanged remote mark remains");
+  assert.equal(merged.have[27], undefined, "a remote deletion wins when the local value is unchanged");
+  assert.equal(merged.have[28], 1, "local-only addition survives");
+  assert.equal(merged.have[29], 1, "remote-only addition survives");
+
+  const localDelete = { have: { 25: 1 }, hundo: {}, m: {}, bt: {} };
+  const remoteUnchanged = { have: { 25: 1, 26: 1 }, hundo: {}, m: {}, bt: {} };
+  const base = { have: { 25: 1, 26: 1 }, hundo: {}, m: {}, bt: {} };
+  const deleted = LOCAL.mergeDexSnapshot(localDelete, remoteUnchanged, 300, 200, base);
+  assert.equal(deleted.have[26], undefined, "a local deletion is retained when the server did not change that mark");
+});
+
 test("guest marks merge into the first signed-in account, then stay isolated from other accounts", () => {
   const storage = new Storage();
   storage.setItem("gofn-dex-v1", JSON.stringify({ have: { 25: 1 }, hundo: {}, m: { shiny: { 25: 1 } }, bt: {} }));
@@ -51,6 +70,7 @@ test("guest marks merge into the first signed-in account, then stay isolated fro
   storage.setItem("gofn-dex-v1", JSON.stringify({ have: { 150: 1 }, hundo: { 150: 1 }, m: {}, bt: {} }));
   storage.setItem("gofn-stamp", "200");
   storage.setItem("gofn-us-v1", JSON.stringify({ "saved:account": { v: true, t: 200 } }));
+  storage.setItem("gofn-dex-baseline-v1", JSON.stringify({ have: { 150: 1 }, hundo: { 150: 1 }, m: {}, bt: {} }));
   LOCAL.activate(storage, "guest", false);
 
   // A mark made while signed out is imported without dropping the account's existing marks.
@@ -63,6 +83,7 @@ test("guest marks merge into the first signed-in account, then stay isolated fro
   const dex = read(storage, "gofn-dex-v1");
   assert.deepEqual(Object.keys(dex.have).sort(), ["150", "25", "26"]);
   assert.deepEqual(Object.keys(dex.hundo), ["150"]);
+  assert.deepEqual(read(storage, "gofn-dex-baseline-v1").have, { 150: 1 }, "the account's last server baseline stays attached to that account");
   const us = read(storage, "gofn-us-v1");
   assert.deepEqual(Object.keys(us).sort(), ["saved:account", "saved:extra", "saved:guest"]);
   assert.deepEqual(read(storage, "gofn-saved", []), ["legacy-guest"]);
