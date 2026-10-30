@@ -29,7 +29,7 @@ All merged milestones above passed their post-merge test checks; the latest main
 - 🔧 **QA-3/QA-4** Partially addressed in #105: versioned assets are precached and the shell cache is bumped. The offline redirect/fallback behaviour still needs a separate end-to-end recheck.
 - ⏳ **ENG-2** Security headers/CSP not applied to static pages (no `public/_headers`).
 - ⏳ **QA-5/RES-5/QA-7** In-person events lack a timezone; Sendai/Mexico City merged under one name in some viewer zones.
-- ⏳ **RES-8** Importer merges the wrong source page into an event (no date-overlap check).
+- 🔧 **RES-8** Reject importer source-page matches when known article and event dates do not overlap; retain existing link/title matching when either date is unknown. Focused regression tests added; awaiting CI and production verification.
 - ⏳ **RES-9** Weaker sources can overwrite official data (schedule-audit worldFixes; Reddit coords to public data).
 - ⏳ **UX-1** Data load failure shows "Loading…" forever and no navigation.
 - ⏳ **UX-2** Horizontal overflow on Today cards at 390px.
