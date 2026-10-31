@@ -37,13 +37,30 @@ test("merging marks agreement, single-source details, conflicts and gaps", () =>
   assert.equal(m.conflicts.length, 1); assert.match(m.conflicts[0].a.text + m.conflicts[0].b.text, /3×.*2×|2×.*3×/);
   assert.ok(m.gaps.some(g => g.field === "shiny" && g.missingFrom.includes("hub")));
 });
-test("legacy multi-source labels migrate without rewriting explanatory text", () => {
-  const old = { status: "confirmed", fields: { bonuses: [{ text: "Two sources agree.", status: "confirmed" }] }, note: "This detail has not been confirmed by the game." };
-  assert.deepEqual(normaliseLegacyStatuses(old), { status: "corroborated", fields: { bonuses: [{ text: "Two sources agree.", status: "corroborated" }] }, note: "This detail has not been confirmed by the game." });
+test("legacy multi-source labels preserve official evidence and normalize community agreement", () => {
+  const old = {
+    status: "confirmed",
+    sources: [{ id: "official", trust: "official" }, { id: "hub", trust: "community" }, { id: "leekduck", trust: "community" }],
+    fields: { bonuses: [
+      { text: "Official and community sources agree.", sources: ["official", "hub"], status: "confirmed" },
+      { text: "Community sources agree.", sources: ["hub", "leekduck"], status: "confirmed" }
+    ] },
+    note: "This detail has not been confirmed by the game."
+  };
+  assert.deepEqual(normaliseLegacyStatuses(old), {
+    status: "official",
+    sources: [{ id: "official", trust: "official" }, { id: "hub", trust: "community" }, { id: "leekduck", trust: "community" }],
+    fields: { bonuses: [
+      { text: "Official and community sources agree.", sources: ["official", "hub"], status: "official" },
+      { text: "Community sources agree.", sources: ["hub", "leekduck"], status: "corroborated" }
+    ] },
+    note: "This detail has not been confirmed by the game."
+  });
+  assert.equal(normaliseLegacyStatuses({ status: "confirmed", sources: [{ id: "hub" }, { id: "leekduck" }] }).status, "corroborated");
 });
 
-test("an official source marks a lone detail as official", () => {
-  const m = mergeSources([{ source: { id: "official", trust: "official" }, fields: { bonuses: ["Double Stardust"], featured: [], raids: [], eggs: [], research: [], shiny: [], moves: [], costumes: [], tickets: [], dates: [] } }, { source: { id: "hub", trust: "community" }, fields: { bonuses: [], featured: [], raids: [], eggs: [], research: [], shiny: [], moves: [], costumes: [], tickets: [], dates: [] } }]);
+test("an official source keeps official status when community sources agree", () => {
+  const m = mergeSources([{ source: { id: "official", trust: "official" }, fields: { bonuses: ["Double Stardust"], featured: [], raids: [], eggs: [], research: [], shiny: [], moves: [], costumes: [], tickets: [], dates: [] } }, { source: { id: "hub", trust: "community" }, fields: { bonuses: ["Double Stardust"], featured: [], raids: [], eggs: [], research: [], shiny: [], moves: [], costumes: [], tickets: [], dates: [] } }]);
   assert.equal(m.fields.bonuses[0].status, "official");
 });
 test("discovery reads links and feeds, keeps only event write-ups, and survives a failing source", async () => {
