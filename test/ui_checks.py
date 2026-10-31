@@ -27,6 +27,7 @@ DASH_CSS = (ROOT / 'public' / 'dash.css').read_text()
 DASH_JS = (ROOT / 'public' / 'dash.js').read_text()
 INDEX_HTML = (ROOT / 'public' / 'index.html').read_text()
 SW_JS = (ROOT / 'public' / 'sw.js').read_text()
+APP_JS = (ROOT / 'public' / 'app.js').read_text()
 check('design tokens define semantic colour, spacing, radius, typography and motion roles',
       all(token in BASE_CSS for token in ['--color-canvas:', '--color-surface:', '--color-text-muted:', '--space-4:', '--radius-card:', '--font-body:', '--motion-standard:']))
 check('base stylesheet components use semantic palette and typography roles while legacy aliases remain defined',
@@ -57,7 +58,10 @@ check('Today focus strip has four data-backed signals and a responsive semantic 
 check('versioned stylesheets are referenced by the page and precached offline',
       all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261031f', '/dash.css?v=20261031k']))
 check('offline shell cache version advances with the stylesheet token release',
-      "gofn-shell-v146" in SW_JS)
+      "gofn-shell-v147" in SW_JS)
+check('versioned dashboard scripts are referenced by the entry page and precached offline',
+      '/app.js?v=20261031e' in INDEX_HTML and '/app.js?v=20261031e' in SW_JS and
+      '/dash.js?v=20261031e' in APP_JS and '/dash.js?v=20261031e' in SW_JS)
 check('mobile chrome uses compact 48px navigation targets, safe-area padding and reduced header/body spacing',
       all(token in BASE_CSS for token in ['padding-block:0 calc(72px + env(safe-area-inset-bottom,0px))', '@media (max-width:1199px){header.top{padding-top:var(--space-4)}}', 'padding:4px 8px calc(4px + env(safe-area-inset-bottom,0px))', 'padding:4px 2px;min-height:48px', 'width:1.2rem;height:1.2rem']) and
       'min-height:68px' in BASE_CSS and 'nav.tabs button{min-height:56px}' in DASH_CSS and '@media(max-width:1199px){nav.tabs button{min-height:48px}}' in DASH_CSS)
@@ -135,6 +139,31 @@ with sync_playwright() as p:
           return {actual:{inGame:Number(document.getElementById('day-live-count').textContent),inPerson:Number(document.getElementById('day-inperson-count').textContent)},expected:{inGame:live.filter(e=>e.kind!=='person').length+worldwide.length,inPerson:live.filter(e=>e.kind==='person').length+regional.length}};
         }""")
         check('Overseas in-person activity remains in its separate summary count', overseas_counts['actual']==overseas_counts['expected'] and overseas_counts['actual']['inPerson']>=1, overseas_counts)
+        # A similarly titled in-game card is not proof that an overseas in-person listing is redundant.
+        collision_events = [ev('fixture-game-collision','Overseas In-Person Fixture','raid-battles','2026-10-09T22:00:00.000','2026-10-09T23:30:00.000','community_reported')] + [
+            ev('fixture-collision-filler-'+str(i),'Collision filler '+str(i),'event',
+               '2026-10-%02dT10:00:00.000'%(20+i),'2026-10-%02dT12:00:00.000'%(20+i),'community_reported')
+            for i in range(9)
+        ]
+        collision_api = json.dumps({'enabled':True,'events':collision_events,'sources':[]})
+        collision_page = page(api=collision_api,extra={'**/world-events.json':(world_fixture,200)})
+        collision_page.wait_for_selector('#home-now .agr.reg')
+        collision_reg = collision_page.locator('#home-now .agr.reg').filter(has_text='Overseas In-Person Fixture')
+        collision_game = collision_page.locator('#home-now .evc').filter(has_text='Overseas In-Person Fixture')
+        check('A same-title in-game event cannot suppress the overseas in-person Today card',
+              collision_reg.count()==1 and collision_reg.is_visible() and collision_game.count()==1 and collision_game.is_visible(),
+              (collision_reg.count(),collision_game.count()))
+        collision_counts = collision_page.evaluate("""() => {
+          const t=new Date(), live=window.GODASH.events().filter(e=>!e.long&&!window.GODASH.kindHidden(e.kind)&&e.start<=t&&e.end>t);
+          const regional=window.GODASH.regionalEvents().filter(e=>e.start<=t&&e.end>t);
+          const worldwide=window.GODASH.worldEvents().filter(e=>e.start<=t&&e.end>t);
+          return {actual:{inGame:Number(document.getElementById('day-live-count').textContent),inPerson:Number(document.getElementById('day-inperson-count').textContent)},expected:{inGame:live.filter(e=>e.kind!=='person').length+worldwide.length,inPerson:live.filter(e=>e.kind==='person').length+regional.length}};
+        }""")
+        check('Same-title in-game and overseas in-person activity remain separately counted',
+              collision_counts['actual']==collision_counts['expected'] and
+              collision_counts['actual']['inGame']>=1 and collision_counts['actual']['inPerson']>=1,
+              collision_counts)
+        collision_page.context.close()
         # A later-starting overseas event is still part of today's unfolded agenda.
         future_world_fixture = json.dumps({'events':[{'id':'fixture-overseas-future','name':'Overseas Future Fixture','place':'Example City, Exampleland','area':'Asia','scope':'regional','start':'2026-10-09T22:46:00+11:00','end':'2026-10-10T22:46:00+11:00','sources':[{'url':'https://example.invalid/overseas-future-fixture'}]}]})
         future_overseas = page(extra={'**/world-events.json':(future_world_fixture,200)})

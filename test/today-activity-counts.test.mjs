@@ -27,3 +27,9 @@ test("Today keeps overseas events visible and separates live from later-today re
   assert.match(html, /<span>In person<\/span>/);
   assert.match(html, /id="today-focus-strip"/);
 });
+
+test("regional in-person entries are not suppressed by in-game deduplication", () => {
+  const regionalGuard = dash.indexOf("if (x.scope !== 'global') return true;");
+  const globalDedupe = dash.indexOf("GODEDUPE.same", regionalGuard);
+  assert.ok(regionalGuard >= 0 && globalDedupe > regionalGuard);
+});
