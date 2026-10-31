@@ -103,6 +103,7 @@ test("unchanged world events retain last-good source attribution when a refresh 
   const retained = preserveWorldSources(current, prior, { watchUrls: watched })[0];
   assert.equal(retained.status, "official");
   assert.deepEqual(retained.sources.map(source => source.id).sort(), ["leekduck", "official", "serebii"]);
+  assert.deepEqual(retained.sources.map(source => source.id), ["official", "leekduck", "serebii"], "last-good source order is retained");
   assert.equal(retained.start, "2026-11-06");
   assert.equal(retained.place, "Mexico City, Mexico");
 
