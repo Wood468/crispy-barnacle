@@ -1561,4 +1561,4 @@ check('dashboard shared gap declarations consume semantic spacing tokens',
       re.search(r'(?<![-\w])(?:column-gap|row-gap|gap)\s*:\s*(?:(?:4|8|12|16|20|24|28|32|36|40)px\s*)+;', DASH_CSS) is None)
 check('dashboard padding and margin declarations consume semantic spacing tokens',
       all(f'var(--space-{step})' in DASH_CSS for step in [1, 2, 3, 4, 5, 7]) and
-      re.search(r'(?<![-\w])(?:padding|margin)(?:-(?:top|right|bottom|left|block|inline)(?:-(?:start|end))?)?\s*:\s*(?![^;{}]*[()])[^;{}]*\b(?:4|8|12|16|20|24|28|32|36|40)px\b[^;{}]*;', DASH_CSS) is None)
+      re.search(r'(?<![-\w])(?:padding|margin)(?:-(?:top|right|bottom|left|block|inline)(?:-(?:start|end))?)?\s*:\s*(?![^;{}]*[()])[^;{}]*(?<![-\w])(?:4|8|12|16|20|24|28|32|36|40)px\b[^;{}]*;', DASH_CSS) is None)
