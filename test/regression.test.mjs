@@ -98,9 +98,10 @@ test("Pokebattler guide slugs and image pick-up", () => {
   assert.equal(guideImage("<html></html>"), "");
 });
 
-test("og:image parser reads the event picture and ignores non-https", () => {
+test("og:image parser accepts audited CDN images and rejects unapproved origins", () => {
   assert.equal(ogImage('<head><meta property="og:image" content="https://cdn.leekduck.com/x.jpg?a=1&amp;b=2"></head>'), "https://cdn.leekduck.com/x.jpg?a=1&b=2");
-  assert.equal(ogImage('<meta content="https://a.test/i.png" property="og:image">'), "https://a.test/i.png");
+  assert.equal(ogImage('<meta content="https://storage.googleapis.com/i.png" property="og:image">'), "https://storage.googleapis.com/i.png");
+  assert.equal(ogImage('<meta content="https://a.test/i.png" property="og:image">'), "");
   assert.equal(ogImage('<meta property="og:image" content="http://a.test/i.png">'), "");
   assert.equal(ogImage("<html></html>"), "");
 });
