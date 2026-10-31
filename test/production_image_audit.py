@@ -213,7 +213,7 @@ def run_audit(target: str, viewport: dict | None = None, device_scale_factor: in
                     break
             today_tab_reactivated = today_tab is not None
             if today_tab is not None:
-                today_tab.click(timeout=10000)
+                today_tab.evaluate("(el) => el.click()")
                 page.wait_for_function(
                     "() => { const el = document.getElementById('tab-now'); return !!el && !el.hidden; }",
                     timeout=10000,
@@ -316,14 +316,39 @@ def run_audit(target: str, viewport: dict | None = None, device_scale_factor: in
 
 
 def open_schedule_tab(page) -> bool:
+    panel = page.locator("#tab-events")
+    if panel.count() and panel.is_visible():
+        return True
     tabs = page.locator("#tabs [role=tab]")
     for index in range(tabs.count()):
         tab = tabs.nth(index)
         label = tab.inner_text().strip().lower()
         if "schedule" in label or label == "events":
-            tab.click(timeout=10000)
+            tab.evaluate("(el) => el.click()")
             page.wait_for_function(
                 "() => { const el = document.getElementById('tab-events'); return !!el && !el.hidden; }",
+                timeout=10000,
+            )
+            return True
+    return False
+
+
+def open_today_tab(page) -> bool:
+    panel = page.locator("#tab-now")
+    if panel.count() and panel.is_visible():
+        return True
+    tabs = page.locator("#tabs [role=tab]")
+    for index in range(tabs.count()):
+        tab = tabs.nth(index)
+        attributes = {
+            "data-tab": tab.get_attribute("data-tab") or "",
+            "data-boot-tab": tab.get_attribute("data-boot-tab") or "",
+            "aria-controls": tab.get_attribute("aria-controls") or "",
+        }
+        if is_today_tab(attributes):
+            tab.evaluate("(el) => el.click()")
+            page.wait_for_function(
+                "() => { const el = document.getElementById('tab-now'); return !!el && !el.hidden; }",
                 timeout=10000,
             )
             return True
@@ -350,6 +375,7 @@ def run_offline_cache_audit(target: str) -> dict:
     offline_reload_ok = False
     offline_error = ""
     online_schedule_opened = False
+    today_restored_online = False
     offline_schedule_opened = False
     online_scroll = {"content_height": 0, "steps": 0, "last_y": 0}
     offline_scroll = {"content_height": 0, "steps": 0, "last_y": 0}
@@ -415,9 +441,13 @@ def run_offline_cache_audit(target: str) -> dict:
             )
             page.wait_for_timeout(1500)
             try:
+                page.wait_for_load_state("load", timeout=15000)
+            except Exception:
+                pass
+            try:
                 page.wait_for_function(
                     "() => !!navigator.serviceWorker && !!navigator.serviceWorker.controller",
-                    timeout=15000,
+                    timeout=20000,
                 )
                 controller = True
             except Exception:
@@ -431,24 +461,28 @@ def run_offline_cache_audit(target: str) -> dict:
                     timeout=25000,
                 )
                 page.wait_for_timeout(1000)
+                phase["name"] = "online_schedule_deep_scroll"
                 online_schedule_opened = open_schedule_tab(page)
                 if online_schedule_opened:
-                    phase["name"] = "online_schedule_deep_scroll"
                     online_scroll = scroll_document(page, VIEWPORT["height"])
                     page.wait_for_timeout(500)
 
-                context.set_offline(True)
-                phase["name"] = "offline_reload_today"
-                try:
-                    page.reload(wait_until="domcontentloaded", timeout=30000)
-                    page.wait_for_function(
-                        "() => !!window.GO && !!document.querySelector('#tabs [role=tab]')",
-                        timeout=20000,
-                    )
-                    page.wait_for_timeout(1200)
-                    offline_reload_ok = True
-                except Exception as exc:
-                    offline_error = str(exc)[:300]
+                today_restored_online = open_today_tab(page)
+                if today_restored_online:
+                    context.set_offline(True)
+                    phase["name"] = "offline_reload_today"
+                    try:
+                        page.reload(wait_until="domcontentloaded", timeout=30000)
+                        page.wait_for_function(
+                            "() => !!window.GO && !!document.querySelector('#tabs [role=tab]')",
+                            timeout=20000,
+                        )
+                        page.wait_for_timeout(1200)
+                        offline_reload_ok = True
+                    except Exception as exc:
+                        offline_error = str(exc)[:300]
+                else:
+                    offline_error = "Could not return to Today before the offline reload."
 
                 if offline_reload_ok:
                     phase["name"] = "offline_schedule_deep_scroll"
@@ -483,6 +517,7 @@ def run_offline_cache_audit(target: str) -> dict:
         "offline_reload_ok": offline_reload_ok,
         "offline_reload_error": offline_error,
         "online_schedule_opened": online_schedule_opened,
+        "today_restored_online": today_restored_online,
         "offline_schedule_opened": offline_schedule_opened,
         "online_schedule_scroll": online_scroll,
         "offline_schedule_scroll": offline_scroll,
@@ -514,7 +549,7 @@ def run_matrix(target: str) -> dict:
     try:
         offline = run_offline_cache_audit(target)
     except Exception as exc:
-        offline = {"error": str(exc)[:400], "service_worker_controlled": False, "offline_reload_ok": False}
+        offline = {"error": str(exc)[:400], "service_worker_controlled": None, "offline_reload_ok": False}
 
     return {
         "measured_at_utc": datetime.now(timezone.utc).isoformat(),
@@ -584,6 +619,7 @@ def write_matrix_summary(report: dict) -> None:
         f"- Service worker controlled page: {offline.get('service_worker_controlled', False)}",
         f"- Offline reload succeeded: {offline.get('offline_reload_ok', False)}",
         f"- Schedule opened online/offline: {offline.get('online_schedule_opened', False)} / {offline.get('offline_schedule_opened', False)}",
+        f"- Today restored before offline reload: {offline.get('today_restored_online', False)}",
         f"- Offline image responses served by service worker: {offline.get('offline_image_responses_from_service_worker', 0)}",
         f"- Unexpected non-read methods: {len(offline.get('non_read_methods', []))}",
         "",
@@ -689,6 +725,8 @@ def main() -> int:
             print("::warning::The production page was not controlled by its service worker; offline cache verification was skipped.")
         elif not offline.get("offline_reload_ok"):
             print(f"::warning::The offline cached-session reload failed: {offline.get('offline_reload_error') or offline.get('error') or 'unknown error'}")
+        if offline.get("online_schedule_opened") and not offline.get("today_restored_online"):
+            print("::warning::Today could not be restored before the offline cached-session reload.")
         if offline.get("online_schedule_opened") and not offline.get("offline_schedule_opened"):
             print("::warning::The Schedule tab could not be opened during the offline cached-session pass.")
         if offline.get("failed_images"):
