@@ -22,13 +22,24 @@ const SOURCE_NAMES = Object.fromEntries(SOURCES.map(x => [x.id, x.name]).concat(
 
 // Older generated snapshots used "confirmed" for agreement between multiple sources.
 // Keep that distinct from official confirmation when preserving records across importer runs.
-export function normaliseLegacyStatuses(value) {
-  if (Array.isArray(value)) return value.map(normaliseLegacyStatuses);
+export function normaliseLegacyStatuses(value, inheritedTrust = null) {
+  if (Array.isArray(value)) return value.map(item => normaliseLegacyStatuses(item, inheritedTrust));
   if (!value || typeof value !== "object") return value;
-  return Object.fromEntries(Object.entries(value).map(([key, child]) => [
-    key,
-    key === "status" && child === "confirmed" ? "corroborated" : normaliseLegacyStatuses(child)
-  ]));
+  const sourceRecords = Array.isArray(value.sources) && value.sources.some(s => s && typeof s === "object" && typeof s.id === "string");
+  const trustBySource = sourceRecords
+    ? new Map(value.sources.map(s => [s.id, s.trust || (s.id === "official" ? "official" : "")]))
+    : inheritedTrust;
+  return Object.fromEntries(Object.entries(value).map(([key, child]) => {
+    if (key === "status" && (child === "confirmed" || child === "corroborated")) {
+      const ids = Array.isArray(value.sources) ? value.sources : [];
+      const hasOfficial = ids.some(s =>
+        (typeof s === "string" && (s === "official" || trustBySource?.get(s) === "official")) ||
+        (s && typeof s === "object" && (s.id === "official" || s.trust === "official"))
+      );
+      return [key, hasOfficial ? "official" : "corroborated"];
+    }
+    return [key, normaliseLegacyStatuses(child, trustBySource)];
+  }));
 }
 
 // Serebii lists real-life events in a table: name, place, dates.
