@@ -396,7 +396,7 @@ header.top{display:flex;align-items:flex-start;justify-content:space-between;gap
   #tab-now .today-layout{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(18rem,.9fr);align-items:start;gap:24px}
   #tab-now .today-main{grid-column:1;order:initial}
   #tab-now .today-sidebar{grid-column:2;display:grid;gap:20px;align-content:start;min-width:0}
-  #tab-now .today-sidebar .agenda-section{margin:0}
+  #tab-now .today-sidebar .agenda-section{margin:0;min-width:0}
   #tab-now #action-centre,#tab-now #foryou-sec,#tab-now #weekly-sec,#tab-now #buy-sec{order:initial}
 }
 
