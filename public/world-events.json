@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-31T16:12:57.719Z",
+ "updated": "2026-10-31T17:50:16.941Z",
  "events": [
   {
    "id": "w-pokemon-fossil-museum-2026",
@@ -266,7 +266,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-10-19"
+   "seen": "2026-10-31"
   },
   {
    "id": "w-mexicraneo-exhibit-paseo-de-la-reforma",
@@ -324,44 +324,6 @@
    ],
    "status": "official",
    "seen": "2026-10-19"
-  },
-  {
-   "id": "w-mega-charizard-x-and-mega-charizard-y-in-mega-raid",
-   "name": "Mega Charizard X and Mega Charizard Y in Mega Raids",
-   "place": "",
-   "area": "Worldwide",
-   "scope": "global",
-   "start": "2026-10-21",
-   "end": "2026-10-27",
-   "datesKnown": true,
-   "sources": [
-    {
-     "id": "leekduck",
-     "name": "Leek Duck",
-     "url": "https://leekduck.com/events/mega-charizard-x-mega-charizard-y-in-mega-raids-october-2026/"
-    }
-   ],
-   "status": "single",
-   "seen": "2026-10-31"
-  },
-  {
-   "id": "w-palkia-in-5-star-raid-battles",
-   "name": "Palkia in 5-star Raid Battles",
-   "place": "",
-   "area": "Worldwide",
-   "scope": "global",
-   "start": "2026-10-21",
-   "end": "2026-10-27",
-   "datesKnown": true,
-   "sources": [
-    {
-     "id": "leekduck",
-     "name": "Leek Duck",
-     "url": "https://leekduck.com/events/palkia-in-5-star-raid-battles-october-2026/"
-    }
-   ],
-   "status": "single",
-   "seen": "2026-10-31"
   },
   {
    "id": "w-pok-mon-30th-anniversary-mall-exploration-sm-east-",
@@ -457,7 +419,7 @@
   {
    "id": "w-fc-seoul",
    "name": "FC Seoul",
-   "place": "South Korea",
+   "place": "Seoul, South Korea",
    "area": "Asia",
    "scope": "regional",
    "start": "2026-10-24",
@@ -465,17 +427,12 @@
    "datesKnown": true,
    "sources": [
     {
-     "id": "official",
-     "name": "Pokémon GO (official)",
-     "url": "https://pokemongo.com/ko/news/fc-seoul-2026/"
-    },
-    {
      "id": "serebii",
      "name": "Serebii",
      "url": "https://www.serebii.net/pokemongo/reallifeevents.shtml"
     }
    ],
-   "status": "official",
+   "status": "single",
    "seen": "2026-10-31"
   },
   {
@@ -520,31 +477,6 @@
    ],
    "status": "single",
    "seen": "2026-10-31"
-  },
-  {
-   "id": "w-pok-mon-run-30-kaohsiung",
-   "name": "Pokémon RUN 30: Kaohsiung",
-   "place": "Kaohsiung, Taiwan (Dream Mall)",
-   "area": "Asia",
-   "scope": "regional",
-   "start": "2026-10-31",
-   "end": "2026-11-01",
-   "datesKnown": true,
-   "sources": [
-    {
-     "id": "official",
-     "name": "Pokémon GO (official)",
-     "url": "https://pokemongo.com/news/pokemon-run-30-2026"
-    },
-    {
-     "id": "g47ix",
-     "name": "G47IX infographic",
-     "url": "https://www.g47ix.pro",
-     "auto": true
-    }
-   ],
-   "status": "official",
-   "seen": "2026-10-17"
   },
   {
    "id": "w-halloween",
@@ -644,25 +576,6 @@
    "seen": "2026-10-31"
   },
   {
-   "id": "w-pok-xciting-lands-at-changi-airport-and-jewel-get-",
-   "name": "PokéXciting! Changi Airport and Jewel",
-   "place": "Singapore",
-   "area": "Asia",
-   "scope": "regional",
-   "start": "2026-11-07",
-   "end": "2026-11-08",
-   "datesKnown": true,
-   "sources": [
-    {
-     "id": "official",
-     "name": "Pokémon GO (official)",
-     "url": "https://pokemongo.com/news/event-singapore-30th-anniversary-2026/"
-    }
-   ],
-   "status": "official",
-   "seen": "2026-10-31"
-  },
-  {
    "id": "w-pok-mon-30th-anniversary-mall-exploration-jewel",
    "name": "Pokémon 30th Anniversary Mall Exploration: Jewel",
    "place": "Singapore (Jewel)",
@@ -698,7 +611,26 @@
     }
    ],
    "status": "official",
-   "seen": "2026-10-19"
+   "seen": "2026-10-31"
+  },
+  {
+   "id": "w-pok-xciting-lands-at-changi-airport-and-jewel-get-",
+   "name": "PokéXciting! Changi Airport and Jewel",
+   "place": "Singapore",
+   "area": "Asia",
+   "scope": "regional",
+   "start": "2026-11-07",
+   "end": "2026-11-08",
+   "datesKnown": true,
+   "sources": [
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "url": "https://pokemongo.com/news/event-singapore-30th-anniversary-2026/"
+    }
+   ],
+   "status": "official",
+   "seen": "2026-10-31"
   },
   {
    "id": "w-into-the-wild",
@@ -757,31 +689,6 @@
    ],
    "status": "official",
    "seen": "2026-10-29"
-  },
-  {
-   "id": "w-pok-mon-run-30-new-taipei",
-   "name": "Pokémon RUN 30: New Taipei",
-   "place": "New Taipei, Taiwan (New Taipei Metropolitan Park)",
-   "area": "Asia",
-   "scope": "regional",
-   "start": "2026-11-14",
-   "end": "2026-11-15",
-   "datesKnown": true,
-   "sources": [
-    {
-     "id": "official",
-     "name": "Pokémon GO (official)",
-     "url": "https://pokemongo.com/news/pokemon-run-30-2026"
-    },
-    {
-     "id": "g47ix",
-     "name": "G47IX infographic",
-     "url": "https://www.g47ix.pro",
-     "auto": true
-    }
-   ],
-   "status": "official",
-   "seen": "2026-10-17"
   },
   {
    "id": "w-go-wild-area-global-meetup-karlsruhe",
@@ -861,9 +768,9 @@
    "seen": "2026-10-31"
   },
   {
-   "id": "w-pok-mon-run-30-kuala-lumpur",
-   "name": "Pokémon RUN 30: Kuala Lumpur",
-   "place": "Kuala Lumpur, Malaysia (KLCC Plaza, Petronas)",
+   "id": "w-pok-mon-run-30-malaysia",
+   "name": "Pokémon RUN 30: Malaysia",
+   "place": "Malaysia",
    "area": "Asia",
    "scope": "regional",
    "start": "2026-11-21",
@@ -873,22 +780,11 @@
     {
      "id": "official",
      "name": "Pokémon GO (official)",
-     "url": "https://pokemongo.com/news/pokemon-run-30-2026"
-    },
-    {
-     "id": "g47ix",
-     "name": "G47IX infographic",
-     "url": "https://www.g47ix.pro",
-     "auto": true
-    },
-    {
-     "id": "official",
-     "name": "Pokémon GO (official)",
      "url": "https://pokemongo.com/news/pokemon-run-30-2026/"
     }
    ],
    "status": "official",
-   "seen": "2026-10-17"
+   "seen": "2026-10-31"
   },
   {
    "id": "w-eternamax-eternatus-max-battles",
@@ -929,25 +825,6 @@
    ],
    "status": "single",
    "seen": "2026-10-19"
-  },
-  {
-   "id": "w-pok-mon-center-bangkok-opens-pok-mon-go-thailand-e",
-   "name": "Pokémon Center BANGKOK Opens: Pokémon GO Thailand Event",
-   "place": "Bangkok, Thailand",
-   "area": "Asia",
-   "scope": "regional",
-   "start": "2026-12-01",
-   "end": "2026-12-10",
-   "datesKnown": true,
-   "sources": [
-    {
-     "id": "hub",
-     "name": "Pokémon GO Hub",
-     "url": "https://pokemongohub.net/post/event/pokemon-center-bangkok-opens-pokemon-go-thailand-event/"
-    }
-   ],
-   "status": "single",
-   "seen": "2026-10-31"
   },
   {
    "id": "w-pok-mon-30th-anniversary-mall-exploration-sm-north",
@@ -1005,12 +882,12 @@
     }
    ],
    "status": "official",
-   "seen": "2026-10-19"
+   "seen": "2026-10-31"
   },
   {
-   "id": "w-pok-mon-run-30-bangkok",
-   "name": "Pokémon RUN 30: Bangkok",
-   "place": "Bangkok, Thailand (Outdoor plaza, Central World)",
+   "id": "w-pok-mon-run-30-thailand",
+   "name": "Pokémon RUN 30: Thailand",
+   "place": "Thailand",
    "area": "Asia",
    "scope": "regional",
    "start": "2027-01-09",
@@ -1020,22 +897,11 @@
     {
      "id": "official",
      "name": "Pokémon GO (official)",
-     "url": "https://pokemongo.com/news/pokemon-run-30-2026"
-    },
-    {
-     "id": "g47ix",
-     "name": "G47IX infographic",
-     "url": "https://www.g47ix.pro",
-     "auto": true
-    },
-    {
-     "id": "official",
-     "name": "Pokémon GO (official)",
      "url": "https://pokemongo.com/news/pokemon-run-30-2026/"
     }
    ],
    "status": "official",
-   "seen": "2026-10-17"
+   "seen": "2026-10-31"
   },
   {
    "id": "w-pok-mon-30th-anniversary-mall-exploration-sm-marik",
@@ -1073,7 +939,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-10-19"
+   "seen": "2026-10-31"
   },
   {
    "id": "w-pok-mon-30th-anniversary-mall-exploration-sm-seasi",
@@ -1202,7 +1068,7 @@
     {
      "id": "official",
      "name": "Pokémon GO (official)",
-     "url": "https://pokemongo.com/ko/news/go-wild-area-stamp-rally-details-2026/"
+     "url": "https://pokemongo.com/ja/news/go-wild-area-stamp-rally-details-2026/"
     }
    ],
    "status": "official",

@@ -1,26 +1,56 @@
 {
- "runAt": "2026-10-31T12:45:24.181Z",
+ "runAt": "2026-10-31T17:50:16.945Z",
  "sources": {
   "official": {
    "listed": 24,
    "error": ""
   },
   "leekduck": {
-   "listed": 49,
+   "listed": 45,
    "error": ""
   },
   "hub": {
-   "listed": 17,
+   "listed": 16,
    "error": ""
   }
  },
  "pagesRead": 80,
  "events": 89,
- "worldEvents": 63,
+ "worldEvents": 58,
  "worldUndated": [
   "GO Wild Area Stamp Rally"
  ],
  "unmatchedPages": [
+  {
+   "source": "official",
+   "title": "Save the Date: Pokémon GO Tour 2027",
+   "url": "https://pokemongo.com/news/save-the-date-go-tour-2027/"
+  },
+  {
+   "source": "official",
+   "title": "Pokémon GO joins Pokémon 30th Anniversary Mall Exploration!",
+   "url": "https://pokemongo.com/news/apac-mall-exploration-2026/"
+  },
+  {
+   "source": "official",
+   "title": "Pokémon GO partners with the European Space Agency",
+   "url": "https://pokemongo.com/news/european-space-agency-event/"
+  },
+  {
+   "source": "official",
+   "title": "全国のイオンモールで『ポケモン GO』のハロウィンイベントを楽しもう！ — Pokémon GO",
+   "url": "https://pokemongo.com/ja/news/202610aeonmall-halloween/"
+  },
+  {
+   "source": "official",
+   "title": "Ready, set, GO! Join the Pokémon RUN 30 event near you! — Pokémon GO",
+   "url": "https://pokemongo.com/news/pokemon-run-30-2026/"
+  },
+  {
+   "source": "official",
+   "title": "¡Celebra el espíritu de Día de Muertos en 2026! — Pokémon GO",
+   "url": "https://pokemongo.com/es_MX/news/dia-de-muertos-2026/"
+  },
   {
    "source": "official",
    "title": "Celebrate the Pokémon Night Out events in Pokémon GO!",
@@ -58,38 +88,8 @@
   },
   {
    "source": "official",
-   "title": "Save the Date: Pokémon GO Tour 2027",
-   "url": "https://pokemongo.com/news/save-the-date-go-tour-2027/"
-  },
-  {
-   "source": "official",
-   "title": "Pokémon GO joins Pokémon 30th Anniversary Mall Exploration!",
-   "url": "https://pokemongo.com/news/apac-mall-exploration-2026/"
-  },
-  {
-   "source": "official",
-   "title": "Pokémon GO partners with the European Space Agency",
-   "url": "https://pokemongo.com/news/european-space-agency-event/"
-  },
-  {
-   "source": "official",
    "title": "Pokémon GO City Safari: Brisbane – Know Before You GO!",
    "url": "https://pokemongo.com/news/city-safari-brisbane-know-before-you-go/"
-  },
-  {
-   "source": "leekduck",
-   "title": "Mega Charizard X and Mega Charizard Y in Mega Raids",
-   "url": "https://leekduck.com/events/mega-charizard-x-mega-charizard-y-in-mega-raids-october-2026/"
-  },
-  {
-   "source": "leekduck",
-   "title": "Palkia in 5-star Raid Battles",
-   "url": "https://leekduck.com/events/palkia-in-5-star-raid-battles-october-2026/"
-  },
-  {
-   "source": "leekduck",
-   "title": "Gastly Spotlight Hour",
-   "url": "https://leekduck.com/events/pokemonspotlighthour2026-10-29/"
   },
   {
    "source": "leekduck",
@@ -115,11 +115,6 @@
    "source": "hub",
    "title": "Pokémon News This Week: Pokémon UNITE Announces Service End, New Merch, New Champions Tournament, Hong Kong Pop-Up",
    "url": "https://pokemongohub.net/post/news/pokemon-news-this-week-pokemon-unite-announces-service-end-new-merch-new-champions-tournament-hong-kong-pop-up/"
-  },
-  {
-   "source": "hub",
-   "title": "Pokémon Center BANGKOK Opens: Pokémon GO Thailand Event",
-   "url": "https://pokemongohub.net/post/event/pokemon-center-bangkok-opens-pokemon-go-thailand-event/"
   }
  ],
  "intl": {
@@ -197,6 +192,62 @@
   "Pokemon Go in Sanriku | July 1st - 11th 2019 | Iwate Prefecture"
  ],
  "gaps": [
+  {
+   "event": "Pokémon GO Wild Area 2026: Mexico City",
+   "field": "bonuses",
+   "missingFrom": [
+    "official"
+   ]
+  },
+  {
+   "event": "Pokémon GO Wild Area 2026: Mexico City",
+   "field": "featured",
+   "missingFrom": [
+    "official"
+   ]
+  },
+  {
+   "event": "Pokémon GO Wild Area 2026: Mexico City",
+   "field": "raids",
+   "missingFrom": [
+    "official"
+   ]
+  },
+  {
+   "event": "Pokémon GO Wild Area 2026: Mexico City",
+   "field": "eggs",
+   "missingFrom": [
+    "official"
+   ]
+  },
+  {
+   "event": "Pokémon GO Wild Area 2026: Mexico City",
+   "field": "research",
+   "missingFrom": [
+    "official"
+   ]
+  },
+  {
+   "event": "Pokémon GO Wild Area 2026: Mexico City",
+   "field": "shiny",
+   "missingFrom": [
+    "official"
+   ]
+  },
+  {
+   "event": "Pokémon GO Wild Area 2026: Mexico City",
+   "field": "costumes",
+   "missingFrom": [
+    "official"
+   ]
+  },
+  {
+   "event": "Pokémon GO Wild Area 2026: Mexico City",
+   "field": "tickets",
+   "missingFrom": [
+    "official"
+   ]
+  },
   {
    "event": "Into the Wild",
    "field": "bonuses",

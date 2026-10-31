@@ -1,9 +1,860 @@
 {
- "updated": "2026-10-31T12:45:24.181Z",
+ "updated": "2026-10-31T17:50:16.945Z",
  "events": {
+  "wag": {
+   "name": "GO Wild Area: Global",
+   "updated": "2026-10-31T17:50:16.945Z",
+   "sources": [
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "trust": "official",
+     "url": "https://pokemongo.com/news/gowa-global-europe-2026/"
+    }
+   ],
+   "fields": {
+    "bonuses": [],
+    "featured": [],
+    "raids": [],
+    "eggs": [],
+    "research": [],
+    "shiny": [],
+    "moves": [],
+    "costumes": [
+     {
+      "text": "Photo opportunities to capture the memories",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Fun activities with local Community Ambassadors and their communities",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Pokémon GO event pins and prints (while supplies last)",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Timed Research when you check in at the official meetup",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "We are also partnering with local Community Ambassadors to add more PokéStops, Gyms, and Powerspots near the event area for these community meetups.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "The best way to experience Pokémon GO Wild Area: Global is in person. We hope to meet you out there, Trainers!",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "—The Pokémon GO team",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     }
+    ],
+    "tickets": [],
+    "dates": []
+   },
+   "conflicts": [],
+   "gaps": []
+  },
+  "leekduck:pokemon-go-wild-area-2026-sendai-japan": {
+   "name": "Pokémon GO Wild Area 2026: Sendai • Tohoku",
+   "updated": "2026-10-31T17:50:16.945Z",
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/pokemon-go-wild-area-2026-sendai-japan/"
+    }
+   ],
+   "fields": {
+    "bonuses": [
+     {
+      "text": "Ticket holders receive these benefits from 12:00 a.m. to 11:59 p.m. local time on their ticketed event day.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Shiny encounters are not guaranteed. To use the increased exploration Max Particle bonus, first collect all available Max Particles in the Nearby menu. Adventure Sync can help track exploration distance.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "featured": [
+     {
+      "text": "Hisuian Sliggoo and Hisuian Goodra Debut",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Use 100 Goomy Candy to evolve Hisuian Sliggoo into Hisuian Goodra.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Steel- and Dragon-themed encounters rotate hourly from 10:00 a.m. to 6:00 p.m. throughout the event area on your ticketed day.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Ticket holders can attract the following mighty Pokémon during the event. These encounters exclude Daily Adventure Incense.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "raids": [
+     {
+      "text": "Gigantamax Duraludon makes its Pokémon GO debut at Pokémon GO Wild Area! This larger-than-life Pokémon will appear in six-star Max Battles during the event.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "If you’re lucky, you may encounter a Shiny one!",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Dynamax Dialga and Dynamax Palkia make their Pokémon GO debuts during GO Wild Area 2026. Both can be Shiny!",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Machamp wearing a modern jacket appears in three-star raids during event hours and may be Shiny.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Crowned Sword Zacian and Crowned Shield Zamazenta appear in five-star raids during the event. Lucky Trainers may encounter Shiny Pokémon!",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "All Trainers can earn Crowned Sword Energy or Crowned Shield Energy by defeating the corresponding raid boss.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Dynamax Dialga and Dynamax Palkia appear in Max Battles during the event. Both have a chance to be Shiny.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "eggs": [
+     {
+      "text": "The following Pokémon hatch from 10 km Eggs obtained during the event. Ticket holders have an increased chance of receiving 10 km Eggs from PokéStops and Gyms.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "The 1/4 Hatch Distance bonus does not stack with other Hatch Distance bonuses.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "research": [
+     {
+      "text": "Two Timed Research experiences guide you through specially decorated PokéStops across the city. Spin the corresponding stops to progress; these can also help you navigate between Stamp Rally locations.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Extra Day add-ons grant both Timed Research experiences again on each added day. Complete the tasks and claim rewards before 8:00 p.m. local time that day.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Event-themed Field Research is more likely to appear during the event. Complete tasks for encounters with event-themed Pokémon. Tasks and individual rewards have not yet been announced.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "shiny": [
+     {
+      "text": "Shiny encounters are not guaranteed. To use the increased exploration Max Particle bonus, first collect all available Max Particles in the Nearby menu. Adventure Sync can help track exploration distance.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "If you’re lucky, you may encounter a Shiny one!",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Dynamax Dialga and Dynamax Palkia make their Pokémon GO debuts during GO Wild Area 2026. Both can be Shiny!",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Hisuian Sliggoo and Hisuian Goodra debut at the in-person GO Wild Area events. Ticket holders may find Hisuian Sliggoo in the wild during either habitat hour, including its Shiny form.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Ticket holders may attract mighty Latias and Latios with Incense, excluding Daily Adventure Incense, on their ticketed event day. Both can be Shiny and are quick to flee, so keep GO Safari Balls ready.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Mighty Pokémon are more likely to have high Attack, Defense, and HP ratings and be XL or XXL. They are harder to catch, and some may be Shiny. GO Safari Balls improve your chances of catching them.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Machamp wearing a modern jacket appears in three-star raids during event hours and may be Shiny.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Crowned Sword Zacian and Crowned Shield Zamazenta appear in five-star raids during the event. Lucky Trainers may encounter Shiny Pokémon!",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Dynamax Dialga and Dynamax Palkia appear in Max Battles during the event. Both have a chance to be Shiny.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Hisuian Sliggoo can be encountered as a Shiny Pokémon at the in-person events. Evolve it to obtain Shiny Hisuian Goodra.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "moves": [],
+    "costumes": [
+     {
+      "text": "Mighty Pokémon can appear during either habitat hour. The in-person lineup includes mighty Machamp wearing a modern jacket, Bastiodon, and Kommo-o, plus mighty Lapras in Sendai.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Machamp wearing a modern jacket appears in three-star raids during event hours and may be Shiny.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Gigantamax Duraludon, Machamp wearing a modern jacket, Dynamax Dialga, Dynamax Palkia, mighty Latias, and mighty Latios can also be Shiny. Ticket holders have increased Shiny encounter chances during event hours.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "tickets": [
+     {
+      "text": "The following bonuses apply from 10:00 a.m. to 6:00 p.m. local time on your ticketed event day.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "The following Unown are attracted to Incense on your ticketed day.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Lucky ticket holders may also encounter these mighty Legendary Pokémon from Incense:",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Claim Special Research during your ticketed session to learn about both Steel- and Dragon-type Pokémon and earn two themed in-game medals. Special Research is granted only once, even with Extra Day add-ons.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "A separate Global ticket grants access to the Global Special Research the following weekend.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Choose one day: November 6, 7, or 8. Japanese ticket prices include applicable taxes and fees. View tickets and add-ons .",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Battle Ready and Egg-thusiast bonuses are active from November 6 at 12:00 a.m. through November 8, 2026, at 11:59 p.m. local time . Add-ons can be purchased after your initial ticket order.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Tickets can be purchased for eligible friends using their exact Trainer usernames. You must be at least Great Friends. Everyone included in one order receives tickets for the same date and time.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Official gameplay details · Tickets and add-ons .",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "dates": [
+     {
+      "text": "The following bonuses apply from 10:00 a.m. to 6:00 p.m. local time on your ticketed event day.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Ticket holders receive these benefits from 12:00 a.m. to 11:59 p.m. local time on their ticketed event day.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "They can only be used from 10:00 a.m. to 6:00 p.m. local time on event days and become inaccessible after the event ends.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Steel- and Dragon-themed encounters rotate hourly from 10:00 a.m. to 6:00 p.m. throughout the event area on your ticketed day.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Choose one day: November 6, 7, or 8. Japanese ticket prices include applicable taxes and fees. View tickets and add-ons .",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ]
+   },
+   "conflicts": [],
+   "gaps": []
+  },
+  "leekduck:pokemon-go-wild-area-2026-mexico-city": {
+   "name": "Pokémon GO Wild Area 2026: Mexico City",
+   "updated": "2026-10-31T17:50:16.945Z",
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/pokemon-go-wild-area-2026-mexico-city/"
+    },
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "trust": "official",
+     "url": "https://pokemongo.com/en/gowildarea/mexico-city/"
+    }
+   ],
+   "fields": {
+    "bonuses": [
+     {
+      "text": "Ticket holders receive these benefits from 12:00 a.m. to 11:59 p.m. local time on their ticketed event day.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Shiny encounters are not guaranteed. To use the increased exploration Max Particle bonus, first collect all available Max Particles in the Nearby menu. Adventure Sync can help track exploration distance.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "featured": [
+     {
+      "text": "Hisuian Sliggoo and Hisuian Goodra Debut",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Use 100 Goomy Candy to evolve Hisuian Sliggoo into Hisuian Goodra.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Steel- and Dragon-themed encounters rotate hourly from 10:00 a.m. to 6:00 p.m. throughout the event area on your ticketed day.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Ticket holders can attract the following mighty Pokémon during the event. These encounters exclude Daily Adventure Incense.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "raids": [
+     {
+      "text": "Gigantamax Duraludon makes its Pokémon GO debut at Pokémon GO Wild Area! This larger-than-life Pokémon will appear in six-star Max Battles during the event.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "If you’re lucky, you may encounter a Shiny one!",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Dynamax Dialga and Dynamax Palkia make their Pokémon GO debuts during GO Wild Area 2026. Both can be Shiny!",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Machamp wearing a modern jacket appears in three-star raids during event hours and may be Shiny.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Crowned Sword Zacian and Crowned Shield Zamazenta appear in five-star raids during the event. Lucky Trainers may encounter Shiny Pokémon!",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "All Trainers can earn Crowned Sword Energy or Crowned Shield Energy by defeating the corresponding raid boss.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Dynamax Dialga and Dynamax Palkia appear in Max Battles during the event. Both have a chance to be Shiny.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "eggs": [
+     {
+      "text": "The following Pokémon hatch from 10 km Eggs obtained during the event. Ticket holders have an increased chance of receiving 10 km Eggs from PokéStops and Gyms.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "The 1/4 Hatch Distance bonus does not stack with other Hatch Distance bonuses.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "research": [
+     {
+      "text": "Two Timed Research experiences guide you through specially decorated PokéStops across the city. Spin the corresponding stops to progress; these can also help you navigate between Stamp Rally locations.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Extra Day add-ons grant both Timed Research experiences again on each added day. Complete the tasks and claim rewards before 8:00 p.m. local time that day.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Event-themed Field Research is more likely to appear during the event. Complete tasks for encounters with event-themed Pokémon. Tasks and individual rewards have not yet been announced.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "shiny": [
+     {
+      "text": "Shiny encounters are not guaranteed. To use the increased exploration Max Particle bonus, first collect all available Max Particles in the Nearby menu. Adventure Sync can help track exploration distance.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "If you’re lucky, you may encounter a Shiny one!",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Dynamax Dialga and Dynamax Palkia make their Pokémon GO debuts during GO Wild Area 2026. Both can be Shiny!",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Hisuian Sliggoo and Hisuian Goodra debut at the in-person GO Wild Area events. Ticket holders may find Hisuian Sliggoo in the wild during either habitat hour, including its Shiny form.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Ticket holders may attract mighty Latias and Latios with Incense, excluding Daily Adventure Incense, on their ticketed event day. Both can be Shiny and are quick to flee, so keep GO Safari Balls ready.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Mighty Pokémon are more likely to have high Attack, Defense, and HP ratings and be XL or XXL. They are harder to catch, and some may be Shiny. GO Safari Balls improve your chances of catching them.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Machamp wearing a modern jacket appears in three-star raids during event hours and may be Shiny.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Crowned Sword Zacian and Crowned Shield Zamazenta appear in five-star raids during the event. Lucky Trainers may encounter Shiny Pokémon!",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Dynamax Dialga and Dynamax Palkia appear in Max Battles during the event. Both have a chance to be Shiny.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Hisuian Sliggoo can be encountered as a Shiny Pokémon at the in-person events. Evolve it to obtain Shiny Hisuian Goodra.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "moves": [],
+    "costumes": [
+     {
+      "text": "Mighty Pokémon can appear during either habitat hour. The in-person lineup includes mighty Machamp wearing a modern jacket, Bastiodon, and Kommo-o, plus mighty Hawlucha in Mexico City.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Machamp wearing a modern jacket appears in three-star raids during event hours and may be Shiny.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Gigantamax Duraludon, Machamp wearing a modern jacket, Dynamax Dialga, Dynamax Palkia, mighty Latias, and mighty Latios can also be Shiny. Ticket holders have increased Shiny encounter chances during event hours.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "tickets": [
+     {
+      "text": "Dates: November 6, 7, or 8, 2026 Time: 10:00 a.m. – 6:00 p.m. local time (UTC−6) Location: Mexico City, Mexico, with gameplay throughout the metropolitan area Ticket: MXN$350 (plus applicable taxes and fees) for one day",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "The following bonuses apply from 10:00 a.m. to 6:00 p.m. local time on your ticketed event day.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "The following Unown are attracted to Incense on your ticketed day.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Lucky ticket holders may also encounter these mighty Legendary Pokémon from Incense:",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Claim Special Research during your ticketed session to learn about both Steel- and Dragon-type Pokémon and earn two themed in-game medals. Special Research is granted only once, even with Extra Day add-ons.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "A separate Global ticket grants access to the Global Special Research the following weekend.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Choose one day: November 6, 7, or 8. Mexico City ticket prices are subject to applicable taxes and fees. View tickets and add-ons .",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Battle Ready and Egg-thusiast bonuses are active from November 6 at 12:00 a.m. through November 8, 2026, at 11:59 p.m. local time . Add-ons can be purchased after your initial ticket order.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Tickets can be purchased for eligible friends using their exact Trainer usernames. You must be at least Great Friends. Everyone included in one order receives tickets for the same date and time.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Official gameplay details · Tickets and add-ons .",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "dates": [
+     {
+      "text": "10:00 a.m. – 6:00 p.m. GMT–6",
+      "sources": [
+       "official",
+       "leekduck"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Ticket holders receive these benefits from 12:00 a.m. to 11:59 p.m. local time on their ticketed event day.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Choose one day: November 6, 7, or 8. Mexico City ticket prices are subject to applicable taxes and fees. View tickets and add-ons .",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ]
+   },
+   "conflicts": [],
+   "gaps": [
+    {
+     "field": "bonuses",
+     "missingFrom": [
+      "official"
+     ]
+    },
+    {
+     "field": "featured",
+     "missingFrom": [
+      "official"
+     ]
+    },
+    {
+     "field": "raids",
+     "missingFrom": [
+      "official"
+     ]
+    },
+    {
+     "field": "eggs",
+     "missingFrom": [
+      "official"
+     ]
+    },
+    {
+     "field": "research",
+     "missingFrom": [
+      "official"
+     ]
+    },
+    {
+     "field": "shiny",
+     "missingFrom": [
+      "official"
+     ]
+    },
+    {
+     "field": "costumes",
+     "missingFrom": [
+      "official"
+     ]
+    },
+    {
+     "field": "tickets",
+     "missingFrom": [
+      "official"
+     ]
+    }
+   ]
+  },
+  "sendai": {
+   "name": "GO Wild Area: Sendai",
+   "updated": "2026-10-31T17:50:16.945Z",
+   "sources": [
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "trust": "official",
+     "url": "https://pokemongo.com/en/gowildarea/sendai/"
+    }
+   ],
+   "fields": {
+    "bonuses": [],
+    "featured": [],
+    "raids": [],
+    "eggs": [],
+    "research": [],
+    "shiny": [],
+    "moves": [],
+    "costumes": [],
+    "tickets": [],
+    "dates": []
+   },
+   "conflicts": [],
+   "gaps": []
+  },
   "dyntrails": {
    "name": "Dynamax Trails",
-   "updated": "2026-10-31T12:45:24.181Z",
+   "updated": "2026-10-31T17:50:16.945Z",
    "sources": [
     {
      "id": "official",
@@ -257,85 +1108,9 @@
    "conflicts": [],
    "gaps": []
   },
-  "wag": {
-   "name": "GO Wild Area: Global",
-   "updated": "2026-10-31T12:45:24.181Z",
-   "sources": [
-    {
-     "id": "official",
-     "name": "Pokémon GO (official)",
-     "trust": "official",
-     "url": "https://pokemongo.com/news/gowa-global-europe-2026/"
-    }
-   ],
-   "fields": {
-    "bonuses": [],
-    "featured": [],
-    "raids": [],
-    "eggs": [],
-    "research": [],
-    "shiny": [],
-    "moves": [],
-    "costumes": [
-     {
-      "text": "Photo opportunities to capture the memories",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "Fun activities with local Community Ambassadors and their communities",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "Pokémon GO event pins and prints (while supplies last)",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "Timed Research when you check in at the official meetup",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "We are also partnering with local Community Ambassadors to add more PokéStops, Gyms, and Powerspots near the event area for these community meetups.",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "The best way to experience Pokémon GO Wild Area: Global is in person. We hope to meet you out there, Trainers!",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "—The Pokémon GO team",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     }
-    ],
-    "tickets": [],
-    "dates": []
-   },
-   "conflicts": [],
-   "gaps": []
-  },
   "leekduck:into-the-wild-2026": {
    "name": "Into the Wild",
-   "updated": "2026-10-31T12:45:24.181Z",
+   "updated": "2026-10-31T17:50:16.945Z",
    "sources": [
     {
      "id": "official",
@@ -641,7 +1416,7 @@
   },
   "novcd": {
    "name": "November Community Day",
-   "updated": "2026-10-31T12:45:24.181Z",
+   "updated": "2026-10-31T17:50:16.945Z",
    "sources": [
     {
      "id": "official",
@@ -834,7 +1609,7 @@
   },
   "gopassnov": {
    "name": "GO Pass: November",
-   "updated": "2026-10-31T12:45:24.181Z",
+   "updated": "2026-10-31T17:50:16.945Z",
    "sources": [
     {
      "id": "official",
@@ -1018,7 +1793,7 @@
   },
   "smr1": {
    "name": "Super Mega Raid Day",
-   "updated": "2026-10-31T12:45:24.181Z",
+   "updated": "2026-10-31T17:50:16.945Z",
    "sources": [
     {
      "id": "official",
@@ -1425,7 +2200,7 @@
   },
   "halloween2": {
    "name": "Halloween 2026, Part Two",
-   "updated": "2026-10-31T12:45:24.181Z",
+   "updated": "2026-10-31T17:50:16.945Z",
    "sources": [
     {
      "id": "official",
@@ -1676,7 +2451,7 @@
   },
   "halloween1": {
    "name": "Halloween 2026, Part One",
-   "updated": "2026-10-31T12:45:24.181Z",
+   "updated": "2026-10-31T17:50:16.945Z",
    "sources": [
     {
      "id": "official",
@@ -1947,7 +2722,7 @@
   },
   "spirits": {
    "name": "Dynamax Uxie, Mesprit and Azelf",
-   "updated": "2026-10-31T12:45:24.181Z",
+   "updated": "2026-10-31T17:50:16.945Z",
    "sources": [
     {
      "id": "official",
@@ -2188,7 +2963,7 @@
   },
   "tcg30": {
    "name": "Pokémon TCG: 30th Celebration (at stores)",
-   "updated": "2026-10-31T12:45:24.181Z",
+   "updated": "2026-10-31T17:50:16.945Z",
    "sources": [
     {
      "id": "official",
@@ -2253,7 +3028,7 @@
   },
   "sandile": {
    "name": "Sandile Hatch Day",
-   "updated": "2026-10-31T12:45:24.181Z",
+   "updated": "2026-10-31T17:50:16.945Z",
    "sources": [
     {
      "id": "official",
@@ -2412,7 +3187,7 @@
   },
   "trek": {
    "name": "Fall Marathon: Buddy Trek",
-   "updated": "2026-10-31T12:45:24.181Z",
+   "updated": "2026-10-31T17:50:16.945Z",
    "sources": [
     {
      "id": "official",
@@ -2641,7 +3416,7 @@
   },
   "leekduck:go-pass-october-2026": {
    "name": "GO Pass: October",
-   "updated": "2026-10-31T12:45:24.181Z",
+   "updated": "2026-10-31T17:50:16.945Z",
    "sources": [
     {
      "id": "official",
@@ -2941,57 +3716,9 @@
    "conflicts": [],
    "gaps": []
   },
-  "leekduck:raidhour20261104": {
-   "name": "Giratina (Altered Forme) Raid Hour",
-   "updated": "2026-10-31T12:45:24.181Z",
-   "sources": [
-    {
-     "id": "leekduck",
-     "name": "Leek Duck",
-     "trust": "community",
-     "url": "https://leekduck.com/events/raidhour20261028/"
-    },
-    {
-     "id": "leekduck",
-     "name": "Leek Duck",
-     "trust": "community",
-     "url": "https://leekduck.com/events/raidhour20261104/"
-    }
-   ],
-   "fields": {
-    "bonuses": [],
-    "featured": [],
-    "raids": [
-     {
-      "text": "A Raid Hour featuring Giratina (Origin Forme) is scheduled from 6:00 p.m. to 7:00 p.m. local time. During this hour there will be an increased number of five-star raids.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ],
-    "eggs": [],
-    "research": [],
-    "shiny": [],
-    "moves": [],
-    "costumes": [],
-    "tickets": [],
-    "dates": [
-     {
-      "text": "A Raid Hour featuring Giratina (Origin Forme) is scheduled from 6:00 p.m. to 7:00 p.m. local time. During this hour there will be an increased number of five-star raids.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ]
-   },
-   "conflicts": [],
-   "gaps": []
-  },
   "leekduck:halloween-2026-part-1": {
    "name": "Pokémon GO Halloween 2026 Part I",
-   "updated": "2026-10-31T12:45:24.181Z",
+   "updated": "2026-10-31T17:50:16.945Z",
    "sources": [
     {
      "id": "leekduck",
@@ -3437,7 +4164,7 @@
   },
   "leekduck:max-mondays-2026-11-02": {
    "name": "Dynamax Machop during Max Monday",
-   "updated": "2026-10-31T12:45:24.181Z",
+   "updated": "2026-10-31T17:50:16.945Z",
    "sources": [
     {
      "id": "leekduck",
@@ -3514,7 +4241,7 @@
   },
   "leekduck:shadow-landorus-incarnate-forme-in-shadow-raids-october-2026": {
    "name": "Shadow Landorus (Incarnate Forme) in Shadow Raids",
-   "updated": "2026-10-31T12:45:24.181Z",
+   "updated": "2026-10-31T17:50:16.945Z",
    "sources": [
     {
      "id": "leekduck",
@@ -3564,7 +4291,7 @@
   },
   "leekduck:giratina-origin-forme-in-5-star-raid-battles-october-2026": {
    "name": "Giratina (Origin Forme) in 5-star Raid Battles",
-   "updated": "2026-10-31T12:45:24.181Z",
+   "updated": "2026-10-31T17:50:16.945Z",
    "sources": [
     {
      "id": "leekduck",
@@ -3626,9 +4353,51 @@
    "conflicts": [],
    "gaps": []
   },
+  "leekduck:raidhour20261104": {
+   "name": "Giratina (Altered Forme) Raid Hour",
+   "updated": "2026-10-31T17:50:16.945Z",
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/raidhour20261104/"
+    }
+   ],
+   "fields": {
+    "bonuses": [],
+    "featured": [],
+    "raids": [
+     {
+      "text": "A Raid Hour featuring Giratina (Altered Forme) is scheduled from 6:00 p.m. to 7:00 p.m. local time. During this hour there will be an increased number of five-star raids.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "eggs": [],
+    "research": [],
+    "shiny": [],
+    "moves": [],
+    "costumes": [],
+    "tickets": [],
+    "dates": [
+     {
+      "text": "A Raid Hour featuring Giratina (Altered Forme) is scheduled from 6:00 p.m. to 7:00 p.m. local time. During this hour there will be an increased number of five-star raids.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ]
+   },
+   "conflicts": [],
+   "gaps": []
+  },
   "leekduck:pokemonspotlighthour2026-11-05": {
    "name": "Teddiursa wearing a witch hat Spotlight Hour",
-   "updated": "2026-10-31T12:45:24.181Z",
+   "updated": "2026-10-31T17:50:16.945Z",
    "sources": [
     {
      "id": "leekduck",
@@ -3682,716 +4451,9 @@
    "conflicts": [],
    "gaps": []
   },
-  "leekduck:pokemon-go-wild-area-2026-sendai-japan": {
-   "name": "Pokémon GO Wild Area 2026: Sendai • Tohoku",
-   "updated": "2026-10-31T12:45:24.181Z",
-   "sources": [
-    {
-     "id": "leekduck",
-     "name": "Leek Duck",
-     "trust": "community",
-     "url": "https://leekduck.com/events/pokemon-go-wild-area-2026-sendai-japan/"
-    }
-   ],
-   "fields": {
-    "bonuses": [
-     {
-      "text": "Ticket holders receive these benefits from 12:00 a.m. to 11:59 p.m. local time on their ticketed event day.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Shiny encounters are not guaranteed. To use the increased exploration Max Particle bonus, first collect all available Max Particles in the Nearby menu. Adventure Sync can help track exploration distance.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ],
-    "featured": [
-     {
-      "text": "Hisuian Sliggoo and Hisuian Goodra Debut",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Use 100 Goomy Candy to evolve Hisuian Sliggoo into Hisuian Goodra.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Steel- and Dragon-themed encounters rotate hourly from 10:00 a.m. to 6:00 p.m. throughout the event area on your ticketed day.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Ticket holders can attract the following mighty Pokémon during the event. These encounters exclude Daily Adventure Incense.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ],
-    "raids": [
-     {
-      "text": "Gigantamax Duraludon makes its Pokémon GO debut at Pokémon GO Wild Area! This larger-than-life Pokémon will appear in six-star Max Battles during the event.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "If you’re lucky, you may encounter a Shiny one!",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Dynamax Dialga and Dynamax Palkia make their Pokémon GO debuts during GO Wild Area 2026. Both can be Shiny!",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Machamp wearing a modern jacket appears in three-star raids during event hours and may be Shiny.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Crowned Sword Zacian and Crowned Shield Zamazenta appear in five-star raids during the event. Lucky Trainers may encounter Shiny Pokémon!",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "All Trainers can earn Crowned Sword Energy or Crowned Shield Energy by defeating the corresponding raid boss.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Dynamax Dialga and Dynamax Palkia appear in Max Battles during the event. Both have a chance to be Shiny.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ],
-    "eggs": [
-     {
-      "text": "The following Pokémon hatch from 10 km Eggs obtained during the event. Ticket holders have an increased chance of receiving 10 km Eggs from PokéStops and Gyms.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "The 1/4 Hatch Distance bonus does not stack with other Hatch Distance bonuses.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ],
-    "research": [
-     {
-      "text": "Two Timed Research experiences guide you through specially decorated PokéStops across the city. Spin the corresponding stops to progress; these can also help you navigate between Stamp Rally locations.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Extra Day add-ons grant both Timed Research experiences again on each added day. Complete the tasks and claim rewards before 8:00 p.m. local time that day.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Event-themed Field Research is more likely to appear during the event. Complete tasks for encounters with event-themed Pokémon. Tasks and individual rewards have not yet been announced.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ],
-    "shiny": [
-     {
-      "text": "Shiny encounters are not guaranteed. To use the increased exploration Max Particle bonus, first collect all available Max Particles in the Nearby menu. Adventure Sync can help track exploration distance.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "If you’re lucky, you may encounter a Shiny one!",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Dynamax Dialga and Dynamax Palkia make their Pokémon GO debuts during GO Wild Area 2026. Both can be Shiny!",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Hisuian Sliggoo and Hisuian Goodra debut at the in-person GO Wild Area events. Ticket holders may find Hisuian Sliggoo in the wild during either habitat hour, including its Shiny form.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Ticket holders may attract mighty Latias and Latios with Incense, excluding Daily Adventure Incense, on their ticketed event day. Both can be Shiny and are quick to flee, so keep GO Safari Balls ready.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Mighty Pokémon are more likely to have high Attack, Defense, and HP ratings and be XL or XXL. They are harder to catch, and some may be Shiny. GO Safari Balls improve your chances of catching them.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Machamp wearing a modern jacket appears in three-star raids during event hours and may be Shiny.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Crowned Sword Zacian and Crowned Shield Zamazenta appear in five-star raids during the event. Lucky Trainers may encounter Shiny Pokémon!",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Dynamax Dialga and Dynamax Palkia appear in Max Battles during the event. Both have a chance to be Shiny.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Hisuian Sliggoo can be encountered as a Shiny Pokémon at the in-person events. Evolve it to obtain Shiny Hisuian Goodra.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ],
-    "moves": [],
-    "costumes": [
-     {
-      "text": "Mighty Pokémon can appear during either habitat hour. The in-person lineup includes mighty Machamp wearing a modern jacket, Bastiodon, and Kommo-o, plus mighty Lapras in Sendai.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Machamp wearing a modern jacket appears in three-star raids during event hours and may be Shiny.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Gigantamax Duraludon, Machamp wearing a modern jacket, Dynamax Dialga, Dynamax Palkia, mighty Latias, and mighty Latios can also be Shiny. Ticket holders have increased Shiny encounter chances during event hours.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ],
-    "tickets": [
-     {
-      "text": "The following bonuses apply from 10:00 a.m. to 6:00 p.m. local time on your ticketed event day.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "The following Unown are attracted to Incense on your ticketed day.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Lucky ticket holders may also encounter these mighty Legendary Pokémon from Incense:",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Claim Special Research during your ticketed session to learn about both Steel- and Dragon-type Pokémon and earn two themed in-game medals. Special Research is granted only once, even with Extra Day add-ons.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "A separate Global ticket grants access to the Global Special Research the following weekend.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Choose one day: November 6, 7, or 8. Japanese ticket prices include applicable taxes and fees. View tickets and add-ons .",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Battle Ready and Egg-thusiast bonuses are active from November 6 at 12:00 a.m. through November 8, 2026, at 11:59 p.m. local time . Add-ons can be purchased after your initial ticket order.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Tickets can be purchased for eligible friends using their exact Trainer usernames. You must be at least Great Friends. Everyone included in one order receives tickets for the same date and time.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Official gameplay details · Tickets and add-ons .",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ],
-    "dates": [
-     {
-      "text": "The following bonuses apply from 10:00 a.m. to 6:00 p.m. local time on your ticketed event day.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Ticket holders receive these benefits from 12:00 a.m. to 11:59 p.m. local time on their ticketed event day.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "They can only be used from 10:00 a.m. to 6:00 p.m. local time on event days and become inaccessible after the event ends.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Steel- and Dragon-themed encounters rotate hourly from 10:00 a.m. to 6:00 p.m. throughout the event area on your ticketed day.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Choose one day: November 6, 7, or 8. Japanese ticket prices include applicable taxes and fees. View tickets and add-ons .",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ]
-   },
-   "conflicts": [],
-   "gaps": []
-  },
-  "leekduck:pokemon-go-wild-area-2026-mexico-city": {
-   "name": "Pokémon GO Wild Area 2026: Mexico City",
-   "updated": "2026-10-31T12:45:24.181Z",
-   "sources": [
-    {
-     "id": "leekduck",
-     "name": "Leek Duck",
-     "trust": "community",
-     "url": "https://leekduck.com/events/pokemon-go-wild-area-2026-mexico-city/"
-    }
-   ],
-   "fields": {
-    "bonuses": [
-     {
-      "text": "Ticket holders receive these benefits from 12:00 a.m. to 11:59 p.m. local time on their ticketed event day.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Shiny encounters are not guaranteed. To use the increased exploration Max Particle bonus, first collect all available Max Particles in the Nearby menu. Adventure Sync can help track exploration distance.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ],
-    "featured": [
-     {
-      "text": "Hisuian Sliggoo and Hisuian Goodra Debut",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Use 100 Goomy Candy to evolve Hisuian Sliggoo into Hisuian Goodra.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Steel- and Dragon-themed encounters rotate hourly from 10:00 a.m. to 6:00 p.m. throughout the event area on your ticketed day.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Ticket holders can attract the following mighty Pokémon during the event. These encounters exclude Daily Adventure Incense.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ],
-    "raids": [
-     {
-      "text": "Gigantamax Duraludon makes its Pokémon GO debut at Pokémon GO Wild Area! This larger-than-life Pokémon will appear in six-star Max Battles during the event.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "If you’re lucky, you may encounter a Shiny one!",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Dynamax Dialga and Dynamax Palkia make their Pokémon GO debuts during GO Wild Area 2026. Both can be Shiny!",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Machamp wearing a modern jacket appears in three-star raids during event hours and may be Shiny.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Crowned Sword Zacian and Crowned Shield Zamazenta appear in five-star raids during the event. Lucky Trainers may encounter Shiny Pokémon!",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "All Trainers can earn Crowned Sword Energy or Crowned Shield Energy by defeating the corresponding raid boss.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Dynamax Dialga and Dynamax Palkia appear in Max Battles during the event. Both have a chance to be Shiny.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ],
-    "eggs": [
-     {
-      "text": "The following Pokémon hatch from 10 km Eggs obtained during the event. Ticket holders have an increased chance of receiving 10 km Eggs from PokéStops and Gyms.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "The 1/4 Hatch Distance bonus does not stack with other Hatch Distance bonuses.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ],
-    "research": [
-     {
-      "text": "Two Timed Research experiences guide you through specially decorated PokéStops across the city. Spin the corresponding stops to progress; these can also help you navigate between Stamp Rally locations.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Extra Day add-ons grant both Timed Research experiences again on each added day. Complete the tasks and claim rewards before 8:00 p.m. local time that day.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Event-themed Field Research is more likely to appear during the event. Complete tasks for encounters with event-themed Pokémon. Tasks and individual rewards have not yet been announced.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ],
-    "shiny": [
-     {
-      "text": "Shiny encounters are not guaranteed. To use the increased exploration Max Particle bonus, first collect all available Max Particles in the Nearby menu. Adventure Sync can help track exploration distance.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "If you’re lucky, you may encounter a Shiny one!",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Dynamax Dialga and Dynamax Palkia make their Pokémon GO debuts during GO Wild Area 2026. Both can be Shiny!",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Hisuian Sliggoo and Hisuian Goodra debut at the in-person GO Wild Area events. Ticket holders may find Hisuian Sliggoo in the wild during either habitat hour, including its Shiny form.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Ticket holders may attract mighty Latias and Latios with Incense, excluding Daily Adventure Incense, on their ticketed event day. Both can be Shiny and are quick to flee, so keep GO Safari Balls ready.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Mighty Pokémon are more likely to have high Attack, Defense, and HP ratings and be XL or XXL. They are harder to catch, and some may be Shiny. GO Safari Balls improve your chances of catching them.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Machamp wearing a modern jacket appears in three-star raids during event hours and may be Shiny.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Crowned Sword Zacian and Crowned Shield Zamazenta appear in five-star raids during the event. Lucky Trainers may encounter Shiny Pokémon!",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Dynamax Dialga and Dynamax Palkia appear in Max Battles during the event. Both have a chance to be Shiny.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Hisuian Sliggoo can be encountered as a Shiny Pokémon at the in-person events. Evolve it to obtain Shiny Hisuian Goodra.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ],
-    "moves": [],
-    "costumes": [
-     {
-      "text": "Mighty Pokémon can appear during either habitat hour. The in-person lineup includes mighty Machamp wearing a modern jacket, Bastiodon, and Kommo-o, plus mighty Hawlucha in Mexico City.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Machamp wearing a modern jacket appears in three-star raids during event hours and may be Shiny.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Gigantamax Duraludon, Machamp wearing a modern jacket, Dynamax Dialga, Dynamax Palkia, mighty Latias, and mighty Latios can also be Shiny. Ticket holders have increased Shiny encounter chances during event hours.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ],
-    "tickets": [
-     {
-      "text": "Dates: November 6, 7, or 8, 2026 Time: 10:00 a.m. – 6:00 p.m. local time (UTC−6) Location: Mexico City, Mexico, with gameplay throughout the metropolitan area Ticket: MXN$350 (plus applicable taxes and fees) for one day",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "The following bonuses apply from 10:00 a.m. to 6:00 p.m. local time on your ticketed event day.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "The following Unown are attracted to Incense on your ticketed day.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Lucky ticket holders may also encounter these mighty Legendary Pokémon from Incense:",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Claim Special Research during your ticketed session to learn about both Steel- and Dragon-type Pokémon and earn two themed in-game medals. Special Research is granted only once, even with Extra Day add-ons.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "A separate Global ticket grants access to the Global Special Research the following weekend.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Choose one day: November 6, 7, or 8. Mexico City ticket prices are subject to applicable taxes and fees. View tickets and add-ons .",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Battle Ready and Egg-thusiast bonuses are active from November 6 at 12:00 a.m. through November 8, 2026, at 11:59 p.m. local time . Add-ons can be purchased after your initial ticket order.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Tickets can be purchased for eligible friends using their exact Trainer usernames. You must be at least Great Friends. Everyone included in one order receives tickets for the same date and time.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Official gameplay details · Tickets and add-ons .",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ],
-    "dates": [
-     {
-      "text": "The following bonuses apply from 10:00 a.m. to 6:00 p.m. local time on your ticketed event day.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Ticket holders receive these benefits from 12:00 a.m. to 11:59 p.m. local time on their ticketed event day.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "They can only be used from 10:00 a.m. to 6:00 p.m. local time on event days and become inaccessible after the event ends.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Steel- and Dragon-themed encounters rotate hourly from 10:00 a.m. to 6:00 p.m. throughout the event area on your ticketed day.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Choose one day: November 6, 7, or 8. Mexico City ticket prices are subject to applicable taxes and fees. View tickets and add-ons .",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ]
-   },
-   "conflicts": [],
-   "gaps": []
-  },
   "leekduck:mega-sableye-in-mega-raids-october-2026": {
    "name": "Mega Sableye in Mega Raids",
-   "updated": "2026-10-31T12:45:24.181Z",
+   "updated": "2026-10-31T17:50:16.945Z",
    "sources": [
     {
      "id": "leekduck",
@@ -4448,7 +4510,7 @@
   },
   "leekduck:giratina-altered-forme-in-5-star-raid-battles-november-2026": {
    "name": "Giratina (Altered Forme) in 5-star Raid Battles",
-   "updated": "2026-10-31T12:45:24.181Z",
+   "updated": "2026-10-31T17:50:16.945Z",
    "sources": [
     {
      "id": "leekduck",
@@ -4519,7 +4581,7 @@
   },
   "leekduck:shadow-tornadus-incarnate-forme-in-shadow-raids-november-4-2026": {
    "name": "Shadow Tornadus (Incarnate Forme) in Shadow Raids",
-   "updated": "2026-10-31T12:45:24.181Z",
+   "updated": "2026-10-31T17:50:16.945Z",
    "sources": [
     {
      "id": "leekduck",
@@ -4561,7 +4623,7 @@
   },
   "leekduck:pokemon-night-out-london-2026": {
    "name": "Pokémon Night Out 2026 - London",
-   "updated": "2026-10-31T12:45:24.181Z",
+   "updated": "2026-10-31T17:50:16.945Z",
    "sources": [
     {
      "id": "leekduck",
@@ -4669,7 +4731,7 @@
   },
   "leekduck:pokemon-go-wild-area-2026-global": {
    "name": "Pokémon GO Wild Area 2026: Global",
-   "updated": "2026-10-31T12:45:24.181Z",
+   "updated": "2026-10-31T17:50:16.945Z",
    "sources": [
     {
      "id": "leekduck",
@@ -4957,7 +5019,7 @@
   },
   "leekduck:max-mondays-2026-11-16": {
    "name": "Max Monday: Pokémon to be announced",
-   "updated": "2026-10-31T12:45:24.181Z",
+   "updated": "2026-10-31T17:50:16.945Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5096,7 +5158,7 @@
   },
   "leekduck:raidhour20261118": {
    "name": "Cresselia and Darkrai Raid Hour",
-   "updated": "2026-10-31T12:45:24.181Z",
+   "updated": "2026-10-31T17:50:16.945Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5138,7 +5200,7 @@
   },
   "leekduck:pokemonspotlighthour2026-11-19": {
    "name": "Grookey, Scorbunny, and Sobble Spotlight Hour",
-   "updated": "2026-10-31T12:45:24.181Z",
+   "updated": "2026-10-31T17:50:16.945Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5172,7 +5234,7 @@
   },
   "minior2": {
    "name": "Minior Showers: Leonids",
-   "updated": "2026-10-31T12:45:24.181Z",
+   "updated": "2026-10-31T17:50:16.945Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5263,7 +5325,7 @@
   },
   "leekduck:eternamax-eternatus-max-battles-2026": {
    "name": "Eternamax Eternatus Returns",
-   "updated": "2026-10-31T12:45:24.181Z",
+   "updated": "2026-10-31T17:50:16.945Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5342,7 +5404,7 @@
   },
   "leekduck:november-communityday2026": {
    "name": "Pawniard Community Day",
-   "updated": "2026-10-31T12:45:24.181Z",
+   "updated": "2026-10-31T17:50:16.945Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5501,7 +5563,7 @@
   },
   "leekduck:dynamax-trails-2026": {
    "name": "Dynamax Trails",
-   "updated": "2026-10-31T12:45:24.181Z",
+   "updated": "2026-10-31T17:50:16.945Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5736,7 +5798,7 @@
   },
   "leekduck:max-mondays-2026-11-23": {
    "name": "Dynamax Espurr during Max Monday",
-   "updated": "2026-10-31T12:45:24.181Z",
+   "updated": "2026-10-31T17:50:16.945Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5813,7 +5875,7 @@
   },
   "leekduck:cresselia-darkrai-in-5-star-raid-battles-november-2026": {
    "name": "Cresselia and Darkrai in 5-star Raid Battles",
-   "updated": "2026-10-31T12:45:24.181Z",
+   "updated": "2026-10-31T17:50:16.945Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5884,7 +5946,7 @@
   },
   "leekduck:mega-banette-in-mega-raids-november-2026": {
    "name": "Mega Banette in Mega Raids",
-   "updated": "2026-10-31T12:45:24.181Z",
+   "updated": "2026-10-31T17:50:16.945Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5948,7 +6010,7 @@
   },
   "leekduck:raidhour20261125": {
    "name": "Deoxys (Normal, Defense, Attack, and Speed Formes) Raid Hour",
-   "updated": "2026-10-31T12:45:24.181Z",
+   "updated": "2026-10-31T17:50:16.945Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5990,7 +6052,7 @@
   },
   "leekduck:pokemonspotlighthour2026-11-26": {
    "name": "Noibat Spotlight Hour",
-   "updated": "2026-10-31T12:45:24.181Z",
+   "updated": "2026-10-31T17:50:16.945Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6024,7 +6086,7 @@
   },
   "smr2": {
    "name": "Super Mega Raid Day",
-   "updated": "2026-10-31T12:45:24.181Z",
+   "updated": "2026-10-31T17:50:16.945Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6066,7 +6128,7 @@
   },
   "twilightwishes": {
    "name": "Twilight Wishes",
-   "updated": "2026-10-31T12:45:24.181Z",
+   "updated": "2026-10-31T17:50:16.945Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6100,7 +6162,7 @@
   },
   "leekduck:max-mondays-2026-11-30": {
    "name": "Dynamax Cryogonal during Max Monday",
-   "updated": "2026-10-31T12:45:24.181Z",
+   "updated": "2026-10-31T17:50:16.945Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6177,7 +6239,7 @@
   },
   "leekduck:season-24-twilight-trails": {
    "name": "Twilight Trails",
-   "updated": "2026-10-31T12:45:24.181Z",
+   "updated": "2026-10-31T17:50:16.945Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6398,7 +6460,7 @@
   },
   "leekduck:go-pass-november-2026": {
    "name": "GO Pass: November",
-   "updated": "2026-10-31T12:45:24.181Z",
+   "updated": "2026-10-31T17:50:16.945Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6610,7 +6672,7 @@
   },
   "leekduck:deoxys-normal-defense-attack-speed-formes-in-5-star-raid-battles-november-2026": {
    "name": "Deoxys (Normal, Defense, Attack, and Speed Formes) in 5-star Raid Battles",
-   "updated": "2026-10-31T12:45:24.181Z",
+   "updated": "2026-10-31T17:50:16.945Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6709,7 +6771,7 @@
   },
   "leekduck:mega-metagross-in-mega-raids-november-2026": {
    "name": "Mega Metagross in Mega Raids",
-   "updated": "2026-10-31T12:45:24.181Z",
+   "updated": "2026-10-31T17:50:16.945Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6780,7 +6842,7 @@
   },
   "minior3": {
    "name": "Minior Showers: Geminids",
-   "updated": "2026-10-31T12:45:24.181Z",
+   "updated": "2026-10-31T17:50:16.945Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6871,7 +6933,7 @@
   },
   "leekduck:pokemon-x-adidas-2026": {
    "name": "adidas × Pokémon Timed Research",
-   "updated": "2026-10-31T12:45:24.181Z",
+   "updated": "2026-10-31T17:50:16.945Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6949,7 +7011,7 @@
   },
   "leekduck:pokemon-go-tour-alola-kaohsiung-2027": {
    "name": "Pokémon GO Tour: Alola - Kaohsiung 2027",
-   "updated": "2026-10-31T12:45:24.181Z",
+   "updated": "2026-10-31T17:50:16.945Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6983,7 +7045,7 @@
   },
   "leekduck:pokemon-go-tour-alola-los-angeles-2027": {
    "name": "Pokémon GO Tour: Alola - Los Angeles 2027",
-   "updated": "2026-10-31T12:45:24.181Z",
+   "updated": "2026-10-31T17:50:16.945Z",
    "sources": [
     {
      "id": "leekduck",
@@ -7017,7 +7079,7 @@
   },
   "leekduck:pokemon-go-tour-alola-global-2027": {
    "name": "Pokémon GO Tour: Alola - Global 2027",
-   "updated": "2026-10-31T12:45:24.181Z",
+   "updated": "2026-10-31T17:50:16.945Z",
    "sources": [
     {
      "id": "leekduck",
@@ -7051,7 +7113,7 @@
   },
   "leekduck:minior-showers-eta-aquariids-2027": {
    "name": "Minior Showers: Eta Aquariids 2027",
-   "updated": "2026-10-31T12:45:24.181Z",
+   "updated": "2026-10-31T17:50:16.945Z",
    "sources": [
     {
      "id": "leekduck",
@@ -7149,7 +7211,7 @@
   },
   "leekduck:minior-showers-southern-delta-aquariids-2027": {
    "name": "Minior Showers: Southern Delta Aquariids 2027",
-   "updated": "2026-10-31T12:45:24.181Z",
+   "updated": "2026-10-31T17:50:16.945Z",
    "sources": [
     {
      "id": "leekduck",
@@ -7247,7 +7309,7 @@
   },
   "leekduck:minior-showers-perseids-2027": {
    "name": "Minior Showers: Perseids 2027",
-   "updated": "2026-10-31T12:45:24.181Z",
+   "updated": "2026-10-31T17:50:16.945Z",
    "sources": [
     {
      "id": "leekduck",
@@ -7328,40 +7390,6 @@
       "text": "Southern Delta Aquariids : July 28–August 2, 2027",
       "sources": [
        "leekduck"
-      ],
-      "status": "single"
-     }
-    ]
-   },
-   "conflicts": [],
-   "gaps": []
-  },
-  "sendai": {
-   "name": "GO Wild Area: Sendai",
-   "updated": "2026-10-30T14:18:29.486Z",
-   "sources": [
-    {
-     "id": "hub",
-     "name": "Pokémon GO Hub",
-     "trust": "community",
-     "url": "https://pokemongohub.net/post/news/pokemon-go-wild-area-event-stamp-rallies-clarification-sendai-and-mexico-city/"
-    }
-   ],
-   "fields": {
-    "bonuses": [],
-    "featured": [],
-    "raids": [],
-    "eggs": [],
-    "research": [],
-    "shiny": [],
-    "moves": [],
-    "costumes": [],
-    "tickets": [],
-    "dates": [
-     {
-      "text": "The stamp rallies for these events will be active from 10:00 a.m. to 8:00 p.m. local time on your main ticketed event day.",
-      "sources": [
-       "hub"
       ],
       "status": "single"
      }
