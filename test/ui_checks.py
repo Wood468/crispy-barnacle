@@ -169,7 +169,7 @@ check('150ms interaction transitions use a shared motion role with unchanged eas
 check('versioned stylesheets are referenced by the page and precached offline',
       all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261031i', '/dash.css?v=20261031t']))
 check('offline shell cache version advances with the stylesheet token release',
-      "gofn-shell-v161" in SW_JS)
+      "gofn-shell-v162" in SW_JS)
 check('versioned dashboard scripts are referenced by the entry page and precached offline',
       '/app.js?v=20261101b' in INDEX_HTML and '/app.js?v=20261101b' in SW_JS and
       '/dash.js?v=20261101a' in APP_JS and '/dash.js?v=20261101a' in SW_JS and
