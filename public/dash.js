@@ -791,16 +791,16 @@
   var UNDATED = [], REGGAZ = {};
   function worldDate(value, endOfDay) {
     var raw = String(value || '').trim();
-    if (/^\\d{4}-\\d{2}-\\d{2}$/.test(raw)) return new Date(raw + (endOfDay ? 'T23:59' : 'T00:00'));
+    if (/^\d{4}-\d{2}-\d{2}$/.test(raw)) return new Date(raw + (endOfDay ? 'T23:59' : 'T00:00'));
     /* A timestamp is accepted only with an explicit offset or Z. An unzoned clock is not a venue-local time. */
-    if (/^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}(?::\\d{2}(?:\\.\\d+)?)?(?:Z|[+-]\\d{2}:\\d{2})$/i.test(raw)) return new Date(raw);
+    if (/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(?::\d{2}(?:\.\d+)?)?(?:Z|[+-]\d{2}:\d{2})$/i.test(raw)) return new Date(raw);
     return new Date(NaN);
   }
   function loadWorld(j, seed) {
     var list = (j.events || []).map(function (e) {
       var src = seed ? j.source : { url: (e.sources && e.sources[0] && e.sources[0].url) || e.url || '#', n: e.sources ? e.sources.length : 1 };
       if (!e.start) return { undated: true, name: e.name, place: e.place, area: e.area, scope: e.scope, src: src };
-      var startValue = String(e.start), startIsDateOnly = /^\\d{4}-\\d{2}-\\d{2}$/.test(startValue);
+      var startValue = String(e.start), startIsDateOnly = /^\d{4}-\d{2}-\d{2}$/.test(startValue);
       /* A date-only start can safely mean the whole local calendar day. A timed event needs an explicit end. */
       if (!e.end && !startIsDateOnly) return { undated: true, name: e.name, place: e.place, area: e.area, scope: e.scope, src: src };
       var s0 = worldDate(startValue, false), e0 = worldDate(String(e.end || e.start), !!e.end || startIsDateOnly);
