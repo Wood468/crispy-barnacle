@@ -28,6 +28,7 @@ DASH_JS = (ROOT / 'public' / 'dash.js').read_text()
 INDEX_HTML = (ROOT / 'public' / 'index.html').read_text()
 SW_JS = (ROOT / 'public' / 'sw.js').read_text()
 APP_JS = (ROOT / 'public' / 'app.js').read_text()
+INFO_JS = (ROOT / 'public' / 'infographic.js').read_text()
 check('design tokens define semantic colour, spacing, radius, typography and motion roles',
       all(token in BASE_CSS for token in ['--color-canvas:', '--color-surface:', '--color-text-muted:', '--space-4:', '--radius-card:', '--font-body:', '--motion-standard:', '--motion-quick:']))
 TYPE_SCALE = {
@@ -161,13 +162,18 @@ check('150ms interaction transitions use a shared motion role with unchanged eas
       'transition:transform var(--motion-quick)' in DASH_CSS and
       BASE_CSS.count('var(--motion-quick)') == 3 and DASH_CSS.count('var(--motion-quick)') == 1)
 check('versioned stylesheets are referenced by the page and precached offline',
-      all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261031i', '/dash.css?v=20261031s']))
+      all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261031i', '/dash.css?v=20261031t']))
 check('offline shell cache version advances with the stylesheet token release',
-      "gofn-shell-v157" in SW_JS)
+      "gofn-shell-v158" in SW_JS)
 check('versioned dashboard scripts are referenced by the entry page and precached offline',
       '/app.js?v=20261031e' in INDEX_HTML and '/app.js?v=20261031e' in SW_JS and
-      '/dash.js?v=20261031e' in APP_JS and '/dash.js?v=20261031e' in SW_JS and
+      '/dash.js?v=20261031f' in APP_JS and '/dash.js?v=20261031f' in SW_JS and
       '/detail.js?v=20261031a' in DASH_JS and '/detail.js?v=20261031a' in SW_JS)
+check('versioned infographic script is referenced by the dashboard and precached offline',
+      '/infographic.js?v=20261031a' in DASH_JS and '/infographic.js?v=20261031a' in SW_JS)
+check('infographic card thumbnails assign original URLs only near the viewport',
+      'data-thumb-src' in INFO_JS and 'new IntersectionObserver' in INFO_JS and
+      "rootMargin: '80px 0px'" in INFO_JS)
 check('mobile chrome uses compact 48px navigation targets, safe-area padding and reduced header/body spacing',
       all(token in BASE_CSS for token in ['padding-block:0 calc(72px + env(safe-area-inset-bottom,0px))', '@media (max-width:1199px){header.top{padding-top:var(--space-4)}}', 'padding:4px 8px calc(4px + env(safe-area-inset-bottom,0px))', 'padding:4px 2px;min-height:48px', 'width:1.2rem;height:1.2rem']) and
       'min-height:68px' in BASE_CSS and 'nav.tabs button{min-height:56px}' in DASH_CSS and '@media(max-width:1199px){nav.tabs button{min-height:48px}}' in DASH_CSS)
@@ -725,6 +731,9 @@ with sync_playwright() as p:
         check('no marks: no "You need" reasons anywhere', pg.locator('text=/You need/').count()==0)
         check('no console/page errors on load', pg.errs==[], pg.errs)
         pg.locator('[data-infographic="cur:trek"].info-available').wait_for(state="attached")
+        hidden_schedule_thumb = pg.locator('#tab-events [data-infographic="cur:trek"].igthumb img[data-thumb-src]').first
+        check('hidden Schedule infographic thumbnails do not request original poster bytes',
+              hidden_schedule_thumb.count() == 1 and not hidden_schedule_thumb.get_attribute('src'))
         lazy_thumb = pg.locator('[data-infographic="cur:trek"].igthumb img[loading=lazy]').first
         lazy_thumb.scroll_into_view_if_needed(timeout=5000)
         lazy_loaded = pg.wait_for_function("selector => { const img = document.querySelector(selector); return !!img && img.complete && img.naturalWidth > 0; }", arg='[data-infographic="cur:trek"].igthumb img[loading=lazy]', timeout=5000)
@@ -758,7 +767,8 @@ with sync_playwright() as p:
                   return document.getElementById('goinfo').hidden && document.activeElement === opener;
               }"""))
         # A thumbnail address that cannot be fetched falls back to the Check infographic button (the rest of this run serves a valid PNG for every picture).
-        pb=page(extra={'**/img/ext/4aa21432-0cfc-4c93-b3eb-0c15f322389d-0119b088.webp':('',404)}); pb.wait_for_timeout(800)
+        pb=page(extra={'**/img/ext/4aa21432-0cfc-4c93-b3eb-0c15f322389d-0119b088.webp':('',404)})
+        pb.locator('[data-infographic="cur:trek"]').first.scroll_into_view_if_needed(timeout=5000); pb.wait_for_timeout(800)
         check('a thumbnail that fails to load becomes Check infographic', pb.locator('[data-igcheck="cur:trek"]').first.inner_text()=='Check infographic' and pb.locator('[data-igcard="cur:trek"] img').count()==0 and pb.locator('[data-igcard="cur:trek"]').first.get_attribute('data-igbad') is not None)
         pb.context.close()
         # Regional event infographics must resolve through the same viewer as standard event cards.
