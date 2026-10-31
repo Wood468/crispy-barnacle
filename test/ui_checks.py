@@ -166,7 +166,7 @@ check('versioned stylesheets are referenced by the page and precached offline',
 check('offline shell cache version advances with the stylesheet token release',
       "gofn-shell-v158" in SW_JS)
 check('versioned dashboard scripts are referenced by the entry page and precached offline',
-      '/app.js?v=20261031e' in INDEX_HTML and '/app.js?v=20261031e' in SW_JS and
+      '/app.js?v=20261031f' in INDEX_HTML and '/app.js?v=20261031f' in SW_JS and
       '/dash.js?v=20261031f' in APP_JS and '/dash.js?v=20261031f' in SW_JS and
       '/detail.js?v=20261031a' in DASH_JS and '/detail.js?v=20261031a' in SW_JS)
 check('versioned infographic script is referenced by the dashboard and precached offline',
