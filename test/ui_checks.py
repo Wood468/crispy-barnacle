@@ -101,7 +101,7 @@ DASH_FONT_SHORTHAND_SCALE = {
     '--type-body-base': 1,
 }
 def font_shorthand_role_count(css, token):
-    return len(re.findall(r'(?<![-\\w])font\\s*:\\s*[^;{}]*var\\(' + re.escape(token) + r'\\)', css))
+    return len(re.findall(r'(?<![-\w])font\s*:\s*[^;{}]*var\(' + re.escape(token) + r'\)', css))
 check('base and dashboard font shorthands reuse shared semantic type roles',
       all(font_shorthand_role_count(BASE_CSS, token) == count for token, count in BASE_FONT_SHORTHAND_SCALE.items()) and
       all(font_shorthand_role_count(DASH_CSS, token) == count for token, count in DASH_FONT_SHORTHAND_SCALE.items()))
