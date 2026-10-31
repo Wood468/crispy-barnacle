@@ -1235,8 +1235,8 @@
       return from <= dayStart && dayStart < to;
     })[0];
     var maxBattle = (D.maxBattles || []).filter(function (r) { return r && r.length >= 3 && r[0] <= dateKey && dateKey <= r[1]; })[0];
-    var raidSummary = rotation ? [rotation.five ? '5★ ' + rotation.five : '', rotation.mega ? 'Mega ' + rotation.mega : ''].filter(Boolean).join(' · ') : '';
-    var raidMeta = [rotation && rotation.shadow ? 'Shadow ' + rotation.shadow : '', maxBattle ? 'Max ' + maxBattle[2] : 'No Max Battle schedule listed'].filter(Boolean).join(' · ');
+    var raidSummary = rotation ? [rotation.five ? '5★ ' + rotation.five : '', rotation.mega ? 'Mega ' + rotation.mega : '', rotation.shadow ? 'Shadow ' + rotation.shadow : ''].filter(Boolean).join(' · ') : '';
+    var raidMeta = maxBattle ? 'Max Battle · ' + maxBattle[2] : 'No Max Battle schedule listed';
     setText('today-focus-raids', raidSummary || (maxBattle ? 'No raid bosses listed for today' : 'No raid rotation listed for today'));
     setText('today-focus-raids-meta', raidMeta);
 
