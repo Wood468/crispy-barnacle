@@ -731,9 +731,20 @@ with sync_playwright() as p:
         check('no marks: no "You need" reasons anywhere', pg.locator('text=/You need/').count()==0)
         check('no console/page errors on load', pg.errs==[], pg.errs)
         pg.locator('[data-infographic="cur:trek"].info-available').wait_for(state="attached")
-        hidden_schedule_thumb = pg.locator('#tab-events [data-infographic="cur:trek"].igthumb img[data-thumb-src]').first
+        pg.evaluate("""() => {
+            const holder = document.createElement('div');
+            holder.id = 'thumbnail-defer-fixture';
+            const button = document.createElement('button');
+            button.type = 'button';
+            button.setAttribute('data-igcard', 'cur:trek');
+            holder.appendChild(button);
+            document.getElementById('tab-events').appendChild(holder);
+        }""")
+        hidden_schedule_thumb = pg.locator('#thumbnail-defer-fixture img[data-thumb-src]').first
+        hidden_schedule_thumb.wait_for(state='attached', timeout=5000)
         check('hidden Schedule infographic thumbnails do not request original poster bytes',
               hidden_schedule_thumb.count() == 1 and not hidden_schedule_thumb.get_attribute('src'))
+        pg.evaluate("() => document.getElementById('thumbnail-defer-fixture')?.remove()")
         lazy_thumb = pg.locator('[data-infographic="cur:trek"].igthumb img[loading=lazy]').first
         lazy_thumb.scroll_into_view_if_needed(timeout=5000)
         lazy_loaded = pg.wait_for_function("selector => { const img = document.querySelector(selector); return !!img && img.complete && img.naturalWidth > 0; }", arg='[data-infographic="cur:trek"].igthumb img[loading=lazy]', timeout=5000)
