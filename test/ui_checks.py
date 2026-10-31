@@ -36,6 +36,8 @@ check('base stylesheet components use semantic palette and typography roles whil
       all(token in BASE_CSS[:BASE_CSS.index('*{box-sizing:border-box}')] for token in ['--bg:', '--panel:', '--soft:', '--line:', '--fg:', '--muted:', '--body:', '--inv-bg:', '--inv-fg:', '--gold:', '--gold-fg:', '--display:', '--sans:', '--mono:']))
 check('dashboard status and surface tokens retain compatibility aliases',
       all(token in DASH_CSS for token in ['--surface-glass:', '--border-subtle:', '--color-success:', '--color-warning:', '--color-danger:', '--glass:var(--surface-glass)', '--ring:var(--border-subtle)']))
+check('warning banner and status foregrounds use semantic tokens with unchanged palette values',
+      all(token in DASH_CSS for token in ['--color-warning-banner:#FBBF24', '--color-on-warning:#1A1200', '--color-warning-banner-border:#B45309', '--color-on-danger:#fff', '--color-on-success:#04230F', 'background:var(--color-warning-banner)', 'color:var(--color-on-warning)', 'border-bottom:3px solid var(--color-warning-banner-border)', 'color:var(--color-on-danger)', 'color:var(--color-on-success)']))
 check('dashboard token migration preserves existing 14px controls and 18px card corners',
       '--radius-control:14px' in BASE_CSS and '--radius-panel:18px' in BASE_CSS and
       re.search(r'\.evc\{[^}]*border-radius:var\(--radius-panel\)', DASH_CSS) and
@@ -56,9 +58,9 @@ check('Today focus strip has four data-backed signals and a responsive semantic 
       all(token in DASH_JS for token in ['function renderTodayStrip', '6 * 60 * 60 * 1000', 'activity.inGame', 'activity.inPerson', 'D.rotation', 'D.maxBattles']) and
       all(token in DASH_CSS for token in ['.today-focus-strip', '.today-focus-card', 'grid-template-columns:repeat(2,minmax(0,1fr))']))
 check('versioned stylesheets are referenced by the page and precached offline',
-      all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261031f', '/dash.css?v=20261031k']))
+      all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261031f', '/dash.css?v=20261031l']))
 check('offline shell cache version advances with the stylesheet token release',
-      "gofn-shell-v147" in SW_JS)
+      "gofn-shell-v148" in SW_JS)
 check('versioned dashboard scripts are referenced by the entry page and precached offline',
       '/app.js?v=20261031e' in INDEX_HTML and '/app.js?v=20261031e' in SW_JS and
       '/dash.js?v=20261031e' in APP_JS and '/dash.js?v=20261031e' in SW_JS)
