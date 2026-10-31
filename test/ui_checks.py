@@ -43,9 +43,9 @@ check('header badges use accent roles, a canvas outline and reduced-motion-aware
 check('empty agenda and watchlist states use a quiet surface and decorative cue',
       all(token in DASH_CSS for token in ['.event-agenda > .empty', '#followed > .empty', '#savedev > .empty', '.today-empty', 'content:"◇"', 'border:1px dashed var(--border-subtle)']))
 check('versioned stylesheets are referenced by the page and precached offline',
-      all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261031c', '/dash.css?v=20261031g']))
+      all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261031c', '/dash.css?v=20261031h']))
 check('offline shell cache version advances with the stylesheet token release',
-      "gofn-shell-v141" in SW_JS)
+      "gofn-shell-v142" in SW_JS)
 check('Today has separate primary and supporting-panel layout wrappers',
       all(token in INDEX_HTML for token in ['class="today-layout"', 'class="today-main"', 'class="today-sidebar"', 'id="home-now"', 'id="action-centre"', 'id="foryou-sec"', 'id="weekly-sec"', 'id="buy-sec"']))
 check('desktop Today uses two columns while mobile preserves action-first order',
