@@ -77,6 +77,34 @@ check('dashboard uses the shared semantic type scale for 79 exact font-size decl
           for token, count in DASH_TYPE_SCALE.items()) and
       all(not re.search(r'font-size\s*:\s*' + re.escape(value) + r'(?=[;}])', DASH_CSS)
           for value in DASH_TYPE_VALUES))
+BASE_FONT_SHORTHAND_SCALE = {
+    '--type-caption': 1,
+    '--type-overline': 2,
+    '--type-meta-compact': 3,
+    '--type-meta': 2,
+    '--type-body-sm': 1,
+    '--type-body-emphasis': 1,
+}
+DASH_FONT_SHORTHAND_SCALE = {
+    '--type-body-sm': 3,
+    '--type-caption': 5,
+    '--type-meta': 7,
+    '--type-heading': 2,
+    '--type-meta-compact': 7,
+    '--type-body-emphasis': 4,
+    '--type-button': 2,
+    '--type-label': 9,
+    '--type-overline': 9,
+    '--type-body-lg': 1,
+    '--type-intro': 1,
+    '--type-caption-compact': 5,
+    '--type-body-base': 1,
+}
+def font_shorthand_role_count(css, token):
+    return len(re.findall(r'(?<![-\w])font\s*:\s*[^;{}]*var\(' + re.escape(token) + r'\)', css))
+check('base and dashboard font shorthands reuse shared semantic type roles',
+      all(font_shorthand_role_count(BASE_CSS, token) == count for token, count in BASE_FONT_SHORTHAND_SCALE.items()) and
+      all(font_shorthand_role_count(DASH_CSS, token) == count for token, count in DASH_FONT_SHORTHAND_SCALE.items()))
 check('base stylesheet components use semantic palette and typography roles while legacy aliases remain defined',
       re.search(r'var\(--(?:bg|panel|soft|line|fg|muted|body|inv-bg|inv-fg|gold|gold-fg|display|sans|mono)\b', BASE_COMPONENT_CSS) is None and
       all(token in BASE_COMPONENT_CSS for token in ['var(--color-canvas)', 'var(--color-surface)', 'var(--color-surface-raised)', 'var(--color-border)', 'var(--color-text)', 'var(--color-text-muted)', 'var(--color-text-body)', 'var(--color-inverse-surface)', 'var(--color-inverse-text)', 'var(--color-accent)', 'var(--color-accent-text)', 'var(--font-display)', 'var(--font-body)', 'var(--font-mono)']) and
@@ -105,9 +133,9 @@ check('Today focus strip has four data-backed signals and a responsive semantic 
       all(token in DASH_JS for token in ['function renderTodayStrip', '6 * 60 * 60 * 1000', 'activity.inGame', 'activity.inPerson', 'D.rotation', 'D.maxBattles']) and
       all(token in DASH_CSS for token in ['.today-focus-strip', '.today-focus-card', 'grid-template-columns:repeat(2,minmax(0,1fr))']))
 check('versioned stylesheets are referenced by the page and precached offline',
-      all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261031g', '/dash.css?v=20261031p']))
+      all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261031h', '/dash.css?v=20261031q']))
 check('offline shell cache version advances with the stylesheet token release',
-      "gofn-shell-v154" in SW_JS)
+      "gofn-shell-v155" in SW_JS)
 check('versioned dashboard scripts are referenced by the entry page and precached offline',
       '/app.js?v=20261031e' in INDEX_HTML and '/app.js?v=20261031e' in SW_JS and
       '/dash.js?v=20261031e' in APP_JS and '/dash.js?v=20261031e' in SW_JS and

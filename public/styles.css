@@ -129,7 +129,7 @@ ul.plain{margin:0;padding-left:1.1em;display:flex;flex-direction:column;gap:6px}
   #rottable tbody tr,#maxtable tbody tr{display:grid;min-width:0;border:1px solid var(--color-border);border-radius:14px;overflow:hidden;background:var(--color-surface)}
   #rottable tbody td,#maxtable tbody tr:not(.max-detail-row) td{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;min-width:0;padding:11px 13px;border-bottom:1px solid var(--color-border);overflow-wrap:anywhere}
   #rottable tbody td:last-child,#maxtable tbody tr:not(.max-detail-row) td:last-child{border-bottom:0}
-  #rottable tbody td::before,#maxtable tbody tr:not(.max-detail-row) td::before{content:attr(data-label);flex:0 0 39%;font:500 .68rem/1.4 var(--font-mono);letter-spacing:.04em;text-transform:uppercase;color:var(--color-text-muted)}
+  #rottable tbody td::before,#maxtable tbody tr:not(.max-detail-row) td::before{content:attr(data-label);flex:0 0 39%;font:500 var(--type-caption)/1.4 var(--font-mono);letter-spacing:.04em;text-transform:uppercase;color:var(--color-text-muted)}
   #maxtable tbody tr.cur{background:var(--color-inverse-surface);color:var(--color-inverse-text)}
   #maxtable tbody tr.cur td{background:transparent;color:inherit}
   #maxtable .max-pokemon{flex-direction:row;align-items:center;gap:8px;min-width:0}
@@ -223,7 +223,7 @@ footer ul{margin:0;padding-left:1.1em}
 .bonus{display:inline-flex;align-items:center;gap:6px;padding:6px 11px 6px 8px;border-radius:12px;background:var(--color-surface-raised);color:var(--color-text);font-size:var(--type-body-sm);line-height:1.2}
 .bonus .gi{width:1.7rem;height:1.7rem;flex:none;object-fit:contain;margin:-3px 0}
 .bonus .gi-wrap{position:relative;display:inline-flex;flex:none;margin-right:6px}
-.bonus .gi-plus{position:absolute;right:-5px;bottom:-5px;width:15px;height:15px;border-radius:50%;background:#12A594;color:#fff;font:800 .72rem/15px var(--font-body);text-align:center;font-style:normal;box-shadow:0 0 0 2px var(--color-canvas,#0b0e14)}
+.bonus .gi-plus{position:absolute;right:-5px;bottom:-5px;width:15px;height:15px;border-radius:50%;background:#12A594;color:#fff;font:800 var(--type-overline)/15px var(--font-body);text-align:center;font-style:normal;box-shadow:0 0 0 2px var(--color-canvas,#0b0e14)}
 .bonus svg{width:1.15rem;height:1.15rem;flex:none}
 .bonus b{font-family:var(--font-display);font-weight:800;font-size:var(--type-intro);letter-spacing:.01em}
 .hero .bonus{background:color-mix(in srgb,var(--hf) 16%,transparent);color:var(--hf)}
@@ -267,13 +267,13 @@ nav.tabs button[aria-selected="true"] svg{stroke-width:2.6}
 .dd>summary::-webkit-details-marker{display:none}
 .dd>summary::after{content:"";margin-left:auto;width:.6rem;height:.6rem;border-right:2.5px solid var(--color-text-muted);border-bottom:2.5px solid var(--color-text-muted);transform:rotate(45deg);transition:transform .15s}
 .dd[open]>summary::after{transform:rotate(-135deg)}
-.dd .cnt{font:500 .8rem var(--font-mono);color:var(--color-text-muted);text-transform:none;letter-spacing:0}
+.dd .cnt{font:500 var(--type-meta-compact) var(--font-mono);color:var(--color-text-muted);text-transform:none;letter-spacing:0}
 .dd .body{padding:0 20px 20px;display:grid;gap:18px}
 .dd h4{display:flex;align-items:center;gap:8px;margin:0 0 4px;font-size:var(--type-body-emphasis)}
-.st{display:inline-block;border-radius:999px;padding:3px 10px;font:700 .72rem var(--font-body);text-transform:uppercase;letter-spacing:.05em}
+.st{display:inline-block;border-radius:999px;padding:3px 10px;font:700 var(--type-overline) var(--font-body);text-transform:uppercase;letter-spacing:.05em}
 .st-a{background:#26833A;color:#fff}.st-d{background:#F59F00;color:#1D1300}.st-n{background:var(--color-surface-raised);color:var(--color-text)}.st-u{background:transparent;color:var(--color-text-muted);border:1px dashed var(--ring)}
 .dd .sub{margin:2px 0 8px;font-size:var(--type-body-sm);color:var(--color-text-muted)}
-.dd .lab{font:600 .78rem var(--font-mono);color:var(--color-text-muted);margin:12px 0 6px;text-transform:uppercase}
+.dd .lab{font:600 var(--type-meta) var(--font-mono);color:var(--color-text-muted);margin:12px 0 6px;text-transform:uppercase}
 .utiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(6.6rem,1fr));gap:8px}
 .ut{background:var(--color-surface-raised);border-radius:12px;padding:8px 6px 10px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:4px;min-width:0}
 .ut img{width:4.2rem;height:4.2rem;object-fit:contain}
@@ -287,19 +287,19 @@ nav.tabs button[aria-selected="true"] svg{stroke-width:2.6}
 .drow{display:grid;grid-template-columns:3.6rem minmax(0,1fr);gap:6px 12px;align-items:center;padding-block:12px;border-top:1px solid var(--color-border)}
 .drow img{width:3.6rem;height:3.6rem;object-fit:contain;background:var(--color-surface-raised);border-radius:14px}
 .drow .nm{font-weight:700;line-height:1.2;overflow-wrap:anywhere}
-.drow .nm small{font:500 .78rem var(--font-mono);color:var(--color-text-muted);margin-right:6px}
+.drow .nm small{font:500 var(--type-meta) var(--font-mono);color:var(--color-text-muted);margin-right:6px}
 .drow .nm .pill{margin-left:6px;vertical-align:middle}
 .drow.un img{opacity:.55}
 .dtog{grid-column:1 / -1;display:flex;gap:5px}
 .dtog .tg{flex:1;min-width:0;height:40px;padding:0 4px;font-size:.74rem}
 .dtog .tg.s[aria-pressed="true"]{background:var(--color-accent);color:var(--color-accent-text)}
 .dchk{display:flex;gap:8px;align-items:center;font-size:var(--type-body-emphasis);color:var(--color-text-muted)}
-.dmini{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:12px;font:500 .8rem var(--font-mono)}
+.dmini{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:12px;font:500 var(--type-meta-compact) var(--font-mono)}
 .dmini b{font-weight:700}
 .st-r{background:#1971c2;color:#fff}
 .ut i a{color:inherit;text-decoration:underline}
 
-#calurl{background:var(--color-surface-raised);color:var(--color-text);border:0;border-radius:12px;padding:12px;font:500 .8rem var(--font-mono)}
+#calurl{background:var(--color-surface-raised);color:var(--color-text);border:0;border-radius:12px;padding:12px;font:500 var(--type-meta-compact) var(--font-mono)}
 
 
 /* Interactive Max Battles at Power Spots schedule */
@@ -322,7 +322,7 @@ nav.tabs button[aria-selected="true"] svg{stroke-width:2.6}
 .rw-list{display:grid;gap:16px}
 .rw-card{padding:18px;display:grid;gap:16px}
 .rw-week-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;border-bottom:1px solid var(--color-border);padding-bottom:12px}
-.rw-week-head>b{font:500 .82rem var(--font-mono);color:var(--color-text-muted)}
+.rw-week-head>b{font:500 var(--type-body-sm) var(--font-mono);color:var(--color-text-muted)}
 .rw-label{display:block;font:500 .76rem var(--font-mono);color:var(--color-text-muted);letter-spacing:.04em;text-transform:uppercase;margin-bottom:8px}
 .rw-raid{display:grid;gap:8px}
 .rw-next{border-top:1px solid var(--color-border);padding-top:14px}
@@ -368,7 +368,7 @@ button.info-open.info-unavailable:disabled { opacity: 1; }
 .goprof-t button i{width:22px;height:22px;border-radius:50%;background:var(--tc)}.goprof-t small{font-weight:400;color:var(--color-text-muted)}
 .goprof-t button[aria-checked="true"]{border-color:var(--tc);box-shadow:0 0 0 3px color-mix(in srgb,var(--tc) 30%,transparent)}
 .goprof-b{display:flex;gap:10px}
-.igbanner{display:block;width:100%;margin:0 0 12px;padding:12px 14px;border-radius:12px;border:1px solid var(--color-accent);background:var(--color-surface-raised);color:var(--color-text);font:600 .9rem var(--font-body,inherit);text-align:left;cursor:pointer;animation:igpulse 2.4s ease-in-out infinite}
+.igbanner{display:block;width:100%;margin:0 0 12px;padding:12px 14px;border-radius:12px;border:1px solid var(--color-accent);background:var(--color-surface-raised);color:var(--color-text);font:600 var(--type-body-emphasis) var(--font-body,inherit);text-align:left;cursor:pointer;animation:igpulse 2.4s ease-in-out infinite}
 @keyframes igpulse{0%,100%{box-shadow:0 0 0 0 transparent}50%{box-shadow:0 0 0 3px color-mix(in srgb,var(--color-accent) 45%,transparent)}}
 @media(prefers-reduced-motion:reduce){.igbanner{animation:none}}
 nav.tabs button.has-new{position:relative}
