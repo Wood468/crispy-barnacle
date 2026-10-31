@@ -1551,3 +1551,8 @@ with sync_playwright() as p:
 print('\nFAILED:',fails if fails else 'none')
 if fails:
     sys.exit(1)
+
+# Dashboard radius adoption: shared scale values are expressed through semantic roles.
+check('dashboard shared radius declarations consume semantic radius tokens',
+      all(f'border-radius:var(--radius-{role})' in DASH_CSS for role in ['sm','md','control','card','panel','lg','xl','pill']) and
+      re.search(r'border-radius:\\s*(?:8|12|14|16|18|20|22|999)px\\b', DASH_CSS) is None)
