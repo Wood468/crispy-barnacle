@@ -48,10 +48,14 @@ check('header badges use accent roles, a canvas outline and reduced-motion-aware
       all(token in DASH_CSS for token in ['border:2px solid var(--color-canvas)', 'background:var(--color-accent)', 'color:var(--color-accent-text)', 'var(--motion-fast)', '@media(prefers-reduced-motion:reduce)']))
 check('empty agenda and watchlist states use a quiet surface and decorative cue',
       all(token in DASH_CSS for token in ['.event-agenda > .empty', '#followed > .empty', '#savedev > .empty', '.today-empty', 'content:"◇"', 'border:1px dashed var(--border-subtle)']))
+check('Today focus strip has four data-backed signals and a responsive semantic surface',
+      all(token in INDEX_HTML for token in ['id="today-focus-strip"', 'id="today-focus-now"', 'id="today-focus-next"', 'id="today-focus-raids"', 'id="today-focus-ending"']) and
+      all(token in DASH_JS for token in ['function renderTodayStrip', '6 * 60 * 60 * 1000', 'activity.inGame', 'activity.inPerson', 'D.rotation', 'D.maxBattles']) and
+      all(token in DASH_CSS for token in ['.today-focus-strip', '.today-focus-card', 'grid-template-columns:repeat(2,minmax(0,1fr))']))
 check('versioned stylesheets are referenced by the page and precached offline',
-      all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261031f', '/dash.css?v=20261031j']))
+      all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261031f', '/dash.css?v=20261031k']))
 check('offline shell cache version advances with the stylesheet token release',
-      "gofn-shell-v145" in SW_JS)
+      "gofn-shell-v146" in SW_JS)
 check('mobile chrome uses compact 48px navigation targets, safe-area padding and reduced header/body spacing',
       all(token in BASE_CSS for token in ['padding-block:0 calc(72px + env(safe-area-inset-bottom,0px))', '@media (max-width:1199px){header.top{padding-top:var(--space-4)}}', 'padding:4px 8px calc(4px + env(safe-area-inset-bottom,0px))', 'padding:4px 2px;min-height:48px', 'width:1.2rem;height:1.2rem']) and
       'min-height:68px' in BASE_CSS and 'nav.tabs button{min-height:56px}' in DASH_CSS and '@media(max-width:1199px){nav.tabs button{min-height:48px}}' in DASH_CSS)
@@ -129,6 +133,41 @@ with sync_playwright() as p:
           return {actual:{inGame:Number(document.getElementById('day-live-count').textContent),inPerson:Number(document.getElementById('day-inperson-count').textContent)},expected:{inGame:live.filter(e=>e.kind!=='person').length+worldwide.length,inPerson:live.filter(e=>e.kind==='person').length+regional.length}};
         }""")
         check('Overseas in-person activity remains in its separate summary count', overseas_counts['actual']==overseas_counts['expected'] and overseas_counts['actual']['inPerson']>=1, overseas_counts)
+         # A later-starting overseas event is still part of today's unfolded agenda.
+         future_world_fixture = json.dumps({'events':[{'id':'fixture-overseas-future','name':'Overseas Future Fixture','place':'Example City, Exampleland','area':'Asia','scope':'regional','start':'2026-10-09T22:46:00+11:00','end':'2026-10-10T22:46:00+11:00','sources':[{'url':'https://example.invalid/overseas-future-fixture'}]}]})
+         future_overseas = page(extra={'**/world-events.json':(future_world_fixture,200)})
+         future_overseas.wait_for_selector('#home-now .agr.reg')
+         future_card = future_overseas.locator('#home-now .agr.reg').filter(has_text='Overseas Future Fixture')
+         future_text = future_card.inner_text() if future_card.count() else ''
+         check('Overseas in-person events starting later today remain visible in the unfolded Today agenda',
+               future_card.count()==1 and future_card.is_visible() and
+               future_card.evaluate("el => el.closest('.today-phase-group')?.querySelector('.today-phase-head span')?.textContent === 'Later today'") and
+               'Example City, Exampleland' in future_text, future_text)
+         next_name = future_overseas.locator('#today-focus-next').inner_text()
+         next_meta = future_overseas.locator('#today-focus-next-meta').inner_text()
+         check('Next summary shows overseas destination without inventing a venue-local time',
+               'Overseas Future Fixture' in next_name and 'Example City, Exampleland' in next_meta and
+               not re.search(r'\b\d{1,2}:\d{2}\b|\b(?:am|pm)\b', next_meta, re.I), (next_name,next_meta))
+         check('Future overseas event does not inflate the current in-person activity count',
+               future_overseas.locator('#day-inperson-count').inner_text()=='0' and
+               '0 in person' in future_overseas.locator('#today-focus-now-meta').inner_text())
+         rotation_text = future_overseas.locator('#today-focus-raids').inner_text()
+         max_text = future_overseas.locator('#today-focus-raids-meta').inner_text()
+         check('Raids and Max summary uses the published rotation active on the viewed date',
+               'Yveltal' in rotation_text and 'Mega Blastoise' in rotation_text and 'Sizzlipede' in max_text,
+               (rotation_text,max_text))
+         future_overseas.set_viewport_size({'width':320,'height':844})
+         strip_320 = future_overseas.locator('#today-focus-strip').bounding_box()
+         check('Today focus strip fits the 320px mobile viewport without horizontal overflow',
+               strip_320 is not None and strip_320['x'] >= 0 and strip_320['x'] + strip_320['width'] <= 321 and
+               future_overseas.evaluate('document.documentElement.scrollWidth <= window.innerWidth'))
+         future_overseas.set_viewport_size({'width':390,'height':844})
+         check('Today focus strip remains visible at 390px', future_overseas.locator('#today-focus-strip').is_visible())
+         future_overseas.set_viewport_size({'width':1280,'height':900})
+         desktop_cols = future_overseas.locator('#today-focus-strip').evaluate("el => getComputedStyle(el).gridTemplateColumns.split(' ').length")
+         check('Today focus strip expands to four columns on desktop', desktop_cols==4, desktop_cols)
+         future_overseas.context.close()
+
         dark_theme = overseas.evaluate("""() => ({
           body:getComputedStyle(document.body).color,
           nav:getComputedStyle(document.querySelector('nav.tabs')).backgroundColor
