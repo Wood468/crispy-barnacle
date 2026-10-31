@@ -18,7 +18,11 @@ class El {
   set textContent(v) { this.children = []; this._text = String(v); } get textContent() { return this._text; }
   set innerHTML(v) { this.children = []; this._text = ""; }
   appendChild(c) { this.children.push(c); return c; }
-  querySelector(sel) { return sel === "img" ? this.children.find((c) => c.tag === "img") || null : null; }
+  querySelector(sel) {
+    if (sel === "img") return this.children.find((c) => c.tag === "img") || null;
+    const m = /^img\[([\w-]+)\]$/.exec(sel);
+    return m ? this.children.find((c) => c.tag === "img" && c.hasAttribute(m[1])) || null : null;
+  }
   addEventListener(t, f) { this.on[t] = f; }
   closest(sel) { const m = /^\[([\w-]+)\]$/.exec(sel); return m && this.hasAttribute(m[1]) ? this : null; }
 }
