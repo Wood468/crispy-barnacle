@@ -1308,6 +1308,8 @@ with sync_playwright() as p:
             if req.method=='PUT': puts.append(json.loads(req.post_data))
             route.fulfill(content_type='application/json',body=json.dumps({'enabled':True,'now':1,'entries':{'follow:eevee':{'v':'Eevee','t':99},'form:37:alola':{'v':1,'t':5}},'applied':None}))
         ctx=b.new_context(viewport={'width':390,'height':844},timezone_id='Australia/Melbourne')
+        ctx.set_default_timeout(10000)
+        ctx.set_default_navigation_timeout(15000)
         pg=ctx.new_page(); pg.errs=[]; pg.on('pageerror',lambda e:pg.errs.append(str(e)))
         pg.route('**/api/sources',ful('{"environment":"production","database":true,"enabled":false,"sources":[]}')); pg.route('**/api/events',ful('{"enabled":false,"events":[]}'))
         pg.route('**/api/dex',lambda r:r.fulfill(status=401,body='{}',content_type='application/json')); pg.route('**/api/art*',lambda r:r.fulfill(status=404,body=''))
@@ -1488,7 +1490,10 @@ with sync_playwright() as p:
             pg=page()
             return pg
         def mk(moves='real'):
-            ctx=b.new_context(viewport={'width':390,'height':844},timezone_id='Australia/Melbourne',locale='en-AU'); pg=ctx.new_page(); pg.errs=[]
+            ctx=b.new_context(viewport={'width':390,'height':844},timezone_id='Australia/Melbourne',locale='en-AU')
+            ctx.set_default_timeout(10000)
+            ctx.set_default_navigation_timeout(15000)
+            pg=ctx.new_page(); pg.errs=[]
             pg.on('pageerror',lambda e:pg.errs.append(str(e)))
             pg.route('**/api/sources',ful('{"environment":"production","database":true,"enabled":false,"sources":[]}')); pg.route('**/api/events',ful('{"enabled":false,"events":[]}'))
             pg.route('**/api/userstate*',lambda r:r.fulfill(status=404,body='{}')); pg.route('**/api/dex',lambda r:r.fulfill(status=401,body='{}')); pg.route('**/api/art*',lambda r:r.fulfill(status=404,body=''))
