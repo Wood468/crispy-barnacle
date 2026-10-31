@@ -23,6 +23,7 @@ def check(name,cond,extra=''):
 ROOT = Path(__file__).resolve().parent.parent
 BASE_CSS = (ROOT / 'public' / 'styles.css').read_text()
 DASH_CSS = (ROOT / 'public' / 'dash.css').read_text()
+DASH_JS = (ROOT / 'public' / 'dash.js').read_text()
 INDEX_HTML = (ROOT / 'public' / 'index.html').read_text()
 SW_JS = (ROOT / 'public' / 'sw.js').read_text()
 check('design tokens define semantic colour, spacing, radius, typography and motion roles',
