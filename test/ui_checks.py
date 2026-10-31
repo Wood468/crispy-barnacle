@@ -60,7 +60,7 @@ check('Today focus strip has four data-backed signals and a responsive semantic 
 check('versioned stylesheets are referenced by the page and precached offline',
       all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261031f', '/dash.css?v=20261031o']))
 check('offline shell cache version advances with the stylesheet token release',
-      "gofn-shell-v151" in SW_JS)
+      "gofn-shell-v152" in SW_JS)
 check('versioned dashboard scripts are referenced by the entry page and precached offline',
       '/app.js?v=20261031e' in INDEX_HTML and '/app.js?v=20261031e' in SW_JS and
       '/dash.js?v=20261031e' in APP_JS and '/dash.js?v=20261031e' in SW_JS and
