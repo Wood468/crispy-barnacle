@@ -140,7 +140,7 @@ with sync_playwright() as p:
         }""")
         check('Overseas in-person activity remains in its separate summary count', overseas_counts['actual']==overseas_counts['expected'] and overseas_counts['actual']['inPerson']>=1, overseas_counts)
         # A similarly titled in-game card is not proof that an overseas in-person listing is redundant.
-        collision_events = [ev('fixture-game-collision','Overseas In-Person Fixture','raid','2026-10-09T22:00:00.000','2026-10-09T23:30:00.000','community_reported')] + [
+        collision_events = [ev('fixture-game-collision','Overseas In-Person Fixture','raid-battles','2026-10-09T22:00:00.000','2026-10-09T23:30:00.000','community_reported')] + [
             ev('fixture-collision-filler-'+str(i),'Collision filler '+str(i),'event',
                '2026-10-%02dT10:00:00.000'%(20+i),'2026-10-%02dT12:00:00.000'%(20+i),'community_reported')
             for i in range(9)
