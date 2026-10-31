@@ -67,6 +67,47 @@ test("splits multiple city/date stops from one official announcement paragraph",
   }), false);
 });
 
+test("unchanged world events retain last-good source attribution when a refresh finds only a subset", async () => {
+  const { preserveWorldSources } = await import("../scripts/importer/world.mjs");
+  const prior = [{
+    id: "w-go-wild-area-2026-mexico-city",
+    name: "GO Wild Area 2026 Mexico City",
+    place: "Mexico City, Mexico",
+    area: "Americas",
+    scope: "regional",
+    start: "2026-11-06",
+    end: "2026-11-08",
+    status: "official",
+    sources: [
+      { id: "official", name: "Pokémon GO (official)", url: "https://pokemongo.com/en/gowildarea/mexico-city" },
+      { id: "leekduck", name: "Leek Duck", url: "https://leekduck.com/events/pokemon-go-wild-area-2026-mexico-city/" },
+      { id: "serebii", name: "Serebii", url: "https://www.serebii.net/pokemongo/reallifeevents.shtml" }
+    ]
+  }];
+  const current = [{
+    id: prior[0].id,
+    name: prior[0].name,
+    place: prior[0].place,
+    area: prior[0].area,
+    scope: prior[0].scope,
+    start: prior[0].start,
+    end: prior[0].end,
+    status: "single",
+    sources: [{ id: "serebii", name: "Serebii", url: "https://www.serebii.net/pokemongo/reallifeevents.shtml" }]
+  }];
+
+  const retained = preserveWorldSources(current, prior)[0];
+  assert.equal(retained.status, "official");
+  assert.deepEqual(retained.sources.map(source => source.id).sort(), ["leekduck", "official", "serebii"]);
+  assert.equal(retained.start, "2026-11-06");
+  assert.equal(retained.place, "Mexico City, Mexico");
+
+  const changed = preserveWorldSources([{ ...current[0], start: "2026-11-07" }], prior)[0];
+  assert.equal(changed.start, "2026-11-07", "current event facts are never overwritten from the old snapshot");
+  assert.deepEqual(changed.sources.map(source => source.id), ["serebii"], "source coverage is not carried across a changed event identity");
+  assert.equal(changed.status, "single");
+});
+
 test("Wild Area city pages retain official source coverage without merging destinations", async () => {
   const { entriesFromPage, mergeWorld, keepOldWorld, normUrl } = await import("../scripts/importer/world.mjs");
   const mexicoUrl = "https://pokemongo.com/en/gowildarea/mexico-city";
