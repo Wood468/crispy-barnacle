@@ -46,6 +46,10 @@ check('versioned stylesheets are referenced by the page and precached offline',
       all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261031c', '/dash.css?v=20261031g']))
 check('offline shell cache version advances with the stylesheet token release',
       "gofn-shell-v141" in SW_JS)
+check('Today has separate primary and supporting-panel layout wrappers',
+      all(token in INDEX_HTML for token in ['class="today-layout"', 'class="today-main"', 'class="today-sidebar"', 'id="home-now"', 'id="action-centre"', 'id="foryou-sec"', 'id="weekly-sec"', 'id="buy-sec"']))
+check('desktop Today uses two columns while mobile preserves action-first order',
+      all(token in DASH_CSS for token in ['#tab-now .today-layout{display:flex;flex-direction:column;gap:20px;min-width:0}', '#tab-now .today-sidebar{display:contents}', '#tab-now #action-centre{order:0}', '#tab-now .today-main{order:1}', '@media(min-width:960px)', 'grid-template-columns:minmax(0,1.55fr) minmax(18rem,.9fr)', '#tab-now .today-sidebar{grid-column:2;display:grid']))
 with sync_playwright() as p:
     b=p.chromium.launch()
     def page(api=None,marks=None,clock='2026-10-09T22:45:00+11:00',sources=None,gens=None,us=None,extra=None,pin=False,slow_places=False):
@@ -110,6 +114,69 @@ with sync_playwright() as p:
           return {actual:{inGame:Number(document.getElementById('day-live-count').textContent),inPerson:Number(document.getElementById('day-inperson-count').textContent)},expected:{inGame:live.filter(e=>e.kind!=='person').length+worldwide.length,inPerson:live.filter(e=>e.kind==='person').length+regional.length}};
         }""")
         check('Overseas in-person activity remains in its separate summary count', overseas_counts['actual']==overseas_counts['expected'] and overseas_counts['actual']['inPerson']>=1, overseas_counts)
+
+        overseas.evaluate("""() => {
+          for (const id of ['action-centre','foryou-sec','weekly-sec','buy-sec']) {
+            const el=document.getElementById(id); if(el) el.hidden=false;
+          }
+        }""")
+        overseas.set_viewport_size({'width':1280,'height':900})
+        desktop_today = overseas.evaluate("""() => {
+          const layout=document.querySelector('#tab-now .today-layout');
+          const main=document.querySelector('#tab-now .today-main').getBoundingClientRect();
+          const side=document.querySelector('#tab-now .today-sidebar').getBoundingClientRect();
+          const card=document.querySelector('#home-now .agr.reg');
+          const sidebar=document.querySelector('#tab-now .today-sidebar');
+          return {
+            display:getComputedStyle(layout).display,
+            columns:getComputedStyle(layout).gridTemplateColumns.split(' ').length,
+            mainRight:main.right,sideLeft:side.left,
+            cardInMain:!!card && !!card.closest('.today-main'),
+            cardVisible:!!card && card.getClientRects().length>0,
+            sideIds:[...sidebar.children].map(el=>el.id),
+            weekOutside:!document.getElementById('week').closest('.today-layout'),
+            documentWidth:document.documentElement.scrollWidth,viewport:innerWidth
+          };
+        }""")
+        check('Desktop Today uses a two-column primary agenda and supporting sidebar',
+              desktop_today['display']=='grid' and desktop_today['columns']==2 and
+              desktop_today['mainRight']<desktop_today['sideLeft'] and
+              desktop_today['sideIds']==['action-centre','foryou-sec','weekly-sec','buy-sec'] and
+              desktop_today['weekOutside'] and desktop_today['documentWidth']<=desktop_today['viewport'],
+              desktop_today)
+        check('Overseas in-person events remain visible in the primary desktop Today agenda',
+              desktop_today['cardInMain'] and desktop_today['cardVisible'], desktop_today)
+        overseas.set_viewport_size({'width':390,'height':844})
+        mobile_today = overseas.evaluate("""() => {
+          const layout=document.querySelector('#tab-now .today-layout');
+          const action=document.getElementById('action-centre').getBoundingClientRect();
+          const main=document.querySelector('#tab-now .today-main').getBoundingClientRect();
+          const foryou=document.getElementById('foryou-sec').getBoundingClientRect();
+          const card=document.querySelector('#home-now .agr.reg').getBoundingClientRect();
+          return {
+            display:getComputedStyle(layout).display,
+            sidebarDisplay:getComputedStyle(document.querySelector('#tab-now .today-sidebar')).display,
+            actionTop:action.top,mainTop:main.top,foryouTop:foryou.top,
+            cardLeft:card.left,cardRight:card.right,
+            documentWidth:document.documentElement.scrollWidth,viewport:innerWidth
+          };
+        }""")
+        check('Mobile Today preserves Action Centre → Today → For you order',
+              mobile_today['display']=='flex' and mobile_today['sidebarDisplay']=='contents' and
+              mobile_today['actionTop']<mobile_today['mainTop']<mobile_today['foryouTop'],
+              mobile_today)
+        check('Overseas in-person events stay within the 390px mobile Today layout',
+              mobile_today['cardLeft']>=-1 and mobile_today['cardRight']<=391 and
+              mobile_today['documentWidth']<=mobile_today['viewport'], mobile_today)
+        overseas.set_viewport_size({'width':320,'height':844})
+        narrow_today = overseas.evaluate("""() => {
+          const card=document.querySelector('#home-now .agr.reg').getBoundingClientRect();
+          return {cardLeft:card.left,cardRight:card.right,documentWidth:document.documentElement.scrollWidth,viewport:innerWidth};
+        }""")
+        check('Overseas in-person events remain visible without horizontal overflow at 320px',
+              overseas.locator('#home-now .agr.reg').is_visible() and narrow_today['cardLeft']>=-1 and
+              narrow_today['cardRight']<=321 and narrow_today['documentWidth']<=narrow_today['viewport'],
+              narrow_today)
         overseas.context.close()
 
         # A small but important mobile interaction: hiding an event should have a reliable tap target,
