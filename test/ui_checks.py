@@ -164,9 +164,9 @@ check('150ms interaction transitions use a shared motion role with unchanged eas
 check('versioned stylesheets are referenced by the page and precached offline',
       all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261031i', '/dash.css?v=20261031t']))
 check('offline shell cache version advances with the stylesheet token release',
-      "gofn-shell-v159" in SW_JS)
+      "gofn-shell-v160" in SW_JS)
 check('versioned dashboard scripts are referenced by the entry page and precached offline',
-      '/app.js?v=20261031f' in INDEX_HTML and '/app.js?v=20261031f' in SW_JS and
+      '/app.js?v=20261101a' in INDEX_HTML and '/app.js?v=20261101a' in SW_JS and
       '/dash.js?v=20261031f' in APP_JS and '/dash.js?v=20261031f' in SW_JS and
       '/detail.js?v=20261031a' in DASH_JS and '/detail.js?v=20261031a' in SW_JS)
 check('versioned season banner script is referenced by the page and precached offline',
@@ -226,6 +226,46 @@ with sync_playwright() as p:
         pg.goto('http://localhost:8791/', wait_until='domcontentloaded' if slow_places else 'load'); pg.wait_for_selector('.pc, .prio-empty',state='attached'); pg.wait_for_timeout(300)
         return pg
     if on('a'):
+        # Primary navigation follows the ARIA tabs pattern: one tab stop, linked panels and predictable keyboard movement.
+        tabs_page = page()
+        tab_buttons = tabs_page.locator('#tabs [role="tab"]')
+        tab_contract = tab_buttons.evaluate_all("""els => {
+          const selected=els.filter(el=>el.getAttribute('aria-selected')==='true');
+          const stops=els.filter(el=>el.tabIndex===0);
+          return {
+            count:els.length,
+            roles:els.every(el=>el.tagName==='BUTTON'),
+            controls:els.every(el=>!!el.id && !!document.getElementById(el.getAttribute('aria-controls')) &&
+              document.getElementById(el.getAttribute('aria-controls')).getAttribute('aria-labelledby')===el.id),
+            selected:selected.length,
+            stops:stops.length,
+            activeMatches:selected.length===1 && stops.length===1 && selected[0]===stops[0]
+          };
+        }""")
+        check('Primary tabs expose linked tabpanels and exactly one keyboard tab stop',
+              tab_contract['count']==4 and tab_contract['roles'] and tab_contract['controls'] and
+              tab_contract['activeMatches'], tab_contract)
+        now_tab = tabs_page.locator('#tabs [data-tab="now"]')
+        schedule_tab = tabs_page.locator('#tabs [data-tab="events"]')
+        collect_tab = tabs_page.locator('#tabs [data-tab="collect"]')
+        now_tab.focus(); now_tab.press('ArrowRight')
+        check('ArrowRight focuses and activates Schedule with roving tabindex',
+              schedule_tab.evaluate("el=>document.activeElement===el && el.tabIndex===0 && el.getAttribute('aria-selected')==='true'") and
+              tabs_page.locator('#tab-events').is_visible() and tabs_page.locator('#tab-now').is_hidden())
+        schedule_tab.press('ArrowLeft')
+        check('ArrowLeft returns to Today and its linked panel',
+              now_tab.evaluate("el=>document.activeElement===el && el.tabIndex===0 && el.getAttribute('aria-selected')==='true'") and
+              tabs_page.locator('#tab-now').is_visible())
+        now_tab.press('End')
+        check('End moves to the final primary tab',
+              collect_tab.evaluate("el=>document.activeElement===el && el.tabIndex===0 && el.getAttribute('aria-selected')==='true'") and
+              tabs_page.locator('#tab-collect').is_visible())
+        collect_tab.press('Home')
+        check('Home returns focus and selection to Today',
+              now_tab.evaluate("el=>document.activeElement===el && el.tabIndex===0 && el.getAttribute('aria-selected')==='true'") and
+              tabs_page.locator('#tab-now').is_visible())
+        tabs_page.context.close()
+
         # A stalled initial data request must time out, expose a retry, and leave the primary navigation usable.
         boot_ctx=b.new_context(viewport={'width':390,'height':844},device_scale_factor=2,timezone_id='Australia/Melbourne',locale='en-AU',service_workers='block')
         boot_ctx.set_default_timeout(10000)
@@ -237,6 +277,15 @@ with sync_playwright() as p:
         boot.clock.fast_forward(13000); boot.clock.run_for(10); boot.wait_for_timeout(100)
         check('stalled initial data request shows a retryable error',boot.locator('#load-error:not([hidden])').count()==1 and boot.locator('#load-retry').is_visible())
         check('fallback navigation remains visible when initial data is unavailable',boot.locator('nav.tabs button[data-boot-tab]').count()==4)
+        boot.locator('nav.tabs button[data-boot-tab="now"]').focus()
+        boot.locator('nav.tabs button[data-boot-tab="now"]').press('ArrowRight')
+        check('fallback navigation supports ArrowRight while event data is unavailable',
+              boot.locator('nav.tabs button[data-boot-tab="events"]').evaluate("el=>document.activeElement===el && el.tabIndex===0 && el.getAttribute('aria-selected')==='true'") and
+              boot.locator('#tab-events').is_visible())
+        boot.locator('nav.tabs button[data-boot-tab="events"]').press('ArrowLeft')
+        check('fallback navigation supports ArrowLeft back to Today',
+              boot.locator('nav.tabs button[data-boot-tab="now"]').evaluate("el=>document.activeElement===el && el.tabIndex===0 && el.getAttribute('aria-selected')==='true'") and
+              boot.locator('#tab-now').is_visible())
         boot.click('nav.tabs button[data-boot-tab="raids"]')
         check('fallback navigation can reach Battle without loaded event data',boot.locator('#tab-raids').is_visible() and boot.locator('#tab-now').is_hidden())
         boot.click('nav.tabs button[data-boot-tab="events"]')
