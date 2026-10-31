@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-31T12:45:24.178Z",
+ "updated": "2026-10-31T16:12:57.719Z",
  "events": [
   {
    "id": "w-pokemon-fossil-museum-2026",
@@ -409,9 +409,9 @@
   {
    "id": "w-get-codes-for-exclusive-timed-research-during-the-",
    "name": "Get codes for exclusive Timed Research during the Pokémon Night Out Twitch broadcast",
-   "place": "Los Angeles, USA",
-   "area": "Americas",
-   "scope": "regional",
+   "place": "",
+   "area": "Worldwide",
+   "scope": "global",
    "start": "2026-10-24",
    "end": "2026-10-24",
    "datesKnown": true,
