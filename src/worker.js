@@ -21,6 +21,7 @@ import * as tgm from "./telegram.js";
 import * as auth from "./auth.js";
 import * as jobs from "./jobs.js";
 import { ogImage, OG_HOSTS } from "./og.js";
+import { IMAGE_CSP_HOSTS } from "./image-policy.js";
 import { venueItems, venueFor, describeVenue } from "./venue-times.js";
 export { ogImage };
 
@@ -114,7 +115,7 @@ const handler = {
 
 // Browser security headers on every response. script-src allows only our own files (no inline scripts or handlers); inline styles are still allowed. The rest of the policy still stops framing, plugins, form hijacking and calls to other sites (so a stolen PIN has nowhere to go).
 export const SECURITY_HEADERS = {
-  "content-security-policy": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' https: data: blob:; connect-src 'self'; worker-src 'self'; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'",
+  "content-security-policy": `default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob: ${IMAGE_CSP_HOSTS.join(" ")}; connect-src 'self'; worker-src 'self'; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'`,
   "x-frame-options": "DENY",
   "x-content-type-options": "nosniff",
   "referrer-policy": "strict-origin-when-cross-origin",

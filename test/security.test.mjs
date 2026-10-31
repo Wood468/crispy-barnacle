@@ -2,7 +2,9 @@ import test from "node:test";
 import { readPrivate } from "./_private.mjs";
 import assert from "node:assert/strict";
 import fs from "node:fs";
-import worker, { withSecurityHeaders, SECURITY_HEADERS } from "../src/worker.js";
+import worker, { withSecurityHeaders, SECURITY_HEADERS, guideImage } from "../src/worker.js";
+import { IMAGE_CSP_HOSTS, OG_IMAGE_HOSTS } from "../src/image-policy.js";
+import { ogImage } from "../src/og.js";
 import { makeDB } from "./helpers.mjs";
 
 test("every response gets the browser security headers, including framing and cross-site calls", async () => {
@@ -75,4 +77,26 @@ test("SYNC_PIN set: the right PIN still opens the private routes, a wrong one (o
   }
   assert.equal((await hit(env, "POST", "/api/jobs/run?job=nope&dry=1", "1234")).status, 400, "past the gate to job validation");
   assert.equal((await hit(env, "POST", "/api/jobs/run?job=nope&dry=1", "9999")).status, 401);
+});
+
+
+test("the image CSP uses only the audited HTTPS image origins", () => {
+  const directive = SECURITY_HEADERS["content-security-policy"].split(";").map(x => x.trim()).find(x => x.startsWith("img-src "));
+  assert.ok(directive, "img-src directive exists");
+  assert.match(directive, /^img-src 'self' data: blob:/);
+  assert.ok(!directive.split(" ").includes("https:"), "generic HTTPS image access must not return");
+  for (const origin of IMAGE_CSP_HOSTS) assert.ok(directive.split(" ").includes(origin), origin);
+  for (const host of OG_IMAGE_HOSTS) assert.ok(IMAGE_CSP_HOSTS.includes("https://" + host), host + " must be covered by img-src");
+  const raidGuide = guideImage('<img src="https://static.pokebattler.com/CaptGoldfish/Mega_Blastoise_Raid_Guide4.jpg">');
+  assert.ok(raidGuide && IMAGE_CSP_HOSTS.includes(new URL(raidGuide).origin), "Pokebattler guide images must be covered by img-src");
+});
+
+test("Open Graph images are accepted only from audited image CDNs", () => {
+  for (const host of OG_IMAGE_HOSTS) {
+    const image = "https://" + host + "/assets/event.webp?size=large&x=1";
+    assert.equal(ogImage('<meta property="og:image" content="' + image.replace(/&/g, "&amp;") + '">'), image);
+  }
+  assert.equal(ogImage('<meta property="og:image" content="https://attacker.example/pixel.png">'), "");
+  assert.equal(ogImage('<meta property="og:image" content="http://cdn.leekduck.com/pixel.png">'), "");
+  assert.equal(ogImage('<meta property="og:image" content="https://cdn.leekduck.com.evil.example/pixel.png">'), "");
 });

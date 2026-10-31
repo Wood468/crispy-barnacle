@@ -172,7 +172,8 @@ test("reminder picture comes from the event page, and only from the two event si
   const f = async u => ({ ok: true, text: async () => '<meta property="og:image" content="https://cdn.leekduck.com/x.jpg">' });
   assert.equal(await eventImage("https://leekduck.com/events/a/", f), "https://cdn.leekduck.com/x.jpg");
   assert.equal(await eventImage("https://evil.example/a", f), ""); assert.equal(await eventImage("", f), ""); assert.equal(await eventImage("https://leekduck.com/a", async () => { throw new Error("x"); }), "");
-  assert.equal(ogImage('<meta property="og:image" content="https://a/b.png">'), "https://a/b.png");
+  assert.equal(ogImage('<meta property="og:image" content="https://lh3.googleusercontent.com/b.png">'), "https://lh3.googleusercontent.com/b.png");
+  assert.equal(ogImage('<meta property="og:image" content="https://unlisted.example/b.png">'), "");
 });
 test("a venue item carries its event page link", () => {
   const v = venueItems({ events: { "x:la": { name: "Pokémon Night Out 2026 - Los Angeles", sources: [{ url: "https://leekduck.com/events/pokemon-night-out-los-angeles-2026/" }], fields: { dates: [{ text: LA }] } } } });
