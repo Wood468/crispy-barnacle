@@ -188,6 +188,28 @@ export function sameWriteupRulings(world) {
 // Normally for 30 days after it was last seen; an entry whose official page is on data/watch-pages.json (a hand-added tour leg, say)
 // stays until its own end date passes. `watchUrls` is a Set of normalised page URLs (trailing slash, see normUrl).
 export const normUrl = u => String(u || "").trim().toLowerCase().replace(/\/?$/, "/");
+export function preserveWorldSources(current, previous = []) {
+  const priorById = new Map((previous || []).filter(event => event && event.id).map(event => [event.id, event]));
+  const identity = ["id", "name", "place", "area", "scope", "start", "end"];
+  return (current || []).map(event => {
+    const prior = priorById.get(event.id);
+    if (!prior || identity.some(key => String(event[key] || "") !== String(prior[key] || ""))) return event;
+
+    // Carry forward only exact, previously recorded source objects. Current event facts
+    // (name, destination, dates and scope) always come from this run's source results.
+    const sources = [...(Array.isArray(event.sources) ? event.sources : [])];
+    for (const source of Array.isArray(prior.sources) ? prior.sources : []) {
+      const url = normUrl(source?.url);
+      if (!source?.id || !url || sources.some(existing => normUrl(existing?.url) === url)) continue;
+      sources.push(source);
+    }
+    const status = sources.some(source => source.id === "official")
+      ? "official"
+      : sources.length > 1 ? "corroborated" : "single";
+    return { ...event, sources, status };
+  });
+}
+
 export function keepOldWorld(o, { cutoff, today, now = Date.now(), watchUrls = new Set(), splitUrls = new Set() }) {
   const srcs = o.sources || [];
   if (!srcs.length || !srcs.some(x => /official/i.test(x.name || "") || x.auto) || /this week|news this week/i.test(o.name)) return false;
