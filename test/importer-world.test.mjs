@@ -96,16 +96,25 @@ test("unchanged world events retain last-good source attribution when a refresh 
     sources: [{ id: "serebii", name: "Serebii", url: "https://www.serebii.net/pokemongo/reallifeevents.shtml" }]
   }];
 
-  const retained = preserveWorldSources(current, prior)[0];
+  const watched = new Set([
+    "https://pokemongo.com/en/gowildarea/mexico-city/",
+    "https://leekduck.com/events/pokemon-go-wild-area-2026-mexico-city/"
+  ]);
+  const retained = preserveWorldSources(current, prior, { watchUrls: watched })[0];
   assert.equal(retained.status, "official");
   assert.deepEqual(retained.sources.map(source => source.id).sort(), ["leekduck", "official", "serebii"]);
   assert.equal(retained.start, "2026-11-06");
   assert.equal(retained.place, "Mexico City, Mexico");
 
-  const changed = preserveWorldSources([{ ...current[0], start: "2026-11-07" }], prior)[0];
+  const changed = preserveWorldSources([{ ...current[0], start: "2026-11-07" }], prior, { watchUrls: watched })[0];
   assert.equal(changed.start, "2026-11-07", "current event facts are never overwritten from the old snapshot");
   assert.deepEqual(changed.sources.map(source => source.id), ["serebii"], "source coverage is not carried across a changed event identity");
   assert.equal(changed.status, "single");
+
+  const unmonitored = preserveWorldSources(current, prior, {
+    watchUrls: new Set(["https://pokemongo.com/en/gowildarea/mexico-city/"])
+  })[0];
+  assert.deepEqual(unmonitored.sources.map(source => source.id).sort(), ["official", "serebii"], "unwatched prior sources are not carried forward");
 });
 
 test("Wild Area city pages retain official source coverage without merging destinations", async () => {
