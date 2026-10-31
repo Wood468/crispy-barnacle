@@ -1,49 +1,49 @@
 {
- "how_to_use": "Event write-ups the importer reads on every run even when they are no longer linked from a news list page (a series announced months ago, such as a multi-city tour). Add { \"url\": \"https://pokemongo.com/news/...\", \"note\": \"why\" }. Only pokemongo.com, leekduck.com and pokemongohub.net pages are read. Remove an entry once the event is over.",
- "pages": [
-  {
-   "url": "https://pokemongo.com/ja/news/202610aeonmall-halloween",
-   "note": "AEON MALL Halloween, Japan, Oct 19 to Nov 1 2026 (remove after Nov 15)"
-  },
-  {
-   "url": "https://pokemongo.com/news/pokemon-run-30-2026",
-   "note": "Pokémon RUN 30, Asia-Pacific series, Oct 2026 to Jan 2027"
-  },
-  {
-   "url": "https://pokemongo.com/news/save-the-date-go-tour-2027",
-   "note": "Pokémon GO Tour 2027: Kaohsiung and Los Angeles Feb 19-21, Global Feb 27-28"
-  },
-  {
-   "url": "https://pokemongo.com/news/european-space-agency-event",
-   "note": "Pokémon GO x ESA, 6 museums, Oct 4 2026 to Apr 30 2027 (remove after May 15 2027)"
-  },
-  {
-   "url": "https://pokemongo.com/news/apac-mall-exploration-2026",
-   "note": "30th Anniversary Mall Exploration, Malaysia/Philippines/Singapore/Hong Kong, to Mar 28 2027 (remove after Apr 10 2027)"
-  },
-  {
-   "url": "https://pokemongo.com/news/gowa-global-europe-2026",
-   "note": "GO Wild Area Global Europe meetups Karlsruhe/Stockholm, Nov 14-15 2026 (remove after Nov 20)"
-  },
-  {
-   "url": "https://pokemongo.com/es_MX/news/dia-de-muertos-2026",
-   "note": "Dia de Muertos Mexico + Paseo de la Reforma stops, to Nov 16 2026 (remove after Nov 20)"
-  },
-  {
-   "url": "https://pokemongo.com/en/gowildarea/mexico-city",
-   "note": "GO Wild Area 2026: Mexico City, Nov 6–8 2026 (remove after Nov 15 2026)"
-  },
-  {
-   "url": "https://pokemongo.com/en/gowildarea/sendai",
-   "note": "GO Wild Area 2026: Sendai • Tohoku, Nov 6–8 2026 (remove after Nov 15 2026)"
-  },
-  {
-   "url": "https://leekduck.com/events/pokemon-go-wild-area-2026-mexico-city/",
-   "note": "GO Wild Area 2026: Mexico City, Nov 6–8 2026"
-  },
-  {
-   "url": "https://leekduck.com/events/pokemon-go-wild-area-2026-sendai-japan/",
-   "note": "GO Wild Area 2026: Sendai • Tohoku, Nov 6–8 2026"
-  }
- ]
+  "how_to_use": "Event write-ups the importer reads on every run even when they are no longer linked from a news list page (a series announced months ago, such as a multi-city tour). Add { \"url\": \"https://pokemongo.com/news/...\", \"note\": \"why\" }. Only pokemongo.com, leekduck.com and pokemongohub.net pages are read. Remove an entry once the event is over.",
+  "pages": [
+    {
+      "url": "https://pokemongo.com/ja/news/202610aeonmall-halloween",
+      "note": "AEON MALL Halloween, Japan, Oct 19 to Nov 1 2026 (remove after Nov 15)"
+    },
+    {
+      "url": "https://pokemongo.com/news/pokemon-run-30-2026",
+      "note": "Pokémon RUN 30, Asia-Pacific series, Oct 2026 to Jan 2027"
+    },
+    {
+      "url": "https://pokemongo.com/news/save-the-date-go-tour-2027",
+      "note": "Pokémon GO Tour 2027: Kaohsiung and Los Angeles Feb 19-21, Global Feb 27-28"
+    },
+    {
+      "url": "https://pokemongo.com/news/european-space-agency-event",
+      "note": "Pokémon GO x ESA, 6 museums, Oct 4 2026 to Apr 30 2027 (remove after May 15 2027)"
+    },
+    {
+      "url": "https://pokemongo.com/news/apac-mall-exploration-2026",
+      "note": "30th Anniversary Mall Exploration, Malaysia/Philippines/Singapore/Hong Kong, to Mar 28 2027 (remove after Apr 10 2027)"
+    },
+    {
+      "url": "https://pokemongo.com/news/gowa-global-europe-2026",
+      "note": "GO Wild Area Global Europe meetups Karlsruhe/Stockholm, Nov 14-15 2026 (remove after Nov 20)"
+    },
+    {
+      "url": "https://pokemongo.com/es_MX/news/dia-de-muertos-2026",
+      "note": "Dia de Muertos Mexico + Paseo de la Reforma stops, to Nov 16 2026 (remove after Nov 20)"
+    },
+    {
+      "url": "https://pokemongo.com/en/gowildarea/mexico-city",
+      "note": "GO Wild Area 2026: Mexico City, Nov 6–8 2026 (remove after Nov 15 2026)"
+    },
+    {
+      "url": "https://pokemongo.com/en/gowildarea/sendai",
+      "note": "GO Wild Area 2026: Sendai • Tohoku, Nov 6–8 2026 (remove after Nov 15 2026)"
+    },
+    {
+      "url": "https://leekduck.com/events/pokemon-go-wild-area-2026-mexico-city/",
+      "note": "GO Wild Area 2026: Mexico City, Nov 6–8 2026"
+    },
+    {
+      "url": "https://leekduck.com/events/pokemon-go-wild-area-2026-sendai-japan/",
+      "note": "GO Wild Area 2026: Sendai • Tohoku, Nov 6–8 2026"
+    }
+  ]
 }
