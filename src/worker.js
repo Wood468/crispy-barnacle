@@ -31,6 +31,76 @@ const POKEAPI = "https://pokeapi.co/api/v2/";
 const COSTUME_BASE = "https://raw.githubusercontent.com/PokeMiners/pogo_assets/master/Images/Pokemon/Addressable%20Assets/";
 const DAY = 86400;
 
+// Miss-only edge protection for expensive artwork/guide lookups. Cloudflare injects
+// cf-connecting-ip at the edge. State is deliberately isolate-local and ephemeral:
+// this dampens bursts but is not a globally coordinated quota or a replacement for
+// a Cloudflare Rate Limiting binding.
+export const EDGE_MISS_LIMITS = Object.freeze({
+  art: Object.freeze({ requests: 120, windowMs: 60_000 }),
+  guide: Object.freeze({ requests: 30, windowMs: 60_000 }),
+});
+const edgeMissBuckets = new Map();
+const edgeMissInFlight = new Map();
+let edgeMissOperations = 0;
+const EDGE_BUCKET_MAX = 4096;
+
+export function allowEdgeMiss(request, endpoint, now = Date.now()) {
+  const policy = EDGE_MISS_LIMITS[endpoint];
+  if (!policy) return { allowed: true, skipped: true, retryAfter: 0 };
+  const ip = (request.headers.get("cf-connecting-ip") || "").trim().slice(0, 100);
+  // Non-Cloudflare local/test requests have no trusted client IP; fail open rather
+  // than grouping unrelated users together under an untrusted forwarded header.
+  if (!ip) return { allowed: true, skipped: true, retryAfter: 0 };
+
+  const key = endpoint + ":" + ip;
+  const previous = edgeMissBuckets.get(key);
+  const cutoff = now - policy.windowMs;
+  const hits = (previous ? previous.hits : []).filter((at) => at > cutoff);
+  const allowed = hits.length < policy.requests;
+  let retryAfter = 0;
+  if (allowed) hits.push(now);
+  else retryAfter = Math.max(1, Math.ceil((hits[0] + policy.windowMs - now) / 1000));
+
+  edgeMissBuckets.delete(key);
+  edgeMissBuckets.set(key, { hits, lastAt: now });
+  if ((++edgeMissOperations % 128) === 0 || edgeMissBuckets.size > EDGE_BUCKET_MAX) {
+    for (const [bucketKey, bucket] of edgeMissBuckets) {
+      if (now - bucket.lastAt > policy.windowMs) edgeMissBuckets.delete(bucketKey);
+    }
+    while (edgeMissBuckets.size > EDGE_BUCKET_MAX) {
+      edgeMissBuckets.delete(edgeMissBuckets.keys().next().value);
+    }
+  }
+  return { allowed, skipped: false, retryAfter, limit: policy.requests, windowMs: policy.windowMs };
+}
+
+export async function singleFlight(key, work) {
+  const active = edgeMissInFlight.get(key);
+  if (active) return (await active).clone();
+  const pending = Promise.resolve().then(work);
+  edgeMissInFlight.set(key, pending);
+  try {
+    return (await pending).clone();
+  } finally {
+    if (edgeMissInFlight.get(key) === pending) edgeMissInFlight.delete(key);
+  }
+}
+
+function edgeMissLimited(endpoint, retryAfter) {
+  const guide = endpoint === "guide";
+  const headers = {
+    "cache-control": "no-store",
+    "retry-after": String(retryAfter),
+    "x-content-type-options": "nosniff",
+    "content-type": guide ? "application/json; charset=utf-8" : "text/plain; charset=utf-8",
+  };
+  const body = guide
+    ? JSON.stringify({ error: "Too many uncached guide lookups. Please retry shortly." })
+    : "Too many uncached artwork lookups. Please retry shortly.";
+  return new Response(body, { status: 429, headers });
+}
+
+
 // Pictures taken from other sites (/img/ext/) and community infographics (/infographics/) can live in an R2 bucket instead of the
 // repository. Active only when the MEDIA binding exists; a picture not found there is served from the site files as before.
 export async function mediaFromR2(request, env, url) {
@@ -54,7 +124,7 @@ const handler = {
     try {
       if (url.pathname === "/api/art" && request.method === "GET") return art(request, env, ctx, url);
       if (url.pathname === "/api/og" && request.method === "GET") return ogGet(url, ctx);
-      if (url.pathname === "/api/guide" && request.method === "GET") return guideGet(url, ctx);
+      if (url.pathname === "/api/guide" && request.method === "GET") return guideGet(request, url, ctx);
       if (url.pathname === "/api/dex") return dex(request, env);
       if (url.pathname === "/api/datamine") return datamineGet(env);
       if (url.pathname === "/api/unreleased") return unreleasedGet(env);
@@ -241,25 +311,31 @@ export function guideImage(html) {
   const m = String(html || "").match(/https:\/\/static\.pokebattler\.com\/CaptGoldfish\/[A-Za-z0-9_\-]*Raid_Guide[A-Za-z0-9_\-]*\.(?:jpe?g|png|webp)/i);
   return m ? m[0] : "";
 }
-async function guideGet(url, ctx) {
+async function guideGet(request, url, ctx) {
   const slugs = guideSlugs(url.searchParams.get("boss") || "");
   if (!slugs.length) return json({ url: "" }, 400);
   let slug = slugs[0], page = "https://www.pokebattler.com/raids/guides/" + slug;
   const cache = caches.default, key = new Request(url.origin + "/api/guide?boss=" + slug);
   const hit = await cache.match(key);
   if (hit) return hit;
-  let img = "";
-  for (const sl of slugs) {
-    try {
-      const pg = "https://www.pokebattler.com/raids/guides/" + sl;
-      const r = await fetch(pg, { cf: { cacheTtl: DAY, cacheEverything: true }, headers: { "user-agent": "GO-Field-Notes/1.0 (+https://pogo.michaelpuff.com)" } });
-      if (r.ok) { img = guideImage((await r.text()).slice(0, 600000)); if (img) { page = pg; slug = sl; break; } }
-    } catch {}
-  }
-  const res = json({ url: img, page, creator: "CaptGoldfish", source: "Pokebattler" }, 200);
-  res.headers.set("cache-control", `public, max-age=${img ? DAY : 900}`);
-  ctx.waitUntil(cache.put(key, res.clone()));
-  return res;
+  return singleFlight("guide:" + key.url, async () => {
+    const cached = await cache.match(key);
+    if (cached) return cached;
+    const allowance = allowEdgeMiss(request, "guide");
+    if (!allowance.allowed) return edgeMissLimited("guide", allowance.retryAfter);
+    let img = "";
+    for (const sl of slugs) {
+      try {
+        const pg = "https://www.pokebattler.com/raids/guides/" + sl;
+        const r = await fetch(pg, { cf: { cacheTtl: DAY, cacheEverything: true }, headers: { "user-agent": "GO-Field-Notes/1.0 (+https://pogo.michaelpuff.com)" } });
+        if (r.ok) { img = guideImage((await r.text()).slice(0, 600000)); if (img) { page = pg; slug = sl; break; } }
+      } catch {}
+    }
+    const res = json({ url: img, page, creator: "CaptGoldfish", source: "Pokebattler" }, 200);
+    res.headers.set("cache-control", "public, max-age=" + (img ? DAY : 900));
+    ctx.waitUntil(cache.put(key, res.clone()));
+    return res;
+  });
 }
 
 // Leek Duck puts a "Graphic" (raid guide, event graphic) on many event pages, hosted under /assets/img/events/. Icons and the banner are excluded.
@@ -300,42 +376,46 @@ async function pokeId(path) {
 
 async function art(request, env, ctx, url) {
   const name = (url.searchParams.get("n") || "").slice(0, 60);
-  if (!/^[\p{L}0-9 ()'’.\-]+$/u.test(name)) return new Response("Bad name", { status: 400 });
+  if (!/^[\p{L}0-9 ()'’.\\-]+$/u.test(name)) return new Response("Bad name", { status: 400 });
   const shiny = url.searchParams.get("shiny") === "1";
   const shadow = url.searchParams.get("shadow") === "1";
   const dynamax = url.searchParams.get("dynamax") === "1";
-  const gigantamax = /^Gigantamax\s/i.test(name);
+  const gigantamax = /^Gigantamax\\s/i.test(name);
   const costume = (url.searchParams.get("c") || "").replace(/[^A-Za-z0-9_]/g, "").slice(0, 40);
   const cache = caches.default;
   const key = new Request(url.origin + "/api/art?n=" + encodeURIComponent(name.toLowerCase()) + (shiny ? "&shiny=1" : "") + (shadow ? "&shadow=1" : "") + (dynamax ? "&dynamax=1" : "") + (costume ? "&c=" + costume : ""));
   const hit = await cache.match(key);
   if (hit) return hit;
+  return singleFlight("art:" + key.url, async () => {
+    const cached = await cache.match(key);
+    if (cached) return cached;
+    const allowance = allowEdgeMiss(request, "art");
+    if (!allowance.allowed) return edgeMissLimited("art", allowance.retryAfter);
+    const { base, list } = artCandidates(name);
+    let id = 0;
+    for (const c of list) { id = await pokeId("pokemon/" + c); if (id) break; }
+    if (!id && base) id = await pokeId("pokemon-species/" + base);
 
-  const { base, list } = artCandidates(name);
-  let id = 0;
-  for (const c of list) { id = await pokeId("pokemon/" + c); if (id) break; }
-  if (!id && base) id = await pokeId("pokemon-species/" + base);
-
-  let img = null;
-  const sources = [];
-  if (id && costume && id < 1100) sources.push(`${COSTUME_BASE}pm${id}.f${costume}${shiny ? ".s" : ""}.icon.png`); // costume art, only for base species
-  // Shadow and Dynamax have no sprite of their own in the game files (the `_11` icons are costume art, e.g. a party hat),
-  // so they use the normal artwork and the page draws the Shadow aura / Max smoke around it.
-  if (id && dynamax && gigantamax && id < 1100) sources.push(`${COSTUME_BASE}pm${id}.fGIGANTAMAX${shiny ? ".s" : ""}.icon.png`);
-  // A costume or Gigantamax sprite that does not exist is never swapped for ordinary artwork. The UI removes the image on 404.
-  if (id && !costume && !(dynamax && gigantamax)) sources.push(`${ART_BASE}${shiny ? "shiny/" : ""}${id}.png`);
-  for (const src of sources) {
-    const r = await fetch(src, { cf: { cacheTtl: 30 * DAY, cacheEverything: true } });
-    if (r.ok) { img = await r.arrayBuffer(); break; }
-  }
-  if (!img) {
-    const miss = new Response("Not found", { status: 404, headers: { "cache-control": "public, max-age=600" } });
-    ctx.waitUntil(cache.put(key, miss.clone()));
-    return miss;
-  }
-  const res = new Response(img, { headers: { "content-type": "image/png", "cache-control": `public, max-age=${30 * DAY}, immutable` } });
-  ctx.waitUntil(cache.put(key, res.clone()));
-  return res;
+    let img = null;
+    const sources = [];
+    if (id && costume && id < 1100) sources.push(COSTUME_BASE + "pm" + id + ".f" + costume + (shiny ? ".s" : "") + ".icon.png");
+    // Shadow and Dynamax have no sprite of their own in the game files; the page draws the aura/smoke.
+    if (id && dynamax && gigantamax && id < 1100) sources.push(COSTUME_BASE + "pm" + id + ".fGIGANTAMAX" + (shiny ? ".s" : "") + ".icon.png");
+    // A costume or Gigantamax sprite that does not exist is never swapped for ordinary artwork.
+    if (id && !costume && !(dynamax && gigantamax)) sources.push(ART_BASE + (shiny ? "shiny/" : "") + id + ".png");
+    for (const src of sources) {
+      const r = await fetch(src, { cf: { cacheTtl: 30 * DAY, cacheEverything: true } });
+      if (r.ok) { img = await r.arrayBuffer(); break; }
+    }
+    if (!img) {
+      const miss = new Response("Not found", { status: 404, headers: { "cache-control": "public, max-age=600" } });
+      ctx.waitUntil(cache.put(key, miss.clone()));
+      return miss;
+    }
+    const res = new Response(img, { headers: { "content-type": "image/png", "cache-control": "public, max-age=" + (30 * DAY) + ", immutable" } });
+    ctx.waitUntil(cache.put(key, res.clone()));
+    return res;
+  });
 }
 
 // ---------------------------------------------------------------- marks (Own / Hundo)
