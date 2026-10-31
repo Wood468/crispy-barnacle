@@ -30,7 +30,7 @@ body{background:radial-gradient(1200px 520px at 50% -140px,color-mix(in srgb,var
 .fchip[aria-pressed="true"]{background:var(--soft);color:var(--fg);border-color:var(--fg)}
 
 /* week strip */
-.weekstrip{background:var(--surface-glass);border:1px solid var(--border-subtle);border-radius:var(--radius-card);padding:10px}
+.weekstrip{background:var(--surface-glass);border:1px solid var(--border-subtle);border-radius:var(--radius-panel);padding:10px}
 .wk-head{display:flex;align-items:center;justify-content:space-between;gap:8px;font:600 .82rem var(--sans);color:var(--muted);margin-bottom:8px}
 .calnav{width:44px;height:44px;border-radius:12px;border:1px solid var(--ring);background:transparent;color:var(--fg);font-size:1.4rem;line-height:1;cursor:pointer}
 .wk-days{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
@@ -44,7 +44,7 @@ body{background:radial-gradient(1200px 520px at 50% -140px,color-mix(in srgb,var
 .dayhead{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}
 
 /* event cards */
-.evc{--k:#7C879B;--kf:#fff;position:relative;display:grid;grid-template-columns:auto 1fr;gap:12px;background:linear-gradient(135deg,color-mix(in srgb,var(--k) 16%,var(--glass)),var(--glass) 55%);border:1px solid var(--border-subtle);border-left:4px solid var(--k);border-radius:var(--radius-card);padding:14px;margin-bottom:10px;min-width:0}
+.evc{--k:#7C879B;--kf:#fff;position:relative;display:grid;grid-template-columns:auto 1fr;gap:12px;background:linear-gradient(135deg,color-mix(in srgb,var(--k) 16%,var(--glass)),var(--glass) 55%);border:1px solid var(--border-subtle);border-left:4px solid var(--k);border-radius:var(--radius-panel);padding:14px;margin-bottom:10px;min-width:0}
 .evc.live{box-shadow:0 0 0 1px color-mix(in srgb,var(--k) 50%,transparent),0 10px 30px -14px var(--k)}
 .evc.ended{opacity:.55}
 .evc-art{display:flex;flex-direction:column;gap:4px;align-items:center;justify-content:center;min-width:64px}
@@ -173,7 +173,7 @@ header.top{padding-bottom:4px}
 /* header: Watchlist and Menu */
 header.top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
 .hbtns{display:flex;gap:8px;flex:none}
-.hbtn{position:relative;width:44px;height:44px;border-radius:var(--radius-md);border:1px solid var(--border-subtle);background:var(--surface-glass);color:var(--fg);display:inline-flex;align-items:center;justify-content:center;padding:0;cursor:pointer}
+.hbtn{position:relative;width:44px;height:44px;border-radius:var(--radius-control);border:1px solid var(--border-subtle);background:var(--surface-glass);color:var(--fg);display:inline-flex;align-items:center;justify-content:center;padding:0;cursor:pointer}
 .hbtn svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
 .hbtn[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
 .hbd{position:absolute;top:-5px;right:-5px;min-width:20px;height:20px;border-radius:10px;background:var(--fg);color:var(--bg);font:700 12px/20px var(--sans,inherit);text-align:center;padding:0 5px}
