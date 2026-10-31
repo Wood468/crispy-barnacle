@@ -123,7 +123,7 @@ CARD_BORDER_SELECTORS = [
     '.today-empty', '.today-next-up', '.evd-hero', '.goinfo-section', '.pc.first', '.opp.missing',
 ]
 def card_rule_text(selector):
-    return ' '.join(re.findall(re.escape(selector) + r'\\s*\\{([^}]*)\\}', DASH_CSS))
+    return ' '.join(re.findall(re.escape(selector) + r'\s*\{([^}]*)\}', DASH_CSS))
 check('dashboard card anatomy roles preserve the existing glass, solid and border surfaces',
       all(token in DASH_CSS for token in [
           '--color-surface-card:var(--surface-glass)',
