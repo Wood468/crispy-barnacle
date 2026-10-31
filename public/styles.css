@@ -5,6 +5,20 @@
   --display:"Big Shoulders Display","Arial Narrow",Arial,sans-serif;
   --sans:"Hanken Grotesk","Helvetica Neue",Arial,sans-serif;
   --mono:"DM Mono",ui-monospace,Menlo,Consolas,monospace;
+
+  /* Semantic colour roles: components consume intent, not palette implementation. */
+  --color-canvas:var(--bg); --color-surface:var(--panel); --color-surface-raised:var(--soft);
+  --color-border:var(--line); --color-text:var(--fg); --color-text-muted:var(--muted); --color-text-body:var(--body);
+  --color-inverse-surface:var(--inv-bg); --color-inverse-text:var(--inv-fg);
+  --color-accent:var(--gold); --color-accent-text:var(--gold-fg);
+
+  /* Four-point spacing scale, shared radii, typography and motion. */
+  --space-1:4px; --space-2:8px; --space-3:12px; --space-4:16px; --space-5:20px;
+  --space-6:24px; --space-7:28px; --space-8:32px; --space-9:36px; --space-10:40px;
+  --radius-sm:8px; --radius-md:12px; --radius-card:16px; --radius-lg:20px; --radius-xl:22px; --radius-pill:999px;
+  --shadow-card:0 12px 32px -24px rgba(0,0,0,.7);
+  --font-display:var(--display); --font-body:var(--sans); --font-mono:var(--mono);
+  --motion-fast:140ms; --motion-standard:220ms; --motion-ease:cubic-bezier(.2,.7,.2,1);
   color-scheme:dark;
 }
 /* Dark is the design. Light is only used if data-theme="light" is set explicitly. */
@@ -14,7 +28,7 @@
   color-scheme:light;
 }
 *{box-sizing:border-box}
-body{background:var(--bg);color:var(--fg);font-family:var(--sans);font-size:15px;line-height:1.55;padding-inline:max(16px,4vw);padding-block:0 calc(88px + env(safe-area-inset-bottom,0px))}
+body{background:var(--color-canvas);color:var(--color-text);font-family:var(--font-body);font-size:15px;line-height:1.55;padding-inline:max(16px,4vw);padding-block:0 calc(88px + env(safe-area-inset-bottom,0px))}
 .wrap{max-width:84rem;margin-inline:auto}
 h1,h2,h3{margin:0;font-family:var(--display);font-weight:800;text-transform:uppercase;line-height:.95;text-wrap:balance}
 p{margin:0}
@@ -55,7 +69,7 @@ main{padding-top:16px}
 .panel{display:flex;flex-direction:column;gap:40px}
 .intro{color:var(--muted);max-width:44rem;font-size:1.05rem}
 .sec{font-size:clamp(2.2rem,5vw,3.4rem)}
-.block{background:var(--panel);border-radius:16px;padding:22px;min-width:0}
+.block{background:var(--color-surface);border-radius:var(--radius-card);padding:22px;min-width:0}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,16rem),1fr));gap:10px}
 .chips{display:flex;flex-wrap:wrap;gap:8px}
 .big{font-family:var(--display);font-weight:800;text-transform:uppercase;font-size:2rem;line-height:.95}
@@ -88,7 +102,7 @@ ul.plain{margin:0;padding-left:1.1em;display:flex;flex-direction:column;gap:6px}
 /* events */
 .evhead{display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:16px;margin-bottom:12px}
 .events{display:flex;flex-direction:column}
-.ev{display:grid;grid-template-columns:5.5rem minmax(0,1fr);gap:8px 24px;padding-block:24px;border-top:1px solid var(--line)}
+.ev{display:grid;grid-template-columns:5.5rem minmax(0,1fr);gap:8px 24px;padding-block:24px;border-top:1px solid var(--color-border)}
 .ev.ended{opacity:.5}
 .ev .when .m{font-family:var(--mono);font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);display:block}
 .ev .when .d{font-family:var(--display);font-weight:800;font-size:4.2rem;line-height:.85;display:block}
@@ -177,7 +191,7 @@ dl.odds{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px 16px;marg
 dl.odds dd{margin:0;font-family:var(--mono);text-align:right}
 .note{color:var(--muted);max-width:46rem;border-top:1px solid var(--line);padding-top:14px}
 
-footer{margin-top:56px;border-top:1px solid var(--line);padding-top:24px;color:var(--muted);font-size:.85rem;display:flex;flex-direction:column;gap:10px}
+footer{margin-top:56px;border-top:1px solid var(--color-border);padding-top:24px;color:var(--color-text-muted);font-size:.85rem;display:flex;flex-direction:column;gap:10px}
 footer ul{margin:0;padding-left:1.1em}
 
 [hidden]{display:none!important}
