@@ -19,7 +19,7 @@ test("wrangler.toml: cron, route, assets and D1 binding are unchanged", () => {
   assert.ok(!/PIPELINE/.test(t), "pipeline stays off: no variable enabling it is set");
 });
 
-test("dex sync: PIN required, marks round-trip, wrong PIN throttled after 10 attempts", async () => {
+test("dex sync: PIN required, wrong PIN throttled after 10 attempts without blocking the correct PIN", async () => {
   const env = mkEnv();
   assert.equal((await call(env, "/api/dex")).status, 401);
   assert.equal((await call(env, "/api/dex", { headers: { "x-pin": "1234" } })).status, 200);
@@ -29,7 +29,7 @@ test("dex sync: PIN required, marks round-trip, wrong PIN throttled after 10 att
   assert.equal(got.have.Mew, 1); assert.equal(got.have.Mewtwo, 1, "a hundo implies owned"); assert.equal(got.m.own["25"], 1);
   const e2 = mkEnv(); let last = 0;
   for (let i = 0; i < 11; i++) last = (await call(e2, "/api/dex", { headers: { "x-pin": "bad" } })).status;
-  assert.equal(last, 429); assert.equal((await call(e2, "/api/dex", { headers: { "x-pin": "1234" } })).status, 429);
+  assert.equal(last, 429); assert.equal((await call(e2, "/api/dex", { headers: { "x-pin": "1234" } })).status, 200, "the correct PIN must still work during a failed-guess throttle");
 });
 
 test("datamine: first run is a baseline, later runs record only new entries, bad downloads never overwrite", async () => {
