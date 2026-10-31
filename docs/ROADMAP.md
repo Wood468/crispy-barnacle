@@ -1,6 +1,6 @@
 # GO Field Notes — Completion Roadmap
 
-_Maintained by the lead coordinator. Last consolidated: 31 Oct 2026, including #123 timezone support, #124 source-trust protection, #125 startup recovery, #127 preview media isolation, #128 community coordinate provenance, #129 source-freshness and raid-consistency monitoring, #130 public-data pre-push validation, #131 the full 44px touch-target audit, #132 Store Watch currency stability, #134 WCAG contrast for live countdowns and event-kind pills, and the next reliability follow-ups (finding IDs QA-\*, RES-\*, UX-\*, ENG-\* refer to the audits)._
+_Maintained by the lead coordinator. Last consolidated: 31 Oct 2026, including #123 timezone support, #124 source-trust protection, #125 startup recovery, #127 preview media isolation, #128 community coordinate provenance, #129 source-freshness and raid-consistency monitoring, #130 public-data pre-push validation, #131 the full 44px touch-target audit, #132 Store Watch currency stability, #134 WCAG contrast for live countdowns and event-kind pills, #138 the semantic design-token foundation, and the next reliability follow-ups (finding IDs QA-\*, RES-\*, UX-\*, ENG-\* refer to the audits)._
 
 ## Status legend
 
@@ -23,6 +23,7 @@ _Maintained by the lead coordinator. Last consolidated: 31 Oct 2026, including #
 - ✅ **#132 — Store Watch currency stability:** whole-store currency flips are held for 72 hours without changing saved prices or generating false price alerts; a changed currency restarts the hold, and a sustained new currency becomes the baseline without price-change alerts. Single-item mismatches are ignored while genuine same-currency changes and new items still alert. Regression, post-merge JavaScript/Python/browser/CodeQL and production Workers checks passed.
 - ✅ **#131 — full 44px touch-target audit:** visible controls across Today, Schedule, Battle, Collection and Saved now meet the 44×44px target, including compact card actions, calendar day buttons, guide toggles and form controls. The offline shell cache was advanced to v134 with the exact dashboard stylesheet URL precached. The Playwright audit passed across all 12 view states; post-merge JavaScript, Python, browser A/B/C, CodeQL and production Workers checks passed.
 - ✅ **#134 — live-countdown and event-kind contrast:** all nine event-kind pills meet WCAG AA 4.5:1, including the in-person and Twitch foreground corrections. Live/urgent countdowns use high-contrast text on a restrained kind-tinted surface. Browser regression checks cover all nine kinds and a live countdown; the offline shell cache was advanced to v135 with the updated dashboard CSS/JS URLs precached. Post-merge JavaScript, Python, browser A/B/C, CodeQL and production Workers checks passed.
+- ✅ **#138 — semantic design-token foundation:** introduced semantic colour roles, a 4px spacing scale, shared radii, typography aliases and motion tokens; migrated shared primitives and high-visibility dashboard surfaces without changing their rendered values. Compatibility aliases remain. Versioned stylesheets are precached exactly in offline shell v137. Token, radius and PWA assertions passed with JavaScript, Python, browser A/B/C, CodeQL, the Cloudflare Workers preview build and the post-merge production build. UX-15/17/18 remain open for gradual adoption.
 - ✅ **#112 — visible data-load recovery:** added an accessible event-data error panel with a retry action; browser regressions and the Cloudflare Workers production build passed.
 - ✅ **#100 — Today attention:** review actions navigate reliably; review counts refresh immediately; empty recent-updates panels disappear; acknowledged updates stay dismissed; meaningful event changes are tracked between visits.
 - ✅ **#101 — curated data refresh:** snapshot moved to 30 Oct 2026; rotations, Raid/Spotlight Hours and Max Monday schedules were extended into early December; event/source URLs and the 1★ boss parsing correction were included. Ongoing freshness monitoring remains a separate task.
@@ -32,7 +33,7 @@ _Maintained by the lead coordinator. Last consolidated: 31 Oct 2026, including #
 - ✅ **#110 — importer date guard:** source-page matches are rejected when known article and event date windows do not overlap; unknown dates remain unknown rather than being guessed.
 - ✅ **Community location discovery:** corrected the Reddit permalink regex, added an explicit Node syntax-check regression test, and confirmed the scheduled discovery workflow ran successfully. Candidate locations remain community-reported, not official event pins.
 
-All merged milestones above passed their post-merge checks. Latest verified application commit: `f68b0ae4f341c5819771677dce8157a5b99e643f`; post-merge JavaScript, Python, all three browser shards and CodeQL passed. Cloudflare Workers production build `da814323-71be-4881-a7fd-d7ec4d94555a` completed successfully. The following roadmap-only commit does not change application code.
+All merged milestones above passed their post-merge checks. Latest verified application commit: `2424002d950f7e140509856e6c40e731cbae7226`; post-merge JavaScript, Python, all three browser shards and CodeQL passed. Cloudflare Workers production build `253c326d-58b0-496e-8eba-da786b8af218` completed successfully.
 
 ## P0 — Critical security / data integrity
 
@@ -67,7 +68,7 @@ All merged milestones above passed their post-merge checks. Latest verified appl
 
 ## P3 — Premium polish
 
-- Design-token system (type scale, 4px spacing, colour roles, radii, card anatomy) — **UX-15/17/18**.
+- 🔧 Design-token system (type scale, 4px spacing, colour roles, radii, card anatomy) — **UX-15/17/18**. #138 establishes the first foundation; continue gradual adoption in small, no-visual-change migrations.
 - ✅ **UX-13** Source trust/freshness labels in #105; event-detail duplicate claims now merge source attribution before rendering, and every detail category uses a consistent line-icon treatment. ✅ **UX-14** Raid week selector as a compact mobile segmented control; boss rows link directly to Best attackers filtered to every published weakness; **UX-16** duplicate navigation.
 - **ENG-12** single shared `esc()`; **ENG-13** narrow CSP img-src; **ENG-14** migration consolidation (🔒); **ENG-15** SHA-pinned actions; **ENG-16** robustness; **QA-8** tab keyboard semantics; **QA-11** costume art lookup.
 
