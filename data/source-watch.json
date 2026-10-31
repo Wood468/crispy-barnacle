@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-30T22:20:57.182Z",
+ "updated": "2026-10-31T05:41:37.289Z",
  "status": [
   {
    "id": "hub",
@@ -19,12 +19,12 @@
   {
    "id": "reddit-silph",
    "state": "ok",
-   "items": 11
+   "items": 12
   },
   {
    "id": "youtube-pogo",
-   "state": "ok",
-   "items": 2
+   "state": "error",
+   "note": "HTTP 404"
   }
  ],
  "gaps": 3,
@@ -70,6 +70,16 @@
    "notInOurData": [
     "Landorus"
    ]
+  },
+  {
+   "source": "reddit-silph",
+   "trust": "tip",
+   "title": "Can a shiny Galarian Bird flee if you are traveling in a car (aka speed lock?)",
+   "link": "https://www.reddit.com/r/TheSilphRoad/comments/1xjtzuf/can_a_shiny_galarian_bird_flee_if_you_are/",
+   "date": "2026-10-30T22:54:56.000Z",
+   "summary": "<table> <tr><td> <a href=\"https://www.reddit.com/r/TheSilphRoad/comments/1xjtzuf/can_a_shiny_galarian_bird_flee_if_you_are/\"> <img src=\"https://preview.redd.it/2lt8gthmpoyh1.jpeg?width=640&amp;crop=sm",
+   "pokemon": [],
+   "notInOurData": []
   },
   {
    "source": "reddit-silph",
@@ -137,26 +147,6 @@
    "pokemon": [
     "Gastly"
    ],
-   "notInOurData": []
-  },
-  {
-   "source": "youtube-pogo",
-   "trust": "official",
-   "title": "New costumed Pokémon make their debuts during Halloween 2026 Part I in Pokémon GO!",
-   "link": "https://www.youtube.com/shorts/I6MvdaExyIg",
-   "date": "2026-10-27T17:00:40.000Z",
-   "summary": "",
-   "pokemon": [],
-   "notInOurData": []
-  },
-  {
-   "source": "youtube-pogo",
-   "trust": "official",
-   "title": "New costumed Pokémon make their debuts during Halloween 2026 Part I in Pokémon GO!",
-   "link": "https://www.youtube.com/watch?v=wyN2y-BgpoU",
-   "date": "2026-10-27T17:00:14.000Z",
-   "summary": "",
-   "pokemon": [],
    "notInOurData": []
   },
   {
