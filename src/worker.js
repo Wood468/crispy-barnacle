@@ -376,11 +376,11 @@ async function pokeId(path) {
 
 async function art(request, env, ctx, url) {
   const name = (url.searchParams.get("n") || "").slice(0, 60);
-  if (!/^[\p{L}0-9 ()'’.\\-]+$/u.test(name)) return new Response("Bad name", { status: 400 });
+  if (!/^[\p{L}0-9 ()'’.\-]+$/u.test(name)) return new Response("Bad name", { status: 400 });
   const shiny = url.searchParams.get("shiny") === "1";
   const shadow = url.searchParams.get("shadow") === "1";
   const dynamax = url.searchParams.get("dynamax") === "1";
-  const gigantamax = /^Gigantamax\\s/i.test(name);
+  const gigantamax = /^Gigantamax\s/i.test(name);
   const costume = (url.searchParams.get("c") || "").replace(/[^A-Za-z0-9_]/g, "").slice(0, 40);
   const cache = caches.default;
   const key = new Request(url.origin + "/api/art?n=" + encodeURIComponent(name.toLowerCase()) + (shiny ? "&shiny=1" : "") + (shadow ? "&shadow=1" : "") + (dynamax ? "&dynamax=1" : "") + (costume ? "&c=" + costume : ""));
@@ -656,7 +656,7 @@ export function watchedIds(text) {
 export function parseFeed(xml) {
   const items = [];
   for (const block of String(xml).split("<item>").slice(1, 11)) {
-    const get = (t) => ((block.match(new RegExp("<" + t + ">(?:<!\\[CDATA\\[)?([\\s\\S]*?)(?:\\]\\]>)?</" + t + ">")) || [])[1] || "").trim();
+    const get = (t) => ((block.match(new RegExp("<" + t + ">(?:<!\\[CDATA\\[)?([\s\\S]*?)(?:\\]\\]>)?</" + t + ">")) || [])[1] || "").trim();
     const title = get("title").replace(/&#8217;|&#039;/g, "'").replace(/&amp;/g, "&").replace(/&#8211;/g, "-");
     const link = get("link");
     if (title && /^https:\/\//.test(link)) items.push({ title, link, date: Date.parse(get("pubDate")) || 0 });
