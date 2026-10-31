@@ -1,9 +1,9 @@
 // Browser image sources observed in the application and audited production event pages.
 // Keep this list narrow: new remote image CDNs require an explicit review and a regression test.
 export const IMAGE_CSP_HOSTS = Object.freeze([
-  "https://raw.githubusercontent.com",       // PokeAPI artwork and PokeMiners costume assets
   "https://play.pokemonshowdown.com",         // animated Pokémon sprites
-  "https://archives.bulbagarden.net",         // Max Particle artwork
+  "https://archives.bulbagarden.net",         // Max Particle artwork and team emblems
+  "https://static.pokebattler.com",             // CaptGoldfish raid guide graphics
   "https://leekduck.com",                     // Leek Duck event graphics (supported page parser)
   "https://cdn.leekduck.com",                 // Leek Duck event graphics and og:image
   "https://lh3.googleusercontent.com",        // official Pokémon GO event artwork
