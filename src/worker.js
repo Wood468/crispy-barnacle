@@ -318,11 +318,11 @@ async function guideGet(request, url, ctx) {
   const cache = caches.default, key = new Request(url.origin + "/api/guide?boss=" + slug);
   const hit = await cache.match(key);
   if (hit) return hit;
+  const allowance = allowEdgeMiss(request, "guide");
+  if (!allowance.allowed) return edgeMissLimited("guide", allowance.retryAfter);
   return singleFlight("guide:" + key.url, async () => {
     const cached = await cache.match(key);
     if (cached) return cached;
-    const allowance = allowEdgeMiss(request, "guide");
-    if (!allowance.allowed) return edgeMissLimited("guide", allowance.retryAfter);
     let img = "";
     for (const sl of slugs) {
       try {
@@ -386,11 +386,11 @@ async function art(request, env, ctx, url) {
   const key = new Request(url.origin + "/api/art?n=" + encodeURIComponent(name.toLowerCase()) + (shiny ? "&shiny=1" : "") + (shadow ? "&shadow=1" : "") + (dynamax ? "&dynamax=1" : "") + (costume ? "&c=" + costume : ""));
   const hit = await cache.match(key);
   if (hit) return hit;
+  const allowance = allowEdgeMiss(request, "art");
+  if (!allowance.allowed) return edgeMissLimited("art", allowance.retryAfter);
   return singleFlight("art:" + key.url, async () => {
     const cached = await cache.match(key);
     if (cached) return cached;
-    const allowance = allowEdgeMiss(request, "art");
-    if (!allowance.allowed) return edgeMissLimited("art", allowance.retryAfter);
     const { base, list } = artCandidates(name);
     let id = 0;
     for (const c of list) { id = await pokeId("pokemon/" + c); if (id) break; }
