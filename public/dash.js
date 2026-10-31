@@ -411,7 +411,7 @@
     var c = ev.status === 'conflicting' ? 'st-c' : ev.status === 'datamined' ? 'st-d' : ev.status === 'official_confirmed' ? 'st-a' : 'st-n';
     return '<span class="st ' + c + '" title="' + esc(ev.source || '') + '">' + esc(STATUS[ev.status] || ev.status || '') + '</span>';
   }
-  var IMG_PARTICLE = 'https://archives.bulbagarden.net/media/upload/4/46/Max_Particle_Sprite.png';
+  var IMG_PARTICLE = '/img/ext/Max-Particle-Sprite-9818b5dc.png';
   var IMG_POWERSPOT = '/img/ext/powerspots-overworld-5a586254.webp';
   /* Pokémon an event ties to Incense (e.g. "Boosted shiny · Hisuian Growlithe (Incense, Oct 16–19)" or "Incense encounters · A, B"). */
   function incenseNames(ev) {
