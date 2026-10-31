@@ -29,7 +29,7 @@ INDEX_HTML = (ROOT / 'public' / 'index.html').read_text()
 SW_JS = (ROOT / 'public' / 'sw.js').read_text()
 APP_JS = (ROOT / 'public' / 'app.js').read_text()
 check('design tokens define semantic colour, spacing, radius, typography and motion roles',
-      all(token in BASE_CSS for token in ['--color-canvas:', '--color-surface:', '--color-text-muted:', '--space-4:', '--radius-card:', '--font-body:', '--motion-standard:']))
+      all(token in BASE_CSS for token in ['--color-canvas:', '--color-surface:', '--color-text-muted:', '--space-4:', '--radius-card:', '--font-body:', '--motion-standard:', '--motion-quick:']))
 TYPE_SCALE = {
     '--type-caption-compact': ('.62rem', 2),
     '--type-caption': ('.68rem', 2),
@@ -154,10 +154,16 @@ check('Today focus strip has four data-backed signals and a responsive semantic 
       all(token in INDEX_HTML for token in ['id="today-focus-strip"', 'id="today-focus-now"', 'id="today-focus-next"', 'id="today-focus-raids"', 'id="today-focus-ending"']) and
       all(token in DASH_JS for token in ['function renderTodayStrip', '6 * 60 * 60 * 1000', 'activity.inGame', 'activity.inPerson', 'D.rotation', 'D.maxBattles']) and
       all(token in DASH_CSS for token in ['.today-focus-strip', '.today-focus-card', 'grid-template-columns:repeat(2,minmax(0,1fr))']))
+check('150ms interaction transitions use a shared motion role with unchanged easing',
+      '--motion-quick:150ms' in BASE_CSS and
+      'transition:background-color var(--motion-quick) ease,color var(--motion-quick) ease' in BASE_CSS and
+      'transition:transform var(--motion-quick)' in BASE_CSS and
+      'transition:transform var(--motion-quick)' in DASH_CSS and
+      BASE_CSS.count('var(--motion-quick)') == 3 and DASH_CSS.count('var(--motion-quick)') == 1)
 check('versioned stylesheets are referenced by the page and precached offline',
-      all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261031h', '/dash.css?v=20261031r']))
+      all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261031i', '/dash.css?v=20261031s']))
 check('offline shell cache version advances with the stylesheet token release',
-      "gofn-shell-v156" in SW_JS)
+      "gofn-shell-v157" in SW_JS)
 check('versioned dashboard scripts are referenced by the entry page and precached offline',
       '/app.js?v=20261031e' in INDEX_HTML and '/app.js?v=20261031e' in SW_JS and
       '/dash.js?v=20261031e' in APP_JS and '/dash.js?v=20261031e' in SW_JS and
