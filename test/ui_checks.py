@@ -91,12 +91,12 @@ with sync_playwright() as p:
         boot_ctx.close()
 
         # Overseas in-person events must stay in the visible Today agenda, with separate counts.
-        world_fixture = json.dumps({'events':[{'id':'fixture-overseas-sendai','name':'GO Wild Area: Sendai','place':'Sendai, Japan','area':'Asia','scope':'regional','start':'2026-10-09','end':'2026-10-10','sources':[{'url':'https://pokemongo.com/en/gowildarea/sendai'}]}]})
+        world_fixture = json.dumps({'events':[{'id':'fixture-overseas-inperson','name':'Overseas In-Person Fixture','place':'Example City, Exampleland','area':'Asia','scope':'regional','start':'2026-10-09','end':'2026-10-10','sources':[{'url':'https://example.invalid/overseas-inperson-fixture'}]}]})
         overseas = page(extra={'**/world-events.json':(world_fixture,200)})
         overseas.wait_for_selector('#home-now .agr.reg')
-        overseas_card = overseas.locator('#home-now .agr.reg').filter(has_text='GO Wild Area: Sendai')
+        overseas_card = overseas.locator('#home-now .agr.reg').filter(has_text='Overseas In-Person Fixture')
         overseas_text = overseas_card.inner_text() if overseas_card.count() else ''
-        check('Overseas in-person events remain visible on Today by default', overseas_card.count()==1 and overseas_card.is_visible() and 'Sendai, Japan' in overseas_text, overseas_text)
+        check('Overseas in-person events remain visible on Today by default', overseas_card.count()==1 and overseas_card.is_visible() and 'Example City, Exampleland' in overseas_text, overseas_text)
         check('Overseas in-person cards stay in the visible unfolded Today agenda', overseas_card.count()==1 and overseas_card.evaluate("el => !!el.closest('.today-phase-group') && !el.closest('details')"))
         check('Unverified venue-local times are not invented for overseas event cards', 'Venue:' not in overseas_text)
         overseas_counts = overseas.evaluate("""() => {
