@@ -427,6 +427,7 @@ header.top{display:flex;align-items:flex-start;justify-content:space-between;gap
 /* Card infographic button: a small picture when there is one (44px touch target), a text button when we cannot find one. */
 button.igthumb{width:44px;height:44px;min-height:44px;padding:0;border-radius:10px;overflow:hidden;flex:none;line-height:0}
 button.igthumb img{width:100%;height:100%;object-fit:cover;object-position:top;display:block;background:var(--color-canvas)}
+button.igthumb.igthumb-pending::before{content:"▧";display:grid;place-items:center;width:100%;height:100%;font-size:20px;line-height:1}
 button.igcheck{min-height:44px}
 .vh-live{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
 .evc.cmp .evc-foot .more.igthumb{flex:none;width:44px;padding:0}
