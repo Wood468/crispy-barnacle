@@ -397,26 +397,43 @@ function cleanDexMarks(m) {
   return out;
 }
 
-// Returns a Response when the PIN check fails, otherwise null. Throttle each source IP independently
-// so one visitor cannot lock every legitimate device out. Store only a SHA-256 digest of the IP.
+// Failed PIN guesses are limited per source IP and across the whole service. The global
+// ceiling uses the existing timestamp-indexed table: no new D1 schema or migration is needed.
+// Check a correct PIN first so an attack cannot lock the owner out of their own account.
+const PIN_FAILURE_WINDOW_MS = 10 * 60 * 1000;
+const PIN_FAILURES_PER_IP = 10;
+const PIN_FAILURES_GLOBAL = 25;
 async function gate(request, env) {
   if (!env.SYNC_PIN) return json({ error: "Not switched on." }, 404); // unset secret (e.g. preview deploys): never match "undefined"
   await ensure(env);
-  const now = Date.now();
+  const given = String(request.headers.get("x-pin") || "");
+  if (given && await same(given, env.SYNC_PIN)) return null;
+
+  const now = Date.now(), cutoff = now - PIN_FAILURE_WINDOW_MS;
   const ip = request.headers.get("cf-connecting-ip") || "unknown";
   const digest = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(ip));
   const ipHash = [...new Uint8Array(digest)].map((b) => b.toString(16).padStart(2, "0")).join("");
-  const { n } = await env.DB.prepare("SELECT COUNT(*) AS n FROM pin_fails_ip WHERE ip_hash = ? AND at > ?").bind(ipHash, now - 10 * 60 * 1000).first();
-  if (n >= 10) return json({ error: "Too many wrong PINs from this address. Try again in 10 minutes." }, 429);
-  const given = String(request.headers.get("x-pin") || "");
-  if (!given || !(await same(given, env.SYNC_PIN))) {
-    await env.DB.batch([
-      env.DB.prepare("INSERT INTO pin_fails_ip (ip_hash, at) VALUES (?, ?)").bind(ipHash, now),
-      env.DB.prepare("DELETE FROM pin_fails_ip WHERE at < ?").bind(now - 24 * 3600 * 1000),
+
+  // One conditional INSERT makes both rolling-window ceilings atomic across concurrent requests.
+  // pin_fails_ip already has indexes for per-IP lookup and timestamp cleanup.
+  const recorded = await env.DB.prepare(
+    "INSERT INTO pin_fails_ip (ip_hash, at) SELECT ?, ? WHERE " +
+    "(SELECT COUNT(*) FROM pin_fails_ip WHERE ip_hash = ? AND at > ?) < ? AND " +
+    "(SELECT COUNT(*) FROM pin_fails_ip WHERE at > ?) < ?"
+  ).bind(ipHash, now, ipHash, cutoff, PIN_FAILURES_PER_IP, cutoff, PIN_FAILURES_GLOBAL).run();
+
+  if (!recorded.meta || recorded.meta.changes !== 1) {
+    const [perIp, global] = await Promise.all([
+      env.DB.prepare("SELECT COUNT(*) AS n FROM pin_fails_ip WHERE ip_hash = ? AND at > ?").bind(ipHash, cutoff).first(),
+      env.DB.prepare("SELECT COUNT(*) AS n FROM pin_fails_ip WHERE at > ?").bind(cutoff).first()
     ]);
-    return json({ error: "Wrong PIN." }, 401);
+    if (perIp.n >= PIN_FAILURES_PER_IP) return json({ error: "Too many wrong PINs from this address. Try again in 10 minutes." }, 429);
+    if (global.n >= PIN_FAILURES_GLOBAL) return json({ error: "Too many wrong PIN attempts across all addresses. Wait for the rolling 10-minute window to clear." }, 429);
+    return json({ error: "Too many wrong PIN attempts. Try again shortly." }, 429);
   }
-  return null;
+
+  await env.DB.prepare("DELETE FROM pin_fails_ip WHERE at < ?").bind(now - 24 * 3600 * 1000).run();
+  return json({ error: "Wrong PIN." }, 401);
 }
 
 // Who is asking? The owner (sync PIN in x-pin, exactly as before) or an invited person with a session cookie.

@@ -50,7 +50,10 @@ test("no inline scripts or handlers, so script-src can forbid them", async () =>
 const SECRET = "PRIVATE-R2-SENTINEL";
 const pinEnv = (pin) => { const env = { DB: makeDB(), ASSETS: { fetch: async () => new Response("{}") }, MEDIA: { get: async () => ({ json: async () => ({ secret: SECRET, places: [], prices: [] }) }) } }; if (pin !== undefined) env.SYNC_PIN = pin; return env; };
 let ipN = 0;
-const hit = (env, method, path, pin) => worker.fetch(new Request("https://x.test" + path, { method, headers: { "content-type": "application/json", "cf-connecting-ip": "10.0.0." + (++ipN % 250), "x-pin": pin }, body: method === "GET" ? undefined : "{}" }), env, { waitUntil() {} });
+const hit = (env, method, path, pin, ip) => {
+  const address = ip || "10.0.0." + (++ipN % 250);
+  return worker.fetch(new Request("https://x.test" + path, { method, headers: { "content-type": "application/json", "cf-connecting-ip": address, "x-pin": pin }, body: method === "GET" ? undefined : "{}" }), env, { waitUntil() {} });
+};
 const PIN_ROUTES = [["GET", "/api/prices-private"], ["GET", "/api/places-private"], ["POST", "/api/jobs/run?job=nope&dry=1"], ["GET", "/api/dex"], ["GET", "/api/userstate"], ["POST", "/api/userstate/init"], ["POST", "/api/datamine/run"], ["POST", "/api/pipeline/run"], ["POST", "/api/ig-decisions"], ["GET", "/api/notify/status"], ["POST", "/api/notify/test"], ["POST", "/api/notify/test-reminder"], ["POST", "/api/notify/run"], ["GET", "/api/notify/push-key"], ["POST", "/api/notify/subscribe"], ["POST", "/api/auth/invite"], ["POST", "/api/auth/users"], ["POST", "/api/auth/create"], ["POST", "/api/auth/remove"]];
 
 for (const [label, pin] of [["unset", undefined], ["empty", ""]]) {
@@ -79,6 +82,32 @@ test("SYNC_PIN set: the right PIN still opens the private routes, a wrong one (o
   assert.equal((await hit(env, "POST", "/api/jobs/run?job=nope&dry=1", "9999")).status, 401);
 });
 
+
+test("PIN failures have a rolling global ceiling across rotating IPs without locking out the correct PIN", async () => {
+  const env = pinEnv("1234");
+  for (let i = 1; i <= 25; i++) {
+    const response = await hit(env, "GET", "/api/prices-private", "wrong", "198.51.100." + i);
+    assert.equal(response.status, 401, "failed guess " + i);
+  }
+  const blocked = await hit(env, "GET", "/api/prices-private", "wrong", "198.51.100.26");
+  assert.equal(blocked.status, 429, "the 26th failure is stopped even from a new address");
+  assert.match((await blocked.json()).error, /across all addresses/);
+
+  const owner = await hit(env, "GET", "/api/prices-private", "1234", "198.51.100.26");
+  assert.equal(owner.status, 200, "the correct PIN remains usable after the global failure ceiling");
+  assert.ok((await owner.text()).includes(SECRET));
+  assert.equal((await env.DB.prepare("SELECT COUNT(*) AS n FROM pin_fails_ip").first()).n, 25, "successful PINs are not counted as failures");
+});
+
+test("PIN failure ceilings are rolling and correct PINs bypass a per-IP throttle", async () => {
+  const env = pinEnv("1234"), ip = "203.0.113.40";
+  for (let i = 0; i < 10; i++) assert.equal((await hit(env, "GET", "/api/prices-private", "wrong", ip)).status, 401);
+  assert.equal((await hit(env, "GET", "/api/prices-private", "wrong", ip)).status, 429, "per-IP ceiling remains 10");
+  assert.equal((await hit(env, "GET", "/api/prices-private", "1234", ip)).status, 200, "correct PIN bypasses a failed-guess throttle");
+
+  env.DB.raw.prepare("UPDATE pin_fails_ip SET at = ?").run(Date.now() - 11 * 60 * 1000);
+  assert.equal((await hit(env, "GET", "/api/prices-private", "wrong", "203.0.113.41")).status, 401, "expired failures no longer consume the global ceiling");
+});
 
 test("the image CSP uses only the audited HTTPS image origins", () => {
   const directive = SECURITY_HEADERS["content-security-policy"].split(";").map(x => x.trim()).find(x => x.startsWith("img-src "));
