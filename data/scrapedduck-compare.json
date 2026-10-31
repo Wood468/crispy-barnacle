@@ -1,7 +1,7 @@
 {
- "updated": "2026-10-31T12:30:23.885Z",
+ "updated": "2026-10-31T19:18:38.767Z",
  "state": "ok",
- "scrapedDuckEvents": 54,
+ "scrapedDuckEvents": 50,
  "missingHere": [],
  "missingThere": [
   {
@@ -90,19 +90,9 @@
    "start": "2026-10-28"
   },
   {
-   "id": "w-pok-mon-run-30-kaohsiung",
-   "name": "Pokémon RUN 30: Kaohsiung",
-   "start": "2026-10-31"
-  },
-  {
    "id": "w-celebrate-the-festival-of-lights-with-the-return-o",
    "name": "Festival of Lights",
    "start": "2026-11-06"
-  },
-  {
-   "id": "w-pok-xciting-lands-at-changi-airport-and-jewel-get-",
-   "name": "PokéXciting! Changi Airport and Jewel",
-   "start": "2026-11-07"
   },
   {
    "id": "w-pok-mon-30th-anniversary-mall-exploration-jewel",
@@ -115,9 +105,9 @@
    "start": "2026-11-07"
   },
   {
-   "id": "w-pok-mon-run-30-new-taipei",
-   "name": "Pokémon RUN 30: New Taipei",
-   "start": "2026-11-14"
+   "id": "w-pok-xciting-lands-at-changi-airport-and-jewel-get-",
+   "name": "PokéXciting! Changi Airport and Jewel",
+   "start": "2026-11-07"
   },
   {
    "id": "w-pok-mon-30th-anniversary-mall-exploration-sm-south",
@@ -125,14 +115,9 @@
    "start": "2026-11-20"
   },
   {
-   "id": "w-pok-mon-run-30-kuala-lumpur",
-   "name": "Pokémon RUN 30: Kuala Lumpur",
+   "id": "w-pok-mon-run-30-malaysia",
+   "name": "Pokémon RUN 30: Malaysia",
    "start": "2026-11-21"
-  },
-  {
-   "id": "w-pok-mon-center-bangkok-opens-pok-mon-go-thailand-e",
-   "name": "Pokémon Center BANGKOK Opens: Pokémon GO Thailand Event",
-   "start": "2026-12-01"
   },
   {
    "id": "w-pok-mon-30th-anniversary-mall-exploration-sm-north",
