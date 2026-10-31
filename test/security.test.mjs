@@ -84,8 +84,8 @@ test("the image CSP uses only the audited HTTPS image origins", () => {
   const directive = SECURITY_HEADERS["content-security-policy"].split(";").map(x => x.trim()).find(x => x.startsWith("img-src "));
   assert.ok(directive, "img-src directive exists");
   assert.match(directive, /^img-src 'self' data: blob:/);
-  assert.doesNotMatch(directive, /(^|\\s)https:(\\s|$)/, "generic HTTPS image access must not return");
-  for (const origin of IMAGE_CSP_HOSTS) assert.ok(directive.split(/\\s+/).includes(origin), origin);
+  assert.ok(!directive.split(" ").includes("https:"), "generic HTTPS image access must not return");
+  for (const origin of IMAGE_CSP_HOSTS) assert.ok(directive.split(" ").includes(origin), origin);
   for (const host of OG_IMAGE_HOSTS) assert.ok(IMAGE_CSP_HOSTS.includes("https://" + host), host + " must be covered by img-src");
 });
 
