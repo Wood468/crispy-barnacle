@@ -73,9 +73,9 @@ DASH_TYPE_SCALE = {
 }
 DASH_TYPE_VALUES = ['.78rem', '.8rem', '.84rem', '.75rem', '.82rem', '.72rem', '.85rem', '.68rem', '1.05rem', '.9rem', '2rem', '1.5rem', '.62rem', '1.1rem']
 check('dashboard uses the shared semantic type scale for 79 exact font-size declarations',
-      all(len(re.findall(r'font-size\\s*:\\s*var\\(' + re.escape(token) + r'\\)(?=[;}])', DASH_CSS)) == count
+      all(len(re.findall(r'font-size\s*:\s*var\(' + re.escape(token) + r'\)(?=[;}])', DASH_CSS)) == count
           for token, count in DASH_TYPE_SCALE.items()) and
-      all(not re.search(r'font-size\\s*:\\s*' + re.escape(value) + r'(?=[;}])', DASH_CSS)
+      all(not re.search(r'font-size\s*:\s*' + re.escape(value) + r'(?=[;}])', DASH_CSS)
           for value in DASH_TYPE_VALUES))
 check('base stylesheet components use semantic palette and typography roles while legacy aliases remain defined',
       re.search(r'var\(--(?:bg|panel|soft|line|fg|muted|body|inv-bg|inv-fg|gold|gold-fg|display|sans|mono)\b', BASE_COMPONENT_CSS) is None and
