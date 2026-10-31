@@ -1,5 +1,5 @@
 import unittest
-from production_image_audit import detail_poster_results, image_kind, payload_bytes, resource_label, summarize
+from production_image_audit import detail_poster_results, image_kind, is_today_tab, payload_bytes, resource_label, summarize
 
 class ProductionImageAuditTests(unittest.TestCase):
     def test_recognises_r2_poster_paths(self):
@@ -16,6 +16,12 @@ class ProductionImageAuditTests(unittest.TestCase):
 
     def test_resource_label_omits_query_and_fragment(self):
         self.assertEqual(resource_label("https://cdn.example.test/poster.webp?token=secret#view"), "cdn.example.test/poster.webp")
+
+    def test_today_tab_selector_supports_live_and_boot_navigation(self):
+        self.assertTrue(is_today_tab({"data-tab": "now"}))
+        self.assertTrue(is_today_tab({"data-boot-tab": "now"}))
+        self.assertTrue(is_today_tab({"aria-controls": "tab-now"}))
+        self.assertFalse(is_today_tab({"data-tab": "events", "aria-controls": "tab-events"}))
 
     def test_detail_poster_results_only_count_responses_after_opening_details(self):
         expected = [
