@@ -53,9 +53,8 @@ test("PWA entry page links to the manifest and iOS touch icon and registers the 
   assert.match(html, /lib\.js\?v=20261030a/);
   assert.match(html, /\/pwa\.js/);
   assert.match(app, /dash\.js\?v=20261031e/);
-  assert.match(dash, /detail\.js\?v=20261030f/);
+  assert.match(dash, /detail\.js\?v=20261031a/);
   assert.match(dash, /places\.js\?v=20261031b/, "the updated Places provenance UI is versioned");
-  assert.match(dash, /detail\.js\?v=20261031a/, "the updated event-detail attribution UI is versioned");
 });
 
 
@@ -89,9 +88,8 @@ test("service worker versions the cache, pre-caches offline fallback, and never 
   assert.match(sw, /'\/app\.js\?v=20261031e'/, "the current app bootstrap is available to the offline shell");
   assert.match(sw, /'\/styles\.css\?v=20261031f'/, "the current recovery panel stylesheet is available to the offline shell");
   assert.match(sw, /'\/dash\.js\?v=20261031e'/, "the current dashboard script is available to the offline shell");
-  assert.match(sw, /'\/detail\.js\?v=20261030f'/, "the current event detail script is available to the offline shell");
+  assert.match(sw, /'\/detail\.js\?v=20261031a'/, "the current event detail script is available to the offline shell");
   assert.match(sw, /'\/places\.js\?v=20261031b'/, "the current sourced venue script is available to the offline shell");
-  assert.match(sw, /'\/detail\.js\?v=20261031a'/, "the current event-detail script is available to the offline shell");
   assert.match(sw, /'\/offline\.html'/);
   assert.match(sw, /cache\.match\('\/offline\.html'\)/);
   assert.match(sw, /url\.pathname\.startsWith\('\/api\/'\)/);
