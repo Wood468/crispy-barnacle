@@ -1,5 +1,5 @@
 import unittest
-from production_image_audit import detail_poster_results, image_kind, is_today_tab, payload_bytes, resource_label, summarize
+from production_image_audit import detail_poster_results, image_kind, is_today_tab, payload_bytes, resource_label, scroll_positions, summarize
 
 class ProductionImageAuditTests(unittest.TestCase):
     def test_recognises_r2_poster_paths(self):
@@ -16,6 +16,14 @@ class ProductionImageAuditTests(unittest.TestCase):
 
     def test_resource_label_omits_query_and_fragment(self):
         self.assertEqual(resource_label("https://cdn.example.test/poster.webp?token=secret#view"), "cdn.example.test/poster.webp")
+
+    def test_scroll_positions_cover_the_document_with_overlapping_viewports(self):
+        self.assertEqual(scroll_positions(600, 800), [0])
+        self.assertEqual(scroll_positions(2500, 800), [0, 600, 1200, 1700])
+        positions = scroll_positions(5000, 320)
+        self.assertEqual(positions[0], 0)
+        self.assertEqual(positions[-1], 4680)
+        self.assertEqual(positions, sorted(set(positions)))
 
     def test_today_tab_selector_supports_live_and_boot_navigation(self):
         self.assertTrue(is_today_tab({"data-tab": "now"}))
