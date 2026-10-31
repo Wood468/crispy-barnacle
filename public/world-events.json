@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-31T05:55:32.572Z",
+ "updated": "2026-10-31T09:20:13.645Z",
  "events": [
   {
    "id": "w-pokemon-fossil-museum-2026",
@@ -591,12 +591,22 @@
    "datesKnown": true,
    "sources": [
     {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "url": "https://pokemongo.com/en/gowildarea/mexico-city"
+    },
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "url": "https://leekduck.com/events/pokemon-go-wild-area-2026-mexico-city/"
+    },
+    {
      "id": "serebii",
      "name": "Serebii",
      "url": "https://www.serebii.net/pokemongo/reallifeevents.shtml"
     }
    ],
-   "status": "single",
+   "status": "official",
    "seen": "2026-10-31"
   },
   {
@@ -610,12 +620,22 @@
    "datesKnown": true,
    "sources": [
     {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "url": "https://pokemongo.com/en/gowildarea/sendai"
+    },
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "url": "https://leekduck.com/events/pokemon-go-wild-area-2026-sendai-japan/"
+    },
+    {
      "id": "serebii",
      "name": "Serebii",
      "url": "https://www.serebii.net/pokemongo/reallifeevents.shtml"
     }
    ],
-   "status": "single",
+   "status": "official",
    "seen": "2026-10-31"
   },
   {
