@@ -7,7 +7,7 @@ import { discover, get } from "./discover.mjs";
 import { extractFields, hasContent } from "./extract.mjs";
 import { mergeSources } from "./compare.mjs";
 import { pageTitle, htmlToLines } from "./text.mjs";
-import { entriesFromPage, mergeWorld, collapseWorld, parseDateRange, placeOf, cleanTitle, tidyName, keepOldWorld, normUrl, sameWriteupRulings } from "./world.mjs";
+import { entriesFromPage, mergeWorld, collapseWorld, parseDateRange, placeOf, cleanTitle, tidyName, normUrl, sameWriteupRulings, prioritizeWatchedPages, retainOldWorldSources } from "./world.mjs";
 import { matchEvent } from "../g47ix-review.mjs";
 import { discoverIntl, entryFromIntlPage, INTL_PATTERN } from "./intl.mjs";
 import { failRun } from "../fail-run.mjs";
@@ -109,8 +109,16 @@ async function main() {
   const { found, status } = await discover();
   // every event's own source link is read too, so a linked write-up is never missed by discovery
   for (const e of events) if (e.link && sourceFor(e.link) && !found.some(f => f.url === e.link.replace(/\/?$/, "/"))) found.push({ source: sourceFor(e.link).id, url: e.link.replace(/\/?$/, "/"), title: e.t });
-  // pages we were told about by hand or by the daily AI check (a series announced long ago drops off the list pages, so it is read every run)
-  try { for (const w of JSON.parse(await readFile("data/watch-pages.json", "utf8")).pages || []) { const u = String(w.url || "").replace(/\/?$/, "/"), s = sourceFor(u); if (s && !found.some(f => f.url === u)) found.push({ source: s.id, url: u, title: w.note || "" }); } } catch { /* no watch list */ }
+  // Curated watch pages must be read before the capped feed results; otherwise a busy feed can starve them.
+  let watchedPages = [];
+  try {
+    watchedPages = JSON.parse(await readFile("data/watch-pages.json", "utf8")).pages || [];
+    for (const w of watchedPages) {
+      const u = String(w.url || "").replace(/\/?$/, "/"), s = sourceFor(u);
+      if (s && !found.some(f => f.url === u)) found.push({ source: s.id, url: u, title: w.note || "" });
+    }
+  } catch { /* no watch list */ }
+  found.splice(0, found.length, ...prioritizeWatchedPages(found, watchedPages.map(w => w.url)));
   const pages = [], errors = [];
   for (const f of found.slice(0, MAX_PAGES * 2)) {
     if (pages.length >= MAX_PAGES) break;
@@ -154,7 +162,7 @@ async function main() {
   const stopRulings = sameWriteupRulings(world.filter(w => (w.sources || []).length === 1));
   let oldWorld = []; try { oldWorld = JSON.parse(await readFile(WORLD_OUT, "utf8")).events || []; } catch { /* first run */ }
   let watchUrls = new Set(); try { watchUrls = new Set((JSON.parse(await readFile("data/watch-pages.json", "utf8")).pages || []).map(w => normUrl(w.url))); } catch { /* no watch list */ }
-  for (const o of oldWorld) if (!world.some(w => w.id === o.id) && keepOldWorld(o, { cutoff, today, watchUrls, splitUrls })) world.push(o); // keep what a source stopped listing, for a while (until its end date when its official page is on the watch list)
+  world = retainOldWorldSources(world, oldWorld, { cutoff, today, watchUrls, splitUrls }); // retain eligible old records and their source provenance even when a same-ID seed is present
   let rules = null; try { rules = JSON.parse(await readFile("data/event-aliases.json", "utf8")); } catch { /* no rulings yet */ }
   rules = { ...(rules || {}), different: [...((rules || {}).different || []), ...stopRulings] };
   const collapsed = collapseWorld(world, rules); world = collapsed.events.map(normaliseLegacyStatuses); // one event, one entry, however many sources or old ids; migrate retained legacy labels
