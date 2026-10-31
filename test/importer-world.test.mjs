@@ -17,6 +17,40 @@ test("multiple community write-ups are corroborated, while official evidence kee
   assert.equal(mergeWorld([...entries, { ...base, url: "https://pokemongo.com/news/pokemon-run-30/", source: "official" }], names)[0].status, "official");
 });
 
+test("same-series events at distinct cities remain separate while country/city aliases still merge", async () => {
+  const { mergeWorld, collapseWorld } = await import("../scripts/importer/world.mjs");
+  const names = { official: "Pokémon GO (official)", leekduck: "Leek Duck" };
+  const cities = mergeWorld([
+    {
+      name: "Pokémon RUN 30", place: "Taichung, Taiwan", area: "Asia", scope: "regional",
+      start: "2026-11-07", end: "2026-11-08", datesKnown: true,
+      url: "https://pokemongo.com/news/run-30-taichung/", source: "official"
+    },
+    {
+      name: "Pokémon RUN 30", place: "Singapore", area: "Asia", scope: "regional",
+      start: "2026-11-07", end: "2026-11-08", datesKnown: true,
+      url: "https://pokemongo.com/news/run-30-singapore/", source: "official"
+    }
+  ], names);
+  assert.equal(cities.length, 2, "same series and dates at different cities are separate real-world stops");
+  assert.deepEqual(cities.map(event => event.place), ["Taichung, Taiwan", "Singapore"]);
+  assert.equal(collapseWorld(cities).events.length, 2, "the later collapse pass must also retain both destinations");
+
+  const nested = mergeWorld([
+    {
+      name: "Pokémon RUN 30", place: "Malaysia", area: "Asia", scope: "regional",
+      start: "2026-11-21", end: "2026-11-22", datesKnown: true,
+      url: "https://pokemongo.com/news/run-30-malaysia/", source: "official"
+    },
+    {
+      name: "Pokémon RUN 30: Kuala Lumpur", place: "Kuala Lumpur, Malaysia (KLCC)", area: "Asia", scope: "regional",
+      start: "2026-11-21", end: "2026-11-22", datesKnown: true,
+      url: "https://leekduck.com/events/pokemon-run-30-kuala-lumpur/", source: "leekduck"
+    }
+  ], names);
+  assert.equal(nested.length, 1, "a country-level record and its city-level version remain one event");
+});
+
 test("curated watch pages are prioritised ahead of the importer page cap", async () => {
   const { prioritizeWatchedPages, normUrl } = await import("../scripts/importer/world.mjs");
   const feeds = Array.from({ length: 90 }, (_, index) => ({

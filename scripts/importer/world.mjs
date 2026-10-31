@@ -163,7 +163,17 @@ export function entriesFromPage(page, today) {
 export function mergeWorld(entries, sources) {
   const out = [];
   for (const e of entries) {
-    const hit = out.find(o => similar(o.name, e.name) && !(o.name !== e.name && o.sources.some(x => x.url === e.url)) && (!o.start || !e.start || (o.start <= (e.end || e.start) && e.start <= (o.end || o.start))));
+    const hit = out.find(o => {
+      if (!similar(o.name, e.name)) return false;
+      if (o.name !== e.name && o.sources.some(x => x.url === e.url)) return false;
+      if (o.start && e.start && !(o.start <= (e.end || e.start) && e.start <= (o.end || o.start))) return false;
+      // A shared series title/date is not enough to merge two distinct destinations.
+      // Reuse the app's place-aware identity rule, but only let its explicit location
+      // conflicts veto the existing source-title match. Country/city nesting still joins.
+      const identity = dd.same(o, e);
+      if (identity.verdict === "different" && (identity.why === "different places" || identity.why === "titles name different places")) return false;
+      return true;
+    });
     const src = { id: e.source, name: sources[e.source] || e.source, url: e.url };
     if (hit) { if (!hit.sources.some(s => s.url === src.url)) hit.sources.push(src); if (!hit.start && e.start) { hit.start = e.start; hit.end = e.end; hit.datesKnown = true; } if (!hit.place && e.place) { hit.place = e.place; hit.area = e.area; } continue; }
     const slug = "w-" + e.name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 50);
