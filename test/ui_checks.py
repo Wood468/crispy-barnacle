@@ -37,8 +37,8 @@ check('dashboard status and surface tokens retain compatibility aliases',
       all(token in DASH_CSS for token in ['--surface-glass:', '--border-subtle:', '--color-success:', '--color-warning:', '--color-danger:', '--glass:var(--surface-glass)', '--ring:var(--border-subtle)']))
 check('dashboard token migration preserves existing 14px controls and 18px card corners',
       '--radius-control:14px' in BASE_CSS and '--radius-panel:18px' in BASE_CSS and
-      re.search(r'\\.evc\\{[^}]*border-radius:var\\(--radius-panel\\)', DASH_CSS) and
-      re.search(r'\\.today-focus-card\\{[^}]*border-radius:var\\(--radius-panel\\)', DASH_CSS) and
+      re.search(r'\.evc\{[^}]*border-radius:var\(--radius-panel\)', DASH_CSS) and
+      re.search(r'\.today-focus-card\{[^}]*border-radius:var\(--radius-panel\)', DASH_CSS) and
       'border-radius:var(--radius-control)' in DASH_CSS)
 check('dashboard primitives consume semantic text, typography, accent, border and pill roles',
       all(token in DASH_CSS for token in ['var(--color-text-muted)', 'var(--color-text-body)', 'var(--font-body)', 'var(--font-display)', 'var(--font-mono)', 'var(--color-danger)', 'var(--color-success)', 'var(--color-accent)', 'var(--color-accent-text)', 'var(--radius-pill)', 'var(--border-subtle)', 'var(--surface-glass)', 'var(--color-surface-raised)']))
