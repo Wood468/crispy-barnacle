@@ -15,7 +15,7 @@
   /* Four-point spacing scale, shared radii, typography and motion. */
   --space-1:4px; --space-2:8px; --space-3:12px; --space-4:16px; --space-5:20px;
   --space-6:24px; --space-7:28px; --space-8:32px; --space-9:36px; --space-10:40px;
-  --radius-sm:8px; --radius-md:12px; --radius-card:16px; --radius-lg:20px; --radius-xl:22px; --radius-pill:999px;
+  --radius-sm:8px; --radius-md:12px; --radius-control:14px; --radius-card:16px; --radius-panel:18px; --radius-lg:20px; --radius-xl:22px; --radius-pill:999px;
   --shadow-card:0 12px 32px -24px rgba(0,0,0,.7);
   --font-display:var(--display); --font-body:var(--sans); --font-mono:var(--mono);
   --motion-fast:140ms; --motion-standard:220ms; --motion-ease:cubic-bezier(.2,.7,.2,1);
