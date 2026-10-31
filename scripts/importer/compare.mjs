@@ -37,8 +37,8 @@ export function mergeSources(results) {
     if (f !== "dates") for (let i = 0; i < clusters.length; i++) for (let j = i + 1; j < clusters.length; j++) if (!/^rank \d+/i.test(clusters[i].text) && disagree(clusters[i].text, clusters[j].text)) conflicts.push({ field: f, a: { text: clusters[i].text, sources: clusters[i].sources }, b: { text: clusters[j].text, sources: clusters[j].sources } });
     const have = results.filter(r => (r.fields[f] || []).length).map(r => r.source.id);
     if (have.length && have.length < results.length) gaps.push({ field: f, missingFrom: results.filter(r => !have.includes(r.source.id)).map(r => r.source.id) });
-    const order = { confirmed: 0, official: 1, single: 2 };
-    fields[f] = clusters.map(c => ({ text: c.text, sources: c.sources, status: c.sources.length >= 2 ? "confirmed" : c.official ? "official" : "single" })).sort((a, b) => order[a.status] - order[b.status]); { const isRk = x => /^rank \d+/i.test(x.text), rk = fields[f].filter(isRk).slice(0, 110); fields[f] = fields[f].filter(x => !isRk(x)).slice(0, 12).concat(rk); }
+    const order = { official: 0, corroborated: 1, single: 2 };
+    fields[f] = clusters.map(c => ({ text: c.text, sources: c.sources, status: c.official ? "official" : c.sources.length >= 2 ? "corroborated" : "single" })).sort((a, b) => order[a.status] - order[b.status]); { const isRk = x => /^rank \d+/i.test(x.text), rk = fields[f].filter(isRk).slice(0, 110); fields[f] = fields[f].filter(x => !isRk(x)).slice(0, 12).concat(rk); }
   }
   return { fields, conflicts, gaps };
 }

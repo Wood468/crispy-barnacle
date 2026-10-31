@@ -20,6 +20,25 @@ test("event detail claim attribution reads trust from source metadata", () => {
   assert.match(detail, /Source trust not labelled/);
 });
 
+test("multi-source claim attribution says corroborated rather than confirmed", () => {
+  assert.match(detail, /ids\.length > 1 \? 'Corroborated'/);
+  assert.doesNotMatch(detail, /ids\.length > 1 \? 'Cross-referenced'/);
+  const data = JSON.parse(fs.readFileSync(new URL("../public/event-details.json", import.meta.url), "utf8"));
+  let confirmed = 0, corroborated = 0;
+  const walk = value => {
+    if (Array.isArray(value)) return value.forEach(walk);
+    if (!value || typeof value !== "object") return;
+    for (const [key, child] of Object.entries(value)) {
+      if (key === "status" && child === "confirmed") confirmed++;
+      if (key === "status" && child === "corroborated") corroborated++;
+      walk(child);
+    }
+  };
+  walk(data);
+  assert.equal(confirmed, 0, "generated claim statuses must not overstate community corroboration as confirmation");
+  assert.ok(corroborated > 0, "the current snapshot retains corroborated multi-source claims");
+});
+
 test("event detail does not substitute the dataset snapshot date for a source-check date", () => {
   assert.match(detail, /var sourceChecked = \(primarySource && \(primarySource\.observed \|\| primarySource\.checked\)\) \|\| ev\.seen \|\| '';/);
   assert.doesNotMatch(detail, /sourceChecked\s*=.*G\.D\.asOf/);

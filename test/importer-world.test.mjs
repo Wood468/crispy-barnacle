@@ -1,6 +1,21 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 
+test("multiple community write-ups are corroborated, while official evidence keeps precedence", async () => {
+  const { mergeWorld, collapseWorld } = await import("../scripts/importer/world.mjs");
+  const base = { name: "Pokémon RUN 30: Taichung", place: "Taichung, Taiwan", area: "Asia", scope: "regional", start: "2026-11-07", end: "2026-11-08", datesKnown: true };
+  const entries = [
+    { ...base, url: "https://leekduck.com/events/pokemon-run-30/", source: "leekduck" },
+    { ...base, url: "https://www.serebii.net/pokemongo/reallifeevents.shtml", source: "serebii" }
+  ];
+  const names = { leekduck: "Leek Duck", serebii: "Serebii", official: "Pokémon GO (official)" };
+  const merged = mergeWorld(entries, names);
+  assert.equal(merged.length, 1);
+  assert.equal(merged[0].status, "corroborated");
+  assert.equal(collapseWorld(merged).events[0].status, "corroborated");
+  assert.equal(mergeWorld([...entries, { ...base, url: "https://pokemongo.com/news/pokemon-run-30/", source: "official" }], names)[0].status, "official");
+});
+
 test("tidyName keeps the event part of a long official headline", async () => {
   const { tidyName } = await import("../scripts/importer/world.mjs");
   assert.equal(tidyName("Pokémon RUN 30: Taichung"), "Pokémon RUN 30: Taichung");

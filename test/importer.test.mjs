@@ -4,7 +4,7 @@ import { htmlToLines, pageTitle } from "../scripts/importer/text.mjs";
 import { extractFields } from "../scripts/importer/extract.mjs";
 import { mergeSources, similar, disagree } from "../scripts/importer/compare.mjs";
 import { linksFrom, feedItems, discover } from "../scripts/importer/discover.mjs";
-import { pickEvent } from "../scripts/importer/run.mjs";
+import { pickEvent, normaliseLegacyStatuses } from "../scripts/importer/run.mjs";
 
 const leek = `<html><head><meta property="og:title" content="Zorua Community Day | Leek Duck"></head><body><nav>menu</nav><main>
 <h1>Zorua Community Day</h1><h2>Bonuses</h2><ul><li>3&times; Catch XP</li><li>1/4 Hatch Distance</li></ul>
@@ -32,13 +32,35 @@ test("merging marks agreement, single-source details, conflicts and gaps", () =>
   const S = (id, trust) => ({ id, name: id, trust, url: "https://x.test/" + id });
   const m = mergeSources([{ source: S("leekduck", "community"), fields: extractFields(leek) }, { source: S("hub", "community"), fields: extractFields(hub) }]);
   const feat = m.fields.featured.find(x => /more frequently/.test(x.text));
-  assert.equal(feat.status, "confirmed"); assert.deepEqual(feat.sources.sort(), ["hub", "leekduck"]);
+  assert.equal(feat.status, "corroborated"); assert.deepEqual(feat.sources.sort(), ["hub", "leekduck"]);
   assert.equal(m.fields.bonuses.find(x => /Lure modules/.test(x.text)).status, "single");
   assert.equal(m.conflicts.length, 1); assert.match(m.conflicts[0].a.text + m.conflicts[0].b.text, /3×.*2×|2×.*3×/);
   assert.ok(m.gaps.some(g => g.field === "shiny" && g.missingFrom.includes("hub")));
 });
-test("an official source marks a lone detail as official", () => {
-  const m = mergeSources([{ source: { id: "official", trust: "official" }, fields: { bonuses: ["Double Stardust"], featured: [], raids: [], eggs: [], research: [], shiny: [], moves: [], costumes: [], tickets: [], dates: [] } }, { source: { id: "hub", trust: "community" }, fields: { bonuses: [], featured: [], raids: [], eggs: [], research: [], shiny: [], moves: [], costumes: [], tickets: [], dates: [] } }]);
+test("legacy multi-source labels preserve official evidence and normalize community agreement", () => {
+  const old = {
+    status: "confirmed",
+    sources: [{ id: "official", trust: "official" }, { id: "hub", trust: "community" }, { id: "leekduck", trust: "community" }],
+    fields: { bonuses: [
+      { text: "Official and community sources agree.", sources: ["official", "hub"], status: "confirmed" },
+      { text: "Community sources agree.", sources: ["hub", "leekduck"], status: "confirmed" }
+    ] },
+    note: "This detail has not been confirmed by the game."
+  };
+  assert.deepEqual(normaliseLegacyStatuses(old), {
+    status: "official",
+    sources: [{ id: "official", trust: "official" }, { id: "hub", trust: "community" }, { id: "leekduck", trust: "community" }],
+    fields: { bonuses: [
+      { text: "Official and community sources agree.", sources: ["official", "hub"], status: "official" },
+      { text: "Community sources agree.", sources: ["hub", "leekduck"], status: "corroborated" }
+    ] },
+    note: "This detail has not been confirmed by the game."
+  });
+  assert.equal(normaliseLegacyStatuses({ status: "confirmed", sources: [{ id: "hub" }, { id: "leekduck" }] }).status, "corroborated");
+});
+
+test("an official source keeps official status when community sources agree", () => {
+  const m = mergeSources([{ source: { id: "official", trust: "official" }, fields: { bonuses: ["Double Stardust"], featured: [], raids: [], eggs: [], research: [], shiny: [], moves: [], costumes: [], tickets: [], dates: [] } }, { source: { id: "hub", trust: "community" }, fields: { bonuses: ["Double Stardust"], featured: [], raids: [], eggs: [], research: [], shiny: [], moves: [], costumes: [], tickets: [], dates: [] } }]);
   assert.equal(m.fields.bonuses[0].status, "official");
 });
 test("discovery reads links and feeds, keeps only event write-ups, and survives a failing source", async () => {

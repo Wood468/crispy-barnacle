@@ -60,10 +60,11 @@ check('Today focus strip has four data-backed signals and a responsive semantic 
 check('versioned stylesheets are referenced by the page and precached offline',
       all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261031f', '/dash.css?v=20261031o']))
 check('offline shell cache version advances with the stylesheet token release',
-      "gofn-shell-v151" in SW_JS)
+      "gofn-shell-v152" in SW_JS)
 check('versioned dashboard scripts are referenced by the entry page and precached offline',
       '/app.js?v=20261031e' in INDEX_HTML and '/app.js?v=20261031e' in SW_JS and
-      '/dash.js?v=20261031e' in APP_JS and '/dash.js?v=20261031e' in SW_JS)
+      '/dash.js?v=20261031e' in APP_JS and '/dash.js?v=20261031e' in SW_JS and
+      '/detail.js?v=20261031a' in DASH_JS and '/detail.js?v=20261031a' in SW_JS)
 check('mobile chrome uses compact 48px navigation targets, safe-area padding and reduced header/body spacing',
       all(token in BASE_CSS for token in ['padding-block:0 calc(72px + env(safe-area-inset-bottom,0px))', '@media (max-width:1199px){header.top{padding-top:var(--space-4)}}', 'padding:4px 8px calc(4px + env(safe-area-inset-bottom,0px))', 'padding:4px 2px;min-height:48px', 'width:1.2rem;height:1.2rem']) and
       'min-height:68px' in BASE_CSS and 'nav.tabs button{min-height:56px}' in DASH_CSS and '@media(max-width:1199px){nav.tabs button{min-height:48px}}' in DASH_CSS)

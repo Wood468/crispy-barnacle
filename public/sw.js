@@ -1,9 +1,9 @@
 /* GO Field Notes offline shell. Never cache /api/*, including private user-state and notification responses. */
-const SHELL_CACHE = 'gofn-shell-v151';
+const SHELL_CACHE = 'gofn-shell-v152';
 const SHELL_URLS = [
   '/', '/index.html', '/offline.html', '/offline.css',
   '/styles.css', '/dash.css', '/dash.css?v=20261031o', '/lib.js', '/lib.js?v=20261030a', '/dedupe.js', '/dedupe.js?v=20261027a', '/move.js', '/move.js?v=20261012n',
-  '/imgerr.js', '/imgerr.js?v=20261015a', '/whatsnew.js', '/whatsnew.js?v=20261030a', '/pin.js', '/pin.js?v=20261015a', '/local-state.js', '/local-state.js?v=20261030a', '/app.js', '/app.js?v=20261031e', '/styles.css?v=20261031f', '/dash.js', '/dash.js?v=20261031e', '/detail.js', '/detail.js?v=20261030f', '/fresh.js', '/places.js', '/places.js?v=20261031b', '/review.js', '/review.js?v=20261030a', '/nudge.js', '/account.js', '/account.js?v=20261030a', '/store.js', '/store.js?v=20261015a', '/season.js', '/season.js?v=20261025a', '/weekly.js', '/weekly.js?v=20261014c', '/buy.js', '/extra.js', '/pwa.js',
+  '/imgerr.js', '/imgerr.js?v=20261015a', '/whatsnew.js', '/whatsnew.js?v=20261030a', '/pin.js', '/pin.js?v=20261015a', '/local-state.js', '/local-state.js?v=20261030a', '/app.js', '/app.js?v=20261031e', '/styles.css?v=20261031f', '/dash.js', '/dash.js?v=20261031e', '/detail.js', '/detail.js?v=20261031a', '/fresh.js', '/places.js', '/places.js?v=20261031b', '/review.js', '/review.js?v=20261030a', '/nudge.js', '/account.js', '/account.js?v=20261030a', '/store.js', '/store.js?v=20261015a', '/season.js', '/season.js?v=20261025a', '/weekly.js', '/weekly.js?v=20261014c', '/buy.js', '/extra.js', '/pwa.js',
   '/infographic.js', '/manifest.webmanifest', '/icon.svg', '/icon-maskable.svg', '/icon-180.png', '/icon-192.png', '/icon-512.png',
   '/data.json', '/dex.json', '/event-info.json', '/forms.json', '/moves.json',
   '/places.json', '/event-details.json', '/event-moves.json', '/regional-events.json', '/world-events.json', '/best-by-type.json', '/prices.json', '/pvp.json', '/release-status.json', '/types.json',

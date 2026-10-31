@@ -20,6 +20,28 @@ const WORLD_OUT = process.env.WORLD_FILE || "public/world-events.json";
 const SEREBII = "https://www.serebii.net/pokemongo/reallifeevents.shtml";
 const SOURCE_NAMES = Object.fromEntries(SOURCES.map(x => [x.id, x.name]).concat([["serebii", "Serebii"]]));
 
+// Older generated snapshots used "confirmed" for agreement between multiple sources.
+// Keep that distinct from official confirmation when preserving records across importer runs.
+export function normaliseLegacyStatuses(value, inheritedTrust = null) {
+  if (Array.isArray(value)) return value.map(item => normaliseLegacyStatuses(item, inheritedTrust));
+  if (!value || typeof value !== "object") return value;
+  const sourceRecords = Array.isArray(value.sources) && value.sources.some(s => s && typeof s === "object" && typeof s.id === "string");
+  const trustBySource = sourceRecords
+    ? new Map(value.sources.map(s => [s.id, s.trust || (s.id === "official" ? "official" : "")]))
+    : inheritedTrust;
+  return Object.fromEntries(Object.entries(value).map(([key, child]) => {
+    if (key === "status" && (child === "confirmed" || child === "corroborated")) {
+      const ids = Array.isArray(value.sources) ? value.sources : [];
+      const hasOfficial = ids.some(s =>
+        (typeof s === "string" && (s === "official" || trustBySource?.get(s) === "official")) ||
+        (s && typeof s === "object" && (s.id === "official" || s.trust === "official"))
+      );
+      return [key, hasOfficial ? "official" : "corroborated"];
+    }
+    return [key, normaliseLegacyStatuses(child, trustBySource)];
+  }));
+}
+
 // Serebii lists real-life events in a table: name, place, dates.
 export function serebiiEvents(html, today = new Date().toISOString().slice(0, 10)) {
   const out = [];
@@ -135,7 +157,7 @@ async function main() {
   for (const o of oldWorld) if (!world.some(w => w.id === o.id) && keepOldWorld(o, { cutoff, today, watchUrls, splitUrls })) world.push(o); // keep what a source stopped listing, for a while (until its end date when its official page is on the watch list)
   let rules = null; try { rules = JSON.parse(await readFile("data/event-aliases.json", "utf8")); } catch { /* no rulings yet */ }
   rules = { ...(rules || {}), different: [...((rules || {}).different || []), ...stopRulings] };
-  const collapsed = collapseWorld(world, rules); world = collapsed.events; // one event, one entry, however many sources or old ids
+  const collapsed = collapseWorld(world, rules); world = collapsed.events.map(normaliseLegacyStatuses); // one event, one entry, however many sources or old ids; migrate retained legacy labels
   if (collapsed.merged.length) console.log("Joined duplicate events: " + collapsed.merged.map(m => m.dropped + " into " + m.kept).join("; "));
   // Short, readable names: headline-style titles from official news are tidied; data/name-overrides.json ({ id: name }) always wins.
   let nameFixes = {}; try { nameFixes = JSON.parse(await readFile("data/name-overrides.json", "utf8")).names || {}; } catch { /* none */ }
@@ -148,7 +170,7 @@ async function main() {
     const merged = mergeSources(results);
     out[id] = { name: event.t, updated: now, sources: results.map(r => r.source), ...merged };
   }
-  for (const [id, v] of Object.entries(old)) if (!out[id] && Date.now() - Date.parse(v.updated || 0) < 45 * 864e5) out[id] = v; // keep recent entries a source stopped listing
+  for (const [id, v] of Object.entries(old)) if (!out[id] && Date.now() - Date.parse(v.updated || 0) < 45 * 864e5) out[id] = normaliseLegacyStatuses(v); // keep recent entries a source stopped listing, with current terminology
   await mkdir("data", { recursive: true });
   await writeFile(OUT, JSON.stringify({ updated: now, events: out }, null, 1) + "\n");
   const gaps = Object.entries(out).flatMap(([id, v]) => (v.gaps || []).map(g => ({ event: v.name, ...g })));

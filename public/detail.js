@@ -184,7 +184,7 @@
         var records = ids.map(function (id) { return (d.sources || []).filter(function (s) { return s.id === id; })[0]; }).filter(Boolean);
         var official = it.status === 'official' || records.some(function (s) { return s.trust === 'official'; });
         var community = records.some(function (s) { return s.trust === 'community'; });
-        var kind = official && community ? 'Official + community' : official ? 'Official source' : ids.length > 1 ? 'Cross-referenced' : community ? 'Community source' : 'Source trust not labelled';
+        var kind = official && community ? 'Official + community' : official ? 'Official source' : ids.length > 1 ? 'Corroborated' : community ? 'Community source' : 'Source trust not labelled';
         return '<small class="evd-claim-source"><span>' + kind + '</span> · ' + labels.join(' · ') + '</small>';
       };
       /* "The free track includes:" followed by bare short lines becomes a label with chips. */
