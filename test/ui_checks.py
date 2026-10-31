@@ -111,6 +111,28 @@ check('base stylesheet components use semantic palette and typography roles whil
       all(token in BASE_CSS[:BASE_CSS.index('*{box-sizing:border-box}')] for token in ['--bg:', '--panel:', '--soft:', '--line:', '--fg:', '--muted:', '--body:', '--inv-bg:', '--inv-fg:', '--gold:', '--gold-fg:', '--display:', '--sans:', '--mono:']))
 check('dashboard status and surface tokens retain compatibility aliases',
       all(token in DASH_CSS for token in ['--surface-glass:', '--border-subtle:', '--color-success:', '--color-warning:', '--color-danger:', '--glass:var(--surface-glass)', '--ring:var(--border-subtle)']))
+CARD_GLASS_SELECTORS = [
+    '.weekstrip', '.evc', '.pc', '.prio-empty', '.rotc', '.opp', '.evd-card',
+    '.tk', '.gencov', '.plc-row', '.srcrow', '.week-day-events>.week-card',
+    '.today-empty', '.today-next-up', '.evd-hero', '.goinfo-section',
+]
+CARD_SOLID_SELECTORS = ['.day-brief', '.today-focus-card']
+CARD_BORDER_SELECTORS = [
+    '.weekstrip', '.evc', '.pc', '.prio-empty', '.rotc', '.opp', '.evd-card',
+    '.tk', '.gencov', '.plc-row', '.srcrow', '.day-brief', '.today-focus-card',
+    '.today-empty', '.today-next-up', '.evd-hero', '.goinfo-section', '.pc.first', '.opp.missing',
+]
+def card_rule_text(selector):
+    return ' '.join(re.findall(re.escape(selector) + r'\s*\{([^}]*)\}', DASH_CSS))
+check('dashboard card anatomy roles preserve the existing glass, solid and border surfaces',
+      all(token in DASH_CSS for token in [
+          '--color-surface-card:var(--surface-glass)',
+          '--color-surface-card-solid:var(--color-surface)',
+          '--color-border-card:var(--border-subtle)',
+      ]) and
+      all('var(--color-surface-card)' in card_rule_text(selector) for selector in CARD_GLASS_SELECTORS) and
+      all('var(--color-surface-card-solid)' in card_rule_text(selector) for selector in CARD_SOLID_SELECTORS) and
+      all('var(--color-border-card)' in card_rule_text(selector) for selector in CARD_BORDER_SELECTORS))
 check('warning banner and status foregrounds use semantic tokens with unchanged palette values',
       all(token in DASH_CSS for token in ['--color-warning-banner:#FBBF24', '--color-on-warning:#1A1200', '--color-warning-banner-border:#B45309', '--color-on-danger:#fff', '--color-on-success:#04230F', 'background:var(--color-warning-banner)', 'color:var(--color-on-warning)', 'border-bottom:3px solid var(--color-warning-banner-border)', 'color:var(--color-on-danger)', 'color:var(--color-on-success)']))
 check('dashboard token migration preserves existing 14px controls and 18px card corners',
@@ -127,15 +149,15 @@ check('inverse dashboard controls use explicit inverse semantic roles',
 check('header badges use accent roles, a canvas outline and reduced-motion-aware controls',
       all(token in DASH_CSS for token in ['border:2px solid var(--color-canvas)', 'background:var(--color-accent)', 'color:var(--color-accent-text)', 'var(--motion-fast)', '@media(prefers-reduced-motion:reduce)']))
 check('empty agenda and watchlist states use a quiet surface and decorative cue',
-      all(token in DASH_CSS for token in ['.event-agenda > .empty', '#followed > .empty', '#savedev > .empty', '.today-empty', 'content:"◇"', 'border:1px dashed var(--border-subtle)']))
+      all(token in DASH_CSS for token in ['.event-agenda > .empty', '#followed > .empty', '#savedev > .empty', '.today-empty', 'content:"◇"', 'border:1px dashed var(--color-border-card)']))
 check('Today focus strip has four data-backed signals and a responsive semantic surface',
       all(token in INDEX_HTML for token in ['id="today-focus-strip"', 'id="today-focus-now"', 'id="today-focus-next"', 'id="today-focus-raids"', 'id="today-focus-ending"']) and
       all(token in DASH_JS for token in ['function renderTodayStrip', '6 * 60 * 60 * 1000', 'activity.inGame', 'activity.inPerson', 'D.rotation', 'D.maxBattles']) and
       all(token in DASH_CSS for token in ['.today-focus-strip', '.today-focus-card', 'grid-template-columns:repeat(2,minmax(0,1fr))']))
 check('versioned stylesheets are referenced by the page and precached offline',
-      all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261031h', '/dash.css?v=20261031q']))
+      all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261031h', '/dash.css?v=20261031r']))
 check('offline shell cache version advances with the stylesheet token release',
-      "gofn-shell-v155" in SW_JS)
+      "gofn-shell-v156" in SW_JS)
 check('versioned dashboard scripts are referenced by the entry page and precached offline',
       '/app.js?v=20261031e' in INDEX_HTML and '/app.js?v=20261031e' in SW_JS and
       '/dash.js?v=20261031e' in APP_JS and '/dash.js?v=20261031e' in SW_JS and
