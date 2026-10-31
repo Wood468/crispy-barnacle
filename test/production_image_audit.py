@@ -75,6 +75,16 @@ def summarize(records: list[dict]) -> dict:
             {"resource": item["resource"], "bytes": item["bytes"], "status": item["status"]}
             for item in sorted(posters, key=lambda item: item["bytes"], reverse=True)[:5]
         ],
+        "largest_images": [
+            {
+                "resource": item["resource"],
+                "bytes": item["bytes"],
+                "status": item["status"],
+                "kind": item["kind"],
+                "phase": item.get("phase", ""),
+            }
+            for item in sorted(records, key=lambda item: item["bytes"], reverse=True)[:5]
+        ],
     }
 
 
@@ -369,7 +379,9 @@ def run_offline_cache_audit(target: str) -> dict:
     records: list[dict] = []
     page_errors: list[str] = []
     failed_images: list[dict] = []
-    non_read_methods: list[str] = []
+    observed_non_read_requests: list[dict] = []
+    blocked_non_read_requests: list[dict] = []
+    blocked_api_requests: list[dict] = []
     phase = {"name": "online_today"}
     controller = False
     offline_reload_ok = False
@@ -405,12 +417,33 @@ def run_offline_cache_audit(target: str) -> dict:
             "from_service_worker": from_service_worker,
         })
 
+    def guard(route):
+        request = route.request
+        path = urlsplit(request.url).path
+        if request.method not in ("GET", "HEAD"):
+            blocked_non_read_requests.append({
+                "method": request.method,
+                "resource": resource_label(request.url),
+            })
+            route.abort()
+        elif path.startswith("/api/"):
+            blocked_api_requests.append({
+                "method": request.method,
+                "resource": resource_label(request.url),
+            })
+            route.abort()
+        else:
+            route.continue_()
+
     def on_request(request):
         if request.method not in ("GET", "HEAD"):
-            non_read_methods.append(request.method)
+            observed_non_read_requests.append({
+                "method": request.method,
+                "resource": resource_label(request.url),
+            })
 
     def on_request_failed(request):
-        if request.resource_type == "image":
+        if request.resource_type == "image" and not urlsplit(request.url).path.startswith("/api/"):
             failed_images.append({
                 "phase": phase["name"],
                 "resource": resource_label(request.url),
@@ -427,6 +460,7 @@ def run_offline_cache_audit(target: str) -> dict:
                 has_touch=True,
                 service_workers="allow",
             )
+            context.route("**/*", guard)
             page = context.new_page()
             page.on("response", capture)
             page.on("request", on_request)
@@ -508,6 +542,13 @@ def run_offline_cache_audit(target: str) -> dict:
         item for item in records
         if item["phase"] in ("offline_reload_today", "offline_schedule_deep_scroll")
     ]
+    blocked_non_read_keys = {
+        (item["method"], item["resource"]) for item in blocked_non_read_requests
+    }
+    unblocked_non_read_requests = [
+        item for item in observed_non_read_requests
+        if (item["method"], item["resource"]) not in blocked_non_read_keys
+    ]
     return {
         "measured_at_utc": datetime.now(timezone.utc).isoformat(),
         "target": target,
@@ -524,7 +565,9 @@ def run_offline_cache_audit(target: str) -> dict:
         "offline_image_responses_from_service_worker": sum(
             1 for item in offline_image_records if item.get("from_service_worker")
         ),
-        "non_read_methods": non_read_methods,
+        "blocked_non_read_requests": blocked_non_read_requests,
+        "blocked_api_requests": blocked_api_requests,
+        "unblocked_non_read_requests": unblocked_non_read_requests,
         "failed_images": failed_images,
         "page_errors": page_errors,
         "phases": phases,
@@ -601,6 +644,12 @@ def write_matrix_summary(report: dict) -> None:
             f"- Schedule scroll: {scroll.get('steps', 0)} positions across "
             f"{scroll.get('content_height', 0):,}px of document height."
         )
+        for phase_key in ("today_initial", "schedule_deep_scroll", "season_details_on_demand"):
+            images = profile["phases"][phase_key].get("largest_images", [])
+            if images:
+                lines.append(f"- Largest images in {phase_key}:")
+                for item in images[:3]:
+                    lines.append(f"  - {item['resource']} — {format_bytes(item['bytes'])} (HTTP {item['status']})")
         if profile.get("season_detail_posters"):
             lines.append("- On-demand detail posters:")
             for item in profile["season_detail_posters"]:
@@ -621,7 +670,9 @@ def write_matrix_summary(report: dict) -> None:
         f"- Schedule opened online/offline: {offline.get('online_schedule_opened', False)} / {offline.get('offline_schedule_opened', False)}",
         f"- Today restored before offline reload: {offline.get('today_restored_online', False)}",
         f"- Offline image responses served by service worker: {offline.get('offline_image_responses_from_service_worker', 0)}",
-        f"- Unexpected non-read methods: {len(offline.get('non_read_methods', []))}",
+        f"- Blocked non-read requests: {len(offline.get('blocked_non_read_requests', []))}",
+        f"- Blocked API requests: {len(offline.get('blocked_api_requests', []))}",
+        f"- Unblocked non-read requests: {len(offline.get('unblocked_non_read_requests', []))}",
         "",
         "| Phase | Image responses | Image payload |",
         "|---|---:|---:|",
@@ -644,8 +695,16 @@ def write_matrix_summary(report: dict) -> None:
         lines.append(f"- Failed image requests: {len(offline['failed_images'])}")
     if offline.get("page_errors"):
         lines.append(f"- Page errors: {len(offline['page_errors'])}")
-    if offline.get("non_read_methods"):
-        lines.append(f"- Non-read methods observed: {', '.join(offline['non_read_methods'])}")
+    if offline.get("blocked_non_read_requests"):
+        lines.append("- Blocked non-read requests:")
+        for item in offline["blocked_non_read_requests"]:
+            lines.append(f"  - {item['method']} {item['resource']}")
+    if offline.get("blocked_api_requests"):
+        lines.append(f"- Blocked API requests: {len(offline['blocked_api_requests'])}")
+    if offline.get("unblocked_non_read_requests"):
+        lines.append("- Unblocked non-read requests:")
+        for item in offline["unblocked_non_read_requests"]:
+            lines.append(f"  - {item['method']} {item['resource']}")
 
     summary_path = os.environ.get("GITHUB_STEP_SUMMARY")
     if summary_path:
@@ -731,8 +790,8 @@ def main() -> int:
             print("::warning::The Schedule tab could not be opened during the offline cached-session pass.")
         if offline.get("failed_images"):
             print(f"::warning::{len(offline['failed_images'])} image request(s) failed during the offline cached-session pass.")
-        if offline.get("non_read_methods"):
-            print(f"::warning::Unexpected non-read methods observed: {', '.join(offline['non_read_methods'])}")
+        if offline.get("unblocked_non_read_requests"):
+            print(f"::warning::Unblocked non-read requests observed: {len(offline['unblocked_non_read_requests'])}")
         if offline.get("page_errors"):
             print(f"::warning::{len(offline['page_errors'])} page error(s) during the offline cached-session pass.")
         return 0
