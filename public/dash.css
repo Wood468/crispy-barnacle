@@ -386,6 +386,20 @@ header.top{display:flex;align-items:flex-start;justify-content:space-between;gap
 #tab-now .event-agenda .evc { height: 100%; }
 #tab-now .event-agenda .evc-art { min-height: 72px; }
 
+/* Desktop Today: keep the event agenda primary and supporting panels alongside it. */
+#tab-now .today-layout{display:flex;flex-direction:column;gap:20px;min-width:0}
+#tab-now .today-main{order:1;min-width:0}
+#tab-now .today-sidebar{display:contents}
+#tab-now #action-centre{order:0}
+#tab-now #foryou-sec,#tab-now #weekly-sec,#tab-now #buy-sec{order:2}
+@media(min-width:960px){
+  #tab-now .today-layout{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(18rem,.9fr);align-items:start;gap:24px}
+  #tab-now .today-main{grid-column:1;order:initial}
+  #tab-now .today-sidebar{grid-column:2;display:grid;gap:20px;align-content:start;min-width:0}
+  #tab-now .today-sidebar .agenda-section{margin:0}
+  #tab-now #action-centre,#tab-now #foryou-sec,#tab-now #weekly-sec,#tab-now #buy-sec{order:initial}
+}
+
 .legacy-test-hook { position:absolute !important; width:1px !important; height:1px !important; padding:0 !important; margin:-1px !important; overflow:hidden !important; clip:rect(0,0,0,0) !important; white-space:nowrap !important; border:0 !important; }
 
 
