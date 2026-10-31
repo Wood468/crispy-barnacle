@@ -22,12 +22,17 @@ def check(name,cond,extra=''):
 # and versioned stylesheets are included in the offline shell.
 ROOT = Path(__file__).resolve().parent.parent
 BASE_CSS = (ROOT / 'public' / 'styles.css').read_text()
+BASE_COMPONENT_CSS = BASE_CSS[BASE_CSS.index('*{box-sizing:border-box}'):]
 DASH_CSS = (ROOT / 'public' / 'dash.css').read_text()
 DASH_JS = (ROOT / 'public' / 'dash.js').read_text()
 INDEX_HTML = (ROOT / 'public' / 'index.html').read_text()
 SW_JS = (ROOT / 'public' / 'sw.js').read_text()
 check('design tokens define semantic colour, spacing, radius, typography and motion roles',
       all(token in BASE_CSS for token in ['--color-canvas:', '--color-surface:', '--color-text-muted:', '--space-4:', '--radius-card:', '--font-body:', '--motion-standard:']))
+check('base stylesheet components use semantic palette and typography roles while legacy aliases remain defined',
+      re.search(r'var\(--(?:bg|panel|soft|line|fg|muted|body|inv-bg|inv-fg|gold|gold-fg|display|sans|mono)\b', BASE_COMPONENT_CSS) is None and
+      all(token in BASE_COMPONENT_CSS for token in ['var(--color-canvas)', 'var(--color-surface)', 'var(--color-surface-raised)', 'var(--color-border)', 'var(--color-text)', 'var(--color-text-muted)', 'var(--color-text-body)', 'var(--color-inverse-surface)', 'var(--color-inverse-text)', 'var(--color-accent)', 'var(--color-accent-text)', 'var(--font-display)', 'var(--font-body)', 'var(--font-mono)']) and
+      all(token in BASE_CSS[:BASE_CSS.index('*{box-sizing:border-box}')] for token in ['--bg:', '--panel:', '--soft:', '--line:', '--fg:', '--muted:', '--body:', '--inv-bg:', '--inv-fg:', '--gold:', '--gold-fg:', '--display:', '--sans:', '--mono:']))
 check('dashboard status and surface tokens retain compatibility aliases',
       all(token in DASH_CSS for token in ['--surface-glass:', '--border-subtle:', '--color-success:', '--color-warning:', '--color-danger:', '--glass:var(--surface-glass)', '--ring:var(--border-subtle)']))
 check('dashboard token migration preserves existing 14px controls and 18px card corners',
@@ -44,9 +49,9 @@ check('header badges use accent roles, a canvas outline and reduced-motion-aware
 check('empty agenda and watchlist states use a quiet surface and decorative cue',
       all(token in DASH_CSS for token in ['.event-agenda > .empty', '#followed > .empty', '#savedev > .empty', '.today-empty', 'content:"◇"', 'border:1px dashed var(--border-subtle)']))
 check('versioned stylesheets are referenced by the page and precached offline',
-      all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261031d', '/dash.css?v=20261031i']))
+      all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261031e', '/dash.css?v=20261031i']))
 check('offline shell cache version advances with the stylesheet token release',
-      "gofn-shell-v143" in SW_JS)
+      "gofn-shell-v144" in SW_JS)
 check('desktop navigation rail is breakpoint-scoped and mobile keeps the bottom bar',
       all(token in BASE_CSS for token in ['@media (min-width:1200px)', 'body{padding-left:max(132px,calc(4vw + 100px));padding-bottom:24px}', 'left:16px;right:auto;top:50%;bottom:auto;transform:translateY(-50%)', 'nav.tabs .row{flex-direction:column', 'nav.tabs button{flex:none;width:100%;min-height:68px']) and
       'nav.tabs{position:fixed;left:0;right:0;bottom:0' in BASE_CSS)
@@ -121,6 +126,19 @@ with sync_playwright() as p:
           return {actual:{inGame:Number(document.getElementById('day-live-count').textContent),inPerson:Number(document.getElementById('day-inperson-count').textContent)},expected:{inGame:live.filter(e=>e.kind!=='person').length+worldwide.length,inPerson:live.filter(e=>e.kind==='person').length+regional.length}};
         }""")
         check('Overseas in-person activity remains in its separate summary count', overseas_counts['actual']==overseas_counts['expected'] and overseas_counts['actual']['inPerson']>=1, overseas_counts)
+        dark_theme = overseas.evaluate("""() => ({
+          body:getComputedStyle(document.body).color,
+          nav:getComputedStyle(document.querySelector('nav.tabs')).backgroundColor
+        })""")
+        overseas.evaluate("document.documentElement.setAttribute('data-theme','light')")
+        light_theme = overseas.evaluate("""() => ({
+          body:getComputedStyle(document.body).color,
+          nav:getComputedStyle(document.querySelector('nav.tabs')).backgroundColor
+        })""")
+        overseas.evaluate("document.documentElement.removeAttribute('data-theme')")
+        check('Semantic base tokens preserve dark and light body text and navigation surfaces',
+              dark_theme=={'body':'rgb(243, 245, 249)','nav':'rgb(20, 25, 34)'} and
+              light_theme=={'body':'rgb(12, 15, 20)','nav':'rgb(255, 255, 255)'}, (dark_theme,light_theme))
 
         overseas.evaluate("""() => {
           for (const id of ['action-centre','foryou-sec','weekly-sec','buy-sec']) {
