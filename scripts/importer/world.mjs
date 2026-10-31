@@ -197,6 +197,37 @@ export function keepOldWorld(o, { cutoff, today, now = Date.now(), watchUrls = n
   return !!o.start && (o.end || o.start) >= today && srcs.some(x => /official/i.test(x.name || "") && watchUrls.has(normUrl(x.url)));
 }
 
+// Curated watch pages are owner-selected sources; read them before capped feed discovery results.
+export function prioritizeWatchedPages(pages, watchedUrls = []) {
+  const watched = new Set([...watchedUrls].map(normUrl));
+  return [...pages].sort((a, b) => Number(watched.has(normUrl(b.url))) - Number(watched.has(normUrl(a.url))));
+}
+
+// Retain trusted source provenance when a same-ID event is rediscovered by a narrower source set.
+// keepOldWorld applies the existing freshness, watch-list, expiry and split-page rules to both cases.
+export function retainOldWorldSources(world, oldWorld, options) {
+  const byId = new Map(world.map(event => [event.id, event]));
+  for (const old of oldWorld || []) {
+    if (!keepOldWorld(old, options)) continue;
+    const current = byId.get(old.id);
+    if (!current) {
+      world.push(old);
+      byId.set(old.id, old);
+      continue;
+    }
+    const sources = new Map();
+    for (const source of [...(current.sources || []), ...(old.sources || [])]) {
+      const key = normUrl(source.url);
+      if (key !== "/" && !sources.has(key)) sources.set(key, source);
+    }
+    current.sources = [...sources.values()];
+    current.status = current.sources.some(source => source.id === "official" || /official/i.test(source.name || ""))
+      ? "official"
+      : current.sources.length > 1 ? "corroborated" : current.status || "single";
+  }
+  return world;
+}
+
 // The same event kept under two ids (a title changed between runs, two sources worded it differently) becomes one entry.
 // `rules` are the owner's own rulings from data/event-aliases.json. Returns { events, merged: [{ kept, dropped, why }] }.
 export function collapseWorld(world, rules = null) {
