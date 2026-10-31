@@ -146,6 +146,20 @@ with sync_playwright() as p:
               desktop_today)
         check('Overseas in-person events remain visible in the primary desktop Today agenda',
               desktop_today['cardInMain'] and desktop_today['cardVisible'], desktop_today)
+        overseas.set_viewport_size({'width':960,'height':900})
+        desktop_min = overseas.evaluate("""() => {
+          const layout=document.querySelector('#tab-now .today-layout');
+          const main=document.querySelector('#tab-now .today-main').getBoundingClientRect();
+          const side=document.querySelector('#tab-now .today-sidebar').getBoundingClientRect();
+          return {display:getComputedStyle(layout).display,mainRight:main.right,sideLeft:side.left,
+                  documentWidth:document.documentElement.scrollWidth,viewport:innerWidth};
+        }""")
+        check('Desktop two-column Today activates at 960px without horizontal overflow',
+              desktop_min['display']=='grid' and desktop_min['mainRight']<desktop_min['sideLeft'] and
+              desktop_min['documentWidth']<=desktop_min['viewport'], desktop_min)
+        overseas.set_viewport_size({'width':900,'height':900})
+        tablet_today = overseas.evaluate("getComputedStyle(document.querySelector('#tab-now .today-layout')).display")
+        check('Below the desktop breakpoint, Today returns to a single-column stack', tablet_today=='flex', tablet_today)
         overseas.set_viewport_size({'width':390,'height':844})
         mobile_today = overseas.evaluate("""() => {
           const layout=document.querySelector('#tab-now .today-layout');
