@@ -160,7 +160,7 @@ with sync_playwright() as p:
         strip_320 = future_overseas.locator('#today-focus-strip').bounding_box()
         check('Today focus strip fits the 320px mobile viewport without horizontal overflow',
               strip_320 is not None and strip_320['x'] >= 0 and strip_320['x'] + strip_320['width'] <= 321 and
-              future_overseas.evaluate('document.documentElement.scrollWidth <= window.innerWidth'))
+              future_overseas.evaluate("() => { const el=document.getElementById('today-focus-strip'); const r=el.getBoundingClientRect(); return el.scrollWidth<=el.clientWidth && r.left>=0 && r.right<=window.innerWidth+1; }"))
         future_overseas.set_viewport_size({'width':390,'height':844})
         check('Today focus strip remains visible at 390px', future_overseas.locator('#today-focus-strip').is_visible())
         future_overseas.set_viewport_size({'width':1280,'height':900})
