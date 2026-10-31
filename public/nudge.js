@@ -3,7 +3,7 @@
 (function () {
   'use strict';
   var KEY = 'gofn-nudge-off';
-  var esc = function (s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
+  var esc = window.GOLIB.esc;
   function off() { try { return JSON.parse(localStorage.getItem(KEY) || '[]'); } catch (e) { return []; } }
   function dismiss(k) { var l = off(); if (l.indexOf(k) < 0) l.push(k); try { localStorage.setItem(KEY, JSON.stringify(l.slice(-60))); } catch (e) { } render(); }
   var notes = [];

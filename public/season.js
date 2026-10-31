@@ -2,7 +2,7 @@
 (function () {
   'use strict';
   var items = [], evs = [];
-  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  var esc = window.GOLIB.esc;
   function render() {
     var tab = document.getElementById('tab-now'), sec = document.getElementById('foryou-sec');
     if (!tab || !sec) return;

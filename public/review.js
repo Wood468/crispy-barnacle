@@ -3,7 +3,7 @@
 (function () {
   'use strict';
   var $ = function (id) { return document.getElementById(id); };
-  var esc = function (s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
+  var esc = window.GOLIB.esc;
   var items = [], decided = {}, decs = {}, msg = '', shown = 10;
   function pin() { try { return localStorage.getItem('gofn-pin') || ''; } catch (e) { return ''; } }
   function safeUrl(u) { return /^https?:\/\//i.test(u || '') ? u : ''; }

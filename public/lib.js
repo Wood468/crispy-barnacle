@@ -4,6 +4,13 @@
 }(typeof self !== 'undefined' ? self : this, function () {
   'use strict';
 
+  // Escape untrusted values for HTML text and quoted attribute values. Validate URLs separately.
+  function esc(value) {
+    return String(value == null ? '' : value).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+
   var FORM_WORDS = { alolan: 'alola', galarian: 'galar', hisuian: 'hisui', paldean: 'paldea', primal: 'primal', gigantamax: 'gmax', mega: 'mega' };
 
   // "Mega Charizard X" -> {base:"Charizard", key:"mega-x"}; "Alolan Vulpix" -> {base:"Vulpix", key:"alola"}.
@@ -234,5 +241,5 @@
     return { inGame: inGame, inPerson: inPerson, total: inGame + inPerson };
   }
 
-  return { rpEstimate: rpEstimate, raidEventFor: raidEventFor, isPlaceholder: isPlaceholder, audify: audify, setTiers: setTiers, loadPrices: loadPrices, priceView: priceView, fmtRp: fmtRp, buildQueue: buildQueue, parseForm: parseForm, formId: formId, merge: merge, reconcileSync: reconcileSync, norm: norm, lev: lev, matchName: matchName, candidates: candidates, liveActivityCounts: liveActivityCounts };
+  return { esc: esc, rpEstimate: rpEstimate, raidEventFor: raidEventFor, isPlaceholder: isPlaceholder, audify: audify, setTiers: setTiers, loadPrices: loadPrices, priceView: priceView, fmtRp: fmtRp, buildQueue: buildQueue, parseForm: parseForm, formId: formId, merge: merge, reconcileSync: reconcileSync, norm: norm, lev: lev, matchName: matchName, candidates: candidates, liveActivityCounts: liveActivityCounts };
 }));

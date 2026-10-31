@@ -34,7 +34,7 @@ Promise.all([
   withTimeout(fetch('/art/index.json').then(function(r){return r.ok?r.json():{}}).catch(function(){return {}}),8000,'Artwork index').catch(function(){return {}})
 ]).then(function(R){var D=R[0];MAN=R[1]||{};
 (function(){
-  function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+  var esc = window.GOLIB.esc;
   function $(id){return document.getElementById(id)}
   var NOW=new Date();
   // An art entry is a name, or {n:name, shiny:1, costume:1, asset:"COSTUME_ENUM", label:"Top hat"}.

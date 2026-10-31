@@ -29,6 +29,11 @@ INDEX_HTML = (ROOT / 'public' / 'index.html').read_text()
 SW_JS = (ROOT / 'public' / 'sw.js').read_text()
 APP_JS = (ROOT / 'public' / 'app.js').read_text()
 INFO_JS = (ROOT / 'public' / 'infographic.js').read_text()
+LIB_JS = (ROOT / 'public' / 'lib.js').read_text()
+ESC_RENDERERS = [APP_JS] + [(ROOT / 'public' / name).read_text() for name in [
+    'account.js', 'buy.js', 'move.js', 'nudge.js', 'review.js',
+    'season.js', 'store.js', 'weekly.js', 'whatsnew.js'
+]]
 check('design tokens define semantic colour, spacing, radius, typography and motion roles',
       all(token in BASE_CSS for token in ['--color-canvas:', '--color-surface:', '--color-text-muted:', '--space-4:', '--radius-card:', '--font-body:', '--motion-standard:', '--motion-quick:']))
 TYPE_SCALE = {
@@ -164,13 +169,18 @@ check('150ms interaction transitions use a shared motion role with unchanged eas
 check('versioned stylesheets are referenced by the page and precached offline',
       all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261031i', '/dash.css?v=20261031t']))
 check('offline shell cache version advances with the stylesheet token release',
-      "gofn-shell-v160" in SW_JS)
+      "gofn-shell-v161" in SW_JS)
 check('versioned dashboard scripts are referenced by the entry page and precached offline',
-      '/app.js?v=20261101a' in INDEX_HTML and '/app.js?v=20261101a' in SW_JS and
-      '/dash.js?v=20261031f' in APP_JS and '/dash.js?v=20261031f' in SW_JS and
+      '/app.js?v=20261101b' in INDEX_HTML and '/app.js?v=20261101b' in SW_JS and
+      '/dash.js?v=20261101a' in APP_JS and '/dash.js?v=20261101a' in SW_JS and
       '/detail.js?v=20261031a' in DASH_JS and '/detail.js?v=20261031a' in SW_JS)
 check('versioned season banner script is referenced by the page and precached offline',
-      '/season.js?v=20261031b' in INDEX_HTML and '/season.js?v=20261031b' in SW_JS)
+      '/season.js?v=20261101a' in INDEX_HTML and '/season.js?v=20261101a' in SW_JS)
+check('all HTML renderers use one shared apostrophe-safe escape helper',
+      'function esc(value)' in LIB_JS and 'esc: esc' in LIB_JS and
+      all('var esc = window.GOLIB.esc;' in source for source in ESC_RENDERERS) and
+      all(not re.search(r'function\s+esc\s*\(', source) and
+          not re.search(r'var\s+esc\s*=\s*function', source) for source in ESC_RENDERERS))
 check('versioned infographic script is referenced by the dashboard and precached offline',
       '/infographic.js?v=20261031a' in DASH_JS and '/infographic.js?v=20261031a' in SW_JS)
 check('infographic card thumbnails assign original URLs only near the viewport',
