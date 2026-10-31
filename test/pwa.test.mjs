@@ -55,6 +55,7 @@ test("PWA entry page links to the manifest and iOS touch icon and registers the 
   assert.match(app, /dash\.js\?v=20261031e/);
   assert.match(dash, /detail\.js\?v=20261030f/);
   assert.match(dash, /places\.js\?v=20261031b/, "the updated Places provenance UI is versioned");
+  assert.match(dash, /detail\.js\?v=20261031a/, "the updated event-detail attribution UI is versioned");
 });
 
 
@@ -79,7 +80,7 @@ test("static JSON dependencies referenced by first-party scripts are precached",
 });
 
 test("service worker versions the cache, pre-caches offline fallback, and never handles API responses", () => {
-  assert.match(sw, /gofn-shell-v151/);
+  assert.match(sw, /gofn-shell-v152/);
   assert.ok(sw.includes("'/lib.js?v=20261030a'"), 'the refreshed dashboard helper is available to the offline shell');
   assert.ok(sw.includes("'/local-state.js?v=20261030a'"), 'account-local state migration is available offline');
   assert.ok(sw.includes("'/account.js?v=20261030a'"), 'the refreshed account transition code is available offline');
@@ -90,6 +91,7 @@ test("service worker versions the cache, pre-caches offline fallback, and never 
   assert.match(sw, /'\/dash\.js\?v=20261031e'/, "the current dashboard script is available to the offline shell");
   assert.match(sw, /'\/detail\.js\?v=20261030f'/, "the current event detail script is available to the offline shell");
   assert.match(sw, /'\/places\.js\?v=20261031b'/, "the current sourced venue script is available to the offline shell");
+  assert.match(sw, /'\/detail\.js\?v=20261031a'/, "the current event-detail script is available to the offline shell");
   assert.match(sw, /'\/offline\.html'/);
   assert.match(sw, /cache\.match\('\/offline\.html'\)/);
   assert.match(sw, /url\.pathname\.startsWith\('\/api\/'\)/);
