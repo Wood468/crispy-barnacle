@@ -29,6 +29,9 @@ check('design tokens define semantic colour, spacing, radius, typography and mot
       all(token in BASE_CSS for token in ['--color-canvas:', '--color-surface:', '--color-text-muted:', '--space-4:', '--radius-card:', '--font-body:', '--motion-standard:']))
 check('dashboard status and surface tokens retain compatibility aliases',
       all(token in DASH_CSS for token in ['--surface-glass:', '--border-subtle:', '--color-success:', '--color-warning:', '--color-danger:', '--glass:var(--surface-glass)', '--ring:var(--border-subtle)']))
+check('dashboard token migration preserves existing 14px controls and 18px card corners',
+      '--radius-control:14px' in BASE_CSS and '--radius-panel:18px' in BASE_CSS and
+      DASH_CSS.count('border-radius:var(--radius-panel)') == 2 and 'border-radius:var(--radius-control)' in DASH_CSS)
 check('versioned stylesheets are referenced by the page and precached offline',
       all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261031c', '/dash.css?v=20261031c']))
 check('offline shell cache version advances with the stylesheet token release',
