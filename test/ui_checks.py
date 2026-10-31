@@ -38,10 +38,14 @@ check('dashboard palette and typography usages no longer depend on legacy aliase
       re.search(r'var\(--(?:bg|panel|soft|line|fg|muted|body|gold|gold-fg|display|sans|mono|glass|ring|ok|warn|bad)\b', DASH_CSS) is None)
 check('inverse dashboard controls use explicit inverse semantic roles',
       'var(--color-inverse-surface)' in DASH_CSS and 'var(--color-inverse-text)' in DASH_CSS)
+check('header badges use accent roles, a canvas outline and reduced-motion-aware controls',
+      all(token in DASH_CSS for token in ['border:2px solid var(--color-canvas)', 'background:var(--color-accent)', 'color:var(--color-accent-text)', 'var(--motion-fast)', '@media(prefers-reduced-motion:reduce)']))
+check('empty agenda and watchlist states use a quiet surface and decorative cue',
+      all(token in DASH_CSS for token in ['.event-agenda > .empty', '#followed > .empty', '#savedev > .empty', '.today-empty', 'content:"◇"', 'border:1px dashed var(--border-subtle)']))
 check('versioned stylesheets are referenced by the page and precached offline',
-      all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261031c', '/dash.css?v=20261031f']))
+      all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261031c', '/dash.css?v=20261031g']))
 check('offline shell cache version advances with the stylesheet token release',
-      "gofn-shell-v140" in SW_JS)
+      "gofn-shell-v141" in SW_JS)
 with sync_playwright() as p:
     b=p.chromium.launch()
     def page(api=None,marks=None,clock='2026-10-09T22:45:00+11:00',sources=None,gens=None,us=None,extra=None,pin=False,slow_places=False):
@@ -277,6 +281,14 @@ with sync_playwright() as p:
         next_button.wait_for(state='attached', timeout=5000)
         check('Empty Today offers a tappable next event', next_button.count() == 1 and
               next_button.get_attribute('aria-label') == 'Open details for Next Up Fixture 0')
+        today_empty_style = next_page.evaluate("""() => {
+          const el=document.querySelector('#home-now .today-empty');
+          const s=getComputedStyle(el), cue=getComputedStyle(el.querySelector('.empty'),'::before');
+          return {border:s.borderTopStyle,background:s.backgroundColor,cue:cue.content};
+        }""")
+        check('Empty Today uses a deliberate quiet-state surface and cue',
+              today_empty_style['border']=='dashed' and today_empty_style['cue']=='"◇"' and today_empty_style['background']!='rgba(0, 0, 0, 0)',
+              today_empty_style)
         next_button.click()
         next_page.locator('#evd').wait_for(state='visible')
         detail_time = next_page.locator('#evd .evd-hero .evc-when').inner_text()
@@ -496,6 +508,23 @@ with sync_playwright() as p:
         pg.wait_for_function("() => { const b=document.getElementById('wlcount'); return b && !b.hidden && b.textContent==='2'; }")
         check('Watchlist badge counts one followed Pokémon plus one saved event',
               pg.locator('#wlcount').inner_text()=='2' and pg.locator('#hwatch').get_attribute('aria-label')=='Watchlist, 2 items')
+        badge_style = pg.evaluate("""() => {
+          const b=document.getElementById('wlcount'), s=getComputedStyle(b);
+          return {height:s.height,border:s.borderTopWidth,font:s.fontFamily,background:s.backgroundColor};
+        }""")
+        check('Watchlist badge uses a compact accent pill with a clear outline',
+              badge_style['height']=='22px' and badge_style['border']=='2px' and 'DM Mono' in badge_style['font'] and badge_style['background']!='rgba(0, 0, 0, 0)',
+              badge_style)
+        pg.set_viewport_size({'width':320,'height':844})
+        header_bounds = pg.evaluate("""() => {
+          const h=document.getElementById('hwatch').getBoundingClientRect();
+          const b=document.getElementById('wlcount').getBoundingClientRect();
+          return {button:[h.left,h.right],badge:[b.left,b.right]};
+        }""")
+        check('Watchlist button and badge stay within a 320px viewport',
+              header_bounds['button'][0]>=0 and header_bounds['button'][1]<=320 and header_bounds['badge'][0]>=0 and header_bounds['badge'][1]<=320,
+              header_bounds)
+        pg.set_viewport_size({'width':390,'height':844})
         ls=pg.evaluate("localStorage.getItem('gofn-us-v1')") or '{}'
         check('follow and save written to local state', 'follow:' in ls and 'saved:' in ls, ls)
         pg.reload(); pg.wait_for_selector('.pc, .prio-empty',state='attached'); pg.click('#hwatch'); pg.wait_for_timeout(300)
@@ -509,6 +538,17 @@ with sync_playwright() as p:
         pg.locator('#savedev .evc [data-save]').first.click()
         pg.wait_for_function("() => { const b=document.getElementById('wlcount'); return b && b.hidden; }")
         check('removing the last saved event hides the Watchlist badge',pg.locator('#wlcount').is_hidden())
+        quiet_states = pg.evaluate("""() => {
+          const f=document.querySelector('#followed > .empty'), s=document.querySelector('#savedev > .empty');
+          const a=getComputedStyle(f), b=getComputedStyle(s);
+          return {follow:{border:a.borderTopStyle,display:a.display,cue:getComputedStyle(f,'::before').content},
+                  saved:{border:b.borderTopStyle,display:b.display,cue:getComputedStyle(s,'::before').content}};
+        }""")
+        check('empty Watchlist panels share the quiet-state card treatment',
+              quiet_states['follow']['border']=='dashed' and quiet_states['saved']['border']=='dashed' and
+              quiet_states['follow']['display']=='flex' and quiet_states['saved']['display']=='flex' and
+              quiet_states['follow']['cue']=='"◇"' and quiet_states['saved']['cue']=='"◇"',
+              quiet_states)
         # 4. week strip day filter + timeline filter
         pg.click('nav.tabs button[data-tab="events"]'); pg.click('#subnav-events button[data-sub="timeline"]'); pg.wait_for_timeout(200)
         pg.click('.wd[data-day="2026-10-10"]'); pg.wait_for_timeout(150)
