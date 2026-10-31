@@ -142,7 +142,7 @@ function json(body, status = 200) {
 export const MAX_SYNC_JSON_BYTES = 2 * 1024 * 1024;
 async function readSyncJson(request) {
   const declared = request.headers.get("content-length");
-  if (declared && /^\\d+$/.test(declared) && Number(declared) > MAX_SYNC_JSON_BYTES) return { error: "too_large" };
+  if (declared && /^\d+$/.test(declared) && Number(declared) > MAX_SYNC_JSON_BYTES) return { error: "too_large" };
   if (!request.body) return { error: "bad_json" };
   const reader = request.body.getReader();
   const chunks = [];
