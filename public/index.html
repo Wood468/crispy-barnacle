@@ -46,26 +46,32 @@
       <details class="dd" id="shdd" hidden><summary>Shiny hunting <span class="cnt" id="shcnt"></span></summary><div class="body"><label><input type="checkbox" id="shhide" checked> Hide ones I already have as a shiny</label><div id="shlist" class="dexlist"></div></div></details>
       <div id="seasonbar" class="seasonbar" hidden></div>
       <section class="day-brief" id="day-brief" aria-label="Daily overview"><div class="day-brief-copy"><span class="day-brief-kicker">YOUR DAY</span><strong id="day-brief-title">Getting your day ready</strong><span id="day-brief-note">Your events and priorities at a glance.</span></div><div class="day-brief-stats"><div><b id="day-live-count">0</b><span>In game</span></div><div><b id="day-inperson-count">0</b><span>In person</span></div><div><b id="day-upcoming-count">0</b><span>Today</span></div></div></section>
-      <section class="agenda-section action-centre" id="action-centre" aria-labelledby="action-centre-title" hidden>
-        <div class="action-centre-head"><div><span class="day-brief-kicker">YOUR NEXT MOVES</span><h2 class="sec2" id="action-centre-title">Worth a look</h2></div><span class="action-centre-hint">Based on your game</span></div>
-        <div id="action-centre-items" class="action-centre-items"></div>
-      </section>
-      <section class="agenda-section" aria-labelledby="agenda-now-title">
-        <h2 class="sec2" id="agenda-now-title">Today</h2>
-        <div id="home-now" class="event-agenda"></div>
-      </section>
-      <section class="agenda-section" id="foryou-sec" aria-labelledby="foryou-title" hidden>
-        <h2 class="sec2" id="foryou-title">For you</h2>
-        <p class="sub" style="margin:0 0 8px">Live and upcoming events with Pokémon you still need or follow.</p>
-        <div id="foryou" class="event-agenda"></div>
-      </section>
-      <section class="agenda-section" id="weekly-sec" aria-labelledby="weekly-title" hidden>
-        <h2 class="sec2" id="weekly-title">Infographics</h2>
-        <div id="weekly" class="weekly-row"></div>
-      </section>
-      <section class="agenda-section" id="buy-sec" hidden>
-        <details class="buyplan"><summary>Purchase planner <small>tickets and passes in the web store</small></summary><div id="buy-body"></div></details>
-      </section>
+      <div class="today-layout">
+        <div class="today-main">
+        <section class="agenda-section" aria-labelledby="agenda-now-title">
+          <h2 class="sec2" id="agenda-now-title">Today</h2>
+          <div id="home-now" class="event-agenda"></div>
+        </section>
+        </div>
+        <div class="today-sidebar">
+        <section class="agenda-section action-centre" id="action-centre" aria-labelledby="action-centre-title" hidden>
+          <div class="action-centre-head"><div><span class="day-brief-kicker">YOUR NEXT MOVES</span><h2 class="sec2" id="action-centre-title">Worth a look</h2></div><span class="action-centre-hint">Based on your game</span></div>
+          <div id="action-centre-items" class="action-centre-items"></div>
+        </section>
+        <section class="agenda-section" id="foryou-sec" aria-labelledby="foryou-title" hidden>
+          <h2 class="sec2" id="foryou-title">For you</h2>
+          <p class="sub" style="margin:0 0 8px">Live and upcoming events with Pokémon you still need or follow.</p>
+          <div id="foryou" class="event-agenda"></div>
+        </section>
+        <section class="agenda-section" id="weekly-sec" aria-labelledby="weekly-title" hidden>
+          <h2 class="sec2" id="weekly-title">Infographics</h2>
+          <div id="weekly" class="weekly-row"></div>
+        </section>
+        <section class="agenda-section" id="buy-sec" hidden>
+          <details class="buyplan"><summary>Purchase planner <small>tickets and passes in the web store</small></summary><div id="buy-body"></div></details>
+        </section>
+        </div>
+      </div>
       <section class="agenda-section" aria-labelledby="agenda-week-title">
         <h2 class="sec2" id="agenda-week-title">This week</h2>
         <div id="week" class="event-agenda"></div>
