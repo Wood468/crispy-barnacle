@@ -19,7 +19,7 @@ test("multiple community write-ups are corroborated, while official evidence kee
 
 test("same-series events at distinct cities remain separate while country/city aliases still merge", async () => {
   const { mergeWorld, collapseWorld } = await import("../scripts/importer/world.mjs");
-  const names = { official: "Pokémon GO (official)" };
+  const names = { official: "Pokémon GO (official)", leekduck: "Leek Duck" };
   const cities = mergeWorld([
     {
       name: "Pokémon RUN 30", place: "Taichung, Taiwan", area: "Asia", scope: "regional",
@@ -45,7 +45,7 @@ test("same-series events at distinct cities remain separate while country/city a
     {
       name: "Pokémon RUN 30: Kuala Lumpur", place: "Kuala Lumpur, Malaysia (KLCC)", area: "Asia", scope: "regional",
       start: "2026-11-21", end: "2026-11-22", datesKnown: true,
-      url: "https://leekduck.com/events/pokemon-run-30-kuala-lumpur/", source: "official"
+      url: "https://leekduck.com/events/pokemon-run-30-kuala-lumpur/", source: "leekduck"
     }
   ], names);
   assert.equal(nested.length, 1, "a country-level record and its city-level version remain one event");
