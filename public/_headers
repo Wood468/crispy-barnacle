@@ -1,0 +1,14 @@
+# These image paths are stable identifiers, not content-hashed filenames.
+# Use a short browser TTL for repeat visits; do not mark them immutable because a
+# replacement image may be published at the same path in a later release.
+# HTML, JavaScript, CSS, manifests and JSON retain Workers Static Assets' default
+# max-age=0, must-revalidate policy with ETag validation.
+
+/art/*.webp
+  Cache-Control: public, max-age=86400
+
+/dex/*.webp
+  Cache-Control: public, max-age=86400
+
+/ico/*.webp
+  Cache-Control: public, max-age=86400
