@@ -2,6 +2,10 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { debutedSpecies, computeStatuses, trackedItems, statusChanges, keepReleased } from "../src/worker.js";
 import { readFileSync } from "node:fs";
+import { createRequire } from "node:module";
+
+const require = createRequire(import.meta.url);
+const GOLIB = require("../public/lib.js");
 
 const NOW = Date.parse("2026-10-23T12:00:00Z");
 const events = [
@@ -84,7 +88,7 @@ test("the Leaks tab has a This week card fed by all three sources", () => {
 });
 test("the first-page 'New since your last visit' box also lists what changed in the leaks", async () => {
   const { runInNewContext } = await import("node:vm");
-  const win = { GODASH: { events: () => [] } };
+  const win = { GOLIB, GODASH: { events: () => [] } };
   const ctx = { window: win, document: { getElementById: () => null }, localStorage: { getItem: () => null, setItem() {} }, setTimeout() {}, Date, JSON, Math, Array, Promise, Object, String, encodeURIComponent };
   runInNewContext(readFileSync("public/whatsnew.js", "utf8"), ctx);
   const since = NOW - 3 * 86400000;

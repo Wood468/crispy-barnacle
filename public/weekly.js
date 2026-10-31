@@ -5,7 +5,7 @@
   var sec = document.getElementById('weekly-sec'), row = document.getElementById('weekly');
   if (!sec || !row) return;
   function safe(u) { return typeof u === 'string' && /^\/infographics\/[\w.\/-]+$/.test(u) ? u : ''; }
-  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+  var esc = window.GOLIB.esc;
   function day(iso) { var d = new Date(iso); return isNaN(d) ? '' : d.toLocaleDateString(undefined, { weekday: 'short', day: 'numeric', month: 'short' }); }
   var opener = null;
   function close() {

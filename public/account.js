@@ -4,7 +4,7 @@
 (function () {
   'use strict';
   var KEY = 'gofn-acct';
-  var esc = function (s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
+  var esc = window.GOLIB.esc;
   function get() { try { return localStorage.getItem(KEY) || ''; } catch (e) { return ''; } }
   function put(v) { try { if (v) localStorage.setItem(KEY, v); else localStorage.removeItem(KEY); } catch (e) { } }
   function pinned() { try { return !!localStorage.getItem('gofn-pin'); } catch (e) { return false; } }

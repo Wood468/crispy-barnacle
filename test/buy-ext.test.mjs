@@ -1,10 +1,12 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
+import { createRequire } from "node:module";
 import vm from "node:vm";
 
 // Load the planner script with just enough of a browser to reach its pure helpers (no element on the page, so it does nothing else).
-const win = {};
+const require = createRequire(import.meta.url);
+const win = { GOLIB: require("../public/lib.js") };
 const ctx = vm.createContext({ window: win, document: { readyState: "complete", getElementById: () => null, addEventListener() {} }, localStorage: { getItem: () => null, setItem() {} }, Date, Math, JSON, String, Number, Object, Array, RegExp });
 vm.runInContext(readFileSync(new URL("../public/buy.js", import.meta.url), "utf8"), ctx);
 const { extEntries, untilStr } = win.GOBUY;

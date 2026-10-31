@@ -3,7 +3,7 @@
    Store data comes from /store-log.json (written by the store watcher); events from GODASH.events(). Nothing is typed in here. */
 (function () {
   'use strict';
-  var esc = function (s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
+  var esc = window.GOLIB.esc;
   var DAY = 864e5, MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   var STOP = /^(ultra|ticket|tickets|box|deluxe|pass|go|pokemon|the|and|of|day|ranks?|global|bundle|pack|\d+|20\d\d)$/;
   var KEY = 'gofn-buyplan', plan = {}, LOG = null, PR = null, EXT = [];

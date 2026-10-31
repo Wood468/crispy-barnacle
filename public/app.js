@@ -34,7 +34,7 @@ Promise.all([
   withTimeout(fetch('/art/index.json').then(function(r){return r.ok?r.json():{}}).catch(function(){return {}}),8000,'Artwork index').catch(function(){return {}})
 ]).then(function(R){var D=R[0];MAN=R[1]||{};
 (function(){
-  function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+  var esc = window.GOLIB.esc;
   function $(id){return document.getElementById(id)}
   var NOW=new Date();
   // An art entry is a name, or {n:name, shiny:1, costume:1, asset:"COSTUME_ENUM", label:"Top hat"}.
@@ -982,7 +982,7 @@ Promise.all([
   function markOwn(ids){var m=dm('own'),added=[];ids.forEach(function(id){if(!m[id]){m[id]=1;added.push(id)}});if(added.length){persist();renderDex()}return added}
   function unmarkOwn(ids){var m=dm('own');ids.forEach(function(id){delete m[id]});persist();renderDex()}
   window.GO={refreshDex:function(){if(DEXLIST.length)renderDex()},markOwn:markOwn,unmarkOwn:unmarkOwn,D:D,MAN:MAN,esc:esc,art:art,fig:fig,bonusRow:bonusRow,bonusChip:bonusChip,MON:MON,DOW:DOW,dex:function(){return dex},showTab:showTab,HERO:HERO,TAGKEY:TAGKEY,tagHtml:tagHtml};
-  var ds=document.createElement('script');ds.src='/dash.js?v=20261031f';document.body.appendChild(ds);
+  var ds=document.createElement('script');ds.src='/dash.js?v=20261101a';document.body.appendChild(ds);
 })();
 
 }).catch(function(){var panel=document.getElementById('load-error');if(panel)panel.hidden=false;var retry=document.getElementById('load-retry');if(retry)retry.addEventListener('click',function(){window.location.reload()},{once:true})});

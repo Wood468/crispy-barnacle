@@ -8,7 +8,7 @@
   function save(ids) { try { localStorage.setItem(KEY, JSON.stringify({ ids: ids, at: Date.now() })); } catch (e) { } }
   function loadLeaks() { try { var j = JSON.parse(localStorage.getItem(LKEY) || 'null'); return j && +j.at ? j : null; } catch (e) { return null; } }
   function saveLeaks() { try { localStorage.setItem(LKEY, JSON.stringify({ at: Date.now() })); } catch (e) { } }
-  function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+  var esc = window.GOLIB.esc;
   function relevant(e) { return e && e.id && !/^cur:(spot|rh)-/.test(e.id) && e.kind !== 'rotation'; }
   function eventValue(v) {
     if (v == null) return '';
