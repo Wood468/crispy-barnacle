@@ -1201,6 +1201,54 @@
   }
 
   /* ---------- wiring ---------- */
+  function renderTodayStrip(t, today, activity) {
+    var root = $('today-focus-strip'); if (!root) return;
+    var dayStart = startOfDay(t), endDay = addDays(dayStart, 1);
+    var regionalToday = regList().filter(function (e) { return e.start < endDay && e.end > dayStart; });
+    var nextItems = [];
+    (today || []).forEach(function (e) { if (e.start > t) nextItems.push({ event: e, regional: false }); });
+    regionalToday.forEach(function (e) { if (e.start > t) nextItems.push({ event: e, regional: true }); });
+    if (!nextItems.length) {
+      EV.filter(function (e) { return e.start > t && !e.long && !isHidden(e.id) && !kindHidden(e.kind); }).forEach(function (e) { nextItems.push({ event: e, regional: false }); });
+      regList().filter(function (e) { return e.start > t; }).forEach(function (e) { nextItems.push({ event: e, regional: true }); });
+    }
+    nextItems.sort(function (a, b) { return a.event.start - b.event.start; });
+    var next = nextItems[0], nextName = 'Nothing scheduled next', nextMeta = 'Check the schedule for updates.';
+    if (next) {
+      var ev = next.event, person = next.regional || kindOf(ev)[0].toLowerCase().indexOf('person') >= 0;
+      nextName = ev.name || 'Upcoming event';
+      if (next.regional) nextMeta = [ev.place, fmtD(ev.start)].filter(Boolean).join(' · ');
+      else if (person) nextMeta = [ev.place || ev.location || ev.venue, fmtD(ev.start)].filter(Boolean).join(' · ');
+      else nextMeta = fmtD(ev.start) + ((!ev.allDay && !(ev.region && ev.sourceStart && !ev.utc)) ? ' · ' + fmtT(ev.start) : '');
+    }
+    var liveCount = activity && Number.isFinite(activity.total) ? activity.total : 0;
+    var inGame = activity && Number.isFinite(activity.inGame) ? activity.inGame : 0;
+    var inPerson = activity && Number.isFinite(activity.inPerson) ? activity.inPerson : 0;
+    var setText = function (id, value) { var el = $(id); if (el) el.textContent = value; };
+    setText('today-focus-now', liveCount ? liveCount + (liveCount === 1 ? ' live event' : ' live events') : 'Nothing live right now');
+    setText('today-focus-now-meta', inGame + ' in game · ' + inPerson + ' in person');
+    setText('today-focus-next', nextName);
+    setText('today-focus-next-meta', nextMeta);
+
+    var dateKey = dayKey(t), rotation = (D.rotation || []).filter(function (r) {
+      var from = new Date(r.s), to = new Date(r.e);
+      return from <= dayStart && dayStart < to;
+    })[0];
+    var maxBattle = (D.maxBattles || []).filter(function (r) { return r && r.length >= 3 && r[0] <= dateKey && dateKey <= r[1]; })[0];
+    var raidSummary = rotation ? [rotation.five ? '5★ ' + rotation.five : '', rotation.mega ? 'Mega ' + rotation.mega : ''].filter(Boolean).join(' · ') : '';
+    var raidMeta = [rotation && rotation.shadow ? 'Shadow ' + rotation.shadow : '', maxBattle ? 'Max ' + maxBattle[2] : 'No Max Battle schedule listed'].filter(Boolean).join(' · ');
+    setText('today-focus-raids', raidSummary || (maxBattle ? 'No raid bosses listed for today' : 'No raid rotation listed for today'));
+    setText('today-focus-raids-meta', raidMeta);
+
+    var sixHours = t.getTime() + 6 * 60 * 60 * 1000;
+    var ending = (today || []).filter(function (e) {
+      var label = kindOf(e)[0].toLowerCase();
+      return phase(e, t) === 'live' && !e.long && !e.allDay && label.indexOf('person') < 0 &&
+        !(e.region && e.sourceStart && !e.utc) && e.end > t && e.end.getTime() <= sixHours;
+    }).sort(function (a, b) { return a.end - b.end; });
+    setText('today-focus-ending', ending.length ? ending.length + ' ending within 6h' : 'Nothing timed in the next 6h');
+    setText('today-focus-ending-meta', ending.length ? ending[0].name + ' · ends ' + fmtT(ending[0].end) : 'Timed in-game events only');
+  }
   function renderHomeBrief(t) {
     t = t || now();
     var endDay = addDays(startOfDay(t), 1);
@@ -1216,6 +1264,7 @@
     if ($('day-upcoming-count')) $('day-upcoming-count').textContent = String(todayCount);
     if (briefTitle) briefTitle.textContent = liveCount ? (liveCount === 1 ? 'Something is happening now' : liveCount + ' things happening now') : (todayCount ? 'Your day is coming up' : 'A quieter day in the game');
     if (briefNote) briefNote.textContent = liveCount || todayCount ? (todayCount ? todayCount + ' more starting today' : 'See what is live and what is next.') : 'No scheduled events today. Here is what is coming up next.';
+    renderTodayStrip(t, today, activity);
   }
   /* Refresh only today's list when its visible event phases change. This keeps the rest of the agenda and focused controls intact. */
   function renderHomeToday(t, force) {
@@ -1225,26 +1274,29 @@
       var ph = phase(e, t);
       return !e.long && !isHidden(e.id) && !kindHidden(e.kind) && (ph === 'live' || (ph === 'soon' && e.start < endDay));
     }).sort(function (a, b) { return a.start - b.start; });
-    var regionalToday = regList().filter(function (e) { return e.start <= t && e.end > t; });
+    var dayStart = startOfDay(t);
+    var todayRegional = regList().filter(function (e) { return e.start < endDay && e.end > dayStart; });
     var nextUp = EV.filter(function (e) { return phase(e, t) === 'soon' && e.start >= endDay && !e.long && !isHidden(e.id) && !kindHidden(e.kind); }).sort(function (a, b) { return a.start - b.start; })[0];
     var tdEl = $('home-now'); if (!tdEl) return;
     var signature = JSON.stringify({
       day: dayKey(t),
       events: today.map(function (e) { return [e.id, phase(e, t)]; }),
-      regional: regionalToday.map(function (e) { return [e.id, e.start, e.end]; }),
+      regional: todayRegional.map(function (e) { return [e.id, e.start, e.end, phase(e, t)]; }),
       next: nextUp ? [nextUp.id, nextUp.start.getTime()] : null
     });
     if (!force && tdEl.getAttribute('data-render-key') === signature) return;
     tdEl.setAttribute('data-render-key', signature);
     var liveToday = today.filter(function (e) { return phase(e, t) === 'live'; });
     var laterToday = today.filter(function (e) { return phase(e, t) === 'soon'; });
+    var liveRegional = todayRegional.filter(function (e) { return e.start <= t && e.end > t; });
+    var laterRegional = todayRegional.filter(function (e) { return e.start > t; });
     function phaseGroup(label, count, html) {
       if (!count) return '';
       return '<section class="today-phase-group"><div class="today-phase-head"><span>' + label + '</span><span class="today-phase-count">' + count + '</span></div><div class="today-phase-cards">' + html + '</div></section>';
     }
-    tdEl.innerHTML = today.length || regionalToday.length
-      ? phaseGroup('Happening now', liveToday.length + regionalToday.length, liveToday.map(function (e) { return card(e); }).join('') + regionalToday.map(function (e) { return agendaRow(e, true); }).join('')) +
-        phaseGroup('Later today', laterToday.length, laterToday.map(function (e) { return card(e); }).join(''))
+    tdEl.innerHTML = today.length || todayRegional.length
+      ? phaseGroup('Happening now', liveToday.length + liveRegional.length, liveToday.map(function (e) { return card(e); }).join('') + liveRegional.map(function (e) { return agendaRow(e, true); }).join('')) +
+        phaseGroup('Later today', laterToday.length + laterRegional.length, laterToday.map(function (e) { return card(e); }).join('') + laterRegional.map(function (e) { return agendaRow(e, true); }).join(''))
       : '<div class="today-empty"><p class="empty">Nothing is scheduled for today.</p>' +
         (nextUp
           ? '<button type="button" class="today-next-up" data-open="' + esc(nextUp.id) + '" aria-label="Open details for ' + esc(nextUp.name) + '"><span class="today-next-kicker">NEXT UP</span><b>' + esc(nextUp.name) + '</b><span class="today-next-time">' + esc(fmtD(nextUp.start) + ' · ' + fmtT(nextUp.start)) + '</span><span class="today-next-action">View event details <span aria-hidden="true">→</span></span></button>'
