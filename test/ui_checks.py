@@ -30,6 +30,31 @@ SW_JS = (ROOT / 'public' / 'sw.js').read_text()
 APP_JS = (ROOT / 'public' / 'app.js').read_text()
 check('design tokens define semantic colour, spacing, radius, typography and motion roles',
       all(token in BASE_CSS for token in ['--color-canvas:', '--color-surface:', '--color-text-muted:', '--space-4:', '--radius-card:', '--font-body:', '--motion-standard:']))
+TYPE_SCALE = {
+    '--type-caption-compact': ('.62rem', 2),
+    '--type-caption': ('.68rem', 2),
+    '--type-overline': ('.72rem', 3),
+    '--type-label': ('.75rem', 7),
+    '--type-meta': ('.78rem', 4),
+    '--type-meta-compact': ('.8rem', 4),
+    '--type-body-sm': ('.82rem', 6),
+    '--type-body-compact': ('.84rem', 2),
+    '--type-button': ('.85rem', 4),
+    '--type-body-emphasis': ('.9rem', 3),
+    '--type-intro': ('1.05rem', 5),
+    '--type-body-lg': ('1.1rem', 2),
+    '--type-heading': ('1.5rem', 2),
+    '--type-stat': ('2rem', 1),
+    '--type-section': ('2.4rem', 2),
+    '--type-hero': ('clamp(3.2rem,9vw,7rem)', 1),
+    '--type-hero-number': ('clamp(5rem,13vw,9rem)', 1),
+    '--type-hero-compact': ('clamp(3.4rem,10vw,5rem)', 1),
+    '--type-body-base': ('15px', 1),
+}
+check('base stylesheet semantic type-scale roles preserve their exact values and declaration counts',
+      all(re.search(re.escape(token) + r'\s*:\s*' + re.escape(value) + r'\s*;', BASE_CSS) and
+          len(re.findall(r'font-size\s*:\s*var\(' + re.escape(token) + r'\)(?=[;}])', BASE_COMPONENT_CSS)) == count
+          for token, (value, count) in TYPE_SCALE.items()))
 check('base stylesheet components use semantic palette and typography roles while legacy aliases remain defined',
       re.search(r'var\(--(?:bg|panel|soft|line|fg|muted|body|inv-bg|inv-fg|gold|gold-fg|display|sans|mono)\b', BASE_COMPONENT_CSS) is None and
       all(token in BASE_COMPONENT_CSS for token in ['var(--color-canvas)', 'var(--color-surface)', 'var(--color-surface-raised)', 'var(--color-border)', 'var(--color-text)', 'var(--color-text-muted)', 'var(--color-text-body)', 'var(--color-inverse-surface)', 'var(--color-inverse-text)', 'var(--color-accent)', 'var(--color-accent-text)', 'var(--font-display)', 'var(--font-body)', 'var(--font-mono)']) and
@@ -58,9 +83,9 @@ check('Today focus strip has four data-backed signals and a responsive semantic 
       all(token in DASH_JS for token in ['function renderTodayStrip', '6 * 60 * 60 * 1000', 'activity.inGame', 'activity.inPerson', 'D.rotation', 'D.maxBattles']) and
       all(token in DASH_CSS for token in ['.today-focus-strip', '.today-focus-card', 'grid-template-columns:repeat(2,minmax(0,1fr))']))
 check('versioned stylesheets are referenced by the page and precached offline',
-      all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261031f', '/dash.css?v=20261031o']))
+      all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261031g', '/dash.css?v=20261031o']))
 check('offline shell cache version advances with the stylesheet token release',
-      "gofn-shell-v152" in SW_JS)
+      "gofn-shell-v153" in SW_JS)
 check('versioned dashboard scripts are referenced by the entry page and precached offline',
       '/app.js?v=20261031e' in INDEX_HTML and '/app.js?v=20261031e' in SW_JS and
       '/dash.js?v=20261031e' in APP_JS and '/dash.js?v=20261031e' in SW_JS and
