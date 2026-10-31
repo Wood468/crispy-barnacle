@@ -5,7 +5,7 @@ import json
 import os
 import sys
 from datetime import datetime, timezone
-from urllib.parse import urlsplit
+from urllib.parse import urlsplit, urljoin
 
 DEFAULT_URL = "https://pogo.michaelpuff.com/"
 VIEWPORT = {"width": 390, "height": 844}
@@ -39,6 +39,27 @@ def summarize(records: list[dict]) -> dict:
             for item in sorted(posters, key=lambda item: item["bytes"], reverse=True)[:5]
         ],
     }
+
+
+def detail_poster_results(expected: list[dict], records: list[dict]) -> list[dict]:
+    """Match each event poster to an image response observed after its detail opens."""
+    results = []
+    for item in expected:
+        matches = [
+            record for record in records
+            if record.get("phase") == "season_details_on_demand"
+            and record.get("resource") == item["resource"]
+        ]
+        results.append({
+            "id": item.get("id", ""),
+            "name": item.get("name", ""),
+            "resource": item["resource"],
+            "loaded": any(record.get("status") == 200 and record.get("bytes", 0) > 0 for record in matches),
+            "bytes": sum(record.get("bytes", 0) for record in matches),
+            "status": matches[-1].get("status") if matches else None,
+        })
+    return results
+
 
 def format_bytes(value: int) -> str:
     return f"{value:,} B"
@@ -121,6 +142,88 @@ def run_audit(target: str) -> dict:
                     break
 
             schedule_records = [item for item in records if item["phase"] == "schedule"]
+
+            # Return to Today, then measure full Season/GO Pass posters only after opening each card.
+            phase["name"] = "today_reactivation"
+            today_tab = None
+            for index in range(tabs.count()):
+                tab = tabs.nth(index)
+                if (tab.get_attribute("aria-controls") or "") == "tab-now":
+                    today_tab = tab
+                    break
+            today_tab_reactivated = today_tab is not None
+            if today_tab is not None:
+                today_tab.click(timeout=10000)
+                page.wait_for_function(
+                    "() => { const el = document.getElementById('tab-now'); return !!el && !el.hidden; }",
+                    timeout=10000,
+                )
+
+            season_cards = page.locator("#seasonbar .ssn-card")
+            season_items = []
+            season_bar = page.locator("#seasonbar")
+            if season_bar.count() and season_bar.is_visible():
+                season_items = season_cards.evaluate_all(
+                    """cards => cards.map(card => {
+                        const id = card.dataset.open || "";
+                        const events = window.GOSEASON && window.GOSEASON.events ? window.GOSEASON.events() : [];
+                        const event = events.find(item => item.id === id);
+                        return { id, name: event ? event.name : card.innerText.trim(), img: event ? event.img : "" };
+                    })"""
+                )
+
+            expected_posters = [
+                {**item, "resource": resource_label(urljoin(target, item["img"]))}
+                for item in season_items if item.get("img")
+            ]
+            detail_errors = []
+            detail_opened = 0
+            phase["name"] = "season_details_on_demand"
+            for index, item in enumerate(season_items):
+                if not item.get("img"):
+                    continue
+                try:
+                    season_cards.nth(index).click(timeout=10000)
+                    page.wait_for_function(
+                        "() => { const modal = document.getElementById('evd'); return !!modal && !modal.hidden; }",
+                        timeout=10000,
+                    )
+                    detail_opened += 1
+                    page.wait_for_function(
+                        """expected => {
+                            const modal = document.getElementById('evd');
+                            const img = modal && modal.querySelector('img.evd-banner');
+                            return !!img && img.getAttribute('src') === expected && img.complete && img.naturalWidth > 0;
+                        }""",
+                        arg=item["img"],
+                        timeout=15000,
+                    )
+                    page.wait_for_timeout(250)
+                except Exception as exc:
+                    detail_errors.append({
+                        "id": item.get("id", ""),
+                        "name": item.get("name", ""),
+                        "error": str(exc)[:200],
+                    })
+                finally:
+                    try:
+                        close = page.locator("#evd-x")
+                        if close.count() and close.is_visible():
+                            close.click(timeout=5000)
+                            page.wait_for_function(
+                                "() => { const modal = document.getElementById('evd'); return !modal || modal.hidden; }",
+                                timeout=5000,
+                            )
+                    except Exception as exc:
+                        detail_errors.append({
+                            "id": item.get("id", ""),
+                            "name": item.get("name", ""),
+                            "error": "close: " + str(exc)[:180],
+                        })
+
+            today_reactivation_records = [item for item in records if item["phase"] == "today_reactivation"]
+            detail_records = [item for item in records if item["phase"] == "season_details_on_demand"]
+            poster_results = detail_poster_results(expected_posters, records)
             report = {
                 "measured_at_utc": datetime.now(timezone.utc).isoformat(),
                 "target": target,
@@ -131,9 +234,15 @@ def run_audit(target: str) -> dict:
                 "api_requests": "blocked",
                 "non_read_methods": "blocked",
                 "schedule_tab_opened": schedule_opened,
+                "today_tab_reactivated": today_tab_reactivated,
+                "season_detail_cards_opened": detail_opened,
+                "season_detail_posters": poster_results,
+                "season_detail_errors": detail_errors,
                 "phases": {
                     "today_initial": summarize(today_records),
                     "schedule_activation_incremental": summarize(schedule_records),
+                    "today_reactivation": summarize(today_reactivation_records),
+                    "season_details_on_demand": summarize(detail_records),
                 },
                 "page_errors": page_errors,
                 "method": "Content-Length when present; otherwise Playwright response-body length.",
@@ -147,6 +256,8 @@ def write_summary(report: dict) -> None:
     phases = report["phases"]
     today = phases["today_initial"]
     schedule = phases["schedule_activation_incremental"]
+    reactivated = phases["today_reactivation"]
+    details = phases["season_details_on_demand"]
     lines = [
         "## Production image waterfall (read-only)",
         "",
@@ -159,10 +270,25 @@ def write_summary(report: dict) -> None:
         "|---|---:|---:|---:|---:|",
         f"| Today initial load | {today['image_responses']} | {format_bytes(today['image_payload_bytes'])} | {today['poster_responses']} | {format_bytes(today['poster_payload_bytes'])} |",
         f"| Schedule activation | {schedule['image_responses']} | {format_bytes(schedule['image_payload_bytes'])} | {schedule['poster_responses']} | {format_bytes(schedule['poster_payload_bytes'])} |",
+        f"| Today reactivation | {reactivated['image_responses']} | {format_bytes(reactivated['image_payload_bytes'])} | {reactivated['poster_responses']} | {format_bytes(reactivated['poster_payload_bytes'])} |",
+        f"| Season/GO Pass details | {details['image_responses']} | {format_bytes(details['image_payload_bytes'])} | {details['poster_responses']} | {format_bytes(details['poster_payload_bytes'])} |",
         "",
-        "Largest poster responses:",
+        f"- Season/GO Pass detail cards opened: {report['season_detail_cards_opened']}",
+        "",
+        "On-demand Season/GO Pass poster loads:",
     ]
-    largest = today["largest_posters"] + schedule["largest_posters"]
+    if report["season_detail_posters"]:
+        for item in report["season_detail_posters"]:
+            state = "loaded" if item["loaded"] else "not observed"
+            lines.append(f"- {item['name']} — {state}; {format_bytes(item['bytes'])}; {item['resource']}")
+    else:
+        lines.append("- No live Season/GO Pass poster cards were available in this sample.")
+    if report["season_detail_errors"]:
+        lines.extend(["", "Detail audit warnings:"])
+        for item in report["season_detail_errors"]:
+            lines.append(f"- {item['name'] or item['id']}: {item['error']}")
+    lines.extend(["", "Largest poster responses:"])
+    largest = today["largest_posters"] + schedule["largest_posters"] + reactivated["largest_posters"] + details["largest_posters"]
     if largest:
         for item in sorted(largest, key=lambda row: row["bytes"], reverse=True)[:5]:
             lines.append(f"- {item['resource']} — {format_bytes(item['bytes'])} (HTTP {item['status']})")
@@ -172,7 +298,7 @@ def write_summary(report: dict) -> None:
     summary_path = os.environ.get("GITHUB_STEP_SUMMARY")
     if summary_path:
         with open(summary_path, "a", encoding="utf-8") as stream:
-            stream.write("\n".join(lines) + "\n")
+            stream.write("\\n".join(lines) + "\\n")
     print(json.dumps(report, indent=2))
 
 def main() -> int:
@@ -184,6 +310,11 @@ def main() -> int:
             print("::warning::The Schedule tab was not found; only Today was measured.")
         if report["page_errors"]:
             print(f"::warning::{len(report['page_errors'])} page error(s) occurred during the sample.")
+        if report["season_detail_errors"]:
+            print(f"::warning::{len(report['season_detail_errors'])} Season/GO Pass detail audit issue(s) occurred.")
+        for item in report["season_detail_posters"]:
+            if not item["loaded"]:
+                print(f"::warning::On-demand poster was not observed for {item['name'] or item['id']}.")
         return 0
     except Exception as exc:
         print(f"::warning::Production image audit could not complete: {exc}", file=sys.stderr)
