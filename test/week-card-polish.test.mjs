@@ -16,5 +16,5 @@ test("This Week cards keep their primary actions thumb-sized and readable", () =
   assert.match(css, /\.week-day-events>\.week-card\.evc\.cmp \.evc-foot \.more\{min-height:44px/);
   assert.match(css, /\.week-day-events>\.week-card\.evc\.cmp \.evc-foot \.star\{[^}]*min-height:44px/);
   assert.match(css, /\.week-day-events>\.week-card \.evc-title-row h3\{font-size:1\.28rem/);
-  assert.match(css, /\.week-day-count\{padding:3px 8px/);
+  assert.match(css, /\.week-day-count\{padding:3px var\(--space-2\)/);
 });
