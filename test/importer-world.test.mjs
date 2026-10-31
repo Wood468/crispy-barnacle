@@ -17,6 +17,40 @@ test("multiple community write-ups are corroborated, while official evidence kee
   assert.equal(mergeWorld([...entries, { ...base, url: "https://pokemongo.com/news/pokemon-run-30/", source: "official" }], names)[0].status, "official");
 });
 
+test("curated watch pages are prioritised ahead of capped feed discovery", async () => {
+  const { prioritizeWatchedPages } = await import("../scripts/importer/world.mjs");
+  const feed = { source: "leekduck", url: "https://leekduck.com/events/feed-event/" };
+  const watched = { source: "official", url: "https://pokemongo.com/en/gowildarea/sendai" };
+  const later = { source: "hub", url: "https://pokemongohub.net/post/event/another-event/" };
+  assert.deepEqual(prioritizeWatchedPages([feed, watched, later], [watched.url]).map(p => p.url), [watched.url, feed.url, later.url]);
+});
+
+test("retains eligible source provenance when a same-ID event is rediscovered by one source", async () => {
+  const { retainOldWorldSources, normUrl } = await import("../scripts/importer/world.mjs");
+  const officialUrl = "https://pokemongo.com/en/gowildarea/mexico-city";
+  const current = {
+    id: "w-go-wild-area-2026-mexico-city", name: "GO Wild Area 2026 Mexico City",
+    place: "Mexico City, Mexico", start: "2026-11-06", end: "2026-11-08",
+    sources: [{ id: "serebii", name: "Serebii", url: "https://www.serebii.net/pokemongo/reallifeevents.shtml" }], status: "single"
+  };
+  const old = {
+    ...current, seen: "2026-10-31", status: "official",
+    sources: [
+      { id: "official", name: "Pokémon GO (official)", url: officialUrl },
+      { id: "leekduck", name: "Leek Duck", url: "https://leekduck.com/events/pokemon-go-wild-area-2026-mexico-city/" },
+      ...current.sources
+    ]
+  };
+  const result = retainOldWorldSources([current], [old], {
+    cutoff: "2026-10-17", today: "2026-10-31", now: Date.parse("2026-10-31T12:45:00Z"),
+    watchUrls: new Set([normUrl(officialUrl)])
+  });
+  assert.equal(result.length, 1);
+  assert.deepEqual(result[0].sources.map(source => source.id).sort(), ["leekduck", "official", "serebii"]);
+  assert.equal(result[0].status, "official");
+  assert.equal(result[0].start, "2026-11-06");
+});
+
 test("tidyName keeps the event part of a long official headline", async () => {
   const { tidyName } = await import("../scripts/importer/world.mjs");
   assert.equal(tidyName("Pokémon RUN 30: Taichung"), "Pokémon RUN 30: Taichung");
