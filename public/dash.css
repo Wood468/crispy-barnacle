@@ -140,7 +140,7 @@ nav.tabs button{min-height:56px}
 @media(max-width:1199px){nav.tabs button{min-height:48px}}
 .tabs button[aria-selected="true"]{background:var(--color-surface-raised)}
 @media (min-width:720px){.prio-list{grid-template-columns:repeat(2,1fr)}.pc.first{grid-column:1/-1}.opps{grid-template-columns:repeat(2,1fr)}}
-@media (prefers-reduced-motion:no-preference){.evc,.pc,.opp{transition:transform .15s}.evc:active,.pc:active{transform:scale(.995)}}
+@media (prefers-reduced-motion:no-preference){.evc,.pc,.opp{transition:transform var(--motion-quick)}.evc:active,.pc:active{transform:scale(.995)}}
 
 /* tighter rhythm inside the new views */
 #tab-events,#tab-collect,#tab-saved,#sub-timeline,#sub-calendar,#sub-opps{gap:14px}
