@@ -43,9 +43,15 @@ check('header badges use accent roles, a canvas outline and reduced-motion-aware
 check('empty agenda and watchlist states use a quiet surface and decorative cue',
       all(token in DASH_CSS for token in ['.event-agenda > .empty', '#followed > .empty', '#savedev > .empty', '.today-empty', 'content:"◇"', 'border:1px dashed var(--border-subtle)']))
 check('versioned stylesheets are referenced by the page and precached offline',
-      all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261031c', '/dash.css?v=20261031h']))
+      all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261031d', '/dash.css?v=20261031i']))
 check('offline shell cache version advances with the stylesheet token release',
-      "gofn-shell-v142" in SW_JS)
+      "gofn-shell-v143" in SW_JS)
+check('desktop navigation rail is breakpoint-scoped and mobile keeps the bottom bar',
+      all(token in BASE_CSS for token in ['@media (min-width:1200px)', 'body{padding-left:max(132px,calc(4vw + 100px));padding-bottom:24px}', 'left:16px;right:auto;top:50%;bottom:auto;transform:translateY(-50%)', 'nav.tabs .row{flex-direction:column', 'nav.tabs button{flex:none;width:100%;min-height:68px']) and
+      'nav.tabs{position:fixed;left:0;right:0;bottom:0' in BASE_CSS)
+check('calendar weekday labels expand to full names on wide screens',
+      all(name in DASH_JS for name in ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']) and
+      all(token in DASH_CSS for token in ['.ch-short{display:inline}', '.ch-long{display:none}', '@media (min-width:720px){.ch-short{display:none}.ch-long{display:inline}}']))
 check('Today has separate primary and supporting-panel layout wrappers',
       all(token in INDEX_HTML for token in ['class="today-layout"', 'class="today-main"', 'class="today-sidebar"', 'id="home-now"', 'id="action-centre"', 'id="foryou-sec"', 'id="weekly-sec"', 'id="buy-sec"']))
 check('desktop Today uses two columns while mobile preserves action-first order',
@@ -146,6 +152,18 @@ with sync_playwright() as p:
               desktop_today)
         check('Overseas in-person events remain visible in the primary desktop Today agenda',
               desktop_today['cardInMain'] and desktop_today['cardVisible'], desktop_today)
+        desktop_nav = overseas.evaluate("""() => {
+          const nav=document.querySelector('nav.tabs'), rect=nav.getBoundingClientRect(), content=document.querySelector('.wrap').getBoundingClientRect();
+          return {position:getComputedStyle(nav).position,left:rect.left,right:rect.right,width:rect.width,
+                  contentLeft:content.left,direction:getComputedStyle(nav.querySelector('.row')).flexDirection,
+                  buttons:[...nav.querySelectorAll('button')].map(b=>({visible:b.getClientRects().length>0,height:b.getBoundingClientRect().height})),
+                  documentWidth:document.documentElement.scrollWidth,viewport:innerWidth};
+        }""")
+        check('Desktop primary navigation becomes a vertical rail outside the content column',
+              desktop_nav['position']=='fixed' and desktop_nav['direction']=='column' and
+              desktop_nav['left']>=0 and desktop_nav['right']<desktop_nav['contentLeft'] and
+              len(desktop_nav['buttons'])==4 and all(b['visible'] and b['height']>=56 for b in desktop_nav['buttons']) and
+              desktop_nav['documentWidth']<=desktop_nav['viewport'], desktop_nav)
         overseas.set_viewport_size({'width':960,'height':900})
         desktop_min = overseas.evaluate("""() => {
           const layout=document.querySelector('#tab-now .today-layout');
@@ -160,6 +178,15 @@ with sync_playwright() as p:
         overseas.set_viewport_size({'width':900,'height':900})
         tablet_today = overseas.evaluate("getComputedStyle(document.querySelector('#tab-now .today-layout')).display")
         check('Below the desktop breakpoint, Today returns to a single-column stack', tablet_today=='flex', tablet_today)
+        tablet_nav = overseas.evaluate("""() => {
+          const nav=document.querySelector('nav.tabs'), rect=nav.getBoundingClientRect();
+          return {position:getComputedStyle(nav).position,bottom:rect.bottom,left:rect.left,right:rect.right,
+                  direction:getComputedStyle(nav.querySelector('.row')).flexDirection,viewport:innerWidth,height:innerHeight};
+        }""")
+        check('Tablet and mobile retain the full-width bottom navigation',
+              tablet_nav['position']=='fixed' and tablet_nav['direction']=='row' and
+              tablet_nav['bottom']>=tablet_nav['height']-1 and tablet_nav['left']<=0 and
+              tablet_nav['right']>=tablet_nav['viewport'], tablet_nav)
         overseas.set_viewport_size({'width':390,'height':844})
         mobile_today = overseas.evaluate("""() => {
           const layout=document.querySelector('#tab-now .today-layout');
@@ -786,8 +813,30 @@ with sync_playwright() as p:
         pg.click('nav.tabs button[data-tab="events"]'); pg.click('#subnav-events button[data-sub="timeline"]'); pg.wait_for_timeout(200)
         check('timeline still lists the unconfirmed items, labelled', 'datamined' in pg.inner_text('#evtimeline').lower() and 'conflicting' in pg.inner_text('#evtimeline').lower() and 'RUMOURED GIGANTAMAX DAY' in pg.inner_text('#evtimeline').upper())
         pg.screenshot(path=OUT+'api_timeline.png')
+        pg.set_viewport_size({'width':1280,'height':900})
         pg.click('#subnav-events button[data-sub="calendar"]'); pg.wait_for_timeout(300)
         check('Events opens as a calendar with region filters and Day/Week/Month', pg.locator('#calreg [data-creg]').count()==6 and pg.locator('#calreg [data-cscope]').count()==3)
+        calendar_wide = pg.evaluate("""() => {
+          const heads=[...document.querySelectorAll('#calgrid .ch')];
+          return {names:heads.map(h=>h.querySelector('.ch-long').textContent),
+                  longVisible:heads.every(h=>getComputedStyle(h.querySelector('.ch-long')).display!=='none'),
+                  shortHidden:heads.every(h=>getComputedStyle(h.querySelector('.ch-short')).display==='none'),
+                  documentWidth:document.documentElement.scrollWidth,viewport:innerWidth};
+        }""")
+        check('Desktop calendar spells out Monday through Sunday',
+              calendar_wide['names']==['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'] and
+              calendar_wide['longVisible'] and calendar_wide['shortHidden'] and
+              calendar_wide['documentWidth']<=calendar_wide['viewport'], calendar_wide)
+        pg.set_viewport_size({'width':390,'height':844})
+        calendar_mobile = pg.evaluate("""() => {
+          const heads=[...document.querySelectorAll('#calgrid .ch')];
+          return {shortVisible:heads.every(h=>getComputedStyle(h.querySelector('.ch-short')).display!=='none'),
+                  longHidden:heads.every(h=>getComputedStyle(h.querySelector('.ch-long')).display==='none'),
+                  names:heads.map(h=>h.querySelector('.ch-short').textContent)};
+        }""")
+        check('Mobile calendar keeps compact Mon–Sun labels',
+              calendar_mobile['shortVisible'] and calendar_mobile['longHidden'] and
+              calendar_mobile['names']==['Mon','Tue','Wed','Thu','Fri','Sat','Sun'], calendar_mobile)
         pg.click('#calreg [data-creg="Asia"]'); pg.wait_for_timeout(200)
         check('region filter shows only regional rows', pg.locator('#calday .agr').count()==pg.locator('#calday .agr.reg').count())
         # 7. old sections still work and are reachable

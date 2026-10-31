@@ -872,7 +872,7 @@
     if (chips && hl.length) chips.innerHTML += '<details class="dd" data-k="hidden"><summary>Hidden by you (' + hl.length + ')</summary><div class="body">' + hl.map(function (h) { return '<div class="hid"><span>' + esc(h.name) + '</span><button type="button" class="more" data-unhide="' + esc(h.id) + '">Show again</button></div>'; }).join('') + '</div></details>';
     if (chips) Array.prototype.forEach.call(chips.querySelectorAll('details.dd[data-k]'), function (d) { if (ddOpen[d.getAttribute('data-k')]) d.open = true; });
     var first = (calMonth.getDay() + 6) % 7, days = new Date(calMonth.getFullYear(), calMonth.getMonth() + 1, 0).getDate(), today = dayKey(now());
-    var h = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map(function (x) { return '<span class="ch">' + x + '</span>'; }).join('');
+    var h = [['Mon', 'Monday'], ['Tue', 'Tuesday'], ['Wed', 'Wednesday'], ['Thu', 'Thursday'], ['Fri', 'Friday'], ['Sat', 'Saturday'], ['Sun', 'Sunday']].map(function (x) { return '<span class="ch"><span class="ch-short">' + x[0] + '</span><span class="ch-long" aria-hidden="true">' + x[1] + '</span></span>'; }).join('');
     for (var i = 0; i < first; i++) h += '<span class="cc empty"></span>';
     for (var d = 1; d <= days; d++) {
       var dt = new Date(calMonth.getFullYear(), calMonth.getMonth(), d), k = dayKey(dt), it = calItems(dt), cnt = it.g.length + it.r.length;
