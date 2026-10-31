@@ -55,6 +55,23 @@
     return Object.assign({}, hit, { infographics: (hit.infographics || []).concat(extra.filter(function (i) { return have.indexOf(i.url) < 0; })) });
   }
   function evById(id) { return X.events().filter(function (e) { return e.id === id; })[0] || (X.raidSlots ? X.raidSlots().filter(function (e) { return e.id === id; })[0] : null) || (X.worldEvents ? X.worldEvents().filter(function (e) { return e.id === id; })[0] : null) || (X.regionalEvents ? X.regionalEvents().filter(function (e) { return e.id === id; })[0] : null); }
+  /* Card posters can be large originals from R2. Do not assign their URL until the
+     44px card control is about to enter the viewport; hidden tabs stay network-idle. */
+  function loadThumb(button) {
+    var img = button.querySelector('img[data-thumb-src]');
+    if (!img) return;
+    var src = img.getAttribute('data-thumb-src');
+    if (!src) return;
+    img.removeAttribute('data-thumb-src');
+    img.src = src;
+  }
+  var thumbObserver = 'IntersectionObserver' in window ? new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (!entry.isIntersecting) return;
+      thumbObserver.unobserve(entry.target);
+      loadThumb(entry.target);
+    });
+  }, { rootMargin: '80px 0px' }) : null;
   /* The card button (data-igcard) shows what we know: a small picture of the infographic when there is one, or an always-on
      "Check infographic" button when there is not. Other buttons (details page, raid rows) keep the text button. */
   function cardButton(button, ev, id, thumb) {
@@ -69,14 +86,30 @@
       button.removeAttribute('data-igcheck'); button.setAttribute('data-infographic', id);
       button.setAttribute('aria-label', 'Open infographic for ' + name); button.title = 'View infographic';
       var img = button.querySelector('img');
-      if (!img || img.getAttribute('src') !== thumb) {
+      var current = img && (img.getAttribute('data-thumb-url') || img.getAttribute('src'));
+      if (!img || current !== thumb) {
+        if (thumbObserver) thumbObserver.unobserve(button);
         button.innerHTML = '';
-        img = document.createElement('img'); img.setAttribute('loading', 'lazy'); img.setAttribute('decoding', 'async'); img.setAttribute('width', '44'); img.setAttribute('height', '44'); img.alt = '';
-        img.addEventListener('error', function () { if (button.querySelector('img') !== img || img.getAttribute('src') !== thumb) return; /* a late error from a picture that was already replaced */ button.setAttribute('data-igbad', thumb); cardButton(button, ev, id, ''); });
-        img.src = thumb; button.appendChild(img);
+        button.classList.add('igthumb-pending');
+        img = document.createElement('img');
+        img.setAttribute('loading', 'lazy'); img.setAttribute('decoding', 'async');
+        img.setAttribute('fetchpriority', 'low'); img.setAttribute('width', '44'); img.setAttribute('height', '44');
+        img.setAttribute('data-thumb-url', thumb); img.setAttribute('data-thumb-src', thumb); img.alt = '';
+        img.addEventListener('load', function () { if (button.querySelector('img') === img) button.classList.remove('igthumb-pending'); });
+        img.addEventListener('error', function () {
+          if (button.querySelector('img') !== img || img.getAttribute('data-thumb-url') !== thumb) return;
+          /* A late error from a picture that was already replaced. */
+          button.setAttribute('data-igbad', thumb); cardButton(button, ev, id, '');
+        });
+        button.appendChild(img);
+        if (thumbObserver) thumbObserver.observe(button);
+        else loadThumb(button);
+      } else if (img.hasAttribute('data-thumb-src') && thumbObserver) {
+        thumbObserver.observe(button);
       }
     } else {
-      button.classList.remove('info-available', 'igthumb'); button.classList.add('igcheck');
+      if (thumbObserver) thumbObserver.unobserve(button);
+      button.classList.remove('info-available', 'igthumb', 'igthumb-pending'); button.classList.add('igcheck');
       button.removeAttribute('data-infographic'); button.setAttribute('data-igcheck', id);
       button.setAttribute('aria-label', 'Check for an infographic for ' + name); button.title = 'Look again for an infographic';
       if (button.getAttribute('data-igmsg') !== '1') button.textContent = 'Check infographic';
