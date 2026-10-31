@@ -836,9 +836,10 @@
   function regList() { // an announced game event the live feed already shows is not listed twice
     return REG.filter(function (x) {
       if (x.end <= now() || isHidden(x.id)) return false;
-      /* A world-list item that is the same event as one of our own cards is not listed twice (e.g. "GO Wild Area: Sendai" and "GO Wild Area 2026 Sendai Tohoku"). */
-      if (window.GODEDUPE && EV.some(function (ev) { return GODEDUPE.same({ name: x.name, place: x.place, start: +x.start, end: +x.end }, { name: ev.name, place: '', start: +ev.start, end: +ev.end }, REGGAZ).verdict === 'same'; })) return false;
+      /* Regional in-person listings are never suppressed by a similarly titled game card. */
       if (x.scope !== 'global') return true;
+      /* A global/world-list item that is the same event as one of our own cards is not listed twice. */
+      if (window.GODEDUPE && EV.some(function (ev) { return GODEDUPE.same({ name: x.name, place: x.place, start: +x.start, end: +x.end }, { name: ev.name, place: '', start: +ev.start, end: +ev.end }, REGGAZ).verdict === 'same'; })) return false;
       var w = words(x.name);
       return !EV.some(function (ev) { return ev.start <= x.end && ev.end >= x.start && words(ev.name).some(function (t) { return w.indexOf(t) >= 0; }); });
     });
