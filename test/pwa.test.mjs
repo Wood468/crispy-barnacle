@@ -7,15 +7,17 @@ const manifest = JSON.parse(read("../public/manifest.webmanifest"));
 const sw = read("../public/sw.js");
 const app = read("../public/app.js");
 const dash = read("../public/dash.js");
+const season = read("../public/season.js");
+const detail = read("../public/detail.js");
 const html = read("../public/index.html");
 const icon = read("../public/icon-maskable.svg");
 const offline = read("../public/offline.html");
 const offlineCss = read("../public/offline.css");
 const dataScripts = [
   app, dash,
-  read("../public/detail.js"), read("../public/places.js"), read("../public/review.js"),
+  detail, read("../public/places.js"), read("../public/review.js"),
   read("../public/fresh.js"), read("../public/whatsnew.js"), read("../public/store.js"),
-  read("../public/season.js"), read("../public/weekly.js"), read("../public/buy.js"),
+  season, read("../public/weekly.js"), read("../public/buy.js"),
   read("../public/extra.js"), read("../public/infographic.js")
 ];
 
@@ -51,6 +53,7 @@ test("PWA entry page links to the manifest and iOS touch icon and registers the 
   assert.match(html, /local-state\.js\?v=20261030a/);
   assert.match(html, /account\.js\?v=20261030a/);
   assert.match(html, /lib\.js\?v=20261030a/);
+  assert.match(html, /season\.js\?v=20261031b/);
   assert.match(html, /\/pwa\.js/);
   assert.match(app, /dash\.js\?v=20261031f/);
   assert.match(dash, /detail\.js\?v=20261031a/);
@@ -58,6 +61,16 @@ test("PWA entry page links to the manifest and iOS touch icon and registers the 
   assert.match(dash, /infographic\.js\?v=20261031a/, "the deferred infographic loader is versioned");
 });
 
+
+test("Today season banners defer full posters until the user opens event details", () => {
+  const card = season.split("\n").find((line) => line.includes('class="ssn-card"'));
+  assert.ok(card, "the Today season card remains present");
+  assert.match(card, /data-open=/, "the card remains an interactive details button");
+  assert.match(card, /title="Open details to view the full poster"/, "the poster remains discoverable on desktop");
+  assert.doesNotMatch(card, /<img\b/i, "the large poster is not requested by the Today banner");
+  assert.match(season, /img:\s*i\.img,\s*season:\s*i/, "the original poster URL remains on the event model");
+  assert.match(detail, /if \(ev\.img\) h \+= '<img class="evd-banner"/, "event details still render the full poster on demand");
+});
 
 test("every local script and stylesheet referenced by the entry page is precached at its exact URL", () => {
   const assets = [...html.matchAll(/(?:src|href)=["'](\/[^"'#]+)["']/g)]
@@ -80,10 +93,11 @@ test("static JSON dependencies referenced by first-party scripts are precached",
 });
 
 test("service worker versions the cache, pre-caches offline fallback, and never handles API responses", () => {
-  assert.match(sw, /gofn-shell-v158/);
+  assert.match(sw, /gofn-shell-v159/);
   assert.ok(sw.includes("'/lib.js?v=20261030a'"), 'the refreshed dashboard helper is available to the offline shell');
   assert.ok(sw.includes("'/local-state.js?v=20261030a'"), 'account-local state migration is available offline');
   assert.ok(sw.includes("'/account.js?v=20261030a'"), 'the refreshed account transition code is available offline');
+  assert.ok(sw.includes("'/season.js?v=20261031b'"), 'the current season banner script is available to the offline shell');
   assert.match(sw, /'\/event-moves\.json'/, "event-only move data is available to offline event details");
   assert.match(sw, /'\/dash\.css\?v=20261031t'/, "the current dashboard stylesheet is available to the offline shell");
   assert.match(sw, /'\/app\.js\?v=20261031f'/, "the current app bootstrap is available to the offline shell");
