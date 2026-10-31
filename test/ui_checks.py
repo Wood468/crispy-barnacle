@@ -733,6 +733,7 @@ with sync_playwright() as p:
         season_cards.first.wait_for(state='visible', timeout=5000)
         check('Today season and GO Pass cards remain visible and do not preload their large posters',
               season_cards.count() == 2 and not pg.season_poster_requests)
+        pg.wait_for_function('!!window.GODETAIL', timeout=5000)
         season_cards.first.click()
         pg.locator('#evd').wait_for(state='visible', timeout=5000)
         pg.locator('#evd .evd-banner').wait_for(state='visible', timeout=5000)
