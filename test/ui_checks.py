@@ -58,9 +58,9 @@ check('Today focus strip has four data-backed signals and a responsive semantic 
       all(token in DASH_JS for token in ['function renderTodayStrip', '6 * 60 * 60 * 1000', 'activity.inGame', 'activity.inPerson', 'D.rotation', 'D.maxBattles']) and
       all(token in DASH_CSS for token in ['.today-focus-strip', '.today-focus-card', 'grid-template-columns:repeat(2,minmax(0,1fr))']))
 check('versioned stylesheets are referenced by the page and precached offline',
-      all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261031f', '/dash.css?v=20261031l']))
+      all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261031f', '/dash.css?v=20261031m']))
 check('offline shell cache version advances with the stylesheet token release',
-      "gofn-shell-v148" in SW_JS)
+      "gofn-shell-v149" in SW_JS)
 check('versioned dashboard scripts are referenced by the entry page and precached offline',
       '/app.js?v=20261031e' in INDEX_HTML and '/app.js?v=20261031e' in SW_JS and
       '/dash.js?v=20261031e' in APP_JS and '/dash.js?v=20261031e' in SW_JS)
@@ -1551,3 +1551,8 @@ with sync_playwright() as p:
 print('\nFAILED:',fails if fails else 'none')
 if fails:
     sys.exit(1)
+
+# Dashboard radius adoption: shared scale values are expressed through semantic roles.
+check('dashboard shared radius declarations consume semantic radius tokens',
+      all(f'border-radius:var(--radius-{role})' in DASH_CSS for role in ['sm','md','control','card','panel','lg','xl','pill']) and
+      re.search(r'border-radius:\s*(?:8|12|14|16|18|20|22|999)px\b', DASH_CSS) is None)
