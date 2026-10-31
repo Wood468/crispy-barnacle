@@ -33,11 +33,11 @@ check('dashboard token migration preserves existing 14px controls and 18px card 
       '--radius-control:14px' in BASE_CSS and '--radius-panel:18px' in BASE_CSS and
       DASH_CSS.count('border-radius:var(--radius-panel)') == 2 and 'border-radius:var(--radius-control)' in DASH_CSS)
 check('dashboard primitives consume semantic text, typography, accent, border and pill roles',
-      all(token in DASH_CSS for token in ['var(--color-text-muted)', 'var(--color-text-body)', 'var(--font-body)', 'var(--font-display)', 'var(--color-danger)', 'var(--color-accent)', 'var(--radius-pill)', 'var(--border-subtle)']))
+      all(token in DASH_CSS for token in ['var(--color-text-muted)', 'var(--color-text-body)', 'var(--font-body)', 'var(--font-display)', 'var(--font-mono)', 'var(--color-danger)', 'var(--color-success)', 'var(--color-accent)', 'var(--color-accent-text)', 'var(--radius-pill)', 'var(--border-subtle)', 'var(--surface-glass)', 'var(--color-surface-raised)']))
 check('versioned stylesheets are referenced by the page and precached offline',
-      all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261031c', '/dash.css?v=20261031d']))
+      all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261031c', '/dash.css?v=20261031e']))
 check('offline shell cache version advances with the stylesheet token release',
-      "gofn-shell-v138" in SW_JS)
+      "gofn-shell-v139" in SW_JS)
 with sync_playwright() as p:
     b=p.chromium.launch()
     def page(api=None,marks=None,clock='2026-10-09T22:45:00+11:00',sources=None,gens=None,us=None,extra=None,pin=False,slow_places=False):
