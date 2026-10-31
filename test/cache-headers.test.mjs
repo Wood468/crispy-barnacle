@@ -51,7 +51,11 @@ test("only stable WebP artwork receives a one-day browser cache", () => {
   for (const [pattern, value] of expected) {
     assert.deepEqual(rules.get(pattern), [value], pattern);
   }
-  assert.doesNotMatch(source, /\bimmutable\b/i, "numeric artwork paths are not content-addressed");
+  for (const values of rules.values()) {
+    for (const header of values.filter(value => /^cache-control:/i.test(value))) {
+      assert.doesNotMatch(header, /\bimmutable\b/i, "numeric artwork paths are not content-addressed");
+    }
+  }
   assert.equal(cacheControl("/art/25.webp"), "public, max-age=86400");
   assert.equal(cacheControl("/dex/25.webp"), "public, max-age=86400");
   assert.equal(cacheControl("/ico/g/raid.webp"), "public, max-age=86400");
