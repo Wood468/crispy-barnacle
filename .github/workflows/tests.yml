@@ -101,7 +101,7 @@ jobs:
 
   production-image-audit:
     # Informational, read-only sample of the live public site; never blocks code checks.
-    if: github.event_name == 'pull_request'
+    if: github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     timeout-minutes: 8
     continue-on-error: true

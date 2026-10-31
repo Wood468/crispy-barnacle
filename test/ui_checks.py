@@ -164,11 +164,13 @@ check('150ms interaction transitions use a shared motion role with unchanged eas
 check('versioned stylesheets are referenced by the page and precached offline',
       all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261031i', '/dash.css?v=20261031t']))
 check('offline shell cache version advances with the stylesheet token release',
-      "gofn-shell-v158" in SW_JS)
+      "gofn-shell-v159" in SW_JS)
 check('versioned dashboard scripts are referenced by the entry page and precached offline',
       '/app.js?v=20261031f' in INDEX_HTML and '/app.js?v=20261031f' in SW_JS and
       '/dash.js?v=20261031f' in APP_JS and '/dash.js?v=20261031f' in SW_JS and
       '/detail.js?v=20261031a' in DASH_JS and '/detail.js?v=20261031a' in SW_JS)
+check('versioned season banner script is referenced by the page and precached offline',
+      '/season.js?v=20261031b' in INDEX_HTML and '/season.js?v=20261031b' in SW_JS)
 check('versioned infographic script is referenced by the dashboard and precached offline',
       '/infographic.js?v=20261031a' in DASH_JS and '/infographic.js?v=20261031a' in SW_JS)
 check('infographic card thumbnails assign original URLs only near the viewport',
@@ -194,8 +196,9 @@ with sync_playwright() as p:
         # Bound default Playwright waits so a lazy asset or missing control cannot stall a whole shard.
         ctx.set_default_timeout(10000)
         ctx.set_default_navigation_timeout(15000)
-        pg=ctx.new_page(); pg.errs=[]
+        pg=ctx.new_page(); pg.errs=[]; pg.season_poster_requests=[]
         pg.on('pageerror',lambda e:pg.errs.append(str(e)))
+        pg.on('request',lambda r:pg.season_poster_requests.append(r.url) if any(slug in r.url for slug in ('season-24-twilight-trails','go-pass-october-2026')) else None)
         pg.clock.install(time=clock)
         pg.route('**/api/sources',ful(sources or '{"environment":"production","database":true,"enabled":false,"sources":[]}'))
         pg.route('**/api/events',ful(api or '{"enabled":false,"events":[]}'))
@@ -728,6 +731,18 @@ with sync_playwright() as p:
 
         # 1. no marks: nothing is claimed missing
         pg=page()
+        season_cards = pg.locator('#seasonbar .ssn-card')
+        season_cards.first.wait_for(state='visible', timeout=5000)
+        check('Today season and GO Pass cards remain visible and do not preload their large posters',
+              season_cards.count() == 2 and not pg.season_poster_requests)
+        pg.wait_for_function('!!window.GODETAIL', timeout=5000)
+        season_cards.first.click()
+        pg.locator('#evd').wait_for(state='visible', timeout=5000)
+        pg.locator('#evd .evd-banner').wait_for(state='visible', timeout=5000)
+        poster_loaded = pg.wait_for_function("() => { const img = document.querySelector('#evd .evd-banner'); return !!img && img.complete && img.naturalWidth > 0; }", timeout=5000)
+        check('opening a season card loads its full poster only in event details',
+              poster_loaded and any('season-24-twilight-trails' in url or 'go-pass-october-2026' in url for url in pg.season_poster_requests))
+        pg.locator('#evd-x').click()
         check('no marks: no "You need" reasons anywhere', pg.locator('text=/You need/').count()==0)
         check('no console/page errors on load', pg.errs==[], pg.errs)
         pg.locator('[data-infographic="cur:trek"].info-available').wait_for(state="attached")

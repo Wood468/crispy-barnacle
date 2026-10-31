@@ -1,4 +1,4 @@
-/* Season and GO Pass banners above "For you". Tap one to open its full event details. Banner pictures: Leek Duck (linked back). */
+/* Season and GO Pass banners above "For you". Tap one to open details; the full Leek Duck poster loads there on demand. */
 (function () {
   'use strict';
   var items = [], evs = [];
@@ -13,7 +13,7 @@
     var html = live.map(function (i) {
       var left = Math.max(0, Math.ceil((new Date(i.e) - now) / 864e5)), tot = new Date(i.e) - new Date(i.s), pct = Math.min(100, Math.max(0, Math.round((now - new Date(i.s)) / tot * 100)));
       var wk = i.label === 'GO Pass' ? 'Week ' + Math.min(Math.ceil((now - new Date(i.s)) / 6048e5), Math.ceil(tot / 6048e5)) + ' of ' + Math.ceil(tot / 6048e5) : pct + '% through';
-      return '<button type="button" class="ssn-card" data-open="' + esc(i.id) + '"><img src="' + esc(i.img) + '" alt="" loading="lazy" referrerpolicy="no-referrer" data-err="rm"><span class="ssn-t"><small>' + esc(i.label) + '</small><b>' + esc(i.name) + '</b><em><strong class="ssn-d">' + left + '</strong> ' + (left === 1 ? 'day left' : 'days left') + ' · ' + wk + '</em><i class="ssn-bar"><u style="width:' + pct + '%"></u></i></span></button>';
+      return '<button type="button" class="ssn-card" data-open="' + esc(i.id) + '" title="Open details to view the full poster"><span class="ssn-t"><small>' + esc(i.label) + '</small><b>' + esc(i.name) + '</b><em><strong class="ssn-d">' + left + '</strong> ' + (left === 1 ? 'day left' : 'days left') + ' · ' + wk + '</em><i class="ssn-bar"><u style="width:' + pct + '%"></u></i></span></button>';
     }).join('');
     if (host.dataset.h !== html) { host.dataset.h = html; host.innerHTML = html; }
   }
