@@ -51,6 +51,42 @@ test("same-series events at distinct cities remain separate while country/city a
   assert.equal(nested.length, 1, "a country-level record and its city-level version remain one event");
 });
 
+test("global Twitch research stays distinct from the in-person Night Out venue event", async () => {
+  const { fromPage, mergeWorld, collapseWorld } = await import("../scripts/importer/world.mjs");
+  const physical = fromPage({
+    title: "Celebrate the Pokémon Night Out events in Pokémon GO! — Pokémon GO",
+    url: "https://pokemongo.com/news/pokemon-night-out-irl-details2026/",
+    source: "official",
+    lines: [{ text: "Pokémon Night Out is taking place at Intuit Dome in Los Angeles, USA, on October 24, 2026, and attending Trainers will have the opportunity to enjoy additional event bonuses in Pokémon GO!" }]
+  }, "2026-10-01");
+  const stream = fromPage({
+    title: "Get codes for exclusive Timed Research during the Pokémon Night Out Twitch broadcast! — Pokémon GO",
+    url: "https://pokemongo.com/news/pokemon-night-out-twitch-drops2026",
+    source: "official",
+    lines: [{ text: "To celebrate the Pokémon Night Out event taking place at Intuit Dome in Los Angeles, USA, on October 24, 2026, Trainers globally can receive codes for exclusive Timed Research by watching 30 minutes of the Pokémon Twitch livestream!" }]
+  }, "2026-10-01");
+
+  assert.equal(physical.scope, "regional");
+  assert.equal(physical.place, "Los Angeles, USA");
+  assert.equal(stream.scope, "global", "a Twitch broadcast is available globally even when it mentions the venue");
+  assert.equal(stream.place, "");
+  assert.equal(stream.area, "Worldwide");
+  assert.equal(stream.start, "2026-10-24");
+  assert.equal(stream.end, "2026-10-24");
+
+  const rules = JSON.parse(readFileSync(new URL("../data/event-aliases.json", import.meta.url), "utf8"));
+  const pair = ["w-celebrate-the-pok-mon-night-out-events-in-pok-mon-", "w-get-codes-for-exclusive-timed-research-during-the-"];
+  assert.ok(rules.different.some(ids => pair.every(id => ids.includes(id))), "the venue event and global Twitch activity are explicitly distinct");
+  const collapsed = collapseWorld(mergeWorld([physical, stream], { official: "Pokémon GO (official)" }), rules);
+  assert.equal(collapsed.events.length, 2, "the global Twitch activity must not be merged into the in-person venue event");
+
+  const saved = JSON.parse(readFileSync(new URL("../public/world-events.json", import.meta.url), "utf8"));
+  const savedStream = saved.events.find(event => event.id === pair[1]);
+  assert.equal(savedStream.scope, "global");
+  assert.equal(savedStream.place, "");
+  assert.equal(savedStream.area, "Worldwide");
+});
+
 test("curated watch pages are prioritised ahead of the importer page cap", async () => {
   const { prioritizeWatchedPages, normUrl } = await import("../scripts/importer/world.mjs");
   const feeds = Array.from({ length: 90 }, (_, index) => ({
