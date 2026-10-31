@@ -58,9 +58,9 @@ check('Today focus strip has four data-backed signals and a responsive semantic 
       all(token in DASH_JS for token in ['function renderTodayStrip', '6 * 60 * 60 * 1000', 'activity.inGame', 'activity.inPerson', 'D.rotation', 'D.maxBattles']) and
       all(token in DASH_CSS for token in ['.today-focus-strip', '.today-focus-card', 'grid-template-columns:repeat(2,minmax(0,1fr))']))
 check('versioned stylesheets are referenced by the page and precached offline',
-      all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261031f', '/dash.css?v=20261031m']))
+      all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261031f', '/dash.css?v=20261031n']))
 check('offline shell cache version advances with the stylesheet token release',
-      "gofn-shell-v149" in SW_JS)
+      "gofn-shell-v150" in SW_JS)
 check('versioned dashboard scripts are referenced by the entry page and precached offline',
       '/app.js?v=20261031e' in INDEX_HTML and '/app.js?v=20261031e' in SW_JS and
       '/dash.js?v=20261031e' in APP_JS and '/dash.js?v=20261031e' in SW_JS)
@@ -1556,3 +1556,6 @@ if fails:
 check('dashboard shared radius declarations consume semantic radius tokens',
       all(f'border-radius:var(--radius-{role})' in DASH_CSS for role in ['sm','md','control','card','panel','lg','xl','pill']) and
       re.search(r'border-radius:\s*(?:8|12|14|16|18|20|22|999)px\b', DASH_CSS) is None)
+check('dashboard shared gap declarations consume semantic spacing tokens',
+      all(f'var(--space-{step})' in DASH_CSS for step in [1, 2, 3, 5]) and
+      re.search(r'(?<![-\w])(?:column-gap|row-gap|gap)\s*:\s*(?:(?:4|8|12|16|20|24|28|32|36|40)px\s*)+;', DASH_CSS) is None)
