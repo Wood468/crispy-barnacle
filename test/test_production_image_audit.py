@@ -58,6 +58,8 @@ class ProductionImageAuditTests(unittest.TestCase):
         self.assertEqual(result["poster_responses"], 2)
         self.assertEqual(result["poster_payload_bytes"], 1500)
         self.assertEqual(result["largest_posters"][0]["resource"], "site/poster.webp")
+        self.assertEqual(result["largest_images"][0]["resource"], "site/poster.webp")
+        self.assertEqual(result["largest_images"][0]["kind"], "infographic-poster")
 
 if __name__ == "__main__":
     unittest.main()
