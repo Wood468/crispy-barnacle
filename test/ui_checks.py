@@ -34,10 +34,14 @@ check('dashboard token migration preserves existing 14px controls and 18px card 
       DASH_CSS.count('border-radius:var(--radius-panel)') == 2 and 'border-radius:var(--radius-control)' in DASH_CSS)
 check('dashboard primitives consume semantic text, typography, accent, border and pill roles',
       all(token in DASH_CSS for token in ['var(--color-text-muted)', 'var(--color-text-body)', 'var(--font-body)', 'var(--font-display)', 'var(--font-mono)', 'var(--color-danger)', 'var(--color-success)', 'var(--color-accent)', 'var(--color-accent-text)', 'var(--radius-pill)', 'var(--border-subtle)', 'var(--surface-glass)', 'var(--color-surface-raised)']))
+check('dashboard palette and typography usages no longer depend on legacy aliases',
+      re.search(r'var\(--(?:bg|panel|soft|line|fg|muted|body|gold|gold-fg|display|sans|mono|glass|ring|ok|warn|bad)\b', DASH_CSS) is None)
+check('inverse dashboard controls use explicit inverse semantic roles',
+      'var(--color-inverse-surface)' in DASH_CSS and 'var(--color-inverse-text)' in DASH_CSS)
 check('versioned stylesheets are referenced by the page and precached offline',
-      all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261031c', '/dash.css?v=20261031e']))
+      all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261031c', '/dash.css?v=20261031f']))
 check('offline shell cache version advances with the stylesheet token release',
-      "gofn-shell-v139" in SW_JS)
+      "gofn-shell-v140" in SW_JS)
 with sync_playwright() as p:
     b=p.chromium.launch()
     def page(api=None,marks=None,clock='2026-10-09T22:45:00+11:00',sources=None,gens=None,us=None,extra=None,pin=False,slow_places=False):
@@ -85,6 +89,24 @@ with sync_playwright() as p:
         boot.click('nav.tabs button[data-boot-tab="events"]')
         check('fallback navigation can return to Schedule',boot.locator('#tab-events').is_visible() and boot.locator('#tab-raids').is_hidden())
         boot_ctx.close()
+
+        # Overseas in-person events must stay in the visible Today agenda, with separate counts.
+        world_fixture = json.dumps({'events':[{'id':'fixture-overseas-inperson','name':'Overseas In-Person Fixture','place':'Example City, Exampleland','area':'Asia','scope':'regional','start':'2026-10-09','end':'2026-10-10','sources':[{'url':'https://example.invalid/overseas-inperson-fixture'}]}]})
+        overseas = page(extra={'**/world-events.json':(world_fixture,200)})
+        overseas.wait_for_selector('#home-now .agr.reg')
+        overseas_card = overseas.locator('#home-now .agr.reg').filter(has_text='Overseas In-Person Fixture')
+        overseas_text = overseas_card.inner_text() if overseas_card.count() else ''
+        check('Overseas in-person events remain visible on Today by default', overseas_card.count()==1 and overseas_card.is_visible() and 'Example City, Exampleland' in overseas_text, overseas_text)
+        check('Overseas in-person cards stay in the visible unfolded Today agenda', overseas_card.count()==1 and overseas_card.evaluate("el => !!el.closest('.today-phase-group') && !el.closest('details')"))
+        check('Unverified venue-local times are not invented for overseas event cards', 'Venue:' not in overseas_text)
+        overseas_counts = overseas.evaluate("""() => {
+          const t=new Date(), live=window.GODASH.events().filter(e=>!e.long&&!window.GODASH.kindHidden(e.kind)&&e.start<=t&&e.end>t);
+          const regional=window.GODASH.regionalEvents().filter(e=>e.start<=t&&e.end>t);
+          const worldwide=window.GODASH.worldEvents().filter(e=>e.start<=t&&e.end>t);
+          return {actual:{inGame:Number(document.getElementById('day-live-count').textContent),inPerson:Number(document.getElementById('day-inperson-count').textContent)},expected:{inGame:live.filter(e=>e.kind!=='person').length+worldwide.length,inPerson:live.filter(e=>e.kind==='person').length+regional.length}};
+        }""")
+        check('Overseas in-person activity remains in its separate summary count', overseas_counts['actual']==overseas_counts['expected'] and overseas_counts['actual']['inPerson']>=1, overseas_counts)
+        overseas.context.close()
 
         # A small but important mobile interaction: hiding an event should have a reliable tap target,
         # an accessible name, and immediately update the Today agenda and its group count.
