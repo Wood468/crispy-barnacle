@@ -7,7 +7,7 @@ import { discover, get } from "./discover.mjs";
 import { extractFields, hasContent } from "./extract.mjs";
 import { mergeSources } from "./compare.mjs";
 import { pageTitle, htmlToLines } from "./text.mjs";
-import { entriesFromPage, mergeWorld, collapseWorld, parseDateRange, placeOf, cleanTitle, tidyName, keepOldWorld, normUrl, sameWriteupRulings, preserveWorldSources } from "./world.mjs";
+import { entriesFromPage, mergeWorld, collapseWorld, parseDateRange, placeOf, cleanTitle, tidyName, keepOldWorld, normUrl, sameWriteupRulings, preserveWorldSources, prioritizeWatchedPages } from "./world.mjs";
 import { matchEvent } from "../g47ix-review.mjs";
 import { discoverIntl, entryFromIntlPage, INTL_PATTERN } from "./intl.mjs";
 import { failRun } from "../fail-run.mjs";
@@ -109,8 +109,16 @@ async function main() {
   const { found, status } = await discover();
   // every event's own source link is read too, so a linked write-up is never missed by discovery
   for (const e of events) if (e.link && sourceFor(e.link) && !found.some(f => f.url === e.link.replace(/\/?$/, "/"))) found.push({ source: sourceFor(e.link).id, url: e.link.replace(/\/?$/, "/"), title: e.t });
-  // pages we were told about by hand or by the daily AI check (a series announced long ago drops off the list pages, so it is read every run)
-  try { for (const w of JSON.parse(await readFile("data/watch-pages.json", "utf8")).pages || []) { const u = String(w.url || "").replace(/\/?$/, "/"), s = sourceFor(u); if (s && !found.some(f => f.url === u)) found.push({ source: s.id, url: u, title: w.note || "" }); } } catch { /* no watch list */ }
+  // Curated watch pages are owner-selected and must be read before the capped feed results.
+  let watchPages = [];
+  try {
+    watchPages = JSON.parse(await readFile("data/watch-pages.json", "utf8")).pages || [];
+    for (const w of watchPages) {
+      const u = String(w.url || "").replace(/\/?$/, "/"), s = sourceFor(u);
+      if (s && !found.some(f => normUrl(f.url) === normUrl(u))) found.push({ source: s.id, url: u, title: w.note || "" });
+    }
+  } catch { /* no watch list */ }
+  found.splice(0, found.length, ...prioritizeWatchedPages(found, watchPages.map(w => w.url)));
   const pages = [], errors = [];
   for (const f of found.slice(0, MAX_PAGES * 2)) {
     if (pages.length >= MAX_PAGES) break;
