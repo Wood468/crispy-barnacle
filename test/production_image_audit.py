@@ -298,7 +298,7 @@ def write_summary(report: dict) -> None:
     summary_path = os.environ.get("GITHUB_STEP_SUMMARY")
     if summary_path:
         with open(summary_path, "a", encoding="utf-8") as stream:
-            stream.write("\\n".join(lines) + "\\n")
+            stream.write("\n".join(lines) + "\n")
     print(json.dumps(report, indent=2))
 
 def main() -> int:
