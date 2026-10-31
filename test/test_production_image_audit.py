@@ -1,5 +1,5 @@
 import unittest
-from production_image_audit import image_kind, payload_bytes, resource_label, summarize
+from production_image_audit import detail_poster_results, image_kind, payload_bytes, resource_label, summarize
 
 class ProductionImageAuditTests(unittest.TestCase):
     def test_recognises_r2_poster_paths(self):
@@ -16,6 +16,22 @@ class ProductionImageAuditTests(unittest.TestCase):
 
     def test_resource_label_omits_query_and_fragment(self):
         self.assertEqual(resource_label("https://cdn.example.test/poster.webp?token=secret#view"), "cdn.example.test/poster.webp")
+
+    def test_detail_poster_results_only_count_responses_after_opening_details(self):
+        expected = [
+            {"id": "season:24", "name": "Twilight Trails", "resource": "pogo.example/season.jpg"},
+            {"id": "season:pass-oct", "name": "GO Pass: October", "resource": "pogo.example/pass.jpg"},
+            {"id": "season:old", "name": "Older season", "resource": "pogo.example/old.jpg"},
+        ]
+        records = [
+            {"phase": "today", "resource": "pogo.example/season.jpg", "status": 200, "bytes": 900, "kind": "infographic-poster"},
+            {"phase": "season_details_on_demand", "resource": "pogo.example/season.jpg", "status": 200, "bytes": 450, "kind": "infographic-poster"},
+            {"phase": "season_details_on_demand", "resource": "pogo.example/pass.jpg", "status": 200, "bytes": 700, "kind": "infographic-poster"},
+        ]
+        result = detail_poster_results(expected, records)
+        self.assertEqual([item["loaded"] for item in result], [True, True, False])
+        self.assertEqual([item["bytes"] for item in result], [450, 700, 0])
+        self.assertIsNone(result[2]["status"])
 
     def test_summary_separates_poster_bytes_from_other_images(self):
         result = summarize([
