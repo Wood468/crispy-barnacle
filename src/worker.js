@@ -137,6 +137,43 @@ function json(body, status = 200) {
   return new Response(JSON.stringify(body), { status, headers: { "content-type": "application/json", "cache-control": "no-store" } });
 }
 
+// Sync write endpoints accept at most 2 MiB of JSON. Check Content-Length when present,
+// then enforce the same bound while streaming so chunked requests cannot bypass it.
+export const MAX_SYNC_JSON_BYTES = 2 * 1024 * 1024;
+async function readSyncJson(request) {
+  const declared = request.headers.get("content-length");
+  if (declared && /^\d+$/.test(declared) && Number(declared) > MAX_SYNC_JSON_BYTES) return { error: "too_large" };
+  if (!request.body) return { error: "bad_json" };
+  const reader = request.body.getReader();
+  const chunks = [];
+  let total = 0;
+  try {
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      total += value.byteLength;
+      if (total > MAX_SYNC_JSON_BYTES) {
+        try { await reader.cancel(); } catch { /* cancellation is best-effort */ }
+        return { error: "too_large" };
+      }
+      chunks.push(value);
+    }
+  } catch {
+    return { error: "bad_json" };
+  } finally {
+    try { reader.releaseLock(); } catch { /* already released */ }
+  }
+  const bytes = new Uint8Array(total);
+  let offset = 0;
+  for (const chunk of chunks) { bytes.set(chunk, offset); offset += chunk.byteLength; }
+  try {
+    const text = new TextDecoder("utf-8", { fatal: true }).decode(bytes);
+    return { value: JSON.parse(text) };
+  } catch {
+    return { error: "bad_json" };
+  }
+}
+
 // ---------------------------------------------------------------- artwork
 
 const slug = (s) => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[.'’]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
@@ -462,7 +499,10 @@ async function dex(request, env) {
     return json(snapshot(row));
   }
 
-  let body; try { body = await request.json(); } catch { return json({ error: "Bad request." }, 400); }
+  const parsed = await readSyncJson(request);
+  if (parsed.error === "too_large") return json({ error: "Payload too large." }, 413);
+  if (parsed.error) return json({ error: "Bad request." }, 400);
+  const body = parsed.value;
   if (!body || typeof body !== "object" || Array.isArray(body)) return json({ error: "Bad request." }, 400);
   // New clients send the version returned by GET. Reject old whole-document writes: an old
   // tab must not overwrite marks saved by a newer device while it was offline.
@@ -977,8 +1017,10 @@ async function userstate(request, env, url) {
   const now = Date.now();
   let applied = null;
   if (request.method === "PUT") {
-    let body; try { body = await request.json(); } catch { return json({ error: "Bad request." }, 400); }
-    const { entries, rejected } = us.cleanEntries(body, now);
+    const parsed = await readSyncJson(request);
+    if (parsed.error === "too_large") return json({ error: "Payload too large." }, 413);
+    if (parsed.error) return json({ error: "Bad request." }, 400);
+    const { entries, rejected } = us.cleanEntries(parsed.value, now);
     applied = { ...(await us.writeEntries(env.DB, entries, uid)), rejected: rejected.length };
   }
   const since = Math.max(0, Number(url.searchParams.get("since")) || 0);
