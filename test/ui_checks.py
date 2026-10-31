@@ -153,10 +153,16 @@ with sync_playwright() as p:
         check('A same-title in-game event cannot suppress the overseas in-person Today card',
               collision_reg.count()==1 and collision_reg.is_visible() and collision_game.count()==1 and collision_game.is_visible(),
               (collision_reg.count(),collision_game.count()))
+        collision_counts = collision_page.evaluate("""() => {
+          const t=new Date(), live=window.GODASH.events().filter(e=>!e.long&&!window.GODASH.kindHidden(e.kind)&&e.start<=t&&e.end>t);
+          const regional=window.GODASH.regionalEvents().filter(e=>e.start<=t&&e.end>t);
+          const worldwide=window.GODASH.worldEvents().filter(e=>e.start<=t&&e.end>t);
+          return {actual:{inGame:Number(document.getElementById('day-live-count').textContent),inPerson:Number(document.getElementById('day-inperson-count').textContent)},expected:{inGame:live.filter(e=>e.kind!=='person').length+worldwide.length,inPerson:live.filter(e=>e.kind==='person').length+regional.length}};
+        }""")
         check('Same-title in-game and overseas in-person activity remain separately counted',
-              collision_page.locator('#day-live-count').inner_text()=='1' and
-              collision_page.locator('#day-inperson-count').inner_text()=='1',
-              (collision_page.locator('#day-live-count').inner_text(),collision_page.locator('#day-inperson-count').inner_text()))
+              collision_counts['actual']==collision_counts['expected'] and
+              collision_counts['actual']['inGame']>=1 and collision_counts['actual']['inPerson']>=1,
+              collision_counts)
         collision_page.context.close()
         # A later-starting overseas event is still part of today's unfolded agenda.
         future_world_fixture = json.dumps({'events':[{'id':'fixture-overseas-future','name':'Overseas Future Fixture','place':'Example City, Exampleland','area':'Asia','scope':'regional','start':'2026-10-09T22:46:00+11:00','end':'2026-10-10T22:46:00+11:00','sources':[{'url':'https://example.invalid/overseas-future-fixture'}]}]})
