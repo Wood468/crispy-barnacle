@@ -188,6 +188,12 @@ export function sameWriteupRulings(world) {
 // Normally for 30 days after it was last seen; an entry whose official page is on data/watch-pages.json (a hand-added tour leg, say)
 // stays until its own end date passes. `watchUrls` is a Set of normalised page URLs (trailing slash, see normUrl).
 export const normUrl = u => String(u || "").trim().toLowerCase().replace(/\/?$/, "/");
+
+// Curated watch pages must survive the discovery cap, while preserving source order within each group.
+export function prioritizeWatchedPages(pages, watchedUrls = []) {
+  const watched = new Set([...watchedUrls].map(normUrl));
+  return [...pages].sort((a, b) => Number(watched.has(normUrl(b.url))) - Number(watched.has(normUrl(a.url))));
+}
 export function preserveWorldSources(current, previous = [], { watchUrls = new Set() } = {}) {
   const priorById = new Map((previous || []).filter(event => event && event.id).map(event => [event.id, event]));
   const identity = ["id", "name", "place", "area", "scope", "start", "end"];
