@@ -17,6 +17,23 @@ test("multiple community write-ups are corroborated, while official evidence kee
   assert.equal(mergeWorld([...entries, { ...base, url: "https://pokemongo.com/news/pokemon-run-30/", source: "official" }], names)[0].status, "official");
 });
 
+test("curated watch pages are prioritised ahead of the importer page cap", async () => {
+  const { prioritizeWatchedPages, normUrl } = await import("../scripts/importer/world.mjs");
+  const feeds = Array.from({ length: 90 }, (_, index) => ({
+    source: "hub", url: `https://pokemongohub.net/post/event/feed-${index}/`
+  }));
+  const watched = [
+    { source: "official", url: "https://pokemongo.com/en/gowildarea/mexico-city" },
+    { source: "official", url: "https://pokemongo.com/en/gowildarea/sendai" },
+    { source: "leekduck", url: "https://leekduck.com/events/pokemon-go-wild-area-2026-mexico-city/" }
+  ];
+  const ordered = prioritizeWatchedPages([...feeds, ...watched], watched.map(page => page.url));
+  assert.deepEqual(ordered.slice(0, watched.length).map(page => page.url), watched.map(page => page.url));
+  const watchedUrls = new Set(watched.map(page => normUrl(page.url)));
+  assert.equal(ordered.slice(0, 80).filter(page => watchedUrls.has(normUrl(page.url))).length, watched.length);
+  assert.deepEqual(ordered.slice(watched.length).map(page => page.url), feeds.map(page => page.url));
+});
+
 test("tidyName keeps the event part of a long official headline", async () => {
   const { tidyName } = await import("../scripts/importer/world.mjs");
   assert.equal(tidyName("Pokémon RUN 30: Taichung"), "Pokémon RUN 30: Taichung");
