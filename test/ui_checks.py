@@ -243,14 +243,14 @@ with sync_playwright() as p:
           };
         }""")
         check('Primary tabs expose linked tabpanels and exactly one keyboard tab stop',
-              tab_contract['count']==5 and tab_contract['roles'] and tab_contract['controls'] and
+              tab_contract['count']==4 and tab_contract['roles'] and tab_contract['controls'] and
               tab_contract['activeMatches'], tab_contract)
         now_tab = tabs_page.locator('#tabs [data-tab="now"]')
         schedule_tab = tabs_page.locator('#tabs [data-tab="events"]')
-        saved_tab = tabs_page.locator('#tabs [data-tab="saved"]')
+        collect_tab = tabs_page.locator('#tabs [data-tab="collect"]')
         now_tab.focus(); now_tab.press('ArrowRight')
         check('ArrowRight focuses and activates Schedule with roving tabindex',
-              schedule_tab.evaluate("el=>document.activeElement===el && el.tabIndex===0 && el.getAttribute('aria-selected')==='true") and
+              schedule_tab.evaluate("el=>document.activeElement===el && el.tabIndex===0 && el.getAttribute('aria-selected')==='true'") and
               tabs_page.locator('#tab-events').is_visible() and tabs_page.locator('#tab-now').is_hidden())
         schedule_tab.press('ArrowLeft')
         check('ArrowLeft returns to Today and its linked panel',
@@ -258,9 +258,9 @@ with sync_playwright() as p:
               tabs_page.locator('#tab-now').is_visible())
         now_tab.press('End')
         check('End moves to the final primary tab',
-              saved_tab.evaluate("el=>document.activeElement===el && el.tabIndex===0 && el.getAttribute('aria-selected')==='true") and
-              tabs_page.locator('#tab-saved').is_visible())
-        saved_tab.press('Home')
+              collect_tab.evaluate("el=>document.activeElement===el && el.tabIndex===0 && el.getAttribute('aria-selected')==='true'") and
+              tabs_page.locator('#tab-collect').is_visible())
+        collect_tab.press('Home')
         check('Home returns focus and selection to Today',
               now_tab.evaluate("el=>document.activeElement===el && el.tabIndex===0 && el.getAttribute('aria-selected')==='true") and
               tabs_page.locator('#tab-now').is_visible())
