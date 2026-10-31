@@ -656,7 +656,7 @@ export function watchedIds(text) {
 export function parseFeed(xml) {
   const items = [];
   for (const block of String(xml).split("<item>").slice(1, 11)) {
-    const get = (t) => ((block.match(new RegExp("<" + t + ">(?:<!\\[CDATA\\[)?([\s\\S]*?)(?:\\]\\]>)?</" + t + ">")) || [])[1] || "").trim();
+    const get = (t) => ((block.match(new RegExp("<" + t + ">(?:<!\\[CDATA\\[)?([\\s\\S]*?)(?:\\]\\]>)?</" + t + ">")) || [])[1] || "").trim();
     const title = get("title").replace(/&#8217;|&#039;/g, "'").replace(/&amp;/g, "&").replace(/&#8211;/g, "-");
     const link = get("link");
     if (title && /^https:\/\//.test(link)) items.push({ title, link, date: Date.parse(get("pubDate")) || 0 });
