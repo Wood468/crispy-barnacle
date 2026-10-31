@@ -52,7 +52,7 @@ jobs:
   browser:
     # Three parallel shards of test/ui_checks.py (UI_SHARD a, b, c), so a change waits for a third of the checks.
     runs-on: ubuntu-latest
-    timeout-minutes: 30   # a stuck browser run once burned about 650 minutes before failing
+    timeout-minutes: 15   # hard stop for a runaway shard; individual browser waits are bounded below
     strategy:
       fail-fast: false
       matrix:
@@ -89,7 +89,11 @@ jobs:
           set +e
           python test/ui_checks.py 2>&1 | tee /tmp/ui-checks.log
           rc=${PIPESTATUS[0]}
-          # Failed checks show up as annotations on the run, so they can be read without opening the log.
-          grep -E '^FAIL' /tmp/ui-checks.log | cut -c1-300 | head -20 | while read -r l; do echo "::error::$l"; done
-          tail -n 12 /tmp/ui-checks.log | cut -c1-300 | while read -r l; do echo "::error::tail: $l"; done
-          exit $rc
+          # Annotate failures only; a successful summary should not create false error annotations.
+          if [ "$rc" -ne 0 ]; then
+            grep -E '^FAIL' /tmp/ui-checks.log | cut -c1-300 | head -20 | while read -r l; do echo "::error::$l"; done
+            tail -n 20 /tmp/ui-checks.log | cut -c1-300 | while read -r l; do echo "::error::tail: $l"; done
+          else
+            grep -E '^FAILED:' /tmp/ui-checks.log | tail -1
+          fi
+          exit "$rc"

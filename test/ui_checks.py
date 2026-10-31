@@ -185,6 +185,9 @@ with sync_playwright() as p:
     b=p.chromium.launch()
     def page(api=None,marks=None,clock='2026-10-09T22:45:00+11:00',sources=None,gens=None,us=None,extra=None,pin=False,slow_places=False):
         ctx=b.new_context(viewport={'width':390,'height':844},device_scale_factor=2,timezone_id='Australia/Melbourne',locale='en-AU',service_workers='block')
+        # Bound default Playwright waits so a lazy asset or missing control cannot stall a whole shard.
+        ctx.set_default_timeout(10000)
+        ctx.set_default_navigation_timeout(15000)
         pg=ctx.new_page(); pg.errs=[]
         pg.on('pageerror',lambda e:pg.errs.append(str(e)))
         pg.clock.install(time=clock)
@@ -216,6 +219,8 @@ with sync_playwright() as p:
     if on('a'):
         # A stalled initial data request must time out, expose a retry, and leave the primary navigation usable.
         boot_ctx=b.new_context(viewport={'width':390,'height':844},device_scale_factor=2,timezone_id='Australia/Melbourne',locale='en-AU',service_workers='block')
+        boot_ctx.set_default_timeout(10000)
+        boot_ctx.set_default_navigation_timeout(15000)
         boot=boot_ctx.new_page(); boot.clock.install(time='2026-10-09T22:45:00+11:00')
         boot.route('**/data.json',lambda route: None)  # leave the request pending to exercise the timeout
         boot.route('**/art/index.json',ful('{}'))
@@ -720,6 +725,10 @@ with sync_playwright() as p:
         check('no marks: no "You need" reasons anywhere', pg.locator('text=/You need/').count()==0)
         check('no console/page errors on load', pg.errs==[], pg.errs)
         pg.locator('[data-infographic="cur:trek"].info-available').wait_for(state="attached")
+        lazy_thumb = pg.locator('[data-infographic="cur:trek"].igthumb img[loading=lazy]').first
+        lazy_thumb.scroll_into_view_if_needed(timeout=5000)
+        lazy_loaded = pg.wait_for_function("selector => { const img = document.querySelector(selector); return !!img && img.complete && img.naturalWidth > 0; }", arg='[data-infographic="cur:trek"].igthumb img[loading=lazy]', timeout=5000)
+        check('lazy infographic thumbnail decodes after entering the viewport', lazy_loaded)
         check('card with an infographic shows a 44px thumbnail button', pg.locator('[data-infographic="cur:trek"].igthumb img[loading=lazy]').count()==1 and pg.locator('[data-infographic="cur:trek"].igthumb').bounding_box()['width']>=44 and not pg.locator('[data-infographic="cur:trek"]').is_disabled())
         check('card with no infographic shows an always-on Check infographic button (no thumbnail)', pg.locator('[data-igcheck="cur:zorua"]').first.inner_text()=='Check infographic' and not pg.locator('[data-igcheck="cur:zorua"]').first.is_disabled() and pg.locator('[data-igcard="cur:zorua"] img').count()==0)
         check('infographic buttons are accessible', 'Open infographic for' in pg.locator('[data-infographic="cur:trek"]').first.get_attribute('aria-label') and 'infographic' in pg.locator('[data-igcheck="cur:zorua"]').first.get_attribute('aria-label'))
@@ -1299,6 +1308,8 @@ with sync_playwright() as p:
             if req.method=='PUT': puts.append(json.loads(req.post_data))
             route.fulfill(content_type='application/json',body=json.dumps({'enabled':True,'now':1,'entries':{'follow:eevee':{'v':'Eevee','t':99},'form:37:alola':{'v':1,'t':5}},'applied':None}))
         ctx=b.new_context(viewport={'width':390,'height':844},timezone_id='Australia/Melbourne')
+        ctx.set_default_timeout(10000)
+        ctx.set_default_navigation_timeout(15000)
         pg=ctx.new_page(); pg.errs=[]; pg.on('pageerror',lambda e:pg.errs.append(str(e)))
         pg.route('**/api/sources',ful('{"environment":"production","database":true,"enabled":false,"sources":[]}')); pg.route('**/api/events',ful('{"enabled":false,"events":[]}'))
         pg.route('**/api/dex',lambda r:r.fulfill(status=401,body='{}',content_type='application/json')); pg.route('**/api/art*',lambda r:r.fulfill(status=404,body=''))
@@ -1479,7 +1490,10 @@ with sync_playwright() as p:
             pg=page()
             return pg
         def mk(moves='real'):
-            ctx=b.new_context(viewport={'width':390,'height':844},timezone_id='Australia/Melbourne',locale='en-AU'); pg=ctx.new_page(); pg.errs=[]
+            ctx=b.new_context(viewport={'width':390,'height':844},timezone_id='Australia/Melbourne',locale='en-AU')
+            ctx.set_default_timeout(10000)
+            ctx.set_default_navigation_timeout(15000)
+            pg=ctx.new_page(); pg.errs=[]
             pg.on('pageerror',lambda e:pg.errs.append(str(e)))
             pg.route('**/api/sources',ful('{"environment":"production","database":true,"enabled":false,"sources":[]}')); pg.route('**/api/events',ful('{"enabled":false,"events":[]}'))
             pg.route('**/api/userstate*',lambda r:r.fulfill(status=404,body='{}')); pg.route('**/api/dex',lambda r:r.fulfill(status=401,body='{}')); pg.route('**/api/art*',lambda r:r.fulfill(status=404,body=''))
@@ -1629,6 +1643,8 @@ with sync_playwright() as p:
         pg.go_back(); pg.wait_for_timeout(300)
         check('Back from another tab returns to Now', pg.locator('#tab-now').is_visible() and pg.url.startswith('http://localhost:8791'))
         pctx=b.new_context(viewport={'width':390,'height':844},timezone_id='Australia/Melbourne',locale='en-AU')
+        pctx.set_default_timeout(10000)
+        pctx.set_default_navigation_timeout(15000)
         ppg=pctx.new_page(); ppg.goto('http://localhost:8791/',wait_until='domcontentloaded')
         ppg.wait_for_function("!!(navigator.serviceWorker && navigator.serviceWorker.controller)",timeout=15000)
         cached=ppg.evaluate("""async()=>{const names=(await caches.keys()).filter(n=>n.startsWith('gofn-shell-'));for(const name of names){const c=await caches.open(name);if(await c.match('/index.html'))return true;}return false;}""")
