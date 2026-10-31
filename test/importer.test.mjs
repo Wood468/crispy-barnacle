@@ -4,7 +4,7 @@ import { htmlToLines, pageTitle } from "../scripts/importer/text.mjs";
 import { extractFields } from "../scripts/importer/extract.mjs";
 import { mergeSources, similar, disagree } from "../scripts/importer/compare.mjs";
 import { linksFrom, feedItems, discover } from "../scripts/importer/discover.mjs";
-import { pickEvent } from "../scripts/importer/run.mjs";
+import { pickEvent, normaliseLegacyStatuses } from "../scripts/importer/run.mjs";
 
 const leek = `<html><head><meta property="og:title" content="Zorua Community Day | Leek Duck"></head><body><nav>menu</nav><main>
 <h1>Zorua Community Day</h1><h2>Bonuses</h2><ul><li>3&times; Catch XP</li><li>1/4 Hatch Distance</li></ul>
