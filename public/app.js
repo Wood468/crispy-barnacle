@@ -3,19 +3,30 @@ var MAN={};
 (function(){
   var nav=document.getElementById('tabs');if(!nav)return;
   var items=[['now','Today'],['events','Schedule'],['raids','Battle'],['collect','Collection']];
-  nav.innerHTML=items.map(function(t,i){return '<button type="button" role="tab" data-boot-tab="'+t[0]+'" aria-controls="tab-'+t[0]+'" aria-selected="'+(i===0?'true':'false')+'"><span>'+t[1]+'</span></button>'}).join('');
+  nav.innerHTML=items.map(function(t,i){return '<button type="button" role="tab" id="tab-button-'+t[0]+'" data-boot-tab="'+t[0]+'" aria-controls="tab-'+t[0]+'" aria-selected="'+(i===0?'true':'false')+'" tabindex="'+(i===0?'0':'-1')+'"><span>'+t[1]+'</span></button>'}).join('');
+  items.forEach(function(t){var panel=document.getElementById('tab-'+t[0]);if(panel)panel.setAttribute('aria-labelledby','tab-button-'+t[0]);});
   function hide(id){var el=document.getElementById(id);if(el)el.hidden=true}
   function show(id){
     ['now','events','raids','collect','saved'].forEach(function(k){var el=document.getElementById('tab-'+k);if(el)el.hidden=k!==id});
-    Array.prototype.forEach.call(nav.querySelectorAll('[data-boot-tab]'),function(b){b.setAttribute('aria-selected',b.getAttribute('data-boot-tab')===id?'true':'false')});
+    Array.prototype.forEach.call(nav.querySelectorAll('[data-boot-tab]'),function(b){var selected=b.getAttribute('data-boot-tab')===id;b.setAttribute('aria-selected',selected?'true':'false');b.tabIndex=selected?0:-1;});
     if(id==='events'){['sub-calendar','sub-leaks'].forEach(hide);var timeline=document.getElementById('sub-timeline');if(timeline)timeline.hidden=false;}
     if(id==='collect'){['sub-opps','sub-megas','sub-guides','sub-forms','sub-import','tab-best','tab-hundo'].forEach(hide);var dex=document.getElementById('sub-mydex');if(dex)dex.hidden=false;var species=document.getElementById('tab-dex');if(species)species.hidden=false;}
     try{localStorage.setItem('gofn-tab',id)}catch(e){}
     window.scrollTo(0,0);
   }
   function click(e){var b=e.target.closest?e.target.closest('[data-boot-tab]'):null;if(!b||!nav.contains(b))return;show(b.getAttribute('data-boot-tab'));}
-  nav.addEventListener('click',click);
-  window.__GOBootNavClear=function(){nav.removeEventListener('click',click);nav.innerHTML='';};
+  function keydown(e){
+    var b=e.target.closest?e.target.closest('[data-boot-tab]'):null;if(!b||!nav.contains(b))return;
+    var buttons=Array.prototype.slice.call(nav.querySelectorAll('[data-boot-tab]')),index=buttons.indexOf(b),next=null;
+    if(index<0)return;
+    if(e.key==='ArrowRight'||e.key==='ArrowLeft'){
+      var step=e.key==='ArrowRight'?1:-1;if(getComputedStyle(nav).direction==='rtl')step*=-1;
+      next=buttons[(index+step+buttons.length)%buttons.length];
+    }else if(e.key==='Home')next=buttons[0];else if(e.key==='End')next=buttons[buttons.length-1];
+    if(next){e.preventDefault();show(next.getAttribute('data-boot-tab'));next.focus();}
+  }
+  nav.addEventListener('click',click);nav.addEventListener('keydown',keydown);
+  window.__GOBootNavClear=function(){nav.removeEventListener('click',click);nav.removeEventListener('keydown',keydown);nav.innerHTML='';};
 })();
 function withTimeout(p,ms,label){return new Promise(function(resolve,reject){var timer=setTimeout(function(){reject(new Error(label+' timed out'))},ms);Promise.resolve(p).then(function(value){clearTimeout(timer);resolve(value)},function(error){clearTimeout(timer);reject(error)})})}
 Promise.all([
@@ -215,10 +226,21 @@ Promise.all([
   if(window.__GOBootNavClear)window.__GOBootNavClear();
   TABS.forEach(function(t,i){
     var b=document.createElement('button');
-    b.type='button';b.setAttribute('role','tab');b.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="'+t[2]+'"/></svg><span>'+t[1]+'</span>';b.dataset.tab=t[0];
+    b.type='button';b.setAttribute('role','tab');b.id='tab-button-'+t[0];b.setAttribute('aria-controls','tab-'+t[0]);b.tabIndex=i===0?0:-1;b.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="'+t[2]+'"/></svg><span>'+t[1]+'</span>';b.dataset.tab=t[0];
     b.setAttribute('aria-selected',i===0?'true':'false');
+    var panel=$('tab-'+t[0]);if(panel)panel.setAttribute('aria-labelledby',b.id);
     b.addEventListener('click',function(){showTab(t[0])});
     tabsEl.appendChild(b);
+  });
+  tabsEl.addEventListener('keydown',function(e){
+    var current=e.target.closest?e.target.closest('[role="tab"][data-tab]'):null;if(!current||!tabsEl.contains(current))return;
+    var buttons=Array.prototype.slice.call(tabsEl.querySelectorAll('[role="tab"][data-tab]')),index=buttons.indexOf(current),next=null;
+    if(index<0)return;
+    if(e.key==='ArrowRight'||e.key==='ArrowLeft'){
+      var step=e.key==='ArrowRight'?1:-1;if(getComputedStyle(tabsEl).direction==='rtl')step*=-1;
+      next=buttons[(index+step+buttons.length)%buttons.length];
+    }else if(e.key==='Home')next=buttons[0];else if(e.key==='End')next=buttons[buttons.length-1];
+    if(next){e.preventDefault();showTab(next.dataset.tab);next.focus();}
   });
   Object.keys(SUBS).forEach(function(k){
     var bar=$('subnav-'+k);if(!bar)return;
@@ -244,7 +266,7 @@ Promise.all([
     curTab=id;if(sub&&SUBS[id]&&SUBS[id].some(function(x){return x[0]===sub}))curSub[id]=sub;
     if(mode&&MODES[id+'/'+curSub[id]])curMode[id+'/'+curSub[id]]=mode;
     PANEL_IDS.forEach(function(panel){var el=$('tab-'+panel);if(el)el.hidden=panel!==id});
-    Array.prototype.forEach.call(tabsEl.children,function(b){b.setAttribute('aria-selected',b.dataset.tab===id?'true':'false')});
+    Array.prototype.forEach.call(tabsEl.children,function(b){var selected=b.dataset.tab===id;b.setAttribute('aria-selected',selected?'true':'false');b.tabIndex=selected?0:-1;});
     $('hwatch').setAttribute('aria-pressed',id==='saved'&&curSub.saved==='watch'?'true':'false');$('hmenu').setAttribute('aria-pressed',id==='saved'&&curSub.saved==='menu'?'true':'false');
     Object.keys(SUBS).forEach(function(k){
       SUBS[k].forEach(function(sv){var el=$(sv[2]);if(el)el.hidden=!(k===id&&curSub[k]===sv[0])});
