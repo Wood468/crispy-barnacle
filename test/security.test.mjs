@@ -2,7 +2,7 @@ import test from "node:test";
 import { readPrivate } from "./_private.mjs";
 import assert from "node:assert/strict";
 import fs from "node:fs";
-import worker, { withSecurityHeaders, SECURITY_HEADERS } from "../src/worker.js";
+import worker, { withSecurityHeaders, SECURITY_HEADERS, guideImage } from "../src/worker.js";
 import { IMAGE_CSP_HOSTS, OG_IMAGE_HOSTS } from "../src/image-policy.js";
 import { ogImage } from "../src/og.js";
 import { makeDB } from "./helpers.mjs";
@@ -87,6 +87,8 @@ test("the image CSP uses only the audited HTTPS image origins", () => {
   assert.ok(!directive.split(" ").includes("https:"), "generic HTTPS image access must not return");
   for (const origin of IMAGE_CSP_HOSTS) assert.ok(directive.split(" ").includes(origin), origin);
   for (const host of OG_IMAGE_HOSTS) assert.ok(IMAGE_CSP_HOSTS.includes("https://" + host), host + " must be covered by img-src");
+  const raidGuide = guideImage('<img src="https://static.pokebattler.com/CaptGoldfish/Mega_Blastoise_Raid_Guide4.jpg">');
+  assert.ok(raidGuide && IMAGE_CSP_HOSTS.includes(new URL(raidGuide).origin), "Pokebattler guide images must be covered by img-src");
 });
 
 test("Open Graph images are accepted only from audited image CDNs", () => {
