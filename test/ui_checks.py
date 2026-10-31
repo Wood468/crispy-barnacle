@@ -10,12 +10,29 @@ OUT='/tmp/go_ui_'
 def ful(body,ct='application/json'): return lambda route,req: route.fulfill(body=body,content_type=ct)
 fails=[]
 import os
+from pathlib import Path
 SHARD=os.environ.get('UI_SHARD','')  # a, b or c runs one third in CI; empty runs everything
 def on(k): return SHARD in ('',k)
 def ev(i,name,type,start,end,status,feat=None): return {'id':'leekduck:'+i,'name':name,'type':type,'start':start,'end':end,'tzMode':'local','scope':'worldwide_local','region':None,'featured':feat or [],'bonuses':[],'status':status,'reports':[{'source':'leekduck','link':'https://leekduck.com/events/'+i+'/'}]}
 def check(name,cond,extra=''):
     print(('PASS ' if cond else 'FAIL ')+name+(' '+str(extra) if extra and not cond else ''))
     if not cond: fails.append(name)
+
+# Design-token contract: semantic roles are shared by the base and dashboard layers,
+# and versioned stylesheets are included in the offline shell.
+ROOT = Path(__file__).resolve().parent.parent
+BASE_CSS = (ROOT / 'public' / 'styles.css').read_text()
+DASH_CSS = (ROOT / 'public' / 'dash.css').read_text()
+INDEX_HTML = (ROOT / 'public' / 'index.html').read_text()
+SW_JS = (ROOT / 'public' / 'sw.js').read_text()
+check('design tokens define semantic colour, spacing, radius, typography and motion roles',
+      all(token in BASE_CSS for token in ['--color-canvas:', '--color-surface:', '--color-text-muted:', '--space-4:', '--radius-card:', '--font-body:', '--motion-standard:']))
+check('dashboard status and surface tokens retain compatibility aliases',
+      all(token in DASH_CSS for token in ['--surface-glass:', '--border-subtle:', '--color-success:', '--color-warning:', '--color-danger:', '--glass:var(--surface-glass)', '--ring:var(--border-subtle)']))
+check('versioned stylesheets are referenced by the page and precached offline',
+      all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261031c', '/dash.css?v=20261031c']))
+check('offline shell cache version advances with the stylesheet token release',
+      "gofn-shell-v137" in SW_JS)
 with sync_playwright() as p:
     b=p.chromium.launch()
     def page(api=None,marks=None,clock='2026-10-09T22:45:00+11:00',sources=None,gens=None,us=None,extra=None,pin=False,slow_places=False):
