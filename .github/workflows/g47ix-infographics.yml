@@ -28,14 +28,14 @@ jobs:
     timeout-minutes: 8
     steps:
       - name: Check out repository
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           ref: main
           fetch-depth: 1
       - name: Restore pictures from R2
         run: bash scripts/r2-sync.sh restore
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: 22
       - name: Validate discovery and matching code
@@ -140,7 +140,7 @@ jobs:
           gh pr create --base main --head "$(git branch --show-current)" --title "Review: new G47IX infographics matched to events" --body "Several signals agreed (caption, the picture's text, a date inside the event, a featured Pokémon). Check each image shows the right event, then merge. Close the PR to reject. Unsure pictures wait in the app's Infographic review list instead."
       - name: Upload review queue
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: g47ix-infographic-review
           path: artifacts/g47ix-candidates.json
@@ -155,7 +155,7 @@ jobs:
     concurrency:
       group: nudge
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           ref: main
       # The pictures live in R2, not git. Without this the picture file is missing and Telegram only gets the caption as text.
@@ -163,7 +163,7 @@ jobs:
         env:
           R2_ONLY: infographics
         run: bash scripts/r2-sync.sh restore
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: 22
       - name: Tell me on Telegram about new infographics
