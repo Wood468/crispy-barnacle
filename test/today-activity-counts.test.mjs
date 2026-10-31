@@ -16,9 +16,14 @@ test("Today live summary separates in-game and in-person activity without droppi
   assert.deepEqual(counts, { inGame: 3, inPerson: 3, total: 6 });
 });
 
-test("Today keeps live regional events visible in the Happening now group", () => {
-  assert.match(dash, /var regionalToday = regList\(\)\.filter\(function \(e\) \{ return e\.start <= t && e\.end > t; \}\)/);
-  assert.match(dash, /phaseGroup\('Happening now', liveToday\.length \+ regionalToday\.length/);
+test("Today keeps overseas events visible and separates live from later-today regional activity", () => {
+  assert.match(dash, /var todayRegional = regList\(\)\.filter\(function \(e\) \{ return e\.start < endDay && e\.end > dayStart; \}\)/);
+  assert.match(dash, /var liveRegional = todayRegional\.filter\(function \(e\) \{ return e\.start <= t && e\.end > t; \}\)/);
+  assert.match(dash, /var laterRegional = todayRegional\.filter\(function \(e\) \{ return e\.start > t; \}\)/);
+  assert.match(dash, /phaseGroup\('Happening now', liveToday\.length \+ liveRegional\.length/);
+  assert.match(dash, /phaseGroup\('Later today', laterToday\.length \+ laterRegional\.length/);
+  assert.match(dash, /function worldDate\(value, endOfDay\)/);
   assert.match(html, /id="day-inperson-count"/);
   assert.match(html, /<span>In person<\/span>/);
+  assert.match(html, /id="today-focus-strip"/);
 });
