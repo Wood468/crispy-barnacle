@@ -47,7 +47,7 @@ jobs:
         with:
           python-version: "3.12"
       - name: Run Discord scraper regression tests
-        run: python -m unittest discover -s test -p 'test_discord_scraper_sync.py'
+        run: python -m unittest discover -s test -p 'test_*.py'
 
   browser:
     # Three parallel shards of test/ui_checks.py (UI_SHARD a, b, c), so a change waits for a third of the checks.
@@ -97,3 +97,24 @@ jobs:
             grep -E '^FAILED:' /tmp/ui-checks.log | tail -1
           fi
           exit "$rc"
+
+
+  production-image-audit:
+    # Informational, read-only sample of the live public site; never blocks code checks.
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install Playwright
+        run: |
+          pip install playwright
+          python -m playwright install --with-deps chromium
+      - name: Measure production image waterfall (read-only)
+        env:
+          GO_FIELD_NOTES_AUDIT_URL: https://pogo.michaelpuff.com/
+        run: python test/production_image_audit.py
