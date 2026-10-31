@@ -49,7 +49,7 @@ check('offline shell cache version advances with the stylesheet token release',
 check('Today has separate primary and supporting-panel layout wrappers',
       all(token in INDEX_HTML for token in ['class="today-layout"', 'class="today-main"', 'class="today-sidebar"', 'id="home-now"', 'id="action-centre"', 'id="foryou-sec"', 'id="weekly-sec"', 'id="buy-sec"']))
 check('desktop Today uses two columns while mobile preserves action-first order',
-      all(token in DASH_CSS for token in ['#tab-now .today-layout{display:flex;flex-direction:column;gap:20px;min-width:0}', '#tab-now .today-sidebar{display:contents}', '#tab-now #action-centre{order:0}', '#tab-now .today-main{order:1}', '@media(min-width:960px)', 'grid-template-columns:minmax(0,1.55fr) minmax(18rem,.9fr)', '#tab-now .today-sidebar{grid-column:2;display:grid']))
+      all(token in DASH_CSS for token in ['#tab-now .today-layout{display:flex;flex-direction:column;gap:20px;min-width:0}', '#tab-now .today-sidebar{display:contents}', '#tab-now #action-centre{order:0}', '#tab-now .today-main{order:1;min-width:0}', '@media(min-width:960px)', 'grid-template-columns:minmax(0,1.55fr) minmax(18rem,.9fr)', '#tab-now .today-sidebar{grid-column:2;display:grid']))
 with sync_playwright() as p:
     b=p.chromium.launch()
     def page(api=None,marks=None,clock='2026-10-09T22:45:00+11:00',sources=None,gens=None,us=None,extra=None,pin=False,slow_places=False):
