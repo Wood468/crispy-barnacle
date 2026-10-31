@@ -1,5 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 
 test("multiple community write-ups are corroborated, while official evidence keeps precedence", async () => {
   const { mergeWorld, collapseWorld } = await import("../scripts/importer/world.mjs");
@@ -64,4 +65,65 @@ test("splits multiple city/date stops from one official announcement paragraph",
     now: Date.parse("2026-10-30T12:00:00Z"),
     splitUrls: new Set([normUrl(page.url)])
   }), false);
+});
+
+test("Wild Area city pages retain official source coverage without merging destinations", async () => {
+  const { entriesFromPage, mergeWorld, keepOldWorld, normUrl } = await import("../scripts/importer/world.mjs");
+  const mexicoUrl = "https://pokemongo.com/en/gowildarea/mexico-city";
+  const sendaiUrl = "https://pokemongo.com/en/gowildarea/sendai";
+  const officialPages = [
+    {
+      title: "Mexico City – GO Wild Area 2026", url: mexicoUrl, source: "official",
+      lines: [{ text: "Pokémon GO Wild Area Visits Mexico City, Mexico, November 6–8, 2026" }, { text: "Real-world event experiences in Mexico City, with gameplay available throughout the metropolitan area." }]
+    },
+    {
+      title: "Sendai • Tohoku – GO Wild Area 2026", url: sendaiUrl, source: "official",
+      lines: [{ text: "Pokémon GO Wild Area Visits Sendai, Miyagi, November 6–8, 2026" }, { text: "Real-world event experiences in Sendai, with gameplay available throughout Miyagi Prefecture." }]
+    }
+  ];
+  const officialEntries = officialPages.map(page => entriesFromPage(page, "2026-10-31")[0]);
+  assert.deepEqual(officialEntries.map(e => [e.place, e.start, e.end]), [
+    ["Mexico City, Mexico", "2026-11-06", "2026-11-08"],
+    ["Sendai and Tohoku, Japan", "2026-11-06", "2026-11-08"]
+  ]);
+  const seeds = [
+    { name: "GO Wild Area 2026 Mexico City", place: "Mexico City, Mexico", area: "Americas", scope: "regional", start: "2026-11-06", end: "2026-11-08", datesKnown: true, url: "https://www.serebii.net/pokemongo/reallifeevents.shtml", source: "serebii" },
+    { name: "GO Wild Area 2026 Sendai Tohoku", place: "Sendai and Tohoku, Japan", area: "Asia", scope: "regional", start: "2026-11-06", end: "2026-11-08", datesKnown: true, url: "https://www.serebii.net/pokemongo/reallifeevents.shtml", source: "serebii" }
+  ];
+  const communityEntries = officialEntries.map((entry, i) => ({
+    ...entry,
+    url: i === 0 ? "https://leekduck.com/events/pokemon-go-wild-area-2026-mexico-city/" : "https://leekduck.com/events/pokemon-go-wild-area-2026-sendai-japan/",
+    source: "leekduck"
+  }));
+  const merged = mergeWorld([...seeds, ...officialEntries, ...communityEntries], {
+    official: "Pokémon GO (official)", leekduck: "Leek Duck", serebii: "Serebii"
+  });
+  assert.equal(merged.length, 2);
+  for (const event of merged) {
+    assert.equal(event.status, "official");
+    assert.deepEqual(event.sources.map(s => s.id).sort(), ["leekduck", "official", "serebii"]);
+    assert.equal(event.start, "2026-11-06");
+    assert.equal(event.end, "2026-11-08");
+  }
+  const oldMexico = {
+    ...merged.find(e => e.place === "Mexico City, Mexico"),
+    seen: "2026-10-31"
+  };
+  assert.equal(keepOldWorld(oldMexico, {
+    cutoff: "2026-10-17", today: "2026-10-31", now: Date.parse("2026-10-31T00:00:00Z"),
+    watchUrls: new Set([normUrl(mexicoUrl)])
+  }), true);
+
+  const snapshot = JSON.parse(readFileSync(new URL("../public/world-events.json", import.meta.url), "utf8")).events;
+  const watch = JSON.parse(readFileSync(new URL("../data/watch-pages.json", import.meta.url), "utf8")).pages.map(p => p.url);
+  for (const [id, officialUrl, leekduckUrl] of [
+    ["w-go-wild-area-2026-mexico-city", mexicoUrl, "https://leekduck.com/events/pokemon-go-wild-area-2026-mexico-city/"],
+    ["w-go-wild-area-2026-sendai-tohoku", sendaiUrl, "https://leekduck.com/events/pokemon-go-wild-area-2026-sendai-japan/"]
+  ]) {
+    const event = snapshot.find(e => e.id === id);
+    assert.equal(event.status, "official");
+    assert.ok(event.sources.some(s => s.url === officialUrl));
+    assert.ok(event.sources.some(s => s.url === leekduckUrl));
+    assert.ok(watch.includes(officialUrl), "the official city page remains watched by the importer");
+  }
 });
