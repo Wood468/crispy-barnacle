@@ -41,6 +41,15 @@ def summarize(records: list[dict]) -> dict:
     }
 
 
+def is_today_tab(attributes: dict) -> bool:
+    """Recognise the live app tab and the temporary boot-navigation tab."""
+    return (
+        attributes.get("data-tab") == "now"
+        or attributes.get("data-boot-tab") == "now"
+        or attributes.get("aria-controls") == "tab-now"
+    )
+
+
 def detail_poster_results(expected: list[dict], records: list[dict]) -> list[dict]:
     """Match each event poster to an image response observed after its detail opens."""
     results = []
@@ -148,7 +157,12 @@ def run_audit(target: str) -> dict:
             today_tab = None
             for index in range(tabs.count()):
                 tab = tabs.nth(index)
-                if (tab.get_attribute("aria-controls") or "") == "tab-now":
+                attributes = {
+                    "data-tab": tab.get_attribute("data-tab") or "",
+                    "data-boot-tab": tab.get_attribute("data-boot-tab") or "",
+                    "aria-controls": tab.get_attribute("aria-controls") or "",
+                }
+                if is_today_tab(attributes):
                     today_tab = tab
                     break
             today_tab_reactivated = today_tab is not None
@@ -308,6 +322,8 @@ def main() -> int:
         write_summary(report)
         if not report["schedule_tab_opened"]:
             print("::warning::The Schedule tab was not found; only Today was measured.")
+        if not report["today_tab_reactivated"]:
+            print("::warning::The Today tab could not be reactivated; Season/GO Pass detail phase was skipped.")
         if report["page_errors"]:
             print(f"::warning::{len(report['page_errors'])} page error(s) occurred during the sample.")
         if report["season_detail_errors"]:
