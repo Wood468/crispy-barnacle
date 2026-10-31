@@ -1,12 +1,12 @@
 {
- "updated": "2026-10-31T02:16:52.506Z",
+ "updated": "2026-10-31T22:47:35.435Z",
  "seeded": true,
  "channels": [
   {
    "src": "events",
    "name": "dm-events",
    "state": "ok",
-   "count": 8
+   "count": 10
   },
   {
    "src": "reports",
@@ -18,10 +18,37 @@
    "src": "gamedata",
    "name": "dm-gamedata",
    "state": "ok",
-   "count": 24
+   "count": 25
   }
  ],
  "items": [
+  {
+   "id": "1566201257729720540",
+   "src": "events",
+   "title": "Catch 13 Ghost-type Pokémon - Halloween Rowlet",
+   "text": "Catch 13 Ghost-type Pokémon - Halloween Rowlet\n> Shiny Rate: 0.78125% (1/128)\nCatch 13 Ghost-type Pokémon - Greavard\nMake 6 Nice Throws - Litwick, Sandygast, Greavard\nWin 3 raids - Hat and Capelet Pikachu\n> Shiny Rate: 0.78125% (1/128)",
+   "link": "",
+   "image": "",
+   "date": "2026-10-31T21:24:38.455Z"
+  },
+  {
+   "id": "1566198484225232967",
+   "src": "events",
+   "title": "New image",
+   "text": "",
+   "link": "",
+   "image": "",
+   "date": "2026-10-31T21:13:37.200Z"
+  },
+  {
+   "id": "1566181137670471845",
+   "src": "gamedata",
+   "title": "Trainer Battles (PvP):",
+   "text": "Trainer Battles (PvP):\nType: Ghost\nPower: 55.0\nEnergy: -45\nGyms and Raids (PvE):\nType: Ghost\nPower: 160.0\nDuration: 2500 ms (2.50 s)\nStart: 2000 ms (2.00 s)\nEnd: 2400 ms (2.40 s)\nEnergy: -100\n\nStats for the move Night Shade+, Mega Sableye's additional Charged Attack, have been added to the game master.\n\n@subscriber @miner",
+   "link": "",
+   "image": "",
+   "date": "2026-10-31T20:04:41.459Z"
+  },
   {
    "id": "1565880899315175445",
    "src": "gamedata",
