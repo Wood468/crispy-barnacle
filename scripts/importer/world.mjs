@@ -170,7 +170,7 @@ export function mergeWorld(entries, sources) {
     let id = slug; for (let n = 2; out.some(o => o.id === id); n++) id = slug + "-" + (e.start || n);
     out.push({ id, name: e.name, place: e.place, area: e.area, scope: e.scope, start: e.start, end: e.end, datesKnown: e.datesKnown, sources: [src] });
   }
-  return out.map(o => ({ ...o, status: o.sources.some(s => s.id === "official") ? "official" : o.sources.length > 1 ? "confirmed" : "single" }));
+  return out.map(o => ({ ...o, status: o.sources.some(s => s.id === "official") ? "official" : o.sources.length > 1 ? "corroborated" : "single" }));
 }
 
 // Two entries built from the same write-up in one run are that announcement's separate stops (venues, cities), never one event:
@@ -213,6 +213,6 @@ export function collapseWorld(world, rules = null) {
       drop.add(d); merged.push({ kept: k.id, dropped: d.id, why });
     }
   }
-  const events = world.filter(w => !drop.has(w)).map(w => ({ ...w, status: (w.sources || []).some(s => s.id === "official") ? "official" : (w.sources || []).length > 1 ? "confirmed" : w.status || "single" }));
+  const events = world.filter(w => !drop.has(w)).map(w => ({ ...w, status: (w.sources || []).some(s => s.id === "official") ? "official" : (w.sources || []).length > 1 ? "corroborated" : w.status || "single" }));
   return { events, merged };
 }
