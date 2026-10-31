@@ -55,6 +55,28 @@ check('base stylesheet semantic type-scale roles preserve their exact values and
       all(re.search(re.escape(token) + r'\s*:\s*' + re.escape(value) + r'\s*;', BASE_CSS) and
           len(re.findall(r'font-size\s*:\s*var\(' + re.escape(token) + r'\)(?=[;}])', BASE_COMPONENT_CSS)) == count
           for token, (value, count) in TYPE_SCALE.items()))
+DASH_TYPE_SCALE = {
+    '--type-meta': 12,
+    '--type-meta-compact': 11,
+    '--type-body-compact': 9,
+    '--type-label': 7,
+    '--type-body-sm': 7,
+    '--type-overline': 7,
+    '--type-button': 6,
+    '--type-caption': 6,
+    '--type-intro': 4,
+    '--type-body-emphasis': 4,
+    '--type-stat': 3,
+    '--type-heading': 1,
+    '--type-caption-compact': 1,
+    '--type-body-lg': 1,
+}
+DASH_TYPE_VALUES = ['.78rem', '.8rem', '.84rem', '.75rem', '.82rem', '.72rem', '.85rem', '.68rem', '1.05rem', '.9rem', '2rem', '1.5rem', '.62rem', '1.1rem']
+check('dashboard uses the shared semantic type scale for 79 exact font-size declarations',
+      all(len(re.findall(r'font-size\s*:\s*var\(' + re.escape(token) + r'\)(?=[;}])', DASH_CSS)) == count
+          for token, count in DASH_TYPE_SCALE.items()) and
+      all(not re.search(r'font-size\s*:\s*' + re.escape(value) + r'(?=[;}])', DASH_CSS)
+          for value in DASH_TYPE_VALUES))
 check('base stylesheet components use semantic palette and typography roles while legacy aliases remain defined',
       re.search(r'var\(--(?:bg|panel|soft|line|fg|muted|body|inv-bg|inv-fg|gold|gold-fg|display|sans|mono)\b', BASE_COMPONENT_CSS) is None and
       all(token in BASE_COMPONENT_CSS for token in ['var(--color-canvas)', 'var(--color-surface)', 'var(--color-surface-raised)', 'var(--color-border)', 'var(--color-text)', 'var(--color-text-muted)', 'var(--color-text-body)', 'var(--color-inverse-surface)', 'var(--color-inverse-text)', 'var(--color-accent)', 'var(--color-accent-text)', 'var(--font-display)', 'var(--font-body)', 'var(--font-mono)']) and
@@ -83,9 +105,9 @@ check('Today focus strip has four data-backed signals and a responsive semantic 
       all(token in DASH_JS for token in ['function renderTodayStrip', '6 * 60 * 60 * 1000', 'activity.inGame', 'activity.inPerson', 'D.rotation', 'D.maxBattles']) and
       all(token in DASH_CSS for token in ['.today-focus-strip', '.today-focus-card', 'grid-template-columns:repeat(2,minmax(0,1fr))']))
 check('versioned stylesheets are referenced by the page and precached offline',
-      all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261031g', '/dash.css?v=20261031o']))
+      all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261031g', '/dash.css?v=20261031p']))
 check('offline shell cache version advances with the stylesheet token release',
-      "gofn-shell-v153" in SW_JS)
+      "gofn-shell-v154" in SW_JS)
 check('versioned dashboard scripts are referenced by the entry page and precached offline',
       '/app.js?v=20261031e' in INDEX_HTML and '/app.js?v=20261031e' in SW_JS and
       '/dash.js?v=20261031e' in APP_JS and '/dash.js?v=20261031e' in SW_JS and
