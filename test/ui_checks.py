@@ -254,7 +254,7 @@ with sync_playwright() as p:
               tabs_page.locator('#tab-events').is_visible() and tabs_page.locator('#tab-now').is_hidden())
         schedule_tab.press('ArrowLeft')
         check('ArrowLeft returns to Today and its linked panel',
-              now_tab.evaluate("el=>document.activeElement===el && el.tabIndex===0 && el.getAttribute('aria-selected')==='true") and
+              now_tab.evaluate("el=>document.activeElement===el && el.tabIndex===0 && el.getAttribute('aria-selected')==='true'") and
               tabs_page.locator('#tab-now').is_visible())
         now_tab.press('End')
         check('End moves to the final primary tab',
@@ -262,7 +262,7 @@ with sync_playwright() as p:
               tabs_page.locator('#tab-collect').is_visible())
         collect_tab.press('Home')
         check('Home returns focus and selection to Today',
-              now_tab.evaluate("el=>document.activeElement===el && el.tabIndex===0 && el.getAttribute('aria-selected')==='true") and
+              now_tab.evaluate("el=>document.activeElement===el && el.tabIndex===0 && el.getAttribute('aria-selected')==='true'") and
               tabs_page.locator('#tab-now').is_visible())
         tabs_page.context.close()
 
@@ -280,11 +280,11 @@ with sync_playwright() as p:
         boot.locator('nav.tabs button[data-boot-tab="now"]').focus()
         boot.locator('nav.tabs button[data-boot-tab="now"]').press('ArrowRight')
         check('fallback navigation supports ArrowRight while event data is unavailable',
-              boot.locator('nav.tabs button[data-boot-tab="events"]').evaluate("el=>document.activeElement===el && el.tabIndex===0 && el.getAttribute('aria-selected')==='true") and
+              boot.locator('nav.tabs button[data-boot-tab="events"]').evaluate("el=>document.activeElement===el && el.tabIndex===0 && el.getAttribute('aria-selected')==='true'") and
               boot.locator('#tab-events').is_visible())
         boot.locator('nav.tabs button[data-boot-tab="events"]').press('ArrowLeft')
         check('fallback navigation supports ArrowLeft back to Today',
-              boot.locator('nav.tabs button[data-boot-tab="now"]').evaluate("el=>document.activeElement===el && el.tabIndex===0 && el.getAttribute('aria-selected')==='true") and
+              boot.locator('nav.tabs button[data-boot-tab="now"]').evaluate("el=>document.activeElement===el && el.tabIndex===0 && el.getAttribute('aria-selected')==='true'") and
               boot.locator('#tab-now').is_visible())
         boot.click('nav.tabs button[data-boot-tab="raids"]')
         check('fallback navigation can reach Battle without loaded event data',boot.locator('#tab-raids').is_visible() and boot.locator('#tab-now').is_hidden())
