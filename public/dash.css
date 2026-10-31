@@ -340,7 +340,7 @@ header.top{display:flex;align-items:flex-start;justify-content:space-between;gap
 }
 #tab-now .day-brief{margin-bottom:0}
 .today-focus-strip{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--space-2);margin:0 0 var(--space-1);min-width:0}
-.today-focus-card{display:grid;align-content:start;gap:5px;min-width:0;min-height:86px;padding:11px var(--space-3);border:1px solid var(--border-subtle);border-radius:var(--radius-panel);background:var(--color-surface);box-shadow:var(--shadow-card)}
+.today-focus-card{display:grid;align-content:start;gap:5px;min-width:0;min-height:86px;padding:11px var(--space-3);border:1px solid var(--color-border-card);border-radius:var(--radius-panel);background:var(--color-surface-card-solid);box-shadow:var(--shadow-card)}
 .today-focus-label{font:700 var(--type-caption-compact) var(--font-mono);letter-spacing:.09em;text-transform:uppercase;color:var(--color-accent)}
 .today-focus-card strong{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;overflow-wrap:anywhere;font:750 .88rem/1.2 var(--font-display);color:var(--color-text)}
 .today-focus-card small{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;overflow-wrap:anywhere;font:500 var(--type-caption)/1.35 var(--font-body);color:var(--color-text-muted)}
