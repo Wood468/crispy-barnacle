@@ -2,7 +2,7 @@
  "updated": "2026-10-30T20:18:10.238Z",
  "items": [
   {
-   "linked": false,
+   "linked": true,
    "id": "discord:1565738053157392384",
    "title": "GMax Gengar counters v2",
    "image": "/infographics/g47ix/discord-1565738053157392384.png",
@@ -36,7 +36,7 @@
    ]
   },
   {
-   "linked": false,
+   "linked": true,
    "id": "discord:1565674951699071116",
    "title": "Chandelure",
    "image": "/infographics/g47ix/discord-1565674951699071116.jpg",
