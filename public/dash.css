@@ -172,11 +172,13 @@ header.top{padding-bottom:4px}
 
 /* header: Watchlist and Menu */
 header.top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
-.hbtns{display:flex;gap:8px;flex:none}
-.hbtn{position:relative;width:44px;height:44px;border-radius:var(--radius-control);border:1px solid var(--border-subtle);background:var(--surface-glass);color:var(--color-text);display:inline-flex;align-items:center;justify-content:center;padding:0;cursor:pointer}
+.hbtns{display:flex;align-items:center;gap:8px;flex:none}
+.hbtn{position:relative;width:44px;height:44px;border-radius:var(--radius-control);border:1px solid var(--border-subtle);background:var(--surface-glass);color:var(--color-text);display:inline-flex;align-items:center;justify-content:center;padding:0;cursor:pointer;transition:background var(--motion-fast) var(--motion-ease),border-color var(--motion-fast) var(--motion-ease),transform var(--motion-fast) var(--motion-ease)}
 .hbtn svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
 .hbtn[aria-pressed="true"]{background:var(--color-inverse-surface);color:var(--color-inverse-text);border-color:var(--color-inverse-surface)}
-.hbd{position:absolute;top:-5px;right:-5px;min-width:20px;height:20px;border-radius:10px;background:var(--color-inverse-surface);color:var(--color-inverse-text);font:700 12px/20px var(--font-body,inherit);text-align:center;padding:0 5px}
+.hbtn:not([aria-pressed="true"]):hover{background:var(--color-surface-raised);border-color:color-mix(in srgb,var(--color-accent) 48%,var(--border-subtle))}
+.hbtn:active{transform:translateY(1px) scale(.97)}
+.hbd{position:absolute;top:-6px;right:-6px;min-width:22px;height:22px;border:2px solid var(--color-canvas);border-radius:var(--radius-pill);background:var(--color-accent);color:var(--color-accent-text);font:700 11px/18px var(--font-mono);font-variant-numeric:tabular-nums;text-align:center;padding:0 5px;box-shadow:0 2px 8px color-mix(in srgb,var(--color-text) 18%,transparent)}
 .hbtn[hidden]{display:none}
 .hbtn.ig-action{width:auto;min-width:44px;padding:0 10px;gap:6px;border-color:color-mix(in srgb,var(--color-accent) 70%,var(--border-subtle));color:var(--color-accent)}
 .hbtn.ig-action svg{width:18px;height:18px}
@@ -351,8 +353,27 @@ header.top{display:flex;align-items:flex-start;justify-content:space-between;gap
 @media(max-width:560px){.week-day-events{grid-template-columns:minmax(0,1fr);gap:9px}.week-day-head{gap:7px}.week-day-events>.week-card{padding:11px}.week-day-events>.week-card .evc-title-row h3{font-size:1.18rem}}
 
 /* Empty Today states still give the player a clear next action. */
-.today-empty{display:grid;gap:10px;justify-items:start;padding:2px 0 8px}
-.today-empty>.empty{padding:8px 0;text-align:left}
+/* Quiet states: give empty agendas and watchlists a deliberate, consistent home. */
+.event-agenda > .empty,
+#followed > .empty,
+#savedev > .empty,
+#opps > .empty {
+  display:flex;align-items:center;gap:12px;min-height:64px;margin:0;padding:14px 16px;
+  border:1px dashed var(--border-subtle);border-radius:var(--radius-card);
+  background:var(--surface-glass);text-align:left;
+}
+.event-agenda > .empty::before,
+#followed > .empty::before,
+#savedev > .empty::before,
+#opps > .empty::before,
+.today-empty > .empty::before {
+  content:"◇";display:grid;place-items:center;flex:none;width:30px;height:30px;
+  border:1px solid color-mix(in srgb,var(--color-accent) 30%,var(--border-subtle));
+  border-radius:10px;background:color-mix(in srgb,var(--color-accent) 9%,var(--color-surface));
+  color:var(--color-accent);font:700 1.15rem/1 var(--font-display);
+}
+.today-empty{display:grid;gap:10px;justify-items:start;padding:14px 16px;border:1px dashed var(--border-subtle);border-radius:var(--radius-card);background:var(--surface-glass)}
+.today-empty>.empty{display:flex;align-items:center;gap:12px;padding:0;text-align:left}
 .today-next-up{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:4px 12px;width:100%;padding:14px 15px;border:1px solid color-mix(in srgb,var(--color-accent) 35%,var(--border-subtle));border-radius:16px;background:linear-gradient(135deg,color-mix(in srgb,var(--color-accent) 8%,var(--surface-glass)),var(--surface-glass) 68%);color:var(--color-text);text-align:left;font:inherit;cursor:pointer}
 .today-next-up:focus-visible{outline:2px solid var(--color-accent);outline-offset:3px}
 .today-next-kicker{grid-column:1/-1;font:700 .64rem var(--font-mono);letter-spacing:.12em;color:var(--color-accent)}
@@ -360,7 +381,8 @@ header.top{display:flex;align-items:flex-start;justify-content:space-between;gap
 .today-next-time{grid-column:1;font-size:.76rem;color:var(--color-text-muted)}
 .today-next-action{grid-column:2;grid-row:2/4;align-self:center;display:flex;align-items:center;gap:5px;color:var(--color-accent);font-size:.76rem;font-weight:800;white-space:nowrap}
 .today-empty-note{margin:0;color:var(--color-text-muted);font-size:.82rem}
-@media(max-width:380px){.today-next-up{gap:4px 8px;padding:12px}.today-next-action{font-size:.7rem}}
+@media(max-width:380px){.today-empty{padding:12px}.today-next-up{gap:4px 8px;padding:12px}.today-next-action{font-size:.7rem}}
+@media(prefers-reduced-motion:reduce){.hbtn{transition:none}.hbtn:active{transform:none}}
 #tab-now .event-agenda .evc { height: 100%; }
 #tab-now .event-agenda .evc-art { min-height: 72px; }
 
