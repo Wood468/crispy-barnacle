@@ -198,19 +198,19 @@ export function preserveWorldSources(current, previous = [], { watchUrls = new S
     // Carry forward only exact, previously recorded source objects. Current event facts
     // (name, destination, dates and scope) always come from this run's source results.
     const currentSources = Array.isArray(event.sources) ? event.sources : [];
-    const currentByUrl = new Map(currentSources.map(source => [normUrl(source?.url), source]).filter(([url]) => url));
+    const currentByUrl = new Map(currentSources.filter(source => source?.url).map(source => [normUrl(source.url), source]));
     const sources = [];
     // Keep the last-good attribution order (official, corroborating sources, etc.),
     // preferring any refreshed current-run object for the same URL.
     for (const source of Array.isArray(prior.sources) ? prior.sources : []) {
-      const url = normUrl(source?.url);
+      const url = source?.url ? normUrl(source.url) : "";
       if (!source?.id || !url || !watchUrls.has(url)) continue;
       const refreshed = currentByUrl.get(url);
       const candidate = refreshed || source;
       if (!sources.some(existing => normUrl(existing?.url) === url)) sources.push(candidate);
     }
     for (const source of currentSources) {
-      const url = normUrl(source?.url);
+      const url = source?.url ? normUrl(source.url) : "";
       if (url && !sources.some(existing => normUrl(existing?.url) === url)) sources.push(source);
     }
     const status = sources.some(source => source.id === "official")
