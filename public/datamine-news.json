@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-30T18:49:12.057Z",
+ "updated": "2026-10-31T02:16:52.506Z",
  "seeded": true,
  "channels": [
   {
@@ -18,10 +18,28 @@
    "src": "gamedata",
    "name": "dm-gamedata",
    "state": "ok",
-   "count": 22
+   "count": 24
   }
  ],
  "items": [
+  {
+   "id": "1565880899315175445",
+   "src": "gamedata",
+   "title": "This avatar item was updated.",
+   "text": "This avatar item was updated.",
+   "link": "",
+   "image": "",
+   "date": "2026-10-31T00:11:39.057Z"
+  },
+  {
+   "id": "1565880242252292197",
+   "src": "gamedata",
+   "title": "Go ahead and swing from the mega Chandelure 🔥 🕯️",
+   "text": "Go ahead and swing from the mega Chandelure 🔥 🕯️ \n\nThe remote raid limit has been raised from 10 to 20\n\n@subscriber @miner",
+   "link": "",
+   "image": "",
+   "date": "2026-10-31T00:09:02.401Z"
+  },
   {
    "id": "1565730387232297084",
    "src": "gamedata",
