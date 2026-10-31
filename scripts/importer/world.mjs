@@ -91,7 +91,10 @@ export function fromPage(page, today = new Date().toISOString().slice(0, 10)) {
   const dateText = [...(page.fields?.dates || []), ...(page.lines || []).slice(0, 40).map(l => l.text)].join(" . ");
   const range = parseDateRange(dateText, +today.slice(0, 4));
   const where = placeOf(title, text);
-  const regional = IN_PERSON.test(title) || (!!where && IN_PERSON.test(text.slice(0, 600)));
+  // A global stream can mention the physical venue it celebrates; its own title takes precedence.
+  // Do not turn an online Twitch broadcast into a second in-person stop at that venue.
+  const virtual = /\\btwitch\\s+(?:broadcast|livestream|live stream)\\b|\\bvirtual\\s+(?:event|broadcast)\\b|\\bonline\\s+broadcast\\b/i.test(title);
+  const regional = !virtual && (IN_PERSON.test(title) || (!!where && IN_PERSON.test(text.slice(0, 600))));
   if (SKIP_NEWS.test(title)) return null;
   if (SKIP.test(title) && !where) return null;
   if (!regional && !range) return null;
