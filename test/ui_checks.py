@@ -52,7 +52,7 @@ check('desktop navigation rail is breakpoint-scoped and mobile keeps the bottom 
       'nav.tabs{position:fixed;left:0;right:0;bottom:0' in BASE_CSS)
 check('calendar weekday labels expand to full names on wide screens',
       all(name in DASH_JS for name in ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']) and
-      all(token in DASH_CSS for token in ['.ch-short{display:inline}', '.ch-long{display:none}', '@media (min-width:720px){.ch-short{display:none}.ch-long{display:inline}}']))
+      all(token in DASH_CSS for token in ['.ch-short{display:inline}', '.ch-long{display:none;white-space:nowrap}', '@media (min-width:720px){.ch-short{display:none}.ch-long{display:inline}}']))
 check('Today has separate primary and supporting-panel layout wrappers',
       all(token in INDEX_HTML for token in ['class="today-layout"', 'class="today-main"', 'class="today-sidebar"', 'id="home-now"', 'id="action-centre"', 'id="foryou-sec"', 'id="weekly-sec"', 'id="buy-sec"']))
 check('desktop Today uses two columns while mobile preserves action-first order',
