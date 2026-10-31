@@ -7,7 +7,7 @@ import { discover, get } from "./discover.mjs";
 import { extractFields, hasContent } from "./extract.mjs";
 import { mergeSources } from "./compare.mjs";
 import { pageTitle, htmlToLines } from "./text.mjs";
-import { entriesFromPage, mergeWorld, collapseWorld, parseDateRange, placeOf, cleanTitle, tidyName, keepOldWorld, normUrl, sameWriteupRulings } from "./world.mjs";
+import { entriesFromPage, mergeWorld, collapseWorld, parseDateRange, placeOf, cleanTitle, tidyName, keepOldWorld, normUrl, sameWriteupRulings, preserveWorldSources } from "./world.mjs";
 import { matchEvent } from "../g47ix-review.mjs";
 import { discoverIntl, entryFromIntlPage, INTL_PATTERN } from "./intl.mjs";
 import { failRun } from "../fail-run.mjs";
@@ -150,10 +150,12 @@ async function main() {
   try { const sh = await get(SEREBII); entries.push(...serebiiEvents(sh)); serebiiLeft = serebiiSkipped(sh); } catch (e) { errors.push("serebii: " + e.message); }
   try { const seed = JSON.parse(await readFile("public/regional-events.json", "utf8")); for (const e of seed.events || []) entries.push({ name: e.name, place: e.place, area: e.area, scope: "regional", start: e.start, end: e.end, datesKnown: true, url: e.url || seed.source.url, source: e.source || "serebii" }); } catch { /* no seed */ }
   const today = new Date().toISOString().slice(0, 10), cutoff = new Date(Date.now() - 14 * 864e5).toISOString().slice(0, 10);
-  let world = mergeWorld(entries, SOURCE_NAMES).filter(w => !w.start || (w.end || w.start) >= cutoff);
-  const stopRulings = sameWriteupRulings(world.filter(w => (w.sources || []).length === 1));
   let oldWorld = []; try { oldWorld = JSON.parse(await readFile(WORLD_OUT, "utf8")).events || []; } catch { /* first run */ }
   let watchUrls = new Set(); try { watchUrls = new Set((JSON.parse(await readFile("data/watch-pages.json", "utf8")).pages || []).map(w => normUrl(w.url))); } catch { /* no watch list */ }
+  let world = mergeWorld(entries, SOURCE_NAMES).filter(w => !w.start || (w.end || w.start) >= cutoff);
+  const stopRulings = sameWriteupRulings(world.filter(w => (w.sources || []).length === 1));
+  // Detect split destinations from this run before retaining only explicitly watched prior sources.
+  world = preserveWorldSources(world, oldWorld, { watchUrls });
   for (const o of oldWorld) if (!world.some(w => w.id === o.id) && keepOldWorld(o, { cutoff, today, watchUrls, splitUrls })) world.push(o); // keep what a source stopped listing, for a while (until its end date when its official page is on the watch list)
   let rules = null; try { rules = JSON.parse(await readFile("data/event-aliases.json", "utf8")); } catch { /* no rulings yet */ }
   rules = { ...(rules || {}), different: [...((rules || {}).different || []), ...stopRulings] };

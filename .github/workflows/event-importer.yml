@@ -32,7 +32,7 @@ jobs:
         with:
           node-version: 22
       - name: Check the importer code
-        run: node --test test/importer.test.mjs test/dedupe.test.mjs
+        run: node --test test/importer.test.mjs test/importer-world.test.mjs test/dedupe.test.mjs
       - name: Read the sources and compare them
         run: node scripts/importer/run.mjs
       - name: Join events listed twice and write the duplicate report
