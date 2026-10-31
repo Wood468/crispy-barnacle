@@ -1,6 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
+import vm from "node:vm";
 
 const read = (p) => fs.readFileSync(new URL(p, import.meta.url), "utf8");
 const manifest = JSON.parse(read("../public/manifest.webmanifest"));
@@ -96,7 +97,7 @@ test("static JSON dependencies referenced by first-party scripts are precached",
 });
 
 test("service worker versions the cache, pre-caches offline fallback, and never handles API responses", () => {
-  assert.match(sw, /gofn-shell-v161/);
+  assert.match(sw, /gofn-shell-v162/);
   assert.ok(sw.includes("'/lib.js?v=20261101a'"), 'the refreshed dashboard helper is available to the offline shell');
   assert.ok(sw.includes("'/local-state.js?v=20261030a'"), 'account-local state migration is available offline');
   assert.ok(sw.includes("'/account.js?v=20261101a'"), 'the refreshed account transition code is available offline');
@@ -120,6 +121,69 @@ test("service worker versions the cache, pre-caches offline fallback, and never 
   assert.match(sw, /name\.startsWith\('gofn-shell-'\)/);
   assert.match(sw, /self\.skipWaiting\(\)/);
   assert.match(sw, /self\.clients\.claim\(\)/);
+});
+
+test("service worker bounds runtime cache entries without evicting the offline shell or breaking online responses", async () => {
+  const listeners = {};
+  const origin = "https://app.test";
+  const entries = new Map();
+  let failCacheWrites = false;
+  const keyUrl = (key) => typeof key === "string" ? new URL(key, origin).href : key.url;
+  const cache = {
+    async put(key, response) {
+      if (failCacheWrites) throw new Error("simulated quota failure");
+      const url = keyUrl(key);
+      entries.delete(url);
+      entries.set(url, response);
+    },
+    async keys() { return [...entries.keys()].map((url) => ({ url })); },
+    async delete(key) { return entries.delete(keyUrl(key)); },
+    async match(key) { return entries.get(keyUrl(key)) || null; }
+  };
+  const self = {
+    location: { origin },
+    addEventListener(name, handler) { listeners[name] = handler; },
+    skipWaiting: async () => {},
+    clients: { claim: async () => {}, openWindow: async () => {} },
+    registration: { pushManager: { getSubscription: async () => null }, showNotification: async () => {} }
+  };
+  const networkFetch = async () => {
+    const response = new Response("network", { status: 200 });
+    Object.defineProperty(response, "type", { value: "basic" });
+    return response;
+  };
+  const caches = {
+    open: async () => cache,
+    keys: async () => ["gofn-shell-v162"],
+    delete: async () => true
+  };
+  vm.runInNewContext(sw, { self, caches, fetch: networkFetch, URL, Request, Response, TextEncoder, crypto: { subtle: { digest: async () => new ArrayBuffer(0) } } });
+
+  entries.set(new URL("/", origin).href, new Response("shell"));
+  for (let i = 0; i < 120; i++) entries.set(new URL("/runtime/" + i, origin).href, new Response("cached"));
+
+  let pending;
+  listeners.fetch({ request: new Request(origin + "/runtime/new"), respondWith(promise) { pending = promise; } });
+  const online = await pending;
+  assert.equal(online.status, 200);
+  assert.equal(await online.text(), "network");
+  const keys = await cache.keys();
+  const runtime = keys.filter((key) => key.url !== new URL("/", origin).href);
+  assert.equal(runtime.length, 120, "runtime entries stay within the configured cap");
+  assert.ok(entries.has(new URL("/", origin).href), "the precached app shell is never evicted");
+  assert.ok(!entries.has(new URL("/runtime/0", origin).href), "the oldest runtime entry is evicted first");
+  assert.ok(entries.has(new URL("/runtime/new", origin).href), "the newest runtime entry is retained");
+
+  failCacheWrites = true;
+  pending = null;
+  listeners.fetch({ request: new Request(origin + "/runtime/quota-failure"), respondWith(promise) { pending = promise; } });
+  const quotaResponse = await pending;
+  assert.equal(quotaResponse.status, 200, "a cache quota failure must not fail a successful network request");
+  assert.equal(await quotaResponse.text(), "network");
+
+  let apiIntercepted = false;
+  listeners.fetch({ request: new Request(origin + "/api/private"), respondWith() { apiIntercepted = true; } });
+  assert.equal(apiIntercepted, false, "private API responses remain outside the service-worker cache");
 });
 
 test("maskable icon has a full-bleed background and viewBox", () => {

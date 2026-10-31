@@ -1,5 +1,5 @@
 /* GO Field Notes offline shell. Never cache /api/*, including private user-state and notification responses. */
-const SHELL_CACHE = 'gofn-shell-v161';
+const SHELL_CACHE = 'gofn-shell-v162';
 const SHELL_URLS = [
   '/', '/index.html', '/offline.html', '/offline.css',
   '/styles.css', '/dash.css', '/dash.css?v=20261031t', '/lib.js', '/lib.js?v=20261101a', '/dedupe.js', '/dedupe.js?v=20261027a', '/move.js', '/move.js?v=20261101a',
@@ -10,6 +10,19 @@ const SHELL_URLS = [
   '/art/index.json', '/costumes.json', '/datamine-news.json', '/data/cp/cp-multipliers.json', '/data/cp/pokemon.json',
   '/season.json', '/weekly.json', '/tickets-external.json', '/store-log.json', '/infographic-queue.json'
 ];
+const SHELL_URL_SET = new Set(SHELL_URLS.map(function (url) { return new URL(url, self.location.origin).href; }));
+const MAX_RUNTIME_CACHE_ENTRIES = 120;
+let runtimeTrimQueue = Promise.resolve();
+function trimRuntimeCache(cache) {
+  // Serialize trims so concurrent fetch events cannot leave the runtime cache over its limit.
+  runtimeTrimQueue = runtimeTrimQueue.catch(function () {}).then(async function () {
+    const keys = await cache.keys();
+    const runtime = keys.filter(function (request) { return !SHELL_URL_SET.has(request.url); });
+    const excess = runtime.length - MAX_RUNTIME_CACHE_ENTRIES;
+    if (excess > 0) await Promise.all(runtime.slice(0, excess).map(function (request) { return cache.delete(request); }));
+  });
+  return runtimeTrimQueue;
+}
 self.addEventListener('install', function (event) {
   event.waitUntil((async function () {
     const cache = await caches.open(SHELL_CACHE);
@@ -40,7 +53,12 @@ self.addEventListener('fetch', function (event) {
       const response = await fetch(request);
       if (response.ok && response.type === 'basic') {
         const key = request.mode === 'navigate' ? (url.pathname === '/' ? '/' : url.pathname) : request;
-        await cache.put(key, response.clone());
+        try {
+          await cache.put(key, response.clone());
+          await trimRuntimeCache(cache);
+        } catch (_) {
+          // Cache quota/storage failures must not turn a successful online response into an offline error.
+        }
       }
       return response;
     } catch (_) {
