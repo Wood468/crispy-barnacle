@@ -49,9 +49,12 @@ check('header badges use accent roles, a canvas outline and reduced-motion-aware
 check('empty agenda and watchlist states use a quiet surface and decorative cue',
       all(token in DASH_CSS for token in ['.event-agenda > .empty', '#followed > .empty', '#savedev > .empty', '.today-empty', 'content:"◇"', 'border:1px dashed var(--border-subtle)']))
 check('versioned stylesheets are referenced by the page and precached offline',
-      all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261031e', '/dash.css?v=20261031i']))
+      all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261031f', '/dash.css?v=20261031j']))
 check('offline shell cache version advances with the stylesheet token release',
-      "gofn-shell-v144" in SW_JS)
+      "gofn-shell-v145" in SW_JS)
+check('mobile chrome uses compact 48px navigation targets, safe-area padding and reduced header/body spacing',
+      all(token in BASE_CSS for token in ['padding-block:0 calc(72px + env(safe-area-inset-bottom,0px))', '@media (max-width:1199px){header.top{padding-top:var(--space-4)}}', 'padding:4px 8px calc(4px + env(safe-area-inset-bottom,0px))', 'padding:4px 2px;min-height:48px', 'width:1.2rem;height:1.2rem']) and
+      'min-height:68px' in BASE_CSS and 'nav.tabs button{min-height:56px}' in DASH_CSS and '@media(max-width:1199px){nav.tabs button{min-height:48px}}' in DASH_CSS)
 check('desktop navigation rail is breakpoint-scoped and mobile keeps the bottom bar',
       all(token in BASE_CSS for token in ['@media (min-width:1200px)', 'body{padding-left:max(132px,calc(4vw + 100px));padding-bottom:24px}', 'left:16px;right:auto;top:50%;bottom:auto;transform:translateY(-50%)', 'nav.tabs .row{flex-direction:column', 'nav.tabs button{flex:none;width:100%;min-height:68px']) and
       'nav.tabs{position:fixed;left:0;right:0;bottom:0' in BASE_CSS)
@@ -206,7 +209,28 @@ with sync_playwright() as p:
               tablet_nav['position']=='fixed' and tablet_nav['direction']=='row' and
               tablet_nav['bottom']>=tablet_nav['height']-1 and tablet_nav['left']<=0 and
               tablet_nav['right']>=tablet_nav['viewport'], tablet_nav)
+        compact_chrome = overseas.evaluate("""() => {
+          const nav=document.querySelector('nav.tabs'), rect=nav.getBoundingClientRect();
+          return {navHeight:rect.height,buttonHeights:[...nav.querySelectorAll('button')].map(b=>b.getBoundingClientRect().height),
+                  headerTop:getComputedStyle(document.querySelector('header.top')).paddingTop,
+                  bodyBottom:parseFloat(getComputedStyle(document.body).paddingBottom)};
+        }""")
+        check('Tablet chrome is shorter while retaining 44px navigation targets and content clearance',
+              compact_chrome['navHeight']<=58 and all(h>=44 for h in compact_chrome['buttonHeights']) and
+              compact_chrome['headerTop']=='16px' and compact_chrome['bodyBottom']>=compact_chrome['navHeight']+12,
+              compact_chrome)
         overseas.set_viewport_size({'width':390,'height':844})
+        mobile_chrome = overseas.evaluate("""() => {
+          const nav=document.querySelector('nav.tabs'), rect=nav.getBoundingClientRect();
+          return {navHeight:rect.height,buttonHeights:[...nav.querySelectorAll('button')].map(b=>b.getBoundingClientRect().height),
+                  headerTop:getComputedStyle(document.querySelector('header.top')).paddingTop,
+                  bodyBottom:parseFloat(getComputedStyle(document.body).paddingBottom),
+                  documentWidth:document.documentElement.scrollWidth,viewport:innerWidth};
+        }""")
+        check('390px mobile chrome is compact, safe-area-aware and overflow-free',
+              mobile_chrome['navHeight']<=58 and all(h>=44 for h in mobile_chrome['buttonHeights']) and
+              mobile_chrome['headerTop']=='16px' and mobile_chrome['bodyBottom']>=mobile_chrome['navHeight']+12 and
+              mobile_chrome['documentWidth']<=mobile_chrome['viewport'], mobile_chrome)
         mobile_today = overseas.evaluate("""() => {
           const layout=document.querySelector('#tab-now .today-layout');
           const action=document.getElementById('action-centre').getBoundingClientRect();
@@ -902,6 +926,16 @@ with sync_playwright() as p:
         pg.click('#subnav-saved button[data-sub="menu"]'); pg.wait_for_timeout(150)
         check('Saved sub-navigation selects Menu', pg.locator('#sub-menu').is_visible() and pg.locator('#subnav-saved button[data-sub="menu"]').get_attribute('aria-pressed')=='true')
         pg.set_viewport_size({'width':320,'height':844})
+        narrow_chrome = pg.evaluate("""() => {
+          const nav=document.querySelector('nav.tabs'), rect=nav.getBoundingClientRect();
+          return {navHeight:rect.height,buttonHeights:[...nav.querySelectorAll('button')].map(b=>b.getBoundingClientRect().height),
+                  headerTop:getComputedStyle(document.querySelector('header.top')).paddingTop,
+                  bodyBottom:parseFloat(getComputedStyle(document.body).paddingBottom)};
+        }""")
+        check('320px mobile chrome retains 44px targets with no content overlap',
+              narrow_chrome['navHeight']<=58 and all(h>=44 for h in narrow_chrome['buttonHeights']) and
+              narrow_chrome['headerTop']=='16px' and narrow_chrome['bodyBottom']>=narrow_chrome['navHeight']+12,
+              narrow_chrome)
         check('all four primary destinations remain visible on narrow mobile', pg.locator('nav.tabs button:visible').count()==4 and pg.evaluate("![...document.querySelectorAll('nav.tabs button')].some(b=>{const r=b.getBoundingClientRect();return r.left<0||r.right>innerWidth})") and not pg.evaluate('document.documentElement.scrollWidth>innerWidth'))
         pg.set_viewport_size({'width':390,'height':844})
         pg.click('#hmenu'); pg.wait_for_timeout(200)

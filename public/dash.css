@@ -132,8 +132,9 @@ body{background:radial-gradient(1200px 520px at 50% -140px,color-mix(in srgb,var
 .followform input{flex:1;min-width:0;min-height:44px}
 .followform .pill{min-height:44px;padding-inline:16px}
 
-/* five-tab bottom nav */
+/* Four-destination bottom nav; desktop rail retains its larger target. */
 nav.tabs button{min-height:56px}
+@media(max-width:1199px){nav.tabs button{min-height:48px}}
 .tabs button[aria-selected="true"]{background:var(--color-surface-raised)}
 @media (min-width:720px){.prio-list{grid-template-columns:repeat(2,1fr)}.pc.first{grid-column:1/-1}.opps{grid-template-columns:repeat(2,1fr)}}
 @media (prefers-reduced-motion:no-preference){.evc,.pc,.opp{transition:transform .15s}.evc:active,.pc:active{transform:scale(.995)}}
