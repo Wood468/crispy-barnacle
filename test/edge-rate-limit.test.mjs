@@ -93,3 +93,54 @@ test("cached guide responses bypass the uncached-miss limit", async (t) => {
   const cached = await lookup("Pokemon Boss 00");
   assert.equal(cached.status, 200, "a previously cached guide is still served over quota");
 });
+
+
+test("art cache hits bypass the uncached-artwork miss limit", async (t) => {
+  const previousCaches = globalThis.caches;
+  const previousFetch = globalThis.fetch;
+  const entries = new Map();
+  globalThis.caches = {
+    default: {
+      async match(key) {
+        const response = entries.get(key.url);
+        return response ? response.clone() : null;
+      },
+      async put(key, response) {
+        entries.set(key.url, response.clone());
+      },
+    },
+  };
+  globalThis.fetch = async (url) => {
+    if (String(url).includes("pokeapi.co")) return new Response(JSON.stringify({ id: 25 }), { status: 200 });
+    return new Response("image bytes", { status: 200 });
+  };
+  t.after(() => {
+    if (previousCaches === undefined) delete globalThis.caches;
+    else globalThis.caches = previousCaches;
+    globalThis.fetch = previousFetch;
+  });
+
+  const ip = "198.51.100.245";
+  const pending = [];
+  const ctx = { waitUntil(promise) { pending.push(promise); } };
+  async function artwork(name) {
+    const response = await worker.fetch(new Request(
+      "https://pogo.test/api/art?n=" + encodeURIComponent(name),
+      { headers: { "cf-connecting-ip": ip } },
+    ), {}, ctx);
+    await Promise.all(pending.splice(0));
+    return response;
+  }
+
+  for (let i = 0; i < EDGE_MISS_LIMITS.art.requests; i++) {
+    const response = await artwork("Pokemon " + String(i).padStart(3, "0"));
+    assert.equal(response.status, 200, "uncached artwork lookup " + i);
+  }
+  const blocked = await artwork("Pokemon 120");
+  assert.equal(blocked.status, 429);
+  assert.ok(Number(blocked.headers.get("retry-after")) > 0);
+  assert.equal(blocked.headers.get("cache-control"), "no-store");
+
+  const cached = await artwork("Pokemon 000");
+  assert.equal(cached.status, 200, "previously cached artwork is still served over quota");
+});
