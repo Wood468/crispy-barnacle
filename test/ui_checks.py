@@ -164,11 +164,13 @@ check('150ms interaction transitions use a shared motion role with unchanged eas
 check('versioned stylesheets are referenced by the page and precached offline',
       all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261031i', '/dash.css?v=20261031t']))
 check('offline shell cache version advances with the stylesheet token release',
-      "gofn-shell-v158" in SW_JS)
+      "gofn-shell-v159" in SW_JS)
 check('versioned dashboard scripts are referenced by the entry page and precached offline',
       '/app.js?v=20261031f' in INDEX_HTML and '/app.js?v=20261031f' in SW_JS and
       '/dash.js?v=20261031f' in APP_JS and '/dash.js?v=20261031f' in SW_JS and
       '/detail.js?v=20261031a' in DASH_JS and '/detail.js?v=20261031a' in SW_JS)
+check('versioned season banner script is referenced by the page and precached offline',
+      '/season.js?v=20261031b' in INDEX_HTML and '/season.js?v=20261031b' in SW_JS)
 check('versioned infographic script is referenced by the dashboard and precached offline',
       '/infographic.js?v=20261031a' in DASH_JS and '/infographic.js?v=20261031a' in SW_JS)
 check('infographic card thumbnails assign original URLs only near the viewport',
