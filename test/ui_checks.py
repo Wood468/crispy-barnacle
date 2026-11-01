@@ -63,7 +63,7 @@ check('base event-kind badges use semantic foreground/background roles with the 
       all(f'--color-kind-{role}:{background}' in BASE_ROOT_CSS and f'--color-on-kind-{role}:{foreground}' in BASE_ROOT_CSS
           for _, role, background, foreground in EVENT_KIND_PALETTE) and
       all(f'background:var(--color-kind-{role});color:var(--color-on-kind-{role})' in event_kind_rule(selector) and
-          re.search(r'#[0-9a-f]{3,8}\\b|rgba?\\(', event_kind_rule(selector), re.I) is None
+          '#' not in event_kind_rule(selector) and 'rgb' not in event_kind_rule(selector)
           for selector, role, _, _ in EVENT_KIND_PALETTE))
 TYPE_SCALE = {
     '--type-caption-compact': ('.62rem', 2),
