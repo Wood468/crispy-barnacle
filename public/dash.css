@@ -1048,23 +1048,65 @@ img.art.is-shiny{outline:2px solid var(--color-accent);outline-offset:2px;border
   border-radius:11px;
 }
 @media(max-width:520px){
-  .evc.cmp .evc-foot{
+  .week-day-events{min-width:0;max-width:100%}
+  .week-day-events>.week-card{min-width:0;max-width:100%;box-sizing:border-box}
+  .evc.cmp{min-width:0;max-width:100%;box-sizing:border-box}
+  .evc.cmp .evc-main{min-width:0;max-width:100%}
+  .evc.cmp .evc-top{
     display:grid;
-    grid-template-columns:minmax(0,1fr) minmax(0,1fr) 42px;
+    grid-template-columns:minmax(0,1fr) 44px;
+    grid-template-areas:"kind hide" "count hide";
+    align-items:center;
+    gap:var(--space-1) var(--space-2);
+    min-width:0;
+  }
+  .evc.cmp .evc-top .kind-grp{grid-area:kind;min-width:0}
+  .evc.cmp .evc-top .cdn{
+    grid-area:count;
+    min-width:0;
+    max-width:100%;
+    white-space:normal;
+    overflow-wrap:anywhere;
+  }
+  .evc.cmp .evc-top .hide-x{
+    grid-area:hide;
+    justify-self:end;
+    align-self:center;
+    width:44px;
+    height:44px;
+    margin:0;
+  }
+  .evc.cmp .evc-title-row{min-width:0;max-width:100%}
+  .evc.cmp .evc-title-row h3{min-width:0;max-width:100%;overflow-wrap:anywhere}
+  .evc.cmp .evc-foot{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:stretch;
+    min-width:0;
+    max-width:100%;
+    box-sizing:border-box;
     gap:6px;
   }
   .evc.cmp .evc-foot .more{
-    min-width:0;
-    width:100%;
-    min-height:42px;
-    padding:0 5px;
+    flex:1 1 6rem;
+    min-width:44px;
+    max-width:100%;
+    width:auto;
+    min-height:44px;
+    height:auto;
+    padding:0 6px;
     font-size:.76rem;
+    line-height:1.2;
+    white-space:normal;
+    overflow-wrap:anywhere;
   }
   .evc.cmp .evc-foot .star{
-    width:42px;
-    min-width:42px;
-    min-height:42px;
-    justify-self:end;
+    flex:0 0 44px;
+    width:44px;
+    min-width:44px;
+    min-height:44px;
+    height:auto;
+    margin-left:auto;
   }
 }
 
@@ -1262,9 +1304,19 @@ select,
 .wk-days {
   grid-template-columns: repeat(7, minmax(44px, 1fr));
   gap: 1px;
+  width:100%;
+  min-width:0;
+  max-width:100%;
+  box-sizing:border-box;
+  overflow-x:auto;
+  overscroll-behavior-x:contain;
+  -webkit-overflow-scrolling:touch;
+  scrollbar-width:thin;
+  scroll-snap-type:x proximity;
 }
 .wd {
   min-width: 44px;
+  scroll-snap-align:start;
 }
 
 

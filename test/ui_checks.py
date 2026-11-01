@@ -240,8 +240,8 @@ check('Today multi-deadline tray is accessible, bounded and source-safe',
       all(token in DASH_JS for token in ['var trayLimit = t.getTime() + 7 * 24 * 60 * 60 * 1000', "safeUrl(d.url || '')", 'trayCandidates.slice(0, 8)', 'View all ', 'noopener noreferrer', "sourceUrl.indexOf('https://') === 0"]) and
       all(token in DASH_CSS for token in ['.today-deadlines>summary', 'min-height:44px', '.today-deadline-item', 'var(--color-link)']) and
       '/dash.js?v=20261102g' in APP_JS and '/dash.js?v=20261102g' in SW_JS and
-      '/dash.css?v=20261102e' in INDEX_HTML and '/dash.css?v=20261102e' in SW_JS and
-      'gofn-shell-v191' in SW_JS)
+      '/dash.css?v=20261102f' in INDEX_HTML and '/dash.css?v=20261102f' in SW_JS and
+      'gofn-shell-v192' in SW_JS)
 check('season pass and deadline data is structured, source-attributed and ordered',
       all(item_id in {item.get('id') for item in SEASON_DATA.get('items', [])}
           for item_id in ['season:pass-halloween', 'season:pass-november']) and
@@ -274,7 +274,7 @@ check('base bonus and information availability controls use semantic status role
           'background: var(--color-status-info-unavailable); color: var(--color-on-status-info-unavailable); border: 1px solid var(--color-border-info-unavailable);',
       ]))
 check('versioned stylesheets are referenced by the page and precached offline',
-      all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261101k', '/dash.css?v=20261102e']))
+      all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261101k', '/dash.css?v=20261102f']))
 check('owner verification scripts are versioned and precached offline',
       '/account.js?v=20261101b' in INDEX_HTML and '/account.js?v=20261101b' in SW_JS and
       '/review.js?v=20261101b' in DASH_JS and '/review.js?v=20261101b' in SW_JS)
@@ -302,7 +302,7 @@ check('event signal chips and detail tags use semantic palette roles with unchan
           '.tg-incense{--tc:var(--color-signal-shadow)}.tg-costume{--tc:var(--color-signal-encounter)}',
       ]))
 check('offline shell cache version advances with the dashboard stylesheet token release',
-      "gofn-shell-v191" in SW_JS)
+      "gofn-shell-v192" in SW_JS)
 check('versioned dashboard scripts are referenced by the entry page and precached offline',
       '/app.js?v=20261102b' in INDEX_HTML and '/app.js?v=20261102b' in SW_JS and
       '/dash.js?v=20261102g' in APP_JS and '/dash.js?v=20261102g' in SW_JS and
@@ -2239,11 +2239,6 @@ with sync_playwright() as p:
             # dispatch_event, not a pointer click: while Schedule overflows at 320px the displaced nav intercepts real taps (the layout bug is asserted below instead)
             pg.dispatch_event('nav.tabs button[data-tab="%s"]'%tab,'click'); pg.wait_for_selector('#tab-%s:not([hidden])'%tab)
             pg.evaluate("new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)))")
-        def known_overflow(tab,width):
-            # TODO(batch 3): remove this allow-list entry (Schedule only, widths <=411px). Two causes, both fixed in batch 3:
-            #  - <=340px: .wk-days is repeat(7,minmax(44px,1fr)) and .wd has min-width:44px (dash.css ~1301), so the week strip is ~373px wide.
-            #  - <412px on days with a live .evc.cmp card whose footer has Details + "Check infographic" + star (fixed clock Fri 9 Oct has cur:space): the footer does not wrap and stretches the grid to 412px.
-            return tab=='events' and width<=411
         # 1. responsive width loop: no horizontal overflow and no zoomed-out layout viewport on any main tab
         guard=[]
         for width in (320,375,390,430,820,1280):
@@ -2258,11 +2253,7 @@ with sync_playwright() as p:
                     return {sw:document.documentElement.scrollWidth,iw:window.innerWidth,vw:window.visualViewport.width,wide};
                 }""")
                 over=m['sw']>m['iw'] or abs(m['vw']-m['iw'])>0.5
-                if known_overflow(tab,width):
-                    # Not a check() on purpose: this depends on importer data, so an entry that stops overflowing must not fail CI. It only reports.
-                    print('NOTE width %d, %s: allow-listed overflow %s TODO(batch 3)'%(width,label,'present' if over else 'gone (remove the allow-list entry)'),m if over else '')
-                else:
-                    check('width %d, %s: no horizontal overflow and visual viewport equals window width'%(width,label),not over,m)
+                check('width %d, %s: no horizontal overflow and visual viewport equals window width'%(width,label),not over,m)
             wpg.context.close()
         # 2. console guard: Today/Schedule/Raids/Collection loads at 390 and 1280 must be free of console errors, page errors and failed requests.
         # Fonts and R2 pictures are mocked in page(), so they need no allow-list. The only known-benign noise is the browser's own

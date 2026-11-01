@@ -97,6 +97,9 @@ jobs:
             grep -E '^FAILED:' /tmp/ui-checks.log | tail -1
           fi
           exit "$rc"
+      - name: Verify narrow Schedule layout at 320/375/390px
+        if: matrix.shard == 'b'
+        run: python test/schedule_layout_browser.py
 
 
   production-image-audit:
