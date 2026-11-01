@@ -1295,19 +1295,19 @@ select,
 .today-focus-card strong,.today-focus-card small{display:-webkit-box;-webkit-box-orient:vertical;overflow:hidden;overflow-wrap:anywhere}
 .today-focus-card strong{-webkit-line-clamp:2;min-height:2.4em;font:700 var(--type-body-sm)/1.2 var(--font-body);color:var(--color-text)}
 .today-focus-card small{-webkit-line-clamp:1;font:500 var(--type-caption)/1.35 var(--font-body);color:var(--color-text-muted)}
-.today-deadlines{min-width:0;margin-top:2px;border-top:1px solid var(--color-border-card)}
-.today-deadlines[hidden]{display:none}
-.today-deadlines>summary{display:flex;align-items:center;min-height:44px;padding:4px 0;color:var(--color-link);font:700 var(--type-caption)/1.25 var(--font-body);cursor:pointer;list-style:none}
+.today-deadlines{min-width:0;margin-top:var(--space-1);border-top:1px solid var(--color-border-card)}
+.today-deadlines[hidden],.today-deadlines-list[hidden]{display:none}
+.today-deadlines>summary{display:flex;align-items:center;min-height:44px;padding:var(--space-1) 0;color:var(--color-link);font-family:var(--font-body);font-size:var(--type-caption);font-weight:700;line-height:1.25;cursor:pointer;list-style:none}
 .today-deadlines>summary::-webkit-details-marker{display:none}
-.today-deadlines>summary::before{content:"+";display:inline-grid;place-items:center;width:18px;height:18px;margin-right:6px;border:1px solid var(--color-border-card);border-radius:50%;font:700 12px var(--font-mono)}
+.today-deadlines>summary::before{content:"+";display:inline-grid;place-items:center;width:18px;height:18px;margin-right:var(--space-2);border:1px solid var(--color-border-card);border-radius:50%;font-family:var(--font-mono);font-size:var(--type-caption-compact);font-weight:700;line-height:1}
 .today-deadlines[open]>summary::before{content:"−"}
-.today-deadlines-list{display:grid;gap:6px;list-style:none;margin:0;padding:0 0 4px}
-.today-deadline-item{min-width:0;padding:8px;border:1px solid var(--color-border-card);border-radius:var(--radius-md);background:var(--color-surface-card)}
+.today-deadlines-list{display:grid;gap:var(--space-2);list-style:none;margin:0;padding:0 0 var(--space-1)}
+.today-deadline-item{min-width:0;padding:var(--space-2);border:1px solid var(--color-border-card);border-radius:var(--radius-md);background:var(--color-surface-card)}
 .today-deadline-item strong,.today-deadline-item span,.today-deadline-item small{display:block;min-height:0;overflow:visible;overflow-wrap:anywhere}
-.today-deadline-item strong{-webkit-line-clamp:unset;font:700 var(--type-caption)/1.25 var(--font-body);color:var(--color-text)}
-.today-deadline-item span{font:600 var(--type-body-sm)/1.3 var(--font-body);color:var(--color-text)}
-.today-deadline-item small{-webkit-line-clamp:unset;margin-top:2px;font:500 var(--type-caption-compact)/1.35 var(--font-body);color:var(--color-text-muted)}
-.today-deadline-item a{color:var(--color-link);text-decoration:underline;text-underline-offset:2px}
+.today-deadline-item strong{-webkit-line-clamp:unset;font-family:var(--font-body);font-size:var(--type-caption);font-weight:700;line-height:1.25;color:var(--color-text)}
+.today-deadline-item span{font-family:var(--font-body);font-size:var(--type-body-sm);font-weight:600;line-height:1.3;color:var(--color-text)}
+.today-deadline-item small{-webkit-line-clamp:unset;margin-top:var(--space-1);font-family:var(--font-body);font-size:var(--type-caption-compact);font-weight:500;line-height:1.35;color:var(--color-text-muted)}
+.today-deadline-item a{display:inline-flex;align-items:center;min-height:44px;padding:0 var(--space-2);color:var(--color-link);text-decoration:underline;text-underline-offset:2px}
 .today-deadline-qualifier{color:var(--color-text-muted)}
 @media(min-width:720px){.today-focus-strip{grid-template-columns:repeat(3,minmax(0,1fr))}.today-focus-card:last-child{grid-column:auto}}
 @media(max-width:360px){.day-brief{padding:var(--space-3)}.day-brief-title{font-size:var(--type-intro);line-height:1.1;min-height:1.1em}}
