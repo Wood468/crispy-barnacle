@@ -1,12 +1,12 @@
 {
- "updated": "2026-11-01T09:10:06.304Z",
+ "updated": "2026-11-01T15:59:33.635Z",
  "seeded": true,
  "channels": [
   {
    "src": "events",
    "name": "dm-events",
    "state": "ok",
-   "count": 10
+   "count": 11
   },
   {
    "src": "reports",
@@ -22,6 +22,15 @@
   }
  ],
  "items": [
+  {
+   "id": "1566445505725075467",
+   "src": "events",
+   "title": "Catch 13 Pokémon - Sableye Mega Resource x 13",
+   "text": "Catch 13 Pokémon - Sableye Mega Resource x 13\nCatch 13 Ghost-type Pokémon - Greavard, Halloween Froakie, Halloween Rowlet\nMake 6 Nice Throws - Greavard, Litwick, Sandygast\nWin a raid -Top Hat Zubat, Sinistea\n\nAdded quest",
+   "link": "",
+   "image": "",
+   "date": "2026-11-01T13:35:11.715Z"
+  },
   {
    "id": "1566287113442304164",
    "src": "gamedata",
