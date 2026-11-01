@@ -1274,7 +1274,7 @@
       setText('today-focus-ending-meta', periodEnding.name + ' · ends ' + fmtD(periodEnding.end) + ' · ' + fmtT(periodEnding.end));
     } else {
       setText('today-focus-ending', ending.length ? ending.length + ' ending within 6h' : 'Nothing timed in the next 6h');
-      setText('today-focus-ending-meta', ending.length ? ending[0].name + ' · ends ' + fmtT(ending[0].end) : 'Published timed-event and pass deadlines only');
+      setText('today-focus-ending-meta', ending.length ? ending[0].name + ' · ends ' + fmtT(ending[0].end) : 'Timed in-game events or published pass dates');
     }
   }
   function renderHomeBrief(t) {
