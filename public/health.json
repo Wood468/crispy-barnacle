@@ -1,25 +1,25 @@
 {
- "updated": "2026-10-31T12:59:54.045Z",
+ "updated": "2026-11-01T00:24:22.698Z",
  "jobs": [
   {
    "id": "event-importer.yml",
    "name": "Event importer",
    "everyH": 1,
-   "lastSuccess": "2026-10-31T12:45:34.000Z",
+   "lastSuccess": "2026-10-31T21:43:46.000Z",
    "state": "fresh"
   },
   {
    "id": "source-watch.yml",
    "name": "Source feed watcher",
    "everyH": 3,
-   "lastSuccess": "2026-10-31T12:30:29.000Z",
+   "lastSuccess": "2026-11-01T00:08:38.000Z",
    "state": "fresh"
   },
   {
    "id": "location-discovery.yml",
    "name": "Community location discovery",
    "everyH": 6,
-   "lastSuccess": "2026-10-31T12:19:20.000Z",
+   "lastSuccess": "2026-10-31T21:29:42.000Z",
    "state": "fresh"
   },
   {
@@ -33,21 +33,21 @@
    "id": "g47ix-infographics.yml",
    "name": "Infographic check",
    "everyH": 2,
-   "lastSuccess": "2026-10-31T07:50:27.000Z",
-   "state": "stale"
+   "lastSuccess": "2026-10-31T22:58:50.000Z",
+   "state": "fresh"
   },
   {
    "id": "store-watch.yml",
    "name": "Store watcher",
    "everyH": 1,
-   "lastSuccess": "2026-10-31T12:32:26.000Z",
+   "lastSuccess": "2026-10-31T21:36:55.000Z",
    "state": "fresh"
   },
   {
    "id": "nudge.yml",
    "name": "Daily nudge",
    "everyH": 24,
-   "lastSuccess": "2026-10-30T23:55:19.000Z",
+   "lastSuccess": "2026-10-31T23:30:22.000Z",
    "state": "fresh"
   },
   {
@@ -61,7 +61,7 @@
    "id": "discord_sync.yml",
    "name": "Discord reader",
    "everyH": 2,
-   "lastSuccess": "2026-10-31T11:58:16.000Z",
+   "lastSuccess": "2026-10-31T21:15:10.000Z",
    "state": "fresh"
   },
   {
@@ -75,7 +75,7 @@
    "id": "worker-cron",
    "name": "Worker hourly jobs",
    "everyH": 1,
-   "lastSuccess": "2026-10-31T12:30:47.755Z",
+   "lastSuccess": "2026-10-31T23:30:47.708Z",
    "state": "fresh",
    "detail": "Discord forwarding: nothing new"
   },
