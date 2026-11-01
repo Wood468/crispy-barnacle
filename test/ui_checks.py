@@ -236,11 +236,15 @@ check('Today brief has three data-backed focus tiles (Next, Ending soon, Raids &
       all(token in INDEX_HTML for token in ['id="today-focus-strip"', 'id="today-focus-next"', 'id="today-focus-raids"', 'id="today-focus-ending"']) and
       all(token in DASH_JS for token in ['function renderTodayStrip', '6 * 60 * 60 * 1000', '48 * 60 * 60 * 1000', 'window.GOSEASON', 'GOSEASON.deadlines', 'gofn-season-ready', 'activity.inGame', 'activity.inPerson', 'D.rotation', 'D.maxBattles']) and
       all(token in DASH_CSS for token in ['.today-focus-strip', '.today-focus-card', 'grid-template-columns:repeat(2,minmax(0,1fr))']))
+check('Tonight owned-counter summary uses existing local marks and curated top-ten type lists',
+      'ownedSummary:function(types,limit)' in APP_JS and 'dex.have[name]' in APP_JS and
+      'gobest-ready' in APP_JS and 'gobest-ready' in DASH_JS and 'gofn-marks' in DASH_JS and
+      'Marked top counters (' in DASH_JS)
 check('Today Tonight planner is an optional accessible local-time disclosure with weakness links to the owned Best attackers view',
       all(token in INDEX_HTML for token in ['id="today-tonight"', 'id="today-tonight-summary"', 'id="today-tonight-list"']) and
       all(token in DASH_JS for token in ['D.spotlight', 'D.raidHour', 'D.maxBattles', '6–7 pm local', '6 am–9 pm local', 'Weak to:', 'data-best-types', 'gofn-dex-ready', 'function renderTonight', 'renderTonight(t, dateKey)']) and
       all(token in DASH_CSS for token in ['.today-tonight', '.today-tonight-list', 'min-height:44px', '.today-tonight-best']) and
-      'gofn-dex-ready' in APP_JS and '/app.js?v=20261102f' in INDEX_HTML and '/app.js?v=20261102f' in SW_JS)
+      'gofn-dex-ready' in APP_JS and '/app.js?v=20261102g' in INDEX_HTML and '/app.js?v=20261102g' in SW_JS)
 check('Dex/type readiness refreshes only the Tonight disclosure, preserving event-detail focus targets',
       "document.addEventListener('gotypes', function () { try { renderRot(); var t = now(); renderTonight(t, dayKey(t)); } catch (e) {} });" in DASH_JS and
       "document.addEventListener('gofn-dex-ready', function () { try { renderRot(); var t = now(); renderTonight(t, dayKey(t)); } catch (e) {} });" in DASH_JS)
@@ -248,9 +252,9 @@ check('Today multi-deadline tray is accessible, bounded and source-safe',
       all(token in INDEX_HTML for token in ['id="today-deadlines"', 'id="today-deadlines-summary"', 'id="today-deadlines-list"']) and
       all(token in DASH_JS for token in ['var trayLimit = t.getTime() + 7 * 24 * 60 * 60 * 1000', "safeUrl(d.url || '')", 'trayCandidates.slice(0, 8)', 'View all ', 'noopener noreferrer', "sourceUrl.indexOf('https://') === 0"]) and
       all(token in DASH_CSS for token in ['.today-deadlines>summary', 'min-height:44px', '.today-deadline-item', 'var(--color-link)']) and
-      '/dash.js?v=20261102k' in APP_JS and '/dash.js?v=20261102k' in SW_JS and
+      '/dash.js?v=20261102l' in APP_JS and '/dash.js?v=20261102l' in SW_JS and
       '/dash.css?v=20261102i' in INDEX_HTML and '/dash.css?v=20261102i' in SW_JS and
-      'gofn-shell-v197' in SW_JS)
+      'gofn-shell-v198' in SW_JS)
 check('season pass and deadline data is structured, source-attributed and ordered',
       all(item_id in {item.get('id') for item in SEASON_DATA.get('items', [])}
           for item_id in ['season:pass-halloween', 'season:pass-november']) and
@@ -311,12 +315,12 @@ check('event signal chips and detail tags use semantic palette roles with unchan
           '.tg-incense{--tc:var(--color-signal-shadow)}.tg-costume{--tc:var(--color-signal-encounter)}',
       ]))
 check('offline shell cache version advances with the dashboard stylesheet token release',
-      "gofn-shell-v197" in SW_JS)
+      "gofn-shell-v198" in SW_JS)
 check('event detail focus restoration can find a re-rendered opener by event key and card role',
       all(token in DETAIL_JS for token in ['openerKey', 'openerClass', "getAttribute('data-open')", 'target.focus()']))
 check('versioned dashboard scripts are referenced by the entry page and precached offline',
-      '/app.js?v=20261102f' in INDEX_HTML and '/app.js?v=20261102f' in SW_JS and
-      '/dash.js?v=20261102k' in APP_JS and '/dash.js?v=20261102k' in SW_JS and
+      '/app.js?v=20261102g' in INDEX_HTML and '/app.js?v=20261102g' in SW_JS and
+      '/dash.js?v=20261102l' in APP_JS and '/dash.js?v=20261102l' in SW_JS and
       '/detail.js?v=20261102b' in DASH_JS and '/detail.js?v=20261102b' in SW_JS)
 check('sync PIN and account controls have one home in Menu and are precached offline',
       INDEX_HTML.index('id="acct" class="acct"') > INDEX_HTML.index('id="sub-menu"') and
@@ -742,9 +746,11 @@ with sync_playwright() as p:
             '**/world-events.json': (json.dumps({'events': []}), 200),
             '**/regional-events.json': (json.dumps({'events': []}), 200)
         }
-        max_monday_page = page(clock='2026-11-02T09:35:00+11:00', extra=tonight_extra)
+        max_monday_page = page(clock='2026-11-02T09:35:00+11:00', marks={'have': {'Mega Rayquaza': 1, 'Mega Mewtwo Y': 1, 'Mega Gardevoir': 1}}, extra=tonight_extra)
         max_monday_page.wait_for_selector('#today-tonight:not([hidden])')
         max_types_ready = settle(max_monday_page, "!!(window.GOTYPES && window.GOTYPES.facts('Machop'))", 30000)
+        settle(max_monday_page, "!!(window.GOBEST && window.GOBEST.ready)", 30000)
+        settle(max_monday_page, "document.querySelector('#today-tonight-list')?.textContent.includes('Marked top counters (3): Mega Rayquaza, Mega Mewtwo Y, Mega Gardevoir')", 30000)
         settle(max_monday_page, "!!document.querySelector('#today-tonight-list [data-best-types]')", 30000)
         max_monday_page.locator('#today-tonight > summary').click()
         max_text = max_monday_page.locator('#today-tonight-list').inner_text()
@@ -752,6 +758,8 @@ with sync_playwright() as p:
               'Max Monday' in max_text and 'Machop' in max_text and '6 am–9 pm local' in max_text, max_text)
         check('Tonight planner shows Max boss weaknesses from the type chart',
               max_types_ready and 'Weak to: Flying, Psychic, Fairy' in max_text, max_text)
+        check('Tonight planner shows the player’s marked top-ten counters for those weaknesses',
+              'Marked top counters (3): Mega Rayquaza, Mega Mewtwo Y, Mega Gardevoir' in max_text, max_text)
         max_best = max_monday_page.locator('#today-tonight-list [data-best-types]')
         check('Max Monday offers a Best attackers handoff for the boss weaknesses',
               max_best.count() == 1 and max_best.get_attribute('data-best-types') == 'Flying|Psychic|Fairy',
@@ -764,10 +772,24 @@ with sync_playwright() as p:
         max_selected = max_monday_page.locator('#typechips button[aria-pressed="true"]').all_inner_texts()
         check('Best attackers opens with the Max boss weakness types selected',
               all(name in max_selected for name in ['Flying', 'Psychic', 'Fairy']), max_selected)
+        max_owned_row = max_monday_page.locator('#list .irow[data-key="Mega Rayquaza"]')
+        max_owned_button = max_owned_row.locator('.tg.o')
+        check('Best attackers reflects the seeded local Have mark for Mega Rayquaza',
+              max_owned_row.count() == 1 and max_owned_button.get_attribute('aria-pressed') == 'true')
+        if max_owned_row.count():
+            max_owned_button.click()
+            settle(max_monday_page, "document.querySelector('#today-tonight-list')?.textContent.includes('Marked top counters (2): Mega Mewtwo Y, Mega Gardevoir')", 10000)
+            check('Tonight owned-counter summary updates when a local Have mark is removed',
+                  'Marked top counters (2): Mega Mewtwo Y, Mega Gardevoir' in max_monday_page.locator('#today-tonight-list').text_content())
+            max_owned_button.click()
+            settle(max_monday_page, "document.querySelector('#today-tonight-list')?.textContent.includes('Marked top counters (3): Mega Rayquaza, Mega Mewtwo Y, Mega Gardevoir')", 10000)
+            check('Tonight owned-counter summary updates when a local Have mark is restored',
+                  'Marked top counters (3): Mega Rayquaza, Mega Mewtwo Y, Mega Gardevoir' in max_monday_page.locator('#today-tonight-list').text_content())
         max_monday_page.context.close()
 
         raid_hour_page = page(clock='2026-11-04T09:35:00+11:00', extra=tonight_extra)
         raid_hour_page.wait_for_selector('#today-tonight:not([hidden])')
+        settle(raid_hour_page, "!!(window.GOBEST && window.GOBEST.ready)", 30000)
         raid_types_ready = settle(raid_hour_page, "!!(window.GOTYPES && window.GOTYPES.facts('Giratina (Altered Forme)'))", 30000)
         settle(raid_hour_page, "!!document.querySelector('#today-tonight-list [data-best-types]')", 30000)
         raid_hour_page.locator('#today-tonight > summary').click()
@@ -778,6 +800,8 @@ with sync_playwright() as p:
         check('Raid Hour exposes type-chart weaknesses and a Best attackers handoff',
               raid_types_ready and 'Weak to:' in raid_text and raid_hour_page.locator('#today-tonight-list [data-best-types]').count() == 1,
               raid_text)
+        check('Tonight planner accurately reports no marked top-ten counters when none are saved',
+              'Marked top counters (0): none in current top-ten lists' in raid_hour_page.locator('#today-tonight-list').text_content())
         raid_hour_page.context.close()
 
         spotlight_page = page(clock='2026-11-05T09:35:00+11:00', extra=tonight_extra)
