@@ -2,9 +2,20 @@
 // One row per entry; the newest timestamp wins per entry, so a phone and a laptop never overwrite each other wholesale.
 export const KEY_RE = /^(form|costume|saved|follow|pref|goal|import|hide|hidekind|mega):[^\u0000-\u001f]{1,100}$/;
 export const MAX_ENTRIES = 5000, MAX_PER_REQUEST = 500, MAX_VALUE = 600;
+export const MAX_READ_KEYS = 50;
 
 export async function stateReady(db) {
   try { return !!(await db.prepare("SELECT 1 AS x FROM sqlite_master WHERE type='table' AND name='user_state'").first()); } catch { return false; }
+}
+
+// GET /api/userstate accepts repeated ?key=<entry-key> parameters for a bounded,
+// targeted read. Keep the full incremental read as the default for existing sync clients.
+export function cleanReadKeys(raw) {
+  if (!Array.isArray(raw) || !raw.length) return { keys: [], error: "empty" };
+  const keys = [...new Set(raw)];
+  if (keys.length > MAX_READ_KEYS) return { keys: [], error: "too_many" };
+  if (keys.some(k => typeof k !== "string" || !KEY_RE.test(k))) return { keys: [], error: "invalid" };
+  return { keys, error: null };
 }
 
 // Returns {entries, rejected}. Keeps only well-formed entries; never throws on bad input.
@@ -32,6 +43,26 @@ export async function readAll(db, since = 0, uid = "") {
   const rows = (await db.prepare("SELECT k, v, t FROM user_state WHERE t > ? AND " + w.sql + " ORDER BY t LIMIT 6000").bind(since, w.arg).all()).results;
   const out = {};
   for (const r of rows) { let v = null; try { v = r.v === null ? null : JSON.parse(r.v); } catch { /* skip bad json */ } out[r.k.slice(p.length)] = { v, t: r.t }; }
+  return out;
+}
+
+// Fetch only the requested keys. Account scoping is applied in SQL as well as by
+// exact bound key values, so a member cannot ask for another member's prefixed row.
+// Tombstones (v = NULL) are retained exactly like readAll().
+export async function readKeys(db, keys, since = 0, uid = "") {
+  const selection = cleanReadKeys(keys);
+  if (selection.error) throw new TypeError("Invalid user-state key selection");
+  const w = mine(uid), p = pre(uid), stored = selection.keys.map(k => p + k);
+  const placeholders = stored.map(() => "?").join(", ");
+  const sql = "SELECT k, v, t FROM user_state WHERE t > ? AND " + w.sql + " AND k IN (" + placeholders + ") ORDER BY t";
+  const rows = (await db.prepare(sql).bind(since, w.arg, ...stored).all()).results;
+  const wanted = new Set(stored), out = {};
+  for (const r of rows) {
+    if (!wanted.has(r.k)) continue;
+    let v = null;
+    try { v = r.v === null ? null : JSON.parse(r.v); } catch { /* skip bad json */ }
+    out[r.k.slice(p.length)] = { v, t: r.t };
+  }
   return out;
 }
 
