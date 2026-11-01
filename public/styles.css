@@ -11,7 +11,6 @@
   --color-border:var(--line); --color-text:var(--fg); --color-text-muted:var(--muted); --color-text-body:var(--body);
   --color-inverse-surface:var(--inv-bg); --color-inverse-text:var(--inv-fg);
   --color-accent:var(--gold); --color-accent-text:var(--gold-fg);
-
   /* Stable event-kind badge colours; intentionally shared by dark and light themes. */
   --color-kind-raid:#D7373C; --color-on-kind-raid:#fff;
   --color-kind-community-day:#F76B15; --color-on-kind-community-day:#1A0E04;
