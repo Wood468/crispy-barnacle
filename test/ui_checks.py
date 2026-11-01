@@ -39,6 +39,31 @@ ESC_RENDERERS = [APP_JS] + [(ROOT / 'public' / name).read_text() for name in [
 ]]
 check('design tokens define semantic colour, spacing, radius, typography and motion roles',
       all(token in BASE_CSS for token in ['--color-canvas:', '--color-surface:', '--color-text-muted:', '--space-4:', '--radius-card:', '--font-body:', '--motion-standard:', '--motion-quick:']))
+
+EVENT_KIND_PALETTE = [
+    ('.p-raid', 'raid', '#D7373C', '#fff'),
+    ('.p-cd', 'community-day', '#F76B15', '#1A0E04'),
+    ('.p-max', 'max-battle', '#6E56CF', '#fff'),
+    ('.p-shiny', 'shiny', '#FFD43B', '#1D1700'),
+    ('.p-debut', 'debut', '#12A594', '#031F1B'),
+    ('.p-bg', 'background-bonus', '#C2338F', '#fff'),
+    ('.p-person', 'in-person', '#3E63DD', '#fff'),
+    ('.p-costume', 'costume', '#FF8FB1', '#2A0A15'),
+    ('.p-shadow', 'shadow', '#5B3F9B', '#fff'),
+    ('.p-mega', 'mega', '#FFB224', '#1A1100'),
+    ('.p-primal', 'primal', '#8E1B1B', '#fff'),
+    ('.p-giga', 'gigantamax', '#D6336C', '#fff'),
+]
+def event_kind_rule(selector):
+    match = re.search(re.escape(selector) + r'\\s*\\{([^}]*)\\}', BASE_CSS)
+    return match.group(1) if match else ''
+BASE_ROOT_CSS = BASE_CSS.split(':root[data-theme="light"]', 1)[0]
+check('base event-kind badges use semantic foreground/background roles with the original palette',
+      all(f'--color-kind-{role}:{background}' in BASE_ROOT_CSS and f'--color-on-kind-{role}:{foreground}' in BASE_ROOT_CSS
+          for _, role, background, foreground in EVENT_KIND_PALETTE) and
+      all(f'background:var(--color-kind-{role});color:var(--color-on-kind-{role})' in event_kind_rule(selector) and
+          re.search(r'#[0-9a-f]{3,8}\\b|rgba?\\(', event_kind_rule(selector), re.I) is None
+          for selector, role, _, _ in EVENT_KIND_PALETTE))
 TYPE_SCALE = {
     '--type-caption-compact': ('.62rem', 2),
     '--type-caption': ('.68rem', 2),
@@ -170,12 +195,12 @@ check('150ms interaction transitions use a shared motion role with unchanged eas
       'transition:transform var(--motion-quick)' in DASH_CSS and
       BASE_CSS.count('var(--motion-quick)') == 3 and DASH_CSS.count('var(--motion-quick)') == 1)
 check('versioned stylesheets are referenced by the page and precached offline',
-      all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261101e', '/dash.css?v=20261101u']))
+      all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261101f', '/dash.css?v=20261101u']))
 check('owner verification scripts are versioned and precached offline',
       '/account.js?v=20261101b' in INDEX_HTML and '/account.js?v=20261101b' in SW_JS and
       '/review.js?v=20261101b' in DASH_JS and '/review.js?v=20261101b' in SW_JS)
 check('offline shell cache version advances with the stylesheet token release',
-      "gofn-shell-v169" in SW_JS)
+      "gofn-shell-v170" in SW_JS)
 check('versioned dashboard scripts are referenced by the entry page and precached offline',
       '/app.js?v=20261101c' in INDEX_HTML and '/app.js?v=20261101c' in SW_JS and
       '/dash.js?v=20261101b' in APP_JS and '/dash.js?v=20261101b' in SW_JS and
