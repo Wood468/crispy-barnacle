@@ -1,25 +1,25 @@
 {
- "updated": "2026-11-01T16:17:42.456Z",
+ "updated": "2026-11-01T22:20:58.126Z",
  "jobs": [
   {
    "id": "event-importer.yml",
    "name": "Event importer",
    "everyH": 1,
-   "lastSuccess": "2026-11-01T15:17:29.000Z",
+   "lastSuccess": "2026-11-01T19:47:42.000Z",
    "state": "fresh"
   },
   {
    "id": "source-watch.yml",
    "name": "Source feed watcher",
    "everyH": 3,
-   "lastSuccess": "2026-11-01T13:25:48.000Z",
+   "lastSuccess": "2026-11-01T19:41:06.000Z",
    "state": "fresh"
   },
   {
    "id": "location-discovery.yml",
    "name": "Community location discovery",
    "everyH": 6,
-   "lastSuccess": "2026-11-01T13:15:32.000Z",
+   "lastSuccess": "2026-11-01T21:59:20.000Z",
    "state": "fresh"
   },
   {
@@ -33,14 +33,14 @@
    "id": "g47ix-infographics.yml",
    "name": "Infographic check",
    "everyH": 2,
-   "lastSuccess": "2026-11-01T10:56:36.000Z",
-   "state": "stale"
+   "lastSuccess": "2026-11-01T21:33:00.000Z",
+   "state": "fresh"
   },
   {
    "id": "store-watch.yml",
    "name": "Store watcher",
    "everyH": 1,
-   "lastSuccess": "2026-11-01T15:11:12.000Z",
+   "lastSuccess": "2026-11-01T19:42:44.000Z",
    "state": "fresh"
   },
   {
@@ -61,8 +61,8 @@
    "id": "discord_sync.yml",
    "name": "Discord reader",
    "everyH": 2,
-   "lastSuccess": "2026-11-01T09:57:08.000Z",
-   "state": "stale"
+   "lastSuccess": "2026-11-01T21:52:45.000Z",
+   "state": "fresh"
   },
   {
    "id": "data-report.yml",
@@ -75,7 +75,7 @@
    "id": "worker-cron",
    "name": "Worker hourly jobs",
    "everyH": 1,
-   "lastSuccess": "2026-11-01T15:30:47.537Z",
+   "lastSuccess": "2026-11-01T21:30:48.390Z",
    "state": "fresh",
    "detail": "Discord forwarding: nothing new"
   },
