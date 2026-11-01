@@ -127,19 +127,19 @@ DASH_TYPE_SCALE = {
     '--type-meta-compact': 11,
     '--type-body-compact': 9,
     '--type-label': 7,
-    '--type-body-sm': 6,
+    '--type-body-sm': 7,
     '--type-overline': 6,
     '--type-button': 6,
-    '--type-caption': 5,
+    '--type-caption': 7,
     '--type-intro': 5,
     '--type-body-emphasis': 4,
     '--type-stat': 3,
     '--type-heading': 1,
-    '--type-caption-compact': 1,
+    '--type-caption-compact': 3,
     '--type-body-lg': 1,
 }
 DASH_TYPE_VALUES = ['.78rem', '.8rem', '.84rem', '.75rem', '.82rem', '.72rem', '.85rem', '.68rem', '1.05rem', '.9rem', '2rem', '1.5rem', '.62rem', '1.1rem']
-check('dashboard uses the shared semantic type scale for 76 exact font-size declarations',
+check('dashboard uses the shared semantic type scale for 81 exact font-size declarations',
       all(len(re.findall(r'font-size\s*:\s*var\(' + re.escape(token) + r'\)(?=[;}])', DASH_CSS)) == count
           for token, count in DASH_TYPE_SCALE.items()) and
       all(not re.search(r'font-size\s*:\s*' + re.escape(value) + r'(?=[;}])', DASH_CSS)
