@@ -41,20 +41,22 @@ test("Schedule week strip contains 44px day targets inside its own narrow-screen
 });
 
 test("Schedule event-card actions wrap instead of forcing a 412px mobile footer", () => {
-  assert.ok(css.includes("@media(max-width:520px){\\n  .week-day-events{min-width:0;max-width:100%}"));
-  assert.ok(css.includes(".evc.cmp .evc-foot{\\n    display:flex;\\n    flex-wrap:wrap;"));
-  assert.ok(css.includes(".evc.cmp .evc-foot .more{\\n    flex:1 1 6rem;\\n    min-width:44px;"));
-  assert.ok(css.includes("min-height:44px;\\n    height:auto;\\n    padding:0 6px;"));
-  assert.ok(css.includes(".evc.cmp .evc-foot .star{\\n    flex:0 0 44px;\\n    width:44px;"));
-  assert.ok(css.includes("min-width:44px;\\n    min-height:44px;"));
+  const nl = String.fromCharCode(10);
+  assert.ok(css.includes("@media(max-width:520px){" + nl + "  .week-day-events{min-width:0;max-width:100%}"));
+  assert.ok(css.includes(".evc.cmp .evc-foot{" + nl + "    display:flex;" + nl + "    flex-wrap:wrap;"));
+  assert.ok(css.includes(".evc.cmp .evc-foot .more{" + nl + "    flex:1 1 6rem;" + nl + "    min-width:44px;"));
+  assert.ok(css.includes("min-height:44px;" + nl + "    height:auto;" + nl + "    padding:0 6px;"));
+  assert.ok(css.includes(".evc.cmp .evc-foot .star{" + nl + "    flex:0 0 44px;" + nl + "    width:44px;"));
+  assert.ok(css.includes("min-width:44px;" + nl + "    min-height:44px;"));
   assert.ok(!css.includes("grid-template-columns:minmax(0,1fr) minmax(0,1fr) 42px"));
 });
 
 test("Schedule event headers wrap beside a fixed 44px hide target on narrow screens", () => {
-  assert.ok(css.includes("@media(max-width:520px){\\n  .week-day-events{min-width:0;max-width:100%}"));
+  const nl = String.fromCharCode(10);
+  assert.ok(css.includes("@media(max-width:520px){" + nl + "  .week-day-events{min-width:0;max-width:100%}"));
   assert.ok(css.includes(".evc.cmp{min-width:0;max-width:100%;box-sizing:border-box}"));
-  assert.ok(css.includes(".evc.cmp .evc-top{\\n    display:grid;\\n    grid-template-columns:minmax(0,1fr) 44px;"));
-  assert.ok(css.includes("grid-template-areas:\"kind hide\" \"count hide\";"));
-  assert.ok(css.includes(".evc.cmp .evc-top .cdn{\\n    grid-area:count;\\n    min-width:0;\\n    max-width:100%;\\n    white-space:normal;\\n    overflow-wrap:anywhere;"));
-  assert.ok(css.includes(".evc.cmp .evc-top .hide-x{\\n    grid-area:hide;\\n    justify-self:end;\\n    align-self:center;\\n    width:44px;\\n    height:44px;\\n    margin:0;"));
+  assert.ok(css.includes(".evc.cmp .evc-top{" + nl + "    display:grid;" + nl + "    grid-template-columns:minmax(0,1fr) 44px;"));
+  assert.ok(css.includes('grid-template-areas:"kind hide" "count hide";'));
+  assert.ok(css.includes(".evc.cmp .evc-top .cdn{" + nl + "    grid-area:count;" + nl + "    min-width:0;" + nl + "    max-width:100%;" + nl + "    white-space:normal;" + nl + "    overflow-wrap:anywhere;"));
+  assert.ok(css.includes(".evc.cmp .evc-top .hide-x{" + nl + "    grid-area:hide;" + nl + "    justify-self:end;" + nl + "    align-self:center;" + nl + "    width:44px;" + nl + "    height:44px;" + nl + "    margin:0;"));
 });
