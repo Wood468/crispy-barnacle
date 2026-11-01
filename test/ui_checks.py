@@ -241,7 +241,7 @@ check('base bonus and information availability controls use semantic status role
           'background: var(--color-status-info-unavailable); color: var(--color-on-status-info-unavailable); border: 1px solid var(--color-border-info-unavailable);',
       ]))
 check('versioned stylesheets are referenced by the page and precached offline',
-      all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261101k', '/dash.css?v=20261102b']))
+      all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261101k', '/dash.css?v=20261102c']))
 check('owner verification scripts are versioned and precached offline',
       '/account.js?v=20261101b' in INDEX_HTML and '/account.js?v=20261101b' in SW_JS and
       '/review.js?v=20261101b' in DASH_JS and '/review.js?v=20261101b' in SW_JS)
@@ -269,7 +269,7 @@ check('event signal chips and detail tags use semantic palette roles with unchan
           '.tg-incense{--tc:var(--color-signal-shadow)}.tg-costume{--tc:var(--color-signal-encounter)}',
       ]))
 check('offline shell cache version advances with the dashboard stylesheet token release',
-      "gofn-shell-v185" in SW_JS)
+      "gofn-shell-v186" in SW_JS)
 check('versioned dashboard scripts are referenced by the entry page and precached offline',
       '/app.js?v=20261101f' in INDEX_HTML and '/app.js?v=20261101f' in SW_JS and
       '/dash.js?v=20261101e' in APP_JS and '/dash.js?v=20261101e' in SW_JS and
@@ -490,19 +490,39 @@ with sync_playwright() as p:
         check('Today focus strip expands to four columns on desktop', desktop_cols==4, desktop_cols)
         future_overseas.context.close()
 
-        dark_theme = overseas.evaluate("""() => ({
-          body:getComputedStyle(document.body).color,
-          nav:getComputedStyle(document.querySelector('nav.tabs')).backgroundColor
-        })""")
+        overseas.evaluate("""() => {
+          const pill=document.createElement('span');
+          pill.className='mega-pill-red';
+          pill.id='theme-mega-pill';
+          document.body.appendChild(pill);
+        }""")
+        overseas.emulate_media(color_scheme='light')
+        dark_theme = overseas.evaluate("""() => {
+          const pill=getComputedStyle(document.getElementById('theme-mega-pill'));
+          return {
+            body:getComputedStyle(document.body).color,
+            nav:getComputedStyle(document.querySelector('nav.tabs')).backgroundColor,
+            megaBg:pill.backgroundColor, megaText:pill.color, megaBorder:pill.borderTopColor
+          };
+        }""")
+        overseas.emulate_media(color_scheme='dark')
         overseas.evaluate("document.documentElement.setAttribute('data-theme','light')")
-        light_theme = overseas.evaluate("""() => ({
-          body:getComputedStyle(document.body).color,
-          nav:getComputedStyle(document.querySelector('nav.tabs')).backgroundColor
-        })""")
+        light_theme = overseas.evaluate("""() => {
+          const pill=getComputedStyle(document.getElementById('theme-mega-pill'));
+          return {
+            body:getComputedStyle(document.body).color,
+            nav:getComputedStyle(document.querySelector('nav.tabs')).backgroundColor,
+            megaBg:pill.backgroundColor, megaText:pill.color, megaBorder:pill.borderTopColor
+          };
+        }""")
         overseas.evaluate("document.documentElement.removeAttribute('data-theme')")
+        overseas.emulate_media(color_scheme='light')
         check('Semantic base tokens preserve dark and light body text and navigation surfaces',
-              dark_theme=={'body':'rgb(243, 245, 249)','nav':'rgb(20, 25, 34)'} and
-              light_theme=={'body':'rgb(12, 15, 20)','nav':'rgb(255, 255, 255)'}, (dark_theme,light_theme))
+              dark_theme['body']=='rgb(243, 245, 249)' and dark_theme['nav']=='rgb(20, 25, 34)' and
+              light_theme['body']=='rgb(12, 15, 20)' and light_theme['nav']=='rgb(255, 255, 255)', (dark_theme,light_theme))
+        check('Mega status pill follows the selected app theme instead of OS preference',
+              dark_theme['megaBg']=='rgb(74, 29, 29)' and dark_theme['megaText']=='rgb(255, 180, 171)' and dark_theme['megaBorder']=='rgb(122, 47, 47)' and
+              light_theme['megaBg']=='rgb(253, 232, 232)' and light_theme['megaText']=='rgb(180, 35, 24)' and light_theme['megaBorder']=='rgb(244, 180, 176)', (dark_theme,light_theme))
 
         overseas.evaluate("""() => {
           for (const id of ['action-centre','foryou-sec','weekly-sec','buy-sec']) {
@@ -2001,6 +2021,20 @@ check('Max, Gigantamax and Shadow artwork-tag gradients use semantic roles with 
           'linear-gradient(90deg,#c1124d,#ff4d6d)',
           'linear-gradient(90deg,#b7310f,#ff7a1a)'
       ]))
+
+# Mega red status pills follow the app's explicit theme, independent of OS preference.
+check('Mega status pill uses semantic theme roles with light and dark palette values',
+      all(token in DASH_CSS for token in [
+          '--color-status-mega-pill-bg:#4a1d1d',
+          '--color-status-mega-pill-fg:#ffb4ab',
+          '--color-status-mega-pill-border:#7a2f2f',
+          ':root[data-theme="light"]{',
+          '--color-status-mega-pill-bg:#fde8e8',
+          '--color-status-mega-pill-fg:#b42318',
+          '--color-status-mega-pill-border:#f4b4b0'
+      ]) and
+      '.mega-pill-red{display:inline-block;align-self:flex-start;margin-top:.35rem;padding:.15rem .6rem;border-radius:var(--radius-pill);background:var(--color-status-mega-pill-bg);color:var(--color-status-mega-pill-fg);border:1px solid var(--color-status-mega-pill-border);font-size:var(--type-label);font-weight:600}' in DASH_CSS and
+      '@media (prefers-color-scheme:dark){.mega-pill-red' not in DASH_CSS)
 
 print('\nFAILED:',fails if fails else 'none')
 if fails:
