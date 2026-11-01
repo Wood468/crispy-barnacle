@@ -25,6 +25,9 @@
   --color-kind-primal:#8E1B1B; --color-on-kind-primal:#fff;
   --color-kind-gigantamax:#D6336C; --color-on-kind-gigantamax:#fff;
 
+  /* Semantic affirmative and provisional status-pill colours. */
+  --color-status-positive:#26833A; --color-on-status-positive:#fff;
+  --color-status-caution:#F59F00; --color-on-status-caution:#1D1300;
   /* Four-point spacing scale, semantic type scale, shared radii and motion. */
   --space-1:4px; --space-2:8px; --space-3:12px; --space-4:16px; --space-5:20px;
   --space-6:24px; --space-7:28px; --space-8:32px; --space-9:36px; --space-10:40px;
@@ -284,7 +287,7 @@ nav.tabs button[aria-selected="true"] svg{stroke-width:2.6}
 .dd .body{padding:0 var(--space-5) var(--space-5);display:grid;gap:18px}
 .dd h4{display:flex;align-items:center;gap:var(--space-2);margin:0 0 var(--space-1);font-size:var(--type-body-emphasis)}
 .st{display:inline-block;border-radius:var(--radius-pill);padding:3px 10px;font:700 var(--type-overline) var(--font-body);text-transform:uppercase;letter-spacing:.05em}
-.st-a{background:#26833A;color:#fff}.st-d{background:#F59F00;color:#1D1300}.st-n{background:var(--color-surface-raised);color:var(--color-text)}.st-u{background:transparent;color:var(--color-text-muted);border:1px dashed var(--ring)}
+.st-a{background:var(--color-status-positive);color:var(--color-on-status-positive)}.st-d{background:var(--color-status-caution);color:var(--color-on-status-caution)}.st-n{background:var(--color-surface-raised);color:var(--color-text)}.st-u{background:transparent;color:var(--color-text-muted);border:1px dashed var(--ring)}
 .dd .sub{margin:2px 0 var(--space-2);font-size:var(--type-body-sm);color:var(--color-text-muted)}
 .dd .lab{font:600 var(--type-meta) var(--font-mono);color:var(--color-text-muted);margin:var(--space-3) 0 6px;text-transform:uppercase}
 .utiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(6.6rem,1fr));gap:var(--space-2)}
