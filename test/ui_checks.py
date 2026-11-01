@@ -241,7 +241,7 @@ check('base bonus and information availability controls use semantic status role
           'background: var(--color-status-info-unavailable); color: var(--color-on-status-info-unavailable); border: 1px solid var(--color-border-info-unavailable);',
       ]))
 check('versioned stylesheets are referenced by the page and precached offline',
-      all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261101k', '/dash.css?v=20261102a']))
+      all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261101k', '/dash.css?v=20261102b']))
 check('owner verification scripts are versioned and precached offline',
       '/account.js?v=20261101b' in INDEX_HTML and '/account.js?v=20261101b' in SW_JS and
       '/review.js?v=20261101b' in DASH_JS and '/review.js?v=20261101b' in SW_JS)
@@ -269,7 +269,7 @@ check('event signal chips and detail tags use semantic palette roles with unchan
           '.tg-incense{--tc:var(--color-signal-shadow)}.tg-costume{--tc:var(--color-signal-encounter)}',
       ]))
 check('offline shell cache version advances with the dashboard stylesheet token release',
-      "gofn-shell-v184" in SW_JS)
+      "gofn-shell-v185" in SW_JS)
 check('versioned dashboard scripts are referenced by the entry page and precached offline',
       '/app.js?v=20261101f' in INDEX_HTML and '/app.js?v=20261101f' in SW_JS and
       '/dash.js?v=20261101e' in APP_JS and '/dash.js?v=20261101e' in SW_JS and
@@ -1977,6 +1977,30 @@ check('shiny, transfer bonus and Max Battle accents reuse semantic roles without
           '.sb-transfer{border-color:color-mix(in srgb,var(--color-signal-transfer-candy) 70%,var(--border-subtle));background:color-mix(in srgb,var(--color-signal-transfer-candy) 22%,var(--surface-glass))}',
           '.rotc.max{border-color:var(--color-kind-max-battle,#6E56CF)}'
       ]) and '--color-kind-max-battle:#6E56CF' in BASE_CSS)
+
+# Max, Gigantamax and Shadow artwork-tag gradients use semantic roles with unchanged hues.
+check('Max, Gigantamax and Shadow artwork-tag gradients use semantic roles with unchanged hues',
+      all(token in DASH_CSS for token in [
+          '--color-signal-max-tag-start:#c1124d',
+          '--color-signal-max-tag-end:#ff4d6d',
+          '--color-signal-gmax-tag-start:#b7310f',
+          '--color-signal-gmax-tag-end:#ff7a1a',
+          '--color-signal-shadow-tag-start:#5b2bb0',
+          '--color-signal-shadow-tag-end:#8a3fe0',
+          '--color-on-signal-tag:#fff'
+      ]) and
+      all(selector in DASH_CSS for selector in [
+          'color:var(--color-on-signal-tag)',
+          '.shadow-tag{background:#5B2BB0}',
+          '.shadow-tag{background:linear-gradient(90deg,var(--color-signal-shadow-tag-start),var(--color-signal-shadow-tag-end))}',
+          '.max-tag{background:linear-gradient(90deg,var(--color-signal-max-tag-start),var(--color-signal-max-tag-end))}',
+          '.max-art.is-gmax .max-tag{background:linear-gradient(90deg,var(--color-signal-gmax-tag-start),var(--color-signal-gmax-tag-end))}'
+      ]) and
+      all(literal not in DASH_CSS for literal in [
+          'linear-gradient(90deg,#5b2bb0,#8a3fe0)',
+          'linear-gradient(90deg,#c1124d,#ff4d6d)',
+          'linear-gradient(90deg,#b7310f,#ff7a1a)'
+      ]))
 
 print('\nFAILED:',fails if fails else 'none')
 if fails:
