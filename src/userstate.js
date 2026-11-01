@@ -12,6 +12,7 @@ export async function stateReady(db) {
 // targeted read. Keep the full incremental read as the default for existing sync clients.
 export function cleanReadKeys(raw) {
   if (!Array.isArray(raw) || !raw.length) return { keys: [], error: "empty" };
+  if (raw.length > MAX_READ_KEYS) return { keys: [], error: "too_many" };
   const keys = [...new Set(raw)];
   if (keys.length > MAX_READ_KEYS) return { keys: [], error: "too_many" };
   if (keys.some(k => typeof k !== "string" || !KEY_RE.test(k))) return { keys: [], error: "invalid" };
