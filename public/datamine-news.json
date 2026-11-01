@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-31T22:47:35.435Z",
+ "updated": "2026-11-01T09:10:06.304Z",
  "seeded": true,
  "channels": [
   {
@@ -18,10 +18,19 @@
    "src": "gamedata",
    "name": "dm-gamedata",
    "state": "ok",
-   "count": 25
+   "count": 26
   }
  ],
  "items": [
+  {
+   "id": "1566287113442304164",
+   "src": "gamedata",
+   "title": "The remote raid limit has been decreased from 20 to 10",
+   "text": "The remote raid limit has been decreased from 20 to 10\n@subscriber @miner",
+   "link": "",
+   "image": "",
+   "date": "2026-11-01T03:05:48.052Z"
+  },
   {
    "id": "1566201257729720540",
    "src": "events",
