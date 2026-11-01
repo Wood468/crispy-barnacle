@@ -1340,6 +1340,11 @@
 
     var tray = $('today-deadlines'), traySummary = $('today-deadlines-summary'), trayList = $('today-deadlines-list');
     if (tray && traySummary && trayList) {
+      if (!tray.dataset.toggleBound) {
+        tray.addEventListener('toggle', function () { trayList.hidden = !tray.open; });
+        tray.dataset.toggleBound = 'true';
+      }
+      trayList.hidden = !tray.open;
       var visibleCandidates = trayCandidates.slice(0, 8);
       var showTray = trayCandidates.length > 1 ||
         (trayCandidates.length === 1 && trayCandidates[0].end.getTime() > periodLimit);
@@ -1359,8 +1364,10 @@
             (d.qualifier ? '<small class="today-deadline-qualifier">' + esc(d.qualifier) + '</small>' : '') +
             '<small>' + esc(when) + (source ? ' · Source: ' + source : '') + '</small></li>';
         }).join('');
+        trayList.hidden = !tray.open;
       } else {
         tray.open = false;
+        trayList.hidden = true;
         trayList.textContent = '';
       }
     }
