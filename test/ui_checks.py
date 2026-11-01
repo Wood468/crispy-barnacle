@@ -241,12 +241,22 @@ check('base bonus and information availability controls use semantic status role
           'background: var(--color-status-info-unavailable); color: var(--color-on-status-info-unavailable); border: 1px solid var(--color-border-info-unavailable);',
       ]))
 check('versioned stylesheets are referenced by the page and precached offline',
-      all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261101k', '/dash.css?v=20261101u']))
+      all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261101k', '/dash.css?v=20261101v']))
 check('owner verification scripts are versioned and precached offline',
       '/account.js?v=20261101b' in INDEX_HTML and '/account.js?v=20261101b' in SW_JS and
       '/review.js?v=20261101b' in DASH_JS and '/review.js?v=20261101b' in SW_JS)
-check('offline shell cache version advances with the stylesheet token release',
-      "gofn-shell-v179" in SW_JS)
+check('source freshness indicators use semantic roles with unchanged colours',
+      all(token in DASH_CSS for token in [
+          '--color-source-fresh:#6BD18A; --color-source-stale:#E8B84A; --color-source-failed:#FF9B8F;',
+          '.fl-stale button,.fl-degraded button{color:var(--color-source-stale)}.fl-failed button{color:var(--color-source-failed)}',
+          '.fr-fresh::before{background:var(--color-source-fresh)}',
+          '.fr-stale::before{background:var(--color-source-stale)}',
+          '.fr-degraded::before{background:var(--color-source-stale)}',
+          '.fr-failed{border-color:var(--color-source-failed)}.fr-failed::before{background:var(--color-source-failed)}',
+          '.fr-sum-stale,.fr-sum-degraded{color:var(--color-source-stale)}.fr-sum-failed{color:var(--color-source-failed)}',
+      ]))
+check('offline shell cache version advances with the dashboard stylesheet token release',
+      "gofn-shell-v180" in SW_JS)
 check('versioned dashboard scripts are referenced by the entry page and precached offline',
       '/app.js?v=20261101f' in INDEX_HTML and '/app.js?v=20261101f' in SW_JS and
       '/dash.js?v=20261101e' in APP_JS and '/dash.js?v=20261101e' in SW_JS and
