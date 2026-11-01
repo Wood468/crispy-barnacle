@@ -129,15 +129,17 @@ test("Check infographic: keeps button semantics, announces separately, resets on
   const resetTimer = t.timers.find((x) => x.ms === 3500); assert.ok(resetTimer && !resetTimer.dead);
   t.click(b);                                  // tap during the message: old timer cancelled; the next result clears the region first so the same text is read again
   assert.ok(resetTimer.dead, "old reset timer really cancelled");
-  await settle(); t.runTimers(50);
+  await settle();
+  assert.equal(t.live.textContent, "", "the region is emptied before the identical message is set again (fails if announce() stops clearing)");
+  t.runTimers(50);
   assert.equal(t.live.textContent, "No infographic found yet", "an identical message is announced again");
   assert.equal(b.textContent, "No infographic found yet");
   const ranBefore = t.timers.filter((x) => x.ran && x.ms === 3500).length; t.runTimers(3500); // fires every timer that is still alive: the cancelled one must not, so only the new one runs
   assert.equal(t.timers.filter((x) => x.ran && x.ms === 3500).length - ranBefore, 1, "only the new reset timer fired");
   assert.ok(!resetTimer.ran);
   assert.equal(b.textContent, "Check infographic");
-  assert.equal(b.textContent, "Check infographic");
   assert.equal(b.getAttribute("data-igmsg"), null);
+  assert.equal(t.live.textContent, "", "after the reset the stale message is gone from the live region");
 });
 
 test("Check infographic: one button's reset timer or re-tap never drops another button's announcement", async () => {
@@ -159,6 +161,36 @@ test("Check infographic: one button's reset timer or re-tap never drops another 
   t.click(b); await settle();
   const pendingB = t.timers.filter((x) => x.ms === 50 && !x.ran && !x.dead);
   assert.equal(pendingB.length, 1);
-  t.click(a);                                  // a is idle: starts a new check; no announce('') must run
+  t.click(a);                                  // a is idle: starts a new check; nothing is announced or cancelled yet
   assert.ok(!pendingB[0].dead, "starting another button's check leaves a pending announcement alone");
+  await settle();                              // A's check ends: the latest announce() wins and replaces B's pending one
+  assert.ok(pendingB[0].dead, "A's finished check supersedes B's pending announcement");
+  const pendingA = t.timers.filter((x) => x.ms === 50 && !x.ran && !x.dead);
+  assert.equal(pendingA.length, 1, "exactly one announcement is pending, nothing stuck");
+  t.runTimers(50);
+  assert.equal(t.live.textContent, "No infographic found yet");
+  t.runTimers(3500);                           // every reset fires: the last announcer's clears the region
+  assert.equal(t.live.textContent, "", "nothing is left stuck in the live region");
+  assert.equal(a.textContent, "Check infographic");
+  assert.equal(b.textContent, "Check infographic");
+});
+
+test("Check infographic: a reset clears the region only for the button whose message is there", async () => {
+  const { t, a, b } = await loaded({ info: { events: {} } });
+  t.click(a); await settle(); t.runTimers(50);
+  const aReset = t.timers.find((x) => x.ms === 3500 && !x.dead && !x.ran);
+  t.click(b); await settle(); t.runTimers(50);   // B's identical text is now in the region
+  const bReset = t.timers.find((x) => x.ms === 3500 && !x.dead && !x.ran && x !== aReset);
+  aReset.ran = true; aReset.f();
+  assert.equal(a.textContent, "Check infographic");
+  assert.equal(t.live.textContent, "No infographic found yet", "A's reset leaves B's current message alone");
+  t.click(a); await settle();                    // A announces again: pending, region empty
+  const aReset2 = t.timers.find((x) => x.ms === 3500 && !x.dead && !x.ran && x !== bReset);
+  bReset.ran = true; bReset.f();
+  const pending = t.timers.filter((x) => x.ms === 50 && !x.ran && !x.dead);
+  assert.equal(pending.length, 1, "B's reset did not cancel A's pending announcement");
+  t.runTimers(50);
+  assert.equal(t.live.textContent, "No infographic found yet", "A's message still arrives");
+  aReset2.ran = true; aReset2.f();
+  assert.equal(t.live.textContent, "", "A's own reset clears it");
 });

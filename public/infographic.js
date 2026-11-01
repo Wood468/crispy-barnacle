@@ -140,19 +140,27 @@
   }
   /* The button keeps its button role; the result is read out through one hidden status region. The region is created at startup (a live
      region added at the moment of the first message is often not announced), and each message is set on a later tick after the text was
-     cleared, so the same message twice in a row is read twice. Only announce() touches the region: a button resetting its own visible text
-     never clears it, so it cannot cancel a newer message that belongs to another button. */
-  var announceTimer = 0;
+     cleared, so the same message twice in a row is read twice. Only announce() and clearLive() touch the region, and clearLive() acts only on the caller's own still-current message. */
+  var announceTimer = 0, liveOwner = 0, liveSeq = 0;
   function liveRegion() {
     var r = document.getElementById('iglive');
     if (!r && document.body) { r = document.createElement('div'); r.id = 'iglive'; r.className = 'vh-live'; r.setAttribute('role', 'status'); r.setAttribute('aria-live', 'polite'); document.body.appendChild(r); }
     return r;
   }
+  /* Returns a token naming this message, so its button can later clear it (and only it). The newest announce() always wins. */
   function announce(text) {
-    var r = liveRegion(); if (!r) return;
+    var r = liveRegion(); if (!r) return 0;
     if (announceTimer) { clearTimeout(announceTimer); announceTimer = 0; }
+    var token = liveOwner = ++liveSeq;
     r.textContent = '';
-    if (text) announceTimer = setTimeout(function () { announceTimer = 0; r.textContent = text; }, 50);
+    announceTimer = setTimeout(function () { announceTimer = 0; r.textContent = text; }, 50);
+    return token;
+  }
+  /* A button's reset empties the region only if the message there is still its own and nothing newer is pending, so a stale
+     "No infographic found yet" is not left for browse-mode readers and another button's message is never touched. */
+  function clearLive(token) {
+    var r = document.getElementById('iglive');
+    if (r && token && liveOwner === token && !announceTimer) { r.textContent = ''; liveOwner = 0; }
   }
   /* "Check infographic": look again, ignoring everything this page already loaded. Found: open it. Not found: say so on the button. */
   function recheck(button) {
@@ -165,8 +173,8 @@
       var found = ((eventInfo(ev, all).infographics || []).some(function (i) { return i && safe(i.url); })) || !!safe(ev.infographicUrl || ev.infographic);
       syncButtons(all);
       if (found) { open(id); return; }
-      button.setAttribute('data-igmsg', '1'); button.textContent = 'No infographic found yet'; announce('No infographic found yet');
-      button._igTimer = setTimeout(function () { button._igTimer = 0; button.removeAttribute('data-igmsg'); button.textContent = 'Check infographic'; }, 3500);
+      button.setAttribute('data-igmsg', '1'); button.textContent = 'No infographic found yet'; var token = announce('No infographic found yet');
+      button._igTimer = setTimeout(function () { button._igTimer = 0; button.removeAttribute('data-igmsg'); button.textContent = 'Check infographic'; clearLive(token); }, 3500);
     }).catch(function () { button.removeAttribute('data-igbusy'); button.textContent = 'Check infographic'; });
   }
   document.addEventListener('visibilitychange', function () { if (!document.hidden && INFO) loadInfo(true).then(function (all) { syncButtons(all); }); });

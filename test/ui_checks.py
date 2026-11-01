@@ -169,7 +169,7 @@ check('150ms interaction transitions use a shared motion role with unchanged eas
 check('versioned stylesheets are referenced by the page and precached offline',
       all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261101c', '/dash.css?v=20261101u']))
 check('offline shell cache version advances with the stylesheet token release',
-      "gofn-shell-v165" in SW_JS)
+      "gofn-shell-v166" in SW_JS)
 check('versioned dashboard scripts are referenced by the entry page and precached offline',
       '/app.js?v=20261101b' in INDEX_HTML and '/app.js?v=20261101b' in SW_JS and
       '/dash.js?v=20261101b' in APP_JS and '/dash.js?v=20261101b' in SW_JS and
@@ -182,7 +182,7 @@ check('all HTML renderers use one shared apostrophe-safe escape helper',
       all(not re.search(r'function\s+esc\s*\(', source) and
           not re.search(r'var\s+esc\s*=\s*function', source) for source in ESC_RENDERERS))
 check('versioned infographic script is referenced by the dashboard and precached offline',
-      '/infographic.js?v=20261101a' in DASH_JS and '/infographic.js?v=20261101a' in SW_JS)
+      '/infographic.js?v=20261101b' in DASH_JS and '/infographic.js?v=20261101b' in SW_JS)
 check('infographic card thumbnails assign original URLs only near the viewport',
       'data-thumb-src' in INFO_JS and 'new IntersectionObserver' in INFO_JS and
       "rootMargin: '80px 0px'" in INFO_JS)
