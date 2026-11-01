@@ -68,6 +68,7 @@ check('base event-kind badges use semantic foreground/background roles with the 
 STATUS_PALETTE = [
     ('.st-a', 'positive', '#26833A', '#fff'),
     ('.st-d', 'caution', '#F59F00', '#1D1300'),
+    ('.st-r', 'released', '#1971c2', '#fff'),
 ]
 def status_rule(selector):
     marker = selector + '{'
@@ -211,12 +212,12 @@ check('150ms interaction transitions use a shared motion role with unchanged eas
       'transition:transform var(--motion-quick)' in DASH_CSS and
       BASE_CSS.count('var(--motion-quick)') == 3 and DASH_CSS.count('var(--motion-quick)') == 1)
 check('versioned stylesheets are referenced by the page and precached offline',
-      all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261101g', '/dash.css?v=20261101u']))
+      all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261101h', '/dash.css?v=20261101u']))
 check('owner verification scripts are versioned and precached offline',
       '/account.js?v=20261101b' in INDEX_HTML and '/account.js?v=20261101b' in SW_JS and
       '/review.js?v=20261101b' in DASH_JS and '/review.js?v=20261101b' in SW_JS)
 check('offline shell cache version advances with the stylesheet token release',
-      "gofn-shell-v171" in SW_JS)
+      "gofn-shell-v172" in SW_JS)
 check('versioned dashboard scripts are referenced by the entry page and precached offline',
       '/app.js?v=20261101c' in INDEX_HTML and '/app.js?v=20261101c' in SW_JS and
       '/dash.js?v=20261101b' in APP_JS and '/dash.js?v=20261101b' in SW_JS and
