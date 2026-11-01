@@ -1258,23 +1258,49 @@
       return phase(e, t) === 'live' && !e.long && !e.allDay && label.indexOf('person') < 0 &&
         !(e.region && e.sourceStart && !e.utc) && e.end > t && e.end.getTime() <= sixHours;
     }).sort(function (a, b) { return a.end - b.end; });
-    /* Structured GO Pass/season end times are a second deadline source. Do not parse free-text reward expiry,
-       ticket sale windows or research notes: only the published start/end dates in season.json qualify. */
+    /* Use published pass/season dates plus explicit structured claim/use deadlines. Never parse free-text notes. */
     var periodLimit = t.getTime() + 48 * 60 * 60 * 1000;
-    var periodEnding = window.GOSEASON && typeof window.GOSEASON.events === 'function'
-      ? window.GOSEASON.events().filter(function (e) {
-          var label = e && e.season && e.season.label, endMs = e && e.end ? +e.end : NaN;
-          return (label === 'GO Pass' || label === 'Season') && e.start <= t && Number.isFinite(endMs) && endMs > t.getTime() && endMs <= periodLimit;
-        }).sort(function (a, b) { return a.end - b.end; })[0]
-      : null;
+    var periodCandidates = [];
+    if (window.GOSEASON && typeof window.GOSEASON.events === 'function') {
+      window.GOSEASON.events().forEach(function (e) {
+        var label = e && e.season && e.season.label;
+        var endMs = e && e.end ? e.end.getTime() : NaN;
+        if ((label === 'GO Pass' || label === 'Season') && e.start && e.start <= t &&
+            Number.isFinite(endMs) && endMs > t.getTime() && endMs <= periodLimit) {
+          periodCandidates.push({
+            name: e.name, end: e.end, title: label + ' ends', action: 'ends',
+            source: e.season.img_credit || 'Leek Duck', priority: 0
+          });
+        }
+      });
+    }
+    if (window.GOSEASON && typeof window.GOSEASON.deadlines === 'function') {
+      window.GOSEASON.deadlines().forEach(function (d) {
+        var endMs = d && d.end ? d.end.getTime() : NaN;
+        if (d && d.start <= t && Number.isFinite(endMs) && endMs > t.getTime() && endMs <= periodLimit) {
+          periodCandidates.push({
+            name: d.name, end: d.end, title: d.title, action: d.action,
+            source: d.source || '', qualifier: d.qualifier || '', priority: 1
+          });
+        }
+      });
+    }
+    var periodEnding = periodCandidates.sort(function (a, b) {
+      return a.end - b.end || b.priority - a.priority;
+    })[0] || null;
     if (periodEnding && (!ending.length || periodEnding.end < ending[0].end)) {
       var hoursLeft = (periodEnding.end.getTime() - t.getTime()) / 36e5;
       var eta = hoursLeft < 1 ? 'under an hour' : hoursLeft < 24 ? Math.ceil(hoursLeft) + ' hours' : Math.ceil(hoursLeft / 24) + ' days';
-      setText('today-focus-ending', periodEnding.season.label + ' ends in ' + eta);
-      setText('today-focus-ending-meta', periodEnding.name + ' · ends ' + fmtD(periodEnding.end) + ' · ' + fmtT(periodEnding.end));
+      setText('today-focus-ending', periodEnding.title + ' in ' + eta);
+      setText('today-focus-ending-meta', [
+        periodEnding.name,
+        periodEnding.action + ' ' + fmtD(periodEnding.end) + ' · ' + fmtT(periodEnding.end),
+        periodEnding.source,
+        periodEnding.qualifier
+      ].filter(Boolean).join(' · '));
     } else {
       setText('today-focus-ending', ending.length ? ending.length + ' ending within 6h' : 'Nothing timed in the next 6h');
-      setText('today-focus-ending-meta', ending.length ? ending[0].name + ' · ends ' + fmtT(ending[0].end) : 'Timed in-game events or published pass dates');
+      setText('today-focus-ending-meta', ending.length ? ending[0].name + ' · ends ' + fmtT(ending[0].end) : 'Timed in-game events or published deadlines');
     }
   }
   function renderHomeBrief(t) {

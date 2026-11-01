@@ -28,6 +28,8 @@ DASH_JS = (ROOT / 'public' / 'dash.js').read_text()
 INDEX_HTML = (ROOT / 'public' / 'index.html').read_text()
 SW_JS = (ROOT / 'public' / 'sw.js').read_text()
 APP_JS = (ROOT / 'public' / 'app.js').read_text()
+SEASON_JS = (ROOT / 'public' / 'season.js').read_text()
+SEASON_DATA = json.loads((ROOT / 'public' / 'season.json').read_text())
 PIN_JS = (ROOT / 'public' / 'pin.js').read_text()
 ACCOUNT_JS = (ROOT / 'public' / 'account.js').read_text()
 REVIEW_JS = (ROOT / 'public' / 'review.js').read_text()
@@ -223,8 +225,15 @@ check('empty agenda and watchlist states use a quiet surface and decorative cue'
       all(token in DASH_CSS for token in ['.event-agenda > .empty', '#followed > .empty', '#savedev > .empty', '.today-empty', 'content:"◇"', 'border:1px dashed var(--color-border-card)']))
 check('Today focus strip has four data-backed signals and a responsive semantic surface',
       all(token in INDEX_HTML for token in ['id="today-focus-strip"', 'id="today-focus-now"', 'id="today-focus-next"', 'id="today-focus-raids"', 'id="today-focus-ending"']) and
-      all(token in DASH_JS for token in ['function renderTodayStrip', '6 * 60 * 60 * 1000', '48 * 60 * 60 * 1000', 'window.GOSEASON', 'gofn-season-ready', 'activity.inGame', 'activity.inPerson', 'D.rotation', 'D.maxBattles']) and
+      all(token in DASH_JS for token in ['function renderTodayStrip', '6 * 60 * 60 * 1000', '48 * 60 * 60 * 1000', 'window.GOSEASON', 'GOSEASON.deadlines', 'gofn-season-ready', 'activity.inGame', 'activity.inPerson', 'D.rotation', 'D.maxBattles']) and
       all(token in DASH_CSS for token in ['.today-focus-strip', '.today-focus-card', 'grid-template-columns:repeat(2,minmax(0,1fr))']))
+check('season pass and deadline data is structured, source-attributed and ordered',
+      all(item_id in {item.get('id') for item in SEASON_DATA.get('items', [])}
+          for item_id in ['season:pass-halloween', 'season:pass-november']) and
+      len(SEASON_DATA.get('deadlines', [])) >= 5 and
+      all(d.get('source') == 'Leek Duck' and d.get('url', '').startswith('https://leekduck.com/') and
+          d.get('s') and d.get('e') and d['s'] < d['e'] for d in SEASON_DATA.get('deadlines', [])) and
+      'deadlines: function () { return deadlines; }' in SEASON_JS)
 check('150ms interaction transitions use a shared motion role with unchanged easing',
       '--motion-quick:150ms' in BASE_CSS and
       'transition:background-color var(--motion-quick) ease,color var(--motion-quick) ease' in BASE_CSS and
@@ -269,10 +278,10 @@ check('event signal chips and detail tags use semantic palette roles with unchan
           '.tg-incense{--tc:var(--color-signal-shadow)}.tg-costume{--tc:var(--color-signal-encounter)}',
       ]))
 check('offline shell cache version advances with the dashboard stylesheet token release',
-      "gofn-shell-v187" in SW_JS)
+      "gofn-shell-v188" in SW_JS)
 check('versioned dashboard scripts are referenced by the entry page and precached offline',
       '/app.js?v=20261102a' in INDEX_HTML and '/app.js?v=20261102a' in SW_JS and
-      '/dash.js?v=20261102d' in APP_JS and '/dash.js?v=20261102d' in SW_JS and
+      '/dash.js?v=20261102e' in APP_JS and '/dash.js?v=20261102e' in SW_JS and
       '/detail.js?v=20261031a' in DASH_JS and '/detail.js?v=20261031a' in SW_JS)
 check('sync PIN and account controls have one home in Menu and are precached offline',
       INDEX_HTML.index('id="acct" class="acct"') > INDEX_HTML.index('id="sub-menu"') and
@@ -287,7 +296,7 @@ check('owner-only account and moderation UI requires server-verified PIN access'
       '[data-role="guest"] #hireview' in BASE_CSS and
       '[data-role="guest"] .igbanner' in BASE_CSS)
 check('versioned season banner script is referenced by the page and precached offline',
-      '/season.js?v=20261102b' in INDEX_HTML and '/season.js?v=20261102b' in SW_JS)
+      '/season.js?v=20261102c' in INDEX_HTML and '/season.js?v=20261102c' in SW_JS)
 check('all HTML renderers use one shared apostrophe-safe escape helper',
       'function esc(value)' in LIB_JS and 'esc: esc' in LIB_JS and
       all('var esc = window.GOLIB.esc;' in source for source in ESC_RENDERERS) and
@@ -320,7 +329,7 @@ with sync_playwright() as p:
         ctx.set_default_navigation_timeout(15000)
         pg=ctx.new_page(); pg.errs=[]; pg.season_poster_requests=[]
         pg.on('pageerror',lambda e:pg.errs.append(str(e)))
-        pg.on('request',lambda r:pg.season_poster_requests.append(r.url) if any(slug in r.url for slug in ('season-24-twilight-trails','go-pass-october-2026')) else None)
+        pg.on('request',lambda r:pg.season_poster_requests.append(r.url) if any(slug in r.url for slug in ('season-24-twilight-trails','go-pass-october-2026','halloween-2026-part-2','go-pass-november-2026')) else None)
         pg.clock.install(time=clock)
         pg.route('**/api/sources',ful(sources or '{"environment":"production","database":true,"enabled":false,"sources":[]}'))
         pg.route('**/api/events',ful(api or '{"enabled":false,"events":[]}'))
@@ -400,17 +409,31 @@ with sync_playwright() as p:
         empty_data_obj['regionals'] = []
         empty_data = json.dumps(empty_data_obj)
         empty_world = json.dumps({'events': []})
-        pass_season = json.dumps({'items': [{
-            'id': 'season:pass-fixture', 'label': 'GO Pass', 'name': 'GO Pass: Fixture',
-            's': '2026-10-01T10:00', 'e': '2026-10-10T10:00',
-            'url': 'https://leekduck.com/events/go-pass-fixture/'
-        }]})
-        deadline_page = page(extra={
+        pass_season = json.dumps({
+            'items': [{
+                'id': 'season:pass-fixture', 'label': 'GO Pass', 'name': 'GO Pass: Fixture',
+                's': '2026-10-01T10:00', 'e': '2026-10-10T10:00',
+                'url': 'https://leekduck.com/events/go-pass-fixture/'
+            }],
+            'deadlines': [
+                {'id': 'pass-rewards', 'name': 'GO Pass: Fixture rewards', 'title': 'Rewards expire',
+                 'action': 'claim by', 's': '2026-10-10T10:00', 'e': '2026-10-12T10:00',
+                 'source': 'Leek Duck', 'url': 'https://leekduck.com/events/go-pass-fixture/'},
+                {'id': 'future-research', 'name': 'Future research fixture', 'title': 'Research expires',
+                 'action': 'claim by', 's': '2026-10-11T10:00', 'e': '2026-10-12T10:00',
+                 'source': 'Leek Duck', 'url': 'https://leekduck.com/events/go-pass-fixture/'},
+                {'id': 'expired-research', 'name': 'Expired research fixture', 'title': 'Research expires',
+                 'action': 'claim by', 's': '2026-10-01T10:00', 'e': '2026-10-09T10:00',
+                 'source': 'Leek Duck', 'url': 'https://leekduck.com/events/go-pass-fixture/'}
+            ]
+        })
+        deadline_responses = {
             '**/data.json': (empty_data, 200),
             '**/world-events.json': (empty_world, 200),
             '**/regional-events.json': (empty_world, 200),
             '**/season.json': (pass_season, 200)
-        })
+        }
+        deadline_page = page(extra=deadline_responses)
         deadline_page.wait_for_function("document.getElementById('today-focus-ending')?.textContent.includes('GO Pass ends in')")
         deadline_label = deadline_page.locator('#today-focus-ending').inner_text()
         deadline_meta = deadline_page.locator('#today-focus-ending-meta').inner_text()
@@ -421,6 +444,35 @@ with sync_playwright() as p:
               '10 Oct' in deadline_meta and '10' in deadline_meta and 'am' in deadline_meta,
               deadline_meta)
         deadline_page.context.close()
+
+        rewards_page = page(clock='2026-10-10T12:00:00+11:00', extra=deadline_responses)
+        rewards_page.wait_for_function("document.getElementById('today-focus-ending')?.textContent.includes('Rewards expire in')")
+        rewards_label = rewards_page.locator('#today-focus-ending').inner_text()
+        rewards_meta = rewards_page.locator('#today-focus-ending-meta').inner_text()
+        check('Today Ending soon surfaces a published reward-claim deadline after the pass ends',
+              'Rewards expire in' in rewards_label and 'GO Pass: Fixture rewards' in rewards_meta and 'claim by' in rewards_meta,
+              (rewards_label, rewards_meta))
+        check('future and expired structured deadlines are ignored',
+              'Future research fixture' not in rewards_meta and 'Expired research fixture' not in rewards_meta,
+              rewards_meta)
+        rewards_page.context.close()
+
+        live_pass_page = page(clock='2026-11-02T05:51:00+11:00', extra={
+            '**/data.json': (empty_data, 200),
+            '**/world-events.json': (empty_world, 200),
+            '**/regional-events.json': (empty_world, 200)
+        })
+        live_pass_page.wait_for_selector('#seasonbar .ssn-card')
+        live_pass_cards = live_pass_page.locator('#seasonbar .ssn-card')
+        live_pass_text = live_pass_cards.all_inner_texts()
+        check('Today shows the active Halloween GO Pass alongside the season and October pass',
+              live_pass_cards.count() == 3 and any('GO Pass: Halloween 2026' in text for text in live_pass_text),
+              live_pass_text)
+        live_pass_page.wait_for_function("document.getElementById('today-focus-ending-meta')?.textContent.includes('GO Pass: October')")
+        check('Today Ending soon prioritises the earliest active published pass deadline',
+              'GO Pass ends in' in live_pass_page.locator('#today-focus-ending').inner_text() and
+              'GO Pass: October' in live_pass_page.locator('#today-focus-ending-meta').inner_text())
+        live_pass_page.context.close()
 
         # A stalled initial data request must time out, expose a retry, and leave the primary navigation usable.
         boot_ctx=b.new_context(viewport={'width':390,'height':844},device_scale_factor=2,timezone_id='Australia/Melbourne',locale='en-AU',service_workers='block')
