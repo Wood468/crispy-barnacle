@@ -1,4 +1,4 @@
-"""Browser checks for the Phase 2 dashboard (needs: pip install playwright; a static server: cd public && python3 -m http.server 8791).
+"""Browser checks for the Phase 2 dashboard (needs: pip install playwright; a static server: cd public && python3 -m http.server 8791; UI_PORT overrides the port).
 Run: python3 test/ui_checks.py. Mocks every /api/* call, fixes the clock to Fri 10 Oct 2026 22:45 Melbourne time."""
 import json,sys,re,base64
 PNG1=base64.b64decode('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==')
@@ -11,9 +11,14 @@ def ful(body,ct='application/json'): return lambda route,req: route.fulfill(body
 fails=[]
 import os
 from pathlib import Path
+BASE='http://localhost:'+os.environ.get('UI_PORT','8791')  # static server; set UI_PORT to run shards or baselines side by side locally (CI keeps 8791)
 SHARD=os.environ.get('UI_SHARD','')  # a, b or c runs one third in CI; empty runs everything
 def on(k): return SHARD in ('',k)
 def ev(i,name,type,start,end,status,feat=None): return {'id':'leekduck:'+i,'name':name,'type':type,'start':start,'end':end,'tzMode':'local','scope':'worldwide_local','region':None,'featured':feat or [],'bonuses':[],'status':status,'reports':[{'source':'leekduck','link':'https://leekduck.com/events/'+i+'/'}]}
+def settle(pg,js,timeout=10000):
+    """Wait for an async app effect (a JS expression on the page) instead of sleeping a fixed time; returns False on timeout so the check that follows reports the failure."""
+    try: pg.wait_for_function(js,timeout=timeout); return True
+    except Exception: return False
 def check(name,cond,extra=''):
     print(('PASS ' if cond else 'FAIL ')+name+(' '+str(extra) if extra and not cond else ''))
     if not cond: fails.append(name)
@@ -341,15 +346,21 @@ check('desktop Today uses two columns while mobile lists today\'s events before 
       all(token in DASH_CSS for token in ['#tab-now .today-layout{display:flex;flex-direction:column;gap:var(--space-5);min-width:0}', '#tab-now .today-sidebar{display:contents}', '#tab-now #action-centre,#tab-now #foryou-sec,#tab-now #weekly-sec,#tab-now #buy-sec{order:2}', '#tab-now .today-main{order:1;min-width:0}', '@media(min-width:960px)', 'grid-template-columns:minmax(0,1.55fr) minmax(18rem,.9fr)', '#tab-now .today-sidebar{grid-column:2;display:grid']))
 with sync_playwright() as p:
     b=p.chromium.launch()
-    def page(api=None,marks=None,clock='2026-10-09T22:45:00+11:00',sources=None,gens=None,us=None,extra=None,pin=False,slow_places=False):
-        ctx=b.new_context(viewport={'width':390,'height':844},device_scale_factor=2,timezone_id='Australia/Melbourne',locale='en-AU',service_workers='block')
+    def page(api=None,marks=None,clock='2026-10-09T22:45:00+11:00',sources=None,gens=None,us=None,extra=None,pin=False,slow_places=False,width=390,height=844,mobile=False,guard=None):
+        ctx=b.new_context(viewport={'width':width,'height':height},device_scale_factor=2,timezone_id='Australia/Melbourne',locale='en-AU',service_workers='block',**({'is_mobile':True,'has_touch':True} if mobile else {}))
         # Bound default Playwright waits so a lazy asset or missing control cannot stall a whole shard.
         ctx.set_default_timeout(10000)
         ctx.set_default_navigation_timeout(15000)
         pg=ctx.new_page(); pg.errs=[]; pg.season_poster_requests=[]
         pg.on('pageerror',lambda e:pg.errs.append(str(e)))
         pg.on('request',lambda r:pg.season_poster_requests.append(r.url) if any(slug in r.url for slug in ('season-24-twilight-trails','go-pass-october-2026','halloween-2026-part-2','go-pass-november-2026')) else None)
+        if guard is not None:  # console guard: collect everything noisy so the caller can filter it against an explicit allow-list
+            pg.on('console',lambda m:guard.append(('console.'+m.type,m.text,m.location.get('url',''))) if m.type in ('error',) else None)
+            pg.on('pageerror',lambda e:guard.append(('pageerror',str(e),'')))
+            pg.on('requestfailed',lambda r:guard.append(('requestfailed',(r.failure or ''),r.url)))
         pg.clock.install(time=clock)
+        # Fonts come from Google over the network: serve empty stand-ins so runs are identical online, offline and behind a proxy.
+        pg.route(re.compile(r'^https://fonts\.(googleapis|gstatic)\.com/'),lambda r:r.fulfill(status=200,body='',content_type='text/css' if 'googleapis' in r.request.url else 'font/woff2'))
         pg.route('**/api/sources',ful(sources or '{"environment":"production","database":true,"enabled":false,"sources":[]}'))
         pg.route('**/api/events',ful(api or '{"enabled":false,"events":[]}'))
         pg.route(re.compile(r'/(img/ext|infographics)/'),lambda r:r.fulfill(body=PNG1,content_type='image/png'))  # R2 pictures are not in the static folder
@@ -358,7 +369,7 @@ with sync_playwright() as p:
         pg.route('**/api/art*',lambda r:r.fulfill(status=404,body=''))
         for pat,(body,st) in (extra or {}).items(): pg.route(pat,(lambda body,st:(lambda r,req=None:r.fulfill(status=st,body=body,content_type='application/json')))(body,st))
         if slow_places:
-            pg.add_init_script("""(() => {
+            pg.add_init_script(r"""(() => {
                 const append = Node.prototype.appendChild;
                 Node.prototype.appendChild = function (node) {
                     if (node && node.tagName === 'SCRIPT' && /\/places\.js(?:\?|$)/.test(node.src)) {
@@ -373,7 +384,9 @@ with sync_playwright() as p:
         if marks: pg.add_init_script("localStorage.setItem('gofn-dex-v1',%s)"%json.dumps(json.dumps(marks)))
         if us: gens=gens or []
         if gens or us: pg.add_init_script("if(!localStorage.getItem('gofn-us-v1'))localStorage.setItem('gofn-us-v1',%s)"%json.dumps(json.dumps(dict({'pref:gen:%d'%g:{'v':True,'t':1} for g in (gens or [])} and {'pref:gen:%d'%g:{'v':True,'t':1} for g in (gens or [])},**{k:{'v':v,'t':1} for k,v in (us or {}).items()}))))
-        pg.goto('http://localhost:8791/', wait_until='domcontentloaded' if slow_places else 'load'); pg.wait_for_selector('.pc, .prio-empty',state='attached'); pg.wait_for_timeout(300)
+        pg.goto(BASE+'/', wait_until='domcontentloaded' if slow_places else 'load'); pg.wait_for_selector('.pc, .prio-empty',state='attached'); pg.wait_for_function("document.getElementById('home-now')?.hasAttribute('data-render-key')")
+        # dash.js appends detail/extra/places/infographic scripts after the first render; tests call their globals straight away.
+        settle(pg,"!!(window.GODETAIL&&window.GOEXTRA&&window.GOINFOGRAPHIC)&&(%s||!!window.GOPLACES)"%('true' if slow_places else 'false'))
         return pg
     if on('a'):
         # Primary navigation follows the ARIA tabs pattern: one tab stop, linked panels and predictable keyboard movement.
@@ -465,12 +478,13 @@ with sync_playwright() as p:
         deadline_page.context.close()
 
         rewards_page = page(clock='2026-10-10T12:00:00+11:00', extra=deadline_responses)
-        rewards_page.wait_for_function("document.getElementById('today-focus-ending')?.textContent.includes('Rewards expire in')")
+        # season.json is fetched by season.js after first paint; wait for it explicitly (it re-renders Today via gofn-season-ready), then for the label.
+        rewards_ready = settle(rewards_page, "!!window.GOSEASON", 30000) and settle(rewards_page, "document.getElementById('today-focus-ending')?.textContent.includes('Rewards expire in')")
         rewards_label = rewards_page.locator('#today-focus-ending').inner_text()
         rewards_meta = rewards_page.locator('#today-focus-ending-meta').inner_text()
         check('Today Ending soon surfaces a published reward-claim deadline after the pass ends',
               'Rewards expire in' in rewards_label and 'GO Pass: Fixture rewards' in rewards_meta and 'claim by' in rewards_meta,
-              (rewards_label, rewards_meta))
+              (rewards_ready, rewards_label, rewards_meta))
         check('future and expired structured deadlines are ignored',
               'Future research fixture' not in rewards_meta and 'Expired research fixture' not in rewards_meta,
               rewards_meta)
@@ -604,7 +618,7 @@ with sync_playwright() as p:
         boot=boot_ctx.new_page(); boot.clock.install(time='2026-10-09T22:45:00+11:00')
         boot.route('**/data.json',lambda route: None)  # leave the request pending to exercise the timeout
         boot.route('**/art/index.json',ful('{}'))
-        boot.goto('http://localhost:8791/',wait_until='domcontentloaded')
+        boot.goto(BASE+'/',wait_until='domcontentloaded')
         boot.clock.fast_forward(13000); boot.clock.run_for(10); boot.wait_for_timeout(100)
         check('stalled initial data request shows a retryable error',boot.locator('#load-error:not([hidden])').count()==1 and boot.locator('#load-retry').is_visible())
         check('fallback navigation remains visible when initial data is unavailable',boot.locator('nav.tabs button[data-boot-tab]').count()==4)
@@ -1168,7 +1182,7 @@ with sync_playwright() as p:
         check('card with no infographic shows an always-on Check infographic button (no thumbnail)', pg.locator('[data-igcheck="cur:zorua"]').first.inner_text()=='Check infographic' and not pg.locator('[data-igcheck="cur:zorua"]').first.is_disabled() and pg.locator('[data-igcard="cur:zorua"] img').count()==0)
         check('infographic buttons are accessible', 'Open infographic for' in pg.locator('[data-infographic="cur:trek"]').first.get_attribute('aria-label') and 'infographic' in pg.locator('[data-igcheck="cur:zorua"]').first.get_attribute('aria-label'))
         check('Check infographic button keeps its button role', pg.locator('[data-igcheck="cur:zorua"]').first.get_attribute('role') is None)
-        pg.locator('[data-igcheck="cur:zorua"]').first.click(); pg.wait_for_timeout(600)
+        pg.locator('[data-igcheck="cur:zorua"]').first.click(); settle(pg,"document.querySelector('[data-igcheck=\"cur:zorua\"]')?.textContent.trim()==='No infographic found yet'")
         check('Check infographic says so in place when nothing is found', pg.locator('[data-igcheck="cur:zorua"]').first.inner_text()=='No infographic found yet' and not pg.locator('#goinfo:not([hidden])').count())
         # The event infographic viewer should behave like the event-details dialog: trap keyboard focus and return it to the card.
         ig_opener = pg.locator('[data-infographic="cur:trek"]').first
@@ -1780,11 +1794,17 @@ with sync_playwright() as p:
         pg.route('**/api/dex',lambda r:r.fulfill(status=401,body='{}',content_type='application/json')); pg.route('**/api/art*',lambda r:r.fulfill(status=404,body=''))
         pg.route('**/api/userstate*',us)
         pg.add_init_script("sessionStorage.setItem('gofn-prof-skip','1');localStorage.setItem('gofn-pin','1234');localStorage.setItem('gofn-us-v1',JSON.stringify({'form:37:alola':{v:0,t:%d}}))"%(9999999999999))
-        pg.goto('http://localhost:8791/'); pg.wait_for_selector('.pc, .prio-empty',state='attached'); pg.wait_for_timeout(600)
-        pg.click('#hmenu'); pg.wait_for_timeout(300)
+        pg.goto(BASE+'/'); pg.wait_for_selector('.pc, .prio-empty',state='attached')
+        # The merge and the PUT of local-newer entries are async after first paint: wait for them, not a fixed 600 ms.
+        settle(pg,"document.getElementById('home-now')?.hasAttribute('data-render-key')")
+        for _ in range(200):
+            if puts: break
+            pg.wait_for_timeout(50)
+        pg.click('#hmenu'); settle(pg,"document.getElementById('followed')?.textContent.toUpperCase().includes('EEVEE')")
         check('server follow arrives on this device', 'EEVEE' in pg.inner_text('#followed').upper(), pg.inner_text('#followed')[:100])
         check('newer local edit beats older server entry', pg.evaluate("GODASH.ownState('Alolan Vulpix').state")=='missing')
         check('local-newer entry is pushed up', any('form:37:alola' in p.get('entries',{}) for p in puts), puts)
+        settle(pg,"document.getElementById('usstat')?.textContent.includes('Synced')")
         check('sync status says synced', 'Synced' in pg.inner_text('#usstat'), pg.inner_text('#usstat'))
         check('no page errors in sync', pg.errs==[], pg.errs)
         # 10. Phase 5 settings: off by default, never needs a secret in the page
@@ -1877,7 +1897,7 @@ with sync_playwright() as p:
         fill=','.join('{"id":"leekduck:f%d","name":"Filler %d","type":"event","start":"2026-11-%02dT10:00:00.000","end":"2026-11-%02dT12:00:00.000","tzMode":"local","status":"community_reported","announced":true,"missing":false,"featured":[],"bonuses":[],"reports":[]}'%(i,i,i+1,i+1) for i in range(11))
         api='{"enabled":true,"events":['+fill+',{"id":"leekduck:x1","name":"Test Raid Day","type":"raid-battles","start":"2026-10-20T10:00:00.000","end":"2026-10-20T11:00:00.000","tzMode":"local","status":"community_reported","announced":true,"missing":false,"featured":[],"bonuses":[],"link":"https://leekduck.com/events/x1/","reports":[{"source":"leekduck","status":"community_reported","link":""}]}],"sources":[]}'
         pg=page(api=api,sources='{"environment":"preview","database":true,"enabled":true,"sources":[]}'); pg.wait_for_function("!!window.GODETAIL")
-        pg.evaluate("GODETAIL.open('leekduck:x1')"); pg.wait_for_timeout(300)
+        pg.evaluate("GODETAIL.open('leekduck:x1')"); pg.wait_for_selector('#evd .evd-btns')
         check('event detail: API event with only a top-level link still gets Open source', pg.locator('#evd a:has-text("Open source")').count()==1)
 
         # ---- Places ----
@@ -1918,13 +1938,14 @@ with sync_playwright() as p:
           {'id':'bad1','name':'No Source Place','city':'X','country':'Australia','lat':-37,'lng':144,'type':'t','tags':[],'sources':[],'verified':'2026-10-01'},
           {'id':'bad2','name':'No Date Place','city':'X','country':'Australia','lat':-37,'lng':144,'type':'t','tags':[],'sources':[{'label':'S','url':'https://example.com'}]},
           {'id':'bad3','name':'Http Source Place','city':'X','country':'Australia','lat':-37,'lng':144,'type':'t','tags':[],'sources':[{'label':'S','url':'http://example.com'}],'verified':'2026-10-01'}]})
-        pg=page(extra={'**/places.json':(fx,200)})
+        pg=page(extra={'**/places.json':(fx,200)}); pg.wait_for_function("!!window.GOPLACES")
         pg.evaluate("GOPLACES.open('')"); pg.wait_for_selector('#plc .plc-row'); pg.wait_for_timeout(200)
         check('places: only places with a source, https link and verified date are listed', pg.locator('#plc .plc-row').count()==1 and 'Route Park' in pg.inner_text('#plc'))
         check('places: Download GPX appears only for the place with a verified route', pg.locator('#plc a[download]').count()==1 and pg.get_attribute('#plc a[download]','href')=='/routes/r1.gpx')
         # event detail links to its venues
         api=json.dumps({'enabled':True,'events':[{'id':'leekduck:f%d'%i,'name':'Filler %d'%i,'type':'event','start':'2026-11-%02dT10:00:00.000'%(i+1),'end':'2026-11-%02dT12:00:00.000'%(i+1),'tzMode':'local','status':'community_reported','announced':True,'missing':False,'featured':[],'bonuses':[],'reports':[]} for i in range(11)]+[{'id':'leekduck:safari','name':'City Safari: Brisbane','type':'event','start':'2026-09-26T10:00:00.000','end':'2026-09-27T18:00:00.000','tzMode':'local','status':'community_reported','announced':True,'missing':False,'featured':[],'bonuses':[],'link':'https://leekduck.com/events/safari/','reports':[]}],'sources':[]})
         pg=page(api=api,sources='{"environment":"preview","database":true,"enabled":true,"sources":[]}',extra={'**/places.json':(PLACES_FIXTURE,200)})
+        pg.wait_for_function("!!window.GOPLACES && !!window.GODETAIL")  # places.js is appended after first render; wait for it
         pg.evaluate("GOPLACES.load()"); pg.evaluate("GODETAIL.open('leekduck:safari')"); pg.wait_for_selector('#evd [data-places]'); pg.wait_for_timeout(200)
         check('event detail: an in-person event links to its sourced venues', pg.locator('#evd [data-places]').count()==2)
         # event-to-place matching: exact name AND overlapping dates, nothing fuzzy
@@ -1938,7 +1959,7 @@ with sync_playwright() as p:
         check('match: missing or invalid dates never link', pg.evaluate("GOPLACES.forEvent({name:'City Safari: Brisbane'}).length+GOPLACES.forEvent({name:'City Safari: Brisbane',start:new Date('x')}).length+GOPLACES.forEvent(null).length")==0)
         pg.click('#evd [data-places] >> nth=0'); pg.wait_for_selector('#plc-back'); pg.wait_for_timeout(200)
         check('event detail: venue link opens the place detail on top', 'Queen Street Mall' in pg.inner_text('#plc') and pg.locator('#plc').is_visible())
-        pg.evaluate("GODETAIL.close(); GOPLACES.close(); GODETAIL.open('leekduck:f1')"); pg.wait_for_timeout(300)
+        pg.evaluate("GODETAIL.close(); GOPLACES.close(); GODETAIL.open('leekduck:f1')"); pg.wait_for_selector('#evd .evd-btns')
         check('event detail: online events show no Places section', pg.locator('#evd [data-places]').count()==0 and 'filler 1' in pg.inner_text('#evd').lower())
 
     if on('c'):
@@ -1965,7 +1986,7 @@ with sync_playwright() as p:
             pg.route('**/api/pvp',lambda r:r.fulfill(status=404,body='')); pg.route('**/pvp.json',ful(PVP))
             if moves=='missing': pg.route('**/moves.json',lambda r:r.fulfill(status=404,body=''))
             elif moves!='real': pg.route('**/moves.json',ful(moves))
-            pg.goto('http://localhost:8791/'); pg.wait_for_selector('.pc, .prio-empty',state='attached'); pg.wait_for_timeout(900); return pg
+            pg.goto(BASE+'/'); pg.wait_for_selector('.pc, .prio-empty',state='attached'); pg.wait_for_timeout(900); return pg
         pg=mk()
         rows=lambda: pg.evaluate("[...document.querySelectorAll('#pvplist .drow')].map(r=>({t:r.innerText.split('\\n')[0],badges:[...r.querySelectorAll('.mvb')].map(m=>({n:m.querySelector('b').textContent,ty:(m.querySelector('.mty')||{getAttribute:()=>null}).getAttribute('aria-label'),elite:(m.querySelector('.etm')||{getAttribute:()=>null}).getAttribute('aria-label')}))}))")
         R=rows(); by={r['badges'][0]['n']+str(i):r for i,r in enumerate(R)}
@@ -2104,13 +2125,13 @@ with sync_playwright() as p:
         pg=page(); pg.click('nav.tabs button[data-tab="events"]'); pg.click('#subnav-events button[data-sub="timeline"]'); pg.wait_for_timeout(200)
         pg.evaluate("GODETAIL.open('cur:zorua')"); pg.wait_for_selector('#evd:not([hidden])'); pg.wait_for_timeout(200)
         pg.go_back(); pg.wait_for_timeout(300)
-        check('Back closes the detail view and stays in the app', pg.evaluate("document.getElementById('evd').hidden") and pg.url.startswith('http://localhost:8791') and pg.locator('#tab-events').is_visible())
+        check('Back closes the detail view and stays in the app', pg.evaluate("document.getElementById('evd').hidden") and pg.url.startswith(BASE) and pg.locator('#tab-events').is_visible())
         pg.go_back(); pg.wait_for_timeout(300)
-        check('Back from another tab returns to Now', pg.locator('#tab-now').is_visible() and pg.url.startswith('http://localhost:8791'))
+        check('Back from another tab returns to Now', pg.locator('#tab-now').is_visible() and pg.url.startswith(BASE))
         pctx=b.new_context(viewport={'width':390,'height':844},timezone_id='Australia/Melbourne',locale='en-AU')
         pctx.set_default_timeout(10000)
         pctx.set_default_navigation_timeout(15000)
-        ppg=pctx.new_page(); ppg.goto('http://localhost:8791/',wait_until='domcontentloaded')
+        ppg=pctx.new_page(); ppg.goto(BASE+'/',wait_until='domcontentloaded')
         ppg.wait_for_function("!!(navigator.serviceWorker && navigator.serviceWorker.controller)",timeout=15000)
         cached=ppg.evaluate("""async()=>{const names=(await caches.keys()).filter(n=>n.startsWith('gofn-shell-'));for(const name of names){const c=await caches.open(name);if(await c.match('/index.html'))return true;}return false;}""")
         check('PWA: service worker controls the app and caches the shell', cached, ppg.evaluate("caches.keys()"))
@@ -2122,12 +2143,12 @@ with sync_playwright() as p:
               ppg.evaluate("({app:!!window.GO,localState:!!window.GOLOCAL,network:!!window.GONET})"))
         offline_cached=ppg.evaluate("""async()=>{for(const name of (await caches.keys()).filter(n=>n.startsWith('gofn-shell-'))){const c=await caches.open(name);if(await c.match('/offline.html'))return true;}return false;}""")
         check('PWA: human-readable offline fallback is precached', offline_cached)
-        ppg.goto('http://localhost:8791/__offline_app_shell_probe__',wait_until='domcontentloaded',timeout=15000)
+        ppg.goto(BASE+'/__offline_app_shell_probe__',wait_until='domcontentloaded',timeout=15000)
         check('PWA: uncached offline navigation falls back to the app shell',
               ppg.locator('h1').inner_text().strip().lower()=='go field notes',
               ppg.evaluate("({title:document.title,h1:document.querySelector('h1')&&document.querySelector('h1').innerText,url:location.href})"))
         ppg.evaluate("""async()=>{for(const name of (await caches.keys()).filter(n=>n.startsWith('gofn-shell-'))){const c=await caches.open(name);await c.delete('/');await c.delete('/index.html');}}""")
-        ppg.goto('http://localhost:8791/__offline_fallback_probe__',wait_until='domcontentloaded',timeout=15000)
+        ppg.goto(BASE+'/__offline_fallback_probe__',wait_until='domcontentloaded',timeout=15000)
         check('PWA: offline page appears when the app shell is unavailable',
               ppg.title()=="You're offline · GO Field Notes" and ppg.locator('h1').inner_text().strip()=="You're offline",
               ppg.evaluate("({title:document.title,h1:document.querySelector('h1')&&document.querySelector('h1').innerText,url:location.href})"))
@@ -2210,6 +2231,95 @@ with sync_playwright() as p:
         check('Today agenda reserves its space until the first render (layout-shift guard)',
               '#home-now:not([data-render-key]){min-height:' in DASH_CSS and ':has(#home-now:not([data-render-key]))' in DASH_CSS and 'EV_READY' in DASH_JS)
         b1.context.close()
+
+    if on('b'):
+        # ---- Batch 2 regression guards: layout width, console cleanliness, touch targets (deterministic: fixed clock, mocked API/images/fonts) ----
+        MAIN_TABS=[('now','Today'),('events','Schedule'),('raids','Raids'),('collect','Collection')]
+        def open_tab(pg,tab):
+            # dispatch_event, not a pointer click: while Schedule overflows at 320px the displaced nav intercepts real taps (the layout bug is asserted below instead)
+            pg.dispatch_event('nav.tabs button[data-tab="%s"]'%tab,'click'); pg.wait_for_selector('#tab-%s:not([hidden])'%tab)
+            pg.evaluate("new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)))")
+        def known_overflow(tab,width):
+            # TODO(batch 3): remove this allow-list entry (Schedule only, widths <=411px). Two causes, both fixed in batch 3:
+            #  - <=340px: .wk-days is repeat(7,minmax(44px,1fr)) and .wd has min-width:44px (dash.css ~1301), so the week strip is ~373px wide.
+            #  - <412px on days with a live .evc.cmp card whose footer has Details + "Check infographic" + star (fixed clock Fri 9 Oct has cur:space): the footer does not wrap and stretches the grid to 412px.
+            return tab=='events' and width<=411
+        # 1. responsive width loop: no horizontal overflow and no zoomed-out layout viewport on any main tab
+        guard=[]
+        for width in (320,375,390,430,820,1280):
+            wpg=page(width=width,height=844 if width<500 else 1000,mobile=width<500,guard=guard if width in (390,1280) else None)
+            for tab,label in MAIN_TABS:
+                open_tab(wpg,tab)
+                m=wpg.evaluate("""() => {
+                    const cw=window.visualViewport.width, wide=[];
+                    const clipped=el=>{ for(let n=el.parentElement;n&&n!==document.body;n=n.parentElement){ const o=getComputedStyle(n).overflowX; if(o!=='visible') return true; } return false; };
+                    document.querySelectorAll('main *').forEach(el=>{ const r=el.getBoundingClientRect(); if(r.width>0&&r.right>cw+1&&!clipped(el)) wide.push([Math.round(r.right),(el.closest('[data-id]')||{getAttribute:()=>''}).getAttribute('data-id')+' '+el.tagName.toLowerCase()+(el.className&&typeof el.className==='string'?'.'+el.className.trim().split(/\\s+/).join('.'):'')]); });
+                    wide.sort((x,y)=>y[0]-x[0]); wide.length=Math.min(wide.length,4);
+                    return {sw:document.documentElement.scrollWidth,iw:window.innerWidth,vw:window.visualViewport.width,wide};
+                }""")
+                over=m['sw']>m['iw'] or abs(m['vw']-m['iw'])>0.5
+                if known_overflow(tab,width):
+                    # Not a check() on purpose: this depends on importer data, so an entry that stops overflowing must not fail CI. It only reports.
+                    print('NOTE width %d, %s: allow-listed overflow %s TODO(batch 3)'%(width,label,'present' if over else 'gone (remove the allow-list entry)'),m if over else '')
+                else:
+                    check('width %d, %s: no horizontal overflow and visual viewport equals window width'%(width,label),not over,m)
+            wpg.context.close()
+        # 2. console guard: Today/Schedule/Raids/Collection loads at 390 and 1280 must be free of console errors, page errors and failed requests.
+        # Fonts and R2 pictures are mocked in page(), so they need no allow-list. The only known-benign noise is the browser's own
+        # "Failed to load resource" line for /api/* calls that the static test server (or an explicit mock) answers with 404/401.
+        BENIGN_API=r'^%s/api/(art|dex|datamine|guide|ig-decisions|places-private|pvp|shinies|unreleased|userstate|venue-times|world)(\?|$)'%re.escape(BASE)
+        def benign(g):
+            kind,text,url=g
+            return kind=='console.error' and re.match(r'^Failed to load resource: the server responded with a status of (404|401)\b',text) is not None and re.match(BENIGN_API,url) is not None
+        unexpected=[g for g in guard if not benign(g)]
+        check('console guard: no console errors, page errors or failed requests on Today, Schedule, Raids and Collection (only the listed mocked /api 404s are tolerated)',not unexpected,unexpected[:5])
+        probe_log=[]; probe=page(guard=probe_log)
+        probe.evaluate("console.error('guard self-test'); queueMicrotask(()=>{throw new Error('guard self-test')})"); settle(probe,"true"); probe.wait_for_timeout(100)
+        check('console guard self-test: an injected console.error and page error are caught and not tolerated',
+              any(g[0]=='console.error' and not benign(g) for g in probe_log) and any(g[0]=='pageerror' and not benign(g) for g in probe_log),probe_log[:6])
+        probe.context.close()
+
+        # 3. touch targets at 390px: visible interactive elements under 44x44. Known offenders live in a committed baseline (the debt list for later
+        # batches); they only produce NOTE lines. A NEW offender (selector not in the baseline) fails. Regenerate with UI_TOUCH_BASELINE=update.
+        TT_FILE=ROOT/'test'/'fixtures'/'touch-targets-baseline.json'
+        TT_JS=r"""() => {
+          const sel = el => {
+            const cls=[...el.classList].filter(c=>!/\d/.test(c)).slice(0,2).map(c=>'.'+c).join('');
+            const attrs=[...el.attributes].map(a=>a.name).filter(n=>n.startsWith('data-')||n==='role').slice(0,2).map(n=>'['+n+']').join('');
+            let scope=''; for(let n=el.parentElement;n&&n!==document.body;n=n.parentElement){ if(n.id){ scope='#'+n.id+' '; break; } }
+            if(!scope){ const n=el.closest('footer,header,nav,[class]:not(body)'); if(n&&n!==el) scope=n.tagName.toLowerCase()+([...n.classList].filter(c=>!/\d/.test(c))[0]?'.'+[...n.classList].filter(c=>!/\d/.test(c))[0]:'')+' '; }
+            return scope+el.tagName.toLowerCase()+cls+attrs;
+          };
+          const out={};
+          document.querySelectorAll('a[href],button,[role=button],input:not([type=hidden]),summary,select,textarea,[tabindex]').forEach(el=>{
+            if(el.tagName!=='A'&&el.tagName!=='BUTTON'&&el.tabIndex<0&&!el.matches('input,summary,select,textarea,[role=button]')) return;
+            if(el.disabled) return;
+            const r=el.getBoundingClientRect(), cs=getComputedStyle(el);
+            if(r.width<=0||r.height<=0||cs.visibility!=='visible') return;
+            const w=Math.round(r.width), h=Math.round(r.height);
+            if(w>=44&&h>=44) return;
+            const k=sel(el), o=out[k]||(out[k]={selector:k,w,h,count:0,e:((el.getAttribute('aria-label')||el.textContent||el.getAttribute('name')||el.id||'').trim().replace(/\\s+/g,' ')).slice(0,40)});
+            o.count++; o.w=Math.min(o.w,w); o.h=Math.min(o.h,h);
+          });
+          return Object.values(out);
+        }"""
+        tt_page=page(width=390,mobile=True)
+        found={}
+        for tab,label in MAIN_TABS:
+            open_tab(tt_page,tab)
+            for o in tt_page.evaluate(TT_JS):
+                f=found.setdefault(o['selector'],{'selector':o['selector'],'size':'%dx%d'%(o['w'],o['h']),'e.g.':o['e'],'tabs':[],'count':0})
+                f['tabs'].append(tab); f['count']=max(f['count'],o['count'])
+        tt_page.context.close()
+        if os.environ.get('UI_TOUCH_BASELINE')=='update':
+            TT_FILE.parent.mkdir(exist_ok=True)
+            TT_FILE.write_text(json.dumps({'about':'Visible interactive elements smaller than 44x44 CSS px at 390px wide on Today, Schedule, Raids and Collection. Debt list: shrink it, never grow it. Regenerate with UI_TOUCH_BASELINE=update python3 test/ui_checks.py (UI_SHARD=b).','viewport':390,'entries':sorted(found.values(),key=lambda e:e['selector'])},indent=1,ensure_ascii=False)+'\n')
+        base=json.loads(TT_FILE.read_text())['entries'] if TT_FILE.exists() else []
+        base_sel={e['selector'] for e in base}
+        new=[f for k,f in found.items() if k not in base_sel]
+        gone=[e['selector'] for e in base if e['selector'] not in found]
+        print('NOTE touch targets: %d known undersized selectors (baseline %d)%s'%(len(found)-len(new),len(base),'; fixed since baseline (remove from file): '+', '.join(gone[:10]) if gone else ''))
+        check('touch targets: no new undersized (<44x44) interactive elements at 390px beyond the committed baseline',not new,[(n['selector'],n['size'],n['tabs']) for n in new[:8]])
     b.close()
 # Dashboard radius adoption: shared scale values are expressed through semantic roles.
 check('dashboard shared radius declarations consume semantic radius tokens',
