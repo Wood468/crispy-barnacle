@@ -30,6 +30,7 @@ SW_JS = (ROOT / 'public' / 'sw.js').read_text()
 APP_JS = (ROOT / 'public' / 'app.js').read_text()
 SEASON_JS = (ROOT / 'public' / 'season.js').read_text()
 SEASON_DATA = json.loads((ROOT / 'public' / 'season.json').read_text())
+EVENT_MOVES = json.loads((ROOT / 'public' / 'event-moves.json').read_text())
 PIN_JS = (ROOT / 'public' / 'pin.js').read_text()
 ACCOUNT_JS = (ROOT / 'public' / 'account.js').read_text()
 REVIEW_JS = (ROOT / 'public' / 'review.js').read_text()
@@ -234,6 +235,15 @@ check('season pass and deadline data is structured, source-attributed and ordere
       all(d.get('source') == 'Leek Duck' and d.get('url', '').startswith('https://leekduck.com/') and
           d.get('s') and d.get('e') and d['s'] < d['e'] for d in SEASON_DATA.get('deadlines', [])) and
       'deadlines: function () { return deadlines; }' in SEASON_JS)
+check('official exclusive-move windows carry source provenance into Today deadlines',
+      any(m.get('eventId') == 'novcd' and m.get('move') == 'Kowtow Cleave' and
+          any(s.get('trust') == 'official' and s.get('url') == 'https://pokemongo.com/news/communityday-november-2026-pawniard/'
+              for s in m.get('sources', []))
+          for m in EVENT_MOVES.get('moves', [])) and
+      "json('/event-moves.json')" in SEASON_JS and
+      "source.trust === 'official'" in SEASON_JS and
+      'Exclusive move window ends' in SEASON_JS and
+      '/event-moves.json' in SW_JS)
 check('150ms interaction transitions use a shared motion role with unchanged easing',
       '--motion-quick:150ms' in BASE_CSS and
       'transition:background-color var(--motion-quick) ease,color var(--motion-quick) ease' in BASE_CSS and
@@ -278,11 +288,11 @@ check('event signal chips and detail tags use semantic palette roles with unchan
           '.tg-incense{--tc:var(--color-signal-shadow)}.tg-costume{--tc:var(--color-signal-encounter)}',
       ]))
 check('offline shell cache version advances with the dashboard stylesheet token release',
-      "gofn-shell-v188" in SW_JS)
+      "gofn-shell-v189" in SW_JS)
 check('versioned dashboard scripts are referenced by the entry page and precached offline',
       '/app.js?v=20261102a' in INDEX_HTML and '/app.js?v=20261102a' in SW_JS and
-      '/dash.js?v=20261102e' in APP_JS and '/dash.js?v=20261102e' in SW_JS and
-      '/detail.js?v=20261031a' in DASH_JS and '/detail.js?v=20261031a' in SW_JS)
+      '/dash.js?v=20261102f' in APP_JS and '/dash.js?v=20261102f' in SW_JS and
+      '/detail.js?v=20261102a' in DASH_JS and '/detail.js?v=20261102a' in SW_JS)
 check('sync PIN and account controls have one home in Menu and are precached offline',
       INDEX_HTML.index('id="acct" class="acct"') > INDEX_HTML.index('id="sub-menu"') and
       'id="pinform"' not in INDEX_HTML and
@@ -296,7 +306,7 @@ check('owner-only account and moderation UI requires server-verified PIN access'
       '[data-role="guest"] #hireview' in BASE_CSS and
       '[data-role="guest"] .igbanner' in BASE_CSS)
 check('versioned season banner script is referenced by the page and precached offline',
-      '/season.js?v=20261102c' in INDEX_HTML and '/season.js?v=20261102c' in SW_JS)
+      '/season.js?v=20261102d' in INDEX_HTML and '/season.js?v=20261102d' in SW_JS)
 check('all HTML renderers use one shared apostrophe-safe escape helper',
       'function esc(value)' in LIB_JS and 'esc: esc' in LIB_JS and
       all('var esc = window.GOLIB.esc;' in source for source in ESC_RENDERERS) and
