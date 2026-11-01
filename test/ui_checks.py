@@ -1778,7 +1778,7 @@ check('base stylesheet spacing declarations consume semantic 4px-scale tokens',
       re.search(r'(?<![-\w])(?:padding|margin)(?:-(?:top|right|bottom|left|block|inline)(?:-(?:start|end))?)?\s*:\s*(?![^;{}]*[()])[^;{}]*(?<![-\w])(?:4|8|12|16|20|24|28|32|36|40)px\b[^;{}]*(?=;|})', BASE_COMPONENT_CSS) is None)
 
 check('dashboard shared gap declarations consume semantic spacing tokens',
-      all(f'var(--space-{step})' in DASH_CSS for step in [1, 2, 3, 5]) and
+      all(f'var(--space-{step})' in DASH_CSS for step in [1, 2, 3, 4, 5, 6, 7]) and
       re.search(r'(?<![-\w])(?:column-gap|row-gap|gap)\s*:\s*(?![^;{}]*[()])[^;{}]*(?<![-\w])(?:4|8|12|16|20|24|28|32|36|40)px\b[^;{}]*(?=;|})', DASH_CSS) is None)
 check('dashboard padding and margin declarations consume semantic spacing tokens',
       all(f'var(--space-{step})' in DASH_CSS for step in [1, 2, 3, 4, 5, 7]) and
