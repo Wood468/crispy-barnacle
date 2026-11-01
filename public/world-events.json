@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-01T19:47:29.630Z",
+ "updated": "2026-11-01T23:41:43.043Z",
  "events": [
   {
    "id": "w-pokemon-fossil-museum-2026",
@@ -419,7 +419,7 @@
   {
    "id": "w-fc-seoul",
    "name": "FC Seoul",
-   "place": "South Korea",
+   "place": "Seoul, South Korea",
    "area": "Asia",
    "scope": "regional",
    "start": "2026-10-24",
@@ -427,17 +427,12 @@
    "datesKnown": true,
    "sources": [
     {
-     "id": "official",
-     "name": "Pokémon GO (official)",
-     "url": "https://pokemongo.com/ko/news/fc-seoul-2026/"
-    },
-    {
      "id": "serebii",
      "name": "Serebii",
      "url": "https://www.serebii.net/pokemongo/reallifeevents.shtml"
     }
    ],
-   "status": "official",
+   "status": "single",
    "seen": "2026-11-01"
   },
   {
@@ -1073,7 +1068,7 @@
     {
      "id": "official",
      "name": "Pokémon GO (official)",
-     "url": "https://pokemongo.com/ko/news/go-wild-area-stamp-rally-details-2026/"
+     "url": "https://pokemongo.com/ja/news/go-wild-area-stamp-rally-details-2026/"
     }
    ],
    "status": "official",
