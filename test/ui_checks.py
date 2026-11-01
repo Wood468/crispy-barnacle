@@ -29,6 +29,8 @@ INDEX_HTML = (ROOT / 'public' / 'index.html').read_text()
 SW_JS = (ROOT / 'public' / 'sw.js').read_text()
 APP_JS = (ROOT / 'public' / 'app.js').read_text()
 PIN_JS = (ROOT / 'public' / 'pin.js').read_text()
+ACCOUNT_JS = (ROOT / 'public' / 'account.js').read_text()
+REVIEW_JS = (ROOT / 'public' / 'review.js').read_text()
 INFO_JS = (ROOT / 'public' / 'infographic.js').read_text()
 LIB_JS = (ROOT / 'public' / 'lib.js').read_text()
 ESC_RENDERERS = [APP_JS] + [(ROOT / 'public' / name).read_text() for name in [
@@ -168,9 +170,12 @@ check('150ms interaction transitions use a shared motion role with unchanged eas
       'transition:transform var(--motion-quick)' in DASH_CSS and
       BASE_CSS.count('var(--motion-quick)') == 3 and DASH_CSS.count('var(--motion-quick)') == 1)
 check('versioned stylesheets are referenced by the page and precached offline',
-      all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261101d', '/dash.css?v=20261101u']))
+      all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261101e', '/dash.css?v=20261101u']))
+check('owner verification scripts are versioned and precached offline',
+      '/account.js?v=20261101b' in INDEX_HTML and '/account.js?v=20261101b' in SW_JS and
+      '/review.js?v=20261101b' in DASH_JS and '/review.js?v=20261101b' in SW_JS)
 check('offline shell cache version advances with the stylesheet token release',
-      "gofn-shell-v168" in SW_JS)
+      "gofn-shell-v169" in SW_JS)
 check('versioned dashboard scripts are referenced by the entry page and precached offline',
       '/app.js?v=20261101c' in INDEX_HTML and '/app.js?v=20261101c' in SW_JS and
       '/dash.js?v=20261101b' in APP_JS and '/dash.js?v=20261101b' in SW_JS and
@@ -180,6 +185,13 @@ check('sync PIN and account controls have one home in Menu and are precached off
       'id="pinform"' not in INDEX_HTML and
       "document.querySelector('#pindd .pinform')" in PIN_JS and
       '/pin.js?v=20261101b' in INDEX_HTML and '/pin.js?v=20261101b' in SW_JS)
+check('owner-only account and moderation UI requires server-verified PIN access',
+      'ownerVerified ? \'owner\' : \'guest\'' in ACCOUNT_JS and
+      "new CustomEvent('gofn-owner-state'" in ACCOUNT_JS and
+      "getAttribute('data-role') === 'owner'" in REVIEW_JS and
+      "gofn-owner-state" in REVIEW_JS and
+      '[data-role="guest"] #hireview' in BASE_CSS and
+      '[data-role="guest"] .igbanner' in BASE_CSS)
 check('versioned season banner script is referenced by the page and precached offline',
       '/season.js?v=20261101a' in INDEX_HTML and '/season.js?v=20261101a' in SW_JS)
 check('all HTML renderers use one shared apostrophe-safe escape helper',
@@ -1240,6 +1252,21 @@ with sync_playwright() as p:
         check('Dex sync status links to the central settings', pg.locator('#dsync button').inner_text()=='Sync & account settings')
         pg.locator('#dsync button').click(); pg.wait_for_timeout(200)
         check('Dex sync link opens Menu and the PIN settings', pg.locator('#sub-menu').is_visible() and pg.locator('#pindd').evaluate('(d)=>d.open'))
+        queue_fixture=json.dumps({'items':[{'id':'discord:owner-ui-fixture','title':'Owner-only review fixture','image':'/infographics/owner-ui-fixture.png','source':'discord','publishedAt':'2026-11-01T00:00:00Z','guesses':[]}]})
+        decisions_fixture=json.dumps({'decisions':[]})
+        review_extra={'**/infographic-queue.json*':(queue_fixture,200),'**/api/ig-decisions':(decisions_fixture,200)}
+        guest_review=page(extra=review_extra)
+        guest_review.wait_for_timeout(500)
+        check('guest does not see owner moderation UI', guest_review.locator('html').get_attribute('data-role')=='guest' and guest_review.locator('#hireview').is_hidden() and guest_review.locator('#igreview').count()==0 and guest_review.locator('#igbanner').count()==0)
+        guest_review.context.close()
+        invalid_review=page(pin=True,extra={**review_extra,'**/api/auth/users':(json.dumps({'error':'Wrong PIN'}),401)})
+        invalid_review.wait_for_timeout(500)
+        check('invalid PIN does not expose owner moderation or account controls', invalid_review.locator('html').get_attribute('data-role')=='guest' and invalid_review.locator('#hireview').is_hidden() and invalid_review.locator('#igreview').count()==0 and invalid_review.locator('#acct [data-acct-form="create"]').count()==0 and 'could not be verified' in invalid_review.inner_text('#acct').lower())
+        invalid_review.context.close()
+        owner_review=page(pin=True,extra={**review_extra,'**/api/auth/users':(json.dumps({'users':[]}),200)})
+        owner_review.wait_for_function("document.documentElement.getAttribute('data-role')==='owner' && !document.getElementById('hireview').hidden",timeout=10000)
+        check('verified owner sees moderation and account controls', owner_review.locator('#igreview:not([hidden])').count()==1 and owner_review.locator('#igdiscord-btn').count()==1 and owner_review.locator('#acct [data-acct-form="create"]').count()==1)
+        owner_review.context.close()
         pg.click('nav.tabs button[data-tab="now"]'); pg.wait_for_timeout(200)
         check('old checklist state is cleared', pg.evaluate("localStorage.getItem('gofn-daily')")==None)
         pg.evaluate("localStorage.setItem('gofn-tab','dex')"); pg.reload(); pg.wait_for_selector('#tab-dex'); pg.wait_for_timeout(300)

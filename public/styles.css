@@ -355,7 +355,7 @@ button.info-open.info-unavailable:disabled { opacity: 1; }
 .acctbox summary{cursor:pointer;padding:10px 0;font-weight:600}.acct-tabs{display:flex;gap:var(--space-2);margin:var(--space-1) 0 10px}
 .acct-f{display:grid;gap:10px;margin-bottom:var(--space-3)}.acct-f label{display:grid;gap:var(--space-1);font-size:var(--type-body-compact);color:var(--color-text-muted)}
 .acct-f input{background:var(--color-surface-raised);color:var(--color-text);border:0;border-radius:var(--radius-md);padding:0 14px;height:44px;min-width:0}
-[data-role="member"] #nudge,[data-role="member"] #igreview{display:none!important}
+[data-role="member"] #nudge,[data-role="member"] #igreview,[data-role="member"] #hireview,[data-role="guest"] #nudge,[data-role="guest"] #igreview,[data-role="guest"] #hireview{display:none!important}
 .acct-u{display:flex;justify-content:space-between;align-items:center;gap:var(--space-2);padding:6px 0;border-top:1px solid var(--color-border)}.acct-u span{overflow-wrap:anywhere;min-width:0}
 .who{display:inline-flex;align-items:center;gap:7px;margin:var(--space-1) 0 0;padding:var(--space-1) 10px;border:1px solid var(--color-border);border-radius:var(--radius-pill);background:var(--color-surface);color:var(--color-text);font:inherit;font-size:var(--type-body-sm);cursor:pointer}
 .who[hidden]{display:none}.wdot{width:10px;height:10px;border-radius:50%;display:inline-block}
@@ -373,7 +373,7 @@ button.info-open.info-unavailable:disabled { opacity: 1; }
 @media(prefers-reduced-motion:reduce){.igbanner{animation:none}}
 nav.tabs button.has-new{position:relative}
 nav.tabs button.has-new:after{content:"";position:absolute;top:6px;right:calc(50% - 20px);width:9px;height:9px;border-radius:50%;background:var(--color-accent)}
-[data-role="member"] .igbanner{display:none!important}
+[data-role="member"] .igbanner,[data-role="guest"] .igbanner{display:none!important}
 .igbanner[hidden]{display:none}
 .temb-w{display:inline-flex;align-items:center;justify-content:center;flex:none}.temb-w img.temb{width:100%;height:100%;object-fit:contain}
 

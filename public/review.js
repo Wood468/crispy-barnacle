@@ -4,8 +4,19 @@
   'use strict';
   var $ = function (id) { return document.getElementById(id); };
   var esc = window.GOLIB.esc;
-  var items = [], decided = {}, decs = {}, msg = '', shown = 10;
+  var items = [], decided = {}, decs = {}, msg = '', shown = 10, loadToken = 0, loadedForOwner = false;
   function pin() { try { return localStorage.getItem('gofn-pin') || ''; } catch (e) { return ''; } }
+  function isOwner() { return document.documentElement.getAttribute('data-role') === 'owner'; }
+  function hideOwnerUi() {
+    loadToken++; loadedForOwner = false; items = []; decided = {}; decs = {}; msg = '';
+    var a = $('hireview'); if (a) a.hidden = true;
+    var c = $('igcount'); if (c) c.hidden = true;
+    var b = $('igbanner'); if (b) b.remove();
+    var d = $('igdiscord'); if (d) d.remove();
+    var h = $('igreview'); if (h) h.remove();
+    var menu = $('hmenu'); if (menu) menu.classList.remove('has-new');
+    var saved = document.querySelector('nav.tabs button[data-tab="saved"]'); if (saved) saved.classList.remove('has-new');
+  }
   function safeUrl(u) { return /^https?:\/\//i.test(u || '') ? u : ''; }
   function eventOptions() {
     var X = window.GODASH; if (!X) return '';
@@ -62,6 +73,7 @@
       + '</div></article>';
   }
   function render() {
+    if (!isOwner()) { hideOwnerUi(); return; }
     var host = $('igreview'); if (!host) return;
     var open = items.filter(function (i) { return !decided[i.id]; }).sort(function (a, b) { return String(b.publishedAt || '').localeCompare(String(a.publishedAt || '')); });
     var dot = $('hmenu'); if (dot) dot.classList.toggle('has-new', open.length > 0);
@@ -77,7 +89,8 @@
       + (linked.length ? '<details class="dd"' + (keepLinked ? ' open' : '') + ' id="iglinked"><summary>Linked infographics <span class="cnt">' + linked.length + '</span></summary><div class="body"><p class="note" style="margin:0 0 8px">Tap ✕ to unlink from one event, add more events, or discard. Changes reach the event within a few hours.</p>' + linked.map(linkedCard).join('') + '</div></details>' : '');
   }
   function send(it, status, eventId, title, note) {
-    if (!pin()) { msg = 'Enter your sync PIN first (Dex tab) so decisions can be saved.'; render(); return; }
+    if (!isOwner()) { hideOwnerUi(); return; }
+    if (!pin()) { msg = 'Set your Sync PIN in Menu → Sync & accounts before reviewing.'; render(); return; }
     fetch('/api/ig-decisions', { method: 'POST', headers: { 'content-type': 'application/json', 'x-pin': pin() }, body: JSON.stringify({ id: it.id, status: status, eventId: eventId || '', eventTitle: title || '' }) })
       .then(function (r) { if (!r.ok) throw new Error(r.status); decided[it.id] = status; decs[it.id] = { id: it.id, status: status, eventId: eventId || '', eventTitle: title || '' }; if (status === 'unlinked') delete decided[it.id]; msg = note || (status === 'approved' ? 'Linked. It will appear on the event after the next scheduled update.' : status === 'unlinked' ? 'Unlinked. It is back in the review list.' : 'Discarded.'); render(); document.dispatchEvent(new Event('gofn-review-updated')); })
       .catch(function () { msg = 'Could not save that decision. Check your sync PIN and connection.'; render(); });
@@ -87,6 +100,7 @@
     send(it, 'approved', list.map(function (l) { return l.id; }).join(','), list.map(function (l) { return l.title; }).join(' | '));
   }
   function banner(n) {
+    if (!isOwner()) { hideOwnerUi(); return; }
     var action = $('hireview'), count = $('igcount');
     if (action) { action.hidden = n < 1; action.classList.toggle('has-pending', n > 0); action.setAttribute('aria-label', n + ' infographic' + (n === 1 ? '' : 's') + ' waiting for review'); action.title = n + ' infographic' + (n === 1 ? '' : 's') + ' waiting for review'; }
     if (count) { count.hidden = n < 1; count.textContent = n > 99 ? '99+' : String(n); }
@@ -96,6 +110,7 @@
     b.hidden = false; b.textContent = '🖼 ' + n + ' infographic' + (n === 1 ? '' : 's') + ' waiting for your review · Review now →';
   }
   function gotoReview() {
+    if (!isOwner()) return;
     var t = document.querySelector('nav.tabs button[data-tab="saved"]'); if (t) t.click();
     setTimeout(function () { var m = document.querySelector('#subnav-saved [data-sub="menu"]'); if (m) m.click(); setTimeout(function () { var h = $('igreview'); if (h && !h.hidden) h.scrollIntoView({ block: 'start' }); }, 150); }, 80);
   }
@@ -132,13 +147,14 @@
     h = document.createElement('div'); h.id = 'igreview'; h.hidden = true; m.insertBefore(h, m.firstChild); return h;
   }
   function mountDiscord() {
+    if (!isOwner()) return;
     var host = ensureHost(); if (!host || $('igdiscord')) return;
     var p = document.createElement('p'); p.id = 'igdiscord'; p.className = 'note'; p.style.margin = '0 0 10px';
     p.innerHTML = '<button type="button" class="pill" id="igdiscord-btn">Check Discord now</button> <span id="igdiscord-msg" role="status"></span>';
     host.parentNode.insertBefore(p, host);
     $('igdiscord-btn').addEventListener('click', function () {
       var out = $('igdiscord-msg'), b = $('igdiscord-btn');
-      if (!pin()) { out.textContent = 'Enter your sync PIN first (Dex tab).'; return; }
+      if (!isOwner() || !pin()) { out.textContent = 'Set your Sync PIN in Menu → Sync & accounts first.'; return; }
       b.disabled = true; out.textContent = 'Checking…';
       fetch('/api/jobs/run?job=discord', { method: 'POST', headers: { 'x-pin': pin() } })
         .then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) { return { ok: r.ok, j: j }; }); })
@@ -148,16 +164,24 @@
     });
   }
   function load() {
+    if (!isOwner()) { hideOwnerUi(); return; }
+    if (loadedForOwner) return;
+    loadedForOwner = true;
+    var token = ++loadToken;
     mountDiscord();
     Promise.all([
       fetch('/infographic-queue.json?t=' + Math.floor(Date.now() / 600000)).then(function (r) { return r.ok ? r.json() : { items: [] }; }).catch(function () { return { items: [] }; }),
       fetch('/api/ig-decisions').then(function (r) { return r.ok ? r.json() : { decisions: [] }; }).catch(function () { return { decisions: [] }; })
     ]).then(function (R) {
+      if (token !== loadToken || !isOwner()) { hideOwnerUi(); return; }
       items = R[0].items || []; (R[1].decisions || []).forEach(function (d) { decs[d.id] = d; if (d.status === 'approved' || d.status === 'rejected' || d.status === 'week' || d.status === 'month') decided[d.id] = d.status; });
       if (!ensureHost()) return;
       render(); document.dispatchEvent(new Event('gofn-review-updated'));
       if (location.hash === '#review') gotoReview();
     });
   }
+  document.addEventListener('gofn-owner-state', function (e) {
+    if (e.detail && e.detail.role === 'owner') load(); else hideOwnerUi();
+  });
   if (window.GODASH) load(); else document.addEventListener('DOMContentLoaded', load);
 })();
