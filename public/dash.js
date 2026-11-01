@@ -1073,6 +1073,8 @@
 
   document.addEventListener('gotypes', function () { try { renderRot(); var t = now(); renderTonight(t, dayKey(t)); } catch (e) {} });
   document.addEventListener('gofn-dex-ready', function () { try { renderRot(); var t = now(); renderTonight(t, dayKey(t)); } catch (e) {} });
+  document.addEventListener('gobest-ready', function () { try { var t = now(); renderTonight(t, dayKey(t)); } catch (e) {} });
+  document.addEventListener('gofn-marks', function () { try { var t = now(); renderTonight(t, dayKey(t)); } catch (e) {} });
 
 
   /* ---------- Collection: what I know about your Dex ---------- */
@@ -1247,11 +1249,14 @@
           var facts = item.boss && window.GOTYPES && GOTYPES.facts(item.boss);
           var weak = facts && Array.isArray(facts.weak) ? facts.weak.filter(function (type, i, all) { return typeof type === 'string' && all.indexOf(type) === i; }) : [];
           var weakness = weak.length ? '<small>Weak to: ' + esc(weak.join(', ')) + '</small>' : '';
+          var owned = weak.length && window.GOBEST && typeof GOBEST.ownedSummary === 'function' ? GOBEST.ownedSummary(weak, 3) : null;
+          var ownedNames = owned && owned.count ? owned.names.join(', ') + (owned.count > owned.names.length ? ' +' + (owned.count - owned.names.length) + ' more' : '') : 'none in current top-ten lists';
+          var ownedLine = owned ? '<small>Marked top counters (' + owned.count + '): ' + esc(ownedNames) + '</small>' : '';
           var best = weak.length && window.GOBEST && typeof GOBEST.showTypes === 'function'
             ? '<button type="button" class="today-tonight-best" data-best-types="' + esc(weak.join('|')) + '" aria-label="Best attackers for ' + esc(item.boss) + ' (weak to ' + esc(weak.join(', ')) + ')">Best attackers</button>'
             : '';
           return '<li class="today-tonight-item"><div class="today-tonight-head"><b>' + esc(item.kind) + '</b><span>' + esc(item.time) + '</span></div><strong>' + esc(item.name) + '</strong>' +
-            (item.detail ? '<small>' + esc(item.detail) + '</small>' : '') + weakness + best + '</li>';
+            (item.detail ? '<small>' + esc(item.detail) + '</small>' : '') + weakness + ownedLine + best + '</li>';
         }).join('');
         tonightList.hidden = !tonight.open;
       } else {

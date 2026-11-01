@@ -637,12 +637,13 @@ Promise.all([
   }
   buildBest();
   fetch('/best-by-type.json').then(function(r){return r.ok?r.json():null}).then(function(j){
-    if(!j||!j.types)return;
+    if(!j||!j.types){window.GOBEST.ready=true;document.dispatchEvent(new Event('gobest-ready'));return;}
     var R={},M={};
     Object.keys(j.types).forEach(function(t){R[t]=j.types[t].map(function(x){M[t+'|'+x.name]=x;return [x.name,x.fast,x.charged,x.dps,x.charged2||''].join('|')})});
     RAW=R;META=M;buildBest();syncRows();refreshMoves();
+    window.GOBEST.ready=true;document.dispatchEvent(new Event('gobest-ready'));
     var n=$('bnote');if(n)n.textContent='Top ten for each attack type. '+j.method+' Updated '+j.generated+'.';
-  }).catch(function(){});
+  }).catch(function(){window.GOBEST.ready=true;document.dispatchEvent(new Event('gobest-ready'));});
   function syncRows(){
     Array.prototype.forEach.call(document.querySelectorAll('#list .irow'),function(row){
       var k=row.dataset.key,own=!!dex.have[k],hu=!!dex.hundo[k];
@@ -689,13 +690,29 @@ Promise.all([
     });
     $('none').hidden=shown>0;
   }
-  window.GOBEST = { showTypes:function(types){
-    var valid = Array.isArray(types) ? types.filter(function(t,i,a){return TYPES.indexOf(t)>-1&&a.indexOf(t)===i}) : [];
-    typeSel = valid.length ? valid : 'All';
-    $('q').value = ''; $('status').value = 'all';
-    Array.prototype.forEach.call(tc.children,function(c){var t=c.textContent.trim();c.setAttribute('aria-pressed',(t==='All'?typeSel==='All':isBestTypeSelected(t,typeSel))?'true':'false')});
-    applyFilters();
-  } };
+  window.GOBEST = {
+    ready: false,
+    ownedSummary:function(types,limit){
+      var valid=Array.isArray(types)?types.filter(function(t,i,a){return TYPES.indexOf(t)>-1&&a.indexOf(t)===i}):[];
+      var scores={};
+      valid.forEach(function(type){
+        (RAW[type]||[]).forEach(function(row){
+          var f=String(row).split('|'),name=f[0],dps=Number(f[3])||0,mark=dex.bt[name]||{};
+          if(name&&(dex.have[name]||dex.hundo[name]||mark.s||mark.x||mark.v))scores[name]=Math.max(scores[name]||0,dps);
+        });
+      });
+      var names=Object.keys(scores).sort(function(a,b){return scores[b]-scores[a]||a.localeCompare(b)});
+      var max=Math.max(1,Math.min(5,Number(limit)||3));
+      return {count:names.length,names:names.slice(0,max)};
+    },
+    showTypes:function(types){
+      var valid = Array.isArray(types) ? types.filter(function(t,i,a){return TYPES.indexOf(t)>-1&&a.indexOf(t)===i}) : [];
+      typeSel = valid.length ? valid : 'All';
+      $('q').value = ''; $('status').value = 'all';
+      Array.prototype.forEach.call(tc.children,function(c){var t=c.textContent.trim();c.setAttribute('aria-pressed',(t==='All'?typeSel==='All':isBestTypeSelected(t,typeSel))?'true':'false')});
+      applyFilters();
+    }
+  };
   $('q').addEventListener('input',applyFilters);
   $('status').addEventListener('change',applyFilters);
   function bt(k){return dex.bt[k]||{}}
@@ -993,7 +1010,7 @@ Promise.all([
     h.innerHTML='<div class="today-status" role="status"><p>Today\'s events did not load. Your saved collection is unchanged.</p><button type="button" class="pill" id="today-retry">Try again</button></div>';
     var r=document.getElementById('today-retry');if(r)r.addEventListener('click',function(){window.location.reload()});
     var b=document.getElementById('day-brief');if(b)b.setAttribute('data-state','unavailable')}
-  var ds=document.createElement('script');ds.src='/dash.js?v=20261102k';ds.onerror=todayUnavailable;document.body.appendChild(ds);setTimeout(function(){if(!window.GODASH)todayUnavailable()},10000);
+  var ds=document.createElement('script');ds.src='/dash.js?v=20261102l';ds.onerror=todayUnavailable;document.body.appendChild(ds);setTimeout(function(){if(!window.GODASH)todayUnavailable()},10000);
 })();
 
 }).catch(function(){var panel=document.getElementById('load-error');if(panel)panel.hidden=false;var retry=document.getElementById('load-retry');if(retry)retry.addEventListener('click',function(){window.location.reload()},{once:true})});
