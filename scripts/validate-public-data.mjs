@@ -76,6 +76,7 @@ if (evInfo && evInfo.events && typeof evInfo.events === "object") {
     if (e.end != null && e.start == null) fail(where, "end without start");
     if (isDay(e.start) && isDay(e.end) && e.end < e.start) fail(where, "end is before start");
     if (e.dateSource != null && (typeof e.dateSource !== "string" || !e.dateSource.trim())) fail(where, "dateSource must be a non-empty string");
+    if (e.dateSource != null && e.start == null) fail(where, "dateSource without start (a source for a date that is not there)");
     if (e.start != null && e.dateSource == null) fail(where, "a dated entry must say where the date came from (dateSource)");
   }
 }

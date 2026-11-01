@@ -223,3 +223,58 @@ test("backfill dates only entries whose id matches one event, never guesses", ()
   assert.equal(info.events.done.start, "2020-01-01");
   assert.equal(r.dated.length, 1);
 });
+
+// ---- Weekly rotation slots: separate instances, and dates are written once ----
+import { spawnSync } from "node:child_process";
+import { mkdtempSync, mkdirSync, writeFileSync, readFileSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
+
+test("two weekly rotation slots with the same boss are two entries and the first keeps its dates", () => {
+  const info = { events: {} }, g = u => ({ url: u, sourceUrl: "https://x/" + u, observed: "2026-10-21" });
+  const wk1 = { id: "raid:dialga:2026-10-14", t: "Dialga 5-star raids", s: "2026-10-14T10:00", e: "2026-10-21T10:00", src: "rotation" };
+  const wk2 = { id: "raid:dialga:2026-10-21", t: "Dialga 5-star raids", s: "2026-10-21T10:00", e: "2026-10-28T10:00", src: "rotation" };
+  addToEventInfo(info, wk1, g("/a.webp"));
+  addToEventInfo(info, wk2, g("/b.webp"));
+  assert.deepEqual(Object.keys(info.events), [wk1.id, wk2.id], "the next week gets its own entry");
+  assert.deepEqual([info.events[wk1.id].start, info.events[wk1.id].end], ["2026-10-14", "2026-10-21"], "week 1 dates untouched");
+  assert.equal(info.events[wk1.id].infographics.length, 1);
+  assert.deepEqual([info.events[wk2.id].start, info.events[wk2.id].end], ["2026-10-21", "2026-10-28"]);
+});
+
+test("dates already on an entry are never rewritten; an undated entry gets them once", () => {
+  const info = { events: { smr1: { names: ["Super Mega Raid Day"], start: "2026-10-31", end: "2026-10-31", dateSource: "data.json", infographics: [] }, old: { names: ["Old"], infographics: [] } } };
+  const g = u => ({ url: u, sourceUrl: "https://x/" + u });
+  // Same id, different window (an id match skips the instance check): the stored dates stay.
+  addToEventInfo(info, { id: "smr1", t: "Super Mega Raid Day", s: "2026-11-02T00:00", e: "2026-11-03T00:00", src: "x" }, g("/a.webp"));
+  assert.deepEqual([info.events.smr1.start, info.events.smr1.end, info.events.smr1.dateSource], ["2026-10-31", "2026-10-31", "data.json"]);
+  addToEventInfo(info, { id: "old", t: "Old", s: "2026-09-01T00:00", e: "2026-09-02T00:00", src: "data.json" }, g("/b.webp"));
+  assert.deepEqual([info.events.old.start, info.events.old.end], ["2026-09-01", "2026-09-02"]);
+});
+
+test("backfill is a dry run unless --write is passed", () => {
+  const dir = mkdtempSync(join(tmpdir(), "evinfo-")), file = join(dir, "event-info.json");
+  const text = JSON.stringify({ events: { halloween1: { names: ["Halloween 2026, Part One"], infographics: [] } } }, null, 2) + "\n";
+  writeFileSync(file, text);
+  const run = (...args) => spawnSync(process.execPath, ["scripts/event-info-dates.mjs", ...args], { env: { ...process.env, EVENT_INFO_FILE: file }, encoding: "utf8" });
+  const dry = run();
+  assert.equal(dry.status, 0, dry.stderr);
+  assert.match(dry.stdout, /^dated\s+halloween1/m, "the dry run would date the entry");
+  assert.equal(readFileSync(file, "utf8"), text, "dry run leaves the file alone");
+  assert.doesNotMatch(dry.stdout, /Saved/);
+  const wet = run("--write");
+  assert.equal(wet.status, 0, wet.stderr);
+  assert.match(readFileSync(file, "utf8"), /"dateSource"/);
+});
+
+test("validator rejects a dateSource with no start", () => {
+  const dir = mkdtempSync(join(tmpdir(), "validate-"));
+  mkdirSync(join(dir, "public"));
+  writeFileSync(join(dir, "public", "data.json"), JSON.stringify({ events: [] }));
+  const check = events => { writeFileSync(join(dir, "public", "event-info.json"), JSON.stringify({ events })); return spawnSync(process.execPath, [join(process.cwd(), "scripts/validate-public-data.mjs")], { cwd: dir, encoding: "utf8" }); };
+  const bad = check({ x: { names: ["X"], dateSource: "data.json" } });
+  assert.notEqual(bad.status, 0);
+  assert.match(bad.stdout + bad.stderr, /dateSource without start/);
+  const good = check({ x: { names: ["X"], start: "2026-10-01", end: "2026-10-02", dateSource: "data.json" } });
+  assert.equal(good.status, 0, good.stdout + good.stderr);
+});

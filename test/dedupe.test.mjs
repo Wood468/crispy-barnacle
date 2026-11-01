@@ -274,6 +274,25 @@ test("dated entries: title fallback compares dates exactly; undated entries beha
   assert.equal(dd.instanceApart({ start: "2026-10-31" }, {}), false);
 });
 
+test("back-to-back windows (rotation handover day) are different instances; single-day and identical ones are not", () => {
+  const wk1 = { start: "2026-10-14", end: "2026-10-21" }, wk2 = { start: "2026-10-21", end: "2026-10-28" };
+  assert.equal(dd.instanceApart(wk1, wk2), true, "weekly raid slots touch on the 21st");
+  assert.equal(dd.instanceApart(wk2, wk1), true, "order does not matter");
+  assert.equal(dd.instanceApart({ start: "2026-10-14T10:00", end: "2026-10-21T10:00" }, { start: "2026-10-21T10:00", end: "2026-10-28T10:00" }), true, "full timestamps too");
+  assert.equal(dd.instanceApart(wk1, wk1), false, "identical windows (same event, two sources)");
+  assert.equal(dd.instanceApart(wk1, { start: "2026-10-14", end: "2026-10-22" }), false, "overlapping windows");
+  assert.equal(dd.instanceApart(wk1, { start: "2026-10-20", end: "2026-10-27" }), false, "overlap of several days");
+  assert.equal(dd.instanceApart(wk1, { start: "2026-10-21" }), false, "a single-day event on the handover day");
+  assert.equal(dd.instanceApart({ start: "2026-10-21" }, { start: "2026-10-21" }), false, "the same single day");
+  assert.equal(dd.instanceApart({ start: "2026-10-14", end: "2026-10-21" }, { start: "2026-10-22", end: "2026-10-28" }), false, "a one-day gap is still within the slack");
+  const mk = (extra) => ({ "raid:dialga:2026-10-14": { names: ["Dialga 5-star raids"], infographics: [{ url: "/d.webp" }], ...extra } });
+  const card = (id, s, e) => ({ id, name: "Dialga 5-star raids", start: new Date(s + "T10:00"), end: new Date(e + "T10:00") });
+  const entry = mk({ start: "2026-10-14", end: "2026-10-21", dateSource: "rotation" });
+  assert.equal(dd.findEventInfo(card("raid:dialga:2026-10-21", "2026-10-21", "2026-10-28"), entry, []), null, "next week does not inherit last week's pictures");
+  assert.equal(dd.findEventInfo(card("w-copy", "2026-10-14", "2026-10-21"), entry, []).infographics.length, 1, "the same week still finds them");
+  assert.equal(dd.findEventInfo(card("w-copy", "2026-10-15", "2026-10-22"), entry, []).infographics.length, 1, "a source one day off still finds them");
+});
+
 test("dated entries: the real event-info.json", () => {
   const card = (id, name, s, e) => ({ id, name, start: new Date(s + "T14:00"), end: new Date((e || s) + "T17:00") });
   // Super Mega Raid Day smr2 must not inherit smr1's pictures, whether or not smr1 is still listed.

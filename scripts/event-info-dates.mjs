@@ -1,7 +1,8 @@
 #!/usr/bin/env node
-// One-off backfill: give existing public/event-info.json entries a start / end (YYYY-MM-DD) and dateSource, taken from the event
-// with the same id in public/data.json, world-events.json, the raid rotation or event-details.json. Entries with no event of that id,
-// or with sources that disagree, are left untouched (never guessed). Dry run by default: `node scripts/event-info-dates.mjs --write` saves.
+// One-off backfill: give existing public/event-info.json entries a start / end (YYYY-MM-DD) and dateSource, taken from the events
+// whose id is the same once any "cur:" / "leekduck:" / "w-" style prefix is ignored (so "cur:halloween1" also picks up "halloween1"), in
+// public/data.json, world-events.json, the raid rotation or event-details.json. Titles are never used. Entries with no such event,
+// or whose matching events disagree on the dates (the only guard against a prefix-only match), are left untouched (never guessed). Dry run by default: `node scripts/event-info-dates.mjs --write` saves.
 // New and refreshed pictures are dated by addToEventInfo in g47ix-publish.mjs; this only covers entries that existed before.
 import { readFile, writeFile } from "node:fs/promises";
 import { datedEvents, eventDates } from "./g47ix-publish.mjs";

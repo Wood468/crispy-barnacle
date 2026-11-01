@@ -147,6 +147,8 @@ export function eventDates(ev) {
   return { start: s[0], end: e && e[0] > s[0] ? e[0] : s[0], dateSource: String(ev.src || "event") };
 }
 // Every event with a known date window, from the same files the app reads. Used to date pictures approved in the app and for the one-off backfill.
+// `now` defaults to 0 on purpose: raidSlots then keeps every historical rotation slot, which the backfill needs to date old entries.
+// Callers that only want current events (publish's main) pass Date.now().
 export function datedEvents({ data, details, world } = {}, now = 0) {
   const tag = (list, src) => (list || []).map(e => ({ ...e, src }));
   return [...tag(data && data.events, "data.json"), ...tag(worldAsEvents(world).filter(w => DAY.test(w.s)), "world-events.json"), ...tag(raidSlots(data && data.rotation, now), "rotation"), ...tag(detailsAsEvents(details).filter(d => d.s), "event-details.json")];
@@ -162,7 +164,9 @@ export function addToEventInfo(info, event, graphic) {
     info.events[key] = { names: [event.t || event.title], source: { label: graphic.creator || "G47IX", trust: "community", url: graphic.sourceUrl, observed: graphic.observed }, tickets: [], info: [], infographics: [] };
   }
   const e = info.events[key];
-  if (when) Object.assign(e, when);
+  // Dates are written once. An entry that already has them keeps them: the title match above only reuses an entry for the same instance
+  // (instanceApart), so a later picture joining it must not move its window; a different instance gets its own entry.
+  if (when && !e.start) Object.assign(e, when);
   e.infographics = e.infographics || [];
   if (e.infographics.some(g => g.url === graphic.url)) return false;
   const who = graphic.creator || "G47IX";
