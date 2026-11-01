@@ -24,7 +24,7 @@ test("Today keeps overseas events visible and separates live from later-today re
   assert.match(dash, /phaseGroup\('Later today', laterToday\.length \+ laterRegional\.length/);
   assert.match(dash, /function worldDate\(value, endOfDay\)/);
   assert.match(html, /id="day-inperson-count"/);
-  assert.match(html, /<span>In person<\/span>/);
+  assert.match(html, /<b id="day-inperson-count">0<\/b> in person/); // Batch 1: counts are one text line in the brief
   assert.match(html, /id="today-focus-strip"/);
 });
 

@@ -212,6 +212,8 @@
     return out;
   }
   var EV = [], usingApi = false, usingReadOnly = false;
+  /* Set once the event list is final. Today's blocks wait for it, so an early empty render cannot flash and then jump. */
+  var EV_READY = false;
   function mergeLiveAndCurated(live, curated) {
     // Only merge titles with the same GODEDUPE.titleKey (or one starting with the other) and a close start time. Token overlap is unsafe:
     // unrelated events can share a Pokémon name ("Zorua Community Day" vs "Zorua Raid Day").
@@ -1233,12 +1235,7 @@
       else if (person) nextMeta = [ev.place || ev.location || ev.venue, fmtD(ev.start)].filter(Boolean).join(' · ');
       else nextMeta = fmtD(ev.start) + ((!ev.allDay && !(ev.region && ev.sourceStart && !ev.utc)) ? ' · ' + fmtT(ev.start) : '');
     }
-    var liveCount = activity && Number.isFinite(activity.total) ? activity.total : 0;
-    var inGame = activity && Number.isFinite(activity.inGame) ? activity.inGame : 0;
-    var inPerson = activity && Number.isFinite(activity.inPerson) ? activity.inPerson : 0;
     var setText = function (id, value) { var el = $(id); if (el) el.textContent = value; };
-    setText('today-focus-now', liveCount ? liveCount + (liveCount === 1 ? ' live event' : ' live events') : 'Nothing live right now');
-    setText('today-focus-now-meta', inGame + ' in game · ' + inPerson + ' in person');
     setText('today-focus-next', nextName);
     setText('today-focus-next-meta', nextMeta);
 
@@ -1304,6 +1301,7 @@
     }
   }
   function renderHomeBrief(t) {
+    if (!EV_READY) return;
     t = t || now();
     var endDay = addDays(startOfDay(t), 1);
     var liveEvents = EV.filter(function (e) { return phase(e, t) === 'live' && !e.long && !isHidden(e.id) && !kindHidden(e.kind); });
@@ -1312,17 +1310,17 @@
     var activity = LIB.liveActivityCounts(liveEvents, regionalToday);
     var liveCount = activity.total;
     var todayCount = today.filter(function (e) { return e.start > t; }).length;
-    var briefTitle = $('day-brief-title'), briefNote = $('day-brief-note');
+    var briefTitle = $('day-brief-title');
     if ($('day-live-count')) $('day-live-count').textContent = String(activity.inGame);
     if ($('day-inperson-count')) $('day-inperson-count').textContent = String(activity.inPerson);
     if ($('day-upcoming-count')) $('day-upcoming-count').textContent = String(todayCount);
     if (briefTitle) briefTitle.textContent = liveCount ? (liveCount === 1 ? 'Something is happening now' : liveCount + ' things happening now') : (todayCount ? 'Your day is coming up' : 'A quieter day in the game');
-    if (briefNote) briefNote.textContent = liveCount || todayCount ? (todayCount ? todayCount + ' more starting today' : 'See what is live and what is next.') : 'No scheduled events today. Here is what is coming up next.';
     renderTodayStrip(t, today, activity);
   }
   document.addEventListener('gofn-season-ready', function () { renderHomeBrief(now()); });
   /* Refresh only today's list when its visible event phases change. This keeps the rest of the agenda and focused controls intact. */
   function renderHomeToday(t, force) {
+    if (!EV_READY) return;
     t = t || now();
     var endDay = addDays(startOfDay(t), 1);
     var today = EV.filter(function (e) {
@@ -1375,6 +1373,7 @@
     }).join('');
   }
   function renderHomeAgenda() {
+    if (!EV_READY) return;
     var t = now(), start = startOfDay(t), endDay = addDays(start, 1), endWeek = addDays(start, 7), endNext = addDays(start, 14);
     var endMonth = new Date(t.getFullYear(), t.getMonth() + 1, 1);
     var thisWeek = EV.filter(function (e) { return phase(e, t) === 'soon' && e.start >= endDay && e.start < endWeek && !isHidden(e.id) && !kindHidden(e.kind); }).sort(function (a, b) { return a.start - b.start; });
@@ -1492,6 +1491,7 @@
     (dexList || []).forEach(function (p) { DEXBY[String(p[1]).toLowerCase()] = p[0]; DEXNAME[p[0]] = p[1]; DEXGEN[p[0]] = p[2]; });
     var dl = $('followdl'); if (dl) dl.innerHTML = (dexList || []).slice(0, 1025).map(function (p) { return '<option value="' + esc(p[1]) + '">'; }).join('');
     EV = EV.length ? EV : fromData();
+    EV_READY = true;
     $('evsource').textContent = usingApi ? (usingReadOnly ? 'Live Leek Duck events with curated details where available. Read-only preview; nothing is stored and the background pipeline remains off.' : 'Events come from the source pipeline. Each card shows how far its source can be trusted.') : 'Events come from the curated schedule. Times are in your own time zone.';
     renderAll();
     renderCoverage();

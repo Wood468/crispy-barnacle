@@ -122,15 +122,15 @@ check('base stylesheet semantic type-scale roles preserve their exact values and
           len(re.findall(r'font-size\s*:\s*var\(' + re.escape(token) + r'\)(?=[;}])', BASE_COMPONENT_CSS)) == count
           for token, (value, count) in TYPE_SCALE.items()))
 DASH_TYPE_SCALE = {
-    '--type-meta': 12,
+    '--type-meta': 11,
     '--type-meta-compact': 11,
     '--type-body-compact': 9,
     '--type-label': 7,
-    '--type-body-sm': 7,
-    '--type-overline': 7,
+    '--type-body-sm': 6,
+    '--type-overline': 6,
     '--type-button': 6,
-    '--type-caption': 6,
-    '--type-intro': 4,
+    '--type-caption': 5,
+    '--type-intro': 5,
     '--type-body-emphasis': 4,
     '--type-stat': 3,
     '--type-heading': 1,
@@ -138,7 +138,7 @@ DASH_TYPE_SCALE = {
     '--type-body-lg': 1,
 }
 DASH_TYPE_VALUES = ['.78rem', '.8rem', '.84rem', '.75rem', '.82rem', '.72rem', '.85rem', '.68rem', '1.05rem', '.9rem', '2rem', '1.5rem', '.62rem', '1.1rem']
-check('dashboard uses the shared semantic type scale for 79 exact font-size declarations',
+check('dashboard uses the shared semantic type scale for 76 exact font-size declarations',
       all(len(re.findall(r'font-size\s*:\s*var\(' + re.escape(token) + r'\)(?=[;}])', DASH_CSS)) == count
           for token, count in DASH_TYPE_SCALE.items()) and
       all(not re.search(r'font-size\s*:\s*' + re.escape(value) + r'(?=[;}])', DASH_CSS)
@@ -152,10 +152,10 @@ BASE_FONT_SHORTHAND_SCALE = {
     '--type-body-emphasis': 1,
 }
 DASH_FONT_SHORTHAND_SCALE = {
-    '--type-body-sm': 3,
-    '--type-caption': 5,
-    '--type-meta': 7,
-    '--type-heading': 2,
+    '--type-body-sm': 8,
+    '--type-caption': 7,
+    '--type-meta': 8,
+    '--type-heading': 3,
     '--type-meta-compact': 7,
     '--type-body-emphasis': 4,
     '--type-button': 2,
@@ -163,7 +163,7 @@ DASH_FONT_SHORTHAND_SCALE = {
     '--type-overline': 9,
     '--type-body-lg': 1,
     '--type-intro': 1,
-    '--type-caption-compact': 5,
+    '--type-caption-compact': 7,
     '--type-body-base': 1,
 }
 def font_shorthand_role_count(css, token):
@@ -182,10 +182,10 @@ CARD_GLASS_SELECTORS = [
     '.tk', '.gencov', '.plc-row', '.srcrow', '.week-day-events>.week-card',
     '.today-empty', '.today-next-up', '.evd-hero', '.goinfo-section',
 ]
-CARD_SOLID_SELECTORS = ['.day-brief', '.today-focus-card']
+CARD_SOLID_SELECTORS = ['.day-brief']  # Batch 1: the focus tiles are flat raised tiles inside the one brief card
 CARD_BORDER_SELECTORS = [
     '.weekstrip', '.evc', '.pc', '.prio-empty', '.rotc', '.opp', '.evd-card',
-    '.tk', '.gencov', '.plc-row', '.srcrow', '.day-brief', '.today-focus-card',
+    '.tk', '.gencov', '.plc-row', '.srcrow', '.day-brief',
     '.today-empty', '.today-next-up', '.evd-hero', '.goinfo-section', '.pc.first', '.opp.missing',
 ]
 def card_rule_text(selector):
@@ -211,7 +211,7 @@ check('base live, raid, mega and shadow badges use semantic roles with their ori
 check('dashboard token migration preserves existing 14px controls and 18px card corners',
       '--radius-control:14px' in BASE_CSS and '--radius-panel:18px' in BASE_CSS and
       re.search(r'\.evc\{[^}]*border-radius:var\(--radius-panel\)', DASH_CSS) and
-      re.search(r'\.today-focus-card\{[^}]*border-radius:var\(--radius-panel\)', DASH_CSS) and
+      re.search(r'\.day-brief\{[^}]*border-radius:var\(--radius-lg\)', DASH_CSS) and re.search(r'\.today-focus-card\{[^}]*border-radius:var\(--radius-md\)', DASH_CSS) and
       'border-radius:var(--radius-control)' in DASH_CSS)
 check('dashboard primitives consume semantic text, typography, accent, border and pill roles',
       all(token in DASH_CSS for token in ['var(--color-text-muted)', 'var(--color-text-body)', 'var(--font-body)', 'var(--font-display)', 'var(--font-mono)', 'var(--color-danger)', 'var(--color-success)', 'var(--color-accent)', 'var(--color-accent-text)', 'var(--radius-pill)', 'var(--border-subtle)', 'var(--surface-glass)', 'var(--color-surface-raised)']))
@@ -223,8 +223,10 @@ check('header badges use accent roles, a canvas outline and reduced-motion-aware
       all(token in DASH_CSS for token in ['border:2px solid var(--color-canvas)', 'background:var(--color-accent)', 'color:var(--color-accent-text)', 'var(--motion-fast)', '@media(prefers-reduced-motion:reduce)']))
 check('empty agenda and watchlist states use a quiet surface and decorative cue',
       all(token in DASH_CSS for token in ['.event-agenda > .empty', '#followed > .empty', '#savedev > .empty', '.today-empty', 'content:"◇"', 'border:1px dashed var(--color-border-card)']))
-check('Today focus strip has four data-backed signals and a responsive semantic surface',
-      all(token in INDEX_HTML for token in ['id="today-focus-strip"', 'id="today-focus-now"', 'id="today-focus-next"', 'id="today-focus-raids"', 'id="today-focus-ending"']) and
+check('Today brief has three data-backed focus tiles (Next, Ending soon, Raids & Max) inside one card; the duplicate Now tile is gone',
+      'id="today-focus-now"' not in INDEX_HTML and 'id="day-brief-note"' not in INDEX_HTML and
+      INDEX_HTML.index('id="day-brief"') < INDEX_HTML.index('id="today-focus-strip"') < INDEX_HTML.index('</section>', INDEX_HTML.index('id="today-focus-strip"')) and
+      all(token in INDEX_HTML for token in ['id="today-focus-strip"', 'id="today-focus-next"', 'id="today-focus-raids"', 'id="today-focus-ending"']) and
       all(token in DASH_JS for token in ['function renderTodayStrip', '6 * 60 * 60 * 1000', '48 * 60 * 60 * 1000', 'window.GOSEASON', 'GOSEASON.deadlines', 'gofn-season-ready', 'activity.inGame', 'activity.inPerson', 'D.rotation', 'D.maxBattles']) and
       all(token in DASH_CSS for token in ['.today-focus-strip', '.today-focus-card', 'grid-template-columns:repeat(2,minmax(0,1fr))']))
 check('season pass and deadline data is structured, source-attributed and ordered',
@@ -239,7 +241,7 @@ check('150ms interaction transitions use a shared motion role with unchanged eas
       'transition:background-color var(--motion-quick) ease,color var(--motion-quick) ease' in BASE_CSS and
       'transition:transform var(--motion-quick)' in BASE_CSS and
       'transition:transform var(--motion-quick)' in DASH_CSS and
-      BASE_CSS.count('var(--motion-quick)') == 3 and DASH_CSS.count('var(--motion-quick)') == 1)
+      BASE_CSS.count('var(--motion-quick)') == 3 and DASH_CSS.count('var(--motion-quick)') == 2)  # Batch 1 adds the what's-new chevron
 check('base bonus and information availability controls use semantic status roles with unchanged colours',
       all(token in BASE_CSS for token in [
           '--color-status-bonus:#12A594; --color-on-status-bonus:#fff;',
@@ -250,7 +252,7 @@ check('base bonus and information availability controls use semantic status role
           'background: var(--color-status-info-unavailable); color: var(--color-on-status-info-unavailable); border: 1px solid var(--color-border-info-unavailable);',
       ]))
 check('versioned stylesheets are referenced by the page and precached offline',
-      all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261101k', '/dash.css?v=20261102c']))
+      all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261101k', '/dash.css?v=20261102d']))
 check('owner verification scripts are versioned and precached offline',
       '/account.js?v=20261101b' in INDEX_HTML and '/account.js?v=20261101b' in SW_JS and
       '/review.js?v=20261101b' in DASH_JS and '/review.js?v=20261101b' in SW_JS)
@@ -278,10 +280,10 @@ check('event signal chips and detail tags use semantic palette roles with unchan
           '.tg-incense{--tc:var(--color-signal-shadow)}.tg-costume{--tc:var(--color-signal-encounter)}',
       ]))
 check('offline shell cache version advances with the dashboard stylesheet token release',
-      "gofn-shell-v188" in SW_JS)
+      "gofn-shell-v189" in SW_JS)
 check('versioned dashboard scripts are referenced by the entry page and precached offline',
-      '/app.js?v=20261102a' in INDEX_HTML and '/app.js?v=20261102a' in SW_JS and
-      '/dash.js?v=20261102e' in APP_JS and '/dash.js?v=20261102e' in SW_JS and
+      '/app.js?v=20261102b' in INDEX_HTML and '/app.js?v=20261102b' in SW_JS and
+      '/dash.js?v=20261102f' in APP_JS and '/dash.js?v=20261102f' in SW_JS and
       '/detail.js?v=20261031a' in DASH_JS and '/detail.js?v=20261031a' in SW_JS)
 check('sync PIN and account controls have one home in Menu and are precached offline',
       INDEX_HTML.index('id="acct" class="acct"') > INDEX_HTML.index('id="sub-menu"') and
@@ -318,8 +320,8 @@ check('calendar weekday labels expand to full names on wide screens',
       all(token in DASH_CSS for token in ['.ch-short{display:inline}', '.ch-long{display:none;white-space:nowrap}', '@media (min-width:720px){.ch-short{display:none}.ch-long{display:inline}}']))
 check('Today has separate primary and supporting-panel layout wrappers',
       all(token in INDEX_HTML for token in ['class="today-layout"', 'class="today-main"', 'class="today-sidebar"', 'id="home-now"', 'id="action-centre"', 'id="foryou-sec"', 'id="weekly-sec"', 'id="buy-sec"']))
-check('desktop Today uses two columns while mobile preserves action-first order',
-      all(token in DASH_CSS for token in ['#tab-now .today-layout{display:flex;flex-direction:column;gap:var(--space-5);min-width:0}', '#tab-now .today-sidebar{display:contents}', '#tab-now #action-centre{order:0}', '#tab-now .today-main{order:1;min-width:0}', '@media(min-width:960px)', 'grid-template-columns:minmax(0,1.55fr) minmax(18rem,.9fr)', '#tab-now .today-sidebar{grid-column:2;display:grid']))
+check('desktop Today uses two columns while mobile lists today\'s events before the supporting panels',
+      all(token in DASH_CSS for token in ['#tab-now .today-layout{display:flex;flex-direction:column;gap:var(--space-5);min-width:0}', '#tab-now .today-sidebar{display:contents}', '#tab-now #action-centre,#tab-now #foryou-sec,#tab-now #weekly-sec,#tab-now #buy-sec{order:2}', '#tab-now .today-main{order:1;min-width:0}', '@media(min-width:960px)', 'grid-template-columns:minmax(0,1.55fr) minmax(18rem,.9fr)', '#tab-now .today-sidebar{grid-column:2;display:grid']))
 with sync_playwright() as p:
     b=p.chromium.launch()
     def page(api=None,marks=None,clock='2026-10-09T22:45:00+11:00',sources=None,gens=None,us=None,extra=None,pin=False,slow_places=False):
@@ -558,7 +560,7 @@ with sync_playwright() as p:
               not re.search(r'\b\d{1,2}:\d{2}\b|\b(?:am|pm)\b', next_meta, re.I), (next_name,next_meta))
         check('Future overseas event does not inflate the current in-person activity count',
               future_overseas.locator('#day-inperson-count').inner_text()=='0' and
-              '0 in person' in future_overseas.locator('#today-focus-now-meta').inner_text())
+              '0 in person' in future_overseas.locator('.day-brief-stats').inner_text())
         rotation_text = future_overseas.locator('#today-focus-raids').inner_text()
         max_text = future_overseas.locator('#today-focus-raids-meta').inner_text()
         check('Raids and Max summary uses the published rotation active on the viewed date',
@@ -573,7 +575,7 @@ with sync_playwright() as p:
         check('Today focus strip remains visible at 390px', future_overseas.locator('#today-focus-strip').is_visible())
         future_overseas.set_viewport_size({'width':1280,'height':900})
         desktop_cols = future_overseas.locator('#today-focus-strip').evaluate("el => getComputedStyle(el).gridTemplateColumns.split(' ').length")
-        check('Today focus strip expands to four columns on desktop', desktop_cols==4, desktop_cols)
+        check('Today focus strip expands to three columns on desktop', desktop_cols==3, desktop_cols)
         future_overseas.context.close()
 
         overseas.evaluate("""() => {
@@ -712,9 +714,9 @@ with sync_playwright() as p:
             documentWidth:document.documentElement.scrollWidth,viewport:innerWidth
           };
         }""")
-        check('Mobile Today preserves Action Centre → Today → For you order',
+        check('Mobile Today lists Today\'s events before the Action Centre and For you panels',
               mobile_today['display']=='flex' and mobile_today['sidebarDisplay']=='contents' and
-              mobile_today['actionTop']<mobile_today['mainTop']<mobile_today['foryouTop'],
+              mobile_today['mainTop']<mobile_today['actionTop']<mobile_today['foryouTop'],
               mobile_today)
         check('Overseas in-person events stay within the 390px mobile Today layout',
               mobile_today['cardLeft']>=-1 and mobile_today['cardRight']<=391 and
@@ -2009,6 +2011,84 @@ with sync_playwright() as p:
               ppg.title()=="You're offline · GO Field Notes" and ppg.locator('h1').inner_text().strip()=="You're offline",
               ppg.evaluate("({title:document.title,h1:document.querySelector('h1')&&document.querySelector('h1').innerText,url:location.href})"))
         pctx.close()
+
+    if on('b'):
+        # Batch 1: Today first screen. Clock is 2 Nov 2026 09:30 Melbourne, when many in-game and overseas in-person events are live.
+        BATCH1_CLOCK = '2026-11-02T09:30:00+11:00'
+        TARGETS_JS = """() => {
+          const small = [];
+          const visible = e => { for (let p = e; p; p = p.parentElement) { if (p.hidden || getComputedStyle(p).display === 'none' || getComputedStyle(p).visibility === 'hidden') return false; } const r = e.getBoundingClientRect(); return r.width > 0 && r.height > 0; };
+          document.querySelectorAll('#tab-now a[href], #tab-now button, #tab-now summary, #tab-now input, #tab-now select, #tab-now [role=button], .whatsnew a[href], .whatsnew button').forEach(e => {
+            if (e.closest('[aria-hidden="true"], [inert]') || !visible(e)) return;
+            const r = (e.tagName === 'INPUT' && e.closest('label') ? e.closest('label') : e).getBoundingClientRect(); // a checkbox's hit area is its label row
+            if (r.width < 43.5 || r.height < 43.5) small.push(e.tagName.toLowerCase() + '.' + String(e.className).split(' ')[0] + ' ' + Math.round(r.width) + 'x' + Math.round(r.height));
+          });
+          return small;
+        }"""
+        seed_new = lambda pg: (pg.evaluate("localStorage.setItem('gofn-seen-events', JSON.stringify({ids:['seed-old-event'], at:1}))"), pg.reload(), pg.wait_for_selector('.whatsnew:not([hidden])', timeout=15000))
+        b1 = page(clock=BATCH1_CLOCK)
+        seed_new(b1)
+        b1.wait_for_selector('#home-now .evc, #home-now .agr', state='attached')
+        overflow = {}
+        for width in (320, 375, 390, 430):
+            b1.set_viewport_size({'width': width, 'height': 844}); b1.wait_for_timeout(120)
+            overflow[width] = b1.evaluate("() => [document.documentElement.scrollWidth, innerWidth]")
+        check('Today has no horizontal overflow at 320, 375, 390 and 430px (what\'s-new collapsed)',
+              all(sw <= iw for sw, iw in overflow.values()), overflow)
+        b1.set_viewport_size({'width': 390, 'height': 844}); b1.wait_for_timeout(120)
+        row = b1.locator('.whatsnew').bounding_box()
+        check('what\'s-new is one collapsed row of about 48px on Today with the list closed',
+              row is not None and 44 <= row['height'] <= 56 and b1.locator('.wn-toggle').get_attribute('aria-expanded') == 'false' and b1.locator('.wn-body').is_hidden(), row)
+        check('what\'s-new sits inside Today, below the daily brief',
+              b1.evaluate("() => { const w=document.querySelector('.whatsnew'), t=document.getElementById('tab-now'), d=document.getElementById('day-brief'); return t.contains(w) && (d.compareDocumentPosition(w) & Node.DOCUMENT_POSITION_FOLLOWING) > 0; }"))
+        first = b1.evaluate("() => { const el=document.querySelector('#home-now .evc, #home-now .agr'); const r=el.getBoundingClientRect(); return {top:Math.round(r.top+scrollY), vh:innerHeight}; }")
+        check('first event card starts inside the first screenful at 390px (above the bottom bar)',
+              first['top'] < first['vh'] - 80, first)
+        b1.set_viewport_size({'width': 320, 'height': 844}); b1.wait_for_timeout(120)
+        first320 = b1.evaluate("() => { const el=document.querySelector('#home-now .evc, #home-now .agr'); return Math.round(el.getBoundingClientRect().top+scrollY); }")
+        check('first event card starts inside the first screenful at 320px', first320 < 844 - 80, first320)
+        tiles = b1.evaluate("() => [...document.querySelectorAll('.day-brief-stats span, .today-focus-card')].map(e => { const r=e.getBoundingClientRect(); const b=document.getElementById('day-brief-title').getBoundingClientRect(); return r.top >= b.bottom - 1 && r.right <= innerWidth && r.left >= 0; })")
+        check('brief counts and tiles stack below the title at 320px without overlap', all(tiles) and len(tiles) == 6, tiles)
+        b1.set_viewport_size({'width': 390, 'height': 844}); b1.wait_for_timeout(120)
+        check('no interactive control on Today is under a 44x44 hit area (collapsed)', b1.evaluate(TARGETS_JS) == [], b1.evaluate(TARGETS_JS))
+        # keyboard: toggle then Got it, Enter expands, links are real rows of 44px
+        b1.locator('.wn-toggle').focus(); b1.keyboard.press('Tab')
+        check('keyboard order is the toggle, then Got it', b1.evaluate("document.activeElement.classList.contains('wn-ok')"))
+        b1.locator('.wn-toggle').focus(); b1.keyboard.press('Enter')
+        check('Enter expands what\'s-new and exposes its links',
+              b1.locator('.wn-toggle').get_attribute('aria-expanded') == 'true' and b1.locator('.wn-body').is_visible() and b1.locator('.wn-body a').count() >= 1)
+        check('no interactive control on Today is under 44x44 with what\'s-new expanded', b1.evaluate(TARGETS_JS) == [], b1.evaluate(TARGETS_JS))
+        link_colour = b1.evaluate("() => { const a=document.querySelector('.wn-body a'); const s=getComputedStyle(a); return [s.color, s.textDecorationLine]; }")
+        check('what\'s-new links use the semantic link colour with no default underline', link_colour[0] != 'rgb(0, 0, 238)' and link_colour[1] == 'none', link_colour)
+        b1.emulate_media(reduced_motion='reduce')
+        check('what\'s-new chevron does not animate with reduced motion',
+              b1.evaluate("() => getComputedStyle(document.querySelector('.wn-view'), '::after').transitionDuration") in ('0s', '0ms'))
+        b1.locator('.wn-toggle').press('Enter')
+        check('Enter collapses what\'s-new again', b1.locator('.wn-toggle').get_attribute('aria-expanded') == 'false' and b1.locator('.wn-body').is_hidden())
+        # never on the other tabs
+        shown_elsewhere = []
+        for tab_id in ('events', 'raids', 'collect', 'saved'):
+            btn = b1.locator('#tabs [data-tab="%s"]' % tab_id)
+            if btn.count():
+                btn.click(); b1.wait_for_timeout(80)
+                if b1.locator('.whatsnew').is_visible(): shown_elsewhere.append(tab_id)
+        check('what\'s-new is absent from the Schedule, Battle, Collection and Saved tabs', shown_elsewhere == [], shown_elsewhere)
+        b1.locator('#tabs [data-tab="now"]').click()
+        # dismissal persists across a reload and the 'seen' list is updated
+        b1.locator('.wn-ok').click()
+        check('Got it hides what\'s-new, stores the seen list and moves focus to the brief',
+              b1.locator('.whatsnew').is_hidden() and b1.evaluate("document.activeElement && document.activeElement.id") == 'day-brief' and
+              b1.evaluate("JSON.parse(localStorage.getItem('gofn-seen-events')).ids.length") > 5)
+        b1.reload(); b1.wait_for_selector('#home-now .evc, #home-now .agr', state='attached'); b1.wait_for_timeout(1500)
+        check('a dismissed what\'s-new stays dismissed after reload', b1.locator('.whatsnew:not([hidden])').count() == 0)
+        check('no console or page errors on the Today first screen', b1.errs == [], b1.errs)
+        # season / GO Pass: one compact strip below the agenda, rows are real 48px+ buttons
+        season_strip = b1.evaluate("""() => { const bar=document.getElementById('seasonbar'); const h=document.getElementById('home-now'); const cards=[...bar.querySelectorAll('.ssn-card')]; return {after:(h.compareDocumentPosition(bar) & Node.DOCUMENT_POSITION_FOLLOWING)>0, n:cards.length, minH:Math.min(...cards.map(c=>c.getBoundingClientRect().height)), bg:getComputedStyle(cards[0]).backgroundImage}; }""")
+        check('season and GO Pass sit in one compact strip after today\'s agenda, with 48px+ rows and no gradient',
+              season_strip['after'] and season_strip['n'] >= 1 and season_strip['minH'] >= 47.5 and season_strip['bg'] == 'none', season_strip)
+        check('Today agenda reserves its space until the first render (layout-shift guard)',
+              '#home-now:not([data-render-key]){min-height:' in DASH_CSS and ':has(#home-now:not([data-render-key]))' in DASH_CSS and 'EV_READY' in DASH_JS)
+        b1.context.close()
     b.close()
 # Dashboard radius adoption: shared scale values are expressed through semantic roles.
 check('dashboard shared radius declarations consume semantic radius tokens',
