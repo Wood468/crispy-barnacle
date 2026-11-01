@@ -148,7 +148,7 @@ export function eventDates(ev) {
 }
 // Every event with a known date window, from the same files the app reads. Used to date pictures approved in the app and for the one-off backfill.
 // `now` defaults to 0 on purpose: raidSlots then keeps every historical rotation slot, which the backfill needs to date old entries.
-// Callers that only want current events (publish's main) pass Date.now().
+// Neither caller passes `now` today: publish's main builds its list from raidSlots directly, and g47ix-apply.mjs uses this default (every slot).
 export function datedEvents({ data, details, world } = {}, now = 0) {
   const tag = (list, src) => (list || []).map(e => ({ ...e, src }));
   return [...tag(data && data.events, "data.json"), ...tag(worldAsEvents(world).filter(w => DAY.test(w.s)), "world-events.json"), ...tag(raidSlots(data && data.rotation, now), "rotation"), ...tag(detailsAsEvents(details).filter(d => d.s), "event-details.json")];

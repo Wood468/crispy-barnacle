@@ -66,7 +66,7 @@ test("mutable entry, code, styles, manifests and public JSON keep default revali
     "/",
     "/index.html",
     "/app.js",
-    "/app.js?v=20261101b",
+    "/app.js?v=20261101f",
     "/dash.css?v=20261031t",
     "/sw.js",
     "/manifest.webmanifest",

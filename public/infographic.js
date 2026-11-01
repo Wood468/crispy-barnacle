@@ -181,7 +181,7 @@
       if (found) { open(id); return; }
       button.setAttribute('data-igmsg', '1'); button.textContent = 'No infographic found yet'; var token = button._igToken = announce('No infographic found yet');
       button._igTimer = setTimeout(function () { button._igTimer = 0; button.removeAttribute('data-igmsg'); button.textContent = 'Check infographic'; if (button._igToken === token) button._igToken = 0; clearLive(token); }, 3500);
-    }).catch(function () { button.removeAttribute('data-igbusy'); button.textContent = 'Check infographic'; releaseOwn(button); });
+    }).catch(function () { button.removeAttribute('data-igbusy'); button.removeAttribute('data-igmsg'); button.textContent = 'Check infographic'; releaseOwn(button); });
   }
   document.addEventListener('visibilitychange', function () { if (!document.hidden && INFO) loadInfo(true).then(function (all) { syncButtons(all); }); });
   function watchButtons() {
