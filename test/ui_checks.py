@@ -167,9 +167,9 @@ check('150ms interaction transitions use a shared motion role with unchanged eas
       'transition:transform var(--motion-quick)' in DASH_CSS and
       BASE_CSS.count('var(--motion-quick)') == 3 and DASH_CSS.count('var(--motion-quick)') == 1)
 check('versioned stylesheets are referenced by the page and precached offline',
-      all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261101c', '/dash.css?v=20261031t']))
+      all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261101c', '/dash.css?v=20261101u']))
 check('offline shell cache version advances with the stylesheet token release',
-      "gofn-shell-v163" in SW_JS)
+      "gofn-shell-v164" in SW_JS)
 check('versioned dashboard scripts are referenced by the entry page and precached offline',
       '/app.js?v=20261101b' in INDEX_HTML and '/app.js?v=20261101b' in SW_JS and
       '/dash.js?v=20261101a' in APP_JS and '/dash.js?v=20261101a' in SW_JS and
@@ -1779,7 +1779,7 @@ check('base stylesheet spacing declarations consume semantic 4px-scale tokens',
 
 check('dashboard shared gap declarations consume semantic spacing tokens',
       all(f'var(--space-{step})' in DASH_CSS for step in [1, 2, 3, 5]) and
-      re.search(r'(?<![-\w])(?:column-gap|row-gap|gap)\s*:\s*(?:(?:4|8|12|16|20|24|28|32|36|40)px\s*)+;', DASH_CSS) is None)
+      re.search(r'(?<![-\w])(?:column-gap|row-gap|gap)\s*:\s*(?![^;{}]*[()])[^;{}]*(?<![-\w])(?:4|8|12|16|20|24|28|32|36|40)px\b[^;{}]*(?=;|})', DASH_CSS) is None)
 check('dashboard padding and margin declarations consume semantic spacing tokens',
       all(f'var(--space-{step})' in DASH_CSS for step in [1, 2, 3, 4, 5, 7]) and
-      re.search(r'(?<![-\w])(?:padding|margin)(?:-(?:top|right|bottom|left|block|inline)(?:-(?:start|end))?)?\s*:\s*(?![^;{}]*[()])[^;{}]*(?<![-\w])(?:4|8|12|16|20|24|28|32|36|40)px\b[^;{}]*;', DASH_CSS) is None)
+      re.search(r'(?<![-\w])(?:padding|margin)(?:-(?:top|right|bottom|left|block|inline)(?:-(?:start|end))?)?\s*:\s*(?![^;{}]*[()])[^;{}]*(?<![-\w])(?:4|8|12|16|20|24|28|32|36|40)px\b[^;{}]*(?=;|})', DASH_CSS) is None)
