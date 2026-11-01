@@ -37,9 +37,32 @@
   window.addEventListener('load', function () { var n = 0, h = setInterval(function () { try { strip(); } catch (e) { } if (++n > 40) clearInterval(h); }, 750); });
   document.addEventListener('visibilitychange', function () { if (!document.hidden) try { strip(); } catch (e) { } });
   document.addEventListener('gofn-state', function () { try { strip(); } catch (e) { } });
-  fetch('/season.json').then(function (r) { return r.ok ? r.json() : null; }).then(function (j) {
+  function json(u) { return fetch(u).then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; }); }
+  Promise.all([json('/season.json'), json('/event-moves.json')]).then(function (loaded) {
+    var j = loaded[0], moveData = loaded[1];
     if (!j) return; items = j.items || [];
-    deadlines = (j.deadlines || []).map(function (d) {
+    var moveDeadlines = (moveData && Array.isArray(moveData.moves) ? moveData.moves : []).map(function (m) {
+      if (!m || !Array.isArray(m.sources) || !m.id || !m.move || !m.eventName) return null;
+      var source = m.sources.filter(function (s) {
+        return s && s.trust === 'official' && s.name && String(s.url || '').indexOf('https://') === 0;
+      })[0];
+      if (!source) return null;
+      var start = String(m.windowStart || ''), end = String(m.windowEnd || '');
+      var startDate = new Date(start), endDate = new Date(end);
+      if (!start || !end || !Number.isFinite(startDate.getTime()) || !Number.isFinite(endDate.getTime()) || endDate <= startDate) return null;
+      var action = m.acquisition === 'EVOLVE' ? 'evolve by' : m.acquisition === 'CATCH' ? 'catch by' : '';
+      if (!action) return null;
+      var moveKind = m.moveKind === 'fast' ? 'Fast Attack' : m.moveKind === 'charged' ? 'Charged Attack' : '';
+      var qualifier = m.acquisition === 'EVOLVE'
+        ? ['Evolve', m.pokemon, m.evolutionTarget ? '→ ' + m.evolutionTarget : '', 'for', m.move, moveKind ? '(' + moveKind + ')' : ''].filter(Boolean).join(' ')
+        : ['Catch', m.pokemon || 'a Pokémon', 'for', m.move, moveKind ? '(' + moveKind + ')' : ''].filter(Boolean).join(' ');
+      return {
+        id: 'exclusive-move:' + m.id, name: m.eventName, title: 'Exclusive move window ends',
+        action: action, qualifier: qualifier, s: start, e: end,
+        source: source.name, url: source.url, sourceTrust: source.trust
+      };
+    }).filter(Boolean);
+    deadlines = (j.deadlines || []).concat(moveDeadlines).map(function (d) {
       if (!d || typeof d !== 'object') return null;
       var start = new Date(d.s), end = new Date(d.e);
       if (!Number.isFinite(start.getTime()) || !Number.isFinite(end.getTime()) || end <= start ||
