@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-01T06:05:59.532Z",
+ "updated": "2026-11-01T13:25:41.871Z",
  "status": [
   {
    "id": "hub",
@@ -23,8 +23,8 @@
   },
   {
    "id": "youtube-pogo",
-   "state": "error",
-   "note": "HTTP 404"
+   "state": "ok",
+   "items": 2
   }
  ],
  "gaps": 3,
@@ -81,6 +81,18 @@
    "pokemon": [
     "Greavard",
     "Sableye"
+   ],
+   "notInOurData": []
+  },
+  {
+   "source": "reddit-silph",
+   "trust": "tip",
+   "title": "Greavard shiny confirmation",
+   "link": "https://www.reddit.com/r/TheSilphRoad/comments/1xkqbfo/greavard_shiny_confirmation/",
+   "date": "2026-11-01T01:02:36.000Z",
+   "summary": "<table> <tr><td> <a href=\"https://www.reddit.com/r/TheSilphRoad/comments/1xkqbfo/greavard_shiny_confirmation/\"> <img src=\"https://preview.redd.it/orzbcb3bhwyh1.png?width=640&amp;crop=smart&amp;auto=we",
+   "pokemon": [
+    "Greavard"
    ],
    "notInOurData": []
   },
@@ -173,6 +185,26 @@
    "notInOurData": []
   },
   {
+   "source": "youtube-pogo",
+   "trust": "official",
+   "title": "New costumed Pokémon make their debuts during Halloween 2026 Part I in Pokémon GO!",
+   "link": "https://www.youtube.com/shorts/I6MvdaExyIg",
+   "date": "2026-10-27T17:00:40.000Z",
+   "summary": "",
+   "pokemon": [],
+   "notInOurData": []
+  },
+  {
+   "source": "youtube-pogo",
+   "trust": "official",
+   "title": "New costumed Pokémon make their debuts during Halloween 2026 Part I in Pokémon GO!",
+   "link": "https://www.youtube.com/watch?v=wyN2y-BgpoU",
+   "date": "2026-10-27T17:00:14.000Z",
+   "summary": "",
+   "pokemon": [],
+   "notInOurData": []
+  },
+  {
    "source": "reddit-silph",
    "trust": "tip",
    "title": "shiny costume pikachu confirmed",
@@ -205,18 +237,6 @@
     "Sinistea",
     "Pikachu",
     "Zubat"
-   ],
-   "notInOurData": []
-  },
-  {
-   "source": "reddit-silph",
-   "trust": "tip",
-   "title": "Shiny costume Sinistea confirmed",
-   "link": "https://www.reddit.com/r/TheSilphRoad/comments/1xgjsbu/shiny_costume_sinistea_confirmed/",
-   "date": "2026-10-27T05:07:46.000Z",
-   "summary": "<table> <tr><td> <a href=\"https://www.reddit.com/r/TheSilphRoad/comments/1xgjsbu/shiny_costume_sinistea_confirmed/\"> <img src=\"https://preview.redd.it/qitqo9ud0yxh1.jpeg?width=640&amp;crop=smart&amp;a",
-   "pokemon": [
-    "Sinistea"
    ],
    "notInOurData": []
   }
