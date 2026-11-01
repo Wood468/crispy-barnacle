@@ -457,6 +457,23 @@ with sync_playwright() as p:
               rewards_meta)
         rewards_page.context.close()
 
+        live_pass_page = page(clock='2026-11-02T05:51:00+11:00', extra={
+            '**/data.json': (empty_data, 200),
+            '**/world-events.json': (empty_world, 200),
+            '**/regional-events.json': (empty_world, 200)
+        })
+        live_pass_page.wait_for_selector('#seasonbar .ssn-card')
+        live_pass_cards = live_pass_page.locator('#seasonbar .ssn-card')
+        live_pass_text = live_pass_cards.all_inner_texts()
+        check('Today shows the active Halloween GO Pass alongside the season and October pass',
+              live_pass_cards.count() == 3 and any('GO Pass: Halloween 2026' in text for text in live_pass_text),
+              live_pass_text)
+        live_pass_page.wait_for_function("document.getElementById('today-focus-ending-meta')?.textContent.includes('GO Pass: October')")
+        check('Today Ending soon prioritises the earliest active published pass deadline',
+              'GO Pass ends in' in live_pass_page.locator('#today-focus-ending').inner_text() and
+              'GO Pass: October' in live_pass_page.locator('#today-focus-ending-meta').inner_text())
+        live_pass_page.context.close()
+
         # A stalled initial data request must time out, expose a retry, and leave the primary navigation usable.
         boot_ctx=b.new_context(viewport={'width':390,'height':844},device_scale_factor=2,timezone_id='Australia/Melbourne',locale='en-AU',service_workers='block')
         boot_ctx.set_default_timeout(10000)
