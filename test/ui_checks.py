@@ -526,6 +526,11 @@ with sync_playwright() as p:
         multi_page.wait_for_function("document.getElementById('today-deadlines') && !document.getElementById('today-deadlines').hidden")
         multi_tray = multi_page.locator('#today-deadlines')
         multi_items = multi_page.locator('#today-deadlines-list li')
+        check('Today deadline tray disclosure is collapsed initially and opens by keyboard-accessible summary',
+              not multi_tray.evaluate("el => el.open"))
+        multi_page.locator('#today-deadlines-summary').focus()
+        multi_page.keyboard.press('Enter')
+        multi_page.wait_for_function("!document.getElementById('today-deadlines-list').hidden")
         multi_text = multi_items.all_inner_texts()
         check('Today deadline tray lists active pass, research and reward deadlines in chronological order',
               multi_items.count() == 3 and
@@ -541,11 +546,6 @@ with sync_playwright() as p:
               multi_page.locator('#today-deadlines-list a').count() == 3 and
               multi_page.locator('#today-deadlines-list a').evaluate_all(
                   "els => els.every(a => a.href.startsWith('https://leekduck.com/') && a.target === '_blank' && a.rel.includes('noopener'))"))
-        check('Today deadline tray disclosure is collapsed initially and opens by keyboard-accessible summary',
-              not multi_tray.evaluate("el => el.open"))
-        multi_page.locator('#today-deadlines-summary').focus()
-        multi_page.keyboard.press('Enter')
-        multi_page.wait_for_function("!document.getElementById('today-deadlines-list').hidden")
         check('Today deadline tray reveals its ordered list when expanded',
               multi_tray.evaluate("el => el.open") and multi_items.count() == 3)
         check('expanded source links meet the 44px hit-target minimum',
