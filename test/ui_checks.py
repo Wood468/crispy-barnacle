@@ -772,7 +772,7 @@ with sync_playwright() as p:
         max_selected = max_monday_page.locator('#typechips button[aria-pressed="true"]').all_inner_texts()
         check('Best attackers opens with the Max boss weakness types selected',
               all(name in max_selected for name in ['Flying', 'Psychic', 'Fairy']), max_selected)
-        max_owned_row = max_monday_page.locator('#list .irow[data-key="Mega Rayquaza"]')
+        max_owned_row = max_monday_page.locator('#list .irow[data-key="Mega Rayquaza"]:visible')
         max_owned_button = max_owned_row.locator('.tg.o')
         check('Best attackers reflects the seeded local Have mark for Mega Rayquaza',
               max_owned_row.count() == 1 and max_owned_button.get_attribute('aria-pressed') == 'true')
