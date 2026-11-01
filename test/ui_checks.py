@@ -230,10 +230,10 @@ check('owner verification scripts are versioned and precached offline',
       '/account.js?v=20261101b' in INDEX_HTML and '/account.js?v=20261101b' in SW_JS and
       '/review.js?v=20261101b' in DASH_JS and '/review.js?v=20261101b' in SW_JS)
 check('offline shell cache version advances with the stylesheet token release',
-      "gofn-shell-v176" in SW_JS)
+      "gofn-shell-v177" in SW_JS)
 check('versioned dashboard scripts are referenced by the entry page and precached offline',
-      '/app.js?v=20261101d' in INDEX_HTML and '/app.js?v=20261101d' in SW_JS and
-      '/dash.js?v=20261101c' in APP_JS and '/dash.js?v=20261101c' in SW_JS and
+      '/app.js?v=20261101e' in INDEX_HTML and '/app.js?v=20261101e' in SW_JS and
+      '/dash.js?v=20261101d' in APP_JS and '/dash.js?v=20261101d' in SW_JS and
       '/detail.js?v=20261031a' in DASH_JS and '/detail.js?v=20261031a' in SW_JS)
 check('sync PIN and account controls have one home in Menu and are precached offline',
       INDEX_HTML.index('id="acct" class="acct"') > INDEX_HTML.index('id="sub-menu"') and
@@ -255,7 +255,7 @@ check('all HTML renderers use one shared apostrophe-safe escape helper',
       all(not re.search(r'function\s+esc\s*\(', source) and
           not re.search(r'var\s+esc\s*=\s*function', source) for source in ESC_RENDERERS))
 check('versioned infographic script is referenced by the dashboard and precached offline',
-      '/infographic.js?v=20261101c' in DASH_JS and '/infographic.js?v=20261101c' in SW_JS)
+      '/infographic.js?v=20261101d' in DASH_JS and '/infographic.js?v=20261101d' in SW_JS)
 check('infographic card thumbnails assign original URLs only near the viewport',
       'data-thumb-src' in INFO_JS and 'new IntersectionObserver' in INFO_JS and
       "rootMargin: '80px 0px'" in INFO_JS)

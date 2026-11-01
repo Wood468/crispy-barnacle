@@ -30,7 +30,7 @@ class El {
 function setup({ events, info }) {
   const buttons = [], docListeners = {}, timers = [];
   let live = null, fetches = 0;
-  const net = { info };                       // what /event-info.json answers: object | "500" | "throw" | "badjson"
+  const net = { info, failMs: -1 };                       // what /event-info.json answers: object | "500" | "throw" | "badjson"
   const document = {
     hidden: false, body: { style: {}, appendChild: (c) => { if (c.id === "iglive") live = c; return c; } },
     querySelectorAll: () => buttons.filter((b) => b.hasAttribute("data-infographic") || b.hasAttribute("data-igcard")),
@@ -50,7 +50,7 @@ function setup({ events, info }) {
   const X = { events: () => events, raidSlots: () => [], kindOf: () => ["Event", "#000", "#fff"], whenText: () => "", countdown: () => "" };
   const window = { GODASH: X, GO: { esc: (s) => String(s), art: () => "", bonusChip: () => "" }, GODEDUPE };
   window.window = window;
-  const ctx = vm.createContext({ window, GODEDUPE, document, fetch, console, Promise, setTimeout: (f, ms) => { timers.push({ f, ms, dead: false, ran: false }); return timers.length; }, clearTimeout: (n) => { if (timers[n - 1]) timers[n - 1].dead = true; } });
+  const ctx = vm.createContext({ window, GODEDUPE, document, fetch, console, Promise, setTimeout: (f, ms) => { if (ms === net.failMs) throw new Error("timer failed"); timers.push({ f, ms, dead: false, ran: false }); return timers.length; }, clearTimeout: (n) => { if (timers[n - 1]) timers[n - 1].dead = true; } });
   const runTimers = (ms) => timers.forEach((t) => { if (!t.dead && !t.ran && (ms == null || t.ms === ms)) { t.ran = true; t.f(); } });
   vm.runInContext(code, ctx);
   const card = (id) => { const b = new El("button"); b.setAttribute("data-igcard", id); buttons.push(b); return b; };
@@ -226,15 +226,66 @@ test("re-tap during the message, then the check errors: the live region ends emp
   assert.equal(t.live.textContent, "", "no stale message after the error");
 });
 
-test("re-tap while the button's own announcement is still pending: it is released once it has landed", async () => {
+test("the start of a re-tap empties the button's own message at once (landed or still pending)", async () => {
   const { t, b } = await loaded({ info: { events: {} } });
-  t.click(b); await settle();                    // announcement pending (50 ms tick not run yet)
-  t.net.info = withPicB;
-  t.click(b);                                    // clearLive must not drop its own pending message here...
-  t.runTimers(50);                               // ...so it lands...
+  t.click(b); await settle(); t.runTimers(50);
   assert.equal(t.live.textContent, NOPE);
-  await settle();                                // ...and the finished check releases it
-  assert.equal(t.live.textContent, "", "fails if clearLive loses its no-announcement-pending guard");
+  t.click(b);                                    // check still in flight (no await): the region must already be empty
+  assert.equal(t.live.textContent, "", "landed message released at the start of the re-tap");
+  await settle(); t.runTimers(50); t.runTimers(3500);
+  assert.equal(t.live.textContent, "");
+  t.click(b); await settle();                    // new announcement pending
+  const pending = t.timers.filter((x) => x.ms === 50 && !x.ran && !x.dead); assert.equal(pending.length, 1);
+  t.click(b);                                    // check still in flight: the pending message is cancelled, not left to land
+  assert.ok(pending[0].dead, "own pending announcement cancelled at the start of the re-tap");
+  t.runTimers(50);
+  assert.equal(t.live.textContent, "", "cancelled message never lands while the check runs");
+});
+
+test("narrow window: the check ends within 50 ms of a re-tap (found): the live region ends empty", async () => {
+  const { t, b } = await loaded({ info: { events: {} } });
+  t.click(b); await settle();                    // announcement pending, 50 ms tick not run yet
+  t.net.info = withPicB;
+  t.click(b); await settle();                    // re-tap; the check finds a picture inside the 50 ms window
+  t.runTimers(50);
+  assert.equal(t.live.textContent, "", "no stale 'No infographic found yet' with nobody to clear it");
+  t.runTimers(3500);
+  assert.equal(t.live.textContent, "");
+});
+
+test("narrow window: the check errors within 50 ms of a re-tap: the live region ends empty", async () => {
+  const events = [{ id: "a", name: "Alpha", start: day(1), end: day(2) }, { id: "b", name: "Beta", start: day(3), end: day(4) }];
+  let boom = false;
+  Object.defineProperty(events, Symbol.isConcatSpreadable, { get() { if (boom) throw new Error("boom"); return true; } });
+  const t = setup({ events, info: { events: {} } });
+  t.card("a"); const b = t.card("b"); await settle();
+  t.click(b); await settle();                    // pending
+  boom = true; t.click(b); await settle(); t.runTimers(50);
+  assert.equal(b.textContent, "Check infographic");
+  assert.equal(t.live.textContent, "");
+});
+
+test("the catch path releases a message the button had just announced", async () => {
+  const { t, b } = await loaded({ info: { events: {} } });
+  t.net.failMs = 3500;                           // the failure comes after announce(): the region holds this button's NEW message
+  t.click(b); await settle();
+  assert.equal(b.textContent, "Check infographic", "the error path resets the button");
+  assert.equal(b.getAttribute("data-igbusy"), null);
+  assert.equal(b._igToken, 0, "token released");
+  t.runTimers(50);
+  assert.equal(t.live.textContent, "", "fails if the catch path does not release its own message");
+});
+
+test("a repeated identical message is still read again, and taps during a check are ignored", async () => {
+  const { t, b } = await loaded({ info: { events: {} } });
+  t.click(b); await settle(); t.runTimers(50);
+  assert.equal(t.live.textContent, NOPE);
+  const before = t.fetches;
+  t.click(b); t.click(b); await settle();
+  assert.equal(t.fetches - before, 1, "second tap during the check ignored");
+  assert.equal(t.live.textContent, "", "emptied before the same text is set again");
+  t.runTimers(50);
+  assert.equal(t.live.textContent, NOPE);
 });
 
 test("two buttons: A's re-tap and A's found/clear never clear or cancel B's current or pending message", async () => {

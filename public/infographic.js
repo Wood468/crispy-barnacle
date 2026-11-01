@@ -156,15 +156,16 @@
     announceTimer = setTimeout(function () { announceTimer = 0; r.textContent = text; }, 50);
     return token;
   }
-  /* A button's reset empties the region only if the message there is still its own and nothing newer is pending, so a stale
-     "No infographic found yet" is not left for browse-mode readers and another button's message is never touched. */
+  /* A button's release empties the region only if the message there (or still pending) is its own: a pending message of its own is cancelled
+     before it lands, so a stale "No infographic found yet" is never left for browse-mode readers, and another button's current or pending message is never touched. */
   function clearLive(token) {
     var r = document.getElementById('iglive');
-    if (r && token && liveOwner === token && !announceTimer) { r.textContent = ''; liveOwner = 0; return true; }
-    return !(r && token && liveOwner === token); /* false only while this message is still its own and pending: try again later */
+    if (!(r && token && liveOwner === token)) return;
+    if (announceTimer) { clearTimeout(announceTimer); announceTimer = 0; }
+    r.textContent = ''; liveOwner = 0;
   }
   /* Drop this button's own announcement (never another button's): used when its reset timer is cancelled or its check ends without a new message. */
-  function releaseOwn(button) { var t = button._igToken; if (t && clearLive(t)) button._igToken = 0; }
+  function releaseOwn(button) { var t = button._igToken; if (t) { clearLive(t); button._igToken = 0; } }
   /* "Check infographic": look again, ignoring everything this page already loaded. Found: open it. Not found: say so on the button. */
   function recheck(button) {
     var id = button.getAttribute('data-igcheck'), ev = evById(id);
