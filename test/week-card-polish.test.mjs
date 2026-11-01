@@ -21,6 +21,13 @@ test("This Week cards keep their primary actions thumb-sized and readable", () =
 
 
 
+function firstCssRule(source, selector) {
+  const start = source.indexOf(selector + "{");
+  if (start < 0) return "";
+  const end = source.indexOf("}", start);
+  return end < 0 ? "" : source.slice(start, end + 1);
+}
+
 function cssRule(source, selector) {
   const start = source.lastIndexOf(selector + "{");
   if (start < 0) return "";
@@ -41,26 +48,26 @@ test("Schedule week strip contains 44px day targets inside its own narrow-screen
 });
 
 test("Schedule event-card actions wrap instead of forcing a 412px mobile footer", () => {
-  const mobileStart = css.indexOf("@media(max-width:520px){\n  .evc.cmp .evc-foot{");
-  assert.notEqual(mobileStart, -1, "the compact footer override must be scoped to mobile");
-  const mobileEnd = css.indexOf("\n}\n", mobileStart);
+  const mobileStart = css.indexOf("@media(max-width:520px){" + String.fromCharCode(10) + "  .week-day-events{");
+  assert.notEqual(mobileStart, -1, "the Schedule mobile override must be present");
+  const mobileEnd = css.indexOf(String.fromCharCode(10) + "}" + String.fromCharCode(10), mobileStart);
+  assert.ok(mobileEnd > mobileStart, "the Schedule mobile override must be closed");
   const mobile = css.slice(mobileStart, mobileEnd + 3);
-  const footer = cssRule(mobile, ".evc.cmp .evc-foot");
-  const more = cssRule(mobile, ".evc.cmp .evc-foot .more");
-  const star = cssRule(mobile, ".evc.cmp .evc-foot .star");
+  const footer = firstCssRule(mobile, ".evc.cmp .evc-foot");
+  const more = firstCssRule(mobile, ".evc.cmp .evc-foot .more");
+  const star = firstCssRule(mobile, ".evc.cmp .evc-foot .star");
   assert.ok(footer.includes("display:flex;") && footer.includes("flex-wrap:wrap;"));
   assert.ok(more.includes("flex:1 1 6rem;") && more.includes("min-width:44px;") && more.includes("min-height:44px;") && more.includes("white-space:normal;"));
   assert.ok(star.includes("flex:0 0 44px;") && star.includes("width:44px;") && star.includes("min-width:44px;") && star.includes("min-height:44px;"));
   assert.ok(!mobile.includes("grid-template-columns:minmax(0,1fr) minmax(0,1fr) 42px"));
 });
 
-
 test("Schedule event headers wrap beside a fixed 44px hide target on narrow screens", () => {
   const mobileStart = css.indexOf("@media(max-width:520px){" + String.fromCharCode(10) + "  .week-day-events{");
   assert.notEqual(mobileStart, -1, "narrow Schedule card constraints must be scoped to mobile");
   const mobileEnd = css.indexOf(String.fromCharCode(10) + "}" + String.fromCharCode(10), mobileStart);
   const mobile = css.slice(mobileStart, mobileEnd + 3);
-  const days = cssRule(mobile, ".week-day-events");
+  const days = firstCssRule(mobile, ".week-day-events");
   const card = cssRule(mobile, ".evc.cmp");
   const top = cssRule(mobile, ".evc.cmp .evc-top");
   const countdown = cssRule(mobile, ".evc.cmp .evc-top .cdn");
