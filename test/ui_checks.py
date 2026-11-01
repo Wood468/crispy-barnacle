@@ -389,7 +389,11 @@ with sync_playwright() as p:
         tabs_page.context.close()
 
         # Published GO Pass/season end times share the existing Ending soon signal; no free-text expiry is inferred.
-        empty_data = json.dumps({'events': [], 'rotation': [], 'maxBattles': [], 'spotlight': [], 'raidHour': []})
+        empty_data_obj = json.loads((ROOT / 'public' / 'data.json').read_text())
+        empty_data_obj['events'] = []
+        empty_data_obj['rotation'] = []
+        empty_data_obj['maxBattles'] = []
+        empty_data = json.dumps(empty_data_obj)
         empty_world = json.dumps({'events': []})
         pass_season = json.dumps({'items': [{
             'id': 'season:pass-fixture', 'label': 'GO Pass', 'name': 'GO Pass: Fixture',
