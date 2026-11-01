@@ -1,36 +1,5 @@
 {
  "about": "Visible interactive elements smaller than 44x44 CSS px at 390px wide on Today, Schedule, Raids and Collection. Debt list: shrink it, never grow it. Regenerate with UI_TOUCH_BASELINE=update python3 test/ui_checks.py (UI_SHARD=b).",
  "viewport": 390,
- "entries": [
-  {
-   "selector": "#prio button.soon-sum[data-gosoon]",
-   "size": "26x45",
-   "e.g.": "⏱ 1 on now · 1 starting in the next 24h ",
-   "tabs": [
-    "now"
-   ],
-   "count": 1
-  },
-  {
-   "selector": "#tab-dex input",
-   "size": "13x13",
-   "e.g.": "dunrel",
-   "tabs": [
-    "collect"
-   ],
-   "count": 1
-  },
-  {
-   "selector": "div.body a",
-   "size": "190x16",
-   "e.g.": "Sources, methodology & data notes",
-   "tabs": [
-    "now",
-    "events",
-    "raids",
-    "collect"
-   ],
-   "count": 10
-  }
- ]
+ "entries": []
 }

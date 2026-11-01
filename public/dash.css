@@ -73,7 +73,7 @@ body{background:radial-gradient(1200px 520px at 50% -140px,color-mix(in srgb,var
 .evc-art:empty{display:none}.evc:has(.evc-art:empty){grid-template-columns:1fr}
 .art.ea{width:64px;height:64px;object-fit:contain;filter:drop-shadow(0 6px 10px rgba(0,0,0,.35))}
 .evc.cmp .art.ea{width:44px;height:44px}
-.evc-main{min-width:0;display:grid;gap:7px;align-content:start}
+.evc-main{min-width:0;display:grid;grid-template-columns:minmax(0,1fr);gap:7px;align-content:start}
 .evc-top,.pc-top,.rot-top,.opp-top{display:flex;align-items:center;gap:var(--space-2);justify-content:space-between}
 .kind{display:inline-block;background:var(--k,#7C879B);color:var(--kf,#fff);border-radius:var(--radius-pill);padding:3px 10px;font:800 .7rem var(--font-body);letter-spacing:.05em;text-transform:uppercase}
 .cdn{font:600 var(--type-meta) var(--font-mono);color:var(--color-text-body);font-variant-numeric:tabular-nums;white-space:nowrap}
@@ -691,8 +691,7 @@ button.igcheck{min-height:44px}
 
 /* Small phones (360px): keep the three card buttons readable, never clipped */
 @media (max-width:380px){
-  .evc.cmp .evc-foot{flex-wrap:wrap}
-  .evc.cmp .evc-foot .more{flex:1 1 auto;min-width:max-content}
+  .evc.cmp .evc-foot .more{min-width:0}
   .tools>*{max-width:100%}
   .dtog .tg{font-size:var(--type-caption);padding:0 2px;letter-spacing:-.01em}
 }
@@ -700,6 +699,7 @@ button.igcheck{min-height:44px}
 .dd .body>*{min-width:0}
 @media (max-width:420px){.evd-bar .tag{display:none}.evd-bar{gap:var(--space-2)}.evd-bar .info-open{margin-left:auto}}
 .foot-dd{background:none;border:0;padding:0}.foot-dd summary{font:600 var(--type-button) var(--font-body);text-transform:none;letter-spacing:0;padding:6px 0}.foot-dd .body{padding:6px 0}
+.foot-dd .body a{display:flex;align-items:center;min-height:44px}
 
 /* From the sources */
 .srcfact{margin:0 0 var(--space-2);display:flex;flex-wrap:wrap;gap:var(--space-1) var(--space-2);align-items:center}
@@ -1259,13 +1259,30 @@ select,
 .mega-controls select {
   min-width: 44px;
 }
+/* Week strip: seven equal columns that can shrink (minmax(0,1fr)) so Sunday never leaves the card. A day is 64px tall and at least 44px wide
+   from 375px up; at 320px (and 200% zoom) the strip is ~254px, so each day is ~36px wide, still above the WCAG 2.2 AA 24px minimum. */
 .wk-days {
-  grid-template-columns: repeat(7, minmax(44px, 1fr));
+  grid-template-columns: repeat(7, minmax(0, 1fr));
   gap: 1px;
 }
 .wd {
-  min-width: 44px;
+  min-width: 0;
 }
+@media (max-width: 400px) {
+  .weekstrip { padding: var(--space-2); }
+  .wk-days { gap: 0; }
+  /* Schedule cards on phones: the text column is only ~150-230px (the picture takes 88px), so three controls and the header chips cannot share one row.
+     Header: chips and hide button on row 1, countdown on row 2. Footer: Details on row 1, then infographic + star on row 2 (same order as the keyboard focus order). All controls stay 44px high. */
+  #tab-events .evc.cmp .evc-top { display: grid; grid-template-columns: minmax(0, 1fr) 44px; align-items: start; row-gap: var(--space-1); }
+  #tab-events .evc.cmp .evc-top .kind-grp { min-width: 0; grid-column: 1; grid-row: 1; }
+  #tab-events .evc.cmp .evc-top .hide-x { grid-column: 2; grid-row: 1; }
+  #tab-events .evc.cmp .evc-top .cdn { grid-column: 1 / -1; grid-row: 2; justify-self: start; max-width: 100%; }
+  #tab-events .evc.cmp .evc-foot:has(.igcheck) { grid-template-columns: minmax(0, 1fr) 44px; }
+  #tab-events .evc.cmp .evc-foot:has(.igcheck) > .more:first-child { grid-column: 1 / -1; }
+}
+/* Schedule: breathing room above every section heading in the timeline (was 0 for "Happening now", directly under the week strip). */
+#evtimeline > .sec2,
+#evtimeline > .sec2.dh { margin: var(--space-6) 0 var(--space-3); }
 
 
 /* Live state: keep the urgency cue, but do not use saturated kind colours as small text. */

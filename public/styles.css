@@ -82,9 +82,12 @@ button,input,select{font:inherit;color:inherit}
 .p-primal{background:var(--color-kind-primal);color:var(--color-on-kind-primal)}
 .p-x{background:var(--color-surface-raised);color:var(--color-text)}
 .p-time{background:var(--color-surface-raised);color:var(--color-text)}
-button.pill{cursor:pointer;padding:9px 14px;font-size:var(--type-button);opacity:.6}
-button.pill[aria-pressed="true"]{opacity:1;box-shadow:0 0 0 2px var(--color-canvas),0 0 0 4px var(--color-text)}
-button.pill.all{background:var(--color-inverse-surface);color:var(--color-inverse-text)}
+/* Action pills: a real raised surface with full-strength text (the old blanket opacity:.6 made every enabled pill look disabled and failed 4.5:1). */
+button.pill,a.pill{background:var(--color-surface-raised);color:var(--color-text);border:1px solid var(--color-border)}
+button.pill{cursor:pointer;padding:9px 14px;font-size:var(--type-button)}
+button.pill[aria-pressed="true"]{box-shadow:0 0 0 2px var(--color-canvas),0 0 0 4px var(--color-text)}
+button.pill.all,a.pill.all{background:var(--color-inverse-surface);color:var(--color-inverse-text);border-color:var(--color-inverse-surface)}
+button.pill:disabled,button.pill[aria-disabled="true"]{opacity:.5;cursor:not-allowed}
 
 header.top{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:var(--space-3) var(--space-6);padding-block:var(--space-6) var(--space-2)}
 header.top h1{font-size:clamp(1.7rem,4vw,2.1rem)}
@@ -233,7 +236,7 @@ footer ul{margin:0;padding-left:1.1em}
 .mon.has b{visibility:hidden}
 .pinform{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:-18px}
 .pinform input{background:var(--color-surface);border:0;border-radius:var(--radius-md);padding:0 var(--space-4);height:44px;min-width:0;flex:1 1 12rem}
-.pinform .pill{cursor:pointer;padding:var(--space-3) 18px;opacity:1}
+.pinform .pill{cursor:pointer;padding:var(--space-3) 18px}
 .fig{margin:0;display:flex;flex-direction:column;align-items:center;gap:2px;position:relative;max-width:7.5rem;text-align:center}
 .fig figcaption{font-size:var(--type-overline);line-height:1.25;color:inherit}
 .fig figcaption b{display:block;font-weight:700}
@@ -315,7 +318,7 @@ nav.tabs button[aria-selected="true"] svg{stroke-width:2.6}
 .dtog{grid-column:1 / -1;display:flex;gap:5px}
 .dtog .tg{flex:1;min-width:0;height:40px;padding:0 var(--space-1);font-size:.74rem}
 .dtog .tg.s[aria-pressed="true"]{background:var(--color-accent);color:var(--color-accent-text)}
-.dchk{display:flex;gap:var(--space-2);align-items:center;font-size:var(--type-body-emphasis);color:var(--color-text-muted)}
+.dchk{display:flex;gap:var(--space-2);align-items:center;min-height:44px;font-size:var(--type-body-emphasis);color:var(--color-text-muted)}
 .dmini{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:var(--space-3);font:500 var(--type-meta-compact) var(--font-mono)}
 .dmini b{font-weight:700}
 .st-r{background:var(--color-status-released);color:var(--color-on-status-released)}
