@@ -30,6 +30,9 @@
   --color-status-caution:#F59F00; --color-on-status-caution:#1D1300;
   --color-status-released:#1971c2; --color-on-status-released:#fff;
   --color-status-live:#D7373C; --color-on-status-live:#fff;
+  --color-status-bonus:#12A594; --color-on-status-bonus:#fff;
+  --color-status-info-available:#176b45; --color-on-status-info-available:#fff; --color-border-info-available:#2ca66d;
+  --color-status-info-unavailable:#343b46; --color-on-status-info-unavailable:#d1d5db; --color-border-info-unavailable:#596273;
   --color-filter-shiny-start:#7b5cff; --color-filter-shiny-end:#d65bd0; --color-on-filter-shiny:#fff;
   /* Four-point spacing scale, semantic type scale, shared radii and motion. */
   --space-1:4px; --space-2:8px; --space-3:12px; --space-4:16px; --space-5:20px;
@@ -242,7 +245,7 @@ footer ul{margin:0;padding-left:1.1em}
 .bonus{display:inline-flex;align-items:center;gap:6px;padding:6px 11px 6px var(--space-2);border-radius:var(--radius-md);background:var(--color-surface-raised);color:var(--color-text);font-size:var(--type-body-sm);line-height:1.2}
 .bonus .gi{width:1.7rem;height:1.7rem;flex:none;object-fit:contain;margin:-3px 0}
 .bonus .gi-wrap{position:relative;display:inline-flex;flex:none;margin-right:6px}
-.bonus .gi-plus{position:absolute;right:-5px;bottom:-5px;width:15px;height:15px;border-radius:50%;background:#12A594;color:#fff;font:800 var(--type-overline)/15px var(--font-body);text-align:center;font-style:normal;box-shadow:0 0 0 2px var(--color-canvas,#0b0e14)}
+.bonus .gi-plus{position:absolute;right:-5px;bottom:-5px;width:15px;height:15px;border-radius:50%;background:var(--color-status-bonus);color:var(--color-on-status-bonus);font:800 var(--type-overline)/15px var(--font-body);text-align:center;font-style:normal;box-shadow:0 0 0 2px var(--color-canvas,#0b0e14)}
 .bonus svg{width:1.15rem;height:1.15rem;flex:none}
 .bonus b{font-family:var(--font-display);font-weight:800;font-size:var(--type-intro);letter-spacing:.01em}
 .hero .bonus{background:color-mix(in srgb,var(--hf) 16%,transparent);color:var(--hf)}
@@ -359,8 +362,8 @@ nav.tabs button[aria-selected="true"] svg{stroke-width:2.6}
 
 /* Infographic availability: keep the status pill visible on every event card. */
 button.info-open { min-height: 34px; border-radius: var(--radius-pill); padding: 7px 11px; font-weight: 750; }
-button.info-open.info-available { background: #176b45; color: #fff; border: 1px solid #2ca66d; }
-button.info-open.info-unavailable { background: #343b46; color: #d1d5db; border: 1px solid #596273; opacity: 1; cursor: not-allowed; }
+button.info-open.info-available { background: var(--color-status-info-available); color: var(--color-on-status-info-available); border: 1px solid var(--color-border-info-available); }
+button.info-open.info-unavailable { background: var(--color-status-info-unavailable); color: var(--color-on-status-info-unavailable); border: 1px solid var(--color-border-info-unavailable); opacity: 1; cursor: not-allowed; }
 button.info-open.info-unavailable:disabled { opacity: 1; }
 .tools select{max-width:100%}
 .irow .bx{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:var(--space-2)}
