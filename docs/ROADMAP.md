@@ -135,7 +135,6 @@ All merged milestones above passed their post-merge checks. Earlier verified app
 
 - "Tonight" planner (Spotlight/Raid Hour/Max Monday with weaknesses and your owned counters).
 - ✅ **Ending-soon tray:** #246/#247 add structured GO Pass, season, reward and research deadlines; #250 adds official-source exclusive-move windows; #251 presents the bounded multi-deadline disclosure. This tranche is merged and production-verified through #253. Verified external ticket-sale cut-offs remain queued.
-- 🔧 Ending-soon tray: #246/#247 add structured GO Pass, season, reward and research deadlines; #250 adds official-source exclusive-move windows; #251 adds the bounded multi-deadline disclosure. Verified external ticket-sale cut-offs remain queued.
 - Raid share card; Travel mode (regional and in-person events at a destination).
 - Owner PIN → session cookie.
 
