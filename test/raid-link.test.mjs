@@ -38,7 +38,7 @@ test("best-attacker filters support every known weakness type for a raid boss", 
   assert.equal(selected("Fire", "All"), false, "All keeps only the All chip pressed");
   assert.equal(selected("Fire", ["Fire", "Fighting"]), true);
   assert.equal(selected("Water", ["Fire", "Fighting"]), false);
-  assert.match(app, /window\.GOBEST = \{ showTypes:function\(types\)/);
+  assert.match(app, /window\.GOBEST = \{\s*ready: false,[\s\S]*?ownedSummary:function\(types,limit\)[\s\S]*?showTypes:function\(types\)/);
   assert.match(app, /typeSel = valid\.length \? valid : 'All';/);
   assert.match(app, /\$\('q'\)\.value = ''; \$\('status'\)\.value = 'all';/);
 });
