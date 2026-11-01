@@ -902,10 +902,21 @@ Promise.all([
     off:'Saved on this device. Account sync is not switched on for this site yet.',
     update:'Please refresh GO Field Notes before syncing, so older open tabs cannot overwrite newer marks.'
   };
-  function setSync(k){
-    $('sync').textContent=MSG[k]||'';$('dsync').textContent=MSG[k]||'';
-    $('pinform').hidden=(k==='synced'||k==='off'||k==='update');
+  function openSyncSettings(){
+    showTab('saved','menu');
+    var dd=$('pindd');if(dd){dd.open=true;dd.scrollIntoView({block:'center'});}
+    var input=$('pinnew');if(input)input.focus();
   }
+  function renderSyncStatus(id,k){
+    var el=$(id);if(!el)return;
+    el.textContent=MSG[k]||'';
+    if(k==='local'||k==='badpin'||k==='signedout'||k==='error'){
+      var b=document.createElement('button');b.type='button';b.className='pill';b.textContent='Sync & account settings';
+      b.addEventListener('click',openSyncSettings);
+      el.appendChild(document.createTextNode(' '));el.appendChild(b);
+    }
+  }
+  function setSync(k){renderSyncStatus('sync',k);renderSyncStatus('dsync',k);}
   function has(o){return Object.keys(o.have).length||Object.keys(o.bt||{}).length||Object.keys(o.hundo).length||DEXCATS.some(function(c){return o.m&&o.m[c]&&Object.keys(o.m[c]).length})}
   function saveLocal(){try{localStorage.setItem('gofn-dex-v1',JSON.stringify(dex));localStorage.setItem('gofn-stamp',String(stamp));localStorage.setItem('gofn-dex-base-v1',String(baseUpdated));if(baselineDex)localStorage.setItem('gofn-dex-baseline-v1',JSON.stringify(baselineDex));else localStorage.removeItem('gofn-dex-baseline-v1')}catch(e){}document.dispatchEvent(new Event('gofn-marks'))}
   function req(method,body){
@@ -968,13 +979,6 @@ Promise.all([
       setSync('synced');
     }catch(e){setSync('error')}
   }
-  $('pinform').addEventListener('submit',function(ev){
-    ev.preventDefault();
-    pin=$('pin').value.trim();$('pin').value='';
-    try{localStorage.setItem('gofn-pin',pin)}catch(e){}
-    document.dispatchEvent(new Event('gofn-identity-change'));
-    location.reload();
-  });
   document.addEventListener('visibilitychange',function(){if(!document.hidden&&online&&!dirty&&!writing)pull()});
   setSync('local');
   syncRows();

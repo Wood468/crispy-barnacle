@@ -28,6 +28,7 @@ DASH_JS = (ROOT / 'public' / 'dash.js').read_text()
 INDEX_HTML = (ROOT / 'public' / 'index.html').read_text()
 SW_JS = (ROOT / 'public' / 'sw.js').read_text()
 APP_JS = (ROOT / 'public' / 'app.js').read_text()
+PIN_JS = (ROOT / 'public' / 'pin.js').read_text()
 INFO_JS = (ROOT / 'public' / 'infographic.js').read_text()
 LIB_JS = (ROOT / 'public' / 'lib.js').read_text()
 ESC_RENDERERS = [APP_JS] + [(ROOT / 'public' / name).read_text() for name in [
@@ -169,11 +170,16 @@ check('150ms interaction transitions use a shared motion role with unchanged eas
 check('versioned stylesheets are referenced by the page and precached offline',
       all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261101d', '/dash.css?v=20261101u']))
 check('offline shell cache version advances with the stylesheet token release',
-      "gofn-shell-v167" in SW_JS)
+      "gofn-shell-v168" in SW_JS)
 check('versioned dashboard scripts are referenced by the entry page and precached offline',
-      '/app.js?v=20261101b' in INDEX_HTML and '/app.js?v=20261101b' in SW_JS and
+      '/app.js?v=20261101c' in INDEX_HTML and '/app.js?v=20261101c' in SW_JS and
       '/dash.js?v=20261101b' in APP_JS and '/dash.js?v=20261101b' in SW_JS and
       '/detail.js?v=20261031a' in DASH_JS and '/detail.js?v=20261031a' in SW_JS)
+check('sync PIN and account controls have one home in Menu and are precached offline',
+      INDEX_HTML.index('id="acct" class="acct"') > INDEX_HTML.index('id="sub-menu"') and
+      'id="pinform"' not in INDEX_HTML and
+      "document.querySelector('#pindd .pinform')" in PIN_JS and
+      '/pin.js?v=20261101b' in INDEX_HTML and '/pin.js?v=20261101b' in SW_JS)
 check('versioned season banner script is referenced by the page and precached offline',
       '/season.js?v=20261101a' in INDEX_HTML and '/season.js?v=20261101a' in SW_JS)
 check('all HTML renderers use one shared apostrophe-safe escape helper',
@@ -1220,6 +1226,20 @@ with sync_playwright() as p:
         pg.set_viewport_size({'width':390,'height':844})
         pg.click('#hmenu'); pg.wait_for_timeout(200)
         check('Menu holds alerts, sync, calendar and sources', pg.locator('#sub-menu #alertsdd').count()==1 and pg.locator('#sub-menu #usstat').count()==1 and pg.locator('#sub-menu #calcard').count()==1 and pg.locator('#sub-menu a[href="/sources.html"]').count()==1)
+        check('sync and account controls are centralised in Menu', pg.locator('#sub-menu #acct').count()==1 and pg.locator('#tab-best #acct').count()==0 and pg.locator('#tab-best #pinform').count()==0 and pg.locator('#pindd .pinform').count()==1)
+        pg.locator('#pindd').evaluate('(d)=>d.open=true')
+        pg.fill('#pinnew','test-sync-pin')
+        with pg.expect_navigation(wait_until='load'):
+            pg.locator('#pindd .pinform button').click()
+        check('Menu PIN form saves the device PIN', pg.evaluate("localStorage.getItem('gofn-pin')==='test-sync-pin'") and pg.locator('#pinstate').inner_text()=='saved on this device')
+        pg.locator('#pindd').evaluate('(d)=>d.open=true')
+        with pg.expect_navigation(wait_until='load'):
+            pg.click('#pinrm')
+        check('Remove PIN clears the saved device PIN', pg.evaluate("localStorage.getItem('gofn-pin')===null") and pg.locator('#pinstate').inner_text()=='not set')
+        pg.click('nav.tabs button[data-tab="collect"]'); pg.wait_for_timeout(200)
+        check('Dex sync status links to the central settings', pg.locator('#dsync button').inner_text()=='Sync & account settings')
+        pg.locator('#dsync button').click(); pg.wait_for_timeout(200)
+        check('Dex sync link opens Menu and the PIN settings', pg.locator('#sub-menu').is_visible() and pg.locator('#pindd').evaluate('(d)=>d.open'))
         pg.click('nav.tabs button[data-tab="now"]'); pg.wait_for_timeout(200)
         check('old checklist state is cleared', pg.evaluate("localStorage.getItem('gofn-daily')")==None)
         pg.evaluate("localStorage.setItem('gofn-tab','dex')"); pg.reload(); pg.wait_for_selector('#tab-dex'); pg.wait_for_timeout(300)
