@@ -29,6 +29,7 @@ test("user-state keyed reads: rejects empty, malformed and over-limit selections
   assert.equal(cleanReadKeys(["saved:event-1", "not-a-user-state-key"]).error, "invalid");
   assert.equal(cleanReadKeys(["saved:bad\u0001key"]).error, "invalid");
   assert.equal(cleanReadKeys(Array.from({ length: MAX_READ_KEYS + 1 }, (_, i) => "saved:event-" + i)).error, "too_many");
+  assert.equal(cleanReadKeys(Array.from({ length: MAX_READ_KEYS + 1 }, () => "saved:event-1")).error, "too_many");
 });
 
 test("user-state keyed reads: member reads bind only its own prefixed keys and preserve tombstones", async () => {
