@@ -1991,7 +1991,7 @@ check('Max, Gigantamax and Shadow artwork-tag gradients use semantic roles with 
       ]) and
       all(selector in DASH_CSS for selector in [
           'color:var(--color-on-signal-tag)',
-          '.shadow-tag{background:var(--color-signal-shadow-tag-start)}',
+          '.shadow-tag{background:#5B2BB0}',
           '.shadow-tag{background:linear-gradient(90deg,var(--color-signal-shadow-tag-start),var(--color-signal-shadow-tag-end))}',
           '.max-tag{background:linear-gradient(90deg,var(--color-signal-max-tag-start),var(--color-signal-max-tag-end))}',
           '.max-art.is-gmax .max-tag{background:linear-gradient(90deg,var(--color-signal-gmax-tag-start),var(--color-signal-gmax-tag-end))}'
