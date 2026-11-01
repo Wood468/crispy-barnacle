@@ -16,7 +16,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&family=Hanken+Grotesk:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap">
 <link rel="stylesheet" href="/styles.css?v=20261101k">
-<link rel="stylesheet" href="/dash.css?v=20261102c">
+<link rel="stylesheet" href="/dash.css?v=20261102d">
 </head>
 <body>
 <div class="wrap">
@@ -42,16 +42,19 @@
     </section>
     <!-- NOW -->
     <section class="panel" id="tab-now" role="tabpanel">
-      <div id="prio" class="legacy-test-hook" aria-live="polite" aria-hidden="true"></div>
+      <div id="prio" class="legacy-test-hook" aria-live="polite" aria-hidden="true" inert></div>
       <details class="dd" id="shdd" hidden><summary>Shiny hunting <span class="cnt" id="shcnt"></span></summary><div class="body"><label><input type="checkbox" id="shhide" checked> Hide ones I already have as a shiny</label><div id="shlist" class="dexlist"></div></div></details>
-      <div id="seasonbar" class="seasonbar" hidden></div>
-      <section class="day-brief" id="day-brief" aria-label="Daily overview"><div class="day-brief-copy"><span class="day-brief-kicker">YOUR DAY</span><strong id="day-brief-title">Getting your day ready</strong><span id="day-brief-note">Your events and priorities at a glance.</span></div><div class="day-brief-stats"><div><b id="day-live-count">0</b><span>In game</span></div><div><b id="day-inperson-count">0</b><span>In person</span></div><div><b id="day-upcoming-count">0</b><span>Today</span></div></div></section>
-      <section class="today-focus-strip" id="today-focus-strip" aria-label="Today at a glance">
-        <div class="today-focus-card"><span class="today-focus-label">Now</span><strong id="today-focus-now">Loading live activity…</strong><small id="today-focus-now-meta">In-game and in-person activity stay separate.</small></div>
-        <div class="today-focus-card"><span class="today-focus-label">Next</span><strong id="today-focus-next">Finding your next event…</strong><small id="today-focus-next-meta">Upcoming schedule</small></div>
-        <div class="today-focus-card"><span class="today-focus-label">Raids &amp; Max today</span><strong id="today-focus-raids">Checking published rotations…</strong><small id="today-focus-raids-meta">Published schedule only</small></div>
-        <div class="today-focus-card"><span class="today-focus-label">Ending soon</span><strong id="today-focus-ending">Checking timed events…</strong><small id="today-focus-ending-meta">Timed in-game events only</small></div>
-      </section>
+      <div class="today-top" id="today-top">
+        <section class="day-brief" id="day-brief" aria-label="Daily overview" tabindex="-1">
+          <strong class="day-brief-title" id="day-brief-title">Getting your day ready</strong>
+          <p class="day-brief-stats" aria-label="Activity today"><span><b id="day-live-count">0</b> in game</span><span><b id="day-inperson-count">0</b> in person</span><span><b id="day-upcoming-count">0</b> starting today</span></p>
+          <div class="today-focus-strip" id="today-focus-strip" role="group" aria-label="Today at a glance">
+            <div class="today-focus-card"><span class="today-focus-label">Next</span><strong id="today-focus-next">Finding your next event…</strong><small id="today-focus-next-meta">Upcoming schedule</small></div>
+            <div class="today-focus-card"><span class="today-focus-label">Ending soon</span><strong id="today-focus-ending">Checking timed events…</strong><small id="today-focus-ending-meta">Timed in-game events only</small></div>
+            <div class="today-focus-card"><span class="today-focus-label">Raids &amp; Max today</span><strong id="today-focus-raids">Checking published rotations…</strong><small id="today-focus-raids-meta">Published schedule only</small></div>
+          </div>
+        </section>
+      </div>
       <div class="today-layout">
         <div class="today-main">
         <section class="agenda-section" aria-labelledby="agenda-now-title">
@@ -78,6 +81,7 @@
         </section>
         </div>
       </div>
+      <div id="seasonbar" class="seasonbar" hidden role="group" aria-label="Season and GO Pass"></div>
       <section class="agenda-section" aria-labelledby="agenda-week-title">
         <h2 class="sec2" id="agenda-week-title">This week</h2>
         <div id="week" class="event-agenda"></div>
@@ -419,12 +423,12 @@
 <script src="/local-state.js?v=20261030a"></script>
 <script src="/account.js?v=20261101b"></script>
 <script src="/dedupe.js?v=20261101b"></script>
-<script src="/app.js?v=20261102a"></script>
+<script src="/app.js?v=20261102b"></script>
 <script src="/store.js?v=20261101a"></script>
 <script src="/season.js?v=20261102c"></script>
 <script src="/weekly.js?v=20261101a"></script>
 <script src="/pin.js?v=20261101b"></script>
-<script src="/whatsnew.js?v=20261101a"></script>
+<script src="/whatsnew.js?v=20261102a"></script>
 <script src="/pwa.js"></script>
 </body>
 </html>

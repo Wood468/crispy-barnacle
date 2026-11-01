@@ -1,4 +1,4 @@
-/* "New since your last visit" on the first page: events that were not in the list the last time you dismissed this note,
+/* "New since your last visit" on Today (never on the other tabs): events that were not in the list the last time you dismissed this note,
    plus what changed in the Leaks tab (now in the game, moved up, new in the game files, datamine posts).
    What you have seen lives only in this browser (localStorage). The first visit just records the events; leaks show the last 7 days. */
 (function () {
@@ -52,26 +52,43 @@
   function loadHistory() { try { var h = JSON.parse(localStorage.getItem(HKEY) || 'null'); return h && h.html ? h : null; } catch (e) { return null; } }
   function saveHistory(html, total) { try { localStorage.setItem(HKEY, JSON.stringify({ html: html, total: total, at: Date.now() })); } catch (e) { } }
   var st = { evDone: false, ids: [], fresh: [], changed: [], snapshot: {}, leaks: null };
+  function buildBody() {
+    var h = '';
+    function row(href, label, ext) { return '<a href="' + href + '"' + (ext ? ' target="_blank" rel="noopener noreferrer"' : '') + '>' + label + '</a>'; }
+    function more(n, shown) { return n > shown ? '<span class="wn-more">+' + (n - shown) + ' more</span>' : ''; }
+    if (st.fresh.length) h += '<div class="wn-list"><span class="wn-h">New events</span>' + st.fresh.slice(0, 12).map(function (e) { return row('#event=' + encodeURIComponent(e.id), esc(e.name || e.id)); }).join('') + more(st.fresh.length, 12) + '</div>';
+    if (st.changed.length) h += '<div class="wn-list"><span class="wn-h">Event changes</span>' + st.changed.slice(0, 12).map(function (x) { return row('#event=' + encodeURIComponent(x.id), esc(x.name) + ' · details changed'); }).join('') + more(st.changed.length, 12) + '</div>';
+    st.leaks.forEach(function (g) {
+      h += '<div class="wn-list"><span class="wn-h">' + esc(g.label) + '</span>' + g.items.slice(0, 8).map(function (i) { return i.l ? row(esc(i.l), esc(i.t), true) : '<a href="#leaks" class="wn-leaks">' + esc(i.t) + '</a>'; }).join('') + more(g.items.length, 8) + '</div>';
+    });
+    return h;
+  }
+  /* The saved history keeps the same markup the old open note used, so the stored copy stays readable. */
   function buildHtml() {
     var nLeaks = st.leaks.reduce(function (n, g) { return n + g.items.length; }, 0), total = st.fresh.length + st.changed.length + nLeaks;
-    var h = '<details class="wn-det" open><summary><b>New since your last visit</b> <span class="wn-n">' + total + '</span></summary>';
-    if (st.fresh.length) h += '<div class="wn-list"><span class="wn-h">New events</span>' + st.fresh.slice(0, 12).map(function (e) { return '<a href="#event=' + encodeURIComponent(e.id) + '">' + esc(e.name || e.id) + '</a>'; }).join('') + (st.fresh.length > 12 ? '<span>+' + (st.fresh.length - 12) + ' more</span>' : '') + '</div>';
-    if (st.changed.length) h += '<div class="wn-list"><span class="wn-h">Event changes</span>' + st.changed.slice(0, 12).map(function (x) { return '<a href="#event=' + encodeURIComponent(x.id) + '">' + esc(x.name) + ' · details changed</a>'; }).join('') + (st.changed.length > 12 ? '<span>+' + (st.changed.length - 12) + ' more</span>' : '') + '</div>';
-    st.leaks.forEach(function (g) {
-      h += '<div class="wn-list"><span class="wn-h">' + esc(g.label) + '</span>' + g.items.slice(0, 8).map(function (i) { return i.l ? '<a href="' + esc(i.l) + '" target="_blank" rel="noopener noreferrer">' + esc(i.t) + '</a>' : '<a href="#leaks" class="wn-leaks">' + esc(i.t) + '</a>'; }).join('') + (g.items.length > 8 ? '<span>+' + (g.items.length - 8) + ' more</span>' : '') + '</div>';
-    });
-    return h + '</details>';
+    return '<details class="wn-det" open><summary><b>New since your last visit</b> <span class="wn-n">' + total + '</span></summary>' + buildBody() + '</details>';
+  }
+  /* Today only: one 48px row ("N new · View") under the daily brief, with the full list one tap away. */
+  function setOpen(open) {
+    if (!box) return;
+    var t = box.querySelector('.wn-toggle'), b = box.querySelector('.wn-body');
+    if (t) t.setAttribute('aria-expanded', open ? 'true' : 'false');
+    if (b) b.hidden = !open;
+    box.classList.toggle('is-open', !!open);
   }
   function mount() {
-    var anchor = document.getElementById('fresh-line'); if (!anchor || !anchor.parentNode) return;
+    var anchor = document.getElementById('day-brief'); if (!anchor || !anchor.parentNode) return;
     if (!box) { box = document.createElement('div'); box.className = 'whatsnew'; box.setAttribute('role', 'region'); box.setAttribute('aria-label', 'Recent updates'); anchor.parentNode.insertBefore(box, anchor.nextSibling); }
     var total = st.fresh.length + st.changed.length + st.leaks.reduce(function (n, g) { return n + g.items.length; }, 0);
     if (!total) { box.hidden = true; box.innerHTML = ''; return; }
-    box.innerHTML = buildHtml() + '<div class="wn-actions"><button type="button" class="pill wn-ok">Got it</button></div>';
+    box.innerHTML = '<div class="wn-row"><button type="button" class="wn-toggle" aria-expanded="false" aria-controls="wn-body"><span class="wn-n">' + total + ' new</span><span class="wn-sub">since your last visit</span><span class="wn-view" aria-hidden="true">View</span></button>' +
+      '<button type="button" class="wn-ok" aria-label="Mark updates as seen">Got it</button></div><div class="wn-body" id="wn-body" hidden>' + buildBody() + '</div>';
     box.hidden = false;
+    box.querySelector('.wn-toggle').addEventListener('click', function () { setOpen(this.getAttribute('aria-expanded') !== 'true'); });
     box.querySelector('.wn-ok').addEventListener('click', function () {
       save(st.ids); saveLeaks(); saveSnapshots(st.snapshot); saveHistory(buildHtml(), total);
       box.hidden = true; box.innerHTML = '';
+      var brief = document.getElementById('day-brief'); if (brief && brief.focus) brief.focus({ preventScroll: true });
     });
     Array.prototype.forEach.call(box.querySelectorAll('.wn-leaks'), function (a) { a.addEventListener('click', function (e) { e.preventDefault(); var b = document.getElementById('menu-leaks'); if (b) b.click(); }); });
   }
@@ -103,7 +120,7 @@
     if (!last) since = Date.now() - 7 * DAY;
     return Promise.all([getJson('/api/unreleased'), getJson('/api/datamine'), getJson('/datamine-news.json')]).then(function (r) { st.leaks = leakGroups(r[0], r[1], r[2], since); render(); }).catch(function () { st.leaks = []; render(); });
   }
-  window.GOWN = { leakGroups: leakGroups, reopen: function () { mount(); var d = box && box.querySelector('.wn-det'); if (d) d.open = true; } };
+  window.GOWN = { leakGroups: leakGroups, reopen: function () { mount(); setOpen(true); } };
   if (typeof fetch === 'function') loadLeakChanges(); else st.leaks = [];
   var tries = 0;
   (function wait() {
