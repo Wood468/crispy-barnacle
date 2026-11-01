@@ -29,6 +29,7 @@
   --color-status-positive:#26833A; --color-on-status-positive:#fff;
   --color-status-caution:#F59F00; --color-on-status-caution:#1D1300;
   --color-status-released:#1971c2; --color-on-status-released:#fff;
+  --color-status-live:#D7373C; --color-on-status-live:#fff;
   --color-filter-shiny-start:#7b5cff; --color-filter-shiny-end:#d65bd0; --color-on-filter-shiny:#fff;
   /* Four-point spacing scale, semantic type scale, shared radii and motion. */
   --space-1:4px; --space-2:8px; --space-3:12px; --space-4:16px; --space-5:20px;
@@ -165,14 +166,14 @@ tr:last-child td{border-bottom:0}
 th{font-family:var(--font-mono);font-size:var(--type-overline);letter-spacing:.1em;text-transform:uppercase;color:var(--color-text-muted);font-weight:500}
 tr.cur td{background:var(--color-inverse-surface);color:var(--color-inverse-text);font-weight:600}
 tr.past td{opacity:.45}
-.now{background:#D7373C;color:#fff}
+.now{background:var(--color-status-live);color:var(--color-on-status-live)}
 
 /* raid blocks */
 .rb{border-radius:var(--radius-card);padding:22px;display:flex;flex-direction:column;gap:var(--space-2);min-width:0}
 .rb .big{font-size:var(--type-section)}
-.rb.r{background:#D7373C;color:#fff}
-.rb.m{background:#FFB224;color:#1A1100}
-.rb.s{background:#5B3F9B;color:#fff}
+.rb.r{background:var(--color-kind-raid);color:var(--color-on-kind-raid)}
+.rb.m{background:var(--color-kind-mega);color:var(--color-on-kind-mega)}
+.rb.s{background:var(--color-kind-shadow);color:var(--color-on-kind-shadow)}
 .rb.h{background:var(--color-inverse-surface);color:var(--color-inverse-text)}
 .rb .label{color:inherit;opacity:.85}
 

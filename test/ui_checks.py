@@ -199,6 +199,13 @@ check('dashboard card anatomy roles preserve the existing glass, solid and borde
       all('var(--color-border-card)' in card_rule_text(selector) for selector in CARD_BORDER_SELECTORS))
 check('warning banner and status foregrounds use semantic tokens with unchanged palette values',
       all(token in DASH_CSS for token in ['--color-warning-banner:#FBBF24', '--color-on-warning:#1A1200', '--color-warning-banner-border:#B45309', '--color-on-danger:#fff', '--color-on-success:#04230F', 'background:var(--color-warning-banner)', 'color:var(--color-on-warning)', 'border-bottom:3px solid var(--color-warning-banner-border)', 'color:var(--color-on-danger)', 'color:var(--color-on-success)']))
+check('base live, raid, mega and shadow badges use semantic roles with their original colours',
+      '--color-status-live:#D7373C; --color-on-status-live:#fff;' in BASE_CSS and all(token in BASE_CSS for token in [
+          '.now{background:var(--color-status-live);color:var(--color-on-status-live)}',
+          '.rb.r{background:var(--color-kind-raid);color:var(--color-on-kind-raid)}',
+          '.rb.m{background:var(--color-kind-mega);color:var(--color-on-kind-mega)}',
+          '.rb.s{background:var(--color-kind-shadow);color:var(--color-on-kind-shadow)}',
+      ]))
 check('dashboard token migration preserves existing 14px controls and 18px card corners',
       '--radius-control:14px' in BASE_CSS and '--radius-panel:18px' in BASE_CSS and
       re.search(r'\.evc\{[^}]*border-radius:var\(--radius-panel\)', DASH_CSS) and
@@ -225,7 +232,7 @@ check('150ms interaction transitions use a shared motion role with unchanged eas
       'transition:transform var(--motion-quick)' in DASH_CSS and
       BASE_CSS.count('var(--motion-quick)') == 3 and DASH_CSS.count('var(--motion-quick)') == 1)
 check('versioned stylesheets are referenced by the page and precached offline',
-      all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261101i', '/dash.css?v=20261101u']))
+      all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261101j', '/dash.css?v=20261101u']))
 check('owner verification scripts are versioned and precached offline',
       '/account.js?v=20261101b' in INDEX_HTML and '/account.js?v=20261101b' in SW_JS and
       '/review.js?v=20261101b' in DASH_JS and '/review.js?v=20261101b' in SW_JS)
