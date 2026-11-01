@@ -101,13 +101,13 @@ test("service worker versions the cache, pre-caches offline fallback, and never 
   assert.match(sw, /gofn-shell-v169/);
   assert.ok(sw.includes("'/lib.js?v=20261101a'"), 'the refreshed dashboard helper is available to the offline shell');
   assert.ok(sw.includes("'/local-state.js?v=20261030a'"), 'account-local state migration is available offline');
-  assert.ok(sw.includes("'/account.js?v=20261101a'"), 'the refreshed account transition code is available offline');
+  assert.ok(sw.includes("'/account.js?v=20261101b'"), 'the refreshed account transition code is available offline');
   assert.ok(sw.includes("'/season.js?v=20261101a'"), 'the current season banner script is available to the offline shell');
   assert.ok(sw.includes("'/app.js?v=20261101c'"), "the current app bootstrap is available offline");
   assert.ok(sw.includes("'/pin.js?v=20261101b'"), "the central sync settings are available offline");
   assert.ok(sw.includes("'/dash.js?v=20261101b'"), "the current dashboard loader is available offline");
   assert.ok(sw.includes("'/nudge.js?v=20261101a'"), "the shared-escape nudge renderer is available offline");
-  assert.ok(sw.includes("'/review.js?v=20261101a'"), "the shared-escape review renderer is available offline");
+  assert.ok(sw.includes("'/review.js?v=20261101b'"), "the shared-escape review renderer is available offline");
   assert.ok(sw.includes("'/buy.js?v=20261101a'"), "the shared-escape purchase renderer is available offline");
   assert.match(sw, /'\/event-moves\.json'/, "event-only move data is available to offline event details");
   assert.match(sw, /'\/dash\.css\?v=20261101u'/, "the current dashboard stylesheet is available to the offline shell");
