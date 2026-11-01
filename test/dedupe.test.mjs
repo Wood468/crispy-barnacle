@@ -127,15 +127,17 @@ test("infographic lookup: genuinely missing stays missing", () => {
   assert.equal(dd.findEventInfo(null, null), null);
 });
 
-test("infographic lookup: a later instance of a recurring event does not inherit the earlier one's pictures", () => {
+test("infographic lookup: a later instance of a recurring event does not inherit the earlier one's pictures (includes one KNOWN LIMITATION assertion)", () => {
   const oct = { id: "cur:smr1", name: "Super Mega Raid Day", start: new Date("2026-10-31T14:00"), end: new Date("2026-10-31T17:00") };
   const nov = { id: "cur:smr2", name: "Super Mega Raid Day", start: new Date("2026-11-28T14:00"), end: new Date("2026-11-28T17:00"), link: "https://leekduck.com/events/super-mega-raid-day-november-2026/" };
   const others = [oct, nov];
   assert.ok(info.smr1.infographics.length >= 2);
   assert.equal(pics(oct), info.smr1.infographics.length, "October matches smr1 by id");
-  // Known limitation: with no date information at all (no event list, no month in the entry's id) the title fallback cannot tell instances apart.
-  // Once the October card has dropped off the lists, the November card inherits October's pictures until entries carry a date field.
-  assert.equal(dd.findEventInfo(nov, info, [nov]).infographics.length, info.smr1.infographics.length, "documented limitation: earlier instance gone from the lists");
+  // KNOWN LIMITATION (documents today's WRONG behaviour on purpose): with no date information at all (no event list, no month in the entry's id)
+  // the title fallback cannot tell instances apart, so once the October card has dropped off the lists the November card wrongly inherits
+  // October's pictures. This assertion is EXPECTED TO FLIP when event-info entries gain a date field: then change it to
+  // assert.equal(dd.findEventInfo(nov, info, [nov]), null) and delete this note.
+  assert.equal(dd.findEventInfo(nov, info, [nov]).infographics.length, info.smr1.infographics.length, "KNOWN LIMITATION (wrong, expected to flip once entries carry a date): earlier instance gone from the lists");
   assert.equal(dd.findEventInfo(nov, info, others), null, "November is owned-elsewhere: smr1 belongs to the October card");
   assert.equal(dd.findEventInfo(oct, info, others).infographics.length, info.smr1.infographics.length);
   // Even when the October card is no longer listed, a month/year in the entry's own id says it is another instance.
@@ -224,10 +226,20 @@ test("infographic lookup: month hints match whole words only, and the card's mon
   assert.equal(dd.findEventInfo(oct, entry("spotlight-2026-03-10"), []), null, "a full date in the id still counts");
   assert.equal(dd.findEventInfo(oct, entry("spotlight-12026-03-100"), []).infographics.length, 1, "digits glued to a date are not a date");
   // Dec 1 at local midnight is December, not November (Date read in local time, as the card displays it).
+  // The zone is pinned to Melbourne for these checks (and restored after), so they catch a UTC read on any runner:
+  // Melbourne midnight on 1 Dec is still 30 Nov in UTC, which is what the old UTC monthOf got wrong.
   const dec = (start) => ({ id: "w-d", name: "Spotlight Hour", start, end: start });
-  assert.equal(dd.findEventInfo(dec(new Date(2026, 11, 1, 0, 0)), entry("october-2026"), []), null, "December is two months after October");
-  assert.equal(dd.findEventInfo(dec(new Date(2026, 11, 1, 0, 0)), entry("november-2026"), []).infographics.length, 1, "December is next to November");
-  assert.equal(dd.findEventInfo(dec(new Date(2026, 10, 30, 23, 59)), entry("december-2026"), []).infographics.length, 1);
+  const prevTZ = process.env.TZ;
+  process.env.TZ = "Australia/Melbourne";
+  try {
+    const d1 = new Date(2026, 11, 1, 0, 0);
+    assert.equal(d1.toISOString(), "2026-11-30T13:00:00.000Z", "precondition: local 1 Dec midnight is 30 Nov in UTC");
+    assert.equal(dd.findEventInfo(dec(d1), entry("october-2026"), []), null, "December is two months after October");
+    assert.equal(dd.findEventInfo(dec(new Date(2026, 11, 1, 0, 0)), entry("november-2026"), []).infographics.length, 1, "December is next to November");
+    assert.equal(dd.findEventInfo(dec(new Date(2026, 10, 30, 23, 59)), entry("december-2026"), []).infographics.length, 1);
+  } finally {
+    if (prevTZ === undefined) delete process.env.TZ; else process.env.TZ = prevTZ;
+  }
   // Date-only strings are read from the text.
   assert.equal(dd.findEventInfo(dec("2026-12-01"), entry("october-2026"), []), null);
   assert.equal(dd.findEventInfo(dec("2026-12-01"), entry("november-2026"), []).infographics.length, 1);

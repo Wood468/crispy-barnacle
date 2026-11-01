@@ -140,7 +140,8 @@
   }
   /* The button keeps its button role; the result is read out through one hidden status region. The region is created at startup (a live
      region added at the moment of the first message is often not announced), and each message is set on a later tick after the text was
-     cleared, so the same message twice in a row is read twice. */
+     cleared, so the same message twice in a row is read twice. Only announce() touches the region: a button resetting its own visible text
+     never clears it, so it cannot cancel a newer message that belongs to another button. */
   var announceTimer = 0;
   function liveRegion() {
     var r = document.getElementById('iglive');
@@ -157,7 +158,7 @@
   function recheck(button) {
     var id = button.getAttribute('data-igcheck'), ev = evById(id);
     if (!ev || button.getAttribute('data-igbusy') === '1') return;
-    if (button._igTimer) { clearTimeout(button._igTimer); button._igTimer = 0; button.removeAttribute('data-igmsg'); announce(''); }
+    if (button._igTimer) { clearTimeout(button._igTimer); button._igTimer = 0; button.removeAttribute('data-igmsg'); }
     button.setAttribute('data-igbusy', '1'); button.textContent = 'Checking…';
     loadInfo(true).then(function (all) {
       button.removeAttribute('data-igbusy');
@@ -165,7 +166,7 @@
       syncButtons(all);
       if (found) { open(id); return; }
       button.setAttribute('data-igmsg', '1'); button.textContent = 'No infographic found yet'; announce('No infographic found yet');
-      button._igTimer = setTimeout(function () { button._igTimer = 0; button.removeAttribute('data-igmsg'); button.textContent = 'Check infographic'; announce(''); }, 3500);
+      button._igTimer = setTimeout(function () { button._igTimer = 0; button.removeAttribute('data-igmsg'); button.textContent = 'Check infographic'; }, 3500);
     }).catch(function () { button.removeAttribute('data-igbusy'); button.textContent = 'Check infographic'; });
   }
   document.addEventListener('visibilitychange', function () { if (!document.hidden && INFO) loadInfo(true).then(function (all) { syncButtons(all); }); });
