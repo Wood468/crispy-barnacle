@@ -232,7 +232,7 @@ check('Today brief has three data-backed focus tiles (Next, Ending soon, Raids &
       all(token in DASH_CSS for token in ['.today-focus-strip', '.today-focus-card', 'grid-template-columns:repeat(2,minmax(0,1fr))']))
 check('Today multi-deadline tray is accessible, bounded and source-safe',
       all(token in INDEX_HTML for token in ['id="today-deadlines"', 'id="today-deadlines-summary"', 'id="today-deadlines-list"']) and
-      all(token in DASH_JS for token in ['var trayLimit = t.getTime() + 7 * 24 * 60 * 60 * 1000', "safeUrl(d.url || '')", 'trayCandidates.slice(0, 8)', 'View all ', 'noopener noreferrer']) and
+      all(token in DASH_JS for token in ['var trayLimit = t.getTime() + 7 * 24 * 60 * 60 * 1000', "safeUrl(d.url || '')", 'trayCandidates.slice(0, 8)', 'View all ', 'noopener noreferrer', "sourceUrl.indexOf('https://') === 0"] and
       all(token in DASH_CSS for token in ['.today-deadlines>summary', 'min-height:44px', '.today-deadline-item', 'var(--color-link)']) and
       '/dash.js?v=20261102g' in APP_JS and '/dash.js?v=20261102g' in SW_JS and
       '/dash.css?v=20261102e' in INDEX_HTML and '/dash.css?v=20261102e' in SW_JS and
@@ -498,6 +498,10 @@ with sync_playwright() as p:
                 'id': 'season:pass-fixture', 'label': 'GO Pass', 'name': 'GO Pass: Fixture',
                 's': '2026-10-01T10:00', 'e': '2026-11-03T10:00',
                 'url': 'https://leekduck.com/events/go-pass-fixture/', 'img_credit': 'Leek Duck'
+            }, {
+                'id': 'season:relative-source', 'label': 'Season', 'name': 'Season: Local image source',
+                's': '2026-10-01T10:00', 'e': '2026-11-04T12:00',
+                'url': '/img/ext/season-poster.webp', 'img_credit': 'Leek Duck'
             }],
             'deadlines': [
                 {'id': 'research-first', 'name': 'Timed Research: First', 'title': 'Research expires',
@@ -533,10 +537,11 @@ with sync_playwright() as p:
         multi_page.wait_for_function("!document.getElementById('today-deadlines-list').hidden")
         multi_text = multi_items.all_inner_texts()
         check('Today deadline tray lists active pass, research and reward deadlines in chronological order',
-              multi_items.count() == 3 and
+              multi_items.count() == 4 and
               'GO Pass: Fixture' in multi_text[0] and
               'Timed Research: First' in multi_text[1] and
-              'GO Pass: Fixture rewards' in multi_text[2],
+              'GO Pass: Fixture rewards' in multi_text[2] and
+              'Season: Local image source' in multi_text[3],
               multi_text)
         check('Today deadline tray excludes future and expired structured windows',
               'Future research fixture' not in ' '.join(multi_text) and
@@ -544,10 +549,11 @@ with sync_playwright() as p:
               multi_text)
         check('Today deadline tray links only the recorded HTTPS source URLs',
               multi_page.locator('#today-deadlines-list a').count() == 3 and
+              multi_items.nth(3).locator('a').count() == 0 and
               multi_page.locator('#today-deadlines-list a').evaluate_all(
                   "els => els.every(a => a.href.startsWith('https://leekduck.com/') && a.target === '_blank' && a.rel.includes('noopener'))"))
         check('Today deadline tray reveals its ordered list when expanded',
-              multi_tray.evaluate("el => el.open") and multi_items.count() == 3)
+              multi_tray.evaluate("el => el.open") and multi_items.count() == 4)
         check('expanded source links meet the 44px hit-target minimum',
               multi_page.locator('#today-deadlines-list a').evaluate_all("els => els.every(a => { const r=a.getBoundingClientRect(); return r.width >= 44 && r.height >= 44; })"))
         multi_page.context.close()
