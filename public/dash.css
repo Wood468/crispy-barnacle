@@ -1368,6 +1368,21 @@ select,
 .today-deadline-item small{-webkit-line-clamp:unset;margin-top:var(--space-1);font-family:var(--font-body);font-size:var(--type-caption-compact);font-weight:500;line-height:1.35;color:var(--color-text-muted)}
 .today-deadline-item a{display:inline-flex;align-items:center;min-height:44px;padding:0 var(--space-2);color:var(--color-link);text-decoration:underline;text-underline-offset:2px}
 .today-deadline-qualifier{color:var(--color-text-muted)}
+
+.today-tonight{min-width:0;margin-top:var(--space-1);border-top:1px solid var(--color-border-card)}
+.today-tonight[hidden],.today-tonight-list[hidden]{display:none}
+.today-tonight>summary{display:flex;align-items:center;min-height:44px;padding:var(--space-1) 0;color:var(--color-link);font-family:var(--font-body);font-size:var(--type-caption);font-weight:700;line-height:1.25;cursor:pointer;list-style:none}
+.today-tonight>summary::-webkit-details-marker{display:none}
+.today-tonight>summary::before{content:"+";display:inline-grid;place-items:center;width:18px;height:18px;margin-right:var(--space-2);border:1px solid var(--color-border-card);border-radius:50%;font-family:var(--font-mono);font-size:var(--type-caption-compact);font-weight:700;line-height:1}
+.today-tonight[open]>summary::before{content:"−"}
+.today-tonight-list{display:grid;gap:var(--space-2);list-style:none;margin:0;padding:0 0 var(--space-1)}
+.today-tonight-item{min-width:0;padding:var(--space-2);border:1px solid var(--color-border-card);border-radius:var(--radius-md);background:var(--color-surface-card)}
+.today-tonight-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:var(--space-1) var(--space-2)}
+.today-tonight-head b{font-family:var(--font-mono);font-size:var(--type-caption-compact);font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--color-accent)}
+.today-tonight-head span{font:500 var(--type-caption-compact)/1.3 var(--font-body);color:var(--color-text-muted)}
+.today-tonight-item strong{display:block;min-height:0;margin-top:2px;overflow:visible;overflow-wrap:anywhere;-webkit-line-clamp:unset;font:700 var(--type-body-sm)/1.25 var(--font-body);color:var(--color-text)}
+.today-tonight-item small{display:block;min-height:0;margin-top:var(--space-1);overflow:visible;overflow-wrap:anywhere;-webkit-line-clamp:unset;font:500 var(--type-caption)/1.35 var(--font-body);color:var(--color-text-muted)}
+.today-tonight-best{display:inline-flex;align-items:center;min-height:44px;margin-top:var(--space-1);padding:0 var(--space-2);border:1px solid var(--color-border-card);border-radius:var(--radius-pill);background:var(--color-surface-raised);color:var(--color-link);font:700 var(--type-caption) var(--font-body);cursor:pointer}
 @media(min-width:720px){.today-focus-strip{grid-template-columns:repeat(3,minmax(0,1fr))}.today-focus-card:last-child{grid-column:auto}}
 @media(max-width:360px){.day-brief{padding:var(--space-3)}.day-brief-title{font-size:var(--type-intro);line-height:1.1;min-height:1.1em}}
 

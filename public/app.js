@@ -732,6 +732,7 @@ Promise.all([
   (U.dd||[]).forEach(function(sec){if(sec.id!=='unreleased')return;(function walk(g){(g.items||[]).forEach(function(i){DUN.push(norm(i.n))});(g.groups||[]).forEach(walk)})({groups:sec.groups})});
   fetch('/dex.json').then(function(r){return r.json()}).then(function(L){
     DEXLIST=L;
+    document.dispatchEvent(new Event('gofn-dex-ready'));
     L.forEach(function(p){if(DUN.indexOf(norm(p[1]))>-1)NOTGO[p[0]]=1});
     fetch('/release-status.json').then(function(r){return r.ok?r.json():null}).then(function(R){
       if(!R||!R.unreleased)return;var today=new Date().toISOString().slice(0,10),ch=false;
@@ -992,7 +993,7 @@ Promise.all([
     h.innerHTML='<div class="today-status" role="status"><p>Today\'s events did not load. Your saved collection is unchanged.</p><button type="button" class="pill" id="today-retry">Try again</button></div>';
     var r=document.getElementById('today-retry');if(r)r.addEventListener('click',function(){window.location.reload()});
     var b=document.getElementById('day-brief');if(b)b.setAttribute('data-state','unavailable')}
-  var ds=document.createElement('script');ds.src='/dash.js?v=20261102h';ds.onerror=todayUnavailable;document.body.appendChild(ds);setTimeout(function(){if(!window.GODASH)todayUnavailable()},10000);
+  var ds=document.createElement('script');ds.src='/dash.js?v=20261102i';ds.onerror=todayUnavailable;document.body.appendChild(ds);setTimeout(function(){if(!window.GODASH)todayUnavailable()},10000);
 })();
 
 }).catch(function(){var panel=document.getElementById('load-error');if(panel)panel.hidden=false;var retry=document.getElementById('load-retry');if(retry)retry.addEventListener('click',function(){window.location.reload()},{once:true})});

@@ -135,16 +135,16 @@ DASH_TYPE_SCALE = {
     '--type-body-sm': 7,
     '--type-overline': 6,
     '--type-button': 6,
-    '--type-caption': 7,
+    '--type-caption': 8,
     '--type-intro': 5,
     '--type-body-emphasis': 4,
     '--type-stat': 3,
     '--type-heading': 1,
-    '--type-caption-compact': 3,
+    '--type-caption-compact': 5,
     '--type-body-lg': 1,
 }
 DASH_TYPE_VALUES = ['.78rem', '.8rem', '.84rem', '.75rem', '.82rem', '.72rem', '.85rem', '.68rem', '1.05rem', '.9rem', '2rem', '1.5rem', '.62rem', '1.1rem']
-check('dashboard uses the shared semantic type scale for 81 exact font-size declarations',
+check('dashboard uses the shared semantic type scale for 84 exact font-size declarations',
       all(len(re.findall(r'font-size\s*:\s*var\(' + re.escape(token) + r'\)(?=[;}])', DASH_CSS)) == count
           for token, count in DASH_TYPE_SCALE.items()) and
       all(not re.search(r'font-size\s*:\s*' + re.escape(value) + r'(?=[;}])', DASH_CSS)
@@ -158,8 +158,8 @@ BASE_FONT_SHORTHAND_SCALE = {
     '--type-body-emphasis': 1,
 }
 DASH_FONT_SHORTHAND_SCALE = {
-    '--type-body-sm': 9,
-    '--type-caption': 7,
+    '--type-body-sm': 10,
+    '--type-caption': 9,
     '--type-meta': 8,
     '--type-heading': 3,
     '--type-meta-compact': 7,
@@ -169,7 +169,7 @@ DASH_FONT_SHORTHAND_SCALE = {
     '--type-overline': 9,
     '--type-body-lg': 1,
     '--type-intro': 1,
-    '--type-caption-compact': 7,
+    '--type-caption-compact': 8,
     '--type-body-base': 1,
 }
 def font_shorthand_role_count(css, token):
@@ -235,13 +235,18 @@ check('Today brief has three data-backed focus tiles (Next, Ending soon, Raids &
       all(token in INDEX_HTML for token in ['id="today-focus-strip"', 'id="today-focus-next"', 'id="today-focus-raids"', 'id="today-focus-ending"']) and
       all(token in DASH_JS for token in ['function renderTodayStrip', '6 * 60 * 60 * 1000', '48 * 60 * 60 * 1000', 'window.GOSEASON', 'GOSEASON.deadlines', 'gofn-season-ready', 'activity.inGame', 'activity.inPerson', 'D.rotation', 'D.maxBattles']) and
       all(token in DASH_CSS for token in ['.today-focus-strip', '.today-focus-card', 'grid-template-columns:repeat(2,minmax(0,1fr))']))
+check('Today Tonight planner is an optional accessible local-time disclosure with weakness links to the owned Best attackers view',
+      all(token in INDEX_HTML for token in ['id="today-tonight"', 'id="today-tonight-summary"', 'id="today-tonight-list"']) and
+      all(token in DASH_JS for token in ['D.spotlight', 'D.raidHour', 'D.maxBattles', '6–7 pm local', '6 am–9 pm local', 'Weak to:', 'data-best-types', 'gofn-dex-ready']) and
+      all(token in DASH_CSS for token in ['.today-tonight', '.today-tonight-list', 'min-height:44px', '.today-tonight-best']) and
+      'gofn-dex-ready' in APP_JS and '/app.js?v=20261102d' in INDEX_HTML and '/app.js?v=20261102d' in SW_JS)
 check('Today multi-deadline tray is accessible, bounded and source-safe',
       all(token in INDEX_HTML for token in ['id="today-deadlines"', 'id="today-deadlines-summary"', 'id="today-deadlines-list"']) and
       all(token in DASH_JS for token in ['var trayLimit = t.getTime() + 7 * 24 * 60 * 60 * 1000', "safeUrl(d.url || '')", 'trayCandidates.slice(0, 8)', 'View all ', 'noopener noreferrer', "sourceUrl.indexOf('https://') === 0"]) and
       all(token in DASH_CSS for token in ['.today-deadlines>summary', 'min-height:44px', '.today-deadline-item', 'var(--color-link)']) and
-      '/dash.js?v=20261102h' in APP_JS and '/dash.js?v=20261102h' in SW_JS and
-      '/dash.css?v=20261102h' in INDEX_HTML and '/dash.css?v=20261102h' in SW_JS and
-      'gofn-shell-v194' in SW_JS)
+      '/dash.js?v=20261102i' in APP_JS and '/dash.js?v=20261102i' in SW_JS and
+      '/dash.css?v=20261102i' in INDEX_HTML and '/dash.css?v=20261102i' in SW_JS and
+      'gofn-shell-v195' in SW_JS)
 check('season pass and deadline data is structured, source-attributed and ordered',
       all(item_id in {item.get('id') for item in SEASON_DATA.get('items', [])}
           for item_id in ['season:pass-halloween', 'season:pass-november']) and
@@ -274,7 +279,7 @@ check('base bonus and information availability controls use semantic status role
           'background: var(--color-status-info-unavailable); color: var(--color-on-status-info-unavailable); border: 1px solid var(--color-border-info-unavailable);',
       ]))
 check('versioned stylesheets are referenced by the page and precached offline',
-      all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261102a', '/dash.css?v=20261102h']))
+      all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261102a', '/dash.css?v=20261102i']))
 check('owner verification scripts are versioned and precached offline',
       '/account.js?v=20261101b' in INDEX_HTML and '/account.js?v=20261101b' in SW_JS and
       '/review.js?v=20261101b' in DASH_JS and '/review.js?v=20261101b' in SW_JS)
@@ -302,10 +307,10 @@ check('event signal chips and detail tags use semantic palette roles with unchan
           '.tg-incense{--tc:var(--color-signal-shadow)}.tg-costume{--tc:var(--color-signal-encounter)}',
       ]))
 check('offline shell cache version advances with the dashboard stylesheet token release',
-      "gofn-shell-v194" in SW_JS)
+      "gofn-shell-v195" in SW_JS)
 check('versioned dashboard scripts are referenced by the entry page and precached offline',
-      '/app.js?v=20261102c' in INDEX_HTML and '/app.js?v=20261102c' in SW_JS and
-      '/dash.js?v=20261102h' in APP_JS and '/dash.js?v=20261102h' in SW_JS and
+      '/app.js?v=20261102d' in INDEX_HTML and '/app.js?v=20261102d' in SW_JS and
+      '/dash.js?v=20261102i' in APP_JS and '/dash.js?v=20261102i' in SW_JS and
       '/detail.js?v=20261102a' in DASH_JS and '/detail.js?v=20261102a' in SW_JS)
 check('sync PIN and account controls have one home in Menu and are precached offline',
       INDEX_HTML.index('id="acct" class="acct"') > INDEX_HTML.index('id="sub-menu"') and
@@ -715,6 +720,77 @@ with sync_playwright() as p:
         desktop_cols = future_overseas.locator('#today-focus-strip').evaluate("el => getComputedStyle(el).gridTemplateColumns.split(' ').length")
         check('Today focus strip expands to three columns on desktop', desktop_cols==3, desktop_cols)
         future_overseas.context.close()
+
+        # The Tonight planner uses only the published local-day Spotlight, Raid Hour and Max Monday records.
+        tonight_data_obj = json.loads((ROOT / 'public' / 'data.json').read_text())
+        tonight_data_obj['events'] = []
+        tonight_data_obj['spotlight'] = [{'d': '2026-11-05', 'n': 'Teddiursa (witch hat)', 'b': '2x evolution XP'}]
+        tonight_data_obj['raidHour'] = [{'d': '2026-11-04', 'n': 'Giratina (Altered Forme)'}]
+        tonight_data_obj['maxBattles'] = [['2026-11-02', '2026-11-08', 'Machop']]
+        tonight_data_obj['rotation'] = []
+        tonight_data_obj['inPerson'] = []
+        tonight_data_obj['worldEvents'] = []
+        tonight_data_obj['regionals'] = []
+        tonight_extra = {
+            '**/data.json': (json.dumps(tonight_data_obj), 200),
+            '**/world-events.json': (json.dumps({'events': []}), 200),
+            '**/regional-events.json': (json.dumps({'events': []}), 200)
+        }
+        max_monday_page = page(clock='2026-11-02T09:35:00+11:00', extra=tonight_extra)
+        max_monday_page.wait_for_selector('#today-tonight:not([hidden])')
+        max_types_ready = settle(max_monday_page, "!!(window.GOTYPES && window.GOTYPES.facts('Machop'))", 30000)
+        settle(max_monday_page, "!!document.querySelector('#today-tonight-list [data-best-types]')", 30000)
+        max_monday_page.locator('#today-tonight > summary').click()
+        max_text = max_monday_page.locator('#today-tonight-list').inner_text()
+        check('Today Tonight planner surfaces Max Monday with its published local hours',
+              'Max Monday' in max_text and 'Machop' in max_text and '6 am–9 pm local' in max_text, max_text)
+        check('Tonight planner shows Max boss weaknesses from the type chart',
+              max_types_ready and 'Weak to: Flying, Psychic, Fairy' in max_text, max_text)
+        max_best = max_monday_page.locator('#today-tonight-list [data-best-types]')
+        check('Max Monday offers a Best attackers handoff for the boss weaknesses',
+              max_best.count() == 1 and max_best.get_attribute('data-best-types') == 'Flying|Psychic|Fairy',
+              max_best.get_attribute('data-best-types') if max_best.count() else 'missing')
+        settle(max_monday_page, "document.querySelectorAll('#typechips button').length > 1", 30000)
+        if max_best.count():
+            max_best.click()
+            max_monday_page.wait_for_selector('#tab-best:not([hidden])')
+            max_monday_page.wait_for_function("document.querySelectorAll('#typechips button[aria-pressed=true]').length===3")
+        max_selected = max_monday_page.locator('#typechips button[aria-pressed="true"]').all_inner_texts()
+        check('Best attackers opens with the Max boss weakness types selected',
+              all(name in max_selected for name in ['Flying', 'Psychic', 'Fairy']), max_selected)
+        max_monday_page.context.close()
+
+        raid_hour_page = page(clock='2026-11-04T09:35:00+11:00', extra=tonight_extra)
+        raid_hour_page.wait_for_selector('#today-tonight:not([hidden])')
+        raid_types_ready = settle(raid_hour_page, "!!(window.GOTYPES && window.GOTYPES.facts('Giratina (Altered Forme)'))", 30000)
+        settle(raid_hour_page, "!!document.querySelector('#today-tonight-list [data-best-types]')", 30000)
+        raid_hour_page.locator('#today-tonight > summary').click()
+        raid_text = raid_hour_page.locator('#today-tonight-list').inner_text()
+        check('Tonight planner surfaces the published Raid Hour boss and local window',
+              'Raid Hour' in raid_text and 'Giratina (Altered Forme)' in raid_text and '6–7 pm local' in raid_text,
+              raid_text)
+        check('Raid Hour exposes type-chart weaknesses and a Best attackers handoff',
+              raid_types_ready and 'Weak to:' in raid_text and raid_hour_page.locator('#today-tonight-list [data-best-types]').count() == 1,
+              raid_text)
+        raid_hour_page.context.close()
+
+        spotlight_page = page(clock='2026-11-05T09:35:00+11:00', extra=tonight_extra)
+        spotlight_page.wait_for_selector('#today-tonight:not([hidden])')
+        spotlight_page.locator('#today-tonight > summary').click()
+        spotlight_text = spotlight_page.locator('#today-tonight-list').inner_text()
+        check('Tonight planner surfaces the published Spotlight Hour, bonus and local window',
+              'Spotlight Hour' in spotlight_text and 'Teddiursa (witch hat)' in spotlight_text and
+              '6–7 pm local' in spotlight_text and '2x evolution XP' in spotlight_text,
+              spotlight_text)
+        check('Spotlight Hour does not invent raid-counter recommendations',
+              spotlight_page.locator('#today-tonight-list [data-best-types]').count() == 0)
+        spotlight_page.context.close()
+
+        no_tonight_page = page(clock='2026-11-03T09:35:00+11:00', extra=tonight_extra)
+        check('Tonight planner stays hidden when no local activity is published for the viewed day',
+              no_tonight_page.locator('#today-tonight').is_hidden())
+        no_tonight_page.context.close()
+
 
         overseas.evaluate("""() => {
           const pill=document.createElement('span');
