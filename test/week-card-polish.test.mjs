@@ -21,13 +21,6 @@ test("This Week cards keep their primary actions thumb-sized and readable", () =
 
 
 
-function firstCssRule(source, selector) {
-  const start = source.indexOf(selector + "{");
-  if (start < 0) return "";
-  const end = source.indexOf("}", start);
-  return end < 0 ? "" : source.slice(start, end + 1);
-}
-
 function cssRule(source, selector) {
   const start = source.lastIndexOf(selector + "{");
   if (start < 0) return "";
@@ -48,33 +41,20 @@ test("Schedule week strip contains 44px day targets inside its own narrow-screen
 });
 
 test("Schedule event-card actions wrap instead of forcing a 412px mobile footer", () => {
-  const mobileStart = css.indexOf("@media(max-width:520px){" + String.fromCharCode(10) + "  .week-day-events{");
-  assert.notEqual(mobileStart, -1, "the Schedule mobile override must be present");
-  const mobileEnd = css.indexOf(String.fromCharCode(10) + "}" + String.fromCharCode(10), mobileStart);
-  assert.ok(mobileEnd > mobileStart, "the Schedule mobile override must be closed");
-  const mobile = css.slice(mobileStart, mobileEnd + 3);
-  const footer = firstCssRule(mobile, ".evc.cmp .evc-foot");
-  const more = firstCssRule(mobile, ".evc.cmp .evc-foot .more");
-  const star = firstCssRule(mobile, ".evc.cmp .evc-foot .star");
-  assert.ok(footer.includes("display:flex;") && footer.includes("flex-wrap:wrap;"));
-  assert.ok(more.includes("flex:1 1 6rem;") && more.includes("min-width:44px;") && more.includes("min-height:44px;") && more.includes("white-space:normal;"));
-  assert.ok(star.includes("flex:0 0 44px;") && star.includes("width:44px;") && star.includes("min-width:44px;") && star.includes("min-height:44px;"));
-  assert.ok(!mobile.includes("grid-template-columns:minmax(0,1fr) minmax(0,1fr) 42px"));
+  assert.ok(css.includes("@media(max-width:520px){\\n  .week-day-events{min-width:0;max-width:100%}"));
+  assert.ok(css.includes(".evc.cmp .evc-foot{\\n    display:flex;\\n    flex-wrap:wrap;"));
+  assert.ok(css.includes(".evc.cmp .evc-foot .more{\\n    flex:1 1 6rem;\\n    min-width:44px;"));
+  assert.ok(css.includes("min-height:44px;\\n    height:auto;\\n    padding:0 6px;"));
+  assert.ok(css.includes(".evc.cmp .evc-foot .star{\\n    flex:0 0 44px;\\n    width:44px;"));
+  assert.ok(css.includes("min-width:44px;\\n    min-height:44px;"));
+  assert.ok(!css.includes("grid-template-columns:minmax(0,1fr) minmax(0,1fr) 42px"));
 });
 
 test("Schedule event headers wrap beside a fixed 44px hide target on narrow screens", () => {
-  const mobileStart = css.indexOf("@media(max-width:520px){" + String.fromCharCode(10) + "  .week-day-events{");
-  assert.notEqual(mobileStart, -1, "narrow Schedule card constraints must be scoped to mobile");
-  const mobileEnd = css.indexOf(String.fromCharCode(10) + "}" + String.fromCharCode(10), mobileStart);
-  const mobile = css.slice(mobileStart, mobileEnd + 3);
-  const days = firstCssRule(mobile, ".week-day-events");
-  const card = cssRule(mobile, ".evc.cmp");
-  const top = cssRule(mobile, ".evc.cmp .evc-top");
-  const countdown = cssRule(mobile, ".evc.cmp .evc-top .cdn");
-  const hide = cssRule(mobile, ".evc.cmp .evc-top .hide-x");
-  assert.ok(days.includes("min-width:0;") && days.includes("max-width:100%;"));
-  assert.ok(card.includes("min-width:0;") && card.includes("max-width:100%;"));
-  assert.ok(top.includes("display:grid;") && top.includes("grid-template-columns:minmax(0,1fr) 44px;") && top.includes("min-width:0;"));
-  assert.ok(countdown.includes("white-space:normal;") && countdown.includes("overflow-wrap:anywhere;"));
-  assert.ok(hide.includes("width:44px;") && hide.includes("height:44px;") && hide.includes("margin:0;"));
+  assert.ok(css.includes("@media(max-width:520px){\\n  .week-day-events{min-width:0;max-width:100%}"));
+  assert.ok(css.includes(".evc.cmp{min-width:0;max-width:100%;box-sizing:border-box}"));
+  assert.ok(css.includes(".evc.cmp .evc-top{\\n    display:grid;\\n    grid-template-columns:minmax(0,1fr) 44px;"));
+  assert.ok(css.includes("grid-template-areas:\"kind hide\" \"count hide\";"));
+  assert.ok(css.includes(".evc.cmp .evc-top .cdn{\\n    grid-area:count;\\n    min-width:0;\\n    max-width:100%;\\n    white-space:normal;\\n    overflow-wrap:anywhere;"));
+  assert.ok(css.includes(".evc.cmp .evc-top .hide-x{\\n    grid-area:hide;\\n    justify-self:end;\\n    align-self:center;\\n    width:44px;\\n    height:44px;\\n    margin:0;"));
 });
