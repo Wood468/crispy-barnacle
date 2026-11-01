@@ -2,7 +2,8 @@
 (function () {
   function state() { var s = document.getElementById('pinstate'), v = ''; try { v = localStorage.getItem('gofn-pin') || ''; } catch (x) {} if (s) s.textContent = v ? 'saved on this device' : 'not set'; }
   var dd = document.getElementById('pindd'); if (dd) dd.addEventListener('toggle', state);
-  var f = document.querySelector('.pinform'), show = document.getElementById('pinshowbtn'), rm = document.getElementById('pinrm');
+  state();
+  var f = document.querySelector('#pindd .pinform'), show = document.getElementById('pinshowbtn'), rm = document.getElementById('pinrm');
   if (f) f.addEventListener('submit', function (e) {
     e.preventDefault();
     var v = document.getElementById('pinnew').value.trim(); if (!v) return;
