@@ -18,3 +18,38 @@ test("This Week cards keep their primary actions thumb-sized and readable", () =
   assert.match(css, /\.week-day-events>\.week-card \.evc-title-row h3\{font-size:1\.28rem/);
   assert.match(css, /\.week-day-count\{padding:3px var\(--space-2\)/);
 });
+
+
+
+function cssRule(source, selector) {
+  const start = source.lastIndexOf(selector + "{");
+  if (start < 0) return "";
+  const end = source.indexOf("}", start);
+  return end < 0 ? "" : source.slice(start, end + 1);
+}
+
+test("Schedule week strip contains 44px day targets inside its own narrow-screen scroller", () => {
+  const weekRule = cssRule(css, ".wk-days ");
+  assert.ok(weekRule.includes("overflow-x:auto;"), "the seven-day strip must contain its intrinsic columns instead of widening the page");
+  assert.ok(weekRule.includes("width:100%;"));
+  assert.ok(weekRule.includes("min-width:0;"));
+  assert.ok(weekRule.includes("max-width:100%;"));
+  assert.ok(weekRule.includes("overscroll-behavior-x:contain;"));
+  const dayRule = cssRule(css, ".wd ");
+  assert.ok(dayRule.includes("min-width: 44px;"));
+  assert.ok(dayRule.includes("scroll-snap-align:start;"));
+});
+
+test("Schedule event-card actions wrap instead of forcing a 412px mobile footer", () => {
+  const mobileStart = css.indexOf("@media(max-width:520px){\n  .evc.cmp .evc-foot{");
+  assert.notEqual(mobileStart, -1, "the compact footer override must be scoped to mobile");
+  const mobileEnd = css.indexOf("\n}\n", mobileStart);
+  const mobile = css.slice(mobileStart, mobileEnd + 3);
+  const footer = cssRule(mobile, ".evc.cmp .evc-foot");
+  const more = cssRule(mobile, ".evc.cmp .evc-foot .more");
+  const star = cssRule(mobile, ".evc.cmp .evc-foot .star");
+  assert.ok(footer.includes("display:flex;") && footer.includes("flex-wrap:wrap;"));
+  assert.ok(more.includes("flex:1 1 6rem;") && more.includes("min-width:44px;") && more.includes("min-height:44px;") && more.includes("white-space:normal;"));
+  assert.ok(star.includes("flex:0 0 44px;") && star.includes("width:44px;") && star.includes("min-width:44px;") && star.includes("min-height:44px;"));
+  assert.ok(!mobile.includes("grid-template-columns:minmax(0,1fr) minmax(0,1fr) 42px"));
+});
