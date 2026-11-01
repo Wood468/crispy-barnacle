@@ -406,6 +406,10 @@
   }
  },
  "watchStart": "2026-10-13T06:44:45.476Z",
- "updated": "2026-11-01T01:12:28.377Z",
- "currency": "$"
+ "updated": "2026-11-01T07:36:01.348Z",
+ "currency": "$",
+ "currencyHold": {
+  "currency": "CA$",
+  "since": "2026-11-01T07:36:01.348Z"
+ }
 }
