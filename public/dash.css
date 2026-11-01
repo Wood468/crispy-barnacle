@@ -107,7 +107,7 @@ body{background:radial-gradient(1200px 520px at 50% -140px,color-mix(in srgb,var
 
 /* Raids: now and next */
 .rotc{background:var(--color-surface-card);border:1px solid var(--color-border-card);border-radius:var(--radius-lg);padding:14px;display:grid;gap:10px;margin-bottom:var(--space-2)}
-.rotc.max{border-color:#6E56CF}
+.rotc.max{border-color:var(--color-kind-max-battle,#6E56CF)}
 .rcs{display:grid;gap:var(--space-2)}
 .rc{display:grid;grid-template-columns:auto 1fr;grid-template-rows:auto auto;column-gap:var(--space-3);align-items:center;background:var(--color-surface-raised);border-radius:var(--radius-control);padding:var(--space-2) var(--space-3);min-width:0}
 .rc .art.ea{grid-row:1/3;width:56px;height:56px}
@@ -727,7 +727,7 @@ button.igcheck{min-height:44px}
 /* Tag colours and game icons */
 .signal .sig-ico{width:14px;height:14px;margin-right:var(--space-1);vertical-align:-2px}
 .sig-up{margin:0 5px 0 -3px;font:900 var(--type-overline)/1 var(--font-body);color:#FFB020}
-.signal-shiny,.signal-highlight-new-shiny{border-color:color-mix(in srgb,#F5C542 60%,var(--border-subtle));background:color-mix(in srgb,#F5C542 18%,var(--surface-glass))}
+.signal-shiny,.signal-highlight-new-shiny{border-color:color-mix(in srgb,var(--color-signal-shiny) 60%,var(--border-subtle));background:color-mix(in srgb,var(--color-signal-shiny) 18%,var(--surface-glass))}
 .signal-highlight-boosted-shiny,.signal-highlight-boosted-shiny-odds,.signal-boosted-shiny-odds{border-color:color-mix(in srgb,var(--color-signal-boosted-shiny) 70%,var(--border-subtle));background:color-mix(in srgb,var(--color-signal-boosted-shiny) 22%,var(--surface-glass))}
 .signal-highlight-shiny-debut{border-color:color-mix(in srgb,var(--color-signal-shiny-debut) 65%,var(--border-subtle));background:color-mix(in srgb,var(--color-signal-shiny-debut) 20%,var(--surface-glass))}
 .signal-transfer-candy{border-color:color-mix(in srgb,var(--color-signal-transfer-candy) 65%,var(--border-subtle));background:color-mix(in srgb,var(--color-signal-transfer-candy) 20%,var(--surface-glass))}
@@ -743,7 +743,7 @@ button.igcheck{min-height:44px}
 /* "2×" bonus badges (Spotlight Hour and others) */
 .sig-bonus{gap:3px;border-width:1.5px}.sig-bonus b{font:900 .74rem/1 var(--font-body);margin-right:2px}
 .sig-bonus .sb-i{width:15px;height:15px;object-fit:contain}.sig-bonus .sb-t{width:15px;height:15px;margin-right:1px}
-.sb-transfer{border-color:color-mix(in srgb,#35B8C9 70%,var(--border-subtle));background:color-mix(in srgb,#35B8C9 22%,var(--surface-glass))}
+.sb-transfer{border-color:color-mix(in srgb,var(--color-signal-transfer-candy) 70%,var(--border-subtle));background:color-mix(in srgb,var(--color-signal-transfer-candy) 22%,var(--surface-glass))}
 .sb-candy{border-color:color-mix(in srgb,#E86AA8 65%,var(--border-subtle));background:color-mix(in srgb,#E86AA8 20%,var(--surface-glass))}
 .sb-dust{border-color:color-mix(in srgb,#9B7BEA 65%,var(--border-subtle));background:color-mix(in srgb,#9B7BEA 20%,var(--surface-glass))}
 .sb-xp{border-color:color-mix(in srgb,#FF9F1C 65%,var(--border-subtle));background:color-mix(in srgb,#FF9F1C 20%,var(--surface-glass))}
