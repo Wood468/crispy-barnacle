@@ -64,27 +64,52 @@ export function movesInSentence(s) {
 }
 
 // All events -> the flat list the app reads.
+function moveSources(details, move) {
+  const needle = String(move.move || "").trim().toLowerCase();
+  const pokemon = String(move.pokemon || "").trim().toLowerCase();
+  const target = String(move.target || "").trim().toLowerCase();
+  if (!needle) return [];
+  const ids = new Set();
+  for (const item of details?.fields?.moves || []) {
+    if (!item || typeof item.text !== "string") continue;
+    const text = item.text.toLowerCase();
+    if (!text.includes(needle) || (pokemon && !text.includes(pokemon)) || (target && !text.includes(target))) continue;
+    for (const id of item.sources || []) if (typeof id === "string") ids.add(id);
+  }
+  return (details?.sources || [])
+    .filter(source => source && ids.has(source.id) && String(source.url || "").startsWith("https://"))
+    .map(source => ({ id: source.id, name: source.name || source.id, trust: source.trust || "", url: source.url }));
+}
+
+// Duplicate schedule/detail descriptions merge source IDs so a concise schedule note cannot
+// suppress the official attribution attached to the structured move field.
 export function buildEventMoves(events, details = {}) {
   const moves = [];
   for (const ev of events || []) {
     const start = String(ev.s || ev.start || "").slice(0, 16);
-    const seen = new Set();
+    const byId = new Map();
     for (const text of textsOf(ev, details[ev.id])) {
       for (const sent of sentences(text)) {
         for (const x of movesInSentence(sent)) {
           const id = [ev.id, slug(x.pokemon || "any"), slug(x.target), slug(x.move)].filter(Boolean).join(":");
-          if (seen.has(id)) continue;
-          seen.add(id);
-          moves.push({
+          const sources = moveSources(details[ev.id], x);
+          if (byId.has(id)) {
+            const existing = byId.get(id);
+            const merged = new Map([...(existing.sources || []), ...sources].map(source => [source.id, source]));
+            existing.sources = [...merged.values()];
+            continue;
+          }
+          byId.set(id, {
             id, eventId: ev.id, eventName: ev.t || ev.name || ev.id,
             pokemon: x.pokemon, evolutionTarget: x.target, move: x.move, moveKind: x.kind,
             acquisition: x.acquisition, windowStart: start, windowEnd: windowEnd(sent, ev),
-            evolveProject: x.acquisition === "EVOLVE",   // needs the right form in hand: shown as an "Evolve project"
-            text: sent.slice(0, 300)
+            evolveProject: x.acquisition === "EVOLVE",
+            text: sent.slice(0, 300), sources
           });
         }
       }
     }
+    moves.push(...byId.values());
   }
   return moves;
 }

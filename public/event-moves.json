@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-26T14:23:22.102Z",
+  "updated": "2026-11-01T20:18:14.213Z",
   "note": "Limited-time moves from events. Never part of a Pokémon's normal moveset; the app shows them only while the window is open. Written by scripts/event-moves.mjs.",
   "moves": [
     {
@@ -14,7 +14,15 @@
       "windowStart": "2026-10-10T14:00",
       "windowEnd": "2026-10-10T21:00",
       "evolveProject": true,
-      "text": "Evolve Zorua during the event or up to 4 hours after to get Zoroark with the exclusive Fast Attack Sucker Punch."
+      "text": "Evolve Zorua during the event or up to 4 hours after to get Zoroark with the exclusive Fast Attack Sucker Punch.",
+      "sources": [
+        {
+          "id": "official",
+          "name": "Pokémon GO (official)",
+          "trust": "official",
+          "url": "https://pokemongo.com/news/communityday-october-2026-zorua/"
+        }
+      ]
     },
     {
       "id": "novcd:bisharp:kingambit:kowtow-cleave",
@@ -28,7 +36,15 @@
       "windowStart": "2026-11-21T14:00",
       "windowEnd": "2026-11-21T21:00",
       "evolveProject": true,
-      "text": "Evolve Bisharp into Kingambit during the event or up to 4 hours after to learn the Charged Attack Kowtow Cleave."
+      "text": "Evolve Bisharp into Kingambit during the event or up to 4 hours after to learn the Charged Attack Kowtow Cleave.",
+      "sources": [
+        {
+          "id": "official",
+          "name": "Pokémon GO (official)",
+          "trust": "official",
+          "url": "https://pokemongo.com/news/communityday-november-2026-pawniard/"
+        }
+      ]
     }
   ]
 }

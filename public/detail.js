@@ -17,8 +17,12 @@
       var what = m.acquisition === 'EVOLVE'
         ? 'Evolve <b>' + esc(m.pokemon) + '</b>' + (m.evolutionTarget ? ' into <b>' + esc(m.evolutionTarget) + '</b>' : '') + ' to get <b>' + esc(m.move) + '</b>' + (m.moveKind ? ' (' + esc(m.moveKind) + ' attack)' : '')
         : (m.pokemon ? '<b>' + esc(m.pokemon) + '</b>' : 'Pokémon') + ' caught in the event will know <b>' + esc(m.move) + '</b>';
+      var sources = (m.sources || []).filter(function (s) { return s && s.name && safe(s.url); }).map(function (s) {
+        return trust(s.trust) + ' <a href="' + esc(s.url) + '" target="_blank" rel="noopener noreferrer">' + esc(s.name) + '</a>';
+      }).join(' · ');
+      var sourceLine = sources ? '<p class="evd-src">Source: ' + sources + '</p>' : '';
       var tag = m.acquisition === 'EVOLVE' ? '<span class="pill all">Evolve project: have a ' + esc(m.pokemon) + ' ready</span> ' : '';
-      return '<div class="evd-row"><div class="v"><p>' + what + (when ? ' <small>' + esc(when) + '</small>' : '') + '</p>' + tag + '</div></div>';
+      return '<div class="evd-row"><div class="v"><p>' + what + (when ? ' <small>' + esc(when) + '</small>' : '') + '</p>' + sourceLine + tag + '</div></div>';
     }).join('');
     return '<h3 class="sec2"' + (highlightTarget ? ' id="evd-highlights"' : '') + '>Event-only moves</h3><div class="evd-card">' + rows + '</div><p class="note">Temporary: not part of the normal moveset, and no Elite TM needed while the window is open.</p>';
   }
