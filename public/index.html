@@ -178,7 +178,7 @@
       <section class="panel" id="sub-mydex" hidden>
         <div class="subnav inner" id="mode-collect-dex" role="group" aria-label="My Dex views"></div>
         <section class="panel" id="tab-dex">
-        <details class="dd dexhow"><summary>How this works</summary><div class="body"><p class="sub" style="margin:0">Every Pokémon, #1 to #1025. Tick what you have, then shiny, lucky, shadow, purified and 100% IV. Anything you mark is counted as owned. Marks sync with your PIN, the same as on the Best Pokémon tab.</p></div></details>
+        <details class="dd dexhow"><summary>How this works</summary><div class="body"><p class="sub" style="margin:0">Every Pokémon, #1 to #1025. Tick what you have, then shiny, lucky, shadow, purified and 100% IV. Anything you mark is counted as owned. Marks sync with the device PIN managed in Menu → Sync & accounts.</p></div></details>
         <div class="prog">
           <div class="nums">
             <div><div class="n"><span id="dOwn">0</span><small> / <span id="dTotal">0</span></small></div><div class="l">OWNED IN POKÉMON GO</div></div>
@@ -266,12 +266,6 @@
         </div>
         <p class="sync" id="btSum" style="margin:0 0 6px"></p>
         <p class="sync" id="sync" role="status" style="margin-top:-24px"></p>
-        <form id="pinform" class="pinform" hidden>
-          <label class="label" for="pin">Sync PIN</label>
-          <input id="pin" type="password" autocomplete="current-password" placeholder="Enter your sync PIN" aria-label="Sync PIN">
-          <button type="submit" class="pill all">Sync</button>
-        </form>
-        <div id="acct" class="acct"></div>
         <div class="tools">
           <input type="search" id="q" placeholder="Search Pokémon or move" aria-label="Search Pokémon or move">
           <select id="status" aria-label="Show">
@@ -355,6 +349,8 @@
       <section class="panel" id="sub-menu" hidden>
       <button type="button" class="dd-link" id="menu-leaks">Leaks <span aria-hidden="true">›</span><small>Datamined and not announced. Not events.</small></button>
       <button type="button" class="dd-link" id="menu-places" data-places="">Places <span aria-hidden="true">›</span><small>Sourced venues and routes. No map.</small></button>
+      <h2 class="sec2">Sync &amp; accounts</h2>
+      <div id="acct" class="acct"></div>
       <p class="sync" id="usstat" role="status"></p>
       <details class="dd" id="pindd">
         <summary>Sync PIN <span class="cnt" id="pinstate"></span></summary>
@@ -423,11 +419,11 @@
 <script src="/local-state.js?v=20261030a"></script>
 <script src="/account.js?v=20261101a"></script>
 <script src="/dedupe.js?v=20261027a"></script>
-<script src="/app.js?v=20261101b"></script>
+<script src="/app.js?v=20261101c"></script>
 <script src="/store.js?v=20261101a"></script>
 <script src="/season.js?v=20261101a"></script>
 <script src="/weekly.js?v=20261101a"></script>
-<script src="/pin.js?v=20261015a"></script>
+<script src="/pin.js?v=20261101b"></script>
 <script src="/whatsnew.js?v=20261101a"></script>
 <script src="/pwa.js"></script>
 </body>
