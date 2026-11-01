@@ -54,6 +54,16 @@
     if (closeStart && overlap / shortest >= 0.6) return 'match';
     return overlap / shortest >= 0.6 ? 'overlap' : 'apart';
   }
+  /* Are two date windows clearly different instances of a recurring event? True when they do not overlap and the gap between them is more than
+     INSTANCE_GAP days. Same-event copies from different sources carry identical or near-identical dates; real repeats in the data are 4+ weeks
+     apart (Super Mega Raid Day 31 Oct vs 28 Nov, monthly Community Days). Unknown dates are never "apart". */
+  var INSTANCE_GAP = 14;
+  function instanceApart(a, b) {
+    var as = day(a.start), ae = day(a.end != null && a.end !== '' ? a.end : a.start), bs = day(b.start), be = day(b.end != null && b.end !== '' ? b.end : b.start);
+    if (isNaN(as) || isNaN(bs)) return false;
+    if (isNaN(ae) || ae < as) ae = as; if (isNaN(be) || be < bs) be = bs;
+    return Math.max(as, bs) - Math.min(ae, be) - 1 > INSTANCE_GAP;
+  }
   /* Places differ when both name one and share no distinctive word, and neither title mentions the other's place. */
   function placeConflict(a, b, ta, tb) {
     var pa = placeTokens(a.place), pb = placeTokens(b.place);
@@ -132,8 +142,8 @@
   function bareId(id) { return String(id || '').replace(/^[a-z]+:/, '').toLowerCase(); }
   function slugOf(u) { var p = String(u || '').split(/[?#]/)[0].split('/').filter(Boolean); return (p.pop() || '').toLowerCase(); }
   /* The title fallback must not hand one instance of a recurring event the pictures of another ("Super Mega Raid Day" in October vs
-     November, a repeat "Zorua Community Day"). event-info.json entries carry no dates, so two signals are used, and a title match is
-     only accepted when neither says "different instance":
+     November, a repeat "Zorua Community Day"). Signals, and a title match is only accepted when none says "different instance":
+       0. the entry's own start / end (YYYY-MM-DD, optional) clearly apart from the card's dates (instanceApart); when present this replaces 2;
        1. another event in the list (`others`) owns that entry by its id and its dates do not overlap this card's dates;
        2. the entry's own id / article address / picture sources name a month and year ("october-2026", "2026-10-14") that is
           more than a month away from the card's start. */
@@ -158,8 +168,9 @@
     return x instanceof Date && !isNaN(x.getTime()) ? x.getFullYear() * 12 + x.getMonth() : null;
   }
   function otherInstance(ev, k, entry, others) {
-    var h = hintOf(k, entry), m = monthOf(ev.start);
-    if (h != null && m != null && Math.abs(h - m) > 1) return true;
+    /* A dated entry (start / end, written by the scripts that attach pictures) is compared exactly. An undated one falls back to the month in its id. */
+    if (entry && entry.start) { if (instanceApart({ start: entry.start, end: entry.end }, { start: ev.start, end: ev.end })) return true; }
+    else { var h = hintOf(k, entry), m = monthOf(ev.start); if (h != null && m != null && Math.abs(h - m) > 1) return true; }
     var bk = bareId(k);
     return (others || []).some(function (o) {
       if (!o || !o.id || o.id === ev.id || (ev.aliasIds || []).indexOf(o.id) > -1) return false;
@@ -185,5 +196,5 @@
     keys.forEach(function (k) { (all[k].infographics || []).forEach(function (g) { if (g && !seen[g.url]) { seen[g.url] = 1; pics.push(g); } }); });
     return Object.assign({}, all[keys[0]], { infographics: pics });
   }
-  return { same: same, judge: judge, groups: groups, tokens: tokens, titleKey: titleKey, placeTokens: placeTokens, findEventInfo: findEventInfo };
+  return { same: same, judge: judge, groups: groups, tokens: tokens, titleKey: titleKey, placeTokens: placeTokens, findEventInfo: findEventInfo, instanceApart: instanceApart };
 });

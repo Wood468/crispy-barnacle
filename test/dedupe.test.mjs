@@ -127,17 +127,16 @@ test("infographic lookup: genuinely missing stays missing", () => {
   assert.equal(dd.findEventInfo(null, null), null);
 });
 
-test("infographic lookup: a later instance of a recurring event does not inherit the earlier one's pictures (includes one KNOWN LIMITATION assertion)", () => {
+test("infographic lookup: a later instance of a recurring event does not inherit the earlier one's pictures ", () => {
   const oct = { id: "cur:smr1", name: "Super Mega Raid Day", start: new Date("2026-10-31T14:00"), end: new Date("2026-10-31T17:00") };
   const nov = { id: "cur:smr2", name: "Super Mega Raid Day", start: new Date("2026-11-28T14:00"), end: new Date("2026-11-28T17:00"), link: "https://leekduck.com/events/super-mega-raid-day-november-2026/" };
   const others = [oct, nov];
   assert.ok(info.smr1.infographics.length >= 2);
   assert.equal(pics(oct), info.smr1.infographics.length, "October matches smr1 by id");
-  // KNOWN LIMITATION (documents today's WRONG behaviour on purpose): with no date information at all (no event list, no month in the entry's id)
-  // the title fallback cannot tell instances apart, so once the October card has dropped off the lists the November card wrongly inherits
-  // October's pictures. This assertion is EXPECTED TO FLIP when event-info entries gain a date field: then change it to
-  // assert.equal(dd.findEventInfo(nov, info, [nov]), null) and delete this note.
-  assert.equal(dd.findEventInfo(nov, info, [nov]).infographics.length, info.smr1.infographics.length, "KNOWN LIMITATION (wrong, expected to flip once entries carry a date): earlier instance gone from the lists");
+  // smr1 carries its date (2026-10-31), so the November card is a different instance even when the October card is gone from the lists.
+  assert.equal(info.smr1.start, "2026-10-31");
+  assert.equal(dd.findEventInfo(nov, info, [nov]), null, "earlier instance gone from the lists: the entry's own date says it is October's");
+  assert.equal(dd.findEventInfo(nov, info, []), null);
   assert.equal(dd.findEventInfo(nov, info, others), null, "November is owned-elsewhere: smr1 belongs to the October card");
   assert.equal(dd.findEventInfo(oct, info, others).infographics.length, info.smr1.infographics.length);
   // Even when the October card is no longer listed, a month/year in the entry's own id says it is another instance.
@@ -243,4 +242,51 @@ test("infographic lookup: month hints match whole words only, and the card's mon
   // Date-only strings are read from the text.
   assert.equal(dd.findEventInfo(dec("2026-12-01"), entry("october-2026"), []), null);
   assert.equal(dd.findEventInfo(dec("2026-12-01"), entry("november-2026"), []).infographics.length, 1);
+});
+
+// ---- Dated entries (start / end / dateSource in event-info.json) ----
+test("dated entries: title fallback compares dates exactly; undated entries behave as before", () => {
+  const card = (id, name, s, e) => ({ id, name, start: new Date(s + "T14:00"), end: new Date((e || s) + "T17:00") });
+  const mk = (extra) => ({ x: { names: ["Zorua Community Day"], infographics: [{ url: "/a.webp" }], ...extra } });
+  const n = (c, all) => (dd.findEventInfo(c, all, []) || {}).infographics?.length || 0;
+  // Repeat Community Day, 3 months later: dated entry is a different instance, undated entry with no month in its id is not told apart.
+  const later = card("cur:zorua2", "Zorua Community Day", "2027-02-14");
+  assert.equal(n(later, mk({ start: "2026-10-10", end: "2026-10-10", dateSource: "data.json" })), 0);
+  assert.equal(n(later, mk({})), 1, "undated: unchanged behaviour");
+  // Same window, a day off (another source, a time zone), or a few days apart: still the same event.
+  assert.equal(n(card("w-copy", "Zorua Community Day", "2026-10-11"), mk({ start: "2026-10-10", end: "2026-10-10" })), 1);
+  assert.equal(n(card("w-copy", "Zorua Community Day", "2026-10-20"), mk({ start: "2026-10-10", end: "2026-10-10" })), 1, "10 days apart is within the 14-day slack");
+  assert.equal(n(card("w-copy", "Zorua Community Day", "2026-11-09"), mk({ start: "2026-10-10", end: "2026-10-10" })), 0, "30 days apart (a monthly repeat)");
+  // Boundary: gap of exactly 14 days between the windows is still the same, 15 is not.
+  assert.equal(n(card("w-copy", "Zorua Community Day", "2026-10-25"), mk({ start: "2026-10-10", end: "2026-10-10" })), 1);
+  assert.equal(n(card("w-copy", "Zorua Community Day", "2026-10-26"), mk({ start: "2026-10-10", end: "2026-10-10" })), 0);
+  // Multi-day: overlapping windows match; a card inside a long entry window matches.
+  assert.equal(n(card("w-copy", "Zorua Community Day", "2026-10-12", "2026-10-30"), mk({ start: "2026-10-01", end: "2026-10-14" })), 1);
+  // A dated entry replaces the month-in-id heuristic: an entry id naming October but dated November follows its date.
+  const fake = { "foo-october-2026": { names: ["Foo Day"], infographics: [{ url: "/f.webp" }], start: "2026-11-20", end: "2026-11-20" } };
+  assert.equal(dd.findEventInfo(card("w-foo", "Foo Day", "2026-11-22"), fake, []).infographics.length, 1);
+  assert.equal(dd.findEventInfo(card("w-foo", "Foo Day", "2026-10-01"), fake, []), null);
+  // Exact id matches ignore dates entirely.
+  assert.equal(n(card("cur:x", "Something else", "2030-01-01"), mk({ start: "2026-10-10", end: "2026-10-10" })), 1);
+  // Cards without dates are never rejected by a dated entry.
+  assert.equal(n({ id: "w-nodate", name: "Zorua Community Day" }, mk({ start: "2026-10-10", end: "2026-10-10" })), 1);
+  assert.equal(dd.instanceApart({ start: "2026-10-31" }, { start: "2026-11-28" }), true);
+  assert.equal(dd.instanceApart({ start: "2026-10-31" }, {}), false);
+});
+
+test("dated entries: the real event-info.json", () => {
+  const card = (id, name, s, e) => ({ id, name, start: new Date(s + "T14:00"), end: new Date((e || s) + "T17:00") });
+  // Super Mega Raid Day smr2 must not inherit smr1's pictures, whether or not smr1 is still listed.
+  const smr1 = card("cur:smr1", "Super Mega Raid Day", "2026-10-31"), smr2 = card("cur:smr2", "Super Mega Raid Day", "2026-11-28");
+  for (const others of [[], [smr2], [smr1, smr2]]) assert.equal(dd.findEventInfo(smr2, info, others), null);
+  assert.equal(dd.findEventInfo(smr1, info, [smr2]).infographics.length, info.smr1.infographics.length);
+  // Wild Area Global still pools its four pictures, and Halloween Part 1 still finds the live entry.
+  const wag = { id: "leekduck:pokemon-go-wild-area-2026-global", aliasIds: ["cur:wag"], name: "Pokémon GO Wild Area 2026: Global", start: new Date("2026-11-14"), end: new Date("2026-11-15") };
+  assert.equal(dd.findEventInfo(wag, info, [wag]).infographics.length, 4);
+  assert.equal(pics({ id: "cur:halloween1", name: "Halloween 2026, Part One", start: new Date("2026-10-27T10:00"), end: new Date("2026-11-01T10:00") }), info["leekduck:halloween-2026-part-1"].infographics.length);
+  // Every date written is well formed, ordered, and says where it came from.
+  for (const [k, e] of Object.entries(info)) {
+    if (e.start == null && e.end == null && e.dateSource == null) continue;
+    assert.match(e.start, /^\d{4}-\d{2}-\d{2}$/, k); assert.match(e.end, /^\d{4}-\d{2}-\d{2}$/, k); assert.ok(e.end >= e.start, k); assert.ok(e.dateSource, k);
+  }
 });

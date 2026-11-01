@@ -178,3 +178,48 @@ test("new Leek Duck detail-only events are available to the infographic matcher"
   assert.equal(result.match.eventId, "leekduck:dynamax-trails-2026");
   assert.equal(result.confident, true);
 });
+
+// ---- Dates on event-info.json entries ----
+import { eventDates, datedEvents } from "../scripts/g47ix-publish.mjs";
+import { backfill } from "../scripts/event-info-dates.mjs";
+
+test("addToEventInfo dates the entry from the event and keeps recurring instances apart", () => {
+  const info = { events: {} }, g = (u) => ({ url: u, sourceUrl: "https://x/" + u, observed: "2026-10-14" });
+  addToEventInfo(info, { id: "smr1", t: "Super Mega Raid Day", s: "2026-10-31T00:00", e: "2026-10-31T23:59", src: "data.json" }, g("/a.webp"));
+  assert.deepEqual([info.events.smr1.start, info.events.smr1.end, info.events.smr1.dateSource], ["2026-10-31", "2026-10-31", "data.json"]);
+  // Same title, a month later: gets its own entry instead of joining smr1.
+  addToEventInfo(info, { id: "smr2", t: "Super Mega Raid Day", s: "2026-11-28T00:00", e: "2026-11-28T23:59" }, g("/b.webp"));
+  assert.equal(info.events.smr1.infographics.length, 1);
+  assert.equal(info.events.smr2.infographics.length, 1);
+  assert.equal(info.events.smr2.dateSource, "event");
+  // Same title, same window under another id: still joins.
+  addToEventInfo(info, { id: "w-smr", t: "Super Mega Raid Day", s: "2026-10-31T00:00", e: "2026-10-31T23:59" }, g("/c.webp"));
+  assert.equal(info.events.smr1.infographics.length, 2);
+  // No event date: nothing is written, and an existing entry keeps the date it has.
+  addToEventInfo(info, { id: "none", t: "Undated" }, g("/d.webp"));
+  assert.equal("start" in info.events.none, false);
+  addToEventInfo(info, { id: "smr1", t: "Super Mega Raid Day" }, g("/e.webp"));
+  assert.equal(info.events.smr1.start, "2026-10-31");
+  assert.equal(eventDates({ s: "bad" }), null);
+});
+
+test("applyDecisions dates approved pictures when the event is known", () => {
+  const reg = { candidates: [{ id: "c1", stagedPath: "/infographics/g47ix/c1.webp", url: "https://d/1", reviewStatus: "needs_review" }] };
+  const info = { events: {} };
+  applyDecisions(reg, info, [{ id: "c1", status: "approved", eventId: "smr2", eventTitle: "Super Mega Raid Day" }], "2026-11-01", (id) => id === "smr2" ? { s: "2026-11-28T00:00", e: "2026-11-28T23:59", src: "data.json" } : null);
+  assert.equal(info.events.smr2.start, "2026-11-28");
+  const r2 = { candidates: [{ id: "c2", stagedPath: "/infographics/g47ix/c2.webp", url: "https://d/2", reviewStatus: "needs_review" }] }, i2 = { events: {} };
+  applyDecisions(r2, i2, [{ id: "c2", status: "approved", eventId: "zz", eventTitle: "Zz" }], "2026-11-01");
+  assert.equal("start" in i2.events.zz, false, "no event lookup: undated, as before");
+});
+
+test("backfill dates only entries whose id matches one event, never guesses", () => {
+  const info = { events: { "cur:smr1": { names: ["Super Mega Raid Day"] }, "leekduck:unknown-thing": { names: ["Unknown"] }, both: { names: ["B"] }, done: { start: "2020-01-01", end: "2020-01-01", dateSource: "x" } } };
+  const src = { data: { events: [{ id: "smr1", t: "Super Mega Raid Day", s: "2026-10-31T00:00", e: "2026-10-31T23:59" }, { id: "both", t: "B", s: "2026-10-01T00:00", e: "2026-10-02T00:00" }] }, world: { events: [{ id: "both", name: "B", start: "2026-12-01", end: "2026-12-02" }] }, details: {} };
+  const r = backfill(info, src);
+  assert.equal(info.events["cur:smr1"].start, "2026-10-31");
+  assert.equal("start" in info.events["leekduck:unknown-thing"], false);
+  assert.equal("start" in info.events.both, false, "two sources disagree");
+  assert.equal(info.events.done.start, "2020-01-01");
+  assert.equal(r.dated.length, 1);
+});

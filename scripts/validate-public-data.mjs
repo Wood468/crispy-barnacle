@@ -64,6 +64,22 @@ if (!data || typeof data !== "object" || !Array.isArray(data.events)) {
   }
 }
 
+// event-info.json: start / end / dateSource are optional (they tell one instance of a recurring event from the next). When present they must be well formed.
+const evInfo = parsed.get("public/event-info.json");
+if (evInfo && evInfo.events && typeof evInfo.events === "object") {
+  const isDay = v => typeof v === "string" && /^\d{4}-\d{2}-\d{2}$/.test(v) && !Number.isNaN(Date.parse(v)) && new Date(v).toISOString().slice(0, 10) === v;
+  for (const [key, e] of Object.entries(evInfo.events)) {
+    const where = `public/event-info.json events["${key}"]`;
+    if (!e || typeof e !== "object") continue;
+    if (e.start != null && !isDay(e.start)) fail(where, `start must be YYYY-MM-DD, got "${e.start}"`);
+    if (e.end != null && !isDay(e.end)) fail(where, `end must be YYYY-MM-DD, got "${e.end}"`);
+    if (e.end != null && e.start == null) fail(where, "end without start");
+    if (isDay(e.start) && isDay(e.end) && e.end < e.start) fail(where, "end is before start");
+    if (e.dateSource != null && (typeof e.dateSource !== "string" || !e.dateSource.trim())) fail(where, "dateSource must be a non-empty string");
+    if (e.start != null && e.dateSource == null) fail(where, "a dated entry must say where the date came from (dateSource)");
+  }
+}
+
 let picturesRestored = false; try { await access(join(PUBLIC, "infographics")); picturesRestored = true; } catch { /* pictures are in R2 */ }
 const weekly = parsed.get("public/weekly.json");
 if (weekly != null) {

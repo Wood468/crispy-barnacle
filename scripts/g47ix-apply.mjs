@@ -4,7 +4,7 @@
 // attaches approved pictures to the chosen event in public/event-info.json, and drops rejected ones.
 // The owner's tap in the app is the approval, so the workflow commits this straight to main.
 import { readFile, writeFile, rm } from "node:fs/promises";
-import { addToEventInfo } from "./g47ix-publish.mjs";
+import { addToEventInfo, datedEvents } from "./g47ix-publish.mjs";
 
 const APP = process.env.APP_URL || "https://pogo.michaelpuff.com";
 const REG = process.env.REGISTRY_FILE || "data/g47ix-infographics-review.json";
@@ -26,7 +26,8 @@ const titlesOf = d => String(d.eventTitle || "").split(" | ");
 
 // A decision is the wanted state: which events carry the picture. Later changes (add another event, unlink one, discard)
 // are applied to pictures that were already published too.
-export function applyDecisions(reg, info, decisions, today = new Date().toISOString().slice(0, 10)) {
+// eventOf(id) may return the event (with s, e, src) so the entry is dated; without it entries are written undated, as before.
+export function applyDecisions(reg, info, decisions, today = new Date().toISOString().slice(0, 10), eventOf = () => null) {
   const out = { published: [], rejected: [], skipped: [], changed: [] };
   for (const d of decisions || []) {
     const c = (reg.candidates || []).find(x => x.id === d.id);
@@ -56,7 +57,7 @@ export function applyDecisions(reg, info, decisions, today = new Date().toISOStr
     if (wasLive) removeFromEventInfo(info, c.stagedPath, was.filter(x => !want.includes(x)));
     want.forEach((id, i) => {
       const t = titles[i] || id;
-      addToEventInfo(info, { id, t }, { url: c.stagedPath, sourceUrl: c.url, observed: today, alt: t + " infographic", creator: c.creator });
+      addToEventInfo(info, { id, t, ...(eventOf(id) || {}) }, { url: c.stagedPath, sourceUrl: c.url, observed: today, alt: t + " infographic", creator: c.creator });
     });
     c.reviewStatus = "published"; c.decision = "approved"; c.publishedEvent = want[0]; c.publishedEvents = want;
     (wasLive ? out.changed : out.published).push(c);
@@ -69,7 +70,11 @@ async function main() {
   if (!r.ok) { console.log("No decisions available (HTTP " + r.status + ")."); return; }
   const { decisions } = await r.json();
   const reg = JSON.parse(await readFile(REG, "utf8")), info = JSON.parse(await readFile(INFO, "utf8"));
-  const res = applyDecisions(reg, info, decisions);
+  const read = async f => { try { return JSON.parse(await readFile(f, "utf8")); } catch { return {}; } };
+  const events = datedEvents({ data: await read("public/data.json"), details: await read("public/event-details.json"), world: await read("public/world-events.json") });
+  const bare = id => String(id).replace(/^[a-z]+:/, "");
+  const eventOf = id => { const hit = events.find(e => e.id === id) || events.find(e => bare(e.id) === bare(id)); return hit ? { s: hit.s, e: hit.e, src: hit.src } : null; };
+  const res = applyDecisions(reg, info, decisions, undefined, eventOf);
   for (const c of res.rejected) if (c.stagedPath) await rm("public" + c.stagedPath, { force: true });
   await writeFile(REG, JSON.stringify(reg, null, 2) + "\n");
   await writeFile(INFO, JSON.stringify(info, null, 2) + "\n");
