@@ -49,11 +49,11 @@ test("PWA entry page links to the manifest and iOS touch icon and registers the 
   assert.match(html, /rel="manifest" href="\/manifest\.webmanifest"/);
   assert.match(html, /rel="apple-touch-icon" href="\/icon-180\.png"/);
   assert.match(html, /dash\.css\?v=20261101u/);
-  assert.match(html, /styles\.css\?v=20261101d/);
+  assert.match(html, /styles\.css\?v=20261101e/);
   assert.match(html, /app\.js\?v=20261101c/);
   assert.match(html, /local-state\.js\?v=20261030a/);
   assert.match(html, /pin\.js\?v=20261101b/);
-  assert.match(html, /account\.js\?v=20261101a/);
+  assert.match(html, /account\.js\?v=20261101b/);
   assert.match(html, /lib\.js\?v=20261101a/);
   assert.match(html, /season\.js\?v=20261101a/);
   assert.match(html, /\/pwa\.js/);
@@ -62,7 +62,7 @@ test("PWA entry page links to the manifest and iOS touch icon and registers the 
   assert.match(dash, /places\.js\?v=20261031b/, "the updated Places provenance UI is versioned");
   assert.match(dash, /infographic\.js\?v=20261101b/, "the deferred infographic loader is versioned");
   assert.match(dash, /nudge\.js\?v=20261101a/, "the shared-escape nudge renderer is versioned");
-  assert.match(dash, /review\.js\?v=20261101a/, "the shared-escape review renderer is versioned");
+  assert.match(dash, /review\.js\?v=20261101b/, "the shared-escape review renderer is versioned");
   assert.match(dash, /buy\.js\?v=20261101a/, "the shared-escape purchase renderer is versioned");
 });
 
@@ -98,7 +98,7 @@ test("static JSON dependencies referenced by first-party scripts are precached",
 });
 
 test("service worker versions the cache, pre-caches offline fallback, and never handles API responses", () => {
-  assert.match(sw, /gofn-shell-v168/);
+  assert.match(sw, /gofn-shell-v169/);
   assert.ok(sw.includes("'/lib.js?v=20261101a'"), 'the refreshed dashboard helper is available to the offline shell');
   assert.ok(sw.includes("'/local-state.js?v=20261030a'"), 'account-local state migration is available offline');
   assert.ok(sw.includes("'/account.js?v=20261101a'"), 'the refreshed account transition code is available offline');
@@ -112,7 +112,7 @@ test("service worker versions the cache, pre-caches offline fallback, and never 
   assert.match(sw, /'\/event-moves\.json'/, "event-only move data is available to offline event details");
   assert.match(sw, /'\/dash\.css\?v=20261101u'/, "the current dashboard stylesheet is available to the offline shell");
   assert.match(sw, /'\/app\.js\?v=20261101c'/, "the current app bootstrap is available to the offline shell");
-  assert.match(sw, /'\/styles\.css\?v=20261101d'/, "the current recovery panel stylesheet is available to the offline shell");
+  assert.match(sw, /'\/styles\.css\?v=20261101e'/, "the current recovery panel stylesheet is available to the offline shell");
   assert.match(sw, /'\/dash\.js\?v=20261101b'/, "the current dashboard script is available to the offline shell");
   assert.match(sw, /'\/detail\.js\?v=20261031a'/, "the current event detail script is available to the offline shell");
   assert.match(sw, /'\/places\.js\?v=20261031b'/, "the current sourced venue script is available to the offline shell");
@@ -156,7 +156,7 @@ test("service worker bounds runtime cache entries without evicting the offline s
   };
   const caches = {
     open: async () => cache,
-    keys: async () => ["gofn-shell-v168"],
+    keys: async () => ["gofn-shell-v169"],
     delete: async () => true
   };
   vm.runInNewContext(sw, { self, caches, fetch: networkFetch, URL, Request, Response, TextEncoder, crypto: { subtle: { digest: async () => new ArrayBuffer(0) } } });
