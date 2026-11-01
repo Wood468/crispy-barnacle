@@ -16,9 +16,14 @@
   function switchIdentity(target, mergeGuest) {
     try { return !!(window.GOLOCAL && window.GOLOCAL.activate(localStorage, target, !!mergeGuest)); } catch (e) { return false; }
   }
+  var ownerVerified = false, ownerCheckStarted = false, ownerCheckFailed = false, ownerUsers = [];
   // Establish the active partition before app.js reads the Dex and user-state keys.
   switchIdentity(identity(), false);
-  function role() { document.documentElement.setAttribute('data-role', get() && !pinned() ? 'member' : 'owner'); }
+  function role() {
+    var next = pinned() ? (ownerVerified ? 'owner' : 'guest') : (get() ? 'member' : 'guest');
+    document.documentElement.setAttribute('data-role', next);
+    document.dispatchEvent(new CustomEvent('gofn-owner-state', { detail: { role: next } }));
+  }
   role();
   function post(path, body) {
     return fetch('/api/auth/' + path, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(body || {}) })
@@ -26,11 +31,21 @@
   }
   var mode = 'in', msg = '', invite = '', made = '';
   function pinHdr() { try { return { 'content-type': 'application/json', 'x-pin': localStorage.getItem('gofn-pin') || '' }; } catch (e) { return { 'content-type': 'application/json' }; } }
+  function usersHtml() {
+    return ownerUsers.length ? '<b>Accounts</b>' + ownerUsers.map(function (u) { return '<div class="acct-u"><span>' + esc(u.email) + '</span><button type="button" class="pill" data-acct="rm" data-email="' + esc(u.email) + '">Remove</button></div>'; }).join('') : 'No accounts yet.';
+  }
   function loadUsers() {
-    fetch('/api/auth/users', { method: 'POST', headers: pinHdr(), body: '{}' }).then(function (r) { return r.ok ? r.json() : null; }).then(function (j) {
-      var h = document.getElementById('acctUsers'); if (!h || !j) return;
-      h.innerHTML = (j.users || []).length ? '<b>Accounts</b>' + j.users.map(function (u) { return '<div class="acct-u"><span>' + esc(u.email) + '</span><button type="button" class="pill" data-acct="rm" data-email="' + esc(u.email) + '">Remove</button></div>'; }).join('') : 'No accounts yet.';
-    }).catch(function () { });
+    ownerCheckStarted = true;
+    return fetch('/api/auth/users', { method: 'POST', headers: pinHdr(), body: '{}' }).then(function (r) {
+      if (!r.ok) throw new Error('Owner PIN could not be verified.');
+      return r.json();
+    }).then(function (j) {
+      ownerVerified = true; ownerCheckFailed = false; ownerUsers = Array.isArray(j.users) ? j.users : [];
+      role(); render(); return true;
+    }).catch(function () {
+      ownerVerified = false; ownerCheckFailed = true; ownerUsers = [];
+      role(); render(); return false;
+    });
   }
   function render() {
     var host = document.getElementById('acct'); if (!host) return;
@@ -40,13 +55,20 @@
       return;
     }
     if (pinned()) {
+      if (!ownerVerified) {
+        host.innerHTML = ownerCheckFailed
+          ? '<p class="note" role="alert">This device’s Sync PIN could not be verified. Owner-only controls are hidden. Update it below, then try again.</p><button type="button" class="pill" data-acct="retry-owner">Retry PIN</button>'
+          : '<p class="note" role="status">Checking the Sync PIN…</p>';
+        if (!ownerCheckStarted) loadUsers();
+        return;
+      }
       host.innerHTML = '<details class="acctbox"><summary>People you have invited</summary><p class="note">Make a one-time invite code (valid 14 days) and send it with the site address. They create their own email and password, and keep their own marks. Events and infographics are shared.</p>'
         + '<form class="acct-f" data-acct-form="create"><b>Add a person yourself</b><label>Email<input name="email" type="email" required></label><label>Password for them (at least 10 characters; they can be told it, and you can change it any time by adding the same email again)<input name="password" type="text" autocomplete="off" minlength="10" required></label><button type="submit" class="pill all">Add person / set password</button></form>'
         + (made ? '<p class="igr-msg" role="status">' + esc(made) + '</p>' : '')
         + '<form class="acct-f" data-acct-form="invite"><label>Who is it for? (just a note for you)<input name="note" maxlength="60" placeholder="e.g. Sam"></label><button type="submit" class="pill all">Create invite code</button></form>'
         + (invite ? '<p class="igr-msg" role="status">Invite code: <b class="mono">' + esc(invite) + '</b><br>Send this with ' + esc(location.origin) + ' (valid 14 days, works once).</p>' : '')
-        + '<div id="acctUsers" class="note"></div></details>';
-      loadUsers(); return;
+        + '<div id="acctUsers" class="note">' + usersHtml() + '</div></details>';
+      return;
     }
     host.innerHTML = '<details class="acctbox"' + (msg ? ' open' : '') + '><summary>Sign in or create an account</summary>'
       + '<div class="acct-tabs"><button type="button" class="pill' + (mode === 'in' ? ' all' : '') + '" data-acct="m-in">Sign in</button><button type="button" class="pill' + (mode === 'up' ? ' all' : '') + '" data-acct="m-up">I have an invite</button></div>'
@@ -60,6 +82,7 @@
   document.addEventListener('click', function (e) {
     var b = e.target.closest && e.target.closest('[data-acct]'); if (!b) return;
     var a = b.getAttribute('data-acct');
+    if (a === 'retry-owner') { ownerCheckStarted = false; ownerCheckFailed = false; ownerVerified = false; render(); return; }
     if (a === 'm-in' || a === 'm-up') { mode = a === 'm-up' ? 'up' : 'in'; msg = ''; render(); var d = document.querySelector('.acctbox'); if (d) d.open = true; }
     if (a === 'rm') { var em = b.getAttribute('data-email'); if (b.getAttribute('data-sure') !== '1') { b.setAttribute('data-sure', '1'); b.textContent = 'Tap again to delete ' + em + ' and their marks'; return; } fetch('/api/auth/remove', { method: 'POST', headers: pinHdr(), body: JSON.stringify({ email: em }) }).then(loadUsers); }
     if (a === 'out') {
@@ -74,8 +97,8 @@
     var f = e.target.closest && e.target.closest('[data-acct-form]'); if (!f) return;
     e.preventDefault();
     var v = {}; Array.prototype.forEach.call(f.elements, function (el) { if (el.name) v[el.name] = el.value; });
-    if (f.getAttribute('data-acct-form') === 'create') { fetch('/api/auth/create', { method: 'POST', headers: pinHdr(), body: JSON.stringify(v) }).then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); }).then(function (r) { made = r.ok ? (r.j.created ? 'Added ' : 'New password set for ') + r.j.email + '.' : (r.j.error || 'That did not work.'); render(); var d = document.querySelector('.acctbox'); if (d) d.open = true; }); return; }
-    if (f.getAttribute('data-acct-form') === 'invite') { fetch('/api/auth/invite', { method: 'POST', headers: pinHdr(), body: JSON.stringify({ note: v.note }) }).then(function (r) { return r.ok ? r.json() : null; }).then(function (j) { invite = j && j.code || ''; render(); var d = document.querySelector('.acctbox'); if (d) d.open = true; }); return; }
+    if (f.getAttribute('data-acct-form') === 'create') { fetch('/api/auth/create', { method: 'POST', headers: pinHdr(), body: JSON.stringify(v) }).then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); }).then(function (r) { made = r.ok ? (r.j.created ? 'Added ' : 'New password set for ') + r.j.email + '.' : (r.j.error || 'That did not work.'); return loadUsers().then(function () { var d = document.querySelector('.acctbox'); if (d) d.open = true; }); }); return; }
+    if (f.getAttribute('data-acct-form') === 'invite') { fetch('/api/auth/invite', { method: 'POST', headers: pinHdr(), body: JSON.stringify({ note: v.note }) }).then(function (r) { return r.ok ? r.json() : null; }).then(function (j) { invite = j && j.code || ''; if (!invite) made = 'Could not create invite code.'; return loadUsers().then(function () { var d = document.querySelector('.acctbox'); if (d) d.open = true; }); }); return; }
     if (!window.GOLOCAL) { msg = 'Please refresh GO Field Notes before signing in so this device’s marks can be preserved.'; render(); return; }
     post(f.getAttribute('data-acct-form') === 'up' ? 'register' : 'login', v).then(function (r) {
       if (!r.ok) { msg = (r.j && r.j.error) || 'That did not work. Try again.'; render(); return; }
