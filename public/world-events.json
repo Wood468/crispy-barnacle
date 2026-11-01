@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-31T21:43:35.418Z",
+ "updated": "2026-11-01T01:17:51.663Z",
  "events": [
   {
    "id": "w-pokemon-fossil-museum-2026",
@@ -18,7 +18,7 @@
     }
    ],
    "status": "single",
-   "seen": "2026-10-31"
+   "seen": "2026-11-01"
   },
   {
    "id": "w-pokemon-jet-red-collaboration-event",
@@ -37,7 +37,7 @@
     }
    ],
    "status": "single",
-   "seen": "2026-10-31"
+   "seen": "2026-11-01"
   },
   {
    "id": "w-pok-mon-jet-red-collaboration",
@@ -56,7 +56,7 @@
     }
    ],
    "status": "single",
-   "seen": "2026-10-31"
+   "seen": "2026-11-01"
   },
   {
    "id": "w-pokemon-x-adidas",
@@ -99,7 +99,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-10-31"
+   "seen": "2026-11-01"
   },
   {
    "id": "w-pok-mon-go-partners-with-the-european-space-agency",
@@ -123,7 +123,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-10-31"
+   "seen": "2026-11-01"
   },
   {
    "id": "w-pokemon-go-x-esa-london",
@@ -266,7 +266,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-10-31"
+   "seen": "2026-11-01"
   },
   {
    "id": "w-mexicraneo-exhibit-paseo-de-la-reforma",
@@ -304,7 +304,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-10-31"
+   "seen": "2026-11-01"
   },
   {
    "id": "w-aeon-mall-halloween",
@@ -342,7 +342,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-10-31"
+   "seen": "2026-11-01"
   },
   {
    "id": "w-celebrate-the-pok-mon-night-out-events-in-pok-mon-",
@@ -366,7 +366,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-10-31"
+   "seen": "2026-11-01"
   },
   {
    "id": "w-get-codes-for-exclusive-timed-research-during-the-",
@@ -385,7 +385,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-10-31"
+   "seen": "2026-11-01"
   },
   {
    "id": "w-pok-mon-go-city-safari-boston-update",
@@ -414,12 +414,12 @@
     }
    ],
    "status": "official",
-   "seen": "2026-10-31"
+   "seen": "2026-11-01"
   },
   {
    "id": "w-fc-seoul",
    "name": "FC Seoul",
-   "place": "South Korea",
+   "place": "Seoul, South Korea",
    "area": "Asia",
    "scope": "regional",
    "start": "2026-10-24",
@@ -427,18 +427,13 @@
    "datesKnown": true,
    "sources": [
     {
-     "id": "official",
-     "name": "Pokémon GO (official)",
-     "url": "https://pokemongo.com/ko/news/fc-seoul-2026/"
-    },
-    {
      "id": "serebii",
      "name": "Serebii",
      "url": "https://www.serebii.net/pokemongo/reallifeevents.shtml"
     }
    ],
-   "status": "official",
-   "seen": "2026-10-31"
+   "status": "single",
+   "seen": "2026-11-01"
   },
   {
    "id": "w-pok-mon-go-dia-de-muertos-2026-mexico-exclusive-ev",
@@ -481,7 +476,7 @@
     }
    ],
    "status": "single",
-   "seen": "2026-10-31"
+   "seen": "2026-11-01"
   },
   {
    "id": "w-halloween",
@@ -520,7 +515,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-10-31"
+   "seen": "2026-11-01"
   },
   {
    "id": "w-go-wild-area-2026-mexico-city",
@@ -549,7 +544,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-10-31"
+   "seen": "2026-11-01"
   },
   {
    "id": "w-go-wild-area-2026-sendai-tohoku",
@@ -578,7 +573,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-10-31"
+   "seen": "2026-11-01"
   },
   {
    "id": "w-pok-mon-30th-anniversary-mall-exploration-jewel",
@@ -597,7 +592,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-10-31"
+   "seen": "2026-11-01"
   },
   {
    "id": "w-pok-mon-run-30-singapore",
@@ -616,7 +611,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-10-31"
+   "seen": "2026-11-01"
   },
   {
    "id": "w-pok-xciting-lands-at-changi-airport-and-jewel-get-",
@@ -635,7 +630,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-10-31"
+   "seen": "2026-11-01"
   },
   {
    "id": "w-into-the-wild",
@@ -674,7 +669,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-10-31"
+   "seen": "2026-11-01"
   },
   {
    "id": "w-ko-gowa-global-on-site-event",
@@ -770,7 +765,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-10-31"
+   "seen": "2026-11-01"
   },
   {
    "id": "w-pok-mon-run-30-malaysia",
@@ -789,7 +784,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-10-31"
+   "seen": "2026-11-01"
   },
   {
    "id": "w-eternamax-eternatus-max-battles",
@@ -848,7 +843,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-10-31"
+   "seen": "2026-11-01"
   },
   {
    "id": "w-minior-showers-geminids",
@@ -887,7 +882,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-10-31"
+   "seen": "2026-11-01"
   },
   {
    "id": "w-pok-mon-run-30-thailand",
@@ -906,7 +901,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-10-31"
+   "seen": "2026-11-01"
   },
   {
    "id": "w-pok-mon-30th-anniversary-mall-exploration-sm-marik",
@@ -925,7 +920,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-10-31"
+   "seen": "2026-11-01"
   },
   {
    "id": "w-pok-mon-run-30-hong-kong",
@@ -944,7 +939,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-10-31"
+   "seen": "2026-11-01"
   },
   {
    "id": "w-pok-mon-30th-anniversary-mall-exploration-sm-seasi",
@@ -963,7 +958,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-10-31"
+   "seen": "2026-11-01"
   },
   {
    "id": "w-save-the-date-pok-mon-go-tour-2027",
@@ -982,7 +977,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-10-31"
+   "seen": "2026-11-01"
   },
   {
    "id": "w-pokemon-go-tour-2027-los-angeles",
@@ -1020,7 +1015,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-10-31"
+   "seen": "2026-11-01"
   },
   {
    "id": "w-pokemon-go-tour-2027-global",
@@ -1058,7 +1053,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-10-31"
+   "seen": "2026-11-01"
   },
   {
    "id": "w-go-wild-area-stamp-rally-details",
@@ -1073,11 +1068,11 @@
     {
      "id": "official",
      "name": "Pokémon GO (official)",
-     "url": "https://pokemongo.com/ko/news/go-wild-area-stamp-rally-details-2026/"
+     "url": "https://pokemongo.com/ja/news/go-wild-area-stamp-rally-details-2026/"
     }
    ],
    "status": "official",
-   "seen": "2026-10-31"
+   "seen": "2026-11-01"
   }
  ]
 }
