@@ -167,9 +167,9 @@ check('150ms interaction transitions use a shared motion role with unchanged eas
       'transition:transform var(--motion-quick)' in DASH_CSS and
       BASE_CSS.count('var(--motion-quick)') == 3 and DASH_CSS.count('var(--motion-quick)') == 1)
 check('versioned stylesheets are referenced by the page and precached offline',
-      all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261031i', '/dash.css?v=20261031t']))
+      all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261101c', '/dash.css?v=20261031t']))
 check('offline shell cache version advances with the stylesheet token release',
-      "gofn-shell-v162" in SW_JS)
+      "gofn-shell-v163" in SW_JS)
 check('versioned dashboard scripts are referenced by the entry page and precached offline',
       '/app.js?v=20261101b' in INDEX_HTML and '/app.js?v=20261101b' in SW_JS and
       '/dash.js?v=20261101a' in APP_JS and '/dash.js?v=20261101a' in SW_JS and
@@ -187,10 +187,10 @@ check('infographic card thumbnails assign original URLs only near the viewport',
       'data-thumb-src' in INFO_JS and 'new IntersectionObserver' in INFO_JS and
       "rootMargin: '80px 0px'" in INFO_JS)
 check('mobile chrome uses compact 48px navigation targets, safe-area padding and reduced header/body spacing',
-      all(token in BASE_CSS for token in ['padding-block:0 calc(72px + env(safe-area-inset-bottom,0px))', '@media (max-width:1199px){header.top{padding-top:var(--space-4)}}', 'padding:4px 8px calc(4px + env(safe-area-inset-bottom,0px))', 'padding:4px 2px;min-height:48px', 'width:1.2rem;height:1.2rem']) and
+      all(token in BASE_CSS for token in ['padding-block:0 calc(72px + env(safe-area-inset-bottom,0px))', '@media (max-width:1199px){header.top{padding-top:var(--space-4)}}', 'padding:4px 8px calc(4px + env(safe-area-inset-bottom,0px))', 'padding:var(--space-1) 2px;min-height:48px', 'width:1.2rem;height:1.2rem']) and
       'min-height:68px' in BASE_CSS and 'nav.tabs button{min-height:56px}' in DASH_CSS and '@media(max-width:1199px){nav.tabs button{min-height:48px}}' in DASH_CSS)
 check('desktop navigation rail is breakpoint-scoped and mobile keeps the bottom bar',
-      all(token in BASE_CSS for token in ['@media (min-width:1200px)', 'body{padding-left:max(132px,calc(4vw + 100px));padding-bottom:24px}', 'left:16px;right:auto;top:50%;bottom:auto;transform:translateY(-50%)', 'nav.tabs .row{flex-direction:column', 'nav.tabs button{flex:none;width:100%;min-height:68px']) and
+      all(token in BASE_CSS for token in ['@media (min-width:1200px)', 'body{padding-left:max(132px,calc(4vw + 100px));padding-bottom:var(--space-6)}', 'left:16px;right:auto;top:50%;bottom:auto;transform:translateY(-50%)', 'nav.tabs .row{flex-direction:column', 'nav.tabs button{flex:none;width:100%;min-height:68px']) and
       'nav.tabs{position:fixed;left:0;right:0;bottom:0' in BASE_CSS)
 check('calendar weekday labels expand to full names on wide screens',
       all(name in DASH_JS for name in ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']) and
@@ -1771,6 +1771,12 @@ if fails:
 check('dashboard shared radius declarations consume semantic radius tokens',
       all(f'border-radius:var(--radius-{role})' in DASH_CSS for role in ['sm','md','control','card','panel','lg','xl','pill']) and
       re.search(r'border-radius:\s*(?:8|12|14|16|18|20|22|999)px\b', DASH_CSS) is None)
+
+check('base stylesheet spacing declarations consume semantic 4px-scale tokens',
+      all(f'var(--space-{step})' in BASE_COMPONENT_CSS for step in [1, 2, 3, 4, 5, 6, 10]) and
+      re.search(r'(?<![-\w])(?:column-gap|row-gap|gap)\s*:\s*(?![^;{}]*[()])[^;{}]*(?<![-\w])(?:4|8|12|16|20|24|28|32|36|40)px\b[^;{}]*(?=;|})', BASE_COMPONENT_CSS) is None and
+      re.search(r'(?<![-\w])(?:padding|margin)(?:-(?:top|right|bottom|left|block|inline)(?:-(?:start|end))?)?\s*:\s*(?![^;{}]*[()])[^;{}]*(?<![-\w])(?:4|8|12|16|20|24|28|32|36|40)px\b[^;{}]*(?=;|})', BASE_COMPONENT_CSS) is None)
+
 check('dashboard shared gap declarations consume semantic spacing tokens',
       all(f'var(--space-{step})' in DASH_CSS for step in [1, 2, 3, 5]) and
       re.search(r'(?<![-\w])(?:column-gap|row-gap|gap)\s*:\s*(?:(?:4|8|12|16|20|24|28|32|36|40)px\s*)+;', DASH_CSS) is None)
