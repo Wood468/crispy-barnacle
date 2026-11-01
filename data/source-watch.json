@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-31T19:18:38.631Z",
+ "updated": "2026-11-01T00:08:33.842Z",
  "status": [
   {
    "id": "hub",
@@ -19,16 +19,30 @@
   {
    "id": "reddit-silph",
    "state": "ok",
-   "items": 12
+   "items": 13
   },
   {
    "id": "youtube-pogo",
-   "state": "ok",
-   "items": 2
+   "state": "error",
+   "note": "HTTP 404"
   }
  ],
  "gaps": 3,
  "items": [
+  {
+   "source": "reddit-silph",
+   "trust": "tip",
+   "title": "Costume Noibat from \"Level 80 Challenge\" Special Research",
+   "link": "https://www.reddit.com/r/TheSilphRoad/comments/1xkix8p/costume_noibat_from_level_80_challenge_special/",
+   "date": "2026-10-31T19:21:39.000Z",
+   "summary": "<table> <tr><td> <a href=\"https://www.reddit.com/r/TheSilphRoad/comments/1xkix8p/costume_noibat_from_level_80_challenge_special/\"> <img src=\"https://preview.redd.it/ce45grchsuyh1.jpeg?width=140&amp;he",
+   "pokemon": [
+    "Noibat"
+   ],
+   "notInOurData": [
+    "Noibat"
+   ]
+  },
   {
    "source": "reddit-silph",
    "trust": "tip",
@@ -60,16 +74,12 @@
   {
    "source": "reddit-silph",
    "trust": "tip",
-   "title": "Legendary Shadow raids and guaranteed catch.",
-   "link": "https://www.reddit.com/r/TheSilphRoad/comments/1xed70z/legendary_shadow_raids_and_guaranteed_catch/",
-   "date": "2026-10-24T16:34:38.000Z",
-   "summary": "<!-- SC_OFF --><div class=\"md\"><p>Hey I'm curious when they changed it so legendaries (shadow)(non-shiny)can be caught by hitting an excellent throw on the smallest possible circle? I just did a lando",
-   "pokemon": [
-    "Landorus"
-   ],
-   "notInOurData": [
-    "Landorus"
-   ]
+   "title": "Who stole my Zubats costume?",
+   "link": "https://www.reddit.com/r/TheSilphRoad/comments/1xkjidt/who_stole_my_zubats_costume/",
+   "date": "2026-10-31T19:46:05.000Z",
+   "summary": "<table> <tr><td> <a href=\"https://www.reddit.com/r/TheSilphRoad/comments/1xkjidt/who_stole_my_zubats_costume/\"> <img src=\"https://preview.redd.it/fbwfu62uwuyh1.png?width=140&amp;height=140&amp;crop=1:",
+   "pokemon": [],
+   "notInOurData": []
   },
   {
    "source": "reddit-silph",
@@ -147,26 +157,6 @@
    "pokemon": [
     "Gastly"
    ],
-   "notInOurData": []
-  },
-  {
-   "source": "youtube-pogo",
-   "trust": "official",
-   "title": "New costumed Pokémon make their debuts during Halloween 2026 Part I in Pokémon GO!",
-   "link": "https://www.youtube.com/shorts/I6MvdaExyIg",
-   "date": "2026-10-27T17:00:40.000Z",
-   "summary": "",
-   "pokemon": [],
-   "notInOurData": []
-  },
-  {
-   "source": "youtube-pogo",
-   "trust": "official",
-   "title": "New costumed Pokémon make their debuts during Halloween 2026 Part I in Pokémon GO!",
-   "link": "https://www.youtube.com/watch?v=wyN2y-BgpoU",
-   "date": "2026-10-27T17:00:14.000Z",
-   "summary": "",
-   "pokemon": [],
    "notInOurData": []
   },
   {
