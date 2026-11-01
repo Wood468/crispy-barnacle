@@ -158,7 +158,7 @@ BASE_FONT_SHORTHAND_SCALE = {
     '--type-body-emphasis': 1,
 }
 DASH_FONT_SHORTHAND_SCALE = {
-    '--type-body-sm': 8,
+    '--type-body-sm': 9,
     '--type-caption': 7,
     '--type-meta': 8,
     '--type-heading': 3,
@@ -188,10 +188,10 @@ CARD_GLASS_SELECTORS = [
     '.tk', '.gencov', '.plc-row', '.srcrow', '.week-day-events>.week-card',
     '.today-empty', '.today-next-up', '.evd-hero', '.goinfo-section',
 ]
-CARD_SOLID_SELECTORS = ['.day-brief']  # Batch 1: the focus tiles are flat raised tiles inside the one brief card
+CARD_SOLID_SELECTORS = ['.day-brief', '.today-status']  # Batch 1: the focus tiles are flat raised tiles inside the one brief card
 CARD_BORDER_SELECTORS = [
     '.weekstrip', '.evc', '.pc', '.prio-empty', '.rotc', '.opp', '.evd-card',
-    '.tk', '.gencov', '.plc-row', '.srcrow', '.day-brief',
+    '.tk', '.gencov', '.plc-row', '.srcrow', '.day-brief', '.today-status',
     '.today-empty', '.today-next-up', '.evd-hero', '.goinfo-section', '.pc.first', '.opp.missing',
 ]
 def card_rule_text(selector):
@@ -239,9 +239,9 @@ check('Today multi-deadline tray is accessible, bounded and source-safe',
       all(token in INDEX_HTML for token in ['id="today-deadlines"', 'id="today-deadlines-summary"', 'id="today-deadlines-list"']) and
       all(token in DASH_JS for token in ['var trayLimit = t.getTime() + 7 * 24 * 60 * 60 * 1000', "safeUrl(d.url || '')", 'trayCandidates.slice(0, 8)', 'View all ', 'noopener noreferrer', "sourceUrl.indexOf('https://') === 0"]) and
       all(token in DASH_CSS for token in ['.today-deadlines>summary', 'min-height:44px', '.today-deadline-item', 'var(--color-link)']) and
-      '/dash.js?v=20261102g' in APP_JS and '/dash.js?v=20261102g' in SW_JS and
-      '/dash.css?v=20261102g' in INDEX_HTML and '/dash.css?v=20261102g' in SW_JS and
-      'gofn-shell-v193' in SW_JS)
+      '/dash.js?v=20261102h' in APP_JS and '/dash.js?v=20261102h' in SW_JS and
+      '/dash.css?v=20261102h' in INDEX_HTML and '/dash.css?v=20261102h' in SW_JS and
+      'gofn-shell-v194' in SW_JS)
 check('season pass and deadline data is structured, source-attributed and ordered',
       all(item_id in {item.get('id') for item in SEASON_DATA.get('items', [])}
           for item_id in ['season:pass-halloween', 'season:pass-november']) and
@@ -274,7 +274,7 @@ check('base bonus and information availability controls use semantic status role
           'background: var(--color-status-info-unavailable); color: var(--color-on-status-info-unavailable); border: 1px solid var(--color-border-info-unavailable);',
       ]))
 check('versioned stylesheets are referenced by the page and precached offline',
-      all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261102a', '/dash.css?v=20261102g']))
+      all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261102a', '/dash.css?v=20261102h']))
 check('owner verification scripts are versioned and precached offline',
       '/account.js?v=20261101b' in INDEX_HTML and '/account.js?v=20261101b' in SW_JS and
       '/review.js?v=20261101b' in DASH_JS and '/review.js?v=20261101b' in SW_JS)
@@ -302,10 +302,10 @@ check('event signal chips and detail tags use semantic palette roles with unchan
           '.tg-incense{--tc:var(--color-signal-shadow)}.tg-costume{--tc:var(--color-signal-encounter)}',
       ]))
 check('offline shell cache version advances with the dashboard stylesheet token release',
-      "gofn-shell-v193" in SW_JS)
+      "gofn-shell-v194" in SW_JS)
 check('versioned dashboard scripts are referenced by the entry page and precached offline',
-      '/app.js?v=20261102b' in INDEX_HTML and '/app.js?v=20261102b' in SW_JS and
-      '/dash.js?v=20261102g' in APP_JS and '/dash.js?v=20261102g' in SW_JS and
+      '/app.js?v=20261102c' in INDEX_HTML and '/app.js?v=20261102c' in SW_JS and
+      '/dash.js?v=20261102h' in APP_JS and '/dash.js?v=20261102h' in SW_JS and
       '/detail.js?v=20261102a' in DASH_JS and '/detail.js?v=20261102a' in SW_JS)
 check('sync PIN and account controls have one home in Menu and are precached offline',
       INDEX_HTML.index('id="acct" class="acct"') > INDEX_HTML.index('id="sub-menu"') and
@@ -346,7 +346,7 @@ check('desktop Today uses two columns while mobile lists today\'s events before 
       all(token in DASH_CSS for token in ['#tab-now .today-layout{display:flex;flex-direction:column;gap:var(--space-5);min-width:0}', '#tab-now .today-sidebar{display:contents}', '#tab-now #action-centre,#tab-now #foryou-sec,#tab-now #weekly-sec,#tab-now #buy-sec{order:2}', '#tab-now .today-main{order:1;min-width:0}', '@media(min-width:960px)', 'grid-template-columns:minmax(0,1.55fr) minmax(18rem,.9fr)', '#tab-now .today-sidebar{grid-column:2;display:grid']))
 with sync_playwright() as p:
     b=p.chromium.launch()
-    def page(api=None,marks=None,clock='2026-10-09T22:45:00+11:00',sources=None,gens=None,us=None,extra=None,pin=False,slow_places=False,width=390,height=844,mobile=False,guard=None):
+    def page(api=None,marks=None,clock='2026-10-09T22:45:00+11:00',sources=None,gens=None,us=None,extra=None,pin=False,slow_places=False,width=390,height=844,mobile=False,guard=None,pre=None,ready=True):
         ctx=b.new_context(viewport={'width':width,'height':height},device_scale_factor=2,timezone_id='Australia/Melbourne',locale='en-AU',service_workers='block',**({'is_mobile':True,'has_touch':True} if mobile else {}))
         # Bound default Playwright waits so a lazy asset or missing control cannot stall a whole shard.
         ctx.set_default_timeout(10000)
@@ -384,6 +384,9 @@ with sync_playwright() as p:
         if marks: pg.add_init_script("localStorage.setItem('gofn-dex-v1',%s)"%json.dumps(json.dumps(marks)))
         if us: gens=gens or []
         if gens or us: pg.add_init_script("if(!localStorage.getItem('gofn-us-v1'))localStorage.setItem('gofn-us-v1',%s)"%json.dumps(json.dumps(dict({'pref:gen:%d'%g:{'v':True,'t':1} for g in (gens or [])} and {'pref:gen:%d'%g:{'v':True,'t':1} for g in (gens or [])},**{k:{'v':v,'t':1} for k,v in (us or {}).items()}))))
+        if pre: pre(pg)  # extra routes (a stalled feed, a blocked script) are registered after the defaults, so they win
+        if not ready:  # robustness tests: do not wait for the first render, that is what they measure
+            pg.goto(BASE+'/', wait_until='domcontentloaded'); return pg
         pg.goto(BASE+'/', wait_until='domcontentloaded' if slow_places else 'load'); pg.wait_for_selector('.pc, .prio-empty',state='attached'); pg.wait_for_function("document.getElementById('home-now')?.hasAttribute('data-render-key')")
         # dash.js appends detail/extra/places/infographic scripts after the first render; tests call their globals straight away.
         settle(pg,"!!(window.GODETAIL&&window.GOEXTRA&&window.GOINFOGRAPHIC)&&(%s||!!window.GOPLACES)"%('true' if slow_places else 'false'))
@@ -2361,7 +2364,7 @@ with sync_playwright() as p:
     const fg = over(parse(cs.color), ownBg);
     const bgF = mix(ownBg, back, o), fgF = mix(fg, back, o);
     const ratioV = ratio(fgF, bgF);
-    out.push({ text: (el.textContent || '').trim().replace(/\s+/g, ' ').slice(0, 40), cls: el.className, ratio: Math.round(ratioV * 100) / 100, opacity: o, fg: cs.color, bg: cs.backgroundColor });
+    out.push({ text: (el.textContent || '').trim().replace(/\\s+/g, ' ').slice(0, 40), cls: el.className, ratio: Math.round(ratioV * 100) / 100, opacity: o, fg: cs.color, bg: cs.backgroundColor });
   });
   return out;
 }"""
@@ -2387,6 +2390,85 @@ with sync_playwright() as p:
         check('contrast: every visible enabled button.pill (and Got it) is at least 4.5:1 against its effective background, opacity included',not low,low[:8])
         check('no pill carries a blanket opacity while enabled',all(r['opacity']>=0.999 for r in pill_rows),[(r['text'],r['opacity']) for r in pill_rows if r['opacity']<0.999][:5])
         cpg.context.close()
+    if on('c'):
+        # ---- Batch 1b: Today stays usable when the live event feed or dash.js is slow, stalled or failing (real browser, not a string grep) ----
+        RB_CLOCK = '2026-11-02T09:30:00+11:00'
+        LIVE_FEED = json.dumps({'enabled': True, 'events': [ev('rb%d' % i, 'Robust event %d' % i, 'event', '2026-11-01T10:00:00', '2026-11-08T20:00:00', 'confirmed') for i in range(12)]})
+        TODAY_STATE_JS = """() => {
+          const shown = e => !!e && !e.hidden && getComputedStyle(e).display !== 'none' && e.getBoundingClientRect().height > 0;
+          const h = document.getElementById('home-now'), stats = document.getElementById('day-brief-stats'), brief = document.getElementById('day-brief');
+          return { keyed: h.hasAttribute('data-render-key'), height: Math.round(h.getBoundingClientRect().height), text: h.innerText.trim(), cards: h.querySelectorAll('.evc, .agr, .today-empty').length,
+            briefShown: shown(brief), statsShown: shown(stats) && getComputedStyle(stats).visibility !== 'hidden', statsText: stats.innerText.replace(/\\s+/g, ' '), title: document.getElementById('day-brief-title').innerText,
+            seasonShown: shown(document.getElementById('seasonbar')), weekShown: shown(document.getElementById('week')), netbar: (document.getElementById('netbar') || {}).innerText || '' };
+        }"""
+        held = []
+        def hang(route, request=None): held.append(route)  # never answers until the test fulfils it
+        def hang_feed(pg): pg.route('**/api/events', hang)
+        def block_script(pg): pg.route(re.compile(r'/dash\.js'), lambda route, request=None: route.abort())
+        # 1. the feed never answers
+        rb = page(clock=RB_CLOCK, pre=hang_feed, ready=False)
+        rb.wait_for_function("document.getElementById('home-now') && document.getElementById('home-now').offsetHeight > 0")
+        early = rb.evaluate(TODAY_STATE_JS)
+        check('stalled feed: before the timeout Today shows a reserved skeleton and no 0 / 0 / 0 counts as data', not early['keyed'] and early['height'] >= 300 and not early['statsShown'], early)
+        ok = settle(rb, "document.getElementById('home-now').hasAttribute('data-render-key')", 12000)
+        stalled = rb.evaluate(TODAY_STATE_JS)
+        check('stalled feed: within 12 s Today renders the curated list (cards, not a blank box)', ok and stalled['cards'] >= 1 and stalled['height'] > 150, stalled)
+        check('stalled feed: the sections the blank-state rule hides are visible again', stalled['seasonShown'] and stalled['weekShown'], stalled)
+        check('stalled feed: the brief shows real counts and the stale-copy notice appears', stalled['statsShown'] and 'in game' in stalled['statsText'] and stalled['title'] != 'Getting your day ready' and 'saved copy' in stalled['netbar'], stalled)
+        shot_dir = os.environ.get('UI_SHOTS')
+        if shot_dir: rb.screenshot(path=shot_dir + '/stalled-after-timeout.png')
+        # ... and a late answer is not thrown away
+        held[0].fulfill(body=LIVE_FEED, content_type='application/json') if held else None
+        late = settle(rb, "/source pipeline/.test(document.getElementById('evsource').textContent) && document.getElementById('netbar').hidden", 8000)
+        check('stalled feed: a live answer that arrives after the timeout replaces the fallback and clears the notice', late, rb.evaluate("[document.getElementById('evsource').textContent, document.getElementById('netbar').hidden]"))
+        rb.context.close()
+        # 2. a 500 and a dropped connection still fall back to the curated list
+        for label, handler in (('500', lambda route, request=None: route.fulfill(status=500, body='{}', content_type='application/json')), ('network error', lambda route, request=None: route.abort())):
+            fb = page(clock=RB_CLOCK, pre=lambda pg, h=handler: pg.route('**/api/events', h), ready=False)
+            ok = settle(fb, "document.getElementById('home-now').hasAttribute('data-render-key')", 6000)
+            st = fb.evaluate(TODAY_STATE_JS)
+            check('feed %s: Today falls back to the curated list with the saved-copy notice' % label, ok and st['cards'] >= 1 and st['statsShown'] and st['seasonShown'] and 'saved copy' in st['netbar'], st)
+            fb.context.close()
+        # 3. dash.js blocked, then stalled: a neutral status row with a 44px Retry, never a blank box
+        for label, handler in (('fails to load', lambda route, request=None: route.abort()), ('never loads', hang)):
+            held.clear()
+            dp = page(clock=RB_CLOCK, pre=lambda pg, h=handler: pg.route(re.compile(r'/dash\.js'), h), ready=False)
+            ok = settle(dp, "!!document.getElementById('today-retry')", 12000)
+            st = dp.evaluate(TODAY_STATE_JS)
+            retry_box = dp.locator('#today-retry').bounding_box() if ok else None
+            check('dash.js %s: within 12 s Today shows a status row with a 44px Retry instead of a blank box' % label, ok and retry_box and retry_box['height'] >= 43.5 and 0 < st['height'] < 200 and 'did not load' in st['text'] and not st['briefShown'], [st, retry_box])
+            if shot_dir and label == 'fails to load': dp.screenshot(path=shot_dir + '/dash-failed.png')
+            dp.unroute(re.compile(r'/dash\.js'))  # the network comes back
+            dp.locator('#today-retry').click()
+            back = settle(dp, "document.getElementById('home-now').hasAttribute('data-render-key') && !document.getElementById('today-retry')", 12000)
+            check('dash.js %s: Retry brings Today back once the script can load' % label, back and dp.evaluate(TODAY_STATE_JS)['cards'] >= 1)
+            dp.context.close()
+        # 4. what's-new: a stalled session must not wipe the seen list (the next visit would call every event new)
+        wn = page(clock=RB_CLOCK, us=None)
+        seen_before = wn.evaluate("JSON.parse(localStorage.getItem('gofn-seen-events')).ids")
+        check('what\'s-new: a normal first visit records the event list', len(seen_before) >= 10, len(seen_before))
+        wn.route('**/api/events', hang); wn.reload(wait_until='domcontentloaded')
+        wn.clock.run_for(25000)  # past the feed timeout and past whatsnew's 20 s wait
+        wn.wait_for_function("document.getElementById('home-now').hasAttribute('data-render-key')")
+        wn.wait_for_timeout(300)
+        seen_after = wn.evaluate("JSON.parse(localStorage.getItem('gofn-seen-events')).ids")
+        check('what\'s-new: the seen list survives a session whose feed stalled', seen_after == seen_before, [len(seen_before), len(seen_after)])
+        wn.unroute('**/api/events', hang); wn.reload(wait_until='load')
+        wn.wait_for_function("document.getElementById('home-now').hasAttribute('data-render-key')"); wn.wait_for_timeout(500)
+        headings = wn.evaluate("[...document.querySelectorAll('.whatsnew .wn-h')].map(e => e.textContent)")
+        check('what\'s-new: after the next normal load no event is falsely listed as new', 'New events' not in headings, headings)
+        wn.context.close()
+        # 5. empty day: one calm line instead of 0 / 0 / 0; no decorative aria-label on the counts; "Got it" keeps its visible name
+        ed = page(clock='2027-09-15T03:00:00+10:00')
+        st = ed.evaluate(TODAY_STATE_JS)
+        check('empty day: the brief says so in one calm line instead of three zeros', ed.locator('#day-brief-empty').is_visible() and not st['statsShown'] and 'Nothing' in ed.locator('#day-brief-empty').inner_text(), st)
+        ed.context.close()
+        ar = page(clock=RB_CLOCK)
+        ar.evaluate("localStorage.setItem('gofn-seen-events', JSON.stringify({ids:['seed-old-event'], at:1}))"); ar.reload(); ar.wait_for_selector('.whatsnew:not([hidden])', timeout=15000)
+        check('the brief counts carry no decorative aria-label and "Got it" has no label that replaces its visible text',
+              ar.get_attribute('#day-brief-stats', 'aria-label') is None and ar.get_attribute('.wn-ok', 'aria-label') is None and ar.locator('.wn-ok').inner_text().strip() == 'Got it')
+        ar.context.close()
+
     b.close()
 # Dashboard radius adoption: shared scale values are expressed through semantic roles.
 check('dashboard shared radius declarations consume semantic radius tokens',

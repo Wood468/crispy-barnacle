@@ -986,7 +986,13 @@ Promise.all([
   function markOwn(ids){var m=dm('own'),added=[];ids.forEach(function(id){if(!m[id]){m[id]=1;added.push(id)}});if(added.length){persist();renderDex()}return added}
   function unmarkOwn(ids){var m=dm('own');ids.forEach(function(id){delete m[id]});persist();renderDex()}
   window.GO={refreshDex:function(){if(DEXLIST.length)renderDex()},markOwn:markOwn,unmarkOwn:unmarkOwn,D:D,MAN:MAN,esc:esc,art:art,fig:fig,bonusRow:bonusRow,bonusChip:bonusChip,MON:MON,DOW:DOW,dex:function(){return dex},showTab:showTab,HERO:HERO,TAGKEY:TAGKEY,tagHtml:tagHtml};
-  var ds=document.createElement('script');ds.src='/dash.js?v=20261102g';document.body.appendChild(ds);
+  /* If dash.js never loads (blocked, stalled or broken) Today must not stay a blank box: say so calmly and offer a retry. A late dash.js replaces this row. */
+  function todayUnavailable(){var h=document.getElementById('home-now');if(!h||h.hasAttribute('data-render-key')||h.getAttribute('data-state')==='unavailable')return;
+    h.setAttribute('data-state','unavailable');h.removeAttribute('aria-busy');
+    h.innerHTML='<div class="today-status" role="status"><p>Today\'s events did not load. Your saved collection is unchanged.</p><button type="button" class="pill" id="today-retry">Try again</button></div>';
+    var r=document.getElementById('today-retry');if(r)r.addEventListener('click',function(){window.location.reload()});
+    var b=document.getElementById('day-brief');if(b)b.setAttribute('data-state','unavailable')}
+  var ds=document.createElement('script');ds.src='/dash.js?v=20261102h';ds.onerror=todayUnavailable;document.body.appendChild(ds);setTimeout(function(){if(!window.GODASH)todayUnavailable()},10000);
 })();
 
 }).catch(function(){var panel=document.getElementById('load-error');if(panel)panel.hidden=false;var retry=document.getElementById('load-retry');if(retry)retry.addEventListener('click',function(){window.location.reload()},{once:true})});
@@ -995,7 +1001,7 @@ Promise.all([
 (function(){
   function bar(){var b=document.getElementById('netbar');if(b)return b;b=document.createElement('div');b.id='netbar';b.className='envbar';b.hidden=true;b.setAttribute('role','status');var e=document.getElementById('envbar');if(e&&e.parentNode)e.parentNode.insertBefore(b,e.nextSibling);else document.body.insertBefore(b,document.body.firstChild);return b}
   function upd(){var b=bar();if(navigator.onLine===false){b.hidden=false;b.innerHTML='<b>You are offline</b><span>Showing the last saved copy. Changes you make sync when you are back online.</span>'}else if(!b.hasAttribute('data-fail'))b.hidden=true}
-  window.GONET={fail:function(msg){var b=bar();b.setAttribute('data-fail','1');b.hidden=false;b.innerHTML='<b>'+msg+'</b><button type="button" class="pill" data-netretry>Try again</button>'}};
+  window.GONET={clear:function(){var b=bar();b.removeAttribute('data-fail');upd()},fail:function(msg){var b=bar();b.setAttribute('data-fail','1');b.hidden=false;b.innerHTML='<b>'+msg+'</b><button type="button" class="pill" data-netretry>Try again</button>'}};
   document.addEventListener('click',function(e){if(e.target.closest&&e.target.closest('[data-netretry]'))location.reload()});
   window.addEventListener('online',upd);window.addEventListener('offline',upd);upd();
 })();

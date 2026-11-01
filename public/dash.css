@@ -1342,7 +1342,10 @@ select,
 .day-brief{display:grid;gap:var(--space-2);min-width:0;margin:0;padding:var(--space-4);border:1px solid var(--color-border-card);border-radius:var(--radius-lg);background:var(--color-surface-card-solid)}
 .day-brief:focus{outline:none}
 .day-brief-title{display:block;min-height:1em;font:800 var(--type-heading)/1 var(--font-display);letter-spacing:.01em;text-transform:uppercase;text-wrap:balance;color:var(--color-text)}
-.day-brief-stats{display:flex;flex-wrap:wrap;gap:var(--space-1) var(--space-3);margin:0;font:500 var(--type-meta)/1.3 var(--font-body);color:var(--color-text-muted)}
+.day-brief-stats,.day-brief-empty{display:flex;flex-wrap:wrap;gap:var(--space-1) var(--space-3);margin:0;font:500 var(--type-meta)/1.3 var(--font-body);color:var(--color-text-muted)}
+.day-brief-stats[hidden],.day-brief-empty[hidden]{display:none}
+.day-brief:not([data-ready]) .day-brief-stats{visibility:hidden}
+.day-brief[data-state="unavailable"]{display:none}
 .day-brief-stats b{font-weight:700;font-variant-numeric:tabular-nums;color:var(--color-text)}
 .today-focus-strip{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--space-2);min-width:0;margin-top:var(--space-1)}
 .today-focus-card{display:grid;align-content:start;gap:2px;min-width:0;min-height:88px;padding:var(--space-3);border-radius:var(--radius-md);background:var(--color-surface-raised)}
@@ -1371,6 +1374,10 @@ select,
 /* Reserve the agenda's space until the first render so the page does not jump when events arrive. */
 #home-now:not([data-render-key]){min-height:332px;border-radius:var(--radius-panel);background:var(--color-surface-raised);opacity:.5}
 .load-error:not([hidden])~#tab-now #home-now:not([data-render-key]){min-height:0;background:none}
+#home-now[data-state="unavailable"]{min-height:0;background:none;opacity:1}
+.today-status{display:flex;align-items:center;justify-content:space-between;gap:var(--space-3);padding:var(--space-2) var(--space-3) var(--space-2) var(--space-4);border:1px solid var(--color-border-card);border-radius:var(--radius-lg);background:var(--color-surface-card-solid)}
+.today-status p{min-width:0;margin:0;font:500 var(--type-body-sm)/1.35 var(--font-body);color:var(--color-text-muted)}
+.today-status .pill{flex:none;min-height:44px}
 
 /* Until the agenda has rendered, keep everything after it out of the first screen so late content cannot push visible rows. */
 #tab-now:has(#home-now:not([data-render-key])) :is(#seasonbar,#action-centre,#foryou-sec,#weekly-sec,#buy-sec,.agenda-section:has(#week),.agenda-section-fold,#tab-now>.note){display:none}

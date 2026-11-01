@@ -16,7 +16,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&family=Hanken+Grotesk:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap">
 <link rel="stylesheet" href="/styles.css?v=20261102a">
-<link rel="stylesheet" href="/dash.css?v=20261102g">
+<link rel="stylesheet" href="/dash.css?v=20261102h">
 </head>
 <body>
 <div class="wrap">
@@ -47,7 +47,8 @@
       <div class="today-top" id="today-top">
         <section class="day-brief" id="day-brief" aria-label="Daily overview" tabindex="-1">
           <strong class="day-brief-title" id="day-brief-title">Getting your day ready</strong>
-          <p class="day-brief-stats" aria-label="Activity today"><span><b id="day-live-count">0</b> in game</span><span><b id="day-inperson-count">0</b> in person</span><span><b id="day-upcoming-count">0</b> starting today</span></p>
+          <p class="day-brief-stats" id="day-brief-stats"><span><b id="day-live-count">0</b> in game</span><span><b id="day-inperson-count">0</b> in person</span><span><b id="day-upcoming-count">0</b> starting today</span></p>
+          <p class="day-brief-empty" id="day-brief-empty" hidden>Nothing is live or starting today.</p>
           <div class="today-focus-strip" id="today-focus-strip" role="group" aria-label="Today at a glance">
             <div class="today-focus-card"><span class="today-focus-label">Next</span><strong id="today-focus-next">Finding your next event…</strong><small id="today-focus-next-meta">Upcoming schedule</small></div>
             <div class="today-focus-card"><span class="today-focus-label">Ending soon</span><strong id="today-focus-ending">Checking timed events…</strong><small id="today-focus-ending-meta">Timed in-game events only</small><details class="today-deadlines" id="today-deadlines" hidden><summary id="today-deadlines-summary">View upcoming deadlines</summary><ol class="today-deadlines-list" id="today-deadlines-list" hidden></ol></details></div>
@@ -59,7 +60,7 @@
         <div class="today-main">
         <section class="agenda-section" aria-labelledby="agenda-now-title">
           <h2 class="sec2" id="agenda-now-title">Today</h2>
-          <div id="home-now" class="event-agenda"></div>
+          <div id="home-now" class="event-agenda" aria-busy="true"></div>
         </section>
         </div>
         <div class="today-sidebar">
@@ -423,12 +424,12 @@
 <script src="/local-state.js?v=20261030a"></script>
 <script src="/account.js?v=20261101b"></script>
 <script src="/dedupe.js?v=20261101b"></script>
-<script src="/app.js?v=20261102b"></script>
+<script src="/app.js?v=20261102c"></script>
 <script src="/store.js?v=20261101a"></script>
 <script src="/season.js?v=20261102d"></script>
 <script src="/weekly.js?v=20261101a"></script>
 <script src="/pin.js?v=20261101b"></script>
-<script src="/whatsnew.js?v=20261102a"></script>
+<script src="/whatsnew.js?v=20261102b"></script>
 <script src="/pwa.js"></script>
 </body>
 </html>
