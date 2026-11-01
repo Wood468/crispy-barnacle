@@ -1904,10 +1904,6 @@ with sync_playwright() as p:
               ppg.evaluate("({title:document.title,h1:document.querySelector('h1')&&document.querySelector('h1').innerText,url:location.href})"))
         pctx.close()
     b.close()
-print('\nFAILED:',fails if fails else 'none')
-if fails:
-    sys.exit(1)
-
 # Dashboard radius adoption: shared scale values are expressed through semantic roles.
 check('dashboard shared radius declarations consume semantic radius tokens',
       all(f'border-radius:var(--radius-{role})' in DASH_CSS for role in ['sm','md','control','card','panel','lg','xl','pill']) and
@@ -1929,3 +1925,7 @@ check('dashboard shared gap declarations consume semantic spacing tokens',
 check('dashboard padding and margin declarations consume semantic spacing tokens',
       all(f'var(--space-{step})' in DASH_CSS for step in [1, 2, 3, 4, 5, 7]) and
       re.search(r'(?<![-\w])(?:padding|margin)(?:-(?:top|right|bottom|left|block|inline)(?:-(?:start|end))?)?\s*:\s*(?![^;{}]*[()])[^;{}]*(?<![-\w])(?:4|8|12|16|20|24|28|32|36|40)px\b[^;{}]*(?=;|})', DASH_CSS) is None)
+
+print('\nFAILED:',fails if fails else 'none')
+if fails:
+    sys.exit(1)
