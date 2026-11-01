@@ -1119,6 +1119,13 @@ async function userstate(request, env, url) {
     applied = { ...(await us.writeEntries(env.DB, entries, uid)), rejected: rejected.length };
   }
   const since = Math.max(0, Number(url.searchParams.get("since")) || 0);
+  // Optional repeated ?key= parameters provide a bounded targeted read. The default
+  // full read remains unchanged for the existing cross-device reconciliation client.
+  if (request.method === "GET" && url.searchParams.has("key")) {
+    const selection = us.cleanReadKeys(url.searchParams.getAll("key"));
+    if (selection.error) return json({ error: "Invalid key selection." }, 400);
+    return json({ enabled: true, now, entries: await us.readKeys(env.DB, selection.keys, since, uid), applied });
+  }
   return json({ enabled: true, now, entries: await us.readAll(env.DB, since, uid), applied });
 }
 
