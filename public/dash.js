@@ -1356,7 +1356,7 @@
         trayList.innerHTML = visibleCandidates.map(function (d) {
           var sourceUrl = safeUrl(d.url || '');
           var source = d.source
-            ? (sourceUrl ? '<a href="' + esc(sourceUrl) + '" target="_blank" rel="noopener noreferrer">' + esc(d.source) + '</a>' : esc(d.source))
+            ? (sourceUrl.indexOf('https://') === 0 ? '<a href="' + esc(sourceUrl) + '" target="_blank" rel="noopener noreferrer">' + esc(d.source) + '</a>' : esc(d.source))
             : '';
           var when = (d.action || 'ends') + ' ' + fmtD(d.end) + ' · ' + fmtT(d.end);
           return '<li class="today-deadline-item"><strong>' + esc(d.title || 'Deadline') + '</strong>' +
