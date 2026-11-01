@@ -180,6 +180,103 @@
     ]
    ],
    "img_credit": "Leek Duck"
+  },
+  {
+   "id": "season:pass-halloween",
+   "label": "GO Pass",
+   "name": "GO Pass: Halloween 2026",
+   "s": "2026-10-27T10:00",
+   "e": "2026-11-05T20:00",
+   "img": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-11-01-halloween-2026-part-2/halloween-2026-part-2.jpg",
+   "url": "https://leekduck.com/events/halloween-2026-part-2/",
+   "sections": [
+    {
+     "t": "GO Pass",
+     "icon": "/ico/pass.webp",
+     "items": [
+      "The same GO Pass: Halloween 2026 continues through Halloween Part II, running from 27 October at 10:00 am to 5 November 2026 at 8:00 pm local time.",
+      "The free pass includes event-themed Pokémon encounters, Candy for event-themed Pokémon, Rare Candy, Ultra Balls and additional rewards.",
+      "GO Pass Deluxe adds additional encounters, Patissier Top and Patissier Pants, Rare Candy XL, Premium Battle Passes and additional rewards.",
+      "Claim all unlocked rewards by 7 November 2026 at 8:00 pm local time."
+     ]
+    }
+   ],
+   "img_credit": "Leek Duck"
+  },
+  {
+   "id": "season:pass-november",
+   "label": "GO Pass",
+   "name": "GO Pass: November",
+   "s": "2026-11-03T10:00",
+   "e": "2026-12-01T10:00",
+   "img": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-11-03-go-pass-november-2026/go-pass-november-2026.jpg",
+   "url": "https://leekduck.com/events/go-pass-november-2026/",
+   "sections": [
+    {
+     "t": "GO Pass",
+     "icon": "/ico/pass.webp",
+     "items": [
+      "GO Pass: November runs from 3 November 2026 at 10:00 am to 1 December 2026 at 10:00 am local time.",
+      "The free pass includes an encounter with Groudon, 400 PokéCoins, a Lucky Egg, Rare Candy XL, Stardust and additional rewards.",
+      "GO Pass Deluxe adds 1,000 additional PokéCoins, a Super Incubator and additional encounters.",
+      "Claim all unlocked rewards by 3 December 2026 at 10:00 am local time."
+     ]
+    }
+   ],
+   "img_credit": "Leek Duck"
+  }
+ ],
+ "deadlines": [
+  {
+   "id": "go-pass-october-rewards",
+   "name": "GO Pass: October rewards",
+   "title": "Rewards expire",
+   "action": "claim by",
+   "s": "2026-11-03T10:00",
+   "e": "2026-11-05T10:00",
+   "source": "Leek Duck",
+   "url": "https://leekduck.com/events/go-pass-october-2026/"
+  },
+  {
+   "id": "halloween-timed-research",
+   "name": "Halloween Timed Research",
+   "title": "Research expires",
+   "action": "claim by",
+   "s": "2026-11-01T10:00",
+   "e": "2026-11-05T20:00",
+   "source": "Leek Duck",
+   "url": "https://leekduck.com/events/halloween-2026-part-2/"
+  },
+  {
+   "id": "go-pass-halloween-rewards",
+   "name": "GO Pass: Halloween rewards",
+   "title": "Rewards expire",
+   "action": "claim by",
+   "s": "2026-11-05T20:00",
+   "e": "2026-11-07T20:00",
+   "source": "Leek Duck",
+   "url": "https://leekduck.com/events/halloween-2026-part-2/"
+  },
+  {
+   "id": "go-pass-october-lucky-trinket",
+   "name": "GO Pass Deluxe: October Lucky Trinket",
+   "title": "Deluxe item expires",
+   "action": "use by",
+   "qualifier": "Deluxe track only",
+   "s": "2026-10-06T10:00",
+   "e": "2026-11-08T23:59",
+   "source": "Leek Duck",
+   "url": "https://leekduck.com/events/go-pass-october-2026/"
+  },
+  {
+   "id": "go-pass-november-rewards",
+   "name": "GO Pass: November rewards",
+   "title": "Rewards expire",
+   "action": "claim by",
+   "s": "2026-12-01T10:00",
+   "e": "2026-12-03T10:00",
+   "source": "Leek Duck",
+   "url": "https://leekduck.com/events/go-pass-november-2026/"
   }
  ]
 }
