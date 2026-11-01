@@ -127,19 +127,19 @@ DASH_TYPE_SCALE = {
     '--type-meta-compact': 11,
     '--type-body-compact': 9,
     '--type-label': 7,
-    '--type-body-sm': 6,
+    '--type-body-sm': 7,
     '--type-overline': 6,
     '--type-button': 6,
-    '--type-caption': 5,
+    '--type-caption': 7,
     '--type-intro': 5,
     '--type-body-emphasis': 4,
     '--type-stat': 3,
     '--type-heading': 1,
-    '--type-caption-compact': 1,
+    '--type-caption-compact': 3,
     '--type-body-lg': 1,
 }
 DASH_TYPE_VALUES = ['.78rem', '.8rem', '.84rem', '.75rem', '.82rem', '.72rem', '.85rem', '.68rem', '1.05rem', '.9rem', '2rem', '1.5rem', '.62rem', '1.1rem']
-check('dashboard uses the shared semantic type scale for 76 exact font-size declarations',
+check('dashboard uses the shared semantic type scale for 81 exact font-size declarations',
       all(len(re.findall(r'font-size\s*:\s*var\(' + re.escape(token) + r'\)(?=[;}])', DASH_CSS)) == count
           for token, count in DASH_TYPE_SCALE.items()) and
       all(not re.search(r'font-size\s*:\s*' + re.escape(value) + r'(?=[;}])', DASH_CSS)
@@ -230,6 +230,13 @@ check('Today brief has three data-backed focus tiles (Next, Ending soon, Raids &
       all(token in INDEX_HTML for token in ['id="today-focus-strip"', 'id="today-focus-next"', 'id="today-focus-raids"', 'id="today-focus-ending"']) and
       all(token in DASH_JS for token in ['function renderTodayStrip', '6 * 60 * 60 * 1000', '48 * 60 * 60 * 1000', 'window.GOSEASON', 'GOSEASON.deadlines', 'gofn-season-ready', 'activity.inGame', 'activity.inPerson', 'D.rotation', 'D.maxBattles']) and
       all(token in DASH_CSS for token in ['.today-focus-strip', '.today-focus-card', 'grid-template-columns:repeat(2,minmax(0,1fr))']))
+check('Today multi-deadline tray is accessible, bounded and source-safe',
+      all(token in INDEX_HTML for token in ['id="today-deadlines"', 'id="today-deadlines-summary"', 'id="today-deadlines-list"']) and
+      all(token in DASH_JS for token in ['var trayLimit = t.getTime() + 7 * 24 * 60 * 60 * 1000', "safeUrl(d.url || '')", 'trayCandidates.slice(0, 8)', 'View all ', 'noopener noreferrer', "sourceUrl.indexOf('https://') === 0"]) and
+      all(token in DASH_CSS for token in ['.today-deadlines>summary', 'min-height:44px', '.today-deadline-item', 'var(--color-link)']) and
+      '/dash.js?v=20261102g' in APP_JS and '/dash.js?v=20261102g' in SW_JS and
+      '/dash.css?v=20261102e' in INDEX_HTML and '/dash.css?v=20261102e' in SW_JS and
+      'gofn-shell-v191' in SW_JS)
 check('season pass and deadline data is structured, source-attributed and ordered',
       all(item_id in {item.get('id') for item in SEASON_DATA.get('items', [])}
           for item_id in ['season:pass-halloween', 'season:pass-november']) and
@@ -262,7 +269,7 @@ check('base bonus and information availability controls use semantic status role
           'background: var(--color-status-info-unavailable); color: var(--color-on-status-info-unavailable); border: 1px solid var(--color-border-info-unavailable);',
       ]))
 check('versioned stylesheets are referenced by the page and precached offline',
-      all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261101k', '/dash.css?v=20261102d']))
+      all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261101k', '/dash.css?v=20261102e']))
 check('owner verification scripts are versioned and precached offline',
       '/account.js?v=20261101b' in INDEX_HTML and '/account.js?v=20261101b' in SW_JS and
       '/review.js?v=20261101b' in DASH_JS and '/review.js?v=20261101b' in SW_JS)
@@ -290,10 +297,10 @@ check('event signal chips and detail tags use semantic palette roles with unchan
           '.tg-incense{--tc:var(--color-signal-shadow)}.tg-costume{--tc:var(--color-signal-encounter)}',
       ]))
 check('offline shell cache version advances with the dashboard stylesheet token release',
-      "gofn-shell-v190" in SW_JS)
+      "gofn-shell-v191" in SW_JS)
 check('versioned dashboard scripts are referenced by the entry page and precached offline',
       '/app.js?v=20261102b' in INDEX_HTML and '/app.js?v=20261102b' in SW_JS and
-      '/dash.js?v=20261102f' in APP_JS and '/dash.js?v=20261102f' in SW_JS and
+      '/dash.js?v=20261102g' in APP_JS and '/dash.js?v=20261102g' in SW_JS and
       '/detail.js?v=20261102a' in DASH_JS and '/detail.js?v=20261102a' in SW_JS)
 check('sync PIN and account controls have one home in Menu and are precached offline',
       INDEX_HTML.index('id="acct" class="acct"') > INDEX_HTML.index('id="sub-menu"') and
@@ -485,6 +492,71 @@ with sync_playwright() as p:
               'GO Pass ends in' in live_pass_page.locator('#today-focus-ending').inner_text() and
               'GO Pass: October' in live_pass_page.locator('#today-focus-ending-meta').inner_text())
         live_pass_page.context.close()
+
+        multi_season = json.dumps({
+            'items': [{
+                'id': 'season:pass-fixture', 'label': 'GO Pass', 'name': 'GO Pass: Fixture',
+                's': '2026-10-01T10:00', 'e': '2026-11-03T10:00',
+                'url': 'https://leekduck.com/events/go-pass-fixture/', 'img_credit': 'Leek Duck'
+            }, {
+                'id': 'season:relative-source', 'label': 'Season', 'name': 'Season: Local image source',
+                's': '2026-10-01T10:00', 'e': '2026-11-04T12:00',
+                'url': '/img/ext/season-poster.webp', 'img_credit': 'Leek Duck'
+            }],
+            'deadlines': [
+                {'id': 'research-first', 'name': 'Timed Research: First', 'title': 'Research expires',
+                 'action': 'claim by', 's': '2026-11-01T10:00', 'e': '2026-11-03T12:00',
+                 'source': 'Leek Duck', 'url': 'https://leekduck.com/events/research-first/'},
+                {'id': 'rewards-second', 'name': 'GO Pass: Fixture rewards', 'title': 'Rewards expire',
+                 'action': 'claim by', 's': '2026-11-01T10:00', 'e': '2026-11-04T10:00',
+                 'source': 'Leek Duck', 'url': 'https://leekduck.com/events/go-pass-fixture/',
+                 'qualifier': 'Claim the published rewards before expiry.'},
+                {'id': 'future-research', 'name': 'Future research fixture', 'title': 'Research expires',
+                 'action': 'claim by', 's': '2026-11-04T10:00', 'e': '2026-11-05T10:00',
+                 'source': 'Leek Duck', 'url': 'https://leekduck.com/events/future-research/'},
+                {'id': 'expired-research', 'name': 'Expired research fixture', 'title': 'Research expires',
+                 'action': 'claim by', 's': '2026-10-31T10:00', 'e': '2026-11-01T10:00',
+                 'source': 'Leek Duck', 'url': 'https://leekduck.com/events/expired-research/'}
+            ]
+        })
+        multi_responses = {
+            '**/data.json': (empty_data, 200),
+            '**/world-events.json': (empty_world, 200),
+            '**/regional-events.json': (empty_world, 200),
+            '**/season.json': (multi_season, 200),
+            '**/event-moves.json': (json.dumps({'moves': []}), 200)
+        }
+        multi_page = page(clock='2026-11-02T07:36:00+11:00', extra=multi_responses)
+        multi_page.wait_for_function("document.getElementById('today-deadlines') && !document.getElementById('today-deadlines').hidden")
+        multi_tray = multi_page.locator('#today-deadlines')
+        multi_items = multi_page.locator('#today-deadlines-list li')
+        check('Today deadline tray disclosure is collapsed initially and opens by keyboard-accessible summary',
+              not multi_tray.evaluate("el => el.open"))
+        multi_page.locator('#today-deadlines-summary').focus()
+        multi_page.keyboard.press('Enter')
+        multi_page.wait_for_function("!document.getElementById('today-deadlines-list').hidden")
+        multi_text = multi_items.all_inner_texts()
+        check('Today deadline tray lists active pass, research and reward deadlines in chronological order',
+              multi_items.count() == 4 and
+              'GO Pass: Fixture' in multi_text[0] and
+              'Timed Research: First' in multi_text[1] and
+              'GO Pass: Fixture rewards' in multi_text[2] and
+              'Season: Local image source' in multi_text[3],
+              multi_text)
+        check('Today deadline tray excludes future and expired structured windows',
+              'Future research fixture' not in ' '.join(multi_text) and
+              'Expired research fixture' not in ' '.join(multi_text),
+              multi_text)
+        check('Today deadline tray links only the recorded HTTPS source URLs',
+              multi_page.locator('#today-deadlines-list a').count() == 3 and
+              multi_items.nth(3).locator('a').count() == 0 and
+              multi_page.locator('#today-deadlines-list a').evaluate_all(
+                  "els => els.every(a => a.href.startsWith('https://leekduck.com/') && a.target === '_blank' && a.rel.includes('noopener'))"))
+        check('Today deadline tray reveals its ordered list when expanded',
+              multi_tray.evaluate("el => el.open") and multi_items.count() == 4)
+        check('expanded source links meet the 44px hit-target minimum',
+              multi_page.locator('#today-deadlines-list a').evaluate_all("els => els.every(a => { const r=a.getBoundingClientRect(); return r.width >= 44 && r.height >= 44; })"))
+        multi_page.context.close()
 
         # Official event-exclusive move windows enter Today only while their published window is active.
         move_deadline_page = page(clock='2026-11-21T14:00:00+11:00', extra={

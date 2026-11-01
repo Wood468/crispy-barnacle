@@ -1255,49 +1255,121 @@
       return phase(e, t) === 'live' && !e.long && !e.allDay && label.indexOf('person') < 0 &&
         !(e.region && e.sourceStart && !e.utc) && e.end > t && e.end.getTime() <= sixHours;
     }).sort(function (a, b) { return a.end - b.end; });
-    /* Use published pass/season dates plus explicit structured claim/use deadlines. Never parse free-text notes. */
+
+    /* Build a bounded, source-backed deadline list. Never parse dates from free text. */
     var periodLimit = t.getTime() + 48 * 60 * 60 * 1000;
-    var periodCandidates = [];
+    var trayLimit = t.getTime() + 7 * 24 * 60 * 60 * 1000;
+    var periodCandidates = [], trayCandidates = [], trayKeys = Object.create(null);
+    function addTrayCandidate(candidate) {
+      if (!candidate || !(candidate.end instanceof Date)) return;
+      var endMs = candidate.end.getTime();
+      if (!Number.isFinite(endMs) || endMs <= t.getTime() || endMs > trayLimit) return;
+      var key = String(candidate.id || ((candidate.name || '') + '|' + endMs));
+      if (trayKeys[key]) return;
+      trayKeys[key] = true;
+      trayCandidates.push(candidate);
+    }
     if (window.GOSEASON && typeof window.GOSEASON.events === 'function') {
       window.GOSEASON.events().forEach(function (e) {
         var label = e && e.season && e.season.label;
         var endMs = e && e.end ? e.end.getTime() : NaN;
         if ((label === 'GO Pass' || label === 'Season') && e.start && e.start <= t &&
-            Number.isFinite(endMs) && endMs > t.getTime() && endMs <= periodLimit) {
-          periodCandidates.push({
-            name: e.name, end: e.end, title: label + ' ends', action: 'ends',
-            source: e.season.img_credit || 'Leek Duck', priority: 0
-          });
+            Number.isFinite(endMs) && endMs > t.getTime()) {
+          var candidate = {
+            id: 'period:' + e.id, name: e.name, end: e.end, title: label + ' ends', action: 'ends',
+            source: e.season.img_credit || 'Leek Duck', url: e.season.url || '', priority: 0
+          };
+          addTrayCandidate(candidate);
+          if (endMs <= periodLimit) periodCandidates.push(candidate);
         }
       });
     }
     if (window.GOSEASON && typeof window.GOSEASON.deadlines === 'function') {
       window.GOSEASON.deadlines().forEach(function (d) {
         var endMs = d && d.end ? d.end.getTime() : NaN;
-        if (d && d.start <= t && Number.isFinite(endMs) && endMs > t.getTime() && endMs <= periodLimit) {
-          periodCandidates.push({
-            name: d.name, end: d.end, title: d.title, action: d.action,
-            source: d.source || '', qualifier: d.qualifier || '', priority: 1
-          });
+        if (d && d.start <= t && Number.isFinite(endMs) && endMs > t.getTime()) {
+          var candidate = {
+            id: d.id || ('deadline:' + d.name + '|' + endMs), name: d.name, end: d.end,
+            title: d.title, action: d.action, source: d.source || '', url: d.url || '',
+            qualifier: d.qualifier || '', priority: 1
+          };
+          addTrayCandidate(candidate);
+          if (endMs <= periodLimit) periodCandidates.push(candidate);
         }
       });
     }
+    ending.forEach(function (e) {
+      addTrayCandidate({
+        id: 'event:' + e.id, name: e.name, end: e.end, title: 'Event ends', action: 'ends',
+        source: e.source || '', url: e.link || '', priority: 0
+      });
+    });
+    trayCandidates.sort(function (a, b) {
+      return a.end - b.end || (b.priority || 0) - (a.priority || 0);
+    });
     var periodEnding = periodCandidates.sort(function (a, b) {
       return a.end - b.end || b.priority - a.priority;
     })[0] || null;
+    var upcoming = trayCandidates[0] || null;
+    function etaFor(end) {
+      var hoursLeft = (end.getTime() - t.getTime()) / 36e5;
+      return hoursLeft < 1 ? 'under an hour' : hoursLeft < 24 ? Math.ceil(hoursLeft) + ' hours' : Math.ceil(hoursLeft / 24) + ' days';
+    }
     if (periodEnding && (!ending.length || periodEnding.end < ending[0].end)) {
-      var hoursLeft = (periodEnding.end.getTime() - t.getTime()) / 36e5;
-      var eta = hoursLeft < 1 ? 'under an hour' : hoursLeft < 24 ? Math.ceil(hoursLeft) + ' hours' : Math.ceil(hoursLeft / 24) + ' days';
-      setText('today-focus-ending', periodEnding.title + ' in ' + eta);
+      setText('today-focus-ending', periodEnding.title + ' in ' + etaFor(periodEnding.end));
       setText('today-focus-ending-meta', [
         periodEnding.name,
         periodEnding.action + ' ' + fmtD(periodEnding.end) + ' · ' + fmtT(periodEnding.end),
         periodEnding.source,
         periodEnding.qualifier
       ].filter(Boolean).join(' · '));
+    } else if (ending.length) {
+      setText('today-focus-ending', ending.length + ' ending within 6h');
+      setText('today-focus-ending-meta', ending[0].name + ' · ends ' + fmtT(ending[0].end));
+    } else if (upcoming) {
+      setText('today-focus-ending', upcoming.title + ' in ' + etaFor(upcoming.end));
+      setText('today-focus-ending-meta', [
+        upcoming.name,
+        upcoming.action + ' ' + fmtD(upcoming.end) + ' · ' + fmtT(upcoming.end),
+        upcoming.source
+      ].filter(Boolean).join(' · '));
     } else {
-      setText('today-focus-ending', ending.length ? ending.length + ' ending within 6h' : 'Nothing timed in the next 6h');
-      setText('today-focus-ending-meta', ending.length ? ending[0].name + ' · ends ' + fmtT(ending[0].end) : 'Timed in-game events or published deadlines');
+      setText('today-focus-ending', 'Nothing timed in the next 6h');
+      setText('today-focus-ending-meta', 'Timed in-game events or published deadlines');
+    }
+
+    var tray = $('today-deadlines'), traySummary = $('today-deadlines-summary'), trayList = $('today-deadlines-list');
+    if (tray && traySummary && trayList) {
+      if (!tray.dataset.toggleBound) {
+        tray.addEventListener('toggle', function () { trayList.hidden = !tray.open; });
+        tray.dataset.toggleBound = 'true';
+      }
+      trayList.hidden = !tray.open;
+      var visibleCandidates = trayCandidates.slice(0, 8);
+      var showTray = trayCandidates.length > 1 ||
+        (trayCandidates.length === 1 && trayCandidates[0].end.getTime() > periodLimit);
+      tray.hidden = !showTray;
+      if (showTray) {
+        traySummary.textContent = trayCandidates.length > visibleCandidates.length
+          ? 'View next ' + visibleCandidates.length + ' of ' + trayCandidates.length + ' deadlines'
+          : visibleCandidates.length === 1 ? 'View 1 upcoming deadline' : 'View all ' + visibleCandidates.length + ' deadlines';
+        trayList.innerHTML = visibleCandidates.map(function (d) {
+          var sourceUrl = safeUrl(d.url || '');
+          var source = d.source
+            ? (sourceUrl.indexOf('https://') === 0 ? '<a href="' + esc(sourceUrl) + '" target="_blank" rel="noopener noreferrer">' + esc(d.source) + '</a>' : esc(d.source))
+            : '';
+          var when = (d.action || 'ends') + ' ' + fmtD(d.end) + ' · ' + fmtT(d.end);
+          return '<li class="today-deadline-item"><strong>' + esc(d.title || 'Deadline') + '</strong>' +
+            '<span>' + esc(d.name || 'Upcoming item') + '</span>' +
+            (d.qualifier ? '<small class="today-deadline-qualifier">' + esc(d.qualifier) + '</small>' : '') +
+            '<small>' + esc(when) + (source ? ' · Source: ' + source : '') + '</small></li>';
+        }).join('');
+        trayList.hidden = !tray.open;
+      } else {
+        tray.open = false;
+        trayList.hidden = true;
+        trayList.textContent = '';
+      }
     }
   }
   function renderHomeBrief(t) {

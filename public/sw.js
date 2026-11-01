@@ -1,9 +1,9 @@
 /* GO Field Notes offline shell. Never cache /api/*, including private user-state and notification responses. */
-const SHELL_CACHE = 'gofn-shell-v190';
+const SHELL_CACHE = 'gofn-shell-v191';
 const SHELL_URLS = [
   '/', '/index.html', '/offline.html', '/offline.css',
-  '/styles.css', '/dash.css', '/dash.css?v=20261102d', '/lib.js', '/lib.js?v=20261101a', '/dedupe.js', '/dedupe.js?v=20261101b', '/move.js', '/move.js?v=20261101a',
-  '/imgerr.js', '/imgerr.js?v=20261015a', '/whatsnew.js', '/whatsnew.js?v=20261102a', '/pin.js', '/pin.js?v=20261101b', '/local-state.js', '/local-state.js?v=20261030a', '/app.js', '/app.js?v=20261102b', '/styles.css?v=20261101k', '/dash.js', '/dash.js?v=20261102f', '/detail.js', '/detail.js?v=20261102a', '/fresh.js', '/places.js', '/places.js?v=20261031b', '/review.js', '/review.js?v=20261101b', '/nudge.js', '/nudge.js?v=20261101a', '/account.js', '/account.js?v=20261101b', '/store.js', '/store.js?v=20261101a', '/season.js', '/season.js?v=20261102d', '/weekly.js', '/weekly.js?v=20261101a', '/buy.js', '/buy.js?v=20261101a', '/extra.js', '/pwa.js',
+  '/styles.css', '/dash.css', '/dash.css?v=20261102e', '/lib.js', '/lib.js?v=20261101a', '/dedupe.js', '/dedupe.js?v=20261101b', '/move.js', '/move.js?v=20261101a',
+  '/imgerr.js', '/imgerr.js?v=20261015a', '/whatsnew.js', '/whatsnew.js?v=20261102a', '/pin.js', '/pin.js?v=20261101b', '/local-state.js', '/local-state.js?v=20261030a', '/app.js', '/app.js?v=20261102b', '/styles.css?v=20261101k', '/dash.js', '/dash.js?v=20261102g', '/detail.js', '/detail.js?v=20261102a', '/fresh.js', '/places.js', '/places.js?v=20261031b', '/review.js', '/review.js?v=20261101b', '/nudge.js', '/nudge.js?v=20261101a', '/account.js', '/account.js?v=20261101b', '/store.js', '/store.js?v=20261101a', '/season.js', '/season.js?v=20261102d', '/weekly.js', '/weekly.js?v=20261101a', '/buy.js', '/buy.js?v=20261101a', '/extra.js', '/pwa.js',
   '/infographic.js', '/infographic.js?v=20261101e', '/manifest.webmanifest', '/icon.svg', '/icon-maskable.svg', '/icon-180.png', '/icon-192.png', '/icon-512.png',
   '/data.json', '/dex.json', '/event-info.json', '/forms.json', '/moves.json',
   '/places.json', '/event-details.json', '/event-moves.json', '/regional-events.json', '/world-events.json', '/best-by-type.json', '/prices.json', '/pvp.json', '/release-status.json', '/types.json',
