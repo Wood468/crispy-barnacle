@@ -51,7 +51,8 @@
   var HKEY = 'gofn-whatsnew-history';
   function loadHistory() { try { var h = JSON.parse(localStorage.getItem(HKEY) || 'null'); return h && h.html ? h : null; } catch (e) { return null; } }
   function saveHistory(html, total) { try { localStorage.setItem(HKEY, JSON.stringify({ html: html, total: total, at: Date.now() })); } catch (e) { } }
-  var st = { evDone: false, ids: [], fresh: [], changed: [], snapshot: {}, leaks: null };
+  /* idsKnown: the event list behind st.ids loaded for real (live feed, or the curated list when the feed is intentionally off). Until then nothing is written to the seen list. */
+  var st = { evDone: false, idsKnown: false, ids: [], fresh: [], changed: [], snapshot: {}, leaks: null };
   function buildBody() {
     var h = '';
     function row(href, label, ext) { return '<a href="' + href + '"' + (ext ? ' target="_blank" rel="noopener noreferrer"' : '') + '>' + label + '</a>'; }
@@ -82,11 +83,11 @@
     var total = st.fresh.length + st.changed.length + st.leaks.reduce(function (n, g) { return n + g.items.length; }, 0);
     if (!total) { box.hidden = true; box.innerHTML = ''; return; }
     box.innerHTML = '<div class="wn-row"><button type="button" class="wn-toggle" aria-expanded="false" aria-controls="wn-body"><span class="wn-n">' + total + ' new</span><span class="wn-sub">since your last visit</span><span class="wn-view" aria-hidden="true">View</span></button>' +
-      '<button type="button" class="wn-ok" aria-label="Mark updates as seen">Got it</button></div><div class="wn-body" id="wn-body" hidden>' + buildBody() + '</div>';
+      '<button type="button" class="wn-ok">Got it</button></div><div class="wn-body" id="wn-body" hidden>' + buildBody() + '</div>';
     box.hidden = false;
     box.querySelector('.wn-toggle').addEventListener('click', function () { setOpen(this.getAttribute('aria-expanded') !== 'true'); });
     box.querySelector('.wn-ok').addEventListener('click', function () {
-      save(st.ids); saveLeaks(); saveSnapshots(st.snapshot); saveHistory(buildHtml(), total);
+      if (st.idsKnown) { save(st.ids); saveSnapshots(st.snapshot); } saveLeaks(); saveHistory(buildHtml(), total);
       box.hidden = true; box.innerHTML = '';
       var brief = document.getElementById('day-brief'); if (brief && brief.focus) brief.focus({ preventScroll: true });
     });
@@ -95,7 +96,7 @@
   function render() {
     if (!st.evDone || st.leaks === null) return;
     var total = st.fresh.length + st.changed.length + st.leaks.reduce(function (n, g) { return n + g.items.length; }, 0);
-    if (!total) { if (box) { box.hidden = true; box.innerHTML = ''; } save(st.ids); saveLeaks(); return; }
+    if (!total) { if (box) { box.hidden = true; box.innerHTML = ''; } if (st.idsKnown) save(st.ids); saveLeaks(); return; }
     mount();
   }
   function run(list) {
@@ -112,7 +113,7 @@
       if (!previous) saveSnapshots(current); // Upgrade older browser state without reporting every existing event as changed.
       else st.changed = list.filter(function (e) { return relevant(e) && previous[e.id] && previous[e.id] !== current[e.id] && (!e.end || +new Date(e.end) > now); }).map(function (e) { return { id: e.id, name: e.name || e.t || e.title || e.id }; });
     }
-    st.evDone = true; render();
+    st.idsKnown = true; st.evDone = true; render();
   }
   function getJson(u) { return fetch(u).then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; }); }
   function loadLeakChanges() {
@@ -122,10 +123,18 @@
   }
   window.GOWN = { leakGroups: leakGroups, reopen: function () { mount(); setOpen(true); } };
   if (typeof fetch === 'function') loadLeakChanges(); else st.leaks = [];
+  /* Run once the event list is real. A fallback caused by a failed or stalled feed ('degraded') is a partial list: never compare or save against it. */
+  var ran = false;
+  function ready() {
+    if (ran) return;
+    var X = window.GODASH, state = X && X.eventsState ? X.eventsState() : 'pending', list = X && X.events ? X.events() : [];
+    if ((state === 'live' || state === 'curated') && list && list.length >= 10) { ran = true; try { run(list); } catch (e) { st.evDone = true; render(); } }
+  }
+  if (document.addEventListener) document.addEventListener('gofn-events-state', ready);
   var tries = 0;
   (function wait() {
-    var X = window.GODASH, list = X && X.events ? X.events() : [];
-    if (list && list.length >= 10) { try { run(list); } catch (e) { st.evDone = true; render(); } return; }
+    ready(); if (ran) return;
+    /* After 20 s show leak changes only (idsKnown stays false, so nothing is marked seen); a later live list still takes over through the event above. */
     if (++tries < 40) setTimeout(wait, 500); else { st.evDone = true; render(); }
   })();
 })();

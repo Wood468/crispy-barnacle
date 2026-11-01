@@ -1382,7 +1382,11 @@
     var activity = LIB.liveActivityCounts(liveEvents, regionalToday);
     var liveCount = activity.total;
     var todayCount = today.filter(function (e) { return e.start > t; }).length;
-    var briefTitle = $('day-brief-title');
+    var briefTitle = $('day-brief-title'), brief = $('day-brief');
+    if (brief) { brief.setAttribute('data-ready', ''); brief.removeAttribute('data-state'); }
+    var quiet = !activity.inGame && !activity.inPerson && !todayCount;
+    if ($('day-brief-stats')) $('day-brief-stats').hidden = quiet;
+    if ($('day-brief-empty')) $('day-brief-empty').hidden = !quiet;
     if ($('day-live-count')) $('day-live-count').textContent = String(activity.inGame);
     if ($('day-inperson-count')) $('day-inperson-count').textContent = String(activity.inPerson);
     if ($('day-upcoming-count')) $('day-upcoming-count').textContent = String(todayCount);
@@ -1411,6 +1415,7 @@
     });
     if (!force && tdEl.getAttribute('data-render-key') === signature) return;
     tdEl.setAttribute('data-render-key', signature);
+    tdEl.removeAttribute('data-state'); tdEl.removeAttribute('aria-busy');
     var liveToday = today.filter(function (e) { return phase(e, t) === 'live'; });
     var laterToday = today.filter(function (e) { return phase(e, t) === 'soon'; });
     var liveRegional = todayRegional.filter(function (e) { return e.start <= t && e.end > t; });
@@ -1551,6 +1556,9 @@
       document.title = 'PREVIEW · ' + document.title;
     }).catch(function () { /* banner is optional */ });
   }
+  function setSource() {
+    var el = $('evsource'); if (el) el.textContent = usingApi ? (usingReadOnly ? 'Live Leek Duck events with curated details where available. Read-only preview; nothing is stored and the background pipeline remains off.' : 'Events come from the source pipeline. Each card shows how far its source can be trusted.') : 'Events come from the curated schedule. Times are in your own time zone.';
+  }
   function start(dexList, cpData) {
     if (cpData && cpData.pokemon && cpData.cpms) {
       cpData.pokemon.forEach(function (p) {
@@ -1564,7 +1572,7 @@
     var dl = $('followdl'); if (dl) dl.innerHTML = (dexList || []).slice(0, 1025).map(function (p) { return '<option value="' + esc(p[1]) + '">'; }).join('');
     EV = EV.length ? EV : fromData();
     EV_READY = true;
-    $('evsource').textContent = usingApi ? (usingReadOnly ? 'Live Leek Duck events with curated details where available. Read-only preview; nothing is stored and the background pipeline remains off.' : 'Events come from the source pipeline. Each card shows how far its source can be trusted.') : 'Events come from the curated schedule. Times are in your own time zone.';
+    setSource();
     renderAll();
     renderCoverage();
     if (window.GO && GO.refreshDex) GO.refreshDex();
@@ -1572,21 +1580,38 @@
     var inf = document.createElement('script'); inf.src = '/infographic.js?v=20261101e'; document.body.appendChild(inf); var x = document.createElement('script'); x.src = '/extra.js?v=20261024a'; document.body.appendChild(x); var z = document.createElement('script'); z.src = '/places.js?v=20261031b'; window.GOPLACES_READY = new Promise(function (resolve) { z.onload = function () { resolve(window.GOPLACES || null); }; z.onerror = function () { resolve(null); }; }); var y = document.createElement('script'); y.src = '/detail.js?v=20261102a'; document.body.appendChild(y); document.body.appendChild(z); var w = document.createElement('script'); w.src = '/fresh.js?v=20261014a'; document.body.appendChild(w); var nv = document.createElement('script'); nv.src = '/nudge.js?v=20261101a'; document.body.appendChild(nv); var rv = document.createElement('script'); rv.src = '/review.js?v=20261101b'; document.body.appendChild(rv); var by = document.createElement('script'); by.src = '/buy.js?v=20261101a'; document.body.appendChild(by);
   }
   envBanner();
+  /* Bounded waits: a request that never answers must not leave Today blank. After FEED_TIMEOUT_MS the page renders from the curated list
+     (the same fallback as a 500 or a network error) and a stale-copy notice; if the live feed still arrives later it is applied then. */
+  var FEED_TIMEOUT_MS = 8000, TIMED_OUT = {}, feedState = 'pending'; // pending | live | curated (feed intentionally off) | degraded (fallback because the feed failed or stalled)
+  function within(p, fallback) { return Promise.race([p, new Promise(function (resolve) { setTimeout(function () { resolve(fallback); }, FEED_TIMEOUT_MS); })]); }
+  function setFeedState(s) { feedState = s; document.dispatchEvent(new Event('gofn-events-state')); }
+  function applyLive(api) {
+    if (!(api && api.enabled && api.events && api.events.length >= 10)) return false;
+    var m = dedupeLive(fromApi(api.events)); if (m.length < 10) return false;
+    EV = mergeLiveAndCurated(m, fromData()); usingApi = true; usingReadOnly = api.readOnly === true; return true;
+  }
   var dexP = fetch('/dex.json').then(function (r) { return r.json(); }).catch(function () { return []; });
   var apiP = fetch('/api/events').then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; });
   var cpP = Promise.all([
     fetch('/data/cp/pokemon.json').then(function (r) { return r.ok ? r.json() : null; }),
     fetch('/data/cp/cp-multipliers.json').then(function (r) { return r.ok ? r.json() : null; })
   ]).then(function (a) { return a[0] && a[1] ? { pokemon: a[0], cpms: a[1] } : null; }).catch(function () { return null; });
-  Promise.all([dexP, apiP, cpP]).then(function (R) {
-    var api = R[1];
+  Promise.all([within(dexP, []), within(apiP, TIMED_OUT), within(cpP, null)]).then(function (R) {
+    var api = R[1], stalled = api === TIMED_OUT; if (stalled) api = null;
     if (!api && window.GONET && navigator.onLine !== false) window.GONET.fail('Could not load the latest events. Showing the saved copy.');
-    if (api && api.enabled && api.events && api.events.length >= 10) { var m = dedupeLive(fromApi(api.events)); if (m.length >= 10) { EV = mergeLiveAndCurated(m, fromData()); usingApi = true; usingReadOnly = api.readOnly === true; } }
+    applyLive(api);
     start(R[0], R[2]);
+    setFeedState(!api ? 'degraded' : (usingApi ? 'live' : 'curated'));
+    if (stalled) apiP.then(function (late) {
+      if (!applyLive(late)) return;
+      setSource(); renderAll(); renderCoverage();
+      if (window.GONET && window.GONET.clear) window.GONET.clear();
+      setFeedState('live');
+    });
   });
   (function () { var q = document.getElementById('evq'), tm; if (!q) return;
     q.addEventListener('input', function () { clearTimeout(tm); tm = setTimeout(function () { evQ = q.value.trim().toLowerCase(); renderStrip(); renderTimeline(); }, 150); });
     document.addEventListener('click', function (e) { if (e.target.closest('[data-clearq]')) { q.value = ''; evQ = ''; renderStrip(); renderTimeline(); q.focus(); } });
   })();
-  window.GODASH = { regionalEvents: function () { return REG.filter(function (x) { return x.scope !== 'global' && x.end > now(); }).map(function (x) { return Object.assign({ world: true, kind: 'event' }, x); }); }, worldEvents: function () { return REG.filter(function (x) { return x.scope === 'global' && x.end > now(); }).map(function (x) { return Object.assign({ world: true, kind: 'event' }, x); }); }, mkEvent: mkEvent, raidSlots: raidSlots, usGet: usGet, usSet: usSet, usStatus: function () { return usStatus; }, renderAll: renderAll, DEXBY: DEXBY, DEXNAME: DEXNAME, art: art, baseOf: baseOf, countdown: countdown, priority: function () { return priority(now()); }, events: function () { return EV; }, mergeLiveAndCurated: mergeLiveAndCurated, ownState: ownState, whenText: whenText, timeMeta: timeMeta, signalTags: signalTags, statusChip: statusChip, kindOf: kindOf, kindHidden: kindHidden, isSaved: isSaved, featArts: featArts, monArt: monArt, signalChips: signalChips, cpRows: cpRows, hundoPair: hundoPair, specialArt: specialArt, hasTag: hasTag, IMG_PARTICLE: IMG_PARTICLE, IMG_POWERSPOT: IMG_POWERSPOT, cpSpecies: cpSpecies, hundoLabels: hundoLabels, genConfirmed: genConfirmed, setGenConfirmed: setGenConfirmed, DEXGEN: DEXGEN };
+  window.GODASH = { regionalEvents: function () { return REG.filter(function (x) { return x.scope !== 'global' && x.end > now(); }).map(function (x) { return Object.assign({ world: true, kind: 'event' }, x); }); }, worldEvents: function () { return REG.filter(function (x) { return x.scope === 'global' && x.end > now(); }).map(function (x) { return Object.assign({ world: true, kind: 'event' }, x); }); }, mkEvent: mkEvent, raidSlots: raidSlots, usGet: usGet, usSet: usSet, usStatus: function () { return usStatus; }, renderAll: renderAll, DEXBY: DEXBY, DEXNAME: DEXNAME, art: art, baseOf: baseOf, countdown: countdown, priority: function () { return priority(now()); }, events: function () { return EV; }, eventsState: function () { return feedState; }, mergeLiveAndCurated: mergeLiveAndCurated, ownState: ownState, whenText: whenText, timeMeta: timeMeta, signalTags: signalTags, statusChip: statusChip, kindOf: kindOf, kindHidden: kindHidden, isSaved: isSaved, featArts: featArts, monArt: monArt, signalChips: signalChips, cpRows: cpRows, hundoPair: hundoPair, specialArt: specialArt, hasTag: hasTag, IMG_PARTICLE: IMG_PARTICLE, IMG_POWERSPOT: IMG_POWERSPOT, cpSpecies: cpSpecies, hundoLabels: hundoLabels, genConfirmed: genConfirmed, setGenConfirmed: setGenConfirmed, DEXGEN: DEXGEN };
 })();
