@@ -11,6 +11,9 @@
   /* Event-signal palette roles shared by agenda chips and detail tags. */
   --color-signal-debut:#12A594; --color-signal-shiny:#F5C542; --color-signal-shadow:#8B5CF6; --color-signal-encounter:#3E63DD;
   --color-signal-dynamax:#E5484D; --color-signal-max-particles:#C77DFF; --color-signal-power-spot:#2B8A9E; --color-signal-max-particle-tag:#8E4EC6;
+  /* Feature-signal roles for boosted odds, ticketed activities and encounter tags. */
+  --color-signal-boosted-shiny:#FF9F1C; --color-signal-boosted-shiny-tag:#F59E0B; --color-signal-shiny-debut:#D65BD0; --color-signal-ticket:#E93D82;
+  --color-signal-power:#E5484D; --color-signal-raid:#E5484D; --color-signal-egg:#E8A33D; --color-signal-wild:#30A46C; --color-signal-transfer-candy:#35B8C9;
   /* Source-freshness state roles; preserve the established indicator hues. */
   --color-source-fresh:#6BD18A; --color-source-stale:#E8B84A; --color-source-failed:#FF9B8F;
   --glass:var(--surface-glass); --ring:var(--border-subtle);
@@ -628,8 +631,8 @@ button.igcheck{min-height:44px}
 .tg{display:inline-flex;align-items:center;gap:var(--space-1);padding:3px var(--space-2) 3px 6px;border-radius:var(--radius-pill);border:1px solid var(--tc,var(--border-subtle));background:color-mix(in srgb,var(--tc,#888) 16%,transparent);font:800 var(--type-caption)/1.2 var(--font-body);letter-spacing:.02em}
 .tg svg{width:13px;height:13px;color:var(--tc)}.tg img{width:15px;height:15px;object-fit:contain}
 .tg-w{position:relative;display:inline-flex;margin-right:3px}.tg-w i{position:absolute;right:-5px;bottom:-4px;width:11px;height:11px;border-radius:50%;background:var(--color-signal-debut);color:#fff;font:800 .6rem/11px var(--font-body);text-align:center;font-style:normal}
-.tg-debut{--tc:var(--color-signal-debut)}.tg-shinydebut{--tc:var(--color-signal-shiny)}.tg-maxdebut{--tc:var(--color-signal-dynamax)}.tg-boostedshiny{--tc:#F59E0B}.tg-shiny{--tc:var(--color-signal-shiny)}
-.tg-incense{--tc:var(--color-signal-shadow)}.tg-costume{--tc:var(--color-signal-encounter)}.tg-power{--tc:#E5484D}.tg-raid{--tc:#E5484D}.tg-egg{--tc:#E8A33D}.tg-wild{--tc:#30A46C}
+.tg-debut{--tc:var(--color-signal-debut)}.tg-shinydebut{--tc:var(--color-signal-shiny)}.tg-maxdebut{--tc:var(--color-signal-dynamax)}.tg-boostedshiny{--tc:var(--color-signal-boosted-shiny-tag)}.tg-shiny{--tc:var(--color-signal-shiny)}
+.tg-incense{--tc:var(--color-signal-shadow)}.tg-costume{--tc:var(--color-signal-encounter)}.tg-power{--tc:var(--color-signal-power)}.tg-raid{--tc:var(--color-signal-raid)}.tg-egg{--tc:var(--color-signal-egg)}.tg-wild{--tc:var(--color-signal-wild)}
 
 .signal-highlight-shiny-debut{border-color:color-mix(in srgb,#F5C542 80%,var(--border-subtle));background:color-mix(in srgb,#F5C542 26%,var(--surface-glass));color:var(--text,#f2f4f8)}
 .signal-highlight-dynamax-debut{border-color:color-mix(in srgb,var(--color-signal-dynamax) 75%,var(--border-subtle));background:color-mix(in srgb,var(--color-signal-dynamax) 24%,var(--surface-glass));color:var(--text,#f2f4f8)}
@@ -640,7 +643,7 @@ button.igcheck{min-height:44px}
 .feat-mon{display:inline-flex;flex-direction:column;align-items:center;gap:var(--space-1)}
 .cp-under{display:inline-flex;align-items:baseline;gap:5px;font:700 var(--type-overline)/1 var(--font-mono,monospace);color:var(--color-text);white-space:nowrap}
 .cp-under b{font-weight:800}.cp-under b.wb{color:#7DB8FF}.cp-under s{text-decoration:none;color:var(--color-text-muted);font-weight:400}
-.signal-ticket{border-color:color-mix(in srgb,#E93D82 70%,var(--border-subtle));background:color-mix(in srgb,#E93D82 20%,var(--surface-glass));color:var(--text,#f2f4f8)}
+.signal-ticket{border-color:color-mix(in srgb,var(--color-signal-ticket) 70%,var(--border-subtle));background:color-mix(in srgb,var(--color-signal-ticket) 20%,var(--surface-glass));color:var(--text,#f2f4f8)}
 
 /* Dynamax: animated sprite, bigger, with the emblem */
 .max-art.is-dyn{position:relative;display:inline-flex;align-items:center;justify-content:center}
@@ -725,9 +728,9 @@ button.igcheck{min-height:44px}
 .signal .sig-ico{width:14px;height:14px;margin-right:var(--space-1);vertical-align:-2px}
 .sig-up{margin:0 5px 0 -3px;font:900 var(--type-overline)/1 var(--font-body);color:#FFB020}
 .signal-shiny,.signal-highlight-new-shiny{border-color:color-mix(in srgb,#F5C542 60%,var(--border-subtle));background:color-mix(in srgb,#F5C542 18%,var(--surface-glass))}
-.signal-highlight-boosted-shiny,.signal-highlight-boosted-shiny-odds,.signal-boosted-shiny-odds{border-color:color-mix(in srgb,#FF9F1C 70%,var(--border-subtle));background:color-mix(in srgb,#FF9F1C 22%,var(--surface-glass))}
-.signal-highlight-shiny-debut{border-color:color-mix(in srgb,#D65BD0 65%,var(--border-subtle));background:color-mix(in srgb,#D65BD0 20%,var(--surface-glass))}
-.signal-transfer-candy{border-color:color-mix(in srgb,#35B8C9 65%,var(--border-subtle));background:color-mix(in srgb,#35B8C9 20%,var(--surface-glass))}
+.signal-highlight-boosted-shiny,.signal-highlight-boosted-shiny-odds,.signal-boosted-shiny-odds{border-color:color-mix(in srgb,var(--color-signal-boosted-shiny) 70%,var(--border-subtle));background:color-mix(in srgb,var(--color-signal-boosted-shiny) 22%,var(--surface-glass))}
+.signal-highlight-shiny-debut{border-color:color-mix(in srgb,var(--color-signal-shiny-debut) 65%,var(--border-subtle));background:color-mix(in srgb,var(--color-signal-shiny-debut) 20%,var(--surface-glass))}
+.signal-transfer-candy{border-color:color-mix(in srgb,var(--color-signal-transfer-candy) 65%,var(--border-subtle));background:color-mix(in srgb,var(--color-signal-transfer-candy) 20%,var(--surface-glass))}
 /* Hide: a small corner button, so the footer buttons keep their room */
 .evc-top{align-items:center}
 .hide-x{flex:none;width:44px;height:44px;margin-left:-3px;margin-right:-9px;padding:0;display:grid;place-items:center;border:0;border-radius:50%;background:transparent;color:var(--color-text-muted);font:700 var(--type-label)/1 var(--font-body);cursor:pointer;opacity:.7;touch-action:manipulation}
