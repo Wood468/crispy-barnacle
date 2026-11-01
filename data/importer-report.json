@@ -1,5 +1,5 @@
 {
- "runAt": "2026-11-01T07:39:48.335Z",
+ "runAt": "2026-11-01T15:17:18.283Z",
  "sources": {
   "official": {
    "listed": 24,
@@ -10,13 +10,13 @@
    "error": ""
   },
   "hub": {
-   "listed": 15,
+   "listed": 14,
    "error": ""
   }
  },
  "pagesRead": 80,
  "events": 89,
- "worldEvents": 59,
+ "worldEvents": 58,
  "worldUndated": [
   "GO Wild Area Stamp Rally"
  ],
@@ -105,11 +105,6 @@
    "source": "hub",
    "title": "Pokémon GO Raid Hour Schedule (November 2026)",
    "url": "https://pokemongohub.net/post/guide/raid-hour-schedule/"
-  },
-  {
-   "source": "hub",
-   "title": "Pokémon GO Raid Schedule & Current Bosses (November 2026)",
-   "url": "https://pokemongohub.net/post/guide/current-go-raids/"
   }
  ],
  "intl": {
@@ -247,14 +242,16 @@
    "event": "Into the Wild",
    "field": "bonuses",
    "missingFrom": [
-    "official"
+    "official",
+    "hub"
    ]
   },
   {
    "event": "Into the Wild",
    "field": "featured",
    "missingFrom": [
-    "official"
+    "official",
+    "hub"
    ]
   },
   {
@@ -266,23 +263,34 @@
   },
   {
    "event": "Into the Wild",
+   "field": "eggs",
+   "missingFrom": [
+    "official",
+    "leekduck"
+   ]
+  },
+  {
+   "event": "Into the Wild",
    "field": "research",
    "missingFrom": [
-    "official"
+    "official",
+    "hub"
    ]
   },
   {
    "event": "Into the Wild",
    "field": "shiny",
    "missingFrom": [
-    "official"
+    "official",
+    "hub"
    ]
   },
   {
    "event": "Into the Wild",
    "field": "tickets",
    "missingFrom": [
-    "official"
+    "official",
+    "hub"
    ]
   },
   {
@@ -307,24 +315,38 @@
    ]
   },
   {
-   "event": "Max Monday: Pokémon to be announced",
-   "field": "raids",
+   "event": "Dynamax Machop during Max Monday",
+   "field": "bonuses",
    "missingFrom": [
     "leekduck"
    ]
   },
   {
-   "event": "Max Monday: Pokémon to be announced",
+   "event": "Dynamax Machop during Max Monday",
+   "field": "research",
+   "missingFrom": [
+    "leekduck"
+   ]
+  },
+  {
+   "event": "Dynamax Machop during Max Monday",
    "field": "shiny",
    "missingFrom": [
     "leekduck"
    ]
   },
   {
-   "event": "Max Monday: Pokémon to be announced",
-   "field": "costumes",
+   "event": "Dynamax Machop during Max Monday",
+   "field": "moves",
    "missingFrom": [
     "leekduck"
+   ]
+  },
+  {
+   "event": "Dynamax Machop during Max Monday",
+   "field": "dates",
+   "missingFrom": [
+    "hub"
    ]
   },
   {

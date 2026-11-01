@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-01T07:39:48.333Z",
+ "updated": "2026-11-01T15:17:18.281Z",
  "events": [
   {
    "id": "w-pokemon-fossil-museum-2026",
@@ -419,7 +419,7 @@
   {
    "id": "w-fc-seoul",
    "name": "FC Seoul",
-   "place": "South Korea",
+   "place": "Seoul, South Korea",
    "area": "Asia",
    "scope": "regional",
    "start": "2026-10-24",
@@ -427,17 +427,12 @@
    "datesKnown": true,
    "sources": [
     {
-     "id": "official",
-     "name": "Pokémon GO (official)",
-     "url": "https://pokemongo.com/ko/news/fc-seoul-2026/"
-    },
-    {
      "id": "serebii",
      "name": "Serebii",
      "url": "https://www.serebii.net/pokemongo/reallifeevents.shtml"
     }
    ],
-   "status": "official",
+   "status": "single",
    "seen": "2026-11-01"
   },
   {
@@ -463,25 +458,6 @@
    ],
    "status": "official",
    "seen": "2026-10-24"
-  },
-  {
-   "id": "w-pok-mon-go-raid-schedule-current-bosses-november-2",
-   "name": "Pokémon GO Raid Schedule & Current Bosses (November 2026)",
-   "place": "",
-   "area": "Worldwide",
-   "scope": "global",
-   "start": "2026-10-28",
-   "end": "2026-11-03",
-   "datesKnown": true,
-   "sources": [
-    {
-     "id": "hub",
-     "name": "Pokémon GO Hub",
-     "url": "https://pokemongohub.net/post/guide/current-go-raids/"
-    }
-   ],
-   "status": "single",
-   "seen": "2026-11-01"
   },
   {
    "id": "w-halloween",
@@ -1092,7 +1068,7 @@
     {
      "id": "official",
      "name": "Pokémon GO (official)",
-     "url": "https://pokemongo.com/ko/news/go-wild-area-stamp-rally-details-2026/"
+     "url": "https://pokemongo.com/ja/news/go-wild-area-stamp-rally-details-2026/"
     }
    ],
    "status": "official",

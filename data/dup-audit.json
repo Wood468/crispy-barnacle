@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-01T07:39:48.669Z",
+ "updated": "2026-11-01T15:17:18.726Z",
  "joinedThisRun": [
   {
    "kept": "w-pokemon-fossil-museum-2026",
@@ -182,25 +182,6 @@
     "list": "curated"
    },
    "why": "dates fit and 1 shared word"
-  },
-  {
-   "a": {
-    "id": "w-pok-mon-go-raid-schedule-current-bosses-november-2",
-    "name": "Pokémon GO Raid Schedule & Current Bosses (November 2026)",
-    "place": "",
-    "start": "2026-10-28",
-    "end": "2026-11-03",
-    "list": "world"
-   },
-   "b": {
-    "id": "w-pok-mon-go-november-2026-event-calendar-all-events",
-    "name": "Pokémon GO November 2026 Event Calendar: All Events, Raids & Bonuses",
-    "place": "",
-    "start": "2026-11-02",
-    "end": "2026-11-02",
-    "list": "world"
-   },
-   "why": "dates fit and 2 shared words"
   }
  ],
  "odd": []
