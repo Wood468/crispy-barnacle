@@ -240,8 +240,8 @@ check('Today multi-deadline tray is accessible, bounded and source-safe',
       all(token in DASH_JS for token in ['var trayLimit = t.getTime() + 7 * 24 * 60 * 60 * 1000', "safeUrl(d.url || '')", 'trayCandidates.slice(0, 8)', 'View all ', 'noopener noreferrer', "sourceUrl.indexOf('https://') === 0"]) and
       all(token in DASH_CSS for token in ['.today-deadlines>summary', 'min-height:44px', '.today-deadline-item', 'var(--color-link)']) and
       '/dash.js?v=20261102g' in APP_JS and '/dash.js?v=20261102g' in SW_JS and
-      '/dash.css?v=20261102f' in INDEX_HTML and '/dash.css?v=20261102f' in SW_JS and
-      'gofn-shell-v192' in SW_JS)
+      '/dash.css?v=20261102g' in INDEX_HTML and '/dash.css?v=20261102g' in SW_JS and
+      'gofn-shell-v193' in SW_JS)
 check('season pass and deadline data is structured, source-attributed and ordered',
       all(item_id in {item.get('id') for item in SEASON_DATA.get('items', [])}
           for item_id in ['season:pass-halloween', 'season:pass-november']) and
@@ -274,7 +274,7 @@ check('base bonus and information availability controls use semantic status role
           'background: var(--color-status-info-unavailable); color: var(--color-on-status-info-unavailable); border: 1px solid var(--color-border-info-unavailable);',
       ]))
 check('versioned stylesheets are referenced by the page and precached offline',
-      all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261101k', '/dash.css?v=20261102f']))
+      all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261102a', '/dash.css?v=20261102g']))
 check('owner verification scripts are versioned and precached offline',
       '/account.js?v=20261101b' in INDEX_HTML and '/account.js?v=20261101b' in SW_JS and
       '/review.js?v=20261101b' in DASH_JS and '/review.js?v=20261101b' in SW_JS)
@@ -302,7 +302,7 @@ check('event signal chips and detail tags use semantic palette roles with unchan
           '.tg-incense{--tc:var(--color-signal-shadow)}.tg-costume{--tc:var(--color-signal-encounter)}',
       ]))
 check('offline shell cache version advances with the dashboard stylesheet token release',
-      "gofn-shell-v192" in SW_JS)
+      "gofn-shell-v193" in SW_JS)
 check('versioned dashboard scripts are referenced by the entry page and precached offline',
       '/app.js?v=20261102b' in INDEX_HTML and '/app.js?v=20261102b' in SW_JS and
       '/dash.js?v=20261102g' in APP_JS and '/dash.js?v=20261102g' in SW_JS and
@@ -2255,6 +2255,26 @@ with sync_playwright() as p:
                 over=m['sw']>m['iw'] or abs(m['vw']-m['iw'])>0.5
                 check('width %d, %s: no horizontal overflow and visual viewport equals window width'%(width,label),not over,m)
             wpg.context.close()
+        # 1b. Schedule under fixed clocks with and without a live .evc.cmp card (data-dependent footer overflow vs the 7-day strip alone), plus the week strip itself
+        for clock_name,clock,want_cmp in (('no live card (Sun 20 Dec)','2026-12-20T10:00:00+11:00',False),('live card (Fri 9 Oct)','2026-10-09T22:45:00+11:00',True)):
+            for width in (320,375,390,430):
+                spg=page(clock=clock,width=width,height=844,mobile=True)
+                open_tab(spg,'events')
+                m=spg.evaluate("""() => {
+                    const cw=window.visualViewport.width, wide=[];
+                    const clipped=el=>{ for(let n=el.parentElement;n&&n!==document.body;n=n.parentElement){ if(getComputedStyle(n).overflowX!=='visible') return true; } return false; };
+                    document.querySelectorAll('main *').forEach(el=>{ const r=el.getBoundingClientRect(); if(r.width>0&&r.right>cw+1&&!clipped(el)) wide.push([Math.round(r.right),el.tagName.toLowerCase()+'.'+String(el.className).trim().split(/\\s+/).join('.')]); });
+                    const days=[...document.querySelectorAll('#weekstrip .wd')].map(d=>d.getBoundingClientRect()), strip=document.querySelector('#weekstrip').getBoundingClientRect();
+                    const feet=[...document.querySelectorAll('#tab-events .evc.cmp .evc-foot > *, #tab-events .evc.cmp .evc-top > .hide-x')].map(e=>e.getBoundingClientRect());
+                    return {sw:document.documentElement.scrollWidth,iw:window.innerWidth,vw:cw,wide:wide.slice(0,3),days:days.length,dayMinW:Math.min(...days.map(r=>r.width)),dayMinH:Math.min(...days.map(r=>r.height)),
+                            stripRight:strip.right,cmp:document.querySelectorAll('#tab-events .evc.cmp').length,
+                            feetInside:feet.every(r=>r.right<=cw+0.5&&r.height>=43.5)};
+                }""")
+                tag='Schedule %s, %dpx'%(clock_name,width)
+                check(tag+': no horizontal overflow, viewport equals window',m['sw']<=m['iw'] and abs(m['vw']-m['iw'])<=0.5 and not m['wide'],m)
+                check(tag+': all 7 days exist, are 44px+ in both directions and the week strip stays inside the screen',m['days']==7 and m['dayMinH']>=43.5 and m['dayMinW']>=43.5 and m['stripRight']<=m['vw']+0.5,m)
+                check(tag+': %s live card on this clock, and its Details, infographic, star and hide controls are inside the card and 44px high'%('a' if want_cmp else 'no'),(m['cmp']>0)==want_cmp and m['feetInside'],m)
+                spg.context.close()
         # 2. console guard: Today/Schedule/Raids/Collection loads at 390 and 1280 must be free of console errors, page errors and failed requests.
         # Fonts and R2 pictures are mocked in page(), so they need no allow-list. The only known-benign noise is the browser's own
         # "Failed to load resource" line for /api/* calls that the static test server (or an explicit mock) answers with 404/401.
@@ -2285,7 +2305,10 @@ with sync_playwright() as p:
           document.querySelectorAll('a[href],button,[role=button],input:not([type=hidden]),summary,select,textarea,[tabindex]').forEach(el=>{
             if(el.tagName!=='A'&&el.tagName!=='BUTTON'&&el.tabIndex<0&&!el.matches('input,summary,select,textarea,[role=button]')) return;
             if(el.disabled) return;
-            const r=el.getBoundingClientRect(), cs=getComputedStyle(el);
+            if(el.closest('[inert]')) return;  // inert subtrees (the legacy #prio test hook) cannot be focused or tapped, so they are not touch targets
+            // A checkbox or radio inside (or for) a <label> is tapped through the label, so the label is its hit area.
+            const lab=(el.matches('input[type=checkbox],input[type=radio]')&&el.labels&&el.labels[0])||null;
+            const r=(lab||el).getBoundingClientRect(), cs=getComputedStyle(el);
             if(r.width<=0||r.height<=0||cs.visibility!=='visible') return;
             const w=Math.round(r.width), h=Math.round(r.height);
             if(w>=44&&h>=44) return;
@@ -2311,6 +2334,59 @@ with sync_playwright() as p:
         gone=[e['selector'] for e in base if e['selector'] not in found]
         print('NOTE touch targets: %d known undersized selectors (baseline %d)%s'%(len(found)-len(new),len(base),'; fixed since baseline (remove from file): '+', '.join(gone[:10]) if gone else ''))
         check('touch targets: no new undersized (<44x44) interactive elements at 390px beyond the committed baseline',not new,[(n['selector'],n['size'],n['tabs']) for n in new[:8]])
+
+        # 4. contrast of every visible enabled action pill (and the what's-new "Got it") against its effective background (opacity included): >= 4.5:1.
+        # Covers the four tabs, the Menu sync/settings panel and the owner infographic review screen (dark theme, the shipped design).
+        PILL_JS=r"""() => {
+  const parse = c => {
+    let m = c.match(/^rgba?\(([^)]+)\)$/);
+    if (m) { const p = m[1].split(/[,\s/]+/).filter(Boolean).map(Number); return [p[0], p[1], p[2], p.length > 3 ? p[3] : 1]; }
+    m = c.match(/^color\(srgb ([^)]+)\)$/);
+    if (m) { const p = m[1].split(/[\s/]+/).filter(Boolean).map(Number); return [p[0] * 255, p[1] * 255, p[2] * 255, p.length > 3 ? p[3] : 1]; }
+    return [0, 0, 0, 0];
+  };
+  const over = (top, bot) => { const a = top[3] + bot[3] * (1 - top[3]); if (a <= 0) return [0, 0, 0, 0]; return [0, 1, 2].map(i => (top[i] * top[3] + bot[i] * bot[3] * (1 - top[3])) / a).concat(a); };
+  const mix = (c, back, o) => [0, 1, 2].map(i => c[i] * o + back[i] * (1 - o)).concat(1);
+  const lum = c => { const f = v => { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); }; return 0.2126 * f(c[0]) + 0.7152 * f(c[1]) + 0.0722 * f(c[2]); };
+  const ratio = (a, b) => { const x = lum(a), y = lum(b); return (Math.max(x, y) + 0.05) / (Math.min(x, y) + 0.05); };
+  const backdrop = el => { const chain = []; for (let n = el.parentElement; n; n = n.parentElement) chain.push(parse(getComputedStyle(n).backgroundColor)); let c = [0, 0, 0, 1]; for (let i = chain.length - 1; i >= 0; i--) c = over(chain[i], c); return c; };
+  const out = [];
+  document.querySelectorAll('button.pill, a.pill, .wn-ok').forEach(el => {
+    if (el.disabled || el.getAttribute('aria-disabled') === 'true') return;
+    const r = el.getBoundingClientRect(), cs = getComputedStyle(el);
+    if (r.width <= 0 || r.height <= 0 || cs.visibility !== 'visible' || (el.checkVisibility && !el.checkVisibility())) return;
+    let o = 1; for (let n = el; n; n = n.parentElement) o *= parseFloat(getComputedStyle(n).opacity);
+    const back = backdrop(el);
+    const ownBg = over(parse(cs.backgroundColor), back);
+    const fg = over(parse(cs.color), ownBg);
+    const bgF = mix(ownBg, back, o), fgF = mix(fg, back, o);
+    const ratioV = ratio(fgF, bgF);
+    out.push({ text: (el.textContent || '').trim().replace(/\s+/g, ' ').slice(0, 40), cls: el.className, ratio: Math.round(ratioV * 100) / 100, opacity: o, fg: cs.color, bg: cs.backgroundColor });
+  });
+  return out;
+}"""
+        queue_fx=json.dumps({'items':[{'id':'discord:contrast-fixture','title':'Contrast review fixture','image':'/infographics/contrast-fixture.png','source':'discord','publishedAt':'2026-11-01T00:00:00Z','guesses':[]}]})
+        cpg=page(pin=True,mobile=True,extra={'**/infographic-queue.json*':(queue_fx,200),'**/api/ig-decisions':(json.dumps({'decisions':[]}),200),'**/api/auth/users':(json.dumps({'users':[]}),200)})
+        cpg.wait_for_function("document.documentElement.getAttribute('data-role')==='owner' && !document.getElementById('hireview').hidden",timeout=10000)
+        pill_rows=[]
+        def grab_pills(where):
+            for r in cpg.evaluate(PILL_JS): r['where']=where; pill_rows.append(r)
+        grab_pills('Today')
+        for tab_id,tab_label in MAIN_TABS[1:]:
+            open_tab(cpg,tab_id); grab_pills(tab_label)
+        cpg.click('#hmenu'); cpg.wait_for_selector('#sub-menu:not([hidden])')
+        cpg.evaluate("document.querySelectorAll('#sub-menu details').forEach(d=>d.open=true)"); cpg.wait_for_timeout(300)
+        grab_pills('Menu sync and settings')
+        if cpg.locator('#hireview').is_visible():
+            cpg.click('#hireview'); cpg.wait_for_selector('#igreview:not([hidden])'); cpg.wait_for_timeout(300)
+        grab_pills('Infographic review')
+        names={r['text'] for r in pill_rows}
+        check('contrast: pills were found on all four tabs, the sync panel and the review screen (Approve, Discard, This week, Month, Sync & account settings, Got it)',
+              len({r['where'] for r in pill_rows})>=5 and all(any(n in t for t in names) for n in ('Approve','Discard','This week','Month overview','Sync & account settings','Got it')),sorted(names)[:30])
+        low=[(r['where'],r['text'],r['ratio']) for r in pill_rows if r['ratio']<4.5]
+        check('contrast: every visible enabled button.pill (and Got it) is at least 4.5:1 against its effective background, opacity included',not low,low[:8])
+        check('no pill carries a blanket opacity while enabled',all(r['opacity']>=0.999 for r in pill_rows),[(r['text'],r['opacity']) for r in pill_rows if r['opacity']<0.999][:5])
+        cpg.context.close()
     b.close()
 # Dashboard radius adoption: shared scale values are expressed through semantic roles.
 check('dashboard shared radius declarations consume semantic radius tokens',

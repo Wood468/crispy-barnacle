@@ -700,6 +700,7 @@ button.igcheck{min-height:44px}
 .dd .body>*{min-width:0}
 @media (max-width:420px){.evd-bar .tag{display:none}.evd-bar{gap:var(--space-2)}.evd-bar .info-open{margin-left:auto}}
 .foot-dd{background:none;border:0;padding:0}.foot-dd summary{font:600 var(--type-button) var(--font-body);text-transform:none;letter-spacing:0;padding:6px 0}.foot-dd .body{padding:6px 0}
+.foot-dd .body a{display:flex;align-items:center;min-height:44px}
 
 /* From the sources */
 .srcfact{margin:0 0 var(--space-2);display:flex;flex-wrap:wrap;gap:var(--space-1) var(--space-2);align-items:center}
@@ -1319,6 +1320,9 @@ select,
   scroll-snap-align:start;
 }
 
+/* Schedule: breathing room above every section heading in the timeline (was 0 for "Happening now", directly under the week strip). */
+#evtimeline > .sec2,
+#evtimeline > .sec2.dh { margin: var(--space-6) 0 var(--space-3); }
 
 /* Live state: keep the urgency cue, but do not use saturated kind colours as small text. */
 .evc.live .cdn,
