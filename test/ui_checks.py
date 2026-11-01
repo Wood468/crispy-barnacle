@@ -241,7 +241,7 @@ check('base bonus and information availability controls use semantic status role
           'background: var(--color-status-info-unavailable); color: var(--color-on-status-info-unavailable); border: 1px solid var(--color-border-info-unavailable);',
       ]))
 check('versioned stylesheets are referenced by the page and precached offline',
-      all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261101k', '/dash.css?v=20261101v']))
+      all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261101k', '/dash.css?v=20261101w']))
 check('owner verification scripts are versioned and precached offline',
       '/account.js?v=20261101b' in INDEX_HTML and '/account.js?v=20261101b' in SW_JS and
       '/review.js?v=20261101b' in DASH_JS and '/review.js?v=20261101b' in SW_JS)
@@ -255,8 +255,21 @@ check('source freshness indicators use semantic roles with unchanged colours',
           '.fr-failed{border-color:var(--color-source-failed)}.fr-failed::before{background:var(--color-source-failed)}',
           '.fr-sum-stale,.fr-sum-degraded{color:var(--color-source-stale)}.fr-sum-failed{color:var(--color-source-failed)}',
       ]))
+check('event signal chips and detail tags use semantic palette roles with unchanged colours',
+      all(token in DASH_CSS for token in [
+          '--color-signal-debut:#12A594; --color-signal-shiny:#F5C542; --color-signal-shadow:#8B5CF6; --color-signal-encounter:#3E63DD;',
+          '.signal-debut,.signal-community-day{border-color:color-mix(in srgb,var(--color-signal-debut) 45%,var(--border-subtle));background:color-mix(in srgb,var(--color-signal-debut) 13%,var(--surface-glass))}',
+          '.signal-shiny{border-color:color-mix(in srgb,var(--color-signal-shiny) 48%,var(--border-subtle));background:color-mix(in srgb,var(--color-signal-shiny) 12%,var(--surface-glass))}',
+          '.signal-shadow{border-color:color-mix(in srgb,var(--color-signal-shadow) 48%,var(--border-subtle));background:color-mix(in srgb,var(--color-signal-shadow) 12%,var(--surface-glass))}',
+          '.signal-background,.signal-costume{border-color:color-mix(in srgb,var(--color-signal-encounter) 45%,var(--border-subtle));background:color-mix(in srgb,var(--color-signal-encounter) 12%,var(--surface-glass))}',
+          '.signal-highlight-debut{border-color:color-mix(in srgb,var(--color-signal-debut) 70%,var(--border-subtle));',
+          '.signal-highlight-new-shiny{border-color:color-mix(in srgb,var(--color-signal-shiny) 75%,var(--border-subtle));',
+          '.signal-highlight-incense-encounters{border-color:color-mix(in srgb,var(--color-signal-shadow) 65%,var(--border-subtle));',
+          '.tg-debut{--tc:var(--color-signal-debut)}.tg-shinydebut{--tc:var(--color-signal-shiny)}',
+          '.tg-incense{--tc:var(--color-signal-shadow)}.tg-costume{--tc:var(--color-signal-encounter)}',
+      ]))
 check('offline shell cache version advances with the dashboard stylesheet token release',
-      "gofn-shell-v180" in SW_JS)
+      "gofn-shell-v181" in SW_JS)
 check('versioned dashboard scripts are referenced by the entry page and precached offline',
       '/app.js?v=20261101f' in INDEX_HTML and '/app.js?v=20261101f' in SW_JS and
       '/dash.js?v=20261101e' in APP_JS and '/dash.js?v=20261101e' in SW_JS and
