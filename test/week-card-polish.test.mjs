@@ -56,9 +56,9 @@ test("Schedule event-card actions wrap instead of forcing a 412px mobile footer"
 
 
 test("Schedule event headers wrap beside a fixed 44px hide target on narrow screens", () => {
-  const mobileStart = css.indexOf("@media(max-width:520px){\\n  .week-day-events{");
+  const mobileStart = css.indexOf("@media(max-width:520px){" + String.fromCharCode(10) + "  .week-day-events{");
   assert.notEqual(mobileStart, -1, "narrow Schedule card constraints must be scoped to mobile");
-  const mobileEnd = css.indexOf("\\n}\\n", mobileStart);
+  const mobileEnd = css.indexOf(String.fromCharCode(10) + "}" + String.fromCharCode(10), mobileStart);
   const mobile = css.slice(mobileStart, mobileEnd + 3);
   const days = cssRule(mobile, ".week-day-events");
   const card = cssRule(mobile, ".evc.cmp");
