@@ -1,7 +1,7 @@
 /* Season and GO Pass banners above "For you". Tap one to open details; the full Leek Duck poster loads there on demand. */
 (function () {
   'use strict';
-  var items = [], evs = [];
+  var items = [], evs = [], deadlines = [];
   var esc = window.GOLIB.esc;
   function render() {
     var tab = document.getElementById('tab-now'), sec = document.getElementById('foryou-sec');
@@ -39,11 +39,18 @@
   document.addEventListener('gofn-state', function () { try { strip(); } catch (e) { } });
   fetch('/season.json').then(function (r) { return r.ok ? r.json() : null; }).then(function (j) {
     if (!j) return; items = j.items || [];
+    deadlines = (j.deadlines || []).map(function (d) {
+      if (!d || typeof d !== 'object') return null;
+      var start = new Date(d.s), end = new Date(d.e);
+      if (!Number.isFinite(start.getTime()) || !Number.isFinite(end.getTime()) || end <= start ||
+          !d.name || !d.title || !d.action || !d.source || String(d.url || '').indexOf('https://') !== 0) return null;
+      return Object.assign({}, d, { start: start, end: end });
+    }).filter(Boolean);
     var tries = 0;
     (function mk() {
       if (!window.GODASH || !GODASH.mkEvent) { if (tries++ < 40) return setTimeout(mk, 150); return; }
       evs = items.map(function (i) { return GODASH.mkEvent({ id: i.id, name: i.name, kind: 'event', s: i.s, e: i.e, tags: [], status: 'official_confirmed', source: 'Leek Duck', link: i.url, notes: [], featured: [], img: i.img, season: i });  }).filter(Boolean);
-      window.GOSEASON = { events: function () { return evs; } };
+      window.GOSEASON = { events: function () { return evs; }, deadlines: function () { return deadlines; } };
       document.dispatchEvent(new Event('gofn-season-ready'));
       render();
     })();
