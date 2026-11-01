@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // One-off backfill: give existing public/event-info.json entries a start / end (YYYY-MM-DD) and dateSource, taken from the events
-// whose id is the same once any "cur:" / "leekduck:" / "w-" style prefix is ignored (so "cur:halloween1" also picks up "halloween1"), in
+// whose id is the same once a leading lowercase "word:" prefix (such as "cur:" or "leekduck:") is ignored (so "cur:halloween1" also picks up "halloween1"; an id like "w-x" only matches exactly), in
 // public/data.json, world-events.json, the raid rotation or event-details.json. Titles are never used. Entries with no such event,
 // or whose matching events disagree on the dates (the only guard against a prefix-only match), are left untouched (never guessed). Dry run by default: `node scripts/event-info-dates.mjs --write` saves.
 // New and refreshed pictures are dated by addToEventInfo in g47ix-publish.mjs; this only covers entries that existed before.
@@ -26,7 +26,7 @@ export function backfill(info, sources) {
 async function main() {
   const read = async (f, fallback) => { try { return JSON.parse(await readFile(f, "utf8")); } catch { return fallback; } };
   const INFO = process.env.EVENT_INFO_FILE || "public/event-info.json";
-  const info = await read(INFO), sources = { data: await read("public/data.json", {}), details: await read("public/event-details.json", {}), world: await read("public/world-events.json", {}) };
+  const info = await read(INFO), sources = { data: await read(process.env.EVENTS_FILE || "public/data.json", {}), details: await read(process.env.EVENT_DETAILS_FILE || "public/event-details.json", {}), world: await read(process.env.WORLD_FILE || "public/world-events.json", {}) };
   const r = backfill(info, sources);
   for (const d of r.dated) console.log("dated  ", d.key, d.start, d.end, d.dateSource);
   for (const d of r.left) console.log("undated", d.key, "-", d.why);

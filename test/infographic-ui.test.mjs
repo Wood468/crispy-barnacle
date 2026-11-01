@@ -272,6 +272,7 @@ test("the catch path releases a message the button had just announced", async ()
   assert.equal(b.textContent, "Check infographic", "the error path resets the button");
   assert.equal(b.getAttribute("data-igbusy"), null);
   assert.equal(b._igToken, 0, "token released");
+  assert.equal(b.getAttribute("data-igmsg"), null, "the message flag is cleared so syncButtons can reset the text");
   t.runTimers(50);
   assert.equal(t.live.textContent, "", "fails if the catch path does not release its own message");
 });
@@ -281,9 +282,11 @@ test("a repeated identical message is still read again, and taps during a check 
   t.click(b); await settle(); t.runTimers(50);
   assert.equal(t.live.textContent, NOPE);
   const before = t.fetches;
-  t.click(b); t.click(b); await settle();
+  t.click(b);
+  assert.equal(t.live.textContent, "", "the re-tap empties the old message at once (releaseOwn), before any new announce");
+  t.click(b); await settle();
   assert.equal(t.fetches - before, 1, "second tap during the check ignored");
-  assert.equal(t.live.textContent, "", "emptied before the same text is set again");
+  assert.equal(t.live.textContent, "", "still empty until the new text lands");
   t.runTimers(50);
   assert.equal(t.live.textContent, NOPE);
 });

@@ -252,19 +252,29 @@ test("dates already on an entry are never rewritten; an undated entry gets them 
   assert.deepEqual([info.events.old.start, info.events.old.end], ["2026-09-01", "2026-09-02"]);
 });
 
-test("backfill is a dry run unless --write is passed", () => {
+test("backfill is a dry run unless --write is passed, and a second --write changes nothing", () => {
+  // Self-contained: the event sources are temp fixtures (EVENTS_FILE / EVENT_DETAILS_FILE / WORLD_FILE), not the live public/*.json.
   const dir = mkdtempSync(join(tmpdir(), "evinfo-")), file = join(dir, "event-info.json");
-  const text = JSON.stringify({ events: { halloween1: { names: ["Halloween 2026, Part One"], infographics: [] } } }, null, 2) + "\n";
+  const put = (name, obj) => { const f = join(dir, name); writeFileSync(f, JSON.stringify(obj)); return f; };
+  const env = { ...process.env, EVENT_INFO_FILE: file,
+    EVENTS_FILE: put("data.json", { events: [{ id: "fixture1", t: "Fixture Event", s: "2026-10-30T10:00", e: "2026-11-02T20:00" }] }),
+    EVENT_DETAILS_FILE: put("details.json", {}), WORLD_FILE: put("world.json", {}) };
+  const text = JSON.stringify({ events: { fixture1: { names: ["Fixture Event"], infographics: [] } } }, null, 2) + "\n";
   writeFileSync(file, text);
-  const run = (...args) => spawnSync(process.execPath, ["scripts/event-info-dates.mjs", ...args], { env: { ...process.env, EVENT_INFO_FILE: file }, encoding: "utf8" });
+  const run = (...args) => spawnSync(process.execPath, ["scripts/event-info-dates.mjs", ...args], { env, encoding: "utf8" });
   const dry = run();
   assert.equal(dry.status, 0, dry.stderr);
-  assert.match(dry.stdout, /^dated\s+halloween1/m, "the dry run would date the entry");
+  assert.match(dry.stdout, /^dated\s+fixture1\s+2026-10-30\s+2026-11-02\s+data\.json/m, "the dry run would date the entry");
   assert.equal(readFileSync(file, "utf8"), text, "dry run leaves the file alone");
   assert.doesNotMatch(dry.stdout, /Saved/);
   const wet = run("--write");
   assert.equal(wet.status, 0, wet.stderr);
-  assert.match(readFileSync(file, "utf8"), /"dateSource"/);
+  const saved = readFileSync(file, "utf8"), e = JSON.parse(saved).events.fixture1;
+  assert.deepEqual([e.start, e.end, e.dateSource], ["2026-10-30", "2026-11-02", "data.json"]);
+  const again = run("--write");
+  assert.equal(again.status, 0, again.stderr);
+  assert.match(again.stdout, /0 dated, 1 left/, "a second run has nothing left to date");
+  assert.equal(readFileSync(file, "utf8"), saved, "a second --write is idempotent");
 });
 
 test("validator rejects a dateSource with no start", () => {
