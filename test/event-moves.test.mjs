@@ -1,5 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
+import fs from "node:fs";
 import { movesInSentence, buildEventMoves } from "../scripts/event-moves.mjs";
 
 test("evolve text gives the form to evolve, the target and the move", () => {
@@ -31,4 +32,36 @@ test("a clock time in the text sets the end on the last day", () => {
   const m = buildEventMoves([ev]);
   assert.equal(m.length, 1);
   assert.equal(m[0].windowEnd, "2026-08-30T20:00");
+});
+
+
+test("duplicate schedule and detail move text retains its official source attribution", () => {
+  const source = {
+    id: "official", name: "Pokémon GO (official)", trust: "official",
+    url: "https://pokemongo.com/news/communityday-november-2026-pawniard/"
+  };
+  const details = {
+    sources: [source, { id: "unused", name: "Unused", trust: "community", url: "https://example.com/" }],
+    fields: {
+      moves: [{
+        text: "Evolve Bisharp during the event or up to four hours afterwards to get a Kingambit that knows the Charged Attack Kowtow Cleave.",
+        sources: ["official"], status: "official"
+      }]
+    }
+  };
+  const event = {
+    id: "novcd", t: "November Community Day", s: "2026-11-21T14:00", e: "2026-11-21T17:00",
+    p: ["Evolve Bisharp into Kingambit during the event or up to 4 hours after to learn the Charged Attack Kowtow Cleave."]
+  };
+  const moves = buildEventMoves([event], { novcd: details });
+  assert.equal(moves.length, 1);
+  assert.equal(moves[0].windowEnd, "2026-11-21T21:00");
+  assert.deepEqual(moves[0].sources, [source]);
+});
+
+test("event-only move detail rows render recorded source links", () => {
+  const detail = fs.readFileSync(new URL("../public/detail.js", import.meta.url), "utf8");
+  assert.match(detail, /m\.sources/);
+  assert.match(detail, /class="evd-src">Source:/);
+  assert.match(detail, /target="_blank" rel="noopener noreferrer"/);
 });
