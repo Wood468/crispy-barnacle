@@ -1,5 +1,5 @@
 {
- "runAt": "2026-11-01T01:17:51.667Z",
+ "runAt": "2026-11-01T07:39:48.335Z",
  "sources": {
   "official": {
    "listed": 24,
@@ -10,13 +10,13 @@
    "error": ""
   },
   "hub": {
-   "listed": 16,
+   "listed": 15,
    "error": ""
   }
  },
  "pagesRead": 80,
  "events": 89,
- "worldEvents": 58,
+ "worldEvents": 59,
  "worldUndated": [
   "GO Wild Area Stamp Rally"
  ],
@@ -98,6 +98,11 @@
   },
   {
    "source": "hub",
+   "title": "Pokémon GO November 2026 Event Calendar: All Events, Raids & Bonuses",
+   "url": "https://pokemongohub.net/post/event/pokemon-go-november-2026-events/"
+  },
+  {
+   "source": "hub",
    "title": "Pokémon GO Raid Hour Schedule (November 2026)",
    "url": "https://pokemongohub.net/post/guide/raid-hour-schedule/"
   },
@@ -105,16 +110,6 @@
    "source": "hub",
    "title": "Pokémon GO Raid Schedule & Current Bosses (November 2026)",
    "url": "https://pokemongohub.net/post/guide/current-go-raids/"
-  },
-  {
-   "source": "hub",
-   "title": "Pokémon GO Spotlight Hours Schedule (November 2026)",
-   "url": "https://pokemongohub.net/post/guide/spotlight-hour-schedule/"
-  },
-  {
-   "source": "hub",
-   "title": "Pokémon News This Week: Pokémon UNITE Announces Service End, New Merch, New Champions Tournament, Hong Kong Pop-Up",
-   "url": "https://pokemongohub.net/post/news/pokemon-news-this-week-pokemon-unite-announces-service-end-new-merch-new-champions-tournament-hong-kong-pop-up/"
   }
  ],
  "intl": {

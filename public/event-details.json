@@ -1,9 +1,9 @@
 {
- "updated": "2026-11-01T01:17:51.667Z",
+ "updated": "2026-11-01T07:39:48.335Z",
  "events": {
   "wag": {
    "name": "GO Wild Area: Global",
-   "updated": "2026-11-01T01:17:51.667Z",
+   "updated": "2026-11-01T07:39:48.335Z",
    "sources": [
     {
      "id": "official",
@@ -79,7 +79,7 @@
   },
   "leekduck:pokemon-go-wild-area-2026-sendai-japan": {
    "name": "Pokémon GO Wild Area 2026: Sendai • Tohoku",
-   "updated": "2026-11-01T01:17:51.667Z",
+   "updated": "2026-11-01T07:39:48.335Z",
    "sources": [
     {
      "id": "leekduck",
@@ -429,7 +429,7 @@
   },
   "leekduck:pokemon-go-wild-area-2026-mexico-city": {
    "name": "Pokémon GO Wild Area 2026: Mexico City",
-   "updated": "2026-11-01T01:17:51.667Z",
+   "updated": "2026-11-01T07:39:48.335Z",
    "sources": [
     {
      "id": "leekduck",
@@ -828,7 +828,7 @@
   },
   "sendai": {
    "name": "GO Wild Area: Sendai",
-   "updated": "2026-11-01T01:17:51.667Z",
+   "updated": "2026-11-01T07:39:48.335Z",
    "sources": [
     {
      "id": "official",
@@ -854,7 +854,7 @@
   },
   "dyntrails": {
    "name": "Dynamax Trails",
-   "updated": "2026-11-01T01:17:51.667Z",
+   "updated": "2026-11-01T07:39:48.335Z",
    "sources": [
     {
      "id": "official",
@@ -1110,7 +1110,7 @@
   },
   "leekduck:into-the-wild-2026": {
    "name": "Into the Wild",
-   "updated": "2026-11-01T01:17:51.667Z",
+   "updated": "2026-11-01T07:39:48.335Z",
    "sources": [
     {
      "id": "official",
@@ -1416,7 +1416,7 @@
   },
   "novcd": {
    "name": "November Community Day",
-   "updated": "2026-11-01T01:17:51.667Z",
+   "updated": "2026-11-01T07:39:48.335Z",
    "sources": [
     {
      "id": "official",
@@ -1609,7 +1609,7 @@
   },
   "gopassnov": {
    "name": "GO Pass: November",
-   "updated": "2026-11-01T01:17:51.667Z",
+   "updated": "2026-11-01T07:39:48.335Z",
    "sources": [
     {
      "id": "official",
@@ -1793,7 +1793,7 @@
   },
   "smr1": {
    "name": "Super Mega Raid Day",
-   "updated": "2026-11-01T01:17:51.667Z",
+   "updated": "2026-11-01T07:39:48.335Z",
    "sources": [
     {
      "id": "official",
@@ -2200,7 +2200,7 @@
   },
   "halloween2": {
    "name": "Halloween 2026, Part Two",
-   "updated": "2026-11-01T01:17:51.667Z",
+   "updated": "2026-11-01T07:39:48.335Z",
    "sources": [
     {
      "id": "official",
@@ -2451,7 +2451,7 @@
   },
   "halloween1": {
    "name": "Halloween 2026, Part One",
-   "updated": "2026-11-01T01:17:51.667Z",
+   "updated": "2026-11-01T07:39:48.335Z",
    "sources": [
     {
      "id": "official",
@@ -2722,7 +2722,7 @@
   },
   "spirits": {
    "name": "Dynamax Uxie, Mesprit and Azelf",
-   "updated": "2026-11-01T01:17:51.667Z",
+   "updated": "2026-11-01T07:39:48.335Z",
    "sources": [
     {
      "id": "official",
@@ -2963,7 +2963,7 @@
   },
   "tcg30": {
    "name": "Pokémon TCG: 30th Celebration (at stores)",
-   "updated": "2026-11-01T01:17:51.667Z",
+   "updated": "2026-11-01T07:39:48.335Z",
    "sources": [
     {
      "id": "official",
@@ -3028,7 +3028,7 @@
   },
   "sandile": {
    "name": "Sandile Hatch Day",
-   "updated": "2026-11-01T01:17:51.667Z",
+   "updated": "2026-11-01T07:39:48.335Z",
    "sources": [
     {
      "id": "official",
@@ -3187,7 +3187,7 @@
   },
   "trek": {
    "name": "Fall Marathon: Buddy Trek",
-   "updated": "2026-11-01T01:17:51.667Z",
+   "updated": "2026-11-01T07:39:48.335Z",
    "sources": [
     {
      "id": "official",
@@ -3416,7 +3416,7 @@
   },
   "leekduck:go-pass-october-2026": {
    "name": "GO Pass: October",
-   "updated": "2026-11-01T01:17:51.667Z",
+   "updated": "2026-11-01T07:39:48.335Z",
    "sources": [
     {
      "id": "official",
@@ -3718,7 +3718,7 @@
   },
   "leekduck:halloween-2026-part-1": {
    "name": "Pokémon GO Halloween 2026 Part I",
-   "updated": "2026-11-01T01:17:51.667Z",
+   "updated": "2026-11-01T07:39:48.335Z",
    "sources": [
     {
      "id": "leekduck",
@@ -3731,10 +3731,40 @@
      "name": "Leek Duck",
      "trust": "community",
      "url": "https://leekduck.com/events/halloween-2026-part-2/"
+    },
+    {
+     "id": "hub",
+     "name": "Pokémon GO Hub",
+     "trust": "community",
+     "url": "https://pokemongohub.net/post/event/pokemon-go-halloween-2026-part-two/"
     }
    ],
    "fields": {
     "bonuses": [
+     {
+      "text": "Complete these Bonus Tasks before Thursday, November 5, 2026, at 8:00 p.m. local time to earn GO Points:",
+      "sources": [
+       "leekduck",
+       "hub"
+      ],
+      "status": "corroborated"
+     },
+     {
+      "text": "Catch 31 Ghost-type Pokémon — 200 GO Points",
+      "sources": [
+       "leekduck",
+       "hub"
+      ],
+      "status": "corroborated"
+     },
+     {
+      "text": "Win 2 raids — 200 GO Points",
+      "sources": [
+       "leekduck",
+       "hub"
+      ],
+      "status": "corroborated"
+     },
      {
       "text": "Reach Major Milestones on GO Pass: Halloween 2026 to unlock these bonuses.",
       "sources": [
@@ -3743,32 +3773,40 @@
       "status": "single"
      },
      {
-      "text": "Complete these Bonus Tasks before Thursday, November 5, 2026, at 8:00 p.m. local time to earn GO Points:",
+      "text": "The event features the following bonuses and debuts. The Candy and Stardust bonuses must be unlocked by reaching the listed GO Pass ranks.",
       "sources": [
-       "leekduck"
+       "hub"
       ],
       "status": "single"
      },
      {
-      "text": "Catch 31 Ghost-type Pokémon — 200 GO Points",
+      "text": "A remix of the Lavender Town music will be playing nightly during this year’s Halloween event. Turn up your in-game sound to feel like you’re taking a stroll through Lavender Town!",
       "sources": [
-       "leekduck"
+       "hub"
       ],
       "status": "single"
      },
      {
-      "text": "Win 2 raids — 200 GO Points",
+      "text": "Shiny Greavard makes its debut. You can evolve it into Shiny Houndstone.",
       "sources": [
-       "leekduck"
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Mega Sableye can now reach Super Max Mega Level by using Sableye Mega Energy after reaching Max Level.",
+      "sources": [
+       "hub"
       ],
       "status": "single"
      },
      {
       "text": "Rank 10: 2× Candy for catching Pokémon",
       "sources": [
-       "leekduck"
+       "leekduck",
+       "hub"
       ],
-      "status": "single"
+      "status": "corroborated"
      },
      {
       "text": "Rank 10: GO Pass Deluxe: 3× Candy for catching Pokémon",
@@ -3883,9 +3921,32 @@
        "leekduck"
       ],
       "status": "single"
+     },
+     {
+      "text": "The following Pokémon are appearing more frequently in the wild:",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
      }
     ],
     "raids": [
+     {
+      "text": "Pikachu wearing a hat and capelet",
+      "sources": [
+       "leekduck",
+       "hub"
+      ],
+      "status": "corroborated"
+     },
+     {
+      "text": "Sinistea wearing a bow",
+      "sources": [
+       "leekduck",
+       "hub"
+      ],
+      "status": "corroborated"
+     },
      {
       "text": "The following Pokémon will appear in one-star raids.",
       "sources": [
@@ -3894,16 +3955,9 @@
       "status": "single"
      },
      {
-      "text": "Pikachu wearing a hat and capelet",
+      "text": "The costumed Pikachu and Sinistea introduced in Part One continue appearing in one-star raids during Halloween 2026 Part Two. Both can be Shiny:",
       "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Sinistea wearing a bow",
-      "sources": [
-       "leekduck"
+       "hub"
       ],
       "status": "single"
      }
@@ -3913,26 +3967,45 @@
      {
       "text": "Complete event-themed Field Research tasks for encounters with Pikachu wearing a hat and capelet, Zubat wearing a top hat, Sinistea wearing a bow, Noibat wearing a headband, and more!",
       "sources": [
-       "leekduck"
+       "leekduck",
+       "hub"
       ],
-      "status": "single"
+      "status": "corroborated"
      },
      {
       "text": "Catch 13 Ghost‑type Pokémon POSSIBLE REWARDS Halloween Piplup Max CP 460 Min CP 426 Headband Noibat Max CP 285 Min CP 258 Zubat wearing a top hat Max CP 285 Min CP 258",
       "sources": [
-       "leekduck"
+       "leekduck",
+       "hub"
       ],
-      "status": "single"
-     },
-     {
-      "text": "Win a raid POSSIBLE REWARDS Zubat wearing a top hat Max CP 285 Min CP 258 Sinistea wearing a bow Max CP 488 Min CP 452",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
+      "status": "corroborated"
      },
      {
       "text": "Win 3 raids REWARD Pikachu wearing a hat and capelet Max CP 402 Min CP 369",
+      "sources": [
+       "leekduck",
+       "hub"
+      ],
+      "status": "corroborated"
+     },
+     {
+      "text": "Catch 13 Pokémon REWARD ×13 Sableye Mega Energy ×13",
+      "sources": [
+       "leekduck",
+       "hub"
+      ],
+      "status": "corroborated"
+     },
+     {
+      "text": "Make 6 Nice Throws POSSIBLE REWARDS Litwick Max CP 431 Min CP 398 Sandygast Max CP 528 Min CP 491 Greavard Max CP 435 Min CP 402",
+      "sources": [
+       "leekduck",
+       "hub"
+      ],
+      "status": "corroborated"
+     },
+     {
+      "text": "Win a raid POSSIBLE REWARDS Zubat wearing a top hat Max CP 285 Min CP 258 Sinistea wearing a bow Max CP 488 Min CP 452",
       "sources": [
        "leekduck"
       ],
@@ -3979,23 +4052,17 @@
        "leekduck"
       ],
       "status": "single"
-     },
-     {
-      "text": "Complete these daily tasks to earn GO Points:",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Catch 13 Pokémon REWARD ×13 Sableye Mega Energy ×13",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
      }
     ],
     "shiny": [
+     {
+      "text": "Shiny Greavard makes its Pokémon GO debut! You may encounter it in the wild or through GO Pass and Field Research tasks.",
+      "sources": [
+       "leekduck",
+       "hub"
+      ],
+      "status": "corroborated"
+     },
      {
       "text": "The celebration continues in Halloween 2026 Part II , featuring Shiny Greavard’s debut and Mega Sableye’s new Super Max level.",
       "sources": [
@@ -4025,9 +4092,37 @@
       "status": "single"
      },
      {
-      "text": "Shiny Greavard makes its Pokémon GO debut! You may encounter it in the wild or through GO Pass and Field Research tasks.",
+      "text": "Shiny Greavard and Houndstone make their Pokémon GO debut, Mega Sableye unlocks Super Max Level, and spooky encounters, costume raids, and Halloween GO Pass rewards await from November 1–5, 2026.",
       "sources": [
-       "leekduck"
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Shiny Greavard makes its debut. You can evolve it into Shiny Houndstone.",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Shiny Greavard becomes available for the first time during this event. You can also evolve Shiny Greavard into Shiny Houndstone using 50 Greavard Candy:",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "How to obtain the newly available Shiny Pokémon:",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "The costumed Pikachu and Sinistea introduced in Part One continue appearing in one-star raids during Halloween 2026 Part Two. Both can be Shiny:",
+      "sources": [
+       "hub"
       ],
       "status": "single"
      }
@@ -4037,9 +4132,10 @@
      {
       "text": "Pikachu wearing a hat and capelet",
       "sources": [
-       "leekduck"
+       "leekduck",
+       "hub"
       ],
-      "status": "single"
+      "status": "corroborated"
      },
      {
       "text": "Zubat wearing a top hat",
@@ -4089,39 +4185,50 @@
        "leekduck"
       ],
       "status": "single"
+     },
+     {
+      "text": "Shiny Greavard and Houndstone make their Pokémon GO debut, Mega Sableye unlocks Super Max Level, and spooky encounters, costume raids, and Halloween GO Pass rewards await from November 1–5, 2026.",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
      }
     ],
     "tickets": [
      {
-      "text": "The free pass includes:",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
       "text": "Encounters with event-themed Pokémon",
       "sources": [
-       "leekduck"
+       "leekduck",
+       "hub"
       ],
-      "status": "single"
+      "status": "corroborated"
      },
      {
       "text": "Additional rewards",
       "sources": [
-       "leekduck"
+       "leekduck",
+       "hub"
       ],
-      "status": "single"
+      "status": "corroborated"
      },
      {
       "text": "Patissier Top and Patissier Pants",
       "sources": [
-       "leekduck"
+       "leekduck",
+       "hub"
       ],
-      "status": "single"
+      "status": "corroborated"
      },
      {
       "text": "Premium Battle Passes",
+      "sources": [
+       "leekduck",
+       "hub"
+      ],
+      "status": "corroborated"
+     },
+     {
+      "text": "The free pass includes:",
       "sources": [
        "leekduck"
       ],
@@ -4154,20 +4261,406 @@
        "leekduck"
       ],
       "status": "single"
+     },
+     {
+      "text": "The free GO Pass: Halloween 2026 was automatically granted on October 27, at 10:00 a.m. local time.",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Reach Major Milestones on your event GO Pass to unlock the following bonuses:",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "For US$7.99 , Trainers can upgrade to the GO Pass Deluxe, a paid version of the GO Pass that offers upgraded rewards and faster progression.",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 1: Free: 2500 × XP | Deluxe: 5000 × Stardust",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 2: Free: 10 × Poké Ball | Deluxe: 20 × Poké Ball",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 3: Free: 10 × Sableye Candy | Deluxe: Dynamax Sableye",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 4: Free: 1 × Rare Candy | Deluxe: 1 × Rare Candy XL",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 5: Free: Duskull | Deluxe: Duskull",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 6: Free: 10 × Duskull Candy | Deluxe: 3 × Duskull Candy XL",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 7: Free: 2500 × XP | Deluxe: 5000 × Stardust",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 8: Free: 1 × Rare Candy | Deluxe: 1 × Rare Candy XL",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 9: Free: Piplup | Deluxe: Piplup",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 10: Free: 2× Candy for catching Pokémon. | Deluxe: 3× Candy for catching Pokémon.",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 11: Free: 2500 × XP | Deluxe: 5000 × Stardust",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 12: Free: 10 × Great Ball | Deluxe: 1 × Premium Raid Pass",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 13: Free: 10 × Zubat Candy | Deluxe: Zubat Wearing a top hat",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 14: Free: 1 × Rare Candy | Deluxe: 1 × Rare Candy XL",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 15: Free: Misdreavus | Deluxe: 1× Patissier Top",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 16: Free: 10 × Misdreavus Candy | Deluxe: 3 × Misdreavus Candy XL",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 17: Free: 2500 × XP | Deluxe: 5000 × Stardust",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 18: Free: 1 × Rare Candy | Deluxe: 1 × Rare Candy XL",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 19: Free: Noibat | Deluxe: Noibat",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 20: Free: 2× Stardust for catching Pokémon. | Deluxe: 3× Stardust for catching Pokémon.",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 21: Free: 5000 × XP | Deluxe: 7500 × Stardust",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 22: Free: 10 × Great Ball | Deluxe: 1 × Premium Raid Pass",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 23: Free: 10 × Drifloon Candy | Deluxe: Drifblim",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 24: Free: 1 × Rare Candy | Deluxe: 1 × Rare Candy XL",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 25: Free: Sandygast | Deluxe: Sandygast",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 26: Free: 10 × Sandygast Candy | Deluxe: 3 × Sandygast Candy XL",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 27: Free: 5000 × XP | Deluxe: 7500 × Stardust",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 28: Free: 1 × Rare Candy | Deluxe: 1 × Rare Candy XL",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 29: Free: Froakie | Deluxe: Froakie",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 31: Free: 5000 × XP | Deluxe: 7500 × Stardust",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 32: Free: 10 × Ultra Ball | Deluxe: 1 × Premium Raid Pass",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 33: Free: 10 × Zubat Candy | Deluxe: Zubat Wearing a top hat",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 34: Free: 1 × Rare Candy | Deluxe: 1 × Rare Candy XL",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 35: Free: Shuppet | Deluxe: Shuppet",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 36: Free: 10 × Shuppet Candy | Deluxe: 3 × Shuppet Candy XL",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 37: Free: 5000 × XP | Deluxe: 7500 × Stardust",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 38: Free: 1 × Rare Candy | Deluxe: 1 × Rare Candy XL",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 39: Free: Rowlet | Deluxe: Rowlet",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 40: Free: Gengar | Deluxe: Gengar",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 41: Free: 7500 × XP | Deluxe: 10000 × Stardust",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 42: Free: 10 × Ultra Ball | Deluxe: 1 × Premium Raid Pass",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 43: Free: 10 × Sinistea Candy | Deluxe: Sinistea",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 44: Free: 1 × Rare Candy | Deluxe: 1 × Rare Candy XL",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 45: Free: Greavard | Deluxe: Greavard",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 46: Free: 10 × Greavard Candy | Deluxe: 3 × Greavard Candy XL",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 47: Free: 7500 × XP | Deluxe: 10000 × Stardust",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 48: Free: 1 × Rare Candy | Deluxe: 1 × Rare Candy XL",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 49: Free: Pikachu Wearing a hat and capelet | Deluxe: Pikachu Wearing a hat and capelet",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 50: Free: Rotom | Deluxe: Rotom",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 108: Free: Spiritomb | Deluxe: Spiritomb",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
      }
     ],
     "dates": [
      {
       "text": "Halloween 2026 Part I runs from Tuesday, October 27, at 10:00 a.m. to Sunday, November 1, 2026, at 10:00 a.m. local time .",
       "sources": [
-       "leekduck"
+       "leekduck",
+       "hub"
       ],
-      "status": "single"
+      "status": "corroborated"
      },
      {
       "text": "Complete these Bonus Tasks before Thursday, November 5, 2026, at 8:00 p.m. local time to earn GO Points:",
       "sources": [
        "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Shiny Greavard and Houndstone make their Pokémon GO debut, Mega Sableye unlocks Super Max Level, and spooky encounters, costume raids, and Halloween GO Pass rewards await from November 1–5, 2026.",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rewards unlocked in the GO Pass will expire on Saturday, November 7, 2026, at 8:00 p.m. local time, so be sure to claim your rewards before they expire.",
+      "sources": [
+       "hub"
       ],
       "status": "single"
      }
@@ -4178,7 +4671,7 @@
   },
   "leekduck:max-mondays-2026-11-02": {
    "name": "Dynamax Machop during Max Monday",
-   "updated": "2026-11-01T01:17:51.667Z",
+   "updated": "2026-11-01T07:39:48.335Z",
    "sources": [
     {
      "id": "leekduck",
@@ -4255,7 +4748,7 @@
   },
   "leekduck:shadow-landorus-incarnate-forme-in-shadow-raids-october-2026": {
    "name": "Shadow Landorus (Incarnate Forme) in Shadow Raids",
-   "updated": "2026-11-01T01:17:51.667Z",
+   "updated": "2026-11-01T07:39:48.335Z",
    "sources": [
     {
      "id": "leekduck",
@@ -4305,7 +4798,7 @@
   },
   "leekduck:giratina-origin-forme-in-5-star-raid-battles-october-2026": {
    "name": "Giratina (Origin Forme) in 5-star Raid Battles",
-   "updated": "2026-11-01T01:17:51.667Z",
+   "updated": "2026-11-01T07:39:48.335Z",
    "sources": [
     {
      "id": "leekduck",
@@ -4369,7 +4862,7 @@
   },
   "leekduck:raidhour20261104": {
    "name": "Giratina (Altered Forme) Raid Hour",
-   "updated": "2026-11-01T01:17:51.667Z",
+   "updated": "2026-11-01T07:39:48.335Z",
    "sources": [
     {
      "id": "leekduck",
@@ -4411,7 +4904,7 @@
   },
   "leekduck:pokemonspotlighthour2026-11-05": {
    "name": "Teddiursa wearing a witch hat Spotlight Hour",
-   "updated": "2026-11-01T01:17:51.667Z",
+   "updated": "2026-11-01T07:39:48.335Z",
    "sources": [
     {
      "id": "leekduck",
@@ -4467,7 +4960,7 @@
   },
   "leekduck:mega-sableye-in-mega-raids-october-2026": {
    "name": "Mega Sableye in Mega Raids",
-   "updated": "2026-11-01T01:17:51.667Z",
+   "updated": "2026-11-01T07:39:48.335Z",
    "sources": [
     {
      "id": "leekduck",
@@ -4524,7 +5017,7 @@
   },
   "leekduck:giratina-altered-forme-in-5-star-raid-battles-november-2026": {
    "name": "Giratina (Altered Forme) in 5-star Raid Battles",
-   "updated": "2026-11-01T01:17:51.667Z",
+   "updated": "2026-11-01T07:39:48.335Z",
    "sources": [
     {
      "id": "leekduck",
@@ -4595,7 +5088,7 @@
   },
   "leekduck:shadow-tornadus-incarnate-forme-in-shadow-raids-november-4-2026": {
    "name": "Shadow Tornadus (Incarnate Forme) in Shadow Raids",
-   "updated": "2026-11-01T01:17:51.667Z",
+   "updated": "2026-11-01T07:39:48.335Z",
    "sources": [
     {
      "id": "leekduck",
@@ -4637,7 +5130,7 @@
   },
   "leekduck:pokemon-night-out-london-2026": {
    "name": "Pokémon Night Out 2026 - London",
-   "updated": "2026-11-01T01:17:51.667Z",
+   "updated": "2026-11-01T07:39:48.335Z",
    "sources": [
     {
      "id": "leekduck",
@@ -4745,7 +5238,7 @@
   },
   "leekduck:pokemon-go-wild-area-2026-global": {
    "name": "Pokémon GO Wild Area 2026: Global",
-   "updated": "2026-11-01T01:17:51.667Z",
+   "updated": "2026-11-01T07:39:48.335Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5033,7 +5526,7 @@
   },
   "leekduck:max-mondays-2026-11-16": {
    "name": "Max Monday: Pokémon to be announced",
-   "updated": "2026-11-01T01:17:51.667Z",
+   "updated": "2026-11-01T07:39:48.335Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5172,7 +5665,7 @@
   },
   "leekduck:raidhour20261118": {
    "name": "Cresselia and Darkrai Raid Hour",
-   "updated": "2026-11-01T01:17:51.667Z",
+   "updated": "2026-11-01T07:39:48.335Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5214,7 +5707,7 @@
   },
   "leekduck:pokemonspotlighthour2026-11-19": {
    "name": "Grookey, Scorbunny, and Sobble Spotlight Hour",
-   "updated": "2026-11-01T01:17:51.667Z",
+   "updated": "2026-11-01T07:39:48.335Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5248,7 +5741,7 @@
   },
   "minior2": {
    "name": "Minior Showers: Leonids",
-   "updated": "2026-11-01T01:17:51.667Z",
+   "updated": "2026-11-01T07:39:48.335Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5339,7 +5832,7 @@
   },
   "leekduck:eternamax-eternatus-max-battles-2026": {
    "name": "Eternamax Eternatus Returns",
-   "updated": "2026-11-01T01:17:51.667Z",
+   "updated": "2026-11-01T07:39:48.335Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5418,7 +5911,7 @@
   },
   "leekduck:november-communityday2026": {
    "name": "Pawniard Community Day",
-   "updated": "2026-11-01T01:17:51.667Z",
+   "updated": "2026-11-01T07:39:48.335Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5577,7 +6070,7 @@
   },
   "leekduck:dynamax-trails-2026": {
    "name": "Dynamax Trails",
-   "updated": "2026-11-01T01:17:51.667Z",
+   "updated": "2026-11-01T07:39:48.335Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5812,7 +6305,7 @@
   },
   "leekduck:max-mondays-2026-11-23": {
    "name": "Dynamax Espurr during Max Monday",
-   "updated": "2026-11-01T01:17:51.667Z",
+   "updated": "2026-11-01T07:39:48.335Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5889,7 +6382,7 @@
   },
   "leekduck:cresselia-darkrai-in-5-star-raid-battles-november-2026": {
    "name": "Cresselia and Darkrai in 5-star Raid Battles",
-   "updated": "2026-11-01T01:17:51.667Z",
+   "updated": "2026-11-01T07:39:48.335Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5960,7 +6453,7 @@
   },
   "leekduck:mega-banette-in-mega-raids-november-2026": {
    "name": "Mega Banette in Mega Raids",
-   "updated": "2026-11-01T01:17:51.667Z",
+   "updated": "2026-11-01T07:39:48.335Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6024,7 +6517,7 @@
   },
   "leekduck:raidhour20261125": {
    "name": "Deoxys (Normal, Defense, Attack, and Speed Formes) Raid Hour",
-   "updated": "2026-11-01T01:17:51.667Z",
+   "updated": "2026-11-01T07:39:48.335Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6066,7 +6559,7 @@
   },
   "leekduck:pokemonspotlighthour2026-11-26": {
    "name": "Noibat Spotlight Hour",
-   "updated": "2026-11-01T01:17:51.667Z",
+   "updated": "2026-11-01T07:39:48.335Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6100,7 +6593,7 @@
   },
   "smr2": {
    "name": "Super Mega Raid Day",
-   "updated": "2026-11-01T01:17:51.667Z",
+   "updated": "2026-11-01T07:39:48.335Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6142,7 +6635,7 @@
   },
   "twilightwishes": {
    "name": "Twilight Wishes",
-   "updated": "2026-11-01T01:17:51.667Z",
+   "updated": "2026-11-01T07:39:48.335Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6176,7 +6669,7 @@
   },
   "leekduck:max-mondays-2026-11-30": {
    "name": "Dynamax Cryogonal during Max Monday",
-   "updated": "2026-11-01T01:17:51.667Z",
+   "updated": "2026-11-01T07:39:48.335Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6253,7 +6746,7 @@
   },
   "leekduck:season-24-twilight-trails": {
    "name": "Twilight Trails",
-   "updated": "2026-11-01T01:17:51.667Z",
+   "updated": "2026-11-01T07:39:48.335Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6474,7 +6967,7 @@
   },
   "leekduck:go-pass-november-2026": {
    "name": "GO Pass: November",
-   "updated": "2026-11-01T01:17:51.667Z",
+   "updated": "2026-11-01T07:39:48.335Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6686,7 +7179,7 @@
   },
   "leekduck:deoxys-normal-defense-attack-speed-formes-in-5-star-raid-battles-november-2026": {
    "name": "Deoxys (Normal, Defense, Attack, and Speed Formes) in 5-star Raid Battles",
-   "updated": "2026-11-01T01:17:51.667Z",
+   "updated": "2026-11-01T07:39:48.335Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6785,7 +7278,7 @@
   },
   "leekduck:mega-metagross-in-mega-raids-november-2026": {
    "name": "Mega Metagross in Mega Raids",
-   "updated": "2026-11-01T01:17:51.667Z",
+   "updated": "2026-11-01T07:39:48.335Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6856,7 +7349,7 @@
   },
   "minior3": {
    "name": "Minior Showers: Geminids",
-   "updated": "2026-11-01T01:17:51.667Z",
+   "updated": "2026-11-01T07:39:48.335Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6947,7 +7440,7 @@
   },
   "leekduck:pokemon-x-adidas-2026": {
    "name": "adidas × Pokémon Timed Research",
-   "updated": "2026-11-01T01:17:51.667Z",
+   "updated": "2026-11-01T07:39:48.335Z",
    "sources": [
     {
      "id": "leekduck",
@@ -7025,7 +7518,7 @@
   },
   "leekduck:pokemon-go-tour-alola-kaohsiung-2027": {
    "name": "Pokémon GO Tour: Alola - Kaohsiung 2027",
-   "updated": "2026-11-01T01:17:51.667Z",
+   "updated": "2026-11-01T07:39:48.335Z",
    "sources": [
     {
      "id": "leekduck",
@@ -7059,7 +7552,7 @@
   },
   "leekduck:pokemon-go-tour-alola-los-angeles-2027": {
    "name": "Pokémon GO Tour: Alola - Los Angeles 2027",
-   "updated": "2026-11-01T01:17:51.667Z",
+   "updated": "2026-11-01T07:39:48.335Z",
    "sources": [
     {
      "id": "leekduck",
@@ -7093,7 +7586,7 @@
   },
   "leekduck:pokemon-go-tour-alola-global-2027": {
    "name": "Pokémon GO Tour: Alola - Global 2027",
-   "updated": "2026-11-01T01:17:51.667Z",
+   "updated": "2026-11-01T07:39:48.335Z",
    "sources": [
     {
      "id": "leekduck",
@@ -7127,7 +7620,7 @@
   },
   "leekduck:minior-showers-eta-aquariids-2027": {
    "name": "Minior Showers: Eta Aquariids 2027",
-   "updated": "2026-11-01T01:17:51.667Z",
+   "updated": "2026-11-01T07:39:48.335Z",
    "sources": [
     {
      "id": "leekduck",
@@ -7225,7 +7718,7 @@
   },
   "leekduck:minior-showers-southern-delta-aquariids-2027": {
    "name": "Minior Showers: Southern Delta Aquariids 2027",
-   "updated": "2026-11-01T01:17:51.667Z",
+   "updated": "2026-11-01T07:39:48.335Z",
    "sources": [
     {
      "id": "leekduck",
@@ -7323,7 +7816,7 @@
   },
   "leekduck:minior-showers-perseids-2027": {
    "name": "Minior Showers: Perseids 2027",
-   "updated": "2026-11-01T01:17:51.667Z",
+   "updated": "2026-11-01T07:39:48.335Z",
    "sources": [
     {
      "id": "leekduck",
