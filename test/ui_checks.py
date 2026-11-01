@@ -30,6 +30,7 @@ BASE_CSS = (ROOT / 'public' / 'styles.css').read_text()
 BASE_COMPONENT_CSS = BASE_CSS[BASE_CSS.index('*{box-sizing:border-box}'):]
 DASH_CSS = (ROOT / 'public' / 'dash.css').read_text()
 DASH_JS = (ROOT / 'public' / 'dash.js').read_text()
+DETAIL_JS = (ROOT / 'public' / 'detail.js').read_text()
 INDEX_HTML = (ROOT / 'public' / 'index.html').read_text()
 SW_JS = (ROOT / 'public' / 'sw.js').read_text()
 APP_JS = (ROOT / 'public' / 'app.js').read_text()
@@ -239,7 +240,7 @@ check('Today Tonight planner is an optional accessible local-time disclosure wit
       all(token in INDEX_HTML for token in ['id="today-tonight"', 'id="today-tonight-summary"', 'id="today-tonight-list"']) and
       all(token in DASH_JS for token in ['D.spotlight', 'D.raidHour', 'D.maxBattles', '6–7 pm local', '6 am–9 pm local', 'Weak to:', 'data-best-types', 'gofn-dex-ready', 'function renderTonight', 'renderTonight(t, dateKey)']) and
       all(token in DASH_CSS for token in ['.today-tonight', '.today-tonight-list', 'min-height:44px', '.today-tonight-best']) and
-      'gofn-dex-ready' in APP_JS and '/app.js?v=20261102e' in INDEX_HTML and '/app.js?v=20261102e' in SW_JS)
+      'gofn-dex-ready' in APP_JS and '/app.js?v=20261102f' in INDEX_HTML and '/app.js?v=20261102f' in SW_JS)
 check('Dex/type readiness refreshes only the Tonight disclosure, preserving event-detail focus targets',
       "document.addEventListener('gotypes', function () { try { renderRot(); var t = now(); renderTonight(t, dayKey(t)); } catch (e) {} });" in DASH_JS and
       "document.addEventListener('gofn-dex-ready', function () { try { renderRot(); var t = now(); renderTonight(t, dayKey(t)); } catch (e) {} });" in DASH_JS)
@@ -247,9 +248,9 @@ check('Today multi-deadline tray is accessible, bounded and source-safe',
       all(token in INDEX_HTML for token in ['id="today-deadlines"', 'id="today-deadlines-summary"', 'id="today-deadlines-list"']) and
       all(token in DASH_JS for token in ['var trayLimit = t.getTime() + 7 * 24 * 60 * 60 * 1000', "safeUrl(d.url || '')", 'trayCandidates.slice(0, 8)', 'View all ', 'noopener noreferrer', "sourceUrl.indexOf('https://') === 0"]) and
       all(token in DASH_CSS for token in ['.today-deadlines>summary', 'min-height:44px', '.today-deadline-item', 'var(--color-link)']) and
-      '/dash.js?v=20261102j' in APP_JS and '/dash.js?v=20261102j' in SW_JS and
+      '/dash.js?v=20261102k' in APP_JS and '/dash.js?v=20261102k' in SW_JS and
       '/dash.css?v=20261102i' in INDEX_HTML and '/dash.css?v=20261102i' in SW_JS and
-      'gofn-shell-v196' in SW_JS)
+      'gofn-shell-v197' in SW_JS)
 check('season pass and deadline data is structured, source-attributed and ordered',
       all(item_id in {item.get('id') for item in SEASON_DATA.get('items', [])}
           for item_id in ['season:pass-halloween', 'season:pass-november']) and
@@ -310,11 +311,13 @@ check('event signal chips and detail tags use semantic palette roles with unchan
           '.tg-incense{--tc:var(--color-signal-shadow)}.tg-costume{--tc:var(--color-signal-encounter)}',
       ]))
 check('offline shell cache version advances with the dashboard stylesheet token release',
-      "gofn-shell-v196" in SW_JS)
+      "gofn-shell-v197" in SW_JS)
+check('event detail focus restoration can find a re-rendered opener by event key and card role',
+      all(token in DETAIL_JS for token in ['openerKey', 'openerClass', "getAttribute('data-open')", 'target.focus()']))
 check('versioned dashboard scripts are referenced by the entry page and precached offline',
-      '/app.js?v=20261102e' in INDEX_HTML and '/app.js?v=20261102e' in SW_JS and
-      '/dash.js?v=20261102j' in APP_JS and '/dash.js?v=20261102j' in SW_JS and
-      '/detail.js?v=20261102a' in DASH_JS and '/detail.js?v=20261102a' in SW_JS)
+      '/app.js?v=20261102f' in INDEX_HTML and '/app.js?v=20261102f' in SW_JS and
+      '/dash.js?v=20261102k' in APP_JS and '/dash.js?v=20261102k' in SW_JS and
+      '/detail.js?v=20261102b' in DASH_JS and '/detail.js?v=20261102b' in SW_JS)
 check('sync PIN and account controls have one home in Menu and are precached offline',
       INDEX_HTML.index('id="acct" class="acct"') > INDEX_HTML.index('id="sub-menu"') and
       'id="pinform"' not in INDEX_HTML and
@@ -1220,8 +1223,10 @@ with sync_playwright() as p:
         next_page.keyboard.press('Tab')
         check('Event detail Tab wraps from the last control to the close button',
               next_page.evaluate("document.activeElement.id === 'evd-x'"))
+        # Replace the original opener while the dialog is open; focus must return to its new Today card node.
+        next_page.evaluate("""() => { const old=document.querySelector('#home-now .today-next-up'); if(old) old.replaceWith(old.cloneNode(true)); }""")
         next_page.keyboard.press('Escape')
-        check('Event detail Escape restores focus to the Today next-event card',
+        check('Event detail Escape restores focus to a re-rendered Today next-event card',
               next_page.evaluate("document.getElementById('evd').hidden && document.activeElement.classList.contains('today-next-up')"))
         next_page.context.close()
 
