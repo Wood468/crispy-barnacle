@@ -8,7 +8,10 @@ import { writeFileSync, readFileSync } from "node:fs";
 import { execFileSync } from "node:child_process";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
+import { createRequire } from "node:module";
 import { matchEvent } from "./g47ix-review.mjs";
+
+const GODEDUPE = createRequire(import.meta.url)("../public/dedupe.js");
 
 const DISCORD_FILE = process.env.DISCORD_FILE || "infographics.json";
 const REG = process.env.REGISTRY_FILE || "data/g47ix-infographics-review.json";
@@ -133,15 +136,33 @@ export function decide(candidate, ocrText, events) {
   return { confident, match, event: ev, score, signals, reason };
 }
 
+// Dates of an event as event-info.json stores them: start / end as YYYY-MM-DD, plus where they came from (dateSource).
+// Pictures are matched to events by title as a fallback, and a recurring event ("Super Mega Raid Day") has the same title every time,
+// so the entry's own dates are what tell one instance from the next (see GODEDUPE.findEventInfo). No event date means no date field:
+// a picture's post date is not used because posters appear weeks before the event and would make a correct match look like another instance.
+const DAY = /^\d{4}-\d{2}-\d{2}/;
+export function eventDates(ev) {
+  const s = DAY.exec(String(ev && ev.s || "")), e = DAY.exec(String(ev && ev.e || ""));
+  if (!s) return null;
+  return { start: s[0], end: e && e[0] > s[0] ? e[0] : s[0], dateSource: String(ev.src || "event") };
+}
+// Every event with a known date window, from the same files the app reads. Used to date pictures approved in the app and for the one-off backfill.
+export function datedEvents({ data, details, world } = {}, now = 0) {
+  const tag = (list, src) => (list || []).map(e => ({ ...e, src }));
+  return [...tag(data && data.events, "data.json"), ...tag(worldAsEvents(world).filter(w => DAY.test(w.s)), "world-events.json"), ...tag(raidSlots(data && data.rotation, now), "rotation"), ...tag(detailsAsEvents(details).filter(d => d.s), "event-details.json")];
+}
 export function addToEventInfo(info, event, graphic) {
   info.events = info.events || {};
-  const title = String(event.t || event.title || "").toLowerCase();
-  let key = Object.keys(info.events).find(k => k === event.id || (info.events[k].names || []).some(n => String(n).toLowerCase() === title));
+  const title = String(event.t || event.title || "").toLowerCase(), when = eventDates(event);
+  // A title match is only reused for the same instance: a dated entry whose window is clearly another one (next month's repeat) is left alone.
+  const sameTitle = k => (info.events[k].names || []).some(n => String(n).toLowerCase() === title) && !(when && info.events[k].start && GODEDUPE.instanceApart(info.events[k], when));
+  let key = Object.keys(info.events).find(k => k === event.id || sameTitle(k));
   if (!key) {
     key = event.id;
     info.events[key] = { names: [event.t || event.title], source: { label: graphic.creator || "G47IX", trust: "community", url: graphic.sourceUrl, observed: graphic.observed }, tickets: [], info: [], infographics: [] };
   }
   const e = info.events[key];
+  if (when) Object.assign(e, when);
   e.infographics = e.infographics || [];
   if (e.infographics.some(g => g.url === graphic.url)) return false;
   const who = graphic.creator || "G47IX";
@@ -282,7 +303,7 @@ async function main() {
   let eventDetails = {};
   try { eventDetails = JSON.parse(await readFile(DETAILS, "utf8")); } catch { /* optional on older previews */ }
   const eventMap = new Map();
-  for (const event of [...(dataJson.events || []), ...detailsAsEvents(eventDetails), ...raidSlots(dataJson.rotation)]) {
+  for (const event of [...(dataJson.events || []).map(e => ({ ...e, src: "data.json" })), ...detailsAsEvents(eventDetails).map(e => (e.s ? { ...e, src: "event-details.json" } : e)), ...raidSlots(dataJson.rotation).map(e => ({ ...e, src: "rotation" }))]) {
     if (!event || !event.id) continue;
     const previous = eventMap.get(event.id);
     eventMap.set(event.id, previous ? { ...previous, ...event, t: previous.t || event.t, art: previous.art || event.art } : event);

@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "how_to_update": "Details come only from a named source. Anything the source does not say is status 'not-published'. Tickets and passes are defined under 'passes'; prices live in prices.json.",
+  "how_to_update": "Details come only from a named source. Anything the source does not say is status 'not-published'. Tickets and passes are defined under 'passes'; prices live in prices.json. Optional start / end (YYYY-MM-DD) and dateSource say which instance of a recurring event an entry is for; they are written by scripts/g47ix-publish.mjs and g47ix-apply.mjs (and once by scripts/event-info-dates.mjs), never by hand.",
   "events": {
     "zorua": {
       "source": {
@@ -76,7 +76,10 @@
       "scheduleNotes": [
         "Community Day runs from 2:00–5:00 p.m. local time. Regular Lure Modules can continue attracting Zorua until 9:00 p.m. local time; that extended window is separate from the main event hours.",
         "The three-hour Incense bonus excludes Daily Adventure Incense, and the one-hour Lure bonus excludes Golden Lure Modules."
-      ]
+      ],
+      "start": "2026-10-10",
+      "end": "2026-10-10",
+      "dateSource": "data.json"
     },
     "trek": {
       "source": {
@@ -105,7 +108,10 @@
         "Fall Marathon: Buddy Trek"
       ],
       "tickets": [],
-      "info": []
+      "info": [],
+      "start": "2026-10-13",
+      "end": "2026-10-19",
+      "dateSource": "data.json"
     },
     "yveltal-oct-2026": {
       "names": [
@@ -193,7 +199,10 @@
           "sourceUrl": "https://discord.com/channels/@me/1558793395198099618/1561413791298752732",
           "alt": "Orionids Meteor Shower: Minior Debut infographic"
         }
-      ]
+      ],
+      "start": "2026-10-19",
+      "end": "2026-10-24",
+      "dateSource": "data.json"
     },
     "sandile": {
       "names": [
@@ -222,7 +231,10 @@
           "sourceUrl": "https://discord.com/channels/@me/1558793395198099618/1560178079878479925",
           "alt": "Sandile Hatch Day infographic"
         }
-      ]
+      ],
+      "start": "2026-10-17",
+      "end": "2026-10-17",
+      "dateSource": "data.json"
     },
     "sendai": {
       "names": [
@@ -244,7 +256,10 @@
           "sourceUrl": "https://discord.com/channels/@me/1558793395198099618/1559125836571877451",
           "alt": "GO Wild Area: Sendai infographic"
         }
-      ]
+      ],
+      "start": "2026-11-06",
+      "end": "2026-11-08",
+      "dateSource": "data.json"
     },
     "cur:wag": {
       "names": [
@@ -287,7 +302,10 @@
           "sourceUrl": "https://discord.com/channels/@me/1558793395198099618/1561441160554094703",
           "alt": "GO Wild Area: Global infographic"
         }
-      ]
+      ],
+      "start": "2026-11-14",
+      "end": "2026-11-15",
+      "dateSource": "data.json"
     },
     "leekduck:pokemon-go-wild-area-2026-global": {
       "names": [
@@ -433,7 +451,10 @@
           "sourceUrl": "",
           "alt": "Shadow Landorus (Incarnate Forme) in Shadow Raids infographic"
         }
-      ]
+      ],
+      "start": "2026-10-07",
+      "end": "2026-11-03",
+      "dateSource": "event-details.json"
     },
     "leekduck:mega-dragonite-in-mega-raids-october-2026": {
       "names": [
@@ -484,7 +505,10 @@
           "sourceUrl": "https://discord.com/channels/@me/1558793395198099618/1559619652097679394",
           "alt": "Dialga in 5-star Raid Battles infographic"
         }
-      ]
+      ],
+      "start": "2026-10-14",
+      "end": "2026-10-20",
+      "dateSource": "event-details.json"
     },
     "smr1": {
       "names": [
@@ -527,7 +551,10 @@
           "sourceUrl": "https://discord.com/channels/@me/1558793395198099618/1565674951699071116",
           "alt": "Super Mega Raid Day infographic"
         }
-      ]
+      ],
+      "start": "2026-10-31",
+      "end": "2026-10-31",
+      "dateSource": "data.json"
     },
     "leekduck:season-24-twilight-trails": {
       "names": [
@@ -629,7 +656,10 @@
           "sourceUrl": "https://discord.com/channels/@me/1558793395198099618/1559878109744996384",
           "alt": "Dialga 5-star raids infographic"
         }
-      ]
+      ],
+      "start": "2026-10-14",
+      "end": "2026-10-21",
+      "dateSource": "rotation"
     },
     "leekduck:pokemonspotlighthour2026-10-15": {
       "names": [
@@ -680,7 +710,10 @@
           "sourceUrl": "https://discord.com/channels/@me/1558793395198099618/1561441119789650044",
           "alt": "Into the Wild infographic"
         }
-      ]
+      ],
+      "start": "2026-11-09",
+      "end": "2026-11-13",
+      "dateSource": "world-events.json"
     },
     "w-pok-mon-run-30-kaohsiung": {
       "names": [
@@ -724,7 +757,10 @@
           "sourceUrl": "https://discord.com/channels/@me/1558793395198099618/1560468502077374585",
           "alt": "Pokémon RUN 30: Taichung infographic"
         }
-      ]
+      ],
+      "start": "2026-10-17",
+      "end": "2026-10-18",
+      "dateSource": "world-events.json"
     },
     "w-pok-mon-run-30-singapore": {
       "names": [
@@ -746,7 +782,10 @@
           "sourceUrl": "https://discord.com/channels/@me/1558793395198099618/1560468502077374585",
           "alt": "Pokémon RUN 30: Singapore infographic"
         }
-      ]
+      ],
+      "start": "2026-11-07",
+      "end": "2026-11-08",
+      "dateSource": "world-events.json"
     },
     "w-pok-mon-run-30-new-taipei": {
       "names": [
@@ -812,7 +851,10 @@
           "sourceUrl": "https://discord.com/channels/@me/1558793395198099618/1560468502077374585",
           "alt": "Pokémon RUN 30: Jakarta infographic"
         }
-      ]
+      ],
+      "start": "2026-12-12",
+      "end": "2026-12-13",
+      "dateSource": "world-events.json"
     },
     "w-pok-mon-run-30-bangkok": {
       "names": [
@@ -856,7 +898,10 @@
           "sourceUrl": "https://discord.com/channels/@me/1558793395198099618/1560468502077374585",
           "alt": "Pokémon RUN 30: Hong Kong infographic"
         }
-      ]
+      ],
+      "start": "2027-01-23",
+      "end": "2027-01-24",
+      "dateSource": "world-events.json"
     },
     "w-save-the-date-pok-mon-go-tour-2027": {
       "names": [
@@ -878,7 +923,10 @@
           "sourceUrl": "https://discord.com/channels/@me/1558793395198099618/1561441170037411973",
           "alt": "Pokémon GO Tour 2027: Kaohsiung infographic"
         }
-      ]
+      ],
+      "start": "2027-02-19",
+      "end": "2027-02-21",
+      "dateSource": "world-events.json"
     },
     "raid:palkia:2026-10-21": {
       "names": [
@@ -907,7 +955,10 @@
           "sourceUrl": "https://discord.com/channels/@me/1558793395198099618/1562287413798375506",
           "alt": "Palkia 5-star raids infographic"
         }
-      ]
+      ],
+      "start": "2026-10-21",
+      "end": "2026-10-28",
+      "dateSource": "rotation"
     },
     "leekduck:mega-charizard-x-mega-charizard-y-in-mega-raids-october-2026": {
       "names": [
@@ -1096,7 +1147,10 @@
           "note": "Pokémon GO Hub reports all three can be Shiny. The official post does not say."
         }
       ],
-      "infographics": []
+      "infographics": [],
+      "start": "2026-10-24",
+      "end": "2026-10-24",
+      "dateSource": "world-events.json"
     },
     "leekduck:november-communityday2026": {
       "names": [
@@ -1162,7 +1216,10 @@
           "sourceUrl": "https://discord.com/channels/@me/1558793395198099618/1562877846815252562",
           "alt": "Pokémon GO Tour 2027: Los Angeles infographic"
         }
-      ]
+      ],
+      "start": "2027-02-19",
+      "end": "2027-02-21",
+      "dateSource": "world-events.json"
     },
     "w-pok-mon-go-dia-de-muertos-2026-mexico-exclusive-ev": {
       "names": [
@@ -1191,7 +1248,10 @@
           "sourceUrl": "https://discord.com/channels/@me/1558793395198099618/1565738053157392384",
           "alt": "Dia de Muertos 2026: Mexico infographic"
         }
-      ]
+      ],
+      "start": "2026-10-27",
+      "end": "2026-11-05",
+      "dateSource": "world-events.json"
     },
     "raid:mega-sableye:2026-10-28": {
       "names": [
@@ -1213,7 +1273,10 @@
           "sourceUrl": "https://discord.com/channels/@me/1558793395198099618/1564819648346726504",
           "alt": "Mega Sableye raids infographic"
         }
-      ]
+      ],
+      "start": "2026-10-28",
+      "end": "2026-11-04",
+      "dateSource": "rotation"
     },
     "leekduck:giratina-origin-forme-in-5-star-raid-battles-october-2026": {
       "names": [
@@ -1235,7 +1298,10 @@
           "sourceUrl": "https://discord.com/channels/@me/1558793395198099618/1564819557892366358",
           "alt": "Giratina (Origin Forme) in 5-star Raid Battles infographic"
         }
-      ]
+      ],
+      "start": "2026-10-28",
+      "end": "2026-11-03",
+      "dateSource": "event-details.json"
     },
     "leekduck:dynamax-trails-2026": {
       "names": [
