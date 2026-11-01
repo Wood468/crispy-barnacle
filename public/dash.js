@@ -1072,7 +1072,7 @@
   });
 
   document.addEventListener('gotypes', function () { try { renderRot(); var t = now(); renderTonight(t, dayKey(t)); } catch (e) {} });
-  document.addEventListener('gofn-dex-ready', function () { try { var t = now(); renderTonight(t, dayKey(t)); } catch (e) {} });
+  document.addEventListener('gofn-dex-ready', function () { try { renderRot(); var t = now(); renderTonight(t, dayKey(t)); } catch (e) {} });
 
 
   /* ---------- Collection: what I know about your Dex ---------- */
