@@ -1071,7 +1071,8 @@
     renderRot();
   });
 
-  document.addEventListener('gotypes', function () { try { renderRot(); } catch (e) {} });
+  document.addEventListener('gotypes', function () { try { renderRot(); var t = now(); renderTonight(t, dayKey(t)); } catch (e) {} });
+  document.addEventListener('gofn-dex-ready', function () { try { renderRot(); var t = now(); renderTonight(t, dayKey(t)); } catch (e) {} });
 
 
   /* ---------- Collection: what I know about your Dex ---------- */
@@ -1215,6 +1216,52 @@
   }
 
   /* ---------- wiring ---------- */
+  function renderTonight(t, dateKey) {
+    var tonight = $('today-tonight'), tonightSummary = $('today-tonight-summary'), tonightList = $('today-tonight-list');
+    if (tonight && tonightSummary && tonightList) {
+      var tonightItems = [];
+      function addTonight(kind, name, time, detail, boss, startHour, endHour) {
+        var start = new Date(dateKey + 'T' + (startHour < 10 ? '0' : '') + startHour + ':00');
+        var end = new Date(dateKey + 'T' + (endHour < 10 ? '0' : '') + endHour + ':00');
+        if (!name || !Number.isFinite(end.getTime()) || t.getTime() >= end.getTime()) return;
+        tonightItems.push({ kind: kind, name: name, time: time, detail: detail || '', boss: boss || '', start: start });
+      }
+      (D.spotlight || []).forEach(function (x) {
+        if (x && x.d === dateKey) addTonight('Spotlight Hour', x.n, '6–7 pm local', x.b || '', '', 18, 19);
+      });
+      (D.raidHour || []).forEach(function (x) {
+        if (x && x.d === dateKey) addTonight('Raid Hour', x.n, '6–7 pm local', '', x.n, 18, 19);
+      });
+      (D.maxBattles || []).forEach(function (x) {
+        if (x && x.length >= 3 && x[0] === dateKey) addTonight('Max Monday', x[2], '6 am–9 pm local', '', x[2], 6, 21);
+      });
+      tonightItems.sort(function (a, b) { return a.start - b.start || a.kind.localeCompare(b.kind); });
+      if (!tonight.dataset.toggleBound) {
+        tonight.addEventListener('toggle', function () { tonightList.hidden = !tonight.open; });
+        tonight.dataset.toggleBound = 'true';
+      }
+      tonight.hidden = !tonightItems.length;
+      if (tonightItems.length) {
+        tonightSummary.textContent = "Tonight's plan · " + tonightItems.length + (tonightItems.length === 1 ? ' activity' : ' activities');
+        tonightList.innerHTML = tonightItems.map(function (item) {
+          var facts = item.boss && window.GOTYPES && GOTYPES.facts(item.boss);
+          var weak = facts && Array.isArray(facts.weak) ? facts.weak.filter(function (type, i, all) { return typeof type === 'string' && all.indexOf(type) === i; }) : [];
+          var weakness = weak.length ? '<small>Weak to: ' + esc(weak.join(', ')) + '</small>' : '';
+          var best = weak.length && window.GOBEST && typeof GOBEST.showTypes === 'function'
+            ? '<button type="button" class="today-tonight-best" data-best-types="' + esc(weak.join('|')) + '" aria-label="Best attackers for ' + esc(item.boss) + ' (weak to ' + esc(weak.join(', ')) + ')">Best attackers</button>'
+            : '';
+          return '<li class="today-tonight-item"><div class="today-tonight-head"><b>' + esc(item.kind) + '</b><span>' + esc(item.time) + '</span></div><strong>' + esc(item.name) + '</strong>' +
+            (item.detail ? '<small>' + esc(item.detail) + '</small>' : '') + weakness + best + '</li>';
+        }).join('');
+        tonightList.hidden = !tonight.open;
+      } else {
+        tonight.open = false;
+        tonightList.hidden = true;
+        tonightList.textContent = '';
+      }
+    }
+  }
+
   function renderTodayStrip(t, today, activity) {
     var root = $('today-focus-strip'); if (!root) return;
     var dayStart = startOfDay(t), endDay = addDays(dayStart, 1);
@@ -1248,6 +1295,8 @@
     var raidMeta = maxBattle ? 'Max Battle · ' + maxBattle[2] : 'No Max Battle schedule listed';
     setText('today-focus-raids', raidSummary || (maxBattle ? 'No raid bosses listed for today' : 'No raid rotation listed for today'));
     setText('today-focus-raids-meta', raidMeta);
+
+    renderTonight(t, dateKey);
 
     var sixHours = t.getTime() + 6 * 60 * 60 * 1000;
     var ending = (today || []).filter(function (e) {
@@ -1577,7 +1626,7 @@
     renderCoverage();
     if (window.GO && GO.refreshDex) GO.refreshDex();
     usSync();
-    var inf = document.createElement('script'); inf.src = '/infographic.js?v=20261101e'; document.body.appendChild(inf); var x = document.createElement('script'); x.src = '/extra.js?v=20261024a'; document.body.appendChild(x); var z = document.createElement('script'); z.src = '/places.js?v=20261031b'; window.GOPLACES_READY = new Promise(function (resolve) { z.onload = function () { resolve(window.GOPLACES || null); }; z.onerror = function () { resolve(null); }; }); var y = document.createElement('script'); y.src = '/detail.js?v=20261102a'; document.body.appendChild(y); document.body.appendChild(z); var w = document.createElement('script'); w.src = '/fresh.js?v=20261014a'; document.body.appendChild(w); var nv = document.createElement('script'); nv.src = '/nudge.js?v=20261101a'; document.body.appendChild(nv); var rv = document.createElement('script'); rv.src = '/review.js?v=20261101b'; document.body.appendChild(rv); var by = document.createElement('script'); by.src = '/buy.js?v=20261101a'; document.body.appendChild(by);
+    var inf = document.createElement('script'); inf.src = '/infographic.js?v=20261101e'; document.body.appendChild(inf); var x = document.createElement('script'); x.src = '/extra.js?v=20261024a'; document.body.appendChild(x); var z = document.createElement('script'); z.src = '/places.js?v=20261031b'; window.GOPLACES_READY = new Promise(function (resolve) { z.onload = function () { resolve(window.GOPLACES || null); }; z.onerror = function () { resolve(null); }; }); var y = document.createElement('script'); y.src = '/detail.js?v=20261102b'; document.body.appendChild(y); document.body.appendChild(z); var w = document.createElement('script'); w.src = '/fresh.js?v=20261014a'; document.body.appendChild(w); var nv = document.createElement('script'); nv.src = '/nudge.js?v=20261101a'; document.body.appendChild(nv); var rv = document.createElement('script'); rv.src = '/review.js?v=20261101b'; document.body.appendChild(rv); var by = document.createElement('script'); by.src = '/buy.js?v=20261101a'; document.body.appendChild(by);
   }
   envBanner();
   /* Bounded waits: a request that never answers must not leave Today blank. After FEED_TIMEOUT_MS the page renders from the curated list

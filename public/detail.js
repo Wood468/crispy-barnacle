@@ -4,7 +4,7 @@
   'use strict';
   var G = window.GO, X = window.GODASH, LIB = window.GOLIB;
   if (!G || !X || !LIB) return;
-  var esc = G.esc, DATA = null, opener = null;
+  var esc = G.esc, DATA = null, opener = null, openerKey = null, openerClass = '';
   function $(id) { return document.getElementById(id); }
   /* Moves an event hands out for a limited time (public/event-moves.json). Shown only here and only while the window is open; never part of a Pokémon's normal moveset. */
   var EVM = [];
@@ -415,7 +415,7 @@
       }).join('') + '</div>';
     }).join('');
   }
-  function close(silent) { var o = $('evd'); if (!o || o.hidden) return; o.hidden = true; document.body.style.overflow = ''; if (opener && opener.isConnected && opener.focus) opener.focus(); if (silent !== true && window.GONAV) window.GONAV.popped(); }
+  function close(silent) { var o = $('evd'); if (!o || o.hidden) return; o.hidden = true; document.body.style.overflow = ''; var target = opener; if ((!target || !target.isConnected) && openerKey) { var candidates = document.querySelectorAll('[data-open]'); for (var i = 0; i < candidates.length; i++) { var candidate = candidates[i]; if (candidate.getAttribute('data-open') === openerKey && (!openerClass || candidate.classList.contains(openerClass))) { target = candidate; break; } } } if (target && target.isConnected && target.focus) target.focus(); opener = null; openerKey = null; openerClass = ''; if (silent !== true && window.GONAV) window.GONAV.popped(); }
   /* The event page's own picture (its og:image), shown at the top when the event has none of its own. */
   function addBanner(o, ev) {
     if (ev.img) return;
@@ -475,6 +475,8 @@
   function open(id, from) {
     var ev = X.events().concat(window.GOSEASON ? window.GOSEASON.events() : []).filter(function (e) { return e.id === id; })[0]; if (!ev) return;
     opener = from || document.activeElement;
+    openerKey = opener && opener.getAttribute ? opener.getAttribute('data-open') : null;
+    openerClass = opener && opener.classList && opener.classList.contains('today-next-up') ? 'today-next-up' : '';
     load().then(function () {
       var o = $('evd'), wasOpen = !!o && !o.hidden;
       if (!o) { o = document.createElement('div'); o.id = 'evd'; o.className = 'evd'; o.setAttribute('role', 'dialog'); o.setAttribute('aria-modal', 'true'); o.setAttribute('aria-labelledby', 'evd-t'); document.body.appendChild(o); }

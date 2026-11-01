@@ -6,6 +6,7 @@ import fs from "node:fs";
 const require = createRequire(import.meta.url);
 const LIB = require("../public/lib.js");
 const dash = fs.readFileSync(new URL("../public/dash.js", import.meta.url), "utf8");
+const app = fs.readFileSync(new URL("../public/app.js", import.meta.url), "utf8");
 const html = fs.readFileSync(new URL("../public/index.html", import.meta.url), "utf8");
 
 test("Today live summary separates in-game and in-person activity without dropping overseas events", () => {
@@ -32,4 +33,21 @@ test("regional in-person entries are not suppressed by in-game deduplication", (
   const regionalGuard = dash.indexOf("if (x.scope !== 'global') return true;");
   const globalDedupe = dash.indexOf("GODEDUPE.same", regionalGuard);
   assert.ok(regionalGuard >= 0 && globalDedupe > regionalGuard);
+});
+
+test("Today Tonight planner uses only published local-day schedules and links weakness types to Best attackers", () => {
+  assert.ok(html.includes('id="today-tonight"'));
+  assert.ok(html.includes('id="today-tonight-summary"'));
+  assert.ok(html.includes('id="today-tonight-list"'));
+  assert.ok(dash.includes("(D.spotlight || [])"));
+  assert.ok(dash.includes("(D.raidHour || [])"));
+  assert.ok(dash.includes("x[0] === dateKey"));
+  assert.ok(dash.includes("6–7 pm local"));
+  assert.ok(dash.includes("6 am–9 pm local"));
+  assert.ok(dash.includes("Weak to:"));
+  assert.ok(dash.includes("data-best-types"));
+  assert.ok(dash.includes("gofn-dex-ready"));
+  assert.ok(dash.includes("function renderTonight"));
+  assert.ok(dash.includes("renderTonight(t, dateKey)"));
+  assert.ok(app.includes("document.dispatchEvent(new Event('gofn-dex-ready'))"));
 });
