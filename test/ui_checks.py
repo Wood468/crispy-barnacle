@@ -1775,7 +1775,7 @@ check('dashboard shared radius declarations consume semantic radius tokens',
 # Base stylesheet radius adoption: shared scale values are expressed through semantic roles.
 check('base stylesheet shared radius declarations consume semantic radius tokens',
       all(f'border-radius:var(--radius-{role})' in BASE_CSS for role in ['md','control','card','panel','lg','xl','pill']) and
-      re.search(r'border-radius:\\s*[^;}]*\\b(?:8|12|14|16|18|20|22|999)px\\b[^;}]*[;}]', BASE_CSS) is None)
+      re.search(r'border-radius:\s*[^;}]*\b(?:8|12|14|16|18|20|22|999)px\b[^;}]*[;}]', BASE_CSS) is None)
 check('base stylesheet spacing declarations consume semantic 4px-scale tokens',
       all(f'var(--space-{step})' in BASE_COMPONENT_CSS for step in [1, 2, 3, 4, 5, 6, 10]) and
       re.search(r'(?<![-\w])(?:column-gap|row-gap|gap)\s*:\s*(?![^;{}]*[()])[^;{}]*(?<![-\w])(?:4|8|12|16|20|24|28|32|36|40)px\b[^;{}]*(?=;|})', BASE_COMPONENT_CSS) is None and
