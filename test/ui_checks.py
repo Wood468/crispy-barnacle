@@ -241,7 +241,7 @@ check('base bonus and information availability controls use semantic status role
           'background: var(--color-status-info-unavailable); color: var(--color-on-status-info-unavailable); border: 1px solid var(--color-border-info-unavailable);',
       ]))
 check('versioned stylesheets are referenced by the page and precached offline',
-      all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261101k', '/dash.css?v=20261101x']))
+      all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261101k', '/dash.css?v=20261101y']))
 check('owner verification scripts are versioned and precached offline',
       '/account.js?v=20261101b' in INDEX_HTML and '/account.js?v=20261101b' in SW_JS and
       '/review.js?v=20261101b' in DASH_JS and '/review.js?v=20261101b' in SW_JS)
@@ -269,7 +269,7 @@ check('event signal chips and detail tags use semantic palette roles with unchan
           '.tg-incense{--tc:var(--color-signal-shadow)}.tg-costume{--tc:var(--color-signal-encounter)}',
       ]))
 check('offline shell cache version advances with the dashboard stylesheet token release',
-      "gofn-shell-v182" in SW_JS)
+      "gofn-shell-v183" in SW_JS)
 check('versioned dashboard scripts are referenced by the entry page and precached offline',
       '/app.js?v=20261101f' in INDEX_HTML and '/app.js?v=20261101f' in SW_JS and
       '/dash.js?v=20261101e' in APP_JS and '/dash.js?v=20261101e' in SW_JS and
@@ -1942,6 +1942,31 @@ check('Dynamax, Max Particles and Power Spot accents use semantic signal tokens'
           '.signal-highlight-dynamax-debut{border-color:color-mix(in srgb,var(--color-signal-dynamax) 75%,var(--border-subtle));background:color-mix(in srgb,var(--color-signal-dynamax) 24%,var(--surface-glass));color:var(--text,#f2f4f8)}',
           '.sp-particle .max-tag{background:var(--color-signal-max-particle-tag)}',
           '.sp-powerspot .max-tag{background:var(--color-signal-power-spot)}'
+      ]))
+
+# Feature-specific encounter, ticket and boosted-odds signals use named roles.
+check('boosted shiny, ticket, raid/power, egg, wild and transfer signals use semantic roles with unchanged hues',
+      all(token in DASH_CSS for token in [
+          '--color-signal-boosted-shiny:#FF9F1C',
+          '--color-signal-boosted-shiny-tag:#F59E0B',
+          '--color-signal-shiny-debut:#D65BD0',
+          '--color-signal-ticket:#E93D82',
+          '--color-signal-power:#E5484D',
+          '--color-signal-raid:#E5484D',
+          '--color-signal-egg:#E8A33D',
+          '--color-signal-wild:#30A46C',
+          '--color-signal-transfer-candy:#35B8C9'
+      ]) and
+      all(selector in DASH_CSS for selector in [
+          '.signal-highlight-boosted-shiny,.signal-highlight-boosted-shiny-odds,.signal-boosted-shiny-odds{border-color:color-mix(in srgb,var(--color-signal-boosted-shiny) 70%,var(--border-subtle));background:color-mix(in srgb,var(--color-signal-boosted-shiny) 22%,var(--surface-glass))}',
+          '.signal-highlight-shiny-debut{border-color:color-mix(in srgb,var(--color-signal-shiny-debut) 65%,var(--border-subtle));background:color-mix(in srgb,var(--color-signal-shiny-debut) 20%,var(--surface-glass))}',
+          '.signal-ticket{border-color:color-mix(in srgb,var(--color-signal-ticket) 70%,var(--border-subtle));background:color-mix(in srgb,var(--color-signal-ticket) 20%,var(--surface-glass));color:var(--text,#f2f4f8)}',
+          '.tg-boostedshiny{--tc:var(--color-signal-boosted-shiny-tag)}',
+          '.tg-power{--tc:var(--color-signal-power)}',
+          '.tg-raid{--tc:var(--color-signal-raid)}',
+          '.tg-egg{--tc:var(--color-signal-egg)}',
+          '.tg-wild{--tc:var(--color-signal-wild)}',
+          '.signal-transfer-candy{border-color:color-mix(in srgb,var(--color-signal-transfer-candy) 65%,var(--border-subtle));background:color-mix(in srgb,var(--color-signal-transfer-candy) 20%,var(--surface-glass))}'
       ]))
 
 print('\nFAILED:',fails if fails else 'none')
