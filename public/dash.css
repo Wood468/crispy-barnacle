@@ -8,6 +8,8 @@
   --color-warning-banner:#FBBF24; --color-on-warning:#1A1200; --color-warning-banner-border:#B45309;
   --color-on-danger:#fff; --color-on-success:#04230F;
   --color-link:#8FAEFF;
+  /* Event-signal palette roles shared by agenda chips and detail tags. */
+  --color-signal-debut:#12A594; --color-signal-shiny:#F5C542; --color-signal-shadow:#8B5CF6; --color-signal-encounter:#3E63DD;
   /* Source-freshness state roles; preserve the established indicator hues. */
   --color-source-fresh:#6BD18A; --color-source-stale:#E8B84A; --color-source-failed:#FF9B8F;
   --glass:var(--surface-glass); --ring:var(--border-subtle);
@@ -510,10 +512,10 @@ button.igcheck{min-height:44px}
 /* Event signals and weekly rotation state */
 .event-signals{display:flex;flex-wrap:wrap;gap:5px;margin:2px 0}
 .signal{display:inline-flex;align-items:center;border:1px solid var(--border-subtle);border-radius:var(--radius-pill);padding:var(--space-1) var(--space-2);font:800 .66rem/1.2 var(--font-body);letter-spacing:.02em;background:var(--surface-glass);color:var(--color-text-body)}
-.signal-debut,.signal-community-day{border-color:color-mix(in srgb,#12A594 45%,var(--border-subtle));background:color-mix(in srgb,#12A594 13%,var(--surface-glass))}
-.signal-shiny{border-color:color-mix(in srgb,#F5C542 48%,var(--border-subtle));background:color-mix(in srgb,#F5C542 12%,var(--surface-glass))}
-.signal-shadow{border-color:color-mix(in srgb,#8B5CF6 48%,var(--border-subtle));background:color-mix(in srgb,#8B5CF6 12%,var(--surface-glass))}
-.signal-background,.signal-costume{border-color:color-mix(in srgb,#3E63DD 45%,var(--border-subtle));background:color-mix(in srgb,#3E63DD 12%,var(--surface-glass))}
+.signal-debut,.signal-community-day{border-color:color-mix(in srgb,var(--color-signal-debut) 45%,var(--border-subtle));background:color-mix(in srgb,var(--color-signal-debut) 13%,var(--surface-glass))}
+.signal-shiny{border-color:color-mix(in srgb,var(--color-signal-shiny) 48%,var(--border-subtle));background:color-mix(in srgb,var(--color-signal-shiny) 12%,var(--surface-glass))}
+.signal-shadow{border-color:color-mix(in srgb,var(--color-signal-shadow) 48%,var(--border-subtle));background:color-mix(in srgb,var(--color-signal-shadow) 12%,var(--surface-glass))}
+.signal-background,.signal-costume{border-color:color-mix(in srgb,var(--color-signal-encounter) 45%,var(--border-subtle));background:color-mix(in srgb,var(--color-signal-encounter) 12%,var(--surface-glass))}
 .rw-current{border-left:3px solid var(--color-success);padding-left:10px}
 .rw-past{opacity:.78}
 .rw-current .rw-label:before{content:"●";color:var(--color-success);margin-right:6px}
@@ -554,13 +556,13 @@ button.igcheck{min-height:44px}
 
 
 /* Named event highlights make the exact debut/shiny target obvious at a glance. */
-.signal-highlight-debut{border-color:color-mix(in srgb,#12A594 70%,var(--border-subtle));background:color-mix(in srgb,#12A594 22%,var(--surface-glass));color:var(--text,#f2f4f8)}
-.signal-highlight-new-shiny{border-color:color-mix(in srgb,#F5C542 75%,var(--border-subtle));background:color-mix(in srgb,#F5C542 24%,var(--surface-glass));color:var(--text,#f2f4f8)}
+.signal-highlight-debut{border-color:color-mix(in srgb,var(--color-signal-debut) 70%,var(--border-subtle));background:color-mix(in srgb,var(--color-signal-debut) 22%,var(--surface-glass));color:var(--text,#f2f4f8)}
+.signal-highlight-new-shiny{border-color:color-mix(in srgb,var(--color-signal-shiny) 75%,var(--border-subtle));background:color-mix(in srgb,var(--color-signal-shiny) 24%,var(--surface-glass));color:var(--text,#f2f4f8)}
 .signal-highlight-boosted-shiny{border-color:color-mix(in srgb,#F59E0B 75%,var(--border-subtle));background:color-mix(in srgb,#F59E0B 20%,var(--surface-glass));color:var(--text,#f2f4f8)}
-.signal-highlight-spawns{border-color:color-mix(in srgb,#3E63DD 65%,var(--border-subtle));background:color-mix(in srgb,#3E63DD 20%,var(--surface-glass));color:var(--text,#f2f4f8)}
+.signal-highlight-spawns{border-color:color-mix(in srgb,var(--color-signal-encounter) 65%,var(--border-subtle));background:color-mix(in srgb,var(--color-signal-encounter) 20%,var(--surface-glass));color:var(--text,#f2f4f8)}
 
-.signal-highlight-wild-encounters{border-color:color-mix(in srgb,#3E63DD 65%,var(--border-subtle));background:color-mix(in srgb,#3E63DD 20%,var(--surface-glass));color:var(--text,#f2f4f8)}
-.signal-highlight-incense-encounters{border-color:color-mix(in srgb,#8B5CF6 65%,var(--border-subtle));background:color-mix(in srgb,#8B5CF6 20%,var(--surface-glass));color:var(--text,#f2f4f8)}
+.signal-highlight-wild-encounters{border-color:color-mix(in srgb,var(--color-signal-encounter) 65%,var(--border-subtle));background:color-mix(in srgb,var(--color-signal-encounter) 20%,var(--surface-glass));color:var(--text,#f2f4f8)}
+.signal-highlight-incense-encounters{border-color:color-mix(in srgb,var(--color-signal-shadow) 65%,var(--border-subtle));background:color-mix(in srgb,var(--color-signal-shadow) 20%,var(--surface-glass));color:var(--text,#f2f4f8)}
 
 /* Variant art: Dynamax red smoke, Shadow aura, Max Particle and Power Spot pictures. */
 .max-art,.shadow-art,.sp-art{position:relative;display:inline-flex;align-items:center;justify-content:center;flex:none;isolation:isolate}
@@ -624,13 +626,13 @@ button.igcheck{min-height:44px}
 .tgs{display:flex;flex-wrap:wrap;gap:5px}
 .tg{display:inline-flex;align-items:center;gap:var(--space-1);padding:3px var(--space-2) 3px 6px;border-radius:var(--radius-pill);border:1px solid var(--tc,var(--border-subtle));background:color-mix(in srgb,var(--tc,#888) 16%,transparent);font:800 var(--type-caption)/1.2 var(--font-body);letter-spacing:.02em}
 .tg svg{width:13px;height:13px;color:var(--tc)}.tg img{width:15px;height:15px;object-fit:contain}
-.tg-w{position:relative;display:inline-flex;margin-right:3px}.tg-w i{position:absolute;right:-5px;bottom:-4px;width:11px;height:11px;border-radius:50%;background:#12A594;color:#fff;font:800 .6rem/11px var(--font-body);text-align:center;font-style:normal}
-.tg-debut{--tc:#12A594}.tg-shinydebut{--tc:#F5C542}.tg-maxdebut{--tc:#E5484D}.tg-boostedshiny{--tc:#F59E0B}.tg-shiny{--tc:#F5C542}
-.tg-incense{--tc:#8B5CF6}.tg-costume{--tc:#3E63DD}.tg-power{--tc:#E5484D}.tg-raid{--tc:#E5484D}.tg-egg{--tc:#E8A33D}.tg-wild{--tc:#30A46C}
+.tg-w{position:relative;display:inline-flex;margin-right:3px}.tg-w i{position:absolute;right:-5px;bottom:-4px;width:11px;height:11px;border-radius:50%;background:var(--color-signal-debut);color:#fff;font:800 .6rem/11px var(--font-body);text-align:center;font-style:normal}
+.tg-debut{--tc:var(--color-signal-debut)}.tg-shinydebut{--tc:var(--color-signal-shiny)}.tg-maxdebut{--tc:#E5484D}.tg-boostedshiny{--tc:#F59E0B}.tg-shiny{--tc:var(--color-signal-shiny)}
+.tg-incense{--tc:var(--color-signal-shadow)}.tg-costume{--tc:var(--color-signal-encounter)}.tg-power{--tc:#E5484D}.tg-raid{--tc:#E5484D}.tg-egg{--tc:#E8A33D}.tg-wild{--tc:#30A46C}
 
 .signal-highlight-shiny-debut{border-color:color-mix(in srgb,#F5C542 80%,var(--border-subtle));background:color-mix(in srgb,#F5C542 26%,var(--surface-glass));color:var(--text,#f2f4f8)}
 .signal-highlight-dynamax-debut{border-color:color-mix(in srgb,#E5484D 75%,var(--border-subtle));background:color-mix(in srgb,#E5484D 24%,var(--surface-glass));color:var(--text,#f2f4f8)}
-.signal-highlight-costume,.signal-highlight-costumes{border-color:color-mix(in srgb,#3E63DD 70%,var(--border-subtle));background:color-mix(in srgb,#3E63DD 22%,var(--surface-glass));color:var(--text,#f2f4f8)}
+.signal-highlight-costume,.signal-highlight-costumes{border-color:color-mix(in srgb,var(--color-signal-encounter) 70%,var(--border-subtle));background:color-mix(in srgb,var(--color-signal-encounter) 22%,var(--surface-glass));color:var(--text,#f2f4f8)}
 .evd-f .tgs{display:flex;flex-wrap:wrap;align-items:center}.evd-f .tg{flex:0 0 auto;width:auto;min-height:0;height:auto;color:var(--color-text,#f2f4f8)}
 
 /* CP under the picture: 100% | weather boosted */
