@@ -241,7 +241,7 @@ check('base bonus and information availability controls use semantic status role
           'background: var(--color-status-info-unavailable); color: var(--color-on-status-info-unavailable); border: 1px solid var(--color-border-info-unavailable);',
       ]))
 check('versioned stylesheets are referenced by the page and precached offline',
-      all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261101k', '/dash.css?v=20261101w']))
+      all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261101k', '/dash.css?v=20261101x']))
 check('owner verification scripts are versioned and precached offline',
       '/account.js?v=20261101b' in INDEX_HTML and '/account.js?v=20261101b' in SW_JS and
       '/review.js?v=20261101b' in DASH_JS and '/review.js?v=20261101b' in SW_JS)
@@ -269,7 +269,7 @@ check('event signal chips and detail tags use semantic palette roles with unchan
           '.tg-incense{--tc:var(--color-signal-shadow)}.tg-costume{--tc:var(--color-signal-encounter)}',
       ]))
 check('offline shell cache version advances with the dashboard stylesheet token release',
-      "gofn-shell-v181" in SW_JS)
+      "gofn-shell-v182" in SW_JS)
 check('versioned dashboard scripts are referenced by the entry page and precached offline',
       '/app.js?v=20261101f' in INDEX_HTML and '/app.js?v=20261101f' in SW_JS and
       '/dash.js?v=20261101e' in APP_JS and '/dash.js?v=20261101e' in SW_JS and
@@ -1925,6 +1925,24 @@ check('dashboard shared gap declarations consume semantic spacing tokens',
 check('dashboard padding and margin declarations consume semantic spacing tokens',
       all(f'var(--space-{step})' in DASH_CSS for step in [1, 2, 3, 4, 5, 7]) and
       re.search(r'(?<![-\w])(?:padding|margin)(?:-(?:top|right|bottom|left|block|inline)(?:-(?:start|end))?)?\s*:\s*(?![^;{}]*[()])[^;{}]*(?<![-\w])(?:4|8|12|16|20|24|28|32|36|40)px\b[^;{}]*(?=;|})', DASH_CSS) is None)
+
+# Dynamax, Max Particles and Power Spot accents use named semantic feature roles.
+check('Dynamax, Max Particles and Power Spot accents use semantic signal tokens',
+      all(token in DASH_CSS for token in [
+          '--color-signal-dynamax:#E5484D',
+          '--color-signal-max-particles:#C77DFF',
+          '--color-signal-power-spot:#2B8A9E',
+          '--color-signal-max-particle-tag:#8E4EC6'
+      ]) and
+      all(selector in DASH_CSS for selector in [
+          '.signal-dynamax,.signal-max-battles{border-color:color-mix(in srgb,var(--color-signal-dynamax) 55%,var(--border-subtle));background:color-mix(in srgb,var(--color-signal-dynamax) 16%,var(--surface-glass))}',
+          '.signal-max-particles{border-color:color-mix(in srgb,var(--color-signal-max-particles) 55%,var(--border-subtle));background:color-mix(in srgb,var(--color-signal-max-particles) 16%,var(--surface-glass))}',
+          '.signal-power-spots{border-color:color-mix(in srgb,var(--color-signal-power-spot) 60%,var(--border-subtle));background:color-mix(in srgb,var(--color-signal-power-spot) 18%,var(--surface-glass))}',
+          '.tg-maxdebut{--tc:var(--color-signal-dynamax)}',
+          '.signal-highlight-dynamax-debut{border-color:color-mix(in srgb,var(--color-signal-dynamax) 75%,var(--border-subtle));background:color-mix(in srgb,var(--color-signal-dynamax) 24%,var(--surface-glass));color:var(--text,#f2f4f8)}',
+          '.sp-particle .max-tag{background:var(--color-signal-max-particle-tag)}',
+          '.sp-powerspot .max-tag{background:var(--color-signal-power-spot)}'
+      ]))
 
 print('\nFAILED:',fails if fails else 'none')
 if fails:
