@@ -55,8 +55,9 @@ EVENT_KIND_PALETTE = [
     ('.p-giga', 'gigantamax', '#D6336C', '#fff'),
 ]
 def event_kind_rule(selector):
-    match = re.search(re.escape(selector) + r'\\s*\\{([^}]*)\\}', BASE_CSS)
-    return match.group(1) if match else ''
+    marker = selector + '{'
+    start = BASE_CSS.find(marker)
+    return BASE_CSS[start + len(marker):].split('}', 1)[0] if start >= 0 else ''
 BASE_ROOT_CSS = BASE_CSS.split(':root[data-theme="light"]', 1)[0]
 check('base event-kind badges use semantic foreground/background roles with the original palette',
       all(f'--color-kind-{role}:{background}' in BASE_ROOT_CSS and f'--color-on-kind-{role}:{foreground}' in BASE_ROOT_CSS
