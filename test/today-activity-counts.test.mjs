@@ -47,5 +47,7 @@ test("Today Tonight planner uses only published local-day schedules and links we
   assert.ok(dash.includes("Weak to:"));
   assert.ok(dash.includes("data-best-types"));
   assert.ok(dash.includes("gofn-dex-ready"));
+  assert.ok(dash.includes("function renderTonight"));
+  assert.ok(dash.includes("renderTonight(t, dateKey)"));
   assert.ok(app.includes("document.dispatchEvent(new Event('gofn-dex-ready'))"));
 });

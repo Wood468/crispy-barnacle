@@ -1071,8 +1071,8 @@
     renderRot();
   });
 
-  document.addEventListener('gotypes', function () { try { renderRot(); renderHomeBrief(now()); } catch (e) {} });
-  document.addEventListener('gofn-dex-ready', function () { try { renderRot(); renderHomeBrief(now()); } catch (e) {} });
+  document.addEventListener('gotypes', function () { try { renderRot(); var t = now(); renderTonight(t, dayKey(t)); } catch (e) {} });
+  document.addEventListener('gofn-dex-ready', function () { try { var t = now(); renderTonight(t, dayKey(t)); } catch (e) {} });
 
 
   /* ---------- Collection: what I know about your Dex ---------- */
@@ -1216,40 +1216,7 @@
   }
 
   /* ---------- wiring ---------- */
-  function renderTodayStrip(t, today, activity) {
-    var root = $('today-focus-strip'); if (!root) return;
-    var dayStart = startOfDay(t), endDay = addDays(dayStart, 1);
-    var regionalToday = regList().filter(function (e) { return e.start < endDay && e.end > dayStart; });
-    var nextItems = [];
-    (today || []).forEach(function (e) { if (e.start > t) nextItems.push({ event: e, regional: false }); });
-    regionalToday.forEach(function (e) { if (e.start > t) nextItems.push({ event: e, regional: true }); });
-    if (!nextItems.length) {
-      EV.filter(function (e) { return e.start > t && !e.long && !isHidden(e.id) && !kindHidden(e.kind); }).forEach(function (e) { nextItems.push({ event: e, regional: false }); });
-      regList().filter(function (e) { return e.start > t; }).forEach(function (e) { nextItems.push({ event: e, regional: true }); });
-    }
-    nextItems.sort(function (a, b) { return a.event.start - b.event.start; });
-    var next = nextItems[0], nextName = 'Nothing scheduled next', nextMeta = 'Check the schedule for updates.';
-    if (next) {
-      var ev = next.event, person = next.regional || kindOf(ev)[0].toLowerCase().indexOf('person') >= 0;
-      nextName = ev.name || 'Upcoming event';
-      if (next.regional) nextMeta = [ev.place, fmtD(ev.start)].filter(Boolean).join(' · ');
-      else if (person) nextMeta = [ev.place || ev.location || ev.venue, fmtD(ev.start)].filter(Boolean).join(' · ');
-      else nextMeta = fmtD(ev.start) + ((!ev.allDay && !(ev.region && ev.sourceStart && !ev.utc)) ? ' · ' + fmtT(ev.start) : '');
-    }
-    var setText = function (id, value) { var el = $(id); if (el) el.textContent = value; };
-    setText('today-focus-next', nextName);
-    setText('today-focus-next-meta', nextMeta);
-
-    var dateKey = dayKey(t), rotation = (D.rotation || []).filter(function (r) {
-      var from = new Date(r.s), to = new Date(r.e);
-      return from <= dayStart && dayStart < to;
-    })[0];
-    var maxBattle = (D.maxBattles || []).filter(function (r) { return r && r.length >= 3 && r[0] <= dateKey && dateKey <= r[1]; })[0];
-    var raidSummary = rotation ? [rotation.five ? '5★ ' + rotation.five : '', rotation.mega ? 'Mega ' + rotation.mega : '', rotation.shadow ? 'Shadow ' + rotation.shadow : ''].filter(Boolean).join(' · ') : '';
-    var raidMeta = maxBattle ? 'Max Battle · ' + maxBattle[2] : 'No Max Battle schedule listed';
-    setText('today-focus-raids', raidSummary || (maxBattle ? 'No raid bosses listed for today' : 'No raid rotation listed for today'));
-    setText('today-focus-raids-meta', raidMeta);
-
+  function renderTonight(t, dateKey) {
     var tonight = $('today-tonight'), tonightSummary = $('today-tonight-summary'), tonightList = $('today-tonight-list');
     if (tonight && tonightSummary && tonightList) {
       var tonightItems = [];
@@ -1293,6 +1260,43 @@
         tonightList.textContent = '';
       }
     }
+  }
+
+  function renderTodayStrip(t, today, activity) {
+    var root = $('today-focus-strip'); if (!root) return;
+    var dayStart = startOfDay(t), endDay = addDays(dayStart, 1);
+    var regionalToday = regList().filter(function (e) { return e.start < endDay && e.end > dayStart; });
+    var nextItems = [];
+    (today || []).forEach(function (e) { if (e.start > t) nextItems.push({ event: e, regional: false }); });
+    regionalToday.forEach(function (e) { if (e.start > t) nextItems.push({ event: e, regional: true }); });
+    if (!nextItems.length) {
+      EV.filter(function (e) { return e.start > t && !e.long && !isHidden(e.id) && !kindHidden(e.kind); }).forEach(function (e) { nextItems.push({ event: e, regional: false }); });
+      regList().filter(function (e) { return e.start > t; }).forEach(function (e) { nextItems.push({ event: e, regional: true }); });
+    }
+    nextItems.sort(function (a, b) { return a.event.start - b.event.start; });
+    var next = nextItems[0], nextName = 'Nothing scheduled next', nextMeta = 'Check the schedule for updates.';
+    if (next) {
+      var ev = next.event, person = next.regional || kindOf(ev)[0].toLowerCase().indexOf('person') >= 0;
+      nextName = ev.name || 'Upcoming event';
+      if (next.regional) nextMeta = [ev.place, fmtD(ev.start)].filter(Boolean).join(' · ');
+      else if (person) nextMeta = [ev.place || ev.location || ev.venue, fmtD(ev.start)].filter(Boolean).join(' · ');
+      else nextMeta = fmtD(ev.start) + ((!ev.allDay && !(ev.region && ev.sourceStart && !ev.utc)) ? ' · ' + fmtT(ev.start) : '');
+    }
+    var setText = function (id, value) { var el = $(id); if (el) el.textContent = value; };
+    setText('today-focus-next', nextName);
+    setText('today-focus-next-meta', nextMeta);
+
+    var dateKey = dayKey(t), rotation = (D.rotation || []).filter(function (r) {
+      var from = new Date(r.s), to = new Date(r.e);
+      return from <= dayStart && dayStart < to;
+    })[0];
+    var maxBattle = (D.maxBattles || []).filter(function (r) { return r && r.length >= 3 && r[0] <= dateKey && dateKey <= r[1]; })[0];
+    var raidSummary = rotation ? [rotation.five ? '5★ ' + rotation.five : '', rotation.mega ? 'Mega ' + rotation.mega : '', rotation.shadow ? 'Shadow ' + rotation.shadow : ''].filter(Boolean).join(' · ') : '';
+    var raidMeta = maxBattle ? 'Max Battle · ' + maxBattle[2] : 'No Max Battle schedule listed';
+    setText('today-focus-raids', raidSummary || (maxBattle ? 'No raid bosses listed for today' : 'No raid rotation listed for today'));
+    setText('today-focus-raids-meta', raidMeta);
+
+    renderTonight(t, dateKey);
 
     var sixHours = t.getTime() + 6 * 60 * 60 * 1000;
     var ending = (today || []).filter(function (e) {
