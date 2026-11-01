@@ -1,10 +1,10 @@
 {
- "updated": "2026-11-01T00:08:33.842Z",
+ "updated": "2026-11-01T06:05:59.532Z",
  "status": [
   {
    "id": "hub",
    "state": "ok",
-   "items": 3
+   "items": 4
   },
   {
    "id": "miners-assets",
@@ -19,7 +19,7 @@
   {
    "id": "reddit-silph",
    "state": "ok",
-   "items": 13
+   "items": 12
   },
   {
    "id": "youtube-pogo",
@@ -70,6 +70,19 @@
    "notInOurData": [
     "Crobat"
    ]
+  },
+  {
+   "source": "hub",
+   "trust": "community",
+   "title": "Pokémon GO Halloween 2026: Part Two",
+   "link": "https://pokemongohub.net/post/event/pokemon-go-halloween-2026-part-two/",
+   "date": "2026-11-01T04:55:14.000Z",
+   "summary": "Pokémon GO&#8217;s Halloween 2026 Part Two event runs from Sunday, November 1, at 10:00 a.m. to Thursday, November 5, 2026, at 8:00 p.m. local time. Shiny Greavard makes its Pokémon GO debut, and Mega",
+   "pokemon": [
+    "Greavard",
+    "Sableye"
+   ],
+   "notInOurData": []
   },
   {
    "source": "reddit-silph",
@@ -204,18 +217,6 @@
    "summary": "<table> <tr><td> <a href=\"https://www.reddit.com/r/TheSilphRoad/comments/1xgjsbu/shiny_costume_sinistea_confirmed/\"> <img src=\"https://preview.redd.it/qitqo9ud0yxh1.jpeg?width=640&amp;crop=smart&amp;a",
    "pokemon": [
     "Sinistea"
-   ],
-   "notInOurData": []
-  },
-  {
-   "source": "reddit-silph",
-   "trust": "tip",
-   "title": "Shiny costume zubat is confirmed",
-   "link": "https://www.reddit.com/r/TheSilphRoad/comments/1xggriy/shiny_costume_zubat_is_confirmed/",
-   "date": "2026-10-27T02:31:14.000Z",
-   "summary": "<table> <tr><td> <a href=\"https://www.reddit.com/r/TheSilphRoad/comments/1xggriy/shiny_costume_zubat_is_confirmed/\"> <img src=\"https://preview.redd.it/na3ftvek8xxh1.jpeg?width=640&amp;crop=smart&amp;a",
-   "pokemon": [
-    "Zubat"
    ],
    "notInOurData": []
   }
