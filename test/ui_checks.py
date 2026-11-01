@@ -391,8 +391,13 @@ with sync_playwright() as p:
         # Published GO Pass/season end times share the existing Ending soon signal; no free-text expiry is inferred.
         empty_data_obj = json.loads((ROOT / 'public' / 'data.json').read_text())
         empty_data_obj['events'] = []
+        empty_data_obj['spotlight'] = []
+        empty_data_obj['raidHour'] = []
         empty_data_obj['rotation'] = []
         empty_data_obj['maxBattles'] = []
+        empty_data_obj['inPerson'] = []
+        empty_data_obj['worldEvents'] = []
+        empty_data_obj['regionals'] = []
         empty_data = json.dumps(empty_data_obj)
         empty_world = json.dumps({'events': []})
         pass_season = json.dumps({'items': [{
