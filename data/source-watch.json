@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-01T13:25:41.871Z",
+ "updated": "2026-11-01T19:41:00.847Z",
  "status": [
   {
    "id": "hub",
@@ -19,7 +19,7 @@
   {
    "id": "reddit-silph",
    "state": "ok",
-   "items": 12
+   "items": 13
   },
   {
    "id": "youtube-pogo",
@@ -70,6 +70,20 @@
    "notInOurData": [
     "Crobat"
    ]
+  },
+  {
+   "source": "reddit-silph",
+   "trust": "tip",
+   "title": "Halloween event - part II feels underwhelming",
+   "link": "https://www.reddit.com/r/TheSilphRoad/comments/1xl450u/halloween_event_part_ii_feels_underwhelming/",
+   "date": "2026-11-01T14:15:45.000Z",
+   "summary": "<!-- SC_OFF --><div class=\"md\"><p>Less spawn variety than p1</p> <p>No new costumes (zubat 💔) </p> <p>Half the costumes compared to p1 </p> <p>The removal of the boxes which made the event genuinely ",
+   "pokemon": [
+    "Drifblim",
+    "Gengar",
+    "Zubat"
+   ],
+   "notInOurData": []
   },
   {
    "source": "hub",
