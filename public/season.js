@@ -44,6 +44,7 @@
       if (!window.GODASH || !GODASH.mkEvent) { if (tries++ < 40) return setTimeout(mk, 150); return; }
       evs = items.map(function (i) { return GODASH.mkEvent({ id: i.id, name: i.name, kind: 'event', s: i.s, e: i.e, tags: [], status: 'official_confirmed', source: 'Leek Duck', link: i.url, notes: [], featured: [], img: i.img, season: i });  }).filter(Boolean);
       window.GOSEASON = { events: function () { return evs; } };
+      document.dispatchEvent(new Event('gofn-season-ready'));
       render();
     })();
   }).catch(function () { });
