@@ -73,16 +73,14 @@ with sync_playwright() as p:
 
         page.wait_for_function("""() => Array.from(document.querySelectorAll('#tab-events .evc.cmp')).some(card =>
           card.querySelector('.evc-foot .star') &&
-          Array.from(card.querySelectorAll('.evc-foot .more')).some(button =>
-            /Check infographic/i.test(button.textContent || '')
-          )
+          card.querySelector('.evc-foot .info-open')
         )""", timeout=20000)
         footer = page.evaluate("""() => {
           const card = [...document.querySelectorAll('#tab-events .evc.cmp')].find(el =>
             el.getBoundingClientRect().width > 0 &&
             el.getBoundingClientRect().height > 0 &&
             el.querySelector('.evc-foot .star') &&
-            [...el.querySelectorAll('.evc-foot .more')].some(button => /Check infographic/i.test(button.textContent || ''))
+            el.querySelector('.evc-foot .info-open')
           );
           const foot = card.querySelector('.evc-foot');
           const actions = [...foot.querySelectorAll('.more, .star')];
