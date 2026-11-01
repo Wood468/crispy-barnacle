@@ -543,9 +543,13 @@ with sync_playwright() as p:
                   "els => els.every(a => a.href.startsWith('https://leekduck.com/') && a.target === '_blank' && a.rel.includes('noopener'))"))
         check('Today deadline tray disclosure is collapsed initially and opens by keyboard-accessible summary',
               not multi_tray.evaluate("el => el.open"))
-        multi_page.locator('#today-deadlines-summary').click()
+        multi_page.locator('#today-deadlines-summary').focus()
+        multi_page.keyboard.press('Enter')
+        multi_page.wait_for_function("!document.getElementById('today-deadlines-list').hidden")
         check('Today deadline tray reveals its ordered list when expanded',
               multi_tray.evaluate("el => el.open") and multi_items.count() == 3)
+        check('expanded source links meet the 44px hit-target minimum',
+              multi_page.locator('#today-deadlines-list a').evaluate_all("els => els.every(a => { const r=a.getBoundingClientRect(); return r.width >= 44 && r.height >= 44; })"))
         multi_page.context.close()
 
         # Official event-exclusive move windows enter Today only while their published window is active.
