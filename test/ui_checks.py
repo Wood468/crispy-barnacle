@@ -81,6 +81,19 @@ check('base affirmative and provisional status pills use semantic foreground/bac
           '#' not in status_rule(selector) and 'rgb' not in status_rule(selector)
           for selector, role, _, _ in STATUS_PALETTE))
 
+SHINY_FILTER_PALETTE = [
+    ('--color-filter-shiny-start', '#7b5cff'),
+    ('--color-filter-shiny-end', '#d65bd0'),
+    ('--color-on-filter-shiny', '#fff'),
+]
+SHINY_FILTER_SELECTOR = '.tg.x.s[aria-pressed="true"]{'
+shiny_start = BASE_CSS.find(SHINY_FILTER_SELECTOR)
+shiny_rule = BASE_CSS[shiny_start + len(SHINY_FILTER_SELECTOR):].split('}', 1)[0] if shiny_start >= 0 else ''
+check('selected Shiny filter uses semantic gradient tokens with unchanged palette values',
+      all(f'{token}:{value}' in BASE_ROOT_CSS for token, value in SHINY_FILTER_PALETTE) and
+      'background:linear-gradient(135deg,var(--color-filter-shiny-start),var(--color-filter-shiny-end))' in shiny_rule and
+      'color:var(--color-on-filter-shiny)' in shiny_rule and '#' not in shiny_rule and 'rgb' not in shiny_rule)
+
 TYPE_SCALE = {
     '--type-caption-compact': ('.62rem', 2),
     '--type-caption': ('.68rem', 2),
@@ -212,12 +225,12 @@ check('150ms interaction transitions use a shared motion role with unchanged eas
       'transition:transform var(--motion-quick)' in DASH_CSS and
       BASE_CSS.count('var(--motion-quick)') == 3 and DASH_CSS.count('var(--motion-quick)') == 1)
 check('versioned stylesheets are referenced by the page and precached offline',
-      all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261101h', '/dash.css?v=20261101u']))
+      all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261101i', '/dash.css?v=20261101u']))
 check('owner verification scripts are versioned and precached offline',
       '/account.js?v=20261101b' in INDEX_HTML and '/account.js?v=20261101b' in SW_JS and
       '/review.js?v=20261101b' in DASH_JS and '/review.js?v=20261101b' in SW_JS)
 check('offline shell cache version advances with the stylesheet token release',
-      "gofn-shell-v172" in SW_JS)
+      "gofn-shell-v173" in SW_JS)
 check('versioned dashboard scripts are referenced by the entry page and precached offline',
       '/app.js?v=20261101c' in INDEX_HTML and '/app.js?v=20261101c' in SW_JS and
       '/dash.js?v=20261101b' in APP_JS and '/dash.js?v=20261101b' in SW_JS and
