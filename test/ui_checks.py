@@ -223,7 +223,7 @@ check('empty agenda and watchlist states use a quiet surface and decorative cue'
       all(token in DASH_CSS for token in ['.event-agenda > .empty', '#followed > .empty', '#savedev > .empty', '.today-empty', 'content:"◇"', 'border:1px dashed var(--color-border-card)']))
 check('Today focus strip has four data-backed signals and a responsive semantic surface',
       all(token in INDEX_HTML for token in ['id="today-focus-strip"', 'id="today-focus-now"', 'id="today-focus-next"', 'id="today-focus-raids"', 'id="today-focus-ending"']) and
-      all(token in DASH_JS for token in ['function renderTodayStrip', '6 * 60 * 60 * 1000', 'activity.inGame', 'activity.inPerson', 'D.rotation', 'D.maxBattles']) and
+      all(token in DASH_JS for token in ['function renderTodayStrip', '6 * 60 * 60 * 1000', '48 * 60 * 60 * 1000', 'window.GOSEASON', 'gofn-season-ready', 'activity.inGame', 'activity.inPerson', 'D.rotation', 'D.maxBattles']) and
       all(token in DASH_CSS for token in ['.today-focus-strip', '.today-focus-card', 'grid-template-columns:repeat(2,minmax(0,1fr))']))
 check('150ms interaction transitions use a shared motion role with unchanged easing',
       '--motion-quick:150ms' in BASE_CSS and
@@ -269,10 +269,10 @@ check('event signal chips and detail tags use semantic palette roles with unchan
           '.tg-incense{--tc:var(--color-signal-shadow)}.tg-costume{--tc:var(--color-signal-encounter)}',
       ]))
 check('offline shell cache version advances with the dashboard stylesheet token release',
-      "gofn-shell-v186" in SW_JS)
+      "gofn-shell-v187" in SW_JS)
 check('versioned dashboard scripts are referenced by the entry page and precached offline',
-      '/app.js?v=20261101f' in INDEX_HTML and '/app.js?v=20261101f' in SW_JS and
-      '/dash.js?v=20261101e' in APP_JS and '/dash.js?v=20261101e' in SW_JS and
+      '/app.js?v=20261102a' in INDEX_HTML and '/app.js?v=20261102a' in SW_JS and
+      '/dash.js?v=20261102d' in APP_JS and '/dash.js?v=20261102d' in SW_JS and
       '/detail.js?v=20261031a' in DASH_JS and '/detail.js?v=20261031a' in SW_JS)
 check('sync PIN and account controls have one home in Menu and are precached offline',
       INDEX_HTML.index('id="acct" class="acct"') > INDEX_HTML.index('id="sub-menu"') and
@@ -287,7 +287,7 @@ check('owner-only account and moderation UI requires server-verified PIN access'
       '[data-role="guest"] #hireview' in BASE_CSS and
       '[data-role="guest"] .igbanner' in BASE_CSS)
 check('versioned season banner script is referenced by the page and precached offline',
-      '/season.js?v=20261101a' in INDEX_HTML and '/season.js?v=20261101a' in SW_JS)
+      '/season.js?v=20261102b' in INDEX_HTML and '/season.js?v=20261102b' in SW_JS)
 check('all HTML renderers use one shared apostrophe-safe escape helper',
       'function esc(value)' in LIB_JS and 'esc: esc' in LIB_JS and
       all('var esc = window.GOLIB.esc;' in source for source in ESC_RENDERERS) and
@@ -387,6 +387,40 @@ with sync_playwright() as p:
               now_tab.evaluate("el=>document.activeElement===el && el.tabIndex===0 && el.getAttribute('aria-selected')==='true'") and
               tabs_page.locator('#tab-now').is_visible())
         tabs_page.context.close()
+
+        # Published GO Pass/season end times share the existing Ending soon signal; no free-text expiry is inferred.
+        empty_data_obj = json.loads((ROOT / 'public' / 'data.json').read_text())
+        empty_data_obj['events'] = []
+        empty_data_obj['spotlight'] = []
+        empty_data_obj['raidHour'] = []
+        empty_data_obj['rotation'] = []
+        empty_data_obj['maxBattles'] = []
+        empty_data_obj['inPerson'] = []
+        empty_data_obj['worldEvents'] = []
+        empty_data_obj['regionals'] = []
+        empty_data = json.dumps(empty_data_obj)
+        empty_world = json.dumps({'events': []})
+        pass_season = json.dumps({'items': [{
+            'id': 'season:pass-fixture', 'label': 'GO Pass', 'name': 'GO Pass: Fixture',
+            's': '2026-10-01T10:00', 'e': '2026-10-10T10:00',
+            'url': 'https://leekduck.com/events/go-pass-fixture/'
+        }]})
+        deadline_page = page(extra={
+            '**/data.json': (empty_data, 200),
+            '**/world-events.json': (empty_world, 200),
+            '**/regional-events.json': (empty_world, 200),
+            '**/season.json': (pass_season, 200)
+        })
+        deadline_page.wait_for_function("document.getElementById('today-focus-ending')?.textContent.includes('GO Pass ends in')")
+        deadline_label = deadline_page.locator('#today-focus-ending').inner_text()
+        deadline_meta = deadline_page.locator('#today-focus-ending-meta').inner_text()
+        check('Today Ending soon surfaces a published active GO Pass deadline',
+              'GO Pass ends in' in deadline_label and 'GO Pass: Fixture' in deadline_meta,
+              (deadline_label, deadline_meta))
+        check('Today Ending soon shows the published pass end date and local time',
+              '10 Oct' in deadline_meta and '10' in deadline_meta and 'am' in deadline_meta,
+              deadline_meta)
+        deadline_page.context.close()
 
         # A stalled initial data request must time out, expose a retry, and leave the primary navigation usable.
         boot_ctx=b.new_context(viewport={'width':390,'height':844},device_scale_factor=2,timezone_id='Australia/Melbourne',locale='en-AU',service_workers='block')

@@ -1258,8 +1258,24 @@
       return phase(e, t) === 'live' && !e.long && !e.allDay && label.indexOf('person') < 0 &&
         !(e.region && e.sourceStart && !e.utc) && e.end > t && e.end.getTime() <= sixHours;
     }).sort(function (a, b) { return a.end - b.end; });
-    setText('today-focus-ending', ending.length ? ending.length + ' ending within 6h' : 'Nothing timed in the next 6h');
-    setText('today-focus-ending-meta', ending.length ? ending[0].name + ' · ends ' + fmtT(ending[0].end) : 'Timed in-game events only');
+    /* Structured GO Pass/season end times are a second deadline source. Do not parse free-text reward expiry,
+       ticket sale windows or research notes: only the published start/end dates in season.json qualify. */
+    var periodLimit = t.getTime() + 48 * 60 * 60 * 1000;
+    var periodEnding = window.GOSEASON && typeof window.GOSEASON.events === 'function'
+      ? window.GOSEASON.events().filter(function (e) {
+          var label = e && e.season && e.season.label, endMs = e && e.end ? +e.end : NaN;
+          return (label === 'GO Pass' || label === 'Season') && e.start <= t && Number.isFinite(endMs) && endMs > t.getTime() && endMs <= periodLimit;
+        }).sort(function (a, b) { return a.end - b.end; })[0]
+      : null;
+    if (periodEnding && (!ending.length || periodEnding.end < ending[0].end)) {
+      var hoursLeft = (periodEnding.end.getTime() - t.getTime()) / 36e5;
+      var eta = hoursLeft < 1 ? 'under an hour' : hoursLeft < 24 ? Math.ceil(hoursLeft) + ' hours' : Math.ceil(hoursLeft / 24) + ' days';
+      setText('today-focus-ending', periodEnding.season.label + ' ends in ' + eta);
+      setText('today-focus-ending-meta', periodEnding.name + ' · ends ' + fmtD(periodEnding.end) + ' · ' + fmtT(periodEnding.end));
+    } else {
+      setText('today-focus-ending', ending.length ? ending.length + ' ending within 6h' : 'Nothing timed in the next 6h');
+      setText('today-focus-ending-meta', ending.length ? ending[0].name + ' · ends ' + fmtT(ending[0].end) : 'Timed in-game events or published pass dates');
+    }
   }
   function renderHomeBrief(t) {
     t = t || now();
@@ -1278,6 +1294,7 @@
     if (briefNote) briefNote.textContent = liveCount || todayCount ? (todayCount ? todayCount + ' more starting today' : 'See what is live and what is next.') : 'No scheduled events today. Here is what is coming up next.';
     renderTodayStrip(t, today, activity);
   }
+  document.addEventListener('gofn-season-ready', function () { renderHomeBrief(now()); });
   /* Refresh only today's list when its visible event phases change. This keeps the rest of the agenda and focused controls intact. */
   function renderHomeToday(t, force) {
     t = t || now();
