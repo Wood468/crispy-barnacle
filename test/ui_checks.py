@@ -231,13 +231,22 @@ check('150ms interaction transitions use a shared motion role with unchanged eas
       'transition:transform var(--motion-quick)' in BASE_CSS and
       'transition:transform var(--motion-quick)' in DASH_CSS and
       BASE_CSS.count('var(--motion-quick)') == 3 and DASH_CSS.count('var(--motion-quick)') == 1)
+check('base bonus and information availability controls use semantic status roles with unchanged colours',
+      all(token in BASE_CSS for token in [
+          '--color-status-bonus:#12A594; --color-on-status-bonus:#fff;',
+          '--color-status-info-available:#176b45; --color-on-status-info-available:#fff; --color-border-info-available:#2ca66d;',
+          '--color-status-info-unavailable:#343b46; --color-on-status-info-unavailable:#d1d5db; --color-border-info-unavailable:#596273;',
+          'background:var(--color-status-bonus);color:var(--color-on-status-bonus);',
+          'background: var(--color-status-info-available); color: var(--color-on-status-info-available); border: 1px solid var(--color-border-info-available);',
+          'background: var(--color-status-info-unavailable); color: var(--color-on-status-info-unavailable); border: 1px solid var(--color-border-info-unavailable);',
+      ]))
 check('versioned stylesheets are referenced by the page and precached offline',
-      all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261101j', '/dash.css?v=20261101u']))
+      all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261101k', '/dash.css?v=20261101u']))
 check('owner verification scripts are versioned and precached offline',
       '/account.js?v=20261101b' in INDEX_HTML and '/account.js?v=20261101b' in SW_JS and
       '/review.js?v=20261101b' in DASH_JS and '/review.js?v=20261101b' in SW_JS)
 check('offline shell cache version advances with the stylesheet token release',
-      "gofn-shell-v178" in SW_JS)
+      "gofn-shell-v179" in SW_JS)
 check('versioned dashboard scripts are referenced by the entry page and precached offline',
       '/app.js?v=20261101f' in INDEX_HTML and '/app.js?v=20261101f' in SW_JS and
       '/dash.js?v=20261101e' in APP_JS and '/dash.js?v=20261101e' in SW_JS and
