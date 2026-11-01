@@ -160,22 +160,27 @@
      "No infographic found yet" is not left for browse-mode readers and another button's message is never touched. */
   function clearLive(token) {
     var r = document.getElementById('iglive');
-    if (r && token && liveOwner === token && !announceTimer) { r.textContent = ''; liveOwner = 0; }
+    if (r && token && liveOwner === token && !announceTimer) { r.textContent = ''; liveOwner = 0; return true; }
+    return !(r && token && liveOwner === token); /* false only while this message is still its own and pending: try again later */
   }
+  /* Drop this button's own announcement (never another button's): used when its reset timer is cancelled or its check ends without a new message. */
+  function releaseOwn(button) { var t = button._igToken; if (t && clearLive(t)) button._igToken = 0; }
   /* "Check infographic": look again, ignoring everything this page already loaded. Found: open it. Not found: say so on the button. */
   function recheck(button) {
     var id = button.getAttribute('data-igcheck'), ev = evById(id);
     if (!ev || button.getAttribute('data-igbusy') === '1') return;
     if (button._igTimer) { clearTimeout(button._igTimer); button._igTimer = 0; button.removeAttribute('data-igmsg'); }
+    releaseOwn(button);
     button.setAttribute('data-igbusy', '1'); button.textContent = 'Checking…';
     loadInfo(true).then(function (all) {
       button.removeAttribute('data-igbusy');
       var found = ((eventInfo(ev, all).infographics || []).some(function (i) { return i && safe(i.url); })) || !!safe(ev.infographicUrl || ev.infographic);
       syncButtons(all);
+      releaseOwn(button);
       if (found) { open(id); return; }
-      button.setAttribute('data-igmsg', '1'); button.textContent = 'No infographic found yet'; var token = announce('No infographic found yet');
-      button._igTimer = setTimeout(function () { button._igTimer = 0; button.removeAttribute('data-igmsg'); button.textContent = 'Check infographic'; clearLive(token); }, 3500);
-    }).catch(function () { button.removeAttribute('data-igbusy'); button.textContent = 'Check infographic'; });
+      button.setAttribute('data-igmsg', '1'); button.textContent = 'No infographic found yet'; var token = button._igToken = announce('No infographic found yet');
+      button._igTimer = setTimeout(function () { button._igTimer = 0; button.removeAttribute('data-igmsg'); button.textContent = 'Check infographic'; if (button._igToken === token) button._igToken = 0; clearLive(token); }, 3500);
+    }).catch(function () { button.removeAttribute('data-igbusy'); button.textContent = 'Check infographic'; releaseOwn(button); });
   }
   document.addEventListener('visibilitychange', function () { if (!document.hidden && INFO) loadInfo(true).then(function (all) { syncButtons(all); }); });
   function watchButtons() {

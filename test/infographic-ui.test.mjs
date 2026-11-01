@@ -194,3 +194,77 @@ test("Check infographic: a reset clears the region only for the button whose mes
   aReset2.ran = true; aReset2.f();
   assert.equal(t.live.textContent, "", "A's own reset clears it");
 });
+
+// ---- re-tap during "No infographic found yet": the button's own announcement must not outlive its cancelled reset timer ----
+const withPicB = { events: { b: { names: ["Beta"], infographics: [{ url: "https://example.com/b.jpg", label: "B" }] } } };
+const NOPE = "No infographic found yet";
+
+test("re-tap during the message, then the check finds a picture: the live region ends empty", async () => {
+  const { t, b } = await loaded({ info: { events: {} } });
+  t.click(b); await settle(); t.runTimers(50);
+  assert.equal(t.live.textContent, NOPE);
+  const reset = t.timers.find((x) => x.ms === 3500 && !x.dead && !x.ran);
+  t.net.info = withPicB;                         // the picture has been published meanwhile
+  t.click(b); assert.ok(reset.dead, "the reset timer was cancelled");
+  await settle(); t.runTimers(50);
+  assert.equal(t.live.textContent, "", "no stale message left with nobody to clear it");
+  t.runTimers(3500);
+  assert.equal(t.live.textContent, "");
+});
+
+test("re-tap during the message, then the check errors: the live region ends empty", async () => {
+  const events = [{ id: "a", name: "Alpha", start: day(1), end: day(2) }, { id: "b", name: "Beta", start: day(3), end: day(4) }];
+  let boom = false;
+  Object.defineProperty(events, Symbol.isConcatSpreadable, { get() { if (boom) throw new Error("boom"); return true; } });
+  const t = setup({ events, info: { events: {} } });
+  t.card("a"); const b = t.card("b"); await settle();
+  t.click(b); await settle(); t.runTimers(50);
+  assert.equal(t.live.textContent, NOPE);
+  boom = true; t.click(b); await settle(); t.runTimers(50);
+  assert.equal(b.textContent, "Check infographic", "the error path resets the button");
+  assert.equal(b.getAttribute("data-igbusy"), null);
+  assert.equal(t.live.textContent, "", "no stale message after the error");
+});
+
+test("re-tap while the button's own announcement is still pending: it is released once it has landed", async () => {
+  const { t, b } = await loaded({ info: { events: {} } });
+  t.click(b); await settle();                    // announcement pending (50 ms tick not run yet)
+  t.net.info = withPicB;
+  t.click(b);                                    // clearLive must not drop its own pending message here...
+  t.runTimers(50);                               // ...so it lands...
+  assert.equal(t.live.textContent, NOPE);
+  await settle();                                // ...and the finished check releases it
+  assert.equal(t.live.textContent, "", "fails if clearLive loses its no-announcement-pending guard");
+});
+
+test("two buttons: A's re-tap and A's found/clear never clear or cancel B's current or pending message", async () => {
+  const { t, a, b } = await loaded({ info: { events: {} } });
+  t.click(a); await settle(); t.runTimers(50);
+  t.click(b); await settle();                    // B's announcement is pending
+  const pendingB = t.timers.filter((x) => x.ms === 50 && !x.ran && !x.dead);
+  assert.equal(pendingB.length, 1);
+  t.net.info = { events: { a: { names: ["Alpha"], infographics: [{ url: "https://example.com/a.jpg", label: "A" }] } } };
+  t.click(a);                                    // A re-taps (its reset timer is cancelled): B's pending message stays
+  assert.ok(!pendingB[0].dead, "A's re-tap did not cancel B's pending announcement");
+  await settle();                                // A's check finds its picture
+  assert.ok(!pendingB[0].dead, "A's found path did not cancel B's pending announcement");
+  t.runTimers(50);
+  assert.equal(t.live.textContent, NOPE, "B's message is current in the region");
+  t.net.info = { events: {} };
+  t.click(a); await settle();                    // A re-taps again with B's message current; A announces afterwards
+  t.runTimers(50);
+  t.runTimers(3500);
+  assert.equal(t.live.textContent, "", "nothing stuck");
+});
+
+test("two buttons: A's re-tap leaves B's current message in the region", async () => {
+  const { t, a, b } = await loaded({ info: { events: {} } });
+  t.click(a); await settle(); t.runTimers(50);
+  t.click(b); await settle(); t.runTimers(50);   // B's message is the current one
+  assert.equal(t.live.textContent, NOPE);
+  t.net.info = { events: { a: { names: ["Alpha"], infographics: [{ url: "https://example.com/a.jpg", label: "A" }] } } };
+  t.click(a);                                    // A's token is stale: releasing it must not touch the region
+  assert.equal(t.live.textContent, NOPE, "A's re-tap did not clear B's message");
+  await settle();
+  assert.equal(t.live.textContent, NOPE, "A's found path did not clear B's message");
+});
