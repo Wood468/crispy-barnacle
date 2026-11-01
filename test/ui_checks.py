@@ -65,6 +65,21 @@ check('base event-kind badges use semantic foreground/background roles with the 
       all(f'background:var(--color-kind-{role});color:var(--color-on-kind-{role})' in event_kind_rule(selector) and
           '#' not in event_kind_rule(selector) and 'rgb' not in event_kind_rule(selector)
           for selector, role, _, _ in EVENT_KIND_PALETTE))
+STATUS_PALETTE = [
+    ('.st-a', 'positive', '#26833A', '#fff'),
+    ('.st-d', 'caution', '#F59F00', '#1D1300'),
+]
+def status_rule(selector):
+    marker = selector + '{'
+    start = BASE_CSS.find(marker)
+    return BASE_CSS[start + len(marker):].split('}', 1)[0] if start >= 0 else ''
+check('base affirmative and provisional status pills use semantic foreground/background roles with unchanged palette values',
+      all(f'--color-status-{role}:{background}' in BASE_ROOT_CSS and f'--color-on-status-{role}:{foreground}' in BASE_ROOT_CSS
+          for _, role, background, foreground in STATUS_PALETTE) and
+      all(f'background:var(--color-status-{role});color:var(--color-on-status-{role})' in status_rule(selector) and
+          '#' not in status_rule(selector) and 'rgb' not in status_rule(selector)
+          for selector, role, _, _ in STATUS_PALETTE))
+
 TYPE_SCALE = {
     '--type-caption-compact': ('.62rem', 2),
     '--type-caption': ('.68rem', 2),
@@ -196,12 +211,12 @@ check('150ms interaction transitions use a shared motion role with unchanged eas
       'transition:transform var(--motion-quick)' in DASH_CSS and
       BASE_CSS.count('var(--motion-quick)') == 3 and DASH_CSS.count('var(--motion-quick)') == 1)
 check('versioned stylesheets are referenced by the page and precached offline',
-      all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261101f', '/dash.css?v=20261101u']))
+      all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261101g', '/dash.css?v=20261101u']))
 check('owner verification scripts are versioned and precached offline',
       '/account.js?v=20261101b' in INDEX_HTML and '/account.js?v=20261101b' in SW_JS and
       '/review.js?v=20261101b' in DASH_JS and '/review.js?v=20261101b' in SW_JS)
 check('offline shell cache version advances with the stylesheet token release',
-      "gofn-shell-v170" in SW_JS)
+      "gofn-shell-v171" in SW_JS)
 check('versioned dashboard scripts are referenced by the entry page and precached offline',
       '/app.js?v=20261101c' in INDEX_HTML and '/app.js?v=20261101c' in SW_JS and
       '/dash.js?v=20261101b' in APP_JS and '/dash.js?v=20261101b' in SW_JS and
