@@ -1771,6 +1771,12 @@ if fails:
 check('dashboard shared radius declarations consume semantic radius tokens',
       all(f'border-radius:var(--radius-{role})' in DASH_CSS for role in ['sm','md','control','card','panel','lg','xl','pill']) and
       re.search(r'border-radius:\s*(?:8|12|14|16|18|20|22|999)px\b', DASH_CSS) is None)
+
+check('base stylesheet spacing declarations consume semantic 4px-scale tokens',
+      all(f'var(--space-{step})' in BASE_COMPONENT_CSS for step in [1, 2, 3, 4, 5, 6, 10]) and
+      re.search(r'(?<![-\w])(?:column-gap|row-gap|gap)\s*:\s*(?![^;{}]*[()])[^;{}]*(?<![-\w])(?:4|8|12|16|20|24|28|32|36|40)px\b[^;{}]*(?=;|})', BASE_COMPONENT_CSS) is None and
+      re.search(r'(?<![-\w])(?:padding|margin)(?:-(?:top|right|bottom|left|block|inline)(?:-(?:start|end))?)?\s*:\s*(?![^;{}]*[()])[^;{}]*(?<![-\w])(?:4|8|12|16|20|24|28|32|36|40)px\b[^;{}]*(?=;|})', BASE_COMPONENT_CSS) is None)
+
 check('dashboard shared gap declarations consume semantic spacing tokens',
       all(f'var(--space-{step})' in DASH_CSS for step in [1, 2, 3, 5]) and
       re.search(r'(?<![-\w])(?:column-gap|row-gap|gap)\s*:\s*(?:(?:4|8|12|16|20|24|28|32|36|40)px\s*)+;', DASH_CSS) is None)
