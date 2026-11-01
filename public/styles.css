@@ -28,6 +28,7 @@
   /* Semantic affirmative and provisional status-pill colours. */
   --color-status-positive:#26833A; --color-on-status-positive:#fff;
   --color-status-caution:#F59F00; --color-on-status-caution:#1D1300;
+  --color-status-released:#1971c2; --color-on-status-released:#fff;
   /* Four-point spacing scale, semantic type scale, shared radii and motion. */
   --space-1:4px; --space-2:8px; --space-3:12px; --space-4:16px; --space-5:20px;
   --space-6:24px; --space-7:28px; --space-8:32px; --space-9:36px; --space-10:40px;
@@ -312,7 +313,7 @@ nav.tabs button[aria-selected="true"] svg{stroke-width:2.6}
 .dchk{display:flex;gap:var(--space-2);align-items:center;font-size:var(--type-body-emphasis);color:var(--color-text-muted)}
 .dmini{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:var(--space-3);font:500 var(--type-meta-compact) var(--font-mono)}
 .dmini b{font-weight:700}
-.st-r{background:#1971c2;color:#fff}
+.st-r{background:var(--color-status-released);color:var(--color-on-status-released)}
 .ut i a{color:inherit;text-decoration:underline}
 
 #calurl{background:var(--color-surface-raised);color:var(--color-text);border:0;border-radius:var(--radius-md);padding:var(--space-3);font:500 var(--type-meta-compact) var(--font-mono)}
