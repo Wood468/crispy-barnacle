@@ -56,12 +56,17 @@
   }
   /* Are two date windows clearly different instances of a recurring event? True when they do not overlap and the gap between them is more than
      INSTANCE_GAP days. Same-event copies from different sources carry identical or near-identical dates; real repeats in the data are 4+ weeks
-     apart (Super Mega Raid Day 31 Oct vs 28 Nov, monthly Community Days). Unknown dates are never "apart". */
+     apart (Super Mega Raid Day 31 Oct vs 28 Nov, monthly Community Days). Unknown dates are never "apart".
+     Back-to-back windows are different instances too: two multi-day windows that share only the end day of one and the start day of the
+     next (the weekly raid rotation runs 14 Oct 10:00 to 21 Oct 10:00, then 21 Oct 10:00 to 28 Oct 10:00, and both are stored by calendar day
+     so they share 21 Oct). Single-day windows never count (a 1-day event on the handover day, or a copy of the same 1-day event, is not
+     split off), and identical or overlapping windows are never "apart". */
   var INSTANCE_GAP = 14;
   function instanceApart(a, b) {
     var as = day(a.start), ae = day(a.end != null && a.end !== '' ? a.end : a.start), bs = day(b.start), be = day(b.end != null && b.end !== '' ? b.end : b.start);
     if (isNaN(as) || isNaN(bs)) return false;
     if (isNaN(ae) || ae < as) ae = as; if (isNaN(be) || be < bs) be = bs;
+    if (ae > as && be > bs && Math.max(as, bs) === Math.min(ae, be)) return true;
     return Math.max(as, bs) - Math.min(ae, be) - 1 > INSTANCE_GAP;
   }
   /* Places differ when both name one and share no distinctive word, and neither title mentions the other's place. */
