@@ -83,9 +83,9 @@ def main():
             page.wait_for_function("() => { const el=document.querySelector('#inperson article h3'); return !!el && el.textContent.includes('In-person fixture: Kyoto'); }", timeout=10000)
             expect("In person is a visible third Schedule view",
                    page.locator("#sub-world").is_visible() and page.locator("#subnav-events button").count() == 3)
+            person_titles = page.locator("#inperson article h3").all_text_contents()
             expect("ticketed in-person event cards render in the view",
-                   page.locator("#inperson article h3").count() == 1 and
-                   "In-person fixture: Kyoto" in page.locator("#inperson").inner_text())
+                   person_titles.count("In-person fixture: Kyoto") == 1, person_titles)
             world_text = page.locator("#world").inner_text()
             expect("world events render with destinations and regional filters",
                    all(x in world_text for x in ["Asia world-event fixture", "Americas world-event fixture", "Kyoto, Japan", "Mexico City, Mexico"]))
