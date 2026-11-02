@@ -17,6 +17,14 @@ test("isPrivateLink: spelling tricks do not make a private Discord channel link 
   assert.equal(LIB.publicLink("https://discord.com\\channels\\1\\2", "https://app.discord.com/channels/1/2", "https://pokemongo.com/x"), "https://pokemongo.com/x");
 });
 
+test("isPrivateLink: a Discord channel link the URL parser rejects (bad port) is still private", () => {
+  for (const u of ["https://discord.com:99999/channels/1/2", "https://user:pw@discord.com:99999/channels/1/2", "https://discord.com.:99999/channels/1", "https://app.discordapp.com:abc/channels/1", "https://discord.com:99999\\channels\\1", "https://discord.com:99999/%63hannels/1", "HTTPS://DISCORD.COM:99999/Channels"]) {
+    assert.throws(() => new URL(u.replace(/\\/g, "/")), undefined, "fixture really is unparseable: " + u);
+    assert.equal(LIB.isPrivateLink(u), true, u);
+  }
+  for (const u of ["https://discord.com:99999/invite/abc", "https://discord.com.evil.example:99999/channels/1", "https://notdiscord.com:99999/channels/1", "https://evil.example:99999/discord.com/channels/1", "https://discord.com:99999/channelsx/1", "https://user@evil.example:99999/discord.com/channels/1", "https://cdn.discordapp.com:99999/attachments/1/2/x.png"]) assert.equal(LIB.isPrivateLink(u), false, u);
+});
+
 test("publicLink: picks the first https link a visitor can open (the event's own official link before a private Discord post)", () => {
   const discord = "https://discord.com/channels/@me/1/2", official = "https://pokemongo.com/news/fall-marathon-buddy-trek-2026";
   assert.equal(LIB.publicLink(discord, official), official, "a Discord post is skipped in favour of the official link");

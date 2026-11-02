@@ -300,7 +300,9 @@
       path = path.replace(/\/{2,}/g, '/');
     } catch (e) {
       /* Cannot be parsed: anything that looks like a Discord channel link is treated as private rather than shown. */
-      return /(^|[^a-z0-9-])(discord|discordapp)\.com\.?[\/\\:@]*\/*channels/i.test(raw.replace(/\\/g, '/'));
+      /* The host part may carry userinfo, any subdomain, a trailing dot and a port (even an invalid one such as :99999); the path must start with /channels. */
+      var flat = raw.replace(/\\/g, '/'); try { flat = decodeURIComponent(flat); } catch (e3) { }
+      return /^https?:\/*(?:[^\/?#@]*@)?(?:[a-z0-9-]+\.)*(?:discord|discordapp)\.com\.*(?::[^\/?#]*)?\/+channels(?:[\/?#]|$)/i.test(flat);
     }
     var onDiscord = ['discord.com', 'discordapp.com'].some(function (d) { return host === d || host.slice(-(d.length + 1)) === '.' + d; });
     return onDiscord && /^\/channels(\/|$)/i.test(path);

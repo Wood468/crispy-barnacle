@@ -55,7 +55,7 @@ test("PWA entry page links to the manifest and iOS touch icon and registers the 
   assert.match(html, /local-state\.js\?v=20261030a/);
   assert.match(html, /pin\.js\?v=20261101b/);
   assert.match(html, /account\.js\?v=20261102a/);
-  assert.match(html, /lib\.js\?v=20261102c/);
+  assert.match(html, /lib\.js\?v=20261102d/);
   assert.match(html, /season\.js\?v=20261102e/);
   assert.match(html, /\/pwa\.js/);
   assert.match(app, /dash\.js\?v=20261103a/);
@@ -63,7 +63,7 @@ test("PWA entry page links to the manifest and iOS touch icon and registers the 
   assert.match(dash, /places\.js\?v=20261102a/, "the updated Places provenance UI is versioned");
   assert.match(dash, /infographic\.js\?v=20261102b/, "the deferred infographic loader is versioned");
   assert.match(dash, /nudge\.js\?v=20261102a/, "the shared-escape nudge renderer is versioned");
-  assert.match(dash, /review\.js\?v=20261102c/, "the shared-escape review renderer is versioned");
+  assert.match(dash, /review\.js\?v=20261102d/, "the shared-escape review renderer is versioned");
   assert.match(dash, /buy\.js\?v=20261102a/, "the shared-escape purchase renderer is versioned");
 });
 
@@ -99,8 +99,8 @@ test("static JSON dependencies referenced by first-party scripts are precached",
 });
 
 test("service worker versions the cache, pre-caches offline fallback, and never handles API responses", () => {
-  assert.match(sw, /gofn-shell-v218/);
-  assert.ok(sw.includes("'/lib.js?v=20261102c'"), 'the refreshed dashboard helper is available to the offline shell');
+  assert.match(sw, /gofn-shell-v219/);
+  assert.ok(sw.includes("'/lib.js?v=20261102d'"), 'the refreshed dashboard helper is available to the offline shell');
   assert.ok(sw.includes("'/local-state.js?v=20261030a'"), 'account-local state migration is available offline');
   assert.ok(sw.includes("'/account.js?v=20261102a'"), 'the refreshed account transition code is available offline');
   assert.ok(sw.includes("'/season.js?v=20261102e'"), 'the current season banner script is available to the offline shell');
@@ -109,7 +109,7 @@ test("service worker versions the cache, pre-caches offline fallback, and never 
   assert.ok(sw.includes("'/dash.js?v=20261103a'"), "the current dashboard loader is available offline");
   assert.ok(sw.includes("'/raid-share.js?v=20261102b'"), "the raid share card is available offline");
   assert.ok(sw.includes("'/nudge.js?v=20261102a'"), "the shared-escape nudge renderer is available offline");
-  assert.ok(sw.includes("'/review.js?v=20261102c'"), "the shared-escape review renderer is available offline");
+  assert.ok(sw.includes("'/review.js?v=20261102d'"), "the shared-escape review renderer is available offline");
   assert.ok(sw.includes("'/buy.js?v=20261102a'"), "the shared-escape purchase renderer is available offline");
   assert.match(sw, /'\/event-moves\.json'/, "event-only move data is available to offline event details");
   assert.match(sw, /'\/dash\.css\?v=20261103a'/, "the current dashboard stylesheet is available to the offline shell");
