@@ -258,7 +258,7 @@ check('Today multi-deadline tray is accessible, bounded and source-safe',
       all(token in DASH_CSS for token in ['.today-deadlines>summary', 'min-height:44px', '.today-deadline-item', 'var(--color-link)']) and
       '/dash.js?v=20261103a' in APP_JS and '/dash.js?v=20261103a' in SW_JS and
       '/dash.css?v=20261103a' in INDEX_HTML and '/dash.css?v=20261103a' in SW_JS and
-      'gofn-shell-v218' in SW_JS)
+      'gofn-shell-v219' in SW_JS)
 check('season pass and deadline data is structured, source-attributed and ordered',
       all(item_id in {item.get('id') for item in SEASON_DATA.get('items', [])}
           for item_id in ['season:pass-halloween', 'season:pass-november']) and
@@ -294,7 +294,7 @@ check('versioned stylesheets are referenced by the page and precached offline',
       all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261102b', '/dash.css?v=20261103a']))
 check('owner verification scripts are versioned and precached offline',
       '/account.js?v=20261102a' in INDEX_HTML and '/account.js?v=20261102a' in SW_JS and
-      '/review.js?v=20261102c' in DASH_JS and '/review.js?v=20261102c' in SW_JS)
+      '/review.js?v=20261102d' in DASH_JS and '/review.js?v=20261102d' in SW_JS)
 check('source freshness indicators use semantic roles with unchanged colours',
       all(token in DASH_CSS for token in [
           '--color-source-fresh:#6BD18A; --color-source-stale:#E8B84A; --color-source-failed:#FF9B8F;',
@@ -319,7 +319,7 @@ check('event signal chips and detail tags use semantic palette roles with unchan
           '.tg-incense{--tc:var(--color-signal-shadow)}.tg-costume{--tc:var(--color-signal-encounter)}',
       ]))
 check('offline shell cache version advances with the dashboard stylesheet token release',
-      "gofn-shell-v218" in SW_JS)
+      "gofn-shell-v219" in SW_JS)
 check('Travel mode searches only source-dated regional listings and preserves Today visibility',
       all(token in INDEX_HTML for token in ['id="sub-travel"', 'id="travel-q"', 'id="travel-destinations"', 'id="travel-regions"', 'id="travel-results"']) and
       "['travel','Travel','sub-travel']" in APP_JS and
@@ -328,7 +328,7 @@ check('Travel mode searches only source-dated regional listings and preserves To
       '/app.js?v=20261103a' in INDEX_HTML and '/app.js?v=20261103a' in SW_JS and
       '/dash.js?v=20261103a' in APP_JS and '/dash.js?v=20261103a' in SW_JS and
       '/dash.css?v=20261103a' in INDEX_HTML and '/dash.css?v=20261103a' in SW_JS and
-      'gofn-shell-v218' in SW_JS)
+      'gofn-shell-v219' in SW_JS)
 check('raid share dialog and script are included in the exact offline shell',
       '/raid-share.js?v=20261102b' in INDEX_HTML and '/raid-share.js?v=20261102b' in SW_JS and
       all(token in INDEX_HTML for token in ['id="raid-share-dialog"', 'id="raid-share-title"', 'id="raid-share-send"', 'id="raid-share-copy"']))
