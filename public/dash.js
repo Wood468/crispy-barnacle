@@ -1309,7 +1309,8 @@
           var facts = item.boss && window.GOTYPES && GOTYPES.facts(item.boss);
           var weak = facts && Array.isArray(facts.weak) ? facts.weak.filter(function (type, i, all) { return typeof type === 'string' && all.indexOf(type) === i; }) : [];
           var weakness = weak.length ? '<small>Weak to: ' + esc(weak.join(', ')) + '</small>' : '';
-          var owned = weak.length && window.GOBEST && typeof GOBEST.ownedSummary === 'function' ? GOBEST.ownedSummary(weak, 3) : null;
+          /* A loading or failed top-ten feed is not evidence of zero owned counters. */
+          var owned = weak.length && window.GOBEST && window.GOBEST.dataReady === true && typeof GOBEST.ownedSummary === 'function' ? GOBEST.ownedSummary(weak, 3) : null;
           var ownedNames = owned && owned.count ? owned.names.join(', ') + (owned.count > owned.names.length ? ' +' + (owned.count - owned.names.length) + ' more' : '') : 'none in current top-ten lists';
           var ownedLine = owned ? '<small>Marked top counters (' + owned.count + '): ' + esc(ownedNames) + '</small>' : '';
           var best = weak.length && window.GOBEST && typeof GOBEST.showTypes === 'function'
