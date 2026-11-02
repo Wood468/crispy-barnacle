@@ -133,7 +133,7 @@ DASH_TYPE_SCALE = {
     '--type-meta': 11,
     '--type-meta-compact': 11,
     '--type-body-compact': 9,
-    '--type-label': 7,
+    '--type-label': 8,
     '--type-body-sm': 7,
     '--type-overline': 6,
     '--type-button': 6,
@@ -146,7 +146,7 @@ DASH_TYPE_SCALE = {
     '--type-body-lg': 1,
 }
 DASH_TYPE_VALUES = ['.78rem', '.8rem', '.84rem', '.75rem', '.82rem', '.72rem', '.85rem', '.68rem', '1.05rem', '.9rem', '2rem', '1.5rem', '.62rem', '1.1rem']
-check('dashboard uses the shared semantic type scale for 84 exact font-size declarations',
+check('dashboard uses the shared semantic type scale for 85 exact font-size declarations',
       all(len(re.findall(r'font-size\s*:\s*var\(' + re.escape(token) + r'\)(?=[;}])', DASH_CSS)) == count
           for token, count in DASH_TYPE_SCALE.items()) and
       all(not re.search(r'font-size\s*:\s*' + re.escape(value) + r'(?=[;}])', DASH_CSS)
@@ -1653,7 +1653,7 @@ with sync_playwright() as p:
             if mode: pg.click(f'#mode-{tab}-{sub} button[data-mode="{mode}"]')
             pg.wait_for_timeout(200)
             check(f'{tab}/{sub}/{mode} reachable and visible', pg.locator(sel).is_visible())
-        check('Events shows Calendar, Timeline and In person; Discoveries lives in the menu', pg.evaluate("document.querySelectorAll('#subnav-events button').length===3 && Array.from(document.querySelectorAll('#subnav-events button')).some(b=>b.dataset.sub==='world' && b.textContent==='In person')"))
+        check('Events shows Calendar, Timeline, In person and Travel; Discoveries lives in the menu', pg.evaluate("(()=>{const buttons=Array.from(document.querySelectorAll('#subnav-events button'));return buttons.length===4 && buttons.some(b=>b.dataset.sub==='world' && b.textContent==='In person') && buttons.some(b=>b.dataset.sub==='travel' && b.textContent==='Travel') && !buttons.some(b=>b.dataset.sub==='leaks') && !!document.getElementById('menu-leaks');})()"))
         pg.click('#hmenu'); pg.click('#menu-leaks'); pg.wait_for_timeout(200)
         check('Leaks opens from the menu', pg.locator('#sub-leaks').is_visible())
         pg.click('nav.tabs button[data-tab="events"]'); pg.click('#subnav-events button[data-sub="timeline"]'); pg.click('#hmenu'); pg.click('#menu-leaks'); pg.wait_for_timeout(200)
