@@ -244,7 +244,7 @@ check('Today Tonight planner is an optional accessible local-time disclosure wit
       all(token in INDEX_HTML for token in ['id="today-tonight"', 'id="today-tonight-summary"', 'id="today-tonight-list"']) and
       all(token in DASH_JS for token in ['D.spotlight', 'D.raidHour', 'D.maxBattles', '6–7 pm local', '6 am–9 pm local', 'Weak to:', 'data-best-types', 'gofn-dex-ready', 'function renderTonight', 'renderTonight(t, dateKey)']) and
       all(token in DASH_CSS for token in ['.today-tonight', '.today-tonight-list', 'min-height:44px', '.today-tonight-best']) and
-      'gofn-dex-ready' in APP_JS and '/app.js?v=20261102h' in INDEX_HTML and '/app.js?v=20261102h' in SW_JS)
+      'gofn-dex-ready' in APP_JS and '/app.js?v=20261102i' in INDEX_HTML and '/app.js?v=20261102i' in SW_JS)
 check('Dex/type readiness refreshes only the Tonight disclosure, preserving event-detail focus targets',
       "document.addEventListener('gotypes', function () { try { renderRot(); var t = now(); renderTonight(t, dayKey(t)); } catch (e) {} });" in DASH_JS and
       "document.addEventListener('gofn-dex-ready', function () { try { renderRot(); var t = now(); renderTonight(t, dayKey(t)); } catch (e) {} });" in DASH_JS)
@@ -252,9 +252,9 @@ check('Today multi-deadline tray is accessible, bounded and source-safe',
       all(token in INDEX_HTML for token in ['id="today-deadlines"', 'id="today-deadlines-summary"', 'id="today-deadlines-list"']) and
       all(token in DASH_JS for token in ['var trayLimit = t.getTime() + 7 * 24 * 60 * 60 * 1000', "safeUrl(d.url || '')", 'trayCandidates.slice(0, 8)', 'View all ', 'noopener noreferrer', "sourceUrl.indexOf('https://') === 0"]) and
       all(token in DASH_CSS for token in ['.today-deadlines>summary', 'min-height:44px', '.today-deadline-item', 'var(--color-link)']) and
-      '/dash.js?v=20261102m' in APP_JS and '/dash.js?v=20261102m' in SW_JS and
+      '/dash.js?v=20261102n' in APP_JS and '/dash.js?v=20261102n' in SW_JS and
       '/dash.css?v=20261102k' in INDEX_HTML and '/dash.css?v=20261102k' in SW_JS and
-      'gofn-shell-v200' in SW_JS)
+      'gofn-shell-v201' in SW_JS)
 check('season pass and deadline data is structured, source-attributed and ordered',
       all(item_id in {item.get('id') for item in SEASON_DATA.get('items', [])}
           for item_id in ['season:pass-halloween', 'season:pass-november']) and
@@ -315,13 +315,13 @@ check('event signal chips and detail tags use semantic palette roles with unchan
           '.tg-incense{--tc:var(--color-signal-shadow)}.tg-costume{--tc:var(--color-signal-encounter)}',
       ]))
 check('offline shell cache version advances with the dashboard stylesheet token release',
-      "gofn-shell-v200" in SW_JS)
+      "gofn-shell-v201" in SW_JS)
 check('event detail focus restoration can find a re-rendered opener by event key and card role',
       all(token in DETAIL_JS for token in ['openerKey', 'openerClass', "getAttribute('data-open')", 'target.focus()']))
 check('versioned dashboard scripts are referenced by the entry page and precached offline',
-      '/app.js?v=20261102h' in INDEX_HTML and '/app.js?v=20261102h' in SW_JS and
-      '/dash.js?v=20261102m' in APP_JS and '/dash.js?v=20261102m' in SW_JS and
-      '/detail.js?v=20261102c' in DASH_JS and '/detail.js?v=20261102c' in SW_JS)
+      '/app.js?v=20261102i' in INDEX_HTML and '/app.js?v=20261102i' in SW_JS and
+      '/dash.js?v=20261102n' in APP_JS and '/dash.js?v=20261102n' in SW_JS and
+      '/detail.js?v=20261102d' in DASH_JS and '/detail.js?v=20261102d' in SW_JS)
 check('sync PIN and account controls have one home in Menu and are precached offline',
       INDEX_HTML.index('id="acct" class="acct"') > INDEX_HTML.index('id="sub-menu"') and
       'id="pinform"' not in INDEX_HTML and
@@ -2695,6 +2695,46 @@ with sync_playwright() as p:
         filled = settle(fr, "(() => { const e = document.getElementById('fresh-line'); return !e.hidden && !e.hasAttribute('data-released') && e.getBoundingClientRect().height >= 32; })()", 8000)
         check('F: a late /api/sources answer still fills the freshness line', filled)
         fr.context.close()
+        # ---- Batch 6: follow-ups to #263 (deferred Today render keeps its force flag, freshness release counted from page start, close focus needs a visible host) ----
+        B6_FEED = json.dumps({'enabled': True, 'events': [ev('b6mon', 'Bulbasaur Day', 'event', '2026-11-02T08:00:00', '2026-11-02T20:00:00', 'confirmed', [{'name': 'Bulbasaur', 'role': 'featured'}])] + [ev('b6x%d' % i, 'Filler event %d' % i, 'event', '2026-11-01T10:00:00', '2026-11-08T20:00:00', 'confirmed') for i in range(11)]})
+        b5_held.clear()
+        d6 = page(clock=RB_CLOCK, marks={'have': {}, 'hundo': {}, 'm': {'own': {'25': 1}}}, gens=[1], extra={'**/api/events': (B6_FEED, 200)}, pre=hold('**/dex.json'), ready=False)
+        la_pg = d6; b5_wait_held(1); d6.clock.run_for(9000)
+        settle(d6, "document.getElementById('home-now').hasAttribute('data-render-key')", 12000)
+        B6_CARD = "(() => { const c = document.querySelector('#home-now [data-id=\"leekduck:b6mon\"]'); return !c ? 'gone' : c.__b6 ? 'old' : 'new'; })()"
+        B6_OLD = "(() => { const c = document.querySelector('#home-now [data-id=\"leekduck:b6mon\"]'); if (!c) return 'gone'; c.__b6 = 1; return 'tagged'; })()"
+        d6_before = d6.evaluate(B6_OLD)  # tag the rendered card node: a re-render of #home-now replaces it, so the tag survives only if nothing re-rendered
+        d6.locator('#home-now [data-id="leekduck:b6mon"] [data-open]').first.click()
+        d6_sheet = settle(d6, "!!document.querySelector('#evd:not([hidden])')", 8000)
+        # the dex arrives while the sheet is open: same event ids, but the Need reason appears (the render waits for the sheet to close)
+        b5_release('**/dex.json', DEX_FILE)
+        d6_dex = settle(d6, "Object.keys(GODASH.DEXBY).length > 500", 10000); d6.wait_for_timeout(500)
+        d6_open = d6.evaluate(B6_CARD)
+        d6.click('#evd-x'); d6.wait_for_timeout(500)
+        d6_after = d6.evaluate(B6_CARD)
+        check('B6-1 precondition: Bulbasaur Day is on Today before the dex arrives, and the sheet opened', d6_sheet and d6_dex and d6_before == 'tagged', d6_before)
+        check('B6-1: a late dex answer on the same event ids is rendered into Today once the event sheet closes (the deferred render keeps its force flag), not while it is open', d6_open == 'old' and d6_after == 'new', [d6_open, d6_after])
+        if shot_dir: d6.screenshot(path=shot_dir + '/b6-after-close.png')
+        # B6-3: the opener's host section is hidden and the opener is gone: focus falls back to Today, not the body
+        d6.evaluate("document.querySelector('#foryou [data-open]') && document.querySelector('#foryou [data-open]').click()")
+        d6_fy = settle(d6, "!!document.querySelector('#evd:not([hidden])')", 8000)
+        d6.evaluate("document.querySelectorAll('[data-open]').forEach(e => { if (!e.closest('#evd')) e.remove(); }); document.getElementById('foryou-sec').hidden = true")
+        d6.click('#evd-x'); d6.wait_for_timeout(300)
+        d6_foc = d6.evaluate("({id: document.activeElement.id, tag: document.activeElement.tagName})")
+        check('B6-3: when the opener and its (hidden) section are gone, closing the sheet puts focus on Today instead of the page body', d6_fy and d6_foc['id'] == 'home-now', [d6_fy, d6_foc])
+        d6.context.close()
+        # B6-2: a stalled feed AND a stalled /api/sources: fresh.js only loads after the 8 s feed wait, so the reserved 44px must be released then, not 8 s later
+        b5_held.clear()
+        f6 = page(clock=RB_CLOCK, pre=hold('**/api/events', '**/api/sources'), ready=False)
+        la_pg = f6; b5_wait_held(1); f6.clock.run_for(9000)
+        settle(f6, "document.getElementById('home-now').hasAttribute('data-render-key')", 12000)
+        f6_loaded = settle(f6, "!!window.GOFRESH", 8000); b5_wait_held(2); f6.clock.run_for(1000); f6.wait_for_timeout(300)
+        f6_h = f6.evaluate("Math.round(document.getElementById('fresh-line').getBoundingClientRect().height)")
+        check('B6-2: with the feed stalled the freshness space is released about 8 s after page start (not 8 s after fresh.js loads)', f6_loaded and f6_h == 0, [f6_loaded, f6_h])
+        b5_release('**/api/sources', '{"environment":"production","database":true,"enabled":false,"sources":[]}'); b5_release('**/api/events', LIVE_FEED)
+        f6_fill = settle(f6, "(() => { const e = document.getElementById('fresh-line'); return !e.hidden && !e.hasAttribute('data-released') && e.getBoundingClientRect().height >= 32; })()", 8000)
+        check('B6-2: a late /api/sources answer still fills the line after an early release', f6_fill)
+        f6.context.close()
 
     b.close()
 # Dashboard radius adoption: shared scale values are expressed through semantic roles.

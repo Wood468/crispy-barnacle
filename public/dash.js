@@ -1462,7 +1462,7 @@
     var nextUp = EV.filter(function (e) { return phase(e, t) === 'soon' && e.start >= endDay && !e.long && !isHidden(e.id) && !kindHidden(e.kind); }).sort(function (a, b) { return a.start - b.start; })[0];
     var tdEl = $('home-now'); if (!tdEl) return;
     /* While the event sheet is open its opener card must stay in the page (closing returns focus to it): render once the sheet closes. */
-    var sheet = $('evd'); if (sheet && !sheet.hidden) { homeNowDeferred = true; return; }
+    var sheet = $('evd'); if (sheet && !sheet.hidden) { homeNowDeferred = true; homeNowForce = homeNowForce || !!force; return; }
     var signature = JSON.stringify({
       day: dayKey(t),
       events: today.map(function (e) { return [e.id, phase(e, t)]; }),
@@ -1494,8 +1494,8 @@
       again.focus({ preventScroll: true });
     }
   }
-  var homeNowDeferred = false;
-  document.addEventListener('gofn-detail-closed', function () { if (homeNowDeferred) { homeNowDeferred = false; renderHomeToday(now()); } });
+  var homeNowDeferred = false, homeNowForce = false;
+  document.addEventListener('gofn-detail-closed', function () { if (homeNowDeferred) { var f = homeNowForce; homeNowDeferred = false; homeNowForce = false; renderHomeToday(now(), f); } });
   function renderWeekGroups(list, t) {
     t = t || now();
     var groups = [], byDay = {};
@@ -1647,7 +1647,7 @@
     renderCoverage();
     if (window.GO && GO.refreshDex) GO.refreshDex();
     usSync();
-    var inf = document.createElement('script'); inf.src = '/infographic.js?v=20261101e'; document.body.appendChild(inf); var x = document.createElement('script'); x.src = '/extra.js?v=20261024a'; document.body.appendChild(x); var z = document.createElement('script'); z.src = '/places.js?v=20261031b'; window.GOPLACES_READY = new Promise(function (resolve) { z.onload = function () { resolve(window.GOPLACES || null); }; z.onerror = function () { resolve(null); }; }); var y = document.createElement('script'); y.src = '/detail.js?v=20261102c'; document.body.appendChild(y); document.body.appendChild(z); var w = document.createElement('script'); w.src = '/fresh.js?v=20261102a'; document.body.appendChild(w); var nv = document.createElement('script'); nv.src = '/nudge.js?v=20261101a'; document.body.appendChild(nv); var rv = document.createElement('script'); rv.src = '/review.js?v=20261101b'; document.body.appendChild(rv); var by = document.createElement('script'); by.src = '/buy.js?v=20261101a'; document.body.appendChild(by);
+    var inf = document.createElement('script'); inf.src = '/infographic.js?v=20261101e'; document.body.appendChild(inf); var x = document.createElement('script'); x.src = '/extra.js?v=20261024a'; document.body.appendChild(x); var z = document.createElement('script'); z.src = '/places.js?v=20261031b'; window.GOPLACES_READY = new Promise(function (resolve) { z.onload = function () { resolve(window.GOPLACES || null); }; z.onerror = function () { resolve(null); }; }); var y = document.createElement('script'); y.src = '/detail.js?v=20261102d'; document.body.appendChild(y); document.body.appendChild(z); var w = document.createElement('script'); w.src = '/fresh.js?v=20261102b'; document.body.appendChild(w); var nv = document.createElement('script'); nv.src = '/nudge.js?v=20261101a'; document.body.appendChild(nv); var rv = document.createElement('script'); rv.src = '/review.js?v=20261101b'; document.body.appendChild(rv); var by = document.createElement('script'); by.src = '/buy.js?v=20261101a'; document.body.appendChild(by);
   }
   envBanner();
   /* Bounded waits: a request that never answers must not leave Today blank. After FEED_TIMEOUT_MS the page renders from the curated list
