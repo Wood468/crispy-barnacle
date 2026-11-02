@@ -2,12 +2,14 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { waitForWorkersBuild, WORKERS_BUILD_CHECK_NAME } from "../scripts/wait-for-workers-build.mjs";
 
-const check = (status, conclusion = null) => ({
+const productionUrl = "https://dash.cloudflare.com/123/workers/services/view/go-field-notes/production/builds/build-123";
+const previewUrl = "https://dash.cloudflare.com/123/workers/services/view/go-field-notes/production/previews/feature-branch/builds/preview-123";
+const check = (status, conclusion = null, details_url = productionUrl, external_id = "build-123") => ({
   name: WORKERS_BUILD_CHECK_NAME,
   status,
   conclusion,
-  external_id: "build-123",
-  details_url: "https://dash.cloudflare.com/example/build-123"
+  external_id,
+  details_url
 });
 const response = (checkRuns, status = 200) => new Response(
   JSON.stringify({ check_runs: checkRuns }),
@@ -44,6 +46,36 @@ test("production gate waits for the matching Cloudflare build and returns its bu
   assert.equal(calls, 3);
   assert.equal(result.buildId, "build-123");
   assert.match(result.detailsUrl, /build-123$/);
+});
+
+test("production gate ignores a successful preview and waits for the production build", async () => {
+  const preview = check("completed", "success", previewUrl, "preview-123");
+  const sequence = [
+    response([preview]),
+    response([preview, check("in_progress")]),
+    response([preview, check("completed", "success")])
+  ];
+  let now = 0;
+  const result = await waitForWorkersBuild(context({
+    fetchImpl: async () => sequence.shift(),
+    sleep: async ms => { now += ms; },
+    now: () => now
+  }));
+  assert.equal(result.buildId, "build-123");
+  assert.equal(result.detailsUrl, productionUrl);
+});
+
+test("production gate does not accept a preview-only success", async () => {
+  let now = 0;
+  await assert.rejects(
+    waitForWorkersBuild(context({
+      timeoutMs: 20,
+      fetchImpl: async () => response([check("completed", "success", previewUrl, "preview-123")]),
+      sleep: async ms => { now += ms; },
+      now: () => now
+    })),
+    /only a preview build is reported; waiting for a production build/
+  );
 });
 
 test("production gate fails closed when the matching Cloudflare build fails", async () => {

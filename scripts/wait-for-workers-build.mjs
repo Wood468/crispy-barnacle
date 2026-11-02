@@ -3,6 +3,30 @@ import { fileURLToPath } from "node:url";
 
 export const WORKERS_BUILD_CHECK_NAME = "Workers Builds: go-field-notes";
 
+function cloudflareBuildPath(item) {
+  try {
+    const url = new URL(item && item.details_url);
+    if (url.protocol !== "https:" || url.hostname !== "dash.cloudflare.com") return null;
+    return url.pathname.split("/").filter(Boolean);
+  } catch {
+    return null;
+  }
+}
+
+function isProductionWorkersBuild(item) {
+  const parts = cloudflareBuildPath(item);
+  return !!parts && parts.length === 8 && parts[1] === "workers" && parts[2] === "services" &&
+    parts[3] === "view" && parts[4] === "go-field-notes" && parts[5] === "production" &&
+    parts[6] === "builds" && !!parts[7];
+}
+
+function isPreviewWorkersBuild(item) {
+  const parts = cloudflareBuildPath(item);
+  return !!parts && parts.length === 10 && parts[1] === "workers" && parts[2] === "services" &&
+    parts[3] === "view" && parts[4] === "go-field-notes" && parts[5] === "production" &&
+    parts[6] === "previews" && !!parts[7] && parts[8] === "builds" && !!parts[9];
+}
+
 export async function waitForWorkersBuild(options = {}) {
   const repository = options.repository ?? process.env.GITHUB_REPOSITORY;
   const sha = options.sha ?? process.env.GITHUB_SHA;
@@ -56,7 +80,8 @@ export async function waitForWorkersBuild(options = {}) {
 
     const payload = await response.json();
     const checkRuns = Array.isArray(payload.check_runs) ? payload.check_runs : [];
-    const check = checkRuns.find(item => item && item.name === WORKERS_BUILD_CHECK_NAME);
+    const matching = checkRuns.filter(item => item && item.name === WORKERS_BUILD_CHECK_NAME);
+    const check = matching.find(isProductionWorkersBuild);
     if (check) {
       lastState = String(check.status || "unknown") + "/" + String(check.conclusion || "pending");
       if (check.status === "completed") {
@@ -69,6 +94,10 @@ export async function waitForWorkersBuild(options = {}) {
           detailsUrl: check.details_url || null
         };
       }
+    } else if (matching.some(isPreviewWorkersBuild)) {
+      lastState = "only a preview build is reported; waiting for a production build";
+    } else if (matching.length) {
+      lastState = "Workers build check does not identify a production deployment";
     }
 
     if (now() >= deadline) break;
