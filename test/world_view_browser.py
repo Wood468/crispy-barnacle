@@ -79,9 +79,12 @@ def main():
             page.wait_for_selector("#subnav-events button[data-sub=world]", timeout=15000)
             page.locator('#subnav-events button[data-sub="world"]').click()
             page.wait_for_function("() => { const el=document.getElementById('sub-world'); return !!el && !el.hidden; }")
+            # app.js creates the sub-navigation before its initial data render completes.
+            page.wait_for_function("() => { const el=document.querySelector('#inperson article h3'); return !!el && el.textContent.includes('In-person fixture: Kyoto'); }", timeout=10000)
             expect("In person is a visible third Schedule view",
                    page.locator("#sub-world").is_visible() and page.locator("#subnav-events button").count() == 3)
             expect("ticketed in-person event cards render in the view",
+                   page.locator("#inperson article h3").count() == 1 and
                    "In-person fixture: Kyoto" in page.locator("#inperson").inner_text())
             world_text = page.locator("#world").inner_text()
             expect("world events render with destinations and regional filters",
@@ -107,9 +110,10 @@ def main():
             for width in (390, 320):
                 page.set_viewport_size({"width": width, "height": 844})
                 page.wait_for_timeout(100)
-                dimensions = page.evaluate("() => ({viewport:innerWidth,document:document.documentElement.scrollWidth,panel:document.querySelector('#sub-world').scrollWidth,client:document.querySelector('#sub-world').clientWidth})")
+                dimensions = page.evaluate("() => { const p=document.querySelector('#sub-world'),w=p.querySelector('.tablewrap'); return {viewport:innerWidth,document:document.documentElement.scrollWidth,panel:p.scrollWidth,client:p.clientWidth,tableWrapClient:w.clientWidth,tableWrapScroll:w.scrollWidth,tableWrapOverflow:getComputedStyle(w).overflowX}; }")
                 expect(f"In person view has no page overflow at {width}px",
-                       dimensions["document"] <= dimensions["viewport"] and dimensions["panel"] <= dimensions["client"],
+                       dimensions["document"] <= dimensions["viewport"] and dimensions["panel"] <= dimensions["client"] and
+                       dimensions["tableWrapOverflow"] == "auto" and dimensions["tableWrapScroll"] >= dimensions["tableWrapClient"],
                        dimensions)
             page.locator('nav.tabs button[data-tab="now"]').click()
             page.wait_for_selector("#home-now .agr.reg", timeout=10000)
