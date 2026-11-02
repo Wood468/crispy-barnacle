@@ -258,7 +258,7 @@ check('Today multi-deadline tray is accessible, bounded and source-safe',
       all(token in DASH_CSS for token in ['.today-deadlines>summary', 'min-height:44px', '.today-deadline-item', 'var(--color-link)']) and
       '/dash.js?v=20261102z' in APP_JS and '/dash.js?v=20261102z' in SW_JS and
       '/dash.css?v=20261102q' in INDEX_HTML and '/dash.css?v=20261102q' in SW_JS and
-      'gofn-shell-v216' in SW_JS)
+      'gofn-shell-v217' in SW_JS)
 check('season pass and deadline data is structured, source-attributed and ordered',
       all(item_id in {item.get('id') for item in SEASON_DATA.get('items', [])}
           for item_id in ['season:pass-halloween', 'season:pass-november']) and
@@ -294,7 +294,7 @@ check('versioned stylesheets are referenced by the page and precached offline',
       all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261102b', '/dash.css?v=20261102q']))
 check('owner verification scripts are versioned and precached offline',
       '/account.js?v=20261102a' in INDEX_HTML and '/account.js?v=20261102a' in SW_JS and
-      '/review.js?v=20261102b' in DASH_JS and '/review.js?v=20261102b' in SW_JS)
+      '/review.js?v=20261102c' in DASH_JS and '/review.js?v=20261102c' in SW_JS)
 check('source freshness indicators use semantic roles with unchanged colours',
       all(token in DASH_CSS for token in [
           '--color-source-fresh:#6BD18A; --color-source-stale:#E8B84A; --color-source-failed:#FF9B8F;',
@@ -319,7 +319,7 @@ check('event signal chips and detail tags use semantic palette roles with unchan
           '.tg-incense{--tc:var(--color-signal-shadow)}.tg-costume{--tc:var(--color-signal-encounter)}',
       ]))
 check('offline shell cache version advances with the dashboard stylesheet token release',
-      "gofn-shell-v216" in SW_JS)
+      "gofn-shell-v217" in SW_JS)
 check('Travel mode searches only source-dated regional listings and preserves Today visibility',
       all(token in INDEX_HTML for token in ['id="sub-travel"', 'id="travel-q"', 'id="travel-destinations"', 'id="travel-regions"', 'id="travel-results"']) and
       "['travel','Travel','sub-travel']" in APP_JS and
@@ -328,7 +328,7 @@ check('Travel mode searches only source-dated regional listings and preserves To
       '/app.js?v=20261102r' in INDEX_HTML and '/app.js?v=20261102r' in SW_JS and
       '/dash.js?v=20261102z' in APP_JS and '/dash.js?v=20261102z' in SW_JS and
       '/dash.css?v=20261102q' in INDEX_HTML and '/dash.css?v=20261102q' in SW_JS and
-      'gofn-shell-v216' in SW_JS)
+      'gofn-shell-v217' in SW_JS)
 check('raid share dialog and script are included in the exact offline shell',
       '/raid-share.js?v=20261102b' in INDEX_HTML and '/raid-share.js?v=20261102b' in SW_JS and
       all(token in INDEX_HTML for token in ['id="raid-share-dialog"', 'id="raid-share-title"', 'id="raid-share-send"', 'id="raid-share-copy"']))
@@ -3047,12 +3047,16 @@ with sync_playwright() as p:
             {'id': 'telegram:b9-dup-b', 'title': 'Dup picture', 'image': '/infographics/g47ix/b9-dup.png', 'post': DISCORD, 'creator': 'G47IX', 'source': 'telegram', 'publishedAt': '2026-10-09T01:00:00Z', 'guesses': []},
             {'id': 'discord:b9-solo', 'title': 'Solo picture', 'image': '/infographics/g47ix/b9-solo.png', 'post': DISCORD[:-3] + '999', 'creator': 'G47IX', 'source': 'discord', 'publishedAt': '2026-10-08T01:00:00Z', 'guesses': []}]})
         def b9_owner(decisions):
-            posts = []; gets = []
+            posts = []; gets = []; stored = {d['id']: dict(d) for d in decisions}  # the mocked site keeps what was posted, as the real one does
             pg = page(api=B9_API, pin=True, mobile=True, extra={'**/infographic-queue.json*': (B9_QUEUE, 200), '**/api/ig-decisions': (json.dumps({'decisions': decisions}), 200), '**/api/auth/users': (json.dumps({'users': []}), 200)})
             def handler(route):
                 req = route.request
-                if req.method == 'POST': posts.append(json.loads(req.post_data)); route.fulfill(status=200, body='{"ok":true}', content_type='application/json')
-                else: gets.append(req.url); route.fulfill(status=200, body=json.dumps({'decisions': decisions}), content_type='application/json')
+                if req.method == 'POST':
+                    body = json.loads(req.post_data); posts.append(body)
+                    if body['status'] == 'reset': stored.pop(body['id'], None)
+                    else: stored[body['id']] = dict(body)
+                    route.fulfill(status=200, body='{"ok":true}', content_type='application/json')
+                else: gets.append(req.url); route.fulfill(status=200, body=json.dumps({'decisions': list(stored.values())}), content_type='application/json')
             pg.route('**/api/ig-decisions', handler)
             pg.wait_for_function("document.documentElement.getAttribute('data-role')==='owner' && !document.getElementById('hireview').hidden", timeout=10000)
             pg.click('#hmenu'); pg.wait_for_selector('#igreview:not([hidden]) .igr'); pg.wait_for_timeout(300)
@@ -3090,6 +3094,96 @@ with sync_playwright() as p:
         lpg.click('#igundo button'); lpg.wait_for_selector('#iglinked .igr[data-id="discord:b9-solo"]', state='attached'); lpg.wait_for_timeout(300)
         check('Undo of a linked picture re-posts the previous approval unchanged', lposts[-1] == {'id': prior['id'], 'status': 'approved', 'eventId': prior['eventId'], 'eventTitle': prior['eventTitle']} and len(lposts) == 2, lposts)
         lpg.context.close()
+        # ---- Batch 11: decisions are never overwritten or deleted on a guess (mocked /api/ig-decisions with a mutable server) ----
+        def b11_owner(decisions, get_ok=True, hold_posts=False, queue=None):
+            srv = {'rows': {d['id']: dict(d) for d in decisions}, 'get_ok': get_ok, 'posts': [], 'gets': 0, 'hold': hold_posts, 'held': []}
+            pg = page(api=B9_API, pin=True, mobile=True, extra={'**/infographic-queue.json*': (queue or B9_QUEUE, 200), '**/api/ig-decisions': ((json.dumps({'decisions': []}), 200) if get_ok else ('{"error":"x"}', 500)), '**/api/auth/users': (json.dumps({'users': []}), 200)})
+            def handler(route):
+                req = route.request
+                if req.method == 'POST':
+                    body = json.loads(req.post_data)
+                    def finish():
+                        srv['posts'].append(body)
+                        if body['status'] == 'reset': srv['rows'].pop(body['id'], None)
+                        else: srv['rows'][body['id']] = dict(body)
+                        route.fulfill(status=200, body='{"ok":true}', content_type='application/json')
+                    if srv['hold']: srv['held'].append(finish)
+                    else: finish()
+                else:
+                    srv['gets'] += 1
+                    if srv['get_ok']: route.fulfill(status=200, body=json.dumps({'decisions': list(srv['rows'].values())}), content_type='application/json')
+                    else: route.fulfill(status=500, body='{"error":"x"}', content_type='application/json')
+            pg.route('**/api/ig-decisions', handler)
+            pg.wait_for_function("document.documentElement.getAttribute('data-role')==='owner'", timeout=10000)
+            pg.click('#hmenu'); pg.wait_for_selector('#igreview:not([hidden])'); pg.wait_for_timeout(300)
+            return pg, srv
+        APPROVED_ELSEWHERE = {'id': 'discord:b9-solo', 'status': 'approved', 'eventId': 'leekduck:b9cd,leekduck:b9rh', 'eventTitle': 'Community Day: Bulbasaur | Dialga Raid Hour'}
+        # (1) Approved somewhere else after this page loaded: Discard reads the site first, Undo puts that exact approval back and never deletes it.
+        gpg, gsrv = b11_owner([])
+        check('B11: with nothing stored the picture is listed for review', gpg.locator('#igreview .igr[data-id="discord:b9-solo"]').count() == 1)
+        gsrv['rows'][APPROVED_ELSEWHERE['id']] = dict(APPROVED_ELSEWHERE)  # approved from Telegram / another device after the page loaded
+        g0 = gsrv['gets']
+        gpg.locator('#igreview .igr[data-id="discord:b9-solo"] [data-ig-no]').click(); gpg.wait_for_selector('#igundo')
+        check('B11: Discard reads the picture\'s current decision from the site first (a fresh request)', gsrv['gets'] > g0, (g0, gsrv['gets']))
+        check('B11: Discard then sends exactly one rejected decision', [p['status'] for p in gsrv['posts']] == ['rejected'], gsrv['posts'])
+        gpg.click('#igundo button'); gpg.wait_for_selector('#iglinked .igr[data-id="discord:b9-solo"]', state='attached', timeout=5000); gpg.wait_for_timeout(200)
+        check('B11: Undo restores the approval that was on the site (same events, same order) and never deletes it', [p['status'] for p in gsrv['posts']] == ['rejected', 'approved'] and gsrv['posts'][-1] == {'id': APPROVED_ELSEWHERE['id'], 'status': 'approved', 'eventId': APPROVED_ELSEWHERE['eventId'], 'eventTitle': APPROVED_ELSEWHERE['eventTitle']} and gsrv['rows'][APPROVED_ELSEWHERE['id']]['status'] == 'approved', gsrv['posts'])
+        gpg.context.close()
+        # (1b) Changed elsewhere between Discard and Undo: Undo does nothing instead of overwriting.
+        gpg, gsrv = b11_owner([])
+        gpg.locator('#igreview .igr[data-id="discord:b9-solo"] [data-ig-no]').click(); gpg.wait_for_selector('#igundo')
+        gsrv['rows'][APPROVED_ELSEWHERE['id']] = dict(APPROVED_ELSEWHERE)
+        gpg.click('#igundo button'); gpg.wait_for_selector('#igreview .igr-msg', timeout=5000); gpg.wait_for_timeout(200)
+        check('B11: Undo refuses when the picture was changed elsewhere in the meantime (nothing written, nothing deleted)', [p['status'] for p in gsrv['posts']] == ['rejected'] and gsrv['rows'][APPROVED_ELSEWHERE['id']]['status'] == 'approved' and 'changed somewhere else' in gpg.inner_text('#igreview .igr-msg'), gsrv['posts'])
+        gpg.context.close()
+        # (1c) The re-read fails: the Discard is refused, the card stays, nothing is written.
+        gpg, gsrv = b11_owner([])
+        gsrv['get_ok'] = False
+        gpg.locator('#igreview .igr[data-id="discord:b9-solo"] [data-ig-no]').click(); gpg.wait_for_function("document.querySelector('#igreview .igr-msg')", timeout=5000)
+        check('B11: if the site\'s decision cannot be re-read, Discard is refused calmly, the card stays and nothing is written', gsrv['posts'] == [] and gpg.locator('#igreview .igr[data-id="discord:b9-solo"]').count() == 1 and gpg.locator('#igundo').count() == 0 and 'not discarded' in gpg.inner_text('#igreview .igr-msg'), gsrv['posts'])
+        gpg.context.close()
+        # (2) The first read of the decisions fails: a visible error, no approve/discard buttons, no writes; Retry brings the cards back.
+        gpg, gsrv = b11_owner([], get_ok=False)
+        check('B11: a failed first read of the decisions shows an error instead of an empty list', gpg.locator('#igreview [role="alert"]').count() == 1 and 'Could not read' in gpg.inner_text('#igreview [role="alert"]'))
+        check('B11: and no Approve / Discard / override buttons are offered while the saved state is unknown', gpg.locator('#igreview .igr, #igreview [data-ig-no], #igreview [data-ig-ok], #igreview [data-ig-pick], #igreview [data-ig-ov]').count() == 0 and gsrv['posts'] == [])
+        gsrv['get_ok'] = True
+        gpg.locator('#igreview [data-ig-retry]').click(); gpg.wait_for_selector('#igreview .igr', timeout=5000)
+        check('B11: Retry loads the decisions and the cards appear', gpg.locator('#igreview .igr[data-id="discord:b9-solo"]').count() == 1 and gpg.locator('#igreview [role="alert"]').count() == 0)
+        gpg.context.close()
+        # (3) Writes on one card are queued: Approve tapped while a Discard is still in flight is only sent after it, and the screen ends on the last write.
+        gpg, gsrv = b11_owner([])
+        gsrv['hold'] = True
+        card_sel = '#igreview .igr[data-id="discord:b9-solo"]'
+        gpg.locator(card_sel + ' [data-ig-no]').click(); gpg.wait_for_timeout(300)
+        check('B11: a Discard still in flight is held at the server', len(gsrv['held']) == 1 and gsrv['posts'] == [])
+        sel_ev = gpg.locator(card_sel + ' select'); sel_ev.select_option(index=1)
+        gpg.locator(card_sel + ' [data-ig-pick]').click(); gpg.wait_for_timeout(400)
+        check('B11: an Approve tapped on the same card meanwhile is NOT sent while the Discard is unfinished', len(gsrv['held']) == 1 and gsrv['posts'] == [], (len(gsrv['held']), gsrv['posts']))
+        gsrv['hold'] = False; gsrv['held'].pop(0)(); gpg.wait_for_timeout(500)
+        check('B11: after the Discard finishes, the Approve is sent: writes reach the site in tap order', [p['status'] for p in gsrv['posts']] == ['rejected', 'approved'], gsrv['posts'])
+        gpg.wait_for_selector('#iglinked .igr[data-id="discord:b9-solo"]', state='attached', timeout=5000)
+        check('B11: the screen shows the last write that reached the site (linked) and no stale Undo is offered for that card', gpg.locator('#igundo').count() == 0 and gsrv['rows']['discord:b9-solo']['status'] == 'approved')
+        gpg.context.close()
+        # (4) Two discards in a row: both can be undone (newest first).
+        gpg, gsrv = b11_owner([])
+        gpg.locator('#igreview .igr[data-id="discord:b9-solo"] [data-ig-no]').click(); gpg.wait_for_selector('#igundo'); gpg.wait_for_timeout(200)
+        gpg.locator('#igreview .igr[data-id="discord:b9-dup-a"] [data-ig-no]').click(); gpg.wait_for_timeout(500)
+        check('B11: both pictures are discarded', gpg.locator('#igreview .igr').count() == 0 and [p['id'] for p in gsrv['posts']] == ['discord:b9-solo', 'discord:b9-dup-a'], gsrv['posts'])
+        gpg.click('#igundo button'); gpg.wait_for_selector('#igreview .igr[data-id="discord:b9-dup-a"]', timeout=5000); gpg.wait_for_timeout(300)
+        check('B11: the second discard\'s Undo works, and the first discard\'s Undo is still on offer afterwards', gpg.locator('#igundo').count() == 1 and gpg.locator('#igreview .igr[data-id="discord:b9-solo"]').count() == 0)
+        gpg.click('#igundo button'); gpg.wait_for_selector('#igreview .igr[data-id="discord:b9-solo"]', timeout=5000); gpg.wait_for_timeout(300)
+        check('B11: both are restored, in order, to exactly their earlier state (nothing stored)', [p['status'] for p in gsrv['posts']] == ['rejected', 'rejected', 'reset', 'reset'] and gsrv['rows'] == {} and gpg.locator('#igundo').count() == 0, gsrv['posts'])
+        gpg.context.close()
+        # (5) A picture matching two cards already listed (one by image file, one by post link) joins them into ONE card.
+        Q3 = json.dumps({'items': [
+            {'id': 'discord:q3-a', 'title': 'A', 'image': '/infographics/g47ix/q3-x.png', 'post': DISCORD[:-3] + '111', 'source': 'discord', 'publishedAt': '2026-10-09T01:00:00Z', 'guesses': []},
+            {'id': 'discord:q3-b', 'title': 'B', 'image': '/infographics/g47ix/q3-y.png', 'post': DISCORD[:-3] + '222', 'source': 'discord', 'publishedAt': '2026-10-09T02:00:00Z', 'guesses': []},
+            {'id': 'telegram:q3-c', 'title': 'C', 'image': '/infographics/g47ix/q3-x.png', 'post': DISCORD[:-3] + '222', 'source': 'telegram', 'publishedAt': '2026-10-09T03:00:00Z', 'guesses': []}]})
+        gpg, gsrv = b11_owner([], queue=Q3)
+        check('B11: a picture matching two listed cards merges all three into one card', gpg.locator('#igreview .igr').count() == 1, gpg.locator('#igreview .igr').count())
+        gpg.locator('#igreview .igr [data-ig-no]').click(); gpg.wait_for_selector('#igundo'); gpg.wait_for_timeout(200)
+        check('B11: and one decision hides the whole merged group', gpg.locator('#igreview .igr').count() == 0)
+        gpg.context.close()
         # Item 1: visitors never get a dead Discord link; the event's own page is used.
         W = json.dumps({'items': [{'id': 'w1', 'kind': 'week', 'title': 'Week', 'image': '/infographics/g47ix/w1.png', 'publishedAt': '2026-10-05T00:00:00Z', 'post': DISCORD}]})
         wpg = page(api=B9_API, extra={'**/weekly.json*': (W, 200)})

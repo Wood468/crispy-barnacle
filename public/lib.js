@@ -191,7 +191,7 @@
      A failed request (network error, non-2xx, bad JSON) is dropped at once, so the next caller tries again. opts.fresh skips the shared copy and replaces every shared copy of that URL; opts.init is passed to fetch for the request that actually goes out.
      The shared copy is keyed by URL plus the fetch options that change what comes back (method, headers, credentials). A caller that forces the network (cache: reload / no-store) never takes a copy that was fetched without that, but a forced copy serves everyone; the soft modes (default, no-cache) share one copy.
      A request that never answers is not kept longer than maxAge: later callers start their own, and opts.timeout (ms) makes one caller stop waiting (the shared request is dropped too, so the next caller does not inherit the hang). */
-  var JSON_CACHE = {};
+  var JSON_CACHE = {}, WRITE_SEQ = 0;
   function initKey(init) {
     if (!init) return '';
     var h = init.headers, hk = '';
@@ -206,16 +206,18 @@
     var k = [init.method || '', init.credentials || '', init.mode || '', hk].join('|');
     return k === '|||' ? '' : k;
   }
+  /* A request that writes (any method but GET, or one with a body) is never shared or kept: each caller sends its own. */
+  function isWrite(init) { return !!init && (init.body != null || (!!init.method && String(init.method).toUpperCase() !== 'GET')); }
   function getJson(url, opts) {
     opts = opts || {};
-    var maxAge = opts.maxAge == null ? 30000 : opts.maxAge, key = url + '\n' + initKey(opts.init), hit = JSON_CACHE[key], now = Date.now(), entry;
+    var maxAge = opts.maxAge == null ? 30000 : opts.maxAge, write = isWrite(opts.init), key = write ? 'write\n' + url + '\n' + (++WRITE_SEQ) : url + '\n' + initKey(opts.init), hit = JSON_CACHE[key], now = Date.now(), entry;
     var forced = !!opts.init && (opts.init.cache === 'reload' || opts.init.cache === 'no-store');
     if (hit && !opts.fresh && now - hit.t < maxAge && (hit.forced || !forced)) entry = hit;
     else {
       if (opts.fresh) Object.keys(JSON_CACHE).forEach(function (k) { if (k.indexOf(url + '\n') === 0) delete JSON_CACHE[k]; });
       var p = fetch(url, opts.init).then(function (r) { if (!r.ok) throw new Error(url + ' HTTP ' + r.status); return r.text(); });
-      entry = JSON_CACHE[key] = { t: now, p: p, forced: forced };
-      p.catch(function () { if (JSON_CACHE[key] === entry) delete JSON_CACHE[key]; });
+      entry = { t: now, p: p, forced: forced };
+      if (!write) { JSON_CACHE[key] = entry; p.catch(function () { if (JSON_CACHE[key] === entry) delete JSON_CACHE[key]; }); }
     }
     var waiting = entry.p, timer = null;
     if (opts.timeout > 0) {
@@ -287,10 +289,21 @@
      publicLink() returns the first candidate that is an https link a visitor can actually open, or '' when none is. */
   function isPrivateLink(u) {
     if (typeof u !== 'string') return false;
-    var m = /^https?:\/\/([^\/?#]+)(\/[^?#]*)?/i.exec(u.trim());
-    if (!m) return false;
-    var host = m[1].toLowerCase().replace(/:\d+$/, '').replace(/^(www|ptb|canary)\./, '');
-    return (host === 'discord.com' || host === 'discordapp.com') && /^\/channels(\/|$)/i.test(m[2] || '');
+    var raw = u.trim();
+    if (!/^https?:/i.test(raw)) return false;
+    var host = '', path = '';
+    try {
+      /* Browsers read a backslash as a slash, so the URL parser is used instead of a pattern: userinfo, trailing dots, ports and case are all dealt with. */
+      var url = new URL(raw);
+      host = url.hostname.toLowerCase().replace(/\.+$/, ''); path = url.pathname;
+      try { path = decodeURIComponent(path); } catch (e2) { }
+      path = path.replace(/\/{2,}/g, '/');
+    } catch (e) {
+      /* Cannot be parsed: anything that looks like a Discord channel link is treated as private rather than shown. */
+      return /(^|[^a-z0-9-])(discord|discordapp)\.com\.?[\/\\:@]*\/*channels/i.test(raw.replace(/\\/g, '/'));
+    }
+    var onDiscord = ['discord.com', 'discordapp.com'].some(function (d) { return host === d || host.slice(-(d.length + 1)) === '.' + d; });
+    return onDiscord && /^\/channels(\/|$)/i.test(path);
   }
   function publicLink() {
     for (var i = 0; i < arguments.length; i++) {

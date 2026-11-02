@@ -11,6 +11,12 @@ test("isPrivateLink: Discord channel/message links are private, other links are 
   for (const u of ["https://pokemongo.com/news/x", "https://leekduck.com/events/x/", "https://discord.com/invite/abc", "https://discord.gg/abc", "https://example.com/discord.com/channels/1", "https://cdn.discordapp.com/attachments/1/2/x.png", "", null, undefined, 5]) assert.equal(LIB.isPrivateLink(u), false, String(u));
 });
 
+test("isPrivateLink: spelling tricks do not make a private Discord channel link look public", () => {
+  for (const u of ["https://discord.com\\channels\\1\\2", "https://user@discord.com/channels/1/2", "https://user:pw@discord.com/channels/1/2", "https://discord.com./channels/1/2", "https://app.discord.com/channels/1/2", "https://a.b.discordapp.com/channels/1/2", "https://DISCORD.COM:443/Channels/1/2", "https://discord.com//channels/1/2", "https://discord.com/%63hannels/1/2", "https://discord.com/./channels/1", "  https://discord.com/channels/1/2  ", "https://www.discord.com./channels/@me/1/2"]) assert.equal(LIB.isPrivateLink(u), true, u);
+  for (const u of ["https://discord.gg/abc", "https://discord.gg/channels/1", "https://cdn.discordapp.com/attachments/1/2/x.png", "https://media.discordapp.net/attachments/1/2/x.png", "https://discord.com/invite/abc", "https://discord.com/channelsx/1", "https://notdiscord.com/channels/1", "https://discord.com.evil.example/channels/1", "https://evil.example/?u=discord.com/channels/1", "https://user@evil.example/discord.com/channels/1", "https://evil.example#discord.com/channels/1"]) assert.equal(LIB.isPrivateLink(u), false, u);
+  assert.equal(LIB.publicLink("https://discord.com\\channels\\1\\2", "https://app.discord.com/channels/1/2", "https://pokemongo.com/x"), "https://pokemongo.com/x");
+});
+
 test("publicLink: picks the first https link a visitor can open (the event's own official link before a private Discord post)", () => {
   const discord = "https://discord.com/channels/@me/1/2", official = "https://pokemongo.com/news/fall-marathon-buddy-trek-2026";
   assert.equal(LIB.publicLink(discord, official), official, "a Discord post is skipped in favour of the official link");
