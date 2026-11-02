@@ -244,7 +244,7 @@ check('Today Tonight planner is an optional accessible local-time disclosure wit
       all(token in INDEX_HTML for token in ['id="today-tonight"', 'id="today-tonight-summary"', 'id="today-tonight-list"']) and
       all(token in DASH_JS for token in ['D.spotlight', 'D.raidHour', 'D.maxBattles', '6–7 pm local', '6 am–9 pm local', 'Weak to:', 'data-best-types', 'gofn-dex-ready', 'function renderTonight', 'renderTonight(t, dateKey)']) and
       all(token in DASH_CSS for token in ['.today-tonight', '.today-tonight-list', 'min-height:44px', '.today-tonight-best']) and
-      'gofn-dex-ready' in APP_JS and '/app.js?v=20261102g' in INDEX_HTML and '/app.js?v=20261102g' in SW_JS)
+      'gofn-dex-ready' in APP_JS and '/app.js?v=20261102h' in INDEX_HTML and '/app.js?v=20261102h' in SW_JS)
 check('Dex/type readiness refreshes only the Tonight disclosure, preserving event-detail focus targets',
       "document.addEventListener('gotypes', function () { try { renderRot(); var t = now(); renderTonight(t, dayKey(t)); } catch (e) {} });" in DASH_JS and
       "document.addEventListener('gofn-dex-ready', function () { try { renderRot(); var t = now(); renderTonight(t, dayKey(t)); } catch (e) {} });" in DASH_JS)
@@ -252,9 +252,9 @@ check('Today multi-deadline tray is accessible, bounded and source-safe',
       all(token in INDEX_HTML for token in ['id="today-deadlines"', 'id="today-deadlines-summary"', 'id="today-deadlines-list"']) and
       all(token in DASH_JS for token in ['var trayLimit = t.getTime() + 7 * 24 * 60 * 60 * 1000', "safeUrl(d.url || '')", 'trayCandidates.slice(0, 8)', 'View all ', 'noopener noreferrer', "sourceUrl.indexOf('https://') === 0"]) and
       all(token in DASH_CSS for token in ['.today-deadlines>summary', 'min-height:44px', '.today-deadline-item', 'var(--color-link)']) and
-      '/dash.js?v=20261102l' in APP_JS and '/dash.js?v=20261102l' in SW_JS and
-      '/dash.css?v=20261102j' in INDEX_HTML and '/dash.css?v=20261102j' in SW_JS and
-      'gofn-shell-v199' in SW_JS)
+      '/dash.js?v=20261102m' in APP_JS and '/dash.js?v=20261102m' in SW_JS and
+      '/dash.css?v=20261102k' in INDEX_HTML and '/dash.css?v=20261102k' in SW_JS and
+      'gofn-shell-v200' in SW_JS)
 check('season pass and deadline data is structured, source-attributed and ordered',
       all(item_id in {item.get('id') for item in SEASON_DATA.get('items', [])}
           for item_id in ['season:pass-halloween', 'season:pass-november']) and
@@ -287,7 +287,7 @@ check('base bonus and information availability controls use semantic status role
           'background: var(--color-status-info-unavailable); color: var(--color-on-status-info-unavailable); border: 1px solid var(--color-border-info-unavailable);',
       ]))
 check('versioned stylesheets are referenced by the page and precached offline',
-      all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261102a', '/dash.css?v=20261102j']))
+      all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261102a', '/dash.css?v=20261102k']))
 check('owner verification scripts are versioned and precached offline',
       '/account.js?v=20261101b' in INDEX_HTML and '/account.js?v=20261101b' in SW_JS and
       '/review.js?v=20261101b' in DASH_JS and '/review.js?v=20261101b' in SW_JS)
@@ -315,13 +315,13 @@ check('event signal chips and detail tags use semantic palette roles with unchan
           '.tg-incense{--tc:var(--color-signal-shadow)}.tg-costume{--tc:var(--color-signal-encounter)}',
       ]))
 check('offline shell cache version advances with the dashboard stylesheet token release',
-      "gofn-shell-v199" in SW_JS)
+      "gofn-shell-v200" in SW_JS)
 check('event detail focus restoration can find a re-rendered opener by event key and card role',
       all(token in DETAIL_JS for token in ['openerKey', 'openerClass', "getAttribute('data-open')", 'target.focus()']))
 check('versioned dashboard scripts are referenced by the entry page and precached offline',
-      '/app.js?v=20261102g' in INDEX_HTML and '/app.js?v=20261102g' in SW_JS and
-      '/dash.js?v=20261102l' in APP_JS and '/dash.js?v=20261102l' in SW_JS and
-      '/detail.js?v=20261102b' in DASH_JS and '/detail.js?v=20261102b' in SW_JS)
+      '/app.js?v=20261102h' in INDEX_HTML and '/app.js?v=20261102h' in SW_JS and
+      '/dash.js?v=20261102m' in APP_JS and '/dash.js?v=20261102m' in SW_JS and
+      '/detail.js?v=20261102c' in DASH_JS and '/detail.js?v=20261102c' in SW_JS)
 check('sync PIN and account controls have one home in Menu and are precached offline',
       INDEX_HTML.index('id="acct" class="acct"') > INDEX_HTML.index('id="sub-menu"') and
       'id="pinform"' not in INDEX_HTML and
@@ -2345,7 +2345,8 @@ with sync_playwright() as p:
         check('Today holds the space of everything that fills in late: footer below the fold while pending, freshness line, deadlines row, date and tab bar',
               all(token in DASH_CSS for token in ['#tab-now:has(#home-now:not([data-render-key]):not([data-state="unavailable"])){min-height:100vh;min-height:100svh}',
                                                   '.fresh-line[hidden]{display:flex!important;visibility:hidden}', '.fresh-line{display:flex;margin:-6px 0 6px;min-height:44px}',
-                                                  '.day-brief:not([data-ready]) .today-deadlines[hidden]{display:block!important;visibility:hidden;min-height:44px}',
+                                                  '.day-brief:not([data-ready]):not([data-state="unavailable"]) .today-deadlines[hidden]{display:block!important;visibility:hidden;min-height:44px}',
+                                                  '.fresh-line[hidden][data-released]{display:none!important}',
                                                   'header.top .date:empty::before', 'nav.tabs .row:empty{min-height:48px}']))
         # Cumulative layout shift of a cold Today load, summed over every shift (user input is not excluded: there is none). Measured un-throttled on purpose: the big
         # shifts (the footer jumping a screen when the agenda arrives, the freshness line and deadlines row growing, the date and tab bar filling in) happen at any speed, so
@@ -2592,6 +2593,108 @@ with sync_playwright() as p:
         check('the brief counts carry no decorative aria-label and "Got it" has no label that replaces its visible text',
               ar.get_attribute('#day-brief-stats', 'aria-label') is None and ar.get_attribute('.wn-ok', 'aria-label') is None and ar.locator('.wn-ok').inner_text().strip() == 'Got it')
         ar.context.close()
+        # ---- Batch 5: follow-ups to #258 / #261 (late answers, focus, live regions, reserved space) ----
+        b5_held = {}
+        def hold(*pats):
+            def pre(pg):
+                for pat in pats: pg.route(pat, lambda route, request=None, k=pat: b5_held.setdefault(k, []).append(route))
+            return pre
+        def b5_release(pat, body=None, status=200):
+            for r in b5_held.pop(pat, []):
+                if body is None: r.continue_()
+                else: r.fulfill(status=status, body=body, content_type='application/json')
+        def b5_wait_held(n, ms=8000):
+            t = 0
+            while sum(len(v) for v in b5_held.values()) < n and t < ms: la_pg.wait_for_timeout(100); t += 100
+        DEX_FILE, CPP_FILE, CPM_FILE = (ROOT / 'public' / 'dex.json').read_text(), (ROOT / 'public' / 'data' / 'cp' / 'pokemon.json').read_text(), (ROOT / 'public' / 'data' / 'cp' / 'cp-multipliers.json').read_text()
+        # A. dex and CP data that arrive after the 8 s wait are applied (no reload), and nothing else is lost
+        b5_held.clear()
+        la_pg = page(clock=RB_CLOCK, pre=hold('**/dex.json', '**/data/cp/pokemon.json', '**/data/cp/cp-multipliers.json'), ready=False)
+        b5_wait_held(3); la_pg.clock.run_for(9000)
+        la_ok = settle(la_pg, "document.getElementById('home-now').hasAttribute('data-render-key')", 12000)
+        la_pg.evaluate("document.getElementById('evq').value = 'abc'")
+        la_before = la_pg.evaluate("({opts: document.querySelectorAll('#followdl option').length, dex: Object.keys(GODASH.DEXBY).length, cp: GODASH.hundoPair({kind:'raid'},{name:'Bulbasaur'})})")
+        check('late dex/CP: Today renders without them after the timeout (nothing yet in the follow list or CP)', la_ok and la_before['opts'] == 0 and la_before['dex'] == 0 and la_before['cp'] is None, la_before)
+        b5_release('**/dex.json', DEX_FILE); b5_release('**/data/cp/pokemon.json', CPP_FILE); b5_release('**/data/cp/cp-multipliers.json', CPM_FILE)
+        la_done = settle(la_pg, "document.querySelectorAll('#followdl option').length > 500 && !!GODASH.hundoPair({kind:'raid'},{name:'Bulbasaur'})", 10000)
+        la_after = la_pg.evaluate("({opts: document.querySelectorAll('#followdl option').length, dex: Object.keys(GODASH.DEXBY).length, cp: GODASH.hundoPair({kind:'raid'},{name:'Bulbasaur'}), q: document.getElementById('evq').value, keyed: document.getElementById('home-now').hasAttribute('data-render-key')})")
+        check('late dex/CP: when they arrive the follow list, Pokémon names and CP are filled in without a reload, and typed state is kept', la_done and la_after['dex'] > 500 and la_after['q'] == 'abc' and la_after['keyed'], la_after)
+        la_pg.context.close()
+        # D. the final state follows the final answer; B. a late render does not detach the open sheet's opener; C. "Got it" stays dismissed
+        LEAKS = json.dumps({'changes': [{'n': 'Testmon', 'to': 'Released', 'at': 1793500000000}]})  # 2 Nov 2026, inside the 7-day window
+        for label, late_body, late_status, want in (('feed switched off', '{"enabled":false,"events":[]}', 200, 'curated'), ('fewer than 10 events', json.dumps({'enabled': True, 'events': [ev('few%d' % i, 'Few %d' % i, 'event', '2026-11-01T10:00:00', '2026-11-08T20:00:00', 'confirmed') for i in range(3)]}), 200, 'curated'), ('still failing', '{}', 500, 'degraded'), ('usable list', LIVE_FEED, 200, 'live')):
+            b5_held.clear()
+            fs = page(clock=RB_CLOCK, pre=hold('**/api/events'), ready=False)
+            la_pg = fs; b5_wait_held(1); fs.clock.run_for(9000)
+            settle(fs, "document.getElementById('home-now').hasAttribute('data-render-key')", 12000)
+            was = fs.evaluate("GODASH.eventsState()")
+            b5_release('**/api/events', late_body, late_status); fs.wait_for_timeout(800)
+            now_state = fs.evaluate("GODASH.eventsState()")
+            check('late feed (%s): state starts degraded and ends %s' % (label, want), was == 'degraded' and now_state == want, [was, now_state])
+            fs.context.close()
+        # B + C on one stalled page that has a "N new" note
+        b5_held.clear()
+        bc = page(clock=RB_CLOCK, pre=hold('**/api/events'), extra={'**/api/unreleased': (LEAKS, 200)}, ready=False)
+        la_pg = bc; b5_wait_held(1); bc.wait_for_timeout(1500); bc.clock.run_for(9000)
+        settle(bc, "document.getElementById('home-now').hasAttribute('data-render-key')", 12000)
+        bc.clock.run_for(20000)
+        wn_shown = settle(bc, "!!document.querySelector('.whatsnew:not([hidden]) .wn-ok')", 8000)
+        check('degraded Today still shows the leaks note (precondition for "Got it")', wn_shown)
+        bc.click('.wn-ok'); bc.wait_for_timeout(200)
+        # B: open a card, let the late feed arrive while the sheet is open
+        opener = bc.locator('#home-now [data-open]').first
+        opener_id = opener.get_attribute('data-open'); opener_handle = opener.element_handle()
+        opener.click()
+        sheet_up = settle(bc, "!!document.querySelector('#evd:not([hidden])')", 8000)
+        b5_release('**/api/events', LIVE_FEED)
+        settle(bc, "GODASH.eventsState()==='live'", 8000); bc.wait_for_timeout(500)
+        still_there = opener_handle.evaluate("e => e.isConnected")
+        check('B: a late live answer does not replace the card behind an open event sheet', sheet_up and still_there)
+        bc.click('#evd-x'); bc.wait_for_timeout(400)
+        foc = bc.evaluate("({tag: document.activeElement.tagName, inHome: !!document.activeElement.closest('#home-now'), id: document.activeElement.id})")
+        check('B: closing the sheet after a late render leaves focus inside Today, not on the page body', foc['inHome'] and foc['tag'] != 'BODY', foc)
+        if shot_dir: bc.screenshot(path=shot_dir + '/b-after-close.png')
+        # B fallback: the opener has vanished for good -> focus goes to the Today list itself
+        bc.locator('#home-now [data-open]').first.click(); settle(bc, "!!document.querySelector('#evd:not([hidden])')", 8000)
+        bc.evaluate("document.querySelectorAll('#home-now [data-open]').forEach(e => e.remove())")
+        bc.click('#evd-x'); bc.wait_for_timeout(300)
+        foc2 = bc.evaluate("({tag: document.activeElement.tagName, id: document.activeElement.id})")
+        check('B: if the opener card is gone for good, focus falls back to the Today list, not the body', foc2['id'] == 'home-now', foc2)
+        # C: the late live list arrived after "Got it": the note must not come back
+        gone = bc.evaluate("(() => { const b = document.querySelector('.whatsnew'); return !b || b.hidden || !b.querySelector('.wn-toggle'); })()")
+        check('C: after "Got it" a late live list does not re-mount the "N new" note this session', gone, bc.evaluate("(document.querySelector('.whatsnew')||{}).outerHTML"))
+        bc.context.close()
+        # E. the unavailable row is announced (live region empty first), and Retry focus survives a late dash.js
+        def hold_dash(pg):
+            pg.route(re.compile(r'/dash\.js'), lambda route, request=None: b5_held.setdefault('dash', []).append(route))
+        b5_held.clear()
+        ep = page(clock=RB_CLOCK, pre=hold_dash, ready=False)
+        la_pg = ep; ep.wait_for_timeout(1000); ep.clock.run_for(11000)
+        row = settle(ep, "!!document.getElementById('today-retry')", 8000)
+        txt = settle(ep, "/did not load/.test(document.querySelector('.today-status p').textContent)", 5000)
+        check('E: the unavailable row is an error announced on insertion (role=alert), not a status region inserted with its text', row and txt and ep.get_attribute('.today-status', 'role') == 'alert', ep.get_attribute('.today-status', 'role'))
+        # F (error state): no 44px hole for the freshness line when Today could not load
+        hole = ep.evaluate("({fresh: Math.round(document.getElementById('fresh-line').getBoundingClientRect().height), brief: Math.round(document.getElementById('day-brief').getBoundingClientRect().height)})")
+        check('F: when Today failed to load, no invisible 44px hole is left for the freshness line or the brief', hole['fresh'] == 0 and hole['brief'] == 0, hole)
+        if shot_dir: ep.screenshot(path=shot_dir + '/e-unavailable.png')
+        ep.focus('#today-retry'); b5_release('dash')
+        back = settle(ep, "document.getElementById('home-now').hasAttribute('data-render-key') && !document.getElementById('today-retry')", 12000)
+        foc3 = ep.evaluate("({tag: document.activeElement.tagName, inHome: !!document.activeElement.closest('#home-now')})")
+        check('E: when dash.js arrives late and replaces the row, focus moves to the replacement instead of the body', back and foc3['inHome'] and foc3['tag'] != 'BODY', foc3)
+        ep.context.close()
+        # F. a stalled /api/sources releases the reserved freshness space after 8 s and still fills in later
+        b5_held.clear()
+        fr = page(clock=RB_CLOCK, pre=hold('**/api/sources'), ready=False)
+        la_pg = fr; settle(fr, "document.getElementById('home-now').hasAttribute('data-render-key')", 12000); fr.wait_for_timeout(1000)
+        fr.clock.run_for(3000)
+        h_early = fr.evaluate("Math.round(document.getElementById('fresh-line').getBoundingClientRect().height)")
+        fr.clock.run_for(9000)
+        h_late = fr.evaluate("Math.round(document.getElementById('fresh-line').getBoundingClientRect().height)")
+        check('F: the freshness line keeps its 44px while waiting, then gives the space back after 8 s of silence', h_early >= 43 and h_late == 0, [h_early, h_late])
+        b5_release('**/api/sources', '{"environment":"production","database":true,"enabled":false,"sources":[]}')
+        filled = settle(fr, "(() => { const e = document.getElementById('fresh-line'); return !e.hidden && !e.hasAttribute('data-released') && e.getBoundingClientRect().height >= 32; })()", 8000)
+        check('F: a late /api/sources answer still fills the freshness line', filled)
+        fr.context.close()
 
     b.close()
 # Dashboard radius adoption: shared scale values are expressed through semantic roles.

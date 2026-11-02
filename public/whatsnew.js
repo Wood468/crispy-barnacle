@@ -3,7 +3,7 @@
    What you have seen lives only in this browser (localStorage). The first visit just records the events; leaks show the last 7 days. */
 (function () {
   'use strict';
-  var KEY = 'gofn-seen-events', LKEY = 'gofn-seen-leaks', SKEY = 'gofn-seen-event-snapshots', DAY = 864e5, box = null;
+  var KEY = 'gofn-seen-events', LKEY = 'gofn-seen-leaks', SKEY = 'gofn-seen-event-snapshots', DAY = 864e5, box = null, dismissed = false; // dismissed: "Got it" was pressed this session; a late live list must not bring the box back
   function load() { try { var j = JSON.parse(localStorage.getItem(KEY) || 'null'); return j && Array.isArray(j.ids) ? j : null; } catch (e) { return null; } }
   function save(ids) { try { localStorage.setItem(KEY, JSON.stringify({ ids: ids, at: Date.now() })); } catch (e) { } }
   function loadLeaks() { try { var j = JSON.parse(localStorage.getItem(LKEY) || 'null'); return j && +j.at ? j : null; } catch (e) { return null; } }
@@ -88,13 +88,13 @@
     box.querySelector('.wn-toggle').addEventListener('click', function () { setOpen(this.getAttribute('aria-expanded') !== 'true'); });
     box.querySelector('.wn-ok').addEventListener('click', function () {
       if (st.idsKnown) { save(st.ids); saveSnapshots(st.snapshot); } saveLeaks(); saveHistory(buildHtml(), total);
-      box.hidden = true; box.innerHTML = '';
+      dismissed = true; box.hidden = true; box.innerHTML = '';
       var brief = document.getElementById('day-brief'); if (brief && brief.focus) brief.focus({ preventScroll: true });
     });
     Array.prototype.forEach.call(box.querySelectorAll('.wn-leaks'), function (a) { a.addEventListener('click', function (e) { e.preventDefault(); var b = document.getElementById('menu-leaks'); if (b) b.click(); }); });
   }
   function render() {
-    if (!st.evDone || st.leaks === null) return;
+    if (dismissed || !st.evDone || st.leaks === null) return;
     var total = st.fresh.length + st.changed.length + st.leaks.reduce(function (n, g) { return n + g.items.length; }, 0);
     if (!total) { if (box) { box.hidden = true; box.innerHTML = ''; } if (st.idsKnown) save(st.ids); saveLeaks(); return; }
     mount();
