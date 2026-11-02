@@ -16,7 +16,7 @@ test("raid share payload uses published weaknesses and clearly scoped local coun
   let receivedTypes = null;
   const api = load();
   const types = { facts: boss => boss === "Yveltal" ? { weak: ["Electric", "Fairy", "Ice", "Electric", null] } : null };
-  const best = { ownedSummary: (weaknesses, limit) => {
+  const best = { ready: true, ownedSummary: (weaknesses, limit) => {
     receivedTypes = { weaknesses, limit };
     return { count: 4, names: ["Mega Diancie", "Shadow Raikou", "Mega Tyranitar"] };
   } };
