@@ -1367,9 +1367,9 @@
   function renderTodayRaidPrep(rotation) {
     var host = $('today-focus-raid-actions'); if (!host) return;
     var bosses = [{ label: '5★', boss: rotation && rotation.five }, { label: 'Mega', boss: rotation && rotation.mega }].filter(function (item) { return !!item.boss; });
-    if (!bosses.length) { host.innerHTML = '<span class="today-focus-raid-note">No published raid counter links today.</span>'; return; }
+    if (!bosses.length) { host.innerHTML = '<small class="today-focus-raid-note">No published raid counter links today.</small>'; return; }
     if (!todayTypesReady) {
-      host.innerHTML = '<span class="today-focus-raid-note">' + (todayTypesFailed ? 'Weakness data unavailable.' : 'Loading weakness data…') + '</span>';
+      host.innerHTML = '<small class="today-focus-raid-note">' + (todayTypesFailed ? 'Weakness data unavailable.' : 'Loading weakness data…') + '</small>';
       return;
     }
     var supported = bosses.map(function (item) {
@@ -1377,10 +1377,10 @@
       var weak = facts && Array.isArray(facts.weak) ? facts.weak.filter(function (type, i, all) { return typeof type === 'string' && all.indexOf(type) === i; }) : [];
       return { label: item.label, boss: item.boss, weak: weak };
     }).filter(function (item) { return item.weak.length; });
-    if (!supported.length) { host.innerHTML = '<span class="today-focus-raid-note">Weakness data unavailable for this rotation.</span>'; return; }
+    if (!supported.length) { host.innerHTML = '<small class="today-focus-raid-note">Weakness data unavailable for this rotation.</small>'; return; }
     if (!window.GOBEST || window.GOBEST.dataReady !== true || typeof GOBEST.showTypes !== 'function') {
       var unavailable = window.GOBEST && window.GOBEST.ready === true;
-      host.innerHTML = '<span class="today-focus-raid-note">' + (unavailable ? 'Curated attackers unavailable.' : 'Loading curated attackers…') + '</span>';
+      host.innerHTML = '<small class="today-focus-raid-note">' + (unavailable ? 'Curated attackers unavailable.' : 'Loading curated attackers…') + '</small>';
       return;
     }
     host.innerHTML = supported.map(function (item) {

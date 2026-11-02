@@ -254,7 +254,7 @@ check('Today game plan is an optional accessible local-time disclosure with weak
       all(token in DASH_JS for token in ['D.spotlight', 'D.raidHour', 'D.maxBattles', '6–7 pm local', '6 am–9 pm local', 'Weak to:', 'data-best-types', 'gofn-dex-ready', 'function renderTonight', 'renderTonight(t, dateKey)']) and
       all(token in DASH_CSS for token in ['.today-tonight', '.today-tonight-list', 'min-height:44px', '.today-tonight-best']) and
       'gofn-dex-ready' in APP_JS and '/app.js?v=20261103d' in INDEX_HTML and '/app.js?v=20261103d' in SW_JS)
-check('Dex/type readiness refreshes only the Tonight disclosure, preserving event-detail focus targets',
+check('Dex/type readiness refreshes Today raid handoffs and the Tonight disclosure without touching event-detail focus targets',
       "document.addEventListener('gotypes', function () { try { renderRot(); var t = now(); renderTodayRaidPrep(todayRotationFor(t)); renderTonight(t, dayKey(t)); } catch (e) {} });" in DASH_JS and
       "document.addEventListener('gofn-dex-ready', function () { try { renderRot(); var t = now(); renderTodayRaidPrep(todayRotationFor(t)); renderTonight(t, dayKey(t)); } catch (e) {} });" in DASH_JS)
 check('Best-attacker date distinguishes ranking-content changes from successful refreshes',
