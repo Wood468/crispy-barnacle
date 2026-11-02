@@ -127,8 +127,12 @@
       windowNode.hidden = !payload.windowLabel;
     }
     if (artNode) {
-      var art = window.GODASH && typeof window.GODASH.art === 'function' ? window.GODASH.art(payload.boss, 'ea') : '';
-      artNode.innerHTML = art || '<span class="raid-share-monogram" aria-hidden="true">GO</span>';
+      var initials = payload.boss.split(/\s+/).map(function (word) { return word.charAt(0); }).join('').slice(0, 2).toUpperCase() || 'GO';
+      var monogram = document.createElement('span');
+      monogram.className = 'raid-share-monogram';
+      monogram.textContent = initials;
+      artNode.textContent = '';
+      artNode.appendChild(monogram);
     }
     if (weaknessNode) {
       weaknessNode.textContent = '';
