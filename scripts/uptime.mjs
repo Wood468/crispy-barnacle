@@ -131,10 +131,11 @@ export async function runChecks() {
     await Promise.all(shell.assets.filter(path => path !== "/sw.js").map(async path => {
       const response = await headAsset(path);
       const type = response.headers.get("content-type") || "";
-      if (path.endsWith(".css") && !/^text\/css(?:;|$)/i.test(type)) {
+      const pathname = new URL(path, BASE).pathname;
+      if (pathname.endsWith(".css") && !/^text\/css(?:;|$)/i.test(type)) {
         throw new Error(path + " has an unexpected content-type");
       }
-      if (path.endsWith(".js") && !isJavaScriptMime(type)) {
+      if (pathname.endsWith(".js") && !isJavaScriptMime(type)) {
         throw new Error(path + " has an unexpected content-type");
       }
     }));
