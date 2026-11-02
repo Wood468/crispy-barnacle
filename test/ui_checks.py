@@ -258,7 +258,7 @@ check('Today multi-deadline tray is accessible, bounded and source-safe',
       all(token in DASH_CSS for token in ['.today-deadlines>summary', 'min-height:44px', '.today-deadline-item', 'var(--color-link)']) and
       '/dash.js?v=20261103a' in APP_JS and '/dash.js?v=20261103a' in SW_JS and
       '/dash.css?v=20261103a' in INDEX_HTML and '/dash.css?v=20261103a' in SW_JS and
-      'gofn-shell-v219' in SW_JS)
+      'gofn-shell-v220' in SW_JS)
 check('season pass and deadline data is structured, source-attributed and ordered',
       all(item_id in {item.get('id') for item in SEASON_DATA.get('items', [])}
           for item_id in ['season:pass-halloween', 'season:pass-november']) and
@@ -294,7 +294,7 @@ check('versioned stylesheets are referenced by the page and precached offline',
       all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261102b', '/dash.css?v=20261103a']))
 check('owner verification scripts are versioned and precached offline',
       '/account.js?v=20261102a' in INDEX_HTML and '/account.js?v=20261102a' in SW_JS and
-      '/review.js?v=20261102d' in DASH_JS and '/review.js?v=20261102d' in SW_JS)
+      '/review.js?v=20261102e' in DASH_JS and '/review.js?v=20261102e' in SW_JS)
 check('source freshness indicators use semantic roles with unchanged colours',
       all(token in DASH_CSS for token in [
           '--color-source-fresh:#6BD18A; --color-source-stale:#E8B84A; --color-source-failed:#FF9B8F;',
@@ -319,7 +319,7 @@ check('event signal chips and detail tags use semantic palette roles with unchan
           '.tg-incense{--tc:var(--color-signal-shadow)}.tg-costume{--tc:var(--color-signal-encounter)}',
       ]))
 check('offline shell cache version advances with the dashboard stylesheet token release',
-      "gofn-shell-v219" in SW_JS)
+      "gofn-shell-v220" in SW_JS)
 check('Travel mode searches only source-dated regional listings and preserves Today visibility',
       all(token in INDEX_HTML for token in ['id="sub-travel"', 'id="travel-q"', 'id="travel-destinations"', 'id="travel-regions"', 'id="travel-results"']) and
       "['travel','Travel','sub-travel']" in APP_JS and
@@ -328,7 +328,7 @@ check('Travel mode searches only source-dated regional listings and preserves To
       '/app.js?v=20261103a' in INDEX_HTML and '/app.js?v=20261103a' in SW_JS and
       '/dash.js?v=20261103a' in APP_JS and '/dash.js?v=20261103a' in SW_JS and
       '/dash.css?v=20261103a' in INDEX_HTML and '/dash.css?v=20261103a' in SW_JS and
-      'gofn-shell-v219' in SW_JS)
+      'gofn-shell-v220' in SW_JS)
 check('raid share dialog and script are included in the exact offline shell',
       '/raid-share.js?v=20261102b' in INDEX_HTML and '/raid-share.js?v=20261102b' in SW_JS and
       all(token in INDEX_HTML for token in ['id="raid-share-dialog"', 'id="raid-share-title"', 'id="raid-share-send"', 'id="raid-share-copy"']))
@@ -3241,6 +3241,78 @@ with sync_playwright() as p:
         gpg.click('#igundo button'); gpg.wait_for_selector('#iglinked .igr[data-id="discord:b9-solo"]', state='attached', timeout=5000); gpg.wait_for_timeout(300)
         check('B13: Undo after a double-tapped Discard restores the original approval, not "rejected"', gsrv['posts'][-1] == {'id': APPROVED_ELSEWHERE['id'], 'status': 'approved', 'eventId': APPROVED_ELSEWHERE['eventId'], 'eventTitle': APPROVED_ELSEWHERE['eventTitle']} and gsrv['rows'][APPROVED_ELSEWHERE['id']]['status'] == 'approved', gsrv['posts'])
         gpg.context.close()
+        # ---- Batch 14: initial review reads are bounded; Retry re-fetches both queue and decisions ----
+        for stalled in ('queue', 'decisions'):
+            calls = {'queue': 0, 'decisions': 0}
+            held_initial = {'queue': 0, 'decisions': 0}
+            allow_retry = {'value': False}
+            def initial_routes(pg, stalled=stalled, calls=calls, held_initial=held_initial, allow_retry=allow_retry):
+                def queue_route(route):
+                    calls['queue'] += 1
+                    if stalled == 'queue' and not allow_retry['value']:
+                        held_initial['queue'] += 1
+                        return
+                    route.fulfill(status=200, body=B9_QUEUE, content_type='application/json')
+                def decisions_route(route):
+                    calls['decisions'] += 1
+                    if stalled == 'decisions' and not allow_retry['value']:
+                        held_initial['decisions'] += 1
+                        return
+                    route.fulfill(status=200, body='{"decisions":[]}', content_type='application/json')
+                pg.route('**/infographic-queue.json*', queue_route)
+                pg.route('**/api/ig-decisions', decisions_route)
+            rpg = page(api=B9_API, pin=True, mobile=True,
+                       extra={'**/api/auth/users': (json.dumps({'users': []}), 200)},
+                       pre=initial_routes, ready=True)
+            rpg.wait_for_function("document.documentElement.getAttribute('data-role')==='owner'", timeout=10000)
+            rpg.click('#hmenu')  # opening the owner menu triggers the review module's first load
+            # Owner verification can produce more than one initial load. Hold every initial
+            # request for the selected resource so a later load cannot accidentally mask the timeout.
+            last = None
+            stable = 0
+            for _ in range(100):
+                rpg.wait_for_timeout(25)
+                current = (calls['queue'], calls['decisions'])
+                if current == last and current[0] >= 1 and current[1] >= 1:
+                    stable += 1
+                else:
+                    stable = 0
+                last = current
+                if stable >= 8: break
+            check('B14: both initial reads reach the fixture before timeout simulation',
+                  calls['queue'] >= 1 and calls['decisions'] >= 1,
+                  {'stalled': stalled, 'calls': calls})
+            rpg.clock.fast_forward(16000)
+            rpg.wait_for_timeout(50)
+            rpg.wait_for_function("!!document.getElementById('igreview') && !document.getElementById('igreview').hidden", timeout=5000)
+            retry_count = rpg.locator('#igreview [data-ig-retry="1"]').count()
+            held_count = held_initial[stalled]
+            check('B14: initial queue and decision requests were intercepted and timeout UI became visible',
+                  calls['queue'] >= 1 and calls['decisions'] >= 1 and held_count >= 1 and retry_count == 1,
+                  {'stalled': stalled, 'calls': calls, 'held': held_initial, 'retry_count': retry_count, 'text': rpg.inner_text('#igreview')})
+            if not retry_count:
+                rpg.context.close()
+                continue
+            if stalled == 'queue':
+                check('B14: a hung initial infographic queue read times out and shows a clear Retry instead of an empty review list',
+                      held_initial['queue'] >= 1 and
+                      'Could not load the infographic queue' in rpg.inner_text('#igreview') and
+                      rpg.locator('#igreview .igr').count() == 0)
+            else:
+                check('B14: a hung initial saved-decisions read times out and pauses review with Retry',
+                      held_initial['decisions'] >= 1 and
+                      'Could not read your saved decisions' in rpg.inner_text('#igreview') and
+                      rpg.locator('#igreview .igr').count() == 0)
+            before_retry = dict(calls)
+            allow_retry['value'] = True
+            rpg.locator('#igreview [data-ig-retry="1"]').click()
+            rpg.wait_for_selector('#igreview .igr[data-id="discord:b9-solo"]', timeout=5000)
+            check('B14: Retry re-fetches both initial resources and review resumes after the hung request',
+                  calls['queue'] > before_retry['queue'] and calls['decisions'] > before_retry['decisions'] and
+                  rpg.locator('#igreview [data-ig-retry="1"]').count() == 0 and
+                  rpg.locator('#igreview .igr[data-id="discord:b9-solo"]').count() == 1,
+                  {'before_retry': before_retry, 'after_retry': calls})
+            rpg.context.close()
         # Item 1: visitors never get a dead Discord link; the event's own page is used.
         W = json.dumps({'items': [{'id': 'w1', 'kind': 'week', 'title': 'Week', 'image': '/infographics/g47ix/w1.png', 'publishedAt': '2026-10-05T00:00:00Z', 'post': DISCORD}]})
         wpg = page(api=B9_API, extra={'**/weekly.json*': (W, 200)})

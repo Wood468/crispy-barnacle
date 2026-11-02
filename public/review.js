@@ -4,7 +4,7 @@
   'use strict';
   var $ = function (id) { return document.getElementById(id); };
   var esc = window.GOLIB.esc;
-  var items = [], decided = {}, decs = {}, msg = '', shown = 10, loadToken = 0, loadedForOwner = false, undos = [], decsOk = false, chains = {}, capped = false, pendingDiscard = {}, recheck = {};
+  var items = [], decided = {}, decs = {}, msg = '', shown = 10, loadToken = 0, loadedForOwner = false, undos = [], decsOk = false, chains = {}, capped = false, pendingDiscard = {}, recheck = {}, queueFailed = false;
   /* GET /api/ig-decisions returns only the newest rows: src/worker.js igDecisions() runs "ORDER BY at DESC LIMIT 500" and has no per-picture query.
      A list this long may be cut off, so a picture missing from it is UNKNOWN (it may hold an older decision), never "nothing stored". */
   var DECISIONS_CAP = 500;
@@ -21,7 +21,7 @@
   function pin() { try { return localStorage.getItem('gofn-pin') || ''; } catch (e) { return ''; } }
   function isOwner() { return document.documentElement.getAttribute('data-role') === 'owner'; }
   function hideOwnerUi() {
-    loadToken++; loadedForOwner = false; items = []; decided = {}; decs = {}; msg = ''; decsOk = false; capped = false; pendingDiscard = {}; recheck = {}; clearUndo();
+    loadToken++; loadedForOwner = false; items = []; decided = {}; decs = {}; msg = ''; decsOk = false; capped = false; queueFailed = false; pendingDiscard = {}; recheck = {}; clearUndo();
     var a = $('hireview'); if (a) a.hidden = true;
     var c = $('igcount'); if (c) c.hidden = true;
     var b = $('igbanner'); if (b) b.remove();
@@ -204,6 +204,7 @@
     var sv = document.querySelector('nav.tabs button[data-tab="saved"]'); if (sv) sv.classList.toggle('has-new', open.length > 0);
     banner(open.length);
     var capNote = capped ? '<p class="igr-msg igr-cap" role="status">Showing the ' + DECISIONS_CAP + ' most recent decisions; older ones may be hidden. A picture that shows no decision here may still have one, so Discard is refused and Approve asks first.</p>' : '';
+    var queueRetry = queueFailed ? '<button type="button" class="pill all" data-ig-retry="1">Retry</button>' : '';
     var linked = items.filter(function (i) { return linkedOf(i.id).length; });
     if (!decsOk) {
       host.hidden = false;
@@ -215,7 +216,7 @@
     var kl = document.getElementById('iglinked'), keepLinked = !!(kl && kl.open);
     host.innerHTML = '<details class="dd" open><summary>Infographic review <span class="cnt">' + open.length + '</span></summary><div class="body">'
       + '<p class="note" style="margin:0 0 8px">Discord and Telegram pictures appear here until you link them. Check the image text and date before approving; nothing is attached to an event until you approve it.</p>'
-      + capNote + (msg ? '<p class="igr-msg" role="status">' + esc(msg) + '</p>' : '') + open.slice(0, shown).map(card).join('') + (open.length > shown ? '<button type="button" class="pill all" data-ig-more="1">Show 10 more (' + (open.length - shown) + ' left)</button>' : '') + '</div></details>'
+      + capNote + (msg ? '<p class="igr-msg" role="status">' + esc(msg) + '</p>' : '') + open.slice(0, shown).map(card).join('') + (open.length > shown ? '<button type="button" class="pill all" data-ig-more="1">Show 10 more (' + (open.length - shown) + ' left)</button>' : '') + queueRetry + '</div></details>'
       + (linked.length ? '<details class="dd"' + (keepLinked ? ' open' : '') + ' id="iglinked"><summary>Linked infographics <span class="cnt">' + linked.length + '</span></summary><div class="body"><p class="note" style="margin:0 0 8px">Tap ✕ to unlink from one event, add more events, or discard. Changes reach the event within a few hours.</p>' + linked.map(linkedCard).join('') + '</div></details>' : '');
   }
   function send(it, status, eventId, title, note) {
@@ -265,7 +266,7 @@
   window.addEventListener('hashchange', function () { if (location.hash === '#review') gotoReview(); });
   document.addEventListener('click', function (e) {
     if (e.target.closest && e.target.closest('[data-ig-undo]')) return undoDiscard();
-    if (e.target.closest && e.target.closest('[data-ig-retry]')) return retryDecisions();
+    if (e.target.closest && e.target.closest('[data-ig-retry]')) return retryLoad();
     if (e.target.closest && e.target.closest('[data-ig-more]')) { shown += 10; return render(); }
     var card = e.target.closest && e.target.closest('.igr'); if (!card) return;
     var it = items.filter(function (i) { return i.id === card.getAttribute('data-id'); })[0]; if (!it) return;
@@ -313,12 +314,11 @@
         .then(function () { b.disabled = false; });
     });
   }
-  function retryDecisions() {
-    var token = loadToken;
-    timedFetch('/api/ig-decisions', { cache: 'reload' }).then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); }).then(function (j) {
-      if (token !== loadToken || !isOwner() || !Array.isArray(j && j.decisions)) throw new Error('bad');
-      decs = {}; decided = {}; takeDecisions(j.decisions); decsOk = true; msg = ''; render(); document.dispatchEvent(new Event('gofn-review-updated'));
-    }).catch(function () { msg = 'Still could not read the saved decisions. Check your connection and try again.'; render(); });
+  function retryLoad() {
+    if (!isOwner()) { hideOwnerUi(); return; }
+    /* Re-fetch both initial resources: the queue can hang independently of saved decisions. */
+    loadedForOwner = false;
+    load();
   }
   function load() {
     if (!isOwner()) { hideOwnerUi(); return; }
@@ -327,12 +327,17 @@
     var token = ++loadToken;
     mountDiscord();
     Promise.all([
-      fetch('/infographic-queue.json?t=' + Math.floor(Date.now() / 600000)).then(function (r) { return r.ok ? r.json() : { items: [] }; }).catch(function () { return { items: [] }; }),
-      /* A failed read is NOT an empty list: without the saved decisions nothing may be changed (see render). */
-      fetch('/api/ig-decisions').then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); }).then(function (j) { return Array.isArray(j && j.decisions) ? j : null; }).catch(function () { return null; })
+      timedFetch('/infographic-queue.json?t=' + Math.floor(Date.now() / 600000)).then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); }).then(function (j) {
+        if (!j || !Array.isArray(j.items)) throw new Error('bad queue');
+        return { items: j.items };
+      }).catch(function () { return { items: [], failed: true }; }),
+      /* A failed or hung read is NOT an empty list: without saved decisions nothing may be changed (see render). */
+      timedFetch('/api/ig-decisions').then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); }).then(function (j) { return Array.isArray(j && j.decisions) ? j : null; }).catch(function () { return null; })
     ]).then(function (R) {
       if (token !== loadToken || !isOwner()) { hideOwnerUi(); return; }
-      items = dedupeItems(R[0].items); decsOk = !!R[1]; if (R[1]) takeDecisions(R[1].decisions);
+      items = dedupeItems(R[0].items); queueFailed = !!R[0].failed;
+      msg = queueFailed ? 'Could not load the infographic queue. Check your connection and tap Retry.' : '';
+      decsOk = !!R[1]; if (R[1]) takeDecisions(R[1].decisions);
       if (!ensureHost()) return;
       render(); document.dispatchEvent(new Event('gofn-review-updated'));
       if (location.hash === '#review') gotoReview();
