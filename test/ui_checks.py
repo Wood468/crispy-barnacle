@@ -1453,7 +1453,7 @@ with sync_playwright() as p:
         check('Max encounter sprite requests special Dynamax art', 'dynamax=1' in maxart and 'alt="Dynamax Sizzlipede"' in maxart, maxart)
         gmaxart=pg.evaluate("window.GODASH.featArts({kind:'max',name:'Gigantamax Raid Day',featured:[{name:'Charizard',role:'raid_boss'}]},1)")
         check('Gigantamax event requests the actual Gigantamax sprite, not ordinary Charizard art', 'n=Gigantamax%20Charizard' in gmaxart and 'dynamax=1' in gmaxart, gmaxart)
-        pg.click('nav.tabs button[data-tab="collect"]'); pg.wait_for_timeout(200); pg.evaluate("document.getElementById('sub-opps').hidden=false")
+        pg.click('nav.tabs button[data-tab="collect"]'); pg.wait_for_timeout(200); pg.evaluate("document.getElementById('sub-opps').hidden=false; document.dispatchEvent(new CustomEvent('gofn-view',{detail:{tab:'collect',sub:'opps'}}))")
         check('unknown ownership explained', pg.locator('#opps .notice').count()==1)
         check('no "Need" chips without marks', pg.locator('.opp.missing').count()==0)
         # 2. marks present: Zorua missing -> need + priority boost; Pikachu owned
@@ -1461,21 +1461,21 @@ with sync_playwright() as p:
         # marks alone (no confirmed generation) must NOT make Zorua a Need
         pg=page(marks=marks)
         prio_txt=pg.inner_text('#prio')
-        pg.click('nav.tabs button[data-tab="collect"]'); pg.wait_for_timeout(200); pg.evaluate("document.getElementById('sub-opps').hidden=false")
+        pg.click('nav.tabs button[data-tab="collect"]'); pg.wait_for_timeout(200); pg.evaluate("document.getElementById('sub-opps').hidden=false; document.dispatchEvent(new CustomEvent('gofn-view',{detail:{tab:'collect',sub:'opps'}}))")
         check('marks without a confirmed generation: Zorua is not a Need anywhere', 'You need' not in prio_txt and pg.locator('.opp.missing').count()==0 and pg.locator('#opps .opp').count()>=1)
         pg=page(marks=marks,gens=[5])
         txt=pg.inner_text('#prio')
         check('priority shows Zorua CD (you need Zorua)', 'ZORUA' in txt.upper() and 'You need Zorua' in txt, txt[:300])
         first=pg.inner_text('#prio .pc.first')
         check('the event with a needed Pokémon outranks the long-running one', 'ZORUA' in first.upper(), first[:120])
-        pg.click('nav.tabs button[data-tab="collect"]'); pg.wait_for_timeout(200); pg.evaluate("document.getElementById('sub-opps').hidden=false")
+        pg.click('nav.tabs button[data-tab="collect"]'); pg.wait_for_timeout(200); pg.evaluate("document.getElementById('sub-opps').hidden=false; document.dispatchEvent(new CustomEvent('gofn-view',{detail:{tab:'collect',sub:'opps'}}))")
         check('opportunities: Zorua listed under You still need', 'Zorua'.upper() in pg.inner_text('#opps').upper() and pg.locator('.opp.missing').count()>=1)
         check('unmarked costume/forms are never claimed as have/need', pg.locator('.opp.unknown').count()>=1 and 'not tracked' in pg.inner_text('#opps').lower())
         # 3. follow + save persist; the header badge counts actual cards, never empty placeholders or wrappers.
         check('empty Watchlist does not count its empty-state rows',
               pg.locator('#wlcount').is_hidden() and pg.locator('#hwatch').get_attribute('aria-label')=='Watchlist',
               {'badge_hidden':pg.locator('#wlcount').is_hidden(),'aria_label':pg.locator('#hwatch').get_attribute('aria-label')})
-        pg.click('nav.tabs button[data-tab="collect"]'); pg.wait_for_timeout(200); pg.evaluate("document.getElementById('sub-opps').hidden=false")
+        pg.click('nav.tabs button[data-tab="collect"]'); pg.wait_for_timeout(200); pg.evaluate("document.getElementById('sub-opps').hidden=false; document.dispatchEvent(new CustomEvent('gofn-view',{detail:{tab:'collect',sub:'opps'}}))")
         pg.locator('#opps .fbtn').first.click(); pg.wait_for_timeout(100)
         pg.click('nav.tabs button[data-tab="events"]'); pg.click('#subnav-events button[data-sub="timeline"]'); pg.wait_for_timeout(200)
         pg.locator('#evtimeline .star').first.click(); pg.wait_for_timeout(100)
