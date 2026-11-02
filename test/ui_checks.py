@@ -1430,8 +1430,17 @@ with sync_playwright() as p:
               }"""))
         # A thumbnail address that cannot be fetched falls back to the Check infographic button (the rest of this run serves a valid PNG for every picture).
         pb=page(extra={'**/img/ext/4aa21432-0cfc-4c93-b3eb-0c15f322389d-0119b088.webp':('',404)})
-        pb.locator('[data-infographic="cur:trek"]').first.scroll_into_view_if_needed(timeout=5000); pb.wait_for_timeout(800)
-        check('a thumbnail that fails to load becomes Check infographic', pb.locator('[data-igcheck="cur:trek"]').first.inner_text()=='Check infographic' and pb.locator('[data-igcard="cur:trek"] img').count()==0 and pb.locator('[data-igcard="cur:trek"]').first.get_attribute('data-igbad') is not None)
+        # The page may rebuild Today while secondary data arrives; scroll the current connected node in one DOM task
+        # instead of holding a Playwright element handle that can be detached between locator resolution and scrolling.
+        thumbnail_scrolled = pb.evaluate("""() => {
+            const target = document.querySelector('[data-infographic="cur:trek"]');
+            if (!target || !target.isConnected) return false;
+            target.scrollIntoView({block:'center', inline:'nearest'});
+            return true;
+        }""")
+        check('failed-thumbnail fixture finds a connected infographic control before scrolling', thumbnail_scrolled)
+        fallback_ready = settle(pb, "(() => { const b=document.querySelector('[data-igcheck=\\\"cur:trek\\\"]'), card=document.querySelector('[data-igcard=\\\"cur:trek\\\"]'); return !!b && b.textContent.trim()==='Check infographic' && !!card && card.hasAttribute('data-igbad'); })()", 8000)
+        check('a thumbnail that fails to load becomes Check infographic', fallback_ready and pb.locator('[data-igcheck="cur:trek"]').first.inner_text()=='Check infographic' and pb.locator('[data-igcard="cur:trek"] img').count()==0 and pb.locator('[data-igcard="cur:trek"]').first.get_attribute('data-igbad') is not None)
         pb.context.close()
         # Regional event infographics must resolve through the same viewer as standard event cards.
         mexico_id='w-pok-mon-go-dia-de-muertos-2026-mexico-exclusive-ev'
@@ -2891,10 +2900,17 @@ with sync_playwright() as p:
         hole = ep.evaluate("({fresh: Math.round(document.getElementById('fresh-line').getBoundingClientRect().height), brief: Math.round(document.getElementById('day-brief').getBoundingClientRect().height)})")
         check('F: when Today failed to load, no invisible 44px hole is left for the freshness line or the brief', hole['fresh'] == 0 and hole['brief'] == 0, hole)
         if shot_dir: ep.screenshot(path=shot_dir + '/e-unavailable.png')
-        ep.focus('#today-retry'); b5_release('dash')
+        ep.focus('#today-retry')
+        retry_focused = ep.evaluate("document.activeElement && document.activeElement.id === 'today-retry'")
+        check('E: Retry receives keyboard focus before the late dashboard script is released', retry_focused)
+        b5_release('dash')
         back = settle(ep, "document.getElementById('home-now').hasAttribute('data-render-key') && !document.getElementById('today-retry')", 12000)
         foc3 = ep.evaluate("({tag: document.activeElement.tagName, inHome: !!document.activeElement.closest('#home-now')})")
         check('E: when dash.js arrives late and replaces the row, focus moves to the replacement instead of the body', back and foc3['inHome'] and foc3['tag'] != 'BODY', foc3)
+        # Later asynchronous data and state refreshes can force Today to rebuild again.
+        ep.evaluate("window.GODASH.renderAll()")
+        foc4 = ep.evaluate("({tag: document.activeElement.tagName, inHome: !!document.activeElement.closest('#home-now'), id: document.activeElement.id})")
+        check('E: a subsequent Today refresh preserves focus inside the rebuilt agenda', foc4['inHome'] and foc4['tag'] != 'BODY', foc4)
         ep.context.close()
         # F. a stalled /api/sources releases the reserved freshness space after 8 s and still fills in later
         b5_held.clear()

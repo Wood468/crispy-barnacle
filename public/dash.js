@@ -1565,7 +1565,16 @@
       next: nextUp ? [nextUp.id, nextUp.start.getTime()] : null
     });
     if (!force && tdEl.getAttribute('data-render-key') === signature) return;
-    var retryHadFocus = !!document.activeElement && document.activeElement.id === 'today-retry';
+    /* Preserve keyboard focus across every Today refresh, not only the first Retry replacement. */
+    var activeBefore = document.activeElement;
+    var focusWithin = !!activeBefore && (activeBefore === tdEl || tdEl.contains(activeBefore));
+    var focusWasRetry = focusWithin && activeBefore.id === 'today-retry';
+    var focusDescriptor = null;
+    if (focusWithin && !focusWasRetry && activeBefore !== tdEl) {
+      var focusAttrs = ['id', 'data-open', 'data-save', 'data-hide', 'data-unhide', 'data-follow', 'data-mark', 'data-val', 'data-type', 'data-kindtog', 'data-day', 'data-wk', 'data-cday', 'data-creg', 'data-cscope', 'data-travel-region', 'data-places', 'data-placesq', 'data-igcard', 'data-infographic', 'href', 'aria-label', 'title'];
+      var focusIdentity = focusAttrs.map(function (name) { return [name, activeBefore.getAttribute(name)]; }).filter(function (pair) { return pair[1] !== null; });
+      focusDescriptor = { tag: activeBefore.tagName, identity: focusIdentity };
+    }
     tdEl.setAttribute('data-render-key', signature);
     tdEl.removeAttribute('data-state'); tdEl.removeAttribute('aria-busy');
     var liveToday = today.filter(function (e) { return phase(e, t) === 'live'; });
@@ -1594,10 +1603,24 @@
         (nextUp
           ? '<button type="button" class="today-next-up" data-open="' + esc(nextUp.id) + '" aria-label="Open details for ' + esc(nextUp.name) + '"><span class="today-next-kicker">NEXT UP</span><b>' + esc(nextUp.name) + '</b><span class="today-next-time">' + esc(fmtD(nextUp.start) + ' · ' + fmtT(nextUp.start)) + '</span><span class="today-next-action">View event details <span aria-hidden="true">→</span></span></button>'
           : '<p class="today-empty-note">Check the schedule for upcoming events.</p>') + '</div>';
-    if (retryHadFocus) { /* the status row's Retry button was focused and has just been replaced: keep focus inside Today */
-      var again = tdEl.querySelector('[data-open]');
+    if (focusWithin) {
+      /* Retry has no equivalent in the loaded agenda; other controls should retain their event/action identity. */
+      var again = activeBefore === tdEl ? tdEl : null;
+      if (!again && focusDescriptor && focusDescriptor.identity.length) {
+        var candidates = tdEl.querySelectorAll(focusDescriptor.tag.toLowerCase());
+        for (var i = 0; i < candidates.length; i++) {
+          var candidate = candidates[i], same = true;
+          for (var j = 0; j < focusDescriptor.identity.length; j++) {
+            var pair = focusDescriptor.identity[j];
+            if (candidate.getAttribute(pair[0]) !== pair[1]) { same = false; break; }
+          }
+          if (same) { again = candidate; break; }
+        }
+      }
+      if (!again) again = tdEl.querySelector('[data-open]');
+      if (!again) again = tdEl.querySelector('button, a[href], input, select, textarea');
       if (!again) { tdEl.setAttribute('tabindex', '-1'); again = tdEl; }
-      again.focus({ preventScroll: true });
+      if (again && typeof again.focus === 'function') again.focus({ preventScroll: true });
     }
   }
   var homeNowDeferred = false, homeNowForce = false;
