@@ -641,6 +641,7 @@ Promise.all([
     var R={},M={};
     Object.keys(j.types).forEach(function(t){R[t]=j.types[t].map(function(x){M[t+'|'+x.name]=x;return [x.name,x.fast,x.charged,x.dps,x.charged2||''].join('|')})});
     RAW=R;META=M;buildBest();syncRows();refreshMoves();
+    window.GOBEST.dataReady=true;
     window.GOBEST.ready=true;document.dispatchEvent(new Event('gobest-ready'));
     var n=$('bnote');if(n)n.textContent='Top ten for each attack type. '+j.method+' Updated '+j.generated+'.';
   }).catch(function(){window.GOBEST.ready=true;document.dispatchEvent(new Event('gobest-ready'));});
@@ -692,6 +693,7 @@ Promise.all([
   }
   window.GOBEST = {
     ready: false,
+    dataReady: false,
     ownedSummary:function(types,limit){
       var valid=Array.isArray(types)?types.filter(function(t,i,a){return TYPES.indexOf(t)>-1&&a.indexOf(t)===i}):[];
       var scores={};
@@ -1012,7 +1014,7 @@ Promise.all([
     var r=document.getElementById('today-retry');if(r)r.addEventListener('click',function(){window.location.reload()});
     var b=document.getElementById('day-brief');if(b)b.setAttribute('data-state','unavailable');
     var f=document.getElementById('fresh-line');if(f)f.setAttribute('data-released','')}
-  var ds=document.createElement('script');ds.src='/dash.js?v=20261102o';ds.onerror=todayUnavailable;document.body.appendChild(ds);setTimeout(function(){if(!window.GODASH)todayUnavailable()},10000);
+  var ds=document.createElement('script');ds.src='/dash.js?v=20261102p';ds.onerror=todayUnavailable;document.body.appendChild(ds);setTimeout(function(){if(!window.GODASH)todayUnavailable()},10000);
 })();
 
 }).catch(function(){var panel=document.getElementById('load-error');if(panel)panel.hidden=false;var retry=document.getElementById('load-retry');if(retry)retry.addEventListener('click',function(){window.location.reload()},{once:true})});
