@@ -1668,6 +1668,13 @@ with sync_playwright() as p:
         following_lower=following_text.lower()
         check('raids: future week does not repeat the globally current Yveltal rotation', 'current raid rotation' not in following_lower and 'at start of week' in following_lower and 'dialga' in following_lower and 'palkia' in following_lower and 'yveltal' not in following_lower, following_text[:1800])
         check('raids: rotation week buttons have mobile-friendly touch height', pg.evaluate("[...document.querySelectorAll('#rotnow .rw-tabs button')].every(b=>b.getBoundingClientRect().height>=44)"))
+        pg.click('#rotnow [data-rotweek="future"]'); pg.wait_for_timeout(100)
+        early_shadow = pg.locator('#rotnow .rc[data-boss="Shadow Landorus (Incarnate)"] [data-raid-share][data-raid-start=""]').first
+        check('share card omits an unstructured early Shadow end instead of extending it to the rotation boundary',
+              early_shadow.count() >= 1 and early_shadow.get_attribute('data-raid-end') == '')
+        low_share = pg.locator('#rotnow .rw-low .rc[data-boss] [data-raid-share]').first
+        check('observed low-tier raid bosses do not inherit an unverified full-rotation window',
+              low_share.count() >= 1 and low_share.get_attribute('data-raid-start') == '' and low_share.get_attribute('data-raid-end') == '')
         pg.click('#rotnow [data-rotweek="this"]'); pg.wait_for_timeout(100)
         raid_share_selector = '#rotnow .rc[data-boss] [data-raid-share]'
         raid_share_count = pg.locator(raid_share_selector).count()
