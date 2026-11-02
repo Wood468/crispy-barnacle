@@ -160,18 +160,18 @@ BASE_FONT_SHORTHAND_SCALE = {
     '--type-body-emphasis': 1,
 }
 DASH_FONT_SHORTHAND_SCALE = {
-    '--type-body-sm': 10,
-    '--type-caption': 9,
+    '--type-body-sm': 11,
+    '--type-caption': 15,
     '--type-meta': 8,
-    '--type-heading': 3,
+    '--type-heading': 7,
     '--type-meta-compact': 7,
     '--type-body-emphasis': 4,
     '--type-button': 2,
     '--type-label': 9,
-    '--type-overline': 9,
+    '--type-overline': 12,
     '--type-body-lg': 1,
     '--type-intro': 1,
-    '--type-caption-compact': 8,
+    '--type-caption-compact': 10,
     '--type-body-base': 1,
 }
 def font_shorthand_role_count(css, token):
@@ -1671,6 +1671,7 @@ with sync_playwright() as p:
         following_lower=following_text.lower()
         check('raids: future week does not repeat the globally current Yveltal rotation', 'current raid rotation' not in following_lower and 'at start of week' in following_lower and 'dialga' in following_lower and 'palkia' in following_lower and 'yveltal' not in following_lower, following_text[:1800])
         check('raids: rotation week buttons have mobile-friendly touch height', pg.evaluate("[...document.querySelectorAll('#rotnow .rw-tabs button')].every(b=>b.getBoundingClientRect().height>=44)"))
+        pg.click('#rotnow [data-rotweek="future"]'); pg.wait_for_timeout(100)
         early_shadow = pg.locator('#rotnow .rc[data-boss="Shadow Landorus (Incarnate)"] [data-raid-share][data-raid-start=""]').first
         check('share card omits an unstructured early Shadow end instead of extending it to the rotation boundary',
               early_shadow.count() >= 1 and early_shadow.get_attribute('data-raid-end') == '')
