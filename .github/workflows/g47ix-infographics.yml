@@ -34,6 +34,11 @@ jobs:
           fetch-depth: 1
       - name: Restore pictures from R2
         run: bash scripts/r2-sync.sh restore
+      - name: Install ImageMagick and OCR tools
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq imagemagick tesseract-ocr >/dev/null
+          convert -list format | grep -q 'WEBP'
       - name: Set up Node.js
         uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
@@ -68,24 +73,47 @@ jobs:
             echo "No new candidates; persistent review registry unchanged."
           fi
       - name: Publish pictures approved in the app
+        id: approved_publish
         shell: bash
         run: |
           set -euo pipefail
           mkdir -p public/infographics/g47ix data/tg-inbox
           node scripts/g47ix-apply.mjs
           bash scripts/r2-sync.sh save   # pictures first, then the data that points at them
+          node scripts/infographic-thumbnails.mjs
+          thumbnail_changed=false
           if [[ -n "$(git status --porcelain -- public data)" ]]; then
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git add -- public/event-info.json public/infographic-queue.json data/g47ix-infographics-review.json
+            git add -- public/event-info.json public/infographic-queue.json public/infographic-thumbs data/g47ix-infographics-review.json
             node scripts/validate-public-data.mjs
-            git commit -m "Publish infographics approved in the app"
-            git pull -q --rebase --autostash origin main
-            node scripts/validate-public-data.mjs
-            git push origin HEAD:main
+            if ! git diff --cached --quiet; then
+              if git diff --cached --name-only | grep -q '^public/infographic-thumbs/'; then
+                thumbnail_changed=true
+              fi
+              git commit -m "Publish approved infographic data and card thumbnails"
+              git pull -q --rebase --autostash origin main
+              node scripts/validate-public-data.mjs
+              git push origin HEAD:main
+            fi
           else
             echo "No decisions to apply."
           fi
+          echo "thumbnail_changed=$thumbnail_changed" >> "$GITHUB_OUTPUT"
+          echo "commit_sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+      - name: Dispatch read-only QA-10 production image audit
+        if: steps.approved_publish.outputs.thumbnail_changed == 'true'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          COMMIT_SHA: ${{ steps.approved_publish.outputs.commit_sha }}
+        run: |
+          curl --fail-with-body --silent --show-error \
+            -X POST \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer $GITHUB_TOKEN" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            "https://api.github.com/repos/$GITHUB_REPOSITORY/dispatches" \
+            -d "{\"event_type\":\"qa10-thumbnail-audit\",\"client_payload\":{\"commit_sha\":\"$COMMIT_SHA\"}}"
       - name: Read the last months of the Discord channel
         env:
           DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
@@ -106,7 +134,6 @@ jobs:
           DISCORD_CREATOR: ${{ vars.DISCORD_CREATOR }}
         run: |
           set -euo pipefail
-          sudo apt-get update -qq && sudo apt-get install -y -qq tesseract-ocr imagemagick >/dev/null
           mkdir -p public/infographics/g47ix data/tg-inbox
           node scripts/g47ix-publish.mjs
           bash scripts/r2-sync.sh save

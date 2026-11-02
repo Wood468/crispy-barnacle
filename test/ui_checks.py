@@ -28,6 +28,7 @@ def check(name,cond,extra=''):
 ROOT = Path(__file__).resolve().parent.parent
 TREK_EVENT_INFO = json.loads((ROOT / 'public' / 'event-info.json').read_text())
 TREK_INFOGRAPHIC_URL = next((item.get('url', '') for item in TREK_EVENT_INFO.get('events', {}).get('trek', {}).get('infographics', []) if item.get('url')), '')
+TREK_THUMB_URL = '/infographic-thumbs/' + TREK_INFOGRAPHIC_URL.lstrip('/') + '.webp' if TREK_INFOGRAPHIC_URL.startswith(('/infographics/', '/img/ext/')) else ''
 BASE_CSS = (ROOT / 'public' / 'styles.css').read_text()
 BASE_COMPONENT_CSS = BASE_CSS[BASE_CSS.index('*{box-sizing:border-box}'):]
 DASH_CSS = (ROOT / 'public' / 'dash.css').read_text()
@@ -267,7 +268,7 @@ check('Today multi-deadline tray is accessible, bounded and source-safe',
       all(token in DASH_CSS for token in ['.today-deadlines>summary', 'min-height:44px', '.today-deadline-item', 'var(--color-link)']) and
       '/dash.js?v=20261103f' in APP_JS and '/dash.js?v=20261103f' in SW_JS and
       '/dash.css?v=20261103d' in INDEX_HTML and '/dash.css?v=20261103d' in SW_JS and
-      'gofn-shell-v225' in SW_JS)
+      'gofn-shell-v226' in SW_JS)
 check('season pass and deadline data is structured, source-attributed and ordered',
       all(item_id in {item.get('id') for item in SEASON_DATA.get('items', [])}
           for item_id in ['season:pass-halloween', 'season:pass-november']) and
@@ -328,7 +329,7 @@ check('event signal chips and detail tags use semantic palette roles with unchan
           '.tg-incense{--tc:var(--color-signal-shadow)}.tg-costume{--tc:var(--color-signal-encounter)}',
       ]))
 check('offline shell cache version advances with the dashboard stylesheet token release',
-      "gofn-shell-v225" in SW_JS)
+      "gofn-shell-v226" in SW_JS)
 check('Travel mode searches only source-dated regional listings and preserves Today visibility',
       all(token in INDEX_HTML for token in ['id="sub-travel"', 'id="travel-q"', 'id="travel-destinations"', 'id="travel-regions"', 'id="travel-results"']) and
       "['travel','Travel','sub-travel']" in APP_JS and
@@ -337,7 +338,7 @@ check('Travel mode searches only source-dated regional listings and preserves To
       '/app.js?v=20261103e' in INDEX_HTML and '/app.js?v=20261103e' in SW_JS and
       '/dash.js?v=20261103f' in APP_JS and '/dash.js?v=20261103f' in SW_JS and
       '/dash.css?v=20261103d' in INDEX_HTML and '/dash.css?v=20261103d' in SW_JS and
-      'gofn-shell-v225' in SW_JS)
+      'gofn-shell-v226' in SW_JS)
 check('raid rotation cards use source-published local windows and Leek Duck attribution',
       'function raidSourceLink(r)' in DASH_JS and 'fmtT(new Date(second.s))' in DASH_JS and
       'Next raid rotation' in DASH_JS and 'sourceUrl' in DASH_JS and
@@ -403,10 +404,13 @@ check('all HTML renderers use one shared apostrophe-safe escape helper',
       all(not re.search(r'function\s+esc\s*\(', source) and
           not re.search(r'var\s+esc\s*=\s*function', source) for source in ESC_RENDERERS))
 check('versioned infographic script is referenced by the dashboard and precached offline',
-      '/infographic.js?v=20261102b' in DASH_JS and '/infographic.js?v=20261102b' in SW_JS)
-check('infographic card thumbnails assign original URLs only near the viewport',
-      'data-thumb-src' in INFO_JS and 'new IntersectionObserver' in INFO_JS and
-      "rootMargin: '80px 0px'" in INFO_JS)
+      '/infographic.js?v=20261103a' in DASH_JS and '/infographic.js?v=20261103a' in SW_JS)
+check('infographic card previews prefer static WebP thumbnails and stay lazy until visible',
+      'function cardThumbUrl(original)' in INFO_JS and '/infographic-thumbs/' in INFO_JS and
+      'data-thumb-src' in INFO_JS and 'data-igfallback' in INFO_JS and
+      'new IntersectionObserver' in INFO_JS and "rootMargin: '80px 0px'" in INFO_JS)
+check('full-resolution infographic URLs remain in the accessible detail viewer',
+      "esc(im.url)" in INFO_JS and 'data-thumb-full' in INFO_JS)
 check('mobile chrome uses compact 48px navigation targets, safe-area padding and reduced header/body spacing',
       all(token in BASE_CSS for token in ['padding-block:0 calc(72px + env(safe-area-inset-bottom,0px))', '@media (max-width:1199px){header.top{padding-top:var(--space-4)}}', 'padding:4px 8px calc(4px + env(safe-area-inset-bottom,0px))', 'padding:var(--space-1) 2px;min-height:48px', 'width:1.2rem;height:1.2rem']) and
       'min-height:68px' in BASE_CSS and 'nav.tabs button{min-height:56px}' in DASH_CSS and '@media(max-width:1199px){nav.tabs button{min-height:48px}}' in DASH_CSS)
@@ -427,9 +431,10 @@ with sync_playwright() as p:
         # Bound default Playwright waits so a lazy asset or missing control cannot stall a whole shard.
         ctx.set_default_timeout(10000)
         ctx.set_default_navigation_timeout(15000)
-        pg=ctx.new_page(); pg.errs=[]; pg.season_poster_requests=[]
+        pg=ctx.new_page(); pg.errs=[]; pg.season_poster_requests=[]; pg.infographic_requests=[]
         pg.on('pageerror',lambda e:pg.errs.append(str(e)))
         pg.on('request',lambda r:pg.season_poster_requests.append(r.url) if any(slug in r.url for slug in ('season-24-twilight-trails','go-pass-october-2026','halloween-2026-part-2','go-pass-november-2026')) else None)
+        pg.on('request',lambda r:pg.infographic_requests.append(r.url) if '/img/ext/' in r.url or '/infographics/' in r.url or '/infographic-thumbs/' in r.url else None)
         if guard is not None:  # console guard: collect everything noisy so the caller can filter it against an explicit allow-list
             pg.on('console',lambda m:guard.append(('console.'+m.type,m.text,m.location.get('url',''))) if m.type in ('error',) else None)
             pg.on('pageerror',lambda e:guard.append(('pageerror',str(e),'')))
@@ -439,7 +444,7 @@ with sync_playwright() as p:
         pg.route(re.compile(r'^https://fonts\.(googleapis|gstatic)\.com/'),lambda r:r.fulfill(status=200,body='',content_type='text/css' if 'googleapis' in r.request.url else 'font/woff2'))
         pg.route('**/api/sources',ful(sources or '{"environment":"production","database":true,"enabled":false,"sources":[]}'))
         pg.route('**/api/events',ful(api or '{"enabled":false,"events":[]}'))
-        pg.route(re.compile(r'/(img/ext|infographics)/'),lambda r:r.fulfill(body=PNG1,content_type='image/png'))  # R2 pictures are not in the static folder
+        pg.route(re.compile(r'/(img/ext|infographics|infographic-thumbs)/'),lambda r:r.fulfill(body=PNG1,content_type='image/png'))  # R2 pictures are not in the static folder
         pg.route('**/api/userstate*',lambda r:r.fulfill(status=404,body='{}',content_type='application/json'))
         pg.route('**/api/dex',lambda r:r.fulfill(status=401,body='{}',content_type='application/json'))
         pg.route('**/api/art*',lambda r:r.fulfill(status=404,body=''))
@@ -1165,9 +1170,10 @@ with sync_playwright() as p:
         touch_card.wait_for(state='attached')
         hide_button = touch_card.locator('.hide-x')
         hide_button.wait_for(state='visible')
-        touch_box = hide_button.bounding_box()
+        touch_box_ready = settle(touch_page, "() => { const b=document.querySelector('#home-now .evc[data-id=\\\"leekduck:touch-target\\\"] .hide-x'); if(!b || !b.isConnected) return false; const r=b.getBoundingClientRect(); return r.width>=44 && r.height>=44; }", 4000)
+        touch_box = touch_page.evaluate("() => { const b=document.querySelector('#home-now .evc[data-id=\\\"leekduck:touch-target\\\"] .hide-x'); if(!b || !b.isConnected) return null; const r=b.getBoundingClientRect(); return {width:r.width,height:r.height}; }")
         check('Today hide control is at least 44×44px',
-              touch_box is not None and touch_box['width'] >= 44 and touch_box['height'] >= 44, touch_box)
+              touch_box_ready and touch_box is not None and touch_box['width'] >= 44 and touch_box['height'] >= 44, touch_box)
         check('Today hide control has an accessible name',
               hide_button.get_attribute('aria-label') == 'Hide Touch Target Test Event')
         before_group = touch_card.evaluate("el => el.closest('.today-phase-group').querySelector('.today-phase-head span').textContent")
@@ -1456,13 +1462,17 @@ with sync_playwright() as p:
         }""")
         hidden_schedule_thumb = pg.locator('#thumbnail-defer-fixture img[data-thumb-src]').first
         hidden_schedule_thumb.wait_for(state='attached', timeout=5000)
-        check('hidden Schedule infographic thumbnails do not request original poster bytes',
-              hidden_schedule_thumb.count() == 1 and not hidden_schedule_thumb.get_attribute('src'))
+        check('hidden Schedule infographic thumbnails point to a deferred static WebP, not the original poster',
+              hidden_schedule_thumb.count() == 1 and hidden_schedule_thumb.get_attribute('data-thumb-src') == TREK_THUMB_URL and not hidden_schedule_thumb.get_attribute('src'))
         pg.evaluate("() => document.getElementById('thumbnail-defer-fixture')?.remove()")
         lazy_thumb = pg.locator('[data-infographic="cur:trek"].igthumb img[loading=lazy]').first
         lazy_thumb.scroll_into_view_if_needed(timeout=5000)
         lazy_loaded = pg.wait_for_function("selector => { const img = document.querySelector(selector); return !!img && img.complete && img.naturalWidth > 0; }", arg='[data-infographic="cur:trek"].igthumb img[loading=lazy]', timeout=5000)
         check('lazy infographic thumbnail decodes after entering the viewport', lazy_loaded)
+        preview_src = lazy_thumb.get_attribute('src') or ''
+        preview_state = {'src':preview_src,'thumbUrl':lazy_thumb.get_attribute('data-thumb-url'),'full':lazy_thumb.get_attribute('data-thumb-full'),'expected':TREK_THUMB_URL,'requests':pg.infographic_requests[-12:]}
+        check('card preview fetches the compact WebP rather than the full-resolution original',
+              lazy_thumb.get_attribute('data-thumb-url') == TREK_THUMB_URL and preview_src.endswith(TREK_THUMB_URL) and any(TREK_THUMB_URL in url for url in pg.infographic_requests), preview_state)
         check('card with an infographic shows a 44px thumbnail button', pg.locator('[data-infographic="cur:trek"].igthumb img[loading=lazy]').count()==1 and pg.locator('[data-infographic="cur:trek"].igthumb').bounding_box()['width']>=44 and not pg.locator('[data-infographic="cur:trek"]').is_disabled())
         check('card with no infographic shows an always-on Check infographic button (no thumbnail)', pg.locator('[data-igcheck="cur:zorua"]').first.inner_text()=='Check infographic' and not pg.locator('[data-igcheck="cur:zorua"]').first.is_disabled() and pg.locator('[data-igcard="cur:zorua"] img').count()==0)
         check('infographic buttons are accessible', 'Open infographic for' in pg.locator('[data-infographic="cur:trek"]').first.get_attribute('aria-label') and 'infographic' in pg.locator('[data-igcheck="cur:zorua"]').first.get_attribute('aria-label'))
@@ -1473,6 +1483,8 @@ with sync_playwright() as p:
         ig_opener = pg.locator('[data-infographic="cur:trek"]').first
         ig_opener.click()
         pg.locator('#goinfo:not([hidden])').wait_for(state='visible')
+        check('event infographic viewer keeps the full-resolution original poster',
+              pg.locator('#goinfo .goinfo-poster img').first.get_attribute('src') == TREK_INFOGRAPHIC_URL)
         check('event infographic viewer initially focuses its close control',
               pg.evaluate("document.activeElement === document.querySelector('#goinfo [data-infoclose]')"))
         pg.keyboard.press('Shift+Tab')
@@ -1491,9 +1503,26 @@ with sync_playwright() as p:
                   const opener = [...document.querySelectorAll('[data-infographic]')].find(el => el.getAttribute('data-infographic') === 'cur:trek');
                   return document.getElementById('goinfo').hidden && document.activeElement === opener;
               }"""))
-        # The first published Trek poster is the card thumbnail; intercept its current event-info URL.
-        check('failed-thumbnail fixture resolves the current linked Trek infographic URL', bool(TREK_INFOGRAPHIC_URL), TREK_INFOGRAPHIC_URL)
-        pb=page(pre=lambda p: p.route('**' + TREK_INFOGRAPHIC_URL, lambda route: route.fulfill(status=404,body='')) if TREK_INFOGRAPHIC_URL else None)
+        # A missing compact thumbnail falls back to the original; if both fail, Check infographic remains available.
+        pf=page(pre=lambda p: p.route('**' + TREK_THUMB_URL, lambda route: route.fulfill(status=404,body='')) if TREK_THUMB_URL else None)
+        # Today can re-render while secondary data arrives; wait for and scroll the current connected node
+        # inside one browser task rather than retaining a locator across the render boundary.
+        thumbnail_scrolled = pf.wait_for_function("""() => {
+            const target = document.querySelector('[data-infographic="cur:trek"]');
+            if (!target || !target.isConnected) return false;
+            target.scrollIntoView({block:'center', inline:'nearest'});
+            return true;
+        }""", timeout=5000)
+        check('missing-thumbnail fixture finds a connected infographic control before scrolling', thumbnail_scrolled)
+        fallback_original = settle(pf, "(() => { const img=document.querySelector('[data-infographic=\\\"cur:trek\\\"] img'); return !!img && img.getAttribute('data-thumb-url')===img.getAttribute('data-thumb-full') && img.complete && img.naturalWidth>0; })()", 8000)
+        check('missing WebP card thumbnail falls back to the full-resolution original',
+              fallback_original and pf.locator('[data-infographic="cur:trek"] img').first.get_attribute('src') == TREK_INFOGRAPHIC_URL)
+        pf.context.close()
+        check('failed-thumbnail fixture resolves both the current full-size image and its WebP derivative', bool(TREK_INFOGRAPHIC_URL) and bool(TREK_THUMB_URL), (TREK_INFOGRAPHIC_URL, TREK_THUMB_URL))
+        def fail_both_infographic_sizes(p):
+            if TREK_THUMB_URL: p.route('**' + TREK_THUMB_URL, lambda route: route.fulfill(status=404,body=''))
+            if TREK_INFOGRAPHIC_URL: p.route('**' + TREK_INFOGRAPHIC_URL, lambda route: route.fulfill(status=404,body=''))
+        pb=page(pre=fail_both_infographic_sizes)
         # The page may rebuild Today while secondary data arrives; scroll the current connected node in one DOM task
         # instead of holding a Playwright element handle that can be detached between locator resolution and scrolling.
         thumbnail_scrolled = pb.evaluate("""() => {
@@ -1504,7 +1533,9 @@ with sync_playwright() as p:
         }""")
         check('failed-thumbnail fixture finds a connected infographic control before scrolling', thumbnail_scrolled)
         fallback_ready = settle(pb, "(() => { const b=document.querySelector('[data-igcheck=\\\"cur:trek\\\"]'), card=document.querySelector('[data-igcard=\\\"cur:trek\\\"]'); return !!b && b.textContent.trim()==='Check infographic' && !!card && card.hasAttribute('data-igbad'); })()", 8000)
-        check('a thumbnail that fails to load becomes Check infographic', fallback_ready and pb.locator('[data-igcheck="cur:trek"]').first.inner_text()=='Check infographic' and pb.locator('[data-igcard="cur:trek"] img').count()==0 and pb.locator('[data-igcard="cur:trek"]').first.get_attribute('data-igbad') is not None)
+        fallback_state = pb.evaluate("""() => { const b=document.querySelector('[data-igcheck=\\\"cur:trek\\\"]'); const card=document.querySelector('[data-igcard=\\\"cur:trek\\\"]'); const img=card&&card.querySelector('img'); return {hasCheck:!!b,text:b&&b.textContent.trim(),hasCard:!!card,hasBad:!!(card&&card.hasAttribute('data-igbad')),imgSrc:img&&img.getAttribute('src'),thumbUrl:img&&img.getAttribute('data-thumb-url')}; }""")
+        fallback_state['requests'] = pb.infographic_requests[-12:]
+        check('a thumbnail that fails to load becomes Check infographic', fallback_ready and pb.locator('[data-igcheck="cur:trek"]').first.inner_text()=='Check infographic' and pb.locator('[data-igcard="cur:trek"] img').count()==0 and pb.locator('[data-igcard="cur:trek"]').first.get_attribute('data-igbad') is not None, fallback_state)
         pb.context.close()
         # Regional event infographics must resolve through the same viewer as standard event cards.
         mexico_id='w-pok-mon-go-dia-de-muertos-2026-mexico-exclusive-ev'
@@ -3164,7 +3195,7 @@ with sync_playwright() as p:
         fl_sw.on('pageerror', lambda e: fl_sw.errs.append(str(e)))
         fl_ctx.route(re.compile(r'^https://fonts\.(googleapis|gstatic)\.com/'), lambda r: r.fulfill(status=200, body='', content_type='text/css' if 'googleapis' in r.request.url else 'font/woff2'))
         fl_ctx.route('**/api/**', lambda r: r.fulfill(status=404, body='{}', content_type='application/json'))
-        fl_ctx.route(re.compile(r'/(img/ext|infographics)/'), lambda r: r.fulfill(body=PNG1, content_type='image/png'))
+        fl_ctx.route(re.compile(r'/(img/ext|infographics|infographic-thumbs)/'), lambda r: r.fulfill(body=PNG1, content_type='image/png'))
         fl_sw.goto(BASE + '/', wait_until='load')
         fl_sw.wait_for_function("document.getElementById('home-now')?.hasAttribute('data-render-key')")
         fl_fresh = re.search(r"w\.src = '(/fresh\.js\?v=\w+)'", DASH_JS).group(1)

@@ -76,32 +76,62 @@
   }, { rootMargin: '80px 0px' }) : null;
   /* The card button (data-igcard) shows what we know: a small picture of the infographic when there is one, or an always-on
      "Check infographic" button when there is not. Other buttons (details page, raid rows) keep the text button. */
+  function cardThumbUrl(original) {
+    var url = String(original || '');
+    var prefixes = ['/infographics/', '/img/ext/'];
+    for (var i = 0; i < prefixes.length; i++) {
+      var prefix = prefixes[i];
+      var relative = url.indexOf(prefix) === 0 ? url.slice(prefix.length) : '';
+      if (relative && /^[\w./-]+$/.test(relative) && !/(^|\/)\.\.?($|\/)/.test(relative)) {
+        return '/infographic-thumbs/' + prefix.slice(1) + relative + '.webp';
+      }
+      var absolutePrefix = 'https://pogo.michaelpuff.com' + prefix;
+      relative = url.indexOf(absolutePrefix) === 0 ? url.slice(absolutePrefix.length) : '';
+      if (relative && /^[\w./-]+$/.test(relative) && !/(^|\/)\.\.?($|\/)/.test(relative)) {
+        return 'https://pogo.michaelpuff.com/infographic-thumbs/' + prefix.slice(1) + relative + '.webp';
+      }
+    }
+    return url;
+  }
   function cardButton(button, ev, id, thumb) {
     var name = ev ? ev.name : 'event';
     button.classList.remove('info-unavailable');
     button.disabled = false;
     button.removeAttribute('aria-disabled');
     button.hidden = false;
-    if (thumb && button.getAttribute('data-igbad') === thumb) thumb = ''; /* that picture failed to load: do not try it again */
-    if (thumb) {
+    var original = thumb;
+    if (original && button.getAttribute('data-igbad') === original) original = '';
+    var preview = original ? cardThumbUrl(original) : '';
+    if (original && button.getAttribute('data-igfallback') === original) preview = original;
+    if (preview) {
       button.classList.add('info-available', 'igthumb'); button.classList.remove('igcheck');
       button.removeAttribute('data-igcheck'); button.setAttribute('data-infographic', id);
       button.setAttribute('aria-label', 'Open infographic for ' + name); button.title = 'View infographic';
       var img = button.querySelector('img');
       var current = img && (img.getAttribute('data-thumb-url') || img.getAttribute('src'));
-      if (!img || current !== thumb) {
+      if (!img || current !== preview) {
         if (thumbObserver) thumbObserver.unobserve(button);
         button.innerHTML = '';
         button.classList.add('igthumb-pending');
         img = document.createElement('img');
         img.setAttribute('loading', 'lazy'); img.setAttribute('decoding', 'async');
         img.setAttribute('fetchpriority', 'low'); img.setAttribute('width', '44'); img.setAttribute('height', '44');
-        img.setAttribute('data-thumb-url', thumb); img.setAttribute('data-thumb-src', thumb); img.alt = '';
+        img.setAttribute('data-thumb-url', preview); img.setAttribute('data-thumb-src', preview);
+        img.setAttribute('data-thumb-full', original); img.alt = '';
         img.addEventListener('load', function () { if (button.querySelector('img') === img) button.classList.remove('igthumb-pending'); });
+        var requested = preview;
         img.addEventListener('error', function () {
-          if (button.querySelector('img') !== img || img.getAttribute('data-thumb-url') !== thumb) return;
-          /* A late error from a picture that was already replaced. */
-          button.setAttribute('data-igbad', thumb); cardButton(button, ev, id, '');
+          if (button.querySelector('img') !== img || img.getAttribute('data-thumb-url') !== requested) return;
+          if (original && requested !== original) {
+            button.setAttribute('data-igfallback', original);
+            requested = original;
+            img.setAttribute('data-thumb-url', original);
+            img.setAttribute('data-thumb-src', original);
+            loadThumb(button);
+            return;
+          }
+          button.setAttribute('data-igbad', original || requested);
+          cardButton(button, ev, id, '');
         });
         button.appendChild(img);
         if (thumbObserver) thumbObserver.observe(button);

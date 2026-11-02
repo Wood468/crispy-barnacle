@@ -126,6 +126,9 @@ test("service worker answers pictures from the cache first and refreshes ones ol
   let net = 0;
   const t = makeSw(async () => { net++; return basic("new-pic"); });
   t.entries.set("https://app.test/dex/25.webp", Object.assign(basic("cached-pic", { date: new Date().toUTCString() })));
+  t.entries.set("https://app.test/infographic-thumbs/g47ix/a.jpg.webp", Object.assign(basic("cached-thumb", { date: new Date().toUTCString() })));
+  const thumb = await t.dispatch("/infographic-thumbs/g47ix/a.jpg.webp");
+  assert.equal(await thumb.text(), "cached-thumb"); assert.equal(net, 0, "a visited infographic WebP is served cache-first");
   const fresh = await t.dispatch("/dex/25.webp");
   assert.equal(await fresh.text(), "cached-pic"); assert.equal(net, 0, "a cached picture needs no network");
   t.entries.set("https://app.test/art/abc.webp", basic("old-pic", { date: new Date(Date.now() - 3 * 86400000).toUTCString() }));
@@ -147,6 +150,8 @@ test("service worker offline: finds code and data by path when only the ?v= diff
   const t = makeSw(async () => { throw new Error("offline"); });
   t.entries.set("https://app.test/fresh.js?v=20260101a", basic("fresh-code"));
   t.entries.set("https://app.test/infographic-queue.json", basic("{}"));
+  t.entries.set("https://app.test/infographic-thumbs/g47ix/a.jpg.webp", basic("offline-thumb"));
+  assert.equal(await (await t.dispatch("/infographic-thumbs/g47ix/a.jpg.webp")).text(), "offline-thumb", "a previously viewed infographic thumbnail remains available offline");
   assert.equal(await (await t.dispatch("/fresh.js?v=20260101a")).text(), "fresh-code");
   assert.equal(await (await t.dispatch("/fresh.js?v=other")).text(), "fresh-code", "same file, other version");
   assert.equal(await (await t.dispatch("/infographic-queue.json?t=123")).text(), "{}");
