@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-01T19:41:00.847Z",
+ "updated": "2026-11-02T00:45:02.837Z",
  "status": [
   {
    "id": "hub",
@@ -23,12 +23,26 @@
   },
   {
    "id": "youtube-pogo",
-   "state": "ok",
-   "items": 2
+   "state": "error",
+   "note": "HTTP 404"
   }
  ],
- "gaps": 3,
+ "gaps": 4,
  "items": [
+  {
+   "source": "reddit-silph",
+   "trust": "tip",
+   "title": "Has anyone actually reached Level 108 to get Spiritomb?",
+   "link": "https://www.reddit.com/r/TheSilphRoad/comments/1xle1cz/has_anyone_actually_reached_level_108_to_get/",
+   "date": "2026-11-01T20:49:36.000Z",
+   "summary": "<!-- SC_OFF --><div class=\"md\"><p>I’m genuinely curious how many players have managed to complete this challenge! How much grinding/raids did it take? How many hours did you play, any luck with shiny ",
+   "pokemon": [
+    "Spiritomb"
+   ],
+   "notInOurData": [
+    "Spiritomb"
+   ]
+  },
   {
    "source": "reddit-silph",
    "trust": "tip",
@@ -199,26 +213,6 @@
    "notInOurData": []
   },
   {
-   "source": "youtube-pogo",
-   "trust": "official",
-   "title": "New costumed Pokémon make their debuts during Halloween 2026 Part I in Pokémon GO!",
-   "link": "https://www.youtube.com/shorts/I6MvdaExyIg",
-   "date": "2026-10-27T17:00:40.000Z",
-   "summary": "",
-   "pokemon": [],
-   "notInOurData": []
-  },
-  {
-   "source": "youtube-pogo",
-   "trust": "official",
-   "title": "New costumed Pokémon make their debuts during Halloween 2026 Part I in Pokémon GO!",
-   "link": "https://www.youtube.com/watch?v=wyN2y-BgpoU",
-   "date": "2026-10-27T17:00:14.000Z",
-   "summary": "",
-   "pokemon": [],
-   "notInOurData": []
-  },
-  {
    "source": "reddit-silph",
    "trust": "tip",
    "title": "shiny costume pikachu confirmed",
@@ -228,16 +222,6 @@
    "pokemon": [
     "Pikachu"
    ],
-   "notInOurData": []
-  },
-  {
-   "source": "reddit-silph",
-   "trust": "tip",
-   "title": "Cleaning Storage",
-   "link": "https://www.reddit.com/r/TheSilphRoad/comments/1xgqc95/cleaning_storage/",
-   "date": "2026-10-27T11:47:31.000Z",
-   "summary": "<!-- SC_OFF --><div class=\"md\"><p>How i clean my Pokemon storage before Big Events and survive on 1500 Storage as F2P Player.</p> <p>4* (check hundos)</p> <p>0attack&amp;0defense&amp;0hp (check nundos",
-   "pokemon": [],
    "notInOurData": []
   },
   {

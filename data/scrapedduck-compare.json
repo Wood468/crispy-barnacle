@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-01T19:41:01.059Z",
+ "updated": "2026-11-02T00:45:03.028Z",
  "state": "ok",
  "scrapedDuckEvents": 50,
  "missingHere": [],
@@ -68,11 +68,6 @@
    "id": "w-mexicraneo-exhibit-paseo-de-la-reforma",
    "name": "Mexicráneo Exhibit: Mexico City",
    "start": "2026-10-17"
-  },
-  {
-   "id": "w-aeon-mall-halloween",
-   "name": "AEON MALL Halloween",
-   "start": "2026-10-19"
   },
   {
    "id": "w-pok-mon-30th-anniversary-mall-exploration-sm-east-",
