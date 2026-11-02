@@ -972,6 +972,7 @@ img.art.is-shiny{outline:2px solid var(--color-accent);outline-offset:2px;border
 #travel-summary{margin:var(--space-2) 0;color:var(--color-text-muted)}
 #travel-results{display:grid;gap:var(--space-2);min-width:0}
 #travel-results .agw{min-width:0}
+#travel-results .agw .ag-actions .agx{width:44px;height:44px;min-width:44px;min-height:44px}
 
 /* Regional agenda rows: keep event copy and actions in separate, predictable columns. */
 .agw{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:stretch;gap:var(--space-2)}

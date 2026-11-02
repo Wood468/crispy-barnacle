@@ -144,8 +144,20 @@ def main():
             page.locator('#travel-regions [data-travel-region="all"]').click()
             expect("All destinations restores the full dated regional list",
                    "Mexico City, Mexico" in page.locator("#travel-results").inner_text())
+            travel_rows_text = page.locator("#travel-results").inner_text()
+            expect("Travel rows preserve the exact source calendar dates",
+                   "2 Nov 2026" in travel_rows_text and "6 Nov 2026 – 8 Nov 2026" in travel_rows_text,
+                   travel_rows_text)
             expect("Travel rows do not invent venue-local times",
-                   "Venue:" not in page.locator("#travel-results").inner_text())
+                   "Venue:" not in travel_rows_text)
+            action_sizes = page.locator("#travel-results .ag-actions .agx").evaluate_all(
+                "(els) => els.map(el => { const r=el.getBoundingClientRect(); return [r.width,r.height]; })")
+            expect("Travel row action controls retain 44px touch targets",
+                   bool(action_sizes) and all(w >= 43.5 and h >= 43.5 for w,h in action_sizes), action_sizes)
+            region_sizes = page.locator("#travel-regions .fchip").evaluate_all(
+                "(els) => els.map(el => el.getBoundingClientRect().height)")
+            expect("Travel region filters retain 44px touch targets",
+                   bool(region_sizes) and all(h >= 43.5 for h in region_sizes), region_sizes)
             page.locator('#subnav-events button[data-sub="timeline"]').click()
             expect("Timeline remains a separate working view",
                    page.locator("#sub-timeline").is_visible() and page.locator("#sub-travel").is_hidden())

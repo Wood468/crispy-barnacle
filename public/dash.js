@@ -875,10 +875,10 @@
     return '<button type="button" class="agr" data-open="' + esc(it.id) + '" style="--k:' + k[1] + '"><i></i><span class="agt"><b>' + esc(it.name) + '</b><small>' + esc(whenText(it)) + '</small></span><em>' + esc(k[0]) + '</em></button>';
   }
   function travelKey(value) {
-    return String(value || '').toLowerCase().normalize('NFD').replace(/[\\u0300-\\u036f]/g, '').trim();
+    return String(value || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim();
   }
   function travelDateLabel(value) {
-    var m = String(value || '').match(/^(\\d{4})-(\\d{2})-(\\d{2})/);
+    var m = String(value || '').match(/^(\d{4})-(\d{2})-(\d{2})/);
     if (!m) return '';
     var month = +m[2] - 1, day = +m[3], year = +m[1];
     if (month < 0 || month > 11 || day < 1 || day > 31) return '';
@@ -893,7 +893,7 @@
     var host = $('travel-results'); if (!host) return;
     /* Do not promote global game events or dates inherited by the existing related-announcement helper into destination plans. */
     var candidates = regList().filter(function (x) {
-      return x.scope !== 'global' && x.place && x.sourceStart && x.sourceEnd && !/^dated:/.test(String(x.id || ''));
+      return x.scope !== 'global' && x.place && x.sourceStart && x.sourceEnd && x.src && String(x.src.url || '').indexOf('https://') === 0 && !/^dated:/.test(String(x.id || ''));
     });
     var places = {};
     candidates.forEach(function (x) { var p = String(x.place || '').trim(); if (p) places[p] = 1; });
