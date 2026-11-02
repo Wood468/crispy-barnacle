@@ -78,14 +78,17 @@
      "Check infographic" button when there is not. Other buttons (details page, raid rows) keep the text button. */
   function cardThumbUrl(original) {
     var url = String(original || '');
-    if (/^\/infographics\/[\w./-]+$/.test(url) && !/(^|\/)\.\.?($|\/)/.test(url)) {
-      return url.replace(/^\/infographics\//, '/infographic-thumbs/') + '.webp';
-    }
-    var absolutePrefix = 'https://pogo.michaelpuff.com/infographics/';
-    if (url.indexOf(absolutePrefix) === 0) {
-      var relative = url.slice(absolutePrefix.length);
-      if (/^[\w./-]+$/.test(relative) && !/(^|\/)\.\.?($|\/)/.test(relative)) {
-        return 'https://pogo.michaelpuff.com/infographic-thumbs/' + relative + '.webp';
+    var prefixes = ['/infographics/', '/img/ext/'];
+    for (var i = 0; i < prefixes.length; i++) {
+      var prefix = prefixes[i];
+      var relative = url.indexOf(prefix) === 0 ? url.slice(prefix.length) : '';
+      if (relative && /^[\w./-]+$/.test(relative) && !/(^|\/)\.\.?($|\/)/.test(relative)) {
+        return '/infographic-thumbs/' + prefix.slice(1) + relative + '.webp';
+      }
+      var absolutePrefix = 'https://pogo.michaelpuff.com' + prefix;
+      relative = url.indexOf(absolutePrefix) === 0 ? url.slice(absolutePrefix.length) : '';
+      if (relative && /^[\w./-]+$/.test(relative) && !/(^|\/)\.\.?($|\/)/.test(relative)) {
+        return 'https://pogo.michaelpuff.com/infographic-thumbs/' + prefix.slice(1) + relative + '.webp';
       }
     }
     return url;

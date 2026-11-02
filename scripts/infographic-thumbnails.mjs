@@ -17,8 +17,9 @@ export function sourceRelativePath(value) {
   if (parsed.origin !== ORIGIN || parsed.search || parsed.hash) return null;
   let pathname;
   try { pathname = decodeURIComponent(parsed.pathname); } catch (_) { return null; }
-  if (!pathname.startsWith('/infographics/')) return null;
-  const relative = pathname.slice('/infographics/'.length);
+  const prefix = pathname.startsWith('/infographics/') ? 'infographics/' : (pathname.startsWith('/img/ext/') ? 'img/ext/' : null);
+  if (!prefix) return null;
+  const relative = prefix + pathname.slice('/' + prefix.length);
   const parts = relative.split('/');
   if (!relative || parts.some(part => !part || part === '.' || part === '..')) return null;
   if (!IMAGE_EXTENSIONS.has(path.posix.extname(relative).toLowerCase())) return null;
@@ -70,7 +71,6 @@ function isWebp(bytes) {
 
 export async function generateThumbnails({ root = ROOT, convert = convertImage, log = console.log } = {}) {
   const publicRoot = path.resolve(root, 'public');
-  const sourceRoot = path.resolve(publicRoot, 'infographics');
   const thumbnailRoot = path.resolve(publicRoot, 'infographic-thumbs');
   const eventInfo = await readJson(path.join(publicRoot, 'event-info.json'));
   const data = await readJson(path.join(publicRoot, 'data.json'));
@@ -81,9 +81,9 @@ export async function generateThumbnails({ root = ROOT, convert = convertImage, 
   for (const url of urls) {
     const relative = sourceRelativePath(url);
     if (!relative) continue;
-    const source = path.resolve(sourceRoot, ...relative.split('/'));
+    const source = path.resolve(publicRoot, ...relative.split('/'));
     const destination = path.resolve(publicRoot, thumbnailRelativePath(url));
-    if (!source.startsWith(sourceRoot + path.sep) || !destination.startsWith(thumbnailRoot + path.sep)) {
+    if (!source.startsWith(publicRoot + path.sep) || !destination.startsWith(thumbnailRoot + path.sep)) {
       failed++;
       log('Unsafe infographic thumbnail path skipped: ' + url);
       continue;

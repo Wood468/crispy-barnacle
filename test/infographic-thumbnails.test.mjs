@@ -14,9 +14,11 @@ const webp = name => Buffer.concat([
 ]);
 
 test('only same-origin approved infographic paths map to safe static WebP paths', () => {
-  assert.equal(sourceRelativePath('/infographics/g47ix/a.jpg'), 'g47ix/a.jpg');
-  assert.equal(sourceRelativePath('https://pogo.michaelpuff.com/infographics/g47ix/a.png'), 'g47ix/a.png');
-  assert.equal(thumbnailRelativePath('/infographics/g47ix/a.jpg'), 'infographic-thumbs/g47ix/a.jpg.webp');
+  assert.equal(sourceRelativePath('/infographics/g47ix/a.jpg'), 'infographics/g47ix/a.jpg');
+  assert.equal(sourceRelativePath('https://pogo.michaelpuff.com/infographics/g47ix/a.png'), 'infographics/g47ix/a.png');
+  assert.equal(sourceRelativePath('/img/ext/a.png'), 'img/ext/a.png');
+  assert.equal(thumbnailRelativePath('/infographics/g47ix/a.jpg'), 'infographic-thumbs/infographics/g47ix/a.jpg.webp');
+  assert.equal(thumbnailRelativePath('/img/ext/a.png'), 'infographic-thumbs/img/ext/a.png.webp');
   assert.equal(sourceRelativePath('https://example.com/infographics/a.jpg'), null);
   assert.equal(sourceRelativePath('/img/ext/a.webp'), null);
   assert.equal(sourceRelativePath('/infographics/a.gif'), null);
@@ -27,9 +29,11 @@ test('approved infographic thumbnails are generated once and unchanged outputs a
   const root = await fs.mkdtemp(path.join(os.tmpdir(), 'gofn-infographic-thumbs-'));
   try {
     const sourceDir = path.join(root, 'public', 'infographics', 'g47ix');
+    const extDir = path.join(root, 'public', 'img', 'ext');
     await fs.mkdir(sourceDir, { recursive: true });
+    await fs.mkdir(extDir, { recursive: true });
     await fs.writeFile(path.join(sourceDir, 'a.jpg'), 'source-a');
-    await fs.writeFile(path.join(sourceDir, 'b.png'), 'source-b');
+    await fs.writeFile(path.join(extDir, 'b.png'), 'source-b');
     await fs.writeFile(path.join(root, 'public', 'event-info.json'), JSON.stringify({
       events: {
         alpha: { infographics: [{ url: '/infographics/g47ix/a.jpg' }, { url: '/infographics/g47ix/a.jpg' }] },
@@ -38,7 +42,7 @@ test('approved infographic thumbnails are generated once and unchanged outputs a
       }
     }));
     await fs.writeFile(path.join(root, 'public', 'data.json'), JSON.stringify({
-      events: [{ id: 'delta', infographicUrl: '/infographics/g47ix/b.png' }]
+      events: [{ id: 'delta', infographicUrl: '/img/ext/b.png' }]
     }));
     const calls = [];
     const convert = async (source, destination) => {
@@ -49,7 +53,7 @@ test('approved infographic thumbnails are generated once and unchanged outputs a
     assert.deepEqual(first, { referenced: 3, generated: 2, unchanged: 0, missing: 1, failed: 0 });
     assert.deepEqual(calls.sort(), ['a.jpg', 'b.png']);
     assert.ok((await fs.readFile(path.join(root, 'public', thumbnailRelativePath('/infographics/g47ix/a.jpg')))).subarray(8, 12).equals(Buffer.from('WEBP')));
-    assert.ok((await fs.readFile(path.join(root, 'public', thumbnailRelativePath('/infographics/g47ix/b.png')))).subarray(8, 12).equals(Buffer.from('WEBP')));
+    assert.ok((await fs.readFile(path.join(root, 'public', thumbnailRelativePath('/img/ext/b.png')))).subarray(8, 12).equals(Buffer.from('WEBP')));
 
     calls.length = 0;
     const second = await generateThumbnails({ root, convert, log: () => {} });
@@ -64,6 +68,8 @@ test('thumbnail generation reads R2-restored originals but never adds the thumbn
   const root = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..');
   const r2Sync = await fs.readFile(path.join(root, 'scripts', 'r2-sync.sh'), 'utf8');
   const workflow = await fs.readFile(path.join(root, '.github', 'workflows', 'g47ix-infographics.yml'), 'utf8');
+  assert.ok(r2Sync.includes('infographics:public/infographics'));
+  assert.ok(r2Sync.includes('img/ext:public/img/ext'));
   assert.equal(r2Sync.includes('infographic-thumbs'), false);
   const generateAt = workflow.indexOf('node scripts/infographic-thumbnails.mjs');
   const restoreAt = workflow.indexOf('bash scripts/r2-sync.sh restore');
