@@ -5,16 +5,18 @@
   var X = window.GODASH, G = window.GO;
   if (!X || !G) return;
   var esc = G.esc;
-  function safe(u) { return typeof u === 'string' && (/^https:\/\//.test(u) || /^\/img\/ext\/[\w.-]+$/.test(u) || /^\/infographics\/[\w.\/-]+$/.test(u)) ? u : ''; }
+  function safe(u) { return typeof u === 'string' && !(window.GOLIB && window.GOLIB.isPrivateLink(u)) && (/^https:\/\//.test(u) || /^\/img\/ext\/[\w.-]+$/.test(u) || /^\/infographics\/[\w.\/-]+$/.test(u)) ? u : ''; }
   var INFO = null;
   var opener = null;
   /* Pictures you approved that the 2-hourly publish has not attached yet. Their image is already on the site and the decision is in
      the database, so they show on the event straight away; once published they come from event-info.json and drop out of this list. */
   var PENDING = [];
-  function loadPending() {
+  /* fresh: skip the 30 s shared copy (after the owner saves a decision the old list would otherwise come back). */
+  function loadPending(fresh) {
+    var o = { fresh: !!fresh, init: { cache: fresh ? 'reload' : 'no-cache' } };
     return Promise.all([
-      window.GOLIB.jsonOrNull('/infographic-queue.json', { init: { cache: 'no-cache' } }).then(function (j) { return j || {}; }),
-      window.GOLIB.jsonOrNull('/api/ig-decisions', { init: { cache: 'no-cache' } }).then(function (j) { return j || {}; })
+      window.GOLIB.jsonOrNull('/infographic-queue.json', o).then(function (j) { return j || {}; }),
+      window.GOLIB.jsonOrNull('/api/ig-decisions', o).then(function (j) { return j || {}; })
     ]).then(function (a) {
       var items = (a[0] && a[0].items) || [], dec = (a[1] && a[1].decisions) || [];
       PENDING = [];
@@ -24,7 +26,7 @@
         var ids = String(d.eventId).split(','), ts = String(d.eventTitle || '').split(' | ');
         ids.forEach(function (id, n) {
           var title = ts[n] || id;
-          PENDING.push({ eventId: id, eventTitle: title, img: { label: 'Infographic · ' + (it.creator || 'G47IX'), url: it.image, source: it.creator || 'G47IX', sourceUrl: it.post || '', alt: title + ' infographic' } });
+          PENDING.push({ eventId: id, eventTitle: title, img: { label: 'Infographic · ' + (it.creator || 'G47IX'), url: it.image, source: it.creator || 'G47IX', sourceUrl: window.GOLIB.publicLink(it.post), alt: title + ' infographic' } });
         });
       });
     });
@@ -39,7 +41,7 @@
     return Promise.all([
       /* A failed fetch (offline, server error, bad JSON) must not wipe what the page already has: null means "keep the old INFO". */
       window.GOLIB.jsonOrNull('/event-info.json', { fresh: !!fresh, init: { cache: fresh ? 'reload' : 'no-cache' } }),
-      loadPending()
+      loadPending(fresh)
     ]).then(function (a) { var ev = a[0] && a[0].events; if (ev && typeof ev === 'object') INFO = ev; return INFO || {}; });
   }
   /* Every event the page knows, so the title fallback can tell "this is the next instance" from "this is the same event". */
@@ -183,6 +185,8 @@
       button._igTimer = setTimeout(function () { button._igTimer = 0; button.removeAttribute('data-igmsg'); button.textContent = 'Check infographic'; if (button._igToken === token) button._igToken = 0; clearLive(token); }, 3500);
     }).catch(function () { button.removeAttribute('data-igbusy'); button.removeAttribute('data-igmsg'); button.textContent = 'Check infographic'; releaseOwn(button); });
   }
+  /* The owner just saved a review decision: look at the decision list again (not the shared copy) so the event sheet matches. */
+  document.addEventListener('gofn-review-updated', function (e) { if (e.detail && e.detail.decided) loadPending(true).then(function () { if (INFO) syncButtons(INFO); }); });
   document.addEventListener('visibilitychange', function () { if (!document.hidden && INFO) loadInfo(true).then(function (all) { syncButtons(all); }); });
   function watchButtons() {
     loadInfo().then(function (all) {

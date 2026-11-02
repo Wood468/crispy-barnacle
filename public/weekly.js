@@ -19,7 +19,7 @@
     var box = document.createElement('div');
     box.id = 'weekly-box'; box.className = 'weekly-box'; box.setAttribute('role', 'dialog'); box.setAttribute('aria-modal', 'true'); box.setAttribute('aria-label', it.kind === 'month' ? 'Month at a glance' : 'Week at a glance');
     box.innerHTML = '<div class="weekly-bar"><span>' + esc(it.kind === 'month' ? 'This month' : 'This week') + (it.publishedAt ? ' · ' + esc(day(it.publishedAt)) : '') + '</span>'
-      + (/^https:\/\//.test(it.post || '') ? '<a href="' + esc(it.post) + '" target="_blank" rel="noopener">Original post</a>' : '')
+      + (window.GOLIB.publicLink(it.post) ? '<a href="' + esc(window.GOLIB.publicLink(it.post)) + '" target="_blank" rel="noopener">Original post</a>' : '')
       + '<button type="button" class="weekly-x" aria-label="Close">✕</button></div>'
       + '<div class="weekly-scroll">' + list.map(function (x) { return '<img src="' + esc(x.image) + '" alt="' + esc(x.title) + ': Pokémon GO overview">'; }).join('') + '</div>';
     box.addEventListener('click', function (e) { if (e.target === box || e.target.closest('.weekly-x') || e.target.tagName === 'IMG') close(); });

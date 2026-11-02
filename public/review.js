@@ -4,11 +4,11 @@
   'use strict';
   var $ = function (id) { return document.getElementById(id); };
   var esc = window.GOLIB.esc;
-  var items = [], decided = {}, decs = {}, msg = '', shown = 10, loadToken = 0, loadedForOwner = false;
+  var items = [], decided = {}, decs = {}, msg = '', shown = 10, loadToken = 0, loadedForOwner = false, undo = null;
   function pin() { try { return localStorage.getItem('gofn-pin') || ''; } catch (e) { return ''; } }
   function isOwner() { return document.documentElement.getAttribute('data-role') === 'owner'; }
   function hideOwnerUi() {
-    loadToken++; loadedForOwner = false; items = []; decided = {}; decs = {}; msg = '';
+    loadToken++; loadedForOwner = false; items = []; decided = {}; decs = {}; msg = ''; clearUndo();
     var a = $('hireview'); if (a) a.hidden = true;
     var c = $('igcount'); if (c) c.hidden = true;
     var b = $('igbanner'); if (b) b.remove();
@@ -18,6 +18,58 @@
     var saved = document.querySelector('nav.tabs button[data-tab="saved"]'); if (saved) saved.classList.remove('has-new');
   }
   function safeUrl(u) { return /^https?:\/\//i.test(u || '') ? u : ''; }
+  /* The queue can hold the same picture twice (one Discord post seen again, or the same file re-added): one card per picture.
+     Two entries are the same picture when they share an id, an image file or an original-post link. A duplicate's suggestions are folded into
+     the first card, and a decision on any copy hides them all. Stored data is not touched; this only changes what is listed. */
+  function imageKey(u) { return String(u || '').split(/[?#]/)[0].split('/').pop().toLowerCase(); }
+  function bareId(x) { return String(x || '').replace(/^[a-z]+:/i, '').toLowerCase(); }
+  function dedupeGuesses(list) {
+    var seen = {}, out = [];
+    (list || []).forEach(function (g) {
+      if (!g || !g.eventId) return;
+      var k = bareId(g.eventId); if (seen[k]) return; seen[k] = 1; out.push(g);
+    });
+    return out;
+  }
+  function dedupeItems(list) {
+    var by = {}, out = [];
+    (list || []).forEach(function (it) {
+      if (!it || !it.id) return;
+      var keys = ['id:' + it.id]; if (it.image) keys.push('img:' + imageKey(it.image)); if (safeUrl(it.post)) keys.push('post:' + it.post);
+      var first = null; keys.some(function (k) { if (by[k]) { first = by[k]; return true; } return false; });
+      if (first) { first.also.push(it.id); first.guesses = dedupeGuesses((first.guesses || []).concat(it.guesses || [])); keys.forEach(function (k) { if (!by[k]) by[k] = first; }); return; }
+      var c = Object.assign({}, it, { also: [], guesses: dedupeGuesses(it.guesses) });
+      keys.forEach(function (k) { by[k] = c; }); out.push(c);
+    });
+    return out;
+  }
+  function isDecided(it) { return !!decided[it.id] || (it.also || []).some(function (i) { return !!decided[i]; }); }
+  /* Discard can be taken back for a few seconds: a small notice with Undo. Undo puts the card back at once and then re-sends what the decision was before (or clears it). */
+  function clearUndo() { if (undo) { clearTimeout(undo.timer); undo = null; } var t = $('igundo'); if (t) t.remove(); }
+  function showUndo(it, prev) {
+    clearUndo();
+    var t = document.createElement('div'); t.id = 'igundo'; t.className = 'evtoast igundo'; t.setAttribute('role', 'status');
+    t.innerHTML = '<span>Discarded</span><button type="button" class="pill" data-ig-undo>Undo</button>';
+    document.body.appendChild(t);
+    undo = { id: it.id, prev: prev, timer: setTimeout(clearUndo, 8000) };
+    var b = t.querySelector('button'); if (b && b.focus) b.focus({ preventScroll: true });
+  }
+  function applyLocal(d) {
+    decs[d.id] = d;
+    if (d.status === 'approved' || d.status === 'rejected' || d.status === 'week' || d.status === 'month') decided[d.id] = d.status; else delete decided[d.id];
+  }
+  function undoDiscard() {
+    var u = undo; if (!u) return; clearUndo();
+    var back = u.prev ? { id: u.id, status: u.prev.status, eventId: u.prev.eventId || '', eventTitle: u.prev.eventTitle || '' } : { id: u.id, status: 'reset', eventId: '', eventTitle: '' };
+    var was = decs[u.id];
+    if (u.prev) applyLocal(back); else { delete decs[u.id]; delete decided[u.id]; }
+    msg = ''; render();
+    post(back).then(function () { document.dispatchEvent(new CustomEvent('gofn-review-updated', { detail: { decided: true } })); })
+      .catch(function () { if (was) applyLocal(was); else applyLocal({ id: u.id, status: 'rejected', eventId: '', eventTitle: '' }); msg = 'Could not undo that. It is still discarded. Check your sync PIN and connection.'; render(); });
+  }
+  function post(body) {
+    return fetch('/api/ig-decisions', { method: 'POST', headers: { 'content-type': 'application/json', 'x-pin': pin() }, body: JSON.stringify(body) }).then(function (r) { if (!r.ok) throw new Error(r.status); });
+  }
   function eventOptions() {
     var X = window.GODASH; if (!X) return '';
     var t = Date.now(), list = X.events().concat(X.raidSlots ? X.raidSlots() : [], X.worldEvents ? X.worldEvents() : [], X.regionalEvents ? X.regionalEvents() : []).filter(function (e) { return e.end.getTime() > t && e.start.getTime() < t + 200 * 864e5; });
@@ -52,7 +104,7 @@
       + '<a class="igr-img" href="' + esc(it.image) + '" target="_blank" rel="noopener"><img src="' + esc(it.image) + '" alt="' + esc(it.title || 'Infographic') + '" loading="lazy" decoding="async"></a>'
       + '<div class="igr-b"><b>' + esc(it.title || 'Untitled graphic') + '</b>'
       + '<div class="igr-g">' + L.map(function (l, n) { return '<button type="button" class="pill all" data-ig-unlink="' + n + '" aria-label="Unlink from ' + esc(l.title) + '">' + esc(l.title) + ' ✕</button>'; }).join('') + '</div>'
-      + '<div class="igr-o"><select aria-label="Link to another event"><option value="">Also link to…</option>' + eventOptions() + '</select><button type="button" class="pill" data-ig-add>Add</button><button type="button" class="pill" data-ig-no>Discard</button></div>'
+      + '<div class="igr-o"><select aria-label="Link to another event"><option value="">Also link to…</option>' + eventOptions() + '</select><button type="button" class="pill" data-ig-add aria-label="Add event: ' + esc(it.title || 'Untitled graphic') + '">Add</button><button type="button" class="pill" data-ig-no aria-label="Discard: ' + esc(it.title || 'Untitled graphic') + '">Discard</button></div>'
       + '<div class="igr-o"><button type="button" class="pill" data-ig-ov="week">📅 This week\'s picture</button><button type="button" class="pill" data-ig-ov="month">🗓 Month overview</button></div>'
       + '</div></article>';
   }
@@ -67,15 +119,15 @@
       + (it.text ? '<details class="igr-ocr"><summary>Read image text</summary><p>' + esc(it.text) + '</p></details>' : '')
       + (it.signals && it.signals.length ? '<div class="igr-s">' + it.signals.map(function (s) { return '<span>' + esc(s) + '</span>'; }).join('') + '</div>' : '')
       + '<div class="igr-g">' + (g.length ? g.map(function (x) { return '<button type="button" class="pill all" data-ig-ok="' + esc(x.eventId) + '" data-t="' + esc(x.eventTitle) + '">Approve: ' + esc(x.eventTitle) + '</button>'; }).join('') : '<small>No likely event found.</small>') + '</div>'
-      + '<div class="igr-o"><select aria-label="Choose another event"><option value="">Another event…</option>' + eventOptions() + '</select><button type="button" class="pill" data-ig-pick>Approve</button><button type="button" class="pill" data-ig-no>Discard</button></div>'
+      + '<div class="igr-o"><select aria-label="Choose another event"><option value="">Another event…</option>' + eventOptions() + '</select><button type="button" class="pill" data-ig-pick aria-label="Approve: ' + esc(it.title || 'Untitled graphic') + '">Approve</button><button type="button" class="pill" data-ig-no aria-label="Discard: ' + esc(it.title || 'Untitled graphic') + '">Discard</button></div>'
       + '<div class="igr-o"><button type="button" class="pill" data-ig-ov="week">📅 This week\'s picture</button><button type="button" class="pill" data-ig-ov="month">🗓 Month overview</button></div>'
-      + (safeUrl(it.post) ? '<small><a href="' + esc(it.post) + '" target="_blank" rel="noopener noreferrer">Original post</a>' + (it.creator ? ' · ' + esc(it.creator) : '') + '</small>' : '')
+      + (safeUrl(it.post) ? '<small><a href="' + esc(it.post) + '" target="_blank" rel="noopener noreferrer">' + (window.GOLIB.isPrivateLink(it.post) ? 'Open in Discord (owner only)' : 'Original post') + '</a>' + (it.creator ? ' · ' + esc(it.creator) : '') + '</small>' : '')
       + '</div></article>';
   }
   function render() {
     if (!isOwner()) { hideOwnerUi(); return; }
     var host = $('igreview'); if (!host) return;
-    var open = items.filter(function (i) { return !decided[i.id]; }).sort(function (a, b) { return String(b.publishedAt || '').localeCompare(String(a.publishedAt || '')); });
+    var open = items.filter(function (i) { return !isDecided(i); }).sort(function (a, b) { return String(b.publishedAt || '').localeCompare(String(a.publishedAt || '')); });
     var dot = $('hmenu'); if (dot) dot.classList.toggle('has-new', open.length > 0);
     var sv = document.querySelector('nav.tabs button[data-tab="saved"]'); if (sv) sv.classList.toggle('has-new', open.length > 0);
     banner(open.length);
@@ -91,8 +143,13 @@
   function send(it, status, eventId, title, note) {
     if (!isOwner()) { hideOwnerUi(); return; }
     if (!pin()) { msg = 'Set your Sync PIN in Menu → Sync & accounts before reviewing.'; render(); return; }
-    fetch('/api/ig-decisions', { method: 'POST', headers: { 'content-type': 'application/json', 'x-pin': pin() }, body: JSON.stringify({ id: it.id, status: status, eventId: eventId || '', eventTitle: title || '' }) })
-      .then(function (r) { if (!r.ok) throw new Error(r.status); decided[it.id] = status; decs[it.id] = { id: it.id, status: status, eventId: eventId || '', eventTitle: title || '' }; if (status === 'unlinked') delete decided[it.id]; msg = note || (status === 'approved' ? 'Linked. It will appear on the event after the next scheduled update.' : status === 'unlinked' ? 'Unlinked. It is back in the review list.' : 'Discarded.'); render(); document.dispatchEvent(new Event('gofn-review-updated')); })
+    var prev = decs[it.id] ? Object.assign({}, decs[it.id]) : null;
+    post({ id: it.id, status: status, eventId: eventId || '', eventTitle: title || '' })
+      .then(function () {
+        applyLocal({ id: it.id, status: status, eventId: eventId || '', eventTitle: title || '' });
+        if (status === 'rejected') { msg = ''; showUndo(it, prev); } else { clearUndo(); msg = note || (status === 'approved' ? 'Linked. It will appear on the event after the next scheduled update.' : status === 'unlinked' ? 'Unlinked. It is back in the review list.' : 'Discarded.'); }
+        render(); document.dispatchEvent(new CustomEvent('gofn-review-updated', { detail: { decided: true } }));
+      })
       .catch(function () { msg = 'Could not save that decision. Check your sync PIN and connection.'; render(); });
   }
   function setLinks(it, list) {
@@ -117,6 +174,7 @@
   document.addEventListener('click', function (e) { if (e.target.closest && (e.target.closest('#igbanner') || e.target.closest('#hireview'))) gotoReview(); });
   window.addEventListener('hashchange', function () { if (location.hash === '#review') gotoReview(); });
   document.addEventListener('click', function (e) {
+    if (e.target.closest && e.target.closest('[data-ig-undo]')) return undoDiscard();
     if (e.target.closest && e.target.closest('[data-ig-more]')) { shown += 10; return render(); }
     var card = e.target.closest && e.target.closest('.igr'); if (!card) return;
     var it = items.filter(function (i) { return i.id === card.getAttribute('data-id'); })[0]; if (!it) return;
@@ -174,7 +232,7 @@
       fetch('/api/ig-decisions').then(function (r) { return r.ok ? r.json() : { decisions: [] }; }).catch(function () { return { decisions: [] }; })
     ]).then(function (R) {
       if (token !== loadToken || !isOwner()) { hideOwnerUi(); return; }
-      items = R[0].items || []; (R[1].decisions || []).forEach(function (d) { decs[d.id] = d; if (d.status === 'approved' || d.status === 'rejected' || d.status === 'week' || d.status === 'month') decided[d.id] = d.status; });
+      items = dedupeItems(R[0].items); (R[1].decisions || []).forEach(applyLocal);
       if (!ensureHost()) return;
       render(); document.dispatchEvent(new Event('gofn-review-updated'));
       if (location.hash === '#review') gotoReview();
