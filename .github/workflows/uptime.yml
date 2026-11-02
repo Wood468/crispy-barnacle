@@ -1,7 +1,7 @@
 name: Site check
 
 # Every 15 minutes: is the live site up, are the data files readable, do R2 pictures load? Telegram (System topic) is told
-# only when it starts failing and when it recovers.
+# only when it starts failing and when it recovers. Roadmap-only commits do not publish Worker assets.
 on:
   push:
     branches: [main]
@@ -11,7 +11,6 @@ on:
       - "workers/**"
       - "scripts/uptime.mjs"
       - "scripts/wait-for-workers-build.mjs"
-      - "docs/ROADMAP.md"
       - ".github/workflows/uptime.yml"
   schedule:
     - cron: "*/15 * * * *"
