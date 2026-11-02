@@ -19,6 +19,7 @@
   function when(ms) { return ok(ms) ? abs(ms) + ' (' + age(ms) + ')' : 'Not recorded'; }
   function snapshotStale(snap) { var ms = snap ? new Date(snap).getTime() : NaN; return isFinite(ms) && Date.now() - ms > 72 * HOUR; }
   function snapshotWarning(snap) { return snapshotStale(snap) ? ' · snapshot may be stale' : ''; }
+  function snapshotNote(snap) { return snapshotStale(snap) ? 'as of ' + esc(snap) + snapshotWarning(snap) : 'snapshot as of ' + esc(snap); }  /* one short phrase: the line stays within two lines at 320 px */
   var TRUST = { official: ['Official', 'st-a'], community: ['Community', 'st-n'], curated: ['Community', 'st-n'], datamine: ['Datamined', 'st-d'] };
   var STATE = { healthy: ['Fresh', 'fresh'], fresh: ['Fresh', 'fresh'], stale: ['Stale', 'stale'], degraded: ['Latest check failed', 'degraded'], failing: ['Failing', 'failed'], failed: ['Failing', 'failed'], never: ['Not checked yet', 'never'], unknown: ['Time not recorded', 'never'], none: ['Not connected', 'never'] };
   function fchip(state) { var s = STATE[state] || STATE.unknown; return '<span class="fr fr-' + s[1] + '">' + s[0] + '</span>'; }
@@ -29,8 +30,8 @@
   function lineModel() {
     var A = S.api, snap = (G.D && G.D.asOf) || '';
     if (!S.done) return null;
-    if (!A) return { cls: snapshotStale(snap) ? 'stale' : 'never', text: 'Could not reach the server to check freshness. Showing the built-in snapshot as of ' + esc(snap) + snapshotWarning(snap) + '.' };
-    if (!A.enabled) return { cls: snapshotStale(snap) ? 'stale' : 'never', text: 'Live feed not connected. Showing the built-in snapshot as of ' + esc(snap) + snapshotWarning(snap) + '.' };
+    if (!A) return { cls: snapshotStale(snap) ? 'stale' : 'never', text: 'Could not reach the server · ' + snapshotNote(snap) };
+    if (!A.enabled) return { cls: snapshotStale(snap) ? 'stale' : 'never', text: 'Live feed not connected · ' + snapshotNote(snap) };
     var f = A.feed || {};
     var t = ok(f.lastSuccess) ? abs(f.lastSuccess) : null;
     if (A.readOnly && f.state === 'fresh' && t) return { cls: 'fresh', text: 'Live event feed checked ' + t + ' · read-only, nothing stored' };
@@ -38,8 +39,8 @@
     if (f.state === 'degraded' && t) return { cls: 'degraded', text: 'Event feed refreshed ' + t + ' · one source failing' };
     if (f.state === 'stale' && t) return { cls: 'stale', text: 'Stale · event feed last refreshed ' + t };
     if (f.state === 'failed' && t) return { cls: 'failed', text: 'Latest refresh failed · showing data from ' + t };
-    if (f.state === 'failed') return { cls: 'failed', text: 'Latest refresh failed and no earlier good refresh is recorded.' };
-    return { cls: 'never', text: (f.state === 'unknown' ? 'A recorded time is invalid, so freshness cannot be judged.' : 'No successful feed refresh is recorded yet.') + ' Showing the built-in snapshot as of ' + esc(snap) + '.' };
+    if (f.state === 'failed') return { cls: 'failed', text: 'Latest refresh failed · no earlier good refresh is recorded' };
+    return { cls: 'never', text: (f.state === 'unknown' ? 'A recorded time is invalid, so freshness cannot be judged' : 'No successful feed refresh is recorded yet') + ' · ' + snapshotNote(snap) };
   }
   function renderLine() {
     var el = $('fresh-line'); if (!el) return; var m = lineModel();

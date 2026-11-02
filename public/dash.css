@@ -20,6 +20,7 @@
   --color-signal-boosted-shiny:#FF9F1C; --color-signal-boosted-shiny-tag:#F59E0B; --color-signal-shiny-debut:#D65BD0; --color-signal-ticket:#E93D82;
   --color-signal-power:#E5484D; --color-signal-raid:#E5484D; --color-signal-egg:#E8A33D; --color-signal-wild:#30A46C; --color-signal-transfer-candy:#35B8C9;
   /* Source-freshness state roles; preserve the established indicator hues. */
+  --type-title-compact:1.45rem; /* app title on phones narrower than 390px, so title and buttons share a row */
   --color-source-fresh:#6BD18A; --color-source-stale:#E8B84A; --color-source-failed:#FF9B8F;
   /* Mega status pills follow the selected app theme, not the OS preference. */
   --color-status-mega-pill-bg:#4a1d1d; --color-status-mega-pill-fg:#ffb4ab; --color-status-mega-pill-border:#7a2f2f;
@@ -40,8 +41,7 @@ body{background:radial-gradient(1200px 520px at 50% -140px,color-mix(in srgb,var
 
 /* environment banner (preview builds only) */
 .envbar{position:sticky;top:0;z-index:30;margin:0 -16px 10px;padding:calc(8px + env(safe-area-inset-top,0px)) 16px 8px;text-align:center;background:var(--color-warning-banner);color:var(--color-on-warning);border-bottom:3px solid var(--color-warning-banner-border);display:grid;gap:1px}
-#netbar[data-fail]{grid-template-columns:minmax(0,1fr) auto;align-items:center;column-gap:var(--space-3);text-align:left} /* message and button side by side: a failed load adds a short bar above Today, not a tall one that pushes the whole page */
-.envbar[hidden]{display:none}.envbar b{font-weight:800;letter-spacing:.04em}.envbar span{font-size:var(--type-label);font-weight:600}
+.envbar[hidden]{display:none}.envbar b{font-weight:800;letter-spacing:.04em}.envbar span,.netbar b,.netbar span{font-size:var(--type-label);font-weight:600}
 
 /* sub-navigation: a segmented control that scrolls sideways if it must */
 .subnav{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding:2px 0 var(--space-1);margin-top:-4px}
@@ -1502,3 +1502,42 @@ main:not(:has(.load-error:not([hidden]))) #tab-now:has(#home-now:not([data-rende
 .raid-share-actions .raid-share-primary{background:var(--color-inverse-surface);border-color:transparent;color:var(--color-inverse-text)}
 .raid-share-status{min-height:1.35em;margin:0;color:var(--color-text-muted);font:500 var(--type-caption) var(--font-body)}
 @media(max-width:360px){.raid-share-shell{padding:var(--space-3)}.raid-share-card{padding:var(--space-3)}.raid-share-hero{grid-template-columns:60px minmax(0,1fr);gap:var(--space-2)}.raid-share-art{width:60px;height:60px}.raid-share-art .art.ea{width:56px;height:56px}.raid-share-actions{grid-template-columns:1fr}}
+
+/* ---- Batch 10: Today header, status notice, hero card footer, in-person label, week strip ---- */
+/* Offline and saved-copy notice: a quiet inline status (not an alarm bar). Amber appears only as a thin edge; the words stay in the normal text colours. */
+.netbar{margin:0 0 var(--space-3);padding:var(--space-2) var(--space-3);display:grid;gap:2px;text-align:left;background:var(--color-surface-card);color:var(--color-text);border:1px solid var(--color-border-card);border-left:3px solid var(--color-source-stale);border-radius:var(--radius-md)}
+.netbar b,.netbar span{line-height:1.35}
+.netbar span{color:var(--color-text-muted);font-weight:400}
+.netbar[data-fail]{grid-template-columns:minmax(0,1fr) auto;align-items:center;column-gap:var(--space-2)}
+.netbar .nb-retry{min-height:44px;min-width:44px;padding:0 var(--space-2);border:0;background:none;color:var(--color-link);text-decoration:underline;text-underline-offset:3px}
+/* Stale, degraded and failed freshness lines: muted text (AA in both themes) with a small state dot, instead of amber or pink text. */
+.fl-stale button,.fl-degraded button,.fl-failed button{color:var(--color-text-muted)}
+.fl-stale button::before,.fl-degraded button::before,.fl-failed button::before{content:"";flex:none;width:8px;height:8px;border-radius:50%;background:var(--color-source-stale)}
+.fl-failed button::before{background:var(--color-source-failed)}
+@media(max-width:389px){header.top h1{font-size:var(--type-title-compact)}}
+/* Header: buttons sit at the right edge; below 360 px the date and buttons share a second row under the title. */
+header.top .hbtns{margin-left:auto}
+@media(max-width:359px){
+  header.top{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:var(--space-1) var(--space-2)}
+  header.top>div:first-child{display:contents}
+  header.top h1{grid-column:1/-1}
+  header.top .date{grid-column:1;grid-row:2;min-width:0}
+  header.top .hbtns{grid-column:2;grid-row:2}
+}
+/* Today hero card: one primary action (Details), the countdown reads as plain status text, and the footer keeps Details, infographic and star on one row. */
+#home-now .evc.cmp .evc-foot .more[data-open]{background:var(--color-filter-selected-bg);color:var(--color-on-filter-selected);border-color:transparent;font-weight:700}
+#home-now .evc.cmp .cdn{padding:0;border:0;border-radius:0;background:none;font-weight:600}
+#home-now .evc.cmp.live .cdn::before{content:"";display:inline-block;width:8px;height:8px;margin-right:var(--space-2);border-radius:50%;background:var(--k);vertical-align:middle}
+@media(max-width:520px){
+  #home-now .evc.cmp .evc-foot .more{flex:1 1 4.5rem}
+  #home-now .evc.cmp .evc-foot .more[data-open]{flex:1.25 1 4.5rem}
+  #home-now .evc.cmp .evc-foot .more.igthumb{flex:0 0 44px;width:44px}
+  #home-now .evc.cmp .evc-foot .star{margin-left:0}
+}
+.today-sub{margin-top:var(--space-1)}
+/* Week strip: seven 44px days never squeeze; when they do not fit (320 px) the strip scrolls and snaps, with soft edges that show there is more. */
+.wk-days{scrollbar-width:none;scroll-snap-type:x mandatory}
+.wk-days[data-more="r"]{-webkit-mask-image:linear-gradient(to right,currentColor calc(100% - 24px),transparent);mask-image:linear-gradient(to right,currentColor calc(100% - 24px),transparent)}
+.wk-days[data-more="l"]{-webkit-mask-image:linear-gradient(to left,currentColor calc(100% - 24px),transparent);mask-image:linear-gradient(to left,currentColor calc(100% - 24px),transparent)}
+.wk-days[data-more="lr"]{-webkit-mask-image:linear-gradient(to right,transparent,currentColor 24px,currentColor calc(100% - 24px),transparent);mask-image:linear-gradient(to right,transparent,currentColor 24px,currentColor calc(100% - 24px),transparent)}
+.wk-days::-webkit-scrollbar{display:none}

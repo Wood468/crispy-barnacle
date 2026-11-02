@@ -248,7 +248,7 @@ check('Today Tonight planner is an optional accessible local-time disclosure wit
       all(token in INDEX_HTML for token in ['id="today-tonight"', 'id="today-tonight-summary"', 'id="today-tonight-list"']) and
       all(token in DASH_JS for token in ['D.spotlight', 'D.raidHour', 'D.maxBattles', '6–7 pm local', '6 am–9 pm local', 'Weak to:', 'data-best-types', 'gofn-dex-ready', 'function renderTonight', 'renderTonight(t, dateKey)']) and
       all(token in DASH_CSS for token in ['.today-tonight', '.today-tonight-list', 'min-height:44px', '.today-tonight-best']) and
-      'gofn-dex-ready' in APP_JS and '/app.js?v=20261102q' in INDEX_HTML and '/app.js?v=20261102q' in SW_JS)
+      'gofn-dex-ready' in APP_JS and '/app.js?v=20261102r' in INDEX_HTML and '/app.js?v=20261102r' in SW_JS)
 check('Dex/type readiness refreshes only the Tonight disclosure, preserving event-detail focus targets',
       "document.addEventListener('gotypes', function () { try { renderRot(); var t = now(); renderTonight(t, dayKey(t)); } catch (e) {} });" in DASH_JS and
       "document.addEventListener('gofn-dex-ready', function () { try { renderRot(); var t = now(); renderTonight(t, dayKey(t)); } catch (e) {} });" in DASH_JS)
@@ -256,9 +256,9 @@ check('Today multi-deadline tray is accessible, bounded and source-safe',
       all(token in INDEX_HTML for token in ['id="today-deadlines"', 'id="today-deadlines-summary"', 'id="today-deadlines-list"']) and
       all(token in DASH_JS for token in ['var trayLimit = t.getTime() + 7 * 24 * 60 * 60 * 1000', "safeUrl(d.url || '')", 'trayCandidates.slice(0, 8)', 'View all ', 'noopener noreferrer', "sourceUrl.indexOf('https://') === 0"]) and
       all(token in DASH_CSS for token in ['.today-deadlines>summary', 'min-height:44px', '.today-deadline-item', 'var(--color-link)']) and
-      '/dash.js?v=20261102y' in APP_JS and '/dash.js?v=20261102y' in SW_JS and
-      '/dash.css?v=20261102p' in INDEX_HTML and '/dash.css?v=20261102p' in SW_JS and
-      'gofn-shell-v215' in SW_JS)
+      '/dash.js?v=20261102z' in APP_JS and '/dash.js?v=20261102z' in SW_JS and
+      '/dash.css?v=20261102q' in INDEX_HTML and '/dash.css?v=20261102q' in SW_JS and
+      'gofn-shell-v216' in SW_JS)
 check('season pass and deadline data is structured, source-attributed and ordered',
       all(item_id in {item.get('id') for item in SEASON_DATA.get('items', [])}
           for item_id in ['season:pass-halloween', 'season:pass-november']) and
@@ -291,7 +291,7 @@ check('base bonus and information availability controls use semantic status role
           'background: var(--color-status-info-unavailable); color: var(--color-on-status-info-unavailable); border: 1px solid var(--color-border-info-unavailable);',
       ]))
 check('versioned stylesheets are referenced by the page and precached offline',
-      all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261102b', '/dash.css?v=20261102p']))
+      all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261102b', '/dash.css?v=20261102q']))
 check('owner verification scripts are versioned and precached offline',
       '/account.js?v=20261102a' in INDEX_HTML and '/account.js?v=20261102a' in SW_JS and
       '/review.js?v=20261102b' in DASH_JS and '/review.js?v=20261102b' in SW_JS)
@@ -319,16 +319,16 @@ check('event signal chips and detail tags use semantic palette roles with unchan
           '.tg-incense{--tc:var(--color-signal-shadow)}.tg-costume{--tc:var(--color-signal-encounter)}',
       ]))
 check('offline shell cache version advances with the dashboard stylesheet token release',
-      "gofn-shell-v215" in SW_JS)
+      "gofn-shell-v216" in SW_JS)
 check('Travel mode searches only source-dated regional listings and preserves Today visibility',
       all(token in INDEX_HTML for token in ['id="sub-travel"', 'id="travel-q"', 'id="travel-destinations"', 'id="travel-regions"', 'id="travel-results"']) and
       "['travel','Travel','sub-travel']" in APP_JS and
       all(token in DASH_JS for token in ['function renderTravel()', 'TRAVEL_REGIONS', 'data-travel-region', "x.scope !== 'global'", "!/^dated:/.test(String(x.id || ''))", "indexOf('https://') === 0", 'sourceStart', 'sourceEnd', 'travelDateText', 'REG.filter(function (x)', 'var hide = it.travel ?', 'focusedRegion', 'focusTarget.focus()']) and
       all(token in DASH_CSS for token in ['#sub-travel .travel-search', '#travel-regions .fchip{min-height:44px}', '#travel-results .agw .ag-actions .agx{width:44px;height:44px;min-width:44px;min-height:44px}']) and
-      '/app.js?v=20261102q' in INDEX_HTML and '/app.js?v=20261102q' in SW_JS and
-      '/dash.js?v=20261102y' in APP_JS and '/dash.js?v=20261102y' in SW_JS and
-      '/dash.css?v=20261102p' in INDEX_HTML and '/dash.css?v=20261102p' in SW_JS and
-      'gofn-shell-v215' in SW_JS)
+      '/app.js?v=20261102r' in INDEX_HTML and '/app.js?v=20261102r' in SW_JS and
+      '/dash.js?v=20261102z' in APP_JS and '/dash.js?v=20261102z' in SW_JS and
+      '/dash.css?v=20261102q' in INDEX_HTML and '/dash.css?v=20261102q' in SW_JS and
+      'gofn-shell-v216' in SW_JS)
 check('raid share dialog and script are included in the exact offline shell',
       '/raid-share.js?v=20261102b' in INDEX_HTML and '/raid-share.js?v=20261102b' in SW_JS and
       all(token in INDEX_HTML for token in ['id="raid-share-dialog"', 'id="raid-share-title"', 'id="raid-share-send"', 'id="raid-share-copy"']))
@@ -340,8 +340,8 @@ check('raid share payload uses sourced weaknesses, local top-ten marks and safe 
 check('event detail focus restoration can find a re-rendered opener by event key and card role',
       all(token in DETAIL_JS for token in ['openerKey', 'openerClass', "getAttribute('data-open')", 'target.focus()']))
 check('versioned dashboard scripts are referenced by the entry page and precached offline',
-      '/app.js?v=20261102q' in INDEX_HTML and '/app.js?v=20261102q' in SW_JS and
-      '/dash.js?v=20261102y' in APP_JS and '/dash.js?v=20261102y' in SW_JS and
+      '/app.js?v=20261102r' in INDEX_HTML and '/app.js?v=20261102r' in SW_JS and
+      '/dash.js?v=20261102z' in APP_JS and '/dash.js?v=20261102z' in SW_JS and
       '/detail.js?v=20261102f' in DASH_JS and '/detail.js?v=20261102f' in SW_JS)
 check('sync PIN and account controls have one home in Menu and are precached offline',
       INDEX_HTML.index('id="acct" class="acct"') > INDEX_HTML.index('id="sub-menu"') and
@@ -3212,6 +3212,94 @@ with sync_playwright() as p:
               returned['todayKey'] == secondary_state['todayKey'] and returned['thisWeek'] == secondary_state['weekText'],
               {'timeline':timeline_ok,'calendar':calendar_ok,'travel':travel_ok,'raids':raids_ok,'opps':opps_ok,'menu':menu_ok,'saved':saved_ok,'returned':returned})
         secondary_page.context.close()
+    if on('c'):
+        # ---- Batch 10: Today header, status notice, hero card footer, in-person grouping, week strip (real browser, 320 to 430 px) ----
+        B10_CLOCK = '2026-11-02T09:30:00+11:00'
+        def b10_500(pg): pg.route('**/api/events', lambda route, request=None: route.fulfill(status=500, body='{}', content_type='application/json'))
+        B10_COLOR_JS = """
+          const rgba = c => { const x = document.createElement('canvas').getContext('2d', { willReadFrequently: true }); x.clearRect(0,0,1,1); x.fillStyle = '#000'; x.fillStyle = c; x.fillRect(0,0,1,1); return [...x.getImageData(0,0,1,1).data]; };
+          const lum = ([r,g,b]) => { const f = v => { v /= 255; return v <= .03928 ? v / 12.92 : Math.pow((v + .055) / 1.055, 2.4); }; return .2126*f(r) + .7152*f(g) + .0722*f(b); };
+          const ratio = (a, b) => { const l1 = lum(a), l2 = lum(b); return (Math.max(l1,l2) + .05) / (Math.min(l1,l2) + .05); };
+          const solid = (el) => { for (let n = el; n; n = n.parentElement) { const c = rgba(getComputedStyle(n).backgroundColor); if (c[3] === 255) return c; } return rgba(getComputedStyle(document.documentElement).getPropertyValue('--color-canvas') || '#000'); };
+        """
+        for width in (320, 375, 390, 430):
+            tp = page(clock=B10_CLOCK, width=width, height=844, mobile=True)
+            tp.wait_for_selector('#fresh-line:not([hidden]) button')
+            m = tp.evaluate("""() => {
+                const vw = window.visualViewport.width, h = document.querySelector('header.top'), kids = [document.querySelector('header.top h1'), document.querySelector('header.top .date'), document.querySelector('.hbtns')];
+                const boxes = kids.map(k => k.getBoundingClientRect()), btns = [...document.querySelectorAll('.hbtns .hbtn:not([hidden])')].map(b => b.getBoundingClientRect());
+                // the buttons must not intersect the title or the date (a shared row is fine as long as the boxes do not touch)
+                const titleBlock = boxes[0], hb = boxes[2], hit = (a, b) => a.left < b.right - 1 && a.right > b.left + 1 && a.top < b.bottom - 1 && a.bottom > b.top + 1;
+                const overlap = [...document.querySelectorAll('.hbtns .hbtn:not([hidden])')].some(bt => hit(bt.getBoundingClientRect(), titleBlock) || hit(bt.getBoundingClientRect(), boxes[1]));
+                const fl = document.getElementById('fresh-line'), flb = fl.querySelector('button'), rg = document.createRange(), tn = [...flb.childNodes].find(n => n.nodeType === 3); rg.selectNodeContents(tn);
+                const flTops = new Set([...rg.getClientRects()].filter(r => r.width > 0 && r.height > 0 && r.height < 30).map(r => Math.round(r.top / 4)));
+                return { sw: document.documentElement.scrollWidth, iw: window.innerWidth, vw, headerH: Math.round(h.getBoundingClientRect().height), btnRight: Math.max(...btns.map(b => b.right)), btnLeft: Math.min(...btns.map(b => b.left)), btnMinH: Math.min(...btns.map(b => b.height)), btnMinW: Math.min(...btns.map(b => b.width)),
+                         overlap, titleRight: titleBlock.right, titleLeft: titleBlock.left, dateBottom: boxes[1].bottom, hbTop: hb.top, flLines: flTops.size, flText: flb.innerText };
+            }""")
+            check('Batch 10, %dpx: Today has no horizontal overflow and the header stays inside the screen with 44px buttons' % width,
+                  m['sw'] <= m['iw'] and abs(m['vw'] - m['iw']) <= 0.5 and m['btnRight'] <= m['vw'] + 0.5 and m['btnLeft'] >= 0 and m['btnMinH'] >= 43.5 and m['btnMinW'] >= 43.5 and m['titleLeft'] >= 0, m)
+            check('Batch 10, %dpx: the header is one or two tidy rows (buttons never overlap the title or date, header under 105px)' % width,
+                  not m['overlap'] and m['headerH'] <= 105, m)
+            check('Batch 10, %dpx: the feed freshness line fits in two lines' % width, 0 < m['flLines'] <= 2, m)
+            f = tp.evaluate("""() => {
+                const card = document.querySelector('#home-now .evc.cmp'); if (!card) return null;
+                const cr = card.getBoundingClientRect(), kids = [...card.querySelectorAll('.evc-foot > *')].map(e => e.getBoundingClientRect());
+                const star = card.querySelector('.evc-foot .star').getBoundingClientRect(), det = card.querySelector('.evc-foot [data-open]').getBoundingClientRect();
+                const cdn = getComputedStyle(card.querySelector('.cdn'));
+                return { n: kids.length, tops: kids.map(k => Math.round(k.top)), centres: kids.map(k => Math.round(k.top + k.height / 2)), starW: star.width, starH: star.height, starAlone: kids.length > 1 && !kids.some(k => k !== star && Math.abs((k.top + k.height / 2) - (star.top + star.height / 2)) < 12),
+                         inside: kids.every(k => k.left >= cr.left && k.right <= cr.right + 0.5), detailsW: det.width, detailsH: det.height, cdnBorder: cdn.borderTopWidth };
+            }""")
+            check('Batch 10, %dpx: the Today hero card footer keeps Details, infographic and the save star on one row, inside the card' % width,
+                  f is not None and f['n'] >= 2 and not f['starAlone'] and max(f['centres']) - min(f['centres']) <= 12 and f['inside'] and f['starW'] >= 43.5 and f['starH'] >= 43.5 and f['detailsH'] >= 43.5 and f['detailsW'] >= 80, f)
+            check('Batch 10, %dpx: the countdown on the hero card is plain status text, not a bordered pill' % width, f is not None and f['cdnBorder'] == '0px', f)
+            g = tp.evaluate("""() => [...document.querySelectorAll('#home-now .today-phase-cards')].map(c => {
+                const kids = [...c.children], i = kids.findIndex(k => k.classList.contains('today-sub')), rows = kids.filter(k => k.classList.contains('agw'));
+                const cnt = i >= 0 ? kids[i].querySelector('.today-phase-count').textContent : '';
+                return { rows: rows.length, subs: kids.filter(k => k.classList.contains('today-sub')).length, rowsAllAfterSub: i >= 0 && rows.every(r => kids.indexOf(r) > i), label: i >= 0 ? kids[i].innerText.replace(/\\s+/g, ' ') : '', cnt };
+            })""")
+            with_rows = [x for x in g if x['rows']]
+            check('Batch 10, %dpx: every in-person row sits under one "In person" label with the right count in each group (overseas rows included)' % width,
+                  with_rows and all(x['subs'] == 1 and x['rowsAllAfterSub'] and x['label'].lower().startswith('in person') and x['cnt'] == str(x['rows']) for x in with_rows), g)
+            tp.context.close()
+        # the saved-copy notice: calm, short, 44px Retry, in both themes and at every phone width
+        for width in (320, 375, 390, 430):
+            for theme in ('dark', 'light'):
+                nb = page(clock=B10_CLOCK, width=width, height=844, mobile=True, pre=b10_500, ready=False)
+                settle(nb, "!!document.getElementById('netbar') && !document.getElementById('netbar').hidden", 12000)
+                if theme == 'light': nb.evaluate("document.documentElement.setAttribute('data-theme','light')")
+                m = nb.evaluate("() => {" + B10_COLOR_JS + """
+                    const bar = document.getElementById('netbar'), b = bar.querySelector('b'), btn = bar.querySelector('[data-netretry]'), cs = getComputedStyle(bar), bg = solid(bar), banner = rgba(getComputedStyle(document.documentElement).getPropertyValue('--color-warning-banner') || '#000');
+                    const lh = parseFloat(getComputedStyle(b).lineHeight), br = btn.getBoundingClientRect(), r = bar.getBoundingClientRect();
+                    return { text: bar.innerText.replace(/\\s+/g, ' '), h: Math.round(r.height), lines: Math.round(b.getBoundingClientRect().height / lh), pos: cs.position, btnH: br.height, btnW: br.width, btnInside: br.right <= r.right + 0.5 && br.left >= r.left, barInside: r.left >= 0 && r.right <= window.innerWidth + 0.5,
+                             sameAsBanner: bg.slice(0,3).join() === banner.slice(0,3).join(), textRatio: ratio(rgba(getComputedStyle(b).color), bg), linkRatio: ratio(rgba(getComputedStyle(btn).color), bg), sw: document.documentElement.scrollWidth, iw: window.innerWidth };
+                }""")
+                tag = 'Batch 10, %dpx %s' % (width, theme)
+                check(tag + ': saved-copy notice keeps its meaning and its Try again button', 'saved copy' in m['text'] and 'Try again' in m['text'], m)
+                check(tag + ': saved-copy notice is compact (two lines of text, under 75px tall), inline (not sticky) and not the loud warning-banner colour', m['lines'] <= 2 and m['h'] <= 75 and m['pos'] != 'sticky' and not m['sameAsBanner'], m)
+                check(tag + ': Try again is a 44px target inside the notice, with no horizontal overflow', m['btnH'] >= 43.5 and m['btnW'] >= 43.5 and m['btnInside'] and m['barInside'] and m['sw'] <= m['iw'], m)
+                check(tag + ': notice text and Try again meet AA contrast (4.5:1) on the notice surface', m['textRatio'] >= 4.5 and m['linkRatio'] >= 4.5, m)
+                nb.context.close()
+        # week strip: seven 44px days; at 320px it scrolls and snaps with an edge cue, and a chosen Sunday stays in view
+        for width in (320, 375, 390, 430):
+            sp = page(clock='2026-12-20T10:00:00+11:00', width=width, height=844, mobile=True)
+            sp.dispatch_event('nav.tabs button[data-tab="events"]', 'click'); sp.wait_for_selector('#tab-events:not([hidden]) #weekstrip .wd'); sp.wait_for_timeout(400)
+            m = sp.evaluate("""() => {
+                const s = document.querySelector('#weekstrip .wk-days'), r = s.getBoundingClientRect(), days = [...s.querySelectorAll('.wd')].map(d => d.getBoundingClientRect());
+                return { n: days.length, minW: Math.min(...days.map(d => d.width)), scrolls: s.scrollWidth > s.clientWidth + 1, more: s.getAttribute('data-more'), snap: getComputedStyle(s).scrollSnapType, allVisible: days.every(d => d.left >= r.left - 0.5 && d.right <= r.right + 0.5), sw: document.documentElement.scrollWidth, iw: window.innerWidth };
+            }""")
+            check('Batch 10, week strip %dpx: seven 44px+ days, no page overflow, and either every day is visible or the strip snaps and shows an edge cue' % width,
+                  m['n'] == 7 and m['minW'] >= 43.5 and m['sw'] <= m['iw'] and (m['allVisible'] or (m['scrolls'] and 'x' in m['snap'] and m['more'] and 'r' in m['more'])), m)
+            if m['scrolls']:
+                sp.evaluate("document.querySelector('#weekstrip .wk-days').scrollLeft = 9999"); sp.wait_for_timeout(200)
+                e = sp.evaluate("""() => { const s = document.querySelector('#weekstrip .wk-days'), r = s.getBoundingClientRect(), days = [...s.querySelectorAll('.wd')], last = days[6].getBoundingClientRect(); return { lastVisible: last.right <= r.right + 0.5 && last.left >= r.left - 0.5, more: s.getAttribute('data-more') }; }""")
+                check('Batch 10, week strip %dpx: scrolled to the end, Sunday is fully visible and the right-edge cue is gone' % width, e['lastVisible'] and 'r' not in (e['more'] or ''), e)
+                sp.evaluate("document.querySelector('#weekstrip .wk-days').scrollLeft = 0"); sp.wait_for_timeout(100)
+                sp.dispatch_event('#weekstrip .wd:nth-child(7)', 'click'); sp.wait_for_timeout(400)
+                v = sp.evaluate("""() => { const s = document.querySelector('#weekstrip .wk-days'), r = s.getBoundingClientRect(), sel = s.querySelector('.wd.sel'); const b = sel && sel.getBoundingClientRect(); return { sel: !!sel, visible: !!b && b.right <= r.right + 0.5 && b.left >= r.left - 0.5 }; }""")
+                check('Batch 10, week strip %dpx: choosing the clipped Sunday keeps it in view after the strip re-renders' % width, v['sel'] and v['visible'], v)
+            sp.context.close()
+
+
     b.close()
 # Dashboard radius adoption: shared scale values are expressed through semantic roles.
 check('dashboard shared radius declarations consume semantic radius tokens',
