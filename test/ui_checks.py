@@ -829,7 +829,7 @@ with sync_playwright() as p:
         settle(max_monday_page, "document.querySelector('#today-tonight-list')?.textContent.includes('Marked top counters (3): Mega Rayquaza, Mega Mewtwo Y, Mega Gardevoir')", 30000)
         settle(max_monday_page, "!!document.querySelector('#today-tonight-list [data-best-types]')", 30000)
         max_monday_page.locator('#today-tonight > summary').click()
-         check('Today battle plan label covers daytime Max Monday as well as evening activities',
+        check('Today battle plan label covers daytime Max Monday as well as evening activities',
                max_monday_page.locator('#today-tonight-summary').text_content() == "Today's battle plan · 1 activity",
                max_monday_page.locator('#today-tonight-summary').text_content())
         max_text = max_monday_page.locator('#today-tonight-list').text_content()  # text_content, not inner_text: inner_text applies the heading's text-transform once the list is un-hidden (the details toggle event fires async), which made these reads race
