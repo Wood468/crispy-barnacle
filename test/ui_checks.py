@@ -3405,7 +3405,7 @@ with sync_playwright() as p:
             }""")
             check('Batch 12, %dpx: the "In person" label count equals the in-person rows and the brief in-person number (here the live ones; one more is later today)' % width,
                   r['labelTotal'] == r['inPersonRows'] == 4 and r['brief'] == 3, r)
-            check('Batch 12, %dpx: overseas in-person events (Tokyo, Chicago, Lisbon) are all still listed under "In person"' % width,
+            check('Batch 12, %dpx: overseas event cards and the scope-less regional record are all still listed under "In person"' % width,
                   sorted(r['inPersonNames']) == ['Brimstone Night Lisbon', 'Quillfeather Meetup Chicago', 'Synthetic Regional Meetup Wellington', 'Zorblax Expo Tokyo'], r)
             check('Batch 12, %dpx: a located regional-events.json record with no scope property is still classified as in person' % width,
                   'Synthetic Regional Meetup Wellington' in r['inPersonNames'], r)
