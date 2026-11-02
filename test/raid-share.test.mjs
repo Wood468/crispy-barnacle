@@ -16,7 +16,7 @@ test("raid share payload uses published weaknesses and clearly scoped local coun
   let receivedTypes = null;
   const api = load();
   const types = { facts: boss => boss === "Yveltal" ? { weak: ["Electric", "Fairy", "Ice", "Electric", null] } : null };
-  const best = { ready: true, ownedSummary: (weaknesses, limit) => {
+  const best = { ready: true, dataReady: true, ownedSummary: (weaknesses, limit) => {
     receivedTypes = { weaknesses, limit };
     return { count: 4, names: ["Mega Diancie", "Shadow Raikou", "Mega Tyranitar"] };
   } };
@@ -45,7 +45,7 @@ test("raid share payload does not invent weaknesses, counters or dates when sour
 test("raid share payload waits for the local attacker summary to be ready", () => {
   const api = load();
   const types = { facts: () => ({ weak: ["Ice"] }) };
-  const best = { ready: false, ownedSummary: () => ({ count: 0, names: [] }) };
+  const best = { ready: true, dataReady: false, ownedSummary: () => ({ count: 0, names: [] }) };
   const payload = api.buildPayload({ boss: "Yveltal" }, types, best, "");
   assert.equal(payload.counters, null);
   assert.doesNotMatch(payload.text, /Marked counters|No marked counters/);
