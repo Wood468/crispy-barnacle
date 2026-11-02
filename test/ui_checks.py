@@ -1439,7 +1439,7 @@ with sync_playwright() as p:
             return true;
         }""")
         check('failed-thumbnail fixture finds a connected infographic control before scrolling', thumbnail_scrolled)
-        fallback_ready = settle(pb, "(() => { const b=document.querySelector('[data-igcheck=\"cur:trek\"]'); return !!b && b.textContent.trim()==='Check infographic' && b.hasAttribute('data-igbad'); })()", 8000)
+        fallback_ready = settle(pb, "(() => { const b=document.querySelector('[data-igcheck=\\\"cur:trek\\\"]'), card=document.querySelector('[data-igcard=\\\"cur:trek\\\"]'); return !!b && b.textContent.trim()==='Check infographic' && !!card && card.hasAttribute('data-igbad'); })()", 8000)
         check('a thumbnail that fails to load becomes Check infographic', fallback_ready and pb.locator('[data-igcheck="cur:trek"]').first.inner_text()=='Check infographic' and pb.locator('[data-igcard="cur:trek"] img').count()==0 and pb.locator('[data-igcard="cur:trek"]').first.get_attribute('data-igbad') is not None)
         pb.context.close()
         # Regional event infographics must resolve through the same viewer as standard event cards.
