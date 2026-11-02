@@ -253,8 +253,8 @@ check('Today multi-deadline tray is accessible, bounded and source-safe',
       all(token in DASH_JS for token in ['var trayLimit = t.getTime() + 7 * 24 * 60 * 60 * 1000', "safeUrl(d.url || '')", 'trayCandidates.slice(0, 8)', 'View all ', 'noopener noreferrer', "sourceUrl.indexOf('https://') === 0"]) and
       all(token in DASH_CSS for token in ['.today-deadlines>summary', 'min-height:44px', '.today-deadline-item', 'var(--color-link)']) and
       '/dash.js?v=20261102l' in APP_JS and '/dash.js?v=20261102l' in SW_JS and
-      '/dash.css?v=20261102i' in INDEX_HTML and '/dash.css?v=20261102i' in SW_JS and
-      'gofn-shell-v198' in SW_JS)
+      '/dash.css?v=20261102j' in INDEX_HTML and '/dash.css?v=20261102j' in SW_JS and
+      'gofn-shell-v199' in SW_JS)
 check('season pass and deadline data is structured, source-attributed and ordered',
       all(item_id in {item.get('id') for item in SEASON_DATA.get('items', [])}
           for item_id in ['season:pass-halloween', 'season:pass-november']) and
@@ -287,7 +287,7 @@ check('base bonus and information availability controls use semantic status role
           'background: var(--color-status-info-unavailable); color: var(--color-on-status-info-unavailable); border: 1px solid var(--color-border-info-unavailable);',
       ]))
 check('versioned stylesheets are referenced by the page and precached offline',
-      all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261102a', '/dash.css?v=20261102i']))
+      all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261102a', '/dash.css?v=20261102j']))
 check('owner verification scripts are versioned and precached offline',
       '/account.js?v=20261101b' in INDEX_HTML and '/account.js?v=20261101b' in SW_JS and
       '/review.js?v=20261101b' in DASH_JS and '/review.js?v=20261101b' in SW_JS)
@@ -315,7 +315,7 @@ check('event signal chips and detail tags use semantic palette roles with unchan
           '.tg-incense{--tc:var(--color-signal-shadow)}.tg-costume{--tc:var(--color-signal-encounter)}',
       ]))
 check('offline shell cache version advances with the dashboard stylesheet token release',
-      "gofn-shell-v198" in SW_JS)
+      "gofn-shell-v199" in SW_JS)
 check('event detail focus restoration can find a re-rendered opener by event key and card role',
       all(token in DETAIL_JS for token in ['openerKey', 'openerClass', "getAttribute('data-open')", 'target.focus()']))
 check('versioned dashboard scripts are referenced by the entry page and precached offline',
@@ -753,7 +753,7 @@ with sync_playwright() as p:
         settle(max_monday_page, "document.querySelector('#today-tonight-list')?.textContent.includes('Marked top counters (3): Mega Rayquaza, Mega Mewtwo Y, Mega Gardevoir')", 30000)
         settle(max_monday_page, "!!document.querySelector('#today-tonight-list [data-best-types]')", 30000)
         max_monday_page.locator('#today-tonight > summary').click()
-        max_text = max_monday_page.locator('#today-tonight-list').inner_text()
+        max_text = max_monday_page.locator('#today-tonight-list').text_content()  # text_content, not inner_text: inner_text applies the heading's text-transform once the list is un-hidden (the details toggle event fires async), which made these reads race
         check('Today Tonight planner surfaces Max Monday with its published local hours',
               'Max Monday' in max_text and 'Machop' in max_text and '6 am–9 pm local' in max_text, max_text)
         check('Tonight planner shows Max boss weaknesses from the type chart',
@@ -793,7 +793,7 @@ with sync_playwright() as p:
         raid_types_ready = settle(raid_hour_page, "!!(window.GOTYPES && window.GOTYPES.facts('Giratina (Altered Forme)'))", 30000)
         settle(raid_hour_page, "!!document.querySelector('#today-tonight-list [data-best-types]')", 30000)
         raid_hour_page.locator('#today-tonight > summary').click()
-        raid_text = raid_hour_page.locator('#today-tonight-list').inner_text()
+        raid_text = raid_hour_page.locator('#today-tonight-list').text_content()  # text_content, not inner_text: inner_text applies the heading's text-transform once the list is un-hidden (the details toggle event fires async), which made these reads race
         check('Tonight planner surfaces the published Raid Hour boss and local window',
               'Raid Hour' in raid_text and 'Giratina (Altered Forme)' in raid_text and '6–7 pm local' in raid_text,
               raid_text)
@@ -807,7 +807,7 @@ with sync_playwright() as p:
         spotlight_page = page(clock='2026-11-05T09:35:00+11:00', extra=tonight_extra)
         spotlight_page.wait_for_selector('#today-tonight:not([hidden])')
         spotlight_page.locator('#today-tonight > summary').click()
-        spotlight_text = spotlight_page.locator('#today-tonight-list').inner_text()
+        spotlight_text = spotlight_page.locator('#today-tonight-list').text_content()  # text_content, not inner_text: inner_text applies the heading's text-transform once the list is un-hidden (the details toggle event fires async), which made these reads race
         check('Tonight planner surfaces the published Spotlight Hour, bonus and local window',
               'Spotlight Hour' in spotlight_text and 'Teddiursa (witch hat)' in spotlight_text and
               '6–7 pm local' in spotlight_text and '2x evolution XP' in spotlight_text,
@@ -2342,6 +2342,22 @@ with sync_playwright() as p:
         check('Today agenda reserves its space until the first render (layout-shift guard)',
               '#home-now:not([data-render-key]){min-height:' in DASH_CSS and ':has(#home-now:not([data-render-key]))' in DASH_CSS and 'EV_READY' in DASH_JS)
         b1.context.close()
+        check('Today holds the space of everything that fills in late: footer below the fold while pending, freshness line, deadlines row, date and tab bar',
+              all(token in DASH_CSS for token in ['#tab-now:has(#home-now:not([data-render-key]):not([data-state="unavailable"])){min-height:100vh;min-height:100svh}',
+                                                  '.fresh-line[hidden]{display:flex!important;visibility:hidden}', '.fresh-line{display:flex;margin:-6px 0 6px;min-height:44px}',
+                                                  '.day-brief:not([data-ready]) .today-deadlines[hidden]{display:block!important;visibility:hidden;min-height:44px}',
+                                                  'header.top .date:empty::before', 'nav.tabs .row:empty{min-height:48px}']))
+        # Cumulative layout shift of a cold Today load, summed over every shift (user input is not excluded: there is none). Measured un-throttled on purpose: the big
+        # shifts (the footer jumping a screen when the agenda arrives, the freshness line and deadlines row growing, the date and tab bar filling in) happen at any speed, so
+        # this is deterministic in CI. Batch 4 measured 0.62 (390px) and 1.09 (1280px) before the fix; Google's "good" threshold is 0.1. Throttled 20-run numbers are in docs/ROADMAP.md.
+        CLS_OBSERVER = "window.__cls=0;new PerformanceObserver(l=>{for(const e of l.getEntries())window.__cls+=e.value}).observe({type:'layout-shift',buffered:true})"
+        for cls_w in (390, 1280):
+            cpg = page(width=cls_w, mobile=cls_w < 500, pre=lambda p: p.add_init_script(CLS_OBSERVER))
+            settle(cpg, "!!(window.GOFRESH&&window.GOFRESH.state().done&&window.GOINFOGRAPHIC&&window.GOEXTRA)")  # the late scripts and the freshness line are part of the load
+            cpg.wait_for_timeout(1500)
+            cls_val = cpg.evaluate("window.__cls")
+            check('Today cold load at %dpx has a cumulative layout shift under 0.1' % cls_w, cls_val < 0.1, 'measured %.4f' % cls_val)
+            cpg.context.close()
 
     if on('b'):
         # ---- Batch 2 regression guards: layout width, console cleanliness, touch targets (deterministic: fixed clock, mocked API/images/fonts) ----
