@@ -248,7 +248,7 @@ check('Today Tonight planner is an optional accessible local-time disclosure wit
       all(token in INDEX_HTML for token in ['id="today-tonight"', 'id="today-tonight-summary"', 'id="today-tonight-list"']) and
       all(token in DASH_JS for token in ['D.spotlight', 'D.raidHour', 'D.maxBattles', '6–7 pm local', '6 am–9 pm local', 'Weak to:', 'data-best-types', 'gofn-dex-ready', 'function renderTonight', 'renderTonight(t, dateKey)']) and
       all(token in DASH_CSS for token in ['.today-tonight', '.today-tonight-list', 'min-height:44px', '.today-tonight-best']) and
-      'gofn-dex-ready' in APP_JS and '/app.js?v=20261102r' in INDEX_HTML and '/app.js?v=20261102r' in SW_JS)
+      'gofn-dex-ready' in APP_JS and '/app.js?v=20261103a' in INDEX_HTML and '/app.js?v=20261103a' in SW_JS)
 check('Dex/type readiness refreshes only the Tonight disclosure, preserving event-detail focus targets',
       "document.addEventListener('gotypes', function () { try { renderRot(); var t = now(); renderTonight(t, dayKey(t)); } catch (e) {} });" in DASH_JS and
       "document.addEventListener('gofn-dex-ready', function () { try { renderRot(); var t = now(); renderTonight(t, dayKey(t)); } catch (e) {} });" in DASH_JS)
@@ -256,9 +256,9 @@ check('Today multi-deadline tray is accessible, bounded and source-safe',
       all(token in INDEX_HTML for token in ['id="today-deadlines"', 'id="today-deadlines-summary"', 'id="today-deadlines-list"']) and
       all(token in DASH_JS for token in ['var trayLimit = t.getTime() + 7 * 24 * 60 * 60 * 1000', "safeUrl(d.url || '')", 'trayCandidates.slice(0, 8)', 'View all ', 'noopener noreferrer', "sourceUrl.indexOf('https://') === 0"]) and
       all(token in DASH_CSS for token in ['.today-deadlines>summary', 'min-height:44px', '.today-deadline-item', 'var(--color-link)']) and
-      '/dash.js?v=20261102z' in APP_JS and '/dash.js?v=20261102z' in SW_JS and
-      '/dash.css?v=20261102q' in INDEX_HTML and '/dash.css?v=20261102q' in SW_JS and
-      'gofn-shell-v217' in SW_JS)
+      '/dash.js?v=20261103a' in APP_JS and '/dash.js?v=20261103a' in SW_JS and
+      '/dash.css?v=20261103a' in INDEX_HTML and '/dash.css?v=20261103a' in SW_JS and
+      'gofn-shell-v218' in SW_JS)
 check('season pass and deadline data is structured, source-attributed and ordered',
       all(item_id in {item.get('id') for item in SEASON_DATA.get('items', [])}
           for item_id in ['season:pass-halloween', 'season:pass-november']) and
@@ -291,7 +291,7 @@ check('base bonus and information availability controls use semantic status role
           'background: var(--color-status-info-unavailable); color: var(--color-on-status-info-unavailable); border: 1px solid var(--color-border-info-unavailable);',
       ]))
 check('versioned stylesheets are referenced by the page and precached offline',
-      all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261102b', '/dash.css?v=20261102q']))
+      all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261102b', '/dash.css?v=20261103a']))
 check('owner verification scripts are versioned and precached offline',
       '/account.js?v=20261102a' in INDEX_HTML and '/account.js?v=20261102a' in SW_JS and
       '/review.js?v=20261102c' in DASH_JS and '/review.js?v=20261102c' in SW_JS)
@@ -319,16 +319,16 @@ check('event signal chips and detail tags use semantic palette roles with unchan
           '.tg-incense{--tc:var(--color-signal-shadow)}.tg-costume{--tc:var(--color-signal-encounter)}',
       ]))
 check('offline shell cache version advances with the dashboard stylesheet token release',
-      "gofn-shell-v217" in SW_JS)
+      "gofn-shell-v218" in SW_JS)
 check('Travel mode searches only source-dated regional listings and preserves Today visibility',
       all(token in INDEX_HTML for token in ['id="sub-travel"', 'id="travel-q"', 'id="travel-destinations"', 'id="travel-regions"', 'id="travel-results"']) and
       "['travel','Travel','sub-travel']" in APP_JS and
       all(token in DASH_JS for token in ['function renderTravel()', 'TRAVEL_REGIONS', 'data-travel-region', "x.scope !== 'global'", "!/^dated:/.test(String(x.id || ''))", "indexOf('https://') === 0", 'sourceStart', 'sourceEnd', 'travelDateText', 'REG.filter(function (x)', 'var hide = it.travel ?', 'focusedRegion', 'focusTarget.focus()']) and
       all(token in DASH_CSS for token in ['#sub-travel .travel-search', '#travel-regions .fchip{min-height:44px}', '#travel-results .agw .ag-actions .agx{width:44px;height:44px;min-width:44px;min-height:44px}']) and
-      '/app.js?v=20261102r' in INDEX_HTML and '/app.js?v=20261102r' in SW_JS and
-      '/dash.js?v=20261102z' in APP_JS and '/dash.js?v=20261102z' in SW_JS and
-      '/dash.css?v=20261102q' in INDEX_HTML and '/dash.css?v=20261102q' in SW_JS and
-      'gofn-shell-v217' in SW_JS)
+      '/app.js?v=20261103a' in INDEX_HTML and '/app.js?v=20261103a' in SW_JS and
+      '/dash.js?v=20261103a' in APP_JS and '/dash.js?v=20261103a' in SW_JS and
+      '/dash.css?v=20261103a' in INDEX_HTML and '/dash.css?v=20261103a' in SW_JS and
+      'gofn-shell-v218' in SW_JS)
 check('raid share dialog and script are included in the exact offline shell',
       '/raid-share.js?v=20261102b' in INDEX_HTML and '/raid-share.js?v=20261102b' in SW_JS and
       all(token in INDEX_HTML for token in ['id="raid-share-dialog"', 'id="raid-share-title"', 'id="raid-share-send"', 'id="raid-share-copy"']))
@@ -340,8 +340,8 @@ check('raid share payload uses sourced weaknesses, local top-ten marks and safe 
 check('event detail focus restoration can find a re-rendered opener by event key and card role',
       all(token in DETAIL_JS for token in ['openerKey', 'openerClass', "getAttribute('data-open')", 'target.focus()']))
 check('versioned dashboard scripts are referenced by the entry page and precached offline',
-      '/app.js?v=20261102r' in INDEX_HTML and '/app.js?v=20261102r' in SW_JS and
-      '/dash.js?v=20261102z' in APP_JS and '/dash.js?v=20261102z' in SW_JS and
+      '/app.js?v=20261103a' in INDEX_HTML and '/app.js?v=20261103a' in SW_JS and
+      '/dash.js?v=20261103a' in APP_JS and '/dash.js?v=20261103a' in SW_JS and
       '/detail.js?v=20261102f' in DASH_JS and '/detail.js?v=20261102f' in SW_JS)
 check('sync PIN and account controls have one home in Menu and are precached offline',
       INDEX_HTML.index('id="acct" class="acct"') > INDEX_HTML.index('id="sub-menu"') and
@@ -3347,9 +3347,9 @@ with sync_playwright() as p:
                   f is not None and f['n'] >= 2 and not f['starAlone'] and max(f['centres']) - min(f['centres']) <= 12 and f['inside'] and f['starW'] >= 43.5 and f['starH'] >= 43.5 and f['detailsH'] >= 43.5 and f['detailsW'] >= 80, f)
             check('Batch 10, %dpx: the countdown on the hero card is plain status text, not a bordered pill' % width, f is not None and f['cdnBorder'] == '0px', f)
             g = tp.evaluate("""() => [...document.querySelectorAll('#home-now .today-phase-cards')].map(c => {
-                const kids = [...c.children], i = kids.findIndex(k => k.classList.contains('today-sub')), rows = kids.filter(k => k.classList.contains('agw'));
+                const kids = [...c.children], i = kids.findIndex(k => k.classList.contains('today-sub') && /^in person/i.test(k.innerText.trim())), onl = kids.findIndex(k => k.classList.contains('today-sub') && /^online/i.test(k.innerText.trim())), rows = kids.filter(k => k.classList.contains('agw') && (onl < 0 || kids.indexOf(k) < onl));
                 const cnt = i >= 0 ? kids[i].querySelector('.today-phase-count').textContent : '';
-                return { rows: rows.length, subs: kids.filter(k => k.classList.contains('today-sub')).length, rowsAllAfterSub: i >= 0 && rows.every(r => kids.indexOf(r) > i), label: i >= 0 ? kids[i].innerText.replace(/\\s+/g, ' ') : '', cnt };
+                return { rows: rows.length, subs: kids.filter(k => k.classList.contains('today-sub') && /^in person/i.test(k.innerText.trim())).length, rowsAllAfterSub: i >= 0 && rows.every(r => kids.indexOf(r) > i), label: i >= 0 ? kids[i].innerText.replace(/\\s+/g, ' ') : '', cnt };
             })""")
             with_rows = [x for x in g if x['rows']]
             check('Batch 10, %dpx: every in-person row sits under one "In person" label with the right count in each group (overseas rows included)' % width,
@@ -3373,6 +3373,82 @@ with sync_playwright() as p:
                 check(tag + ': Try again is a 44px target inside the notice, with no horizontal overflow', m['btnH'] >= 43.5 and m['btnW'] >= 43.5 and m['btnInside'] and m['barInside'] and m['sw'] <= m['iw'], m)
                 check(tag + ': notice text and Try again meet AA contrast (4.5:1) on the notice surface', m['textRatio'] >= 4.5 and m['linkRatio'] >= 4.5, m)
                 nb.context.close()
+
+        # ---- Batch 12: "In person" means in person; no-venue world items are labelled honestly; one stale message; row action labels; hero art; week strip observer ----
+        B12_WORLD = json.dumps({'updated': '2026-11-02T00:00:00Z', 'events': [
+            {'id': 'w-b12-tokyo', 'name': 'Zorblax Expo Tokyo', 'place': 'Tokyo, Japan', 'area': 'Asia', 'scope': 'regional', 'start': '2026-11-01', 'end': '2026-11-09', 'sources': [{'url': 'https://example.com/a'}]},
+            {'id': 'w-b12-chicago', 'name': 'Quillfeather Meetup Chicago', 'place': 'Chicago, USA', 'area': 'Americas', 'scope': 'regional', 'start': '2026-11-02', 'end': '2026-11-02', 'sources': [{'url': 'https://example.com/b'}]},
+            {'id': 'w-b12-later', 'name': 'Brimstone Night Lisbon', 'place': 'Lisbon, Portugal', 'area': 'Europe', 'scope': 'regional', 'start': '2026-11-02T18:00:00+11:00', 'end': '2026-11-02T22:00:00+11:00', 'sources': [{'url': 'https://example.com/c'}]},
+            {'id': 'w-b12-g1', 'name': 'Snorfwhistle Worldwide Showcase', 'place': '', 'area': 'Worldwide', 'scope': 'global', 'start': '2026-11-01', 'end': '2026-11-05', 'sources': [{'url': 'https://example.com/d'}]},
+            {'id': 'w-b12-g2', 'name': 'Plinkerton Play from anywhere', 'place': 'Play from anywhere', 'area': 'Worldwide', 'scope': 'global', 'start': '2026-11-02T20:00:00+11:00', 'end': '2026-11-02T23:00:00+11:00', 'sources': [{'url': 'https://example.com/e'}]},
+        ]})
+        for width in (320, 390):
+            wp = page(clock=B10_CLOCK, width=width, height=844, mobile=True, extra={'**/world-events.json': (B12_WORLD, 200)})
+            r = wp.evaluate("""() => {
+                const norm = t => t.replace(/\\s+/g, ' ').trim();
+                const out = { subs: [], inPersonRows: 0, inPersonNames: [], onlineNames: [], labelTotal: 0 };
+                document.querySelectorAll('#home-now .today-phase-cards').forEach(c => {
+                    let cur = '';
+                    [...c.children].forEach(k => {
+                        if (k.classList.contains('today-sub')) { cur = norm(k.querySelector('span').textContent).toLowerCase(); out.subs.push([cur, +k.querySelector('.today-phase-count').textContent]); }
+                        else if (k.classList.contains('agw')) { const n = k.querySelector('.agt b').textContent; if (cur === 'in person') { out.inPersonRows++; out.inPersonNames.push(n); } else out.onlineNames.push([cur, n]); }
+                    });
+                });
+                out.labelTotal = out.subs.filter(s => s[0] === 'in person').reduce((a, s) => a + s[1], 0);
+                out.brief = +document.getElementById('day-inperson-count').textContent; out.briefGame = +document.getElementById('day-live-count').textContent;
+                out.liveGroup = (document.querySelector('#home-now .today-phase-group .today-phase-count') || {}).textContent;
+                return out;
+            }""")
+            check('Batch 12, %dpx: the "In person" label count equals the in-person rows and the brief in-person number (here the live ones; one more is later today)' % width,
+                  r['labelTotal'] == r['inPersonRows'] == 3 and r['brief'] == 2, r)
+            check('Batch 12, %dpx: overseas in-person events (Tokyo, Chicago, Lisbon) are all still listed under "In person"' % width,
+                  sorted(r['inPersonNames']) == ['Brimstone Night Lisbon', 'Quillfeather Meetup Chicago', 'Zorblax Expo Tokyo'], r)
+            check('Batch 12, %dpx: global / play-from-anywhere items are never under "In person"; they sit under "Online / worldwide" and still count as in game' % width,
+                  all(n[0] == 'online / worldwide' for n in r['onlineNames']) and sorted(n[1] for n in r['onlineNames']) == ['Plinkerton Play from anywhere', 'Snorfwhistle Worldwide Showcase'] and r['briefGame'] >= 1, r)
+            wp.context.close()
+        # one problem, one message: with the saved-copy notice showing, the freshness line steps aside
+        for width in (320, 390):
+            sp2 = page(clock=B10_CLOCK, width=width, height=844, mobile=True, pre=b10_500, ready=False)
+            settle(sp2, "!!document.getElementById('netbar') && !document.getElementById('netbar').hidden", 12000)
+            sp2.wait_for_timeout(1500)
+            m = sp2.evaluate("""() => { const nb = document.getElementById('netbar'), fl = document.getElementById('fresh-line'), vis = e => { const r = e.getBoundingClientRect(); const cs = getComputedStyle(e); return r.height > 0 && cs.visibility !== 'hidden' && cs.display !== 'none'; };
+                return { net: nb.innerText.replace(/\\s+/g, ' '), netRole: nb.getAttribute('role'), freshVisible: vis(fl), freshText: fl.innerText, retry: !!nb.querySelector('[data-netretry]') }; }""")
+            check('Batch 12, %dpx: with the saved-copy notice showing there is one message (no second "Live feed not connected" line), with the date, Try again and status role' % width,
+                  not m['freshVisible'] and 'saved copy' in m['net'] and ' from ' in m['net'] and m['retry'] and m['netRole'] == 'status', m)
+            sp2.context.close()
+        # row actions say what they do
+        ap = page(clock=B10_CLOCK, width=320, height=844, mobile=True)
+        a = ap.evaluate("""() => [...document.querySelectorAll('#home-now .agw')].slice(0, 4).map(w => {
+            const ig = w.querySelector('.agig'), hd = w.querySelector('[data-hide]'), cap = (e, pseudo) => getComputedStyle(e, pseudo).content;
+            const rect = e => { const r = e.getBoundingClientRect(); return [r.width, r.height]; };
+            return { igCap: ig.classList.contains('igthumb') ? 'thumb' : cap(ig, '::after'), igLabel: ig.getAttribute('aria-label'), hideText: hd.innerText.replace(/\\s+/g, ' ').trim(), hideLabel: hd.getAttribute('aria-label'), hideTitle: hd.title, igSize: rect(ig), hideSize: rect(hd), name: w.querySelector('.agt b').textContent };
+        })""")
+        check('Batch 12: in-person row buttons are captioned ("Poster"/thumbnail and "Hide"), keep names with the event, are 44px, and Hide says it only hides',
+              a and all(x['hideText'].lower().endswith('hide') and x['hideLabel'] == 'Hide ' + x['name'] and 'again' in x['hideTitle'].lower() and x['hideSize'][0] >= 43.5 and x['hideSize'][1] >= 43.5 and x['igSize'][0] >= 43.5 and x['igSize'][1] >= 43.5
+                        and x['igLabel'].endswith(x['name']) and (x['igCap'] in ('thumb', '"Poster"')) for x in a), a)
+        ap.context.close()
+        # a card whose pictures all fail to load does not reserve an empty art column
+        hp = page(clock=B10_CLOCK, width=320, height=844, mobile=True)
+        h = hp.evaluate("""() => { const c = document.querySelector('#home-now .evc.cmp'), art = c.querySelector('.evc-art'); return { imgs: c.querySelectorAll('.evc-art img').length, artDisplay: getComputedStyle(art).display, mainW: Math.round(c.querySelector('.evc-main').getBoundingClientRect().width), cardW: Math.round(c.getBoundingClientRect().width), firstChildTop: Math.round(c.querySelector('.evc-main').getBoundingClientRect().top - c.getBoundingClientRect().top) }; }""")
+        check('Batch 12: the hero card has no empty art block when its pictures are gone (art column collapsed, content starts at the card padding)',
+              (h['imgs'] > 0 or (h['artDisplay'] == 'none' and h['mainW'] >= h['cardW'] - 36 and h['firstChildTop'] <= 20)), h)
+        hp.context.close()
+        # week strip: re-rendering must not pile up observers on detached strips
+        wk = page(clock='2026-12-20T10:00:00+11:00', width=320, height=844, mobile=True)
+        wk.evaluate("""() => { window.__ro = { made: 0, obs: 0, disc: 0 }; const R = window.ResizeObserver; window.ResizeObserver = class extends R { constructor(cb) { super(cb); window.__ro.made++; } observe(t) { window.__ro.obs++; return super.observe(t); } disconnect() { window.__ro.disc++; return super.disconnect(); } }; }""")
+        wk.dispatch_event('nav.tabs button[data-tab="events"]', 'click'); wk.wait_for_selector('#tab-events:not([hidden]) #weekstrip .wd')
+        for _ in range(5): wk.dispatch_event('#weekstrip [data-wk="1"]', 'click'); wk.wait_for_timeout(150)
+        ro = wk.evaluate("window.__ro")
+        check('Batch 12: re-rendering the week strip reuses one ResizeObserver (at most one created, previous strip released with disconnect)', ro['made'] <= 1 and ro['obs'] >= 5 and ro['disc'] >= ro['obs'] - 1, ro)
+        wk.context.close()
+        # status dots in the light theme reach 3:1 against the card surface
+        lp = page(clock=B10_CLOCK, width=390, height=844, mobile=True)
+        lp.evaluate("document.documentElement.setAttribute('data-theme','light')")
+        lc = lp.evaluate("() => {" + B10_COLOR_JS + """
+            const cs = getComputedStyle(document.documentElement), bg = rgba(cs.getPropertyValue('--color-surface-card').trim() || '#fff'), canvas = rgba(cs.getPropertyValue('--color-canvas').trim() || '#fff');
+            return { stale: ratio(rgba(cs.getPropertyValue('--color-source-stale').trim()), bg), failed: ratio(rgba(cs.getPropertyValue('--color-source-failed').trim()), bg), staleC: ratio(rgba(cs.getPropertyValue('--color-source-stale').trim()), canvas), failedC: ratio(rgba(cs.getPropertyValue('--color-source-failed').trim()), canvas) }; }""")
+        check('Batch 12: amber and failed status dots are at least 3:1 on the light surfaces', min(lc.values()) >= 3.0, lc)
+        lp.context.close()
         # week strip: seven 44px days; at 320px it scrolls and snaps with an edge cue, and a chosen Sunday stays in view
         for width in (320, 375, 390, 430):
             sp = page(clock='2026-12-20T10:00:00+11:00', width=width, height=844, mobile=True)

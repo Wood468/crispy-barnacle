@@ -45,6 +45,8 @@
   function renderLine() {
     var el = $('fresh-line'); if (!el) return; var m = lineModel();
     if (!m) { el.hidden = true; return; }
+    /* One message per problem: while the saved-copy notice is showing it already says the feed did not load and from when, so this line steps aside. */
+    var nb = $('netbar'); if (nb && nb.hasAttribute('data-fail') && !nb.hidden) { el.hidden = true; el.setAttribute('data-released', ''); return; }
     el.removeAttribute('data-released'); el.hidden = false; el.className = 'fresh-line fl-' + m.cls; el.innerHTML = '<button type="button" id="fresh-go" aria-label="Open sources and freshness">' + m.text + ' <span aria-hidden="true">›</span></button>';
   }
 
@@ -116,6 +118,7 @@
     if (window.GOMOVE) GOMOVE.ready.then(renderAll);
   });
   document.addEventListener('gomoves', renderAll);
+  document.addEventListener('gofn-netbar', renderLine);
   document.addEventListener('click', function (e) { if (e.target.closest('#fresh-go')) { G.showTab('saved', 'menu'); var d = $('srcdd'); if (d) { d.open = true; setTimeout(function () { d.scrollIntoView({ block: 'start' }); }, 50); } } });
   window.GOFRESH = { state: function () { return S; }, lineModel: lineModel, render: renderAll };
 })();
