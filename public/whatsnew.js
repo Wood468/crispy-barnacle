@@ -115,7 +115,7 @@
     }
     st.idsKnown = true; st.evDone = true; render();
   }
-  function getJson(u) { return fetch(u).then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; }); }
+  function getJson(u) { return window.GOLIB.jsonOrNull(u); }
   function loadLeakChanges() {
     var last = loadLeaks(), since = Math.max(last ? last.at : 0, Date.now() - 14 * DAY);
     if (!last) since = Date.now() - 7 * DAY;

@@ -187,12 +187,29 @@
       return t ? (t.basis === 'verified' ? '' : '≈ ') + 'A$' + Number(t.aud).toFixed(2) : 'A$ price not confirmed';
     });
   }
-  try { if (typeof fetch === 'function' && typeof window !== 'undefined') fetch('/prices.json').then(function (r) { return r.ok ? r.json() : null; }).then(function (d) { if (d) setTiers(d.tiers_au); }).catch(function () { }); } catch (e) { }
+  /* One request per JSON URL per page load. The first caller's request is shared by everyone who asks for the same URL within maxAge (default 30 s), each caller getting its own freshly parsed copy so nobody can mutate another's data.
+     A failed request (network error, non-2xx, bad JSON) is dropped at once, so the next caller tries again. opts.fresh skips the shared copy and replaces it; opts.init is passed to fetch for the request that actually goes out. */
+  var JSON_CACHE = {};
+  function getJson(url, opts) {
+    opts = opts || {};
+    var maxAge = opts.maxAge == null ? 30000 : opts.maxAge, hit = JSON_CACHE[url], now = Date.now(), entry;
+    if (hit && !opts.fresh && now - hit.t < maxAge) entry = hit;
+    else {
+      var p = fetch(url, opts.init).then(function (r) { if (!r.ok) throw new Error(url + ' HTTP ' + r.status); return r.text(); });
+      entry = JSON_CACHE[url] = { t: now, p: p };
+      p.catch(function () { if (JSON_CACHE[url] === entry) delete JSON_CACHE[url]; });
+    }
+    return entry.p.then(function (text) {
+      try { return JSON.parse(text); } catch (e) { if (JSON_CACHE[url] === entry) delete JSON_CACHE[url]; throw e; }
+    });
+  }
+  function jsonOrNull(url, opts) { return getJson(url, opts).catch(function () { return null; }); }
+  try { if (typeof fetch === 'function' && typeof window !== 'undefined') jsonOrNull('/prices.json').then(function (d) { if (d) setTiers(d.tiers_au); }); } catch (e) { }
 
   // Public prices, plus the owner's private Indonesian (Rp) prices when the sync PIN is on this device (never for anyone else).
   function loadPrices() {
     var pin = ''; try { pin = localStorage.getItem('gofn-pin') || ''; } catch (e) { }
-    var pub = fetch('/prices.json').then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; });
+    var pub = jsonOrNull('/prices.json');
     if (!pin) return pub;
     return Promise.all([pub, fetch('/api/prices-private', { headers: { 'x-pin': pin }, cache: 'no-store' }).then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; })]).then(function (a) {
       var d = a[0]; if (!d || !a[1]) return d;
@@ -241,5 +258,5 @@
     return { inGame: inGame, inPerson: inPerson, total: inGame + inPerson };
   }
 
-  return { esc: esc, rpEstimate: rpEstimate, raidEventFor: raidEventFor, isPlaceholder: isPlaceholder, audify: audify, setTiers: setTiers, loadPrices: loadPrices, priceView: priceView, fmtRp: fmtRp, buildQueue: buildQueue, parseForm: parseForm, formId: formId, merge: merge, reconcileSync: reconcileSync, norm: norm, lev: lev, matchName: matchName, candidates: candidates, liveActivityCounts: liveActivityCounts };
+  return { esc: esc, rpEstimate: rpEstimate, raidEventFor: raidEventFor, isPlaceholder: isPlaceholder, audify: audify, setTiers: setTiers, loadPrices: loadPrices, getJson: getJson, jsonOrNull: jsonOrNull, priceView: priceView, fmtRp: fmtRp, buildQueue: buildQueue, parseForm: parseForm, formId: formId, merge: merge, reconcileSync: reconcileSync, norm: norm, lev: lev, matchName: matchName, candidates: candidates, liveActivityCounts: liveActivityCounts };
 }));

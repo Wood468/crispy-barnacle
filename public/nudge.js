@@ -15,11 +15,11 @@
       return '<div class="nudge-i"><span class="nudge-t">' + esc(n.text) + '</span>' + n.action + '<button type="button" class="nudge-x" data-nudge-x="' + esc(n.key) + '" aria-label="Dismiss">✕</button></div>';
     }).join('');
   }
-  function json(u) { return fetch(u).then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; }); }
+  function json(u, opts) { return window.GOLIB.jsonOrNull(u, opts); }
   function init() {
     var now = document.getElementById('tab-now'); if (!now) return;
     if (!document.getElementById('nudge')) { var d = document.createElement('div'); d.id = 'nudge'; d.hidden = true; now.insertBefore(d, now.firstChild); }
-    Promise.all([json('/infographic-queue.json?t=' + Math.floor(Date.now() / 600000)), json('/api/ig-decisions'), json('/event-details.json')]).then(function (R) {
+    Promise.all([json('/infographic-queue.json'), json('/api/ig-decisions'), json('/event-details.json', { maxAge: 600000 })]).then(function (R) {
       /* The infographic review banner lives in review.js and updates as you decide; a second banner here went stale. */
       var X = window.GODASH, evs = X ? X.events() : [], t = Date.now();
       Object.keys((R[2] && R[2].events) || {}).forEach(function (id) {
@@ -35,5 +35,7 @@
     var x = e.target.closest && e.target.closest('[data-nudge-x]'); if (x) return dismiss(x.getAttribute('data-nudge-x'));
     if (e.target.closest && e.target.closest('[data-nudge-menu]')) { var m = document.getElementById('hmenu'); if (m) m.click(); }
   });
-  if (window.GODASH) init(); else document.addEventListener('DOMContentLoaded', init);
+  /* The note only matters once Today has drawn, and event-details.json is big: ask for it when the browser is idle, not while the first screen is still loading. */
+  function later() { if (window.requestIdleCallback) window.requestIdleCallback(init, { timeout: 4000 }); else setTimeout(init, 1500); }
+  if (window.GODASH) later(); else document.addEventListener('DOMContentLoaded', later);
 })();

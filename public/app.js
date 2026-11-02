@@ -67,7 +67,7 @@ Promise.all([
     var ck=(o.costume&&!o.asset&&o.label&&!dbx)?' data-ck="'+esc(String(o.n).toLowerCase()+'|'+String(o.label).toLowerCase())+'"':(isg&&!gm?' data-gk="'+esc(gk)+'"':'');
     var fb=cstill?' data-still="'+esc(cstill)+'" title="'+(gm?'Gigantamax picture: Serebii':'Costume picture: Serebii / Dittobase')+'"':sd?' data-still="'+esc(still)+'" data-gif="https://play.pokemonshowdown.com/sprites/'+(o.shiny?'ani-shiny':'ani')+'/'+sd+'.gif"':'';
     var tg=(o.costume||o.asset)?'':' data-sn="'+esc(o.n)+'"'+(o.shiny?' data-sv="1"':'')+(o.shadow?' data-ss="1"':'')+(o.dynamax?' data-sd="1"':'');
-    return '<img class="art'+(sd?' ani':'')+(gm?' gm-real':'')+(cls?' '+cls:'')+'" loading="lazy" alt="'+esc(alt)+'" src="'+src+'"'+fb+tg+ck+' data-err="art"'+(cls==='in'?' data-load="has"':'')+'>';
+    return '<img class="art'+(sd?' ani':'')+(gm?' gm-real':'')+(cls?' '+cls:'')+'" loading="lazy" decoding="async" width="208" height="256" alt="'+esc(alt)+'" src="'+src+'"'+fb+tg+ck+' data-err="art"'+(cls==='in'?' data-load="has"':'')+'>';
   }
   /* Tap any Pokémon picture to flip it between its normal and shiny look; tap again to flip back. Costumes have no flip. */
   document.addEventListener('click',function(e){
@@ -166,14 +166,14 @@ Promise.all([
   /* The game's own icons (type badges, weather, eggs) dropped inline into plain text. Input is already HTML-escaped. */
   var TYPES='normal fighting flying poison ground rock bug ghost steel fire water grass electric psychic ice dragon dark fairy'.split('|').join(' ');
   var WX={sunny:'sunny',clear:'sunny','partly cloudy':'partly',cloudy:'cloudy',overcast:'cloudy',rainy:'rain',rain:'rain',snowy:'snow',snow:'snow',foggy:'fog',fog:'fog',windy:'windy',wind:'windy'};
-  function typeImg(t){t=t.toLowerCase();return '<img class="ti" src="/ico/g/type-'+t+'.webp" alt="'+t+'" title="'+t+' type" loading="lazy">'}
+  function typeImg(t){t=t.toLowerCase();return '<img class="ti" src="/ico/g/type-'+t+'.webp" alt="'+t+'" title="'+t+' type" loading="lazy" decoding="async">'}
   function rich(h){
     h=String(h);
     if(window.GOLIB&&window.GOLIB.audify)h=window.GOLIB.audify(h);
     h=h.replace(/\b(Normal|Fighting|Flying|Poison|Ground|Rock|Bug|Ghost|Steel|Fire|Water|Grass|Electric|Psychic|Ice|Dragon|Dark|Fairy)(-| )types?\b/g,function(m,t){return typeImg(t)+m});
-    h=h.replace(/\b(Sunny|Clear|Partly cloudy|Cloudy|Overcast|Rainy|Snowy|Foggy|Windy)(\/(?:Sunny|Clear|Partly cloudy|Cloudy|Overcast|Rainy|Snowy|Foggy|Windy))* weather\b/gi,function(m,w){var k=WX[w.toLowerCase()];return k?'<img class="ti wx" src="/ico/g/wx-'+k+'.webp" alt="" title="Weather boost" loading="lazy">'+m:m});
-    h=h.replace(/\b(Power Spots?|Max Particles?)\b/g,function(m){var X=window.GODASH,u=X&&(/Power/.test(m)?X.IMG_POWERSPOT:X.IMG_PARTICLE);return u?'<img class="ti gi-pic" src="'+u+'" alt="" loading="lazy" data-err="rm">'+m:m});
-    h=h.replace(/\b(2|5|7|10|12) ?km eggs?\b/gi,function(m,k){return '<img class="ti egg" src="/ico/g/egg-'+k+'km.webp" alt="" loading="lazy">'+m});
+    h=h.replace(/\b(Sunny|Clear|Partly cloudy|Cloudy|Overcast|Rainy|Snowy|Foggy|Windy)(\/(?:Sunny|Clear|Partly cloudy|Cloudy|Overcast|Rainy|Snowy|Foggy|Windy))* weather\b/gi,function(m,w){var k=WX[w.toLowerCase()];return k?'<img class="ti wx" src="/ico/g/wx-'+k+'.webp" alt="" title="Weather boost" loading="lazy" decoding="async">'+m:m});
+    h=h.replace(/\b(Power Spots?|Max Particles?)\b/g,function(m){var X=window.GODASH,u=X&&(/Power/.test(m)?X.IMG_POWERSPOT:X.IMG_PARTICLE);return u?'<img class="ti gi-pic" src="'+u+'" alt="" loading="lazy" decoding="async" data-err="rm">'+m:m});
+    h=h.replace(/\b(2|5|7|10|12) ?km eggs?\b/gi,function(m,k){return '<img class="ti egg" src="/ico/g/egg-'+k+'km.webp" alt="" loading="lazy" decoding="async">'+m});
     return h;
   }
   window.GORICH=rich;
@@ -181,16 +181,16 @@ Promise.all([
   function giIcons(t,k){
     // Incense and shiny can both apply ("Incense: boosted shiny ..."): show both icons; "boosted" shiny gets a + badge.
     var out='';
-    if(/incense/i.test(t))out+='<img class="gi" src="/ico/incense.webp" alt="Incense" loading="lazy">';
-    if(/shiny/i.test(t))out+='<span class="gi-wrap"><img class="gi" src="/ico/shiny.webp" alt="Shiny" loading="lazy">'+(/boost|increase|higher|more|better/i.test(t)?'<i class="gi-plus" aria-label="boosted">+</i>':'')+'</span>';
+    if(/incense/i.test(t))out+='<img class="gi" src="/ico/incense.webp" alt="Incense" loading="lazy" decoding="async">';
+    if(/shiny/i.test(t))out+='<span class="gi-wrap"><img class="gi" src="/ico/shiny.webp" alt="Shiny" loading="lazy" decoding="async">'+(/boost|increase|higher|more|better/i.test(t)?'<i class="gi-plus" aria-label="boosted">+</i>':'')+'</span>';
     if(out)return out;
     var km=String(t).match(/\b(2|5|7|10|12) ?km\b/);
-    if(km&&/egg|hatch/i.test(t))return '<img class="gi" src="/ico/g/egg-'+km[1]+'km.webp" alt="" loading="lazy">';
-    if(/transfer/i.test(t)&&/candy/i.test(t))return '<img class="gi gi-trade" src="/ico/trade.webp" alt="Transfer" loading="lazy"><img class="gi" src="/ico/candy.webp" alt="" loading="lazy">';
-    if(/shadow/i.test(t))return '<img class="gi" src="/ico/g/shadow.webp" alt="" loading="lazy">';
-    if(/mega energy|mega evol/i.test(t))return '<img class="gi" src="/ico/g/mega.webp" alt="" loading="lazy">';
-    if(/raid hour|raid day|raid boss/i.test(t))return '<img class="gi" src="/ico/g/raid.webp" alt="" loading="lazy">';
-    return GI[k]?'<img class="gi" src="/ico/'+k+'.webp" alt="" loading="lazy">':'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+BI[k]+'</svg>';
+    if(km&&/egg|hatch/i.test(t))return '<img class="gi" src="/ico/g/egg-'+km[1]+'km.webp" alt="" loading="lazy" decoding="async">';
+    if(/transfer/i.test(t)&&/candy/i.test(t))return '<img class="gi gi-trade" src="/ico/trade.webp" alt="Transfer" loading="lazy" decoding="async"><img class="gi" src="/ico/candy.webp" alt="" loading="lazy" decoding="async">';
+    if(/shadow/i.test(t))return '<img class="gi" src="/ico/g/shadow.webp" alt="" loading="lazy" decoding="async">';
+    if(/mega energy|mega evol/i.test(t))return '<img class="gi" src="/ico/g/mega.webp" alt="" loading="lazy" decoding="async">';
+    if(/raid hour|raid day|raid boss/i.test(t))return '<img class="gi" src="/ico/g/raid.webp" alt="" loading="lazy" decoding="async">';
+    return GI[k]?'<img class="gi" src="/ico/'+k+'.webp" alt="" loading="lazy" decoding="async">':'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+BI[k]+'</svg>';
   }
   function bonusChip(t){
     var m=String(t).match(/^(\d+(?:\.\d+)?x|half|up to \d+)\s+(.*)$/i);
@@ -505,7 +505,7 @@ Promise.all([
     if(!n)h+='<p class="sub">Nothing new this week.</p>';
     box.querySelector('.cnt').textContent=n+' new';box.querySelector('.body').innerHTML=h;
   }
-  fetch('/api/unreleased').then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(R){
+  window.GOLIB.getJson('/api/unreleased').then(function(R){
     W.R=R;weekDraw();
     if(!R.items||!R.items.length)return;
     var open={};Array.prototype.forEach.call(document.querySelectorAll('#up-dd details'),function(d){open[d.dataset.id]=d.open});
@@ -515,7 +515,7 @@ Promise.all([
     var el=$('up-updated');if(el&&R.updated)el.textContent='Statuses last worked out '+fmtTs(R.updated)+'.';
   }).catch(function(){});
   function fmtTs(ms){var d=new Date(ms);return d.getDate()+' '+MON[d.getMonth()]+' '+d.getFullYear()}
-  fetch('/api/datamine').then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(M){
+  window.GOLIB.getJson('/api/datamine').then(function(M){
     W.M=M;weekDraw();
     var h='<p class="sub" style="margin:0">Checked automatically every morning: new Pokémon, forms, Megas and moves appearing in the game data the PokéMiners publish, plus Pokémon GO Hub\'s datamine posts. Finding something here does not mean it is coming. All of it is unconfirmed.</p>';
     if(!M.checked)h+='<p class="sub">It has not run yet. The first run records what is in the game data now, then it reports what is new.</p>';
@@ -535,7 +535,7 @@ Promise.all([
     $('up-watch').appendChild(el);
   }).catch(function(){});
   // Datamine news: PokeMiners' datamining channels, read from Discord by a GitHub job (community datamining, never announced).
-  fetch('/datamine-news.json').then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(N){
+  window.GOLIB.getJson('/datamine-news.json').then(function(N){
     W.N=N;weekDraw();
     var items=(N&&N.items)||[];if(!items.length)return;
     var SRC=[['all','All'],['events','Events'],['reports','Reports'],['gamedata','Game data']],sel='all',shown=15;
@@ -570,7 +570,7 @@ Promise.all([
     return EVM.filter(function(m){var end=m.windowEnd?new Date(m.windowEnd).getTime():0,st=m.windowStart?new Date(m.windowStart).getTime():0;
       return (!st||st<=now)&&end>now&&need.indexOf(String(m.move).toLowerCase())>=0&&[m.pokemon,m.evolutionTarget].some(function(x){return x&&String(x).toLowerCase()===base})})[0]||null;
   }
-  try{fetch('/event-moves.json').then(function(r){return r.ok?r.json():null}).then(function(j){if(j&&j.moves&&j.moves.length){EVM=j.moves;if(typeof buildBest==='function'&&META){buildBest();if(typeof syncRows==='function')syncRows();if(typeof refreshMoves==='function')refreshMoves()}}}).catch(function(){})}catch(e){}
+  try{window.GOLIB.jsonOrNull('/event-moves.json').then(function(j){if(j&&j.moves&&j.moves.length){EVM=j.moves;if(typeof buildBest==='function'&&META){buildBest();if(typeof syncRows==='function')syncRows();if(typeof refreshMoves==='function')refreshMoves()}}}).catch(function(){})}catch(e){}
   var RAIDNOW=D.raidNow;
   var TYPES=Object.keys(RAW);
   var all={};
@@ -602,7 +602,7 @@ Promise.all([
     var b=document.createElement('button');b.type='button';
     b.className='pill fpill'+(t==='All'?'':' ftype');
     if(t!=='All'){b.style.background=TCOL[t][0];b.style.color=TCOL[t][1]}
-    b.innerHTML=(t==='All'?'':'<img class="ti" src="/ico/g/type-'+t.toLowerCase()+'.webp" alt="">')+t;
+    b.innerHTML=(t==='All'?'':'<img class="ti" src="/ico/g/type-'+t.toLowerCase()+'.webp" alt="" decoding="async">')+t;
     b.setAttribute('aria-pressed',(t==='All' ? typeSel==='All' : isBestTypeSelected(t,typeSel))?'true':'false');
     b.addEventListener('click',function(){
       typeSel=t;
@@ -749,11 +749,11 @@ Promise.all([
   function norm(s){return String(s).toLowerCase().replace(/[^a-z0-9]/g,'')}
   var DUN=[];
   (U.dd||[]).forEach(function(sec){if(sec.id!=='unreleased')return;(function walk(g){(g.items||[]).forEach(function(i){DUN.push(norm(i.n))});(g.groups||[]).forEach(walk)})({groups:sec.groups})});
-  fetch('/dex.json').then(function(r){return r.json()}).then(function(L){
+  window.GOLIB.getJson('/dex.json').then(function(L){
     DEXLIST=L;
     document.dispatchEvent(new Event('gofn-dex-ready'));
     L.forEach(function(p){if(DUN.indexOf(norm(p[1]))>-1)NOTGO[p[0]]=1});
-    fetch('/release-status.json').then(function(r){return r.ok?r.json():null}).then(function(R){
+    window.GOLIB.jsonOrNull('/release-status.json').then(function(R){
       if(!R||!R.unreleased)return;var today=new Date().toISOString().slice(0,10),ch=false;
       R.unreleased.forEach(function(u){if(u.type!=='pokemon'||(u.available&&u.available<=today))return;L.forEach(function(p){if(norm(p[1])===norm(u.name)&&!NOTGO[p[0]]){NOTGO[p[0]]=1;ch=true}})});
       if(ch)renderDex();
@@ -795,7 +795,7 @@ Promise.all([
     $('dmore').hidden=list.length<=dshown;
     $('dexlist').innerHTML=list.slice(0,dshown).map(function(p){
       var id=p[0],un=NOTGO[id];
-      return '<div class="drow'+(un?' un':'')+'" data-id="'+id+'"><img src="/dex/'+id+'.webp" alt="" loading="lazy" width="58" height="58">'
+      return '<div class="drow'+(un?' un':'')+'" data-id="'+id+'"><img src="/dex/'+id+'.webp" alt="" loading="lazy" decoding="async" width="58" height="58">'
         +'<div><div class="nm"><small>#'+String(id).padStart(4,'0')+'</small>'+esc(p[1])+(un?'<span class="pill p-x">Not in GO yet</span>':'')+rowState(p)+'</div></div>'
         +'<div class="dtog">'+DEXCATS.map(function(c){return '<button type="button" class="tg'+(c==='shiny'?' s':'')+'" data-c="'+c+'" aria-pressed="'+(dm(c)[id]?'true':'false')+'">'+DLAB[c]+'</button>'}).join('')+'</div></div>';
     }).join('');
@@ -813,7 +813,7 @@ Promise.all([
     var BD={yes:['st-a','Melbourne'],likely:['st-d','Likely'],no:null};
     $('reglist').innerHTML=list.map(function(r){
       var b=BD[r[3]],own=dm('own')[r[0]];
-      return '<div class="drow" style="grid-template-columns:3.6rem minmax(0,1fr)"><img src="/dex/'+r[0]+'.webp" alt="" loading="lazy" width="58" height="58">'
+      return '<div class="drow" style="grid-template-columns:3.6rem minmax(0,1fr)"><img src="/dex/'+r[0]+'.webp" alt="" loading="lazy" decoding="async" width="58" height="58">'
         +'<div><div class="nm"><small>#'+String(r[0]).padStart(4,'0')+'</small>'+esc(r[1])+'</div>'
         +'<div class="meta" style="display:flex;flex-wrap:wrap;gap:6px 8px;margin-top:4px;align-items:center">'+(b?'<span class="st '+b[0]+'">'+b[1]+'</span>':'')+(own?'<span class="pill p-x">Owned</span>':'')+'<span class="muted" style="font-size:.82rem">'+esc(r[2])+'</span></div></div></div>';
     }).join('')||'<p class="note">Nothing to show.</p>';
@@ -848,7 +848,7 @@ Promise.all([
     if(!DEXLIST.length)return 0;var b=baseName(n);
     for(var i=0;i<DEXLIST.length;i++)if(norm(DEXLIST[i][1])===b)return DEXLIST[i][0];return 0;
   }
-  function dimg(n){var id=dexIdOf(n);return id?'<img src="/dex/'+id+'.webp" alt="" width="46" height="46" loading="lazy">':''}
+  function dimg(n){var id=dexIdOf(n);return id?'<img src="/dex/'+id+'.webp" alt="" width="46" height="46" loading="lazy" decoding="async">':''}
   function bossTypes(n){
     if(TD.boss[n])return TD.boss[n];
     var id=dexIdOf(n);return id&&TD.species[id]?TD.species[id]:null;
@@ -874,7 +874,7 @@ Promise.all([
     }).join('');
   }
   $('pvplg').addEventListener('change',renderPvp);
-  fetch('/api/pvp').then(function(r){if(!r.ok)throw 0;return r.json()}).catch(function(){return fetch('/pvp.json').then(function(r){return r.json()})}).then(function(p){PV=p;renderPvp()}).catch(function(){});
+  window.GOLIB.getJson('/api/pvp').catch(function(){return window.GOLIB.getJson('/pvp.json')}).then(function(p){PV=p;renderPvp()}).catch(function(){});
 
   /* ---------- shiny hunting ---------- */
   var SHF=[];
@@ -1014,7 +1014,7 @@ Promise.all([
     var r=document.getElementById('today-retry');if(r)r.addEventListener('click',function(){window.location.reload()});
     var b=document.getElementById('day-brief');if(b)b.setAttribute('data-state','unavailable');
     var f=document.getElementById('fresh-line');if(f)f.setAttribute('data-released','')}
-  var ds=document.createElement('script');ds.src='/dash.js?v=20261102v';ds.onerror=todayUnavailable;document.body.appendChild(ds);setTimeout(function(){if(!window.GODASH)todayUnavailable()},10000);
+  var ds=document.createElement('script');ds.src='/dash.js?v=20261102w';ds.onerror=todayUnavailable;document.body.appendChild(ds);setTimeout(function(){if(!window.GODASH)todayUnavailable()},10000);
 })();
 
 }).catch(function(){var panel=document.getElementById('load-error');if(panel)panel.hidden=false;var retry=document.getElementById('load-retry');if(retry)retry.addEventListener('click',function(){window.location.reload()},{once:true})});

@@ -140,7 +140,7 @@
   function emblem(k, size) {
     if (!TEAMS[k]) return '';
     var n = size || 22;
-    return '<span class="temb-w" style="width:' + n + 'px;height:' + n + 'px" data-fb="' + esc(shield(k, n)) + '"><img class="temb" src="' + EMBIMG[k] + '" alt="" width="' + n + '" height="' + n + '" loading="lazy" referrerpolicy="no-referrer"></span>';
+    return '<span class="temb-w" style="width:' + n + 'px;height:' + n + 'px" data-fb="' + esc(shield(k, n)) + '"><img class="temb" src="' + EMBIMG[k] + '" alt="" width="' + n + '" height="' + n + '" loading="lazy" decoding="async" referrerpolicy="no-referrer"></span>';
   }
   /* If an emblem picture does not load, the plain shield takes its place. */
   document.addEventListener('error', function (e) {

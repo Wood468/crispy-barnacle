@@ -49,7 +49,7 @@
   function linkedCard(it) {
     var L = linkedOf(it.id);
     return '<article class="igr" data-id="' + esc(it.id) + '">'
-      + '<a class="igr-img" href="' + esc(it.image) + '" target="_blank" rel="noopener"><img src="' + esc(it.image) + '" alt="' + esc(it.title || 'Infographic') + '" loading="lazy"></a>'
+      + '<a class="igr-img" href="' + esc(it.image) + '" target="_blank" rel="noopener"><img src="' + esc(it.image) + '" alt="' + esc(it.title || 'Infographic') + '" loading="lazy" decoding="async"></a>'
       + '<div class="igr-b"><b>' + esc(it.title || 'Untitled graphic') + '</b>'
       + '<div class="igr-g">' + L.map(function (l, n) { return '<button type="button" class="pill all" data-ig-unlink="' + n + '" aria-label="Unlink from ' + esc(l.title) + '">' + esc(l.title) + ' ✕</button>'; }).join('') + '</div>'
       + '<div class="igr-o"><select aria-label="Link to another event"><option value="">Also link to…</option>' + eventOptions() + '</select><button type="button" class="pill" data-ig-add>Add</button><button type="button" class="pill" data-ig-no>Discard</button></div>'
@@ -61,7 +61,7 @@
     /* Events that have already finished are not offered. */
     var g = (it.guesses || []).filter(function (x) { return x.eventId && (!window.GODASH || live[x.eventId] || live[String(x.eventId).replace(/^[a-z]+:/, '')] || liveN[String(x.eventTitle || '').toLowerCase()]); }).slice(0, 3);
     return '<article class="igr" data-id="' + esc(it.id) + '">'
-      + '<a class="igr-img" href="' + esc(it.image) + '" target="_blank" rel="noopener"><img src="' + esc(it.image) + '" alt="' + esc(it.title || 'Infographic') + '" loading="lazy"></a>'
+      + '<a class="igr-img" href="' + esc(it.image) + '" target="_blank" rel="noopener"><img src="' + esc(it.image) + '" alt="' + esc(it.title || 'Infographic') + '" loading="lazy" decoding="async"></a>'
       + '<div class="igr-b"><b>' + esc(it.title || 'Untitled graphic') + '</b>' + '<small>' + esc(it.source === 'telegram' ? 'Telegram inbox' : it.source === 'discord' ? 'Discord' : it.source || 'Source unknown') + (it.publishedAt ? ' · Posted ' + esc(String(it.publishedAt).slice(0, 10)) : '') + (it.history ? ' · older post' : '') + '</small>'
       + (it.note ? '<small>' + esc(it.note) + '</small>' : '')
       + (it.text ? '<details class="igr-ocr"><summary>Read image text</summary><p>' + esc(it.text) + '</p></details>' : '')

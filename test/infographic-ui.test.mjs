@@ -7,6 +7,7 @@ import { createRequire } from "node:module";
 
 const code = readFileSync(new URL("../public/infographic.js", import.meta.url), "utf8");
 const GODEDUPE = createRequire(import.meta.url)("../public/dedupe.js");
+const LIB_SRC = readFileSync(new URL("../public/lib.js", import.meta.url), "utf8");
 
 class El {
   constructor(tag) { this.tag = tag; this.attrs = {}; this.children = []; this._text = ""; this.cls = new Set(); this.hidden = false; this.disabled = false; this.style = {}; this.title = ""; this.on = {};
@@ -41,14 +42,16 @@ function setup({ events, info }) {
     if (/event-info/.test(url)) {
       fetches++;
       if (net.info === "throw") return Promise.reject(new Error("offline"));
-      if (net.info === "500") return Promise.resolve({ ok: false, json: () => Promise.resolve({}) });
-      if (net.info === "badjson") return Promise.resolve({ ok: true, json: () => Promise.reject(new SyntaxError("bad")) });
-      return Promise.resolve({ ok: true, json: () => Promise.resolve(net.info) });
+      if (net.info === "500") return Promise.resolve({ ok: false, text: () => Promise.resolve("{}") });
+      if (net.info === "badjson") return Promise.resolve({ ok: true, text: () => Promise.resolve("{bad") });
+      return Promise.resolve({ ok: true, text: () => Promise.resolve(JSON.stringify(net.info)) });
     }
-    return Promise.resolve({ ok: true, json: () => Promise.resolve({}) });
+    return Promise.resolve({ ok: true, text: () => Promise.resolve("{}") });
   };
   const X = { events: () => events, raidSlots: () => [], kindOf: () => ["Event", "#000", "#fff"], whenText: () => "", countdown: () => "" };
-  const window = { GODASH: X, GO: { esc: (s) => String(s), art: () => "", bonusChip: () => "" }, GODEDUPE };
+  // A fresh GOLIB per setup: its shared JSON cache must not leak one test's answers into the next.
+  const libRoot = {}; vm.runInNewContext(LIB_SRC, { self: libRoot, fetch, Date, JSON, Promise, setTimeout });
+  const window = { GOLIB: libRoot.GOLIB, GODASH: X, GO: { esc: (s) => String(s), art: () => "", bonusChip: () => "" }, GODEDUPE };
   window.window = window;
   const ctx = vm.createContext({ window, GODEDUPE, document, fetch, console, Promise, setTimeout: (f, ms) => { if (ms === net.failMs) throw new Error("timer failed"); timers.push({ f, ms, dead: false, ran: false }); return timers.length; }, clearTimeout: (n) => { if (timers[n - 1]) timers[n - 1].dead = true; } });
   const runTimers = (ms) => timers.forEach((t) => { if (!t.dead && !t.ran && (ms == null || t.ms === ms)) { t.ran = true; t.f(); } });

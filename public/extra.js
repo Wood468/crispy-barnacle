@@ -40,7 +40,7 @@
     }).join('') + (rows.length > shown ? '<button type="button" class="pill" id="formmore">Show more (' + (rows.length - shown) + ')</button>' : '')
       : '<p class="empty">' + (q ? 'No forms found for that name.' : grp === 'marked' ? 'Nothing marked yet. Search a Pokémon above, or pick a type.' : 'No forms here.') + '</p>';
   }
-  Promise.all([fetch('/forms.json').then(function (r) { return r.json(); }), fetch('/release-status.json').then(function (r) { if (!r.ok) throw new Error('status'); return r.json(); }).catch(function () { return { unreleased: [] }; })]).then(function (results) { FORMS = results[0].f || []; (results[1].unreleased || []).forEach(function (x) { RELEASES[releaseKey(x.name)] = x; }); renderForms(); }).catch(function () { $('formlist').innerHTML = '<p class="empty">Could not load the form list.</p>'; });
+  Promise.all([fetch('/forms.json').then(function (r) { return r.json(); }), window.GOLIB.getJson('/release-status.json').catch(function () { return { unreleased: [] }; })]).then(function (results) { FORMS = results[0].f || []; (results[1].unreleased || []).forEach(function (x) { RELEASES[releaseKey(x.name)] = x; }); renderForms(); }).catch(function () { $('formlist').innerHTML = '<p class="empty">Could not load the form list.</p>'; });
   document.addEventListener('click', function (e) {
     var b = e.target.closest && e.target.closest('[data-fg],#formmore'); if (!b) return;
     if (b.id === 'formmore') shown += 60; else { grp = b.getAttribute('data-fg'); shown = 60; $('formq').value = ''; }

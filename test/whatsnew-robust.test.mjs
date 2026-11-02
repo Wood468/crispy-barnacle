@@ -19,7 +19,7 @@ function boot({ seen, state = "pending", events = [] } = {}) {
     window: win, document: doc, Date, JSON, Math, Array, Object, String, Promise, encodeURIComponent, console,
     localStorage: { getItem: (k) => (store.has(k) ? store.get(k) : null), setItem: (k, v) => { store.set(k, String(v)); } },
     setTimeout: (f) => { timers.push(f); return timers.length; },
-    fetch: (u) => Promise.resolve({ ok: false, json: async () => null }),
+    fetch: (u) => Promise.resolve({ ok: false, json: async () => null, text: async () => 'null' }),
   };
   runInNewContext(src, ctx);
   return {

@@ -248,7 +248,7 @@ check('Today Tonight planner is an optional accessible local-time disclosure wit
       all(token in INDEX_HTML for token in ['id="today-tonight"', 'id="today-tonight-summary"', 'id="today-tonight-list"']) and
       all(token in DASH_JS for token in ['D.spotlight', 'D.raidHour', 'D.maxBattles', '6–7 pm local', '6 am–9 pm local', 'Weak to:', 'data-best-types', 'gofn-dex-ready', 'function renderTonight', 'renderTonight(t, dateKey)']) and
       all(token in DASH_CSS for token in ['.today-tonight', '.today-tonight-list', 'min-height:44px', '.today-tonight-best']) and
-      'gofn-dex-ready' in APP_JS and '/app.js?v=20261102m' in INDEX_HTML and '/app.js?v=20261102m' in SW_JS)
+      'gofn-dex-ready' in APP_JS and '/app.js?v=20261102n' in INDEX_HTML and '/app.js?v=20261102n' in SW_JS)
 check('Dex/type readiness refreshes only the Tonight disclosure, preserving event-detail focus targets',
       "document.addEventListener('gotypes', function () { try { renderRot(); var t = now(); renderTonight(t, dayKey(t)); } catch (e) {} });" in DASH_JS and
       "document.addEventListener('gofn-dex-ready', function () { try { renderRot(); var t = now(); renderTonight(t, dayKey(t)); } catch (e) {} });" in DASH_JS)
@@ -256,9 +256,9 @@ check('Today multi-deadline tray is accessible, bounded and source-safe',
       all(token in INDEX_HTML for token in ['id="today-deadlines"', 'id="today-deadlines-summary"', 'id="today-deadlines-list"']) and
       all(token in DASH_JS for token in ['var trayLimit = t.getTime() + 7 * 24 * 60 * 60 * 1000', "safeUrl(d.url || '')", 'trayCandidates.slice(0, 8)', 'View all ', 'noopener noreferrer', "sourceUrl.indexOf('https://') === 0"]) and
       all(token in DASH_CSS for token in ['.today-deadlines>summary', 'min-height:44px', '.today-deadline-item', 'var(--color-link)']) and
-      '/dash.js?v=20261102v' in APP_JS and '/dash.js?v=20261102v' in SW_JS and
+      '/dash.js?v=20261102w' in APP_JS and '/dash.js?v=20261102w' in SW_JS and
       '/dash.css?v=20261102o' in INDEX_HTML and '/dash.css?v=20261102o' in SW_JS and
-      'gofn-shell-v211' in SW_JS)
+      'gofn-shell-v212' in SW_JS)
 check('season pass and deadline data is structured, source-attributed and ordered',
       all(item_id in {item.get('id') for item in SEASON_DATA.get('items', [])}
           for item_id in ['season:pass-halloween', 'season:pass-november']) and
@@ -293,8 +293,8 @@ check('base bonus and information availability controls use semantic status role
 check('versioned stylesheets are referenced by the page and precached offline',
       all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261102b', '/dash.css?v=20261102o']))
 check('owner verification scripts are versioned and precached offline',
-      '/account.js?v=20261101b' in INDEX_HTML and '/account.js?v=20261101b' in SW_JS and
-      '/review.js?v=20261101b' in DASH_JS and '/review.js?v=20261101b' in SW_JS)
+      '/account.js?v=20261102a' in INDEX_HTML and '/account.js?v=20261102a' in SW_JS and
+      '/review.js?v=20261102a' in DASH_JS and '/review.js?v=20261102a' in SW_JS)
 check('source freshness indicators use semantic roles with unchanged colours',
       all(token in DASH_CSS for token in [
           '--color-source-fresh:#6BD18A; --color-source-stale:#E8B84A; --color-source-failed:#FF9B8F;',
@@ -319,16 +319,16 @@ check('event signal chips and detail tags use semantic palette roles with unchan
           '.tg-incense{--tc:var(--color-signal-shadow)}.tg-costume{--tc:var(--color-signal-encounter)}',
       ]))
 check('offline shell cache version advances with the dashboard stylesheet token release',
-      "gofn-shell-v211" in SW_JS)
+      "gofn-shell-v212" in SW_JS)
 check('Travel mode searches only source-dated regional listings and preserves Today visibility',
       all(token in INDEX_HTML for token in ['id="sub-travel"', 'id="travel-q"', 'id="travel-destinations"', 'id="travel-regions"', 'id="travel-results"']) and
       "['travel','Travel','sub-travel']" in APP_JS and
       all(token in DASH_JS for token in ['function renderTravel()', 'TRAVEL_REGIONS', 'data-travel-region', "x.scope !== 'global'", "!/^dated:/.test(String(x.id || ''))", "indexOf('https://') === 0", 'sourceStart', 'sourceEnd', 'travelDateText', 'REG.filter(function (x)', 'var hide = it.travel ?', 'focusedRegion', 'focusTarget.focus()']) and
       all(token in DASH_CSS for token in ['#sub-travel .travel-search', '#travel-regions .fchip{min-height:44px}', '#travel-results .agw .ag-actions .agx{width:44px;height:44px;min-width:44px;min-height:44px}']) and
-      '/app.js?v=20261102m' in INDEX_HTML and '/app.js?v=20261102m' in SW_JS and
-      '/dash.js?v=20261102v' in APP_JS and '/dash.js?v=20261102v' in SW_JS and
+      '/app.js?v=20261102n' in INDEX_HTML and '/app.js?v=20261102n' in SW_JS and
+      '/dash.js?v=20261102w' in APP_JS and '/dash.js?v=20261102w' in SW_JS and
       '/dash.css?v=20261102o' in INDEX_HTML and '/dash.css?v=20261102o' in SW_JS and
-      'gofn-shell-v211' in SW_JS)
+      'gofn-shell-v212' in SW_JS)
 check('raid share dialog and script are included in the exact offline shell',
       '/raid-share.js?v=20261102b' in INDEX_HTML and '/raid-share.js?v=20261102b' in SW_JS and
       all(token in INDEX_HTML for token in ['id="raid-share-dialog"', 'id="raid-share-title"', 'id="raid-share-send"', 'id="raid-share-copy"']))
@@ -340,9 +340,9 @@ check('raid share payload uses sourced weaknesses, local top-ten marks and safe 
 check('event detail focus restoration can find a re-rendered opener by event key and card role',
       all(token in DETAIL_JS for token in ['openerKey', 'openerClass', "getAttribute('data-open')", 'target.focus()']))
 check('versioned dashboard scripts are referenced by the entry page and precached offline',
-      '/app.js?v=20261102m' in INDEX_HTML and '/app.js?v=20261102m' in SW_JS and
-      '/dash.js?v=20261102v' in APP_JS and '/dash.js?v=20261102v' in SW_JS and
-      '/detail.js?v=20261102d' in DASH_JS and '/detail.js?v=20261102d' in SW_JS)
+      '/app.js?v=20261102n' in INDEX_HTML and '/app.js?v=20261102n' in SW_JS and
+      '/dash.js?v=20261102w' in APP_JS and '/dash.js?v=20261102w' in SW_JS and
+      '/detail.js?v=20261102e' in DASH_JS and '/detail.js?v=20261102e' in SW_JS)
 check('sync PIN and account controls have one home in Menu and are precached offline',
       INDEX_HTML.index('id="acct" class="acct"') > INDEX_HTML.index('id="sub-menu"') and
       'id="pinform"' not in INDEX_HTML and
@@ -356,14 +356,14 @@ check('owner-only account and moderation UI requires server-verified PIN access'
       '[data-role="guest"] #hireview' in BASE_CSS and
       '[data-role="guest"] .igbanner' in BASE_CSS)
 check('versioned season banner script is referenced by the page and precached offline',
-      '/season.js?v=20261102d' in INDEX_HTML and '/season.js?v=20261102d' in SW_JS)
+      '/season.js?v=20261102e' in INDEX_HTML and '/season.js?v=20261102e' in SW_JS)
 check('all HTML renderers use one shared apostrophe-safe escape helper',
       'function esc(value)' in LIB_JS and 'esc: esc' in LIB_JS and
       all('var esc = window.GOLIB.esc;' in source for source in ESC_RENDERERS) and
       all(not re.search(r'function\s+esc\s*\(', source) and
           not re.search(r'var\s+esc\s*=\s*function', source) for source in ESC_RENDERERS))
 check('versioned infographic script is referenced by the dashboard and precached offline',
-      '/infographic.js?v=20261101e' in DASH_JS and '/infographic.js?v=20261101e' in SW_JS)
+      '/infographic.js?v=20261102a' in DASH_JS and '/infographic.js?v=20261102a' in SW_JS)
 check('infographic card thumbnails assign original URLs only near the viewport',
       'data-thumb-src' in INFO_JS and 'new IntersectionObserver' in INFO_JS and
       "rootMargin: '80px 0px'" in INFO_JS)
@@ -1847,9 +1847,8 @@ with sync_playwright() as p:
         pg.keyboard.press('Escape'); pg.wait_for_timeout(200)
         check('detail closes on Escape', pg.locator('#evd').is_hidden())
         # with an Indonesian price added to the data file the card converts it, without any code change
-        pg2=page(pin=True)
-        pg2.route('**/api/prices-private', lambda r: r.fulfill(status=200, content_type='application/json', body=json.dumps({"fx":{"from":"IDR","to":"AUD","rate":0.0001,"source":"test","url":"https://x.test","observed":"2026-10-10"},"prices":[{"product":"zorua-cd-research","currency":"IDR","amount":50000,"region":"ID","source":"test store","url":"https://x.test","observed":"2026-10-10"}]})))
-        pg2.route('**/prices.json', lambda r: r.fulfill(status=200, content_type='application/json', body=json.dumps({"prices":[{"product":"zorua-cd-research","currency":"AUD","amount":8,"region":"AU","verified":True,"source":"test au","url":"https://x.test","observed":"2026-10-10"}]})))
+        # the prices are asked for once per load and shared, so the Indonesian price is served from the start
+        pg2=page(pin=True,extra={'**/api/prices-private':(json.dumps({"fx":{"from":"IDR","to":"AUD","rate":0.0001,"source":"test","url":"https://x.test","observed":"2026-10-10"},"prices":[{"product":"zorua-cd-research","currency":"IDR","amount":50000,"region":"ID","source":"test store","url":"https://x.test","observed":"2026-10-10"}]}),200),'**/prices.json':(json.dumps({"prices":[{"product":"zorua-cd-research","currency":"AUD","amount":8,"region":"AU","verified":True,"source":"test au","url":"https://x.test","observed":"2026-10-10"}]}),200)})
         pg2.click('nav.tabs button[data-tab="events"]'); pg2.click('#subnav-events button[data-sub="timeline"]'); pg2.wait_for_selector('#evtimeline .evc[data-id$="zorua"] .more'); pg2.click('#evtimeline .evc[data-id$="zorua"] .more'); pg2.wait_for_selector('#evd .tk'); pg2.wait_for_timeout(300)
         t2=pg2.inner_text('#evd')
         check('detail: Rp price converts to A$, shows Originally A$ in Australia and a verified saving, and never the Rp amount', '≈ A$5.00' in t2 and 'Originally A$8.00 in Australia' in t2 and 'Save A$3.00 (38%)' in t2 and 'Rp 50' not in t2 and '50,000' not in t2, t2[:0])
@@ -2940,6 +2939,67 @@ with sync_playwright() as p:
               all(t in DASH_CSS for t in ['--color-filter-bg:', '--color-filter-selected-bg:', '--color-on-filter-selected:', '.fchip[aria-pressed="true"],.pill.fpill[aria-pressed="true"],.subnav button[aria-pressed="true"],.plc-tags .chip[aria-pressed="true"]{background:var(--color-filter-selected-bg)']) and
               "class=\"chip\" data-tag=\"\" aria-pressed=" in (ROOT / 'public' / 'places.js').read_text() and
               "class=\"pill' + (grp" not in (ROOT / 'public' / 'extra.js').read_text())
+
+
+    if on('b'):
+        # ---- Batch 8: first-load work (shared JSON loader, deferred details, offline shell). Real browser, local files, fixed clock. ----
+        fl_log = []
+        def fl_pre(p):
+            p.on('request', lambda r: fl_log.append((r.resource_type, r.url.split('#')[0])))
+            for u in ('datamine', 'unreleased', 'pvp', 'ig-decisions'):  # these answer 200 in production; the default 404 would (rightly) be retried by each caller
+                p.route('**/api/' + u, lambda r: r.fulfill(body='{}', content_type='application/json'))
+        fl_pg = page(pre=fl_pre)
+        settle(fl_pg, "!!(window.GOFRESH&&window.GOFRESH.state().done&&window.GOINFOGRAPHIC&&window.GOEXTRA&&window.GODETAIL)")
+        fl_pg.wait_for_timeout(1500)
+        # A. no data or code URL is requested twice on a cold Today load (pictures are excluded: the browser cache answers repeats; /api/art and per-id calls differ by query)
+        fl_counts = {}
+        for kind, url in fl_log:
+            if kind in ('fetch', 'xhr', 'script', 'stylesheet', 'document'):
+                path = url.replace(BASE, '')
+                fl_counts[path] = fl_counts.get(path, 0) + 1
+        fl_dups = sorted((u, n) for u, n in fl_counts.items() if n > 1 and not u.startswith('https://fonts.'))
+        check('cold Today load requests no JSON, API or script URL more than once', not fl_dups, fl_dups)
+        check('dash.js is found by the preload before app.js injects it (one request, started from the head)',
+              fl_counts.get('/dash.js?v=' + re.search(r"ds\.src='/dash\.js\?v=(\w+)'", APP_JS).group(1)) == 1 and '<link rel="preload" href="/dash.js?v=' in INDEX_HTML)
+        # B. an event sheet opened straight after load has its details (event-details.json is no longer fetched at startup, only on idle or when a sheet needs it)
+        fl_pg.evaluate("GODETAIL.open('cur:trek')")
+        fl_ok = settle(fl_pg, "!!document.querySelector('.evd-groups')", 8000)
+        fl_txt = fl_pg.evaluate("(document.querySelector('.evd-groups')||{}).textContent||''")
+        check('event sheet opened right after load shows the sourced details from event-details.json', fl_ok and len(fl_txt) > 100, fl_txt[:80])
+        fl_pg.context.close()
+        # C. the 310 KB details file does not compete with the first render: it is not requested before Today has drawn
+        fl_order = []
+        def fl_order_pre(p): p.on('request', lambda r: fl_order.append(r.url.replace(BASE, '')))
+        fl_d = page(pre=fl_order_pre)
+        fl_d.wait_for_timeout(300)
+        # the home-now render has happened by now (page() waits for it); the details file may only be asked for after dash.js has started
+        fl_dash_idx = next((i for i, u in enumerate(fl_order) if u.startswith('/dash.js')), -1)
+        fl_det_idx = next((i for i, u in enumerate(fl_order) if u.startswith('/event-details.json')), 10**6)
+        fl_nudge_idx = next((i for i, u in enumerate(fl_order) if u.startswith('/nudge.js')), -1)
+        check('event-details.json is not requested until the page scripts after the first render have loaded', fl_dash_idx >= 0 and fl_nudge_idx >= 0 and fl_det_idx > fl_nudge_idx, (fl_dash_idx, fl_nudge_idx, fl_det_idx))
+        fl_d.context.close()
+        # D. service worker: after one visit, an offline reload still shows Today, and the versioned fresh.js (as dash.js requests it) comes from the cache
+        fl_ctx = b.new_context(viewport={'width': 390, 'height': 844}, timezone_id='Australia/Melbourne', locale='en-AU', service_workers='allow')
+        fl_ctx.set_default_timeout(15000)
+        fl_sw = fl_ctx.new_page(); fl_sw.errs = []
+        fl_sw.on('pageerror', lambda e: fl_sw.errs.append(str(e)))
+        fl_ctx.route(re.compile(r'^https://fonts\.(googleapis|gstatic)\.com/'), lambda r: r.fulfill(status=200, body='', content_type='text/css' if 'googleapis' in r.request.url else 'font/woff2'))
+        fl_ctx.route('**/api/**', lambda r: r.fulfill(status=404, body='{}', content_type='application/json'))
+        fl_ctx.route(re.compile(r'/(img/ext|infographics)/'), lambda r: r.fulfill(body=PNG1, content_type='image/png'))
+        fl_sw.goto(BASE + '/', wait_until='load')
+        fl_sw.wait_for_function("document.getElementById('home-now')?.hasAttribute('data-render-key')")
+        fl_fresh = re.search(r"w\.src = '(/fresh\.js\?v=\w+)'", DASH_JS).group(1)
+        fl_ready = settle(fl_sw, "navigator.serviceWorker.controller&&window.GOFRESH", 30000)
+        fl_cached = fl_sw.evaluate("""async (u) => { const n = (await caches.keys()).find(k => k.startsWith('gofn-shell-')); if (!n) return {name: null}; const c = await caches.open(n);
+            return {name: n, keys: (await c.keys()).length, fresh: !!(await c.match(u)), dashjs: !!(await c.match('/dash.js?v=' + %s))}; }""" % json.dumps(re.search(r"ds\.src='/dash\.js\?v=(\w+)'", APP_JS).group(1)), fl_fresh)
+        check('service worker installs on the first visit and its cache holds the versioned fresh.js and dash.js', fl_ready and fl_cached.get('fresh') and fl_cached.get('dashjs') and fl_cached.get('keys', 0) >= 50, fl_cached)
+        fl_ctx.set_offline(True)
+        fl_sw.reload(wait_until='domcontentloaded')
+        fl_off = settle(fl_sw, "document.getElementById('home-now')?.hasAttribute('data-render-key')", 20000)
+        fl_off_fresh = settle(fl_sw, "!!window.GOFRESH&&!!window.GODETAIL", 15000)
+        fl_off_state = fl_sw.evaluate("({err: !document.getElementById('load-error').hidden, cards: document.querySelectorAll('#home-now .evc, #home-now .pc, #home-now .event-card').length, keyed: document.getElementById('home-now').hasAttribute('data-render-key'), title: document.title})")
+        check('offline reload after one visit still shows Today, with the versioned fresh.js and detail.js served from the cache', fl_off and fl_off_fresh and not fl_off_state['err'] and not fl_sw.errs, (fl_off, fl_off_fresh, fl_off_state, fl_sw.errs[:2]))
+        fl_ctx.close()
 
 
     b.close()
