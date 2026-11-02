@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-02T11:08:31.002Z",
+ "updated": "2026-11-02T21:43:09.426Z",
  "recorded": [
   "pokemon-us",
   "pokemon-uk",
@@ -10,7 +10,7 @@
   {
    "id": "pokemon-us",
    "state": "ok",
-   "links": 1
+   "links": 2
   },
   {
    "id": "pokemon-uk",
@@ -32,6 +32,8 @@
   "https://www.pokemon.com/us/news/have-a-fab-boo-lous-time-during-pokemon-go-halloween-2026-part-i-and-part-ii/": "2026-10-27",
   "https://www.pokemon.com/uk/news/have-a-fab-boo-lous-time-during-pokemon-go-halloween-2026-part-i-and-part-ii/": "2026-10-27",
   "https://www.pokemon.com/us/news/burning-battles-await-during-pokemon-gos-chandelure-super-mega-raid-day/": "2026-10-28",
-  "https://www.pokemon.com/uk/news/burning-battles-await-during-pokemon-gos-chandelure-super-mega-raid-day/": "2026-10-28"
+  "https://www.pokemon.com/uk/news/burning-battles-await-during-pokemon-gos-chandelure-super-mega-raid-day/": "2026-10-28",
+  "https://www.pokemon.com/us/news/battle-with-mimikyu-in-the-play-pokemon-pokemon-go-championship-series/": "2026-11-02",
+  "https://www.pokemon.com/uk/news/battle-with-mimikyu-in-the-play-pokemon-pokemon-go-championship-series/": "2026-11-02"
  }
 }
