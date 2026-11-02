@@ -7,6 +7,120 @@
   "eventImages": {},
   "candidates": [
     {
+      "id": "discord:1566880019089723575",
+      "source": "discord",
+      "creator": "",
+      "title": "g47ix Twillight",
+      "url": "https://discord.com/channels/@me/1558793395198099618/1566880019089723575",
+      "publishedAt": "2026-11-02T18:21:47.774000+00:00",
+      "imageUrl": "https://cdn.discordapp.com/attachments/886998693897719819/1566875384606105821/g47ix_Twillight.png?ex=6aea21ea&is=6ae8d06a&hm=07bce7d6f39d8746c0ad1cd39a5b9873c90a2eab99ab06e598f350a6b2ad1978&",
+      "reviewStatus": "needs_review",
+      "decision": "pending",
+      "ocrChecked": true,
+      "ocrText": "TWILIGHT 24 30) vad NOV NOV EF =} VVIESIIES 10:00 am ~~ PAY OS BOOSTED + SHINY OODS rN“ > oF w @ “4 vey! During this event, stars will light up the skies. — ++ ++ en py ofe of o & WK My ma Ox 7 RES ss fo a = Boosted Lucky 2x Catch Stardust and more! a Pokémon and YW New Pose» GO Pass Deluxe cag Lucky Friends | $4.99 Follow for more G47|X £) ax | | > www.g47ix.pro",
+      "eventMatch": {
+        "eventId": "gopassnov",
+        "eventTitle": "GO Pass: November",
+        "score": 0.442,
+        "confidence": "low",
+        "matchedTerms": [
+          "pass",
+          "nov",
+          "poke",
+          "lucky",
+          "stardust",
+          "deluxe",
+          "more",
+          "mon"
+        ],
+        "alternatives": [
+          {
+            "eventId": "gopassnov",
+            "eventTitle": "GO Pass: November",
+            "score": 0.442
+          },
+          {
+            "eventId": "leekduck:go-pass-october-2026",
+            "eventTitle": "GO Pass: October",
+            "score": 0.409
+          },
+          {
+            "eventId": "twilightwishes",
+            "eventTitle": "Twilight Wishes",
+            "score": 0.403
+          }
+        ],
+        "method": "title-to-public/data.json heuristic",
+        "requiresHumanVerification": true
+      },
+      "reviewNote": "Match is not strong enough (low).",
+      "signals": [
+        "picture text names the event",
+        "posted around the event"
+      ],
+      "matchScore": 3,
+      "stagedPath": "/infographics/g47ix/discord-1566880019089723575.webp"
+    },
+    {
+      "id": "discord:1566749490084319334",
+      "source": "discord",
+      "creator": "",
+      "title": "GO Weekly TT",
+      "url": "https://discord.com/channels/@me/1558793395198099618/1566749490084319334",
+      "publishedAt": "2026-11-02T09:43:07.234000+00:00",
+      "imageUrl": "https://cdn.discordapp.com/attachments/886998693897719819/1566607674521559190/GO_Weekly_TT.png?ex=6ae9d157&is=6ae87fd7&hm=0e2b6870089f7a525814e3060038c9d1fadbf60fed057eec61d99b37b063a410&",
+      "reviewStatus": "weekly",
+      "decision": "pending",
+      "ocrChecked": true,
+      "ocrText": "PASAY r, © >) GOM-L/, | 2-8 NOVEMBER MONDAY TUESDAY WEDNESDAY THURSDAY FRIDAY SATURDAY SUNDAY 3NOV |( 4NOV )( 5NOV )| 6NOV )| 7NOV ) 8NOV | re V7 Su 2 AeA Raid mt GO Ba ttle = ar Friendship Scenic Monday Tuesday Hour Thursday Friday Sunday qa Qu Up to 3 Special Trades One Rare Candy XL One Rare Candy XL 50 battles/day More Pokémon in the for completing Enter up to for completing 2 guaranteed wild and Boosted in-person 5 Showcases in-person 4x Stardust Candy XL from trade incense on Routes Max Battles. Raid Battles. from win rewards Increased chance Encounter Mateo 3x of Lucky Trade NEW ort OC eS iwi) RAIDS y SENDAI Wy 4 MEX mo i ry RAIDS” wa Oo, = . 1 ew oy Spotlight Hour MAX aay @ LACE @ 2x Evolution XP 2 le} NEW GO PASS © 8:00 pm HALLOWEEN PART II Oo eee eo / Local and exclusive events on q FESTIVAL Dia de ® OF LIGHTS — no. 2 pa Muertos ie 4 9 @ India Paseo de la Reforma « a NOV6-8 — =. = = |B) OCT31-NO E/E see “5 os APAC Cross-Region Pokémon Mall Ex, Six museums Cy Stamp Rally Observatory ADIDAS collab Malaysi ; r @esa across Europe Until 2029 Eh until Dec 6 Ne Until January 202; Until Dec 2026 /Jan Until 30 APR 2027 Pokémon Jet UK NATIONAL until Aug 2027 TRUST SITES KANTO Until Dec 31 ; ) ae | SGOT ve LI He GA7IX 090 ®Xoa Follow for more g47ix.pro VAMIES)",
+      "eventMatch": {
+        "eventId": "novcd",
+        "eventTitle": "November Community Day",
+        "score": 0.81,
+        "confidence": "high",
+        "matchedTerms": [
+          "november",
+          "day",
+          "2026",
+          "more",
+          "wild",
+          "local",
+          "special",
+          "candy",
+          "chance",
+          "hour",
+          "incense",
+          "trade"
+        ],
+        "alternatives": [
+          {
+            "eventId": "novcd",
+            "eventTitle": "November Community Day",
+            "score": 0.81
+          },
+          {
+            "eventId": "gopassnov",
+            "eventTitle": "GO Pass: November",
+            "score": 0.807
+          },
+          {
+            "eventId": "into",
+            "eventTitle": "Into the Wild",
+            "score": 0.801
+          }
+        ],
+        "method": "title-to-public/data.json heuristic",
+        "requiresHumanVerification": true
+      },
+      "reviewNote": "Two events look alike. Please choose.",
+      "signals": [
+        "picture text names the event",
+        "posted around the event"
+      ],
+      "matchScore": 3,
+      "stagedPath": "/infographics/g47ix/discord-1566749490084319334.webp"
+    },
+    {
       "id": "discord:1566612945503395841",
       "source": "discord",
       "creator": "",
