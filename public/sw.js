@@ -1,9 +1,9 @@
 /* GO Field Notes offline shell. Never cache /api/*, including private user-state and notification responses. */
-const SHELL_CACHE = 'gofn-shell-v225';
+const SHELL_CACHE = 'gofn-shell-v226';
 const SHELL_URLS = [
   '/', '/index.html', '/offline.html', '/offline.css',
   /* Versioned code and styles are listed once, exactly as index.html, app.js and dash.js request them. Any other ?v= (or unversioned) request is answered offline by the ignoreSearch fallback below. */
-  '/styles.css?v=20261102b', '/dash.css?v=20261103d', '/lib.js?v=20261102d', '/dedupe.js?v=20261101b', '/move.js?v=20261102a', '/imgerr.js?v=20261015a', '/whatsnew.js?v=20261102d', '/pin.js?v=20261101b', '/local-state.js?v=20261030a', '/app.js?v=20261103e', '/raid-share.js?v=20261102b', '/dash.js?v=20261103f', '/detail.js?v=20261102f', '/fresh.js?v=20261103a', '/places.js?v=20261102a', '/review.js?v=20261102e', '/nudge.js?v=20261102a', '/account.js?v=20261102a', '/store.js?v=20261102a', '/season.js?v=20261102e', '/weekly.js?v=20261102a', '/buy.js?v=20261102a', '/extra.js?v=20261102c', '/infographic.js?v=20261102b', '/pwa.js',
+  '/styles.css?v=20261102b', '/dash.css?v=20261103d', '/lib.js?v=20261102d', '/dedupe.js?v=20261101b', '/move.js?v=20261102a', '/imgerr.js?v=20261015a', '/whatsnew.js?v=20261102d', '/pin.js?v=20261101b', '/local-state.js?v=20261030a', '/app.js?v=20261103e', '/raid-share.js?v=20261102b', '/dash.js?v=20261103f', '/detail.js?v=20261102f', '/fresh.js?v=20261103a', '/places.js?v=20261102a', '/review.js?v=20261102e', '/nudge.js?v=20261102a', '/account.js?v=20261102a', '/store.js?v=20261102a', '/season.js?v=20261102e', '/weekly.js?v=20261102a', '/buy.js?v=20261102a', '/extra.js?v=20261102c', '/infographic.js?v=20261103a', '/pwa.js',
   '/manifest.webmanifest', '/icon.svg', '/icon-maskable.svg', '/icon-180.png', '/icon-192.png', '/icon-512.png',
   '/data.json', '/dex.json', '/event-info.json', '/forms.json', '/moves.json',
   '/places.json', '/event-details.json', '/event-moves.json', '/regional-events.json', '/world-events.json', '/best-by-type.json', '/prices.json', '/pvp.json', '/release-status.json', '/types.json',
@@ -37,7 +37,7 @@ async function storeCopy(key, copy) {
   }
 }
 /* Stable-path pictures (/art, /dex, /ico webp) are served from the cache first: the Worker already lets the browser reuse them for a day. After a day the cached copy is refreshed in the background. */
-const IMAGE_PATH = /^\/(?:art|dex|ico)\/.+\.webp$/;
+const IMAGE_PATH = /^\/(?:art|dex|ico|infographic-thumbs)\/.+\.webp$/;
 const IMAGE_REFRESH_MS = 86400000;
 /* Offline only: a request may differ from the cached one just by its ?v= or ?t= (older page, other version), so match code, styles and JSON by path. Never used for pages or API calls. */
 const STATIC_PATH = /\.(?:js|css|json)$/;

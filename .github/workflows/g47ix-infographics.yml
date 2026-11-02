@@ -34,6 +34,11 @@ jobs:
           fetch-depth: 1
       - name: Restore pictures from R2
         run: bash scripts/r2-sync.sh restore
+      - name: Install ImageMagick and OCR tools
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq imagemagick tesseract-ocr >/dev/null
+          convert -list format | grep -q 'WEBP'
       - name: Set up Node.js
         uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
@@ -74,12 +79,13 @@ jobs:
           mkdir -p public/infographics/g47ix data/tg-inbox
           node scripts/g47ix-apply.mjs
           bash scripts/r2-sync.sh save   # pictures first, then the data that points at them
+          node scripts/infographic-thumbnails.mjs
           if [[ -n "$(git status --porcelain -- public data)" ]]; then
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git add -- public/event-info.json public/infographic-queue.json data/g47ix-infographics-review.json
+            git add -- public/event-info.json public/infographic-queue.json public/infographic-thumbs data/g47ix-infographics-review.json
             node scripts/validate-public-data.mjs
-            git commit -m "Publish infographics approved in the app"
+            git commit -m "Publish approved infographic data and card thumbnails"
             git pull -q --rebase --autostash origin main
             node scripts/validate-public-data.mjs
             git push origin HEAD:main
@@ -106,7 +112,6 @@ jobs:
           DISCORD_CREATOR: ${{ vars.DISCORD_CREATOR }}
         run: |
           set -euo pipefail
-          sudo apt-get update -qq && sudo apt-get install -y -qq tesseract-ocr imagemagick >/dev/null
           mkdir -p public/infographics/g47ix data/tg-inbox
           node scripts/g47ix-publish.mjs
           bash scripts/r2-sync.sh save

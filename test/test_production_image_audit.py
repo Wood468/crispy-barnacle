@@ -5,6 +5,7 @@ class ProductionImageAuditTests(unittest.TestCase):
     def test_recognises_r2_poster_paths(self):
         self.assertEqual(image_kind("https://pogo.michaelpuff.com/infographics/event-1.webp?cache=1"), "infographic-poster")
         self.assertEqual(image_kind("https://pogo.michaelpuff.com/img/ext/event-2.webp"), "infographic-poster")
+        self.assertEqual(image_kind("https://pogo.michaelpuff.com/infographic-thumbs/g47ix/event-3.jpg.webp"), "infographic-poster")
 
     def test_other_images_are_not_counted_as_posters(self):
         self.assertEqual(image_kind("https://raw.githubusercontent.com/PokeAPI/sprites/pokemon/25.png"), "other-image")

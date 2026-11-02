@@ -50,7 +50,7 @@ def scroll_document(page, viewport_height: int, delay_ms: int = 250) -> dict:
 
 def image_kind(url: str) -> str:
     path = urlsplit(url).path.lower()
-    return "infographic-poster" if path.startswith(("/infographics/", "/img/ext/")) else "other-image"
+    return "infographic-poster" if path.startswith(("/infographics/", "/img/ext/", "/infographic-thumbs/")) else "other-image"
 
 def payload_bytes(headers: dict, body: bytes) -> int:
     raw = headers.get("content-length") or headers.get("Content-Length") or ""
