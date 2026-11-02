@@ -51,6 +51,15 @@ test("raid rows offer in-app Best attackers only from published weakness metadat
   assert.match(dash, /GOBEST\.showTypes\(types\)/);
 });
 
+test("raid rotation boss rows expose only published schedule windows for sharing", () => {
+  assert.match(dash, /data-raid-share/);
+  assert.match(dash, /data-raid-boss=.*esc\\(n\\)/);
+  assert.match(dash, /data-raid-kind=.*esc\\(label\\)/);
+  assert.ok(dash.includes("var shareWindow = shareValue && !/,\\\\s*to\\\\s/i.test(String(shareValue))"));
+  assert.match(dash, /data-raid-start=.*esc\\(shareWindow\\.start\\)/);
+  assert.match(dash, /data-raid-end=.*esc\\(shareWindow\\.end\\)/);
+});
+
 test("raid week selector is a compact segmented control with phone-width scrolling and 44px actions", () => {
   assert.match(dashCss, /\.rw-tabs\{display:grid;grid-template-columns:repeat\(4/);
   assert.match(dashCss, /\.rw-tabs button\[aria-selected="true"\]/);
