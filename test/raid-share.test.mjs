@@ -25,7 +25,8 @@ test("raid share payload uses published weaknesses and clearly scoped local coun
   }, types, best, "https://pogo.example/");
   assert.equal(payload.title, "Pokémon GO raid · Yveltal");
   assert.deepEqual(Array.from(payload.weak), ["Electric", "Fairy", "Ice"]);
-  assert.deepEqual(receivedTypes, { weaknesses: ["Electric", "Fairy", "Ice"], limit: 3 });
+  assert.deepEqual(Array.from(receivedTypes.weaknesses), ["Electric", "Fairy", "Ice"]);
+  assert.equal(receivedTypes.limit, 3);
   assert.match(payload.windowLabel, /local$/);
   assert.match(payload.text, /Weak to: Electric, Fairy, Ice/);
   assert.match(payload.text, /Marked counters in the current top-ten type lists: Mega Diancie, Shadow Raikou, Mega Tyranitar \(\+1 more\)/);
