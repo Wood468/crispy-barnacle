@@ -26,8 +26,8 @@ def check(name,cond,extra=''):
 # Design-token contract: semantic roles are shared by the base and dashboard layers,
 # and versioned stylesheets are included in the offline shell.
 ROOT = Path(__file__).resolve().parent.parent
-INFO_QUEUE = json.loads((ROOT / 'public' / 'infographic-queue.json').read_text())
-TREK_INFOGRAPHIC_URL = next((item.get('image', '') for item in INFO_QUEUE.get('items', []) if item.get('linked') and item.get('image') and any(g.get('eventId') == 'trek' for g in item.get('guesses', []))), '')
+TREK_EVENT_INFO = json.loads((ROOT / 'public' / 'event-info.json').read_text())
+TREK_INFOGRAPHIC_URL = next((item.get('url', '') for item in TREK_EVENT_INFO.get('events', {}).get('trek', {}).get('infographics', []) if item.get('url')), '')
 BASE_CSS = (ROOT / 'public' / 'styles.css').read_text()
 BASE_COMPONENT_CSS = BASE_CSS[BASE_CSS.index('*{box-sizing:border-box}'):]
 DASH_CSS = (ROOT / 'public' / 'dash.css').read_text()
@@ -255,7 +255,7 @@ check('Today game plan is an optional accessible local-time disclosure with weak
       all(token in INDEX_HTML for token in ['id="today-tonight"', 'id="today-tonight-summary"', 'id="today-tonight-list"', 'Today&#39;s game plan']) and "Today's game plan · " in DASH_JS and
       all(token in DASH_JS for token in ['D.spotlight', 'D.raidHour', 'D.maxBattles', '6–7 pm local', '6 am–9 pm local', 'Weak to:', 'data-best-types', 'gofn-dex-ready', 'function renderTonight', 'renderTonight(t, dateKey)']) and
       all(token in DASH_CSS for token in ['.today-tonight', '.today-tonight-list', 'min-height:44px', '.today-tonight-best']) and
-      'gofn-dex-ready' in APP_JS and '/app.js?v=20261103d' in INDEX_HTML and '/app.js?v=20261103d' in SW_JS)
+      'gofn-dex-ready' in APP_JS and '/app.js?v=20261103e' in INDEX_HTML and '/app.js?v=20261103e' in SW_JS)
 check('Dex/type readiness refreshes Today raid handoffs and the Tonight disclosure without touching event-detail focus targets',
       "document.addEventListener('gotypes', function () { try { todayTypesReady = true; todayTypesFailed = false; renderRot(); var t = now(); renderTodayRaidPrep(todayRotationFor(t)); renderTonight(t, dayKey(t)); } catch (e) {} });" in DASH_JS and
       "document.addEventListener('gofn-dex-ready', function () { try { renderRot(); var t = now(); renderTodayRaidPrep(todayRotationFor(t)); renderTonight(t, dayKey(t)); } catch (e) {} });" in DASH_JS)
@@ -265,9 +265,9 @@ check('Today multi-deadline tray is accessible, bounded and source-safe',
       all(token in INDEX_HTML for token in ['id="today-deadlines"', 'id="today-deadlines-summary"', 'id="today-deadlines-list"']) and
       all(token in DASH_JS for token in ['var trayLimit = t.getTime() + 7 * 24 * 60 * 60 * 1000', "safeUrl(d.url || '')", 'trayCandidates.slice(0, 8)', 'View all ', 'noopener noreferrer', "sourceUrl.indexOf('https://') === 0"]) and
       all(token in DASH_CSS for token in ['.today-deadlines>summary', 'min-height:44px', '.today-deadline-item', 'var(--color-link)']) and
-      '/dash.js?v=20261103e' in APP_JS and '/dash.js?v=20261103e' in SW_JS and
-      '/dash.css?v=20261103c' in INDEX_HTML and '/dash.css?v=20261103c' in SW_JS and
-      'gofn-shell-v224' in SW_JS)
+      '/dash.js?v=20261103f' in APP_JS and '/dash.js?v=20261103f' in SW_JS and
+      '/dash.css?v=20261103d' in INDEX_HTML and '/dash.css?v=20261103d' in SW_JS and
+      'gofn-shell-v225' in SW_JS)
 check('season pass and deadline data is structured, source-attributed and ordered',
       all(item_id in {item.get('id') for item in SEASON_DATA.get('items', [])}
           for item_id in ['season:pass-halloween', 'season:pass-november']) and
@@ -300,7 +300,7 @@ check('base bonus and information availability controls use semantic status role
           'background: var(--color-status-info-unavailable); color: var(--color-on-status-info-unavailable); border: 1px solid var(--color-border-info-unavailable);',
       ]))
 check('versioned stylesheets are referenced by the page and precached offline',
-      all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261102b', '/dash.css?v=20261103c']))
+      all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261102b', '/dash.css?v=20261103d']))
 check('owner verification scripts are versioned and precached offline',
       '/account.js?v=20261102a' in INDEX_HTML and '/account.js?v=20261102a' in SW_JS and
       '/review.js?v=20261102e' in DASH_JS and '/review.js?v=20261102e' in SW_JS)
@@ -328,16 +328,16 @@ check('event signal chips and detail tags use semantic palette roles with unchan
           '.tg-incense{--tc:var(--color-signal-shadow)}.tg-costume{--tc:var(--color-signal-encounter)}',
       ]))
 check('offline shell cache version advances with the dashboard stylesheet token release',
-      "gofn-shell-v224" in SW_JS)
+      "gofn-shell-v225" in SW_JS)
 check('Travel mode searches only source-dated regional listings and preserves Today visibility',
       all(token in INDEX_HTML for token in ['id="sub-travel"', 'id="travel-q"', 'id="travel-destinations"', 'id="travel-regions"', 'id="travel-results"']) and
       "['travel','Travel','sub-travel']" in APP_JS and
       all(token in DASH_JS for token in ['function renderTravel()', 'TRAVEL_REGIONS', 'data-travel-region', "x.scope !== 'global'", "!/^dated:/.test(String(x.id || ''))", "indexOf('https://') === 0", 'sourceStart', 'sourceEnd', 'travelDateText', 'REG.filter(function (x)', 'var hide = it.travel ?', 'focusedRegion', 'focusTarget.focus()']) and
       all(token in DASH_CSS for token in ['#sub-travel .travel-search', '#travel-regions .fchip{min-height:44px}', '#travel-results .agw .ag-actions .agx{width:44px;height:44px;min-width:44px;min-height:44px}']) and
-      '/app.js?v=20261103d' in INDEX_HTML and '/app.js?v=20261103d' in SW_JS and
-      '/dash.js?v=20261103e' in APP_JS and '/dash.js?v=20261103e' in SW_JS and
-      '/dash.css?v=20261103c' in INDEX_HTML and '/dash.css?v=20261103c' in SW_JS and
-      'gofn-shell-v224' in SW_JS)
+      '/app.js?v=20261103e' in INDEX_HTML and '/app.js?v=20261103e' in SW_JS and
+      '/dash.js?v=20261103f' in APP_JS and '/dash.js?v=20261103f' in SW_JS and
+      '/dash.css?v=20261103d' in INDEX_HTML and '/dash.css?v=20261103d' in SW_JS and
+      'gofn-shell-v225' in SW_JS)
 check('raid rotation cards use source-published local windows and Leek Duck attribution',
       'function raidSourceLink(r)' in DASH_JS and 'fmtT(new Date(second.s))' in DASH_JS and
       'Next raid rotation' in DASH_JS and 'sourceUrl' in DASH_JS and
@@ -353,8 +353,8 @@ check('raid share payload uses sourced weaknesses, local top-ten marks and safe 
 check('event detail focus restoration can find a re-rendered opener by event key and card role',
       all(token in DETAIL_JS for token in ['openerKey', 'openerClass', "getAttribute('data-open')", 'target.focus()']))
 check('versioned dashboard scripts are referenced by the entry page and precached offline',
-      '/app.js?v=20261103d' in INDEX_HTML and '/app.js?v=20261103d' in SW_JS and
-      '/dash.js?v=20261103e' in APP_JS and '/dash.js?v=20261103e' in SW_JS and
+      '/app.js?v=20261103e' in INDEX_HTML and '/app.js?v=20261103e' in SW_JS and
+      '/dash.js?v=20261103f' in APP_JS and '/dash.js?v=20261103f' in SW_JS and
       '/detail.js?v=20261102f' in DASH_JS and '/detail.js?v=20261102f' in SW_JS)
 check('sync PIN and account controls have one home in Menu and are precached offline',
       INDEX_HTML.index('id="acct" class="acct"') > INDEX_HTML.index('id="sub-menu"') and
@@ -819,6 +819,29 @@ with sync_playwright() as p:
         check('Keyboard activation opens Best attackers with only the published five-star boss weaknesses selected',
               set(selected_types) == set(five_types), (selected_types, five_types))
         future_overseas.context.close()
+
+        # Type facts may resolve before dash.js is appended; the readiness state must survive that race.
+        def wait_for_types_before_dashboard(p):
+            p.add_init_script(r"""(() => {
+                const append = Node.prototype.appendChild;
+                Node.prototype.appendChild = function (node) {
+                    if (node && node.tagName === 'SCRIPT' && /\/dash\.js\?/.test(node.src)) {
+                        const parent = this;
+                        const release = () => {
+                            window.__gofnTypesReadyBeforeDash = !!(window.GOTYPES && window.GOTYPES.ready === true);
+                            append.call(parent, node);
+                        };
+                        if (window.GOTYPES && window.GOTYPES.ready === true) release();
+                        else document.addEventListener('gotypes', release, { once: true });
+                        return node;
+                    }
+                    return append.call(this, node);
+                };
+            })();""")
+        early_types = page(pre=wait_for_types_before_dashboard)
+        early_types_ready = settle(early_types, "window.__gofnTypesReadyBeforeDash === true && document.querySelectorAll('#today-focus-raid-actions [data-best-types]').length === 2", 30000)
+        check('Today raid handoffs render when type data resolves before dashboard bootstrap', early_types_ready)
+        early_types.context.close()
 
         # Raid windows can start after midnight; the Today summary must include an active or upcoming window on its start day.
         rotation_window_data = json.loads((ROOT / 'public' / 'data.json').read_text())
@@ -1468,7 +1491,7 @@ with sync_playwright() as p:
                   const opener = [...document.querySelectorAll('[data-infographic]')].find(el => el.getAttribute('data-infographic') === 'cur:trek');
                   return document.getElementById('goinfo').hidden && document.activeElement === opener;
               }"""))
-        # The current linked Trek infographic URL is intercepted dynamically so this fallback test follows the public queue's actual storage path.
+        # The first published Trek poster is the card thumbnail; intercept its current event-info URL.
         check('failed-thumbnail fixture resolves the current linked Trek infographic URL', bool(TREK_INFOGRAPHIC_URL), TREK_INFOGRAPHIC_URL)
         pb=page(pre=lambda p: p.route('**' + TREK_INFOGRAPHIC_URL, lambda route: route.fulfill(status=404,body='')) if TREK_INFOGRAPHIC_URL else None)
         # The page may rebuild Today while secondary data arrives; scroll the current connected node in one DOM task

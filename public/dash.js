@@ -1153,7 +1153,7 @@
     renderRot();
   });
 
-  var todayTypesReady = false, todayTypesFailed = false;
+  var todayTypesReady = !!(window.GOTYPES && window.GOTYPES.ready === true), todayTypesFailed = false;
   document.addEventListener('gotypes', function () { try { todayTypesReady = true; todayTypesFailed = false; renderRot(); var t = now(); renderTodayRaidPrep(todayRotationFor(t)); renderTonight(t, dayKey(t)); } catch (e) {} });
   document.addEventListener('gofn-dex-ready', function () { try { renderRot(); var t = now(); renderTodayRaidPrep(todayRotationFor(t)); renderTonight(t, dayKey(t)); } catch (e) {} });
   document.addEventListener('gobest-ready', function () { try { var t = now(); renderTodayRaidPrep(todayRotationFor(t)); renderTonight(t, dayKey(t)); } catch (e) {} });
