@@ -1,5 +1,6 @@
 {
  "alerted": [
+  "source-watch.yml",
   "g47ix-infographics.yml",
   "discord_sync.yml",
   "ai-heartbeat-pipeline"
