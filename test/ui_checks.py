@@ -1711,7 +1711,7 @@ with sync_playwright() as p:
             pg.wait_for_function('!!window.__raidCopied')
             check('raid share copy action includes the selected boss and app link',
                   raid_share_boss in pg.evaluate('window.__raidCopied') and 'GO Field Notes:' in pg.evaluate('window.__raidCopied'))
-            pg.evaluate("() => { delete navigator.share; window.__raidCopied = ''; }")
+            pg.evaluate("() => { Object.defineProperty(navigator,'share',{configurable:true,writable:true,value:undefined}); window.__raidCopied = ''; }")
             pg.click('#raid-share-send')
             pg.wait_for_function('!!window.__raidCopied')
             check('unsupported native sharing falls back to copying the same raid details',
