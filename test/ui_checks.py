@@ -2457,7 +2457,12 @@ with sync_playwright() as p:
           return small;
         }"""
         seed_new = lambda pg: (pg.evaluate("localStorage.setItem('gofn-seen-events', JSON.stringify({ids:['seed-old-event'], at:1}))"), pg.reload(), pg.wait_for_selector('.whatsnew:not([hidden])', timeout=15000))
-        b1 = page(clock=BATCH1_CLOCK)
+        # Keep the dismissal/reload test independent of whichever datamine posts happen to be current.
+        b1 = page(clock=BATCH1_CLOCK, extra={
+            '**/api/unreleased': (json.dumps({'changes': []}), 200),
+            '**/api/datamine': (json.dumps({'items': [], 'posts': []}), 200),
+            '**/datamine-news.json': (json.dumps({'items': []}), 200)
+        })
         seed_new(b1)
         b1.wait_for_selector('#home-now .evc, #home-now .agr', state='attached')
         overflow = {}
