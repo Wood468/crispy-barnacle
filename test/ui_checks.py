@@ -245,7 +245,7 @@ check('Today Tonight planner is an optional accessible local-time disclosure wit
       all(token in INDEX_HTML for token in ['id="today-tonight"', 'id="today-tonight-summary"', 'id="today-tonight-list"']) and
       all(token in DASH_JS for token in ['D.spotlight', 'D.raidHour', 'D.maxBattles', '6–7 pm local', '6 am–9 pm local', 'Weak to:', 'data-best-types', 'gofn-dex-ready', 'function renderTonight', 'renderTonight(t, dateKey)']) and
       all(token in DASH_CSS for token in ['.today-tonight', '.today-tonight-list', 'min-height:44px', '.today-tonight-best']) and
-      'gofn-dex-ready' in APP_JS and '/app.js?v=20261102m' in INDEX_HTML and '/app.js?v=20261102m' in SW_JS)
+      'gofn-dex-ready' in APP_JS and '/app.js?v=20261102l' in INDEX_HTML and '/app.js?v=20261102l' in SW_JS)
 check('Dex/type readiness refreshes only the Tonight disclosure, preserving event-detail focus targets',
       "document.addEventListener('gotypes', function () { try { renderRot(); var t = now(); renderTonight(t, dayKey(t)); } catch (e) {} });" in DASH_JS and
       "document.addEventListener('gofn-dex-ready', function () { try { renderRot(); var t = now(); renderTonight(t, dayKey(t)); } catch (e) {} });" in DASH_JS)
@@ -328,7 +328,7 @@ check('raid share payload uses sourced weaknesses, local top-ten marks and safe 
 check('event detail focus restoration can find a re-rendered opener by event key and card role',
       all(token in DETAIL_JS for token in ['openerKey', 'openerClass', "getAttribute('data-open')", 'target.focus()']))
 check('versioned dashboard scripts are referenced by the entry page and precached offline',
-      '/app.js?v=20261102m' in INDEX_HTML and '/app.js?v=20261102m' in SW_JS and
+      '/app.js?v=20261102l' in INDEX_HTML and '/app.js?v=20261102l' in SW_JS and
       '/dash.js?v=20261102p' in APP_JS and '/dash.js?v=20261102p' in SW_JS and
       '/detail.js?v=20261102d' in DASH_JS and '/detail.js?v=20261102d' in SW_JS)
 check('sync PIN and account controls have one home in Menu and are precached offline',
