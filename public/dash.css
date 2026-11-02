@@ -1389,6 +1389,9 @@ select,
 .today-deadline-item a{display:inline-flex;align-items:center;min-height:44px;padding:0 var(--space-2);color:var(--color-link);text-decoration:underline;text-underline-offset:2px}
 .today-deadline-qualifier{color:var(--color-text-muted)}
 
+.today-focus-raid-actions{display:flex;flex-wrap:wrap;gap:var(--space-1);margin-top:var(--space-1);min-width:0}
+.today-focus-raid-actions[hidden]{display:none}
+.today-focus-raid-actions .today-focus-raid-best{margin-top:0;max-width:100%;white-space:nowrap}
 .today-tonight{min-width:0;margin-top:var(--space-1);border-top:1px solid var(--color-border-card)}
 .today-tonight[hidden],.today-tonight-list[hidden]{display:none}
 .today-tonight>summary{display:flex;align-items:center;min-height:44px;padding:var(--space-1) 0;color:var(--color-link);font-family:var(--font-body);font-size:var(--type-caption);font-weight:700;line-height:1.25;cursor:pointer;list-style:none}

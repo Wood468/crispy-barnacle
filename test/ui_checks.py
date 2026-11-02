@@ -234,9 +234,14 @@ check('empty agenda and watchlist states use a quiet surface and decorative cue'
 check('Today brief has three data-backed focus tiles (Next, Ending soon, Raids & Max) inside one card; the duplicate Now tile is gone',
       'id="today-focus-now"' not in INDEX_HTML and 'id="day-brief-note"' not in INDEX_HTML and
       INDEX_HTML.index('id="day-brief"') < INDEX_HTML.index('id="today-focus-strip"') < INDEX_HTML.index('</section>', INDEX_HTML.index('id="today-focus-strip"')) and
-      all(token in INDEX_HTML for token in ['id="today-focus-strip"', 'id="today-focus-next"', 'id="today-focus-raids"', 'id="today-focus-ending"']) and
+      all(token in INDEX_HTML for token in ['id="today-focus-strip"', 'id="today-focus-next"', 'id="today-focus-raids"', 'id="today-focus-raid-actions"', 'id="today-focus-ending"']) and
       all(token in DASH_JS for token in ['function renderTodayStrip', '6 * 60 * 60 * 1000', '48 * 60 * 60 * 1000', 'window.GOSEASON', 'GOSEASON.deadlines', 'gofn-season-ready', 'activity.inGame', 'activity.inPerson', 'D.rotation', 'D.maxBattles']) and
       all(token in DASH_CSS for token in ['.today-focus-strip', '.today-focus-card', 'grid-template-columns:repeat(2,minmax(0,1fr))']))
+check('Today raid focus offers curated counter handoffs for the published five-star and Mega bosses',
+      'function todayRotationFor(t)' in DASH_JS and 'function renderTodayRaidPrep(rotation)' in DASH_JS and
+      all(token in DASH_JS for token in ['GOTYPES.facts(item.boss)', 'GOBEST.dataReady !== true', 'renderTodayRaidPrep(rotation)', 'data-best-types']) and
+      all(token in INDEX_HTML for token in ['id="today-focus-raid-actions"', 'role="group"']) and
+      all(token in DASH_CSS for token in ['.today-focus-raid-actions', 'min-height:44px']))
 check('Tonight owned-counter summary uses existing local marks and curated top-ten type lists',
       'ownedSummary:function(types,limit)' in APP_JS and 'dex.have[name]' in APP_JS and
       'gobest-ready' in APP_JS and 'gobest-ready' in DASH_JS and 'gofn-marks' in DASH_JS and
@@ -248,7 +253,7 @@ check('Today game plan is an optional accessible local-time disclosure with weak
       all(token in INDEX_HTML for token in ['id="today-tonight"', 'id="today-tonight-summary"', 'id="today-tonight-list"', 'Today&#39;s game plan']) and "Today's game plan · " in DASH_JS and
       all(token in DASH_JS for token in ['D.spotlight', 'D.raidHour', 'D.maxBattles', '6–7 pm local', '6 am–9 pm local', 'Weak to:', 'data-best-types', 'gofn-dex-ready', 'function renderTonight', 'renderTonight(t, dateKey)']) and
       all(token in DASH_CSS for token in ['.today-tonight', '.today-tonight-list', 'min-height:44px', '.today-tonight-best']) and
-      'gofn-dex-ready' in APP_JS and '/app.js?v=20261103c' in INDEX_HTML and '/app.js?v=20261103c' in SW_JS)
+      'gofn-dex-ready' in APP_JS and '/app.js?v=20261103d' in INDEX_HTML and '/app.js?v=20261103d' in SW_JS)
 check('Dex/type readiness refreshes only the Tonight disclosure, preserving event-detail focus targets',
       "document.addEventListener('gotypes', function () { try { renderRot(); var t = now(); renderTonight(t, dayKey(t)); } catch (e) {} });" in DASH_JS and
       "document.addEventListener('gofn-dex-ready', function () { try { renderRot(); var t = now(); renderTonight(t, dayKey(t)); } catch (e) {} });" in DASH_JS)
@@ -327,7 +332,7 @@ check('Travel mode searches only source-dated regional listings and preserves To
       "['travel','Travel','sub-travel']" in APP_JS and
       all(token in DASH_JS for token in ['function renderTravel()', 'TRAVEL_REGIONS', 'data-travel-region', "x.scope !== 'global'", "!/^dated:/.test(String(x.id || ''))", "indexOf('https://') === 0", 'sourceStart', 'sourceEnd', 'travelDateText', 'REG.filter(function (x)', 'var hide = it.travel ?', 'focusedRegion', 'focusTarget.focus()']) and
       all(token in DASH_CSS for token in ['#sub-travel .travel-search', '#travel-regions .fchip{min-height:44px}', '#travel-results .agw .ag-actions .agx{width:44px;height:44px;min-width:44px;min-height:44px}']) and
-      '/app.js?v=20261103c' in INDEX_HTML and '/app.js?v=20261103c' in SW_JS and
+      '/app.js?v=20261103d' in INDEX_HTML and '/app.js?v=20261103d' in SW_JS and
       '/dash.js?v=20261103d' in APP_JS and '/dash.js?v=20261103d' in SW_JS and
       '/dash.css?v=20261103b' in INDEX_HTML and '/dash.css?v=20261103b' in SW_JS and
       'gofn-shell-v223' in SW_JS)
@@ -346,7 +351,7 @@ check('raid share payload uses sourced weaknesses, local top-ten marks and safe 
 check('event detail focus restoration can find a re-rendered opener by event key and card role',
       all(token in DETAIL_JS for token in ['openerKey', 'openerClass', "getAttribute('data-open')", 'target.focus()']))
 check('versioned dashboard scripts are referenced by the entry page and precached offline',
-      '/app.js?v=20261103c' in INDEX_HTML and '/app.js?v=20261103c' in SW_JS and
+      '/app.js?v=20261103d' in INDEX_HTML and '/app.js?v=20261103d' in SW_JS and
       '/dash.js?v=20261103d' in APP_JS and '/dash.js?v=20261103d' in SW_JS and
       '/detail.js?v=20261102f' in DASH_JS and '/detail.js?v=20261102f' in SW_JS)
 check('sync PIN and account controls have one home in Menu and are precached offline',
@@ -783,6 +788,34 @@ with sync_playwright() as p:
         future_overseas.set_viewport_size({'width':1280,'height':900})
         desktop_cols = future_overseas.locator('#today-focus-strip').evaluate("el => getComputedStyle(el).gridTemplateColumns.split(' ').length")
         check('Today focus strip expands to three columns on desktop', desktop_cols==3, desktop_cols)
+        settle(future_overseas, "document.querySelectorAll('#today-focus-raid-actions [data-best-types]').length === 2", 30000)
+        raid_prep_buttons = future_overseas.locator('#today-focus-raid-actions [data-best-types]')
+        five_button = future_overseas.locator('#today-focus-raid-actions [data-best-types]').filter(has_text='5★ attackers')
+        mega_button = future_overseas.locator('#today-focus-raid-actions [data-best-types]').filter(has_text='Mega attackers')
+        check('Today raid focus offers curated handoffs for the published five-star and Mega bosses',
+              raid_prep_buttons.count() == 2 and 'Yveltal' in five_button.get_attribute('aria-label') and
+              'Mega Blastoise' in mega_button.get_attribute('aria-label'), raid_prep_buttons.all_text_contents())
+        raid_metrics = future_overseas.locator('#today-focus-raid-actions').evaluate("el => ({visible:!el.hidden, overflow:el.scrollWidth>el.clientWidth, heights:[...el.querySelectorAll('button')].map(b=>b.getBoundingClientRect().height)})")
+        check('Today raid handoffs remain visible, non-overflowing and 44px high at desktop',
+              raid_metrics['visible'] and not raid_metrics['overflow'] and len(raid_metrics['heights']) == 2 and all(h >= 44 for h in raid_metrics['heights']), raid_metrics)
+        for raid_theme in ('light', 'dark'):
+            future_overseas.evaluate("(theme) => { if (theme === 'light') document.documentElement.setAttribute('data-theme','light'); else document.documentElement.removeAttribute('data-theme'); }", raid_theme)
+            contrast = five_button.evaluate("""b => {
+              const rgb = value => (value.match(/[\\d.]+/g) || []).slice(0,3).map(Number);
+              const lum = value => { const c=rgb(value).map(x=>{x/=255;return x<=.04045?x/12.92:Math.pow((x+.055)/1.055,2.4)}); return .2126*c[0]+.7152*c[1]+.0722*c[2]; };
+              const s=getComputedStyle(b), a=lum(s.color), z=lum(s.backgroundColor);
+              return {height:b.getBoundingClientRect().height, ratio:(Math.max(a,z)+.05)/(Math.min(a,z)+.05)};
+            }""")
+            check('Today raid handoff button meets target size and AA text contrast in ' + raid_theme + ' theme',
+                  contrast['height'] >= 44 and contrast['ratio'] >= 4.5, contrast)
+        five_types = five_button.get_attribute('data-best-types').split('|')
+        five_button.focus()
+        five_button.press('Enter')
+        future_overseas.wait_for_selector('#tab-best:not([hidden])')
+        future_overseas.wait_for_function("document.querySelectorAll('#typechips button[aria-pressed=true]').length > 0")
+        selected_types = future_overseas.locator('#typechips button[aria-pressed="true"]').all_inner_texts()
+        check('Keyboard activation opens Best attackers with only the published five-star boss weaknesses selected',
+              set(selected_types) == set(five_types), (selected_types, five_types))
         future_overseas.context.close()
 
         # Raid windows can start after midnight; the Today summary must include an active or upcoming window on its start day.
