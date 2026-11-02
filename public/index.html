@@ -16,7 +16,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&family=Hanken+Grotesk:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap">
 <link rel="stylesheet" href="/styles.css?v=20261102a">
-<link rel="stylesheet" href="/dash.css?v=20261102j">
+<link rel="stylesheet" href="/dash.css?v=20261102k">
 </head>
 <body>
 <div class="wrap">
@@ -395,6 +395,40 @@
 
   </main>
 
+  <dialog id="raid-share-dialog" class="raid-share-dialog" aria-labelledby="raid-share-title" aria-describedby="raid-share-description">
+    <div class="raid-share-shell">
+      <div class="raid-share-head">
+        <div><span class="raid-share-eyebrow">GO FIELD NOTES</span><h2 id="raid-share-title">Share raid details</h2></div>
+        <button type="button" class="raid-share-close" data-raid-share-close aria-label="Close share dialog">×</button>
+      </div>
+      <article class="raid-share-card" id="raid-share-card">
+        <div class="raid-share-brand">GO FIELD NOTES <span>· RAID ROTATION</span></div>
+        <div class="raid-share-hero">
+          <div class="raid-share-art" id="raid-share-art" aria-hidden="true"></div>
+          <div class="raid-share-identity">
+            <span id="raid-share-kind" class="raid-share-kind"></span>
+            <h3 id="raid-share-boss"></h3>
+            <p id="raid-share-window" hidden></p>
+          </div>
+        </div>
+        <section id="raid-share-weakness-section" class="raid-share-section" hidden>
+          <h4>WEAK TO</h4><div id="raid-share-weakness" class="raid-share-types"></div>
+        </section>
+        <section id="raid-share-counters-section" class="raid-share-section" hidden>
+          <h4>MY MARKED COUNTERS</h4><p id="raid-share-counters"></p>
+          <small class="raid-share-footnote">Counter suggestions use the current curated top-ten type lists and your local marks; they are not a complete battle ranking.</small>
+        </section>
+        <p class="raid-share-disclaimer" id="raid-share-description">Rotation boundaries use local time. Confirm the in-game schedule before making plans.</p>
+      </article>
+      <details class="raid-share-text-details"><summary>Text to share</summary><pre id="raid-share-text"></pre></details>
+      <div class="raid-share-actions">
+        <button type="button" id="raid-share-send" class="raid-share-primary">Share</button>
+        <button type="button" id="raid-share-copy">Copy text</button>
+      </div>
+      <p id="raid-share-status" class="raid-share-status" role="status" aria-live="polite"></p>
+    </div>
+  </dialog>
+
   <footer>
     <p>Unofficial fan tool, not affiliated with Niantic, Scopely, Nintendo or The Pokémon Company. Pokémon names and artwork belong to their owners. Events as of <span id="asof"></span>. Confirm times in the game before a big outing.</p>
     <details class="dd foot-dd">
@@ -424,7 +458,8 @@
 <script src="/local-state.js?v=20261030a"></script>
 <script src="/account.js?v=20261101b"></script>
 <script src="/dedupe.js?v=20261101b"></script>
-<script src="/app.js?v=20261102g"></script>
+<script src="/app.js?v=20261102h"></script>
+<script src="/raid-share.js?v=20261102a"></script>
 <script src="/store.js?v=20261101a"></script>
 <script src="/season.js?v=20261102d"></script>
 <script src="/weekly.js?v=20261101a"></script>
