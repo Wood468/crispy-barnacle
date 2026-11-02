@@ -244,7 +244,7 @@ check('Tonight owned-counter summary uses existing local marks and curated top-t
 check('Tonight does not interpret a loading or failed top-ten feed as zero owned counters',
       'window.GOBEST.dataReady === true' in DASH_JS and 'window.GOBEST.dataReady=true' in APP_JS and
       "document.addEventListener('gobest-ready'" in DASH_JS)
-check('Today battle plan is an optional accessible local-time disclosure with weakness links to the owned Best attackers view',
+check('Today game plan is an optional accessible local-time disclosure with weakness links to the owned Best attackers view',
       all(token in INDEX_HTML for token in ['id="today-tonight"', 'id="today-tonight-summary"', 'id="today-tonight-list"', 'Today&#39;s battle plan']) and "Today's battle plan · " in DASH_JS and
       all(token in DASH_JS for token in ['D.spotlight', 'D.raidHour', 'D.maxBattles', '6–7 pm local', '6 am–9 pm local', 'Weak to:', 'data-best-types', 'gofn-dex-ready', 'function renderTonight', 'renderTonight(t, dateKey)']) and
       all(token in DASH_CSS for token in ['.today-tonight', '.today-tonight-list', 'min-height:44px', '.today-tonight-best']) and
@@ -829,8 +829,8 @@ with sync_playwright() as p:
         settle(max_monday_page, "document.querySelector('#today-tonight-list')?.textContent.includes('Marked top counters (3): Mega Rayquaza, Mega Mewtwo Y, Mega Gardevoir')", 30000)
         settle(max_monday_page, "!!document.querySelector('#today-tonight-list [data-best-types]')", 30000)
         max_monday_page.locator('#today-tonight > summary').click()
-        check('Today battle plan label covers daytime Max Monday as well as evening activities',
-               max_monday_page.locator('#today-tonight-summary').text_content() == "Today's battle plan · 1 activity",
+        check('Today game plan label covers daytime Max Monday as well as evening activities',
+               max_monday_page.locator('#today-tonight-summary').text_content() == "Today's game plan · 1 activity",
                max_monday_page.locator('#today-tonight-summary').text_content())
         max_text = max_monday_page.locator('#today-tonight-list').text_content()  # text_content, not inner_text: inner_text applies the heading's text-transform once the list is un-hidden (the details toggle event fires async), which made these reads race
         check('Today Tonight planner surfaces Max Monday with its published local hours',

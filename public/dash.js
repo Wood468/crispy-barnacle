@@ -1326,7 +1326,7 @@
       }
       tonight.hidden = !tonightItems.length;
       if (tonightItems.length) {
-        tonightSummary.textContent = "Today's battle plan · " + tonightItems.length + (tonightItems.length === 1 ? ' activity' : ' activities');
+        tonightSummary.textContent = "Today's game plan · " + tonightItems.length + (tonightItems.length === 1 ? ' activity' : ' activities');
         tonightList.innerHTML = tonightItems.map(function (item) {
           var facts = item.boss && window.GOTYPES && GOTYPES.facts(item.boss);
           var weak = facts && Array.isArray(facts.weak) ? facts.weak.filter(function (type, i, all) { return typeof type === 'string' && all.indexOf(type) === i; }) : [];
