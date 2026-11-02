@@ -730,6 +730,13 @@
     }
     var a = ws, b = addDays(ws, 6);
     el.innerHTML = '<div class="wk-head"><button type="button" class="calnav" data-wk="-1" aria-label="Previous week">‹</button><span>' + esc(fmtD(a) + ' to ' + fmtD(b)) + (weekOff === 0 ? ' · this week' : '') + '</span><button type="button" class="calnav" data-wk="1" aria-label="Next week">›</button></div><div class="wk-days">' + cells + '</div>';
+    /* Re-rendering resets the scroll: keep the chosen day in view when the strip scrolls (320 px shows about six days). */
+    var strip = el.querySelector('.wk-days'), pick = strip && strip.querySelector('.wd.sel');
+    if (pick && strip.scrollWidth > strip.clientWidth + 1) { var pr = pick.getBoundingClientRect(), sr = strip.getBoundingClientRect(); if (pr.right > sr.right) strip.scrollLeft += pr.right - sr.right + 8; }
+    if (strip) { /* data-more says which edge still has days behind it; the stylesheet fades that edge */
+      var edge = function () { var l = strip.scrollLeft > 2, r = strip.scrollLeft + strip.clientWidth < strip.scrollWidth - 2; strip.setAttribute('data-more', (l ? 'l' : '') + (r ? 'r' : '')); };
+      edge(); strip.addEventListener('scroll', edge, { passive: true }); if (window.ResizeObserver) new ResizeObserver(edge).observe(strip);
+    }
   }
   function drawTimeline() {
     var el = $('evtimeline'); if (!el) return;
@@ -1542,9 +1549,13 @@
       if (!count) return '';
       return '<section class="today-phase-group"><div class="today-phase-head"><span>' + label + '</span><span class="today-phase-count">' + count + '</span></div><div class="today-phase-cards">' + html + '</div></section>';
     }
+    /* In-person events (overseas ones included, never filtered by country) sit under one quiet "In person" label, the same way in every group. */
+    function inPerson(list) {
+      return list.length ? '<div class="today-phase-head today-sub"><span>In person</span><span class="today-phase-count">' + list.length + '</span></div>' + list.map(function (e) { return agendaRow(e, true); }).join('') : '';
+    }
     tdEl.innerHTML = today.length || todayRegional.length
-      ? phaseGroup('Happening now', liveToday.length + liveRegional.length, liveToday.map(function (e) { return card(e); }).join('') + liveRegional.map(function (e) { return agendaRow(e, true); }).join('')) +
-        phaseGroup('Later today', laterToday.length + laterRegional.length, laterToday.map(function (e) { return card(e); }).join('') + laterRegional.map(function (e) { return agendaRow(e, true); }).join(''))
+      ? phaseGroup('Happening now', liveToday.length + liveRegional.length, liveToday.map(function (e) { return card(e); }).join('') + inPerson(liveRegional)) +
+        phaseGroup('Later today', laterToday.length + laterRegional.length, laterToday.map(function (e) { return card(e); }).join('') + inPerson(laterRegional))
       : '<div class="today-empty"><p class="empty">Nothing is scheduled for today.</p>' +
         (nextUp
           ? '<button type="button" class="today-next-up" data-open="' + esc(nextUp.id) + '" aria-label="Open details for ' + esc(nextUp.name) + '"><span class="today-next-kicker">NEXT UP</span><b>' + esc(nextUp.name) + '</b><span class="today-next-time">' + esc(fmtD(nextUp.start) + ' · ' + fmtT(nextUp.start)) + '</span><span class="today-next-action">View event details <span aria-hidden="true">→</span></span></button>'
@@ -1739,7 +1750,7 @@
     renderCoverage();
     if (window.GO && GO.refreshDex) GO.refreshDex();
     usSync();
-    var inf = document.createElement('script'); inf.src = '/infographic.js?v=20261102b'; document.body.appendChild(inf); var x = document.createElement('script'); x.src = '/extra.js?v=20261102c'; document.body.appendChild(x); var z = document.createElement('script'); z.src = '/places.js?v=20261102a'; window.GOPLACES_READY = new Promise(function (resolve) { z.onload = function () { resolve(window.GOPLACES || null); }; z.onerror = function () { resolve(null); }; }); var y = document.createElement('script'); y.src = '/detail.js?v=20261102f'; document.body.appendChild(y); document.body.appendChild(z); var w = document.createElement('script'); w.src = '/fresh.js?v=20261102c'; document.body.appendChild(w); var nv = document.createElement('script'); nv.src = '/nudge.js?v=20261102a'; document.body.appendChild(nv); var rv = document.createElement('script'); rv.src = '/review.js?v=20261102b'; document.body.appendChild(rv); var by = document.createElement('script'); by.src = '/buy.js?v=20261102a'; document.body.appendChild(by);
+    var inf = document.createElement('script'); inf.src = '/infographic.js?v=20261102b'; document.body.appendChild(inf); var x = document.createElement('script'); x.src = '/extra.js?v=20261102c'; document.body.appendChild(x); var z = document.createElement('script'); z.src = '/places.js?v=20261102a'; window.GOPLACES_READY = new Promise(function (resolve) { z.onload = function () { resolve(window.GOPLACES || null); }; z.onerror = function () { resolve(null); }; }); var y = document.createElement('script'); y.src = '/detail.js?v=20261102f'; document.body.appendChild(y); document.body.appendChild(z); var w = document.createElement('script'); w.src = '/fresh.js?v=20261102d'; document.body.appendChild(w); var nv = document.createElement('script'); nv.src = '/nudge.js?v=20261102a'; document.body.appendChild(nv); var rv = document.createElement('script'); rv.src = '/review.js?v=20261102b'; document.body.appendChild(rv); var by = document.createElement('script'); by.src = '/buy.js?v=20261102a'; document.body.appendChild(by);
   }
   envBanner();
   /* Bounded waits: a request that never answers must not leave Today blank. After FEED_TIMEOUT_MS the page renders from the curated list
@@ -1765,7 +1776,7 @@
   }).then(function (R) {
     var api = R[1], stalled = api === TIMED_OUT; if (stalled) api = null;
     var dexLate = R[0] === TIMED_OUT, cpLate = R[2] === TIMED_OUT;
-    if (!api && window.GONET && navigator.onLine !== false) window.GONET.fail('Could not load the latest events. Showing the saved copy.');
+    if (!api && window.GONET && navigator.onLine !== false) window.GONET.fail('Latest events did not load. Showing the saved copy.');
     applyLive(api);
     start(dexLate ? [] : R[0], cpLate ? null : R[2]);
     setFeedState(!api ? 'degraded' : (usingApi ? 'live' : 'curated'));
