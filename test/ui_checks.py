@@ -3262,7 +3262,7 @@ with sync_playwright() as p:
                 pg.route('**/api/ig-decisions', decisions_route)
             rpg = page(api=B9_API, pin=True, mobile=True,
                        extra={'**/api/auth/users': (json.dumps({'users': []}), 200)},
-                       pre=initial_routes, ready=False)
+                       pre=initial_routes, ready=True)
             rpg.wait_for_function("document.documentElement.getAttribute('data-role')==='owner'", timeout=10000)
             rpg.wait_for_timeout(100)
             rpg.clock.fast_forward(16000)
