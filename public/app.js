@@ -1015,7 +1015,7 @@ Promise.all([
     var r=document.getElementById('today-retry');if(r)r.addEventListener('click',function(){window.location.reload()});
     var b=document.getElementById('day-brief');if(b)b.setAttribute('data-state','unavailable');
     var f=document.getElementById('fresh-line');if(f)f.setAttribute('data-released','')}
-  var ds=document.createElement('script');ds.src='/dash.js?v=20261102z';ds.onerror=todayUnavailable;document.body.appendChild(ds);setTimeout(function(){if(!window.GODASH)todayUnavailable()},10000);
+  var ds=document.createElement('script');ds.src='/dash.js?v=20261103a';ds.onerror=todayUnavailable;document.body.appendChild(ds);setTimeout(function(){if(!window.GODASH)todayUnavailable()},10000);
 })();
 
 }).catch(function(){var panel=document.getElementById('load-error');if(panel)panel.hidden=false;var retry=document.getElementById('load-retry');if(retry)retry.addEventListener('click',function(){window.location.reload()},{once:true})});
@@ -1024,7 +1024,8 @@ Promise.all([
 (function(){
   function bar(){var b=document.getElementById('netbar');if(b)return b;b=document.createElement('div');b.id='netbar';b.className='netbar';b.hidden=true;b.setAttribute('role','status');var e=document.getElementById('envbar');if(e&&e.parentNode)e.parentNode.insertBefore(b,e.nextSibling);else document.body.insertBefore(b,document.body.firstChild);return b}
   function upd(){var b=bar();if(navigator.onLine===false){b.hidden=false;b.innerHTML='<b>You are offline</b><span>Showing the saved copy. Changes sync when you are back online.</span>'}else if(!b.hasAttribute('data-fail'))b.hidden=true}
-  window.GONET={clear:function(){var b=bar();b.removeAttribute('data-fail');upd()},fail:function(msg){var b=bar();b.setAttribute('data-fail','1');b.hidden=false;b.innerHTML='<b>'+msg+'</b><button type="button" class="pill nb-retry" data-netretry>Try again</button>'}};
+  function note(){document.dispatchEvent(new CustomEvent('gofn-netbar'))}
+  window.GONET={clear:function(){var b=bar();b.removeAttribute('data-fail');upd();note()},fail:function(msg,sub){var b=bar();b.setAttribute('data-fail','1');b.hidden=false;b.innerHTML='<b>'+msg+'</b>'+(sub?'<span>'+sub+'</span>':'')+'<button type="button" class="pill nb-retry" data-netretry>Try again</button>';note()}};
   document.addEventListener('click',function(e){if(e.target.closest&&e.target.closest('[data-netretry]'))location.reload()});
   window.addEventListener('online',upd);window.addEventListener('offline',upd);upd();
 })();

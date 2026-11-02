@@ -735,9 +735,12 @@
     if (pick && strip.scrollWidth > strip.clientWidth + 1) { var pr = pick.getBoundingClientRect(), sr = strip.getBoundingClientRect(); if (pr.right > sr.right) strip.scrollLeft += pr.right - sr.right + 8; }
     if (strip) { /* data-more says which edge still has days behind it; the stylesheet fades that edge */
       var edge = function () { var l = strip.scrollLeft > 2, r = strip.scrollLeft + strip.clientWidth < strip.scrollWidth - 2; strip.setAttribute('data-more', (l ? 'l' : '') + (r ? 'r' : '')); };
-      edge(); strip.addEventListener('scroll', edge, { passive: true }); if (window.ResizeObserver) new ResizeObserver(edge).observe(strip);
+      edge(); strip.addEventListener('scroll', edge, { passive: true });
+      /* One observer for the life of the page: each render replaces the strip, so release the old one before watching the new one (a fresh observer per render kept every detached strip alive). */
+      if (window.ResizeObserver) { if (!stripRO) stripRO = new ResizeObserver(function () { var cur = document.querySelector('#weekstrip .wk-days'); if (cur && cur._edge) cur._edge(); }); stripRO.disconnect(); strip._edge = edge; stripRO.observe(strip); }
     }
   }
+  var stripRO = null;
   function drawTimeline() {
     var el = $('evtimeline'); if (!el) return;
     var t = now(), html = '', ws = weekStart(weekOff), we = addDays(ws, 7);
@@ -855,6 +858,8 @@
       return !EV.some(function (ev) { return ev.start <= x.end && ev.end >= x.start && words(ev.name).some(function (t) { return w.indexOf(t) >= 0; }); });
     });
   }
+  /* One rule for "in person": a located/regional listing. A global item (play from anywhere, an in-game feature) is never in person. The Today brief and the Today group labels both use it. */
+  function regInPerson(e) { return !!e && e.scope !== 'global'; }
   function regDay(day) {
     var d0 = startOfDay(day).getTime(), d1 = d0 + 864e5;
     return regList().filter(function (r) {
@@ -869,15 +874,15 @@
   function agendaRow(it, isReg) {
     var pl = isReg && window.GOPLACES ? GOPLACES.forEvent(it) : [];  // real-life events with sourced venues get a pin button
     var pin = pl.length ? '<button type="button" class="agx agpin" data-places="' + (pl.length === 1 ? esc(pl[0].id) : '') + '" data-placesq="' + (pl.length === 1 ? '' : esc(it.name)) + '" aria-label="Location and coordinates for ' + esc(it.name) + '" title="Location and coordinates">📍<span>Coords</span></button>' : '';
-    var ig = isReg ? '<button type="button" class="agx agig" data-igcard="' + esc(it.id) + '" data-infographic="' + esc(it.id) + '" aria-label="Open infographic for ' + esc(it.name) + '"></button>' : '';
-    var hide = it.travel ? '' : '<button type="button" class="agx" data-hide="' + esc(it.id) + '" aria-label="Hide ' + esc(it.name) + '" title="Hide">✕</button>';
+    var ig = isReg ? '<button type="button" class="agx agig" data-igcard="' + esc(it.id) + '" data-infographic="' + esc(it.id) + '" aria-label="Open infographic for ' + esc(it.name) + '"></button>' : '';  // the picture-check state is labelled "Poster" by the stylesheet
+    var hide = it.travel ? '' : '<button type="button" class="agx" data-hide="' + esc(it.id) + '" aria-label="Hide ' + esc(it.name) + '" title="Hide this event (show it again from Hidden by you)"><span class="agx-ic" aria-hidden="true">✕</span><span class="agx-cap" aria-hidden="true">Hide</span></button>';
     return '<div class="agw">' + agendaInner(it, isReg) + '<div class="ag-actions">' + pin + ig + hide + '</div></div>';
   }
   function agendaInner(it, isReg) {
     if (isReg) {
       var mult = it.end.getTime() - it.start.getTime() > 864e5;
       var when = it.travel ? travelDateText(it) : (mult ? fmtD(it.start) + ' to ' + fmtD(it.end) : fmtD(it.start));
-      return '<a class="agr reg" href="' + esc(it.src.url) + '" target="_blank" rel="noopener noreferrer" style="--k:' + REGCOL + '"><i></i><span class="agt"><b>' + esc(it.name) + '</b><small>' + esc(it.place) + ' · ' + esc(when) + '</small></span><em>' + esc(it.area) + '</em></a>';
+      return '<a class="agr reg" href="' + esc(it.src.url) + '" target="_blank" rel="noopener noreferrer" style="--k:' + REGCOL + '"><i></i><span class="agt"><b>' + esc(it.name) + '</b><small>' + (it.place ? esc(it.place) + ' · ' : '') + esc(when) + '</small></span><em>' + esc(it.area) + '</em></a>';
     }
     var k = kindOf(it);
     return '<button type="button" class="agr" data-open="' + esc(it.id) + '" style="--k:' + k[1] + '"><i></i><span class="agt"><b>' + esc(it.name) + '</b><small>' + esc(whenText(it)) + '</small></span><em>' + esc(k[0]) + '</em></button>';
@@ -1501,7 +1506,8 @@
     var liveEvents = EV.filter(function (e) { return phase(e, t) === 'live' && !e.long && !isHidden(e.id) && !kindHidden(e.kind); });
     var today = EV.filter(function (e) { var ph = phase(e, t); return !e.long && !isHidden(e.id) && !kindHidden(e.kind) && (ph === 'live' || (ph === 'soon' && e.start < endDay)); });
     var regionalToday = regList().filter(function (e) { return e.start <= t && e.end > t; });
-    var activity = LIB.liveActivityCounts(liveEvents, regionalToday);
+    var activity = LIB.liveActivityCounts(liveEvents, []);
+    regionalToday.forEach(function (e) { if (regInPerson(e)) activity.inPerson++; else activity.inGame++; activity.total++; });
     var liveCount = activity.total;
     var todayCount = today.filter(function (e) { return e.start > t; }).length;
     var briefTitle = $('day-brief-title'), brief = $('day-brief');
@@ -1512,7 +1518,7 @@
     if ($('day-live-count')) $('day-live-count').textContent = String(activity.inGame);
     if ($('day-inperson-count')) $('day-inperson-count').textContent = String(activity.inPerson);
     if ($('day-upcoming-count')) $('day-upcoming-count').textContent = String(todayCount);
-    if (briefTitle) briefTitle.textContent = liveCount ? (liveCount === 1 ? 'Something is happening now' : liveCount + ' things happening now') : (todayCount ? 'Your day is coming up' : 'A quieter day in the game');
+    if (briefTitle) briefTitle.textContent = liveCount ? 'Today at a glance' : (todayCount ? 'Your day is coming up' : 'A quieter day in the game');
     renderTodayStrip(t, today, activity);
   }
   document.addEventListener('gofn-season-ready', function () { renderHomeBrief(now()); });
@@ -1550,12 +1556,19 @@
       return '<section class="today-phase-group"><div class="today-phase-head"><span>' + label + '</span><span class="today-phase-count">' + count + '</span></div><div class="today-phase-cards">' + html + '</div></section>';
     }
     /* In-person events (overseas ones included, never filtered by country) sit under one quiet "In person" label, the same way in every group. */
+    function subHead(label, n) { return '<div class="today-phase-head today-sub"><span>' + label + '</span><span class="today-phase-count">' + n + '</span></div>'; }
     function inPerson(list) {
-      return list.length ? '<div class="today-phase-head today-sub"><span>In person</span><span class="today-phase-count">' + list.length + '</span></div>' + list.map(function (e) { return agendaRow(e, true); }).join('') : '';
+      var rows = list.filter(regInPerson);
+      return rows.length ? subHead('In person', rows.length) + rows.map(function (e) { return agendaRow(e, true); }).join('') : '';
+    }
+    /* A world-list item with no venue (play from anywhere) is not in person: it gets its own honest label instead of being counted as a venue event. */
+    function online(list) {
+      var rows = list.filter(function (e) { return !regInPerson(e); });
+      return rows.length ? subHead('Online / worldwide', rows.length) + rows.map(function (e) { return agendaRow(e, true); }).join('') : '';
     }
     tdEl.innerHTML = today.length || todayRegional.length
-      ? phaseGroup('Happening now', liveToday.length + liveRegional.length, liveToday.map(function (e) { return card(e); }).join('') + inPerson(liveRegional)) +
-        phaseGroup('Later today', laterToday.length + laterRegional.length, laterToday.map(function (e) { return card(e); }).join('') + inPerson(laterRegional))
+      ? phaseGroup('Happening now', liveToday.length + liveRegional.length, liveToday.map(function (e) { return card(e); }).join('') + inPerson(liveRegional) + online(liveRegional)) +
+        phaseGroup('Later today', laterToday.length + laterRegional.length, laterToday.map(function (e) { return card(e); }).join('') + inPerson(laterRegional) + online(laterRegional))
       : '<div class="today-empty"><p class="empty">Nothing is scheduled for today.</p>' +
         (nextUp
           ? '<button type="button" class="today-next-up" data-open="' + esc(nextUp.id) + '" aria-label="Open details for ' + esc(nextUp.name) + '"><span class="today-next-kicker">NEXT UP</span><b>' + esc(nextUp.name) + '</b><span class="today-next-time">' + esc(fmtD(nextUp.start) + ' · ' + fmtT(nextUp.start)) + '</span><span class="today-next-action">View event details <span aria-hidden="true">→</span></span></button>'
@@ -1750,7 +1763,7 @@
     renderCoverage();
     if (window.GO && GO.refreshDex) GO.refreshDex();
     usSync();
-    var inf = document.createElement('script'); inf.src = '/infographic.js?v=20261102b'; document.body.appendChild(inf); var x = document.createElement('script'); x.src = '/extra.js?v=20261102c'; document.body.appendChild(x); var z = document.createElement('script'); z.src = '/places.js?v=20261102a'; window.GOPLACES_READY = new Promise(function (resolve) { z.onload = function () { resolve(window.GOPLACES || null); }; z.onerror = function () { resolve(null); }; }); var y = document.createElement('script'); y.src = '/detail.js?v=20261102f'; document.body.appendChild(y); document.body.appendChild(z); var w = document.createElement('script'); w.src = '/fresh.js?v=20261102d'; document.body.appendChild(w); var nv = document.createElement('script'); nv.src = '/nudge.js?v=20261102a'; document.body.appendChild(nv); var rv = document.createElement('script'); rv.src = '/review.js?v=20261102c'; document.body.appendChild(rv); var by = document.createElement('script'); by.src = '/buy.js?v=20261102a'; document.body.appendChild(by);
+    var inf = document.createElement('script'); inf.src = '/infographic.js?v=20261102b'; document.body.appendChild(inf); var x = document.createElement('script'); x.src = '/extra.js?v=20261102c'; document.body.appendChild(x); var z = document.createElement('script'); z.src = '/places.js?v=20261102a'; window.GOPLACES_READY = new Promise(function (resolve) { z.onload = function () { resolve(window.GOPLACES || null); }; z.onerror = function () { resolve(null); }; }); var y = document.createElement('script'); y.src = '/detail.js?v=20261102f'; document.body.appendChild(y); document.body.appendChild(z); var w = document.createElement('script'); w.src = '/fresh.js?v=20261103a'; document.body.appendChild(w); var nv = document.createElement('script'); nv.src = '/nudge.js?v=20261102a'; document.body.appendChild(nv); var rv = document.createElement('script'); rv.src = '/review.js?v=20261102c'; document.body.appendChild(rv); var by = document.createElement('script'); by.src = '/buy.js?v=20261102a'; document.body.appendChild(by);
   }
   envBanner();
   /* Bounded waits: a request that never answers must not leave Today blank. After FEED_TIMEOUT_MS the page renders from the curated list
@@ -1776,7 +1789,7 @@
   }).then(function (R) {
     var api = R[1], stalled = api === TIMED_OUT; if (stalled) api = null;
     var dexLate = R[0] === TIMED_OUT, cpLate = R[2] === TIMED_OUT;
-    if (!api && window.GONET && navigator.onLine !== false) window.GONET.fail('Latest events did not load. Showing the saved copy.');
+    if (!api && window.GONET && navigator.onLine !== false) window.GONET.fail('Latest events did not load.', 'Showing the saved copy' + (window.GO && GO.D && GO.D.asOf ? ' from ' + GO.esc(GO.D.asOf) : '') + '.');
     applyLive(api);
     start(dexLate ? [] : R[0], cpLate ? null : R[2]);
     setFeedState(!api ? 'degraded' : (usingApi ? 'live' : 'curated'));
