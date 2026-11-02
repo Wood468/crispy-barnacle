@@ -174,6 +174,11 @@ def main():
             expect("In person can be reopened after Timeline",
                    page.locator("#sub-world").is_visible())
             page.locator('#subnav-events button[data-sub="travel"]').click()
+            page.locator('#travel-regions [data-travel-region="Americas"]').click()
+            travel_americas = page.locator("#travel-results").inner_text()
+            expect("Travel destination filter is scoped to Travel",
+                   "Mexico City, Mexico" in travel_americas and "Kyoto, Japan" not in travel_americas,
+                   travel_americas)
             for width in (390, 320):
                 page.set_viewport_size({"width": width, "height": 844})
                 page.wait_for_timeout(100)
