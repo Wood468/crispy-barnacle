@@ -3406,6 +3406,40 @@ with sync_playwright() as p:
             check('Batch 12, %dpx: global / play-from-anywhere items are never under "In person"; they sit under "Online / worldwide" and still count as in game' % width,
                   all(n[0] == 'online / worldwide' for n in r['onlineNames']) and sorted(n[1] for n in r['onlineNames']) == ['Plinkerton Play from anywhere', 'Snorfwhistle Worldwide Showcase'] and r['briefGame'] >= 1, r)
             wp.context.close()
+        # regional-events.json is a fallback, not a second feed: exercise its scope-less source schema
+        # separately with an empty world-events.json, matching dash.js's actual loader sequence.
+        B12_REGIONAL = json.dumps({'updated': '2026-11-02', 'note': 'test fixture', 'source': {
+            'label': 'Test fixture', 'url': 'https://example.com/regional', 'observed': '2026-11-02'
+        }, 'events': [
+            {'id': 'rg-b12-wellington', 'name': 'Synthetic Regional Meetup Wellington', 'place': 'Wellington, New Zealand', 'area': 'Oceania', 'start': '2026-11-02', 'end': '2026-11-02'}
+        ]})
+        B12_EMPTY_WORLD = json.dumps({'updated': '2026-11-02', 'events': []})
+        for width in (320, 390):
+            rp = page(clock=B10_CLOCK, width=width, height=844, mobile=True, extra={
+                '**/world-events.json': (B12_EMPTY_WORLD, 200),
+                '**/regional-events.json': (B12_REGIONAL, 200)
+            })
+            shown = settle(rp, "Array.from(document.querySelectorAll('#home-now .agw .agt b')).some(e => e.textContent.includes('Synthetic Regional Meetup Wellington'))", 10000)
+            r = rp.evaluate("""() => {
+                const norm = t => t.replace(/\\s+/g, ' ').trim();
+                const out = { subs: [], inPersonRows: 0, inPersonNames: [], onlineNames: [], labelTotal: 0 };
+                document.querySelectorAll('#home-now .today-phase-cards').forEach(c => {
+                    let cur = '';
+                    [...c.children].forEach(k => {
+                        if (k.classList.contains('today-sub')) { cur = norm(k.querySelector('span').textContent).toLowerCase(); out.subs.push([cur, +k.querySelector('.today-phase-count').textContent]); }
+                        else if (k.classList.contains('agw')) { const n = k.querySelector('.agt b').textContent; if (cur === 'in person') { out.inPersonRows++; out.inPersonNames.push(n); } else out.onlineNames.push([cur, n]); }
+                    });
+                });
+                out.labelTotal = out.subs.filter(s => s[0] === 'in person').reduce((a, s) => a + s[1], 0);
+                out.brief = +document.getElementById('day-inperson-count').textContent;
+                out.briefGame = +document.getElementById('day-live-count').textContent;
+                return out;
+            }""")
+            check('Batch 12 fallback, %dpx: empty world list loads the scope-less regional source record' % width,
+                  shown and r['inPersonNames'] == ['Synthetic Regional Meetup Wellington'], r)
+            check('Batch 12 fallback, %dpx: regional record remains in the unfolded In person group and counts agree' % width,
+                  r['labelTotal'] == r['inPersonRows'] == r['brief'] == 1 and r['briefGame'] == 0, r)
+            rp.context.close()
         # one problem, one message: with the saved-copy notice showing, the freshness line steps aside
         for width in (320, 390):
             sp2 = page(clock=B10_CLOCK, width=width, height=844, mobile=True, pre=b10_500, ready=False)
