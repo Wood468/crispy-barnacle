@@ -3103,7 +3103,10 @@ with sync_playwright() as p:
         wpg.context.close()
         INFO = json.dumps({'events': {'b9cd': {'source': {'label': 'G47IX', 'trust': 'community', 'url': DISCORD, 'observed': '2026-10-09'}, 'infographics': [{'label': 'Infographic - G47IX', 'url': '/infographics/g47ix/b9.png', 'source': 'G47IX', 'sourceUrl': DISCORD, 'alt': 'x'}], 'names': ['Community Day: Bulbasaur'], 'tickets': [], 'info': []}}})
         ipg = page(api=B9_API, extra={'**/event-info.json*': (INFO, 200)})
-        ipg.wait_for_function("document.querySelector('[data-igcard=\"leekduck:b9cd\"]')"); ipg.evaluate("GOINFOGRAPHIC.open('leekduck:b9cd')"); ipg.wait_for_selector('.goinfo-poster'); ipg.wait_for_timeout(200)
+        # Infographic buttons in the hidden Schedule timeline are now intentionally deferred.
+        ipg.click('nav.tabs button[data-tab="events"]')
+        ipg.wait_for_function("document.querySelector('#evtimeline [data-igcard=\"leekduck:b9cd\"]')")
+        ipg.evaluate("GOINFOGRAPHIC.open('leekduck:b9cd')"); ipg.wait_for_selector('.goinfo-poster'); ipg.wait_for_timeout(200)
         check('event picture viewer: no Discord link, and the poster still names its creator', ipg.evaluate("document.querySelectorAll('a[href*=\"discord.com\"]').length") == 0 and 'G47IX' in ipg.inner_text('.goinfo-poster-top'))
         ipg.evaluate("GOINFOGRAPHIC.close()"); ipg.wait_for_timeout(200)
         ipg.evaluate("GODETAIL.open('leekduck:b9cd')"); ipg.wait_for_selector('#evd:not([hidden]) .evd-btns'); ipg.wait_for_timeout(300)
