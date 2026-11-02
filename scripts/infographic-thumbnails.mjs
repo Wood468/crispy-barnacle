@@ -19,7 +19,7 @@ export function sourceRelativePath(value) {
   try { pathname = decodeURIComponent(parsed.pathname); } catch (_) { return null; }
   const prefix = pathname.startsWith('/infographics/') ? 'infographics/' : (pathname.startsWith('/img/ext/') ? 'img/ext/' : null);
   if (!prefix) return null;
-  const relative = prefix + pathname.slice('/' + prefix.length);
+  const relative = prefix + pathname.slice(('/' + prefix).length);
   const parts = relative.split('/');
   if (!relative || parts.some(part => !part || part === '.' || part === '..')) return null;
   if (!IMAGE_EXTENSIONS.has(path.posix.extname(relative).toLowerCase())) return null;

@@ -20,7 +20,7 @@ test('only same-origin approved infographic paths map to safe static WebP paths'
   assert.equal(thumbnailRelativePath('/infographics/g47ix/a.jpg'), 'infographic-thumbs/infographics/g47ix/a.jpg.webp');
   assert.equal(thumbnailRelativePath('/img/ext/a.png'), 'infographic-thumbs/img/ext/a.png.webp');
   assert.equal(sourceRelativePath('https://example.com/infographics/a.jpg'), null);
-  assert.equal(sourceRelativePath('/img/ext/a.webp'), null);
+  assert.equal(sourceRelativePath('/other/a.webp'), null);
   assert.equal(sourceRelativePath('/infographics/a.gif'), null);
   assert.equal(sourceRelativePath('/infographics/%2e%2e/private.jpg'), null);
 });
