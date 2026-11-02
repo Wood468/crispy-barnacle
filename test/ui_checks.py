@@ -3097,7 +3097,7 @@ with sync_playwright() as p:
         # ---- Batch 11: decisions are never overwritten or deleted on a guess (mocked /api/ig-decisions with a mutable server) ----
         def b11_owner(decisions, get_ok=True, hold_posts=False, queue=None):
             srv = {'rows': {d['id']: dict(d) for d in decisions}, 'get_ok': get_ok, 'posts': [], 'gets': 0, 'hold': hold_posts, 'held': []}
-            pg = page(api=B9_API, pin=True, mobile=True, extra={'**/infographic-queue.json*': (queue or B9_QUEUE, 200), '**/api/ig-decisions': ((json.dumps({'decisions': []}), 200) if get_ok else ('{"error":"x"}', 500)), '**/api/auth/users': (json.dumps({'users': []}), 200)})
+            pg = page(api=B9_API, pin=True, mobile=True, extra={'**/infographic-queue.json*': (queue or B9_QUEUE, 200), '**/api/ig-decisions': ((json.dumps({'decisions': list(decisions)}), 200) if get_ok else ('{"error":"x"}', 500)), '**/api/auth/users': (json.dumps({'users': []}), 200)})
             def handler(route):
                 req = route.request
                 if req.method == 'POST':
@@ -3183,6 +3183,63 @@ with sync_playwright() as p:
         check('B11: a picture matching two listed cards merges all three into one card', gpg.locator('#igreview .igr').count() == 1, gpg.locator('#igreview .igr').count())
         gpg.locator('#igreview .igr [data-ig-no]').click(); gpg.wait_for_selector('#igundo'); gpg.wait_for_timeout(200)
         check('B11: and one decision hides the whole merged group', gpg.locator('#igreview .igr').count() == 0)
+        gpg.context.close()
+        # ---- Batch 13: the 500-row cap, hung writes and double-tapped Discard (mocked /api/ig-decisions as in B11) ----
+        SOLO = '#igreview .igr[data-id="discord:b9-solo"]'
+        def b13_fill(n): return [{'id': 'fill:%d' % i, 'status': 'approved', 'eventId': 'x%d' % i, 'eventTitle': 'Filler %d' % i} for i in range(n)]
+        # (a) Exactly 500 rows and the picture is not among them: it may hold an older decision, so Discard is refused and nothing is written.
+        gpg, gsrv = b11_owner(b13_fill(500))
+        check('B13: a full 500-row decision list shows a visible notice that older decisions may be hidden', 'Showing the 500 most recent decisions; older ones may be hidden' in gpg.inner_text('#igreview'))
+        g0 = gsrv['gets']
+        gpg.locator(SOLO + ' [data-ig-no]').click(); gpg.wait_for_function("document.querySelector('#igreview .igr-msg:not(.igr-cap)')", timeout=5000)
+        check('B13: with 500 rows and the picture missing, Discard is refused calmly (it was re-read, nothing written, card stays, no Undo)', gsrv['gets'] > g0 and gsrv['posts'] == [] and gpg.locator(SOLO).count() == 1 and gpg.locator('#igundo').count() == 0 and 'Not discarded' in gpg.inner_text('#igreview .igr-msg:not(.igr-cap)'), (gsrv['gets'], gsrv['posts']))
+        dlg = []
+        gpg.once('dialog', lambda d: (dlg.append(d.message), d.dismiss()))
+        gpg.locator(SOLO + ' select').select_option(index=1); gpg.locator(SOLO + ' [data-ig-pick]').click(); gpg.wait_for_timeout(300)
+        check('B13: at the cap, Approve of a picture with no visible decision asks first, and a "no" writes nothing', len(dlg) == 1 and gsrv['posts'] == [] and gpg.locator(SOLO).count() == 1, (dlg, gsrv['posts']))
+        gpg.once('dialog', lambda d: d.accept())
+        gpg.locator(SOLO + ' [data-ig-pick]').click(); gpg.wait_for_selector('#iglinked .igr[data-id="discord:b9-solo"]', state='attached', timeout=5000)
+        check('B13: ...and a "yes" saves the approval', [p['status'] for p in gsrv['posts']] == ['approved'], gsrv['posts'])
+        gpg.context.close()
+        # (b) 499 rows (below the cap): the picture really has no decision, so everything behaves as before, with no notice and no question.
+        gpg, gsrv = b11_owner(b13_fill(499))
+        dlg = []; gpg.on('dialog', lambda d: (dlg.append(d.message), d.dismiss()))
+        check('B13: below the cap there is no notice', 'most recent decisions' not in gpg.inner_text('#igreview'))
+        gpg.locator(SOLO + ' [data-ig-no]').click(); gpg.wait_for_selector('#igundo', timeout=5000)
+        check('B13: below the cap Discard works as before (one rejected decision) and no question is asked', [p['status'] for p in gsrv['posts']] == ['rejected'] and dlg == [], (gsrv['posts'], dlg))
+        gpg.click('#igundo button'); gpg.wait_for_selector(SOLO, timeout=5000); gpg.wait_for_timeout(300)
+        check('B13: below the cap Undo of a first-time Discard still clears it (reset)', [p['status'] for p in gsrv['posts']] == ['rejected', 'reset'] and 'discord:b9-solo' not in gsrv['rows'], gsrv['posts'])
+        gpg.context.close()
+        # (c) The list grows to 500 rows without the picture between Discard and Undo: Undo cannot prove the picture is unchanged, so it never sends reset.
+        gpg, gsrv = b11_owner(b13_fill(499))
+        gpg.locator(SOLO + ' [data-ig-no]').click(); gpg.wait_for_selector('#igundo', timeout=5000)
+        gsrv['rows'].pop('discord:b9-solo', None); gsrv['rows'].update({r['id']: r for r in b13_fill(500)})  # newer rows pushed the discard out of the newest 500
+        gpg.click('#igundo button'); gpg.wait_for_selector('#igreview .igr-msg:not(.igr-cap)', timeout=5000); gpg.wait_for_timeout(200)
+        check('B13: Undo never sends reset when the list is cut off and the picture is missing', [p['status'] for p in gsrv['posts']] == ['rejected'] and 'full' in gpg.inner_text('#igreview .igr-msg:not(.igr-cap)'), gsrv['posts'])
+        gpg.context.close()
+        # (d) A POST that never answers: after about 15 s the calm error shows, the card stays, the queue is free, and the next action re-reads before writing.
+        gpg, gsrv = b11_owner([])
+        gsrv['hold'] = True
+        gpg.locator(SOLO + ' select').select_option(index=1); gpg.locator(SOLO + ' [data-ig-pick]').click(); gpg.wait_for_timeout(300)
+        check('B13: the hung write is waiting at the server', len(gsrv['held']) == 1 and gsrv['posts'] == [])
+        gpg.clock.fast_forward(16000); gpg.wait_for_function("((document.querySelector('#igreview .igr-msg:not(.igr-cap)')||{}).textContent||'').includes('too long')", timeout=5000)
+        check('B13: a write that times out shows the calm error and keeps the card (nothing is assumed saved)', gpg.locator(SOLO).count() == 1 and gpg.locator('#iglinked').count() == 0, gpg.inner_text('#igreview'))
+        gsrv['rows']['discord:b9-solo'] = dict(APPROVED_ELSEWHERE)  # the "lost" write actually landed (or another device approved it)
+        gsrv['hold'] = False; g0 = gsrv['gets']
+        gpg.locator(SOLO + ' [data-ig-no]').click(); gpg.wait_for_selector('#iglinked .igr[data-id="discord:b9-solo"]', state='attached', timeout=5000); gpg.wait_for_timeout(200)
+        check('B13: the next action after a timeout re-reads first, writes nothing, and shows what the site holds', gsrv['gets'] > g0 and gsrv['posts'] == [] and gpg.locator('#igundo').count() == 0 and 'checked again' in gpg.inner_text('#igreview'), (gsrv['gets'], gsrv['posts']))
+        gpg.locator('#iglinked').evaluate("e=>e.open=true")
+        gpg.locator('#iglinked .igr [data-ig-no]').click(); gpg.wait_for_selector('#igundo', timeout=5000)
+        check('B13: after the re-read the next tap goes through normally', [p['status'] for p in gsrv['posts']] == ['rejected'], gsrv['posts'])
+        gpg.context.close()
+        # (e) Double-tapping Discard (before the card hides) sends one write, and Undo restores the ORIGINAL decision.
+        gpg, gsrv = b11_owner([])
+        gsrv['rows']['discord:b9-solo'] = dict(APPROVED_ELSEWHERE); gsrv['hold'] = True
+        gpg.evaluate("()=>{const b=document.querySelector('#igreview .igr[data-id=\"discord:b9-solo\"] [data-ig-no]'); b.click(); b.click();}")
+        gpg.wait_for_timeout(500); gsrv['hold'] = False; gsrv['held'].pop(0)(); gpg.wait_for_selector('#igundo', timeout=5000); gpg.wait_for_timeout(300)
+        check('B13: a double-tapped Discard writes exactly one rejected decision', [p['status'] for p in gsrv['posts']] == ['rejected'] and gsrv['held'] == [] , gsrv['posts'])
+        gpg.click('#igundo button'); gpg.wait_for_selector('#iglinked .igr[data-id="discord:b9-solo"]', state='attached', timeout=5000); gpg.wait_for_timeout(300)
+        check('B13: Undo after a double-tapped Discard restores the original approval, not "rejected"', gsrv['posts'][-1] == {'id': APPROVED_ELSEWHERE['id'], 'status': 'approved', 'eventId': APPROVED_ELSEWHERE['eventId'], 'eventTitle': APPROVED_ELSEWHERE['eventTitle']} and gsrv['rows'][APPROVED_ELSEWHERE['id']]['status'] == 'approved', gsrv['posts'])
         gpg.context.close()
         # Item 1: visitors never get a dead Discord link; the event's own page is used.
         W = json.dumps({'items': [{'id': 'w1', 'kind': 'week', 'title': 'Week', 'image': '/infographics/g47ix/w1.png', 'publishedAt': '2026-10-05T00:00:00Z', 'post': DISCORD}]})

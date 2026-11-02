@@ -4,11 +4,24 @@
   'use strict';
   var $ = function (id) { return document.getElementById(id); };
   var esc = window.GOLIB.esc;
-  var items = [], decided = {}, decs = {}, msg = '', shown = 10, loadToken = 0, loadedForOwner = false, undos = [], decsOk = false, chains = {};
+  var items = [], decided = {}, decs = {}, msg = '', shown = 10, loadToken = 0, loadedForOwner = false, undos = [], decsOk = false, chains = {}, capped = false, pendingDiscard = {}, recheck = {};
+  /* GET /api/ig-decisions returns only the newest rows: src/worker.js igDecisions() runs "ORDER BY at DESC LIMIT 500" and has no per-picture query.
+     A list this long may be cut off, so a picture missing from it is UNKNOWN (it may hold an older decision), never "nothing stored". */
+  var DECISIONS_CAP = 500;
+  var NET_TIMEOUT_MS = 15000;
+  function unknownErr() { var e = new Error('unknown'); e.unknown = true; return e; }
+  /* fetch with a time limit: a hung request ends in a timeout error instead of blocking the picture's queue forever. */
+  function timedFetch(url, opts) {
+    var ctl = typeof AbortController === 'function' ? new AbortController() : null, timer;
+    var o = Object.assign({}, opts || {}); if (ctl) o.signal = ctl.signal;
+    var limit = new Promise(function (_, reject) { timer = setTimeout(function () { var e = new Error('timeout'); e.timeout = true; reject(e); if (ctl) { try { ctl.abort(); } catch (e2) { } } }, NET_TIMEOUT_MS); });
+    return Promise.race([fetch(url, o), limit]).then(function (r) { clearTimeout(timer); return r; }, function (e) { clearTimeout(timer); throw e; });
+  }
+  function takeDecisions(list) { capped = list.length >= DECISIONS_CAP; list.forEach(applyLocal); }
   function pin() { try { return localStorage.getItem('gofn-pin') || ''; } catch (e) { return ''; } }
   function isOwner() { return document.documentElement.getAttribute('data-role') === 'owner'; }
   function hideOwnerUi() {
-    loadToken++; loadedForOwner = false; items = []; decided = {}; decs = {}; msg = ''; decsOk = false; clearUndo();
+    loadToken++; loadedForOwner = false; items = []; decided = {}; decs = {}; msg = ''; decsOk = false; capped = false; pendingDiscard = {}; recheck = {}; clearUndo();
     var a = $('hireview'); if (a) a.hidden = true;
     var c = $('igcount'); if (c) c.hidden = true;
     var b = $('igbanner'); if (b) b.remove();
@@ -87,12 +100,25 @@
     tail.then(function () { if (chains[id] === tail) delete chains[id]; });
     return run;
   }
-  /* The site's current decision for one picture, read fresh (never from a browser or shared copy): the decision, or null when it holds none. Rejects when it cannot be read. */
+  /* The site's current decision for one picture, read fresh (never from a browser or shared copy): the decision, or null when it holds none. Rejects when it cannot be read, and when the list was cut off at the cap and does not show the picture (then it is unknown). */
   function readServer(id) {
-    return fetch('/api/ig-decisions', { cache: 'reload' }).then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); }).then(function (j) {
+    return timedFetch('/api/ig-decisions', { cache: 'reload' }).then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); }).then(function (j) {
       var list = j && j.decisions; if (!Array.isArray(list)) throw new Error('bad');
       var hit = list.filter(function (d) { return d && d.id === id; })[0] || null;
+      /* A full-length list that does not mention the picture proves nothing: older rows may have been cut off. */
+      if (!hit && list.length >= DECISIONS_CAP) throw unknownErr();
       return hit ? { id: id, status: hit.status, eventId: hit.eventId || '', eventTitle: hit.eventTitle || '' } : null;
+    });
+  }
+  var CAP_MSG = 'The saved decisions list is full (' + DECISIONS_CAP + ' shown), so this picture\'s saved state cannot be checked. Nothing was changed.';
+  var TIMEOUT_MSG = 'Saving took too long, so it may or may not have been saved. The card stays. Your next tap checks the saved state first.';
+  function failMsg(e, fallback) { return e && e.unknown ? CAP_MSG : e && e.timeout ? TIMEOUT_MSG : fallback; }
+  /* After a write timed out it may still have landed: read the site again before anything else is written for that picture, show what it holds, and ask for a fresh tap. */
+  function recheckFirst(id) {
+    if (!recheck[id]) return Promise.resolve(true);
+    return readServer(id).then(function (now) {
+      setLocal(id, now); delete recheck[id];
+      msg = 'An earlier save on this picture timed out, so the saved decision was checked again. Tap again if you still want to change it.'; render(); return false;
     });
   }
   function setLocal(id, d) { if (d) applyLocal(d); else { delete decs[id]; delete decided[id]; } }
@@ -100,17 +126,21 @@
     var u = undos[undos.length - 1]; if (!u) return; dropUndo(u); drawUndo(false);
     var back = u.prev ? { id: u.id, status: u.prev.status, eventId: u.prev.eventId || '', eventTitle: u.prev.eventTitle || '' } : { id: u.id, status: 'reset', eventId: '', eventTitle: '' };
     queued(u.id, function () {
-      return readServer(u.id).then(function (now) {
+      return recheckFirst(u.id).then(function (go) { if (!go) return; return readServer(u.id).then(function (now) {
         if (!now || now.status !== 'rejected') { setLocal(u.id, now); msg = 'That picture was changed somewhere else since you discarded it, so Undo did nothing.'; render(); return; }
         return post(back).then(function () {
           setLocal(u.id, u.prev ? back : null); msg = ''; render();
           document.dispatchEvent(new CustomEvent('gofn-review-updated', { detail: { decided: true } }));
         });
-      }).catch(function () { msg = 'Could not undo that. It is still discarded. Check your sync PIN and connection.'; render(); });
+      }); }).catch(function (e) { msg = failMsg(e, 'Could not undo that. It is still discarded. Check your sync PIN and connection.'); render(); });
     });
   }
   function post(body) {
-    return fetch('/api/ig-decisions', { method: 'POST', headers: { 'content-type': 'application/json', 'x-pin': pin() }, body: JSON.stringify(body) }).then(function (r) { if (!r.ok) throw new Error(r.status); });
+    return timedFetch('/api/ig-decisions', { method: 'POST', headers: { 'content-type': 'application/json', 'x-pin': pin() }, body: JSON.stringify(body) }).then(function (r) { if (!r.ok) throw new Error(r.status); }, function (e) {
+      /* A write that timed out may still have landed: nothing more is written for this picture until the site has been read again. */
+      if (e && e.timeout && body && body.id) recheck[body.id] = true;
+      throw e;
+    });
   }
   function eventOptions() {
     var X = window.GODASH; if (!X) return '';
@@ -173,37 +203,44 @@
     var dot = $('hmenu'); if (dot) dot.classList.toggle('has-new', open.length > 0);
     var sv = document.querySelector('nav.tabs button[data-tab="saved"]'); if (sv) sv.classList.toggle('has-new', open.length > 0);
     banner(open.length);
+    var capNote = capped ? '<p class="igr-msg igr-cap" role="status">Showing the ' + DECISIONS_CAP + ' most recent decisions; older ones may be hidden. A picture that shows no decision here may still have one, so Discard is refused and Approve asks first.</p>' : '';
     var linked = items.filter(function (i) { return linkedOf(i.id).length; });
     if (!decsOk) {
       host.hidden = false;
       host.innerHTML = '<details class="dd" open><summary>Infographic review <span class="cnt">' + open.length + '</span></summary><div class="body"><p class="igr-msg" role="alert">Could not read your saved decisions, so review is paused. Nothing can be approved or discarded until they load, so a choice you made elsewhere is never overwritten.</p>' + (msg ? '<p class="igr-msg" role="status">' + esc(msg) + '</p>' : '') + '<button type="button" class="pill all" data-ig-retry="1">Retry</button></div></details>';
       return;
     }
-    if (!open.length && !msg && !linked.length) { host.hidden = true; host.innerHTML = ''; return; }
+    if (!open.length && !msg && !capped && !linked.length) { host.hidden = true; host.innerHTML = ''; return; }
     host.hidden = false;
     var kl = document.getElementById('iglinked'), keepLinked = !!(kl && kl.open);
     host.innerHTML = '<details class="dd" open><summary>Infographic review <span class="cnt">' + open.length + '</span></summary><div class="body">'
       + '<p class="note" style="margin:0 0 8px">Discord and Telegram pictures appear here until you link them. Check the image text and date before approving; nothing is attached to an event until you approve it.</p>'
-      + (msg ? '<p class="igr-msg" role="status">' + esc(msg) + '</p>' : '') + open.slice(0, shown).map(card).join('') + (open.length > shown ? '<button type="button" class="pill all" data-ig-more="1">Show 10 more (' + (open.length - shown) + ' left)</button>' : '') + '</div></details>'
+      + capNote + (msg ? '<p class="igr-msg" role="status">' + esc(msg) + '</p>' : '') + open.slice(0, shown).map(card).join('') + (open.length > shown ? '<button type="button" class="pill all" data-ig-more="1">Show 10 more (' + (open.length - shown) + ' left)</button>' : '') + '</div></details>'
       + (linked.length ? '<details class="dd"' + (keepLinked ? ' open' : '') + ' id="iglinked"><summary>Linked infographics <span class="cnt">' + linked.length + '</span></summary><div class="body"><p class="note" style="margin:0 0 8px">Tap ✕ to unlink from one event, add more events, or discard. Changes reach the event within a few hours.</p>' + linked.map(linkedCard).join('') + '</div></details>' : '');
   }
   function send(it, status, eventId, title, note) {
     if (!isOwner()) { hideOwnerUi(); return; }
     if (!decsOk) { msg = 'Saved decisions could not be read, so nothing can be changed yet. Tap Retry.'; render(); return; }
     if (!pin()) { msg = 'Set your Sync PIN in Menu → Sync & accounts before reviewing.'; render(); return; }
+    /* Older decisions may be hidden (list at the cap): this picture could already hold one, so overwriting it needs a yes. Discard is refused further down. */
+    if (capped && status !== 'rejected' && status !== 'unlinked' && !decs[it.id] && !window.confirm('Older saved decisions are hidden, so this picture may already have a saved decision. Replace it?')) return;
+    if (status === 'rejected') { if (pendingDiscard[it.id]) return; pendingDiscard[it.id] = true; }
     var body = { id: it.id, status: status, eventId: eventId || '', eventTitle: title || '' };
     queued(it.id, function () {
+      return recheckFirst(it.id).then(function (go) {
+        if (!go) return;
       /* A Discard replaces whatever the site holds, and Undo has to put that back: read it fresh first, and do not write when it cannot be read. */
-      var before = status === 'rejected' ? readServer(it.id).then(function (d) { return { prev: d }; }, function () { return null; }) : Promise.resolve({ prev: undefined });
+      var before = status === 'rejected' ? readServer(it.id).then(function (d) { return { prev: d }; }, function (e) { return { fail: e || true }; }) : Promise.resolve({ prev: undefined });
       return before.then(function (b) {
-        if (!b) { msg = 'Could not check the saved decision for this picture, so it was not discarded. Try again.'; render(); return; }
+        if (b.fail) { msg = b.fail.unknown ? 'Not discarded: ' + CAP_MSG : 'Could not check the saved decision for this picture, so it was not discarded. Try again.'; render(); return; }
         return post(body).then(function () {
           applyLocal({ id: it.id, status: status, eventId: eventId || '', eventTitle: title || '' });
           if (status === 'rejected') { msg = ''; showUndo(it, b.prev); } else { clearUndo(it.id); msg = note || (status === 'approved' ? 'Linked. It will appear on the event after the next scheduled update.' : status === 'unlinked' ? 'Unlinked. It is back in the review list.' : 'Discarded.'); }
           render(); document.dispatchEvent(new CustomEvent('gofn-review-updated', { detail: { decided: true } }));
         });
-      }).catch(function () { msg = 'Could not save that decision. Check your sync PIN and connection.'; render(); });
-    });
+      });
+      }).catch(function (e) { msg = failMsg(e, 'Could not save that decision. Check your sync PIN and connection.'); render(); });
+    }).then(function () { delete pendingDiscard[it.id]; });
   }
   function setLinks(it, list) {
     if (!list.length) return send(it, 'unlinked');
@@ -244,7 +281,8 @@
     }
     var ov = e.target.closest('[data-ig-ov]');
     if (ov) return send(it, ov.getAttribute('data-ig-ov'), '', '', ov.getAttribute('data-ig-ov') === 'week' ? 'Set as this week\'s picture. It shows under At a glance after the next scheduled update.' : 'Set as the month overview. It shows under At a glance after the next scheduled update.');
-    if (e.target.closest('[data-ig-no]')) return send(it, 'rejected');
+    var no = e.target.closest('[data-ig-no]');
+    if (no) { if (pendingDiscard[it.id]) return; no.disabled = true; return send(it, 'rejected'); }
     if (e.target.closest('[data-ig-pick]')) {
       var sel = card.querySelector('select'), o = sel && sel.options[sel.selectedIndex];
       if (!o || !o.value) { msg = 'Choose an event first.'; return render(); }
@@ -277,9 +315,9 @@
   }
   function retryDecisions() {
     var token = loadToken;
-    fetch('/api/ig-decisions', { cache: 'reload' }).then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); }).then(function (j) {
+    timedFetch('/api/ig-decisions', { cache: 'reload' }).then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); }).then(function (j) {
       if (token !== loadToken || !isOwner() || !Array.isArray(j && j.decisions)) throw new Error('bad');
-      decs = {}; decided = {}; j.decisions.forEach(applyLocal); decsOk = true; msg = ''; render(); document.dispatchEvent(new Event('gofn-review-updated'));
+      decs = {}; decided = {}; takeDecisions(j.decisions); decsOk = true; msg = ''; render(); document.dispatchEvent(new Event('gofn-review-updated'));
     }).catch(function () { msg = 'Still could not read the saved decisions. Check your connection and try again.'; render(); });
   }
   function load() {
@@ -294,7 +332,7 @@
       fetch('/api/ig-decisions').then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); }).then(function (j) { return Array.isArray(j && j.decisions) ? j : null; }).catch(function () { return null; })
     ]).then(function (R) {
       if (token !== loadToken || !isOwner()) { hideOwnerUi(); return; }
-      items = dedupeItems(R[0].items); decsOk = !!R[1]; if (R[1]) R[1].decisions.forEach(applyLocal);
+      items = dedupeItems(R[0].items); decsOk = !!R[1]; if (R[1]) takeDecisions(R[1].decisions);
       if (!ensureHost()) return;
       render(); document.dispatchEvent(new Event('gofn-review-updated'));
       if (location.hash === '#review') gotoReview();
