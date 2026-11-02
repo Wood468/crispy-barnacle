@@ -87,11 +87,14 @@
       area.style.position = 'fixed';
       area.style.opacity = '0';
       area.style.pointerEvents = 'none';
-      document.body.appendChild(area);
+      var active = document.activeElement;
+      dialog.appendChild(area);
+      area.focus();
       area.select();
       var copied = false;
       try { copied = !!document.execCommand && document.execCommand('copy'); } catch (e) { copied = false; }
       area.remove();
+      if (active && active.isConnected && typeof active.focus === 'function') active.focus();
       if (copied) resolve();
       else reject(new Error('Clipboard unavailable'));
     });
