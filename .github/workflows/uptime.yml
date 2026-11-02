@@ -10,6 +10,7 @@ on:
       - "src/**"
       - "workers/**"
       - "scripts/uptime.mjs"
+      - "scripts/wait-for-workers-build.mjs"
       - "docs/ROADMAP.md"
       - ".github/workflows/uptime.yml"
   schedule:
