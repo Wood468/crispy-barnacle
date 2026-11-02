@@ -37,7 +37,7 @@
   window.addEventListener('load', function () { var n = 0, h = setInterval(function () { try { strip(); } catch (e) { } if (++n > 40) clearInterval(h); }, 750); });
   document.addEventListener('visibilitychange', function () { if (!document.hidden) try { strip(); } catch (e) { } });
   document.addEventListener('gofn-state', function () { try { strip(); } catch (e) { } });
-  function json(u) { return fetch(u).then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; }); }
+  function json(u) { return window.GOLIB.jsonOrNull(u); }
   Promise.all([json('/season.json'), json('/event-moves.json')]).then(function (loaded) {
     var j = loaded[0], moveData = loaded[1];
     if (!j) return; items = j.items || [];

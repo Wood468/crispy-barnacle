@@ -13,8 +13,8 @@
   var PENDING = [];
   function loadPending() {
     return Promise.all([
-      fetch('/infographic-queue.json', { cache: 'no-cache' }).then(function (r) { return r.ok ? r.json() : {}; }).catch(function () { return {}; }),
-      fetch('/api/ig-decisions', { cache: 'no-cache' }).then(function (r) { return r.ok ? r.json() : {}; }).catch(function () { return {}; })
+      window.GOLIB.jsonOrNull('/infographic-queue.json', { init: { cache: 'no-cache' } }).then(function (j) { return j || {}; }),
+      window.GOLIB.jsonOrNull('/api/ig-decisions', { init: { cache: 'no-cache' } }).then(function (j) { return j || {}; })
     ]).then(function (a) {
       var items = (a[0] && a[0].items) || [], dec = (a[1] && a[1].decisions) || [];
       PENDING = [];
@@ -38,7 +38,7 @@
     if (INFO && !fresh) return Promise.resolve(INFO);
     return Promise.all([
       /* A failed fetch (offline, server error, bad JSON) must not wipe what the page already has: null means "keep the old INFO". */
-      fetch('/event-info.json', { cache: fresh ? 'reload' : 'no-cache' }).then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; }),
+      window.GOLIB.jsonOrNull('/event-info.json', { fresh: !!fresh, init: { cache: fresh ? 'reload' : 'no-cache' } }),
       loadPending()
     ]).then(function (a) { var ev = a[0] && a[0].events; if (ev && typeof ev === 'object') INFO = ev; return INFO || {}; });
   }
@@ -239,7 +239,7 @@
     var link = safe(ev.link);
     var html = '<div class="goinfo-panel" style="--k:' + esc(k[1]) + ';--kf:' + esc(k[2]) + '">'
       + '<div class="goinfo-top"><b>GO Field Notes · Event infographic</b><button type="button" class="goinfo-close" data-infoclose aria-label="Close infographic">×</button></div>';
-    if (images.length) html += images.map(function (im) { var sourceUrl = safe(im.sourceUrl); return '<section class="goinfo-poster"><div class="goinfo-poster-top">' + esc(im.label || 'Event infographic') + (im.source ? ' · ' + esc(im.source) : '') + '</div><img src="' + esc(im.url) + '" alt="' + esc(im.alt || (ev.name + ' event infographic')) + '" style="display:block;width:100%;height:auto;max-height:78vh;object-fit:contain" loading="lazy">' + (sourceUrl ? '<a class="goinfo-source" href="' + esc(sourceUrl) + '" target="_blank" rel="noopener noreferrer">View creator/source</a>' : '') + '</section>'; }).join('');
+    if (images.length) html += images.map(function (im) { var sourceUrl = safe(im.sourceUrl); return '<section class="goinfo-poster"><div class="goinfo-poster-top">' + esc(im.label || 'Event infographic') + (im.source ? ' · ' + esc(im.source) : '') + '</div><img src="' + esc(im.url) + '" alt="' + esc(im.alt || (ev.name + ' event infographic')) + '" style="display:block;width:100%;height:auto;max-height:78vh;object-fit:contain" loading="lazy" decoding="async">' + (sourceUrl ? '<a class="goinfo-source" href="' + esc(sourceUrl) + '" target="_blank" rel="noopener noreferrer">View creator/source</a>' : '') + '</section>'; }).join('');
     html += '<div class="goinfo-art"><span class="goinfo-kind">' + esc(k[0]) + '</span><h2>' + esc(ev.name) + '</h2><p class="goinfo-date">' + esc(X.whenText(ev)) + '</p><p>' + esc(X.countdown(ev)) + '</p>';
     if (mons.length) html += '<div class="goinfo-pokemon">' + mons.map(function (f) {
       return '<div class="goinfo-mon">' + (X.monArt ? X.monArt(ev, f, 'ea') : G.art(f.name, 'ea')) + '<b>' + esc(f.name) + '</b>' + (f.costume ? '<small>Costume</small>' : '') + (f.shiny ? '<small>Shiny available</small>' : '') + '</div>';

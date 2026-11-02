@@ -21,14 +21,14 @@
     var k = nk(move); return l.some(function (n) { return nk(n) === k; });
   }
   function badge(type, name) {
-    if (type && TY[type]) return '<img class="mty mty-img" role="img" aria-label="' + type + ' type" src="/ico/g/type-' + type.toLowerCase() + '.webp" alt="" title="' + type + '" width="20" height="20" loading="lazy">';
+    if (type && TY[type]) return '<img class="mty mty-img" role="img" aria-label="' + type + ' type" src="/ico/g/type-' + type.toLowerCase() + '.webp" alt="" title="' + type + '" width="20" height="20" loading="lazy" decoding="async">';
     return '<i class="mty unk" role="img" aria-label="Type unknown"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 9a2.5 2.5 0 115 0c0 1.7-2.5 2-2.5 4M12 17v.5"/></svg></i>';
   }
   // html(moveName, typeHint?, pokemonName?): the badge, the name, and an Elite TM tag when sourced data supports it.
   function html(name, hint, pokemon) {
     if (!D) return '<span class="mvb"><b>' + esc(name) + '</b></span>';
     var t = typeOf(name, hint), elite = isElite(pokemon, name), fast = !!D.fastSet[nk(name)];
-    return '<span class="mvb">' + badge(t, name) + '<b>' + esc(name) + '</b>' + (elite ? '<span class="etm" aria-label="Needs an Elite ' + (fast ? 'Fast' : 'Charged') + ' TM"><img src="/ico/g/elite-' + (fast ? 'fast' : 'charged') + '-tm.webp" alt="" width="22" height="16" loading="lazy">Elite TM</span>' : '') + '</span>';
+    return '<span class="mvb">' + badge(t, name) + '<b>' + esc(name) + '</b>' + (elite ? '<span class="etm" aria-label="Needs an Elite ' + (fast ? 'Fast' : 'Charged') + ' TM"><img src="/ico/g/elite-' + (fast ? 'fast' : 'charged') + '-tm.webp" alt="" width="22" height="16" loading="lazy" decoding="async">Elite TM</span>' : '') + '</span>';
   }
   var ready = fetch('/moves.json').then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; }).then(function (j) {
     if (j && j.types && j.elite) { D = j; build(); document.dispatchEvent(new Event('gomoves')); } return !!D;

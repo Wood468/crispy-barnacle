@@ -109,7 +109,7 @@
 
   /* The empty line reserves its 44px so nothing jumps when the text arrives. If the answers never come, give the space back 8 s after the page started (this script loads after the feed wait, so time already spent counts); a late answer still fills the line. */
   setTimeout(function () { var el = $('fresh-line'); if (!S.done && el && el.hidden) el.setAttribute('data-released', ''); }, Math.max(0, 8000 - Math.round(window.performance && performance.now ? performance.now() : 0)));
-  function j(u) { return fetch(u, { cache: 'no-cache' }).then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; }); }
+  function j(u) { return window.GOLIB.jsonOrNull(u, { init: { cache: 'no-cache' } }); }
   Promise.all([j('/api/sources'), j('/api/datamine'), j('/api/pvp').then(function (p) { return p || j('/pvp.json'); }), (window.GOLIB ? GOLIB.loadPrices() : j('/prices.json')), j('/health.json')]).then(function (a) {
     S.api = a[0] && typeof a[0] === 'object' ? a[0] : null; S.dm = a[1]; S.pvp = a[2]; S.prices = a[3]; S.jobs = a[4]; S.done = true; renderAll();
     if (window.GOMOVE) GOMOVE.ready.then(renderAll);

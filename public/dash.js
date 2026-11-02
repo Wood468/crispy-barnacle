@@ -306,7 +306,7 @@
   var LIB = window.GOLIB;
   /* Pokémon that are not out in Pokémon GO yet cannot be owned, so they are never marked Have or Need. */
   var UNREL = {};
-  try { fetch('/release-status.json').then(function (r) { return r.ok ? r.json() : null; }).then(function (R) { if (!R || !R.unreleased) return; var today = new Date().toISOString().slice(0, 10); R.unreleased.forEach(function (u) { if (u.type === 'pokemon' && !(u.available && u.available <= today)) UNREL[LIB.norm(u.name)] = u.available || true; }); try { renderAll(); } catch (e) { } }).catch(function () { }); } catch (e) { }
+  try { window.GOLIB.jsonOrNull('/release-status.json').then(function (R) { if (!R || !R.unreleased) return; var today = new Date().toISOString().slice(0, 10); R.unreleased.forEach(function (u) { if (u.type === 'pokemon' && !(u.available && u.available <= today)) UNREL[LIB.norm(u.name)] = u.available || true; }); try { renderAll(); } catch (e) { } }).catch(function () { }); } catch (e) { }
   function ownState(name, costume) {
     var p = LIB.parseForm(name), id = DEXBY[p.base.toLowerCase()], d = marks();
     if (UNREL[LIB.norm(p.base)]) return { state: 'unreleased', id: id || 0, base: p.base, why: 'Not released in Pokémon GO yet' };
@@ -427,7 +427,7 @@
     });
     return out;
   }
-  var INC_IMG = '<img class="inc-badge" src="/ico/incense.webp" alt="Incense" title="Incense encounter" loading="lazy">';
+  var INC_IMG = '<img class="inc-badge" src="/ico/incense.webp" alt="Incense" title="Incense encounter" loading="lazy" decoding="async">';
   function hasTag(ev, t) { return (ev.tags || []).indexOf(t) > -1; }
   /* One Pokémon, drawn the way the game shows it: Shadow gets the purple aura, Dynamax the red Max smoke, Gigantamax its own sprite. */
   /* Dynamax: animated sprite (Pokémon Showdown), drawn larger, with the Dynamax emblem. Falls back to the still picture if the animation is missing. */
@@ -435,7 +435,7 @@
   function showdownId(name) { return window.GOSD ? window.GOSD(name) : ''; }
   function dynaAnim(name) {
     var id = showdownId(name); if (!id) return '';
-    return '<img class="dyn-ani" alt="" loading="lazy" src="https://play.pokemonshowdown.com/sprites/ani/' + id + '.gif" data-err="rm">';
+    return '<img class="dyn-ani" alt="" loading="lazy" decoding="async" src="https://play.pokemonshowdown.com/sprites/ani/' + id + '.gif" data-err="rm">';
   }
   function monArt(ev, f, cls) {
     var isShadow = hasTag(ev, 'Shadow') || /^Shadow\s/i.test(f.name);
@@ -444,15 +444,15 @@
     var spriteName = isGmax && !/^Gigantamax\s/i.test(f.name) ? 'Gigantamax ' + f.name : f.name;
     var sprite = art({ n: spriteName, costume: f.costume, shiny: f.shiny, shadow: isShadow, dynamax: isMax }, cls || 'ea');
     var inc = incenseNames(ev)[String(f.name).toLowerCase()] ? INC_IMG : '';
-    if (isMax) return '<span class="max-art ' + (isGmax ? 'is-gmax' : 'is-dyn') + '">' + sprite + inc + '<span class="max-tag">' + (isGmax ? '' : '<img class="dyn-logo" alt="" src="' + IMG_DYNAMAX + '" data-err="rm">') + (isGmax ? 'G-Max' : 'Dynamax') + '</span></span>';
-    if (isShadow) return '<span class="shadow-art"><i class="sf sf1"></i><i class="sf sf2"></i><i class="sf sf3"></i>' + sprite + inc + '<span class="shadow-tag"><img src="/ico/g/shadow.webp" alt="" loading="lazy">Shadow</span></span>';
+    if (isMax) return '<span class="max-art ' + (isGmax ? 'is-gmax' : 'is-dyn') + '">' + sprite + inc + '<span class="max-tag">' + (isGmax ? '' : '<img class="dyn-logo" alt="" decoding="async" src="' + IMG_DYNAMAX + '" data-err="rm">') + (isGmax ? 'G-Max' : 'Dynamax') + '</span></span>';
+    if (isShadow) return '<span class="shadow-art"><i class="sf sf1"></i><i class="sf sf2"></i><i class="sf sf3"></i>' + sprite + inc + '<span class="shadow-tag"><img src="/ico/g/shadow.webp" alt="" loading="lazy" decoding="async">Shadow</span></span>';
     return inc ? '<span class="inc-art">' + sprite + inc + '</span>' : sprite;
   }
   /* Events with no Pokémon of their own but a Max Particle or Power Spot bonus show that picture. */
   function specialArt(ev) {
     var out = '';
-    if (hasTag(ev, 'Power Spots')) out += '<span class="sp-art sp-powerspot"><img class="art" alt="Power Spot" loading="lazy" src="' + IMG_POWERSPOT + '" data-err="prm"><span class="max-tag">Power Spot</span></span>';
-    if (hasTag(ev, 'Max Particles')) out += '<span class="sp-art sp-particle"><img class="art" alt="Max Particles" loading="lazy" src="' + IMG_PARTICLE + '" data-err="prm"><span class="max-tag">Max Particles</span></span>';
+    if (hasTag(ev, 'Power Spots')) out += '<span class="sp-art sp-powerspot"><img class="art" alt="Power Spot" loading="lazy" decoding="async" src="' + IMG_POWERSPOT + '" data-err="prm"><span class="max-tag">Power Spot</span></span>';
+    if (hasTag(ev, 'Max Particles')) out += '<span class="sp-art sp-particle"><img class="art" alt="Max Particles" loading="lazy" decoding="async" src="' + IMG_PARTICLE + '" data-err="prm"><span class="max-tag">Max Particles</span></span>';
     return out;
   }
   function featArts(ev, n) {
@@ -470,7 +470,7 @@
   var PH_ICO = { raid: '/ico/g/raid.webp', cd: '/ico/g/event.webp', spot: '/ico/shiny.webp', max: '/ico/g/powerup.webp' };
   function placeholderArt(ev) {
     var l = String(ev.link || ''), ok = /^https:\/\/(www\.)?(leekduck|pokemongo)\.com\//.test(l);
-    return '<span class="evc-ph"' + (ok ? ' data-og="' + esc(l) + '"' : '') + '><img class="ph-ico" alt="" src="' + (PH_ICO[ev.kind] || '/ico/g/event.webp') + '" data-err="rm"></span>';
+    return '<span class="evc-ph"' + (ok ? ' data-og="' + esc(l) + '"' : '') + '><img class="ph-ico" alt="" decoding="async" src="' + (PH_ICO[ev.kind] || '/ico/g/event.webp') + '" data-err="rm"></span>';
   }
   (function ogThumbs() {
     var CK = 'gofn-og', cache = {}, busy = 0, queue = [], io = null;
@@ -528,7 +528,7 @@
   }
   /* Tickets and passes: read from event-info.json once, so a card can say "Ticket" or "GO Pass" without opening details. */
   var EVINFO = null;
-  try { fetch('/event-info.json').then(function (r) { return r.ok ? r.json() : null; }).then(function (j) { if (j) { EVINFO = j; try { renderAll(); } catch (e) { } } }).catch(function () { }); } catch (e) { }
+  try { window.GOLIB.jsonOrNull('/event-info.json').then(function (j) { if (j) { EVINFO = j; try { renderAll(); } catch (e) { } } }).catch(function () { }); } catch (e) { }
   function ticketTags(ev) {
     if (!EVINFO || !EVINFO.events) return [];
     var all = EVINFO.events, bare = String(ev.id || '').replace(/^[a-z]+:/, ''), hit = all[ev.id] || all[bare];
@@ -546,10 +546,10 @@
   function bonusBadge(b) {
     var m = String(b).match(/^(\d+(?:\.\d+)?)\s*[x×]\s+(.*)$/i); if (!m) return null;
     var what = m[2], low = what.toLowerCase(), ico = '', cls = '', label = what;
-    if (/transfer/.test(low) && /candy/.test(low)) { ico = '<img class="sb-i sb-t" src="/ico/trade.webp" alt=""><img class="sb-i" src="/ico/candy.webp" alt="">'; cls = 'sb-transfer'; label = 'Transfer candy'; }
-    else if (/candy/.test(low)) { ico = '<img class="sb-i" src="/ico/candy.webp" alt="">'; cls = 'sb-candy'; label = /catch/.test(low) ? 'Catch candy' : what; }
-    else if (/stardust|dust/.test(low)) { ico = '<img class="sb-i" src="/ico/dust.webp" alt="">'; cls = 'sb-dust'; label = /catch/.test(low) ? 'Catch stardust' : 'Stardust'; }
-    else if (/xp/.test(low)) { ico = '<img class="sb-i" src="/ico/xp.webp" alt="">'; cls = 'sb-xp'; label = /evolution/.test(low) ? 'Evolution XP' : /catch/.test(low) ? 'Catch XP' : 'XP'; }
+    if (/transfer/.test(low) && /candy/.test(low)) { ico = '<img class="sb-i sb-t" src="/ico/trade.webp" decoding="async" alt="" decoding="async"><img class="sb-i" src="/ico/candy.webp" alt="" decoding="async">'; cls = 'sb-transfer'; label = 'Transfer candy'; }
+    else if (/candy/.test(low)) { ico = '<img class="sb-i" src="/ico/candy.webp" alt="" decoding="async">'; cls = 'sb-candy'; label = /catch/.test(low) ? 'Catch candy' : what; }
+    else if (/stardust|dust/.test(low)) { ico = '<img class="sb-i" src="/ico/dust.webp" alt="" decoding="async">'; cls = 'sb-dust'; label = /catch/.test(low) ? 'Catch stardust' : 'Stardust'; }
+    else if (/xp/.test(low)) { ico = '<img class="sb-i" src="/ico/xp.webp" alt="" decoding="async">'; cls = 'sb-xp'; label = /evolution/.test(low) ? 'Evolution XP' : /catch/.test(low) ? 'Catch XP' : 'XP'; }
     else return null;
     return { cls: cls, html: '<span class="signal sig-bonus ' + cls + '" title="' + esc(b) + '"><b>' + esc(m[1]) + '×</b>' + ico + esc(label) + '</span>' };
   }
@@ -572,9 +572,9 @@
     var MAXCHIPS = max || 4;
     // The game's own pictures where we have them: shiny sparkle, candy, incense.
     function sigIcon(text) {
-      if (/incense/i.test(text)) return '<img class="sig-ico" src="/ico/incense.webp" alt="" loading="lazy">';
-      if (/candy/i.test(text)) return '<img class="sig-ico" src="/ico/candy.webp" alt="" loading="lazy">';
-      if (/shiny/i.test(text)) return '<img class="sig-ico" src="/ico/shiny.webp" alt="" loading="lazy">' + (/boost|odds|increase/i.test(text) ? '<b class="sig-up" aria-hidden="true">+</b>' : '');
+      if (/incense/i.test(text)) return '<img class="sig-ico" src="/ico/incense.webp" alt="" loading="lazy" decoding="async">';
+      if (/candy/i.test(text)) return '<img class="sig-ico" src="/ico/candy.webp" alt="" loading="lazy" decoding="async">';
+      if (/shiny/i.test(text)) return '<img class="sig-ico" src="/ico/shiny.webp" alt="" loading="lazy" decoding="async">' + (/boost|odds|increase/i.test(text) ? '<b class="sig-up" aria-hidden="true">+</b>' : '');
       return '';
     }
     // Plain, specific wording: Debut, Shiny debut, Dynamax debut, Boosted shiny, Costume.
@@ -1021,7 +1021,7 @@
     function key(d) { return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0'); }
     function range(a,b) { return fmtD(a) + ' – ' + fmtD(b); }
     function rotAt(d) { return rot.filter(function(r){ return new Date(r.s) <= d && d < new Date(r.e); })[0]; }
-    function tico(t, ttl) { return '<img class="ti" src="/ico/g/type-' + String(t).toLowerCase() + '.webp" alt="' + esc(t) + '" title="' + esc(t) + '" loading="lazy">'; }
+    function tico(t, ttl) { return '<img class="ti" src="/ico/g/type-' + String(t).toLowerCase() + '.webp" alt="' + esc(t) + '" title="' + esc(t) + '" loading="lazy" decoding="async">'; }
     function raidEvent(name, r) { return raidSlotFor(name, r) || null; }
     function cell(label, name, r) {
       if (!name) return '';
@@ -1170,7 +1170,7 @@
   /* Megas announced for GO but not out yet come from release-status.json. */
   var MEGA_FUTURE = ['Meganium','Feraligatr','Clefable','Hawlucha','Dragalge','Barbaracle','Pyroar','Scolipede','Excadrill','Chandelure','Emboar','Eelektross','Scrafty','Froslass','Drampa','Zygarde','Chimecho','Absol Z','Garchomp Z','Lucario Z','Heatran','Golurk','Meowstic','Crabominable','Golisopod','Zeraora','Scovillain','Glimmora','Tatsugiri','Baxcalibur','Magearna','Floette','Darkrai'].map(function (n) { return [n, 'future', false, '']; });
   var MEGA_ANN = {}; /* names Niantic has announced; the rest of the list is from Serebii's roster and is not announced for GO */
-  try { fetch('/release-status.json').then(function (r) { return r.ok ? r.json() : null; }).then(function (R) { if (!R || !R.unreleased) return; R.unreleased.forEach(function (u) { var m = /^Mega\s+(.+)$/i.exec(u.name || ''); if (m) MEGA_ANN[m[1]] = 1; if (m && MEGAS.every(function (x) { return x[0] !== m[1]; }) && MEGA_FUTURE.every(function (x) { return x[0] !== m[1]; })) MEGA_FUTURE.push([m[1], 'future', false, '']); }); try { renderMegas(); } catch (e) { } }).catch(function () { }); } catch (e) { }
+  try { window.GOLIB.jsonOrNull('/release-status.json').then(function (R) { if (!R || !R.unreleased) return; R.unreleased.forEach(function (u) { var m = /^Mega\s+(.+)$/i.exec(u.name || ''); if (m) MEGA_ANN[m[1]] = 1; if (m && MEGAS.every(function (x) { return x[0] !== m[1]; }) && MEGA_FUTURE.every(function (x) { return x[0] !== m[1]; })) MEGA_FUTURE.push([m[1], 'future', false, '']); }); try { renderMegas(); } catch (e) { } }).catch(function () { }); } catch (e) { }
   function megaKey(name,field){return 'mega:'+name.toLowerCase().replace(/[^a-z0-9]+/g,'-')+':'+field;}
   function megaVal(name,field){return usGet(megaKey(name,field))===true;}
   function renderMegas(){
@@ -1677,7 +1677,7 @@
 
   /* ---------- start ---------- */
   function envBanner() {
-    fetch('/api/sources').then(function (r) { return r.json(); }).then(function (j) {
+    window.GOLIB.getJson('/api/sources').then(function (j) {
       var b = $('envbar'); if (!b || !j || j.environment !== 'preview') return;
       b.hidden = false; b.innerHTML = '<b>' + (j.database ? 'PREVIEW — STAGING DATABASE' : 'PREVIEW — NO DATABASE') + '</b><span>Test copy of the app. Not your live app.</span>';
       document.title = 'PREVIEW · ' + document.title;
@@ -1710,26 +1710,30 @@
     renderCoverage();
     if (window.GO && GO.refreshDex) GO.refreshDex();
     usSync();
-    var inf = document.createElement('script'); inf.src = '/infographic.js?v=20261101e'; document.body.appendChild(inf); var x = document.createElement('script'); x.src = '/extra.js?v=20261102a'; document.body.appendChild(x); var z = document.createElement('script'); z.src = '/places.js?v=20261102a'; window.GOPLACES_READY = new Promise(function (resolve) { z.onload = function () { resolve(window.GOPLACES || null); }; z.onerror = function () { resolve(null); }; }); var y = document.createElement('script'); y.src = '/detail.js?v=20261102d'; document.body.appendChild(y); document.body.appendChild(z); var w = document.createElement('script'); w.src = '/fresh.js?v=20261102b'; document.body.appendChild(w); var nv = document.createElement('script'); nv.src = '/nudge.js?v=20261101a'; document.body.appendChild(nv); var rv = document.createElement('script'); rv.src = '/review.js?v=20261101b'; document.body.appendChild(rv); var by = document.createElement('script'); by.src = '/buy.js?v=20261101a'; document.body.appendChild(by);
+    var inf = document.createElement('script'); inf.src = '/infographic.js?v=20261102a'; document.body.appendChild(inf); var x = document.createElement('script'); x.src = '/extra.js?v=20261102b'; document.body.appendChild(x); var z = document.createElement('script'); z.src = '/places.js?v=20261102a'; window.GOPLACES_READY = new Promise(function (resolve) { z.onload = function () { resolve(window.GOPLACES || null); }; z.onerror = function () { resolve(null); }; }); var y = document.createElement('script'); y.src = '/detail.js?v=20261102e'; document.body.appendChild(y); document.body.appendChild(z); var w = document.createElement('script'); w.src = '/fresh.js?v=20261102c'; document.body.appendChild(w); var nv = document.createElement('script'); nv.src = '/nudge.js?v=20261102a'; document.body.appendChild(nv); var rv = document.createElement('script'); rv.src = '/review.js?v=20261102a'; document.body.appendChild(rv); var by = document.createElement('script'); by.src = '/buy.js?v=20261101a'; document.body.appendChild(by);
   }
   envBanner();
   /* Bounded waits: a request that never answers must not leave Today blank. After FEED_TIMEOUT_MS the page renders from the curated list
      (the same fallback as a 500 or a network error) and a stale-copy notice; if the live feed still arrives later it is applied then. */
   var FEED_TIMEOUT_MS = 8000, TIMED_OUT = {}, feedState = 'pending'; // pending | live | curated (feed intentionally off) | degraded (fallback because the feed failed or stalled)
-  function within(p, fallback) { return Promise.race([p, new Promise(function (resolve) { setTimeout(function () { resolve(fallback); }, FEED_TIMEOUT_MS); })]); }
+  var WAIT_T0 = Date.now(), CP_GRACE_MS = 1500;
+  function within(p, fallback, ms) { return Promise.race([p, new Promise(function (resolve) { setTimeout(function () { resolve(fallback); }, ms == null ? FEED_TIMEOUT_MS : ms); })]); }
   function setFeedState(s) { feedState = s; document.dispatchEvent(new Event('gofn-events-state')); }
   function applyLive(api) {
     if (!(api && api.enabled && api.events && api.events.length >= 10)) return false;
     var m = dedupeLive(fromApi(api.events)); if (m.length < 10) return false;
     EV = mergeLiveAndCurated(m, fromData()); usingApi = true; usingReadOnly = api.readOnly === true; return true;
   }
-  var dexP = fetch('/dex.json').then(function (r) { return r.json(); }).catch(function () { return []; });
+  var dexP = window.GOLIB.getJson('/dex.json').catch(function () { return []; });
   var apiP = fetch('/api/events').then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; });
   var cpP = Promise.all([
     fetch('/data/cp/pokemon.json').then(function (r) { return r.ok ? r.json() : null; }),
     fetch('/data/cp/cp-multipliers.json').then(function (r) { return r.ok ? r.json() : null; })
   ]).then(function (a) { return a[0] && a[1] ? { pokemon: a[0], cpms: a[1] } : null; }).catch(function () { return null; });
-  Promise.all([within(dexP, TIMED_OUT), within(apiP, TIMED_OUT), within(cpP, TIMED_OUT)]).then(function (R) {
+  /* The CP table (215 KB) is only a garnish on raid cards: once the dex and the feed have answered it gets a short grace period (never past the 8 s total), then Today draws without it and it is applied when it lands. */
+  Promise.all([within(dexP, TIMED_OUT), within(apiP, TIMED_OUT)]).then(function (R) {
+    return within(cpP, TIMED_OUT, Math.max(0, Math.min(CP_GRACE_MS, FEED_TIMEOUT_MS - (Date.now() - WAIT_T0)))).then(function (cp) { R.push(cp); return R; });
+  }).then(function (R) {
     var api = R[1], stalled = api === TIMED_OUT; if (stalled) api = null;
     var dexLate = R[0] === TIMED_OUT, cpLate = R[2] === TIMED_OUT;
     if (!api && window.GONET && navigator.onLine !== false) window.GONET.fail('Could not load the latest events. Showing the saved copy.');

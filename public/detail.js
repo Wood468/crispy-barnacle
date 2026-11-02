@@ -28,7 +28,7 @@
   }
   function load() {
     if (DATA) return Promise.resolve(DATA);
-    function j(u) { return fetch(u, { cache: 'no-cache' }).then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; }); }
+    function j(u) { return window.GOLIB.jsonOrNull(u, { maxAge: 600000, init: { cache: 'no-cache' } }); }
     var placesP = window.GOPLACES_READY ? window.GOPLACES_READY.then(function (places) { return places && places.load ? places.load() : null; }) : (window.GOPLACES ? window.GOPLACES.load() : null);
     return Promise.all([j('/event-info.json'), (window.GOLIB ? GOLIB.loadPrices() : j('/prices.json')), placesP, j('/event-details.json'), j('/event-moves.json')]).then(function (a) { EVM = (a[4] && a[4].moves) || []; DATA = { info: a[0] || { events: {}, passes: {} }, prices: a[1] || { prices: [], fx: null }, details: (a[3] && a[3].events) || {} }; return DATA; });
   }
@@ -223,7 +223,7 @@
     var si = ev.season; if (!si) return '';
     var d = findDetails(ev) || { fields: {} }, F = d.fields || {};
     var rank = function (list) { return (list || []).map(function (x) { return x.text; }).filter(function (t) { return /^rank \d+/i.test(t); }); };
-    var ico = function (src) { return '<img class="ci" src="' + esc(src) + '" alt="" loading="lazy" data-err="rm">'; };
+    var ico = function (src) { return '<img class="ci" src="' + esc(src) + '" alt="" loading="lazy" decoding="async" data-err="rm">'; };
     var sec = function (title, icon, body) { return body ? '<section class="evd-grp"><h4>' + ico(icon) + esc(title) + '</h4>' + body + '</section>' : ''; };
     var ul = function (items) { return '<ul>' + items.map(function (x) { return '<li>' + window.GORICH(esc(x)) + '</li>'; }).join('') + '</ul>'; };
     // milestone bonuses by tier, free and Deluxe
@@ -314,7 +314,7 @@
       h += '<aside class="schedule-notes"><b>Schedule notes</b><ul>' + scheduleNotes.filter(Boolean).map(function (n) { return '<li>' + esc(n) + '</li>'; }).join('') + '</ul></aside>';
     }
     h += '<div class="evd-btns"><a class="pill all" download="' + esc(ev.id) + '.ics" href="' + icsFor(ev) + '">Add to calendar</a>' + (link ? '<a class="pill" href="' + esc(link) + '" target="_blank" rel="noopener noreferrer">' + esc(linkLabel) + '</a>' : '<span class="npub" data-nolink>No source link published</span>') + '</div>';
-    if (ev.bonuses && ev.bonuses.length) h += '<h3 class="sec2" id="evd-highlights">Bonuses</h3><div class="bonuses">' + ev.bonuses.map(function (b) { var chip = G.bonusChip(b); var img = /max particle/i.test(b) ? X.IMG_PARTICLE : /power spot/i.test(b) ? X.IMG_POWERSPOT : ''; return img ? chip.replace(/<(svg|img)[\s\S]*?(<\/svg>|>)(?=<b>|<span>)/, '<img class="gi gi-pic" src="' + esc(img) + '" alt="" loading="lazy" data-err="rm">') : chip; }).join('') + '</div>';
+    if (ev.bonuses && ev.bonuses.length) h += '<h3 class="sec2" id="evd-highlights">Bonuses</h3><div class="bonuses">' + ev.bonuses.map(function (b) { var chip = G.bonusChip(b); var img = /max particle/i.test(b) ? X.IMG_PARTICLE : /power spot/i.test(b) ? X.IMG_POWERSPOT : ''; return img ? chip.replace(/<(svg|img)[\s\S]*?(<\/svg>|>)(?=<b>|<span>)/, '<img class="gi gi-pic" src="' + esc(img) + '" alt="" loading="lazy" decoding="async" data-err="rm">') : chip; }).join('') + '</div>';
     h += evMovesHtml(ev, highlightOnMoves);
     if (ev.featured && ev.featured.length) h += featuredSections(ev, highlightOnFeatured);
     h += '<h3 class="sec2" id="evd-information">What is in this event</h3>';
@@ -349,15 +349,15 @@
   var SVG = function (d) { return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="' + d + '"/></svg>'; };
   var TAGS = {
     debut: { t: 'Debut', i: SVG('M12 3l2.6 5.6 6.1.7-4.5 4.2 1.2 6L12 16.5 6.6 19.5l1.2-6L3.3 9.3l6.1-.7z') },
-    shinydebut: { t: 'Shiny debut', i: '<img src="/ico/shiny.webp" alt="" loading="lazy">' },
+    shinydebut: { t: 'Shiny debut', i: '<img src="/ico/shiny.webp" alt="" loading="lazy" decoding="async">' },
     maxdebut: { t: 'Dynamax debut', i: SVG('M13 2L4 14h7l-1 8 9-12h-7z') },
-    boostedshiny: { t: 'Boosted shiny', i: '<span class="tg-w"><img src="/ico/shiny.webp" alt="" loading="lazy"><i>+</i></span>' },
-    shiny: { t: 'Shiny', i: '<img src="/ico/shiny.webp" alt="" loading="lazy">' },
-    incense: { t: 'Incense', i: '<img src="/ico/incense.webp" alt="" loading="lazy">' },
+    boostedshiny: { t: 'Boosted shiny', i: '<span class="tg-w"><img src="/ico/shiny.webp" alt="" loading="lazy" decoding="async"><i>+</i></span>' },
+    shiny: { t: 'Shiny', i: '<img src="/ico/shiny.webp" alt="" loading="lazy" decoding="async">' },
+    incense: { t: 'Incense', i: '<img src="/ico/incense.webp" alt="" loading="lazy" decoding="async">' },
     costume: { t: 'Costume', i: SVG('M8 3l-5 3 2 4 2-1v11h10V9l2 1 2-4-5-3a4 4 0 0 1-8 0z') },
-    power: { t: 'Mega, Max & moves', i: '<img src="/ico/g/mega.webp" alt="" loading="lazy">' },
-    raid: { t: 'Raid boss', i: '<img src="/ico/g/raid.webp" alt="" loading="lazy">' },
-    egg: { t: 'Hatches', i: '<img src="/ico/g/egg-5km.webp" alt="" loading="lazy">' },
+    power: { t: 'Mega, Max & moves', i: '<img src="/ico/g/mega.webp" alt="" loading="lazy" decoding="async">' },
+    raid: { t: 'Raid boss', i: '<img src="/ico/g/raid.webp" alt="" loading="lazy" decoding="async">' },
+    egg: { t: 'Hatches', i: '<img src="/ico/g/egg-5km.webp" alt="" loading="lazy" decoding="async">' },
     wild: { t: 'Wild', i: SVG('M5 19C5 9 11 5 20 4c0 9-4 15-14 15zM5 19l8-8') }
   };
   var SECTIONS = [
