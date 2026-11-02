@@ -10,6 +10,7 @@ on:
       - "src/**"
       - "workers/**"
       - "scripts/uptime.mjs"
+      - "scripts/wait-for-workers-build.mjs"
       - "docs/ROADMAP.md"
       - ".github/workflows/uptime.yml"
   schedule:
@@ -18,6 +19,8 @@ on:
 
 permissions:
   actions: read
+  checks: read
+  contents: read
 
 concurrency:
   group: uptime
@@ -26,15 +29,17 @@ concurrency:
 jobs:
   uptime:
     runs-on: ubuntu-latest
-    timeout-minutes: 4
+    timeout-minutes: 12
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: 22
-      - name: Allow production assets to settle after a main push
+      - name: Wait for the Cloudflare Workers production build
         if: github.event_name == 'push'
-        run: sleep 45
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: node scripts/wait-for-workers-build.mjs
       - name: Check the live site
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
