@@ -244,7 +244,7 @@ check('Today Tonight planner is an optional accessible local-time disclosure wit
       all(token in INDEX_HTML for token in ['id="today-tonight"', 'id="today-tonight-summary"', 'id="today-tonight-list"']) and
       all(token in DASH_JS for token in ['D.spotlight', 'D.raidHour', 'D.maxBattles', '6–7 pm local', '6 am–9 pm local', 'Weak to:', 'data-best-types', 'gofn-dex-ready', 'function renderTonight', 'renderTonight(t, dateKey)']) and
       all(token in DASH_CSS for token in ['.today-tonight', '.today-tonight-list', 'min-height:44px', '.today-tonight-best']) and
-      'gofn-dex-ready' in APP_JS and '/app.js?v=20261102i' in INDEX_HTML and '/app.js?v=20261102i' in SW_JS)
+      'gofn-dex-ready' in APP_JS and '/app.js?v=20261102j' in INDEX_HTML and '/app.js?v=20261102j' in SW_JS)
 check('Dex/type readiness refreshes only the Tonight disclosure, preserving event-detail focus targets',
       "document.addEventListener('gotypes', function () { try { renderRot(); var t = now(); renderTonight(t, dayKey(t)); } catch (e) {} });" in DASH_JS and
       "document.addEventListener('gofn-dex-ready', function () { try { renderRot(); var t = now(); renderTonight(t, dayKey(t)); } catch (e) {} });" in DASH_JS)
@@ -252,9 +252,9 @@ check('Today multi-deadline tray is accessible, bounded and source-safe',
       all(token in INDEX_HTML for token in ['id="today-deadlines"', 'id="today-deadlines-summary"', 'id="today-deadlines-list"']) and
       all(token in DASH_JS for token in ['var trayLimit = t.getTime() + 7 * 24 * 60 * 60 * 1000', "safeUrl(d.url || '')", 'trayCandidates.slice(0, 8)', 'View all ', 'noopener noreferrer', "sourceUrl.indexOf('https://') === 0"]) and
       all(token in DASH_CSS for token in ['.today-deadlines>summary', 'min-height:44px', '.today-deadline-item', 'var(--color-link)']) and
-      '/dash.js?v=20261102n' in APP_JS and '/dash.js?v=20261102n' in SW_JS and
-      '/dash.css?v=20261102k' in INDEX_HTML and '/dash.css?v=20261102k' in SW_JS and
-      'gofn-shell-v201' in SW_JS)
+      '/dash.js?v=20261102o' in APP_JS and '/dash.js?v=20261102o' in SW_JS and
+      '/dash.css?v=20261102l' in INDEX_HTML and '/dash.css?v=20261102l' in SW_JS and
+      'gofn-shell-v202' in SW_JS)
 check('season pass and deadline data is structured, source-attributed and ordered',
       all(item_id in {item.get('id') for item in SEASON_DATA.get('items', [])}
           for item_id in ['season:pass-halloween', 'season:pass-november']) and
@@ -287,7 +287,7 @@ check('base bonus and information availability controls use semantic status role
           'background: var(--color-status-info-unavailable); color: var(--color-on-status-info-unavailable); border: 1px solid var(--color-border-info-unavailable);',
       ]))
 check('versioned stylesheets are referenced by the page and precached offline',
-      all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261102a', '/dash.css?v=20261102k']))
+      all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261102b', '/dash.css?v=20261102l']))
 check('owner verification scripts are versioned and precached offline',
       '/account.js?v=20261101b' in INDEX_HTML and '/account.js?v=20261101b' in SW_JS and
       '/review.js?v=20261101b' in DASH_JS and '/review.js?v=20261101b' in SW_JS)
@@ -315,12 +315,12 @@ check('event signal chips and detail tags use semantic palette roles with unchan
           '.tg-incense{--tc:var(--color-signal-shadow)}.tg-costume{--tc:var(--color-signal-encounter)}',
       ]))
 check('offline shell cache version advances with the dashboard stylesheet token release',
-      "gofn-shell-v201" in SW_JS)
+      "gofn-shell-v202" in SW_JS)
 check('event detail focus restoration can find a re-rendered opener by event key and card role',
       all(token in DETAIL_JS for token in ['openerKey', 'openerClass', "getAttribute('data-open')", 'target.focus()']))
 check('versioned dashboard scripts are referenced by the entry page and precached offline',
-      '/app.js?v=20261102i' in INDEX_HTML and '/app.js?v=20261102i' in SW_JS and
-      '/dash.js?v=20261102n' in APP_JS and '/dash.js?v=20261102n' in SW_JS and
+      '/app.js?v=20261102j' in INDEX_HTML and '/app.js?v=20261102j' in SW_JS and
+      '/dash.js?v=20261102o' in APP_JS and '/dash.js?v=20261102o' in SW_JS and
       '/detail.js?v=20261102d' in DASH_JS and '/detail.js?v=20261102d' in SW_JS)
 check('sync PIN and account controls have one home in Menu and are precached offline',
       INDEX_HTML.index('id="acct" class="acct"') > INDEX_HTML.index('id="sub-menu"') and
@@ -2735,6 +2735,96 @@ with sync_playwright() as p:
         f6_fill = settle(f6, "(() => { const e = document.getElementById('fresh-line'); return !e.hidden && !e.hasAttribute('data-released') && e.getBoundingClientRect().height >= 32; })()", 8000)
         check('B6-2: a late /api/sources answer still fills the line after an early release', f6_fill)
         f6.context.close()
+
+    if on('b'):
+        # ---- Batch 7: every filter pill / chip / segmented filter shares one unmistakable selected state (real browser, dark and light) ----
+        FP_JS = """(sel) => {
+          const cv = document.createElement('canvas').getContext('2d');
+          const rgb = c => { cv.clearRect(0,0,1,1); cv.fillStyle = '#000'; cv.fillStyle = c; cv.fillRect(0,0,1,1); const d = cv.getImageData(0,0,1,1).data; return [d[0],d[1],d[2],d[3]]; };
+          return Array.from(document.querySelectorAll(sel)).map(el => {
+            const cs = getComputedStyle(el), bf = getComputedStyle(el, '::before'), r = el.getBoundingClientRect();
+            const state = el.hasAttribute('aria-pressed') ? el.getAttribute('aria-pressed') : el.getAttribute('aria-selected');
+            return {text: el.textContent.trim().replace(/\\s+/g,' '), state, w: r.width, h: r.height, bg: rgb(cs.backgroundColor), fg: rgb(cs.color),
+                    shadow: cs.boxShadow, check: bf.content, typed: el.classList.contains('ftype'), pl: cs.paddingLeft, pr: cs.paddingRight};
+          });
+        }"""
+        def fp_lum(c):
+            def ch(v):
+                v = v/255.0
+                return v/12.92 if v <= 0.03928 else ((v+0.055)/1.055)**2.4
+            return 0.2126*ch(c[0])+0.7152*ch(c[1])+0.0722*ch(c[2])
+        def fp_ratio(a, b):
+            la, lb = fp_lum(a), fp_lum(b)
+            return (max(la, lb)+0.05)/(min(la, lb)+0.05)
+        def fp_nav(pg, tab, sub=None, mode=None):
+            if tab == 'menu':  # views that live in the header menu
+                pg.click('#hmenu')
+                if sub: pg.click('#menu-' + sub)
+                pg.wait_for_timeout(250); return
+            pg.evaluate("a => { const q = s => document.querySelector(s); const t = q('#tabs [data-tab=\"'+a[0]+'\"]'); if (t) t.click(); if (a[1]) { const b = q('#subnav-'+a[0]+' [data-sub=\"'+a[1]+'\"]'); if (b) b.click(); } if (a[2]) { const m = q('#mode-'+a[0]+'-'+a[1]+' [data-mode=\"'+a[2]+'\"]'); if (m) m.click(); } }", [tab, sub, mode])
+            pg.wait_for_timeout(250)
+        fp_pg = page()
+        FP_GROUPS = [
+            # name, nav, pill selector, index of the "All" pill (None if the group has none), index to pick, multi-select
+            ('Schedule type filters', ('events', 'timeline'), '#evtypes .fchip', 0, 2, False),
+            ('Schedule region chips', ('events', 'calendar'), '#calreg .rgrow .fchip', 0, 2, False),
+            ('Schedule range segments', ('events', 'calendar'), '#calreg .seg .fchip', None, 1, False),
+            ('Discoveries source chips', ('menu', 'leaks'), '#sub-leaks [data-dmsrc]', 0, 1, False),
+            ('Events sub-navigation', ('events', 'timeline'), '#subnav-events button', None, 0, False),
+            ('My Dex mode bar', ('collect', 'dex'), '#mode-collect-dex button', None, 1, False),
+            ('Dex generation chips', ('collect', 'dex'), '#genchips .fchip', 0, 2, False),
+            ('Dex form-group pills', ('collect', 'dex', 'forms'), '#formgrp .pill', None, 2, False),
+            ('Best-by-type pills', ('collect', 'guides', 'best'), '#typechips .pill', 0, 4, False),
+        ]
+        def fp_group(pg, name, sel, all_idx, pick, multi):
+            for theme in ('dark', 'light'):
+                pg.evaluate("t => { if (t === 'light') document.documentElement.setAttribute('data-theme','light'); else document.documentElement.removeAttribute('data-theme'); }", theme)
+                s0 = pg.evaluate(FP_JS, sel)
+                if not s0: check('%s [%s]: pills render' % (name, theme), False); continue
+                was = [i for i, x in enumerate(s0) if x['state'] == 'true']
+                pg.locator(sel).nth(pick).scroll_into_view_if_needed(); pg.locator(sel).nth(pick).click(force=True); pg.wait_for_timeout(200)
+                s1 = pg.evaluate(FP_JS, sel)
+                on1 = [i for i, x in enumerate(s1) if x['state'] == 'true']
+                tag = '%s [%s]' % (name, theme)
+                if multi: check(tag + ': toggling flips only the chosen pill', all((x['state'] != y['state']) == (i == pick) for i, (x, y) in enumerate(zip(s0, s1))), (was, on1))
+                else:
+                    check(tag + ': exactly one pill is aria-pressed/selected, and it is the chosen one', on1 == [pick], on1)
+                    if all_idx is not None:
+                        check(tag + ': "All" is selected by default and unselected once another pill is chosen', all_idx in was and s1[all_idx]['state'] == 'false', (was, s1[all_idx]['state']))
+                # The event-kind toggles append " (hidden)" to the label itself, so only their height is compared; every other group must keep its width.
+                check(tag + ': pill widths do not change when toggled (no layout shift)', multi and all(abs(x['h']-y['h']) < 0.6 for x, y in zip(s0, s1)) or len(s0) == len(s1) and all(abs(x['w']-y['w']) < 0.6 and abs(x['h']-y['h']) < 0.6 for x, y in zip(s0, s1)), [(x['w'], y['w']) for x, y in zip(s0, s1) if abs(x['w']-y['w']) >= 0.6])
+                check(tag + ': pills keep a 44px touch height', all(x['h'] >= 43.9 for x in s0+s1), [x['h'] for x in s0+s1 if x['h'] < 43.9])
+                pairs = [x for x in s0 + s1 if not x['typed']]
+                sel_px = [x for x in pairs if x['state'] == 'true']; off_px = [x for x in pairs if x['state'] == 'false']
+                if sel_px and off_px:
+                    check(tag + ': selected fill vs unselected fill is at least 3:1', min(fp_ratio(a['bg'], b['bg']) for a in sel_px for b in off_px) >= 3.0, min(fp_ratio(a['bg'], b['bg']) for a in sel_px for b in off_px))
+                    check(tag + ': text is at least 4.5:1 in both states', min(fp_ratio(x['fg'], x['bg']) for x in sel_px + off_px) >= 4.5, min(fp_ratio(x['fg'], x['bg']) for x in sel_px + off_px))
+                    check(tag + ': pill fills are opaque, so contrast is measured on real colours', all(x['bg'][3] == 255 for x in sel_px + off_px))
+                check(tag + ': selected pill is not colour-only (check mark drawn), unselected pills have none', all((x['check'] != 'none') == (x['state'] == 'true') for x in s0 + s1), [(x['text'], x['state'], x['check']) for x in s1 if (x['check'] != 'none') != (x['state'] == 'true')])
+                check(tag + ': padding is symmetric, so the check never moves the label', all(x['pl'] == x['pr'] for x in s0 + s1 if not x['typed']), [(x['pl'], x['pr']) for x in s1[:2]])
+                if any(x['typed'] for x in s1):
+                    check(tag + ': typed pills show selection as a ring, only on the chosen pill', all((x['shadow'] != 'none') == (x['state'] == 'true') for x in s1 if x['typed']), [(x['text'], x['shadow']) for x in s1 if x['typed']][:3])
+                # put the group back the way it was
+                pg.locator(sel).nth(was[0] if (was and not multi) else pick).click(force=True); pg.wait_for_timeout(150)
+        for name, nav, sel, all_idx, pick, multi in FP_GROUPS:
+            fp_nav(fp_pg, *nav)
+            fp_pg.evaluate("s => { const e = document.querySelector(s); const d = e && e.closest('details'); if (d) d.open = true; }", sel); fp_pg.wait_for_timeout(120)  # chips inside a collapsed disclosure
+            fp_group(fp_pg, name, sel, all_idx, pick, multi)
+        # Kind toggles in Settings are multi-select: each chip flips on its own.
+        fp_nav(fp_pg, 'menu')
+        fp_pg.evaluate("() => { const d = document.querySelector('#kindsbox').closest('details'); if (d) d.open = true; }"); fp_pg.wait_for_timeout(150)
+        fp_group(fp_pg, 'Settings event-kind toggles', '#kindsbox .fchip', None, 1, True)
+        fp_pg.close()
+        # Places tag chips (opened with a fixture so the group is stable).
+        fp_pl = page(extra={'**/places.json': (PLACES_FIXTURE, 200)}); fp_pl.wait_for_function("!!window.GOPLACES")
+        fp_pl.evaluate("GOPLACES.open('')"); fp_pl.wait_for_selector('#plc .plc-tags .chip')
+        fp_group(fp_pl, 'Places tag chips', '#plc .plc-tags .chip', 0, 2, False)
+        fp_pl.close()
+        check('filter pills share one token-based treatment in the stylesheet (no hard-coded colours)',
+              all(t in DASH_CSS for t in ['--color-filter-bg:', '--color-filter-selected-bg:', '--color-on-filter-selected:', '.fchip[aria-pressed="true"],.pill.fpill[aria-pressed="true"],.subnav button[aria-pressed="true"],.plc-tags .chip[aria-pressed="true"]{background:var(--color-filter-selected-bg)']) and
+              "class=\"chip\" data-tag=\"\" aria-pressed=" in (ROOT / 'public' / 'places.js').read_text() and
+              "class=\"pill' + (grp" not in (ROOT / 'public' / 'extra.js').read_text())
+
 
     b.close()
 # Dashboard radius adoption: shared scale values are expressed through semantic roles.

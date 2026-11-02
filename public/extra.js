@@ -23,7 +23,7 @@
   }
   function renderForms() {
     var list = $('formlist'); if (!list) return;
-    $('formgrp').innerHTML = GROUPS.map(function (g) { return '<button type="button" class="pill' + (grp === g[0] ? ' all' : '') + '" data-fg="' + g[0] + '" aria-pressed="' + (grp === g[0]) + '">' + g[1] + '</button>'; }).join('');
+    $('formgrp').innerHTML = GROUPS.map(function (g) { return '<button type="button" class="pill fpill" data-fg="' + g[0] + '" aria-pressed="' + (grp === g[0]) + '">' + g[1] + '</button>'; }).join('');
     var q = $('formq').value.trim().toLowerCase(), rows = FORMS.filter(function (f) {
       var tk = 'form:' + f[0] + ':' + f[1];
       if (q) return (X.DEXNAME[f[0]] || '').toLowerCase().indexOf(q) > -1;

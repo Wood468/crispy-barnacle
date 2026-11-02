@@ -408,7 +408,7 @@ Promise.all([
     var h='<div class="block" style="margin-bottom:14px"><h3 class="wreg" style="margin-top:0">Australia and Oceania</h3>'+
       (list.filter(function(e){return e.region==='Oceania'}).length?'<ul class="wlist">'+list.filter(function(e){return e.region==='Oceania'}).map(function(e){return wcard(e,today)}).join('')+'</ul>':'<p class="sub">Nothing on in Australia or Oceania right now.</p>')+
       (au.filter(function(e){return e.region==='Global'}).length?'<p class="sub" style="margin-top:10px">You can still play these from Melbourne: '+au.filter(function(e){return e.region==='Global'}).map(function(e){return esc(e.t)+' ('+esc(wdate(e.s,e.e))+')'}).join(', ')+'.</p>':'')+'</div>';
-    h+='<div class="chips" id="wchips" style="margin-bottom:6px">'+[['all','All'],['au','Play from Australia'],['Asia','Asia'],['Americas','Americas'],['Europe','Europe']].map(function(c){return '<button type="button" class="pill '+(wsel===c[0]?'all':'p-x')+'" data-w="'+c[0]+'" aria-pressed="'+(wsel===c[0])+'">'+c[1]+'</button>'}).join('')+'</div>';
+    h+='<div class="chips" id="wchips" style="margin-bottom:6px">'+[['all','All'],['au','Play from Australia'],['Asia','Asia'],['Americas','Americas'],['Europe','Europe']].map(function(c){return '<button type="button" class="pill p-x fpill" data-w="'+c[0]+'" aria-pressed="'+(wsel===c[0])+'">'+c[1]+'</button>'}).join('')+'</div>';
     h+=live.length?'<h3 class="wreg">Events</h3><ul class="wlist">'+live.map(function(e){return wcard(e,today)}).join('')+'</ul>':'<p class="sub">Nothing matches.</p>';
     if(long.length)h+='<h3 class="wreg">Long running</h3><ul class="wlist">'+long.map(function(e){return wcard(e,today)}).join('')+'</ul>';
     $('world').innerHTML=h;
@@ -600,7 +600,7 @@ Promise.all([
   typeSel = previousTypeSel === 'All' ? 'All' : Array.isArray(previousTypeSel) ? previousTypeSel.filter(function(t,i,a){return TYPES.indexOf(t)>-1&&a.indexOf(t)===i}) : (TYPES.indexOf(previousTypeSel)>-1 ? previousTypeSel : 'All');
   ['All'].concat(TYPES).forEach(function(t){
     var b=document.createElement('button');b.type='button';
-    b.className='pill '+(t==='All'?'all':'');
+    b.className='pill fpill'+(t==='All'?'':' ftype');
     if(t!=='All'){b.style.background=TCOL[t][0];b.style.color=TCOL[t][1]}
     b.innerHTML=(t==='All'?'':'<img class="ti" src="/ico/g/type-'+t.toLowerCase()+'.webp" alt="">')+t;
     b.setAttribute('aria-pressed',(t==='All' ? typeSel==='All' : isBestTypeSelected(t,typeSel))?'true':'false');
@@ -1012,7 +1012,7 @@ Promise.all([
     var r=document.getElementById('today-retry');if(r)r.addEventListener('click',function(){window.location.reload()});
     var b=document.getElementById('day-brief');if(b)b.setAttribute('data-state','unavailable');
     var f=document.getElementById('fresh-line');if(f)f.setAttribute('data-released','')}
-  var ds=document.createElement('script');ds.src='/dash.js?v=20261102n';ds.onerror=todayUnavailable;document.body.appendChild(ds);setTimeout(function(){if(!window.GODASH)todayUnavailable()},10000);
+  var ds=document.createElement('script');ds.src='/dash.js?v=20261102o';ds.onerror=todayUnavailable;document.body.appendChild(ds);setTimeout(function(){if(!window.GODASH)todayUnavailable()},10000);
 })();
 
 }).catch(function(){var panel=document.getElementById('load-error');if(panel)panel.hidden=false;var retry=document.getElementById('load-retry');if(retry)retry.addEventListener('click',function(){window.location.reload()},{once:true})});

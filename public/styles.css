@@ -85,7 +85,6 @@ button,input,select{font:inherit;color:inherit}
 /* Action pills: a real raised surface with full-strength text (the old blanket opacity:.6 made every enabled pill look disabled and failed 4.5:1). */
 button.pill,a.pill{background:var(--color-surface-raised);color:var(--color-text);border:1px solid var(--color-border)}
 button.pill{cursor:pointer;padding:9px 14px;font-size:var(--type-button)}
-button.pill[aria-pressed="true"]{box-shadow:0 0 0 2px var(--color-canvas),0 0 0 4px var(--color-text)}
 button.pill.all,a.pill.all{background:var(--color-inverse-surface);color:var(--color-inverse-text);border-color:var(--color-inverse-surface)}
 button.pill:disabled,button.pill[aria-disabled="true"]{opacity:.5;cursor:not-allowed}
 
