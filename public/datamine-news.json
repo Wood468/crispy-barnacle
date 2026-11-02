@@ -1,12 +1,12 @@
 {
- "updated": "2026-11-02T15:39:15.195Z",
+ "updated": "2026-11-02T23:13:15.506Z",
  "seeded": true,
  "channels": [
   {
    "src": "events",
    "name": "dm-events",
    "state": "ok",
-   "count": 11
+   "count": 12
   },
   {
    "src": "reports",
@@ -18,10 +18,46 @@
    "src": "gamedata",
    "name": "dm-gamedata",
    "state": "ok",
-   "count": 28
+   "count": 31
   }
  ],
  "items": [
+  {
+   "id": "1566917761802969235",
+   "src": "gamedata",
+   "title": "Mega Chandelure at Super Max Level now gain 10 levels instead of 2 levels.",
+   "text": "Mega Chandelure at Super Max Level now gain 10 levels instead of 2 levels.\n\nIn addition to that, Ominous Wind+'s power in Gyms and Raids (PvE) was increased from 145 to 174.\n\n@subscriber @miner",
+   "link": "",
+   "image": "",
+   "date": "2026-11-02T20:51:46.338Z"
+  },
+  {
+   "id": "1566909566183280642",
+   "src": "events",
+   "title": "New image",
+   "text": "",
+   "link": "",
+   "image": "",
+   "date": "2026-11-02T20:19:12.350Z"
+  },
+  {
+   "id": "1566897093606375736",
+   "src": "gamedata",
+   "title": "Remote interaction range was lowered from 3500 to 2050 in MAPOBJECTSINTERACTIONRANGESETTINGS.",
+   "text": "Remote interaction range was lowered from 3500 to 2050 in MAPOBJECTSINTERACTIONRANGESETTINGS.\ndiff\n- remoteinteractionrangemeters: 3500.0\n+ remoteinteractionrangemeters: 2050.0\n\n@subscriber @miner",
+   "link": "",
+   "image": "",
+   "date": "2026-11-02T19:29:38.656Z"
+  },
+  {
+   "id": "1566889165897990176",
+   "src": "gamedata",
+   "title": "A bunch of stuff was rolled out. This includes the updated XP breakdown for catching Pokémon, as well as the instant-app",
+   "text": "A bunch of stuff was rolled out. This includes the updated XP breakdown for catching Pokémon, as well as the instant-appraisal button on Pokémon summary screens, among other things.\n\nACFOREGROUNDCATCHENCOUNTERFEATUREGATE\nACFOREGROUNDCATCHMAPFOCUSFEATUREGATE\nACFOREGROUNDCATCHPOIFOCUSFEATUREGATE\nSOFTSFIDAALERTUPDATEFEATUREGATE\nSOFTSFIDAFOREGROUNDDESCRIPTIONTEXTCODEGATE\nSOFTSFIDASETTINGS\nSOFTSFIDAWIDGETBACKGROUNDCOLORFEATUREGATE\nDMAXGACHASYSTEMREMOVALFEATUREGATE\nMAPPOKEMONRINGSFEATUREGATE\nMICHELINMAPPOKEMONATTRACTANTFOGFEATUREGATE\nMICHELINMAPPOKESTOPSPUNCONTRASTUPFEATUREGATE\nAPPRAISALFEATUREGATE\nIMMERSIVECATCHSUMMARYFEATUREGATE\n\n@subscriber @miner",
+   "link": "",
+   "image": "",
+   "date": "2026-11-02T18:58:08.543Z"
+  },
   {
    "id": "1566781625604509707",
    "src": "gamedata",
