@@ -115,7 +115,7 @@ test("homepage and offline shell version mismatches fail closed", () => {
 });
 
 test("missing owner-review precache entry fails closed", () => {
-  const missingReview = SERVICE_WORKER.replace("'/review.js?v=6', ", "");
+  const missingReview = SERVICE_WORKER.replace(", '/review.js?v=6'", "");
   assert.throws(() => extractCoreAssetUrls(HTML, missingReview), /does not precache \/review\.js/);
 });
 
