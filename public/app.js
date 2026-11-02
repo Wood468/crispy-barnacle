@@ -629,8 +629,8 @@ Promise.all([
         +'<span class="mon" style="--tb:'+TCOL[t][0]+';--tf:'+TCOL[t][1]+'" aria-hidden="true">'+'<b>'+esc(base.slice(0,2))+'</b>'+art(name,'in')+'</span>'
         +'<div style="min-width:0"><div class="nm">'+esc(name)+'</div><div class="mv">'+esc(f[1])+' + '+esc(f[2])+(f[4]?' + '+esc(f[4]):'')+'</div>'
         +'<div class="meta">'+(form?tagHtml(form):'')+(RAIDNOW[name]?tagHtml('Raids',RAIDNOW[name]):'')+'<span class="dps">'+f[3]+' DPS</span></div>'+need
-        +'<div class="bx"><button type="button" class="tg x s" aria-pressed="false">Shiny</button><button type="button" class="tg x m" aria-pressed="false">Maxed out</button>'+sel+'</div></div>'
-        +'<div class="toggles"><button type="button" class="tg o" aria-pressed="false">Obtained</button><button type="button" class="tg h" aria-pressed="false">Hundo</button></div></div>';
+        +'<div class="bx"><button type="button" class="tg x s" aria-pressed="false" aria-label="Shiny: '+esc(name)+'">Shiny</button><button type="button" class="tg x m" aria-pressed="false" aria-label="Maxed out: '+esc(name)+'">Maxed out</button>'+sel+'</div></div>'
+        +'<div class="toggles"><button type="button" class="tg o" aria-pressed="false" aria-label="Obtained: '+esc(name)+'">Obtained</button><button type="button" class="tg h" aria-pressed="false" aria-label="Hundo: '+esc(name)+'">Hundo</button></div></div>';
     });
     g.innerHTML=h;
     list.appendChild(g);
@@ -798,7 +798,7 @@ Promise.all([
       var id=p[0],un=NOTGO[id];
       return '<div class="drow'+(un?' un':'')+'" data-id="'+id+'"><img src="/dex/'+id+'.webp" alt="" loading="lazy" decoding="async" width="58" height="58">'
         +'<div><div class="nm"><small>#'+String(id).padStart(4,'0')+'</small>'+esc(p[1])+(un?'<span class="pill p-x">Not in GO yet</span>':'')+rowState(p)+'</div></div>'
-        +'<div class="dtog">'+DEXCATS.map(function(c){return '<button type="button" class="tg'+(c==='shiny'?' s':'')+'" data-c="'+c+'" aria-pressed="'+(dm(c)[id]?'true':'false')+'">'+DLAB[c]+'</button>'}).join('')+'</div></div>';
+        +'<div class="dtog">'+DEXCATS.map(function(c){return '<button type="button" class="tg'+(c==='shiny'?' s':'')+'" data-c="'+c+'" aria-pressed="'+(dm(c)[id]?'true':'false')+'" aria-label="'+DLAB[c]+': '+esc(p[1])+'">'+DLAB[c]+'</button>'}).join('')+'</div></div>';
     }).join('');
   }
   function renderReg(){
