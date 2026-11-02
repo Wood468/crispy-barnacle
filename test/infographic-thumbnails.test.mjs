@@ -71,6 +71,7 @@ test('thumbnail generation reads R2-restored originals but never adds the thumbn
   const root = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..');
   const r2Sync = await fs.readFile(path.join(root, 'scripts', 'r2-sync.sh'), 'utf8');
   const workflow = await fs.readFile(path.join(root, '.github', 'workflows', 'g47ix-infographics.yml'), 'utf8');
+  const auditWorkflow = await fs.readFile(path.join(root, '.github', 'workflows', 'qa10-thumbnail-audit.yml'), 'utf8');
   assert.ok(r2Sync.includes('infographics:public/infographics'));
   assert.ok(r2Sync.includes('img/ext:public/img/ext'));
   assert.equal(r2Sync.includes('infographic-thumbs'), false);
@@ -79,4 +80,9 @@ test('thumbnail generation reads R2-restored originals but never adds the thumbn
   const saveAt = workflow.indexOf('bash scripts/r2-sync.sh save');
   assert.ok(restoreAt >= 0 && saveAt > restoreAt && generateAt > saveAt);
   assert.ok(workflow.includes('public/infographic-thumbs'));
+  assert.ok(workflow.includes('qa10-thumbnail-audit'));
+  assert.ok(workflow.includes('steps.publish.outputs.commit_sha'));
+  assert.ok(auditWorkflow.includes('repository_dispatch:'));
+  assert.ok(auditWorkflow.includes('scripts/wait-for-workers-build.mjs'));
+  assert.ok(auditWorkflow.includes('test/production_image_audit.py'));
 });

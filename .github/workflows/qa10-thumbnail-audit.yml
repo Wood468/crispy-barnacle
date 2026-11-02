@@ -1,0 +1,36 @@
+name: QA-10 thumbnail production audit
+
+on:
+  repository_dispatch:
+    types: [qa10-thumbnail-audit]
+  workflow_dispatch:
+
+permissions:
+  actions: read
+  checks: read
+  contents: read
+
+jobs:
+  production-image-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.event.client_payload.commit_sha || github.sha }}
+      - name: Wait for the exact Cloudflare production Workers build
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_SHA: ${{ github.event.client_payload.commit_sha || github.sha }}
+        run: node scripts/wait-for-workers-build.mjs
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7
+        with:
+          python-version: "3.12"
+      - name: Install Playwright
+        run: |
+          pip install playwright
+          python -m playwright install --with-deps chromium
+      - name: Measure production image waterfall (read-only)
+        env:
+          GO_FIELD_NOTES_AUDIT_URL: https://pogo.michaelpuff.com/
+        run: python test/production_image_audit.py

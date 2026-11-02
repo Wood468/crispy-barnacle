@@ -1,8 +1,6 @@
 name: Tests
 
 permissions:
-  actions: read
-  checks: read
   contents: read
 
 # Changes that only touch data files (the importer, AI checks and bots commit these all day) skip the tests: no code changed.
@@ -108,18 +106,13 @@ jobs:
 
 
   production-image-audit:
-    # Informational, read-only sample of the live public site; also sample the thumbnail deployment.
-    if: github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && contains(github.event.head_commit.message, 'card thumbnails'))
+    # Informational, read-only sample of the live public site; never blocks code checks.
+    if: github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 12
     continue-on-error: true
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-      - name: Wait for the Cloudflare Workers production build
-        if: github.event_name == 'push'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: node scripts/wait-for-workers-build.mjs
       - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7
         with:
           python-version: "3.12"
