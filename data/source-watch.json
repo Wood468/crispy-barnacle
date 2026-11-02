@@ -1,10 +1,10 @@
 {
- "updated": "2026-11-02T00:45:02.837Z",
+ "updated": "2026-11-02T11:08:30.097Z",
  "status": [
   {
    "id": "hub",
    "state": "ok",
-   "items": 4
+   "items": 5
   },
   {
    "id": "miners-assets",
@@ -18,85 +18,25 @@
   },
   {
    "id": "reddit-silph",
-   "state": "ok",
-   "items": 13
+   "state": "error",
+   "note": "HTTP 429"
   },
   {
    "id": "youtube-pogo",
-   "state": "error",
-   "note": "HTTP 404"
+   "state": "ok",
+   "items": 2
   }
  ],
- "gaps": 4,
+ "gaps": 0,
  "items": [
   {
-   "source": "reddit-silph",
-   "trust": "tip",
-   "title": "Has anyone actually reached Level 108 to get Spiritomb?",
-   "link": "https://www.reddit.com/r/TheSilphRoad/comments/1xle1cz/has_anyone_actually_reached_level_108_to_get/",
-   "date": "2026-11-01T20:49:36.000Z",
-   "summary": "<!-- SC_OFF --><div class=\"md\"><p>I’m genuinely curious how many players have managed to complete this challenge! How much grinding/raids did it take? How many hours did you play, any luck with shiny ",
-   "pokemon": [
-    "Spiritomb"
-   ],
-   "notInOurData": [
-    "Spiritomb"
-   ]
-  },
-  {
-   "source": "reddit-silph",
-   "trust": "tip",
-   "title": "Costume Noibat from \"Level 80 Challenge\" Special Research",
-   "link": "https://www.reddit.com/r/TheSilphRoad/comments/1xkix8p/costume_noibat_from_level_80_challenge_special/",
-   "date": "2026-10-31T19:21:39.000Z",
-   "summary": "<table> <tr><td> <a href=\"https://www.reddit.com/r/TheSilphRoad/comments/1xkix8p/costume_noibat_from_level_80_challenge_special/\"> <img src=\"https://preview.redd.it/ce45grchsuyh1.jpeg?width=140&amp;he",
-   "pokemon": [
-    "Noibat"
-   ],
-   "notInOurData": [
-    "Noibat"
-   ]
-  },
-  {
-   "source": "reddit-silph",
-   "trust": "tip",
-   "title": "Dia de Muertos Timed Research + Bg Costume Cubone",
-   "link": "https://www.reddit.com/r/TheSilphRoad/comments/1xgx0ak/dia_de_muertos_timed_research_bg_costume_cubone/",
-   "date": "2026-10-27T16:19:59.000Z",
-   "summary": "<table> <tr><td> <a href=\"https://www.reddit.com/r/TheSilphRoad/comments/1xgx0ak/dia_de_muertos_timed_research_bg_costume_cubone/\"> <img src=\"https://preview.redd.it/rfbfr4u4c1yh1.jpeg?width=140&amp;h",
-   "pokemon": [
-    "Cubone"
-   ],
-   "notInOurData": [
-    "Cubone"
-   ]
-  },
-  {
-   "source": "reddit-silph",
-   "trust": "tip",
-   "title": "New costume crobat looks different from normal",
-   "link": "https://www.reddit.com/r/TheSilphRoad/comments/1xgwc8h/new_costume_crobat_looks_different_from_normal/",
-   "date": "2026-10-27T15:55:45.000Z",
-   "summary": "<table> <tr><td> <a href=\"https://www.reddit.com/r/TheSilphRoad/comments/1xgwc8h/new_costume_crobat_looks_different_from_normal/\"> <img src=\"https://preview.redd.it/gfezykk381yh1.jpeg?width=640&amp;cr",
-   "pokemon": [
-    "Crobat"
-   ],
-   "notInOurData": [
-    "Crobat"
-   ]
-  },
-  {
-   "source": "reddit-silph",
-   "trust": "tip",
-   "title": "Halloween event - part II feels underwhelming",
-   "link": "https://www.reddit.com/r/TheSilphRoad/comments/1xl450u/halloween_event_part_ii_feels_underwhelming/",
-   "date": "2026-11-01T14:15:45.000Z",
-   "summary": "<!-- SC_OFF --><div class=\"md\"><p>Less spawn variety than p1</p> <p>No new costumes (zubat 💔) </p> <p>Half the costumes compared to p1 </p> <p>The removal of the boxes which made the event genuinely ",
-   "pokemon": [
-    "Drifblim",
-    "Gengar",
-    "Zubat"
-   ],
+   "source": "hub",
+   "trust": "community",
+   "title": "PvE Analysis: Halloween Event 2026 Part 2",
+   "link": "https://pokemongohub.net/post/meta/pve-analysis-halloween-event-2026-part-2/",
+   "date": "2026-11-02T09:42:29.000Z",
+   "summary": "Hello, Trainers! We hope everyone had a fantastic Halloween! True to one of Pokémon GO’s longest-running traditions, the Halloween 2026 Event is currently underway, bringing a host of spooky spawns, r",
+   "pokemon": [],
    "notInOurData": []
   },
   {
@@ -113,50 +53,6 @@
    "notInOurData": []
   },
   {
-   "source": "reddit-silph",
-   "trust": "tip",
-   "title": "Greavard shiny confirmation",
-   "link": "https://www.reddit.com/r/TheSilphRoad/comments/1xkqbfo/greavard_shiny_confirmation/",
-   "date": "2026-11-01T01:02:36.000Z",
-   "summary": "<table> <tr><td> <a href=\"https://www.reddit.com/r/TheSilphRoad/comments/1xkqbfo/greavard_shiny_confirmation/\"> <img src=\"https://preview.redd.it/orzbcb3bhwyh1.png?width=640&amp;crop=smart&amp;auto=we",
-   "pokemon": [
-    "Greavard"
-   ],
-   "notInOurData": []
-  },
-  {
-   "source": "reddit-silph",
-   "trust": "tip",
-   "title": "Who stole my Zubats costume?",
-   "link": "https://www.reddit.com/r/TheSilphRoad/comments/1xkjidt/who_stole_my_zubats_costume/",
-   "date": "2026-10-31T19:46:05.000Z",
-   "summary": "<table> <tr><td> <a href=\"https://www.reddit.com/r/TheSilphRoad/comments/1xkjidt/who_stole_my_zubats_costume/\"> <img src=\"https://preview.redd.it/fbwfu62uwuyh1.png?width=140&amp;height=140&amp;crop=1:",
-   "pokemon": [],
-   "notInOurData": []
-  },
-  {
-   "source": "reddit-silph",
-   "trust": "tip",
-   "title": "Can a shiny Galarian Bird flee if you are traveling in a car (aka speed lock?)",
-   "link": "https://www.reddit.com/r/TheSilphRoad/comments/1xjtzuf/can_a_shiny_galarian_bird_flee_if_you_are/",
-   "date": "2026-10-30T22:54:56.000Z",
-   "summary": "<table> <tr><td> <a href=\"https://www.reddit.com/r/TheSilphRoad/comments/1xjtzuf/can_a_shiny_galarian_bird_flee_if_you_are/\"> <img src=\"https://preview.redd.it/2lt8gthmpoyh1.jpeg?width=640&amp;crop=sm",
-   "pokemon": [],
-   "notInOurData": []
-  },
-  {
-   "source": "reddit-silph",
-   "trust": "tip",
-   "title": "Different pokemon from an event box with same IV gender and level?",
-   "link": "https://www.reddit.com/r/TheSilphRoad/comments/1xjr46u/different_pokemon_from_an_event_box_with_same_iv/",
-   "date": "2026-10-30T20:54:41.000Z",
-   "summary": "<!-- SC_OFF --><div class=\"md\"><p>Was playing with a friend and encountered a weird thing about those event boxes. He was about to transfer some Pokemon and found that he had caught a perfect costume ",
-   "pokemon": [
-    "Gengar"
-   ],
-   "notInOurData": []
-  },
-  {
    "source": "hub",
    "trust": "community",
    "title": "Super Mega Chandelure Raid Day",
@@ -165,38 +61,6 @@
    "summary": "Mega Chandelure will debut during a special Super Mega Raid Day event on Saturday, October 31, 2026, from 2:00 p.m. to 5:00 p.m. local time. You can look forward to Mega Chandelure in Super Mega Raids",
    "pokemon": [
     "Chandelure"
-   ],
-   "notInOurData": []
-  },
-  {
-   "source": "reddit-silph",
-   "trust": "tip",
-   "title": "How shiny predicting worked",
-   "link": "https://www.reddit.com/r/TheSilphRoad/comments/1xjazpa/how_shiny_predicting_worked/",
-   "date": "2026-10-30T09:45:22.000Z",
-   "summary": "<!-- SC_OFF --><div class=\"md\"><p>Hi all, I was the person who originally found how to predict shinies. It's now been patched, so here's how to do it for everyone curious:</p> <p>```java static boolea",
-   "pokemon": [],
-   "notInOurData": []
-  },
-  {
-   "source": "reddit-silph",
-   "trust": "tip",
-   "title": "Trainer Code usage for determining shinies has been patched",
-   "link": "https://www.reddit.com/r/TheSilphRoad/comments/1xj27zc/trainer_code_usage_for_determining_shinies_has/",
-   "date": "2026-10-30T01:22:46.000Z",
-   "summary": "<table> <tr><td> <a href=\"https://www.reddit.com/r/TheSilphRoad/comments/1xj27zc/trainer_code_usage_for_determining_shinies_has/\"> <img src=\"https://preview.redd.it/42b2se53biyh1.jpeg?width=640&amp;cr",
-   "pokemon": [],
-   "notInOurData": []
-  },
-  {
-   "source": "reddit-silph",
-   "trust": "tip",
-   "title": "Non-costume wild zubat?",
-   "link": "https://www.reddit.com/r/TheSilphRoad/comments/1xhwz6b/noncostume_wild_zubat/",
-   "date": "2026-10-28T18:54:48.000Z",
-   "summary": "<table> <tr><td> <a href=\"https://www.reddit.com/r/TheSilphRoad/comments/1xhwz6b/noncostume_wild_zubat/\"> <img src=\"https://preview.redd.it/96g9mrzx89yh1.jpeg?width=140&amp;height=140&amp;crop=1:1,sma",
-   "pokemon": [
-    "Zubat"
    ],
    "notInOurData": []
   },
@@ -213,15 +77,23 @@
    "notInOurData": []
   },
   {
-   "source": "reddit-silph",
-   "trust": "tip",
-   "title": "shiny costume pikachu confirmed",
-   "link": "https://www.reddit.com/r/TheSilphRoad/comments/1xgrpds/shiny_costume_pikachu_confirmed/",
-   "date": "2026-10-27T12:52:59.000Z",
-   "summary": "<table> <tr><td> <a href=\"https://www.reddit.com/r/TheSilphRoad/comments/1xgrpds/shiny_costume_pikachu_confirmed/\"> <img src=\"https://preview.redd.it/eqcks9phb0yh1.jpeg?width=640&amp;crop=smart&amp;au",
-   "pokemon": [
-    "Pikachu"
-   ],
+   "source": "youtube-pogo",
+   "trust": "official",
+   "title": "New costumed Pokémon make their debuts during Halloween 2026 Part I in Pokémon GO!",
+   "link": "https://www.youtube.com/shorts/I6MvdaExyIg",
+   "date": "2026-10-27T17:00:40.000Z",
+   "summary": "",
+   "pokemon": [],
+   "notInOurData": []
+  },
+  {
+   "source": "youtube-pogo",
+   "trust": "official",
+   "title": "New costumed Pokémon make their debuts during Halloween 2026 Part I in Pokémon GO!",
+   "link": "https://www.youtube.com/watch?v=wyN2y-BgpoU",
+   "date": "2026-10-27T17:00:14.000Z",
+   "summary": "",
+   "pokemon": [],
    "notInOurData": []
   },
   {
