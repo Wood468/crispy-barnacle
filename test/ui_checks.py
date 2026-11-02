@@ -808,6 +808,42 @@ with sync_playwright() as p:
                   'Marked top counters (3): Mega Rayquaza, Mega Mewtwo Y, Mega Gardevoir' in max_monday_page.locator('#today-tonight-list').text_content())
         max_monday_page.context.close()
 
+        # A pending or failed curated feed is not evidence that the player has zero owned counters.
+        pending_best_page = page(
+            clock='2026-11-02T09:35:00+11:00',
+            marks={'have': {'Mega Rayquaza': 1}},
+            extra=tonight_extra,
+            pre=lambda pg: pg.route('**/best-by-type.json', lambda route: None)
+        )
+        pending_best_page.wait_for_selector('#today-tonight:not([hidden])')
+        settle(pending_best_page, "!!(window.GOTYPES && window.GOTYPES.facts('Machop'))", 30000)
+        pending_best_page.locator('#today-tonight > summary').click()
+        pending_best_text = pending_best_page.locator('#today-tonight-list').text_content()
+        check('Tonight with a pending curated feed withholds the owned-counter summary',
+              'Marked top counters' not in pending_best_text and
+              'none in current top-ten lists' not in pending_best_text and
+              'Weak to: Flying, Psychic, Fairy' in pending_best_text,
+              pending_best_text)
+        pending_best_page.context.close()
+
+        failed_best_page = page(
+            clock='2026-11-02T09:35:00+11:00',
+            marks={'have': {'Mega Rayquaza': 1}},
+            extra=tonight_extra,
+            pre=lambda pg: pg.route('**/best-by-type.json', lambda route: route.fulfill(
+                status=503, body='{"error":"unavailable"}', content_type='application/json'))
+        )
+        failed_best_page.wait_for_selector('#today-tonight:not([hidden])')
+        settle(failed_best_page, "!!(window.GOBEST && window.GOBEST.ready === true)", 30000)
+        failed_best_page.locator('#today-tonight > summary').click()
+        failed_best_text = failed_best_page.locator('#today-tonight-list').text_content()
+        check('Tonight with a failed curated feed does not claim zero owned counters',
+              'Marked top counters' not in failed_best_text and
+              'none in current top-ten lists' not in failed_best_text and
+              'Weak to: Flying, Psychic, Fairy' in failed_best_text,
+              failed_best_text)
+        failed_best_page.context.close()
+
         raid_hour_page = page(clock='2026-11-04T09:35:00+11:00', extra=tonight_extra)
         raid_hour_page.wait_for_selector('#today-tonight:not([hidden])')
         settle(raid_hour_page, "!!(window.GOBEST && window.GOBEST.ready)", 30000)
