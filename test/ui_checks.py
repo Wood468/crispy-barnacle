@@ -240,8 +240,8 @@ check('Today brief has three data-backed focus tiles (Next, Ending soon, Raids &
 check('Today raid focus offers curated counter handoffs for the published five-star and Mega bosses',
       'function todayRotationFor(t)' in DASH_JS and 'function renderTodayRaidPrep(rotation)' in DASH_JS and
       all(token in DASH_JS for token in ['GOTYPES.facts(item.boss)', 'GOBEST.dataReady !== true', 'renderTodayRaidPrep(rotation)', 'data-best-types']) and
-      all(token in INDEX_HTML for token in ['id="today-focus-raid-actions"', 'role="group"']) and
-      all(token in DASH_CSS for token in ['.today-focus-raid-actions', 'min-height:44px']))
+      all(token in INDEX_HTML for token in ['id="today-focus-raid-actions"', 'role="group"', 'aria-live="polite"', 'Loading published counter links…']) and
+      all(token in DASH_CSS for token in ['.today-focus-raid-actions{display:flex;align-items:center;flex-wrap:wrap;gap:var(--space-1);margin-top:var(--space-1);min-width:0;min-height:44px}', '.today-focus-raid-note']))
 check('Tonight owned-counter summary uses existing local marks and curated top-ten type lists',
       'ownedSummary:function(types,limit)' in APP_JS and 'dex.have[name]' in APP_JS and
       'gobest-ready' in APP_JS and 'gobest-ready' in DASH_JS and 'gofn-marks' in DASH_JS and

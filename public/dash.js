@@ -1153,10 +1153,12 @@
     renderRot();
   });
 
-  document.addEventListener('gotypes', function () { try { renderRot(); var t = now(); renderTodayRaidPrep(todayRotationFor(t)); renderTonight(t, dayKey(t)); } catch (e) {} });
+  var todayTypesReady = false, todayTypesFailed = false;
+  document.addEventListener('gotypes', function () { try { todayTypesReady = true; todayTypesFailed = false; renderRot(); var t = now(); renderTodayRaidPrep(todayRotationFor(t)); renderTonight(t, dayKey(t)); } catch (e) {} });
   document.addEventListener('gofn-dex-ready', function () { try { renderRot(); var t = now(); renderTodayRaidPrep(todayRotationFor(t)); renderTonight(t, dayKey(t)); } catch (e) {} });
   document.addEventListener('gobest-ready', function () { try { var t = now(); renderTodayRaidPrep(todayRotationFor(t)); renderTonight(t, dayKey(t)); } catch (e) {} });
   document.addEventListener('gofn-marks', function () { try { var t = now(); renderTonight(t, dayKey(t)); } catch (e) {} });
+  setTimeout(function () { if (!todayTypesReady) { todayTypesFailed = true; var t = now(); renderTodayRaidPrep(todayRotationFor(t)); } }, 10000);
 
 
   /* ---------- Collection: what I know about your Dex ---------- */
@@ -1364,16 +1366,26 @@
 
   function renderTodayRaidPrep(rotation) {
     var host = $('today-focus-raid-actions'); if (!host) return;
-    var buttons = [];
-    [{ label: '5★', boss: rotation && rotation.five }, { label: 'Mega', boss: rotation && rotation.mega }].forEach(function (item) {
-      if (!item.boss || !window.GOBEST || window.GOBEST.dataReady !== true || typeof GOBEST.showTypes !== 'function') return;
+    var bosses = [{ label: '5★', boss: rotation && rotation.five }, { label: 'Mega', boss: rotation && rotation.mega }].filter(function (item) { return !!item.boss; });
+    if (!bosses.length) { host.innerHTML = '<span class="today-focus-raid-note">No published raid counter links today.</span>'; return; }
+    if (!todayTypesReady) {
+      host.innerHTML = '<span class="today-focus-raid-note">' + (todayTypesFailed ? 'Weakness data unavailable.' : 'Loading weakness data…') + '</span>';
+      return;
+    }
+    var supported = bosses.map(function (item) {
       var facts = window.GOTYPES && GOTYPES.facts(item.boss);
       var weak = facts && Array.isArray(facts.weak) ? facts.weak.filter(function (type, i, all) { return typeof type === 'string' && all.indexOf(type) === i; }) : [];
-      if (!weak.length) return;
-      buttons.push('<button type="button" class="today-tonight-best today-focus-raid-best" data-best-types="' + esc(weak.join('|')) + '" aria-label="Best attackers for ' + esc(item.label + ' ' + item.boss) + ' (weak to ' + esc(weak.join(', ')) + ')">' + esc(item.label) + ' attackers</button>');
-    });
-    host.innerHTML = buttons.join('');
-    host.hidden = !buttons.length;
+      return { label: item.label, boss: item.boss, weak: weak };
+    }).filter(function (item) { return item.weak.length; });
+    if (!supported.length) { host.innerHTML = '<span class="today-focus-raid-note">Weakness data unavailable for this rotation.</span>'; return; }
+    if (!window.GOBEST || window.GOBEST.dataReady !== true || typeof GOBEST.showTypes !== 'function') {
+      var unavailable = window.GOBEST && window.GOBEST.ready === true;
+      host.innerHTML = '<span class="today-focus-raid-note">' + (unavailable ? 'Curated attackers unavailable.' : 'Loading curated attackers…') + '</span>';
+      return;
+    }
+    host.innerHTML = supported.map(function (item) {
+      return '<button type="button" class="today-tonight-best today-focus-raid-best" data-best-types="' + esc(item.weak.join('|')) + '" aria-label="Best attackers for ' + esc(item.label + ' ' + item.boss) + ' (weak to ' + esc(item.weak.join(', ')) + ')">' + esc(item.label) + ' attackers</button>';
+    }).join('');
   }
 
   function renderTodayStrip(t, today, activity) {
