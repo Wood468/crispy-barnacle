@@ -257,7 +257,7 @@ check('Today multi-deadline tray is accessible, bounded and source-safe',
       all(token in DASH_JS for token in ['var trayLimit = t.getTime() + 7 * 24 * 60 * 60 * 1000', "safeUrl(d.url || '')", 'trayCandidates.slice(0, 8)', 'View all ', 'noopener noreferrer', "sourceUrl.indexOf('https://') === 0"]) and
       all(token in DASH_CSS for token in ['.today-deadlines>summary', 'min-height:44px', '.today-deadline-item', 'var(--color-link)']) and
       '/dash.js?v=20261102y' in APP_JS and '/dash.js?v=20261102y' in SW_JS and
-      '/dash.css?v=20261102p' in INDEX_HTML and '/dash.css?v=20261102p' in SW_JS and
+      '/dash.css?v=20261102o' in INDEX_HTML and '/dash.css?v=20261102o' in SW_JS and
       'gofn-shell-v214' in SW_JS)
 check('season pass and deadline data is structured, source-attributed and ordered',
       all(item_id in {item.get('id') for item in SEASON_DATA.get('items', [])}
@@ -291,7 +291,7 @@ check('base bonus and information availability controls use semantic status role
           'background: var(--color-status-info-unavailable); color: var(--color-on-status-info-unavailable); border: 1px solid var(--color-border-info-unavailable);',
       ]))
 check('versioned stylesheets are referenced by the page and precached offline',
-      all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261102b', '/dash.css?v=20261102p']))
+      all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261102b', '/dash.css?v=20261102o']))
 check('owner verification scripts are versioned and precached offline',
       '/account.js?v=20261102a' in INDEX_HTML and '/account.js?v=20261102a' in SW_JS and
       '/review.js?v=20261102a' in DASH_JS and '/review.js?v=20261102a' in SW_JS)
@@ -327,7 +327,7 @@ check('Travel mode searches only source-dated regional listings and preserves To
       all(token in DASH_CSS for token in ['#sub-travel .travel-search', '#travel-regions .fchip{min-height:44px}', '#travel-results .agw .ag-actions .agx{width:44px;height:44px;min-width:44px;min-height:44px}']) and
       '/app.js?v=20261102p' in INDEX_HTML and '/app.js?v=20261102p' in SW_JS and
       '/dash.js?v=20261102y' in APP_JS and '/dash.js?v=20261102y' in SW_JS and
-      '/dash.css?v=20261102p' in INDEX_HTML and '/dash.css?v=20261102p' in SW_JS and
+      '/dash.css?v=20261102o' in INDEX_HTML and '/dash.css?v=20261102o' in SW_JS and
       'gofn-shell-v214' in SW_JS)
 check('raid share dialog and script are included in the exact offline shell',
       '/raid-share.js?v=20261102b' in INDEX_HTML and '/raid-share.js?v=20261102b' in SW_JS and
