@@ -631,8 +631,9 @@ def write_matrix_summary(report: dict) -> None:
         lines.append(f"- Viewport: {viewport['width']}×{viewport['height']} at DPR {profile['device_scale_factor']}")
         lines.extend([
             "",
-            "| Phase | Image responses | Image payload | Infographic posters | Poster payload |",
-            "|---|---:|---:|---:|---:|",
+            "| Phase | Image responses | Image payload | Infographic posters | Poster payload | Card thumbnails | Thumbnail payload |",
+            "|---|---:|---:|---:|---:|---:|---:|",
+
         ])
         phase_labels = [
             ("today_initial", "Today initial load"),
@@ -645,7 +646,8 @@ def write_matrix_summary(report: dict) -> None:
             value = profile["phases"][key]
             lines.append(
                 f"| {label} | {value['image_responses']} | {format_bytes(value['image_payload_bytes'])} "
-                f"| {value['poster_responses']} | {format_bytes(value['poster_payload_bytes'])} |"
+                f"| {value['poster_responses']} | {format_bytes(value['poster_payload_bytes'])} "
+                f"| {value['thumbnail_responses']} | {format_bytes(value['thumbnail_payload_bytes'])} |"
             )
         scroll = profile.get("schedule_scroll", {})
         lines.append("")
@@ -658,6 +660,11 @@ def write_matrix_summary(report: dict) -> None:
             if images:
                 lines.append(f"- Largest images in {phase_key}:")
                 for item in images[:3]:
+                    lines.append(f"  - {item['resource']} — {format_bytes(item['bytes'])} (HTTP {item['status']})")
+            thumbnails = profile["phases"][phase_key].get("largest_thumbnails", [])
+            if thumbnails:
+                lines.append(f"- Largest card thumbnails in {phase_key}:")
+                for item in thumbnails[:3]:
                     lines.append(f"  - {item['resource']} — {format_bytes(item['bytes'])} (HTTP {item['status']})")
         if profile.get("season_detail_posters"):
             lines.append("- On-demand detail posters:")
@@ -683,8 +690,8 @@ def write_matrix_summary(report: dict) -> None:
         f"- Blocked API requests: {len(offline.get('blocked_api_requests', []))}",
         f"- Unblocked non-read requests: {len(offline.get('unblocked_non_read_requests', []))}",
         "",
-        "| Phase | Image responses | Image payload |",
-        "|---|---:|---:|",
+        "| Phase | Image responses | Image payload | Infographic posters | Poster payload | Card thumbnails | Thumbnail payload |",
+        "|---|---:|---:|---:|---:|---:|---:|",
     ])
     for key, label in [
         ("online_today", "Online Today"),
@@ -695,7 +702,9 @@ def write_matrix_summary(report: dict) -> None:
         value = offline.get("phases", {}).get(key, {})
         lines.append(
             f"| {label} | {value.get('image_responses', 0)} | "
-            f"{format_bytes(value.get('image_payload_bytes', 0))} |"
+            f"{format_bytes(value.get('image_payload_bytes', 0))} | "
+            f"{value.get('poster_responses', 0)} | {format_bytes(value.get('poster_payload_bytes', 0))} | "
+            f"{value.get('thumbnail_responses', 0)} | {format_bytes(value.get('thumbnail_payload_bytes', 0))} |"
         )
     if offline.get("error") or offline.get("offline_reload_error"):
         lines.append("")
@@ -735,12 +744,12 @@ def write_summary(report: dict) -> None:
         f"- Viewport: {report['viewport']['width']}x{report['viewport']['height']} at DPR {report['device_scale_factor']}",
         "- Safety: fresh context; service workers, /api/*, and non-GET/HEAD requests blocked.",
         "",
-        "| Phase | Image responses | Image payload | Infographic posters | Poster payload |",
-        "|---|---:|---:|---:|---:|",
-        f"| Today initial load | {today['image_responses']} | {format_bytes(today['image_payload_bytes'])} | {today['poster_responses']} | {format_bytes(today['poster_payload_bytes'])} |",
-        f"| Schedule activation | {schedule['image_responses']} | {format_bytes(schedule['image_payload_bytes'])} | {schedule['poster_responses']} | {format_bytes(schedule['poster_payload_bytes'])} |",
-        f"| Today reactivation | {reactivated['image_responses']} | {format_bytes(reactivated['image_payload_bytes'])} | {reactivated['poster_responses']} | {format_bytes(reactivated['poster_payload_bytes'])} |",
-        f"| Season/GO Pass details | {details['image_responses']} | {format_bytes(details['image_payload_bytes'])} | {details['poster_responses']} | {format_bytes(details['poster_payload_bytes'])} |",
+        "| Phase | Image responses | Image payload | Infographic posters | Poster payload | Card thumbnails | Thumbnail payload |",
+        "|---|---:|---:|---:|---:|---:|---:|",
+        f"| Today initial load | {today['image_responses']} | {format_bytes(today['image_payload_bytes'])} | {today['poster_responses']} | {format_bytes(today['poster_payload_bytes'])} | {today['thumbnail_responses']} | {format_bytes(today['thumbnail_payload_bytes'])} |",
+        f"| Schedule activation | {schedule['image_responses']} | {format_bytes(schedule['image_payload_bytes'])} | {schedule['poster_responses']} | {format_bytes(schedule['poster_payload_bytes'])} | {schedule['thumbnail_responses']} | {format_bytes(schedule['thumbnail_payload_bytes'])} |",
+        f"| Today reactivation | {reactivated['image_responses']} | {format_bytes(reactivated['image_payload_bytes'])} | {reactivated['poster_responses']} | {format_bytes(reactivated['poster_payload_bytes'])} | {reactivated['thumbnail_responses']} | {format_bytes(reactivated['thumbnail_payload_bytes'])} |",
+        f"| Season/GO Pass details | {details['image_responses']} | {format_bytes(details['image_payload_bytes'])} | {details['poster_responses']} | {format_bytes(details['poster_payload_bytes'])} | {details['thumbnail_responses']} | {format_bytes(details['thumbnail_payload_bytes'])} |",
         "",
         f"- Season/GO Pass detail cards opened: {report['season_detail_cards_opened']}",
         "",
@@ -763,6 +772,13 @@ def write_summary(report: dict) -> None:
             lines.append(f"- {item['resource']} — {format_bytes(item['bytes'])} (HTTP {item['status']})")
     else:
         lines.append("- No infographic poster responses were observed in these phases.")
+    lines.extend(["", "Largest card thumbnail responses:"])
+    largest_thumbnails = today["largest_thumbnails"] + schedule["largest_thumbnails"] + reactivated["largest_thumbnails"] + details["largest_thumbnails"]
+    if largest_thumbnails:
+        for item in sorted(largest_thumbnails, key=lambda row: row["bytes"], reverse=True)[:5]:
+            lines.append(f"- {item['resource']} — {format_bytes(item['bytes'])} (HTTP {item['status']})")
+    else:
+        lines.append("- No card thumbnail responses were observed in these phases.")
     lines.extend(["", f"Measurement method: {report['method']}"])
     summary_path = os.environ.get("GITHUB_STEP_SUMMARY")
     if summary_path:
