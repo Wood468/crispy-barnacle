@@ -26,6 +26,8 @@ def check(name,cond,extra=''):
 # Design-token contract: semantic roles are shared by the base and dashboard layers,
 # and versioned stylesheets are included in the offline shell.
 ROOT = Path(__file__).resolve().parent.parent
+INFO_QUEUE = json.loads((ROOT / 'public' / 'infographic-queue.json').read_text())
+TREK_INFOGRAPHIC_URL = next((item.get('image', '') for item in INFO_QUEUE.get('items', []) if item.get('linked') and item.get('image') and any(g.get('eventId') == 'trek' for g in item.get('guesses', []))), '')
 BASE_CSS = (ROOT / 'public' / 'styles.css').read_text()
 BASE_COMPONENT_CSS = BASE_CSS[BASE_CSS.index('*{box-sizing:border-box}'):]
 DASH_CSS = (ROOT / 'public' / 'dash.css').read_text()
@@ -255,7 +257,7 @@ check('Today game plan is an optional accessible local-time disclosure with weak
       all(token in DASH_CSS for token in ['.today-tonight', '.today-tonight-list', 'min-height:44px', '.today-tonight-best']) and
       'gofn-dex-ready' in APP_JS and '/app.js?v=20261103d' in INDEX_HTML and '/app.js?v=20261103d' in SW_JS)
 check('Dex/type readiness refreshes Today raid handoffs and the Tonight disclosure without touching event-detail focus targets',
-      "document.addEventListener('gotypes', function () { try { renderRot(); var t = now(); renderTodayRaidPrep(todayRotationFor(t)); renderTonight(t, dayKey(t)); } catch (e) {} });" in DASH_JS and
+      "document.addEventListener('gotypes', function () { try { todayTypesReady = true; todayTypesFailed = false; renderRot(); var t = now(); renderTodayRaidPrep(todayRotationFor(t)); renderTonight(t, dayKey(t)); } catch (e) {} });" in DASH_JS and
       "document.addEventListener('gofn-dex-ready', function () { try { renderRot(); var t = now(); renderTodayRaidPrep(todayRotationFor(t)); renderTonight(t, dayKey(t)); } catch (e) {} });" in DASH_JS)
 check('Best-attacker date distinguishes ranking-content changes from successful refreshes',
       "Ranking content last changed '+j.generated" in APP_JS and "Updated '+j.generated" not in APP_JS)
@@ -1466,8 +1468,9 @@ with sync_playwright() as p:
                   const opener = [...document.querySelectorAll('[data-infographic]')].find(el => el.getAttribute('data-infographic') === 'cur:trek');
                   return document.getElementById('goinfo').hidden && document.activeElement === opener;
               }"""))
-        # A thumbnail address that cannot be fetched falls back to the Check infographic button (the rest of this run serves a valid PNG for every picture).
-        pb=page(extra={'**/img/ext/4aa21432-0cfc-4c93-b3eb-0c15f322389d-0119b088.webp':('',404)})
+        # The current linked Trek infographic URL is intercepted dynamically so this fallback test follows the public queue's actual storage path.
+        check('failed-thumbnail fixture resolves the current linked Trek infographic URL', bool(TREK_INFOGRAPHIC_URL), TREK_INFOGRAPHIC_URL)
+        pb=page(pre=lambda p: p.route('**' + TREK_INFOGRAPHIC_URL, lambda route: route.fulfill(status=404,body='')) if TREK_INFOGRAPHIC_URL else None)
         # The page may rebuild Today while secondary data arrives; scroll the current connected node in one DOM task
         # instead of holding a Playwright element handle that can be detached between locator resolution and scrolling.
         thumbnail_scrolled = pb.evaluate("""() => {
