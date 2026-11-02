@@ -41,7 +41,7 @@ async function headAsset(path) {
 }
 
 function htmlAttribute(tag, name) {
-  const match = tag.match(new RegExp("\\\\b" + name + "\\\\s*=\\\\s*(['\\\"])(.*?)\\\\1", "i"));
+  const match = tag.match(new RegExp("\\b" + name + "\\s*=\\s*(['\"])(.*?)\\1", "i"));
   return match ? match[2] : "";
 }
 
@@ -57,10 +57,10 @@ function isJavaScriptMime(value) {
 export function extractCoreAssetUrls(homeHtml, serviceWorker) {
   const origin = new URL(BASE).origin;
   const htmlAssets = new Map();
-  const tags = String(homeHtml || "").match(/<(?:script|link)\\b[^>]*>/gi) || [];
+  const tags = String(homeHtml || "").match(/<(?:script|link)\b[^>]*>/gi) || [];
   for (const tag of tags) {
-    const script = /^<script\\b/i.test(tag);
-    const rel = htmlAttribute(tag, "rel").toLowerCase().split(/\\s+/);
+    const script = /^<script\b/i.test(tag);
+    const rel = htmlAttribute(tag, "rel").toLowerCase().split(/\s+/);
     const relevant = script || rel.includes("stylesheet") ||
       (rel.includes("preload") && htmlAttribute(tag, "as").toLowerCase() === "script");
     if (!relevant) continue;
@@ -68,23 +68,23 @@ export function extractCoreAssetUrls(homeHtml, serviceWorker) {
     if (!raw) continue;
     try {
       const url = new URL(raw, BASE);
-      if (url.origin !== origin || !/\\.(?:js|css)$/i.test(url.pathname)) continue;
+      if (url.origin !== origin || !/\.(?:js|css)$/i.test(url.pathname)) continue;
       htmlAssets.set(url.pathname, url.pathname + url.search);
     } catch (_) { /* Ignore malformed or non-URL attributes; required assets are checked below. */ }
   }
 
-  const cacheMatch = String(serviceWorker || "").match(/const\\s+SHELL_CACHE\\s*=\\s*(['"])([^'"]+)\\1/);
-  if (!cacheMatch || !/^gofn-shell-v\\d+$/.test(cacheMatch[2])) {
+  const cacheMatch = String(serviceWorker || "").match(/const\s+SHELL_CACHE\s*=\s*(['"])([^'"]+)\1/);
+  if (!cacheMatch || !/^gofn-shell-v\d+$/.test(cacheMatch[2])) {
     throw new Error("service worker shell cache version is missing");
   }
-  const shellMatch = String(serviceWorker || "").match(/const\\s+SHELL_URLS\\s*=\\s*\\[([\\s\\S]*?)\\];/);
+  const shellMatch = String(serviceWorker || "").match(/const\s+SHELL_URLS\s*=\s*\[([\s\S]*?)\];/);
   if (!shellMatch) throw new Error("service worker offline asset list is missing");
 
   const shellAssets = new Map();
   for (const match of shellMatch[1].matchAll(/['"]([^'"]+)['"]/g)) {
     try {
       const url = new URL(match[1], BASE);
-      if (url.origin !== origin || !/\\.(?:js|css)$/i.test(url.pathname)) continue;
+      if (url.origin !== origin || !/\.(?:js|css)$/i.test(url.pathname)) continue;
       shellAssets.set(url.pathname, url.pathname + url.search);
     } catch (_) { /* Ignore non-URL list entries. */ }
   }
@@ -131,7 +131,7 @@ export async function runChecks() {
     await Promise.all(shell.assets.filter(path => path !== "/sw.js").map(async path => {
       const response = await headAsset(path);
       const type = response.headers.get("content-type") || "";
-      if (path.endsWith(".css") && !/^text\\/css(?:;|$)/i.test(type)) {
+      if (path.endsWith(".css") && !/^text\/css(?:;|$)/i.test(type)) {
         throw new Error(path + " has an unexpected content-type");
       }
       if (path.endsWith(".js") && !isJavaScriptMime(type)) {
