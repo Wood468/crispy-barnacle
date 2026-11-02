@@ -314,11 +314,12 @@ Promise.all([
   $('menu-leaks').addEventListener('click',function(){showTab('events','leaks')});
   (function(){
     function upd(){
-      var n=document.querySelectorAll('#followed .opp, #savedev .evc').length,c=$('wlcount');
+      var n=window.GODASH&&typeof window.GODASH.savedCount==='function'?window.GODASH.savedCount():document.querySelectorAll('#followed .opp, #savedev .evc').length,c=$('wlcount');
       c.textContent=n;c.hidden=n===0;
       $('hwatch').setAttribute('aria-label','Watchlist'+(n?', '+n+' items':''));
     }
-    ['followed','savedev'].forEach(function(id){var el=$(id);if(el)new MutationObserver(upd).observe(el,{childList:true})});upd();
+    ['followed','savedev'].forEach(function(id){var el=$(id);if(el)new MutationObserver(upd).observe(el,{childList:true})});
+    document.addEventListener('gofn-marks',upd);document.addEventListener('gofn-state',upd);document.addEventListener('gofn-saved-count',upd);upd();
   })();
   var firstTab=null;
   try{var st=localStorage.getItem('gofn-tab');if(st){var pp=st.split('/');firstTab=[pp[0],pp[1],pp[2]]}}catch(e){}
@@ -1014,7 +1015,7 @@ Promise.all([
     var r=document.getElementById('today-retry');if(r)r.addEventListener('click',function(){window.location.reload()});
     var b=document.getElementById('day-brief');if(b)b.setAttribute('data-state','unavailable');
     var f=document.getElementById('fresh-line');if(f)f.setAttribute('data-released','')}
-  var ds=document.createElement('script');ds.src='/dash.js?v=20261102x';ds.onerror=todayUnavailable;document.body.appendChild(ds);setTimeout(function(){if(!window.GODASH)todayUnavailable()},10000);
+  var ds=document.createElement('script');ds.src='/dash.js?v=20261102y';ds.onerror=todayUnavailable;document.body.appendChild(ds);setTimeout(function(){if(!window.GODASH)todayUnavailable()},10000);
 })();
 
 }).catch(function(){var panel=document.getElementById('load-error');if(panel)panel.hidden=false;var retry=document.getElementById('load-retry');if(retry)retry.addEventListener('click',function(){window.location.reload()},{once:true})});

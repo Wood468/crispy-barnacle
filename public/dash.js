@@ -705,7 +705,7 @@
       return ev.kind === typeSel;
     });
   }
-  function renderTypes() {
+  function drawTypes() {
     var el = $('evtypes'); if (!el) return;
     el.innerHTML = TYPEFILTERS.map(function (f) { return '<button type="button" class="fchip" data-type="' + f[0] + '" aria-pressed="' + (typeSel === f[0]) + '">' + esc(f[1]) + '</button>'; }).join('');
   }
@@ -719,7 +719,7 @@
       return true;
     });
   }
-  function renderStrip() {
+  function drawStrip() {
     var el = $('weekstrip'); if (!el) return;
     if (evQ) { el.innerHTML = ''; return; }
     var ws = weekStart(weekOff), today = dayKey(now()), cells = '';
@@ -731,7 +731,7 @@
     var a = ws, b = addDays(ws, 6);
     el.innerHTML = '<div class="wk-head"><button type="button" class="calnav" data-wk="-1" aria-label="Previous week">‹</button><span>' + esc(fmtD(a) + ' to ' + fmtD(b)) + (weekOff === 0 ? ' · this week' : '') + '</span><button type="button" class="calnav" data-wk="1" aria-label="Next week">›</button></div><div class="wk-days">' + cells + '</div>';
   }
-  function renderTimeline() {
+  function drawTimeline() {
     var el = $('evtimeline'); if (!el) return;
     var t = now(), html = '', ws = weekStart(weekOff), we = addDays(ws, 7);
     if (evQ) { // searching: every live and upcoming event that matches, soonest first, whatever week or kind switch is set
@@ -890,7 +890,7 @@
     if (a && b) return a === b ? a : a + ' – ' + b;
     return it.start && it.end ? (fmtD(it.start) === fmtD(it.end) ? fmtD(it.start) : fmtD(it.start) + ' – ' + fmtD(it.end)) : 'Dates listed by source';
   }
-  function renderTravel() {
+  function drawTravel() {
     var host = $('travel-results'); if (!host) return;
     /* Do not promote global game events or dates inherited by the existing related-announcement helper into destination plans. */
     var candidates = REG.filter(function (x) {
@@ -931,7 +931,7 @@
   }
   document.addEventListener('goplaces', function () { renderCalendar(); renderTravel(); });
   document.addEventListener('toggle', function (e) { var d = e.target; if (d && d.matches && d.matches('#calreg details.dd[data-k]')) d.setAttribute('data-was', d.open ? '1' : '0'); }, true);
-  function renderCalendar() {
+  function drawCalendar() {
     var g = $('calgrid'); if (!g) return;
     if (!calMonth) { var n = now(); calMonth = new Date(n.getFullYear(), n.getMonth(), 1); }
     $('calttl').textContent = MON[calMonth.getMonth()] + ' ' + calMonth.getFullYear();
@@ -1012,7 +1012,7 @@
     return out;
   }
   function raidSlotFor(boss, r) { var id = 'raid:' + slug(String(boss || '').replace(/, to .*/, '').trim()) + ':' + String(r.s).slice(0, 10); return raidSlots().filter(function (x) { return x.id === id; })[0]; }
-  function renderRot() {
+  function drawRot() {
     var el = $('rotnow'); if (!el || !D.rotation) return;
     var t = now(), rot = D.rotation, max = D.maxBattles || [];
     var day = new Date(t.getFullYear(), t.getMonth(), t.getDate());
@@ -1244,7 +1244,7 @@
       + (o.tk ? markBtns(o.tk, x.name) : '')
       + '<ul class="opp-evs">' + evs.map(function (e) { return '<li><b>' + esc(e.name) + '</b><span>' + esc(fmtD(e.start) + (e.allDay ? '' : ', ' + fmtT(e.start))) + ' · ' + esc(countdown(e)) + '</span></li>'; }).join('') + (x.evs.length > 3 ? '<li class="muted">+' + (x.evs.length - 3) + ' more</li>' : '') + '</ul></div></article>';
   }
-  function renderOpps() {
+  function drawOpps() {
     var el = $('opps'); if (!el) return;
     var list = opportunities(), known = Object.keys(DEXGEN).some(function (id) { return genConfirmed(DEXGEN[id]); }) || usKeys('form:').length > 0;
     var need = list.filter(function (x) { return x.o.state === 'missing'; });
@@ -1265,7 +1265,7 @@
   }
 
   /* ---------- Saved and followed ---------- */
-  function renderSaved() {
+  function drawSaved() {
     var fl = $('followed'), sv = $('savedev'); if (!fl || !sv) return;
     var opps = opportunities(), byBase = {};
     opps.forEach(function (x) { byBase[x.o.base.toLowerCase()] = x; });
@@ -1617,8 +1617,37 @@
       return '<button type="button" class="action-item" data-quick-go="'+c.key+'"><span class="action-icon" aria-hidden="true">'+c.icon+'</span><span class="action-copy"><b>'+esc(c.title)+'</b><small>'+esc(c.detail)+'</small></span><span class="action-count">'+c.count+'</span><span class="action-arrow" aria-hidden="true">›</span></button>';
     }).join('');
   }
-  /* Travel results are refreshed by world-data, region and query changes, not unrelated Today/global rerenders. */
-  function renderAll() { renderKinds(); renderPrio(); renderHomeAgenda(); renderActionCentre(); renderTypes(); renderStrip(); renderTimeline(); renderCalendar(); renderRot(); renderOpps(); renderSaved(); }
+  /* Secondary views are built only while their panel is visible. Today and its This Week list stay eager. */
+  function panelIsVisible(id) {
+    var el = $(id);
+    return !!el && !el.hidden && !el.closest('[hidden]');
+  }
+  function isTimelineVisible() { return panelIsVisible('tab-events') && panelIsVisible('sub-timeline'); }
+  function isCalendarVisible() { return panelIsVisible('tab-events') && panelIsVisible('sub-calendar'); }
+  function isTravelVisible() { return panelIsVisible('tab-events') && panelIsVisible('sub-travel'); }
+  function isRaidsVisible() { return panelIsVisible('tab-raids'); }
+  function isOppsVisible() { return panelIsVisible('tab-collect') && panelIsVisible('sub-opps'); }
+  function isSavedVisible() { return panelIsVisible('tab-saved') && (panelIsVisible('sub-watch') || panelIsVisible('sub-menu')); }
+  function renderTypes() { if (isTimelineVisible()) drawTypes(); }
+  function renderStrip() { if (isTimelineVisible()) drawStrip(); }
+  function renderTimeline() { if (isTimelineVisible()) drawTimeline(); }
+  function renderCalendar() { if (isCalendarVisible()) drawCalendar(); }
+  function renderTravel() { if (isTravelVisible()) drawTravel(); }
+  function renderRot() { if (isRaidsVisible()) drawRot(); }
+  function renderOpps() { if (isOppsVisible()) drawOpps(); }
+  function renderSaved() { if (isSavedVisible()) drawSaved(); }
+  function savedCount() { return followList().length + savedList().length; }
+  function renderActiveSecondaryView() {
+    if (isTimelineVisible()) { renderTypes(); renderStrip(); renderTimeline(); }
+    else if (isCalendarVisible()) renderCalendar();
+    else if (isTravelVisible()) renderTravel();
+    else if (isRaidsVisible()) renderRot();
+    else if (isOppsVisible()) renderOpps();
+    else if (isSavedVisible()) renderSaved();
+  }
+  document.addEventListener('gofn-view', renderActiveSecondaryView);
+  /* Today remains eager; only the currently visible secondary view is rendered or refreshed. */
+  function renderAll() { renderKinds(); renderPrio(); renderHomeAgenda(); renderActionCentre(); renderActiveSecondaryView(); }
   function tick() { // keep countdowns honest without re-rendering whole views
     var t = now(), byId = {}; EV.forEach(function (e) { byId[e.id] = e; });
     Array.prototype.forEach.call(document.querySelectorAll('.cdn[data-id]'), function (n) { var e = byId[n.getAttribute('data-id')]; if (e) n.textContent = countdown(e, t); });
@@ -1761,5 +1790,6 @@
     var q = $('travel-q'); if (!q) return;
     q.addEventListener('input', function () { travelQuery = q.value.trim(); renderTravel(); });
   })();
-  window.GODASH = { regionalEvents: function () { return REG.filter(function (x) { return x.scope !== 'global' && x.end > now(); }).map(function (x) { return Object.assign({ world: true, kind: 'event' }, x); }); }, worldEvents: function () { return REG.filter(function (x) { return x.scope === 'global' && x.end > now(); }).map(function (x) { return Object.assign({ world: true, kind: 'event' }, x); }); }, mkEvent: mkEvent, raidSlots: raidSlots, usGet: usGet, usSet: usSet, usStatus: function () { return usStatus; }, renderAll: renderAll, DEXBY: DEXBY, DEXNAME: DEXNAME, art: art, baseOf: baseOf, countdown: countdown, priority: function () { return priority(now()); }, events: function () { return EV; }, eventsState: function () { return feedState; }, mergeLiveAndCurated: mergeLiveAndCurated, ownState: ownState, whenText: whenText, timeMeta: timeMeta, signalTags: signalTags, statusChip: statusChip, kindOf: kindOf, kindHidden: kindHidden, isSaved: isSaved, featArts: featArts, monArt: monArt, signalChips: signalChips, cpRows: cpRows, hundoPair: hundoPair, specialArt: specialArt, hasTag: hasTag, IMG_PARTICLE: IMG_PARTICLE, IMG_POWERSPOT: IMG_POWERSPOT, cpSpecies: cpSpecies, hundoLabels: hundoLabels, genConfirmed: genConfirmed, setGenConfirmed: setGenConfirmed, DEXGEN: DEXGEN };
+  window.GODASH = { regionalEvents: function () { return REG.filter(function (x) { return x.scope !== 'global' && x.end > now(); }).map(function (x) { return Object.assign({ world: true, kind: 'event' }, x); }); }, worldEvents: function () { return REG.filter(function (x) { return x.scope === 'global' && x.end > now(); }).map(function (x) { return Object.assign({ world: true, kind: 'event' }, x); }); }, mkEvent: mkEvent, raidSlots: raidSlots, usGet: usGet, usSet: usSet, usStatus: function () { return usStatus; }, renderAll: renderAll, DEXBY: DEXBY, DEXNAME: DEXNAME, art: art, baseOf: baseOf, countdown: countdown, priority: function () { return priority(now()); }, events: function () { return EV; }, eventsState: function () { return feedState; }, mergeLiveAndCurated: mergeLiveAndCurated, ownState: ownState, whenText: whenText, timeMeta: timeMeta, signalTags: signalTags, statusChip: statusChip, kindOf: kindOf, kindHidden: kindHidden, isSaved: isSaved, featArts: featArts, monArt: monArt, signalChips: signalChips, cpRows: cpRows, hundoPair: hundoPair, specialArt: specialArt, hasTag: hasTag, IMG_PARTICLE: IMG_PARTICLE, IMG_POWERSPOT: IMG_POWERSPOT, cpSpecies: cpSpecies, hundoLabels: hundoLabels, genConfirmed: genConfirmed, setGenConfirmed: setGenConfirmed, DEXGEN: DEXGEN, savedCount: savedCount };
+  document.dispatchEvent(new Event('gofn-saved-count'));
 })();
