@@ -133,7 +133,7 @@ DASH_TYPE_SCALE = {
     '--type-meta': 11,
     '--type-meta-compact': 11,
     '--type-body-compact': 9,
-    '--type-label': 7,
+    '--type-label': 8,
     '--type-body-sm': 7,
     '--type-overline': 6,
     '--type-button': 6,
@@ -146,7 +146,7 @@ DASH_TYPE_SCALE = {
     '--type-body-lg': 1,
 }
 DASH_TYPE_VALUES = ['.78rem', '.8rem', '.84rem', '.75rem', '.82rem', '.72rem', '.85rem', '.68rem', '1.05rem', '.9rem', '2rem', '1.5rem', '.62rem', '1.1rem']
-check('dashboard uses the shared semantic type scale for 84 exact font-size declarations',
+check('dashboard uses the shared semantic type scale for 85 exact font-size declarations',
       all(len(re.findall(r'font-size\s*:\s*var\(' + re.escape(token) + r'\)(?=[;}])', DASH_CSS)) == count
           for token, count in DASH_TYPE_SCALE.items()) and
       all(not re.search(r'font-size\s*:\s*' + re.escape(value) + r'(?=[;}])', DASH_CSS)
@@ -245,7 +245,7 @@ check('Today Tonight planner is an optional accessible local-time disclosure wit
       all(token in INDEX_HTML for token in ['id="today-tonight"', 'id="today-tonight-summary"', 'id="today-tonight-list"']) and
       all(token in DASH_JS for token in ['D.spotlight', 'D.raidHour', 'D.maxBattles', '6–7 pm local', '6 am–9 pm local', 'Weak to:', 'data-best-types', 'gofn-dex-ready', 'function renderTonight', 'renderTonight(t, dateKey)']) and
       all(token in DASH_CSS for token in ['.today-tonight', '.today-tonight-list', 'min-height:44px', '.today-tonight-best']) and
-      'gofn-dex-ready' in APP_JS and '/app.js?v=20261102l' in INDEX_HTML and '/app.js?v=20261102l' in SW_JS)
+      'gofn-dex-ready' in APP_JS and '/app.js?v=20261102m' in INDEX_HTML and '/app.js?v=20261102m' in SW_JS)
 check('Dex/type readiness refreshes only the Tonight disclosure, preserving event-detail focus targets',
       "document.addEventListener('gotypes', function () { try { renderRot(); var t = now(); renderTonight(t, dayKey(t)); } catch (e) {} });" in DASH_JS and
       "document.addEventListener('gofn-dex-ready', function () { try { renderRot(); var t = now(); renderTonight(t, dayKey(t)); } catch (e) {} });" in DASH_JS)
@@ -253,9 +253,9 @@ check('Today multi-deadline tray is accessible, bounded and source-safe',
       all(token in INDEX_HTML for token in ['id="today-deadlines"', 'id="today-deadlines-summary"', 'id="today-deadlines-list"']) and
       all(token in DASH_JS for token in ['var trayLimit = t.getTime() + 7 * 24 * 60 * 60 * 1000', "safeUrl(d.url || '')", 'trayCandidates.slice(0, 8)', 'View all ', 'noopener noreferrer', "sourceUrl.indexOf('https://') === 0"]) and
       all(token in DASH_CSS for token in ['.today-deadlines>summary', 'min-height:44px', '.today-deadline-item', 'var(--color-link)']) and
-      '/dash.js?v=20261102p' in APP_JS and '/dash.js?v=20261102p' in SW_JS and
-      '/dash.css?v=20261102m' in INDEX_HTML and '/dash.css?v=20261102m' in SW_JS and
-      'gofn-shell-v205' in SW_JS)
+      '/dash.js?v=20261102u' in APP_JS and '/dash.js?v=20261102u' in SW_JS and
+      '/dash.css?v=20261102o' in INDEX_HTML and '/dash.css?v=20261102o' in SW_JS and
+      'gofn-shell-v210' in SW_JS)
 check('season pass and deadline data is structured, source-attributed and ordered',
       all(item_id in {item.get('id') for item in SEASON_DATA.get('items', [])}
           for item_id in ['season:pass-halloween', 'season:pass-november']) and
@@ -288,7 +288,7 @@ check('base bonus and information availability controls use semantic status role
           'background: var(--color-status-info-unavailable); color: var(--color-on-status-info-unavailable); border: 1px solid var(--color-border-info-unavailable);',
       ]))
 check('versioned stylesheets are referenced by the page and precached offline',
-      all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261102b', '/dash.css?v=20261102m']))
+      all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261102b', '/dash.css?v=20261102o']))
 check('owner verification scripts are versioned and precached offline',
       '/account.js?v=20261101b' in INDEX_HTML and '/account.js?v=20261101b' in SW_JS and
       '/review.js?v=20261101b' in DASH_JS and '/review.js?v=20261101b' in SW_JS)
@@ -316,7 +316,16 @@ check('event signal chips and detail tags use semantic palette roles with unchan
           '.tg-incense{--tc:var(--color-signal-shadow)}.tg-costume{--tc:var(--color-signal-encounter)}',
       ]))
 check('offline shell cache version advances with the dashboard stylesheet token release',
-      "gofn-shell-v205" in SW_JS)
+      "gofn-shell-v210" in SW_JS)
+check('Travel mode searches only source-dated regional listings and preserves Today visibility',
+      all(token in INDEX_HTML for token in ['id="sub-travel"', 'id="travel-q"', 'id="travel-destinations"', 'id="travel-regions"', 'id="travel-results"']) and
+      "['travel','Travel','sub-travel']" in APP_JS and
+      all(token in DASH_JS for token in ['function renderTravel()', 'TRAVEL_REGIONS', 'data-travel-region', "x.scope !== 'global'", "!/^dated:/.test(String(x.id || ''))", "indexOf('https://') === 0", 'sourceStart', 'sourceEnd', 'travelDateText', 'REG.filter(function (x)', 'var hide = it.travel ?', 'focusedRegion', 'focusTarget.focus()']) and
+      all(token in DASH_CSS for token in ['#sub-travel .travel-search', '#travel-regions .fchip{min-height:44px}', '#travel-results .agw .ag-actions .agx{width:44px;height:44px;min-width:44px;min-height:44px}']) and
+      '/app.js?v=20261102m' in INDEX_HTML and '/app.js?v=20261102m' in SW_JS and
+      '/dash.js?v=20261102u' in APP_JS and '/dash.js?v=20261102u' in SW_JS and
+      '/dash.css?v=20261102o' in INDEX_HTML and '/dash.css?v=20261102o' in SW_JS and
+      'gofn-shell-v210' in SW_JS)
 check('raid share dialog and script are included in the exact offline shell',
       '/raid-share.js?v=20261102b' in INDEX_HTML and '/raid-share.js?v=20261102b' in SW_JS and
       all(token in INDEX_HTML for token in ['id="raid-share-dialog"', 'id="raid-share-title"', 'id="raid-share-send"', 'id="raid-share-copy"']))
@@ -328,8 +337,8 @@ check('raid share payload uses sourced weaknesses, local top-ten marks and safe 
 check('event detail focus restoration can find a re-rendered opener by event key and card role',
       all(token in DETAIL_JS for token in ['openerKey', 'openerClass', "getAttribute('data-open')", 'target.focus()']))
 check('versioned dashboard scripts are referenced by the entry page and precached offline',
-      '/app.js?v=20261102l' in INDEX_HTML and '/app.js?v=20261102l' in SW_JS and
-      '/dash.js?v=20261102p' in APP_JS and '/dash.js?v=20261102p' in SW_JS and
+      '/app.js?v=20261102m' in INDEX_HTML and '/app.js?v=20261102m' in SW_JS and
+      '/dash.js?v=20261102u' in APP_JS and '/dash.js?v=20261102u' in SW_JS and
       '/detail.js?v=20261102d' in DASH_JS and '/detail.js?v=20261102d' in SW_JS)
 check('sync PIN and account controls have one home in Menu and are precached offline',
       INDEX_HTML.index('id="acct" class="acct"') > INDEX_HTML.index('id="sub-menu"') and
@@ -1644,7 +1653,7 @@ with sync_playwright() as p:
             if mode: pg.click(f'#mode-{tab}-{sub} button[data-mode="{mode}"]')
             pg.wait_for_timeout(200)
             check(f'{tab}/{sub}/{mode} reachable and visible', pg.locator(sel).is_visible())
-        check('Events shows Calendar, Timeline and In person; Discoveries lives in the menu', pg.evaluate("document.querySelectorAll('#subnav-events button').length===3 && Array.from(document.querySelectorAll('#subnav-events button')).some(b=>b.dataset.sub==='world' && b.textContent==='In person')"))
+        check('Events shows Calendar, Timeline, In person and Travel; Discoveries lives in the menu', pg.evaluate("(()=>{const buttons=Array.from(document.querySelectorAll('#subnav-events button'));return buttons.length===4 && buttons.some(b=>b.dataset.sub==='world' && b.textContent==='In person') && buttons.some(b=>b.dataset.sub==='travel' && b.textContent==='Travel') && !buttons.some(b=>b.dataset.sub==='leaks') && !!document.getElementById('menu-leaks');})()"))
         pg.click('#hmenu'); pg.click('#menu-leaks'); pg.wait_for_timeout(200)
         check('Leaks opens from the menu', pg.locator('#sub-leaks').is_visible())
         pg.click('nav.tabs button[data-tab="events"]'); pg.click('#subnav-events button[data-sub="timeline"]'); pg.click('#hmenu'); pg.click('#menu-leaks'); pg.wait_for_timeout(200)

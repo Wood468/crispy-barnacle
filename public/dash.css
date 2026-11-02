@@ -964,6 +964,16 @@ img.art.is-shiny{outline:2px solid var(--color-accent);outline-offset:2px;border
 .by-ext{border-style:dashed}
 
 
+/* Travel mode: source-bounded destination search, with touch-sized region filters. */
+#sub-travel .travel-search{display:grid;gap:6px;margin:var(--space-3) 0;color:var(--color-text-muted);font-size:var(--type-label);font-weight:700}
+#sub-travel .travel-search input{width:100%;min-width:0;min-height:48px;padding:var(--space-2) var(--space-3);border:1px solid var(--color-border-card);border-radius:var(--radius-control);background:var(--color-surface-card);color:var(--color-text);font:600 var(--type-body) var(--font-body)}
+#travel-regions{display:flex;flex-wrap:wrap;gap:6px;margin:var(--space-2) 0}
+#travel-regions .fchip{min-height:44px}
+#travel-summary{margin:var(--space-2) 0;color:var(--color-text-muted)}
+#travel-results{display:grid;gap:var(--space-2);min-width:0}
+#travel-results .agw{min-width:0}
+#travel-results .agw .ag-actions .agx{width:44px;height:44px;min-width:44px;min-height:44px}
+
 /* Regional agenda rows: keep event copy and actions in separate, predictable columns. */
 .agw{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:stretch;gap:var(--space-2)}
 .agw>.agr{width:100%;min-width:0;grid-template-columns:4px minmax(0,1fr) minmax(56px,auto);padding:10px;gap:9px}

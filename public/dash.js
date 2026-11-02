@@ -790,6 +790,8 @@
   /* ---------- Calendar: month grid, plus a compact Day / Week / Month list, with worldwide in-person events ---------- */
   var REG = [], regSel = 'all', scopeSel = 'month', REGCOL = '#2bb3a3';
   var REGIONS = [['all', 'Everything'], ['global', 'In the game'], ['Asia', 'Asia'], ['Americas', 'Americas'], ['Europe', 'Europe'], ['Oceania', 'Oceania']];
+  var TRAVEL_REGIONS = [['all', 'All destinations'], ['Asia', 'Asia'], ['Americas', 'Americas'], ['Europe', 'Europe'], ['Oceania', 'Oceania']];
+  var travelRegion = 'all', travelQuery = '';
   var UNDATED = [], REGGAZ = {};
   function worldDate(value, endOfDay) {
     var raw = String(value || '').trim();
@@ -807,7 +809,7 @@
       if (!e.end && !startIsDateOnly) return { undated: true, name: e.name, place: e.place, area: e.area, scope: e.scope, src: src };
       var s0 = worldDate(startValue, false), e0 = worldDate(String(e.end || e.start), !!e.end || startIsDateOnly);
       if (!Number.isFinite(s0.getTime()) || !Number.isFinite(e0.getTime()) || e0 < s0) return { undated: true, name: e.name, place: e.place, area: e.area, scope: e.scope, src: src };
-      return { id: e.id, name: e.name, place: e.place || '', area: e.scope === 'global' ? 'In the game' : e.area, scope: e.scope || 'regional', start: s0, end: e0, long: (e0 - s0) > 14 * 864e5, src: src };
+      return { id: e.id, name: e.name, place: e.place || '', area: e.scope === 'global' ? 'In the game' : e.area, scope: e.scope || 'regional', start: s0, end: e0, sourceStart: startValue, sourceEnd: String(e.end || e.start), long: (e0 - s0) > 14 * 864e5, src: src };
     });
     /* An announcement with no dates of its own (e.g. Gigantamax Duraludon at the Sendai Wild Area) takes the dates of the
        dated event at the same place whose name it shares a distinctive word with. */
@@ -828,7 +830,7 @@
       GODEDUPE.groups(REG.map(asEv), null).forEach(function (g) { g.dupes.forEach(function (d) { gone[d.event.id] = 1; }); });
       REG = REG.filter(function (x) { return !gone[x.id]; });
     }
-    renderCalendar(); renderHomeAgenda(); renderTimeline();
+    renderCalendar(); renderHomeAgenda(); renderTimeline(); renderTravel();
   }
   fetch('/world-events.json').then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; }).then(function (j) {
     if (j && (j.events || []).length) return loadWorld(j, false);
@@ -861,18 +863,73 @@
     var pl = isReg && window.GOPLACES ? GOPLACES.forEvent(it) : [];  // real-life events with sourced venues get a pin button
     var pin = pl.length ? '<button type="button" class="agx agpin" data-places="' + (pl.length === 1 ? esc(pl[0].id) : '') + '" data-placesq="' + (pl.length === 1 ? '' : esc(it.name)) + '" aria-label="Location and coordinates for ' + esc(it.name) + '" title="Location and coordinates">📍<span>Coords</span></button>' : '';
     var ig = isReg ? '<button type="button" class="agx agig" data-igcard="' + esc(it.id) + '" data-infographic="' + esc(it.id) + '" aria-label="Open infographic for ' + esc(it.name) + '"></button>' : '';
-    return '<div class="agw">' + agendaInner(it, isReg) + '<div class="ag-actions">' + pin + ig + '<button type="button" class="agx" data-hide="' + esc(it.id) + '" aria-label="Hide ' + esc(it.name) + '" title="Hide">✕</button></div></div>';
+    var hide = it.travel ? '' : '<button type="button" class="agx" data-hide="' + esc(it.id) + '" aria-label="Hide ' + esc(it.name) + '" title="Hide">✕</button>';
+    return '<div class="agw">' + agendaInner(it, isReg) + '<div class="ag-actions">' + pin + ig + hide + '</div></div>';
   }
   function agendaInner(it, isReg) {
     if (isReg) {
       var mult = it.end.getTime() - it.start.getTime() > 864e5;
-      var when = mult ? fmtD(it.start) + ' to ' + fmtD(it.end) : fmtD(it.start);
+      var when = it.travel ? travelDateText(it) : (mult ? fmtD(it.start) + ' to ' + fmtD(it.end) : fmtD(it.start));
       return '<a class="agr reg" href="' + esc(it.src.url) + '" target="_blank" rel="noopener noreferrer" style="--k:' + REGCOL + '"><i></i><span class="agt"><b>' + esc(it.name) + '</b><small>' + esc(it.place) + ' · ' + esc(when) + '</small></span><em>' + esc(it.area) + '</em></a>';
     }
     var k = kindOf(it);
     return '<button type="button" class="agr" data-open="' + esc(it.id) + '" style="--k:' + k[1] + '"><i></i><span class="agt"><b>' + esc(it.name) + '</b><small>' + esc(whenText(it)) + '</small></span><em>' + esc(k[0]) + '</em></button>';
   }
-  document.addEventListener('goplaces', function () { renderCalendar(); });
+  function travelKey(value) {
+    return String(value || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim();
+  }
+  function travelDateLabel(value) {
+    var m = String(value || '').match(/^(\d{4})-(\d{2})-(\d{2})/);
+    if (!m) return '';
+    var month = +m[2] - 1, day = +m[3], year = +m[1];
+    if (month < 0 || month > 11 || day < 1 || day > 31) return '';
+    return day + ' ' + MON[month] + ' ' + year;
+  }
+  function travelDateText(it) {
+    var a = travelDateLabel(it.sourceStart), b = travelDateLabel(it.sourceEnd);
+    if (a && b) return a === b ? a : a + ' – ' + b;
+    return it.start && it.end ? (fmtD(it.start) === fmtD(it.end) ? fmtD(it.start) : fmtD(it.start) + ' – ' + fmtD(it.end)) : 'Dates listed by source';
+  }
+  function renderTravel() {
+    var host = $('travel-results'); if (!host) return;
+    /* Do not promote global game events or dates inherited by the existing related-announcement helper into destination plans. */
+    var candidates = REG.filter(function (x) {
+      return x.end > now() && x.scope !== 'global' && x.place && x.sourceStart && x.sourceEnd &&
+        x.src && String(x.src.url || '').indexOf('https://') === 0 && !/^dated:/.test(String(x.id || ''));
+    });
+    var places = {};
+    candidates.forEach(function (x) { var p = String(x.place || '').trim(); if (p) places[p] = 1; });
+    var dl = $('travel-destinations');
+    if (dl) dl.innerHTML = Object.keys(places).sort(function (a, b) { return a.localeCompare(b); }).map(function (p) {
+      return '<option value="' + esc(p) + '"></option>';
+    }).join('');
+    var regions = $('travel-regions');
+    var focusedRegion = document.activeElement && document.activeElement.getAttribute && document.activeElement.getAttribute('data-travel-region');
+    if (regions) {
+      regions.innerHTML = TRAVEL_REGIONS.map(function (r) {
+        return '<button type="button" class="fchip" data-travel-region="' + r[0] + '" aria-pressed="' + (travelRegion === r[0]) + '">' + esc(r[1]) + '</button>';
+      }).join('');
+      if (focusedRegion) {
+        var focusTarget = Array.prototype.filter.call(regions.children, function (button) {
+          return button.getAttribute('data-travel-region') === focusedRegion;
+        })[0];
+        if (focusTarget) focusTarget.focus();
+      }
+    }
+    var q = travelKey(travelQuery), filtered = candidates.filter(function (x) {
+      if (travelRegion !== 'all' && x.area !== travelRegion) return false;
+      var haystack = travelKey([x.place, x.name, x.area].join(' '));
+      return !q || haystack.indexOf(q) >= 0;
+    }).sort(function (a, b) { return a.start - b.start || String(a.name).localeCompare(String(b.name)); });
+    var shownPlaces = {};
+    filtered.forEach(function (x) { shownPlaces[x.place] = 1; });
+    var summary = $('travel-summary');
+    if (summary) summary.textContent = filtered.length + (filtered.length === 1 ? ' published event' : ' published events') + ' across ' + Object.keys(shownPlaces).length + (Object.keys(shownPlaces).length === 1 ? ' listed place' : ' listed places');
+    host.innerHTML = filtered.length
+      ? filtered.map(function (x) { return agendaRow(Object.assign({}, x, { travel: true }), true); }).join('')
+      : '<p class="empty">No published destination events match. Try a broader place or another region.</p>';
+  }
+  document.addEventListener('goplaces', function () { renderCalendar(); renderTravel(); });
   document.addEventListener('toggle', function (e) { var d = e.target; if (d && d.matches && d.matches('#calreg details.dd[data-k]')) d.setAttribute('data-was', d.open ? '1' : '0'); }, true);
   function renderCalendar() {
     var g = $('calgrid'); if (!g) return;
@@ -1559,6 +1616,7 @@
       return '<button type="button" class="action-item" data-quick-go="'+c.key+'"><span class="action-icon" aria-hidden="true">'+c.icon+'</span><span class="action-copy"><b>'+esc(c.title)+'</b><small>'+esc(c.detail)+'</small></span><span class="action-count">'+c.count+'</span><span class="action-arrow" aria-hidden="true">›</span></button>';
     }).join('');
   }
+  /* Travel results are refreshed by world-data, region and query changes, not unrelated Today/global rerenders. */
   function renderAll() { renderKinds(); renderPrio(); renderHomeAgenda(); renderActionCentre(); renderTypes(); renderStrip(); renderTimeline(); renderCalendar(); renderRot(); renderOpps(); renderSaved(); }
   function tick() { // keep countdowns honest without re-rendering whole views
     var t = now(), byId = {}; EV.forEach(function (e) { byId[e.id] = e; });
@@ -1569,7 +1627,7 @@
     renderActionCentre();
   }
   document.addEventListener('click', function (ev) {
-    var b = ev.target.closest && ev.target.closest('[data-mark],[data-save],[data-hide],[data-unhide],[data-follow],[data-type],[data-kindtog],[data-day],[data-wk],[data-clearday],[data-cday],[data-creg],[data-cscope]'); if (!b) return;
+    var b = ev.target.closest && ev.target.closest('[data-mark],[data-save],[data-hide],[data-unhide],[data-follow],[data-type],[data-kindtog],[data-day],[data-wk],[data-clearday],[data-cday],[data-creg],[data-cscope],[data-travel-region]'); if (!b) return;
     if (b.hasAttribute('data-mark')) { var mv = b.getAttribute('data-val'); var cur = usGet(b.getAttribute('data-mark')); var nv = mv === '' ? null : +mv; if (nv === cur) nv = null; setMark(b.getAttribute('data-mark'), nv); }
     else if (b.hasAttribute('data-hide')) toggleHide(b.getAttribute('data-hide'));
     else if (b.hasAttribute('data-unhide')) toggleHide(b.getAttribute('data-unhide'));
@@ -1583,6 +1641,7 @@
     else if (b.hasAttribute('data-cday')) { calSel = b.getAttribute('data-cday'); renderCalendar(); }
     else if (b.hasAttribute('data-creg')) { regSel = b.getAttribute('data-creg'); renderCalendar(); }
     else if (b.hasAttribute('data-cscope')) { scopeSel = b.getAttribute('data-cscope'); renderCalendar(); }
+    else if (b.hasAttribute('data-travel-region')) { travelRegion = b.getAttribute('data-travel-region'); renderTravel(); }
   });
   $('calprev').addEventListener('click', function () { calMonth = new Date(calMonth.getFullYear(), calMonth.getMonth() - 1, 1); calSel = ''; renderCalendar(); });
   $('calnext').addEventListener('click', function () { calMonth = new Date(calMonth.getFullYear(), calMonth.getMonth() + 1, 1); calSel = ''; renderCalendar(); });
@@ -1692,6 +1751,10 @@
   (function () { var q = document.getElementById('evq'), tm; if (!q) return;
     q.addEventListener('input', function () { clearTimeout(tm); tm = setTimeout(function () { evQ = q.value.trim().toLowerCase(); renderStrip(); renderTimeline(); }, 150); });
     document.addEventListener('click', function (e) { if (e.target.closest('[data-clearq]')) { q.value = ''; evQ = ''; renderStrip(); renderTimeline(); q.focus(); } });
+  })();
+  (function () {
+    var q = $('travel-q'); if (!q) return;
+    q.addEventListener('input', function () { travelQuery = q.value.trim(); renderTravel(); });
   })();
   window.GODASH = { regionalEvents: function () { return REG.filter(function (x) { return x.scope !== 'global' && x.end > now(); }).map(function (x) { return Object.assign({ world: true, kind: 'event' }, x); }); }, worldEvents: function () { return REG.filter(function (x) { return x.scope === 'global' && x.end > now(); }).map(function (x) { return Object.assign({ world: true, kind: 'event' }, x); }); }, mkEvent: mkEvent, raidSlots: raidSlots, usGet: usGet, usSet: usSet, usStatus: function () { return usStatus; }, renderAll: renderAll, DEXBY: DEXBY, DEXNAME: DEXNAME, art: art, baseOf: baseOf, countdown: countdown, priority: function () { return priority(now()); }, events: function () { return EV; }, eventsState: function () { return feedState; }, mergeLiveAndCurated: mergeLiveAndCurated, ownState: ownState, whenText: whenText, timeMeta: timeMeta, signalTags: signalTags, statusChip: statusChip, kindOf: kindOf, kindHidden: kindHidden, isSaved: isSaved, featArts: featArts, monArt: monArt, signalChips: signalChips, cpRows: cpRows, hundoPair: hundoPair, specialArt: specialArt, hasTag: hasTag, IMG_PARTICLE: IMG_PARTICLE, IMG_POWERSPOT: IMG_POWERSPOT, cpSpecies: cpSpecies, hundoLabels: hundoLabels, genConfirmed: genConfirmed, setGenConfirmed: setGenConfirmed, DEXGEN: DEXGEN };
 })();

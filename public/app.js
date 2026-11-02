@@ -209,9 +209,9 @@ Promise.all([
   ];
   /* Saved is a global utility opened from the header, not a fifth destination in the primary navigation. */
   var PANEL_IDS=['now','events','raids','collect','saved'];
-  // Three views per tab. Some views have a second-level filter (MODES) over existing sections.
+  // Multiple views per tab. Some views have a second-level filter (MODES) over existing sections.
   var SUBS={
-    events:[['calendar','Calendar','sub-calendar'],['timeline','Timeline','sub-timeline'],['world','In person','sub-world'],['leaks','Discoveries','sub-leaks','menu']],
+    events:[['calendar','Calendar','sub-calendar'],['timeline','Timeline','sub-timeline'],['world','In person','sub-world'],['travel','Travel','sub-travel'],['leaks','Discoveries','sub-leaks','menu']],
     collect:[['dex','My Dex','sub-mydex'],['opps','Opportunities','sub-opps','menu'],['megas','Megas','sub-megas'],['guides','Guides','sub-guides']],
     saved:[['watch','Watchlist','sub-watch'],['menu','Menu','sub-menu']]
   };
@@ -1014,7 +1014,7 @@ Promise.all([
     var r=document.getElementById('today-retry');if(r)r.addEventListener('click',function(){window.location.reload()});
     var b=document.getElementById('day-brief');if(b)b.setAttribute('data-state','unavailable');
     var f=document.getElementById('fresh-line');if(f)f.setAttribute('data-released','')}
-  var ds=document.createElement('script');ds.src='/dash.js?v=20261102p';ds.onerror=todayUnavailable;document.body.appendChild(ds);setTimeout(function(){if(!window.GODASH)todayUnavailable()},10000);
+  var ds=document.createElement('script');ds.src='/dash.js?v=20261102u';ds.onerror=todayUnavailable;document.body.appendChild(ds);setTimeout(function(){if(!window.GODASH)todayUnavailable()},10000);
 })();
 
 }).catch(function(){var panel=document.getElementById('load-error');if(panel)panel.hidden=false;var retry=document.getElementById('load-retry');if(retry)retry.addEventListener('click',function(){window.location.reload()},{once:true})});

@@ -16,7 +16,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&family=Hanken+Grotesk:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap">
 <link rel="stylesheet" href="/styles.css?v=20261102b">
-<link rel="stylesheet" href="/dash.css?v=20261102m">
+<link rel="stylesheet" href="/dash.css?v=20261102o">
 </head>
 <body>
 <div class="wrap">
@@ -145,6 +145,19 @@
           <div id="world"></div>
           <p class="note" id="worldnote"></p>
         </div>
+      </section>
+      <section class="panel" id="sub-travel" hidden>
+        <h2 class="sec2">Travel mode</h2>
+        <p class="intro">Find published regional and in-person Pokémon GO events at a destination. Search matches the place and event names supplied by the sources.</p>
+        <label class="travel-search">
+          <span>Destination or event</span>
+          <input id="travel-q" type="search" list="travel-destinations" placeholder="Search a city, country or event" autocomplete="off">
+        </label>
+        <datalist id="travel-destinations"></datalist>
+        <div class="chips" id="travel-regions" role="group" aria-label="Filter destinations by region"></div>
+        <p class="sync" id="travel-summary" role="status" aria-live="polite"></p>
+        <div class="agenda travel-results" id="travel-results"></div>
+        <p class="note">Only current or upcoming regional listings with published dates appear here. Date ranges use the dates in the source listing; venue-local times are not inferred. Global in-game events remain in Timeline. This view does not change the Today agenda.</p>
       </section>
       <div id="tl-debut" hidden>
         <div>
@@ -457,7 +470,7 @@
 <script src="/local-state.js?v=20261030a"></script>
 <script src="/account.js?v=20261101b"></script>
 <script src="/dedupe.js?v=20261101b"></script>
-<script src="/app.js?v=20261102l"></script>
+<script src="/app.js?v=20261102m"></script>
 <script src="/raid-share.js?v=20261102b"></script>
 <script src="/store.js?v=20261101a"></script>
 <script src="/season.js?v=20261102d"></script>

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Browser regression for the reachable In person and world events Schedule view."""
+"""Browser regression for In person, world and destination-search Schedule views."""
 import json
 import os
 from pathlib import Path
@@ -25,16 +25,32 @@ def main():
         {"t": "Global world-event fixture", "where": "Play from anywhere", "region": "Global", "s": "2026-11-14", "e": "2026-11-15", "link": "https://example.test/global", "note": "Global play fixture.", "kind": "event"}
     ]
     data["worldNote"] = "Deterministic browser fixture."
-    world_today = {"events": [{
-        "id": "fixture-overseas-inperson",
-        "name": "Overseas In-Person Fixture",
-        "place": "Kyoto, Japan",
-        "area": "Asia",
-        "scope": "regional",
-        "start": "2026-11-02",
-        "end": "2026-11-03",
-        "sources": [{"url": "https://example.test/overseas"}]
-    }]}
+    world_today = {"events": [
+        {"id": "fixture-overseas-inperson",
+         "name": "Overseas In-Person Fixture",
+         "place": "Kyoto, Japan",
+         "area": "Asia",
+         "scope": "regional",
+         "start": "2026-11-02",
+         "end": "2026-11-03",
+         "sources": [{"url": "https://example.test/overseas"}]},
+        {"id": "fixture-mexico",
+         "name": "Mexico City Wild Area Fixture",
+         "place": "Mexico City, Mexico",
+         "area": "Americas",
+         "scope": "regional",
+         "start": "2026-11-06",
+         "end": "2026-11-08",
+         "sources": [{"url": "https://example.test/mexico"}]},
+        {"id": "fixture-global",
+         "name": "Global In-Game Fixture",
+         "place": "",
+         "area": "Worldwide",
+         "scope": "global",
+         "start": "2026-11-14",
+         "end": "2026-11-15",
+         "sources": [{"url": "https://example.test/global"}]}
+    ]}
     empty_api = {"enabled": False, "events": []}
     failures = []
 
@@ -82,7 +98,7 @@ def main():
             # app.js creates the sub-navigation before its initial data render completes.
             page.wait_for_function("() => { const el=document.querySelector('#inperson article h3'); return !!el && el.textContent.includes('In-person fixture: Kyoto'); }", timeout=10000)
             expect("In person is a visible third Schedule view",
-                   page.locator("#sub-world").is_visible() and page.locator("#subnav-events button").count() == 3)
+                   page.locator("#sub-world").is_visible() and page.locator("#subnav-events button").count() == 4)
             person_titles = page.locator("#inperson article h3").all_text_contents()
             expect("ticketed in-person event cards render in the view",
                    person_titles.count("In-person fixture: Kyoto") == 1, person_titles)
@@ -101,12 +117,75 @@ def main():
             expect("All restores the complete regional event list",
                    page.locator('#world [data-w="all"]').get_attribute("aria-pressed") == "true" and
                    "Asia world-event fixture" in all_text and "Americas world-event fixture" in all_text)
+            page.locator('#subnav-events button[data-sub="travel"]').click()
+            page.wait_for_function("() => { const el=document.getElementById('sub-travel'); return !!el && !el.hidden; }")
+            page.wait_for_function("() => document.querySelectorAll('#travel-results .agw').length >= 2")
+            # A global hide preference may affect Today/Timeline, but must not silently remove a destination from Travel.
+            page.evaluate("() => { window.GODASH.usSet('hide:fixture-mexico', true); }")
+            page.locator('#travel-regions [data-travel-region="all"]').click()
+            travel_text = page.locator("#travel-results").inner_text()
+            expect("Travel is a separate fourth Schedule view",
+                   page.locator("#sub-travel").is_visible() and page.locator("#sub-world").is_hidden() and
+                   page.locator("#subnav-events button[data-sub=travel]").get_attribute("aria-pressed") == "true")
+            expect("Travel shows dated regional destinations but excludes global in-game events",
+                   "Kyoto, Japan" in travel_text and "Mexico City, Mexico" in travel_text and
+                   "Global In-Game Fixture" not in travel_text, travel_text)
+            expect("Travel is independent of per-event hide preferences and has no global hide control",
+                   "Mexico City Wild Area Fixture" in travel_text and
+                   page.locator("#travel-results [data-hide]").count() == 0, travel_text)
+            expect("Travel datalist contains exact source-listed places",
+                   page.locator('#travel-destinations option[value="Kyoto, Japan"]').count() == 1 and
+                   page.locator('#travel-destinations option[value="Mexico City, Mexico"]').count() == 1)
+            page.locator("#travel-q").fill("Kyoto")
+            travel_text = page.locator("#travel-results").inner_text()
+            expect("destination search narrows to the matching place",
+                   "Overseas In-Person Fixture" in travel_text and "Mexico City Wild Area Fixture" not in travel_text,
+                   travel_text)
+            page.locator("#travel-q").fill("")
+            asia_filter = page.locator('#travel-regions [data-travel-region="Asia"]')
+            asia_filter.focus()
+            page.keyboard.press("Enter")
+            asia_travel = page.locator("#travel-results").inner_text()
+            expect("Travel region filter selects Asia only and preserves keyboard focus",
+                   page.locator('#travel-regions [data-travel-region="Asia"]').get_attribute("aria-pressed") == "true" and
+                   page.evaluate("() => document.activeElement.getAttribute('data-travel-region')") == "Asia" and
+                   "Kyoto, Japan" in asia_travel and "Mexico City, Mexico" not in asia_travel)
+            page.locator('#travel-regions [data-travel-region="all"]').click()
+            expect("All destinations restores the full dated regional list",
+                   "Mexico City, Mexico" in page.locator("#travel-results").inner_text())
+            travel_rows_text = page.locator("#travel-results").inner_text()
+            expect("Travel rows preserve the exact source calendar dates",
+                   "2 Nov 2026" in travel_rows_text and "6 Nov 2026 – 8 Nov 2026" in travel_rows_text,
+                   travel_rows_text)
+            expect("Travel rows do not invent venue-local times",
+                   "Venue:" not in travel_rows_text)
+            action_sizes = page.locator("#travel-results .ag-actions .agx").evaluate_all(
+                "(els) => els.map(el => { const r=el.getBoundingClientRect(); return [r.width,r.height]; })")
+            expect("Travel row action controls retain 44px touch targets",
+                   bool(action_sizes) and all(w >= 43.5 and h >= 43.5 for w,h in action_sizes), action_sizes)
+            region_sizes = page.locator("#travel-regions .fchip").evaluate_all(
+                "(els) => els.map(el => el.getBoundingClientRect().height)")
+            expect("Travel region filters retain 44px touch targets",
+                   bool(region_sizes) and all(h >= 43.5 for h in region_sizes), region_sizes)
             page.locator('#subnav-events button[data-sub="timeline"]').click()
             expect("Timeline remains a separate working view",
-                   page.locator("#sub-timeline").is_visible() and page.locator("#sub-world").is_hidden())
+                   page.locator("#sub-timeline").is_visible() and page.locator("#sub-travel").is_hidden())
             page.locator('#subnav-events button[data-sub="world"]').click()
             expect("In person can be reopened after Timeline",
                    page.locator("#sub-world").is_visible())
+            page.locator('#subnav-events button[data-sub="travel"]').click()
+            page.locator('#travel-regions [data-travel-region="Americas"]').click()
+            travel_americas = page.locator("#travel-results").inner_text()
+            expect("Travel destination filter is scoped to Travel",
+                   "Mexico City, Mexico" in travel_americas and "Kyoto, Japan" not in travel_americas,
+                   travel_americas)
+            for width in (390, 320):
+                page.set_viewport_size({"width": width, "height": 844})
+                page.wait_for_timeout(100)
+                dimensions = page.evaluate("() => { const p=document.querySelector('#sub-travel'); return {viewport:innerWidth,document:document.documentElement.scrollWidth,panel:p.scrollWidth,client:p.clientWidth}; }")
+                expect(f"Travel view has no page overflow at {width}px",
+                       dimensions["document"] <= dimensions["viewport"] and dimensions["panel"] <= dimensions["client"],
+                       dimensions)
             for width in (390, 320):
                 page.set_viewport_size({"width": width, "height": 844})
                 page.wait_for_timeout(100)
