@@ -3267,8 +3267,14 @@ with sync_playwright() as p:
             rpg.click('#hmenu')  # opening the owner menu triggers the review module's first load
             rpg.wait_for_timeout(100)
             rpg.clock.fast_forward(16000)
-            rpg.wait_for_selector('#igreview:not([hidden])', timeout=5000)
-            rpg.wait_for_selector('#igreview [data-ig-retry="1"]', timeout=5000)
+            rpg.wait_for_function("!!document.getElementById('igreview') && !document.getElementById('igreview').hidden", timeout=5000)
+            retry_count = rpg.locator('#igreview [data-ig-retry="1"]').count()
+            check('B14: initial queue and decision requests were intercepted and timeout UI became visible',
+                  calls['queue'] >= 1 and calls['decisions'] >= 1 and retry_count == 1,
+                  {'stalled': stalled, 'calls': calls, 'retry_count': retry_count, 'text': rpg.inner_text('#igreview')})
+            if not retry_count:
+                rpg.context.close()
+                continue
             if stalled == 'queue':
                 check('B14: a hung initial infographic queue read times out and shows a clear Retry instead of an empty review list',
                       calls['queue'] == 1 and calls['decisions'] == 1 and
