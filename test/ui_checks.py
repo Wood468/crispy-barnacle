@@ -321,7 +321,7 @@ check('raid share dialog and script are included in the exact offline shell',
       '/raid-share.js?v=20261102b' in INDEX_HTML and '/raid-share.js?v=20261102b' in SW_JS and
       all(token in INDEX_HTML for token in ['id="raid-share-dialog"', 'id="raid-share-title"', 'id="raid-share-send"', 'id="raid-share-copy"']))
 check('raid share payload uses published weakness metadata and explicitly scoped local counters',
-      all(token in RAID_SHARE_JS for token in ['typeApi.facts(boss)', 'bestApi.dataReady === true', 'bestApi.ownedSummary(weak, 3)', 'current top-ten type lists', 'your local marks', 'navigator.share', 'navigator.clipboard', 'textContent = payload.boss', 'innerHTML']))
+      all(token in RAID_SHARE_JS for token in ['typeApi.facts(boss)', 'bestApi.dataReady === true', 'bestApi.ownedSummary(weak, 3)', 'current top-ten type lists', 'your local marks', 'navigator.share', 'navigator.clipboard', 'textContent = payload.boss']) and 'innerHTML' not in RAID_SHARE_JS)
 check('event detail focus restoration can find a re-rendered opener by event key and card role',
       all(token in DETAIL_JS for token in ['openerKey', 'openerClass', "getAttribute('data-open')", 'target.focus()']))
 check('versioned dashboard scripts are referenced by the entry page and precached offline',
