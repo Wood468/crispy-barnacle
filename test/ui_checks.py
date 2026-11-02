@@ -3264,6 +3264,7 @@ with sync_playwright() as p:
                        extra={'**/api/auth/users': (json.dumps({'users': []}), 200)},
                        pre=initial_routes, ready=True)
             rpg.wait_for_function("document.documentElement.getAttribute('data-role')==='owner'", timeout=10000)
+            rpg.click('#hmenu')  # opening the owner menu triggers the review module's first load
             rpg.wait_for_timeout(100)
             rpg.clock.fast_forward(16000)
             rpg.wait_for_selector('#igreview:not([hidden])', timeout=5000)
