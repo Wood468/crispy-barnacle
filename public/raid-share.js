@@ -133,8 +133,10 @@
       var source = sourceArt && sourceArt.getAttribute('src');
       var safeSrc = '';
       try {
-        var imageUrl = new URL(source, window.location.href);
-        if (imageUrl.origin === window.location.origin && /^https?:$/.test(imageUrl.protocol)) safeSrc = imageUrl.href;
+        if (source) {
+          var imageUrl = new URL(source, window.location.href);
+          if (imageUrl.origin === window.location.origin && /^https?:$/.test(imageUrl.protocol)) safeSrc = imageUrl.href;
+        }
       } catch (e) { safeSrc = ''; }
       if (safeSrc) {
         var image = document.createElement('img');
