@@ -254,7 +254,7 @@ check('Today multi-deadline tray is accessible, bounded and source-safe',
       all(token in DASH_CSS for token in ['.today-deadlines>summary', 'min-height:44px', '.today-deadline-item', 'var(--color-link)']) and
       '/dash.js?v=20261102o' in APP_JS and '/dash.js?v=20261102o' in SW_JS and
       '/dash.css?v=20261102l' in INDEX_HTML and '/dash.css?v=20261102l' in SW_JS and
-      'gofn-shell-v203' in SW_JS)
+      'gofn-shell-v204' in SW_JS)
 check('season pass and deadline data is structured, source-attributed and ordered',
       all(item_id in {item.get('id') for item in SEASON_DATA.get('items', [])}
           for item_id in ['season:pass-halloween', 'season:pass-november']) and
@@ -315,7 +315,7 @@ check('event signal chips and detail tags use semantic palette roles with unchan
           '.tg-incense{--tc:var(--color-signal-shadow)}.tg-costume{--tc:var(--color-signal-encounter)}',
       ]))
 check('offline shell cache version advances with the dashboard stylesheet token release',
-      "gofn-shell-v203" in SW_JS)
+      "gofn-shell-v204" in SW_JS)
 check('event detail focus restoration can find a re-rendered opener by event key and card role',
       all(token in DETAIL_JS for token in ['openerKey', 'openerClass', "getAttribute('data-open')", 'target.focus()']))
 check('versioned dashboard scripts are referenced by the entry page and precached offline',
