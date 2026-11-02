@@ -2891,10 +2891,17 @@ with sync_playwright() as p:
         hole = ep.evaluate("({fresh: Math.round(document.getElementById('fresh-line').getBoundingClientRect().height), brief: Math.round(document.getElementById('day-brief').getBoundingClientRect().height)})")
         check('F: when Today failed to load, no invisible 44px hole is left for the freshness line or the brief', hole['fresh'] == 0 and hole['brief'] == 0, hole)
         if shot_dir: ep.screenshot(path=shot_dir + '/e-unavailable.png')
-        ep.focus('#today-retry'); b5_release('dash')
+        ep.focus('#today-retry')
+        retry_focused = ep.evaluate("document.activeElement && document.activeElement.id === 'today-retry'")
+        check('E: Retry receives keyboard focus before the late dashboard script is released', retry_focused)
+        b5_release('dash')
         back = settle(ep, "document.getElementById('home-now').hasAttribute('data-render-key') && !document.getElementById('today-retry')", 12000)
         foc3 = ep.evaluate("({tag: document.activeElement.tagName, inHome: !!document.activeElement.closest('#home-now')})")
         check('E: when dash.js arrives late and replaces the row, focus moves to the replacement instead of the body', back and foc3['inHome'] and foc3['tag'] != 'BODY', foc3)
+        # Later asynchronous data and state refreshes can force Today to rebuild again.
+        ep.evaluate("window.GODASH.renderAll()")
+        foc4 = ep.evaluate("({tag: document.activeElement.tagName, inHome: !!document.activeElement.closest('#home-now'), id: document.activeElement.id})")
+        check('E: a subsequent Today refresh preserves focus inside the rebuilt agenda', foc4['inHome'] and foc4['tag'] != 'BODY', foc4)
         ep.context.close()
         # F. a stalled /api/sources releases the reserved freshness space after 8 s and still fills in later
         b5_held.clear()
