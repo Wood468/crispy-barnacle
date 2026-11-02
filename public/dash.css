@@ -1556,5 +1556,5 @@ header.top .hbtns{margin-left:auto}
 .evc.cmp .evc-art:not(:has(img)) + .evc-main{grid-column:1/-1}
 
 /* Raid rotation provenance: source links remain easy to open on mobile and keyboard-visible. */
-.rw-source{display:inline-flex;align-items:center;min-height:44px;max-width:100%;padding:0 var(--space-2);color:var(--color-link);font:700 var(--type-caption-compact) var(--font-body);text-decoration:underline;text-underline-offset:3px;overflow-wrap:anywhere}
+.rw-source{display:inline-flex;align-items:center;min-height:44px;max-width:100%;padding:0 var(--space-2);color:var(--color-link);font-weight:700;text-decoration:underline;text-underline-offset:3px;overflow-wrap:anywhere}
 .rw-source:focus-visible{outline:2px solid var(--color-link);outline-offset:2px;border-radius:var(--radius-control)}

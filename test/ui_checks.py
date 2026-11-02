@@ -1781,7 +1781,7 @@ with sync_playwright() as p:
             if cresselia_source.count(): cresselia_source.focus()
             check('Leek Duck source link is keyboard focusable',
                   rotation_time_page.evaluate("document.activeElement?.getAttribute('href') === '" + cresselia_url + "'"))
-            rotation_time_page.locator('#rotnow [data-rotweek="following"]').click()
+            rotation_time_page.locator('#rotnow [data-rotweek="next"]').click()
             future_rotation_text = rotation_time_page.locator('#rotnow').text_content()
             deoxys_url = 'https://leekduck.com/events/deoxys-normal-defense-attack-speed-formes-in-5-star-raid-battles-november-2026/'
             deoxys_source = rotation_time_page.locator('#rotnow .rw-source[href="' + deoxys_url + '"]')
