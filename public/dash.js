@@ -1616,7 +1616,8 @@
       return '<button type="button" class="action-item" data-quick-go="'+c.key+'"><span class="action-icon" aria-hidden="true">'+c.icon+'</span><span class="action-copy"><b>'+esc(c.title)+'</b><small>'+esc(c.detail)+'</small></span><span class="action-count">'+c.count+'</span><span class="action-arrow" aria-hidden="true">›</span></button>';
     }).join('');
   }
-  function renderAll() { renderKinds(); renderPrio(); renderHomeAgenda(); renderActionCentre(); renderTypes(); renderStrip(); renderTimeline(); renderCalendar(); renderTravel(); renderRot(); renderOpps(); renderSaved(); }
+  /* Travel results are refreshed by world-data, region and query changes, not unrelated Today/global rerenders. */
+  function renderAll() { renderKinds(); renderPrio(); renderHomeAgenda(); renderActionCentre(); renderTypes(); renderStrip(); renderTimeline(); renderCalendar(); renderRot(); renderOpps(); renderSaved(); }
   function tick() { // keep countdowns honest without re-rendering whole views
     var t = now(), byId = {}; EV.forEach(function (e) { byId[e.id] = e; });
     Array.prototype.forEach.call(document.querySelectorAll('.cdn[data-id]'), function (n) { var e = byId[n.getAttribute('data-id')]; if (e) n.textContent = countdown(e, t); });

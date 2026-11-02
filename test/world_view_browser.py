@@ -121,7 +121,8 @@ def main():
             page.wait_for_function("() => { const el=document.getElementById('sub-travel'); return !!el && !el.hidden; }")
             page.wait_for_function("() => document.querySelectorAll('#travel-results .agw').length >= 2")
             # A global hide preference may affect Today/Timeline, but must not silently remove a destination from Travel.
-            page.evaluate("() => { window.GODASH.usSet('hide:fixture-mexico', true); window.GODASH.renderAll(); }")
+            page.evaluate("() => { window.GODASH.usSet('hide:fixture-mexico', true); }")
+            page.locator('#travel-regions [data-travel-region="all"]').click()
             travel_text = page.locator("#travel-results").inner_text()
             expect("Travel is a separate fourth Schedule view",
                    page.locator("#sub-travel").is_visible() and page.locator("#sub-world").is_hidden() and
