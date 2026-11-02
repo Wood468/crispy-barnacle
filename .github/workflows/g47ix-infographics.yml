@@ -73,7 +73,7 @@ jobs:
             echo "No new candidates; persistent review registry unchanged."
           fi
       - name: Publish pictures approved in the app
-        id: publish
+        id: approved_publish
         shell: bash
         run: |
           set -euo pipefail
@@ -102,10 +102,10 @@ jobs:
           echo "thumbnail_changed=$thumbnail_changed" >> "$GITHUB_OUTPUT"
           echo "commit_sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
       - name: Dispatch read-only QA-10 production image audit
-        if: steps.publish.outputs.thumbnail_changed == 'true'
+        if: steps.approved_publish.outputs.thumbnail_changed == 'true'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          COMMIT_SHA: ${{ steps.publish.outputs.commit_sha }}
+          COMMIT_SHA: ${{ steps.approved_publish.outputs.commit_sha }}
         run: |
           curl --fail-with-body --silent --show-error \
             -X POST \
