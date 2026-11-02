@@ -18,10 +18,127 @@ async function get(path, tries = 2) {
 }
 async function json(path) { return (await get(path)).json(); }
 
+async function headAsset(path) {
+  const headers = { "user-agent": "go-field-notes-uptime" };
+  let response = null, headStatus = null, headError = null;
+  try {
+    response = await fetch(BASE + path, { method: "HEAD", headers, signal: AbortSignal.timeout(20000) });
+    if (!response.ok) headStatus = response.status;
+  } catch (error) { headError = error; }
+  // Some static hosts do not implement HEAD consistently. A safe GET fallback
+  // distinguishes an unsupported HEAD response from a genuinely missing asset.
+  if (!response || !response.ok) {
+    try {
+      response = await fetch(BASE + path, { method: "GET", headers, signal: AbortSignal.timeout(20000) });
+    } catch (error) {
+      throw new Error(path + " HEAD/GET failed: " + (error && error.message || error || headError || "request failed"));
+    }
+  }
+  if (!response.ok) {
+    throw new Error(path + " HTTP " + response.status + (headStatus ? " (HEAD " + headStatus + ")" : ""));
+  }
+  return response;
+}
+
+function htmlAttribute(tag, name) {
+  const match = tag.match(new RegExp("\\\\b" + name + "\\\\s*=\\\\s*(['\\\"])(.*?)\\\\1", "i"));
+  return match ? match[2] : "";
+}
+
+function isJavaScriptMime(value) {
+  const mime = String(value || "").split(";")[0].trim().toLowerCase();
+  return [
+    "application/javascript", "text/javascript",
+    "application/ecmascript", "text/ecmascript",
+    "application/x-javascript", "text/x-javascript"
+  ].includes(mime);
+}
+
+export function extractCoreAssetUrls(homeHtml, serviceWorker) {
+  const origin = new URL(BASE).origin;
+  const htmlAssets = new Map();
+  const tags = String(homeHtml || "").match(/<(?:script|link)\\b[^>]*>/gi) || [];
+  for (const tag of tags) {
+    const script = /^<script\\b/i.test(tag);
+    const rel = htmlAttribute(tag, "rel").toLowerCase().split(/\\s+/);
+    const relevant = script || rel.includes("stylesheet") ||
+      (rel.includes("preload") && htmlAttribute(tag, "as").toLowerCase() === "script");
+    if (!relevant) continue;
+    const raw = htmlAttribute(tag, script ? "src" : "href");
+    if (!raw) continue;
+    try {
+      const url = new URL(raw, BASE);
+      if (url.origin !== origin || !/\\.(?:js|css)$/i.test(url.pathname)) continue;
+      htmlAssets.set(url.pathname, url.pathname + url.search);
+    } catch (_) { /* Ignore malformed or non-URL attributes; required assets are checked below. */ }
+  }
+
+  const cacheMatch = String(serviceWorker || "").match(/const\\s+SHELL_CACHE\\s*=\\s*(['"])([^'"]+)\\1/);
+  if (!cacheMatch || !/^gofn-shell-v\\d+$/.test(cacheMatch[2])) {
+    throw new Error("service worker shell cache version is missing");
+  }
+  const shellMatch = String(serviceWorker || "").match(/const\\s+SHELL_URLS\\s*=\\s*\\[([\\s\\S]*?)\\];/);
+  if (!shellMatch) throw new Error("service worker offline asset list is missing");
+
+  const shellAssets = new Map();
+  for (const match of shellMatch[1].matchAll(/['"]([^'"]+)['"]/g)) {
+    try {
+      const url = new URL(match[1], BASE);
+      if (url.origin !== origin || !/\\.(?:js|css)$/i.test(url.pathname)) continue;
+      shellAssets.set(url.pathname, url.pathname + url.search);
+    } catch (_) { /* Ignore non-URL list entries. */ }
+  }
+
+  const required = ["styles.css", "dash.css", "app.js", "dash.js", "lib.js", "pwa.js", "review.js"];
+  const requiredInHtml = new Set(["styles.css", "dash.css", "app.js", "dash.js", "lib.js", "pwa.js"]);
+  const assets = [];
+  for (const name of required) {
+    const path = "/" + name;
+    const shellUrl = shellAssets.get(path);
+    if (!shellUrl) throw new Error("offline shell does not precache " + path);
+    const htmlUrl = htmlAssets.get(path);
+    if (requiredInHtml.has(name) && !htmlUrl) throw new Error("homepage does not reference " + path);
+    if (htmlUrl && htmlUrl !== shellUrl) {
+      throw new Error(path + " version differs between homepage and offline shell");
+    }
+    assets.push(shellUrl);
+  }
+  // The worker itself is not part of its own precache list, but it must be
+  // fetchable for pwa.js to register offline support.
+  assets.push("/sw.js");
+  return { cacheName: cacheMatch[2], assets };
+}
+
 export async function runChecks() {
   const problems = [];
+  let homeHtml = "";
   const check = async (name, fn) => { try { await fn(); } catch (e) { problems.push(name + ": " + (e && e.message || e)); } };
-  await check("home page", async () => { const t = await (await get("/")).text(); if (!/<html/i.test(t)) throw new Error("not a page"); });
+  await check("home page", async () => {
+    homeHtml = await (await get("/")).text();
+    if (!/<html/i.test(homeHtml)) throw new Error("not a page");
+  });
+  await check("versioned app assets", async () => {
+    if (!homeHtml) {
+      homeHtml = await (await get("/")).text();
+      if (!/<html/i.test(homeHtml)) throw new Error("not a page");
+    }
+    const worker = await get("/sw.js");
+    if (!isJavaScriptMime(worker.headers.get("content-type"))) {
+      throw new Error("/sw.js has an unexpected content-type");
+    }
+    const serviceWorker = await worker.text();
+    const shell = extractCoreAssetUrls(homeHtml, serviceWorker);
+    await Promise.all(shell.assets.filter(path => path !== "/sw.js").map(async path => {
+      const response = await headAsset(path);
+      const type = response.headers.get("content-type") || "";
+      if (path.endsWith(".css") && !/^text\\/css(?:;|$)/i.test(type)) {
+        throw new Error(path + " has an unexpected content-type");
+      }
+      if (path.endsWith(".js") && !isJavaScriptMime(type)) {
+        throw new Error(path + " has an unexpected content-type");
+      }
+    }));
+  });
   await check("data.json", async () => { const d = await json("/data.json"); if (!Array.isArray(d.events) || !d.events.length) throw new Error("no events"); });
   await check("world-events.json", async () => { const d = await json("/world-events.json"); if (!Array.isArray(d.events)) throw new Error("no events list"); });
   await check("prices.json", async () => { await json("/prices.json"); });
@@ -31,7 +148,7 @@ export async function runChecks() {
     const img = ((w.items || [])[0] || {}).image || ((q.items || [])[0] || {}).image;
     if (!img) return; // nothing to test yet
     const r = await get(img.startsWith("/") ? img : "/" + img);
-    if (!/^image\//.test(r.headers.get("content-type") || "")) throw new Error(img + " did not come back as a picture");
+    if (!/^image\\//.test(r.headers.get("content-type") || "")) throw new Error(img + " did not come back as a picture");
   });
   return problems;
 }
