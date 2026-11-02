@@ -148,7 +148,7 @@ export async function runChecks() {
     const img = ((w.items || [])[0] || {}).image || ((q.items || [])[0] || {}).image;
     if (!img) return; // nothing to test yet
     const r = await get(img.startsWith("/") ? img : "/" + img);
-    if (!/^image\\//.test(r.headers.get("content-type") || "")) throw new Error(img + " did not come back as a picture");
+    if (!/^image\//.test(r.headers.get("content-type") || "")) throw new Error(img + " did not come back as a picture");
   });
   return problems;
 }
