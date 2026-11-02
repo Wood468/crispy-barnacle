@@ -3244,18 +3244,19 @@ with sync_playwright() as p:
         # ---- Batch 14: initial review reads are bounded; Retry re-fetches both queue and decisions ----
         for stalled in ('queue', 'decisions'):
             calls = {'queue': 0, 'decisions': 0}
-            held_initial = {}
-            def initial_routes(pg, stalled=stalled, calls=calls, held_initial=held_initial):
+            held_initial = {'queue': 0, 'decisions': 0}
+            allow_retry = {'value': False}
+            def initial_routes(pg, stalled=stalled, calls=calls, held_initial=held_initial, allow_retry=allow_retry):
                 def queue_route(route):
                     calls['queue'] += 1
-                    if stalled == 'queue' and calls['queue'] == 1:
-                        held_initial['queue'] = route
+                    if stalled == 'queue' and not allow_retry['value']:
+                        held_initial['queue'] += 1
                         return
                     route.fulfill(status=200, body=B9_QUEUE, content_type='application/json')
                 def decisions_route(route):
                     calls['decisions'] += 1
-                    if stalled == 'decisions' and calls['decisions'] == 1:
-                        held_initial['decisions'] = route
+                    if stalled == 'decisions' and not allow_retry['value']:
+                        held_initial['decisions'] += 1
                         return
                     route.fulfill(status=200, body='{"decisions":[]}', content_type='application/json')
                 pg.route('**/infographic-queue.json*', queue_route)
@@ -3265,33 +3266,52 @@ with sync_playwright() as p:
                        pre=initial_routes, ready=True)
             rpg.wait_for_function("document.documentElement.getAttribute('data-role')==='owner'", timeout=10000)
             rpg.click('#hmenu')  # opening the owner menu triggers the review module's first load
-            rpg.wait_for_timeout(100)
+            # Owner verification can produce more than one initial load. Hold every initial
+            # request for the selected resource so a later load cannot accidentally mask the timeout.
+            last = None
+            stable = 0
+            for _ in range(100):
+                rpg.wait_for_timeout(25)
+                current = (calls['queue'], calls['decisions'])
+                if current == last and current[0] >= 1 and current[1] >= 1:
+                    stable += 1
+                else:
+                    stable = 0
+                last = current
+                if stable >= 8: break
+            check('B14: both initial reads reach the fixture before timeout simulation',
+                  calls['queue'] >= 1 and calls['decisions'] >= 1,
+                  {'stalled': stalled, 'calls': calls})
             rpg.clock.fast_forward(16000)
+            rpg.wait_for_timeout(50)
             rpg.wait_for_function("!!document.getElementById('igreview') && !document.getElementById('igreview').hidden", timeout=5000)
             retry_count = rpg.locator('#igreview [data-ig-retry="1"]').count()
+            held_count = held_initial[stalled]
             check('B14: initial queue and decision requests were intercepted and timeout UI became visible',
-                  calls['queue'] >= 1 and calls['decisions'] >= 1 and retry_count == 1,
-                  {'stalled': stalled, 'calls': calls, 'retry_count': retry_count, 'text': rpg.inner_text('#igreview')})
+                  calls['queue'] >= 1 and calls['decisions'] >= 1 and held_count >= 1 and retry_count == 1,
+                  {'stalled': stalled, 'calls': calls, 'held': held_initial, 'retry_count': retry_count, 'text': rpg.inner_text('#igreview')})
             if not retry_count:
                 rpg.context.close()
                 continue
             if stalled == 'queue':
                 check('B14: a hung initial infographic queue read times out and shows a clear Retry instead of an empty review list',
-                      calls['queue'] == 1 and calls['decisions'] == 1 and
+                      held_initial['queue'] >= 1 and
                       'Could not load the infographic queue' in rpg.inner_text('#igreview') and
                       rpg.locator('#igreview .igr').count() == 0)
             else:
                 check('B14: a hung initial saved-decisions read times out and pauses review with Retry',
-                      calls['queue'] == 1 and calls['decisions'] == 1 and
+                      held_initial['decisions'] >= 1 and
                       'Could not read your saved decisions' in rpg.inner_text('#igreview') and
                       rpg.locator('#igreview .igr').count() == 0)
+            before_retry = dict(calls)
+            allow_retry['value'] = True
             rpg.locator('#igreview [data-ig-retry="1"]').click()
             rpg.wait_for_selector('#igreview .igr[data-id="discord:b9-solo"]', timeout=5000)
             check('B14: Retry re-fetches both initial resources and review resumes after the hung request',
-                  calls['queue'] >= 2 and calls['decisions'] >= 2 and
+                  calls['queue'] > before_retry['queue'] and calls['decisions'] > before_retry['decisions'] and
                   rpg.locator('#igreview [data-ig-retry="1"]').count() == 0 and
                   rpg.locator('#igreview .igr[data-id="discord:b9-solo"]').count() == 1,
-                  calls)
+                  {'before_retry': before_retry, 'after_retry': calls})
             rpg.context.close()
         # Item 1: visitors never get a dead Discord link; the event's own page is used.
         W = json.dumps({'items': [{'id': 'w1', 'kind': 'week', 'title': 'Week', 'image': '/infographics/g47ix/w1.png', 'publishedAt': '2026-10-05T00:00:00Z', 'post': DISCORD}]})
