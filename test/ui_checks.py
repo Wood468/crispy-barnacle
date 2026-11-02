@@ -1635,7 +1635,7 @@ with sync_playwright() as p:
             if mode: pg.click(f'#mode-{tab}-{sub} button[data-mode="{mode}"]')
             pg.wait_for_timeout(200)
             check(f'{tab}/{sub}/{mode} reachable and visible', pg.locator(sel).is_visible())
-        check('Events shows two views; Leaks lives in the menu', pg.evaluate("document.querySelectorAll('#subnav-events button').length===2"))
+        check('Events shows Calendar, Timeline and In person; Discoveries lives in the menu', pg.evaluate("document.querySelectorAll('#subnav-events button').length===3 && Array.from(document.querySelectorAll('#subnav-events button')).some(b=>b.dataset.sub==='world' && b.textContent==='In person')"))
         pg.click('#hmenu'); pg.click('#menu-leaks'); pg.wait_for_timeout(200)
         check('Leaks opens from the menu', pg.locator('#sub-leaks').is_visible())
         pg.click('nav.tabs button[data-tab="events"]'); pg.click('#subnav-events button[data-sub="timeline"]'); pg.click('#hmenu'); pg.click('#menu-leaks'); pg.wait_for_timeout(200)
