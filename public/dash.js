@@ -974,8 +974,9 @@
         var f = window.GOTYPES && GOTYPES.facts(n), real = window.GOLIB && GOLIB.raidEventFor(EV, n, label, new Date(r.s).getTime(), new Date(r.e).getTime()), ev = real || raidEvent(n, r);
         var ib = ev ? '<button type="button" class="info-open rc-info" data-infographic="' + esc(ev.id) + '" aria-label="Open infographic for ' + esc(n) + '">▧ Infographic</button>' : '';
         if (real) ib += '<button type="button" class="rc-info rc-details" data-open="' + esc(real.id) + '" aria-label="Open event details for ' + esc(n) + '">ⓘ Details</button>';
+        var share = '<button type="button" class="rc-info rc-share" data-raid-share data-raid-boss="' + esc(n) + '" data-raid-kind="' + esc(label) + '" data-raid-start="' + esc(r.s || '') + '" data-raid-end="' + esc(r.e || '') + '" aria-label="Share ' + esc(n) + ' ' + esc(label) + ' raid details">↗ Share</button>';
         return '<div class="rc" data-boss="' + esc(n) + '"' + (label === '5★' || label === 'Mega' ? ' data-guide="' + esc(n) + '"' : '') + '><div class="rc-form">' + art(n, 'ea') + '<div class="rc-txt"><span class="rl">' + label + '</span><b>' + esc(n) + '</b>' +
-          (f ? '<span class="rtype">' + f.types.map(function (t) { return tico(t); }).join('') + '</span><span class="rweak" title="Weak to">▾ ' + f.weak.map(function (t) { return tico(t); }).join('') + '</span>' : '') + '</div></div>' + ib + '</div>';
+          (f ? '<span class="rtype">' + f.types.map(function (t) { return tico(t); }).join('') + '</span><span class="rweak" title="Weak to">▾ ' + f.weak.map(function (t) { return tico(t); }).join('') + '</span>' : '') + '</div></div>' + ib + share + '</div>';
       }).join('');
     }
     function lowTier(r) {
