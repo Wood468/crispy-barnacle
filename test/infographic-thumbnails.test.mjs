@@ -46,14 +46,14 @@ test('approved infographic thumbnails are generated once and unchanged outputs a
       await fs.writeFile(destination, webp(path.basename(source)));
     };
     const first = await generateThumbnails({ root, convert, log: () => {} });
-    assert.deepEqual(first, { referenced: 2, generated: 2, unchanged: 0, missing: 0, failed: 0 });
+    assert.deepEqual(first, { referenced: 3, generated: 2, unchanged: 0, missing: 1, failed: 0 });
     assert.deepEqual(calls.sort(), ['a.jpg', 'b.png']);
     assert.ok((await fs.readFile(path.join(root, 'public', thumbnailRelativePath('/infographics/g47ix/a.jpg')))).subarray(8, 12).equals(Buffer.from('WEBP')));
     assert.ok((await fs.readFile(path.join(root, 'public', thumbnailRelativePath('/infographics/g47ix/b.png')))).subarray(8, 12).equals(Buffer.from('WEBP')));
 
     calls.length = 0;
     const second = await generateThumbnails({ root, convert, log: () => {} });
-    assert.deepEqual(second, { referenced: 2, generated: 0, unchanged: 2, missing: 0, failed: 0 });
+    assert.deepEqual(second, { referenced: 3, generated: 0, unchanged: 2, missing: 1, failed: 0 });
     assert.deepEqual(calls.sort(), ['a.jpg', 'b.png']);
   } finally {
     await fs.rm(root, { recursive: true, force: true });

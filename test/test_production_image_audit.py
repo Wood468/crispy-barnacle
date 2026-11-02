@@ -5,7 +5,7 @@ class ProductionImageAuditTests(unittest.TestCase):
     def test_recognises_r2_poster_paths(self):
         self.assertEqual(image_kind("https://pogo.michaelpuff.com/infographics/event-1.webp?cache=1"), "infographic-poster")
         self.assertEqual(image_kind("https://pogo.michaelpuff.com/img/ext/event-2.webp"), "infographic-poster")
-        self.assertEqual(image_kind("https://pogo.michaelpuff.com/infographic-thumbs/g47ix/event-3.jpg.webp"), "infographic-poster")
+        self.assertEqual(image_kind("https://pogo.michaelpuff.com/infographic-thumbs/g47ix/event-3.jpg.webp"), "infographic-thumbnail")
 
     def test_other_images_are_not_counted_as_posters(self):
         self.assertEqual(image_kind("https://raw.githubusercontent.com/PokeAPI/sprites/pokemon/25.png"), "other-image")
@@ -53,11 +53,14 @@ class ProductionImageAuditTests(unittest.TestCase):
             {"kind": "infographic-poster", "bytes": 1200, "resource": "site/poster.webp", "status": 200},
             {"kind": "other-image", "bytes": 800, "resource": "site/icon.png", "status": 200},
             {"kind": "infographic-poster", "bytes": 300, "resource": "site/second.webp", "status": 200},
+            {"kind": "infographic-thumbnail", "bytes": 150, "resource": "site/thumb.webp", "status": 200},
         ])
-        self.assertEqual(result["image_responses"], 3)
-        self.assertEqual(result["image_payload_bytes"], 2300)
+        self.assertEqual(result["image_responses"], 4)
+        self.assertEqual(result["image_payload_bytes"], 2450)
         self.assertEqual(result["poster_responses"], 2)
         self.assertEqual(result["poster_payload_bytes"], 1500)
+        self.assertEqual(result["thumbnail_responses"], 1)
+        self.assertEqual(result["thumbnail_payload_bytes"], 150)
         self.assertEqual(result["largest_posters"][0]["resource"], "site/poster.webp")
         self.assertEqual(result["largest_images"][0]["resource"], "site/poster.webp")
         self.assertEqual(result["largest_images"][0]["kind"], "infographic-poster")

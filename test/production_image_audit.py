@@ -50,7 +50,9 @@ def scroll_document(page, viewport_height: int, delay_ms: int = 250) -> dict:
 
 def image_kind(url: str) -> str:
     path = urlsplit(url).path.lower()
-    return "infographic-poster" if path.startswith(("/infographics/", "/img/ext/", "/infographic-thumbs/")) else "other-image"
+    if path.startswith("/infographic-thumbs/"):
+        return "infographic-thumbnail"
+    return "infographic-poster" if path.startswith(("/infographics/", "/img/ext/")) else "other-image"
 
 def payload_bytes(headers: dict, body: bytes) -> int:
     raw = headers.get("content-length") or headers.get("Content-Length") or ""
@@ -66,14 +68,21 @@ def resource_label(url: str) -> str:
 
 def summarize(records: list[dict]) -> dict:
     posters = [item for item in records if item["kind"] == "infographic-poster"]
+    thumbnails = [item for item in records if item["kind"] == "infographic-thumbnail"]
     return {
         "image_responses": len(records),
         "image_payload_bytes": sum(item["bytes"] for item in records),
         "poster_responses": len(posters),
         "poster_payload_bytes": sum(item["bytes"] for item in posters),
+        "thumbnail_responses": len(thumbnails),
+        "thumbnail_payload_bytes": sum(item["bytes"] for item in thumbnails),
         "largest_posters": [
             {"resource": item["resource"], "bytes": item["bytes"], "status": item["status"]}
             for item in sorted(posters, key=lambda item: item["bytes"], reverse=True)[:5]
+        ],
+        "largest_thumbnails": [
+            {"resource": item["resource"], "bytes": item["bytes"], "status": item["status"]}
+            for item in sorted(thumbnails, key=lambda item: item["bytes"], reverse=True)[:5]
         ],
         "largest_images": [
             {
