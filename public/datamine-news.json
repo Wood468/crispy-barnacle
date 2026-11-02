@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-01T15:59:33.635Z",
+ "updated": "2026-11-02T15:39:15.195Z",
  "seeded": true,
  "channels": [
   {
@@ -18,10 +18,28 @@
    "src": "gamedata",
    "name": "dm-gamedata",
    "state": "ok",
-   "count": 26
+   "count": 28
   }
  ],
  "items": [
+  {
+   "id": "1566781625604509707",
+   "src": "gamedata",
+   "title": "The expiration date and time for GO Safari Ball was also changed to November 8, 2026 at 6:00pm. I suppose they realized",
+   "text": "The expiration date and time for GO Safari Ball was also changed to November 8, 2026 at 6:00pm. I suppose they realized there’s also in-person events to take into account.",
+   "link": "",
+   "image": "",
+   "date": "2026-11-02T11:50:48.939Z"
+  },
+  {
+   "id": "1566778144705351732",
+   "src": "gamedata",
+   "title": "At 12:00am on November 3, the daily point limit for GO Pass: Halloween 2026 is removed.",
+   "text": "At 12:00am on November 3, the daily point limit for GO Pass: Halloween 2026 is removed.",
+   "link": "",
+   "image": "",
+   "date": "2026-11-02T11:36:59.028Z"
+  },
   {
    "id": "1566445505725075467",
    "src": "events",
