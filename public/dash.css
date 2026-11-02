@@ -23,6 +23,9 @@
   --color-source-fresh:#6BD18A; --color-source-stale:#E8B84A; --color-source-failed:#FF9B8F;
   /* Mega status pills follow the selected app theme, not the OS preference. */
   --color-status-mega-pill-bg:#4a1d1d; --color-status-mega-pill-fg:#ffb4ab; --color-status-mega-pill-border:#7a2f2f;
+  /* Filter pills: one selected/unselected treatment for every chip, pill and segmented filter. Roles alias the theme-aware surface, text and inverse roles, so dark and light resolve automatically. */
+  --color-filter-bg:var(--color-surface); --color-on-filter:var(--color-text-body); --color-filter-border:var(--border-subtle);
+  --color-filter-selected-bg:var(--color-inverse-surface); --color-on-filter-selected:var(--color-inverse-text);
   --glass:var(--surface-glass); --ring:var(--border-subtle);
   --ok:var(--color-success); --warn:var(--color-warning); --bad:var(--color-danger);
 }
@@ -43,14 +46,12 @@ body{background:radial-gradient(1200px 520px at 50% -140px,color-mix(in srgb,var
 /* sub-navigation: a segmented control that scrolls sideways if it must */
 .subnav{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding:2px 0 var(--space-1);margin-top:-4px}
 .subnav::-webkit-scrollbar{display:none}
-.subnav button{flex:none;border:1px solid var(--border-subtle);background:var(--surface-glass);color:var(--color-text-muted);border-radius:var(--radius-pill);padding:9px var(--space-4);min-height:44px;font:700 .86rem var(--font-body);cursor:pointer}
-.subnav button[aria-pressed="true"]{background:var(--color-inverse-surface);color:var(--color-inverse-text);border-color:var(--color-inverse-surface)}
+.subnav button{flex:none;border-radius:var(--radius-pill);padding:9px var(--space-4);min-height:44px;font:700 .86rem var(--font-body);cursor:pointer}
 
 /* filter chips */
 #evtypes{display:flex;flex-wrap:nowrap;overflow-x:auto;gap:6px;scrollbar-width:none;margin-inline:-2px;padding:2px}
 #evtypes::-webkit-scrollbar{display:none}
-.fchip{flex:none;border:1px solid var(--border-subtle);background:transparent;color:var(--color-text-body);border-radius:var(--radius-pill);padding:var(--space-2) 14px;min-height:40px;font:600 var(--type-body-sm) var(--font-body);cursor:pointer}
-.fchip[aria-pressed="true"]{background:var(--color-surface-raised);color:var(--color-text);border-color:var(--color-inverse-surface)}
+.fchip{flex:none;border-radius:var(--radius-pill);padding:var(--space-2) 14px;min-height:40px;font:600 var(--type-body-sm) var(--font-body);cursor:pointer}
 
 /* week strip */
 .weekstrip{background:var(--color-surface-card);border:1px solid var(--color-border-card);border-radius:var(--radius-panel);padding:10px}
@@ -286,8 +287,7 @@ header.top{display:flex;align-items:flex-start;justify-content:space-between;gap
 .sh2{display:flex;align-items:baseline;justify-content:space-between}
 .dd-link{all:unset;box-sizing:border-box;display:grid;grid-template-columns:1fr auto;gap:2px var(--space-2);align-items:center;width:100%;min-height:56px;padding:10px var(--space-4);margin:0 0 10px;border:1px solid var(--border-subtle);border-radius:var(--radius-panel);background:var(--surface-glass);font:700 var(--type-intro) var(--font-body,inherit);cursor:pointer}
 .dd-link small{grid-column:1;font:400 var(--type-body-sm) var(--font-body,inherit);color:var(--color-text-muted)}.dd-link:focus-visible{outline:2px solid var(--color-text);outline-offset:2px}
-.plc-tags .chip{background:var(--surface-glass);border:1px solid var(--border-subtle);color:var(--color-text);border-radius:var(--radius-pill);padding:0 14px;font:600 var(--type-body-emphasis) var(--font-body,inherit);cursor:pointer}
-.plc-tags .chip.on{background:var(--color-inverse-surface);color:var(--color-inverse-text);border-color:var(--color-inverse-surface)}
+.plc-tags .chip{border-radius:var(--radius-pill);padding:0 14px;font:600 var(--type-body-emphasis) var(--font-body,inherit);cursor:pointer}
 .plc-t,.plc-h,.plc-h *{border:0!important;padding-bottom:0}
 .sh2 .m{white-space:nowrap}
 /* Move badges */
@@ -1443,3 +1443,13 @@ main:not(:has(.load-error:not([hidden]))) #tab-now:has(#home-now:not([data-rende
 .ssn-d{font-weight:700;color:var(--color-text)}
 .ssn-bar{position:absolute;left:0;right:0;bottom:0;height:3px;background:var(--color-surface-raised)}
 .ssn-bar u{display:block;height:100%;background:var(--color-accent);text-decoration:none}
+
+/* Filter pills (UX-15/17/18): every chip, pill and segmented filter shares one state treatment.
+   Unselected = quiet outline on the card surface. Selected = filled inverse surface plus a check mark, so state never relies on colour alone.
+   Padding is symmetric and reserves room for the check, and the border width never changes, so toggling causes no layout shift. */
+.fchip,.pill.fpill,.subnav button,.plc-tags .chip{position:relative;padding-inline:var(--space-5);background:var(--color-filter-bg);color:var(--color-on-filter);border:1px solid var(--color-filter-border)}
+.fchip[aria-pressed="true"],.pill.fpill[aria-pressed="true"],.subnav button[aria-pressed="true"],.plc-tags .chip[aria-pressed="true"]{background:var(--color-filter-selected-bg);color:var(--color-on-filter-selected);border-color:var(--color-filter-selected-bg)}
+.fchip[aria-pressed="true"]::before,.pill.fpill[aria-pressed="true"]::before,.subnav button[aria-pressed="true"]::before,.plc-tags .chip[aria-pressed="true"]::before{content:"";position:absolute;left:var(--space-2);top:50%;width:4px;height:8px;margin-top:-6px;border:solid currentColor;border-width:0 2px 2px 0;transform:rotate(45deg);pointer-events:none}
+.fchip:disabled,.pill.fpill:disabled,.subnav button:disabled,.plc-tags .chip:disabled{opacity:.5;cursor:not-allowed}
+/* Best-by-type pills keep their type colour (inline), so selection is a ring plus the check mark. */
+.pill.fpill.ftype[aria-pressed="true"]{box-shadow:0 0 0 2px var(--color-canvas),0 0 0 4px var(--color-text)}
