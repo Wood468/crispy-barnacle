@@ -248,7 +248,7 @@ check('Today Tonight planner is an optional accessible local-time disclosure wit
       all(token in INDEX_HTML for token in ['id="today-tonight"', 'id="today-tonight-summary"', 'id="today-tonight-list"']) and
       all(token in DASH_JS for token in ['D.spotlight', 'D.raidHour', 'D.maxBattles', '6–7 pm local', '6 am–9 pm local', 'Weak to:', 'data-best-types', 'gofn-dex-ready', 'function renderTonight', 'renderTonight(t, dateKey)']) and
       all(token in DASH_CSS for token in ['.today-tonight', '.today-tonight-list', 'min-height:44px', '.today-tonight-best']) and
-      'gofn-dex-ready' in APP_JS and '/app.js?v=20261102o' in INDEX_HTML and '/app.js?v=20261102o' in SW_JS)
+      'gofn-dex-ready' in APP_JS and '/app.js?v=20261102q' in INDEX_HTML and '/app.js?v=20261102q' in SW_JS)
 check('Dex/type readiness refreshes only the Tonight disclosure, preserving event-detail focus targets',
       "document.addEventListener('gotypes', function () { try { renderRot(); var t = now(); renderTonight(t, dayKey(t)); } catch (e) {} });" in DASH_JS and
       "document.addEventListener('gofn-dex-ready', function () { try { renderRot(); var t = now(); renderTonight(t, dayKey(t)); } catch (e) {} });" in DASH_JS)
@@ -256,9 +256,9 @@ check('Today multi-deadline tray is accessible, bounded and source-safe',
       all(token in INDEX_HTML for token in ['id="today-deadlines"', 'id="today-deadlines-summary"', 'id="today-deadlines-list"']) and
       all(token in DASH_JS for token in ['var trayLimit = t.getTime() + 7 * 24 * 60 * 60 * 1000', "safeUrl(d.url || '')", 'trayCandidates.slice(0, 8)', 'View all ', 'noopener noreferrer', "sourceUrl.indexOf('https://') === 0"]) and
       all(token in DASH_CSS for token in ['.today-deadlines>summary', 'min-height:44px', '.today-deadline-item', 'var(--color-link)']) and
-      '/dash.js?v=20261102x' in APP_JS and '/dash.js?v=20261102x' in SW_JS and
-      '/dash.css?v=20261102p' in INDEX_HTML and '/dash.css?v=20261102p' in SW_JS and
-      'gofn-shell-v213' in SW_JS)
+      '/dash.js?v=20261102y' in APP_JS and '/dash.js?v=20261102y' in SW_JS and
+      '/dash.css?v=20261102o' in INDEX_HTML and '/dash.css?v=20261102o' in SW_JS and
+      'gofn-shell-v215' in SW_JS)
 check('season pass and deadline data is structured, source-attributed and ordered',
       all(item_id in {item.get('id') for item in SEASON_DATA.get('items', [])}
           for item_id in ['season:pass-halloween', 'season:pass-november']) and
@@ -291,10 +291,10 @@ check('base bonus and information availability controls use semantic status role
           'background: var(--color-status-info-unavailable); color: var(--color-on-status-info-unavailable); border: 1px solid var(--color-border-info-unavailable);',
       ]))
 check('versioned stylesheets are referenced by the page and precached offline',
-      all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261102b', '/dash.css?v=20261102p']))
+      all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261102b', '/dash.css?v=20261102o']))
 check('owner verification scripts are versioned and precached offline',
       '/account.js?v=20261102a' in INDEX_HTML and '/account.js?v=20261102a' in SW_JS and
-      '/review.js?v=20261102b' in DASH_JS and '/review.js?v=20261102b' in SW_JS)
+      '/review.js?v=20261102a' in DASH_JS and '/review.js?v=20261102a' in SW_JS)
 check('source freshness indicators use semantic roles with unchanged colours',
       all(token in DASH_CSS for token in [
           '--color-source-fresh:#6BD18A; --color-source-stale:#E8B84A; --color-source-failed:#FF9B8F;',
@@ -319,16 +319,16 @@ check('event signal chips and detail tags use semantic palette roles with unchan
           '.tg-incense{--tc:var(--color-signal-shadow)}.tg-costume{--tc:var(--color-signal-encounter)}',
       ]))
 check('offline shell cache version advances with the dashboard stylesheet token release',
-      "gofn-shell-v213" in SW_JS)
+      "gofn-shell-v215" in SW_JS)
 check('Travel mode searches only source-dated regional listings and preserves Today visibility',
       all(token in INDEX_HTML for token in ['id="sub-travel"', 'id="travel-q"', 'id="travel-destinations"', 'id="travel-regions"', 'id="travel-results"']) and
       "['travel','Travel','sub-travel']" in APP_JS and
       all(token in DASH_JS for token in ['function renderTravel()', 'TRAVEL_REGIONS', 'data-travel-region', "x.scope !== 'global'", "!/^dated:/.test(String(x.id || ''))", "indexOf('https://') === 0", 'sourceStart', 'sourceEnd', 'travelDateText', 'REG.filter(function (x)', 'var hide = it.travel ?', 'focusedRegion', 'focusTarget.focus()']) and
       all(token in DASH_CSS for token in ['#sub-travel .travel-search', '#travel-regions .fchip{min-height:44px}', '#travel-results .agw .ag-actions .agx{width:44px;height:44px;min-width:44px;min-height:44px}']) and
-      '/app.js?v=20261102o' in INDEX_HTML and '/app.js?v=20261102o' in SW_JS and
-      '/dash.js?v=20261102x' in APP_JS and '/dash.js?v=20261102x' in SW_JS and
-      '/dash.css?v=20261102p' in INDEX_HTML and '/dash.css?v=20261102p' in SW_JS and
-      'gofn-shell-v213' in SW_JS)
+      '/app.js?v=20261102q' in INDEX_HTML and '/app.js?v=20261102q' in SW_JS and
+      '/dash.js?v=20261102y' in APP_JS and '/dash.js?v=20261102y' in SW_JS and
+      '/dash.css?v=20261102o' in INDEX_HTML and '/dash.css?v=20261102o' in SW_JS and
+      'gofn-shell-v215' in SW_JS)
 check('raid share dialog and script are included in the exact offline shell',
       '/raid-share.js?v=20261102b' in INDEX_HTML and '/raid-share.js?v=20261102b' in SW_JS and
       all(token in INDEX_HTML for token in ['id="raid-share-dialog"', 'id="raid-share-title"', 'id="raid-share-send"', 'id="raid-share-copy"']))
@@ -340,9 +340,9 @@ check('raid share payload uses sourced weaknesses, local top-ten marks and safe 
 check('event detail focus restoration can find a re-rendered opener by event key and card role',
       all(token in DETAIL_JS for token in ['openerKey', 'openerClass', "getAttribute('data-open')", 'target.focus()']))
 check('versioned dashboard scripts are referenced by the entry page and precached offline',
-      '/app.js?v=20261102o' in INDEX_HTML and '/app.js?v=20261102o' in SW_JS and
-      '/dash.js?v=20261102x' in APP_JS and '/dash.js?v=20261102x' in SW_JS and
-      '/detail.js?v=20261102f' in DASH_JS and '/detail.js?v=20261102f' in SW_JS)
+      '/app.js?v=20261102q' in INDEX_HTML and '/app.js?v=20261102q' in SW_JS and
+      '/dash.js?v=20261102y' in APP_JS and '/dash.js?v=20261102y' in SW_JS and
+      '/detail.js?v=20261102e' in DASH_JS and '/detail.js?v=20261102e' in SW_JS)
 check('sync PIN and account controls have one home in Menu and are precached offline',
       INDEX_HTML.index('id="acct" class="acct"') > INDEX_HTML.index('id="sub-menu"') and
       'id="pinform"' not in INDEX_HTML and
@@ -357,13 +357,40 @@ check('owner-only account and moderation UI requires server-verified PIN access'
       '[data-role="guest"] .igbanner' in BASE_CSS)
 check('versioned season banner script is referenced by the page and precached offline',
       '/season.js?v=20261102e' in INDEX_HTML and '/season.js?v=20261102e' in SW_JS)
+check('secondary dashboard views render only while their panels are active',
+      all(token in DASH_JS for token in [
+          'function panelIsVisible(id)',
+          'function isTimelineVisible()',
+          'function isCalendarVisible()',
+          'function isTravelVisible()',
+          'function isRaidsVisible()',
+          'function isOppsVisible()',
+          'function isSavedVisible()',
+          "function isSavedVisible() { return panelIsVisible('tab-saved') && (panelIsVisible('sub-watch') || panelIsVisible('sub-menu')); }",
+          'function drawTypes()',
+          'function drawStrip()',
+          'function drawTimeline()',
+          'function drawCalendar()',
+          'function drawTravel()',
+          'function drawRot()',
+          'function drawOpps()',
+          'function drawSaved()',
+          "document.addEventListener('gofn-view', renderActiveSecondaryView);"
+      ]) and
+      'function renderAll() { renderKinds(); renderPrio(); renderHomeAgenda(); renderActionCentre(); renderActiveSecondaryView(); }' in DASH_JS)
+check('Watchlist badge derives its count from saved/followed state while secondary panels are deferred',
+      'savedCount: savedCount' in DASH_JS and
+      "typeof window.GODASH.savedCount==='function'" in APP_JS and
+      "document.addEventListener('gofn-marks',upd)" in APP_JS and
+      "document.addEventListener('gofn-state',upd)" in APP_JS and
+      "document.addEventListener('gofn-saved-count',upd)" in APP_JS)
 check('all HTML renderers use one shared apostrophe-safe escape helper',
       'function esc(value)' in LIB_JS and 'esc: esc' in LIB_JS and
       all('var esc = window.GOLIB.esc;' in source for source in ESC_RENDERERS) and
       all(not re.search(r'function\s+esc\s*\(', source) and
           not re.search(r'var\s+esc\s*=\s*function', source) for source in ESC_RENDERERS))
 check('versioned infographic script is referenced by the dashboard and precached offline',
-      '/infographic.js?v=20261102b' in DASH_JS and '/infographic.js?v=20261102b' in SW_JS)
+      '/infographic.js?v=20261102a' in DASH_JS and '/infographic.js?v=20261102a' in SW_JS)
 check('infographic card thumbnails assign original URLs only near the viewport',
       'data-thumb-src' in INFO_JS and 'new IntersectionObserver' in INFO_JS and
       "rootMargin: '80px 0px'" in INFO_JS)
@@ -1044,10 +1071,11 @@ with sync_playwright() as p:
                ('2026-10-10' if i < 4 else '2026-10-11') + 'T10:30:00', 'official_confirmed')
             for i in range(9)
         ]
-        touch_page = page(api=json.dumps({'enabled': True, 'events': touch_events}))
+        touch_page = page(api=json.dumps({'enabled': True, 'events': touch_events}), mobile=True)
         touch_card = touch_page.locator('#home-now .evc[data-id="leekduck:touch-target"]')
         touch_card.wait_for(state='attached')
         hide_button = touch_card.locator('.hide-x')
+        hide_button.wait_for(state='visible')
         touch_box = hide_button.bounding_box()
         check('Today hide control is at least 44×44px',
               touch_box is not None and touch_box['width'] >= 44 and touch_box['height'] >= 44, touch_box)
@@ -1433,7 +1461,7 @@ with sync_playwright() as p:
         check('Max encounter sprite requests special Dynamax art', 'dynamax=1' in maxart and 'alt="Dynamax Sizzlipede"' in maxart, maxart)
         gmaxart=pg.evaluate("window.GODASH.featArts({kind:'max',name:'Gigantamax Raid Day',featured:[{name:'Charizard',role:'raid_boss'}]},1)")
         check('Gigantamax event requests the actual Gigantamax sprite, not ordinary Charizard art', 'n=Gigantamax%20Charizard' in gmaxart and 'dynamax=1' in gmaxart, gmaxart)
-        pg.click('nav.tabs button[data-tab="collect"]'); pg.wait_for_timeout(200); pg.evaluate("document.getElementById('sub-opps').hidden=false")
+        pg.click('nav.tabs button[data-tab="collect"]'); pg.wait_for_timeout(200); pg.evaluate("document.getElementById('sub-opps').hidden=false; document.dispatchEvent(new CustomEvent('gofn-view',{detail:{tab:'collect',sub:'opps'}}))")
         check('unknown ownership explained', pg.locator('#opps .notice').count()==1)
         check('no "Need" chips without marks', pg.locator('.opp.missing').count()==0)
         # 2. marks present: Zorua missing -> need + priority boost; Pikachu owned
@@ -1441,21 +1469,21 @@ with sync_playwright() as p:
         # marks alone (no confirmed generation) must NOT make Zorua a Need
         pg=page(marks=marks)
         prio_txt=pg.inner_text('#prio')
-        pg.click('nav.tabs button[data-tab="collect"]'); pg.wait_for_timeout(200); pg.evaluate("document.getElementById('sub-opps').hidden=false")
+        pg.click('nav.tabs button[data-tab="collect"]'); pg.wait_for_timeout(200); pg.evaluate("document.getElementById('sub-opps').hidden=false; document.dispatchEvent(new CustomEvent('gofn-view',{detail:{tab:'collect',sub:'opps'}}))")
         check('marks without a confirmed generation: Zorua is not a Need anywhere', 'You need' not in prio_txt and pg.locator('.opp.missing').count()==0 and pg.locator('#opps .opp').count()>=1)
         pg=page(marks=marks,gens=[5])
         txt=pg.inner_text('#prio')
         check('priority shows Zorua CD (you need Zorua)', 'ZORUA' in txt.upper() and 'You need Zorua' in txt, txt[:300])
         first=pg.inner_text('#prio .pc.first')
         check('the event with a needed Pokémon outranks the long-running one', 'ZORUA' in first.upper(), first[:120])
-        pg.click('nav.tabs button[data-tab="collect"]'); pg.wait_for_timeout(200); pg.evaluate("document.getElementById('sub-opps').hidden=false")
+        pg.click('nav.tabs button[data-tab="collect"]'); pg.wait_for_timeout(200); pg.evaluate("document.getElementById('sub-opps').hidden=false; document.dispatchEvent(new CustomEvent('gofn-view',{detail:{tab:'collect',sub:'opps'}}))")
         check('opportunities: Zorua listed under You still need', 'Zorua'.upper() in pg.inner_text('#opps').upper() and pg.locator('.opp.missing').count()>=1)
         check('unmarked costume/forms are never claimed as have/need', pg.locator('.opp.unknown').count()>=1 and 'not tracked' in pg.inner_text('#opps').lower())
         # 3. follow + save persist; the header badge counts actual cards, never empty placeholders or wrappers.
         check('empty Watchlist does not count its empty-state rows',
               pg.locator('#wlcount').is_hidden() and pg.locator('#hwatch').get_attribute('aria-label')=='Watchlist',
               {'badge_hidden':pg.locator('#wlcount').is_hidden(),'aria_label':pg.locator('#hwatch').get_attribute('aria-label')})
-        pg.click('nav.tabs button[data-tab="collect"]'); pg.wait_for_timeout(200); pg.evaluate("document.getElementById('sub-opps').hidden=false")
+        pg.click('nav.tabs button[data-tab="collect"]'); pg.wait_for_timeout(200); pg.evaluate("document.getElementById('sub-opps').hidden=false; document.dispatchEvent(new CustomEvent('gofn-view',{detail:{tab:'collect',sub:'opps'}}))")
         pg.locator('#opps .fbtn').first.click(); pg.wait_for_timeout(100)
         pg.click('nav.tabs button[data-tab="events"]'); pg.click('#subnav-events button[data-sub="timeline"]'); pg.wait_for_timeout(200)
         pg.locator('#evtimeline .star').first.click(); pg.wait_for_timeout(100)
@@ -3008,132 +3036,53 @@ with sync_playwright() as p:
         fl_ctx.close()
 
 
-    if on('c'):
-        # ---- Batch 9: private Discord links, review Undo + dedupe, accessible names (real browser, fixed clock, 390px) ----
-        B9_EV = ev('b9cd', 'Community Day: Bulbasaur', 'community-day', '2026-10-09T10:00:00', '2026-10-20T20:00:00', 'official_confirmed')
-        B9_API = json.dumps({'enabled': True, 'events': [B9_EV, ev('b9rh', 'Dialga Raid Hour', 'raid-hour', '2026-10-10T20:00:00.000', '2026-10-10T21:00:00.000', 'official_confirmed', [{'name': 'Dialga', 'role': 'raid_boss', 'dex': 483}])] + [ev('b9f%d' % i, 'Batch nine filler %d' % i, 'event', '2026-10-09T10:00:00', '2026-10-20T20:00:00', 'confirmed') for i in range(10)]})  # the live feed needs 10+ events to be trusted
-        DISCORD = 'https://discord.com/channels/@me/1558793395198099618/1558796039035682828'
-        B9_QUEUE = json.dumps({'items': [
-            {'id': 'discord:b9-dup-a', 'title': 'Dup picture', 'image': '/infographics/g47ix/b9-dup.png', 'post': DISCORD, 'creator': 'G47IX', 'source': 'discord', 'publishedAt': '2026-10-09T01:00:00Z',
-             'guesses': [{'eventId': 'leekduck:b9cd', 'eventTitle': 'Community Day: Bulbasaur'}, {'eventId': 'b9cd', 'eventTitle': 'Community Day: Bulbasaur'}]},
-            {'id': 'telegram:b9-dup-b', 'title': 'Dup picture', 'image': '/infographics/g47ix/b9-dup.png', 'post': DISCORD, 'creator': 'G47IX', 'source': 'telegram', 'publishedAt': '2026-10-09T01:00:00Z', 'guesses': []},
-            {'id': 'discord:b9-solo', 'title': 'Solo picture', 'image': '/infographics/g47ix/b9-solo.png', 'post': DISCORD[:-3] + '999', 'creator': 'G47IX', 'source': 'discord', 'publishedAt': '2026-10-08T01:00:00Z', 'guesses': []}]})
-        def b9_owner(decisions):
-            posts = []; gets = []
-            pg = page(api=B9_API, pin=True, mobile=True, extra={'**/infographic-queue.json*': (B9_QUEUE, 200), '**/api/ig-decisions': (json.dumps({'decisions': decisions}), 200), '**/api/auth/users': (json.dumps({'users': []}), 200)})
-            def handler(route):
-                req = route.request
-                if req.method == 'POST': posts.append(json.loads(req.post_data)); route.fulfill(status=200, body='{"ok":true}', content_type='application/json')
-                else: gets.append(req.url); route.fulfill(status=200, body=json.dumps({'decisions': decisions}), content_type='application/json')
-            pg.route('**/api/ig-decisions', handler)
-            pg.wait_for_function("document.documentElement.getAttribute('data-role')==='owner' && !document.getElementById('hireview').hidden", timeout=10000)
-            pg.click('#hmenu'); pg.wait_for_selector('#igreview:not([hidden]) .igr'); pg.wait_for_timeout(300)
-            return pg, posts, gets
-        # Item 2: the same picture listed twice is shown once; suggestions for one event are shown once; Discard can be undone.
-        opg, posts, gets = b9_owner([])
-        cards = opg.eval_on_selector_all('#igreview .igr', 'els=>els.map(e=>e.getAttribute("data-id"))')
-        check('review: the same picture queued twice (same image and Discord post) appears once, and the second id is not listed', cards == ['discord:b9-dup-a', 'discord:b9-solo'], cards)
-        check('review: two suggestions for the same event (leekduck:id and bare id) give one Approve button', opg.locator('#igreview .igr[data-id="discord:b9-dup-a"] [data-ig-ok]').count() == 1)
-        link_txt = opg.locator('#igreview .igr[data-id="discord:b9-solo"] a[href*="discord.com/channels"]').inner_text()
-        check('review (owner only): the Discord post link stays, clearly labelled', link_txt == 'Open in Discord (owner only)', link_txt)
-        check('review: Discard and Approve buttons say which picture they are for', opg.locator('#igreview .igr[data-id="discord:b9-solo"] [data-ig-no]').get_attribute('aria-label') == 'Discard: Solo picture')
-        n_gets = len(gets)
-        opg.locator('#igreview .igr[data-id="discord:b9-solo"] [data-ig-no]').click(); opg.wait_for_selector('#igundo')
-        check('Discard posts one rejected decision and the card leaves the list', posts == [{'id': 'discord:b9-solo', 'status': 'rejected', 'eventId': '', 'eventTitle': ''}] and opg.locator('#igreview .igr[data-id="discord:b9-solo"]').count() == 0, posts)
-        check('Discard shows a "Discarded - Undo" notice that is announced politely and has a 44px Undo button', opg.get_attribute('#igundo', 'role') == 'status' and 'Discarded' in opg.inner_text('#igundo') and opg.locator('#igundo button').bounding_box()['height'] >= 44)
-        opg.wait_for_timeout(300); opg.screenshot(path=OUT+'b9_review_undo.png')
-        check('after a decision the decision list is fetched again, not taken from the shared 30 s copy', len(gets) > n_gets, (n_gets, len(gets)))
-        opg.click('#igundo button'); opg.wait_for_timeout(50)
-        check('Undo puts the card back at once and removes the notice', opg.locator('#igreview .igr[data-id="discord:b9-solo"]').count() == 1 and opg.locator('#igundo').count() == 0)
-        opg.wait_for_timeout(300)
-        check('Undo of a first-time Discard clears the stored decision (reset), exactly once', posts[-1] == {'id': 'discord:b9-solo', 'status': 'reset', 'eventId': '', 'eventTitle': ''} and len(posts) == 2, posts)
-        opg.locator('#igreview .igr[data-id="discord:b9-solo"] [data-ig-no]').click(); opg.wait_for_selector('#igundo')
-        opg.clock.fast_forward(9000); opg.wait_for_timeout(100)
-        check('the Undo notice goes away by itself after about 8 seconds and the discard stays', opg.locator('#igundo').count() == 0 and opg.locator('#igreview .igr[data-id="discord:b9-solo"]').count() == 0)
-        opg.locator('#igreview .igr[data-id="discord:b9-dup-a"] [data-ig-no]').click(); opg.wait_for_selector('#igundo')
-        check('discarding one copy hides the whole duplicate group', opg.locator('#igreview .igr').count() == 0)
-        opg.context.close()
-        # Undo after Discard of an already linked picture re-sends the earlier approval (same events, same order).
-        prior = {'id': 'discord:b9-solo', 'status': 'approved', 'eventId': 'leekduck:b9cd,leekduck:b9rh', 'eventTitle': 'Community Day: Bulbasaur | Dialga Raid Hour'}
-        lpg, lposts, lgets = b9_owner([prior])
-        lpg.wait_for_selector('#iglinked'); lpg.evaluate("document.getElementById('iglinked').open=true")
-        lpg.locator('#iglinked .igr[data-id="discord:b9-solo"] [data-ig-no]').click(); lpg.wait_for_selector('#igundo')
-        check('discarding a linked picture sends rejected', lposts[-1]['status'] == 'rejected' and lpg.locator('#iglinked .igr[data-id="discord:b9-solo"]').count() == 0, lposts)
-        lpg.click('#igundo button'); lpg.wait_for_selector('#iglinked .igr[data-id="discord:b9-solo"]', state='attached'); lpg.wait_for_timeout(300)
-        check('Undo of a linked picture re-posts the previous approval unchanged', lposts[-1] == {'id': prior['id'], 'status': 'approved', 'eventId': prior['eventId'], 'eventTitle': prior['eventTitle']} and len(lposts) == 2, lposts)
-        lpg.context.close()
-        # Item 1: visitors never get a dead Discord link; the event's own page is used.
-        W = json.dumps({'items': [{'id': 'w1', 'kind': 'week', 'title': 'Week', 'image': '/infographics/g47ix/w1.png', 'publishedAt': '2026-10-05T00:00:00Z', 'post': DISCORD}]})
-        wpg = page(api=B9_API, extra={'**/weekly.json*': (W, 200)})
-        wpg.wait_for_selector('#weekly .weekly-card'); wpg.click('#weekly .weekly-card'); wpg.wait_for_selector('#weekly-box')
-        check('weekly picture: a Discord post is not offered as "Original post"', wpg.locator('#weekly-box a').count() == 0)
-        wpg.context.close()
-        W2 = W.replace(DISCORD.replace('/', '\\/'), 'https://x.com/g47ix/status/1').replace(DISCORD, 'https://x.com/g47ix/status/1')
-        wpg = page(api=B9_API, extra={'**/weekly.json*': (W2, 200)})
-        wpg.wait_for_selector('#weekly .weekly-card'); wpg.click('#weekly .weekly-card'); wpg.wait_for_selector('#weekly-box')
-        check('weekly picture: a public original post is still linked', wpg.locator('#weekly-box a[href="https://x.com/g47ix/status/1"]').count() == 1)
-        wpg.context.close()
-        INFO = json.dumps({'events': {'b9cd': {'source': {'label': 'G47IX', 'trust': 'community', 'url': DISCORD, 'observed': '2026-10-09'}, 'infographics': [{'label': 'Infographic - G47IX', 'url': '/infographics/g47ix/b9.png', 'source': 'G47IX', 'sourceUrl': DISCORD, 'alt': 'x'}], 'names': ['Community Day: Bulbasaur'], 'tickets': [], 'info': []}}})
-        ipg = page(api=B9_API, extra={'**/event-info.json*': (INFO, 200)})
-        ipg.wait_for_function("document.querySelector('[data-igcard=\"leekduck:b9cd\"]')"); ipg.evaluate("GOINFOGRAPHIC.open('leekduck:b9cd')"); ipg.wait_for_selector('.goinfo-poster'); ipg.wait_for_timeout(200)
-        check('event picture viewer: no Discord link, and the poster still names its creator', ipg.evaluate("document.querySelectorAll('a[href*=\"discord.com\"]').length") == 0 and 'G47IX' in ipg.inner_text('.goinfo-poster-top'))
-        ipg.evaluate("GOINFOGRAPHIC.close()"); ipg.wait_for_timeout(200)
-        ipg.evaluate("GODETAIL.open('leekduck:b9cd')"); ipg.wait_for_selector('#evd:not([hidden]) .evd-btns'); ipg.wait_for_timeout(300)
-        check('event sheet: the source button goes to the event\'s own official link, never a Discord post', ipg.evaluate("document.querySelectorAll('a[href*=\"discord.com\"]').length") == 0 and ipg.locator('#evd .evd-btns a[href^="https://leekduck.com/"]').count() == 1)
-        ipg.context.close()
-        # Item 3: names. Every button on the five main screens has one, and toggles say WHICH event / Pokémon.
-        NAME_JS = """() => { const out = [];
-          document.querySelectorAll('button,[role=button]').forEach(el => { const r = el.getBoundingClientRect(), cs = getComputedStyle(el);
-            if (cs.display === 'none' || cs.visibility === 'hidden' || el.closest('[hidden]') || (r.width === 0 && r.height === 0)) return;
-            let n = (el.getAttribute('aria-label') || '').trim();
-            const lb = el.getAttribute('aria-labelledby'); if (!n && lb) n = lb.split(/\\s+/).map(i => (document.getElementById(i) || {}).textContent || '').join(' ').trim();
-            if (!n) n = (el.innerText || el.textContent || '').trim().replace(/[\\u2605\\u2606\\u2715\\u2022\\u203a\\u2039]/g, '').trim();
-            if (!n) { const im = el.querySelector('img[alt]'); n = im ? (im.getAttribute('alt') || '').trim() : ''; }
-            if (!n) n = (el.getAttribute('title') || '').trim();
-            out.push({ n: n, h: el.outerHTML.slice(0, 120), p: el.getAttribute('aria-pressed'), cls: el.className }); });
-          return out; }"""
-        npg = page(api=B9_API, mobile=True, us={'pref:gen:1': True}, marks={})
-        unnamed = []; seen_pressed = []
-        def audit(where):
-            for r in npg.evaluate(NAME_JS):
-                if not r['n']: unnamed.append((where, r['h']))
-                seen_pressed.append(r)
-        audit('Today')
-        for tab in ('events', 'raids', 'collect'):
-            npg.dispatch_event('nav.tabs button[data-tab="%s"]' % tab, 'click'); npg.wait_for_selector('#tab-%s:not([hidden])' % tab)
-            npg.wait_for_timeout(400); audit(tab)
-            for sub in npg.eval_on_selector_all('#subnav-%s button[data-sub]' % tab, 'e=>e.map(x=>x.dataset.sub)'):
-                npg.dispatch_event('#subnav-%s [data-sub="%s"]' % (tab, sub), 'click'); npg.wait_for_timeout(350); audit(tab + '/' + sub)
-                for mode in npg.eval_on_selector_all('#mode-%s-%s [data-mode]' % (tab, sub), 'e=>e.map(x=>x.dataset.mode)'):
-                    npg.dispatch_event('#mode-%s-%s [data-mode="%s"]' % (tab, sub, mode), 'click'); npg.wait_for_timeout(350); audit('%s/%s/%s' % (tab, sub, mode))
-        npg.dispatch_event('#hmenu', 'click'); npg.wait_for_timeout(400); audit('Saved')
-        for sub in npg.eval_on_selector_all('#subnav-saved button[data-sub]', 'e=>e.map(x=>x.dataset.sub)'):
-            npg.dispatch_event('#subnav-saved [data-sub="%s"]' % sub, 'click'); npg.wait_for_timeout(350); audit('Saved/' + sub)
-        check('every visible button on Today, Schedule, Raids, Collection and Saved has an accessible name', len(seen_pressed) > 100 and not unnamed, unnamed[:6])
-        stars = [r for r in seen_pressed if 'star' in (r['cls'] or '')]
-        check('save stars say which event they save and expose their state with aria-pressed', stars and all(r['p'] in ('true', 'false') and r['n'].startswith('Save ') and len(r['n']) > 8 and 'Save event' not in r['n'] for r in stars), [r['n'] for r in stars][:3])
-        npg.evaluate("GODETAIL.open('leekduck:b9cd')"); npg.wait_for_selector('#evd:not([hidden]) .star'); npg.wait_for_timeout(300)
-        star = npg.locator('#evd .star[data-save="leekduck:b9cd"]')
-        before = star.get_attribute('aria-label')
-        star.click(); npg.wait_for_timeout(300)
-        star = npg.locator('#evd .star[data-save="leekduck:b9cd"]')
-        check('tapping the star flips aria-pressed and the name keeps the event', star.get_attribute('aria-pressed') == 'true' and star.get_attribute('aria-label') == before == 'Save Community Day: Bulbasaur', (before, star.get_attribute('aria-label')))
-        npg.screenshot(path=OUT+'b9_star_sheet.png'); npg.evaluate("GODETAIL.close()")
-        npg.dispatch_event('nav.tabs button[data-tab="collect"]', 'click'); npg.wait_for_timeout(300)
-        npg.dispatch_event('#subnav-collect [data-sub="dex"]', 'click'); npg.dispatch_event('#mode-collect-dex [data-mode="species"]', 'click'); npg.wait_for_selector('#dexlist .drow')
-        row = npg.locator('#dexlist .drow').first
-        rname = row.locator('.nm').evaluate("e=>[...e.childNodes].filter(n=>n.nodeType===3).map(n=>n.textContent).join('')")
-        labs = row.locator('.dtog button').evaluate_all('els=>els.map(e=>[e.getAttribute("aria-label"),e.textContent,e.getAttribute("aria-pressed")])')
-        check('Pokedex row toggles name the Pokemon and the mark, and keep aria-pressed', len(labs) == 6 and all(l[0] == l[1] + ': ' + rname and l[2] in ('true', 'false') for l in labs), (rname, labs[:2]))
-        shiny = row.locator('.dtog button.s'); shiny.click(); npg.wait_for_timeout(200)
-        check('tapping Shiny sets aria-pressed on that Pokemon only', npg.locator('#dexlist .drow').first.locator('.dtog button.s').get_attribute('aria-pressed') == 'true' and npg.locator('#dexlist .drow').nth(1).locator('.dtog button.s').get_attribute('aria-pressed') == 'false')
-        npg.dispatch_event('#mode-collect-dex [data-mode="forms"]', 'click'); npg.fill('#formq', 'vulpix'); npg.wait_for_selector('#formlist .frow'); npg.wait_for_timeout(200)
-        fl = npg.locator('#formlist .frow').first
-        fname = fl.locator('.fname b').inner_text()
-        check('Have / Need buttons on the forms list name the form', fl.locator('[data-val="1"]').get_attribute('aria-label') == 'Have: ' + fname and fl.locator('[data-val="0"]').get_attribute('aria-label') == 'Need: ' + fname)
-        npg.context.close()
-
-
+    if on('b'):
+        # Batch 9: hidden secondary views stay unrendered on Today and mount when their view is opened.
+        secondary_page = page()
+        secondary_state = secondary_page.evaluate("""() => ({
+          today: document.querySelector('#home-now')?.children.length || 0,
+          todayKey: document.querySelector('#home-now')?.getAttribute('data-render-key') || '',
+          thisWeek: document.querySelector('#week')?.children.length || 0,
+          weekText: document.querySelector('#week')?.textContent || '',
+          timeline: document.querySelector('#evtimeline')?.children.length || 0,
+          weekstrip: document.querySelector('#weekstrip')?.children.length || 0,
+          calendar: document.querySelector('#calgrid')?.children.length || 0,
+          travel: document.querySelector('#travel-results')?.children.length || 0,
+          raids: document.querySelector('#rotnow')?.children.length || 0,
+          opps: document.querySelector('#opps')?.children.length || 0,
+          saved: document.querySelector('#savedev')?.children.length || 0,
+          followed: document.querySelector('#followed')?.children.length || 0
+        })""")
+        check('Today and its This Week section render eagerly while hidden secondary views remain unrendered',
+              secondary_state['today'] > 0 and secondary_state['todayKey'] and secondary_state['thisWeek'] > 0 and
+              all(secondary_state[k] == 0 for k in ['timeline','weekstrip','calendar','travel','raids','opps','saved','followed']), secondary_state)
+        def secondary_click(selector): secondary_page.locator(selector).dispatch_event('click')
+        secondary_click('nav.tabs button[data-tab="events"]')
+        timeline_ok = settle(secondary_page, "document.querySelector('#evtimeline')?.children.length > 0 && document.querySelector('#weekstrip')?.children.length > 0")
+        secondary_click('#subnav-events button[data-sub="calendar"]')
+        calendar_ok = settle(secondary_page, "document.querySelectorAll('#calgrid button.cc').length > 0")
+        secondary_click('#subnav-events button[data-sub="travel"]')
+        travel_ok = settle(secondary_page, "document.querySelectorAll('#travel-regions button[data-travel-region]').length === 5 && document.querySelector('#travel-results')?.children.length > 0")
+        secondary_click('nav.tabs button[data-tab="raids"]')
+        raids_ok = settle(secondary_page, "document.querySelector('#rotnow')?.children.length > 0")
+        secondary_click('nav.tabs button[data-tab="collect"]')
+        secondary_page.evaluate("document.getElementById('sub-opps').hidden=false; document.dispatchEvent(new CustomEvent('gofn-view',{detail:{tab:'collect',sub:'opps'}}))")
+        opps_ok = settle(secondary_page, "document.querySelector('#opps')?.children.length > 0")
+        secondary_click('#hmenu')
+        menu_ok = settle(secondary_page, "document.querySelector('#followed')?.children.length > 0")
+        secondary_click('#hwatch')
+        saved_ok = settle(secondary_page, "document.querySelector('#savedev')?.children.length > 0")
+        secondary_click('nav.tabs button[data-tab="now"]')
+        returned = secondary_page.evaluate("""() => ({
+          todayKey: document.querySelector('#home-now')?.getAttribute('data-render-key') || '',
+          thisWeek: document.querySelector('#week')?.textContent || '',
+          todayVisible: !document.querySelector('#tab-now')?.hidden
+        })""")
+        check('Timeline, Calendar, Travel, Battle, Opportunities and Watchlist render on activation; Today and This Week remain unchanged on return',
+              timeline_ok and calendar_ok and travel_ok and raids_ok and opps_ok and menu_ok and saved_ok and returned['todayVisible'] and
+              returned['todayKey'] == secondary_state['todayKey'] and returned['thisWeek'] == secondary_state['weekText'],
+              {'timeline':timeline_ok,'calendar':calendar_ok,'travel':travel_ok,'raids':raids_ok,'opps':opps_ok,'menu':menu_ok,'saved':saved_ok,'returned':returned})
+        secondary_page.context.close()
     b.close()
 # Dashboard radius adoption: shared scale values are expressed through semantic roles.
 check('dashboard shared radius declarations consume semantic radius tokens',
