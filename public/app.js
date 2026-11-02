@@ -644,7 +644,7 @@ Promise.all([
     RAW=R;META=M;buildBest();syncRows();refreshMoves();
     window.GOBEST.dataReady=true;
     window.GOBEST.ready=true;document.dispatchEvent(new Event('gobest-ready'));
-    var n=$('bnote');if(n)n.textContent='Top ten for each attack type. '+j.method+' Updated '+j.generated+'.';
+    var n=$('bnote');if(n)n.textContent='Top ten for each attack type. '+j.method+' Ranking content last changed '+j.generated+'.';
   }).catch(function(){window.GOBEST.ready=true;document.dispatchEvent(new Event('gobest-ready'));});
   function syncRows(){
     Array.prototype.forEach.call(document.querySelectorAll('#list .irow'),function(row){
@@ -1015,7 +1015,7 @@ Promise.all([
     var r=document.getElementById('today-retry');if(r)r.addEventListener('click',function(){window.location.reload()});
     var b=document.getElementById('day-brief');if(b)b.setAttribute('data-state','unavailable');
     var f=document.getElementById('fresh-line');if(f)f.setAttribute('data-released','')}
-  var ds=document.createElement('script');ds.src='/dash.js?v=20261103c';ds.onerror=todayUnavailable;document.body.appendChild(ds);setTimeout(function(){if(!window.GODASH)todayUnavailable()},10000);
+  var ds=document.createElement('script');ds.src='/dash.js?v=20261103d';ds.onerror=todayUnavailable;document.body.appendChild(ds);setTimeout(function(){if(!window.GODASH)todayUnavailable()},10000);
 })();
 
 }).catch(function(){var panel=document.getElementById('load-error');if(panel)panel.hidden=false;var retry=document.getElementById('load-retry');if(retry)retry.addEventListener('click',function(){window.location.reload()},{once:true})});
