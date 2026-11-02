@@ -120,6 +120,8 @@ def main():
             page.locator('#subnav-events button[data-sub="travel"]').click()
             page.wait_for_function("() => { const el=document.getElementById('sub-travel'); return !!el && !el.hidden; }")
             page.wait_for_function("() => document.querySelectorAll('#travel-results .agw').length >= 2")
+            # A global hide preference may affect Today/Timeline, but must not silently remove a destination from Travel.
+            page.evaluate("() => { window.GODASH.usSet('hide:fixture-mexico', true); window.GODASH.renderAll(); }")
             travel_text = page.locator("#travel-results").inner_text()
             expect("Travel is a separate fourth Schedule view",
                    page.locator("#sub-travel").is_visible() and page.locator("#sub-world").is_hidden() and
@@ -127,6 +129,9 @@ def main():
             expect("Travel shows dated regional destinations but excludes global in-game events",
                    "Kyoto, Japan" in travel_text and "Mexico City, Mexico" in travel_text and
                    "Global In-Game Fixture" not in travel_text, travel_text)
+            expect("Travel is independent of per-event hide preferences and has no global hide control",
+                   "Mexico City Wild Area Fixture" in travel_text and
+                   page.locator("#travel-results [data-hide]").count() == 0, travel_text)
             expect("Travel datalist contains exact source-listed places",
                    page.locator('#travel-destinations option[value="Kyoto, Japan"]').count() == 1 and
                    page.locator('#travel-destinations option[value="Mexico City, Mexico"]').count() == 1)
