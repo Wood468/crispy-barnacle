@@ -1,5 +1,9 @@
+import os
+import tempfile
 import unittest
-from production_image_audit import detail_poster_results, image_kind, is_today_tab, payload_bytes, resource_label, scroll_positions, summarize
+from pathlib import Path
+from unittest.mock import patch
+from production_image_audit import detail_poster_results, image_kind, is_today_tab, payload_bytes, resource_label, scroll_positions, summarize, write_matrix_summary
 
 class ProductionImageAuditTests(unittest.TestCase):
     def test_recognises_r2_poster_paths(self):
@@ -47,6 +51,65 @@ class ProductionImageAuditTests(unittest.TestCase):
         self.assertEqual([item["loaded"] for item in result], [True, True, False])
         self.assertEqual([item["bytes"] for item in result], [450, 700, 0])
         self.assertIsNone(result[2]["status"])
+
+    def test_matrix_summary_reports_card_thumbnail_bytes_separately(self):
+        sample = summarize([
+            {"kind": "infographic-poster", "bytes": 1200, "resource": "site/poster.webp", "status": 200},
+            {"kind": "other-image", "bytes": 800, "resource": "site/icon.png", "status": 200},
+            {"kind": "infographic-poster", "bytes": 300, "resource": "site/second.webp", "status": 200},
+            {"kind": "infographic-thumbnail", "bytes": 150, "resource": "site/thumb.webp", "status": 200},
+        ])
+        empty = summarize([])
+        report = {
+            "measured_at_utc": "2026-11-03T00:00:00+00:00",
+            "target": "https://pogo.michaelpuff.com/",
+            "profiles": [{
+                "profile": "mobile-compact",
+                "viewport": {"width": 320, "height": 740},
+                "device_scale_factor": 3,
+                "phases": {
+                    "today_initial": sample,
+                    "schedule_activation_incremental": empty,
+                    "schedule_deep_scroll": empty,
+                    "today_reactivation": empty,
+                    "season_details_on_demand": empty,
+                },
+                "schedule_scroll": {"steps": 1, "content_height": 740},
+                "season_detail_posters": [],
+                "season_detail_errors": [],
+                "page_errors": [],
+            }],
+            "offline_cache": {
+                "service_worker_controlled": True,
+                "offline_reload_ok": True,
+                "online_schedule_opened": True,
+                "offline_schedule_opened": True,
+                "today_restored_online": True,
+                "offline_image_responses_from_service_worker": 1,
+                "blocked_non_read_requests": [],
+                "blocked_api_requests": [],
+                "unblocked_non_read_requests": [],
+                "failed_images": [],
+                "page_errors": [],
+                "phases": {
+                    "online_today": sample,
+                    "online_schedule_deep_scroll": empty,
+                    "offline_reload_today": sample,
+                    "offline_schedule_deep_scroll": empty,
+                },
+            },
+        }
+        with tempfile.TemporaryDirectory() as folder:
+            summary_path = Path(folder) / "summary.md"
+            with patch.dict(os.environ, {"GITHUB_STEP_SUMMARY": str(summary_path)}):
+                write_matrix_summary(report)
+            summary = summary_path.read_text(encoding="utf-8")
+        self.assertIn("Card thumbnails", summary)
+        self.assertIn("Thumbnail payload", summary)
+        self.assertIn("| Today initial load | 4 | 2,450 B | 2 | 1,500 B | 1 | 150 B |", summary)
+        self.assertIn("| Offline cached Today reload | 4 | 2,450 B | 2 | 1,500 B | 1 | 150 B |", summary)
+        self.assertIn("Largest card thumbnails in today_initial", summary)
+        self.assertIn("site/thumb.webp", summary)
 
     def test_summary_separates_poster_bytes_from_other_images(self):
         result = summarize([
