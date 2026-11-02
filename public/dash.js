@@ -1461,6 +1461,8 @@
     var todayRegional = regList().filter(function (e) { return e.start < endDay && e.end > dayStart; });
     var nextUp = EV.filter(function (e) { return phase(e, t) === 'soon' && e.start >= endDay && !e.long && !isHidden(e.id) && !kindHidden(e.kind); }).sort(function (a, b) { return a.start - b.start; })[0];
     var tdEl = $('home-now'); if (!tdEl) return;
+    /* While the event sheet is open its opener card must stay in the page (closing returns focus to it): render once the sheet closes. */
+    var sheet = $('evd'); if (sheet && !sheet.hidden) { homeNowDeferred = true; return; }
     var signature = JSON.stringify({
       day: dayKey(t),
       events: today.map(function (e) { return [e.id, phase(e, t)]; }),
@@ -1468,6 +1470,7 @@
       next: nextUp ? [nextUp.id, nextUp.start.getTime()] : null
     });
     if (!force && tdEl.getAttribute('data-render-key') === signature) return;
+    var retryHadFocus = !!document.activeElement && document.activeElement.id === 'today-retry';
     tdEl.setAttribute('data-render-key', signature);
     tdEl.removeAttribute('data-state'); tdEl.removeAttribute('aria-busy');
     var liveToday = today.filter(function (e) { return phase(e, t) === 'live'; });
@@ -1485,7 +1488,14 @@
         (nextUp
           ? '<button type="button" class="today-next-up" data-open="' + esc(nextUp.id) + '" aria-label="Open details for ' + esc(nextUp.name) + '"><span class="today-next-kicker">NEXT UP</span><b>' + esc(nextUp.name) + '</b><span class="today-next-time">' + esc(fmtD(nextUp.start) + ' · ' + fmtT(nextUp.start)) + '</span><span class="today-next-action">View event details <span aria-hidden="true">→</span></span></button>'
           : '<p class="today-empty-note">Check the schedule for upcoming events.</p>') + '</div>';
+    if (retryHadFocus) { /* the status row's Retry button was focused and has just been replaced: keep focus inside Today */
+      var again = tdEl.querySelector('[data-open]');
+      if (!again) { tdEl.setAttribute('tabindex', '-1'); again = tdEl; }
+      again.focus({ preventScroll: true });
+    }
   }
+  var homeNowDeferred = false;
+  document.addEventListener('gofn-detail-closed', function () { if (homeNowDeferred) { homeNowDeferred = false; renderHomeToday(now()); } });
   function renderWeekGroups(list, t) {
     t = t || now();
     var groups = [], byDay = {};
@@ -1613,7 +1623,7 @@
   function setSource() {
     var el = $('evsource'); if (el) el.textContent = usingApi ? (usingReadOnly ? 'Live Leek Duck events with curated details where available. Read-only preview; nothing is stored and the background pipeline remains off.' : 'Events come from the source pipeline. Each card shows how far its source can be trusted.') : 'Events come from the curated schedule. Times are in your own time zone.';
   }
-  function start(dexList, cpData) {
+  function applyCp(cpData) {
     if (cpData && cpData.pokemon && cpData.cpms) {
       cpData.pokemon.forEach(function (p) {
         if (!p || !p.name || !Number.isFinite(p.attack) || !Number.isFinite(p.defense) || !Number.isFinite(p.stamina)) return;
@@ -1622,8 +1632,14 @@
       CPMS = cpData.cpms;
       CP_READY = CPMS.length >= 49 && Object.keys(CP_STATS).length > 1000;
     }
+  }
+  function applyDex(dexList) {
     (dexList || []).forEach(function (p) { DEXBY[String(p[1]).toLowerCase()] = p[0]; DEXNAME[p[0]] = p[1]; DEXGEN[p[0]] = p[2]; });
     var dl = $('followdl'); if (dl) dl.innerHTML = (dexList || []).slice(0, 1025).map(function (p) { return '<option value="' + esc(p[1]) + '">'; }).join('');
+  }
+  function start(dexList, cpData) {
+    applyCp(cpData);
+    applyDex(dexList);
     EV = EV.length ? EV : fromData();
     EV_READY = true;
     setSource();
@@ -1631,7 +1647,7 @@
     renderCoverage();
     if (window.GO && GO.refreshDex) GO.refreshDex();
     usSync();
-    var inf = document.createElement('script'); inf.src = '/infographic.js?v=20261101e'; document.body.appendChild(inf); var x = document.createElement('script'); x.src = '/extra.js?v=20261024a'; document.body.appendChild(x); var z = document.createElement('script'); z.src = '/places.js?v=20261031b'; window.GOPLACES_READY = new Promise(function (resolve) { z.onload = function () { resolve(window.GOPLACES || null); }; z.onerror = function () { resolve(null); }; }); var y = document.createElement('script'); y.src = '/detail.js?v=20261102b'; document.body.appendChild(y); document.body.appendChild(z); var w = document.createElement('script'); w.src = '/fresh.js?v=20261014a'; document.body.appendChild(w); var nv = document.createElement('script'); nv.src = '/nudge.js?v=20261101a'; document.body.appendChild(nv); var rv = document.createElement('script'); rv.src = '/review.js?v=20261101b'; document.body.appendChild(rv); var by = document.createElement('script'); by.src = '/buy.js?v=20261101a'; document.body.appendChild(by);
+    var inf = document.createElement('script'); inf.src = '/infographic.js?v=20261101e'; document.body.appendChild(inf); var x = document.createElement('script'); x.src = '/extra.js?v=20261024a'; document.body.appendChild(x); var z = document.createElement('script'); z.src = '/places.js?v=20261031b'; window.GOPLACES_READY = new Promise(function (resolve) { z.onload = function () { resolve(window.GOPLACES || null); }; z.onerror = function () { resolve(null); }; }); var y = document.createElement('script'); y.src = '/detail.js?v=20261102c'; document.body.appendChild(y); document.body.appendChild(z); var w = document.createElement('script'); w.src = '/fresh.js?v=20261102a'; document.body.appendChild(w); var nv = document.createElement('script'); nv.src = '/nudge.js?v=20261101a'; document.body.appendChild(nv); var rv = document.createElement('script'); rv.src = '/review.js?v=20261101b'; document.body.appendChild(rv); var by = document.createElement('script'); by.src = '/buy.js?v=20261101a'; document.body.appendChild(by);
   }
   envBanner();
   /* Bounded waits: a request that never answers must not leave Today blank. After FEED_TIMEOUT_MS the page renders from the curated list
@@ -1650,17 +1666,24 @@
     fetch('/data/cp/pokemon.json').then(function (r) { return r.ok ? r.json() : null; }),
     fetch('/data/cp/cp-multipliers.json').then(function (r) { return r.ok ? r.json() : null; })
   ]).then(function (a) { return a[0] && a[1] ? { pokemon: a[0], cpms: a[1] } : null; }).catch(function () { return null; });
-  Promise.all([within(dexP, []), within(apiP, TIMED_OUT), within(cpP, null)]).then(function (R) {
+  Promise.all([within(dexP, TIMED_OUT), within(apiP, TIMED_OUT), within(cpP, TIMED_OUT)]).then(function (R) {
     var api = R[1], stalled = api === TIMED_OUT; if (stalled) api = null;
+    var dexLate = R[0] === TIMED_OUT, cpLate = R[2] === TIMED_OUT;
     if (!api && window.GONET && navigator.onLine !== false) window.GONET.fail('Could not load the latest events. Showing the saved copy.');
     applyLive(api);
-    start(R[0], R[2]);
+    start(dexLate ? [] : R[0], cpLate ? null : R[2]);
     setFeedState(!api ? 'degraded' : (usingApi ? 'live' : 'curated'));
+    /* Late answers are applied when they arrive: Have/Need, CP and the follow list fill in without a reload. Nothing the person has done is reset (the state lives in module variables). */
+    function refreshLate() { renderAll(); renderCoverage(); if (window.GO && GO.refreshDex) GO.refreshDex(); }
+    if (dexLate) dexP.then(function (late) { if (late && late.length) { applyDex(late); refreshLate(); } });
+    if (cpLate) cpP.then(function (late) { if (late) { applyCp(late); refreshLate(); } });
     if (stalled) apiP.then(function (late) {
-      if (!applyLive(late)) return;
+      if (!late) return; // still failing: stay on the saved copy, state stays 'degraded'
+      /* The final answer decides the state, as on a normal load: usable live list -> live, feed off or too short -> curated (a complete list, so What's new may compare). */
+      applyLive(late);
       setSource(); renderAll(); renderCoverage();
       if (window.GONET && window.GONET.clear) window.GONET.clear();
-      setFeedState('live');
+      setFeedState(usingApi ? 'live' : 'curated');
     });
   });
   (function () { var q = document.getElementById('evq'), tm; if (!q) return;

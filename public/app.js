@@ -1007,10 +1007,12 @@ Promise.all([
   /* If dash.js never loads (blocked, stalled or broken) Today must not stay a blank box: say so calmly and offer a retry. A late dash.js replaces this row. */
   function todayUnavailable(){var h=document.getElementById('home-now');if(!h||h.hasAttribute('data-render-key')||h.getAttribute('data-state')==='unavailable')return;
     h.setAttribute('data-state','unavailable');h.removeAttribute('aria-busy');
-    h.innerHTML='<div class="today-status" role="status"><p>Today\'s events did not load. Your saved collection is unchanged.</p><button type="button" class="pill" id="today-retry">Try again</button></div>';
+    /* An error row: role=alert is announced when it is inserted with its text (role=status is only announced if its text changes afterwards). */
+    h.innerHTML='<div class="today-status" role="alert"><p>Today\'s events did not load. Your saved collection is unchanged.</p><button type="button" class="pill" id="today-retry">Try again</button></div>';
     var r=document.getElementById('today-retry');if(r)r.addEventListener('click',function(){window.location.reload()});
-    var b=document.getElementById('day-brief');if(b)b.setAttribute('data-state','unavailable')}
-  var ds=document.createElement('script');ds.src='/dash.js?v=20261102l';ds.onerror=todayUnavailable;document.body.appendChild(ds);setTimeout(function(){if(!window.GODASH)todayUnavailable()},10000);
+    var b=document.getElementById('day-brief');if(b)b.setAttribute('data-state','unavailable');
+    var f=document.getElementById('fresh-line');if(f)f.setAttribute('data-released','')}
+  var ds=document.createElement('script');ds.src='/dash.js?v=20261102m';ds.onerror=todayUnavailable;document.body.appendChild(ds);setTimeout(function(){if(!window.GODASH)todayUnavailable()},10000);
 })();
 
 }).catch(function(){var panel=document.getElementById('load-error');if(panel)panel.hidden=false;var retry=document.getElementById('load-retry');if(retry)retry.addEventListener('click',function(){window.location.reload()},{once:true})});

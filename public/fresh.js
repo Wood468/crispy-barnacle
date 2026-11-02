@@ -44,7 +44,7 @@
   function renderLine() {
     var el = $('fresh-line'); if (!el) return; var m = lineModel();
     if (!m) { el.hidden = true; return; }
-    el.hidden = false; el.className = 'fresh-line fl-' + m.cls; el.innerHTML = '<button type="button" id="fresh-go" aria-label="Open sources and freshness">' + m.text + ' <span aria-hidden="true">›</span></button>';
+    el.removeAttribute('data-released'); el.hidden = false; el.className = 'fresh-line fl-' + m.cls; el.innerHTML = '<button type="button" id="fresh-go" aria-label="Open sources and freshness">' + m.text + ' <span aria-hidden="true">›</span></button>';
   }
 
   /* ---- Menu › Sources and freshness ---- */
@@ -107,6 +107,8 @@
   }
   function renderAll() { renderLine(); renderCard(); }
 
+  /* The empty line reserves its 44px so nothing jumps when the text arrives. If the answers never come, give the space back after 8 s; a late answer still fills the line. */
+  setTimeout(function () { var el = $('fresh-line'); if (!S.done && el && el.hidden) el.setAttribute('data-released', ''); }, 8000);
   function j(u) { return fetch(u, { cache: 'no-cache' }).then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; }); }
   Promise.all([j('/api/sources'), j('/api/datamine'), j('/api/pvp').then(function (p) { return p || j('/pvp.json'); }), (window.GOLIB ? GOLIB.loadPrices() : j('/prices.json')), j('/health.json')]).then(function (a) {
     S.api = a[0] && typeof a[0] === 'object' ? a[0] : null; S.dm = a[1]; S.pvp = a[2]; S.prices = a[3]; S.jobs = a[4]; S.done = true; renderAll();
