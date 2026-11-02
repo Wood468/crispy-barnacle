@@ -25,7 +25,7 @@
       }) : [];
     } catch (e) { weak = []; }
     var counters = null;
-    if (weak.length && bestApi && bestApi.ready === true && typeof bestApi.ownedSummary === 'function') {
+    if (weak.length && bestApi && bestApi.dataReady === true && typeof bestApi.ownedSummary === 'function') {
       try {
         var summary = bestApi.ownedSummary(weak, 3);
         if (summary && Number.isFinite(Number(summary.count)) && Array.isArray(summary.names)) {
