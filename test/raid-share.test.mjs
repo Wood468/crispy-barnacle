@@ -42,6 +42,15 @@ test("raid share payload does not invent weaknesses, counters or dates when sour
   assert.doesNotMatch(payload.text, /Weak to:|Marked counters|Rotation:/);
 });
 
+test("raid share payload waits for the local attacker summary to be ready", () => {
+  const api = load();
+  const types = { facts: () => ({ weak: ["Ice"] }) };
+  const best = { ready: false, ownedSummary: () => ({ count: 0, names: [] }) };
+  const payload = api.buildPayload({ boss: "Yveltal" }, types, best, "");
+  assert.equal(payload.counters, null);
+  assert.doesNotMatch(payload.text, /Marked counters|No marked counters/);
+});
+
 test("raid share payload rejects an empty boss name", () => {
   assert.equal(load().buildPayload({ boss: "   " }, null, null, ""), null);
 });
