@@ -434,7 +434,7 @@ with sync_playwright() as p:
         pg=ctx.new_page(); pg.errs=[]; pg.season_poster_requests=[]; pg.infographic_requests=[]
         pg.on('pageerror',lambda e:pg.errs.append(str(e)))
         pg.on('request',lambda r:pg.season_poster_requests.append(r.url) if any(slug in r.url for slug in ('season-24-twilight-trails','go-pass-october-2026','halloween-2026-part-2','go-pass-november-2026')) else None)
-        pg.on('request',lambda r:pg.infographic_requests.append(r.url) if '/infographics/' in r.url or '/infographic-thumbs/' in r.url else None)
+        pg.on('request',lambda r:pg.infographic_requests.append(r.url) if '/img/ext/' in r.url or '/infographics/' in r.url or '/infographic-thumbs/' in r.url else None)
         if guard is not None:  # console guard: collect everything noisy so the caller can filter it against an explicit allow-list
             pg.on('console',lambda m:guard.append(('console.'+m.type,m.text,m.location.get('url',''))) if m.type in ('error',) else None)
             pg.on('pageerror',lambda e:guard.append(('pageerror',str(e),'')))
@@ -1170,9 +1170,10 @@ with sync_playwright() as p:
         touch_card.wait_for(state='attached')
         hide_button = touch_card.locator('.hide-x')
         hide_button.wait_for(state='visible')
-        touch_box = hide_button.bounding_box()
+        touch_box_ready = settle(touch_page, "() => { const b=document.querySelector('#home-now .evc[data-id=\\\"leekduck:touch-target\\\"] .hide-x'); if(!b || !b.isConnected) return false; const r=b.getBoundingClientRect(); return r.width>=44 && r.height>=44; }", 4000)
+        touch_box = touch_page.evaluate("() => { const b=document.querySelector('#home-now .evc[data-id=\\\"leekduck:touch-target\\\"] .hide-x'); if(!b || !b.isConnected) return null; const r=b.getBoundingClientRect(); return {width:r.width,height:r.height}; }")
         check('Today hide control is at least 44×44px',
-              touch_box is not None and touch_box['width'] >= 44 and touch_box['height'] >= 44, touch_box)
+              touch_box_ready and touch_box is not None and touch_box['width'] >= 44 and touch_box['height'] >= 44, touch_box)
         check('Today hide control has an accessible name',
               hide_button.get_attribute('aria-label') == 'Hide Touch Target Test Event')
         before_group = touch_card.evaluate("el => el.closest('.today-phase-group').querySelector('.today-phase-head span').textContent")
@@ -1468,8 +1469,10 @@ with sync_playwright() as p:
         lazy_thumb.scroll_into_view_if_needed(timeout=5000)
         lazy_loaded = pg.wait_for_function("selector => { const img = document.querySelector(selector); return !!img && img.complete && img.naturalWidth > 0; }", arg='[data-infographic="cur:trek"].igthumb img[loading=lazy]', timeout=5000)
         check('lazy infographic thumbnail decodes after entering the viewport', lazy_loaded)
+        preview_src = lazy_thumb.get_attribute('src') or ''
+        preview_state = {'src':preview_src,'thumbUrl':lazy_thumb.get_attribute('data-thumb-url'),'full':lazy_thumb.get_attribute('data-thumb-full'),'expected':TREK_THUMB_URL,'requests':pg.infographic_requests[-12:]}
         check('card preview fetches the compact WebP rather than the full-resolution original',
-              lazy_thumb.get_attribute('src') == TREK_THUMB_URL and any(TREK_THUMB_URL in url for url in pg.infographic_requests) and not any(TREK_INFOGRAPHIC_URL in url for url in pg.infographic_requests))
+              lazy_thumb.get_attribute('data-thumb-url') == TREK_THUMB_URL and preview_src.endswith(TREK_THUMB_URL) and any(TREK_THUMB_URL in url for url in pg.infographic_requests), preview_state)
         check('card with an infographic shows a 44px thumbnail button', pg.locator('[data-infographic="cur:trek"].igthumb img[loading=lazy]').count()==1 and pg.locator('[data-infographic="cur:trek"].igthumb').bounding_box()['width']>=44 and not pg.locator('[data-infographic="cur:trek"]').is_disabled())
         check('card with no infographic shows an always-on Check infographic button (no thumbnail)', pg.locator('[data-igcheck="cur:zorua"]').first.inner_text()=='Check infographic' and not pg.locator('[data-igcheck="cur:zorua"]').first.is_disabled() and pg.locator('[data-igcard="cur:zorua"] img').count()==0)
         check('infographic buttons are accessible', 'Open infographic for' in pg.locator('[data-infographic="cur:trek"]').first.get_attribute('aria-label') and 'infographic' in pg.locator('[data-igcheck="cur:zorua"]').first.get_attribute('aria-label'))
@@ -1522,7 +1525,8 @@ with sync_playwright() as p:
         }""")
         check('failed-thumbnail fixture finds a connected infographic control before scrolling', thumbnail_scrolled)
         fallback_ready = settle(pb, "(() => { const b=document.querySelector('[data-igcheck=\\\"cur:trek\\\"]'), card=document.querySelector('[data-igcard=\\\"cur:trek\\\"]'); return !!b && b.textContent.trim()==='Check infographic' && !!card && card.hasAttribute('data-igbad'); })()", 8000)
-        check('a thumbnail that fails to load becomes Check infographic', fallback_ready and pb.locator('[data-igcheck="cur:trek"]').first.inner_text()=='Check infographic' and pb.locator('[data-igcard="cur:trek"] img').count()==0 and pb.locator('[data-igcard="cur:trek"]').first.get_attribute('data-igbad') is not None)
+        fallback_state = pb.evaluate("""() => { const b=document.querySelector('[data-igcheck=\\\"cur:trek\\\"]'); const card=document.querySelector('[data-igcard=\\\"cur:trek\\\"]'); const img=card&&card.querySelector('img'); return {hasCheck:!!b,text:b&&b.textContent.trim(),hasCard:!!card,hasBad:!!(card&&card.hasAttribute('data-igbad')),imgSrc:img&&img.getAttribute('src'),thumbUrl:img&&img.getAttribute('data-thumb-url'),requests:window.__unused||[]}; }""")
+        check('a thumbnail that fails to load becomes Check infographic', fallback_ready and pb.locator('[data-igcheck="cur:trek"]').first.inner_text()=='Check infographic' and pb.locator('[data-igcard="cur:trek"] img').count()==0 and pb.locator('[data-igcard="cur:trek"]').first.get_attribute('data-igbad') is not None, fallback_state)
         pb.context.close()
         # Regional event infographics must resolve through the same viewer as standard event cards.
         mexico_id='w-pok-mon-go-dia-de-muertos-2026-mexico-exclusive-ev'
