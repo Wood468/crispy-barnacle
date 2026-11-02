@@ -153,3 +153,40 @@ test("service worker offline: finds code and data by path when only the ?v= diff
   const miss = await t.dispatch("/not-cached.js?v=1");
   assert.equal(miss.status, 503);
 });
+
+test("GOLIB.getJson: a caller's own fetch options are never dropped because someone else already asked", async () => {
+  const seen = [];
+  const lib = freshLib((u, init) => { seen.push([u, init]); return ok({ n: seen.length }); });
+  seen.length = 0;
+  await lib.getJson("/o.json");
+  await lib.getJson("/o.json", { init: { cache: "no-cache" } });
+  assert.equal(seen.length, 1, "the soft cache modes (default / no-cache) both revalidate, so they share one request");
+  await lib.getJson("/o.json", { init: { cache: "reload" } });
+  assert.equal(seen.length, 2, "a caller that forces the network never gets a copy fetched without that");
+  assert.equal(seen[1][1].cache, "reload", "and its fetch options reach fetch");
+  await lib.getJson("/o.json");
+  await lib.getJson("/o.json", { init: { cache: "no-cache" } });
+  assert.equal(seen.length, 2, "a forced copy serves later soft callers");
+  await lib.getJson("/o.json", { init: { headers: { "x-test": "1" } } });
+  assert.equal(seen.length, 3, "different headers mean a different request");
+  assert.deepEqual(seen[2][1].headers, { "x-test": "1" });
+  await lib.getJson("/o.json", { init: { headers: { "X-Test": "1" } } });
+  assert.equal(seen.length, 3, "header names are compared without case");
+});
+
+test("GOLIB.getJson: a request that never answers does not hold later callers past maxAge or their own timeout", async () => {
+  let calls = 0, hang = true;
+  const lib = freshLib(() => { calls++; return hang ? new Promise(() => {}) : ok({ v: calls }); });
+  calls = 0;
+  lib.getJson("/h.json").catch(() => {});
+  assert.equal(calls, 1);
+  await new Promise((r) => setTimeout(r, 8));
+  hang = false;
+  assert.deepEqual(await lib.getJson("/h.json", { maxAge: 5 }), { v: 2 }, "an entry older than maxAge is dropped even though it never settled");
+  hang = true; calls = 0;
+  await assert.rejects(lib.getJson("/h2.json", { timeout: 15 }), /timed out/, "a caller with a timeout stops waiting");
+  assert.equal(await lib.jsonOrNull("/h2.json", { timeout: 15 }), null, "jsonOrNull gives null instead of hanging");
+  assert.equal(calls, 2, "the timed-out request was dropped, so the next caller starts a new one");
+  hang = false;
+  assert.deepEqual(await lib.getJson("/h2.json", { timeout: 50 }), { v: 3 });
+});

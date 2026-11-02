@@ -35,8 +35,8 @@
     list.innerHTML = rows.length ? rows.slice(0, shown).map(function (f) {
       var tk = 'form:' + f[0] + ':' + f[1], nm = fullName(f);
       return '<div class="frow"><span class="fa">' + G.art(nm, 'ea') + '</span><span class="fname"><b>' + esc(nm) + '</b>' + unreleasedBadge(nm) + '</span><span class="fbtns">'
-        + '<button type="button" data-mark="' + esc(tk) + '" data-val="1" aria-pressed="' + (S.get(tk) === 1) + '">Have</button>'
-        + '<button type="button" data-mark="' + esc(tk) + '" data-val="0" aria-pressed="' + (S.get(tk) === 0) + '">Need</button></span></div>';
+        + '<button type="button" data-mark="' + esc(tk) + '" data-val="1" aria-pressed="' + (S.get(tk) === 1) + '" aria-label="Have: ' + esc(nm) + '">Have</button>'
+        + '<button type="button" data-mark="' + esc(tk) + '" data-val="0" aria-pressed="' + (S.get(tk) === 0) + '" aria-label="Need: ' + esc(nm) + '">Need</button></span></div>';
     }).join('') + (rows.length > shown ? '<button type="button" class="pill" id="formmore">Show more (' + (rows.length - shown) + ')</button>' : '')
       : '<p class="empty">' + (q ? 'No forms found for that name.' : grp === 'marked' ? 'Nothing marked yet. Search a Pokémon above, or pick a type.' : 'No forms here.') + '</p>';
   }

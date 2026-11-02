@@ -187,21 +187,46 @@
       return t ? (t.basis === 'verified' ? '' : '≈ ') + 'A$' + Number(t.aud).toFixed(2) : 'A$ price not confirmed';
     });
   }
-  /* One request per JSON URL per page load. The first caller's request is shared by everyone who asks for the same URL within maxAge (default 30 s), each caller getting its own freshly parsed copy so nobody can mutate another's data.
-     A failed request (network error, non-2xx, bad JSON) is dropped at once, so the next caller tries again. opts.fresh skips the shared copy and replaces it; opts.init is passed to fetch for the request that actually goes out. */
+  /* One request per JSON URL per page load. The first caller's request is shared by everyone who asks for the same URL (with the same fetch options) within maxAge (default 30 s), each caller getting its own freshly parsed copy so nobody can mutate another's data.
+     A failed request (network error, non-2xx, bad JSON) is dropped at once, so the next caller tries again. opts.fresh skips the shared copy and replaces every shared copy of that URL; opts.init is passed to fetch for the request that actually goes out.
+     The shared copy is keyed by URL plus the fetch options that change what comes back (method, headers, credentials). A caller that forces the network (cache: reload / no-store) never takes a copy that was fetched without that, but a forced copy serves everyone; the soft modes (default, no-cache) share one copy.
+     A request that never answers is not kept longer than maxAge: later callers start their own, and opts.timeout (ms) makes one caller stop waiting (the shared request is dropped too, so the next caller does not inherit the hang). */
   var JSON_CACHE = {};
+  function initKey(init) {
+    if (!init) return '';
+    var h = init.headers, hk = '';
+    if (h) {
+      var pairs = [];
+      if (typeof h.forEach === 'function' && !Array.isArray(h)) h.forEach(function (v, k) { pairs.push([String(k).toLowerCase(), String(v)]); });
+      else if (Array.isArray(h)) h.forEach(function (x) { pairs.push([String(x[0]).toLowerCase(), String(x[1])]); });
+      else Object.keys(h).forEach(function (k) { pairs.push([k.toLowerCase(), String(h[k])]); });
+      pairs.sort(function (a, b) { return a[0] < b[0] ? -1 : a[0] > b[0] ? 1 : 0; });
+      hk = JSON.stringify(pairs);
+    }
+    var k = [init.method || '', init.credentials || '', init.mode || '', hk].join('|');
+    return k === '|||' ? '' : k;
+  }
   function getJson(url, opts) {
     opts = opts || {};
-    var maxAge = opts.maxAge == null ? 30000 : opts.maxAge, hit = JSON_CACHE[url], now = Date.now(), entry;
-    if (hit && !opts.fresh && now - hit.t < maxAge) entry = hit;
+    var maxAge = opts.maxAge == null ? 30000 : opts.maxAge, key = url + '\n' + initKey(opts.init), hit = JSON_CACHE[key], now = Date.now(), entry;
+    var forced = !!opts.init && (opts.init.cache === 'reload' || opts.init.cache === 'no-store');
+    if (hit && !opts.fresh && now - hit.t < maxAge && (hit.forced || !forced)) entry = hit;
     else {
+      if (opts.fresh) Object.keys(JSON_CACHE).forEach(function (k) { if (k.indexOf(url + '\n') === 0) delete JSON_CACHE[k]; });
       var p = fetch(url, opts.init).then(function (r) { if (!r.ok) throw new Error(url + ' HTTP ' + r.status); return r.text(); });
-      entry = JSON_CACHE[url] = { t: now, p: p };
-      p.catch(function () { if (JSON_CACHE[url] === entry) delete JSON_CACHE[url]; });
+      entry = JSON_CACHE[key] = { t: now, p: p, forced: forced };
+      p.catch(function () { if (JSON_CACHE[key] === entry) delete JSON_CACHE[key]; });
     }
-    return entry.p.then(function (text) {
-      try { return JSON.parse(text); } catch (e) { if (JSON_CACHE[url] === entry) delete JSON_CACHE[url]; throw e; }
-    });
+    var waiting = entry.p, timer = null;
+    if (opts.timeout > 0) {
+      waiting = Promise.race([entry.p, new Promise(function (_, reject) {
+        timer = setTimeout(function () { if (JSON_CACHE[key] === entry) delete JSON_CACHE[key]; reject(new Error(url + ' timed out')); }, opts.timeout);
+      })]);
+    }
+    return waiting.then(function (text) {
+      if (timer && typeof clearTimeout === 'function') clearTimeout(timer);
+      try { return JSON.parse(text); } catch (e) { if (JSON_CACHE[key] === entry) delete JSON_CACHE[key]; throw e; }
+    }, function (e) { if (timer && typeof clearTimeout === 'function') clearTimeout(timer); throw e; });
   }
   function jsonOrNull(url, opts) { return getJson(url, opts).catch(function () { return null; }); }
   try { if (typeof fetch === 'function' && typeof window !== 'undefined') jsonOrNull('/prices.json').then(function (d) { if (d) setTiers(d.tiers_au); }); } catch (e) { }
@@ -258,5 +283,22 @@
     return { inGame: inGame, inPerson: inPerson, total: inGame + inPerson };
   }
 
-  return { esc: esc, rpEstimate: rpEstimate, raidEventFor: raidEventFor, isPlaceholder: isPlaceholder, audify: audify, setTiers: setTiers, loadPrices: loadPrices, getJson: getJson, jsonOrNull: jsonOrNull, priceView: priceView, fmtRp: fmtRp, buildQueue: buildQueue, parseForm: parseForm, formId: formId, merge: merge, reconcileSync: reconcileSync, norm: norm, lev: lev, matchName: matchName, candidates: candidates, liveActivityCounts: liveActivityCounts };
+  /* Links that only work for the person who owns the Discord server (discord.com/channels/...) are useless to everyone else.
+     publicLink() returns the first candidate that is an https link a visitor can actually open, or '' when none is. */
+  function isPrivateLink(u) {
+    if (typeof u !== 'string') return false;
+    var m = /^https?:\/\/([^\/?#]+)(\/[^?#]*)?/i.exec(u.trim());
+    if (!m) return false;
+    var host = m[1].toLowerCase().replace(/:\d+$/, '').replace(/^(www|ptb|canary)\./, '');
+    return (host === 'discord.com' || host === 'discordapp.com') && /^\/channels(\/|$)/i.test(m[2] || '');
+  }
+  function publicLink() {
+    for (var i = 0; i < arguments.length; i++) {
+      var u = arguments[i];
+      if (typeof u === 'string' && /^https:\/\//i.test(u) && !isPrivateLink(u)) return u;
+    }
+    return '';
+  }
+
+  return { isPrivateLink: isPrivateLink, publicLink: publicLink, esc: esc, rpEstimate: rpEstimate, raidEventFor: raidEventFor, isPlaceholder: isPlaceholder, audify: audify, setTiers: setTiers, loadPrices: loadPrices, getJson: getJson, jsonOrNull: jsonOrNull, priceView: priceView, fmtRp: fmtRp, buildQueue: buildQueue, parseForm: parseForm, formId: formId, merge: merge, reconcileSync: reconcileSync, norm: norm, lev: lev, matchName: matchName, candidates: candidates, liveActivityCounts: liveActivityCounts };
 }));
