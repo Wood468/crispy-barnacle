@@ -1700,9 +1700,20 @@ with sync_playwright() as p:
             pg.wait_for_function('!!window.__raidCopied')
             check('raid share copy fallback includes the selected boss and app link',
                   raid_share_boss in pg.evaluate('window.__raidCopied') and 'GO Field Notes:' in pg.evaluate('window.__raidCopied'))
+            pg.evaluate("() => { delete navigator.share; window.__raidCopied = ''; }")
+            pg.click('#raid-share-send')
+            pg.wait_for_function('!!window.__raidCopied')
+            check('unsupported native sharing falls back to copying the same raid details',
+                  raid_share_boss in pg.evaluate('window.__raidCopied') and 'Rotation:' in pg.evaluate('window.__raidCopied'))
             pg.click('#raid-share-close')
             pg.wait_for_function("!document.querySelector('#raid-share-dialog').open")
             check('closing the raid share card restores focus to its opening raid row',
+                  pg.evaluate("document.activeElement && document.activeElement.hasAttribute('data-raid-share')"))
+            raid_share_button.click()
+            pg.wait_for_selector('#raid-share-dialog[open]')
+            pg.keyboard.press('Escape')
+            pg.wait_for_function("!document.querySelector('#raid-share-dialog').open")
+            check('Escape closes the raid share card and restores focus to its opener',
                   pg.evaluate("document.activeElement && document.activeElement.hasAttribute('data-raid-share')"))
         pg.click('nav.tabs button[data-tab="now"]'); pg.wait_for_timeout(200)
         check('now tab: checklist gone; shiny list and calendar subscribe kept', pg.locator('#daily').count()==0 and pg.locator('#dailyList').count()==0 and pg.locator('#shdd').count()==1 and pg.locator('#tab-now #calcard').count()==0 and pg.locator('#sub-menu #calcard').count()==1 and pg.input_value('#calurl').endswith('/api/calendar.ics') and pg.get_attribute('#calsub','href').startswith('webcal:'))
