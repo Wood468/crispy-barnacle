@@ -1505,7 +1505,15 @@ with sync_playwright() as p:
               }"""))
         # A missing compact thumbnail falls back to the original; if both fail, Check infographic remains available.
         pf=page(pre=lambda p: p.route('**' + TREK_THUMB_URL, lambda route: route.fulfill(status=404,body='')) if TREK_THUMB_URL else None)
-        pf.locator('[data-infographic="cur:trek"]').first.scroll_into_view_if_needed(timeout=5000)
+        # Today can re-render while secondary data arrives; wait for and scroll the current connected node
+        # inside one browser task rather than retaining a locator across the render boundary.
+        thumbnail_scrolled = pf.wait_for_function("""() => {
+            const target = document.querySelector('[data-infographic="cur:trek"]');
+            if (!target || !target.isConnected) return false;
+            target.scrollIntoView({block:'center', inline:'nearest'});
+            return true;
+        }""", timeout=5000)
+        check('missing-thumbnail fixture finds a connected infographic control before scrolling', thumbnail_scrolled)
         fallback_original = settle(pf, "(() => { const img=document.querySelector('[data-infographic=\\\"cur:trek\\\"] img'); return !!img && img.getAttribute('data-thumb-url')===img.getAttribute('data-thumb-full') && img.complete && img.naturalWidth>0; })()", 8000)
         check('missing WebP card thumbnail falls back to the full-resolution original',
               fallback_original and pf.locator('[data-infographic="cur:trek"] img').first.get_attribute('src') == TREK_INFOGRAPHIC_URL)
