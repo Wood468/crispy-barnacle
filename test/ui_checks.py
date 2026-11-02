@@ -2662,12 +2662,18 @@ with sync_playwright() as p:
         late = settle(rb, "/source pipeline/.test(document.getElementById('evsource').textContent) && document.getElementById('netbar').hidden", 8000)
         check('stalled feed: a live answer that arrives after the timeout replaces the fallback and clears the notice', late, rb.evaluate("[document.getElementById('evsource').textContent, document.getElementById('netbar').hidden]"))
         rb.context.close()
-        # 2. a 500 and a dropped connection still fall back to the curated list
+        # 2. a 500 and a dropped connection still fall back to the curated list.
+        # The season banner is an independent async feed: assert Today is usable first,
+        # then wait for that feed before checking its banner (fast failures must not
+        # make this test sample the banner before season.js has finished).
         for label, handler in (('500', lambda route, request=None: route.fulfill(status=500, body='{}', content_type='application/json')), ('network error', lambda route, request=None: route.abort())):
             fb = page(clock=RB_CLOCK, pre=lambda pg, h=handler: pg.route('**/api/events', h), ready=False)
             ok = settle(fb, "document.getElementById('home-now').hasAttribute('data-render-key')", 6000)
             st = fb.evaluate(TODAY_STATE_JS)
-            check('feed %s: Today falls back to the curated list with the saved-copy notice' % label, ok and st['cards'] >= 1 and st['statsShown'] and st['seasonShown'] and 'saved copy' in st['netbar'], st)
+            check('feed %s: Today falls back to the curated list with the saved-copy notice before the season feed is ready' % label, ok and st['cards'] >= 1 and st['statsShown'] and 'saved copy' in st['netbar'], st)
+            season_ready = settle(fb, "!!document.querySelector('#seasonbar .ssn-card')", 8000)
+            st = fb.evaluate(TODAY_STATE_JS)
+            check('feed %s: the independent active season banner appears when its data is ready' % label, season_ready and st['seasonShown'], st)
             fb.context.close()
         # 3. dash.js blocked, then stalled: a neutral status row with a 44px Retry, never a blank box
         for label, handler in (('fails to load', lambda route, request=None: route.abort()), ('never loads', hang)):
