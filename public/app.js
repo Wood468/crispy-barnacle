@@ -211,7 +211,7 @@ Promise.all([
   var PANEL_IDS=['now','events','raids','collect','saved'];
   // Three views per tab. Some views have a second-level filter (MODES) over existing sections.
   var SUBS={
-    events:[['calendar','Calendar','sub-calendar'],['timeline','Timeline','sub-timeline'],['leaks','Discoveries','sub-leaks','menu']],
+    events:[['calendar','Calendar','sub-calendar'],['timeline','Timeline','sub-timeline'],['world','In person','sub-world'],['leaks','Discoveries','sub-leaks','menu']],
     collect:[['dex','My Dex','sub-mydex'],['opps','Opportunities','sub-opps','menu'],['megas','Megas','sub-megas'],['guides','Guides','sub-guides']],
     saved:[['watch','Watchlist','sub-watch'],['menu','Menu','sub-menu']]
   };
@@ -220,8 +220,8 @@ Promise.all([
     'collect/guides':[['best','Best attackers','tab-best'],['hundo','Hundo guide','tab-hundo']]
   };
   // Old saved locations still open the right place.
-  var LEGACY={upcoming:['events','leaks'],person:['events','calendar'],dex:['collect','dex','species'],best:['collect','guides','best'],hundo:['collect','guides','hundo']};
-  var LEGACYSUB={'events/world':['calendar'],'events/coming':['calendar'],'collect/forms':['dex','forms'],'collect/import':['dex','import'],'collect/best':['guides','best'],'collect/hundo':['guides','hundo']};
+  var LEGACY={upcoming:['events','leaks'],person:['events','world'],dex:['collect','dex','species'],best:['collect','guides','best'],hundo:['collect','guides','hundo']};
+  var LEGACYSUB={'events/world':['world'],'events/coming':['calendar'],'collect/forms':['dex','forms'],'collect/import':['dex','import'],'collect/best':['guides','best'],'collect/hundo':['guides','hundo']};
   var tabsEl=$('tabs'),curTab='now',curSub={events:'timeline',collect:'dex',saved:'watch'},curMode={'collect/dex':'species','collect/guides':'best'};
   if(window.__GOBootNavClear)window.__GOBootNavClear();
   TABS.forEach(function(t,i){

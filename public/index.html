@@ -129,13 +129,14 @@
         <div id="evtimeline"></div>
         <p class="note" id="evsource"></p>
       </div>
-        <div id="tl-more" hidden>
-        <section class="panel" id="tab-person">
+      </section>
+      <section class="panel" id="sub-world" hidden>
+        <h2 class="sec2">In person and around the world</h2>
         <p class="intro">Ticketed events that happen in a real place. Most also have a global version you can play from home.</p>
         <div class="grid" id="inperson" style="grid-template-columns:repeat(auto-fit,minmax(min(100%,22rem),1fr))"></div>
         <div>
           <h2 class="sec" style="margin-bottom:14px">Already over this year</h2>
-          <div class="tablewrap" tabindex="0" role="region" aria-label="GO Fest 2026 in person locations"><table>
+          <div class="tablewrap" tabindex="0" role="region" aria-label="GO Fest 2026 in person locations" style="overflow-x:auto;max-width:100%"><table>
             <thead><tr><th>GO Fest 2026</th><th>Dates</th><th>Venue</th></tr></thead>
             <tbody id="fests"></tbody></table></div>
         </div>
@@ -145,15 +146,13 @@
           <p class="note" id="worldnote"></p>
         </div>
       </section>
-        <div id="tl-debut">
+      <div id="tl-debut" hidden>
         <div>
           <h2 class="sec" style="margin-bottom:14px">Announced</h2>
           <div class="grid" id="up-announced" style="grid-template-columns:repeat(auto-fit,minmax(min(100%,20rem),1fr))"></div>
         </div>
           <p class="note">Only announced items are shown here. Anything found in game files but not announced is under Leaks.</p>
-        </div>
-        </div>
-      </section>
+      </div>
       <section class="panel" id="sub-calendar" hidden>
         <div class="calhead"><button type="button" class="calnav" id="calprev" aria-label="Previous month">‹</button><h2 class="sec2" id="calttl"></h2><button type="button" class="calnav" id="calnext" aria-label="Next month">›</button></div>
         <div class="evtypes" id="calreg" role="group" aria-label="Region and range"></div>
@@ -424,7 +423,7 @@
 <script src="/local-state.js?v=20261030a"></script>
 <script src="/account.js?v=20261101b"></script>
 <script src="/dedupe.js?v=20261101b"></script>
-<script src="/app.js?v=20261102j"></script>
+<script src="/app.js?v=20261102k"></script>
 <script src="/store.js?v=20261101a"></script>
 <script src="/season.js?v=20261102d"></script>
 <script src="/weekly.js?v=20261101a"></script>
