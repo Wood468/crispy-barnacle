@@ -1627,7 +1627,7 @@
   function isTravelVisible() { return panelIsVisible('tab-events') && panelIsVisible('sub-travel'); }
   function isRaidsVisible() { return panelIsVisible('tab-raids'); }
   function isOppsVisible() { return panelIsVisible('tab-collect') && panelIsVisible('sub-opps'); }
-  function isSavedVisible() { return panelIsVisible('tab-saved') && panelIsVisible('sub-watch'); }
+  function isSavedVisible() { return panelIsVisible('tab-saved') && (panelIsVisible('sub-watch') || panelIsVisible('sub-menu')); }
   function renderTypes() { if (isTimelineVisible()) drawTypes(); }
   function renderStrip() { if (isTimelineVisible()) drawStrip(); }
   function renderTimeline() { if (isTimelineVisible()) drawTimeline(); }

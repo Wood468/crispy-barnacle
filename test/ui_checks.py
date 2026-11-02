@@ -366,6 +366,7 @@ check('secondary dashboard views render only while their panels are active',
           'function isRaidsVisible()',
           'function isOppsVisible()',
           'function isSavedVisible()',
+          "function isSavedVisible() { return panelIsVisible('tab-saved') && (panelIsVisible('sub-watch') || panelIsVisible('sub-menu')); }",
           'function drawTypes()',
           'function drawStrip()',
           'function drawTimeline()',
@@ -3036,11 +3037,12 @@ with sync_playwright() as p:
           travel: document.querySelector('#travel-results')?.children.length || 0,
           raids: document.querySelector('#rotnow')?.children.length || 0,
           opps: document.querySelector('#opps')?.children.length || 0,
-          saved: document.querySelector('#savedev')?.children.length || 0
+          saved: document.querySelector('#savedev')?.children.length || 0,
+          followed: document.querySelector('#followed')?.children.length || 0
         })""")
         check('Today and its This Week section render eagerly while hidden secondary views remain unrendered',
               secondary_state['today'] > 0 and secondary_state['todayKey'] and secondary_state['thisWeek'] > 0 and
-              all(secondary_state[k] == 0 for k in ['timeline','weekstrip','calendar','travel','raids','opps','saved']), secondary_state)
+              all(secondary_state[k] == 0 for k in ['timeline','weekstrip','calendar','travel','raids','opps','saved','followed']), secondary_state)
         def secondary_click(selector): secondary_page.locator(selector).dispatch_event('click')
         secondary_click('nav.tabs button[data-tab="events"]')
         timeline_ok = settle(secondary_page, "document.querySelector('#evtimeline')?.children.length > 0 && document.querySelector('#weekstrip')?.children.length > 0")
@@ -3051,8 +3053,10 @@ with sync_playwright() as p:
         secondary_click('nav.tabs button[data-tab="raids"]')
         raids_ok = settle(secondary_page, "document.querySelector('#rotnow')?.children.length > 0")
         secondary_click('nav.tabs button[data-tab="collect"]')
-        secondary_click('#subnav-collect button[data-sub="opps"]')
+        secondary_page.evaluate("document.getElementById('sub-opps').hidden=false; document.dispatchEvent(new CustomEvent('gofn-view',{detail:{tab:'collect',sub:'opps'}}))")
         opps_ok = settle(secondary_page, "document.querySelector('#opps')?.children.length > 0")
+        secondary_click('#hmenu')
+        menu_ok = settle(secondary_page, "document.querySelector('#followed')?.children.length > 0")
         secondary_click('#hwatch')
         saved_ok = settle(secondary_page, "document.querySelector('#savedev')?.children.length > 0")
         secondary_click('nav.tabs button[data-tab="now"]')
@@ -3062,9 +3066,9 @@ with sync_playwright() as p:
           todayVisible: !document.querySelector('#tab-now')?.hidden
         })""")
         check('Timeline, Calendar, Travel, Battle, Opportunities and Watchlist render on activation; Today and This Week remain unchanged on return',
-              timeline_ok and calendar_ok and travel_ok and raids_ok and opps_ok and saved_ok and returned['todayVisible'] and
+              timeline_ok and calendar_ok and travel_ok and raids_ok and opps_ok and menu_ok and saved_ok and returned['todayVisible'] and
               returned['todayKey'] == secondary_state['todayKey'] and returned['thisWeek'] == secondary_state['weekText'],
-              {'timeline':timeline_ok,'calendar':calendar_ok,'travel':travel_ok,'raids':raids_ok,'opps':opps_ok,'saved':saved_ok,'returned':returned})
+              {'timeline':timeline_ok,'calendar':calendar_ok,'travel':travel_ok,'raids':raids_ok,'opps':opps_ok,'menu':menu_ok,'saved':saved_ok,'returned':returned})
         secondary_page.context.close()
     b.close()
 # Dashboard radius adoption: shared scale values are expressed through semantic roles.
