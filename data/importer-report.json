@@ -1,16 +1,16 @@
 {
- "runAt": "2026-11-02T16:21:20.093Z",
+ "runAt": "2026-11-02T23:39:41.920Z",
  "sources": {
   "official": {
-   "listed": 24,
+   "listed": 22,
    "error": ""
   },
   "leekduck": {
-   "listed": 45,
+   "listed": 44,
    "error": ""
   },
   "hub": {
-   "listed": 14,
+   "listed": 13,
    "error": ""
   }
  },
@@ -33,11 +33,6 @@
   },
   {
    "source": "official",
-   "title": "Pokémon GO partners with the European Space Agency",
-   "url": "https://pokemongo.com/news/european-space-agency-event/"
-  },
-  {
-   "source": "official",
    "title": "全国のイオンモールで『ポケモン GO』のハロウィンイベントを楽しもう！ — Pokémon GO",
    "url": "https://pokemongo.com/ja/news/202610aeonmall-halloween/"
   },
@@ -45,6 +40,11 @@
    "source": "official",
    "title": "Ready, set, GO! Join the Pokémon RUN 30 event near you! — Pokémon GO",
    "url": "https://pokemongo.com/news/pokemon-run-30-2026/"
+  },
+  {
+   "source": "official",
+   "title": "Pokémon GO partners with the European Space Agency",
+   "url": "https://pokemongo.com/news/european-space-agency-event/"
   },
   {
    "source": "official",
@@ -85,11 +85,6 @@
    "source": "official",
    "title": "Event Update: City Safari Boston — Pokémon GO",
    "url": "https://pokemongo.com/news/city-safari-boston-update/"
-  },
-  {
-   "source": "official",
-   "title": "Pokémon GO City Safari: Brisbane – Know Before You GO!",
-   "url": "https://pokemongo.com/news/city-safari-brisbane-know-before-you-go/"
   },
   {
    "source": "leekduck",
@@ -137,7 +132,7 @@
    "error": ""
   },
   "it": {
-   "listed": 27,
+   "listed": 28,
    "error": ""
   },
   "pt_br": {
@@ -145,7 +140,7 @@
    "error": ""
   },
   "th": {
-   "listed": 27,
+   "listed": 28,
    "error": ""
   }
  },
@@ -301,20 +296,6 @@
    ]
   },
   {
-   "event": "Super Mega Raid Day",
-   "field": "bonuses",
-   "missingFrom": [
-    "leekduck"
-   ]
-  },
-  {
-   "event": "Super Mega Raid Day",
-   "field": "research",
-   "missingFrom": [
-    "leekduck"
-   ]
-  },
-  {
    "event": "Dynamax Machop during Max Monday",
    "field": "bonuses",
    "missingFrom": [
@@ -347,6 +328,27 @@
    "field": "dates",
    "missingFrom": [
     "hub"
+   ]
+  },
+  {
+   "event": "Max Monday: Pokémon to be announced",
+   "field": "raids",
+   "missingFrom": [
+    "leekduck"
+   ]
+  },
+  {
+   "event": "Max Monday: Pokémon to be announced",
+   "field": "shiny",
+   "missingFrom": [
+    "leekduck"
+   ]
+  },
+  {
+   "event": "Max Monday: Pokémon to be announced",
+   "field": "costumes",
+   "missingFrom": [
+    "leekduck"
    ]
   },
   {

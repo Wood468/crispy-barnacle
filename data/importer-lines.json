@@ -937,6 +937,24 @@
    {
     "t": "h",
     "level": 2,
+    "text": "GO Pass"
+   },
+   {
+    "t": "p",
+    "text": "Earn points to increase your rank and unlock rewards. You can earn points by completing Pass Tasks. Any rewards you earn for completing a Pass Task will be awarded as soon as you finish the task."
+   },
+   {
+    "t": "h",
+    "level": 3,
+    "text": "GO Pass: November"
+   },
+   {
+    "t": "p",
+    "text": "Encounter Groudon!"
+   },
+   {
+    "t": "h",
+    "level": 2,
     "text": "Sales"
    },
    {
