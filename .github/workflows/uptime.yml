@@ -3,6 +3,15 @@ name: Site check
 # Every 15 minutes: is the live site up, are the data files readable, do R2 pictures load? Telegram (System topic) is told
 # only when it starts failing and when it recovers.
 on:
+  push:
+    branches: [main]
+    paths:
+      - "public/**"
+      - "src/**"
+      - "workers/**"
+      - "scripts/uptime.mjs"
+      - "docs/ROADMAP.md"
+      - ".github/workflows/uptime.yml"
   schedule:
     - cron: "*/15 * * * *"
   workflow_dispatch:
@@ -23,6 +32,9 @@ jobs:
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: 22
+      - name: Allow production assets to settle after a main push
+        if: github.event_name == 'push'
+        run: sleep 45
       - name: Check the live site
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
