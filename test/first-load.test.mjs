@@ -174,6 +174,24 @@ test("GOLIB.getJson: a caller's own fetch options are never dropped because some
   assert.equal(seen.length, 3, "header names are compared without case");
 });
 
+test("GOLIB.getJson: a request that writes (POST, or any body) is never shared or kept", async () => {
+  const seen = [];
+  const lib = freshLib((u, init) => { seen.push([u, init]); return ok({ n: seen.length }); });
+  seen.length = 0;
+  const post = { method: "POST", body: "{\"a\":1}" };
+  await Promise.all([lib.getJson("/w.json", { init: post }), lib.getJson("/w.json", { init: post })]);
+  assert.equal(seen.length, 2, "two identical POSTs are two requests");
+  await lib.getJson("/w.json", { init: { body: "x" } });
+  await lib.getJson("/w.json", { init: { method: "post", body: "{\"a\":2}" } });
+  assert.equal(seen.length, 4, "a body alone, or a lower-case method, is still a write");
+  await lib.getJson("/w.json");
+  await lib.getJson("/w.json");
+  assert.equal(seen.length, 5, "a GET after the writes is fetched once, not served from a write");
+  await lib.getJson("/w.json", { init: { method: "GET" } });
+  await lib.getJson("/w.json", { init: { method: "GET" } });
+  assert.equal(seen.length, 6, "an explicit GET is still shared with other explicit GETs");
+});
+
 test("GOLIB.getJson: a request that never answers does not hold later callers past maxAge or their own timeout", async () => {
   let calls = 0, hang = true;
   const lib = freshLib(() => { calls++; return hang ? new Promise(() => {}) : ok({ v: calls }); });
