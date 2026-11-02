@@ -64,6 +64,31 @@ if (!data || typeof data !== "object" || !Array.isArray(data.events)) {
   }
 }
 
+// Raid rotation windows are local wall-clock times; source URLs must point to Leek Duck event pages.
+const rotations = data && data.rotation;
+if (rotations != null) {
+  if (!Array.isArray(rotations)) fail("public/data.json rotation", "expected an array");
+  else {
+    const validLocalTime = value => typeof value === "string" &&
+      /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/.test(value) && !Number.isNaN(Date.parse(value));
+    for (const [i, row] of rotations.entries()) {
+      const where = `public/data.json rotation[${i}]`;
+      if (!row || typeof row !== "object" || Array.isArray(row)) { fail(where, "expected a rotation object"); continue; }
+      if (!validLocalTime(row.s)) fail(where, "start must be a local YYYY-MM-DDTHH:mm value");
+      if (!validLocalTime(row.e)) fail(where, "end must be a local YYYY-MM-DDTHH:mm value");
+      if (validLocalTime(row.s) && validLocalTime(row.e) && Date.parse(row.e) <= Date.parse(row.s)) fail(where, "rotation end must be after start");
+      if (row.sourceUrl != null) {
+        try {
+          const u = new URL(row.sourceUrl);
+          if (typeof row.sourceUrl !== "string" || u.protocol !== "https:" || u.hostname !== "leekduck.com" || !/^\/events\/[a-z0-9-]+\/?$/i.test(u.pathname)) {
+            fail(where, "sourceUrl must be an HTTPS Leek Duck event page");
+          }
+        } catch { fail(where, "sourceUrl is not a valid URL"); }
+      }
+    }
+  }
+}
+
 // event-info.json: start / end / dateSource are optional (they tell one instance of a recurring event from the next). When present they must be well formed.
 const evInfo = parsed.get("public/event-info.json");
 if (evInfo && evInfo.events && typeof evInfo.events === "object") {

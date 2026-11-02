@@ -256,9 +256,9 @@ check('Today multi-deadline tray is accessible, bounded and source-safe',
       all(token in INDEX_HTML for token in ['id="today-deadlines"', 'id="today-deadlines-summary"', 'id="today-deadlines-list"']) and
       all(token in DASH_JS for token in ['var trayLimit = t.getTime() + 7 * 24 * 60 * 60 * 1000', "safeUrl(d.url || '')", 'trayCandidates.slice(0, 8)', 'View all ', 'noopener noreferrer', "sourceUrl.indexOf('https://') === 0"]) and
       all(token in DASH_CSS for token in ['.today-deadlines>summary', 'min-height:44px', '.today-deadline-item', 'var(--color-link)']) and
-      '/dash.js?v=20261103a' in APP_JS and '/dash.js?v=20261103a' in SW_JS and
-      '/dash.css?v=20261103a' in INDEX_HTML and '/dash.css?v=20261103a' in SW_JS and
-      'gofn-shell-v220' in SW_JS)
+      '/dash.js?v=20261103b' in APP_JS and '/dash.js?v=20261103b' in SW_JS and
+      '/dash.css?v=20261103b' in INDEX_HTML and '/dash.css?v=20261103b' in SW_JS and
+      'gofn-shell-v221' in SW_JS)
 check('season pass and deadline data is structured, source-attributed and ordered',
       all(item_id in {item.get('id') for item in SEASON_DATA.get('items', [])}
           for item_id in ['season:pass-halloween', 'season:pass-november']) and
@@ -291,7 +291,7 @@ check('base bonus and information availability controls use semantic status role
           'background: var(--color-status-info-unavailable); color: var(--color-on-status-info-unavailable); border: 1px solid var(--color-border-info-unavailable);',
       ]))
 check('versioned stylesheets are referenced by the page and precached offline',
-      all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261102b', '/dash.css?v=20261103a']))
+      all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261102b', '/dash.css?v=20261103b']))
 check('owner verification scripts are versioned and precached offline',
       '/account.js?v=20261102a' in INDEX_HTML and '/account.js?v=20261102a' in SW_JS and
       '/review.js?v=20261102e' in DASH_JS and '/review.js?v=20261102e' in SW_JS)
@@ -319,16 +319,20 @@ check('event signal chips and detail tags use semantic palette roles with unchan
           '.tg-incense{--tc:var(--color-signal-shadow)}.tg-costume{--tc:var(--color-signal-encounter)}',
       ]))
 check('offline shell cache version advances with the dashboard stylesheet token release',
-      "gofn-shell-v220" in SW_JS)
+      "gofn-shell-v221" in SW_JS)
 check('Travel mode searches only source-dated regional listings and preserves Today visibility',
       all(token in INDEX_HTML for token in ['id="sub-travel"', 'id="travel-q"', 'id="travel-destinations"', 'id="travel-regions"', 'id="travel-results"']) and
       "['travel','Travel','sub-travel']" in APP_JS and
       all(token in DASH_JS for token in ['function renderTravel()', 'TRAVEL_REGIONS', 'data-travel-region', "x.scope !== 'global'", "!/^dated:/.test(String(x.id || ''))", "indexOf('https://') === 0", 'sourceStart', 'sourceEnd', 'travelDateText', 'REG.filter(function (x)', 'var hide = it.travel ?', 'focusedRegion', 'focusTarget.focus()']) and
       all(token in DASH_CSS for token in ['#sub-travel .travel-search', '#travel-regions .fchip{min-height:44px}', '#travel-results .agw .ag-actions .agx{width:44px;height:44px;min-width:44px;min-height:44px}']) and
       '/app.js?v=20261103a' in INDEX_HTML and '/app.js?v=20261103a' in SW_JS and
-      '/dash.js?v=20261103a' in APP_JS and '/dash.js?v=20261103a' in SW_JS and
-      '/dash.css?v=20261103a' in INDEX_HTML and '/dash.css?v=20261103a' in SW_JS and
-      'gofn-shell-v220' in SW_JS)
+      '/dash.js?v=20261103b' in APP_JS and '/dash.js?v=20261103b' in SW_JS and
+      '/dash.css?v=20261103b' in INDEX_HTML and '/dash.css?v=20261103b' in SW_JS and
+      'gofn-shell-v221' in SW_JS)
+check('raid rotation cards use source-published local windows and Leek Duck attribution',
+      'function raidSourceLink(r)' in DASH_JS and 'fmtT(new Date(second.s))' in DASH_JS and
+      'Next raid rotation' in DASH_JS and 'sourceUrl' in DASH_JS and
+      'Raid rotation windows follow their published local times' in DASH_JS and '.rw-source' in DASH_CSS)
 check('raid share dialog and script are included in the exact offline shell',
       '/raid-share.js?v=20261102b' in INDEX_HTML and '/raid-share.js?v=20261102b' in SW_JS and
       all(token in INDEX_HTML for token in ['id="raid-share-dialog"', 'id="raid-share-title"', 'id="raid-share-send"', 'id="raid-share-copy"']))
@@ -341,7 +345,7 @@ check('event detail focus restoration can find a re-rendered opener by event key
       all(token in DETAIL_JS for token in ['openerKey', 'openerClass', "getAttribute('data-open')", 'target.focus()']))
 check('versioned dashboard scripts are referenced by the entry page and precached offline',
       '/app.js?v=20261103a' in INDEX_HTML and '/app.js?v=20261103a' in SW_JS and
-      '/dash.js?v=20261103a' in APP_JS and '/dash.js?v=20261103a' in SW_JS and
+      '/dash.js?v=20261103b' in APP_JS and '/dash.js?v=20261103b' in SW_JS and
       '/detail.js?v=20261102f' in DASH_JS and '/detail.js?v=20261102f' in SW_JS)
 check('sync PIN and account controls have one home in Menu and are precached offline',
       INDEX_HTML.index('id="acct" class="acct"') > INDEX_HTML.index('id="sub-menu"') and
@@ -1754,6 +1758,37 @@ with sync_playwright() as p:
         low_share = pg.locator('#rotnow .rw-low .rc[data-boss] [data-raid-share]').first
         check('observed low-tier raid bosses do not inherit an unverified full-rotation window',
               low_share.count() >= 1 and low_share.get_attribute('data-raid-start') == '' and low_share.get_attribute('data-raid-end') == '')
+        # Leek Duck publishes the next regular rotation at 6 am local; keep it visible during the overnight gap.
+        for width in (320, 390, 1280):
+            rotation_time_page = page(clock='2026-11-16T05:30:00+11:00', width=width, height=900, mobile=width < 600)
+            rotation_time_page.click('nav.tabs button[data-tab="raids"]'); rotation_time_page.wait_for_timeout(250)
+            ready = settle(rotation_time_page, "document.querySelector('#rotnow')?.textContent.includes('Next raid rotation')", 10000)
+            rotation_text = rotation_time_page.locator('#rotnow').text_content()
+            cresselia_url = 'https://leekduck.com/events/cresselia-darkrai-in-5-star-raid-battles-november-2026/'
+            cresselia_source = rotation_time_page.locator('#rotnow .rw-source[href="' + cresselia_url + '"]')
+            check('raid rotation shows the next 6 am local window before it starts',
+                  ready and 'Next raid rotation · Mon 16 Nov, 6 am' in rotation_text and
+                  'Cresselia and Darkrai' in rotation_text and cresselia_source.count() == 1,
+                  rotation_text[:1200])
+            source_box = cresselia_source.bounding_box() if cresselia_source.count() else None
+            check('raid source link has a 44px target and no horizontal overflow',
+                  source_box is not None and source_box['height'] >= 43.5 and
+                  rotation_time_page.evaluate('document.documentElement.scrollWidth <= window.innerWidth + 1'),
+                  source_box)
+            rotation_time_page.evaluate("document.documentElement.setAttribute('data-theme','light')")
+            check('Leek Duck source remains visible in light theme', cresselia_source.count() == 1 and cresselia_source.is_visible())
+            rotation_time_page.evaluate("document.documentElement.removeAttribute('data-theme')")
+            if cresselia_source.count(): cresselia_source.focus()
+            check('Leek Duck source link is keyboard focusable',
+                  rotation_time_page.evaluate("document.activeElement?.getAttribute('href') === '" + cresselia_url + "'"))
+            rotation_time_page.locator('#rotnow [data-rotweek="next"]').click()
+            future_rotation_text = rotation_time_page.locator('#rotnow').text_content()
+            deoxys_url = 'https://leekduck.com/events/deoxys-normal-defense-attack-speed-formes-in-5-star-raid-battles-november-2026/'
+            deoxys_source = rotation_time_page.locator('#rotnow .rw-source[href="' + deoxys_url + '"]')
+            check('future rotation uses the source-derived 6 am time rather than a hard-coded 10 am',
+                  'From Wed 25 Nov, 6 am' in future_rotation_text and 'Deoxys' in future_rotation_text and
+                  deoxys_source.count() == 1, future_rotation_text[:1200])
+            rotation_time_page.context.close()
         pg.click('#rotnow [data-rotweek="this"]'); pg.wait_for_timeout(100)
         raid_share_selector = '#rotnow .rc[data-boss] [data-raid-share]'
         raid_share_count = pg.locator(raid_share_selector).count()

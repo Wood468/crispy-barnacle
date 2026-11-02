@@ -1056,6 +1056,11 @@
       return '<div class="rw-low"><span class="rw-label">1–3★ raids' + (l.shadowOne || l.shadowThree ? ' and Shadow raids' : '') + (l.observed ? ' · as of ' + esc(fmtD(new Date(l.observed + 'T12:00'))) : '') + '</span><div class="rcs rcs-low">' +
         [['1★', l.one], ['3★', l.three], ['Shadow 1★', l.shadowOne], ['Shadow 3★', l.shadowThree]].map(function (g) { return (g[1] || []).map(function (n) { return cell(g[0], n, r); }).join(''); }).join('') + '</div></div>';
     }
+    function raidSourceLink(r) {
+      var url = String(r && r.sourceUrl || '');
+      if (!/^https:\/\/leekduck\.com\/events\/[a-z0-9-]+\/?$/i.test(url)) return '';
+      return '<a class="rw-source" href="' + esc(url) + '" target="_blank" rel="noopener noreferrer" aria-label="Source schedule on Leek Duck">Leek Duck source ↗</a>';
+    }
     function weekCard(offset) {
       var a = addDay(monday, offset * 7), b = addDay(a, 6), mid = addDay(a, 2); mid.setHours(11, 0, 0, 0);
       var first = rotAt(a), second = rotAt(mid);
@@ -1066,17 +1071,22 @@
       var rotationRows = [];
       if (isCurrentWeek) {
         if (activeRotation) rotationRows.push({ r: activeRotation, label: 'Current raid rotation', cls: 'rw-current' });
-        // For this week, omit any rotation that has already ended; show only a future change.
-        if (!rotationRows.length && first && new Date(first.e) > t) rotationRows.push({ r: first, label: 'Raid rotation this week', cls: '' });
+        // If the previous rotation has ended but the next one starts later this week,
+        // keep the upcoming source-published window visible rather than showing an empty card.
+        if (!rotationRows.length) {
+          var upcoming = [first, second].filter(function (r) { return r && new Date(r.s) > t && new Date(r.e) > t; })
+            .sort(function (x, y) { return new Date(x.s) - new Date(y.s); })[0];
+          if (upcoming) rotationRows.push({ r: upcoming, label: 'Next raid rotation · ' + fmtD(new Date(upcoming.s)) + ', ' + fmtT(new Date(upcoming.s)), cls: 'rw-next' });
+        }
       } else if (new Date(a) > t) {
         // Future week cards must be calculated from that week's dates, never the globally active rotation.
         if (first) rotationRows.push({ r: first, label: 'At start of week', cls: '' });
-        if (second && second !== first) rotationRows.push({ r: second, label: 'From ' + fmtD(new Date(second.s)) + ', 10 am', cls: 'rw-next' });
+        if (second && second !== first) rotationRows.push({ r: second, label: 'From ' + fmtD(new Date(second.s)) + ', ' + fmtT(new Date(second.s)), cls: 'rw-next' });
       }
       if (!rotationRows.length) body += '<p class="empty">No raid rotation published for this week yet.</p>';
       rotationRows.forEach(function (row) {
         var r = row.r;
-        body += '<div class="rw-raid ' + row.cls + '"><span class="rw-label">' + esc(row.label) + '</span><div class="rcs">' +
+        body += '<div class="rw-raid ' + row.cls + '"><span class="rw-label">' + esc(row.label) + '</span>' + raidSourceLink(r) + '<div class="rcs">' +
           cell('5★', r.five, r) + cell('Mega', r.mega, r) + cell('Shadow', String(r.shadow || '').replace(/, to .*/, ''), r) + '</div>' + lowTier(r) + '<p class="evc-when">Raid Hour: ' + esc(r.rh || 'Not listed') + '</p></div>';
       });
       body += mb ? '<div class="rw-max"><span class="rw-label">Max Monday · ' + esc(fmtD(new Date(mb[0] + 'T12:00'))) + ' · 6 am–9 pm</span><div class="rw-max-pokemon">' + monArt({ kind: 'max', tags: [], name: '' }, { name: mb[2] }, 'ea') + '<div><b>' + esc(mb[2]) + '</b><small>Featured Max Pokémon at Power Spots</small></div></div></div>' :
@@ -1096,7 +1106,7 @@
     var cards = knownOffsets.map(weekCard).join('');
     el.innerHTML = '<div class="prio-head"><h2 class="sec2">Raid & Max Battle rotation</h2></div>' + tabs +
       (cards ? '<div class="rw-list">' + cards + '</div>' : '<p class="empty">No further rotations are published yet.</p>') +
-      '<p class="note">Raid bosses change Wednesdays at 10 am local time. Max Battles feature a new Pokémon on Mondays, 6 am–9 pm local time. Future weeks appear only where schedule data is available.</p>';
+      '<p class="note">Raid rotation windows follow their published local times; use the Leek Duck source link where provided. Max Battles feature a new Pokémon on Mondays, 6 am–9 pm local time. Future weeks appear only where schedule data is available.</p>';
     addGuideLinks(el);
   }
   /* A "Counters guide" button on each 5-star and Mega boss, shown only when /api/guide finds the guide (so it never links to a missing page). */

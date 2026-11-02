@@ -657,52 +657,58 @@
     },
     {
       "s": "2026-10-21T10:00",
-      "e": "2026-10-28T10:00",
+      "e": "2026-10-27T22:00",
       "five": "Palkia",
       "mega": "Mega Charizard X and Y",
       "shadow": "Shadow Landorus (Incarnate)",
       "low": { "one": ["Axew", "Goomy", "Jangmo-o", "Frigibax"], "three": ["Alolan Ninetales", "Alolan Raichu", "Alolan Muk"], "shadowOne": ["Shadow Gastly", "Shadow Totodile", "Shadow Shieldon", "Shadow Gible"], "shadowThree": ["Shadow Primeape", "Shadow Kirlia", "Shadow Drapion"], "observed": "2026-10-21", "source": "Pokémon GO Hub current raids" },
-      "rh": "Palkia"
+      "rh": "Palkia",
+      "sourceUrl": "https://leekduck.com/events/palkia-in-5-star-raid-battles-october-2026/"
     },
     {
-      "s": "2026-10-28T10:00",
-      "e": "2026-11-04T10:00",
+      "s": "2026-10-28T06:00",
+      "e": "2026-11-03T22:00",
       "five": "Origin Forme Giratina",
       "mega": "Mega Sableye",
       "shadow": "Shadow Landorus (Incarnate), to Nov 3",
       "low": { "one": ["Pikachu (hat and capelet)", "Sinistea (bow)"], "three": ["Cofagrigus", "Trevenant", "Dhelmise"], "shadowOne": ["Shadow Gastly", "Shadow Totodile", "Shadow Shieldon", "Shadow Gible"], "shadowThree": ["Shadow Primeape", "Shadow Kirlia", "Shadow Drapion"], "observed": "2026-10-30", "source": "Official Halloween 2026 posts (1-star); Leek Duck raid bosses (3-star and Shadow)" },
-      "rh": "Origin Forme Giratina"
+      "rh": "Origin Forme Giratina",
+      "sourceUrl": "https://leekduck.com/events/giratina-origin-forme-in-5-star-raid-battles-october-2026/"
     },
     {
-      "s": "2026-11-04T10:00",
-      "e": "2026-11-09T10:00",
+      "s": "2026-11-04T06:00",
+      "e": "2026-11-08T22:00",
       "five": "Giratina (Altered Forme)",
       "mega": "Mega Sableye",
       "shadow": "Shadow Tornadus (Incarnate), to Nov 8",
-      "rh": "Giratina (Altered Forme), Wed Nov 4"
+      "rh": "Giratina (Altered Forme), Wed Nov 4",
+      "sourceUrl": "https://leekduck.com/events/giratina-altered-forme-in-5-star-raid-battles-november-2026/"
     },
     {
       "s": "2026-11-09T10:00",
       "e": "2026-11-13T20:00",
       "five": "Crowned Sword Zacian and Crowned Shield Zamazenta",
       "low": { "three": ["Druddigon", "Orthworm"], "source": "Official Into the Wild announcement" },
-      "rh": "Crowned Sword Zacian, Mon Nov 9 · Crowned Shield Zamazenta, Tue Nov 10"
+      "rh": "Crowned Sword Zacian, Mon Nov 9 · Crowned Shield Zamazenta, Tue Nov 10",
+      "sourceUrl": "https://leekduck.com/events/into-the-wild-2026/"
     },
     {
-      "s": "2026-11-16T10:00",
-      "e": "2026-11-25T10:00",
+      "s": "2026-11-16T06:00",
+      "e": "2026-11-24T22:00",
       "five": "Cresselia and Darkrai",
       "mega": "Mega Banette",
       "shadow": "Shadow Tornadus (Incarnate)",
-      "rh": "Cresselia and Darkrai, Wed Nov 18"
+      "rh": "Cresselia and Darkrai, Wed Nov 18",
+      "sourceUrl": "https://leekduck.com/events/cresselia-darkrai-in-5-star-raid-battles-november-2026/"
     },
     {
-      "s": "2026-11-25T10:00",
-      "e": "2026-12-02T10:00",
+      "s": "2026-11-25T06:00",
+      "e": "2026-12-01T22:00",
       "five": "Deoxys (all four Formes)",
       "mega": "Mega Metagross",
       "shadow": "Shadow Tornadus (Incarnate), to Dec 1",
-      "rh": "Deoxys (all four Formes), Wed Nov 25"
+      "rh": "Deoxys (all four Formes), Wed Nov 25",
+      "sourceUrl": "https://leekduck.com/events/deoxys-normal-defense-attack-speed-formes-in-5-star-raid-battles-november-2026/"
     }
   ],
   "maxBattles": [
