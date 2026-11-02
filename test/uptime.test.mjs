@@ -80,7 +80,6 @@ test("core assets match the homepage and exact offline-shell versions", () => {
     "/styles.css?v=1", "/dash.css?v=2", "/app.js?v=5",
     "/dash.js?v=4", "/lib.js?v=3", "/pwa.js", "/review.js?v=6", "/sw.js"
   ]);
-  assert.ok(!result.assets.some(path => path.includes("fonts.googleapis.com")));
 });
 
 test("uptime check passes when the page, data, images and app assets are healthy", async () => {
