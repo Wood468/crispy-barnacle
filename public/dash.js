@@ -1374,10 +1374,21 @@
     setText('today-focus-next', nextName);
     setText('today-focus-next-meta', nextMeta);
 
-    var dateKey = dayKey(t), rotation = (D.rotation || []).filter(function (r) {
-      var from = new Date(r.s), to = new Date(r.e);
-      return from <= dayStart && dayStart < to;
+    var dateKey = dayKey(t);
+    /* Rotation windows may begin after local midnight (for example 6 am or 10 am).
+       Show the rotation active now, or the next published window later today. */
+    var rotationCandidates = (D.rotation || []).map(function (r) {
+      return { rotation: r, from: new Date(r.s), to: new Date(r.e) };
+    }).filter(function (item) {
+      return Number.isFinite(item.from.getTime()) && Number.isFinite(item.to.getTime()) &&
+        item.from < endDay && item.to > t;
+    }).sort(function (a, b) { return a.from - b.from; });
+    var activeRotation = rotationCandidates.filter(function (item) {
+      return item.from <= t && t < item.to;
     })[0];
+    var rotation = (activeRotation || rotationCandidates.filter(function (item) {
+      return item.from > t;
+    })[0] || {}).rotation;
     var maxBattle = (D.maxBattles || []).filter(function (r) { return r && r.length >= 3 && r[0] <= dateKey && dateKey <= r[1]; })[0];
     var raidSummary = rotation ? [rotation.five ? '5★ ' + rotation.five : '', rotation.mega ? 'Mega ' + rotation.mega : '', rotation.shadow ? 'Shadow ' + rotation.shadow : ''].filter(Boolean).join(' · ') : '';
     var raidMeta = maxBattle ? 'Max Battle · ' + maxBattle[2] : 'No Max Battle schedule listed';
