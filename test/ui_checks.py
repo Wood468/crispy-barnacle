@@ -1525,7 +1525,8 @@ with sync_playwright() as p:
         }""")
         check('failed-thumbnail fixture finds a connected infographic control before scrolling', thumbnail_scrolled)
         fallback_ready = settle(pb, "(() => { const b=document.querySelector('[data-igcheck=\\\"cur:trek\\\"]'), card=document.querySelector('[data-igcard=\\\"cur:trek\\\"]'); return !!b && b.textContent.trim()==='Check infographic' && !!card && card.hasAttribute('data-igbad'); })()", 8000)
-        fallback_state = pb.evaluate("""() => { const b=document.querySelector('[data-igcheck=\\\"cur:trek\\\"]'); const card=document.querySelector('[data-igcard=\\\"cur:trek\\\"]'); const img=card&&card.querySelector('img'); return {hasCheck:!!b,text:b&&b.textContent.trim(),hasCard:!!card,hasBad:!!(card&&card.hasAttribute('data-igbad')),imgSrc:img&&img.getAttribute('src'),thumbUrl:img&&img.getAttribute('data-thumb-url'),requests:window.__unused||[]}; }""")
+        fallback_state = pb.evaluate("""() => { const b=document.querySelector('[data-igcheck=\\\"cur:trek\\\"]'); const card=document.querySelector('[data-igcard=\\\"cur:trek\\\"]'); const img=card&&card.querySelector('img'); return {hasCheck:!!b,text:b&&b.textContent.trim(),hasCard:!!card,hasBad:!!(card&&card.hasAttribute('data-igbad')),imgSrc:img&&img.getAttribute('src'),thumbUrl:img&&img.getAttribute('data-thumb-url')}; }""")
+        fallback_state['requests'] = pb.infographic_requests[-12:]
         check('a thumbnail that fails to load becomes Check infographic', fallback_ready and pb.locator('[data-igcheck="cur:trek"]').first.inner_text()=='Check infographic' and pb.locator('[data-igcard="cur:trek"] img').count()==0 and pb.locator('[data-igcard="cur:trek"]').first.get_attribute('data-igbad') is not None, fallback_state)
         pb.context.close()
         # Regional event infographics must resolve through the same viewer as standard event cards.
