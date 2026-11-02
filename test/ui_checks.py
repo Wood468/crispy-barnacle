@@ -1430,8 +1430,17 @@ with sync_playwright() as p:
               }"""))
         # A thumbnail address that cannot be fetched falls back to the Check infographic button (the rest of this run serves a valid PNG for every picture).
         pb=page(extra={'**/img/ext/4aa21432-0cfc-4c93-b3eb-0c15f322389d-0119b088.webp':('',404)})
-        pb.locator('[data-infographic="cur:trek"]').first.scroll_into_view_if_needed(timeout=5000); pb.wait_for_timeout(800)
-        check('a thumbnail that fails to load becomes Check infographic', pb.locator('[data-igcheck="cur:trek"]').first.inner_text()=='Check infographic' and pb.locator('[data-igcard="cur:trek"] img').count()==0 and pb.locator('[data-igcard="cur:trek"]').first.get_attribute('data-igbad') is not None)
+        # The page may rebuild Today while secondary data arrives; scroll the current connected node in one DOM task
+        # instead of holding a Playwright element handle that can be detached between locator resolution and scrolling.
+        thumbnail_scrolled = pb.evaluate("""() => {
+            const target = document.querySelector('[data-infographic="cur:trek"]');
+            if (!target || !target.isConnected) return false;
+            target.scrollIntoView({block:'center', inline:'nearest'});
+            return true;
+        }""")
+        check('failed-thumbnail fixture finds a connected infographic control before scrolling', thumbnail_scrolled)
+        fallback_ready = settle(pb, "(() => { const b=document.querySelector('[data-igcheck=\"cur:trek\"]'); return !!b && b.textContent.trim()==='Check infographic' && b.hasAttribute('data-igbad'); })()", 8000)
+        check('a thumbnail that fails to load becomes Check infographic', fallback_ready and pb.locator('[data-igcheck="cur:trek"]').first.inner_text()=='Check infographic' and pb.locator('[data-igcard="cur:trek"] img').count()==0 and pb.locator('[data-igcard="cur:trek"]').first.get_attribute('data-igbad') is not None)
         pb.context.close()
         # Regional event infographics must resolve through the same viewer as standard event cards.
         mexico_id='w-pok-mon-go-dia-de-muertos-2026-mexico-exclusive-ev'
