@@ -3382,8 +3382,12 @@ with sync_playwright() as p:
             {'id': 'w-b12-g1', 'name': 'Snorfwhistle Worldwide Showcase', 'place': '', 'area': 'Worldwide', 'scope': 'global', 'start': '2026-11-01', 'end': '2026-11-05', 'sources': [{'url': 'https://example.com/d'}]},
             {'id': 'w-b12-g2', 'name': 'Plinkerton Play from anywhere', 'place': 'Play from anywhere', 'area': 'Worldwide', 'scope': 'global', 'start': '2026-11-02T20:00:00+11:00', 'end': '2026-11-02T23:00:00+11:00', 'sources': [{'url': 'https://example.com/e'}]},
         ]})
+        # Mirror the real regional-events.json schema: a located event with no scope property.
+        B12_REGIONAL = json.dumps({'updated': '2026-11-02T00:00:00Z', 'note': 'test fixture', 'source': 'test fixture', 'events': [
+            {'id': 'rg-b12-wellington', 'name': 'Synthetic Regional Meetup Wellington', 'place': 'Wellington, New Zealand', 'area': 'Oceania', 'start': '2026-11-02', 'end': '2026-11-02', 'sources': [{'url': 'https://example.com/regional'}]},
+        ]})
         for width in (320, 390):
-            wp = page(clock=B10_CLOCK, width=width, height=844, mobile=True, extra={'**/world-events.json': (B12_WORLD, 200)})
+            wp = page(clock=B10_CLOCK, width=width, height=844, mobile=True, extra={'**/world-events.json': (B12_WORLD, 200), '**/regional-events.json': (B12_REGIONAL, 200)})
             r = wp.evaluate("""() => {
                 const norm = t => t.replace(/\\s+/g, ' ').trim();
                 const out = { subs: [], inPersonRows: 0, inPersonNames: [], onlineNames: [], labelTotal: 0 };
@@ -3400,9 +3404,11 @@ with sync_playwright() as p:
                 return out;
             }""")
             check('Batch 12, %dpx: the "In person" label count equals the in-person rows and the brief in-person number (here the live ones; one more is later today)' % width,
-                  r['labelTotal'] == r['inPersonRows'] == 3 and r['brief'] == 2, r)
+                  r['labelTotal'] == r['inPersonRows'] == 4 and r['brief'] == 3, r)
             check('Batch 12, %dpx: overseas in-person events (Tokyo, Chicago, Lisbon) are all still listed under "In person"' % width,
-                  sorted(r['inPersonNames']) == ['Brimstone Night Lisbon', 'Quillfeather Meetup Chicago', 'Zorblax Expo Tokyo'], r)
+                  sorted(r['inPersonNames']) == ['Brimstone Night Lisbon', 'Quillfeather Meetup Chicago', 'Synthetic Regional Meetup Wellington', 'Zorblax Expo Tokyo'], r)
+            check('Batch 12, %dpx: a located regional-events.json record with no scope property is still classified as in person' % width,
+                  'Synthetic Regional Meetup Wellington' in r['inPersonNames'], r)
             check('Batch 12, %dpx: global / play-from-anywhere items are never under "In person"; they sit under "Online / worldwide" and still count as in game' % width,
                   all(n[0] == 'online / worldwide' for n in r['onlineNames']) and sorted(n[1] for n in r['onlineNames']) == ['Plinkerton Play from anywhere', 'Snorfwhistle Worldwide Showcase'] and r['briefGame'] >= 1, r)
             wp.context.close()
