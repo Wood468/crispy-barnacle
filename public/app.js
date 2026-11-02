@@ -319,7 +319,7 @@ Promise.all([
       $('hwatch').setAttribute('aria-label','Watchlist'+(n?', '+n+' items':''));
     }
     ['followed','savedev'].forEach(function(id){var el=$(id);if(el)new MutationObserver(upd).observe(el,{childList:true})});
-    document.addEventListener('gofn-marks',upd);document.addEventListener('gofn-saved-count',upd);upd();
+    document.addEventListener('gofn-marks',upd);document.addEventListener('gofn-state',upd);document.addEventListener('gofn-saved-count',upd);upd();
   })();
   var firstTab=null;
   try{var st=localStorage.getItem('gofn-tab');if(st){var pp=st.split('/');firstTab=[pp[0],pp[1],pp[2]]}}catch(e){}

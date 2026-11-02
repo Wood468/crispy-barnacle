@@ -1,9 +1,9 @@
 /* GO Field Notes offline shell. Never cache /api/*, including private user-state and notification responses. */
-const SHELL_CACHE = 'gofn-shell-v214';
+const SHELL_CACHE = 'gofn-shell-v215';
 const SHELL_URLS = [
   '/', '/index.html', '/offline.html', '/offline.css',
   /* Versioned code and styles are listed once, exactly as index.html, app.js and dash.js request them. Any other ?v= (or unversioned) request is answered offline by the ignoreSearch fallback below. */
-  '/styles.css?v=20261102b', '/dash.css?v=20261102o', '/lib.js?v=20261102a', '/dedupe.js?v=20261101b', '/move.js?v=20261102a', '/imgerr.js?v=20261015a', '/whatsnew.js?v=20261102d', '/pin.js?v=20261101b', '/local-state.js?v=20261030a', '/app.js?v=20261102p', '/raid-share.js?v=20261102b', '/dash.js?v=20261102y', '/detail.js?v=20261102e', '/fresh.js?v=20261102c', '/places.js?v=20261102a', '/review.js?v=20261102a', '/nudge.js?v=20261102a', '/account.js?v=20261102a', '/store.js?v=20261102a', '/season.js?v=20261102e', '/weekly.js?v=20261101a', '/buy.js?v=20261101a', '/extra.js?v=20261102b', '/infographic.js?v=20261102a', '/pwa.js',
+  '/styles.css?v=20261102b', '/dash.css?v=20261102o', '/lib.js?v=20261102a', '/dedupe.js?v=20261101b', '/move.js?v=20261102a', '/imgerr.js?v=20261015a', '/whatsnew.js?v=20261102d', '/pin.js?v=20261101b', '/local-state.js?v=20261030a', '/app.js?v=20261102q', '/raid-share.js?v=20261102b', '/dash.js?v=20261102y', '/detail.js?v=20261102e', '/fresh.js?v=20261102c', '/places.js?v=20261102a', '/review.js?v=20261102a', '/nudge.js?v=20261102a', '/account.js?v=20261102a', '/store.js?v=20261102a', '/season.js?v=20261102e', '/weekly.js?v=20261101a', '/buy.js?v=20261101a', '/extra.js?v=20261102b', '/infographic.js?v=20261102a', '/pwa.js',
   '/manifest.webmanifest', '/icon.svg', '/icon-maskable.svg', '/icon-180.png', '/icon-192.png', '/icon-512.png',
   '/data.json', '/dex.json', '/event-info.json', '/forms.json', '/moves.json',
   '/places.json', '/event-details.json', '/event-moves.json', '/regional-events.json', '/world-events.json', '/best-by-type.json', '/prices.json', '/pvp.json', '/release-status.json', '/types.json',
