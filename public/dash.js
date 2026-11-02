@@ -6,7 +6,7 @@
   var D = G.D, esc = G.esc, art = G.art, MON = G.MON, DOW = G.DOW;
   function $(id) { return document.getElementById(id); }
   function now() { return new Date(); }
-  function safeUrl(u) { return typeof u === 'string' && (/^https:\/\//.test(u) || /^\/img\/ext\/[\w.-]+$/.test(u)) ? u : ''; }
+  function safeUrl(u) { return typeof u === 'string' && !(window.GOLIB && window.GOLIB.isPrivateLink(u)) && (/^https:\/\//.test(u) || /^\/img\/ext\/[\w.-]+$/.test(u)) ? u : ''; }
   function isOfficialUrl(u) { try { var h = new URL(String(u || '')).hostname.toLowerCase(); return h === 'pokemongo.com' || /\.pokemongo\.com$/.test(h); } catch (e) { return false; } }
 
   /* Raid hundo CP reference data (PvPoke Game Master, MIT); only exact known species/forms are labelled. */
@@ -546,7 +546,7 @@
   function bonusBadge(b) {
     var m = String(b).match(/^(\d+(?:\.\d+)?)\s*[x×]\s+(.*)$/i); if (!m) return null;
     var what = m[2], low = what.toLowerCase(), ico = '', cls = '', label = what;
-    if (/transfer/.test(low) && /candy/.test(low)) { ico = '<img class="sb-i sb-t" src="/ico/trade.webp" decoding="async" alt="" decoding="async"><img class="sb-i" src="/ico/candy.webp" alt="" decoding="async">'; cls = 'sb-transfer'; label = 'Transfer candy'; }
+    if (/transfer/.test(low) && /candy/.test(low)) { ico = '<img class="sb-i sb-t" src="/ico/trade.webp" alt="" decoding="async"><img class="sb-i" src="/ico/candy.webp" alt="" decoding="async">'; cls = 'sb-transfer'; label = 'Transfer candy'; }
     else if (/candy/.test(low)) { ico = '<img class="sb-i" src="/ico/candy.webp" alt="" decoding="async">'; cls = 'sb-candy'; label = /catch/.test(low) ? 'Catch candy' : what; }
     else if (/stardust|dust/.test(low)) { ico = '<img class="sb-i" src="/ico/dust.webp" alt="" decoding="async">'; cls = 'sb-dust'; label = /catch/.test(low) ? 'Catch stardust' : 'Stardust'; }
     else if (/xp/.test(low)) { ico = '<img class="sb-i" src="/ico/xp.webp" alt="" decoding="async">'; cls = 'sb-xp'; label = /evolution/.test(low) ? 'Evolution XP' : /catch/.test(low) ? 'Catch XP' : 'XP'; }
@@ -607,7 +607,7 @@
       + '<div class="evc-title-row"><h3 title="' + esc(v.name) + '">' + esc(v.name) + '</h3></div>'
       + '<p class="evc-when" style="font-weight:600">🎯 Bonuses ' + (live ? 'started ' : 'start ') + esc(v.day + ', ' + v.show) + ' your time' + (v.note ? ' <small>(' + esc(v.note) + ')</small>' : '') + '</p>'
       + venueClock
-      + (/^https:\/\//.test(v.link || '') ? '<div class="evc-foot"><a class="more" href="' + esc(v.link) + '" target="_blank" rel="noopener noreferrer">Event page</a></div>' : '') + '</div></article>';
+      + (safeUrl(v.link) ? '<div class="evc-foot"><a class="more" href="' + esc(v.link) + '" target="_blank" rel="noopener noreferrer">Event page</a></div>' : '') + '</div></article>';
   }
   window.GOVENUE = fetch('/api/venue-times?all=1&tz=' + encodeURIComponent(venueViewerZone())).then(function (r) { return r.ok ? r.json() : { items: [] }; }).catch(function () { return { items: [] }; }).then(function (d) {
     VENUE = ((d && d.items) || []).filter(function (i) { return i && i.ms; });
@@ -629,7 +629,7 @@
       + '<div class="evc-foot">'
       + '<button type="button" class="more" data-open="' + esc(ev.id) + '" aria-label="Details: ' + esc(ev.name) + '">Details</button>'
       + '<button type="button" class="more info-open" data-igcard="' + esc(ev.id) + '" data-infographic="' + esc(ev.id) + '" aria-label="Open infographic for ' + esc(ev.name) + '">▧ Infographic</button>'
-      + '<button type="button" class="star' + (saved ? ' on' : '') + '" data-save="' + esc(ev.id) + '" aria-pressed="' + saved + '" aria-label="' + (saved ? 'Remove from saved' : 'Save event and get a Telegram reminder') + '" title="Saved events send you a Telegram reminder">' + (saved ? '★' : '☆') + '</button></div>'
+      + '<button type="button" class="star' + (saved ? ' on' : '') + '" data-save="' + esc(ev.id) + '" aria-pressed="' + saved + '" aria-label="Save ' + esc(ev.name) + '" title="Saved events send you a Telegram reminder">' + (saved ? '★' : '☆') + '</button></div>'
       + (ev.status === 'conflicting' ? '<p class="evc-warn">Sources disagree about the time or place. Check in the game before heading out.</p>' : '')
       + '</div></article>';
   }
@@ -676,7 +676,7 @@
           + '<h3>' + esc(ev.name) + '</h3><p class="evc-when">' + esc(whenText(ev)) + '</p>'
           + '<p class="evc-bonus" data-bn="' + esc(ev.name) + '" data-bs="' + esc(bday(ev.start)) + '" data-be="' + esc(bday(ev.end)) + '" hidden></p>'
           + (x.why.length ? '<div class="why">' + x.why.slice(0, 3).map(function (w) { return '<span>' + esc(w) + '</span>'; }).join('') + '</div>' : '')
-          + '<div class="pc-foot">' + statusChip(ev) + '<button type="button" class="more" data-open="' + esc(ev.id) + '" aria-label="Details: ' + esc(ev.name) + '">Details</button><button type="button" class="star' + (isSaved(ev.id) ? ' on' : '') + '" data-save="' + esc(ev.id) + '" aria-pressed="' + isSaved(ev.id) + '" aria-label="' + (isSaved(ev.id) ? 'Remove from saved' : 'Save event') + '">' + (isSaved(ev.id) ? '★' : '☆') + '</button></div>'
+          + '<div class="pc-foot">' + statusChip(ev) + '<button type="button" class="more" data-open="' + esc(ev.id) + '" aria-label="Details: ' + esc(ev.name) + '">Details</button><button type="button" class="star' + (isSaved(ev.id) ? ' on' : '') + '" data-save="' + esc(ev.id) + '" aria-pressed="' + isSaved(ev.id) + '" aria-label="Save ' + esc(ev.name) + '">' + (isSaved(ev.id) ? '★' : '☆') + '</button></div>'
           + '</div></article>';
       }).join('') + '</div>';
     }
@@ -1200,8 +1200,8 @@
       var n=m[0],released=m[1]==='released',h=megaVal(n,'hundo'),sh=megaVal(n,'shundo'),sm=megaVal(n,'supermax'),mv=m[2]===true,upcoming=m[3];
       var full='Mega '+n, en=EXTRA_NAME[n];
       return '<article class="mega-row"><div class="mega-mon"><div class="mega-pair">'+art(full,'ea')+'</div><div class="mega-name"><h3>'+esc(full)+'</h3><span class="mega-status '+(released?'is-released':'is-future')+'">'+(released?'Released in GO':MEGA_ANN[n]?'Announced, not released in GO yet':'Not released in GO yet, not announced')+'</span>'+(mv&&en?'<span class="mega-move">Extra Charged Attack: <b>'+esc(en)+'</b></span>':mv?'<span class="mega-move">Extra Charged Attack: name not published yet</span>':'')+'</div><div class="mega-shiny" title="Shiny '+esc(full)+'">'+art({n:full,shiny:true},'ea')+'</div></div>'
-       +'<div class="mega-checks"><label><input type="checkbox" data-mega="'+esc(n)+'" data-field="hundo" '+(h?'checked':'')+'> Hundo ready</label><label><input type="checkbox" data-mega="'+esc(n)+'" data-field="shundo" '+(sh?'checked':'')+'> Shundo ready</label>'
-       +'<label><input type="checkbox" data-mega="'+esc(n)+'" data-field="maxlevel" '+(megaVal(n,'maxlevel')?'checked':'')+'> Maxed out</label>'+(released&&(mv||upcoming)?'<label><input type="checkbox" data-mega="'+esc(n)+'" data-field="supermax" '+(sm?'checked':'')+'> Super Max achieved</label><span class="mega-eligibility" aria-label="Additional Charged Attack eligibility">'+(mv?'Extra Charged Attack eligible'+(en?' · '+esc(en):''):'Extra Charged Attack announced · '+upcoming+(en?' · '+esc(en):''))+'</span>':'<span class="mega-pill-red">Super Max not released yet</span>')+'</div></article>';
+       +'<div class="mega-checks"><label><input type="checkbox" data-mega="'+esc(n)+'" data-field="hundo" aria-label="Hundo ready: '+esc(n)+'" '+(h?'checked':'')+'> Hundo ready</label><label><input type="checkbox" data-mega="'+esc(n)+'" data-field="shundo" aria-label="Shundo ready: '+esc(n)+'" '+(sh?'checked':'')+'> Shundo ready</label>'
+       +'<label><input type="checkbox" data-mega="'+esc(n)+'" data-field="maxlevel" aria-label="Maxed out: '+esc(n)+'" '+(megaVal(n,'maxlevel')?'checked':'')+'> Maxed out</label>'+(released&&(mv||upcoming)?'<label><input type="checkbox" data-mega="'+esc(n)+'" data-field="supermax" aria-label="Super Max achieved: '+esc(n)+'" '+(sm?'checked':'')+'> Super Max achieved</label><span class="mega-eligibility" aria-label="Additional Charged Attack eligibility">'+(mv?'Extra Charged Attack eligible'+(en?' · '+esc(en):''):'Extra Charged Attack announced · '+upcoming+(en?' · '+esc(en):''))+'</span>':'<span class="mega-pill-red">Super Max not released yet</span>')+'</div></article>';
     }).join(''):(filter==='future'?'<p class="empty">No officially announced unreleased Mega forms are listed yet. Speculative forms are intentionally excluded.</p>':'<p class="empty">No Mega forms match these filters.</p>');
   }
   document.addEventListener('change',function(e){
@@ -1232,14 +1232,14 @@
   }
   function markBtns(tk, label) {
     var v = usGet(tk);
-    return '<div class="mk" role="group" aria-label="Mark ' + esc(label) + '"><button type="button" data-mark="' + esc(tk) + '" data-val="1" aria-pressed="' + (v === 1) + '">Have</button><button type="button" data-mark="' + esc(tk) + '" data-val="0" aria-pressed="' + (v === 0) + '">Need</button>'
-      + (v !== undefined ? '<button type="button" data-mark="' + esc(tk) + '" data-val="" class="mk-clear">Clear</button>' : '') + '</div>';
+    return '<div class="mk" role="group" aria-label="Mark ' + esc(label) + '"><button type="button" data-mark="' + esc(tk) + '" data-val="1" aria-pressed="' + (v === 1) + '" aria-label="Have: ' + esc(label) + '">Have</button><button type="button" data-mark="' + esc(tk) + '" data-val="0" aria-pressed="' + (v === 0) + '" aria-label="Need: ' + esc(label) + '">Need</button>'
+      + (v !== undefined ? '<button type="button" data-mark="' + esc(tk) + '" data-val="" class="mk-clear" aria-label="Clear mark: ' + esc(label) + '">Clear</button>' : '') + '</div>';
   }
   function oppCard(x) {
     var o = x.o, evs = x.evs.slice(0, 3), chip = { missing: '<span class="st st-need">Need</span>', have: '<span class="st st-n">Have</span>', form: '<span class="st st-d">Not collectible</span>', unknown: '<span class="st st-n">Not tracked</span>' }[o.state];
     var fol = isFollowed(x.name);
     return '<article class="opp ' + o.state + '"><div class="opp-art">' + art({ n: o.base, costume: x.costume }, 'ea') + '</div><div class="opp-main">'
-      + '<div class="opp-top"><h3>' + esc(x.name) + '</h3>' + chip + '<button type="button" class="fbtn" data-follow="' + esc(x.name) + '" aria-pressed="' + fol + '" aria-label="' + (fol ? 'Unfollow ' : 'Follow ') + esc(x.name) + '">' + (fol ? '★' : '☆') + '</button></div>'
+      + '<div class="opp-top"><h3>' + esc(x.name) + '</h3>' + chip + '<button type="button" class="fbtn" data-follow="' + esc(x.name) + '" aria-pressed="' + fol + '" aria-label="Follow ' + esc(x.name) + '">' + (fol ? '★' : '☆') + '</button></div>'
       + (o.why ? '<p class="muted opp-why">' + esc(o.why) + '</p>' : '')
       + (o.tk ? markBtns(o.tk, x.name) : '')
       + '<ul class="opp-evs">' + evs.map(function (e) { return '<li><b>' + esc(e.name) + '</b><span>' + esc(fmtD(e.start) + (e.allDay ? '' : ', ' + fmtT(e.start))) + ' · ' + esc(countdown(e)) + '</span></li>'; }).join('') + (x.evs.length > 3 ? '<li class="muted">+' + (x.evs.length - 3) + ' more</li>' : '') + '</ul></div></article>';
@@ -1271,10 +1271,10 @@
     opps.forEach(function (x) { byBase[x.o.base.toLowerCase()] = x; });
     fl.innerHTML = followList().length ? '<div class="opps">' + followList().map(function (n) {
       var x = byBase[n.toLowerCase()], o = ownState(n);
-      return x ? oppCard(x) : '<article class="opp ' + o.state + '"><div class="opp-art">' + art(n, 'ea') + '</div><div class="opp-main"><div class="opp-top"><h3>' + esc(n) + '</h3><button type="button" class="fbtn" data-follow="' + esc(n) + '" aria-pressed="true" aria-label="Unfollow ' + esc(n) + '">★</button></div><p class="muted opp-why">Not in any scheduled event in the next four weeks.</p></div></article>';
+      return x ? oppCard(x) : '<article class="opp ' + o.state + '"><div class="opp-art">' + art(n, 'ea') + '</div><div class="opp-main"><div class="opp-top"><h3>' + esc(n) + '</h3><button type="button" class="fbtn" data-follow="' + esc(n) + '" aria-pressed="true" aria-label="Follow ' + esc(n) + '">★</button></div><p class="muted opp-why">Not in any scheduled event in the next four weeks.</p></div></article>';
     }).join('') + '</div>' : '<p class="empty">You are not following any Pokémon yet. Add one above and events featuring it get a highlight.</p>';
     var byId = {}; EV.forEach(function (e) { byId[e.id] = e; });
-    sv.innerHTML = savedList().length ? savedList().map(function (id) { return byId[id] ? card(byId[id]) : '<article class="evc ended"><div class="evc-main"><h3>No longer listed</h3><p class="evc-when">' + esc(id) + '</p><div class="evc-foot"><button type="button" class="star on" data-save="' + esc(id) + '">★ Remove</button></div></div></article>'; }).join('') : '<p class="empty">No saved events. Tap ☆ Save on an event.</p>';
+    sv.innerHTML = savedList().length ? savedList().map(function (id) { return byId[id] ? card(byId[id]) : '<article class="evc ended"><div class="evc-main"><h3>No longer listed</h3><p class="evc-when">' + esc(id) + '</p><div class="evc-foot"><button type="button" class="star on" data-save="' + esc(id) + '" aria-label="Remove saved event that is no longer listed">★ Remove</button></div></div></article>'; }).join('') : '<p class="empty">No saved events. Tap ☆ Save on an event.</p>';
   }
 
   /* ---------- wiring ---------- */
@@ -1739,7 +1739,7 @@
     renderCoverage();
     if (window.GO && GO.refreshDex) GO.refreshDex();
     usSync();
-    var inf = document.createElement('script'); inf.src = '/infographic.js?v=20261102a'; document.body.appendChild(inf); var x = document.createElement('script'); x.src = '/extra.js?v=20261102b'; document.body.appendChild(x); var z = document.createElement('script'); z.src = '/places.js?v=20261102a'; window.GOPLACES_READY = new Promise(function (resolve) { z.onload = function () { resolve(window.GOPLACES || null); }; z.onerror = function () { resolve(null); }; }); var y = document.createElement('script'); y.src = '/detail.js?v=20261102e'; document.body.appendChild(y); document.body.appendChild(z); var w = document.createElement('script'); w.src = '/fresh.js?v=20261102c'; document.body.appendChild(w); var nv = document.createElement('script'); nv.src = '/nudge.js?v=20261102a'; document.body.appendChild(nv); var rv = document.createElement('script'); rv.src = '/review.js?v=20261102a'; document.body.appendChild(rv); var by = document.createElement('script'); by.src = '/buy.js?v=20261101a'; document.body.appendChild(by);
+    var inf = document.createElement('script'); inf.src = '/infographic.js?v=20261102b'; document.body.appendChild(inf); var x = document.createElement('script'); x.src = '/extra.js?v=20261102c'; document.body.appendChild(x); var z = document.createElement('script'); z.src = '/places.js?v=20261102a'; window.GOPLACES_READY = new Promise(function (resolve) { z.onload = function () { resolve(window.GOPLACES || null); }; z.onerror = function () { resolve(null); }; }); var y = document.createElement('script'); y.src = '/detail.js?v=20261102f'; document.body.appendChild(y); document.body.appendChild(z); var w = document.createElement('script'); w.src = '/fresh.js?v=20261102c'; document.body.appendChild(w); var nv = document.createElement('script'); nv.src = '/nudge.js?v=20261102a'; document.body.appendChild(nv); var rv = document.createElement('script'); rv.src = '/review.js?v=20261102b'; document.body.appendChild(rv); var by = document.createElement('script'); by.src = '/buy.js?v=20261102a'; document.body.appendChild(by);
   }
   envBanner();
   /* Bounded waits: a request that never answers must not leave Today blank. After FEED_TIMEOUT_MS the page renders from the curated list
