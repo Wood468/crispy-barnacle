@@ -1065,10 +1065,11 @@ with sync_playwright() as p:
                ('2026-10-10' if i < 4 else '2026-10-11') + 'T10:30:00', 'official_confirmed')
             for i in range(9)
         ]
-        touch_page = page(api=json.dumps({'enabled': True, 'events': touch_events}))
+        touch_page = page(api=json.dumps({'enabled': True, 'events': touch_events}), mobile=True)
         touch_card = touch_page.locator('#home-now .evc[data-id="leekduck:touch-target"]')
         touch_card.wait_for(state='attached')
         hide_button = touch_card.locator('.hide-x')
+        hide_button.wait_for(state='visible')
         touch_box = hide_button.bounding_box()
         check('Today hide control is at least 44×44px',
               touch_box is not None and touch_box['width'] >= 44 and touch_box['height'] >= 44, touch_box)
