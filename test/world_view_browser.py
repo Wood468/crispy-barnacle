@@ -74,8 +74,9 @@ def main():
             response = page.goto(BASE, wait_until="domcontentloaded")
             expect("entry page loads", response is not None and response.status < 400)
             page.wait_for_selector("#tabs [role=tab]", timeout=15000)
-            page.wait_for_selector("#subnav-events button[data-sub=world]", timeout=15000)
+            # The Schedule sub-navigation is hidden until its parent tab is active.
             page.locator('nav.tabs button[data-tab="events"]').click()
+            page.wait_for_selector("#subnav-events button[data-sub=world]", timeout=15000)
             page.locator('#subnav-events button[data-sub="world"]').click()
             page.wait_for_function("() => { const el=document.getElementById('sub-world'); return !!el && !el.hidden; }")
             expect("In person is a visible third Schedule view",
