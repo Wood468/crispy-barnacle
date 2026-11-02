@@ -245,7 +245,7 @@ check('Tonight does not interpret a loading or failed top-ten feed as zero owned
       'window.GOBEST.dataReady === true' in DASH_JS and 'window.GOBEST.dataReady=true' in APP_JS and
       "document.addEventListener('gobest-ready'" in DASH_JS)
 check('Today game plan is an optional accessible local-time disclosure with weakness links to the owned Best attackers view',
-      all(token in INDEX_HTML for token in ['id="today-tonight"', 'id="today-tonight-summary"', 'id="today-tonight-list"', 'Today&#39;s battle plan']) and "Today's battle plan · " in DASH_JS and
+      all(token in INDEX_HTML for token in ['id="today-tonight"', 'id="today-tonight-summary"', 'id="today-tonight-list"', 'Today&#39;s game plan']) and "Today's battle plan · " in DASH_JS and
       all(token in DASH_JS for token in ['D.spotlight', 'D.raidHour', 'D.maxBattles', '6–7 pm local', '6 am–9 pm local', 'Weak to:', 'data-best-types', 'gofn-dex-ready', 'function renderTonight', 'renderTonight(t, dateKey)']) and
       all(token in DASH_CSS for token in ['.today-tonight', '.today-tonight-list', 'min-height:44px', '.today-tonight-best']) and
       'gofn-dex-ready' in APP_JS and '/app.js?v=20261103c' in INDEX_HTML and '/app.js?v=20261103c' in SW_JS)
