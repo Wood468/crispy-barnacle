@@ -3,6 +3,15 @@ name: Site check
 # Every 15 minutes: is the live site up, are the data files readable, do R2 pictures load? Telegram (System topic) is told
 # only when it starts failing and when it recovers.
 on:
+  push:
+    branches: [main]
+    paths:
+      - "public/**"
+      - "src/**"
+      - "workers/**"
+      - "scripts/uptime.mjs"
+      - "docs/ROADMAP.md"
+      - ".github/workflows/uptime.yml"
   schedule:
     - cron: "*/15 * * * *"
   workflow_dispatch:
@@ -30,4 +39,7 @@ jobs:
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           TELEGRAM_GROUP_ID: ${{ secrets.TELEGRAM_GROUP_ID }}
           TELEGRAM_TOPIC_SYSTEM: ${{ secrets.TELEGRAM_TOPIC_SYSTEM || secrets.TELEGRAM_TOPICS_SYSTEM }}
+      - name: Allow production assets to settle after a main push
+        if: github.event_name == 'push'
+        run: sleep 45
         run: node scripts/uptime.mjs
