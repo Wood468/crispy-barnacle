@@ -81,6 +81,13 @@
     if (/^\/infographics\/[\w./-]+$/.test(url) && !/(^|\/)\.\.?($|\/)/.test(url)) {
       return url.replace(/^\/infographics\//, '/infographic-thumbs/') + '.webp';
     }
+    var absolutePrefix = 'https://pogo.michaelpuff.com/infographics/';
+    if (url.indexOf(absolutePrefix) === 0) {
+      var relative = url.slice(absolutePrefix.length);
+      if (/^[\w./-]+$/.test(relative) && !/(^|\/)\.\.?($|\/)/.test(relative)) {
+        return 'https://pogo.michaelpuff.com/infographic-thumbs/' + relative + '.webp';
+      }
+    }
     return url;
   }
   function cardButton(button, ev, id, thumb) {
