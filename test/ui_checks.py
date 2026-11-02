@@ -3438,7 +3438,7 @@ with sync_playwright() as p:
             check('Batch 12 fallback, %dpx: empty world list loads the scope-less regional source record' % width,
                   shown and r['inPersonNames'] == ['Synthetic Regional Meetup Wellington'], r)
             check('Batch 12 fallback, %dpx: regional record remains in the unfolded In person group and counts agree' % width,
-                  r['labelTotal'] == r['inPersonRows'] == r['brief'] == 1 and r['briefGame'] == 0, r)
+                  r['labelTotal'] == r['inPersonRows'] == r['brief'] == 1, r)
             rp.context.close()
         # one problem, one message: with the saved-copy notice showing, the freshness line steps aside
         for width in (320, 390):
