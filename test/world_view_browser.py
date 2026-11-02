@@ -141,10 +141,13 @@ def main():
                    "Overseas In-Person Fixture" in travel_text and "Mexico City Wild Area Fixture" not in travel_text,
                    travel_text)
             page.locator("#travel-q").fill("")
-            page.locator('#travel-regions [data-travel-region="Asia"]').click()
+            asia_filter = page.locator('#travel-regions [data-travel-region="Asia"]')
+            asia_filter.focus()
+            page.keyboard.press("Enter")
             asia_travel = page.locator("#travel-results").inner_text()
-            expect("Travel region filter selects Asia only",
+            expect("Travel region filter selects Asia only and preserves keyboard focus",
                    page.locator('#travel-regions [data-travel-region="Asia"]').get_attribute("aria-pressed") == "true" and
+                   page.evaluate("() => document.activeElement.getAttribute('data-travel-region')") == "Asia" and
                    "Kyoto, Japan" in asia_travel and "Mexico City, Mexico" not in asia_travel)
             page.locator('#travel-regions [data-travel-region="all"]').click()
             expect("All destinations restores the full dated regional list",

@@ -904,9 +904,18 @@
       return '<option value="' + esc(p) + '"></option>';
     }).join('');
     var regions = $('travel-regions');
-    if (regions) regions.innerHTML = TRAVEL_REGIONS.map(function (r) {
-      return '<button type="button" class="fchip" data-travel-region="' + r[0] + '" aria-pressed="' + (travelRegion === r[0]) + '">' + esc(r[1]) + '</button>';
-    }).join('');
+    var focusedRegion = document.activeElement && document.activeElement.getAttribute && document.activeElement.getAttribute('data-travel-region');
+    if (regions) {
+      regions.innerHTML = TRAVEL_REGIONS.map(function (r) {
+        return '<button type="button" class="fchip" data-travel-region="' + r[0] + '" aria-pressed="' + (travelRegion === r[0]) + '">' + esc(r[1]) + '</button>';
+      }).join('');
+      if (focusedRegion) {
+        var focusTarget = Array.prototype.filter.call(regions.children, function (button) {
+          return button.getAttribute('data-travel-region') === focusedRegion;
+        })[0];
+        if (focusTarget) focusTarget.focus();
+      }
+    }
     var q = travelKey(travelQuery), filtered = candidates.filter(function (x) {
       if (travelRegion !== 'all' && x.area !== travelRegion) return false;
       var haystack = travelKey([x.place, x.name, x.area].join(' '));
