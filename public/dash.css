@@ -669,7 +669,7 @@ button.igcheck{min-height:44px}
 
 /* Calendar compact list */
 .agenda{display:grid;gap:6px}
-.agr{display:grid;grid-template-columns:4px 1fr auto;gap:10px;align-items:center;text-align:left;width:100%;padding:var(--space-2) 10px;border:1px solid var(--border-subtle);border-radius:var(--radius-md);background:var(--surface-glass);color:var(--color-text-body);text-decoration:none;font:inherit;cursor:pointer}
+.agr{display:grid;grid-template-columns:4px minmax(0,1fr) auto;gap:10px;align-items:center;text-align:left;width:100%;min-width:0;max-width:100%;box-sizing:border-box;padding:var(--space-2) 10px;border:1px solid var(--border-subtle);border-radius:var(--radius-md);background:var(--surface-glass);color:var(--color-text-body);text-decoration:none;font:inherit;cursor:pointer}
 .agr i{align-self:stretch;border-radius:4px;background:var(--k)}
 .agr .agt{display:grid;gap:1px;min-width:0}.agr b{font:700 .86rem/1.25 var(--font-body);overflow-wrap:anywhere}.agr small{color:var(--color-text-muted);font-size:.74rem}
 .agr em{font:700 var(--type-caption-compact) var(--font-body);letter-spacing:.06em;text-transform:uppercase;color:var(--k);font-style:normal;white-space:nowrap}
@@ -981,8 +981,8 @@ img.art.is-shiny{outline:2px solid var(--color-accent);outline-offset:2px;border
 #travel-results .agw .ag-actions .agx{width:44px;height:44px;min-width:44px;min-height:44px}
 
 /* Regional agenda rows: keep event copy and actions in separate, predictable columns. */
-.agw{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:stretch;gap:var(--space-2)}
-.agw>.agr{width:100%;min-width:0;grid-template-columns:4px minmax(0,1fr) minmax(56px,auto);padding:10px;gap:9px}
+.agw{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:stretch;gap:var(--space-2);min-width:0;max-width:100%;box-sizing:border-box}
+.agw>.agr{width:100%;min-width:0;max-width:100%;box-sizing:border-box;grid-template-columns:4px minmax(0,1fr) minmax(56px,auto);padding:10px;gap:9px}
 .agw .agr .agt{min-width:0}
 .agw .agr b{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;line-height:1.22}
 .agw .agr small{display:block;line-height:1.35;overflow-wrap:anywhere}
@@ -994,8 +994,8 @@ img.art.is-shiny{outline:2px solid var(--color-accent);outline-offset:2px;border
 .agw .ag-actions .agig:not(.igthumb)::before{content:"▧";font-size:var(--type-intro)}
 .agw .ag-actions .agpin{font-size:1rem}
 @media(max-width:420px){
-  .agw{gap:5px}
-  .agw>.agr{grid-template-columns:3px minmax(0,1fr);gap:var(--space-2);padding:9px}
+  .agw{gap:5px;min-width:0;max-width:100%}
+  .agw>.agr{grid-template-columns:3px minmax(0,1fr);gap:var(--space-2);padding:9px;min-width:0;max-width:100%;box-sizing:border-box}
   .agw .agr em{grid-column:2;justify-self:start;text-align:left;max-width:100%;font-size:.58rem;letter-spacing:.04em}
   .agw .agr small{font-size:.7rem}
   .agw .ag-actions{min-width:30px;gap:3px}
@@ -1174,11 +1174,11 @@ img.art.is-shiny{outline:2px solid var(--color-accent);outline-offset:2px;border
 @media(max-width:560px){.agenda-fold>summary{min-height:52px;padding:var(--space-3)}.agenda-fold>.event-agenda{padding:9px}}
 
 /* Today agenda: separate what's live from what's still ahead, using the existing event phases. */
-.today-phase-group{display:grid;gap:var(--space-2)}
+.today-phase-group{display:grid;gap:var(--space-2);min-width:0;max-width:100%}
 .today-phase-group+.today-phase-group{margin-top:var(--space-4);padding-top:14px;border-top:1px solid var(--border-subtle)}
 .today-phase-head{display:flex;align-items:center;gap:var(--space-2);color:var(--color-text-muted);font-size:.7rem;font-weight:800;letter-spacing:.09em;text-transform:uppercase}
 .today-phase-count{display:inline-grid;place-items:center;min-width:22px;height:22px;padding:0 6px;border:1px solid var(--border-subtle);border-radius:var(--radius-pill);color:var(--color-text);font:700 .7rem var(--font-mono,monospace);font-variant-numeric:tabular-nums}
-.today-phase-cards{display:grid;gap:9px}
+.today-phase-cards{display:grid;gap:9px;min-width:0;max-width:100%}
 
 
 /* Keep Today card actions inside the card even when the compact mobile grid is active. */

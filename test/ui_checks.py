@@ -768,10 +768,12 @@ with sync_playwright() as p:
               not re.search(r'\b\d{1,2}:\d{2}\b|\b(?:am|pm)\b', run30_text, re.I), run30_text)
         for run30_width in (320, 390, 1280):
             run30_fallback.set_viewport_size({'width':run30_width,'height':844 if run30_width < 600 else 900})
+            run30_fallback.wait_for_timeout(100)
             run30_box = run30_card.bounding_box()
             check('New Taipei RUN 30 remains visible at %dpx in the regional fallback' % run30_width,
                   run30_card.count()==1 and run30_card.is_visible() and run30_box is not None and
-                  run30_box['x'] >= -1 and run30_box['x'] + run30_box['width'] <= run30_width + 1)
+                  run30_box['x'] >= -1 and run30_box['x'] + run30_box['width'] <= run30_width + 1,
+                  {'viewport':run30_width,'box':run30_box,'documentWidth':run30_fallback.evaluate('document.documentElement.scrollWidth')})
         run30_fallback.context.close()
 
         # A similarly titled in-game card is not proof that an overseas in-person listing is redundant.
@@ -1956,7 +1958,7 @@ with sync_playwright() as p:
             if mode: pg.click(f'#mode-{tab}-{sub} button[data-mode="{mode}"]')
             pg.wait_for_timeout(200)
             check(f'{tab}/{sub}/{mode} reachable and visible', pg.locator(sel).is_visible())
-        check('Events shows Calendar, Timeline, In person and Travel; Discoveries lives in the menu', pg.evaluate("(()=>{const buttons=Array.from(document.querySelectorAll('#subnav-events button'));return buttons.length===4 && buttons.some(b=>b.dataset.sub==='world' && b.textContent==='In person') && buttons.some(b=>b.dataset.sub==='travel' && b.textContent==='Travel') && !buttons.some(b=>b.dataset.sub==='leaks') && !!document.getElementById('menu-leaks');})()"))
+        check('Schedule shows Calendar, Timeline, In person, Travel and Research; Discoveries lives in the menu', pg.evaluate("(()=>{const buttons=Array.from(document.querySelectorAll('#subnav-events button'));return buttons.length===5 && buttons.some(b=>b.dataset.sub==='world' && b.textContent==='In person') && buttons.some(b=>b.dataset.sub==='travel' && b.textContent==='Travel') && buttons.some(b=>b.dataset.sub==='research' && b.textContent==='Research') && !buttons.some(b=>b.dataset.sub==='leaks') && !!document.getElementById('menu-leaks');})()"))
         pg.click('#hmenu'); pg.click('#menu-leaks'); pg.wait_for_timeout(200)
         check('Leaks opens from the menu', pg.locator('#sub-leaks').is_visible())
         pg.click('nav.tabs button[data-tab="events"]'); pg.click('#subnav-events button[data-sub="timeline"]'); pg.click('#hmenu'); pg.click('#menu-leaks'); pg.wait_for_timeout(200)
