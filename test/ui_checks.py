@@ -3967,8 +3967,8 @@ with sync_playwright() as p:
         sources = shiny_page.locator('#today-shiny-list .today-shiny-source')
         check('shiny cards preserve official versus community source attribution and disclose missing check dates',
               sources.count()==2 and
-              'Community source · Leek Duck · Source check date not recorded' in shiny_text and
-              'Official source · Official Pokémon GO · Source check date not recorded' in shiny_text and
+              'Community · Leek Duck · Check date not recorded' in shiny_text and
+              'Official · Official Pokémon GO · Check date not recorded' in shiny_text and
               all('noopener' in (sources.nth(i).get_attribute('rel') or '') for i in range(sources.count())), shiny_text)
         check('shiny cards show the source-published event date window, without converting venue-local times',
               '1–5 Nov 2026' in shiny_text and '4 Nov 2026' in shiny_text, shiny_text)
