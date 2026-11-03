@@ -230,6 +230,40 @@ As of `2026-11-03T18:06Z` (05:06 Melbourne), run #70 remains the latest schedule
 6. **P3 — External ticket-sale coverage:** #306 completes in-card official-source attribution and freshness, distinguishes registration windows from ticket-sale windows, validates offset-bearing registration instants, and only labels availability when explicitly dated and sourced. Sendai registration ended 15 Sep JST; its ticket availability remains unconfirmed and is not mislabelled sold out. Mexico City is labelled Tickets available based on its official source checked 3 Nov 2026. Official source links are host-allowlisted, named and touch-sized; browser coverage spans 320/390/1280px, keyboard disclosure, light/dark and overflow. Further sale cut-offs may be added only from verified official pages; leave unknown dates/times absent.
 7. **✅ P3 — on-demand Season/GO Pass poster payload (completed by #315; production verified):** static 640×960 WebP detail derivatives now serve all three Season/GO Pass cards only when opened. The full-resolution originals remain accessible through keyboard-focusable links and are used as fallbacks if a thumbnail is missing or fails. The exact production audit measured 96,122 B across the three card thumbnails versus 2,667,524 B for their original poster payloads (−96.4%); the audit also confirmed online loading, offline loading and service-worker delivery. See the #315 release entry above for exact build, run IDs, viewport measurements and offline evidence. `public/season-thumbs/` remains outside R2 sync; this was a static-asset change only.
 
+## User-requested premium product experience audit — 4 Nov 2026
+
+The user supplied Pokémon GO screenshots and identified live shiny boosts, visual GO Pass ranks, event research, raid reschedule visuals, artwork-led event cards, and coherent event details as priority experiences. This is an experience-quality brief, not a request to copy Pokémon GO's assets or exact UI. Audit performed against main fb6589b4435af8d82e5f72b0b584e59f3d038e27.
+
+### Verified current state and actual gaps
+
+- **Today:** already has the daily brief, separate in-game/in-person counts, agenda, For you cards, season/GO Pass strip, seven-day view, source-backed ending deadlines and raid/Max focus. Event cards already carry typed debut/shiny/boosted-shiny signals. There is no consolidated live shiny-boost rail on Today; build one from active, source-backed highlights only, distinguish boosted odds from shiny availability/debut, and never invent a rate.
+- **Event detail:** already has an artwork hero, schedule/countdown, bonuses, featured Pokémon, source comparison/freshness, venue details, and shared section styling. The event-detail source model stores research under fields.research as prose/flattened lines, not structured task/reward records. No central Research destination exists.
+- **GO Pass:** detail.js already knows how to render milestone bonuses and a free/Deluxe rank table when its matching detail record contains rank rows. The active Halloween GO Pass card is season:pass-halloween, but its matching season.json item has no event-details.json record. Its 51 rank reward rows currently sit under the separate Halloween Part II event record's fields.tickets, so the pass detail cannot resolve them by its own name. November has a source-backed pass summary and milestone bonuses, but no per-rank reward rows in the current snapshot. Do not fabricate missing ranks.
+- **Research tasks:** Halloween Part II currently has five flattened Field Research task/reward descriptions plus Timed Research prose in fields.research. The importer already classifies Research headings, but it does not emit task/reward objects. Preserve the original text and source attribution while adding structured task records; unparsed content must remain visible as prose.
+- **Raid rotations:** the Battle destination already shows current/upcoming weekly rotations, boss artwork, low-tier availability, Raid Hour, source links and week navigation. A reschedule badge/history is a genuine remaining opportunity only if the importer can compare a new published window with a previously stored published window; do not infer a change from missing data.
+- **Navigation:** primary tabs are already the deliberately simple Today, Schedule, Battle and Collection. Put Research (and, if justified by testing, a pass list) in Schedule's secondary navigation rather than adding another primary tab. Event and pass pages should deep-link to the central Research view and use the same underlying records.
+
+### First coherent implementation batch — Research + GO Pass
+
+1. Extend the source importer/merge model with optional structured research tasks (task text, reward type/name/quantity, encounter CP bounds where explicitly published, event window, source IDs/trust, and checked date). Keep raw fields.research unchanged as a fallback; reject ambiguous parses rather than guessing.
+2. Render event-specific research task cards with reward artwork and provenance in event details, plus a central Schedule → Research view filtered to currently active and upcoming source-published tasks. Both views must consume the same records; add explicit cross-links and meaningful empty/loading/stale states.
+3. Add an explicit source-detail association for season/pass records so a pass can reuse its linked event-detail rank/milestone data without copying it. Link Halloween's pass to the Halloween Part II source record. For November, improve extraction from the source table before displaying ranks; otherwise show the verified summary and a clear "rank rewards not published/parsed" state.
+4. Keep free and Deluxe tracks distinct; show the first ranks, milestone bonuses, point-earning tasks, and claim deadlines only where the source publishes them. Do not imply personal progress.
+
+### Following visual batch — Today + schedule
+
+- Add the Today live shiny rail from active event highlights with explicit boost/debut/availability states, Pokémon artwork, active window, source and freshness. No numerical odds unless a source explicitly publishes them.
+- Improve raid reschedule/change annotations only after a source-backed previous/current window comparison exists; preserve the current weekly rotation view and its source links.
+- Refine event-card and event-detail hierarchy using the existing artwork and signal model; avoid duplicate content or new primary navigation.
+
+### Quality gates
+
+Add parser fixtures for the current Halloween research examples and GO Pass rank tables; source-provenance and unknown-field tests; central/event view parity and cross-link browser tests; active/expired and timezone boundary tests; 320px/390px mobile and desktop; light/dark; keyboard/focus and reduced motion; offline/PWA cache; empty/stale/error/loading states; and regression checks that overseas in-person events remain visible on Today with separate counts. No D1/R2, secret, Access, backup, or infrastructure changes are required for this product batch.
+
+### Existing branch check
+
+feat/structured-pass-research-deadlines-20261102 is an old 10-commit branch based on 1 Nov, 247 commits behind current main. Its deadline work is already represented in current season.js/dash.js; it is not a safe base for the new research/pass experience. Do not push to it or merge it wholesale. Start a fresh branch from the then-current main when the coherent implementation is ready.
+
 Completed reference: RES-2 raid rotation boundaries were corrected in #291 using individually published Leek Duck local windows (regular rotations 6 am–10 pm; Into the Wild special window 10 am–8 pm), and #292 is production verified: Today shows the active rotation or the next source-published rotation beginning later on the viewed local day. No historical dates were bulk-shifted.
 
 **Owner-controlled items remain blocked:** D1 schema consolidation (ENG-6/14) and a separate backup bucket (ENG-11) still require explicit approval. No migration, backup, storage or infrastructure change is part of this release-readiness batch.
