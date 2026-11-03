@@ -48,6 +48,22 @@ with sync_playwright() as p:
 
         page.locator('nav.tabs button[data-tab="events"]').click()
         page.wait_for_selector("#tab-events:not([hidden])")
+        research = page.locator('#subnav-events button[data-sub="research"]')
+        assert research.count() == 1, f"{width}px Schedule has no Research destination"
+        research.focus()
+        research.press("Enter")
+        page.wait_for_selector("#sub-research:not([hidden])")
+        page.wait_for_selector("#research-title")
+        research_layout = page.evaluate("""() => ({
+          pageWidth: document.documentElement.scrollWidth,
+          viewportWidth: window.innerWidth,
+          panelWidth: document.querySelector('#sub-research').getBoundingClientRect().width,
+          heading: document.getElementById('research-title').textContent.trim()
+        })""")
+        assert research_layout["pageWidth"] <= width, f"{width}px Research page overflow: {research_layout}"
+        assert research_layout["panelWidth"] <= width, f"{width}px Research panel exceeds viewport: {research_layout}"
+        assert research_layout["heading"] == "Research", f"{width}px Research heading missing: {research_layout}"
+
         timeline = page.locator('#subnav-events button[data-sub="timeline"]')
         if timeline.count():
             timeline.click()

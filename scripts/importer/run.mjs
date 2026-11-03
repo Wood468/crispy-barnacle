@@ -178,7 +178,12 @@ async function main() {
   const now = new Date().toISOString(), out = {};
   for (const [id, { event, results }] of byEvent) {
     const merged = mergeSources(results);
-    out[id] = { name: event.t, updated: now, sources: results.map(r => r.source), ...merged };
+    const researchTasks = (merged.researchTasks || []).map(task => ({
+      ...task, eventId: id, eventName: event.t,
+      eventWindow: { start: event.start || null, end: event.end || null },
+      checkedAt: now.slice(0, 10)
+    }));
+    out[id] = { name: event.t, updated: now, sources: results.map(r => r.source), ...merged, researchTasks };
   }
   for (const [id, v] of Object.entries(old)) if (!out[id] && Date.now() - Date.parse(v.updated || 0) < 45 * 864e5) out[id] = normaliseLegacyStatuses(v); // keep recent entries a source stopped listing, with current terminology
   await mkdir("data", { recursive: true });

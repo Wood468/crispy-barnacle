@@ -211,7 +211,7 @@ Promise.all([
   var PANEL_IDS=['now','events','raids','collect','saved'];
   // Multiple views per tab. Some views have a second-level filter (MODES) over existing sections.
   var SUBS={
-    events:[['calendar','Calendar','sub-calendar'],['timeline','Timeline','sub-timeline'],['world','In person','sub-world'],['travel','Travel','sub-travel'],['leaks','Discoveries','sub-leaks','menu']],
+    events:[['calendar','Calendar','sub-calendar'],['timeline','Timeline','sub-timeline'],['research','Research','sub-research'],['world','In person','sub-world'],['travel','Travel','sub-travel'],['leaks','Discoveries','sub-leaks','menu']],
     collect:[['dex','My Dex','sub-mydex'],['opps','Opportunities','sub-opps','menu'],['megas','Megas','sub-megas'],['guides','Guides','sub-guides']],
     saved:[['watch','Watchlist','sub-watch'],['menu','Menu','sub-menu']]
   };
@@ -282,7 +282,15 @@ Promise.all([
     document.dispatchEvent(new CustomEvent('gofn-view',{detail:{tab:id,sub:curSub[id]||'',mode:curMode[key2]||''}}));
     if(!sub||arguments.length<3)window.scrollTo(0,0);
   }
-  // Back button / swipe-back: stay inside the app. An open detail or infographic closes first; from any other tab Back goes to Now;
+  // Back button / swipe-back: stay inside the app. An open detail or infographic closes first; from any other tab Back goes to Now;  window.GOAPP = window.GOAPP || {};
+  window.GOAPP.openResearch = function (eventId) {
+    if (window.GODETAIL && typeof window.GODETAIL.close === 'function') window.GODETAIL.close();
+    setTimeout(function () {
+      showTab('events', 'research');
+      document.dispatchEvent(new CustomEvent('gofn-research-focus', { detail: { eventId: eventId || '' } }));
+    }, 120);
+  };
+
   // only from Now does Back leave the site. Tabs use no history entries of their own, so one Back is always one step.
   window.GONAV={depth:0,internal:false,
     push:function(){this.depth++;try{history.pushState({gofn:'overlay',d:this.depth},'')}catch(e){this.depth--}},

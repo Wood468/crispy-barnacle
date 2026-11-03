@@ -183,6 +183,7 @@
   },
   {
    "id": "season:pass-halloween",
+   "detailId": "leekduck:halloween-2026-part-2",
    "label": "GO Pass",
    "name": "GO Pass: Halloween 2026",
    "s": "2026-10-27T10:00",
@@ -205,6 +206,7 @@
   },
   {
    "id": "season:pass-november",
+   "detailId": "leekduck:go-pass-november-2026",
    "label": "GO Pass",
    "name": "GO Pass: November",
    "s": "2026-11-03T10:00",
