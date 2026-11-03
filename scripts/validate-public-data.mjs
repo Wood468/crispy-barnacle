@@ -106,6 +106,58 @@ if (evInfo && evInfo.events && typeof evInfo.events === "object") {
   }
 }
 
+
+// Regional world-event provenance is rendered directly in the app; malformed source objects must never reach it.
+const worldEvents = parsed.get("public/world-events.json");
+if (worldEvents != null) {
+  if (!worldEvents || !Array.isArray(worldEvents.events)) fail("public/world-events.json", "expected an events array");
+  else {
+    const ids = new Set();
+    for (const [i, event] of worldEvents.events.entries()) {
+      const where = `public/world-events.json events[${i}]`;
+      if (!event || typeof event !== "object" || Array.isArray(event)) { fail(where, "expected an event object"); continue; }
+      if (typeof event.id !== "string" || !event.id.trim()) fail(where, "missing event id");
+      else if (ids.has(event.id)) fail(where, `duplicate event id "${event.id}"`);
+      else ids.add(event.id);
+      if (typeof event.name !== "string" || !event.name.trim()) fail(where, "missing event name");
+      if (!Array.isArray(event.sources) || !event.sources.length) { fail(where, "expected at least one source record"); continue; }
+      for (const [j, source] of event.sources.entries()) {
+        const sourceWhere = where + ` sources[${j}]`;
+        if (!source || typeof source !== "object" || Array.isArray(source)) { fail(sourceWhere, "expected a source object"); continue; }
+        for (const key of ["id", "name", "url"]) {
+          if (typeof source[key] !== "string" || !source[key].trim()) fail(sourceWhere, key + " must be a non-empty string");
+        }
+        if (typeof source.url === "string") {
+          try { if (new URL(source.url).protocol !== "https:") fail(sourceWhere, "source URL must use HTTPS"); }
+          catch { fail(sourceWhere, "source URL is invalid"); }
+        }
+      }
+    }
+  }
+}
+
+const regionalEvents = parsed.get("public/regional-events.json");
+if (regionalEvents != null) {
+  if (!regionalEvents || !Array.isArray(regionalEvents.events)) fail("public/regional-events.json", "expected an events array");
+  else for (const [i, event] of regionalEvents.events.entries()) {
+    const where = `public/regional-events.json events[${i}]`;
+    if (!event || typeof event !== "object" || Array.isArray(event)) { fail(where, "expected an event object"); continue; }
+    if (event.source != null && typeof event.source !== "string") {
+      if (!event.source || typeof event.source !== "object" || Array.isArray(event.source)) fail(where, "source must be a source id or source object");
+      else {
+        const label = event.source.name || event.source.label;
+        if (typeof label !== "string" || !label.trim()) fail(where, "source object needs a non-empty name or label");
+        if (typeof event.source.url !== "string" || !event.source.url.trim()) fail(where, "source object needs its own URL");
+        else { try { if (new URL(event.source.url).protocol !== "https:") fail(where, "source object URL must use HTTPS"); } catch { fail(where, "source object URL is invalid"); } }
+      }
+    }
+    if (event.url != null) {
+      try { if (new URL(event.url).protocol !== "https:") fail(where, "event URL must use HTTPS"); }
+      catch { fail(where, "event URL is invalid"); }
+    }
+  }
+}
+
 let picturesRestored = false; try { await access(join(PUBLIC, "infographics")); picturesRestored = true; } catch { /* pictures are in R2 */ }
 const weekly = parsed.get("public/weekly.json");
 if (weekly != null) {
