@@ -154,14 +154,50 @@ export async function runChecks() {
   return problems;
 }
 
-async function previousConclusion() {
-  const repo = process.env.GITHUB_REPOSITORY, tok = process.env.GITHUB_TOKEN;
-  if (!repo || !tok) return null;
+export async function previousLiveCheckConclusion(options = {}) {
+  const repository = options.repository ?? process.env.GITHUB_REPOSITORY;
+  const token = options.token ?? process.env.GITHUB_TOKEN;
+  const fetchImpl = options.fetchImpl ?? globalThis.fetch;
+  if (!repository || !token) return null;
+
+  const [owner, name, extra] = repository.split("/");
+  if (!owner || !name || extra) return null;
+  const base = `https://api.github.com/repos/${encodeURIComponent(owner)}/${encodeURIComponent(name)}`;
+  const headers = {
+    authorization: "Bearer " + token,
+    accept: "application/vnd.github+json",
+    "x-github-api-version": "2022-11-28",
+    "user-agent": "go-field-notes-site-check"
+  };
+
   try {
-    const r = await fetch(`https://api.github.com/repos/${repo}/actions/workflows/uptime.yml/runs?status=completed&per_page=1`, { headers: { authorization: "Bearer " + tok, accept: "application/vnd.github+json" } });
-    const j = await r.json();
-    return (j.workflow_runs || [])[0]?.conclusion || null;
-  } catch { return null; }
+    const runsResponse = await fetchImpl(
+      base + "/actions/workflows/uptime.yml/runs?status=completed&per_page=20",
+      { headers, signal: AbortSignal.timeout(10000) }
+    );
+    if (!runsResponse.ok) return null;
+    const runs = await runsResponse.json();
+
+    // A push can fail before the live check if Cloudflare has not reported its
+    // production build yet. Such a run says nothing about the live site's state.
+    for (const run of runs.workflow_runs || []) {
+      if (!run || !run.id) continue;
+      const jobsResponse = await fetchImpl(
+        base + "/actions/runs/" + encodeURIComponent(run.id) + "/jobs?per_page=100",
+        { headers, signal: AbortSignal.timeout(10000) }
+      );
+      if (!jobsResponse.ok) return null;
+      const jobs = await jobsResponse.json();
+      for (const job of jobs.jobs || []) {
+        const step = (job.steps || []).find(item => item && item.name === "Check the live site");
+        if (!step || step.status !== "completed") continue;
+        if (step.conclusion === "success" || step.conclusion === "failure") return step.conclusion;
+      }
+    }
+  } catch {
+    return null;
+  }
+  return null;
 }
 
 async function tell(text) {
@@ -172,7 +208,7 @@ async function tell(text) {
 }
 
 if (import.meta.url === "file://" + process.argv[1]) {
-  const problems = await runChecks(), prev = await previousConclusion();
+  const [problems, prev] = await Promise.all([runChecks(), previousLiveCheckConclusion()]);
   if (problems.length) {
     console.log(problems.map(p => "::error::" + p).join("\n"));
     if (prev !== "failure") await tell("🔴 Site is down or broken\n" + problems.slice(0, 5).map(p => "• " + p).join("\n") + "\n\n" + BASE);

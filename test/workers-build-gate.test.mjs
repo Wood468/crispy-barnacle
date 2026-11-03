@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { waitForWorkersBuild, WORKERS_BUILD_CHECK_NAME } from "../scripts/wait-for-workers-build.mjs";
+import { waitForWorkersBuild, WORKERS_BUILD_CHECK_NAME, DEFAULT_WORKERS_BUILD_TIMEOUT_MS } from "../scripts/wait-for-workers-build.mjs";
 
 const productionUrl = "https://dash.cloudflare.com/123/workers/services/view/go-field-notes/production/builds/build-123";
 const previewUrl = "https://dash.cloudflare.com/123/workers/services/view/go-field-notes/production/previews/feature-branch/builds/preview-123";
@@ -117,4 +117,28 @@ test("production gate times out when Cloudflare never reports a build", async ()
     })),
     /Timed out waiting.*Cloudflare Workers build check has not appeared/
   );
+});
+
+
+test("default production gate allows a delayed Cloudflare build queue", async () => {
+  let now = 0;
+  let calls = 0;
+  const result = await waitForWorkersBuild({
+    repository: "Wood468/crispy-barnacle",
+    sha: "a".repeat(40),
+    token: "test-token",
+    pollIntervalMs: 60_000,
+    fetchImpl: async () => {
+      calls += 1;
+      return calls === 10
+        ? response([check("completed", "success")])
+        : response([]);
+    },
+    sleep: async ms => { now += ms; },
+    now: () => now
+  });
+  assert.equal(DEFAULT_WORKERS_BUILD_TIMEOUT_MS, 15 * 60 * 1000);
+  assert.equal(calls, 10);
+  assert.equal(now, 9 * 60 * 1000);
+  assert.equal(result.buildId, "build-123");
 });
