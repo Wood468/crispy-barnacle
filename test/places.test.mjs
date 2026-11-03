@@ -91,3 +91,11 @@ test("places.json: no raid, gym or PokéStop claim without a named source and da
 test("places.json: event links carry exact names and date ranges", () => {
   for (const p of D.places) for (const e of p.events || []) { assert.ok(e.name && day(e.from) && day(e.to) && e.from <= e.to, p.id + " event entry"); }
 });
+
+const placesUi = readFileSync(new URL("../public/places.js", import.meta.url), "utf8");
+test("Places dialog traps forward and reverse keyboard focus", () => {
+  assert.ok(placesUi.includes("o.addEventListener('keydown', function (e)"));
+  assert.ok(placesUi.includes("e.shiftKey && (active === first || !o.contains(active))"));
+  assert.ok(placesUi.includes("!e.shiftKey && (active === last || !o.contains(active))"));
+  assert.ok(placesUi.includes("el.getClientRects().length > 0"));
+});
