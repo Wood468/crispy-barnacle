@@ -282,7 +282,8 @@ Promise.all([
     document.dispatchEvent(new CustomEvent('gofn-view',{detail:{tab:id,sub:curSub[id]||'',mode:curMode[key2]||''}}));
     if(!sub||arguments.length<3)window.scrollTo(0,0);
   }
-  // Back button / swipe-back: stay inside the app. An open detail or infographic closes first; from any other tab Back goes to Now;  window.GOAPP = window.GOAPP || {};
+  // Back button / swipe-back: stay inside the app. An open detail or infographic closes first; from any other tab Back goes to Now;
+  window.GOAPP = window.GOAPP || {};
   window.GOAPP.openResearch = function (eventId) {
     if (window.GODETAIL && typeof window.GODETAIL.close === 'function') window.GODETAIL.close();
     setTimeout(function () {
