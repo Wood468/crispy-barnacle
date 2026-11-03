@@ -104,6 +104,36 @@ function isSupportedImage(bytes) {
   return jpeg || png || isWebp(bytes);
 }
 
+async function readLimitedBody(response) {
+  const reader = response.body && typeof response.body.getReader === 'function'
+    ? response.body.getReader()
+    : null;
+  if (!reader) {
+    const bytes = Buffer.from(await response.arrayBuffer());
+    if (bytes.length > MAX_SOURCE_BYTES) throw new Error('source image exceeds the 20 MB safety limit');
+    return bytes;
+  }
+
+  const chunks = [];
+  let total = 0;
+  try {
+    while (true) {
+      const result = await reader.read();
+      if (result.done) break;
+      const chunk = Buffer.from(result.value);
+      total += chunk.length;
+      if (total > MAX_SOURCE_BYTES) {
+        try { await reader.cancel(); } catch (_) {}
+        throw new Error('source image exceeds the 20 MB safety limit');
+      }
+      chunks.push(chunk);
+    }
+  } finally {
+    try { reader.releaseLock(); } catch (_) {}
+  }
+  return Buffer.concat(chunks, total);
+}
+
 async function fetchOriginal(source, tempRoot, fetchImpl) {
   const response = await fetchImpl(source.url, {
     headers: {
@@ -128,8 +158,8 @@ async function fetchOriginal(source, tempRoot, fetchImpl) {
   if (rawLength && Number.isFinite(contentLength) && contentLength > MAX_SOURCE_BYTES) {
     throw new Error('source image exceeds the 20 MB safety limit');
   }
-  const bytes = Buffer.from(await response.arrayBuffer());
-  if (!bytes.length || bytes.length > MAX_SOURCE_BYTES) throw new Error('source image size is outside the 20 MB safety limit');
+  const bytes = await readLimitedBody(response);
+  if (!bytes.length) throw new Error('source image is empty');
   if (!isSupportedImage(bytes)) throw new Error('source response is not a JPEG, PNG or WebP image');
 
   const parsed = new URL(source.url);
