@@ -1,22 +1,22 @@
 {
- "runAt": "2026-11-02T23:39:41.920Z",
+ "runAt": "2026-11-03T06:57:47.125Z",
  "sources": {
   "official": {
-   "listed": 22,
+   "listed": 23,
    "error": ""
   },
   "leekduck": {
-   "listed": 44,
+   "listed": 43,
    "error": ""
   },
   "hub": {
-   "listed": 13,
+   "listed": 12,
    "error": ""
   }
  },
  "pagesRead": 80,
  "events": 89,
- "worldEvents": 57,
+ "worldEvents": 59,
  "worldUndated": [
   "GO Wild Area Stamp Rally"
  ],
@@ -95,11 +95,6 @@
    "source": "hub",
    "title": "Pokémon GO November 2026 Event Calendar: All Events, Raids & Bonuses",
    "url": "https://pokemongohub.net/post/event/pokemon-go-november-2026-events/"
-  },
-  {
-   "source": "hub",
-   "title": "Pokémon GO Raid Hour Schedule (November 2026)",
-   "url": "https://pokemongohub.net/post/guide/raid-hour-schedule/"
   }
  ],
  "intl": {
@@ -238,7 +233,7 @@
    "field": "bonuses",
    "missingFrom": [
     "official",
-    "hub"
+    "official"
    ]
   },
   {
@@ -246,6 +241,8 @@
    "field": "featured",
    "missingFrom": [
     "official",
+    "official",
+    "hub",
     "hub"
    ]
   },
@@ -253,6 +250,7 @@
    "event": "Into the Wild",
    "field": "raids",
    "missingFrom": [
+    "official",
     "official"
    ]
   },
@@ -261,6 +259,7 @@
    "field": "eggs",
    "missingFrom": [
     "official",
+    "official",
     "leekduck"
    ]
   },
@@ -268,7 +267,7 @@
    "event": "Into the Wild",
    "field": "research",
    "missingFrom": [
-    "official",
+    "hub",
     "hub"
    ]
   },
@@ -277,7 +276,18 @@
    "field": "shiny",
    "missingFrom": [
     "official",
+    "official",
+    "hub",
     "hub"
+   ]
+  },
+  {
+   "event": "Into the Wild",
+   "field": "costumes",
+   "missingFrom": [
+    "official",
+    "official",
+    "leekduck"
    ]
   },
   {
@@ -285,13 +295,14 @@
    "field": "tickets",
    "missingFrom": [
     "official",
-    "hub"
+    "official"
    ]
   },
   {
    "event": "Into the Wild",
    "field": "dates",
    "missingFrom": [
+    "official",
     "official"
    ]
   },
@@ -331,24 +342,10 @@
    ]
   },
   {
-   "event": "Max Monday: Pokémon to be announced",
-   "field": "raids",
+   "event": "GO Pass: November",
+   "field": "featured",
    "missingFrom": [
-    "leekduck"
-   ]
-  },
-  {
-   "event": "Max Monday: Pokémon to be announced",
-   "field": "shiny",
-   "missingFrom": [
-    "leekduck"
-   ]
-  },
-  {
-   "event": "Max Monday: Pokémon to be announced",
-   "field": "costumes",
-   "missingFrom": [
-    "leekduck"
+    "hub"
    ]
   },
   {

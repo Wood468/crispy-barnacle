@@ -1,24 +1,7 @@
 {
- "checked": "2026-11-02T23:39:45.062Z",
- "compared": 49,
- "problems": [
-  {
-   "id": "smr1",
-   "name": "Super Mega Raid Day",
-   "field": "start",
-   "ours": "2026-10-31T14:00",
-   "leekduck": "2026-11-28T14:00:00",
-   "slug": "super-mega-raid-day-november-2026"
-  },
-  {
-   "id": "smr1",
-   "name": "Super Mega Raid Day",
-   "field": "end",
-   "ours": "2026-10-31T17:00",
-   "leekduck": "2026-11-28T17:00:00",
-   "slug": "super-mega-raid-day-november-2026"
-  }
- ],
+ "checked": "2026-11-03T06:57:50.069Z",
+ "compared": 48,
+ "problems": [],
  "missing": [
   {
    "slug": "minior-showers-eta-aquariids-2027",
