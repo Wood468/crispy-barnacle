@@ -53,6 +53,57 @@ test("same-series events at distinct cities remain separate while country/city a
   assert.equal(nested[0].place, "Kuala Lumpur, Malaysia (KLCC)", "the more specific city/venue replaces the country-only place");
 });
 
+test("same-writeup country aliases retain the more specific city and venue", async () => {
+  const { mergeWorld, sameWriteupRulings, collapseWorld } = await import("../scripts/importer/world.mjs");
+  const officialUrl = "https://pokemongo.com/news/pokemon-run-30-2026/";
+  const source = { id: "official", name: "Pokémon GO (official)", url: officialUrl };
+  const broad = {
+    id: "w-pok-mon-run-30-malaysia",
+    name: "Pokémon RUN 30: Malaysia",
+    place: "Malaysia",
+    area: "Asia",
+    scope: "regional",
+    start: "2026-11-21",
+    end: "2026-11-22",
+    sources: [source],
+    status: "official"
+  };
+  const specific = {
+    id: "w-pok-mon-run-30-kuala-lumpur",
+    name: "Pokémon RUN 30: Kuala Lumpur",
+    place: "Kuala Lumpur, Malaysia (KLCC Plaza Petronas)",
+    area: "Asia",
+    scope: "regional",
+    start: "2026-11-21",
+    end: "2026-11-22",
+    sources: [source],
+    status: "official"
+  };
+
+  // The same official page can yield both a country-level parse and a curated venue record.
+  // They describe one stop, so the same-write-up guard must not preserve the weaker alias as a separate event.
+  const merged = mergeWorld([broad, specific], { official: "Pokémon GO (official)" });
+  const rulings = sameWriteupRulings(merged);
+  assert.deepEqual(rulings, []);
+  const collapsed = collapseWorld(merged, { different: rulings });
+  assert.equal(collapsed.events.length, 1);
+  assert.equal(collapsed.events[0].name, specific.name);
+  assert.equal(collapsed.events[0].place, specific.place);
+  assert.equal(collapsed.events[0].area, "Asia");
+
+  // Two genuinely different destinations in the same announcement must remain separate.
+  const singapore = {
+    ...specific,
+    id: "w-pok-mon-run-30-singapore",
+    name: "Pokémon RUN 30: Singapore",
+    place: "Singapore (The Kallang)"
+  };
+  const separate = mergeWorld([broad, singapore], { official: "Pokémon GO (official)" });
+  const separateRulings = sameWriteupRulings(separate);
+  assert.deepEqual(separateRulings, [[separate[0].id, separate[1].id]]);
+  assert.equal(collapseWorld(separate, { different: separateRulings }).events.length, 2);
+});
+
 test("global Twitch research stays distinct from the in-person Night Out venue event", async () => {
   const { fromPage, mergeWorld, collapseWorld } = await import("../scripts/importer/world.mjs");
   const physical = fromPage({
