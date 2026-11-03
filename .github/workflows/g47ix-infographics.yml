@@ -106,7 +106,6 @@ jobs:
             echo "No decisions to apply."
           fi
           echo "thumbnail_changed=$thumbnail_changed" >> "$GITHUB_OUTPUT"
-          echo "commit_sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
       - name: Read the last months of the Discord channel
         env:
           DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
