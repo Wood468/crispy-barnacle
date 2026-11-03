@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-03T12:45:49.800Z",
+ "updated": "2026-11-03T15:17:44.626Z",
  "events": [
   {
    "id": "w-pokemon-fossil-museum-2026",
@@ -400,7 +400,7 @@
   {
    "id": "w-fc-seoul",
    "name": "FC Seoul",
-   "place": "South Korea",
+   "place": "Seoul, South Korea",
    "area": "Asia",
    "scope": "regional",
    "start": "2026-10-24",
@@ -408,23 +408,18 @@
    "datesKnown": true,
    "sources": [
     {
-     "id": "official",
-     "name": "Pokémon GO (official)",
-     "url": "https://pokemongo.com/ko/news/fc-seoul-2026/"
-    },
-    {
      "id": "serebii",
      "name": "Serebii",
      "url": "https://www.serebii.net/pokemongo/reallifeevents.shtml"
     }
    ],
-   "status": "official",
+   "status": "single",
    "seen": "2026-11-03"
   },
   {
    "id": "w-pok-mon-go-dia-de-muertos-2026-mexico-exclusive-ev",
    "name": "Dia de Muertos 2026: Mexico",
-   "place": "Mexico",
+   "place": "Paseo de la Reforma, Mexico City, Mexico",
    "area": "Americas",
    "scope": "regional",
    "start": "2026-10-27",
