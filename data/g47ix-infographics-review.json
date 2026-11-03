@@ -14,8 +14,8 @@
       "url": "https://discord.com/channels/@me/1558793395198099618/1566971418531463239",
       "publishedAt": "2026-11-03T00:24:59.099000+00:00",
       "imageUrl": "https://cdn.discordapp.com/attachments/886998693897719819/1566966687410946068/tr_QOL_3.png?ex=6aea76f3&is=6ae92573&hm=b04c6cde1c995940f3c1d18b00d672caded608a9b56fe02b59d1d61b096d4b87&",
-      "reviewStatus": "needs_review",
-      "decision": "pending",
+      "reviewStatus": "rejected",
+      "decision": "rejected",
       "ocrChecked": true,
       "ocrText": "2 ™ GO Wild Area Updates oe i Upgrade your trainer ae profile with backgrounds! Pe ee WA 2026 Lo on Backgro: we dai/ Me ill be availab 7 to display am ‘al time a @® @ _ GOWA 2026 Special Backgr \"previously | released ‘ation B round 60 vailable to y at 10 LEVEL / 3,350,000 | dg This feature will be scala le to Trainers” in their local time. Friends will not be able | © @ 6 e to see your buddy Pokémon’s background until 10:00 a. .m. ‘in their local time. | | 08 @o ®@ @4 a. Aas More updates rarring iT nT ine ild L/ u'll aT Wwur hil in tl lok ror ral if if Follow for more G47|X £) (co) X ie L > | ~<",
       "eventMatch": {
@@ -56,7 +56,8 @@
         "posted around the event"
       ],
       "matchScore": 3,
-      "stagedPath": "/infographics/g47ix/discord-1566971418531463239.png"
+      "stagedPath": "/infographics/g47ix/discord-1566971418531463239.png",
+      "publishedEvents": []
     },
     {
       "id": "discord:1566927162467025069",
@@ -66,8 +67,8 @@
       "url": "https://discord.com/channels/@me/1558793395198099618/1566927162467025069",
       "publishedAt": "2026-11-02T21:29:07.631000+00:00",
       "imageUrl": "https://cdn.discordapp.com/attachments/886998693897719819/1566922139259510854/QOL_2.png?ex=6aea4d76&is=6ae8fbf6&hm=d122b159bb9cc972d7728e41cd31714c422207f5a4e1c24944c1b9cf30c35814&",
-      "reviewStatus": "needs_review",
-      "decision": "pending",
+      "reviewStatus": "rejected",
+      "decision": "rejected",
       "ocrChecked": true,
       "ocrText": "SPORE NOY, Quality-of-Life Updates Go THE EXPLORER GADGET EVOLVES! ay ae 27:07 5 17:20:06 USE IT WHILE YOU ACTIVELY PLAY To* GRza 0:06 It will automatically attempts to catch Pokémon =. and spin PokéStops even while the app is open s SO ee ON \\ eI i == eS > a While Trainers are actively playing Pokémon GO with the te Explorer Gadget turned on, they will see a pink PokéBall icon appear over Pokémon or PokéStops on the map a that the Explorer Gadget is attempting to catch or spin = re Tap the Pokémon or PokéStop to interact with it yourself. The Explorer Gadget will not attempt to catch certain encountered Pokémon, such as Pokémon that aren’t yet registered in your Pokédex or mighty Pokémon. MORE QOL UPDATES TOTAL170XP © @ 400 To improve the consistency of wild encounters for all players, visiting a PowerSpot or placing f 300 9 a Pokémon at a Power Spot after winning a Max Battle will no longer trigger special Updated Dedicated wild encounters around Catch Summary Appraise Button the Power Spot. a A ~~ is, at a ee Zz Updated Encounter Better spun PokéStop Better coe /M ystery Ring Indicators Color Saturation Box Visual Effects Follow for more G47|1X £) Ox he) L > | www.g47ix.pro",
       "eventMatch": {
@@ -108,7 +109,8 @@
         "posted around the event"
       ],
       "matchScore": 3,
-      "stagedPath": "/infographics/g47ix/discord-1566927162467025069.webp"
+      "stagedPath": "/infographics/g47ix/discord-1566927162467025069.webp",
+      "publishedEvents": []
     },
     {
       "id": "discord:1566916181749932032",
@@ -118,8 +120,8 @@
       "url": "https://discord.com/channels/@me/1558793395198099618/1566916181749932032",
       "publishedAt": "2026-11-02T20:45:29.624000+00:00",
       "imageUrl": "https://cdn.discordapp.com/attachments/886998693897719819/1566910944611799221/GOPass_Nov_26.png?ex=6aea4308&is=6ae8f188&hm=64b623667ca5617cc27ccc6eee177880adf31c8816d444dd7400cb15e7383d63&",
-      "reviewStatus": "needs_review",
-      "decision": "pending",
+      "reviewStatus": "published",
+      "decision": "approved",
       "ocrChecked": true,
       "ocrText": "qa ¢ Starting \\VZ GO Pass ep = November NOV ++ a ‘ai44 DELUXE Ww Sete od &, Groudon 1000 Poke Coins a (IA PZ Dy Additional — .< S\\e@ encounters g AND MORE AND MORE = N Se. ——— Major Milestone Bonuses Tier 1 - Rank 1 | One additional Candy and one guaranteed Candy XL* for trading Pokémon Tier 2 - Rank 25 Tier 2 - Rank 25 ‘i Open up to 40 Gifts per day ) Open up to 50 Gifts per day Receive up to 125 Gifts per day Receive up to 150 Gifts per day Hold 10 more Gifts Hold 20 more Gifts Tier 4 - Rank 75 | Increased Stardust and XP from hatching Eggs ~ > From November 28-29 there’s no daily limit on the number of GO Points you can earn! Follow for more G47|X £) Ox i oe *for Trainers level 31 and above www.g47ix.pro",
       "eventMatch": {
@@ -168,7 +170,11 @@
         "posted around the event"
       ],
       "matchScore": 6,
-      "stagedPath": "/infographics/g47ix/discord-1566916181749932032.png"
+      "stagedPath": "/infographics/g47ix/discord-1566916181749932032.png",
+      "publishedEvent": "leekduck:go-pass-november-2026",
+      "publishedEvents": [
+        "leekduck:go-pass-november-2026"
+      ]
     },
     {
       "id": "discord:1566880019089723575",
