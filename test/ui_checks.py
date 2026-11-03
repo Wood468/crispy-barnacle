@@ -3860,6 +3860,13 @@ with sync_playwright() as p:
         for width in (320,390,1280):
             tp = page(api=ticket_api,clock='2026-11-03T12:00:00+11:00',width=width,height=900,mobile=width<500,extra=ticket_extra)
             loaded = settle(tp,"document.querySelectorAll('#buy-body .by-ext').length===2",15000)
+            if loaded:
+                if width==1280:
+                    tp.locator('#buy-sec summary').focus()
+                    tp.keyboard.press('Enter')
+                else:
+                    tp.locator('#buy-sec summary').click()
+            opened = settle(tp,"document.querySelector('#buy-sec details.buyplan').open",3000)
             tp.evaluate("document.documentElement.setAttribute('data-theme',%s)" % json.dumps('light' if width==390 else 'dark'))
             state = tp.evaluate("""() => {
                 const cards=[...document.querySelectorAll('#buy-body .by-ext')];
@@ -3868,7 +3875,7 @@ with sync_playwright() as p:
             sendai = next((x for x in state['cards'] if 'Sendai' in x['text']),None)
             mexico = next((x for x in state['cards'] if 'Mexico City' in x['text']),None)
             check('Purchase Planner %dpx: Sendai registration is not mislabeled as a closed sale; Mexico City shows verified availability and both show 3 Nov source checks' % width,
-                  loaded and sendai is not None and mexico is not None and
+                  loaded and opened and sendai is not None and mexico is not None and
                   'Registration ended 15 Sep JST · ticket availability unconfirmed' in sendai['text'] and
                   'Tickets available' in mexico['text'] and
                   sendai['text'].count('Official source checked 3 Nov 2026')==1 and
