@@ -256,7 +256,7 @@ check('Today game plan is an optional accessible local-time disclosure with weak
       all(token in INDEX_HTML for token in ['id="today-tonight"', 'id="today-tonight-summary"', 'id="today-tonight-list"', 'Today&#39;s game plan']) and "Today's game plan · " in DASH_JS and
       all(token in DASH_JS for token in ['D.spotlight', 'D.raidHour', 'D.maxBattles', '6–7 pm local', '6 am–9 pm local', 'Weak to:', 'data-best-types', 'gofn-dex-ready', 'function renderTonight', 'renderTonight(t, dateKey)', 'today-tonight-state', 'Live now · ends in ', 'Starts in ', 'upcomingCount']) and
       all(token in DASH_CSS for token in ['.today-tonight', '.today-tonight-list', 'min-height:44px', '.today-tonight-best']) and
-      'gofn-dex-ready' in APP_JS and '/app.js?v=20261103e' in INDEX_HTML and '/app.js?v=20261103e' in SW_JS)
+      'gofn-dex-ready' in APP_JS and '/app.js?v=20261103f' in INDEX_HTML and '/app.js?v=20261103f' in SW_JS)
 check('Dex/type readiness refreshes Today raid handoffs and the Tonight disclosure without touching event-detail focus targets',
       "document.addEventListener('gotypes', function () { try { todayTypesReady = true; todayTypesFailed = false; renderRot(); var t = now(); renderTodayRaidPrep(todayRotationFor(t)); renderTonight(t, dayKey(t)); } catch (e) {} });" in DASH_JS and
       "document.addEventListener('gofn-dex-ready', function () { try { renderRot(); var t = now(); renderTodayRaidPrep(todayRotationFor(t)); renderTonight(t, dayKey(t)); } catch (e) {} });" in DASH_JS)
@@ -335,7 +335,7 @@ check('Travel mode searches only source-dated regional listings and preserves To
       "['travel','Travel','sub-travel']" in APP_JS and
       all(token in DASH_JS for token in ['function renderTravel()', 'TRAVEL_REGIONS', 'data-travel-region', "x.scope !== 'global'", "!/^dated:/.test(String(x.id || ''))", "indexOf('https://') === 0", 'sourceStart', 'sourceEnd', 'travelDateText', 'REG.filter(function (x)', 'var hide = it.travel ?', 'focusedRegion', 'focusTarget.focus()']) and
       all(token in DASH_CSS for token in ['#sub-travel .travel-search', '#travel-regions .fchip{min-height:44px}', '#travel-results .agw .ag-actions .agx{width:44px;height:44px;min-width:44px;min-height:44px}']) and
-      '/app.js?v=20261103e' in INDEX_HTML and '/app.js?v=20261103e' in SW_JS and
+      '/app.js?v=20261103f' in INDEX_HTML and '/app.js?v=20261103f' in SW_JS and
       '/dash.js?v=20261103g' in APP_JS and '/dash.js?v=20261103g' in SW_JS and
       '/dash.css?v=20261103d' in INDEX_HTML and '/dash.css?v=20261103d' in SW_JS and
       'gofn-shell-v227' in SW_JS)
@@ -354,7 +354,7 @@ check('raid share payload uses sourced weaknesses, local top-ten marks and safe 
 check('event detail focus restoration can find a re-rendered opener by event key and card role',
       all(token in DETAIL_JS for token in ['openerKey', 'openerClass', "getAttribute('data-open')", 'target.focus()']))
 check('versioned dashboard scripts are referenced by the entry page and precached offline',
-      '/app.js?v=20261103e' in INDEX_HTML and '/app.js?v=20261103e' in SW_JS and
+      '/app.js?v=20261103f' in INDEX_HTML and '/app.js?v=20261103f' in SW_JS and
       '/dash.js?v=20261103g' in APP_JS and '/dash.js?v=20261103g' in SW_JS and
       '/detail.js?v=20261102f' in DASH_JS and '/detail.js?v=20261102f' in SW_JS)
 check('sync PIN and account controls have one home in Menu and are precached offline',
