@@ -330,10 +330,10 @@ check('event signal chips and detail tags use semantic palette roles with unchan
       ]))
 check('offline shell cache version advances with the dashboard stylesheet token release',
       "gofn-shell-v232" in SW_JS)
-check('Travel mode searches only source-dated regional listings and preserves Today visibility',
+check('Travel mode searches only source-dated physical destinations and preserves Today visibility',
       all(token in INDEX_HTML for token in ['id="sub-travel"', 'id="travel-q"', 'id="travel-destinations"', 'id="travel-regions"', 'id="travel-results"']) and
       "['travel','Travel','sub-travel']" in APP_JS and
-      all(token in DASH_JS for token in ['function renderTravel()', 'TRAVEL_REGIONS', 'data-travel-region', "x.scope !== 'global'", "!/^dated:/.test(String(x.id || ''))", "indexOf('https://') === 0", 'sourceStart', 'sourceEnd', 'travelDateText', 'REG.filter(function (x)', 'var hide = it.travel ?', 'focusedRegion', 'focusTarget.focus()']) and
+      all(token in DASH_JS for token in ['function renderTravel()', 'TRAVEL_REGIONS', 'data-travel-region', "LIB.isInPersonWorldEvent(x)", 'function inGameRegional(list)', "subHead('In-game (regional)'", "!/^dated:/.test(String(x.id || ''))", "indexOf('https://') === 0", 'sourceStart', 'sourceEnd', 'travelDateText', 'REG.filter(function (x)', 'var hide = it.travel ?', 'focusedRegion', 'focusTarget.focus()']) and
       all(token in DASH_CSS for token in ['#sub-travel .travel-search', '#travel-regions .fchip{min-height:44px}', '#travel-results .agw .ag-actions .agx{width:44px;height:44px;min-width:44px;min-height:44px}']) and
       '/app.js?v=20261103i' in INDEX_HTML and '/app.js?v=20261103i' in SW_JS and
       '/dash.js?v=20261104a' in APP_JS and '/dash.js?v=20261104a' in SW_JS and
