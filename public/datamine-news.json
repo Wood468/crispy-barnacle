@@ -1,12 +1,12 @@
 {
- "updated": "2026-11-03T04:00:26.596Z",
+ "updated": "2026-11-03T19:27:14.709Z",
  "seeded": true,
  "channels": [
   {
    "src": "events",
    "name": "dm-events",
    "state": "ok",
-   "count": 12
+   "count": 13
   },
   {
    "src": "reports",
@@ -18,10 +18,46 @@
    "src": "gamedata",
    "name": "dm-gamedata",
    "state": "ok",
-   "count": 34
+   "count": 37
   }
  ],
  "items": [
+  {
+   "id": "1567251110664732718",
+   "src": "gamedata",
+   "title": "QUESTTOTALDAYSCATCHRESULTFIXFEATUREGATE and TODAYVIEWINNERTABSHEADERFEATUREGATE were rolled out.",
+   "text": "QUESTTOTALDAYSCATCHRESULTFIXFEATUREGATE and TODAYVIEWINNERTABSHEADERFEATUREGATE were rolled out.",
+   "link": "",
+   "image": "",
+   "date": "2026-11-03T18:56:22.900Z"
+  },
+  {
+   "id": "1567227026606137368",
+   "src": "events",
+   "title": "Raid Boss Rotation Update",
+   "text": "Raid Boss Rotation Update\nTime Ranges\n November 4, 2026 at 6:00 a.m. – November 5, 2026 at 8:00 p.m.\nPokémon\n One-Star Raids: Pikachu wearing a hat and capelet, Sinistea wearing a bow\n Three-Star Raids: Cofagrigus, Trevenant, Dhelmise\n Five-Star Raids: Giratina (Altered Forme)\n Mega Raids: Mega Sableye\nEvolution Criteria\n Urshifu (Single Strike Style): 1 Dark-type Pokémon\n Urshifu (Rapid Strike Style): 0 Water-type Pokémon\n Kingambit: 1 Dark- or Steel-type Pokémon\nShadow Raid Boss Rotation Update\nTime Ranges\n November 4, 2026 at 6:00 a.m. – November 8, 2026 at 8:00 p.m.\n November 16, 2026 at 6:00 a.m. – December 1, 2026 at 8:00 p.m.\nPokémon\n One-Star Shadow Raids: Shadow Larvitar, Shadow Mud",
+   "link": "",
+   "image": "",
+   "date": "2026-11-03T17:20:40.813Z"
+  },
+  {
+   "id": "1567208904134230036",
+   "src": "gamedata",
+   "title": "Thanks to @Where the crap is Shiny Dreepy and @52047 for checking in-game, it seems as though there may be additional se",
+   "text": "Thanks to @Where the crap is Shiny Dreepy and @52047 for checking in-game, it seems as though there may be additional server checks to truly \"activate\" these features.\ndiff\n enablemultiuse: true\n extradurationms: 4000\n enablenoncombatmove: true\n+ inlobbyactivationsettings {\n+ enableactivationinraidlobby: true\n+ enableactivationinmaxlobby: true\n+ }\n }\n }\n }\n\nThe game master was updated to include flags for enabling these Adventure Effects in lobbies, but it does not seem as though it is possible yet. If the blog is to be believed, these should be enabled when Into the Wild begins.\n\n@subscriber @miner",
+   "link": "",
+   "image": "",
+   "date": "2026-11-03T16:08:40.079Z"
+  },
+  {
+   "id": "1567206446720876796",
+   "src": "gamedata",
+   "title": "The Adventure Effects for Freeze Shock, Ice Burn, Behemoth Blade, Behemoth Bash, and Dynamax Cannon can now be activated",
+   "text": "The Adventure Effects for Freeze Shock, Ice Burn, Behemoth Blade, Behemoth Bash, and Dynamax Cannon can now be activated in battle lobbies.\n\n@subscriber @miner",
+   "link": "",
+   "image": "",
+   "date": "2026-11-03T15:58:54.186Z"
+  },
   {
    "id": "1566976107964661812",
    "src": "gamedata",
