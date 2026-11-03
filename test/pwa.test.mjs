@@ -45,26 +45,11 @@ test("standard PNG icons have the dimensions declared in the manifest", () => {
   }
 });
 
-test("PWA entry page links to the manifest and iOS touch icon and registers the service worker", () => {
+test("PWA entry page links to the manifest, iOS touch icon and service-worker registration", () => {
   assert.match(html, /rel="manifest" href="\/manifest\.webmanifest"/);
   assert.match(html, /rel="apple-touch-icon" href="\/icon-180\.png"/);
-  assert.match(html, /dash\.css\?v=20261104a/);
-  assert.match(html, /styles\.css\?v=20261102b/);
-  assert.match(html, /app\.js\?v=20261104a/);
-  assert.match(html, /raid-share\.js\?v=20261102b/);
-  assert.match(html, /local-state\.js\?v=20261030a/);
-  assert.match(html, /pin\.js\?v=20261101b/);
-  assert.match(html, /account\.js\?v=20261102a/);
-  assert.match(html, /lib\.js\?v=20261104a/);
-  assert.match(html, /season\.js\?v=20261104b/);
   assert.match(html, /\/pwa\.js/);
-  assert.match(app, /dash\.js\?v=20261104c/);
-  assert.match(dash, /detail\.js\?v=20261104b/);
-  assert.match(dash, /places\.js\?v=20261103b/, "the updated Places provenance UI is versioned");
-  assert.match(dash, /infographic\.js\?v=20261103a/, "the deferred infographic loader is versioned");
-  assert.match(dash, /nudge\.js\?v=20261102a/, "the shared-escape nudge renderer is versioned");
-  assert.match(dash, /review\.js\?v=20261104b/, "the shared-escape review renderer is versioned");
-  assert.match(dash, /buy\.js\?v=20261103a/, "the shared-escape purchase renderer is versioned");
+  assert.match(read("../public/pwa.js"), /serviceWorker\.register/);
 });
 
 
@@ -84,13 +69,15 @@ test("Today season cards defer posters and event details load a compact, cacheab
   assert.match(detail, /loadSeasonBanner\(o, ev2\)/, "the thumbnail loader receives the completed event after dialog rendering");
 });
 
-test("every local script and stylesheet referenced by the entry page is precached at its exact URL", () => {
-  const assets = [...html.matchAll(/(?:src|href)=["'](\/[^"'#]+)["']/g)]
-    .map((match) => match[1])
-    .filter((url) => /\.(?:js|css)(?:\?|$)/.test(url));
+test("every versioned local script and stylesheet requested by the page and lazy loaders is precached at its exact URL", () => {
+  const sources = [html, app, dash];
+  const assets = [...new Set(sources.flatMap((source) =>
+    [...source.matchAll(/(?:src|href)=["'](\/[^"'#]+)["']/g)].map((match) => match[1])
+  ))].filter((url) => /\.(?:js|css)\?v=/.test(url));
   assert.ok(assets.length > 0);
   for (const asset of assets) assert.ok(sw.includes("'" + asset + "'"), "offline shell is missing " + asset);
 });
+
 
 test("static JSON dependencies referenced by first-party scripts are precached", () => {
   const urls = new Set();
@@ -104,30 +91,10 @@ test("static JSON dependencies referenced by first-party scripts are precached",
   for (const url of urls) assert.ok(sw.includes("'" + url + "'"), "offline shell is missing static data " + url);
 });
 
-test("service worker versions the cache, pre-caches offline fallback, and never handles API responses", () => {
-  assert.match(sw, /gofn-shell-v234/);
-  assert.match(sw, /season-thumbs/, 'Season detail WebP thumbnails are eligible for offline runtime caching');
-  assert.ok(sw.includes("'/lib.js?v=20261104a'"), 'the refreshed dashboard helper is available to the offline shell');
-  assert.ok(sw.includes("'/local-state.js?v=20261030a'"), 'account-local state migration is available offline');
-  assert.ok(sw.includes("'/account.js?v=20261102a'"), 'the refreshed account transition code is available offline');
-  assert.ok(sw.includes("'/season.js?v=20261104b'"), 'the current season banner script is available to the offline shell');
-  assert.ok(sw.includes("'/app.js?v=20261104a'"), "the current app bootstrap is available offline");
-  assert.ok(sw.includes("'/pin.js?v=20261101b'"), "the central sync settings are available offline");
-  assert.ok(sw.includes("'/dash.js?v=20261104c'"), "the current dashboard loader is available offline");
-  assert.ok(sw.includes("'/places.js?v=20261103b'"), "the Places dialog accessibility fix is available offline");
-  assert.ok(dash.includes("places.js?v=20261103b"), "the dashboard loads the versioned Places dialog accessibility fix");
-  assert.ok(sw.includes("'/raid-share.js?v=20261102b'"), "the raid share card is available offline");
-  assert.ok(sw.includes("'/nudge.js?v=20261102a'"), "the shared-escape nudge renderer is available offline");
-  assert.ok(sw.includes("'/review.js?v=20261104b'"), "the shared-escape review renderer is available offline");
-  assert.ok(sw.includes("'/buy.js?v=20261103a'"), "the shared-escape purchase renderer is available offline");
+test("service worker versions the cache, caches Season posters offline, and never handles API responses", () => {
+  assert.match(sw, /gofn-shell-v\d+/);
+  assert.match(sw, /season-thumbs/, "Season detail WebP thumbnails are eligible for offline runtime caching");
   assert.match(sw, /'\/event-moves\.json'/, "event-only move data is available to offline event details");
-  assert.match(sw, /'\/dash\.css\?v=20261104a'/, "the current dashboard stylesheet is available to the offline shell");
-  assert.match(sw, /'\/app\.js\?v=20261104a'/, "the current app bootstrap is available to the offline shell");
-  assert.match(sw, /'\/styles\.css\?v=20261102b'/, "the current recovery panel stylesheet is available to the offline shell");
-  assert.match(sw, /'\/dash\.js\?v=20261104c'/, "the current dashboard script is available to the offline shell");
-  assert.match(sw, /'\/detail\.js\?v=20261104b'/, "the current event detail script is available to the offline shell");
-  assert.match(sw, /'\/places\.js\?v=20261103b'/, "the current sourced venue script is available to the offline shell");
-  assert.match(sw, /'\/infographic\.js\?v=20261103a'/, "the current infographic loader is available to the offline shell");
   assert.match(sw, /'\/offline\.html'/);
   assert.match(sw, /cache\.match\('\/offline\.html'\)/);
   assert.match(sw, /url\.pathname\.startsWith\('\/api\/'\)/);
@@ -135,7 +102,6 @@ test("service worker versions the cache, pre-caches offline fallback, and never 
   assert.match(sw, /self\.skipWaiting\(\)/);
   assert.match(sw, /self\.clients\.claim\(\)/);
 });
-
 test("service worker bounds runtime cache entries without evicting the offline shell or breaking online responses", async () => {
   const listeners = {};
   const origin = "https://app.test";
