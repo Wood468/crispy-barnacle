@@ -157,8 +157,8 @@ test('Generation workflow updates only static derivatives and service worker cac
   assert.doesNotMatch(discover, /Dispatch read-only QA-10/, 'audit dispatch waits until all G47IX commits have finished');
   assert.match(g47ix, /deploy_changed:\s+\$\{\{\s*steps\.summarize_public\.outputs\.deploy_changed\s*\}\}/);
   assert.match(notify, /if \[\[ "\$DEPLOY_CHANGED" == "true" \]\]; then[\s\S]*?Record notification state after public update[\s\S]*?\[skip ci\]/);
-  assert.match(notify, /final_sha="\\$\\(git ls-remote origin refs\\/heads\\/main/);
-  assert.match(notify, /echo "final_commit_sha=\\$final_sha" >> "\\$GITHUB_OUTPUT"/);
+  assert.ok(notify.includes('final_sha="$(git ls-remote origin refs/heads/main'));
+  assert.ok(notify.includes('echo "final_commit_sha=$final_sha" >> "$GITHUB_OUTPUT"'));
   assert.match(audit, /COMMIT_SHA:\s+\$\{\{\s*needs\.notify\.outputs\.final_commit_sha\s*\}\}/);
   assert.ok(g47ix.indexOf('  audit:') > g47ix.indexOf('  notify:'), 'the production audit runs after the final main commit');
 });
