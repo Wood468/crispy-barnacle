@@ -50,7 +50,7 @@ test("PWA entry page links to the manifest and iOS touch icon and registers the 
   assert.match(html, /rel="apple-touch-icon" href="\/icon-180\.png"/);
   assert.match(html, /dash\.css\?v=20261103d/);
   assert.match(html, /styles\.css\?v=20261102b/);
-  assert.match(html, /app\.js\?v=20261103h/);
+  assert.match(html, /app\.js\?v=20261103i/);
   assert.match(html, /raid-share\.js\?v=20261102b/);
   assert.match(html, /local-state\.js\?v=20261030a/);
   assert.match(html, /pin\.js\?v=20261101b/);
@@ -58,9 +58,9 @@ test("PWA entry page links to the manifest and iOS touch icon and registers the 
   assert.match(html, /lib\.js\?v=20261102d/);
   assert.match(html, /season\.js\?v=20261102e/);
   assert.match(html, /\/pwa\.js/);
-  assert.match(app, /dash\.js\?v=20261103i/);
+  assert.match(app, /dash\.js\?v=20261103j/);
   assert.match(dash, /detail\.js\?v=20261102f/);
-  assert.match(dash, /places\.js\?v=20261102a/, "the updated Places provenance UI is versioned");
+  assert.match(dash, /places\.js\?v=20261103b/, "the updated Places provenance UI is versioned");
   assert.match(dash, /infographic\.js\?v=20261103a/, "the deferred infographic loader is versioned");
   assert.match(dash, /nudge\.js\?v=20261102a/, "the shared-escape nudge renderer is versioned");
   assert.match(dash, /review\.js\?v=20261102e/, "the shared-escape review renderer is versioned");
@@ -115,11 +115,11 @@ test("service worker versions the cache, pre-caches offline fallback, and never 
   assert.ok(sw.includes("'/buy.js?v=20261103a'"), "the shared-escape purchase renderer is available offline");
   assert.match(sw, /'\/event-moves\.json'/, "event-only move data is available to offline event details");
   assert.match(sw, /'\/dash\.css\?v=20261103d'/, "the current dashboard stylesheet is available to the offline shell");
-  assert.match(sw, /'\/app\.js\?v=20261103h'/, "the current app bootstrap is available to the offline shell");
+  assert.match(sw, /'\/app\.js\?v=20261103i'/, "the current app bootstrap is available to the offline shell");
   assert.match(sw, /'\/styles\.css\?v=20261102b'/, "the current recovery panel stylesheet is available to the offline shell");
-  assert.match(sw, /'\/dash\.js\?v=20261103i'/, "the current dashboard script is available to the offline shell");
+  assert.match(sw, /'\/dash\.js\?v=20261103j'/, "the current dashboard script is available to the offline shell");
   assert.match(sw, /'\/detail\.js\?v=20261102f'/, "the current event detail script is available to the offline shell");
-  assert.match(sw, /'\/places\.js\?v=20261102a'/, "the current sourced venue script is available to the offline shell");
+  assert.match(sw, /'\/places\.js\?v=20261103b'/, "the current sourced venue script is available to the offline shell");
   assert.match(sw, /'\/infographic\.js\?v=20261103a'/, "the current infographic loader is available to the offline shell");
   assert.match(sw, /'\/offline\.html'/);
   assert.match(sw, /cache\.match\('\/offline\.html'\)/);
