@@ -187,7 +187,7 @@ test('Generation workflow updates only static derivatives and service worker cac
   assert.match(workflow, /git add -- public\/infographic-thumbs public\/season-thumbs/);
   assert.doesNotMatch(workflow, /r2-sync\.sh|R2_ACCESS_KEY|CLOUDFLARE_API_TOKEN/);
   assert.match(sw, /season-thumbs/);
-  assert.match(sw, /gofn-shell-v233/);
+  assert.match(sw, /gofn-shell-v234/);
   assert.match(season, /seasonThumbnailPath/);
   const discover = g47ix.slice(g47ix.indexOf('  discover:'), g47ix.indexOf('  notify:'));
   const notify = g47ix.slice(g47ix.indexOf('  notify:'), g47ix.indexOf('  audit:'));
