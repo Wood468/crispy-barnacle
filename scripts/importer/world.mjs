@@ -2,6 +2,7 @@
 // Read from write-ups that matched no feed event. Each gets a place, an area, dates and the sources that mention it.
 import { createRequire } from "node:module";
 import { similar } from "./compare.mjs";
+import { sourceFor } from "./sources.mjs";
 const dd = createRequire(import.meta.url)("../../public/dedupe.js"); // the same rule the app and the daily audit use
 
 const MON = { jan: 0, feb: 1, mar: 2, apr: 3, may: 4, jun: 5, jul: 6, aug: 7, sep: 8, sept: 8, oct: 9, nov: 10, dec: 11 };
@@ -163,12 +164,50 @@ export function entriesFromPage(page, today) {
 }
 
 // Join entries that are the same event seen in several write-ups or lists.
+export function regionalSeedEntries(seed) {
+  const fallbackUrl = String(seed?.source?.url || "").trim();
+  return (Array.isArray(seed?.events) ? seed.events : []).map(event => {
+    const source = event?.source || "serebii";
+    const sourceObject = source && typeof source === "object" && !Array.isArray(source) ? source : null;
+    const url = String(sourceObject?.url || event?.url || fallbackUrl).trim();
+    return {
+      name: event.name, place: event.place, area: event.area, scope: event.scope || "regional",
+      start: event.start, end: event.end, datesKnown: true, url, source
+    };
+  });
+}
+
+// Seed records may carry a per-event source object; normalise it before it reaches the public feed.
+export function worldSourceRecord(entry, sources = {}) {
+  const raw = entry?.source;
+  const object = raw && typeof raw === "object" && !Array.isArray(raw) ? raw : null;
+  const url = String(object?.url || entry?.url || "").trim();
+  const label = [object?.name, object?.label].find(value => typeof value === "string" && value.trim())?.trim() || "";
+  const sourceNameMatch = label
+    ? Object.entries(sources).find(([, name]) => typeof name === "string" && name.toLowerCase() === label.toLowerCase())
+    : null;
+  const id = typeof raw === "string" && raw.trim()
+    ? raw.trim()
+    : (typeof object?.id === "string" && object.id.trim()
+      ? object.id.trim()
+      : sourceNameMatch?.[0] || sourceFor(url)?.id || (/serebii\.net/i.test(url) || /serebii/i.test(label) ? "serebii" : "unknown"));
+  return { id, name: label || sources[id] || id, url };
+}
+
+function placeDetailScore(place) {
+  const value = String(place || "").trim();
+  if (!value) return 0;
+  const words = value.toLowerCase().match(/[a-z0-9]+/g) || [];
+  return words.length + (value.includes(",") ? 2 : 0) + (/\([^)]*\)/.test(value) ? 3 : 0);
+}
+
 export function mergeWorld(entries, sources) {
   const out = [];
   for (const e of entries) {
+    const src = worldSourceRecord(e, sources);
     const hit = out.find(o => {
       if (!similar(o.name, e.name)) return false;
-      if (o.name !== e.name && o.sources.some(x => x.url === e.url)) return false;
+      if (o.name !== e.name && o.sources.some(x => x.url === src.url)) return false;
       if (o.start && e.start && !(o.start <= (e.end || e.start) && e.start <= (o.end || o.start))) return false;
       // A shared series title/date is not enough to merge two distinct destinations.
       // Reuse the app's place-aware identity rule, but only let its explicit location
@@ -177,8 +216,19 @@ export function mergeWorld(entries, sources) {
       if (identity.verdict === "different" && (identity.why === "different places" || identity.why === "titles name different places")) return false;
       return true;
     });
-    const src = { id: e.source, name: sources[e.source] || e.source, url: e.url };
-    if (hit) { if (!hit.sources.some(s => s.url === src.url)) hit.sources.push(src); if (!hit.start && e.start) { hit.start = e.start; hit.end = e.end; hit.datesKnown = true; } if (!hit.place && e.place) { hit.place = e.place; hit.area = e.area; } continue; }
+    if (hit) {
+      if (!hit.sources.some(s => s.url === src.url)) hit.sources.push(src);
+      if (!hit.start && e.start) { hit.start = e.start; hit.end = e.end; hit.datesKnown = true; }
+      const identity = dd.same(hit, e);
+      if (identity.verdict === "same" && identity.why === "same dates, same series, one place inside the other" && placeDetailScore(e.place) > placeDetailScore(hit.place)) {
+        const currentSeries = String(hit.name || "").split(":")[0].trim().toLowerCase();
+        const incomingSeries = String(e.name || "").split(":")[0].trim().toLowerCase();
+        if (currentSeries && currentSeries === incomingSeries && e.name) hit.name = e.name;
+        hit.place = e.place;
+        hit.area = e.area || hit.area;
+      } else if (!hit.place && e.place) { hit.place = e.place; hit.area = e.area; }
+      continue;
+    }
     const slug = "w-" + e.name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 50);
     let id = slug; for (let n = 2; out.some(o => o.id === id); n++) id = slug + "-" + (e.start || n);
     out.push({ id, name: e.name, place: e.place, area: e.area, scope: e.scope, start: e.start, end: e.end, datesKnown: e.datesKnown, sources: [src] });
