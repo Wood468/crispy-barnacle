@@ -3,7 +3,7 @@ import tempfile
 import unittest
 from pathlib import Path
 from unittest.mock import patch
-from production_image_audit import detail_poster_results, image_kind, is_today_tab, payload_bytes, resource_label, scroll_positions, summarize, write_matrix_summary
+from production_image_audit import detail_poster_results, image_kind, is_today_tab, payload_bytes, resource_label, scroll_positions, season_thumbnail_path, summarize, write_matrix_summary
 
 class ProductionImageAuditTests(unittest.TestCase):
     def test_recognises_r2_poster_paths(self):
@@ -11,6 +11,11 @@ class ProductionImageAuditTests(unittest.TestCase):
         self.assertEqual(image_kind("https://pogo.michaelpuff.com/img/ext/event-2.webp"), "infographic-poster")
         self.assertEqual(image_kind("https://pogo.michaelpuff.com/infographic-thumbs/g47ix/event-3.jpg.webp"), "infographic-thumbnail")
         self.assertEqual(image_kind("https://pogo.michaelpuff.com/season-thumbs/season-24-a1b2c3d4.webp"), "season-thumbnail")
+
+    def test_season_thumbnail_path_matches_the_browser_and_generator_naming_rule(self):
+        item = {"id": "season:24", "img": "/img/ext/season-24-twilight-trails-99c978ed.jpg"}
+        self.assertEqual(season_thumbnail_path(item), "/season-thumbs/season-24-49a5f9d7.webp")
+        self.assertEqual(season_thumbnail_path({"id": "season:24"}), "")
 
     def test_other_images_are_not_counted_as_posters(self):
         self.assertEqual(image_kind("https://raw.githubusercontent.com/PokeAPI/sprites/pokemon/25.png"), "other-image")
