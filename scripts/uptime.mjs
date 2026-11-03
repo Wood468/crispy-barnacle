@@ -208,7 +208,7 @@ async function tell(text) {
 }
 
 if (import.meta.url === "file://" + process.argv[1]) {
-  const problems = await runChecks(), prev = await previousLiveCheckConclusion();
+  const [problems, prev] = await Promise.all([runChecks(), previousLiveCheckConclusion()]);
   if (problems.length) {
     console.log(problems.map(p => "::error::" + p).join("\n"));
     if (prev !== "failure") await tell("🔴 Site is down or broken\n" + problems.slice(0, 5).map(p => "• " + p).join("\n") + "\n\n" + BASE);
