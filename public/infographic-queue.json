@@ -1,6 +1,109 @@
 {
- "updated": "2026-11-02T19:55:08.699Z",
+ "updated": "2026-11-03T01:56:18.170Z",
  "items": [
+  {
+   "linked": false,
+   "id": "discord:1566971418531463239",
+   "title": "tr QOL 3",
+   "image": "/infographics/g47ix/discord-1566971418531463239.png",
+   "post": "https://discord.com/channels/@me/1558793395198099618/1566971418531463239",
+   "creator": "",
+   "source": "discord",
+   "publishedAt": "2026-11-03T00:24:59.099000+00:00",
+   "note": "Two events look alike. Please choose.",
+   "history": false,
+   "signals": [
+    "picture text names the event",
+    "posted around the event"
+   ],
+   "text": "2 ™ GO Wild Area Updates oe i Upgrade your trainer ae profile with backgrounds! Pe ee WA 2026 Lo on Backgro: we dai/ Me ill be availab 7 to display am ‘al time a @® @ _ GOWA 2026 Special Backgr \"previously | released ‘ation B round 60 vailable to y at 10 LEVEL / 3,350,000 | dg This feature will be scala le to Trainers” in their local time. Friends will not be able | © @ 6 e to see your buddy Pokémon’s background until 10:00 a. .m. ‘in their local time. | | 08 @o ®@ @4 a. Aas More updates rarring iT nT ine ild L/ u'll aT Wwur hil in tl lok ror ral if if Follow for more G47|X £) (co) X ie L > | ~<",
+   "guesses": [
+    {
+     "eventId": "into",
+     "eventTitle": "Into the Wild",
+     "score": 0.801
+    },
+    {
+     "eventId": "leekduck:into-the-wild-2026",
+     "eventTitle": "Into the Wild",
+     "score": 0.801
+    },
+    {
+     "eventId": "leekduck:pokemon-go-wild-area-2026-global",
+     "eventTitle": "Pokémon GO Wild Area 2026: Global",
+     "score": 0.671
+    }
+   ]
+  },
+  {
+   "linked": false,
+   "id": "discord:1566927162467025069",
+   "title": "QOL 2",
+   "image": "/infographics/g47ix/discord-1566927162467025069.webp",
+   "post": "https://discord.com/channels/@me/1558793395198099618/1566927162467025069",
+   "creator": "",
+   "source": "discord",
+   "publishedAt": "2026-11-02T21:29:07.631000+00:00",
+   "note": "Two events look alike. Please choose.",
+   "history": false,
+   "signals": [
+    "picture text names the event",
+    "posted around the event"
+   ],
+   "text": "SPORE NOY, Quality-of-Life Updates Go THE EXPLORER GADGET EVOLVES! ay ae 27:07 5 17:20:06 USE IT WHILE YOU ACTIVELY PLAY To* GRza 0:06 It will automatically attempts to catch Pokémon =. and spin PokéStops even while the app is open s SO ee ON \\ eI i == eS > a While Trainers are actively playing Pokémon GO with the te Explorer Gadget turned on, they will see a pink PokéBall icon appear over Pokémon or PokéStops on the map a that the Explorer Gadget is attempting to catch or spin = re Tap the Pokémon or PokéStop to interact with it yourself. The Explorer Gadget will not attempt to catch certain encountered Pokémon, such as Pokémon that aren’t yet registered in your Pokédex or mighty Pokémon. M",
+   "guesses": [
+    {
+     "eventId": "into",
+     "eventTitle": "Into the Wild",
+     "score": 0.791
+    },
+    {
+     "eventId": "leekduck:into-the-wild-2026",
+     "eventTitle": "Into the Wild",
+     "score": 0.787
+    },
+    {
+     "eventId": "leekduck:max-mondays-2026-11-16",
+     "eventTitle": "Max Monday: Pokémon to be announced",
+     "score": 0.475
+    }
+   ]
+  },
+  {
+   "linked": false,
+   "id": "discord:1566916181749932032",
+   "title": "GOPass Nov 26",
+   "image": "/infographics/g47ix/discord-1566916181749932032.png",
+   "post": "https://discord.com/channels/@me/1558793395198099618/1566916181749932032",
+   "creator": "",
+   "source": "discord",
+   "publishedAt": "2026-11-02T20:45:29.624000+00:00",
+   "note": "Two events look alike. Please choose.",
+   "history": false,
+   "signals": [
+    "picture text names the event",
+    "date in the picture is inside the event",
+    "posted around the event"
+   ],
+   "text": "qa ¢ Starting \\VZ GO Pass ep = November NOV ++ a ‘ai44 DELUXE Ww Sete od &, Groudon 1000 Poke Coins a (IA PZ Dy Additional — .< S\\e@ encounters g AND MORE AND MORE = N Se. ——— Major Milestone Bonuses Tier 1 - Rank 1 | One additional Candy and one guaranteed Candy XL* for trading Pokémon Tier 2 - Rank 25 Tier 2 - Rank 25 ‘i Open up to 40 Gifts per day ) Open up to 50 Gifts per day Receive up to 125 Gifts per day Receive up to 150 Gifts per day Hold 10 more Gifts Hold 20 more Gifts Tier 4 - Rank 75 | Increased Stardust and XP from hatching Eggs ~ > From November 28-29 there’s no daily limit on the number of GO Points you can earn! Follow for more G47|X £) Ox i oe *for Trainers level 31 and abo",
+   "guesses": [
+    {
+     "eventId": "gopassnov",
+     "eventTitle": "GO Pass: November",
+     "score": 0.838
+    },
+    {
+     "eventId": "novcd",
+     "eventTitle": "November Community Day",
+     "score": 0.817
+    },
+    {
+     "eventId": "leekduck:go-pass-november-2026",
+     "eventTitle": "GO Pass: November",
+     "score": 0.788
+    }
+   ]
+  },
   {
    "linked": true,
    "id": "discord:1566880019089723575",
