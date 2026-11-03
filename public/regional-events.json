@@ -1,6 +1,6 @@
 {
- "updated": "2026-10-23",
- "note": "Dates are as listed by the source. The end of the ESA collaboration is listed as ongoing, so 31 Dec 2026 is a placeholder end.",
+ "updated": "2026-11-03",
+ "note": "Dates and venues follow each event's listed source. The end of the ESA collaboration is listed as ongoing, so 31 Dec 2026 is a placeholder end. Per-event source objects override the Serebii fallback source.",
  "source": {
   "label": "Serebii.net, Pokémon GO real-life events",
   "url": "https://www.serebii.net/pokemongo/reallifeevents.shtml",
@@ -103,7 +103,88 @@
    "start": "2026-10-31",
    "end": "2026-11-05",
    "url": "https://pokemongo.com/es_MX/news/dia-de-muertos-2026",
-   "source": "official"
+   "source": {
+    "label": "Pokémon GO (official)",
+    "url": "https://pokemongo.com/es_MX/news/dia-de-muertos-2026"
+   }
+  },
+  {
+   "id": "rg-run30-singapore",
+   "name": "Pokémon RUN 30: Singapore",
+   "place": "Singapore (The Kallang)",
+   "area": "Asia",
+   "scope": "regional",
+   "start": "2026-11-07",
+   "end": "2026-11-08",
+   "source": {
+    "label": "Pokémon GO (official)",
+    "url": "https://pokemongo.com/news/pokemon-run-30-2026/"
+   }
+  },
+  {
+   "id": "rg-run30-new-taipei",
+   "name": "Pokémon RUN 30: New Taipei",
+   "place": "New Taipei, Taiwan (New Taipei Metropolitan Park)",
+   "area": "Asia",
+   "scope": "regional",
+   "start": "2026-11-14",
+   "end": "2026-11-15",
+   "source": {
+    "label": "Pokémon GO (official)",
+    "url": "https://pokemongo.com/news/pokemon-run-30-2026/"
+   }
+  },
+  {
+   "id": "rg-run30-kuala-lumpur",
+   "name": "Pokémon RUN 30: Kuala Lumpur",
+   "place": "Kuala Lumpur, Malaysia (KLCC Plaza Petronas)",
+   "area": "Asia",
+   "scope": "regional",
+   "start": "2026-11-21",
+   "end": "2026-11-22",
+   "source": {
+    "label": "Pokémon GO (official)",
+    "url": "https://pokemongo.com/news/pokemon-run-30-2026/"
+   }
+  },
+  {
+   "id": "rg-run30-jakarta",
+   "name": "Pokémon RUN 30: Jakarta",
+   "place": "Jakarta, Indonesia (GBK / Gelora Bung Karno)",
+   "area": "Asia",
+   "scope": "regional",
+   "start": "2026-12-12",
+   "end": "2026-12-13",
+   "source": {
+    "label": "Pokémon GO (official)",
+    "url": "https://pokemongo.com/news/pokemon-run-30-2026/"
+   }
+  },
+  {
+   "id": "rg-run30-bangkok",
+   "name": "Pokémon RUN 30: Bangkok",
+   "place": "Bangkok, Thailand (outdoor plaza in front of Central World)",
+   "area": "Asia",
+   "scope": "regional",
+   "start": "2027-01-09",
+   "end": "2027-01-10",
+   "source": {
+    "label": "Pokémon GO (official)",
+    "url": "https://pokemongo.com/news/pokemon-run-30-2026/"
+   }
+  },
+  {
+   "id": "rg-run30-hong-kong",
+   "name": "Pokémon RUN 30: Hong Kong",
+   "place": "Hong Kong (Science Park)",
+   "area": "Asia",
+   "scope": "regional",
+   "start": "2027-01-23",
+   "end": "2027-01-24",
+   "source": {
+    "label": "Pokémon GO (official)",
+    "url": "https://pokemongo.com/news/pokemon-run-30-2026/"
+   }
   }
  ]
 }

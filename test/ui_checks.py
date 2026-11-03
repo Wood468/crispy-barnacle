@@ -737,6 +737,29 @@ with sync_playwright() as p:
           return {actual:{inGame:Number(document.getElementById('day-live-count').textContent),inPerson:Number(document.getElementById('day-inperson-count').textContent)},expected:{inGame:live.filter(e=>e.kind!=='person').length+worldwide.length,inPerson:live.filter(e=>e.kind==='person').length+regional.length}};
         }""")
         check('Overseas in-person activity remains in its separate summary count', overseas_counts['actual']==overseas_counts['expected'] and overseas_counts['actual']['inPerson']>=1, overseas_counts)
+
+        # The primary world feed can fail; the regional fallback must preserve each event's own official source.
+        run30_fallback = page(clock='2026-11-14T12:00:00+11:00', extra={
+            '**/world-events.json': (json.dumps({'events': []}), 200)
+        })
+        run30_fallback.wait_for_selector('#home-now .agr.reg')
+        run30_card = run30_fallback.locator('#home-now .agr.reg').filter(has_text='Pokémon RUN 30: New Taipei')
+        run30_text = run30_card.inner_text() if run30_card.count() else ''
+        check('New Taipei RUN 30 remains visible on Today through the regional fallback',
+              run30_card.count()==1 and run30_card.is_visible() and 'New Taipei Metropolitan Park' in run30_text,
+              run30_text)
+        check('Regional fallback preserves the official Pokémon GO source for RUN 30',
+              run30_card.get_attribute('href') == 'https://pokemongo.com/news/pokemon-run-30-2026/')
+        check('Regional fallback does not invent an event-local time',
+              not re.search(r'\b\d{1,2}:\d{2}\b|\b(?:am|pm)\b', run30_text, re.I), run30_text)
+        for run30_width in (320, 390, 1280):
+            run30_fallback.set_viewport_size({'width':run30_width,'height':844 if run30_width < 600 else 900})
+            run30_box = run30_card.bounding_box()
+            check('New Taipei RUN 30 remains visible at %dpx in the regional fallback' % run30_width,
+                  run30_card.count()==1 and run30_card.is_visible() and run30_box is not None and
+                  run30_box['x'] >= -1 and run30_box['x'] + run30_box['width'] <= run30_width + 1)
+        run30_fallback.context.close()
+
         # A similarly titled in-game card is not proof that an overseas in-person listing is redundant.
         collision_events = [ev('fixture-game-collision','Overseas In-Person Fixture','raid-battles','2026-10-09T22:00:00.000','2026-10-09T23:30:00.000','community_reported')] + [
             ev('fixture-collision-filler-'+str(i),'Collision filler '+str(i),'event',
