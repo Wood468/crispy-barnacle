@@ -145,6 +145,8 @@ test('Generation workflow updates only static derivatives and service worker cac
   const season = await fs.readFile(path.join(ROOT, 'public', 'season.js'), 'utf8');
   const g47ix = await fs.readFile(path.join(ROOT, '.github', 'workflows', 'g47ix-infographics.yml'), 'utf8');
   assert.match(workflow, /public\/season\.json/);
+  assert.match(workflow, /public\/season\.js/);
+  assert.match(workflow, /scripts\/season-thumbnails\.mjs/);
   assert.match(workflow, /node scripts\/season-thumbnails\.mjs --remote/);
   assert.match(workflow, /git add -- public\/infographic-thumbs public\/season-thumbs/);
   assert.doesNotMatch(workflow, /r2-sync\.sh|R2_ACCESS_KEY|CLOUDFLARE_API_TOKEN/);
