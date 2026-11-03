@@ -407,8 +407,6 @@ def open_season_detail_thumbnail(page) -> bool:
     """Open the first visible Season/GO Pass card and confirm its compact poster loaded."""
     cards = page.locator("#seasonbar .ssn-card")
     try:
-        if not cards.count():
-            return False
         cards.first.wait_for(state="visible", timeout=10000)
         cards.first.click(timeout=10000)
         page.wait_for_function(

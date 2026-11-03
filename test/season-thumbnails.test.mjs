@@ -143,6 +143,7 @@ test('Generation workflow updates only static derivatives and service worker cac
   const workflow = await fs.readFile(path.join(ROOT, '.github', 'workflows', 'qa10-thumbnail-generation.yml'), 'utf8');
   const sw = await fs.readFile(path.join(ROOT, 'public', 'sw.js'), 'utf8');
   const season = await fs.readFile(path.join(ROOT, 'public', 'season.js'), 'utf8');
+  const g47ix = await fs.readFile(path.join(ROOT, '.github', 'workflows', 'g47ix-infographics.yml'), 'utf8');
   assert.match(workflow, /public\/season\.json/);
   assert.match(workflow, /node scripts\/season-thumbnails\.mjs --remote/);
   assert.match(workflow, /git add -- public\/infographic-thumbs public\/season-thumbs/);
@@ -150,4 +151,13 @@ test('Generation workflow updates only static derivatives and service worker cac
   assert.match(sw, /season-thumbs/);
   assert.match(sw, /gofn-shell-v233/);
   assert.match(season, /seasonThumbnailPath/);
+  const discover = g47ix.slice(g47ix.indexOf('  discover:'), g47ix.indexOf('  notify:'));
+  const notify = g47ix.slice(g47ix.indexOf('  notify:'), g47ix.indexOf('  audit:'));
+  const audit = g47ix.slice(g47ix.indexOf('  audit:'));
+  assert.doesNotMatch(discover, /Dispatch read-only QA-10/, 'audit dispatch waits until all G47IX commits have finished');
+  assert.match(g47ix, /deploy_changed:\s+\$\{\{\s*steps\.summarize_public\.outputs\.deploy_changed\s*\}\}/);
+  assert.match(notify, /if \[\[ "\$DEPLOY_CHANGED" == "true" \]\]; then[\s\S]*?Record notification state after public update[\s\S]*?\[skip ci\]/);
+  assert.match(notify, /final_commit_sha=\$\(git ls-remote origin refs\/heads\/main/);
+  assert.match(audit, /COMMIT_SHA:\s+\$\{\{\s*needs\.notify\.outputs\.final_commit_sha\s*\}\}/);
+  assert.ok(g47ix.indexOf('  audit:') > g47ix.indexOf('  notify:'), 'the production audit runs after the final main commit');
 });
