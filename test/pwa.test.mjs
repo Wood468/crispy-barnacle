@@ -99,18 +99,18 @@ test("static JSON dependencies referenced by first-party scripts are precached",
 });
 
 test("service worker versions the cache, pre-caches offline fallback, and never handles API responses", () => {
-  assert.match(sw, /gofn-shell-v227/);
+  assert.match(sw, /gofn-shell-v228/);
   assert.ok(sw.includes("'/lib.js?v=20261102d'"), 'the refreshed dashboard helper is available to the offline shell');
   assert.ok(sw.includes("'/local-state.js?v=20261030a'"), 'account-local state migration is available offline');
   assert.ok(sw.includes("'/account.js?v=20261102a'"), 'the refreshed account transition code is available offline');
   assert.ok(sw.includes("'/season.js?v=20261102e'"), 'the current season banner script is available to the offline shell');
-  assert.ok(sw.includes("'/app.js?v=20261103f'"), "the current app bootstrap is available offline");
+  assert.ok(sw.includes("'/app.js?v=20261103g'"), "the current app bootstrap is available offline");
   assert.ok(sw.includes("'/pin.js?v=20261101b'"), "the central sync settings are available offline");
-  assert.ok(sw.includes("'/dash.js?v=20261103g'"), "the current dashboard loader is available offline");
+  assert.ok(sw.includes("'/dash.js?v=20261103h'"), "the current dashboard loader is available offline");
   assert.ok(sw.includes("'/raid-share.js?v=20261102b'"), "the raid share card is available offline");
   assert.ok(sw.includes("'/nudge.js?v=20261102a'"), "the shared-escape nudge renderer is available offline");
   assert.ok(sw.includes("'/review.js?v=20261102e'"), "the shared-escape review renderer is available offline");
-  assert.ok(sw.includes("'/buy.js?v=20261102a'"), "the shared-escape purchase renderer is available offline");
+  assert.ok(sw.includes("'/buy.js?v=20261103a'"), "the shared-escape purchase renderer is available offline");
   assert.match(sw, /'\/event-moves\.json'/, "event-only move data is available to offline event details");
   assert.match(sw, /'\/dash\.css\?v=20261103d'/, "the current dashboard stylesheet is available to the offline shell");
   assert.match(sw, /'\/app\.js\?v=20261103f'/, "the current app bootstrap is available to the offline shell");

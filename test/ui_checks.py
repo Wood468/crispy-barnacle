@@ -256,7 +256,7 @@ check('Today game plan is an optional accessible local-time disclosure with weak
       all(token in INDEX_HTML for token in ['id="today-tonight"', 'id="today-tonight-summary"', 'id="today-tonight-list"', 'Today&#39;s game plan']) and "Today's game plan · " in DASH_JS and
       all(token in DASH_JS for token in ['D.spotlight', 'D.raidHour', 'D.maxBattles', '6–7 pm local', '6 am–9 pm local', 'Weak to:', 'data-best-types', 'gofn-dex-ready', 'function renderTonight', 'renderTonight(t, dateKey)', 'today-tonight-state', 'Live now · ends in ', 'Starts in ', 'upcomingCount']) and
       all(token in DASH_CSS for token in ['.today-tonight', '.today-tonight-list', 'min-height:44px', '.today-tonight-best']) and
-      'gofn-dex-ready' in APP_JS and '/app.js?v=20261103f' in INDEX_HTML and '/app.js?v=20261103f' in SW_JS)
+      'gofn-dex-ready' in APP_JS and '/app.js?v=20261103g' in INDEX_HTML and '/app.js?v=20261103g' in SW_JS)
 check('Dex/type readiness refreshes Today raid handoffs and the Tonight disclosure without touching event-detail focus targets',
       "document.addEventListener('gotypes', function () { try { todayTypesReady = true; todayTypesFailed = false; renderRot(); var t = now(); renderTodayRaidPrep(todayRotationFor(t)); renderTonight(t, dayKey(t)); } catch (e) {} });" in DASH_JS and
       "document.addEventListener('gofn-dex-ready', function () { try { renderRot(); var t = now(); renderTodayRaidPrep(todayRotationFor(t)); renderTonight(t, dayKey(t)); } catch (e) {} });" in DASH_JS)
@@ -266,9 +266,9 @@ check('Today multi-deadline tray is accessible, bounded and source-safe',
       all(token in INDEX_HTML for token in ['id="today-deadlines"', 'id="today-deadlines-summary"', 'id="today-deadlines-list"']) and
       all(token in DASH_JS for token in ['var trayLimit = t.getTime() + 7 * 24 * 60 * 60 * 1000', "safeUrl(d.url || '')", 'trayCandidates.slice(0, 8)', 'View all ', 'noopener noreferrer', "sourceUrl.indexOf('https://') === 0"]) and
       all(token in DASH_CSS for token in ['.today-deadlines>summary', 'min-height:44px', '.today-deadline-item', 'var(--color-link)']) and
-      '/dash.js?v=20261103g' in APP_JS and '/dash.js?v=20261103g' in SW_JS and
+      '/dash.js?v=20261103h' in APP_JS and '/dash.js?v=20261103h' in SW_JS and
       '/dash.css?v=20261103d' in INDEX_HTML and '/dash.css?v=20261103d' in SW_JS and
-      'gofn-shell-v227' in SW_JS)
+      'gofn-shell-v228' in SW_JS)
 check('season pass and deadline data is structured, source-attributed and ordered',
       all(item_id in {item.get('id') for item in SEASON_DATA.get('items', [])}
           for item_id in ['season:pass-halloween', 'season:pass-november']) and
@@ -329,16 +329,16 @@ check('event signal chips and detail tags use semantic palette roles with unchan
           '.tg-incense{--tc:var(--color-signal-shadow)}.tg-costume{--tc:var(--color-signal-encounter)}',
       ]))
 check('offline shell cache version advances with the dashboard stylesheet token release',
-      "gofn-shell-v227" in SW_JS)
+      "gofn-shell-v228" in SW_JS)
 check('Travel mode searches only source-dated regional listings and preserves Today visibility',
       all(token in INDEX_HTML for token in ['id="sub-travel"', 'id="travel-q"', 'id="travel-destinations"', 'id="travel-regions"', 'id="travel-results"']) and
       "['travel','Travel','sub-travel']" in APP_JS and
       all(token in DASH_JS for token in ['function renderTravel()', 'TRAVEL_REGIONS', 'data-travel-region', "x.scope !== 'global'", "!/^dated:/.test(String(x.id || ''))", "indexOf('https://') === 0", 'sourceStart', 'sourceEnd', 'travelDateText', 'REG.filter(function (x)', 'var hide = it.travel ?', 'focusedRegion', 'focusTarget.focus()']) and
       all(token in DASH_CSS for token in ['#sub-travel .travel-search', '#travel-regions .fchip{min-height:44px}', '#travel-results .agw .ag-actions .agx{width:44px;height:44px;min-width:44px;min-height:44px}']) and
-      '/app.js?v=20261103f' in INDEX_HTML and '/app.js?v=20261103f' in SW_JS and
-      '/dash.js?v=20261103g' in APP_JS and '/dash.js?v=20261103g' in SW_JS and
+      '/app.js?v=20261103g' in INDEX_HTML and '/app.js?v=20261103g' in SW_JS and
+      '/dash.js?v=20261103h' in APP_JS and '/dash.js?v=20261103h' in SW_JS and
       '/dash.css?v=20261103d' in INDEX_HTML and '/dash.css?v=20261103d' in SW_JS and
-      'gofn-shell-v227' in SW_JS)
+      'gofn-shell-v228' in SW_JS)
 check('raid rotation cards use source-published local windows and Leek Duck attribution',
       'function raidSourceLink(r)' in DASH_JS and 'fmtT(new Date(second.s))' in DASH_JS and
       'Next raid rotation' in DASH_JS and 'sourceUrl' in DASH_JS and
@@ -354,8 +354,8 @@ check('raid share payload uses sourced weaknesses, local top-ten marks and safe 
 check('event detail focus restoration can find a re-rendered opener by event key and card role',
       all(token in DETAIL_JS for token in ['openerKey', 'openerClass', "getAttribute('data-open')", 'target.focus()']))
 check('versioned dashboard scripts are referenced by the entry page and precached offline',
-      '/app.js?v=20261103f' in INDEX_HTML and '/app.js?v=20261103f' in SW_JS and
-      '/dash.js?v=20261103g' in APP_JS and '/dash.js?v=20261103g' in SW_JS and
+      '/app.js?v=20261103g' in INDEX_HTML and '/app.js?v=20261103g' in SW_JS and
+      '/dash.js?v=20261103h' in APP_JS and '/dash.js?v=20261103h' in SW_JS and
       '/detail.js?v=20261102f' in DASH_JS and '/detail.js?v=20261102f' in SW_JS)
 check('sync PIN and account controls have one home in Menu and are precached offline',
       INDEX_HTML.index('id="acct" class="acct"') > INDEX_HTML.index('id="sub-menu"') and
@@ -3851,6 +3851,34 @@ with sync_playwright() as p:
             sp.context.close()
 
 
+    if on('c'):
+        # Purchase Planner: ticket availability is sourced, registration is not called a sale, and official links remain touch-sized.
+        ticket_data = json.loads((ROOT / 'public' / 'tickets-external.json').read_text())
+        ticket_log = json.dumps({'updated':'2026-11-03T00:00:00Z','watchStart':'2026-10-01T00:00:00Z','items':[]})
+        ticket_api = json.dumps({'enabled':True,'events':[ev('ticket-fixture-%d'%i,'Ticket fixture %d'%i,'event','2026-11-01T10:00:00','2026-11-08T20:00:00','confirmed') for i in range(10)]})
+        ticket_extra = {'**/tickets-external.json':(json.dumps(ticket_data),200),'**/store-log.json':(ticket_log,200)}
+        for width in (320,390,1280):
+            tp = page(api=ticket_api,clock='2026-11-03T12:00:00+11:00',width=width,height=900,mobile=width<500,extra=ticket_extra)
+            loaded = settle(tp,"document.querySelectorAll('#buy-body .by-ext').length===2",15000)
+            tp.evaluate("document.documentElement.setAttribute('data-theme',%s)" % json.dumps('light' if width==390 else 'dark'))
+            state = tp.evaluate("""() => {
+                const cards=[...document.querySelectorAll('#buy-body .by-ext')];
+                return {cards:cards.map(card=>({text:card.innerText.replace(/\\s+/g,' ').trim(),links:[...card.querySelectorAll('a')].map(a=>{const r=a.getBoundingClientRect();return {text:a.textContent.trim(),href:a.href,height:r.height};})})),width:document.documentElement.scrollWidth,viewport:innerWidth};
+            }""")
+            sendai = next((x for x in state['cards'] if 'Sendai' in x['text']),None)
+            mexico = next((x for x in state['cards'] if 'Mexico City' in x['text']),None)
+            check('Purchase Planner %dpx: Sendai registration is not mislabeled as a closed sale; Mexico City shows verified availability and both show 3 Nov source checks' % width,
+                  loaded and sendai is not None and mexico is not None and
+                  'Registration closed 15 Sep · ticket availability unconfirmed' in sendai['text'] and
+                  'Tickets available' in mexico['text'] and
+                  sendai['text'].count('Official source checked 3 Nov 2026')==1 and
+                  mexico['text'].count('Official source checked 3 Nov 2026')==1,state)
+            source_links = [a for card in state['cards'] for a in card['links'] if a['text']!='Open ticket site']
+            check('Purchase Planner %dpx: official source links are allowlisted, named and at least 44px high' % width,
+                  len(source_links)>=4 and all(a['href'].startswith('https://pokemongo.com/') and a['text'] and a['height']>=43.5 for a in source_links),source_links)
+            check('Purchase Planner %dpx: no horizontal overflow or browser errors' % width,
+                  state['width']<=state['viewport'] and not tp.errs,state)
+            tp.context.close()
     b.close()
 # Dashboard radius adoption: shared scale values are expressed through semantic roles.
 check('dashboard shared radius declarations consume semantic radius tokens',
