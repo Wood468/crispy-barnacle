@@ -7,7 +7,7 @@ import { discover, get } from "./discover.mjs";
 import { extractFields, hasContent } from "./extract.mjs";
 import { mergeSources } from "./compare.mjs";
 import { pageTitle, htmlToLines } from "./text.mjs";
-import { entriesFromPage, mergeWorld, collapseWorld, parseDateRange, placeOf, cleanTitle, tidyName, keepOldWorld, normUrl, sameWriteupRulings, preserveWorldSources, prioritizeWatchedPages } from "./world.mjs";
+import { entriesFromPage, mergeWorld, collapseWorld, parseDateRange, placeOf, cleanTitle, tidyName, keepOldWorld, normUrl, sameWriteupRulings, preserveWorldSources, prioritizeWatchedPages, regionalSeedEntries } from "./world.mjs";
 import { matchEvent } from "../g47ix-review.mjs";
 import { discoverIntl, entryFromIntlPage, INTL_PATTERN } from "./intl.mjs";
 import { failRun } from "../fail-run.mjs";
@@ -156,7 +156,7 @@ async function main() {
   } catch (e) { errors.push("intl: " + e.message); }
   let serebiiLeft = [];
   try { const sh = await get(SEREBII); entries.push(...serebiiEvents(sh)); serebiiLeft = serebiiSkipped(sh); } catch (e) { errors.push("serebii: " + e.message); }
-  try { const seed = JSON.parse(await readFile("public/regional-events.json", "utf8")); for (const e of seed.events || []) entries.push({ name: e.name, place: e.place, area: e.area, scope: "regional", start: e.start, end: e.end, datesKnown: true, url: e.url || seed.source.url, source: e.source || "serebii" }); } catch { /* no seed */ }
+  try { const seed = JSON.parse(await readFile("public/regional-events.json", "utf8")); entries.push(...regionalSeedEntries(seed)); } catch { /* no seed */ }
   const today = new Date().toISOString().slice(0, 10), cutoff = new Date(Date.now() - 14 * 864e5).toISOString().slice(0, 10);
   let oldWorld = []; try { oldWorld = JSON.parse(await readFile(WORLD_OUT, "utf8")).events || []; } catch { /* first run */ }
   let watchUrls = new Set(); try { watchUrls = new Set((JSON.parse(await readFile("data/watch-pages.json", "utf8")).pages || []).map(w => normUrl(w.url))); } catch { /* no watch list */ }
