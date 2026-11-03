@@ -177,6 +177,17 @@
       var id = e.target.id; if (id === 'plc-country') { F.country = e.target.value; F.region = ''; F.city = ''; } else if (id === 'plc-region') { F.region = e.target.value; F.city = ''; } else if (id === 'plc-city') F.city = e.target.value; else return;
       paint(true);
     });
+    /* Keep keyboard focus inside the Places dialog, including when its content is re-rendered. */
+    o.addEventListener('keydown', function (e) {
+      if (e.key !== 'Tab') return;
+      var items = Array.prototype.slice.call(o.querySelectorAll('a[href],button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea:not([disabled]),summary,[tabindex]:not([tabindex="-1"])')).filter(function (el) {
+        return !el.closest('[hidden],[aria-hidden="true"]') && el.getClientRects().length > 0;
+      });
+      if (!items.length) { e.preventDefault(); var closeButton = $('plc-x') || $('plc-back'); if (closeButton) closeButton.focus(); return; }
+      var first = items[0], last = items[items.length - 1], active = document.activeElement;
+      if (e.shiftKey && (active === first || !o.contains(active))) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && (active === last || !o.contains(active))) { e.preventDefault(); first.focus(); }
+    });
   }
   document.addEventListener('click', function (e) {
     var g = e.target.closest('[data-gpx]'); if (!g) return;
