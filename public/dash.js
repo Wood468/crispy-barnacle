@@ -1607,8 +1607,8 @@
   }
   var TODAY_SHINY_HTML = null;
   function renderTodayShiny(t) {
-    var root = $('today-shiny'), host = $('today-shiny-list'), empty = $('today-shiny-empty'), count = $('today-shiny-count'), summary = $('today-shiny-summary');
-    if (!root || !host || !empty || !count || !summary || !EV_READY) return;
+    var root = $('today-shiny'), host = $('today-shiny-list'), empty = $('today-shiny-empty'), count = $('today-shiny-count');
+    if (!root || !host || !empty || !count || !EV_READY) return;
     t = t || now();
     var records = [], seen = Object.create(null);
     function add(ev, name, type, artItem) {
@@ -1643,27 +1643,27 @@
       count.hidden = true; count.textContent = '0';
       empty.hidden = false;
       empty.textContent = 'No source-confirmed shiny boosts, debuts or shiny availability are active right now.';
-      summary.textContent = 'Boosted odds, new shiny debuts and availability are labelled separately. No unverified rates are shown.';
       return;
     }
-    var visible = records.slice(0, 8), boosted = records.filter(function (r) { return r.type === 'boosted'; }).length;
+    var visible = records.slice(0, 8);
     count.hidden = false; count.textContent = String(records.length);
     count.setAttribute('aria-label', records.length + ' active shiny highlights');
     empty.hidden = true; host.hidden = false;
-    summary.textContent = boosted ? boosted + ' source-backed boosted shiny highlight' + (boosted === 1 ? ' is' : 's are') + ' active; debuts and availability are labelled separately.' : 'No boosted-rate claim is active; new shiny debuts and availability are shown separately.';
     var html = visible.map(function (r) {
-      var badge = r.type === 'boosted' ? 'Boosted odds' : r.type === 'debut' ? 'New shiny debut' : 'Shiny available';
-      var sourceKind = r.source.kind === 'official' ? 'Official source' : 'Community source';
+      var badge = r.type === 'boosted' ? 'Boosted odds' : r.type === 'debut' ? 'New shiny' : 'Shiny available';
+      var sourceKind = r.source.kind === 'official' ? 'Official' : 'Community';
+      var freshness = shinyFreshness(r.event).replace('Source check date not recorded', 'Check date not recorded').replace('Source checked ', 'Checked ');
+      var eventName = r.event.name || 'Event';
       var artHtml = monArt(r.event, r.art, 'today-shiny-sprite');
       return '<article class="today-shiny-card" role="listitem" data-shiny-kind="' + r.type + '">'
+        + '<button type="button" class="today-shiny-open" data-open="' + esc(r.event.id) + '" aria-label="' + esc('View ' + r.name + ' in ' + eventName) + '">'
         + '<span class="today-shiny-art">' + artHtml + '</span>'
-        + '<div class="today-shiny-content"><span class="today-shiny-badge today-shiny-badge--' + r.type + '">' + esc(badge) + '</span>'
-        + '<strong class="today-shiny-name">' + esc(r.name) + '</strong>'
-        + '<span class="today-shiny-event">' + esc(r.event.name) + '</span>'
-        + '<small class="today-shiny-meta">' + esc(shinyWindowText(r.event)) + '</small>'
-        + '<small class="today-shiny-meta">' + esc(sourceKind + ' · ' + r.source.name + ' · ' + shinyFreshness(r.event)) + '</small>'
-        + '<div class="today-shiny-actions"><button type="button" class="pill today-shiny-open" data-open="' + esc(r.event.id) + '">View event</button>'
-        + '<a class="pill today-shiny-source" href="' + esc(r.source.url) + '" target="_blank" rel="noopener noreferrer">Source</a></div></div></article>';
+        + '<span class="today-shiny-content"><span class="today-shiny-topline"><span class="today-shiny-badge today-shiny-badge--' + r.type + '">' + esc(badge) + '</span>'
+        + '<strong class="today-shiny-name">' + esc(r.name) + '</strong></span>'
+        + '<span class="today-shiny-event">' + esc(eventName + ' · ' + shinyWindowText(r.event)) + '</span>'
+        + '<small class="today-shiny-meta">' + esc(sourceKind + ' · ' + r.source.name + ' · ' + freshness) + '</small></span></button>'
+        + '<a class="today-shiny-source" href="' + esc(r.source.url) + '" target="_blank" rel="noopener noreferrer" aria-label="' + esc('Open source: ' + r.source.name) + '" title="' + esc(r.source.name) + '">Source</a>'
+        + '</article>';
     }).join('');
     if (TODAY_SHINY_HTML !== html) { host.innerHTML = html; TODAY_SHINY_HTML = html; }
   }
