@@ -1573,11 +1573,11 @@
   function shinyWindowActive(item, t) {
     var w = item && (item.window || item.activeWindow);
     if (w) {
-      function parse(v) {
+      function parse(v, inclusiveEnd) {
         var s = String(v || '');
-        return /^\d{4}-\d{2}-\d{2}$/.test(s) ? new Date(s + 'T00:00:00') : new Date(s);
+        return /^\d{4}-\d{2}-\d{2}$/.test(s) ? new Date(s + (inclusiveEnd ? 'T23:59:59.999' : 'T00:00:00')) : new Date(s);
       }
-      var start = parse(w.start || w.s), end = parse(w.end || w.e);
+      var start = parse(w.start || w.s, false), end = parse(w.end || w.e, true);
       return Number.isFinite(start.getTime()) && Number.isFinite(end.getTime()) && end > start && start <= t && t < end;
     }
     var label = String(item && item.label || '');
@@ -1605,6 +1605,7 @@
     var raw = typeof v === 'number' ? new Date(v) : new Date(String(v).slice(0, 10) + 'T12:00:00');
     return isNaN(raw) ? 'Source check date not recorded' : 'Source checked ' + raw.getDate() + ' ' + MON[raw.getMonth()] + ' ' + raw.getFullYear();
   }
+  var TODAY_SHINY_HTML = null;
   function renderTodayShiny(t) {
     var root = $('today-shiny'), host = $('today-shiny-list'), empty = $('today-shiny-empty'), count = $('today-shiny-count'), summary = $('today-shiny-summary');
     if (!root || !host || !empty || !count || !summary || !EV_READY) return;
@@ -1638,7 +1639,7 @@
     records.sort(function (a, b) { return order[a.type] - order[b.type] || a.event.start - b.event.start || a.name.localeCompare(b.name); });
     root.setAttribute('aria-busy', 'false');
     if (!records.length) {
-      host.hidden = true; host.innerHTML = '';
+      host.hidden = true; host.innerHTML = ''; TODAY_SHINY_HTML = '';
       count.hidden = true; count.textContent = '0';
       empty.hidden = false;
       empty.textContent = 'No source-confirmed shiny boosts, debuts or shiny availability are active right now.';
@@ -1650,7 +1651,7 @@
     count.setAttribute('aria-label', records.length + ' active shiny highlights');
     empty.hidden = true; host.hidden = false;
     summary.textContent = boosted ? boosted + ' source-backed boosted shiny highlight' + (boosted === 1 ? ' is' : 's are') + ' active; debuts and availability are labelled separately.' : 'No boosted-rate claim is active; new shiny debuts and availability are shown separately.';
-    host.innerHTML = visible.map(function (r) {
+    var html = visible.map(function (r) {
       var badge = r.type === 'boosted' ? 'Boosted odds' : r.type === 'debut' ? 'New shiny debut' : 'Shiny available';
       var sourceKind = r.source.kind === 'official' ? 'Official source' : 'Community source';
       var artHtml = monArt(r.event, r.art, 'today-shiny-sprite');
@@ -1664,6 +1665,7 @@
         + '<div class="today-shiny-actions"><button type="button" class="pill today-shiny-open" data-open="' + esc(r.event.id) + '">View event</button>'
         + '<a class="pill today-shiny-source" href="' + esc(r.source.url) + '" target="_blank" rel="noopener noreferrer">Source</a></div></div></article>';
     }).join('');
+    if (TODAY_SHINY_HTML !== html) { host.innerHTML = html; TODAY_SHINY_HTML = html; }
   }
 
 function renderHomeBrief(t) {
