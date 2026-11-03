@@ -1346,6 +1346,31 @@
           "alt": "Gastly Spotlight Hour infographic"
         }
       ]
+    },
+    "twilightwishes": {
+      "names": [
+        "Twilight Wishes"
+      ],
+      "source": {
+        "label": "G47IX",
+        "trust": "community",
+        "url": "https://discord.com/channels/@me/1558793395198099618/1566880019089723575",
+        "observed": "2026-11-03"
+      },
+      "tickets": [],
+      "info": [],
+      "infographics": [
+        {
+          "label": "Infographic · G47IX",
+          "url": "/infographics/g47ix/discord-1566880019089723575.webp",
+          "source": "G47IX",
+          "sourceUrl": "https://discord.com/channels/@me/1558793395198099618/1566880019089723575",
+          "alt": "Twilight Wishes infographic"
+        }
+      ],
+      "start": "2026-11-24",
+      "end": "2026-11-30",
+      "dateSource": "data.json"
     }
   },
   "passes": {
