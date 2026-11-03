@@ -1,10 +1,10 @@
 {
- "updated": "2026-11-03T17:03:51.974Z",
+ "updated": "2026-11-03T23:23:42.130Z",
  "status": [
   {
    "id": "hub",
    "state": "ok",
-   "items": 6
+   "items": 5
   },
   {
    "id": "miners-assets",
@@ -19,12 +19,12 @@
   {
    "id": "reddit-silph",
    "state": "ok",
-   "items": 11
+   "items": 10
   },
   {
    "id": "youtube-pogo",
-   "state": "ok",
-   "items": 2
+   "state": "error",
+   "note": "HTTP 404"
   }
  ],
  "gaps": 4,
@@ -208,50 +208,6 @@
    "link": "https://www.reddit.com/r/TheSilphRoad/comments/1xj27zc/trainer_code_usage_for_determining_shinies_has/",
    "date": "2026-10-30T01:22:46.000Z",
    "summary": "<table> <tr><td> <a href=\"https://www.reddit.com/r/TheSilphRoad/comments/1xj27zc/trainer_code_usage_for_determining_shinies_has/\"> <img src=\"https://preview.redd.it/42b2se53biyh1.jpeg?width=640&amp;cr",
-   "pokemon": [],
-   "notInOurData": []
-  },
-  {
-   "source": "reddit-silph",
-   "trust": "tip",
-   "title": "Non-costume wild zubat?",
-   "link": "https://www.reddit.com/r/TheSilphRoad/comments/1xhwz6b/noncostume_wild_zubat/",
-   "date": "2026-10-28T18:54:48.000Z",
-   "summary": "<table> <tr><td> <a href=\"https://www.reddit.com/r/TheSilphRoad/comments/1xhwz6b/noncostume_wild_zubat/\"> <img src=\"https://preview.redd.it/96g9mrzx89yh1.jpeg?width=140&amp;height=140&amp;crop=1:1,sma",
-   "pokemon": [
-    "Zubat"
-   ],
-   "notInOurData": []
-  },
-  {
-   "source": "hub",
-   "trust": "community",
-   "title": "Gastly Spotlight Hour (October 2025): Last Minute Guide",
-   "link": "https://pokemongohub.net/post/tips-and-tricks/gastly-spotlight-hour-october-2025-last-minute-guide-2/",
-   "date": "2026-10-28T13:23:13.000Z",
-   "summary": "25 Candy 100 Candy 0 Candy if traded 200/40 Mega Energy Shiny Gastly can be pretty subtle &#8211; look out for its cloud turning a blue colour! The following Pokémon will grant you extra bonuses when ",
-   "pokemon": [
-    "Gastly"
-   ],
-   "notInOurData": []
-  },
-  {
-   "source": "youtube-pogo",
-   "trust": "official",
-   "title": "New costumed Pokémon make their debuts during Halloween 2026 Part I in Pokémon GO!",
-   "link": "https://www.youtube.com/shorts/I6MvdaExyIg",
-   "date": "2026-10-27T17:00:40.000Z",
-   "summary": "",
-   "pokemon": [],
-   "notInOurData": []
-  },
-  {
-   "source": "youtube-pogo",
-   "trust": "official",
-   "title": "New costumed Pokémon make their debuts during Halloween 2026 Part I in Pokémon GO!",
-   "link": "https://www.youtube.com/watch?v=wyN2y-BgpoU",
-   "date": "2026-10-27T17:00:14.000Z",
-   "summary": "",
    "pokemon": [],
    "notInOurData": []
   }
