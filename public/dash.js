@@ -1558,9 +1558,118 @@
       }
     }
   }
-  function renderHomeBrief(t) {
+    /* Source-backed shiny activity for Today. Only explicit boost/debut/availability signals are shown;
+     date-specific sub-windows need a structured window before they can be called live. */
+  function shinySource(ev) {
+    var url = safeUrl(ev && ev.link); if (!url) return null;
+    try {
+      var host = new URL(url).hostname.toLowerCase();
+      if (host === 'pokemongo.com' || /\\.pokemongo\\.com$/.test(host)) return { name: 'Official Pokémon GO', kind: 'official', url: url };
+      if (host === 'leekduck.com' || /\\.leekduck\\.com$/.test(host)) return { name: 'Leek Duck', kind: 'community', url: url };
+      if (host === 'pokemongohub.net' || /\\.pokemongohub\\.net$/.test(host)) return { name: 'Pokémon GO Hub', kind: 'community', url: url };
+    } catch (err) {}
+    return null;
+  }
+  function shinyWindowActive(item, t) {
+    var w = item && (item.window || item.activeWindow);
+    if (w) {
+      function parse(v) {
+        var s = String(v || '');
+        return /^\\d{4}-\\d{2}-\\d{2}$/.test(s) ? new Date(s + 'T00:00:00') : new Date(s);
+      }
+      var start = parse(w.start || w.s), end = parse(w.end || w.e);
+      return Number.isFinite(start.getTime()) && Number.isFinite(end.getTime()) && end > start && start <= t && t < end;
+    }
+    var label = String(item && item.label || '');
+    var month = '(?:Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|Jun(?:e)?|Jul(?:y)?|Aug(?:ust)?|Sep(?:t(?:ember)?)?|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?)';
+    var range = new RegExp('\\\\b' + month + '\\\\s*\\\\d{1,2}\\\\s*[–-]\\\\s*(?:' + month + '\\\\s*)?\\\\d{1,2}\\\\b', 'i');
+    var starts = new RegExp('\\\\b(?:from|starting|starts|until|through)\\\\s+(?:\\\\d{1,2}\\\\s+)?' + month + '\\\\b', 'i');
+    return !range.test(label) && !starts.test(label);
+  }
+  function shinyDate(value) {
+    var m = /^(\\d{4}-\\d{2}-\\d{2})/.exec(String(value || ''));
+    if (!m) return '';
+    var d = new Date(m[1] + 'T12:00:00');
+    return isNaN(d) ? '' : d.getDate() + ' ' + MON[d.getMonth()] + ' ' + d.getFullYear();
+  }
+  function shinyWindowText(ev) {
+    var a = shinyDate(ev && ev.sourceStart), b = shinyDate(ev && ev.sourceEnd);
+    if (!a || !b) return 'Active event window';
+    var ma = /^(\\d+) (\\w+) (\\d{4})$/.exec(a), mb = /^(\\d+) (\\w+) (\\d{4})$/.exec(b);
+    if (ma && mb && ma[2] === mb[2] && ma[3] === mb[3]) return ma[1] + '–' + mb[1] + ' ' + mb[2] + ' ' + mb[3];
+    return a === b ? a : a + ' – ' + b;
+  }
+  function shinyFreshness(ev) {
+    var v = ev && (ev.seen || ev.checkedAt || ev.sourceChecked);
+    if (!v) return 'Source check date not recorded';
+    var raw = typeof v === 'number' ? new Date(v) : new Date(String(v).slice(0, 10) + 'T12:00:00');
+    return isNaN(raw) ? 'Source check date not recorded' : 'Source checked ' + raw.getDate() + ' ' + MON[raw.getMonth()] + ' ' + raw.getFullYear();
+  }
+  function renderTodayShiny(t) {
+    var root = $('today-shiny'), host = $('today-shiny-list'), empty = $('today-shiny-empty'), count = $('today-shiny-count'), summary = $('today-shiny-summary');
+    if (!root || !host || !empty || !count || !summary || !EV_READY) return;
+    t = t || now();
+    var records = [], seen = Object.create(null);
+    function add(ev, name, type, artItem) {
+      name = String(name || '').replace(/\\s+/g, ' ').trim();
+      if (!name || name.length > 72 || ev.status === 'conflicting' || ev.status === 'datamined') return;
+      var source = shinySource(ev); if (!source) return;
+      var key = ev.id + '|' + name.toLowerCase() + '|' + type;
+      if (seen[key]) return;
+      seen[key] = true;
+      records.push({ event: ev, name: name, type: type, source: source, art: Object.assign({}, artItem || {}, { name: name, shiny: true }) });
+    }
+    EV.filter(function (ev) { return phase(ev, t) === 'live' && ev.end > t; }).forEach(function (ev) {
+      (ev.highlights || []).forEach(function (h) {
+        if (!h || h.type !== 'boosted-shiny' || !shinyWindowActive(h, t)) return;
+        var label = String(h.label || '');
+        var name = label.replace(/^BOOSTED SHINY\\s*[·:–-]\\s*/i, '').trim() || h.pokemon || h.name || '';
+        var match = (ev.featured || []).filter(function (f) { return f && String(f.name || '').toLowerCase() === String(name).toLowerCase(); })[0];
+        add(ev, name, 'boosted', match);
+      });
+      (ev.featured || []).forEach(function (f) {
+        if (!f || !(f.shiny || f.canBeShiny) || !shinyWindowActive(f, t)) return;
+        var label = String(f.label || '');
+        var type = /boost/i.test(label) ? 'boosted' : /debut|new shiny/i.test(label) ? 'debut' : 'available';
+        add(ev, f.name, type, f);
+      });
+    });
+    var order = { boosted: 0, debut: 1, available: 2 };
+    records.sort(function (a, b) { return order[a.type] - order[b.type] || a.event.start - b.event.start || a.name.localeCompare(b.name); });
+    root.setAttribute('aria-busy', 'false');
+    if (!records.length) {
+      host.hidden = true; host.innerHTML = '';
+      count.hidden = true; count.textContent = '0';
+      empty.hidden = false;
+      empty.textContent = 'No source-confirmed shiny boosts, debuts or shiny availability are active right now.';
+      summary.textContent = 'Boosted odds, new shiny debuts and availability are labelled separately. No unverified rates are shown.';
+      return;
+    }
+    var visible = records.slice(0, 8), boosted = records.filter(function (r) { return r.type === 'boosted'; }).length;
+    count.hidden = false; count.textContent = String(records.length);
+    count.setAttribute('aria-label', records.length + ' active shiny highlights');
+    empty.hidden = true; host.hidden = false;
+    summary.textContent = boosted ? boosted + ' source-backed boosted shiny highlight' + (boosted === 1 ? ' is' : 's are') + ' active; debuts and availability are labelled separately.' : 'No boosted-rate claim is active; new shiny debuts and availability are shown separately.';
+    host.innerHTML = visible.map(function (r) {
+      var badge = r.type === 'boosted' ? 'Boosted odds' : r.type === 'debut' ? 'New shiny debut' : 'Shiny available';
+      var sourceKind = r.source.kind === 'official' ? 'Official source' : 'Community source';
+      var artHtml = monArt(r.event, r.art, 'today-shiny-sprite');
+      return '<article class="today-shiny-card" role="listitem" data-shiny-kind="' + r.type + '">'
+        + '<span class="today-shiny-art">' + artHtml + '</span>'
+        + '<div class="today-shiny-content"><span class="today-shiny-badge today-shiny-badge--' + r.type + '">' + esc(badge) + '</span>'
+        + '<strong class="today-shiny-name">' + esc(r.name) + '</strong>'
+        + '<span class="today-shiny-event">' + esc(r.event.name) + '</span>'
+        + '<small class="today-shiny-meta">' + esc(shinyWindowText(r.event)) + '</small>'
+        + '<small class="today-shiny-meta">' + esc(sourceKind + ' · ' + r.source.name + ' · ' + shinyFreshness(r.event)) + '</small>'
+        + '<div class="today-shiny-actions"><button type="button" class="pill today-shiny-open" data-open="' + esc(r.event.id) + '">View event</button>'
+        + '<a class="pill today-shiny-source" href="' + esc(r.source.url) + '" target="_blank" rel="noopener noreferrer">Source</a></div></div></article>';
+    }).join('');
+  }
+
+function renderHomeBrief(t) {
     if (!EV_READY) return;
     t = t || now();
+    renderTodayShiny(t);
     var endDay = addDays(startOfDay(t), 1);
     var liveEvents = EV.filter(function (e) { return phase(e, t) === 'live' && !e.long && !isHidden(e.id) && !kindHidden(e.kind); });
     var today = EV.filter(function (e) { var ph = phase(e, t); return !e.long && !isHidden(e.id) && !kindHidden(e.kind) && (ph === 'live' || (ph === 'soon' && e.start < endDay)); });
@@ -1585,6 +1694,7 @@
   function renderHomeToday(t, force) {
     if (!EV_READY) return;
     t = t || now();
+    renderTodayShiny(t);
     var endDay = addDays(startOfDay(t), 1);
     var today = EV.filter(function (e) {
       var ph = phase(e, t);
