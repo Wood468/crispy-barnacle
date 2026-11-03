@@ -72,16 +72,17 @@ def main():
                 held_feed_routes.append(route)
                 return
 
+            # Fail closed before considering API paths: no non-read request
+            # is ever allowed to leave the browser.
+            if method not in ("GET", "HEAD"):
+                blocked_writes.append(f"{method} {path}")
+                route.abort()
+                return
+
             # This smoke needs no account, sync, owner, or other API data.
             if path.startswith("/api/"):
                 blocked_api_paths.append(path)
                 route.fulfill(status=404, body="{}", content_type="application/json")
-                return
-
-            # Fail closed if the app unexpectedly attempts any write.
-            if method not in ("GET", "HEAD"):
-                blocked_writes.append(f"{method} {path}")
-                route.abort()
                 return
 
             route.continue_()
