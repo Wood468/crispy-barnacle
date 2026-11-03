@@ -146,7 +146,7 @@ if (ext) {
       if (!day.test(x.eventEnd || "")) fail(where, "eventEnd must be YYYY-MM-DD, or the entry would never expire");
       const isDay = value => typeof value === "string" && day.test(value) && !Number.isNaN(Date.parse(value)) && new Date(value).toISOString().slice(0, 10) === value;
       const isInstant = value => {
-        const m = typeof value === "string" && /^(\\d{4}-\\d{2}-\\d{2})T(\\d{2}):(\\d{2})(?::(\\d{2}))?(Z|[+-]\\d{2}:\\d{2})$/.exec(value);
+        const m = typeof value === "string" && /^(\d{4}-\d{2}-\d{2})T(\d{2}):(\d{2})(?::(\d{2}))?(Z|[+-]\d{2}:\d{2})$/.exec(value);
         if (!m || !isDay(m[1]) || Number(m[2]) > 23 || Number(m[3]) > 59 || Number(m[4] || 0) > 59) return false;
         if (m[5] !== "Z") { const off = /^([+-])(\\d{2}):(\\d{2})$/.exec(m[5]); if (!off || Number(off[2]) > 14 || Number(off[3]) > 59 || (Number(off[2]) === 14 && Number(off[3]) !== 0)) return false; }
         return !Number.isNaN(Date.parse(value));
@@ -157,7 +157,6 @@ if (ext) {
       if (x.registrationStart && x.registrationEnd && Date.parse(x.registrationStart) > Date.parse(x.registrationEnd)) fail(where, "registrationStart is after registrationEnd");
       if (!!x.registrationStart !== !!x.registrationEnd) fail(where, "registrationStart and registrationEnd must be supplied together");
       if ((x.registrationStart || x.registrationEnd) && (typeof x.registrationTimeZone !== "string" || !x.registrationTimeZone.trim())) fail(where, "a registration window needs its source timezone label");
-      if (!!x.registrationStart !== !!x.registrationEnd) fail(where, "registrationStart and registrationEnd must be supplied together");
       if (x.eventStart && x.eventEnd && x.eventStart > x.eventEnd) fail(where, "eventStart is after eventEnd");
       if (x.availability != null && !["available", "sold-out", "unknown"].includes(x.availability)) fail(where, "availability must be available, sold-out or unknown");
       if (x.availability != null && !isDay(x.observed)) fail(where, "explicit availability needs an observed YYYY-MM-DD date");

@@ -61,8 +61,8 @@
     });
     return bs >= 0.5 ? best : null;
   }
-  /* Tickets sold outside the web store (/tickets-external.json). An entry disappears the day after its event ends. The optional sale window
-     decides the chip: opens soon, on sale, or closed. Dates are plain days, read as the player's own day. */
+  /* Tickets sold outside the web store (/tickets-external.json). An entry disappears the day after its event ends. Sale windows are plain days;
+     registration windows are exact offset-bearing instants, and explicit availability is shown only with a dated official source. */
   function dayMs(s) {
     var m = /^(\d{4})-(\d\d)-(\d\d)$/.exec(s || '');
     if (!m) return null;
@@ -70,7 +70,7 @@
     return d.getFullYear() === y && d.getMonth() === month && d.getDate() === day ? d.getTime() : null;
   }
   function instantMs(s) {
-    var m = /^(\\d{4}-\\d{2}-\\d{2})T(\\d{2}):(\\d{2})(?::(\\d{2}))?(Z|[+-]\\d{2}:\\d{2})$/.exec(s || '');
+    var m = /^(\d{4}-\d{2}-\d{2})T(\d{2}):(\d{2})(?::(\d{2}))?(Z|[+-]\d{2}:\d{2})$/.exec(s || '');
     if (!m || dayMs(m[1]) == null || +m[2] > 23 || +m[3] > 59 || +(m[4] || 0) > 59) return null;
     var ms = Date.parse(s);
     return Number.isFinite(ms) ? ms : null;

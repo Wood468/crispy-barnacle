@@ -1,5 +1,5 @@
 {
- "note": "Tickets that are NOT sold in the Pokémon GO web store. Each entry cites the source for its price and buying place. eventStart/eventEnd, optional saleStart/saleEnd and optional registrationStart/registrationEnd are YYYY-MM-DD. Explicit availability is dated and sourced; an entry disappears the day after eventEnd.",
+ "note": "Tickets that are NOT sold in the Pokémon GO web store. Each entry cites the source for its price and buying place. eventStart/eventEnd and optional saleStart/saleEnd are YYYY-MM-DD; registrationStart/registrationEnd are ISO date-times with offsets and registrationTimeZone labels. Explicit availability is dated and sourced; an entry disappears the day after eventEnd.",
  "items": [
   {
    "id": "wild-area-sendai",
