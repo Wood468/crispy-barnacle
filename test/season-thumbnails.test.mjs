@@ -115,8 +115,8 @@ test('Remote generation fetches only approved sources and rejects non-image resp
     const result = await generateSeasonThumbnails({ root, sourceMode: 'remote', fetchImpl, convert, log: () => {} });
     assert.deepEqual(result, { referenced: 2, generated: 2, unchanged: 0, missing: 0, failed: 0 });
     assert.deepEqual(calls.map(call => call.url), [
-      'https://cdn.leekduck.com/assets/img/events/2026/november.jpg',
-      'https://pogo.michaelpuff.com/img/ext/season.jpg'
+      'https://pogo.michaelpuff.com/img/ext/season.jpg',
+      'https://cdn.leekduck.com/assets/img/events/2026/november.jpg'
     ]);
     assert.ok(calls.every(call => call.options.redirect === 'error'));
     assert.ok(calls.every(call => call.options.headers['user-agent'].includes('go-field-notes-season-thumbnail-generator')));
