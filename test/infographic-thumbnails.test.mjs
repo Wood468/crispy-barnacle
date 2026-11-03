@@ -134,6 +134,21 @@ function isWebpBytes(bytes) {
   return bytes.length >= 12 && bytes.toString('ascii', 0, 4) === 'RIFF' && bytes.toString('ascii', 8, 12) === 'WEBP';
 }
 
+
+test('QA-10 thumbnail audit dispatch sends one payload-bearing repository_dispatch request', async () => {
+  const root = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..');
+  const workflow = await fs.readFile(path.join(root, '.github', 'workflows', 'qa10-thumbnail-generation.yml'), 'utf8');
+  const marker = '      - name: Dispatch the read-only production image audit';
+  const section = workflow.slice(workflow.indexOf(marker));
+  assert.ok(section.startsWith(marker), 'dispatch step must exist');
+  assert.ok(section.includes('set -euo pipefail'), 'dispatch shell must fail safely');
+  const curlCalls = section.match(/curl --fail-with-body/g) || [];
+  assert.equal(curlCalls.length, 1, 'dispatch must issue exactly one API request');
+  assert.ok(section.indexOf('payload=') < section.indexOf('curl --fail-with-body'), 'payload must be constructed before dispatch');
+  assert.ok(section.includes('-d "$payload"'), 'repository_dispatch must include its event payload');
+  assert.ok(section.includes('qa10-thumbnail-audit'), 'dispatch must use the QA-10 audit event type');
+});
+
 test('thumbnail generation reads R2-restored originals but never adds the thumbnail folder to R2 sync', async () => {
   const root = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..');
   const r2Sync = await fs.readFile(path.join(root, 'scripts', 'r2-sync.sh'), 'utf8');
