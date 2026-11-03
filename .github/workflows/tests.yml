@@ -104,6 +104,12 @@ jobs:
         if: matrix.shard == 'b'
         run: python test/schedule_layout_browser.py
 
+      - name: Verify Today slow-feed fallback and late recovery
+        if: matrix.shard == 'c'
+        env:
+          GO_FIELD_NOTES_SLOW_FEED_URL: http://127.0.0.1:8791
+        run: python test/slow_feed_browser.py
+
 
   production-image-audit:
     # Informational, read-only sample of the live public site; never blocks code checks.
