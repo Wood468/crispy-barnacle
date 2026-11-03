@@ -104,6 +104,37 @@ test("same-writeup country aliases retain the more specific city and venue", asy
   assert.equal(collapseWorld(separate, { different: separateRulings }).events.length, 2);
 });
 
+test("curated world IDs survive a city-name refinement in the source feed", async () => {
+  const { regionalSeedEntries, mergeWorld } = await import("../scripts/importer/world.mjs");
+  const url = "https://pokemongo.com/news/pokemon-run-30-2026/";
+  const seed = regionalSeedEntries({
+    events: [{
+      name: "Pokémon RUN 30: Bangkok",
+      worldId: "w-pok-mon-run-30-thailand",
+      place: "Bangkok, Thailand (outdoor plaza in front of Central World)",
+      area: "Asia",
+      scope: "regional",
+      start: "2027-01-09",
+      end: "2027-01-10",
+      source: { label: "Pokémon GO (official)", url }
+    }]
+  });
+  const merged = mergeWorld([{
+    name: "Pokémon RUN 30: Bangkok",
+    place: "Bangkok, Thailand",
+    area: "Asia",
+    scope: "regional",
+    start: "2027-01-09",
+    end: "2027-01-10",
+    datesKnown: true,
+    url,
+    source: "official"
+  }, ...seed], { official: "Pokémon GO (official)" });
+  assert.equal(merged.length, 1);
+  assert.equal(merged[0].id, "w-pok-mon-run-30-thailand");
+  assert.equal(merged[0].place, "Bangkok, Thailand (outdoor plaza in front of Central World)");
+});
+
 test("global Twitch research stays distinct from the in-person Night Out venue event", async () => {
   const { fromPage, mergeWorld, collapseWorld } = await import("../scripts/importer/world.mjs");
   const physical = fromPage({
