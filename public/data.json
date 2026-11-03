@@ -227,7 +227,7 @@
     },
     {
       "id": "halloween1",
-      "detailIds": ["leekduck:halloween-2026-part-1"],
+      "detailIds": ["halloween1", "leekduck:halloween-2026-part-1"],
       "t": "Halloween 2026, Part One",
       "s": "2026-10-27T10:00",
       "e": "2026-11-01T10:00",
@@ -300,7 +300,7 @@
     },
     {
       "id": "halloween2",
-      "detailIds": ["leekduck:halloween-2026-part-2"],
+      "detailIds": ["halloween2", "leekduck:halloween-2026-part-2"],
       "t": "Halloween 2026, Part Two",
       "s": "2026-11-01T10:00",
       "e": "2026-11-05T20:00",

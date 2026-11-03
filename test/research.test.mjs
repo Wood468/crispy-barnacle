@@ -13,6 +13,8 @@ const sample = `<main>
 </table>
 <h2>Timed Research</h2>
 <p>There will be a free Timed Research opportunity available.</p>
+<p>Claim all rewards before Thursday, November 5, 2026, at 8:00 p.m. local time.</p>
+<p>Complete 3 Field Research tasks REWARD before the claim deadline.</p>
 </main>`;
 
 test("research parser extracts explicit encounter CP bounds and item quantities only", () => {
@@ -50,6 +52,7 @@ test("event and pass source associations are explicit and the central Research v
   const pass = season.items.find(item => item.id === "season:pass-halloween");
   const novemberPass = season.items.find(item => item.id === "season:pass-november");
   const tasks = details.events["leekduck:halloween-2026-part-2"].researchTasks;
+  assert.ok(halloween.detailIds.includes("halloween2"));
   assert.ok(halloween.detailIds.includes("leekduck:halloween-2026-part-2"));
   assert.equal(pass.detailId, "leekduck:halloween-2026-part-2");
   assert.equal(novemberPass.detailId, "leekduck:go-pass-november-2026");

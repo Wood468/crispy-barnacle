@@ -48,11 +48,18 @@ function parseResearchTask(line, category) {
     for (const chunk of rewardText.split(/\s+\|\s+/).map(trim).filter(Boolean)) {
       const qty = /^(?:[×x]\s*(\d+)\s*)?(.+?)(?:\s+[×x]\s*(\d+))?$/i.exec(chunk);
       if (!qty) continue;
-      const name = trim(qty[2]);
+      let name = trim(qty[2]);
       if (!name || /^(possible )?rewards?$/i.test(name) || name.length > 100) continue;
-      const quantity = Number(qty[1] || qty[3] || 1);
+      let quantity = Number(qty[1] || qty[3] || 1);
+      const numeric = /^(\d+)\s+(.+)$/.exec(name);
+      if (numeric) { quantity = Number(numeric[1]); name = trim(numeric[2]); }
       if (!Number.isInteger(quantity) || quantity < 1 || quantity > 999) continue;
-      const type = /\b(candy|ball|stardust|xp|energy|pass|incubator|revive|potion|pok[eé]coin|rare candy)\b/i.test(name) ? "item" : "other";
+      const encounter = /^(?:an?\s+)?encounter with\s+(.+)$/i.exec(name);
+      const knownItem = /\b(candy|ball|stardust|xp|energy|pass|incubator|revive|potion|pok[eé]coin|rare candy|incense|lure|egg)\b/i.test(name);
+      const explicitQuantity = !!(qty[1] || qty[3] || numeric);
+      if (!encounter && !knownItem && !explicitQuantity) continue;
+      if (encounter) name = trim(encounter[1]);
+      const type = encounter ? "encounter" : knownItem ? "item" : "other";
       rewards.push({ type, name, quantity });
     }
   }
