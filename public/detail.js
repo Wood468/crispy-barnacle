@@ -318,15 +318,18 @@
     if (!tasks.length) return '';
     function attribution(task) {
       var ids = (task.sources || []).filter(function (id, i, a) { return id && a.indexOf(id) === i; });
-      var links = ids.map(function (id) {
-        var source = (d.sources || []).filter(function (s) { return s.id === id; })[0];
-        if (!source) return '';
+      var refs = Array.isArray(task.sourceRefs) && task.sourceRefs.length ? task.sourceRefs : ids.map(function (id) {
+        return (d.sources || []).filter(function (s) { return s.id === id; })[0];
+      }).filter(Boolean);
+      var links = refs.map(function (source) {
+        var name = source.name || source.id || '';
         var url = safe(source.url);
-        return url ? '<a href="' + esc(url) + '" target="_blank" rel="noopener noreferrer">' + esc(source.name) + '</a>' : esc(source.name);
+        return url ? '<a href="' + esc(url) + '" target="_blank" rel="noopener noreferrer">' + esc(name) + '</a>' : esc(name);
       }).filter(Boolean);
       var label = task.status === 'official' ? 'Official' : task.status === 'corroborated' ? 'Cross-checked' : 'Single source';
       return '<small class="research-task-source">' + label + (links.length ? ' · ' + links.join(' · ') : '') + (task.checkedAt ? ' · checked ' + esc(task.checkedAt) : '') + '</small>';
     }
+
     function reward(item) {
       if (item.type === 'encounter') {
         var cp = item.cpMin && item.cpMax ? '<small>CP ' + esc(item.cpMin) + '–' + esc(item.cpMax) + '</small>' : '<small>Encounter</small>';

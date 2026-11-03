@@ -80,6 +80,25 @@ test("a page is tied to an event by its own link first, then a strong title matc
   assert.equal(pickEvent({ url: "https://z.test/p/", title: "Weekend vibes" }, evs), null);
 });
 
+test("Leek Duck detail IDs and part numbers keep companion event pages separate", () => {
+  const events = [
+    { id: "halloween1", t: "Pokémon GO Halloween 2026 Part One", link: "https://leekduck.com/events/halloween-2026-part-2/", start: "2026-10-27T10:00", end: "2026-11-01T10:00", detailIds: ["leekduck:halloween-2026-part-1"] },
+    { id: "halloween2", t: "Pokémon GO Halloween 2026 Part Two", link: "https://leekduck.com/events/halloween-2026-part-2/", start: "2026-11-01T10:00", end: "2026-11-05T20:00", detailIds: ["leekduck:halloween-2026-part-2"] }
+  ];
+  const partOne = {
+    source: "leekduck", url: "https://leekduck.com/events/halloween-2026-part-1/",
+    title: "Pokémon GO Halloween 2026 Part I",
+    fields: { dates: ["October 27, 2026 to November 1, 2026"] }
+  };
+  assert.equal(pickEvent(partOne, events).event.id, "halloween1", "the exact source detail ID wins over an ambiguous link");
+  const hubPartTwo = {
+    source: "hub", url: "https://pokemongohub.net/post/event/pokemon-go-halloween-2026-part-two/",
+    title: "Pokémon GO Halloween 2026: Part Two",
+    fields: { dates: ["November 1, 2026 to November 5, 2026", "October 27, 2026 to November 1, 2026"] }
+  };
+  assert.equal(pickEvent(hubPartTwo, events).event.id, "halloween2", "the part number disambiguates an article that mentions both event windows");
+});
+
 test("date evidence blocks a title or source-link match to a different event window", () => {
   const event = { id: "z", t: "Zorua Community Day", link: "https://leekduck.com/events/zorua-community-day/", start: "2026-11-21T14:00", end: "2026-11-21T17:00" };
   const events = [event];

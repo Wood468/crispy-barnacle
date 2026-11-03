@@ -44,8 +44,10 @@ export function mergeSources(results) {
   for (const r of sorted) for (const task of (r.fields.researchTasks || [])) {
     const key = JSON.stringify([task.category || "research", String(task.task || "").toLowerCase().replace(/\s+/g, " ").trim(), (task.rewards || []).map(x => [x.type, x.name, x.quantity, x.cpMin, x.cpMax])]);
     let item = taskMap.get(key);
-    if (!item) { item = { ...task, sources: [], official: false }; taskMap.set(key, item); }
+    if (!item) { item = { ...task, sources: [], sourceRefs: [], official: false }; taskMap.set(key, item); }
     if (!item.sources.includes(r.source.id)) item.sources.push(r.source.id);
+    const sourceRef = { id: r.source.id, name: r.source.name || r.source.id, trust: r.source.trust || "", url: r.source.url || "" };
+    if (!item.sourceRefs.some(s => s.id === sourceRef.id && s.url === sourceRef.url)) item.sourceRefs.push(sourceRef);
     if (r.source.trust === "official") item.official = true;
   }
   const researchTasks = [...taskMap.values()].map(({ official, ...task }) => ({

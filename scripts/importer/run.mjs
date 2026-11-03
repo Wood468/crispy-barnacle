@@ -70,10 +70,28 @@ export function serebiiSkipped(html, today = new Date().toISOString().slice(0, 1
 
 export async function appEvents() {
   const evs = [];
-  try { const j = await (await fetch(APP + "/api/events", { signal: AbortSignal.timeout(20000) })).json(); for (const e of j.events || []) evs.push({ id: e.id, t: e.name, link: e.link || "", start: e.start, end: e.end }); } catch { /* snapshot only */ }
-  try { for (const e of JSON.parse(await readFile("public/data.json", "utf8")).events || []) if (!evs.some(x => x.id === e.id)) evs.push({ id: e.id, t: e.t, link: e.sourceUrl || "", start: e.s, end: e.e }); } catch { /* none */ }
+  try {
+    const j = await (await fetch(APP + "/api/events", { signal: AbortSignal.timeout(20000) })).json();
+    for (const e of j.events || []) evs.push({ id: e.id, t: e.name, link: e.link || "", start: e.start, end: e.end, detailIds: [] });
+  } catch { /* snapshot only */ }
+  try {
+    const curated = JSON.parse(await readFile("public/data.json", "utf8")).events || [];
+    for (const e of curated) {
+      const existing = evs.find(x => x.id === e.id);
+      const detailIds = Array.isArray(e.detailIds) ? e.detailIds : [];
+      const link = e.sourceUrl || e.link || "";
+      if (existing) {
+        existing.t = e.t || existing.t;
+        existing.link = link || existing.link;
+        existing.start = e.s || existing.start;
+        existing.end = e.e || existing.end;
+        existing.detailIds = detailIds;
+      } else evs.push({ id: e.id, t: e.t, link, start: e.s, end: e.e, detailIds });
+    }
+  } catch { /* no snapshot */ }
   return evs;
 }
+
 function pageDatesOverlapEvent(page, event) {
   const eventStart = String(event.start || "").slice(0, 10);
   const eventEnd = String(event.end || event.start || "").slice(0, 10);
@@ -93,16 +111,53 @@ function pageDatesOverlapEvent(page, event) {
   return ranges.some(range => range.start <= eventEnd && range.end >= eventStart);
 }
 
+function eventPartNumber(value) {
+  const pattern = new RegExp("\\bpart[\\s-]*(one|two|three|four|five|iv|iii|ii|i|[1-9]\\d*)\\b", "i");
+  const m = pattern.exec(String(value || ""));
+  if (!m) return null;
+  const token = m[1].toLowerCase();
+  const words = { one: 1, two: 2, three: 3, four: 4, five: 5 };
+  const romans = { i: 1, ii: 2, iii: 3, iv: 4 };
+  if (words[token]) return words[token];
+  if (romans[token]) return romans[token];
+  const n = Number(token);
+  return Number.isInteger(n) && n > 0 ? n : null;
+}
+function pageDetailId(page) {
+  if (page.source !== "leekduck") return "";
+  try {
+    const parts = new URL(page.url).pathname.split("/").filter(Boolean);
+    return parts.length === 2 && parts[0] === "events" ? "leekduck:" + parts[1] : "";
+  } catch { return ""; }
+}
 export function pickEvent(page, events) {
-  const direct = events.find(e => e.link && e.link.replace(/\/?$/, "/") === page.url);
+  const pagePart = eventPartNumber(String(page.title || "") + " " + String(page.url || ""));
+  const compatible = event => {
+    const eventPart = eventPartNumber(event.t || event.name || "");
+    return pagePart === null || eventPart === null || eventPart === pagePart;
+  };
+  // A Leek Duck detail ID is more precise than title matching: related Part I/II
+  // write-ups can mention both date windows while containing different task tables.
+  const detailId = pageDetailId(page);
+  if (detailId) {
+    const exact = events.find(e => Array.isArray(e.detailIds) && e.detailIds.includes(detailId) && compatible(e));
+    if (exact) return pageDatesOverlapEvent(page, exact) ? { event: exact, how: "detail-id" } : null;
+  }
+  const normalUrl = value => {
+    const text = String(value || "");
+    return text.endsWith("/") ? text : text + "/";
+  };
+  const direct = events.find(e => e.link && normalUrl(e.link) === normalUrl(page.url) && compatible(e));
   if (direct) return pageDatesOverlapEvent(page, direct) ? { event: direct, how: "linked" } : null;
-  const m = matchEvent({ title: page.title || "" }, events);
+  const candidates = events.filter(compatible);
+  const m = matchEvent({ title: page.title || "" }, candidates);
   if (m && m.confidence === "high") {
-    const event = events.find(e => e.id === m.eventId);
+    const event = candidates.find(e => e.id === m.eventId);
     if (event && pageDatesOverlapEvent(page, event)) return { event, how: "title" };
   }
   return null;
 }
+
 
 async function main() {
   const events = await appEvents();
