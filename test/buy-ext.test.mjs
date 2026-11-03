@@ -46,7 +46,7 @@ test("published GO Wild Area records reflect the official source checks on 3 Nov
   const sendai = rows.find(r => r.x.id === "wild-area-sendai");
   const mexico = rows.find(r => r.x.id === "wild-area-mexico-city");
   assert.equal(sendai.status, "unknown");
-  assert.match(sendai.chip, /Registration closed 15 Sep · ticket availability unconfirmed/);
+  assert.match(sendai.chip, /Registration ended 15 Sep JST · ticket availability unconfirmed/);
   assert.equal(mexico.status, "open");
   assert.equal(mexico.chip, "Tickets available");
   assert.equal(sendai.x.observed, "2026-11-03");

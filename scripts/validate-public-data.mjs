@@ -148,7 +148,7 @@ if (ext) {
       const isInstant = value => {
         const m = typeof value === "string" && /^(\d{4}-\d{2}-\d{2})T(\d{2}):(\d{2})(?::(\d{2}))?(Z|[+-]\d{2}:\d{2})$/.exec(value);
         if (!m || !isDay(m[1]) || Number(m[2]) > 23 || Number(m[3]) > 59 || Number(m[4] || 0) > 59) return false;
-        if (m[5] !== "Z") { const off = /^([+-])(\\d{2}):(\\d{2})$/.exec(m[5]); if (!off || Number(off[2]) > 14 || Number(off[3]) > 59 || (Number(off[2]) === 14 && Number(off[3]) !== 0)) return false; }
+        if (m[5] !== "Z") { const off = m[5].slice(1).split(":").map(Number); if (off[0] > 14 || off[1] > 59 || (off[0] === 14 && off[1] !== 0)) return false; }
         return !Number.isNaN(Date.parse(value));
       };
       for (const k of ["eventStart", "saleStart", "saleEnd", "observed"]) if (x[k] && !isDay(x[k])) fail(where, k + " must be a real YYYY-MM-DD date");
