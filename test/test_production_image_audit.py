@@ -1,3 +1,4 @@
+import json
 import os
 import tempfile
 import unittest
@@ -16,6 +17,17 @@ class ProductionImageAuditTests(unittest.TestCase):
         item = {"id": "season:24", "img": "/img/ext/season-24-twilight-trails-99c978ed.jpg"}
         self.assertEqual(season_thumbnail_path(item), "/season-thumbs/season-24-49a5f9d7.webp")
         self.assertEqual(season_thumbnail_path({"id": "season:24"}), "")
+
+    def test_current_season_records_produce_valid_detail_thumbnail_paths(self):
+        root = Path(__file__).resolve().parent.parent
+        season = json.loads((root / "public" / "season.json").read_text(encoding="utf-8"))
+        for item in season.get("items", []):
+            if item.get("img"):
+                self.assertRegex(
+                    season_thumbnail_path(item),
+                    r"^/season-thumbs/season-[a-z0-9-]+-[a-f0-9]{8}\\.webp$",
+                    item.get("id", ""),
+                )
 
     def test_other_images_are_not_counted_as_posters(self):
         self.assertEqual(image_kind("https://raw.githubusercontent.com/PokeAPI/sprites/pokemon/25.png"), "other-image")
