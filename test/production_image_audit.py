@@ -72,7 +72,8 @@ def resource_label(url: str) -> str:
 def season_thumbnail_path(item: dict) -> str:
     """Mirror public/season.js and scripts/season-thumbnails.mjs for audit matching."""
     image = str(item.get("img") or "")
-    slug = re.sub(r"[^a-z0-9]+", "-", str(item.get("id") or "").removeprefix("season:").lower()).strip("-")
+    event_id = re.sub(r"^season:", "", str(item.get("id") or ""), flags=re.IGNORECASE)
+    slug = re.sub(r"[^a-z0-9]+", "-", event_id.lower()).strip("-")
     if not image or not slug:
         return ""
     value = 2166136261
