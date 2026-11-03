@@ -4065,6 +4065,89 @@ check('Mega status pill uses semantic theme roles with light and dark palette va
       '.mega-pill-red{display:inline-block;align-self:flex-start;margin-top:.35rem;padding:.15rem .6rem;border-radius:var(--radius-pill);background:var(--color-status-mega-pill-bg);color:var(--color-status-mega-pill-fg);border:1px solid var(--color-status-mega-pill-border);font-size:var(--type-label);font-weight:600}' in DASH_CSS and
       '@media (prefers-color-scheme:dark){.mega-pill-red' not in DASH_CSS)
 
+
+    if on('a'):
+        # Today shiny rail: only active, source-backed boosts/debuts/availability are shown.
+        shiny_data = json.loads((ROOT / 'public' / 'data.json').read_text())
+        shiny_data['events'] = [e for e in shiny_data.get('events', []) if e.get('id') not in {
+            'shiny-boost-fixture', 'shiny-window-fixture', 'shiny-conflict-fixture', 'shiny-future-fixture', 'shiny-expired-fixture'
+        }]
+        shiny_data['events'].extend([
+            {
+                'id':'shiny-boost-fixture','t':'Shiny boost fixture','s':'2026-11-04T09:00','e':'2026-11-04T21:00',
+                'status':'community_reported','source':'Leek Duck','sourceUrl':'https://leekduck.com/events/shiny-boost-fixture/',
+                'tags':['Shiny'],'highlights':[{'type':'boosted-shiny','label':'BOOSTED SHINY · Electrike'}],
+                'art':[{'n':'Electrike','shiny':1,'label':'Boosted odds'}]
+            },
+            {
+                'id':'shiny-window-fixture','t':'Windowed shiny fixture','s':'2026-11-04T09:00','e':'2026-11-08T21:00',
+                'status':'community_reported','source':'Leek Duck','sourceUrl':'https://leekduck.com/events/shiny-window-fixture/',
+                'tags':['Shiny'],'highlights':[{'type':'boosted-shiny','label':'BOOSTED SHINY · Hisuian Growlithe (Incense, Nov 6–8)'}],
+                'art':[{'n':'Hisuian Growlithe','shiny':1,'label':'Boosted from Nov 6'}]
+            },
+            {
+                'id':'shiny-conflict-fixture','t':'Conflicting shiny fixture','s':'2026-11-04T09:00','e':'2026-11-04T21:00',
+                'status':'conflicting','source':'Official Pokémon GO','sourceUrl':'https://pokemongo.com/news/shiny-conflict-fixture',
+                'tags':['Shiny'],'art':[{'n':'Mewtwo','shiny':1,'label':'Boosted odds'}]
+            },
+            {
+                'id':'shiny-future-fixture','t':'Future shiny fixture','s':'2026-11-05T10:00','e':'2026-11-05T20:00',
+                'status':'community_reported','source':'Leek Duck','sourceUrl':'https://leekduck.com/events/shiny-future-fixture/',
+                'tags':['Shiny'],'art':[{'n':'Elekid','shiny':1,'label':'Shiny debut'}]
+            },
+            {
+                'id':'shiny-expired-fixture','t':'Expired shiny fixture','s':'2026-11-01T10:00','e':'2026-11-03T20:00',
+                'status':'community_reported','source':'Leek Duck','sourceUrl':'https://leekduck.com/events/shiny-expired-fixture/',
+                'tags':['Shiny'],'art':[{'n':'Murkrow','shiny':1,'label':'Shiny available'}]
+            }
+        ])
+        shiny_page = page(clock='2026-11-04T10:31:00+11:00', extra={'**/data.json*':(json.dumps(shiny_data),200)})
+        shiny_page.wait_for_function("document.getElementById('today-shiny')?.getAttribute('aria-busy') === 'false'", timeout=15000)
+        shiny_cards = shiny_page.locator('#today-shiny-list .today-shiny-card')
+        shiny_text = shiny_page.locator('#today-shiny').inner_text()
+        check('Today shiny rail shows only active source-backed boosts and shiny debuts',
+              shiny_cards.count()==2 and 'Electrike' in shiny_text and 'Greavard' in shiny_text and
+              'Hisuian Growlithe' not in shiny_text and 'Mewtwo' not in shiny_text and
+              'Elekid' not in shiny_text and 'Murkrow' not in shiny_text, shiny_text)
+        check('boosted odds and a shiny debut are explicitly distinguished without invented rates',
+              shiny_page.locator('[data-shiny-kind="boosted"]').count()==1 and
+              shiny_page.locator('[data-shiny-kind="debut"]').count()==1 and
+              not re.search(r'\b\d+(?:\.\d+)?\s*%', shiny_text), shiny_text)
+        sources = shiny_page.locator('#today-shiny-list .today-shiny-source')
+        check('shiny cards preserve official versus community source attribution and disclose missing check dates',
+              sources.count()==2 and
+              'Community source · Leek Duck · Source check date not recorded' in shiny_text and
+              'Official source · Official Pokémon GO · Source check date not recorded' in shiny_text and
+              all('noopener' in (sources.nth(i).get_attribute('rel') or '') for i in range(sources.count())), shiny_text)
+        check('shiny cards show the source-published event date window, without converting venue-local times',
+              '1–5 Nov 2026' in shiny_text and '4 Nov 2026' in shiny_text, shiny_text)
+        check('Today shiny rail does not claim a source check from the older dataset as-of date',
+              '30 Oct 2026' not in shiny_text)
+        open_shiny_event = shiny_page.locator('#today-shiny-list .today-shiny-open').first
+        open_shiny_event.focus(); open_shiny_event.press('Enter')
+        check('keyboard activation opens the matching event detail from the shiny rail',
+              shiny_page.locator('#evd').is_visible() and 'Shiny boost fixture' in shiny_page.locator('#evd-t').inner_text())
+        shiny_page.locator('#evd-x').click()
+        check('closing a shiny-linked event detail returns to the Today view', shiny_page.locator('#evd').is_hidden())
+        responsive = {}
+        for width in (320,390,1280):
+            shiny_page.set_viewport_size({'width':width,'height':844}); shiny_page.wait_for_timeout(80)
+            responsive[width] = shiny_page.evaluate("""() => {
+              const panel=document.getElementById('today-shiny'), rail=document.getElementById('today-shiny-list');
+              return {page:[document.documentElement.scrollWidth,innerWidth],panel:Math.round(panel.getBoundingClientRect().width),
+                rail:Math.round(rail.getBoundingClientRect().width)};
+            }""")
+        check('Today shiny rail has no page overflow at 320px, 390px or desktop',
+              all(v['page'][0] <= v['page'][1] and v['panel'] <= v['page'][1] for v in responsive.values()), responsive)
+        shiny_page.emulate_media(reduced_motion='reduce')
+        check('shiny rail respects reduced-motion preferences',
+              shiny_page.evaluate("getComputedStyle(document.getElementById('today-shiny-list')).scrollBehavior") in ('auto','initial'))
+        shiny_page.context.close()
+        check('Today shiny rail assets are versioned in the offline shell',
+              DASH_URL.endswith('dash.js?v=20261104f') and DASH_CSS_URL.endswith('dash.css?v=20261104e') and
+              APP_URL.endswith('app.js?v=20261104e') and SHELL_CACHE=='gofn-shell-v238' and
+              '/research.js?v=20261104b' in SW_JS and '/data.json' in SW_JS)
+
 print('\nFAILED:',fails if fails else 'none')
 if fails:
     sys.exit(1)
