@@ -22,19 +22,21 @@ const GENERIC = new Set(["pokemon", "pok", "mon", "the", "and", "for", "with", "
 const sig = s => new Set(words(String(s).normalize("NFKD").replace(/[\u0300-\u036f]/g, "")).filter(w => !GENERIC.has(w) && !/^\d+$/.test(w)));
 const day = s => String(s || "").slice(0, 10);
 const overlaps = (a1, a2, b1, b2) => day(a1) && day(b1) && day(a1) <= day(b2 || b1) && day(b1) <= day(a2 || a1);
-// Same event under a different name: enough shared key words, and the dates overlap unless almost every word agrees.
+// Same event under a different name: enough shared key words and an overlapping event window.
 export function fuzzy(name, s, e, t) {
   const a = sig(name), b = sig(t.slug.replace(/-/g, " ")); let n = 0; for (const w of a) if (b.has(w)) n++;
   const covers = b.size ? n / b.size : 0;
   if (n >= 1 && n === a.size && n === b.size && day(s) === day(t.start)) return true; // the same single key word and the same start day
-  return n >= 3 && covers >= 0.6 || (n >= 2 && covers >= 0.5 && overlaps(s, e, t.start, t.end));
+  return overlaps(s, e, t.start, t.end) && (n >= 3 && covers >= 0.6 || (n >= 2 && covers >= 0.5));
 }
 export function match(ours, theirs) {
   const bySlug = theirs.find(t => ours.sourceUrl && ours.sourceUrl.includes("/" + t.slug + "/"));
   if (bySlug) return bySlug;
   const w = words(ours.t);
-  const cands = w.length ? theirs.filter(t => w.every(x => t.slug.includes(x))) : [];
-  // Two events can share a name (the Super Mega Raid Days): take the one that starts nearest to ours.
+  // Titles are not unique event identifiers: recurring Raid Days can share a title on different dates.
+  // Only use title-based candidates whose published window overlaps ours. An exact source-URL match above
+  // still detects a genuine reschedule even when the old and new date ranges do not overlap.
+  const cands = w.length ? theirs.filter(t => w.every(x => t.slug.includes(x)) && overlaps(ours.s, ours.e, t.start, t.end)) : [];
   const gap = t => Math.abs(Date.parse(t.start) - Date.parse(ours.s)) || 0;
   return cands.sort((a, b) => gap(a) - gap(b))[0] || theirs.find(t => fuzzy(ours.t, ours.s, ours.e, t)) || null;
 }
