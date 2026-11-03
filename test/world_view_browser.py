@@ -34,6 +34,15 @@ def main():
          "start": "2026-11-02",
          "end": "2026-11-03",
          "sources": [{"url": "https://example.test/overseas"}]},
+        {"id": "fixture-regional-in-game",
+         "name": "Regional In-Game Fixture",
+         "place": "India",
+         "area": "Asia",
+         "scope": "regional",
+         "mode": "in-game",
+         "start": "2026-11-02",
+         "end": "2026-11-03",
+         "sources": [{"url": "https://example.test/india"}]},
         {"id": "fixture-mexico",
          "name": "Mexico City Wild Area Fixture",
          "place": "Mexico City, Mexico",
@@ -104,19 +113,19 @@ def main():
                    person_titles.count("In-person fixture: Kyoto") == 1, person_titles)
             world_text = page.locator("#world").inner_text()
             expect("world events render with destinations and regional filters",
-                   all(x in world_text for x in ["Asia world-event fixture", "Americas world-event fixture", "Kyoto, Japan", "Mexico City, Mexico"]))
+                   all(x in world_text for x in ["Asia world-event fixture", "Americas world-event fixture", "Kyoto, Japan", "Mexico City, Mexico", "Regional In-Game Fixture", "India"]))
             expect("global play remains separately identified",
                    "Global world-event fixture" in world_text)
             page.locator('#world [data-w="Asia"]').click()
             asia_text = page.locator("#world").inner_text()
             expect("Asia filter selects only the Asia event in the event list",
                    page.locator('#world [data-w="Asia"]').get_attribute("aria-pressed") == "true" and
-                   "Asia world-event fixture" in asia_text and "Americas world-event fixture" not in asia_text)
+                   "Asia world-event fixture" in asia_text and "Regional In-Game Fixture" in asia_text and "Americas world-event fixture" not in asia_text)
             page.locator('#world [data-w="all"]').click()
             all_text = page.locator("#world").inner_text()
             expect("All restores the complete regional event list",
                    page.locator('#world [data-w="all"]').get_attribute("aria-pressed") == "true" and
-                   "Asia world-event fixture" in all_text and "Americas world-event fixture" in all_text)
+                   "Asia world-event fixture" in all_text and "Americas world-event fixture" in all_text and "Regional In-Game Fixture" in all_text)
             page.locator('#subnav-events button[data-sub="travel"]').click()
             page.wait_for_function("() => { const el=document.getElementById('sub-travel'); return !!el && !el.hidden; }")
             page.wait_for_function("() => document.querySelectorAll('#travel-results .agw').length >= 2")
@@ -127,15 +136,16 @@ def main():
             expect("Travel is a separate fourth Schedule view",
                    page.locator("#sub-travel").is_visible() and page.locator("#sub-world").is_hidden() and
                    page.locator("#subnav-events button[data-sub=travel]").get_attribute("aria-pressed") == "true")
-            expect("Travel shows dated regional destinations but excludes global in-game events",
+            expect("Travel shows physical destinations but excludes global and regional in-game events",
                    "Kyoto, Japan" in travel_text and "Mexico City, Mexico" in travel_text and
-                   "Global In-Game Fixture" not in travel_text, travel_text)
+                   "Global In-Game Fixture" not in travel_text and "Regional In-Game Fixture" not in travel_text, travel_text)
             expect("Travel is independent of per-event hide preferences and has no global hide control",
                    "Mexico City Wild Area Fixture" in travel_text and
                    page.locator("#travel-results [data-hide]").count() == 0, travel_text)
             expect("Travel datalist contains exact source-listed places",
                    page.locator('#travel-destinations option[value="Kyoto, Japan"]').count() == 1 and
-                   page.locator('#travel-destinations option[value="Mexico City, Mexico"]').count() == 1)
+                   page.locator('#travel-destinations option[value="Mexico City, Mexico"]').count() == 1 and
+                    page.locator('#travel-destinations option[value="India"]').count() == 0)
             page.locator("#travel-q").fill("Kyoto")
             travel_text = page.locator("#travel-results").inner_text()
             expect("destination search narrows to the matching place",
@@ -202,6 +212,23 @@ def main():
                    overseas.count() == 1 and overseas.is_visible() and "Kyoto, Japan" in overseas_text, overseas_text)
             expect("overseas event stays in the unfolded Today agenda",
                    overseas.count() == 1 and overseas.evaluate("el => !!el.closest('.today-phase-group') && !el.closest('details')"))
+            regional_game = page.locator("#home-now .agr.reg").filter(has_text="Regional In-Game Fixture")
+            today_groups = page.evaluate("""() => {
+                const groupFor = (title) => {
+                    const link = Array.from(document.querySelectorAll('#home-now .agr.reg')).find(el => el.textContent.includes(title));
+                    const row = link && link.closest('.agw');
+                    let previous = row && row.previousElementSibling;
+                    while (previous && !previous.classList.contains('today-sub')) previous = previous.previousElementSibling;
+                    return previous ? previous.textContent.trim().replace(/\\s+/g, ' ') : '';
+                };
+                return { overseas: groupFor('Overseas In-Person Fixture'), regionalGame: groupFor('Regional In-Game Fixture') };
+            }""")
+            expect("regional in-game event remains visible on Today",
+                   regional_game.count() == 1 and regional_game.is_visible())
+            expect("overseas in-person event stays under the In person label",
+                   today_groups["overseas"].startsWith("In person"), today_groups)
+            expect("regional in-game event is not misclassified as in-person",
+                   today_groups["regionalGame"].startsWith("In-game (regional)"), today_groups)
             expect("unverified venue-local time is not invented",
                    "Venue:" not in overseas_text, overseas_text)
             expect("no browser page errors", not page_errors, page_errors)

@@ -9,12 +9,22 @@ const dash = fs.readFileSync(new URL("../public/dash.js", import.meta.url), "utf
 const app = fs.readFileSync(new URL("../public/app.js", import.meta.url), "utf8");
 const html = fs.readFileSync(new URL("../public/index.html", import.meta.url), "utf8");
 
-test("Today live summary separates in-game and in-person activity without dropping overseas events", () => {
+test("Today live summary separates global, regional in-game and in-person activity without dropping overseas events", () => {
   const counts = LIB.liveActivityCounts(
     [{ kind: "raid" }, { kind: "max" }, { kind: "person" }],
-    [{ scope: "global" }, { scope: "regional" }, { scope: "regional" }]
+    [{ scope: "global" }, { scope: "regional" }, { scope: "regional", mode: "in-game" }]
   );
-  assert.deepEqual(counts, { inGame: 3, inPerson: 3, total: 6 });
+  assert.deepEqual(counts, { inGame: 4, inPerson: 2, total: 6 });
+});
+
+test("regional in-game mode is distinct while unmarked regional destinations retain the in-person default", () => {
+  assert.equal(LIB.isInPersonWorldEvent({ scope: "regional" }), true);
+  assert.equal(LIB.isInPersonWorldEvent({ scope: "regional", mode: "in-game" }), false);
+  assert.equal(LIB.isInPersonWorldEvent({ scope: "regional", mode: "in-person" }), true);
+  assert.equal(LIB.isInPersonWorldEvent({ scope: "global" }), false);
+  assert.equal(LIB.isInPersonWorldEvent({}), true);
+  assert.equal(LIB.isRegionalInGameEvent({ scope: "regional", mode: "in-game" }), true);
+  assert.equal(LIB.isRegionalInGameEvent({ scope: "global", mode: "in-game" }), false);
 });
 
 test("Today keeps overseas events visible and separates live from later-today regional activity", () => {
@@ -24,15 +34,19 @@ test("Today keeps overseas events visible and separates live from later-today re
   assert.match(dash, /phaseGroup\('Happening now', liveToday\.length \+ liveRegional\.length/);
   assert.match(dash, /phaseGroup\('Later today', laterToday\.length \+ laterRegional\.length/);
   assert.match(dash, /function worldDate\(value, endOfDay\)/);
+  assert.match(dash, /function regInPerson\(e\) \{ return LIB\.isInPersonWorldEvent\(e\); \}/);
+  assert.match(dash, /function inGameRegional\(list\)/);
+  assert.match(dash, /subHead\('In-game \(regional\)'/);
   assert.match(html, /id="day-inperson-count"/);
   assert.match(html, /<b id="day-inperson-count">0<\/b> in person/); // Batch 1: counts are one text line in the brief
   assert.match(html, /id="today-focus-strip"/);
 });
 
-test("regional in-person entries are not suppressed by in-game deduplication", () => {
+test("regional in-person and regional in-game entries are not suppressed by global in-game deduplication", () => {
   const regionalGuard = dash.indexOf("if (x.scope !== 'global') return true;");
   const globalDedupe = dash.indexOf("GODEDUPE.same", regionalGuard);
   assert.ok(regionalGuard >= 0 && globalDedupe > regionalGuard);
+  assert.match(dash, /LIB\.isInPersonWorldEvent\(x\)/, "Travel includes only physical regional destinations");
 });
 
 test("Today Tonight planner uses only published local-day schedules and links weakness types to Best attackers", () => {

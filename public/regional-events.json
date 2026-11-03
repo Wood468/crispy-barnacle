@@ -1,6 +1,6 @@
 {
- "updated": "2026-11-03",
- "note": "Dates and venues follow each event's listed source. The end of the ESA collaboration is listed as ongoing, so 31 Dec 2026 is a placeholder end. Per-event source objects override the Serebii fallback source.",
+ "updated": "2026-11-04",
+ "note": "Dates and venues follow each event's listed source. The end of the ESA collaboration is listed as ongoing, so 31 Dec 2026 is a placeholder end. Per-event source objects override the Serebii fallback source. Regional entries are treated as in-person unless mode is 'in-game', which marks a region-locked gameplay event rather than a physical destination.",
  "source": {
   "label": "Serebii.net, Pokémon GO real-life events",
   "url": "https://www.serebii.net/pokemongo/reallifeevents.shtml",
@@ -22,6 +22,22 @@
    "area": "Asia",
    "start": "2026-11-06",
    "end": "2026-11-08"
+  },
+  {
+   "id": "rg-festival-of-lights-india-2026",
+   "worldId": "w-celebrate-the-festival-of-lights-with-the-return-o",
+   "name": "Festival of Lights",
+   "place": "India",
+   "area": "Asia",
+   "scope": "regional",
+   "mode": "in-game",
+   "start": "2026-11-06",
+   "end": "2026-11-08",
+   "source": {
+    "id": "official",
+    "label": "Pokémon GO (official)",
+    "url": "https://pokemongo.com/news/festival-of-lights-2026/"
+   }
   },
   {
    "id": "rg-boston-safari",

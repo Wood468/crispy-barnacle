@@ -419,3 +419,62 @@ test("per-event regional seed source objects override the shared Serebii fallbac
     { id: "serebii", name: "Serebii", url: serebiiUrl }
   ]);
 });
+
+
+test("regional in-game classification survives the curated fallback seed and world merge", async () => {
+  const { regionalSeedEntries, mergeWorld, collapseWorld } = await import("../scripts/importer/world.mjs");
+  const url = "https://pokemongo.com/news/festival-of-lights-2026/";
+  const seed = regionalSeedEntries({
+    events: [{
+      name: "Festival of Lights",
+      worldId: "w-celebrate-the-festival-of-lights-with-the-return-o",
+      place: "India",
+      area: "Asia",
+      scope: "regional",
+      mode: "in-game",
+      start: "2026-11-06",
+      end: "2026-11-08",
+      source: { id: "official", label: "Pokémon GO (official)", url }
+    }]
+  });
+  assert.equal(seed[0].mode, "in-game");
+  const merged = mergeWorld([{
+    name: "Festival of Lights",
+    place: "India",
+    area: "Asia",
+    scope: "regional",
+    start: "2026-11-06",
+    end: "2026-11-08",
+    datesKnown: true,
+    url,
+    source: "official"
+  }, ...seed], { official: "Pokémon GO (official)" });
+  assert.equal(merged.length, 1);
+  assert.equal(merged[0].id, "w-celebrate-the-festival-of-lights-with-the-return-o");
+  assert.equal(merged[0].mode, "in-game");
+  assert.equal(collapseWorld(merged).events[0].mode, "in-game");
+});
+
+test("conflicting world-event modes fail closed instead of silently merging unlike activities", async () => {
+  const { mergeWorld, collapseWorld } = await import("../scripts/importer/world.mjs");
+  const url = "https://pokemongo.com/news/festival-of-lights-2026/";
+  const base = {
+    name: "Festival of Lights",
+    place: "India",
+    area: "Asia",
+    scope: "regional",
+    start: "2026-11-06",
+    end: "2026-11-08",
+    datesKnown: true,
+    url,
+    source: "official"
+  };
+  assert.throws(() => mergeWorld([
+    { ...base, mode: "in-game" },
+    { ...base, mode: "in-person" }
+  ], { official: "Pokémon GO (official)" }), /Conflicting world-event modes/);
+  assert.throws(() => collapseWorld([
+    { ...base, id: "festival-a", mode: "in-game", sources: [{ id: "official", name: "Pokémon GO (official)", url }] },
+    { ...base, id: "festival-b", mode: "in-person", sources: [{ id: "official", name: "Pokémon GO (official)", url }] }
+  ]), /Conflicting world-event modes/);
+});
