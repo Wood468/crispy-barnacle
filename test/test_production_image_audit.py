@@ -25,7 +25,7 @@ class ProductionImageAuditTests(unittest.TestCase):
             if item.get("img"):
                 self.assertRegex(
                     season_thumbnail_path(item),
-                    r"^/season-thumbs/season-[a-z0-9-]+-[a-f0-9]{8}\\.webp$",
+                    r"^/season-thumbs/season-[a-z0-9-]+-[a-f0-9]{8}\.webp$",
                     item.get("id", ""),
                 )
 
