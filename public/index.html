@@ -50,23 +50,19 @@
           <strong class="day-brief-title" id="day-brief-title">Getting your day ready</strong>
           <p class="day-brief-stats" id="day-brief-stats"><span><b id="day-live-count">0</b> in game</span><span><b id="day-inperson-count">0</b> in person</span><span><b id="day-upcoming-count">0</b> starting today</span></p>
           <p class="day-brief-empty" id="day-brief-empty" hidden>Nothing is live or starting today.</p>
+          <div class="today-shiny-panel" id="today-shiny" aria-labelledby="today-shiny-title" aria-busy="true">
+            <div class="today-shiny-head">
+              <span class="day-brief-kicker" id="today-shiny-title">LIVE SHINY</span>
+              <span class="today-shiny-count" id="today-shiny-count" hidden>0</span>
+            </div>
+            <p class="today-shiny-empty" id="today-shiny-empty" role="status" aria-live="polite">Checking current event sources…</p>
+            <div class="today-shiny-rail" id="today-shiny-list" role="list" aria-label="Currently active source-backed shiny activity" hidden></div>
+          </div>
           <div class="today-focus-strip" id="today-focus-strip" role="group" aria-label="Today at a glance">
             <div class="today-focus-card"><span class="today-focus-label">Next</span><strong id="today-focus-next">Finding your next event…</strong><small id="today-focus-next-meta">Upcoming schedule</small></div>
             <div class="today-focus-card"><span class="today-focus-label">Ending soon</span><strong id="today-focus-ending">Checking timed events…</strong><small id="today-focus-ending-meta">Timed in-game events only</small><details class="today-deadlines" id="today-deadlines" hidden><summary id="today-deadlines-summary">View upcoming deadlines</summary><ol class="today-deadlines-list" id="today-deadlines-list" hidden></ol></details></div>
             <div class="today-focus-card"><span class="today-focus-label">Raids &amp; Max today</span><strong id="today-focus-raids">Checking published rotations…</strong><small id="today-focus-raids-meta">Published schedule only</small><div class="today-focus-raid-actions" id="today-focus-raid-actions" role="group" aria-label="Best attackers for today's published raid rotation" aria-live="polite"><small class="today-focus-raid-note">Loading published counter links…</small></div><details class="today-tonight" id="today-tonight" hidden><summary id="today-tonight-summary">Today&#39;s game plan</summary><ol class="today-tonight-list" id="today-tonight-list" hidden></ol></details></div>
           </div>
-        </section>
-        <section class="today-shiny-panel" id="today-shiny" aria-labelledby="today-shiny-title" aria-busy="true">
-          <div class="today-shiny-head">
-            <div>
-              <span class="day-brief-kicker">LIVE SHINY ACTIVITY</span>
-              <h2 class="sec2" id="today-shiny-title">Shiny boosts &amp; debuts</h2>
-              <p class="today-shiny-summary" id="today-shiny-summary">Boosted odds, new shiny debuts and availability are labelled separately. No unverified rates are shown.</p>
-            </div>
-            <span class="today-shiny-count" id="today-shiny-count" hidden>0</span>
-          </div>
-          <p class="today-shiny-empty" id="today-shiny-empty" role="status" aria-live="polite">Checking current event sources…</p>
-          <div class="today-shiny-rail" id="today-shiny-list" role="list" aria-label="Currently active source-backed shiny activity" hidden></div>
         </section>
       </div>
       <div class="today-layout">
