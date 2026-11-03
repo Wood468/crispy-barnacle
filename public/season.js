@@ -3,6 +3,14 @@
   'use strict';
   var items = [], evs = [], deadlines = [];
   var esc = window.GOLIB.esc;
+  function seasonThumbnailPath(id, image) {
+    var slug = String(id || '').replace(/^season:/i, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+    var value = String(image || '');
+    if (!slug || !value) return '';
+    var hash = 2166136261;
+    for (var n = 0; n < value.length; n++) { hash ^= value.charCodeAt(n); hash = Math.imul(hash, 16777619); }
+    return '/season-thumbs/season-' + slug + '-' + (hash >>> 0).toString(16).padStart(8, '0') + '.webp';
+  }
   function render() {
     var tab = document.getElementById('tab-now'), sec = document.getElementById('foryou-sec');
     if (!tab || !sec) return;
@@ -72,7 +80,10 @@
     var tries = 0;
     (function mk() {
       if (!window.GODASH || !GODASH.mkEvent) { if (tries++ < 40) return setTimeout(mk, 150); return; }
-      evs = items.map(function (i) { return GODASH.mkEvent({ id: i.id, name: i.name, kind: 'event', s: i.s, e: i.e, tags: [], status: 'official_confirmed', source: 'Leek Duck', link: i.url, notes: [], featured: [], img: i.img, season: i });  }).filter(Boolean);
+      evs = items.map(function (i) {
+        var season = Object.assign({}, i, { thumbnail: seasonThumbnailPath(i.id, i.img) });
+        return GODASH.mkEvent({ id: i.id, name: i.name, kind: 'event', s: i.s, e: i.e, tags: [], status: 'official_confirmed', source: 'Leek Duck', link: i.url, notes: [], featured: [], img: i.img, season: season });
+      }).filter(Boolean);
       window.GOSEASON = { events: function () { return evs; }, deadlines: function () { return deadlines; } };
       document.dispatchEvent(new Event('gofn-season-ready'));
       render();

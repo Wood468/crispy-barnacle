@@ -24,6 +24,9 @@ env:   # the secret names are spelled CLOUDFARE_* in GitHub (typo kept on purpos
 
 jobs:
   discover:
+    outputs:
+      deploy_changed: ${{ steps.summarize_public.outputs.deploy_changed }}
+      thumbnail_changed: ${{ steps.approved_publish.outputs.thumbnail_changed }}
     runs-on: ubuntu-latest
     timeout-minutes: 8
     steps:
@@ -32,6 +35,9 @@ jobs:
         with:
           ref: main
           fetch-depth: 1
+      - name: Record the starting main commit
+        id: baseline
+        run: echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
       - name: Restore pictures from R2
         run: bash scripts/r2-sync.sh restore
       - name: Install ImageMagick and OCR tools
@@ -100,20 +106,6 @@ jobs:
             echo "No decisions to apply."
           fi
           echo "thumbnail_changed=$thumbnail_changed" >> "$GITHUB_OUTPUT"
-          echo "commit_sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
-      - name: Dispatch read-only QA-10 production image audit
-        if: steps.approved_publish.outputs.thumbnail_changed == 'true'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          COMMIT_SHA: ${{ steps.approved_publish.outputs.commit_sha }}
-        run: |
-          curl --fail-with-body --silent --show-error \
-            -X POST \
-            -H "Accept: application/vnd.github+json" \
-            -H "Authorization: Bearer $GITHUB_TOKEN" \
-            -H "X-GitHub-Api-Version: 2022-11-28" \
-            "https://api.github.com/repos/$GITHUB_REPOSITORY/dispatches" \
-            -d "{\"event_type\":\"qa10-thumbnail-audit\",\"client_payload\":{\"commit_sha\":\"$COMMIT_SHA\"}}"
       - name: Read the last months of the Discord channel
         env:
           DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
@@ -173,10 +165,26 @@ jobs:
           path: artifacts/g47ix-candidates.json
           if-no-files-found: warn
           retention-days: 30
+      - name: Summarize public changes for deployment
+        id: summarize_public
+        env:
+          BASE_SHA: ${{ steps.baseline.outputs.sha }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch -q origin main
+          changed_files="$(git diff --name-only "$BASE_SHA" origin/main || true)"
+          if grep -q '^public/' <<<"$changed_files"; then
+            echo "deploy_changed=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "deploy_changed=false" >> "$GITHUB_OUTPUT"
+          fi
 
   notify:
     needs: discover
     if: ${{ always() }}
+    outputs:
+      final_commit_sha: ${{ steps.commit_state.outputs.final_commit_sha }}
     runs-on: ubuntu-latest
     timeout-minutes: 6
     concurrency:
@@ -208,14 +216,6 @@ jobs:
         run: |
           set -euo pipefail
           node scripts/nudge.mjs
-          git add -- data/nudge-state.json 2>/dev/null || true
-          if ! git diff --cached --quiet; then
-            git config user.name "github-actions[bot]"
-            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git commit -m "Nudge: remember infographics already announced [skip ci]"
-            git pull -q --rebase origin main
-            git push origin HEAD:main
-          fi
       - name: Send the weekly picture to Telegram
         continue-on-error: true
         env:
@@ -229,13 +229,46 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          git pull -q --rebase origin main
           node scripts/weekly-pic.mjs
+      - name: Commit notification state after all public updates
+        id: commit_state
+        shell: bash
+        env:
+          DEPLOY_CHANGED: ${{ needs.discover.outputs.deploy_changed }}
+        run: |
+          set -euo pipefail
+          git pull -q --rebase --autostash origin main
+          git add -- data/nudge-state.json 2>/dev/null || true
           git add -- data/weekly-pic-state.json 2>/dev/null || true
           if ! git diff --cached --quiet; then
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git commit -m "Weekly picture: remember what was sent [skip ci]"
-            git pull -q --rebase origin main
+            if [[ "$DEPLOY_CHANGED" == "true" ]]; then
+              git commit -m "Record notification state after public update"
+            else
+              git commit -m "Record G47IX notification state [skip ci]"
+            fi
             git push origin HEAD:main
           fi
+          final_sha="$(git ls-remote origin refs/heads/main | awk '{print $1}')"
+          echo "final_commit_sha=$final_sha" >> "$GITHUB_OUTPUT"
+
+  audit:
+    needs: [discover, notify]
+    if: ${{ needs.discover.outputs.thumbnail_changed == 'true' && needs.notify.outputs.final_commit_sha != '' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dispatch read-only QA-10 production image audit for final main commit
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          COMMIT_SHA: ${{ needs.notify.outputs.final_commit_sha }}
+        run: |
+          set -euo pipefail
+          payload="$(node -e 'process.stdout.write(JSON.stringify({ event_type: "qa10-thumbnail-audit", client_payload: { commit_sha: process.env.COMMIT_SHA } }))')"
+          curl --fail-with-body --silent --show-error \
+            -X POST \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer $GITHUB_TOKEN" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            -d "$payload" \
+            "https://api.github.com/repos/$GITHUB_REPOSITORY/dispatches"

@@ -34,6 +34,52 @@
   }
   function fmtDay(iso) { var d = new Date(iso + 'T12:00'); return isNaN(d) ? esc(iso) : d.getDate() + ' ' + G.MON[d.getMonth()]; }
   function safe(u) { return typeof u === 'string' && !(window.GOLIB && window.GOLIB.isPrivateLink(u)) && (/^https:\/\//.test(u) || /^\/img\/ext\/[\w.-]+$/.test(u)) ? u : ''; }
+  function safeSeasonThumb(u) {
+    return typeof u === 'string' && /^\/season-thumbs\/season-[a-z0-9-]+-[a-f0-9]{8}\.webp$/i.test(u) ? u : '';
+  }
+  function seasonBannerHtml() {
+    /* Keep the HTML template constant; poster URLs and labels are assigned through DOM properties below. */
+    return '<div data-season-banner></div>';
+  }
+  function loadSeasonBanner(o, ev) {
+    var slot = o.querySelector('[data-season-banner]');
+    if (!slot) return;
+    var original = safe(ev && ev.img);
+    if (!original) { slot.remove(); return; }
+    var thumb = safeSeasonThumb(ev && ev.season && ev.season.thumbnail);
+    var img = document.createElement('img');
+    img.className = ev && ev.season ? 'evd-banner evd-banner-season' : 'evd-banner';
+    img.alt = '';
+    img.referrerPolicy = 'no-referrer';
+    img.decoding = 'async';
+
+    if (thumb) {
+      var link = document.createElement('a'), triedOriginal = false;
+      link.className = 'evd-banner-link';
+      link.href = original;
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
+      link.setAttribute('aria-label', 'Open full-size poster for ' + String(ev && ev.name || 'event'));
+      link.title = 'Open full-size poster';
+      img.addEventListener('error', function () {
+        if (!triedOriginal) {
+          triedOriginal = true;
+          img.src = original;
+          return;
+        }
+        link.remove();
+      });
+      link.appendChild(img);
+      slot.replaceWith(link);
+      img.src = thumb;
+      return;
+    }
+
+    img.setAttribute('data-err', 'rm');
+    img.addEventListener('error', function () { img.remove(); }, { once: true });
+    slot.replaceWith(img);
+    img.src = original;
+  }
   function safeGpx(u) { return typeof u === 'string' && (/^https:\/\//.test(u) || /^\/(?:gpx|routes|places)\/[\w./-]+\.gpx(?:\?[^#]*)?$/i.test(u)) ? u : ''; }
   function trust(t) {
     var official = t === 'official', community = t === 'community';
@@ -303,7 +349,7 @@
       + '<button type="button" class="pill" data-evlink="' + esc(ev.id) + '" aria-label="Share a link to this event">🔗 Link</button>'
       + '<button type="button" class="star' + (saved ? ' on' : '') + '" data-save="' + esc(ev.id) + '" aria-pressed="' + saved + '" aria-label="Save ' + esc(ev.name) + '" title="Saved events send you a Telegram reminder">' + (saved ? '★' : '☆') + '</button></div>';
     h += '<label class="evd-lead"' + (saved ? '' : ' hidden') + '>🔔 Remind me <select data-lead="' + esc(ev.id) + '" aria-label="When to remind me">' + [['', 'Morning of the event'], ['1440', '1 day before'], ['180', '3 hours before'], ['60', '1 hour before'], ['off', 'Don\'t remind me']].map(function (o) { return '<option value="' + o[0] + '"' + (String(X.usGet('pref:lead:' + ev.id) || '') === o[0] ? ' selected' : '') + '>' + o[1] + '</option>'; }).join('') + '</select></label>';
-    if (ev.img) h += '<img class="evd-banner" src="' + esc(ev.img) + '" alt="" referrerpolicy="no-referrer" data-err="rm">';
+    if (ev.img) h += seasonBannerHtml(ev);
     h += '<header class="evd-hero" style="--k:' + k[1] + ';--kf:' + k[2] + '"><div class="evd-art">' + X.featArts(ev, 3) + '</div><span class="kind">' + esc(k[0]) + '</span><h2 id="evd-t">' + esc(ev.name) + '</h2>'
       + '<p class="evc-when">' + esc(X.timeMeta(ev)) + '</p><p class="cdn evd-cd">' + esc(X.countdown(ev)) + '</p>' + X.signalChips(ev, 8, true) + X.cpRows(ev) + '<div class="evd-chips">' + X.statusChip(ev) + '</div></header>';
     h += '<nav class="evd-jump" aria-label="Jump to event details">' + (hasHighlights ? '<a href="#evd-highlights">Highlights</a>' : '') + '<a href="#evd-information">Details</a>' + (venues.length ? '<a href="#evd-locations">Locations</a>' : '') + '<a href="#evd-sources">Sources</a></nav>';
@@ -483,6 +529,7 @@
       if (!o) { o = document.createElement('div'); o.id = 'evd'; o.className = 'evd'; o.setAttribute('role', 'dialog'); o.setAttribute('aria-modal', 'true'); o.setAttribute('aria-labelledby', 'evd-t'); document.body.appendChild(o); }
       var ev2 = completeEvent(ev);
       o.innerHTML = '<div class="evd-in">' + render(ev2) + '</div>';
+      loadSeasonBanner(o, ev2);
       addBanner(o, ev2);
       addBonusTime(o, ev2);
       o.hidden = false; document.body.style.overflow = 'hidden'; o.scrollTop = 0;

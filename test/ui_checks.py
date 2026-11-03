@@ -40,6 +40,19 @@ SW_JS = (ROOT / 'public' / 'sw.js').read_text()
 APP_JS = (ROOT / 'public' / 'app.js').read_text()
 SEASON_JS = (ROOT / 'public' / 'season.js').read_text()
 SEASON_DATA = json.loads((ROOT / 'public' / 'season.json').read_text())
+def asset_ref(source, pattern):
+    match = re.search(pattern, source)
+    return match.group(1) if match else '__missing_asset_reference__'
+
+APP_URL = asset_ref(INDEX_HTML, r'<script src="(/app\.js\?v=[^"]+)"')
+DASH_URL = asset_ref(APP_JS, r"ds\.src='(/dash\.js\?v=[^']+)'")
+STYLES_URL = asset_ref(INDEX_HTML, r'href="(/styles\.css\?v=[^"]+)"')
+DASH_CSS_URL = asset_ref(INDEX_HTML, r'href="(/dash\.css\?v=[^"]+)"')
+ACCOUNT_URL = asset_ref(INDEX_HTML, r'<script src="(/account\.js\?v=[^"]+)"')
+DETAIL_URL = asset_ref(DASH_JS, r"y\.src = '(/detail\.js\?v=[^']+)'")
+REVIEW_URL = asset_ref(DASH_JS, r"rv\.src = '(/review\.js\?v=[^']+)'")
+SEASON_URL = asset_ref(INDEX_HTML, r'<script src="(/season\.js\?v=[^"]+)"')
+SHELL_CACHE = asset_ref(SW_JS, r"const SHELL_CACHE = '(gofn-shell-v\d+)'")
 EVENT_MOVES = json.loads((ROOT / 'public' / 'event-moves.json').read_text())
 PIN_JS = (ROOT / 'public' / 'pin.js').read_text()
 ACCOUNT_JS = (ROOT / 'public' / 'account.js').read_text()
@@ -256,7 +269,7 @@ check('Today game plan is an optional accessible local-time disclosure with weak
       all(token in INDEX_HTML for token in ['id="today-tonight"', 'id="today-tonight-summary"', 'id="today-tonight-list"', 'Today&#39;s game plan']) and "Today's game plan · " in DASH_JS and
       all(token in DASH_JS for token in ['D.spotlight', 'D.raidHour', 'D.maxBattles', '6–7 pm local', '6 am–9 pm local', 'Weak to:', 'data-best-types', 'gofn-dex-ready', 'function renderTonight', 'renderTonight(t, dateKey)', 'today-tonight-state', 'Live now · ends in ', 'Starts in ', 'upcomingCount']) and
       all(token in DASH_CSS for token in ['.today-tonight', '.today-tonight-list', 'min-height:44px', '.today-tonight-best']) and
-      'gofn-dex-ready' in APP_JS and '/app.js?v=20261103i' in INDEX_HTML and '/app.js?v=20261103i' in SW_JS)
+      'gofn-dex-ready' in APP_JS and APP_URL in INDEX_HTML and APP_URL in SW_JS)
 check('Dex/type readiness refreshes Today raid handoffs and the Tonight disclosure without touching event-detail focus targets',
       "document.addEventListener('gotypes', function () { try { todayTypesReady = true; todayTypesFailed = false; renderRot(); var t = now(); renderTodayRaidPrep(todayRotationFor(t)); renderTonight(t, dayKey(t)); } catch (e) {} });" in DASH_JS and
       "document.addEventListener('gofn-dex-ready', function () { try { renderRot(); var t = now(); renderTodayRaidPrep(todayRotationFor(t)); renderTonight(t, dayKey(t)); } catch (e) {} });" in DASH_JS)
@@ -266,9 +279,9 @@ check('Today multi-deadline tray is accessible, bounded and source-safe',
       all(token in INDEX_HTML for token in ['id="today-deadlines"', 'id="today-deadlines-summary"', 'id="today-deadlines-list"']) and
       all(token in DASH_JS for token in ['var trayLimit = t.getTime() + 7 * 24 * 60 * 60 * 1000', "safeUrl(d.url || '')", 'trayCandidates.slice(0, 8)', 'View all ', 'noopener noreferrer', "sourceUrl.indexOf('https://') === 0"]) and
       all(token in DASH_CSS for token in ['.today-deadlines>summary', 'min-height:44px', '.today-deadline-item', 'var(--color-link)']) and
-      '/dash.js?v=20261104a' in APP_JS and '/dash.js?v=20261104a' in SW_JS and
-      '/dash.css?v=20261103d' in INDEX_HTML and '/dash.css?v=20261103d' in SW_JS and
-      'gofn-shell-v232' in SW_JS)
+      DASH_URL in APP_JS and DASH_URL in SW_JS and
+      DASH_CSS_URL in INDEX_HTML and DASH_CSS_URL in SW_JS and
+      SHELL_CACHE in SW_JS)
 check('season pass and deadline data is structured, source-attributed and ordered',
       all(item_id in {item.get('id') for item in SEASON_DATA.get('items', [])}
           for item_id in ['season:pass-halloween', 'season:pass-november']) and
@@ -301,10 +314,10 @@ check('base bonus and information availability controls use semantic status role
           'background: var(--color-status-info-unavailable); color: var(--color-on-status-info-unavailable); border: 1px solid var(--color-border-info-unavailable);',
       ]))
 check('versioned stylesheets are referenced by the page and precached offline',
-      all(url in INDEX_HTML and url in SW_JS for url in ['/styles.css?v=20261102b', '/dash.css?v=20261103d']))
+      all(url in INDEX_HTML and url in SW_JS for url in [STYLES_URL, DASH_CSS_URL]))
 check('owner verification scripts are versioned and precached offline',
-      '/account.js?v=20261102a' in INDEX_HTML and '/account.js?v=20261102a' in SW_JS and
-      '/review.js?v=20261102e' in DASH_JS and '/review.js?v=20261102e' in SW_JS)
+      ACCOUNT_URL in INDEX_HTML and ACCOUNT_URL in SW_JS and
+      REVIEW_URL in DASH_JS and REVIEW_URL in SW_JS)
 check('source freshness indicators use semantic roles with unchanged colours',
       all(token in DASH_CSS for token in [
           '--color-source-fresh:#6BD18A; --color-source-stale:#E8B84A; --color-source-failed:#FF9B8F;',
@@ -329,16 +342,16 @@ check('event signal chips and detail tags use semantic palette roles with unchan
           '.tg-incense{--tc:var(--color-signal-shadow)}.tg-costume{--tc:var(--color-signal-encounter)}',
       ]))
 check('offline shell cache version advances with the dashboard stylesheet token release',
-      "gofn-shell-v232" in SW_JS)
+      SHELL_CACHE in SW_JS)
 check('Travel mode searches only source-dated physical destinations and preserves Today visibility',
       all(token in INDEX_HTML for token in ['id="sub-travel"', 'id="travel-q"', 'id="travel-destinations"', 'id="travel-regions"', 'id="travel-results"']) and
       "['travel','Travel','sub-travel']" in APP_JS and
       all(token in DASH_JS for token in ['function renderTravel()', 'TRAVEL_REGIONS', 'data-travel-region', "LIB.isInPersonWorldEvent(x)", 'function inGameRegional(list)', "subHead('In-game (regional)'", "!/^dated:/.test(String(x.id || ''))", "indexOf('https://') === 0", 'sourceStart', 'sourceEnd', 'travelDateText', 'REG.filter(function (x)', 'var hide = it.travel ?', 'focusedRegion', 'focusTarget.focus()']) and
       all(token in DASH_CSS for token in ['#sub-travel .travel-search', '#travel-regions .fchip{min-height:44px}', '#travel-results .agw .ag-actions .agx{width:44px;height:44px;min-width:44px;min-height:44px}']) and
-      '/app.js?v=20261103i' in INDEX_HTML and '/app.js?v=20261103i' in SW_JS and
-      '/dash.js?v=20261104a' in APP_JS and '/dash.js?v=20261104a' in SW_JS and
-      '/dash.css?v=20261103d' in INDEX_HTML and '/dash.css?v=20261103d' in SW_JS and
-      'gofn-shell-v232' in SW_JS)
+      APP_URL in INDEX_HTML and APP_URL in SW_JS and
+      DASH_URL in APP_JS and DASH_URL in SW_JS and
+      DASH_CSS_URL in INDEX_HTML and DASH_CSS_URL in SW_JS and
+      SHELL_CACHE in SW_JS)
 check('raid rotation cards use source-published local windows and Leek Duck attribution',
       'function raidSourceLink(r)' in DASH_JS and 'fmtT(new Date(second.s))' in DASH_JS and
       'Next raid rotation' in DASH_JS and 'sourceUrl' in DASH_JS and
@@ -354,9 +367,9 @@ check('raid share payload uses sourced weaknesses, local top-ten marks and safe 
 check('event detail focus restoration can find a re-rendered opener by event key and card role',
       all(token in DETAIL_JS for token in ['openerKey', 'openerClass', "getAttribute('data-open')", 'target.focus()']))
 check('versioned dashboard scripts are referenced by the entry page and precached offline',
-      '/app.js?v=20261103i' in INDEX_HTML and '/app.js?v=20261103i' in SW_JS and
-      '/dash.js?v=20261104a' in APP_JS and '/dash.js?v=20261104a' in SW_JS and
-      '/detail.js?v=20261102f' in DASH_JS and '/detail.js?v=20261102f' in SW_JS)
+      APP_URL in INDEX_HTML and APP_URL in SW_JS and
+      DASH_URL in APP_JS and DASH_URL in SW_JS and
+      DETAIL_URL in DASH_JS and DETAIL_URL in SW_JS)
 check('sync PIN and account controls have one home in Menu and are precached offline',
       INDEX_HTML.index('id="acct" class="acct"') > INDEX_HTML.index('id="sub-menu"') and
       'id="pinform"' not in INDEX_HTML and
@@ -370,7 +383,7 @@ check('owner-only account and moderation UI requires server-verified PIN access'
       '[data-role="guest"] #hireview' in BASE_CSS and
       '[data-role="guest"] .igbanner' in BASE_CSS)
 check('versioned season banner script is referenced by the page and precached offline',
-      '/season.js?v=20261102e' in INDEX_HTML and '/season.js?v=20261102e' in SW_JS)
+      SEASON_URL in INDEX_HTML and SEASON_URL in SW_JS)
 check('secondary dashboard views render only while their panels are active',
       all(token in DASH_JS for token in [
           'function panelIsVisible(id)',
@@ -431,9 +444,10 @@ with sync_playwright() as p:
         # Bound default Playwright waits so a lazy asset or missing control cannot stall a whole shard.
         ctx.set_default_timeout(10000)
         ctx.set_default_navigation_timeout(15000)
-        pg=ctx.new_page(); pg.errs=[]; pg.season_poster_requests=[]; pg.infographic_requests=[]
+        pg=ctx.new_page(); pg.errs=[]; pg.season_poster_requests=[]; pg.season_thumb_requests=[]; pg.infographic_requests=[]
         pg.on('pageerror',lambda e:pg.errs.append(str(e)))
         pg.on('request',lambda r:pg.season_poster_requests.append(r.url) if any(slug in r.url for slug in ('season-24-twilight-trails','go-pass-october-2026','halloween-2026-part-2','go-pass-november-2026')) else None)
+        pg.on('request',lambda r:pg.season_thumb_requests.append(r.url) if '/season-thumbs/' in r.url else None)
         pg.on('request',lambda r:pg.infographic_requests.append(r.url) if '/img/ext/' in r.url or '/infographics/' in r.url or '/infographic-thumbs/' in r.url else None)
         if guard is not None:  # console guard: collect everything noisy so the caller can filter it against an explicit allow-list
             pg.on('console',lambda m:guard.append(('console.'+m.type,m.text,m.location.get('url',''))) if m.type in ('error',) else None)
@@ -444,7 +458,7 @@ with sync_playwright() as p:
         pg.route(re.compile(r'^https://fonts\.(googleapis|gstatic)\.com/'),lambda r:r.fulfill(status=200,body='',content_type='text/css' if 'googleapis' in r.request.url else 'font/woff2'))
         pg.route('**/api/sources',ful(sources or '{"environment":"production","database":true,"enabled":false,"sources":[]}'))
         pg.route('**/api/events',ful(api or '{"enabled":false,"events":[]}'))
-        pg.route(re.compile(r'/(img/ext|infographics|infographic-thumbs)/'),lambda r:r.fulfill(body=PNG1,content_type='image/png'))  # R2 pictures are not in the static folder
+        pg.route(re.compile(r'/(img/ext|infographics|infographic-thumbs|season-thumbs)/'),lambda r:r.fulfill(body=PNG1,content_type='image/png'))  # R2 pictures are not in the static folder
         pg.route('**/api/userstate*',lambda r:r.fulfill(status=404,body='{}',content_type='application/json'))
         pg.route('**/api/dex',lambda r:r.fulfill(status=401,body='{}',content_type='application/json'))
         pg.route('**/api/art*',lambda r:r.fulfill(status=404,body=''))
@@ -1501,9 +1515,36 @@ with sync_playwright() as p:
         pg.locator('#evd').wait_for(state='visible', timeout=5000)
         pg.locator('#evd .evd-banner').wait_for(state='visible', timeout=5000)
         poster_loaded = pg.wait_for_function("() => { const img = document.querySelector('#evd .evd-banner'); return !!img && img.complete && img.naturalWidth > 0; }", timeout=5000)
-        check('opening a season card loads its full poster only in event details',
-              poster_loaded and any('season-24-twilight-trails' in url or 'go-pass-october-2026' in url for url in pg.season_poster_requests))
+        season_banner = pg.locator('#evd .evd-banner')
+        season_banner_link = pg.locator('#evd .evd-banner-link')
+        season_thumb_src = season_banner.get_attribute('src') or ''
+        season_original = '/img/ext/season-24-twilight-trails-99c978ed.jpg'
+        check('opening a season card loads a compact WebP poster only in event details',
+              poster_loaded and '/season-thumbs/season-24-' in season_thumb_src and
+              any('/season-thumbs/season-24-' in url for url in pg.season_thumb_requests) and
+              not pg.season_poster_requests,
+              {'src': season_thumb_src, 'thumbs': pg.season_thumb_requests, 'originals': pg.season_poster_requests})
+        check('season detail keeps an accessible link to the full-resolution original',
+              season_banner_link.get_attribute('href') == season_original and
+              season_banner_link.get_attribute('target') == '_blank' and
+              season_banner_link.get_attribute('aria-label') == 'Open full-size poster for Twilight Trails')
         pg.locator('#evd-x').click()
+
+        fallback_page = page(clock='2026-10-09T22:45:00+11:00')
+        fallback_page.route('**/season-thumbs/**', lambda route: route.fulfill(status=404, body='missing'))
+        fallback_page.locator('#seasonbar .ssn-card').first.wait_for(state='visible', timeout=5000)
+        fallback_page.locator('#seasonbar .ssn-card').first.click()
+        fallback_page.locator('#evd').wait_for(state='visible', timeout=5000)
+        fallback_page.wait_for_function("""() => {
+            const img = document.querySelector('#evd .evd-banner');
+            return !!img && img.complete && img.naturalWidth > 0 &&
+                img.getAttribute('src').includes('season-24-twilight-trails-99c978ed.jpg');
+        }""", timeout=5000)
+        check('missing season WebP safely falls back to the full-resolution original',
+              any('season-24-twilight-trails' in url for url in fallback_page.season_poster_requests) and
+              fallback_page.locator('#evd .evd-banner-link').get_attribute('href') == season_original)
+        fallback_page.locator('#evd-x').click()
+        fallback_page.context.close()
         check('no marks: no "You need" reasons anywhere', pg.locator('text=/You need/').count()==0)
         check('no console/page errors on load', pg.errs==[], pg.errs)
         pg.locator('[data-infographic="cur:trek"].info-available').wait_for(state="attached")

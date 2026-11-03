@@ -167,7 +167,8 @@ test('thumbnail generation reads R2-restored originals but never adds the thumbn
   const stepIds = [...workflow.matchAll(/^\s+id:\s*([A-Za-z0-9_-]+)\s*$/gm)].map(match => match[1]);
   assert.equal(new Set(stepIds).size, stepIds.length, 'G47IX workflow step IDs must be unique');
   assert.ok(workflow.includes('steps.approved_publish.outputs.thumbnail_changed'));
-  assert.ok(workflow.includes('steps.approved_publish.outputs.commit_sha'));
+  assert.ok(workflow.includes('steps.summarize_public.outputs.deploy_changed'));
+  assert.ok(workflow.includes('needs.notify.outputs.final_commit_sha'));
   assert.ok(auditWorkflow.includes('repository_dispatch:'));
   assert.ok(auditWorkflow.includes('scripts/wait-for-workers-build.mjs'));
   assert.ok(auditWorkflow.includes('test/production_image_audit.py'));
