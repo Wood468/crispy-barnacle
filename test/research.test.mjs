@@ -40,7 +40,7 @@ test("structured research merges exact tasks while retaining official/community 
     { source: { id: "hub", trust: "community" }, fields }
   ]);
   assert.equal(merged.researchTasks.length, 2);
-  assert.deepEqual(merged.researchTasks[0].sources, ["leekduck", "hub"]);
+  assert.deepEqual([...merged.researchTasks[0].sources].sort(), ["hub", "leekduck"]);
   assert.equal(merged.researchTasks[0].status, "corroborated");
 });
 
@@ -77,5 +77,7 @@ test("event and pass source associations are explicit and the central Research v
   assert.match(dash, /detailIds: x\.detailIds \|\| \[\]/);
   assert.match(research, /researchTasks/);
   assert.match(research, /eventWindow/);
+  assert.match(research, /CURRENT DATE/);
+  assert.match(research, /GODASH\.monArt/);
   assert.match(sw, /research\.js\?v=/);
 });
