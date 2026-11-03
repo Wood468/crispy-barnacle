@@ -172,7 +172,7 @@ export function regionalSeedEntries(seed) {
     const url = String(sourceObject?.url || event?.url || fallbackUrl).trim();
     return {
       name: event.name, place: event.place, area: event.area, scope: event.scope || "regional",
-      start: event.start, end: event.end, datesKnown: true, url, source
+      start: event.start, end: event.end, datesKnown: true, url, source, worldId: event.worldId || ""
     };
   });
 }
@@ -205,6 +205,7 @@ export function mergeWorld(entries, sources) {
   const out = [];
   for (const e of entries) {
     const src = worldSourceRecord(e, sources);
+    const stableId = typeof e.worldId === "string" && /^w-[a-z0-9-]+$/.test(e.worldId) ? e.worldId : "";
     const hit = out.find(o => {
       if (!similar(o.name, e.name)) return false;
       if (o.name !== e.name && o.sources.some(x => x.url === src.url)) return false;
@@ -217,6 +218,7 @@ export function mergeWorld(entries, sources) {
       return true;
     });
     if (hit) {
+      if (stableId && !out.some(o => o !== hit && o.id === stableId)) hit.id = stableId;
       if (!hit.sources.some(s => s.url === src.url)) hit.sources.push(src);
       if (!hit.start && e.start) { hit.start = e.start; hit.end = e.end; hit.datesKnown = true; }
       const identity = dd.same(hit, e);
@@ -229,7 +231,7 @@ export function mergeWorld(entries, sources) {
       } else if (!hit.place && e.place) { hit.place = e.place; hit.area = e.area; }
       continue;
     }
-    const slug = "w-" + e.name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 50);
+    const slug = stableId || ("w-" + e.name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 50));
     let id = slug; for (let n = 2; out.some(o => o.id === id); n++) id = slug + "-" + (e.start || n);
     out.push({ id, name: e.name, place: e.place, area: e.area, scope: e.scope, start: e.start, end: e.end, datesKnown: e.datesKnown, sources: [src] });
   }
