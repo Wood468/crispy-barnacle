@@ -798,8 +798,8 @@
   },
   {
    "id": "w-pok-mon-run-30-malaysia",
-   "name": "Pokémon RUN 30: Malaysia",
-   "place": "Malaysia",
+   "name": "Pokémon RUN 30: Kuala Lumpur",
+   "place": "Kuala Lumpur, Malaysia (KLCC Plaza Petronas)",
    "area": "Asia",
    "scope": "regional",
    "start": "2026-11-21",
@@ -1104,4 +1104,4 @@
    "seen": "2026-11-02"
   }
  ]
-}
+}\n
