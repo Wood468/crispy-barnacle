@@ -2,8 +2,8 @@ name: Event details importer
 
 on:
   schedule:
-    # Every hour (about a minute per run). GitHub schedules use UTC and can be delayed.
-    - cron: "20 * * * *"
+    # Hourly at :52 UTC. Shifted from :20 after repeated missing scheduled runs; GitHub may still delay starts.
+    - cron: "52 * * * *"
   workflow_dispatch:
 
 permissions:
