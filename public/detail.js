@@ -48,7 +48,7 @@
     if (!original) { slot.remove(); return; }
     var thumb = safeSeasonThumb(ev && ev.season && ev.season.thumbnail);
     var img = document.createElement('img');
-    img.className = 'evd-banner';
+    img.className = ev && ev.season ? 'evd-banner evd-banner-season' : 'evd-banner';
     img.alt = '';
     img.referrerPolicy = 'no-referrer';
     img.decoding = 'async';
