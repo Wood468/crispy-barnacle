@@ -1309,8 +1309,9 @@
       function addTonight(kind, name, time, detail, boss, startHour, endHour) {
         var start = new Date(dateKey + 'T' + (startHour < 10 ? '0' : '') + startHour + ':00');
         var end = new Date(dateKey + 'T' + (endHour < 10 ? '0' : '') + endHour + ':00');
-        if (!name || !Number.isFinite(end.getTime()) || t.getTime() >= end.getTime()) return;
-        tonightItems.push({ kind: kind, name: name, time: time, detail: detail || '', boss: boss || '', start: start });
+        if (!name || !Number.isFinite(start.getTime()) || !Number.isFinite(end.getTime()) ||
+            end.getTime() <= start.getTime() || t.getTime() >= end.getTime()) return;
+        tonightItems.push({ kind: kind, name: name, time: time, detail: detail || '', boss: boss || '', start: start, end: end });
       }
       (D.spotlight || []).forEach(function (x) {
         if (x && x.d === dateKey) addTonight('Spotlight Hour', x.n, '6–7 pm local', x.b || '', '', 18, 19);
@@ -1328,8 +1329,19 @@
       }
       tonight.hidden = !tonightItems.length;
       if (tonightItems.length) {
-        tonightSummary.textContent = "Today's game plan · " + tonightItems.length + (tonightItems.length === 1 ? ' activity' : ' activities');
+        var liveCount = 0, upcomingCount = 0;
+        tonightItems.forEach(function (item) {
+          if (t >= item.start && t < item.end) liveCount++;
+          else if (t < item.start) upcomingCount++;
+        });
+        var summaryParts = [];
+        if (liveCount) summaryParts.push(liveCount + ' live');
+        if (upcomingCount) summaryParts.push(upcomingCount + ' upcoming');
+        tonightSummary.textContent = "Today's game plan · " + summaryParts.join(' · ');
         tonightList.innerHTML = tonightItems.map(function (item) {
+          var live = t >= item.start && t < item.end;
+          var until = live ? item.end.getTime() - t.getTime() : item.start.getTime() - t.getTime();
+          var status = live ? 'Live now · ends in ' + dur(until) : (until <= 60000 ? 'Starting now' : 'Starts in ' + dur(until));
           var facts = item.boss && window.GOTYPES && GOTYPES.facts(item.boss);
           var weak = facts && Array.isArray(facts.weak) ? facts.weak.filter(function (type, i, all) { return typeof type === 'string' && all.indexOf(type) === i; }) : [];
           var weakness = weak.length ? '<small>Weak to: ' + esc(weak.join(', ')) + '</small>' : '';
@@ -1341,6 +1353,7 @@
             ? '<button type="button" class="today-tonight-best" data-best-types="' + esc(weak.join('|')) + '" aria-label="Best attackers for ' + esc(item.boss) + ' (weak to ' + esc(weak.join(', ')) + ')">Best attackers</button>'
             : '';
           return '<li class="today-tonight-item"><div class="today-tonight-head"><b>' + esc(item.kind) + '</b><span>' + esc(item.time) + '</span></div><strong>' + esc(item.name) + '</strong>' +
+            '<small class="today-tonight-state">' + esc(status) + '</small>' +
             (item.detail ? '<small>' + esc(item.detail) + '</small>' : '') + weakness + ownedLine + best + '</li>';
         }).join('');
         tonightList.hidden = !tonight.open;
@@ -1351,7 +1364,6 @@
       }
     }
   }
-
   function todayRotationFor(t) {
     var endDay = addDays(startOfDay(t), 1);
     var candidates = (D.rotation || []).map(function (r) {
