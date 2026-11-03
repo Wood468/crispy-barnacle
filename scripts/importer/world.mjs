@@ -172,7 +172,7 @@ export function regionalSeedEntries(seed) {
     const url = String(sourceObject?.url || event?.url || fallbackUrl).trim();
     return {
       name: event.name, place: event.place, area: event.area, scope: event.scope || "regional",
-      start: event.start, end: event.end, datesKnown: true, url, source
+      start: event.start, end: event.end, datesKnown: true, url, source, worldId: event.worldId || ""
     };
   });
 }
@@ -205,6 +205,7 @@ export function mergeWorld(entries, sources) {
   const out = [];
   for (const e of entries) {
     const src = worldSourceRecord(e, sources);
+    const stableId = typeof e.worldId === "string" && /^w-[a-z0-9-]+$/.test(e.worldId) ? e.worldId : "";
     const hit = out.find(o => {
       if (!similar(o.name, e.name)) return false;
       if (o.name !== e.name && o.sources.some(x => x.url === src.url)) return false;
@@ -217,6 +218,7 @@ export function mergeWorld(entries, sources) {
       return true;
     });
     if (hit) {
+      if (stableId && !out.some(o => o !== hit && o.id === stableId)) hit.id = stableId;
       if (!hit.sources.some(s => s.url === src.url)) hit.sources.push(src);
       if (!hit.start && e.start) { hit.start = e.start; hit.end = e.end; hit.datesKnown = true; }
       const identity = dd.same(hit, e);
@@ -229,7 +231,7 @@ export function mergeWorld(entries, sources) {
       } else if (!hit.place && e.place) { hit.place = e.place; hit.area = e.area; }
       continue;
     }
-    const slug = "w-" + e.name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 50);
+    const slug = stableId || ("w-" + e.name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 50));
     let id = slug; for (let n = 2; out.some(o => o.id === id); n++) id = slug + "-" + (e.start || n);
     out.push({ id, name: e.name, place: e.place, area: e.area, scope: e.scope, start: e.start, end: e.end, datesKnown: e.datesKnown, sources: [src] });
   }
@@ -238,11 +240,23 @@ export function mergeWorld(entries, sources) {
 
 // Two entries built from the same write-up in one run are that announcement's separate stops (venues, cities), never one event:
 // returns their id pairs as "different" rulings so the duplicate check cannot join "Mall Exploration: SM Davao" with "...: SM Marikina".
+// A country/region label contained in a city/venue label is a less-specific view of the same stop,
+// not a second destination from the same announcement. Keep separate cities and venues as separate stops.
+function isMoreSpecificPlace(candidate, current) {
+  const specific = String(candidate || "").trim().toLowerCase().replace(/\s+/g, " ");
+  const broad = String(current || "").trim().toLowerCase().replace(/\s+/g, " ");
+  return !!specific && !!broad && specific !== broad && specific.includes(broad);
+}
+
 export function sameWriteupRulings(world) {
   const out = [];
   for (let i = 0; i < world.length; i++) for (let j = i + 1; j < world.length; j++) {
     const a = world[i], b = world[j];
-    if ((a.sources || []).some(x => (b.sources || []).some(y => normUrl(x.url) === normUrl(y.url)))) out.push([a.id, b.id]);
+    const sameWriteup = (a.sources || []).some(x => (b.sources || []).some(y => normUrl(x.url) === normUrl(y.url)));
+    if (!sameWriteup) continue;
+    const identity = dd.same(a, b);
+    const nestedPlaceAlias = identity.verdict === "same" && (isMoreSpecificPlace(a.place, b.place) || isMoreSpecificPlace(b.place, a.place));
+    if (!nestedPlaceAlias) out.push([a.id, b.id]);
   }
   return out;
 }
@@ -307,7 +321,12 @@ export function collapseWorld(world, rules = null) {
     for (const { event: d, why } of g.dupes) {
       const k = g.keep;
       for (const s of d.sources || []) if (!(k.sources || []).some(x => x.url === s.url)) (k.sources = k.sources || []).push(s);
-      if (!k.place && d.place) { k.place = d.place; k.area = d.area || k.area; }
+      if (isMoreSpecificPlace(d.place, k.place) && placeDetailScore(d.place) > placeDetailScore(k.place)) {
+        k.place = d.place;
+        k.area = d.area || k.area;
+        const city = String(d.place).split(/[,(]/)[0].trim().toLowerCase();
+        if (city && String(d.name || "").toLowerCase().includes(city) && !String(k.name || "").toLowerCase().includes(city)) k.name = d.name;
+      } else if (!k.place && d.place) { k.place = d.place; k.area = d.area || k.area; }
       const span = e => (Date.parse(e.end || e.start) - Date.parse(e.start)) / 864e5;
       if (span(k) > 3 * 365 && span(d) <= 3 * 365) k.end = d.end; // a typo year (2076) on one copy
       if (k.scope === "global" && d.scope === "regional" && d.place) { /* keep the keeper's scope */ }
