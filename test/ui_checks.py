@@ -42,7 +42,7 @@ SEASON_JS = (ROOT / 'public' / 'season.js').read_text()
 SEASON_DATA = json.loads((ROOT / 'public' / 'season.json').read_text())
 def asset_ref(source, pattern):
     match = re.search(pattern, source)
-    return match.group(1) if match else ''
+    return match.group(1) if match else '__missing_asset_reference__'
 
 APP_URL = asset_ref(INDEX_HTML, r'<script src="(/app\.js\?v=[^"]+)"')
 DASH_URL = asset_ref(APP_JS, r"ds\.src='(/dash\.js\?v=[^']+)'")
