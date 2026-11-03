@@ -52,6 +52,8 @@ def image_kind(url: str) -> str:
     path = urlsplit(url).path.lower()
     if path.startswith("/infographic-thumbs/"):
         return "infographic-thumbnail"
+    if path.startswith("/season-thumbs/"):
+        return "season-thumbnail"
     return "infographic-poster" if path.startswith(("/infographics/", "/img/ext/")) else "other-image"
 
 def payload_bytes(headers: dict, body: bytes) -> int:
@@ -68,7 +70,8 @@ def resource_label(url: str) -> str:
 
 def summarize(records: list[dict]) -> dict:
     posters = [item for item in records if item["kind"] == "infographic-poster"]
-    thumbnails = [item for item in records if item["kind"] == "infographic-thumbnail"]
+    thumbnails = [item for item in records if item["kind"] in ("infographic-thumbnail", "season-thumbnail")]
+    season_thumbnails = [item for item in records if item["kind"] == "season-thumbnail"]
     return {
         "image_responses": len(records),
         "image_payload_bytes": sum(item["bytes"] for item in records),
@@ -76,6 +79,8 @@ def summarize(records: list[dict]) -> dict:
         "poster_payload_bytes": sum(item["bytes"] for item in posters),
         "thumbnail_responses": len(thumbnails),
         "thumbnail_payload_bytes": sum(item["bytes"] for item in thumbnails),
+        "season_thumbnail_responses": len(season_thumbnails),
+        "season_thumbnail_payload_bytes": sum(item["bytes"] for item in season_thumbnails),
         "largest_posters": [
             {"resource": item["resource"], "bytes": item["bytes"], "status": item["status"]}
             for item in sorted(posters, key=lambda item: item["bytes"], reverse=True)[:5]
@@ -107,19 +112,32 @@ def is_today_tab(attributes: dict) -> bool:
 
 
 def detail_poster_results(expected: list[dict], records: list[dict]) -> list[dict]:
-    """Match each event poster to an image response observed after its detail opens."""
+    """Report whether each opened Season/GO Pass detail used its compact thumbnail or full-size fallback."""
     results = []
     for item in expected:
-        matches = [
+        thumb_resource = item.get("thumbnail_resource", "")
+        original_resource = item.get("original_resource", "")
+        thumb_matches = [
             record for record in records
-            if record.get("phase") == "season_details_on_demand"
-            and record.get("resource") == item["resource"]
+            if thumb_resource and record.get("phase") == "season_details_on_demand"
+            and record.get("resource") == thumb_resource
         ]
+        original_matches = [
+            record for record in records
+            if original_resource and record.get("phase") == "season_details_on_demand"
+            and record.get("resource") == original_resource
+        ]
+        thumbnail_loaded = any(record.get("status") == 200 and record.get("bytes", 0) > 0 for record in thumb_matches)
+        original_loaded = any(record.get("status") == 200 and record.get("bytes", 0) > 0 for record in original_matches)
+        matches = thumb_matches + original_matches
         results.append({
             "id": item.get("id", ""),
             "name": item.get("name", ""),
-            "resource": item["resource"],
-            "loaded": any(record.get("status") == 200 and record.get("bytes", 0) > 0 for record in matches),
+            "resource": thumb_resource or original_resource,
+            "original_resource": original_resource,
+            "loaded": thumbnail_loaded or original_loaded,
+            "thumbnail_loaded": thumbnail_loaded,
+            "original_fallback_loaded": original_loaded,
             "bytes": sum(record.get("bytes", 0) for record in matches),
             "status": matches[-1].get("status") if matches else None,
         })
@@ -247,12 +265,21 @@ def run_audit(target: str, viewport: dict | None = None, device_scale_factor: in
                         const id = card.dataset.open || "";
                         const events = window.GOSEASON && window.GOSEASON.events ? window.GOSEASON.events() : [];
                         const event = events.find(item => item.id === id);
-                        return { id, name: event ? event.name : card.innerText.trim(), img: event ? event.img : "" };
+                        return {
+                            id,
+                            name: event ? event.name : card.innerText.trim(),
+                            img: event ? event.img : "",
+                            thumbnail: event && event.season ? event.season.thumbnail : ""
+                        };
                     })"""
                 )
 
             expected_posters = [
-                {**item, "resource": resource_label(urljoin(target, item["img"]))}
+                {
+                    **item,
+                    "thumbnail_resource": resource_label(urljoin(target, item["thumbnail"])) if item.get("thumbnail") else "",
+                    "original_resource": resource_label(urljoin(target, item["img"]))
+                }
                 for item in season_items if item.get("img")
             ]
             detail_errors = []
@@ -272,9 +299,11 @@ def run_audit(target: str, viewport: dict | None = None, device_scale_factor: in
                         """expected => {
                             const modal = document.getElementById('evd');
                             const img = modal && modal.querySelector('img.evd-banner');
-                            return !!img && img.getAttribute('src') === expected && img.complete && img.naturalWidth > 0;
+                            const src = img && img.getAttribute('src');
+                            return !!img && (src === expected.thumbnail || src === expected.img) &&
+                                img.complete && img.naturalWidth > 0;
                         }""",
-                        arg=item["img"],
+                        arg={"thumbnail": item.get("thumbnail", ""), "img": item["img"]},
                         timeout=15000,
                     )
                     page.wait_for_timeout(250)
@@ -374,6 +403,38 @@ def open_today_tab(page) -> bool:
     return False
 
 
+def open_season_detail_thumbnail(page) -> bool:
+    """Open the first visible Season/GO Pass card and confirm its compact poster loaded."""
+    cards = page.locator("#seasonbar .ssn-card")
+    try:
+        if not cards.count():
+            return False
+        cards.first.wait_for(state="visible", timeout=10000)
+        cards.first.click(timeout=10000)
+        page.wait_for_function(
+            """() => {
+                const modal = document.getElementById('evd');
+                const img = modal && modal.querySelector('img.evd-banner');
+                return !!img && img.complete && img.naturalWidth > 0;
+            }""",
+            timeout=15000,
+        )
+        return "/season-thumbs/" in (page.locator("#evd .evd-banner").get_attribute("src") or "")
+    except Exception:
+        return False
+    finally:
+        try:
+            close = page.locator("#evd-x")
+            if close.count() and close.is_visible():
+                close.click(timeout=5000)
+                page.wait_for_function(
+                    "() => { const modal = document.getElementById('evd'); return !modal || modal.hidden; }",
+                    timeout=5000,
+                )
+        except Exception:
+            pass
+
+
 def run_offline_cache_audit(target: str) -> dict:
     """Prime the live app online, then verify a service-worker-cached revisit offline.
 
@@ -398,6 +459,8 @@ def run_offline_cache_audit(target: str) -> dict:
     online_schedule_opened = False
     today_restored_online = False
     offline_schedule_opened = False
+    online_season_thumbnail_opened = False
+    offline_season_thumbnail_opened = False
     online_scroll = {"content_height": 0, "steps": 0, "last_y": 0}
     offline_scroll = {"content_height": 0, "steps": 0, "last_y": 0}
 
@@ -512,6 +575,9 @@ def run_offline_cache_audit(target: str) -> dict:
 
                 today_restored_online = open_today_tab(page)
                 if today_restored_online:
+                    phase["name"] = "online_season_detail"
+                    online_season_thumbnail_opened = open_season_detail_thumbnail(page)
+                    page.wait_for_timeout(500)
                     context.set_offline(True)
                     phase["name"] = "offline_reload_today"
                     try:
@@ -528,6 +594,10 @@ def run_offline_cache_audit(target: str) -> dict:
                     offline_error = "Could not return to Today before the offline reload."
 
                 if offline_reload_ok:
+                    open_today_tab(page)
+                    phase["name"] = "offline_season_detail"
+                    offline_season_thumbnail_opened = open_season_detail_thumbnail(page)
+                    page.wait_for_timeout(300)
                     phase["name"] = "offline_schedule_deep_scroll"
                     offline_schedule_opened = open_schedule_tab(page)
                     if offline_schedule_opened:
@@ -541,6 +611,8 @@ def run_offline_cache_audit(target: str) -> dict:
         "online_today",
         "online_schedule_deep_scroll",
         "offline_reload_today",
+        "online_season_detail",
+        "offline_season_detail",
         "offline_schedule_deep_scroll",
     ]
     phases = {
@@ -549,7 +621,7 @@ def run_offline_cache_audit(target: str) -> dict:
     }
     offline_image_records = [
         item for item in records
-        if item["phase"] in ("offline_reload_today", "offline_schedule_deep_scroll")
+        if item["phase"] in ("offline_reload_today", "offline_season_detail", "offline_schedule_deep_scroll")
     ]
     blocked_non_read_keys = {
         (item["method"], item["resource"]) for item in blocked_non_read_requests
@@ -569,6 +641,13 @@ def run_offline_cache_audit(target: str) -> dict:
         "online_schedule_opened": online_schedule_opened,
         "today_restored_online": today_restored_online,
         "offline_schedule_opened": offline_schedule_opened,
+        "season_detail_thumbnail_online": online_season_thumbnail_opened,
+        "season_detail_thumbnail_offline": offline_season_thumbnail_opened,
+        "season_detail_thumbnail_from_service_worker": any(
+            item["phase"] == "offline_season_detail" and item["kind"] == "season-thumbnail"
+            and item.get("from_service_worker") and item["status"] == 200 and item["bytes"] > 0
+            for item in records
+        ),
         "online_schedule_scroll": online_scroll,
         "offline_schedule_scroll": offline_scroll,
         "offline_image_responses_from_service_worker": sum(
@@ -631,7 +710,7 @@ def write_matrix_summary(report: dict) -> None:
         lines.append(f"- Viewport: {viewport['width']}×{viewport['height']} at DPR {profile['device_scale_factor']}")
         lines.extend([
             "",
-            "| Phase | Image responses | Image payload | Infographic posters | Poster payload | Card thumbnails | Thumbnail payload |",
+            "| Phase | Image responses | Image payload | Infographic posters | Poster payload | Thumbnail assets | Thumbnail payload |",
             "|---|---:|---:|---:|---:|---:|---:|",
 
         ])
@@ -663,13 +742,13 @@ def write_matrix_summary(report: dict) -> None:
                     lines.append(f"  - {item['resource']} — {format_bytes(item['bytes'])} (HTTP {item['status']})")
             thumbnails = profile["phases"][phase_key].get("largest_thumbnails", [])
             if thumbnails:
-                lines.append(f"- Largest card thumbnails in {phase_key}:")
+                lines.append(f"- Largest thumbnails in {phase_key}:")
                 for item in thumbnails[:3]:
                     lines.append(f"  - {item['resource']} — {format_bytes(item['bytes'])} (HTTP {item['status']})")
         if profile.get("season_detail_posters"):
             lines.append("- On-demand detail posters:")
             for item in profile["season_detail_posters"]:
-                state = "loaded" if item["loaded"] else "not observed"
+                state = "thumbnail loaded" if item.get("thumbnail_loaded") else "full-size fallback" if item.get("original_fallback_loaded") else "not observed"
                 lines.append(f"  - {item['name']} — {state}; {format_bytes(item['bytes'])}; {item['resource']}")
         if profile.get("page_errors"):
             lines.append(f"- Page errors: {len(profile['page_errors'])}")
@@ -686,11 +765,13 @@ def write_matrix_summary(report: dict) -> None:
         f"- Schedule opened online/offline: {offline.get('online_schedule_opened', False)} / {offline.get('offline_schedule_opened', False)}",
         f"- Today restored before offline reload: {offline.get('today_restored_online', False)}",
         f"- Offline image responses served by service worker: {offline.get('offline_image_responses_from_service_worker', 0)}",
+        f"- Season detail thumbnail opened online/offline: {offline.get('season_detail_thumbnail_online', False)} / {offline.get('season_detail_thumbnail_offline', False)}",
+        f"- Season detail thumbnail served offline by service worker: {offline.get('season_detail_thumbnail_from_service_worker', False)}",
         f"- Blocked non-read requests: {len(offline.get('blocked_non_read_requests', []))}",
         f"- Blocked API requests: {len(offline.get('blocked_api_requests', []))}",
         f"- Unblocked non-read requests: {len(offline.get('unblocked_non_read_requests', []))}",
         "",
-        "| Phase | Image responses | Image payload | Infographic posters | Poster payload | Card thumbnails | Thumbnail payload |",
+        "| Phase | Image responses | Image payload | Infographic posters | Poster payload | Thumbnail assets | Thumbnail payload |",
         "|---|---:|---:|---:|---:|---:|---:|",
     ])
     for key, label in [
@@ -744,7 +825,7 @@ def write_summary(report: dict) -> None:
         f"- Viewport: {report['viewport']['width']}x{report['viewport']['height']} at DPR {report['device_scale_factor']}",
         "- Safety: fresh context; service workers, /api/*, and non-GET/HEAD requests blocked.",
         "",
-        "| Phase | Image responses | Image payload | Infographic posters | Poster payload | Card thumbnails | Thumbnail payload |",
+        "| Phase | Image responses | Image payload | Infographic posters | Poster payload | Thumbnail assets | Thumbnail payload |",
         "|---|---:|---:|---:|---:|---:|---:|",
         f"| Today initial load | {today['image_responses']} | {format_bytes(today['image_payload_bytes'])} | {today['poster_responses']} | {format_bytes(today['poster_payload_bytes'])} | {today['thumbnail_responses']} | {format_bytes(today['thumbnail_payload_bytes'])} |",
         f"| Schedule activation | {schedule['image_responses']} | {format_bytes(schedule['image_payload_bytes'])} | {schedule['poster_responses']} | {format_bytes(schedule['poster_payload_bytes'])} | {schedule['thumbnail_responses']} | {format_bytes(schedule['thumbnail_payload_bytes'])} |",

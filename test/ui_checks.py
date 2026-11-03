@@ -431,9 +431,10 @@ with sync_playwright() as p:
         # Bound default Playwright waits so a lazy asset or missing control cannot stall a whole shard.
         ctx.set_default_timeout(10000)
         ctx.set_default_navigation_timeout(15000)
-        pg=ctx.new_page(); pg.errs=[]; pg.season_poster_requests=[]; pg.infographic_requests=[]
+        pg=ctx.new_page(); pg.errs=[]; pg.season_poster_requests=[]; pg.season_thumb_requests=[]; pg.infographic_requests=[]
         pg.on('pageerror',lambda e:pg.errs.append(str(e)))
         pg.on('request',lambda r:pg.season_poster_requests.append(r.url) if any(slug in r.url for slug in ('season-24-twilight-trails','go-pass-october-2026','halloween-2026-part-2','go-pass-november-2026')) else None)
+        pg.on('request',lambda r:pg.season_thumb_requests.append(r.url) if '/season-thumbs/' in r.url else None)
         pg.on('request',lambda r:pg.infographic_requests.append(r.url) if '/img/ext/' in r.url or '/infographics/' in r.url or '/infographic-thumbs/' in r.url else None)
         if guard is not None:  # console guard: collect everything noisy so the caller can filter it against an explicit allow-list
             pg.on('console',lambda m:guard.append(('console.'+m.type,m.text,m.location.get('url',''))) if m.type in ('error',) else None)
@@ -444,7 +445,7 @@ with sync_playwright() as p:
         pg.route(re.compile(r'^https://fonts\.(googleapis|gstatic)\.com/'),lambda r:r.fulfill(status=200,body='',content_type='text/css' if 'googleapis' in r.request.url else 'font/woff2'))
         pg.route('**/api/sources',ful(sources or '{"environment":"production","database":true,"enabled":false,"sources":[]}'))
         pg.route('**/api/events',ful(api or '{"enabled":false,"events":[]}'))
-        pg.route(re.compile(r'/(img/ext|infographics|infographic-thumbs)/'),lambda r:r.fulfill(body=PNG1,content_type='image/png'))  # R2 pictures are not in the static folder
+        pg.route(re.compile(r'/(img/ext|infographics|infographic-thumbs|season-thumbs)/'),lambda r:r.fulfill(body=PNG1,content_type='image/png'))  # R2 pictures are not in the static folder
         pg.route('**/api/userstate*',lambda r:r.fulfill(status=404,body='{}',content_type='application/json'))
         pg.route('**/api/dex',lambda r:r.fulfill(status=401,body='{}',content_type='application/json'))
         pg.route('**/api/art*',lambda r:r.fulfill(status=404,body=''))
@@ -1501,9 +1502,36 @@ with sync_playwright() as p:
         pg.locator('#evd').wait_for(state='visible', timeout=5000)
         pg.locator('#evd .evd-banner').wait_for(state='visible', timeout=5000)
         poster_loaded = pg.wait_for_function("() => { const img = document.querySelector('#evd .evd-banner'); return !!img && img.complete && img.naturalWidth > 0; }", timeout=5000)
-        check('opening a season card loads its full poster only in event details',
-              poster_loaded and any('season-24-twilight-trails' in url or 'go-pass-october-2026' in url for url in pg.season_poster_requests))
+        season_banner = pg.locator('#evd .evd-banner')
+        season_banner_link = pg.locator('#evd .evd-banner-link')
+        season_thumb_src = season_banner.get_attribute('src') or ''
+        season_original = '/img/ext/season-24-twilight-trails-99c978ed.jpg'
+        check('opening a season card loads a compact WebP poster only in event details',
+              poster_loaded and '/season-thumbs/season-24-' in season_thumb_src and
+              any('/season-thumbs/season-24-' in url for url in pg.season_thumb_requests) and
+              not pg.season_poster_requests,
+              {'src': season_thumb_src, 'thumbs': pg.season_thumb_requests, 'originals': pg.season_poster_requests})
+        check('season detail keeps an accessible link to the full-resolution original',
+              season_banner_link.get_attribute('href') == season_original and
+              season_banner_link.get_attribute('target') == '_blank' and
+              season_banner_link.get_attribute('aria-label') == 'Open full-size poster for Twilight Trails')
         pg.locator('#evd-x').click()
+
+        fallback_page = page(clock='2026-10-09T22:45:00+11:00')
+        fallback_page.route('**/season-thumbs/**', lambda route: route.fulfill(status=404, body='missing'))
+        fallback_page.locator('#seasonbar .ssn-card').first.wait_for(state='visible', timeout=5000)
+        fallback_page.locator('#seasonbar .ssn-card').first.click()
+        fallback_page.locator('#evd').wait_for(state='visible', timeout=5000)
+        fallback_page.wait_for_function("""() => {
+            const img = document.querySelector('#evd .evd-banner');
+            return !!img && img.complete && img.naturalWidth > 0 &&
+                img.getAttribute('src').includes('season-24-twilight-trails-99c978ed.jpg');
+        }""", timeout=5000)
+        check('missing season WebP safely falls back to the full-resolution original',
+              any('season-24-twilight-trails' in url for url in fallback_page.season_poster_requests) and
+              fallback_page.locator('#evd .evd-banner-link').get_attribute('href') == season_original)
+        fallback_page.locator('#evd-x').click()
+        fallback_page.context.close()
         check('no marks: no "You need" reasons anywhere', pg.locator('text=/You need/').count()==0)
         check('no console/page errors on load', pg.errs==[], pg.errs)
         pg.locator('[data-infographic="cur:trek"].info-available').wait_for(state="attached")
