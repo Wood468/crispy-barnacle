@@ -120,6 +120,8 @@ if (worldEvents != null) {
       else if (ids.has(event.id)) fail(where, `duplicate event id "${event.id}"`);
       else ids.add(event.id);
       if (typeof event.name !== "string" || !event.name.trim()) fail(where, "missing event name");
+      if (event.mode != null && !["in-game", "in-person"].includes(event.mode)) fail(where, "mode must be 'in-game' or 'in-person' when present");
+      if (event.mode && event.scope === "global") fail(where, "global events use scope 'global' and do not need a regional mode override");
       if (!Array.isArray(event.sources) || !event.sources.length) { fail(where, "expected at least one source record"); continue; }
       for (const [j, source] of event.sources.entries()) {
         const sourceWhere = where + ` sources[${j}]`;
@@ -142,6 +144,8 @@ if (regionalEvents != null) {
   else for (const [i, event] of regionalEvents.events.entries()) {
     const where = `public/regional-events.json events[${i}]`;
     if (!event || typeof event !== "object" || Array.isArray(event)) { fail(where, "expected an event object"); continue; }
+    if (event.mode != null && !["in-game", "in-person"].includes(event.mode)) fail(where, "mode must be 'in-game' or 'in-person' when present");
+    if (event.mode && event.scope === "global") fail(where, "global events use scope 'global' and do not need a regional mode override");
     if (event.source != null && typeof event.source !== "string") {
       if (!event.source || typeof event.source !== "object" || Array.isArray(event.source)) fail(where, "source must be a source id or source object");
       else {

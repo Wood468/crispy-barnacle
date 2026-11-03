@@ -172,7 +172,7 @@ export function regionalSeedEntries(seed) {
     const url = String(sourceObject?.url || event?.url || fallbackUrl).trim();
     return {
       name: event.name, place: event.place, area: event.area, scope: event.scope || "regional",
-      start: event.start, end: event.end, datesKnown: true, url, source, worldId: event.worldId || ""
+      mode: event.mode || "", start: event.start, end: event.end, datesKnown: true, url, source, worldId: event.worldId || ""
     };
   });
 }
@@ -219,6 +219,10 @@ export function mergeWorld(entries, sources) {
     });
     if (hit) {
       if (stableId && !out.some(o => o !== hit && o.id === stableId)) hit.id = stableId;
+      if (e.mode) {
+        if (hit.mode && hit.mode !== e.mode) throw new Error(`Conflicting world-event modes for ${hit.id || hit.name}: ${hit.mode} vs ${e.mode}`);
+        hit.mode = e.mode;
+      }
       if (!hit.sources.some(s => s.url === src.url)) hit.sources.push(src);
       if (!hit.start && e.start) { hit.start = e.start; hit.end = e.end; hit.datesKnown = true; }
       const identity = dd.same(hit, e);
@@ -233,7 +237,7 @@ export function mergeWorld(entries, sources) {
     }
     const slug = stableId || ("w-" + e.name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 50));
     let id = slug; for (let n = 2; out.some(o => o.id === id); n++) id = slug + "-" + (e.start || n);
-    out.push({ id, name: e.name, place: e.place, area: e.area, scope: e.scope, start: e.start, end: e.end, datesKnown: e.datesKnown, sources: [src] });
+    out.push({ id, name: e.name, place: e.place, area: e.area, scope: e.scope, ...(e.mode ? { mode: e.mode } : {}), start: e.start, end: e.end, datesKnown: e.datesKnown, sources: [src] });
   }
   return out.map(o => ({ ...o, status: o.sources.some(s => s.id === "official") ? "official" : o.sources.length > 1 ? "corroborated" : "single" }));
 }
@@ -320,6 +324,10 @@ export function collapseWorld(world, rules = null) {
   for (const g of dd.groups(dated, rules, rank)) {
     for (const { event: d, why } of g.dupes) {
       const k = g.keep;
+      if (d.mode) {
+        if (k.mode && k.mode !== d.mode) throw new Error(`Conflicting world-event modes for ${k.id || k.name}: ${k.mode} vs ${d.mode}`);
+        k.mode = d.mode;
+      }
       for (const s of d.sources || []) if (!(k.sources || []).some(x => x.url === s.url)) (k.sources = k.sources || []).push(s);
       if (isMoreSpecificPlace(d.place, k.place) && placeDetailScore(d.place) > placeDetailScore(k.place)) {
         k.place = d.place;

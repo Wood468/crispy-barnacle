@@ -270,8 +270,14 @@
     var t = T[u.toFixed(2)], idr = t ? t.idr : Math.round(u * m.typical / 500) * 500;
     return { idr: idr, aud: Math.round(idr * fx.rate * 100) / 100, basis: t ? 'seen' : 'modelled', seen: t ? t.seen : '' };
   }
-  // Split the Today live total into game events and real-world in-person events. Regional
-  // events remain visible; this only makes the summary count more informative.
+  // Regional entries are in-person by default. An explicit mode:'in-game' marks a
+  // region-locked gameplay event with no physical venue, so it belongs with game activity.
+  function isInPersonWorldEvent(event) {
+    return !!event && event.scope !== 'global' && event.mode !== 'in-game';
+  }
+  function isRegionalInGameEvent(event) {
+    return !!event && event.scope !== 'global' && event.mode === 'in-game';
+  }
   function liveActivityCounts(events, regional) {
     var inGame = 0, inPerson = 0;
     (events || []).forEach(function (event) {
@@ -280,7 +286,7 @@
     });
     (regional || []).forEach(function (event) {
       if (!event) return;
-      if (event.scope === 'global') inGame++; else inPerson++;
+      if (isInPersonWorldEvent(event)) inPerson++; else inGame++;
     });
     return { inGame: inGame, inPerson: inPerson, total: inGame + inPerson };
   }
@@ -315,5 +321,5 @@
     return '';
   }
 
-  return { isPrivateLink: isPrivateLink, publicLink: publicLink, esc: esc, rpEstimate: rpEstimate, raidEventFor: raidEventFor, isPlaceholder: isPlaceholder, audify: audify, setTiers: setTiers, loadPrices: loadPrices, getJson: getJson, jsonOrNull: jsonOrNull, priceView: priceView, fmtRp: fmtRp, buildQueue: buildQueue, parseForm: parseForm, formId: formId, merge: merge, reconcileSync: reconcileSync, norm: norm, lev: lev, matchName: matchName, candidates: candidates, liveActivityCounts: liveActivityCounts };
+  return { isPrivateLink: isPrivateLink, publicLink: publicLink, esc: esc, rpEstimate: rpEstimate, raidEventFor: raidEventFor, isPlaceholder: isPlaceholder, audify: audify, setTiers: setTiers, loadPrices: loadPrices, getJson: getJson, jsonOrNull: jsonOrNull, priceView: priceView, fmtRp: fmtRp, buildQueue: buildQueue, parseForm: parseForm, formId: formId, merge: merge, reconcileSync: reconcileSync, norm: norm, lev: lev, matchName: matchName, candidates: candidates, isInPersonWorldEvent: isInPersonWorldEvent, isRegionalInGameEvent: isRegionalInGameEvent, liveActivityCounts: liveActivityCounts };
 }));

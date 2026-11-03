@@ -813,13 +813,13 @@
   function loadWorld(j, seed) {
     var list = (j.events || []).map(function (e) {
       var src = seed ? (e.source && typeof e.source === 'object' && e.source.url ? e.source : j.source) : { url: (e.sources && e.sources[0] && e.sources[0].url) || e.url || '#', n: e.sources ? e.sources.length : 1 };
-      if (!e.start) return { undated: true, name: e.name, place: e.place, area: e.area, scope: e.scope, src: src };
+      if (!e.start) return { undated: true, name: e.name, place: e.place, area: e.area, scope: e.scope, mode: e.mode || '', src: src };
       var startValue = String(e.start), startIsDateOnly = /^\d{4}-\d{2}-\d{2}$/.test(startValue);
       /* A date-only start can safely mean the whole local calendar day. A timed event needs an explicit end. */
-      if (!e.end && !startIsDateOnly) return { undated: true, name: e.name, place: e.place, area: e.area, scope: e.scope, src: src };
+      if (!e.end && !startIsDateOnly) return { undated: true, name: e.name, place: e.place, area: e.area, scope: e.scope, mode: e.mode || '', src: src };
       var s0 = worldDate(startValue, false), e0 = worldDate(String(e.end || e.start), !!e.end || startIsDateOnly);
-      if (!Number.isFinite(s0.getTime()) || !Number.isFinite(e0.getTime()) || e0 < s0) return { undated: true, name: e.name, place: e.place, area: e.area, scope: e.scope, src: src };
-      return { id: e.id, name: e.name, place: e.place || '', area: e.scope === 'global' ? 'In the game' : e.area, scope: e.scope || 'regional', start: s0, end: e0, sourceStart: startValue, sourceEnd: String(e.end || e.start), long: (e0 - s0) > 14 * 864e5, src: src };
+      if (!Number.isFinite(s0.getTime()) || !Number.isFinite(e0.getTime()) || e0 < s0) return { undated: true, name: e.name, place: e.place, area: e.area, scope: e.scope, mode: e.mode || '', src: src };
+      return { id: e.id, name: e.name, place: e.place || '', area: e.scope === 'global' ? 'In the game' : e.area, scope: e.scope || 'regional', mode: e.mode || '', start: s0, end: e0, sourceStart: startValue, sourceEnd: String(e.end || e.start), long: (e0 - s0) > 14 * 864e5, src: src };
     });
     /* An announcement with no dates of its own (e.g. Gigantamax Duraludon at the Sendai Wild Area) takes the dates of the
        dated event at the same place whose name it shares a distinctive word with. */
@@ -827,7 +827,7 @@
       if (!x.undated) return;
       var words = String(x.name).toLowerCase().match(/wild area|go fest|safari|community day|go tour|go park/);
       var host = words && list.filter(function (y) { return !y.undated && y.place === x.place && String(y.name).toLowerCase().indexOf(words[0]) >= 0; })[0];
-      if (host) list[i] = { id: 'dated:' + host.id + ':' + i, name: x.name, place: x.place, area: host.area, scope: x.scope || 'regional', start: host.start, end: host.end, long: host.long, src: x.src };
+      if (host) list[i] = { id: 'dated:' + host.id + ':' + i, name: x.name, place: x.place, area: host.area, scope: x.scope || 'regional', mode: x.mode || '', start: host.start, end: host.end, long: host.long, src: x.src };
     });
     UNDATED = list.filter(function (x) { return x.undated; });
     REG = list.filter(function (x) { return !x.undated; });
@@ -850,7 +850,7 @@
   function regList() { // an announced game event the live feed already shows is not listed twice
     return REG.filter(function (x) {
       if (x.end <= now() || isHidden(x.id)) return false;
-      /* Regional in-person listings are never suppressed by a similarly titled game card. */
+      /* Regional listings—physical or region-locked in-game—are never suppressed by a similarly titled game card. */
       if (x.scope !== 'global') return true;
       /* A global/world-list item that is the same event as one of our own cards is not listed twice. */
       if (window.GODEDUPE && EV.some(function (ev) { return GODEDUPE.same({ name: x.name, place: x.place, start: +x.start, end: +x.end }, { name: ev.name, place: '', start: +ev.start, end: +ev.end }, REGGAZ).verdict === 'same'; })) return false;
@@ -858,8 +858,8 @@
       return !EV.some(function (ev) { return ev.start <= x.end && ev.end >= x.start && words(ev.name).some(function (t) { return w.indexOf(t) >= 0; }); });
     });
   }
-  /* One rule for "in person": a located/regional listing. A global item (play from anywhere, an in-game feature) is never in person. The Today brief and the Today group labels both use it. */
-  function regInPerson(e) { return !!e && e.scope !== 'global'; }
+  /* Regional entries are in person unless the source-backed mode explicitly marks a regional in-game event. */
+  function regInPerson(e) { return LIB.isInPersonWorldEvent(e); }
   function regDay(day) {
     var d0 = startOfDay(day).getTime(), d1 = d0 + 864e5;
     return regList().filter(function (r) {
@@ -904,9 +904,9 @@
   }
   function drawTravel() {
     var host = $('travel-results'); if (!host) return;
-    /* Do not promote global game events or dates inherited by the existing related-announcement helper into destination plans. */
+    /* Only real-world regional listings belong in destination plans; global and regional in-game items stay in the schedule, not Travel. */
     var candidates = REG.filter(function (x) {
-      return x.end > now() && x.scope !== 'global' && x.place && x.sourceStart && x.sourceEnd &&
+      return x.end > now() && LIB.isInPersonWorldEvent(x) && x.place && x.sourceStart && x.sourceEnd &&
         x.src && String(x.src.url || '').indexOf('https://') === 0 && !/^dated:/.test(String(x.id || ''));
     });
     var places = {};
@@ -1599,7 +1599,7 @@
     var signature = JSON.stringify({
       day: dayKey(t),
       events: today.map(function (e) { return [e.id, phase(e, t)]; }),
-      regional: todayRegional.map(function (e) { return [e.id, e.start, e.end, phase(e, t)]; }),
+      regional: todayRegional.map(function (e) { return [e.id, e.start, e.end, e.mode || '', phase(e, t)]; }),
       next: nextUp ? [nextUp.id, nextUp.start.getTime()] : null
     });
     if (!force && tdEl.getAttribute('data-render-key') === signature) return;
@@ -1629,14 +1629,18 @@
       var rows = list.filter(regInPerson);
       return rows.length ? subHead('In person', rows.length) + rows.map(function (e) { return agendaRow(e, true); }).join('') : '';
     }
-    /* A world-list item with no venue (play from anywhere) is not in person: it gets its own honest label instead of being counted as a venue event. */
+    function inGameRegional(list) {
+      var rows = list.filter(LIB.isRegionalInGameEvent);
+      return rows.length ? subHead('In-game (regional)', rows.length) + rows.map(function (e) { return agendaRow(e, true); }).join('') : '';
+    }
+    /* Global play-from-anywhere events remain under their own Online / worldwide label. */
     function online(list) {
-      var rows = list.filter(function (e) { return !regInPerson(e); });
+      var rows = list.filter(function (e) { return e.scope === 'global'; });
       return rows.length ? subHead('Online / worldwide', rows.length) + rows.map(function (e) { return agendaRow(e, true); }).join('') : '';
     }
     tdEl.innerHTML = today.length || todayRegional.length
-      ? phaseGroup('Happening now', liveToday.length + liveRegional.length, liveToday.map(function (e) { return card(e); }).join('') + inPerson(liveRegional) + online(liveRegional)) +
-        phaseGroup('Later today', laterToday.length + laterRegional.length, laterToday.map(function (e) { return card(e); }).join('') + inPerson(laterRegional) + online(laterRegional))
+      ? phaseGroup('Happening now', liveToday.length + liveRegional.length, liveToday.map(function (e) { return card(e); }).join('') + inPerson(liveRegional) + inGameRegional(liveRegional) + online(liveRegional)) +
+        phaseGroup('Later today', laterToday.length + laterRegional.length, laterToday.map(function (e) { return card(e); }).join('') + inPerson(laterRegional) + inGameRegional(laterRegional) + online(laterRegional))
       : '<div class="today-empty"><p class="empty">Nothing is scheduled for today.</p>' +
         (nextUp
           ? '<button type="button" class="today-next-up" data-open="' + esc(nextUp.id) + '" aria-label="Open details for ' + esc(nextUp.name) + '"><span class="today-next-kicker">NEXT UP</span><b>' + esc(nextUp.name) + '</b><span class="today-next-time">' + esc(fmtD(nextUp.start) + ' · ' + fmtT(nextUp.start)) + '</span><span class="today-next-action">View event details <span aria-hidden="true">→</span></span></button>'

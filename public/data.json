@@ -162,13 +162,17 @@
       "t": "Pokémon TCG: 30th Celebration (at stores)",
       "s": "2026-09-27T10:00",
       "e": "2026-10-20T22:00",
-      "tags": ["Raids"],
+      "tags": [
+        "Raids"
+      ],
       "p": [
         "Only at Target, Best Buy and GameStop: open Pokémon GO in store for Timed Research with Gastly, Haunter and Gengar encounters.",
         "Mega Gengar appears more often in Mega Raids at those stores, and its Gengar can be Shiny.",
         "Start the research by Oct 20, 10 pm local time. Claim rewards before Nov 20."
       ],
-      "art": ["Gengar"],
+      "art": [
+        "Gengar"
+      ],
       "sourceUrl": "https://leekduck.com/events/pokemon-tcg-30th-celebration/",
       "source": "Leek Duck"
     },
@@ -332,13 +336,17 @@
       "t": "GO Pass: November",
       "s": "2026-11-03T10:00",
       "e": "2026-12-01T10:00",
-      "tags": ["Event"],
+      "tags": [
+        "Event"
+      ],
       "p": [
         "Free GO Pass from Tue Nov 3, 10 am to Tue Dec 1, 10 am local time. Free rewards include a Groudon encounter, 400 PokéCoins, a Lucky Egg, a Rare Candy XL and Stardust.",
         "GO Pass Deluxe (US$7.99) adds 1,000 more PokéCoins, a Super Incubator and extra encounters; Deluxe + 10 Ranks is US$9.99.",
         "No daily GO Point limit from Sat Nov 28, 12 am to Sun Nov 29, 11:59 pm. Claim rewards by Thu Dec 3, 10 am local time."
       ],
-      "art": ["Groudon"],
+      "art": [
+        "Groudon"
+      ],
       "sourceUrl": "https://pokemongo.com/news/go-pass-november-2026",
       "source": "Official Pokémon GO announcement"
     },
@@ -375,13 +383,21 @@
       "t": "Into the Wild",
       "s": "2026-11-09T10:00",
       "e": "2026-11-13T20:00",
-      "tags": ["Event", "Raids", "Debut"],
+      "tags": [
+        "Event",
+        "Raids",
+        "Debut"
+      ],
       "p": [
         "Crowned Sword Zacian and Crowned Shield Zamazenta in five-star raids, with Raid Hour at 6 pm on Nov 9 (Zacian) and Nov 10 (Zamazenta). Druddigon and Orthworm in three-star raids.",
         "Dynamax Regidrago debuts in five-star Max Battles on Nov 12; Registeel Nov 11, Latias and Latios Nov 13. Dynamax Meltan debuts in GO Pass.",
         "Remote Raid limit 30 (Nov 9 to 13). Shiny Gimmighoul from the Coin Bag and shiny Meltan from the Mystery Box until Nov 15, 6 pm. Daily Discoveries pause Nov 9 to 15."
       ],
-      "art": ["Zacian", "Zamazenta", "Regidrago"],
+      "art": [
+        "Zacian",
+        "Zamazenta",
+        "Regidrago"
+      ],
       "sourceUrl": "https://pokemongo.com/news/into-the-wild-2026",
       "source": "Official Pokémon GO announcement"
     },
@@ -413,12 +429,16 @@
       "t": "Minior Showers: Leonids",
       "s": "2026-11-14T17:00",
       "e": "2026-11-19T23:59",
-      "tags": ["Event"],
+      "tags": [
+        "Event"
+      ],
       "p": [
         "Minior in Meteor Form in the wild, with extra Stardust for catching it.",
         "Best from 5 pm to 9 pm local time each day."
       ],
-      "art": ["Minior"],
+      "art": [
+        "Minior"
+      ],
       "sourceUrl": "https://leekduck.com/events/minior-showers-leonids-2026/",
       "source": "Leek Duck"
     },
@@ -427,12 +447,16 @@
       "t": "Minior Showers: Geminids",
       "s": "2026-12-11T17:00",
       "e": "2026-12-16T23:59",
-      "tags": ["Event"],
+      "tags": [
+        "Event"
+      ],
       "p": [
         "Minior in Meteor Form in the wild, with extra Stardust for catching it.",
         "Best from 5 pm to 9 pm local time each day."
       ],
-      "art": ["Minior"],
+      "art": [
+        "Minior"
+      ],
       "sourceUrl": "https://leekduck.com/events/minior-showers-geminids-2026/",
       "source": "Leek Duck"
     },
@@ -441,7 +465,10 @@
       "t": "Dynamax Trails",
       "s": "2026-11-16T10:00",
       "e": "2026-11-23T20:00",
-      "tags": ["Max Battles", "Event"],
+      "tags": [
+        "Max Battles",
+        "Event"
+      ],
       "p": [
         "Wild encounters include Pokémon that have debuted in Dynamax Max Battles (not Legendary or Mythical), with a chance of Max Particles from those catches and from Max Battles.",
         "Max Particle limit 2,400 and 8x Max Particles from Power Spots. Event-themed Field Research.",
@@ -459,12 +486,16 @@
       "t": "Eternamax Eternatus Returns",
       "s": "2026-11-21T11:00",
       "e": "2026-11-21T14:00",
-      "tags": ["Max Battles"],
+      "tags": [
+        "Max Battles"
+      ],
       "p": [
         "Eternamax Eternatus takes over most Power Spots in Max Battles, 11 am to 2 pm local time. It cannot be caught; beating it gives Eternatus Candy and Candy XL.",
         "Power Spots refresh more often. Remote Raid limit 30 from Fri Nov 20, 1 pm to Sat Nov 21, 6 pm (Pacific time)."
       ],
-      "art": ["Eternatus"],
+      "art": [
+        "Eternatus"
+      ],
       "sourceUrl": "https://pokemongo.com/news/dynamax-trails-eternamax-eternatus-2026",
       "source": "Official Pokémon GO announcement"
     },
@@ -500,7 +531,9 @@
       "t": "Twilight Wishes",
       "s": "2026-11-24T10:00",
       "e": "2026-11-30T20:00",
-      "tags": ["Event"],
+      "tags": [
+        "Event"
+      ],
       "p": [
         "Listed by Leek Duck for Nov 24, 10 am to Nov 30, 8 pm local time. No details are announced yet."
       ],
@@ -638,7 +671,18 @@
       "five": "Yveltal",
       "mega": "Mega Blastoise",
       "shadow": "Shadow Landorus (Incarnate)",
-      "low": { "one": ["Astronaut Pikachu"], "three": ["Starmie", "Umbreon", "Gothitelle"], "observed": "2026-10-07", "source": "Dexerto current raid bosses" },
+      "low": {
+        "one": [
+          "Astronaut Pikachu"
+        ],
+        "three": [
+          "Starmie",
+          "Umbreon",
+          "Gothitelle"
+        ],
+        "observed": "2026-10-07",
+        "source": "Dexerto current raid bosses"
+      },
       "rh": "Yveltal"
     },
     {
@@ -648,8 +692,17 @@
       "mega": "Mega Dragonite",
       "shadow": "Shadow Landorus (Incarnate)",
       "low": {
-        "one": ["Clefairy", "Teddiursa", "Elgyem", "Amaura"],
-        "three": ["Starmie", "Umbreon", "Gothitelle"],
+        "one": [
+          "Clefairy",
+          "Teddiursa",
+          "Elgyem",
+          "Amaura"
+        ],
+        "three": [
+          "Starmie",
+          "Umbreon",
+          "Gothitelle"
+        ],
         "observed": "2026-10-14",
         "source": "Dexerto current raid bosses (the page lists no dates)"
       },
@@ -661,7 +714,32 @@
       "five": "Palkia",
       "mega": "Mega Charizard X and Y",
       "shadow": "Shadow Landorus (Incarnate)",
-      "low": { "one": ["Axew", "Goomy", "Jangmo-o", "Frigibax"], "three": ["Alolan Ninetales", "Alolan Raichu", "Alolan Muk"], "shadowOne": ["Shadow Gastly", "Shadow Totodile", "Shadow Shieldon", "Shadow Gible"], "shadowThree": ["Shadow Primeape", "Shadow Kirlia", "Shadow Drapion"], "observed": "2026-10-21", "source": "Pokémon GO Hub current raids" },
+      "low": {
+        "one": [
+          "Axew",
+          "Goomy",
+          "Jangmo-o",
+          "Frigibax"
+        ],
+        "three": [
+          "Alolan Ninetales",
+          "Alolan Raichu",
+          "Alolan Muk"
+        ],
+        "shadowOne": [
+          "Shadow Gastly",
+          "Shadow Totodile",
+          "Shadow Shieldon",
+          "Shadow Gible"
+        ],
+        "shadowThree": [
+          "Shadow Primeape",
+          "Shadow Kirlia",
+          "Shadow Drapion"
+        ],
+        "observed": "2026-10-21",
+        "source": "Pokémon GO Hub current raids"
+      },
       "rh": "Palkia",
       "sourceUrl": "https://leekduck.com/events/palkia-in-5-star-raid-battles-october-2026/"
     },
@@ -671,7 +749,30 @@
       "five": "Origin Forme Giratina",
       "mega": "Mega Sableye",
       "shadow": "Shadow Landorus (Incarnate), to Nov 3",
-      "low": { "one": ["Pikachu (hat and capelet)", "Sinistea (bow)"], "three": ["Cofagrigus", "Trevenant", "Dhelmise"], "shadowOne": ["Shadow Gastly", "Shadow Totodile", "Shadow Shieldon", "Shadow Gible"], "shadowThree": ["Shadow Primeape", "Shadow Kirlia", "Shadow Drapion"], "observed": "2026-10-30", "source": "Official Halloween 2026 posts (1-star); Leek Duck raid bosses (3-star and Shadow)" },
+      "low": {
+        "one": [
+          "Pikachu (hat and capelet)",
+          "Sinistea (bow)"
+        ],
+        "three": [
+          "Cofagrigus",
+          "Trevenant",
+          "Dhelmise"
+        ],
+        "shadowOne": [
+          "Shadow Gastly",
+          "Shadow Totodile",
+          "Shadow Shieldon",
+          "Shadow Gible"
+        ],
+        "shadowThree": [
+          "Shadow Primeape",
+          "Shadow Kirlia",
+          "Shadow Drapion"
+        ],
+        "observed": "2026-10-30",
+        "source": "Official Halloween 2026 posts (1-star); Leek Duck raid bosses (3-star and Shadow)"
+      },
       "rh": "Origin Forme Giratina",
       "sourceUrl": "https://leekduck.com/events/giratina-origin-forme-in-5-star-raid-battles-october-2026/"
     },
@@ -688,7 +789,13 @@
       "s": "2026-11-09T10:00",
       "e": "2026-11-13T20:00",
       "five": "Crowned Sword Zacian and Crowned Shield Zamazenta",
-      "low": { "three": ["Druddigon", "Orthworm"], "source": "Official Into the Wild announcement" },
+      "low": {
+        "three": [
+          "Druddigon",
+          "Orthworm"
+        ],
+        "source": "Official Into the Wild announcement"
+      },
       "rh": "Crowned Sword Zacian, Mon Nov 9 · Crowned Shield Zamazenta, Tue Nov 10",
       "sourceUrl": "https://leekduck.com/events/into-the-wild-2026/"
     },
@@ -2006,6 +2113,17 @@
       "link": "https://leekduck.com/events/pokemon-go-wild-area-2026-sendai-japan/",
       "note": "Ticketed in person event.",
       "kind": "event"
+    },
+    {
+      "t": "Festival of Lights",
+      "where": "India",
+      "region": "Asia",
+      "s": "2026-11-06",
+      "e": "2026-11-08",
+      "link": "https://pokemongo.com/en/news/festival-of-lights-2026",
+      "note": "India-only in-game event; no physical venue.",
+      "kind": "event",
+      "mode": "in-game"
     },
     {
       "t": "GO Wild Area: Mexico City",
