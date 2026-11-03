@@ -37,29 +37,48 @@
   function safeSeasonThumb(u) {
     return typeof u === 'string' && /^\/season-thumbs\/season-[a-z0-9-]+-[a-f0-9]{8}\.webp$/i.test(u) ? u : '';
   }
-  function seasonBannerHtml(ev) {
-    var original = safe(ev.img), thumb = safeSeasonThumb(ev.season && ev.season.thumbnail);
-    if (ev.season && thumb && original) {
-      return '<a class="evd-banner-link" href="' + esc(original) + '" target="_blank" rel="noopener noreferrer" aria-label="Open full-size poster for ' + esc(ev.name) + '" title="Open full-size poster"><img class="evd-banner" data-season-thumb="' + esc(thumb) + '" data-season-original="' + esc(original) + '" alt="" referrerpolicy="no-referrer" decoding="async"></a>';
-    }
-    return original ? '<img class="evd-banner" src="' + esc(original) + '" alt="" referrerpolicy="no-referrer" data-err="rm">' : '';
+  function seasonBannerHtml() {
+    /* Keep the HTML template constant; poster URLs and labels are assigned through DOM properties below. */
+    return '<div data-season-banner></div>';
   }
-  function loadSeasonBanner(o) {
-    var img = o.querySelector('.evd-banner[data-season-thumb]');
-    if (!img) return;
-    var thumb = img.getAttribute('data-season-thumb') || '';
-    var original = img.getAttribute('data-season-original') || '';
-    var triedOriginal = false;
-    img.addEventListener('error', function () {
-      if (!triedOriginal && original) {
-        triedOriginal = true;
-        img.setAttribute('src', original);
-        return;
-      }
-      var link = img.closest('.evd-banner-link');
-      if (link) link.remove(); else img.remove();
-    });
-    img.setAttribute('src', thumb);
+  function loadSeasonBanner(o, ev) {
+    var slot = o.querySelector('[data-season-banner]');
+    if (!slot) return;
+    var original = safe(ev && ev.img);
+    if (!original) { slot.remove(); return; }
+    var thumb = safeSeasonThumb(ev && ev.season && ev.season.thumbnail);
+    var img = document.createElement('img');
+    img.className = 'evd-banner';
+    img.alt = '';
+    img.referrerPolicy = 'no-referrer';
+    img.decoding = 'async';
+
+    if (thumb) {
+      var link = document.createElement('a'), triedOriginal = false;
+      link.className = 'evd-banner-link';
+      link.href = original;
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
+      link.setAttribute('aria-label', 'Open full-size poster for ' + String(ev && ev.name || 'event'));
+      link.title = 'Open full-size poster';
+      img.addEventListener('error', function () {
+        if (!triedOriginal) {
+          triedOriginal = true;
+          img.src = original;
+          return;
+        }
+        link.remove();
+      });
+      link.appendChild(img);
+      slot.replaceWith(link);
+      img.src = thumb;
+      return;
+    }
+
+    img.setAttribute('data-err', 'rm');
+    img.addEventListener('error', function () { img.remove(); }, { once: true });
+    slot.replaceWith(img);
+    img.src = original;
   }
   function safeGpx(u) { return typeof u === 'string' && (/^https:\/\//.test(u) || /^\/(?:gpx|routes|places)\/[\w./-]+\.gpx(?:\?[^#]*)?$/i.test(u)) ? u : ''; }
   function trust(t) {
@@ -510,7 +529,7 @@
       if (!o) { o = document.createElement('div'); o.id = 'evd'; o.className = 'evd'; o.setAttribute('role', 'dialog'); o.setAttribute('aria-modal', 'true'); o.setAttribute('aria-labelledby', 'evd-t'); document.body.appendChild(o); }
       var ev2 = completeEvent(ev);
       o.innerHTML = '<div class="evd-in">' + render(ev2) + '</div>';
-      loadSeasonBanner(o);
+      loadSeasonBanner(o, ev2);
       addBanner(o, ev2);
       addBonusTime(o, ev2);
       o.hidden = false; document.body.style.overflow = 'hidden'; o.scrollTop = 0;
