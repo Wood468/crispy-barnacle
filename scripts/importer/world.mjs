@@ -241,8 +241,8 @@ export function mergeWorld(entries, sources) {
 // A country/region label contained in a city/venue label is a less-specific view of the same stop,
 // not a second destination from the same announcement. Keep separate cities and venues as separate stops.
 function isMoreSpecificPlace(candidate, current) {
-  const specific = String(candidate || "").trim().toLowerCase().replace(/\\s+/g, " ");
-  const broad = String(current || "").trim().toLowerCase().replace(/\\s+/g, " ");
+  const specific = String(candidate || "").trim().toLowerCase().replace(/\s+/g, " ");
+  const broad = String(current || "").trim().toLowerCase().replace(/\s+/g, " ");
   return !!specific && !!broad && specific !== broad && specific.includes(broad);
 }
 
