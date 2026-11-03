@@ -130,7 +130,7 @@ if (weekly != null) {
   }
 }
 
-// Tickets sold outside the web store: the planner hides an entry the day after eventEnd and works out "on sale / closed" from saleStart and saleEnd.
+// Tickets sold outside the web store: eventEnd controls expiry; registration and sale windows are distinct, and explicit availability is dated and sourced.
 const ext = parsed.get("public/tickets-external.json");
 if (ext) {
   const day = /^\d{4}-\d\d-\d\d$/;
@@ -144,9 +144,22 @@ if (ext) {
       for (const k of ["name", "when", "price"]) if (!x[k]) fail(where, `${k} is required`);
       try { if (new URL(x.url).protocol !== "https:") fail(where, "url must use HTTPS"); } catch { fail(where, "url is not a valid URL"); }
       if (!day.test(x.eventEnd || "")) fail(where, "eventEnd must be YYYY-MM-DD, or the entry would never expire");
-      for (const k of ["eventStart", "saleStart", "saleEnd"]) if (x[k] && !day.test(x[k])) fail(where, `${k} must be YYYY-MM-DD`);
+      const isDay = value => typeof value === "string" && day.test(value) && !Number.isNaN(Date.parse(value)) && new Date(value).toISOString().slice(0, 10) === value;
+      for (const k of ["eventStart", "saleStart", "saleEnd", "registrationStart", "registrationEnd", "observed"]) if (x[k] && !isDay(x[k])) fail(where, k + " must be a real YYYY-MM-DD date");
       if (x.saleStart && x.saleEnd && x.saleStart > x.saleEnd) fail(where, "saleStart is after saleEnd");
+      if (x.registrationStart && x.registrationEnd && x.registrationStart > x.registrationEnd) fail(where, "registrationStart is after registrationEnd");
+      if (!!x.registrationStart !== !!x.registrationEnd) fail(where, "registrationStart and registrationEnd must be supplied together");
       if (x.eventStart && x.eventEnd && x.eventStart > x.eventEnd) fail(where, "eventStart is after eventEnd");
+      if (x.availability != null && !["available", "sold-out", "unknown"].includes(x.availability)) fail(where, "availability must be available, sold-out or unknown");
+      if (x.availability != null && !isDay(x.observed)) fail(where, "explicit availability needs an observed YYYY-MM-DD date");
+      if (x.observed && (!Array.isArray(x.sources) || !x.sources.length)) fail(where, "an observed source date needs at least one source URL");
+      if (x.sources != null) {
+        if (!Array.isArray(x.sources)) fail(where, "sources must be an array of HTTPS URLs");
+        else for (const [j, source] of x.sources.entries()) {
+          try { if (typeof source !== "string" || new URL(source).protocol !== "https:") fail(where, "sources[" + j + "] must be an HTTPS URL"); }
+          catch { fail(where, "sources[" + j + "] is not a valid HTTPS URL"); }
+        }
+      }
     }
   }
 }

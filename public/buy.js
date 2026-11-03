@@ -63,15 +63,55 @@
   }
   /* Tickets sold outside the web store (/tickets-external.json). An entry disappears the day after its event ends. The optional sale window
      decides the chip: opens soon, on sale, or closed. Dates are plain days, read as the player's own day. */
-  function dayMs(s) { var m = /^(\d{4})-(\d\d)-(\d\d)$/.exec(s || ''); return m ? new Date(+m[1], +m[2] - 1, +m[3]).getTime() : null; }
+  function dayMs(s) {
+    var m = /^(\d{4})-(\d\d)-(\d\d)$/.exec(s || '');
+    if (!m) return null;
+    var y = +m[1], month = +m[2] - 1, day = +m[3], d = new Date(y, month, day);
+    return d.getFullYear() === y && d.getMonth() === month && d.getDate() === day ? d.getTime() : null;
+  }
+  function officialSourceUrl(value) {
+    try {
+      var u = new URL(String(value || ''));
+      if (u.protocol !== 'https:' || (u.hostname !== 'pokemongo.com' && u.hostname !== 'www.pokemongo.com') || u.username || u.password || u.port) return '';
+      return u.href;
+    } catch (e) { return ''; }
+  }
+  function sourceLinks(x) {
+    var seen = {}, urls = [];
+    (Array.isArray(x.sources) ? x.sources : []).forEach(function (raw) {
+      var url = officialSourceUrl(raw);
+      if (url && !seen[url]) { seen[url] = true; urls.push(url); }
+    });
+    return urls.map(function (url, i) {
+      var label = urls.length === 1 ? 'Official event details' : (i === 0 ? 'Official overview' : i === 1 ? 'Location details' : 'Ticket details');
+      return '<a class="by-lnk" href="' + esc(url) + '" target="_blank" rel="noopener" aria-label="' + esc(label + ': ' + (x.name || 'event')) + '">' + label + '</a>';
+    }).join('');
+  }
+  function sourceChecked(x, now) {
+    var ms = dayMs(x.observed);
+    if (ms == null) return '';
+    var today = new Date(now); today.setHours(0, 0, 0, 0);
+    if (ms > today.getTime()) return '';
+    return 'Official source checked ' + new Date(ms).toLocaleDateString('en-AU', { day: 'numeric', month: 'short', year: 'numeric' });
+  }
   function extEntries(items, now) {
     return (items || []).map(function (x) {
-      var e0 = dayMs(x.eventStart), e1 = dayMs(x.eventEnd), s0 = dayMs(x.saleStart), s1 = dayMs(x.saleEnd), status, chip;
+      var e0 = dayMs(x.eventStart), e1 = dayMs(x.eventEnd), s0 = dayMs(x.saleStart), s1 = dayMs(x.saleEnd);
+      var r0 = dayMs(x.registrationStart), r1 = dayMs(x.registrationEnd), status, chip;
       if (e1 != null && now >= e1 + DAY) return null;
-      if (s0 != null && now < s0) { status = 'soon'; chip = 'Sale opens ' + dstr(s0); }
+      if (x.availability === 'available') { status = 'open'; chip = 'Tickets available'; }
+      else if (x.availability === 'sold-out') { status = 'closed'; chip = 'Sold out'; }
+      else if (r0 != null || r1 != null) {
+        if (r0 != null && now < r0) { status = 'soon'; chip = 'Registration opens ' + dstr(r0); }
+        else if (r1 != null && now < r1 + DAY) { status = 'open'; chip = 'Registration open · until ' + dstr(r1); }
+        else if (r1 != null) { status = 'unknown'; chip = 'Registration closed ' + dstr(r1) + ' · ticket availability unconfirmed'; }
+        else { status = 'unknown'; chip = 'Registration window not confirmed · check official details'; }
+      }
+      else if (x.availability === 'unknown') { status = 'unknown'; chip = 'Ticket availability not confirmed · check official details'; }
+      else if (s0 != null && now < s0) { status = 'soon'; chip = 'Sale opens ' + dstr(s0); }
       else if (s1 != null && now >= s1 + DAY) { status = 'closed'; chip = 'Sale closed ' + dstr(s1) + ' · check for resale or extra days'; }
       else if (s0 != null || s1 != null) { status = 'open'; chip = 'On sale now' + (s1 != null ? ' · until ' + dstr(s1) : ''); }
-      else { status = 'unknown'; chip = 'Check the ticket site for availability'; }
+      else { status = 'unknown'; chip = 'Ticket availability not confirmed · check official details'; }
       return { x: x, status: status, chip: chip, sort: e0 != null ? e0 : e1 != null ? e1 : 9e15 };
     }).filter(Boolean).sort(function (a, b) { return a.sort - b.sort; });
   }
@@ -99,8 +139,8 @@
       : 'Lead times build up as the watcher sees new items appear' + (leads.length ? ' (' + leads.length + ' measured so far).' : '.');
     var ex = extEntries(EXT, now);
     var ext = ex.length ? '<h4>Sold on the Niantic ticketing site</h4><p class="note">Not in the web store, so not in the A$ total. Prices are in local currency.</p><div class="by-list">' + ex.map(function (r) {
-      var x = r.x;
-      return '<div class="by-r by-ext"><span class="by-t"><b>' + esc(x.name) + '</b><small class="by-chip by-st-' + r.status + '">' + esc(r.chip) + '</small><small>' + esc(x.when) + ' · ' + esc(x.price) + '</small>' + (x.note ? '<small>' + esc(x.note) + '</small>' : '') + '<a class="by-lnk" href="' + esc(x.url) + '" target="_blank" rel="noopener">Open ticket site</a></span></div>';
+      var x = r.x, sources = sourceLinks(x), checked = sourceChecked(x, now);
+      return '<div class="by-r by-ext"><span class="by-t"><b>' + esc(x.name) + '</b><small class="by-chip by-st-' + r.status + '">' + esc(r.chip) + '</small><small>' + esc(x.when) + ' · ' + esc(x.price) + '</small>' + (x.note ? '<small>' + esc(x.note) + '</small>' : '') + (checked ? '<small class="by-source-date">' + esc(checked) + '</small>' : '') + (sources ? '<span class="by-acts">' + sources + '</span>' : '') + '<a class="by-lnk" href="' + esc(x.url) + '" target="_blank" rel="noopener">Open ticket site</a></span></div>';
     }).join('') + '</div>' : '';
     host.innerHTML = bar + h + ext + '<p class="note">' + esc(stat) + ' All prices in A$. Store list last changed ' + esc(new Date(LOG.updated).toLocaleString('en-AU', { day: 'numeric', month: 'short', hour: 'numeric', minute: '2-digit' })) + '.</p>';
     host.querySelectorAll('[data-by]').forEach(function (c) { c.addEventListener('change', function () { setMark(c.dataset.by, c.checked ? 'plan' : ''); render(host, m, now); }); });
@@ -118,7 +158,7 @@
       }, 300);
     }).catch(function () { });
   }
-  window.GOBUY = { extEntries: extEntries, untilStr: untilStr };
+  window.GOBUY = { extEntries: extEntries, untilStr: untilStr, dayMs: dayMs, officialSourceUrl: officialSourceUrl, sourceLinks: sourceLinks, sourceChecked: sourceChecked };
   document.addEventListener('gofn-state', function () { if (VIEW && LOG) render(VIEW.host, VIEW.m, Date.now()); });
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', go); else go();
 })();

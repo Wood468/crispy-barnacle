@@ -4,25 +4,71 @@ import { readFileSync } from "node:fs";
 import { createRequire } from "node:module";
 import vm from "node:vm";
 
-// Load the planner script with just enough of a browser to reach its pure helpers (no element on the page, so it does nothing else).
+// Load the planner script with just enough of a browser to reach its pure helpers.
 const require = createRequire(import.meta.url);
 const win = { GOLIB: require("../public/lib.js") };
-const ctx = vm.createContext({ window: win, document: { readyState: "complete", getElementById: () => null, addEventListener() {} }, localStorage: { getItem: () => null, setItem() {} }, Date, Math, JSON, String, Number, Object, Array, RegExp });
+const ctx = vm.createContext({ window: win, document: { readyState: "complete", getElementById: () => null, addEventListener() {} }, localStorage: { getItem: () => null, setItem() {} }, Date, Math, JSON, String, Number, Object, Array, RegExp, URL });
 vm.runInContext(readFileSync(new URL("../public/buy.js", import.meta.url), "utf8"), ctx);
-const { extEntries, untilStr } = win.GOBUY;
+const { extEntries, untilStr, dayMs, officialSourceUrl, sourceLinks, sourceChecked } = win.GOBUY;
 
 const at = (y, m, d, h = 12) => new Date(y, m - 1, d, h).getTime();
-const SENDAI = { id: "s", name: "Sendai", eventStart: "2026-11-06", eventEnd: "2026-11-08", saleStart: "2026-09-11", saleEnd: "2026-09-15" };
+const SENDAI = { id: "s", name: "Sendai", eventStart: "2026-11-06", eventEnd: "2026-11-08", registrationStart: "2026-09-11", registrationEnd: "2026-09-15", availability: "unknown", observed: "2026-11-03" };
 const MEXICO = { id: "m", name: "Mexico City", eventStart: "2026-11-06", eventEnd: "2026-11-08" };
 
-test("tickets sold elsewhere: chip follows the sale window and the entry expires after the event", () => {
+test("tickets sold elsewhere: registration is not mislabeled as the ticket-sale window", () => {
   const chips = now => extEntries([SENDAI, MEXICO], now).map(r => r.status);
   assert.deepEqual(chips(at(2026, 9, 1)), ["soon", "unknown"]);
   assert.deepEqual(chips(at(2026, 9, 12)), ["open", "unknown"]);
-  assert.deepEqual(chips(at(2026, 10, 20)), ["closed", "unknown"]);
-  assert.match(extEntries([SENDAI], at(2026, 10, 20))[0].chip, /Sale closed 15 Sep · check for resale/);
-  assert.deepEqual(chips(at(2026, 11, 8, 23)), ["closed", "unknown"], "still listed on the last day of the event");
+  assert.deepEqual(chips(at(2026, 10, 20)), ["unknown", "unknown"]);
+  assert.match(extEntries([SENDAI], at(2026, 10, 20))[0].chip, /Registration closed 15 Sep · ticket availability unconfirmed/);
+  assert.deepEqual(chips(at(2026, 11, 8, 23)), ["unknown", "unknown"], "still listed on the last day of the event");
   assert.deepEqual(chips(at(2026, 11, 9, 1)), [], "gone the day after the event");
+});
+
+test("sale windows retain their original opening and closing behaviour", () => {
+  const sale = { ...MEXICO, saleStart: "2026-09-11", saleEnd: "2026-09-15" };
+  assert.equal(extEntries([sale], at(2026, 9, 1))[0].status, "soon");
+  assert.equal(extEntries([sale], at(2026, 9, 12))[0].status, "open");
+  assert.equal(extEntries([sale], at(2026, 9, 20))[0].status, "closed");
+});
+
+test("explicit ticket availability is shown only when recorded", () => {
+  assert.equal(extEntries([{...MEXICO, availability:"available"}], at(2026,11,3))[0].chip, "Tickets available");
+  assert.equal(extEntries([{...MEXICO, availability:"sold-out"}], at(2026,11,3))[0].status, "closed");
+  assert.equal(extEntries([{...MEXICO, availability:"unknown"}], at(2026,11,3))[0].status, "unknown");
+});
+
+test("published GO Wild Area records reflect the official source checks on 3 Nov 2026", () => {
+  const data = JSON.parse(readFileSync(new URL("../public/tickets-external.json", import.meta.url), "utf8"));
+  const rows = extEntries(data.items, at(2026,11,3));
+  const sendai = rows.find(r => r.x.id === "wild-area-sendai");
+  const mexico = rows.find(r => r.x.id === "wild-area-mexico-city");
+  assert.equal(sendai.status, "unknown");
+  assert.match(sendai.chip, /Registration closed 15 Sep · ticket availability unconfirmed/);
+  assert.equal(mexico.status, "open");
+  assert.equal(mexico.chip, "Tickets available");
+  assert.equal(sendai.x.observed, "2026-11-03");
+  assert.equal(mexico.x.observed, "2026-11-03");
+});
+
+test("official source links allow only HTTPS Pokémon GO pages and de-duplicate URLs", () => {
+  assert.equal(officialSourceUrl("https://pokemongo.com/en/gowildarea"), "https://pokemongo.com/en/gowildarea");
+  assert.equal(officialSourceUrl("https://www.pokemongo.com/en/gowildarea"), "https://www.pokemongo.com/en/gowildarea");
+  for (const bad of ["http://pokemongo.com/en/gowildarea", "https://pokemongo.com.evil.test/x", "https://pokemongo.com@evil.test/x", "https://evil.test/x", "javascript:alert(1)"]) {
+    assert.equal(officialSourceUrl(bad), "");
+  }
+  const html = sourceLinks({name:"Example",sources:["https://pokemongo.com/en/gowildarea","https://pokemongo.com/en/gowildarea","https://evil.test/"]});
+  assert.equal((html.match(/<a\b/g)||[]).length, 1);
+  assert.match(html, /Official event details/);
+  assert.doesNotMatch(html, /evil\.test/);
+});
+
+test("source-check dates must be valid and cannot be in the future", () => {
+  assert.match(sourceChecked({observed:"2026-11-03"}, at(2026,11,3)), /Official source checked 3 Nov 2026/);
+  assert.equal(sourceChecked({observed:"2026-11-04"}, at(2026,11,3)), "");
+  assert.equal(sourceChecked({observed:"2026-02-31"}, at(2026,11,3)), "");
+  assert.equal(dayMs("2026-02-31"), null);
+  assert.equal(dayMs("2026-11-03"), at(2026,11,3,0));
 });
 
 test("tickets sold elsewhere: sorted by event date, and bad input does not break it", () => {
