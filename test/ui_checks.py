@@ -1532,10 +1532,19 @@ with sync_playwright() as p:
             return true;
         }""")
         check('failed-thumbnail fixture finds a connected infographic control before scrolling', thumbnail_scrolled)
-        fallback_ready = settle(pb, "(() => { const b=document.querySelector('[data-igcheck=\\\"cur:trek\\\"]'), card=document.querySelector('[data-igcard=\\\"cur:trek\\\"]'); return !!b && b.textContent.trim()==='Check infographic' && !!card && card.hasAttribute('data-igbad'); })()", 8000)
-        fallback_state = pb.evaluate("""() => { const b=document.querySelector('[data-igcheck=\\\"cur:trek\\\"]'); const card=document.querySelector('[data-igcard=\\\"cur:trek\\\"]'); const img=card&&card.querySelector('img'); return {hasCheck:!!b,text:b&&b.textContent.trim(),hasCard:!!card,hasBad:!!(card&&card.hasAttribute('data-igbad')),imgSrc:img&&img.getAttribute('src'),thumbUrl:img&&img.getAttribute('data-thumb-url')}; }""")
+        fallback_ready = settle(pb, """(() => {
+            const b=[...document.querySelectorAll('[data-igcheck]')].find(el => el.getAttribute('data-igcheck')==='cur:trek');
+            const card=[...document.querySelectorAll('[data-igcard]')].find(el => el.getAttribute('data-igcard')==='cur:trek');
+            return !!b && b.textContent.trim()==='Check infographic' && !!card && card.hasAttribute('data-igbad') && !card.querySelector('img');
+        })()""", 15000)
+        fallback_state = pb.evaluate("""() => {
+            const b=[...document.querySelectorAll('[data-igcheck]')].find(el => el.getAttribute('data-igcheck')==='cur:trek');
+            const card=[...document.querySelectorAll('[data-igcard]')].find(el => el.getAttribute('data-igcard')==='cur:trek');
+            return {hasCheck:!!b,text:b&&b.textContent.trim(),hasCard:!!card,hasBad:!!(card&&card.hasAttribute('data-igbad')),hasImage:!!(card&&card.querySelector('img'))};
+        }""")
         fallback_state['requests'] = pb.infographic_requests[-12:]
-        check('a thumbnail that fails to load becomes Check infographic', fallback_ready and pb.locator('[data-igcheck="cur:trek"]').first.inner_text()=='Check infographic' and pb.locator('[data-igcard="cur:trek"] img').count()==0 and pb.locator('[data-igcard="cur:trek"]').first.get_attribute('data-igbad') is not None, fallback_state)
+        requested_both_sizes = any(url.endswith(TREK_THUMB_URL) for url in fallback_state['requests']) and any(url.endswith(TREK_INFOGRAPHIC_URL) for url in fallback_state['requests'])
+        check('a thumbnail that fails to load becomes Check infographic', fallback_ready and fallback_state['hasCheck'] and fallback_state['text']=='Check infographic' and fallback_state['hasCard'] and fallback_state['hasBad'] and not fallback_state['hasImage'] and requested_both_sizes, fallback_state)
         pb.context.close()
         # Regional event infographics must resolve through the same viewer as standard event cards.
         mexico_id='w-pok-mon-go-dia-de-muertos-2026-mexico-exclusive-ev'
