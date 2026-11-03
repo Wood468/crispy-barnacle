@@ -4051,21 +4051,6 @@ check('Max, Gigantamax and Shadow artwork-tag gradients use semantic roles with 
           'linear-gradient(90deg,#b7310f,#ff7a1a)'
       ]))
 
-# Mega red status pills follow the app's explicit theme, independent of OS preference.
-check('Mega status pill uses semantic theme roles with light and dark palette values',
-      all(token in DASH_CSS for token in [
-          '--color-status-mega-pill-bg:#4a1d1d',
-          '--color-status-mega-pill-fg:#ffb4ab',
-          '--color-status-mega-pill-border:#7a2f2f',
-          ':root[data-theme="light"]{',
-          '--color-status-mega-pill-bg:#fde8e8',
-          '--color-status-mega-pill-fg:#b42318',
-          '--color-status-mega-pill-border:#f4b4b0'
-      ]) and
-      '.mega-pill-red{display:inline-block;align-self:flex-start;margin-top:.35rem;padding:.15rem .6rem;border-radius:var(--radius-pill);background:var(--color-status-mega-pill-bg);color:var(--color-status-mega-pill-fg);border:1px solid var(--color-status-mega-pill-border);font-size:var(--type-label);font-weight:600}' in DASH_CSS and
-      '@media (prefers-color-scheme:dark){.mega-pill-red' not in DASH_CSS)
-
-
     if on('a'):
         # Today shiny rail: only active, source-backed boosts/debuts/availability are shown.
         shiny_data = json.loads((ROOT / 'public' / 'data.json').read_text())
@@ -4173,6 +4158,22 @@ check('Mega status pill uses semantic theme roles with light and dark palette va
               DASH_URL.endswith('dash.js?v=20261104f') and DASH_CSS_URL.endswith('dash.css?v=20261104e') and
               APP_URL.endswith('app.js?v=20261104e') and SHELL_CACHE=='gofn-shell-v238' and
               '/research.js?v=20261104b' in SW_JS and '/data.json' in SW_JS)
+
+# Mega red status pills follow the app's explicit theme, independent of OS preference.
+check('Mega status pill uses semantic theme roles with light and dark palette values',
+      all(token in DASH_CSS for token in [
+          '--color-status-mega-pill-bg:#4a1d1d',
+          '--color-status-mega-pill-fg:#ffb4ab',
+          '--color-status-mega-pill-border:#7a2f2f',
+          ':root[data-theme="light"]{',
+          '--color-status-mega-pill-bg:#fde8e8',
+          '--color-status-mega-pill-fg:#b42318',
+          '--color-status-mega-pill-border:#f4b4b0'
+      ]) and
+      '.mega-pill-red{display:inline-block;align-self:flex-start;margin-top:.35rem;padding:.15rem .6rem;border-radius:var(--radius-pill);background:var(--color-status-mega-pill-bg);color:var(--color-status-mega-pill-fg);border:1px solid var(--color-status-mega-pill-border);font-size:var(--type-label);font-weight:600}' in DASH_CSS and
+      '@media (prefers-color-scheme:dark){.mega-pill-red' not in DASH_CSS)
+
+
 
 print('\nFAILED:',fails if fails else 'none')
 if fails:
