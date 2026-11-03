@@ -21,6 +21,7 @@ def main():
     data["pastFests"] = []
     data["worldEvents"] = [
         {"t": "Asia world-event fixture", "where": "Kyoto, Japan", "region": "Asia", "s": "2026-11-06", "e": "2026-11-08", "link": "https://example.test/asia", "note": "Ticketed in-person fixture.", "kind": "event"},
+        {"t": "Regional In-Game Fixture", "where": "India", "region": "Asia", "s": "2026-11-06", "e": "2026-11-08", "link": "https://example.test/india", "note": "India-only in-game event; no physical destination.", "kind": "event", "mode": "in-game"},
         {"t": "Americas world-event fixture", "where": "Mexico City, Mexico", "region": "Americas", "s": "2026-11-06", "e": "2026-11-08", "link": "https://example.test/americas", "note": "Ticketed in-person fixture.", "kind": "event"},
         {"t": "Global world-event fixture", "where": "Play from anywhere", "region": "Global", "s": "2026-11-14", "e": "2026-11-15", "link": "https://example.test/global", "note": "Global play fixture.", "kind": "event"}
     ]
@@ -226,9 +227,9 @@ def main():
             expect("regional in-game event remains visible on Today",
                    regional_game.count() == 1 and regional_game.is_visible())
             expect("overseas in-person event stays under the In person label",
-                   today_groups["overseas"].startsWith("In person"), today_groups)
+                   today_groups["overseas"].startswith("In person"), today_groups)
             expect("regional in-game event is not misclassified as in-person",
-                   today_groups["regionalGame"].startsWith("In-game (regional)"), today_groups)
+                   today_groups["regionalGame"].startswith("In-game (regional)"), today_groups)
             expect("unverified venue-local time is not invented",
                    "Venue:" not in overseas_text, overseas_text)
             expect("no browser page errors", not page_errors, page_errors)
