@@ -16,8 +16,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&family=Hanken+Grotesk:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap">
 <link rel="stylesheet" href="/styles.css?v=20261102b">
-<link rel="stylesheet" href="/dash.css?v=20261104b">
-<link rel="preload" href="/dash.js?v=20261104c" as="script">
+<link rel="stylesheet" href="/dash.css?v=20261104d">
+<link rel="preload" href="/dash.js?v=20261104e" as="script">
 </head>
 <body>
 <div class="wrap">
@@ -130,6 +130,15 @@
         <div id="evtimeline"></div>
         <p class="note" id="evsource"></p>
       </div>
+      </section>
+      <section class="panel" id="sub-research" hidden aria-labelledby="research-title">
+        <div class="research-page-head">
+          <span class="research-eyebrow">SCHEDULE / RESEARCH</span>
+          <h2 class="sec2" id="research-title">Research</h2>
+          <p class="intro">Field, Timed and Special Research from current and upcoming events. Rewards and task details appear only when a source publishes them.</p>
+        </div>
+        <p id="research-status" class="sync" role="status" aria-live="polite">Research data is loading…</p>
+        <div id="research-list" class="research-groups" aria-busy="false"></div>
       </section>
       <section class="panel" id="sub-world" hidden>
         <h2 class="sec2">In person and around the world</h2>
@@ -471,10 +480,11 @@
 <script src="/local-state.js?v=20261030a"></script>
 <script src="/account.js?v=20261102a"></script>
 <script src="/dedupe.js?v=20261101b"></script>
-<script src="/app.js?v=20261104a"></script>
+<script src="/app.js?v=20261104d"></script>
 <script src="/raid-share.js?v=20261102b"></script>
 <script src="/store.js?v=20261102a"></script>
 <script src="/season.js?v=20261104b"></script>
+<script src="/research.js?v=20261104b"></script>
 <script src="/weekly.js?v=20261102a"></script>
 <script src="/pin.js?v=20261101b"></script>
 <script src="/whatsnew.js?v=20261102d"></script>

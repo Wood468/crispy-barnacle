@@ -211,7 +211,7 @@ Promise.all([
   var PANEL_IDS=['now','events','raids','collect','saved'];
   // Multiple views per tab. Some views have a second-level filter (MODES) over existing sections.
   var SUBS={
-    events:[['calendar','Calendar','sub-calendar'],['timeline','Timeline','sub-timeline'],['world','In person','sub-world'],['travel','Travel','sub-travel'],['leaks','Discoveries','sub-leaks','menu']],
+    events:[['calendar','Calendar','sub-calendar'],['timeline','Timeline','sub-timeline'],['research','Research','sub-research'],['world','In person','sub-world'],['travel','Travel','sub-travel'],['leaks','Discoveries','sub-leaks','menu']],
     collect:[['dex','My Dex','sub-mydex'],['opps','Opportunities','sub-opps','menu'],['megas','Megas','sub-megas'],['guides','Guides','sub-guides']],
     saved:[['watch','Watchlist','sub-watch'],['menu','Menu','sub-menu']]
   };
@@ -283,6 +283,15 @@ Promise.all([
     if(!sub||arguments.length<3)window.scrollTo(0,0);
   }
   // Back button / swipe-back: stay inside the app. An open detail or infographic closes first; from any other tab Back goes to Now;
+  window.GOAPP = window.GOAPP || {};
+  window.GOAPP.openResearch = function (eventId) {
+    if (window.GODETAIL && typeof window.GODETAIL.close === 'function') window.GODETAIL.close();
+    setTimeout(function () {
+      showTab('events', 'research');
+      document.dispatchEvent(new CustomEvent('gofn-research-focus', { detail: { eventId: eventId || '' } }));
+    }, 120);
+  };
+
   // only from Now does Back leave the site. Tabs use no history entries of their own, so one Back is always one step.
   window.GONAV={depth:0,internal:false,
     push:function(){this.depth++;try{history.pushState({gofn:'overlay',d:this.depth},'')}catch(e){this.depth--}},
@@ -1015,7 +1024,7 @@ Promise.all([
     var r=document.getElementById('today-retry');if(r)r.addEventListener('click',function(){window.location.reload()});
     var b=document.getElementById('day-brief');if(b)b.setAttribute('data-state','unavailable');
     var f=document.getElementById('fresh-line');if(f)f.setAttribute('data-released','')}
-  var ds=document.createElement('script');ds.src='/dash.js?v=20261104c';ds.onerror=todayUnavailable;document.body.appendChild(ds);setTimeout(function(){if(!window.GODASH)todayUnavailable()},10000);
+  var ds=document.createElement('script');ds.src='/dash.js?v=20261104e';ds.onerror=todayUnavailable;document.body.appendChild(ds);setTimeout(function(){if(!window.GODASH)todayUnavailable()},10000);
 })();
 
 }).catch(function(){var panel=document.getElementById('load-error');if(panel)panel.hidden=false;var retry=document.getElementById('load-retry');if(retry)retry.addEventListener('click',function(){window.location.reload()},{once:true})});

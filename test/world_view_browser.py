@@ -108,7 +108,7 @@ def main():
             # app.js creates the sub-navigation before its initial data render completes.
             page.wait_for_function("() => { const el=document.querySelector('#inperson article h3'); return !!el && el.textContent.includes('In-person fixture: Kyoto'); }", timeout=10000)
             expect("In person is a visible third Schedule view",
-                   page.locator("#sub-world").is_visible() and page.locator("#subnav-events button").count() == 4)
+                   page.locator("#sub-world").is_visible() and page.locator("#subnav-events button").count() == 5 and page.locator('#subnav-events button[data-sub="research"]').count() == 1)
             person_titles = page.locator("#inperson article h3").all_text_contents()
             expect("ticketed in-person event cards render in the view",
                    person_titles.count("In-person fixture: Kyoto") == 1, person_titles)

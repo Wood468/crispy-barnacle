@@ -28,11 +28,49 @@ const trim = s => s.replace(/^[•·\-–\s]+/, "").replace(/\s+/g, " ").trim();
 const NOISE = /^(share|read more|related|advertisement|sign up|follow us|comments?|learn more|and even more|keep an eye out|tier \d|rank \d+\s*$)|and even more goodies|learn more about|^\*/i;
 const keep = s => (s.length >= 14 || /[×]|\d\s?x\b/i.test(s) && s.length >= 6) && s.length <= 220 && !NOISE.test(s);
 
+function parseResearchTask(line, category) {
+  const marker = /\b(?:possible\s+)?rewards?\s*:?\s*/i.exec(String(line || ""));
+  if (!marker) return null;
+  const task = trim(String(line).slice(0, marker.index)).replace(/[|:–—-]+$/, "").trim();
+  const rewardText = trim(String(line).slice(marker.index + marker[0].length));
+  if (!task || /^task$/i.test(task) || task.length < 4 || !rewardText || /^(possible )?rewards?$/i.test(rewardText)) return null;
+  if (!/^(catch|spin|make|win|complete|send|hatch|power up|evolve|take|use|earn|battle|trade|transfer|walk|feed|give|land|defeat|purify|exchange|open|explore|adventure|beat|visit|photograph|level up|collect|get|play|perform|throw)\b/i.test(task)) return null;
+  const rewards = [];
+  const cp = /([^|]+?)\s+Max CP\s+(\d{2,4})\s+Min CP\s+(\d{2,4})/gi;
+  let match;
+  while ((match = cp.exec(rewardText)) !== null) {
+    const name = trim(match[1]).replace(/^[|,;\s]+/, "");
+    const maxCP = Number(match[2]), minCP = Number(match[3]);
+    if (!name || minCP > maxCP || maxCP > 9999) continue;
+    rewards.push({ type: "encounter", name, quantity: 1, cpMin: minCP, cpMax: maxCP });
+  }
+  if (!rewards.length) {
+    for (const chunk of rewardText.split(/\s+\|\s+/).map(trim).filter(Boolean)) {
+      const qty = /^(?:[×x]\s*(\d+)\s*)?(.+?)(?:\s+[×x]\s*(\d+))?$/i.exec(chunk);
+      if (!qty) continue;
+      let name = trim(qty[2]);
+      if (!name || /^(possible )?rewards?$/i.test(name) || name.length > 100) continue;
+      let quantity = Number(qty[1] || qty[3] || 1);
+      const numeric = /^(\d+)\s+(.+)$/.exec(name);
+      if (numeric) { quantity = Number(numeric[1]); name = trim(numeric[2]); }
+      if (!Number.isInteger(quantity) || quantity < 1 || quantity > 999) continue;
+      const encounter = /^(?:an?\s+)?encounter with\s+(.+)$/i.exec(name);
+      const knownItem = /\b(candy|ball|stardust|xp|energy|pass|incubator|revive|potion|pok[eé]coin|rare candy|incense|lure|egg)\b/i.test(name);
+      const explicitQuantity = !!(qty[1] || qty[3] || numeric);
+      if (!encounter && !knownItem && !explicitQuantity) continue;
+      if (encounter) name = trim(encounter[1]);
+      const type = encounter ? "encounter" : knownItem ? "item" : "other";
+      rewards.push({ type, name, quantity });
+    }
+  }
+  return rewards.length ? { task, category: category || "research", rewards } : null;
+}
+
 export function extractFields(html) {
   const lines = Array.isArray(html) ? html : htmlToLines(html);
-  const out = Object.fromEntries(FIELDS.map(f => [f, []]));
+  const out = Object.fromEntries(FIELDS.map(f => [f, []])); out.researchTasks = [];
   const add = (f, s) => { s = trim(s); if (keep(s) && !out[f].includes(s) && out[f].filter(x => /^rank \d+/i.test(x) === /^rank \d+/i.test(s)).length < (/^rank \d+/i.test(s) ? 110 : 14)) out[f].push(s); };
-  let cur = null, rank = 0, headSeen = "", deluxe = false, taken = 0;
+  let cur = null, rank = 0, headSeen = "", deluxe = false, taken = 0, researchKind = "research";
   for (const l of lines) {
     // "Tier 2 – Rank 25" style labels: remember the rank so the bonus lines under it say which rank unlocks them.
     const rm = RANKLABEL.exec(l.text);
@@ -54,10 +92,18 @@ export function extractFields(html) {
       rank = 0; deluxe = false; headSeen = l.text;
       const hit = HEAD.find(([, re]) => re.test(l.text));
       cur = hit ? hit[0] : null;
+      researchKind = /field\s+research/i.test(l.text) ? "field" : /timed\s+research/i.test(l.text) ? "timed" : /special\s+research/i.test(l.text) ? "special" : "research";
       if (/\bdebut\b/i.test(l.text) && !/shiny/i.test(l.text)) add("featured", l.text);
       continue;
     }
     if (cur) add(cur, l.text);
+    if (cur === "research") {
+      const task = parseResearchTask(l.text, researchKind);
+      if (task) {
+        const key = JSON.stringify([task.category, task.task.toLowerCase(), task.rewards]);
+        if (!out.researchTasks.some(x => JSON.stringify([x.category, x.task.toLowerCase(), x.rewards]) === key)) out.researchTasks.push(task);
+      }
+    }
     for (const [f, re] of LINE) if (re.test(l.text) && f !== cur) add(f, l.text);
   }
   return out;

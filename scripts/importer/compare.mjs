@@ -40,5 +40,18 @@ export function mergeSources(results) {
     const order = { official: 0, corroborated: 1, single: 2 };
     fields[f] = clusters.map(c => ({ text: c.text, sources: c.sources, status: c.official ? "official" : c.sources.length >= 2 ? "corroborated" : "single" })).sort((a, b) => order[a.status] - order[b.status]); { const isRk = x => /^rank \d+/i.test(x.text), rk = fields[f].filter(isRk).slice(0, 110); fields[f] = fields[f].filter(x => !isRk(x)).slice(0, 12).concat(rk); }
   }
-  return { fields, conflicts, gaps };
+  const taskMap = new Map();
+  for (const r of sorted) for (const task of (r.fields.researchTasks || [])) {
+    const key = JSON.stringify([task.category || "research", String(task.task || "").toLowerCase().replace(/\s+/g, " ").trim(), (task.rewards || []).map(x => [x.type, x.name, x.quantity, x.cpMin, x.cpMax])]);
+    let item = taskMap.get(key);
+    if (!item) { item = { ...task, sources: [], sourceRefs: [], official: false }; taskMap.set(key, item); }
+    if (!item.sources.includes(r.source.id)) item.sources.push(r.source.id);
+    const sourceRef = { id: r.source.id, name: r.source.name || r.source.id, trust: r.source.trust || "", url: r.source.url || "" };
+    if (!item.sourceRefs.some(s => s.id === sourceRef.id && s.url === sourceRef.url)) item.sourceRefs.push(sourceRef);
+    if (r.source.trust === "official") item.official = true;
+  }
+  const researchTasks = [...taskMap.values()].map(({ official, ...task }) => ({
+    ...task, status: official ? "official" : task.sources.length >= 2 ? "corroborated" : "single"
+  })).sort((a, b) => String(a.category).localeCompare(String(b.category)) || String(a.task).localeCompare(String(b.task)));
+  return { fields, conflicts, gaps, researchTasks };
 }

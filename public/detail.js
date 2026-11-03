@@ -151,10 +151,51 @@
   /* "From the sources": what several write-ups say about the event, compared. Each line shows how many sources agree. */
   var CATS = [['tickets', 'Tickets and passes'], ['bonuses', 'Bonuses'], ['featured', 'Wild and featured'], ['raids', 'Raids and Max'], ['eggs', 'Eggs'], ['research', 'Research'], ['shiny', 'Shiny'], ['moves', 'Moves'], ['costumes', 'Costumes'], ['dates', 'Dates and times']];
   function findDetails(ev) {
-    var D = DATA.details || {}; if (D[ev.id]) return D[ev.id];
-    var n = LIB.norm(ev.name), hit = null;
-    Object.keys(D).forEach(function (k) { if (LIB.norm(D[k].name) === n) hit = D[k]; });
-    return hit;
+    var D = DATA.details || {}, ids = [];
+    if (ev && ev.season && ev.season.detailId) ids.push(ev.season.detailId);
+    if (ev && ev.id) ids.push(ev.id);
+    if (ev && Array.isArray(ev.detailIds)) ids = ids.concat(ev.detailIds);
+    var hits = [];
+    ids.filter(function (id, i, a) { return id && a.indexOf(id) === i; }).forEach(function (id) {
+      if (D[id] && hits.indexOf(D[id]) < 0) hits.push(D[id]);
+    });
+    if (!hits.length) {
+      var n = LIB.norm(ev && ev.name), hit = null;
+      Object.keys(D).forEach(function (k) { if (LIB.norm(D[k].name) === n) hit = D[k]; });
+      if (hit) hits.push(hit);
+    }
+    if (hits.length < 2) return hits[0] || null;
+    var out = { name: hits[0].name, updated: "", sources: [], fields: {}, conflicts: [], gaps: [], researchTasks: [] };
+    function uniquePush(list, item, key) {
+      var value = key ? key(item) : JSON.stringify(item);
+      if (!list.some(function (x) { return (key ? key(x) : JSON.stringify(x)) === value; })) list.push(item);
+    }
+    hits.forEach(function (d) {
+      if (String(d.updated || "") > out.updated) out.updated = String(d.updated || "");
+      (d.sources || []).forEach(function (s) { uniquePush(out.sources, s, function (x) { return x.id + "|" + x.url; }); });
+      Object.keys(d.fields || {}).forEach(function (field) {
+        var list = out.fields[field] || (out.fields[field] = []);
+        (d.fields[field] || []).forEach(function (item) {
+          var existing = list.filter(function (x) { return x.text === item.text; })[0];
+          if (existing) {
+            existing.sources = Array.from(new Set((existing.sources || []).concat(item.sources || [])));
+            var official = existing.status === "official" || item.status === "official";
+            existing.status = official ? "official" : existing.sources.length > 1 ? "corroborated" : existing.status;
+          } else list.push(Object.assign({}, item, { sources: (item.sources || []).slice() }));
+        });
+      });
+      (d.researchTasks || []).forEach(function (task) {
+        var key = JSON.stringify([task.category, task.task, task.rewards]);
+        var existing = out.researchTasks.filter(function (x) { return JSON.stringify([x.category, x.task, x.rewards]) === key; })[0];
+        if (existing) {
+          existing.sources = Array.from(new Set((existing.sources || []).concat(task.sources || [])));
+          existing.status = existing.status === "official" || task.status === "official" ? "official" : existing.sources.length > 1 ? "corroborated" : existing.status;
+        } else out.researchTasks.push(Object.assign({}, task, { sources: (task.sources || []).slice() }));
+      });
+      (d.conflicts || []).forEach(function (x) { uniquePush(out.conflicts, x); });
+      (d.gaps || []).forEach(function (x) { uniquePush(out.gaps, x); });
+    });
+    return out;
   }
   function srcName(d, id) { var s = (d.sources || []).filter(function (x) { return x.id === id; })[0]; return s ? s.name : id; }
   /* Matching line icons keep every event-detail category visually consistent. */
@@ -219,6 +260,13 @@
     var grouped = dedupeSourceGroups(d.fields);
     var groups = CATS.map(function (c) {
       var items = grouped[c[0]] || [];
+      if (c[0] === 'research' && (d.researchTasks || []).length) {
+        var taskStarts = d.researchTasks.map(function (task) { return tidy(task.task).toLowerCase(); });
+        items = items.filter(function (item) {
+          var text = tidy(item.text).toLowerCase();
+          return !taskStarts.some(function (task) { return task && text.indexOf(task) === 0; });
+        });
+      }
       if (!items.length) return '';
       var ranks = items.filter(function (x) { return /^rank \d+\b/i.test(x.text); }).sort(function (a, b) { return parseInt(a.text.replace(/\D+/, ''), 10) - parseInt(b.text.replace(/\D+/, ''), 10); }), rest = items.filter(function (x) { return ranks.indexOf(x) < 0; });
       var fmt = function (x) { return window.GORICH(c[0] === 'tickets' ? passPrice(esc(x), ev) : esc(x)); };
@@ -265,6 +313,39 @@
   }
 
   /* Seasons and monthly GO Passes: their own layout, in sections with icons. Curated notes come from season.json; rank rows and prices from the compared write-ups. */
+  function researchTasksHtml(ev, d) {
+    var tasks = d && Array.isArray(d.researchTasks) ? d.researchTasks : [];
+    if (!tasks.length) return '';
+    function attribution(task) {
+      var ids = (task.sources || []).filter(function (id, i, a) { return id && a.indexOf(id) === i; });
+      var refs = Array.isArray(task.sourceRefs) && task.sourceRefs.length ? task.sourceRefs : ids.map(function (id) {
+        return (d.sources || []).filter(function (s) { return s.id === id; })[0];
+      }).filter(Boolean);
+      var links = refs.map(function (source) {
+        var name = source.name || source.id || '';
+        var url = safe(source.url);
+        return url ? '<a href="' + esc(url) + '" target="_blank" rel="noopener noreferrer">' + esc(name) + '</a>' : esc(name);
+      }).filter(Boolean);
+      var label = task.status === 'official' ? 'Official' : task.status === 'corroborated' ? 'Cross-checked' : 'Single source';
+      return '<small class="research-task-source">' + label + (links.length ? ' · ' + links.join(' · ') : '') + (task.checkedAt ? ' · checked ' + esc(task.checkedAt) : '') + '</small>';
+    }
+
+    function reward(item) {
+      if (item.type === 'encounter') {
+        var cp = item.cpMin && item.cpMax ? '<small>CP ' + esc(item.cpMin) + '–' + esc(item.cpMax) + '</small>' : '<small>Encounter</small>';
+        return '<div class="research-reward">' + X.monArt(ev, { name: item.name, costume: /wearing|costume/i.test(item.name), role: 'featured' }, 'ea') + '<span><b>' + esc(item.name) + '</b>' + cp + '</span></div>';
+      }
+      return '<div class="research-reward research-reward-item"><span class="research-reward-qty">' + (item.quantity > 1 ? esc(item.quantity) + '×' : '•') + '</span><span><b>' + esc(item.name) + '</b><small>' + (item.type === 'item' ? 'Item reward' : 'Possible reward') + '</small></span></div>';
+    }
+    return '<section class="evd-research"><h3 class="sec2" id="evd-research-title">Research tasks</h3><div class="evd-card research-task-list">'
+      + tasks.map(function (task) {
+        var kind = task.category === 'field' ? 'Field Research' : task.category === 'timed' ? 'Timed Research' : task.category === 'special' ? 'Special Research' : 'Research';
+        return '<article class="research-task"><div class="research-task-head"><span class="research-task-kind">' + kind + '</span><span class="research-task-state">' + (task.rewards || []).length + ' reward' + ((task.rewards || []).length === 1 ? '' : 's') + '</span></div><h4>' + esc(task.task) + '</h4><div class="research-rewards">' + (task.rewards || []).map(reward).join('') + '</div>' + attribution(task) + '</article>';
+      }).join('')
+      + '</div><button type="button" class="pill all research-browse" data-open-research data-event-id="' + esc(ev.id) + '">Browse current research</button></section>';
+  }
+
+
   function seasonPage(ev) {
     var si = ev.season; if (!si) return '';
     var d = findDetails(ev) || { fields: {} }, F = d.fields || {};
@@ -285,7 +366,8 @@
     var rows = rank(F.tickets).map(function (t) { var m = /^rank (\d+)\W*(.*)$/i.exec(t), fd = /^Free: (.*?) \| Deluxe: (.*)$/.exec(m[2]); return fd ? { r: +m[1], f: fd[1], d: fd[2] } : null; }).filter(Boolean).sort(function (a, b) { return a.r - b.r; });
     var rowHtml = function (x) { return '<tr><th>' + x.r + '</th><td>' + window.GORICH(esc(x.f)) + '</td><td>' + window.GORICH(esc(x.d)) + '</td></tr>'; };
     var rewards = rows.length ? '<details class="evd-rk" open><summary>First 10 ranks</summary><div class="ss-scroll"><table class="ss-tab"><thead><tr><th>Rank</th><th>Free</th><th>Deluxe</th></tr></thead><tbody>' + rows.slice(0, 10).map(rowHtml).join('') + '</tbody></table></div></details>'
-      + (rows.length > 10 ? '<details class="evd-rk"><summary>All ' + rows.length + ' rank rewards</summary><div class="ss-scroll"><table class="ss-tab"><thead><tr><th>Rank</th><th>Free</th><th>Deluxe</th></tr></thead><tbody>' + rows.slice(10).map(rowHtml).join('') + '</tbody></table></div></details>' : '') : '';
+      + (rows.length > 10 ? '<details class="evd-rk"><summary>All ' + rows.length + ' rank rewards</summary><div class="ss-scroll"><table class="ss-tab"><thead><tr><th>Rank</th><th>Free</th><th>Deluxe</th></tr></thead><tbody>' + rows.slice(10).map(rowHtml).join('') + '</tbody></table></div></details>' : '')
+      : (si.label === 'GO Pass' ? '<p class="note">Individual rank rewards have not been published or parsed from the linked source yet. Only verified summaries and milestone bonuses are shown.</p>' : '');
     // prices
     var prices = (F.tickets || []).map(function (x) { return tidy(x.text); }).filter(function (t) { return /US\$/.test(t) && !/^rank/i.test(t); });
     var priceHtml = prices.length ? '<ul>' + prices.map(function (t) { return '<li>' + window.GORICH(passPrice(esc(t), ev)) + '</li>'; }).join('') + '</ul>' : '';
@@ -376,6 +458,8 @@
     } else {
       h += '<div class="npub-card">The schedule confirms the event name and dates, but no further details have been recorded yet. Spawns, raids, eggs, research, shiny chances, moves and forms are not confirmed here. Check the source for updates.</div>';
     }
+    var researchCards = researchTasksHtml(ev, findDetails(ev));
+    if (researchCards) h += researchCards;
     if (e && ((Array.isArray(e.tickets) && e.tickets.length) || (Array.isArray(e.alsoRunning) && e.alsoRunning.length))) {
       h += '<h3 class="sec2">Passes &amp; tickets <span class="m">all optional</span></h3><p class="note">Ticket prices and availability can vary by region. Check the in-game shop for the price available to your account.</p>';
       h += (e.tickets || []).map(passCard).join('');
@@ -537,7 +621,16 @@
       var x = $('evd-x'); if (x) { x.addEventListener('click', function () { close(); }); x.focus(); }
     });
   }
-  document.addEventListener('click', function (e) { var b = e.target.closest('[data-open]'); if (b) { e.preventDefault(); open(b.dataset.open, b); } });
+  document.addEventListener('click', function (e) {
+    var research = e.target.closest('[data-open-research]');
+    if (research) {
+      e.preventDefault();
+      if (window.GOAPP && typeof window.GOAPP.openResearch === 'function') window.GOAPP.openResearch(research.getAttribute('data-event-id') || '');
+      return;
+    }
+    var b = e.target.closest('[data-open]');
+    if (b) { e.preventDefault(); open(b.dataset.open, b); }
+  });
   /* Keep keyboard navigation inside the modal while it is open. */
   document.addEventListener('keydown', function (e) {
     var o = $('evd'); if (!o || o.hidden) return;

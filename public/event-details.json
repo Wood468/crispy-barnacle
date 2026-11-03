@@ -4956,7 +4956,237 @@
     ]
    },
    "conflicts": [],
-   "gaps": []
+   "gaps": [],
+   "researchTasks": [
+    {
+     "task": "Catch 13 Pokémon",
+     "category": "field",
+     "rewards": [
+      {
+       "type": "item",
+       "name": "Sableye Mega Energy",
+       "quantity": 13
+      }
+     ],
+     "sources": [
+      "leekduck",
+      "hub"
+     ],
+     "status": "corroborated",
+     "eventId": "halloween2",
+     "eventName": "Halloween 2026, Part Two",
+     "eventWindow": {
+      "start": "2026-11-01T10:00",
+      "end": "2026-11-05T20:00"
+     },
+     "checkedAt": "2026-11-03",
+     "sourceRefs": [
+      {
+       "id": "leekduck",
+       "name": "Leek Duck",
+       "trust": "community",
+       "url": "https://leekduck.com/events/halloween-2026-part-2/"
+      },
+      {
+       "id": "hub",
+       "name": "Pokémon GO Hub",
+       "trust": "community",
+       "url": "https://pokemongohub.net/post/event/pokemon-go-halloween-2026-part-two/"
+      }
+     ]
+    },
+    {
+     "task": "Catch 13 Ghost‑type Pokémon",
+     "category": "field",
+     "rewards": [
+      {
+       "type": "encounter",
+       "name": "Halloween Costume Rowlet",
+       "quantity": 1,
+       "cpMin": 418,
+       "cpMax": 453
+      },
+      {
+       "type": "encounter",
+       "name": "Greavard",
+       "quantity": 1,
+       "cpMin": 402,
+       "cpMax": 435
+      },
+      {
+       "type": "encounter",
+       "name": "Halloween Costume Froakie",
+       "quantity": 1,
+       "cpMin": 392,
+       "cpMax": 425
+      }
+     ],
+     "sources": [
+      "leekduck",
+      "hub"
+     ],
+     "status": "corroborated",
+     "eventId": "halloween2",
+     "eventName": "Halloween 2026, Part Two",
+     "eventWindow": {
+      "start": "2026-11-01T10:00",
+      "end": "2026-11-05T20:00"
+     },
+     "checkedAt": "2026-11-03",
+     "sourceRefs": [
+      {
+       "id": "leekduck",
+       "name": "Leek Duck",
+       "trust": "community",
+       "url": "https://leekduck.com/events/halloween-2026-part-2/"
+      },
+      {
+       "id": "hub",
+       "name": "Pokémon GO Hub",
+       "trust": "community",
+       "url": "https://pokemongohub.net/post/event/pokemon-go-halloween-2026-part-two/"
+      }
+     ]
+    },
+    {
+     "task": "Make 6 Nice Throws",
+     "category": "field",
+     "rewards": [
+      {
+       "type": "encounter",
+       "name": "Litwick",
+       "quantity": 1,
+       "cpMin": 398,
+       "cpMax": 431
+      },
+      {
+       "type": "encounter",
+       "name": "Sandygast",
+       "quantity": 1,
+       "cpMin": 491,
+       "cpMax": 528
+      },
+      {
+       "type": "encounter",
+       "name": "Greavard",
+       "quantity": 1,
+       "cpMin": 402,
+       "cpMax": 435
+      }
+     ],
+     "sources": [
+      "leekduck",
+      "hub"
+     ],
+     "status": "corroborated",
+     "eventId": "halloween2",
+     "eventName": "Halloween 2026, Part Two",
+     "eventWindow": {
+      "start": "2026-11-01T10:00",
+      "end": "2026-11-05T20:00"
+     },
+     "checkedAt": "2026-11-03",
+     "sourceRefs": [
+      {
+       "id": "leekduck",
+       "name": "Leek Duck",
+       "trust": "community",
+       "url": "https://leekduck.com/events/halloween-2026-part-2/"
+      },
+      {
+       "id": "hub",
+       "name": "Pokémon GO Hub",
+       "trust": "community",
+       "url": "https://pokemongohub.net/post/event/pokemon-go-halloween-2026-part-two/"
+      }
+     ]
+    },
+    {
+     "task": "Win a raid",
+     "category": "field",
+     "rewards": [
+      {
+       "type": "encounter",
+       "name": "Zubat wearing a top hat",
+       "quantity": 1,
+       "cpMin": 258,
+       "cpMax": 285
+      },
+      {
+       "type": "encounter",
+       "name": "Sinistea wearing a bow",
+       "quantity": 1,
+       "cpMin": 452,
+       "cpMax": 488
+      }
+     ],
+     "sources": [
+      "leekduck",
+      "hub"
+     ],
+     "status": "corroborated",
+     "eventId": "halloween2",
+     "eventName": "Halloween 2026, Part Two",
+     "eventWindow": {
+      "start": "2026-11-01T10:00",
+      "end": "2026-11-05T20:00"
+     },
+     "checkedAt": "2026-11-03",
+     "sourceRefs": [
+      {
+       "id": "leekduck",
+       "name": "Leek Duck",
+       "trust": "community",
+       "url": "https://leekduck.com/events/halloween-2026-part-2/"
+      },
+      {
+       "id": "hub",
+       "name": "Pokémon GO Hub",
+       "trust": "community",
+       "url": "https://pokemongohub.net/post/event/pokemon-go-halloween-2026-part-two/"
+      }
+     ]
+    },
+    {
+     "task": "Win 3 raids",
+     "category": "field",
+     "rewards": [
+      {
+       "type": "encounter",
+       "name": "Pikachu wearing a hat and capelet",
+       "quantity": 1,
+       "cpMin": 369,
+       "cpMax": 402
+      }
+     ],
+     "sources": [
+      "leekduck",
+      "hub"
+     ],
+     "status": "corroborated",
+     "eventId": "halloween2",
+     "eventName": "Halloween 2026, Part Two",
+     "eventWindow": {
+      "start": "2026-11-01T10:00",
+      "end": "2026-11-05T20:00"
+     },
+     "checkedAt": "2026-11-03",
+     "sourceRefs": [
+      {
+       "id": "leekduck",
+       "name": "Leek Duck",
+       "trust": "community",
+       "url": "https://leekduck.com/events/halloween-2026-part-2/"
+      },
+      {
+       "id": "hub",
+       "name": "Pokémon GO Hub",
+       "trust": "community",
+       "url": "https://pokemongohub.net/post/event/pokemon-go-halloween-2026-part-two/"
+      }
+     ]
+    }
+   ]
   },
   "leekduck:mega-sableye-in-mega-raids-october-2026": {
    "name": "Mega Sableye in Mega Raids",
@@ -8963,45 +9193,33 @@
      {
       "text": "Complete event-themed Field Research tasks for encounters with Pikachu wearing a hat and capelet, Zubat wearing a top hat, Sinistea wearing a bow, Noibat wearing a headband, and more!",
       "sources": [
-       "leekduck",
-       "hub"
+       "leekduck"
       ],
-      "status": "corroborated"
+      "status": "single"
      },
      {
       "text": "Catch 13 Ghost‑type Pokémon POSSIBLE REWARDS Halloween Piplup Max CP 460 Min CP 426 Headband Noibat Max CP 285 Min CP 258 Zubat wearing a top hat Max CP 285 Min CP 258",
       "sources": [
-       "leekduck",
-       "hub"
+       "leekduck"
       ],
-      "status": "corroborated"
+      "status": "single"
      },
      {
-      "text": "Win 3 raids REWARD Pikachu wearing a hat and capelet Max CP 402 Min CP 369",
+      "text": "Make 6 Nice Throws POSSIBLE REWARDS Pumpkaboo (Small) Max CP 515 Min CP 478 Pumpkaboo (Average) Max CP 523 Min CP 486 Pumpkaboo (Large) Max CP 533 Min CP 496 Pumpkaboo (Super) Max CP 536 Min CP 498 Duskull Max CP 302 Min CP 273 Misdreavus Max CP 825 Min CP 779",
       "sources": [
-       "leekduck",
-       "hub"
+       "leekduck"
       ],
-      "status": "corroborated"
-     },
-     {
-      "text": "Catch 13 Pokémon REWARD ×13 Sableye Mega Energy ×13",
-      "sources": [
-       "leekduck",
-       "hub"
-      ],
-      "status": "corroborated"
-     },
-     {
-      "text": "Make 6 Nice Throws POSSIBLE REWARDS Litwick Max CP 431 Min CP 398 Sandygast Max CP 528 Min CP 491 Greavard Max CP 435 Min CP 402",
-      "sources": [
-       "leekduck",
-       "hub"
-      ],
-      "status": "corroborated"
+      "status": "single"
      },
      {
       "text": "Win a raid POSSIBLE REWARDS Zubat wearing a top hat Max CP 285 Min CP 258 Sinistea wearing a bow Max CP 488 Min CP 452",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Win 3 raids REWARD Pikachu wearing a hat and capelet Max CP 402 Min CP 369",
       "sources": [
        "leekduck"
       ],
@@ -9043,7 +9261,7 @@
       "status": "single"
      },
      {
-      "text": "Claim all rewards before Sunday, November 1, 2026, at 10:00 a.m. local time , before the Timed Research expires.",
+      "text": "Claim all rewards before Sunday, November 1, 2026, at 10:00 a.m. local time, before the Timed Research expires.",
       "sources": [
        "leekduck"
       ],
@@ -9663,7 +9881,193 @@
     ]
    },
    "conflicts": [],
-   "gaps": []
+   "gaps": [],
+   "researchTasks": [
+    {
+     "task": "Catch 13 Ghost‑type Pokémon",
+     "category": "field",
+     "rewards": [
+      {
+       "type": "encounter",
+       "name": "Halloween Piplup",
+       "quantity": 1,
+       "cpMin": 426,
+       "cpMax": 460
+      },
+      {
+       "type": "encounter",
+       "name": "Headband Noibat",
+       "quantity": 1,
+       "cpMin": 258,
+       "cpMax": 285
+      },
+      {
+       "type": "encounter",
+       "name": "Zubat wearing a top hat",
+       "quantity": 1,
+       "cpMin": 258,
+       "cpMax": 285
+      }
+     ],
+     "sources": [
+      "leekduck"
+     ],
+     "sourceRefs": [
+      {
+       "id": "leekduck",
+       "name": "Leek Duck",
+       "trust": "community",
+       "url": "https://leekduck.com/events/halloween-2026-part-1/"
+      }
+     ],
+     "status": "single",
+     "eventId": "halloween1",
+     "eventName": "Halloween 2026, Part One",
+     "eventWindow": {
+      "start": "2026-10-27T10:00",
+      "end": "2026-11-01T10:00"
+     },
+     "checkedAt": "2026-11-04"
+    },
+    {
+     "task": "Make 6 Nice Throws",
+     "category": "field",
+     "rewards": [
+      {
+       "type": "encounter",
+       "name": "Pumpkaboo (Small)",
+       "quantity": 1,
+       "cpMin": 478,
+       "cpMax": 515
+      },
+      {
+       "type": "encounter",
+       "name": "Pumpkaboo (Average)",
+       "quantity": 1,
+       "cpMin": 486,
+       "cpMax": 523
+      },
+      {
+       "type": "encounter",
+       "name": "Pumpkaboo (Large)",
+       "quantity": 1,
+       "cpMin": 496,
+       "cpMax": 533
+      },
+      {
+       "type": "encounter",
+       "name": "Pumpkaboo (Super)",
+       "quantity": 1,
+       "cpMin": 498,
+       "cpMax": 536
+      },
+      {
+       "type": "encounter",
+       "name": "Duskull",
+       "quantity": 1,
+       "cpMin": 273,
+       "cpMax": 302
+      },
+      {
+       "type": "encounter",
+       "name": "Misdreavus",
+       "quantity": 1,
+       "cpMin": 779,
+       "cpMax": 825
+      }
+     ],
+     "sources": [
+      "leekduck"
+     ],
+     "sourceRefs": [
+      {
+       "id": "leekduck",
+       "name": "Leek Duck",
+       "trust": "community",
+       "url": "https://leekduck.com/events/halloween-2026-part-1/"
+      }
+     ],
+     "status": "single",
+     "eventId": "halloween1",
+     "eventName": "Halloween 2026, Part One",
+     "eventWindow": {
+      "start": "2026-10-27T10:00",
+      "end": "2026-11-01T10:00"
+     },
+     "checkedAt": "2026-11-04"
+    },
+    {
+     "task": "Win a raid",
+     "category": "field",
+     "rewards": [
+      {
+       "type": "encounter",
+       "name": "Zubat wearing a top hat",
+       "quantity": 1,
+       "cpMin": 258,
+       "cpMax": 285
+      },
+      {
+       "type": "encounter",
+       "name": "Sinistea wearing a bow",
+       "quantity": 1,
+       "cpMin": 452,
+       "cpMax": 488
+      }
+     ],
+     "sources": [
+      "leekduck"
+     ],
+     "sourceRefs": [
+      {
+       "id": "leekduck",
+       "name": "Leek Duck",
+       "trust": "community",
+       "url": "https://leekduck.com/events/halloween-2026-part-1/"
+      }
+     ],
+     "status": "single",
+     "eventId": "halloween1",
+     "eventName": "Halloween 2026, Part One",
+     "eventWindow": {
+      "start": "2026-10-27T10:00",
+      "end": "2026-11-01T10:00"
+     },
+     "checkedAt": "2026-11-04"
+    },
+    {
+     "task": "Win 3 raids",
+     "category": "field",
+     "rewards": [
+      {
+       "type": "encounter",
+       "name": "Pikachu wearing a hat and capelet",
+       "quantity": 1,
+       "cpMin": 369,
+       "cpMax": 402
+      }
+     ],
+     "sources": [
+      "leekduck"
+     ],
+     "sourceRefs": [
+      {
+       "id": "leekduck",
+       "name": "Leek Duck",
+       "trust": "community",
+       "url": "https://leekduck.com/events/halloween-2026-part-1/"
+      }
+     ],
+     "status": "single",
+     "eventId": "halloween1",
+     "eventName": "Halloween 2026, Part One",
+     "eventWindow": {
+      "start": "2026-10-27T10:00",
+      "end": "2026-11-01T10:00"
+     },
+     "checkedAt": "2026-11-04"
+    }
+   ]
   },
   "into": {
    "name": "Into the Wild",
