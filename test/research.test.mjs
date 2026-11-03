@@ -45,10 +45,18 @@ test("structured research merges exact tasks while retaining official/community 
 test("event and pass source associations are explicit and the central Research view is in Schedule", () => {
   const data = JSON.parse(fs.readFileSync(new URL("../public/data.json", import.meta.url), "utf8"));
   const season = JSON.parse(fs.readFileSync(new URL("../public/season.json", import.meta.url), "utf8"));
+  const details = JSON.parse(fs.readFileSync(new URL("../public/event-details.json", import.meta.url), "utf8"));
   const halloween = data.events.find(event => event.id === "halloween2");
   const pass = season.items.find(item => item.id === "season:pass-halloween");
+  const novemberPass = season.items.find(item => item.id === "season:pass-november");
+  const tasks = details.events["leekduck:halloween-2026-part-2"].researchTasks;
   assert.ok(halloween.detailIds.includes("leekduck:halloween-2026-part-2"));
   assert.equal(pass.detailId, "leekduck:halloween-2026-part-2");
+  assert.equal(novemberPass.detailId, "leekduck:go-pass-november-2026");
+  assert.equal(tasks.length, 5);
+  assert.ok(tasks.every(task => task.category === "field" && task.eventId === "halloween2"));
+  assert.equal(tasks[0].eventWindow.end, "2026-11-05T20:00");
+  assert.ok(tasks.every(task => task.sources.includes("leekduck") && task.sources.includes("hub")));
   const app = fs.readFileSync(new URL("../public/app.js", import.meta.url), "utf8");
   const html = fs.readFileSync(new URL("../public/index.html", import.meta.url), "utf8");
   const detail = fs.readFileSync(new URL("../public/detail.js", import.meta.url), "utf8");
