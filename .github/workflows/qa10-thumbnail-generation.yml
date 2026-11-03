@@ -1,0 +1,72 @@
+name: QA-10 read-only infographic thumbnail generation
+
+on:
+  schedule:
+    - cron: "30 2 * * *" # daily fallback; GitHub schedules use UTC
+  workflow_dispatch:
+  workflow_run:
+    workflows: ["G47IX infographic discovery"]
+    types: [completed]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: qa10-thumbnail-generation
+  cancel-in-progress: false
+
+jobs:
+  generate:
+    if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: main
+          fetch-depth: 1
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 22
+      - name: Install ImageMagick with WebP support
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq imagemagick >/dev/null
+          convert -list format | grep -q 'WEBP'
+      - name: Test the remote thumbnail generator
+        run: node --test test/infographic-thumbnails.test.mjs
+      - name: Fetch approved originals from the public site and generate missing thumbnails
+        run: node scripts/infographic-thumbnails.mjs --remote --skip-existing
+      - name: Commit only generated static thumbnails
+        id: publish
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- public/infographic-thumbs
+          node scripts/validate-public-data.mjs
+          if ! git diff --cached --quiet; then
+            git commit -m "Generate WebP infographic card thumbnails"
+            git pull -q --rebase --autostash origin main
+            node scripts/validate-public-data.mjs
+            git push origin HEAD:main
+            echo "thumbnail_changed=true" >> "$GITHUB_OUTPUT"
+            echo "commit_sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+          else
+            echo "No new thumbnails; existing static derivatives are current."
+            echo "thumbnail_changed=false" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Dispatch the read-only production image audit
+        if: steps.publish.outputs.thumbnail_changed == 'true'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          COMMIT_SHA: ${{ steps.publish.outputs.commit_sha }}
+        run: |
+          curl --fail-with-body --silent --show-error \
+            -X POST \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer $GITHUB_TOKEN" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            "https://api.github.com/repos/$GITHUB_REPOSITORY/dispatches" \
+            -d "{\\"event_type\\":\\"qa10-thumbnail-audit\\",\\"client_payload\\":{\\"commit_sha\\":\\"$COMMIT_SHA\\"}}"
