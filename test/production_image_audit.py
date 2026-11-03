@@ -3,6 +3,7 @@
 from __future__ import annotations
 import json
 import os
+import re
 import sys
 from datetime import datetime, timezone
 from urllib.parse import urlsplit, urljoin
@@ -67,6 +68,18 @@ def payload_bytes(headers: dict, body: bytes) -> int:
 def resource_label(url: str) -> str:
     parsed = urlsplit(url)
     return (parsed.hostname or "local") + parsed.path
+
+def season_thumbnail_path(item: dict) -> str:
+    """Mirror public/season.js and scripts/season-thumbnails.mjs for audit matching."""
+    image = str(item.get("img") or "")
+    slug = re.sub(r"[^a-z0-9]+", "-", str(item.get("id") or "").removeprefix("season:").lower()).strip("-")
+    if not image or not slug:
+        return ""
+    value = 2166136261
+    for char in image:
+        value = ((value ^ ord(char)) * 16777619) & 0xffffffff
+    return f"/season-thumbs/season-{slug}-{value:08x}.webp"
+
 
 def summarize(records: list[dict]) -> dict:
     posters = [item for item in records if item["kind"] == "infographic-poster"]
@@ -277,7 +290,7 @@ def run_audit(target: str, viewport: dict | None = None, device_scale_factor: in
             expected_posters = [
                 {
                     **item,
-                    "thumbnail_resource": resource_label(urljoin(target, item["thumbnail"])) if item.get("thumbnail") else "",
+                    "thumbnail_resource": resource_label(urljoin(target, season_thumbnail_path(item))) if season_thumbnail_path(item) else "",
                     "original_resource": resource_label(urljoin(target, item["img"]))
                 }
                 for item in season_items if item.get("img")
