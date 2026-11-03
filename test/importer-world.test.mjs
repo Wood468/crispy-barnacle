@@ -265,3 +265,41 @@ test("Wild Area city pages retain official source coverage without merging desti
     assert.ok(watch.includes(officialUrl), "the official city page remains watched by the importer");
   }
 });
+
+
+test("Pokémon RUN 30 city stops keep official venues and date-only event windows", () => {
+  const officialUrl = "https://pokemongo.com/news/pokemon-run-30-2026/";
+  const world = JSON.parse(readFileSync(new URL("../public/world-events.json", import.meta.url), "utf8")).events;
+  const fallback = JSON.parse(readFileSync(new URL("../public/regional-events.json", import.meta.url), "utf8")).events;
+  const watch = JSON.parse(readFileSync(new URL("../data/watch-pages.json", import.meta.url), "utf8")).pages;
+  const expected = [
+    ["w-pok-mon-run-30-singapore", "rg-run30-singapore", "Pokémon RUN 30: Singapore", "Singapore (The Kallang)", "2026-11-07", "2026-11-08"],
+    ["w-pok-mon-run-30-new-taipei", "rg-run30-new-taipei", "Pokémon RUN 30: New Taipei", "New Taipei, Taiwan (New Taipei Metropolitan Park)", "2026-11-14", "2026-11-15"],
+    ["w-pok-mon-run-30-malaysia", "rg-run30-kuala-lumpur", "Pokémon RUN 30: Kuala Lumpur", "Kuala Lumpur, Malaysia (KLCC Plaza Petronas)", "2026-11-21", "2026-11-22"],
+    ["w-pok-mon-run-30-jakarta", "rg-run30-jakarta", "Pokémon RUN 30: Jakarta", "Jakarta, Indonesia (GBK / Gelora Bung Karno)", "2026-12-12", "2026-12-13"],
+    ["w-pok-mon-run-30-thailand", "rg-run30-bangkok", "Pokémon RUN 30: Bangkok", "Bangkok, Thailand (outdoor plaza in front of Central World)", "2027-01-09", "2027-01-10"],
+    ["w-pok-mon-run-30-hong-kong", "rg-run30-hong-kong", "Pokémon RUN 30: Hong Kong", "Hong Kong (Science Park)", "2027-01-23", "2027-01-24"]
+  ];
+  assert.ok(watch.some(item => String(item.url || "").replace(/\/$/, "") === officialUrl.replace(/\/$/, "")), "the official series page remains on the importer watch list");
+  for (const [id, fallbackId, name, place, start, end] of expected) {
+    const event = world.find(item => item.id === id);
+    assert.ok(event, name + " exists in the primary world-event feed");
+    assert.equal(event.name, name);
+    assert.equal(event.place, place);
+    assert.equal(event.start, start);
+    assert.equal(event.end, end);
+    assert.equal(event.scope, "regional", "each city stop remains an in-person regional event");
+    assert.equal(event.area, "Asia");
+    assert.equal(event.datesKnown, true);
+    assert.match(event.start, /^\d{4}-\d{2}-\d{2}$/);
+    assert.match(event.end, /^\d{4}-\d{2}-\d{2}$/);
+    assert.ok(event.sources.some(source => source.id === "official" && source.url === officialUrl));
+    const backup = fallback.find(item => item.id === fallbackId);
+    assert.ok(backup, name + " remains available in the regional fallback");
+    assert.equal(backup.source.url, officialUrl);
+    assert.equal(backup.source.label, "Pokémon GO (official)");
+    assert.equal(backup.scope, "regional");
+    assert.equal(backup.start, start);
+    assert.equal(backup.end, end);
+  }
+});

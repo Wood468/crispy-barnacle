@@ -812,7 +812,7 @@
   }
   function loadWorld(j, seed) {
     var list = (j.events || []).map(function (e) {
-      var src = seed ? j.source : { url: (e.sources && e.sources[0] && e.sources[0].url) || e.url || '#', n: e.sources ? e.sources.length : 1 };
+      var src = seed ? (e.source && typeof e.source === 'object' && e.source.url ? e.source : j.source) : { url: (e.sources && e.sources[0] && e.sources[0].url) || e.url || '#', n: e.sources ? e.sources.length : 1 };
       if (!e.start) return { undated: true, name: e.name, place: e.place, area: e.area, scope: e.scope, src: src };
       var startValue = String(e.start), startIsDateOnly = /^\d{4}-\d{2}-\d{2}$/.test(startValue);
       /* A date-only start can safely mean the whole local calendar day. A timed event needs an explicit end. */

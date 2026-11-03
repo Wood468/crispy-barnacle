@@ -256,7 +256,7 @@ check('Today game plan is an optional accessible local-time disclosure with weak
       all(token in INDEX_HTML for token in ['id="today-tonight"', 'id="today-tonight-summary"', 'id="today-tonight-list"', 'Today&#39;s game plan']) and "Today's game plan · " in DASH_JS and
       all(token in DASH_JS for token in ['D.spotlight', 'D.raidHour', 'D.maxBattles', '6–7 pm local', '6 am–9 pm local', 'Weak to:', 'data-best-types', 'gofn-dex-ready', 'function renderTonight', 'renderTonight(t, dateKey)', 'today-tonight-state', 'Live now · ends in ', 'Starts in ', 'upcomingCount']) and
       all(token in DASH_CSS for token in ['.today-tonight', '.today-tonight-list', 'min-height:44px', '.today-tonight-best']) and
-      'gofn-dex-ready' in APP_JS and '/app.js?v=20261103g' in INDEX_HTML and '/app.js?v=20261103g' in SW_JS)
+      'gofn-dex-ready' in APP_JS and '/app.js?v=20261103h' in INDEX_HTML and '/app.js?v=20261103h' in SW_JS)
 check('Dex/type readiness refreshes Today raid handoffs and the Tonight disclosure without touching event-detail focus targets',
       "document.addEventListener('gotypes', function () { try { todayTypesReady = true; todayTypesFailed = false; renderRot(); var t = now(); renderTodayRaidPrep(todayRotationFor(t)); renderTonight(t, dayKey(t)); } catch (e) {} });" in DASH_JS and
       "document.addEventListener('gofn-dex-ready', function () { try { renderRot(); var t = now(); renderTodayRaidPrep(todayRotationFor(t)); renderTonight(t, dayKey(t)); } catch (e) {} });" in DASH_JS)
@@ -266,9 +266,9 @@ check('Today multi-deadline tray is accessible, bounded and source-safe',
       all(token in INDEX_HTML for token in ['id="today-deadlines"', 'id="today-deadlines-summary"', 'id="today-deadlines-list"']) and
       all(token in DASH_JS for token in ['var trayLimit = t.getTime() + 7 * 24 * 60 * 60 * 1000', "safeUrl(d.url || '')", 'trayCandidates.slice(0, 8)', 'View all ', 'noopener noreferrer', "sourceUrl.indexOf('https://') === 0"]) and
       all(token in DASH_CSS for token in ['.today-deadlines>summary', 'min-height:44px', '.today-deadline-item', 'var(--color-link)']) and
-      '/dash.js?v=20261103h' in APP_JS and '/dash.js?v=20261103h' in SW_JS and
+      '/dash.js?v=20261103i' in APP_JS and '/dash.js?v=20261103i' in SW_JS and
       '/dash.css?v=20261103d' in INDEX_HTML and '/dash.css?v=20261103d' in SW_JS and
-      'gofn-shell-v228' in SW_JS)
+      'gofn-shell-v229' in SW_JS)
 check('season pass and deadline data is structured, source-attributed and ordered',
       all(item_id in {item.get('id') for item in SEASON_DATA.get('items', [])}
           for item_id in ['season:pass-halloween', 'season:pass-november']) and
@@ -329,16 +329,16 @@ check('event signal chips and detail tags use semantic palette roles with unchan
           '.tg-incense{--tc:var(--color-signal-shadow)}.tg-costume{--tc:var(--color-signal-encounter)}',
       ]))
 check('offline shell cache version advances with the dashboard stylesheet token release',
-      "gofn-shell-v228" in SW_JS)
+      "gofn-shell-v229" in SW_JS)
 check('Travel mode searches only source-dated regional listings and preserves Today visibility',
       all(token in INDEX_HTML for token in ['id="sub-travel"', 'id="travel-q"', 'id="travel-destinations"', 'id="travel-regions"', 'id="travel-results"']) and
       "['travel','Travel','sub-travel']" in APP_JS and
       all(token in DASH_JS for token in ['function renderTravel()', 'TRAVEL_REGIONS', 'data-travel-region', "x.scope !== 'global'", "!/^dated:/.test(String(x.id || ''))", "indexOf('https://') === 0", 'sourceStart', 'sourceEnd', 'travelDateText', 'REG.filter(function (x)', 'var hide = it.travel ?', 'focusedRegion', 'focusTarget.focus()']) and
       all(token in DASH_CSS for token in ['#sub-travel .travel-search', '#travel-regions .fchip{min-height:44px}', '#travel-results .agw .ag-actions .agx{width:44px;height:44px;min-width:44px;min-height:44px}']) and
-      '/app.js?v=20261103g' in INDEX_HTML and '/app.js?v=20261103g' in SW_JS and
-      '/dash.js?v=20261103h' in APP_JS and '/dash.js?v=20261103h' in SW_JS and
+      '/app.js?v=20261103h' in INDEX_HTML and '/app.js?v=20261103h' in SW_JS and
+      '/dash.js?v=20261103i' in APP_JS and '/dash.js?v=20261103i' in SW_JS and
       '/dash.css?v=20261103d' in INDEX_HTML and '/dash.css?v=20261103d' in SW_JS and
-      'gofn-shell-v228' in SW_JS)
+      'gofn-shell-v229' in SW_JS)
 check('raid rotation cards use source-published local windows and Leek Duck attribution',
       'function raidSourceLink(r)' in DASH_JS and 'fmtT(new Date(second.s))' in DASH_JS and
       'Next raid rotation' in DASH_JS and 'sourceUrl' in DASH_JS and
@@ -354,8 +354,8 @@ check('raid share payload uses sourced weaknesses, local top-ten marks and safe 
 check('event detail focus restoration can find a re-rendered opener by event key and card role',
       all(token in DETAIL_JS for token in ['openerKey', 'openerClass', "getAttribute('data-open')", 'target.focus()']))
 check('versioned dashboard scripts are referenced by the entry page and precached offline',
-      '/app.js?v=20261103g' in INDEX_HTML and '/app.js?v=20261103g' in SW_JS and
-      '/dash.js?v=20261103h' in APP_JS and '/dash.js?v=20261103h' in SW_JS and
+      '/app.js?v=20261103h' in INDEX_HTML and '/app.js?v=20261103h' in SW_JS and
+      '/dash.js?v=20261103i' in APP_JS and '/dash.js?v=20261103i' in SW_JS and
       '/detail.js?v=20261102f' in DASH_JS and '/detail.js?v=20261102f' in SW_JS)
 check('sync PIN and account controls have one home in Menu and are precached offline',
       INDEX_HTML.index('id="acct" class="acct"') > INDEX_HTML.index('id="sub-menu"') and
@@ -737,6 +737,29 @@ with sync_playwright() as p:
           return {actual:{inGame:Number(document.getElementById('day-live-count').textContent),inPerson:Number(document.getElementById('day-inperson-count').textContent)},expected:{inGame:live.filter(e=>e.kind!=='person').length+worldwide.length,inPerson:live.filter(e=>e.kind==='person').length+regional.length}};
         }""")
         check('Overseas in-person activity remains in its separate summary count', overseas_counts['actual']==overseas_counts['expected'] and overseas_counts['actual']['inPerson']>=1, overseas_counts)
+
+        # The primary world feed can fail; the regional fallback must preserve each event's own official source.
+        run30_fallback = page(clock='2026-11-14T12:00:00+11:00', extra={
+            '**/world-events.json': (json.dumps({'events': []}), 200)
+        })
+        run30_fallback.wait_for_selector('#home-now .agr.reg')
+        run30_card = run30_fallback.locator('#home-now .agr.reg').filter(has_text='Pokémon RUN 30: New Taipei')
+        run30_text = run30_card.inner_text() if run30_card.count() else ''
+        check('New Taipei RUN 30 remains visible on Today through the regional fallback',
+              run30_card.count()==1 and run30_card.is_visible() and 'New Taipei Metropolitan Park' in run30_text,
+              run30_text)
+        check('Regional fallback preserves the official Pokémon GO source for RUN 30',
+              run30_card.get_attribute('href') == 'https://pokemongo.com/news/pokemon-run-30-2026/')
+        check('Regional fallback does not invent an event-local time',
+              not re.search(r'\b\d{1,2}:\d{2}\b|\b(?:am|pm)\b', run30_text, re.I), run30_text)
+        for run30_width in (320, 390, 1280):
+            run30_fallback.set_viewport_size({'width':run30_width,'height':844 if run30_width < 600 else 900})
+            run30_box = run30_card.bounding_box()
+            check('New Taipei RUN 30 remains visible at %dpx in the regional fallback' % run30_width,
+                  run30_card.count()==1 and run30_card.is_visible() and run30_box is not None and
+                  run30_box['x'] >= -1 and run30_box['x'] + run30_box['width'] <= run30_width + 1)
+        run30_fallback.context.close()
+
         # A similarly titled in-game card is not proof that an overseas in-person listing is redundant.
         collision_events = [ev('fixture-game-collision','Overseas In-Person Fixture','raid-battles','2026-10-09T22:00:00.000','2026-10-09T23:30:00.000','community_reported')] + [
             ev('fixture-collision-filler-'+str(i),'Collision filler '+str(i),'event',
