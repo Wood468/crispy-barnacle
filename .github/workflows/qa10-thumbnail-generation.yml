@@ -5,6 +5,8 @@ on:
     branches: [main]
     paths:
       - "public/season.json"
+      - "public/season.js"
+      - "scripts/season-thumbnails.mjs"
   schedule:
     - cron: "30 2 * * *" # daily fallback; GitHub schedules use UTC
   workflow_dispatch:
