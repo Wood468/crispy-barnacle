@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { extractCoreAssetUrls, runChecks } from "../scripts/uptime.mjs";
+import { extractCoreAssetUrls, runChecks, previousLiveCheckConclusion } from "../scripts/uptime.mjs";
 
 const HTML = [
   "<html><head>",
@@ -123,4 +123,78 @@ test("uptime check still reports a failing R2 picture", async () => {
     const problems = await runChecks();
     assert.ok(problems.some(problem => /R2 picture/.test(problem)));
   });
+});
+
+
+test("site-state history ignores runs that failed before the live-site check", async () => {
+  const requests = [];
+  const result = await previousLiveCheckConclusion({
+    repository: "Wood468/crispy-barnacle",
+    token: "test-token",
+    fetchImpl: async (url, init) => {
+      requests.push(url);
+      assert.equal(init.headers.authorization, "Bearer test-token");
+      if (url.endsWith("/actions/workflows/uptime.yml/runs?status=completed&per_page=20")) {
+        return new Response(JSON.stringify({ workflow_runs: [{ id: 99 }, { id: 98 }] }), {
+          status: 200, headers: { "content-type": "application/json" }
+        });
+      }
+      if (url.endsWith("/actions/runs/99/jobs?per_page=100")) {
+        return new Response(JSON.stringify({ jobs: [{ steps: [
+          { name: "Wait for the Cloudflare Workers production build", status: "completed", conclusion: "failure" },
+          { name: "Check the live site", status: "completed", conclusion: "skipped" }
+        ] }] }), { status: 200, headers: { "content-type": "application/json" } });
+      }
+      if (url.endsWith("/actions/runs/98/jobs?per_page=100")) {
+        return new Response(JSON.stringify({ jobs: [{ steps: [
+          { name: "Check the live site", status: "completed", conclusion: "success" }
+        ] }] }), { status: 200, headers: { "content-type": "application/json" } });
+      }
+      throw new Error("Unexpected API request: " + url);
+    }
+  });
+  assert.equal(result, "success");
+  assert.equal(requests.length, 3);
+});
+
+test("site-state history records a failure only when the live-site check itself failed", async () => {
+  const result = await previousLiveCheckConclusion({
+    repository: "Wood468/crispy-barnacle",
+    token: "test-token",
+    fetchImpl: async url => {
+      if (url.endsWith("/actions/workflows/uptime.yml/runs?status=completed&per_page=20")) {
+        return new Response(JSON.stringify({ workflow_runs: [{ id: 97 }] }), {
+          status: 200, headers: { "content-type": "application/json" }
+        });
+      }
+      if (url.endsWith("/actions/runs/97/jobs?per_page=100")) {
+        return new Response(JSON.stringify({ jobs: [{ steps: [
+          { name: "Check the live site", status: "completed", conclusion: "failure" }
+        ] }] }), { status: 200, headers: { "content-type": "application/json" } });
+      }
+      throw new Error("Unexpected API request: " + url);
+    }
+  });
+  assert.equal(result, "failure");
+});
+
+test("site-state history is unknown when no completed run reached the live-site check", async () => {
+  const result = await previousLiveCheckConclusion({
+    repository: "Wood468/crispy-barnacle",
+    token: "test-token",
+    fetchImpl: async url => {
+      if (url.endsWith("/actions/workflows/uptime.yml/runs?status=completed&per_page=20")) {
+        return new Response(JSON.stringify({ workflow_runs: [{ id: 96 }] }), {
+          status: 200, headers: { "content-type": "application/json" }
+        });
+      }
+      if (url.endsWith("/actions/runs/96/jobs?per_page=100")) {
+        return new Response(JSON.stringify({ jobs: [{ steps: [
+          { name: "Check the live site", status: "completed", conclusion: "skipped" }
+        ] }] }), { status: 200, headers: { "content-type": "application/json" } });
+      }
+      throw new Error("Unexpected API request: " + url);
+    }
+  });
+  assert.equal(result, null);
 });

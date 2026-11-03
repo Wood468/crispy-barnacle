@@ -2,6 +2,7 @@ import { resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 export const WORKERS_BUILD_CHECK_NAME = "Workers Builds: go-field-notes";
+export const DEFAULT_WORKERS_BUILD_TIMEOUT_MS = 15 * 60 * 1000;
 
 function cloudflareBuildPath(item) {
   try {
@@ -34,7 +35,7 @@ export async function waitForWorkersBuild(options = {}) {
   const fetchImpl = options.fetchImpl ?? globalThis.fetch;
   const sleep = options.sleep ?? (ms => new Promise(resolveSleep => setTimeout(resolveSleep, ms)));
   const now = options.now ?? (() => Date.now());
-  const timeoutMs = options.timeoutMs ?? 8 * 60 * 1000;
+  const timeoutMs = options.timeoutMs ?? DEFAULT_WORKERS_BUILD_TIMEOUT_MS;
   const pollIntervalMs = options.pollIntervalMs ?? 10 * 1000;
 
   if (!repository || !sha || !token) {
