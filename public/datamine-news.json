@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-02T23:13:15.506Z",
+ "updated": "2026-11-03T04:00:26.596Z",
  "seeded": true,
  "channels": [
   {
@@ -18,10 +18,37 @@
    "src": "gamedata",
    "name": "dm-gamedata",
    "state": "ok",
-   "count": 31
+   "count": 34
   }
  ],
  "items": [
+  {
+   "id": "1566976107964661812",
+   "src": "gamedata",
+   "title": "Settings were added for new avatar items for the next season of GO Battle League, themed after Gym Leader Winona of the",
+   "text": "Settings were added for new avatar items for the next season of GO Battle League, themed after Gym Leader Winona of the Hoenn region.\n\n@subscriber @miner",
+   "link": "",
+   "image": "",
+   "date": "2026-11-03T00:43:37.147Z"
+  },
+  {
+   "id": "1566956596011991224",
+   "src": "gamedata",
+   "title": "Settings were added for GO Pass: Dynamax Trails pass points, indicating a daily point limit of 900.",
+   "text": "Settings were added for GO Pass: Dynamax Trails pass points, indicating a daily point limit of 900.\n\n@subscriber @miner",
+   "link": "",
+   "image": "",
+   "date": "2026-11-02T23:26:05.135Z"
+  },
+  {
+   "id": "1566955168354930785",
+   "src": "gamedata",
+   "title": "VNEXTBATTLECLIENTSETTINGS was updated to include the following settings.",
+   "text": "VNEXTBATTLECLIENTSETTINGS was updated to include the following settings.\ndiff\n+ latencytrackingsettings {\n+ maxnumberevents: 200\n+ maxnumbergetstate: 200\n+ }",
+   "link": "",
+   "image": "",
+   "date": "2026-11-02T23:20:24.755Z"
+  },
   {
    "id": "1566917761802969235",
    "src": "gamedata",
