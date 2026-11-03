@@ -1,5 +1,7 @@
 {
  "alerted": [
+  "event-importer.yml",
+  "store-watch.yml",
   "discord_sync.yml",
   "ai-heartbeat-pipeline"
  ],
