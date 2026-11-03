@@ -83,7 +83,7 @@ async function fetchOriginal(relative, tempRoot, fetchImpl) {
   const url = new URL('/' + encodedPath, ORIGIN);
   const response = await fetchImpl(url, {
     headers: {
-      accept: 'image/avif,image/webp,image/apng,image/*,*/*;q=0.8',
+      accept: 'image/jpeg,image/png,image/webp,*/*;q=0.8',
       'user-agent': 'Mozilla/5.0 go-field-notes-thumbnail-generator'
     },
     redirect: 'error',
