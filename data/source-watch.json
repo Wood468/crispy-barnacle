@@ -1,10 +1,10 @@
 {
- "updated": "2026-11-02T21:43:07.450Z",
+ "updated": "2026-11-03T06:47:59.204Z",
  "status": [
   {
    "id": "hub",
    "state": "ok",
-   "items": 6
+   "items": 5
   },
   {
    "id": "miners-assets",
@@ -23,8 +23,8 @@
   },
   {
    "id": "youtube-pogo",
-   "state": "ok",
-   "items": 2
+   "state": "error",
+   "note": "HTTP 404"
   }
  ],
  "gaps": 4,
@@ -44,6 +44,20 @@
    "notInOurData": [
     "Umbreon",
     "Espeon"
+   ]
+  },
+  {
+   "source": "reddit-silph",
+   "trust": "tip",
+   "title": "Implementing a Giratina Adventure Effect: Balancing an Overworld Shiny-Tier Modifier Around Candy XL Gating",
+   "link": "https://www.reddit.com/r/TheSilphRoad/comments/1xmjm23/implementing_a_giratina_adventure_effect/",
+   "date": "2026-11-03T04:36:22.000Z",
+   "summary": "<!-- SC_OFF --><div class=\"md\"><p>With Origin Forme Dialga and <a href=\"https://www.google.com/search?kgmid=%2Fg%2F121mvvv3&amp;q=Palkia\">Palkia</a> firmly defining the utility meta for overworld Adve",
+   "pokemon": [
+    "Giratina"
+   ],
+   "notInOurData": [
+    "Giratina"
    ]
   },
   {
@@ -72,20 +86,6 @@
    ],
    "notInOurData": [
     "Noibat"
-   ]
-  },
-  {
-   "source": "reddit-silph",
-   "trust": "tip",
-   "title": "Dia de Muertos Timed Research + Bg Costume Cubone",
-   "link": "https://www.reddit.com/r/TheSilphRoad/comments/1xgx0ak/dia_de_muertos_timed_research_bg_costume_cubone/",
-   "date": "2026-10-27T16:19:59.000Z",
-   "summary": "<table> <tr><td> <a href=\"https://www.reddit.com/r/TheSilphRoad/comments/1xgx0ak/dia_de_muertos_timed_research_bg_costume_cubone/\"> <img src=\"https://preview.redd.it/rfbfr4u4c1yh1.jpeg?width=140&amp;h",
-   "pokemon": [
-    "Cubone"
-   ],
-   "notInOurData": [
-    "Cubone"
    ]
   },
   {
@@ -232,40 +232,6 @@
    "summary": "25 Candy 100 Candy 0 Candy if traded 200/40 Mega Energy Shiny Gastly can be pretty subtle &#8211; look out for its cloud turning a blue colour! The following Pokémon will grant you extra bonuses when ",
    "pokemon": [
     "Gastly"
-   ],
-   "notInOurData": []
-  },
-  {
-   "source": "youtube-pogo",
-   "trust": "official",
-   "title": "New costumed Pokémon make their debuts during Halloween 2026 Part I in Pokémon GO!",
-   "link": "https://www.youtube.com/shorts/I6MvdaExyIg",
-   "date": "2026-10-27T17:00:40.000Z",
-   "summary": "",
-   "pokemon": [],
-   "notInOurData": []
-  },
-  {
-   "source": "youtube-pogo",
-   "trust": "official",
-   "title": "New costumed Pokémon make their debuts during Halloween 2026 Part I in Pokémon GO!",
-   "link": "https://www.youtube.com/watch?v=wyN2y-BgpoU",
-   "date": "2026-10-27T17:00:14.000Z",
-   "summary": "",
-   "pokemon": [],
-   "notInOurData": []
-  },
-  {
-   "source": "hub",
-   "trust": "community",
-   "title": "Pokémon GO Halloween 2026: Part One",
-   "link": "https://pokemongohub.net/post/event/halloween-2026-part-one/",
-   "date": "2026-10-27T06:55:52.000Z",
-   "summary": "Pokémon GO’s Halloween 2026 Part One event runs from October 27 at 10:00 a.m. to November 1 at 10:00 a.m. local time, bringing three new costume Pokémon: Pikachu wearing a hat and capelet, Zubat weari",
-   "pokemon": [
-    "Sinistea",
-    "Pikachu",
-    "Zubat"
    ],
    "notInOurData": []
   }
