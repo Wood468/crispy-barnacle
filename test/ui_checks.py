@@ -4124,7 +4124,33 @@ check('Mega status pill uses semantic theme roles with light and dark palette va
         check('Today shiny rail does not claim a source check from the older dataset as-of date',
               '30 Oct 2026' not in shiny_text)
         open_shiny_event = shiny_page.locator('#today-shiny-list .today-shiny-open').first
-        open_shiny_event.focus(); open_shiny_event.press('Enter')
+        open_shiny_event.focus()
+        shiny_page.clock.fast_forward(60000)
+        check('minute refresh preserves keyboard focus on an unchanged shiny card',
+              shiny_page.evaluate("document.activeElement?.classList.contains('today-shiny-open')"))
+        check('shiny rail has an explicit keyboard focus-visible treatment',
+              '.today-shiny-actions .pill:focus-visible' in DASH_CSS)
+        theme_contrast = shiny_page.evaluate("""() => {
+          function rgb(value) {
+            if (value[0] === '#') { const h=value.slice(1); return [0,2,4].map(i=>parseInt(h.slice(i,i+2),16)); }
+            const m=value.match(/rgba?\\(([^)]+)\\)/i);
+            if(m) return m[1].split(',').slice(0,3).map(Number);
+            const v=(value.match(/[0-9.]+/g)||[]).slice(0,3).map(Number);
+            return value.startsWith('color(srgb')?v.map(x=>x*255):v;
+          }
+          function lum(value) { return rgb(value).map(x=>{x/=255;return x<=.04045?x/12.92:Math.pow((x+.055)/1.055,2.4);}).reduce((a,x,i)=>a+x*[.2126,.7152,.0722][i],0); }
+          function ratio(a,b) { const x=lum(a),y=lum(b);return (Math.max(x,y)+.05)/(Math.min(x,y)+.05); }
+          const out={};
+          for(const theme of ['light','dark']) {
+            document.documentElement.setAttribute('data-theme',theme);
+            const el=document.querySelector('[data-shiny-kind="boosted"] .today-shiny-badge');
+            const s=getComputedStyle(el); out[theme]={ratio:ratio(s.color,s.backgroundColor),fg:s.color,bg:s.backgroundColor};
+          }
+          return out;
+        }""")
+        check('shiny badges retain readable contrast in light and dark themes',
+              theme_contrast['light']['ratio']>=4.5 and theme_contrast['dark']['ratio']>=4.5, theme_contrast)
+        open_shiny_event.press('Enter')
         check('keyboard activation opens the matching event detail from the shiny rail',
               shiny_page.locator('#evd').is_visible() and 'Shiny boost fixture' in shiny_page.locator('#evd-t').inner_text())
         shiny_page.locator('#evd-x').click()
