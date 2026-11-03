@@ -1,5 +1,5 @@
 {
- "generated": "2026-10-12",
+ "generated": "2026-11-03",
  "method": "Estimated damage per second of the best fast + charged cycle against a neutral target at level 50 with 15 IVs, weighted by the attacker's bulk. Our own estimate from game-master data, not a battle simulation.",
  "sources": [
   "PvPoke game master (Pokémon, move pools, Elite TM moves)",
@@ -987,6 +987,15 @@
     }
    },
    {
+    "name": "Mega Chandelure",
+    "dex": 609,
+    "fast": "Fire Spin",
+    "charged": "Overheat",
+    "charged2": "Shadow Ball",
+    "dps": 18.2,
+    "score": 237.5
+   },
+   {
     "name": "Reshiram",
     "dex": 643,
     "fast": "Fire Fang",
@@ -1054,26 +1063,6 @@
     "charged2": "Shadow Ball",
     "dps": 18,
     "score": 213.2
-   },
-   {
-    "name": "Mega Charizard X",
-    "dex": 6,
-    "fast": "Fire Spin",
-    "charged": "Blast Burn",
-    "charged2": "Overheat",
-    "dps": 15.9,
-    "score": 212.3,
-    "needs": [
-     {
-      "move": "Blast Burn",
-      "kind": "elite"
-     }
-    ],
-    "without": {
-     "fast": "Fire Spin",
-     "charged": "Overheat",
-     "dps": 15.1
-    }
    }
   ],
   "Flying": [
@@ -1253,6 +1242,15 @@
     "score": 288.2
    },
    {
+    "name": "Mega Chandelure",
+    "dex": 609,
+    "fast": "Fire Spin",
+    "charged": "Shadow Ball",
+    "charged2": "Overheat",
+    "dps": 18.2,
+    "score": 237.2
+   },
+   {
     "name": "Mega Gengar",
     "dex": 94,
     "fast": "Lick",
@@ -1378,15 +1376,6 @@
      "charged": "Shadow Ball",
      "dps": 16.7
     }
-   },
-   {
-    "name": "Dragapult",
-    "dex": 887,
-    "fast": "Dragon Tail",
-    "charged": "Shadow Ball",
-    "charged2": "Breaking Swipe",
-    "dps": 14.4,
-    "score": 187.7
    }
   ],
   "Grass": [
