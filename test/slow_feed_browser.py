@@ -98,6 +98,18 @@ def main():
         page.route("**/*", safe_route)
         page.goto(BASE + "/", wait_until="domcontentloaded", timeout=30000)
 
+        # Exercise the telemetry exception locally even on the static CI host,
+        # which does not inject Cloudflare Web Analytics.
+        telemetry_status = page.evaluate("""async () => {
+          const response = await fetch('/cdn-cgi/rum', {
+            method: 'POST',
+            body: 'synthetic smoke telemetry'
+          });
+          return response.status;
+        }""")
+        if telemetry_status != 204 or not intercepted_telemetry:
+            raise AssertionError("Cloudflare RUM telemetry was not fulfilled locally")
+
         deadline = time.monotonic() + 20
         while not held_feed_routes and time.monotonic() < deadline:
             page.wait_for_timeout(100)
@@ -172,6 +184,7 @@ def main():
             "heldFeedRequests": len(held_feed_routes),
             "blockedOtherApiRequests": len(blocked_api_paths),
             "interceptedTelemetryRequests": len(intercepted_telemetry),
+            "syntheticTelemetryStatus": telemetry_status,
             "blockedWrites": blocked_writes,
             "pageErrors": page_errors,
             "productionMutation": "none; /api/events was intercepted before network",
