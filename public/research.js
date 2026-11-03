@@ -37,10 +37,11 @@
     var checked = datePart(task.checkedAt);
     return '<small class="research-task-source">' + label + (links.length ? ' · ' + links.join(' · ') : '') + (checked ? ' · checked ' + esc(fmtDay(checked)) : '') + '</small>';
   }
-  function rewardHtml(reward) {
+  function rewardHtml(reward, event) {
     if (reward.type === 'encounter') {
       var cp = reward.cpMin && reward.cpMax ? 'CP ' + reward.cpMin + '–' + reward.cpMax : 'Encounter';
-      return '<div class="research-reward"><img loading="lazy" decoding="async" width="44" height="44" alt="" src="/api/art?n=' + encodeURIComponent(reward.name) + '"><span><b>' + esc(reward.name) + '</b><small>' + esc(cp) + '</small></span></div>';
+      var art = window.GODASH && GODASH.monArt ? GODASH.monArt(event || {}, { name: reward.name, costume: /wearing|costume/i.test(reward.name), role: 'featured' }, 'ea') : '';
+      return '<div class="research-reward">' + art + '<span><b>' + esc(reward.name) + '</b><small>' + esc(cp) + '</small></span></div>';
     }
     return '<div class="research-reward research-reward-item"><span class="research-reward-qty">' + (reward.quantity > 1 ? esc(reward.quantity) + '×' : '•') + '</span><span><b>' + esc(reward.name) + '</b><small>' + (reward.type === 'item' ? 'Item reward' : 'Possible reward') + '</small></span></div>';
   }
@@ -81,7 +82,7 @@
           if (!start || !end || end < start) { unknownWindows++; return; }
           if (end < today) return;
           var event = eventMap[task.eventId] || eventMap[detailId] || null;
-          var key = event ? event.id : (task.eventId || detailId);
+          var key = event ? 'cur:' + event.id : (task.eventId || detailId);
           var group = groups[key] || (groups[key] = { id: key, event: event, name: (event && event.t) || task.eventName || record.name || 'Research event', start: start, end: end, tasks: [] });
           if (start < group.start) group.start = start;
           if (end > group.end) group.end = end;
@@ -100,12 +101,12 @@
       status.textContent = total + ' source-backed task' + (total === 1 ? '' : 's') + ' across ' + list.length + ' event' + (list.length === 1 ? '' : 's') + '. Event dates are shown as published dates; venue clock times are not converted.';
       host.innerHTML = list.map(function (group) {
         var live = group.start <= today && group.end >= today;
-        var eventButton = group.event ? '<button type="button" class="pill all" data-open="' + esc(group.event.id) + '">Event details</button>' : '';
+        var eventButton = group.event ? '<button type="button" class="pill all" data-open="' + esc(group.id) + '">Event details</button>' : '';
         var tasks = group.tasks.map(function (entry) {
           var task = entry.task, kind = task.category === 'field' ? 'Field Research' : task.category === 'timed' ? 'Timed Research' : task.category === 'special' ? 'Special Research' : 'Research';
-          return '<article class="research-task"><div class="research-task-head"><span class="research-task-kind">' + kind + '</span><span class="research-task-state">' + (task.rewards || []).length + ' reward' + ((task.rewards || []).length === 1 ? '' : 's') + '</span></div><h4>' + esc(task.task) + '</h4><div class="research-rewards">' + (task.rewards || []).map(rewardHtml).join('') + '</div>' + sourceLine(task, entry.record) + '</article>';
+          return '<article class="research-task"><div class="research-task-head"><span class="research-task-kind">' + kind + '</span><span class="research-task-state">' + (task.rewards || []).length + ' reward' + ((task.rewards || []).length === 1 ? '' : 's') + '</span></div><h4>' + esc(task.task) + '</h4><div class="research-rewards">' + (task.rewards || []).map(function (reward) { return rewardHtml(reward, group.event); }).join('') + '</div>' + sourceLine(task, entry.record) + '</article>';
         }).join('');
-        return '<section class="research-event" data-research-group="' + esc(group.id) + '"><header class="research-event-head"><div><span class="research-event-state ' + (live ? 'live' : 'upcoming') + '">' + (live ? 'LIVE' : 'UPCOMING') + '</span><h3>' + esc(group.name) + '</h3><p>' + esc(fmtDay(group.start)) + (group.end !== group.start ? ' – ' + esc(fmtDay(group.end)) : '') + ' · source-published event dates</p></div>' + eventButton + '</header><div class="research-event-tasks">' + tasks + '</div></section>';
+        return '<section class="research-event" data-research-group="' + esc(group.id) + '"><header class="research-event-head"><div><span class="research-event-state ' + (live ? 'live' : 'upcoming') + '">' + (live ? 'CURRENT DATE' : 'UPCOMING') + '</span><h3>' + esc(group.name) + '</h3><p>' + esc(fmtDay(group.start)) + (group.end !== group.start ? ' – ' + esc(fmtDay(group.end)) : '') + ' · source-published event dates</p></div>' + eventButton + '</header><div class="research-event-tasks">' + tasks + '</div></section>';
       }).join('');
       if (lastFocus) focusGroup(lastFocus);
     }).catch(function () {

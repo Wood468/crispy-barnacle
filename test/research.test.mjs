@@ -53,6 +53,7 @@ test("event and pass source associations are explicit and the central Research v
   const html = fs.readFileSync(new URL("../public/index.html", import.meta.url), "utf8");
   const detail = fs.readFileSync(new URL("../public/detail.js", import.meta.url), "utf8");
   const research = fs.readFileSync(new URL("../public/research.js", import.meta.url), "utf8");
+  const dash = fs.readFileSync(new URL("../public/dash.js", import.meta.url), "utf8");
   const sw = fs.readFileSync(new URL("../public/sw.js", import.meta.url), "utf8");
   assert.match(app, /\['research','Research','sub-research'\]/);
   assert.match(app, /openResearch/);
@@ -60,6 +61,8 @@ test("event and pass source associations are explicit and the central Research v
   assert.match(html, /research\.js\?v=/);
   assert.match(detail, /researchTasksHtml/);
   assert.match(detail, /data-open-research/);
+  assert.match(detail, /GOAPP\.openResearch/);
+  assert.match(dash, /detailIds: x\.detailIds \|\| \[\]/);
   assert.match(research, /researchTasks/);
   assert.match(research, /eventWindow/);
   assert.match(sw, /research\.js\?v=/);

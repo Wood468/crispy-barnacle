@@ -330,7 +330,7 @@
     function reward(item) {
       if (item.type === 'encounter') {
         var cp = item.cpMin && item.cpMax ? '<small>CP ' + esc(item.cpMin) + '–' + esc(item.cpMax) + '</small>' : '<small>Encounter</small>';
-        return '<div class="research-reward"><img loading="lazy" decoding="async" width="44" height="44" alt="" src="/api/art?n=' + encodeURIComponent(item.name) + '"><span><b>' + esc(item.name) + '</b>' + cp + '</span></div>';
+        return '<div class="research-reward">' + X.monArt(ev, { name: item.name, costume: /wearing|costume/i.test(item.name), role: 'featured' }, 'ea') + '<span><b>' + esc(item.name) + '</b>' + cp + '</span></div>';
       }
       return '<div class="research-reward research-reward-item"><span class="research-reward-qty">' + (item.quantity > 1 ? esc(item.quantity) + '×' : '•') + '</span><span><b>' + esc(item.name) + '</b><small>' + (item.type === 'item' ? 'Item reward' : 'Possible reward') + '</small></span></div>';
     }
@@ -618,7 +618,16 @@
       var x = $('evd-x'); if (x) { x.addEventListener('click', function () { close(); }); x.focus(); }
     });
   }
-  document.addEventListener('click', function (e) { var b = e.target.closest('[data-open]'); if (b) { e.preventDefault(); open(b.dataset.open, b); } });
+  document.addEventListener('click', function (e) {
+    var research = e.target.closest('[data-open-research]');
+    if (research) {
+      e.preventDefault();
+      if (window.GOAPP && typeof window.GOAPP.openResearch === 'function') window.GOAPP.openResearch(research.getAttribute('data-event-id') || '');
+      return;
+    }
+    var b = e.target.closest('[data-open]');
+    if (b) { e.preventDefault(); open(b.dataset.open, b); }
+  });
   /* Keep keyboard navigation inside the modal while it is open. */
   document.addEventListener('keydown', function (e) {
     var o = $('evd'); if (!o || o.hidden) return;
