@@ -111,7 +111,7 @@ test("service worker versions the cache, pre-caches offline fallback, and never 
   assert.ok(sw.includes("'/season.js?v=20261104b'"), 'the current season banner script is available to the offline shell');
   assert.ok(sw.includes("'/app.js?v=20261103i'"), "the current app bootstrap is available offline");
   assert.ok(sw.includes("'/pin.js?v=20261101b'"), "the central sync settings are available offline");
-  assert.ok(sw.includes("'/dash.js?v=20261104a'"), "the current dashboard loader is available offline");
+  assert.ok(sw.includes("'/dash.js?v=20261104b'"), "the current dashboard loader is available offline");
   assert.ok(sw.includes("'/places.js?v=20261103b'"), "the Places dialog accessibility fix is available offline");
   assert.ok(dash.includes("places.js?v=20261103b"), "the dashboard loads the versioned Places dialog accessibility fix");
   assert.ok(sw.includes("'/raid-share.js?v=20261102b'"), "the raid share card is available offline");
