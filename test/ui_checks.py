@@ -342,7 +342,7 @@ check('event signal chips and detail tags use semantic palette roles with unchan
           '.tg-incense{--tc:var(--color-signal-shadow)}.tg-costume{--tc:var(--color-signal-encounter)}',
       ]))
 check('offline shell cache version advances with the dashboard stylesheet token release',
-      "gofn-shell-v232" in SW_JS)
+      SHELL_CACHE in SW_JS)
 check('Travel mode searches only source-dated physical destinations and preserves Today visibility',
       all(token in INDEX_HTML for token in ['id="sub-travel"', 'id="travel-q"', 'id="travel-destinations"', 'id="travel-regions"', 'id="travel-results"']) and
       "['travel','Travel','sub-travel']" in APP_JS and
