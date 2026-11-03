@@ -21,6 +21,21 @@ test("two events with the same name are matched by date", () => {
   assert.equal(r.problems.length, 0);
 });
 
+test("a past same-title event is not compared with a later recurring event", () => {
+  const theirs = [{ slug: "super-mega-raid-day-november-2026", type: "raid-day", start: "2026-11-28T14:00:00", end: "2026-11-28T17:00:00", local: true }];
+  const ours = [{ id: "smr1", t: "Super Mega Raid Day", s: "2026-10-31T14:00", e: "2026-10-31T17:00", sourceUrl: "https://pokemongo.com/news/chandelure-super-mega-raid-day-2026/" }];
+  const result = audit(ours, theirs);
+  assert.deepEqual(result.problems, []);
+  assert.deepEqual(result.missing.map(x => x.slug), ["super-mega-raid-day-november-2026"]);
+});
+
+test("an exact Leek Duck source slug still detects a non-overlapping date change", () => {
+  const theirs = [{ slug: "super-mega-raid-day-november-2026", type: "raid-day", start: "2026-11-28T14:00:00", end: "2026-11-28T17:00:00", local: true }];
+  const ours = [{ id: "smr1", t: "Super Mega Raid Day", s: "2026-10-31T14:00", e: "2026-10-31T17:00", sourceUrl: "https://leekduck.com/events/super-mega-raid-day-november-2026/" }];
+  const result = audit(ours, theirs);
+  assert.deepEqual(result.problems.map(p => p.field), ["start", "end"]);
+});
+
 import { auditWorld, newAlerts } from "../scripts/schedule-audit.mjs";
 test("world event dates are corrected from Leek Duck, and alerts are sent once", () => {
   const theirs = [{ slug: "into-the-wild-2026", type: "event", start: "2026-11-09T10:00:00", end: "2026-11-13T20:00:00", local: true }];
