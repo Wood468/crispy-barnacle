@@ -10,6 +10,7 @@ const app = read("../public/app.js");
 const dash = read("../public/dash.js");
 const season = read("../public/season.js");
 const detail = read("../public/detail.js");
+const dashCss = read("../public/dash.css");
 const html = read("../public/index.html");
 const icon = read("../public/icon-maskable.svg");
 const offline = read("../public/offline.html");
@@ -67,6 +68,7 @@ test("Today season cards defer posters and event details load a compact, cacheab
   assert.match(detail, /img\.src = thumb/, "the compact WebP is loaded on demand");
   assert.match(detail, /img\.src = original/, "a missing thumbnail falls back to the original poster");
   assert.match(detail, /loadSeasonBanner\(o, ev2\)/, "the thumbnail loader receives the completed event after dialog rendering");
+  assert.match(dashCss, /\.evd-banner-season\{object-fit:contain;background:var\(--color-surface-card\)\}/, "portrait Season posters are shown in full rather than cropped");
 });
 
 test("every versioned local script and stylesheet requested by the page and lazy loaders is precached at its exact URL", () => {
