@@ -99,14 +99,16 @@ test("static JSON dependencies referenced by first-party scripts are precached",
 });
 
 test("service worker versions the cache, pre-caches offline fallback, and never handles API responses", () => {
-  assert.match(sw, /gofn-shell-v229/);
+  assert.match(sw, /gofn-shell-v230/);
   assert.ok(sw.includes("'/lib.js?v=20261102d'"), 'the refreshed dashboard helper is available to the offline shell');
   assert.ok(sw.includes("'/local-state.js?v=20261030a'"), 'account-local state migration is available offline');
   assert.ok(sw.includes("'/account.js?v=20261102a'"), 'the refreshed account transition code is available offline');
   assert.ok(sw.includes("'/season.js?v=20261102e'"), 'the current season banner script is available to the offline shell');
   assert.ok(sw.includes("'/app.js?v=20261103h'"), "the current app bootstrap is available offline");
   assert.ok(sw.includes("'/pin.js?v=20261101b'"), "the central sync settings are available offline");
-  assert.ok(sw.includes("'/dash.js?v=20261103i'"), "the current dashboard loader is available offline");
+  assert.ok(sw.includes("'/dash.js?v=20261103j'"), "the current dashboard loader is available offline");
+  assert.ok(sw.includes("'/places.js?v=20261103b'"), "the Places dialog accessibility fix is available offline");
+  assert.ok(dash.includes("places.js?v=20261103b"), "the dashboard loads the versioned Places dialog accessibility fix");
   assert.ok(sw.includes("'/raid-share.js?v=20261102b'"), "the raid share card is available offline");
   assert.ok(sw.includes("'/nudge.js?v=20261102a'"), "the shared-escape nudge renderer is available offline");
   assert.ok(sw.includes("'/review.js?v=20261102e'"), "the shared-escape review renderer is available offline");
