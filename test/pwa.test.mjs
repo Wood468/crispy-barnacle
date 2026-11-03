@@ -50,7 +50,7 @@ test("PWA entry page links to the manifest and iOS touch icon and registers the 
   assert.match(html, /rel="apple-touch-icon" href="\/icon-180\.png"/);
   assert.match(html, /dash\.css\?v=20261103d/);
   assert.match(html, /styles\.css\?v=20261102b/);
-  assert.match(html, /app\.js\?v=20261103f/);
+  assert.match(html, /app\.js\?v=20261103g/);
   assert.match(html, /raid-share\.js\?v=20261102b/);
   assert.match(html, /local-state\.js\?v=20261030a/);
   assert.match(html, /pin\.js\?v=20261101b/);

@@ -69,6 +69,12 @@
     var y = +m[1], month = +m[2] - 1, day = +m[3], d = new Date(y, month, day);
     return d.getFullYear() === y && d.getMonth() === month && d.getDate() === day ? d.getTime() : null;
   }
+  function instantMs(s) {
+    var m = /^(\\d{4}-\\d{2}-\\d{2})T(\\d{2}):(\\d{2})(?::(\\d{2}))?(Z|[+-]\\d{2}:\\d{2})$/.exec(s || '');
+    if (!m || dayMs(m[1]) == null || +m[2] > 23 || +m[3] > 59 || +(m[4] || 0) > 59) return null;
+    var ms = Date.parse(s);
+    return Number.isFinite(ms) ? ms : null;
+  }
   function officialSourceUrl(value) {
     try {
       var u = new URL(String(value || ''));
@@ -97,14 +103,17 @@
   function extEntries(items, now) {
     return (items || []).map(function (x) {
       var e0 = dayMs(x.eventStart), e1 = dayMs(x.eventEnd), s0 = dayMs(x.saleStart), s1 = dayMs(x.saleEnd);
-      var r0 = dayMs(x.registrationStart), r1 = dayMs(x.registrationEnd), status, chip;
+      var r0 = instantMs(x.registrationStart), r1 = instantMs(x.registrationEnd), status, chip;
       if (e1 != null && now >= e1 + DAY) return null;
       if (x.availability === 'available') { status = 'open'; chip = 'Tickets available'; }
       else if (x.availability === 'sold-out') { status = 'closed'; chip = 'Sold out'; }
       else if (r0 != null || r1 != null) {
-        if (r0 != null && now < r0) { status = 'soon'; chip = 'Registration opens ' + dstr(r0); }
-        else if (r1 != null && now < r1 + DAY) { status = 'open'; chip = 'Registration open · until ' + dstr(r1); }
-        else if (r1 != null) { status = 'unknown'; chip = 'Registration closed ' + dstr(r1) + ' · ticket availability unconfirmed'; }
+        var tz = x.registrationTimeZone ? ' ' + x.registrationTimeZone : '';
+        var r0Day = x.registrationStart ? dayMs(String(x.registrationStart).slice(0, 10)) : null;
+        var r1Day = x.registrationEnd ? dayMs(String(x.registrationEnd).slice(0, 10)) : null;
+        if (r0 != null && now < r0) { status = 'soon'; chip = 'Registration opens ' + (r0Day != null ? dstr(r0Day) : dstr(r0)) + tz; }
+        else if (r1 != null && now <= r1) { status = 'open'; chip = 'Registration open · until ' + (r1Day != null ? dstr(r1Day) : dstr(r1)) + tz; }
+        else if (r1 != null) { status = 'unknown'; chip = 'Registration ended ' + (r1Day != null ? dstr(r1Day) : dstr(r1)) + tz + ' · ticket availability unconfirmed'; }
         else { status = 'unknown'; chip = 'Registration window not confirmed · check official details'; }
       }
       else if (x.availability === 'unknown') { status = 'unknown'; chip = 'Ticket availability not confirmed · check official details'; }
@@ -158,7 +167,7 @@
       }, 300);
     }).catch(function () { });
   }
-  window.GOBUY = { extEntries: extEntries, untilStr: untilStr, dayMs: dayMs, officialSourceUrl: officialSourceUrl, sourceLinks: sourceLinks, sourceChecked: sourceChecked };
+  window.GOBUY = { extEntries: extEntries, untilStr: untilStr, dayMs: dayMs, instantMs: instantMs, officialSourceUrl: officialSourceUrl, sourceLinks: sourceLinks, sourceChecked: sourceChecked };
   document.addEventListener('gofn-state', function () { if (VIEW && LOG) render(VIEW.host, VIEW.m, Date.now()); });
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', go); else go();
 })();

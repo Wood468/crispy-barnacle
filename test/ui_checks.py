@@ -3869,7 +3869,7 @@ with sync_playwright() as p:
             mexico = next((x for x in state['cards'] if 'Mexico City' in x['text']),None)
             check('Purchase Planner %dpx: Sendai registration is not mislabeled as a closed sale; Mexico City shows verified availability and both show 3 Nov source checks' % width,
                   loaded and sendai is not None and mexico is not None and
-                  'Registration closed 15 Sep · ticket availability unconfirmed' in sendai['text'] and
+                  'Registration ended 15 Sep JST · ticket availability unconfirmed' in sendai['text'] and
                   'Tickets available' in mexico['text'] and
                   sendai['text'].count('Official source checked 3 Nov 2026')==1 and
                   mexico['text'].count('Official source checked 3 Nov 2026')==1,state)

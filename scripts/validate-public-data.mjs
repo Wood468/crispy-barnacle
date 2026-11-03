@@ -145,9 +145,18 @@ if (ext) {
       try { if (new URL(x.url).protocol !== "https:") fail(where, "url must use HTTPS"); } catch { fail(where, "url is not a valid URL"); }
       if (!day.test(x.eventEnd || "")) fail(where, "eventEnd must be YYYY-MM-DD, or the entry would never expire");
       const isDay = value => typeof value === "string" && day.test(value) && !Number.isNaN(Date.parse(value)) && new Date(value).toISOString().slice(0, 10) === value;
-      for (const k of ["eventStart", "saleStart", "saleEnd", "registrationStart", "registrationEnd", "observed"]) if (x[k] && !isDay(x[k])) fail(where, k + " must be a real YYYY-MM-DD date");
+      const isInstant = value => {
+        const m = typeof value === "string" && /^(\\d{4}-\\d{2}-\\d{2})T(\\d{2}):(\\d{2})(?::(\\d{2}))?(Z|[+-]\\d{2}:\\d{2})$/.exec(value);
+        if (!m || !isDay(m[1]) || Number(m[2]) > 23 || Number(m[3]) > 59 || Number(m[4] || 0) > 59) return false;
+        if (m[5] !== "Z") { const off = /^([+-])(\\d{2}):(\\d{2})$/.exec(m[5]); if (!off || Number(off[2]) > 14 || Number(off[3]) > 59 || (Number(off[2]) === 14 && Number(off[3]) !== 0)) return false; }
+        return !Number.isNaN(Date.parse(value));
+      };
+      for (const k of ["eventStart", "saleStart", "saleEnd", "observed"]) if (x[k] && !isDay(x[k])) fail(where, k + " must be a real YYYY-MM-DD date");
+      for (const k of ["registrationStart", "registrationEnd"]) if (x[k] && !isInstant(x[k])) fail(where, k + " must be an ISO date-time with an explicit timezone");
       if (x.saleStart && x.saleEnd && x.saleStart > x.saleEnd) fail(where, "saleStart is after saleEnd");
-      if (x.registrationStart && x.registrationEnd && x.registrationStart > x.registrationEnd) fail(where, "registrationStart is after registrationEnd");
+      if (x.registrationStart && x.registrationEnd && Date.parse(x.registrationStart) > Date.parse(x.registrationEnd)) fail(where, "registrationStart is after registrationEnd");
+      if (!!x.registrationStart !== !!x.registrationEnd) fail(where, "registrationStart and registrationEnd must be supplied together");
+      if ((x.registrationStart || x.registrationEnd) && (typeof x.registrationTimeZone !== "string" || !x.registrationTimeZone.trim())) fail(where, "a registration window needs its source timezone label");
       if (!!x.registrationStart !== !!x.registrationEnd) fail(where, "registrationStart and registrationEnd must be supplied together");
       if (x.eventStart && x.eventEnd && x.eventStart > x.eventEnd) fail(where, "eventStart is after eventEnd");
       if (x.availability != null && !["available", "sold-out", "unknown"].includes(x.availability)) fail(where, "availability must be available, sold-out or unknown");

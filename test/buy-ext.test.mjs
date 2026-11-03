@@ -9,18 +9,20 @@ const require = createRequire(import.meta.url);
 const win = { GOLIB: require("../public/lib.js") };
 const ctx = vm.createContext({ window: win, document: { readyState: "complete", getElementById: () => null, addEventListener() {} }, localStorage: { getItem: () => null, setItem() {} }, Date, Math, JSON, String, Number, Object, Array, RegExp, URL });
 vm.runInContext(readFileSync(new URL("../public/buy.js", import.meta.url), "utf8"), ctx);
-const { extEntries, untilStr, dayMs, officialSourceUrl, sourceLinks, sourceChecked } = win.GOBUY;
+const { extEntries, untilStr, dayMs, instantMs, officialSourceUrl, sourceLinks, sourceChecked } = win.GOBUY;
 
 const at = (y, m, d, h = 12) => new Date(y, m - 1, d, h).getTime();
-const SENDAI = { id: "s", name: "Sendai", eventStart: "2026-11-06", eventEnd: "2026-11-08", registrationStart: "2026-09-11", registrationEnd: "2026-09-15", availability: "unknown", observed: "2026-11-03" };
+const SENDAI = { id: "s", name: "Sendai", eventStart: "2026-11-06", eventEnd: "2026-11-08", registrationStart: "2026-09-11T08:00:00+09:00", registrationEnd: "2026-09-15T07:59:00+09:00", registrationTimeZone: "JST", availability: "unknown", observed: "2026-11-03" };
 const MEXICO = { id: "m", name: "Mexico City", eventStart: "2026-11-06", eventEnd: "2026-11-08" };
 
 test("tickets sold elsewhere: registration is not mislabeled as the ticket-sale window", () => {
   const chips = now => extEntries([SENDAI, MEXICO], now).map(r => r.status);
   assert.deepEqual(chips(at(2026, 9, 1)), ["soon", "unknown"]);
   assert.deepEqual(chips(at(2026, 9, 12)), ["open", "unknown"]);
+  assert.equal(extEntries([SENDAI], Date.parse("2026-09-15T08:58:00+10:00"))[0].status, "open", "registration remains open before 7:59 am JST");
+  assert.equal(extEntries([SENDAI], Date.parse("2026-09-15T09:00:00+10:00"))[0].status, "unknown", "registration closes at the published instant, not midnight");
   assert.deepEqual(chips(at(2026, 10, 20)), ["unknown", "unknown"]);
-  assert.match(extEntries([SENDAI], at(2026, 10, 20))[0].chip, /Registration closed 15 Sep · ticket availability unconfirmed/);
+  assert.match(extEntries([SENDAI], at(2026, 10, 20))[0].chip, /Registration ended 15 Sep JST · ticket availability unconfirmed/);
   assert.deepEqual(chips(at(2026, 11, 8, 23)), ["unknown", "unknown"], "still listed on the last day of the event");
   assert.deepEqual(chips(at(2026, 11, 9, 1)), [], "gone the day after the event");
 });
@@ -69,6 +71,9 @@ test("source-check dates must be valid and cannot be in the future", () => {
   assert.equal(sourceChecked({observed:"2026-02-31"}, at(2026,11,3)), "");
   assert.equal(dayMs("2026-02-31"), null);
   assert.equal(dayMs("2026-11-03"), at(2026,11,3,0));
+  assert.equal(instantMs("2026-09-15T07:59:00+09:00"), Date.parse("2026-09-15T07:59:00+09:00"));
+  assert.equal(instantMs("2026-09-15T07:59:00"), null);
+  assert.equal(instantMs("2026-02-31T07:59:00+09:00"), null);
 });
 
 test("tickets sold elsewhere: sorted by event date, and bad input does not break it", () => {
