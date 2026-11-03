@@ -2,8 +2,8 @@
 """Read-only browser fault-injection smoke for the Today live-event feed.
 
 The /api/events request is held inside Chromium and never reaches the Worker.
-All other API requests are answered locally, and every non-GET/HEAD request
-is aborted. The same script runs against the local static build in CI and the
+All other API requests are answered locally. Non-GET/HEAD requests are aborted,
+except Cloudflare's /cdn-cgi/rum beacon, which is fulfilled locally (never sent). The same script runs against the local static build in CI and the
 live production site from its dedicated scheduled workflow.
 """
 import json
@@ -47,6 +47,7 @@ def main():
     held_feed_routes = []
     blocked_writes = []
     blocked_api_paths = []
+    intercepted_telemetry = []
     page_errors = []
 
     with sync_playwright() as playwright:
@@ -72,7 +73,14 @@ def main():
                 held_feed_routes.append(route)
                 return
 
-            # Fail closed before considering API paths: no non-read request
+            # Cloudflare's browser RUM beacon is expected on production pages.
+            # Fulfil it locally so telemetry is not sent by this read-only smoke.
+            if path == "/cdn-cgi/rum" and method == "POST":
+                intercepted_telemetry.append(path)
+                route.fulfill(status=204, body="")
+                return
+
+            # Fail closed before considering API paths: no other non-read request
             # is ever allowed to leave the browser.
             if method not in ("GET", "HEAD"):
                 blocked_writes.append(f"{method} {path}")
@@ -163,6 +171,7 @@ def main():
             "recovered": recovered,
             "heldFeedRequests": len(held_feed_routes),
             "blockedOtherApiRequests": len(blocked_api_paths),
+            "interceptedTelemetryRequests": len(intercepted_telemetry),
             "blockedWrites": blocked_writes,
             "pageErrors": page_errors,
             "productionMutation": "none; /api/events was intercepted before network",
