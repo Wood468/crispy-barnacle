@@ -1,7 +1,7 @@
 {
- "updated": "2026-11-03T06:47:59.391Z",
+ "updated": "2026-11-03T17:03:52.128Z",
  "state": "ok",
- "scrapedDuckEvents": 49,
+ "scrapedDuckEvents": 48,
  "missingHere": [],
  "missingThere": [
   {
@@ -80,6 +80,11 @@
    "start": "2026-10-27"
   },
   {
+   "id": "w-forever-stamp-rally-go-wild-area",
+   "name": "Forever Stamp Rally Go Wild Area",
+   "start": "2026-11-03"
+  },
+  {
    "id": "w-celebrate-the-festival-of-lights-with-the-return-o",
    "name": "Festival of Lights",
    "start": "2026-11-06"
@@ -100,14 +105,14 @@
    "start": "2026-11-07"
   },
   {
-   "id": "w-pok-mon-30th-anniversary-mall-exploration-sm-south",
-   "name": "Pokémon 30th Anniversary Mall Exploration: SM Southmall",
-   "start": "2026-11-20"
-  },
-  {
    "id": "w-pok-mon-run-30-new-taipei",
    "name": "Pokémon RUN 30: New Taipei",
    "start": "2026-11-14"
+  },
+  {
+   "id": "w-pok-mon-30th-anniversary-mall-exploration-sm-south",
+   "name": "Pokémon 30th Anniversary Mall Exploration: SM Southmall",
+   "start": "2026-11-20"
   },
   {
    "id": "w-pok-mon-run-30-malaysia",
