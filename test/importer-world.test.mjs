@@ -49,6 +49,8 @@ test("same-series events at distinct cities remain separate while country/city a
     }
   ], names);
   assert.equal(nested.length, 1, "a country-level record and its city-level version remain one event");
+  assert.equal(nested[0].name, "Pokémon RUN 30: Kuala Lumpur", "the more specific city title replaces the country-level label");
+  assert.equal(nested[0].place, "Kuala Lumpur, Malaysia (KLCC)", "the more specific city/venue replaces the country-only place");
 });
 
 test("global Twitch research stays distinct from the in-person Night Out venue event", async () => {
@@ -294,6 +296,8 @@ test("Pokémon RUN 30 city stops keep official venues and date-only event window
     assert.match(event.start, /^\d{4}-\d{2}-\d{2}$/);
     assert.match(event.end, /^\d{4}-\d{2}-\d{2}$/);
     assert.ok(event.sources.some(source => source.id === "official" && source.url === officialUrl));
+    assert.ok(event.sources.every(source => typeof source.id === "string" && typeof source.name === "string" && typeof source.url === "string"), "every public source record has string id, name and URL fields");
+    assert.ok(!event.sources.some(source => source.id === "official" && /serebii\\.net/i.test(source.url)), "an official source object never inherits the shared Serebii fallback URL");
     const backup = fallback.find(item => item.id === fallbackId);
     assert.ok(backup, name + " remains available in the regional fallback");
     assert.equal(backup.source.url, officialUrl);
@@ -302,4 +306,34 @@ test("Pokémon RUN 30 city stops keep official venues and date-only event window
     assert.equal(backup.start, start);
     assert.equal(backup.end, end);
   }
+});
+
+
+test("per-event regional seed source objects override the shared Serebii fallback", async () => {
+  const { regionalSeedEntries, mergeWorld } = await import("../scripts/importer/world.mjs");
+  const officialUrl = "https://pokemongo.com/news/pokemon-run-30-2026/";
+  const serebiiUrl = "https://www.serebii.net/pokemongo/reallifeevents.shtml";
+  const seed = {
+    source: { label: "Serebii.net, Pokémon GO real-life events", url: serebiiUrl },
+    events: [
+      {
+        name: "Pokémon RUN 30: New Taipei", place: "New Taipei, Taiwan (New Taipei Metropolitan Park)",
+        area: "Asia", start: "2026-11-14", end: "2026-11-15", url: serebiiUrl,
+        source: { label: "Pokémon GO (official)", url: officialUrl }
+      },
+      {
+        name: "Legacy regional event", place: "Tokyo, Japan", area: "Asia",
+        start: "2026-11-20", end: "2026-11-20"
+      }
+    ]
+  };
+  const entries = regionalSeedEntries(seed);
+  assert.equal(entries[0].url, officialUrl, "the per-event official URL takes precedence over both event and shared fallback URLs");
+  assert.deepEqual(mergeWorld([entries[0]], { official: "Pokémon GO (official)" })[0].sources, [
+    { id: "official", name: "Pokémon GO (official)", url: officialUrl }
+  ]);
+  assert.equal(entries[1].url, serebiiUrl, "entries without a per-event source retain the shared fallback URL");
+  assert.deepEqual(mergeWorld([entries[1]], { serebii: "Serebii" })[0].sources, [
+    { id: "serebii", name: "Serebii", url: serebiiUrl }
+  ]);
 });
