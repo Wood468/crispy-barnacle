@@ -1,5 +1,5 @@
 {
- "runAt": "2026-11-03T06:57:47.125Z",
+ "runAt": "2026-11-03T12:45:49.803Z",
  "sources": {
   "official": {
    "listed": 23,
@@ -10,13 +10,13 @@
    "error": ""
   },
   "hub": {
-   "listed": 12,
+   "listed": 11,
    "error": ""
   }
  },
  "pagesRead": 80,
  "events": 89,
- "worldEvents": 59,
+ "worldEvents": 61,
  "worldUndated": [
   "GO Wild Area Stamp Rally"
  ],
@@ -88,8 +88,23 @@
   },
   {
    "source": "leekduck",
+   "title": "Dynamax Machop during Max Monday",
+   "url": "https://leekduck.com/events/max-mondays-2026-11-02/"
+  },
+  {
+   "source": "leekduck",
    "title": "Shadow Tornadus (Incarnate Forme) in Shadow Raids",
    "url": "https://leekduck.com/events/shadow-tornadus-incarnate-forme-in-shadow-raids-november-16-2026/"
+  },
+  {
+   "source": "hub",
+   "title": "Shadow Tornadus (Incarnate) Raid Counters Guide",
+   "url": "https://pokemongohub.net/post/guide/shadow-tornadus-incarnate-raid-counters-guide/"
+  },
+  {
+   "source": "hub",
+   "title": "Dynamax Machop Max Monday: Event Guide",
+   "url": "https://pokemongohub.net/post/event/dynamax-machop-max-monday/"
   },
   {
    "source": "hub",
@@ -307,6 +322,13 @@
    ]
   },
   {
+   "event": "GO Pass: November",
+   "field": "featured",
+   "missingFrom": [
+    "hub"
+   ]
+  },
+  {
    "event": "Dynamax Machop during Max Monday",
    "field": "bonuses",
    "missingFrom": [
@@ -337,13 +359,6 @@
   {
    "event": "Dynamax Machop during Max Monday",
    "field": "dates",
-   "missingFrom": [
-    "hub"
-   ]
-  },
-  {
-   "event": "GO Pass: November",
-   "field": "featured",
    "missingFrom": [
     "hub"
    ]

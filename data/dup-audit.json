@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-03T06:57:47.725Z",
+ "updated": "2026-11-03T12:45:50.392Z",
  "joinedThisRun": [
   {
    "kept": "w-pokemon-fossil-museum-2026",
@@ -24,6 +24,16 @@
   {
    "kept": "w-pok-mon-30th-anniversary-mall-exploration-jewel",
    "dropped": "w-pok-mon-30th-anniversary-mall-exploration-changi-a",
+   "why": "same event"
+  },
+  {
+   "kept": "w-pok-mon-run-30-malaysia",
+   "dropped": "w-pok-mon-run-30-kuala-lumpur",
+   "why": "same event"
+  },
+  {
+   "kept": "w-pok-mon-run-30-bangkok",
+   "dropped": "w-pok-mon-run-30-thailand",
    "why": "same event"
   }
  ],
