@@ -139,6 +139,42 @@ test('Remote generation fetches only approved sources and rejects non-image resp
   }
 });
 
+test('Remote generation cancels an oversized streamed poster before buffering it fully', async () => {
+  const root = await fixtureRoot([{ id: 'season:large', img: '/img/ext/large.jpg' }]);
+  let cancelled = false;
+  const chunks = [Buffer.alloc(12 * 1024 * 1024), Buffer.alloc(9 * 1024 * 1024)];
+  try {
+    const fetchImpl = async url => ({
+      ...response({ url: String(url), bytes: JPEG }),
+      body: {
+        getReader() {
+          let index = 0;
+          return {
+            async read() {
+              return index < chunks.length
+                ? { done: false, value: chunks[index++] }
+                : { done: true };
+            },
+            async cancel() { cancelled = true; },
+            releaseLock() {}
+          };
+        }
+      }
+    });
+    const result = await generateSeasonThumbnails({
+      root,
+      sourceMode: 'remote',
+      fetchImpl,
+      convert: async () => { throw new Error('conversion must not run for an oversized source'); },
+      log: () => {}
+    });
+    assert.deepEqual(result, { referenced: 1, generated: 0, unchanged: 0, missing: 0, failed: 1 });
+    assert.equal(cancelled, true);
+  } finally {
+    await fs.rm(root, { recursive: true, force: true });
+  }
+});
+
 test('Generation workflow updates only static derivatives and service worker caches Season thumbnails offline', async () => {
   const workflow = await fs.readFile(path.join(ROOT, '.github', 'workflows', 'qa10-thumbnail-generation.yml'), 'utf8');
   const sw = await fs.readFile(path.join(ROOT, 'public', 'sw.js'), 'utf8');
