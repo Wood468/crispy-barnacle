@@ -60,11 +60,11 @@ test("PWA entry page links to the manifest and iOS touch icon and registers the 
   assert.match(html, /\/pwa\.js/);
   assert.match(app, /dash\.js\?v=20261103h/);
   assert.match(dash, /detail\.js\?v=20261102f/);
-  assert.match(dash, /places\.js\?v=20261103a/, "the updated Places provenance UI is versioned");
+  assert.match(dash, /places\.js\?v=20261102a/, "the updated Places provenance UI is versioned");
   assert.match(dash, /infographic\.js\?v=20261103a/, "the deferred infographic loader is versioned");
   assert.match(dash, /nudge\.js\?v=20261102a/, "the shared-escape nudge renderer is versioned");
   assert.match(dash, /review\.js\?v=20261102e/, "the shared-escape review renderer is versioned");
-  assert.match(dash, /buy\.js\?v=20261102a/, "the shared-escape purchase renderer is versioned");
+  assert.match(dash, /buy\.js\?v=20261103a/, "the shared-escape purchase renderer is versioned");
 });
 
 
