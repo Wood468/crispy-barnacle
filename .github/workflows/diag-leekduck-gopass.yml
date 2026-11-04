@@ -1,0 +1,160 @@
+name: diag-leekduck-gopass
+# TEMPORARY read-only diagnostic. Close (do not merge) after results are read.
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/diag-leekduck-gopass.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  capture:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Fetch page once and report structure as annotations
+        run: |
+          mkdir -p out
+          node - <<'NODE_EOF'
+          const fs = require('fs');
+          const crypto = require('crypto');
+          const URL_ = 'https://leekduck.com/events/go-pass-november-2026/';
+          const UA = 'GO-Field-Notes-Importer/1.0 (+https://pogo.michaelpuff.com; reads public event write-ups, links back to every source)';
+          const enc = (s) => String(s).replace(/%/g, '%25').replace(/\r/g, '%0D').replace(/\n/g, '%0A');
+          const note = (title, msg) => {
+            let m = String(msg);
+            if (m.length > 1500) m = m.slice(0, 1480) + ' ...[truncated]';
+            console.log('::notice title=' + String(title).replace(/[,:\n]/g, ' ') + '::' + enc(m));
+          };
+          const count = (h, re) => (h.match(re) || []).length;
+          const flat = (s) => s.replace(/\s+/g, ' ');
+          (async () => {
+            const res = await fetch(URL_, { headers: { 'User-Agent': UA, 'Accept': 'text/html' }, redirect: 'follow' });
+            const buf = Buffer.from(await res.arrayBuffer());
+            fs.writeFileSync('out/leekduck-gopass-raw.html', buf);
+            const html = buf.toString('utf8');
+            const sha = crypto.createHash('sha256').update(buf).digest('hex');
+            note('A status', 'status=' + res.status + '\nfinalUrl=' + res.url + '\ncontent-type=' + res.headers.get('content-type') + '\nbytes=' + buf.length + '\nsha256=' + sha + '\nserver=' + res.headers.get('server') + '\ncf-mitigated=' + res.headers.get('cf-mitigated'));
+            if (!buf.length) { note('A empty', 'empty body'); return; }
+            note('A first 300 chars', flat(html.slice(0, 300)));
+
+            // B counts
+            const scriptOpen = html.match(/<script\b[^>]*>/gi) || [];
+            const srcScripts = scriptOpen.filter((t) => /\bsrc\s*=/i.test(t)).length;
+            note('B counts', 'table=' + count(html, /<table\b/gi) + '\ntr=' + count(html, /<tr\b/gi) + '\ntd=' + count(html, /<td\b/gi) + '\nscript total=' + scriptOpen.length + ' (src=' + srcScripts + ' inline=' + (scriptOpen.length - srcScripts) + ')\ndiv=' + count(html, /<div\b/gi));
+
+            // C names
+            const names = ['Rookidee', 'Sandygast', 'Impidimp', 'Klink'];
+            note('C names', names.map((n) => n + '=' + count(html, new RegExp(n, 'g'))).join('\n'));
+
+            // script blocks
+            const scripts = [];
+            const sre = /<script\b([^>]*)>([\s\S]*?)<\/script>/gi;
+            let m;
+            while ((m = sre.exec(html))) {
+              scripts.push({ attrs: m[1], body: m[2], start: m.index, bodyStart: m.index + m[0].indexOf('>') + 1, end: m.index + m[0].length });
+            }
+
+            // D first Rookidee
+            const pos = html.indexOf('Rookidee');
+            if (pos < 0) {
+              note('D Rookidee', 'not found');
+            } else {
+              const inScript = scripts.find((s) => pos >= s.bodyStart && pos < s.end);
+              if (inScript) {
+                const type = (inScript.attrs.match(/\btype\s*=\s*["']?([^"'\s>]+)/i) || [])[1] || 'none';
+                const id = (inScript.attrs.match(/\bid\s*=\s*["']?([^"'\s>]+)/i) || [])[1] || 'none';
+                note('D Rookidee in script', 'INSIDE <script> type=' + type + ' id=' + id + ' attrs=' + flat(inScript.attrs) + '\nsnippet: ' + flat(html.slice(Math.max(0, pos - 250), pos + 250)));
+              } else {
+                // build open-element stack over prefix
+                const prefix = html.slice(0, pos);
+                const voids = new Set(['area','base','br','col','embed','hr','img','input','link','meta','param','source','track','wbr']);
+                const stack = [];
+                const tre = /<!--[\s\S]*?-->|<(\/?)([a-zA-Z][\w:-]*)([^>]*)>/g;
+                let t;
+                while ((t = tre.exec(prefix))) {
+                  if (!t[2]) continue;
+                  const tag = t[2].toLowerCase();
+                  if (t[1]) {
+                    for (let i = stack.length - 1; i >= 0; i--) { if (stack[i].tag === tag) { stack.length = i; break; } }
+                  } else if (!voids.has(tag) && !/\/\s*$/.test(t[3])) {
+                    stack.push({ tag, attrs: t[3] });
+                    if (tag === 'script' || tag === 'style') {
+                      const close = prefix.toLowerCase().indexOf('</' + tag, tre.lastIndex);
+                      if (close < 0) break;
+                      stack.pop();
+                      tre.lastIndex = close;
+                    }
+                  }
+                }
+                const chain = stack.slice(-8).reverse().map((e) => {
+                  const cls = (e.attrs.match(/\bclass\s*=\s*["']([^"']*)["']/i) || [])[1];
+                  const id = (e.attrs.match(/\bid\s*=\s*["']([^"']*)["']/i) || [])[1];
+                  const data = (e.attrs.match(/\bdata-[\w-]+/gi) || []).join(',');
+                  return e.tag + (id ? '#' + id : '') + (cls ? '.' + cls.trim().replace(/\s+/g, '.') : '') + (data ? ' [' + data + ']' : '');
+                });
+                note('D Rookidee ancestors', 'not in script. nearest ancestor first:\n' + chain.join('\n<- '));
+                note('D Rookidee snippet', flat(html.slice(Math.max(0, pos - 250), pos + 250)));
+              }
+            }
+
+            // E scripts
+            const inline = scripts.filter((s) => !/\bsrc\s*=/i.test(s.attrs));
+            const lines = inline.map((s, i) => {
+              const type = (s.attrs.match(/\btype\s*=\s*["']?([^"'\s>]+)/i) || [])[1] || '-';
+              const id = (s.attrs.match(/\bid\s*=\s*["']?([^"'\s>]+)/i) || [])[1] || '-';
+              const flags = [];
+              if (/ld\+json/i.test(type)) flags.push('LD+JSON');
+              if (id === '__NEXT_DATA__') flags.push('NEXT_DATA');
+              if (/rank/i.test(s.body)) flags.push('has-rank');
+              if (/Rookidee/.test(s.body)) flags.push('has-Rookidee');
+              s.flags = flags; s.type = type; s.id = id;
+              return '#' + i + ' type=' + type + ' id=' + id + ' len=' + s.body.length + (flags.length ? ' FLAGS=' + flags.join(',') : '');
+            });
+            for (let i = 0; i < lines.length; i += 12) note('E inline scripts ' + (i / 12 + 1), lines.slice(i, i + 12).join('\n') || 'none');
+            if (!lines.length) note('E inline scripts', 'none found');
+            let flagged = 0;
+            inline.forEach((s, i) => {
+              if (!s.flags.length || flagged >= 6) return;
+              flagged++;
+              let keys = 'not JSON';
+              try { const j = JSON.parse(s.body); keys = Array.isArray(j) ? 'array len ' + j.length : Object.keys(j).join(','); } catch (e) {}
+              note('E flagged script #' + i, 'flags=' + s.flags.join(',') + '\ntopKeys=' + keys + '\nfirst400=' + flat(s.body.slice(0, 400)));
+            });
+
+            // F urls
+            const urls = new Set();
+            const ure = /(?:https?:)?\/\/[^\s"'<>\\)]+|["'](\/[^\s"'<>\\]+)["']/g;
+            const pat = /\.json|\/api\/|graphql|wp-json|_next\/data/i;
+            let u;
+            while ((u = ure.exec(html))) {
+              const s = (u[1] || u[0]).replace(/^["']|["']$/g, '');
+              if (pat.test(s)) urls.add(s.slice(0, 200));
+            }
+            const ul = [...urls];
+            note('F json-ish urls', ul.length ? ul.slice(0, 25).join('\n') + (ul.length > 25 ? '\n...total ' + ul.length : '') : 'not found');
+
+            // G header region and classes
+            const gi = html.search(/basic/i);
+            const di = html.search(/deluxe/i);
+            note('G BASIC region', gi < 0 ? 'not found' : flat(html.slice(Math.max(0, gi - 150), gi + 150)));
+            note('G DELUXE region', di < 0 ? 'not found' : flat(html.slice(Math.max(0, di - 150), di + 150)));
+            const classes = new Set();
+            const cre = /\bclass\s*=\s*["']([^"']*)["']/gi;
+            let c;
+            while ((c = cre.exec(html))) {
+              c[1].split(/\s+/).forEach((k) => { if (/pass|rank|reward/i.test(k)) classes.add(k); });
+            }
+            note('G classes', classes.size ? [...classes].slice(0, 15).join('\n') : 'not found');
+          })().catch((e) => { note('ERROR', String(e && e.stack || e)); process.exitCode = 1; });
+          NODE_EOF
+      - name: Upload raw body
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: leekduck-gopass-raw
+          path: out/leekduck-gopass-raw.html
+          retention-days: 3
+          if-no-files-found: warn
