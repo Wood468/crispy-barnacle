@@ -99,6 +99,15 @@ test("the 110 rank-row cap is enforced rather than silently truncating rewards",
   assert.throws(() => extractLeekDuckGoPassRewards(html), /110-row cap/);
 });
 
+test("extractFields fails closed on malformed pass markup but keeps unrelated article details", () => {
+  const malformedRank = rankBlock(1).replace('<div class="rank-number">1</div>', "");
+  const html = wrap(malformedRank) + "<h2>Bonuses</h2><p>2× Catch XP for catching Pokémon.</p>";
+  const fields = extractFields(html);
+  assert.match(fields.goPassParseError, /rank-number/);
+  assert.ok(!fields.tickets.some(x => /^Rank \d+:/i.test(x)), "no partial or guessed rank rows are published");
+  assert.ok(fields.bonuses.includes("2× Catch XP for catching Pokémon."), "unrelated article details remain available");
+});
+
 test("the existing importer ignores pages without a Leek Duck battle-pass container", () => {
   const fields = extractFields("<main><h2>Tickets</h2><p>Special Research ticket: US$2.00</p></main>");
   assert.ok(fields.tickets.some(x => /US\$2/.test(x)));
