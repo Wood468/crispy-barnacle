@@ -1612,3 +1612,45 @@ header.top .hbtns{margin-left:auto}
 @media(prefers-reduced-motion:reduce){
   .research-event,.research-task{scroll-behavior:auto;transition:none}
 }
+
+/* Today: compact source-backed shiny activity inside the daily brief. */
+.today-shiny-panel{display:grid;gap:var(--space-1);min-width:0;margin-top:var(--space-1)}
+.today-shiny-head{display:flex;align-items:center;justify-content:space-between;gap:var(--space-2);min-width:0;min-height:20px}
+.today-shiny-count{display:inline-grid;place-items:center;min-width:24px;height:24px;padding:0 var(--space-2);border:1px solid var(--color-border-card);border-radius:var(--radius-pill);background:var(--color-surface-raised);color:var(--color-text);font:700 var(--type-caption) var(--font-mono);font-variant-numeric:tabular-nums}
+.today-shiny-empty{display:flex;align-items:center;min-height:44px;margin:0;padding:var(--space-1) var(--space-2);border:1px dashed var(--color-border-card);border-radius:var(--radius-md);color:var(--color-text-muted);font:500 var(--type-caption) var(--font-body)}
+.today-shiny-rail{display:flex;gap:var(--space-2);min-width:0;max-width:100%;overflow-x:auto;overscroll-behavior-inline:contain;scroll-snap-type:x mandatory;scroll-behavior:smooth;padding:var(--space-1) 0}
+.today-shiny-card{display:grid;grid-template-columns:minmax(0,1fr) 44px;align-items:center;gap:var(--space-1);flex:0 0 min(320px,100%);min-width:0;padding:var(--space-1) var(--space-2);border:1px solid var(--color-border-card);border-radius:var(--radius-md);background:var(--color-surface-raised);scroll-snap-align:start}
+.today-shiny-open{display:flex;align-items:center;gap:var(--space-2);min-width:0;min-height:56px;padding:0;border:0;background:transparent;color:var(--color-text);text-align:left;cursor:pointer}
+.today-shiny-open:focus-visible,.today-shiny-source:focus-visible{outline:2px solid var(--color-link);outline-offset:2px}
+.today-shiny-art{display:grid;place-items:center;width:44px;height:44px;min-width:44px;border-radius:var(--radius-sm);background:var(--color-surface-card)}
+.today-shiny-art img{display:block;width:44px;height:44px;object-fit:contain}
+.today-shiny-content{display:grid;gap:0;min-width:0}
+.today-shiny-topline{display:flex;align-items:center;gap:var(--space-1);min-width:0;flex-wrap:wrap}
+.today-shiny-badge{display:inline-flex;align-items:center;min-height:20px;padding:var(--space-1) var(--space-2);border:1px solid var(--color-border-card);border-radius:var(--radius-pill);color:var(--color-text);font:700 var(--type-caption-compact) var(--font-mono);white-space:nowrap}
+.today-shiny-badge--boosted{border-color:color-mix(in srgb,var(--color-signal-boosted-shiny) 65%,var(--color-border-card));background:color-mix(in srgb,var(--color-signal-boosted-shiny) 18%,var(--color-surface-raised))}
+.today-shiny-badge--debut{border-color:color-mix(in srgb,var(--color-signal-shiny-debut) 65%,var(--color-border-card));background:color-mix(in srgb,var(--color-signal-shiny-debut) 18%,var(--color-surface-raised))}
+.today-shiny-badge--available{border-color:color-mix(in srgb,var(--color-signal-shiny) 65%,var(--color-border-card));background:color-mix(in srgb,var(--color-signal-shiny) 16%,var(--color-surface-raised))}
+.today-shiny-name{min-width:0;color:var(--color-text);font:700 var(--type-body-sm) var(--font-body);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.today-shiny-event,.today-shiny-meta{display:block;min-width:0;color:var(--color-text-muted);font:500 var(--type-caption-compact) var(--font-body);line-height:1.2;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.today-shiny-source{display:grid;place-items:center;min-width:44px;min-height:44px;padding:var(--space-1);border:1px solid var(--color-border-card);border-radius:var(--radius-sm);color:var(--color-link);font:700 var(--type-caption-compact) var(--font-body);text-decoration:none}
+@media(prefers-reduced-motion:reduce){.today-shiny-rail{scroll-behavior:auto;scroll-snap-type:none}}
+
+/* Keep the live shiny rail visible without pushing the first event below the mobile fold. */
+.day-brief[data-shiny-active]{padding:var(--space-3);gap:var(--space-1)}
+.today-top[data-shiny-active]{gap:var(--space-1)}
+.day-brief[data-shiny-active] .today-focus-strip{margin-top:0}
+.today-shiny-panel{grid-template-columns:52px minmax(0,1fr);align-items:center;gap:var(--space-1);margin-top:0}
+.today-shiny-head{display:grid;align-content:center;justify-content:start;gap:var(--space-1);min-height:44px}
+.today-shiny-head .day-brief-kicker{line-height:1.1}
+.today-shiny-count{min-width:20px;height:18px;padding:0 var(--space-1)}
+.today-shiny-empty{grid-column:2;min-height:44px;margin:0;padding:var(--space-1);line-height:1.15}
+.today-shiny-rail{gap:var(--space-1);padding:0}
+.today-shiny-card{flex:0 0 min(320px,100%);grid-template-columns:minmax(0,1fr) 44px;gap:var(--space-1);padding:0;border:0;background:transparent}
+.today-shiny-open{gap:var(--space-2);min-height:44px}
+.today-shiny-art{width:36px;height:36px;min-width:36px}
+.today-shiny-art img{width:36px;height:36px}
+.today-shiny-topline{gap:var(--space-1);flex-wrap:nowrap}
+.today-shiny-badge{min-height:18px;padding:0 var(--space-1)}
+.today-shiny-name{flex:1;min-width:0}
+.today-shiny-event,.today-shiny-meta{line-height:1.05}
+

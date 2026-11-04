@@ -545,7 +545,7 @@
       }).join('') + '</div>';
     }).join('');
   }
-  function close(silent) { var o = $('evd'); if (!o || o.hidden) return; o.hidden = true; document.body.style.overflow = ''; try { document.dispatchEvent(new Event('gofn-detail-closed')); } catch (err) { } var target = opener; if ((!target || !target.isConnected) && openerKey) { var candidates = document.querySelectorAll('[data-open]'); for (var i = 0; i < candidates.length; i++) { var candidate = candidates[i]; if (candidate.getClientRects().length && candidate.getAttribute('data-open') === openerKey && (!openerClass || candidate.classList.contains(openerClass))) { target = candidate; break; } } } if (!target || !target.isConnected || !target.getClientRects().length) { var host = openerHostId ? $(openerHostId) : null; if (!host || !host.getClientRects().length) { host = $('home-now'); if (!host || !host.getClientRects().length) host = document.querySelector('[role="tabpanel"]:not([hidden]) h1, [role="tabpanel"]:not([hidden]) h2, [role="tabpanel"]:not([hidden]) h3'); } if (host) { if (!host.hasAttribute('tabindex')) host.setAttribute('tabindex', '-1'); target = host; } } if (target && target.isConnected && target.focus) target.focus(); opener = null; openerHostId = ''; openerKey = null; openerClass = ''; if (silent !== true && window.GONAV) window.GONAV.popped(); }
+  function close(silent) { var o = $('evd'); if (!o || o.hidden) return; o.hidden = true; document.body.style.overflow = ''; try { document.dispatchEvent(new Event('gofn-detail-closed')); } catch (err) { } var target = opener; if ((!target || !target.isConnected) && openerKey) { var candidates = document.querySelectorAll('[data-open]'); for (var i = 0; i < candidates.length; i++) { var candidate = candidates[i]; if (candidate.getClientRects().length && candidate.getAttribute('data-open') === openerKey && (!openerClass || String(candidate.className || '').trim() === openerClass)) { target = candidate; break; } } } if (!target || !target.isConnected || !target.getClientRects().length) { var host = openerHostId ? $(openerHostId) : null; if (!host || !host.getClientRects().length) { host = $('home-now'); if (!host || !host.getClientRects().length) host = document.querySelector('[role="tabpanel"]:not([hidden]) h1, [role="tabpanel"]:not([hidden]) h2, [role="tabpanel"]:not([hidden]) h3'); } if (host) { if (!host.hasAttribute('tabindex')) host.setAttribute('tabindex', '-1'); target = host; } } if (target && target.isConnected && target.focus) target.focus(); opener = null; openerHostId = ''; openerKey = null; openerClass = ''; if (silent !== true && window.GONAV) window.GONAV.popped(); }
   /* The event page's own picture (its og:image), shown at the top when the event has none of its own. */
   function addBanner(o, ev) {
     if (ev.img) return;
@@ -606,7 +606,7 @@
     var ev = X.events().concat(window.GOSEASON ? window.GOSEASON.events() : []).filter(function (e) { return e.id === id; })[0]; if (!ev) return;
     opener = from || document.activeElement;
     openerKey = opener && opener.getAttribute ? opener.getAttribute('data-open') : null;
-    openerClass = opener && opener.classList && opener.classList.contains('today-next-up') ? 'today-next-up' : '';
+    openerClass = opener && opener.classList ? String(opener.className || '').trim() : '';
     var hostEl = opener && opener.parentElement && opener.parentElement.closest ? opener.parentElement.closest('[id]') : null; openerHostId = hostEl ? hostEl.id : '';
     load().then(function () {
       var o = $('evd'), wasOpen = !!o && !o.hidden;
