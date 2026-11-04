@@ -182,7 +182,7 @@
       var kind = PIPE_KIND[x.type] || 'event';
       var featured = Array.isArray(x.featured) ? x.featured : [];
       var bonuses = Array.isArray(x.bonuses) ? x.bonuses : [];
-      return mkEvent({ id: x.id, name: x.name, kind: kind, s: x.start, e: x.end || x.start, bonuses: bonuses, featured: featured, tags: signalTags({name:x.name,kind:kind,type:x.type,bonuses:bonuses,featured:featured}),
+      return mkEvent({ id: x.id, name: x.name, kind: kind, s: x.start, e: x.end || x.start, bonuses: bonuses, featured: featured, highlights: Array.isArray(x.highlights) ? x.highlights : [], tags: signalTags({name:x.name,kind:kind,type:x.type,bonuses:bonuses,featured:featured}),
         status: (x.status === 'community_reported' && (officialLink || reportedOfficial)) ? 'official_confirmed' : x.status,
         source: officialLink ? 'Official Pokémon GO announcement' : (x.reports && x.reports[0] && x.reports[0].source === 'leekduck') ? 'Leek Duck' : (x.source || 'Leek Duck (community-reported)'), link: link,
         utc: x.tzMode === 'utc', region: x.region || '', scope: x.scope, conflict: x.conflict, infographicUrl: x.infographicUrl || x.infographic || '' });
@@ -204,6 +204,7 @@
       var seen = {}; (hit.featured || []).forEach(function (f) { seen[(f.name || '').toLowerCase()] = 1; });
       (x.featured || []).forEach(function (f) { var q = (f.name || '').toLowerCase(); if (!seen[q]) { (hit.featured = hit.featured || []).push(f); seen[q] = 1; } });
       hit.bonuses = Array.from(new Set((hit.bonuses || []).concat(x.bonuses || [])));
+      hit.highlights = mergeHighlights(hit.highlights, x.highlights);
       if (!hit.link && x.link) hit.link = x.link;
       if (!hit.infographicUrl && x.infographicUrl) hit.infographicUrl = x.infographicUrl;
       hit.aliasIds = (hit.aliasIds || []).concat([x.id], x.aliasIds || []); /* so its pictures still find this card: see GODEDUPE.findEventInfo */
@@ -282,6 +283,7 @@
       var cNotes = (c.notes || []).filter(function (t) { return !(liveHasDetail && window.GOLIB && GOLIB.isPlaceholder(t)); });
       if (cNotes.length) liveEvent.notes = Array.from(new Set((liveEvent.notes || []).concat(cNotes)));
       liveEvent.tags = Array.from(new Set((liveEvent.tags || []).concat(c.tags || [])));
+      liveEvent.highlights = mergeHighlights(liveEvent.highlights, c.highlights);
       if (c.status === 'official_confirmed' && c.link) {
         liveEvent.status = 'official_confirmed'; liveEvent.source = c.source; liveEvent.link = c.link;
       }
@@ -553,6 +555,25 @@
     else return null;
     return { cls: cls, html: '<span class="signal sig-bonus ' + cls + '" title="' + esc(b) + '"><b>' + esc(m[1]) + '×</b>' + ico + esc(label) + '</span>' };
   }
+  /* Typed event highlights must survive the live/curated and duplicate-report merges. */
+  function mergeHighlights(existing, incoming) {
+    var out = [], seen = Object.create(null);
+    function key(h) {
+      if (!h || typeof h !== 'object') return '';
+      var type = String(h.type || '').trim().toLowerCase();
+      var label = String(h.label || '').trim().replace(/\s+/g, ' ').toLowerCase();
+      return type && label ? JSON.stringify([type, label]) : '';
+    }
+    [existing, incoming].forEach(function (list) {
+      (Array.isArray(list) ? list : []).forEach(function (h) {
+        var k = key(h);
+        if (!k || seen[k]) return;
+        seen[k] = 1; out.push(h);
+      });
+    });
+    return out;
+  }
+
   function signalChips(ev, max, full) {
     var highlights = (ev.highlights || []).filter(function (h) { return h && h.type && h.label; });
     var hasDebutHighlight = highlights.some(function (h) { return h.type === 'debut'; });
