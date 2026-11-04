@@ -45,23 +45,25 @@ test("explicit no-rewards cells preserve empty Deluxe ranks 50 and 75 without in
     "Rank 75: Free: XP ×1000 | Deluxe: —"
   ]);
   assert.deepEqual(parsed.ranks.filter(x => x.deluxeEmpty).map(x => x.rank), [50, 75]);
-  assert.throws(() => extractLeekDuckGoPassRewards(wrap(rankBlock(50, reward("Stardust ×50"), ""))), /explicit no-rewards marker/);
+  assert.throws(() => extractLeekDuckGoPassRewards(wrap(rankBlock(50, reward("Stardust ×50"), "")), { allowPartialExcerpt: true }), /explicit no-rewards marker/);
 });
 
 test("data-bonus rows at later ranks and on either track remain milestone bonuses", () => {
   const bonus = name => '<div class="reward-item" data-bonus="true"><div class="reward-info"><span class="reward-name">' + name + '</span></div></div>';
-  const html = wrap(rankBlock(
+  const rank25 = rankBlock(
     25,
     bonus("Tier 2 GO Pass Bonus: Open up to 40 Gifts per day") + reward("Stardust ×50"),
     bonus("Tier 2 GO Pass Bonus: Open up to 50 Gifts per day") + reward("XP ×100")
-  ));
+  );
+  const html = wrap(rank25);
   const parsed = extractLeekDuckGoPassRewards(html, { allowPartialExcerpt: true });
   assert.deepEqual(parsed.bonusItems.map(x => [x.rank, x.track, x.name]), [
     [25, "basic", "Tier 2 GO Pass Bonus: Open up to 40 Gifts per day"],
     [25, "deluxe", "Tier 2 GO Pass Bonus: Open up to 50 Gifts per day"]
   ]);
   assert.deepEqual(parsed.tickets, ["Rank 25: Free: Stardust ×50 | Deluxe: XP ×100"]);
-  const fields = extractFields(html);
+  const completeRanks = Array.from({ length: 24 }, (_, index) => rankBlock(index + 1)).join("");
+  const fields = extractFields(wrap(completeRanks + rank25));
   assert.ok(fields.bonuses.includes("Rank 25: Open up to 40 Gifts per day"));
   assert.ok(fields.bonuses.includes("Rank 25 Deluxe: Open up to 50 Gifts per day"));
 });
