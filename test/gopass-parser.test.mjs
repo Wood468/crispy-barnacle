@@ -11,7 +11,7 @@ const rankBlock = (rank, basic = reward("Stardust ×50"), deluxe = reward("XP ×
   '<div class="rank-item"><div class="rank-label"><div class="rank-number">' + rank + '</div></div><div class="rank-paths"><div class="rank-rewards basic">' + basic + '</div><div class="rank-rewards deluxe">' + deluxe + "</div></div></div>";
 
 test("captured Leek Duck excerpts parse rank rewards, bonuses, the ellipsis and rank 200", () => {
-  const parsed = extractLeekDuckGoPassRewards(fixture);
+  const parsed = extractLeekDuckGoPassRewards(fixture, { allowPartial: true });
   assert.deepEqual(parsed.ranks.map(x => x.rank), [1, 2, 3, 100, 200]);
   assert.deepEqual(parsed.gaps, [{ beforeRank: 100, afterRank: 200 }]);
   assert.deepEqual(parsed.bonusItems.map(x => x.name), [
@@ -37,7 +37,8 @@ test("extractFields integrates captured rank rows and Rank 1 bonuses into existi
 
 test("explicit no-rewards cells preserve empty Deluxe ranks 50 and 75 without inventing rewards", () => {
   const noRewards = '<div class="no-rewards">-</div>';
-  const html = wrap(rankBlock(50, reward("Stardust ×50"), noRewards) + rankBlock(75, reward("XP ×1000"), noRewards));
+  const ellipsis = '<div class="rank-item rank-ellipsis"><div class="rank-ellipsis-mark">…</div></div>';
+  const html = wrap(rankBlock(50, reward("Stardust ×50"), noRewards) + ellipsis + rankBlock(75, reward("XP ×1000"), noRewards));
   const parsed = extractLeekDuckGoPassRewards(html);
   assert.deepEqual(parsed.tickets, [
     "Rank 50: Free: Stardust ×50 | Deluxe: —",
@@ -112,4 +113,33 @@ test("the existing importer ignores pages without a Leek Duck battle-pass contai
   const fields = extractFields("<main><h2>Tickets</h2><p>Special Research ticket: US$2.00</p></main>");
   assert.ok(fields.tickets.some(x => /US\$2/.test(x)));
   assert.equal(fields.goPassParseError, undefined);
+});
+
+test("rank gaps without an explicit ellipsis fail closed", () => {
+  assert.throws(
+    () => extractLeekDuckGoPassRewards(wrap(rankBlock(1) + rankBlock(2) + rankBlock(4) + rankBlock(7))),
+    /without an explicit ellipsis/
+  );
+  assert.deepEqual(
+    extractLeekDuckGoPassRewards(wrap(rankBlock(1) + rankBlock(2) + '<div class="rank-item rank-ellipsis">…</div>' + rankBlock(200))).gaps,
+    [{ beforeRank: 2, afterRank: 200 }]
+  );
+});
+
+test("oversized and pathological unterminated tags are rejected before tokenisation", () => {
+  assert.throws(() => extractLeekDuckGoPassRewards("x".repeat(512 * 1024 + 1)), /512 KiB safety limit/);
+  assert.throws(
+    () => extractLeekDuckGoPassRewards('<div class="battle-pass-container -has-toggle">' + '<div '.repeat(900)),
+    /overlong or unterminated tag/
+  );
+});
+
+test("milestone bonuses already extracted by the generic heading scan are not duplicated", () => {
+  const bonusPage = '<h3>Tier 1 – Rank 1</h3><ul><li>One additional Candy for trading Pokémon</li></ul>' +
+    '<h2>Rewards</h2>' + wrap(rankBlock(1,
+      '<div class="reward-item" data-bonus="true"><span class="reward-name">Tier 1 GO Pass Bonus: One additional Candy for trading Pokémon</span></div>' + reward("Stardust ×50"),
+      '<div class="no-rewards">-</div>'
+    ));
+  const fields = extractFields(bonusPage);
+  assert.equal(fields.bonuses.filter(x => /One additional Candy for trading Pokémon/.test(x)).length, 1);
 });
