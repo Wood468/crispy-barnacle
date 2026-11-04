@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-04T06:23:23.417Z",
+ "updated": "2026-11-04T17:15:22.999Z",
  "status": [
   {
    "id": "hub",
@@ -23,8 +23,8 @@
   },
   {
    "id": "youtube-pogo",
-   "state": "error",
-   "note": "HTTP 404"
+   "state": "ok",
+   "items": 2
   }
  ],
  "gaps": 4,
@@ -208,6 +208,26 @@
    "link": "https://www.reddit.com/r/TheSilphRoad/comments/1xj27zc/trainer_code_usage_for_determining_shinies_has/",
    "date": "2026-10-30T01:22:46.000Z",
    "summary": "<table> <tr><td> <a href=\"https://www.reddit.com/r/TheSilphRoad/comments/1xj27zc/trainer_code_usage_for_determining_shinies_has/\"> <img src=\"https://preview.redd.it/42b2se53biyh1.jpeg?width=640&amp;cr",
+   "pokemon": [],
+   "notInOurData": []
+  },
+  {
+   "source": "youtube-pogo",
+   "trust": "official",
+   "title": "New costumed Pokémon make their debuts during Halloween 2026 Part I in Pokémon GO!",
+   "link": "https://www.youtube.com/shorts/I6MvdaExyIg",
+   "date": "2026-10-27T17:00:40.000Z",
+   "summary": "",
+   "pokemon": [],
+   "notInOurData": []
+  },
+  {
+   "source": "youtube-pogo",
+   "trust": "official",
+   "title": "New costumed Pokémon make their debuts during Halloween 2026 Part I in Pokémon GO!",
+   "link": "https://www.youtube.com/watch?v=wyN2y-BgpoU",
+   "date": "2026-10-27T17:00:14.000Z",
+   "summary": "",
    "pokemon": [],
    "notInOurData": []
   }
