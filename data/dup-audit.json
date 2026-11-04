@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-03T15:17:45.060Z",
+ "updated": "2026-11-04T00:57:03.412Z",
  "joinedThisRun": [
   {
    "kept": "w-pokemon-fossil-museum-2026",
@@ -9,6 +9,11 @@
   {
    "kept": "w-pok-mon-30th-anniversary-mall-exploration-ombak-kl",
    "dropped": "w-pok-mon-30th-anniversary-mall-exploration-sm-mall-",
+   "why": "same event"
+  },
+  {
+   "kept": "w-celebrate-the-festival-of-lights-with-the-return-o",
+   "dropped": "w-celebrate-the-festival-of-lights-with-the-return-o-2026-11-06",
    "why": "same event"
   },
   {
