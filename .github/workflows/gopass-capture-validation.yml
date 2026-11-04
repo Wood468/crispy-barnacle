@@ -26,7 +26,7 @@ jobs:
           node-version: 22
       - name: Download the original read-only capture
         env:
-          GH_TOKEN: \${{ github.token }}
+          GH_TOKEN: ${{ github.token }}
         run: gh run download 41828989579 --repo Wood468/crispy-barnacle --name leekduck-gopass-raw --dir /tmp/leekduck-gopass
       - name: Validate all rendered ranks and reward counts
         env:
