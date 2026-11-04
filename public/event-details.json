@@ -1,9 +1,9 @@
 {
- "updated": "2026-11-04T08:05:55.661Z",
+ "updated": "2026-11-04T16:39:06.417Z",
  "events": {
   "wag": {
    "name": "GO Wild Area: Global",
-   "updated": "2026-11-04T08:05:55.661Z",
+   "updated": "2026-11-04T16:39:06.417Z",
    "sources": [
     {
      "id": "official",
@@ -80,7 +80,7 @@
   },
   "leekduck:pokemon-go-wild-area-2026-sendai-japan": {
    "name": "Pokémon GO Wild Area 2026: Sendai • Tohoku",
-   "updated": "2026-11-04T08:05:55.661Z",
+   "updated": "2026-11-04T16:39:06.417Z",
    "sources": [
     {
      "id": "leekduck",
@@ -466,7 +466,7 @@
   },
   "leekduck:pokemon-go-wild-area-2026-mexico-city": {
    "name": "Pokémon GO Wild Area 2026: Mexico City",
-   "updated": "2026-11-04T08:05:55.661Z",
+   "updated": "2026-11-04T16:39:06.417Z",
    "sources": [
     {
      "id": "leekduck",
@@ -899,9 +899,263 @@
    ],
    "researchTasks": []
   },
+  "gopassnov": {
+   "name": "GO Pass: November",
+   "updated": "2026-11-04T16:39:06.417Z",
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/go-pass-november-2026/"
+    },
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "trust": "official",
+     "url": "https://pokemongo.com/news/go-pass-november-2026/"
+    }
+   ],
+   "fields": {
+    "bonuses": [
+     {
+      "text": "Reach Major Milestones on your GO Pass to unlock the following bonuses.",
+      "sources": [
+       "official",
+       "leekduck"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "—The Pokémon GO team",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Rank 1: One additional Candy for trading Pokémon.",
+      "sources": [
+       "official",
+       "leekduck"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Rank 1: Trainers level 31 and above will receive one guaranteed Candy XL when trading Pokémon.",
+      "sources": [
+       "official",
+       "leekduck"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Rank 25: Open up to 40 Gifts per day.",
+      "sources": [
+       "official",
+       "leekduck"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Rank 25: Receive up to 125 Gifts per day from spinning PokéStops and Gym Photo Discs.",
+      "sources": [
+       "official",
+       "leekduck"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Rank 25: Hold 10 more Gifts in your Item Bag.",
+      "sources": [
+       "official",
+       "leekduck"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Rank 50: 2× Daily Adventure Incense duration.",
+      "sources": [
+       "official",
+       "leekduck"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Rank 75: Increased Stardust and XP from hatching Eggs.",
+      "sources": [
+       "official",
+       "leekduck"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Rank 25 Deluxe: Open up to 50 Gifts per day.",
+      "sources": [
+       "official",
+       "leekduck"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Rank 25 Deluxe: Receive up to 150 Gifts per day from spinning PokéStops and Gym Photo Discs.",
+      "sources": [
+       "official",
+       "leekduck"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Rank 25 Deluxe: Hold up to 20 more Gifts in your Item Bag.",
+      "sources": [
+       "official",
+       "leekduck"
+      ],
+      "status": "official"
+     }
+    ],
+    "featured": [
+     {
+      "text": "Complete Pass Tasks to rank up your GO Pass to earn the following rewards.",
+      "sources": [
+       "official",
+       "leekduck"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Encounter with Groudon*",
+      "sources": [
+       "official",
+       "leekduck"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Trainers who upgrade to the GO Pass Deluxe can also earn the following rewards.",
+      "sources": [
+       "official",
+       "leekduck"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "1,000 additional PokéCoins for a total of 1,400 PokéCoins",
+      "sources": [
+       "official",
+       "leekduck"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "One Super Incubator",
+      "sources": [
+       "official",
+       "leekduck"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Additional encounters with even more Pokémon!",
+      "sources": [
+       "official",
+       "leekduck"
+      ],
+      "status": "official"
+     }
+    ],
+    "raids": [],
+    "eggs": [],
+    "research": [],
+    "shiny": [],
+    "moves": [],
+    "costumes": [],
+    "tickets": [
+     {
+      "text": "From Tuesday, November 3, at 10:00 a.m. to Tuesday, December 1, at 10:00 a.m. local time, the GO Pass and GO Pass Deluxe for November will be available in Pokémon GO!",
+      "sources": [
+       "official",
+       "leekduck"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Additionally, from Saturday, November 28, at 12:00 a.m. to Sunday, November 29, at 11:59 p.m. local time, there’s no daily limit for how many GO Points you can earn!",
+      "sources": [
+       "official",
+       "leekduck"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Earn PokéCoins and encounter Groudon in GO Pass: November!",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "For US$7.99*, Trainers can upgrade to the GO Pass Deluxe, a paid version of the GO Pass that offers upgraded rewards and faster progression.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "For US$9.99*, Trainers can upgrade to the GO Pass Deluxe + 10 Ranks to also automatically earn enough GO Points to reach Rank 11.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rewards unlocked in the GO Pass will expire on Thursday, December 3, at 10:00 a.m. local time, so be sure to claim your rewards before they’re gone!",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Earn points to increase your rank and unlock rewards. You can earn points by completing Pass Tasks. Any rewards you earn for completing a Pass Task will be awarded as soon as you finish the task.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "dates": [
+     {
+      "text": "From Tuesday, November 3, at 10:00 a.m. to Tuesday, December 1, at 10:00 a.m. local time, the GO Pass and GO Pass Deluxe for November will be available in Pokémon GO!",
+      "sources": [
+       "official",
+       "leekduck"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Additionally, from Saturday, November 28, at 12:00 a.m. to Sunday, November 29, at 11:59 p.m. local time, there’s no daily limit for how many GO Points you can earn!",
+      "sources": [
+       "official",
+       "leekduck"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Rewards unlocked in the GO Pass will expire on Thursday, December 3, at 10:00 a.m. local time, so be sure to claim your rewards before they’re gone!",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ]
+   },
+   "conflicts": [],
+   "gaps": [],
+   "researchTasks": []
+  },
   "sendai": {
    "name": "GO Wild Area: Sendai",
-   "updated": "2026-11-04T08:05:55.661Z",
+   "updated": "2026-11-04T16:39:06.417Z",
    "sources": [
     {
      "id": "official",
@@ -928,7 +1182,7 @@
   },
   "leekduck:into-the-wild-2026": {
    "name": "Into the Wild",
-   "updated": "2026-11-04T08:05:55.661Z",
+   "updated": "2026-11-04T16:39:06.417Z",
    "sources": [
     {
      "id": "official",
@@ -1564,7 +1818,7 @@
   },
   "dyntrails": {
    "name": "Dynamax Trails",
-   "updated": "2026-11-04T08:05:55.661Z",
+   "updated": "2026-11-04T16:39:06.417Z",
    "sources": [
     {
      "id": "official",
@@ -1821,7 +2075,7 @@
   },
   "novcd": {
    "name": "November Community Day",
-   "updated": "2026-11-04T08:05:55.661Z",
+   "updated": "2026-11-04T16:39:06.417Z",
    "sources": [
     {
      "id": "official",
@@ -2013,194 +2267,9 @@
    "gaps": [],
    "researchTasks": []
   },
-  "gopassnov": {
-   "name": "GO Pass: November",
-   "updated": "2026-11-04T08:05:55.661Z",
-   "sources": [
-    {
-     "id": "official",
-     "name": "Pokémon GO (official)",
-     "trust": "official",
-     "url": "https://pokemongo.com/news/go-pass-november-2026/"
-    }
-   ],
-   "fields": {
-    "bonuses": [
-     {
-      "text": "Reach Major Milestones on your GO Pass to unlock the following bonuses.",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "—The Pokémon GO team",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "Rank 1: One additional Candy for trading Pokémon.",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "Rank 1: Trainers level 31 and above will receive one guaranteed Candy XL when trading Pokémon.",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "Rank 25: Open up to 40 Gifts per day.",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "Rank 25: Receive up to 125 Gifts per day from spinning PokéStops and Gym Photo Discs.",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "Rank 25: Hold 10 more Gifts in your Item Bag.",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "Rank 50: 2× Daily Adventure Incense duration.",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "Rank 75: Increased Stardust and XP from hatching Eggs.",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "Rank 25 Deluxe: Open up to 50 Gifts per day.",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "Rank 25 Deluxe: Receive up to 150 Gifts per day from spinning PokéStops and Gym Photo Discs.",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "Rank 25 Deluxe: Hold up to 20 more Gifts in your Item Bag.",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     }
-    ],
-    "featured": [
-     {
-      "text": "Complete Pass Tasks to rank up your GO Pass to earn the following rewards.",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "Encounter with Groudon*",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "Trainers who upgrade to the GO Pass Deluxe can also earn the following rewards.",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "1,000 additional PokéCoins for a total of 1,400 PokéCoins",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "One Super Incubator",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "Additional encounters with even more Pokémon!",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     }
-    ],
-    "raids": [],
-    "eggs": [],
-    "research": [],
-    "shiny": [],
-    "moves": [],
-    "costumes": [],
-    "tickets": [
-     {
-      "text": "From Tuesday, November 3, at 10:00 a.m. to Tuesday, December 1, at 10:00 a.m. local time, the GO Pass and GO Pass Deluxe for November will be available in Pokémon GO!",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "Additionally, from Saturday, November 28, at 12:00 a.m. to Sunday, November 29, at 11:59 p.m. local time, there’s no daily limit for how many GO Points you can earn!",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     }
-    ],
-    "dates": [
-     {
-      "text": "From Tuesday, November 3, at 10:00 a.m. to Tuesday, December 1, at 10:00 a.m. local time, the GO Pass and GO Pass Deluxe for November will be available in Pokémon GO!",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "Additionally, from Saturday, November 28, at 12:00 a.m. to Sunday, November 29, at 11:59 p.m. local time, there’s no daily limit for how many GO Points you can earn!",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     }
-    ]
-   },
-   "conflicts": [],
-   "gaps": [],
-   "researchTasks": []
-  },
   "smr1": {
    "name": "Super Mega Raid Day",
-   "updated": "2026-11-04T08:05:55.661Z",
+   "updated": "2026-11-04T16:39:06.417Z",
    "sources": [
     {
      "id": "official",
@@ -2381,7 +2450,7 @@
   },
   "halloween2": {
    "name": "Halloween 2026, Part Two",
-   "updated": "2026-11-04T08:05:55.661Z",
+   "updated": "2026-11-04T16:39:06.417Z",
    "sources": [
     {
      "id": "official",
@@ -2987,7 +3056,7 @@
   },
   "halloween1": {
    "name": "Halloween 2026, Part One",
-   "updated": "2026-11-04T08:05:55.661Z",
+   "updated": "2026-11-04T16:39:06.417Z",
    "sources": [
     {
      "id": "official",
@@ -3259,7 +3328,7 @@
   },
   "spirits": {
    "name": "Dynamax Uxie, Mesprit and Azelf",
-   "updated": "2026-11-04T08:05:55.661Z",
+   "updated": "2026-11-04T16:39:06.417Z",
    "sources": [
     {
      "id": "official",
@@ -3501,7 +3570,7 @@
   },
   "tcg30": {
    "name": "Pokémon TCG: 30th Celebration (at stores)",
-   "updated": "2026-11-04T08:05:55.661Z",
+   "updated": "2026-11-04T16:39:06.417Z",
    "sources": [
     {
      "id": "official",
@@ -3567,7 +3636,7 @@
   },
   "sandile": {
    "name": "Sandile Hatch Day",
-   "updated": "2026-11-04T08:05:55.661Z",
+   "updated": "2026-11-04T16:39:06.417Z",
    "sources": [
     {
      "id": "official",
@@ -3727,7 +3796,7 @@
   },
   "trek": {
    "name": "Fall Marathon: Buddy Trek",
-   "updated": "2026-11-04T08:05:55.661Z",
+   "updated": "2026-11-04T16:39:06.417Z",
    "sources": [
     {
      "id": "official",
@@ -3955,125 +4024,9 @@
    "gaps": [],
    "researchTasks": []
   },
-  "leekduck:shadow-landorus-incarnate-forme-in-shadow-raids-october-2026": {
-   "name": "Shadow Landorus (Incarnate Forme) in Shadow Raids",
-   "updated": "2026-11-04T08:05:55.661Z",
-   "sources": [
-    {
-     "id": "leekduck",
-     "name": "Leek Duck",
-     "trust": "community",
-     "url": "https://leekduck.com/events/shadow-landorus-incarnate-forme-in-shadow-raids-october-2026/"
-    }
-   ],
-   "fields": {
-    "bonuses": [],
-    "featured": [],
-    "raids": [
-     {
-      "text": "Shadow Landorus (Incarnate Forme) will appear in five-star Shadow Raids every weekend from October 7, 2026 to November 3, 2026. If you’re lucky, you may encounter Shiny Shadow Landorus (Incarnate Forme)!",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ],
-    "eggs": [],
-    "research": [],
-    "shiny": [
-     {
-      "text": "Shadow Landorus (Incarnate Forme) will appear in five-star Shadow Raids every weekend from October 7, 2026 to November 3, 2026. If you’re lucky, you may encounter Shiny Shadow Landorus (Incarnate Forme)!",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ],
-    "moves": [],
-    "costumes": [],
-    "tickets": [],
-    "dates": [
-     {
-      "text": "Shadow Landorus (Incarnate Forme) will appear in five-star Shadow Raids every weekend from October 7, 2026 to November 3, 2026. If you’re lucky, you may encounter Shiny Shadow Landorus (Incarnate Forme)!",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ]
-   },
-   "conflicts": [],
-   "gaps": [],
-   "researchTasks": []
-  },
-  "leekduck:giratina-origin-forme-in-5-star-raid-battles-october-2026": {
-   "name": "Giratina (Origin Forme) in 5-star Raid Battles",
-   "updated": "2026-11-04T08:05:55.661Z",
-   "sources": [
-    {
-     "id": "leekduck",
-     "name": "Leek Duck",
-     "trust": "community",
-     "url": "https://leekduck.com/events/giratina-origin-forme-in-5-star-raid-battles-october-2026/"
-    }
-   ],
-   "fields": {
-    "bonuses": [],
-    "featured": [],
-    "raids": [
-     {
-      "text": "Giratina (Origin) will be in five-star raid battles from October 28, 2026 to November 3, 2026.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "There will also be a Raid Hour featuring Giratina (Origin Forme) from 6:00 p.m. to 7:00 p.m. local time on October 28.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ],
-    "eggs": [],
-    "research": [],
-    "shiny": [
-     {
-      "text": "If you’re lucky, you may encounter a Shiny Giratina (Origin Forme).",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ],
-    "moves": [],
-    "costumes": [],
-    "tickets": [],
-    "dates": [
-     {
-      "text": "Giratina (Origin) will be in five-star raid battles from October 28, 2026 to November 3, 2026.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "There will also be a Raid Hour featuring Giratina (Origin Forme) from 6:00 p.m. to 7:00 p.m. local time on October 28.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ]
-   },
-   "conflicts": [],
-   "gaps": [],
-   "researchTasks": []
-  },
   "leekduck:raidhour20261104": {
    "name": "Giratina (Altered Forme) Raid Hour",
-   "updated": "2026-11-04T08:05:55.661Z",
+   "updated": "2026-11-04T16:39:06.417Z",
    "sources": [
     {
      "id": "leekduck",
@@ -4116,7 +4069,7 @@
   },
   "leekduck:pokemonspotlighthour2026-11-05": {
    "name": "Teddiursa wearing a witch hat Spotlight Hour",
-   "updated": "2026-11-04T08:05:55.661Z",
+   "updated": "2026-11-04T16:39:06.417Z",
    "sources": [
     {
      "id": "leekduck",
@@ -4173,7 +4126,7 @@
   },
   "leekduck:mega-sableye-in-mega-raids-october-2026": {
    "name": "Mega Sableye in Mega Raids",
-   "updated": "2026-11-04T08:05:55.661Z",
+   "updated": "2026-11-04T16:39:06.417Z",
    "sources": [
     {
      "id": "leekduck",
@@ -4231,7 +4184,7 @@
   },
   "leekduck:giratina-altered-forme-in-5-star-raid-battles-november-2026": {
    "name": "Giratina (Altered Forme) in 5-star Raid Battles",
-   "updated": "2026-11-04T08:05:55.661Z",
+   "updated": "2026-11-04T16:39:06.417Z",
    "sources": [
     {
      "id": "leekduck",
@@ -4303,7 +4256,7 @@
   },
   "leekduck:shadow-tornadus-incarnate-forme-in-shadow-raids-november-4-2026": {
    "name": "Shadow Tornadus (Incarnate Forme) in Shadow Raids",
-   "updated": "2026-11-04T08:05:55.661Z",
+   "updated": "2026-11-04T16:39:06.417Z",
    "sources": [
     {
      "id": "leekduck",
@@ -4346,7 +4299,7 @@
   },
   "leekduck:pokemon-night-out-london-2026": {
    "name": "Pokémon Night Out 2026 - London",
-   "updated": "2026-11-04T08:05:55.661Z",
+   "updated": "2026-11-04T16:39:06.417Z",
    "sources": [
     {
      "id": "leekduck",
@@ -4455,7 +4408,7 @@
   },
   "leekduck:pokemon-go-wild-area-2026-global": {
    "name": "Pokémon GO Wild Area 2026: Global",
-   "updated": "2026-11-04T08:05:55.661Z",
+   "updated": "2026-11-04T16:39:06.417Z",
    "sources": [
     {
      "id": "leekduck",
@@ -4793,7 +4746,7 @@
   },
   "leekduck:max-mondays-2026-11-16": {
    "name": "Max Monday: Pokémon to be announced",
-   "updated": "2026-11-04T08:05:55.661Z",
+   "updated": "2026-11-04T16:39:06.417Z",
    "sources": [
     {
      "id": "leekduck",
@@ -4835,7 +4788,7 @@
   },
   "leekduck:raidhour20261118": {
    "name": "Cresselia and Darkrai Raid Hour",
-   "updated": "2026-11-04T08:05:55.661Z",
+   "updated": "2026-11-04T16:39:06.417Z",
    "sources": [
     {
      "id": "leekduck",
@@ -4878,7 +4831,7 @@
   },
   "leekduck:pokemonspotlighthour2026-11-19": {
    "name": "Grookey, Scorbunny, and Sobble Spotlight Hour",
-   "updated": "2026-11-04T08:05:55.661Z",
+   "updated": "2026-11-04T16:39:06.417Z",
    "sources": [
     {
      "id": "leekduck",
@@ -4913,7 +4866,7 @@
   },
   "minior2": {
    "name": "Minior Showers: Leonids",
-   "updated": "2026-11-04T08:05:55.661Z",
+   "updated": "2026-11-04T16:39:06.417Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5005,7 +4958,7 @@
   },
   "leekduck:eternamax-eternatus-max-battles-2026": {
    "name": "Eternamax Eternatus Returns",
-   "updated": "2026-11-04T08:05:55.661Z",
+   "updated": "2026-11-04T16:39:06.417Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5085,7 +5038,7 @@
   },
   "leekduck:november-communityday2026": {
    "name": "Pawniard Community Day",
-   "updated": "2026-11-04T08:05:55.661Z",
+   "updated": "2026-11-04T16:39:06.417Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5342,7 +5295,7 @@
   },
   "leekduck:dynamax-trails-2026": {
    "name": "Dynamax Trails",
-   "updated": "2026-11-04T08:05:55.661Z",
+   "updated": "2026-11-04T16:39:06.417Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5578,7 +5531,7 @@
   },
   "leekduck:max-mondays-2026-11-23": {
    "name": "Dynamax Espurr during Max Monday",
-   "updated": "2026-11-04T08:05:55.661Z",
+   "updated": "2026-11-04T16:39:06.417Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5656,7 +5609,7 @@
   },
   "leekduck:cresselia-darkrai-in-5-star-raid-battles-november-2026": {
    "name": "Cresselia and Darkrai in 5-star Raid Battles",
-   "updated": "2026-11-04T08:05:55.661Z",
+   "updated": "2026-11-04T16:39:06.417Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5728,7 +5681,7 @@
   },
   "leekduck:mega-banette-in-mega-raids-november-2026": {
    "name": "Mega Banette in Mega Raids",
-   "updated": "2026-11-04T08:05:55.661Z",
+   "updated": "2026-11-04T16:39:06.417Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5793,7 +5746,7 @@
   },
   "leekduck:raidhour20261125": {
    "name": "Deoxys (Normal, Defense, Attack, and Speed Formes) Raid Hour",
-   "updated": "2026-11-04T08:05:55.661Z",
+   "updated": "2026-11-04T16:39:06.417Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5836,7 +5789,7 @@
   },
   "leekduck:pokemonspotlighthour2026-11-26": {
    "name": "Noibat Spotlight Hour",
-   "updated": "2026-11-04T08:05:55.661Z",
+   "updated": "2026-11-04T16:39:06.417Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5871,7 +5824,7 @@
   },
   "smr2": {
    "name": "Super Mega Raid Day",
-   "updated": "2026-11-04T08:05:55.661Z",
+   "updated": "2026-11-04T16:39:06.417Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5914,7 +5867,7 @@
   },
   "twilightwishes": {
    "name": "Twilight Wishes",
-   "updated": "2026-11-04T08:05:55.661Z",
+   "updated": "2026-11-04T16:39:06.417Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6180,7 +6133,7 @@
   },
   "leekduck:max-mondays-2026-11-30": {
    "name": "Dynamax Cryogonal during Max Monday",
-   "updated": "2026-11-04T08:05:55.661Z",
+   "updated": "2026-11-04T16:39:06.417Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6258,7 +6211,7 @@
   },
   "leekduck:season-24-twilight-trails": {
    "name": "Twilight Trails",
-   "updated": "2026-11-04T08:05:55.661Z",
+   "updated": "2026-11-04T16:39:06.417Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6478,289 +6431,9 @@
    "gaps": [],
    "researchTasks": []
   },
-  "leekduck:go-pass-november-2026": {
-   "name": "GO Pass: November",
-   "updated": "2026-11-04T08:05:55.661Z",
-   "sources": [
-    {
-     "id": "leekduck",
-     "name": "Leek Duck",
-     "trust": "community",
-     "url": "https://leekduck.com/events/go-pass-november-2026/"
-    },
-    {
-     "id": "hub",
-     "name": "Pokémon GO Hub",
-     "trust": "community",
-     "url": "https://pokemongohub.net/post/guide/go-pass-november-2026/"
-    }
-   ],
-   "fields": {
-    "bonuses": [
-     {
-      "text": "Reach Major Milestones on your GO Pass to unlock the following bonuses.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 1: Trainers level 31 and above will receive one guaranteed Candy XL when trading Pokémon",
-      "sources": [
-       "leekduck",
-       "hub"
-      ],
-      "status": "corroborated"
-     },
-     {
-      "text": "Rank 50: 2× Daily Adventure Incense duration",
-      "sources": [
-       "leekduck",
-       "hub"
-      ],
-      "status": "corroborated"
-     },
-     {
-      "text": "Rank 75: Increased XP and Stardust from hatching Eggs",
-      "sources": [
-       "leekduck",
-       "hub"
-      ],
-      "status": "corroborated"
-     },
-     {
-      "text": "Rank 1: One additional Candy for trading Pokémon",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 25: Open up to 40 Gifts per day",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 25: Receive up to 125 Gifts per day from spinning PokéStop and Gym Photo Discs",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 25: Hold 10 more Gifts in your Item Bag",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 25 Deluxe: Open up to 50 Gifts per day",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 25 Deluxe: Receive up to 150 Gifts per day from spinning PokéStop and Gym Photo Discs",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 25 Deluxe: Hold up to 20 more Gifts in your Item Bag",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 25: Open up to 40 Gifts per day Receive up to 125 Gifts per day from spinning PokéStops and Gym Photo Discs Hold 10 more Gifts in your Item Bag",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     }
-    ],
-    "featured": [
-     {
-      "text": "Complete Pass Tasks to rank up your GO Pass to earn the following rewards.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Encounter with Groudon*",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Trainers who upgrade to the GO Pass Deluxe can also earn the following rewards.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "1,000 additional PokéCoins for a total of 1,400 PokéCoins",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "One Super Incubator",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Additional encounters with even more Pokémon!",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ],
-    "raids": [],
-    "eggs": [],
-    "research": [],
-    "shiny": [],
-    "moves": [],
-    "costumes": [],
-    "tickets": [
-     {
-      "text": "Additionally, from Saturday, November 28, at 12:00 a.m. to Sunday, November 29, at 11:59 p.m. local time, there’s no daily limit for how many GO Points you can earn!",
-      "sources": [
-       "leekduck",
-       "hub"
-      ],
-      "status": "corroborated"
-     },
-     {
-      "text": "Earn PokéCoins and encounter Groudon in GO Pass: November!",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "The GO Pass and GO Pass Deluxe for November will be available from November 3, 2026 at 10:00 am to December 1, 2026 at 10:00 am local time.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "For US$7.99*, Trainers can upgrade to the GO Pass Deluxe, a paid version of the GO Pass that offers upgraded rewards and faster progression.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "For US$9.99*, Trainers can upgrade to the GO Pass Deluxe + 10 Ranks to also automatically earn enough GO Points to reach Rank 11.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rewards unlocked in the GO Pass will expire on Thursday, December 3, at 10:00 a.m. local time, so be sure to claim your rewards before they’re gone!",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Earn points to increase your rank and unlock rewards. You can earn points by completing Pass Tasks. Any rewards you earn for completing a Pass Task will be awarded as soon as you finish the task.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "GO Pass: November will be automatically distributed on Tuesday, November 3, at 10:00 a.m. local time",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Earn GO Points and rank up until Tuesday, December 1, at 10:00 a.m. local time",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Tier | Bonuses",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "In addition to all free GO Pass rewards, Trainers with GO Pass Deluxe can earn:",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "1,000 additional PokéCoins , for a total of 1,400 PokéCoins",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     }
-    ],
-    "dates": [
-     {
-      "text": "Additionally, from Saturday, November 28, at 12:00 a.m. to Sunday, November 29, at 11:59 p.m. local time, there’s no daily limit for how many GO Points you can earn!",
-      "sources": [
-       "leekduck",
-       "hub"
-      ],
-      "status": "corroborated"
-     },
-     {
-      "text": "The GO Pass and GO Pass Deluxe for November will be available from November 3, 2026 at 10:00 am to December 1, 2026 at 10:00 am local time.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rewards unlocked in the GO Pass will expire on Thursday, December 3, at 10:00 a.m. local time, so be sure to claim your rewards before they’re gone!",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ]
-   },
-   "conflicts": [],
-   "gaps": [
-    {
-     "field": "featured",
-     "missingFrom": [
-      "hub"
-     ]
-    }
-   ],
-   "researchTasks": []
-  },
   "leekduck:deoxys-normal-defense-attack-speed-formes-in-5-star-raid-battles-november-2026": {
    "name": "Deoxys (Normal, Defense, Attack, and Speed Formes) in 5-star Raid Battles",
-   "updated": "2026-11-04T08:05:55.661Z",
+   "updated": "2026-11-04T16:39:06.417Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6860,7 +6533,7 @@
   },
   "leekduck:mega-metagross-in-mega-raids-november-2026": {
    "name": "Mega Metagross in Mega Raids",
-   "updated": "2026-11-04T08:05:55.661Z",
+   "updated": "2026-11-04T16:39:06.417Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6932,7 +6605,7 @@
   },
   "minior3": {
    "name": "Minior Showers: Geminids",
-   "updated": "2026-11-04T08:05:55.661Z",
+   "updated": "2026-11-04T16:39:06.417Z",
    "sources": [
     {
      "id": "leekduck",
@@ -7024,7 +6697,7 @@
   },
   "leekduck:pokemon-x-adidas-2026": {
    "name": "adidas × Pokémon Timed Research",
-   "updated": "2026-11-04T08:05:55.661Z",
+   "updated": "2026-11-04T16:39:06.417Z",
    "sources": [
     {
      "id": "leekduck",
@@ -7103,7 +6776,7 @@
   },
   "leekduck:pokemon-go-tour-alola-kaohsiung-2027": {
    "name": "Pokémon GO Tour: Alola - Kaohsiung 2027",
-   "updated": "2026-11-04T08:05:55.661Z",
+   "updated": "2026-11-04T16:39:06.417Z",
    "sources": [
     {
      "id": "leekduck",
@@ -7138,7 +6811,7 @@
   },
   "leekduck:pokemon-go-tour-alola-los-angeles-2027": {
    "name": "Pokémon GO Tour: Alola - Los Angeles 2027",
-   "updated": "2026-11-04T08:05:55.661Z",
+   "updated": "2026-11-04T16:39:06.417Z",
    "sources": [
     {
      "id": "leekduck",
@@ -7173,7 +6846,7 @@
   },
   "leekduck:pokemon-go-tour-alola-global-2027": {
    "name": "Pokémon GO Tour: Alola - Global 2027",
-   "updated": "2026-11-04T08:05:55.661Z",
+   "updated": "2026-11-04T16:39:06.417Z",
    "sources": [
     {
      "id": "leekduck",
@@ -7208,7 +6881,7 @@
   },
   "leekduck:minior-showers-eta-aquariids-2027": {
    "name": "Minior Showers: Eta Aquariids 2027",
-   "updated": "2026-11-04T08:05:55.661Z",
+   "updated": "2026-11-04T16:39:06.417Z",
    "sources": [
     {
      "id": "leekduck",
@@ -7307,7 +6980,7 @@
   },
   "leekduck:minior-showers-southern-delta-aquariids-2027": {
    "name": "Minior Showers: Southern Delta Aquariids 2027",
-   "updated": "2026-11-04T08:05:55.661Z",
+   "updated": "2026-11-04T16:39:06.417Z",
    "sources": [
     {
      "id": "leekduck",
@@ -7406,7 +7079,7 @@
   },
   "leekduck:minior-showers-perseids-2027": {
    "name": "Minior Showers: Perseids 2027",
-   "updated": "2026-11-04T08:05:55.661Z",
+   "updated": "2026-11-04T16:39:06.417Z",
    "sources": [
     {
      "id": "leekduck",
@@ -7496,9 +7169,158 @@
    "gaps": [],
    "researchTasks": []
   },
+  "leekduck:go-pass-november-2026": {
+   "name": "GO Pass: November",
+   "updated": "2026-11-04T16:39:06.417Z",
+   "sources": [
+    {
+     "id": "hub",
+     "name": "Pokémon GO Hub",
+     "trust": "community",
+     "url": "https://pokemongohub.net/post/guide/go-pass-november-2026/"
+    }
+   ],
+   "fields": {
+    "bonuses": [
+     {
+      "text": "Rank 1: One additional Candy for trading Pokémon Trainers level 31 and above receive one guaranteed Candy XL when trading Pokémon",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 25: Open up to 40 Gifts per day Receive up to 125 Gifts per day from spinning PokéStops and Gym Photo Discs Hold 10 more Gifts in your Item Bag",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 50: 2× Daily Adventure Incense duration",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 75: Increased Stardust from hatching Eggs Increased XP from hatching Eggs",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     }
+    ],
+    "featured": [],
+    "raids": [],
+    "eggs": [],
+    "research": [],
+    "shiny": [],
+    "moves": [],
+    "costumes": [],
+    "tickets": [
+     {
+      "text": "GO Pass: November will be automatically distributed on Tuesday, November 3, at 10:00 a.m. local time",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Earn GO Points and rank up until Tuesday, December 1, at 10:00 a.m. local time",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "There is no daily GO Points earning limit from Saturday, November 28, at 12:00 a.m. to Sunday, November 29, at 11:59 p.m. local time",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Tier | Bonuses",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "In addition to all free GO Pass rewards, Trainers with GO Pass Deluxe can earn:",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "1,000 additional PokéCoins , for a total of 1,400 PokéCoins",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "One Super Incubator",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Additional Pokémon encounters",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Purchasing through the Pokémon GO Web Store also provides the following gifts with purchase:",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "GO Pass Deluxe: November: 10 Ultra Balls, five Max Revives, one Premium Battle Pass, and five Max Potions.",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Open up to 50 Gifts per day",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Receive up to 150 Gifts per day from spinning PokéStops and Gym Photo Discs",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     }
+    ],
+    "dates": [
+     {
+      "text": "There is no daily GO Points earning limit from Saturday, November 28, at 12:00 a.m. to Sunday, November 29, at 11:59 p.m. local time",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     }
+    ]
+   },
+   "conflicts": [],
+   "gaps": [],
+   "researchTasks": []
+  },
   "leekduck:twilight-wishes-2026": {
    "name": "Twilight Wishes",
-   "updated": "2026-11-04T08:05:55.661Z",
+   "updated": "2026-11-04T16:39:06.417Z",
    "sources": [
     {
      "id": "hub",
@@ -7781,6 +7603,122 @@
       "text": "Pokémon GO’s Twilight Wishes event runs from November 24 at 10:00 a.m. to November 30, 2026, at 8:00 p.m. local time , bringing back Sun Scarf Espeon and Moon Scarf Umbreon alongside Sun Crown and Moon Crown Pikachu!",
       "sources": [
        "hub"
+      ],
+      "status": "single"
+     }
+    ]
+   },
+   "conflicts": [],
+   "gaps": [],
+   "researchTasks": []
+  },
+  "leekduck:shadow-landorus-incarnate-forme-in-shadow-raids-october-2026": {
+   "name": "Shadow Landorus (Incarnate Forme) in Shadow Raids",
+   "updated": "2026-11-04T08:05:55.661Z",
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/shadow-landorus-incarnate-forme-in-shadow-raids-october-2026/"
+    }
+   ],
+   "fields": {
+    "bonuses": [],
+    "featured": [],
+    "raids": [
+     {
+      "text": "Shadow Landorus (Incarnate Forme) will appear in five-star Shadow Raids every weekend from October 7, 2026 to November 3, 2026. If you’re lucky, you may encounter Shiny Shadow Landorus (Incarnate Forme)!",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "eggs": [],
+    "research": [],
+    "shiny": [
+     {
+      "text": "Shadow Landorus (Incarnate Forme) will appear in five-star Shadow Raids every weekend from October 7, 2026 to November 3, 2026. If you’re lucky, you may encounter Shiny Shadow Landorus (Incarnate Forme)!",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "moves": [],
+    "costumes": [],
+    "tickets": [],
+    "dates": [
+     {
+      "text": "Shadow Landorus (Incarnate Forme) will appear in five-star Shadow Raids every weekend from October 7, 2026 to November 3, 2026. If you’re lucky, you may encounter Shiny Shadow Landorus (Incarnate Forme)!",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ]
+   },
+   "conflicts": [],
+   "gaps": [],
+   "researchTasks": []
+  },
+  "leekduck:giratina-origin-forme-in-5-star-raid-battles-october-2026": {
+   "name": "Giratina (Origin Forme) in 5-star Raid Battles",
+   "updated": "2026-11-04T08:05:55.661Z",
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/giratina-origin-forme-in-5-star-raid-battles-october-2026/"
+    }
+   ],
+   "fields": {
+    "bonuses": [],
+    "featured": [],
+    "raids": [
+     {
+      "text": "Giratina (Origin) will be in five-star raid battles from October 28, 2026 to November 3, 2026.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "There will also be a Raid Hour featuring Giratina (Origin Forme) from 6:00 p.m. to 7:00 p.m. local time on October 28.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "eggs": [],
+    "research": [],
+    "shiny": [
+     {
+      "text": "If you’re lucky, you may encounter a Shiny Giratina (Origin Forme).",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "moves": [],
+    "costumes": [],
+    "tickets": [],
+    "dates": [
+     {
+      "text": "Giratina (Origin) will be in five-star raid battles from October 28, 2026 to November 3, 2026.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "There will also be a Raid Hour featuring Giratina (Origin Forme) from 6:00 p.m. to 7:00 p.m. local time on October 28.",
+      "sources": [
+       "leekduck"
       ],
       "status": "single"
      }

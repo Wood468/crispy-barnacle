@@ -1,5 +1,5 @@
 {
- "runAt": "2026-11-04T08:05:55.661Z",
+ "runAt": "2026-11-04T16:39:06.417Z",
  "sources": {
   "official": {
    "listed": 22,
@@ -98,8 +98,23 @@
   },
   {
    "source": "leekduck",
+   "title": "Shadow Landorus (Incarnate Forme) in Shadow Raids",
+   "url": "https://leekduck.com/events/shadow-landorus-incarnate-forme-in-shadow-raids-october-2026/"
+  },
+  {
+   "source": "leekduck",
+   "title": "Giratina (Origin Forme) in 5-star Raid Battles",
+   "url": "https://leekduck.com/events/giratina-origin-forme-in-5-star-raid-battles-october-2026/"
+  },
+  {
+   "source": "leekduck",
    "title": "Shadow Tornadus (Incarnate Forme) in Shadow Raids",
    "url": "https://leekduck.com/events/shadow-tornadus-incarnate-forme-in-shadow-raids-november-16-2026/"
+  },
+  {
+   "source": "hub",
+   "title": "How to Beat Gigantamax Duraludon: Best Counters and Guide",
+   "url": "https://pokemongohub.net/post/guide/how-to-beat-gigantamax-duraludon-best-counters-and-guide/"
   },
   {
    "source": "hub",
@@ -120,11 +135,6 @@
    "source": "hub",
    "title": "Dynamax Machop Max Monday: Event Guide",
    "url": "https://pokemongohub.net/post/event/dynamax-machop-max-monday/"
-  },
-  {
-   "source": "hub",
-   "title": "Pokémon GO November 2026 Event Calendar: All Events, Raids & Bonuses",
-   "url": "https://pokemongohub.net/post/event/pokemon-go-november-2026-events/"
   }
  ],
  "intl": {
@@ -334,13 +344,6 @@
    "missingFrom": [
     "official",
     "official"
-   ]
-  },
-  {
-   "event": "GO Pass: November",
-   "field": "featured",
-   "missingFrom": [
-    "hub"
    ]
   },
   {

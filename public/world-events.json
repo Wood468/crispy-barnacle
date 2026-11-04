@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-04T08:05:55.658Z",
+ "updated": "2026-11-04T16:39:06.414Z",
  "events": [
   {
    "id": "w-pokemon-fossil-museum-2026",
@@ -400,7 +400,7 @@
   {
    "id": "w-fc-seoul",
    "name": "FC Seoul",
-   "place": "Seoul, South Korea",
+   "place": "South Korea",
    "area": "Asia",
    "scope": "regional",
    "start": "2026-10-24",
@@ -408,12 +408,17 @@
    "datesKnown": true,
    "sources": [
     {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "url": "https://pokemongo.com/ko/news/fc-seoul-2026/"
+    },
+    {
      "id": "serebii",
      "name": "Serebii",
      "url": "https://www.serebii.net/pokemongo/reallifeevents.shtml"
     }
    ],
-   "status": "single",
+   "status": "official",
    "seen": "2026-11-04"
   },
   {
@@ -441,6 +446,25 @@
    "seen": "2026-10-24"
   },
   {
+   "id": "w-giratina-origin-forme-in-5-star-raid-battles",
+   "name": "Giratina (Origin Forme) in 5-star Raid Battles",
+   "place": "",
+   "area": "Worldwide",
+   "scope": "global",
+   "start": "2026-10-28",
+   "end": "2026-11-03",
+   "datesKnown": true,
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "url": "https://leekduck.com/events/giratina-origin-forme-in-5-star-raid-battles-october-2026/"
+    }
+   ],
+   "status": "single",
+   "seen": "2026-11-04"
+  },
+  {
    "id": "w-halloween",
    "name": "Halloween 2026 Part 2",
    "place": "",
@@ -459,25 +483,6 @@
    ],
    "status": "single",
    "seen": "2026-10-30"
-  },
-  {
-   "id": "w-pok-mon-go-november-2026-event-calendar-all-events",
-   "name": "Pokémon GO November 2026 Event Calendar: All Events, Raids & Bonuses",
-   "place": "",
-   "area": "Worldwide",
-   "scope": "global",
-   "start": "2026-11-02",
-   "end": "2026-11-02",
-   "datesKnown": true,
-   "sources": [
-    {
-     "id": "hub",
-     "name": "Pokémon GO Hub",
-     "url": "https://pokemongohub.net/post/event/pokemon-go-november-2026-events/"
-    }
-   ],
-   "status": "single",
-   "seen": "2026-11-04"
   },
   {
    "id": "w-forever-stamp-rally-go-wild-area",
