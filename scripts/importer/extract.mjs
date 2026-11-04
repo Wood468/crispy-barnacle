@@ -127,7 +127,7 @@ export function extractFields(html) {
     try {
       const pass = extractLeekDuckGoPassRewards(html);
       if (pass) {
-        for (const item of pass.bonusItems) add("bonuses", "Rank " + item.rank + ": " + item.name);
+        for (const item of pass.bonusItems) add("bonuses", "Rank " + item.rank + (item.track === "deluxe" ? " Deluxe" : "") + ": " + item.name);
         for (const row of pass.tickets) add("tickets", row);
       }
     } catch (error) {
