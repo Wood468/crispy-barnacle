@@ -199,6 +199,25 @@ test("official, Leek Duck and Hub rank layouts all keep their rank", () => {
   assert.ok(hub.tickets.some(x => /^Rank 3: Free: Dynamax Bounsweet \| Deluxe: 5 × Bounsweet Candy$/.test(x)), JSON.stringify(hub.tickets));
 });
 
+test("Leek Duck GO Pass rank table rows with a separate RANK cell become track-specific rewards", () => {
+  const html = '<main><h2>GO Pass: November</h2><table>' +
+    '<tr><th>RANK</th><th>BASIC</th><th>DELUXE</th></tr>' +
+    '<tr><td>RANK</td><td>1</td><td>Tier 1 GO Pass Bonus: One additional Candy for trading Pokémon</td><td>Tier 1 GO Pass Bonus: Guaranteed Candy XL when trading</td></tr>' +
+    '<tr><td>RANK</td><td>2</td><td>XP ×10000</td><td>Stardust ×10000</td></tr>' +
+    '<tr><td>RANK</td><td>100</td><td>Groudon (Level 20)</td><td>PokéCoin ×200</td></tr>' +
+    '<tr><td>RANK</td><td>101</td><td>Stardust ×50</td><td>Stardust ×100</td></tr>' +
+    '<tr><td>RANK</td><td>200</td><td>Stardust ×50</td><td>Stardust ×100</td></tr>' +
+    '</table></main>';
+  const lines = htmlToLines(html);
+  assert.ok(lines.some(x => x.text === "RANK | 2 | XP ×10000 | Stardust ×10000"), JSON.stringify(lines));
+  const f = extractFields(lines);
+  assert.ok(f.tickets.includes("Rank 2: Free: XP ×10000 | Deluxe: Stardust ×10000"), JSON.stringify(f.tickets));
+  assert.ok(f.tickets.includes("Rank 100: Free: Groudon (Level 20) | Deluxe: PokéCoin ×200"), JSON.stringify(f.tickets));
+  assert.ok(f.tickets.includes("Rank 101: Free: Stardust ×50 | Deluxe: Stardust ×100"), JSON.stringify(f.tickets));
+  assert.ok(f.tickets.includes("Rank 200: Free: Stardust ×50 | Deluxe: Stardust ×100"), JSON.stringify(f.tickets));
+  assert.ok(!f.tickets.some(x => /^Rank 1:/.test(x)), "milestone rank 1 is not duplicated in the rank reward table");
+});
+
 test("rank reward rows never count as source disagreements", () => {
   const mk = t => ({ source: { id: t, name: t, trust: "community" }, fields: { tickets: ["Rank 3: Free: 5 × Candy | Deluxe: 3 × Candy XL", "Rank 4: Free: 10 × Candy | Deluxe: 2 × Candy XL"], bonuses: [] } });
   assert.equal(mergeSources([mk("a"), mk("b")]).conflicts.length, 0);
