@@ -1,5 +1,6 @@
 name: diag-leekduck-gopass
-# TEMPORARY read-only diagnostic. Close (do not merge) after results are read.
+# TEMPORARY read-only diagnostic (round 2). Close (do not merge) after results are read.
+# Exactly one HTTP GET (step 1). Steps 2+ only read out/leekduck-gopass-raw.html from disk.
 on:
   pull_request:
     paths:
@@ -14,141 +15,376 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - name: Fetch page once and report structure as annotations
+      - name: "1 Fetch page once and save body"
         run: |
           mkdir -p out
+          cat > out/lib.js <<'LIB_EOF'
+          'use strict';
+          const fs = require('fs');
+          const FILE = 'out/leekduck-gopass-raw.html';
+          const CNT = 'out/.ann_count';
+          const MAXMSG = 3500;
+          const PER_STEP = 8;
+          const PER_JOB = 50;
+          const VOID = new Set(['area','base','br','col','embed','hr','img','input','link','meta','param','source','track','wbr']);
+          const flat = (s) => String(s).replace(/\s+/g, ' ').trim();
+          const enc = (s) => String(s).replace(/%/g, '%25').replace(/\r/g, '%0D').replace(/\n/g, '%0A');
+          const encTitle = (s) => String(s).replace(/%/g, '%25').replace(/[\r\n]/g, ' ').replace(/:/g, '%3A').replace(/,/g, '%2C');
+          const readCount = () => { try { return parseInt(fs.readFileSync(CNT, 'utf8'), 10) || 0; } catch (e) { return 0; } };
+
+          class Step {
+            constructor(name) { this.name = name; this.items = []; }
+            add(title, msg) {
+              let m = String(msg);
+              if (m.length > MAXMSG) m = m.slice(0, MAXMSG - 30) + ' ...[hard-cut at ' + (MAXMSG - 30) + ' of ' + m.length + ']';
+              this.items.push([title, m]);
+            }
+            split(title, text) {
+              const t = String(text);
+              if (t.length <= MAXMSG) { this.add(title, t); return; }
+              const n = Math.ceil(t.length / MAXMSG);
+              for (let i = 0; i < n; i++) this.add(title + ' part ' + (i + 1) + '/' + n, t.slice(i * MAXMSG, (i + 1) * MAXMSG));
+            }
+            splitLines(title, lines) {
+              const chunks = [];
+              let cur = '';
+              for (const ln of lines) {
+                if (cur && (cur.length + ln.length + 1) > MAXMSG) { chunks.push(cur); cur = ''; }
+                cur += (cur ? '\n' : '') + ln.slice(0, MAXMSG);
+              }
+              if (cur) chunks.push(cur);
+              if (!chunks.length) chunks.push('none');
+              chunks.forEach((c, i) => this.add(chunks.length > 1 ? title + ' part ' + (i + 1) + '/' + chunks.length : title, c));
+            }
+            flush() {
+              const total = readCount();
+              const allowed = Math.max(0, Math.min(PER_STEP, PER_JOB - total));
+              let list = this.items;
+              if (list.length > allowed) {
+                const dropped = list.length - Math.max(allowed - 1, 0);
+                list = list.slice(0, Math.max(allowed - 1, 0));
+                if (allowed > 0) list.push([this.name + ' DROPPED', 'annotation cap reached: ' + dropped + ' annotation(s) not emitted (limits: ' + PER_STEP + ' per step, ' + PER_JOB + ' per job)']);
+              }
+              for (const [t, m] of list) console.log('::notice title=' + encTitle(t) + '::' + enc(m));
+              fs.mkdirSync('out', { recursive: true });
+              fs.writeFileSync(CNT, String(total + list.length));
+              console.log('step ' + this.name + ': emitted ' + list.length + ' of ' + this.items.length + ' (job total now ' + (total + list.length) + ')');
+            }
+          }
+
+          function mask(h) {
+            return h
+              .replace(/<!--[\s\S]*?-->/g, (x) => ' '.repeat(x.length))
+              .replace(/(<(script|style)\b[^>]*>)([\s\S]*?)(<\/\2\s*>)/gi, (a, o, t, b, c) => o + ' '.repeat(b.length) + c);
+          }
+
+          function parseTags(m) {
+            const out = [];
+            const re = /<([a-zA-Z][\w:-]*)((?:"[^"]*"|'[^']*'|[^>"'])*)>/g;
+            let x;
+            while ((x = re.exec(m))) {
+              const attrs = x[2];
+              const cm = attrs.match(/\bclass\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s>]+))/i);
+              const cv = cm ? (cm[1] !== undefined ? cm[1] : (cm[2] !== undefined ? cm[2] : cm[3])) : '';
+              out.push({ tag: x[1].toLowerCase(), attrs, idx: x.index, openEnd: re.lastIndex, cls: cv.trim().split(/\s+/).filter(Boolean), selfClose: /\/\s*$/.test(attrs), i: out.length, end: undefined });
+            }
+            return out;
+          }
+
+          // Balanced-block extractor: from the open tag t, count nested same-name open/close tags.
+          // Returns index just past the matching close tag, or -1 if unbalanced.
+          function blockEnd(m, t) {
+            if (VOID.has(t.tag) || t.selfClose) return t.openEnd;
+            const re = new RegExp('<(/?)' + t.tag + '\\b(?:"[^"]*"|\'[^\']*\'|[^>"\'])*>', 'gi');
+            re.lastIndex = t.idx;
+            let d = 0, x;
+            while ((x = re.exec(m))) {
+              if (x[1]) { d--; if (d === 0) return re.lastIndex; } else if (!/\/\s*>$/.test(x[0])) d++;
+            }
+            return -1;
+          }
+
+          function load(S) {
+            if (!fs.existsSync(FILE)) { S.add(S.name + ' no input', 'out/leekduck-gopass-raw.html not found (fetch step did not write it)'); return null; }
+            const html = fs.readFileSync(FILE, 'utf8');
+            if (!html.length) { S.add(S.name + ' no input', 'saved body is empty'); return null; }
+            const m = mask(html);
+            const tags = parseTags(m);
+            const D = { html, m, tags };
+            D.end = (t) => { if (t.end === undefined) t.end = blockEnd(m, t); return t.end; };
+            D.markup = (t, cap) => {
+              const e = D.end(t);
+              if (e < 0) return html.slice(t.idx, t.idx + (cap || 3500)) + ' [UNBALANCED: no matching close tag, slice only]';
+              return html.slice(t.idx, e);
+            };
+            D.within = (t) => {
+              const e = D.end(t);
+              const lim = e < 0 ? t.openEnd + 3500 : e;
+              const out = [];
+              for (let j = t.i + 1; j < tags.length && tags[j].idx < lim; j++) out.push(tags[j]);
+              return out;
+            };
+            D.text = (t) => flat(D.markup(t).replace(/<[^>]*>/g, ' ').replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&#0?39;/g, "'"));
+            D.divs = (token) => tags.filter((t) => t.tag === 'div' && t.cls.includes(token));
+            D.key = (t) => t.tag + (t.cls.length ? '.' + t.cls.join('.') : '');
+            D.items = () => D.divs('rank-item');
+            D.rankNumber = (t) => { const r = D.within(t).find((x) => x.tag === 'div' && x.cls.includes('rank-number')); return r ? D.text(r) : null; };
+            return D;
+          }
+
+          function run(name, fn) {
+            const S = new Step(name);
+            try {
+              const D = load(S);
+              if (D) fn(S, D);
+            } catch (e) {
+              S.add(name + ' ERROR', String(e && e.stack || e));
+              process.exitCode = 1;
+            } finally {
+              S.flush();
+            }
+          }
+
+          module.exports = { Step, load, run, flat, enc, mask, parseTags, blockEnd, MAXMSG };
+          LIB_EOF
           node - <<'NODE_EOF'
           const fs = require('fs');
           const crypto = require('crypto');
+          const L = require(process.cwd() + '/out/lib.js');
           const URL_ = 'https://leekduck.com/events/go-pass-november-2026/';
           const UA = 'GO-Field-Notes-Importer/1.0 (+https://pogo.michaelpuff.com; reads public event write-ups, links back to every source)';
-          const enc = (s) => String(s).replace(/%/g, '%25').replace(/\r/g, '%0D').replace(/\n/g, '%0A');
-          const note = (title, msg) => {
-            let m = String(msg);
-            if (m.length > 1500) m = m.slice(0, 1480) + ' ...[truncated]';
-            console.log('::notice title=' + String(title).replace(/[,:\n]/g, ' ') + '::' + enc(m));
-          };
-          const count = (h, re) => (h.match(re) || []).length;
-          const flat = (s) => s.replace(/\s+/g, ' ');
+          fs.writeFileSync('out/.ann_count', '0');
+          const S = new L.Step('A');
           (async () => {
-            const res = await fetch(URL_, { headers: { 'User-Agent': UA, 'Accept': 'text/html' }, redirect: 'follow' });
-            const buf = Buffer.from(await res.arrayBuffer());
-            fs.writeFileSync('out/leekduck-gopass-raw.html', buf);
-            const html = buf.toString('utf8');
-            const sha = crypto.createHash('sha256').update(buf).digest('hex');
-            note('A status', 'status=' + res.status + '\nfinalUrl=' + res.url + '\ncontent-type=' + res.headers.get('content-type') + '\nbytes=' + buf.length + '\nsha256=' + sha + '\nserver=' + res.headers.get('server') + '\ncf-mitigated=' + res.headers.get('cf-mitigated'));
-            if (!buf.length) { note('A empty', 'empty body'); return; }
-            note('A first 300 chars', flat(html.slice(0, 300)));
-
-            // B counts
-            const scriptOpen = html.match(/<script\b[^>]*>/gi) || [];
-            const srcScripts = scriptOpen.filter((t) => /\bsrc\s*=/i.test(t)).length;
-            note('B counts', 'table=' + count(html, /<table\b/gi) + '\ntr=' + count(html, /<tr\b/gi) + '\ntd=' + count(html, /<td\b/gi) + '\nscript total=' + scriptOpen.length + ' (src=' + srcScripts + ' inline=' + (scriptOpen.length - srcScripts) + ')\ndiv=' + count(html, /<div\b/gi));
-
-            // C names
-            const names = ['Rookidee', 'Sandygast', 'Impidimp', 'Klink'];
-            note('C names', names.map((n) => n + '=' + count(html, new RegExp(n, 'g'))).join('\n'));
-
-            // script blocks
-            const scripts = [];
-            const sre = /<script\b([^>]*)>([\s\S]*?)<\/script>/gi;
-            let m;
-            while ((m = sre.exec(html))) {
-              scripts.push({ attrs: m[1], body: m[2], start: m.index, bodyStart: m.index + m[0].indexOf('>') + 1, end: m.index + m[0].length });
+            try {
+              // exactly one GET; redirects are NOT followed so no second request is ever made
+              const res = await fetch(URL_, { headers: { 'User-Agent': UA, 'Accept': 'text/html' }, redirect: 'manual', signal: AbortSignal.timeout(30000) });
+              const buf = Buffer.from(await res.arrayBuffer());
+              fs.writeFileSync('out/leekduck-gopass-raw.html', buf);
+              const sha = crypto.createHash('sha256').update(buf).digest('hex');
+              S.add('A status', 'status=' + res.status + '\nlocation=' + res.headers.get('location') + '\ncontent-type=' + res.headers.get('content-type') + '\nbytes=' + buf.length + '\nsha256=' + sha + '\nserver=' + res.headers.get('server') + '\ncf-mitigated=' + res.headers.get('cf-mitigated'));
+            } catch (e) {
+              S.add('A ERROR', String(e && e.stack || e));
+              process.exitCode = 1;
+            } finally {
+              S.flush();
             }
-
-            // D first Rookidee
-            const pos = html.indexOf('Rookidee');
-            if (pos < 0) {
-              note('D Rookidee', 'not found');
-            } else {
-              const inScript = scripts.find((s) => pos >= s.bodyStart && pos < s.end);
-              if (inScript) {
-                const type = (inScript.attrs.match(/\btype\s*=\s*["']?([^"'\s>]+)/i) || [])[1] || 'none';
-                const id = (inScript.attrs.match(/\bid\s*=\s*["']?([^"'\s>]+)/i) || [])[1] || 'none';
-                note('D Rookidee in script', 'INSIDE <script> type=' + type + ' id=' + id + ' attrs=' + flat(inScript.attrs) + '\nsnippet: ' + flat(html.slice(Math.max(0, pos - 250), pos + 250)));
-              } else {
-                // build open-element stack over prefix
-                const prefix = html.slice(0, pos);
-                const voids = new Set(['area','base','br','col','embed','hr','img','input','link','meta','param','source','track','wbr']);
-                const stack = [];
-                const tre = /<!--[\s\S]*?-->|<(\/?)([a-zA-Z][\w:-]*)([^>]*)>/g;
-                let t;
-                while ((t = tre.exec(prefix))) {
-                  if (!t[2]) continue;
-                  const tag = t[2].toLowerCase();
-                  if (t[1]) {
-                    for (let i = stack.length - 1; i >= 0; i--) { if (stack[i].tag === tag) { stack.length = i; break; } }
-                  } else if (!voids.has(tag) && !/\/\s*$/.test(t[3])) {
-                    stack.push({ tag, attrs: t[3] });
-                    if (tag === 'script' || tag === 'style') {
-                      const close = prefix.toLowerCase().indexOf('</' + tag, tre.lastIndex);
-                      if (close < 0) break;
-                      stack.pop();
-                      tre.lastIndex = close;
-                    }
-                  }
-                }
-                const chain = stack.slice(-8).reverse().map((e) => {
-                  const cls = (e.attrs.match(/\bclass\s*=\s*["']([^"']*)["']/i) || [])[1];
-                  const id = (e.attrs.match(/\bid\s*=\s*["']([^"']*)["']/i) || [])[1];
-                  const data = (e.attrs.match(/\bdata-[\w-]+/gi) || []).join(',');
-                  return e.tag + (id ? '#' + id : '') + (cls ? '.' + cls.trim().replace(/\s+/g, '.') : '') + (data ? ' [' + data + ']' : '');
+          })();
+          NODE_EOF
+      - name: "2 R1 rank-item counts and rank-number values (reads saved file, no network)"
+        if: always()
+        run: |
+          node - <<'NODE_EOF'
+          const L = require(process.cwd() + '/out/lib.js');
+          L.run('R1', (S, D) => {
+            const items = D.items();
+            const vals = items.map((t) => D.rankNumber(t));
+            const show = (v) => (v === null ? '<no rank-number>' : JSON.stringify(v));
+            const ints = vals.filter((v) => v !== null && /^\d+$/.test(v)).map(Number);
+            // runs in document order where each value is previous+1
+            const runs = [];
+            for (const n of ints) {
+              const last = runs[runs.length - 1];
+              if (last && n === last[1] + 1) last[1] = n; else runs.push([n, n]);
+            }
+            const fmt = (r) => (r[0] === r[1] ? String(r[0]) : r[0] + '-' + r[1]);
+            const uniq = [...new Set(ints)].sort((a, b) => a - b);
+            const sorted = [];
+            for (const n of uniq) {
+              const last = sorted[sorted.length - 1];
+              if (last && n === last[1] + 1) last[1] = n; else sorted.push([n, n]);
+            }
+            const nonInt = vals.filter((v) => v === null || !/^\d+$/.test(v));
+            const seen = new Map();
+            vals.forEach((v) => seen.set(v, (seen.get(v) || 0) + 1));
+            const dupExtra = vals.length - seen.size;
+            const dupVals = [...seen.entries()].filter((e) => e[1] > 1).slice(0, 20).map((e) => show(e[0]) + 'x' + e[1]);
+            const lines = [];
+            lines.push('div.rank-item count=' + items.length);
+            lines.push('rank-number values found=' + vals.filter((v) => v !== null).length + ' (rank-items without rank-number=' + vals.filter((v) => v === null).length + ')');
+            lines.push('document-order runs (each step +1): ' + (runs.length ? runs.slice(0, 60).map(fmt).join(', ') + (runs.length > 60 ? ' ...total runs ' + runs.length : '') : 'none'));
+            lines.push('sorted distinct integer ranges: ' + (sorted.length ? sorted.slice(0, 60).map(fmt).join(', ') + (sorted.length > 60 ? ' ...total ' + sorted.length : '') : 'none'));
+            lines.push('first 6 raw: ' + vals.slice(0, 6).map(show).join(' | '));
+            lines.push('last 6 raw: ' + vals.slice(-6).map(show).join(' | '));
+            lines.push('non-plain-integer raw values (count ' + nonInt.length + '): ' + (nonInt.length ? nonInt.slice(0, 30).map(show).join(' | ') : 'none'));
+            lines.push('duplicate extra occurrences (items minus distinct values)=' + dupExtra + (dupVals.length ? ' e.g. ' + dupVals.join(', ') : ''));
+            S.add('R1 rank-item and rank-number', lines.join('\n'));
+            const c = (tok) => D.divs(tok).length;
+            S.add('R1 containers', 'div.battle-pass-rewards=' + c('battle-pass-rewards') + '\ndiv.battle-pass-container=' + c('battle-pass-container') + '\ndiv.rank-paths=' + c('rank-paths') + '\ndiv.rank-rewards=' + c('rank-rewards') + '\ndiv.reward-item=' + c('reward-item'));
+          });
+          NODE_EOF
+      - name: "3 R2 first three rank-items verbatim (reads saved file, no network)"
+        if: always()
+        run: |
+          node - <<'NODE_EOF'
+          const L = require(process.cwd() + '/out/lib.js');
+          L.run('R2', (S, D) => {
+            const items = D.items();
+            if (!items.length) { S.add('R2 first rank-items', 'not found'); return; }
+            items.slice(0, 3).forEach((t, k) => {
+              S.split('R2 rank-item #' + (k + 1) + ' rank-number=' + JSON.stringify(D.rankNumber(t)) + ' (verbatim, whitespace flattened)', L.flat(D.markup(t)));
+            });
+          });
+          NODE_EOF
+      - name: "4 R3 rank-item near 100, last, and odd rank-numbers (reads saved file, no network)"
+        if: always()
+        run: |
+          node - <<'NODE_EOF'
+          const L = require(process.cwd() + '/out/lib.js');
+          L.run('R3', (S, D) => {
+            const items = D.items();
+            if (!items.length) { S.add('R3 rank-items', 'not found'); return; }
+            const vals = items.map((t) => D.rankNumber(t));
+            const emit = (title, t, v) => S.split(title + ' rank-number=' + JSON.stringify(v) + ' (verbatim, flattened)', L.flat(D.markup(t)));
+            let best = -1, bd = Infinity;
+            vals.forEach((v, i) => { if (v !== null && /^\d+$/.test(v)) { const d = Math.abs(Number(v) - 100); if (d < bd) { bd = d; best = i; } } });
+            if (best >= 0) emit('R3a closest to 100 (item index ' + (best + 1) + ')', items[best], vals[best]);
+            else if (items.length >= 100) emit('R3a 100th item (no integer rank-numbers)', items[99], vals[99]);
+            else S.add('R3a closest to 100', 'not found');
+            emit('R3b last rank-item (index ' + items.length + ')', items[items.length - 1], vals[vals.length - 1]);
+            const odd = [];
+            vals.forEach((v, i) => { if (v === null || !/^\d+$/.test(v) || /[-+–—]/.test(v)) odd.push(i); });
+            if (!odd.length) S.add('R3c non-integer or range rank-number', 'not found');
+            else {
+              S.add('R3c summary', 'matching rank-items=' + odd.length + '; showing first ' + Math.min(3, odd.length) + '; raw values of first 20: ' + odd.slice(0, 20).map((i) => JSON.stringify(vals[i])).join(' | '));
+              odd.slice(0, 3).forEach((i, k) => emit('R3c #' + (k + 1) + ' (item index ' + (i + 1) + ')', items[i], vals[i]));
+            }
+          });
+          NODE_EOF
+      - name: "5 R6 element types inside reward-item and reward-info (reads saved file, no network)"
+        if: always()
+        run: |
+          node - <<'NODE_EOF'
+          const L = require(process.cwd() + '/out/lib.js');
+          L.run('R6', (S, D) => {
+            const types = (blocks) => {
+              const m = new Map();
+              blocks.forEach((b) => D.within(b).forEach((x) => { const k = D.key(x); m.set(k, (m.get(k) || 0) + 1); }));
+              return [...m.entries()].sort((a, b) => b[1] - a[1] || (a[0] < b[0] ? -1 : 1)).map((e) => e[0] + ' = ' + e[1]);
+            };
+            const ri = D.divs('reward-item');
+            const rf = D.divs('reward-info');
+            S.splitLines('R6 element types INSIDE div.reward-item (blocks=' + ri.length + ')', ri.length ? types(ri) : ['not found']);
+            S.splitLines('R6 element types INSIDE div.reward-info (blocks=' + rf.length + ')', rf.length ? types(rf) : ['not found']);
+            const q = rf.filter((b) => /\d|(^|\s)[x×](\s|$)/i.test(D.text(b)));
+            if (!q.length) S.add('R6 reward-info with quantity-like text', 'not found (reward-info blocks=' + rf.length + ')');
+            else {
+              S.add('R6 quantity-like count', 'reward-info blocks with digits or standalone x in text=' + q.length + ' of ' + rf.length);
+              q.slice(0, 3).forEach((b, k) => S.split('R6 verbatim reward-info #' + (k + 1) + ' text=' + JSON.stringify(D.text(b)).slice(0, 80), L.flat(D.markup(b))));
+            }
+          });
+          NODE_EOF
+      - name: "6 R5 reward-item histogram per path (reads saved file, no network)"
+        if: always()
+        run: |
+          node - <<'NODE_EOF'
+          const L = require(process.cwd() + '/out/lib.js');
+          L.run('R5', (S, D) => {
+            const items = D.items();
+            const hist = { basic: new Map(), deluxe: new Map() };
+            const emptyRanks = { basic: [], deluxe: [] };
+            const missing = { basic: 0, deluxe: 0 };
+            let emptyBlocks = 0, totalBlocks = 0, otherBlocks = 0;
+            items.forEach((it) => {
+              const rn = D.rankNumber(it);
+              const inner = D.within(it);
+              for (const kind of ['basic', 'deluxe']) {
+                const blocks = inner.filter((x) => x.tag === 'div' && x.cls.includes('rank-rewards') && x.cls.includes(kind));
+                if (!blocks.length) { missing[kind]++; continue; }
+                blocks.forEach((b) => {
+                  const n = D.within(b).filter((x) => x.tag === 'div' && x.cls.includes('reward-item')).length;
+                  hist[kind].set(n, (hist[kind].get(n) || 0) + 1);
+                  totalBlocks++;
+                  if (n === 0) { emptyBlocks++; emptyRanks[kind].push(rn); }
                 });
-                note('D Rookidee ancestors', 'not in script. nearest ancestor first:\n' + chain.join('\n<- '));
-                note('D Rookidee snippet', flat(html.slice(Math.max(0, pos - 250), pos + 250)));
               }
-            }
-
-            // E scripts
-            const inline = scripts.filter((s) => !/\bsrc\s*=/i.test(s.attrs));
-            const lines = inline.map((s, i) => {
-              const type = (s.attrs.match(/\btype\s*=\s*["']?([^"'\s>]+)/i) || [])[1] || '-';
-              const id = (s.attrs.match(/\bid\s*=\s*["']?([^"'\s>]+)/i) || [])[1] || '-';
-              const flags = [];
-              if (/ld\+json/i.test(type)) flags.push('LD+JSON');
-              if (id === '__NEXT_DATA__') flags.push('NEXT_DATA');
-              if (/rank/i.test(s.body)) flags.push('has-rank');
-              if (/Rookidee/.test(s.body)) flags.push('has-Rookidee');
-              s.flags = flags; s.type = type; s.id = id;
-              return '#' + i + ' type=' + type + ' id=' + id + ' len=' + s.body.length + (flags.length ? ' FLAGS=' + flags.join(',') : '');
             });
-            for (let i = 0; i < lines.length; i += 12) note('E inline scripts ' + (i / 12 + 1), lines.slice(i, i + 12).join('\n') || 'none');
-            if (!lines.length) note('E inline scripts', 'none found');
-            let flagged = 0;
-            inline.forEach((s, i) => {
-              if (!s.flags.length || flagged >= 6) return;
-              flagged++;
-              let keys = 'not JSON';
-              try { const j = JSON.parse(s.body); keys = Array.isArray(j) ? 'array len ' + j.length : Object.keys(j).join(','); } catch (e) {}
-              note('E flagged script #' + i, 'flags=' + s.flags.join(',') + '\ntopKeys=' + keys + '\nfirst400=' + flat(s.body.slice(0, 400)));
-            });
-
-            // F urls
-            const urls = new Set();
-            const ure = /(?:https?:)?\/\/[^\s"'<>\\)]+|["'](\/[^\s"'<>\\]+)["']/g;
-            const pat = /\.json|\/api\/|graphql|wp-json|_next\/data/i;
-            let u;
-            while ((u = ure.exec(html))) {
-              const s = (u[1] || u[0]).replace(/^["']|["']$/g, '');
-              if (pat.test(s)) urls.add(s.slice(0, 200));
+            otherBlocks = D.divs('rank-rewards').filter((x) => !x.cls.includes('basic') && !x.cls.includes('deluxe')).length;
+            const fmt = (m) => [...m.entries()].sort((a, b) => a[0] - b[0]).map((e) => e[0] + ' item' + (e[0] === 1 ? '' : 's') + ' x ' + e[1]).join(', ') || 'none';
+            S.add('R5 reward-item histogram', 'rank-items=' + items.length +
+              '\nbasic: ' + fmt(hist.basic) + ' (rank-items with no rank-rewards.basic block: ' + missing.basic + ')' +
+              '\ndeluxe: ' + fmt(hist.deluxe) + ' (rank-items with no rank-rewards.deluxe block: ' + missing.deluxe + ')' +
+              '\nrank-rewards blocks counted=' + totalBlocks + ', empty (0 reward-item)=' + emptyBlocks + ', rank-rewards divs with neither basic nor deluxe class=' + otherBlocks);
+            const lst = (a) => (a.length ? a.slice(0, 40).map((v) => JSON.stringify(v)).join(', ') + (a.length > 40 ? ' ...total ' + a.length : '') : 'none');
+            S.add('R5 ranks with empty path', 'basic empty (' + emptyRanks.basic.length + '): ' + lst(emptyRanks.basic) + '\ndeluxe empty (' + emptyRanks.deluxe.length + '): ' + lst(emptyRanks.deluxe));
+          });
+          NODE_EOF
+      - name: "7 R4 class name census (reads saved file, no network)"
+        if: always()
+        run: |
+          node - <<'NODE_EOF'
+          const L = require(process.cwd() + '/out/lib.js');
+          L.run('R4', (S, D) => {
+            const re = /pass|rank|reward|battle|path|milestone|resource|tier|toggle|compact|quantity|amount|count/i;
+            const m = new Map();
+            D.tags.forEach((t) => t.cls.forEach((c) => { if (re.test(c)) m.set(c, (m.get(c) || 0) + 1); }));
+            const rows = [...m.entries()].sort((a, b) => b[1] - a[1] || (a[0] < b[0] ? -1 : 1)).map((e) => e[0] + ' = ' + e[1]);
+            S.splitLines('R4 class names (' + rows.length + ' distinct, count desc)', rows.length ? rows : ['not found']);
+          });
+          NODE_EOF
+      - name: "8 R7 milestone tier bonus elements and headings (reads saved file, no network)"
+        if: always()
+        run: |
+          node - <<'NODE_EOF'
+          const L = require(process.cwd() + '/out/lib.js');
+          L.run('R7', (S, D) => {
+            for (const kw of ['milestone', 'tier', 'bonus']) {
+              const hits = D.tags.filter((t) => t.cls.some((c) => c.toLowerCase().includes(kw)));
+              if (!hits.length) { S.add('R7 class includes ' + kw, 'not found'); continue; }
+              const parts = hits.slice(0, 3).map((t, k) => {
+                const mk = L.flat(D.markup(t, 1500));
+                return '#' + (k + 1) + ' <' + D.key(t) + '> ' + (mk.length > 1500 ? mk.slice(0, 1500) + ' ...[cut at 1500 of ' + mk.length + ']' : mk);
+              });
+              S.split('R7 class includes ' + kw + ' (total ' + hits.length + ', first ' + parts.length + ')', parts.join('\n---\n'));
             }
-            const ul = [...urls];
-            note('F json-ish urls', ul.length ? ul.slice(0, 25).join('\n') + (ul.length > 25 ? '\n...total ' + ul.length : '') : 'not found');
-
-            // G header region and classes
-            const gi = html.search(/basic/i);
-            const di = html.search(/deluxe/i);
-            note('G BASIC region', gi < 0 ? 'not found' : flat(html.slice(Math.max(0, gi - 150), gi + 150)));
-            note('G DELUXE region', di < 0 ? 'not found' : flat(html.slice(Math.max(0, di - 150), di + 150)));
-            const classes = new Set();
-            const cre = /\bclass\s*=\s*["']([^"']*)["']/gi;
-            let c;
-            while ((c = cre.exec(html))) {
-              c[1].split(/\s+/).forEach((k) => { if (/pass|rank|reward/i.test(k)) classes.add(k); });
+            const pc = D.divs('page-content')[0];
+            if (!pc) S.add('R7 headings in div.page-content', 'not found (no div.page-content)');
+            else {
+              const hs = D.within(pc).filter((x) => /^h[1-4]$/.test(x.tag));
+              S.add('R7 headings h1-h4 in div.page-content (total ' + hs.length + ')', hs.length ? hs.slice(0, 25).map((h) => h.tag + ': ' + D.text(h)).join('\n') : 'not found');
             }
-            note('G classes', classes.size ? [...classes].slice(0, 15).join('\n') : 'not found');
-          })().catch((e) => { note('ERROR', String(e && e.stack || e)); process.exitCode = 1; });
+          });
+          NODE_EOF
+      - name: "9 R8 GO Pass Deluxe context and compact toggle (reads saved file, no network)"
+        if: always()
+        run: |
+          node - <<'NODE_EOF'
+          const L = require(process.cwd() + '/out/lib.js');
+          L.run('R8', (S, D) => {
+            const h = D.html;
+            const bad = [];
+            let x;
+            const rr = /<(script|title)\b[^>]*>[\s\S]*?<\/\1\s*>|<meta\b(?:"[^"]*"|'[^']*'|[^>"'])*>/gi;
+            while ((x = rr.exec(h))) bad.push([x.index, rr.lastIndex]);
+            const needle = 'GO Pass Deluxe';
+            let pos = -1, total = 0, skipped = 0, from = 0, i;
+            while ((i = h.indexOf(needle, from)) >= 0) {
+              total++;
+              from = i + needle.length;
+              if (bad.some((r) => i >= r[0] && i < r[1])) { skipped++; continue; }
+              if (pos < 0) pos = i;
+            }
+            if (pos < 0) S.add('R8 around GO Pass Deluxe', 'not found outside meta/title/script (occurrences=' + total + ', in meta/title/script=' + skipped + ')');
+            else S.add('R8 around first GO Pass Deluxe outside meta/title/script (occurrences=' + total + ', skipped=' + skipped + ')', L.flat(h.slice(Math.max(0, pos - 300), pos + needle.length + 300)));
+            const cut = (s) => { const f = L.flat(s); return f.length > 1500 ? f.slice(0, 1500) + ' ...[cut at 1500 of ' + f.length + ']' : f; };
+            const ht = D.tags.filter((t) => t.cls.some((c) => c.includes('-has-toggle')));
+            if (!ht.length) S.add('R8 element class -has-toggle', 'not found');
+            else S.split('R8 first element with class containing -has-toggle (total ' + ht.length + '; ' + D.key(ht[0]) + ')', cut(D.markup(ht[0], 1500)));
+            const bp = D.tags.filter((t) => /bp-compact/i.test(t.attrs));
+            if (!bp.length) S.add('R8 bp-compact', 'not found in any tag attribute');
+            else {
+              S.add('R8 tags with bp-compact in attributes (total ' + bp.length + ', first 5 open tags)', bp.slice(0, 5).map((t) => L.flat(h.slice(t.idx, t.openEnd)).slice(0, 400)).join('\n'));
+              let par = null;
+              const b0 = bp.find((t) => t.tag !== 'div') || bp[0];
+              for (let j = b0.i - 1; j >= Math.max(0, b0.i - 400); j--) {
+                const u = D.tags[j];
+                const e = D.end(u);
+                if (e > b0.idx) { par = u; break; }
+              }
+              if (par) S.split('R8 parent element of first bp-compact tag (' + D.key(par) + ')', cut(D.markup(par, 1500)));
+              else S.add('R8 parent of bp-compact', 'not found within 400 preceding tags');
+            }
+          });
           NODE_EOF
       - name: Upload raw body
         if: always()
