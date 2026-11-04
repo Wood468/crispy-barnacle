@@ -1,6 +1,74 @@
 {
- "updated": "2026-11-04T04:11:24.209Z",
+ "updated": "2026-11-04T13:34:07.956Z",
  "items": [
+  {
+   "linked": false,
+   "id": "discord:1567493738429812858",
+   "title": "SH XP EVO 2025 2 1",
+   "image": "/infographics/g47ix/discord-1567493738429812858.png",
+   "post": "https://discord.com/channels/@me/1558793395198099618/1567493738429812858",
+   "creator": "",
+   "source": "discord",
+   "publishedAt": "2026-11-04T11:00:29.867000+00:00",
+   "note": "Match is not strong enough (medium).",
+   "history": false,
+   "signals": [
+    "picture text names the event"
+   ],
+   "text": "(local time) oe? s) oS) NOV ——— 6:00 - 7:00 pm TE EBSA ce | Evolve Pokémon that require a | ‘@ Rank 1 PvP for evolving small amount of candies for SY 0/14/15 wi 14.5 TA Pokémon evolution to earn a lot of XP JF 1/15/15 Wi24 - Evolution New Pokédex www.goiv.app xP entry XP é yw 2000 xP 3000 XI Remember about @ 2000 xe @ 6000 xP Lucky Egg! ADVENTURE EFFECTS Spadal Rend of Shock Freeze as) Mega Evolve for bonuses & Shiny is available Roar Ice Please note - shiny rate is not of Time Burn boosted during Spotlight Hour GSO 6 y Future Sight+ Follow formore GA7ZIX @O aXe www.g47ix.pro",
+   "guesses": [
+    {
+     "eventId": "leekduck:pokemonspotlighthour2026-11-26",
+     "eventTitle": "Noibat Spotlight Hour",
+     "score": 0.527
+    },
+    {
+     "eventId": "leekduck:pokemonspotlighthour2026-10-29",
+     "eventTitle": "Gastly Spotlight Hour",
+     "score": 0.527
+    },
+    {
+     "eventId": "leekduck:pokemonspotlighthour2026-10-22",
+     "eventTitle": "Morelull Spotlight Hour",
+     "score": 0.527
+    }
+   ]
+  },
+  {
+   "linked": false,
+   "id": "discord:1567456104860885044",
+   "title": "GOPass Nov 26",
+   "image": "/infographics/g47ix/discord-1567456104860885044.png",
+   "post": "https://discord.com/channels/@me/1558793395198099618/1567456104860885044",
+   "creator": "",
+   "source": "discord",
+   "publishedAt": "2026-11-04T08:30:57.325000+00:00",
+   "note": "Two events look alike. Please choose.",
+   "history": false,
+   "signals": [
+    "picture text names the event",
+    "date in the picture is inside the event",
+    "posted around the event"
+   ],
+   "text": "qa ¢ Starting \\VZ GO Pass ep = November NOV ++ a ‘ai44 DELUXE Ww Sete od &, Groudon 1000 Poke Coins a (IA PZ Dy Additional — .< S\\e@ encounters g AND MORE AND MORE = N Se. ——— Major Milestone Bonuses Tier 1 - Rank 1 | One additional Candy and one guaranteed Candy XL* for trading Pokémon Tier 2 - Rank 25 Tier 2 - Rank 25 ‘i Open up to 40 Gifts per day ) Open up to 50 Gifts per day Receive up to 125 Gifts per day Receive up to 150 Gifts per day Hold 10 more Gifts Hold 20 more Gifts Tier 4 - Rank 75 | Increased Stardust and XP from hatching Eggs ~ > From November 28-29 there’s no daily limit on the number of GO Points you can earn! Follow for more G47|X £) Ox i oe *for Trainers level 31 and abo",
+   "guesses": [
+    {
+     "eventId": "gopassnov",
+     "eventTitle": "GO Pass: November",
+     "score": 0.838
+    },
+    {
+     "eventId": "novcd",
+     "eventTitle": "November Community Day",
+     "score": 0.817
+    },
+    {
+     "eventId": "leekduck:go-pass-november-2026",
+     "eventTitle": "GO Pass: November",
+     "score": 0.797
+    }
+   ]
+  },
   {
    "linked": true,
    "id": "discord:1567338528482926603",
