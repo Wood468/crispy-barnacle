@@ -216,6 +216,7 @@ test("Leek Duck GO Pass rank table rows with a separate RANK cell become track-s
   assert.ok(f.tickets.includes("Rank 101: Free: Stardust ×50 | Deluxe: Stardust ×100"), JSON.stringify(f.tickets));
   assert.ok(f.tickets.includes("Rank 200: Free: Stardust ×50 | Deluxe: Stardust ×100"), JSON.stringify(f.tickets));
   assert.ok(!f.tickets.some(x => /^Rank 1:/.test(x)), "milestone rank 1 is not duplicated in the rank reward table");
+  assert.ok(!f.tickets.includes("RANK | BASIC | DELUXE"), "table headers are not shown as reward details");
 });
 
 test("rank reward rows never count as source disagreements", () => {
