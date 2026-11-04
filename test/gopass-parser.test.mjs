@@ -9,7 +9,6 @@ const wrap = body => '<div class="battle-pass-container -has-toggle"><div class=
 const reward = (name, alt = "") => '<div class="reward-item">' + (alt ? '<div class="reward-image"><img alt="' + alt + '" /></div>' : "") + '<div class="reward-info"><span class="reward-name">' + name + "</span></div></div>";
 const rankBlock = (rank, basic = reward("Stardust ×50"), deluxe = reward("XP ×100")) =>
   '<div class="rank-item"><div class="rank-label"><div class="rank-number">' + rank + '</div></div><div class="rank-paths"><div class="rank-rewards basic">' + basic + '</div><div class="rank-rewards deluxe">' + deluxe + "</div></div></div>";
-const emptyDeluxe = '<div class="rank-rewards deluxe"><div class="no-rewards">-</div></div>';
 
 test("captured Leek Duck excerpts parse rank rewards, bonuses, the ellipsis and rank 200", () => {
   const parsed = extractLeekDuckGoPassRewards(fixture);
@@ -36,11 +35,15 @@ test("extractFields integrates captured rank rows and Rank 1 bonuses into existi
   assert.ok(!fields.goPassParseError);
 });
 
-test("explicit no-rewards cells preserve empty Deluxe ranks without inventing a reward", () => {
-  const html = wrap(rankBlock(50, reward("Stardust ×50"), '<div class="rank-rewards deluxe"><div class="no-rewards">-</div></div>'));
+test("explicit no-rewards cells preserve empty Deluxe ranks 50 and 75 without inventing rewards", () => {
+  const noRewards = '<div class="rank-rewards deluxe"><div class="no-rewards">-</div></div>';
+  const html = wrap(rankBlock(50, reward("Stardust ×50"), noRewards) + rankBlock(75, reward("XP ×1000"), noRewards));
   const parsed = extractLeekDuckGoPassRewards(html);
-  assert.deepEqual(parsed.tickets, ["Rank 50: Free: Stardust ×50 | Deluxe: —"]);
-  assert.equal(parsed.ranks[0].deluxeEmpty, true);
+  assert.deepEqual(parsed.tickets, [
+    "Rank 50: Free: Stardust ×50 | Deluxe: —",
+    "Rank 75: Free: XP ×1000 | Deluxe: —"
+  ]);
+  assert.deepEqual(parsed.ranks.filter(x => x.deluxeEmpty).map(x => x.rank), [50, 75]);
   assert.throws(() => extractLeekDuckGoPassRewards(wrap(rankBlock(50, reward("Stardust ×50"), '<div class="rank-rewards deluxe"></div>'))), /explicit no-rewards marker/);
 });
 
