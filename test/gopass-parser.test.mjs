@@ -36,7 +36,7 @@ test("extractFields integrates captured rank rows and Rank 1 bonuses into existi
 });
 
 test("explicit no-rewards cells preserve empty Deluxe ranks 50 and 75 without inventing rewards", () => {
-  const noRewards = '<div class="rank-rewards deluxe"><div class="no-rewards">-</div></div>';
+  const noRewards = '<div class="no-rewards">-</div>';
   const html = wrap(rankBlock(50, reward("Stardust ×50"), noRewards) + rankBlock(75, reward("XP ×1000"), noRewards));
   const parsed = extractLeekDuckGoPassRewards(html);
   assert.deepEqual(parsed.tickets, [
@@ -44,7 +44,7 @@ test("explicit no-rewards cells preserve empty Deluxe ranks 50 and 75 without in
     "Rank 75: Free: XP ×1000 | Deluxe: —"
   ]);
   assert.deepEqual(parsed.ranks.filter(x => x.deluxeEmpty).map(x => x.rank), [50, 75]);
-  assert.throws(() => extractLeekDuckGoPassRewards(wrap(rankBlock(50, reward("Stardust ×50"), '<div class="rank-rewards deluxe"></div>'))), /explicit no-rewards marker/);
+  assert.throws(() => extractLeekDuckGoPassRewards(wrap(rankBlock(50, reward("Stardust ×50"), ""))), /explicit no-rewards marker/);
 });
 
 test("data-bonus rows at later ranks and on either track remain milestone bonuses", () => {
