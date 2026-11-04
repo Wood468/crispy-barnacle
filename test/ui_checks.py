@@ -4022,8 +4022,8 @@ with sync_playwright() as p:
               shiny_page.evaluate("getComputedStyle(document.getElementById('today-shiny-list')).scrollBehavior") in ('auto','initial'))
         shiny_page.context.close()
         check('Today shiny rail assets are versioned in the offline shell',
-              DASH_URL.endswith('dash.js?v=20261104f') and DASH_CSS_URL.endswith('dash.css?v=20261104e') and
-              APP_URL.endswith('app.js?v=20261104e') and SHELL_CACHE=='gofn-shell-v238' and
+              DASH_URL.endswith('dash.js?v=20261104g') and DASH_CSS_URL.endswith('dash.css?v=20261104g') and
+              APP_URL.endswith('app.js?v=20261104f') and SHELL_CACHE=='gofn-shell-v240' and
               '/research.js?v=20261104b' in SW_JS and '/data.json' in SW_JS)
 
     if on('c'):
