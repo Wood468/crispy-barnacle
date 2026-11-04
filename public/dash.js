@@ -1071,10 +1071,15 @@
           (f ? '<span class="rtype">' + f.types.map(function (t) { return tico(t); }).join('') + '</span><span class="rweak" title="Weak to">▾ ' + f.weak.map(function (t) { return tico(t); }).join('') + '</span>' : '') + '</div></div>' + ib + share + '</div>';
       }).join('');
     }
+    function lowSourceLink(l) {
+      var url = String(l && l.sourceUrl || '');
+      if (!/^https:\/\/pokemongohub\.net\/post\/guide\/current-go-raids\/?$/i.test(url)) return '';
+      return '<a class="rw-source" href="' + esc(url) + '" target="_blank" rel="noopener noreferrer" aria-label="Source for lower-tier raid bosses on Pokémon GO Hub">Pokémon GO Hub source ↗</a>';
+    }
     function lowTier(r) {
       /* 1-3 star bosses, where a source has published them for that rotation. */
       var l = r && r.low; if (!l) return '<p class="muted rw-low">1–3★ raid bosses are not announced for this rotation yet.</p>';
-      return '<div class="rw-low"><span class="rw-label">1–3★ raids' + (l.shadowOne || l.shadowThree ? ' and Shadow raids' : '') + (l.observed ? ' · as of ' + esc(fmtD(new Date(l.observed + 'T12:00'))) : '') + '</span><div class="rcs rcs-low">' +
+      return '<div class="rw-low"><span class="rw-label">1–3★ raids' + (l.shadowOne || l.shadowThree ? ' and Shadow raids' : '') + (l.observed ? ' · as of ' + esc(fmtD(new Date(l.observed + 'T12:00'))) : '') + '</span>' + lowSourceLink(l) + '<div class="rcs rcs-low">' +
         [['1★', l.one], ['3★', l.three], ['Shadow 1★', l.shadowOne], ['Shadow 3★', l.shadowThree]].map(function (g) { return (g[1] || []).map(function (n) { return cell(g[0], n, r); }).join(''); }).join('') + '</div></div>';
     }
     function raidSourceLink(r) {
