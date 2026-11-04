@@ -46,7 +46,7 @@ test("explicit no-rewards cells preserve empty Deluxe ranks without inventing a 
 
 test("HTML entities and non-breaking spaces are normalised in reward names", () => {
   const html = wrap(rankBlock(1, reward("Stardust&nbsp;×50"), reward("XP&#215;100")));
-  const parsed = extractLeekDuckGoGoPassRewardsCompat(html);
+  const parsed = extractLeekDuckGoPassRewards(html);
   assert.deepEqual(parsed.tickets, ["Rank 1: Free: Stardust ×50 | Deluxe: XP×100"]);
 });
 
@@ -62,7 +62,7 @@ test("duplicate ranks, missing rank numbers and missing tracks fail closed", () 
 test("empty reward names, inconsistent image alts and malformed divs fail closed", () => {
   assert.throws(() => extractLeekDuckGoPassRewards(wrap(rankBlock(1, reward(""), reward("XP ×100")))), /non-empty reward-name/);
   assert.throws(() => extractLeekDuckGoPassRewards(wrap(rankBlock(1, reward("Groudon", "Pikachu"), reward("XP ×100")))), /does not match reward-name/);
-  const truncated = wrap(rankBlock(1)).replace(/<\\/div><\\/div>$/, "</div>");
+  const truncated = wrap(rankBlock(1)).slice(0, -6);
   assert.throws(() => extractLeekDuckGoPassRewards(truncated), /Unbalanced battle-pass-container div/);
   assert.throws(() => extractLeekDuckGoPassRewards(wrap('<div class="rank-row">not the expected markup</div>')), /no rank-item blocks/);
 });
