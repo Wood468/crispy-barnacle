@@ -7,6 +7,154 @@
   "eventImages": {},
   "candidates": [
     {
+      "id": "discord:1567338528482926603",
+      "source": "discord",
+      "creator": "",
+      "title": "Sableye",
+      "url": "https://discord.com/channels/@me/1558793395198099618/1567338528482926603",
+      "publishedAt": "2026-11-04T00:43:44.932000+00:00",
+      "imageUrl": "https://cdn.discordapp.com/attachments/1087756541668630638/1567334088527057008/Counter_M_Sableye.png?ex=6aebcd1e&is=6aea7b9e&hm=066c43a7bdbe542375f9fa48b5dea1772a2b7cbb4ee94f15c7ca0dd3222128a9&",
+      "reviewStatus": "needs_review",
+      "decision": "pending",
+      "ocrChecked": true,
+      "ocrText": "Wi 8 NOV } = 28 OcT- Ny #302 SABLEYE a 23935 CP “\\t hides in the darkness of caves. 3 Its diet of gems has transformed its eyes into gemstones.” Weakness + Difficulty: 2+ trainers needed @ & 843 cP %we 1054 CP Boost Fog ¥ (\" Ua 4 @ Charm ® Dragon Tail © Meta > Fas @ Charm @ Dazzling Gle @ Dragon Ascent [5 @ Play Rough @ Zap Cannon+ at a! / F 5 e@ Fairy Wind @ Dragon Tail @ Volt Switch eA> Tel FJ yi wal> @ Dazzling Gleam= t) Dynamax Cannon @ Natures Madness ZL. 2 4 Dats Wel @ Astonish @ Bullet Seed 244! oa rm © Metal Claw © @ Natures Madness @ Natures Madness taQ oO hd © Behemoth Bash (a | a VA AC fri) © w Remember to use proper counters, Party Play Follow for more: and Zacian’s or Mewtwo X Adventure Effect if needed ae GA7IX 9@ @ X @ | g47ix.pro",
+      "eventMatch": {
+        "eventId": "dyntrails",
+        "eventTitle": "Dynamax Trails",
+        "score": 0.396,
+        "confidence": "low",
+        "matchedTerms": [
+          "dynamax",
+          "nov"
+        ],
+        "alternatives": [
+          {
+            "eventId": "dyntrails",
+            "eventTitle": "Dynamax Trails",
+            "score": 0.396
+          },
+          {
+            "eventId": "leekduck:dynamax-trails-2026",
+            "eventTitle": "Dynamax Trails",
+            "score": 0.393
+          },
+          {
+            "eventId": "leekduck:max-mondays-2026-10-26",
+            "eventTitle": "Dynamax Sableye during Max Monday",
+            "score": 0.318
+          }
+        ],
+        "method": "title-to-public/data.json heuristic",
+        "requiresHumanVerification": true
+      },
+      "reviewNote": "Match is not strong enough (low).",
+      "signals": [
+        "picture text names the event",
+        "posted around the event"
+      ],
+      "matchScore": 3,
+      "stagedPath": "/infographics/g47ix/discord-1567338528482926603.png"
+    },
+    {
+      "id": "discord:1567330361497620490",
+      "source": "discord",
+      "creator": "",
+      "title": "Tornadus",
+      "url": "https://discord.com/channels/@me/1558793395198099618/1567330361497620490",
+      "publishedAt": "2026-11-04T00:11:17.771000+00:00",
+      "imageUrl": "https://cdn.discordapp.com/attachments/1087756541668630638/1567325977418272940/Counter_S_Tornadus.png?ex=6aebc590&is=6aea7410&hm=86cfc54fd8297d9415eaabf7ccb812e6f21d0c2f545042dce75660e7c4837f9a&",
+      "reviewStatus": "needs_review",
+      "decision": "pending",
+      "ocrChecked": true,
+      "ocrText": "gw 4 NOV- 1 DEC Shadow: Incarnate Forme ~~ om, | #641 f ORNADUS 46044 CP ‘e “In every direction it flies, creating winds so powerful Le = they blow everything away. Weaknesses a a oa Difficulty: 2+ trainers needed Ky, 1911 CP %ws 2389 CP Boost ¥] Windy @ Thunder Fang @ Thunder Shock @ Thunder Sho ® Ice Fang @ Discharge+ @ Zap Cannon+ @ Volt Tackle+ @ Ice Burn (5 7X Va yY ® Charge Beam @ Shadow Claw @ Rock Throw @ Thunder Shock Nas @ Fusion Bolt 5 @ Freeze Shock (4 ~ @ Rock Slide ® Wild Charge x & @ smack Down Lda, * ®@ Volt Switch @ Psycho Cut @ Thunder Shock/\\ @ Rock Slide ® Wildbolt Storm @ Thunderbolt ® Discharge sae ‘ Pay a “a i Be Follow for more Remember to use gems, proper counters, Party Play ‘or @ and Zacian’s Adventure Effect if needed. G GA7IX @9@ @ X @ | g47ix.pro",
+      "eventMatch": {
+        "eventId": "into",
+        "eventTitle": "Into the Wild",
+        "score": 0.789,
+        "confidence": "high",
+        "matchedTerms": [
+          "wild",
+          "zacian",
+          "nov"
+        ],
+        "alternatives": [
+          {
+            "eventId": "into",
+            "eventTitle": "Into the Wild",
+            "score": 0.789
+          },
+          {
+            "eventId": "leekduck:into-the-wild-2026",
+            "eventTitle": "Into the Wild",
+            "score": 0.786
+          },
+          {
+            "eventId": "leekduck:shadow-tornadus-incarnate-forme-in-shadow-raids-november-4-2026",
+            "eventTitle": "Shadow Tornadus (Incarnate Forme) in Shadow Raids",
+            "score": 0.636
+          }
+        ],
+        "method": "title-to-public/data.json heuristic",
+        "requiresHumanVerification": true
+      },
+      "reviewNote": "Two events look alike. Please choose.",
+      "signals": [
+        "picture text names the event",
+        "posted around the event"
+      ],
+      "matchScore": 3,
+      "stagedPath": "/infographics/g47ix/discord-1567330361497620490.png"
+    },
+    {
+      "id": "discord:1567330302207074475",
+      "source": "discord",
+      "creator": "",
+      "title": "Giratina",
+      "url": "https://discord.com/channels/@me/1558793395198099618/1567330302207074475",
+      "publishedAt": "2026-11-04T00:11:03.635000+00:00",
+      "imageUrl": "https://cdn.discordapp.com/attachments/1087756541668630638/1567326083609661600/Counter_Giratina_Alternate.png?ex=6aebc5a9&is=6aea7429&hm=51542f4fd505f77f8454b165ec3f4a579796fc4312bd471b267f9bb6c85419a8&",
+      "reviewStatus": "needs_review",
+      "decision": "pending",
+      "ocrChecked": true,
+      "ocrText": "oe ZZ — = S gw 4NOV-8 NOV _ ch Pomme Yy Vd N Uf Up Y \\ \\ \\\\ ‘ #487 Kol Vi if \\ \\ 38326 CP A | na a Hi! a | AN banished for its violence. It silently gazed upon the old world from the Distortion World.” | \\ ayy Weaknesses © @O @ @ \\\\ AW Difficulty: 2+ trainers needed \\ \\\\ — Pw 4 4 1931 CP & WB 2414 CP Boost a] Windy Fog oe 6 Dragon Tail ® Dragon Tail ® Dragon Tail eo Dragon Tail ® Dynamax Cannon a) Breaking Swipe [5 @ Outrage+ ® Freeze Shock (4 < <1 ve = \\ \\ e© NY, © Snarl \\ gy) @ Hex A \" ae i @ Psycho Cut (A) yr vs Tail W . © Dark Pulse+ @ Ominous Wind:, x \\ . 2) @ Moongeist Bea Vv Bi OX im ®@ Ice Fang \" 6 Dragon Tail @ Ice Burn (5 > Ball ® Spacial Rend Remember to use proper counters, Party Play Follow for more: ‘wt and Zacian’s Adventure Effect if needed. V G471X OO @X B | g47ix.pro",
+      "eventMatch": {
+        "eventId": "dyntrails",
+        "eventTitle": "Dynamax Trails",
+        "score": 0.397,
+        "confidence": "low",
+        "matchedTerms": [
+          "dynamax",
+          "nov"
+        ],
+        "alternatives": [
+          {
+            "eventId": "dyntrails",
+            "eventTitle": "Dynamax Trails",
+            "score": 0.397
+          },
+          {
+            "eventId": "leekduck:dynamax-trails-2026",
+            "eventTitle": "Dynamax Trails",
+            "score": 0.393
+          },
+          {
+            "eventId": "space",
+            "eventTitle": "World Space Week",
+            "score": 0.263
+          }
+        ],
+        "method": "title-to-public/data.json heuristic",
+        "requiresHumanVerification": true
+      },
+      "reviewNote": "Match is not strong enough (low).",
+      "signals": [
+        "picture text names the event",
+        "posted around the event"
+      ],
+      "matchScore": 3,
+      "stagedPath": "/infographics/g47ix/discord-1567330302207074475.webp"
+    },
+    {
       "id": "discord:1567217227550433310",
       "source": "discord",
       "creator": "",
