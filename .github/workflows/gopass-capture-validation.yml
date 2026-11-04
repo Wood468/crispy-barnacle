@@ -1,0 +1,34 @@
+name: Captured GO Pass source validation
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "scripts/importer/gopass.mjs"
+      - "test/gopass-capture-validation.mjs"
+      - ".github/workflows/gopass-capture-validation.yml"
+
+permissions:
+  actions: read
+  contents: read
+
+jobs:
+  captured-source:
+    # One-off verification against the temporary three-day artifact from PR #323.
+    # This job is deliberately limited to this implementation branch.
+    if: github.event.pull_request.head.ref == 'feat/leekduck-november-gopass-parser-20261105'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 22
+      - name: Download the original read-only capture
+        env:
+          GH_TOKEN: \${{ github.token }}
+        run: gh run download 41828989579 --repo Wood468/crispy-barnacle --name leekduck-gopass-raw --dir /tmp/leekduck-gopass
+      - name: Validate all rendered ranks and reward counts
+        env:
+          GO_PASS_CAPTURE_HTML: /tmp/leekduck-gopass/leekduck-gopass-raw.html
+        run: node test/gopass-capture-validation.mjs
