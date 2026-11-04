@@ -80,6 +80,7 @@ export function extractFields(html) {
     if (tr) { add("bonuses", `Rank ${tr[1]}: ${tr[2]}`); continue; }
     // Leek Duck's GO Pass table labels the first cell "RANK", then places the rank number and Basic/Deluxe rewards in separate cells.
     // htmlToLines turns that row into "RANK | 2 | XP ×10000 | Stardust ×10000".
+    if (/^rank\s*\|\s*basic\s*\|\s*deluxe$/i.test(l.text)) continue;
     const duckRow = /^rank\s*\|\s*(\d{1,3})\s*\|\s*(.{3,})$/i.exec(l.text);
     if (duckRow && /pass|rank|reward|milestone/i.test(headSeen)) {
       const cols = duckRow[2].split(/\s*\|\s*/).map(trim);
