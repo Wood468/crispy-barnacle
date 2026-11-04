@@ -1635,3 +1635,23 @@ header.top .hbtns{margin-left:auto}
 .today-shiny-source{display:grid;place-items:center;min-width:44px;min-height:44px;padding:var(--space-1);border:1px solid var(--color-border-card);border-radius:var(--radius-sm);color:var(--color-link);font:700 var(--type-caption-compact) var(--font-body);text-decoration:none}
 @media(prefers-reduced-motion:reduce){.today-shiny-rail{scroll-behavior:auto;scroll-snap-type:none}}
 
+/* Keep the live shiny rail visible without pushing the first event below the mobile fold. */
+.day-brief[data-shiny-active]{padding:10px;gap:4px}
+.today-top[data-shiny-active]{gap:4px}
+.day-brief[data-shiny-active] .today-focus-strip{margin-top:0}
+.today-shiny-panel{grid-template-columns:52px minmax(0,1fr);align-items:center;gap:4px;margin-top:0}
+.today-shiny-head{display:grid;align-content:center;justify-content:start;gap:2px;min-height:44px}
+.today-shiny-head .day-brief-kicker{font-size:var(--type-caption-compact);line-height:1.1}
+.today-shiny-count{min-width:20px;height:18px;padding:0 4px}
+.today-shiny-empty{grid-column:2;min-height:44px;margin:0;padding:2px 4px;line-height:1.15}
+.today-shiny-rail{gap:4px;padding:0}
+.today-shiny-card{flex:0 0 min(320px,100%);grid-template-columns:minmax(0,1fr) 44px;gap:4px;padding:0;border:0;background:transparent}
+.today-shiny-open{gap:6px;min-height:44px}
+.today-shiny-art{width:36px;height:36px;min-width:36px}
+.today-shiny-art img{width:36px;height:36px}
+.today-shiny-content{gap:1px}
+.today-shiny-topline{gap:4px;flex-wrap:nowrap}
+.today-shiny-badge{min-height:18px;padding:0 4px}
+.today-shiny-name{flex:1;min-width:0}
+.today-shiny-event,.today-shiny-meta{line-height:1.05}
+

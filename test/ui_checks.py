@@ -176,8 +176,8 @@ BASE_FONT_SHORTHAND_SCALE = {
     '--type-body-emphasis': 1,
 }
 DASH_FONT_SHORTHAND_SCALE = {
-    '--type-body-sm': 11,
-    '--type-caption': 15,
+    '--type-body-sm': 12,
+    '--type-caption': 17,
     '--type-meta': 8,
     '--type-heading': 7,
     '--type-meta-compact': 7,
@@ -187,7 +187,7 @@ DASH_FONT_SHORTHAND_SCALE = {
     '--type-overline': 12,
     '--type-body-lg': 1,
     '--type-intro': 1,
-    '--type-caption-compact': 10,
+    '--type-caption-compact': 13,
     '--type-body-base': 1,
 }
 def font_shorthand_role_count(css, token):
@@ -834,7 +834,7 @@ with sync_playwright() as p:
         future_overseas.set_viewport_size({'width':1280,'height':900})
         desktop_cols = future_overseas.locator('#today-focus-strip').evaluate("el => getComputedStyle(el).gridTemplateColumns.split(' ').length")
         check('Today focus strip expands to three columns on desktop', desktop_cols==3, desktop_cols)
-        settle(future_overseas, "document.querySelectorAll('#today-focus-raid-actions [data-best-types]').length === 2", 30000)
+        settle(future_overseas, "document.querySelectorAll('#today-focus-raid-actions [data-best-types]').length === 2 && [...document.querySelectorAll('#today-focus-raid-actions [data-best-types]')].every(b => b.getClientRects().length && b.getBoundingClientRect().height >= 44)", 30000)
         raid_prep_buttons = future_overseas.locator('#today-focus-raid-actions [data-best-types]')
         five_button = future_overseas.locator('#today-focus-raid-actions [data-best-types]').filter(has_text='5★ attackers')
         mega_button = future_overseas.locator('#today-focus-raid-actions [data-best-types]').filter(has_text='Mega attackers')
@@ -3980,7 +3980,7 @@ with sync_playwright() as p:
         check('minute refresh preserves keyboard focus on an unchanged shiny card',
               shiny_page.evaluate("document.activeElement?.classList.contains('today-shiny-open')"))
         check('shiny rail has an explicit keyboard focus-visible treatment',
-              '.today-shiny-actions .pill:focus-visible' in DASH_CSS)
+              '.today-shiny-open:focus-visible' in DASH_CSS and '.today-shiny-source:focus-visible' in DASH_CSS)
         theme_contrast = shiny_page.evaluate("""() => {
           function rgb(value) {
             if (value[0] === '#') { const h=value.slice(1); return [0,2,4].map(i=>parseInt(h.slice(i,i+2),16)); }
@@ -4002,10 +4002,11 @@ with sync_playwright() as p:
         check('shiny badges retain readable contrast in light and dark themes',
               theme_contrast['light']['ratio']>=4.5 and theme_contrast['dark']['ratio']>=4.5, theme_contrast)
         open_shiny_event.press('Enter')
-        check('keyboard activation opens the matching event detail from the shiny rail',
-              shiny_page.locator('#evd').is_visible() and 'Shiny boost fixture' in shiny_page.locator('#evd-t').inner_text())
+        shiny_opened = settle(shiny_page, "!!document.querySelector('#evd:not([hidden])') && /Shiny boost fixture/.test(document.getElementById('evd-t')?.textContent || '')", 10000)
+        check('keyboard activation opens the matching event detail from the shiny rail', shiny_opened)
         shiny_page.locator('#evd-x').click()
-        check('closing a shiny-linked event detail returns to the Today view', shiny_page.locator('#evd').is_hidden())
+        shiny_returned = settle(shiny_page, "document.querySelector('#evd')?.hidden === true && document.activeElement?.classList.contains('today-shiny-open')", 5000)
+        check('closing a shiny-linked event detail restores focus to its Today card', shiny_returned)
         responsive = {}
         for width in (320,390,1280):
             shiny_page.set_viewport_size({'width':width,'height':844}); shiny_page.wait_for_timeout(80)
