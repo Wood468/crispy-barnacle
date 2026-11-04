@@ -128,6 +128,9 @@ function parseTrack(rankNode, markup, rank, kind) {
   if (blocks.length !== 1) throw new Error("Expected one rank-rewards." + kind + " block at rank " + rank);
   const track = blocks[0];
   const rewardNodes = descendants(track).filter(n => has(n, "reward-item"));
+  if (rewardNodes.some(node => descendants(node).some(child => has(child, "reward-item")))) {
+    throw new Error("Nested reward-item blocks are not supported at rank " + rank + " (" + kind + ")");
+  }
   const emptyNodes = descendants(track).filter(n => has(n, "no-rewards"));
   if (!rewardNodes.length) {
     if (emptyNodes.length !== 1 || !["-", "–", "—"].includes(cleanText(inner(emptyNodes[0], markup)))) {
@@ -147,11 +150,17 @@ function parseTrack(rankNode, markup, rank, kind) {
  * returned when explicitly present in the markup; ellipses are recorded but
  * no missing rank numbers or rewards are inferred.
  */
-export function extractLeekDuckGoPassRewards(html, { allowPartial = false } = {}) {
+export function extractLeekDuckGoPassRewards(html, { allowPartialExcerpt = false } = {}) {
   const source = String(html || "");
   if (source.length > 512 * 1024) throw new Error("GO Pass source exceeds the 512 KiB safety limit");
-  // Reject pathological unterminated tags before the quoted-attribute tokenisers run.
-  if (/<(?:div|span|img)\\b[^>]{4096,}/i.test(source)) throw new Error("GO Pass source contains an overlong or unterminated tag");
+  // Count relevant tags with simple linear scans before quoted-attribute tokenisers run.
+  const preflight = stripNonMarkup(source);
+  const divTagCount = (preflight.match(/<div\b/gi) || []).length;
+  const spanTagCount = (preflight.match(/<span\b/gi) || []).length;
+  const imageTagCount = (preflight.match(/<img\b/gi) || []).length;
+  if (divTagCount > 5000 || spanTagCount > 5000 || imageTagCount > 5000) {
+    throw new Error("GO Pass source contains too many structural tags");
+  }
   const markup = containerBlock(source);
   if (!markup) return null;
   const root = divTree(markup);
@@ -181,10 +190,13 @@ export function extractLeekDuckGoPassRewards(html, { allowPartial = false } = {}
     const rank = Number(rawRank);
     if (rank < 1 || rank > 999 || seen.has(rank)) throw new Error("Invalid or duplicate GO Pass rank " + rank);
     if (rank <= previous) throw new Error("GO Pass ranks are not in strictly increasing document order at rank " + rank);
-    if (!allowPartial && previous && !afterEllipsis && rank !== previous + 1) {
+    if (!allowPartialExcerpt && !previous && rank !== 1) {
+      throw new Error("GO Pass ranks must start at rank 1");
+    }
+    if (!allowPartialExcerpt && previous && !afterEllipsis && rank !== previous + 1) {
       throw new Error("Unexpected GO Pass rank gap between " + previous + " and " + rank + " without an explicit ellipsis");
     }
-    if (!allowPartial && afterEllipsis && rank <= previous + 1) {
+    if (!allowPartialExcerpt && afterEllipsis && rank <= previous + 1) {
       throw new Error("rank-ellipsis does not represent a rank gap");
     }
     previous = rank; seen.add(rank); afterEllipsis = false;

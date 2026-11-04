@@ -159,6 +159,38 @@ export function pickEvent(page, events) {
 }
 
 
+function goPassRowText(value) {
+  return typeof value === "string" ? value : String(value?.text || "");
+}
+function isGoPassRankRow(value) {
+  return /^rank \d+:/i.test(goPassRowText(value));
+}
+
+/** Preserve the last known-good rank rows if Leek Duck's structured GO Pass markup fails. */
+export function preserveGoPassRows(out, old, byEvent) {
+  for (const [id, { results }] of byEvent) {
+    const failedLeekDuck = results.some(result =>
+      result.source?.id === "leekduck" && result.fields?.goPassParseError
+    );
+    if (!failedLeekDuck || !old[id] || !out[id]) continue;
+    for (const field of ["tickets", "bonuses"]) {
+      const current = Array.isArray(out[id][field]) ? out[id][field] : [];
+      const currentRankRows = current.filter(isGoPassRankRow);
+      const nonRankRows = current.filter(row => !isGoPassRankRow(row));
+      const previousRankRows = (old[id][field] || []).filter(isGoPassRankRow);
+      const seen = new Set([...nonRankRows, ...currentRankRows].map(goPassRowText));
+      out[id][field] = [
+        ...nonRankRows,
+        ...currentRankRows,
+        ...previousRankRows.filter(row => !seen.has(goPassRowText(row)))
+      ];
+    }
+    out[id].goPassParseWarning = "GO Pass source parsing failed; previously published rank rewards were retained.";
+  }
+  return out;
+}
+
+
 async function main() {
   const events = await appEvents();
   const { found, status } = await discover();
@@ -240,17 +272,7 @@ async function main() {
     }));
     out[id] = { name: event.t, updated: now, sources: results.map(r => r.source), ...merged, researchTasks };
   }
-  // If a source's structured GO Pass markup changes unexpectedly, retain the
-  // last known-good rank rewards rather than replacing them with an empty list.
-  for (const [id, { results }] of byEvent) {
-    if (!results.some(r => r.fields.goPassParseError) || !old[id] || !out[id]) continue;
-    for (const field of ["tickets", "bonuses"]) {
-      const previousRows = (old[id][field] || []).filter(value => /^rank \\d+/i.test(String(value)));
-      const currentRows = (out[id][field] || []).filter(value => !/^rank \\d+/i.test(String(value)));
-      out[id][field] = [...new Set([...currentRows, ...previousRows])];
-    }
-    out[id].goPassParseWarning = "GO Pass source parsing failed; previously published rank rewards were retained.";
-  }
+  preserveGoPassRows(out, old, byEvent);
   for (const [id, v] of Object.entries(old)) if (!out[id] && Date.now() - Date.parse(v.updated || 0) < 45 * 864e5) out[id] = normaliseLegacyStatuses(v); // keep recent entries a source stopped listing, with current terminology
   await mkdir("data", { recursive: true });
   await writeFile(OUT, JSON.stringify({ updated: now, events: out }, null, 1) + "\n");
