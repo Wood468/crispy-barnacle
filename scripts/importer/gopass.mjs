@@ -2,7 +2,7 @@ import { decode } from "./text.mjs";
 
 const TAG = /<\/?div\b(?:"[^"]*"|'[^']*'|[^>"'])*>/gi;
 const OPEN_DIV = /<div\b(?:"[^"]*"|'[^']*'|[^>"'])*>/gi;
-const GENERIC_ALTS = new Set(["pokemon", "item", "reward", "rewards", "icon", "candy", "xp", "stardust", "pokecoin"]);
+const GENERIC_ALTS = new Set(["pokemon", "item", "reward", "rewards", "icon"]);
 
 function attr(tag, name) {
   const m = new RegExp("\\b" + name + "\\s*=\\s*(?:\"([^\"]*)\"|'([^']*)'|([^\\s>]+))", "i").exec(tag);
