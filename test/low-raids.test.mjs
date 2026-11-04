@@ -45,6 +45,13 @@ test("live GO Hub raid markup keeps boss names and rejects costume captions and 
   assert.equal(sane({ ...t, one: [...t.one, "Wearing a hat and capelet"] }), false, "non-boss copy cannot pass the safety gate");
   assert.equal(SOURCE_URL, "https://pokemongohub.net/post/guide/current-go-raids/");
 });
+
+test("Battle low-tier cards expose only the allowlisted Pokémon GO Hub source URL", () => {
+  const dash = readFileSync(new URL("../public/dash.js", import.meta.url), "utf8");
+  assert.match(dash, /function lowSourceLink\(l\)/);
+  assert.match(dash, /pokemongohub\\\.net\\\/post\\\/guide\\\/current-go-raids/);
+  assert.match(dash, /Pokémon GO Hub source/);
+});
 test("a page that does not parse is not trusted", () => {
   assert.equal(sane(parseTiers("<html><body>Please enable JavaScript</body></html>")), false);
   assert.equal(sane(parseTiers("<h2>1-Star Raids</h2><h2>3-Star Raids</h2><h2>5-Star Raids</h2>")), false);
