@@ -50,16 +50,13 @@ test("HTML entities and non-breaking spaces are normalised in reward names", () 
   assert.deepEqual(parsed.tickets, ["Rank 1: Free: Stardust ×50 | Deluxe: XP×100"]);
 });
 
-function extractLeekDuckGoGoPassRewardsCompat(html) {
-  return extractLeekDuckGoPassRewards(html);
-}
 
 test("duplicate ranks, missing rank numbers and missing tracks fail closed", () => {
   assert.throws(() => extractLeekDuckGoPassRewards(wrap(rankBlock(1) + rankBlock(2) + rankBlock(2))), /duplicate GO Pass rank/);
   const missingNumber = rankBlock(1).replace('<div class="rank-number">1</div>', "");
   assert.throws(() => extractLeekDuckGoPassRewards(wrap(missingNumber)), /one rank-number/);
-  const missingTrack = rankBlock(1).replace(/<div class="rank-rewards deluxe">[\\s\\S]*?<\\/div><\\/div><\\/div>$/, "");
-  assert.throws(() => extractLeekDuckGoPassRewards(wrap(missingTrack)), /Basic and Deluxe tracks|rank-rewards\\.deluxe/);
+  const missingTrack = '<div class="rank-item"><div class="rank-label"><div class="rank-number">1</div></div><div class="rank-paths"><div class="rank-rewards basic">' + reward("Stardust ×50") + '</div></div></div>';
+  assert.throws(() => extractLeekDuckGoPassRewards(wrap(missingTrack)), /Basic and Deluxe tracks/);
 });
 
 test("empty reward names, inconsistent image alts and malformed divs fail closed", () => {
