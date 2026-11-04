@@ -4023,7 +4023,7 @@ with sync_playwright() as p:
         shiny_page.context.close()
         check('Today shiny rail assets are versioned in the offline shell',
               DASH_URL.endswith('dash.js?v=20261104h') and DASH_CSS_URL.endswith('dash.css?v=20261104g') and
-              APP_URL.endswith('app.js?v=20261104f') and SHELL_CACHE=='gofn-shell-v241' and
+              APP_URL.endswith('app.js?v=20261104g') and SHELL_CACHE=='gofn-shell-v241' and
               '/research.js?v=20261104b' in SW_JS and '/data.json' in SW_JS)
 
     if on('c'):
