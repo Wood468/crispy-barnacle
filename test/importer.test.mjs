@@ -1,5 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import { htmlToLines, pageTitle } from "../scripts/importer/text.mjs";
 import { extractFields } from "../scripts/importer/extract.mjs";
 import { mergeSources, similar, disagree } from "../scripts/importer/compare.mjs";
@@ -267,4 +268,34 @@ test("two entries whose names slug the same still get different ids", () => {
   const e = (place, start) => ({ name: "A very long event name that is the same for every stop of the tour here", place, start, end: start, source: "x", url: "u" + place });
   const out = mergeW([e("Manila", "2026-10-03"), e("Taipei", "2026-10-17")], { x: "X" });
   assert.equal(new Set(out.map(o => o.id)).size, out.length);
+});
+
+
+test("the November GO Pass Leek Duck rank table is watched, matched exactly and parsed", () => {
+  const watch = JSON.parse(readFileSync(new URL("../data/watch-pages.json", import.meta.url), "utf8"));
+  const data = JSON.parse(readFileSync(new URL("../public/data.json", import.meta.url), "utf8"));
+  const url = "https://leekduck.com/events/go-pass-november-2026/";
+  assert.ok(watch.pages.some(p => String(p.url || "").replace(/\/?$/, "/") === url), "the rendered rank source stays on the importer watch list");
+
+  const event = data.events.find(e => e.id === "gopassnov");
+  assert.ok(event, "the November GO Pass event exists");
+  assert.ok(event.detailIds.includes("leekduck:go-pass-november-2026"), "the source page is mapped by its exact Leek Duck detail ID");
+
+  const html = '<html><head><meta property="og:title" content="GO Pass: November | Leek Duck"></head><body><main>' +
+    '<h1>GO Pass: November</h1>' +
+    '<p>From Tuesday, November 3, 2026, at 10:00 a.m. to Tuesday, December 1, 2026, at 10:00 a.m. local time.</p>' +
+    '<h2>GO Pass: November</h2>' +
+    '<table><tr><th>RANK</th><th>BASIC</th><th>DELUXE</th></tr>' +
+    '<tr><td>RANK</td><td>100</td><td>Groudon (Level 20)</td><td>PokéCoin ×200</td></tr>' +
+    '<tr><td>RANK</td><td>101</td><td>Stardust ×50</td><td>Stardust ×100</td></tr></table>' +
+    '</main></body></html>';
+  const lines = htmlToLines(html);
+  const page = { source: "leekduck", url, title: pageTitle(html), fields: extractFields(lines), lines };
+  const match = pickEvent(page, [{
+    id: event.id, t: event.t, link: event.sourceUrl, start: event.s, end: event.e, detailIds: event.detailIds
+  }]);
+  assert.equal(match?.event.id, "gopassnov");
+  assert.equal(match?.how, "detail-id");
+  assert.ok(page.fields.tickets.includes("Rank 100: Free: Groudon (Level 20) | Deluxe: PokéCoin ×200"));
+  assert.ok(page.fields.tickets.includes("Rank 101: Free: Stardust ×50 | Deluxe: Stardust ×100"));
 });

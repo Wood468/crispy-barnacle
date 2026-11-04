@@ -375,3 +375,13 @@ Completed reference: RES-2 raid rotation boundaries were corrected in #291 using
 ### Current handover
 - Main at start of this update: `28cf2c89754a5f819ebb5ec44aea505db881029c`; open PR count: 0. No application code was changed in this update. Main commit `28cf2c89754a5f819ebb5ec44aea505db881029c` is the scheduled importer data refresh.
 - No D1/R2, secret, Access, credentials, preview configuration or backup setting was changed. Owner PIN session hardening remains separate.
+
+
+## November GO Pass source-ingestion correction — 4 Nov 2026, 19:58 Melbourne
+
+- The live [Leek Duck GO Pass: November page](https://leekduck.com/events/go-pass-november-2026/) visibly publishes its Basic/Deluxe rank table, including Rank 100 (Groudon / PokéCoin ×200) and the repeat Stardust rows at Ranks 101–200. These values are source-published; none are manually copied into public event data.
+- A closer inspection corrected the previous diagnosis: the importer snapshot did **not** contain the Leek Duck November page at all. `data/watch-pages.json` had no November GO Pass entry, and `data/importer-lines.json` contained the official November pass page but not a Leek Duck November page. Therefore the earlier statement that the captured Leek Duck HTTP response omitted the rank table was not established.
+- This batch explicitly adds the Leek Duck page to the importer watch list, maps `gopassnov` to the exact `leekduck:go-pass-november-2026` detail ID, and adds an offline integration fixture covering watch-list presence, exact event matching, date overlap and Basic/Deluxe rank parsing.
+- The next natural scheduled importer run must demonstrate that the live page is actually fetched and its rows appear in generated `public/event-details.json`. If the raw response still omits the table, inspect the captured source lines and source page structure before adding any alternate retrieval mechanism. Do not hand-edit rewards or manually dispatch the importer.
+- Scheduled importer run #72 (`41796710531`) completed successfully at `2026-11-04T08:06:07Z`; its report is `2026-11-04T08:05:55.661Z`. At this audit the report had not yet advanced beyond #72. The `:52 UTC` slot at 08:52Z is not yet independently verified. Keep the cron, concurrency and R2 process unchanged; require two consecutive successful natural scheduled runs.
+- Main at batch start: `8c11366f3bd174d0026c612e41f9109d8f9e63b7`; no open PRs. Relevant pass/rank branches were diverged (the old #320 branch was 4 ahead / 6 behind; older pass branches were 24–273 commits behind), so this work starts on a fresh branch. No D1/R2, secrets, Access or credentials are changed.

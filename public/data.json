@@ -335,6 +335,7 @@
     },
     {
       "id": "gopassnov",
+      "detailIds": ["gopassnov", "leekduck:go-pass-november-2026"],
       "t": "GO Pass: November",
       "s": "2026-11-03T10:00",
       "e": "2026-12-01T10:00",
