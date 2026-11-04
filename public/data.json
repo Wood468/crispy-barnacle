@@ -785,6 +785,7 @@
       "five": "Giratina (Altered Forme)",
       "mega": "Mega Sableye",
       "shadow": "Shadow Tornadus (Incarnate), to Nov 8",
+      "low": { "one": ["Pikachu", "Antique Sinistea"], "three": ["Cofagrigus", "Trevenant", "Dhelmise"], "shadowOne": ["Shadow Larvitar", "Shadow Mudkip", "Shadow Makuhita", "Shadow Cranidos"], "shadowThree": ["Shadow Prinplup", "Shadow Piloswine", "Shadow Poliwhirl"], "observed": "2026-11-04", "source": "Pokémon GO Hub current raids", "sourceUrl": "https://pokemongohub.net/post/guide/current-go-raids/" },
       "rh": "Giratina (Altered Forme), Wed Nov 4",
       "sourceUrl": "https://leekduck.com/events/giratina-altered-forme-in-5-star-raid-battles-november-2026/"
     },

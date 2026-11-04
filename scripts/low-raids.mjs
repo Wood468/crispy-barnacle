@@ -7,7 +7,8 @@
 // Run: node scripts/low-raids.mjs   (DRY_RUN=true prints what it would do; HUB_HTML=<file> reads a saved page instead of fetching)
 import { readFile, writeFile } from "node:fs/promises";
 
-const PAGE = "https://pokemongohub.net/post/guide/current-go-raids/";
+export const SOURCE_URL = "https://pokemongohub.net/post/guide/current-go-raids/";
+const PAGE = SOURCE_URL;
 const DATA = process.env.DATA_FILE || "public/data.json";
 const SOURCE = "Pokémon GO Hub current raids";
 
@@ -35,7 +36,8 @@ export function cleanName(s) {
   return n;
 }
 const NAME = /^[A-Za-zÀ-ÿ][A-Za-zÀ-ÿ0-9'’.:\- ()♀♂]{1,38}$/;
-const NOT_A_NAME = /\b(current|bosses|boss|raids?|guide|guides|related|counters?|stars?|tier)\b|:$/i; // a heading or label, not a Pokémon
+const NOT_A_NAME = /\b(current|bosses|boss|raids?|guide|guides|related|counters?|stars?|tier|wearing|event|part|bonuses?|see our|go wild area)\b|:$/i;
+const isBossName = s => NAME.test(s) && !NOT_A_NAME.test(s) && !/^(none|n\/a|tba|soon|shadow)$/i.test(s) && !/^and\b/i.test(s); // a heading or label, not a Pokémon
 const isHeading = l => /\bBosses\b/i.test(l) || /^Current\b/i.test(l) || /\bRaids?\b\s*:?$/i.test(l) || /^Shadow\b.*Raids?/i.test(l) || /\bShadow Raids?\s*:?$/i.test(l) || /^(Last update|Updated|Related|Read more|See also|Share)\b/i.test(l) || /^Raid (Hour|Boss)/i.test(l);
 
 // { one: [...], three: [...], five: [...], mega: [...] } from the headings "1-Star Raids", "3-Star Raids", "5-Star Raids", "Mega Raids".
@@ -50,7 +52,7 @@ export function parseTiers(html) {
     if (!k) { const m = /^((?:Shadow\s+)?(?:Tier\s*)?[135][\s-]*Star(?:\s+Shadow)?\s+Raids?|Mega Raids?)\s*:\s*(.+)$/i.exec(lines[i]); if (m) { k = key(m[1] + ":"); rest = m[2]; } }
     if (!k || out[k].length) continue; // the first block under each heading only
     const names = [];
-    const take = s => { for (const part of String(s).split(/,|·|\|/)) { const n = cleanName(part); if (n && NAME.test(n) && !NOT_A_NAME.test(n) && !/^(none|n\/a|tba|soon)$/i.test(n)) names.push(n); } };
+    const take = s => { const raw = String(s); if (NOT_A_NAME.test(raw)) return; for (const part of raw.split(/,|·|\||\s+and\s+/i)) { const n = cleanName(part); if (isBossName(n)) names.push(n); } };
     if (rest) take(rest);
     for (let j = i + 1; j < lines.length && !rest && names.length < 12; j++) { if (key(lines[j]) || isHeading(lines[j])) break; take(lines[j]); }
     // Shadow lists are always "Shadow X", whether the page wrote "Shadow Primeape", "Primeape (Shadow)" or only the sprite's name.
@@ -59,7 +61,8 @@ export function parseTiers(html) {
   return out;
 }
 
-export const sane = t => (t.shadowOne || []).length <= 8 && (t.shadowThree || []).length <= 8 && t.one.length >= 1 && t.one.length <= 8 && t.three.length >= 1 && t.three.length <= 8 && t.five.length >= 1 && t.five.length <= 4;
+const saneList = (list, min = 0, max = 8) => Array.isArray(list) && list.length >= min && list.length <= max && list.every(isBossName) && new Set(list).size === list.length;
+export const sane = t => saneList(t.one, 1) && saneList(t.three, 1) && saneList(t.five, 1, 4) && saneList(t.shadowOne || []) && saneList(t.shadowThree || []);
 
 const norm = s => String(s || "").toLowerCase().replace(/\(.*?\)/g, "").replace(/\b(forme?|form|mega|primal|shadow)\b/g, "").replace(/[^a-z0-9]+/g, " ").trim();
 // The rotation (current or upcoming) whose 5-star boss is one of the page's 5-star bosses.
@@ -71,7 +74,7 @@ export function pickRotation(rotation, five, nowMs = Date.now()) {
 
 // The same low block that is already there, or one we may replace (empty, or written by this job).
 export const mayReplace = r => !r.low || String(r.low.source || "").startsWith(SOURCE);
-export const sameLow = (a, b) => !!a && JSON.stringify([a.one, a.three, a.shadowOne || [], a.shadowThree || []]) === JSON.stringify([b.one, b.three, b.shadowOne || [], b.shadowThree || []]);
+export const sameLow = (a, b) => !!a && JSON.stringify([a.one, a.three, a.shadowOne || [], a.shadowThree || [], a.sourceUrl || ""]) === JSON.stringify([b.one, b.three, b.shadowOne || [], b.shadowThree || [], b.sourceUrl || ""]);
 
 // Rewrites just the one rotation object in the file's text, keeping its other lines and the rest of the file exactly as they were.
 export function applyLow(raw, rotationStart, low) {
@@ -113,7 +116,7 @@ async function main() {
   if (!r) { console.log("::notice::1-3 star raids: the page's 5-star boss (" + t.five.join(", ") + ") matches no current or upcoming rotation. Nothing changed."); return; }
   if (!mayReplace(r)) { console.log("::notice::1-3 star raids: the " + r.five + " rotation already has hand-entered data from " + r.low.source + ". Left alone."); return; }
   if (sameLow(r.low, { one: t.one, three: t.three, shadowOne: t.shadowOne, shadowThree: t.shadowThree })) { console.log("::notice::1-3 star raids for " + r.five + " are already up to date."); return; }
-  const low = { one: t.one, three: t.three, ...(t.shadowOne.length ? { shadowOne: t.shadowOne } : {}), ...(t.shadowThree.length ? { shadowThree: t.shadowThree } : {}), observed: new Date().toISOString().slice(0, 10), source: SOURCE };
+  const low = { one: t.one, three: t.three, ...(t.shadowOne.length ? { shadowOne: t.shadowOne } : {}), ...(t.shadowThree.length ? { shadowThree: t.shadowThree } : {}), observed: new Date().toISOString().slice(0, 10), source: SOURCE, sourceUrl: SOURCE_URL };
   const out = applyLow(raw, r.s, low);
   const check = JSON.parse(out); // must still be valid JSON, and nothing but this rotation's low may differ
   const was = JSON.parse(raw); const idx = was.rotation.findIndex(x => x.s === r.s);
