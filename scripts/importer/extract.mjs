@@ -78,6 +78,18 @@ export function extractFields(html) {
     if (rm) { rank = +(rm[1] || rm[2]); cur = "bonuses"; taken = 0; continue; }
     const tr = /^tier\s*\d+\s*\(rank\s*(\d+)\)\s*\|\s*(.{6,})$/i.exec(l.text);
     if (tr) { add("bonuses", `Rank ${tr[1]}: ${tr[2]}`); continue; }
+    // Leek Duck's GO Pass table labels the first cell "RANK", then places the rank number and Basic/Deluxe rewards in separate cells.
+    // htmlToLines turns that row into "RANK | 2 | XP ×10000 | Stardust ×10000".
+    const duckRow = /^rank\s*\|\s*(\d{1,3})\s*\|\s*(.{3,})$/i.exec(l.text);
+    if (duckRow && /pass|rank|reward|milestone/i.test(headSeen)) {
+      const cols = duckRow[2].split(/\s*\|\s*/).map(trim);
+      // Rank 1 and milestone rows are already represented in the structured bonus section above.
+      const milestone = cols.length >= 2 && cols.every(x => /^tier\s*\d+\s+go pass bonus/i.test(x) || x === "-");
+      if (cols.length >= 2 && cols[0].length <= 70 && !milestone) {
+        add("tickets", "Rank " + duckRow[1] + ": Free: " + cols[0] + " | Deluxe: " + cols[1]);
+      }
+      continue;
+    }
     // reward table rows such as "97 | Kyogre Candy": GO Pass rank rewards
     const row = /^(?:rank\s*)?(\d{1,3})\s*\|\s*(.{3,})$/i.exec(l.text);
     if (row && /pass|rank|reward|milestone/i.test(headSeen)) {
