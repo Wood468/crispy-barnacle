@@ -138,10 +138,6 @@ function parseTrack(rankNode, markup, rank, kind) {
   }
   if (emptyNodes.length) throw new Error("Track at rank " + rank + " contains both rewards and no-rewards");
   const items = rewardNodes.map(n => parseRewardItem(n, markup, rank, kind));
-  const bonuses = items.filter(x => x.bonus);
-  if (bonuses.length && (kind !== "basic" || rank !== 1 || bonuses.length !== items.length)) {
-    throw new Error("Unexpected data-bonus reward item at rank " + rank + " (" + kind + ")");
-  }
   return { items, empty: false };
 }
 
@@ -189,8 +185,11 @@ export function extractLeekDuckGoPassRewards(html) {
     if (trackNodes.filter(n => has(n, "basic")).length !== 1 || trackNodes.filter(n => has(n, "deluxe")).length !== 1) {
       throw new Error("Rank " + rank + " is missing one of the Basic/Deluxe tracks");
     }
-    const rankBonuses = basic.items.filter(x => x.bonus);
-    rankBonuses.forEach(item => bonusItems.push({ rank, track: "basic", name: item.name, imgAlts: item.alts }));
+    const rankBonuses = [
+      ...basic.items.filter(x => x.bonus).map(item => ({ rank, track: "basic", name: item.name, imgAlts: item.alts })),
+      ...deluxe.items.filter(x => x.bonus).map(item => ({ rank, track: "deluxe", name: item.name, imgAlts: item.alts }))
+    ];
+    bonusItems.push(...rankBonuses);
     const basicRewards = basic.items.filter(x => !x.bonus).map(x => x.name);
     const deluxeRewards = deluxe.items.filter(x => !x.bonus).map(x => x.name);
     if (basicRewards.length || deluxeRewards.length) {
