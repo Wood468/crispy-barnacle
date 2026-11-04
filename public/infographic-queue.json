@@ -2,7 +2,7 @@
  "updated": "2026-11-04T04:11:24.209Z",
  "items": [
   {
-   "linked": false,
+   "linked": true,
    "id": "discord:1567338528482926603",
    "title": "Sableye",
    "image": "/infographics/g47ix/discord-1567338528482926603.png",
@@ -36,7 +36,7 @@
    ]
   },
   {
-   "linked": false,
+   "linked": true,
    "id": "discord:1567330361497620490",
    "title": "Tornadus",
    "image": "/infographics/g47ix/discord-1567330361497620490.png",
@@ -70,7 +70,7 @@
    ]
   },
   {
-   "linked": false,
+   "linked": true,
    "id": "discord:1567330302207074475",
    "title": "Giratina",
    "image": "/infographics/g47ix/discord-1567330302207074475.webp",
@@ -104,7 +104,7 @@
    ]
   },
   {
-   "linked": false,
+   "linked": true,
    "id": "discord:1567217227550433310",
    "title": "FOL 26",
    "image": "/infographics/g47ix/discord-1567217227550433310.webp",

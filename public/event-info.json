@@ -1393,6 +1393,103 @@
           "alt": "GO Pass: November infographic"
         }
       ]
+    },
+    "w-celebrate-the-festival-of-lights-with-the-return-o": {
+      "names": [
+        "Festival of Lights"
+      ],
+      "source": {
+        "label": "G47IX",
+        "trust": "community",
+        "url": "https://discord.com/channels/@me/1558793395198099618/1567217227550433310",
+        "observed": "2026-11-04"
+      },
+      "tickets": [],
+      "info": [],
+      "infographics": [
+        {
+          "label": "Infographic · G47IX",
+          "url": "/infographics/g47ix/discord-1567217227550433310.webp",
+          "source": "G47IX",
+          "sourceUrl": "https://discord.com/channels/@me/1558793395198099618/1567217227550433310",
+          "alt": "Festival of Lights infographic"
+        }
+      ],
+      "start": "2026-11-06",
+      "end": "2026-11-08",
+      "dateSource": "world-events.json"
+    },
+    "leekduck:giratina-altered-forme-in-5-star-raid-battles-november-2026": {
+      "names": [
+        "Giratina (Altered Forme) in 5-star Raid Battles"
+      ],
+      "source": {
+        "label": "G47IX",
+        "trust": "community",
+        "url": "https://discord.com/channels/@me/1558793395198099618/1567330302207074475",
+        "observed": "2026-11-04"
+      },
+      "tickets": [],
+      "info": [],
+      "infographics": [
+        {
+          "label": "Infographic · G47IX",
+          "url": "/infographics/g47ix/discord-1567330302207074475.webp",
+          "source": "G47IX",
+          "sourceUrl": "https://discord.com/channels/@me/1558793395198099618/1567330302207074475",
+          "alt": "Giratina (Altered Forme) in 5-star Raid Battles infographic"
+        }
+      ],
+      "start": "2026-11-04",
+      "end": "2026-11-08",
+      "dateSource": "event-details.json"
+    },
+    "leekduck:max-mondays-2026-10-26": {
+      "names": [
+        "Dynamax Sableye during Max Monday"
+      ],
+      "source": {
+        "label": "G47IX",
+        "trust": "community",
+        "url": "https://discord.com/channels/@me/1558793395198099618/1567338528482926603",
+        "observed": "2026-11-04"
+      },
+      "tickets": [],
+      "info": [],
+      "infographics": [
+        {
+          "label": "Infographic · G47IX",
+          "url": "/infographics/g47ix/discord-1567338528482926603.png",
+          "source": "G47IX",
+          "sourceUrl": "https://discord.com/channels/@me/1558793395198099618/1567338528482926603",
+          "alt": "Dynamax Sableye during Max Monday infographic"
+        }
+      ]
+    },
+    "leekduck:shadow-tornadus-incarnate-forme-in-shadow-raids-november-4-2026": {
+      "names": [
+        "Shadow Tornadus (Incarnate Forme) in Shadow Raids"
+      ],
+      "source": {
+        "label": "G47IX",
+        "trust": "community",
+        "url": "https://discord.com/channels/@me/1558793395198099618/1567330361497620490",
+        "observed": "2026-11-04"
+      },
+      "tickets": [],
+      "info": [],
+      "infographics": [
+        {
+          "label": "Infographic · G47IX",
+          "url": "/infographics/g47ix/discord-1567330361497620490.png",
+          "source": "G47IX",
+          "sourceUrl": "https://discord.com/channels/@me/1558793395198099618/1567330361497620490",
+          "alt": "Shadow Tornadus (Incarnate Forme) in Shadow Raids infographic"
+        }
+      ],
+      "start": "2026-11-04",
+      "end": "2026-11-08",
+      "dateSource": "event-details.json"
     }
   },
   "passes": {
