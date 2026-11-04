@@ -47,6 +47,24 @@ test("explicit no-rewards cells preserve empty Deluxe ranks 50 and 75 without in
   assert.throws(() => extractLeekDuckGoPassRewards(wrap(rankBlock(50, reward("Stardust ×50"), '<div class="rank-rewards deluxe"></div>'))), /explicit no-rewards marker/);
 });
 
+test("data-bonus rows at later ranks and on either track remain milestone bonuses", () => {
+  const bonus = name => '<div class="reward-item" data-bonus="true"><div class="reward-info"><span class="reward-name">' + name + '</span></div></div>';
+  const html = wrap(rankBlock(
+    25,
+    bonus("Tier 2 GO Pass Bonus: Open up to 40 Gifts per day") + reward("Stardust ×50"),
+    bonus("Tier 2 GO Pass Bonus: Open up to 50 Gifts per day") + reward("XP ×100")
+  ));
+  const parsed = extractLeekDuckGoPassRewards(html);
+  assert.deepEqual(parsed.bonusItems.map(x => [x.rank, x.track, x.name]), [
+    [25, "basic", "Tier 2 GO Pass Bonus: Open up to 40 Gifts per day"],
+    [25, "deluxe", "Tier 2 GO Pass Bonus: Open up to 50 Gifts per day"]
+  ]);
+  assert.deepEqual(parsed.tickets, ["Rank 25: Free: Stardust ×50 | Deluxe: XP ×100"]);
+  const fields = extractFields(html);
+  assert.ok(fields.bonuses.includes("Rank 25: Tier 2 GO Pass Bonus: Open up to 40 Gifts per day"));
+  assert.ok(fields.bonuses.includes("Rank 25 Deluxe: Tier 2 GO Pass Bonus: Open up to 50 Gifts per day"));
+});
+
 test("HTML entities and non-breaking spaces are normalised in reward names", () => {
   const html = wrap(rankBlock(1, reward("Stardust&nbsp;×50"), reward("XP&#215;100")));
   const parsed = extractLeekDuckGoPassRewards(html);
