@@ -123,7 +123,7 @@ export function extractFields(html) {
   // Leek Duck renders GO Pass ranks as nested divs, not table rows. Parse that
   // source-specific structure separately; malformed pass markup is reported but
   // does not discard the article's other successfully extracted details.
-  if (typeof html === "string" && /<div\\b(?=[^>]*class=["'][^"']*\\bbattle-pass-container\\b)/i.test(html)) {
+  if (typeof html === "string" && html.includes("battle-pass-container")) {
     try {
       const pass = extractLeekDuckGoPassRewards(html);
       if (pass) {
