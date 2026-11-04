@@ -127,10 +127,19 @@ export function extractFields(html) {
     try {
       const pass = extractLeekDuckGoPassRewards(html);
       if (pass) {
-        for (const item of pass.bonusItems) add("bonuses", "Rank " + item.rank + (item.track === "deluxe" ? " Deluxe" : "") + ": " + item.name);
+        for (const item of pass.bonusItems) {
+          const concise = item.name.replace(/^Tier\\s*\\d+\\s+GO Pass Bonus:\\s*/i, "");
+          const prefix = "Rank " + item.rank + (item.track === "deluxe" ? " Deluxe" : "") + ": ";
+          // The generic heading/list scan may already have emitted this milestone.
+          if (!out.bonuses.includes("Rank " + item.rank + ": " + concise) &&
+              !out.bonuses.includes(prefix + concise)) add("bonuses", prefix + concise);
+        }
         for (const row of pass.tickets) add("tickets", row);
       }
     } catch (error) {
+      // A failed structured parse must not leave generic/partial rank rows behind.
+      out.tickets = out.tickets.filter(value => !/^rank \\d+:/i.test(value));
+      out.bonuses = out.bonuses.filter(value => !/^rank \\d+/i.test(value));
       out.goPassParseError = error instanceof Error ? error.message : String(error);
     }
   }
