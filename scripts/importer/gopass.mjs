@@ -196,7 +196,7 @@ export function extractLeekDuckGoPassRewards(html) {
     if (basicRewards.length || deluxeRewards.length) {
       tickets.push("Rank " + rank + ": Free: " + (basicRewards.join(" · ") || "—") + " | Deluxe: " + (deluxeRewards.join(" · ") || "—"));
     }
-    ranks.push({ rank, basic: basicRewards, deluxe: deluxeRewards, deluxeEmpty: deluxe.empty });
+    ranks.push({ rank, basic: basicRewards, deluxe: deluxeRewards, basicItemCount: basic.items.length, deluxeItemCount: deluxe.items.length, basicEmpty: basic.empty, deluxeEmpty: deluxe.empty });
     order.push({ type: "rank", rank });
   }
   if (ellipsisCount > 1) throw new Error("More than one rank-ellipsis placeholder was found");
