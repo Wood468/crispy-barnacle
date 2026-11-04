@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import { parseTiers, sane, pickRotation, mayReplace, applyLow, cleanName, sameLow, tell } from "../scripts/low-raids.mjs";
+import { parseTiers, sane, pickRotation, mayReplace, applyLow, cleanName, sameLow, tell, SOURCE_URL } from "../scripts/low-raids.mjs";
 
 const LISTS = `<h2>1-Star Raids</h2><ul><li>Axew</li><li>Goomy</li><li>Jangmo-o</li><li>Frigibax</li></ul>
 <h2>3-Star Raids</h2><ul><li>Alola Ninetales</li><li>Alola Raichu</li><li>Alola Muk</li></ul>
@@ -9,6 +9,18 @@ const LISTS = `<h2>1-Star Raids</h2><ul><li>Axew</li><li>Goomy</li><li>Jangmo-o<
 <h2>Shadow 3-Star Raids</h2><ul><li>Shadow Primeape</li></ul><p>Last update: October 20, 2026</p>`;
 const INLINE = `<p><strong>1-Star Raids:</strong> Axew, Goomy, Jangmo-o, Frigibax</p><p><strong>3-Star Raids:</strong> Alola Ninetales, Alola Raichu, Alola Muk</p><p><strong>5-Star Raids:</strong> Palkia</p>`;
 const PICTURES = `<h3>1-Star Raids</h3><div><img src="a.png" alt="Axew"><img src="b.png" alt="Goomy"></div><h3>3-Star Raids</h3><div><img src="c.png" alt="Alola Muk Pokémon"></div><h3>5-Star Raids</h3><div><img alt="Palkia"></div>`;
+
+const HUB_CURRENT = `<h2>Current Pokémon GO Raid Bosses</h2>
+<h3>5-Star Raids</h3><ul><li><img alt="Sprite of Giratina from Pokémon GO"><span>Altered Giratina 1931 CP / 2414 CP</span></li></ul>
+<h3>Mega Raids</h3><ul><li><img alt="Sprite of Mega Sableye from Pokémon GO"><span>Mega Sableye 843 CP / 1054 CP</span></li></ul>
+<h3>3-Star Raids</h3><ul><li><img alt="Sprite of Cofagrigus from Pokémon GO"><span>Cofagrigus</span></li><li><img alt="Sprite of Trevenant from Pokémon GO"><span>Trevenant</span></li><li><img alt="Sprite of Dhelmise from Pokémon GO"><span>Dhelmise</span></li></ul>
+<p>Raid guides: Cofagrigus, Trevenant, and Dhelmise.</p>
+<h3>1-Star Raids</h3><ul><li><img alt="Sprite of Pikachu from Pokémon GO"><span>Pikachu Wearing a hat and capelet</span></li><li><img alt="Sprite of Antique Sinistea from Pokémon GO"><span>Antique Sinistea Wearing a bow</span></li></ul>
+<p>For event dates and bonuses, see our Halloween Part One and Halloween Part Two guides.</p>
+<h2>Current Shadow Raid Bosses</h2><h3>5-Star Shadow Raids</h3><ul><li><img alt="Sprite of Tornadus from Pokémon GO"><span>Incarnate Shadow Tornadus</span></li></ul>
+<h3>3-Star Shadow Raids</h3><ul><li><img alt="Sprite of Shadow Prinplup from Pokémon GO"><span>Shadow Prinplup</span></li><li><img alt="Sprite of Shadow Piloswine from Pokémon GO"><span>Shadow Piloswine</span></li><li><img alt="Sprite of Shadow Poliwhirl from Pokémon GO"><span>Shadow Poliwhirl</span></li></ul>
+<p>Raid guides: Shadow Prinplup, Shadow Piloswine, and Shadow Poliwhirl.</p>
+<h3>1-Star Shadow Raids</h3><ul><li><img alt="Sprite of Shadow Larvitar from Pokémon GO"><span>Shadow Larvitar</span></li><li><img alt="Sprite of Shadow Mudkip from Pokémon GO"><span>Shadow Mudkip</span></li><li><img alt="Sprite of Shadow Makuhita from Pokémon GO"><span>Shadow Makuhita</span></li><li><img alt="Sprite of Shadow Cranidos from Pokémon GO"><span>Shadow Cranidos</span></li></ul>`;
 
 test("tiers are read from lists, inline text and picture alt text; shadow and other blocks do not bleed in", () => {
   for (const html of [LISTS, INLINE]) {
@@ -20,6 +32,18 @@ test("tiers are read from lists, inline text and picture alt text; shadow and ot
   const p = parseTiers(PICTURES);
   assert.deepEqual(p.one, ["Axew", "Goomy"]); assert.deepEqual(p.three, ["Alolan Muk"]);
   assert.ok(!parseTiers(LISTS).three.some(n => /Primeape/.test(n)));
+});
+
+test("live GO Hub raid markup keeps boss names and rejects costume captions and article copy", () => {
+  const t = parseTiers(HUB_CURRENT);
+  assert.deepEqual(t.five, ["Giratina"]);
+  assert.deepEqual(t.one, ["Pikachu", "Antique Sinistea"]);
+  assert.deepEqual(t.three, ["Cofagrigus", "Trevenant", "Dhelmise"]);
+  assert.deepEqual(t.shadowOne, ["Shadow Larvitar", "Shadow Mudkip", "Shadow Makuhita", "Shadow Cranidos"]);
+  assert.deepEqual(t.shadowThree, ["Shadow Prinplup", "Shadow Piloswine", "Shadow Poliwhirl"]);
+  assert.ok(sane(t));
+  assert.equal(sane({ ...t, one: [...t.one, "Wearing a hat and capelet"] }), false, "non-boss copy cannot pass the safety gate");
+  assert.equal(SOURCE_URL, "https://pokemongohub.net/post/guide/current-go-raids/");
 });
 test("a page that does not parse is not trusted", () => {
   assert.equal(sane(parseTiers("<html><body>Please enable JavaScript</body></html>")), false);
@@ -84,6 +108,7 @@ test("Shadow 1-star and 3-star raids are read under their own headings, and alwa
   assert.ok(sane(t));
   assert.deepEqual(parseTiers(LISTS).shadowOne, [], "a page with no Shadow 1-star list gives none");
   assert.ok(!sameLow({ one: ["Axew"], three: ["Alolan Muk"] }, { one: ["Axew"], three: ["Alolan Muk"], shadowOne: ["Shadow Gastly"] }), "adding shadow bosses counts as a change");
+  assert.ok(!sameLow({ one: ["Axew"], three: ["Alolan Muk"] }, { one: ["Axew"], three: ["Alolan Muk"], sourceUrl: SOURCE_URL }), "adding source attribution counts as a change");
 });
 
 test("Shadow headings written '3-Star Shadow Raids' (Hub's wording) are read too", () => {
