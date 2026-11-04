@@ -27,7 +27,7 @@ const LINE = [
 const RANKLABEL = /^(?:tier\s*\d+\W*)?\(?rank\s*(\d+)\)?\W*(?:bonus(?:es)?|milestone)?\W*$|^tier\s*\d+\s*bonus\s*starting at rank\s*(\d+)\W*$/i;
 const trim = s => s.replace(/^[•·\-–\s]+/, "").replace(/\s+/g, " ").trim();
 const NOISE = /^(share|read more|related|advertisement|sign up|follow us|comments?|learn more|and even more|keep an eye out|tier \d|rank \d+\s*$)|and even more goodies|learn more about|^\*/i;
-const keep = s => (s.length >= 14 || /[×]|\d\s?x\b/i.test(s) && s.length >= 6) && s.length <= 220 && !NOISE.test(s);
+const keep = s => (s.length >= 14 || /[×]|\\d\\s?x\\b/i.test(s) && s.length >= 6) && (s.length <= 220 || /^rank \\d+/i.test(s) && s.length <= 600) && !NOISE.test(s);
 
 function parseResearchTask(line, category) {
   const marker = /\b(?:possible\s+)?rewards?\s*:?\s*/i.exec(String(line || ""));
