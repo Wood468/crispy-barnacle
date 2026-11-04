@@ -147,8 +147,12 @@ function parseTrack(rankNode, markup, rank, kind) {
  * returned when explicitly present in the markup; ellipses are recorded but
  * no missing rank numbers or rewards are inferred.
  */
-export function extractLeekDuckGoPassRewards(html) {
-  const markup = containerBlock(html);
+export function extractLeekDuckGoPassRewards(html, { allowPartial = false } = {}) {
+  const source = String(html || "");
+  if (source.length > 512 * 1024) throw new Error("GO Pass source exceeds the 512 KiB safety limit");
+  // Reject pathological unterminated tags before the quoted-attribute tokenisers run.
+  if (/<(?:div|span|img)\\b[^>]{4096,}/i.test(source)) throw new Error("GO Pass source contains an overlong or unterminated tag");
+  const markup = containerBlock(source);
   if (!markup) return null;
   const root = divTree(markup);
   if (!has(root, "battle-pass-container") || !has(root, "-has-toggle")) throw new Error("Unexpected battle-pass root structure");
@@ -159,7 +163,7 @@ export function extractLeekDuckGoPassRewards(html) {
   if (rankNodes.length > 111) throw new Error("GO Pass rank-item count exceeds the supported 110 reward-row cap plus one ellipsis");
 
   const order = [], ranks = [], bonusItems = [], tickets = [], seen = new Set();
-  let previous = 0, ellipsisCount = 0;
+  let previous = 0, ellipsisCount = 0, afterEllipsis = false;
   for (const node of rankNodes) {
     if (has(node, "rank-ellipsis")) {
       ellipsisCount++;
@@ -167,6 +171,7 @@ export function extractLeekDuckGoPassRewards(html) {
         throw new Error("rank-ellipsis unexpectedly contains rank rewards");
       }
       order.push({ type: "ellipsis" });
+      afterEllipsis = true;
       continue;
     }
     const numberNodes = descendants(node).filter(n => has(n, "rank-number"));
@@ -176,7 +181,13 @@ export function extractLeekDuckGoPassRewards(html) {
     const rank = Number(rawRank);
     if (rank < 1 || rank > 999 || seen.has(rank)) throw new Error("Invalid or duplicate GO Pass rank " + rank);
     if (rank <= previous) throw new Error("GO Pass ranks are not in strictly increasing document order at rank " + rank);
-    previous = rank; seen.add(rank);
+    if (!allowPartial && previous && !afterEllipsis && rank !== previous + 1) {
+      throw new Error("Unexpected GO Pass rank gap between " + previous + " and " + rank + " without an explicit ellipsis");
+    }
+    if (!allowPartial && afterEllipsis && rank <= previous + 1) {
+      throw new Error("rank-ellipsis does not represent a rank gap");
+    }
+    previous = rank; seen.add(rank); afterEllipsis = false;
 
     const trackNodes = descendants(node).filter(n => has(n, "rank-rewards"));
     if (trackNodes.length !== 2) throw new Error("Expected exactly Basic and Deluxe tracks at rank " + rank);
