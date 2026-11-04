@@ -240,6 +240,17 @@ async function main() {
     }));
     out[id] = { name: event.t, updated: now, sources: results.map(r => r.source), ...merged, researchTasks };
   }
+  // If a source's structured GO Pass markup changes unexpectedly, retain the
+  // last known-good rank rewards rather than replacing them with an empty list.
+  for (const [id, { results }] of byEvent) {
+    if (!results.some(r => r.fields.goPassParseError) || !old[id] || !out[id]) continue;
+    for (const field of ["tickets", "bonuses"]) {
+      const previousRows = (old[id][field] || []).filter(value => /^rank \\d+/i.test(String(value)));
+      const currentRows = (out[id][field] || []).filter(value => !/^rank \\d+/i.test(String(value)));
+      out[id][field] = [...new Set([...currentRows, ...previousRows])];
+    }
+    out[id].goPassParseWarning = "GO Pass source parsing failed; previously published rank rewards were retained.";
+  }
   for (const [id, v] of Object.entries(old)) if (!out[id] && Date.now() - Date.parse(v.updated || 0) < 45 * 864e5) out[id] = normaliseLegacyStatuses(v); // keep recent entries a source stopped listing, with current terminology
   await mkdir("data", { recursive: true });
   await writeFile(OUT, JSON.stringify({ updated: now, events: out }, null, 1) + "\n");
