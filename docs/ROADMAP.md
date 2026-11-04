@@ -320,3 +320,17 @@ Completed reference: RES-2 raid rotation boundaries were corrected in #291 using
 - Importer hourly reliability remains unverified until a second consecutive successful scheduled run is observed.
 - Owner PIN session-cookie hardening remains a separate blocked security item; no Worker secret, Access setting, D1 or R2 resource was changed.
 
+
+
+## Release-readiness verification update — 4 Nov 2026, 16:26 Melbourne
+
+### Importer schedule — four consecutive expected slots without run records
+- Re-queried the repository's scheduled Actions run history through `2026-11-04T05:30:00Z` (16:30 Melbourne window; checked at 16:26). The only Event details importer run returned for 4 Nov was scheduled run #71, `41750416990`, created `2026-11-04T00:55:35Z` and completed successfully at `00:57:13Z`. No importer run record appears for the next four expected `:52 UTC` slots: 01:52, 02:52, 03:52 or 04:52 UTC (12:52, 13:52, 14:52 and 15:52 Melbourne).
+- Other scheduled workflows did execute after those slots (including Job health `41755325587` at 01:37Z, Site check `41764677518` at 03:03Z, and G47IX infographic discovery `41771552161` at 04:10Z). This shows scheduled Actions activity elsewhere, but does not prove whether importer schedule events were delivered, suppressed or disabled.
+- The main workflow still declares `52 * * * *` UTC and concurrency `event-importer` with `cancel-in-progress: false`. The latest health snapshot is still updated at `2026-11-04T01:37:50.589Z` and reports only `lastSuccess=2026-11-04T00:57:13Z`; the importer report remains `runAt=2026-11-04T00:57:03.098Z`. Neither is evidence of a later run.
+- The available GitHub connector cannot read the workflow enabled/disabled toggle or repository schedule event-delivery history. The run listing contains no importer run records for the four slots; it does not establish whether GitHub failed to deliver them or the workflow was disabled after run #71. No evidence of a queued or cancelled importer run was returned.
+- **Decision:** keep the schedule unchanged and do not manually dispatch. Do not change concurrency, R2, credentials or secrets. Cadence remains unverified; require two consecutive successful scheduled runs. Next expected slot after this audit: 05:52Z (16:52 Melbourne).
+
+### Current repository handover
+- Main at the start of this audit: `94d8ac9a76fb6884ea0db4f2b93a07783f17cc12` (`Record notification state after public update`, data-only). No open PRs. #319 remains production-verified as recorded in the preceding update: exact production build `1ec84642-414b-4e41-aeab-1fc325ce8bfe`, Worker version `ba53435f-a541-4d92-96d4-0171cc32bbaa`, Tests `41767062417`, CodeQL `41767062431`, Site check `41767062419`, slow-feed smoke `41767062469`. No new app code or production change was made in this audit.
+- No owner-controlled resources were changed. Owner PIN session hardening remains separate; no secret, Access, D1, R2, backup or preview setting was touched.
