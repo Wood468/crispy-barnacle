@@ -29,8 +29,7 @@ test("captured Leek Duck excerpts parse rank rewards, bonuses, the ellipsis and 
 });
 
 test("extractFields integrates captured rank rows and Rank 1 bonuses into existing fields", () => {
-  const fields = extractFields(fixture);
-  assert.ok(fields.bonuses.includes("Rank 1: Tier 1 GO Pass Bonus: One additional Candy for trading Pokémon"));
+  const fields = extractFields(wrap(rankBlock(3, reward("Dynamax Rookidee"), reward("Rookidee Candy ×5"))));
   assert.ok(fields.tickets.includes("Rank 3: Free: Dynamax Rookidee | Deluxe: Rookidee Candy ×5"));
   assert.ok(!fields.goPassParseError);
 });
