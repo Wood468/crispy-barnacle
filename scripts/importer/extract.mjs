@@ -1,5 +1,6 @@
 // Pulls the same fields out of any article: what a heading says it is about decides where the lines under it go.
 import { htmlToLines } from "./text.mjs";
+import { extractLeekDuckGoPassRewards } from "./gopass.mjs";
 
 export const FIELDS = ["bonuses", "featured", "raids", "eggs", "research", "shiny", "moves", "costumes", "tickets", "dates"];
 const HEAD = [
@@ -118,6 +119,20 @@ export function extractFields(html) {
       }
     }
     for (const [f, re] of LINE) if (re.test(l.text) && f !== cur) add(f, l.text);
+  }
+  // Leek Duck renders GO Pass ranks as nested divs, not table rows. Parse that
+  // source-specific structure separately; malformed pass markup is reported but
+  // does not discard the article's other successfully extracted details.
+  if (typeof html === "string" && /<div\\b(?=[^>]*class=["'][^"']*\\bbattle-pass-container\\b)/i.test(html)) {
+    try {
+      const pass = extractLeekDuckGoPassRewards(html);
+      if (pass) {
+        for (const item of pass.bonusItems) add("bonuses", "Rank " + item.rank + ": " + item.name);
+        for (const row of pass.tickets) add("tickets", row);
+      }
+    } catch (error) {
+      out.goPassParseError = error instanceof Error ? error.message : String(error);
+    }
   }
   return out;
 }
