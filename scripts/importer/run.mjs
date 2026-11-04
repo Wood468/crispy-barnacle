@@ -179,7 +179,7 @@ async function main() {
     if (pages.length >= MAX_PAGES) break;
     try {
       const html = await get(f.url);
-      const title = pageTitle(html) || f.title, fields = extractFields(html);
+      const title = pageTitle(html) || f.title, fields = extractFields(html); if (fields.goPassParseError) errors.push(f.url + ": GO Pass parser: " + fields.goPassParseError);
       const lines = htmlToLines(html);
       if (hasContent(fields) || lines.length) pages.push({ ...f, title, fields, lines });
       await new Promise(r => setTimeout(r, 400));
