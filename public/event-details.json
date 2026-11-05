@@ -1,9 +1,9 @@
 {
- "updated": "2026-11-05T18:19:54.818Z",
+ "updated": "2026-11-05T23:52:38.381Z",
  "events": {
   "wag": {
    "name": "GO Wild Area: Global",
-   "updated": "2026-11-05T18:19:54.818Z",
+   "updated": "2026-11-05T23:52:38.381Z",
    "sources": [
     {
      "id": "official",
@@ -80,7 +80,7 @@
   },
   "leekduck:pokemon-go-wild-area-2026-sendai-japan": {
    "name": "Pokémon GO Wild Area 2026: Sendai • Tohoku",
-   "updated": "2026-11-05T18:19:54.818Z",
+   "updated": "2026-11-05T23:52:38.381Z",
    "sources": [
     {
      "id": "leekduck",
@@ -466,7 +466,7 @@
   },
   "leekduck:pokemon-go-wild-area-2026-mexico-city": {
    "name": "Pokémon GO Wild Area 2026: Mexico City",
-   "updated": "2026-11-05T18:19:54.818Z",
+   "updated": "2026-11-05T23:52:38.381Z",
    "sources": [
     {
      "id": "leekduck",
@@ -901,7 +901,7 @@
   },
   "gopassnov": {
    "name": "GO Pass: November",
-   "updated": "2026-11-05T18:19:54.818Z",
+   "updated": "2026-11-05T23:52:38.381Z",
    "sources": [
     {
      "id": "leekduck",
@@ -1155,7 +1155,7 @@
   },
   "sendai": {
    "name": "GO Wild Area: Sendai",
-   "updated": "2026-11-05T18:19:54.818Z",
+   "updated": "2026-11-05T23:52:38.381Z",
    "sources": [
     {
      "id": "official",
@@ -1180,9 +1180,340 @@
    "gaps": [],
    "researchTasks": []
   },
+  "leekduck:super-mega-raid-day-november-2026": {
+   "name": "Super Mega Raid Day",
+   "updated": "2026-11-05T23:52:38.381Z",
+   "sources": [
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "trust": "official",
+     "url": "https://pokemongo.com/news/clefable-super-mega-raid-day-2026/"
+    },
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/clefable-super-mega-raid-day-2026/"
+    },
+    {
+     "id": "hub",
+     "name": "Pokémon GO Hub",
+     "trust": "community",
+     "url": "https://pokemongohub.net/post/event/super-mega-clefable-raid-day/"
+    }
+   ],
+   "fields": {
+    "bonuses": [
+     {
+      "text": "Remote Raid limit increased to 20 from Friday, November 27, at 5:00 p.m. to Saturday, November 28, 2026, at 8:00 p.m. PST.",
+      "sources": [
+       "official",
+       "hub"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Receive up to six free Raid Passes from spinning Gym Photo Discs.",
+      "sources": [
+       "official",
+       "hub"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Clefable caught from Super Mega Raids will have Mega Level 1 unlocked.",
+      "sources": [
+       "official",
+       "hub"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Increased chance of encountering Shiny Clefable from Super Mega Raids.",
+      "sources": [
+       "official",
+       "hub"
+      ],
+      "status": "official"
+     }
+    ],
+    "featured": [
+     {
+      "text": "Mega-Evolved Pokémon Debut",
+      "sources": [
+       "official",
+       "leekduck"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Mega Clefable*",
+      "sources": [
+       "official",
+       "leekduck",
+       "hub"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Clefable caught from raids has the following CP ranges:",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "From 1322 CP to 1392 CP with no weather boost",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "From 1653 CP to 1741 CP with the Cloudy weather boost",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     }
+    ],
+    "raids": [
+     {
+      "text": "Saturday, November 28, 2026, from 2:00 p.m. to 5:00 p.m. local time",
+      "sources": [
+       "official",
+       "leekduck",
+       "hub"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Super Mega Raids will take great teamwork and may only appear at certain Gyms, so we’re making it easier to find both these raids and other Trainers to help you take them on!",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "You can visit the Map to see the locations where Super Mega Raids might appear during an event, in addition to those in progress.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Expected event-exclusive Timed Research",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Timed Research will be available during the event, with rewards including one Premium Battle Pass and an encounter with Metagross .",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "The tasks and other rewards below are expected based on Chandelure Super Mega Raid Day and will be confirmed when the event begins.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Complete the Timed Research tasks and claim their rewards before the research expires.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Super Mega Raids take teamwork and only appear at certain Gyms, often in parks and similar locations. The official Pokémon GO map shows where Super Mega Raids might appear during the event, plus raids in progress.",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     }
+    ],
+    "eggs": [],
+    "research": [
+     {
+      "text": "Timed Research will be available to Trainers during the event! Complete the research tasks to earn a Premium Battle Pass and an encounter with Metagross.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Please note that Timed Research expires. The tasks associated with Timed Research must be completed and their rewards must be claimed before the Timed Research ends.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Complete the event Timed Research for a Premium Battle Pass and an encounter with Metagross , one of the best Mega Clefable counters. Claim the rewards before the research expires.",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     }
+    ],
+    "shiny": [
+     {
+      "text": "Increased chance of encountering Shiny Clefable from Super Mega Raids.",
+      "sources": [
+       "official",
+       "leekduck",
+       "hub"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Regular Sprite | Shiny Sprite",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     }
+    ],
+    "moves": [],
+    "costumes": [],
+    "tickets": [
+     {
+      "text": "For US$4.99 (or the equivalent pricing tier in your local currency), you can purchase a ticket that grants the following bonuses.*",
+      "sources": [
+       "official",
+       "leekduck",
+       "hub"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Receive up to 14 Raid Passes from spinning Gym Photo Discs.",
+      "sources": [
+       "official",
+       "hub"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Increased chance to get Rare Candy XL from Raid Battles.",
+      "sources": [
+       "official",
+       "hub"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "An additional 5,000 XP from Super Mega Raids.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "These bonuses will be effective on Saturday, November 28, 2026, from 2:00 p.m. to 5:00 p.m. local time.",
+      "sources": [
+       "official",
+       "leekduck",
+       "hub"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Check it out in the Pokémon GO Web Store soon! You never know what else you may find.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "—The Pokémon GO team",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Tickets can be gifted to friends at Great Friends or higher. Purchases, including gifts, are non-refundable, subject to applicable law and the Terms of Service. Tickets cannot be purchased with PokéCoins.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "5,000 extra XP from Super Mega Raids",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "You can gift tickets to friends you’re at least Great Friends with. Purchases are non-refundable.",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Better deal: The Clefable Super Mega Raid Day Ultra Ticket Box in the Pokémon GO Web Store costs the same US$4.99 and adds a bonus Premium Battle Pass .",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     }
+    ],
+    "dates": [
+     {
+      "text": "Saturday, November 28, 2026, from 2:00 p.m. to 5:00 p.m. local time",
+      "sources": [
+       "official",
+       "leekduck",
+       "hub"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Based on the results of the Global Challenge, Mega Clefable will receive the following bonuses from Monday, November 30, at 12:00 p.m. PST until Sunday, December 13, at 12:00 p.m. PST",
+      "sources": [
+       "official",
+       "hub"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "The completed tiers determine the strength of the following rewards, available from Monday, November 30, at 12:00 p.m. to Sunday, December 13, 2026, at 12:00 p.m. PST :",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ]
+   },
+   "conflicts": [],
+   "gaps": [
+    {
+     "field": "bonuses",
+     "missingFrom": [
+      "leekduck"
+     ]
+    },
+    {
+     "field": "research",
+     "missingFrom": [
+      "leekduck"
+     ]
+    }
+   ],
+   "researchTasks": []
+  },
   "leekduck:pokemon-go-wild-area-2026-global": {
    "name": "Pokémon GO Wild Area 2026: Global",
-   "updated": "2026-11-05T18:19:54.818Z",
+   "updated": "2026-11-05T23:52:38.381Z",
    "sources": [
     {
      "id": "official",
@@ -1660,7 +1991,7 @@
   },
   "leekduck:into-the-wild-2026": {
    "name": "Into the Wild",
-   "updated": "2026-11-05T18:19:54.818Z",
+   "updated": "2026-11-05T23:52:38.381Z",
    "sources": [
     {
      "id": "official",
@@ -1679,6 +2010,12 @@
      "name": "Leek Duck",
      "trust": "community",
      "url": "https://leekduck.com/events/into-the-wild-2026/"
+    },
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/go-wild-area-gigantamax-machamp-power-up-timed-research/"
     },
     {
      "id": "hub",
@@ -1826,6 +2163,27 @@
       "status": "single"
      },
      {
+      "text": "Event-exclusive Timed Research",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "There will be Timed Research available to Trainers starting Friday, November 6, at 10:00 a.m. to Sunday, November 15, 2026, at 11:59 p.m. local time.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Complete the Timed Research to encounter Gigantamax Machamp and earn Machop Candy, Machop Candy XL, and Max Particles to help power it up. Timed Research tasks will also award Stardust, Ultra Balls, and more!",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
       "text": "New Trainer profile backgrounds, private Max Battle groups, exclusive Research bonuses, and avatar rewards arrive ahead of GO Wild Area 2026.",
       "sources": [
        "hub"
@@ -1862,27 +2220,6 @@
      },
      {
       "text": "Previously, entering a Max Battle lobby would automatically match Trainers with other participants. Starting with GO Wild Area 2026, Trainers will have two options when joining a battle:",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Private Group: Enter a group code to join an existing private Max Battle group",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "This should make it easier for coordinated groups to tackle difficult Max Battles without being automatically matched with other players.",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "For more information about their appearances, check out our GO Wild Area 2026: Global guide .",
       "sources": [
        "hub"
       ],
@@ -1949,6 +2286,20 @@
      },
      {
       "text": "You’ll have 365 days after using your Silver Bottle Cap to finish Hyper Training.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "There will be Timed Research available to Trainers starting Friday, November 6, at 10:00 a.m. to Sunday, November 15, 2026, at 11:59 p.m. local time.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Complete the Timed Research to encounter Gigantamax Machamp and earn Machop Candy, Machop Candy XL, and Max Particles to help power it up. Timed Research tasks will also award Stardust, Ultra Balls, and more!",
       "sources": [
        "leekduck"
       ],
@@ -2142,6 +2493,13 @@
       "status": "single"
      },
      {
+      "text": "There will be Timed Research available to Trainers starting Friday, November 6, at 10:00 a.m. to Sunday, November 15, 2026, at 11:59 p.m. local time.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
       "text": "Dates: November 6–8, 2026",
       "sources": [
        "hub"
@@ -2196,13 +2554,6 @@
        "hub"
       ],
       "status": "single"
-     },
-     {
-      "text": "Ticket add-on bonuses are active from November 6 through November 8, 2026 , allowing eligible Trainers to benefit throughout the in-person event weekend.",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
      }
     ]
    },
@@ -2252,6 +2603,7 @@
      "missingFrom": [
       "official",
       "official",
+      "leekduck",
       "leekduck"
      ]
     },
@@ -2274,7 +2626,7 @@
   },
   "dyntrails": {
    "name": "Dynamax Trails",
-   "updated": "2026-11-05T18:19:54.818Z",
+   "updated": "2026-11-05T23:52:38.381Z",
    "sources": [
     {
      "id": "official",
@@ -2531,7 +2883,7 @@
   },
   "novcd": {
    "name": "November Community Day",
-   "updated": "2026-11-05T18:19:54.818Z",
+   "updated": "2026-11-05T23:52:38.381Z",
    "sources": [
     {
      "id": "official",
@@ -2725,7 +3077,7 @@
   },
   "smr1": {
    "name": "Super Mega Raid Day",
-   "updated": "2026-11-05T18:19:54.818Z",
+   "updated": "2026-11-05T23:52:38.381Z",
    "sources": [
     {
      "id": "official",
@@ -2906,7 +3258,7 @@
   },
   "halloween2": {
    "name": "Halloween 2026, Part Two",
-   "updated": "2026-11-05T18:19:54.818Z",
+   "updated": "2026-11-05T23:52:38.381Z",
    "sources": [
     {
      "id": "official",
@@ -3512,7 +3864,7 @@
   },
   "halloween1": {
    "name": "Halloween 2026, Part One",
-   "updated": "2026-11-05T18:19:54.818Z",
+   "updated": "2026-11-05T23:52:38.381Z",
    "sources": [
     {
      "id": "official",
@@ -3784,7 +4136,7 @@
   },
   "spirits": {
    "name": "Dynamax Uxie, Mesprit and Azelf",
-   "updated": "2026-11-05T18:19:54.818Z",
+   "updated": "2026-11-05T23:52:38.381Z",
    "sources": [
     {
      "id": "official",
@@ -4026,7 +4378,7 @@
   },
   "tcg30": {
    "name": "Pokémon TCG: 30th Celebration (at stores)",
-   "updated": "2026-11-05T18:19:54.818Z",
+   "updated": "2026-11-05T23:52:38.381Z",
    "sources": [
     {
      "id": "official",
@@ -4092,7 +4444,7 @@
   },
   "sandile": {
    "name": "Sandile Hatch Day",
-   "updated": "2026-11-05T18:19:54.818Z",
+   "updated": "2026-11-05T23:52:38.381Z",
    "sources": [
     {
      "id": "official",
@@ -4250,239 +4602,9 @@
    "gaps": [],
    "researchTasks": []
   },
-  "trek": {
-   "name": "Fall Marathon: Buddy Trek",
-   "updated": "2026-11-05T18:19:54.818Z",
-   "sources": [
-    {
-     "id": "official",
-     "name": "Pokémon GO (official)",
-     "trust": "official",
-     "url": "https://pokemongo.com/news/fall-marathon-buddy-trek-2026/"
-    }
-   ],
-   "fields": {
-    "bonuses": [
-     {
-      "text": "Increased chance to encounter Shiny Electrike.",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "Reach Major Milestones on your event GO Pass to unlock the following bonuses.",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "Rank 10: Incense (excluding Daily Adventure Incense) activated during the event will last for two hours.",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "Rank 20: Earn 5× Mega Energy by exploring with Electrike or Manectric as your buddy after Mega Evolving Manectric at least once.",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     }
-    ],
-    "featured": [
-     {
-      "text": "For the first time in Pokémon GO, you’ll be able to encounter Bramblin—if you’re lucky! You may encounter Bramblin when you complete GO Pass tasks or use Incense.",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "Super Max Debut",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "Starting with the Fall Marathon: Buddy Trek event, you’ll be able to increase Mega Manectric’s Mega Level all the way up to Super Max Level for the first time in Pokémon GO! Learn more here .",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "Manectric will now be able to use an additional Charged Attack, Discharge+, when it’s Mega Evolved.",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "Trainer Battles : 50 power",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "Raid Battles : 150 power",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "You may encounter event-themed Pokémon in the wild, including Ponyta*, Doduo*, Electrike*, Blitzle*, and more! You might even encounter Skarmory*!",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "The following Pokémon will be attracted to Incense (excluding Daily Adventure Incense) during the event on the following days.",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "October 13 at 10:00 a.m. to October 16, 2026, at 10:00 a.m. local time",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "Galarian Ponyta*",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     }
-    ],
-    "raids": [],
-    "eggs": [],
-    "research": [
-     {
-      "text": "Event-themed Field Research tasks will be available.",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "There will be a free Timed Research opportunity available.",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "Timed Research rewards include the following.",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "An encounter with Pikachu wearing a marathon visor",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     }
-    ],
-    "shiny": [
-     {
-      "text": "Increased chance to encounter Shiny Electrike.",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     }
-    ],
-    "moves": [],
-    "costumes": [
-     {
-      "text": "An encounter with Pikachu wearing a marathon visor",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     }
-    ],
-    "tickets": [
-     {
-      "text": "From Tuesday, October 13, at 10:00 a.m. to Monday, October 19, 2026, at 8:00 p.m. local time, the GO Pass and GO Pass Deluxe for Fall Marathon: Buddy Trek will be available in Pokémon GO!",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "A GO Pass is a free, limited-time progression track available during a specified period. By collecting GO Points, you can increase your rank to earn rewards.",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "For US$4.99*, Trainers can upgrade to the GO Pass Deluxe, a paid version of the GO Pass that offers upgraded rewards and faster progression.",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "For US$6.99*, Trainers can upgrade to the GO Pass Deluxe + 6 Ranks to also automatically earn enough GO Points to reach Rank 7.",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "Rewards unlocked in the GO Pass will expire on Wednesday, October 21, 2026, at 8:00 p.m. local time, so be sure to claim your rewards before they’re gone!",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "Availability of event tickets and the GO Pass Deluxe may vary by region.",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     }
-    ],
-    "dates": [
-     {
-      "text": "Tuesday, October 13, at 10:00 a.m. to Monday, October 19, 2026, at 8:00 p.m. local time",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     },
-     {
-      "text": "Rewards unlocked in the GO Pass will expire on Wednesday, October 21, 2026, at 8:00 p.m. local time, so be sure to claim your rewards before they’re gone!",
-      "sources": [
-       "official"
-      ],
-      "status": "official"
-     }
-    ]
-   },
-   "conflicts": [],
-   "gaps": [],
-   "researchTasks": []
-  },
   "leekduck:pokemonspotlighthour2026-11-05": {
    "name": "Teddiursa wearing a witch hat Spotlight Hour",
-   "updated": "2026-11-05T18:19:54.818Z",
+   "updated": "2026-11-05T23:52:38.381Z",
    "sources": [
     {
      "id": "leekduck",
@@ -4539,7 +4661,7 @@
   },
   "leekduck:mega-sableye-in-mega-raids-october-2026": {
    "name": "Mega Sableye in Mega Raids",
-   "updated": "2026-11-05T18:19:54.818Z",
+   "updated": "2026-11-05T23:52:38.381Z",
    "sources": [
     {
      "id": "leekduck",
@@ -4597,7 +4719,7 @@
   },
   "leekduck:giratina-altered-forme-in-5-star-raid-battles-november-2026": {
    "name": "Giratina (Altered Forme) in 5-star Raid Battles",
-   "updated": "2026-11-05T18:19:54.818Z",
+   "updated": "2026-11-05T23:52:38.381Z",
    "sources": [
     {
      "id": "leekduck",
@@ -4669,7 +4791,7 @@
   },
   "leekduck:shadow-tornadus-incarnate-forme-in-shadow-raids-november-4-2026": {
    "name": "Shadow Tornadus (Incarnate Forme) in Shadow Raids",
-   "updated": "2026-11-05T18:19:54.818Z",
+   "updated": "2026-11-05T23:52:38.381Z",
    "sources": [
     {
      "id": "leekduck",
@@ -4712,7 +4834,7 @@
   },
   "leekduck:pokemon-night-out-london-2026": {
    "name": "Pokémon Night Out 2026 - London",
-   "updated": "2026-11-05T18:19:54.818Z",
+   "updated": "2026-11-05T23:52:38.381Z",
    "sources": [
     {
      "id": "leekduck",
@@ -4821,7 +4943,7 @@
   },
   "leekduck:max-mondays-2026-11-16": {
    "name": "Max Monday: Pokémon to be announced",
-   "updated": "2026-11-05T18:19:54.818Z",
+   "updated": "2026-11-05T23:52:38.381Z",
    "sources": [
     {
      "id": "leekduck",
@@ -4863,7 +4985,7 @@
   },
   "leekduck:raidhour20261118": {
    "name": "Cresselia and Darkrai Raid Hour",
-   "updated": "2026-11-05T18:19:54.818Z",
+   "updated": "2026-11-05T23:52:38.381Z",
    "sources": [
     {
      "id": "leekduck",
@@ -4906,7 +5028,7 @@
   },
   "leekduck:pokemonspotlighthour2026-11-19": {
    "name": "Grookey, Scorbunny, and Sobble Spotlight Hour",
-   "updated": "2026-11-05T18:19:54.818Z",
+   "updated": "2026-11-05T23:52:38.381Z",
    "sources": [
     {
      "id": "leekduck",
@@ -4941,7 +5063,7 @@
   },
   "minior2": {
    "name": "Minior Showers: Leonids",
-   "updated": "2026-11-05T18:19:54.818Z",
+   "updated": "2026-11-05T23:52:38.381Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5033,7 +5155,7 @@
   },
   "leekduck:eternamax-eternatus-max-battles-2026": {
    "name": "Eternamax Eternatus Returns",
-   "updated": "2026-11-05T18:19:54.818Z",
+   "updated": "2026-11-05T23:52:38.381Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5113,7 +5235,7 @@
   },
   "leekduck:november-communityday2026": {
    "name": "Pawniard Community Day",
-   "updated": "2026-11-05T18:19:54.818Z",
+   "updated": "2026-11-05T23:52:38.381Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5370,7 +5492,7 @@
   },
   "leekduck:dynamax-trails-2026": {
    "name": "Dynamax Trails",
-   "updated": "2026-11-05T18:19:54.818Z",
+   "updated": "2026-11-05T23:52:38.381Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5606,7 +5728,7 @@
   },
   "leekduck:max-mondays-2026-11-23": {
    "name": "Dynamax Espurr during Max Monday",
-   "updated": "2026-11-05T18:19:54.818Z",
+   "updated": "2026-11-05T23:52:38.381Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5684,7 +5806,7 @@
   },
   "leekduck:cresselia-darkrai-in-5-star-raid-battles-november-2026": {
    "name": "Cresselia and Darkrai in 5-star Raid Battles",
-   "updated": "2026-11-05T18:19:54.818Z",
+   "updated": "2026-11-05T23:52:38.381Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5756,7 +5878,7 @@
   },
   "leekduck:mega-banette-in-mega-raids-november-2026": {
    "name": "Mega Banette in Mega Raids",
-   "updated": "2026-11-05T18:19:54.818Z",
+   "updated": "2026-11-05T23:52:38.381Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5821,7 +5943,7 @@
   },
   "leekduck:raidhour20261125": {
    "name": "Deoxys (Normal, Defense, Attack, and Speed Formes) Raid Hour",
-   "updated": "2026-11-05T18:19:54.818Z",
+   "updated": "2026-11-05T23:52:38.381Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5864,7 +5986,7 @@
   },
   "leekduck:pokemonspotlighthour2026-11-26": {
    "name": "Noibat Spotlight Hour",
-   "updated": "2026-11-05T18:19:54.818Z",
+   "updated": "2026-11-05T23:52:38.381Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5897,52 +6019,9 @@
    "gaps": [],
    "researchTasks": []
   },
-  "smr2": {
-   "name": "Super Mega Raid Day",
-   "updated": "2026-11-05T18:19:54.818Z",
-   "sources": [
-    {
-     "id": "leekduck",
-     "name": "Leek Duck",
-     "trust": "community",
-     "url": "https://leekduck.com/events/super-mega-raid-day-november-2026/"
-    }
-   ],
-   "fields": {
-    "bonuses": [],
-    "featured": [],
-    "raids": [
-     {
-      "text": "The Super Mega Raid Day event will take place on November 28, 2026 from 2 pm to 5 pm. Stay tuned for more details.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ],
-    "eggs": [],
-    "research": [],
-    "shiny": [],
-    "moves": [],
-    "costumes": [],
-    "tickets": [],
-    "dates": [
-     {
-      "text": "The Super Mega Raid Day event will take place on November 28, 2026 from 2 pm to 5 pm. Stay tuned for more details.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ]
-   },
-   "conflicts": [],
-   "gaps": [],
-   "researchTasks": []
-  },
   "twilightwishes": {
    "name": "Twilight Wishes",
-   "updated": "2026-11-05T18:19:54.818Z",
+   "updated": "2026-11-05T23:52:38.381Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6208,7 +6287,7 @@
   },
   "leekduck:max-mondays-2026-11-30": {
    "name": "Dynamax Cryogonal during Max Monday",
-   "updated": "2026-11-05T18:19:54.818Z",
+   "updated": "2026-11-05T23:52:38.381Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6286,7 +6365,7 @@
   },
   "leekduck:season-24-twilight-trails": {
    "name": "Twilight Trails",
-   "updated": "2026-11-05T18:19:54.818Z",
+   "updated": "2026-11-05T23:52:38.381Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6508,7 +6587,7 @@
   },
   "leekduck:deoxys-normal-defense-attack-speed-formes-in-5-star-raid-battles-november-2026": {
    "name": "Deoxys (Normal, Defense, Attack, and Speed Formes) in 5-star Raid Battles",
-   "updated": "2026-11-05T18:19:54.818Z",
+   "updated": "2026-11-05T23:52:38.381Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6608,7 +6687,7 @@
   },
   "leekduck:mega-metagross-in-mega-raids-november-2026": {
    "name": "Mega Metagross in Mega Raids",
-   "updated": "2026-11-05T18:19:54.818Z",
+   "updated": "2026-11-05T23:52:38.381Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6680,7 +6759,7 @@
   },
   "minior3": {
    "name": "Minior Showers: Geminids",
-   "updated": "2026-11-05T18:19:54.818Z",
+   "updated": "2026-11-05T23:52:38.381Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6772,7 +6851,7 @@
   },
   "leekduck:pokemon-x-adidas-2026": {
    "name": "adidas × Pokémon Timed Research",
-   "updated": "2026-11-05T18:19:54.818Z",
+   "updated": "2026-11-05T23:52:38.381Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6851,7 +6930,7 @@
   },
   "leekduck:pokemon-go-tour-alola-kaohsiung-2027": {
    "name": "Pokémon GO Tour: Alola - Kaohsiung 2027",
-   "updated": "2026-11-05T18:19:54.818Z",
+   "updated": "2026-11-05T23:52:38.381Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6886,7 +6965,7 @@
   },
   "leekduck:pokemon-go-tour-alola-los-angeles-2027": {
    "name": "Pokémon GO Tour: Alola - Los Angeles 2027",
-   "updated": "2026-11-05T18:19:54.818Z",
+   "updated": "2026-11-05T23:52:38.381Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6921,7 +7000,7 @@
   },
   "leekduck:pokemon-go-tour-alola-global-2027": {
    "name": "Pokémon GO Tour: Alola - Global 2027",
-   "updated": "2026-11-05T18:19:54.818Z",
+   "updated": "2026-11-05T23:52:38.381Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6956,7 +7035,7 @@
   },
   "leekduck:minior-showers-eta-aquariids-2027": {
    "name": "Minior Showers: Eta Aquariids 2027",
-   "updated": "2026-11-05T18:19:54.818Z",
+   "updated": "2026-11-05T23:52:38.381Z",
    "sources": [
     {
      "id": "leekduck",
@@ -7055,7 +7134,7 @@
   },
   "leekduck:minior-showers-southern-delta-aquariids-2027": {
    "name": "Minior Showers: Southern Delta Aquariids 2027",
-   "updated": "2026-11-05T18:19:54.818Z",
+   "updated": "2026-11-05T23:52:38.381Z",
    "sources": [
     {
      "id": "leekduck",
@@ -7154,7 +7233,7 @@
   },
   "leekduck:minior-showers-perseids-2027": {
    "name": "Minior Showers: Perseids 2027",
-   "updated": "2026-11-05T18:19:54.818Z",
+   "updated": "2026-11-05T23:52:38.381Z",
    "sources": [
     {
      "id": "leekduck",
@@ -7244,175 +7323,9 @@
    "gaps": [],
    "researchTasks": []
   },
-  "leekduck:super-mega-raid-day-november-2026": {
-   "name": "Super Mega Raid Day",
-   "updated": "2026-11-05T18:19:54.818Z",
-   "sources": [
-    {
-     "id": "hub",
-     "name": "Pokémon GO Hub",
-     "trust": "community",
-     "url": "https://pokemongohub.net/post/event/super-mega-clefable-raid-day/"
-    }
-   ],
-   "fields": {
-    "bonuses": [
-     {
-      "text": "Increased chance to encounter shiny Clefable from Super Mega Raids",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Up to six free Raid Passes from spinning Gym Photo Discs",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Remote Raid limit increased to 20 from Friday, November 27, at 5:00 p.m. to Saturday, November 28,2026, at 8:00 p.m. PDT.",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     }
-    ],
-    "featured": [
-     {
-      "text": "Mega Clefable will debut in Super Mega Raids during the event! Mega Clefable is a Fairy and Flying type Pokémon.",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Clefable can be encounter in the following CP ranges from Raid Encounters:",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "From 1322 CP to 1392 CP , with no weather boost",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "From 1653 CP to 1741 CP with Cloudy and Windy weather boost",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     }
-    ],
-    "raids": [
-     {
-      "text": "Mega Clefable will debut during a special Super Mega Raid Day event on Saturday, November 28, 2026, from 2:00 p.m. to 5:00 p.m. local time .",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Super Mega Raids will take great teamwork and may only appear at certain Gyms, so to make it easier to find nearby Gyms, Power Spots, and more, Pokémon GO has a new web-based map.",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     }
-    ],
-    "eggs": [],
-    "research": [],
-    "shiny": [
-     {
-      "text": "Regular Sprite | Shiny Sprite",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Clefable | Clefable",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     }
-    ],
-    "moves": [],
-    "costumes": [],
-    "tickets": [
-     {
-      "text": "For US$4.99 (or the equivalent pricing tier in your local currency), you can purchase the event ticket offering the following bonuses:",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Up to 14 Raid Passes from spinning Gym Photo Discs",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Increased chance to get Rare Candy XL from Raid Battles",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "5,000 XP extra from Super Mega Raids.",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "These bonuses will be effective on Saturday, November 28,2026, from 2:00 p.m. to 5:00 p.m. local time.",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     }
-    ],
-    "dates": [
-     {
-      "text": "Mega Clefable will debut during a special Super Mega Raid Day event on Saturday, November 28, 2026, from 2:00 p.m. to 5:00 p.m. local time .",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Remote Raid limit increased to 20 from Friday, November 27, at 5:00 p.m. to Saturday, November 28,2026, at 8:00 p.m. PDT.",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "These bonuses will be effective on Saturday, November 28,2026, from 2:00 p.m. to 5:00 p.m. local time.",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     }
-    ]
-   },
-   "conflicts": [],
-   "gaps": [],
-   "researchTasks": []
-  },
   "leekduck:go-pass-november-2026": {
    "name": "GO Pass: November",
-   "updated": "2026-11-05T18:19:54.818Z",
+   "updated": "2026-11-05T23:52:38.381Z",
    "sources": [
     {
      "id": "hub",
@@ -7561,7 +7474,7 @@
   },
   "leekduck:twilight-wishes-2026": {
    "name": "Twilight Wishes",
-   "updated": "2026-11-05T18:19:54.818Z",
+   "updated": "2026-11-05T23:52:38.381Z",
    "sources": [
     {
      "id": "hub",
@@ -7844,6 +7757,279 @@
       "text": "Pokémon GO’s Twilight Wishes event runs from November 24 at 10:00 a.m. to November 30, 2026, at 8:00 p.m. local time , bringing back Sun Scarf Espeon and Moon Scarf Umbreon alongside Sun Crown and Moon Crown Pikachu!",
       "sources": [
        "hub"
+      ],
+      "status": "single"
+     }
+    ]
+   },
+   "conflicts": [],
+   "gaps": [],
+   "researchTasks": []
+  },
+  "trek": {
+   "name": "Fall Marathon: Buddy Trek",
+   "updated": "2026-11-05T18:19:54.818Z",
+   "sources": [
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "trust": "official",
+     "url": "https://pokemongo.com/news/fall-marathon-buddy-trek-2026/"
+    }
+   ],
+   "fields": {
+    "bonuses": [
+     {
+      "text": "Increased chance to encounter Shiny Electrike.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Reach Major Milestones on your event GO Pass to unlock the following bonuses.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Rank 10: Incense (excluding Daily Adventure Incense) activated during the event will last for two hours.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Rank 20: Earn 5× Mega Energy by exploring with Electrike or Manectric as your buddy after Mega Evolving Manectric at least once.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     }
+    ],
+    "featured": [
+     {
+      "text": "For the first time in Pokémon GO, you’ll be able to encounter Bramblin—if you’re lucky! You may encounter Bramblin when you complete GO Pass tasks or use Incense.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Super Max Debut",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Starting with the Fall Marathon: Buddy Trek event, you’ll be able to increase Mega Manectric’s Mega Level all the way up to Super Max Level for the first time in Pokémon GO! Learn more here .",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Manectric will now be able to use an additional Charged Attack, Discharge+, when it’s Mega Evolved.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Trainer Battles : 50 power",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Raid Battles : 150 power",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "You may encounter event-themed Pokémon in the wild, including Ponyta*, Doduo*, Electrike*, Blitzle*, and more! You might even encounter Skarmory*!",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "The following Pokémon will be attracted to Incense (excluding Daily Adventure Incense) during the event on the following days.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "October 13 at 10:00 a.m. to October 16, 2026, at 10:00 a.m. local time",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Galarian Ponyta*",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     }
+    ],
+    "raids": [],
+    "eggs": [],
+    "research": [
+     {
+      "text": "Event-themed Field Research tasks will be available.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "There will be a free Timed Research opportunity available.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Timed Research rewards include the following.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "An encounter with Pikachu wearing a marathon visor",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     }
+    ],
+    "shiny": [
+     {
+      "text": "Increased chance to encounter Shiny Electrike.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     }
+    ],
+    "moves": [],
+    "costumes": [
+     {
+      "text": "An encounter with Pikachu wearing a marathon visor",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     }
+    ],
+    "tickets": [
+     {
+      "text": "From Tuesday, October 13, at 10:00 a.m. to Monday, October 19, 2026, at 8:00 p.m. local time, the GO Pass and GO Pass Deluxe for Fall Marathon: Buddy Trek will be available in Pokémon GO!",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "A GO Pass is a free, limited-time progression track available during a specified period. By collecting GO Points, you can increase your rank to earn rewards.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "For US$4.99*, Trainers can upgrade to the GO Pass Deluxe, a paid version of the GO Pass that offers upgraded rewards and faster progression.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "For US$6.99*, Trainers can upgrade to the GO Pass Deluxe + 6 Ranks to also automatically earn enough GO Points to reach Rank 7.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Rewards unlocked in the GO Pass will expire on Wednesday, October 21, 2026, at 8:00 p.m. local time, so be sure to claim your rewards before they’re gone!",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Availability of event tickets and the GO Pass Deluxe may vary by region.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     }
+    ],
+    "dates": [
+     {
+      "text": "Tuesday, October 13, at 10:00 a.m. to Monday, October 19, 2026, at 8:00 p.m. local time",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Rewards unlocked in the GO Pass will expire on Wednesday, October 21, 2026, at 8:00 p.m. local time, so be sure to claim your rewards before they’re gone!",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     }
+    ]
+   },
+   "conflicts": [],
+   "gaps": [],
+   "researchTasks": []
+  },
+  "smr2": {
+   "name": "Super Mega Raid Day",
+   "updated": "2026-11-05T18:19:54.818Z",
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/super-mega-raid-day-november-2026/"
+    }
+   ],
+   "fields": {
+    "bonuses": [],
+    "featured": [],
+    "raids": [
+     {
+      "text": "The Super Mega Raid Day event will take place on November 28, 2026 from 2 pm to 5 pm. Stay tuned for more details.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "eggs": [],
+    "research": [],
+    "shiny": [],
+    "moves": [],
+    "costumes": [],
+    "tickets": [],
+    "dates": [
+     {
+      "text": "The Super Mega Raid Day event will take place on November 28, 2026 from 2 pm to 5 pm. Stay tuned for more details.",
+      "sources": [
+       "leekduck"
       ],
       "status": "single"
      }

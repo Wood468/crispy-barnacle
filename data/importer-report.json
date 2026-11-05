@@ -1,12 +1,12 @@
 {
- "runAt": "2026-11-05T18:19:54.818Z",
+ "runAt": "2026-11-05T23:52:38.381Z",
  "sources": {
   "official": {
    "listed": 22,
    "error": ""
   },
   "leekduck": {
-   "listed": 39,
+   "listed": 40,
    "error": ""
   },
   "hub": {
@@ -120,11 +120,6 @@
    "source": "hub",
    "title": "Shadow Poliwhirl Raid Guide",
    "url": "https://pokemongohub.net/post/guide/shadow-poliwhirl-raid-guide/"
-  },
-  {
-   "source": "hub",
-   "title": "Shadow Prinplup Raid Counters Guide",
-   "url": "https://pokemongohub.net/post/guide/shadow-prinplup-raid-counters-guide/"
   }
  ],
  "intl": {
@@ -259,6 +254,20 @@
    ]
   },
   {
+   "event": "Super Mega Raid Day",
+   "field": "bonuses",
+   "missingFrom": [
+    "leekduck"
+   ]
+  },
+  {
+   "event": "Super Mega Raid Day",
+   "field": "research",
+   "missingFrom": [
+    "leekduck"
+   ]
+  },
+  {
    "event": "Pokémon GO Wild Area 2026: Global",
    "field": "bonuses",
    "missingFrom": [
@@ -372,6 +381,7 @@
    "missingFrom": [
     "official",
     "official",
+    "leekduck",
     "leekduck"
    ]
   },
