@@ -1,10 +1,10 @@
 {
- "updated": "2026-11-05T17:24:41.571Z",
+ "updated": "2026-11-05T23:38:49.917Z",
  "status": [
   {
    "id": "hub",
    "state": "ok",
-   "items": 5
+   "items": 6
   },
   {
    "id": "miners-assets",
@@ -19,15 +19,15 @@
   {
    "id": "reddit-silph",
    "state": "ok",
-   "items": 11
+   "items": 9
   },
   {
    "id": "youtube-pogo",
-   "state": "ok",
-   "items": 2
+   "state": "error",
+   "note": "HTTP 404"
   }
  ],
- "gaps": 5,
+ "gaps": 6,
  "items": [
   {
    "source": "reddit-silph",
@@ -60,6 +60,20 @@
    "notInOurData": [
     "Umbreon",
     "Espeon"
+   ]
+  },
+  {
+   "source": "hub",
+   "trust": "community",
+   "title": "Super Mega Clefable Raid Day",
+   "link": "https://pokemongohub.net/post/event/super-mega-clefable-raid-day/",
+   "date": "2026-11-05T18:14:11.000Z",
+   "summary": "Mega Clefable debuts during Clefable Super Mega Raid Day on Saturday, November 28, 2026, from 2:00 p.m. to 5:00 p.m. local time. Mega Clefable appears in Super Mega Raids with an increased chance to b",
+   "pokemon": [
+    "Clefable"
+   ],
+   "notInOurData": [
+    "Clefable"
    ]
   },
   {
@@ -194,18 +208,6 @@
    "notInOurData": []
   },
   {
-   "source": "reddit-silph",
-   "trust": "tip",
-   "title": "Different pokemon from an event box with same IV gender and level?",
-   "link": "https://www.reddit.com/r/TheSilphRoad/comments/1xjr46u/different_pokemon_from_an_event_box_with_same_iv/",
-   "date": "2026-10-30T20:54:41.000Z",
-   "summary": "<!-- SC_OFF --><div class=\"md\"><p>Was playing with a friend and encountered a weird thing about those event boxes. He was about to transfer some Pokemon and found that he had caught a perfect costume ",
-   "pokemon": [
-    "Gengar"
-   ],
-   "notInOurData": []
-  },
-  {
    "source": "hub",
    "trust": "community",
    "title": "Super Mega Chandelure Raid Day",
@@ -215,36 +217,6 @@
    "pokemon": [
     "Chandelure"
    ],
-   "notInOurData": []
-  },
-  {
-   "source": "reddit-silph",
-   "trust": "tip",
-   "title": "How shiny predicting worked",
-   "link": "https://www.reddit.com/r/TheSilphRoad/comments/1xjazpa/how_shiny_predicting_worked/",
-   "date": "2026-10-30T09:45:22.000Z",
-   "summary": "<!-- SC_OFF --><div class=\"md\"><p>Hi all, I was the person who originally found how to predict shinies. It's now been patched, so here's how to do it for everyone curious:</p> <p>```java static boolea",
-   "pokemon": [],
-   "notInOurData": []
-  },
-  {
-   "source": "youtube-pogo",
-   "trust": "official",
-   "title": "New costumed Pokémon make their debuts during Halloween 2026 Part I in Pokémon GO!",
-   "link": "https://www.youtube.com/shorts/I6MvdaExyIg",
-   "date": "2026-10-27T17:00:40.000Z",
-   "summary": "",
-   "pokemon": [],
-   "notInOurData": []
-  },
-  {
-   "source": "youtube-pogo",
-   "trust": "official",
-   "title": "New costumed Pokémon make their debuts during Halloween 2026 Part I in Pokémon GO!",
-   "link": "https://www.youtube.com/watch?v=wyN2y-BgpoU",
-   "date": "2026-10-27T17:00:14.000Z",
-   "summary": "",
-   "pokemon": [],
    "notInOurData": []
   }
  ]
