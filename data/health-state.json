@@ -1,7 +1,9 @@
 {
  "alerted": [
-  "g47ix-infographics.yml",
-  "ai-heartbeat-pipeline"
+  "store-watch.yml",
+  "discord_sync.yml",
+  "ai-heartbeat-pipeline",
+  "ai-heartbeat-shiny"
  ],
  "unmatched": []
 }
