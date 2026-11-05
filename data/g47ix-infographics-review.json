@@ -14,15 +14,19 @@
       "url": "https://discord.com/channels/@me/1558793395198099618/1567818617846894664",
       "publishedAt": "2026-11-05T08:31:27.156000+00:00",
       "imageUrl": "https://cdn.discordapp.com/attachments/886998693897719819/1567211604809097236/FOL_26.png?ex=6aed554b&is=6aec03cb&hm=927081925597e4522c805d4b52da50bf4cb5500f5380c50319b4d788114ed327&",
-      "reviewStatus": "unmatched",
-      "decision": "pending",
+      "reviewStatus": "published",
+      "decision": "approved",
       "ocrChecked": true,
       "ocrText": "=o India Exclusive We tL a6 Jo CH im * <4 Y a “0 i ¥< 2 Vy AN V/ e Va ve aoe 8:00 pm —— —_Z fp Ki Be SPECIAL BACKGROUND OLLECTION CHANCE i ce .” CHALLENGES 6:00 pm 6:30 pm 7:00 pm 7:30 pm ++ Mgt , ++ = # t+ ot + t+ + + + A a“ + x et 4+ + A ~ + i) fp w a > o~ $ tee’ as ll A t+ e+ 4+ ++ t+ Some f » it event-themed i) o Pokémon A will sere WAN +4 sek + 4+ MERZ : See 7% duration or",
       "eventMatch": null,
       "reviewNote": "No event name found in the caption or image text.",
       "signals": [],
       "matchScore": 0,
-      "stagedPath": "/infographics/g47ix/discord-1567818617846894664.webp"
+      "stagedPath": "/infographics/g47ix/discord-1567818617846894664.webp",
+      "publishedEvent": "w-celebrate-the-festival-of-lights-with-the-return-o",
+      "publishedEvents": [
+        "w-celebrate-the-festival-of-lights-with-the-return-o"
+      ]
     },
     {
       "id": "discord:1567493738429812858",
@@ -32,8 +36,8 @@
       "url": "https://discord.com/channels/@me/1558793395198099618/1567493738429812858",
       "publishedAt": "2026-11-04T11:00:29.867000+00:00",
       "imageUrl": "https://cdn.discordapp.com/attachments/886998693897719819/1567488831551184996/SH_XP_EVO_2025_2-1.png?ex=6aec5d3b&is=6aeb0bbb&hm=32ed48fede36f86e8fa8fd60a83c2529588e299d15f635b56f3577cf550d78e1&",
-      "reviewStatus": "needs_review",
-      "decision": "pending",
+      "reviewStatus": "rejected",
+      "decision": "rejected",
       "ocrChecked": true,
       "ocrText": "(local time) oe? s) oS) NOV ——— 6:00 - 7:00 pm TE EBSA ce | Evolve Pokémon that require a | ‘@ Rank 1 PvP for evolving small amount of candies for SY 0/14/15 wi 14.5 TA Pokémon evolution to earn a lot of XP JF 1/15/15 Wi24 - Evolution New Pokédex www.goiv.app xP entry XP é yw 2000 xP 3000 XI Remember about @ 2000 xe @ 6000 xP Lucky Egg! ADVENTURE EFFECTS Spadal Rend of Shock Freeze as) Mega Evolve for bonuses & Shiny is available Roar Ice Please note - shiny rate is not of Time Burn boosted during Spotlight Hour GSO 6 y Future Sight+ Follow formore GA7ZIX @O aXe www.g47ix.pro",
       "eventMatch": {
@@ -70,7 +74,8 @@
         "picture text names the event"
       ],
       "matchScore": 2,
-      "stagedPath": "/infographics/g47ix/discord-1567493738429812858.png"
+      "stagedPath": "/infographics/g47ix/discord-1567493738429812858.png",
+      "publishedEvents": []
     },
     {
       "id": "discord:1567456104860885044",
@@ -80,8 +85,8 @@
       "url": "https://discord.com/channels/@me/1558793395198099618/1567456104860885044",
       "publishedAt": "2026-11-04T08:30:57.325000+00:00",
       "imageUrl": "https://cdn.discordapp.com/attachments/886998693897719819/1566910944611799221/GOPass_Nov_26.png?ex=6aec3d48&is=6aeaebc8&hm=d1c3b7e6ebdcff7bd0ccd0d85008956d8cb45e3b8334f8033f76907cd4e3db09&",
-      "reviewStatus": "needs_review",
-      "decision": "pending",
+      "reviewStatus": "published",
+      "decision": "approved",
       "ocrChecked": true,
       "ocrText": "qa ¢ Starting \\VZ GO Pass ep = November NOV ++ a ‘ai44 DELUXE Ww Sete od &, Groudon 1000 Poke Coins a (IA PZ Dy Additional — .< S\\e@ encounters g AND MORE AND MORE = N Se. ——— Major Milestone Bonuses Tier 1 - Rank 1 | One additional Candy and one guaranteed Candy XL* for trading Pokémon Tier 2 - Rank 25 Tier 2 - Rank 25 ‘i Open up to 40 Gifts per day ) Open up to 50 Gifts per day Receive up to 125 Gifts per day Receive up to 150 Gifts per day Hold 10 more Gifts Hold 20 more Gifts Tier 4 - Rank 75 | Increased Stardust and XP from hatching Eggs ~ > From November 28-29 there’s no daily limit on the number of GO Points you can earn! Follow for more G47|X £) Ox i oe *for Trainers level 31 and above www.g47ix.pro",
       "eventMatch": {
@@ -130,7 +135,11 @@
         "posted around the event"
       ],
       "matchScore": 6,
-      "stagedPath": "/infographics/g47ix/discord-1567456104860885044.png"
+      "stagedPath": "/infographics/g47ix/discord-1567456104860885044.png",
+      "publishedEvent": "gopassnov",
+      "publishedEvents": [
+        "gopassnov"
+      ]
     },
     {
       "id": "discord:1567338528482926603",

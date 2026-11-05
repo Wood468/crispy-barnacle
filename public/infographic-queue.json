@@ -2,7 +2,7 @@
  "updated": "2026-11-05T08:49:09.264Z",
  "items": [
   {
-   "linked": false,
+   "linked": true,
    "id": "discord:1567818617846894664",
    "title": "FOL 26",
    "image": "/infographics/g47ix/discord-1567818617846894664.webp",
@@ -17,40 +17,7 @@
    "guesses": []
   },
   {
-   "linked": false,
-   "id": "discord:1567493738429812858",
-   "title": "SH XP EVO 2025 2 1",
-   "image": "/infographics/g47ix/discord-1567493738429812858.png",
-   "post": "https://discord.com/channels/@me/1558793395198099618/1567493738429812858",
-   "creator": "",
-   "source": "discord",
-   "publishedAt": "2026-11-04T11:00:29.867000+00:00",
-   "note": "Match is not strong enough (medium).",
-   "history": false,
-   "signals": [
-    "picture text names the event"
-   ],
-   "text": "(local time) oe? s) oS) NOV ——— 6:00 - 7:00 pm TE EBSA ce | Evolve Pokémon that require a | ‘@ Rank 1 PvP for evolving small amount of candies for SY 0/14/15 wi 14.5 TA Pokémon evolution to earn a lot of XP JF 1/15/15 Wi24 - Evolution New Pokédex www.goiv.app xP entry XP é yw 2000 xP 3000 XI Remember about @ 2000 xe @ 6000 xP Lucky Egg! ADVENTURE EFFECTS Spadal Rend of Shock Freeze as) Mega Evolve for bonuses & Shiny is available Roar Ice Please note - shiny rate is not of Time Burn boosted during Spotlight Hour GSO 6 y Future Sight+ Follow formore GA7ZIX @O aXe www.g47ix.pro",
-   "guesses": [
-    {
-     "eventId": "leekduck:pokemonspotlighthour2026-11-26",
-     "eventTitle": "Noibat Spotlight Hour",
-     "score": 0.527
-    },
-    {
-     "eventId": "leekduck:pokemonspotlighthour2026-10-29",
-     "eventTitle": "Gastly Spotlight Hour",
-     "score": 0.527
-    },
-    {
-     "eventId": "leekduck:pokemonspotlighthour2026-10-22",
-     "eventTitle": "Morelull Spotlight Hour",
-     "score": 0.527
-    }
-   ]
-  },
-  {
-   "linked": false,
+   "linked": true,
    "id": "discord:1567456104860885044",
    "title": "GOPass Nov 26",
    "image": "/infographics/g47ix/discord-1567456104860885044.png",

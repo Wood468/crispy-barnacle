@@ -1391,8 +1391,18 @@
           "source": "G47IX",
           "sourceUrl": "https://discord.com/channels/@me/1558793395198099618/1566916181749932032",
           "alt": "GO Pass: November infographic"
+        },
+        {
+          "label": "Infographic · G47IX",
+          "url": "/infographics/g47ix/discord-1567456104860885044.png",
+          "source": "G47IX",
+          "sourceUrl": "https://discord.com/channels/@me/1558793395198099618/1567456104860885044",
+          "alt": "GO Pass: November infographic"
         }
-      ]
+      ],
+      "start": "2026-11-03",
+      "end": "2026-12-01",
+      "dateSource": "data.json"
     },
     "w-celebrate-the-festival-of-lights-with-the-return-o": {
       "names": [
@@ -1412,6 +1422,13 @@
           "url": "/infographics/g47ix/discord-1567217227550433310.webp",
           "source": "G47IX",
           "sourceUrl": "https://discord.com/channels/@me/1558793395198099618/1567217227550433310",
+          "alt": "Festival of Lights infographic"
+        },
+        {
+          "label": "Infographic · G47IX",
+          "url": "/infographics/g47ix/discord-1567818617846894664.webp",
+          "source": "G47IX",
+          "sourceUrl": "https://discord.com/channels/@me/1558793395198099618/1567818617846894664",
           "alt": "Festival of Lights infographic"
         }
       ],
