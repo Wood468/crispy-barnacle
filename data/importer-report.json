@@ -1,22 +1,22 @@
 {
- "runAt": "2026-11-05T09:56:04.444Z",
+ "runAt": "2026-11-05T18:19:54.818Z",
  "sources": {
   "official": {
    "listed": 22,
    "error": ""
   },
   "leekduck": {
-   "listed": 43,
+   "listed": 39,
    "error": ""
   },
   "hub": {
-   "listed": 11,
+   "listed": 13,
    "error": ""
   }
  },
  "pagesRead": 80,
  "events": 89,
- "worldEvents": 61,
+ "worldEvents": 60,
  "worldUndated": [
   "GO Wild Area Stamp Rally"
  ],
@@ -88,26 +88,6 @@
   },
   {
    "source": "leekduck",
-   "title": "Dynamax Machop during Max Monday",
-   "url": "https://leekduck.com/events/max-mondays-2026-11-02/"
-  },
-  {
-   "source": "leekduck",
-   "title": "GO Pass: October",
-   "url": "https://leekduck.com/events/go-pass-october-2026/"
-  },
-  {
-   "source": "leekduck",
-   "title": "Shadow Landorus (Incarnate Forme) in Shadow Raids",
-   "url": "https://leekduck.com/events/shadow-landorus-incarnate-forme-in-shadow-raids-october-2026/"
-  },
-  {
-   "source": "leekduck",
-   "title": "Giratina (Origin Forme) in 5-star Raid Battles",
-   "url": "https://leekduck.com/events/giratina-origin-forme-in-5-star-raid-battles-october-2026/"
-  },
-  {
-   "source": "leekduck",
    "title": "Giratina (Altered Forme) Raid Hour",
    "url": "https://leekduck.com/events/raidhour20261104/"
   },
@@ -140,6 +120,11 @@
    "source": "hub",
    "title": "Shadow Poliwhirl Raid Guide",
    "url": "https://pokemongohub.net/post/guide/shadow-poliwhirl-raid-guide/"
+  },
+  {
+   "source": "hub",
+   "title": "Shadow Prinplup Raid Counters Guide",
+   "url": "https://pokemongohub.net/post/guide/shadow-prinplup-raid-counters-guide/"
   }
  ],
  "intl": {
@@ -277,56 +262,64 @@
    "event": "Pokémon GO Wild Area 2026: Global",
    "field": "bonuses",
    "missingFrom": [
-    "official"
+    "official",
+    "hub"
    ]
   },
   {
    "event": "Pokémon GO Wild Area 2026: Global",
    "field": "featured",
    "missingFrom": [
-    "official"
+    "official",
+    "hub"
    ]
   },
   {
    "event": "Pokémon GO Wild Area 2026: Global",
    "field": "raids",
    "missingFrom": [
-    "official"
+    "official",
+    "hub"
    ]
   },
   {
    "event": "Pokémon GO Wild Area 2026: Global",
    "field": "eggs",
    "missingFrom": [
-    "official"
+    "official",
+    "hub"
    ]
   },
   {
    "event": "Pokémon GO Wild Area 2026: Global",
    "field": "research",
    "missingFrom": [
-    "official"
+    "official",
+    "hub"
    ]
   },
   {
    "event": "Pokémon GO Wild Area 2026: Global",
    "field": "shiny",
    "missingFrom": [
-    "official"
+    "official",
+    "hub"
    ]
   },
   {
    "event": "Pokémon GO Wild Area 2026: Global",
    "field": "moves",
    "missingFrom": [
-    "official"
+    "official",
+    "hub"
    ]
   },
   {
    "event": "Pokémon GO Wild Area 2026: Global",
    "field": "tickets",
    "missingFrom": [
-    "official"
+    "official",
+    "hub"
    ]
   },
   {
@@ -343,6 +336,7 @@
    "missingFrom": [
     "official",
     "official",
+    "hub",
     "hub"
    ]
   },
@@ -358,6 +352,7 @@
    "event": "Into the Wild",
    "field": "research",
    "missingFrom": [
+    "hub",
     "hub"
    ]
   },
@@ -367,6 +362,7 @@
    "missingFrom": [
     "official",
     "official",
+    "hub",
     "hub"
    ]
   },

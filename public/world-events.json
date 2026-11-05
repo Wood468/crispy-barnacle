@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-05T09:56:04.441Z",
+ "updated": "2026-11-05T18:19:54.814Z",
  "events": [
   {
    "id": "w-pokemon-fossil-museum-2026",
@@ -441,25 +441,6 @@
    "seen": "2026-10-24"
   },
   {
-   "id": "w-giratina-origin-forme-in-5-star-raid-battles",
-   "name": "Giratina (Origin Forme) in 5-star Raid Battles",
-   "place": "",
-   "area": "Worldwide",
-   "scope": "global",
-   "start": "2026-10-28",
-   "end": "2026-11-03",
-   "datesKnown": true,
-   "sources": [
-    {
-     "id": "leekduck",
-     "name": "Leek Duck",
-     "url": "https://leekduck.com/events/giratina-origin-forme-in-5-star-raid-battles-october-2026/"
-    }
-   ],
-   "status": "single",
-   "seen": "2026-11-05"
-  },
-  {
    "id": "w-halloween",
    "name": "Halloween 2026 Part 2",
    "place": "",
@@ -482,7 +463,7 @@
   {
    "id": "w-forever-stamp-rally-go-wild-area",
    "name": "Forever Stamp Rally Go Wild Area",
-   "place": "South Korea",
+   "place": "Japan",
    "area": "Asia",
    "scope": "regional",
    "start": "2026-11-03",
@@ -492,7 +473,12 @@
     {
      "id": "official",
      "name": "Pokémon GO (official)",
-     "url": "https://pokemongo.com/ko/news/forever-stamp-rally-go-wild-area-2026/"
+     "url": "https://pokemongo.com/ja/news/forever-stamp-rally-go-wild-area-2026/"
+    },
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "url": "https://pokemongo.com/ja/news/go-wild-area-stamp-rally-details-2026/"
     }
    ],
    "status": "official",
