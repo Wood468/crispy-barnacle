@@ -635,6 +635,12 @@
     if (VENUE.length && EV.length) { renderPrio(); renderTimeline(); }
     return d;
   });
+  function cardSource(ev) {
+    var label = ev.source || 'Event source';
+    return safeUrl(ev.link)
+      ? '<a class="evc-source" href="' + esc(ev.link) + '" target="_blank" rel="noopener noreferrer" aria-label="Source for ' + esc(ev.name) + ': ' + esc(label) + '">Source: ' + esc(label) + '</a>'
+      : (ev.source ? '<p class="evc-source">Source: ' + esc(label) + '</p>' : '');
+  }
   function card(ev, opt) {
     opt = opt || {};
     var week = !!opt.week, k = kindOf(ev), p = phase(ev), saved = isSaved(ev.id);
@@ -651,6 +657,7 @@
       + '<button type="button" class="more" data-open="' + esc(ev.id) + '" aria-label="Details: ' + esc(ev.name) + '">Details</button>'
       + '<button type="button" class="more info-open" data-igcard="' + esc(ev.id) + '" data-infographic="' + esc(ev.id) + '" aria-label="Open infographic for ' + esc(ev.name) + '">▧ Infographic</button>'
       + '<button type="button" class="star' + (saved ? ' on' : '') + '" data-save="' + esc(ev.id) + '" aria-pressed="' + saved + '" aria-label="Save ' + esc(ev.name) + '" title="Saved events send you a Telegram reminder">' + (saved ? '★' : '☆') + '</button></div>'
+      + cardSource(ev)
       + (ev.status === 'conflicting' ? '<p class="evc-warn">Sources disagree about the time or place. Check in the game before heading out.</p>' : '')
       + '</div></article>';
   }

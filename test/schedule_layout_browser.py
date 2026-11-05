@@ -27,7 +27,7 @@ def api(route):
 
 with sync_playwright() as p:
     browser = p.chromium.launch()
-    for width in (320, 375, 390):
+    for width in (320, 375, 390, 430, 768, 1440):
         context = browser.new_context(
             viewport={"width": width, "height": 844},
             timezone_id="Australia/Melbourne",
@@ -68,6 +68,18 @@ with sync_playwright() as p:
         if timeline.count():
             timeline.click()
         page.wait_for_selector(".wk-days")
+        page.wait_for_selector("#evtimeline .evc-source")
+        source = page.locator("#evtimeline a.evc-source").first
+        assert source.get_attribute("href").startswith("https://"), "source must link to a published URL"
+        assert "Source:" in source.inner_text(), "source attribution must be visible"
+        assert source.get_attribute("rel") == "noopener noreferrer"
+        event = source.locator("xpath=ancestor::article")
+        save = event.locator("button[data-save]")
+        save.click()
+        assert save.get_attribute("aria-pressed") == "true", "saving still works"
+        save.click()
+        assert save.get_attribute("aria-pressed") == "false", "unsaving still works"
+
 
         week = page.evaluate("""() => {
           const el = document.querySelector('#tab-events .wk-days');
