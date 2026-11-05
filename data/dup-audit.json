@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-04T22:15:49.905Z",
+ "updated": "2026-11-05T02:52:06.906Z",
  "joinedThisRun": [
   {
    "kept": "w-pokemon-fossil-museum-2026",
@@ -90,6 +90,25 @@
     "list": "world"
    },
    "why": "same dates, short matching titles"
+  },
+  {
+   "keep": {
+    "id": "wag",
+    "name": "GO Wild Area: Global",
+    "place": "",
+    "start": "2026-11-14",
+    "end": "2026-11-15",
+    "list": "curated"
+   },
+   "dupe": {
+    "id": "w-community-meetups-go-wild-area-details-asia-pacifi",
+    "name": "Community Meetups Go Wild Area Details Asia Pacific",
+    "place": "Taipei, Taiwan",
+    "start": "2026-11-14",
+    "end": "2026-11-14",
+    "list": "world"
+   },
+   "why": "same dates, 2 shared words (67%)"
   },
   {
    "keep": {

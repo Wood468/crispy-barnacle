@@ -1,5 +1,5 @@
 {
- "runAt": "2026-11-04T22:15:49.362Z",
+ "runAt": "2026-11-05T02:52:06.501Z",
  "sources": {
   "official": {
    "listed": 22,
@@ -16,7 +16,7 @@
  },
  "pagesRead": 80,
  "events": 89,
- "worldEvents": 60,
+ "worldEvents": 61,
  "worldUndated": [
   "GO Wild Area Stamp Rally"
  ],
@@ -33,11 +33,6 @@
   },
   {
    "source": "official",
-   "title": "Pokémon GO joins Pokémon 30th Anniversary Mall Exploration!",
-   "url": "https://pokemongo.com/news/apac-mall-exploration-2026/"
-  },
-  {
-   "source": "official",
    "title": "全国のイオンモールで『ポケモン GO』のハロウィンイベントを楽しもう！ — Pokémon GO",
    "url": "https://pokemongo.com/ja/news/202610aeonmall-halloween/"
   },
@@ -50,6 +45,11 @@
    "source": "official",
    "title": "Pokémon GO partners with the European Space Agency",
    "url": "https://pokemongo.com/news/european-space-agency-event/"
+  },
+  {
+   "source": "official",
+   "title": "Pokémon GO joins Pokémon 30th Anniversary Mall Exploration!",
+   "url": "https://pokemongo.com/news/apac-mall-exploration-2026/"
   },
   {
    "source": "official",
@@ -130,11 +130,6 @@
    "source": "hub",
    "title": "Shadow Prinplup Raid Counters Guide",
    "url": "https://pokemongohub.net/post/guide/shadow-prinplup-raid-counters-guide/"
-  },
-  {
-   "source": "hub",
-   "title": "Dynamax Machop Max Monday: Event Guide",
-   "url": "https://pokemongohub.net/post/event/dynamax-machop-max-monday/"
   }
  ],
  "intl": {
@@ -263,6 +258,62 @@
   },
   {
    "event": "Pokémon GO Wild Area 2026: Mexico City",
+   "field": "tickets",
+   "missingFrom": [
+    "official"
+   ]
+  },
+  {
+   "event": "Pokémon GO Wild Area 2026: Global",
+   "field": "bonuses",
+   "missingFrom": [
+    "official"
+   ]
+  },
+  {
+   "event": "Pokémon GO Wild Area 2026: Global",
+   "field": "featured",
+   "missingFrom": [
+    "official"
+   ]
+  },
+  {
+   "event": "Pokémon GO Wild Area 2026: Global",
+   "field": "raids",
+   "missingFrom": [
+    "official"
+   ]
+  },
+  {
+   "event": "Pokémon GO Wild Area 2026: Global",
+   "field": "eggs",
+   "missingFrom": [
+    "official"
+   ]
+  },
+  {
+   "event": "Pokémon GO Wild Area 2026: Global",
+   "field": "research",
+   "missingFrom": [
+    "official"
+   ]
+  },
+  {
+   "event": "Pokémon GO Wild Area 2026: Global",
+   "field": "shiny",
+   "missingFrom": [
+    "official"
+   ]
+  },
+  {
+   "event": "Pokémon GO Wild Area 2026: Global",
+   "field": "moves",
+   "missingFrom": [
+    "official"
+   ]
+  },
+  {
+   "event": "Pokémon GO Wild Area 2026: Global",
    "field": "tickets",
    "missingFrom": [
     "official"

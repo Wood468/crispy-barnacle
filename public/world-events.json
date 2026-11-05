@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-04T22:15:49.359Z",
+ "updated": "2026-11-05T02:52:06.498Z",
  "events": [
   {
    "id": "w-pokemon-fossil-museum-2026",
@@ -18,7 +18,7 @@
     }
    ],
    "status": "single",
-   "seen": "2026-11-04"
+   "seen": "2026-11-05"
   },
   {
    "id": "w-pokemon-jet-red-collaboration-event",
@@ -37,7 +37,7 @@
     }
    ],
    "status": "single",
-   "seen": "2026-11-04"
+   "seen": "2026-11-05"
   },
   {
    "id": "w-pok-mon-jet-red-collaboration",
@@ -56,7 +56,7 @@
     }
    ],
    "status": "single",
-   "seen": "2026-11-04"
+   "seen": "2026-11-05"
   },
   {
    "id": "w-pokemon-x-adidas",
@@ -99,7 +99,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-11-04"
+   "seen": "2026-11-05"
   },
   {
    "id": "w-pok-mon-go-partners-with-the-european-space-agency",
@@ -123,7 +123,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-11-04"
+   "seen": "2026-11-05"
   },
   {
    "id": "w-pokemon-go-x-esa-london",
@@ -285,7 +285,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-11-04"
+   "seen": "2026-11-05"
   },
   {
    "id": "w-aeon-mall-halloween",
@@ -323,7 +323,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-11-04"
+   "seen": "2026-11-05"
   },
   {
    "id": "w-celebrate-the-pok-mon-night-out-events-in-pok-mon-",
@@ -347,7 +347,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-11-04"
+   "seen": "2026-11-05"
   },
   {
    "id": "w-get-codes-for-exclusive-timed-research-during-the-",
@@ -366,7 +366,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-11-04"
+   "seen": "2026-11-05"
   },
   {
    "id": "w-pok-mon-go-city-safari-boston-update",
@@ -395,7 +395,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-11-04"
+   "seen": "2026-11-05"
   },
   {
    "id": "w-fc-seoul",
@@ -414,7 +414,7 @@
     }
    ],
    "status": "single",
-   "seen": "2026-11-04"
+   "seen": "2026-11-05"
   },
   {
    "id": "w-pok-mon-go-dia-de-muertos-2026-mexico-exclusive-ev",
@@ -457,7 +457,7 @@
     }
    ],
    "status": "single",
-   "seen": "2026-11-04"
+   "seen": "2026-11-05"
   },
   {
    "id": "w-halloween",
@@ -520,7 +520,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-11-04",
+   "seen": "2026-11-05",
    "mode": "in-game"
   },
   {
@@ -550,7 +550,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-11-04"
+   "seen": "2026-11-05"
   },
   {
    "id": "w-go-wild-area-2026-sendai-tohoku",
@@ -579,26 +579,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-11-04"
-  },
-  {
-   "id": "w-pok-mon-30th-anniversary-mall-exploration-jewel",
-   "name": "Pokémon 30th Anniversary Mall Exploration: Jewel",
-   "place": "Singapore (Jewel)",
-   "area": "Asia",
-   "scope": "regional",
-   "start": "2026-11-07",
-   "end": "2027-01-31",
-   "datesKnown": true,
-   "sources": [
-    {
-     "id": "official",
-     "name": "Pokémon GO (official)",
-     "url": "https://pokemongo.com/news/apac-mall-exploration-2026/"
-    }
-   ],
-   "status": "official",
-   "seen": "2026-11-04"
+   "seen": "2026-11-05"
   },
   {
    "id": "w-pok-mon-run-30-singapore",
@@ -617,7 +598,26 @@
     }
    ],
    "status": "official",
-   "seen": "2026-11-04"
+   "seen": "2026-11-05"
+  },
+  {
+   "id": "w-pok-mon-30th-anniversary-mall-exploration-jewel",
+   "name": "Pokémon 30th Anniversary Mall Exploration: Jewel",
+   "place": "Singapore (Jewel)",
+   "area": "Asia",
+   "scope": "regional",
+   "start": "2026-11-07",
+   "end": "2027-01-31",
+   "datesKnown": true,
+   "sources": [
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "url": "https://pokemongo.com/news/apac-mall-exploration-2026/"
+    }
+   ],
+   "status": "official",
+   "seen": "2026-11-05"
   },
   {
    "id": "w-pok-xciting-lands-at-changi-airport-and-jewel-get-",
@@ -636,7 +636,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-11-04"
+   "seen": "2026-11-05"
   },
   {
    "id": "w-into-the-wild",
@@ -675,7 +675,26 @@
     }
    ],
    "status": "official",
-   "seen": "2026-11-04"
+   "seen": "2026-11-05"
+  },
+  {
+   "id": "w-community-meetups-go-wild-area-details-asia-pacifi",
+   "name": "Community Meetups Go Wild Area Details Asia Pacific",
+   "place": "Taipei, Taiwan",
+   "area": "Asia",
+   "scope": "regional",
+   "start": "2026-11-14",
+   "end": "2026-11-14",
+   "datesKnown": true,
+   "sources": [
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "url": "https://pokemongo.com/ko/news/community-meetups-go-wild-area-2026-details-asia-pacific/"
+    }
+   ],
+   "status": "official",
+   "seen": "2026-11-05"
   },
   {
    "id": "w-pok-mon-run-30-new-taipei",
@@ -694,7 +713,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-11-04"
+   "seen": "2026-11-05"
   },
   {
    "id": "w-ko-gowa-global-on-site-event",
@@ -790,7 +809,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-11-04"
+   "seen": "2026-11-05"
   },
   {
    "id": "w-pok-mon-run-30-malaysia",
@@ -809,7 +828,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-11-04"
+   "seen": "2026-11-05"
   },
   {
    "id": "w-eternamax-eternatus-max-battles",
@@ -868,7 +887,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-11-04"
+   "seen": "2026-11-05"
   },
   {
    "id": "w-minior-showers-geminids",
@@ -907,7 +926,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-11-04"
+   "seen": "2026-11-05"
   },
   {
    "id": "w-pok-mon-run-30-thailand",
@@ -926,7 +945,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-11-04"
+   "seen": "2026-11-05"
   },
   {
    "id": "w-pok-mon-30th-anniversary-mall-exploration-sm-marik",
@@ -945,7 +964,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-11-04"
+   "seen": "2026-11-05"
   },
   {
    "id": "w-pok-mon-run-30-hong-kong",
@@ -964,7 +983,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-11-04"
+   "seen": "2026-11-05"
   },
   {
    "id": "w-pok-mon-30th-anniversary-mall-exploration-sm-seasi",
@@ -983,7 +1002,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-11-04"
+   "seen": "2026-11-05"
   },
   {
    "id": "w-save-the-date-pok-mon-go-tour-2027",
@@ -1002,7 +1021,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-11-04"
+   "seen": "2026-11-05"
   },
   {
    "id": "w-pokemon-go-tour-2027-los-angeles",
@@ -1040,7 +1059,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-11-04"
+   "seen": "2026-11-05"
   },
   {
    "id": "w-pokemon-go-tour-2027-global",
@@ -1078,7 +1097,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-11-04"
+   "seen": "2026-11-05"
   },
   {
    "id": "w-go-wild-area-stamp-rally-details",

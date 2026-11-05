@@ -1,5 +1,5 @@
 {
- "checked": "2026-11-04T22:15:51.780Z",
+ "checked": "2026-11-05T02:52:11.864Z",
  "compared": 48,
  "problems": [],
  "missing": [
@@ -23,6 +23,21 @@
   }
  ],
  "worldFixes": [],
- "worldConflicts": [],
+ "worldConflicts": [
+  {
+   "id": "w-community-meetups-go-wild-area-details-asia-pacifi",
+   "name": "Community Meetups Go Wild Area Details Asia Pacific",
+   "slug": "pokemon-go-wild-area-2026-global",
+   "from": [
+    "2026-11-14",
+    "2026-11-14"
+   ],
+   "to": [
+    "2026-11-14",
+    "2026-11-15"
+   ],
+   "reason": "official_source_present"
+  }
+ ],
  "added": []
 }
