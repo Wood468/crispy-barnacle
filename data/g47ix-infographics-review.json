@@ -7,6 +7,24 @@
   "eventImages": {},
   "candidates": [
     {
+      "id": "discord:1567818617846894664",
+      "source": "discord",
+      "creator": "",
+      "title": "FOL 26",
+      "url": "https://discord.com/channels/@me/1558793395198099618/1567818617846894664",
+      "publishedAt": "2026-11-05T08:31:27.156000+00:00",
+      "imageUrl": "https://cdn.discordapp.com/attachments/886998693897719819/1567211604809097236/FOL_26.png?ex=6aed554b&is=6aec03cb&hm=927081925597e4522c805d4b52da50bf4cb5500f5380c50319b4d788114ed327&",
+      "reviewStatus": "unmatched",
+      "decision": "pending",
+      "ocrChecked": true,
+      "ocrText": "=o India Exclusive We tL a6 Jo CH im * <4 Y a “0 i ¥< 2 Vy AN V/ e Va ve aoe 8:00 pm —— —_Z fp Ki Be SPECIAL BACKGROUND OLLECTION CHANCE i ce .” CHALLENGES 6:00 pm 6:30 pm 7:00 pm 7:30 pm ++ Mgt , ++ = # t+ ot + t+ + + + A a“ + x et 4+ + A ~ + i) fp w a > o~ $ tee’ as ll A t+ e+ 4+ ++ t+ Some f » it event-themed i) o Pokémon A will sere WAN +4 sek + 4+ MERZ : See 7% duration or",
+      "eventMatch": null,
+      "reviewNote": "No event name found in the caption or image text.",
+      "signals": [],
+      "matchScore": 0,
+      "stagedPath": "/infographics/g47ix/discord-1567818617846894664.webp"
+    },
+    {
       "id": "discord:1567493738429812858",
       "source": "discord",
       "creator": "",
