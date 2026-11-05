@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-04T23:40:04.239Z",
+ "updated": "2026-11-05T06:47:26.067Z",
  "status": [
   {
    "id": "hub",
@@ -19,7 +19,7 @@
   {
    "id": "reddit-silph",
    "state": "ok",
-   "items": 10
+   "items": 11
   },
   {
    "id": "youtube-pogo",
@@ -27,8 +27,24 @@
    "note": "HTTP 404"
   }
  ],
- "gaps": 4,
+ "gaps": 5,
  "items": [
+  {
+   "source": "reddit-silph",
+   "trust": "tip",
+   "title": "There’s a chance for a glitched costume Ditto encounter during Teddiursa Spotlight Hour",
+   "link": "https://www.reddit.com/r/TheSilphRoad/comments/1xob52g/theres_a_chance_for_a_glitched_costume_ditto/",
+   "date": "2026-11-05T05:59:32.000Z",
+   "summary": "<table> <tr><td> <a href=\"https://www.reddit.com/r/TheSilphRoad/comments/1xob52g/theres_a_chance_for_a_glitched_costume_ditto/\"> <img src=\"https://preview.redd.it/axk7vshxhqzh1.jpeg?width=140&amp;heig",
+   "pokemon": [
+    "Teddiursa",
+    "Ditto"
+   ],
+   "notInOurData": [
+    "Teddiursa",
+    "Ditto"
+   ]
+  },
   {
    "source": "hub",
    "trust": "community",
@@ -87,6 +103,16 @@
    "notInOurData": [
     "Noibat"
    ]
+  },
+  {
+   "source": "reddit-silph",
+   "trust": "tip",
+   "title": "Mega 4 inquiry",
+   "link": "https://www.reddit.com/r/TheSilphRoad/comments/1xo4g6f/mega_4_inquiry/",
+   "date": "2026-11-05T00:17:11.000Z",
+   "summary": "<table> <tr><td> <a href=\"https://www.reddit.com/r/TheSilphRoad/comments/1xo4g6f/mega_4_inquiry/\"> <img src=\"https://preview.redd.it/5ky6djrusozh1.jpeg?width=640&amp;crop=smart&amp;auto=webp&amp;s=3ca",
+   "pokemon": [],
+   "notInOurData": []
   },
   {
    "source": "reddit-silph",
@@ -198,16 +224,6 @@
    "link": "https://www.reddit.com/r/TheSilphRoad/comments/1xjazpa/how_shiny_predicting_worked/",
    "date": "2026-10-30T09:45:22.000Z",
    "summary": "<!-- SC_OFF --><div class=\"md\"><p>Hi all, I was the person who originally found how to predict shinies. It's now been patched, so here's how to do it for everyone curious:</p> <p>```java static boolea",
-   "pokemon": [],
-   "notInOurData": []
-  },
-  {
-   "source": "reddit-silph",
-   "trust": "tip",
-   "title": "Trainer Code usage for determining shinies has been patched",
-   "link": "https://www.reddit.com/r/TheSilphRoad/comments/1xj27zc/trainer_code_usage_for_determining_shinies_has/",
-   "date": "2026-10-30T01:22:46.000Z",
-   "summary": "<table> <tr><td> <a href=\"https://www.reddit.com/r/TheSilphRoad/comments/1xj27zc/trainer_code_usage_for_determining_shinies_has/\"> <img src=\"https://preview.redd.it/42b2se53biyh1.jpeg?width=640&amp;cr",
    "pokemon": [],
    "notInOurData": []
   }
