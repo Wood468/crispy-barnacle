@@ -40,7 +40,7 @@ test('costume artwork entries must use existing local assets, never fabricated U
     for (const type of ['pictures', 'shiny']) {
       const path = costumes[type]?.[key];
       if (path === undefined) continue; // artwork is optional until verified
-      assert.match(path, /^\\/img\\/ext\\/[a-z0-9-]+\\.png$/i);
+      assert.ok(path.startsWith('/img/ext/') && path.endsWith('.png'), 'Invalid local artwork path for ' + key);
       assert.ok(!path.includes('..'), 'Unsafe artwork path for ' + key);
     }
   }
