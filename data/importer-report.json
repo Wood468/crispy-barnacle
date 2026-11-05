@@ -1,5 +1,5 @@
 {
- "runAt": "2026-11-05T02:52:06.501Z",
+ "runAt": "2026-11-05T09:56:04.444Z",
  "sources": {
   "official": {
    "listed": 22,
@@ -10,7 +10,7 @@
    "error": ""
   },
   "hub": {
-   "listed": 10,
+   "listed": 11,
    "error": ""
   }
  },
@@ -108,8 +108,23 @@
   },
   {
    "source": "leekduck",
+   "title": "Giratina (Altered Forme) Raid Hour",
+   "url": "https://leekduck.com/events/raidhour20261104/"
+  },
+  {
+   "source": "leekduck",
    "title": "Shadow Tornadus (Incarnate Forme) in Shadow Raids",
    "url": "https://leekduck.com/events/shadow-tornadus-incarnate-forme-in-shadow-raids-november-16-2026/"
+  },
+  {
+   "source": "hub",
+   "title": "How to beat Dynamax Dialga: Complete Guide",
+   "url": "https://pokemongohub.net/post/news/how-to-beat-dynamax-dialga-complete-guide/"
+  },
+  {
+   "source": "hub",
+   "title": "How to beat Dynamax Palkia: Complete Guide",
+   "url": "https://pokemongohub.net/post/news/how-to-beat-dynamax-palkia-complete-guide/"
   },
   {
    "source": "hub",
@@ -125,11 +140,6 @@
    "source": "hub",
    "title": "Shadow Poliwhirl Raid Guide",
    "url": "https://pokemongohub.net/post/guide/shadow-poliwhirl-raid-guide/"
-  },
-  {
-   "source": "hub",
-   "title": "Shadow Prinplup Raid Counters Guide",
-   "url": "https://pokemongohub.net/post/guide/shadow-prinplup-raid-counters-guide/"
   }
  ],
  "intl": {
@@ -333,7 +343,6 @@
    "missingFrom": [
     "official",
     "official",
-    "hub",
     "hub"
    ]
   },
@@ -347,18 +356,8 @@
   },
   {
    "event": "Into the Wild",
-   "field": "eggs",
-   "missingFrom": [
-    "official",
-    "official",
-    "leekduck"
-   ]
-  },
-  {
-   "event": "Into the Wild",
    "field": "research",
    "missingFrom": [
-    "hub",
     "hub"
    ]
   },
@@ -368,7 +367,6 @@
    "missingFrom": [
     "official",
     "official",
-    "hub",
     "hub"
    ]
   },

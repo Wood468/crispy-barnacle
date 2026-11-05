@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-05T02:52:06.498Z",
+ "updated": "2026-11-05T09:56:04.441Z",
  "events": [
   {
    "id": "w-pokemon-fossil-museum-2026",
@@ -482,7 +482,7 @@
   {
    "id": "w-forever-stamp-rally-go-wild-area",
    "name": "Forever Stamp Rally Go Wild Area",
-   "place": "Japan",
+   "place": "South Korea",
    "area": "Asia",
    "scope": "regional",
    "start": "2026-11-03",
@@ -492,16 +492,11 @@
     {
      "id": "official",
      "name": "Pokémon GO (official)",
-     "url": "https://pokemongo.com/ja/news/forever-stamp-rally-go-wild-area-2026/"
-    },
-    {
-     "id": "official",
-     "name": "Pokémon GO (official)",
-     "url": "https://pokemongo.com/ja/news/go-wild-area-stamp-rally-details-2026/"
+     "url": "https://pokemongo.com/ko/news/forever-stamp-rally-go-wild-area-2026/"
     }
    ],
    "status": "official",
-   "seen": "2026-11-03"
+   "seen": "2026-11-05"
   },
   {
    "id": "w-celebrate-the-festival-of-lights-with-the-return-o",
@@ -678,25 +673,6 @@
    "seen": "2026-11-05"
   },
   {
-   "id": "w-community-meetups-go-wild-area-details-asia-pacifi",
-   "name": "Community Meetups Go Wild Area Details Asia Pacific",
-   "place": "Taipei, Taiwan",
-   "area": "Asia",
-   "scope": "regional",
-   "start": "2026-11-14",
-   "end": "2026-11-14",
-   "datesKnown": true,
-   "sources": [
-    {
-     "id": "official",
-     "name": "Pokémon GO (official)",
-     "url": "https://pokemongo.com/ko/news/community-meetups-go-wild-area-2026-details-asia-pacific/"
-    }
-   ],
-   "status": "official",
-   "seen": "2026-11-05"
-  },
-  {
    "id": "w-pok-mon-run-30-new-taipei",
    "name": "Pokémon RUN 30: New Taipei",
    "place": "New Taipei, Taiwan (New Taipei Metropolitan Park)",
@@ -710,6 +686,25 @@
      "id": "official",
      "name": "Pokémon GO (official)",
      "url": "https://pokemongo.com/news/pokemon-run-30-2026/"
+    }
+   ],
+   "status": "official",
+   "seen": "2026-11-05"
+  },
+  {
+   "id": "w-community-meetups-go-wild-area-details-asia-pacifi",
+   "name": "Community Meetups Go Wild Area Details Asia Pacific",
+   "place": "Taipei, Taiwan",
+   "area": "Asia",
+   "scope": "regional",
+   "start": "2026-11-14",
+   "end": "2026-11-14",
+   "datesKnown": true,
+   "sources": [
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "url": "https://pokemongo.com/ko/news/community-meetups-go-wild-area-2026-details-asia-pacific/"
     }
    ],
    "status": "official",
