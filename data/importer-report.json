@@ -1,8 +1,8 @@
 {
- "runAt": "2026-11-06T11:35:09.465Z",
+ "runAt": "2026-11-06T18:32:09.892Z",
  "sources": {
   "official": {
-   "listed": 22,
+   "listed": 23,
    "error": ""
   },
   "leekduck": {
@@ -55,6 +55,11 @@
    "source": "official",
    "title": "¡Celebra el espíritu de Día de Muertos en 2026! — Pokémon GO",
    "url": "https://pokemongo.com/es_MX/news/dia-de-muertos-2026/"
+  },
+  {
+   "source": "official",
+   "title": "This weekend only! Log in November 6–8 for free Timed Research featuring Gigantamax Machamp! — Pokémon GO",
+   "url": "https://pokemongo.com/news/gowildarea-2026-timed-research/"
   },
   {
    "source": "official",

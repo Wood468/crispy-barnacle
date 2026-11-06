@@ -1,9 +1,9 @@
 {
- "updated": "2026-11-06T11:35:09.465Z",
+ "updated": "2026-11-06T18:32:09.892Z",
  "events": {
   "wag": {
    "name": "GO Wild Area: Global",
-   "updated": "2026-11-06T11:35:09.465Z",
+   "updated": "2026-11-06T18:32:09.892Z",
    "sources": [
     {
      "id": "official",
@@ -80,7 +80,7 @@
   },
   "leekduck:pokemon-go-wild-area-2026-sendai-japan": {
    "name": "Pokémon GO Wild Area 2026: Sendai • Tohoku",
-   "updated": "2026-11-06T11:35:09.465Z",
+   "updated": "2026-11-06T18:32:09.892Z",
    "sources": [
     {
      "id": "leekduck",
@@ -501,7 +501,7 @@
   },
   "leekduck:pokemon-go-wild-area-2026-mexico-city": {
    "name": "Pokémon GO Wild Area 2026: Mexico City",
-   "updated": "2026-11-06T11:35:09.465Z",
+   "updated": "2026-11-06T18:32:09.892Z",
    "sources": [
     {
      "id": "leekduck",
@@ -957,7 +957,7 @@
   },
   "gopassnov": {
    "name": "GO Pass: November",
-   "updated": "2026-11-06T11:35:09.465Z",
+   "updated": "2026-11-06T18:32:09.892Z",
    "sources": [
     {
      "id": "leekduck",
@@ -1897,7 +1897,7 @@
   },
   "sendai": {
    "name": "GO Wild Area: Sendai",
-   "updated": "2026-11-06T11:35:09.465Z",
+   "updated": "2026-11-06T18:32:09.892Z",
    "sources": [
     {
      "id": "official",
@@ -1924,7 +1924,7 @@
   },
   "leekduck:super-mega-raid-day-november-2026": {
    "name": "Super Mega Raid Day",
-   "updated": "2026-11-06T11:35:09.465Z",
+   "updated": "2026-11-06T18:32:09.892Z",
    "sources": [
     {
      "id": "official",
@@ -2255,7 +2255,7 @@
   },
   "leekduck:pokemon-go-wild-area-2026-global": {
    "name": "Pokémon GO Wild Area 2026: Global",
-   "updated": "2026-11-06T11:35:09.465Z",
+   "updated": "2026-11-06T18:32:09.892Z",
    "sources": [
     {
      "id": "official",
@@ -2733,7 +2733,7 @@
   },
   "leekduck:into-the-wild-2026": {
    "name": "Into the Wild",
-   "updated": "2026-11-06T11:35:09.465Z",
+   "updated": "2026-11-06T18:32:09.892Z",
    "sources": [
     {
      "id": "official",
@@ -3375,7 +3375,7 @@
   },
   "dyntrails": {
    "name": "Dynamax Trails",
-   "updated": "2026-11-06T11:35:09.465Z",
+   "updated": "2026-11-06T18:32:09.892Z",
    "sources": [
     {
      "id": "official",
@@ -3632,7 +3632,7 @@
   },
   "novcd": {
    "name": "November Community Day",
-   "updated": "2026-11-06T11:35:09.465Z",
+   "updated": "2026-11-06T18:32:09.892Z",
    "sources": [
     {
      "id": "official",
@@ -3826,7 +3826,7 @@
   },
   "smr1": {
    "name": "Super Mega Raid Day",
-   "updated": "2026-11-06T11:35:09.465Z",
+   "updated": "2026-11-06T18:32:09.892Z",
    "sources": [
     {
      "id": "official",
@@ -4007,7 +4007,7 @@
   },
   "halloween2": {
    "name": "Halloween 2026, Part Two",
-   "updated": "2026-11-06T11:35:09.465Z",
+   "updated": "2026-11-06T18:32:09.892Z",
    "sources": [
     {
      "id": "official",
@@ -4618,7 +4618,7 @@
   },
   "halloween1": {
    "name": "Halloween 2026, Part One",
-   "updated": "2026-11-06T11:35:09.465Z",
+   "updated": "2026-11-06T18:32:09.892Z",
    "sources": [
     {
      "id": "official",
@@ -4890,7 +4890,7 @@
   },
   "spirits": {
    "name": "Dynamax Uxie, Mesprit and Azelf",
-   "updated": "2026-11-06T11:35:09.465Z",
+   "updated": "2026-11-06T18:32:09.892Z",
    "sources": [
     {
      "id": "official",
@@ -5132,7 +5132,7 @@
   },
   "tcg30": {
    "name": "Pokémon TCG: 30th Celebration (at stores)",
-   "updated": "2026-11-06T11:35:09.465Z",
+   "updated": "2026-11-06T18:32:09.892Z",
    "sources": [
     {
      "id": "official",
@@ -5198,7 +5198,7 @@
   },
   "sandile": {
    "name": "Sandile Hatch Day",
-   "updated": "2026-11-06T11:35:09.465Z",
+   "updated": "2026-11-06T18:32:09.892Z",
    "sources": [
     {
      "id": "official",
@@ -5358,7 +5358,7 @@
   },
   "leekduck:mega-sableye-in-mega-raids-october-2026": {
    "name": "Mega Sableye in Mega Raids",
-   "updated": "2026-11-06T11:35:09.465Z",
+   "updated": "2026-11-06T18:32:09.892Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5416,7 +5416,7 @@
   },
   "leekduck:giratina-altered-forme-in-5-star-raid-battles-november-2026": {
    "name": "Giratina (Altered Forme) in 5-star Raid Battles",
-   "updated": "2026-11-06T11:35:09.465Z",
+   "updated": "2026-11-06T18:32:09.892Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5488,7 +5488,7 @@
   },
   "leekduck:shadow-tornadus-incarnate-forme-in-shadow-raids-november-4-2026": {
    "name": "Shadow Tornadus (Incarnate Forme) in Shadow Raids",
-   "updated": "2026-11-06T11:35:09.465Z",
+   "updated": "2026-11-06T18:32:09.892Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5531,7 +5531,7 @@
   },
   "leekduck:pokemon-night-out-london-2026": {
    "name": "Pokémon Night Out 2026 - London",
-   "updated": "2026-11-06T11:35:09.465Z",
+   "updated": "2026-11-06T18:32:09.892Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5640,7 +5640,7 @@
   },
   "leekduck:max-mondays-2026-11-16": {
    "name": "Max Monday: Pokémon to be announced",
-   "updated": "2026-11-06T11:35:09.465Z",
+   "updated": "2026-11-06T18:32:09.892Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5682,7 +5682,7 @@
   },
   "leekduck:raidhour20261118": {
    "name": "Cresselia and Darkrai Raid Hour",
-   "updated": "2026-11-06T11:35:09.465Z",
+   "updated": "2026-11-06T18:32:09.892Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5725,7 +5725,7 @@
   },
   "leekduck:pokemonspotlighthour2026-11-19": {
    "name": "Grookey, Scorbunny, and Sobble Spotlight Hour",
-   "updated": "2026-11-06T11:35:09.465Z",
+   "updated": "2026-11-06T18:32:09.892Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5760,7 +5760,7 @@
   },
   "minior2": {
    "name": "Minior Showers: Leonids",
-   "updated": "2026-11-06T11:35:09.465Z",
+   "updated": "2026-11-06T18:32:09.892Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5852,7 +5852,7 @@
   },
   "leekduck:eternamax-eternatus-max-battles-2026": {
    "name": "Eternamax Eternatus Returns",
-   "updated": "2026-11-06T11:35:09.465Z",
+   "updated": "2026-11-06T18:32:09.892Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5932,7 +5932,7 @@
   },
   "leekduck:november-communityday2026": {
    "name": "Pawniard Community Day",
-   "updated": "2026-11-06T11:35:09.465Z",
+   "updated": "2026-11-06T18:32:09.892Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6189,7 +6189,7 @@
   },
   "leekduck:dynamax-trails-2026": {
    "name": "Dynamax Trails",
-   "updated": "2026-11-06T11:35:09.465Z",
+   "updated": "2026-11-06T18:32:09.892Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6425,7 +6425,7 @@
   },
   "leekduck:max-mondays-2026-11-23": {
    "name": "Dynamax Espurr during Max Monday",
-   "updated": "2026-11-06T11:35:09.465Z",
+   "updated": "2026-11-06T18:32:09.892Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6503,7 +6503,7 @@
   },
   "leekduck:cresselia-darkrai-in-5-star-raid-battles-november-2026": {
    "name": "Cresselia and Darkrai in 5-star Raid Battles",
-   "updated": "2026-11-06T11:35:09.465Z",
+   "updated": "2026-11-06T18:32:09.892Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6575,7 +6575,7 @@
   },
   "leekduck:mega-banette-in-mega-raids-november-2026": {
    "name": "Mega Banette in Mega Raids",
-   "updated": "2026-11-06T11:35:09.465Z",
+   "updated": "2026-11-06T18:32:09.892Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6640,7 +6640,7 @@
   },
   "leekduck:raidhour20261125": {
    "name": "Deoxys (Normal, Defense, Attack, and Speed Formes) Raid Hour",
-   "updated": "2026-11-06T11:35:09.465Z",
+   "updated": "2026-11-06T18:32:09.892Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6683,7 +6683,7 @@
   },
   "leekduck:pokemonspotlighthour2026-11-26": {
    "name": "Noibat Spotlight Hour",
-   "updated": "2026-11-06T11:35:09.465Z",
+   "updated": "2026-11-06T18:32:09.892Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6718,19 +6718,13 @@
   },
   "leekduck:twilight-wishes-2026": {
    "name": "Twilight Wishes",
-   "updated": "2026-11-06T11:35:09.465Z",
+   "updated": "2026-11-06T18:32:09.892Z",
    "sources": [
     {
      "id": "leekduck",
      "name": "Leek Duck",
      "trust": "community",
      "url": "https://leekduck.com/events/twilight-wishes-2026/"
-    },
-    {
-     "id": "hub",
-     "name": "Pokémon GO Hub",
-     "trust": "community",
-     "url": "https://pokemongohub.net/post/event/twilight-wishes-2026/"
     }
    ],
    "fields": {
@@ -6743,59 +6737,28 @@
       "status": "single"
      },
      {
-      "text": "The following bonuses will be active during Twilight Wishes:",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Increased chance to encounter Shiny Staryu and Shiny Elgyem",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "The event also features special decorations, with stars lighting up the in-game skies throughout Twilight Wishes.",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Additional bonuses, including increased Lucky Trade chances and catch Stardust, can be unlocked through the event GO Pass.",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
       "text": "Rank 1: Increased chance to get Lucky Pokémon in trades",
       "sources": [
-       "leekduck",
-       "hub"
+       "leekduck"
       ],
-      "status": "corroborated"
+      "status": "single"
+     },
+     {
+      "text": "Rank 1: Increased chance to become Lucky Friends",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
      },
      {
       "text": "Rank 10: 2× Stardust for catching Pokémon",
       "sources": [
-       "leekduck",
-       "hub"
+       "leekduck"
       ],
-      "status": "corroborated"
+      "status": "single"
      },
      {
       "text": "Rank 10: GO Pass Deluxe: 3× Stardust for catching Pokémon",
-      "sources": [
-       "leekduck",
-       "hub"
-      ],
-      "status": "corroborated"
-     },
-     {
-      "text": "Rank 1: Increased chance to become Lucky Friends",
       "sources": [
        "leekduck"
       ],
@@ -6811,23 +6774,21 @@
     ],
     "featured": [
      {
+      "text": "Espeon wearing a sun scarf, Umbreon wearing a moon scarf, and Rockruff are featured during Twilight Wishes. All three can be Shiny if you’re lucky!",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
       "text": "The following Pokémon will appear in the wild, along with other event-themed Pokémon.",
       "sources": [
-       "leekduck",
-       "hub"
+       "leekduck"
       ],
-      "status": "corroborated"
+      "status": "single"
      },
      {
       "text": "If you’re lucky, you might also encounter Rockruff!",
-      "sources": [
-       "leekduck",
-       "hub"
-      ],
-      "status": "corroborated"
-     },
-     {
-      "text": "Espeon wearing a sun scarf, Umbreon wearing a moon scarf, and Rockruff are featured during Twilight Wishes. All three can be Shiny if you’re lucky!",
       "sources": [
        "leekduck"
       ],
@@ -6881,39 +6842,22 @@
        "leekduck"
       ],
       "status": "single"
-     },
-     {
-      "text": "All featured Pokémon listed above can be encountered as Shiny Pokémon, if you’re lucky.",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
      }
     ],
     "raids": [
      {
       "text": "Pikachu wearing a sun crown",
       "sources": [
-       "leekduck",
-       "hub"
+       "leekduck"
       ],
-      "status": "corroborated"
+      "status": "single"
      },
      {
       "text": "Espeon wearing a sun scarf",
       "sources": [
-       "leekduck",
-       "hub"
+       "leekduck"
       ],
-      "status": "corroborated"
-     },
-     {
-      "text": "Mega Manectric",
-      "sources": [
-       "leekduck",
-       "hub"
-      ],
-      "status": "corroborated"
+      "status": "single"
      },
      {
       "text": "Umbreon wearing a moon scarf",
@@ -6923,16 +6867,9 @@
       "status": "single"
      },
      {
-      "text": "Event-themed Pokémon will appear in one-star, three-star, and Mega Raids throughout Twilight Wishes. All Pokémon featured in these event raids have a chance to be encountered as Shiny Pokémon.",
+      "text": "Mega Manectric",
       "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "⚔️ Related raid guides: Espeon Raid Guide , Umbreon Raid Guide",
-      "sources": [
-       "hub"
+       "leekduck"
       ],
       "status": "single"
      }
@@ -6942,10 +6879,9 @@
      {
       "text": "Complete event-themed Field Research tasks to earn Mega Energy and encounters with event-themed Pokémon, including Staryu, Elgyem, and more!",
       "sources": [
-       "leekduck",
-       "hub"
+       "leekduck"
       ],
-      "status": "corroborated"
+      "status": "single"
      },
      {
       "text": "Celebrate the Twilight Trails Season finale with additional encounters featuring Pokémon from throughout the Season. These Field Research rewards change during the event.",
@@ -6953,24 +6889,9 @@
        "leekduck"
       ],
       "status": "single"
-     },
-     {
-      "text": "To celebrate the end of the Twilight Trails Season, additional Field Research encounters will rotate during the event , featuring Pokémon from earlier seasonal events. All Field Research rotation times are local time.",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
      }
     ],
     "shiny": [
-     {
-      "text": "Staryu and Elgyem have an increased chance of being Shiny during the event.",
-      "sources": [
-       "leekduck",
-       "hub"
-      ],
-      "status": "corroborated"
-     },
      {
       "text": "Espeon wearing a sun scarf, Umbreon wearing a moon scarf, and Rockruff are featured during Twilight Wishes. All three can be Shiny if you’re lucky!",
       "sources": [
@@ -6979,30 +6900,9 @@
       "status": "single"
      },
      {
-      "text": "Sun Scarf Espeon and Moon Scarf Umbreon return alongside boosted Shiny encounters, themed raids, and a special GO Pass to close out the Twilight Trails Season.",
+      "text": "Staryu and Elgyem have an increased chance of being Shiny during the event.",
       "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "The following Pokémon will have an increased chance of appearing as Shiny Pokémon during Twilight Wishes:",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "All featured Pokémon listed above can be encountered as Shiny Pokémon, if you’re lucky.",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Event-themed Pokémon will appear in one-star, three-star, and Mega Raids throughout Twilight Wishes. All Pokémon featured in these event raids have a chance to be encountered as Shiny Pokémon.",
-      "sources": [
-       "hub"
+       "leekduck"
       ],
       "status": "single"
      }
@@ -7012,21 +6912,19 @@
      {
       "text": "Espeon wearing a sun scarf, Umbreon wearing a moon scarf, and Rockruff are featured during Twilight Wishes. All three can be Shiny if you’re lucky!",
       "sources": [
-       "leekduck",
-       "hub"
+       "leekduck"
       ],
-      "status": "corroborated"
-     },
-     {
-      "text": "Gengar wearing a Spooky Festival costume",
-      "sources": [
-       "leekduck",
-       "hub"
-      ],
-      "status": "corroborated"
+      "status": "single"
      },
      {
       "text": "Pikachu wearing a sun crown",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Gengar wearing a Spooky Festival costume",
       "sources": [
        "leekduck"
       ],
@@ -7044,10 +6942,9 @@
      {
       "text": "GO Pass Deluxe costs US$4.99 (or the equivalent local pricing tier). It offers upgraded rewards and faster progression.",
       "sources": [
-       "leekduck",
-       "hub"
+       "leekduck"
       ],
-      "status": "corroborated"
+      "status": "single"
      },
      {
       "text": "For US$6.99 (or the equivalent local pricing tier), GO Pass Deluxe + 6 Ranks also provides enough GO Points to reach Rank 7.",
@@ -7069,72 +6966,15 @@
        "leekduck"
       ],
       "status": "single"
-     },
-     {
-      "text": "A special GO Pass: Twilight Wishes will be available from Tuesday, November 24, at 10:00 a.m. to Monday, November 30, 2026, at 8:00 p.m. local time .",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "The event features a free GO Pass and a paid GO Pass Deluxe, both offering rewards as Trainers collect GO Points and progress through ranks.",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "All Trainers automatically receive the free GO Pass: Twilight Wishes on November 24 at 10:00 a.m. local time.",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Earn GO Points by completing Pass Tasks and rank up through November 30 at 8:00 p.m. local time.",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Additional bonus tasks will become available during the event.",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Complete Pass Tasks and rank up to earn rewards, including:",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Encounters with event-themed Pokémon",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Mega Energy for Beedrill, Houndoom, Sableye, and Manectric",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
      }
     ],
     "dates": [
      {
       "text": "Twilight Wishes runs from Tuesday, November 24, at 10:00 a.m. to Monday, November 30, 2026, at 8:00 p.m. local time .",
       "sources": [
-       "leekduck",
-       "hub"
+       "leekduck"
       ],
-      "status": "corroborated"
+      "status": "single"
      }
     ]
    },
@@ -7144,7 +6984,7 @@
   },
   "leekduck:max-mondays-2026-11-30": {
    "name": "Dynamax Cryogonal during Max Monday",
-   "updated": "2026-11-06T11:35:09.465Z",
+   "updated": "2026-11-06T18:32:09.892Z",
    "sources": [
     {
      "id": "leekduck",
@@ -7222,7 +7062,7 @@
   },
   "leekduck:season-24-twilight-trails": {
    "name": "Twilight Trails",
-   "updated": "2026-11-06T11:35:09.465Z",
+   "updated": "2026-11-06T18:32:09.892Z",
    "sources": [
     {
      "id": "leekduck",
@@ -7444,7 +7284,7 @@
   },
   "leekduck:deoxys-normal-defense-attack-speed-formes-in-5-star-raid-battles-november-2026": {
    "name": "Deoxys (Normal, Defense, Attack, and Speed Formes) in 5-star Raid Battles",
-   "updated": "2026-11-06T11:35:09.465Z",
+   "updated": "2026-11-06T18:32:09.892Z",
    "sources": [
     {
      "id": "leekduck",
@@ -7544,7 +7384,7 @@
   },
   "leekduck:mega-metagross-in-mega-raids-november-2026": {
    "name": "Mega Metagross in Mega Raids",
-   "updated": "2026-11-06T11:35:09.465Z",
+   "updated": "2026-11-06T18:32:09.892Z",
    "sources": [
     {
      "id": "leekduck",
@@ -7616,7 +7456,7 @@
   },
   "minior3": {
    "name": "Minior Showers: Geminids",
-   "updated": "2026-11-06T11:35:09.465Z",
+   "updated": "2026-11-06T18:32:09.892Z",
    "sources": [
     {
      "id": "leekduck",
@@ -7708,7 +7548,7 @@
   },
   "leekduck:pokemon-x-adidas-2026": {
    "name": "adidas × Pokémon Timed Research",
-   "updated": "2026-11-06T11:35:09.465Z",
+   "updated": "2026-11-06T18:32:09.892Z",
    "sources": [
     {
      "id": "leekduck",
@@ -7787,7 +7627,7 @@
   },
   "leekduck:pokemon-go-tour-alola-kaohsiung-2027": {
    "name": "Pokémon GO Tour: Alola - Kaohsiung 2027",
-   "updated": "2026-11-06T11:35:09.465Z",
+   "updated": "2026-11-06T18:32:09.892Z",
    "sources": [
     {
      "id": "leekduck",
@@ -7822,7 +7662,7 @@
   },
   "leekduck:pokemon-go-tour-alola-los-angeles-2027": {
    "name": "Pokémon GO Tour: Alola - Los Angeles 2027",
-   "updated": "2026-11-06T11:35:09.465Z",
+   "updated": "2026-11-06T18:32:09.892Z",
    "sources": [
     {
      "id": "leekduck",
@@ -7857,7 +7697,7 @@
   },
   "leekduck:pokemon-go-tour-alola-global-2027": {
    "name": "Pokémon GO Tour: Alola - Global 2027",
-   "updated": "2026-11-06T11:35:09.465Z",
+   "updated": "2026-11-06T18:32:09.892Z",
    "sources": [
     {
      "id": "leekduck",
@@ -7892,7 +7732,7 @@
   },
   "leekduck:minior-showers-eta-aquariids-2027": {
    "name": "Minior Showers: Eta Aquariids 2027",
-   "updated": "2026-11-06T11:35:09.465Z",
+   "updated": "2026-11-06T18:32:09.892Z",
    "sources": [
     {
      "id": "leekduck",
@@ -7991,7 +7831,7 @@
   },
   "leekduck:minior-showers-southern-delta-aquariids-2027": {
    "name": "Minior Showers: Southern Delta Aquariids 2027",
-   "updated": "2026-11-06T11:35:09.465Z",
+   "updated": "2026-11-06T18:32:09.892Z",
    "sources": [
     {
      "id": "leekduck",
@@ -8090,7 +7930,7 @@
   },
   "leekduck:minior-showers-perseids-2027": {
    "name": "Minior Showers: Perseids 2027",
-   "updated": "2026-11-06T11:35:09.465Z",
+   "updated": "2026-11-06T18:32:09.892Z",
    "sources": [
     {
      "id": "leekduck",
@@ -8182,7 +8022,7 @@
   },
   "leekduck:go-pass-november-2026": {
    "name": "GO Pass: November",
-   "updated": "2026-11-06T11:35:09.465Z",
+   "updated": "2026-11-06T18:32:09.892Z",
    "sources": [
     {
      "id": "hub",

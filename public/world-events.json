@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-06T11:35:09.461Z",
+ "updated": "2026-11-06T18:32:09.888Z",
  "events": [
   {
    "id": "w-pokemon-fossil-museum-2026",
@@ -463,7 +463,7 @@
   {
    "id": "w-forever-stamp-rally-go-wild-area",
    "name": "Forever Stamp Rally Go Wild Area",
-   "place": "South Korea",
+   "place": "Japan",
    "area": "Asia",
    "scope": "regional",
    "start": "2026-11-03",
@@ -473,7 +473,12 @@
     {
      "id": "official",
      "name": "Pokémon GO (official)",
-     "url": "https://pokemongo.com/ko/news/forever-stamp-rally-go-wild-area-2026/"
+     "url": "https://pokemongo.com/ja/news/forever-stamp-rally-go-wild-area-2026/"
+    },
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "url": "https://pokemongo.com/ja/news/go-wild-area-stamp-rally-details-2026/"
     }
    ],
    "status": "official",
@@ -500,22 +505,27 @@
    "mode": "in-game"
   },
   {
-   "id": "w-free-gigantamax-machamp-timed-research-available-t",
-   "name": "Free Gigantamax Machamp Timed Research Available This Weekend Only!",
+   "id": "w-this-weekend-only-log-in-november-6-8-for-free-tim",
+   "name": "This weekend only! Log in November 6–8 for free Timed Research featuring Gigantamax Machamp",
    "place": "",
    "area": "Worldwide",
    "scope": "global",
    "start": "2026-11-06",
-   "end": "2026-11-15",
+   "end": "2026-11-08",
    "datesKnown": true,
    "sources": [
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "url": "https://pokemongo.com/news/gowildarea-2026-timed-research/"
+    },
     {
      "id": "hub",
      "name": "Pokémon GO Hub",
      "url": "https://pokemongohub.net/post/news/free-gigantamax-machamp-timed-research-available-this-weekend-only/"
     }
    ],
-   "status": "single",
+   "status": "official",
    "seen": "2026-11-06"
   },
   {
