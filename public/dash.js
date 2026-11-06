@@ -1285,6 +1285,9 @@
     return '<div class="mk" role="group" aria-label="Mark ' + esc(label) + '"><button type="button" data-mark="' + esc(tk) + '" data-val="1" aria-pressed="' + (v === 1) + '" aria-label="Have: ' + esc(label) + '">Have</button><button type="button" data-mark="' + esc(tk) + '" data-val="0" aria-pressed="' + (v === 0) + '" aria-label="Need: ' + esc(label) + '">Need</button>'
       + (v !== undefined ? '<button type="button" data-mark="' + esc(tk) + '" data-val="" class="mk-clear" aria-label="Clear mark: ' + esc(label) + '">Clear</button>' : '') + '</div>';
   }
+  function opportunityEventRow(e) {
+    return '<li><button type="button" class="opp-event" data-open="' + esc(e.id) + '" aria-label="Event details: ' + esc(e.name) + '"><b>' + esc(e.name) + '</b><span>' + esc(timeMeta(e)) + ' · ' + esc(countdown(e)) + '</span></button></li>';
+  }
   function oppCard(x) {
     var o = x.o, evs = x.evs.slice(0, 3), chip = { missing: '<span class="st st-need">Need</span>', have: '<span class="st st-n">Have</span>', form: '<span class="st st-d">Not collectible</span>', unknown: '<span class="st st-n">Not tracked</span>' }[o.state];
     var fol = isFollowed(x.name);
@@ -1292,11 +1295,15 @@
       + '<div class="opp-top"><h3>' + esc(x.name) + '</h3>' + chip + '<button type="button" class="fbtn" data-follow="' + esc(x.name) + '" aria-pressed="' + fol + '" aria-label="Follow ' + esc(x.name) + '">' + (fol ? '★' : '☆') + '</button></div>'
       + (o.why ? '<p class="muted opp-why">' + esc(o.why) + '</p>' : '')
       + (o.tk ? markBtns(o.tk, x.name) : '')
-      + '<ul class="opp-evs">' + evs.map(function (e) { return '<li><b>' + esc(e.name) + '</b><span>' + esc(fmtD(e.start) + (e.allDay ? '' : ', ' + fmtT(e.start))) + ' · ' + esc(countdown(e)) + '</span></li>'; }).join('') + (x.evs.length > 3 ? '<li class="muted">+' + (x.evs.length - 3) + ' more</li>' : '') + '</ul></div></article>';
+      + '<ul class="opp-evs">' + evs.map(opportunityEventRow).join('') + '</ul>'
+      + (x.evs.length > 3 ? '<details class="opp-more"><summary>' + (x.evs.length - 3) + ' more events</summary><ul class="opp-evs">' + x.evs.slice(3).map(opportunityEventRow).join('') + '</ul></details>' : '') + '</div></article>';
   }
   function drawOpps() {
     var el = $('opps'); if (!el) return;
-    var list = opportunities(), known = Object.keys(DEXGEN).some(function (id) { return genConfirmed(DEXGEN[id]); }) || usKeys('form:').length > 0;
+    var active = document.activeElement, focusAttr = active && el.contains(active) ? ['data-follow', 'data-mark'].filter(function (key) { return active.hasAttribute(key); })[0] : '';
+    var focusValue = focusAttr ? active.getAttribute(focusAttr) : '', focusMark = focusAttr === 'data-mark' ? active.getAttribute('data-val') : '';
+    var all = opportunities(), query = $('opp-search') ? $('opp-search').value : '', mode = $('opp-filter') ? $('opp-filter').value : 'all';
+    var list = LIB.filterOpportunities(all, query, mode, isFollowed), known = Object.keys(DEXGEN).some(function (id) { return genConfirmed(DEXGEN[id]); }) || usKeys('form:').length > 0;
     var need = list.filter(function (x) { return x.o.state === 'missing'; });
     var debut = list.filter(function (x) { return (x.o.state === 'unknown' || x.o.state === 'form') && x.evs.some(function (ev) { return ev.kind === 'debut'; }); });
     var debutKeys = {};
@@ -1304,15 +1311,26 @@
     var unk = list.filter(function (x) { return (x.o.state === 'unknown' || x.o.state === 'form') && !debutKeys[(x.name || '').toLowerCase()]; });
     var have = list.filter(function (x) { return x.o.state === 'have'; });
     var html = '';
+    if ($('opp-status')) $('opp-status').textContent = list.length + ' of ' + all.length + ' Pokémon opportunities in the next four weeks. ' + (mode === 'following' ? 'Showing Pokémon you follow.' : mode === 'need' ? 'Showing only Pokémon marked Need.' : 'Showing all collection states.');
     if (!known) html += '<div class="notice"><b>Nothing is counted as Need yet.</b> In My Dex, tick what you own and confirm a generation as complete. Until then everything is shown as not tracked, never as missing.</div>';
     if (need.length) html += '<h2 class="sec2">You still need</h2><div class="opps">' + need.map(oppCard).join('') + '</div>';
-    else if (known) html += '<div class="prio-empty"><b>No Pokémon are currently marked Need for the next four weeks.</b><span>Upcoming debuts are shown separately below, even if your Dex is not tracking them yet.</span></div>';
+    else if (known && mode === 'all' && !query) html += '<div class="prio-empty"><b>No Pokémon are currently marked Need for the next four weeks.</b><span>Upcoming debuts are shown separately below, even if your Dex is not tracking them yet.</span></div>';
     if (debut.length) html += '<h2 class="sec2 dh">Upcoming Pokémon debuts</h2><p class="note" style="margin-bottom:8px">New Pokémon arriving in announced events. Mark each one Have or Need once you know your collection status.</p><div class="opps">' + debut.map(oppCard).join('') + '</div>';
     if (unk.length) html += '<h2 class="sec2 dh">' + (known ? 'Not tracked yet' : 'Featured soon') + '</h2><p class="note" style="margin-bottom:8px">' + (known ? 'Pokémon in generations you have not confirmed, and forms and costumes you have not marked. Nothing here is assumed missing.' : 'Nothing is assumed missing until you mark something.') + '</p><div class="opps">' + unk.map(oppCard).join('') + '</div>';
-    if (have.length) html += '<details class="dd" style="margin-top:10px"><summary>Already in your collection <span class="cnt">' + have.length + '</span></summary><div class="body"><div class="opps">' + have.map(oppCard).join('') + '</div></div></details>';
-    if (!list.length) html += '<p class="empty">No featured Pokémon in the next four weeks.</p>';
+    if (have.length) html += '<details class="dd"' + (query || mode !== 'all' ? ' open' : '') + ' style="margin-top:10px"><summary>Already in your collection <span class="cnt">' + have.length + '</span></summary><div class="body"><div class="opps">' + have.map(oppCard).join('') + '</div></div></details>';
+    if (!list.length) html += '<p class="empty">' + (!all.length ? 'No featured Pokémon in the next four weeks.' : mode === 'following' && !query ? 'None of the Pokémon you follow have a scheduled opportunity in the next four weeks. Follow a Pokémon from All opportunities to include it here.' : 'No opportunities match these filters. Try another Pokémon or event, or clear the filters.') + '</p>';
     el.innerHTML = html;
+    if (focusAttr) {
+      var replacement = Array.prototype.filter.call(el.querySelectorAll('[' + focusAttr + ']'), function (node) { return node.getAttribute(focusAttr) === focusValue && (focusAttr !== 'data-mark' || node.getAttribute('data-val') === focusMark); })[0];
+      (replacement || $('opp-search')).focus({ preventScroll: true });
+    }
   }
+
+  if ($('opp-search')) $('opp-search').addEventListener('input', renderOpps);
+  if ($('opp-filter')) $('opp-filter').addEventListener('change', renderOpps);
+  if ($('opp-clear')) $('opp-clear').addEventListener('click', function () {
+    $('opp-search').value = ''; $('opp-filter').value = 'all'; renderOpps(); $('opp-search').focus();
+  });
 
   /* ---------- Saved and followed ---------- */
   function drawSaved() {

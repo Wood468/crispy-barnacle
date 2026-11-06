@@ -4,6 +4,16 @@
 }(typeof self !== 'undefined' ? self : this, function () {
   'use strict';
 
+  // Filter the existing collection opportunities without inferring new ownership or changing order.
+  function filterOpportunities(rows, query, mode, followed) {
+    var q = norm(query || '');
+    return (rows || []).filter(function (row) {
+      if (mode === 'need' && row.o.state !== 'missing') return false;
+      if (mode === 'following' && !followed(row.name)) return false;
+      return !q || norm([row.name, row.o.base].concat(row.evs.map(function (e) { return e.name; })).join(' ')).indexOf(q) >= 0;
+    });
+  }
+
   // Escape untrusted values for HTML text and quoted attribute values. Validate URLs separately.
   function esc(value) {
     return String(value == null ? '' : value).replace(/[&<>"']/g, function (c) {
@@ -321,5 +331,5 @@
     return '';
   }
 
-  return { isPrivateLink: isPrivateLink, publicLink: publicLink, esc: esc, rpEstimate: rpEstimate, raidEventFor: raidEventFor, isPlaceholder: isPlaceholder, audify: audify, setTiers: setTiers, loadPrices: loadPrices, getJson: getJson, jsonOrNull: jsonOrNull, priceView: priceView, fmtRp: fmtRp, buildQueue: buildQueue, parseForm: parseForm, formId: formId, merge: merge, reconcileSync: reconcileSync, norm: norm, lev: lev, matchName: matchName, candidates: candidates, isInPersonWorldEvent: isInPersonWorldEvent, isRegionalInGameEvent: isRegionalInGameEvent, liveActivityCounts: liveActivityCounts };
+  return { filterOpportunities: filterOpportunities, isPrivateLink: isPrivateLink, publicLink: publicLink, esc: esc, rpEstimate: rpEstimate, raidEventFor: raidEventFor, isPlaceholder: isPlaceholder, audify: audify, setTiers: setTiers, loadPrices: loadPrices, getJson: getJson, jsonOrNull: jsonOrNull, priceView: priceView, fmtRp: fmtRp, buildQueue: buildQueue, parseForm: parseForm, formId: formId, merge: merge, reconcileSync: reconcileSync, norm: norm, lev: lev, matchName: matchName, candidates: candidates, isInPersonWorldEvent: isInPersonWorldEvent, isRegionalInGameEvent: isRegionalInGameEvent, liveActivityCounts: liveActivityCounts };
 }));
