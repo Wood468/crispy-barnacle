@@ -15,6 +15,8 @@ DATA['events'] = [
 ] + [
     {'id': 'planner-zorua', 't': 'Zorua Moonlight', 's': '2026-11-07T10:00', 'e': '2026-11-07T18:00',
      'art': ['Zorua'], 'p': [], 'sourceUrl': 'https://pokemongo.com/news/fixture'},
+    {'id': 'planner-form', 't': 'Alolan Field Day', 's': '2026-11-09T10:00', 'e': '2026-11-09T18:00',
+     'art': ['Alolan Rattata'], 'p': [], 'sourceUrl': 'https://pokemongo.com/news/fixture'},
     {'id': 'planner-owned', 't': 'Bulbasaur Garden', 's': '2026-11-08T10:00', 'e': '2026-11-08T18:00',
      'art': ['Bulbasaur'], 'p': [], 'sourceUrl': 'https://pokemongo.com/news/fixture'}
 ]
@@ -43,7 +45,7 @@ with sync_playwright() as p:
         page.route('**/api/**', api)
         page.route('**/data.json', lambda r: r.fulfill(body=json.dumps(DATA), content_type='application/json'))
         page.add_init_script("""localStorage.setItem('gofn-us-v1', JSON.stringify({
-            'pref:gen:1':{v:true,t:1}, 'follow:pikachu':{v:'Pikachu',t:1}
+            'pref:gen:1':{v:true,t:1}, 'follow:pikachu':{v:'Pikachu',t:1}, 'form:19:alola':{v:0,t:1}
         }));localStorage.setItem('gofn-dex-v1',JSON.stringify({m:{own:{1:1}}}));""")
         page.goto(BASE + '/')
         try:
@@ -81,6 +83,12 @@ with sync_playwright() as p:
         assert search.evaluate('(el) => el === document.activeElement')
         search.fill('Bulbasaur')
         assert page.locator('#opps .opp.have:visible').count() == 1, 'owned search result expands automatically'
+        search.fill('Alolan Rattata')
+        mode.select_option('need')
+        page.locator('#opps [data-mark="form:19:alola"][data-val="1"]').click()
+        assert page.locator('#opps .opp').count() == 0
+        assert search.evaluate('(el) => el === document.activeElement'), 'marked row removed by Need filter returns focus to search'
+        assert page.evaluate("JSON.parse(localStorage.getItem('gofn-us-v1'))['form:19:alola'].v") == 1
         search.fill('')
         mode.select_option('following')
         assert page.locator('#opps .opp').count() == 1

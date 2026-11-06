@@ -1321,7 +1321,7 @@
     if (!list.length) html += '<p class="empty">' + (!all.length ? 'No featured Pokémon in the next four weeks.' : mode === 'following' && !query ? 'None of the Pokémon you follow have a scheduled opportunity in the next four weeks. Follow a Pokémon from All opportunities to include it here.' : 'No opportunities match these filters. Try another Pokémon or event, or clear the filters.') + '</p>';
     el.innerHTML = html;
     if (focusAttr) {
-      var replacement = Array.prototype.filter.call(el.querySelectorAll('[' + focusAttr + ']'), function (node) { return node.getAttribute(focusAttr) === focusValue && (focusAttr !== 'data-mark' || node.getAttribute('data-val') === focusMark); })[0];
+      var replacement = Array.prototype.filter.call(el.querySelectorAll('[' + focusAttr + ']'), function (node) { return node.getClientRects().length && node.getAttribute(focusAttr) === focusValue && (focusAttr !== 'data-mark' || node.getAttribute('data-val') === focusMark); })[0];
       (replacement || $('opp-search')).focus({ preventScroll: true });
     }
   }
