@@ -4,9 +4,11 @@
   var host = document.getElementById('research-list');
   var status = document.getElementById('research-status');
   if (!host || !status || !window.GOLIB) return;
-  var loaded = null, loading = false, lastFocus = '';
+  var loaded = null, loadedAt = 0, loading = null, rendering = false, refreshFailed = false, lastFocus = '';
+  var refresh = document.querySelector('[data-research-refresh]');
+  var MAX_AGE = 300000;
   function esc(value) { return window.GOLIB.esc(String(value == null ? '' : value)); }
-  function json(url) { return window.GOLIB.jsonOrNull(url, { maxAge: 300000, init: { cache: 'no-cache' } }); }
+  function json(url, fresh) { return window.GOLIB.jsonOrNull(url, { maxAge: MAX_AGE, timeout: 10000, fresh: fresh, init: { cache: 'no-cache' } }); }
   function datePart(value) {
     var s = String(value || '').slice(0, 10);
     return /^\d{4}-\d{2}-\d{2}$/.test(s) ? s : '';
@@ -36,8 +38,7 @@
       return url ? '<a href="' + esc(url) + '" target="_blank" rel="noopener noreferrer">' + esc(name) + '</a>' : esc(name);
     }).filter(Boolean);
     var label = task.status === 'official' ? 'Official' : task.status === 'corroborated' ? 'Cross-checked' : 'Single source';
-    var checked = datePart(task.checkedAt);
-    return '<small class="research-task-source">' + label + (links.length ? ' · ' + links.join(' · ') : '') + (checked ? ' · checked ' + esc(fmtDay(checked)) : '') + '</small>';
+    return '<small class="research-task-source">' + label + (links.length ? ' · ' + links.join(' · ') : '') + ' · ' + esc(window.GOLIB.researchCheckedText(task.checkedAt)) + '</small>';
   }
 
   function rewardHtml(reward, event) {
@@ -48,15 +49,17 @@
     }
     return '<div class="research-reward research-reward-item"><span class="research-reward-qty">' + (reward.quantity > 1 ? esc(reward.quantity) + '×' : '•') + '</span><span><b>' + esc(reward.name) + '</b><small>' + (reward.type === 'item' ? 'Item reward' : 'Possible reward') + '</small></span></div>';
   }
-  function load() {
-    if (loaded) return Promise.resolve(loaded);
+  function load(fresh) {
+    if (loaded && !fresh && !refreshFailed && Date.now() - loadedAt < MAX_AGE) return Promise.resolve(loaded);
     if (loading) return loading;
-    loading = Promise.all([json('/event-details.json'), json('/data.json')]).then(function (values) {
+    loading = Promise.all([json('/event-details.json', fresh), json('/data.json', fresh)]).then(function (values) {
       if (!values[0] || !values[0].events || !values[1] || !Array.isArray(values[1].events)) throw new Error('Research source data is unavailable');
       loaded = { details: values[0], data: values[1] };
-      loading = false;
+      loadedAt = Date.now();
+      refreshFailed = false;
+      loading = null;
       return loaded;
-    }).catch(function (error) { loading = false; throw error; });
+    }).catch(function (error) { loading = null; refreshFailed = true; throw error; });
     return loading;
   }
   function focusGroup(eventId) {
@@ -69,11 +72,16 @@
       return;
     }
   }
-  function render() {
+  function render(fresh) {
+    if (rendering) return;
+    rendering = true;
+    if (refresh) refresh.setAttribute('aria-disabled', 'true');
+    var previous = host.innerHTML;
+    var hadResults = !!loaded;
     host.setAttribute('aria-busy', 'true');
-    host.innerHTML = '<p class="note">Loading published research…</p>';
-    status.textContent = 'Loading research from the latest saved source snapshot…';
-    load().then(function (data) {
+    if (!hadResults) host.innerHTML = '<p class="note">Loading published research…</p>';
+    status.textContent = hadResults ? 'Refreshing research. Showing the previous snapshot while checking…' : 'Loading research from the saved source snapshot…';
+    load(fresh).then(function (data) {
       var today = localDay(), eventMap = Object.create(null), groups = Object.create(null), unknownWindows = 0;
       (data.data.events || []).forEach(function (event) {
         [event.id].concat(Array.isArray(event.detailIds) ? event.detailIds : []).forEach(function (id) { if (id) eventMap[id] = event; });
@@ -101,7 +109,7 @@
         return;
       }
       var total = list.reduce(function (n, group) { return n + group.tasks.length; }, 0);
-      status.textContent = total + ' source-backed task' + (total === 1 ? '' : 's') + ' across ' + list.length + ' event' + (list.length === 1 ? '' : 's') + '. Event dates are shown as published dates; venue clock times are not converted.';
+      status.textContent = 'Saved source snapshot. ' + total + ' source-backed task' + (total === 1 ? '' : 's') + ' across ' + list.length + ' event' + (list.length === 1 ? '' : 's') + '. Event dates are shown as published dates; venue clock times are not converted.';
       host.innerHTML = list.map(function (group) {
         var live = group.start <= today && group.end >= today;
         var eventButton = group.event ? '<button type="button" class="pill all" data-open="' + esc(group.id) + '">Event details</button>' : '';
@@ -111,11 +119,20 @@
         }).join('');
         return '<section class="research-event" data-research-group="' + esc(group.id) + '"><header class="research-event-head"><div><span class="research-event-state ' + (live ? 'live' : 'upcoming') + '">' + (live ? 'CURRENT DATE' : 'UPCOMING') + '</span><h3>' + esc(group.name) + '</h3><p>' + esc(fmtDay(group.start)) + (group.end !== group.start ? ' – ' + esc(fmtDay(group.end)) : '') + ' · source-published event dates</p></div>' + eventButton + '</header><div class="research-event-tasks">' + tasks + '</div></section>';
       }).join('');
-      if (lastFocus) focusGroup(lastFocus);
+      if (lastFocus) { focusGroup(lastFocus); lastFocus = ''; }
     }).catch(function () {
       host.removeAttribute('aria-busy');
+      if (hadResults) {
+        host.innerHTML = previous;
+        status.textContent = 'Research could not be refreshed. Showing the previous snapshot; it may be out of date. Try Refresh research again.';
+        return;
+      }
       host.innerHTML = '<div class="research-empty"><b>Research could not be loaded</b><p>Check your connection and retry. Existing event and saved collection data have not been changed.</p><button type="button" class="pill" data-research-retry>Try again</button></div>';
       status.textContent = 'Research data could not be loaded.';
+    }).finally(function () {
+      rendering = false;
+      host.removeAttribute('aria-busy');
+      if (refresh) refresh.removeAttribute('aria-disabled');
     });
   }
   document.addEventListener('gofn-view', function (event) {
@@ -123,9 +140,9 @@
   });
   document.addEventListener('gofn-research-focus', function (event) {
     lastFocus = event.detail && event.detail.eventId || '';
-    setTimeout(function () { focusGroup(lastFocus); }, 150);
+    setTimeout(function () { if (!rendering && lastFocus) { focusGroup(lastFocus); lastFocus = ''; } }, 150);
   });
   document.addEventListener('click', function (event) {
-    if (event.target.closest && event.target.closest('[data-research-retry]')) { loaded = null; render(); }
+    if (event.target.closest && event.target.closest('[data-research-retry], [data-research-refresh]')) render(true);
   });
 })();

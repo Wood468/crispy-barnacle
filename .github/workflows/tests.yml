@@ -107,6 +107,10 @@ jobs:
         if: matrix.shard == 'b'
         run: python test/schedule_layout_browser.py
 
+      - name: Verify Research freshness and recovery
+        if: matrix.shard == 'b'
+        run: python test/research_recovery_browser.py
+
       - name: Verify Today slow-feed fallback and late recovery
         if: matrix.shard == 'c'
         env:

@@ -327,7 +327,7 @@
         return url ? '<a href="' + esc(url) + '" target="_blank" rel="noopener noreferrer">' + esc(name) + '</a>' : esc(name);
       }).filter(Boolean);
       var label = task.status === 'official' ? 'Official' : task.status === 'corroborated' ? 'Cross-checked' : 'Single source';
-      return '<small class="research-task-source">' + label + (links.length ? ' · ' + links.join(' · ') : '') + (task.checkedAt ? ' · checked ' + esc(task.checkedAt) : '') + '</small>';
+      return '<small class="research-task-source">' + label + (links.length ? ' · ' + links.join(' · ') : '') + ' · ' + esc(window.GOLIB.researchCheckedText(task.checkedAt)) + '</small>';
     }
 
     function reward(item) {
