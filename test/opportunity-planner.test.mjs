@@ -33,9 +33,9 @@ test('opportunity event actions retain event identity, source clock wording and 
   const dash = fs.readFileSync(new URL('../public/dash.js', import.meta.url), 'utf8');
   const body = dash.match(/function opportunityEventRow\(e\) \{([\s\S]*?)\n  \}/)[1];
   const render = new Function('e', 'esc', 'timeMeta', 'countdown', body);
-  const html = render({ id: 'cur:a" onclick="bad', name: 'Festival <script>' }, esc, () => 'UTC: 10:00 · Local time in each region', () => 'Tomorrow');
+  const html = render({ id: 'cur:a" onclick="bad', name: 'Festival <ScRiPt>' }, esc, () => 'UTC: 10:00 · Local time in each region', () => 'Tomorrow');
   assert.match(html, /data-open="cur:a&quot; onclick=&quot;bad"/);
-  assert.match(html, /Festival &lt;script&gt;/);
+  assert.match(html, /Festival &lt;script&gt;/i);
   assert.match(html, /UTC: 10:00 · Local time in each region/);
-  assert.doesNotMatch(html, /<script>| onclick="bad/);
+  assert.doesNotMatch(html, /<script>| onclick="bad/i);
 });
