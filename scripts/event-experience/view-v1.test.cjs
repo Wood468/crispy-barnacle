@@ -32,6 +32,6 @@ test('internal source evidence does not leak into visible section list',()=>{
  assert.ok(!JSON.stringify(view).includes('checkedAt'));
 });
 test('nested scheduled activity becomes a rotation section',()=>{
- const view=project(event('go-fest',{activities:[{id:'hour-1',parentId:'main',schedule:{start:'2027-01-01T10:00:00'}}]}));
+ const view=project(event('go-fest',{activities:[{id:'hour-1',parentId:'main',schedule:{timeBasis:'instant',start:'2027-01-01T10:00:00Z',end:'2027-01-01T11:00:00Z'}}]}));
  assert.ok(view.sections.some(s=>s.key==='rotations'));
 });

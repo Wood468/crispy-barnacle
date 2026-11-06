@@ -215,6 +215,25 @@
   var EV = [], usingApi = false, usingReadOnly = false;
   /* Set once the event list is final. Today's blocks wait for it, so an early empty render cannot flash and then jump. */
   var EV_READY = false;
+  function syncUniversalCatalogue() {
+    if(!EV_READY||!window.GOEventRegistry)return;
+    var ids=new Set(EV.flatMap(function(e){return [e.id].concat(e.aliasIds||[]);})),unknown=[];
+    GOEventRegistry.events().forEach(function(model){
+      var meta=model.internalValidation||{};
+      if(!(meta.native||!meta.collection||(meta.collection==='source-details'&&model.lifecycle==='announced')))return;
+      if(model.lifecycle==='cancelled'||model.lifecycle==='ended'||model.lifecycle==='reference')return;
+      if(ids.has(model.eventId)||ids.has('cur:'+model.eventId)||(model.aliases||[]).some(function(a){return ids.has(a);}))return;
+      var display=GOEventRegistry.display(model);
+      if(display.instantKnown){EV.push(display);ids.add(model.eventId);}else if(!isHidden(model.eventId))unknown.push(display);
+    });
+    [['tab-now',unknown.filter(function(e){return e.kind==='person'&&(!window.GOTodayVisibility||GOTodayVisibility.todayPlacement(e.universalModel,now(),Intl.DateTimeFormat().resolvedOptions().timeZone).visible);}),'Announced in person'],['sub-timeline',unknown,'Dates to be announced']].forEach(function(row){
+      var host=$(row[0]);if(!host)return;var id='universal-announced-'+row[0],section=$(id);
+      if(!section){section=document.createElement('section');section.id=id;section.className='agenda-section ue-announced';host.appendChild(section);}
+      section.hidden=!row[1].length;
+      section.innerHTML=row[1].length?'<h2 class="sec2">'+esc(row[2])+'</h2>'+row[1].map(function(e){return '<button type="button" class="ue-announcement" data-open="'+esc(e.id)+'"><b>'+esc(e.name)+'</b><span>'+esc(e.region||'')+' · Dates to be announced</span></button>';}).join(''):'';
+    });
+  }
+  if(window.GOEventRegistry)GOEventRegistry.ready.then(function(){if(EV_READY)renderAll();});
   function mergeLiveAndCurated(live, curated) {
     // Only merge titles with the same GODEDUPE.titleKey (or one starting with the other) and a close start time. Token overlap is unsafe:
     // unrelated events can share a Pokémon name ("Zorua Community Day" vs "Zorua Raid Day").
@@ -319,17 +338,24 @@
   /* Pokémon that are not out in Pokémon GO yet cannot be owned, so they are never marked Have or Need. */
   var UNREL = {};
   try { window.GOLIB.jsonOrNull('/release-status.json').then(function (R) { if (!R || !R.unreleased) return; var today = new Date().toISOString().slice(0, 10); R.unreleased.forEach(function (u) { if (u.type === 'pokemon' && !(u.available && u.available <= today)) UNREL[LIB.norm(u.name)] = u.available || true; }); try { renderAll(); } catch (e) { } }).catch(function () { }); } catch (e) { }
-  function ownState(name, costume) {
+  function ownState(name, costume, identity) {
     var p = LIB.parseForm(name), id = DEXBY[p.base.toLowerCase()], d = marks();
     if (UNREL[LIB.norm(p.base)]) return { state: 'unreleased', id: id || 0, base: p.base, why: 'Not released in Pokémon GO yet' };
+    var precise=identity||(window.GOEventAdapter?GOEventAdapter.pokemon({name:name,costume:costume}):null);
+    if(precise&&precise.costumeId)costume=true;
+    if(precise&&/^\d+$/.test(precise.speciesId)&&DEXNAME[+precise.speciesId])id=+precise.speciesId;
     if (!id) return { state: 'unknown', id: 0, base: p.base, why: 'Not in the Pokédex list' };
     var out = { id: id, base: p.base, why: '' };
     if (p.special === 'dynamax') return Object.assign(out, { state: 'form', why: 'Dynamax is a battle state, there is nothing to collect' });
+    if(precise&&precise.formId&&precise.formId!==p.key&&precise.formId!==p.special&&/^[a-z0-9][a-z0-9-]{0,63}$/.test(precise.formId)){
+      var preciseKey='form:'+id+':'+precise.formId,preciseValue=usGet(preciseKey);
+      return Object.assign(out,{tk:preciseKey,state:preciseValue===1?'have':preciseValue===0?'missing':'unknown',why:'Track this exact form.'});
+    }
     if (p.special === 'shadow' || p.special === 'purified') {
       var has = d.m && d.m[p.special] && d.m[p.special][id];
       return Object.assign(out, has ? { state: 'have' } : { state: 'unknown', why: 'Not marked as ' + p.special + ' on your Dex' });
     }
-    var tk = p.key ? 'form:' + id + ':' + p.key : (costume ? 'costume:' + id + ':' + LIB.norm(name) : '');
+    var tk = p.key ? 'form:' + id + ':' + p.key : (costume ? 'costume:' + id + ':' + LIB.norm(precise&&precise.collectionName||name) : '');
     if (tk) {
       var v = usGet(tk); out.tk = tk;
       return Object.assign(out, v === 1 ? { state: 'have' } : v === 0 ? { state: 'missing' } : { state: 'unknown', why: 'Not tracked. Tap Have or Need.' });
@@ -513,7 +539,7 @@
     ev.featured.forEach(function (f) {
       if (f.role === 'shiny_form') return;
       var k = f.name.toLowerCase(); if (seen[k]) return; seen[k] = 1;
-      var o = ownState(f.name, f.costume);
+      var o = ownState(f.name, f.costume, f.identity);
       var cls = 'fc' + (o.state === 'missing' ? ' need' : o.state === 'have' ? ' have' : '');
       out.push('<span class="' + cls + '"><span>' + esc(f.name) + (o.state === 'missing' ? '<b>need</b>' : '') + '</span></span>');
     });
@@ -523,7 +549,7 @@
     var r = [], seen = {};
     ev.featured.forEach(function (f) {
       if (f.role === 'shiny_form') return;
-      var o = ownState(f.name, f.costume), k = o.base.toLowerCase(); if (seen[k]) return; seen[k] = 1;
+      var o = ownState(f.name, f.costume, f.identity), k = o.base.toLowerCase(); if (seen[k]) return; seen[k] = 1;
       if (o.state === 'missing') r.push('You need ' + o.base);
       else if (isFollowed(f.name)) r.push('You follow ' + o.base);
       else if (f.costume) r.push('Costume: ' + (f.label || o.base));
@@ -1298,7 +1324,7 @@
       if (phase(ev, t) === 'ended' || !announced(ev) || ev.long || ev.start > addDays(t, 28)) return;
       ev.featured.forEach(function (f) {
         if (f.role === 'shiny_form') return;
-        var o = ownState(f.name, f.costume), spec = o.tk || o.state === 'form' || LIB.parseForm(f.name).special, key = (spec ? f.name : o.base).toLowerCase();
+        var o = ownState(f.name, f.costume, f.identity), spec = o.tk || o.state === 'form' || LIB.parseForm(f.name).special, key = (spec ? f.name : o.base).toLowerCase();
         if (!by[key]) by[key] = { name: spec ? f.name : o.base, o: o, evs: [], costume: !!f.costume, label: f.label };
         if (by[key].evs.indexOf(ev) < 0) by[key].evs.push(ev);
       });
@@ -1952,7 +1978,7 @@ function renderHomeBrief(t) {
   }
   document.addEventListener('gofn-view', renderActiveSecondaryView);
   /* Today remains eager; only the currently visible secondary view is rendered or refreshed. */
-  function renderAll() { renderKinds(); renderPrio(); renderHomeAgenda(); renderActionCentre(); renderActiveSecondaryView(); }
+  function renderAll() { syncUniversalCatalogue(); renderKinds(); renderPrio(); renderHomeAgenda(); renderActionCentre(); renderActiveSecondaryView(); }
   function tick() { // keep countdowns honest without re-rendering whole views
     var t = now(), byId = {}; EV.forEach(function (e) { byId[e.id] = e; });
     Array.prototype.forEach.call(document.querySelectorAll('.cdn[data-id]'), function (n) { var e = byId[n.getAttribute('data-id')]; if (e) n.textContent = countdown(e, t); });
@@ -2044,7 +2070,7 @@ function renderHomeBrief(t) {
     renderCoverage();
     if (window.GO && GO.refreshDex) GO.refreshDex();
     usSync();
-    var inf = document.createElement('script'); inf.src = '/infographic.js?v=20261103a'; document.body.appendChild(inf); var x = document.createElement('script'); x.src = '/extra.js?v=20261102c'; document.body.appendChild(x); var z = document.createElement('script'); z.src = '/places.js?v=20261103b'; window.GOPLACES_READY = new Promise(function (resolve) { z.onload = function () { resolve(window.GOPLACES || null); }; z.onerror = function () { resolve(null); }; }); var y = document.createElement('script'); y.src = '/detail.js?v=20261106d'; document.body.appendChild(y); document.body.appendChild(z); var w = document.createElement('script'); w.src = '/fresh.js?v=20261103a'; document.body.appendChild(w); var nv = document.createElement('script'); nv.src = '/nudge.js?v=20261102a'; document.body.appendChild(nv); var rv = document.createElement('script'); rv.src = '/review.js?v=20261104b'; document.body.appendChild(rv); var by = document.createElement('script'); by.src = '/buy.js?v=20261103a'; document.body.appendChild(by);
+    var inf = document.createElement('script'); inf.src = '/infographic.js?v=20261103a'; document.body.appendChild(inf); var x = document.createElement('script'); x.src = '/extra.js?v=20261102c'; document.body.appendChild(x); var z = document.createElement('script'); z.src = '/places.js?v=20261103b'; window.GOPLACES_READY = new Promise(function (resolve) { z.onload = function () { resolve(window.GOPLACES || null); }; z.onerror = function () { resolve(null); }; }); var y = document.createElement('script'); y.src = '/detail.js?v=20261107a'; document.body.appendChild(y); document.body.appendChild(z); var w = document.createElement('script'); w.src = '/fresh.js?v=20261103a'; document.body.appendChild(w); var nv = document.createElement('script'); nv.src = '/nudge.js?v=20261102a'; document.body.appendChild(nv); var rv = document.createElement('script'); rv.src = '/review.js?v=20261104b'; document.body.appendChild(rv); var by = document.createElement('script'); by.src = '/buy.js?v=20261103a'; document.body.appendChild(by);
   }
   envBanner();
   /* Bounded waits: a request that never answers must not leave Today blank. After FEED_TIMEOUT_MS the page renders from the curated list
@@ -2095,6 +2121,6 @@ function renderHomeBrief(t) {
     var q = $('travel-q'); if (!q) return;
     q.addEventListener('input', function () { travelQuery = q.value.trim(); renderTravel(); });
   })();
-  window.GODASH = { regionalEvents: function () { return REG.filter(function (x) { return x.scope !== 'global' && x.end > now(); }).map(function (x) { return Object.assign({ world: true, kind: 'event' }, x); }); }, worldEvents: function () { return REG.filter(function (x) { return x.scope === 'global' && x.end > now(); }).map(function (x) { return Object.assign({ world: true, kind: 'event' }, x); }); }, mkEvent: mkEvent, raidSlots: raidSlots, usGet: usGet, usSet: usSet, usStatus: function () { return usStatus; }, renderAll: renderAll, DEXBY: DEXBY, DEXNAME: DEXNAME, art: art, baseOf: baseOf, countdown: countdown, priority: function () { return priority(now()); }, events: function () { return EV; }, eventsState: function () { return feedState; }, mergeLiveAndCurated: mergeLiveAndCurated, ownState: ownState, whenText: whenText, timeMeta: timeMeta, signalTags: signalTags, statusChip: statusChip, kindOf: kindOf, kindHidden: kindHidden, isSaved: isSaved, featArts: featArts, monArt: monArt, signalChips: signalChips, cpRows: cpRows, hundoPair: hundoPair, specialArt: specialArt, hasTag: hasTag, IMG_PARTICLE: IMG_PARTICLE, IMG_POWERSPOT: IMG_POWERSPOT, cpSpecies: cpSpecies, hundoLabels: hundoLabels, genConfirmed: genConfirmed, setGenConfirmed: setGenConfirmed, DEXGEN: DEXGEN, savedCount: savedCount };
+  window.GODASH = { regionalEvents: function () { return REG.filter(function (x) { return x.scope !== 'global' && x.end > now(); }).map(function (x) { return Object.assign({ world: true, kind: 'event' }, x); }); }, worldEvents: function () { return REG.filter(function (x) { return x.scope === 'global' && x.end > now(); }).map(function (x) { return Object.assign({ world: true, kind: 'event' }, x); }); }, mkEvent: mkEvent, raidSlots: raidSlots, usGet: usGet, usSet: usSet, usStatus: function () { return usStatus; }, renderAll: renderAll, DEXBY: DEXBY, DEXNAME: DEXNAME, art: art, baseOf: baseOf, countdown: countdown, priority: function () { return priority(now()); }, events: function () { return EV; }, eventsState: function () { return feedState; }, mergeLiveAndCurated: mergeLiveAndCurated, ownState: ownState, markBtns: markBtns, isFollowed: isFollowed, whenText: whenText, timeMeta: timeMeta, signalTags: signalTags, statusChip: statusChip, kindOf: kindOf, kindHidden: kindHidden, isSaved: isSaved, featArts: featArts, monArt: monArt, signalChips: signalChips, cpRows: cpRows, hundoPair: hundoPair, specialArt: specialArt, hasTag: hasTag, IMG_PARTICLE: IMG_PARTICLE, IMG_POWERSPOT: IMG_POWERSPOT, cpSpecies: cpSpecies, hundoLabels: hundoLabels, genConfirmed: genConfirmed, setGenConfirmed: setGenConfirmed, DEXGEN: DEXGEN, savedCount: savedCount };
   document.dispatchEvent(new Event('gofn-saved-count'));
 })();

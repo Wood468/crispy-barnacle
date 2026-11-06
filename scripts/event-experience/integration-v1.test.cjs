@@ -15,7 +15,8 @@ test('curated legacy record survives projection without fabricated encounters',(
  assert.equal(migrated.legacy.artRefs[0].costumeUnresolved,true);
  assert.equal(migrated.pokemon.length,0);
  assert.deepEqual(project(migrated).sections.map(x=>x.key),['overview']);
- assert.equal(reconcile([migrated]).resolve('leekduck:example').eventId,'legacy-1');
+ assert.equal(reconcile([migrated]).resolve('leekduck:example'),null);
+ assert.equal(reconcile([migrated]).resolve('legacy-1').eventId,'legacy-1');
 });
 test('synthetic future event renders optional content without event-specific branching',()=>{
  const key=identity({speciesId:'25'});

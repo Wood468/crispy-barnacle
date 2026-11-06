@@ -4,7 +4,7 @@ const {normalize}=require('./contract-v1.js');
 function text(v){return typeof v==='string'?v.trim():'';}
 function migrateLegacyEvent(ev,options={}){
  if(!ev || !text(ev.id) || !text(ev.t)) throw new Error('Legacy event requires id and title');
- const aliases=[ev.id,...(Array.isArray(ev.detailIds)?ev.detailIds:[])];
+ const aliases=[ev.id,...(Array.isArray(ev.aliases)?ev.aliases:[])];
  const sourceUrl=text(ev.sourceUrl);
  // Legacy times have no offset; preserve them without guessing an IANA zone.
  // A caller must supply an independently verified timeBasis/timeZone.

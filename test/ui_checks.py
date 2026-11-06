@@ -404,7 +404,7 @@ check('secondary dashboard views render only while their panels are active',
           'function drawSaved()',
           "document.addEventListener('gofn-view', renderActiveSecondaryView);"
       ]) and
-      'function renderAll() { renderKinds(); renderPrio(); renderHomeAgenda(); renderActionCentre(); renderActiveSecondaryView(); }' in DASH_JS)
+      'function renderAll() { syncUniversalCatalogue(); renderKinds(); renderPrio(); renderHomeAgenda(); renderActionCentre(); renderActiveSecondaryView(); }' in DASH_JS)
 check('Watchlist badge derives its count from saved/followed state while secondary panels are deferred',
       'savedCount: savedCount' in DASH_JS and
       "typeof window.GODASH.savedCount==='function'" in APP_JS and
@@ -1415,7 +1415,7 @@ with sync_playwright() as p:
         next_page.locator('#evd').wait_for(state='visible')
         detail_time = next_page.locator('#evd .evd-hero .evc-when').inner_text()
         check('Worldwide-local event details keep local-time context visible',
-              'Your time:' in detail_time and 'Local time in each region' in detail_time,
+              'Local time wherever you play' in detail_time and 'AEDT' in detail_time,
               detail_time)
         jump_links = next_page.locator('#evd .evd-jump a').evaluate_all(
             "els => els.map(a => ({label: a.textContent.trim(), target: !!document.getElementById(a.getAttribute('href').slice(1))}))")
@@ -1423,7 +1423,7 @@ with sync_playwright() as p:
         check('Event detail hides Highlights and Locations when those sections are absent',
               all(x['label'] not in ['Highlights', 'Locations'] for x in jump_links), jump_links)
         # Highlights must land on the first real section even when there are no bonuses.
-        highlight_page = page()
+        highlight_page = page(extra={'**/data.json': (empty_data,200), '**/event-info.json': ('{"events":{},"passes":{}}',200), '**/event-details.json': ('{"events":{}}',200), '**/events-v1.json': ('{"schemaVersion":1,"events":[]}',200)})
         highlight_page.wait_for_function("window.GODETAIL && window.GODASH", timeout=5000)
         highlight_page.evaluate("""() => {
             const events = GODASH.events();
@@ -1499,7 +1499,7 @@ with sync_playwright() as p:
         next_page.keyboard.press('Shift+Tab')
         wrapped_last = next_page.evaluate("""() => {
             const d = document.getElementById('evd');
-            const items = [...d.querySelectorAll('a[href],button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea:not([disabled]),summary,[tabindex]:not([tabindex="-1"])')].filter(el => !el.closest('[hidden],[aria-hidden="true"]') && el.getClientRects().length > 0);
+            const items = [...d.querySelectorAll('a[href],button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea:not([disabled]),summary,[tabindex]:not([tabindex="-1"])')].filter(el => !el.closest('[hidden],[aria-hidden="true"]') && (!el.checkVisibility || el.checkVisibility()) && el.getClientRects().length > 0);
             return items.length > 1 && document.activeElement === items[items.length - 1];
         }""")
         check('Event detail Shift+Tab wraps from the first control to the last', wrapped_last)
@@ -1596,7 +1596,7 @@ with sync_playwright() as p:
         pg.keyboard.press('Shift+Tab')
         ig_wrapped_last = pg.evaluate("""() => {
             const d = document.getElementById('goinfo');
-            const items = [...d.querySelectorAll('a[href],button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea:not([disabled]),summary,[tabindex]:not([tabindex="-1"])')].filter(el => !el.closest('[hidden],[aria-hidden="true"]') && el.getClientRects().length > 0);
+            const items = [...d.querySelectorAll('a[href],button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea:not([disabled]),summary,[tabindex]:not([tabindex="-1"])')].filter(el => !el.closest('[hidden],[aria-hidden="true"]') && (!el.checkVisibility || el.checkVisibility()) && el.getClientRects().length > 0);
             return items.length > 1 && document.activeElement === items[items.length - 1];
         }""")
         check('event infographic Shift+Tab wraps from the close control to the last link', ig_wrapped_last)
@@ -2143,10 +2143,9 @@ with sync_playwright() as p:
         # ---- event detail: passes, prices, labelled gaps ----
         pg=page(); pg.click('nav.tabs button[data-tab="events"]'); pg.click('#subnav-events button[data-sub="timeline"]'); pg.wait_for_selector('#evtimeline .evc[data-id$="zorua"] .more'); pg.click('#evtimeline .evc[data-id$="zorua"] .more'); pg.wait_for_selector('#evd .tk'); pg.wait_for_timeout(300)
         t=pg.inner_text('#evd')
-        check('detail: what is in this event shows published and not-published labels', 'Not published' in t and 'Published' in t and 'Raids' in t and 'Sucker Punch' in t)
-        check('detail: passes and tickets list the Zorua ticket, Ultra Box, free GO Pass and Deluxe', pg.locator('#evd .tk').count()==4 and 'special research ticket' in t.lower() and 'go pass deluxe' in t.lower() and 'free' in t.lower())
-        check('detail: deadlines and unpublished items are labelled', 'Not published yet' in t and '5 Nov, 10 am local' in t and 'not listed yet' in t)
-        check('detail: a US-priced ticket shows its Australian tier price (marked approximate), never US dollars or an exchange-rate estimate', '≈ A$2.99' in t and 'Save A$' not in t and 'reference only' not in t and 'US$' not in t and 'equivalent pricing' not in t)
+        check('detail: published event facts and event-only moves remain visible without verification clutter', 'Sucker Punch' in t and 'Event bonuses' in t and pg.locator('#evd .pub,#evd .npub,#evd .st').count()==0)
+        expected_tickets = json.loads((ROOT/'public/event-info.json').read_text())['events']['zorua']['tickets']
+        check('detail: all curated event tickets retain Australian prices and purchase information', pg.locator('#evd .tk').count()==len(expected_tickets) and 'special research ticket' in t.lower() and '≈ A$2.99' in t and 'Buy or claim by' in t)
         pg.screenshot(path=OUT+'detail.png', full_page=False)
         pg.keyboard.press('Escape'); pg.wait_for_timeout(200)
         check('detail closes on Escape', pg.locator('#evd').is_hidden())
@@ -2419,16 +2418,16 @@ with sync_playwright() as p:
         # Open source
         pg=page(); pg.wait_for_function("!!window.GODETAIL")
         pg.evaluate("GODETAIL.open('cur:zorua')"); pg.wait_for_selector('#evd .evd-btns'); pg.wait_for_timeout(200)
-        check('event detail: Zorua gets Open source from the official post', pg.locator('#evd .evd-btns a:has-text("Open source")').count()==1 and 'pokemongo.com' in (pg.get_attribute('#evd .evd-btns a:has-text("Open source")','href') or ''))
+        check('event detail: Zorua gets Open source from the official post', pg.locator('#evd-sources a[href*="pokemongo.com"]').count()>0)
         no_link=page(); no_link.wait_for_function("!!window.GODETAIL && !!window.GODASH")
-        no_link.evaluate("""() => { GODASH.events().push({id:'test:no-source',name:'No Source Test',kind:'event',start:new Date('2026-11-20T10:00:00'),end:new Date('2026-11-20T11:00:00'),status:'community_reported',announced:true,missing:false,featured:[],bonuses:[],notes:[],reports:[]}); GODETAIL.open('test:no-source'); }"""); no_link.wait_for_selector('#evd [data-nolink]')
-        check('event detail: with no URL anywhere it says so instead of inventing one', no_link.locator('#evd [data-nolink]').count()==1 and no_link.locator('#evd a:has-text("Open source")').count()==0)
+        no_link.evaluate("""() => { GODASH.events().push({id:'test:no-source',name:'No Source Test',kind:'event',start:new Date('2026-11-20T10:00:00'),end:new Date('2026-11-20T11:00:00'),status:'community_reported',announced:true,missing:false,featured:[],bonuses:[],notes:[],reports:[]}); GODETAIL.open('test:no-source'); }"""); no_link.wait_for_selector('#evd-sources',state='attached')
+        check('event detail: with no URL anywhere it says so instead of inventing one', no_link.locator('#evd-sources a').count()==0)
         no_link.context.close()
         fill=','.join('{"id":"leekduck:f%d","name":"Filler %d","type":"event","start":"2026-11-%02dT10:00:00.000","end":"2026-11-%02dT12:00:00.000","tzMode":"local","status":"community_reported","announced":true,"missing":false,"featured":[],"bonuses":[],"reports":[]}'%(i,i,i+1,i+1) for i in range(11))
         api='{"enabled":true,"events":['+fill+',{"id":"leekduck:x1","name":"Test Raid Day","type":"raid-battles","start":"2026-10-20T10:00:00.000","end":"2026-10-20T11:00:00.000","tzMode":"local","status":"community_reported","announced":true,"missing":false,"featured":[],"bonuses":[],"link":"https://leekduck.com/events/x1/","reports":[{"source":"leekduck","status":"community_reported","link":""}]}],"sources":[]}'
         pg=page(api=api,sources='{"environment":"preview","database":true,"enabled":true,"sources":[]}'); pg.wait_for_function("!!window.GODETAIL")
         pg.evaluate("GODETAIL.open('leekduck:x1')"); pg.wait_for_selector('#evd .evd-btns')
-        check('event detail: API event with only a top-level link still gets Open source', pg.locator('#evd a:has-text("Open source")').count()==1)
+        check('event detail: API event with only a top-level link still gets Open source', pg.locator('#evd-sources a[href="https://leekduck.com/events/x1/"]').count()==1)
 
         # ---- Places ----
         pg=page(extra={'**/places.json':(PLACES_FIXTURE,200)}); pg.click('#hmenu'); pg.wait_for_timeout(300)

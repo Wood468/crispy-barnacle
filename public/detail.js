@@ -4,12 +4,12 @@
   'use strict';
   var G = window.GO, X = window.GODASH, LIB = window.GOLIB;
   if (!G || !X || !LIB) return;
-  var esc = G.esc, DATA = null, opener = null, openerKey = null, openerClass = '', openerHostId = '';
+  var esc = G.esc, DATA = null, activeModel = null, opener = null, openerKey = null, openerClass = '', openerHostId = '';
   function $(id) { return document.getElementById(id); }
   /* Moves an event hands out for a limited time (public/event-moves.json). Shown only here and only while the window is open; never part of a Pokémon's normal moveset. */
   var EVM = [];
   function evMovesHtml(ev, highlightTarget) {
-    var L = EVM.filter(function (m) { return m.eventId === ev.id; });
+    var L = EVM.filter(function (m) { return m.eventId === ev.id || m.eventId === String(ev.id).replace(/^cur:/,''); });
     if (!L.length) return '';
     var rows = L.map(function (m) {
       var until = m.windowEnd ? new Date(m.windowEnd) : null, open = !until || isNaN(until) || until.getTime() > Date.now();
@@ -30,7 +30,7 @@
     if (DATA) return Promise.resolve(DATA);
     function j(u) { return window.GOLIB.jsonOrNull(u, { maxAge: 600000, init: { cache: 'no-cache' } }); }
     var placesP = window.GOPLACES_READY ? window.GOPLACES_READY.then(function (places) { return places && places.load ? places.load() : null; }) : (window.GOPLACES ? window.GOPLACES.load() : null);
-    return Promise.all([j('/event-info.json'), (window.GOLIB ? GOLIB.loadPrices() : j('/prices.json')), placesP, j('/event-details.json'), j('/event-moves.json')]).then(function (a) { EVM = (a[4] && a[4].moves) || []; DATA = { info: a[0] || { events: {}, passes: {} }, prices: a[1] || { prices: [], fx: null }, details: (a[3] && a[3].events) || {} }; return DATA; });
+    return Promise.all([j('/event-info.json'), (window.GOLIB ? GOLIB.loadPrices() : j('/prices.json')), placesP, j('/event-details.json'), j('/event-moves.json'), (window.GOEventRegistry?GOEventRegistry.ready:j('/events-v1.json'))]).then(function (a) { EVM = (a[4] && a[4].moves) || []; if(window.GOEventAdapter){GOEventAdapter.configureSpecies(a[5]&&a[5].species||[]);GOEventAdapter.configureCostumes(a[5]&&a[5].costumes||[]);} DATA = { info: a[0] || { events: {}, passes: {} }, prices: a[1] || { prices: [], fx: null }, details: (a[3] && a[3].events) || {}, catalogue: a[5] && a[5].schemaVersion===1 ? a[5].events || [] : [] }; return DATA; });
   }
   function fmtDay(iso) { var d = new Date(iso + 'T12:00'); return isNaN(d) ? esc(iso) : d.getDate() + ' ' + G.MON[d.getMonth()]; }
   function safe(u) { return typeof u === 'string' && !(window.GOLIB && window.GOLIB.isPrivateLink(u)) && (/^https:\/\//.test(u) || /^\/img\/ext\/[\w.-]+$/.test(u)) ? u : ''; }
@@ -334,7 +334,7 @@
     function reward(item) {
       if (item.type === 'encounter') {
         var cp = item.cpMin && item.cpMax ? '<small>CP ' + esc(item.cpMin) + '–' + esc(item.cpMax) + '</small>' : '<small>Encounter</small>';
-        return '<div class="research-reward">' + X.monArt(ev, { name: item.name, costume: /wearing|costume/i.test(item.name), role: 'featured' }, 'ea') + '<span><b>' + esc(item.name) + '</b>' + cp + '</span></div>';
+        return '<div class="research-reward">' + (window.GOEventAdapter?exactArt(GOEventAdapter.pokemon({name:item.name,costume:item.costume||/wearing|costume/i.test(item.name),label:item.label,formId:item.formId,costumeId:item.costumeId})):X.monArt(ev,{name:item.name,costume:/wearing|costume/i.test(item.name),role:'featured'},'ea')) + '<span><b>' + esc(item.name) + '</b>' + cp + '</span></div>';
       }
       return '<div class="research-reward research-reward-item"><span class="research-reward-qty">' + (item.quantity > 1 ? esc(item.quantity) + '×' : '•') + '</span><span><b>' + esc(item.name) + '</b><small>' + (item.type === 'item' ? 'Item reward' : 'Possible reward') + '</small></span></div>';
     }
@@ -390,26 +390,30 @@
   function completeEvent(ev) {
     if ((ev.featured && ev.featured.length) && (ev.bonuses && ev.bonuses.length || (ev.notes && ev.notes.length))) return ev;
     var out = Object.assign({}, ev), D0 = (G.D && G.D.events) || [], n = LIB.norm(ev.name), sl = slugOf(ev.link) || String(ev.id).split(':').pop().toLowerCase();
-    var c = D0.filter(function (x) { return (x.sourceUrl && slugOf(x.sourceUrl) === sl && sl.indexOf('-') > 0) || LIB.norm(x.t) === n; })[0];
+    var c = D0.filter(function (x) { return (x.sourceUrl && slugOf(x.sourceUrl) === sl && sl.indexOf('-') > 0) || (String(ev.id).replace(/^cur:/,'') === x.id); })[0];
     if (c) {
       if (!(out.featured && out.featured.length)) out.featured = (c.art || []).map(function (a) { a = typeof a === 'string' ? { n: a } : a; return { name: a.n, costume: !!a.costume, shiny: !!a.shiny, label: a.label, role: 'featured' }; });
       if (!(out.bonuses && out.bonuses.length)) out.bonuses = (c.bonuses || []).slice();
       if (!(out.notes && out.notes.length)) out.notes = (c.p || []).filter(function (t) { return !(window.GOLIB && GOLIB.isPlaceholder && GOLIB.isPlaceholder(t)); });
     }
     var d = findDetails(ev);
-    if (d && d.fields && !(out.featured && out.featured.length)) {
-      var seen = {}, mons = [];
-      (d.fields.featured || []).forEach(function (it) {
-        var t = tidy(it.text), m = /^([A-Z][A-Za-z'’.\- ]{2,24}?)(?: \(([^)]*)\))?$/.exec(t);
-        if (!m || /\b(core colors?|will|shower|event)\b/i.test(t)) return;
-        var k = m[1].toLowerCase(); if (seen[k]) return; seen[k] = 1; mons.push({ name: m[1], label: m[2] ? m[2] : undefined, role: 'featured' });
-      });
-      if (mons.length) out.featured = mons;
-    }
     return out;
   }
   function hasDetails(ev) { var d = findDetails(ev); return !!(d && d.fields && Object.keys(d.fields).some(function (k) { return (d.fields[k] || []).length; })); }
-  function render(ev) {
+  function toolbarHtml(ev){
+    var saved=X.isSaved(ev.id);
+    var h = '<div class="evd-bar"><button type="button" class="hbtn" id="evd-x" aria-label="Close event details"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button><span class="tag">EVENT DETAIL</span>'
+      + '<button type="button" class="pill info-open" data-infographic="' + esc(ev.id) + '">▧ Infographic</button>'
+      + '<button type="button" class="pill" data-evlink="' + esc(ev.id) + '" aria-label="Share a link to this event">🔗 Link</button>'
+      + '<button type="button" class="star' + (saved ? ' on' : '') + '" data-save="' + esc(ev.id) + '" aria-pressed="' + saved + '" aria-label="Save ' + esc(ev.name) + '" title="Saved events send you a Telegram reminder">' + (saved ? '★' : '☆') + '</button></div>';
+    h += '<label class="evd-lead"' + (saved ? '' : ' hidden') + '>🔔 Remind me <select data-lead="' + esc(ev.id) + '" aria-label="When to remind me">' + [['', 'Morning of the event'], ['1440', '1 day before'], ['180', '3 hours before'], ['60', '1 hour before'], ['off', 'Don\'t remind me']].map(function (o) { return '<option value="' + o[0] + '"' + (String(X.usGet('pref:lead:' + ev.id) || '') === o[0] ? ' selected' : '') + '>' + o[1] + '</option>'; }).join('') + '</select></label>';
+    return h;
+  }
+  function venueHtml(ev,venues){
+    if(!venues.length)return '';
+    return '<h3 class="sec2" id="evd-locations">Locations &amp; routes <span class="m">sourced venues</span></h3><div class="evd-card evd-venues">' + venues.map(function (p) { return '<article class="evd-venue"><div><b>' + esc(p.name) + '</b><small>' + esc([p.city, p.region, p.country].filter(Boolean).join(', ')) + '</small><span class="note">' + esc(p.type || 'Event location') + '</span></div><div class="evd-venue-actions"><button type="button" class="pill" data-copycoord="' + esc(p.lat.toFixed(6) + ',' + p.lng.toFixed(6)) + '">Copy coordinates</button><button type="button" class="pill" data-places="' + esc(p.id) + '">Place details</button>' + (p.route && safeGpx(p.route.file) && safe(p.route.url) && p.route.verified ? '<a class="pill all" href="' + esc(safeGpx(p.route.file)) + '" download>Download route GPX</a>' : '') + '</div></article>'; }).join('') + '<div class="evd-venue-foot"><button type="button" class="pill all" data-gpx="' + venues.map(function (p) { return esc(p.id); }).join(',') + '" data-gpxname="' + esc(ev.name) + '"' + (venues.length > 1 ? ' data-gpxorder="1"' : '') + '>Download venue points GPX</button><p class="note">' + (venues.length > 1 ? 'Sourced venue points in this event; this is a list of stops, not a walking route.' : 'A GPX waypoint for this venue, not a walking route.') + '</p></div></div>';
+  }
+  function renderLegacy(ev) {
     var k = X.kindOf(ev), I = DATA.info, e = findInfo(ev), saved = X.isSaved(ev.id);
     var eventSources = Array.isArray(ev.sources) ? ev.sources : [];
     var primarySource = eventSources.filter(function (s) { return s && (s.id === 'official' || /(^|\.)pokemongo\.com\//i.test(s.url || '')); })[0] || eventSources[0] || (e && e.source ? e.source : null);
@@ -422,16 +426,12 @@
     var leekDuckSource = primarySource && /leekduck[.]com$/i.test((function(){try{return new URL(primarySource.url).hostname;}catch(e){return '';}})());
     var venues = window.GOPLACES ? window.GOPLACES.forEvent(ev) : [];
     var hasBonusHighlights = !!(ev.bonuses && ev.bonuses.length);
-    var hasMoveHighlights = EVM.some(function (m) { return m.eventId === ev.id; });
+    var hasMoveHighlights = EVM.some(function (m) { return m.eventId === ev.id || m.eventId === String(ev.id).replace(/^cur:/,''); });
     var hasFeaturedHighlights = (ev.featured || []).some(function (f) { return f && f.role !== 'shiny_form'; });
     var hasHighlights = hasBonusHighlights || hasMoveHighlights || hasFeaturedHighlights;
     var highlightOnMoves = !hasBonusHighlights && hasMoveHighlights;
     var highlightOnFeatured = !hasBonusHighlights && !hasMoveHighlights && hasFeaturedHighlights;
-    var h = '<div class="evd-bar"><button type="button" class="hbtn" id="evd-x" aria-label="Close event details"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button><span class="tag">EVENT DETAIL</span>'
-      + '<button type="button" class="pill info-open" data-infographic="' + esc(ev.id) + '">▧ Infographic</button>'
-      + '<button type="button" class="pill" data-evlink="' + esc(ev.id) + '" aria-label="Share a link to this event">🔗 Link</button>'
-      + '<button type="button" class="star' + (saved ? ' on' : '') + '" data-save="' + esc(ev.id) + '" aria-pressed="' + saved + '" aria-label="Save ' + esc(ev.name) + '" title="Saved events send you a Telegram reminder">' + (saved ? '★' : '☆') + '</button></div>';
-    h += '<label class="evd-lead"' + (saved ? '' : ' hidden') + '>🔔 Remind me <select data-lead="' + esc(ev.id) + '" aria-label="When to remind me">' + [['', 'Morning of the event'], ['1440', '1 day before'], ['180', '3 hours before'], ['60', '1 hour before'], ['off', 'Don\'t remind me']].map(function (o) { return '<option value="' + o[0] + '"' + (String(X.usGet('pref:lead:' + ev.id) || '') === o[0] ? ' selected' : '') + '>' + o[1] + '</option>'; }).join('') + '</select></label>';
+    var h = toolbarHtml(ev);
     if (ev.img) h += seasonBannerHtml(ev);
     h += '<header class="evd-hero" style="--k:' + k[1] + ';--kf:' + k[2] + '"><div class="evd-art">' + X.featArts(ev, 3) + '</div><span class="kind">' + esc(k[0]) + '</span><h2 id="evd-t">' + esc(ev.name) + '</h2>'
       + '<p class="evc-when">' + esc(X.timeMeta(ev)) + '</p><p class="cdn evd-cd">' + esc(X.countdown(ev)) + '</p>' + X.signalChips(ev, 8, true) + X.cpRows(ev) + '<div class="evd-chips">' + X.statusChip(ev) + '</div></header>';
@@ -468,7 +468,7 @@
       h += '<p class="note">Gigantamax Day, Mega Day and in-person tickets use this same card when an event has one.</p>';
     }
     h += ev.season ? seasonPage(ev) : sourcesBlock(ev);
-    if (venues.length) h += '<h3 class="sec2" id="evd-locations">Locations &amp; routes <span class="m">sourced venues</span></h3><div class="evd-card evd-venues">' + venues.map(function (p) { return '<article class="evd-venue"><div><b>' + esc(p.name) + '</b><small>' + esc([p.city, p.region, p.country].filter(Boolean).join(', ')) + '</small><span class="note">' + esc(p.type || 'Event location') + '</span></div><div class="evd-venue-actions"><button type="button" class="pill" data-copycoord="' + esc(p.lat.toFixed(6) + ',' + p.lng.toFixed(6)) + '">Copy coordinates</button><button type="button" class="pill" data-places="' + esc(p.id) + '">Place details</button>' + (p.route && safeGpx(p.route.file) && safe(p.route.url) && p.route.verified ? '<a class="pill all" href="' + esc(safeGpx(p.route.file)) + '" download>Download route GPX</a>' : '') + '</div></article>'; }).join('') + '<div class="evd-venue-foot"><button type="button" class="pill all" data-gpx="' + venues.map(function (p) { return esc(p.id); }).join(',') + '" data-gpxname="' + esc(ev.name) + '"' + (venues.length > 1 ? ' data-gpxorder="1"' : '') + '>Download venue points GPX</button><p class="note">' + (venues.length > 1 ? 'Sourced venue points in this event; this is a list of stops, not a walking route.' : 'A GPX waypoint for this venue, not a walking route.') + '</p></div></div>';
+    h += venueHtml(ev,venues);
     h += '<h3 class="sec2" id="evd-sources">Where this comes from</h3><div class="evd-card"><div class="evd-row"><span class="k">Schedule</span><div class="v"><p>' + X.statusChip(ev) + ' ' + esc(ev.source || '') + '</p></div></div>'
       + (e ? '<div class="evd-row"><span class="k">Details</span><div class="v">' + srcLine(e.source) + '</div></div>' : '') + '</div>'
       + '<p class="note">Source checked: ' + esc(sourceChecked || 'date unavailable') + ' · <span class="src-fresh" data-age="' + (sourceAge === null ? 'unknown' : sourceAge) + '">' + sourceFresh + '</span>' + (leekDuckSource ? '. Leek Duck is treated as a trusted primary Pokémon GO community source; it is distinct from a Niantic announcement.' : '') + '</p>'
@@ -476,6 +476,78 @@
     return h;
   }
 
+  function primary(html) {
+    var template=document.createElement('template');template.innerHTML=html||'';
+    template.content.querySelectorAll('.evd-src,.evd-claim-source,.research-task-source,.src-fresh,.pub,.npub,.st,.note[role="status"]').forEach(function(node){node.remove();});
+    return template.innerHTML;
+  }
+  function calendarEvent(ev,model){var range=GOEventClock.range(model.schedule,Intl.DateTimeFormat().resolvedOptions().timeZone);return Object.assign({},ev,{start:new Date(range.start),end:new Date(range.end),utc:model.schedule.timeBasis!=='player-local'});}
+  function eventWindow(model,ev) {
+    if(model.lifecycle==='postponed')return 'Postponed · New dates to be announced';
+    if(!model.schedule){
+      if(model.dateText)return model.dateText;
+      var published=model.internalValidation&&model.internalValidation.legacyDates||{};
+      if(/^\d{4}-\d{2}-\d{2}$/.test(published.start||'')){var dates=new Intl.DateTimeFormat('en-AU',{timeZone:'UTC',weekday:'short',day:'numeric',month:'short',year:'numeric'});return dates.format(new Date(published.start+'T12:00Z'))+(published.end&&published.end!==published.start?' – '+dates.format(new Date(published.end.slice(0,10)+'T12:00Z')):'')+' · Event times to be confirmed';}
+      return ev.datesKnown===false?'Dates to be announced':X.timeMeta(ev);
+    }
+    try{
+      var viewer=Intl.DateTimeFormat().resolvedOptions().timeZone,range=GOEventClock.range(model.schedule,viewer);
+      function inZone(zone){var f=new Intl.DateTimeFormat('en-AU',{timeZone:zone,weekday:'short',day:'numeric',month:'short',hour:'numeric',minute:'2-digit',timeZoneName:'short'});return f.format(new Date(range.start))+' – '+f.format(new Date(range.end));}
+      if(model.schedule.timeBasis==='player-local')return inZone(viewer)+' · Local time wherever you play';
+      return 'Your time: '+inZone(viewer)+(model.schedule.timeBasis==='local'&&model.schedule.timeZone!==viewer?' · Venue: '+inZone(model.schedule.timeZone):'');
+    }catch(error){return 'Published dates · time zone to be confirmed';}
+  }
+  function displayName(p){
+    if(p.costumeId)return p.name;
+    return GOEventAdapter.collectionName(p) || (GOLIB.parseForm(p.name).base!==p.name?p.name:p.name+(p.label?' ('+p.label+')':p.formId?' ('+p.formId+')':''));
+  }
+  function exactArt(p) {
+    var name=displayName(p),q='/api/art?n='+encodeURIComponent(name),described=GOEventAdapter.collectionName(p);
+    if(p.formId&&!p.costumeId&&(!G.MAN[q]||(!described&&GOLIB.parseForm(p.name).base===p.name)))return '<span class="art costume-unavailable ea" role="img" aria-label="'+esc(name+' · form art unavailable')+'"><span>'+esc(name)+'</span><small>Form art unavailable</small></span>';
+    return G.art({n:name,costume:!!p.costumeId,label:p.label||p.costumeId},'ea');
+  }
+  function collectionState(p,model){
+    var name=GOEventAdapter.collectionName(p);
+    if(p.formId==='dynamax'||/-dynamax$/.test(p.formId||''))return {state:'form'};
+    if(!name){var id=+p.speciesId;if(id&&X.DEXNAME[id]&&p.formId&&/^[a-z0-9][a-z0-9-]{0,63}$/.test(p.formId)){var tk='form:'+id+':'+p.formId,v=X.usGet(tk);return {state:v===1?'have':v===0?'missing':'unknown',tk:tk};}return {state:'unknown'};}
+    if(p.costumeId&&(model.pokemon||[]).some(function(other){return other.key!==p.key&&GOEventAdapter.collectionName(other)===name;}))return {state:'unknown'};
+    return X.ownState(name,!!p.costumeId);
+  }
+  function refreshOwnership(){
+    var dialog=$('evd');if(!dialog||dialog.hidden||!activeModel)return;
+    dialog.querySelectorAll('.ue-mon').forEach(function(card){
+      var p=activeModel.pokemon.find(function(p){return p.key===card.getAttribute('data-identity');});if(!p)return;
+      var own=collectionState(p,activeModel),label=card.querySelector('.own');
+      if(label){label.textContent=own.state==='have'?'Have':own.state==='missing'?'Need':own.state==='unreleased'?'Not released':'Not tracked';label.className='own '+(own.state==='have'?'own-have':own.state==='missing'?'own-need':'own-unk');}
+      card.querySelectorAll('[data-mark]').forEach(function(button){var value=button.getAttribute('data-val');button.setAttribute('aria-pressed',String(value!==''&&X.usGet(button.getAttribute('data-mark'))===+value));});
+      var follow=card.querySelector('[data-follow]');if(follow){var following=X.isFollowed(follow.getAttribute('data-follow'));follow.textContent=following?'Following':'Follow';follow.setAttribute('aria-pressed',String(following));}
+    });
+  }
+  document.addEventListener('gofn-state',refreshOwnership);
+  document.addEventListener('gofn-marks',refreshOwnership);
+  function render(ev) {
+    if(!window.GOEventAdapter || !window.GOEventComponents) return renderLegacy(ev);
+    var d=findDetails(ev)||{}, info=findInfo(ev)||{}, snapshot=(DATA.catalogue||[]).find(function(item){return item.eventId===ev.id || item.eventId===String(ev.id).replace(/^cur:/,'') || (item.aliases||[]).indexOf(ev.id)>=0;});
+    var model=window.GOEventAdapter.adapt(ev.universalModel || Object.assign({},ev,{id:snapshot?snapshot.eventId:ev.id}),d,info);
+    if(snapshot && snapshot.eventId===model.eventId)model=window.GOEventAdapter.retain(snapshot,model);
+    activeModel=model;
+    var venues=window.GOPLACES?GOPLACES.forEvent(ev):[];
+    var tickets=(info.tickets||[]).map(passCard).join('');
+    var pass=ev.season?primary(seasonPage(ev)):'';
+
+    var calendar=null;try{if(model.schedule)calendar=calendarEvent(ev,model);}catch(error){}
+    var sources=model.sources.map(function(src){var url=safe(src.url);return url?'<li><a href="'+esc(url)+'" target="_blank" rel="noopener noreferrer">'+esc(src.name||src.label||'Event source')+'</a></li>':'';}).filter(function(v,i,a){return v&&a.indexOf(v)===i;}).join('');
+    var conflicts=(model.internalValidation&&model.internalValidation.conflicts||[]).map(function(c){var values=[c.a&&c.a.text,c.b&&c.b.text].filter(Boolean);return '<li>'+esc(c.field==='shiny'?'Shiny availability':c.field||'Event detail')+(values.length?': '+values.map(esc).join(' / '):' needs rechecking.')+'</li>';}).join('');
+    var footer='<details class="ue-sources" id="evd-sources"><summary>Sources &amp; updates</summary><ul>'+sources+'</ul>'+(conflicts?'<h4>Details to recheck</h4><ul>'+conflicts+'</ul>':'')+(d.updated?'<p class="note">Last update '+esc(String(d.updated).slice(0,10))+'</p>':'')+(d.goPassParseWarning?'<p class="note">The last complete GO Pass rewards have been retained while the latest update is checked.'+(d.goPassRetainedAt?' Saved rank snapshot: '+esc(String(d.goPassRetainedAt).slice(0,10))+'.':'')+'</p>':'')+'</details>';
+    return window.GOEventComponents.render(model,{
+      toolbar:toolbarHtml(ev).replace('<span class="tag">EVENT DETAIL</span>',''),clock:window.GOEventClock,safe:safe,rewardArt:function(item){return exactArt(GOEventAdapter.pokemon({name:item.name,costume:!!item.costume,label:item.label,formId:item.formId,costumeId:item.costumeId,asset:item.assetKey}));},banner:ev.img?seasonBannerHtml(ev):'',heroArt:model.pokemon.slice(0,3).map(exactArt).join(''),
+      when:eventWindow(model,ev),countdown:model.schedule&&model.lifecycle!=='cancelled'&&model.lifecycle!=='postponed'&&ev.datesKnown!==false?X.countdown(ev):'',
+      ownership:function(p){return collectionState(p,model);},nameFor:displayName,follow:function(p){var name=GOEventAdapter.collectionName(p)||displayName(p),following=X.isFollowed(name);return '<button type="button" class="ue-follow" data-follow="'+esc(name)+'" aria-pressed="'+String(following)+'" aria-label="Follow '+esc(name)+'">'+(following?'Following':'Follow')+'</button>';},marks:typeof X.markBtns==='function'?X.markBtns:null,art:G.art,artFor:exactArt,bonus:G.bonusChip,
+      actions:'<div class="evd-btns">'+(calendar&&model.lifecycle!=='cancelled'&&model.lifecycle!=='postponed'?'<a class="pill all" download="event.ics" href="'+icsFor(calendar)+'">Add to calendar</a>':'')+'</div>',
+      research:primary(researchTasksHtml(ev,d)),passes:pass,tickets:primary(tickets),moves:primary(evMovesHtml(ev,!model.bonuses.length)),
+      locations:venueHtml(ev,venues),sources:footer
+    });
+  }
   /* Featured Pokémon, grouped by what is special about each one in this event. */
   var SVG = function (d) { return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="' + d + '"/></svg>'; };
   var TAGS = {
@@ -557,7 +629,7 @@
     fetch('/api/og?u=' + encodeURIComponent(link)).then(function (r) { return r.ok ? r.json() : null; }).then(function (d) {
       var hero = o.querySelector('.evd-hero'); if (!d || !hero || o.hidden || o.querySelector('.evd-banner') || !safe(d.image)) return;
       var im = document.createElement('img'); im.className = 'evd-banner'; im.alt = ''; im.referrerPolicy = 'no-referrer'; im.src = d.image; im.onerror = function () { im.remove(); };
-      hero.parentNode.insertBefore(im, hero);
+      (hero.querySelector('.ue-hero-media') || hero).prepend(im);
     }).catch(function () {});
   }
   /* Use the viewer's IANA zone; the API also returns the venue's own clock. */
@@ -572,6 +644,7 @@
   }
   /* In-person events with a venue time (Night Out): when the in-game bonuses start, in your time, matching the Telegram reminders. */
   function addBonusTime(o, ev) {
+    if(ev.datesKnown===false)return;
     var day = function (v) { return v ? (typeof v === 'string' ? v.slice(0, 10) : new Date(v).toISOString().slice(0, 10)) : ''; };
     fetch('/api/venue-times?name=' + encodeURIComponent(ev.name || '') + '&start=' + encodeURIComponent(day(ev.start)) + '&end=' + encodeURIComponent(day(ev.end)) + venueTimeQuery()).then(function (r) { return r.ok ? r.json() : null; }).then(function (d) {
       var when = o.querySelector('.evc-when'); if (!d || !d.items || !d.items.length || !when || o.hidden || o.querySelector('.evd-bonus')) return;
@@ -604,7 +677,8 @@
   if (window.MutationObserver) new MutationObserver(function () { clearTimeout(fillTimer); fillTimer = setTimeout(fillBonus, 200); }).observe(document.body, { childList: true, subtree: true });
   fillBonus();
   function open(id, from) {
-    var ev = X.events().concat(window.GOSEASON ? window.GOSEASON.events() : []).filter(function (e) { return e.id === id; })[0]; if (!ev) return;
+    var ev = X.events().concat(window.GOSEASON ? window.GOSEASON.events() : []).filter(function (e) { return e.id === id; })[0];
+    if(!ev){if(!DATA){load().then(function(){open(id,from);});return;}var model=window.GOEventRegistry&&GOEventRegistry.find(id);if(!model)return;ev=X.events().find(function(item){return item.id==='cur:'+model.eventId||(model.aliases||[]).indexOf(item.id)>=0;})||GOEventRegistry.display(model);}
     opener = from || document.activeElement;
     openerKey = opener && opener.getAttribute ? opener.getAttribute('data-open') : null;
     openerClass = opener && opener.classList ? String(opener.className || '').trim() : '';
@@ -612,7 +686,8 @@
     load().then(function () {
       var o = $('evd'), wasOpen = !!o && !o.hidden;
       if (!o) { o = document.createElement('div'); o.id = 'evd'; o.className = 'evd'; o.setAttribute('role', 'dialog'); o.setAttribute('aria-modal', 'true'); o.setAttribute('aria-labelledby', 'evd-t'); document.body.appendChild(o); }
-      var ev2 = completeEvent(ev);
+      var ev2 = completeEvent(ev),sourcePoster=findDetails(ev2);
+      if(!ev2.img&&sourcePoster&&safe(sourcePoster.image))ev2=Object.assign({},ev2,{img:sourcePoster.image});
       o.innerHTML = '<div class="evd-in">' + render(ev2) + '</div>';
       loadSeasonBanner(o, ev2);
       addBanner(o, ev2);
@@ -629,6 +704,7 @@
       if (dialog && target && dialog.contains(target)) {
         /* Native fragment navigation emits popstate and closes the modal. Keep section jumps inside it. */
         e.preventDefault();
+        if(target.tagName==='DETAILS')target.open=true;
         target.setAttribute('tabindex', '-1');
         target.focus({ preventScroll: true });
         target.scrollIntoView({ block: 'start' });
@@ -650,7 +726,7 @@
     if (e.key === 'Escape') { close(); return; }
     if (e.key !== 'Tab') return;
     var items = Array.prototype.slice.call(o.querySelectorAll('a[href],button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea:not([disabled]),summary,[tabindex]:not([tabindex="-1"])')).filter(function (el) {
-      return !el.closest('[hidden],[aria-hidden="true"]') && el.getClientRects().length > 0;
+      return !el.closest('[hidden],[aria-hidden="true"]') && (!el.checkVisibility || el.checkVisibility()) && el.getClientRects().length > 0;
     });
     if (!items.length) { e.preventDefault(); var x = $('evd-x'); if (x) x.focus(); return; }
     var first = items[0], last = items[items.length - 1], active = document.activeElement;
@@ -682,7 +758,7 @@
     var id; try { id = decodeURIComponent(m[1]); } catch (err) { return; }
     var tries = 0, tm = setInterval(function () {
       var evs = X.events().concat(window.GOSEASON ? window.GOSEASON.events() : []);
-      if (evs.some(function (e) { return e.id === id; })) { clearInterval(tm); try { history.replaceState(history.state, '', location.pathname + location.search); } catch (err) {} open(id); }
+      if (evs.some(function (e) { return e.id === id; }) || (window.GOEventRegistry&&GOEventRegistry.find(id))) { clearInterval(tm); try { history.replaceState(history.state, '', location.pathname + location.search); } catch (err) {} open(id); }
       else if (++tries > 40) { clearInterval(tm); try { history.replaceState(history.state, '', location.pathname + location.search); } catch (err) {} toast('That event is no longer listed.'); }
     }, 250);
   }

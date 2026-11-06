@@ -11,6 +11,10 @@ import { entriesFromPage, mergeWorld, collapseWorld, parseDateRange, placeOf, cl
 import { matchEvent } from "../g47ix-review.mjs";
 import { discoverIntl, entryFromIntlPage, INTL_PATTERN } from "./intl.mjs";
 import { failRun } from "../fail-run.mjs";
+import { extractEncounters, mergeEncounters, posterFromHtml } from "./encounters.mjs";
+import catalogue from "../event-experience/build-catalogue.cjs";
+import eventAdapter from "../../public/event-adapter.js";
+import { announcementFromPage } from "./announcements.mjs";
 
 const APP = process.env.APP_URL || "https://pogo.michaelpuff.com";
 const OUT = process.env.OUT_FILE || "public/event-details.json";
@@ -228,17 +232,21 @@ async function main() {
       const html = await get(f.url);
       const title = pageTitle(html) || f.title, fields = extractFields(html); if (fields.goPassParseError) errors.push(f.url + ": GO Pass parser: " + fields.goPassParseError);
       const lines = htmlToLines(html);
-      if (hasContent(fields) || lines.length) pages.push({ ...f, title, fields, lines });
+      if (hasContent(fields) || lines.length) pages.push({ ...f, title, fields, lines, html });
       await new Promise(r => setTimeout(r, 400));
     } catch (e) { errors.push(f.url + ": " + e.message); }
   }
+  let dex=[];try{dex=JSON.parse(await readFile('public/dex.json','utf8'));}catch{/* exact unknown identities remain prose */}
+  let artNames=[];try{artNames=Object.keys(JSON.parse(await readFile('public/art/index.json','utf8'))).map(url=>new URL(url,'https://app.invalid').searchParams.get('n')).filter(Boolean);}catch{/* optional asset aliases */}
+  let costumeNames=[];try{const data=JSON.parse(await readFile('public/data.json','utf8'));const costumeDB=JSON.parse(await readFile('public/costumes.json','utf8'));eventAdapter.configureSpecies(dex);costumeNames=eventAdapter.costumeDescriptors(data,costumeDB);}catch{/* no inferred costumes */}
   const byEvent = new Map(), unmatched = [];
   for (const p of pages) {
     const hit = pickEvent(p, events);
     if (!hit) { unmatched.push({ source: p.source, title: p.title, url: p.url }); continue; }
     const arr = byEvent.get(hit.event.id) || { event: hit.event, results: [] };
     const s = SOURCES.find(x => x.id === p.source);
-    arr.results.push({ source: { id: s.id, name: s.name, trust: s.trust, url: p.url }, fields: p.fields });
+    p.fields.eventEncounters=extractEncounters(p.html,{dex,names:artNames,costumes:costumeNames});
+    arr.results.push({ image:posterFromHtml(p.html,p.url), source: { id: s.id, name: s.name, trust: s.trust, url: p.url }, fields: p.fields });
     byEvent.set(hit.event.id, arr);
   }
   // Events the live feed does not list: regional, in-person, exclusive and new announcements
@@ -279,18 +287,31 @@ async function main() {
   let old = {}; try { old = JSON.parse(await readFile(OUT, "utf8")).events || {}; } catch { /* first run */ }
   const now = new Date().toISOString(), out = {};
   for (const [id, { event, results }] of byEvent) {
-    const merged = mergeSources(results);
+    const merged = { ...mergeSources(results), ...mergeEncounters(results) };
+    const image=results.map(r=>r.image).find(Boolean)||null;
     const researchTasks = (merged.researchTasks || []).map(task => ({
       ...task, eventId: id, eventName: event.t,
       eventWindow: { start: event.start || null, end: event.end || null },
       checkedAt: now.slice(0, 10)
     }));
-    out[id] = { name: event.t, updated: now, sources: results.map(r => r.source), ...merged, researchTasks };
+    out[id] = { name: event.t, image, updated: now, sources: results.map(r => r.source), ...merged, researchTasks };
+  }
+  // Unmatched source articles are first-class announcements, not just diagnostics.
+  for(const page of pages){
+    if([...byEvent.values()].some(group=>group.results.some(result=>result.source.url===page.url)))continue;
+    const announcement=announcementFromPage(page,{dex,names:artNames,costumes:costumeNames});if(!announcement)continue;
+    const split=entriesFromPage(page),represented=split.length>0;
+    const {native,...metadata}=announcement.internalValidation;
+    out[announcement.eventId]={name:announcement.title,researchTasks:(page.fields.researchTasks||[]).map(task=>({...task,eventId:announcement.eventId,eventName:announcement.title,eventWindow:{start:announcement.schedule?.start||null,end:announcement.schedule?.end||null},checkedAt:now.slice(0,10)})),updated:now,sources:announcement.sources,image:announcement.image,fields:Object.fromEntries(Object.entries(page.fields||{}).filter(([,v])=>Array.isArray(v)).map(([k,v])=>[k,v.map(text=>typeof text==='string'?{text,sources:[page.source],status:page.source==='official'?'official':'single'}:text)])),
+      ...(represented?{}:{normalizedEvent:announcement}),
+      ...(split.length<=1?{pokemon:announcement.pokemon,encounters:announcement.encounters}:{}),
+      internalValidation:metadata};
   }
   preserveGoPassRows(out, old, byEvent);
   for (const [id, v] of Object.entries(old)) if (!out[id] && Date.now() - Date.parse(v.updated || 0) < 45 * 864e5) out[id] = normaliseLegacyStatuses(v); // keep recent entries a source stopped listing, with current terminology
   await mkdir("data", { recursive: true });
   await writeFile(OUT, JSON.stringify({ updated: now, events: out }, null, 1) + "\n");
+  if (OUT === "public/event-details.json" && WORLD_OUT === "public/world-events.json") await catalogue.publish();
   const gaps = Object.entries(out).flatMap(([id, v]) => (v.gaps || []).map(g => ({ event: v.name, ...g })));
   try { await writeFile("data/importer-lines.json", JSON.stringify(pages.filter(p => /go-pass|pass/i.test(p.url)).map(p => ({ url: p.url, lines: p.lines.slice(0, 260) })), null, 1) + "\n"); } catch { /* debug only */ }
   await writeFile(REPORT, JSON.stringify({ runAt: now, sources: status, pagesRead: pages.length, events: Object.keys(out).length, worldEvents: world.length, worldUndated: world.filter(w => !w.start).map(w => w.name), unmatchedPages: unmatched.slice(0, 40), intl: intlStatus, serebiiSkipped: serebiiLeft.slice(0, 30), gaps: gaps.slice(0, 80), errors: errors.slice(0, 20) }, null, 1) + "\n");
