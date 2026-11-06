@@ -115,6 +115,10 @@ jobs:
         if: matrix.shard == 'b'
         run: python test/research_recovery_browser.py
 
+      - name: Verify premium Today, Schedule and event detail surfaces
+        if: matrix.shard == 'b'
+        run: python test/premium_surfaces_browser.py
+
       - name: Verify combined source rendering and offline upgrade
         if: matrix.shard == 'b'
         run: python test/release_browser.py
@@ -158,6 +162,7 @@ jobs:
         run: |
           python test/opportunity_planner_browser.py
           python test/research_recovery_browser.py
+          python test/premium_surfaces_browser.py
       - name: Verify combined source rendering, PWA update and preserved player data
         run: python test/release_browser.py
       - name: Wait for the approved production build

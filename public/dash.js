@@ -759,6 +759,9 @@
   }
   function drawStrip() {
     var el = $('weekstrip'); if (!el) return;
+    var active = document.activeElement;
+    var focusDay = el.contains(active) ? active.getAttribute('data-day') : null;
+    var focusWeek = el.contains(active) ? active.getAttribute('data-wk') : null;
     if (evQ) { el.innerHTML = ''; return; }
     var ws = weekStart(weekOff), today = dayKey(now()), cells = '';
     for (var i = 0; i < 7; i++) {
@@ -768,6 +771,13 @@
     }
     var a = ws, b = addDays(ws, 6);
     el.innerHTML = '<div class="wk-head"><button type="button" class="calnav" data-wk="-1" aria-label="Previous week">‹</button><span>' + esc(fmtD(a) + ' to ' + fmtD(b)) + (weekOff === 0 ? ' · this week' : '') + '</span><button type="button" class="calnav" data-wk="1" aria-label="Next week">›</button></div><div class="wk-days">' + cells + '</div>';
+    /* Replacing the buttons must not drop keyboard focus back to the page. */
+    if (focusDay !== null || focusWeek !== null) {
+      var focusTarget = Array.from(el.querySelectorAll('button')).find(function (button) {
+        return focusDay !== null ? button.getAttribute('data-day') === focusDay : button.getAttribute('data-wk') === focusWeek;
+      });
+      if (focusTarget) focusTarget.focus({ preventScroll: true });
+    }
     /* Re-rendering resets the scroll: keep the chosen day in view when the strip scrolls (320 px shows about six days). */
     var strip = el.querySelector('.wk-days'), pick = strip && strip.querySelector('.wd.sel');
     if (pick && strip.scrollWidth > strip.clientWidth + 1) { var pr = pick.getBoundingClientRect(), sr = strip.getBoundingClientRect(); if (pr.right > sr.right) strip.scrollLeft += pr.right - sr.right + 8; }
@@ -1317,7 +1327,10 @@
   }
   function drawOpps() {
     var el = $('opps'); if (!el) return;
-    var active = document.activeElement, focusAttr = active && el.contains(active) ? ['data-follow', 'data-mark'].filter(function (key) { return active.hasAttribute(key); })[0] : '';
+    var active = document.activeElement, focusAttr = active && el.contains(active) ? ['data-follow', 'data-mark', 'data-open'].filter(function (key) { return active.hasAttribute(key); })[0] : '';
+    var expanded = Array.from(el.querySelectorAll('.opp-more[open]')).map(function (more) { return more.closest('.opp').querySelector('[data-follow]').getAttribute('data-follow'); });
+    var focusCard = active && active.closest('.opp');
+    var focusName = focusCard && focusCard.querySelector('[data-follow]').getAttribute('data-follow');
     var focusValue = focusAttr ? active.getAttribute(focusAttr) : '', focusMark = focusAttr === 'data-mark' ? active.getAttribute('data-val') : '';
     var all = opportunities(), query = $('opp-search') ? $('opp-search').value : '', mode = $('opp-filter') ? $('opp-filter').value : 'all';
     var list = LIB.filterOpportunities(all, query, mode, isFollowed), known = Object.keys(DEXGEN).some(function (id) { return genConfirmed(DEXGEN[id]); }) || usKeys('form:').length > 0;
@@ -1337,8 +1350,12 @@
     if (have.length) html += '<details class="dd"' + (query || mode !== 'all' ? ' open' : '') + ' style="margin-top:10px"><summary>Already in your collection <span class="cnt">' + have.length + '</span></summary><div class="body"><div class="opps">' + have.map(oppCard).join('') + '</div></div></details>';
     if (!list.length) html += '<p class="empty">' + (!all.length ? 'No featured Pokémon in the next four weeks.' : mode === 'following' && !query ? 'None of the Pokémon you follow have a scheduled opportunity in the next four weeks. Follow a Pokémon from All opportunities to include it here.' : 'No opportunities match these filters. Try another Pokémon or event, or clear the filters.') + '</p>';
     el.innerHTML = html;
+    Array.from(el.querySelectorAll('.opp')).forEach(function (card) {
+      var more = card.querySelector('.opp-more'), follow = card.querySelector('[data-follow]');
+      if (more && follow && expanded.indexOf(follow.getAttribute('data-follow')) >= 0) more.open = true;
+    });
     if (focusAttr) {
-      var replacement = Array.prototype.filter.call(el.querySelectorAll('[' + focusAttr + ']'), function (node) { return node.getClientRects().length && node.getAttribute(focusAttr) === focusValue && (focusAttr !== 'data-mark' || node.getAttribute('data-val') === focusMark); })[0];
+      var replacement = Array.prototype.filter.call(el.querySelectorAll('[' + focusAttr + ']'), function (node) { return node.getClientRects().length && node.getAttribute(focusAttr) === focusValue && (!focusName || node.closest('.opp').querySelector('[data-follow]').getAttribute('data-follow') === focusName) && (focusAttr !== 'data-mark' || node.getAttribute('data-val') === focusMark); })[0];
       (replacement || $('opp-search')).focus({ preventScroll: true });
     }
   }
@@ -2027,7 +2044,7 @@ function renderHomeBrief(t) {
     renderCoverage();
     if (window.GO && GO.refreshDex) GO.refreshDex();
     usSync();
-    var inf = document.createElement('script'); inf.src = '/infographic.js?v=20261103a'; document.body.appendChild(inf); var x = document.createElement('script'); x.src = '/extra.js?v=20261102c'; document.body.appendChild(x); var z = document.createElement('script'); z.src = '/places.js?v=20261103b'; window.GOPLACES_READY = new Promise(function (resolve) { z.onload = function () { resolve(window.GOPLACES || null); }; z.onerror = function () { resolve(null); }; }); var y = document.createElement('script'); y.src = '/detail.js?v=20261106c'; document.body.appendChild(y); document.body.appendChild(z); var w = document.createElement('script'); w.src = '/fresh.js?v=20261103a'; document.body.appendChild(w); var nv = document.createElement('script'); nv.src = '/nudge.js?v=20261102a'; document.body.appendChild(nv); var rv = document.createElement('script'); rv.src = '/review.js?v=20261104b'; document.body.appendChild(rv); var by = document.createElement('script'); by.src = '/buy.js?v=20261103a'; document.body.appendChild(by);
+    var inf = document.createElement('script'); inf.src = '/infographic.js?v=20261103a'; document.body.appendChild(inf); var x = document.createElement('script'); x.src = '/extra.js?v=20261102c'; document.body.appendChild(x); var z = document.createElement('script'); z.src = '/places.js?v=20261103b'; window.GOPLACES_READY = new Promise(function (resolve) { z.onload = function () { resolve(window.GOPLACES || null); }; z.onerror = function () { resolve(null); }; }); var y = document.createElement('script'); y.src = '/detail.js?v=20261106d'; document.body.appendChild(y); document.body.appendChild(z); var w = document.createElement('script'); w.src = '/fresh.js?v=20261103a'; document.body.appendChild(w); var nv = document.createElement('script'); nv.src = '/nudge.js?v=20261102a'; document.body.appendChild(nv); var rv = document.createElement('script'); rv.src = '/review.js?v=20261104b'; document.body.appendChild(rv); var by = document.createElement('script'); by.src = '/buy.js?v=20261103a'; document.body.appendChild(by);
   }
   envBanner();
   /* Bounded waits: a request that never answers must not leave Today blank. After FEED_TIMEOUT_MS the page renders from the curated list

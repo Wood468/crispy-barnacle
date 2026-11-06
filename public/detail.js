@@ -623,6 +623,18 @@
     });
   }
   document.addEventListener('click', function (e) {
+    var jump = e.target.closest('.evd-jump a');
+    if (jump) {
+      var dialog = $('evd'), target = $(String(jump.getAttribute('href') || '').slice(1));
+      if (dialog && target && dialog.contains(target)) {
+        /* Native fragment navigation emits popstate and closes the modal. Keep section jumps inside it. */
+        e.preventDefault();
+        target.setAttribute('tabindex', '-1');
+        target.focus({ preventScroll: true });
+        target.scrollIntoView({ block: 'start' });
+      }
+      return;
+    }
     var research = e.target.closest('[data-open-research]');
     if (research) {
       e.preventDefault();
