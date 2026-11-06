@@ -40,7 +40,7 @@ test('Twilight Wishes costume records have distinct identities and never imply b
 test('unreleased opportunities remain visible without inventing collection ownership', () => {
   const source = fs.readFileSync(new URL('../public/dash.js', import.meta.url), 'utf8');
   const helpers = source.slice(source.indexOf('  function opportunityEventRow('), source.indexOf("  if ($('opp-search'))"));
-  const nodes = { opps: { innerHTML: '', contains: () => false }, 'opp-status': {}, 'opp-search': { value: '' }, 'opp-filter': { value: 'all' } };
+  const nodes = { opps: { innerHTML: '', contains: () => false, querySelectorAll: () => [] }, 'opp-status': {}, 'opp-search': { value: '' }, 'opp-filter': { value: 'all' } };
   const row = { name: 'Source-published future Pokémon', costume: false, o: { state: 'unreleased', base: 'Future Pokémon', why: 'Not released in Pokémon GO yet' }, evs: [{ name: 'Announced debut event', id: 'cur:debut', kind: 'debut' }] };
   const context = { $: id => nodes[id], LIB: lib, opportunities: () => [row], document: { activeElement: null }, DEXGEN: {}, genConfirmed: () => false, usKeys: () => [], isFollowed: () => false, esc: lib.esc, art: () => '', timeMeta: () => 'Source-published date', countdown: () => 'Upcoming' };
   vm.createContext(context); vm.runInContext(helpers, context); context.drawOpps();
