@@ -159,6 +159,53 @@ export function pickEvent(page, events) {
 }
 
 
+function goPassRowText(value) {
+  return typeof value === "string" ? value : String(value?.text || "");
+}
+function isGoPassRankRow(value) {
+  return /^rank \d+(?: deluxe)?:/i.test(goPassRowText(value));
+}
+
+/** Preserve the last known-good rank rows if Leek Duck's structured GO Pass markup fails. */
+export function preserveGoPassRows(out, old, byEvent) {
+  for (const [id, { results }] of byEvent) {
+    const failedLeekDuck = results.some(result =>
+      result.source?.id === "leekduck" && result.fields?.goPassParseError
+    );
+    if (!failedLeekDuck || !old[id] || !out[id]) continue;
+    const currentFields = out[id].fields || (out[id].fields = {});
+    const previousFields = old[id].fields || {};
+    let retained = 0;
+    for (const field of ["tickets", "bonuses"]) {
+      const current = Array.isArray(currentFields[field]) ? currentFields[field] : [];
+      const previous = Array.isArray(previousFields[field]) ? previousFields[field] : [];
+      const seen = new Set(current.map(goPassRowText));
+      const currentRanks = new Set(current.filter(isGoPassRankRow).map(row => /^rank \d+/i.exec(goPassRowText(row))[0].toLowerCase()));
+      const keep = previous.filter(row => {
+        if (!isGoPassRankRow(row) || seen.has(goPassRowText(row))) return false;
+        // A current source's reward for a rank wins over its older snapshot.
+        if (field === "tickets" && currentRanks.has(/^rank \d+/i.exec(goPassRowText(row))[0].toLowerCase())) return false;
+        seen.add(goPassRowText(row));
+        return true;
+      });
+      currentFields[field] = current.concat(keep);
+      retained += keep.length;
+    }
+    out[id].goPassParseWarning = retained
+      ? "GO Pass source parsing failed; previously published rank rewards were retained."
+      : "GO Pass source parsing failed; rank rewards could not be refreshed.";
+    if (retained) {
+      out[id].goPassRetainedAt = old[id].goPassRetainedAt || old[id].updated || null;
+      const sources = out[id].sources || (out[id].sources = []);
+      for (const source of old[id].sources || []) {
+        if (!sources.some(value => value.id === source.id && value.url === source.url)) sources.push(source);
+      }
+    }
+  }
+  return out;
+}
+
+
 async function main() {
   const events = await appEvents();
   const { found, status } = await discover();
@@ -179,7 +226,7 @@ async function main() {
     if (pages.length >= MAX_PAGES) break;
     try {
       const html = await get(f.url);
-      const title = pageTitle(html) || f.title, fields = extractFields(html);
+      const title = pageTitle(html) || f.title, fields = extractFields(html); if (fields.goPassParseError) errors.push(f.url + ": GO Pass parser: " + fields.goPassParseError);
       const lines = htmlToLines(html);
       if (hasContent(fields) || lines.length) pages.push({ ...f, title, fields, lines });
       await new Promise(r => setTimeout(r, 400));
@@ -240,6 +287,7 @@ async function main() {
     }));
     out[id] = { name: event.t, updated: now, sources: results.map(r => r.source), ...merged, researchTasks };
   }
+  preserveGoPassRows(out, old, byEvent);
   for (const [id, v] of Object.entries(old)) if (!out[id] && Date.now() - Date.parse(v.updated || 0) < 45 * 864e5) out[id] = normaliseLegacyStatuses(v); // keep recent entries a source stopped listing, with current terminology
   await mkdir("data", { recursive: true });
   await writeFile(OUT, JSON.stringify({ updated: now, events: out }, null, 1) + "\n");

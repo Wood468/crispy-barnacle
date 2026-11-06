@@ -4,6 +4,26 @@
 }(typeof self !== 'undefined' ? self : this, function () {
   'use strict';
 
+  // Filter the existing collection opportunities without inferring new ownership or changing order.
+  function filterOpportunities(rows, query, mode, followed) {
+    var q = norm(query || '');
+    return (rows || []).filter(function (row) {
+      if (mode === 'need' && row.o.state !== 'missing') return false;
+      if (mode === 'following' && !followed(row.name)) return false;
+      return !q || norm([row.name, row.o.base].concat(row.evs.map(function (e) { return e.name; })).join(' ')).indexOf(q) >= 0;
+    });
+  }
+
+  // Only a task's own checked date establishes verification age, never dataset asOf.
+  function researchCheckedText(value, now) {
+    var day = typeof value === 'string' ? value.slice(0, 10) : '';
+    var ms = /^\d{4}-\d{2}-\d{2}$/.test(day) ? Date.parse(day + 'T00:00:00Z') : NaN;
+    var clock = now == null ? Date.now() : now;
+    if (!Number.isFinite(ms) || new Date(ms).toISOString().slice(0, 10) !== day || ms > clock) return 'Source check date unavailable';
+    var age = Math.floor((clock - ms) / 864e5);
+    return 'Checked ' + day + (age > 21 ? ' · source check may be out of date' : age > 7 ? ' · source check may be due' : '');
+  }
+
   // Escape untrusted values for HTML text and quoted attribute values. Validate URLs separately.
   function esc(value) {
     return String(value == null ? '' : value).replace(/[&<>"']/g, function (c) {
@@ -321,5 +341,5 @@
     return '';
   }
 
-  return { isPrivateLink: isPrivateLink, publicLink: publicLink, esc: esc, rpEstimate: rpEstimate, raidEventFor: raidEventFor, isPlaceholder: isPlaceholder, audify: audify, setTiers: setTiers, loadPrices: loadPrices, getJson: getJson, jsonOrNull: jsonOrNull, priceView: priceView, fmtRp: fmtRp, buildQueue: buildQueue, parseForm: parseForm, formId: formId, merge: merge, reconcileSync: reconcileSync, norm: norm, lev: lev, matchName: matchName, candidates: candidates, isInPersonWorldEvent: isInPersonWorldEvent, isRegionalInGameEvent: isRegionalInGameEvent, liveActivityCounts: liveActivityCounts };
+  return { researchCheckedText: researchCheckedText, filterOpportunities: filterOpportunities, isPrivateLink: isPrivateLink, publicLink: publicLink, esc: esc, rpEstimate: rpEstimate, raidEventFor: raidEventFor, isPlaceholder: isPlaceholder, audify: audify, setTiers: setTiers, loadPrices: loadPrices, getJson: getJson, jsonOrNull: jsonOrNull, priceView: priceView, fmtRp: fmtRp, buildQueue: buildQueue, parseForm: parseForm, formId: formId, merge: merge, reconcileSync: reconcileSync, norm: norm, lev: lev, matchName: matchName, candidates: candidates, isInPersonWorldEvent: isInPersonWorldEvent, isRegionalInGameEvent: isRegionalInGameEvent, liveActivityCounts: liveActivityCounts };
 }));

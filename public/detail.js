@@ -171,6 +171,7 @@
       if (!list.some(function (x) { return (key ? key(x) : JSON.stringify(x)) === value; })) list.push(item);
     }
     hits.forEach(function (d) {
+      if (d.goPassParseWarning) { out.goPassParseWarning = d.goPassParseWarning; out.goPassRetainedAt = d.goPassRetainedAt || null; }
       if (String(d.updated || "") > out.updated) out.updated = String(d.updated || "");
       (d.sources || []).forEach(function (s) { uniquePush(out.sources, s, function (x) { return x.id + "|" + x.url; }); });
       Object.keys(d.fields || {}).forEach(function (field) {
@@ -327,7 +328,7 @@
         return url ? '<a href="' + esc(url) + '" target="_blank" rel="noopener noreferrer">' + esc(name) + '</a>' : esc(name);
       }).filter(Boolean);
       var label = task.status === 'official' ? 'Official' : task.status === 'corroborated' ? 'Cross-checked' : 'Single source';
-      return '<small class="research-task-source">' + label + (links.length ? ' · ' + links.join(' · ') : '') + (task.checkedAt ? ' · checked ' + esc(task.checkedAt) : '') + '</small>';
+      return '<small class="research-task-source">' + label + (links.length ? ' · ' + links.join(' · ') : '') + ' · ' + esc(window.GOLIB.researchCheckedText(task.checkedAt)) + '</small>';
     }
 
     function reward(item) {
@@ -365,15 +366,15 @@
     // rank rewards, free and Deluxe columns
     var rows = rank(F.tickets).map(function (t) { var m = /^rank (\d+)\W*(.*)$/i.exec(t), fd = /^Free: (.*?) \| Deluxe: (.*)$/.exec(m[2]); return fd ? { r: +m[1], f: fd[1], d: fd[2] } : null; }).filter(Boolean).sort(function (a, b) { return a.r - b.r; });
     var rowHtml = function (x) { return '<tr><th>' + x.r + '</th><td>' + window.GORICH(esc(x.f)) + '</td><td>' + window.GORICH(esc(x.d)) + '</td></tr>'; };
-    var rewards = rows.length ? '<details class="evd-rk" open><summary>First 10 ranks</summary><div class="ss-scroll"><table class="ss-tab"><thead><tr><th>Rank</th><th>Free</th><th>Deluxe</th></tr></thead><tbody>' + rows.slice(0, 10).map(rowHtml).join('') + '</tbody></table></div></details>'
-      + (rows.length > 10 ? '<details class="evd-rk"><summary>All ' + rows.length + ' rank rewards</summary><div class="ss-scroll"><table class="ss-tab"><thead><tr><th>Rank</th><th>Free</th><th>Deluxe</th></tr></thead><tbody>' + rows.slice(10).map(rowHtml).join('') + '</tbody></table></div></details>' : '')
+    var rewards = rows.length ? '<details class="evd-rk" open><summary>First ' + Math.min(10, rows.length) + ' published ranks</summary><div class="ss-scroll"><table class="ss-tab"><thead><tr><th>Rank</th><th>Free</th><th>Deluxe</th></tr></thead><tbody>' + rows.slice(0, 10).map(rowHtml).join('') + '</tbody></table></div></details>'
+      + (rows.length > 10 ? '<details class="evd-rk"><summary>Remaining ' + (rows.length - 10) + ' published ranks</summary><div class="ss-scroll"><table class="ss-tab"><thead><tr><th>Rank</th><th>Free</th><th>Deluxe</th></tr></thead><tbody>' + rows.slice(10).map(rowHtml).join('') + '</tbody></table></div></details>' : '')
       : (si.label === 'GO Pass' ? '<p class="note">Individual rank rewards have not been published or parsed from the linked source yet. Only verified summaries and milestone bonuses are shown.</p>' : '');
     // prices
     var prices = (F.tickets || []).map(function (x) { return tidy(x.text); }).filter(function (t) { return /US\$/.test(t) && !/^rank/i.test(t); });
     var priceHtml = prices.length ? '<ul>' + prices.map(function (t) { return '<li>' + window.GORICH(passPrice(esc(t), ev)) + '</li>'; }).join('') + '</ul>' : '';
     // tasks and points
     var pts = (si.points || []).length ? '<div class="ss-pts">' + si.points.map(function (p) { return '<span class="ss-pt"><b>' + p[1] + '</b><i>pts</i> ' + esc(p[0]) + '<small>' + esc(p[2]) + '</small></span>'; }).join('') + '</div><p class="note">Up to 250 extra points a day: win a raid (100), hatch an Egg (40), catch a Pokémon (5).</p>' : '';
-    var out = '';
+    var out = d.goPassParseWarning ? '<p class="note" role="status">' + esc(d.goPassParseWarning) + (d.goPassRetainedAt ? ' Saved rank snapshot: ' + esc(String(d.goPassRetainedAt).slice(0, 10)) + '.' : '') + '</p>' : '';
     out += (si.sections || []).slice(0, 1).map(function (x) { return sec(x.t, x.icon, ul(x.items)); }).join('');
     out += sec('Milestone bonuses', '/ico/xp.webp', tierHtml);
     out += sec('Rank rewards', '/ico/g/powerup.webp', rewards);

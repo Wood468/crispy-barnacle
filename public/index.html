@@ -16,8 +16,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&family=Hanken+Grotesk:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap">
 <link rel="stylesheet" href="/styles.css?v=20261102b">
-<link rel="stylesheet" href="/dash.css?v=20261104g">
-<link rel="preload" href="/dash.js?v=20261104h" as="script">
+<link rel="stylesheet" href="/dash.css?v=20261106c">
+<link rel="preload" href="/dash.js?v=20261106c" as="script">
 </head>
 <body>
 <div class="wrap">
@@ -128,6 +128,7 @@
 
     <!-- EVENTS -->
     <section class="panel" id="tab-events" role="tabpanel" hidden>
+      <div class="schedule-heading"><h2 class="sec2">Schedule</h2><p>Plan your next session. Explore worldwide events, research and in-person destinations.</p></div>
       <div class="subnav" id="subnav-events" role="group" aria-label="Events views"></div>
             <section class="panel" id="sub-timeline">
         <div class="subnav inner" id="mode-events-timeline" hidden role="group" aria-label="Timeline filter"></div>
@@ -146,6 +147,7 @@
           <p class="intro">Field, Timed and Special Research from current and upcoming events. Rewards and task details appear only when a source publishes them.</p>
         </div>
         <p id="research-status" class="sync" role="status" aria-live="polite">Research data is loading…</p>
+        <button type="button" class="pill" data-research-refresh aria-controls="research-list">Refresh research</button>
         <div id="research-list" class="research-groups" aria-busy="false"></div>
       </section>
       <section class="panel" id="sub-world" hidden>
@@ -208,6 +210,12 @@
       <div class="subnav" id="subnav-collect" role="group" aria-label="Collection views"></div>
             <section class="panel" id="sub-opps">
         <p class="intro">Upcoming events matched to the Pokémon you still need and the ones you follow. Only events from the schedule count; nothing here is a rumour.</p>
+        <div class="opp-controls" role="search" aria-label="Collection opportunities">
+          <label for="opp-search">Pokémon or event<input id="opp-search" type="search" placeholder="Search opportunities" autocomplete="off" maxlength="120" aria-controls="opps"></label>
+          <label for="opp-filter">Show<select id="opp-filter" aria-controls="opps"><option value="all">All opportunities</option><option value="need">Need</option><option value="following">Following</option></select></label>
+          <button type="button" class="pill" id="opp-clear">Clear filters</button>
+        </div>
+        <p id="opp-status" class="note" role="status" aria-live="polite"></p>
         <div id="opps"></div>
       </section>
       <section class="panel" id="sub-mydex" hidden>
@@ -483,16 +491,16 @@
 </div>
 
 <script src="/imgerr.js?v=20261015a"></script>
-<script src="/lib.js?v=20261104a"></script>
+<script src="/lib.js?v=20261106c"></script>
 <script src="/move.js?v=20261102a"></script>
 <script src="/local-state.js?v=20261030a"></script>
 <script src="/account.js?v=20261102a"></script>
 <script src="/dedupe.js?v=20261101b"></script>
-<script src="/app.js?v=20261104g"></script>
+<script src="/app.js?v=20261106c"></script>
 <script src="/raid-share.js?v=20261102b"></script>
 <script src="/store.js?v=20261102a"></script>
 <script src="/season.js?v=20261104b"></script>
-<script src="/research.js?v=20261104b"></script>
+<script src="/research.js?v=20261106c"></script>
 <script src="/weekly.js?v=20261102a"></script>
 <script src="/pin.js?v=20261101b"></script>
 <script src="/whatsnew.js?v=20261102d"></script>

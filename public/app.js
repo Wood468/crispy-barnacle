@@ -51,7 +51,12 @@ Promise.all([
   }
   window.GOSD=sdId;
   /* Pictures are animated (Pokémon Showdown) wherever one exists; the still artwork is the fallback. Costume art is the game's own still icon. */
-  var COSTPIC={},COSTSH={},GMX={},GMSH={};try{fetch('/costumes.json').then(function(r){return r.ok?r.json():null}).then(function(j){if(j&&j.pictures&&Object.keys(j.pictures).length){COSTPIC=j.pictures;COSTSH=j.shiny||{};GMX=j.gmax||{};GMSH=j.gmaxShiny||{};setTimeout(function(){try{var need=[].some.call(document.querySelectorAll('img[data-ck]'),function(i){return COSTPIC[i.getAttribute('data-ck')]})||[].some.call(document.querySelectorAll('img[data-gk]'),function(i){return GMX[i.getAttribute('data-gk')]});if(need&&window.GODASH&&GODASH.renderAll)GODASH.renderAll()}catch(e){}},300)}}).catch(function(){})}catch(e){}
+  var COSTPIC={},COSTSH={},GMX={},GMSH={};try{fetch('/costumes.json').then(function(r){return r.ok?r.json():null}).then(function(j){if(j&&j.pictures&&Object.keys(j.pictures).length){COSTPIC=j.pictures;COSTSH=j.shiny||{};GMX=j.gmax||{};GMSH=j.gmaxShiny||{};setTimeout(function(){try{var need=[].some.call(document.querySelectorAll('.art[data-ck]'),function(i){return COSTPIC[i.getAttribute('data-ck')]})||[].some.call(document.querySelectorAll('img[data-gk]'),function(i){return GMX[i.getAttribute('data-gk')]});if(need&&window.GODASH&&GODASH.renderAll)GODASH.renderAll()}catch(e){}},300)}}).catch(function(){})}catch(e){}
+  function costumeUnavailable(o,cls){
+    var label=String(o.n||'')+(o.label&&String(o.n||'').toLowerCase().indexOf(String(o.label).toLowerCase())<0?' ('+o.label+')':'');
+    var key=window.GOLIB.parseForm(o.n||'').base.toLowerCase()+'|'+String(o.label||'').toLowerCase();
+    return '<span class="art costume-unavailable'+(cls?' '+cls:'')+'" role="img" aria-label="'+esc(label+' · costume artwork unavailable')+'" data-ck="'+esc(key)+'"><span>'+esc(label)+'</span><small>Costume art unavailable</small></span>';
+  }
   function art(n,cls){
     var o=typeof n==='string'?{n:n}:n;
     var q='/api/art?n='+encodeURIComponent(o.n)+(o.shiny?'&shiny=1':'')+(o.shadow?'&shadow=1':'')+(o.dynamax?'&dynamax=1':'')+(o.asset?'&c='+encodeURIComponent(o.asset):'');
@@ -61,13 +66,15 @@ Promise.all([
     /* The still picture is what loads first, from this site, so there is never a blank or broken frame.
        The animated sprite is swapped in only while the picture is on screen (see GOANIM below). */
     var src=still;
-    /* Costumes with no game-file picture: use one found and checked by scripts/costumes.mjs (costumes.json), else the plain picture. */
-    var cks=String(o.n).toLowerCase()+'|'+String(o.label).toLowerCase();var gk=String(o.n).toLowerCase(),isg=!o.costume&&!o.asset&&/^gigantamax /.test(gk),gm=isg?((o.shiny&&GMSH[gk])||GMX[gk]||''):'';var dbx=(o.costume&&!o.asset&&o.label&&(o.shiny?COSTSH[cks]:COSTPIC[cks]))||gm;
-    var cstill=dbx?still:'';if(dbx)src=dbx;
-    var ck=(o.costume&&!o.asset&&o.label&&!dbx)?' data-ck="'+esc(String(o.n).toLowerCase()+'|'+String(o.label).toLowerCase())+'"':(isg&&!gm?' data-gk="'+esc(gk)+'"':'');
+    /* A costume uses an exact verified mirror or a labelled unavailable state, never ordinary species artwork. */
+    var cks=window.GOLIB.parseForm(o.n).base.toLowerCase()+'|'+String(o.label).toLowerCase();var gk=String(o.n).toLowerCase(),isg=!o.costume&&!o.asset&&/^gigantamax /.test(gk),gm=isg?((o.shiny&&GMSH[gk])||GMX[gk]||''):'';var dbx=(o.costume&&!o.asset&&o.label&&(o.shiny?COSTSH[cks]:COSTPIC[cks]))||gm;
+    if(o.costume&&!o.asset&&!/^\/img\/ext\/[A-Za-z0-9_.-]+\.(?:png|webp|jpe?g)$/i.test(dbx||''))return costumeUnavailable(o,cls);
+    if(o.costume&&o.label)alt+=' ('+o.label+')';
+    var cstill=dbx&&!o.costume?still:'';if(dbx)src=dbx;
+    var ck=(o.costume&&!o.asset&&o.label&&!dbx)?' data-ck="'+esc(cks)+'"':(isg&&!gm?' data-gk="'+esc(gk)+'"':'');
     var fb=cstill?' data-still="'+esc(cstill)+'" title="'+(gm?'Gigantamax picture: Serebii':'Costume picture: Serebii / Dittobase')+'"':sd?' data-still="'+esc(still)+'" data-gif="https://play.pokemonshowdown.com/sprites/'+(o.shiny?'ani-shiny':'ani')+'/'+sd+'.gif"':'';
     var tg=(o.costume||o.asset)?'':' data-sn="'+esc(o.n)+'"'+(o.shiny?' data-sv="1"':'')+(o.shadow?' data-ss="1"':'')+(o.dynamax?' data-sd="1"':'');
-    return '<img class="art'+(sd?' ani':'')+(gm?' gm-real':'')+(cls?' '+cls:'')+'" loading="lazy" decoding="async" width="208" height="256" alt="'+esc(alt)+'" src="'+src+'"'+fb+tg+ck+' data-err="art"'+(cls==='in'?' data-load="has"':'')+'>';
+    return '<img class="art'+(sd?' ani':'')+(gm?' gm-real':'')+(cls?' '+cls:'')+'" loading="lazy" decoding="async" width="208" height="256" alt="'+esc(alt)+'" src="'+src+'"'+fb+tg+ck+((o.costume||o.asset)?' data-costume-name="'+esc(o.n)+'" data-costume-label="'+esc(o.label||'')+'"':'')+' data-err="art"'+(cls==='in'?' data-load="has"':'')+'>';
   }
   /* Tap any Pokémon picture to flip it between its normal and shiny look; tap again to flip back. Costumes have no flip. */
   document.addEventListener('click',function(e){
@@ -78,7 +85,21 @@ Promise.all([
     /* Only swap once the other picture has loaded, so a missing shiny never leaves a blank. */
     var t=new Image(); t.onload=function(){ if(!i.isConnected)return; n.classList.toggle('is-shiny',sh); i.parentNode.replaceChild(n,i); if(window.GOANIM)GOANIM.scan(n.parentNode); }; t.src=n.getAttribute('data-still')||n.getAttribute('src');
   });
-  window.GOARTERR=function(i){var s=i.getAttribute('data-still');if(s&&i.getAttribute('src')!==s){i.classList.remove('ani');i.src=s}else i.remove()};
+  window.GOARTERR=function(i){
+    if(!i||i.tagName!=='IMG')return;
+    if(i.hasAttribute('data-costume-name')){
+      var name=i.getAttribute('data-costume-name')||'', outfit=i.getAttribute('data-costume-label')||'';
+      var label=name+(outfit&&name.toLowerCase().indexOf(outfit.toLowerCase())<0?' ('+outfit+')':'');
+      var host=document.createElement('span');host.className='art costume-unavailable '+((i.className.match(/\b(ea|in|lg|sm)\b/)||[''])[0]);
+      host.setAttribute('role','img');host.setAttribute('aria-label',label+' · costume artwork unavailable');
+      host.setAttribute('data-ck',window.GOLIB.parseForm(name).base.toLowerCase()+'|'+outfit.toLowerCase());
+      var text=document.createElement('span');text.textContent=label;
+      var note=document.createElement('small');note.textContent='Costume art unavailable';host.append(text,note);i.replaceWith(host);return;
+    }
+    var s=i.getAttribute('data-still'), u=null;
+    try{u=s?new URL(s,window.location.origin):null}catch(e){}
+    if(u&&(u.protocol==='https:'||u.protocol==='http:')&&u.origin===window.location.origin&&(u.pathname==='/api/art'||/^\/art\/[A-Za-z0-9_.-]+\.webp$/.test(u.pathname))&&i.getAttribute('src')!==u.href){i.classList.remove('ani');i.src=u.href}else i.remove();
+  };
   /* Animated sprites: swap one in only while it is visible, and back to the still when it scrolls away.
      A long list of animated pictures at once is what made the page stutter on phones. */
   (function(){
@@ -212,7 +233,7 @@ Promise.all([
   // Multiple views per tab. Some views have a second-level filter (MODES) over existing sections.
   var SUBS={
     events:[['calendar','Calendar','sub-calendar'],['timeline','Timeline','sub-timeline'],['research','Research','sub-research'],['world','In person','sub-world'],['travel','Travel','sub-travel'],['leaks','Discoveries','sub-leaks','menu']],
-    collect:[['dex','My Dex','sub-mydex'],['opps','Opportunities','sub-opps','menu'],['megas','Megas','sub-megas'],['guides','Guides','sub-guides']],
+    collect:[['dex','My Dex','sub-mydex'],['opps','Opportunities','sub-opps'],['megas','Megas','sub-megas'],['guides','Guides','sub-guides']],
     saved:[['watch','Watchlist','sub-watch'],['menu','Menu','sub-menu']]
   };
   var MODES={
@@ -1024,7 +1045,7 @@ Promise.all([
     var r=document.getElementById('today-retry');if(r)r.addEventListener('click',function(){window.location.reload()});
     var b=document.getElementById('day-brief');if(b)b.setAttribute('data-state','unavailable');
     var f=document.getElementById('fresh-line');if(f)f.setAttribute('data-released','')}
-  var ds=document.createElement('script');ds.src='/dash.js?v=20261104h';ds.onerror=todayUnavailable;document.body.appendChild(ds);setTimeout(function(){if(!window.GODASH)todayUnavailable()},10000);
+  var ds=document.createElement('script');ds.src='/dash.js?v=20261106c';ds.onerror=todayUnavailable;document.body.appendChild(ds);setTimeout(function(){if(!window.GODASH)todayUnavailable()},10000);
 })();
 
 }).catch(function(){var panel=document.getElementById('load-error');if(panel)panel.hidden=false;var retry=document.getElementById('load-retry');if(retry)retry.addEventListener('click',function(){window.location.reload()},{once:true})});

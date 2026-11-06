@@ -538,11 +538,48 @@
         "Event"
       ],
       "p": [
-        "Listed by Leek Duck for Nov 24, 10 am to Nov 30, 8 pm local time. No details are announced yet."
+        "Official event: November 24, 10 am to November 30, 8 pm local time. Increased chance to encounter Shiny Staryu and Shiny Elgyem; no numerical shiny odds were announced.",
+        "Wild encounters include shiny-eligible Clefairy, Staryu and Elgyem, with Rockruff appearing if lucky.",
+        "One-star raids: Pikachu wearing a sun crown and Pikachu wearing a moon crown. Three-star raids: Espeon wearing a sun scarf and Umbreon wearing a moon scarf. All four costumed raid encounters are shiny-eligible.",
+        "Mega raids: Mega Beedrill, Mega Houndoom, Mega Sableye and Mega Manectric; shiny-eligible encounters.",
+        "Event Field Research rewards include Mega Energy and encounters such as Staryu and Elgyem. November 24 at 10 am to November 26 at 10 am: Applin and Maschiff. November 26 at 10 am to November 30 at 8 pm: Spooky Festival Gengar, Halloween Mischief Drifblim and Bramblin; the two costumed encounters are shiny-eligible.",
+        "GO Pass: Twilight Wishes starts November 24 at 10 am and ends November 30 at 8 pm local time. Rank 1 unlocks increased Lucky Pokémon trade and Lucky Friends chances; Rank 10 unlocks 2x catch Stardust (3x with Deluxe). Rewards must be claimed by December 2 at 8 pm local time."
       ],
-      "status": "community_reported",
-      "sourceUrl": "https://leekduck.com/events/twilight-wishes-2026/",
-      "source": "Leek Duck"
+      "art": [
+        {
+          "n": "Staryu",
+          "shiny": 1
+        },
+        {
+          "n": "Elgyem",
+          "shiny": 1
+        },
+        "Clefairy",
+        "Rockruff",
+        {
+          "n": "Pikachu (sun crown)",
+          "costume": 1,
+          "label": "sun crown"
+        },
+        {
+          "n": "Pikachu (moon crown)",
+          "costume": 1,
+          "label": "moon crown"
+        },
+        {
+          "n": "Espeon (sun scarf)",
+          "costume": 1,
+          "label": "sun scarf"
+        },
+        {
+          "n": "Umbreon (moon scarf)",
+          "costume": 1,
+          "label": "moon scarf"
+        }
+      ],
+      "sourceUrl": "https://pokemongo.com/news/twilight-wishes-2026",
+      "source": "Official Pokémon GO announcement",
+      "status": "official_confirmed"
     },
     {
       "id": "smr2",

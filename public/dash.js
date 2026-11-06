@@ -158,7 +158,7 @@
     (D.events || []).forEach(function (x) {
       var tags = x.tags || [], title = x.t || '', k = tags.some(function (t) { return /twitch\s*drops/i.test(t); }) || /twitch\s*drops/i.test(title) ? 'twitch' : tags.indexOf('Community Day') > -1 || /community day/i.test(title) ? 'cd' : tags.indexOf('Max Battles') > -1 || /max battle|dynamax|gigantamax|max monday/i.test(title) ? 'max' : tags.indexOf('Raids') > -1 || /\braids?\b|raid hour/i.test(title) ? 'raid' : tags.indexOf('In person') > -1 || /in-person|safari zone|city safari|go fest/i.test(title) ? 'person' : tags.indexOf('Debut') > -1 || /\bdebut\b/i.test(title) ? 'debut' : /spotlight hour/i.test(title) ? 'spot' : 'event';
       out.push(mkEvent({ id: 'cur:' + x.id, detailIds: x.detailIds || [], name: x.t, kind: k, s: x.s, e: x.e, utc: x.utc === true || x.tzMode === 'utc', region: x.region || '', scope: x.scope || '', tags: signalTags({ name:x.t, kind:k, tags:tags, notes:x.p, bonuses:x.bonuses, featured:(x.art||[]).map(function(a){return typeof a==='string'?{name:a}:a;}) }), notes: x.p, bonuses: x.bonuses,
-        featured: (x.art || []).map(function (a) { a = typeof a === 'string' ? { n: a } : a; return { name: a.n, costume: !!a.costume, shiny: !!a.shiny, label: a.label, role: 'featured' }; }),
+        featured: (x.art || []).map(function (a) { a = typeof a === 'string' ? { n: a } : a; return { name: a.n, costume: !!a.costume, shiny: !!a.shiny, label: a.label, asset: a.asset, role: 'featured' }; }),
         highlights: Array.isArray(x.highlights) ? x.highlights : [],
         status: x.status || (x.sourceUrl ? 'official_confirmed' : 'community_reported'),
         source: x.source || (x.sourceUrl ? 'Official Pokémon GO announcement' : 'Curated community calendar'),
@@ -266,6 +266,16 @@
       if (match < 0) { out.push(c); return; }
       used[match] = 1;
       var liveEvent = out[match], seen = {};
+      // An underspecified live species must not imply ordinary artwork where the
+      // official curated roster names only costume variants of that species.
+      if (c.status === 'official_confirmed') {
+        var costumeBases = {}, ordinaryBases = {};
+        (c.featured || []).forEach(function (f) { (f.costume ? costumeBases : ordinaryBases)[LIB.parseForm(f.name).base.toLowerCase()] = true; });
+        liveEvent.featured = (liveEvent.featured || []).filter(function (f) {
+          var base = LIB.parseForm(f.name).base.toLowerCase();
+          return f.costume || !costumeBases[base] || ordinaryBases[base] || String(f.name).toLowerCase() !== base;
+        });
+      }
       /* Keep the fuller write-up's title when the curated card carries more detail. */
       if ((c.featured || []).length > (liveEvent.featured || []).length) liveEvent.name = c.name;
       (liveEvent.featured || []).forEach(function(f) { seen[(f.name || '').toLowerCase()] = 1; });
@@ -273,7 +283,7 @@
         var k = (f.name || '').toLowerCase();
         if (!seen[k]) { liveEvent.featured.push(f); seen[k] = 1; }
         else if (f.costume) liveEvent.featured.forEach(function(old) {
-          if ((old.name || '').toLowerCase() === k) old.costume = true;
+          if ((old.name || '').toLowerCase() === k) { old.costume = true; if (!old.label && f.label) old.label = f.label; if (!old.asset && f.asset) old.asset = f.asset; }
         });
       });
       liveEvent.aliasIds = (liveEvent.aliasIds || []).concat([c.id]); /* the curated copy's id: its infographics are filed under it */
@@ -444,7 +454,7 @@
     var isGmax = /^Gigantamax\s/i.test(f.name) || (/gigantamax/i.test(ev.name || '') && !/dynamax.*gigantamax/i.test(ev.name || ''));
     var isMax = ev.kind === 'max' || /^(Dynamax|Gigantamax)\s/i.test(f.name) || /\b(dynamax|gigantamax)\b/i.test(ev.name || '');
     var spriteName = isGmax && !/^Gigantamax\s/i.test(f.name) ? 'Gigantamax ' + f.name : f.name;
-    var sprite = art({ n: spriteName, costume: f.costume, shiny: f.shiny, shadow: isShadow, dynamax: isMax }, cls || 'ea');
+    var sprite = art({ n: spriteName, costume: f.costume, label: f.label, asset: f.asset, shiny: f.shiny, shadow: isShadow, dynamax: isMax }, cls || 'ea');
     var inc = incenseNames(ev)[String(f.name).toLowerCase()] ? INC_IMG : '';
     if (isMax) return '<span class="max-art ' + (isGmax ? 'is-gmax' : 'is-dyn') + '">' + sprite + inc + '<span class="max-tag">' + (isGmax ? '' : '<img class="dyn-logo" alt="" decoding="async" src="' + IMG_DYNAMAX + '" data-err="rm">') + (isGmax ? 'G-Max' : 'Dynamax') + '</span></span>';
     if (isShadow) return '<span class="shadow-art"><i class="sf sf1"></i><i class="sf sf2"></i><i class="sf sf3"></i>' + sprite + inc + '<span class="shadow-tag"><img src="/ico/g/shadow.webp" alt="" loading="lazy" decoding="async">Shadow</span></span>';
@@ -635,6 +645,12 @@
     if (VENUE.length && EV.length) { renderPrio(); renderTimeline(); }
     return d;
   });
+  function cardSource(ev) {
+    var label = ev.source || 'Event source';
+    return safeUrl(ev.link)
+      ? '<a class="evc-source" href="' + esc(ev.link) + '" target="_blank" rel="noopener noreferrer" aria-label="Source for ' + esc(ev.name) + ': ' + esc(label) + '">Source: ' + esc(label) + '</a>'
+      : (ev.source ? '<p class="evc-source">Source: ' + esc(label) + '</p>' : '');
+  }
   function card(ev, opt) {
     opt = opt || {};
     var week = !!opt.week, k = kindOf(ev), p = phase(ev), saved = isSaved(ev.id);
@@ -651,6 +667,7 @@
       + '<button type="button" class="more" data-open="' + esc(ev.id) + '" aria-label="Details: ' + esc(ev.name) + '">Details</button>'
       + '<button type="button" class="more info-open" data-igcard="' + esc(ev.id) + '" data-infographic="' + esc(ev.id) + '" aria-label="Open infographic for ' + esc(ev.name) + '">▧ Infographic</button>'
       + '<button type="button" class="star' + (saved ? ' on' : '') + '" data-save="' + esc(ev.id) + '" aria-pressed="' + saved + '" aria-label="Save ' + esc(ev.name) + '" title="Saved events send you a Telegram reminder">' + (saved ? '★' : '☆') + '</button></div>'
+      + cardSource(ev)
       + (ev.status === 'conflicting' ? '<p class="evc-warn">Sources disagree about the time or place. Check in the game before heading out.</p>' : '')
       + '</div></article>';
   }
@@ -1285,34 +1302,52 @@
     return '<div class="mk" role="group" aria-label="Mark ' + esc(label) + '"><button type="button" data-mark="' + esc(tk) + '" data-val="1" aria-pressed="' + (v === 1) + '" aria-label="Have: ' + esc(label) + '">Have</button><button type="button" data-mark="' + esc(tk) + '" data-val="0" aria-pressed="' + (v === 0) + '" aria-label="Need: ' + esc(label) + '">Need</button>'
       + (v !== undefined ? '<button type="button" data-mark="' + esc(tk) + '" data-val="" class="mk-clear" aria-label="Clear mark: ' + esc(label) + '">Clear</button>' : '') + '</div>';
   }
+  function opportunityEventRow(e) {
+    return '<li><button type="button" class="opp-event" data-open="' + esc(e.id) + '" aria-label="Event details: ' + esc(e.name) + '"><b>' + esc(e.name) + '</b><span>' + esc(timeMeta(e)) + ' · ' + esc(countdown(e)) + '</span></button></li>';
+  }
   function oppCard(x) {
-    var o = x.o, evs = x.evs.slice(0, 3), chip = { missing: '<span class="st st-need">Need</span>', have: '<span class="st st-n">Have</span>', form: '<span class="st st-d">Not collectible</span>', unknown: '<span class="st st-n">Not tracked</span>' }[o.state];
+    var o = x.o, evs = x.evs.slice(0, 3), chip = { missing: '<span class="st st-need">Need</span>', have: '<span class="st st-n">Have</span>', form: '<span class="st st-d">Not collectible</span>', unknown: '<span class="st st-n">Not tracked</span>', unreleased: '<span class="st st-n">Not released yet</span>' }[o.state];
     var fol = isFollowed(x.name);
-    return '<article class="opp ' + o.state + '"><div class="opp-art">' + art({ n: o.base, costume: x.costume }, 'ea') + '</div><div class="opp-main">'
+    return '<article class="opp ' + o.state + '"><div class="opp-art">' + art({ n: o.base, costume: x.costume, label: x.label }, 'ea') + '</div><div class="opp-main">'
       + '<div class="opp-top"><h3>' + esc(x.name) + '</h3>' + chip + '<button type="button" class="fbtn" data-follow="' + esc(x.name) + '" aria-pressed="' + fol + '" aria-label="Follow ' + esc(x.name) + '">' + (fol ? '★' : '☆') + '</button></div>'
       + (o.why ? '<p class="muted opp-why">' + esc(o.why) + '</p>' : '')
       + (o.tk ? markBtns(o.tk, x.name) : '')
-      + '<ul class="opp-evs">' + evs.map(function (e) { return '<li><b>' + esc(e.name) + '</b><span>' + esc(fmtD(e.start) + (e.allDay ? '' : ', ' + fmtT(e.start))) + ' · ' + esc(countdown(e)) + '</span></li>'; }).join('') + (x.evs.length > 3 ? '<li class="muted">+' + (x.evs.length - 3) + ' more</li>' : '') + '</ul></div></article>';
+      + '<ul class="opp-evs">' + evs.map(opportunityEventRow).join('') + '</ul>'
+      + (x.evs.length > 3 ? '<details class="opp-more"><summary>' + (x.evs.length - 3) + ' more events</summary><ul class="opp-evs">' + x.evs.slice(3).map(opportunityEventRow).join('') + '</ul></details>' : '') + '</div></article>';
   }
   function drawOpps() {
     var el = $('opps'); if (!el) return;
-    var list = opportunities(), known = Object.keys(DEXGEN).some(function (id) { return genConfirmed(DEXGEN[id]); }) || usKeys('form:').length > 0;
+    var active = document.activeElement, focusAttr = active && el.contains(active) ? ['data-follow', 'data-mark'].filter(function (key) { return active.hasAttribute(key); })[0] : '';
+    var focusValue = focusAttr ? active.getAttribute(focusAttr) : '', focusMark = focusAttr === 'data-mark' ? active.getAttribute('data-val') : '';
+    var all = opportunities(), query = $('opp-search') ? $('opp-search').value : '', mode = $('opp-filter') ? $('opp-filter').value : 'all';
+    var list = LIB.filterOpportunities(all, query, mode, isFollowed), known = Object.keys(DEXGEN).some(function (id) { return genConfirmed(DEXGEN[id]); }) || usKeys('form:').length > 0;
     var need = list.filter(function (x) { return x.o.state === 'missing'; });
-    var debut = list.filter(function (x) { return (x.o.state === 'unknown' || x.o.state === 'form') && x.evs.some(function (ev) { return ev.kind === 'debut'; }); });
+    var debut = list.filter(function (x) { return (x.o.state === 'unknown' || x.o.state === 'form' || x.o.state === 'unreleased') && x.evs.some(function (ev) { return ev.kind === 'debut'; }); });
     var debutKeys = {};
     debut.forEach(function (x) { debutKeys[(x.name || '').toLowerCase()] = true; });
-    var unk = list.filter(function (x) { return (x.o.state === 'unknown' || x.o.state === 'form') && !debutKeys[(x.name || '').toLowerCase()]; });
+    var unk = list.filter(function (x) { return (x.o.state === 'unknown' || x.o.state === 'form' || x.o.state === 'unreleased') && !debutKeys[(x.name || '').toLowerCase()]; });
     var have = list.filter(function (x) { return x.o.state === 'have'; });
     var html = '';
+    if ($('opp-status')) $('opp-status').textContent = list.length + ' of ' + all.length + ' Pokémon opportunities in the next four weeks. ' + (mode === 'following' ? 'Showing Pokémon you follow.' : mode === 'need' ? 'Showing only Pokémon marked Need.' : 'Showing all collection states.');
     if (!known) html += '<div class="notice"><b>Nothing is counted as Need yet.</b> In My Dex, tick what you own and confirm a generation as complete. Until then everything is shown as not tracked, never as missing.</div>';
     if (need.length) html += '<h2 class="sec2">You still need</h2><div class="opps">' + need.map(oppCard).join('') + '</div>';
-    else if (known) html += '<div class="prio-empty"><b>No Pokémon are currently marked Need for the next four weeks.</b><span>Upcoming debuts are shown separately below, even if your Dex is not tracking them yet.</span></div>';
+    else if (known && mode === 'all' && !query) html += '<div class="prio-empty"><b>No Pokémon are currently marked Need for the next four weeks.</b><span>Upcoming debuts are shown separately below, even if your Dex is not tracking them yet.</span></div>';
     if (debut.length) html += '<h2 class="sec2 dh">Upcoming Pokémon debuts</h2><p class="note" style="margin-bottom:8px">New Pokémon arriving in announced events. Mark each one Have or Need once you know your collection status.</p><div class="opps">' + debut.map(oppCard).join('') + '</div>';
     if (unk.length) html += '<h2 class="sec2 dh">' + (known ? 'Not tracked yet' : 'Featured soon') + '</h2><p class="note" style="margin-bottom:8px">' + (known ? 'Pokémon in generations you have not confirmed, and forms and costumes you have not marked. Nothing here is assumed missing.' : 'Nothing is assumed missing until you mark something.') + '</p><div class="opps">' + unk.map(oppCard).join('') + '</div>';
-    if (have.length) html += '<details class="dd" style="margin-top:10px"><summary>Already in your collection <span class="cnt">' + have.length + '</span></summary><div class="body"><div class="opps">' + have.map(oppCard).join('') + '</div></div></details>';
-    if (!list.length) html += '<p class="empty">No featured Pokémon in the next four weeks.</p>';
+    if (have.length) html += '<details class="dd"' + (query || mode !== 'all' ? ' open' : '') + ' style="margin-top:10px"><summary>Already in your collection <span class="cnt">' + have.length + '</span></summary><div class="body"><div class="opps">' + have.map(oppCard).join('') + '</div></div></details>';
+    if (!list.length) html += '<p class="empty">' + (!all.length ? 'No featured Pokémon in the next four weeks.' : mode === 'following' && !query ? 'None of the Pokémon you follow have a scheduled opportunity in the next four weeks. Follow a Pokémon from All opportunities to include it here.' : 'No opportunities match these filters. Try another Pokémon or event, or clear the filters.') + '</p>';
     el.innerHTML = html;
+    if (focusAttr) {
+      var replacement = Array.prototype.filter.call(el.querySelectorAll('[' + focusAttr + ']'), function (node) { return node.getClientRects().length && node.getAttribute(focusAttr) === focusValue && (focusAttr !== 'data-mark' || node.getAttribute('data-val') === focusMark); })[0];
+      (replacement || $('opp-search')).focus({ preventScroll: true });
+    }
   }
+
+  if ($('opp-search')) $('opp-search').addEventListener('input', renderOpps);
+  if ($('opp-filter')) $('opp-filter').addEventListener('change', renderOpps);
+  if ($('opp-clear')) $('opp-clear').addEventListener('click', function () {
+    $('opp-search').value = ''; $('opp-filter').value = 'all'; renderOpps(); $('opp-search').focus();
+  });
 
   /* ---------- Saved and followed ---------- */
   function drawSaved() {
@@ -1992,7 +2027,7 @@ function renderHomeBrief(t) {
     renderCoverage();
     if (window.GO && GO.refreshDex) GO.refreshDex();
     usSync();
-    var inf = document.createElement('script'); inf.src = '/infographic.js?v=20261103a'; document.body.appendChild(inf); var x = document.createElement('script'); x.src = '/extra.js?v=20261102c'; document.body.appendChild(x); var z = document.createElement('script'); z.src = '/places.js?v=20261103b'; window.GOPLACES_READY = new Promise(function (resolve) { z.onload = function () { resolve(window.GOPLACES || null); }; z.onerror = function () { resolve(null); }; }); var y = document.createElement('script'); y.src = '/detail.js?v=20261104e'; document.body.appendChild(y); document.body.appendChild(z); var w = document.createElement('script'); w.src = '/fresh.js?v=20261103a'; document.body.appendChild(w); var nv = document.createElement('script'); nv.src = '/nudge.js?v=20261102a'; document.body.appendChild(nv); var rv = document.createElement('script'); rv.src = '/review.js?v=20261104b'; document.body.appendChild(rv); var by = document.createElement('script'); by.src = '/buy.js?v=20261103a'; document.body.appendChild(by);
+    var inf = document.createElement('script'); inf.src = '/infographic.js?v=20261103a'; document.body.appendChild(inf); var x = document.createElement('script'); x.src = '/extra.js?v=20261102c'; document.body.appendChild(x); var z = document.createElement('script'); z.src = '/places.js?v=20261103b'; window.GOPLACES_READY = new Promise(function (resolve) { z.onload = function () { resolve(window.GOPLACES || null); }; z.onerror = function () { resolve(null); }; }); var y = document.createElement('script'); y.src = '/detail.js?v=20261106c'; document.body.appendChild(y); document.body.appendChild(z); var w = document.createElement('script'); w.src = '/fresh.js?v=20261103a'; document.body.appendChild(w); var nv = document.createElement('script'); nv.src = '/nudge.js?v=20261102a'; document.body.appendChild(nv); var rv = document.createElement('script'); rv.src = '/review.js?v=20261104b'; document.body.appendChild(rv); var by = document.createElement('script'); by.src = '/buy.js?v=20261103a'; document.body.appendChild(by);
   }
   envBanner();
   /* Bounded waits: a request that never answers must not leave Today blank. After FEED_TIMEOUT_MS the page renders from the curated list
