@@ -1664,37 +1664,90 @@ header.top .hbtns{margin-left:auto}
 .today-shiny-event,.today-shiny-meta{line-height:1.05}
 
 
-/* Today and Schedule: quiet surfaces let event art, titles and time lead. */
-.schedule-heading{display:grid;gap:var(--space-2);margin:var(--space-5) 0 var(--space-5);max-width:65ch}
-.schedule-heading .sec2{font:800 clamp(1.8rem,5vw,2.4rem)/1.1 var(--font-body);text-transform:none;letter-spacing:-.03em}
-.schedule-heading p{color:var(--color-text-muted);font-size:var(--type-body-emphasis);line-height:1.5}
-:is(#tab-now,#tab-events) .evc.cmp{border:1px solid var(--color-border-card);border-radius:var(--radius-card);background:var(--color-surface);box-shadow:none;padding:var(--space-4);gap:var(--space-3)}
-:is(#tab-now,#tab-events) .evc.cmp.live{border-color:color-mix(in srgb,var(--k) 45%,var(--color-border-card))}
+/* Field journal: one visual language for the daily brief, schedule and event detail.
+   Flat surfaces, open section rhythm and source-backed artwork carry the hierarchy. */
+:root{--journal-rule:var(--color-border)}
+body{background:var(--color-canvas)}
+::selection{background:var(--color-accent);color:var(--color-accent-text)}
+:is(#tab-now,#tab-events,.evd) :is(input,select){caret-color:var(--color-text)}
+:is(#tab-now,#tab-events,.evd) :is(button,a,input,select,summary):focus-visible{outline:2px solid var(--color-link);outline-offset:3px}
+:is(#tab-now,#tab-events,.evd){scrollbar-color:var(--color-text-muted) var(--color-canvas)}
+:is(#tab-now,#tab-events,.evd) .sec2{font-family:var(--font-body);font-weight:700;text-transform:none;letter-spacing:-.02em;line-height:1.2}
+:is(#tab-now,#tab-events) .agenda-section>.sec2{font-size:1.55rem;margin-bottom:var(--space-4)}
+:is(#tab-now,#tab-events) .sec2.dh{font-size:1rem;color:var(--color-text-body);letter-spacing:0}
+:is(#tab-now,#tab-events) .evc.cmp{border:1px solid var(--journal-rule);border-radius:var(--radius-card);background:var(--color-surface);box-shadow:none;padding:var(--space-4);gap:var(--space-3);margin-bottom:var(--space-3)}
+:is(#tab-now,#tab-events) .evc.cmp.live{border-color:color-mix(in srgb,var(--k) 35%,var(--journal-rule))}
 :is(#tab-now,#tab-events) .evc.cmp .evc-main{gap:var(--space-2)}
-:is(#tab-now,#tab-events) .evc.cmp .evc-title-row h3{font:750 1.25rem/1.2 var(--font-body);text-transform:none;letter-spacing:-.02em}
+:is(#tab-now,#tab-events) .evc.cmp .evc-title-row h3{display:block;overflow:visible;font:700 1.3rem/1.2 var(--font-body);text-transform:none;letter-spacing:-.025em;text-wrap:balance}
 :is(#tab-now,#tab-events) .evc.cmp .evc-when{font-size:var(--type-body-emphasis);line-height:1.5;color:var(--color-text-body)}
 :is(#tab-now,#tab-events) .evc.cmp .cdn{font-family:var(--font-body);font-variant-numeric:tabular-nums}
-:is(#tab-now,#tab-events) .evc.cmp .evc-art .art.ea{width:72px;height:72px}
+:is(#tab-now,#tab-events) .evc.cmp .evc-art .art.ea{width:64px;height:64px}
 :is(#tab-now,#tab-events) .evc.cmp .evc-art{gap:var(--space-3);flex-wrap:wrap}
-:is(#tab-now,#tab-events) .evc.cmp .evc-foot{flex-wrap:wrap;padding-top:var(--space-1)}
+:is(#tab-now,#tab-events) .evc.cmp .evc-foot{flex-wrap:wrap;padding-top:var(--space-2);border-top:1px solid var(--journal-rule)}
 :is(#tab-now,#tab-events) .evc.cmp .evc-foot .more{white-space:normal;line-height:1.25}
 .evc-source{display:flex;align-items:center;min-height:44px;max-width:100%;color:var(--color-text-muted);font:500 var(--type-meta)/1.4 var(--font-body);overflow-wrap:anywhere}
 a.evc-source{color:var(--color-link);text-underline-offset:3px}
-#tab-now .day-brief-title{font:800 var(--type-heading)/1.15 var(--font-body);text-transform:none;letter-spacing:-.025em}
-#tab-now .today-focus-card{background:transparent;border-radius:0;min-height:0;padding:0;gap:2px}
-#tab-now .today-focus-strip{gap:var(--space-1) var(--space-4);border-top:1px solid var(--color-border-card);margin-top:0}
-#tab-now .today-focus-card strong{font-size:var(--type-body-sm);line-height:1.25;min-height:0}
+/* The brief is an open page rather than a card inside the page. */
+#tab-now .day-brief{gap:var(--space-1);padding:var(--space-2) 0 var(--space-4);border:0;border-bottom:1px solid var(--journal-rule);border-radius:0;background:transparent}
+#tab-now .day-brief-title{font:700 clamp(1.65rem,6vw,2.2rem)/1.15 var(--font-body);text-transform:none;letter-spacing:-.03em}
+#tab-now .day-brief-stats{gap:var(--space-3);line-height:1.5}
+#tab-now .day-brief-stats span{display:inline}
+#tab-now .day-brief-stats b{font-size:1rem}
+#tab-now .today-focus-strip{gap:var(--space-2) var(--space-4);border-top:1px solid var(--journal-rule);padding-top:var(--space-2);margin-top:var(--space-1)}
+#tab-now .today-focus-card{background:transparent;border-radius:0;min-height:0;padding:0;gap:var(--space-1)}
+#tab-now .today-focus-card strong{font-size:var(--type-body-sm);line-height:1.3;min-height:0;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden}
 #tab-now .today-focus-card small{display:block;overflow:visible;-webkit-line-clamp:unset;font-size:var(--type-meta);line-height:1.3}
-#tab-now .today-focus-label{font-family:var(--font-body);letter-spacing:.02em;text-transform:none;color:var(--color-text-muted);font-size:var(--type-meta)}
-#tab-events .wk-days .wd{font-variant-numeric:tabular-nums}
-#tab-events .wk-days .wd[aria-pressed="true"]{outline:2px solid var(--color-accent);outline-offset:-2px}
+#tab-now .today-focus-label{font:600 var(--type-meta)/1.3 var(--font-body);letter-spacing:0;text-transform:none;color:var(--color-text-muted)}
+#tab-now .today-focus-raid-actions{min-height:0;margin:0}
+#tab-now .today-shiny-panel .today-shiny-empty{padding:0}
+#tab-now .today-focus-card:last-child{gap:2px}
+#tab-now .today-shiny-panel{order:1;border-top:1px solid var(--journal-rule);padding-top:var(--space-2);margin-top:var(--space-1)}
+#tab-now .today-shiny-empty{border:0;padding:0;min-height:0;line-height:1.35}
+#tab-now .today-shiny-head{min-height:0}
+#tab-now .today-shiny-head .day-brief-kicker{font:600 var(--type-meta)/1.2 var(--font-body);text-transform:none;letter-spacing:0}
+#tab-now .today-shiny-art{background:transparent}
+#tab-now .today-layout{margin-top:0}
+/* Schedule reads as a calendar: tabs, search, date strip, then dated entries. */
+.schedule-heading{display:grid;gap:var(--space-2);margin:var(--space-4) 0 var(--space-6);max-width:65ch}
+.schedule-heading .sec2{font:700 clamp(2rem,6vw,2.8rem)/1.1 var(--font-body);text-transform:none;letter-spacing:-.03em}
+.schedule-heading p{color:var(--color-text-muted);font-size:var(--type-body-emphasis);line-height:1.5;max-width:52ch}
+#subnav-events{border-bottom:1px solid var(--journal-rule);padding-bottom:var(--space-2);gap:var(--space-1)}
+#subnav-events button{border-radius:var(--radius-sm);background:transparent;border-color:transparent;color:var(--color-text-muted);font-weight:600}
+#subnav-events button[aria-pressed="true"]{background:var(--color-inverse-surface);color:var(--color-inverse-text)}
+#tab-events .weekstrip{background:transparent;border:0;border-block:1px solid var(--journal-rule);border-radius:0;padding:var(--space-3) 0;margin-top:var(--space-4)}
+#tab-events .wk-head{color:var(--color-text-body);font-family:var(--font-body)}
+#tab-events .wk-days .wd{font-variant-numeric:tabular-nums;border-radius:var(--radius-sm)}
+#tab-events .wk-days .wd[aria-pressed="true"]{background:var(--color-accent);color:var(--color-accent-text);outline:0}
+#tab-events .wk-days .wd[aria-pressed="true"] span{color:inherit}
+#tab-events .wk-days .wd[aria-pressed="true"]:focus-visible{outline:2px solid var(--color-link);outline-offset:2px}
+/* Event detail carries the same typography and rules; artwork never sits behind text. */
+.evd-in{max-width:52rem;padding:var(--space-3) var(--space-5) calc(56px + env(safe-area-inset-bottom,0px));gap:var(--space-4)}
+.evd-bar{background:var(--color-canvas);backdrop-filter:none;padding-block:var(--space-2)}
+.evd-hero{min-height:0;padding:var(--space-4) 0 var(--space-6);border:0;border-bottom:1px solid var(--journal-rule);border-radius:0;background:transparent;gap:var(--space-3);overflow:visible}
+.evd-hero:after{display:none}
+.evd-hero .evd-art{position:static;display:flex;flex-wrap:wrap;align-items:center;gap:var(--space-3);width:auto;max-width:100%;opacity:1;filter:none;min-width:0}
+.evd-hero .evd-art:empty{display:none}
+.evd-hero h2{font:700 clamp(1.9rem,7vw,3rem)/1.1 var(--font-body);letter-spacing:-.03em;margin:0;max-width:22ch;overflow-wrap:anywhere;text-wrap:balance}
+.evd-hero .evc-when{max-width:65ch;font-size:var(--type-body-emphasis);line-height:1.5;color:var(--color-text-body)}
+.evd-hero .evd-cd{font:600 1rem/1.4 var(--font-body);font-variant-numeric:tabular-nums;margin:0}
+.evd-jump{top:68px;gap:var(--space-1);border-bottom:1px solid var(--journal-rule);padding-bottom:var(--space-2)}
+.evd-jump a{display:inline-flex;align-items:center;min-height:44px;border:0;border-radius:var(--radius-sm);background:var(--color-surface);padding:var(--space-2) var(--space-3);font-size:var(--type-body-sm)}
+.evd-in>.sec2{font-size:1.4rem;margin:var(--space-4) 0 0;scroll-margin-top:144px}
+.evd-card{border-radius:var(--radius-md);background:var(--color-surface);box-shadow:none;padding:var(--space-3) var(--space-4)}
+.evd-feat{gap:var(--space-3)}
+.evd-f{border-radius:var(--radius-md);background:var(--color-surface);box-shadow:none;padding:var(--space-3)}
+.evd-row p,.evd-grp li{line-height:1.55;max-width:70ch}
+.evd-banner{border-radius:var(--radius-md);box-shadow:none}
 @media(max-width:560px){
   :is(#tab-now,#tab-events) .evc.cmp .evc-art{grid-column:1/-1;flex-direction:row;justify-content:flex-start}
   :is(#tab-now,#tab-events) .evc.cmp .evc-main{grid-column:1/-1}
   :is(#tab-now,#tab-events) .evc.cmp .evc-art:not(:has(img)){display:none}
 }
-
-#tab-now .day-brief{gap:var(--space-1)}
+@media(min-width:720px){
+  #tab-now .today-focus-strip{gap:var(--space-5);padding-block:var(--space-4)}
+  #tab-now .today-focus-card+.today-focus-card{padding-left:var(--space-5);border-left:1px solid var(--journal-rule)}
+  .evd-in{padding-inline:var(--space-8)}
+}
 
 /* Missing special-form artwork stays explicit rather than implying a normal Pokémon is that costume. */
 .art.costume-unavailable{display:inline-flex;flex-direction:column;align-items:center;justify-content:center;min-width:44px;max-width:100%;padding:var(--space-1);text-align:center;white-space:normal;overflow-wrap:anywhere;color:var(--color-text-muted);background:var(--color-surface-raised);border-radius:var(--radius-md);font-size:var(--type-meta);line-height:1.3}
