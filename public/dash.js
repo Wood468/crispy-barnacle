@@ -266,6 +266,16 @@
       if (match < 0) { out.push(c); return; }
       used[match] = 1;
       var liveEvent = out[match], seen = {};
+      // An underspecified live species must not imply ordinary artwork where the
+      // official curated roster names only costume variants of that species.
+      if (c.status === 'official_confirmed') {
+        var costumeBases = {}, ordinaryBases = {};
+        (c.featured || []).forEach(function (f) { (f.costume ? costumeBases : ordinaryBases)[LIB.parseForm(f.name).base.toLowerCase()] = true; });
+        liveEvent.featured = (liveEvent.featured || []).filter(function (f) {
+          var base = LIB.parseForm(f.name).base.toLowerCase();
+          return f.costume || !costumeBases[base] || ordinaryBases[base] || String(f.name).toLowerCase() !== base;
+        });
+      }
       /* Keep the fuller write-up's title when the curated card carries more detail. */
       if ((c.featured || []).length > (liveEvent.featured || []).length) liveEvent.name = c.name;
       (liveEvent.featured || []).forEach(function(f) { seen[(f.name || '').toLowerCase()] = 1; });
@@ -273,7 +283,7 @@
         var k = (f.name || '').toLowerCase();
         if (!seen[k]) { liveEvent.featured.push(f); seen[k] = 1; }
         else if (f.costume) liveEvent.featured.forEach(function(old) {
-          if ((old.name || '').toLowerCase() === k) old.costume = true;
+          if ((old.name || '').toLowerCase() === k) { old.costume = true; if (!old.label && f.label) old.label = f.label; if (!old.asset && f.asset) old.asset = f.asset; }
         });
       });
       liveEvent.aliasIds = (liveEvent.aliasIds || []).concat([c.id]); /* the curated copy's id: its infographics are filed under it */

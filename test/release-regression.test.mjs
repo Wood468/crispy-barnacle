@@ -64,3 +64,24 @@ test('the image error handler only accepts image elements and same-origin artwor
   assert.equal(removed, true);
   context.window.GOARTERR({ tagName: 'IFRAME', remove() { throw new Error('non-image was modified'); } });
 });
+
+test('live/curated integration keeps exact official costume variants instead of bare species sprites', () => {
+  const dash = fs.readFileSync(new URL('../public/dash.js', import.meta.url), 'utf8');
+  const code = dash.slice(dash.indexOf('  function mergeLiveAndCurated('), dash.indexOf('  function announced('));
+  const context = { window: { GOLIB: lib }, LIB: lib, mergeHighlights: (a,b) => (a||[]).concat(b||[]) };
+  vm.createContext(context); vm.runInContext(code, context);
+  const dates = { start: new Date('2026-11-24T10:00:00Z'), end: new Date('2026-11-30T20:00:00Z') };
+  const live = { ...dates, id: 'leekduck:twilight-wishes-2026', name: 'Twilight Wishes', featured: [{name:'Pikachu'}, {name:'Espeon'}, {name:'Staryu'}], notes: [], bonuses: [] };
+  const curated = { ...dates, id:'cur:twilightwishes', name:'Twilight Wishes', status:'official_confirmed', link:'https://pokemongo.com/news/twilight-wishes-2026', featured: [
+    {name:'Pikachu (sun crown)', costume:true, label:'sun crown'},
+    {name:'Pikachu (moon crown)', costume:true, label:'moon crown'},
+    {name:'Espeon (sun scarf)', costume:true, label:'sun scarf'},
+    {name:'Staryu'}
+  ] };
+  const [result] = context.mergeLiveAndCurated([live], [curated]);
+  assert.equal(result.featured.filter(f=>f.costume).length,3);
+  assert.ok(!result.featured.some(f=>['Pikachu','Espeon'].includes(f.name)));
+  assert.ok(result.featured.some(f=>f.name==='Staryu' && !f.costume));
+  assert.equal(result.status,'official_confirmed');
+  assert.ok(result.aliasIds.includes('cur:twilightwishes'));
+});
