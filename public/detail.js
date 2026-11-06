@@ -15,8 +15,8 @@
       var until = m.windowEnd ? new Date(m.windowEnd) : null, open = !until || isNaN(until) || until.getTime() > Date.now();
       var when = until && !isNaN(until) ? (open ? 'until ' : 'ended ') + until.toLocaleString('en-AU', { weekday: 'short', day: 'numeric', month: 'short', hour: 'numeric', minute: '2-digit' }) : '';
       var what = m.acquisition === 'EVOLVE'
-        ? 'Evolve <b>' + esc(m.pokemon) + '</b>' + (m.evolutionTarget ? ' into <b>' + esc(m.evolutionTarget) + '</b>' : '') + ' to get <b>' + esc(m.move) + '</b>' + (m.moveKind ? ' (' + esc(m.moveKind) + ' attack)' : '')
-        : (m.pokemon ? '<b>' + esc(m.pokemon) + '</b>' : 'Pokémon') + ' caught in the event will know <b>' + esc(m.move) + '</b>';
+        ? 'Evolve <b>' + esc(m.pokemon) + '</b>' + (m.evolutionTarget ? ' into <b>' + esc(m.evolutionTarget) + '</b>' : '') + ' to get ' + moveHtml({name:m.move,pokemon:m.evolutionTarget||m.pokemon}) + (m.moveKind ? ' (' + esc(m.moveKind) + ' attack)' : '')
+        : (m.pokemon ? '<b>' + esc(m.pokemon) + '</b>' : 'Pokémon') + ' caught in the event will know ' + moveHtml({name:m.move,pokemon:m.pokemon});
       var sources = (m.sources || []).filter(function (s) { return s && s.name && safe(s.url); }).map(function (s) {
         return trust(s.trust) + ' <a href="' + esc(s.url) + '" target="_blank" rel="noopener noreferrer">' + esc(s.name) + '</a>';
       }).join(' · ');

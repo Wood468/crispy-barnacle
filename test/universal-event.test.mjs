@@ -155,3 +155,9 @@ test('malformed child timing is quarantined without losing the new event',async(
  const m=announcementFromPage({source:'leekduck',url:'https://leekduck.com/events/synthetic-child-dates/',title:machine.name,html:'<script type="application/ld+json">'+JSON.stringify(machine)+'</script>',fields:{}},{});
  assert.equal(m.activities.length,1);assert.equal(m.activities[0].schedule,null);assert.ok(m.internalValidation.warnings.length);
 });
+test('gallery merges visually identical source edges without collapsing encounter methods',()=>{
+ const p={speciesId:'25',name:'Pikachu'},key=C.identity(p);
+ const m=event({pokemon:[p],encounters:[{identityKey:key,method:'other',access:'all'},{identityKey:key,method:'other',access:'unknown'},{identityKey:key,method:'wild'}]});
+ const html=UI.render(m,{});assert.equal((html.match(/data-identity="25:base:none"/g)||[]).length,2);
+ const featured=UI.render(event({pokemon:[p],encounters:[{identityKey:key,method:'other'}]}),{});assert.equal((featured.match(/Featured Pokémon/g)||[]).length,1);
+});

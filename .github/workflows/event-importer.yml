@@ -68,6 +68,10 @@ jobs:
         run: |
           node scripts/mirror-images.mjs
           bash scripts/r2-sync.sh save
+      - name: Reconcile the catalogue after source and artwork updates
+        run: |
+          node scripts/event-experience/build-catalogue.cjs
+          node scripts/event-experience/audit-catalogue-v1.cjs
       - name: Commit when something changed
         shell: bash
         run: |

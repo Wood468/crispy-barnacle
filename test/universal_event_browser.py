@@ -124,4 +124,16 @@ with sync_playwright() as p:
         page.evaluate('GODETAIL.close()')
     assert errors==[],errors
     print(f'PASS all {len(CATALOGUE["events"])} catalogue records open with universal renderer in {engine}')
+    context.close()
+    context=browser.new_context(viewport={'width':390,'height':900},timezone_id='America/New_York',service_workers='block')
+    context.route('**/api/**',api)
+    dst={**FUTURE,'eventId':'synthetic-dst-gap','title':'Synthetic DST gap','schedule':{'timeBasis':'player-local','start':'2027-03-14T02:30','end':'2027-03-14T03:30'}}
+    context.route('**/events-v1.json',lambda r:r.fulfill(body=json.dumps({'schemaVersion':1,'species':DEX,'events':[dst]}),content_type='application/json'))
+    page=context.new_page();errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
+    page.goto(BASE+'/');page.wait_for_function('!!window.GODETAIL&&!!window.GOEventRegistry');page.evaluate('GOEventRegistry.ready')
+    page.evaluate("GODETAIL.open('synthetic-dst-gap')")
+    page.wait_for_function("document.getElementById('evd-t')?.textContent==='Synthetic DST gap'")
+    assert page.locator('#evd a[download]').count()==0
+    assert errors==[],errors
+    print('PASS player-local DST gap keeps detail readable and withholds invalid calendar')
     context.close();browser.close()
