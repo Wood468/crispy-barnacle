@@ -16,12 +16,12 @@ function reconcile(events){
   const aliases=new Set([id,...(Array.isArray(ev.aliases)?ev.aliases:[])].map(clean).filter(Boolean));
   aliases.forEach(alias=>{
    const existing=aliasToId.get(alias);
-   if(existing&&existing!==id)conflicts.push({type:'alias-collision',alias,ids:[existing,id].sort()});
+   if((existing&&existing!==id)||(byId.has(alias)&&alias!==id))conflicts.push({type:'alias-collision',alias,ids:[existing||alias,id].sort()});
    else aliasToId.set(alias,id);
   });
  });
  // An alias collision invalidates that alias rather than silently choosing a winner.
- conflicts.filter(c=>c.type==='alias-collision').forEach(c=>aliasToId.delete(c.alias));
+ conflicts.filter(c=>c.type==='alias-collision').forEach(c=>{if(byId.has(c.alias))aliasToId.set(c.alias,c.alias);else aliasToId.delete(c.alias);});
  return {resolve(alias){const id=aliasToId.get(clean(alias));return id?byId.get(id)||null:null;},
   conflicts, canonicalCount:byId.size, aliasCount:aliasToId.size};
 }
