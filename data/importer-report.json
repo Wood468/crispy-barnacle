@@ -1,22 +1,22 @@
 {
- "runAt": "2026-11-06T03:45:04.945Z",
+ "runAt": "2026-11-06T18:32:09.892Z",
  "sources": {
   "official": {
-   "listed": 22,
+   "listed": 23,
    "error": ""
   },
   "leekduck": {
-   "listed": 40,
+   "listed": 39,
    "error": ""
   },
   "hub": {
-   "listed": 13,
+   "listed": 14,
    "error": ""
   }
  },
  "pagesRead": 80,
  "events": 89,
- "worldEvents": 61,
+ "worldEvents": 62,
  "worldUndated": [
   "GO Wild Area Stamp Rally"
  ],
@@ -58,6 +58,11 @@
   },
   {
    "source": "official",
+   "title": "This weekend only! Log in November 6–8 for free Timed Research featuring Gigantamax Machamp! — Pokémon GO",
+   "url": "https://pokemongo.com/news/gowildarea-2026-timed-research/"
+  },
+  {
+   "source": "official",
    "title": "Celebrate the Pokémon Night Out events in Pokémon GO!",
    "url": "https://pokemongo.com/news/pokemon-night-out-irl-details2026/"
   },
@@ -88,13 +93,18 @@
   },
   {
    "source": "leekduck",
-   "title": "Giratina (Altered Forme) Raid Hour",
-   "url": "https://leekduck.com/events/raidhour20261104/"
+   "title": "Teddiursa wearing a witch hat Spotlight Hour",
+   "url": "https://leekduck.com/events/pokemonspotlighthour2026-11-05/"
   },
   {
    "source": "leekduck",
    "title": "Shadow Tornadus (Incarnate Forme) in Shadow Raids",
    "url": "https://leekduck.com/events/shadow-tornadus-incarnate-forme-in-shadow-raids-november-16-2026/"
+  },
+  {
+   "source": "hub",
+   "title": "Free Gigantamax Machamp Timed Research Available This Weekend Only!",
+   "url": "https://pokemongohub.net/post/news/free-gigantamax-machamp-timed-research-available-this-weekend-only/"
   },
   {
    "source": "hub",
@@ -594,5 +604,7 @@
    ]
   }
  ],
- "errors": []
+ "errors": [
+  "https://leekduck.com/events/halloween-2026-part-2/: GO Pass parser: img alt \"Halloween Piplup\" does not match reward-name at rank 9 (basic)"
+ ]
 }

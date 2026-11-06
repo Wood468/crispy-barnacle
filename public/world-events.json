@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-06T03:45:04.943Z",
+ "updated": "2026-11-06T18:32:09.888Z",
  "events": [
   {
    "id": "w-pokemon-fossil-museum-2026",
@@ -503,6 +503,30 @@
    "status": "official",
    "seen": "2026-11-06",
    "mode": "in-game"
+  },
+  {
+   "id": "w-this-weekend-only-log-in-november-6-8-for-free-tim",
+   "name": "This weekend only! Log in November 6–8 for free Timed Research featuring Gigantamax Machamp",
+   "place": "",
+   "area": "Worldwide",
+   "scope": "global",
+   "start": "2026-11-06",
+   "end": "2026-11-08",
+   "datesKnown": true,
+   "sources": [
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "url": "https://pokemongo.com/news/gowildarea-2026-timed-research/"
+    },
+    {
+     "id": "hub",
+     "name": "Pokémon GO Hub",
+     "url": "https://pokemongohub.net/post/news/free-gigantamax-machamp-timed-research-available-this-weekend-only/"
+    }
+   ],
+   "status": "official",
+   "seen": "2026-11-06"
   },
   {
    "id": "w-go-wild-area-2026-mexico-city",

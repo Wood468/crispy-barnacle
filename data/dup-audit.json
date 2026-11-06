@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-06T03:45:05.259Z",
+ "updated": "2026-11-06T18:32:10.507Z",
  "joinedThisRun": [
   {
    "kept": "w-pokemon-fossil-museum-2026",
@@ -190,6 +190,25 @@
   },
   {
    "a": {
+    "id": "gopassnov",
+    "name": "GO Pass: November",
+    "place": "",
+    "start": "2026-11-03",
+    "end": "2026-12-01",
+    "list": "curated"
+   },
+   "b": {
+    "id": "w-this-weekend-only-log-in-november-6-8-for-free-tim",
+    "name": "This weekend only! Log in November 6–8 for free Timed Research featuring Gigantamax Machamp",
+    "place": "",
+    "start": "2026-11-06",
+    "end": "2026-11-08",
+    "list": "world"
+   },
+   "why": "dates fit and 1 shared word"
+  },
+  {
+   "a": {
     "id": "into",
     "name": "Into the Wild",
     "place": "",
@@ -225,6 +244,25 @@
     "list": "world"
    },
    "why": "dates fit and 2 shared words"
+  },
+  {
+   "a": {
+    "id": "w-this-weekend-only-log-in-november-6-8-for-free-tim",
+    "name": "This weekend only! Log in November 6–8 for free Timed Research featuring Gigantamax Machamp",
+    "place": "",
+    "start": "2026-11-06",
+    "end": "2026-11-08",
+    "list": "world"
+   },
+   "b": {
+    "id": "w-go-wild-area-gigantamax-machamp-power-up-timed-res",
+    "name": "GO Wild Area Gigantamax Machamp Power Up Timed Research",
+    "place": "",
+    "start": "2026-11-06",
+    "end": "2026-11-15",
+    "list": "world"
+   },
+   "why": "dates fit and 4 shared words"
   }
  ],
  "odd": []
