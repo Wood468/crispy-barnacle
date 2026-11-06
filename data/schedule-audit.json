@@ -1,6 +1,6 @@
 {
- "checked": "2026-11-06T03:45:07.901Z",
- "compared": 44,
+ "checked": "2026-11-06T11:35:13.180Z",
+ "compared": 43,
  "problems": [],
  "missing": [
   {
@@ -22,7 +22,21 @@
    "end": "2027-08-15T23:59:00"
   }
  ],
- "worldFixes": [],
+ "worldFixes": [
+  {
+   "id": "w-free-gigantamax-machamp-timed-research-available-t",
+   "name": "Free Gigantamax Machamp Timed Research Available This Weekend Only!",
+   "slug": "go-wild-area-gigantamax-machamp-power-up-timed-research",
+   "from": [
+    "2026-11-06",
+    "2026-11-08"
+   ],
+   "to": [
+    "2026-11-06",
+    "2026-11-15"
+   ]
+  }
+ ],
  "worldConflicts": [
   {
    "id": "w-community-meetups-go-wild-area-details-asia-pacifi",

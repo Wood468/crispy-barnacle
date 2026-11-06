@@ -1,9 +1,9 @@
 {
- "updated": "2026-11-06T03:45:04.945Z",
+ "updated": "2026-11-06T11:35:09.465Z",
  "events": {
   "wag": {
    "name": "GO Wild Area: Global",
-   "updated": "2026-11-06T03:45:04.945Z",
+   "updated": "2026-11-06T11:35:09.465Z",
    "sources": [
     {
      "id": "official",
@@ -80,7 +80,7 @@
   },
   "leekduck:pokemon-go-wild-area-2026-sendai-japan": {
    "name": "Pokémon GO Wild Area 2026: Sendai • Tohoku",
-   "updated": "2026-11-06T03:45:04.945Z",
+   "updated": "2026-11-06T11:35:09.465Z",
    "sources": [
     {
      "id": "leekduck",
@@ -261,7 +261,28 @@
       "status": "single"
      },
      {
-      "text": "Event-themed Field Research is more likely to appear during the event. Complete tasks for encounters with event-themed Pokémon. Tasks and individual rewards have not yet been announced.",
+      "text": "Complete event-themed Field Research tasks for encounters with Hisuian Sliggoo or mighty Machamp wearing a modern jacket . Both can be Shiny.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Catch a Hisuian Sliggoo REWARD Hisuian Sliggoo",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Make an Excellent Throw REWARD Mighty Modern Jacket Machamp",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Win a Gigantamax Battle REWARD Mighty Modern Jacket Machamp",
       "sources": [
        "leekduck"
       ],
@@ -340,6 +361,13 @@
       "status": "single"
      },
      {
+      "text": "Complete event-themed Field Research tasks for encounters with Hisuian Sliggoo or mighty Machamp wearing a modern jacket . Both can be Shiny.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
       "text": "Hisuian Sliggoo can be encountered as a Shiny Pokémon at the in-person events. Evolve it to obtain Shiny Hisuian Goodra.",
       "sources": [
        "leekduck"
@@ -358,6 +386,13 @@
      },
      {
       "text": "Machamp wearing a modern jacket appears in three-star raids during event hours and may be Shiny.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Complete event-themed Field Research tasks for encounters with Hisuian Sliggoo or mighty Machamp wearing a modern jacket . Both can be Shiny.",
       "sources": [
        "leekduck"
       ],
@@ -466,7 +501,7 @@
   },
   "leekduck:pokemon-go-wild-area-2026-mexico-city": {
    "name": "Pokémon GO Wild Area 2026: Mexico City",
-   "updated": "2026-11-06T03:45:04.945Z",
+   "updated": "2026-11-06T11:35:09.465Z",
    "sources": [
     {
      "id": "leekduck",
@@ -922,7 +957,7 @@
   },
   "gopassnov": {
    "name": "GO Pass: November",
-   "updated": "2026-11-06T03:45:04.945Z",
+   "updated": "2026-11-06T11:35:09.465Z",
    "sources": [
     {
      "id": "leekduck",
@@ -1142,6 +1177,692 @@
        "leekduck"
       ],
       "status": "single"
+     },
+     {
+      "text": "Rank 2: Free: XP ×10000 | Deluxe: Stardust ×10000",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 3: Free: Dynamax Rookidee | Deluxe: Rookidee Candy ×5",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 4: Free: Rookidee Candy ×5 | Deluxe: Rookidee Candy XL ×3",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 5: Free: XP ×500 | Deluxe: XP ×1500",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 6: Free: Stardust ×500 | Deluxe: Stardust ×1500",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 7: Free: Sandygast | Deluxe: Sandygast Candy ×5",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 8: Free: Sandygast Candy ×5 | Deluxe: Sandygast Candy XL ×3",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 9: Free: Impidimp Candy ×5 | Deluxe: Impidimp",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 10: Free: PokéCoin ×10 | Deluxe: PokéCoin ×20",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 11: Free: Poké Ball ×5 | Deluxe: Poké Ball ×25",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 12: Free: Klink | Deluxe: Klink Candy ×5",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 13: Free: Klink Candy ×5 | Deluxe: Klink Candy XL ×3",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 14: Free: Razz Berry ×10 | Deluxe: Golden Razz Berry ×3",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 15: Free: XP ×750 | Deluxe: XP ×2250",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 16: Free: Stardust ×750 | Deluxe: Stardust ×2250",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 17: Free: Nickit Candy ×5 | Deluxe: Nickit",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 18: Free: Nickit Candy ×5 | Deluxe: Nickit Candy XL ×3",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 19: Free: Max Particle ×100 | Deluxe: Max Particle ×400",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 20: Free: PokéCoin ×20 | Deluxe: PokéCoin ×40",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 21: Free: Mysterious Component ×2 | Deluxe: Mysterious Component ×2",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 22: Free: Phanpy | Deluxe: Phanpy Candy ×5",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 23: Free: Phanpy Candy ×5 | Deluxe: Phanpy Candy XL ×3",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 24: Free: Absol Candy ×5 | Deluxe: Absol",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 26: Free: Great Ball ×5 | Deluxe: Great Ball ×25",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 27: Free: Falinks Candy ×5 | Deluxe: Dynamax Falinks",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 28: Free: Falinks Candy ×5 | Deluxe: Falinks Candy XL ×3",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 29: Free: Nanab Berry ×10 | Deluxe: Silver Pinap Berry ×3",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 30: Free: PokéCoin ×30 | Deluxe: PokéCoin ×60",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 31: Free: Poffin ×1 | Deluxe: Poffin ×1",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 32: Free: Tinkatink | Deluxe: Tinkatink Candy ×5",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 33: Free: Tinkatink Candy ×5 | Deluxe: Tinkatink Candy XL ×3",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 34: Free: XP ×1000 | Deluxe: XP ×3000",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 35: Free: Great Ball ×10 | Deluxe: Great Ball ×40",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 36: Free: Stardust ×1000 | Deluxe: Stardust ×3000",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 37: Free: Miltank | Deluxe: Miltank Candy ×5",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 38: Free: Miltank Candy ×5 | Deluxe: Miltank Candy XL ×3",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 39: Free: Dhelmise Candy ×5 | Deluxe: Dhelmise",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 40: Free: PokéCoin ×40 | Deluxe: PokéCoin ×80",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 41: Free: Mysterious Component ×2 | Deluxe: Mysterious Component ×2",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 42: Free: Tadbulb | Deluxe: Tadbulb Candy ×5",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 43: Free: Tadbulb Candy ×5 | Deluxe: Tadbulb Candy XL ×3",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 44: Free: XP ×1500 | Deluxe: XP ×4500",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 45: Free: Great Ball ×10 | Deluxe: Great Ball ×40",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 46: Free: Stardust ×1500 | Deluxe: Stardust ×4500",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 47: Free: Greavard | Deluxe: Greavard Candy ×5",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 48: Free: Greavard Candy ×5 | Deluxe: Greavard Candy XL ×3",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 49: Free: Max Particle ×100 | Deluxe: Max Particle ×400",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 51: Free: Great Ball ×15 | Deluxe: Great Ball ×50",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 52: Free: Swablu | Deluxe: Swablu Candy ×5",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 53: Free: Swablu Candy ×5 | Deluxe: Swablu Candy XL ×3",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 54: Free: Duraludon Candy ×5 | Deluxe: Duraludon",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 55: Free: Lucky Egg ×1 | Deluxe: Rare Candy ×3",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 56: Free: Mysterious Component ×2 | Deluxe: Mysterious Component ×2",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 57: Free: Vigoroth | Deluxe: Slakoth Candy ×5",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 58: Free: Slakoth Candy ×5 | Deluxe: Slakoth Candy XL ×3",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 59: Free: Fast TM ×1 | Deluxe: Fast TM ×2",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 60: Free: PokéCoin ×60 | Deluxe: PokéCoin ×120",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 61: Free: Charged TM ×1 | Deluxe: Charged TM ×2",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 62: Free: Slugma Candy ×5 | Deluxe: Magcargo",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 63: Free: Slugma Candy ×5 | Deluxe: Slugma Candy XL ×3",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 64: Free: XP ×2000 | Deluxe: XP ×6000",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 65: Free: Great Ball ×15 | Deluxe: Great Ball ×50",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 66: Free: Stardust ×2000 | Deluxe: Stardust ×6000",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 67: Free: Dragonair | Deluxe: Dratini Candy ×5",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 68: Free: Dratini Candy ×5 | Deluxe: Dratini Candy XL ×3",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 69: Free: Poltchageist Candy ×5 | Deluxe: Poltchageist",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 70: Free: PokéCoin ×70 | Deluxe: PokéCoin ×140",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 71: Free: Silver Pinap Berry ×1 | Deluxe: Silver Pinap Berry ×3",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 72: Free: Alolan Sandshrew | Deluxe: Sandshrew Candy ×5",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 73: Free: Sandshrew Candy ×5 | Deluxe: Sandshrew Candy XL ×3",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 74: Free: Max Particle ×100 | Deluxe: Max Particle ×400",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 76: Free: Ultra Ball ×10 | Deluxe: Ultra Ball ×40",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 77: Free: Dynamax Combee | Deluxe: Combee Candy ×5",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 78: Free: Combee Candy ×5 | Deluxe: Combee Candy XL ×3",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 79: Free: XP ×2500 | Deluxe: Stardust ×7500",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 80: Free: PokéCoin ×80 | Deluxe: PokéCoin ×160",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 81: Free: Stardust ×2500 | Deluxe: Stardust ×7500",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 82: Free: Fidough Candy ×5 | Deluxe: Fidough",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 83: Free: Fidough Candy ×5 | Deluxe: Fidough Candy XL ×3",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 84: Free: Flittle Candy ×5 | Deluxe: Flittle",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 85: Free: Ultra Ball ×15 | Deluxe: Ultra Ball ×50",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 86: Free: Max Particle ×200 | Deluxe: Max Particle ×800",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 87: Free: Alolan Dugtrio | Deluxe: Diglett Candy ×5",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 88: Free: Diglett Candy ×5 | Deluxe: Diglett Candy XL ×3",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 89: Free: Rare Candy ×3 | Deluxe: Rare Candy ×5",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 90: Free: PokéCoin ×90 | Deluxe: PokéCoin ×180",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 91: Free: Rare Candy XL ×1 | Deluxe: Rare Candy XL ×3",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 92: Free: Gible | Deluxe: Gible Candy ×5",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 93: Free: Gible Candy ×5 | Deluxe: Gible Candy XL ×3",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 94: Free: Turtonator Candy ×5 | Deluxe: Turtonator",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 95: Free: Rare Candy ×5 | Deluxe: Rare Candy XL ×2",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 96: Free: Rare Candy ×5 | Deluxe: Rare Candy XL ×2",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 97: Free: Groudon Candy ×3 | Deluxe: Groudon Candy ×10",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 98: Free: Stardust ×5000 | Deluxe: Groudon Candy XL ×3",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 99: Free: XP ×5000 | Deluxe: Super Incubator ×1",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 100: Free: Groudon (Level 20) | Deluxe: PokéCoin ×200",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 101: Free: Stardust ×50 | Deluxe: Stardust ×100",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 200: Free: Stardust ×50 | Deluxe: Stardust ×100",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
      }
     ],
     "dates": [
@@ -1176,7 +1897,7 @@
   },
   "sendai": {
    "name": "GO Wild Area: Sendai",
-   "updated": "2026-11-06T03:45:04.945Z",
+   "updated": "2026-11-06T11:35:09.465Z",
    "sources": [
     {
      "id": "official",
@@ -1203,7 +1924,7 @@
   },
   "leekduck:super-mega-raid-day-november-2026": {
    "name": "Super Mega Raid Day",
-   "updated": "2026-11-06T03:45:04.945Z",
+   "updated": "2026-11-06T11:35:09.465Z",
    "sources": [
     {
      "id": "official",
@@ -1534,7 +2255,7 @@
   },
   "leekduck:pokemon-go-wild-area-2026-global": {
    "name": "Pokémon GO Wild Area 2026: Global",
-   "updated": "2026-11-06T03:45:04.945Z",
+   "updated": "2026-11-06T11:35:09.465Z",
    "sources": [
     {
      "id": "official",
@@ -2012,7 +2733,7 @@
   },
   "leekduck:into-the-wild-2026": {
    "name": "Into the Wild",
-   "updated": "2026-11-06T03:45:04.945Z",
+   "updated": "2026-11-06T11:35:09.465Z",
    "sources": [
     {
      "id": "official",
@@ -2654,7 +3375,7 @@
   },
   "dyntrails": {
    "name": "Dynamax Trails",
-   "updated": "2026-11-06T03:45:04.945Z",
+   "updated": "2026-11-06T11:35:09.465Z",
    "sources": [
     {
      "id": "official",
@@ -2911,7 +3632,7 @@
   },
   "novcd": {
    "name": "November Community Day",
-   "updated": "2026-11-06T03:45:04.945Z",
+   "updated": "2026-11-06T11:35:09.465Z",
    "sources": [
     {
      "id": "official",
@@ -3105,7 +3826,7 @@
   },
   "smr1": {
    "name": "Super Mega Raid Day",
-   "updated": "2026-11-06T03:45:04.945Z",
+   "updated": "2026-11-06T11:35:09.465Z",
    "sources": [
     {
      "id": "official",
@@ -3286,7 +4007,7 @@
   },
   "halloween2": {
    "name": "Halloween 2026, Part Two",
-   "updated": "2026-11-06T03:45:04.945Z",
+   "updated": "2026-11-06T11:35:09.465Z",
    "sources": [
     {
      "id": "official",
@@ -3312,6 +4033,13 @@
       "status": "official"
      },
      {
+      "text": "Complete the Bonus Tasks in the GO Pass section to earn extra GO Points toward these milestones.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
       "text": "Complete these Bonus Tasks before Thursday, November 5, 2026, at 8:00 p.m. local time to earn GO Points:",
       "sources": [
        "leekduck"
@@ -3335,32 +4063,28 @@
      {
       "text": "Rank 10: 2× Candy for catching Pokémon.",
       "sources": [
-       "official",
-       "leekduck"
+       "official"
       ],
       "status": "official"
      },
      {
       "text": "Rank 10: GO Pass Deluxe: 3× Candy for catching Pokémon.",
       "sources": [
-       "official",
-       "leekduck"
+       "official"
       ],
       "status": "official"
      },
      {
       "text": "Rank 20: 2× Stardust for catching Pokémon.",
       "sources": [
-       "official",
-       "leekduck"
+       "official"
       ],
       "status": "official"
      },
      {
       "text": "Rank 20: GO Pass Deluxe: 3× Stardust for catching Pokémon.",
       "sources": [
-       "official",
-       "leekduck"
+       "official"
       ],
       "status": "official"
      },
@@ -3888,11 +4612,13 @@
      },
      "checkedAt": "2026-11-06"
     }
-   ]
+   ],
+   "goPassParseWarning": "GO Pass source parsing failed; previously published rank rewards were retained.",
+   "goPassRetainedAt": "2026-11-06T03:45:04.945Z"
   },
   "halloween1": {
    "name": "Halloween 2026, Part One",
-   "updated": "2026-11-06T03:45:04.945Z",
+   "updated": "2026-11-06T11:35:09.465Z",
    "sources": [
     {
      "id": "official",
@@ -4164,7 +4890,7 @@
   },
   "spirits": {
    "name": "Dynamax Uxie, Mesprit and Azelf",
-   "updated": "2026-11-06T03:45:04.945Z",
+   "updated": "2026-11-06T11:35:09.465Z",
    "sources": [
     {
      "id": "official",
@@ -4406,7 +5132,7 @@
   },
   "tcg30": {
    "name": "Pokémon TCG: 30th Celebration (at stores)",
-   "updated": "2026-11-06T03:45:04.945Z",
+   "updated": "2026-11-06T11:35:09.465Z",
    "sources": [
     {
      "id": "official",
@@ -4472,7 +5198,7 @@
   },
   "sandile": {
    "name": "Sandile Hatch Day",
-   "updated": "2026-11-06T03:45:04.945Z",
+   "updated": "2026-11-06T11:35:09.465Z",
    "sources": [
     {
      "id": "official",
@@ -4630,66 +5356,9 @@
    "gaps": [],
    "researchTasks": []
   },
-  "leekduck:pokemonspotlighthour2026-11-05": {
-   "name": "Teddiursa wearing a witch hat Spotlight Hour",
-   "updated": "2026-11-06T03:45:04.945Z",
-   "sources": [
-    {
-     "id": "leekduck",
-     "name": "Leek Duck",
-     "trust": "community",
-     "url": "https://leekduck.com/events/pokemonspotlighthour2026-11-05/"
-    }
-   ],
-   "fields": {
-    "bonuses": [],
-    "featured": [
-     {
-      "text": "The following Pokémon will appear more frequently in the wild.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Teddiursa wearing a witch hat",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ],
-    "raids": [],
-    "eggs": [],
-    "research": [],
-    "shiny": [],
-    "moves": [],
-    "costumes": [
-     {
-      "text": "Pokémon Spotlight Hour will feature a different Pokémon and special bonus for one hour at 6:00 p.m. local time.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "November 5 : The featured Pokémon is Teddiursa wearing a witch hat and the special bonus is 2× Evolution XP .",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ],
-    "tickets": [],
-    "dates": []
-   },
-   "conflicts": [],
-   "gaps": [],
-   "researchTasks": []
-  },
   "leekduck:mega-sableye-in-mega-raids-october-2026": {
    "name": "Mega Sableye in Mega Raids",
-   "updated": "2026-11-06T03:45:04.945Z",
+   "updated": "2026-11-06T11:35:09.465Z",
    "sources": [
     {
      "id": "leekduck",
@@ -4747,7 +5416,7 @@
   },
   "leekduck:giratina-altered-forme-in-5-star-raid-battles-november-2026": {
    "name": "Giratina (Altered Forme) in 5-star Raid Battles",
-   "updated": "2026-11-06T03:45:04.945Z",
+   "updated": "2026-11-06T11:35:09.465Z",
    "sources": [
     {
      "id": "leekduck",
@@ -4819,7 +5488,7 @@
   },
   "leekduck:shadow-tornadus-incarnate-forme-in-shadow-raids-november-4-2026": {
    "name": "Shadow Tornadus (Incarnate Forme) in Shadow Raids",
-   "updated": "2026-11-06T03:45:04.945Z",
+   "updated": "2026-11-06T11:35:09.465Z",
    "sources": [
     {
      "id": "leekduck",
@@ -4862,7 +5531,7 @@
   },
   "leekduck:pokemon-night-out-london-2026": {
    "name": "Pokémon Night Out 2026 - London",
-   "updated": "2026-11-06T03:45:04.945Z",
+   "updated": "2026-11-06T11:35:09.465Z",
    "sources": [
     {
      "id": "leekduck",
@@ -4971,7 +5640,7 @@
   },
   "leekduck:max-mondays-2026-11-16": {
    "name": "Max Monday: Pokémon to be announced",
-   "updated": "2026-11-06T03:45:04.945Z",
+   "updated": "2026-11-06T11:35:09.465Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5013,7 +5682,7 @@
   },
   "leekduck:raidhour20261118": {
    "name": "Cresselia and Darkrai Raid Hour",
-   "updated": "2026-11-06T03:45:04.945Z",
+   "updated": "2026-11-06T11:35:09.465Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5056,7 +5725,7 @@
   },
   "leekduck:pokemonspotlighthour2026-11-19": {
    "name": "Grookey, Scorbunny, and Sobble Spotlight Hour",
-   "updated": "2026-11-06T03:45:04.945Z",
+   "updated": "2026-11-06T11:35:09.465Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5091,7 +5760,7 @@
   },
   "minior2": {
    "name": "Minior Showers: Leonids",
-   "updated": "2026-11-06T03:45:04.945Z",
+   "updated": "2026-11-06T11:35:09.465Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5183,7 +5852,7 @@
   },
   "leekduck:eternamax-eternatus-max-battles-2026": {
    "name": "Eternamax Eternatus Returns",
-   "updated": "2026-11-06T03:45:04.945Z",
+   "updated": "2026-11-06T11:35:09.465Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5263,7 +5932,7 @@
   },
   "leekduck:november-communityday2026": {
    "name": "Pawniard Community Day",
-   "updated": "2026-11-06T03:45:04.945Z",
+   "updated": "2026-11-06T11:35:09.465Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5520,7 +6189,7 @@
   },
   "leekduck:dynamax-trails-2026": {
    "name": "Dynamax Trails",
-   "updated": "2026-11-06T03:45:04.945Z",
+   "updated": "2026-11-06T11:35:09.465Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5756,7 +6425,7 @@
   },
   "leekduck:max-mondays-2026-11-23": {
    "name": "Dynamax Espurr during Max Monday",
-   "updated": "2026-11-06T03:45:04.945Z",
+   "updated": "2026-11-06T11:35:09.465Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5834,7 +6503,7 @@
   },
   "leekduck:cresselia-darkrai-in-5-star-raid-battles-november-2026": {
    "name": "Cresselia and Darkrai in 5-star Raid Battles",
-   "updated": "2026-11-06T03:45:04.945Z",
+   "updated": "2026-11-06T11:35:09.465Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5906,7 +6575,7 @@
   },
   "leekduck:mega-banette-in-mega-raids-november-2026": {
    "name": "Mega Banette in Mega Raids",
-   "updated": "2026-11-06T03:45:04.945Z",
+   "updated": "2026-11-06T11:35:09.465Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5971,7 +6640,7 @@
   },
   "leekduck:raidhour20261125": {
    "name": "Deoxys (Normal, Defense, Attack, and Speed Formes) Raid Hour",
-   "updated": "2026-11-06T03:45:04.945Z",
+   "updated": "2026-11-06T11:35:09.465Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6014,7 +6683,7 @@
   },
   "leekduck:pokemonspotlighthour2026-11-26": {
    "name": "Noibat Spotlight Hour",
-   "updated": "2026-11-06T03:45:04.945Z",
+   "updated": "2026-11-06T11:35:09.465Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6040,6 +6709,1676 @@
     "shiny": [],
     "moves": [],
     "costumes": [],
+    "tickets": [],
+    "dates": []
+   },
+   "conflicts": [],
+   "gaps": [],
+   "researchTasks": []
+  },
+  "leekduck:twilight-wishes-2026": {
+   "name": "Twilight Wishes",
+   "updated": "2026-11-06T11:35:09.465Z",
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/twilight-wishes-2026/"
+    },
+    {
+     "id": "hub",
+     "name": "Pokémon GO Hub",
+     "trust": "community",
+     "url": "https://pokemongohub.net/post/event/twilight-wishes-2026/"
+    }
+   ],
+   "fields": {
+    "bonuses": [
+     {
+      "text": "Reach Major Milestones on the event GO Pass to unlock the following bonuses.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "The following bonuses will be active during Twilight Wishes:",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Increased chance to encounter Shiny Staryu and Shiny Elgyem",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "The event also features special decorations, with stars lighting up the in-game skies throughout Twilight Wishes.",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Additional bonuses, including increased Lucky Trade chances and catch Stardust, can be unlocked through the event GO Pass.",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 1: Increased chance to get Lucky Pokémon in trades",
+      "sources": [
+       "leekduck",
+       "hub"
+      ],
+      "status": "corroborated"
+     },
+     {
+      "text": "Rank 10: 2× Stardust for catching Pokémon",
+      "sources": [
+       "leekduck",
+       "hub"
+      ],
+      "status": "corroborated"
+     },
+     {
+      "text": "Rank 10: GO Pass Deluxe: 3× Stardust for catching Pokémon",
+      "sources": [
+       "leekduck",
+       "hub"
+      ],
+      "status": "corroborated"
+     },
+     {
+      "text": "Rank 1: Increased chance to become Lucky Friends",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 10: Additional bonus tasks for the event GO Pass will be available during the event.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "featured": [
+     {
+      "text": "The following Pokémon will appear in the wild, along with other event-themed Pokémon.",
+      "sources": [
+       "leekduck",
+       "hub"
+      ],
+      "status": "corroborated"
+     },
+     {
+      "text": "If you’re lucky, you might also encounter Rockruff!",
+      "sources": [
+       "leekduck",
+       "hub"
+      ],
+      "status": "corroborated"
+     },
+     {
+      "text": "Espeon wearing a sun scarf, Umbreon wearing a moon scarf, and Rockruff are featured during Twilight Wishes. All three can be Shiny if you’re lucky!",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Staryu and Elgyem have an increased chance of being Shiny during the event.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "The event GO Pass features the following rewards:",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Mega Energy for Beedrill, Houndoom, Sableye, and Manectric",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Additional rewards",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Trainers who upgrade to GO Pass Deluxe can also earn:",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "An event-themed avatar pose",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Premium Battle Passes",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "All featured Pokémon listed above can be encountered as Shiny Pokémon, if you’re lucky.",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     }
+    ],
+    "raids": [
+     {
+      "text": "Pikachu wearing a sun crown",
+      "sources": [
+       "leekduck",
+       "hub"
+      ],
+      "status": "corroborated"
+     },
+     {
+      "text": "Espeon wearing a sun scarf",
+      "sources": [
+       "leekduck",
+       "hub"
+      ],
+      "status": "corroborated"
+     },
+     {
+      "text": "Mega Manectric",
+      "sources": [
+       "leekduck",
+       "hub"
+      ],
+      "status": "corroborated"
+     },
+     {
+      "text": "Umbreon wearing a moon scarf",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Event-themed Pokémon will appear in one-star, three-star, and Mega Raids throughout Twilight Wishes. All Pokémon featured in these event raids have a chance to be encountered as Shiny Pokémon.",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "⚔️ Related raid guides: Espeon Raid Guide , Umbreon Raid Guide",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     }
+    ],
+    "eggs": [],
+    "research": [
+     {
+      "text": "Complete event-themed Field Research tasks to earn Mega Energy and encounters with event-themed Pokémon, including Staryu, Elgyem, and more!",
+      "sources": [
+       "leekduck",
+       "hub"
+      ],
+      "status": "corroborated"
+     },
+     {
+      "text": "Celebrate the Twilight Trails Season finale with additional encounters featuring Pokémon from throughout the Season. These Field Research rewards change during the event.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "To celebrate the end of the Twilight Trails Season, additional Field Research encounters will rotate during the event , featuring Pokémon from earlier seasonal events. All Field Research rotation times are local time.",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     }
+    ],
+    "shiny": [
+     {
+      "text": "Staryu and Elgyem have an increased chance of being Shiny during the event.",
+      "sources": [
+       "leekduck",
+       "hub"
+      ],
+      "status": "corroborated"
+     },
+     {
+      "text": "Espeon wearing a sun scarf, Umbreon wearing a moon scarf, and Rockruff are featured during Twilight Wishes. All three can be Shiny if you’re lucky!",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Sun Scarf Espeon and Moon Scarf Umbreon return alongside boosted Shiny encounters, themed raids, and a special GO Pass to close out the Twilight Trails Season.",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "The following Pokémon will have an increased chance of appearing as Shiny Pokémon during Twilight Wishes:",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "All featured Pokémon listed above can be encountered as Shiny Pokémon, if you’re lucky.",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Event-themed Pokémon will appear in one-star, three-star, and Mega Raids throughout Twilight Wishes. All Pokémon featured in these event raids have a chance to be encountered as Shiny Pokémon.",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     }
+    ],
+    "moves": [],
+    "costumes": [
+     {
+      "text": "Espeon wearing a sun scarf, Umbreon wearing a moon scarf, and Rockruff are featured during Twilight Wishes. All three can be Shiny if you’re lucky!",
+      "sources": [
+       "leekduck",
+       "hub"
+      ],
+      "status": "corroborated"
+     },
+     {
+      "text": "Gengar wearing a Spooky Festival costume",
+      "sources": [
+       "leekduck",
+       "hub"
+      ],
+      "status": "corroborated"
+     },
+     {
+      "text": "Pikachu wearing a sun crown",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Drifblim wearing a Halloween Mischief costume",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "tickets": [
+     {
+      "text": "GO Pass Deluxe costs US$4.99 (or the equivalent local pricing tier). It offers upgraded rewards and faster progression.",
+      "sources": [
+       "leekduck",
+       "hub"
+      ],
+      "status": "corroborated"
+     },
+     {
+      "text": "For US$6.99 (or the equivalent local pricing tier), GO Pass Deluxe + 6 Ranks also provides enough GO Points to reach Rank 7.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Deluxe includes rewards from both tracks. You can upgrade while the pass is available and claim rewards from ranks you have already unlocked. Availability may vary by region.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Claim all unlocked rewards by Wednesday, December 2, 2026, at 8:00 p.m. local time , before they expire.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "A special GO Pass: Twilight Wishes will be available from Tuesday, November 24, at 10:00 a.m. to Monday, November 30, 2026, at 8:00 p.m. local time .",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "The event features a free GO Pass and a paid GO Pass Deluxe, both offering rewards as Trainers collect GO Points and progress through ranks.",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "All Trainers automatically receive the free GO Pass: Twilight Wishes on November 24 at 10:00 a.m. local time.",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Earn GO Points by completing Pass Tasks and rank up through November 30 at 8:00 p.m. local time.",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Additional bonus tasks will become available during the event.",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Complete Pass Tasks and rank up to earn rewards, including:",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Encounters with event-themed Pokémon",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Mega Energy for Beedrill, Houndoom, Sableye, and Manectric",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     }
+    ],
+    "dates": [
+     {
+      "text": "Twilight Wishes runs from Tuesday, November 24, at 10:00 a.m. to Monday, November 30, 2026, at 8:00 p.m. local time .",
+      "sources": [
+       "leekduck",
+       "hub"
+      ],
+      "status": "corroborated"
+     }
+    ]
+   },
+   "conflicts": [],
+   "gaps": [],
+   "researchTasks": []
+  },
+  "leekduck:max-mondays-2026-11-30": {
+   "name": "Dynamax Cryogonal during Max Monday",
+   "updated": "2026-11-06T11:35:09.465Z",
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/max-mondays-2026-11-30/"
+    }
+   ],
+   "fields": {
+    "bonuses": [],
+    "featured": [],
+    "raids": [
+     {
+      "text": "Dynamax Cryogonal may appear in Max Battles from November 30, 2026 through December 6, 2026 .",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "These Dynamax Pokémon may appear in Max Battles throughout this season. Max Battles will be available from 6:00 a.m. to 9:00 p.m. local time on Mondays.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Power Spots will refresh more frequently.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Additional Power Spots will be active on Mondays compared to the rest of the week.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Max Battles will rotate to feature different Dynamax Pokémon.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "On November 30, 2026 , the featured Dynamax Pokémon is Cryogonal .",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "eggs": [],
+    "research": [],
+    "shiny": [],
+    "moves": [],
+    "costumes": [],
+    "tickets": [],
+    "dates": [
+     {
+      "text": "These Dynamax Pokémon may appear in Max Battles throughout this season. Max Battles will be available from 6:00 a.m. to 9:00 p.m. local time on Mondays.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ]
+   },
+   "conflicts": [],
+   "gaps": [],
+   "researchTasks": []
+  },
+  "leekduck:season-24-twilight-trails": {
+   "name": "Twilight Trails",
+   "updated": "2026-11-06T11:35:09.465Z",
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/season-24-twilight-trails/"
+    }
+   ],
+   "fields": {
+    "bonuses": [
+     {
+      "text": "Rank 1: One guaranteed Candy XL when trading Pokémon for Trainers level 31 and above",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 1: One additional Candy for trading Pokémon",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 25: Increased limits on opening Gifts, receiving Gifts from PokéStop and Gym Photo Discs, and storing Gifts",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 50: 2× Daily Adventure Incense duration",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 75: Increased XP and Stardust from hatching Eggs",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "featured": [
+     {
+      "text": "More Pokémon originally discovered in the Paldea region, which was featured in the Pokémon Scarlet and Pokémon Violet games for Nintendo Switch, have been spotted in Pokémon GO!",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Be on the lookout for Maschiff , Mabosstiff , and more!",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Dynamax Rhyhorn , Dynamax Sneasel , Dynamax Sizzlipede , and more will make their way into Max Battles throughout the Season. Keep an eye out for new Dynamax Pokémon at Power Spots!",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Dynamax Uxie , Dynamax Mesprit , and Dynamax Azelf will appear in a Max Battle Day during Twilight Trails.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "As the Seasons change, you may find different Pokémon appearing in your area. Explore during Twilight Trails to see what discoveries await!",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "raids": [],
+    "eggs": [
+     {
+      "text": "Here are some of the Pokémon hatching from Eggs this season.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "There are more Pokémon appearing in Eggs than the ones listed.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Regional: Mime Jr. is exclusive to Eggs obtained in Europe.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Indeedee (Male)",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Indeedee (Female)",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Galarian Meowth",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Galarian Zigzagoon",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Galarian Stunfisk",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "This type of Egg is obtained from Mateo’s Gift Exchange at the end of a Route.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Galarian Slowpoke",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Hisuian Sneasel",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Galarian Corsola",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "research": [
+     {
+      "text": "Complete Field Research to unlock Research Breakthrough encounters with one of a variety of Season-themed Pokémon. Find out where your trail leads you each week!",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "shiny": [],
+    "moves": [],
+    "costumes": [],
+    "tickets": [
+     {
+      "text": "Reach Major Milestones on your GO Pass to unlock the following bonuses. Once unlocked, these bonuses will last until the current GO Pass ends!",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "GO Pass, a limited-time progression track, will be available during Twilight Trails! Complete Pass Tasks to earn GO Points to increase your rank and earn rewards.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "The GO Pass Deluxe , a paid version of the GO Pass, will be available for Trainers looking for upgraded rewards and faster progression.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "dates": [
+     {
+      "text": "Spotlight Hour will return from 6:00 p.m. to 7:00 p.m. local time.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ]
+   },
+   "conflicts": [],
+   "gaps": [],
+   "researchTasks": []
+  },
+  "leekduck:deoxys-normal-defense-attack-speed-formes-in-5-star-raid-battles-november-2026": {
+   "name": "Deoxys (Normal, Defense, Attack, and Speed Formes) in 5-star Raid Battles",
+   "updated": "2026-11-06T11:35:09.465Z",
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/deoxys-normal-defense-attack-speed-formes-in-5-star-raid-battles-november-2026/"
+    }
+   ],
+   "fields": {
+    "bonuses": [],
+    "featured": [],
+    "raids": [
+     {
+      "text": "Deoxys (Normal), Deoxys (Defense), Deoxys (Attack), and Deoxys (Speed) will be in five-star raid battles from November 25, 2026 to December 1, 2026.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Raid bosses change at 6:00 a.m. local time.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "There will also be a Raid Hour featuring Deoxys (Normal, Defense, Attack, and Speed Formes) from 6:00 p.m. to 7:00 p.m. local time on November 25.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "eggs": [],
+    "research": [],
+    "shiny": [
+     {
+      "text": "If you’re lucky, you may encounter Shiny forms of these Pokémon.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Deoxys (Normal)",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Deoxys (Defense)",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Deoxys (Attack)",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Deoxys (Speed)",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "moves": [],
+    "costumes": [],
+    "tickets": [],
+    "dates": [
+     {
+      "text": "Deoxys (Normal), Deoxys (Defense), Deoxys (Attack), and Deoxys (Speed) will be in five-star raid battles from November 25, 2026 to December 1, 2026.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "There will also be a Raid Hour featuring Deoxys (Normal, Defense, Attack, and Speed Formes) from 6:00 p.m. to 7:00 p.m. local time on November 25.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ]
+   },
+   "conflicts": [],
+   "gaps": [],
+   "researchTasks": []
+  },
+  "leekduck:mega-metagross-in-mega-raids-november-2026": {
+   "name": "Mega Metagross in Mega Raids",
+   "updated": "2026-11-06T11:35:09.465Z",
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/mega-metagross-in-mega-raids-november-2026/"
+    }
+   ],
+   "fields": {
+    "bonuses": [],
+    "featured": [],
+    "raids": [
+     {
+      "text": "Mega Metagross will be in Mega Raids from November 25, 2026 at 6 am to December 1, 2026 at 10 pm local time.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Raid bosses change at 6:00 a.m. local time.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Mega Metagross will be in Mega Raids.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "eggs": [],
+    "research": [],
+    "shiny": [
+     {
+      "text": "If you’re lucky, you may encounter Shiny Metagross.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Mega Metagross",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "moves": [],
+    "costumes": [],
+    "tickets": [],
+    "dates": [
+     {
+      "text": "Mega Metagross will be in Mega Raids from November 25, 2026 at 6 am to December 1, 2026 at 10 pm local time.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ]
+   },
+   "conflicts": [],
+   "gaps": [],
+   "researchTasks": []
+  },
+  "minior3": {
+   "name": "Minior Showers: Geminids",
+   "updated": "2026-11-06T11:35:09.465Z",
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/minior-showers-geminids-2026/"
+    }
+   ],
+   "fields": {
+    "bonuses": [],
+    "featured": [
+     {
+      "text": "You may encounter Minior in its Meteor Form in the wild during the event. You’ll receive 1,000 Stardust for catching Minior .",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Minior encounters are more likely from 5:00 p.m. to 9:00 p.m. local time each day .",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "raids": [],
+    "eggs": [],
+    "research": [],
+    "shiny": [],
+    "moves": [],
+    "costumes": [],
+    "tickets": [],
+    "dates": [
+     {
+      "text": "This Minior Shower runs from December 11, 2026 at 5:00 p.m. to December 16, 2026 at 11:59 p.m. local time .",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "From 5:00 p.m. to 9:00 p.m. local time every day during each Minior Shower, shooting stars will light up the in-game sky. During these hours, you’ll have an increased chance of encountering Minior in the wild!",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Orionids : October 19–24, 2026",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Leonids : November 14–19, 2026",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Eta Aquariids : May 3–8, 2027",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Southern Delta Aquariids : July 28–August 2, 2027",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Perseids : August 10–15, 2027",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ]
+   },
+   "conflicts": [],
+   "gaps": [],
+   "researchTasks": []
+  },
+  "leekduck:pokemon-x-adidas-2026": {
+   "name": "adidas × Pokémon Timed Research",
+   "updated": "2026-11-06T11:35:09.465Z",
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/pokemon-x-adidas-2026/"
+    }
+   ],
+   "fields": {
+    "bonuses": [],
+    "featured": [],
+    "raids": [],
+    "eggs": [],
+    "research": [
+     {
+      "text": "Celebrate the adidas × Pokémon collection with Timed Research at participating adidas and retail stores worldwide!",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Research is available starting September 25, 2026, at 10:00 a.m. local time , through January 15, 2027, at 8:00 p.m. local time .",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Event-exclusive Timed Research",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "This Timed Research has three pages. Complete the tasks to earn adidas avatar items, Lucario Candy, Lucario Mega Energy, XP, Stardust, and an encounter with Lucario. If you’re lucky, you may encounter a Shiny Lucario!",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Obtain the research by January 15, 2027, at 8:00 p.m. local time. Complete all tasks and claim all rewards before February 13, 2027, at 8:00 p.m. local time.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "shiny": [
+     {
+      "text": "This Timed Research has three pages. Complete the tasks to earn adidas avatar items, Lucario Candy, Lucario Mega Energy, XP, Stardust, and an encounter with Lucario. If you’re lucky, you may encounter a Shiny Lucario!",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "moves": [],
+    "costumes": [
+     {
+      "text": "Complete your outfit! Trainers worldwide can redeem offer code ADIDASxPOKEMON through the Pokémon GO Web Store to get a pair of adidas shoes for their avatar.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "tickets": [],
+    "dates": []
+   },
+   "conflicts": [],
+   "gaps": [],
+   "researchTasks": []
+  },
+  "leekduck:pokemon-go-tour-alola-kaohsiung-2027": {
+   "name": "Pokémon GO Tour: Alola - Kaohsiung 2027",
+   "updated": "2026-11-06T11:35:09.465Z",
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/pokemon-go-tour-alola-kaohsiung-2027/"
+    }
+   ],
+   "fields": {
+    "bonuses": [],
+    "featured": [],
+    "raids": [],
+    "eggs": [],
+    "research": [],
+    "shiny": [],
+    "moves": [],
+    "costumes": [],
+    "tickets": [],
+    "dates": [
+     {
+      "text": "Dates: February 19–21, 2027 Location: Kaohsiung, Taiwan Event hours: To be announced",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ]
+   },
+   "conflicts": [],
+   "gaps": [],
+   "researchTasks": []
+  },
+  "leekduck:pokemon-go-tour-alola-los-angeles-2027": {
+   "name": "Pokémon GO Tour: Alola - Los Angeles 2027",
+   "updated": "2026-11-06T11:35:09.465Z",
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/pokemon-go-tour-alola-los-angeles-2027/"
+    }
+   ],
+   "fields": {
+    "bonuses": [],
+    "featured": [],
+    "raids": [],
+    "eggs": [],
+    "research": [],
+    "shiny": [],
+    "moves": [],
+    "costumes": [],
+    "tickets": [],
+    "dates": [
+     {
+      "text": "Dates: February 19–21, 2027 Location: Los Angeles, California Event hours: To be announced",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ]
+   },
+   "conflicts": [],
+   "gaps": [],
+   "researchTasks": []
+  },
+  "leekduck:pokemon-go-tour-alola-global-2027": {
+   "name": "Pokémon GO Tour: Alola - Global 2027",
+   "updated": "2026-11-06T11:35:09.465Z",
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/pokemon-go-tour-alola-global-2027/"
+    }
+   ],
+   "fields": {
+    "bonuses": [],
+    "featured": [],
+    "raids": [],
+    "eggs": [],
+    "research": [],
+    "shiny": [],
+    "moves": [],
+    "costumes": [],
+    "tickets": [],
+    "dates": [
+     {
+      "text": "Dates: February 27–28, 2027 Location: Worldwide Event hours: To be announced",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ]
+   },
+   "conflicts": [],
+   "gaps": [],
+   "researchTasks": []
+  },
+  "leekduck:minior-showers-eta-aquariids-2027": {
+   "name": "Minior Showers: Eta Aquariids 2027",
+   "updated": "2026-11-06T11:35:09.465Z",
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/minior-showers-eta-aquariids-2027/"
+    }
+   ],
+   "fields": {
+    "bonuses": [],
+    "featured": [
+     {
+      "text": "You may encounter Minior in its Meteor Form in the wild during the event. You’ll receive 1,000 Stardust for catching Minior .",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Minior encounters are more likely from 5:00 p.m. to 9:00 p.m. local time each day .",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "raids": [],
+    "eggs": [],
+    "research": [],
+    "shiny": [],
+    "moves": [],
+    "costumes": [],
+    "tickets": [],
+    "dates": [
+     {
+      "text": "This Minior Shower runs from May 3, 2027 at 5:00 p.m. to May 8, 2027 at 11:59 p.m. local time .",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "From 5:00 p.m. to 9:00 p.m. local time every day during each Minior Shower, shooting stars will light up the in-game sky. During these hours, you’ll have an increased chance of encountering Minior in the wild!",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Orionids : October 19–24, 2026",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Leonids : November 14–19, 2026",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Geminids : December 11–16, 2026",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Eta Aquariids : May 3–8, 2027",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Southern Delta Aquariids : July 28–August 2, 2027",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Perseids : August 10–15, 2027",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ]
+   },
+   "conflicts": [],
+   "gaps": [],
+   "researchTasks": []
+  },
+  "leekduck:minior-showers-southern-delta-aquariids-2027": {
+   "name": "Minior Showers: Southern Delta Aquariids 2027",
+   "updated": "2026-11-06T11:35:09.465Z",
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/minior-showers-southern-delta-aquariids-2027/"
+    }
+   ],
+   "fields": {
+    "bonuses": [],
+    "featured": [
+     {
+      "text": "You may encounter Minior in its Meteor Form in the wild during the event. You’ll receive 1,000 Stardust for catching Minior .",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Minior encounters are more likely from 5:00 p.m. to 9:00 p.m. local time each day .",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "raids": [],
+    "eggs": [],
+    "research": [],
+    "shiny": [],
+    "moves": [],
+    "costumes": [],
+    "tickets": [],
+    "dates": [
+     {
+      "text": "This Minior Shower runs from July 28, 2027 at 5:00 p.m. to August 2, 2027 at 11:59 p.m. local time .",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "From 5:00 p.m. to 9:00 p.m. local time every day during each Minior Shower, shooting stars will light up the in-game sky. During these hours, you’ll have an increased chance of encountering Minior in the wild!",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Orionids : October 19–24, 2026",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Leonids : November 14–19, 2026",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Geminids : December 11–16, 2026",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Eta Aquariids : May 3–8, 2027",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Southern Delta Aquariids : July 28–August 2, 2027",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Perseids : August 10–15, 2027",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ]
+   },
+   "conflicts": [],
+   "gaps": [],
+   "researchTasks": []
+  },
+  "leekduck:minior-showers-perseids-2027": {
+   "name": "Minior Showers: Perseids 2027",
+   "updated": "2026-11-06T11:35:09.465Z",
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/minior-showers-perseids-2027/"
+    }
+   ],
+   "fields": {
+    "bonuses": [],
+    "featured": [
+     {
+      "text": "You may encounter Minior in its Meteor Form in the wild during the event. You’ll receive 1,000 Stardust for catching Minior .",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Minior encounters are more likely from 5:00 p.m. to 9:00 p.m. local time each day .",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "raids": [],
+    "eggs": [],
+    "research": [],
+    "shiny": [],
+    "moves": [],
+    "costumes": [],
+    "tickets": [],
+    "dates": [
+     {
+      "text": "This Minior Shower runs from August 10, 2027 at 5:00 p.m. to August 15, 2027 at 11:59 p.m. local time .",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "From 5:00 p.m. to 9:00 p.m. local time every day during each Minior Shower, shooting stars will light up the in-game sky. During these hours, you’ll have an increased chance of encountering Minior in the wild!",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Orionids : October 19–24, 2026",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Leonids : November 14–19, 2026",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Geminids : December 11–16, 2026",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Eta Aquariids : May 3–8, 2027",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Southern Delta Aquariids : July 28–August 2, 2027",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ]
+   },
+   "conflicts": [],
+   "gaps": [],
+   "researchTasks": []
+  },
+  "leekduck:go-pass-november-2026": {
+   "name": "GO Pass: November",
+   "updated": "2026-11-06T11:35:09.465Z",
+   "sources": [
+    {
+     "id": "hub",
+     "name": "Pokémon GO Hub",
+     "trust": "community",
+     "url": "https://pokemongohub.net/post/guide/go-pass-november-2026/"
+    }
+   ],
+   "fields": {
+    "bonuses": [
+     {
+      "text": "Rank 1: One additional Candy for trading Pokémon Trainers level 31 and above receive one guaranteed Candy XL when trading Pokémon",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 25: Open up to 40 Gifts per day Receive up to 125 Gifts per day from spinning PokéStops and Gym Photo Discs Hold 10 more Gifts in your Item Bag",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 50: 2× Daily Adventure Incense duration",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rank 75: Increased Stardust from hatching Eggs Increased XP from hatching Eggs",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     }
+    ],
+    "featured": [],
+    "raids": [],
+    "eggs": [],
+    "research": [],
+    "shiny": [],
+    "moves": [],
+    "costumes": [],
+    "tickets": [
+     {
+      "text": "GO Pass: November will be automatically distributed on Tuesday, November 3, at 10:00 a.m. local time",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Earn GO Points and rank up until Tuesday, December 1, at 10:00 a.m. local time",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "There is no daily GO Points earning limit from Saturday, November 28, at 12:00 a.m. to Sunday, November 29, at 11:59 p.m. local time",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Tier | Bonuses",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "In addition to all free GO Pass rewards, Trainers with GO Pass Deluxe can earn:",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "1,000 additional PokéCoins , for a total of 1,400 PokéCoins",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "One Super Incubator",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Additional Pokémon encounters",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Purchasing through the Pokémon GO Web Store also provides the following gifts with purchase:",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "GO Pass Deluxe: November: 10 Ultra Balls, five Max Revives, one Premium Battle Pass, and five Max Potions.",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Open up to 50 Gifts per day",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Receive up to 150 Gifts per day from spinning PokéStops and Gym Photo Discs",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     }
+    ],
+    "dates": [
+     {
+      "text": "There is no daily GO Points earning limit from Saturday, November 28, at 12:00 a.m. to Sunday, November 29, at 11:59 p.m. local time",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     }
+    ]
+   },
+   "conflicts": [],
+   "gaps": [],
+   "researchTasks": []
+  },
+  "leekduck:pokemonspotlighthour2026-11-05": {
+   "name": "Teddiursa wearing a witch hat Spotlight Hour",
+   "updated": "2026-11-06T03:45:04.945Z",
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/pokemonspotlighthour2026-11-05/"
+    }
+   ],
+   "fields": {
+    "bonuses": [],
+    "featured": [
+     {
+      "text": "The following Pokémon will appear more frequently in the wild.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Teddiursa wearing a witch hat",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "raids": [],
+    "eggs": [],
+    "research": [],
+    "shiny": [],
+    "moves": [],
+    "costumes": [
+     {
+      "text": "Pokémon Spotlight Hour will feature a different Pokémon and special bonus for one hour at 6:00 p.m. local time.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "November 5 : The featured Pokémon is Teddiursa wearing a witch hat and the special bonus is 2× Evolution XP .",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
     "tickets": [],
     "dates": []
    },
@@ -6304,1487 +8643,6 @@
       "text": "Twilight Wishes runs from Tuesday, November 24, at 10:00 a.m. to Monday, November 30, 2026, at 8:00 p.m. local time .",
       "sources": [
        "leekduck"
-      ],
-      "status": "single"
-     }
-    ]
-   },
-   "conflicts": [],
-   "gaps": [],
-   "researchTasks": []
-  },
-  "leekduck:max-mondays-2026-11-30": {
-   "name": "Dynamax Cryogonal during Max Monday",
-   "updated": "2026-11-06T03:45:04.945Z",
-   "sources": [
-    {
-     "id": "leekduck",
-     "name": "Leek Duck",
-     "trust": "community",
-     "url": "https://leekduck.com/events/max-mondays-2026-11-30/"
-    }
-   ],
-   "fields": {
-    "bonuses": [],
-    "featured": [],
-    "raids": [
-     {
-      "text": "Dynamax Cryogonal may appear in Max Battles from November 30, 2026 through December 6, 2026 .",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "These Dynamax Pokémon may appear in Max Battles throughout this season. Max Battles will be available from 6:00 a.m. to 9:00 p.m. local time on Mondays.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Power Spots will refresh more frequently.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Additional Power Spots will be active on Mondays compared to the rest of the week.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Max Battles will rotate to feature different Dynamax Pokémon.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "On November 30, 2026 , the featured Dynamax Pokémon is Cryogonal .",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ],
-    "eggs": [],
-    "research": [],
-    "shiny": [],
-    "moves": [],
-    "costumes": [],
-    "tickets": [],
-    "dates": [
-     {
-      "text": "These Dynamax Pokémon may appear in Max Battles throughout this season. Max Battles will be available from 6:00 a.m. to 9:00 p.m. local time on Mondays.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ]
-   },
-   "conflicts": [],
-   "gaps": [],
-   "researchTasks": []
-  },
-  "leekduck:season-24-twilight-trails": {
-   "name": "Twilight Trails",
-   "updated": "2026-11-06T03:45:04.945Z",
-   "sources": [
-    {
-     "id": "leekduck",
-     "name": "Leek Duck",
-     "trust": "community",
-     "url": "https://leekduck.com/events/season-24-twilight-trails/"
-    }
-   ],
-   "fields": {
-    "bonuses": [
-     {
-      "text": "Rank 1: One guaranteed Candy XL when trading Pokémon for Trainers level 31 and above",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 1: One additional Candy for trading Pokémon",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 25: Increased limits on opening Gifts, receiving Gifts from PokéStop and Gym Photo Discs, and storing Gifts",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 50: 2× Daily Adventure Incense duration",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 75: Increased XP and Stardust from hatching Eggs",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ],
-    "featured": [
-     {
-      "text": "More Pokémon originally discovered in the Paldea region, which was featured in the Pokémon Scarlet and Pokémon Violet games for Nintendo Switch, have been spotted in Pokémon GO!",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Be on the lookout for Maschiff , Mabosstiff , and more!",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Dynamax Rhyhorn , Dynamax Sneasel , Dynamax Sizzlipede , and more will make their way into Max Battles throughout the Season. Keep an eye out for new Dynamax Pokémon at Power Spots!",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Dynamax Uxie , Dynamax Mesprit , and Dynamax Azelf will appear in a Max Battle Day during Twilight Trails.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "As the Seasons change, you may find different Pokémon appearing in your area. Explore during Twilight Trails to see what discoveries await!",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ],
-    "raids": [],
-    "eggs": [
-     {
-      "text": "Here are some of the Pokémon hatching from Eggs this season.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "There are more Pokémon appearing in Eggs than the ones listed.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Regional: Mime Jr. is exclusive to Eggs obtained in Europe.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Indeedee (Male)",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Indeedee (Female)",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Galarian Meowth",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Galarian Zigzagoon",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Galarian Stunfisk",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "This type of Egg is obtained from Mateo’s Gift Exchange at the end of a Route.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Galarian Slowpoke",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Hisuian Sneasel",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Galarian Corsola",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ],
-    "research": [
-     {
-      "text": "Complete Field Research to unlock Research Breakthrough encounters with one of a variety of Season-themed Pokémon. Find out where your trail leads you each week!",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ],
-    "shiny": [],
-    "moves": [],
-    "costumes": [],
-    "tickets": [
-     {
-      "text": "Reach Major Milestones on your GO Pass to unlock the following bonuses. Once unlocked, these bonuses will last until the current GO Pass ends!",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "GO Pass, a limited-time progression track, will be available during Twilight Trails! Complete Pass Tasks to earn GO Points to increase your rank and earn rewards.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "The GO Pass Deluxe , a paid version of the GO Pass, will be available for Trainers looking for upgraded rewards and faster progression.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ],
-    "dates": [
-     {
-      "text": "Spotlight Hour will return from 6:00 p.m. to 7:00 p.m. local time.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ]
-   },
-   "conflicts": [],
-   "gaps": [],
-   "researchTasks": []
-  },
-  "leekduck:deoxys-normal-defense-attack-speed-formes-in-5-star-raid-battles-november-2026": {
-   "name": "Deoxys (Normal, Defense, Attack, and Speed Formes) in 5-star Raid Battles",
-   "updated": "2026-11-06T03:45:04.945Z",
-   "sources": [
-    {
-     "id": "leekduck",
-     "name": "Leek Duck",
-     "trust": "community",
-     "url": "https://leekduck.com/events/deoxys-normal-defense-attack-speed-formes-in-5-star-raid-battles-november-2026/"
-    }
-   ],
-   "fields": {
-    "bonuses": [],
-    "featured": [],
-    "raids": [
-     {
-      "text": "Deoxys (Normal), Deoxys (Defense), Deoxys (Attack), and Deoxys (Speed) will be in five-star raid battles from November 25, 2026 to December 1, 2026.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Raid bosses change at 6:00 a.m. local time.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "There will also be a Raid Hour featuring Deoxys (Normal, Defense, Attack, and Speed Formes) from 6:00 p.m. to 7:00 p.m. local time on November 25.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ],
-    "eggs": [],
-    "research": [],
-    "shiny": [
-     {
-      "text": "If you’re lucky, you may encounter Shiny forms of these Pokémon.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Deoxys (Normal)",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Deoxys (Defense)",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Deoxys (Attack)",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Deoxys (Speed)",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ],
-    "moves": [],
-    "costumes": [],
-    "tickets": [],
-    "dates": [
-     {
-      "text": "Deoxys (Normal), Deoxys (Defense), Deoxys (Attack), and Deoxys (Speed) will be in five-star raid battles from November 25, 2026 to December 1, 2026.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "There will also be a Raid Hour featuring Deoxys (Normal, Defense, Attack, and Speed Formes) from 6:00 p.m. to 7:00 p.m. local time on November 25.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ]
-   },
-   "conflicts": [],
-   "gaps": [],
-   "researchTasks": []
-  },
-  "leekduck:mega-metagross-in-mega-raids-november-2026": {
-   "name": "Mega Metagross in Mega Raids",
-   "updated": "2026-11-06T03:45:04.945Z",
-   "sources": [
-    {
-     "id": "leekduck",
-     "name": "Leek Duck",
-     "trust": "community",
-     "url": "https://leekduck.com/events/mega-metagross-in-mega-raids-november-2026/"
-    }
-   ],
-   "fields": {
-    "bonuses": [],
-    "featured": [],
-    "raids": [
-     {
-      "text": "Mega Metagross will be in Mega Raids from November 25, 2026 at 6 am to December 1, 2026 at 10 pm local time.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Raid bosses change at 6:00 a.m. local time.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Mega Metagross will be in Mega Raids.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ],
-    "eggs": [],
-    "research": [],
-    "shiny": [
-     {
-      "text": "If you’re lucky, you may encounter Shiny Metagross.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Mega Metagross",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ],
-    "moves": [],
-    "costumes": [],
-    "tickets": [],
-    "dates": [
-     {
-      "text": "Mega Metagross will be in Mega Raids from November 25, 2026 at 6 am to December 1, 2026 at 10 pm local time.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ]
-   },
-   "conflicts": [],
-   "gaps": [],
-   "researchTasks": []
-  },
-  "minior3": {
-   "name": "Minior Showers: Geminids",
-   "updated": "2026-11-06T03:45:04.945Z",
-   "sources": [
-    {
-     "id": "leekduck",
-     "name": "Leek Duck",
-     "trust": "community",
-     "url": "https://leekduck.com/events/minior-showers-geminids-2026/"
-    }
-   ],
-   "fields": {
-    "bonuses": [],
-    "featured": [
-     {
-      "text": "You may encounter Minior in its Meteor Form in the wild during the event. You’ll receive 1,000 Stardust for catching Minior .",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Minior encounters are more likely from 5:00 p.m. to 9:00 p.m. local time each day .",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ],
-    "raids": [],
-    "eggs": [],
-    "research": [],
-    "shiny": [],
-    "moves": [],
-    "costumes": [],
-    "tickets": [],
-    "dates": [
-     {
-      "text": "This Minior Shower runs from December 11, 2026 at 5:00 p.m. to December 16, 2026 at 11:59 p.m. local time .",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "From 5:00 p.m. to 9:00 p.m. local time every day during each Minior Shower, shooting stars will light up the in-game sky. During these hours, you’ll have an increased chance of encountering Minior in the wild!",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Orionids : October 19–24, 2026",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Leonids : November 14–19, 2026",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Eta Aquariids : May 3–8, 2027",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Southern Delta Aquariids : July 28–August 2, 2027",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Perseids : August 10–15, 2027",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ]
-   },
-   "conflicts": [],
-   "gaps": [],
-   "researchTasks": []
-  },
-  "leekduck:pokemon-x-adidas-2026": {
-   "name": "adidas × Pokémon Timed Research",
-   "updated": "2026-11-06T03:45:04.945Z",
-   "sources": [
-    {
-     "id": "leekduck",
-     "name": "Leek Duck",
-     "trust": "community",
-     "url": "https://leekduck.com/events/pokemon-x-adidas-2026/"
-    }
-   ],
-   "fields": {
-    "bonuses": [],
-    "featured": [],
-    "raids": [],
-    "eggs": [],
-    "research": [
-     {
-      "text": "Celebrate the adidas × Pokémon collection with Timed Research at participating adidas and retail stores worldwide!",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Research is available starting September 25, 2026, at 10:00 a.m. local time , through January 15, 2027, at 8:00 p.m. local time .",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Event-exclusive Timed Research",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "This Timed Research has three pages. Complete the tasks to earn adidas avatar items, Lucario Candy, Lucario Mega Energy, XP, Stardust, and an encounter with Lucario. If you’re lucky, you may encounter a Shiny Lucario!",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Obtain the research by January 15, 2027, at 8:00 p.m. local time. Complete all tasks and claim all rewards before February 13, 2027, at 8:00 p.m. local time.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ],
-    "shiny": [
-     {
-      "text": "This Timed Research has three pages. Complete the tasks to earn adidas avatar items, Lucario Candy, Lucario Mega Energy, XP, Stardust, and an encounter with Lucario. If you’re lucky, you may encounter a Shiny Lucario!",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ],
-    "moves": [],
-    "costumes": [
-     {
-      "text": "Complete your outfit! Trainers worldwide can redeem offer code ADIDASxPOKEMON through the Pokémon GO Web Store to get a pair of adidas shoes for their avatar.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ],
-    "tickets": [],
-    "dates": []
-   },
-   "conflicts": [],
-   "gaps": [],
-   "researchTasks": []
-  },
-  "leekduck:pokemon-go-tour-alola-kaohsiung-2027": {
-   "name": "Pokémon GO Tour: Alola - Kaohsiung 2027",
-   "updated": "2026-11-06T03:45:04.945Z",
-   "sources": [
-    {
-     "id": "leekduck",
-     "name": "Leek Duck",
-     "trust": "community",
-     "url": "https://leekduck.com/events/pokemon-go-tour-alola-kaohsiung-2027/"
-    }
-   ],
-   "fields": {
-    "bonuses": [],
-    "featured": [],
-    "raids": [],
-    "eggs": [],
-    "research": [],
-    "shiny": [],
-    "moves": [],
-    "costumes": [],
-    "tickets": [],
-    "dates": [
-     {
-      "text": "Dates: February 19–21, 2027 Location: Kaohsiung, Taiwan Event hours: To be announced",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ]
-   },
-   "conflicts": [],
-   "gaps": [],
-   "researchTasks": []
-  },
-  "leekduck:pokemon-go-tour-alola-los-angeles-2027": {
-   "name": "Pokémon GO Tour: Alola - Los Angeles 2027",
-   "updated": "2026-11-06T03:45:04.945Z",
-   "sources": [
-    {
-     "id": "leekduck",
-     "name": "Leek Duck",
-     "trust": "community",
-     "url": "https://leekduck.com/events/pokemon-go-tour-alola-los-angeles-2027/"
-    }
-   ],
-   "fields": {
-    "bonuses": [],
-    "featured": [],
-    "raids": [],
-    "eggs": [],
-    "research": [],
-    "shiny": [],
-    "moves": [],
-    "costumes": [],
-    "tickets": [],
-    "dates": [
-     {
-      "text": "Dates: February 19–21, 2027 Location: Los Angeles, California Event hours: To be announced",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ]
-   },
-   "conflicts": [],
-   "gaps": [],
-   "researchTasks": []
-  },
-  "leekduck:pokemon-go-tour-alola-global-2027": {
-   "name": "Pokémon GO Tour: Alola - Global 2027",
-   "updated": "2026-11-06T03:45:04.945Z",
-   "sources": [
-    {
-     "id": "leekduck",
-     "name": "Leek Duck",
-     "trust": "community",
-     "url": "https://leekduck.com/events/pokemon-go-tour-alola-global-2027/"
-    }
-   ],
-   "fields": {
-    "bonuses": [],
-    "featured": [],
-    "raids": [],
-    "eggs": [],
-    "research": [],
-    "shiny": [],
-    "moves": [],
-    "costumes": [],
-    "tickets": [],
-    "dates": [
-     {
-      "text": "Dates: February 27–28, 2027 Location: Worldwide Event hours: To be announced",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ]
-   },
-   "conflicts": [],
-   "gaps": [],
-   "researchTasks": []
-  },
-  "leekduck:minior-showers-eta-aquariids-2027": {
-   "name": "Minior Showers: Eta Aquariids 2027",
-   "updated": "2026-11-06T03:45:04.945Z",
-   "sources": [
-    {
-     "id": "leekduck",
-     "name": "Leek Duck",
-     "trust": "community",
-     "url": "https://leekduck.com/events/minior-showers-eta-aquariids-2027/"
-    }
-   ],
-   "fields": {
-    "bonuses": [],
-    "featured": [
-     {
-      "text": "You may encounter Minior in its Meteor Form in the wild during the event. You’ll receive 1,000 Stardust for catching Minior .",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Minior encounters are more likely from 5:00 p.m. to 9:00 p.m. local time each day .",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ],
-    "raids": [],
-    "eggs": [],
-    "research": [],
-    "shiny": [],
-    "moves": [],
-    "costumes": [],
-    "tickets": [],
-    "dates": [
-     {
-      "text": "This Minior Shower runs from May 3, 2027 at 5:00 p.m. to May 8, 2027 at 11:59 p.m. local time .",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "From 5:00 p.m. to 9:00 p.m. local time every day during each Minior Shower, shooting stars will light up the in-game sky. During these hours, you’ll have an increased chance of encountering Minior in the wild!",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Orionids : October 19–24, 2026",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Leonids : November 14–19, 2026",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Geminids : December 11–16, 2026",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Eta Aquariids : May 3–8, 2027",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Southern Delta Aquariids : July 28–August 2, 2027",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Perseids : August 10–15, 2027",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ]
-   },
-   "conflicts": [],
-   "gaps": [],
-   "researchTasks": []
-  },
-  "leekduck:minior-showers-southern-delta-aquariids-2027": {
-   "name": "Minior Showers: Southern Delta Aquariids 2027",
-   "updated": "2026-11-06T03:45:04.945Z",
-   "sources": [
-    {
-     "id": "leekduck",
-     "name": "Leek Duck",
-     "trust": "community",
-     "url": "https://leekduck.com/events/minior-showers-southern-delta-aquariids-2027/"
-    }
-   ],
-   "fields": {
-    "bonuses": [],
-    "featured": [
-     {
-      "text": "You may encounter Minior in its Meteor Form in the wild during the event. You’ll receive 1,000 Stardust for catching Minior .",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Minior encounters are more likely from 5:00 p.m. to 9:00 p.m. local time each day .",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ],
-    "raids": [],
-    "eggs": [],
-    "research": [],
-    "shiny": [],
-    "moves": [],
-    "costumes": [],
-    "tickets": [],
-    "dates": [
-     {
-      "text": "This Minior Shower runs from July 28, 2027 at 5:00 p.m. to August 2, 2027 at 11:59 p.m. local time .",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "From 5:00 p.m. to 9:00 p.m. local time every day during each Minior Shower, shooting stars will light up the in-game sky. During these hours, you’ll have an increased chance of encountering Minior in the wild!",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Orionids : October 19–24, 2026",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Leonids : November 14–19, 2026",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Geminids : December 11–16, 2026",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Eta Aquariids : May 3–8, 2027",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Southern Delta Aquariids : July 28–August 2, 2027",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Perseids : August 10–15, 2027",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ]
-   },
-   "conflicts": [],
-   "gaps": [],
-   "researchTasks": []
-  },
-  "leekduck:minior-showers-perseids-2027": {
-   "name": "Minior Showers: Perseids 2027",
-   "updated": "2026-11-06T03:45:04.945Z",
-   "sources": [
-    {
-     "id": "leekduck",
-     "name": "Leek Duck",
-     "trust": "community",
-     "url": "https://leekduck.com/events/minior-showers-perseids-2027/"
-    }
-   ],
-   "fields": {
-    "bonuses": [],
-    "featured": [
-     {
-      "text": "You may encounter Minior in its Meteor Form in the wild during the event. You’ll receive 1,000 Stardust for catching Minior .",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Minior encounters are more likely from 5:00 p.m. to 9:00 p.m. local time each day .",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ],
-    "raids": [],
-    "eggs": [],
-    "research": [],
-    "shiny": [],
-    "moves": [],
-    "costumes": [],
-    "tickets": [],
-    "dates": [
-     {
-      "text": "This Minior Shower runs from August 10, 2027 at 5:00 p.m. to August 15, 2027 at 11:59 p.m. local time .",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "From 5:00 p.m. to 9:00 p.m. local time every day during each Minior Shower, shooting stars will light up the in-game sky. During these hours, you’ll have an increased chance of encountering Minior in the wild!",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Orionids : October 19–24, 2026",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Leonids : November 14–19, 2026",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Geminids : December 11–16, 2026",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Eta Aquariids : May 3–8, 2027",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Southern Delta Aquariids : July 28–August 2, 2027",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ]
-   },
-   "conflicts": [],
-   "gaps": [],
-   "researchTasks": []
-  },
-  "leekduck:go-pass-november-2026": {
-   "name": "GO Pass: November",
-   "updated": "2026-11-06T03:45:04.945Z",
-   "sources": [
-    {
-     "id": "hub",
-     "name": "Pokémon GO Hub",
-     "trust": "community",
-     "url": "https://pokemongohub.net/post/guide/go-pass-november-2026/"
-    }
-   ],
-   "fields": {
-    "bonuses": [
-     {
-      "text": "Rank 1: One additional Candy for trading Pokémon Trainers level 31 and above receive one guaranteed Candy XL when trading Pokémon",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 25: Open up to 40 Gifts per day Receive up to 125 Gifts per day from spinning PokéStops and Gym Photo Discs Hold 10 more Gifts in your Item Bag",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 50: 2× Daily Adventure Incense duration",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 75: Increased Stardust from hatching Eggs Increased XP from hatching Eggs",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     }
-    ],
-    "featured": [],
-    "raids": [],
-    "eggs": [],
-    "research": [],
-    "shiny": [],
-    "moves": [],
-    "costumes": [],
-    "tickets": [
-     {
-      "text": "GO Pass: November will be automatically distributed on Tuesday, November 3, at 10:00 a.m. local time",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Earn GO Points and rank up until Tuesday, December 1, at 10:00 a.m. local time",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "There is no daily GO Points earning limit from Saturday, November 28, at 12:00 a.m. to Sunday, November 29, at 11:59 p.m. local time",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Tier | Bonuses",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "In addition to all free GO Pass rewards, Trainers with GO Pass Deluxe can earn:",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "1,000 additional PokéCoins , for a total of 1,400 PokéCoins",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "One Super Incubator",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Additional Pokémon encounters",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Purchasing through the Pokémon GO Web Store also provides the following gifts with purchase:",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "GO Pass Deluxe: November: 10 Ultra Balls, five Max Revives, one Premium Battle Pass, and five Max Potions.",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Open up to 50 Gifts per day",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Receive up to 150 Gifts per day from spinning PokéStops and Gym Photo Discs",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     }
-    ],
-    "dates": [
-     {
-      "text": "There is no daily GO Points earning limit from Saturday, November 28, at 12:00 a.m. to Sunday, November 29, at 11:59 p.m. local time",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     }
-    ]
-   },
-   "conflicts": [],
-   "gaps": [],
-   "researchTasks": []
-  },
-  "leekduck:twilight-wishes-2026": {
-   "name": "Twilight Wishes",
-   "updated": "2026-11-06T03:45:04.945Z",
-   "sources": [
-    {
-     "id": "hub",
-     "name": "Pokémon GO Hub",
-     "trust": "community",
-     "url": "https://pokemongohub.net/post/event/twilight-wishes-2026/"
-    }
-   ],
-   "fields": {
-    "bonuses": [
-     {
-      "text": "The following bonuses will be active during Twilight Wishes:",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Increased chance to encounter Shiny Staryu and Shiny Elgyem",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "The event also features special decorations, with stars lighting up the in-game skies throughout Twilight Wishes.",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Additional bonuses, including increased Lucky Trade chances and catch Stardust, can be unlocked through the event GO Pass.",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 1: Increased chance to receive Lucky Pokémon in trades Increased chance to become Lucky Friends",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 10: 2× Stardust for catching Pokémon",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Rank 10: 3× Stardust for catching Pokémon",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     }
-    ],
-    "featured": [
-     {
-      "text": "The following Pokémon will appear in the wild during Twilight Wishes:",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "If you’re lucky, you may also encounter:",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "All featured Pokémon listed above can be encountered as Shiny Pokémon, if you’re lucky.",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     }
-    ],
-    "raids": [
-     {
-      "text": "Event-themed Pokémon will appear in one-star, three-star, and Mega Raids throughout Twilight Wishes. All Pokémon featured in these event raids have a chance to be encountered as Shiny Pokémon.",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Sun Crown and Moon Crown Pikachu return to one-star raids:",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Espeon wearing a sun scarf and Umbreon wearing a moon scarf return to three-star raids:",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "⚔️ Related raid guides: Espeon Raid Guide , Umbreon Raid Guide",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Mega Manectric",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     }
-    ],
-    "eggs": [],
-    "research": [
-     {
-      "text": "Event-themed Field Research tasks will be available throughout Twilight Wishes. Completing these tasks can reward Trainers with Mega Energy and encounters with event-themed Pokémon, including:",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "To celebrate the end of the Twilight Trails Season, additional Field Research encounters will rotate during the event , featuring Pokémon from earlier seasonal events. All Field Research rotation times are local time.",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     }
-    ],
-    "shiny": [
-     {
-      "text": "Sun Scarf Espeon and Moon Scarf Umbreon return alongside boosted Shiny encounters, themed raids, and a special GO Pass to close out the Twilight Trails Season.",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Increased chance to encounter Shiny Staryu and Shiny Elgyem",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "The following Pokémon will have an increased chance of appearing as Shiny Pokémon during Twilight Wishes:",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "All featured Pokémon listed above can be encountered as Shiny Pokémon, if you’re lucky.",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Event-themed Pokémon will appear in one-star, three-star, and Mega Raids throughout Twilight Wishes. All Pokémon featured in these event raids have a chance to be encountered as Shiny Pokémon.",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     }
-    ],
-    "moves": [],
-    "costumes": [
-     {
-      "text": "Espeon wearing a sun scarf and Umbreon wearing a moon scarf return to three-star raids:",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "The second Field Research encounter rotation includes Gengar wearing a Spooky Festival costume and Drifblim wearing a Halloween Mischief costume. Both can be encountered as Shiny Pokémon:",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     }
-    ],
-    "tickets": [
-     {
-      "text": "A special GO Pass: Twilight Wishes will be available from Tuesday, November 24, at 10:00 a.m. to Monday, November 30, 2026, at 8:00 p.m. local time .",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "The event features a free GO Pass and a paid GO Pass Deluxe, both offering rewards as Trainers collect GO Points and progress through ranks.",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "All Trainers automatically receive the free GO Pass: Twilight Wishes on November 24 at 10:00 a.m. local time.",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Earn GO Points by completing Pass Tasks and rank up through November 30 at 8:00 p.m. local time.",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Additional bonus tasks will become available during the event.",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Complete Pass Tasks and rank up to earn rewards, including:",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Encounters with event-themed Pokémon",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Mega Energy for Beedrill, Houndoom, Sableye, and Manectric",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Additional rewards",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Reaching Major Milestones on your event GO Pass will unlock the following bonuses:",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Tier | Bonuses",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "An event-themed avatar pose",
-      "sources": [
-       "hub"
-      ],
-      "status": "single"
-     }
-    ],
-    "dates": [
-     {
-      "text": "Pokémon GO’s Twilight Wishes event runs from November 24 at 10:00 a.m. to November 30, 2026, at 8:00 p.m. local time , bringing back Sun Scarf Espeon and Moon Scarf Umbreon alongside Sun Crown and Moon Crown Pikachu!",
-      "sources": [
-       "hub"
       ],
       "status": "single"
      }

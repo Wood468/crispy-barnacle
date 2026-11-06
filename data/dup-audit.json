@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-06T03:45:05.259Z",
+ "updated": "2026-11-06T11:35:10.068Z",
  "joinedThisRun": [
   {
    "kept": "w-pokemon-fossil-museum-2026",
@@ -225,6 +225,25 @@
     "list": "world"
    },
    "why": "dates fit and 2 shared words"
+  },
+  {
+   "a": {
+    "id": "w-free-gigantamax-machamp-timed-research-available-t",
+    "name": "Free Gigantamax Machamp Timed Research Available This Weekend Only!",
+    "place": "",
+    "start": "2026-11-06",
+    "end": "2026-11-08",
+    "list": "world"
+   },
+   "b": {
+    "id": "w-go-wild-area-gigantamax-machamp-power-up-timed-res",
+    "name": "GO Wild Area Gigantamax Machamp Power Up Timed Research",
+    "place": "",
+    "start": "2026-11-06",
+    "end": "2026-11-15",
+    "list": "world"
+   },
+   "why": "dates fit and 4 shared words"
   }
  ],
  "odd": []
