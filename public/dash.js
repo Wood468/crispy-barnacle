@@ -1327,7 +1327,10 @@
   }
   function drawOpps() {
     var el = $('opps'); if (!el) return;
-    var active = document.activeElement, focusAttr = active && el.contains(active) ? ['data-follow', 'data-mark'].filter(function (key) { return active.hasAttribute(key); })[0] : '';
+    var active = document.activeElement, focusAttr = active && el.contains(active) ? ['data-follow', 'data-mark', 'data-open'].filter(function (key) { return active.hasAttribute(key); })[0] : '';
+    var expanded = Array.from(el.querySelectorAll('.opp-more[open]')).map(function (more) { return more.closest('.opp').querySelector('[data-follow]').getAttribute('data-follow'); });
+    var focusCard = active && active.closest('.opp');
+    var focusName = focusCard && focusCard.querySelector('[data-follow]').getAttribute('data-follow');
     var focusValue = focusAttr ? active.getAttribute(focusAttr) : '', focusMark = focusAttr === 'data-mark' ? active.getAttribute('data-val') : '';
     var all = opportunities(), query = $('opp-search') ? $('opp-search').value : '', mode = $('opp-filter') ? $('opp-filter').value : 'all';
     var list = LIB.filterOpportunities(all, query, mode, isFollowed), known = Object.keys(DEXGEN).some(function (id) { return genConfirmed(DEXGEN[id]); }) || usKeys('form:').length > 0;
@@ -1347,8 +1350,12 @@
     if (have.length) html += '<details class="dd"' + (query || mode !== 'all' ? ' open' : '') + ' style="margin-top:10px"><summary>Already in your collection <span class="cnt">' + have.length + '</span></summary><div class="body"><div class="opps">' + have.map(oppCard).join('') + '</div></div></details>';
     if (!list.length) html += '<p class="empty">' + (!all.length ? 'No featured Pokémon in the next four weeks.' : mode === 'following' && !query ? 'None of the Pokémon you follow have a scheduled opportunity in the next four weeks. Follow a Pokémon from All opportunities to include it here.' : 'No opportunities match these filters. Try another Pokémon or event, or clear the filters.') + '</p>';
     el.innerHTML = html;
+    Array.from(el.querySelectorAll('.opp')).forEach(function (card) {
+      var more = card.querySelector('.opp-more'), follow = card.querySelector('[data-follow]');
+      if (more && follow && expanded.indexOf(follow.getAttribute('data-follow')) >= 0) more.open = true;
+    });
     if (focusAttr) {
-      var replacement = Array.prototype.filter.call(el.querySelectorAll('[' + focusAttr + ']'), function (node) { return node.getClientRects().length && node.getAttribute(focusAttr) === focusValue && (focusAttr !== 'data-mark' || node.getAttribute('data-val') === focusMark); })[0];
+      var replacement = Array.prototype.filter.call(el.querySelectorAll('[' + focusAttr + ']'), function (node) { return node.getClientRects().length && node.getAttribute(focusAttr) === focusValue && (!focusName || node.closest('.opp').querySelector('[data-follow]').getAttribute('data-follow') === focusName) && (focusAttr !== 'data-mark' || node.getAttribute('data-val') === focusMark); })[0];
       (replacement || $('opp-search')).focus({ preventScroll: true });
     }
   }

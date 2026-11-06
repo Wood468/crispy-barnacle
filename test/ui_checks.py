@@ -439,7 +439,7 @@ check('desktop Today uses two columns while mobile lists today\'s events before 
       all(token in DASH_CSS for token in ['#tab-now .today-layout{display:flex;flex-direction:column;gap:var(--space-5);min-width:0}', '#tab-now .today-sidebar{display:contents}', '#tab-now #action-centre,#tab-now #foryou-sec,#tab-now #weekly-sec,#tab-now #buy-sec{order:2}', '#tab-now .today-main{order:1;min-width:0}', '@media(min-width:960px)', 'grid-template-columns:minmax(0,1.55fr) minmax(18rem,.9fr)', '#tab-now .today-sidebar{grid-column:2;display:grid']))
 with sync_playwright() as p:
     b=p.chromium.launch()
-    def page(api=None,marks=None,clock='2026-10-09T22:45:00+11:00',sources=None,gens=None,us=None,extra=None,pin=False,slow_places=False,width=390,height=844,mobile=False,guard=None,pre=None,ready=True):
+    def page(api=None,marks=None,clock='2026-10-09T22:45:00+11:00',sources=None,gens=None,us=None,extra=None,pin=False,slow_places=False,width=390,height=844,mobile=False,guard=None,pre=None,ready=True,expand_brief=False):
         ctx=b.new_context(viewport={'width':width,'height':height},device_scale_factor=2,timezone_id='Australia/Melbourne',locale='en-AU',service_workers='block',**({'is_mobile':True,'has_touch':True} if mobile else {}))
         # Bound default Playwright waits so a lazy asset or missing control cannot stall a whole shard.
         ctx.set_default_timeout(10000)
@@ -485,6 +485,7 @@ with sync_playwright() as p:
         pg.goto(BASE+'/', wait_until='domcontentloaded' if slow_places else 'load'); pg.wait_for_selector('.pc, .prio-empty',state='attached'); pg.wait_for_function("document.getElementById('home-now')?.hasAttribute('data-render-key')")
         # dash.js appends detail/extra/places/infographic scripts after the first render; tests call their globals straight away.
         settle(pg,"!!(window.GODETAIL&&window.GOEXTRA&&window.GOINFOGRAPHIC)&&(%s||!!window.GOPLACES)"%('true' if slow_places else 'false'))
+        if expand_brief: pg.locator('#today-brief-details > summary').click()
         return pg
     if on('a'):
         # Primary navigation follows the ARIA tabs pattern: one tab stop, linked panels and predictable keyboard movement.
@@ -563,7 +564,7 @@ with sync_playwright() as p:
             '**/regional-events.json': (empty_world, 200),
             '**/season.json': (pass_season, 200)
         }
-        deadline_page = page(extra=deadline_responses)
+        deadline_page = page(expand_brief=True,extra=deadline_responses)
         deadline_page.wait_for_function("document.getElementById('today-focus-ending')?.textContent.includes('GO Pass ends in')")
         deadline_label = deadline_page.locator('#today-focus-ending').inner_text()
         deadline_meta = deadline_page.locator('#today-focus-ending-meta').inner_text()
@@ -575,7 +576,7 @@ with sync_playwright() as p:
               deadline_meta)
         deadline_page.context.close()
 
-        rewards_page = page(clock='2026-10-10T12:00:00+11:00', extra=deadline_responses)
+        rewards_page = page(expand_brief=True,clock='2026-10-10T12:00:00+11:00', extra=deadline_responses)
         # season.json is fetched by season.js after first paint; wait for it explicitly (it re-renders Today via gofn-season-ready), then for the label.
         rewards_ready = settle(rewards_page, "!!window.GOSEASON", 30000) and settle(rewards_page, "document.getElementById('today-focus-ending')?.textContent.includes('Rewards expire in')")
         rewards_label = rewards_page.locator('#today-focus-ending').inner_text()
@@ -588,7 +589,7 @@ with sync_playwright() as p:
               rewards_meta)
         rewards_page.context.close()
 
-        live_pass_page = page(clock='2026-11-02T05:51:00+11:00', extra={
+        live_pass_page = page(expand_brief=True,clock='2026-11-02T05:51:00+11:00', extra={
             '**/data.json': (empty_data, 200),
             '**/world-events.json': (empty_world, 200),
             '**/regional-events.json': (empty_world, 200)
@@ -638,7 +639,7 @@ with sync_playwright() as p:
             '**/season.json': (multi_season, 200),
             '**/event-moves.json': (json.dumps({'moves': []}), 200)
         }
-        multi_page = page(clock='2026-11-02T07:36:00+11:00', extra=multi_responses)
+        multi_page = page(expand_brief=True,clock='2026-11-02T07:36:00+11:00', extra=multi_responses)
         multi_page.wait_for_function("document.getElementById('today-deadlines') && !document.getElementById('today-deadlines').hidden")
         multi_tray = multi_page.locator('#today-deadlines')
         multi_items = multi_page.locator('#today-deadlines-list li')
@@ -671,7 +672,7 @@ with sync_playwright() as p:
         multi_page.context.close()
 
         # Official event-exclusive move windows enter Today only while their published window is active.
-        move_deadline_page = page(clock='2026-11-21T14:00:00+11:00', extra={
+        move_deadline_page = page(expand_brief=True,clock='2026-11-21T14:00:00+11:00', extra={
             '**/data.json': (empty_data, 200),
             '**/world-events.json': (empty_world, 200),
             '**/regional-events.json': (empty_world, 200)
@@ -696,7 +697,7 @@ with sync_playwright() as p:
             'sources': [{'id': 'community', 'name': 'Community report', 'trust': 'community',
                          'url': 'https://example.com/community-report'}]
         }]})
-        unverified_move_page = page(clock='2026-11-21T14:00:00+11:00', extra={
+        unverified_move_page = page(expand_brief=True,clock='2026-11-21T14:00:00+11:00', extra={
             '**/data.json': (empty_data, 200),
             '**/world-events.json': (empty_world, 200),
             '**/regional-events.json': (empty_world, 200),
@@ -803,7 +804,7 @@ with sync_playwright() as p:
         collision_page.context.close()
         # A later-starting overseas event is still part of today's unfolded agenda.
         future_world_fixture = json.dumps({'events':[{'id':'fixture-overseas-future','name':'Overseas Future Fixture','place':'Example City, Exampleland','area':'Asia','scope':'regional','start':'2026-10-09T22:46:00+11:00','end':'2026-10-10T22:46:00+11:00','sources':[{'url':'https://example.invalid/overseas-future-fixture'}]}]})
-        future_overseas = page(extra={'**/world-events.json':(future_world_fixture,200)})
+        future_overseas = page(expand_brief=True,extra={'**/world-events.json':(future_world_fixture,200)})
         future_overseas.wait_for_selector('#home-now .agr.reg')
         future_card = future_overseas.locator('#home-now .agr.reg').filter(has_text='Overseas Future Fixture')
         future_text = future_card.inner_text() if future_card.count() else ''
@@ -819,7 +820,6 @@ with sync_playwright() as p:
         check('Future overseas event does not inflate the current in-person activity count',
               future_overseas.locator('#day-inperson-count').inner_text()=='0' and
               '0 in person' in future_overseas.locator('.day-brief-stats').inner_text())
-        future_overseas.locator('#today-brief-details > summary').click()
         rotation_text = future_overseas.locator('#today-focus-raids').inner_text()
         max_text = future_overseas.locator('#today-focus-raids-meta').inner_text()
         check('Raids and Max summary uses the published rotation active on the viewed date',
@@ -888,8 +888,7 @@ with sync_playwright() as p:
                     return append.call(this, node);
                 };
             })();""")
-        early_types = page(pre=wait_for_types_before_dashboard)
-        early_types.locator('#today-brief-details > summary').click()
+        early_types = page(expand_brief=True,pre=wait_for_types_before_dashboard)
         early_types_ready = settle(early_types, "window.__gofnTypesReadyBeforeDash === true && document.querySelectorAll('#today-focus-raid-actions [data-best-types]').length === 2", 30000)
         check('Today raid handoffs render when type data resolves before dashboard bootstrap', early_types_ready)
         early_types.context.close()
@@ -909,7 +908,7 @@ with sync_playwright() as p:
             ('2026-11-09T09:35:00+11:00', 'Crowned Sword Zacian and Crowned Shield Zamazenta', 'before the published 10 am start')
         ]
         for rotation_clock, expected_boss, label in rotation_cases:
-            rotation_page = page(clock=rotation_clock, extra=rotation_window_extra)
+            rotation_page = page(expand_brief=True,clock=rotation_clock, extra=rotation_window_extra)
             settle(rotation_page, "document.getElementById('today-focus-raids') && document.getElementById('today-focus-raids').textContent !== 'Checking published rotations…'", 30000)
             rotation_summary = rotation_page.locator('#today-focus-raids').text_content()
             check('Today raid summary includes the rotation ' + label,
@@ -931,7 +930,7 @@ with sync_playwright() as p:
             '**/world-events.json': (json.dumps({'events': []}), 200),
             '**/regional-events.json': (json.dumps({'events': []}), 200)
         }
-        max_monday_page = page(clock='2026-11-02T09:35:00+11:00', marks={'have': {'Mega Rayquaza': 1, 'Mega Mewtwo Y': 1, 'Mega Gardevoir': 1}}, extra=tonight_extra)
+        max_monday_page = page(expand_brief=True,clock='2026-11-02T09:35:00+11:00', marks={'have': {'Mega Rayquaza': 1, 'Mega Mewtwo Y': 1, 'Mega Gardevoir': 1}}, extra=tonight_extra)
         max_monday_page.wait_for_selector('#today-tonight:not([hidden])')
         max_types_ready = settle(max_monday_page, "!!(window.GOTYPES && window.GOTYPES.facts('Machop'))", 30000)
         settle(max_monday_page, "!!(window.GOBEST && window.GOBEST.ready)", 30000)
@@ -980,7 +979,7 @@ with sync_playwright() as p:
         status_data_obj['raidHour'] = [{'d': '2026-11-02', 'n': 'Giratina (Altered Forme)'}]
         status_extra = dict(tonight_extra)
         status_extra['**/data.json'] = (json.dumps(status_data_obj), 200)
-        status_page = page(clock='2026-11-02T17:30:00+11:00', extra=status_extra)
+        status_page = page(expand_brief=True,clock='2026-11-02T17:30:00+11:00', extra=status_extra)
         status_page.wait_for_selector('#today-tonight:not([hidden])')
         status_page.locator('#today-tonight > summary').click()
         status_text = status_page.locator('#today-tonight-list').text_content()
@@ -1009,7 +1008,7 @@ with sync_playwright() as p:
         status_page.context.close()
 
         # A pending or failed curated feed is not evidence that the player has zero owned counters.
-        pending_best_page = page(
+        pending_best_page = page(expand_brief=True,
             clock='2026-11-02T09:35:00+11:00',
             marks={'have': {'Mega Rayquaza': 1}},
             extra=tonight_extra,
@@ -1026,7 +1025,7 @@ with sync_playwright() as p:
               pending_best_text)
         pending_best_page.context.close()
 
-        failed_best_page = page(
+        failed_best_page = page(expand_brief=True,
             clock='2026-11-02T09:35:00+11:00',
             marks={'have': {'Mega Rayquaza': 1}},
             extra=tonight_extra,
@@ -1044,7 +1043,7 @@ with sync_playwright() as p:
               failed_best_text)
         failed_best_page.context.close()
 
-        raid_hour_page = page(clock='2026-11-04T09:35:00+11:00', extra=tonight_extra)
+        raid_hour_page = page(expand_brief=True,clock='2026-11-04T09:35:00+11:00', extra=tonight_extra)
         raid_hour_page.wait_for_selector('#today-tonight:not([hidden])')
         settle(raid_hour_page, "!!(window.GOBEST && window.GOBEST.ready)", 30000)
         raid_types_ready = settle(raid_hour_page, "!!(window.GOTYPES && window.GOTYPES.facts('Giratina (Altered Forme)'))", 30000)
@@ -1061,7 +1060,7 @@ with sync_playwright() as p:
               'Marked top counters (0): none in current top-ten lists' in raid_hour_page.locator('#today-tonight-list').text_content())
         raid_hour_page.context.close()
 
-        spotlight_page = page(clock='2026-11-05T09:35:00+11:00', extra=tonight_extra)
+        spotlight_page = page(expand_brief=True,clock='2026-11-05T09:35:00+11:00', extra=tonight_extra)
         spotlight_page.wait_for_selector('#today-tonight:not([hidden])')
         spotlight_page.locator('#today-tonight > summary').click()
         spotlight_text = spotlight_page.locator('#today-tonight-list').text_content()  # text_content, not inner_text: inner_text applies the heading's text-transform once the list is un-hidden (the details toggle event fires async), which made these reads race
@@ -1073,7 +1072,7 @@ with sync_playwright() as p:
               spotlight_page.locator('#today-tonight-list [data-best-types]').count() == 0)
         spotlight_page.context.close()
 
-        no_tonight_page = page(clock='2026-11-03T09:35:00+11:00', extra=tonight_extra)
+        no_tonight_page = page(expand_brief=True,clock='2026-11-03T09:35:00+11:00', extra=tonight_extra)
         check('Tonight planner stays hidden when no local activity is published for the viewed day',
               no_tonight_page.locator('#today-tonight').is_hidden())
         no_tonight_page.context.close()

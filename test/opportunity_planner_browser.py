@@ -71,6 +71,9 @@ with sync_playwright() as p:
         page.keyboard.press('Enter')
         page.locator('#evd').wait_for(state='visible')
         assert 'Planner Festival 4' in page.locator('#evd').inner_text()
+        # A late source/state refresh must preserve expanded event rows and the modal's return target.
+        page.evaluate("document.dispatchEvent(new Event('gofn-state'))")
+        assert page.locator('#opps .opp-more').first.evaluate('(el)=>el.open')
         page.keyboard.press('Escape')
         assert last.evaluate('(el) => el === document.activeElement')
         search.fill('Moonlight')
