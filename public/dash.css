@@ -146,10 +146,10 @@ body{background:radial-gradient(1200px 520px at 50% -140px,color-mix(in srgb,var
 /* opportunities and followed */
 .opp-controls{display:flex;flex-wrap:wrap;gap:var(--space-2);align-items:end;margin-bottom:var(--space-3)}
 .opp-controls label{display:grid;gap:var(--space-1);flex:1 1 180px;min-width:0;color:var(--color-text-muted);font-size:var(--type-meta)}
-.opp-controls input,.opp-controls select{width:100%;min-height:44px;font-size:1rem}
+.opp-controls input,.opp-controls select{width:100%;min-height:44px;font-size:1rem;background:var(--color-surface-card);color:var(--color-text);border:1px solid var(--color-border-card);border-radius:var(--radius-md);padding:var(--space-2) var(--space-3)}
 .opp-controls .pill{min-height:44px}
 .opp-event{display:grid;gap:var(--space-1);width:100%;min-width:0;min-height:44px;text-align:left;color:var(--color-text);background:none;border:0;padding:var(--space-2) 0;cursor:pointer;font:inherit;overflow-wrap:anywhere}
-.opp-event:hover b{text-decoration:underline;text-underline-offset:3px}
+.opp-event b{text-decoration:underline;text-underline-offset:3px}
 .opp-event:focus-visible{outline:2px solid currentColor;outline-offset:2px}
 .opp-evs .opp-event span{text-align:left}
 .opp-more summary{min-height:44px;display:flex;align-items:center;cursor:pointer;font-size:var(--type-meta);text-decoration:underline;text-underline-offset:3px}

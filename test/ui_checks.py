@@ -146,7 +146,7 @@ check('base stylesheet semantic type-scale roles preserve their exact values and
           len(re.findall(r'font-size\s*:\s*var\(' + re.escape(token) + r'\)(?=[;}])', BASE_COMPONENT_CSS)) == count
           for token, (value, count) in TYPE_SCALE.items()))
 DASH_TYPE_SCALE = {
-    '--type-meta': 12,
+    '--type-meta': 14,
     '--type-meta-compact': 12,
     '--type-body-compact': 9,
     '--type-label': 8,
@@ -162,7 +162,7 @@ DASH_TYPE_SCALE = {
     '--type-body-lg': 2,
 }
 DASH_TYPE_VALUES = ['.78rem', '.8rem', '.84rem', '.75rem', '.82rem', '.72rem', '.85rem', '.68rem', '1.05rem', '.9rem', '2rem', '1.5rem', '.62rem', '1.1rem']
-check('dashboard uses the shared semantic type scale for 95 exact font-size declarations',
+check('dashboard uses the shared semantic type scale for 97 exact font-size declarations',
       all(len(re.findall(r'font-size\s*:\s*var\(' + re.escape(token) + r'\)(?=[;}])', DASH_CSS)) == count
           for token, count in DASH_TYPE_SCALE.items()) and
       all(not re.search(r'font-size\s*:\s*' + re.escape(value) + r'(?=[;}])', DASH_CSS)
