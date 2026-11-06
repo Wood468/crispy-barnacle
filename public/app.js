@@ -86,6 +86,7 @@ Promise.all([
     var t=new Image(); t.onload=function(){ if(!i.isConnected)return; n.classList.toggle('is-shiny',sh); i.parentNode.replaceChild(n,i); if(window.GOANIM)GOANIM.scan(n.parentNode); }; t.src=n.getAttribute('data-still')||n.getAttribute('src');
   });
   window.GOARTERR=function(i){
+    if(!i||i.tagName!=='IMG')return;
     if(i.hasAttribute('data-costume-name')){
       var name=i.getAttribute('data-costume-name')||'', outfit=i.getAttribute('data-costume-label')||'';
       var label=name+(outfit&&name.toLowerCase().indexOf(outfit.toLowerCase())<0?' ('+outfit+')':'');
@@ -95,7 +96,9 @@ Promise.all([
       var text=document.createElement('span');text.textContent=label;
       var note=document.createElement('small');note.textContent='Costume art unavailable';host.append(text,note);i.replaceWith(host);return;
     }
-    var s=i.getAttribute('data-still');if(s&&i.getAttribute('src')!==s){i.classList.remove('ani');i.src=s}else i.remove();
+    var s=i.getAttribute('data-still'), u=null;
+    try{u=s?new URL(s,window.location.origin):null}catch(e){}
+    if(u&&(u.protocol==='https:'||u.protocol==='http:')&&u.origin===window.location.origin&&(u.pathname==='/api/art'||/^\/art\/[A-Za-z0-9_.-]+\.webp$/.test(u.pathname))&&i.getAttribute('src')!==u.href){i.classList.remove('ani');i.src=u.href}else i.remove();
   };
   /* Animated sprites: swap one in only while it is visible, and back to the still when it scrolls away.
      A long list of animated pictures at once is what made the page stutter on phones. */

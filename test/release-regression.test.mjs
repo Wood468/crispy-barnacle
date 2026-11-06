@@ -49,3 +49,18 @@ test('unreleased opportunities remain visible without inventing collection owner
   assert.doesNotMatch(nodes.opps.innerHTML, /data-mark=|class="opp missing"/);
   assert.match(nodes['opp-status'].textContent, /1 of 1/);
 });
+
+test('the image error handler only accepts image elements and same-origin artwork fallbacks', () => {
+  const code = app.slice(app.indexOf('  window.GOARTERR='), app.indexOf('  /* Animated sprites:'));
+  const context = { window: { location: { origin: 'https://app.test' }, GOLIB: lib }, URL };
+  vm.createContext(context); vm.runInContext(code, context);
+  let removed = false;
+  const img = { tagName: 'IMG', hasAttribute: () => false, getAttribute: key => key === 'data-still' ? '/art/25.webp' : '/missing.png', classList: { remove() {} }, remove() { removed = true; } };
+  context.window.GOARTERR(img);
+  assert.equal(img.src, 'https://app.test/art/25.webp');
+  assert.equal(removed, false);
+  img.getAttribute = key => key === 'data-still' ? 'javascript:alert(1)' : '/missing.png';
+  context.window.GOARTERR(img);
+  assert.equal(removed, true);
+  context.window.GOARTERR({ tagName: 'IFRAME', remove() { throw new Error('non-image was modified'); } });
+});
