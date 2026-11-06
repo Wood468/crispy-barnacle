@@ -1,5 +1,6 @@
 // Pulls the same fields out of any article: what a heading says it is about decides where the lines under it go.
 import { htmlToLines } from "./text.mjs";
+import { extractLeekDuckGoPassRewards } from "./gopass.mjs";
 
 export const FIELDS = ["bonuses", "featured", "raids", "eggs", "research", "shiny", "moves", "costumes", "tickets", "dates"];
 const HEAD = [
@@ -26,7 +27,7 @@ const LINE = [
 const RANKLABEL = /^(?:tier\s*\d+\W*)?\(?rank\s*(\d+)\)?\W*(?:bonus(?:es)?|milestone)?\W*$|^tier\s*\d+\s*bonus\s*starting at rank\s*(\d+)\W*$/i;
 const trim = s => s.replace(/^[•·\-–\s]+/, "").replace(/\s+/g, " ").trim();
 const NOISE = /^(share|read more|related|advertisement|sign up|follow us|comments?|learn more|and even more|keep an eye out|tier \d|rank \d+\s*$)|and even more goodies|learn more about|^\*/i;
-const keep = s => (s.length >= 14 || /[×]|\d\s?x\b/i.test(s) && s.length >= 6) && s.length <= 220 && !NOISE.test(s);
+const keep = s => (s.length >= 14 || /[×]|\d\s?x\b/i.test(s) && s.length >= 6) && (s.length <= 220 || /^rank \d+/i.test(s) && s.length <= 600) && !NOISE.test(s);
 
 function parseResearchTask(line, category) {
   const marker = /\b(?:possible\s+)?rewards?\s*:?\s*/i.exec(String(line || ""));
@@ -118,6 +119,29 @@ export function extractFields(html) {
       }
     }
     for (const [f, re] of LINE) if (re.test(l.text) && f !== cur) add(f, l.text);
+  }
+  // Leek Duck renders GO Pass ranks as nested divs, not table rows. Parse that
+  // source-specific structure separately; malformed pass markup is reported but
+  // does not discard the article's other successfully extracted details.
+  if (typeof html === "string" && html.includes("battle-pass-container")) {
+    try {
+      const pass = extractLeekDuckGoPassRewards(html);
+      if (pass) {
+        for (const item of pass.bonusItems) {
+          const concise = item.name.replace(/^Tier\s*\d+\s+GO Pass Bonus:\s*/i, "");
+          const prefix = "Rank " + item.rank + (item.track === "deluxe" ? " Deluxe" : "") + ": ";
+          // The generic heading/list scan may already have emitted this milestone.
+          if (!out.bonuses.includes("Rank " + item.rank + ": " + concise) &&
+              !out.bonuses.includes(prefix + concise)) add("bonuses", prefix + concise);
+        }
+        for (const row of pass.tickets) add("tickets", row);
+      }
+    } catch (error) {
+      // A failed structured parse must not leave generic/partial rank rows behind.
+      out.tickets = out.tickets.filter(value => !/^rank \d+:/i.test(value));
+      out.bonuses = out.bonuses.filter(value => !/^rank \d+/i.test(value));
+      out.goPassParseError = error instanceof Error ? error.message : String(error);
+    }
   }
   return out;
 }
