@@ -1,9 +1,50 @@
 {
- "updated": "2026-11-05T23:38:49.954Z",
- "claims": 1,
- "official": 1,
+ "updated": "2026-11-06T06:47:20.606Z",
+ "claims": 7,
+ "official": 7,
  "communityOnly": 0,
  "unsourced": 0,
  "score": 100,
- "issues": []
+ "issues": [
+  {
+   "event": "twilightwishes",
+   "issue": "Pikachu (sun crown) is not in dex.json",
+   "level": "warn"
+  },
+  {
+   "event": "twilightwishes",
+   "issue": "costume pikachu (sun crown)|sun crown has no picture and is not tracked as missing",
+   "level": "warn"
+  },
+  {
+   "event": "twilightwishes",
+   "issue": "Pikachu (moon crown) is not in dex.json",
+   "level": "warn"
+  },
+  {
+   "event": "twilightwishes",
+   "issue": "costume pikachu (moon crown)|moon crown has no picture and is not tracked as missing",
+   "level": "warn"
+  },
+  {
+   "event": "twilightwishes",
+   "issue": "Espeon (sun scarf) is not in dex.json",
+   "level": "warn"
+  },
+  {
+   "event": "twilightwishes",
+   "issue": "costume espeon (sun scarf)|sun scarf has no picture and is not tracked as missing",
+   "level": "warn"
+  },
+  {
+   "event": "twilightwishes",
+   "issue": "Umbreon (moon scarf) is not in dex.json",
+   "level": "warn"
+  },
+  {
+   "event": "twilightwishes",
+   "issue": "costume umbreon (moon scarf)|moon scarf has no picture and is not tracked as missing",
+   "level": "warn"
+  }
+ ]
 }

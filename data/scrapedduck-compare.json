@@ -1,7 +1,7 @@
 {
- "updated": "2026-11-05T23:38:50.122Z",
+ "updated": "2026-11-06T06:47:20.708Z",
  "state": "ok",
- "scrapedDuckEvents": 43,
+ "scrapedDuckEvents": 44,
  "missingHere": [],
  "missingThere": [
   {
@@ -73,11 +73,6 @@
    "id": "w-pok-mon-30th-anniversary-mall-exploration-sm-east-",
    "name": "Pokémon 30th Anniversary Mall Exploration: SM East Ortigas",
    "start": "2026-10-23"
-  },
-  {
-   "id": "w-pok-mon-go-dia-de-muertos-2026-mexico-exclusive-ev",
-   "name": "Dia de Muertos 2026: Mexico",
-   "start": "2026-10-27"
   },
   {
    "id": "w-celebrate-the-festival-of-lights-with-the-return-o",

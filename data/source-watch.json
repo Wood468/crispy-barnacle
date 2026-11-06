@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-05T23:38:49.917Z",
+ "updated": "2026-11-06T06:47:20.562Z",
  "status": [
   {
    "id": "hub",
@@ -27,7 +27,7 @@
    "note": "HTTP 404"
   }
  ],
- "gaps": 6,
+ "gaps": 5,
  "items": [
   {
    "source": "reddit-silph",
@@ -43,23 +43,6 @@
    "notInOurData": [
     "Teddiursa",
     "Ditto"
-   ]
-  },
-  {
-   "source": "hub",
-   "trust": "community",
-   "title": "Pokémon GO Twilight Wishes (2026)",
-   "link": "https://pokemongohub.net/post/event/twilight-wishes-2026/",
-   "date": "2026-11-02T17:55:29.000Z",
-   "summary": "Pokémon GO&#8217;s Twilight Wishes event runs from November 24 at 10:00 a.m. to November 30, 2026, at 8:00 p.m. local time, bringing back Sun Scarf Espeon and Moon Scarf Umbreon alongside Sun Crown an",
-   "pokemon": [
-    "Pikachu",
-    "Umbreon",
-    "Espeon"
-   ],
-   "notInOurData": [
-    "Umbreon",
-    "Espeon"
    ]
   },
   {
@@ -136,6 +119,20 @@
    "date": "2026-11-02T18:40:31.000Z",
    "summary": "<table> <tr><td> <a href=\"https://www.reddit.com/r/TheSilphRoad/comments/1xm5k36/data_from_24_hours_of_catching_costume_cubones/\"> <img src=\"https://preview.redd.it/1mrq61ksu8zh1.jpeg?width=140&amp;he",
    "pokemon": [],
+   "notInOurData": []
+  },
+  {
+   "source": "hub",
+   "trust": "community",
+   "title": "Pokémon GO Twilight Wishes (2026)",
+   "link": "https://pokemongohub.net/post/event/twilight-wishes-2026/",
+   "date": "2026-11-02T17:55:29.000Z",
+   "summary": "Pokémon GO&#8217;s Twilight Wishes event runs from November 24 at 10:00 a.m. to November 30, 2026, at 8:00 p.m. local time, bringing back Sun Scarf Espeon and Moon Scarf Umbreon alongside Sun Crown an",
+   "pokemon": [
+    "Pikachu",
+    "Umbreon",
+    "Espeon"
+   ],
    "notInOurData": []
   },
   {
