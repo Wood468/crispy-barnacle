@@ -39,7 +39,16 @@ with sync_playwright() as p:
         # A live overseas event remains unfolded and starts above the bottom navigation.
         first = page.locator('#home-now .evc').first
         assert 'Sendai' in first.inner_text()
-        assert first.bounding_box()['y'] < 820, (width, first.bounding_box())
+        title = first.locator('.evc-title-row h3')
+        assert title.bounding_box()['y'] + title.bounding_box()['height'] < 820, (width, title.bounding_box())
+        brief = page.locator('#today-brief-details')
+        assert not brief.evaluate('(el)=>el.open')
+        brief.locator('summary').first.focus()
+        page.keyboard.press('Enter')
+        assert page.locator('#today-focus-raids').is_visible()
+        assert page.locator('#today-focus-raids').evaluate('(el)=>el.scrollHeight<=el.clientHeight+1')
+        page.keyboard.press('Enter')
+        page.evaluate('scrollTo(0,0)')
         capture('today')
         page.locator('#tabs [data-tab="events"]').click()
         page.wait_for_function('document.querySelector("#evtimeline [data-open]")')

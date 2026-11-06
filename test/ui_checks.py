@@ -819,6 +819,7 @@ with sync_playwright() as p:
         check('Future overseas event does not inflate the current in-person activity count',
               future_overseas.locator('#day-inperson-count').inner_text()=='0' and
               '0 in person' in future_overseas.locator('.day-brief-stats').inner_text())
+        future_overseas.locator('#today-brief-details > summary').click()
         rotation_text = future_overseas.locator('#today-focus-raids').inner_text()
         max_text = future_overseas.locator('#today-focus-raids-meta').inner_text()
         check('Raids and Max summary uses the published rotation active on the viewed date',
@@ -888,6 +889,7 @@ with sync_playwright() as p:
                 };
             })();""")
         early_types = page(pre=wait_for_types_before_dashboard)
+        early_types.locator('#today-brief-details > summary').click()
         early_types_ready = settle(early_types, "window.__gofnTypesReadyBeforeDash === true && document.querySelectorAll('#today-focus-raid-actions [data-best-types]').length === 2", 30000)
         check('Today raid handoffs render when type data resolves before dashboard bootstrap', early_types_ready)
         early_types.context.close()
@@ -2723,8 +2725,12 @@ with sync_playwright() as p:
         b1.set_viewport_size({'width': 320, 'height': 844}); b1.wait_for_timeout(120)
         first320 = b1.evaluate("() => { const el=document.querySelector('#home-now .evc, #home-now .agr'); return Math.round(el.getBoundingClientRect().top+scrollY); }")
         check('first event card starts inside the first screenful at 320px', first320 < 844 - 80, first320)
+        check('Today planning brief starts collapsed with a keyboard-accessible 44px summary',
+              not b1.locator('#today-brief-details').evaluate('(el)=>el.open') and b1.locator('#today-brief-details > summary').bounding_box()['height'] >= 44)
+        b1.locator('#today-brief-details > summary').focus(); b1.keyboard.press('Enter')
         tiles = b1.evaluate("() => [...document.querySelectorAll('.day-brief-stats span, .today-focus-card')].map(e => { const r=e.getBoundingClientRect(); const b=document.getElementById('day-brief-title').getBoundingClientRect(); return r.top >= b.bottom - 1 && r.right <= innerWidth && r.left >= 0; })")
         check('brief counts and tiles stack below the title at 320px without overlap', all(tiles) and len(tiles) == 6, tiles)
+        b1.locator('#today-brief-details > summary').click()
         b1.set_viewport_size({'width': 390, 'height': 844}); b1.wait_for_timeout(120)
         check('no interactive control on Today is under a 44x44 hit area (collapsed)', b1.evaluate(TARGETS_JS) == [], b1.evaluate(TARGETS_JS))
         # keyboard: toggle then Got it, Enter expands, links are real rows of 44px
