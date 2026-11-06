@@ -85,7 +85,18 @@ Promise.all([
     /* Only swap once the other picture has loaded, so a missing shiny never leaves a blank. */
     var t=new Image(); t.onload=function(){ if(!i.isConnected)return; n.classList.toggle('is-shiny',sh); i.parentNode.replaceChild(n,i); if(window.GOANIM)GOANIM.scan(n.parentNode); }; t.src=n.getAttribute('data-still')||n.getAttribute('src');
   });
-  window.GOARTERR=function(i){if(i.hasAttribute('data-costume-name')){var host=document.createElement('span');host.innerHTML=costumeUnavailable({n:i.getAttribute('data-costume-name'),label:i.getAttribute('data-costume-label')},(i.className.match(/\b(ea|in|lg|sm)\b/)||[''])[0]);i.replaceWith(host.firstChild);return}var s=i.getAttribute('data-still');if(s&&i.getAttribute('src')!==s){i.classList.remove('ani');i.src=s}else i.remove()};
+  window.GOARTERR=function(i){
+    if(i.hasAttribute('data-costume-name')){
+      var name=i.getAttribute('data-costume-name')||'', outfit=i.getAttribute('data-costume-label')||'';
+      var label=name+(outfit&&name.toLowerCase().indexOf(outfit.toLowerCase())<0?' ('+outfit+')':'');
+      var host=document.createElement('span');host.className='art costume-unavailable '+((i.className.match(/\b(ea|in|lg|sm)\b/)||[''])[0]);
+      host.setAttribute('role','img');host.setAttribute('aria-label',label+' · costume artwork unavailable');
+      host.setAttribute('data-ck',window.GOLIB.parseForm(name).base.toLowerCase()+'|'+outfit.toLowerCase());
+      var text=document.createElement('span');text.textContent=label;
+      var note=document.createElement('small');note.textContent='Costume art unavailable';host.append(text,note);i.replaceWith(host);return;
+    }
+    var s=i.getAttribute('data-still');if(s&&i.getAttribute('src')!==s){i.classList.remove('ani');i.src=s}else i.remove();
+  };
   /* Animated sprites: swap one in only while it is visible, and back to the still when it scrolls away.
      A long list of animated pictures at once is what made the page stutter on phones. */
   (function(){
