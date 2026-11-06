@@ -846,12 +846,17 @@ with sync_playwright() as p:
               raid_metrics['visible'] and not raid_metrics['overflow'] and len(raid_metrics['heights']) == 2 and all(h >= 44 for h in raid_metrics['heights']), raid_metrics)
         for raid_theme in ('light', 'dark'):
             future_overseas.evaluate("(theme) => { if (theme === 'light') document.documentElement.setAttribute('data-theme','light'); else document.documentElement.removeAttribute('data-theme'); }", raid_theme)
-            contrast = five_button.evaluate("""b => {
+            # Late data can rebuild Today between locator resolution and evaluation.
+            # Resolve and measure the live node in one browser task, without weakening AA/44px assertions.
+            contrast = future_overseas.wait_for_function("""() => {
+              const b=[...document.querySelectorAll('#today-focus-raid-actions [data-best-types]')].find(x=>x.textContent.includes('5★ attackers'));
+              if(!b || !b.isConnected || !b.getClientRects().length) return false;
               const rgb = value => (value.match(/[\\d.]+/g) || []).slice(0,3).map(Number);
               const lum = value => { const c=rgb(value).map(x=>{x/=255;return x<=.04045?x/12.92:Math.pow((x+.055)/1.055,2.4)}); return .2126*c[0]+.7152*c[1]+.0722*c[2]; };
               const s=getComputedStyle(b), a=lum(s.color), z=lum(s.backgroundColor);
-              return {height:b.getBoundingClientRect().height, ratio:(Math.max(a,z)+.05)/(Math.min(a,z)+.05)};
-            }""")
+              const ratio=(Math.max(a,z)+.05)/(Math.min(a,z)+.05), height=b.getBoundingClientRect().height;
+              return height>0 && Number.isFinite(ratio) ? {height,ratio} : false;
+            }""").json_value()
             check('Today raid handoff button meets target size and AA text contrast in ' + raid_theme + ' theme',
                   contrast['height'] >= 44 and contrast['ratio'] >= 4.5, contrast)
         five_types = five_button.get_attribute('data-best-types').split('|')
