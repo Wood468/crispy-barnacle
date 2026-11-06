@@ -1,9 +1,9 @@
 {
- "updated": "2026-11-06T18:32:09.892Z",
+ "updated": "2026-11-06T23:33:45.979Z",
  "events": {
   "wag": {
    "name": "GO Wild Area: Global",
-   "updated": "2026-11-06T18:32:09.892Z",
+   "updated": "2026-11-06T23:33:45.979Z",
    "sources": [
     {
      "id": "official",
@@ -80,7 +80,7 @@
   },
   "leekduck:pokemon-go-wild-area-2026-sendai-japan": {
    "name": "Pokémon GO Wild Area 2026: Sendai • Tohoku",
-   "updated": "2026-11-06T18:32:09.892Z",
+   "updated": "2026-11-06T23:33:45.979Z",
    "sources": [
     {
      "id": "leekduck",
@@ -261,7 +261,28 @@
       "status": "single"
      },
      {
-      "text": "Complete event-themed Field Research tasks for encounters with Hisuian Sliggoo or mighty Machamp wearing a modern jacket . Both can be Shiny.",
+      "text": "Catch 10 Dragon‑type Pokémon POSSIBLE REWARDS Trapinch Max CP 546 Min CP 507 ×2000 Stardust ×2000 ×1 Silver Pinap Berry ×1",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Power up Dragon‑type Pokémon 5 times REWARD Frigibax Max CP 534 Min CP 496",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Win 2 raids POSSIBLE REWARDS Mighty Azumarill Max CP 680 Min CP 637 Mighty Modern Jacket Machamp",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Win a Max Battle POSSIBLE REWARDS Mighty Kommo-o Max CP 1418 Min CP 1357 Mighty Bastiodon Max CP 660 Min CP 615",
       "sources": [
        "leekduck"
       ],
@@ -275,14 +296,35 @@
       "status": "single"
      },
      {
-      "text": "Make an Excellent Throw REWARD Mighty Modern Jacket Machamp",
+      "text": "Hatch an Egg POSSIBLE REWARDS Honedge Max CP 595 Min CP 556 Drampa Max CP 1249 Min CP 1191",
       "sources": [
        "leekduck"
       ],
       "status": "single"
      },
      {
-      "text": "Win a Gigantamax Battle REWARD Mighty Modern Jacket Machamp",
+      "text": "Power up Steel‑type Pokémon 5 times POSSIBLE REWARDS Bronzor Max CP 258 Min CP 229 Skarmory Max CP 903 Min CP 854 Onix Max CP 472 Min CP 435",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Explore 2 km REWARD Mighty Modern Jacket Machamp",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Use a Dragon‑type Charged Attack in a battle REWARD Mighty Kommo-o Max CP 1418 Min CP 1357",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Make an Excellent Throw POSSIBLE REWARDS ×2 Silver Pinap Berry ×2 ×2 Golden Razz Berry ×2",
       "sources": [
        "leekduck"
       ],
@@ -361,13 +403,6 @@
       "status": "single"
      },
      {
-      "text": "Complete event-themed Field Research tasks for encounters with Hisuian Sliggoo or mighty Machamp wearing a modern jacket . Both can be Shiny.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
       "text": "Hisuian Sliggoo can be encountered as a Shiny Pokémon at the in-person events. Evolve it to obtain Shiny Hisuian Goodra.",
       "sources": [
        "leekduck"
@@ -386,13 +421,6 @@
      },
      {
       "text": "Machamp wearing a modern jacket appears in three-star raids during event hours and may be Shiny.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Complete event-themed Field Research tasks for encounters with Hisuian Sliggoo or mighty Machamp wearing a modern jacket . Both can be Shiny.",
       "sources": [
        "leekduck"
       ],
@@ -497,11 +525,365 @@
    },
    "conflicts": [],
    "gaps": [],
-   "researchTasks": []
+   "researchTasks": [
+    {
+     "task": "Catch 10 Dragon‑type Pokémon",
+     "category": "field",
+     "rewards": [
+      {
+       "type": "encounter",
+       "name": "Trapinch",
+       "quantity": 1,
+       "cpMin": 507,
+       "cpMax": 546
+      }
+     ],
+     "sources": [
+      "leekduck"
+     ],
+     "sourceRefs": [
+      {
+       "id": "leekduck",
+       "name": "Leek Duck",
+       "trust": "community",
+       "url": "https://leekduck.com/events/pokemon-go-wild-area-2026-sendai-japan/"
+      }
+     ],
+     "status": "single",
+     "eventId": "leekduck:pokemon-go-wild-area-2026-sendai-japan",
+     "eventName": "Pokémon GO Wild Area 2026: Sendai • Tohoku",
+     "eventWindow": {
+      "start": "2026-11-06T01:00:00.000Z",
+      "end": "2026-11-08T09:00:00.000Z"
+     },
+     "checkedAt": "2026-11-06"
+    },
+    {
+     "task": "Catch 10 Steel‑type Pokémon",
+     "category": "field",
+     "rewards": [
+      {
+       "type": "encounter",
+       "name": "×1 Golden Razz Berry ×1 Rookidee",
+       "quantity": 1,
+       "cpMin": 258,
+       "cpMax": 285
+      }
+     ],
+     "sources": [
+      "leekduck"
+     ],
+     "sourceRefs": [
+      {
+       "id": "leekduck",
+       "name": "Leek Duck",
+       "trust": "community",
+       "url": "https://leekduck.com/events/pokemon-go-wild-area-2026-sendai-japan/"
+      }
+     ],
+     "status": "single",
+     "eventId": "leekduck:pokemon-go-wild-area-2026-sendai-japan",
+     "eventName": "Pokémon GO Wild Area 2026: Sendai • Tohoku",
+     "eventWindow": {
+      "start": "2026-11-06T01:00:00.000Z",
+      "end": "2026-11-08T09:00:00.000Z"
+     },
+     "checkedAt": "2026-11-06"
+    },
+    {
+     "task": "Hatch an Egg",
+     "category": "field",
+     "rewards": [
+      {
+       "type": "encounter",
+       "name": "Honedge",
+       "quantity": 1,
+       "cpMin": 556,
+       "cpMax": 595
+      },
+      {
+       "type": "encounter",
+       "name": "Drampa",
+       "quantity": 1,
+       "cpMin": 1191,
+       "cpMax": 1249
+      }
+     ],
+     "sources": [
+      "leekduck"
+     ],
+     "sourceRefs": [
+      {
+       "id": "leekduck",
+       "name": "Leek Duck",
+       "trust": "community",
+       "url": "https://leekduck.com/events/pokemon-go-wild-area-2026-sendai-japan/"
+      }
+     ],
+     "status": "single",
+     "eventId": "leekduck:pokemon-go-wild-area-2026-sendai-japan",
+     "eventName": "Pokémon GO Wild Area 2026: Sendai • Tohoku",
+     "eventWindow": {
+      "start": "2026-11-06T01:00:00.000Z",
+      "end": "2026-11-08T09:00:00.000Z"
+     },
+     "checkedAt": "2026-11-06"
+    },
+    {
+     "task": "Make an Excellent Throw",
+     "category": "field",
+     "rewards": [
+      {
+       "type": "other",
+       "name": "Silver Pinap Berry ×2 ×2 Golden Razz Berry",
+       "quantity": 2
+      }
+     ],
+     "sources": [
+      "leekduck"
+     ],
+     "sourceRefs": [
+      {
+       "id": "leekduck",
+       "name": "Leek Duck",
+       "trust": "community",
+       "url": "https://leekduck.com/events/pokemon-go-wild-area-2026-sendai-japan/"
+      }
+     ],
+     "status": "single",
+     "eventId": "leekduck:pokemon-go-wild-area-2026-sendai-japan",
+     "eventName": "Pokémon GO Wild Area 2026: Sendai • Tohoku",
+     "eventWindow": {
+      "start": "2026-11-06T01:00:00.000Z",
+      "end": "2026-11-08T09:00:00.000Z"
+     },
+     "checkedAt": "2026-11-06"
+    },
+    {
+     "task": "Power up Dragon‑type Pokémon 5 times",
+     "category": "field",
+     "rewards": [
+      {
+       "type": "encounter",
+       "name": "Frigibax",
+       "quantity": 1,
+       "cpMin": 496,
+       "cpMax": 534
+      }
+     ],
+     "sources": [
+      "leekduck"
+     ],
+     "sourceRefs": [
+      {
+       "id": "leekduck",
+       "name": "Leek Duck",
+       "trust": "community",
+       "url": "https://leekduck.com/events/pokemon-go-wild-area-2026-sendai-japan/"
+      }
+     ],
+     "status": "single",
+     "eventId": "leekduck:pokemon-go-wild-area-2026-sendai-japan",
+     "eventName": "Pokémon GO Wild Area 2026: Sendai • Tohoku",
+     "eventWindow": {
+      "start": "2026-11-06T01:00:00.000Z",
+      "end": "2026-11-08T09:00:00.000Z"
+     },
+     "checkedAt": "2026-11-06"
+    },
+    {
+     "task": "Power up Steel‑type Pokémon 5 times",
+     "category": "field",
+     "rewards": [
+      {
+       "type": "encounter",
+       "name": "Bronzor",
+       "quantity": 1,
+       "cpMin": 229,
+       "cpMax": 258
+      },
+      {
+       "type": "encounter",
+       "name": "Skarmory",
+       "quantity": 1,
+       "cpMin": 854,
+       "cpMax": 903
+      },
+      {
+       "type": "encounter",
+       "name": "Onix",
+       "quantity": 1,
+       "cpMin": 435,
+       "cpMax": 472
+      }
+     ],
+     "sources": [
+      "leekduck"
+     ],
+     "sourceRefs": [
+      {
+       "id": "leekduck",
+       "name": "Leek Duck",
+       "trust": "community",
+       "url": "https://leekduck.com/events/pokemon-go-wild-area-2026-sendai-japan/"
+      }
+     ],
+     "status": "single",
+     "eventId": "leekduck:pokemon-go-wild-area-2026-sendai-japan",
+     "eventName": "Pokémon GO Wild Area 2026: Sendai • Tohoku",
+     "eventWindow": {
+      "start": "2026-11-06T01:00:00.000Z",
+      "end": "2026-11-08T09:00:00.000Z"
+     },
+     "checkedAt": "2026-11-06"
+    },
+    {
+     "task": "Use a Dragon‑type Charged Attack in a battle",
+     "category": "field",
+     "rewards": [
+      {
+       "type": "encounter",
+       "name": "Mighty Kommo-o",
+       "quantity": 1,
+       "cpMin": 1357,
+       "cpMax": 1418
+      }
+     ],
+     "sources": [
+      "leekduck"
+     ],
+     "sourceRefs": [
+      {
+       "id": "leekduck",
+       "name": "Leek Duck",
+       "trust": "community",
+       "url": "https://leekduck.com/events/pokemon-go-wild-area-2026-sendai-japan/"
+      }
+     ],
+     "status": "single",
+     "eventId": "leekduck:pokemon-go-wild-area-2026-sendai-japan",
+     "eventName": "Pokémon GO Wild Area 2026: Sendai • Tohoku",
+     "eventWindow": {
+      "start": "2026-11-06T01:00:00.000Z",
+      "end": "2026-11-08T09:00:00.000Z"
+     },
+     "checkedAt": "2026-11-06"
+    },
+    {
+     "task": "Use a Steel‑type Charged Attack in a battle",
+     "category": "field",
+     "rewards": [
+      {
+       "type": "encounter",
+       "name": "Mighty Bastiodon",
+       "quantity": 1,
+       "cpMin": 615,
+       "cpMax": 660
+      },
+      {
+       "type": "encounter",
+       "name": "Shieldon",
+       "quantity": 1,
+       "cpMin": 348,
+       "cpMax": 381
+      }
+     ],
+     "sources": [
+      "leekduck"
+     ],
+     "sourceRefs": [
+      {
+       "id": "leekduck",
+       "name": "Leek Duck",
+       "trust": "community",
+       "url": "https://leekduck.com/events/pokemon-go-wild-area-2026-sendai-japan/"
+      }
+     ],
+     "status": "single",
+     "eventId": "leekduck:pokemon-go-wild-area-2026-sendai-japan",
+     "eventName": "Pokémon GO Wild Area 2026: Sendai • Tohoku",
+     "eventWindow": {
+      "start": "2026-11-06T01:00:00.000Z",
+      "end": "2026-11-08T09:00:00.000Z"
+     },
+     "checkedAt": "2026-11-06"
+    },
+    {
+     "task": "Win 2 raids",
+     "category": "field",
+     "rewards": [
+      {
+       "type": "encounter",
+       "name": "Mighty Azumarill",
+       "quantity": 1,
+       "cpMin": 637,
+       "cpMax": 680
+      }
+     ],
+     "sources": [
+      "leekduck"
+     ],
+     "sourceRefs": [
+      {
+       "id": "leekduck",
+       "name": "Leek Duck",
+       "trust": "community",
+       "url": "https://leekduck.com/events/pokemon-go-wild-area-2026-sendai-japan/"
+      }
+     ],
+     "status": "single",
+     "eventId": "leekduck:pokemon-go-wild-area-2026-sendai-japan",
+     "eventName": "Pokémon GO Wild Area 2026: Sendai • Tohoku",
+     "eventWindow": {
+      "start": "2026-11-06T01:00:00.000Z",
+      "end": "2026-11-08T09:00:00.000Z"
+     },
+     "checkedAt": "2026-11-06"
+    },
+    {
+     "task": "Win a Max Battle",
+     "category": "field",
+     "rewards": [
+      {
+       "type": "encounter",
+       "name": "Mighty Kommo-o",
+       "quantity": 1,
+       "cpMin": 1357,
+       "cpMax": 1418
+      },
+      {
+       "type": "encounter",
+       "name": "Mighty Bastiodon",
+       "quantity": 1,
+       "cpMin": 615,
+       "cpMax": 660
+      }
+     ],
+     "sources": [
+      "leekduck"
+     ],
+     "sourceRefs": [
+      {
+       "id": "leekduck",
+       "name": "Leek Duck",
+       "trust": "community",
+       "url": "https://leekduck.com/events/pokemon-go-wild-area-2026-sendai-japan/"
+      }
+     ],
+     "status": "single",
+     "eventId": "leekduck:pokemon-go-wild-area-2026-sendai-japan",
+     "eventName": "Pokémon GO Wild Area 2026: Sendai • Tohoku",
+     "eventWindow": {
+      "start": "2026-11-06T01:00:00.000Z",
+      "end": "2026-11-08T09:00:00.000Z"
+     },
+     "checkedAt": "2026-11-06"
+    }
+   ]
   },
   "leekduck:pokemon-go-wild-area-2026-mexico-city": {
    "name": "Pokémon GO Wild Area 2026: Mexico City",
-   "updated": "2026-11-06T18:32:09.892Z",
+   "updated": "2026-11-06T23:33:45.979Z",
    "sources": [
     {
      "id": "leekduck",
@@ -694,7 +1076,70 @@
       "status": "single"
      },
      {
-      "text": "Event-themed Field Research is more likely to appear during the event. Complete tasks for encounters with event-themed Pokémon. Tasks and individual rewards have not yet been announced.",
+      "text": "Catch 10 Dragon‑type Pokémon POSSIBLE REWARDS Trapinch Max CP 546 Min CP 507 ×2000 Stardust ×2000 ×1 Silver Pinap Berry ×1",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Power up Dragon‑type Pokémon 5 times REWARD Frigibax Max CP 534 Min CP 496",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Win 2 raids POSSIBLE REWARDS Mighty Azumarill Max CP 680 Min CP 637 Mighty Modern Jacket Machamp",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Win a Max Battle POSSIBLE REWARDS Mighty Kommo-o Max CP 1418 Min CP 1357 Mighty Bastiodon Max CP 660 Min CP 615",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Catch a Hisuian Sliggoo REWARD Hisuian Sliggoo",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Hatch an Egg POSSIBLE REWARDS Honedge Max CP 595 Min CP 556 Drampa Max CP 1249 Min CP 1191",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Power up Steel‑type Pokémon 5 times POSSIBLE REWARDS Bronzor Max CP 258 Min CP 229 Skarmory Max CP 903 Min CP 854 Onix Max CP 472 Min CP 435",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Explore 2 km REWARD Mighty Modern Jacket Machamp",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Use a Dragon‑type Charged Attack in a battle REWARD Mighty Kommo-o Max CP 1418 Min CP 1357",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Make an Excellent Throw POSSIBLE REWARDS ×2 Silver Pinap Berry ×2 ×2 Golden Razz Berry ×2",
       "sources": [
        "leekduck"
       ],
@@ -827,13 +1272,6 @@
       "status": "single"
      },
      {
-      "text": "Claim Special Research during your ticketed session to learn about both Steel- and Dragon-type Pokémon and earn two themed in-game medals. Special Research is granted only once, even with Extra Day add-ons.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
       "text": "Choose one day: November 6, 7, or 8. Mexico City ticket prices are subject to applicable taxes and fees. View tickets and add-ons .",
       "sources": [
        "leekduck"
@@ -953,11 +1391,365 @@
      ]
     }
    ],
-   "researchTasks": []
+   "researchTasks": [
+    {
+     "task": "Catch 10 Dragon‑type Pokémon",
+     "category": "field",
+     "rewards": [
+      {
+       "type": "encounter",
+       "name": "Trapinch",
+       "quantity": 1,
+       "cpMin": 507,
+       "cpMax": 546
+      }
+     ],
+     "sources": [
+      "leekduck"
+     ],
+     "sourceRefs": [
+      {
+       "id": "leekduck",
+       "name": "Leek Duck",
+       "trust": "community",
+       "url": "https://leekduck.com/events/pokemon-go-wild-area-2026-mexico-city/"
+      }
+     ],
+     "status": "single",
+     "eventId": "leekduck:pokemon-go-wild-area-2026-mexico-city",
+     "eventName": "Pokémon GO Wild Area 2026: Mexico City",
+     "eventWindow": {
+      "start": "2026-11-06T16:00:00.000Z",
+      "end": "2026-11-09T00:00:00.000Z"
+     },
+     "checkedAt": "2026-11-06"
+    },
+    {
+     "task": "Catch 10 Steel‑type Pokémon",
+     "category": "field",
+     "rewards": [
+      {
+       "type": "encounter",
+       "name": "×1 Golden Razz Berry ×1 Rookidee",
+       "quantity": 1,
+       "cpMin": 258,
+       "cpMax": 285
+      }
+     ],
+     "sources": [
+      "leekduck"
+     ],
+     "sourceRefs": [
+      {
+       "id": "leekduck",
+       "name": "Leek Duck",
+       "trust": "community",
+       "url": "https://leekduck.com/events/pokemon-go-wild-area-2026-mexico-city/"
+      }
+     ],
+     "status": "single",
+     "eventId": "leekduck:pokemon-go-wild-area-2026-mexico-city",
+     "eventName": "Pokémon GO Wild Area 2026: Mexico City",
+     "eventWindow": {
+      "start": "2026-11-06T16:00:00.000Z",
+      "end": "2026-11-09T00:00:00.000Z"
+     },
+     "checkedAt": "2026-11-06"
+    },
+    {
+     "task": "Hatch an Egg",
+     "category": "field",
+     "rewards": [
+      {
+       "type": "encounter",
+       "name": "Honedge",
+       "quantity": 1,
+       "cpMin": 556,
+       "cpMax": 595
+      },
+      {
+       "type": "encounter",
+       "name": "Drampa",
+       "quantity": 1,
+       "cpMin": 1191,
+       "cpMax": 1249
+      }
+     ],
+     "sources": [
+      "leekduck"
+     ],
+     "sourceRefs": [
+      {
+       "id": "leekduck",
+       "name": "Leek Duck",
+       "trust": "community",
+       "url": "https://leekduck.com/events/pokemon-go-wild-area-2026-mexico-city/"
+      }
+     ],
+     "status": "single",
+     "eventId": "leekduck:pokemon-go-wild-area-2026-mexico-city",
+     "eventName": "Pokémon GO Wild Area 2026: Mexico City",
+     "eventWindow": {
+      "start": "2026-11-06T16:00:00.000Z",
+      "end": "2026-11-09T00:00:00.000Z"
+     },
+     "checkedAt": "2026-11-06"
+    },
+    {
+     "task": "Make an Excellent Throw",
+     "category": "field",
+     "rewards": [
+      {
+       "type": "other",
+       "name": "Silver Pinap Berry ×2 ×2 Golden Razz Berry",
+       "quantity": 2
+      }
+     ],
+     "sources": [
+      "leekduck"
+     ],
+     "sourceRefs": [
+      {
+       "id": "leekduck",
+       "name": "Leek Duck",
+       "trust": "community",
+       "url": "https://leekduck.com/events/pokemon-go-wild-area-2026-mexico-city/"
+      }
+     ],
+     "status": "single",
+     "eventId": "leekduck:pokemon-go-wild-area-2026-mexico-city",
+     "eventName": "Pokémon GO Wild Area 2026: Mexico City",
+     "eventWindow": {
+      "start": "2026-11-06T16:00:00.000Z",
+      "end": "2026-11-09T00:00:00.000Z"
+     },
+     "checkedAt": "2026-11-06"
+    },
+    {
+     "task": "Power up Dragon‑type Pokémon 5 times",
+     "category": "field",
+     "rewards": [
+      {
+       "type": "encounter",
+       "name": "Frigibax",
+       "quantity": 1,
+       "cpMin": 496,
+       "cpMax": 534
+      }
+     ],
+     "sources": [
+      "leekduck"
+     ],
+     "sourceRefs": [
+      {
+       "id": "leekduck",
+       "name": "Leek Duck",
+       "trust": "community",
+       "url": "https://leekduck.com/events/pokemon-go-wild-area-2026-mexico-city/"
+      }
+     ],
+     "status": "single",
+     "eventId": "leekduck:pokemon-go-wild-area-2026-mexico-city",
+     "eventName": "Pokémon GO Wild Area 2026: Mexico City",
+     "eventWindow": {
+      "start": "2026-11-06T16:00:00.000Z",
+      "end": "2026-11-09T00:00:00.000Z"
+     },
+     "checkedAt": "2026-11-06"
+    },
+    {
+     "task": "Power up Steel‑type Pokémon 5 times",
+     "category": "field",
+     "rewards": [
+      {
+       "type": "encounter",
+       "name": "Bronzor",
+       "quantity": 1,
+       "cpMin": 229,
+       "cpMax": 258
+      },
+      {
+       "type": "encounter",
+       "name": "Skarmory",
+       "quantity": 1,
+       "cpMin": 854,
+       "cpMax": 903
+      },
+      {
+       "type": "encounter",
+       "name": "Onix",
+       "quantity": 1,
+       "cpMin": 435,
+       "cpMax": 472
+      }
+     ],
+     "sources": [
+      "leekduck"
+     ],
+     "sourceRefs": [
+      {
+       "id": "leekduck",
+       "name": "Leek Duck",
+       "trust": "community",
+       "url": "https://leekduck.com/events/pokemon-go-wild-area-2026-mexico-city/"
+      }
+     ],
+     "status": "single",
+     "eventId": "leekduck:pokemon-go-wild-area-2026-mexico-city",
+     "eventName": "Pokémon GO Wild Area 2026: Mexico City",
+     "eventWindow": {
+      "start": "2026-11-06T16:00:00.000Z",
+      "end": "2026-11-09T00:00:00.000Z"
+     },
+     "checkedAt": "2026-11-06"
+    },
+    {
+     "task": "Use a Dragon‑type Charged Attack in a battle",
+     "category": "field",
+     "rewards": [
+      {
+       "type": "encounter",
+       "name": "Mighty Kommo-o",
+       "quantity": 1,
+       "cpMin": 1357,
+       "cpMax": 1418
+      }
+     ],
+     "sources": [
+      "leekduck"
+     ],
+     "sourceRefs": [
+      {
+       "id": "leekduck",
+       "name": "Leek Duck",
+       "trust": "community",
+       "url": "https://leekduck.com/events/pokemon-go-wild-area-2026-mexico-city/"
+      }
+     ],
+     "status": "single",
+     "eventId": "leekduck:pokemon-go-wild-area-2026-mexico-city",
+     "eventName": "Pokémon GO Wild Area 2026: Mexico City",
+     "eventWindow": {
+      "start": "2026-11-06T16:00:00.000Z",
+      "end": "2026-11-09T00:00:00.000Z"
+     },
+     "checkedAt": "2026-11-06"
+    },
+    {
+     "task": "Use a Steel‑type Charged Attack in a battle",
+     "category": "field",
+     "rewards": [
+      {
+       "type": "encounter",
+       "name": "Mighty Bastiodon",
+       "quantity": 1,
+       "cpMin": 615,
+       "cpMax": 660
+      },
+      {
+       "type": "encounter",
+       "name": "Shieldon",
+       "quantity": 1,
+       "cpMin": 348,
+       "cpMax": 381
+      }
+     ],
+     "sources": [
+      "leekduck"
+     ],
+     "sourceRefs": [
+      {
+       "id": "leekduck",
+       "name": "Leek Duck",
+       "trust": "community",
+       "url": "https://leekduck.com/events/pokemon-go-wild-area-2026-mexico-city/"
+      }
+     ],
+     "status": "single",
+     "eventId": "leekduck:pokemon-go-wild-area-2026-mexico-city",
+     "eventName": "Pokémon GO Wild Area 2026: Mexico City",
+     "eventWindow": {
+      "start": "2026-11-06T16:00:00.000Z",
+      "end": "2026-11-09T00:00:00.000Z"
+     },
+     "checkedAt": "2026-11-06"
+    },
+    {
+     "task": "Win 2 raids",
+     "category": "field",
+     "rewards": [
+      {
+       "type": "encounter",
+       "name": "Mighty Azumarill",
+       "quantity": 1,
+       "cpMin": 637,
+       "cpMax": 680
+      }
+     ],
+     "sources": [
+      "leekduck"
+     ],
+     "sourceRefs": [
+      {
+       "id": "leekduck",
+       "name": "Leek Duck",
+       "trust": "community",
+       "url": "https://leekduck.com/events/pokemon-go-wild-area-2026-mexico-city/"
+      }
+     ],
+     "status": "single",
+     "eventId": "leekduck:pokemon-go-wild-area-2026-mexico-city",
+     "eventName": "Pokémon GO Wild Area 2026: Mexico City",
+     "eventWindow": {
+      "start": "2026-11-06T16:00:00.000Z",
+      "end": "2026-11-09T00:00:00.000Z"
+     },
+     "checkedAt": "2026-11-06"
+    },
+    {
+     "task": "Win a Max Battle",
+     "category": "field",
+     "rewards": [
+      {
+       "type": "encounter",
+       "name": "Mighty Kommo-o",
+       "quantity": 1,
+       "cpMin": 1357,
+       "cpMax": 1418
+      },
+      {
+       "type": "encounter",
+       "name": "Mighty Bastiodon",
+       "quantity": 1,
+       "cpMin": 615,
+       "cpMax": 660
+      }
+     ],
+     "sources": [
+      "leekduck"
+     ],
+     "sourceRefs": [
+      {
+       "id": "leekduck",
+       "name": "Leek Duck",
+       "trust": "community",
+       "url": "https://leekduck.com/events/pokemon-go-wild-area-2026-mexico-city/"
+      }
+     ],
+     "status": "single",
+     "eventId": "leekduck:pokemon-go-wild-area-2026-mexico-city",
+     "eventName": "Pokémon GO Wild Area 2026: Mexico City",
+     "eventWindow": {
+      "start": "2026-11-06T16:00:00.000Z",
+      "end": "2026-11-09T00:00:00.000Z"
+     },
+     "checkedAt": "2026-11-06"
+    }
+   ]
   },
   "gopassnov": {
    "name": "GO Pass: November",
-   "updated": "2026-11-06T18:32:09.892Z",
+   "updated": "2026-11-06T23:33:45.979Z",
    "sources": [
     {
      "id": "leekduck",
@@ -1897,7 +2689,7 @@
   },
   "sendai": {
    "name": "GO Wild Area: Sendai",
-   "updated": "2026-11-06T18:32:09.892Z",
+   "updated": "2026-11-06T23:33:45.979Z",
    "sources": [
     {
      "id": "official",
@@ -1924,7 +2716,7 @@
   },
   "leekduck:super-mega-raid-day-november-2026": {
    "name": "Super Mega Raid Day",
-   "updated": "2026-11-06T18:32:09.892Z",
+   "updated": "2026-11-06T23:33:45.979Z",
    "sources": [
     {
      "id": "official",
@@ -2255,7 +3047,7 @@
   },
   "leekduck:pokemon-go-wild-area-2026-global": {
    "name": "Pokémon GO Wild Area 2026: Global",
-   "updated": "2026-11-06T18:32:09.892Z",
+   "updated": "2026-11-06T23:33:45.979Z",
    "sources": [
     {
      "id": "official",
@@ -2733,7 +3525,7 @@
   },
   "leekduck:into-the-wild-2026": {
    "name": "Into the Wild",
-   "updated": "2026-11-06T18:32:09.892Z",
+   "updated": "2026-11-06T23:33:45.979Z",
    "sources": [
     {
      "id": "official",
@@ -2752,12 +3544,6 @@
      "name": "Leek Duck",
      "trust": "community",
      "url": "https://leekduck.com/events/into-the-wild-2026/"
-    },
-    {
-     "id": "leekduck",
-     "name": "Leek Duck",
-     "trust": "community",
-     "url": "https://leekduck.com/events/go-wild-area-gigantamax-machamp-power-up-timed-research/"
     },
     {
      "id": "hub",
@@ -2905,34 +3691,6 @@
       "status": "single"
      },
      {
-      "text": "Event-exclusive Timed Research",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "There will be Timed Research available to Trainers starting Friday, November 6, at 10:00 a.m. to Sunday, November 15, 2026, at 11:59 p.m. local time.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Complete the Timed Research to encounter Gigantamax Machamp and earn Machop Candy, Machop Candy XL, and Max Particles to help power it up. Timed Research tasks will also award Stardust, Ultra Balls, and more!",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Gigantamax Machamp from this research has a 5% (1 in 20) chance of being Shiny .",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
       "text": "New Trainer profile backgrounds, private Max Battle groups, exclusive Research bonuses, and avatar rewards arrive ahead of GO Wild Area 2026.",
       "sources": [
        "hub"
@@ -2962,6 +3720,34 @@
      },
      {
       "text": "One of the biggest gameplay improvements arriving with GO Wild Area is the ability to join Dynamax Battles privately .",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Previously, entering a Max Battle lobby would automatically match Trainers with other participants. Starting with GO Wild Area 2026, Trainers will have two options when joining a battle:",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Private Group: Enter a group code to join an existing private Max Battle group",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "This should make it easier for coordinated groups to tackle difficult Max Battles without being automatically matched with other players.",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "For more information about their appearances, check out our GO Wild Area 2026: Global guide .",
       "sources": [
        "hub"
       ],
@@ -3032,32 +3818,11 @@
        "leekduck"
       ],
       "status": "single"
-     },
-     {
-      "text": "There will be Timed Research available to Trainers starting Friday, November 6, at 10:00 a.m. to Sunday, November 15, 2026, at 11:59 p.m. local time.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Complete the Timed Research to encounter Gigantamax Machamp and earn Machop Candy, Machop Candy XL, and Max Particles to help power it up. Timed Research tasks will also award Stardust, Ultra Balls, and more!",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
      }
     ],
     "shiny": [
      {
       "text": "Regidrago will make its Pokémon GO Dynamax debut in five-star Max Battles, and Meltan will make its Dynamax debut in GO Pass: Into the Wild. If you’re lucky, you may encounter a Shiny one!",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Gigantamax Machamp from this research has a 5% (1 in 20) chance of being Shiny .",
       "sources": [
        "leekduck"
       ],
@@ -3242,13 +4007,6 @@
       "status": "single"
      },
      {
-      "text": "There will be Timed Research available to Trainers starting Friday, November 6, at 10:00 a.m. to Sunday, November 15, 2026, at 11:59 p.m. local time.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
       "text": "Dates: November 6–8, 2026",
       "sources": [
        "hub"
@@ -3303,6 +4061,13 @@
        "hub"
       ],
       "status": "single"
+     },
+     {
+      "text": "Ticket add-on bonuses are active from November 6 through November 8, 2026 , allowing eligible Trainers to benefit throughout the in-person event weekend.",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
      }
     ]
    },
@@ -3352,7 +4117,6 @@
      "missingFrom": [
       "official",
       "official",
-      "leekduck",
       "leekduck"
      ]
     },
@@ -3375,7 +4139,7 @@
   },
   "dyntrails": {
    "name": "Dynamax Trails",
-   "updated": "2026-11-06T18:32:09.892Z",
+   "updated": "2026-11-06T23:33:45.979Z",
    "sources": [
     {
      "id": "official",
@@ -3632,7 +4396,7 @@
   },
   "novcd": {
    "name": "November Community Day",
-   "updated": "2026-11-06T18:32:09.892Z",
+   "updated": "2026-11-06T23:33:45.979Z",
    "sources": [
     {
      "id": "official",
@@ -3826,7 +4590,7 @@
   },
   "smr1": {
    "name": "Super Mega Raid Day",
-   "updated": "2026-11-06T18:32:09.892Z",
+   "updated": "2026-11-06T23:33:45.979Z",
    "sources": [
     {
      "id": "official",
@@ -4007,7 +4771,7 @@
   },
   "halloween2": {
    "name": "Halloween 2026, Part Two",
-   "updated": "2026-11-06T18:32:09.892Z",
+   "updated": "2026-11-06T23:33:45.979Z",
    "sources": [
     {
      "id": "official",
@@ -4618,7 +5382,7 @@
   },
   "halloween1": {
    "name": "Halloween 2026, Part One",
-   "updated": "2026-11-06T18:32:09.892Z",
+   "updated": "2026-11-06T23:33:45.979Z",
    "sources": [
     {
      "id": "official",
@@ -4890,7 +5654,7 @@
   },
   "spirits": {
    "name": "Dynamax Uxie, Mesprit and Azelf",
-   "updated": "2026-11-06T18:32:09.892Z",
+   "updated": "2026-11-06T23:33:45.979Z",
    "sources": [
     {
      "id": "official",
@@ -5132,7 +5896,7 @@
   },
   "tcg30": {
    "name": "Pokémon TCG: 30th Celebration (at stores)",
-   "updated": "2026-11-06T18:32:09.892Z",
+   "updated": "2026-11-06T23:33:45.979Z",
    "sources": [
     {
      "id": "official",
@@ -5198,7 +5962,7 @@
   },
   "sandile": {
    "name": "Sandile Hatch Day",
-   "updated": "2026-11-06T18:32:09.892Z",
+   "updated": "2026-11-06T23:33:45.979Z",
    "sources": [
     {
      "id": "official",
@@ -5358,7 +6122,7 @@
   },
   "leekduck:mega-sableye-in-mega-raids-october-2026": {
    "name": "Mega Sableye in Mega Raids",
-   "updated": "2026-11-06T18:32:09.892Z",
+   "updated": "2026-11-06T23:33:45.979Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5416,7 +6180,7 @@
   },
   "leekduck:giratina-altered-forme-in-5-star-raid-battles-november-2026": {
    "name": "Giratina (Altered Forme) in 5-star Raid Battles",
-   "updated": "2026-11-06T18:32:09.892Z",
+   "updated": "2026-11-06T23:33:45.979Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5488,7 +6252,7 @@
   },
   "leekduck:shadow-tornadus-incarnate-forme-in-shadow-raids-november-4-2026": {
    "name": "Shadow Tornadus (Incarnate Forme) in Shadow Raids",
-   "updated": "2026-11-06T18:32:09.892Z",
+   "updated": "2026-11-06T23:33:45.979Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5531,7 +6295,7 @@
   },
   "leekduck:pokemon-night-out-london-2026": {
    "name": "Pokémon Night Out 2026 - London",
-   "updated": "2026-11-06T18:32:09.892Z",
+   "updated": "2026-11-06T23:33:45.979Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5638,9 +6402,96 @@
    "gaps": [],
    "researchTasks": []
   },
+  "leekduck:go-wild-area-gigantamax-machamp-power-up-timed-research": {
+   "name": "GO Wild Area: Gigantamax Machamp Power Up! Timed Research",
+   "updated": "2026-11-06T23:33:45.979Z",
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/go-wild-area-gigantamax-machamp-power-up-timed-research/"
+    }
+   ],
+   "fields": {
+    "bonuses": [],
+    "featured": [],
+    "raids": [
+     {
+      "text": "Event-exclusive Timed Research",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "There will be Timed Research available to Trainers starting Friday, November 6, at 10:00 a.m. to Sunday, November 15, 2026, at 11:59 p.m. local time.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Complete the Timed Research to encounter Gigantamax Machamp and earn Machop Candy, Machop Candy XL, and Max Particles to help power it up. Timed Research tasks will also award Stardust, Ultra Balls, and more!",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Gigantamax Machamp from this research has a 5% (1 in 20) chance of being Shiny .",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "eggs": [],
+    "research": [
+     {
+      "text": "There will be Timed Research available to Trainers starting Friday, November 6, at 10:00 a.m. to Sunday, November 15, 2026, at 11:59 p.m. local time.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Complete the Timed Research to encounter Gigantamax Machamp and earn Machop Candy, Machop Candy XL, and Max Particles to help power it up. Timed Research tasks will also award Stardust, Ultra Balls, and more!",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "shiny": [
+     {
+      "text": "Gigantamax Machamp from this research has a 5% (1 in 20) chance of being Shiny .",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "moves": [],
+    "costumes": [],
+    "tickets": [],
+    "dates": [
+     {
+      "text": "There will be Timed Research available to Trainers starting Friday, November 6, at 10:00 a.m. to Sunday, November 15, 2026, at 11:59 p.m. local time.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ]
+   },
+   "conflicts": [],
+   "gaps": [],
+   "researchTasks": []
+  },
   "leekduck:max-mondays-2026-11-16": {
    "name": "Max Monday: Pokémon to be announced",
-   "updated": "2026-11-06T18:32:09.892Z",
+   "updated": "2026-11-06T23:33:45.979Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5682,7 +6533,7 @@
   },
   "leekduck:raidhour20261118": {
    "name": "Cresselia and Darkrai Raid Hour",
-   "updated": "2026-11-06T18:32:09.892Z",
+   "updated": "2026-11-06T23:33:45.979Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5725,7 +6576,7 @@
   },
   "leekduck:pokemonspotlighthour2026-11-19": {
    "name": "Grookey, Scorbunny, and Sobble Spotlight Hour",
-   "updated": "2026-11-06T18:32:09.892Z",
+   "updated": "2026-11-06T23:33:45.979Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5760,7 +6611,7 @@
   },
   "minior2": {
    "name": "Minior Showers: Leonids",
-   "updated": "2026-11-06T18:32:09.892Z",
+   "updated": "2026-11-06T23:33:45.979Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5852,7 +6703,7 @@
   },
   "leekduck:eternamax-eternatus-max-battles-2026": {
    "name": "Eternamax Eternatus Returns",
-   "updated": "2026-11-06T18:32:09.892Z",
+   "updated": "2026-11-06T23:33:45.979Z",
    "sources": [
     {
      "id": "leekduck",
@@ -5932,7 +6783,7 @@
   },
   "leekduck:november-communityday2026": {
    "name": "Pawniard Community Day",
-   "updated": "2026-11-06T18:32:09.892Z",
+   "updated": "2026-11-06T23:33:45.979Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6189,7 +7040,7 @@
   },
   "leekduck:dynamax-trails-2026": {
    "name": "Dynamax Trails",
-   "updated": "2026-11-06T18:32:09.892Z",
+   "updated": "2026-11-06T23:33:45.979Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6425,7 +7276,7 @@
   },
   "leekduck:max-mondays-2026-11-23": {
    "name": "Dynamax Espurr during Max Monday",
-   "updated": "2026-11-06T18:32:09.892Z",
+   "updated": "2026-11-06T23:33:45.979Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6503,7 +7354,7 @@
   },
   "leekduck:cresselia-darkrai-in-5-star-raid-battles-november-2026": {
    "name": "Cresselia and Darkrai in 5-star Raid Battles",
-   "updated": "2026-11-06T18:32:09.892Z",
+   "updated": "2026-11-06T23:33:45.979Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6575,7 +7426,7 @@
   },
   "leekduck:mega-banette-in-mega-raids-november-2026": {
    "name": "Mega Banette in Mega Raids",
-   "updated": "2026-11-06T18:32:09.892Z",
+   "updated": "2026-11-06T23:33:45.979Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6640,7 +7491,7 @@
   },
   "leekduck:raidhour20261125": {
    "name": "Deoxys (Normal, Defense, Attack, and Speed Formes) Raid Hour",
-   "updated": "2026-11-06T18:32:09.892Z",
+   "updated": "2026-11-06T23:33:45.979Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6683,7 +7534,7 @@
   },
   "leekduck:pokemonspotlighthour2026-11-26": {
    "name": "Noibat Spotlight Hour",
-   "updated": "2026-11-06T18:32:09.892Z",
+   "updated": "2026-11-06T23:33:45.979Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6718,7 +7569,7 @@
   },
   "leekduck:twilight-wishes-2026": {
    "name": "Twilight Wishes",
-   "updated": "2026-11-06T18:32:09.892Z",
+   "updated": "2026-11-06T23:33:45.979Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6984,7 +7835,7 @@
   },
   "leekduck:max-mondays-2026-11-30": {
    "name": "Dynamax Cryogonal during Max Monday",
-   "updated": "2026-11-06T18:32:09.892Z",
+   "updated": "2026-11-06T23:33:45.979Z",
    "sources": [
     {
      "id": "leekduck",
@@ -7062,7 +7913,7 @@
   },
   "leekduck:season-24-twilight-trails": {
    "name": "Twilight Trails",
-   "updated": "2026-11-06T18:32:09.892Z",
+   "updated": "2026-11-06T23:33:45.979Z",
    "sources": [
     {
      "id": "leekduck",
@@ -7284,7 +8135,7 @@
   },
   "leekduck:deoxys-normal-defense-attack-speed-formes-in-5-star-raid-battles-november-2026": {
    "name": "Deoxys (Normal, Defense, Attack, and Speed Formes) in 5-star Raid Battles",
-   "updated": "2026-11-06T18:32:09.892Z",
+   "updated": "2026-11-06T23:33:45.979Z",
    "sources": [
     {
      "id": "leekduck",
@@ -7384,7 +8235,7 @@
   },
   "leekduck:mega-metagross-in-mega-raids-november-2026": {
    "name": "Mega Metagross in Mega Raids",
-   "updated": "2026-11-06T18:32:09.892Z",
+   "updated": "2026-11-06T23:33:45.979Z",
    "sources": [
     {
      "id": "leekduck",
@@ -7456,7 +8307,7 @@
   },
   "minior3": {
    "name": "Minior Showers: Geminids",
-   "updated": "2026-11-06T18:32:09.892Z",
+   "updated": "2026-11-06T23:33:45.979Z",
    "sources": [
     {
      "id": "leekduck",
@@ -7548,7 +8399,7 @@
   },
   "leekduck:pokemon-x-adidas-2026": {
    "name": "adidas × Pokémon Timed Research",
-   "updated": "2026-11-06T18:32:09.892Z",
+   "updated": "2026-11-06T23:33:45.979Z",
    "sources": [
     {
      "id": "leekduck",
@@ -7627,7 +8478,7 @@
   },
   "leekduck:pokemon-go-tour-alola-kaohsiung-2027": {
    "name": "Pokémon GO Tour: Alola - Kaohsiung 2027",
-   "updated": "2026-11-06T18:32:09.892Z",
+   "updated": "2026-11-06T23:33:45.979Z",
    "sources": [
     {
      "id": "leekduck",
@@ -7662,7 +8513,7 @@
   },
   "leekduck:pokemon-go-tour-alola-los-angeles-2027": {
    "name": "Pokémon GO Tour: Alola - Los Angeles 2027",
-   "updated": "2026-11-06T18:32:09.892Z",
+   "updated": "2026-11-06T23:33:45.979Z",
    "sources": [
     {
      "id": "leekduck",
@@ -7697,7 +8548,7 @@
   },
   "leekduck:pokemon-go-tour-alola-global-2027": {
    "name": "Pokémon GO Tour: Alola - Global 2027",
-   "updated": "2026-11-06T18:32:09.892Z",
+   "updated": "2026-11-06T23:33:45.979Z",
    "sources": [
     {
      "id": "leekduck",
@@ -7732,7 +8583,7 @@
   },
   "leekduck:minior-showers-eta-aquariids-2027": {
    "name": "Minior Showers: Eta Aquariids 2027",
-   "updated": "2026-11-06T18:32:09.892Z",
+   "updated": "2026-11-06T23:33:45.979Z",
    "sources": [
     {
      "id": "leekduck",
@@ -7831,7 +8682,7 @@
   },
   "leekduck:minior-showers-southern-delta-aquariids-2027": {
    "name": "Minior Showers: Southern Delta Aquariids 2027",
-   "updated": "2026-11-06T18:32:09.892Z",
+   "updated": "2026-11-06T23:33:45.979Z",
    "sources": [
     {
      "id": "leekduck",
@@ -7930,7 +8781,7 @@
   },
   "leekduck:minior-showers-perseids-2027": {
    "name": "Minior Showers: Perseids 2027",
-   "updated": "2026-11-06T18:32:09.892Z",
+   "updated": "2026-11-06T23:33:45.979Z",
    "sources": [
     {
      "id": "leekduck",
@@ -8022,7 +8873,7 @@
   },
   "leekduck:go-pass-november-2026": {
    "name": "GO Pass: November",
-   "updated": "2026-11-06T18:32:09.892Z",
+   "updated": "2026-11-06T23:33:45.979Z",
    "sources": [
     {
      "id": "hub",
