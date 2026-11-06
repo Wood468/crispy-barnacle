@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-06T16:46:40.981Z",
+ "updated": "2026-11-06T23:08:50.612Z",
  "status": [
   {
    "id": "hub",
@@ -23,8 +23,8 @@
   },
   {
    "id": "youtube-pogo",
-   "state": "ok",
-   "items": 2
+   "state": "error",
+   "note": "HTTP 404"
   }
  ],
  "gaps": 5,
@@ -216,26 +216,6 @@
    "pokemon": [
     "Chandelure"
    ],
-   "notInOurData": []
-  },
-  {
-   "source": "youtube-pogo",
-   "trust": "official",
-   "title": "New costumed Pokémon make their debuts during Halloween 2026 Part I in Pokémon GO!",
-   "link": "https://www.youtube.com/shorts/I6MvdaExyIg",
-   "date": "2026-10-27T17:00:40.000Z",
-   "summary": "",
-   "pokemon": [],
-   "notInOurData": []
-  },
-  {
-   "source": "youtube-pogo",
-   "trust": "official",
-   "title": "New costumed Pokémon make their debuts during Halloween 2026 Part I in Pokémon GO!",
-   "link": "https://www.youtube.com/watch?v=wyN2y-BgpoU",
-   "date": "2026-10-27T17:00:14.000Z",
-   "summary": "",
-   "pokemon": [],
    "notInOurData": []
   }
  ]
