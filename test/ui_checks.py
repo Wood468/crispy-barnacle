@@ -2417,7 +2417,7 @@ with sync_playwright() as p:
         pg.close()
         # Open source
         pg=page(); pg.wait_for_function("!!window.GODETAIL")
-        pg.evaluate("GODETAIL.open('cur:zorua')"); pg.wait_for_selector('#evd .evd-btns'); pg.wait_for_timeout(200)
+        pg.evaluate("GODETAIL.open('cur:zorua')"); pg.wait_for_selector('#evd-sources',state='attached'); pg.wait_for_timeout(200)
         check('event detail: Zorua gets Open source from the official post', pg.locator('#evd-sources a[href*="pokemongo.com"]').count()>0)
         no_link=page(); no_link.wait_for_function("!!window.GODETAIL && !!window.GODASH")
         no_link.evaluate("""() => { GODASH.events().push({id:'test:no-source',name:'No Source Test',kind:'event',start:new Date('2026-11-20T10:00:00'),end:new Date('2026-11-20T11:00:00'),status:'community_reported',announced:true,missing:false,featured:[],bonuses:[],notes:[],reports:[]}); GODETAIL.open('test:no-source'); }"""); no_link.wait_for_selector('#evd-sources',state='attached')
@@ -2426,7 +2426,7 @@ with sync_playwright() as p:
         fill=','.join('{"id":"leekduck:f%d","name":"Filler %d","type":"event","start":"2026-11-%02dT10:00:00.000","end":"2026-11-%02dT12:00:00.000","tzMode":"local","status":"community_reported","announced":true,"missing":false,"featured":[],"bonuses":[],"reports":[]}'%(i,i,i+1,i+1) for i in range(11))
         api='{"enabled":true,"events":['+fill+',{"id":"leekduck:x1","name":"Test Raid Day","type":"raid-battles","start":"2026-10-20T10:00:00.000","end":"2026-10-20T11:00:00.000","tzMode":"local","status":"community_reported","announced":true,"missing":false,"featured":[],"bonuses":[],"link":"https://leekduck.com/events/x1/","reports":[{"source":"leekduck","status":"community_reported","link":""}]}],"sources":[]}'
         pg=page(api=api,sources='{"environment":"preview","database":true,"enabled":true,"sources":[]}'); pg.wait_for_function("!!window.GODETAIL")
-        pg.evaluate("GODETAIL.open('leekduck:x1')"); pg.wait_for_selector('#evd .evd-btns')
+        pg.evaluate("GODETAIL.open('leekduck:x1')"); pg.wait_for_selector('#evd-sources',state='attached')
         check('event detail: API event with only a top-level link still gets Open source', pg.locator('#evd-sources a[href="https://leekduck.com/events/x1/"]').count()==1)
 
         # ---- Places ----
@@ -2488,7 +2488,7 @@ with sync_playwright() as p:
         check('match: missing or invalid dates never link', pg.evaluate("GOPLACES.forEvent({name:'City Safari: Brisbane'}).length+GOPLACES.forEvent({name:'City Safari: Brisbane',start:new Date('x')}).length+GOPLACES.forEvent(null).length")==0)
         pg.click('#evd [data-places] >> nth=0'); pg.wait_for_selector('#plc-back'); pg.wait_for_timeout(200)
         check('event detail: venue link opens the place detail on top', 'Queen Street Mall' in pg.inner_text('#plc') and pg.locator('#plc').is_visible())
-        pg.evaluate("GODETAIL.close(); GOPLACES.close(); GODETAIL.open('leekduck:f1')"); pg.wait_for_selector('#evd .evd-btns')
+        pg.evaluate("GODETAIL.close(); GOPLACES.close(); GODETAIL.open('leekduck:f1')"); pg.wait_for_selector('#evd-sources',state='attached')
         check('event detail: online events show no Places section', pg.locator('#evd [data-places]').count()==0 and 'filler 1' in pg.inner_text('#evd').lower())
 
     if on('c'):

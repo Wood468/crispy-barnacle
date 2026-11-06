@@ -487,7 +487,7 @@
     if(!model.schedule){
       if(model.dateText)return model.dateText;
       var published=model.internalValidation&&model.internalValidation.legacyDates||{};
-      if(/^\d{4}-\d{2}-\d{2}$/.test(published.start||'')){var dates=new Intl.DateTimeFormat('en-AU',{timeZone:'UTC',weekday:'short',day:'numeric',month:'short',year:'numeric'});return dates.format(new Date(published.start+'T12:00Z'))+(published.end&&published.end!==published.start?' – '+dates.format(new Date(published.end.slice(0,10)+'T12:00Z')):'')+' · Event times to be confirmed';}
+      if(/^\d{4}-\d{2}-\d{2}$/.test(published.start||'')&&GOEventClock.valid(published.start+'T00:00',false)&&(!published.end||GOEventClock.valid(published.end.slice(0,10)+'T00:00',false))){var dates=new Intl.DateTimeFormat('en-AU',{timeZone:'UTC',weekday:'short',day:'numeric',month:'short',year:'numeric'});return dates.format(new Date(published.start+'T12:00Z'))+(published.end&&published.end!==published.start?' – '+dates.format(new Date(published.end.slice(0,10)+'T12:00Z')):'')+' · Event times to be confirmed';}
       return ev.datesKnown===false?'Dates to be announced':X.timeMeta(ev);
     }
     try{
