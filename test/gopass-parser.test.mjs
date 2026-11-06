@@ -167,28 +167,27 @@ test("nested reward-item blocks fail closed rather than being double-counted", (
   assert.throws(() => extractLeekDuckGoPassRewards(wrap(rankBlock(1, nested, reward("XP ×100")))), /Nested reward-item/);
 });
 
-test("GO Pass parse errors preserve previous rank rows in merged object-shaped fields", () => {
-  const out = { event: {
+test("GO Pass parse failures retain real nested field rows, timestamps and source provenance", () => {
+  const out = { event: { sources: [], fields: {
     tickets: [
       { text: "Rank 2: Current official reward", sources: ["official"], status: "official" },
       { text: "Current ticket note", sources: ["official"], status: "official" }
-    ],
-    bonuses: [{ text: "Current event bonus", sources: ["official"], status: "official" }]
-  }};
-  const old = { event: {
-    tickets: [{ text: "Rank 1: Previous reward", sources: ["leekduck"], status: "single" }],
-    bonuses: [{ text: "Rank 1: Previous milestone", sources: ["leekduck"], status: "single" }]
-  }};
-  const byEvent = new Map([["event", { results: [{
-    source: { id: "leekduck" }, fields: { goPassParseError: "missing Deluxe track" }
-  }]}]]);
+    ], bonuses: [{ text: "Current event bonus", sources: ["official"], status: "official" }]
+  } } };
+  const old = { event: { updated: "2026-11-01T10:00:00Z", sources: [{ id: "leekduck", url: "https://leekduck.com/events/go-pass-november-2026/" }], fields: {
+    tickets: [
+      { text: "Rank 1: Previous reward", sources: ["leekduck"], status: "single" },
+      { text: "Rank 2: Obsolete reward", sources: ["leekduck"], status: "single" }
+    ], bonuses: [{ text: "Rank 1 Deluxe: Previous milestone", sources: ["leekduck"], status: "single" }]
+  } } };
+  const byEvent = new Map([["event", { results: [{ source: { id: "leekduck" }, fields: { goPassParseError: "missing Deluxe track" } }] }]]);
   preserveGoPassRows(out, old, byEvent);
-  assert.deepEqual(out.event.tickets.map(row => row.text), [
-    "Current ticket note", "Rank 2: Current official reward", "Rank 1: Previous reward"
-  ]);
-  assert.deepEqual(out.event.bonuses.map(row => row.text), [
-    "Current event bonus", "Rank 1: Previous milestone"
-  ]);
-  assert.match(out.event.goPassParseWarning, /previously published rank rewards were retained/);
+  assert.deepEqual(out.event.fields.tickets.map(row => row.text), ["Rank 2: Current official reward", "Current ticket note", "Rank 1: Previous reward"]);
+  assert.deepEqual(out.event.fields.bonuses.map(row => row.text), ["Current event bonus", "Rank 1 Deluxe: Previous milestone"]);
+  assert.equal(out.event.goPassRetainedAt, old.event.updated);
+  assert.equal(out.event.sources[0].url, old.event.sources[0].url);
+  assert.equal(out.event.tickets, undefined, "no unused top-level field is written");
+  assert.match(out.event.goPassParseWarning, /previously published/);
+  preserveGoPassRows(out, old, byEvent);
+  assert.equal(out.event.fields.tickets.length, 3, "retries never duplicate rewards");
 });
-

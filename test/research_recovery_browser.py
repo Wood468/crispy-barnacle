@@ -1,3 +1,4 @@
+import os
 """Research freshness, recovery and narrow-layout acceptance checks with source fixtures."""
 import json
 from datetime import datetime
@@ -7,7 +8,7 @@ from playwright.sync_api import sync_playwright
 ROOT = Path(__file__).resolve().parent.parent
 BASE = 'http://127.0.0.1:8791'
 with sync_playwright() as p:
-    browser = p.chromium.launch()
+    browser = getattr(p, os.environ.get('GO_FIELD_NOTES_TEST_BROWSER', 'chromium')).launch()
     for width, theme in [(320, 'light'), (390, 'dark'), (1440, 'dark')]:
         context = browser.new_context(viewport={'width': width, 'height': 900}, color_scheme=theme,
                                       service_workers='block')

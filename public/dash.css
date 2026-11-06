@@ -1695,3 +1695,7 @@ a.evc-source{color:var(--color-link);text-underline-offset:3px}
 }
 
 #tab-now .day-brief{gap:var(--space-1)}
+
+/* Missing special-form artwork stays explicit rather than implying a normal Pokémon is that costume. */
+.art.costume-unavailable{display:inline-flex;flex-direction:column;align-items:center;justify-content:center;min-width:44px;max-width:100%;padding:var(--space-1);text-align:center;white-space:normal;overflow-wrap:anywhere;color:var(--color-text-muted);background:var(--color-surface-raised);border-radius:var(--radius-md);font-size:var(--type-meta);line-height:1.3}
+.costume-unavailable small{font:inherit}

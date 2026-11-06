@@ -546,16 +546,40 @@
         "GO Pass: Twilight Wishes starts November 24 at 10 am and ends November 30 at 8 pm local time. Rank 1 unlocks increased Lucky Pokémon trade and Lucky Friends chances; Rank 10 unlocks 2x catch Stardust (3x with Deluxe). Rewards must be claimed by December 2 at 8 pm local time."
       ],
       "art": [
-        {"n": "Staryu", "shiny": 1},
-        {"n": "Elgyem", "shiny": 1},
+        {
+          "n": "Staryu",
+          "shiny": 1
+        },
+        {
+          "n": "Elgyem",
+          "shiny": 1
+        },
         "Clefairy",
         "Rockruff",
-        "Pikachu",
-        "Espeon",
-        "Umbreon"
+        {
+          "n": "Pikachu (sun crown)",
+          "costume": 1,
+          "label": "sun crown"
+        },
+        {
+          "n": "Pikachu (moon crown)",
+          "costume": 1,
+          "label": "moon crown"
+        },
+        {
+          "n": "Espeon (sun scarf)",
+          "costume": 1,
+          "label": "sun scarf"
+        },
+        {
+          "n": "Umbreon (moon scarf)",
+          "costume": 1,
+          "label": "moon scarf"
+        }
       ],
       "sourceUrl": "https://pokemongo.com/news/twilight-wishes-2026",
-      "source": "Official Pokémon GO announcement"
+      "source": "Official Pokémon GO announcement",
+      "status": "official_confirmed"
     },
     {
       "id": "smr2",

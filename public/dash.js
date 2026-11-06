@@ -158,7 +158,7 @@
     (D.events || []).forEach(function (x) {
       var tags = x.tags || [], title = x.t || '', k = tags.some(function (t) { return /twitch\s*drops/i.test(t); }) || /twitch\s*drops/i.test(title) ? 'twitch' : tags.indexOf('Community Day') > -1 || /community day/i.test(title) ? 'cd' : tags.indexOf('Max Battles') > -1 || /max battle|dynamax|gigantamax|max monday/i.test(title) ? 'max' : tags.indexOf('Raids') > -1 || /\braids?\b|raid hour/i.test(title) ? 'raid' : tags.indexOf('In person') > -1 || /in-person|safari zone|city safari|go fest/i.test(title) ? 'person' : tags.indexOf('Debut') > -1 || /\bdebut\b/i.test(title) ? 'debut' : /spotlight hour/i.test(title) ? 'spot' : 'event';
       out.push(mkEvent({ id: 'cur:' + x.id, detailIds: x.detailIds || [], name: x.t, kind: k, s: x.s, e: x.e, utc: x.utc === true || x.tzMode === 'utc', region: x.region || '', scope: x.scope || '', tags: signalTags({ name:x.t, kind:k, tags:tags, notes:x.p, bonuses:x.bonuses, featured:(x.art||[]).map(function(a){return typeof a==='string'?{name:a}:a;}) }), notes: x.p, bonuses: x.bonuses,
-        featured: (x.art || []).map(function (a) { a = typeof a === 'string' ? { n: a } : a; return { name: a.n, costume: !!a.costume, shiny: !!a.shiny, label: a.label, role: 'featured' }; }),
+        featured: (x.art || []).map(function (a) { a = typeof a === 'string' ? { n: a } : a; return { name: a.n, costume: !!a.costume, shiny: !!a.shiny, label: a.label, asset: a.asset, role: 'featured' }; }),
         highlights: Array.isArray(x.highlights) ? x.highlights : [],
         status: x.status || (x.sourceUrl ? 'official_confirmed' : 'community_reported'),
         source: x.source || (x.sourceUrl ? 'Official Pokémon GO announcement' : 'Curated community calendar'),
@@ -444,7 +444,7 @@
     var isGmax = /^Gigantamax\s/i.test(f.name) || (/gigantamax/i.test(ev.name || '') && !/dynamax.*gigantamax/i.test(ev.name || ''));
     var isMax = ev.kind === 'max' || /^(Dynamax|Gigantamax)\s/i.test(f.name) || /\b(dynamax|gigantamax)\b/i.test(ev.name || '');
     var spriteName = isGmax && !/^Gigantamax\s/i.test(f.name) ? 'Gigantamax ' + f.name : f.name;
-    var sprite = art({ n: spriteName, costume: f.costume, shiny: f.shiny, shadow: isShadow, dynamax: isMax }, cls || 'ea');
+    var sprite = art({ n: spriteName, costume: f.costume, label: f.label, asset: f.asset, shiny: f.shiny, shadow: isShadow, dynamax: isMax }, cls || 'ea');
     var inc = incenseNames(ev)[String(f.name).toLowerCase()] ? INC_IMG : '';
     if (isMax) return '<span class="max-art ' + (isGmax ? 'is-gmax' : 'is-dyn') + '">' + sprite + inc + '<span class="max-tag">' + (isGmax ? '' : '<img class="dyn-logo" alt="" decoding="async" src="' + IMG_DYNAMAX + '" data-err="rm">') + (isGmax ? 'G-Max' : 'Dynamax') + '</span></span>';
     if (isShadow) return '<span class="shadow-art"><i class="sf sf1"></i><i class="sf sf2"></i><i class="sf sf3"></i>' + sprite + inc + '<span class="shadow-tag"><img src="/ico/g/shadow.webp" alt="" loading="lazy" decoding="async">Shadow</span></span>';
@@ -1296,9 +1296,9 @@
     return '<li><button type="button" class="opp-event" data-open="' + esc(e.id) + '" aria-label="Event details: ' + esc(e.name) + '"><b>' + esc(e.name) + '</b><span>' + esc(timeMeta(e)) + ' · ' + esc(countdown(e)) + '</span></button></li>';
   }
   function oppCard(x) {
-    var o = x.o, evs = x.evs.slice(0, 3), chip = { missing: '<span class="st st-need">Need</span>', have: '<span class="st st-n">Have</span>', form: '<span class="st st-d">Not collectible</span>', unknown: '<span class="st st-n">Not tracked</span>' }[o.state];
+    var o = x.o, evs = x.evs.slice(0, 3), chip = { missing: '<span class="st st-need">Need</span>', have: '<span class="st st-n">Have</span>', form: '<span class="st st-d">Not collectible</span>', unknown: '<span class="st st-n">Not tracked</span>', unreleased: '<span class="st st-n">Not released yet</span>' }[o.state];
     var fol = isFollowed(x.name);
-    return '<article class="opp ' + o.state + '"><div class="opp-art">' + art({ n: o.base, costume: x.costume }, 'ea') + '</div><div class="opp-main">'
+    return '<article class="opp ' + o.state + '"><div class="opp-art">' + art({ n: o.base, costume: x.costume, label: x.label }, 'ea') + '</div><div class="opp-main">'
       + '<div class="opp-top"><h3>' + esc(x.name) + '</h3>' + chip + '<button type="button" class="fbtn" data-follow="' + esc(x.name) + '" aria-pressed="' + fol + '" aria-label="Follow ' + esc(x.name) + '">' + (fol ? '★' : '☆') + '</button></div>'
       + (o.why ? '<p class="muted opp-why">' + esc(o.why) + '</p>' : '')
       + (o.tk ? markBtns(o.tk, x.name) : '')
@@ -1312,10 +1312,10 @@
     var all = opportunities(), query = $('opp-search') ? $('opp-search').value : '', mode = $('opp-filter') ? $('opp-filter').value : 'all';
     var list = LIB.filterOpportunities(all, query, mode, isFollowed), known = Object.keys(DEXGEN).some(function (id) { return genConfirmed(DEXGEN[id]); }) || usKeys('form:').length > 0;
     var need = list.filter(function (x) { return x.o.state === 'missing'; });
-    var debut = list.filter(function (x) { return (x.o.state === 'unknown' || x.o.state === 'form') && x.evs.some(function (ev) { return ev.kind === 'debut'; }); });
+    var debut = list.filter(function (x) { return (x.o.state === 'unknown' || x.o.state === 'form' || x.o.state === 'unreleased') && x.evs.some(function (ev) { return ev.kind === 'debut'; }); });
     var debutKeys = {};
     debut.forEach(function (x) { debutKeys[(x.name || '').toLowerCase()] = true; });
-    var unk = list.filter(function (x) { return (x.o.state === 'unknown' || x.o.state === 'form') && !debutKeys[(x.name || '').toLowerCase()]; });
+    var unk = list.filter(function (x) { return (x.o.state === 'unknown' || x.o.state === 'form' || x.o.state === 'unreleased') && !debutKeys[(x.name || '').toLowerCase()]; });
     var have = list.filter(function (x) { return x.o.state === 'have'; });
     var html = '';
     if ($('opp-status')) $('opp-status').textContent = list.length + ' of ' + all.length + ' Pokémon opportunities in the next four weeks. ' + (mode === 'following' ? 'Showing Pokémon you follow.' : mode === 'need' ? 'Showing only Pokémon marked Need.' : 'Showing all collection states.');

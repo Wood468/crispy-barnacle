@@ -163,7 +163,7 @@ function goPassRowText(value) {
   return typeof value === "string" ? value : String(value?.text || "");
 }
 function isGoPassRankRow(value) {
-  return /^rank \d+:/i.test(goPassRowText(value));
+  return /^rank \d+(?: deluxe)?:/i.test(goPassRowText(value));
 }
 
 /** Preserve the last known-good rank rows if Leek Duck's structured GO Pass markup fails. */
@@ -173,19 +173,34 @@ export function preserveGoPassRows(out, old, byEvent) {
       result.source?.id === "leekduck" && result.fields?.goPassParseError
     );
     if (!failedLeekDuck || !old[id] || !out[id]) continue;
+    const currentFields = out[id].fields || (out[id].fields = {});
+    const previousFields = old[id].fields || {};
+    let retained = 0;
     for (const field of ["tickets", "bonuses"]) {
-      const current = Array.isArray(out[id][field]) ? out[id][field] : [];
-      const currentRankRows = current.filter(isGoPassRankRow);
-      const nonRankRows = current.filter(row => !isGoPassRankRow(row));
-      const previousRankRows = (old[id][field] || []).filter(isGoPassRankRow);
-      const seen = new Set([...nonRankRows, ...currentRankRows].map(goPassRowText));
-      out[id][field] = [
-        ...nonRankRows,
-        ...currentRankRows,
-        ...previousRankRows.filter(row => !seen.has(goPassRowText(row)))
-      ];
+      const current = Array.isArray(currentFields[field]) ? currentFields[field] : [];
+      const previous = Array.isArray(previousFields[field]) ? previousFields[field] : [];
+      const seen = new Set(current.map(goPassRowText));
+      const currentRanks = new Set(current.filter(isGoPassRankRow).map(row => /^rank \d+/i.exec(goPassRowText(row))[0].toLowerCase()));
+      const keep = previous.filter(row => {
+        if (!isGoPassRankRow(row) || seen.has(goPassRowText(row))) return false;
+        // A current source's reward for a rank wins over its older snapshot.
+        if (field === "tickets" && currentRanks.has(/^rank \d+/i.exec(goPassRowText(row))[0].toLowerCase())) return false;
+        seen.add(goPassRowText(row));
+        return true;
+      });
+      currentFields[field] = current.concat(keep);
+      retained += keep.length;
     }
-    out[id].goPassParseWarning = "GO Pass source parsing failed; previously published rank rewards were retained.";
+    out[id].goPassParseWarning = retained
+      ? "GO Pass source parsing failed; previously published rank rewards were retained."
+      : "GO Pass source parsing failed; rank rewards could not be refreshed.";
+    if (retained) {
+      out[id].goPassRetainedAt = old[id].goPassRetainedAt || old[id].updated || null;
+      const sources = out[id].sources || (out[id].sources = []);
+      for (const source of old[id].sources || []) {
+        if (!sources.some(value => value.id === source.id && value.url === source.url)) sources.push(source);
+      }
+    }
   }
   return out;
 }

@@ -446,7 +446,7 @@ with sync_playwright() as p:
         ctx.set_default_navigation_timeout(15000)
         pg=ctx.new_page(); pg.errs=[]; pg.season_poster_requests=[]; pg.season_thumb_requests=[]; pg.infographic_requests=[]
         pg.on('pageerror',lambda e:pg.errs.append(str(e)))
-        pg.on('request',lambda r:pg.season_poster_requests.append(r.url) if any(slug in r.url for slug in ('season-24-twilight-trails','go-pass-october-2026','halloween-2026-part-2','go-pass-november-2026')) else None)
+        pg.on('request',lambda r:pg.season_poster_requests.append(r.url) if r.resource_type=='image' and any(slug in r.url for slug in ('season-24-twilight-trails','go-pass-october-2026','halloween-2026-part-2','go-pass-november-2026')) else None)
         pg.on('request',lambda r:pg.season_thumb_requests.append(r.url) if '/season-thumbs/' in r.url else None)
         pg.on('request',lambda r:pg.infographic_requests.append(r.url) if '/img/ext/' in r.url or '/infographics/' in r.url or '/infographic-thumbs/' in r.url else None)
         if guard is not None:  # console guard: collect everything noisy so the caller can filter it against an explicit allow-list
@@ -469,7 +469,7 @@ with sync_playwright() as p:
                 Node.prototype.appendChild = function (node) {
                     if (node && node.tagName === 'SCRIPT' && /\/places\.js(?:\?|$)/.test(node.src)) {
                         window.__gofnPlacesDeferred = true;
-                        setTimeout(() => append.call(this, node), 1500);
+                        window.__gofnReleasePlaces = () => append.call(this, node);
                         return node;
                     }
                     return append.call(this, node);
@@ -1481,6 +1481,7 @@ with sync_playwright() as p:
         places_page.wait_for_function("window.GODETAIL && window.__gofnPlacesDeferred && !window.GOPLACES", timeout=5000)
         check('Event detail loader is ready while the places script is still delayed',
               places_page.evaluate('!!window.GOPLACES_READY && typeof window.GOPLACES_READY.then === "function"'))
+        places_page.evaluate('window.__gofnReleasePlaces()')
         places_page.locator('#home-now .today-next-up').click()
         places_page.locator('#evd').wait_for(state='visible', timeout=5000)
         location_link = places_page.locator('#evd .evd-jump a[href="#evd-locations"]')

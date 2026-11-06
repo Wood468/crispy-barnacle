@@ -115,12 +115,61 @@ jobs:
         if: matrix.shard == 'b'
         run: python test/research_recovery_browser.py
 
+      - name: Verify combined source rendering and offline upgrade
+        if: matrix.shard == 'b'
+        run: python test/release_browser.py
+
       - name: Verify Today slow-feed fallback and late recovery
         if: matrix.shard == 'c'
         env:
           GO_FIELD_NOTES_SLOW_FEED_URL: http://127.0.0.1:8791
         run: python test/slow_feed_browser.py
 
+
+  webkit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: read
+      checks: read
+    env:
+      GO_FIELD_NOTES_TEST_BROWSER: webkit
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 22
+      - name: Install Playwright WebKit
+        run: |
+          pip install playwright
+          python -m playwright install --with-deps webkit
+      - name: Start static app server
+        run: |
+          python -m http.server 8791 --directory public > /tmp/go-field-notes-http.log 2>&1 &
+          for i in $(seq 1 20); do
+            if curl --silent --fail http://127.0.0.1:8791/ > /dev/null; then exit 0; fi
+            sleep 1
+          done
+          exit 1
+      - name: Verify Collection planner and Research in WebKit
+        run: |
+          python test/opportunity_planner_browser.py
+          python test/research_recovery_browser.py
+      - name: Verify combined source rendering, PWA update and preserved player data
+        run: python test/release_browser.py
+      - name: Wait for the approved production build
+        if: github.event_name == 'push'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: node scripts/wait-for-workers-build.mjs
+      - name: Verify actual production assets and application in WebKit
+        if: github.event_name == 'push'
+        env:
+          GO_FIELD_NOTES_RELEASE_URL: https://pogo.michaelpuff.com
+        run: python test/release_browser.py
 
   production-image-audit:
     # Informational, read-only sample of the live public site; never blocks code checks.

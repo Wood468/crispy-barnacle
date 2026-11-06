@@ -1,3 +1,4 @@
+import os
 """Collection opportunity search, ownership boundaries and event handoffs in the real app."""
 import json
 import re
@@ -25,7 +26,7 @@ for event in DATA['events']:
 DATA['spotlight'] = []
 DATA['raidHour'] = []
 with sync_playwright() as p:
-    browser = p.chromium.launch()
+    browser = getattr(p, os.environ.get('GO_FIELD_NOTES_TEST_BROWSER', 'chromium')).launch()
     for width, theme in [(320, 'light'), (390, 'dark'), (1440, 'dark')]:
         context = browser.new_context(viewport={'width': width, 'height': 900}, timezone_id='Australia/Sydney',
                                       service_workers='block')
