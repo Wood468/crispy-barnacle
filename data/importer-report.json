@@ -1,5 +1,5 @@
 {
- "runAt": "2026-11-06T18:32:09.892Z",
+ "runAt": "2026-11-06T23:33:45.979Z",
  "sources": {
   "official": {
    "listed": 23,
@@ -15,7 +15,7 @@
   }
  },
  "pagesRead": 80,
- "events": 89,
+ "events": 90,
  "worldEvents": 62,
  "worldUndated": [
   "GO Wild Area Stamp Rally"
@@ -394,7 +394,6 @@
    "missingFrom": [
     "official",
     "official",
-    "leekduck",
     "leekduck"
    ]
   },
