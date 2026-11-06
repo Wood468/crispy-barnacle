@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-05T23:52:38.962Z",
+ "updated": "2026-11-06T03:45:05.259Z",
  "joinedThisRun": [
   {
    "kept": "w-pokemon-fossil-museum-2026",
@@ -34,25 +34,6 @@
  ],
  "same": [],
  "crossList": [
-  {
-   "keep": {
-    "id": "halloween2",
-    "name": "Halloween 2026, Part Two",
-    "place": "",
-    "start": "2026-11-01",
-    "end": "2026-11-05",
-    "list": "curated"
-   },
-   "dupe": {
-    "id": "w-halloween",
-    "name": "Halloween 2026 Part 2",
-    "place": "",
-    "start": "2026-11-01",
-    "end": "2026-11-05",
-    "list": "world"
-   },
-   "why": "same dates, short matching titles"
-  },
   {
    "keep": {
     "id": "sendai",
@@ -206,6 +187,44 @@
     "list": "curated"
    },
    "why": "dates fit and 1 shared word"
+  },
+  {
+   "a": {
+    "id": "into",
+    "name": "Into the Wild",
+    "place": "",
+    "start": "2026-11-09",
+    "end": "2026-11-13",
+    "list": "curated"
+   },
+   "b": {
+    "id": "w-go-wild-area-gigantamax-machamp-power-up-timed-res",
+    "name": "GO Wild Area Gigantamax Machamp Power Up Timed Research",
+    "place": "",
+    "start": "2026-11-06",
+    "end": "2026-11-15",
+    "list": "world"
+   },
+   "why": "dates fit and 1 shared word"
+  },
+  {
+   "a": {
+    "id": "wag",
+    "name": "GO Wild Area: Global",
+    "place": "",
+    "start": "2026-11-14",
+    "end": "2026-11-15",
+    "list": "curated"
+   },
+   "b": {
+    "id": "w-go-wild-area-gigantamax-machamp-power-up-timed-res",
+    "name": "GO Wild Area Gigantamax Machamp Power Up Timed Research",
+    "place": "",
+    "start": "2026-11-06",
+    "end": "2026-11-15",
+    "list": "world"
+   },
+   "why": "dates fit and 2 shared words"
   }
  ],
  "odd": []

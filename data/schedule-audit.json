@@ -1,5 +1,5 @@
 {
- "checked": "2026-11-05T23:52:41.637Z",
+ "checked": "2026-11-06T03:45:07.901Z",
  "compared": 44,
  "problems": [],
  "missing": [
@@ -39,26 +39,5 @@
    "reason": "official_source_present"
   }
  ],
- "added": [
-  {
-   "id": "w-go-wild-area-gigantamax-machamp-power-up-timed-res",
-   "name": "GO Wild Area Gigantamax Machamp Power Up Timed Research",
-   "place": "",
-   "area": "Worldwide",
-   "scope": "regional",
-   "start": "2026-11-06",
-   "end": "2026-11-15",
-   "datesKnown": true,
-   "sources": [
-    {
-     "id": "leekduck",
-     "name": "Leek Duck",
-     "url": "https://leekduck.com/events/go-wild-area-gigantamax-machamp-power-up-timed-research/",
-     "auto": true
-    }
-   ],
-   "status": "single",
-   "seen": "2026-11-05"
-  }
- ]
+ "added": []
 }
