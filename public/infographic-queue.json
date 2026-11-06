@@ -2,7 +2,7 @@
  "updated": "2026-11-05T23:05:27.307Z",
  "items": [
   {
-   "linked": false,
+   "linked": true,
    "id": "discord:1568023752749613163",
    "title": "M Clefable RD",
    "image": "/infographics/g47ix/discord-1568023752749613163.webp",
@@ -35,7 +35,7 @@
    ]
   },
   {
-   "linked": false,
+   "linked": true,
    "id": "discord:1568019569581494334",
    "title": "Palkia",
    "image": "/infographics/g47ix/discord-1568019569581494334.webp",
@@ -69,7 +69,7 @@
    ]
   },
   {
-   "linked": false,
+   "linked": true,
    "id": "discord:1568019537834676367",
    "title": "Counter Zamazenta CROWN",
    "image": "/infographics/g47ix/discord-1568019537834676367.png",
@@ -104,7 +104,7 @@
    ]
   },
   {
-   "linked": false,
+   "linked": true,
    "id": "discord:1568019536358412349",
    "title": "Duraludon",
    "image": "/infographics/g47ix/discord-1568019536358412349.webp",
@@ -135,7 +135,7 @@
    ]
   },
   {
-   "linked": false,
+   "linked": true,
    "id": "discord:1568019536228257994",
    "title": "Dialga",
    "image": "/infographics/g47ix/discord-1568019536228257994.webp",

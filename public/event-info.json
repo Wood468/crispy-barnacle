@@ -550,6 +550,13 @@
           "source": "G47IX",
           "sourceUrl": "https://discord.com/channels/@me/1558793395198099618/1565674951699071116",
           "alt": "Super Mega Raid Day infographic"
+        },
+        {
+          "label": "Infographic · G47IX",
+          "url": "/infographics/g47ix/discord-1568023752749613163.webp",
+          "source": "G47IX",
+          "sourceUrl": "https://discord.com/channels/@me/1558793395198099618/1568023752749613163",
+          "alt": "Super Mega Raid Day infographic"
         }
       ],
       "start": "2026-10-31",
@@ -1322,8 +1329,32 @@
           "source": "G47IX",
           "sourceUrl": "https://discord.com/channels/@me/1558793395198099618/1565053518329684099",
           "alt": "Dynamax Trails infographic"
+        },
+        {
+          "label": "Infographic · G47IX",
+          "url": "/infographics/g47ix/discord-1568019536228257994.webp",
+          "source": "G47IX",
+          "sourceUrl": "https://discord.com/channels/@me/1558793395198099618/1568019536228257994",
+          "alt": "Dynamax Trails infographic"
+        },
+        {
+          "label": "Infographic · G47IX",
+          "url": "/infographics/g47ix/discord-1568019536358412349.webp",
+          "source": "G47IX",
+          "sourceUrl": "https://discord.com/channels/@me/1558793395198099618/1568019536358412349",
+          "alt": "Dynamax Trails infographic"
+        },
+        {
+          "label": "Infographic · G47IX",
+          "url": "/infographics/g47ix/discord-1568019569581494334.webp",
+          "source": "G47IX",
+          "sourceUrl": "https://discord.com/channels/@me/1558793395198099618/1568019569581494334",
+          "alt": "Dynamax Trails infographic"
         }
-      ]
+      ],
+      "start": "2026-11-16",
+      "end": "2026-11-23",
+      "dateSource": "data.json"
     },
     "leekduck:pokemonspotlighthour2026-10-29": {
       "names": [
@@ -1507,6 +1538,31 @@
       "start": "2026-11-04",
       "end": "2026-11-08",
       "dateSource": "event-details.json"
+    },
+    "raid:crowned-sword-zacian-and-crowned-shield-zamazenta:2026-11-09": {
+      "names": [
+        "Crowned Sword Zacian and Crowned Shield Zamazenta 5-star raids"
+      ],
+      "source": {
+        "label": "G47IX",
+        "trust": "community",
+        "url": "https://discord.com/channels/@me/1558793395198099618/1568019537834676367",
+        "observed": "2026-11-06"
+      },
+      "tickets": [],
+      "info": [],
+      "infographics": [
+        {
+          "label": "Infographic · G47IX",
+          "url": "/infographics/g47ix/discord-1568019537834676367.png",
+          "source": "G47IX",
+          "sourceUrl": "https://discord.com/channels/@me/1558793395198099618/1568019537834676367",
+          "alt": "Crowned Sword Zacian and Crowned Shield Zamazenta 5-star raids infographic"
+        }
+      ],
+      "start": "2026-11-09",
+      "end": "2026-11-13",
+      "dateSource": "rotation"
     }
   },
   "passes": {
