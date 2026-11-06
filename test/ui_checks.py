@@ -4024,7 +4024,7 @@ with sync_playwright() as p:
         check('Today shiny rail assets are versioned in the offline shell',
               all(url in SW_JS for url in (DASH_URL, DASH_CSS_URL, APP_URL)) and
               bool(re.fullmatch(r'gofn-shell-v[0-9]+', SHELL_CACHE)) and
-              '/research.js?v=20261104b' in SW_JS and '/data.json' in SW_JS)
+              '/research.js?v=20261106c' in SW_JS and '/data.json' in SW_JS)
 
     if on('c'):
         # Purchase Planner: ticket availability is sourced, registration is not called a sale, and official links remain touch-sized.
