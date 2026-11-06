@@ -34,5 +34,23 @@ test('invalid identity and dangling encounter are rejected',()=> {
  assert.throws(()=>normalize(event({encounters:[{identityKey:'missing',method:'raid'}]})),/unknown Pokémon/);
 });
 test('event ID is stable across amended schedule metadata',()=> {
- assert.equal(normalize(event({schedule:{start:'2027-01-01'}})).eventId,normalize(event({schedule:{start:'2027-01-02'}})).eventId);
+ assert.equal(normalize(event({schedule:{start:'2027-01-01T14:00:00',end:'2027-01-01T17:00:00',timeBasis:'local',timeZone:'Australia/Melbourne'}})).eventId,normalize(event({schedule:{start:'2027-01-02T14:00:00',end:'2027-01-02T17:00:00',timeBasis:'local',timeZone:'Australia/Melbourne'}})).eventId);
+});
+
+test('schedule and optional panels survive normalization',()=> {
+ const schedule={start:'2027-01-01T14:00:00',end:'2027-01-01T17:00:00',timeBasis:'local',timeZone:'Australia/Melbourne',regionIds:['global']};
+ const result=normalize(event({schedule,research:[{id:'task-1'}],passes:[{id:'pass-1'}],tickets:[{id:'ticket-1'}],aliases:['legacy-id','legacy-id']}));
+ assert.deepEqual(result.schedule,schedule);
+ assert.equal(result.research.length,1);
+ assert.equal(result.passes.length,1);
+ assert.equal(result.tickets.length,1);
+ assert.deepEqual(result.aliases,['legacy-id']);
+});
+test('local clock requires named timezone and instant requires explicit offset',()=> {
+ assert.throws(()=>normalize(event({schedule:{start:'2027-01-01T14:00:00',end:'2027-01-01T17:00:00',timeBasis:'local'}})),/IANA/);
+ assert.throws(()=>normalize(event({schedule:{start:'2027-01-01T14:00:00',end:'2027-01-01T17:00:00',timeBasis:'instant'}})),/offsets/);
+});
+test('overseas region metadata is retained rather than suppressed',()=> {
+ const schedule={start:'2027-01-01T10:00:00',end:'2027-01-01T18:00:00',timeBasis:'local',timeZone:'America/Los_Angeles',regionIds:['us-los-angeles']};
+ assert.deepEqual(normalize(event({schedule})).schedule.regionIds,['us-los-angeles']);
 });
