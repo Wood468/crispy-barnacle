@@ -54,3 +54,16 @@ test('overseas region metadata is retained rather than suppressed',()=> {
  const schedule={start:'2027-01-01T10:00:00',end:'2027-01-01T18:00:00',timeBasis:'local',timeZone:'America/Los_Angeles',regionIds:['us-los-angeles']};
  assert.deepEqual(normalize(event({schedule})).schedule.regionIds,['us-los-angeles']);
 });
+
+test('rejects impossible local calendar dates and invalid timezone names',()=> {
+ const base={start:'2027-02-30T14:00:00',end:'2027-03-01T17:00:00',timeBasis:'local',timeZone:'Australia/Melbourne'};
+ assert.throws(()=>normalize(event({schedule:base})),/Invalid schedule datetime/);
+ assert.throws(()=>normalize(event({schedule:{...base,start:'2027-02-28T14:00:00',timeZone:'Mars/Olympus'}})),/Invalid IANA timeZone/);
+});
+test('local-clock ordering is deterministic without importer host timezone',()=> {
+ const schedule={start:'2027-01-01T14:00:00',end:'2027-01-01T13:00:00',timeBasis:'local',timeZone:'America/Los_Angeles'};
+ assert.throws(()=>normalize(event({schedule})),/Schedule end must follow start/);
+});
+test('rejects offsetless instant and malformed offset dates',()=> {
+ assert.throws(()=>normalize(event({schedule:{start:'2027-01-01T14:00:00+99:00',end:'2027-01-01T17:00:00Z',timeBasis:'instant'}})),/Invalid schedule datetime/);
+});
