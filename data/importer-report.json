@@ -1,5 +1,5 @@
 {
- "runAt": "2026-11-05T23:52:38.381Z",
+ "runAt": "2026-11-06T03:45:04.945Z",
  "sources": {
   "official": {
    "listed": 22,
@@ -16,7 +16,7 @@
  },
  "pagesRead": 80,
  "events": 89,
- "worldEvents": 60,
+ "worldEvents": 61,
  "worldUndated": [
   "GO Wild Area Stamp Rally"
  ],
@@ -28,11 +28,6 @@
   },
   {
    "source": "official",
-   "title": "Save the Date: Pokémon GO Tour 2027",
-   "url": "https://pokemongo.com/news/save-the-date-go-tour-2027/"
-  },
-  {
-   "source": "official",
    "title": "全国のイオンモールで『ポケモン GO』のハロウィンイベントを楽しもう！ — Pokémon GO",
    "url": "https://pokemongo.com/ja/news/202610aeonmall-halloween/"
   },
@@ -40,6 +35,11 @@
    "source": "official",
    "title": "Ready, set, GO! Join the Pokémon RUN 30 event near you! — Pokémon GO",
    "url": "https://pokemongo.com/news/pokemon-run-30-2026/"
+  },
+  {
+   "source": "official",
+   "title": "Save the Date: Pokémon GO Tour 2027",
+   "url": "https://pokemongo.com/news/save-the-date-go-tour-2027/"
   },
   {
    "source": "official",
@@ -115,11 +115,6 @@
    "source": "hub",
    "title": "Shadow Tornadus (Incarnate) Raid Counters Guide",
    "url": "https://pokemongohub.net/post/guide/shadow-tornadus-incarnate-raid-counters-guide/"
-  },
-  {
-   "source": "hub",
-   "title": "Shadow Poliwhirl Raid Guide",
-   "url": "https://pokemongohub.net/post/guide/shadow-poliwhirl-raid-guide/"
   }
  ],
  "intl": {
@@ -201,6 +196,7 @@
    "event": "Pokémon GO Wild Area 2026: Mexico City",
    "field": "bonuses",
    "missingFrom": [
+    "official",
     "official"
    ]
   },
@@ -208,6 +204,7 @@
    "event": "Pokémon GO Wild Area 2026: Mexico City",
    "field": "featured",
    "missingFrom": [
+    "official",
     "official"
    ]
   },
@@ -215,6 +212,7 @@
    "event": "Pokémon GO Wild Area 2026: Mexico City",
    "field": "raids",
    "missingFrom": [
+    "official",
     "official"
    ]
   },
@@ -222,6 +220,7 @@
    "event": "Pokémon GO Wild Area 2026: Mexico City",
    "field": "eggs",
    "missingFrom": [
+    "official",
     "official"
    ]
   },
@@ -229,6 +228,7 @@
    "event": "Pokémon GO Wild Area 2026: Mexico City",
    "field": "research",
    "missingFrom": [
+    "official",
     "official"
    ]
   },
@@ -236,6 +236,7 @@
    "event": "Pokémon GO Wild Area 2026: Mexico City",
    "field": "shiny",
    "missingFrom": [
+    "official",
     "official"
    ]
   },
@@ -243,6 +244,7 @@
    "event": "Pokémon GO Wild Area 2026: Mexico City",
    "field": "costumes",
    "missingFrom": [
+    "official",
     "official"
    ]
   },
@@ -250,6 +252,7 @@
    "event": "Pokémon GO Wild Area 2026: Mexico City",
    "field": "tickets",
    "missingFrom": [
+    "official",
     "official"
    ]
   },
