@@ -35,12 +35,12 @@
     if (schedule) {
       if (!str(schedule.start) || !str(schedule.end)) throw new Error('Schedule requires start and end');
       if (['local','instant'].indexOf(schedule.timeBasis) < 0) throw new Error('Schedule requires local or instant timeBasis');
-      if (schedule.timeBasis === 'instant' && (!/(Z|[+-]\\d{2}:\\d{2})$/.test(schedule.start) || !/(Z|[+-]\\d{2}:\\d{2})$/.test(schedule.end))) throw new Error('Instant schedule requires timezone offsets');
-      if (schedule.timeBasis === 'local' && (!str(schedule.timeZone) || !/^[A-Za-z_]+\\/[A-Za-z_]+/.test(schedule.timeZone))) throw new Error('Local schedule requires IANA timeZone');
+      if (schedule.timeBasis === 'instant' && (!/(Z|[+-]\d{2}:\d{2})$/.test(schedule.start) || !/(Z|[+-]\d{2}:\d{2})$/.test(schedule.end))) throw new Error('Instant schedule requires timezone offsets');
+      if (schedule.timeBasis === 'local' && (!str(schedule.timeZone) || !/^[A-Za-z_]+\/[A-Za-z_]+/.test(schedule.timeZone))) throw new Error('Local schedule requires IANA timeZone');
       // Compare wall-clock strings only for a single named timezone. Date.parse of
       // offsetless values otherwise depends on the machine running the importer.
       function validDateTime(value, withOffset) {
-        var match = /^(\\d{4})-(\\d{2})-(\\d{2})T(\\d{2}):(\\d{2})(?::(\\d{2}))?(?:([Zz]|[+-]\\d{2}:\\d{2}))?$/.exec(value);
+        var match = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})(?::(\d{2}))?(?:([Zz]|[+-]\d{2}:\d{2}))?$/.exec(value);
         if (!match || (withOffset && !match[7]) || (!withOffset && match[7])) return false;
         var year=+match[1], month=+match[2], day=+match[3], hour=+match[4], minute=+match[5], second=+(match[6]||0);
         if (hour>23 || minute>59 || second>59) return false;
