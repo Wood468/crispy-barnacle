@@ -209,3 +209,11 @@ test('new authoritative schedules take precedence over reviewed fallback correct
  const corrections={schemaVersion:1,events:{'native-amendment':{schedule:{...schedule,start:'2027-01-01T10:00Z',end:'2027-01-01T18:00Z'}}}};
  assert.deepEqual(buildCatalogue({data,corrections}).events[0].schedule,schedule);
 });
+test('long GO Pass tracks group exact source ranks into compact expandable ranges',()=>{
+ const stages=Array.from({length:98},(_,i)=>({rank:i+2,free:['Rare Candy'],deluxe:['Premium Battle Pass']}));
+ const html=UI.render(event({passes:[{title:'Synthetic long GO Pass',stages}]}),{});
+ assert.equal((html.match(/class="ue-pass-range"/g)||[]).length,4);
+ assert.match(html,/Ranks 2–25/);assert.match(html,/Ranks 76–99/);
+ assert.equal((html.match(/<li><b>Rank /g)||[]).length,98);
+ assert.doesNotMatch(html,/<li><b>Rank 1<\/b>/);
+});

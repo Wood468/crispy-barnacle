@@ -98,6 +98,15 @@ with sync_playwright() as p:
         page.keyboard.press('Escape')
         assert page.locator('#evd').is_hidden()
         assert event.evaluate('(el)=>el===document.activeElement'), 'detail close lost trigger focus'
+        page.evaluate("GODETAIL.open('cur:gopassnov')")
+        page.wait_for_function("document.getElementById('evd-t')?.textContent.includes('GO Pass')")
+        assert page.locator('#evd .ue-pass-range').count()>=4
+        assert page.locator('#evd .ue-pass-stages > li').count()>=90
+        page.locator('#evd .ue-pass-range > summary').last.click()
+        assert 'Rank 100' in page.locator('#evd').inner_text()
+        assert page.locator('#evd').evaluate('(el)=>el.scrollWidth<=el.clientWidth'), ('GO Pass',width)
+        capture('gopass')
+        page.keyboard.press('Escape')
         assert errors == [], errors
         print(f'PASS premium surfaces {engine} {width}px {theme}: live overseas visibility, full titles, calendar keyboard focus, detail links and close focus')
         context.close()
