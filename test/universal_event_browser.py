@@ -31,7 +31,8 @@ FESTIVAL={
 NATIVE_PASS={**FESTIVAL,'eventId':'synthetic-native-pass','title':'Synthetic native GO Pass','family':'go-pass'}
 FUTURE={'schemaVersion':1,'eventId':'synthetic-future-community-day','title':'Synthetic Future Community Day',
  'schedule':{'timeBasis':'player-local','start':'2026-11-08T14:00','end':'2026-11-08T17:00'},
- 'pokemon':[{'speciesId':'25','name':'Pikachu','methods':['wild']}], 'internalValidation':{'native':True}}
+ 'pokemon':[{'speciesId':'25','name':'Pikachu'}],
+ 'activities':[{'id':'wild','kind':'wild','pokemonRefs':['25:base:none','25:base:none']},{'id':'raid','kind':'raid','pokemonRefs':['25:base:none']}], 'internalValidation':{'native':True}}
 UNDATED={'schemaVersion':1,'eventId':'synthetic-undated-overseas','title':'Synthetic Overseas Announcement',
  'attendance':'in-person','location':'Synthetic overseas destination','lifecycle':'announced',
  'internalValidation':{'native':True}}
@@ -44,7 +45,7 @@ def api(route):
 with sync_playwright() as p:
     engine=os.environ.get('GO_FIELD_NOTES_TEST_BROWSER','chromium')
     browser=getattr(p,engine).launch()
-    for width in [320,390,430,1440]:
+    for width in [320,375,390,430,1440]:
         context=browser.new_context(viewport={'width':width,'height':900},timezone_id='Australia/Melbourne',service_workers='block')
         context.set_default_timeout(15000)
         context.route('**/api/**',api)
@@ -73,6 +74,8 @@ with sync_playwright() as p:
             print('Event handoff failure:',errors,page.evaluate("({title:document.getElementById('evd-t')?.textContent,hidden:document.getElementById('evd')?.hidden,active:document.activeElement?.outerHTML,events:GODASH.events().filter(e=>e.id==='synthetic-future-community-day').map(e=>({id:e.id,name:e.name}))})"),flush=True)
             raise
         assert page.locator('#evd [data-method="wild"]').count()==1
+        assert page.locator('#evd [data-method="raid"] [data-identity="25:base:none"]').count()==1
+        assert page.locator('#evd [data-method="wild"] [data-identity="25:base:none"]').count()==1
         assert page.locator('#evd-research-title').count()==0, 'unknown research section invented'
         page.keyboard.press('Escape')
         page.evaluate("GODETAIL.open('synthetic-future-festival')")
