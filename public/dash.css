@@ -1860,7 +1860,7 @@ a.evc-source{color:var(--color-link);text-underline-offset:3px}
 .evd-in:has(.ue-hero) .research-rewards{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));
-  gap:10px;
+  gap:var(--space-3);
   min-width:0;
 }
 .evd-in:has(.ue-hero) .research-reward{
@@ -1870,9 +1870,9 @@ a.evc-source{color:var(--color-link);text-underline-offset:3px}
   width:100%;
   min-width:0;
   max-width:100%;
-  gap:10px;
+  gap:var(--space-3);
   overflow:hidden;
-  padding:10px;
+  padding:var(--space-3);
 }
 .evd-in:has(.ue-hero) .research-reward>span:last-child{
   min-width:0;
@@ -1895,9 +1895,9 @@ a.evc-source{color:var(--color-link);text-underline-offset:3px}
   height:48px;
   max-height:48px;
   margin:0;
-  padding:2px;
+  padding:var(--space-1);
   overflow:hidden;
-  border-radius:8px;
+  border-radius:var(--radius-sm);
   font-size:10px;
   line-height:1.15;
   text-align:center;
@@ -1923,11 +1923,11 @@ a.evc-source{color:var(--color-link);text-underline-offset:3px}
   object-fit:contain;
 }
 .evd-in:has(.ue-hero) .ue-gallery.evd-feat{
-  gap:16px 10px;
+  gap:var(--space-4) var(--space-3);
 }
 .evd-in:has(.ue-hero) .ue-mon-art{
   min-height:96px;
-  padding:8px;
+  padding:var(--space-2);
 }
 .evd-in:has(.ue-hero) .ue-mon-art .art.ea{
   width:80px;
@@ -1953,7 +1953,7 @@ a.evc-source{color:var(--color-link);text-underline-offset:3px}
   width:48px;
   height:48px;
   min-width:0;
-  border-radius:10px;
+  border-radius:var(--radius-md);
   background:var(--color-surface-raised,var(--color-surface));
   color:var(--color-text-muted);
   font:700 20px/1 var(--font-body);
@@ -1973,15 +1973,15 @@ a.evc-source{color:var(--color-link);text-underline-offset:3px}
   grid-template-columns:minmax(0,1fr);
   align-content:start;
   justify-items:stretch;
-  gap:6px;
-  padding:10px;
+  gap:var(--space-2);
+  padding:var(--space-3);
   border:1px solid var(--color-border);
-  border-radius:14px;
+  border-radius:var(--radius-lg);
   background:var(--color-surface);
   overflow:hidden;
 }
 .evd-in:has(.ue-hero) .ue-mon-art{
-  border-radius:10px;
+  border-radius:var(--radius-md);
   background:var(--color-canvas);
 }
 .evd-in:has(.ue-hero) .ue-mon .evd-fm{
@@ -2002,12 +2002,12 @@ a.evc-source{color:var(--color-link);text-underline-offset:3px}
   display:flex;
   flex-wrap:wrap;
   align-items:center;
-  gap:6px;
+  gap:var(--space-2);
 }
 .evd-in:has(.ue-hero) .ue-mon-controls :is(button,summary){
   min-height:36px;
-  padding:6px 10px;
-  border-radius:9px;
+  padding:var(--space-2) var(--space-3);
+  border-radius:var(--radius-sm);
   font-size:var(--type-meta-compact);
 }
 .evd-in:has(.ue-hero) .ue-mon .mk button{
@@ -2015,4 +2015,121 @@ a.evc-source{color:var(--color-link);text-underline-offset:3px}
 }
 @media(max-width:350px){
   .evd-in:has(.ue-hero) .ue-gallery.evd-feat{grid-template-columns:minmax(0,1fr)}
+}
+
+
+/* Event bonuses: readable grouped benefits rather than a wall of text. */
+.evd-in:has(.ue-hero) .ue-bonuses{
+  display:grid;
+  gap:var(--space-2);
+  border:0;
+}
+.evd-in:has(.ue-hero) .ue-bonus{
+  display:grid;
+  min-width:0;
+  padding:var(--space-3) var(--space-4);
+  border:1px solid var(--color-border);
+  border-radius:var(--radius-md);
+  background:var(--color-surface);
+  font-size:var(--type-body-sm);
+  line-height:1.5;
+  overflow-wrap:anywhere;
+}
+.evd-in:has(.ue-hero) .ue-bonus:last-child{
+  border-bottom:1px solid var(--color-border);
+}
+.evd-in:has(.ue-hero) .ue-bonus .bonus{
+  min-height:0;
+  display:flex;
+  align-items:flex-start;
+  gap:var(--space-3);
+  flex-wrap:nowrap;
+  font-size:var(--type-body-sm);
+  line-height:1.5;
+  overflow-wrap:anywhere;
+}
+.evd-in:has(.ue-hero) .ue-bonus .bonus :is(img,svg){
+  flex:none;
+  max-width:32px;
+  max-height:32px;
+  object-fit:contain;
+}
+.evd-in:has(.ue-hero) .ue-bonus :is(p,span,b,small){
+  min-width:0;
+  overflow-wrap:anywhere;
+}
+.evd-in:has(.ue-hero) .ue-bonus :is(p,ul,ol){
+  margin-block:var(--space-1);
+}
+
+
+/* Hard isolation of arbitrary legacy reward artwork/fallback markup. */
+.evd-in:has(.ue-hero) .research-reward .ue-reward-art{
+  display:grid;
+  place-items:center;
+  position:relative;
+  width:48px;
+  height:48px;
+  min-width:0;
+  max-width:48px;
+  max-height:48px;
+  overflow:hidden;
+  border-radius:var(--radius-md);
+  isolation:isolate;
+}
+.evd-in:has(.ue-hero) .research-reward .ue-reward-art :is(img,.art,svg,canvas){
+  display:block;
+  width:100%;
+  max-width:100%;
+  height:100%;
+  max-height:100%;
+  object-fit:contain;
+}
+.evd-in:has(.ue-hero) .research-reward .ue-reward-art .costume-unavailable{
+  width:100%;
+  height:100%;
+  min-height:0;
+  max-height:100%;
+  overflow:hidden;
+}
+.evd-in:has(.ue-hero) .research-reward .ue-reward-art .ue-reward-icon{
+  width:100%;
+  height:100%;
+}
+
+
+/* Missing species/form artwork must not expand a Pokémon tile. */
+.evd-in:has(.ue-hero) .ue-mon-art{
+  position:relative;
+  overflow:hidden;
+  isolation:isolate;
+}
+.evd-in:has(.ue-hero) .ue-mon-art .art.costume-unavailable{
+  display:grid;
+  place-items:center;
+  width:100%;
+  height:80px;
+  min-height:0;
+  max-height:80px;
+  margin:0;
+  padding:var(--space-2);
+  overflow:hidden;
+  text-align:center;
+  font-size:11px;
+  line-height:1.25;
+  overflow-wrap:anywhere;
+}
+.evd-in:has(.ue-hero) .ue-mon .evd-fm,
+.evd-in:has(.ue-hero) .ue-mon .ue-signals,
+.evd-in:has(.ue-hero) .ue-mon .ue-mon-controls{
+  width:100%;
+  min-width:0;
+}
+.evd-in:has(.ue-hero) .ue-mon .ue-signals{
+  display:flex;
+  flex-wrap:wrap;
+  gap:var(--space-1);
+}
+.evd-in:has(.ue-hero) .ue-mon .evd-fm small{
+  overflow-wrap:anywhere;
 }
