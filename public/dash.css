@@ -1853,3 +1853,166 @@ a.evc-source{color:var(--color-link);text-underline-offset:3px}
 .ue-follow[aria-pressed="true"]{background:var(--color-filter-selected-bg);color:var(--color-on-filter-selected)}
 
 #timezone-form{display:flex;flex-wrap:wrap;gap:var(--space-2);align-items:center}#timezone-form label{flex-basis:100%}#timezone-choice{max-width:100%;min-width:0;min-height:44px;font:inherit;font-size:var(--text-md,1rem);color:var(--color-text-primary);background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-control);padding:var(--space-2)}
+
+
+/* Universal event iPhone layout guardrails: reward artwork and text must never escape tiles.
+   Scoped to universal event detail; preserves legacy Research and collection layouts. */
+.evd-in:has(.ue-hero) .research-rewards{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));
+  gap:10px;
+  min-width:0;
+}
+.evd-in:has(.ue-hero) .research-reward{
+  display:grid;
+  grid-template-columns:48px minmax(0,1fr);
+  align-items:center;
+  width:100%;
+  min-width:0;
+  max-width:100%;
+  gap:10px;
+  overflow:hidden;
+  padding:10px;
+}
+.evd-in:has(.ue-hero) .research-reward>span:last-child{
+  min-width:0;
+  max-width:100%;
+  overflow-wrap:anywhere;
+  word-break:normal;
+}
+.evd-in:has(.ue-hero) .research-reward>span:last-child b{
+  display:block;
+  min-width:0;
+  overflow-wrap:anywhere;
+  line-height:1.35;
+}
+.evd-in:has(.ue-hero) .research-reward :is(.art,.costume-unavailable,.research-reward-qty){
+  display:grid;
+  place-items:center;
+  width:48px;
+  min-width:0;
+  max-width:48px;
+  height:48px;
+  max-height:48px;
+  margin:0;
+  padding:2px;
+  overflow:hidden;
+  border-radius:8px;
+  font-size:10px;
+  line-height:1.15;
+  text-align:center;
+  overflow-wrap:anywhere;
+}
+.evd-in:has(.ue-hero) .research-reward .costume-unavailable{
+  color:transparent;
+  position:relative;
+}
+.evd-in:has(.ue-hero) .research-reward .costume-unavailable::after{
+  content:'?';
+  position:absolute;
+  inset:0;
+  display:grid;
+  place-items:center;
+  color:var(--color-text-muted);
+  font:700 20px/1 var(--font-body);
+}
+.evd-in:has(.ue-hero) .research-reward img{
+  width:48px;
+  height:48px;
+  max-width:100%;
+  object-fit:contain;
+}
+.evd-in:has(.ue-hero) .ue-gallery.evd-feat{
+  gap:16px 10px;
+}
+.evd-in:has(.ue-hero) .ue-mon-art{
+  min-height:96px;
+  padding:8px;
+}
+.evd-in:has(.ue-hero) .ue-mon-art .art.ea{
+  width:80px;
+  height:80px;
+}
+.evd-in:has(.ue-hero) .ue-mon-controls{
+  min-width:0;
+  max-width:100%;
+}
+.evd-in:has(.ue-hero) .evd-jump{
+  overscroll-behavior-x:contain;
+  -webkit-overflow-scrolling:touch;
+}
+@media(max-width:380px){
+  .evd-in:has(.ue-hero) .research-rewards{grid-template-columns:minmax(0,1fr)}
+}
+
+
+/* Fallback reward icons use the same footprint as Pokémon artwork. */
+.evd-in:has(.ue-hero) .research-reward .ue-reward-icon{
+  display:grid;
+  place-items:center;
+  width:48px;
+  height:48px;
+  min-width:0;
+  border-radius:10px;
+  background:var(--color-surface-raised,var(--color-surface));
+  color:var(--color-text-muted);
+  font:700 20px/1 var(--font-body);
+}
+.evd-in:has(.ue-hero) .research-reward .research-reward-qty{
+  font-size:var(--type-meta-compact);
+}
+.evd-in:has(.ue-hero) .research-reward>span:last-child small{
+  display:block;
+  overflow-wrap:anywhere;
+}
+
+
+/* Premium universal encounter cards: image, identity, state and actions in one surface. */
+.evd-in:has(.ue-hero) .ue-gallery .ue-mon.evd-f{
+  display:grid;
+  grid-template-columns:minmax(0,1fr);
+  align-content:start;
+  justify-items:stretch;
+  gap:6px;
+  padding:10px;
+  border:1px solid var(--color-border);
+  border-radius:14px;
+  background:var(--color-surface);
+  overflow:hidden;
+}
+.evd-in:has(.ue-hero) .ue-mon-art{
+  border-radius:10px;
+  background:var(--color-canvas);
+}
+.evd-in:has(.ue-hero) .ue-mon .evd-fm{
+  gap:3px;
+}
+.evd-in:has(.ue-hero) .ue-mon .evd-fm b{
+  font-size:var(--type-body-sm);
+  line-height:1.3;
+}
+.evd-in:has(.ue-hero) .ue-mon .evd-fm small{
+  font-size:var(--type-caption);
+  line-height:1.3;
+}
+.evd-in:has(.ue-hero) .ue-mon .own{
+  font-size:var(--type-caption);
+}
+.evd-in:has(.ue-hero) .ue-mon-controls{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  gap:6px;
+}
+.evd-in:has(.ue-hero) .ue-mon-controls :is(button,summary){
+  min-height:36px;
+  padding:6px 10px;
+  border-radius:9px;
+  font-size:var(--type-meta-compact);
+}
+.evd-in:has(.ue-hero) .ue-mon .mk button{
+  min-height:36px;
+}
+@media(max-width:350px){
+  .evd-in:has(.ue-hero) .ue-gallery.evd-feat{grid-template-columns:minmax(0,1fr)}
+}
