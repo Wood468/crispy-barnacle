@@ -31,6 +31,9 @@ with sync_playwright() as p:
   def ready():
    page.wait_for_function("!!window.GODASH&&!!window.GODETAIL&&GOEventRegistry.settled()")
    page.evaluate('GOEventRegistry.ready')
+   # Complete the deferred nudge source before deliberately tearing this document
+   # down again. Its large JSON body can otherwise still be decoding during reload.
+   page.evaluate("GOLIB.jsonOrNull('/event-details.json',{maxAge:600000})")
   def open_event(id):
    page.evaluate('(id)=>GODETAIL.open(id)',id)
    page.locator('#evd:not([hidden]) .ue-hero').wait_for()
