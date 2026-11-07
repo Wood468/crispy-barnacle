@@ -26,15 +26,18 @@
     if(!ev||ev.schemaVersion!==1||!ev.eventId) throw Error('Normalized v1 event required');
     var family=FAMILY[ev.family]?ev.family:'other';
     var activities=Array.isArray(ev.activities)?ev.activities:[];
+    // Ignore empty source placeholders: a section should only appear when it has content.
+    function populated(value){return value!==null&&value!==undefined&&value!==''&&typeof value==='object'&&!Array.isArray(value)&&Object.keys(value).length>0;}
+    function countRecords(value){return Array.isArray(value)?value.filter(populated).length:0;}
     var counts={
       overview:1,
-      encounters:Array.isArray(ev.encounters)?ev.encounters.length:0,
+      encounters:countRecords(ev.encounters),
       rotations:activities.filter(function(a){return a&&a.schedule&&a.presentation==='rotation';}).length,
       schedule:activities.filter(function(a){return a&&a.schedule&&a.presentation==='schedule';}).length,
-      bonuses:Array.isArray(ev.bonuses)?ev.bonuses.length:0,
-      research:(Array.isArray(ev.research)?ev.research.length:0)+activities.filter(function(a){return a&&a.schedule&&a.presentation==='research';}).length,
-      passes:Array.isArray(ev.passes)?ev.passes.length:0,
-      tickets:(Array.isArray(ev.tickets)?ev.tickets.length:0)+activities.filter(function(a){return a&&a.schedule&&a.presentation==='ticket';}).length
+      bonuses:countRecords(ev.bonuses),
+      research:countRecords(ev.research)+activities.filter(function(a){return a&&a.schedule&&a.presentation==='research';}).length,
+      passes:countRecords(ev.passes),
+      tickets:countRecords(ev.tickets)+activities.filter(function(a){return a&&a.schedule&&a.presentation==='ticket';}).length
     };
     var preferred=FAMILY[family], all=FAMILY.other;
     // A family guides order but never suppresses sections actually present.
