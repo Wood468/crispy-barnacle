@@ -29,6 +29,12 @@ const trim = s => s.replace(/^[•·\-–\s]+/, "").replace(/\s+/g, " ").trim();
 const NOISE = /^(share|read more|related|advertisement|sign up|follow us|comments?|learn more|and even more|keep an eye out|tier \d|rank \d+\s*$)|and even more goodies|learn more about|^\*/i;
 const keep = s => (s.length >= 14 || /[×]|\d\s?x\b/i.test(s) && s.length >= 6) && (s.length <= 220 || /^rank \d+/i.test(s) && s.length <= 600) && !NOISE.test(s);
 
+export function researchOptions({dex=[],names=[],costumes=[],forms={f:[]}}={}){
+ const byId=new Map(dex.map(p=>[p[0],p[1]])),prefix={alola:'Alolan',galar:'Galarian',hisui:'Hisuian',paldea:'Paldean',mega:'Mega',primal:'Primal',gmax:'Gigantamax'};
+ const formNames=(forms.f||[]).filter(row=>prefix[row[1]]&&byId.has(row[0])).map(row=>prefix[row[1]]+' '+byId.get(row[0]));
+ return {pokemonNames:[...dex.map(p=>p[1]),...names,...formNames],costumes};
+}
+
 function researchRewardNames(options){
  const entries=new Map(),key=value=>trim(value).normalize('NFKC').toLowerCase();
  function add(name,record){entries.set(key(name),record);entries.set(key('Mighty '+name),{...record,mighty:true});}

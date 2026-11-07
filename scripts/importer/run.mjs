@@ -4,7 +4,7 @@
 import { readFile, writeFile, mkdir } from "node:fs/promises";
 import { SOURCES, sourceFor } from "./sources.mjs";
 import { discover, get } from "./discover.mjs";
-import { extractFields, hasContent } from "./extract.mjs";
+import { extractFields, hasContent, researchOptions } from "./extract.mjs";
 import { mergeSources } from "./compare.mjs";
 import { pageTitle, htmlToLines } from "./text.mjs";
 import { entriesFromPage, mergeWorld, collapseWorld, parseDateRange, placeOf, cleanTitle, tidyName, keepOldWorld, normUrl, sameWriteupRulings, preserveWorldSources, prioritizeWatchedPages, regionalSeedEntries } from "./world.mjs";
@@ -239,8 +239,8 @@ async function main() {
   let dex=[];try{dex=JSON.parse(await readFile('public/dex.json','utf8'));}catch{/* exact unknown identities remain prose */}
   let artNames=[];try{artNames=Object.keys(JSON.parse(await readFile('public/art/index.json','utf8'))).map(url=>new URL(url,'https://app.invalid').searchParams.get('n')).filter(Boolean);}catch{/* optional asset aliases */}
   let costumeNames=[];try{const data=JSON.parse(await readFile('public/data.json','utf8'));const costumeDB=JSON.parse(await readFile('public/costumes.json','utf8'));eventAdapter.configureSpecies(dex);costumeNames=eventAdapter.costumeDescriptors(data,costumeDB);}catch{/* no inferred costumes */}
-  let formNames=[];try{const rows=JSON.parse(await readFile('public/forms.json','utf8')),byId=new Map(dex.map(p=>[p[0],p[1]])),prefix={alola:'Alolan',galar:'Galarian',hisui:'Hisuian',paldea:'Paldean',mega:'Mega',primal:'Primal',gmax:'Gigantamax'};formNames=rows.filter(row=>prefix[row[1]]&&byId.has(row[0])).map(row=>prefix[row[1]]+' '+byId.get(row[0]));}catch{/* undeclared forms remain source prose */}
-  const rewardOptions={pokemonNames:[...dex.map(p=>p[1]),...artNames,...formNames],costumes:costumeNames};
+  let formData={f:[]};try{formData=JSON.parse(await readFile('public/forms.json','utf8'));}catch{/* undeclared forms remain source prose */}
+  const rewardOptions=researchOptions({dex,names:artNames,costumes:costumeNames,forms:formData});
   for(const page of pages)page.fields=extractFields(page.html,rewardOptions);
   const byEvent = new Map(), unmatched = [];
   for (const p of pages) {
@@ -248,7 +248,7 @@ async function main() {
     if (!hit) { unmatched.push({ source: p.source, title: p.title, url: p.url }); continue; }
     const arr = byEvent.get(hit.event.id) || { event: hit.event, results: [] };
     const s = SOURCES.find(x => x.id === p.source);
-    p.fields.eventEncounters=extractEncounters(p.html,{dex,names:artNames.concat(formNames),costumes:costumeNames});
+    p.fields.eventEncounters=extractEncounters(p.html,{dex,names:rewardOptions.pokemonNames,costumes:costumeNames});
     arr.results.push({ image:posterFromHtml(p.html,p.url), source: { id: s.id, name: s.name, trust: s.trust, url: p.url }, fields: p.fields });
     byEvent.set(hit.event.id, arr);
   }
@@ -302,7 +302,7 @@ async function main() {
   // Unmatched source articles are first-class announcements, not just diagnostics.
   for(const page of pages){
     if([...byEvent.values()].some(group=>group.results.some(result=>result.source.url===page.url)))continue;
-    const announcement=announcementFromPage(page,{dex,names:artNames.concat(formNames),costumes:costumeNames});if(!announcement)continue;
+    const announcement=announcementFromPage(page,{dex,names:rewardOptions.pokemonNames,costumes:costumeNames});if(!announcement)continue;
     const split=entriesFromPage(page),represented=split.length>0;
     const {native,...metadata}=announcement.internalValidation;
     out[announcement.eventId]={name:announcement.title,researchTasks:(page.fields.researchTasks||[]).map(task=>({...task,eventId:announcement.eventId,eventName:announcement.title,eventWindow:{start:announcement.schedule?.start||null,end:announcement.schedule?.end||null},checkedAt:now.slice(0,10)})),updated:now,sources:announcement.sources,image:announcement.image,fields:Object.fromEntries(Object.entries(page.fields||{}).filter(([,v])=>Array.isArray(v)).map(([k,v])=>[k,v.map(text=>typeof text==='string'?{text,sources:[page.source],status:page.source==='official'?'official':'single'}:text)])),

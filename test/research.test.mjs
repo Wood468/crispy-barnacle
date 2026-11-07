@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
-import { extractFields } from "../scripts/importer/extract.mjs";
+import { extractFields, researchOptions } from "../scripts/importer/extract.mjs";
 import { htmlToLines } from "../scripts/importer/text.mjs";
 import { mergeSources } from "../scripts/importer/compare.mjs";
 
@@ -179,4 +179,12 @@ test('Wild Area source snapshots include complete mixed and CP-less reward pools
   assert.equal(raid[1].name,'Machamp (Modern Jacket)');assert.equal(raid[1].cpMax,undefined);
   if(slug==='mexico-city'){assert.equal(raid[2].name,'Conkeldurr');assert.equal(raid[2].cpMin,1368);}
  }
+});
+
+test('the shipped form registry enables exact CP-less regional research rewards',()=>{
+ const read=name=>JSON.parse(fs.readFileSync(new URL('../public/'+name+'.json',import.meta.url),'utf8'));
+ const options=researchOptions({dex:read('dex'),forms:read('forms')});
+ const result=extractFields('<h2>Field Research</h2><p>Catch a Hisuian Sliggoo REWARD Hisuian Sliggoo</p>',options);
+ assert.equal(result.researchTasks[0].rewards[0].name,'Hisuian Sliggoo');
+ assert.equal(result.researchTasks[0].rewards[0].cpMax,undefined);
 });
