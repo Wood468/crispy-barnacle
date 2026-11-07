@@ -174,14 +174,19 @@ with sync_playwright() as p:
     held[0].fulfill(body=json.dumps({'schemaVersion':1,'species':DEX,'events':[FUTURE]}),content_type='application/json')
     page.wait_for_function("GODASH.events().some(e=>e.id==='synthetic-future-community-day')")
     page.locator('#tabs [data-tab="events"]').click()
-    page.locator('#evtimeline [data-open="synthetic-future-community-day"]').click()
+    late_target=page.locator('#evtimeline [data-open="synthetic-future-community-day"]')
+    late_target.scroll_into_view_if_needed()
+    page.wait_for_function("""()=>{
+        const el=document.querySelector('#evtimeline [data-open="synthetic-future-community-day"]');
+        if(!el)return false;
+        const r=el.getBoundingClientRect(),hit=document.elementFromPoint(r.x+r.width/2,r.y+r.height/2);
+        return hit?.closest('[data-open]')===el;
+    }""")
+    late_target.click()
     try:
         page.wait_for_function("document.getElementById('evd-t')?.textContent==='Synthetic Future Community Day'")
     except Exception:
-        print('Late catalogue handoff failure:',errors,sorted(pending),page.evaluate("({title:document.getElementById('evd-t')?.textContent,hidden:document.getElementById('evd')?.hidden,active:document.activeElement?.outerHTML,depth:GONAV.depth,settled:GOEventRegistry.settled(),handoff:window.__handoff,places:!!window.GOPLACES,events:GODASH.events().filter(e=>e.id==='synthetic-future-community-day').map(e=>({id:e.id,name:e.name}))})"),flush=True)
-        page.evaluate("GODETAIL.open('synthetic-future-community-day')")
-        page.wait_for_timeout(300)
-        print('Direct open diagnostic:',page.locator('#evd-t').all_text_contents(),sorted(pending),flush=True)
+        print('Late catalogue handoff failure:',errors,sorted(pending),page.evaluate("({title:document.getElementById('evd-t')?.textContent,hidden:document.getElementById('evd')?.hidden,active:document.activeElement?.outerHTML.slice(0,240),depth:GONAV.depth,settled:GOEventRegistry.settled(),handoff:window.__handoff,places:!!window.GOPLACES,events:GODASH.events().filter(e=>e.id==='synthetic-future-community-day').map(e=>({id:e.id,name:e.name}))})"),flush=True)
         raise
     assert errors==[],errors
     print('PASS late catalogue announces future events without a reload or user-state edit')
@@ -197,4 +202,27 @@ with sync_playwright() as p:
     assert page.locator('#evd a[download]').count()==0
     assert errors==[],errors
     print('PASS player-local DST gap keeps detail readable and withholds invalid calendar')
+    context.close()
+    # A supplementary source that never answers cannot block the validated announcement.
+    context=browser.new_context(viewport={'width':390,'height':900},timezone_id='Asia/Tokyo',service_workers='block')
+    context.route('**/api/**',api)
+    context.route(re.compile(r'^https://fonts\.'),lambda r:r.fulfill(body='',content_type='text/css'))
+    context.route('**/events-v1.json',lambda r:r.fulfill(body=json.dumps({'schemaVersion':1,'species':DEX,'events':[FUTURE]}),content_type='application/json'))
+    stalled=[];context.route('**/event-details.json',lambda r:stalled.append(r))
+    context.add_init_script("localStorage.setItem('gofn-dex-v1',JSON.stringify({m:{own:{25:1}}}));localStorage.setItem('gofn-us-v1',JSON.stringify({'follow:pikachu':{v:'Pikachu',t:1}}));")
+    page=context.new_page();page.clock.install(time='2026-11-07T12:00:00+09:00')
+    page.goto(BASE+'/',wait_until='domcontentloaded')
+    page.wait_for_function('!!window.GODETAIL&&GOEventRegistry.settled()')
+    before=page.evaluate("({dex:localStorage.getItem('gofn-dex-v1'),us:localStorage.getItem('gofn-us-v1')})")
+    page.evaluate("GODETAIL.open('synthetic-future-community-day')")
+    page.clock.run_for(8100)
+    page.wait_for_function("document.getElementById('evd-t')?.textContent==='Synthetic Future Community Day'")
+    assert page.locator('#evd [data-method="wild"]').count()==1
+    assert page.locator('#evd [data-method="wild"] .own').inner_text()=='Have'
+    assert page.locator('#evd-research-title').count()==0
+    page.locator('#evd-sources > summary').click()
+    assert 'supplementary event information could not be loaded' in page.locator('#evd-sources').inner_text()
+    assert page.evaluate("({dex:localStorage.getItem('gofn-dex-v1'),us:localStorage.getItem('gofn-us-v1')})")==before
+    for route in stalled:route.abort()
+    print('PASS stalled supplementary source retains canonical details, optional sections and collection state')
     context.close();browser.close()
