@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "events": {
+    "sendai": {
+      "aliases": ["in-person:wild-area:GO Wild Area: Sendai, Japan", "leekduck:pokemon-go-wild-area-2026-sendai-japan", "rg-sendai-wild-area", "w-go-wild-area-2026-sendai-and-tohoku", "w-go-wild-area-2026-sendai-tohoku", "world:https://leekduck.com/events/pokemon-go-wild-area-2026-sendai-japan"],
+      "schedule": {"start": "2026-11-06T10:00", "end": "2026-11-08T18:00", "timeBasis": "local", "timeZone": "Asia/Tokyo"},
+      "attendance": "in-person",
+      "location": "Sendai, Japan",
+      "sourceUrl": "https://leekduck.com/events/pokemon-go-wild-area-2026-sendai-japan/"
+    },
+    "leekduck:pokemon-go-wild-area-2026-mexico-city": {
+      "aliases": ["rg-mexico-wild-area", "w-go-wild-area-2026-mexico-city", "world:https://leekduck.com/events/pokemon-go-wild-area-2026-mexico-city"],
+      "schedule": {"start": "2026-11-06T10:00", "end": "2026-11-08T18:00", "timeBasis": "local", "timeZone": "America/Mexico_City"},
+      "attendance": "in-person",
+      "location": "Mexico City, Mexico",
+      "sourceUrl": "https://leekduck.com/events/pokemon-go-wild-area-2026-mexico-city/"
+    }
+  }
+}

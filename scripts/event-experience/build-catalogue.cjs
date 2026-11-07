@@ -17,6 +17,13 @@ function buildCatalogue(input){
  const data=input.data||{},details=input.details?.events||{},info=input.info?.events||{},previous=input.previous?.events||[];
  const old=new Map(previous.map(e=>[e.eventId,e])),out=new Map(),coverage=[],warnings=[],rejections=[],oldIndex=reconcile(previous);
  const rules=new Map();for(const pair of input.aliases?.same||[]){if(Array.isArray(pair)&&pair.length===2)rules.set(pair[1],pair[0]);}
+ // Reviewed source corrections apply before normalization, never in event-specific UI branches.
+ const corrections=input.corrections?.events||{},correctionAliases={};
+ if(input.corrections&&input.corrections.schemaVersion!==1)throw Error('Invalid correction schema');
+ for(const [id,patch] of Object.entries(corrections)){
+  correctionAliases[id]=[id,...(patch.aliases||[])].flatMap(alias=>{const prior=oldIndex.resolve(alias);return prior?[prior.eventId,...(prior.aliases||[])]:[];}).filter(alias=>alias!==id);
+  for(const alias of patch.aliases||[]){if(rules.has(alias)&&rules.get(alias)!==id)throw Error('Conflicting correction alias: '+alias);rules.set(alias,id);}
+ }
  function urls(model){return new Set((model.sources||[]).filter(s=>s.url&&!L.isPrivateLink(s.url)).map(s=>key(s.url)).filter(Boolean));}
  function samePublishedEvent(a,b){
   const x=a.internalValidation?.legacyDates||a.schedule||{},y=b.internalValidation?.legacyDates||b.schedule||{};
@@ -33,6 +40,8 @@ function buildCatalogue(input){
   // Explicit source URL joins only. A shared title is never identity evidence.
   const url=key(raw.link||raw.sourceUrl);
   if(!d&&url){const hits=Object.values(details).filter(x=>(x.sources||[]).some(s=>key(s.url)===url));if(hits.length===1)d=hits[0];}
+  const correctedId=rules.get(String(raw.id))||String(raw.id),patch=corrections[correctedId];
+  if(patch)raw={...raw,...patch,id:correctedId,aliases:[...(raw.aliases||[]),...(patch.aliases||[]),...(correctionAliases[correctedId]||[]),...(String(raw.id)!==correctedId?[String(raw.id)]:[])]};
   let model=A.adapt(raw,d,i);const originalId=model.eventId;
   let canonical=rules.get(originalId)||(oldIndex.resolve(originalId)||{}).eventId;if(canonical===originalId)canonical=null;
   if(!canonical){const matches=[...out.values()].filter(e=>samePublishedEvent(e,model));if(matches.length===1)canonical=matches[0].eventId;}
@@ -66,8 +75,9 @@ function buildCatalogue(input){
 }
 async function publish(root=path.resolve(__dirname,'../..')){async function read(name,fallback={}){try{return JSON.parse(await fs.readFile(path.join(root,'public',name+'.json'),'utf8'));}catch(e){if(e.code==='ENOENT')return fallback;throw e;}}
  const [data,details,info,world,regional,season,previous,dex,costumes]=await Promise.all(['data','event-details','event-info','world-events','regional-events','season','events-v1','dex','costumes'].map(n=>read(n)));
+ let corrections={schemaVersion:1,events:{}};try{corrections=JSON.parse(await fs.readFile(path.join(root,'data/event-corrections.json'),'utf8'));}catch(error){if(error.code!=='ENOENT')throw error;}
  let aliases={};try{aliases=JSON.parse(await fs.readFile(path.join(root,'data/event-aliases.json'),'utf8'));}catch(error){if(error.code!=='ENOENT')throw error;}
- const result=buildCatalogue({data,details,info,world,regional,season,previous,dex,costumes,aliases});
+ const result=buildCatalogue({data,details,info,world,regional,season,previous,dex,costumes,aliases,corrections});
  const target=path.join(root,'public/events-v1.json'),temp=target+'.tmp';await fs.writeFile(temp,JSON.stringify(result,null,1)+'\n');await fs.rename(temp,target);return result;
 }
 module.exports={buildCatalogue,publish,digest};

@@ -568,11 +568,21 @@
      "category": "field",
      "rewards": [
       {
+       "type": "item",
+       "name": "Golden Razz Berry",
+       "quantity": 1
+      },
+      {
        "type": "encounter",
-       "name": "×1 Golden Razz Berry ×1 Rookidee",
+       "name": "Rookidee",
        "quantity": 1,
        "cpMin": 258,
        "cpMax": 285
+      },
+      {
+       "type": "item",
+       "name": "Stardust",
+       "quantity": 2000
       }
      ],
      "sources": [
@@ -639,8 +649,13 @@
      "category": "field",
      "rewards": [
       {
-       "type": "other",
-       "name": "Silver Pinap Berry ×2 ×2 Golden Razz Berry",
+       "type": "item",
+       "name": "Silver Pinap Berry",
+       "quantity": 2
+      },
+      {
+       "type": "item",
+       "name": "Golden Razz Berry",
        "quantity": 2
       }
      ],
@@ -1725,11 +1740,21 @@
      "category": "field",
      "rewards": [
       {
+       "type": "item",
+       "name": "Golden Razz Berry",
+       "quantity": 1
+      },
+      {
        "type": "encounter",
-       "name": "×1 Golden Razz Berry ×1 Rookidee",
+       "name": "Rookidee",
        "quantity": 1,
        "cpMin": 258,
        "cpMax": 285
+      },
+      {
+       "type": "item",
+       "name": "Stardust",
+       "quantity": 2000
       }
      ],
      "sources": [
@@ -1796,9 +1821,22 @@
      "category": "field",
      "rewards": [
       {
-       "type": "other",
-       "name": "Silver Pinap Berry ×2 ×2 Golden Razz Berry ×2 Mighty Modern Jacket Machamp",
+       "type": "item",
+       "name": "Silver Pinap Berry",
        "quantity": 2
+      },
+      {
+       "type": "item",
+       "name": "Golden Razz Berry",
+       "quantity": 2
+      },
+      {
+       "type": "encounter",
+       "name": "Machamp (Modern Jacket)",
+       "quantity": 1,
+       "costume": true,
+       "costumeId": "modernjacket",
+       "label": "Modern Jacket"
       }
      ],
      "sources": [

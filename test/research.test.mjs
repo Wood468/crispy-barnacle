@@ -122,3 +122,38 @@ test("event and pass source associations are explicit and the central Research v
   assert.match(research, /GODASH\.monArt/);
   assert.match(sw, /research\.js\?v=/);
 });
+
+test('mixed research reward columns preserve items, encounter forms and large currency quantities',()=>{
+ const {researchTasks}=extractFields(`<h2>Field Research</h2><table><tr><td>Catch 5 Pokémon</td><td>REWARDS 1,000 Stardust | Pikachu (Test crown) Max CP 402 Min CP 369 | Rare Candy ×3 | 10000 XP</td></tr></table>`);
+ assert.deepEqual(researchTasks[0].rewards,[
+  {type:'item',name:'Stardust',quantity:1000},
+  {type:'encounter',name:'Pikachu (Test crown)',quantity:1,cpMin:369,cpMax:402},
+  {type:'item',name:'Rare Candy',quantity:3},
+  {type:'item',name:'XP',quantity:10000}
+ ]);
+});
+test('malformed research rewards remain source prose without invented rewards',()=>{
+ const fields=extractFields(`<h2>Field Research</h2><p>Catch 5 Pokémon REWARDS Pikachu Max CP 300 Min CP 400 | ×2 Rare Candy ×3 | 1,00 Stardust | Pokémon to be announced</p>`);
+ assert.deepEqual(fields.researchTasks,[]);
+ assert.match(fields.research.join(' '),/Pokémon to be announced/);
+});
+test('mixed reward extraction is deterministic and preserves explicit event association inputs',()=>{
+ const html='<h2>Timed Research</h2><p>Win a raid REWARDS Rare Candy ×3 | Encounter with Alolan Raichu</p>';
+ const first=extractFields(html),second=extractFields(html);
+ assert.deepEqual(first,second);assert.equal(first.researchTasks[0].category,'timed');
+ assert.deepEqual(first.researchTasks[0].rewards,[{type:'item',name:'Rare Candy',quantity:3},{type:'encounter',name:'Alolan Raichu',quantity:1}]);
+});
+test('flattened source item blocks never become part of an encounter name',()=>{
+ const fields=extractFields('<h2>Field Research</h2><p>Catch 10 Steel-type Pokémon POSSIBLE REWARDS ×1 Golden Razz Berry ×1 Rookidee Max CP 285 Min CP 258 ×2000 Stardust ×2000</p><p>Make an Excellent Throw POSSIBLE REWARDS ×2 Silver Pinap Berry ×2 ×2 Golden Razz Berry ×2</p>');
+ assert.deepEqual(fields.researchTasks[0].rewards,[{type:'item',name:'Golden Razz Berry',quantity:1},{type:'encounter',name:'Rookidee',quantity:1,cpMin:258,cpMax:285},{type:'item',name:'Stardust',quantity:2000}]);
+ assert.deepEqual(fields.researchTasks[1].rewards,[{type:'item',name:'Silver Pinap Berry',quantity:2},{type:'item',name:'Golden Razz Berry',quantity:2}]);
+});
+test('published Wild Area research separates item rewards and exact encounter identity',()=>{
+ const details=JSON.parse(fs.readFileSync(new URL('../public/event-details.json',import.meta.url),'utf8'));
+ for(const id of ['leekduck:pokemon-go-wild-area-2026-sendai-japan','leekduck:pokemon-go-wild-area-2026-mexico-city']){
+  const task=details.events[id].researchTasks.find(t=>t.task==='Catch 10 Steel‑type Pokémon');
+  assert.equal(task.eventId,id);assert.equal(task.sourceRefs[0].url,'https://leekduck.com/events/'+id.slice(9)+'/');
+  assert.deepEqual(task.rewards.map(r=>r.name),['Golden Razz Berry','Rookidee','Stardust']);
+  assert.equal(task.rewards[2].quantity,2000);
+ }
+});

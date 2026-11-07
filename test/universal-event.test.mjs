@@ -183,3 +183,17 @@ test('gallery merges visually identical source edges without collapsing encounte
  assert.equal((html.match(/data-identity="25:base:test-hat"/g)||[]).length,1);
  assert.equal(JSON.stringify(raw),before);assert.equal(model.pokemon[0].shiny,'unknown');
  });
+
+test('reviewed source corrections reconcile aliases while retaining published identities and local times',()=>{
+ const data={events:[{id:'canonical',t:'Synthetic overseas event'},{id:'source-copy',t:'Synthetic overseas event',aliases:['old-source-link']}]};
+ const previous=buildCatalogue({data});
+ const corrections={schemaVersion:1,events:{canonical:{aliases:['source-copy'],attendance:'in-person',location:'Tokyo, Japan',schedule:{start:'2027-01-01T10:00',end:'2027-01-01T18:00',timeBasis:'local',timeZone:'Asia/Tokyo'}}}};
+ const next=buildCatalogue({data,previous,corrections});
+ assert.equal(next.events.length,1);assert.equal(next.events[0].eventId,'canonical');
+ for(const id of ['source-copy','old-source-link'])assert.ok(next.events[0].aliases.includes(id));
+ assert.equal(next.events[0].schedule.timeZone,'Asia/Tokyo');
+ assert.equal(next.events[0].attendance,'in-person');
+ const again=buildCatalogue({data,previous:next,corrections});
+ assert.deepEqual(again.events.map(e=>e.eventId),['canonical']);
+ assert.deepEqual(again.events[0].aliases,next.events[0].aliases);
+});
