@@ -159,6 +159,11 @@ with sync_playwright() as p:
     held=[]
     context.route('**/events-v1.json',lambda route:held.append(route))
     page=context.new_page();errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
+    pending=set()
+    page.on('request',lambda r:pending.add(r.url))
+    page.on('requestfinished',lambda r:pending.discard(r.url))
+    page.on('requestfailed',lambda r:pending.discard(r.url))
+    page.add_init_script("""window.__handoff=[];['pointerdown','pointerup','click'].forEach(type=>document.addEventListener(type,e=>window.__handoff.push({type,target:e.target.closest('[data-open]')?.getAttribute('data-open')||e.target.tagName}),true));""")
     page.clock.install(time='2026-11-07T12:00:00+11:00')
     page.goto(BASE+'/',wait_until='domcontentloaded')
     page.wait_for_function("!!window.GODETAIL&&GODASH.eventsState()!=='pending'")
@@ -170,7 +175,10 @@ with sync_playwright() as p:
     try:
         page.wait_for_function("document.getElementById('evd-t')?.textContent==='Synthetic Future Community Day'")
     except Exception:
-        print('Late catalogue handoff failure:',errors,page.evaluate("({title:document.getElementById('evd-t')?.textContent,hidden:document.getElementById('evd')?.hidden,active:document.activeElement?.outerHTML,depth:GONAV.depth,events:GODASH.events().filter(e=>e.id==='synthetic-future-community-day').map(e=>({id:e.id,name:e.name}))})"),flush=True)
+        print('Late catalogue handoff failure:',errors,sorted(pending),page.evaluate("({title:document.getElementById('evd-t')?.textContent,hidden:document.getElementById('evd')?.hidden,active:document.activeElement?.outerHTML,depth:GONAV.depth,settled:GOEventRegistry.settled(),handoff:window.__handoff,places:!!window.GOPLACES,events:GODASH.events().filter(e=>e.id==='synthetic-future-community-day').map(e=>({id:e.id,name:e.name}))})"),flush=True)
+        page.evaluate("GODETAIL.open('synthetic-future-community-day')")
+        page.wait_for_timeout(300)
+        print('Direct open diagnostic:',page.locator('#evd-t').all_text_contents(),sorted(pending),flush=True)
         raise
     assert errors==[],errors
     print('PASS late catalogue announces future events without a reload or user-state edit')
