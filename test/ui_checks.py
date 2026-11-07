@@ -769,8 +769,8 @@ with sync_playwright() as p:
               not re.search(r'\b\d{1,2}:\d{2}\b|\b(?:am|pm)\b', run30_text, re.I), run30_text)
         for run30_width in (320, 390, 1280):
             run30_fallback.set_viewport_size({'width':run30_width,'height':844 if run30_width < 600 else 900})
-            run30_fallback.wait_for_timeout(100)
-            run30_box = run30_card.bounding_box()
+            run30_card.wait_for(state='visible')
+            run30_box = run30_card.evaluate('(el)=>{const r=el.getBoundingClientRect();return {x:r.x,y:r.y,width:r.width,height:r.height};}')
             check('New Taipei RUN 30 remains visible at %dpx in the regional fallback' % run30_width,
                   run30_card.count()==1 and run30_card.is_visible() and run30_box is not None and
                   run30_box['x'] >= -1 and run30_box['x'] + run30_box['width'] <= run30_width + 1,

@@ -129,6 +129,9 @@ with sync_playwright() as p:
         assert page.locator('#evd .ue-sources').count()==1,item['eventId']
         assert page.locator('#evd').evaluate('(el)=>el.scrollWidth<=el.clientWidth'),item['eventId']
         page.evaluate('GODETAIL.close()')
+    page.wait_for_function('!GONAV.internal&&GONAV.pending.length===0')
+    assert page.evaluate('GONAV.depth')==0
+    assert page.url.rstrip('/')==BASE
     assert errors==[],errors
     print(f'PASS all {len(CATALOGUE["events"])} catalogue records open with universal renderer in {engine}')
     context.close()
