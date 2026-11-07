@@ -58,8 +58,15 @@ with sync_playwright() as p:
         page.wait_for_function("!!window.GODASH&&!!window.GODETAIL&&GODASH.events().some(e=>e.id==='synthetic-future-community-day')&&GODASH.DEXBY.raichu===26")
         assert page.locator('#universal-announced-tab-now').is_visible(), 'undated overseas announcement hidden'
         page.locator('#tabs [data-tab="events"]').click()
-        page.locator('#evtimeline [data-open="synthetic-future-community-day"]').click()
-        page.wait_for_function("document.getElementById('evd-t')?.textContent==='Synthetic Future Community Day'")
+        target=page.locator('#evtimeline [data-open="synthetic-future-community-day"]')
+        target.focus()
+        assert target.evaluate('(el)=>{GODASH.renderAll();return el.isConnected&&document.activeElement===el;}'), 'unchanged Schedule refresh replaced the focused event button'
+        target.click()
+        try:
+            page.wait_for_function("document.getElementById('evd-t')?.textContent==='Synthetic Future Community Day'")
+        except Exception:
+            print('Event handoff failure:',errors,page.evaluate("({title:document.getElementById('evd-t')?.textContent,hidden:document.getElementById('evd')?.hidden,active:document.activeElement?.outerHTML,events:GODASH.events().filter(e=>e.id==='synthetic-future-community-day').map(e=>({id:e.id,name:e.name}))})"),flush=True)
+            raise
         assert page.locator('#evd [data-method="wild"]').count()==1
         assert page.locator('#evd-research-title').count()==0, 'unknown research section invented'
         page.keyboard.press('Escape')

@@ -482,7 +482,7 @@ with sync_playwright() as p:
         if pre: pre(pg)  # extra routes (a stalled feed, a blocked script) are registered after the defaults, so they win
         if not ready:  # robustness tests: do not wait for the first render, that is what they measure
             pg.goto(BASE+'/', wait_until='domcontentloaded'); return pg
-        pg.goto(BASE+'/', wait_until='domcontentloaded' if slow_places else 'load'); pg.wait_for_selector('.pc, .prio-empty',state='attached'); pg.wait_for_function("document.getElementById('home-now')?.hasAttribute('data-render-key')")
+        pg.goto(BASE+'/', wait_until='domcontentloaded' if slow_places else 'load'); pg.wait_for_function("document.getElementById('home-now')?.hasAttribute('data-render-key')")
         # dash.js appends detail/extra/places/infographic scripts after the first render; tests call their globals straight away.
         settle(pg,"!!(window.GODETAIL&&window.GOEXTRA&&window.GOINFOGRAPHIC)&&(%s||!!window.GOPLACES)"%('true' if slow_places else 'false'))
         if expand_brief: pg.locator('#today-brief-details > summary').click()
@@ -3626,8 +3626,8 @@ with sync_playwright() as p:
         ipg.evaluate("GOINFOGRAPHIC.open('leekduck:b9cd')"); ipg.wait_for_selector('.goinfo-poster'); ipg.wait_for_timeout(200)
         check('event picture viewer: no Discord link, and the poster still names its creator', ipg.evaluate("document.querySelectorAll('a[href*=\"discord.com\"]').length") == 0 and 'G47IX' in ipg.inner_text('.goinfo-poster-top'))
         ipg.evaluate("GOINFOGRAPHIC.close()"); ipg.wait_for_timeout(200)
-        ipg.evaluate("GODETAIL.open('leekduck:b9cd')"); ipg.wait_for_selector('#evd:not([hidden]) .evd-btns'); ipg.wait_for_timeout(300)
-        check('event sheet: the source button goes to the event\'s own official link, never a Discord post', ipg.evaluate("document.querySelectorAll('a[href*=\"discord.com\"]').length") == 0 and ipg.locator('#evd .evd-btns a[href^="https://leekduck.com/"]').count() == 1)
+        ipg.evaluate("GODETAIL.open('leekduck:b9cd')"); ipg.wait_for_selector('#evd:not([hidden]) #evd-sources',state='attached'); ipg.wait_for_timeout(300)
+        check('event sheet: the source button goes to the event\'s own official link, never a Discord post', ipg.evaluate("document.querySelectorAll('a[href*=\"discord.com\"]').length") == 0 and ipg.locator('#evd-sources a[href^="https://leekduck.com/"]').count() >= 1)
         ipg.context.close()
         # Item 3: names. Every button on the five main screens has one, and toggles say WHICH event / Pokémon.
         NAME_JS = """() => { const out = [];

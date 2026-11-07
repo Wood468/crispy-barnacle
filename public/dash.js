@@ -817,12 +817,13 @@
   var stripRO = null;
   function drawTimeline() {
     var el = $('evtimeline'); if (!el) return;
+    function paint(html) { if(el._gofnTimelineHTML===html)return;el._gofnTimelineHTML=html;el.innerHTML=html; }
     var t = now(), html = '', ws = weekStart(weekOff), we = addDays(ws, 7);
     if (evQ) { // searching: every live and upcoming event that matches, soonest first, whatever week or kind switch is set
       var res = EV.filter(function (e) { return e.end > t && !isHidden(e.id) && matchesQ(e); }).sort(function (a, b) { return a.start - b.start; });
       var regRes = regList().filter(function (e) { return e.end > t && (String(e.name + ' ' + e.place + ' ' + e.area).toLowerCase().indexOf(evQ) >= 0); });
-      el.innerHTML = '<div class="dayhead"><h2 class="sec2">' + (res.length + regRes.length) + ((res.length + regRes.length) === 1 ? ' result' : ' results') + '</h2><button type="button" class="pill all" data-clearq="1">Clear search</button></div>'
-        + (res.length || regRes.length ? res.slice(0, 60).map(function (e) { return card(e); }).join('') + regRes.map(function (e) { return agendaRow(e, true); }).join('') : '<p class="empty">Nothing live or coming up matches that. Try a Pokémon or part of an event name.</p>'); return;
+      paint('<div class="dayhead"><h2 class="sec2">' + (res.length + regRes.length) + ((res.length + regRes.length) === 1 ? ' result' : ' results') + '</h2><button type="button" class="pill all" data-clearq="1">Clear search</button></div>'
+        + (res.length || regRes.length ? res.slice(0, 60).map(function (e) { return card(e); }).join('') + regRes.map(function (e) { return agendaRow(e, true); }).join('') : '<p class="empty">Nothing live or coming up matches that. Try a Pokémon or part of an event name.</p>')); return;
     }
     if (typeSel === 'soon') { // whatever week is shown, this is about the next 24 hours: what is on now, then what pays out next
       var tn = t.getTime();
@@ -832,7 +833,7 @@
       sn.sort(function (a, b) { return a.at - b.at; });
       var lv = sn.filter(function (x) { return x.live; }), up = sn.filter(function (x) { return !x.live; });
       html = (lv.length ? '<h2 class="sec2">Happening now</h2>' + lv.map(function (x) { return x.html; }).join('') : '') + (up.length ? '<h2 class="sec2 dh">Starting in the next 24 hours</h2>' + up.map(function (x) { return x.html; }).join('') : '');
-      el.innerHTML = html || '<p class="empty">Nothing starts in the next 24 hours.</p>'; return;
+      paint(html || '<p class="empty">Nothing starts in the next 24 hours.</p>'); return;
     }
     if (selDay) {
       var d = new Date(selDay + 'T12:00'), evs = filtered(dayEvents(d)).sort(function (a, b) { return a.start - b.start; });
@@ -840,7 +841,7 @@
       html += '<div class="dayhead"><h2 class="sec2">' + esc(fmtD(d)) + '</h2><button type="button" class="pill all" data-clearday="1">Show week</button></div>';
       html += evs.map(function (e) { return card(e); }).join('') + dayRegional.map(function (e) { return agendaRow(e, true); }).join('');
       if (!evs.length && !dayRegional.length) html += '<p class="empty">Nothing listed for this day.</p>';
-      el.innerHTML = html; return;
+      paint(html); return;
     }
     /* The week arrows control both the strip and this list. Show every event overlapping
        the selected Monday–Sunday range; selecting an individual date is optional. */
@@ -868,7 +869,7 @@
       html += '<h2 class="sec2 dh">' + (weekOff === 0 && k === today ? 'Today' : weekOff === 0 && k === tmw ? 'Tomorrow' : esc(fmtD(d))) + '</h2>' + groups[k].map(function (e) { return card(e); }).join('');
     });
     if (!html) html = '<p class="empty">No events match that filter for this week.</p>';
-    el.innerHTML = html;
+    paint(html);
   }
 
   /* ---------- Calendar: month grid, plus a compact Day / Week / Month list, with worldwide in-person events ---------- */
