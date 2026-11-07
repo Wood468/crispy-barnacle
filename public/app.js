@@ -36,6 +36,7 @@ Promise.all([
 (function(){
   var esc = window.GOLIB.esc;
   function $(id){return document.getElementById(id)}
+  var CLOCK=window.GOEventClock;
   var NOW=new Date();
   // An art entry is a name, or {n:name, shiny:1, costume:1, asset:"COSTUME_ENUM", label:"Top hat"}.
   /* Pokémon Showdown file name for a species/form, e.g. "Alolan Ninetales" -> "ninetales-alola", "Mega Charizard X" -> "charizard-megax". */
@@ -127,7 +128,7 @@ Promise.all([
   function artRow(list,cls){return list&&list.length?'<div class="arts">'+list.map(function(n){return fig(n,cls)}).join('')+'</div>':''}
   var MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
   var DOW=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
-  $('today').textContent=(DOW[NOW.getDay()]+' '+NOW.getDate()+' '+MON[NOW.getMonth()]+' '+NOW.getFullYear()).toUpperCase();
+  var todayParts=CLOCK.fields(NOW);$('today').textContent=(DOW[todayParts.weekday]+' '+todayParts.day+' '+MON[todayParts.month]+' '+todayParts.year).toUpperCase();
 
   var TAGKEY={'Community Day':'cd','Raids':'raid','Max Battles':'max','Shiny':'shiny','Debut':'debut','Background':'bg','In person':'person','Costume':'costume','Shadow':'shadow','Mega':'mega','Primal':'primal'};
   var ICONS={
@@ -382,9 +383,9 @@ Promise.all([
   var WEEK=D.week;
   var HERO={cd:['#F76B15','#1A0E04'],raid:['#D7373C','#FFFFFF'],max:['#6E56CF','#FFFFFF'],shiny:['#FFD43B','#1D1700'],debut:['#12A594','#031F1B'],bg:['#C2338F','#FFFFFF'],person:['#3E63DD','#FFFFFF'],costume:['#FF8FB1','#2A0A15']};
 
-  function pd(s){return new Date(s)}
-  function fmtD(d){return DOW[d.getDay()]+' '+d.getDate()+' '+MON[d.getMonth()]}
-  function fmtT(d){var h=d.getHours(),m=d.getMinutes(),ap=h>=12?'pm':'am';h=h%12||12;return h+(m?':'+('0'+m).slice(-2):'')+' '+ap}
+  function pd(s){return CLOCK.parseDate(s)}
+  function fmtD(d){var p=CLOCK.fields(d);return DOW[p.weekday]+' '+p.day+' '+MON[p.month]}
+  function fmtT(d){var p=CLOCK.fields(d),h=p.hour,m=p.minute,ap=h>=12?'pm':'am';h=h%12||12;return h+(m?':'+('0'+m).slice(-2):'')+' '+ap}
   function rangeText(s,e){
     var a=pd(s),b=pd(e);
     var sameDay=a.toDateString()===b.toDateString();
@@ -402,7 +403,7 @@ Promise.all([
     return {k:'up',t:sameDay?'Today':tmw?'Tomorrow':'In '+days+' days'};
   }
 
-  var todayDow=NOW.getDay();
+  var todayDow=CLOCK.fields(NOW).weekday;
   $('week').innerHTML=[1,2,3,4,5,6,0].map(function(i){
     return '<div class="day'+(i===todayDow?' today':'')+'"><b>'+WEEK[i][0]+(i===todayDow?' · today':'')+'</b><span>'+esc(WEEK[i][1])+'</span></div>';
   }).join('');
@@ -1054,7 +1055,7 @@ Promise.all([
     var r=document.getElementById('today-retry');if(r)r.addEventListener('click',function(){window.location.reload()});
     var b=document.getElementById('day-brief');if(b)b.setAttribute('data-state','unavailable');
     var f=document.getElementById('fresh-line');if(f)f.setAttribute('data-released','')}
-  var ds=document.createElement('script');ds.src='/dash.js?v=20261107a';ds.onerror=todayUnavailable;document.body.appendChild(ds);setTimeout(function(){if(!window.GODASH)todayUnavailable()},10000);
+  var ds=document.createElement('script');ds.src='/dash.js?v=20261107b';ds.onerror=todayUnavailable;document.body.appendChild(ds);setTimeout(function(){if(!window.GODASH)todayUnavailable()},10000);
 })();
 
 }).catch(function(){var panel=document.getElementById('load-error');if(panel)panel.hidden=false;var retry=document.getElementById('load-retry');if(retry)retry.addEventListener('click',function(){window.location.reload()},{once:true})});

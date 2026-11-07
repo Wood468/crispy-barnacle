@@ -5,6 +5,10 @@
   var G = window.GO; if (!G) return;
   var D = G.D, esc = G.esc, art = G.art, MON = G.MON, DOW = G.DOW;
   function $(id) { return document.getElementById(id); }
+  var CLOCK=window.GOEventClock;
+  function pd(value){return CLOCK.parseDate(value);}
+  function civil(d){return CLOCK.fields(d);}
+  function atDate(y,m,d,h,min){return CLOCK.calendarDate(y,m,d,h,min);}
   function now() { return new Date(); }
   function safeUrl(u) { return typeof u === 'string' && !(window.GOLIB && window.GOLIB.isPrivateLink(u)) && (/^https:\/\//.test(u) || /^\/img\/ext\/[\w.-]+$/.test(u)) ? u : ''; }
   function isOfficialUrl(u) { try { var h = new URL(String(u || '')).hostname.toLowerCase(); return h === 'pokemongo.com' || /\.pokemongo\.com$/.test(h); } catch (e) { return false; } }
@@ -66,13 +70,13 @@
   var PIPE_KIND = { 'community-day': 'cd', 'raid-battles': 'raid', 'raid-hour': 'raid', 'raid-day': 'raid', 'raid-weekend': 'raid', 'elite-raids': 'raid', 'max-battles': 'max', 'max-mondays': 'max',
     'pokemon-spotlight-hour': 'spot', 'go-battle-league': 'pvp', 'wild-area': 'person', 'pokemon-go-tour': 'person', 'pokemon-go-fest': 'person', 'safari-zone': 'person', 'city-safari': 'person', 'ticketed-event': 'person', 'twitch-drops': 'twitch', 'twitch-drops-event': 'twitch' };
 
-  /* ---------- time helpers (all in the device's own time zone) ---------- */
+  /* Calendar labels and boundaries follow the saved viewer zone, or the device by default. */
   function pad(n) { return ('0' + n).slice(-2); }
-  function fmtD(d) { return DOW[d.getDay()] + ' ' + d.getDate() + ' ' + MON[d.getMonth()]; }
-  function fmtT(d) { var h = d.getHours(), m = d.getMinutes(), ap = h >= 12 ? 'pm' : 'am'; h = h % 12 || 12; return h + (m ? ':' + pad(m) : '') + ' ' + ap; }
-  function dayKey(d) { return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); }
-  function startOfDay(d) { return new Date(d.getFullYear(), d.getMonth(), d.getDate()); }
-  function addDays(d, n) { return new Date(d.getFullYear(), d.getMonth(), d.getDate() + n, d.getHours(), d.getMinutes()); }
+  function fmtD(d) { var p=civil(d);return DOW[p.weekday]+' '+p.day+' '+MON[p.month]; }
+  function fmtT(d) { var p=civil(d),h=p.hour,m=p.minute,ap=h>=12?'pm':'am';h=h%12||12;return h+(m?':'+pad(m):'')+' '+ap; }
+  function dayKey(d) { return CLOCK.dayKey(d); }
+  function startOfDay(d) { return CLOCK.startDay(d); }
+  function addDays(d,n) { return CLOCK.addDays(d,n); }
   function dur(ms) {
     var m = Math.max(0, Math.round(ms / 60000));
     if (m < 60) return m + 'm';
@@ -141,10 +145,10 @@
 
   /* ---------- the event model ---------- */
   function mkEvent(o) {
-    var s = new Date(o.s), e = new Date(o.e);
+    var s = pd(o.s), e = pd(o.e);
     if (isNaN(s) || isNaN(e)) return null;
     o.start = s; o.end = e; o.sourceStart = o.s; o.sourceEnd = o.e;
-    o.allDay = s.getHours() === 0 && s.getMinutes() === 0 && e.getHours() === 23;
+    o.allDay = civil(s).hour === 0 && civil(s).minute === 0 && civil(e).hour === 23;
     o.long = e - s > 10 * 864e5;
     o.featured = (o.featured || []).filter(function (f) { return f && f.name; });
     o.bonuses = o.bonuses || [];
@@ -226,7 +230,7 @@
       var display=GOEventRegistry.display(model);
       if(display.instantKnown){EV.push(display);ids.add(model.eventId);}else if(!isHidden(model.eventId))unknown.push(display);
     });
-    [['tab-now',unknown.filter(function(e){return e.kind==='person'&&(!window.GOTodayVisibility||GOTodayVisibility.todayPlacement(e.universalModel,now(),Intl.DateTimeFormat().resolvedOptions().timeZone).visible);}),'Announced in person'],['sub-timeline',unknown,'Dates to be announced']].forEach(function(row){
+    [['tab-now',unknown.filter(function(e){return e.kind==='person'&&(!window.GOTodayVisibility||GOTodayVisibility.todayPlacement(e.universalModel,now(),CLOCK.viewerZone()).visible);}),'Announced in person'],['sub-timeline',unknown,'Dates to be announced']].forEach(function(row){
       var host=$(row[0]);if(!host)return;var id='universal-announced-'+row[0],section=$(id);
       if(!section){section=document.createElement('section');section.id=id;section.className='agenda-section ue-announced';host.appendChild(section);}
       section.hidden=!row[1].length;
@@ -651,8 +655,8 @@
   /* In-person events with a venue time (Night Out): loaded once, shared with the cards (detail.js) and used for "Next 24h" and the Today summary. */
   var VENUE = [];
   function venueViewerZone() {
-    try { return Intl.DateTimeFormat().resolvedOptions().timeZone || 'Australia/Melbourne'; }
-    catch (e) { return 'Australia/Melbourne'; }
+    try { return CLOCK.viewerZone(); }
+    catch (e) { return 'UTC'; }
   }
   function venueLive(v, t) { return v.ms <= t && (v.endMs || v.ms + 4 * 36e5) > t; }
   function venueUp(v, t) { return v.ms > t && v.ms - t <= 864e5; }
@@ -727,7 +731,7 @@
   function renderPrio() {
     var box = $('prio'); if (!box) return;
     var t = now(), list = priority(t), top = list.slice(0, 4);
-    var html = '<div class="prio-head"><h2 class="sec2">Priority now</h2><span class="muted mono">' + esc(DOW[t.getDay()] + ' ' + fmtT(t)) + '</span></div>' + soonSummary(t);
+    var html = '<div class="prio-head"><h2 class="sec2">Priority now</h2><span class="muted mono">' + esc(DOW[civil(t).weekday] + ' ' + fmtT(t)) + '</span></div>' + soonSummary(t);
     if (!top.length) {
       var nx = EV.filter(function (e) { return phase(e, t) === 'soon' && announced(e) && !e.long; }).sort(function (a, b) { return a.start - b.start; })[0];
       html += '<div class="prio-empty"><b>Nothing urgent right now.</b><span>' + (nx ? 'Next up: ' + esc(nx.name) + ', ' + esc(countdown(nx, t).toLowerCase()) + '.' : 'No scheduled events in the data I have.') + '</span></div>';
@@ -773,7 +777,7 @@
     var el = $('evtypes'); if (!el) return;
     el.innerHTML = TYPEFILTERS.map(function (f) { return '<button type="button" class="fchip" data-type="' + f[0] + '" aria-pressed="' + (typeSel === f[0]) + '">' + esc(f[1]) + '</button>'; }).join('');
   }
-  function weekStart(off) { var t = startOfDay(now()), dow = (t.getDay() + 6) % 7; return addDays(t, -dow + off * 7); }
+  function weekStart(off) { var t = startOfDay(now()), dow = (civil(t).weekday + 6) % 7; return addDays(t, -dow + off * 7); }
   function dayEvents(day) { // events touching a given calendar day (long ones only on first and last day)
     var d0 = startOfDay(day).getTime(), d1 = d0 + 864e5;
     return EV.filter(function (ev) {
@@ -793,7 +797,7 @@
     for (var i = 0; i < 7; i++) {
       var d = addDays(ws, i), k = dayKey(d), evs = filtered(dayEvents(d));
       var dots = evs.slice(0, 4).map(function (e) { return '<i style="background:' + kindOf(e)[1] + '"></i>'; }).join('');
-      cells += '<button type="button" class="wd' + (k === today ? ' today' : '') + (k === selDay ? ' sel' : '') + '" data-day="' + k + '" aria-pressed="' + (k === selDay) + '"><span>' + DOW[d.getDay()] + '</span><b>' + d.getDate() + '</b><em>' + (dots || '') + '</em></button>';
+      cells += '<button type="button" class="wd' + (k === today ? ' today' : '') + (k === selDay ? ' sel' : '') + '" data-day="' + k + '" aria-pressed="' + (k === selDay) + '"><span>' + DOW[civil(d).weekday] + '</span><b>' + civil(d).day + '</b><em>' + (dots || '') + '</em></button>';
     }
     var a = ws, b = addDays(ws, 6);
     el.innerHTML = '<div class="wk-head"><button type="button" class="calnav" data-wk="-1" aria-label="Previous week">‹</button><span>' + esc(fmtD(a) + ' to ' + fmtD(b)) + (weekOff === 0 ? ' · this week' : '') + '</span><button type="button" class="calnav" data-wk="1" aria-label="Next week">›</button></div><div class="wk-days">' + cells + '</div>';
@@ -836,7 +840,7 @@
       paint(html || '<p class="empty">Nothing starts in the next 24 hours.</p>'); return;
     }
     if (selDay) {
-      var d = new Date(selDay + 'T12:00'), evs = filtered(dayEvents(d)).sort(function (a, b) { return a.start - b.start; });
+      var d = pd(selDay + 'T12:00'), evs = filtered(dayEvents(d)).sort(function (a, b) { return a.start - b.start; });
       var dayRegional = regDay(d).filter(function (e) { return regSel === 'all' || regSel === 'global' || e.area === regSel; });
       html += '<div class="dayhead"><h2 class="sec2">' + esc(fmtD(d)) + '</h2><button type="button" class="pill all" data-clearday="1">Show week</button></div>';
       html += evs.map(function (e) { return card(e); }).join('') + dayRegional.map(function (e) { return agendaRow(e, true); }).join('');
@@ -865,7 +869,7 @@
     });
     var today = dayKey(t), tmw = dayKey(addDays(t, 1));
     order.forEach(function (k) {
-      var d = new Date(k + 'T12:00');
+      var d = pd(k + 'T12:00');
       html += '<h2 class="sec2 dh">' + (weekOff === 0 && k === today ? 'Today' : weekOff === 0 && k === tmw ? 'Tomorrow' : esc(fmtD(d))) + '</h2>' + groups[k].map(function (e) { return card(e); }).join('');
     });
     if (!html) html = '<p class="empty">No events match that filter for this week.</p>';
@@ -880,7 +884,7 @@
   var UNDATED = [], REGGAZ = {};
   function worldDate(value, endOfDay) {
     var raw = String(value || '').trim();
-    if (/^\d{4}-\d{2}-\d{2}$/.test(raw)) return new Date(raw + (endOfDay ? 'T23:59' : 'T00:00'));
+    if (/^\d{4}-\d{2}-\d{2}$/.test(raw)) return pd(raw + (endOfDay ? 'T23:59' : 'T00:00'));
     /* A timestamp is accepted only with an explicit offset or Z. An unzoned clock is not a venue-local time. */
     if (/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(?::\d{2}(?:\.\d+)?)?(?:Z|[+-]\d{2}:\d{2})$/i.test(raw)) return new Date(raw);
     return new Date(NaN);
@@ -1024,8 +1028,8 @@
   document.addEventListener('toggle', function (e) { var d = e.target; if (d && d.matches && d.matches('#calreg details.dd[data-k]')) d.setAttribute('data-was', d.open ? '1' : '0'); }, true);
   function drawCalendar() {
     var g = $('calgrid'); if (!g) return;
-    if (!calMonth) { var n = now(); calMonth = new Date(n.getFullYear(), n.getMonth(), 1); }
-    $('calttl').textContent = MON[calMonth.getMonth()] + ' ' + calMonth.getFullYear();
+    if (!calMonth) { var n = now(); calMonth = atDate(civil(n).year,civil(n).month,1); }
+    $('calttl').textContent = MON[civil(calMonth).month] + ' ' + civil(calMonth).year;
     var chips = $('calreg');
     var ddOpen = {}; if (chips) Array.prototype.forEach.call(chips.querySelectorAll('details.dd[data-k]'), function (d) { ddOpen[d.getAttribute('data-k')] = d.open; });
     if (chips) chips.innerHTML = '<div class="rgrow">' + REGIONS.map(function (r) { return '<button type="button" class="fchip" data-creg="' + r[0] + '" aria-pressed="' + (regSel === r[0]) + '">' + esc(r[1]) + '</button>'; }).join('') + '</div>'
@@ -1033,21 +1037,21 @@
     var hl = hiddenList().map(function (id) { var e = EV.filter(function (x) { return x.id === id; })[0] || REG.filter(function (x) { return x.id === id; })[0]; return e && e.end > now() ? { id: id, name: e.name } : null; }).filter(Boolean);
     if (chips && hl.length) chips.innerHTML += '<details class="dd" data-k="hidden"><summary>Hidden by you (' + hl.length + ')</summary><div class="body">' + hl.map(function (h) { return '<div class="hid"><span>' + esc(h.name) + '</span><button type="button" class="more" data-unhide="' + esc(h.id) + '">Show again</button></div>'; }).join('') + '</div></details>';
     if (chips) Array.prototype.forEach.call(chips.querySelectorAll('details.dd[data-k]'), function (d) { if (ddOpen[d.getAttribute('data-k')]) d.open = true; });
-    var first = (calMonth.getDay() + 6) % 7, days = new Date(calMonth.getFullYear(), calMonth.getMonth() + 1, 0).getDate(), today = dayKey(now());
+    var first = (civil(calMonth).weekday + 6) % 7, days = civil(atDate(civil(calMonth).year, civil(calMonth).month + 1, 0)).day, today = dayKey(now());
     var h = [['Mon', 'Monday'], ['Tue', 'Tuesday'], ['Wed', 'Wednesday'], ['Thu', 'Thursday'], ['Fri', 'Friday'], ['Sat', 'Saturday'], ['Sun', 'Sunday']].map(function (x) { return '<span class="ch"><span class="ch-short">' + x[0] + '</span><span class="ch-long" aria-hidden="true">' + x[1] + '</span></span>'; }).join('');
     for (var i = 0; i < first; i++) h += '<span class="cc empty"></span>';
     for (var d = 1; d <= days; d++) {
-      var dt = new Date(calMonth.getFullYear(), calMonth.getMonth(), d), k = dayKey(dt), it = calItems(dt), cnt = it.g.length + it.r.length;
+      var dt = atDate(civil(calMonth).year, civil(calMonth).month, d), k = dayKey(dt), it = calItems(dt), cnt = it.g.length + it.r.length;
       var dots = it.g.slice(0, 3).map(function (e) { return '<i style="background:' + kindOf(e)[1] + '"></i>'; }).join('') + it.r.slice(0, 2).map(function () { return '<i class="rg" style="background:' + REGCOL + '"></i>'; }).join('');
       h += '<button type="button" class="cc' + (k === today ? ' today' : '') + (k === calSel ? ' sel' : '') + '" data-cday="' + k + '" aria-label="' + esc(fmtD(dt)) + ', ' + cnt + ' events"><b>' + d + '</b><em>' + dots + '</em></button>';
     }
     g.innerHTML = h;
     // Compact list for the chosen range
-    var anchor = calSel ? new Date(calSel + 'T12:00') : (dayKey(now()).slice(0, 7) === dayKey(calMonth).slice(0, 7) ? startOfDay(now()) : calMonth);
+    var anchor = calSel ? pd(calSel + 'T12:00') : (dayKey(now()).slice(0, 7) === dayKey(calMonth).slice(0, 7) ? startOfDay(now()) : calMonth);
     var r0, r1, ttl;
     if (scopeSel === 'day') { r0 = startOfDay(anchor); r1 = addDays(r0, 1); ttl = fmtD(r0); }
-    else if (scopeSel === 'week') { var dow = (anchor.getDay() + 6) % 7; r0 = addDays(startOfDay(anchor), -dow); r1 = addDays(r0, 7); ttl = 'Week of ' + fmtD(r0); }
-    else { r0 = new Date(calMonth.getFullYear(), calMonth.getMonth(), 1); r1 = new Date(calMonth.getFullYear(), calMonth.getMonth() + 1, 1); ttl = MON[calMonth.getMonth()] + ' ' + calMonth.getFullYear(); }
+    else if (scopeSel === 'week') { var dow = (civil(anchor).weekday + 6) % 7; r0 = addDays(startOfDay(anchor), -dow); r1 = addDays(r0, 7); ttl = 'Week of ' + fmtD(r0); }
+    else { r0 = atDate(civil(calMonth).year, civil(calMonth).month, 1); r1 = atDate(civil(calMonth).year, civil(calMonth).month + 1, 1); ttl = MON[civil(calMonth).month] + ' ' + civil(calMonth).year; }
     var seen = {}, rows = [];
     for (var t = new Date(r0); t < r1; t = addDays(t, 1)) {
       var x = calItems(t);
@@ -1063,7 +1067,7 @@
       var html = '', lastWk = null;
       if (ong.length) html += '<div class="agenda-div"><span>Ongoing</span></div>' + ong.map(function (r) { return r.html; }).join('');
       rest.forEach(function (r) {
-        var d0 = startOfDay(new Date(Math.max(r.at, r0))), wk = addDays(d0, -((d0.getDay() + 6) % 7)), key = dayKey(wk);
+        var d0 = startOfDay(new Date(Math.max(r.at, r0))), wk = addDays(d0, -((civil(d0).weekday + 6) % 7)), key = dayKey(wk);
         if (key !== lastWk) { lastWk = key; html += '<div class="agenda-div"><span>Week of ' + esc(fmtD(wk)) + '</span></div>'; }
         html += r.html;
       });
@@ -1091,7 +1095,7 @@
     ((D.rotation) || []).forEach(function (r) {
       [['five', '5-star raids'], ['mega', 'Mega raids'], ['shadow', 'Shadow raids']].forEach(function (k) {
         var boss = canonicalBoss(r[k[0]]); if (!boss) return;
-        var start = new Date(r.s), end = new Date(r.e);
+        var start = pd(r.s), end = pd(r.e);
         if (!Number.isFinite(+start) || !Number.isFinite(+end)) return;
         var name = boss + (k[0] === 'five' ? ' 5-star raids' : ' raids');
         var key = slug(boss) + ':' + +start + ':' + +end + ':' + k[0];
@@ -1106,12 +1110,12 @@
   function drawRot() {
     var el = $('rotnow'); if (!el || !D.rotation) return;
     var t = now(), rot = D.rotation, max = D.maxBattles || [];
-    var day = new Date(t.getFullYear(), t.getMonth(), t.getDate());
-    var monday = new Date(day); monday.setDate(day.getDate() - ((day.getDay() + 6) % 7));
-    function addDay(d, n) { var x = new Date(d); x.setDate(x.getDate() + n); return x; }
-    function key(d) { return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0'); }
+    var day = startOfDay(t);
+    var monday = addDays(day,-((civil(day).weekday + 6) % 7));
+    function addDay(d,n){return addDays(d,n);}
+    function key(d){return dayKey(d);}
     function range(a,b) { return fmtD(a) + ' – ' + fmtD(b); }
-    function rotAt(d) { return rot.filter(function(r){ return new Date(r.s) <= d && d < new Date(r.e); })[0]; }
+    function rotAt(d) { return rot.filter(function(r){ return pd(r.s) <= d && d < pd(r.e); })[0]; }
     function tico(t, ttl) { return '<img class="ti" src="/ico/g/type-' + String(t).toLowerCase() + '.webp" alt="' + esc(t) + '" title="' + esc(t) + '" loading="lazy" decoding="async">'; }
     function raidEvent(name, r) { return raidSlotFor(name, r) || null; }
     function cell(label, name, r) {
@@ -1119,7 +1123,7 @@
       /* One Pokémon per row. A slot naming both Mega Charizard forms becomes two rows, each with full-size art. */
       var names = /^Mega Charizard X and Y$/i.test(name) ? ['Mega Charizard X', 'Mega Charizard Y'] : [name];
       return names.map(function (n) {
-        var f = window.GOTYPES && GOTYPES.facts(n), real = window.GOLIB && GOLIB.raidEventFor(EV, n, label, new Date(r.s).getTime(), new Date(r.e).getTime()), ev = real || raidEvent(n, r);
+        var f = window.GOTYPES && GOTYPES.facts(n), real = window.GOLIB && GOLIB.raidEventFor(EV, n, label, pd(r.s).getTime(), pd(r.e).getTime()), ev = real || raidEvent(n, r);
         var ib = ev ? '<button type="button" class="info-open rc-info" data-infographic="' + esc(ev.id) + '" aria-label="Open infographic for ' + esc(n) + '">▧ Infographic</button>' : '';
         if (real) ib += '<button type="button" class="rc-info rc-details" data-open="' + esc(real.id) + '" aria-label="Open event details for ' + esc(n) + '">ⓘ Details</button>';
         var shareValue = label === '5★' ? r.five : label === 'Mega' ? r.mega : label === 'Shadow' ? r.shadow : '';
@@ -1137,7 +1141,7 @@
     function lowTier(r) {
       /* 1-3 star bosses, where a source has published them for that rotation. */
       var l = r && r.low; if (!l) return '<p class="muted rw-low">1–3★ raid bosses are not announced for this rotation yet.</p>';
-      return '<div class="rw-low"><span class="rw-label">1–3★ raids' + (l.shadowOne || l.shadowThree ? ' and Shadow raids' : '') + (l.observed ? ' · as of ' + esc(fmtD(new Date(l.observed + 'T12:00'))) : '') + '</span>' + lowSourceLink(l) + '<div class="rcs rcs-low">' +
+      return '<div class="rw-low"><span class="rw-label">1–3★ raids' + (l.shadowOne || l.shadowThree ? ' and Shadow raids' : '') + (l.observed ? ' · as of ' + esc(fmtD(pd(l.observed + 'T12:00'))) : '') + '</span>' + lowSourceLink(l) + '<div class="rcs rcs-low">' +
         [['1★', l.one], ['3★', l.three], ['Shadow 1★', l.shadowOne], ['Shadow 3★', l.shadowThree]].map(function (g) { return (g[1] || []).map(function (n) { return cell(g[0], n, r); }).join(''); }).join('') + '</div></div>';
     }
     function raidSourceLink(r) {
@@ -1150,7 +1154,7 @@
       var first = rotAt(a), second = rotAt(mid);
       var mb = max.filter(function(m){ return m[0] <= key(b) && m[1] >= key(a); })[0];
       var body = '';
-      var activeRotation = rot.filter(function (r) { return new Date(r.s) <= t && t < new Date(r.e); })[0];
+      var activeRotation = rot.filter(function (r) { return pd(r.s) <= t && t < pd(r.e); })[0];
       var isCurrentWeek = key(a) <= key(t) && key(t) <= key(b);
       var rotationRows = [];
       if (isCurrentWeek) {
@@ -1158,14 +1162,14 @@
         // If the previous rotation has ended but the next one starts later this week,
         // keep the upcoming source-published window visible rather than showing an empty card.
         if (!rotationRows.length) {
-          var upcoming = [first, second].filter(function (r) { return r && new Date(r.s) > t && new Date(r.e) > t; })
+          var upcoming = [first, second].filter(function (r) { return r && pd(r.s) > t && pd(r.e) > t; })
             .sort(function (x, y) { return new Date(x.s) - new Date(y.s); })[0];
-          if (upcoming) rotationRows.push({ r: upcoming, label: 'Next raid rotation · ' + fmtD(new Date(upcoming.s)) + ', ' + fmtT(new Date(upcoming.s)), cls: 'rw-next' });
+          if (upcoming) rotationRows.push({ r: upcoming, label: 'Next raid rotation · ' + fmtD(pd(upcoming.s)) + ', ' + fmtT(pd(upcoming.s)), cls: 'rw-next' });
         }
-      } else if (new Date(a) > t) {
+      } else if (pd(a) > t) {
         // Future week cards must be calculated from that week's dates, never the globally active rotation.
         if (first) rotationRows.push({ r: first, label: 'At start of week', cls: '' });
-        if (second && second !== first) rotationRows.push({ r: second, label: 'From ' + fmtD(new Date(second.s)) + ', ' + fmtT(new Date(second.s)), cls: 'rw-next' });
+        if (second && second !== first) rotationRows.push({ r: second, label: 'From ' + fmtD(pd(second.s)) + ', ' + fmtT(pd(second.s)), cls: 'rw-next' });
       }
       if (!rotationRows.length) body += '<p class="empty">No raid rotation published for this week yet.</p>';
       rotationRows.forEach(function (row) {
@@ -1173,7 +1177,7 @@
         body += '<div class="rw-raid ' + row.cls + '"><span class="rw-label">' + esc(row.label) + '</span>' + raidSourceLink(r) + '<div class="rcs">' +
           cell('5★', r.five, r) + cell('Mega', r.mega, r) + cell('Shadow', String(r.shadow || '').replace(/, to .*/, ''), r) + '</div>' + lowTier(r) + '<p class="evc-when">Raid Hour: ' + esc(r.rh || 'Not listed') + '</p></div>';
       });
-      body += mb ? '<div class="rw-max"><span class="rw-label">Max Monday · ' + esc(fmtD(new Date(mb[0] + 'T12:00'))) + ' · 6 am–9 pm</span><div class="rw-max-pokemon">' + monArt({ kind: 'max', tags: [], name: '' }, { name: mb[2] }, 'ea') + '<div><b>' + esc(mb[2]) + '</b><small>Featured Max Pokémon at Power Spots</small></div></div></div>' :
+      body += mb ? '<div class="rw-max"><span class="rw-label">Max Monday · ' + esc(fmtD(pd(mb[0] + 'T12:00'))) + ' · 6 am–9 pm</span><div class="rw-max-pokemon">' + monArt({ kind: 'max', tags: [], name: '' }, { name: mb[2] }, 'ea') + '<div><b>' + esc(mb[2]) + '</b><small>Featured Max Pokémon at Power Spots</small></div></div></div>' :
         '<div class="rw-max"><span class="rw-label">Max Battles</span><p class="muted">No featured Pokémon published for this week yet.</p></div>';
       return '<article class="rotc rw-card"><div class="rw-week-head"><span class="kind">' + esc(offset === 0 ? 'This week' : 'Week of ' + fmtD(a)) + '</span><b>' + esc(range(a,b)) + '</b></div>' + body + '</article>';
     }
@@ -1416,8 +1420,8 @@
     if (tonight && tonightSummary && tonightList) {
       var tonightItems = [];
       function addTonight(kind, name, time, detail, boss, startHour, endHour) {
-        var start = new Date(dateKey + 'T' + (startHour < 10 ? '0' : '') + startHour + ':00');
-        var end = new Date(dateKey + 'T' + (endHour < 10 ? '0' : '') + endHour + ':00');
+        var start = pd(dateKey + 'T' + (startHour < 10 ? '0' : '') + startHour + ':00');
+        var end = pd(dateKey + 'T' + (endHour < 10 ? '0' : '') + endHour + ':00');
         if (!name || !Number.isFinite(start.getTime()) || !Number.isFinite(end.getTime()) ||
             end.getTime() <= start.getTime() || t.getTime() >= end.getTime()) return;
         tonightItems.push({ kind: kind, name: name, time: time, detail: detail || '', boss: boss || '', start: start, end: end });
@@ -1476,7 +1480,7 @@
   function todayRotationFor(t) {
     var endDay = addDays(startOfDay(t), 1);
     var candidates = (D.rotation || []).map(function (r) {
-      return { rotation: r, from: new Date(r.s), to: new Date(r.e) };
+      return { rotation: r, from: pd(r.s), to: pd(r.e) };
     }).filter(function (item) {
       return Number.isFinite(item.from.getTime()) && Number.isFinite(item.to.getTime()) &&
         item.from < endDay && item.to > t;
@@ -1684,7 +1688,7 @@
     if (w) {
       function parse(v, inclusiveEnd) {
         var s = String(v || '');
-        return /^\d{4}-\d{2}-\d{2}$/.test(s) ? new Date(s + (inclusiveEnd ? 'T23:59:59.999' : 'T00:00:00')) : new Date(s);
+        return /^\d{4}-\d{2}-\d{2}$/.test(s) ? pd(s + (inclusiveEnd ? 'T23:59:59.999' : 'T00:00:00')) : pd(s);
       }
       var start = parse(w.start || w.s, false), end = parse(w.end || w.e, true);
       return Number.isFinite(start.getTime()) && Number.isFinite(end.getTime()) && end > start && start <= t && t < end;
@@ -1913,7 +1917,7 @@ function renderHomeBrief(t) {
   function renderHomeAgenda() {
     if (!EV_READY) return;
     var t = now(), start = startOfDay(t), endDay = addDays(start, 1), endWeek = addDays(start, 7), endNext = addDays(start, 14);
-    var endMonth = new Date(t.getFullYear(), t.getMonth() + 1, 1);
+    var endMonth = atDate(civil(t).year,civil(t).month+1,1);
     var thisWeek = EV.filter(function (e) { return phase(e, t) === 'soon' && e.start >= endDay && e.start < endWeek && !isHidden(e.id) && !kindHidden(e.kind); }).sort(function (a, b) { return a.start - b.start; });
     var nextWeek = EV.filter(function (e) { return phase(e, t) === 'soon' && e.start >= endWeek && e.start < endNext && !isHidden(e.id) && !kindHidden(e.kind); }).sort(function (a, b) { return a.start - b.start; });
     var later = EV.filter(function (e) { return phase(e, t) === 'soon' && e.start >= endNext && e.start < endMonth && !isHidden(e.id) && !kindHidden(e.kind); }).sort(function (a, b) { return a.start - b.start; });
@@ -2010,8 +2014,8 @@ function renderHomeBrief(t) {
     else if (b.hasAttribute('data-cscope')) { scopeSel = b.getAttribute('data-cscope'); renderCalendar(); }
     else if (b.hasAttribute('data-travel-region')) { travelRegion = b.getAttribute('data-travel-region'); renderTravel(); }
   });
-  $('calprev').addEventListener('click', function () { calMonth = new Date(calMonth.getFullYear(), calMonth.getMonth() - 1, 1); calSel = ''; renderCalendar(); });
-  $('calnext').addEventListener('click', function () { calMonth = new Date(calMonth.getFullYear(), calMonth.getMonth() + 1, 1); calSel = ''; renderCalendar(); });
+  $('calprev').addEventListener('click', function () { calMonth = atDate(civil(calMonth).year, civil(calMonth).month - 1, 1); calSel = ''; renderCalendar(); });
+  $('calnext').addEventListener('click', function () { calMonth = atDate(civil(calMonth).year, civil(calMonth).month + 1, 1); calSel = ''; renderCalendar(); });
   $('followform').addEventListener('submit', function (e) {
     e.preventDefault();
     var v = $('followq').value.trim(), id = DEXBY[baseOf(v).base.toLowerCase()];
@@ -2076,7 +2080,7 @@ function renderHomeBrief(t) {
     renderCoverage();
     if (window.GO && GO.refreshDex) GO.refreshDex();
     usSync();
-    var inf = document.createElement('script'); inf.src = '/infographic.js?v=20261103a'; document.body.appendChild(inf); var x = document.createElement('script'); x.src = '/extra.js?v=20261102c'; document.body.appendChild(x); var z = document.createElement('script'); z.src = '/places.js?v=20261103b'; window.GOPLACES_READY = new Promise(function (resolve) { z.onload = function () { resolve(window.GOPLACES || null); }; z.onerror = function () { resolve(null); }; }); var y = document.createElement('script'); y.src = '/detail.js?v=20261107a'; document.body.appendChild(y); document.body.appendChild(z); var w = document.createElement('script'); w.src = '/fresh.js?v=20261103a'; document.body.appendChild(w); var nv = document.createElement('script'); nv.src = '/nudge.js?v=20261102a'; document.body.appendChild(nv); var rv = document.createElement('script'); rv.src = '/review.js?v=20261104b'; document.body.appendChild(rv); var by = document.createElement('script'); by.src = '/buy.js?v=20261103a'; document.body.appendChild(by);
+    var inf = document.createElement('script'); inf.src = '/infographic.js?v=20261103a'; document.body.appendChild(inf); var x = document.createElement('script'); x.src = '/extra.js?v=20261102c'; document.body.appendChild(x); var z = document.createElement('script'); z.src = '/places.js?v=20261103b'; window.GOPLACES_READY = new Promise(function (resolve) { z.onload = function () { resolve(window.GOPLACES || null); }; z.onerror = function () { resolve(null); }; }); var y = document.createElement('script'); y.src = '/detail.js?v=20261107b'; document.body.appendChild(y); document.body.appendChild(z); var w = document.createElement('script'); w.src = '/fresh.js?v=20261103a'; document.body.appendChild(w); var nv = document.createElement('script'); nv.src = '/nudge.js?v=20261102a'; document.body.appendChild(nv); var rv = document.createElement('script'); rv.src = '/review.js?v=20261104b'; document.body.appendChild(rv); var by = document.createElement('script'); by.src = '/buy.js?v=20261103a'; document.body.appendChild(by);
   }
   envBanner();
   /* Bounded waits: a request that never answers must not leave Today blank. After FEED_TIMEOUT_MS the page renders from the curated list

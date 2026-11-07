@@ -42,12 +42,17 @@ with sync_playwright() as pw:
             page.wait_for_function('!!window.GODASH && !!window.GODETAIL')
             if width == 390:
                 refs = re.findall(r"'(/[^']+\.(?:js|css)(?:\?v=[^']+)?)'", SW)
-                refs = [u for u in refs if re.search(r'/(app|dash|lib|detail|research)\.(js|css)', u)]
+                refs = list(dict.fromkeys(refs))
                 for url in ['/sw.js'] + refs:
                     content = page.evaluate('async url => {const r=await fetch(url,{cache:"reload"}); if(!r.ok) throw Error(url+": "+r.status); return r.text()}', url)
                     expected = (ROOT / 'public' / url.split('?', 1)[0].lstrip('/')).read_bytes()
                     assert hashlib.sha256(content.encode()).digest() == hashlib.sha256(expected).digest(), 'stale production asset: ' + url
                 print('PASS production script/style/service-worker hashes match the release checkout')
+                page.evaluate('GOEventRegistry.ready')
+                integrity=page.evaluate("async()=>GOEventCatalogue.validate(await fetch('/events-v1.json',{cache:'reload'}).then(r=>r.json())).diagnostics")
+                assert integrity['rejectedCount']==0 and not integrity['conflicts'],integrity
+                assert page.evaluate('GOEventRegistry.events().length')>0
+                print('PASS production catalogue validates with no rejected events or identity collisions')
             page.locator('#tabs [data-tab="events"]').click()
             assert page.locator('.schedule-heading').is_visible()
             page.locator('#tabs [data-tab="collect"]').click()

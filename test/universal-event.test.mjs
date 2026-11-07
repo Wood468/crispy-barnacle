@@ -104,7 +104,7 @@ test('equivalent source form spellings resolve consistently without combining Sh
  A.configureSpecies([]);
 });
 test('conflicting bonuses are withheld from primary content instead of showing both as facts',()=>{
- const model=event({bonuses:['2× Catch Candy','3× Catch Candy'],internalValidation:{conflicts:[{field:'bonuses',a:{text:'2× Catch Candy'},b:{text:'3× Catch Candy'}}]}});const html=UI.render(model,{});assert.doesNotMatch(html,/2× Catch Candy|3× Catch Candy/);assert.match(html,/Some event details conflict/);
+ const model=event({bonuses:['2× Catch Candy','3× Catch Candy'],internalValidation:{conflicts:[{field:'bonuses',a:{text:'2× Catch Candy'},b:{text:'3× Catch Candy'}}]}});const html=UI.render(model,{});assert.doesNotMatch(html,/2× Catch Candy|3× Catch Candy/);assert.doesNotMatch(html,/Some event details conflict/);
 });
 test('cancellations remain cancelled during an incomplete refresh and render a consequential warning',()=>{
  const cancelled=event({lifecycle:'cancelled'}),partial=event({});assert.equal(A.retain(cancelled,partial).lifecycle,'cancelled');assert.match(UI.render(cancelled,{}),/Event cancelled/);

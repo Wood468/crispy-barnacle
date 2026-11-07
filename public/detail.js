@@ -12,8 +12,8 @@
     var L = EVM.filter(function (m) { return m.eventId === ev.id || m.eventId === String(ev.id).replace(/^cur:/,''); });
     if (!L.length) return '';
     var rows = L.map(function (m) {
-      var until = m.windowEnd ? new Date(m.windowEnd) : null, open = !until || isNaN(until) || until.getTime() > Date.now();
-      var when = until && !isNaN(until) ? (open ? 'until ' : 'ended ') + until.toLocaleString('en-AU', { weekday: 'short', day: 'numeric', month: 'short', hour: 'numeric', minute: '2-digit' }) : '';
+      var until = m.windowEnd ? GOEventClock.parseDate(m.windowEnd) : null, open = !until || isNaN(until) || until.getTime() > Date.now();
+      var when = until && !isNaN(until) ? (open ? 'until ' : 'ended ') + until.toLocaleString('en-AU', { weekday: 'short', day: 'numeric', month: 'short', hour: 'numeric', minute: '2-digit',timeZone:GOEventClock.viewerZone() }) : '';
       var what = m.acquisition === 'EVOLVE'
         ? 'Evolve <b>' + esc(m.pokemon) + '</b>' + (m.evolutionTarget ? ' into <b>' + esc(m.evolutionTarget) + '</b>' : '') + ' to get ' + moveHtml({name:m.move}) + (m.moveKind ? ' (' + esc(m.moveKind) + ' attack)' : '')
         : (m.pokemon ? '<b>' + esc(m.pokemon) + '</b>' : 'Pokémon') + ' caught in the event will know ' + moveHtml({name:m.move});
@@ -481,7 +481,7 @@
     template.content.querySelectorAll('.evd-src,.evd-claim-source,.research-task-source,.src-fresh,.pub,.npub,.st,.note[role="status"]').forEach(function(node){node.remove();});
     return template.innerHTML;
   }
-  function calendarEvent(ev,model){var range=GOEventClock.range(model.schedule,Intl.DateTimeFormat().resolvedOptions().timeZone);return Object.assign({},ev,{start:new Date(range.start),end:new Date(range.end),utc:model.schedule.timeBasis!=='player-local'});}
+  function calendarEvent(ev,model){var range=GOEventClock.range(model.schedule,GOEventClock.viewerZone());return Object.assign({},ev,{start:new Date(range.start),end:new Date(range.end),utc:true});}
   function eventWindow(model,ev) {
     if(model.lifecycle==='postponed')return 'Postponed · New dates to be announced';
     if(!model.schedule){
@@ -491,11 +491,11 @@
       return ev.datesKnown===false?'Dates to be announced':X.timeMeta(ev);
     }
     try{
-      var viewer=Intl.DateTimeFormat().resolvedOptions().timeZone,range=GOEventClock.range(model.schedule,viewer);
+      var viewer=GOEventClock.viewerZone(),range=GOEventClock.range(model.schedule,viewer);
       function inZone(zone){var f=new Intl.DateTimeFormat('en-AU',{timeZone:zone,weekday:'short',day:'numeric',month:'short',hour:'numeric',minute:'2-digit',timeZoneName:'short'});return f.format(new Date(range.start))+' – '+f.format(new Date(range.end));}
       if(model.schedule.timeBasis==='player-local')return inZone(viewer)+' · Local time wherever you play';
       return 'Your time: '+inZone(viewer)+(model.schedule.timeBasis==='local'&&model.schedule.timeZone!==viewer?' · Venue: '+inZone(model.schedule.timeZone):'');
-    }catch(error){return 'Published dates · time zone to be confirmed';}
+    }catch(error){return 'Time needs confirmation in your selected time zone.';}
   }
   function displayName(p){
     if(p.costumeId)return p.name;
@@ -538,9 +538,10 @@
     var calendar=null;try{if(model.schedule)calendar=calendarEvent(ev,model);}catch(error){}
     var sources=model.sources.map(function(src){var url=safe(src.url);return url?'<li><a href="'+esc(url)+'" target="_blank" rel="noopener noreferrer">'+esc(src.name||src.label||'Event source')+'</a></li>':'';}).filter(function(v,i,a){return v&&a.indexOf(v)===i;}).join('');
     var conflicts=(model.internalValidation&&model.internalValidation.conflicts||[]).map(function(c){var values=[c.a&&c.a.text,c.b&&c.b.text].filter(Boolean);return '<li>'+esc(c.field==='shiny'?'Shiny availability':c.field||'Event detail')+(values.length?': '+values.map(esc).join(' / '):' needs rechecking.')+'</li>';}).join('');
-    var footer='<details class="ue-sources" id="evd-sources"><summary>Sources &amp; updates</summary><ul>'+sources+'</ul>'+(conflicts?'<h4>Details to recheck</h4><ul>'+conflicts+'</ul>':'')+(d.updated?'<p class="note">Last update '+esc(String(d.updated).slice(0,10))+'</p>':'')+(d.goPassParseWarning?'<p class="note">The last complete GO Pass rewards have been retained while the latest update is checked.'+(d.goPassRetainedAt?' Saved rank snapshot: '+esc(String(d.goPassRetainedAt).slice(0,10))+'.':'')+'</p>':'')+'</details>';
+    var catalogue=window.GOEventRegistry&&GOEventRegistry.diagnostics?GOEventRegistry.diagnostics():{},heldUpdate=catalogue.rejectedCount||catalogue.conflicts&&catalogue.conflicts.length;
+    var footer='<details class="ue-sources" id="evd-sources"><summary>Sources &amp; updates</summary>'+(heldUpdate?'<p class="note">The latest event update was held. Showing the last available information.</p>':'')+'<ul>'+sources+'</ul>'+(conflicts?'<h4>Details to recheck</h4><ul>'+conflicts+'</ul>':'')+(d.updated?'<p class="note">Last update '+esc(String(d.updated).slice(0,10))+'</p>':'')+(d.goPassParseWarning?'<p class="note">The last complete GO Pass rewards have been retained while the latest update is checked.'+(d.goPassRetainedAt?' Saved rank snapshot: '+esc(String(d.goPassRetainedAt).slice(0,10))+'.':'')+'</p>':'')+'</details>';
     return window.GOEventComponents.render(model,{
-      toolbar:toolbarHtml(ev).replace('<span class="tag">EVENT DETAIL</span>',''),clock:window.GOEventClock,safe:safe,rewardArt:function(item){return exactArt(GOEventAdapter.pokemon({name:item.name,costume:!!item.costume,label:item.label,formId:item.formId,costumeId:item.costumeId,asset:item.assetKey}));},banner:ev.img?seasonBannerHtml(ev):'',heroArt:model.pokemon.slice(0,3).map(exactArt).join(''),
+      toolbar:toolbarHtml(ev).replace('<span class="tag">EVENT DETAIL</span>',''),clock:window.GOEventClock,viewerZone:GOEventClock.viewerZone(),safe:safe,rewardArt:function(item){return exactArt(GOEventAdapter.pokemon({name:item.name,costume:!!item.costume,label:item.label,formId:item.formId,costumeId:item.costumeId,asset:item.assetKey}));},banner:ev.img?seasonBannerHtml(ev):'',heroArt:model.pokemon.slice(0,3).map(exactArt).join(''),
       when:eventWindow(model,ev),countdown:model.schedule&&model.lifecycle!=='cancelled'&&model.lifecycle!=='postponed'&&ev.datesKnown!==false?X.countdown(ev):'',
       ownership:function(p){return collectionState(p,model);},nameFor:displayName,follow:function(p){var name=GOEventAdapter.collectionName(p)||displayName(p),following=X.isFollowed(name);return '<button type="button" class="ue-follow" data-follow="'+esc(name)+'" aria-pressed="'+String(following)+'" aria-label="Follow '+esc(name)+'">'+(following?'Following':'Follow')+'</button>';},marks:typeof X.markBtns==='function'?X.markBtns:null,art:G.art,artFor:exactArt,bonus:G.bonusChip,
       actions:'<div class="evd-btns">'+(calendar&&model.lifecycle!=='cancelled'&&model.lifecycle!=='postponed'?'<a class="pill all" download="event.ics" href="'+icsFor(calendar)+'">Add to calendar</a>':'')+'</div>',
@@ -634,7 +635,7 @@
   }
   /* Use the viewer's IANA zone; the API also returns the venue's own clock. */
   function venueTimeQuery() {
-    try { return '&tz=' + encodeURIComponent(Intl.DateTimeFormat().resolvedOptions().timeZone || 'Australia/Melbourne'); }
+    try { return '&tz=' + encodeURIComponent(GOEventClock.viewerZone()); }
     catch (e) { return '&tz=Australia%2FMelbourne'; }
   }
   function venueTimeLabel(i) {

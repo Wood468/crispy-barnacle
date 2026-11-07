@@ -16,8 +16,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&family=Hanken+Grotesk:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap">
 <link rel="stylesheet" href="/styles.css?v=20261102b">
-<link rel="stylesheet" href="/dash.css?v=20261107a">
-<link rel="preload" href="/dash.js?v=20261107a" as="script">
+<link rel="stylesheet" href="/dash.css?v=20261107b">
+<link rel="preload" href="/dash.js?v=20261107b" as="script">
 </head>
 <body>
 <div class="wrap">
@@ -393,6 +393,17 @@
       <section class="panel" id="sub-menu" hidden>
       <button type="button" class="dd-link" id="menu-leaks">Leaks <span aria-hidden="true">›</span><small>Datamined and not announced. Not events.</small></button>
       <button type="button" class="dd-link" id="menu-places" data-places="">Places <span aria-hidden="true">›</span><small>Sourced venues and routes. No map.</small></button>
+      <details class="dd" id="timezonedd">
+        <summary>Time zone</summary>
+        <div class="body">
+          <form id="timezone-form">
+            <label for="timezone-choice">Display times in</label>
+            <select id="timezone-choice" aria-describedby="timezone-status"></select>
+            <button type="submit" class="pill">Apply time zone</button>
+          </form>
+          <p class="note" id="timezone-status" role="status"></p>
+        </div>
+      </details>
       <h2 class="sec2">Sync &amp; accounts</h2>
       <div id="acct" class="acct"></div>
       <p class="sync" id="usstat" role="status"></p>
@@ -416,7 +427,7 @@
       <details class="dd" id="calcard">
         <summary>Add events to your calendar</summary>
         <div class="body">
-          <p class="sub" style="margin:0">A calendar that updates itself with events, Spotlight Hours, Raid Hours and the weekly Max Battle Pokémon. Timed ones have a reminder 30 minutes before. Times show in your phone's local time.</p>
+          <p class="sub" style="margin:0">A calendar that updates itself with events, Spotlight Hours, Raid Hours and the weekly Max Battle Pokémon. Timed ones have a reminder 30 minutes before. Subscription times follow your calendar app’s time zone. Individual event downloads use your selected display time zone.</p>
           <ol class="sub" style="margin:0;padding-left:1.2rem;display:grid;gap:6px">
             <li>On iPhone, tap <b>Subscribe</b>. If it asks, choose Subscribe, then Done.</li>
             <li>Or in Settings: Calendar, Accounts, Add Account, Other, Add Subscribed Calendar, and paste the address below.</li>
@@ -473,7 +484,7 @@
     <details class="dd foot-dd">
       <summary>Sources and credits</summary>
       <div class="body">
-        <p>Infographics are the work of their named creators and link back to the original post. Costume pictures appear once the game files for them are published; until then you may see the plain Pokémon. If the live feed is unavailable the app falls back to its saved snapshot.</p>
+        <p>Infographics are the work of their named creators and link back to the original post. Costumes without verified artwork are clearly labelled until the correct artwork is available. If the live feed is unavailable the app falls back to its saved snapshot.</p>
         <p><a href="/event-methodology.html">Sources, methodology &amp; data notes</a></p>
         <ul>
       <li><a href="https://pokemongohub.net/post/news/ultra-necrozma-ultra-burst-raid-datamine/">Pokémon GO Hub: Ultra Burst datamine (Sep 26)</a></li>
@@ -493,22 +504,24 @@
 
 <script src="/imgerr.js?v=20261015a"></script>
 <script src="/lib.js?v=20261106c"></script>
-<script src="/event-clock.js?v=20261107a"></script>
-<script src="/event-contract.js?v=20261107a"></script>
-<script src="/event-view.js?v=20261107a"></script>
+<script src="/event-clock.js?v=20261107b"></script>
+<script src="/timezone.js?v=20261107b"></script>
+<script src="/event-contract.js?v=20261107b"></script>
+<script src="/event-view.js?v=20261107b"></script>
 <script src="/event-adapter.js?v=20261107a"></script>
-<script src="/event-components.js?v=20261107a"></script>
+<script src="/event-components.js?v=20261107b"></script>
 <script src="/event-identity.js?v=20261107a"></script>
 <script src="/event-policy.js?v=20261107a"></script>
-<script src="/event-registry.js?v=20261107a"></script>
+<script src="/event-catalogue.js?v=20261107b"></script>
+<script src="/event-registry.js?v=20261107b"></script>
 <script src="/move.js?v=20261102a"></script>
 <script src="/local-state.js?v=20261030a"></script>
 <script src="/account.js?v=20261102a"></script>
 <script src="/dedupe.js?v=20261101b"></script>
-<script src="/app.js?v=20261107a"></script>
+<script src="/app.js?v=20261107b"></script>
 <script src="/raid-share.js?v=20261102b"></script>
 <script src="/store.js?v=20261102a"></script>
-<script src="/season.js?v=20261104b"></script>
+<script src="/season.js?v=20261107b"></script>
 <script src="/research.js?v=20261106c"></script>
 <script src="/weekly.js?v=20261102a"></script>
 <script src="/pin.js?v=20261101b"></script>

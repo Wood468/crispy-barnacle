@@ -5,6 +5,7 @@ const path=require('node:path');
 const crypto=require('node:crypto');
 const A=require('../../public/event-adapter.js');
 const C=require('./contract-v1.js');
+const Catalogue=require('../../public/event-catalogue.js');
 const L=require('../../public/lib.js');
 const {reconcile}=require('./identity-index-v1.cjs');
 function key(url){try{const u=new URL(url);return u.origin+u.pathname.replace(/\/$/,'');}catch{return '';}}
@@ -14,7 +15,7 @@ function buildCatalogue(input){
  A.configureSpecies(input.dex||input.previous?.species||[]);
  const costumeRows=input.costumeRows||A.costumeDescriptors(input.data,input.costumes);A.configureCostumes(costumeRows);
  const data=input.data||{},details=input.details?.events||{},info=input.info?.events||{},previous=input.previous?.events||[];
- const old=new Map(previous.map(e=>[e.eventId,e])),out=new Map(),coverage=[],warnings=[],oldIndex=reconcile(previous);
+ const old=new Map(previous.map(e=>[e.eventId,e])),out=new Map(),coverage=[],warnings=[],rejections=[],oldIndex=reconcile(previous);
  const rules=new Map();for(const pair of input.aliases?.same||[]){if(Array.isArray(pair)&&pair.length===2)rules.set(pair[1],pair[0]);}
  function urls(model){return new Set((model.sources||[]).filter(s=>s.url&&!L.isPrivateLink(s.url)).map(s=>key(s.url)).filter(Boolean));}
  function samePublishedEvent(a,b){
@@ -24,9 +25,9 @@ function buildCatalogue(input){
   const links=urls(a);return [...urls(b)].some(url=>links.has(url));
  }
 
- function add(raw,collection){
-  if(!raw)return;if(raw.schemaVersion===1)raw={...raw,id:raw.eventId};
-  if(!raw.id||!(raw.name||raw.t||raw.title))return;
+ function addRecord(raw,collection){
+  if(!raw)throw Error('Missing event record');if(raw.schemaVersion===1)raw={...raw,id:raw.eventId};
+  if(!raw.id||!(raw.name||raw.t||raw.title))throw Error('Event requires stable ID and title');
   const bare=String(raw.id).replace(/^cur:/,''),ids=[raw.id,bare,...(raw.detailIds||[])];
   let d=ids.map(id=>details[id]).find(Boolean),i=ids.map(id=>info[id]).find(Boolean)||{};
   // Explicit source URL joins only. A shared title is never identity evidence.
@@ -42,7 +43,8 @@ function buildCatalogue(input){
   merged.internalValidation={...merged.internalValidation,contentHash:hash,revision:prior?(prior.internalValidation?.revision||1)+(priorHash!==hash?1:0):1,amended:!!prior&&priorHash!==hash,native:!!(raw.schemaVersion===1||existing?.internalValidation?.native),collection:existing?.internalValidation?.collection||collection};
   out.set(merged.eventId,merged);
  }
- function batch(name,items,convert){let count=0;for(const raw of items||[]){add(convert?convert(raw):raw,name);count++;}coverage.push({collection:name,records:count});}
+ function add(raw,collection){try{addRecord(raw,collection);}catch(error){rejections.push({eventId:raw&&(raw.eventId||raw.id)||null,collection,error:error.message});}}
+ function batch(name,items,convert){let count=0;if(items!=null&&!Array.isArray(items)){rejections.push({eventId:null,collection:name,error:'Expected event array'});return;}for(const raw of items||[]){try{add(convert?convert(raw):raw,name);}catch(error){rejections.push({eventId:raw&&raw.id||null,collection:name,error:error.message});}count++;}coverage.push({collection:name,records:count});}
  batch('events',data.events);
  batch('worldEvents',data.worldEvents,x=>({...x,id:x.id||'world:'+key(x.link),name:x.t,place:x.where,kind:x.mode==='in-game'||x.scope==='global'?'event':'person'}));
  batch('inPerson',data.inPerson,x=>({...x,id:x.id||'in-person:'+C.classify(x.title)+':'+x.title,notes:x.bullets,name:x.title,kind:'person'}));
@@ -58,7 +60,8 @@ function buildCatalogue(input){
  const consumed=new Set([...out.values()].flatMap(e=>e.aliases||[]));
  previous.forEach(e=>{if(!out.has(e.eventId)&&!consumed.has(e.eventId))out.set(e.eventId,e);});
  const events=[...out.values()].sort((a,b)=>a.eventId.localeCompare(b.eventId));
- const index=reconcile(events);if(index.conflicts.length)throw Error('Catalogue identity conflicts: '+JSON.stringify(index.conflicts));
+ const checked=Catalogue.validate({schemaVersion:1,events}),conflicts=checked.diagnostics.conflicts;
+ if(rejections.length||!checked.valid){const diagnostics={rejectedCount:rejections.length+checked.diagnostics.rejectedCount,rejections:rejections.concat(checked.diagnostics.rejections),conflicts};const error=Error('Catalogue validation failed: '+JSON.stringify(diagnostics));error.diagnostics=diagnostics;throw error;}
  return publicValue({schemaVersion:1,species:input.dex||input.previous?.species||[],costumes:costumeRows,events,coverage,excluded:[{collection:'upcoming',reason:'Pokémon release summaries, not independent event instances; existing release views are preserved'},{collection:'regionals',reason:'Geographic Pokémon availability, not event instances'},{collection:'week',reason:'Static week guidance, not event instances'},{collection:'raidNow',reason:'Derived rotation summary, represented by rotation records'},{collection:'pastFests',reason:'Historical reference list, not announced event instances'}],warnings});
 }
 async function publish(root=path.resolve(__dirname,'../..')){async function read(name,fallback={}){try{return JSON.parse(await fs.readFile(path.join(root,'public',name+'.json'),'utf8'));}catch(e){if(e.code==='ENOENT')return fallback;throw e;}}

@@ -13055,7 +13055,7 @@
     },
     "contentHash": "07af76591580ceff44f49ff994dbfe92bb0669eb95c683fb848dd25b4b0346d8",
     "revision": 3,
-    "amended": true,
+    "amended": false,
     "native": false,
     "collection": "source-details"
    },
@@ -17964,7 +17964,7 @@
     },
     "contentHash": "f164ae2d64481d6bf1817b11787fa6ccde93bf22490227f108fa00a9543b411a",
     "revision": 3,
-    "amended": true,
+    "amended": false,
     "native": false,
     "collection": "source-details"
    },
@@ -19004,7 +19004,7 @@
     },
     "contentHash": "f6b07a646ca39eb9f1107278447324bb82e60251beda572d4c7401a63a91fbbf",
     "revision": 3,
-    "amended": true,
+    "amended": false,
     "native": false,
     "collection": "source-details"
    },
@@ -36058,7 +36058,7 @@
     },
     "contentHash": "5cdd55e002ca42377352e7b637a57f2e39afa99cde6bbc64780733a9cc28f6b3",
     "revision": 3,
-    "amended": true,
+    "amended": false,
     "native": false,
     "collection": "world-events"
    },
@@ -36601,7 +36601,7 @@
     },
     "contentHash": "600b16780d9c29474dddc5467f1296023424be45dff304ec1e89a0b8c6708918",
     "revision": 3,
-    "amended": true,
+    "amended": false,
     "native": false,
     "collection": "world-events"
    },
@@ -37374,7 +37374,7 @@
     },
     "contentHash": "2bc734bbc0384877a9299bd46137dea24f7131a8ee949d5e9a37646a6cc24dec",
     "revision": 3,
-    "amended": true,
+    "amended": false,
     "native": false,
     "collection": "world-events"
    },
@@ -41612,7 +41612,7 @@
     },
     "contentHash": "b31794293f576272cd34e93696a4fd9591e71a869320cfce45abc2ff226289be",
     "revision": 3,
-    "amended": true,
+    "amended": false,
     "native": false,
     "collection": "worldEvents"
    },
@@ -42654,7 +42654,7 @@
     },
     "contentHash": "765db37004fe5717593416070dbad4543c350dacde9270b6a1fe2485208bccfb",
     "revision": 3,
-    "amended": true,
+    "amended": false,
     "native": false,
     "collection": "worldEvents"
    },
