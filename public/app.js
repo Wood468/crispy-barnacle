@@ -821,7 +821,7 @@ MAN=R[1]||{};window.__GOART={m:R[2]&&R[2].entries?R[2]:null,d:R[3]||[]};
   /* ---------- pokedex checklist ---------- */
   var DEXCATS=['own','shiny','lucky','shadow','purified','hundo'];
   var DLAB={own:'Own',shiny:'Shiny',lucky:'Lucky',shadow:'Shadow',purified:'Purified',hundo:'100%'};
-  var DEXLIST=[],NOTGO={},dshown=60;
+  var DEXLIST=[],NOTGO={},dshown=60,DEX_VIEW=null;
   function dm(c){return dex.m[c]||(dex.m[c]={})}
   function norm(s){return String(s).toLowerCase().replace(/[^a-z0-9]/g,'')}
   var DUN=[];
@@ -844,10 +844,13 @@ MAN=R[1]||{};window.__GOART={m:R[2]&&R[2].entries?R[2]:null,d:R[3]||[]};
   }).catch(function(){$('dexlist').innerHTML='<p class="note">Could not load the Pokédex list.</p>'});
   function dexMatch(p){
     var q=$('dq').value.trim().toLowerCase(),g=+$('dgen').value,sv=$('dstat').value,id=p[0];
-    if(!$('dunrel').checked&&NOTGO[id]&&!q)return false;
+    if(sv!=='unreleased'&&!$('dunrel').checked&&NOTGO[id]&&!q)return false;
     if(g&&p[2]!==g)return false;
     if(q&&p[1].toLowerCase().indexOf(q)<0&&String(id)!==q.replace('#',''))return false;
-    var own=!!dm('own')[id],sh=!!dm('shiny')[id],lu=!!dm('lucky')[id],hu=!!dm('hundo')[id];
+    if(sv==='unreleased')return !!NOTGO[id];
+    var own=DEX_VIEW?DEX_VIEW.registered.has(String(id)):!!dm('own')[id];
+    function marked(c){return DEX_VIEW?!!(DEX_VIEW.states[c]&&DEX_VIEW.states[c].has(String(id))):!!dm(c)[id];}
+    var sh=marked('shiny'),lu=marked('lucky'),hu=marked('hundo');
     var gc=!!(window.GODASH&&GODASH.genConfirmed(p[2]));
     if(sv==='missing')return !own&&gc;if(sv==='untracked')return !own&&!gc;if(sv==='own')return own;if(sv==='noshiny')return !sh;if(sv==='shiny')return sh;if(sv==='nolucky')return !lu;if(sv==='nohundo')return !hu;
     return true;
@@ -867,15 +870,11 @@ MAN=R[1]||{};window.__GOART={m:R[2]&&R[2].entries?R[2]:null,d:R[3]||[]};
     var own=cnt('own');
     $('dOwn').textContent=own;$('dShiny').textContent=cnt('shiny');$('dBar').style.width=(inGo?own/inGo*100:0)+'%';
     $('dMini').innerHTML=['lucky','shadow','purified','hundo'].map(function(c){return '<span>'+DLAB[c]+' <b>'+cnt(c)+'</b></span>'}).join('');
+    DEX_VIEW=GOCollectionUI.catalogue()?GOCollectionUI.projection(dex):null;
     var list=DEXLIST.filter(dexMatch);
     $('dnone').hidden=list.length>0;
     $('dmore').hidden=list.length<=dshown;
-    $('dexlist').innerHTML=list.slice(0,dshown).map(function(p){
-      var id=p[0],un=NOTGO[id];
-      return '<div class="drow'+(un?' un':'')+'" data-id="'+id+'"><img src="/dex/'+id+'.webp" alt="" loading="lazy" decoding="async" width="58" height="58">'
-        +'<div><div class="nm"><small>#'+String(id).padStart(4,'0')+'</small>'+esc(p[1])+(un?'<span class="pill p-x">Not in GO yet</span>':'')+rowState(p)+'</div></div>'
-        +'<div class="dtog">'+DEXCATS.map(function(c){return '<button type="button" class="tg'+(c==='shiny'?' s':'')+'" data-c="'+c+'" aria-pressed="'+(dm(c)[id]?'true':'false')+'" aria-label="'+DLAB[c]+': '+esc(p[1])+'">'+DLAB[c]+'</button>'}).join('')+'</div></div>';
-    }).join('');
+    window.GOCollectionUI.render(list,dshown,{rows:DEXLIST,dex:dex,notGo:NOTGO,confirmed:function(g){return !!(window.GODASH&&GODASH.genConfirmed(g));}});
   }
   function renderReg(){
     var R=D.regionals||[];if(!R.length||!DEXLIST.length)return;
@@ -912,7 +911,7 @@ MAN=R[1]||{};window.__GOART={m:R[2]&&R[2].entries?R[2]:null,d:R[3]||[]};
     DEXCATS.forEach(function(x){var t=row.querySelector('[data-c="'+x+'"]');t.setAttribute('aria-pressed',dm(x)[id]?'true':'false')});
     var keep=$('dstat').value==='all';
     if(keep){var n=0;DEXLIST.forEach(function(p){if(dm('own')[p[0]]&&!NOTGO[p[0]])n++});$('dOwn').textContent=n;$('dBar').style.width=((+$('dTotal').textContent)?(n/(+$('dTotal').textContent)*100):0)+'%';$('dShiny').textContent=DEXLIST.filter(function(p){return dm('shiny')[p[0]]&&!NOTGO[p[0]]}).length}
-    else renderDex();
+    renderDex();
   });
 
   /* ---------- counters and pvp ---------- */
@@ -1087,7 +1086,7 @@ MAN=R[1]||{};window.__GOART={m:R[2]&&R[2].entries?R[2]:null,d:R[3]||[]};
   pull();
   function markOwn(ids){var m=dm('own'),added=[];ids.forEach(function(id){if(!m[id]){m[id]=1;added.push(id)}});if(added.length){persist();renderDex()}return added}
   function unmarkOwn(ids){var m=dm('own');ids.forEach(function(id){delete m[id]});persist();renderDex()}
-  window.GO={refreshDex:function(){if(DEXLIST.length)renderDex()},markOwn:markOwn,unmarkOwn:unmarkOwn,D:D,MAN:MAN,esc:esc,art:art,fig:fig,bonusRow:bonusRow,bonusChip:bonusChip,MON:MON,DOW:DOW,dex:function(){return dex},showTab:showTab,HERO:HERO,TAGKEY:TAGKEY,tagHtml:tagHtml};
+  window.GO={refreshDex:function(){if(DEXLIST.length)renderDex()},setDexMark:function(id,c){if(DEXCATS.indexOf(c)<0||!DEXLIST.some(function(p){return String(p[0])===String(id)})||NOTGO[id])return false;if(dm(c)[id])delete dm(c)[id];else{dm(c)[id]=1;dm('own')[id]=1;}persist();renderDex();renderShiny();return true;},markOwn:markOwn,unmarkOwn:unmarkOwn,D:D,MAN:MAN,esc:esc,art:art,fig:fig,bonusRow:bonusRow,bonusChip:bonusChip,MON:MON,DOW:DOW,dex:function(){return dex},showTab:showTab,HERO:HERO,TAGKEY:TAGKEY,tagHtml:tagHtml};
   /* If dash.js never loads (blocked, stalled or broken) Today must not stay a blank box: say so calmly and offer a retry. A late dash.js replaces this row. */
   function todayUnavailable(){var h=document.getElementById('home-now');if(!h||h.hasAttribute('data-render-key')||h.getAttribute('data-state')==='unavailable')return;
     h.setAttribute('data-state','unavailable');h.removeAttribute('aria-busy');
@@ -1097,7 +1096,7 @@ MAN=R[1]||{};window.__GOART={m:R[2]&&R[2].entries?R[2]:null,d:R[3]||[]};
     var v=document.getElementById('today-v1');if(v&&v.getAttribute('aria-busy')==='true'){v.removeAttribute('aria-busy');v.innerHTML='<div class="today-status" role="alert"><p>Today\'s events did not load. Your saved collection is unchanged.</p><button type="button" class="pill" id="today-retry-v1">Try again</button></div>';var r2=document.getElementById('today-retry-v1');if(r2)r2.addEventListener('click',function(){window.location.reload()});}
     var b=document.getElementById('day-brief');if(b)b.setAttribute('data-state','unavailable');
     var f=document.getElementById('fresh-line');if(f)f.setAttribute('data-released','')}
-  var ds=document.createElement('script');ds.src='/dash.js?v=20261117n';ds.onerror=todayUnavailable;document.body.appendChild(ds);setTimeout(function(){if(!window.GODASH)todayUnavailable()},10000);
+  var ds=document.createElement('script');ds.src='/dash.js?v=20261112p1';ds.onerror=todayUnavailable;document.body.appendChild(ds);setTimeout(function(){if(!window.GODASH)todayUnavailable()},10000);
 })();
 
 }).catch(function(){var panel=document.getElementById('load-error');if(panel)panel.hidden=false;var retry=document.getElementById('load-retry');if(retry)retry.addEventListener('click',function(){window.location.reload()},{once:true})});

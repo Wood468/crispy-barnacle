@@ -374,7 +374,9 @@
     if(precise&&/^\d+$/.test(precise.speciesId)&&DEXNAME[+precise.speciesId])id=+precise.speciesId;
     if (!id) return { state: 'unknown', id: 0, base: p.base, why: 'Not in the Pokédex list' };
     var out = { id: id, base: p.base, why: '' };
-    if (p.special === 'dynamax') return Object.assign(out, { state: 'form', why: 'Dynamax is a battle state, there is nothing to collect' });
+    if (p.special === 'dynamax') { var maxOwned=window.GOInventory&&GOInventory.records().some(function(r){return r.identity.speciesId===String(id)&&r.identity.capabilities.dynamax===true;});return Object.assign(out,maxOwned?{state:'have'}:{ state: 'form', why: 'Track Dynamax-capable individual Pokémon separately from species registration.' }); }
+    var collectionCat=window.GOCollectionUI&&GOCollectionUI.catalogue();
+    if(precise&&precise.formId&&collectionCat&&window.GOCollectionModel){var collectionForm=GOCollectionModel.canonicalForm(precise.formId);if(collectionCat.forSpecies(id).some(function(v){return v.formId===collectionForm;})){var collectionIdentity={speciesId:String(id),formId:collectionForm,costumeId:precise.costumeId||null},collectionValue=GOCollectionModel.variantValue(collectionIdentity,US,collectionCat);if(collectionValue!==undefined)return Object.assign(out,{tk:GOCollectionModel.legacyKey(collectionIdentity,collectionCat),state:collectionValue===1?'have':'missing'});}}
     if(precise&&precise.formId&&precise.formId!==p.key&&precise.formId!==p.special&&/^[a-z0-9][a-z0-9-]{0,63}$/.test(precise.formId)){
       var preciseKey='form:'+id+':'+precise.formId,preciseValue=usGet(preciseKey);
       return Object.assign(out,{tk:preciseKey,state:preciseValue===1?'have':preciseValue===0?'missing':'unknown',why:'Track this exact form.'});

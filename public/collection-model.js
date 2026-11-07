@@ -1,0 +1,55 @@
+/* Shared collection contract. Species registration, exact variants and individual observations stay separate. */
+(function(root,factory){var api=factory(typeof module==='object'&&module.exports?require('./lib.js'):root.GOLIB);if(typeof module==='object'&&module.exports)module.exports=api;else root.GOCollectionModel=api;}(typeof globalThis!=='undefined'?globalThis:this,function(L){
+'use strict';
+var STATES=['shiny','shadow','purified','lucky'],CAPABILITIES=['mega','dynamax','gigantamax'];
+function norm(s){return String(s||'').normalize('NFKD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/♀/g,'female').replace(/♂/g,'male').replace(/[^a-z0-9]/g,'');}
+function slug(s){var v=String(s||'').trim();if(v.length>100||/[\x00-\x1f]/.test(v))throw Error('Invalid variant label');return v;}
+function formName(name,f){if(f[1]==='mega-x'||f[1]==='mega-y')return 'Mega '+name+' '+f[1].slice(-1).toUpperCase();var a=f[2].split(' ');return /^(Alolan|Galarian|Hisuian|Paldean)$/.test(a[0])?a[0]+' '+name+(a.length>1?' ('+a.slice(1).join(' ')+')':''):f[2]+' '+name;}
+function canonicalForm(value){var v=String(value||'').toLowerCase().replace(/forme$/i,'');if(/^mega[-_ ]?[xy]$/.test(v))return 'mega-'+v.slice(-1);return v;}
+function catalogue(dex,forms,costumes,combatForms){
+ var species=new Map(),names=new Map(),variants=[];
+ function alias(name,v){var key=norm(name);if(!names.has(key))names.set(key,[]);var list=names.get(key);if(!list.some(function(x){return x.speciesId===v.speciesId&&x.formId===v.formId&&x.costumeId===v.costumeId;}))list.push(v);}
+ (dex||[]).forEach(function(p){var s={speciesId:String(p[0]),number:+p[0],name:p[1],generation:p[2]};species.set(s.speciesId,s);var v={speciesId:s.speciesId,formId:null,costumeId:null,name:s.name,label:'Base form',group:'base'};variants.push(v);alias(s.name,v);});
+ (forms||[]).forEach(function(f){var s=species.get(String(f[0]));if(!s)return;var v={speciesId:s.speciesId,formId:f[1],costumeId:null,label:f[2],name:formName(s.name,f),group:f[3]};variants.push(v);alias(v.name,v);alias(s.name+' ('+f[2]+')',v);});
+ (combatForms||[]).forEach(function(row){if(!row||!row.form||typeof row.name!=='string')return;var parts=row.form.split(',').map(function(x){return x.trim();}).filter(function(x){return !/^(Shadow|Purified)$/i.test(x);});if(parts.length!==1)return;var label=parts[0],base=row.name.split(' (')[0],sp=Array.from(species.values()).find(function(x){return norm(x.name)===norm(base);});if(!sp)return;var regional={Alolan:'alola',Galarian:'galar',Hisuian:'hisui',Paldean:'paldea'},formId=regional[label]||canonicalForm(norm(label));var v=variants.find(function(x){return x.speciesId===sp.speciesId&&x.formId===formId&&!x.costumeId;});if(!v){v={speciesId:sp.speciesId,formId:formId,costumeId:null,label:label,name:base+' ('+label+')',group:regional[label]?'regional':'other'};variants.push(v);}alias(base+' ('+label+')',v);alias(label+' '+base,v);alias(base+' ('+label+' Forme)',v);alias(label+' Forme '+base,v);});
+ (costumes||[]).forEach(function(c){var s=Array.from(species.values()).find(function(x){return norm(x.name)===norm(c.name);});if(!s)return;var v={speciesId:s.speciesId,formId:null,costumeId:c.costumeId||L.norm(c.label),label:c.label,name:s.name+' ('+c.label+')',group:'costume'};variants.push(v);alias(v.name,v);alias(s.name+' wearing '+c.label,v);});
+ return {species:species,variants:variants,names:names,find:function(name){return (names.get(norm(name))||[]).slice();},forSpecies:function(id){return variants.filter(function(v){return v.speciesId===String(id);});}};
+}
+function tri(v){if(v==null)return null;if(typeof v!=='boolean')throw Error('Collection states must be true, false or unknown');return v;}
+function identity(input,cat){
+ if(!input||!cat.species.has(String(input.speciesId)))throw Error('Unknown Pokédex number');
+ var out={formKnown:input.formKnown!==false&&input.formId!=='unknown',speciesId:String(input.speciesId),formId:input.formId&&input.formId!=='base'&&input.formId!=='unknown'?canonicalForm(slug(input.formId)):null,costumeId:input.costumeId?slug(input.costumeId):null,backgroundId:input.backgroundId?slug(input.backgroundId):null};
+ if(out.formId&&!cat.variants.some(function(v){return v.speciesId===out.speciesId&&v.formId===out.formId;}))throw Error('Unsupported form; correct the identity before importing');
+ if(out.costumeId&&!cat.variants.some(function(v){return v.speciesId===out.speciesId&&v.costumeId===out.costumeId;}))throw Error('Unsupported costume; keep it unresolved until identified');
+ STATES.forEach(function(k){out[k]=tri(input[k]);});
+ if(out.shadow&&out.purified)throw Error('A Pokémon cannot be both Shadow and Purified');
+ out.capabilities={};CAPABILITIES.forEach(function(k){out.capabilities[k]=tri(input.capabilities&&input.capabilities[k]);});
+ return out;
+}
+function key(i){return [i.speciesId,i.formKnown===false?'unresolved':i.formId||'base',i.costumeId||'none',i.backgroundId||'none'].map(encodeURIComponent).join(':')+'|'+STATES.concat(CAPABILITIES).map(function(k){var v=STATES.includes(k)?i[k]:i.capabilities&&i.capabilities[k];return k+'='+(v===null||v===undefined?'?':v?1:0);}).join('&');}
+function attributes(raw){raw=raw||{};var out={cp:null,ivs:null,level:null,moves:[]};
+ if(raw.cp!=null){if(!Number.isInteger(raw.cp)||raw.cp<10||raw.cp>99999)throw Error('CP must be a whole number from 10 to 99999');out.cp=raw.cp;}
+ if(raw.level!=null){if(!Number.isFinite(raw.level)||raw.level<1||raw.level>55||raw.level*2%1)throw Error('Level must be 1–55 in half-level steps');out.level=raw.level;}
+ if(raw.ivs!=null){out.ivs={};['attack','defense','stamina'].forEach(function(k){var v=raw.ivs[k];if(v==null)out.ivs[k]=null;else{if(!Number.isInteger(v)||v<0||v>15)throw Error('IVs must be whole numbers from 0 to 15');out.ivs[k]=v;}});}
+ if(raw.moves!=null){if(!Array.isArray(raw.moves)||raw.moves.length>3)throw Error('At most three observed moves');out.moves=raw.moves.map(function(m){if(typeof m!=='string'||!m.trim()||m.length>80)throw Error('Invalid move');return m.trim();});}
+ return out;
+}
+function source(raw){if(raw==null)return null;if(raw.kind&&!['manual','text','screenshot','video','unknown'].includes(raw.kind))throw Error('Unsupported observation source');var out={kind:raw.kind||'unknown'};['hash','observationId'].forEach(function(k){if(raw[k]!=null){if(typeof raw[k]!=='string'||raw[k].length>160||/[\x00-\x1f]/.test(raw[k]))throw Error('Invalid observation reference');out[k]=raw[k];}});if(raw.frameTime!=null){if(!Number.isFinite(raw.frameTime)||raw.frameTime<0||raw.frameTime>86400)throw Error('Invalid frame time');out.frameTime=raw.frameTime;}return out;}
+function record(raw,cat){if(!raw||raw.schemaVersion!==1||typeof raw.id!=='string'||!/[A-Za-z0-9]/.test(raw.id)||!/^[a-zA-Z0-9:_-]{1,160}$/.test(raw.id))throw Error('Invalid inventory record');return {schemaVersion:1,id:raw.id,identity:identity(raw.identity,cat),attributes:attributes(raw.attributes),createdAt:typeof raw.createdAt==='string'?raw.createdAt:null,source:source(raw.source)};}
+function legacyKey(v,cat){var s=cat.species.get(String(v.speciesId));if(!s||v.formKnown===false||v.backgroundId||v.formId&&v.costumeId)return null;if(v.costumeId){var c=cat.forSpecies(v.speciesId).find(function(x){return x.costumeId===v.costumeId;});return c?'costume:'+v.speciesId+':'+L.norm(c.name):null;}return v.formId?'form:'+v.speciesId+':'+v.formId:null;}
+function legacyKeys(v,cat){var k=legacyKey(v,cat);if(!k)return [];return v.formId?[k,'form:'+v.speciesId+':'+canonicalForm(v.formId)+'forme'].filter(function(x,i,a){return a.indexOf(x)===i;}):[k];}
+function variantValue(v,us,cat){var entries=legacyKeys(v,cat).map(function(k){var r=us[k];return r&&typeof r==='object'?r:r===undefined?null:{v:r,t:0};}).filter(function(r){return r&&(r.v===0||r.v===1);}).sort(function(a,b){return (b.t||0)-(a.t||0);});if(!entries.length)return undefined;if(entries[1]&&entries[1].t===entries[0].t&&entries[1].v!==entries[0].v)return undefined;return entries[0].v;}
+function projection(dex,us,records,cat){
+ dex=dex||{};us=us||{};var registered=new Set(),states=Object.create(null),variants=new Set();
+ function add(id){if(cat.species.has(String(id)))registered.add(String(id));}
+ Object.keys(dex.m||{}).forEach(function(c){Object.entries(dex.m[c]||{}).forEach(function(pair){if(pair[1]===1||pair[1]===true){add(pair[0]);if(!states[c])states[c]=new Set();states[c].add(String(pair[0]));}});});
+ ['have','hundo'].forEach(function(c){Object.keys(dex[c]||{}).filter(function(n){return dex[c][n];}).forEach(function(n){var matches=cat.find(n);if(matches.length===1){add(matches[0].speciesId);if(c==='hundo'){if(!states.hundo)states.hundo=new Set();states.hundo.add(matches[0].speciesId);}if(matches[0].formId)variants.add(legacyKey(matches[0],cat));}});});
+ cat.variants.forEach(function(v){var k=legacyKey(v,cat),value=variantValue(v,us,cat);if(value===1){variants.add(k);add(v.speciesId);}});
+ (records||[]).forEach(function(r){var i=r.identity;add(i.speciesId);var iv=r.attributes&&r.attributes.ivs;if(iv&&['attack','defense','stamina'].every(function(k){return iv[k]===15;})){if(!states.hundo)states.hundo=new Set();states.hundo.add(i.speciesId);}STATES.forEach(function(c){if(i[c]===true){if(!states[c])states[c]=new Set();states[c].add(i.speciesId);}});if(i.backgroundId){if(!states.background)states.background=new Set();states.background.add(i.speciesId);}CAPABILITIES.forEach(function(c){if(i.capabilities&&i.capabilities[c]){if(!states[c])states[c]=new Set();states[c].add(i.speciesId);}});var k=legacyKey(i,cat);if(k)variants.add(k);});
+ return {registered:registered,states:states,variants:variants};
+}
+// Similar CP/IVs can belong to distinct Pokémon: only the same source observation is an exact duplicate.
+function duplicates(candidate,records){var exact=[],possible=[];(records||[]).forEach(function(r){if(candidate.source&&r.source&&candidate.source.observationId&&candidate.source.observationId===r.source.observationId)exact.push(r.id);else if(key(candidate.identity)===key(r.identity)&&candidate.attributes.cp!=null&&candidate.attributes.cp===r.attributes.cp)possible.push(r.id);});return {exact:exact,possible:possible};}
+function readiness(records,rankings){return (records||[]).map(function(r){var row=(rankings||[]).find(function(x){return x.speciesId===r.identity.speciesId&&(x.formId||null)===(r.identity.formId||null);});var known=r.attributes.moves.length&&r.attributes.level!==null&&r.attributes.ivs&&Object.values(r.attributes.ivs).every(function(v){return v!==null;});return {recordId:r.id,reference:row||null,attributesComplete:!!known,needs:['moves','level','ivs'].filter(function(k){return k==='moves'?!r.attributes.moves.length:r.attributes[k]===null;}),personalDps:null};});}
+return {schemaVersion:1,canonicalForm:canonicalForm,variantValue:variantValue,legacyKeys:legacyKeys,catalogue:catalogue,identity:identity,key:key,attributes:attributes,record:record,projection:projection,legacyKey:legacyKey,duplicates:duplicates,readiness:readiness,norm:norm,states:STATES};
+}));
