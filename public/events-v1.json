@@ -8621,6 +8621,277 @@
   },
   {
    "schemaVersion": 1,
+   "eventId": "hub:minior-showers-leonid-november-2026",
+   "aliases": [],
+   "family": "other",
+   "title": "Minior Showers: Leonid (November 2026)",
+   "dateText": "",
+   "completeness": "partial",
+   "lifecycle": "reference",
+   "attendance": "",
+   "location": null,
+   "image": null,
+   "notes": [],
+   "internalValidation": {
+    "warnings": [],
+    "lifecycleDeclared": true,
+    "conflicts": [],
+    "fields": {
+     "bonuses": [
+      {
+       "text": "1000 Stardust for catching Minior",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Increased chance to encounter Minior from 5:00 p.m. to 9:00 p.m. local time each day",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Shooting stars will light up the in-game sky",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "If you are very lucky, you may get a Bonus Timed Research that rewards one million stardust!",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "A very small amount of trainers have shared that they also have an extra Bonus Timed Research, that rewards a whopping one million stardust!",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Task | Rewards",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Claim Reward! | 1 × Star Piece",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Use a Star Piece | 7740 × Stardust",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rewards | 1000000 × Stardust",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      }
+     ],
+     "featured": [
+      {
+       "text": "The second Minior to make their Pokémon GO debut during the Leonid Meteor Shower is ??? Core Minior.",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      }
+     ],
+     "raids": [],
+     "eggs": [],
+     "research": [
+      {
+       "text": "Task | Rewards",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Claim Reward! | 1 × Star Piece",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Use a Star Piece | 7740 × Stardust",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rewards | 77,400 × Stardust",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      }
+     ],
+     "shiny": [],
+     "moves": [],
+     "costumes": [],
+     "tickets": [],
+     "dates": [
+      {
+       "text": "Increased chance to encounter Minior from 5:00 p.m. to 9:00 p.m. local time each day",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "From 5:00 p.m. to 9:00 p.m. local time every day during each Minior Shower, the in-game sky will be lit by shooting stars. You’ll also have an increased chance of encountering Minior in the wild.",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      }
+     ],
+     "researchTasks": []
+    },
+    "info": [],
+    "detailRefs": [
+     "hub:minior-showers-leonid-november-2026"
+    ],
+    "legacyDates": {
+     "start": "",
+     "end": ""
+    },
+    "contentHash": "9dd1c71dc9e5dcde55f6daeece5a17041eccd409357ea9f1f4d292f934cb4c76",
+    "revision": 1,
+    "amended": false,
+    "native": false,
+    "collection": "source-details"
+   },
+   "schedule": null,
+   "activities": [],
+   "bonuses": [
+    {
+     "text": "1000 Stardust for catching Minior",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Increased chance to encounter Minior from 5:00 p.m. to 9:00 p.m. local time each day",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Shooting stars will light up the in-game sky",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "If you are very lucky, you may get a Bonus Timed Research that rewards one million stardust!",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "A very small amount of trainers have shared that they also have an extra Bonus Timed Research, that rewards a whopping one million stardust!",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Task | Rewards",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Claim Reward! | 1 × Star Piece",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Use a Star Piece | 7740 × Stardust",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Rewards | 1000000 × Stardust",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
+    }
+   ],
+   "research": [
+    {
+     "text": "Task | Rewards",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Claim Reward! | 1 × Star Piece",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Use a Star Piece | 7740 × Stardust",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Rewards | 77,400 × Stardust",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
+    }
+   ],
+   "passes": [],
+   "tickets": [],
+   "sources": [
+    {
+     "id": "hub",
+     "name": "Pokémon GO Hub",
+     "trust": "community",
+     "url": "https://pokemongohub.net/post/event/minior-showers-leonid-november-2026/"
+    }
+   ],
+   "pokemon": [],
+   "encounters": [],
+   "groups": {}
+  },
+  {
+   "schemaVersion": 1,
    "eventId": "in-person:wild-area:GO Wild Area: Global",
    "aliases": [],
    "family": "wild-area",
@@ -37608,7 +37879,7 @@
      "end": "2026-11-08"
     },
     "contentHash": "dce45278d164ec7d0efdbec4d901eac6f95e08bdec7b64c64c440d1336263583",
-    "revision": 8,
+    "revision": 10,
     "amended": true,
     "native": false,
     "collection": "world-events"
@@ -38695,7 +38966,7 @@
    "completeness": "partial",
    "lifecycle": "announced",
    "attendance": "in-person",
-   "location": "Japan",
+   "location": "South Korea",
    "image": null,
    "notes": [],
    "internalValidation": {
@@ -38709,8 +38980,8 @@
      "start": "2026-11-03",
      "end": "2026-11-03"
     },
-    "contentHash": "0ca84974cfa677f1be63ebd7712b231d3f83b8d9beb34b2f503e737968fe94fe",
-    "revision": 6,
+    "contentHash": "5cdd55e002ca42377352e7b637a57f2e39afa99cde6bbc64780733a9cc28f6b3",
+    "revision": 7,
     "amended": false,
     "native": false,
     "collection": "world-events"
@@ -39255,7 +39526,7 @@
      "end": "2026-11-08"
     },
     "contentHash": "636a667f0bd8860852090ec7ed9c3389bd07ff19389ca5fbffd0d12d18318dc5",
-    "revision": 9,
+    "revision": 11,
     "amended": true,
     "native": false,
     "collection": "world-events"
@@ -41217,6 +41488,284 @@
     },
     {
      "url": "https://leekduck.com/events/minior-showers-geminids-2026/",
+     "name": "Event source"
+    }
+   ],
+   "pokemon": [],
+   "encounters": [],
+   "groups": {}
+  },
+  {
+   "schemaVersion": 1,
+   "eventId": "w-minior-showers-leonid-november-2026",
+   "aliases": [],
+   "family": "other",
+   "title": "Minior Showers: Leonid (November 2026)",
+   "dateText": "",
+   "completeness": "partial",
+   "lifecycle": "announced",
+   "attendance": "",
+   "location": null,
+   "image": null,
+   "notes": [],
+   "internalValidation": {
+    "warnings": [],
+    "lifecycleDeclared": false,
+    "conflicts": [],
+    "fields": {
+     "bonuses": [
+      {
+       "text": "1000 Stardust for catching Minior",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Increased chance to encounter Minior from 5:00 p.m. to 9:00 p.m. local time each day",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Shooting stars will light up the in-game sky",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "If you are very lucky, you may get a Bonus Timed Research that rewards one million stardust!",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "A very small amount of trainers have shared that they also have an extra Bonus Timed Research, that rewards a whopping one million stardust!",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Task | Rewards",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Claim Reward! | 1 × Star Piece",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Use a Star Piece | 7740 × Stardust",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rewards | 1000000 × Stardust",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      }
+     ],
+     "featured": [
+      {
+       "text": "The second Minior to make their Pokémon GO debut during the Leonid Meteor Shower is ??? Core Minior.",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      }
+     ],
+     "raids": [],
+     "eggs": [],
+     "research": [
+      {
+       "text": "Task | Rewards",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Claim Reward! | 1 × Star Piece",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Use a Star Piece | 7740 × Stardust",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rewards | 77,400 × Stardust",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      }
+     ],
+     "shiny": [],
+     "moves": [],
+     "costumes": [],
+     "tickets": [],
+     "dates": [
+      {
+       "text": "Increased chance to encounter Minior from 5:00 p.m. to 9:00 p.m. local time each day",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "From 5:00 p.m. to 9:00 p.m. local time every day during each Minior Shower, the in-game sky will be lit by shooting stars. You’ll also have an increased chance of encountering Minior in the wild.",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      }
+     ],
+     "researchTasks": []
+    },
+    "info": [],
+    "detailRefs": [],
+    "legacyDates": {
+     "start": "2026-11-14",
+     "end": "2026-11-19"
+    },
+    "contentHash": "a2f3bc6e7d4fcea052ecf057141c683a6622bd585e04842cf01617ea2333c9de",
+    "revision": 1,
+    "amended": false,
+    "native": false,
+    "collection": "world-events"
+   },
+   "schedule": null,
+   "activities": [],
+   "bonuses": [
+    {
+     "text": "1000 Stardust for catching Minior",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Increased chance to encounter Minior from 5:00 p.m. to 9:00 p.m. local time each day",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Shooting stars will light up the in-game sky",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "If you are very lucky, you may get a Bonus Timed Research that rewards one million stardust!",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "A very small amount of trainers have shared that they also have an extra Bonus Timed Research, that rewards a whopping one million stardust!",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Task | Rewards",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Claim Reward! | 1 × Star Piece",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Use a Star Piece | 7740 × Stardust",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Rewards | 1000000 × Stardust",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
+    }
+   ],
+   "research": [
+    {
+     "text": "Task | Rewards",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Claim Reward! | 1 × Star Piece",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Use a Star Piece | 7740 × Stardust",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Rewards | 77,400 × Stardust",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
+    }
+   ],
+   "passes": [],
+   "tickets": [],
+   "sources": [
+    {
+     "id": "hub",
+     "name": "Pokémon GO Hub",
+     "url": "https://pokemongohub.net/post/event/minior-showers-leonid-november-2026/"
+    },
+    {
+     "id": "hub",
+     "name": "Pokémon GO Hub",
+     "trust": "community",
+     "url": "https://pokemongohub.net/post/event/minior-showers-leonid-november-2026/"
+    },
+    {
+     "url": "https://pokemongohub.net/post/event/minior-showers-leonid-november-2026/",
      "name": "Event source"
     }
    ],
@@ -44167,7 +44716,7 @@
      "end": "2027-04-11"
     },
     "contentHash": "84950064738e11a798ef98f9fd6ab913640b138fb1594e38612f64db09c4dd24",
-    "revision": 8,
+    "revision": 10,
     "amended": true,
     "native": false,
     "collection": "world-events"
@@ -50293,7 +50842,7 @@
   },
   {
    "collection": "world-events",
-   "records": 56
+   "records": 57
   },
   {
    "collection": "regional-events",

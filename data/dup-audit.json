@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-07T16:40:15.011Z",
+ "updated": "2026-11-07T20:33:40.613Z",
  "joinedThisRun": [
   {
    "kept": "w-pokemon-fossil-museum-2026",
@@ -90,6 +90,25 @@
     "list": "world"
    },
    "why": "same dates, 2 shared words (67%)"
+  },
+  {
+   "keep": {
+    "id": "minior2",
+    "name": "Minior Showers: Leonids",
+    "place": "",
+    "start": "2026-11-14",
+    "end": "2026-11-19",
+    "list": "curated"
+   },
+   "dupe": {
+    "id": "w-minior-showers-leonid-november-2026",
+    "name": "Minior Showers: Leonid (November 2026)",
+    "place": "",
+    "start": "2026-11-14",
+    "end": "2026-11-19",
+    "list": "world"
+   },
+   "why": "same dates, 3 shared words (100%)"
   },
   {
    "keep": {
@@ -203,6 +222,25 @@
     "place": "",
     "start": "2026-11-06",
     "end": "2026-11-08",
+    "list": "world"
+   },
+   "why": "dates fit and 1 shared word"
+  },
+  {
+   "a": {
+    "id": "gopassnov",
+    "name": "GO Pass: November",
+    "place": "",
+    "start": "2026-11-03",
+    "end": "2026-12-01",
+    "list": "curated"
+   },
+   "b": {
+    "id": "w-minior-showers-leonid-november-2026",
+    "name": "Minior Showers: Leonid (November 2026)",
+    "place": "",
+    "start": "2026-11-14",
+    "end": "2026-11-19",
     "list": "world"
    },
    "why": "dates fit and 1 shared word"

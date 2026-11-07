@@ -1,5 +1,5 @@
 {
- "runAt": "2026-11-07T16:40:14.555Z",
+ "runAt": "2026-11-07T20:33:39.978Z",
  "sources": {
   "official": {
    "listed": 23,
@@ -10,13 +10,13 @@
    "error": ""
   },
   "hub": {
-   "listed": 14,
+   "listed": 15,
    "error": ""
   }
  },
  "pagesRead": 80,
- "events": 97,
- "worldEvents": 62,
+ "events": 98,
+ "worldEvents": 63,
  "worldUndated": [
   "GO Wild Area Stamp Rally"
  ],
@@ -98,6 +98,11 @@
   },
   {
    "source": "hub",
+   "title": "Minior Showers: Leonid (November 2026)",
+   "url": "https://pokemongohub.net/post/event/minior-showers-leonid-november-2026/"
+  },
+  {
+   "source": "hub",
    "title": "Free Gigantamax Machamp Timed Research Available This Weekend Only!",
    "url": "https://pokemongohub.net/post/news/free-gigantamax-machamp-timed-research-available-this-weekend-only/"
   },
@@ -120,11 +125,6 @@
    "source": "hub",
    "title": "Shadow Tornadus (Incarnate) Raid Counters Guide",
    "url": "https://pokemongohub.net/post/guide/shadow-tornadus-incarnate-raid-counters-guide/"
-  },
-  {
-   "source": "hub",
-   "title": "Shadow Poliwhirl Raid Guide",
-   "url": "https://pokemongohub.net/post/guide/shadow-poliwhirl-raid-guide/"
   }
  ],
  "intl": {
