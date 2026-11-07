@@ -2147,3 +2147,14 @@ a.evc-source{color:var(--color-link);text-underline-offset:3px}
 .rw-low>summary{min-height:44px;display:flex;align-items:center;cursor:pointer;color:var(--color-text-body);font-weight:650}
 .rw-low>summary::after{content:'+';margin-left:auto}
 .rw-low[open]>summary::after{content:'−'}
+
+/* On phones, encounter artwork anchors a compact reading row instead of a tall poster tile. */
+@media(max-width:520px){
+ .evd-in:has(.ue-hero) .ue-gallery.evd-feat{grid-template-columns:minmax(0,1fr)}
+ .evd-in:has(.ue-hero) .ue-gallery .ue-mon.evd-f{grid-template-columns:64px minmax(0,1fr);column-gap:var(--space-3);row-gap:var(--space-1);padding:var(--space-3);align-items:center}
+ .evd-in:has(.ue-hero) .ue-mon-art{grid-column:1;grid-row:1/4;align-self:start;min-height:64px;max-width:64px}
+ .evd-in:has(.ue-hero) .ue-mon-art .art{width:64px;height:64px;max-width:64px}
+ .evd-in:has(.ue-hero) .ue-mon :is(.evd-fm,.own,.ue-mon-controls){grid-column:2;min-width:0}
+ .evd-in:has(.ue-hero) .ue-mon-controls :is(button,summary),.evd-in:has(.ue-hero) .ue-mon .mk button{min-height:44px}
+ .evd-in:has(.ue-hero) .ue-mon-art .art.costume-unavailable{width:64px;min-width:0;font-size:var(--type-caption);overflow-wrap:anywhere}
+}
