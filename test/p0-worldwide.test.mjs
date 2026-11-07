@@ -19,8 +19,8 @@ test('saved override and reset are device-local and do not rewrite collection st
  const fakeIntl={DateTimeFormat:function(locale,options){return new Intl.DateTimeFormat(locale,{timeZone:'Asia/Tokyo',...options});}};
  const sandbox={Intl:fakeIntl,Date,Map,Set,localStorage:{getItem:k=>data.get(k)||null,setItem:(k,v)=>data.set(k,v),removeItem:k=>data.delete(k)}};
  vm.runInNewContext(fs.readFileSync(new URL('../public/event-clock.js',import.meta.url),'utf8'),sandbox);
- const clock=sandbox.GOEventClock;assert.equal(clock.viewerZone(),'Asia/Tokyo');clock.setViewerZone('America/New_York');assert.equal(clock.viewerZone(),'America/New_York');clock.setViewerZone('');assert.equal(clock.viewerZone(),'Asia/Tokyo');
- data.set('gofn-timezone','Invalid/Zone');assert.equal(clock.viewerZone(),'Asia/Tokyo');assert.throws(()=>clock.setViewerZone('Invalid/Zone'));assert.equal(data.get('gofn-dex-v1'),'EXISTING_COLLECTION');
+ const clock=sandbox.GOEventClock;assert.equal(clock.viewerZone(),'Australia/Melbourne');clock.setViewerZone('America/New_York');assert.equal(clock.viewerZone(),'America/New_York');clock.setViewerZone('');assert.equal(clock.viewerZone(),'Asia/Tokyo');
+ data.set('gofn-timezone','Invalid/Zone');assert.equal(clock.viewerZone(),'Australia/Melbourne');assert.throws(()=>clock.setViewerZone('Invalid/Zone'));assert.equal(data.get('gofn-dex-v1'),'EXISTING_COLLECTION');
 });
 test('player-local publication never depends on Melbourne DST, at event or activity level',()=>{
  const local={timeBasis:'player-local',start:'2026-10-04T02:30',end:'2026-10-04T03:30'};
@@ -111,4 +111,16 @@ test('failed atomic publication leaves the validated public file byte-for-byte i
   await assert.rejects(publish(root),error=>error.diagnostics.rejections[0].eventId==='unsafe-new-record');
   assert.equal(await readFile(path.join(root,'public/events-v1.json'),'utf8'),before);
  }finally{await rm(root,{recursive:true,force:true});}
+});
+
+test('new users default to Melbourne and can explicitly choose device time',()=>{
+ const previous=globalThis.localStorage;const data=new Map();
+ globalThis.localStorage={getItem:k=>data.has(k)?data.get(k):null,setItem:(k,v)=>data.set(k,v)};
+ try{
+  assert.equal(Clock.selectedZone(),'Australia/Melbourne');
+  assert.equal(Clock.viewerZone(),'Australia/Melbourne');
+  Clock.setViewerZone('');assert.equal(data.get('gofn-timezone'),'device');assert.equal(Clock.selectedZone(),'');
+  Clock.setViewerZone('Asia/Tokyo');assert.equal(Clock.viewerZone(),'Asia/Tokyo');
+  data.set('gofn-timezone','Invalid/Zone');assert.equal(Clock.viewerZone(),'Australia/Melbourne');
+ }finally{if(previous===undefined)delete globalThis.localStorage;else globalThis.localStorage=previous;}
 });

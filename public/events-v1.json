@@ -17707,8 +17707,8 @@
      "start": "2026-11-06",
      "end": "2026-11-08"
     },
-    "contentHash": "a8b67c8198d434fc71ba4f6885da6e80f0f2094dd8955491133181819d22ed32",
-    "revision": 6,
+    "contentHash": "3c88a0335dd88189e8bc625280a4bb83c1ddc0fac469636494bc5c899a79a464",
+    "revision": 7,
     "amended": true,
     "native": false,
     "collection": "worldEvents"
@@ -18449,6 +18449,32 @@
      "collectionName": "Bastiodon"
     },
     {
+     "key": "483:dynamax:none",
+     "speciesId": "483",
+     "formId": "dynamax",
+     "costumeId": null,
+     "shiny": "yes",
+     "assetKey": null,
+     "name": "Dynamax Dialga",
+     "label": null,
+     "debut": true,
+     "boostedShiny": null,
+     "collectionName": "Dynamax Dialga"
+    },
+    {
+     "key": "484:dynamax:none",
+     "speciesId": "484",
+     "formId": "dynamax",
+     "costumeId": null,
+     "shiny": "yes",
+     "assetKey": null,
+     "name": "Dynamax Palkia",
+     "label": null,
+     "debut": true,
+     "boostedShiny": null,
+     "collectionName": "Dynamax Palkia"
+    },
+    {
      "key": "534:base:none",
      "speciesId": "534",
      "formId": null,
@@ -18501,6 +18527,32 @@
      "collectionName": "Hawlucha"
     },
     {
+     "key": "705:hisui:none",
+     "speciesId": "705",
+     "formId": "hisui",
+     "costumeId": null,
+     "shiny": "yes",
+     "assetKey": null,
+     "name": "Hisuian Sliggoo",
+     "label": null,
+     "debut": true,
+     "boostedShiny": null,
+     "collectionName": "Hisuian Sliggoo"
+    },
+    {
+     "key": "706:hisui:none",
+     "speciesId": "706",
+     "formId": "hisui",
+     "costumeId": null,
+     "shiny": "yes",
+     "assetKey": null,
+     "name": "Hisuian Goodra",
+     "label": null,
+     "debut": true,
+     "boostedShiny": null,
+     "collectionName": "Hisuian Goodra"
+    },
+    {
      "key": "707:base:none",
      "speciesId": "707",
      "formId": null,
@@ -18551,6 +18603,19 @@
      "debut": null,
      "boostedShiny": null,
      "collectionName": "Duraludon"
+    },
+    {
+     "key": "884:gmax:none",
+     "speciesId": "884",
+     "formId": "gmax",
+     "costumeId": null,
+     "shiny": "yes",
+     "assetKey": null,
+     "name": "Gigantamax Duraludon",
+     "label": null,
+     "debut": true,
+     "boostedShiny": null,
+     "collectionName": "Gigantamax Duraludon"
     }
    ],
    "encounters": [
@@ -18641,6 +18706,36 @@
     {
      "identityKey": "784:base:none",
      "method": "incense",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "483:dynamax:none",
+     "method": "max",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "484:dynamax:none",
+     "method": "max",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "884:gmax:none",
+     "method": "max",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "706:hisui:none",
+     "method": "other",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "705:hisui:none",
+     "method": "wild",
      "activityId": "main",
      "access": "unknown"
     }
@@ -18736,6 +18831,42 @@
      {
       "identityKey": "784:base:none",
       "method": "incense",
+      "activityId": "main",
+      "access": "unknown"
+     }
+    ],
+    "max": [
+     {
+      "identityKey": "483:dynamax:none",
+      "method": "max",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "484:dynamax:none",
+      "method": "max",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "884:gmax:none",
+      "method": "max",
+      "activityId": "main",
+      "access": "unknown"
+     }
+    ],
+    "other": [
+     {
+      "identityKey": "706:hisui:none",
+      "method": "other",
+      "activityId": "main",
+      "access": "unknown"
+     }
+    ],
+    "wild": [
+     {
+      "identityKey": "705:hisui:none",
+      "method": "wild",
       "activityId": "main",
       "access": "unknown"
      }
@@ -32617,8 +32748,8 @@
      "start": "",
      "end": ""
     },
-    "contentHash": "1bd43ede1ff7e3a5dd5eef6415d1c1a7344f41f370f4c32af6603dc3f1ee3cc6",
-    "revision": 5,
+    "contentHash": "b2fba6efc43da8ecfcd5ab69ab184256c7b5165b01cbdc3c1344cead95fbe9bf",
+    "revision": 6,
     "amended": true,
     "native": false,
     "collection": "events"
@@ -33351,6 +33482,19 @@
      "collectionName": "Dialga"
     },
     {
+     "key": "483:dynamax:none",
+     "speciesId": "483",
+     "formId": "dynamax",
+     "costumeId": null,
+     "shiny": "yes",
+     "assetKey": null,
+     "name": "Dynamax Dialga",
+     "label": null,
+     "debut": true,
+     "boostedShiny": null,
+     "collectionName": "Dynamax Dialga"
+    },
+    {
      "key": "484:base:none",
      "speciesId": "484",
      "formId": null,
@@ -33362,6 +33506,19 @@
      "debut": null,
      "boostedShiny": null,
      "collectionName": "Palkia"
+    },
+    {
+     "key": "484:dynamax:none",
+     "speciesId": "484",
+     "formId": "dynamax",
+     "costumeId": null,
+     "shiny": "yes",
+     "assetKey": null,
+     "name": "Dynamax Palkia",
+     "label": null,
+     "debut": true,
+     "boostedShiny": null,
+     "collectionName": "Dynamax Palkia"
     },
     {
      "key": "534:base:none",
@@ -33401,6 +33558,32 @@
      "debut": null,
      "boostedShiny": null,
      "collectionName": "Honedge"
+    },
+    {
+     "key": "705:hisui:none",
+     "speciesId": "705",
+     "formId": "hisui",
+     "costumeId": null,
+     "shiny": "yes",
+     "assetKey": null,
+     "name": "Hisuian Sliggoo",
+     "label": null,
+     "debut": true,
+     "boostedShiny": null,
+     "collectionName": "Hisuian Sliggoo"
+    },
+    {
+     "key": "706:hisui:none",
+     "speciesId": "706",
+     "formId": "hisui",
+     "costumeId": null,
+     "shiny": "yes",
+     "assetKey": null,
+     "name": "Hisuian Goodra",
+     "label": null,
+     "debut": true,
+     "boostedShiny": null,
+     "collectionName": "Hisuian Goodra"
     },
     {
      "key": "707:base:none",
@@ -33459,11 +33642,11 @@
      "speciesId": "884",
      "formId": "gmax",
      "costumeId": null,
-     "shiny": "unknown",
+     "shiny": "yes",
      "assetKey": null,
      "name": "Gigantamax Duraludon",
      "label": null,
-     "debut": null,
+     "debut": true,
      "boostedShiny": null,
      "collectionName": "Gigantamax Duraludon"
     }
@@ -33560,6 +33743,24 @@
      "access": "unknown"
     },
     {
+     "identityKey": "483:dynamax:none",
+     "method": "max",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "484:dynamax:none",
+     "method": "max",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "884:gmax:none",
+     "method": "max",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
      "identityKey": "483:base:none",
      "method": "other",
      "activityId": "main",
@@ -33578,6 +33779,12 @@
      "access": "unknown"
     },
     {
+     "identityKey": "706:hisui:none",
+     "method": "other",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
      "identityKey": "884:gmax:none",
      "method": "other",
      "activityId": "main",
@@ -33586,6 +33793,12 @@
     {
      "identityKey": "884:gmax:none",
      "method": "other",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "705:hisui:none",
+     "method": "wild",
      "activityId": "main",
      "access": "unknown"
     }
@@ -33685,6 +33898,26 @@
       "access": "unknown"
      }
     ],
+    "max": [
+     {
+      "identityKey": "483:dynamax:none",
+      "method": "max",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "484:dynamax:none",
+      "method": "max",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "884:gmax:none",
+      "method": "max",
+      "activityId": "main",
+      "access": "unknown"
+     }
+    ],
     "other": [
      {
       "identityKey": "483:base:none",
@@ -33705,6 +33938,12 @@
       "access": "unknown"
      },
      {
+      "identityKey": "706:hisui:none",
+      "method": "other",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
       "identityKey": "884:gmax:none",
       "method": "other",
       "activityId": "main",
@@ -33713,6 +33952,14 @@
      {
       "identityKey": "884:gmax:none",
       "method": "other",
+      "activityId": "main",
+      "access": "unknown"
+     }
+    ],
+    "wild": [
+     {
+      "identityKey": "705:hisui:none",
+      "method": "wild",
       "activityId": "main",
       "access": "unknown"
      }

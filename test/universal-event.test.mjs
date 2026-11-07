@@ -197,3 +197,8 @@ test('reviewed source corrections reconcile aliases while retaining published id
  assert.deepEqual(again.events.map(e=>e.eventId),['canonical']);
  assert.deepEqual(again.events[0].aliases,next.events[0].aliases);
 });
+test('nested habitat headings retain wild method until the next peer section',async()=>{
+ const {extractEncounters}=await import('../scripts/importer/encounters.mjs');
+ const result=extractEncounters('<h2>Spawns</h2><h3>Solid as Steel Hour</h3><li>Pikachu</li><h3>Daring as Dragons Hour</h3><li>Raichu</li><h2>Research</h2><li>Pikachu</li>',{dex:[[25,'Pikachu'],[26,'Raichu']]});
+ assert.deepEqual(result.encounters.map(e=>[e.identityKey,e.method]),[['25:base:none','wild'],['26:base:none','wild']]);
+});
