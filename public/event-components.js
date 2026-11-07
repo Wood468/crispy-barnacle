@@ -11,7 +11,7 @@ function reward(item,ctx){
  if(typeof item==='string')return '<div class="research-reward"><span class="ue-reward-art"><span class="ue-reward-icon" aria-hidden="true">★</span></span><span><b>'+esc(item)+'</b></span></div>';
  if(!item||typeof item.name!=='string')return '';
  var quantity=Number.isInteger(item.quantity)&&item.quantity>1?esc(item.quantity)+'× ':'';
- var cp=Number.isInteger(item.cpMin)&&Number.isInteger(item.cpMax)&&item.cpMin<=item.cpMax?'<small>CP '+esc(item.cpMin)+'–'+esc(item.cpMax)+'</small>':'';
+ var cp=Number.isInteger(item.cpMin)&&Number.isInteger(item.cpMax)&&item.cpMin<=item.cpMax?'<small>CP '+esc(item.cpMin)+'–'+esc(item.cpMax)+'</small>':item.type==='encounter'&&Number.isInteger(item.level)?'<small>Level '+esc(item.level)+'</small>':'';
  var artwork=item.type==='encounter'&&ctx.rewardArt?ctx.rewardArt(item):'';
  var fallback='<span class="ue-reward-icon" aria-hidden="true">'+(item.type==='encounter'?'?':item.type==='item'?'◆':'★')+'</span>';
  var icon='<span class="ue-reward-art">'+(artwork||fallback)+'</span>';
@@ -26,7 +26,7 @@ function passes(items,ctx){
   if(stages.length<=12)content='<ol class="ue-pass-stages">'+stages.map(stage).join('')+'</ol>';
   else{
    var groups={};stages.forEach(function(s){var key=Math.floor(Math.max(0,s.rank-1)/25);(groups[key]||(groups[key]=[])).push(s);});
-   content='<p class="ue-pass-count">'+stages.length+' reward ranks · Expand a range to compare rewards.</p>'+Object.keys(groups).map(function(key){var list=groups[key];return '<details class="ue-pass-range"><summary>Ranks '+esc(list[0].rank)+'–'+esc(list[list.length-1].rank)+'</summary><ol class="ue-pass-stages">'+list.map(stage).join('')+'</ol></details>';}).join('');
+   content='<p class="ue-pass-count">'+stages.length+' reward ranks · Expand a range to compare rewards.</p>'+Object.keys(groups).map(function(key){var list=groups[key];return '<details class="ue-pass-range"><summary>'+(list.length===1?'Rank '+esc(list[0].rank):'Ranks '+esc(list[0].rank)+'–'+esc(list[list.length-1].rank))+'</summary><ol class="ue-pass-stages">'+list.map(stage).join('')+'</ol></details>';}).join('');
   }
   return '<article class="ue-pass"><h4>'+esc(value(p))+'</h4>'+((p.text&&p.text!==value(p))?'<p>'+esc(p.text)+'</p>':'')+content+'</article>';
  }).join('');

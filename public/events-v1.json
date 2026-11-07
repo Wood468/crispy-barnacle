@@ -6349,9 +6349,9 @@
      "start": "2026-11-03T10:00",
      "end": "2026-12-01T10:00"
     },
-    "contentHash": "979e1d5cf2e3bc3a457b12b4d3b76e53725916935d7d1ca98c75c1089a523269",
-    "revision": 4,
-    "amended": false,
+    "contentHash": "1e06cbe2549f5be04227938f34f5e36c4c8e75c9ff29c43c4b4dcc816da2f865",
+    "revision": 5,
+    "amended": true,
     "native": false,
     "collection": "events"
    },
@@ -6399,883 +6399,1668 @@
       {
        "rank": 2,
        "free": [
-        "XP ×10000"
+        {
+         "type": "item",
+         "name": "XP",
+         "quantity": 10000
+        }
        ],
        "deluxe": [
-        "Stardust ×10000"
+        {
+         "type": "item",
+         "name": "Stardust",
+         "quantity": 10000
+        }
        ]
       },
       {
        "rank": 3,
        "free": [
-        "Dynamax Rookidee"
+        {
+         "type": "encounter",
+         "name": "Dynamax Rookidee",
+         "quantity": 1
+        }
        ],
        "deluxe": [
-        "Rookidee Candy ×5"
+        {
+         "type": "item",
+         "name": "Rookidee Candy",
+         "quantity": 5
+        }
        ]
       },
       {
        "rank": 4,
        "free": [
-        "Rookidee Candy ×5"
+        {
+         "type": "item",
+         "name": "Rookidee Candy",
+         "quantity": 5
+        }
        ],
        "deluxe": [
-        "Rookidee Candy XL ×3"
+        {
+         "type": "item",
+         "name": "Rookidee Candy XL",
+         "quantity": 3
+        }
        ]
       },
       {
        "rank": 5,
        "free": [
-        "XP ×500"
+        {
+         "type": "item",
+         "name": "XP",
+         "quantity": 500
+        }
        ],
        "deluxe": [
-        "XP ×1500"
+        {
+         "type": "item",
+         "name": "XP",
+         "quantity": 1500
+        }
        ]
       },
       {
        "rank": 6,
        "free": [
-        "Stardust ×500"
+        {
+         "type": "item",
+         "name": "Stardust",
+         "quantity": 500
+        }
        ],
        "deluxe": [
-        "Stardust ×1500"
+        {
+         "type": "item",
+         "name": "Stardust",
+         "quantity": 1500
+        }
        ]
       },
       {
        "rank": 7,
        "free": [
-        "Sandygast"
+        {
+         "type": "encounter",
+         "name": "Sandygast",
+         "quantity": 1
+        }
        ],
        "deluxe": [
-        "Sandygast Candy ×5"
+        {
+         "type": "item",
+         "name": "Sandygast Candy",
+         "quantity": 5
+        }
        ]
       },
       {
        "rank": 8,
        "free": [
-        "Sandygast Candy ×5"
+        {
+         "type": "item",
+         "name": "Sandygast Candy",
+         "quantity": 5
+        }
        ],
        "deluxe": [
-        "Sandygast Candy XL ×3"
+        {
+         "type": "item",
+         "name": "Sandygast Candy XL",
+         "quantity": 3
+        }
        ]
       },
       {
        "rank": 9,
        "free": [
-        "Impidimp Candy ×5"
+        {
+         "type": "item",
+         "name": "Impidimp Candy",
+         "quantity": 5
+        }
        ],
        "deluxe": [
-        "Impidimp"
+        {
+         "type": "encounter",
+         "name": "Impidimp",
+         "quantity": 1
+        }
        ]
       },
       {
        "rank": 10,
        "free": [
-        "PokéCoin ×10"
+        {
+         "type": "item",
+         "name": "PokéCoin",
+         "quantity": 10
+        }
        ],
        "deluxe": [
-        "PokéCoin ×20"
+        {
+         "type": "item",
+         "name": "PokéCoin",
+         "quantity": 20
+        }
        ]
       },
       {
        "rank": 11,
        "free": [
-        "Poké Ball ×5"
+        {
+         "type": "item",
+         "name": "Poké Ball",
+         "quantity": 5
+        }
        ],
        "deluxe": [
-        "Poké Ball ×25"
+        {
+         "type": "item",
+         "name": "Poké Ball",
+         "quantity": 25
+        }
        ]
       },
       {
        "rank": 12,
        "free": [
-        "Klink"
+        {
+         "type": "encounter",
+         "name": "Klink",
+         "quantity": 1
+        }
        ],
        "deluxe": [
-        "Klink Candy ×5"
+        {
+         "type": "item",
+         "name": "Klink Candy",
+         "quantity": 5
+        }
        ]
       },
       {
        "rank": 13,
        "free": [
-        "Klink Candy ×5"
+        {
+         "type": "item",
+         "name": "Klink Candy",
+         "quantity": 5
+        }
        ],
        "deluxe": [
-        "Klink Candy XL ×3"
+        {
+         "type": "item",
+         "name": "Klink Candy XL",
+         "quantity": 3
+        }
        ]
       },
       {
        "rank": 14,
        "free": [
-        "Razz Berry ×10"
+        {
+         "type": "item",
+         "name": "Razz Berry",
+         "quantity": 10
+        }
        ],
        "deluxe": [
-        "Golden Razz Berry ×3"
+        {
+         "type": "item",
+         "name": "Golden Razz Berry",
+         "quantity": 3
+        }
        ]
       },
       {
        "rank": 15,
        "free": [
-        "XP ×750"
+        {
+         "type": "item",
+         "name": "XP",
+         "quantity": 750
+        }
        ],
        "deluxe": [
-        "XP ×2250"
+        {
+         "type": "item",
+         "name": "XP",
+         "quantity": 2250
+        }
        ]
       },
       {
        "rank": 16,
        "free": [
-        "Stardust ×750"
+        {
+         "type": "item",
+         "name": "Stardust",
+         "quantity": 750
+        }
        ],
        "deluxe": [
-        "Stardust ×2250"
+        {
+         "type": "item",
+         "name": "Stardust",
+         "quantity": 2250
+        }
        ]
       },
       {
        "rank": 17,
        "free": [
-        "Nickit Candy ×5"
+        {
+         "type": "item",
+         "name": "Nickit Candy",
+         "quantity": 5
+        }
        ],
        "deluxe": [
-        "Nickit"
+        {
+         "type": "encounter",
+         "name": "Nickit",
+         "quantity": 1
+        }
        ]
       },
       {
        "rank": 18,
        "free": [
-        "Nickit Candy ×5"
+        {
+         "type": "item",
+         "name": "Nickit Candy",
+         "quantity": 5
+        }
        ],
        "deluxe": [
-        "Nickit Candy XL ×3"
+        {
+         "type": "item",
+         "name": "Nickit Candy XL",
+         "quantity": 3
+        }
        ]
       },
       {
        "rank": 19,
        "free": [
-        "Max Particle ×100"
+        {
+         "type": "other",
+         "name": "Max Particle",
+         "quantity": 100
+        }
        ],
        "deluxe": [
-        "Max Particle ×400"
+        {
+         "type": "other",
+         "name": "Max Particle",
+         "quantity": 400
+        }
        ]
       },
       {
        "rank": 20,
        "free": [
-        "PokéCoin ×20"
+        {
+         "type": "item",
+         "name": "PokéCoin",
+         "quantity": 20
+        }
        ],
        "deluxe": [
-        "PokéCoin ×40"
+        {
+         "type": "item",
+         "name": "PokéCoin",
+         "quantity": 40
+        }
        ]
       },
       {
        "rank": 21,
        "free": [
-        "Mysterious Component ×2"
+        {
+         "type": "other",
+         "name": "Mysterious Component",
+         "quantity": 2
+        }
        ],
        "deluxe": [
-        "Mysterious Component ×2"
+        {
+         "type": "other",
+         "name": "Mysterious Component",
+         "quantity": 2
+        }
        ]
       },
       {
        "rank": 22,
        "free": [
-        "Phanpy"
+        {
+         "type": "encounter",
+         "name": "Phanpy",
+         "quantity": 1
+        }
        ],
        "deluxe": [
-        "Phanpy Candy ×5"
+        {
+         "type": "item",
+         "name": "Phanpy Candy",
+         "quantity": 5
+        }
        ]
       },
       {
        "rank": 23,
        "free": [
-        "Phanpy Candy ×5"
+        {
+         "type": "item",
+         "name": "Phanpy Candy",
+         "quantity": 5
+        }
        ],
        "deluxe": [
-        "Phanpy Candy XL ×3"
+        {
+         "type": "item",
+         "name": "Phanpy Candy XL",
+         "quantity": 3
+        }
        ]
       },
       {
        "rank": 24,
        "free": [
-        "Absol Candy ×5"
+        {
+         "type": "item",
+         "name": "Absol Candy",
+         "quantity": 5
+        }
        ],
        "deluxe": [
-        "Absol"
+        {
+         "type": "encounter",
+         "name": "Absol",
+         "quantity": 1
+        }
        ]
       },
       {
        "rank": 26,
        "free": [
-        "Great Ball ×5"
+        {
+         "type": "item",
+         "name": "Great Ball",
+         "quantity": 5
+        }
        ],
        "deluxe": [
-        "Great Ball ×25"
+        {
+         "type": "item",
+         "name": "Great Ball",
+         "quantity": 25
+        }
        ]
       },
       {
        "rank": 27,
        "free": [
-        "Falinks Candy ×5"
+        {
+         "type": "item",
+         "name": "Falinks Candy",
+         "quantity": 5
+        }
        ],
        "deluxe": [
-        "Dynamax Falinks"
+        {
+         "type": "encounter",
+         "name": "Dynamax Falinks",
+         "quantity": 1
+        }
        ]
       },
       {
        "rank": 28,
        "free": [
-        "Falinks Candy ×5"
+        {
+         "type": "item",
+         "name": "Falinks Candy",
+         "quantity": 5
+        }
        ],
        "deluxe": [
-        "Falinks Candy XL ×3"
+        {
+         "type": "item",
+         "name": "Falinks Candy XL",
+         "quantity": 3
+        }
        ]
       },
       {
        "rank": 29,
        "free": [
-        "Nanab Berry ×10"
+        {
+         "type": "item",
+         "name": "Nanab Berry",
+         "quantity": 10
+        }
        ],
        "deluxe": [
-        "Silver Pinap Berry ×3"
+        {
+         "type": "item",
+         "name": "Silver Pinap Berry",
+         "quantity": 3
+        }
        ]
       },
       {
        "rank": 30,
        "free": [
-        "PokéCoin ×30"
+        {
+         "type": "item",
+         "name": "PokéCoin",
+         "quantity": 30
+        }
        ],
        "deluxe": [
-        "PokéCoin ×60"
+        {
+         "type": "item",
+         "name": "PokéCoin",
+         "quantity": 60
+        }
        ]
       },
       {
        "rank": 31,
        "free": [
-        "Poffin ×1"
+        {
+         "type": "other",
+         "name": "Poffin",
+         "quantity": 1
+        }
        ],
        "deluxe": [
-        "Poffin ×1"
+        {
+         "type": "other",
+         "name": "Poffin",
+         "quantity": 1
+        }
        ]
       },
       {
        "rank": 32,
        "free": [
-        "Tinkatink"
+        {
+         "type": "encounter",
+         "name": "Tinkatink",
+         "quantity": 1
+        }
        ],
        "deluxe": [
-        "Tinkatink Candy ×5"
+        {
+         "type": "item",
+         "name": "Tinkatink Candy",
+         "quantity": 5
+        }
        ]
       },
       {
        "rank": 33,
        "free": [
-        "Tinkatink Candy ×5"
+        {
+         "type": "item",
+         "name": "Tinkatink Candy",
+         "quantity": 5
+        }
        ],
        "deluxe": [
-        "Tinkatink Candy XL ×3"
+        {
+         "type": "item",
+         "name": "Tinkatink Candy XL",
+         "quantity": 3
+        }
        ]
       },
       {
        "rank": 34,
        "free": [
-        "XP ×1000"
+        {
+         "type": "item",
+         "name": "XP",
+         "quantity": 1000
+        }
        ],
        "deluxe": [
-        "XP ×3000"
+        {
+         "type": "item",
+         "name": "XP",
+         "quantity": 3000
+        }
        ]
       },
       {
        "rank": 35,
        "free": [
-        "Great Ball ×10"
+        {
+         "type": "item",
+         "name": "Great Ball",
+         "quantity": 10
+        }
        ],
        "deluxe": [
-        "Great Ball ×40"
+        {
+         "type": "item",
+         "name": "Great Ball",
+         "quantity": 40
+        }
        ]
       },
       {
        "rank": 36,
        "free": [
-        "Stardust ×1000"
+        {
+         "type": "item",
+         "name": "Stardust",
+         "quantity": 1000
+        }
        ],
        "deluxe": [
-        "Stardust ×3000"
+        {
+         "type": "item",
+         "name": "Stardust",
+         "quantity": 3000
+        }
        ]
       },
       {
        "rank": 37,
        "free": [
-        "Miltank"
+        {
+         "type": "encounter",
+         "name": "Miltank",
+         "quantity": 1
+        }
        ],
        "deluxe": [
-        "Miltank Candy ×5"
+        {
+         "type": "item",
+         "name": "Miltank Candy",
+         "quantity": 5
+        }
        ]
       },
       {
        "rank": 38,
        "free": [
-        "Miltank Candy ×5"
+        {
+         "type": "item",
+         "name": "Miltank Candy",
+         "quantity": 5
+        }
        ],
        "deluxe": [
-        "Miltank Candy XL ×3"
+        {
+         "type": "item",
+         "name": "Miltank Candy XL",
+         "quantity": 3
+        }
        ]
       },
       {
        "rank": 39,
        "free": [
-        "Dhelmise Candy ×5"
+        {
+         "type": "item",
+         "name": "Dhelmise Candy",
+         "quantity": 5
+        }
        ],
        "deluxe": [
-        "Dhelmise"
+        {
+         "type": "encounter",
+         "name": "Dhelmise",
+         "quantity": 1
+        }
        ]
       },
       {
        "rank": 40,
        "free": [
-        "PokéCoin ×40"
+        {
+         "type": "item",
+         "name": "PokéCoin",
+         "quantity": 40
+        }
        ],
        "deluxe": [
-        "PokéCoin ×80"
+        {
+         "type": "item",
+         "name": "PokéCoin",
+         "quantity": 80
+        }
        ]
       },
       {
        "rank": 41,
        "free": [
-        "Mysterious Component ×2"
+        {
+         "type": "other",
+         "name": "Mysterious Component",
+         "quantity": 2
+        }
        ],
        "deluxe": [
-        "Mysterious Component ×2"
+        {
+         "type": "other",
+         "name": "Mysterious Component",
+         "quantity": 2
+        }
        ]
       },
       {
        "rank": 42,
        "free": [
-        "Tadbulb"
+        {
+         "type": "encounter",
+         "name": "Tadbulb",
+         "quantity": 1
+        }
        ],
        "deluxe": [
-        "Tadbulb Candy ×5"
+        {
+         "type": "item",
+         "name": "Tadbulb Candy",
+         "quantity": 5
+        }
        ]
       },
       {
        "rank": 43,
        "free": [
-        "Tadbulb Candy ×5"
+        {
+         "type": "item",
+         "name": "Tadbulb Candy",
+         "quantity": 5
+        }
        ],
        "deluxe": [
-        "Tadbulb Candy XL ×3"
+        {
+         "type": "item",
+         "name": "Tadbulb Candy XL",
+         "quantity": 3
+        }
        ]
       },
       {
        "rank": 44,
        "free": [
-        "XP ×1500"
+        {
+         "type": "item",
+         "name": "XP",
+         "quantity": 1500
+        }
        ],
        "deluxe": [
-        "XP ×4500"
+        {
+         "type": "item",
+         "name": "XP",
+         "quantity": 4500
+        }
        ]
       },
       {
        "rank": 45,
        "free": [
-        "Great Ball ×10"
+        {
+         "type": "item",
+         "name": "Great Ball",
+         "quantity": 10
+        }
        ],
        "deluxe": [
-        "Great Ball ×40"
+        {
+         "type": "item",
+         "name": "Great Ball",
+         "quantity": 40
+        }
        ]
       },
       {
        "rank": 46,
        "free": [
-        "Stardust ×1500"
+        {
+         "type": "item",
+         "name": "Stardust",
+         "quantity": 1500
+        }
        ],
        "deluxe": [
-        "Stardust ×4500"
+        {
+         "type": "item",
+         "name": "Stardust",
+         "quantity": 4500
+        }
        ]
       },
       {
        "rank": 47,
        "free": [
-        "Greavard"
+        {
+         "type": "encounter",
+         "name": "Greavard",
+         "quantity": 1
+        }
        ],
        "deluxe": [
-        "Greavard Candy ×5"
+        {
+         "type": "item",
+         "name": "Greavard Candy",
+         "quantity": 5
+        }
        ]
       },
       {
        "rank": 48,
        "free": [
-        "Greavard Candy ×5"
+        {
+         "type": "item",
+         "name": "Greavard Candy",
+         "quantity": 5
+        }
        ],
        "deluxe": [
-        "Greavard Candy XL ×3"
+        {
+         "type": "item",
+         "name": "Greavard Candy XL",
+         "quantity": 3
+        }
        ]
       },
       {
        "rank": 49,
        "free": [
-        "Max Particle ×100"
+        {
+         "type": "other",
+         "name": "Max Particle",
+         "quantity": 100
+        }
        ],
        "deluxe": [
-        "Max Particle ×400"
+        {
+         "type": "other",
+         "name": "Max Particle",
+         "quantity": 400
+        }
        ]
       },
       {
        "rank": 51,
        "free": [
-        "Great Ball ×15"
+        {
+         "type": "item",
+         "name": "Great Ball",
+         "quantity": 15
+        }
        ],
        "deluxe": [
-        "Great Ball ×50"
+        {
+         "type": "item",
+         "name": "Great Ball",
+         "quantity": 50
+        }
        ]
       },
       {
        "rank": 52,
        "free": [
-        "Swablu"
+        {
+         "type": "encounter",
+         "name": "Swablu",
+         "quantity": 1
+        }
        ],
        "deluxe": [
-        "Swablu Candy ×5"
+        {
+         "type": "item",
+         "name": "Swablu Candy",
+         "quantity": 5
+        }
        ]
       },
       {
        "rank": 53,
        "free": [
-        "Swablu Candy ×5"
+        {
+         "type": "item",
+         "name": "Swablu Candy",
+         "quantity": 5
+        }
        ],
        "deluxe": [
-        "Swablu Candy XL ×3"
+        {
+         "type": "item",
+         "name": "Swablu Candy XL",
+         "quantity": 3
+        }
        ]
       },
       {
        "rank": 54,
        "free": [
-        "Duraludon Candy ×5"
+        {
+         "type": "item",
+         "name": "Duraludon Candy",
+         "quantity": 5
+        }
        ],
        "deluxe": [
-        "Duraludon"
+        {
+         "type": "encounter",
+         "name": "Duraludon",
+         "quantity": 1
+        }
        ]
       },
       {
        "rank": 55,
        "free": [
-        "Lucky Egg ×1"
+        {
+         "type": "item",
+         "name": "Lucky Egg",
+         "quantity": 1
+        }
        ],
        "deluxe": [
-        "Rare Candy ×3"
+        {
+         "type": "item",
+         "name": "Rare Candy",
+         "quantity": 3
+        }
        ]
       },
       {
        "rank": 56,
        "free": [
-        "Mysterious Component ×2"
+        {
+         "type": "other",
+         "name": "Mysterious Component",
+         "quantity": 2
+        }
        ],
        "deluxe": [
-        "Mysterious Component ×2"
+        {
+         "type": "other",
+         "name": "Mysterious Component",
+         "quantity": 2
+        }
        ]
       },
       {
        "rank": 57,
        "free": [
-        "Vigoroth"
+        {
+         "type": "encounter",
+         "name": "Vigoroth",
+         "quantity": 1
+        }
        ],
        "deluxe": [
-        "Slakoth Candy ×5"
+        {
+         "type": "item",
+         "name": "Slakoth Candy",
+         "quantity": 5
+        }
        ]
       },
       {
        "rank": 58,
        "free": [
-        "Slakoth Candy ×5"
+        {
+         "type": "item",
+         "name": "Slakoth Candy",
+         "quantity": 5
+        }
        ],
        "deluxe": [
-        "Slakoth Candy XL ×3"
+        {
+         "type": "item",
+         "name": "Slakoth Candy XL",
+         "quantity": 3
+        }
        ]
       },
       {
        "rank": 59,
        "free": [
-        "Fast TM ×1"
+        {
+         "type": "other",
+         "name": "Fast TM",
+         "quantity": 1
+        }
        ],
        "deluxe": [
-        "Fast TM ×2"
+        {
+         "type": "other",
+         "name": "Fast TM",
+         "quantity": 2
+        }
        ]
       },
       {
        "rank": 60,
        "free": [
-        "PokéCoin ×60"
+        {
+         "type": "item",
+         "name": "PokéCoin",
+         "quantity": 60
+        }
        ],
        "deluxe": [
-        "PokéCoin ×120"
+        {
+         "type": "item",
+         "name": "PokéCoin",
+         "quantity": 120
+        }
        ]
       },
       {
        "rank": 61,
        "free": [
-        "Charged TM ×1"
+        {
+         "type": "other",
+         "name": "Charged TM",
+         "quantity": 1
+        }
        ],
        "deluxe": [
-        "Charged TM ×2"
+        {
+         "type": "other",
+         "name": "Charged TM",
+         "quantity": 2
+        }
        ]
       },
       {
        "rank": 62,
        "free": [
-        "Slugma Candy ×5"
+        {
+         "type": "item",
+         "name": "Slugma Candy",
+         "quantity": 5
+        }
        ],
        "deluxe": [
-        "Magcargo"
+        {
+         "type": "encounter",
+         "name": "Magcargo",
+         "quantity": 1
+        }
        ]
       },
       {
        "rank": 63,
        "free": [
-        "Slugma Candy ×5"
+        {
+         "type": "item",
+         "name": "Slugma Candy",
+         "quantity": 5
+        }
        ],
        "deluxe": [
-        "Slugma Candy XL ×3"
+        {
+         "type": "item",
+         "name": "Slugma Candy XL",
+         "quantity": 3
+        }
        ]
       },
       {
        "rank": 64,
        "free": [
-        "XP ×2000"
+        {
+         "type": "item",
+         "name": "XP",
+         "quantity": 2000
+        }
        ],
        "deluxe": [
-        "XP ×6000"
+        {
+         "type": "item",
+         "name": "XP",
+         "quantity": 6000
+        }
        ]
       },
       {
        "rank": 65,
        "free": [
-        "Great Ball ×15"
+        {
+         "type": "item",
+         "name": "Great Ball",
+         "quantity": 15
+        }
        ],
        "deluxe": [
-        "Great Ball ×50"
+        {
+         "type": "item",
+         "name": "Great Ball",
+         "quantity": 50
+        }
        ]
       },
       {
        "rank": 66,
        "free": [
-        "Stardust ×2000"
+        {
+         "type": "item",
+         "name": "Stardust",
+         "quantity": 2000
+        }
        ],
        "deluxe": [
-        "Stardust ×6000"
+        {
+         "type": "item",
+         "name": "Stardust",
+         "quantity": 6000
+        }
        ]
       },
       {
        "rank": 67,
        "free": [
-        "Dragonair"
+        {
+         "type": "encounter",
+         "name": "Dragonair",
+         "quantity": 1
+        }
        ],
        "deluxe": [
-        "Dratini Candy ×5"
+        {
+         "type": "item",
+         "name": "Dratini Candy",
+         "quantity": 5
+        }
        ]
       },
       {
        "rank": 68,
        "free": [
-        "Dratini Candy ×5"
+        {
+         "type": "item",
+         "name": "Dratini Candy",
+         "quantity": 5
+        }
        ],
        "deluxe": [
-        "Dratini Candy XL ×3"
+        {
+         "type": "item",
+         "name": "Dratini Candy XL",
+         "quantity": 3
+        }
        ]
       },
       {
        "rank": 69,
        "free": [
-        "Poltchageist Candy ×5"
+        {
+         "type": "item",
+         "name": "Poltchageist Candy",
+         "quantity": 5
+        }
        ],
        "deluxe": [
-        "Poltchageist"
+        {
+         "type": "encounter",
+         "name": "Poltchageist",
+         "quantity": 1
+        }
        ]
       },
       {
        "rank": 70,
        "free": [
-        "PokéCoin ×70"
+        {
+         "type": "item",
+         "name": "PokéCoin",
+         "quantity": 70
+        }
        ],
        "deluxe": [
-        "PokéCoin ×140"
+        {
+         "type": "item",
+         "name": "PokéCoin",
+         "quantity": 140
+        }
        ]
       },
       {
        "rank": 71,
        "free": [
-        "Silver Pinap Berry ×1"
+        {
+         "type": "item",
+         "name": "Silver Pinap Berry",
+         "quantity": 1
+        }
        ],
        "deluxe": [
-        "Silver Pinap Berry ×3"
+        {
+         "type": "item",
+         "name": "Silver Pinap Berry",
+         "quantity": 3
+        }
        ]
       },
       {
        "rank": 72,
        "free": [
-        "Alolan Sandshrew"
+        {
+         "type": "encounter",
+         "name": "Alolan Sandshrew",
+         "quantity": 1
+        }
        ],
        "deluxe": [
-        "Sandshrew Candy ×5"
+        {
+         "type": "item",
+         "name": "Sandshrew Candy",
+         "quantity": 5
+        }
        ]
       },
       {
        "rank": 73,
        "free": [
-        "Sandshrew Candy ×5"
+        {
+         "type": "item",
+         "name": "Sandshrew Candy",
+         "quantity": 5
+        }
        ],
        "deluxe": [
-        "Sandshrew Candy XL ×3"
+        {
+         "type": "item",
+         "name": "Sandshrew Candy XL",
+         "quantity": 3
+        }
        ]
       },
       {
        "rank": 74,
        "free": [
-        "Max Particle ×100"
+        {
+         "type": "other",
+         "name": "Max Particle",
+         "quantity": 100
+        }
        ],
        "deluxe": [
-        "Max Particle ×400"
+        {
+         "type": "other",
+         "name": "Max Particle",
+         "quantity": 400
+        }
        ]
       },
       {
        "rank": 76,
        "free": [
-        "Ultra Ball ×10"
+        {
+         "type": "item",
+         "name": "Ultra Ball",
+         "quantity": 10
+        }
        ],
        "deluxe": [
-        "Ultra Ball ×40"
+        {
+         "type": "item",
+         "name": "Ultra Ball",
+         "quantity": 40
+        }
        ]
       },
       {
        "rank": 77,
        "free": [
-        "Dynamax Combee"
+        {
+         "type": "encounter",
+         "name": "Dynamax Combee",
+         "quantity": 1
+        }
        ],
        "deluxe": [
-        "Combee Candy ×5"
+        {
+         "type": "item",
+         "name": "Combee Candy",
+         "quantity": 5
+        }
        ]
       },
       {
        "rank": 78,
        "free": [
-        "Combee Candy ×5"
+        {
+         "type": "item",
+         "name": "Combee Candy",
+         "quantity": 5
+        }
        ],
        "deluxe": [
-        "Combee Candy XL ×3"
+        {
+         "type": "item",
+         "name": "Combee Candy XL",
+         "quantity": 3
+        }
        ]
       },
       {
        "rank": 79,
        "free": [
-        "XP ×2500"
+        {
+         "type": "item",
+         "name": "XP",
+         "quantity": 2500
+        }
        ],
        "deluxe": [
-        "Stardust ×7500"
+        {
+         "type": "item",
+         "name": "Stardust",
+         "quantity": 7500
+        }
        ]
       },
       {
        "rank": 80,
        "free": [
-        "PokéCoin ×80"
+        {
+         "type": "item",
+         "name": "PokéCoin",
+         "quantity": 80
+        }
        ],
        "deluxe": [
-        "PokéCoin ×160"
+        {
+         "type": "item",
+         "name": "PokéCoin",
+         "quantity": 160
+        }
        ]
       },
       {
        "rank": 81,
        "free": [
-        "Stardust ×2500"
+        {
+         "type": "item",
+         "name": "Stardust",
+         "quantity": 2500
+        }
        ],
        "deluxe": [
-        "Stardust ×7500"
+        {
+         "type": "item",
+         "name": "Stardust",
+         "quantity": 7500
+        }
        ]
       },
       {
        "rank": 82,
        "free": [
-        "Fidough Candy ×5"
+        {
+         "type": "item",
+         "name": "Fidough Candy",
+         "quantity": 5
+        }
        ],
        "deluxe": [
-        "Fidough"
+        {
+         "type": "encounter",
+         "name": "Fidough",
+         "quantity": 1
+        }
        ]
       },
       {
        "rank": 83,
        "free": [
-        "Fidough Candy ×5"
+        {
+         "type": "item",
+         "name": "Fidough Candy",
+         "quantity": 5
+        }
        ],
        "deluxe": [
-        "Fidough Candy XL ×3"
+        {
+         "type": "item",
+         "name": "Fidough Candy XL",
+         "quantity": 3
+        }
        ]
       },
       {
        "rank": 84,
        "free": [
-        "Flittle Candy ×5"
+        {
+         "type": "item",
+         "name": "Flittle Candy",
+         "quantity": 5
+        }
        ],
        "deluxe": [
-        "Flittle"
+        {
+         "type": "encounter",
+         "name": "Flittle",
+         "quantity": 1
+        }
        ]
       },
       {
        "rank": 85,
        "free": [
-        "Ultra Ball ×15"
+        {
+         "type": "item",
+         "name": "Ultra Ball",
+         "quantity": 15
+        }
        ],
        "deluxe": [
-        "Ultra Ball ×50"
+        {
+         "type": "item",
+         "name": "Ultra Ball",
+         "quantity": 50
+        }
        ]
       },
       {
        "rank": 86,
        "free": [
-        "Max Particle ×200"
+        {
+         "type": "other",
+         "name": "Max Particle",
+         "quantity": 200
+        }
        ],
        "deluxe": [
-        "Max Particle ×800"
+        {
+         "type": "other",
+         "name": "Max Particle",
+         "quantity": 800
+        }
        ]
       },
       {
        "rank": 87,
        "free": [
-        "Alolan Dugtrio"
+        {
+         "type": "encounter",
+         "name": "Alolan Dugtrio",
+         "quantity": 1
+        }
        ],
        "deluxe": [
-        "Diglett Candy ×5"
+        {
+         "type": "item",
+         "name": "Diglett Candy",
+         "quantity": 5
+        }
        ]
       },
       {
        "rank": 88,
        "free": [
-        "Diglett Candy ×5"
+        {
+         "type": "item",
+         "name": "Diglett Candy",
+         "quantity": 5
+        }
        ],
        "deluxe": [
-        "Diglett Candy XL ×3"
+        {
+         "type": "item",
+         "name": "Diglett Candy XL",
+         "quantity": 3
+        }
        ]
       },
       {
        "rank": 89,
        "free": [
-        "Rare Candy ×3"
+        {
+         "type": "item",
+         "name": "Rare Candy",
+         "quantity": 3
+        }
        ],
        "deluxe": [
-        "Rare Candy ×5"
+        {
+         "type": "item",
+         "name": "Rare Candy",
+         "quantity": 5
+        }
        ]
       },
       {
        "rank": 90,
        "free": [
-        "PokéCoin ×90"
+        {
+         "type": "item",
+         "name": "PokéCoin",
+         "quantity": 90
+        }
        ],
        "deluxe": [
-        "PokéCoin ×180"
+        {
+         "type": "item",
+         "name": "PokéCoin",
+         "quantity": 180
+        }
        ]
       },
       {
        "rank": 91,
        "free": [
-        "Rare Candy XL ×1"
+        {
+         "type": "item",
+         "name": "Rare Candy XL",
+         "quantity": 1
+        }
        ],
        "deluxe": [
-        "Rare Candy XL ×3"
+        {
+         "type": "item",
+         "name": "Rare Candy XL",
+         "quantity": 3
+        }
        ]
       },
       {
        "rank": 92,
        "free": [
-        "Gible"
+        {
+         "type": "encounter",
+         "name": "Gible",
+         "quantity": 1
+        }
        ],
        "deluxe": [
-        "Gible Candy ×5"
+        {
+         "type": "item",
+         "name": "Gible Candy",
+         "quantity": 5
+        }
        ]
       },
       {
        "rank": 93,
        "free": [
-        "Gible Candy ×5"
+        {
+         "type": "item",
+         "name": "Gible Candy",
+         "quantity": 5
+        }
        ],
        "deluxe": [
-        "Gible Candy XL ×3"
+        {
+         "type": "item",
+         "name": "Gible Candy XL",
+         "quantity": 3
+        }
        ]
       },
       {
        "rank": 94,
        "free": [
-        "Turtonator Candy ×5"
+        {
+         "type": "item",
+         "name": "Turtonator Candy",
+         "quantity": 5
+        }
        ],
        "deluxe": [
-        "Turtonator"
+        {
+         "type": "encounter",
+         "name": "Turtonator",
+         "quantity": 1
+        }
        ]
       },
       {
        "rank": 95,
        "free": [
-        "Rare Candy ×5"
+        {
+         "type": "item",
+         "name": "Rare Candy",
+         "quantity": 5
+        }
        ],
        "deluxe": [
-        "Rare Candy XL ×2"
+        {
+         "type": "item",
+         "name": "Rare Candy XL",
+         "quantity": 2
+        }
        ]
       },
       {
        "rank": 96,
        "free": [
-        "Rare Candy ×5"
+        {
+         "type": "item",
+         "name": "Rare Candy",
+         "quantity": 5
+        }
        ],
        "deluxe": [
-        "Rare Candy XL ×2"
+        {
+         "type": "item",
+         "name": "Rare Candy XL",
+         "quantity": 2
+        }
        ]
       },
       {
        "rank": 97,
        "free": [
-        "Groudon Candy ×3"
+        {
+         "type": "item",
+         "name": "Groudon Candy",
+         "quantity": 3
+        }
        ],
        "deluxe": [
-        "Groudon Candy ×10"
+        {
+         "type": "item",
+         "name": "Groudon Candy",
+         "quantity": 10
+        }
        ]
       },
       {
        "rank": 98,
        "free": [
-        "Stardust ×5000"
+        {
+         "type": "item",
+         "name": "Stardust",
+         "quantity": 5000
+        }
        ],
        "deluxe": [
-        "Groudon Candy XL ×3"
+        {
+         "type": "item",
+         "name": "Groudon Candy XL",
+         "quantity": 3
+        }
        ]
       },
       {
        "rank": 99,
        "free": [
-        "XP ×5000"
+        {
+         "type": "item",
+         "name": "XP",
+         "quantity": 5000
+        }
        ],
        "deluxe": [
-        "Super Incubator ×1"
+        {
+         "type": "item",
+         "name": "Super Incubator",
+         "quantity": 1
+        }
        ]
       },
       {
        "rank": 100,
        "free": [
-        "Groudon (Level 20)"
+        {
+         "type": "encounter",
+         "name": "Groudon",
+         "quantity": 1,
+         "level": 20
+        }
        ],
        "deluxe": [
-        "PokéCoin ×200"
+        {
+         "type": "item",
+         "name": "PokéCoin",
+         "quantity": 200
+        }
        ]
       },
       {
        "rank": 101,
        "free": [
-        "Stardust ×50"
+        {
+         "type": "item",
+         "name": "Stardust",
+         "quantity": 50
+        }
        ],
        "deluxe": [
-        "Stardust ×100"
+        {
+         "type": "item",
+         "name": "Stardust",
+         "quantity": 100
+        }
        ]
       },
       {
        "rank": 200,
        "free": [
-        "Stardust ×50"
+        {
+         "type": "item",
+         "name": "Stardust",
+         "quantity": 50
+        }
        ],
        "deluxe": [
-        "Stardust ×100"
+        {
+         "type": "item",
+         "name": "Stardust",
+         "quantity": 100
+        }
        ]
       }
      ]
@@ -30752,9 +31537,9 @@
      "start": "2026-10-27T10:00",
      "end": "2026-11-05T20:00"
     },
-    "contentHash": "400b28771bb293c455cd4f0f77dbf7d0d9372439eb9971cd05a7ed7c93ea520d",
-    "revision": 2,
-    "amended": false,
+    "contentHash": "da0561c1e6b9d3ea5a8bddaf5d89871d10d3a409e626ef4cf250cc738bb24eae",
+    "revision": 3,
+    "amended": true,
     "native": false,
     "collection": "season"
    },
@@ -31187,115 +31972,215 @@
       {
        "rank": 1,
        "free": [
-        "2500 × XP"
+        {
+         "type": "item",
+         "name": "XP",
+         "quantity": 2500
+        }
        ],
        "deluxe": [
-        "5000 × Stardust"
+        {
+         "type": "item",
+         "name": "Stardust",
+         "quantity": 5000
+        }
        ]
       },
       {
        "rank": 2,
        "free": [
-        "10 × Poké Ball"
+        {
+         "type": "item",
+         "name": "Poké Ball",
+         "quantity": 10
+        }
        ],
        "deluxe": [
-        "20 × Poké Ball"
+        {
+         "type": "item",
+         "name": "Poké Ball",
+         "quantity": 20
+        }
        ]
       },
       {
        "rank": 3,
        "free": [
-        "10 × Sableye Candy"
+        {
+         "type": "item",
+         "name": "Sableye Candy",
+         "quantity": 10
+        }
        ],
        "deluxe": [
-        "Dynamax Sableye"
+        {
+         "type": "encounter",
+         "name": "Dynamax Sableye",
+         "quantity": 1
+        }
        ]
       },
       {
        "rank": 4,
        "free": [
-        "1 × Rare Candy"
+        {
+         "type": "item",
+         "name": "Rare Candy",
+         "quantity": 1
+        }
        ],
        "deluxe": [
-        "1 × Rare Candy XL"
+        {
+         "type": "item",
+         "name": "Rare Candy XL",
+         "quantity": 1
+        }
        ]
       },
       {
        "rank": 5,
        "free": [
-        "Duskull"
+        {
+         "type": "encounter",
+         "name": "Duskull",
+         "quantity": 1
+        }
        ],
        "deluxe": [
-        "Duskull"
+        {
+         "type": "encounter",
+         "name": "Duskull",
+         "quantity": 1
+        }
        ]
       },
       {
        "rank": 6,
        "free": [
-        "10 × Duskull Candy"
+        {
+         "type": "item",
+         "name": "Duskull Candy",
+         "quantity": 10
+        }
        ],
        "deluxe": [
-        "3 × Duskull Candy XL"
+        {
+         "type": "item",
+         "name": "Duskull Candy XL",
+         "quantity": 3
+        }
        ]
       },
       {
        "rank": 7,
        "free": [
-        "2500 × XP"
+        {
+         "type": "item",
+         "name": "XP",
+         "quantity": 2500
+        }
        ],
        "deluxe": [
-        "5000 × Stardust"
+        {
+         "type": "item",
+         "name": "Stardust",
+         "quantity": 5000
+        }
        ]
       },
       {
        "rank": 8,
        "free": [
-        "1 × Rare Candy"
+        {
+         "type": "item",
+         "name": "Rare Candy",
+         "quantity": 1
+        }
        ],
        "deluxe": [
-        "1 × Rare Candy XL"
+        {
+         "type": "item",
+         "name": "Rare Candy XL",
+         "quantity": 1
+        }
        ]
       },
       {
        "rank": 9,
        "free": [
-        "Piplup"
+        {
+         "type": "encounter",
+         "name": "Piplup",
+         "quantity": 1
+        }
        ],
        "deluxe": [
-        "Piplup"
+        {
+         "type": "encounter",
+         "name": "Piplup",
+         "quantity": 1
+        }
        ]
       },
       {
        "rank": 10,
        "free": [
-        "2× Candy for catching Pokémon."
+        {
+         "type": "item",
+         "name": "Candy for catching Pokémon.",
+         "quantity": 2
+        }
        ],
        "deluxe": [
-        "3× Candy for catching Pokémon."
+        {
+         "type": "item",
+         "name": "Candy for catching Pokémon.",
+         "quantity": 3
+        }
        ]
       },
       {
        "rank": 11,
        "free": [
-        "2500 × XP"
+        {
+         "type": "item",
+         "name": "XP",
+         "quantity": 2500
+        }
        ],
        "deluxe": [
-        "5000 × Stardust"
+        {
+         "type": "item",
+         "name": "Stardust",
+         "quantity": 5000
+        }
        ]
       },
       {
        "rank": 12,
        "free": [
-        "10 × Great Ball"
+        {
+         "type": "item",
+         "name": "Great Ball",
+         "quantity": 10
+        }
        ],
        "deluxe": [
-        "1 × Premium Raid Pass"
+        {
+         "type": "item",
+         "name": "Premium Raid Pass",
+         "quantity": 1
+        }
        ]
       },
       {
        "rank": 13,
        "free": [
-        "10 × Zubat Candy"
+        {
+         "type": "item",
+         "name": "Zubat Candy",
+         "quantity": 10
+        }
        ],
        "deluxe": [
         "Zubat Wearing a top hat"
@@ -31304,169 +32189,317 @@
       {
        "rank": 14,
        "free": [
-        "1 × Rare Candy"
+        {
+         "type": "item",
+         "name": "Rare Candy",
+         "quantity": 1
+        }
        ],
        "deluxe": [
-        "1 × Rare Candy XL"
+        {
+         "type": "item",
+         "name": "Rare Candy XL",
+         "quantity": 1
+        }
        ]
       },
       {
        "rank": 15,
        "free": [
-        "Misdreavus"
+        {
+         "type": "encounter",
+         "name": "Misdreavus",
+         "quantity": 1
+        }
        ],
        "deluxe": [
-        "1× Patissier Top"
+        {
+         "type": "other",
+         "name": "Patissier Top",
+         "quantity": 1
+        }
        ]
       },
       {
        "rank": 16,
        "free": [
-        "10 × Misdreavus Candy"
+        {
+         "type": "item",
+         "name": "Misdreavus Candy",
+         "quantity": 10
+        }
        ],
        "deluxe": [
-        "3 × Misdreavus Candy XL"
+        {
+         "type": "item",
+         "name": "Misdreavus Candy XL",
+         "quantity": 3
+        }
        ]
       },
       {
        "rank": 17,
        "free": [
-        "2500 × XP"
+        {
+         "type": "item",
+         "name": "XP",
+         "quantity": 2500
+        }
        ],
        "deluxe": [
-        "5000 × Stardust"
+        {
+         "type": "item",
+         "name": "Stardust",
+         "quantity": 5000
+        }
        ]
       },
       {
        "rank": 18,
        "free": [
-        "1 × Rare Candy"
+        {
+         "type": "item",
+         "name": "Rare Candy",
+         "quantity": 1
+        }
        ],
        "deluxe": [
-        "1 × Rare Candy XL"
+        {
+         "type": "item",
+         "name": "Rare Candy XL",
+         "quantity": 1
+        }
        ]
       },
       {
        "rank": 19,
        "free": [
-        "Noibat"
+        {
+         "type": "encounter",
+         "name": "Noibat",
+         "quantity": 1
+        }
        ],
        "deluxe": [
-        "Noibat"
+        {
+         "type": "encounter",
+         "name": "Noibat",
+         "quantity": 1
+        }
        ]
       },
       {
        "rank": 20,
        "free": [
-        "2× Stardust for catching Pokémon."
+        {
+         "type": "item",
+         "name": "Stardust for catching Pokémon.",
+         "quantity": 2
+        }
        ],
        "deluxe": [
-        "3× Stardust for catching Pokémon."
+        {
+         "type": "item",
+         "name": "Stardust for catching Pokémon.",
+         "quantity": 3
+        }
        ]
       },
       {
        "rank": 21,
        "free": [
-        "5000 × XP"
+        {
+         "type": "item",
+         "name": "XP",
+         "quantity": 5000
+        }
        ],
        "deluxe": [
-        "7500 × Stardust"
+        {
+         "type": "item",
+         "name": "Stardust",
+         "quantity": 7500
+        }
        ]
       },
       {
        "rank": 22,
        "free": [
-        "10 × Great Ball"
+        {
+         "type": "item",
+         "name": "Great Ball",
+         "quantity": 10
+        }
        ],
        "deluxe": [
-        "1 × Premium Raid Pass"
+        {
+         "type": "item",
+         "name": "Premium Raid Pass",
+         "quantity": 1
+        }
        ]
       },
       {
        "rank": 23,
        "free": [
-        "10 × Drifloon Candy"
+        {
+         "type": "item",
+         "name": "Drifloon Candy",
+         "quantity": 10
+        }
        ],
        "deluxe": [
-        "Drifblim"
+        {
+         "type": "encounter",
+         "name": "Drifblim",
+         "quantity": 1
+        }
        ]
       },
       {
        "rank": 24,
        "free": [
-        "1 × Rare Candy"
+        {
+         "type": "item",
+         "name": "Rare Candy",
+         "quantity": 1
+        }
        ],
        "deluxe": [
-        "1 × Rare Candy XL"
+        {
+         "type": "item",
+         "name": "Rare Candy XL",
+         "quantity": 1
+        }
        ]
       },
       {
        "rank": 25,
        "free": [
-        "Sandygast"
+        {
+         "type": "encounter",
+         "name": "Sandygast",
+         "quantity": 1
+        }
        ],
        "deluxe": [
-        "Sandygast"
+        {
+         "type": "encounter",
+         "name": "Sandygast",
+         "quantity": 1
+        }
        ]
       },
       {
        "rank": 26,
        "free": [
-        "10 × Sandygast Candy"
+        {
+         "type": "item",
+         "name": "Sandygast Candy",
+         "quantity": 10
+        }
        ],
        "deluxe": [
-        "3 × Sandygast Candy XL"
+        {
+         "type": "item",
+         "name": "Sandygast Candy XL",
+         "quantity": 3
+        }
        ]
       },
       {
        "rank": 27,
        "free": [
-        "5000 × XP"
+        {
+         "type": "item",
+         "name": "XP",
+         "quantity": 5000
+        }
        ],
        "deluxe": [
-        "7500 × Stardust"
+        {
+         "type": "item",
+         "name": "Stardust",
+         "quantity": 7500
+        }
        ]
       },
       {
        "rank": 28,
        "free": [
-        "1 × Rare Candy"
+        {
+         "type": "item",
+         "name": "Rare Candy",
+         "quantity": 1
+        }
        ],
        "deluxe": [
-        "1 × Rare Candy XL"
+        {
+         "type": "item",
+         "name": "Rare Candy XL",
+         "quantity": 1
+        }
        ]
       },
       {
        "rank": 29,
        "free": [
-        "Froakie"
+        {
+         "type": "encounter",
+         "name": "Froakie",
+         "quantity": 1
+        }
        ],
        "deluxe": [
-        "Froakie"
+        {
+         "type": "encounter",
+         "name": "Froakie",
+         "quantity": 1
+        }
        ]
       },
       {
        "rank": 31,
        "free": [
-        "5000 × XP"
+        {
+         "type": "item",
+         "name": "XP",
+         "quantity": 5000
+        }
        ],
        "deluxe": [
-        "7500 × Stardust"
+        {
+         "type": "item",
+         "name": "Stardust",
+         "quantity": 7500
+        }
        ]
       },
       {
        "rank": 32,
        "free": [
-        "10 × Ultra Ball"
+        {
+         "type": "item",
+         "name": "Ultra Ball",
+         "quantity": 10
+        }
        ],
        "deluxe": [
-        "1 × Premium Raid Pass"
+        {
+         "type": "item",
+         "name": "Premium Raid Pass",
+         "quantity": 1
+        }
        ]
       },
       {
        "rank": 33,
        "free": [
-        "10 × Zubat Candy"
+        {
+         "type": "item",
+         "name": "Zubat Candy",
+         "quantity": 10
+        }
        ],
        "deluxe": [
         "Zubat Wearing a top hat"
@@ -31475,136 +32508,256 @@
       {
        "rank": 34,
        "free": [
-        "1 × Rare Candy"
+        {
+         "type": "item",
+         "name": "Rare Candy",
+         "quantity": 1
+        }
        ],
        "deluxe": [
-        "1 × Rare Candy XL"
+        {
+         "type": "item",
+         "name": "Rare Candy XL",
+         "quantity": 1
+        }
        ]
       },
       {
        "rank": 35,
        "free": [
-        "Shuppet"
+        {
+         "type": "encounter",
+         "name": "Shuppet",
+         "quantity": 1
+        }
        ],
        "deluxe": [
-        "Shuppet"
+        {
+         "type": "encounter",
+         "name": "Shuppet",
+         "quantity": 1
+        }
        ]
       },
       {
        "rank": 36,
        "free": [
-        "10 × Shuppet Candy"
+        {
+         "type": "item",
+         "name": "Shuppet Candy",
+         "quantity": 10
+        }
        ],
        "deluxe": [
-        "3 × Shuppet Candy XL"
+        {
+         "type": "item",
+         "name": "Shuppet Candy XL",
+         "quantity": 3
+        }
        ]
       },
       {
        "rank": 37,
        "free": [
-        "5000 × XP"
+        {
+         "type": "item",
+         "name": "XP",
+         "quantity": 5000
+        }
        ],
        "deluxe": [
-        "7500 × Stardust"
+        {
+         "type": "item",
+         "name": "Stardust",
+         "quantity": 7500
+        }
        ]
       },
       {
        "rank": 38,
        "free": [
-        "1 × Rare Candy"
+        {
+         "type": "item",
+         "name": "Rare Candy",
+         "quantity": 1
+        }
        ],
        "deluxe": [
-        "1 × Rare Candy XL"
+        {
+         "type": "item",
+         "name": "Rare Candy XL",
+         "quantity": 1
+        }
        ]
       },
       {
        "rank": 39,
        "free": [
-        "Rowlet"
+        {
+         "type": "encounter",
+         "name": "Rowlet",
+         "quantity": 1
+        }
        ],
        "deluxe": [
-        "Rowlet"
+        {
+         "type": "encounter",
+         "name": "Rowlet",
+         "quantity": 1
+        }
        ]
       },
       {
        "rank": 40,
        "free": [
-        "Gengar"
+        {
+         "type": "encounter",
+         "name": "Gengar",
+         "quantity": 1
+        }
        ],
        "deluxe": [
-        "Gengar"
+        {
+         "type": "encounter",
+         "name": "Gengar",
+         "quantity": 1
+        }
        ]
       },
       {
        "rank": 41,
        "free": [
-        "7500 × XP"
+        {
+         "type": "item",
+         "name": "XP",
+         "quantity": 7500
+        }
        ],
        "deluxe": [
-        "10000 × Stardust"
+        {
+         "type": "item",
+         "name": "Stardust",
+         "quantity": 10000
+        }
        ]
       },
       {
        "rank": 42,
        "free": [
-        "10 × Ultra Ball"
+        {
+         "type": "item",
+         "name": "Ultra Ball",
+         "quantity": 10
+        }
        ],
        "deluxe": [
-        "1 × Premium Raid Pass"
+        {
+         "type": "item",
+         "name": "Premium Raid Pass",
+         "quantity": 1
+        }
        ]
       },
       {
        "rank": 43,
        "free": [
-        "10 × Sinistea Candy"
+        {
+         "type": "item",
+         "name": "Sinistea Candy",
+         "quantity": 10
+        }
        ],
        "deluxe": [
-        "Sinistea"
+        {
+         "type": "encounter",
+         "name": "Sinistea",
+         "quantity": 1
+        }
        ]
       },
       {
        "rank": 44,
        "free": [
-        "1 × Rare Candy"
+        {
+         "type": "item",
+         "name": "Rare Candy",
+         "quantity": 1
+        }
        ],
        "deluxe": [
-        "1 × Rare Candy XL"
+        {
+         "type": "item",
+         "name": "Rare Candy XL",
+         "quantity": 1
+        }
        ]
       },
       {
        "rank": 45,
        "free": [
-        "Greavard"
+        {
+         "type": "encounter",
+         "name": "Greavard",
+         "quantity": 1
+        }
        ],
        "deluxe": [
-        "Greavard"
+        {
+         "type": "encounter",
+         "name": "Greavard",
+         "quantity": 1
+        }
        ]
       },
       {
        "rank": 46,
        "free": [
-        "10 × Greavard Candy"
+        {
+         "type": "item",
+         "name": "Greavard Candy",
+         "quantity": 10
+        }
        ],
        "deluxe": [
-        "3 × Greavard Candy XL"
+        {
+         "type": "item",
+         "name": "Greavard Candy XL",
+         "quantity": 3
+        }
        ]
       },
       {
        "rank": 47,
        "free": [
-        "7500 × XP"
+        {
+         "type": "item",
+         "name": "XP",
+         "quantity": 7500
+        }
        ],
        "deluxe": [
-        "10000 × Stardust"
+        {
+         "type": "item",
+         "name": "Stardust",
+         "quantity": 10000
+        }
        ]
       },
       {
        "rank": 48,
        "free": [
-        "1 × Rare Candy"
+        {
+         "type": "item",
+         "name": "Rare Candy",
+         "quantity": 1
+        }
        ],
        "deluxe": [
-        "1 × Rare Candy XL"
+        {
+         "type": "item",
+         "name": "Rare Candy XL",
+         "quantity": 1
+        }
        ]
       },
       {
@@ -31619,19 +32772,35 @@
       {
        "rank": 50,
        "free": [
-        "Rotom"
+        {
+         "type": "encounter",
+         "name": "Rotom",
+         "quantity": 1
+        }
        ],
        "deluxe": [
-        "Rotom"
+        {
+         "type": "encounter",
+         "name": "Rotom",
+         "quantity": 1
+        }
        ]
       },
       {
        "rank": 108,
        "free": [
-        "Spiritomb"
+        {
+         "type": "encounter",
+         "name": "Spiritomb",
+         "quantity": 1
+        }
        ],
        "deluxe": [
-        "Spiritomb"
+        {
+         "type": "encounter",
+         "name": "Spiritomb",
+         "quantity": 1
+        }
        ]
       }
      ]

@@ -217,3 +217,12 @@ test('long GO Pass tracks group exact source ranks into compact expandable range
  assert.equal((html.match(/<li><b>Rank /g)||[]).length,98);
  assert.doesNotMatch(html,/<li><b>Rank 1<\/b>/);
 });
+test('GO Pass source rewards retain exact encounters, levels and item quantities',()=>{
+ A.configureSpecies([[383,'Groudon'],[821,'Rookidee']]);
+ const result=A.passFields([{text:'Rank 3: Free: Dynamax Rookidee | Deluxe: Rookidee Candy ×5'},{text:'Rank 100: Free: Groudon (Level 20) | Deluxe: PokéCoin ×200'}]);
+ assert.deepEqual(result.passes[0].stages[0].free,[{type:'encounter',name:'Dynamax Rookidee',quantity:1}]);
+ assert.deepEqual(result.passes[0].stages[1].free,[{type:'encounter',name:'Groudon',quantity:1,level:20}]);
+ assert.deepEqual(result.passes[0].stages[1].deluxe,[{type:'item',name:'PokéCoin',quantity:200}]);
+ const html=UI.render(event({passes:result.passes}),{rewardArt:()=>'<img alt="Exact reward" src="/example.png">'});
+ assert.match(html,/Level 20/);assert.match(html,/200× PokéCoin/);assert.match(html,/Exact reward/);
+});

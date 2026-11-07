@@ -102,7 +102,7 @@ with sync_playwright() as p:
         page.wait_for_function("document.getElementById('evd-t')?.textContent.includes('GO Pass')")
         assert page.locator('#evd .ue-pass-range').count()>=4
         assert page.locator('#evd .ue-pass-stages > li').count()>=90
-        page.locator('#evd .ue-pass-range > summary').last.click()
+        page.locator('#evd .ue-pass-range').filter(has_text='Rank 100').locator('summary').click()
         assert 'Rank 100' in page.locator('#evd').inner_text()
         assert page.locator('#evd').evaluate('(el)=>el.scrollWidth<=el.clientWidth'), ('GO Pass',width)
         capture('gopass')
