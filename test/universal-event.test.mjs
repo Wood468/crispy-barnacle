@@ -202,3 +202,10 @@ test('nested habitat headings retain wild method until the next peer section',as
  const result=extractEncounters('<h2>Spawns</h2><h3>Solid as Steel Hour</h3><li>Pikachu</li><h3>Daring as Dragons Hour</h3><li>Raichu</li><h2>Research</h2><li>Pikachu</li>',{dex:[[25,'Pikachu'],[26,'Raichu']]});
  assert.deepEqual(result.encounters.map(e=>[e.identityKey,e.method]),[['25:base:none','wild'],['26:base:none','wild']]);
 });
+
+test('new authoritative schedules take precedence over reviewed fallback corrections',()=>{
+ const schedule={timeBasis:'instant',start:'2027-01-02T10:00Z',end:'2027-01-02T18:00Z'};
+ const data={events:[{schemaVersion:1,eventId:'native-amendment',title:'Synthetic amended event',schedule,pokemon:[]}]};
+ const corrections={schemaVersion:1,events:{'native-amendment':{schedule:{...schedule,start:'2027-01-01T10:00Z',end:'2027-01-01T18:00Z'}}}};
+ assert.deepEqual(buildCatalogue({data,corrections}).events[0].schedule,schedule);
+});

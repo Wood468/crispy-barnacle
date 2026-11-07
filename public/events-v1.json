@@ -17709,7 +17709,7 @@
     },
     "contentHash": "3c88a0335dd88189e8bc625280a4bb83c1ddc0fac469636494bc5c899a79a464",
     "revision": 7,
-    "amended": true,
+    "amended": false,
     "native": false,
     "collection": "worldEvents"
    },
@@ -32750,7 +32750,7 @@
     },
     "contentHash": "b2fba6efc43da8ecfcd5ab69ab184256c7b5165b01cbdc3c1344cead95fbe9bf",
     "revision": 6,
-    "amended": true,
+    "amended": false,
     "native": false,
     "collection": "events"
    },
