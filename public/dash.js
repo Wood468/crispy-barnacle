@@ -1168,7 +1168,7 @@
       var rotationRows = weekRotations(a,end).map(function(r){
         var active=pd(r.s)<=t&&t<pd(r.e);
         var upcoming='From '+fmtD(pd(r.s))+', '+fmtT(pd(r.s));
-        var label=active?'Current raid rotation':offset===0?'Next raid rotation · '+upcoming:pd(r.s)<=a?'At start of week':upcoming;
+        var label=active?'Current raid rotation':offset===0?'Next raid rotation · '+fmtD(pd(r.s))+', '+fmtT(pd(r.s)):pd(r.s)<=a?'At start of week':upcoming;
         return {r:r,label:label,cls:active?'rw-current':'rw-next'};
       });
       if (!rotationRows.length) body += '<p class="empty">No raid rotation published for this week yet.</p>';
