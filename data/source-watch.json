@@ -1,10 +1,10 @@
 {
- "updated": "2026-11-07T13:01:34.248Z",
+ "updated": "2026-11-07T19:25:52.406Z",
  "status": [
   {
    "id": "hub",
    "state": "ok",
-   "items": 6
+   "items": 5
   },
   {
    "id": "miners-assets",
@@ -19,7 +19,7 @@
   {
    "id": "reddit-silph",
    "state": "ok",
-   "items": 9
+   "items": 8
   },
   {
    "id": "youtube-pogo",
@@ -189,28 +189,6 @@
    "summary": "<table> <tr><td> <a href=\"https://www.reddit.com/r/TheSilphRoad/comments/1xkqbfo/greavard_shiny_confirmation/\"> <img src=\"https://preview.redd.it/orzbcb3bhwyh1.png?width=640&amp;crop=smart&amp;auto=we",
    "pokemon": [
     "Greavard"
-   ],
-   "notInOurData": []
-  },
-  {
-   "source": "reddit-silph",
-   "trust": "tip",
-   "title": "Who stole my Zubats costume?",
-   "link": "https://www.reddit.com/r/TheSilphRoad/comments/1xkjidt/who_stole_my_zubats_costume/",
-   "date": "2026-10-31T19:46:05.000Z",
-   "summary": "<table> <tr><td> <a href=\"https://www.reddit.com/r/TheSilphRoad/comments/1xkjidt/who_stole_my_zubats_costume/\"> <img src=\"https://preview.redd.it/fbwfu62uwuyh1.png?width=140&amp;height=140&amp;crop=1:",
-   "pokemon": [],
-   "notInOurData": []
-  },
-  {
-   "source": "hub",
-   "trust": "community",
-   "title": "Super Mega Chandelure Raid Day",
-   "link": "https://pokemongohub.net/post/event/super-mega-chandelure-raid-day/",
-   "date": "2026-10-30T17:00:32.000Z",
-   "summary": "Mega Chandelure will debut during a special Super Mega Raid Day event on Saturday, October 31, 2026, from 2:00 p.m. to 5:00 p.m. local time. You can look forward to Mega Chandelure in Super Mega Raids",
-   "pokemon": [
-    "Chandelure"
    ],
    "notInOurData": []
   },
