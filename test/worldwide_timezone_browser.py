@@ -25,7 +25,8 @@ with sync_playwright() as p:
   payload=[copy.deepcopy(VALID)]
   context.route('**/events-v1.json',lambda r:r.fulfill(body=json.dumps(payload[0]),content_type='application/json'))
   context.add_init_script("if(!localStorage.getItem('gofn-dex-v1'))localStorage.setItem('gofn-dex-v1',JSON.stringify({m:{own:{25:1}}}));if(!localStorage.getItem('gofn-us-v1'))localStorage.setItem('gofn-us-v1',JSON.stringify({'saved:cur:zorua':{v:1,t:1},'follow:pikachu':{v:'Pikachu',t:1}}));")
-  page=context.new_page();errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
+  page=context.new_page();errors=[];failed=[];page.on('pageerror',lambda e:errors.append(str(e)))
+  page.on('requestfailed',lambda r:failed.append((r.url,r.failure or '')))
   page.clock.install(time='2026-11-07T03:00:00Z')
   def ready():
    page.wait_for_function("!!window.GODASH&&!!window.GODETAIL&&GOEventRegistry.settled()")
@@ -100,7 +101,15 @@ with sync_playwright() as p:
   page.evaluate("localStorage.setItem('gofn-timezone','Invalid/Zone')");page.reload();ready()
   assert page.evaluate('GOEventClock.viewerZone()')=='Asia/Tokyo'
   assert page.locator('#timezone-choice').input_value()==''
-  assert errors==[],errors
+  # WebKit also emits a page error for a fetch cancelled by navigation, even when
+  # the application catches its rejection. Exclude only a matching, cancelled
+  # same-origin JSON request; real CORS/security failures and JS errors still fail.
+  def cancelled_navigation_fetch(error):
+   return error.endswith(' due to access control checks.') and any(
+    url.startswith(BASE+'/') and '.json' in url and url.split('://',1)[1] in error and re.search(r'cancel|abort',reason,re.I)
+    for url,reason in failed)
+  unexpected=[e for e in errors if not cancelled_navigation_fetch(e)]
+  assert unexpected==[],{'errors':unexpected,'failed':failed}
   print(f'PASS worldwide {ENGINE} {width}px: device default, override/reset, DST-safe projection/ICS, preserved collection, held invalid/colliding catalogue, activity identity')
   context.close()
  # Calendar membership must follow civil boundaries on both 23- and 25-hour days.
