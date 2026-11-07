@@ -35,7 +35,7 @@ with sync_playwright() as p:
   assert page.evaluate('document.documentElement.scrollWidth<=innerWidth'),width
   assert root.evaluate('(el)=>el.scrollWidth<=el.clientWidth'),width
   for control in root.locator('button').all():
-   assert control.bounding_box()['height']>=43,(width,control.inner_text())
+   assert not control.is_visible() or control.bounding_box()['height']>=43,(width,control.inner_text())
   if OUT:
    Path(OUT).mkdir(parents=True,exist_ok=True);page.screenshot(path=str(Path(OUT)/f'battle-{width}.png'),full_page=True)
   root.locator('[data-rotweek="next"]').click()
