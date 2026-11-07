@@ -10124,7 +10124,7 @@
   },
   "leekduck:go-pass-november-2026": {
    "name": "GO Pass: November",
-   "image": "https://pokemongohub.net/wp-content/uploads/2026/10/november-2026-go-pass.jpg",
+   "image": null,
    "updated": "2026-11-07T03:16:47.657Z",
    "sources": [
     {
@@ -10273,7 +10273,12 @@
    "researchTasks": [],
    "pokemon": [],
    "encounters": [],
-   "encounterConflicts": []
+   "encounterConflicts": [],
+   "internalValidation": {
+    "unavailableArtwork": [
+     "https://pokemongohub.net/wp-content/uploads/2026/10/november-2026-go-pass.jpg"
+    ]
+   }
   },
   "official:festival-of-lights-2026": {
    "name": "Celebrate the Festival of Lights with the return of Pikachu wearing a saree and Pikachu wearing a kurta! — Pokémon GO",

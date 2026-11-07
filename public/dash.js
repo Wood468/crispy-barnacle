@@ -9,6 +9,11 @@
   function pd(value){return CLOCK.parseDate(value);}
   function civil(d){return CLOCK.fields(d);}
   function atDate(y,m,d,h,min){return CLOCK.calendarDate(y,m,d,h,min);}
+  // Preserve hydrated artwork and active controls when a secondary feed changes no visible content.
+  function paintView(el,html){
+    if(el._gofnHTML===html&&el._gofnFirst===el.firstChild)return false;
+    el.innerHTML=html;el._gofnHTML=html;el._gofnFirst=el.firstChild;return true;
+  }
   function now() { return new Date(); }
   function safeUrl(u) { return typeof u === 'string' && !(window.GOLIB && window.GOLIB.isPrivateLink(u)) && (/^https:\/\//.test(u) || /^\/img\/ext\/[\w.-]+$/.test(u)) ? u : ''; }
   function isOfficialUrl(u) { try { var h = new URL(String(u || '')).hostname.toLowerCase(); return h === 'pokemongo.com' || /\.pokemongo\.com$/.test(h); } catch (e) { return false; } }
@@ -821,7 +826,7 @@
   var stripRO = null;
   function drawTimeline() {
     var el = $('evtimeline'); if (!el) return;
-    function paint(html) { if(el._gofnTimelineHTML===html)return;el._gofnTimelineHTML=html;el.innerHTML=html; }
+    function paint(html) { paintView(el,html); }
     var t = now(), html = '', ws = weekStart(weekOff), we = addDays(ws, 7);
     if (evQ) { // searching: every live and upcoming event that matches, soonest first, whatever week or kind switch is set
       var res = EV.filter(function (e) { return e.end > t && !isHidden(e.id) && matchesQ(e); }).sort(function (a, b) { return a.start - b.start; });
@@ -1868,13 +1873,14 @@ function renderHomeBrief(t) {
       var rows = list.filter(function (e) { return e.scope === 'global'; });
       return rows.length ? subHead('Online / worldwide', rows.length) + rows.map(function (e) { return agendaRow(e, true); }).join('') : '';
     }
-    tdEl.innerHTML = today.length || todayRegional.length
+    var todayHTML = today.length || todayRegional.length
       ? phaseGroup('Happening now', liveToday.length + liveRegional.length, liveToday.map(function (e) { return card(e); }).join('') + inPerson(liveRegional) + inGameRegional(liveRegional) + online(liveRegional)) +
         phaseGroup('Later today', laterToday.length + laterRegional.length, laterToday.map(function (e) { return card(e); }).join('') + inPerson(laterRegional) + inGameRegional(laterRegional) + online(laterRegional))
       : '<div class="today-empty"><p class="empty">Nothing is scheduled for today.</p>' +
         (nextUp
           ? '<button type="button" class="today-next-up" data-open="' + esc(nextUp.id) + '" aria-label="Open details for ' + esc(nextUp.name) + '"><span class="today-next-kicker">NEXT UP</span><b>' + esc(nextUp.name) + '</b><span class="today-next-time">' + esc(fmtD(nextUp.start) + ' · ' + fmtT(nextUp.start)) + '</span><span class="today-next-action">View event details <span aria-hidden="true">→</span></span></button>'
           : '<p class="today-empty-note">Check the schedule for upcoming events.</p>') + '</div>';
+    if(!paintView(tdEl,todayHTML))return;
     if (focusWithin) {
       /* Retry has no equivalent in the loaded agenda; other controls should retain their event/action identity. */
       var again = activeBefore === tdEl ? tdEl : null;
@@ -1923,7 +1929,7 @@ function renderHomeBrief(t) {
     var later = EV.filter(function (e) { return phase(e, t) === 'soon' && e.start >= endNext && e.start < endMonth && !isHidden(e.id) && !kindHidden(e.kind); }).sort(function (a, b) { return a.start - b.start; });
     function fill(id, list, empty, countId) {
       var el = $(id); list = list.filter(function (e) { return !fyIds[e.id]; });
-      if (el) el.innerHTML = list.length ? (id === 'week' ? renderWeekGroups(list, t) : list.map(function (e) { return card(e); }).join('')) : '<p class="empty">' + empty + '</p>';
+      if (el) paintView(el,list.length ? (id === 'week' ? renderWeekGroups(list, t) : list.map(function (e) { return card(e); }).join('')) : '<p class="empty">' + empty + '</p>');
       var count = countId && $(countId);
       if (count) count.textContent = list.length + (list.length === 1 ? ' event' : ' events');
     }

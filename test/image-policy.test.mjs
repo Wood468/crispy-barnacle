@@ -6,6 +6,7 @@ import { IMAGE_CSP_HOSTS } from "../src/image-policy.js";
 const files = [
   "public/event-info.json",
   "public/event-details.json",
+  "public/events-v1.json",
   "public/infographic-queue.json",
   "public/world-events.json",
   "public/regional-events.json",

@@ -3,6 +3,8 @@
 import { readdir, readFile, access } from "node:fs/promises";
 import { join, relative, resolve, sep } from "node:path";
 
+import { IMAGE_CSP_HOSTS } from '../src/image-policy.js';
+import Catalogue from '../public/event-catalogue.js';
 const ROOT = process.cwd();
 const PUBLIC = join(ROOT, "public");
 const errors = [];
@@ -29,6 +31,18 @@ for (const file of files) {
     fail(name, `invalid JSON (${e.message})`);
   }
 }
+
+// Source updates are held before commit if they violate the existing browser image policy.
+function checkImages(value,path){
+  if(Array.isArray(value)){value.forEach((v,i)=>checkImages(v,path+'.'+i));return;}
+  if(value&&typeof value==='object'){Object.entries(value).forEach(([k,v])=>checkImages(v,path+'.'+k));return;}
+  const key=path.split('.').pop();
+  if(typeof value!=='string'||!/^https?:\/\//i.test(value)||!(/^(image|infographic|infographicUrl|poster|banner|thumbnail)$/i.test(key)||/\.infographics\.\d+\.url$/i.test(path)))return;
+  try{const u=new URL(value);if(u.protocol!=='https:'||!IMAGE_CSP_HOSTS.includes(u.origin)||u.username||u.password)fail(path,'image origin is not permitted by the existing CSP');}catch(error){fail(path,'invalid image URL');}
+}
+for(const name of ['event-info','event-details','events-v1','infographic-queue','world-events','regional-events','season','weekly'])checkImages(parsed.get('public/'+name+'.json'),'public/'+name+'.json');
+const catalogue=parsed.get('public/events-v1.json');
+if(catalogue){const result=Catalogue.validate(catalogue);if(!result.valid)fail('public/events-v1.json',JSON.stringify(result.diagnostics));}
 
 const data = parsed.get("public/data.json");
 if (!data || typeof data !== "object" || !Array.isArray(data.events)) {

@@ -1,5 +1,6 @@
 // Conservative activity extraction: only published list entries with known exact identities.
 // Narrative text remains prose. No substring species matching, costume guesses or blanket shiny boosts.
+import {isAllowedOgImage} from '../../src/image-policy.js';
 import {htmlToLines,decode} from './text.mjs';
 import adapter from '../../public/event-adapter.js';
 import contract from '../../public/event-contract.js';
@@ -36,6 +37,6 @@ export function mergeEncounters(results){
 }
 export function posterFromHtml(html,pageUrl){
  const tags=String(html).match(/<meta\b[^>]*>/gi)||[];
- for(const tag of tags){if(!/\b(?:property|name)\s*=\s*["']og:image["']/i.test(tag))continue;const m=/\bcontent\s*=\s*(["'])(.*?)\1/i.exec(tag);if(!m)continue;try{const url=new URL(decode(m[2]),pageUrl);if(url.protocol==='https:'&&!url.username&&!url.password)return url.href;}catch{}}
+ for(const tag of tags){if(!/\b(?:property|name)\s*=\s*["']og:image["']/i.test(tag))continue;const m=/\bcontent\s*=\s*(["'])(.*?)\1/i.exec(tag);if(!m)continue;try{const url=new URL(decode(m[2]),pageUrl);if(isAllowedOgImage(url.href))return url.href;}catch{}}
  return null;
 }

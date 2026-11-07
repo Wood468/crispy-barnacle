@@ -57,6 +57,9 @@ with sync_playwright() as p:
         page.goto(BASE+'/')
         page.wait_for_function("!!window.GODASH&&!!window.GODETAIL&&GODASH.events().some(e=>e.id==='synthetic-future-community-day')&&GODASH.DEXBY.raichu===26")
         assert page.locator('#universal-announced-tab-now').is_visible(), 'undated overseas announcement hidden'
+        today_target=page.locator('#home-now [data-open]').first
+        today_target.focus()
+        assert today_target.evaluate('(el)=>{GODASH.renderAll();return el.isConnected&&document.activeElement===el;}'), 'unchanged Today refresh replaced the focused event button'
         page.locator('#tabs [data-tab="events"]').click()
         target=page.locator('#evtimeline [data-open="synthetic-future-community-day"]')
         target.focus()
