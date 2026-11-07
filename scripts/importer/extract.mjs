@@ -29,7 +29,16 @@ const trim = s => s.replace(/^[•·\-–\s]+/, "").replace(/\s+/g, " ").trim();
 const NOISE = /^(share|read more|related|advertisement|sign up|follow us|comments?|learn more|and even more|keep an eye out|tier \d|rank \d+\s*$)|and even more goodies|learn more about|^\*/i;
 const keep = s => (s.length >= 14 || /[×]|\d\s?x\b/i.test(s) && s.length >= 6) && (s.length <= 220 || /^rank \d+/i.test(s) && s.length <= 600) && !NOISE.test(s);
 
-function parseResearchTask(line, category) {
+function researchRewardNames(options){
+ const entries=new Map(),key=value=>trim(value).normalize('NFKC').toLowerCase();
+ function add(name,record){entries.set(key(name),record);entries.set(key('Mighty '+name),{...record,mighty:true});}
+ for(const name of options.pokemonNames||[]){if(typeof name==='string'&&name)add(name,{name});}
+ for(const costume of options.costumes||[]){if(!costume?.name||!costume.label)continue;const record={name:costume.name+' ('+costume.label+')',costume:true,label:costume.label,costumeId:costume.costumeId};for(const alias of [record.name,costume.label+' '+costume.name,costume.name+' wearing a '+costume.label])add(alias,record);}
+ const names=[...entries.keys()].sort((a,b)=>b.length-a.length);
+ return value=>{let rest=key(value),out=[];if(!rest||!names.length)return null;while(rest){const name=names.find(name=>rest===name||rest.startsWith(name+' '));if(!name)return null;out.push({...entries.get(name)});rest=rest.slice(name.length).trim();}return out;};
+}
+
+function parseResearchTask(line, category, declaredNames) {
   const marker = /\b(?:possible\s+)?rewards?\s*:?\s*/i.exec(String(line || ""));
   if (!marker) return null;
   const task = trim(String(line).slice(0, marker.index)).replace(/[|:–—-]+$/, "").trim();
@@ -45,15 +54,20 @@ function parseResearchTask(line, category) {
   // Table columns are independent rewards. Encounter CP text must not suppress adjacent items.
   for (const chunk of columns.split(/\s*\|\s*/).map(trim).filter(Boolean)) {
     const cp = /(.+?)\s+Max CP\s+(\d{2,4})\s+Min CP\s+(\d{2,4})/gi;
-    let match, hasCP = false;
+    let match, hasCP = false, lastEnd = 0;
     while ((match = cp.exec(chunk)) !== null) {
-      hasCP = true;
+      hasCP = true; lastEnd = cp.lastIndex;
       const name = trim(match[1]).replace(/^[,;\s]+/, "");
       const maxCP = Number(match[2]), minCP = Number(match[3]);
       if (!name || minCP > maxCP || maxCP > 9999) continue;
-      rewards.push({ type: "encounter", name, quantity: 1, cpMin: minCP, cpMax: maxCP });
+      const declared=declaredNames(name);
+      if(declared){for(const p of declared.slice(0,-1))rewards.push({type:'encounter',quantity:1,...p});rewards.push({type:'encounter',quantity:1,...declared.at(-1),cpMin:minCP,cpMax:maxCP});}
+      else rewards.push({ type: "encounter", name, quantity: 1, cpMin: minCP, cpMax: maxCP });
     }
-    if (hasCP || /\b(?:Max|Min) CP\b/i.test(chunk)) continue;
+    if(hasCP){const trailing=declaredNames(chunk.slice(lastEnd));if(trailing)for(const p of trailing)rewards.push({type:'encounter',quantity:1,...p});continue;}
+    if(/\b(?:Max|Min) CP\b/i.test(chunk))continue;
+    const declared=declaredNames(chunk);
+    if(declared){for(const p of declared)rewards.push({type:'encounter',quantity:1,...p});continue;}
     const qty = /^(?:[×x]\s*(\d+)\s*)?(.+?)(?:\s+[×x]\s*(\d+))?$/i.exec(chunk);
     if (!qty) continue;
     let name = trim(qty[2]);
@@ -78,7 +92,8 @@ function parseResearchTask(line, category) {
   return rewards.length ? { task, category: category || "research", rewards } : null;
 }
 
-export function extractFields(html) {
+export function extractFields(html, options={}) {
+  const declaredNames=researchRewardNames(options);
   const lines = Array.isArray(html) ? html : htmlToLines(html);
   const out = Object.fromEntries(FIELDS.map(f => [f, []])); out.researchTasks = [];
   const add = (f, s) => { s = trim(s); if (keep(s) && !out[f].includes(s) && out[f].filter(x => /^rank \d+/i.test(x) === /^rank \d+/i.test(s)).length < (/^rank \d+/i.test(s) ? 110 : 14)) out[f].push(s); };
@@ -123,7 +138,7 @@ export function extractFields(html) {
     }
     if (cur) add(cur, l.text);
     if (cur === "research") {
-      const task = parseResearchTask(l.text, researchKind);
+      const task = parseResearchTask(l.text, researchKind, declaredNames);
       if (task) {
         const key = JSON.stringify([task.category, task.task.toLowerCase(), task.rewards]);
         if (!out.researchTasks.some(x => JSON.stringify([x.category, x.task.toLowerCase(), x.rewards]) === key)) out.researchTasks.push(task);
