@@ -1,4 +1,4 @@
-/* Device-local display by default. This preference never rewrites event schedules or account data. */
+/* Melbourne display by default, with an explicit device-time option. This preference never rewrites event schedules or account data. */
 (function () {
   'use strict';
   var clock=window.GOEventClock,select=document.getElementById('timezone-choice'),form=document.getElementById('timezone-form'),status=document.getElementById('timezone-status');

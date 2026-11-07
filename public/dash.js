@@ -116,6 +116,7 @@
     return 'Listed clock: '+String(ev.sourceStart).replace('T',' ')+' (source timezone not supplied)';
   }
   function timeMeta(ev) {
+    if(ev.universalModel&&ev.universalModel.schedule&&ev.universalModel.schedule.timeBasis!=='player-local')return whenText(ev)+' · '+CLOCK.viewerZone().replace(/_/g,' ');
     if (ev.utc) return 'Your time: '+whenText(ev)+' · UTC: '+utcWhenText(ev);
     if (ev.region && ev.sourceStart) return sourceClock(ev)+' · Cannot convert to your time without the source timezone';
     if (ev.scope === 'worldwide_local') return 'Your time: '+whenText(ev)+' · Local time in each region';
@@ -228,6 +229,12 @@
     if(!EV_READY||!window.GOEventRegistry)return;
     var ids=new Set(EV.flatMap(function(e){return [e.id].concat(e.aliasIds||[]);})),unknown=[];
     GOEventRegistry.events().forEach(function(model){
+      var matching=EV.find(function(e){return e.id===model.eventId||e.id==='cur:'+model.eventId||(model.aliases||[]).indexOf(e.id)>=0||(e.aliasIds||[]).indexOf(model.eventId)>=0;});
+      if(matching&&model.schedule){
+        var published=GOEventRegistry.display(model);
+        if(published.instantKnown){var id=matching.id,name=matching.name,featured=matching.featured;Object.assign(matching,published,{id:id,name:name,featured:featured.length?featured:published.featured,aliasIds:Array.from(new Set((matching.aliasIds||[]).concat(model.aliases||[],[model.eventId])))});}
+        return;
+      }
       var meta=model.internalValidation||{};
       if(!(meta.native||!meta.collection||(meta.collection==='source-details'&&model.lifecycle==='announced')))return;
       if(model.lifecycle==='cancelled'||model.lifecycle==='ended'||model.lifecycle==='reference')return;
@@ -1128,6 +1135,10 @@
       return rot.filter(function(r){return pd(r.s)<end&&pd(r.e)>a&&pd(r.e)>t;})
         .sort(function(x,y){return pd(x.s)-pd(y.s);});
     }
+    function maxEvents(a,end){
+      if(!window.GOEventRegistry)return [];
+      return GOEventRegistry.events().filter(function(model){return model.schedule&&model.lifecycle!=='cancelled'&&model.groups&&model.groups.max&&model.groups.max.length;}).map(function(model){return GOEventRegistry.display(model);}).filter(function(event){return event.instantKnown&&event.start<end&&event.end>a&&event.end>t;});
+    }
     function tico(t, ttl) { return '<img class="ti" src="/ico/g/type-' + String(t).toLowerCase() + '.webp" alt="' + esc(t) + '" title="' + esc(t) + '" loading="lazy" decoding="async">'; }
     function raidEvent(name, r) { return raidSlotFor(name, r) || null; }
     function cell(label, name, r) {
@@ -1181,13 +1192,15 @@
         var label='Max Battle rotation';
         return '<div class="rw-max"><span class="rw-label">'+label+'</span><p class="rw-window">'+esc(fmtD(pd(mb[0]+'T12:00'))+' – '+fmtD(pd(mb[1]+'T12:00')))+' · local dates</p><div class="rw-max-pokemon">'+monArt({kind:'max',tags:[],name:''},{name:mb[2]},'ea')+'<div><b>'+esc(mb[2])+'</b><small>Featured at Power Spots</small></div></div>'+(civil(pd(mb[0]+'T12:00')).weekday===1?'<p class="muted">Max Monday spotlight · '+esc(fmtD(pd(mb[0]+'T12:00')))+' · 6 am–9 pm local time</p>':'')+'</div>';
       }).join('') : '<div class="rw-max"><span class="rw-label">Max Battles</span><p class="muted">No featured Pokémon published for this week yet.</p></div>';
+      var related=maxEvents(a,end);
+      if(related.length)body+='<section class="rw-event-links"><h3>Max Battle events</h3>'+related.map(function(event){return '<button type="button" class="rw-max-event" data-open="'+esc(event.id)+'"><b>'+esc(event.name)+'</b><span>'+esc(timeMeta(event))+'</span>'+(event.region?'<small>'+esc(event.region)+'</small>':'')+'</button>';}).join('')+'</section>';
       return '<article class="rotc rw-card"><div class="rw-week-head"><span class="kind">' + esc(offset === 0 ? 'This week' : 'Week of ' + fmtD(a)) + '</span><b>' + esc(range(a,b)) + '</b></div>' + body + '</article>';
     }
     var labels = [{id:'this',text:'This week'},{id:'next',text:'Next week'},{id:'following',text:'Following week'},{id:'future',text:'Future'}];
     var offsets = rotWeekTab === 'this' ? [0] : rotWeekTab === 'next' ? [1] : rotWeekTab === 'following' ? [2] : [3,4,5];
     var knownOffsets = offsets.filter(function(off){
       var a = addDay(monday, off * 7), end = addDay(a, 7);
-      return weekRotations(a,end).length || max.some(function(m){ return m[0] < key(end) && m[1] >= key(a); });
+      return weekRotations(a,end).length || maxEvents(a,end).length || max.some(function(m){ return m[0] < key(end) && m[1] >= key(a); });
     });
     var tabs = '<div class="rw-tabs" role="tablist" aria-label="Rotation week">' + labels.map(function(x){
       var selected = rotWeekTab === x.id;
@@ -2083,7 +2096,7 @@ function renderHomeBrief(t) {
     renderCoverage();
     if (window.GO && GO.refreshDex) GO.refreshDex();
     usSync();
-    var inf = document.createElement('script'); inf.src = '/infographic.js?v=20261103a'; document.body.appendChild(inf); var x = document.createElement('script'); x.src = '/extra.js?v=20261102c'; document.body.appendChild(x); var z = document.createElement('script'); z.src = '/places.js?v=20261103b'; window.GOPLACES_READY = new Promise(function (resolve) { z.onload = function () { resolve(window.GOPLACES || null); }; z.onerror = function () { resolve(null); }; }); var y = document.createElement('script'); y.src = '/detail.js?v=20261107b'; document.body.appendChild(y); document.body.appendChild(z); var w = document.createElement('script'); w.src = '/fresh.js?v=20261103a'; document.body.appendChild(w); var nv = document.createElement('script'); nv.src = '/nudge.js?v=20261102a'; document.body.appendChild(nv); var rv = document.createElement('script'); rv.src = '/review.js?v=20261104b'; document.body.appendChild(rv); var by = document.createElement('script'); by.src = '/buy.js?v=20261103a'; document.body.appendChild(by);
+    var inf = document.createElement('script'); inf.src = '/infographic.js?v=20261103a'; document.body.appendChild(inf); var x = document.createElement('script'); x.src = '/extra.js?v=20261102c'; document.body.appendChild(x); var z = document.createElement('script'); z.src = '/places.js?v=20261103b'; window.GOPLACES_READY = new Promise(function (resolve) { z.onload = function () { resolve(window.GOPLACES || null); }; z.onerror = function () { resolve(null); }; }); var y = document.createElement('script'); y.src = '/detail.js?v=20261108b'; document.body.appendChild(y); document.body.appendChild(z); var w = document.createElement('script'); w.src = '/fresh.js?v=20261103a'; document.body.appendChild(w); var nv = document.createElement('script'); nv.src = '/nudge.js?v=20261102a'; document.body.appendChild(nv); var rv = document.createElement('script'); rv.src = '/review.js?v=20261104b'; document.body.appendChild(rv); var by = document.createElement('script'); by.src = '/buy.js?v=20261103a'; document.body.appendChild(by);
   }
   envBanner();
   /* Bounded waits: a request that never answers must not leave Today blank. After FEED_TIMEOUT_MS the page renders from the curated list

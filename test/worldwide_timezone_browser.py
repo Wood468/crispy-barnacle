@@ -19,6 +19,7 @@ with sync_playwright() as p:
  browser=getattr(p,ENGINE).launch()
  for width in [320,390,1440]:
   context=browser.new_context(viewport={'width':width,'height':900},timezone_id='Asia/Tokyo',service_workers='block')
+  context.add_init_script("if(!localStorage.getItem('gofn-timezone'))localStorage.setItem('gofn-timezone','device')")
   context.set_default_timeout(20000)
   context.route('**/api/**',stub_api)
   context.route(re.compile(r'^https://fonts\.'),lambda r:r.fulfill(body='',content_type='text/css'))
@@ -102,8 +103,8 @@ with sync_playwright() as p:
   assert page.evaluate("({dex:localStorage.getItem('gofn-dex-v1'),us:localStorage.getItem('gofn-us-v1')})")==before
   change_zone('');assert page.evaluate('GOEventClock.viewerZone()')=='Asia/Tokyo'
   page.evaluate("localStorage.setItem('gofn-timezone','Invalid/Zone')");page.reload();ready()
-  assert page.evaluate('GOEventClock.viewerZone()')=='Asia/Tokyo'
-  assert page.locator('#timezone-choice').input_value()==''
+  assert page.evaluate('GOEventClock.viewerZone()')=='Australia/Melbourne'
+  assert page.locator('#timezone-choice').input_value()=='Australia/Melbourne'
   # WebKit also emits a page error for a fetch cancelled by navigation, even when
   # the application catches its rejection. Exclude only a matching, cancelled
   # same-origin JSON request; real CORS/security failures and JS errors still fail.
@@ -118,6 +119,7 @@ with sync_playwright() as p:
  # Calendar membership must follow civil boundaries on both 23- and 25-hour days.
  for day,next_day in [('2027-03-14','2027-03-15'),('2026-11-01','2026-11-02')]:
   context=browser.new_context(viewport={'width':390,'height':900},timezone_id='America/New_York',service_workers='block')
+  context.add_init_script("if(!localStorage.getItem('gofn-timezone'))localStorage.setItem('gofn-timezone','device')")
   context.route('**/api/**',stub_api)
   context.route(re.compile(r'^https://fonts\.'),lambda r:r.fulfill(body='',content_type='text/css'))
   late={**PLAYER,'eventId':'synthetic-dst-late','title':'Synthetic late DST day','schedule':{'timeBasis':'player-local','start':day+'T23:30','end':day+'T23:45'}}
@@ -133,6 +135,7 @@ with sync_playwright() as p:
   context.close()
  # Restricted storage must leave the online catalogue and existing player marks usable.
  context=browser.new_context(viewport={'width':390,'height':900},timezone_id='Asia/Tokyo',service_workers='block')
+ context.add_init_script("if(!localStorage.getItem('gofn-timezone'))localStorage.setItem('gofn-timezone','device')")
  context.route('**/api/**',stub_api)
  context.route(re.compile(r'^https://fonts\.'),lambda r:r.fulfill(body='',content_type='text/css'))
  context.route('**/events-v1.json',lambda r:r.fulfill(body=json.dumps(VALID),content_type='application/json'))

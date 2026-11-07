@@ -53,7 +53,7 @@
   function loadSeasonBanner(o, ev) {
     var slot = o.querySelector('[data-season-banner]');
     if (!slot) return;
-    var original = safe(ev && ev.img);
+    var original = safe(ev && ev.img || activeModel && activeModel.image);
     if (!original) { slot.remove(); return; }
     var thumb = safeSeasonThumb(ev && ev.season && ev.season.thumbnail);
     var img = document.createElement('img');
@@ -512,8 +512,8 @@
   }
   function exactArt(p) {
     var name=displayName(p),q='/api/art?n='+encodeURIComponent(name),described=GOEventAdapter.collectionName(p);
-    if(p.formId&&!p.costumeId&&(!G.MAN[q]||(!described&&GOLIB.parseForm(p.name).base===p.name)))return '<span class="art costume-unavailable ea" role="img" aria-label="'+esc(name+' · form art unavailable')+'"><span>'+esc(name)+'</span><small>Form art unavailable</small></span>';
-    return G.art({n:name,costume:!!p.costumeId,label:p.label||p.costumeId},'ea');
+    if(p.formId&&!p.costumeId&&!described&&GOLIB.parseForm(p.name).base===p.name)return '<span class="art costume-unavailable ea" role="img" aria-label="'+esc(name+' · form art unavailable')+'"><span>'+esc(name)+'</span><small>Form art unavailable</small></span>';
+    return G.art({n:name,costume:!!p.costumeId,label:p.label||p.costumeId,asset:p.assetKey||undefined,dynamax:p.formId==='dynamax'||/-dynamax$/.test(p.formId||'')},'ea');
   }
   function collectionState(p,model){
     var name=GOEventAdapter.collectionName(p);
@@ -550,7 +550,7 @@
     var catalogue=window.GOEventRegistry&&GOEventRegistry.diagnostics?GOEventRegistry.diagnostics():{},heldUpdate=catalogue.rejectedCount||catalogue.conflicts&&catalogue.conflicts.length;
     var footer='<details class="ue-sources" id="evd-sources"><summary>Sources &amp; updates</summary>'+(heldUpdate?'<p class="note">The latest event update was held. Showing the last available information.</p>':'')+(DATA.incomplete?'<p class="note">Some supplementary event information could not be loaded. Showing the available announcement. Reload to try again.</p>':'')+'<ul>'+sources+'</ul>'+(conflicts?'<h4>Details to recheck</h4><ul>'+conflicts+'</ul>':'')+(d.updated?'<p class="note">Last update '+esc(String(d.updated).slice(0,10))+'</p>':'')+(d.goPassParseWarning?'<p class="note">The last complete GO Pass rewards have been retained while the latest update is checked.'+(d.goPassRetainedAt?' Saved rank snapshot: '+esc(String(d.goPassRetainedAt).slice(0,10))+'.':'')+'</p>':'')+'</details>';
     return window.GOEventComponents.render(model,{
-      toolbar:toolbarHtml(ev).replace('<span class="tag">EVENT DETAIL</span>',''),clock:window.GOEventClock,viewerZone:GOEventClock.viewerZone(),safe:safe,rewardArt:function(item){return exactArt(GOEventAdapter.pokemon({name:item.name,costume:!!item.costume,label:item.label,formId:item.formId,costumeId:item.costumeId,asset:item.assetKey}));},banner:ev.img?seasonBannerHtml(ev):'',heroArt:model.pokemon.slice(0,3).map(exactArt).join(''),
+      toolbar:toolbarHtml(ev).replace('<span class="tag">EVENT DETAIL</span>',''),clock:window.GOEventClock,viewerZone:GOEventClock.viewerZone(),safe:safe,rewardArt:function(item){return exactArt(GOEventAdapter.pokemon({name:item.name,costume:!!item.costume,label:item.label,formId:item.formId,costumeId:item.costumeId,asset:item.assetKey}));},banner:(ev.img||model.image)?seasonBannerHtml(ev):'',heroArt:model.pokemon.slice(0,3).map(exactArt).join(''),
       when:eventWindow(model,ev),countdown:model.schedule&&model.lifecycle!=='cancelled'&&model.lifecycle!=='postponed'&&ev.datesKnown!==false?X.countdown(ev):'',
       ownership:function(p){return collectionState(p,model);},nameFor:displayName,follow:function(p){var name=GOEventAdapter.collectionName(p)||displayName(p),following=X.isFollowed(name);return '<button type="button" class="ue-follow" data-follow="'+esc(name)+'" aria-pressed="'+String(following)+'" aria-label="Follow '+esc(name)+'">'+(following?'Following':'Follow')+'</button>';},marks:typeof X.markBtns==='function'?X.markBtns:null,art:G.art,artFor:exactArt,bonus:G.bonusChip,
       actions:'<div class="evd-btns">'+(calendar&&model.lifecycle!=='cancelled'&&model.lifecycle!=='postponed'?'<a class="pill all" download="event.ics" href="'+icsFor(calendar)+'">Add to calendar</a>':'')+'</div>',

@@ -379,7 +379,14 @@
         "Higher shiny chance"
       ],
       "sourceUrl": "https://pokemongo.com/en/gowildarea/sendai",
-      "source": "Official Pokémon GO announcement"
+      "source": "Official Pokémon GO announcement",
+      "timeZone": "Asia/Tokyo",
+      "attendance": "in-person",
+      "location": "Sendai, Japan",
+      "detailIds": [
+        "leekduck:pokemon-go-wild-area-2026-sendai-japan"
+      ],
+      "img": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-11-06-pokemon-go-wild-area-2026-sendai-japan/key-art.jpg"
     },
     {
       "id": "into",

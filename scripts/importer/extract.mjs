@@ -37,32 +37,43 @@ function parseResearchTask(line, category) {
   if (!task || /^task$/i.test(task) || task.length < 4 || !rewardText || /^(possible )?rewards?$/i.test(rewardText)) return null;
   if (!/^(catch|spin|make|win|complete|send|hatch|power up|evolve|take|use|earn|battle|trade|transfer|walk|feed|give|land|defeat|purify|exchange|open|explore|adventure|beat|visit|photograph|level up|collect|get|play|perform|throw)\b/i.test(task)) return null;
   const rewards = [];
-  const cp = /([^|]+?)\s+Max CP\s+(\d{2,4})\s+Min CP\s+(\d{2,4})/gi;
-  let match;
-  while ((match = cp.exec(rewardText)) !== null) {
-    const name = trim(match[1]).replace(/^[|,;\s]+/, "");
-    const maxCP = Number(match[2]), minCP = Number(match[3]);
-    if (!name || minCP > maxCP || maxCP > 9999) continue;
-    rewards.push({ type: "encounter", name, quantity: 1, cpMin: minCP, cpMax: maxCP });
-  }
-  if (!rewards.length) {
-    for (const chunk of rewardText.split(/\s+\|\s+/).map(trim).filter(Boolean)) {
-      const qty = /^(?:[×x]\s*(\d+)\s*)?(.+?)(?:\s+[×x]\s*(\d+))?$/i.exec(chunk);
-      if (!qty) continue;
-      let name = trim(qty[2]);
-      if (!name || /^(possible )?rewards?$/i.test(name) || name.length > 100) continue;
-      let quantity = Number(qty[1] || qty[3] || 1);
-      const numeric = /^(\d+)\s+(.+)$/.exec(name);
-      if (numeric) { quantity = Number(numeric[1]); name = trim(numeric[2]); }
-      if (!Number.isInteger(quantity) || quantity < 1 || quantity > 999) continue;
-      const encounter = /^(?:an?\s+)?encounter with\s+(.+)$/i.exec(name);
-      const knownItem = /\b(candy|ball|stardust|xp|energy|pass|incubator|revive|potion|pok[eé]coin|rare candy|incense|lure|egg)\b/i.test(name);
-      const explicitQuantity = !!(qty[1] || qty[3] || numeric);
-      if (!encounter && !knownItem && !explicitQuantity) continue;
-      if (encounter) name = trim(encounter[1]);
-      const type = encounter ? "encounter" : knownItem ? "item" : "other";
-      rewards.push({ type, name, quantity });
+  // Some feeds flatten adjacent item blocks and repeat the quantity around an icon.
+  // Only a named item with an explicit × quantity creates a boundary; Pokémon names stay intact.
+  const itemNames = '(?:Golden Razz Berry|Silver Pinap Berry|Razz Berry|Pinap Berry|Nanab Berry|Stardust|XP)';
+  const itemBlocks = new RegExp('(?:[×x]\\s*\\d+\\s+' + itemNames + '(?:\\s+[×x]\\s*\\d+)?|' + itemNames + '\\s+[×x]\\s*\\d+)', 'gi');
+  const columns = rewardText.replace(itemBlocks, text => ' | ' + text + ' | ');
+  // Table columns are independent rewards. Encounter CP text must not suppress adjacent items.
+  for (const chunk of columns.split(/\s*\|\s*/).map(trim).filter(Boolean)) {
+    const cp = /(.+?)\s+Max CP\s+(\d{2,4})\s+Min CP\s+(\d{2,4})/gi;
+    let match, hasCP = false;
+    while ((match = cp.exec(chunk)) !== null) {
+      hasCP = true;
+      const name = trim(match[1]).replace(/^[,;\s]+/, "");
+      const maxCP = Number(match[2]), minCP = Number(match[3]);
+      if (!name || minCP > maxCP || maxCP > 9999) continue;
+      rewards.push({ type: "encounter", name, quantity: 1, cpMin: minCP, cpMax: maxCP });
     }
+    if (hasCP || /\b(?:Max|Min) CP\b/i.test(chunk)) continue;
+    const qty = /^(?:[×x]\s*(\d+)\s*)?(.+?)(?:\s+[×x]\s*(\d+))?$/i.exec(chunk);
+    if (!qty) continue;
+    let name = trim(qty[2]);
+    if (!name || /^(possible )?rewards?$/i.test(name) || name.length > 100) continue;
+    let quantity = Number(qty[1] || qty[3] || 1);
+    if (qty[1] && qty[3] && Number(qty[1]) !== Number(qty[3])) continue;
+    const numeric = /^(\d[\d,]*)\s+(.+)$/.exec(name);
+    if (numeric) {
+      if (!/^(?:\d+|\d{1,3}(?:,\d{3})+)$/.test(numeric[1])) continue;
+      const amount = Number(numeric[1].replace(/,/g, ''));
+      if ((qty[1] || qty[3]) && quantity !== amount) continue;
+      quantity = amount; name = trim(numeric[2]);
+    }
+    if (!Number.isSafeInteger(quantity) || quantity < 1 || quantity > 1e9) continue;
+    const encounter = /^(?:an?\s+)?encounter with\s+(.+)$/i.exec(name);
+    const knownItem = /\b(candy|ball|stardust|xp|energy|pass|incubator|revive|potion|pok[eé]coin|rare candy|incense|lure|egg|berry)\b/i.test(name);
+    const explicitQuantity = !!(qty[1] || qty[3] || numeric);
+    if (!encounter && !knownItem && !explicitQuantity) continue;
+    if (encounter) name = trim(encounter[1]);
+    rewards.push({ type: encounter ? "encounter" : knownItem ? "item" : "other", name, quantity });
   }
   return rewards.length ? { task, category: category || "research", rewards } : null;
 }

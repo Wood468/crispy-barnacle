@@ -11,14 +11,26 @@ function reward(item,ctx){
  if(typeof item==='string')return '<div class="research-reward"><span class="ue-reward-art"><span class="ue-reward-icon" aria-hidden="true">★</span></span><span><b>'+esc(item)+'</b></span></div>';
  if(!item||typeof item.name!=='string')return '';
  var quantity=Number.isInteger(item.quantity)&&item.quantity>1?esc(item.quantity)+'× ':'';
- var cp=Number.isInteger(item.cpMin)&&Number.isInteger(item.cpMax)&&item.cpMin<=item.cpMax?'<small>CP '+esc(item.cpMin)+'–'+esc(item.cpMax)+'</small>':'';
+ var cp=Number.isInteger(item.cpMin)&&Number.isInteger(item.cpMax)&&item.cpMin<=item.cpMax?'<small>CP '+esc(item.cpMin)+'–'+esc(item.cpMax)+'</small>':item.type==='encounter'&&Number.isInteger(item.level)?'<small>Level '+esc(item.level)+'</small>':'';
  var artwork=item.type==='encounter'&&ctx.rewardArt?ctx.rewardArt(item):'';
  var fallback='<span class="ue-reward-icon" aria-hidden="true">'+(item.type==='encounter'?'?':item.type==='item'?'◆':'★')+'</span>';
  var icon='<span class="ue-reward-art">'+(artwork||fallback)+'</span>';
  return '<div class="research-reward">'+icon+'<span><b>'+quantity+esc(item.name)+'</b>'+cp+'</span></div>';
 }
 function research(items,ctx){return items.filter(function(r){return value(r);}).map(function(r){return '<article class="research-task"><h4>'+esc(value(r))+'</h4>'+(r.access&&r.access!=='unknown'?'<p>'+esc(r.access)+'</p>':'')+(Array.isArray(r.rewards)?'<div class="research-rewards">'+r.rewards.map(function(x){return reward(x,ctx);}).join('')+'</div>':'')+'</article>';}).join('');}
-function passes(items,ctx){return items.filter(function(p){return value(p);}).map(function(p){var stages=Array.isArray(p.stages)?p.stages:[];return '<article class="ue-pass"><h4>'+esc(value(p))+'</h4>'+((p.text&&p.text!==value(p))?'<p>'+esc(p.text)+'</p>':'')+'<ol class="ue-pass-stages">'+stages.filter(function(s){return Number.isInteger(s.rank)&&s.rank>=0;}).slice().sort(function(a,b){return a.rank-b.rank;}).map(function(s){return '<li><b>Rank '+esc(s.rank)+'</b>'+(Number.isFinite(s.points)?'<small>'+esc(s.points)+' points</small>':'')+(s.free?'<div><h5>Free</h5>'+[].concat(s.free).map(function(x){return reward(x,ctx);}).join('')+'</div>':'')+(s.deluxe?'<div><h5>Deluxe</h5>'+[].concat(s.deluxe).map(function(x){return reward(x,ctx);}).join('')+'</div>':'')+(Array.isArray(s.rewards)?s.rewards.map(function(x){return reward(x,ctx);}).join(''):'')+'</li>';}).join('')+'</ol></article>';}).join('');}
+function passes(items,ctx){
+ function stage(s){return '<li><b>Rank '+esc(s.rank)+'</b>'+(Number.isFinite(s.points)?'<small>'+esc(s.points)+' points</small>':'')+(s.free?'<div><h5>Free</h5>'+[].concat(s.free).map(function(x){return reward(x,ctx);}).join('')+'</div>':'')+(s.deluxe?'<div><h5>Deluxe</h5>'+[].concat(s.deluxe).map(function(x){return reward(x,ctx);}).join('')+'</div>':'')+(Array.isArray(s.rewards)?s.rewards.map(function(x){return reward(x,ctx);}).join(''):'')+'</li>';}
+ return items.filter(function(p){return value(p);}).map(function(p){
+  var stages=(Array.isArray(p.stages)?p.stages:[]).filter(function(s){return s&&Number.isInteger(s.rank)&&s.rank>=0;}).slice().sort(function(a,b){return a.rank-b.rank;});
+  var content='';
+  if(stages.length<=12)content='<ol class="ue-pass-stages">'+stages.map(stage).join('')+'</ol>';
+  else{
+   var groups={};stages.forEach(function(s){var key=Math.floor(Math.max(0,s.rank-1)/25);(groups[key]||(groups[key]=[])).push(s);});
+   content='<p class="ue-pass-count">'+stages.length+' reward ranks · Expand a range to compare rewards.</p>'+Object.keys(groups).map(function(key){var list=groups[key];return '<details class="ue-pass-range"><summary>'+(list.length===1?'Rank '+esc(list[0].rank):'Ranks '+esc(list[0].rank)+'–'+esc(list[list.length-1].rank))+'</summary><ol class="ue-pass-stages">'+list.map(stage).join('')+'</ol></details>';}).join('');
+  }
+  return '<article class="ue-pass"><h4>'+esc(value(p))+'</h4>'+((p.text&&p.text!==value(p))?'<p>'+esc(p.text)+'</p>':'')+content+'</article>';
+ }).join('');
+}
 function tickets(items,ctx){return items.filter(function(t){return value(t);}).map(function(t){var price='';if(t.price&&Number.isFinite(t.price.amount)&&/^[A-Z]{3}$/.test(t.price.currency))try{price=new Intl.NumberFormat('en-AU',{style:'currency',currency:t.price.currency,currencyDisplay:'code'}).format(t.price.amount);}catch(e){}var url=ctx.safe&&ctx.safe(t.url);return '<article class="ue-ticket"><h4>'+esc(value(t))+'</h4>'+(t.access?'<p>'+esc(t.access)+'</p>':'')+(price?'<b>'+esc(price)+'</b>':'')+(url?'<a class="pill" href="'+esc(url)+'" target="_blank" rel="noopener noreferrer">View ticket</a>':'')+'</article>';}).join('');}
 function activityTime(a,ctx){
  if(!a||!a.schedule)return '';

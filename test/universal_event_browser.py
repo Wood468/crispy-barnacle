@@ -195,6 +195,7 @@ with sync_playwright() as p:
     print('PASS late catalogue announces future events without a reload or user-state edit')
     context.close()
     context=browser.new_context(viewport={'width':390,'height':900},timezone_id='America/New_York',service_workers='block')
+    context.add_init_script("localStorage.setItem('gofn-timezone','America/New_York')")
     context.route('**/api/**',api)
     dst={**FUTURE,'eventId':'synthetic-dst-gap','title':'Synthetic DST gap','schedule':{'timeBasis':'player-local','start':'2027-03-14T02:30','end':'2027-03-14T03:30'}}
     context.route('**/events-v1.json',lambda r:r.fulfill(body=json.dumps({'schemaVersion':1,'species':DEX,'events':[dst]}),content_type='application/json'))

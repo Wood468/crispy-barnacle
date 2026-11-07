@@ -4,16 +4,16 @@ import {isAllowedOgImage} from '../../src/image-policy.js';
 import {htmlToLines,decode} from './text.mjs';
 import adapter from '../../public/event-adapter.js';
 import contract from '../../public/event-contract.js';
-const HEADS=[['wild',/^(?:wild encounters|in the wild|wild pok[eé]mon|wild spawns)$/i],['raid',/^(?:(?:one|three|five|[135])-star |mega |shadow )?raids(?: encounters)?$/i],['max',/^(?:max battles|dynamax battles|gigantamax battles)$/i],['egg',/^(?:(?:2|5|7|10|12)\s*km )?eggs(?: hatches)?$/i],['incense',/^incense(?: encounters)?$/i],['lure',/^lure(?: encounters)?$/i],['research',/^research encounters$/i]];
+const HEADS=[['wild',/^(?:wild encounters|in the wild|wild pok[eé]mon|wild spawns|spawns|rotating habitat hours)$/i],['raid',/^(?:(?:one|three|five|[135])-star |mega |shadow )?raids(?: encounters)?$/i],['max',/^(?:max battles|dynamax battles|gigantamax battles)$/i],['egg',/^(?:(?:2|5|7|10|12)\s*km )?eggs(?: hatches)?$/i],['incense',/^incense(?: encounters)?$/i],['lure',/^lure(?: encounters)?$/i],['research',/^research encounters$/i]];
 export function methodForHeading(text){return HEADS.find(([,pattern])=>pattern.test(text))?.[0]||null;}
 export function extractEncounters(input,{dex=[],names=[],costumes=[]}={}){
  adapter.configureSpecies(dex);adapter.configureCostumes(costumes);
  const known=new Map(dex.map(p=>[p[1].toLowerCase(),{name:p[1],speciesId:String(p[0])}]));
  names.forEach(name=>{if(typeof name==='string')known.set(name.toLowerCase(),{name});});
  costumes.forEach(p=>{if(p&&p.name&&p.label)known.set((p.name+' ('+p.label+')').toLowerCase(),{name:p.name,label:p.label,costume:true});});
- const pokemon=new Map(),encounters=[],lines=Array.isArray(input)?input:htmlToLines(input);let method=null;
+ const pokemon=new Map(),encounters=[],lines=Array.isArray(input)?input:htmlToLines(input);let method=null,methodLevel=0;
  for(const line of lines){
-  if(line.t==='h'){method=methodForHeading(line.text);continue;}
+  if(line.t==='h'){const next=methodForHeading(line.text);if(next){method=next;methodLevel=line.level||2;}else if(!line.level||line.level<=methodLevel){method=null;methodLevel=0;}continue;}
   if(!method||!['li','p'].includes(line.t))continue;
   for(const item of line.text.split(/,\s*|\s+and\s+/i)){
    let label=item.trim(),shiny='unknown',boostedShiny=null;

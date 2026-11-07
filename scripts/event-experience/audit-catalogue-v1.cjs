@@ -7,7 +7,7 @@ const C=require('../../public/event-contract.js');
 const root=path.resolve(__dirname,'../..');
 function read(name,fallback={}){try{return JSON.parse(fs.readFileSync(path.join(root,name),'utf8'));}catch(error){if(error.code==='ENOENT')return fallback;throw error;}}
 const previous=read('public/events-v1.json');
-const input={previous,aliases:read('data/event-aliases.json')};
+const input={previous,aliases:read('data/event-aliases.json'),corrections:read('data/event-corrections.json',{schemaVersion:1,events:{}})};
 for(const [key,name] of Object.entries({data:'data',details:'event-details',info:'event-info',world:'world-events',regional:'regional-events',season:'season',dex:'dex',costumes:'costumes'}))input[key]=read('public/'+name+'.json');
 const catalogue=buildCatalogue(input);
 for(const event of catalogue.events)C.normalize(event);

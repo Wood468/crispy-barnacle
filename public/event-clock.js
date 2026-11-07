@@ -20,10 +20,10 @@
   function validZone(zone){if(typeof zone!=='string'||!zone)return false;if(zoneValidity.has(zone))return zoneValidity.get(zone);var valid=true;try{new Intl.DateTimeFormat('en',{timeZone:zone});}catch(e){valid=false;}if(zoneValidity.size>=128)zoneValidity.delete(zoneValidity.keys().next().value);zoneValidity.set(zone,valid);return valid;}
   function deviceZone(){if(detectedDeviceZone)return detectedDeviceZone;try{var zone=Intl.DateTimeFormat().resolvedOptions().timeZone;detectedDeviceZone=validZone(zone)?zone:'UTC';}catch(e){detectedDeviceZone='UTC';}return detectedDeviceZone;}
   if(root.addEventListener)root.addEventListener('focus',function(){detectedDeviceZone=null;});
-  function selectedZone(){try{return root.localStorage.getItem('gofn-timezone')||'';}catch(e){return '';}}
+  function selectedZone(){try{var saved=root.localStorage.getItem('gofn-timezone');return saved==='device'?'':validZone(saved)?saved:'Australia/Melbourne';}catch(e){return 'Australia/Melbourne';}}
   function effectiveViewerTimeZone(override,device){return validZone(override)?override:validZone(device)?device:'UTC';}
   function viewerZone(){return effectiveViewerTimeZone(selectedZone(),deviceZone());}
-  function setViewerZone(zone){if(zone&&!validZone(zone))throw Error('Choose a valid time zone');if(zone)root.localStorage.setItem('gofn-timezone',zone);else root.localStorage.removeItem('gofn-timezone');}
+  function setViewerZone(zone){if(zone&&!validZone(zone))throw Error('Choose a valid time zone');if(zone)root.localStorage.setItem('gofn-timezone',zone);else root.localStorage.setItem('gofn-timezone','device');}
   function fields(date,zone){var d=new Date(parts(+date,zone||viewerZone())+'Z');return {year:d.getUTCFullYear(),month:d.getUTCMonth(),day:d.getUTCDate(),weekday:d.getUTCDay(),hour:d.getUTCHours(),minute:d.getUTCMinutes()};}
   function calendarDate(year,month,day,hour,minute,zone){
     zone=zone||viewerZone();var nominal=new Date(Date.UTC(year,month,day,hour||0,minute||0)),wall=nominal.toISOString().slice(0,19);

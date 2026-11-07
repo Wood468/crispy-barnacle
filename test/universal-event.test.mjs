@@ -183,3 +183,46 @@ test('gallery merges visually identical source edges without collapsing encounte
  assert.equal((html.match(/data-identity="25:base:test-hat"/g)||[]).length,1);
  assert.equal(JSON.stringify(raw),before);assert.equal(model.pokemon[0].shiny,'unknown');
  });
+
+test('reviewed source corrections reconcile aliases while retaining published identities and local times',()=>{
+ const data={events:[{id:'canonical',t:'Synthetic overseas event'},{id:'source-copy',t:'Synthetic overseas event',aliases:['old-source-link']}]};
+ const previous=buildCatalogue({data});
+ const corrections={schemaVersion:1,events:{canonical:{aliases:['source-copy'],attendance:'in-person',location:'Tokyo, Japan',schedule:{start:'2027-01-01T10:00',end:'2027-01-01T18:00',timeBasis:'local',timeZone:'Asia/Tokyo'}}}};
+ const next=buildCatalogue({data,previous,corrections});
+ assert.equal(next.events.length,1);assert.equal(next.events[0].eventId,'canonical');
+ for(const id of ['source-copy','old-source-link'])assert.ok(next.events[0].aliases.includes(id));
+ assert.equal(next.events[0].schedule.timeZone,'Asia/Tokyo');
+ assert.equal(next.events[0].attendance,'in-person');
+ const again=buildCatalogue({data,previous:next,corrections});
+ assert.deepEqual(again.events.map(e=>e.eventId),['canonical']);
+ assert.deepEqual(again.events[0].aliases,next.events[0].aliases);
+});
+test('nested habitat headings retain wild method until the next peer section',async()=>{
+ const {extractEncounters}=await import('../scripts/importer/encounters.mjs');
+ const result=extractEncounters('<h2>Spawns</h2><h3>Solid as Steel Hour</h3><li>Pikachu</li><h3>Daring as Dragons Hour</h3><li>Raichu</li><h2>Research</h2><li>Pikachu</li>',{dex:[[25,'Pikachu'],[26,'Raichu']]});
+ assert.deepEqual(result.encounters.map(e=>[e.identityKey,e.method]),[['25:base:none','wild'],['26:base:none','wild']]);
+});
+
+test('new authoritative schedules take precedence over reviewed fallback corrections',()=>{
+ const schedule={timeBasis:'instant',start:'2027-01-02T10:00Z',end:'2027-01-02T18:00Z'};
+ const data={events:[{schemaVersion:1,eventId:'native-amendment',title:'Synthetic amended event',schedule,pokemon:[]}]};
+ const corrections={schemaVersion:1,events:{'native-amendment':{schedule:{...schedule,start:'2027-01-01T10:00Z',end:'2027-01-01T18:00Z'}}}};
+ assert.deepEqual(buildCatalogue({data,corrections}).events[0].schedule,schedule);
+});
+test('long GO Pass tracks group exact source ranks into compact expandable ranges',()=>{
+ const stages=Array.from({length:98},(_,i)=>({rank:i+2,free:['Rare Candy'],deluxe:['Premium Battle Pass']}));
+ const html=UI.render(event({passes:[{title:'Synthetic long GO Pass',stages}]}),{});
+ assert.equal((html.match(/class="ue-pass-range"/g)||[]).length,4);
+ assert.match(html,/Ranks 2–25/);assert.match(html,/Ranks 76–99/);
+ assert.equal((html.match(/<li><b>Rank /g)||[]).length,98);
+ assert.doesNotMatch(html,/<li><b>Rank 1<\/b>/);
+});
+test('GO Pass source rewards retain exact encounters, levels and item quantities',()=>{
+ A.configureSpecies([[383,'Groudon'],[821,'Rookidee']]);
+ const result=A.passFields([{text:'Rank 3: Free: Dynamax Rookidee | Deluxe: Rookidee Candy ×5'},{text:'Rank 100: Free: Groudon (Level 20) | Deluxe: PokéCoin ×200'}]);
+ assert.deepEqual(result.passes[0].stages[0].free,[{type:'encounter',name:'Dynamax Rookidee',quantity:1}]);
+ assert.deepEqual(result.passes[0].stages[1].free,[{type:'encounter',name:'Groudon',quantity:1,level:20}]);
+ assert.deepEqual(result.passes[0].stages[1].deluxe,[{type:'item',name:'PokéCoin',quantity:200}]);
+ const html=UI.render(event({passes:result.passes}),{rewardArt:()=>'<img alt="Exact reward" src="/example.png">'});
+ assert.match(html,/Level 20/);assert.match(html,/200× PokéCoin/);assert.match(html,/Exact reward/);
+});
