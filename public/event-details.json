@@ -1,9 +1,10 @@
 {
- "updated": "2026-11-06T23:33:45.979Z",
+ "updated": "2026-11-07T03:16:47.657Z",
  "events": {
   "wag": {
    "name": "GO Wild Area: Global",
-   "updated": "2026-11-06T23:33:45.979Z",
+   "image": "https://lh3.googleusercontent.com/44ggmV081gROwILff_vc2fROBHVCfBGTlRPQ8EtwxMt0ePAkWpirNJMtFk0C3qzHyx7zQqfFAbzKsziiRTTz67bHWdZyRKJN1d7b9Z50Q0M",
+   "updated": "2026-11-07T03:16:47.657Z",
    "sources": [
     {
      "id": "official",
@@ -76,11 +77,15 @@
    },
    "conflicts": [],
    "gaps": [],
-   "researchTasks": []
+   "researchTasks": [],
+   "pokemon": [],
+   "encounters": [],
+   "encounterConflicts": []
   },
   "leekduck:pokemon-go-wild-area-2026-sendai-japan": {
    "name": "Pokémon GO Wild Area 2026: Sendai • Tohoku",
-   "updated": "2026-11-06T23:33:45.979Z",
+   "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-11-06-pokemon-go-wild-area-2026-sendai-japan/key-art.jpg",
+   "updated": "2026-11-07T03:16:47.657Z",
    "sources": [
     {
      "id": "leekduck",
@@ -556,7 +561,7 @@
       "start": "2026-11-06T01:00:00.000Z",
       "end": "2026-11-08T09:00:00.000Z"
      },
-     "checkedAt": "2026-11-06"
+     "checkedAt": "2026-11-07"
     },
     {
      "task": "Catch 10 Steel‑type Pokémon",
@@ -588,7 +593,7 @@
       "start": "2026-11-06T01:00:00.000Z",
       "end": "2026-11-08T09:00:00.000Z"
      },
-     "checkedAt": "2026-11-06"
+     "checkedAt": "2026-11-07"
     },
     {
      "task": "Hatch an Egg",
@@ -627,7 +632,7 @@
       "start": "2026-11-06T01:00:00.000Z",
       "end": "2026-11-08T09:00:00.000Z"
      },
-     "checkedAt": "2026-11-06"
+     "checkedAt": "2026-11-07"
     },
     {
      "task": "Make an Excellent Throw",
@@ -657,7 +662,7 @@
       "start": "2026-11-06T01:00:00.000Z",
       "end": "2026-11-08T09:00:00.000Z"
      },
-     "checkedAt": "2026-11-06"
+     "checkedAt": "2026-11-07"
     },
     {
      "task": "Power up Dragon‑type Pokémon 5 times",
@@ -689,7 +694,7 @@
       "start": "2026-11-06T01:00:00.000Z",
       "end": "2026-11-08T09:00:00.000Z"
      },
-     "checkedAt": "2026-11-06"
+     "checkedAt": "2026-11-07"
     },
     {
      "task": "Power up Steel‑type Pokémon 5 times",
@@ -735,7 +740,7 @@
       "start": "2026-11-06T01:00:00.000Z",
       "end": "2026-11-08T09:00:00.000Z"
      },
-     "checkedAt": "2026-11-06"
+     "checkedAt": "2026-11-07"
     },
     {
      "task": "Use a Dragon‑type Charged Attack in a battle",
@@ -767,7 +772,7 @@
       "start": "2026-11-06T01:00:00.000Z",
       "end": "2026-11-08T09:00:00.000Z"
      },
-     "checkedAt": "2026-11-06"
+     "checkedAt": "2026-11-07"
     },
     {
      "task": "Use a Steel‑type Charged Attack in a battle",
@@ -806,7 +811,7 @@
       "start": "2026-11-06T01:00:00.000Z",
       "end": "2026-11-08T09:00:00.000Z"
      },
-     "checkedAt": "2026-11-06"
+     "checkedAt": "2026-11-07"
     },
     {
      "task": "Win 2 raids",
@@ -838,7 +843,7 @@
       "start": "2026-11-06T01:00:00.000Z",
       "end": "2026-11-08T09:00:00.000Z"
      },
-     "checkedAt": "2026-11-06"
+     "checkedAt": "2026-11-07"
     },
     {
      "task": "Win a Max Battle",
@@ -877,13 +882,304 @@
       "start": "2026-11-06T01:00:00.000Z",
       "end": "2026-11-08T09:00:00.000Z"
      },
-     "checkedAt": "2026-11-06"
+     "checkedAt": "2026-11-07"
     }
-   ]
+   ],
+   "pokemon": [
+    {
+     "key": "131:base:none",
+     "speciesId": "131",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Lapras",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Lapras"
+    },
+    {
+     "key": "184:base:none",
+     "speciesId": "184",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Azumarill",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Azumarill"
+    },
+    {
+     "key": "212:base:none",
+     "speciesId": "212",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Scizor",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Scizor"
+    },
+    {
+     "key": "230:base:none",
+     "speciesId": "230",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Kingdra",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Kingdra"
+    },
+    {
+     "key": "306:base:none",
+     "speciesId": "306",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Aggron",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Aggron"
+    },
+    {
+     "key": "330:base:none",
+     "speciesId": "330",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Flygon",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Flygon"
+    },
+    {
+     "key": "395:base:none",
+     "speciesId": "395",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Empoleon",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Empoleon"
+    },
+    {
+     "key": "411:base:none",
+     "speciesId": "411",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Bastiodon",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Bastiodon"
+    },
+    {
+     "key": "534:base:none",
+     "speciesId": "534",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Conkeldurr",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Conkeldurr"
+    },
+    {
+     "key": "635:base:none",
+     "speciesId": "635",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Hydreigon",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Hydreigon"
+    },
+    {
+     "key": "679:base:none",
+     "speciesId": "679",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Honedge",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Honedge"
+    },
+    {
+     "key": "707:base:none",
+     "speciesId": "707",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Klefki",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Klefki"
+    },
+    {
+     "key": "780:base:none",
+     "speciesId": "780",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Drampa",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Drampa"
+    },
+    {
+     "key": "784:base:none",
+     "speciesId": "784",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Kommo-o",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Kommo-o"
+    },
+    {
+     "key": "884:base:none",
+     "speciesId": "884",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Duraludon",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Duraludon"
+    }
+   ],
+   "encounters": [
+    {
+     "identityKey": "679:base:none",
+     "method": "egg",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "707:base:none",
+     "method": "egg",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "780:base:none",
+     "method": "egg",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "884:base:none",
+     "method": "egg",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "131:base:none",
+     "method": "incense",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "184:base:none",
+     "method": "incense",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "212:base:none",
+     "method": "incense",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "230:base:none",
+     "method": "incense",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "306:base:none",
+     "method": "incense",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "330:base:none",
+     "method": "incense",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "395:base:none",
+     "method": "incense",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "411:base:none",
+     "method": "incense",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "534:base:none",
+     "method": "incense",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "635:base:none",
+     "method": "incense",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "784:base:none",
+     "method": "incense",
+     "activityId": "main",
+     "access": "unknown"
+    }
+   ],
+   "encounterConflicts": []
   },
   "leekduck:pokemon-go-wild-area-2026-mexico-city": {
    "name": "Pokémon GO Wild Area 2026: Mexico City",
-   "updated": "2026-11-06T23:33:45.979Z",
+   "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-11-06-pokemon-go-wild-area-2026-mexico-city/key-art.jpg",
+   "updated": "2026-11-07T03:16:47.657Z",
    "sources": [
     {
      "id": "leekduck",
@@ -1076,6 +1372,20 @@
       "status": "single"
      },
      {
+      "text": "Complete event-themed Field Research tasks for item rewards and encounters with Steel-, Dragon-, and mighty Pokémon.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "The Hatch an Egg task obtained during Solid as Steel Hour rewards Honedge ; the version obtained during Daring as Dragons Hour rewards Drampa .",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
       "text": "Catch 10 Dragon‑type Pokémon POSSIBLE REWARDS Trapinch Max CP 546 Min CP 507 ×2000 Stardust ×2000 ×1 Silver Pinap Berry ×1",
       "sources": [
        "leekduck"
@@ -1083,21 +1393,21 @@
       "status": "single"
      },
      {
-      "text": "Power up Dragon‑type Pokémon 5 times REWARD Frigibax Max CP 534 Min CP 496",
+      "text": "Power up Dragon‑type Pokémon 5 times POSSIBLE REWARDS Frigibax Max CP 534 Min CP 496 Jangmo-o Max CP 415 Min CP 382 Goomy Max CP 418 Min CP 385",
       "sources": [
        "leekduck"
       ],
       "status": "single"
      },
      {
-      "text": "Win 2 raids POSSIBLE REWARDS Mighty Azumarill Max CP 680 Min CP 637 Mighty Modern Jacket Machamp",
+      "text": "Win 2 raids POSSIBLE REWARDS Mighty Azumarill Max CP 680 Min CP 637 Mighty Modern Jacket Machamp Mighty Conkeldurr Max CP 1430 Min CP 1368",
       "sources": [
        "leekduck"
       ],
       "status": "single"
      },
      {
-      "text": "Win a Max Battle POSSIBLE REWARDS Mighty Kommo-o Max CP 1418 Min CP 1357 Mighty Bastiodon Max CP 660 Min CP 615",
+      "text": "Win a Max Battle POSSIBLE REWARDS Mighty Kommo-o Max CP 1418 Min CP 1357 Mighty Bastiodon Max CP 660 Min CP 615 Mighty Modern Jacket Machamp",
       "sources": [
        "leekduck"
       ],
@@ -1125,21 +1435,7 @@
       "status": "single"
      },
      {
-      "text": "Explore 2 km REWARD Mighty Modern Jacket Machamp",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Use a Dragon‑type Charged Attack in a battle REWARD Mighty Kommo-o Max CP 1418 Min CP 1357",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     },
-     {
-      "text": "Make an Excellent Throw POSSIBLE REWARDS ×2 Silver Pinap Berry ×2 ×2 Golden Razz Berry ×2",
+      "text": "Use a Steel‑type Charged Attack in a battle POSSIBLE REWARDS Mighty Bastiodon Max CP 660 Min CP 615 Shieldon Max CP 381 Min CP 348",
       "sources": [
        "leekduck"
       ],
@@ -1422,7 +1718,7 @@
       "start": "2026-11-06T16:00:00.000Z",
       "end": "2026-11-09T00:00:00.000Z"
      },
-     "checkedAt": "2026-11-06"
+     "checkedAt": "2026-11-07"
     },
     {
      "task": "Catch 10 Steel‑type Pokémon",
@@ -1454,7 +1750,7 @@
       "start": "2026-11-06T16:00:00.000Z",
       "end": "2026-11-09T00:00:00.000Z"
      },
-     "checkedAt": "2026-11-06"
+     "checkedAt": "2026-11-07"
     },
     {
      "task": "Hatch an Egg",
@@ -1493,7 +1789,7 @@
       "start": "2026-11-06T16:00:00.000Z",
       "end": "2026-11-09T00:00:00.000Z"
      },
-     "checkedAt": "2026-11-06"
+     "checkedAt": "2026-11-07"
     },
     {
      "task": "Make an Excellent Throw",
@@ -1501,7 +1797,7 @@
      "rewards": [
       {
        "type": "other",
-       "name": "Silver Pinap Berry ×2 ×2 Golden Razz Berry",
+       "name": "Silver Pinap Berry ×2 ×2 Golden Razz Berry ×2 Mighty Modern Jacket Machamp",
        "quantity": 2
       }
      ],
@@ -1523,7 +1819,7 @@
       "start": "2026-11-06T16:00:00.000Z",
       "end": "2026-11-09T00:00:00.000Z"
      },
-     "checkedAt": "2026-11-06"
+     "checkedAt": "2026-11-07"
     },
     {
      "task": "Power up Dragon‑type Pokémon 5 times",
@@ -1535,6 +1831,20 @@
        "quantity": 1,
        "cpMin": 496,
        "cpMax": 534
+      },
+      {
+       "type": "encounter",
+       "name": "Jangmo-o",
+       "quantity": 1,
+       "cpMin": 382,
+       "cpMax": 415
+      },
+      {
+       "type": "encounter",
+       "name": "Goomy",
+       "quantity": 1,
+       "cpMin": 385,
+       "cpMax": 418
       }
      ],
      "sources": [
@@ -1555,7 +1865,7 @@
       "start": "2026-11-06T16:00:00.000Z",
       "end": "2026-11-09T00:00:00.000Z"
      },
-     "checkedAt": "2026-11-06"
+     "checkedAt": "2026-11-07"
     },
     {
      "task": "Power up Steel‑type Pokémon 5 times",
@@ -1601,7 +1911,7 @@
       "start": "2026-11-06T16:00:00.000Z",
       "end": "2026-11-09T00:00:00.000Z"
      },
-     "checkedAt": "2026-11-06"
+     "checkedAt": "2026-11-07"
     },
     {
      "task": "Use a Dragon‑type Charged Attack in a battle",
@@ -1633,7 +1943,7 @@
       "start": "2026-11-06T16:00:00.000Z",
       "end": "2026-11-09T00:00:00.000Z"
      },
-     "checkedAt": "2026-11-06"
+     "checkedAt": "2026-11-07"
     },
     {
      "task": "Use a Steel‑type Charged Attack in a battle",
@@ -1672,7 +1982,7 @@
       "start": "2026-11-06T16:00:00.000Z",
       "end": "2026-11-09T00:00:00.000Z"
      },
-     "checkedAt": "2026-11-06"
+     "checkedAt": "2026-11-07"
     },
     {
      "task": "Win 2 raids",
@@ -1684,6 +1994,13 @@
        "quantity": 1,
        "cpMin": 637,
        "cpMax": 680
+      },
+      {
+       "type": "encounter",
+       "name": "Mighty Modern Jacket Machamp Mighty Conkeldurr",
+       "quantity": 1,
+       "cpMin": 1368,
+       "cpMax": 1430
       }
      ],
      "sources": [
@@ -1704,7 +2021,7 @@
       "start": "2026-11-06T16:00:00.000Z",
       "end": "2026-11-09T00:00:00.000Z"
      },
-     "checkedAt": "2026-11-06"
+     "checkedAt": "2026-11-07"
     },
     {
      "task": "Win a Max Battle",
@@ -1743,13 +2060,304 @@
       "start": "2026-11-06T16:00:00.000Z",
       "end": "2026-11-09T00:00:00.000Z"
      },
-     "checkedAt": "2026-11-06"
+     "checkedAt": "2026-11-07"
     }
-   ]
+   ],
+   "pokemon": [
+    {
+     "key": "184:base:none",
+     "speciesId": "184",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Azumarill",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Azumarill"
+    },
+    {
+     "key": "212:base:none",
+     "speciesId": "212",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Scizor",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Scizor"
+    },
+    {
+     "key": "230:base:none",
+     "speciesId": "230",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Kingdra",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Kingdra"
+    },
+    {
+     "key": "306:base:none",
+     "speciesId": "306",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Aggron",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Aggron"
+    },
+    {
+     "key": "330:base:none",
+     "speciesId": "330",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Flygon",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Flygon"
+    },
+    {
+     "key": "395:base:none",
+     "speciesId": "395",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Empoleon",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Empoleon"
+    },
+    {
+     "key": "411:base:none",
+     "speciesId": "411",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Bastiodon",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Bastiodon"
+    },
+    {
+     "key": "534:base:none",
+     "speciesId": "534",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Conkeldurr",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Conkeldurr"
+    },
+    {
+     "key": "635:base:none",
+     "speciesId": "635",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Hydreigon",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Hydreigon"
+    },
+    {
+     "key": "679:base:none",
+     "speciesId": "679",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Honedge",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Honedge"
+    },
+    {
+     "key": "701:base:none",
+     "speciesId": "701",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Hawlucha",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Hawlucha"
+    },
+    {
+     "key": "707:base:none",
+     "speciesId": "707",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Klefki",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Klefki"
+    },
+    {
+     "key": "780:base:none",
+     "speciesId": "780",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Drampa",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Drampa"
+    },
+    {
+     "key": "784:base:none",
+     "speciesId": "784",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Kommo-o",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Kommo-o"
+    },
+    {
+     "key": "884:base:none",
+     "speciesId": "884",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Duraludon",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Duraludon"
+    }
+   ],
+   "encounters": [
+    {
+     "identityKey": "679:base:none",
+     "method": "egg",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "707:base:none",
+     "method": "egg",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "780:base:none",
+     "method": "egg",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "884:base:none",
+     "method": "egg",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "184:base:none",
+     "method": "incense",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "212:base:none",
+     "method": "incense",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "230:base:none",
+     "method": "incense",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "306:base:none",
+     "method": "incense",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "330:base:none",
+     "method": "incense",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "395:base:none",
+     "method": "incense",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "411:base:none",
+     "method": "incense",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "534:base:none",
+     "method": "incense",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "635:base:none",
+     "method": "incense",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "701:base:none",
+     "method": "incense",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "784:base:none",
+     "method": "incense",
+     "activityId": "main",
+     "access": "unknown"
+    }
+   ],
+   "encounterConflicts": []
   },
   "gopassnov": {
    "name": "GO Pass: November",
-   "updated": "2026-11-06T23:33:45.979Z",
+   "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-11-03-go-pass-november-2026/go-pass-november-2026.jpg",
+   "updated": "2026-11-07T03:16:47.657Z",
    "sources": [
     {
      "id": "leekduck",
@@ -2685,11 +3293,15 @@
    },
    "conflicts": [],
    "gaps": [],
-   "researchTasks": []
+   "researchTasks": [],
+   "pokemon": [],
+   "encounters": [],
+   "encounterConflicts": []
   },
   "sendai": {
    "name": "GO Wild Area: Sendai",
-   "updated": "2026-11-06T23:33:45.979Z",
+   "image": "https://lh3.googleusercontent.com/mKoeqvHXmLsEsFxHgdhcK2XoC_XhjXUDl8gvBeH0iEfQTCNOuNY_vJ_k7QRoIYJFfVanVY_aE6ERNdqPgOPpOxvRQaw0I4T1YzTnodb8GUY",
+   "updated": "2026-11-07T03:16:47.657Z",
    "sources": [
     {
      "id": "official",
@@ -2712,11 +3324,15 @@
    },
    "conflicts": [],
    "gaps": [],
-   "researchTasks": []
+   "researchTasks": [],
+   "pokemon": [],
+   "encounters": [],
+   "encounterConflicts": []
   },
   "leekduck:super-mega-raid-day-november-2026": {
    "name": "Super Mega Raid Day",
-   "updated": "2026-11-06T23:33:45.979Z",
+   "image": "https://lh3.googleusercontent.com/HyFWaQMZqtZNT3Sb3uFeHyWMBFI8bB_4hNQ2NLrpfBGrH1YijjIr1n0ZNC0YlNAZHPpfiWTq0zzgT9MRUFzlMoEjN4ENEm0AlnuJFZRA9CQ",
+   "updated": "2026-11-07T03:16:47.657Z",
    "sources": [
     {
      "id": "official",
@@ -3043,11 +3659,15 @@
      ]
     }
    ],
-   "researchTasks": []
+   "researchTasks": [],
+   "pokemon": [],
+   "encounters": [],
+   "encounterConflicts": []
   },
   "leekduck:pokemon-go-wild-area-2026-global": {
    "name": "Pokémon GO Wild Area 2026: Global",
-   "updated": "2026-11-06T23:33:45.979Z",
+   "image": "https://lh3.googleusercontent.com/jkmT_jf1BmLdPEEzRG7B6yFKILNPYV34p47qSvsk1ZJKxb1lreNQJkHk3zFFL5Uj0-WFWODr7c2HaB4DqI9wkJILJra1o3VqDvM9ks8-LIM",
+   "updated": "2026-11-07T03:16:47.657Z",
    "sources": [
     {
      "id": "official",
@@ -3521,11 +4141,264 @@
      ]
     }
    ],
-   "researchTasks": []
+   "researchTasks": [],
+   "pokemon": [
+    {
+     "key": "184:base:none",
+     "speciesId": "184",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Azumarill",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Azumarill"
+    },
+    {
+     "key": "212:base:none",
+     "speciesId": "212",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Scizor",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Scizor"
+    },
+    {
+     "key": "230:base:none",
+     "speciesId": "230",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Kingdra",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Kingdra"
+    },
+    {
+     "key": "306:base:none",
+     "speciesId": "306",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Aggron",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Aggron"
+    },
+    {
+     "key": "330:base:none",
+     "speciesId": "330",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Flygon",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Flygon"
+    },
+    {
+     "key": "395:base:none",
+     "speciesId": "395",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Empoleon",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Empoleon"
+    },
+    {
+     "key": "462:base:none",
+     "speciesId": "462",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Magnezone",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Magnezone"
+    },
+    {
+     "key": "534:base:none",
+     "speciesId": "534",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Conkeldurr",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Conkeldurr"
+    },
+    {
+     "key": "635:base:none",
+     "speciesId": "635",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Hydreigon",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Hydreigon"
+    },
+    {
+     "key": "679:base:none",
+     "speciesId": "679",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Honedge",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Honedge"
+    },
+    {
+     "key": "707:base:none",
+     "speciesId": "707",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Klefki",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Klefki"
+    },
+    {
+     "key": "780:base:none",
+     "speciesId": "780",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Drampa",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Drampa"
+    },
+    {
+     "key": "884:base:none",
+     "speciesId": "884",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Duraludon",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Duraludon"
+    }
+   ],
+   "encounters": [
+    {
+     "identityKey": "679:base:none",
+     "method": "egg",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "707:base:none",
+     "method": "egg",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "780:base:none",
+     "method": "egg",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "884:base:none",
+     "method": "egg",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "184:base:none",
+     "method": "incense",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "212:base:none",
+     "method": "incense",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "230:base:none",
+     "method": "incense",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "306:base:none",
+     "method": "incense",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "330:base:none",
+     "method": "incense",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "395:base:none",
+     "method": "incense",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "462:base:none",
+     "method": "incense",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "534:base:none",
+     "method": "incense",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "635:base:none",
+     "method": "incense",
+     "activityId": "main",
+     "access": "unknown"
+    }
+   ],
+   "encounterConflicts": []
   },
   "leekduck:into-the-wild-2026": {
    "name": "Into the Wild",
-   "updated": "2026-11-06T23:33:45.979Z",
+   "image": "https://lh3.googleusercontent.com/U-aJxlmtiVe7UDPLAEoyI8LKHgyuRe9RpQB9nxZzRj-sCkzCPo9RlTdZ9XXtMSwR1sI80g6EEtGyA9bLRWGnALsEnz5EHR9z6bOWA2frRw",
+   "updated": "2026-11-07T03:16:47.657Z",
    "sources": [
     {
      "id": "official",
@@ -4135,11 +5008,55 @@
      ]
     }
    ],
-   "researchTasks": []
+   "researchTasks": [],
+   "pokemon": [
+    {
+     "key": "621:base:none",
+     "speciesId": "621",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Druddigon",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Druddigon"
+    },
+    {
+     "key": "968:base:none",
+     "speciesId": "968",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Orthworm",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Orthworm"
+    }
+   ],
+   "encounters": [
+    {
+     "identityKey": "621:base:none",
+     "method": "raid",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "968:base:none",
+     "method": "raid",
+     "activityId": "main",
+     "access": "unknown"
+    }
+   ],
+   "encounterConflicts": []
   },
   "dyntrails": {
    "name": "Dynamax Trails",
-   "updated": "2026-11-06T23:33:45.979Z",
+   "image": "https://lh3.googleusercontent.com/1ZxNwH9PkuqgUPjvwhCrCNSTSDktinzgCcLJEkm4tu41LlE_7OdyfM4GkR9qd9atoN_Tairx5bQ6IxBBOULlCO29cCM4qTuvsE4dm-RFup0",
+   "updated": "2026-11-07T03:16:47.657Z",
    "sources": [
     {
      "id": "official",
@@ -4392,11 +5309,15 @@
    },
    "conflicts": [],
    "gaps": [],
-   "researchTasks": []
+   "researchTasks": [],
+   "pokemon": [],
+   "encounters": [],
+   "encounterConflicts": []
   },
   "novcd": {
    "name": "November Community Day",
-   "updated": "2026-11-06T23:33:45.979Z",
+   "image": "https://lh3.googleusercontent.com/t5O4uk87m4uBdjNiiMgMq9nKNOkWyt3lNxwPc4dEqi8nL2ORXDgmO91Dc8orIGjysTupi4Jfr9F1FQq5jp36L68z7XZlddd8Kq-CSJQJEVfk",
+   "updated": "2026-11-07T03:16:47.657Z",
    "sources": [
     {
      "id": "official",
@@ -4586,11 +5507,15 @@
    },
    "conflicts": [],
    "gaps": [],
-   "researchTasks": []
+   "researchTasks": [],
+   "pokemon": [],
+   "encounters": [],
+   "encounterConflicts": []
   },
   "smr1": {
    "name": "Super Mega Raid Day",
-   "updated": "2026-11-06T23:33:45.979Z",
+   "image": "https://lh3.googleusercontent.com/6P6KzIHu36YynVJ4Bn6-2y_98P8qbfr5VP6aBOsIC83pPQ6NifL2ZrIWrF12RCzi-yJzdpuVsboYspq5mfkvph2B5OJslcoYMaHnNM8ua8og",
+   "updated": "2026-11-07T03:16:47.657Z",
    "sources": [
     {
      "id": "official",
@@ -4767,11 +5692,15 @@
    },
    "conflicts": [],
    "gaps": [],
-   "researchTasks": []
+   "researchTasks": [],
+   "pokemon": [],
+   "encounters": [],
+   "encounterConflicts": []
   },
   "halloween2": {
    "name": "Halloween 2026, Part Two",
-   "updated": "2026-11-06T23:33:45.979Z",
+   "image": "https://lh3.googleusercontent.com/4QN-7EtDk7S7dxL9bKLbsUF7lbTaUTntnGzOG8qDk4xxOQFyY4dKt3tQQ2msv37JhacLDFrawLGXVAv_kv3tzE_kTXiIh_HbskFdKhNCHjlh",
+   "updated": "2026-11-07T03:16:47.657Z",
    "sources": [
     {
      "id": "official",
@@ -5227,7 +6156,7 @@
       "start": "2026-11-01T10:00",
       "end": "2026-11-05T20:00"
      },
-     "checkedAt": "2026-11-06"
+     "checkedAt": "2026-11-07"
     },
     {
      "task": "Catch 13 Pokémon",
@@ -5257,7 +6186,7 @@
       "start": "2026-11-01T10:00",
       "end": "2026-11-05T20:00"
      },
-     "checkedAt": "2026-11-06"
+     "checkedAt": "2026-11-07"
     },
     {
      "task": "Make 6 Nice Throws",
@@ -5303,7 +6232,7 @@
       "start": "2026-11-01T10:00",
       "end": "2026-11-05T20:00"
      },
-     "checkedAt": "2026-11-06"
+     "checkedAt": "2026-11-07"
     },
     {
      "task": "Win 3 raids",
@@ -5335,7 +6264,7 @@
       "start": "2026-11-01T10:00",
       "end": "2026-11-05T20:00"
      },
-     "checkedAt": "2026-11-06"
+     "checkedAt": "2026-11-07"
     },
     {
      "task": "Win a raid",
@@ -5374,15 +6303,19 @@
       "start": "2026-11-01T10:00",
       "end": "2026-11-05T20:00"
      },
-     "checkedAt": "2026-11-06"
+     "checkedAt": "2026-11-07"
     }
    ],
+   "pokemon": [],
+   "encounters": [],
+   "encounterConflicts": [],
    "goPassParseWarning": "GO Pass source parsing failed; previously published rank rewards were retained.",
    "goPassRetainedAt": "2026-11-06T03:45:04.945Z"
   },
   "halloween1": {
    "name": "Halloween 2026, Part One",
-   "updated": "2026-11-06T23:33:45.979Z",
+   "image": "https://lh3.googleusercontent.com/_-kCe3YnQqLlPgLfqe6BZN6v8dIhuuhVzbOSgExE5XjKL__BcqBCbch1V2Z4fOEh18nYEX6O5rqBgWmNmU7kmvy92Yd2u8RBIxDbe79p3kU",
+   "updated": "2026-11-07T03:16:47.657Z",
    "sources": [
     {
      "id": "official",
@@ -5650,11 +6583,15 @@
    },
    "conflicts": [],
    "gaps": [],
-   "researchTasks": []
+   "researchTasks": [],
+   "pokemon": [],
+   "encounters": [],
+   "encounterConflicts": []
   },
   "spirits": {
    "name": "Dynamax Uxie, Mesprit and Azelf",
-   "updated": "2026-11-06T23:33:45.979Z",
+   "image": "https://lh3.googleusercontent.com/lKvMVkt13VprgaVCCdWqglwACCNc_F4rLJMuuZg_MqZSHjDIkEm3dldHcnyv7OPdDmJYAdfYC9xZef00Jfna7R1B8QJLLBMOigqW_89obec",
+   "updated": "2026-11-07T03:16:47.657Z",
    "sources": [
     {
      "id": "official",
@@ -5892,11 +6829,15 @@
    },
    "conflicts": [],
    "gaps": [],
-   "researchTasks": []
+   "researchTasks": [],
+   "pokemon": [],
+   "encounters": [],
+   "encounterConflicts": []
   },
   "tcg30": {
    "name": "Pokémon TCG: 30th Celebration (at stores)",
-   "updated": "2026-11-06T23:33:45.979Z",
+   "image": "https://lh3.googleusercontent.com/gu1IHS_f2PGLsp57UvnfXLT3fugx6jlQbECfFUQfU5GIEGQfjVspMMywEamItPc6BA36X6bv4rYC1bVoLzjyvLC-ddmUXbkPD5CurRnP8w",
+   "updated": "2026-11-07T03:16:47.657Z",
    "sources": [
     {
      "id": "official",
@@ -5958,11 +6899,15 @@
    },
    "conflicts": [],
    "gaps": [],
-   "researchTasks": []
+   "researchTasks": [],
+   "pokemon": [],
+   "encounters": [],
+   "encounterConflicts": []
   },
   "sandile": {
    "name": "Sandile Hatch Day",
-   "updated": "2026-11-06T23:33:45.979Z",
+   "image": "https://lh3.googleusercontent.com/r1sFIBAWuypbu790nY-nohK15pwrrz9wxabdnLn-equ2WbOzIF-1_H6L15URPfazMTlosJBnBe-PR_Wpdj6Q7GJ2JrShPTDUEc6_GMgtShxE",
+   "updated": "2026-11-07T03:16:47.657Z",
    "sources": [
     {
      "id": "official",
@@ -6118,11 +7063,15 @@
    },
    "conflicts": [],
    "gaps": [],
-   "researchTasks": []
+   "researchTasks": [],
+   "pokemon": [],
+   "encounters": [],
+   "encounterConflicts": []
   },
   "leekduck:mega-sableye-in-mega-raids-october-2026": {
    "name": "Mega Sableye in Mega Raids",
-   "updated": "2026-11-06T23:33:45.979Z",
+   "image": "https://cdn.leekduck.com/assets/img/events/mega-default.jpg",
+   "updated": "2026-11-07T03:16:47.657Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6176,11 +7125,36 @@
    },
    "conflicts": [],
    "gaps": [],
-   "researchTasks": []
+   "researchTasks": [],
+   "pokemon": [
+    {
+     "key": "302:mega:none",
+     "speciesId": "302",
+     "formId": "mega",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Mega Sableye",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Mega Sableye"
+    }
+   ],
+   "encounters": [
+    {
+     "identityKey": "302:mega:none",
+     "method": "raid",
+     "activityId": "main",
+     "access": "unknown"
+    }
+   ],
+   "encounterConflicts": []
   },
   "leekduck:giratina-altered-forme-in-5-star-raid-battles-november-2026": {
    "name": "Giratina (Altered Forme) in 5-star Raid Battles",
-   "updated": "2026-11-06T23:33:45.979Z",
+   "image": "https://cdn.leekduck.com/assets/img/events/giratinaaltered.jpg",
+   "updated": "2026-11-07T03:16:47.657Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6248,11 +7222,15 @@
    },
    "conflicts": [],
    "gaps": [],
-   "researchTasks": []
+   "researchTasks": [],
+   "pokemon": [],
+   "encounters": [],
+   "encounterConflicts": []
   },
   "leekduck:shadow-tornadus-incarnate-forme-in-shadow-raids-november-4-2026": {
    "name": "Shadow Tornadus (Incarnate Forme) in Shadow Raids",
-   "updated": "2026-11-06T23:33:45.979Z",
+   "image": "https://cdn.leekduck.com/assets/img/events/tornadus.jpg",
+   "updated": "2026-11-07T03:16:47.657Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6291,11 +7269,15 @@
    },
    "conflicts": [],
    "gaps": [],
-   "researchTasks": []
+   "researchTasks": [],
+   "pokemon": [],
+   "encounters": [],
+   "encounterConflicts": []
   },
   "leekduck:pokemon-night-out-london-2026": {
    "name": "Pokémon Night Out 2026 - London",
-   "updated": "2026-11-06T23:33:45.979Z",
+   "image": "https://cdn.leekduck.com/assets/img/events/pokemon-night-out-2026.jpg",
+   "updated": "2026-11-07T03:16:47.657Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6400,11 +7382,55 @@
    },
    "conflicts": [],
    "gaps": [],
-   "researchTasks": []
+   "researchTasks": [],
+   "pokemon": [
+    {
+     "key": "25:base:none",
+     "speciesId": "25",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Pikachu",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Pikachu"
+    },
+    {
+     "key": "94:base:none",
+     "speciesId": "94",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Gengar",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Gengar"
+    }
+   ],
+   "encounters": [
+    {
+     "identityKey": "25:base:none",
+     "method": "raid",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "94:base:none",
+     "method": "raid",
+     "activityId": "main",
+     "access": "unknown"
+    }
+   ],
+   "encounterConflicts": []
   },
   "leekduck:go-wild-area-gigantamax-machamp-power-up-timed-research": {
    "name": "GO Wild Area: Gigantamax Machamp Power Up! Timed Research",
-   "updated": "2026-11-06T23:33:45.979Z",
+   "image": "https://cdn.leekduck.com/assets/img/events/article-images/2025/2025-05-25-gigantamax-machamp-max-battle-day-may-2025/gigantamax-machamp-max-battles.jpg",
+   "updated": "2026-11-07T03:16:47.657Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6487,11 +7513,15 @@
    },
    "conflicts": [],
    "gaps": [],
-   "researchTasks": []
+   "researchTasks": [],
+   "pokemon": [],
+   "encounters": [],
+   "encounterConflicts": []
   },
   "leekduck:max-mondays-2026-11-16": {
    "name": "Max Monday: Pokémon to be announced",
-   "updated": "2026-11-06T23:33:45.979Z",
+   "image": "https://cdn.leekduck.com/assets/img/events/max-battles-kanto.jpg",
+   "updated": "2026-11-07T03:16:47.657Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6529,11 +7559,15 @@
    },
    "conflicts": [],
    "gaps": [],
-   "researchTasks": []
+   "researchTasks": [],
+   "pokemon": [],
+   "encounters": [],
+   "encounterConflicts": []
   },
   "leekduck:raidhour20261118": {
    "name": "Cresselia and Darkrai Raid Hour",
-   "updated": "2026-11-06T23:33:45.979Z",
+   "image": "https://cdn.leekduck.com/assets/img/events/raidhour.jpg",
+   "updated": "2026-11-07T03:16:47.657Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6572,11 +7606,15 @@
    },
    "conflicts": [],
    "gaps": [],
-   "researchTasks": []
+   "researchTasks": [],
+   "pokemon": [],
+   "encounters": [],
+   "encounterConflicts": []
   },
   "leekduck:pokemonspotlighthour2026-11-19": {
    "name": "Grookey, Scorbunny, and Sobble Spotlight Hour",
-   "updated": "2026-11-06T23:33:45.979Z",
+   "image": "https://cdn.leekduck.com/assets/img/events/pokemonspotlighthour.jpg",
+   "updated": "2026-11-07T03:16:47.657Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6607,11 +7645,15 @@
    },
    "conflicts": [],
    "gaps": [],
-   "researchTasks": []
+   "researchTasks": [],
+   "pokemon": [],
+   "encounters": [],
+   "encounterConflicts": []
   },
   "minior2": {
    "name": "Minior Showers: Leonids",
-   "updated": "2026-11-06T23:33:45.979Z",
+   "image": "https://cdn.leekduck.com/assets/img/events/minior-showers-2026.jpg",
+   "updated": "2026-11-07T03:16:47.657Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6699,11 +7741,15 @@
    },
    "conflicts": [],
    "gaps": [],
-   "researchTasks": []
+   "researchTasks": [],
+   "pokemon": [],
+   "encounters": [],
+   "encounterConflicts": []
   },
   "leekduck:eternamax-eternatus-max-battles-2026": {
    "name": "Eternamax Eternatus Returns",
-   "updated": "2026-11-06T23:33:45.979Z",
+   "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-11-16-dynamax-trails-2026/dynamax-trails-2026.jpg",
+   "updated": "2026-11-07T03:16:47.657Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6779,11 +7825,15 @@
    },
    "conflicts": [],
    "gaps": [],
-   "researchTasks": []
+   "researchTasks": [],
+   "pokemon": [],
+   "encounters": [],
+   "encounterConflicts": []
   },
   "leekduck:november-communityday2026": {
    "name": "Pawniard Community Day",
-   "updated": "2026-11-06T23:33:45.979Z",
+   "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-11-21-november-communityday2026/pawniard-november-cd-2026.jpg",
+   "updated": "2026-11-07T03:16:47.657Z",
    "sources": [
     {
      "id": "leekduck",
@@ -6970,7 +8020,7 @@
       "start": "2026-11-21T14:00:00.000",
       "end": "2026-11-21T17:00:00.000"
      },
-     "checkedAt": "2026-11-06"
+     "checkedAt": "2026-11-07"
     },
     {
      "task": "Catch 5 Pokemon while in a Party",
@@ -7002,7 +8052,7 @@
       "start": "2026-11-21T14:00:00.000",
       "end": "2026-11-21T17:00:00.000"
      },
-     "checkedAt": "2026-11-06"
+     "checkedAt": "2026-11-07"
     },
     {
      "task": "Catch 50 Pokemon",
@@ -7034,13 +8084,17 @@
       "start": "2026-11-21T14:00:00.000",
       "end": "2026-11-21T17:00:00.000"
      },
-     "checkedAt": "2026-11-06"
+     "checkedAt": "2026-11-07"
     }
-   ]
+   ],
+   "pokemon": [],
+   "encounters": [],
+   "encounterConflicts": []
   },
   "leekduck:dynamax-trails-2026": {
    "name": "Dynamax Trails",
-   "updated": "2026-11-06T23:33:45.979Z",
+   "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-11-16-dynamax-trails-2026/dynamax-trails-2026.jpg",
+   "updated": "2026-11-07T03:16:47.657Z",
    "sources": [
     {
      "id": "leekduck",
@@ -7272,11 +8326,15 @@
    },
    "conflicts": [],
    "gaps": [],
-   "researchTasks": []
+   "researchTasks": [],
+   "pokemon": [],
+   "encounters": [],
+   "encounterConflicts": []
   },
   "leekduck:max-mondays-2026-11-23": {
    "name": "Dynamax Espurr during Max Monday",
-   "updated": "2026-11-06T23:33:45.979Z",
+   "image": "https://cdn.leekduck.com/assets/img/events/max-battles-kanto.jpg",
+   "updated": "2026-11-07T03:16:47.657Z",
    "sources": [
     {
      "id": "leekduck",
@@ -7350,11 +8408,15 @@
    },
    "conflicts": [],
    "gaps": [],
-   "researchTasks": []
+   "researchTasks": [],
+   "pokemon": [],
+   "encounters": [],
+   "encounterConflicts": []
   },
   "leekduck:cresselia-darkrai-in-5-star-raid-battles-november-2026": {
    "name": "Cresselia and Darkrai in 5-star Raid Battles",
-   "updated": "2026-11-06T23:33:45.979Z",
+   "image": "https://cdn.leekduck.com/assets/img/events/legendary-cresselia.jpg",
+   "updated": "2026-11-07T03:16:47.657Z",
    "sources": [
     {
      "id": "leekduck",
@@ -7422,11 +8484,55 @@
    },
    "conflicts": [],
    "gaps": [],
-   "researchTasks": []
+   "researchTasks": [],
+   "pokemon": [
+    {
+     "key": "488:base:none",
+     "speciesId": "488",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Cresselia",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Cresselia"
+    },
+    {
+     "key": "491:base:none",
+     "speciesId": "491",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Darkrai",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Darkrai"
+    }
+   ],
+   "encounters": [
+    {
+     "identityKey": "488:base:none",
+     "method": "raid",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "491:base:none",
+     "method": "raid",
+     "activityId": "main",
+     "access": "unknown"
+    }
+   ],
+   "encounterConflicts": []
   },
   "leekduck:mega-banette-in-mega-raids-november-2026": {
    "name": "Mega Banette in Mega Raids",
-   "updated": "2026-11-06T23:33:45.979Z",
+   "image": "https://cdn.leekduck.com/assets/img/events/mega-default.jpg",
+   "updated": "2026-11-07T03:16:47.657Z",
    "sources": [
     {
      "id": "leekduck",
@@ -7487,11 +8593,36 @@
    },
    "conflicts": [],
    "gaps": [],
-   "researchTasks": []
+   "researchTasks": [],
+   "pokemon": [
+    {
+     "key": "354:mega:none",
+     "speciesId": "354",
+     "formId": "mega",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Mega Banette",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Mega Banette"
+    }
+   ],
+   "encounters": [
+    {
+     "identityKey": "354:mega:none",
+     "method": "raid",
+     "activityId": "main",
+     "access": "unknown"
+    }
+   ],
+   "encounterConflicts": []
   },
   "leekduck:raidhour20261125": {
    "name": "Deoxys (Normal, Defense, Attack, and Speed Formes) Raid Hour",
-   "updated": "2026-11-06T23:33:45.979Z",
+   "image": "https://cdn.leekduck.com/assets/img/events/raidhour.jpg",
+   "updated": "2026-11-07T03:16:47.657Z",
    "sources": [
     {
      "id": "leekduck",
@@ -7530,11 +8661,15 @@
    },
    "conflicts": [],
    "gaps": [],
-   "researchTasks": []
+   "researchTasks": [],
+   "pokemon": [],
+   "encounters": [],
+   "encounterConflicts": []
   },
   "leekduck:pokemonspotlighthour2026-11-26": {
    "name": "Noibat Spotlight Hour",
-   "updated": "2026-11-06T23:33:45.979Z",
+   "image": "https://cdn.leekduck.com/assets/img/events/pokemonspotlighthour.jpg",
+   "updated": "2026-11-07T03:16:47.657Z",
    "sources": [
     {
      "id": "leekduck",
@@ -7565,11 +8700,15 @@
    },
    "conflicts": [],
    "gaps": [],
-   "researchTasks": []
+   "researchTasks": [],
+   "pokemon": [],
+   "encounters": [],
+   "encounterConflicts": []
   },
   "leekduck:twilight-wishes-2026": {
    "name": "Twilight Wishes",
-   "updated": "2026-11-06T23:33:45.979Z",
+   "image": "https://cdn.leekduck.com/assets/img/events/twilight-wishes-2026.jpg?v2",
+   "updated": "2026-11-07T03:16:47.657Z",
    "sources": [
     {
      "id": "leekduck",
@@ -7831,11 +8970,55 @@
    },
    "conflicts": [],
    "gaps": [],
-   "researchTasks": []
+   "researchTasks": [],
+   "pokemon": [
+    {
+     "key": "15:mega:none",
+     "speciesId": "15",
+     "formId": "mega",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Mega Beedrill",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Mega Beedrill"
+    },
+    {
+     "key": "302:mega:none",
+     "speciesId": "302",
+     "formId": "mega",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Mega Sableye",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Mega Sableye"
+    }
+   ],
+   "encounters": [
+    {
+     "identityKey": "15:mega:none",
+     "method": "raid",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "302:mega:none",
+     "method": "raid",
+     "activityId": "main",
+     "access": "unknown"
+    }
+   ],
+   "encounterConflicts": []
   },
   "leekduck:max-mondays-2026-11-30": {
    "name": "Dynamax Cryogonal during Max Monday",
-   "updated": "2026-11-06T23:33:45.979Z",
+   "image": "https://cdn.leekduck.com/assets/img/events/max-battles-kanto.jpg",
+   "updated": "2026-11-07T03:16:47.657Z",
    "sources": [
     {
      "id": "leekduck",
@@ -7909,11 +9092,15 @@
    },
    "conflicts": [],
    "gaps": [],
-   "researchTasks": []
+   "researchTasks": [],
+   "pokemon": [],
+   "encounters": [],
+   "encounterConflicts": []
   },
   "leekduck:season-24-twilight-trails": {
    "name": "Twilight Trails",
-   "updated": "2026-11-06T23:33:45.979Z",
+   "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-09-08-season-24-twilight-trails/season-24-twilight-trails.jpg",
+   "updated": "2026-11-07T03:16:47.657Z",
    "sources": [
     {
      "id": "leekduck",
@@ -8131,11 +9318,15 @@
    },
    "conflicts": [],
    "gaps": [],
-   "researchTasks": []
+   "researchTasks": [],
+   "pokemon": [],
+   "encounters": [],
+   "encounterConflicts": []
   },
   "leekduck:deoxys-normal-defense-attack-speed-formes-in-5-star-raid-battles-november-2026": {
    "name": "Deoxys (Normal, Defense, Attack, and Speed Formes) in 5-star Raid Battles",
-   "updated": "2026-11-06T23:33:45.979Z",
+   "image": "https://cdn.leekduck.com/assets/img/events/deoxys-all-formes.jpg",
+   "updated": "2026-11-07T03:16:47.657Z",
    "sources": [
     {
      "id": "leekduck",
@@ -8231,11 +9422,15 @@
    },
    "conflicts": [],
    "gaps": [],
-   "researchTasks": []
+   "researchTasks": [],
+   "pokemon": [],
+   "encounters": [],
+   "encounterConflicts": []
   },
   "leekduck:mega-metagross-in-mega-raids-november-2026": {
    "name": "Mega Metagross in Mega Raids",
-   "updated": "2026-11-06T23:33:45.979Z",
+   "image": "https://cdn.leekduck.com/assets/img/events/mega-default.jpg",
+   "updated": "2026-11-07T03:16:47.657Z",
    "sources": [
     {
      "id": "leekduck",
@@ -8303,11 +9498,36 @@
    },
    "conflicts": [],
    "gaps": [],
-   "researchTasks": []
+   "researchTasks": [],
+   "pokemon": [
+    {
+     "key": "376:mega:none",
+     "speciesId": "376",
+     "formId": "mega",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Mega Metagross",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Mega Metagross"
+    }
+   ],
+   "encounters": [
+    {
+     "identityKey": "376:mega:none",
+     "method": "raid",
+     "activityId": "main",
+     "access": "unknown"
+    }
+   ],
+   "encounterConflicts": []
   },
   "minior3": {
    "name": "Minior Showers: Geminids",
-   "updated": "2026-11-06T23:33:45.979Z",
+   "image": "https://cdn.leekduck.com/assets/img/events/minior-showers-2026.jpg",
+   "updated": "2026-11-07T03:16:47.657Z",
    "sources": [
     {
      "id": "leekduck",
@@ -8395,11 +9615,15 @@
    },
    "conflicts": [],
    "gaps": [],
-   "researchTasks": []
+   "researchTasks": [],
+   "pokemon": [],
+   "encounters": [],
+   "encounterConflicts": []
   },
   "leekduck:pokemon-x-adidas-2026": {
    "name": "adidas × Pokémon Timed Research",
-   "updated": "2026-11-06T23:33:45.979Z",
+   "image": "https://cdn.leekduck.com/assets/img/events/pokemon-x-adidas-2026.jpg",
+   "updated": "2026-11-07T03:16:47.657Z",
    "sources": [
     {
      "id": "leekduck",
@@ -8474,11 +9698,15 @@
    },
    "conflicts": [],
    "gaps": [],
-   "researchTasks": []
+   "researchTasks": [],
+   "pokemon": [],
+   "encounters": [],
+   "encounterConflicts": []
   },
   "leekduck:pokemon-go-tour-alola-kaohsiung-2027": {
    "name": "Pokémon GO Tour: Alola - Kaohsiung 2027",
-   "updated": "2026-11-06T23:33:45.979Z",
+   "image": "https://cdn.leekduck.com/assets/img/events/events-default-img.jpg",
+   "updated": "2026-11-07T03:16:47.657Z",
    "sources": [
     {
      "id": "leekduck",
@@ -8509,11 +9737,15 @@
    },
    "conflicts": [],
    "gaps": [],
-   "researchTasks": []
+   "researchTasks": [],
+   "pokemon": [],
+   "encounters": [],
+   "encounterConflicts": []
   },
   "leekduck:pokemon-go-tour-alola-los-angeles-2027": {
    "name": "Pokémon GO Tour: Alola - Los Angeles 2027",
-   "updated": "2026-11-06T23:33:45.979Z",
+   "image": "https://cdn.leekduck.com/assets/img/events/events-default-img.jpg",
+   "updated": "2026-11-07T03:16:47.657Z",
    "sources": [
     {
      "id": "leekduck",
@@ -8544,11 +9776,15 @@
    },
    "conflicts": [],
    "gaps": [],
-   "researchTasks": []
+   "researchTasks": [],
+   "pokemon": [],
+   "encounters": [],
+   "encounterConflicts": []
   },
   "leekduck:pokemon-go-tour-alola-global-2027": {
    "name": "Pokémon GO Tour: Alola - Global 2027",
-   "updated": "2026-11-06T23:33:45.979Z",
+   "image": "https://cdn.leekduck.com/assets/img/events/events-default-img.jpg",
+   "updated": "2026-11-07T03:16:47.657Z",
    "sources": [
     {
      "id": "leekduck",
@@ -8579,11 +9815,15 @@
    },
    "conflicts": [],
    "gaps": [],
-   "researchTasks": []
+   "researchTasks": [],
+   "pokemon": [],
+   "encounters": [],
+   "encounterConflicts": []
   },
   "leekduck:minior-showers-eta-aquariids-2027": {
    "name": "Minior Showers: Eta Aquariids 2027",
-   "updated": "2026-11-06T23:33:45.979Z",
+   "image": "https://cdn.leekduck.com/assets/img/events/minior-showers-2026.jpg",
+   "updated": "2026-11-07T03:16:47.657Z",
    "sources": [
     {
      "id": "leekduck",
@@ -8678,11 +9918,15 @@
    },
    "conflicts": [],
    "gaps": [],
-   "researchTasks": []
+   "researchTasks": [],
+   "pokemon": [],
+   "encounters": [],
+   "encounterConflicts": []
   },
   "leekduck:minior-showers-southern-delta-aquariids-2027": {
    "name": "Minior Showers: Southern Delta Aquariids 2027",
-   "updated": "2026-11-06T23:33:45.979Z",
+   "image": "https://cdn.leekduck.com/assets/img/events/minior-showers-2026.jpg",
+   "updated": "2026-11-07T03:16:47.657Z",
    "sources": [
     {
      "id": "leekduck",
@@ -8777,11 +10021,15 @@
    },
    "conflicts": [],
    "gaps": [],
-   "researchTasks": []
+   "researchTasks": [],
+   "pokemon": [],
+   "encounters": [],
+   "encounterConflicts": []
   },
   "leekduck:minior-showers-perseids-2027": {
    "name": "Minior Showers: Perseids 2027",
-   "updated": "2026-11-06T23:33:45.979Z",
+   "image": "https://cdn.leekduck.com/assets/img/events/minior-showers-2026.jpg",
+   "updated": "2026-11-07T03:16:47.657Z",
    "sources": [
     {
      "id": "leekduck",
@@ -8869,11 +10117,15 @@
    },
    "conflicts": [],
    "gaps": [],
-   "researchTasks": []
+   "researchTasks": [],
+   "pokemon": [],
+   "encounters": [],
+   "encounterConflicts": []
   },
   "leekduck:go-pass-november-2026": {
    "name": "GO Pass: November",
-   "updated": "2026-11-06T23:33:45.979Z",
+   "image": "https://pokemongohub.net/wp-content/uploads/2026/10/november-2026-go-pass.jpg",
+   "updated": "2026-11-07T03:16:47.657Z",
    "sources": [
     {
      "id": "hub",
@@ -9018,11 +10270,853 @@
    },
    "conflicts": [],
    "gaps": [],
-   "researchTasks": []
+   "researchTasks": [],
+   "pokemon": [],
+   "encounters": [],
+   "encounterConflicts": []
+  },
+  "official:festival-of-lights-2026": {
+   "name": "Celebrate the Festival of Lights with the return of Pikachu wearing a saree and Pikachu wearing a kurta! — Pokémon GO",
+   "researchTasks": [],
+   "updated": "2026-11-07T03:16:47.657Z",
+   "sources": [
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "trust": "official",
+     "url": "https://pokemongo.com/news/festival-of-lights-2026/"
+    }
+   ],
+   "image": "https://lh3.googleusercontent.com/CecgAXRzLOF4ifTP3Ufl01if11xzdVEI6R169xxEXw095LM8_lhhWydeV5VNDpXF9Ax-U8N1Zxq6SlKpwsft03DRYjsekc05qpxF8EyqcnU",
+   "fields": {
+    "bonuses": [
+     {
+      "text": "3× Lure Module duration.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Receive stickers featuring Pikachu wearing a saree or Pikachu wearing a kurta when spinning PokéStops.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Some event-themed Pokémon will also glow.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "—The Pokémon GO team",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     }
+    ],
+    "featured": [
+     {
+      "text": "Lure Modules are more likely to attract the following event-themed Pokémon.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Charmander* Chinchou* Mareep* Camerupt* Litwick* Lampent* Morelull* Tadbulb*",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     }
+    ],
+    "raids": [
+     {
+      "text": "The following Pokémon will appear in raids.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Pikachu wearing a saree* Pikachu wearing a kurta*",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     }
+    ],
+    "eggs": [],
+    "research": [],
+    "shiny": [],
+    "moves": [],
+    "costumes": [
+     {
+      "text": "The Festival of Lights is coming back to Pokémon GO! For this year’s celebrations—exclusive to Trainers in India—get ready for the return of Pikachu wearing a saree and Pikachu wearing a kurta!",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Pikachu wearing a saree* Pikachu wearing a kurta*",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Charmander* Pikachu wearing a saree with chance of Special Background* Pikachu wearing a kurta with chance of Special Background* Chinchou* Mareep* Camerupt* Litwick* Lampent* Morelull* Tadbulb*",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Receive stickers featuring Pikachu wearing a saree or Pikachu wearing a kurta when spinning PokéStops.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     }
+    ],
+    "tickets": [],
+    "dates": [
+     {
+      "text": "Friday, November 6, at 10:00 a.m. to Sunday, November 8, 2026, at 8:00 p.m. local time",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     }
+    ],
+    "researchTasks": []
+   },
+   "pokemon": [],
+   "encounters": [],
+   "internalValidation": {
+    "warnings": [],
+    "lifecycleDeclared": false,
+    "fields": {
+     "bonuses": [
+      {
+       "text": "3× Lure Module duration."
+      },
+      {
+       "text": "Receive stickers featuring Pikachu wearing a saree or Pikachu wearing a kurta when spinning PokéStops."
+      },
+      {
+       "text": "Some event-themed Pokémon will also glow."
+      },
+      {
+       "text": "—The Pokémon GO team"
+      }
+     ],
+     "featured": [
+      {
+       "text": "Lure Modules are more likely to attract the following event-themed Pokémon."
+      },
+      {
+       "text": "Charmander* Chinchou* Mareep* Camerupt* Litwick* Lampent* Morelull* Tadbulb*"
+      }
+     ],
+     "raids": [
+      {
+       "text": "The following Pokémon will appear in raids."
+      },
+      {
+       "text": "Pikachu wearing a saree* Pikachu wearing a kurta*"
+      }
+     ],
+     "eggs": [],
+     "research": [],
+     "shiny": [],
+     "moves": [],
+     "costumes": [
+      {
+       "text": "The Festival of Lights is coming back to Pokémon GO! For this year’s celebrations—exclusive to Trainers in India—get ready for the return of Pikachu wearing a saree and Pikachu wearing a kurta!"
+      },
+      {
+       "text": "Pikachu wearing a saree* Pikachu wearing a kurta*"
+      },
+      {
+       "text": "Charmander* Pikachu wearing a saree with chance of Special Background* Pikachu wearing a kurta with chance of Special Background* Chinchou* Mareep* Camerupt* Litwick* Lampent* Morelull* Tadbulb*"
+      },
+      {
+       "text": "Receive stickers featuring Pikachu wearing a saree or Pikachu wearing a kurta when spinning PokéStops."
+      }
+     ],
+     "tickets": [],
+     "dates": [
+      {
+       "text": "Friday, November 6, at 10:00 a.m. to Sunday, November 8, 2026, at 8:00 p.m. local time"
+      }
+     ]
+    },
+    "legacyDates": {
+     "start": "",
+     "end": ""
+    }
+   }
+  },
+  "official:pokemon-run-30-2026": {
+   "name": "Ready, set, GO! Join the Pokémon RUN 30 event near you! — Pokémon GO",
+   "researchTasks": [],
+   "updated": "2026-11-07T03:16:47.657Z",
+   "sources": [
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "trust": "official",
+     "url": "https://pokemongo.com/news/pokemon-run-30-2026/"
+    }
+   ],
+   "image": "https://lh3.googleusercontent.com/c7e36ASB48bmKd_kOL4e61NU9Y3EPaXd0xmQJldeDAa9zn-W9CSwx6Taf_ENgLcx8K7RE3yP62zaLqwkUSACC6GUcEua_kus5gsm_xoljQ",
+   "fields": {
+    "bonuses": [
+     {
+      "text": "2× Incense duration (excluding Daily Adventure Incense)",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "10× XP for spinning new PokéStops",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "2× XP for spinning PokéStops",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "1/2 Hatch Distance",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     }
+    ],
+    "featured": [
+     {
+      "text": "The following Pokémon will appear more frequently in the wild.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "The following Pokémon will be attracted to Incense (excluding Daily Adventure Incense) during the event.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     }
+    ],
+    "raids": [],
+    "eggs": [],
+    "research": [
+     {
+      "text": "During the event period, Trainers can receive two event-exclusive Timed Research opportunities at no cost within the event area.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "<Pokémon RUN Timed Research> Timed Research rewards include the following.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "2,026 Stardust",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "An encounter with Pikachu and one random first partner Pokémon",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "This Timed Research will expire after the event ends. Be sure to complete the Timed Research tasks and claim all rewards within one day after each event concludes.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "<Pokémon RUN Timed Research: After the Run> Timed Research rewards include the following.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "1 Premium Battle Pass",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Be sure to complete the Timed Research tasks and claim all rewards within seven days after each event concludes.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "—The Pokémon GO team",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     }
+    ],
+    "shiny": [],
+    "moves": [],
+    "costumes": [],
+    "tickets": [],
+    "dates": [
+     {
+      "text": "Philippines: October 3–4, 2026 / SM Mall of Asia",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Taiwan: -October 17–18 / 台中中央公園, Taichung Central Park -October 31 – November 1 / 高雄夢時代, Dream Mall (Kaohsiung) -November 14–15 / 新北大都會公園, New Taipei Metropolitan Park",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Singapore: November 7–8, 2026 / Singapore The Kallang",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Malaysia: November 21-22, 2026 / KLCC Plaza Petronas",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Indonesia: December 12–13, 2026 / GBK (Gelora Bung Karno), Jakarta",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Thailand: January 9–10, 2027 / The outdoor plaza in front of Central World",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Hong Kong: January 23–24, 2027 / 香港科學園, Science Park",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     }
+    ],
+    "researchTasks": []
+   },
+   "internalValidation": {
+    "warnings": [],
+    "lifecycleDeclared": false,
+    "fields": {
+     "bonuses": [
+      {
+       "text": "2× Incense duration (excluding Daily Adventure Incense)"
+      },
+      {
+       "text": "10× XP for spinning new PokéStops"
+      },
+      {
+       "text": "2× XP for spinning PokéStops"
+      },
+      {
+       "text": "1/2 Hatch Distance"
+      }
+     ],
+     "featured": [
+      {
+       "text": "The following Pokémon will appear more frequently in the wild."
+      },
+      {
+       "text": "The following Pokémon will be attracted to Incense (excluding Daily Adventure Incense) during the event."
+      }
+     ],
+     "raids": [],
+     "eggs": [],
+     "research": [
+      {
+       "text": "During the event period, Trainers can receive two event-exclusive Timed Research opportunities at no cost within the event area."
+      },
+      {
+       "text": "<Pokémon RUN Timed Research> Timed Research rewards include the following."
+      },
+      {
+       "text": "2,026 Stardust"
+      },
+      {
+       "text": "An encounter with Pikachu and one random first partner Pokémon"
+      },
+      {
+       "text": "This Timed Research will expire after the event ends. Be sure to complete the Timed Research tasks and claim all rewards within one day after each event concludes."
+      },
+      {
+       "text": "<Pokémon RUN Timed Research: After the Run> Timed Research rewards include the following."
+      },
+      {
+       "text": "1 Premium Battle Pass"
+      },
+      {
+       "text": "Be sure to complete the Timed Research tasks and claim all rewards within seven days after each event concludes."
+      },
+      {
+       "text": "—The Pokémon GO team"
+      }
+     ],
+     "shiny": [],
+     "moves": [],
+     "costumes": [],
+     "tickets": [],
+     "dates": [
+      {
+       "text": "Philippines: October 3–4, 2026 / SM Mall of Asia"
+      },
+      {
+       "text": "Taiwan: -October 17–18 / 台中中央公園, Taichung Central Park -October 31 – November 1 / 高雄夢時代, Dream Mall (Kaohsiung) -November 14–15 / 新北大都會公園, New Taipei Metropolitan Park"
+      },
+      {
+       "text": "Singapore: November 7–8, 2026 / Singapore The Kallang"
+      },
+      {
+       "text": "Malaysia: November 21-22, 2026 / KLCC Plaza Petronas"
+      },
+      {
+       "text": "Indonesia: December 12–13, 2026 / GBK (Gelora Bung Karno), Jakarta"
+      },
+      {
+       "text": "Thailand: January 9–10, 2027 / The outdoor plaza in front of Central World"
+      },
+      {
+       "text": "Hong Kong: January 23–24, 2027 / 香港科學園, Science Park"
+      }
+     ]
+    },
+    "legacyDates": {
+     "start": "",
+     "end": ""
+    }
+   }
+  },
+  "official:save-the-date-go-tour-2027": {
+   "name": "Save the Date: Pokémon GO Tour 2027",
+   "researchTasks": [],
+   "updated": "2026-11-07T03:16:47.657Z",
+   "sources": [
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "trust": "official",
+     "url": "https://pokemongo.com/news/save-the-date-go-tour-2027/"
+    }
+   ],
+   "image": "https://lh3.googleusercontent.com/ZD_ZnJIVRb8a2RWD8L9wF4UR3f0fBAT2ZKk9lLB58yOlXhKOrghIstmijArGABhFlVacGQU56R514Pl0NsA9tTqEpGxbIo4D4oipystojQ",
+   "fields": {
+    "bonuses": [],
+    "featured": [],
+    "raids": [],
+    "eggs": [],
+    "research": [],
+    "shiny": [],
+    "moves": [],
+    "costumes": [],
+    "tickets": [],
+    "dates": [],
+    "researchTasks": []
+   },
+   "pokemon": [],
+   "encounters": [],
+   "internalValidation": {
+    "warnings": [],
+    "lifecycleDeclared": false,
+    "fields": {
+     "bonuses": [],
+     "featured": [],
+     "raids": [],
+     "eggs": [],
+     "research": [],
+     "shiny": [],
+     "moves": [],
+     "costumes": [],
+     "tickets": [],
+     "dates": []
+    },
+    "legacyDates": {
+     "start": "",
+     "end": ""
+    }
+   }
+  },
+  "official:european-space-agency-event": {
+   "name": "Pokémon GO partners with the European Space Agency",
+   "researchTasks": [],
+   "updated": "2026-11-07T03:16:47.657Z",
+   "sources": [
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "trust": "official",
+     "url": "https://pokemongo.com/news/european-space-agency-event/"
+    }
+   ],
+   "image": "https://lh3.googleusercontent.com/7CITEYsKb4CAwdYOln7q7h5K6U1cIVu2cnWRbDZtixs10PkfYfHzPn5Iz9wwbMFE3bosgBEiKnZlEZJZmGiyl-YqYRKHlIL8d7VAzR4DjA",
+   "fields": {
+    "bonuses": [],
+    "featured": [
+     {
+      "text": "Look to the skies, Trainers! From October 4 to October 10, 2026, these event-themed Pokémon will appear more frequently around participating locations.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     }
+    ],
+    "raids": [],
+    "eggs": [],
+    "research": [],
+    "shiny": [],
+    "moves": [],
+    "costumes": [],
+    "tickets": [],
+    "dates": [
+     {
+      "text": "From October 4, 2026, to April 30, 2027, Trainers visiting participating science and space museums can discover special Pokémon GO gameplay inspired by the wonders of space, including encounters with Astronaut Pikachu!",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Look to the skies, Trainers! From October 4 to October 10, 2026, these event-themed Pokémon will appear more frequently around participating locations.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "All the above gameplay, excluding Location Backgrounds, will be available at the following ESA locations across Europe from October 4 to October 10, 2026.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     }
+    ],
+    "researchTasks": []
+   },
+   "pokemon": [
+    {
+     "key": "824:base:none",
+     "speciesId": "824",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Blipbug",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Blipbug"
+    }
+   ],
+   "encounters": [
+    {
+     "identityKey": "824:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    }
+   ],
+   "internalValidation": {
+    "warnings": [],
+    "lifecycleDeclared": false,
+    "fields": {
+     "bonuses": [],
+     "featured": [
+      {
+       "text": "Look to the skies, Trainers! From October 4 to October 10, 2026, these event-themed Pokémon will appear more frequently around participating locations."
+      }
+     ],
+     "raids": [],
+     "eggs": [],
+     "research": [],
+     "shiny": [],
+     "moves": [],
+     "costumes": [],
+     "tickets": [],
+     "dates": [
+      {
+       "text": "From October 4, 2026, to April 30, 2027, Trainers visiting participating science and space museums can discover special Pokémon GO gameplay inspired by the wonders of space, including encounters with Astronaut Pikachu!"
+      },
+      {
+       "text": "Look to the skies, Trainers! From October 4 to October 10, 2026, these event-themed Pokémon will appear more frequently around participating locations."
+      },
+      {
+       "text": "All the above gameplay, excluding Location Backgrounds, will be available at the following ESA locations across Europe from October 4 to October 10, 2026."
+      }
+     ]
+    },
+    "legacyDates": {
+     "start": "",
+     "end": ""
+    }
+   }
+  },
+  "official:gowildarea-2026-timed-research": {
+   "name": "This weekend only! Log in November 6–8 for free Timed Research featuring Gigantamax Machamp! — Pokémon GO",
+   "researchTasks": [],
+   "updated": "2026-11-07T03:16:47.657Z",
+   "sources": [
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "trust": "official",
+     "url": "https://pokemongo.com/news/gowildarea-2026-timed-research/"
+    }
+   ],
+   "image": "https://lh3.googleusercontent.com/ou9s1BeQ2dxKpKmtjCjzqmE7LInbAzbD6UxkhtK6DMHRPpfxjkCxIfoVyfWpulXpmXnCCuTOluKKw_e_5n6yMhRFnYOq4OBwe5KoWt4HCeU",
+   "fields": {
+    "bonuses": [],
+    "featured": [],
+    "raids": [],
+    "eggs": [],
+    "research": [
+     {
+      "text": "Friday, November 6, at 10:00 a.m. to Sunday, November 8, 2026, at 11:59 p.m. local time",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Timed Research rewards will include the following.",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "An encounter with Gigantamax Machamp*",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "Machop Candy and Candy XL",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     },
+     {
+      "text": "—The Pokémon GO team",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     }
+    ],
+    "shiny": [],
+    "moves": [],
+    "costumes": [],
+    "tickets": [],
+    "dates": [
+     {
+      "text": "Friday, November 6, at 10:00 a.m. to Sunday, November 8, 2026, at 11:59 p.m. local time",
+      "sources": [
+       "official"
+      ],
+      "status": "official"
+     }
+    ],
+    "researchTasks": []
+   },
+   "pokemon": [],
+   "encounters": [],
+   "internalValidation": {
+    "warnings": [],
+    "lifecycleDeclared": false,
+    "fields": {
+     "bonuses": [],
+     "featured": [],
+     "raids": [],
+     "eggs": [],
+     "research": [
+      {
+       "text": "Friday, November 6, at 10:00 a.m. to Sunday, November 8, 2026, at 11:59 p.m. local time"
+      },
+      {
+       "text": "Timed Research rewards will include the following."
+      },
+      {
+       "text": "An encounter with Gigantamax Machamp*"
+      },
+      {
+       "text": "Machop Candy and Candy XL"
+      },
+      {
+       "text": "—The Pokémon GO team"
+      }
+     ],
+     "shiny": [],
+     "moves": [],
+     "costumes": [],
+     "tickets": [],
+     "dates": [
+      {
+       "text": "Friday, November 6, at 10:00 a.m. to Sunday, November 8, 2026, at 11:59 p.m. local time"
+      }
+     ]
+    },
+    "legacyDates": {
+     "start": "",
+     "end": ""
+    }
+   }
+  },
+  "official:city-safari-boston-rescheduled": {
+   "name": "Pokémon GO City Safari: Boston Update",
+   "researchTasks": [],
+   "updated": "2026-11-07T03:16:47.657Z",
+   "sources": [
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "trust": "official",
+     "url": "https://pokemongo.com/news/city-safari-boston-rescheduled/"
+    }
+   ],
+   "image": "https://lh3.googleusercontent.com/5SAHXmMPUCpY_TUiDA81oiN00LXrIbsOXN9CTFtZbjI4pz_0RbQr0tmSACr1JErfEvZqM131RfCU8-LA2uskPRaP7YAom1uS216jhW_JpQ",
+   "fields": {
+    "bonuses": [],
+    "featured": [],
+    "raids": [],
+    "eggs": [],
+    "research": [],
+    "shiny": [],
+    "moves": [],
+    "costumes": [],
+    "tickets": [],
+    "dates": [],
+    "researchTasks": []
+   },
+   "pokemon": [],
+   "encounters": [],
+   "internalValidation": {
+    "warnings": [],
+    "lifecycleDeclared": false,
+    "fields": {
+     "bonuses": [],
+     "featured": [],
+     "raids": [],
+     "eggs": [],
+     "research": [],
+     "shiny": [],
+     "moves": [],
+     "costumes": [],
+     "tickets": [],
+     "dates": []
+    },
+    "legacyDates": {
+     "start": "",
+     "end": ""
+    }
+   }
+  },
+  "official:city-safari-boston-update": {
+   "name": "Event Update: City Safari Boston — Pokémon GO",
+   "researchTasks": [],
+   "updated": "2026-11-07T03:16:47.657Z",
+   "sources": [
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "trust": "official",
+     "url": "https://pokemongo.com/news/city-safari-boston-update/"
+    }
+   ],
+   "image": "https://lh3.googleusercontent.com/5SAHXmMPUCpY_TUiDA81oiN00LXrIbsOXN9CTFtZbjI4pz_0RbQr0tmSACr1JErfEvZqM131RfCU8-LA2uskPRaP7YAom1uS216jhW_JpQ",
+   "fields": {
+    "bonuses": [],
+    "featured": [],
+    "raids": [],
+    "eggs": [],
+    "research": [],
+    "shiny": [],
+    "moves": [],
+    "costumes": [],
+    "tickets": [],
+    "dates": [],
+    "researchTasks": []
+   },
+   "pokemon": [],
+   "encounters": [],
+   "internalValidation": {
+    "warnings": [],
+    "lifecycleDeclared": false,
+    "fields": {
+     "bonuses": [],
+     "featured": [],
+     "raids": [],
+     "eggs": [],
+     "research": [],
+     "shiny": [],
+     "moves": [],
+     "costumes": [],
+     "tickets": [],
+     "dates": []
+    },
+    "legacyDates": {
+     "start": "",
+     "end": ""
+    }
+   }
   },
   "leekduck:pokemonspotlighthour2026-11-05": {
    "name": "Teddiursa wearing a witch hat Spotlight Hour",
-   "updated": "2026-11-06T03:45:04.945Z",
+   "researchTasks": [],
+   "updated": "2026-11-07T03:16:47.657Z",
    "sources": [
     {
      "id": "leekduck",
@@ -9031,6 +11125,7 @@
      "url": "https://leekduck.com/events/pokemonspotlighthour2026-11-05/"
     }
    ],
+   "image": "https://cdn.leekduck.com/assets/img/events/pokemonspotlighthour.jpg",
    "fields": {
     "bonuses": [],
     "featured": [
@@ -9068,14 +11163,286 @@
        "leekduck"
       ],
       "status": "single"
+     },
+     {
+      "text": "Teddiursa wearing a witch hat",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
      }
     ],
     "tickets": [],
-    "dates": []
+    "dates": [],
+    "researchTasks": []
    },
-   "conflicts": [],
-   "gaps": [],
-   "researchTasks": []
+   "normalizedEvent": {
+    "schemaVersion": 1,
+    "eventId": "leekduck:pokemonspotlighthour2026-11-05",
+    "aliases": [],
+    "family": "spotlight-hour",
+    "title": "Teddiursa wearing a witch hat Spotlight Hour",
+    "dateText": "",
+    "completeness": "partial",
+    "lifecycle": "announced",
+    "attendance": "",
+    "location": null,
+    "image": "https://cdn.leekduck.com/assets/img/events/pokemonspotlighthour.jpg",
+    "notes": [],
+    "internalValidation": {
+     "warnings": [],
+     "lifecycleDeclared": false,
+     "native": true,
+     "fields": {
+      "bonuses": [],
+      "featured": [
+       {
+        "text": "The following Pokémon will appear more frequently in the wild."
+       },
+       {
+        "text": "Teddiursa wearing a witch hat"
+       }
+      ],
+      "raids": [],
+      "eggs": [],
+      "research": [],
+      "shiny": [],
+      "moves": [],
+      "costumes": [
+       {
+        "text": "Pokémon Spotlight Hour will feature a different Pokémon and special bonus for one hour at 6:00 p.m. local time."
+       },
+       {
+        "text": "November 5 : The featured Pokémon is Teddiursa wearing a witch hat and the special bonus is 2× Evolution XP ."
+       },
+       {
+        "text": "Teddiursa wearing a witch hat"
+       }
+      ],
+      "tickets": [],
+      "dates": []
+     },
+     "legacyDates": {
+      "start": "",
+      "end": ""
+     }
+    },
+    "schedule": null,
+    "activities": [],
+    "bonuses": [],
+    "research": [],
+    "passes": [],
+    "tickets": [],
+    "sources": [
+     {
+      "id": "leekduck",
+      "name": "Leek Duck",
+      "trust": "community",
+      "url": "https://leekduck.com/events/pokemonspotlighthour2026-11-05/"
+     }
+    ],
+    "pokemon": [],
+    "encounters": [],
+    "groups": {}
+   },
+   "pokemon": [],
+   "encounters": [],
+   "internalValidation": {
+    "warnings": [],
+    "lifecycleDeclared": false,
+    "fields": {
+     "bonuses": [],
+     "featured": [
+      {
+       "text": "The following Pokémon will appear more frequently in the wild."
+      },
+      {
+       "text": "Teddiursa wearing a witch hat"
+      }
+     ],
+     "raids": [],
+     "eggs": [],
+     "research": [],
+     "shiny": [],
+     "moves": [],
+     "costumes": [
+      {
+       "text": "Pokémon Spotlight Hour will feature a different Pokémon and special bonus for one hour at 6:00 p.m. local time."
+      },
+      {
+       "text": "November 5 : The featured Pokémon is Teddiursa wearing a witch hat and the special bonus is 2× Evolution XP ."
+      },
+      {
+       "text": "Teddiursa wearing a witch hat"
+      }
+     ],
+     "tickets": [],
+     "dates": []
+    },
+    "legacyDates": {
+     "start": "",
+     "end": ""
+    }
+   }
+  },
+  "leekduck:shadow-tornadus-incarnate-forme-in-shadow-raids-november-16-2026": {
+   "name": "Shadow Tornadus (Incarnate Forme) in Shadow Raids",
+   "researchTasks": [],
+   "updated": "2026-11-07T03:16:47.657Z",
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/shadow-tornadus-incarnate-forme-in-shadow-raids-november-16-2026/"
+    }
+   ],
+   "image": "https://cdn.leekduck.com/assets/img/events/tornadus.jpg",
+   "fields": {
+    "bonuses": [],
+    "featured": [],
+    "raids": [
+     {
+      "text": "Shadow Tornadus (Incarnate Forme) will appear in five-star Shadow Raids every weekend from November 16, 2026 to December 1, 2026.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Shadow Tornadus (Incarnate Forme) will appear in Shadow Raids.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Tornadus (Incarnate)",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "eggs": [],
+    "research": [],
+    "shiny": [],
+    "moves": [],
+    "costumes": [],
+    "tickets": [],
+    "dates": [
+     {
+      "text": "Shadow Tornadus (Incarnate Forme) will appear in five-star Shadow Raids every weekend from November 16, 2026 to December 1, 2026.",
+      "sources": [
+       "leekduck"
+      ],
+      "status": "single"
+     }
+    ],
+    "researchTasks": []
+   },
+   "normalizedEvent": {
+    "schemaVersion": 1,
+    "eventId": "leekduck:shadow-tornadus-incarnate-forme-in-shadow-raids-november-16-2026",
+    "aliases": [],
+    "family": "other",
+    "title": "Shadow Tornadus (Incarnate Forme) in Shadow Raids",
+    "dateText": "Shadow Tornadus (Incarnate Forme) will appear in five-star Shadow Raids every weekend from November 16, 2026 to December 1, 2026.",
+    "completeness": "partial",
+    "lifecycle": "announced",
+    "attendance": "",
+    "location": null,
+    "image": "https://cdn.leekduck.com/assets/img/events/tornadus.jpg",
+    "notes": [],
+    "internalValidation": {
+     "warnings": [],
+     "lifecycleDeclared": false,
+     "native": true,
+     "fields": {
+      "bonuses": [],
+      "featured": [],
+      "raids": [
+       {
+        "text": "Shadow Tornadus (Incarnate Forme) will appear in five-star Shadow Raids every weekend from November 16, 2026 to December 1, 2026."
+       },
+       {
+        "text": "Shadow Tornadus (Incarnate Forme) will appear in Shadow Raids."
+       },
+       {
+        "text": "Tornadus (Incarnate)"
+       }
+      ],
+      "eggs": [],
+      "research": [],
+      "shiny": [],
+      "moves": [],
+      "costumes": [],
+      "tickets": [],
+      "dates": [
+       {
+        "text": "Shadow Tornadus (Incarnate Forme) will appear in five-star Shadow Raids every weekend from November 16, 2026 to December 1, 2026."
+       }
+      ]
+     },
+     "legacyDates": {
+      "start": "",
+      "end": ""
+     }
+    },
+    "schedule": null,
+    "activities": [],
+    "bonuses": [],
+    "research": [],
+    "passes": [],
+    "tickets": [],
+    "sources": [
+     {
+      "id": "leekduck",
+      "name": "Leek Duck",
+      "trust": "community",
+      "url": "https://leekduck.com/events/shadow-tornadus-incarnate-forme-in-shadow-raids-november-16-2026/"
+     }
+    ],
+    "pokemon": [],
+    "encounters": [],
+    "groups": {}
+   },
+   "pokemon": [],
+   "encounters": [],
+   "internalValidation": {
+    "warnings": [],
+    "lifecycleDeclared": false,
+    "fields": {
+     "bonuses": [],
+     "featured": [],
+     "raids": [
+      {
+       "text": "Shadow Tornadus (Incarnate Forme) will appear in five-star Shadow Raids every weekend from November 16, 2026 to December 1, 2026."
+      },
+      {
+       "text": "Shadow Tornadus (Incarnate Forme) will appear in Shadow Raids."
+      },
+      {
+       "text": "Tornadus (Incarnate)"
+      }
+     ],
+     "eggs": [],
+     "research": [],
+     "shiny": [],
+     "moves": [],
+     "costumes": [],
+     "tickets": [],
+     "dates": [
+      {
+       "text": "Shadow Tornadus (Incarnate Forme) will appear in five-star Shadow Raids every weekend from November 16, 2026 to December 1, 2026."
+      }
+     ]
+    },
+    "legacyDates": {
+     "start": "",
+     "end": ""
+    }
+   }
   },
   "twilightwishes": {
    "name": "Twilight Wishes",
@@ -13163,48 +15530,6 @@
      },
      {
       "text": "Perseids : August 10–15, 2027",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ]
-   },
-   "conflicts": [],
-   "gaps": []
-  },
-  "leekduck:shadow-tornadus-incarnate-forme-in-shadow-raids-november-16-2026": {
-   "name": "Shadow Tornadus (Incarnate Forme) in Shadow Raids",
-   "updated": "2026-10-29T16:15:41.377Z",
-   "sources": [
-    {
-     "id": "leekduck",
-     "name": "Leek Duck",
-     "trust": "community",
-     "url": "https://leekduck.com/events/shadow-tornadus-incarnate-forme-in-shadow-raids-november-16-2026/"
-    }
-   ],
-   "fields": {
-    "bonuses": [],
-    "featured": [],
-    "raids": [
-     {
-      "text": "Shadow Tornadus (Incarnate Forme) will appear in five-star Shadow Raids every weekend from November 16, 2026 to December 1, 2026.",
-      "sources": [
-       "leekduck"
-      ],
-      "status": "single"
-     }
-    ],
-    "eggs": [],
-    "research": [],
-    "shiny": [],
-    "moves": [],
-    "costumes": [],
-    "tickets": [],
-    "dates": [
-     {
-      "text": "Shadow Tornadus (Incarnate Forme) will appear in five-star Shadow Raids every weekend from November 16, 2026 to December 1, 2026.",
       "sources": [
        "leekduck"
       ],
