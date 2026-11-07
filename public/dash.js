@@ -888,13 +888,13 @@
   function loadWorld(j, seed) {
     var list = (j.events || []).map(function (e) {
       var src = seed ? (e.source && typeof e.source === 'object' && e.source.url ? e.source : j.source) : { url: (e.sources && e.sources[0] && e.sources[0].url) || e.url || '#', n: e.sources ? e.sources.length : 1 };
-      if (!e.start) return { undated: true, name: e.name, place: e.place, area: e.area, scope: e.scope, mode: e.mode || '', src: src };
+      if (!e.start) return { undated: true, catalogueId:e.id, name: e.name, place: e.place, area: e.area, scope: e.scope, mode: e.mode || '', src: src };
       var startValue = String(e.start), startIsDateOnly = /^\d{4}-\d{2}-\d{2}$/.test(startValue);
       /* A date-only start can safely mean the whole local calendar day. A timed event needs an explicit end. */
-      if (!e.end && !startIsDateOnly) return { undated: true, name: e.name, place: e.place, area: e.area, scope: e.scope, mode: e.mode || '', src: src };
+      if (!e.end && !startIsDateOnly) return { undated: true, catalogueId:e.id, name: e.name, place: e.place, area: e.area, scope: e.scope, mode: e.mode || '', src: src };
       var s0 = worldDate(startValue, false), e0 = worldDate(String(e.end || e.start), !!e.end || startIsDateOnly);
-      if (!Number.isFinite(s0.getTime()) || !Number.isFinite(e0.getTime()) || e0 < s0) return { undated: true, name: e.name, place: e.place, area: e.area, scope: e.scope, mode: e.mode || '', src: src };
-      return { id: e.id, name: e.name, place: e.place || '', area: e.scope === 'global' ? 'In the game' : e.area, scope: e.scope || 'regional', mode: e.mode || '', start: s0, end: e0, sourceStart: startValue, sourceEnd: String(e.end || e.start), long: (e0 - s0) > 14 * 864e5, src: src };
+      if (!Number.isFinite(s0.getTime()) || !Number.isFinite(e0.getTime()) || e0 < s0) return { undated: true, catalogueId:e.id, name: e.name, place: e.place, area: e.area, scope: e.scope, mode: e.mode || '', src: src };
+      return { id: e.id, catalogueId:e.id, name: e.name, place: e.place || '', area: e.scope === 'global' ? 'In the game' : e.area, scope: e.scope || 'regional', mode: e.mode || '', start: s0, end: e0, sourceStart: startValue, sourceEnd: String(e.end || e.start), long: (e0 - s0) > 14 * 864e5, src: src };
     });
     /* An announcement with no dates of its own (e.g. Gigantamax Duraludon at the Sendai Wild Area) takes the dates of the
        dated event at the same place whose name it shares a distinctive word with. */
@@ -902,7 +902,7 @@
       if (!x.undated) return;
       var words = String(x.name).toLowerCase().match(/wild area|go fest|safari|community day|go tour|go park/);
       var host = words && list.filter(function (y) { return !y.undated && y.place === x.place && String(y.name).toLowerCase().indexOf(words[0]) >= 0; })[0];
-      if (host) list[i] = { id: 'dated:' + host.id + ':' + i, name: x.name, place: x.place, area: host.area, scope: x.scope || 'regional', mode: x.mode || '', start: host.start, end: host.end, long: host.long, src: x.src };
+      if (host) list[i] = { id: 'dated:' + host.id + ':' + i, catalogueId:x.catalogueId, name: x.name, place: x.place, area: host.area, scope: x.scope || 'regional', mode: x.mode || '', start: host.start, end: host.end, long: host.long, src: x.src };
     });
     UNDATED = list.filter(function (x) { return x.undated; });
     REG = list.filter(function (x) { return !x.undated; });
@@ -953,11 +953,15 @@
     var hide = it.travel ? '' : '<button type="button" class="agx" data-hide="' + esc(it.id) + '" aria-label="Hide ' + esc(it.name) + '" title="Hide this event (show it again from Hidden by you)"><span class="agx-ic" aria-hidden="true">✕</span><span class="agx-cap" aria-hidden="true">Hide</span></button>';
     return '<div class="agw">' + agendaInner(it, isReg) + '<div class="ag-actions">' + pin + ig + hide + '</div></div>';
   }
+  function catalogueDetailAttr(it) {
+    var model=window.GOEventRegistry&&GOEventRegistry.find(it.catalogueId||it.id);
+    return model?' data-open="'+esc(model.eventId)+'"':'';
+  }
   function agendaInner(it, isReg) {
     if (isReg) {
       var mult = it.end.getTime() - it.start.getTime() > 864e5;
       var when = it.travel ? travelDateText(it) : (mult ? fmtD(it.start) + ' to ' + fmtD(it.end) : fmtD(it.start));
-      return '<a class="agr reg" href="' + esc(it.src.url) + '" target="_blank" rel="noopener noreferrer" style="--k:' + REGCOL + '"><i></i><span class="agt"><b>' + esc(it.name) + '</b><small>' + (it.place ? esc(it.place) + ' · ' : '') + esc(when) + '</small></span><em>' + esc(it.area) + '</em></a>';
+      return '<a class="agr reg"'+catalogueDetailAttr(it)+' href="' + esc(it.src.url) + '" target="_blank" rel="noopener noreferrer" style="--k:' + REGCOL + '"><i></i><span class="agt"><b>' + esc(it.name) + '</b><small>' + (it.place ? esc(it.place) + ' · ' : '') + esc(when) + '</small></span><em>' + esc(it.area) + '</em></a>';
     }
     var k = kindOf(it);
     return '<button type="button" class="agr" data-open="' + esc(it.id) + '" style="--k:' + k[1] + '"><i></i><span class="agt"><b>' + esc(it.name) + '</b><small>' + esc(whenText(it)) + '</small></span><em>' + esc(k[0]) + '</em></button>';
@@ -1025,7 +1029,7 @@
     var chips = $('calreg');
     var ddOpen = {}; if (chips) Array.prototype.forEach.call(chips.querySelectorAll('details.dd[data-k]'), function (d) { ddOpen[d.getAttribute('data-k')] = d.open; });
     if (chips) chips.innerHTML = '<div class="rgrow">' + REGIONS.map(function (r) { return '<button type="button" class="fchip" data-creg="' + r[0] + '" aria-pressed="' + (regSel === r[0]) + '">' + esc(r[1]) + '</button>'; }).join('') + '</div>'
-      + '<span class="seg" role="group" aria-label="Range">' + [['day', 'Day'], ['week', 'Week'], ['month', 'Month']].map(function (r) { return '<button type="button" class="fchip" data-cscope="' + r[0] + '" aria-pressed="' + (scopeSel === r[0]) + '">' + r[1] + '</button>'; }).join('') + '</span>' + (UNDATED.length && (regSel === 'all' || regSel === 'global') ? '<details class="dd" data-k="undated"><summary>Announced, date not published yet (' + UNDATED.length + ')</summary><div class="body">' + UNDATED.map(function (u) { return '<a class="agr reg" href="' + esc(u.src.url) + '" target="_blank" rel="noopener noreferrer" style="--k:' + REGCOL + '"><i></i><span class="agt"><b>' + esc(u.name) + '</b><small>' + esc(u.place || 'Dates to be announced') + '</small></span><em>' + esc(u.area || '') + '</em></a>'; }).join('') + '</div></details>' : '');
+      + '<span class="seg" role="group" aria-label="Range">' + [['day', 'Day'], ['week', 'Week'], ['month', 'Month']].map(function (r) { return '<button type="button" class="fchip" data-cscope="' + r[0] + '" aria-pressed="' + (scopeSel === r[0]) + '">' + r[1] + '</button>'; }).join('') + '</span>' + (UNDATED.length && (regSel === 'all' || regSel === 'global') ? '<details class="dd" data-k="undated"><summary>Announced, date not published yet (' + UNDATED.length + ')</summary><div class="body">' + UNDATED.map(function (u) { return '<a class="agr reg"'+catalogueDetailAttr(u)+' href="' + esc(u.src.url) + '" target="_blank" rel="noopener noreferrer" style="--k:' + REGCOL + '"><i></i><span class="agt"><b>' + esc(u.name) + '</b><small>' + esc(u.place || 'Dates to be announced') + '</small></span><em>' + esc(u.area || '') + '</em></a>'; }).join('') + '</div></details>' : '');
     var hl = hiddenList().map(function (id) { var e = EV.filter(function (x) { return x.id === id; })[0] || REG.filter(function (x) { return x.id === id; })[0]; return e && e.end > now() ? { id: id, name: e.name } : null; }).filter(Boolean);
     if (chips && hl.length) chips.innerHTML += '<details class="dd" data-k="hidden"><summary>Hidden by you (' + hl.length + ')</summary><div class="body">' + hl.map(function (h) { return '<div class="hid"><span>' + esc(h.name) + '</span><button type="button" class="more" data-unhide="' + esc(h.id) + '">Show again</button></div>'; }).join('') + '</div></details>';
     if (chips) Array.prototype.forEach.call(chips.querySelectorAll('details.dd[data-k]'), function (d) { if (ddOpen[d.getAttribute('data-k')]) d.open = true; });

@@ -122,6 +122,18 @@ with sync_playwright() as p:
     page=context.new_page();errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
     page.goto(BASE+'/');page.wait_for_function('!!window.GODETAIL&&!!window.GOEventRegistry')
     page.evaluate('GOEventRegistry.ready')
+    regional=page.locator('#home-now .agr.reg[data-open]').first
+    regional.wait_for(state='visible')
+    regional_id=regional.get_attribute('data-open')
+    expected_title=page.evaluate('(id)=>GOEventRegistry.find(id).title',regional_id)
+    source_url=regional.get_attribute('href')
+    regional.click()
+    page.wait_for_function('(title)=>document.getElementById("evd-t")?.textContent===title',arg=expected_title)
+    assert len(context.pages)==1, 'known overseas event escaped to its external source'
+    assert page.locator('#evd-sources a').evaluate_all('(links,url)=>links.some(a=>a.href===url)',source_url)
+    page.keyboard.press('Escape')
+    page.wait_for_function('!GONAV.internal&&GONAV.pending.length===0')
+    print('PASS overseas Today listing opens the universal sheet and retains its source link')
     for item in CATALOGUE['events']:
         page.evaluate('(id)=>GODETAIL.open(id)',item['eventId'])
         page.wait_for_function('(title)=>document.getElementById("evd-t")?.textContent===title',arg=item['title'],timeout=10000)

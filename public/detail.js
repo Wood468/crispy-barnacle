@@ -718,7 +718,7 @@
       return;
     }
     var b = e.target.closest('[data-open]');
-    if (b) { e.preventDefault(); open(b.dataset.open, b); }
+    if (b) { if(b.tagName==='A'&&(e.metaKey||e.ctrlKey||e.shiftKey||e.altKey||e.button!==0))return;e.preventDefault(); open(b.dataset.open, b); }
   });
   /* Keep keyboard navigation inside the modal while it is open. */
   document.addEventListener('keydown', function (e) {
