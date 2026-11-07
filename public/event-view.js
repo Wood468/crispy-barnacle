@@ -32,9 +32,9 @@
       rotations:activities.filter(function(a){return a&&a.schedule&&a.presentation==='rotation';}).length,
       schedule:activities.filter(function(a){return a&&a.schedule&&a.presentation==='schedule';}).length,
       bonuses:Array.isArray(ev.bonuses)?ev.bonuses.length:0,
-      research:(Array.isArray(ev.research)?ev.research.length:0)+activities.filter(function(a){return a.schedule&&a.presentation==='research';}).length,
+      research:(Array.isArray(ev.research)?ev.research.length:0)+activities.filter(function(a){return a&&a.schedule&&a.presentation==='research';}).length,
       passes:Array.isArray(ev.passes)?ev.passes.length:0,
-      tickets:(Array.isArray(ev.tickets)?ev.tickets.length:0)+activities.filter(function(a){return a.schedule&&a.presentation==='ticket';}).length
+      tickets:(Array.isArray(ev.tickets)?ev.tickets.length:0)+activities.filter(function(a){return a&&a.schedule&&a.presentation==='ticket';}).length
     };
     var preferred=FAMILY[family], all=FAMILY.other;
     // A family guides order but never suppresses sections actually present.

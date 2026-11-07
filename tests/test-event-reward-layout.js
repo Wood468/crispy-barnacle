@@ -58,3 +58,12 @@ test('text-only rewards escape hostile content inside the contained artwork layo
  assert.doesNotMatch(html,/<img src=x/);
  assert.match(html,/&lt;img src=x onerror=alert\(1\)&gt; &amp; 100 Stardust/);
 });
+
+const view=require('../public/event-view.js');
+test('incomplete future ingestion tolerates null activity records without hiding valid schedule',()=>{
+ const model=futureEvent({activities:[null,{id:'rotation',presentation:'rotation',schedule:{start:'2099-01-01T10:00:00'}},{id:'research',presentation:'research',schedule:{start:'2099-01-01T11:00:00'}},{id:'ticket',presentation:'ticket',schedule:{start:'2099-01-01T12:00:00'}}]});
+ const projected=view.project(model);
+ assert.equal(projected.sections.find(s=>s.key==='rotations').count,1);
+ assert.equal(projected.sections.find(s=>s.key==='research').count,1);
+ assert.equal(projected.sections.find(s=>s.key==='tickets').count,1);
+});
