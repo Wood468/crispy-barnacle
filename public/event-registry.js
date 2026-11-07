@@ -9,9 +9,30 @@
   var kinds={'community-day':'cd','raid-day':'raid','raid-hour':'raid','max-battles':'max','spotlight-hour':'spot'};
   return {id:model.eventId,name:model.title,dateText:model.lifecycle==='postponed'?'Postponed · New dates to be announced':model.dateText||'',kind:model.attendance==='in-person'?'person':kinds[model.family]||'event',start:root.GOEventClock.parseDate(range?range.start:published?legacy.start:NaN),end:root.GOEventClock.parseDate(range?range.end:published?legacy.end:NaN),sourceStart:published?legacy.start:'',sourceEnd:published?legacy.end:'',instantKnown:!!range&&model.lifecycle!=='postponed',datesKnown:!!range||published,scope:model.schedule&&model.schedule.timeBasis==='player-local'?'worldwide_local':'',utc:!!(model.schedule&&model.schedule.timeBasis==='instant'),region:typeof model.location==='string'?model.location:'',link:(model.sources.find(function(s){return s.url;})||{}).url||'',img:model.image||'',featured:model.pokemon.map(function(p){return {name:root.GOEventAdapter.collectionName(p)||(p.name+(p.formId?' ('+p.formId+')':'')),costume:!!p.costumeId,label:p.label,formId:p.formId,identity:p};}),notes:model.notes,bonuses:model.bonuses.map(function(b){return typeof b==='string'?b:b.text||b.title||'';}),universalModel:model};
  }
- var diagnostics={rejectedCount:0,rejections:[],conflicts:[]},CACHE='gofn-catalogue-v1',KEY='/events-v1.validated.json';
- async function previousSnapshot(){try{if(!root.caches)return null;var cache=await root.caches.open(CACHE),response=await cache.match(KEY);return response?await response.json():null;}catch(error){return null;}}
- async function saveSnapshot(snapshot){try{if(root.caches){var cache=await root.caches.open(CACHE);await cache.put(KEY,new Response(JSON.stringify(snapshot),{headers:{'content-type':'application/json'}}));}}catch(error){diagnostics.cacheUnavailable=true;}}
+ var diagnostics={rejectedCount:0,rejections:[],conflicts:[]};
+ // Public structured data lives separately from player storage and the replaceable PWA shell.
+ // Wait for transaction completion: a successful request alone does not guarantee persistence.
+ function storedSnapshot(snapshot,write){return new Promise(function(resolve,reject){
+  var db=null,done=false,result=null;
+  function finish(error){if(done)return;done=true;clearTimeout(timer);if(db)db.close();if(error)reject(error);else resolve(result);}
+  var timer=setTimeout(function(){finish(new Error('Catalogue storage timed out'));},3000);
+  var request;
+  try{if(!root.indexedDB)throw new Error('Catalogue storage unavailable');request=root.indexedDB.open('gofn-event-catalogue-v1',1);}catch(error){finish(error);return;}
+  request.onupgradeneeded=function(){request.result.createObjectStore('snapshots');};
+  request.onerror=function(){finish(request.error||new Error('Catalogue storage unavailable'));};
+  request.onblocked=function(){finish(new Error('Catalogue storage is busy'));};
+  request.onsuccess=function(){
+   db=request.result;if(done){db.close();return;}
+   db.onversionchange=function(){db.close();};
+   try{var tx=db.transaction('snapshots',write?'readwrite':'readonly'),store=tx.objectStore('snapshots'),op=write?store.put(snapshot,'current'):store.get('current');
+    op.onsuccess=function(){result=write?snapshot:op.result||null;};
+    tx.oncomplete=function(){finish();};
+    tx.onabort=tx.onerror=function(){finish(tx.error||op.error||new Error('Catalogue storage unavailable'));};
+   }catch(error){finish(error);}
+  };
+ });}
+ async function previousSnapshot(){try{return await storedSnapshot(null,false);}catch(error){return null;}}
+ async function saveSnapshot(snapshot){try{await storedSnapshot(snapshot,true);}catch(error){diagnostics.cacheUnavailable=true;}}
  var ready=(async function(){
   var previous=await previousSnapshot(),candidate=await root.GOLIB.jsonOrNull('/events-v1.json',{maxAge:600000,init:{cache:'no-cache'}});
   var decision=root.GOEventCatalogue.prepare(candidate,previous);

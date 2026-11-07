@@ -18,10 +18,7 @@ def stub_api(route):route.fulfill(body='{"enabled":false,"events":[],"sources":[
 with sync_playwright() as p:
  browser=getattr(p,ENGINE).launch()
  for width in [320,390,1440]:
-  # WebKit disables CacheStorage together with service workers in "block" mode.
-  # Keep storage available while suppressing registration so fixture fetches stay routed.
-  context=browser.new_context(viewport={'width':width,'height':900},timezone_id='Asia/Tokyo',service_workers='allow')
-  context.add_init_script("if(navigator.serviceWorker)navigator.serviceWorker.register=()=>Promise.reject(new Error('Offline registration is isolated in this fixture'));")
+  context=browser.new_context(viewport={'width':width,'height':900},timezone_id='Asia/Tokyo',service_workers='block')
   context.set_default_timeout(20000)
   context.route('**/api/**',stub_api)
   context.route(re.compile(r'^https://fonts\.'),lambda r:r.fulfill(body='',content_type='text/css'))
@@ -79,12 +76,6 @@ with sync_playwright() as p:
   assert page.locator('#evd-research-title').is_visible() and page.locator('#evd-tickets').is_visible()
   assert page.locator('#evd-rotations').count()==0
   close_event()
-  cached=page.evaluate("""async()=>{
-   const names=await caches.keys(),c=await caches.open('gofn-catalogue-v1'),keys=await c.keys();
-   const r=await c.match('/events-v1.validated.json'),data=r?await r.json():null;
-   return {names,keys:keys.map(r=>r.url),count:data?.events?.length,diagnostics:GOEventRegistry.diagnostics()};
-  }""")
-  assert cached.get('count')==len(VALID['events']),cached
   bad=copy.deepcopy(VALID);bad['events'].append({'schemaVersion':1,'eventId':'synthetic-invalid-new','title':'Synthetic invalid','pokemon':[{'speciesId':'25'}],'encounters':[{'identityKey':'25:base:none','method':'wiild'}]});payload[0]=bad
   page.reload();ready()
   diagnostics=page.evaluate('GOEventRegistry.diagnostics()')
@@ -128,4 +119,18 @@ with sync_playwright() as p:
   assert page.locator('#calday [data-open="synthetic-dst-tomorrow"]').count()==0,day
   print(f'PASS {ENGINE} DST calendar membership {day}: late same-day event included, following day excluded')
   context.close()
- browser.close()
+ # Restricted storage must leave the online catalogue and existing player marks usable.
+ context=browser.new_context(viewport={'width':390,'height':900},timezone_id='Asia/Tokyo',service_workers='block')
+ context.route('**/api/**',stub_api)
+ context.route(re.compile(r'^https://fonts\.'),lambda r:r.fulfill(body='',content_type='text/css'))
+ context.route('**/events-v1.json',lambda r:r.fulfill(body=json.dumps(VALID),content_type='application/json'))
+ context.add_init_script("Object.defineProperty(window,'indexedDB',{value:undefined,configurable:true});localStorage.setItem('gofn-dex-v1',JSON.stringify({m:{own:{25:1}}}));")
+ page=context.new_page();page.goto(BASE+'/');ready()
+ assert page.evaluate('GOEventRegistry.events().length')==len(VALID['events'])
+ assert page.evaluate('GOEventRegistry.diagnostics().cacheUnavailable')
+ before=page.evaluate("localStorage.getItem('gofn-dex-v1')")
+ open_event(INSTANT['eventId'])
+ assert page.locator('#evd .ue-mon .own').all_inner_texts()==['Have','Have']
+ assert page.evaluate("localStorage.getItem('gofn-dex-v1')")==before
+ print(f'PASS {ENGINE} restricted storage keeps online events and existing collection marks usable')
+ context.close();browser.close()
