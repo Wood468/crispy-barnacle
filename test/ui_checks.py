@@ -3291,8 +3291,8 @@ with sync_playwright() as p:
               fl_counts.get('/dash.js?v=' + re.search(r"ds\.src='/dash\.js\?v=(\w+)'", APP_JS).group(1)) == 1 and '<link rel="preload" href="/dash.js?v=' in INDEX_HTML)
         # B. an event sheet opened straight after load has its details (event-details.json is no longer fetched at startup, only on idle or when a sheet needs it)
         fl_pg.evaluate("GODETAIL.open('cur:trek')")
-        fl_ok = settle(fl_pg, "!!document.querySelector('.evd-groups')", 8000)
-        fl_txt = fl_pg.evaluate("(document.querySelector('.evd-groups')||{}).textContent||''")
+        fl_ok = settle(fl_pg, "document.getElementById('evd-t') && document.getElementById('evd').textContent.includes('Increased chance to encounter Shiny Electrike.')", 8000)
+        fl_txt = fl_pg.evaluate("(document.getElementById('evd')||{}).textContent||''")
         check('event sheet opened right after load shows the sourced details from event-details.json', fl_ok and len(fl_txt) > 100, fl_txt[:80])
         fl_pg.context.close()
         # C. the 310 KB details file does not compete with the first render: it is not requested before Today has drawn
