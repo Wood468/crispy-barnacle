@@ -32,12 +32,12 @@
     var counts={
       overview:1,
       encounters:countRecords(ev.encounters),
-      rotations:activities.filter(function(a){return a&&a.schedule&&a.presentation==='rotation';}).length,
-      schedule:activities.filter(function(a){return a&&a.schedule&&a.presentation==='schedule';}).length,
+      rotations:activities.filter(function(a){return a&&populated(a.schedule)&&a.presentation==='rotation';}).length,
+      schedule:activities.filter(function(a){return a&&populated(a.schedule)&&a.presentation==='schedule';}).length,
       bonuses:countRecords(ev.bonuses),
-      research:countRecords(ev.research)+activities.filter(function(a){return a&&a.schedule&&a.presentation==='research';}).length,
+      research:countRecords(ev.research)+activities.filter(function(a){return a&&populated(a.schedule)&&a.presentation==='research';}).length,
       passes:countRecords(ev.passes),
-      tickets:countRecords(ev.tickets)+activities.filter(function(a){return a&&a.schedule&&a.presentation==='ticket';}).length
+      tickets:countRecords(ev.tickets)+activities.filter(function(a){return a&&populated(a.schedule)&&a.presentation==='ticket';}).length
     };
     var preferred=FAMILY[family], all=FAMILY.other;
     // A family guides order but never suppresses sections actually present.
