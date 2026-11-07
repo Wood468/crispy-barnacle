@@ -13,6 +13,7 @@ DATA['rotation']=[
  {'s':'2026-11-06T10:00','e':'2026-11-07T20:00','five':'Cresselia and Darkrai','mega':'Mega Charizard X and Y'},
  {'s':'2026-11-08T06:00','e':'2026-11-08T22:00','five':'Deoxys (all four Formes)'},
  {'s':'2026-11-15T06:00','e':'2026-11-15T22:00','five':'Crowned Sword Zacian and Crowned Shield Zamazenta'}]
+MAX_EVENT={'schemaVersion':1,'eventId':'synthetic-gigantamax-weekend','title':'Synthetic Gigantamax weekend','family':'max-battles','schedule':{'timeBasis':'player-local','start':'2026-11-06T10:00','end':'2026-11-06T17:00'},'pokemon':[{'speciesId':'884','name':'Gigantamax Duraludon','formId':'gmax'}],'activities':[{'id':'max','kind':'max','pokemonRefs':['884:gmax:none']}],'internalValidation':{'native':True}}
 DATA['maxBattles']=[['2026-11-02','2026-11-04','Machop'],['2026-11-05','2026-11-08','Espurr']]
 with sync_playwright() as p:
  browser=getattr(p,os.environ.get('GO_FIELD_NOTES_TEST_BROWSER','chromium')).launch()
@@ -21,13 +22,15 @@ with sync_playwright() as p:
   context.route('**/api/**',lambda r:r.fulfill(body='{"enabled":false,"events":[],"sources":[]}',content_type='application/json'))
   context.route(re.compile(r'^https://fonts\.'),lambda r:r.fulfill(body='',content_type='text/css'))
   context.route('**/data.json',lambda r:r.fulfill(body=json.dumps(DATA),content_type='application/json'))
+  context.route('**/events-v1.json',lambda r:r.fulfill(body=json.dumps({'schemaVersion':1,'species':json.loads((ROOT/'public/dex.json').read_text()),'events':[MAX_EVENT]}),content_type='application/json'))
   page=context.new_page();errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
   page.clock.install(time='2026-11-03T12:00:00+11:00')
-  page.goto(BASE+'/');page.wait_for_function('!!window.GODASH')
+  page.goto(BASE+'/');page.wait_for_function("!!window.GODASH&&GOEventRegistry.settled()&&GODASH.events().some(e=>e.id==='synthetic-gigantamax-weekend')")
   page.locator('#tabs [data-tab="raids"]').click()
   root=page.locator('#rotnow')
   for name in ['Giratina (Altered Forme)','Cresselia','Darkrai','Mega Charizard X','Mega Charizard Y','Deoxys (Normal Forme)','Deoxys (Attack Forme)','Deoxys (Defense Forme)','Deoxys (Speed Forme)']:
    assert root.locator(f'.rc[data-boss="{name}"]').count()==1,(width,name)
+  assert root.locator('.rw-max-event[data-open="synthetic-gigantamax-weekend"]').count()==1
   assert root.locator('.rw-raid').count()==3
   assert root.locator('.rw-max-pokemon').count()==2
   assert '6 am–9 pm' in root.inner_text()
