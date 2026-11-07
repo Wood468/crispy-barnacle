@@ -2061,3 +2061,38 @@ a.evc-source{color:var(--color-link);text-underline-offset:3px}
 .evd-in:has(.ue-hero) .ue-bonus :is(p,ul,ol){
   margin-block:4px;
 }
+
+
+/* Hard isolation of arbitrary legacy reward artwork/fallback markup. */
+.evd-in:has(.ue-hero) .research-reward .ue-reward-art{
+  display:grid;
+  place-items:center;
+  position:relative;
+  width:48px;
+  height:48px;
+  min-width:0;
+  max-width:48px;
+  max-height:48px;
+  overflow:hidden;
+  border-radius:10px;
+  isolation:isolate;
+}
+.evd-in:has(.ue-hero) .research-reward .ue-reward-art :is(img,.art,svg,canvas){
+  display:block;
+  width:100%;
+  max-width:100%;
+  height:100%;
+  max-height:100%;
+  object-fit:contain;
+}
+.evd-in:has(.ue-hero) .research-reward .ue-reward-art .costume-unavailable{
+  width:100%;
+  height:100%;
+  min-height:0;
+  max-height:100%;
+  overflow:hidden;
+}
+.evd-in:has(.ue-hero) .research-reward .ue-reward-art .ue-reward-icon{
+  width:100%;
+  height:100%;
+}
