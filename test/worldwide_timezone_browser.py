@@ -18,7 +18,10 @@ def stub_api(route):route.fulfill(body='{"enabled":false,"events":[],"sources":[
 with sync_playwright() as p:
  browser=getattr(p,ENGINE).launch()
  for width in [320,390,1440]:
-  context=browser.new_context(viewport={'width':width,'height':900},timezone_id='Asia/Tokyo',service_workers='block')
+  # WebKit disables CacheStorage together with service workers in "block" mode.
+  # Keep storage available while suppressing registration so fixture fetches stay routed.
+  context=browser.new_context(viewport={'width':width,'height':900},timezone_id='Asia/Tokyo',service_workers='allow')
+  context.add_init_script("if(navigator.serviceWorker)navigator.serviceWorker.register=()=>Promise.reject(new Error('Offline registration is isolated in this fixture'));")
   context.set_default_timeout(20000)
   context.route('**/api/**',stub_api)
   context.route(re.compile(r'^https://fonts\.'),lambda r:r.fulfill(body='',content_type='text/css'))
@@ -76,6 +79,8 @@ with sync_playwright() as p:
   assert page.locator('#evd-research-title').is_visible() and page.locator('#evd-tickets').is_visible()
   assert page.locator('#evd-rotations').count()==0
   close_event()
+  cached=page.evaluate("async()=>{const c=await caches.open('gofn-catalogue-v1');const r=await c.match('/events-v1.validated.json');return r?await r.json():null;}")
+  assert cached and len(cached['events'])==len(VALID['events']),page.evaluate('GOEventRegistry.diagnostics()')
   bad=copy.deepcopy(VALID);bad['events'].append({'schemaVersion':1,'eventId':'synthetic-invalid-new','title':'Synthetic invalid','pokemon':[{'speciesId':'25'}],'encounters':[{'identityKey':'25:base:none','method':'wiild'}]});payload[0]=bad
   page.reload();ready()
   diagnostics=page.evaluate('GOEventRegistry.diagnostics()')
