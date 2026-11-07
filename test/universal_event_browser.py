@@ -139,13 +139,16 @@ with sync_playwright() as p:
     page.keyboard.press('Escape')
     page.wait_for_function('!GONAV.internal&&GONAV.pending.length===0')
     print('PASS overseas Today listing opens the universal sheet and retains its source link')
+    # Exercise every renderer using one sheet session. Hundreds of synthetic push/back
+    # operations exceed WebKit's history traversal rate limit and obscure the render checks.
+    # Actual close/focus/history journeys are verified separately above and below.
     for item in CATALOGUE['events']:
         page.evaluate('(id)=>GODETAIL.open(id)',item['eventId'])
         page.wait_for_function('(title)=>document.getElementById("evd-t")?.textContent===title',arg=item['title'],timeout=10000)
         assert page.locator('#evd .ue-hero').count()==1,item['eventId']
         assert page.locator('#evd .ue-sources').count()==1,item['eventId']
         assert page.locator('#evd').evaluate('(el)=>el.scrollWidth<=el.clientWidth'),item['eventId']
-        page.evaluate('GODETAIL.close()')
+    page.evaluate('GODETAIL.close()')
     page.wait_for_function('!GONAV.internal&&GONAV.pending.length===0')
     assert page.evaluate('GONAV.depth')==0
     assert page.url.rstrip('/')==BASE
