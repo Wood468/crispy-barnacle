@@ -38,6 +38,7 @@ test('research names are escaped, and event without sources has no dead Sources 
  const html=render(futureEvent({research:[{task:'A <script>alert(1)<\/script>',rewards:['Mystery reward']}]}));
  assert.doesNotMatch(html,/<script>/);
  assert.match(html,/Mystery reward/);
+ assert.match(html,/<span class="ue-reward-art"><span class="ue-reward-icon" aria-hidden="true">★<\/span><\/span><span><b>Mystery reward<\/b>/);
  assert.doesNotMatch(html,/href="#evd-sources"/);
 });
 test('gallery preserves independent activities with identical display names',()=>{
@@ -49,4 +50,11 @@ test('gallery preserves independent activities with identical display names',()=
  });
  const html=components.gallery(model,{});
  assert.equal((html.match(/class="ue-mon evd-f"/g)||[]).length,2);
+});
+
+test('text-only rewards escape hostile content inside the contained artwork layout',()=>{
+ const html=render(futureEvent({research:[{task:'Spin a PokéStop',rewards:['<img src=x onerror=alert(1)> & 100 Stardust']}]}));
+ assert.equal((html.match(/class="ue-reward-art"/g)||[]).length,1);
+ assert.doesNotMatch(html,/<img src=x/);
+ assert.match(html,/&lt;img src=x onerror=alert\(1\)&gt; &amp; 100 Stardust/);
 });
