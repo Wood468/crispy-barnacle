@@ -8099,38 +8099,9 @@
       {
        "text": "Reach Major Milestones on your event GO Pass to unlock the following bonuses.",
        "sources": [
-        "official",
-        "leekduck"
+        "official"
        ],
        "status": "official"
-      },
-      {
-       "text": "Complete the Bonus Tasks in the GO Pass section to earn extra GO Points toward these milestones.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Complete these Bonus Tasks before Thursday, November 5, 2026, at 8:00 p.m. local time to earn GO Points:",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Catch 31 Ghost-type Pokémon — 200 GO Points",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Win 2 raids — 200 GO Points",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
       },
       {
        "text": "Rank 10: 2× Candy for catching Pokémon.",
@@ -8159,29 +8130,20 @@
         "official"
        ],
        "status": "official"
-      },
-      {
-       "text": "Rank 20: Complete the Bonus Tasks in the GO Pass section to earn extra GO Points toward these milestones.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
       }
      ],
      "featured": [
       {
        "text": "For the first time in Pokémon GO, you’ll be able to encounter Shiny Greavard—if you’re lucky! You may encounter Greavard in the wild or when you complete GO Pass and Field Research tasks.",
        "sources": [
-        "official",
-        "leekduck"
+        "official"
        ],
        "status": "official"
       },
       {
        "text": "May encounter event-themed Pokémon in the wild, including Litwick*, Rowlet wearing a Pokémon Halloween costume*, Greavard*, and more! You might even encounter Gengar wearing a Spooky Festival costume*!",
        "sources": [
-        "official",
-        "leekduck"
+        "official"
        ],
        "status": "official"
       },
@@ -8212,29 +8174,20 @@
         "official"
        ],
        "status": "official"
-      },
-      {
-       "text": "The following Pokémon will appear more frequently in the wild.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
       }
      ],
      "raids": [
       {
        "text": "The following Pokémon will appear in raids.",
        "sources": [
-        "official",
-        "leekduck"
+        "official"
        ],
        "status": "official"
       },
       {
        "text": "One-Star Raids Pikachu wearing a hat and capelet* Sinistea wearing a bow*",
        "sources": [
-        "official",
-        "leekduck"
+        "official"
        ],
        "status": "official"
       }
@@ -8251,40 +8204,35 @@
       {
        "text": "The research tasks in this free Timed Research will be automatically completed for all Trainers.",
        "sources": [
-        "official",
-        "leekduck"
+        "official"
        ],
        "status": "official"
       },
       {
        "text": "Timed Research rewards include the following.",
        "sources": [
-        "official",
-        "leekduck"
+        "official"
        ],
        "status": "official"
       },
       {
        "text": "6 Rare Candies",
        "sources": [
-        "official",
-        "leekduck"
+        "official"
        ],
        "status": "official"
       },
       {
        "text": "An encounter with Sinistea wearing a bow*",
        "sources": [
-        "official",
-        "leekduck"
+        "official"
        ],
        "status": "official"
       },
       {
        "text": "Please note that Timed Research expires. The tasks associated with this Timed Research must be completed and their rewards must be claimed before Thursday, November 5, 2026, at 8:00 p.m. local time.",
        "sources": [
-        "official",
-        "leekduck"
+        "official"
        ],
        "status": "official"
       },
@@ -8294,72 +8242,15 @@
         "official"
        ],
        "status": "official"
-      },
-      {
-       "text": "Catch 13 Pokémon REWARD ×13 Sableye Mega Energy ×13",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Catch 13 Ghost‑type Pokémon POSSIBLE REWARDS Halloween Costume Rowlet Max CP 453 Min CP 418 Greavard Max CP 435 Min CP 402 Halloween Costume Froakie Max CP 425 Min CP 392",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Make 6 Nice Throws POSSIBLE REWARDS Litwick Max CP 431 Min CP 398 Sandygast Max CP 528 Min CP 491 Greavard Max CP 435 Min CP 402",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Win 3 raids REWARD Pikachu wearing a hat and capelet Max CP 402 Min CP 369",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Event-exclusive Timed Research",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
       }
      ],
      "shiny": [
       {
        "text": "For the first time in Pokémon GO, you’ll be able to encounter Shiny Greavard—if you’re lucky! You may encounter Greavard in the wild or when you complete GO Pass and Field Research tasks.",
        "sources": [
-        "official",
-        "leekduck"
+        "official"
        ],
        "status": "official"
-      },
-      {
-       "text": "Shiny Greavard makes its Pokémon GO debut, and Mega Sableye can reach the new Super Max Mega Level! Halloween continues with costumed Pokémon, themed encounters, and GO Pass bonuses.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Pikachu wearing a hat and capelet",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Sinistea wearing a bow",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
       }
      ],
      "moves": [],
@@ -8367,16 +8258,14 @@
       {
        "text": "May encounter event-themed Pokémon in the wild, including Litwick*, Rowlet wearing a Pokémon Halloween costume*, Greavard*, and more! You might even encounter Gengar wearing a Spooky Festival costume*!",
        "sources": [
-        "official",
-        "leekduck"
+        "official"
        ],
        "status": "official"
       },
       {
        "text": "One-Star Raids Pikachu wearing a hat and capelet* Sinistea wearing a bow*",
        "sources": [
-        "official",
-        "leekduck"
+        "official"
        ],
        "status": "official"
       }
@@ -8406,76 +8295,30 @@
       {
        "text": "For US$9.99*, Trainers can upgrade to the GO Pass Deluxe + 10 Ranks to also automatically earn enough GO Points to reach Rank 11.",
        "sources": [
-        "official",
-        "leekduck"
+        "official"
        ],
        "status": "official"
       },
       {
        "text": "Rewards unlocked in the GO Pass will expire on Saturday, November 7, 2026, at 8:00 p.m. local time, so be sure to claim your rewards before they’re gone!",
        "sources": [
-        "official",
-        "leekduck"
+        "official"
        ],
        "status": "official"
       },
       {
        "text": "Availability of event tickets and the GO Pass Deluxe may vary by region.",
        "sources": [
-        "official",
-        "leekduck"
+        "official"
        ],
        "status": "official"
-      },
-      {
-       "text": "The free pass includes:",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Encounters with event-themed Pokémon",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Additional rewards",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Patissier Top and Patissier Pants",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Premium Battle Passes",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Rank up to encounter Rotom and Spiritomb and earn Halloween rewards!",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
       }
      ],
      "dates": [
       {
        "text": "Sunday, November 1, at 10:00 a.m. to Thursday, November 5, 2026, at 8:00 p.m. local time",
        "sources": [
-        "official",
-        "leekduck"
+        "official"
        ],
        "status": "official"
       },
@@ -8497,8 +8340,8 @@
      "start": "2026-11-01T10:00",
      "end": "2026-11-05T20:00"
     },
-    "contentHash": "b0d649d209c219d25367b0a1eab2be05a1fcdc7bca1e5237ded19a5dd978c4b2",
-    "revision": 5,
+    "contentHash": "8f9269b137b21ca024f822bbd86979b9c19c0e9b61ca8e9af3af968cc2c10c48",
+    "revision": 6,
     "amended": false,
     "native": false,
     "collection": "events"
@@ -8509,38 +8352,9 @@
     {
      "text": "Reach Major Milestones on your event GO Pass to unlock the following bonuses.",
      "sources": [
-      "official",
-      "leekduck"
+      "official"
      ],
      "status": "official"
-    },
-    {
-     "text": "Complete the Bonus Tasks in the GO Pass section to earn extra GO Points toward these milestones.",
-     "sources": [
-      "leekduck"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Complete these Bonus Tasks before Thursday, November 5, 2026, at 8:00 p.m. local time to earn GO Points:",
-     "sources": [
-      "leekduck"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Catch 31 Ghost-type Pokémon — 200 GO Points",
-     "sources": [
-      "leekduck"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Win 2 raids — 200 GO Points",
-     "sources": [
-      "leekduck"
-     ],
-     "status": "single"
     },
     {
      "text": "Rank 10: 2× Candy for catching Pokémon.",
@@ -8569,209 +8383,9 @@
       "official"
      ],
      "status": "official"
-    },
-    {
-     "text": "Rank 20: Complete the Bonus Tasks in the GO Pass section to earn extra GO Points toward these milestones.",
-     "sources": [
-      "leekduck"
-     ],
-     "status": "single"
     }
    ],
    "research": [
-    {
-     "task": "Catch 13 Ghost‑type Pokémon",
-     "category": "field",
-     "rewards": [
-      {
-       "type": "encounter",
-       "name": "Halloween Costume Rowlet",
-       "quantity": 1,
-       "cpMin": 418,
-       "cpMax": 453
-      },
-      {
-       "type": "encounter",
-       "name": "Greavard",
-       "quantity": 1,
-       "cpMin": 402,
-       "cpMax": 435
-      },
-      {
-       "type": "encounter",
-       "name": "Halloween Costume Froakie",
-       "quantity": 1,
-       "cpMin": 392,
-       "cpMax": 425
-      }
-     ],
-     "sources": [
-      "leekduck"
-     ],
-     "sourceRefs": [
-      {
-       "id": "leekduck",
-       "name": "Leek Duck",
-       "trust": "community",
-       "url": "https://leekduck.com/events/halloween-2026-part-2/"
-      }
-     ],
-     "status": "single",
-     "eventId": "halloween2",
-     "eventName": "Halloween 2026, Part Two",
-     "eventWindow": {
-      "start": "2026-11-01T10:00",
-      "end": "2026-11-05T20:00"
-     },
-     "checkedAt": "2026-11-07"
-    },
-    {
-     "task": "Catch 13 Pokémon",
-     "category": "field",
-     "rewards": [
-      {
-       "type": "item",
-       "name": "Sableye Mega Energy",
-       "quantity": 13
-      }
-     ],
-     "sources": [
-      "leekduck"
-     ],
-     "sourceRefs": [
-      {
-       "id": "leekduck",
-       "name": "Leek Duck",
-       "trust": "community",
-       "url": "https://leekduck.com/events/halloween-2026-part-2/"
-      }
-     ],
-     "status": "single",
-     "eventId": "halloween2",
-     "eventName": "Halloween 2026, Part Two",
-     "eventWindow": {
-      "start": "2026-11-01T10:00",
-      "end": "2026-11-05T20:00"
-     },
-     "checkedAt": "2026-11-07"
-    },
-    {
-     "task": "Make 6 Nice Throws",
-     "category": "field",
-     "rewards": [
-      {
-       "type": "encounter",
-       "name": "Litwick",
-       "quantity": 1,
-       "cpMin": 398,
-       "cpMax": 431
-      },
-      {
-       "type": "encounter",
-       "name": "Sandygast",
-       "quantity": 1,
-       "cpMin": 491,
-       "cpMax": 528
-      },
-      {
-       "type": "encounter",
-       "name": "Greavard",
-       "quantity": 1,
-       "cpMin": 402,
-       "cpMax": 435
-      }
-     ],
-     "sources": [
-      "leekduck"
-     ],
-     "sourceRefs": [
-      {
-       "id": "leekduck",
-       "name": "Leek Duck",
-       "trust": "community",
-       "url": "https://leekduck.com/events/halloween-2026-part-2/"
-      }
-     ],
-     "status": "single",
-     "eventId": "halloween2",
-     "eventName": "Halloween 2026, Part Two",
-     "eventWindow": {
-      "start": "2026-11-01T10:00",
-      "end": "2026-11-05T20:00"
-     },
-     "checkedAt": "2026-11-07"
-    },
-    {
-     "task": "Win 3 raids",
-     "category": "field",
-     "rewards": [
-      {
-       "type": "encounter",
-       "name": "Pikachu wearing a hat and capelet",
-       "quantity": 1,
-       "cpMin": 369,
-       "cpMax": 402
-      }
-     ],
-     "sources": [
-      "leekduck"
-     ],
-     "sourceRefs": [
-      {
-       "id": "leekduck",
-       "name": "Leek Duck",
-       "trust": "community",
-       "url": "https://leekduck.com/events/halloween-2026-part-2/"
-      }
-     ],
-     "status": "single",
-     "eventId": "halloween2",
-     "eventName": "Halloween 2026, Part Two",
-     "eventWindow": {
-      "start": "2026-11-01T10:00",
-      "end": "2026-11-05T20:00"
-     },
-     "checkedAt": "2026-11-07"
-    },
-    {
-     "task": "Win a raid",
-     "category": "field",
-     "rewards": [
-      {
-       "type": "encounter",
-       "name": "Zubat wearing a top hat",
-       "quantity": 1,
-       "cpMin": 258,
-       "cpMax": 285
-      },
-      {
-       "type": "encounter",
-       "name": "Sinistea wearing a bow",
-       "quantity": 1,
-       "cpMin": 452,
-       "cpMax": 488
-      }
-     ],
-     "sources": [
-      "leekduck"
-     ],
-     "sourceRefs": [
-      {
-       "id": "leekduck",
-       "name": "Leek Duck",
-       "trust": "community",
-       "url": "https://leekduck.com/events/halloween-2026-part-2/"
-      }
-     ],
-     "status": "single",
-     "eventId": "halloween2",
-     "eventName": "Halloween 2026, Part Two",
-     "eventWindow": {
-      "start": "2026-11-01T10:00",
-      "end": "2026-11-05T20:00"
-     },
-     "checkedAt": "2026-11-07"
-    },
     {
      "text": "There will be a free Timed Research opportunity available.",
      "sources": [
@@ -8782,40 +8396,35 @@
     {
      "text": "The research tasks in this free Timed Research will be automatically completed for all Trainers.",
      "sources": [
-      "official",
-      "leekduck"
+      "official"
      ],
      "status": "official"
     },
     {
      "text": "Timed Research rewards include the following.",
      "sources": [
-      "official",
-      "leekduck"
+      "official"
      ],
      "status": "official"
     },
     {
      "text": "6 Rare Candies",
      "sources": [
-      "official",
-      "leekduck"
+      "official"
      ],
      "status": "official"
     },
     {
      "text": "An encounter with Sinistea wearing a bow*",
      "sources": [
-      "official",
-      "leekduck"
+      "official"
      ],
      "status": "official"
     },
     {
      "text": "Please note that Timed Research expires. The tasks associated with this Timed Research must be completed and their rewards must be claimed before Thursday, November 5, 2026, at 8:00 p.m. local time.",
      "sources": [
-      "official",
-      "leekduck"
+      "official"
      ],
      "status": "official"
     },
@@ -8825,41 +8434,6 @@
       "official"
      ],
      "status": "official"
-    },
-    {
-     "text": "Catch 13 Pokémon REWARD ×13 Sableye Mega Energy ×13",
-     "sources": [
-      "leekduck"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Catch 13 Ghost‑type Pokémon POSSIBLE REWARDS Halloween Costume Rowlet Max CP 453 Min CP 418 Greavard Max CP 435 Min CP 402 Halloween Costume Froakie Max CP 425 Min CP 392",
-     "sources": [
-      "leekduck"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Make 6 Nice Throws POSSIBLE REWARDS Litwick Max CP 431 Min CP 398 Sandygast Max CP 528 Min CP 491 Greavard Max CP 435 Min CP 402",
-     "sources": [
-      "leekduck"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Win 3 raids REWARD Pikachu wearing a hat and capelet Max CP 402 Min CP 369",
-     "sources": [
-      "leekduck"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Event-exclusive Timed Research",
-     "sources": [
-      "leekduck"
-     ],
-     "status": "single"
     }
    ],
    "passes": [],
@@ -8888,68 +8462,23 @@
     {
      "text": "For US$9.99*, Trainers can upgrade to the GO Pass Deluxe + 10 Ranks to also automatically earn enough GO Points to reach Rank 11.",
      "sources": [
-      "official",
-      "leekduck"
+      "official"
      ],
      "status": "official"
     },
     {
      "text": "Rewards unlocked in the GO Pass will expire on Saturday, November 7, 2026, at 8:00 p.m. local time, so be sure to claim your rewards before they’re gone!",
      "sources": [
-      "official",
-      "leekduck"
+      "official"
      ],
      "status": "official"
     },
     {
      "text": "Availability of event tickets and the GO Pass Deluxe may vary by region.",
      "sources": [
-      "official",
-      "leekduck"
+      "official"
      ],
      "status": "official"
-    },
-    {
-     "text": "The free pass includes:",
-     "sources": [
-      "leekduck"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Encounters with event-themed Pokémon",
-     "sources": [
-      "leekduck"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Additional rewards",
-     "sources": [
-      "leekduck"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Patissier Top and Patissier Pants",
-     "sources": [
-      "leekduck"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Premium Battle Passes",
-     "sources": [
-      "leekduck"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Rank up to encounter Rotom and Spiritomb and earn Halloween rewards!",
-     "sources": [
-      "leekduck"
-     ],
-     "status": "single"
     }
    ],
    "sources": [
@@ -24582,28 +24111,59 @@
        "status": "single"
       },
       {
-       "text": "Rank 1: Increased chance to get Lucky Pokémon in trades",
+       "text": "The following bonuses will be active during Twilight Wishes:",
        "sources": [
-        "leekduck"
+        "hub"
        ],
        "status": "single"
       },
       {
-       "text": "Rank 1: Increased chance to become Lucky Friends",
+       "text": "Increased chance to encounter Shiny Staryu and Shiny Elgyem",
        "sources": [
-        "leekduck"
+        "hub"
        ],
        "status": "single"
+      },
+      {
+       "text": "The event also features special decorations, with stars lighting up the in-game skies throughout Twilight Wishes.",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Additional bonuses, including increased Lucky Trade chances and catch Stardust, can be unlocked through the event GO Pass.",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 1: Increased chance to get Lucky Pokémon in trades",
+       "sources": [
+        "leekduck",
+        "hub"
+       ],
+       "status": "corroborated"
       },
       {
        "text": "Rank 10: 2× Stardust for catching Pokémon",
        "sources": [
-        "leekduck"
+        "leekduck",
+        "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
        "text": "Rank 10: GO Pass Deluxe: 3× Stardust for catching Pokémon",
+       "sources": [
+        "leekduck",
+        "hub"
+       ],
+       "status": "corroborated"
+      },
+      {
+       "text": "Rank 1: Increased chance to become Lucky Friends",
        "sources": [
         "leekduck"
        ],
@@ -24619,21 +24179,23 @@
      ],
      "featured": [
       {
-       "text": "Espeon wearing a sun scarf, Umbreon wearing a moon scarf, and Rockruff are featured during Twilight Wishes. All three can be Shiny if you’re lucky!",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
        "text": "The following Pokémon will appear in the wild, along with other event-themed Pokémon.",
        "sources": [
-        "leekduck"
+        "leekduck",
+        "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
        "text": "If you’re lucky, you might also encounter Rockruff!",
+       "sources": [
+        "leekduck",
+        "hub"
+       ],
+       "status": "corroborated"
+      },
+      {
+       "text": "Espeon wearing a sun scarf, Umbreon wearing a moon scarf, and Rockruff are featured during Twilight Wishes. All three can be Shiny if you’re lucky!",
        "sources": [
         "leekduck"
        ],
@@ -24687,22 +24249,39 @@
         "leekduck"
        ],
        "status": "single"
+      },
+      {
+       "text": "All featured Pokémon listed above can be encountered as Shiny Pokémon, if you’re lucky.",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
       }
      ],
      "raids": [
       {
        "text": "Pikachu wearing a sun crown",
        "sources": [
-        "leekduck"
+        "leekduck",
+        "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
        "text": "Espeon wearing a sun scarf",
        "sources": [
-        "leekduck"
+        "leekduck",
+        "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
+      },
+      {
+       "text": "Mega Manectric",
+       "sources": [
+        "leekduck",
+        "hub"
+       ],
+       "status": "corroborated"
       },
       {
        "text": "Umbreon wearing a moon scarf",
@@ -24712,9 +24291,16 @@
        "status": "single"
       },
       {
-       "text": "Mega Manectric",
+       "text": "Event-themed Pokémon will appear in one-star, three-star, and Mega Raids throughout Twilight Wishes. All Pokémon featured in these event raids have a chance to be encountered as Shiny Pokémon.",
        "sources": [
-        "leekduck"
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "⚔️ Related raid guides: Espeon Raid Guide , Umbreon Raid Guide",
+       "sources": [
+        "hub"
        ],
        "status": "single"
       }
@@ -24724,9 +24310,10 @@
       {
        "text": "Complete event-themed Field Research tasks to earn Mega Energy and encounters with event-themed Pokémon, including Staryu, Elgyem, and more!",
        "sources": [
-        "leekduck"
+        "leekduck",
+        "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
        "text": "Celebrate the Twilight Trails Season finale with additional encounters featuring Pokémon from throughout the Season. These Field Research rewards change during the event.",
@@ -24734,9 +24321,24 @@
         "leekduck"
        ],
        "status": "single"
+      },
+      {
+       "text": "To celebrate the end of the Twilight Trails Season, additional Field Research encounters will rotate during the event , featuring Pokémon from earlier seasonal events. All Field Research rotation times are local time.",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
       }
      ],
      "shiny": [
+      {
+       "text": "Staryu and Elgyem have an increased chance of being Shiny during the event.",
+       "sources": [
+        "leekduck",
+        "hub"
+       ],
+       "status": "corroborated"
+      },
       {
        "text": "Espeon wearing a sun scarf, Umbreon wearing a moon scarf, and Rockruff are featured during Twilight Wishes. All three can be Shiny if you’re lucky!",
        "sources": [
@@ -24745,9 +24347,30 @@
        "status": "single"
       },
       {
-       "text": "Staryu and Elgyem have an increased chance of being Shiny during the event.",
+       "text": "Sun Scarf Espeon and Moon Scarf Umbreon return alongside boosted Shiny encounters, themed raids, and a special GO Pass to close out the Twilight Trails Season.",
        "sources": [
-        "leekduck"
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "The following Pokémon will have an increased chance of appearing as Shiny Pokémon during Twilight Wishes:",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "All featured Pokémon listed above can be encountered as Shiny Pokémon, if you’re lucky.",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Event-themed Pokémon will appear in one-star, three-star, and Mega Raids throughout Twilight Wishes. All Pokémon featured in these event raids have a chance to be encountered as Shiny Pokémon.",
+       "sources": [
+        "hub"
        ],
        "status": "single"
       }
@@ -24757,19 +24380,21 @@
       {
        "text": "Espeon wearing a sun scarf, Umbreon wearing a moon scarf, and Rockruff are featured during Twilight Wishes. All three can be Shiny if you’re lucky!",
        "sources": [
-        "leekduck"
+        "leekduck",
+        "hub"
        ],
-       "status": "single"
-      },
-      {
-       "text": "Pikachu wearing a sun crown",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
        "text": "Gengar wearing a Spooky Festival costume",
+       "sources": [
+        "leekduck",
+        "hub"
+       ],
+       "status": "corroborated"
+      },
+      {
+       "text": "Pikachu wearing a sun crown",
        "sources": [
         "leekduck"
        ],
@@ -24787,9 +24412,10 @@
       {
        "text": "GO Pass Deluxe costs US$4.99 (or the equivalent local pricing tier). It offers upgraded rewards and faster progression.",
        "sources": [
-        "leekduck"
+        "leekduck",
+        "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
        "text": "For US$6.99 (or the equivalent local pricing tier), GO Pass Deluxe + 6 Ranks also provides enough GO Points to reach Rank 7.",
@@ -24811,15 +24437,72 @@
         "leekduck"
        ],
        "status": "single"
+      },
+      {
+       "text": "A special GO Pass: Twilight Wishes will be available from Tuesday, November 24, at 10:00 a.m. to Monday, November 30, 2026, at 8:00 p.m. local time .",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "The event features a free GO Pass and a paid GO Pass Deluxe, both offering rewards as Trainers collect GO Points and progress through ranks.",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "All Trainers automatically receive the free GO Pass: Twilight Wishes on November 24 at 10:00 a.m. local time.",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Earn GO Points by completing Pass Tasks and rank up through November 30 at 8:00 p.m. local time.",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Additional bonus tasks will become available during the event.",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Complete Pass Tasks and rank up to earn rewards, including:",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Encounters with event-themed Pokémon",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Mega Energy for Beedrill, Houndoom, Sableye, and Manectric",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
       }
      ],
      "dates": [
       {
        "text": "Twilight Wishes runs from Tuesday, November 24, at 10:00 a.m. to Monday, November 30, 2026, at 8:00 p.m. local time .",
        "sources": [
-        "leekduck"
+        "leekduck",
+        "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       }
      ]
     },
@@ -24831,8 +24514,8 @@
      "start": "",
      "end": ""
     },
-    "contentHash": "6bbc0b819d1fae42313499353bae1f16b57a30d4e349d6689748fe51c7470860",
-    "revision": 3,
+    "contentHash": "fb3cca5271322c3036ea9fb278025c82f3a1ecbd7b7b21f7ea0bfce95ab53485",
+    "revision": 4,
     "amended": false,
     "native": false,
     "collection": "source-details"
@@ -24848,28 +24531,59 @@
      "status": "single"
     },
     {
-     "text": "Rank 1: Increased chance to get Lucky Pokémon in trades",
+     "text": "The following bonuses will be active during Twilight Wishes:",
      "sources": [
-      "leekduck"
+      "hub"
      ],
      "status": "single"
     },
     {
-     "text": "Rank 1: Increased chance to become Lucky Friends",
+     "text": "Increased chance to encounter Shiny Staryu and Shiny Elgyem",
      "sources": [
-      "leekduck"
+      "hub"
      ],
      "status": "single"
+    },
+    {
+     "text": "The event also features special decorations, with stars lighting up the in-game skies throughout Twilight Wishes.",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Additional bonuses, including increased Lucky Trade chances and catch Stardust, can be unlocked through the event GO Pass.",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Rank 1: Increased chance to get Lucky Pokémon in trades",
+     "sources": [
+      "leekduck",
+      "hub"
+     ],
+     "status": "corroborated"
     },
     {
      "text": "Rank 10: 2× Stardust for catching Pokémon",
      "sources": [
-      "leekduck"
+      "leekduck",
+      "hub"
      ],
-     "status": "single"
+     "status": "corroborated"
     },
     {
      "text": "Rank 10: GO Pass Deluxe: 3× Stardust for catching Pokémon",
+     "sources": [
+      "leekduck",
+      "hub"
+     ],
+     "status": "corroborated"
+    },
+    {
+     "text": "Rank 1: Increased chance to become Lucky Friends",
      "sources": [
       "leekduck"
      ],
@@ -24887,14 +24601,22 @@
     {
      "text": "Complete event-themed Field Research tasks to earn Mega Energy and encounters with event-themed Pokémon, including Staryu, Elgyem, and more!",
      "sources": [
-      "leekduck"
+      "leekduck",
+      "hub"
      ],
-     "status": "single"
+     "status": "corroborated"
     },
     {
      "text": "Celebrate the Twilight Trails Season finale with additional encounters featuring Pokémon from throughout the Season. These Field Research rewards change during the event.",
      "sources": [
       "leekduck"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "To celebrate the end of the Twilight Trails Season, additional Field Research encounters will rotate during the event , featuring Pokémon from earlier seasonal events. All Field Research rotation times are local time.",
+     "sources": [
+      "hub"
      ],
      "status": "single"
     }
@@ -24904,9 +24626,10 @@
     {
      "text": "GO Pass Deluxe costs US$4.99 (or the equivalent local pricing tier). It offers upgraded rewards and faster progression.",
      "sources": [
-      "leekduck"
+      "leekduck",
+      "hub"
      ],
-     "status": "single"
+     "status": "corroborated"
     },
     {
      "text": "For US$6.99 (or the equivalent local pricing tier), GO Pass Deluxe + 6 Ranks also provides enough GO Points to reach Rank 7.",
@@ -24928,6 +24651,62 @@
       "leekduck"
      ],
      "status": "single"
+    },
+    {
+     "text": "A special GO Pass: Twilight Wishes will be available from Tuesday, November 24, at 10:00 a.m. to Monday, November 30, 2026, at 8:00 p.m. local time .",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "The event features a free GO Pass and a paid GO Pass Deluxe, both offering rewards as Trainers collect GO Points and progress through ranks.",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "All Trainers automatically receive the free GO Pass: Twilight Wishes on November 24 at 10:00 a.m. local time.",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Earn GO Points by completing Pass Tasks and rank up through November 30 at 8:00 p.m. local time.",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Additional bonus tasks will become available during the event.",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Complete Pass Tasks and rank up to earn rewards, including:",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Encounters with event-themed Pokémon",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Mega Energy for Beedrill, Houndoom, Sableye, and Manectric",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
     }
    ],
    "sources": [
@@ -24936,9 +24715,28 @@
      "name": "Leek Duck",
      "trust": "community",
      "url": "https://leekduck.com/events/twilight-wishes-2026/"
+    },
+    {
+     "id": "hub",
+     "name": "Pokémon GO Hub",
+     "trust": "community",
+     "url": "https://pokemongohub.net/post/event/twilight-wishes-2026/"
     }
    ],
    "pokemon": [
+    {
+     "key": "120:base:none",
+     "speciesId": "120",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Staryu",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Staryu"
+    },
     {
      "key": "15:mega:none",
      "speciesId": "15",
@@ -24953,6 +24751,45 @@
      "collectionName": "Mega Beedrill"
     },
     {
+     "key": "196:base:none",
+     "speciesId": "196",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Espeon",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Espeon"
+    },
+    {
+     "key": "197:base:none",
+     "speciesId": "197",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Umbreon",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Umbreon"
+    },
+    {
+     "key": "25:base:none",
+     "speciesId": "25",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Pikachu",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Pikachu"
+    },
+    {
      "key": "302:mega:none",
      "speciesId": "302",
      "formId": "mega",
@@ -24964,6 +24801,45 @@
      "debut": null,
      "boostedShiny": null,
      "collectionName": "Mega Sableye"
+    },
+    {
+     "key": "35:base:none",
+     "speciesId": "35",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Clefairy",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Clefairy"
+    },
+    {
+     "key": "605:base:none",
+     "speciesId": "605",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Elgyem",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Elgyem"
+    },
+    {
+     "key": "744:base:none",
+     "speciesId": "744",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Rockruff",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Rockruff"
     }
    ],
    "encounters": [
@@ -24974,8 +24850,50 @@
      "access": "unknown"
     },
     {
+     "identityKey": "196:base:none",
+     "method": "raid",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "197:base:none",
+     "method": "raid",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "25:base:none",
+     "method": "raid",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
      "identityKey": "302:mega:none",
      "method": "raid",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "120:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "35:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "605:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "744:base:none",
+     "method": "wild",
      "activityId": "main",
      "access": "unknown"
     }
@@ -24989,8 +24907,52 @@
       "access": "unknown"
      },
      {
+      "identityKey": "196:base:none",
+      "method": "raid",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "197:base:none",
+      "method": "raid",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "25:base:none",
+      "method": "raid",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
       "identityKey": "302:mega:none",
       "method": "raid",
+      "activityId": "main",
+      "access": "unknown"
+     }
+    ],
+    "wild": [
+     {
+      "identityKey": "120:base:none",
+      "method": "wild",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "35:base:none",
+      "method": "wild",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "605:base:none",
+      "method": "wild",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "744:base:none",
+      "method": "wild",
       "activityId": "main",
       "access": "unknown"
      }
@@ -37646,8 +37608,8 @@
      "end": "2026-11-08"
     },
     "contentHash": "dce45278d164ec7d0efdbec4d901eac6f95e08bdec7b64c64c440d1336263583",
-    "revision": 4,
-    "amended": false,
+    "revision": 6,
+    "amended": true,
     "native": false,
     "collection": "world-events"
    },
@@ -38733,7 +38695,7 @@
    "completeness": "partial",
    "lifecycle": "announced",
    "attendance": "in-person",
-   "location": "Japan",
+   "location": "South Korea",
    "image": null,
    "notes": [],
    "internalValidation": {
@@ -38747,8 +38709,8 @@
      "start": "2026-11-03",
      "end": "2026-11-03"
     },
-    "contentHash": "0ca84974cfa677f1be63ebd7712b231d3f83b8d9beb34b2f503e737968fe94fe",
-    "revision": 4,
+    "contentHash": "5cdd55e002ca42377352e7b637a57f2e39afa99cde6bbc64780733a9cc28f6b3",
+    "revision": 5,
     "amended": false,
     "native": false,
     "collection": "world-events"
@@ -39293,8 +39255,8 @@
      "end": "2026-11-08"
     },
     "contentHash": "636a667f0bd8860852090ec7ed9c3389bd07ff19389ca5fbffd0d12d18318dc5",
-    "revision": 5,
-    "amended": false,
+    "revision": 7,
+    "amended": true,
     "native": false,
     "collection": "world-events"
    },
@@ -43796,6 +43758,11 @@
      "name": "Pokémon GO (official)",
      "trust": "official",
      "url": "https://pokemongo.com/news/pokemon-run-30-2026/"
+    },
+    {
+     "id": "serebii",
+     "name": "Serebii",
+     "url": "https://www.serebii.net/pokemongo/reallifeevents.shtml"
     }
    ],
    "pokemon": [],
@@ -44200,8 +44167,8 @@
      "end": "2027-04-11"
     },
     "contentHash": "84950064738e11a798ef98f9fd6ab913640b138fb1594e38612f64db09c4dd24",
-    "revision": 4,
-    "amended": false,
+    "revision": 6,
+    "amended": true,
     "native": false,
     "collection": "world-events"
    },

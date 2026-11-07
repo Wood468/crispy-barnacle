@@ -1,12 +1,12 @@
 {
- "runAt": "2026-11-07T03:16:47.657Z",
+ "runAt": "2026-11-07T10:43:47.026Z",
  "sources": {
   "official": {
    "listed": 23,
    "error": ""
   },
   "leekduck": {
-   "listed": 39,
+   "listed": 37,
    "error": ""
   },
   "hub": {
@@ -93,11 +93,6 @@
   },
   {
    "source": "leekduck",
-   "title": "Teddiursa wearing a witch hat Spotlight Hour",
-   "url": "https://leekduck.com/events/pokemonspotlighthour2026-11-05/"
-  },
-  {
-   "source": "leekduck",
    "title": "Shadow Tornadus (Incarnate Forme) in Shadow Raids",
    "url": "https://leekduck.com/events/shadow-tornadus-incarnate-forme-in-shadow-raids-november-16-2026/"
   },
@@ -125,6 +120,11 @@
    "source": "hub",
    "title": "Shadow Tornadus (Incarnate) Raid Counters Guide",
    "url": "https://pokemongohub.net/post/guide/shadow-tornadus-incarnate-raid-counters-guide/"
+  },
+  {
+   "source": "hub",
+   "title": "Shadow Poliwhirl Raid Guide",
+   "url": "https://pokemongohub.net/post/guide/shadow-poliwhirl-raid-guide/"
   }
  ],
  "intl": {
@@ -603,7 +603,5 @@
    ]
   }
  ],
- "errors": [
-  "https://leekduck.com/events/halloween-2026-part-2/: GO Pass parser: img alt \"Halloween Piplup\" does not match reward-name at rank 9 (basic)"
- ]
+ "errors": []
 }
