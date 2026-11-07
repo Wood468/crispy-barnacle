@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
-import { extractFields } from "../scripts/importer/extract.mjs";
+import { extractFields, researchOptions } from "../scripts/importer/extract.mjs";
 import { htmlToLines } from "../scripts/importer/text.mjs";
 import { mergeSources } from "../scripts/importer/compare.mjs";
 
@@ -156,4 +156,35 @@ test('published Wild Area research separates item rewards and exact encounter id
   assert.deepEqual(task.rewards.map(r=>r.name),['Golden Razz Berry','Rookidee','Stardust']);
   assert.equal(task.rewards[2].quantity,2000);
  }
+});
+test('declared research names preserve CP-less costumes beside CP-bearing encounters',()=>{
+ const options={pokemonNames:['Azumarill','Conkeldurr','Hisuian Sliggoo'],costumes:[{name:'Machamp',label:'modern jacket',costumeId:'modernjacket'}]};
+ const fields=extractFields('<h2>Field Research</h2><p>Win 2 raids POSSIBLE REWARDS Mighty Azumarill Max CP 680 Min CP 637 Mighty Modern Jacket Machamp Mighty Conkeldurr Max CP 1430 Min CP 1368</p><p>Catch a Hisuian Sliggoo REWARD Hisuian Sliggoo</p><p>Explore 2 km REWARD Mighty Modern Jacket Machamp</p>',options);
+ assert.equal(fields.researchTasks.length,3);
+ const rewards=fields.researchTasks[0].rewards;assert.deepEqual(rewards.map(r=>r.name),['Azumarill','Machamp (modern jacket)','Conkeldurr']);
+ assert.equal(rewards[1].costumeId,'modernjacket');assert.equal(rewards[1].mighty,true);assert.equal(rewards[1].cpMin,undefined);
+ assert.equal(rewards[2].cpMin,1368);assert.equal(rewards[2].cpMax,1430);
+ assert.equal(fields.researchTasks[1].rewards[0].name,'Hisuian Sliggoo');
+ assert.equal(fields.researchTasks[2].rewards[0].costume,true);
+ const unknown=extractFields('<h2>Field Research</h2><p>Catch 5 Pokémon REWARD Hisuian Sliggoo may appear next month</p>',options);assert.deepEqual(unknown.researchTasks,[]);
+});
+test('Wild Area source snapshots include complete mixed and CP-less reward pools',()=>{
+ const data=JSON.parse(fs.readFileSync(new URL('../public/event-details.json',import.meta.url),'utf8'));
+ for(const slug of ['sendai-japan','mexico-city']){
+  const tasks=data.events['leekduck:pokemon-go-wild-area-2026-'+slug].researchTasks;
+  assert.equal(tasks.length,12);assert.equal(tasks.find(t=>t.task==='Catch 10 Dragon‑type Pokémon').rewards.length,3);
+  assert.equal(tasks.find(t=>t.task==='Catch a Hisuian Sliggoo').rewards[0].name,'Hisuian Sliggoo');
+  assert.equal(tasks.find(t=>t.task==='Explore 2 km').rewards[0].costumeId,'modernjacket');
+  const raid=tasks.find(t=>t.task==='Win 2 raids').rewards;
+  assert.equal(raid[1].name,'Machamp (Modern Jacket)');assert.equal(raid[1].cpMax,undefined);
+  if(slug==='mexico-city'){assert.equal(raid[2].name,'Conkeldurr');assert.equal(raid[2].cpMin,1368);}
+ }
+});
+
+test('the shipped form registry enables exact CP-less regional research rewards',()=>{
+ const read=name=>JSON.parse(fs.readFileSync(new URL('../public/'+name+'.json',import.meta.url),'utf8'));
+ const options=researchOptions({dex:read('dex'),forms:read('forms')});
+ const result=extractFields('<h2>Field Research</h2><p>Catch a Hisuian Sliggoo REWARD Hisuian Sliggoo</p>',options);
+ assert.equal(result.researchTasks[0].rewards[0].name,'Hisuian Sliggoo');
+ assert.equal(result.researchTasks[0].rewards[0].cpMax,undefined);
 });

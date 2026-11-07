@@ -107,6 +107,18 @@ with sync_playwright() as p:
         assert page.locator('#evd').evaluate('(el)=>el.scrollWidth<=el.clientWidth'), ('GO Pass',width)
         capture('gopass')
         page.keyboard.press('Escape')
+        page.evaluate("GODETAIL.open('leekduck:pokemon-go-wild-area-2026-mexico-city')")
+        page.wait_for_function("document.getElementById('evd-t')?.textContent.includes('Mexico')")
+        assert page.locator('#evd .research-task').count()==12
+        raid_task=page.locator('#evd .research-task').filter(has_text='Win 2 raids')
+        assert raid_task.locator('.research-reward').count()==3
+        assert 'Conkeldurr' in raid_task.inner_text()
+        costume_reward=raid_task.locator('.research-reward').filter(has_text='Machamp (Modern Jacket)')
+        assert costume_reward.count()==1 and 'CP ' not in costume_reward.inner_text()
+        raid_task.scroll_into_view_if_needed()
+        assert page.locator('#evd').evaluate('(el)=>el.scrollWidth<=el.clientWidth'), ('Research rewards',width)
+        capture('research-rewards')
+        page.keyboard.press('Escape')
         assert errors == [], errors
         print(f'PASS premium surfaces {engine} {width}px {theme}: live overseas visibility, full titles, calendar keyboard focus, detail links and close focus')
         context.close()

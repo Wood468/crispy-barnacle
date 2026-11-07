@@ -6351,7 +6351,7 @@
     },
     "contentHash": "1e06cbe2549f5be04227938f34f5e36c4c8e75c9ff29c43c4b4dcc816da2f865",
     "revision": 5,
-    "amended": true,
+    "amended": false,
     "native": false,
     "collection": "events"
    },
@@ -18492,9 +18492,9 @@
      "start": "2026-11-06",
      "end": "2026-11-08"
     },
-    "contentHash": "3c88a0335dd88189e8bc625280a4bb83c1ddc0fac469636494bc5c899a79a464",
-    "revision": 7,
-    "amended": false,
+    "contentHash": "45071182276be18483c8b6fb1d2700b15600b505bff0bc4344215636fa00131f",
+    "revision": 8,
+    "amended": true,
     "native": false,
     "collection": "worldEvents"
    },
@@ -18567,6 +18567,16 @@
        "quantity": 1,
        "cpMin": 507,
        "cpMax": 546
+      },
+      {
+       "type": "item",
+       "name": "Stardust",
+       "quantity": 2000
+      },
+      {
+       "type": "item",
+       "name": "Silver Pinap Berry",
+       "quantity": 1
       }
      ],
      "sources": [
@@ -18630,6 +18640,71 @@
       "end": "2026-11-09T00:00:00.000Z"
      },
      "checkedAt": "2026-11-07"
+    },
+    {
+     "category": "field",
+     "sources": [
+      "leekduck"
+     ],
+     "sourceRefs": [
+      {
+       "id": "leekduck",
+       "name": "Leek Duck",
+       "trust": "community",
+       "url": "https://leekduck.com/events/pokemon-go-wild-area-2026-mexico-city/"
+      }
+     ],
+     "status": "single",
+     "eventId": "leekduck:pokemon-go-wild-area-2026-mexico-city",
+     "eventName": "Pokémon GO Wild Area 2026: Mexico City",
+     "eventWindow": {
+      "start": "2026-11-06T16:00:00.000Z",
+      "end": "2026-11-09T00:00:00.000Z"
+     },
+     "checkedAt": "2026-11-07",
+     "task": "Catch a Hisuian Sliggoo",
+     "rewards": [
+      {
+       "type": "encounter",
+       "name": "Hisuian Sliggoo",
+       "quantity": 1,
+       "formId": "hisui"
+      }
+     ]
+    },
+    {
+     "category": "field",
+     "sources": [
+      "leekduck"
+     ],
+     "sourceRefs": [
+      {
+       "id": "leekduck",
+       "name": "Leek Duck",
+       "trust": "community",
+       "url": "https://leekduck.com/events/pokemon-go-wild-area-2026-mexico-city/"
+      }
+     ],
+     "status": "single",
+     "eventId": "leekduck:pokemon-go-wild-area-2026-mexico-city",
+     "eventName": "Pokémon GO Wild Area 2026: Mexico City",
+     "eventWindow": {
+      "start": "2026-11-06T16:00:00.000Z",
+      "end": "2026-11-09T00:00:00.000Z"
+     },
+     "checkedAt": "2026-11-07",
+     "task": "Explore 2 km",
+     "rewards": [
+      {
+       "type": "encounter",
+       "name": "Machamp (Modern Jacket)",
+       "quantity": 1,
+       "costume": true,
+       "costumeId": "modernjacket",
+       "label": "Modern Jacket",
+       "mighty": true
+      }
+     ]
     },
     {
      "task": "Hatch an Egg",
@@ -18811,10 +18886,11 @@
      "rewards": [
       {
        "type": "encounter",
-       "name": "Mighty Kommo-o",
+       "name": "Kommo-o",
        "quantity": 1,
        "cpMin": 1357,
-       "cpMax": 1418
+       "cpMax": 1418,
+       "mighty": true
       }
      ],
      "sources": [
@@ -18843,10 +18919,11 @@
      "rewards": [
       {
        "type": "encounter",
-       "name": "Mighty Bastiodon",
+       "name": "Bastiodon",
        "quantity": 1,
        "cpMin": 615,
-       "cpMax": 660
+       "cpMax": 660,
+       "mighty": true
       },
       {
        "type": "encounter",
@@ -18882,15 +18959,26 @@
      "rewards": [
       {
        "type": "encounter",
-       "name": "Mighty Azumarill",
+       "name": "Azumarill",
        "quantity": 1,
        "cpMin": 637,
-       "cpMax": 680
+       "cpMax": 680,
+       "mighty": true
       },
       {
        "type": "encounter",
-       "name": "Mighty Modern Jacket Machamp Mighty Conkeldurr",
+       "name": "Machamp (Modern Jacket)",
        "quantity": 1,
+       "costume": true,
+       "costumeId": "modernjacket",
+       "label": "Modern Jacket",
+       "mighty": true
+      },
+      {
+       "type": "encounter",
+       "name": "Conkeldurr",
+       "quantity": 1,
+       "mighty": true,
        "cpMin": 1368,
        "cpMax": 1430
       }
@@ -18921,17 +19009,28 @@
      "rewards": [
       {
        "type": "encounter",
-       "name": "Mighty Kommo-o",
+       "name": "Kommo-o",
        "quantity": 1,
        "cpMin": 1357,
-       "cpMax": 1418
+       "cpMax": 1418,
+       "mighty": true
       },
       {
        "type": "encounter",
-       "name": "Mighty Bastiodon",
+       "name": "Bastiodon",
        "quantity": 1,
        "cpMin": 615,
-       "cpMax": 660
+       "cpMax": 660,
+       "mighty": true
+      },
+      {
+       "type": "encounter",
+       "name": "Machamp (Modern Jacket)",
+       "quantity": 1,
+       "costume": true,
+       "costumeId": "modernjacket",
+       "label": "Modern Jacket",
+       "mighty": true
       }
      ],
      "sources": [
@@ -31539,7 +31638,7 @@
     },
     "contentHash": "da0561c1e6b9d3ea5a8bddaf5d89871d10d3a409e626ef4cf250cc738bb24eae",
     "revision": 3,
-    "amended": true,
+    "amended": false,
     "native": false,
     "collection": "season"
    },
@@ -33917,9 +34016,9 @@
      "start": "",
      "end": ""
     },
-    "contentHash": "b2fba6efc43da8ecfcd5ab69ab184256c7b5165b01cbdc3c1344cead95fbe9bf",
-    "revision": 6,
-    "amended": false,
+    "contentHash": "7e01fbf9856e7a4353376d08e38a522b53a204b7f35b50d74696be44083f1c99",
+    "revision": 7,
+    "amended": true,
     "native": false,
     "collection": "events"
    },
@@ -33992,6 +34091,16 @@
        "quantity": 1,
        "cpMin": 507,
        "cpMax": 546
+      },
+      {
+       "type": "item",
+       "name": "Stardust",
+       "quantity": 2000
+      },
+      {
+       "type": "item",
+       "name": "Silver Pinap Berry",
+       "quantity": 1
       }
      ],
      "sources": [
@@ -34055,6 +34164,71 @@
       "end": "2026-11-08T09:00:00.000Z"
      },
      "checkedAt": "2026-11-07"
+    },
+    {
+     "category": "field",
+     "sources": [
+      "leekduck"
+     ],
+     "sourceRefs": [
+      {
+       "id": "leekduck",
+       "name": "Leek Duck",
+       "trust": "community",
+       "url": "https://leekduck.com/events/pokemon-go-wild-area-2026-sendai-japan/"
+      }
+     ],
+     "status": "single",
+     "eventId": "leekduck:pokemon-go-wild-area-2026-sendai-japan",
+     "eventName": "Pokémon GO Wild Area 2026: Sendai • Tohoku",
+     "eventWindow": {
+      "start": "2026-11-06T01:00:00.000Z",
+      "end": "2026-11-08T09:00:00.000Z"
+     },
+     "checkedAt": "2026-11-07",
+     "task": "Catch a Hisuian Sliggoo",
+     "rewards": [
+      {
+       "type": "encounter",
+       "name": "Hisuian Sliggoo",
+       "quantity": 1,
+       "formId": "hisui"
+      }
+     ]
+    },
+    {
+     "category": "field",
+     "sources": [
+      "leekduck"
+     ],
+     "sourceRefs": [
+      {
+       "id": "leekduck",
+       "name": "Leek Duck",
+       "trust": "community",
+       "url": "https://leekduck.com/events/pokemon-go-wild-area-2026-sendai-japan/"
+      }
+     ],
+     "status": "single",
+     "eventId": "leekduck:pokemon-go-wild-area-2026-sendai-japan",
+     "eventName": "Pokémon GO Wild Area 2026: Sendai • Tohoku",
+     "eventWindow": {
+      "start": "2026-11-06T01:00:00.000Z",
+      "end": "2026-11-08T09:00:00.000Z"
+     },
+     "checkedAt": "2026-11-07",
+     "task": "Explore 2 km",
+     "rewards": [
+      {
+       "type": "encounter",
+       "name": "Machamp (Modern Jacket)",
+       "quantity": 1,
+       "costume": true,
+       "costumeId": "modernjacket",
+       "label": "Modern Jacket",
+       "mighty": true
+      }
+     ]
     },
     {
      "task": "Hatch an Egg",
@@ -34214,10 +34388,11 @@
      "rewards": [
       {
        "type": "encounter",
-       "name": "Mighty Kommo-o",
+       "name": "Kommo-o",
        "quantity": 1,
        "cpMin": 1357,
-       "cpMax": 1418
+       "cpMax": 1418,
+       "mighty": true
       }
      ],
      "sources": [
@@ -34246,10 +34421,11 @@
      "rewards": [
       {
        "type": "encounter",
-       "name": "Mighty Bastiodon",
+       "name": "Bastiodon",
        "quantity": 1,
        "cpMin": 615,
-       "cpMax": 660
+       "cpMax": 660,
+       "mighty": true
       },
       {
        "type": "encounter",
@@ -34285,10 +34461,20 @@
      "rewards": [
       {
        "type": "encounter",
-       "name": "Mighty Azumarill",
+       "name": "Azumarill",
        "quantity": 1,
        "cpMin": 637,
-       "cpMax": 680
+       "cpMax": 680,
+       "mighty": true
+      },
+      {
+       "type": "encounter",
+       "name": "Machamp (Modern Jacket)",
+       "quantity": 1,
+       "costume": true,
+       "costumeId": "modernjacket",
+       "label": "Modern Jacket",
+       "mighty": true
       }
      ],
      "sources": [
@@ -34317,17 +34503,19 @@
      "rewards": [
       {
        "type": "encounter",
-       "name": "Mighty Kommo-o",
+       "name": "Kommo-o",
        "quantity": 1,
        "cpMin": 1357,
-       "cpMax": 1418
+       "cpMax": 1418,
+       "mighty": true
       },
       {
        "type": "encounter",
-       "name": "Mighty Bastiodon",
+       "name": "Bastiodon",
        "quantity": 1,
        "cpMin": 615,
-       "cpMax": 660
+       "cpMax": 660,
+       "mighty": true
       }
      ],
      "sources": [
