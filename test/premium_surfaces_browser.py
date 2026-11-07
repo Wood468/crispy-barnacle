@@ -41,7 +41,14 @@ with sync_playwright() as p:
         assert 'Sendai' in first.inner_text()
         title = first.locator('.evc-title-row h3')
         title.wait_for(state='visible')
-        title_box=title.evaluate('(el)=>{const r=el.getBoundingClientRect();return {y:r.y,height:r.height,width:r.width};}')
+        # Read the current connected title and its geometry in one browser task: a genuine late
+        # source update can replace a card between locator resolution and an element evaluation.
+        title_box=page.wait_for_function("""()=>{
+            const el=document.querySelector('#home-now .evc .evc-title-row h3');
+            if(!el)return false;
+            const r=el.getBoundingClientRect();
+            return r.height>0&&r.width>0?{y:r.y,height:r.height,width:r.width}:false;
+        }""").json_value()
         assert title_box['height']>0 and title_box['width']>0 and title_box['y']+title_box['height']<820, (width,title_box)
         brief = page.locator('#today-brief-details')
         assert not brief.evaluate('(el)=>el.open')

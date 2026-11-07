@@ -22,7 +22,7 @@ test('synthetic future event renders optional content without event-specific bra
  const key=identity({speciesId:'25'});
  const ev=normalize({schemaVersion:1,eventId:'future-synthetic',family:'unannounced-future-family',title:'Synthetic only',
  pokemon:[{speciesId:'25'}],encounters:[{identityKey:key,method:'wild'},{identityKey:key,method:'raid'}],
- activities:[{id:'rotation-1',parentId:'main',schedule:{start:'2027-01-01T10:00:00+11:00',end:'2027-01-01T11:00:00+11:00'}}],
+ activities:[{id:'rotation-1',presentation:'rotation',parentId:'main',schedule:{start:'2027-01-01T10:00:00+11:00',end:'2027-01-01T11:00:00+11:00'}}],
  research:[{title:'Example research'}],passes:[{title:'Example pass'}],tickets:[{title:'Example ticket'}],
  sources:[{url:'https://example.invalid',confidence:0.3}]});
  const view=project(ev);

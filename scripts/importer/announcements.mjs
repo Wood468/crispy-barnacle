@@ -1,4 +1,5 @@
 // Publish newly discovered event articles even when no curated event or venue exists yet.
+import {isAllowedOgImage} from '../../src/image-policy.js';
 import {sourceFor} from './sources.mjs';
 import {decode} from './text.mjs';
 import {extractEncounters,posterFromHtml,methodForHeading} from './encounters.mjs';
@@ -27,6 +28,8 @@ export function announcementFromPage(page,options={}){
     if(!node||typeof node!=='object')return;
     const identifier=typeof node.identifier==='string'?node.identifier:typeof node['@id']==='string'?node['@id']:parent+':'+index;
     const activity={id:'activity:'+identifier,parentId:parent,title:typeof node.name==='string'?node.name:'Activity',kind:methodForHeading(node.name||'')||'other'};
+    if(/\b(?:rotat(?:ion|ions|ing)|habitats?)\b/i.test(activity.title)||node.additionalType==='rotation')activity.presentation='rotation';
+    else if(parent!=='main'&&raw.activities.some(a=>a.id===parent&&a.presentation==='rotation'))activity.presentation='rotation';
     if(node.startDate&&node.endDate){const start=String(node.startDate),end=String(node.endDate);if(/(?:Z|[+-]\d{2}:\d{2})$/.test(start)&&/(?:Z|[+-]\d{2}:\d{2})$/.test(end))activity.schedule={start,end,timeBasis:'instant'};else if(raw.schedule&&raw.schedule.timeBasis==='local')activity.schedule={start,end,timeBasis:'local',timeZone:raw.schedule.timeZone};}
     const sub=extractEncounters(typeof node.description==='string'?node.description:'',options);
     for(const p of sub.pokemon){const prior=roster.get(p.key);roster.set(p.key,prior?{...prior,...p,shiny:p.shiny==='unknown'?prior.shiny:p.shiny}:p);}
@@ -38,10 +41,10 @@ export function announcementFromPage(page,options={}){
   children(event.subEvent);const scoped=new Set(specific.map(e=>e.identityKey+'|'+e.method));raw.pokemon=[...roster.values()];raw.encounters=raw.encounters.filter(e=>!scoped.has(e.identityKey+'|'+e.method)).concat(specific);
  }
  if(event&&event.description)raw.notes=[decode(String(event.description).replace(/<[^>]*>/g,' ')).replace(/\s+/g,' ').trim()];
- if(event&&event.image){const image=[].concat(event.image).map(v=>typeof v==='string'?v:v&&v.url).find(v=>typeof v==='string'&&v.startsWith('https://'));if(image)raw.image=image;}
+ if(event&&event.image){const image=[].concat(event.image).map(v=>typeof v==='string'?v:v&&v.url).find(v=>typeof v==='string'&&isAllowedOgImage(v));if(image)raw.image=image;}
  if(event&&event.offers)raw.tickets=[].concat(event.offers).filter(o=>o&&typeof o==='object').map(o=>({title:typeof o.name==='string'?o.name:'Ticket',url:typeof o.url==='string'?o.url:null,...(o.price!==undefined&&Number.isFinite(Number(o.price))&&Number(o.price)>=0&&/^[A-Z]{3}$/.test(o.priceCurrency||'')?{price:{amount:Number(o.price),currency:o.priceCurrency}}:{})}));
  const ranks=adapter.passFields(raw.tickets);if(ranks.passes.length){raw.passes=ranks.passes;raw.tickets=ranks.tickets;}
- for(const activity of raw.activities){if(activity.schedule){try{clock.range(activity.schedule,'Australia/Melbourne');}catch(error){raw.internalValidation.warnings.push(activity.id+': '+error.message);activity.schedule=null;}}}
+ for(const activity of raw.activities){if(activity.schedule){try{clock.validateSchedule(activity.schedule);}catch(error){raw.internalValidation.warnings.push(activity.id+': '+error.message);activity.schedule=null;}}}
  // Invalid dates do not erase a newly announced event or invent an interval.
  try{return contract.normalize(raw);}catch(error){if(!/schedule|IANA|boundary|offset|local/i.test(error.message))throw error;raw.schedule=null;raw.internalValidation.warnings.push(error.message);return contract.normalize(raw);}
 }

@@ -22048,6 +22048,7 @@
      "start": "",
      "end": ""
     },
+    "conflicts": [],
     "contentHash": "1d5a2ff8d2a36f4303e462e93dfcba6c078a41a679531a0e71c3dcea6fe032c3",
     "revision": 3,
     "amended": false,
@@ -23448,6 +23449,7 @@
      "start": "",
      "end": ""
     },
+    "conflicts": [],
     "contentHash": "7d5aa66f805d3695e51ff728f54636bf8c9f5b13bf6e4c800e1ffa8617d55bce",
     "revision": 3,
     "amended": false,
@@ -37645,7 +37647,7 @@
     },
     "contentHash": "dce45278d164ec7d0efdbec4d901eac6f95e08bdec7b64c64c440d1336263583",
     "revision": 4,
-    "amended": true,
+    "amended": false,
     "native": false,
     "collection": "world-events"
    },
@@ -39292,7 +39294,7 @@
     },
     "contentHash": "636a667f0bd8860852090ec7ed9c3389bd07ff19389ca5fbffd0d12d18318dc5",
     "revision": 5,
-    "amended": true,
+    "amended": false,
     "native": false,
     "collection": "world-events"
    },
@@ -44199,7 +44201,7 @@
     },
     "contentHash": "84950064738e11a798ef98f9fd6ab913640b138fb1594e38612f64db09c4dd24",
     "revision": 4,
-    "amended": true,
+    "amended": false,
     "native": false,
     "collection": "world-events"
    },

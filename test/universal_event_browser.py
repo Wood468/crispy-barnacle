@@ -57,6 +57,11 @@ with sync_playwright() as p:
         page.goto(BASE+'/')
         page.wait_for_function("!!window.GODASH&&!!window.GODETAIL&&GODASH.events().some(e=>e.id==='synthetic-future-community-day')&&GODASH.DEXBY.raichu===26")
         assert page.locator('#universal-announced-tab-now').is_visible(), 'undated overseas announcement hidden'
+        assert page.evaluate("""()=>{
+            GODASH.renderAll();
+            const el=document.querySelector('#home-now [data-open]');el.focus();
+            GODASH.renderAll();return el.isConnected&&document.activeElement===el;
+        }"""), 'unchanged Today refresh replaced the focused event button'
         page.locator('#tabs [data-tab="events"]').click()
         target=page.locator('#evtimeline [data-open="synthetic-future-community-day"]')
         target.focus()
@@ -134,13 +139,16 @@ with sync_playwright() as p:
     page.keyboard.press('Escape')
     page.wait_for_function('!GONAV.internal&&GONAV.pending.length===0')
     print('PASS overseas Today listing opens the universal sheet and retains its source link')
+    # Exercise every renderer using one sheet session. Hundreds of synthetic push/back
+    # operations exceed WebKit's history traversal rate limit and obscure the render checks.
+    # Actual close/focus/history journeys are verified separately above and below.
     for item in CATALOGUE['events']:
         page.evaluate('(id)=>GODETAIL.open(id)',item['eventId'])
         page.wait_for_function('(title)=>document.getElementById("evd-t")?.textContent===title',arg=item['title'],timeout=10000)
         assert page.locator('#evd .ue-hero').count()==1,item['eventId']
         assert page.locator('#evd .ue-sources').count()==1,item['eventId']
         assert page.locator('#evd').evaluate('(el)=>el.scrollWidth<=el.clientWidth'),item['eventId']
-        page.evaluate('GODETAIL.close()')
+    page.evaluate('GODETAIL.close()')
     page.wait_for_function('!GONAV.internal&&GONAV.pending.length===0')
     assert page.evaluate('GONAV.depth')==0
     assert page.url.rstrip('/')==BASE
@@ -154,6 +162,11 @@ with sync_playwright() as p:
     held=[]
     context.route('**/events-v1.json',lambda route:held.append(route))
     page=context.new_page();errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
+    pending=set()
+    page.on('request',lambda r:pending.add(r.url))
+    page.on('requestfinished',lambda r:pending.discard(r.url))
+    page.on('requestfailed',lambda r:pending.discard(r.url))
+    page.add_init_script("""window.__handoff=[];['pointerdown','pointerup','click'].forEach(type=>document.addEventListener(type,e=>window.__handoff.push({type,target:e.target.closest('[data-open]')?.getAttribute('data-open')||e.target.tagName}),true));""")
     page.clock.install(time='2026-11-07T12:00:00+11:00')
     page.goto(BASE+'/',wait_until='domcontentloaded')
     page.wait_for_function("!!window.GODETAIL&&GODASH.eventsState()!=='pending'")
@@ -161,8 +174,20 @@ with sync_playwright() as p:
     held[0].fulfill(body=json.dumps({'schemaVersion':1,'species':DEX,'events':[FUTURE]}),content_type='application/json')
     page.wait_for_function("GODASH.events().some(e=>e.id==='synthetic-future-community-day')")
     page.locator('#tabs [data-tab="events"]').click()
-    page.locator('#evtimeline [data-open="synthetic-future-community-day"]').click()
-    page.wait_for_function("document.getElementById('evd-t')?.textContent==='Synthetic Future Community Day'")
+    late_target=page.locator('#evtimeline [data-open="synthetic-future-community-day"]')
+    late_target.scroll_into_view_if_needed()
+    page.wait_for_function("""()=>{
+        const el=document.querySelector('#evtimeline [data-open="synthetic-future-community-day"]');
+        if(!el)return false;
+        const r=el.getBoundingClientRect(),hit=document.elementFromPoint(r.x+r.width/2,r.y+r.height/2);
+        return hit?.closest('[data-open]')===el;
+    }""")
+    late_target.click()
+    try:
+        page.wait_for_function("document.getElementById('evd-t')?.textContent==='Synthetic Future Community Day'")
+    except Exception:
+        print('Late catalogue handoff failure:',errors,sorted(pending),page.evaluate("({title:document.getElementById('evd-t')?.textContent,hidden:document.getElementById('evd')?.hidden,active:document.activeElement?.outerHTML.slice(0,240),depth:GONAV.depth,settled:GOEventRegistry.settled(),handoff:window.__handoff,places:!!window.GOPLACES,events:GODASH.events().filter(e=>e.id==='synthetic-future-community-day').map(e=>({id:e.id,name:e.name}))})"),flush=True)
+        raise
     assert errors==[],errors
     print('PASS late catalogue announces future events without a reload or user-state edit')
     context.close()
@@ -177,4 +202,27 @@ with sync_playwright() as p:
     assert page.locator('#evd a[download]').count()==0
     assert errors==[],errors
     print('PASS player-local DST gap keeps detail readable and withholds invalid calendar')
+    context.close()
+    # A supplementary source that never answers cannot block the validated announcement.
+    context=browser.new_context(viewport={'width':390,'height':900},timezone_id='Asia/Tokyo',service_workers='block')
+    context.route('**/api/**',api)
+    context.route(re.compile(r'^https://fonts\.'),lambda r:r.fulfill(body='',content_type='text/css'))
+    context.route('**/events-v1.json',lambda r:r.fulfill(body=json.dumps({'schemaVersion':1,'species':DEX,'events':[FUTURE]}),content_type='application/json'))
+    stalled=[];context.route('**/event-details.json',lambda r:stalled.append(r))
+    context.add_init_script("localStorage.setItem('gofn-dex-v1',JSON.stringify({m:{own:{25:1}}}));localStorage.setItem('gofn-us-v1',JSON.stringify({'follow:pikachu':{v:'Pikachu',t:1}}));")
+    page=context.new_page();page.clock.install(time='2026-11-07T12:00:00+09:00')
+    page.goto(BASE+'/',wait_until='domcontentloaded')
+    page.wait_for_function('!!window.GODETAIL&&GOEventRegistry.settled()')
+    before=page.evaluate("({dex:localStorage.getItem('gofn-dex-v1'),us:localStorage.getItem('gofn-us-v1')})")
+    page.evaluate("GODETAIL.open('synthetic-future-community-day')")
+    page.clock.run_for(8100)
+    page.wait_for_function("document.getElementById('evd-t')?.textContent==='Synthetic Future Community Day'")
+    assert page.locator('#evd [data-method="wild"]').count()==1
+    assert page.locator('#evd [data-method="wild"] .own').inner_text()=='Have'
+    assert page.locator('#evd-research-title').count()==0
+    page.locator('#evd-sources > summary').click()
+    assert 'supplementary event information could not be loaded' in page.locator('#evd-sources').inner_text()
+    assert page.evaluate("({dex:localStorage.getItem('gofn-dex-v1'),us:localStorage.getItem('gofn-us-v1')})")==before
+    for route in stalled:route.abort()
+    print('PASS stalled supplementary source retains canonical details, optional sections and collection state')
     context.close();browser.close()

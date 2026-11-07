@@ -53,7 +53,9 @@ test('catalogue publication is idempotent and amendments retain stable IDs',()=>
 });
 test('source outage preserves the last validated catalogue',()=>{const first=buildCatalogue({data:{events:[{id:'retained',t:'Synthetic event',art:['Pikachu']}]}});assert.deepEqual(buildCatalogue({previous:first}).events,first.events);});
 test('no provenance or technical timestamps leak into primary presentation',()=>{
- const html=UI.render(event({sources:[{url:'https://example.invalid/private-metadata',confidence:1,updated:'2026-11-07'}],internalValidation:{fields:{bonuses:[{text:'2× Candy',status:'official',sources:['official']}]},warnings:[]}}),{});assert.doesNotMatch(html,/confidence|example.invalid|2026-11-07|Official|Single source|Cross-checked/);
+ const html=UI.render(event({sources:[{url:'https://example.invalid/private-metadata',confidence:1,updated:'2026-11-07'}],internalValidation:{fields:{bonuses:[{text:'2× Candy',status:'official',sources:['official']}]},warnings:[]}}),{});
+ assert.doesNotMatch(html,/confidence|2026-11-07|Official|Single source|Cross-checked/);
+ assert.doesNotMatch(html.split('<details class="ue-sources"')[0],/example.invalid/);
 });
 test('activities reject cycles, dangling parents and dangling encounter references',()=>{
  assert.throws(()=>event({activities:[{id:'one',parentId:'two'},{id:'two',parentId:'one'}]}),/cycle/);
@@ -78,8 +80,14 @@ test('source encounters keep distinct costumes and unresolved conflicts remain u
 });
 test('published poster URL is extracted without authoring or guessing artwork',async()=>{
  const {posterFromHtml}=await import('../scripts/importer/encounters.mjs');
- assert.equal(posterFromHtml('<meta content="https://images.example.invalid/banner.jpg?a=1&amp;b=2" property="og:image">','https://example.invalid/event'),'https://images.example.invalid/banner.jpg?a=1&b=2');
+ assert.equal(posterFromHtml('<meta content="https://cdn.leekduck.com/synthetic-banner.jpg?a=1&amp;b=2" property="og:image">','https://example.invalid/event'),'https://cdn.leekduck.com/synthetic-banner.jpg?a=1&b=2');
+ assert.equal(posterFromHtml('<meta property="og:image" content="https://pokemongohub.net/unapproved.png">','https://example.invalid/event'),null);
  assert.equal(posterFromHtml('<meta property="og:image" content="javascript:alert(1)">','https://example.invalid/event'),null);
+ const {announcementFromPage}=await import('../scripts/importer/announcements.mjs');
+ const page={source:'leekduck',url:'https://leekduck.com/events/synthetic-poster/',title:'Synthetic event',fields:{}};
+ const announce=image=>announcementFromPage({...page,html:'<script type="application/ld+json">'+JSON.stringify({'@type':'Event',name:page.title,image})+'</script>'});
+ assert.equal(announce('https://pokemongohub.net/unapproved.png').image,null);
+ assert.equal(announce('https://cdn.leekduck.com/synthetic-banner.jpg').image,'https://cdn.leekduck.com/synthetic-banner.jpg');
 });
 test('confirmed shared article, title, region and dates reconcile duplicate source IDs',()=>{
  const data={events:[{id:'curated-pass',t:'GO Pass: Synthetic',s:'2027-01-01T10:00',e:'2027-02-01T10:00',detailIds:['source:pass']}]};
@@ -104,7 +112,7 @@ test('equivalent source form spellings resolve consistently without combining Sh
  A.configureSpecies([]);
 });
 test('conflicting bonuses are withheld from primary content instead of showing both as facts',()=>{
- const model=event({bonuses:['2× Catch Candy','3× Catch Candy'],internalValidation:{conflicts:[{field:'bonuses',a:{text:'2× Catch Candy'},b:{text:'3× Catch Candy'}}]}});const html=UI.render(model,{});assert.doesNotMatch(html,/2× Catch Candy|3× Catch Candy/);assert.match(html,/Some event details conflict/);
+ const model=event({bonuses:['2× Catch Candy','3× Catch Candy'],internalValidation:{conflicts:[{field:'bonuses',a:{text:'2× Catch Candy'},b:{text:'3× Catch Candy'}}]}});const html=UI.render(model,{});assert.doesNotMatch(html,/2× Catch Candy|3× Catch Candy/);assert.doesNotMatch(html,/Some event details conflict/);
 });
 test('cancellations remain cancelled during an incomplete refresh and render a consequential warning',()=>{
  const cancelled=event({lifecycle:'cancelled'}),partial=event({});assert.equal(A.retain(cancelled,partial).lifecycle,'cancelled');assert.match(UI.render(cancelled,{}),/Event cancelled/);
