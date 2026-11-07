@@ -1944,3 +1944,24 @@ a.evc-source{color:var(--color-link);text-underline-offset:3px}
 @media(max-width:380px){
   .evd-in:has(.ue-hero) .research-rewards{grid-template-columns:minmax(0,1fr)}
 }
+
+
+/* Fallback reward icons use the same footprint as Pokémon artwork. */
+.evd-in:has(.ue-hero) .research-reward .ue-reward-icon{
+  display:grid;
+  place-items:center;
+  width:48px;
+  height:48px;
+  min-width:0;
+  border-radius:10px;
+  background:var(--color-surface-raised,var(--color-surface));
+  color:var(--color-text-muted);
+  font:700 20px/1 var(--font-body);
+}
+.evd-in:has(.ue-hero) .research-reward .research-reward-qty{
+  font-size:var(--type-meta-compact);
+}
+.evd-in:has(.ue-hero) .research-reward>span:last-child small{
+  display:block;
+  overflow-wrap:anywhere;
+}
