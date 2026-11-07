@@ -16,7 +16,7 @@ if OUT:
 with sync_playwright() as p:
     engine = os.environ.get('GO_FIELD_NOTES_TEST_BROWSER', 'chromium')
     browser = getattr(p, engine).launch()
-    for width, theme in [(320, 'light'), (390, 'dark'), (768, 'light'), (1440, 'dark')]:
+    for width, theme in [(320, 'light'), (375, 'dark'), (390, 'dark'), (430, 'light'), (768, 'light'), (1440, 'dark')]:
         context = browser.new_context(viewport={'width': width, 'height': 900},
                                       timezone_id='Australia/Sydney', service_workers='block')
         context.route('**/api/**', lambda r: r.fulfill(

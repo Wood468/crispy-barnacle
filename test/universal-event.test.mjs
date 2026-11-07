@@ -1,3 +1,7 @@
+import '../tests/event-view-sparse.test.js';
+import '../tests/event-view-activity-schedule.test.js';
+import '../tests/event-view-activity-pokemon.test.js';
+import '../tests/test-event-reward-layout.js';
 // Include the existing contract work in the repository's normal JavaScript CI command.
 import '../scripts/event-experience/contract-v1.test.cjs';
 import '../scripts/event-experience/view-v1.test.cjs';
@@ -169,3 +173,13 @@ test('gallery merges visually identical source edges without collapsing encounte
  const html=UI.render(m,{});assert.equal((html.match(/data-identity="25:base:none"/g)||[]).length,2);
  const featured=UI.render(event({pokemon:[p],encounters:[{identityKey:key,method:'other'}]}),{});assert.equal((featured.match(/Featured Pokémon/g)||[]).length,1);
 });
+
+ test('activity-only references render actual encounter groups after normalization',()=>{
+ const raw={schemaVersion:1,eventId:'future-activity-only',title:'Synthetic activity-only event',pokemon:[{speciesId:'25',name:'Pikachu'},{speciesId:'25',name:'Pikachu',costumeId:'test-hat',label:'Test hat'}],activities:[{id:'wild',kind:'wild',pokemonRefs:['25:base:none','25:base:none','25:base:test-hat']},{id:'raid',kind:'raid',pokemonRefs:['25:base:none']}]};
+ const before=JSON.stringify(raw),model=C.normalize(raw),html=UI.render(model,{});
+ assert.equal(model.groups.wild.length,2);assert.equal(model.groups.raid.length,1);
+ assert.match(html,/data-method="wild"/);assert.match(html,/data-method="raid"/);
+ assert.equal((html.match(/data-identity="25:base:none"/g)||[]).length,2);
+ assert.equal((html.match(/data-identity="25:base:test-hat"/g)||[]).length,1);
+ assert.equal(JSON.stringify(raw),before);assert.equal(model.pokemon[0].shiny,'unknown');
+ });

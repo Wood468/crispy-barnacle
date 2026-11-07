@@ -12,6 +12,7 @@ test('empty activity schedules never create phantom navigation sections', () => 
       {presentation: 'research', schedule: {}},
       {presentation: 'ticket', schedule: {}},
       {presentation: 'rotation', schedule: null},
+      {presentation: 'rotation', schedule: {start: '2027-01-01T09:00:00'}},
       {presentation: 'schedule', schedule: {start: '2027-01-01T10:00:00'}},
       {presentation: 'research', schedule: {start: '2027-01-01T11:00:00'}}
     ],
