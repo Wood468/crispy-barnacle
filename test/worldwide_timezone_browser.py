@@ -79,8 +79,12 @@ with sync_playwright() as p:
   assert page.locator('#evd-research-title').is_visible() and page.locator('#evd-tickets').is_visible()
   assert page.locator('#evd-rotations').count()==0
   close_event()
-  cached=page.evaluate("async()=>{const c=await caches.open('gofn-catalogue-v1');const r=await c.match('/events-v1.validated.json');return r?await r.json():null;}")
-  assert cached and len(cached['events'])==len(VALID['events']),page.evaluate('GOEventRegistry.diagnostics()')
+  cached=page.evaluate("""async()=>{
+   const names=await caches.keys(),c=await caches.open('gofn-catalogue-v1'),keys=await c.keys();
+   const r=await c.match('/events-v1.validated.json'),data=r?await r.json():null;
+   return {names,keys:keys.map(r=>r.url),count:data?.events?.length,diagnostics:GOEventRegistry.diagnostics()};
+  }""")
+  assert cached.get('count')==len(VALID['events']),cached
   bad=copy.deepcopy(VALID);bad['events'].append({'schemaVersion':1,'eventId':'synthetic-invalid-new','title':'Synthetic invalid','pokemon':[{'speciesId':'25'}],'encounters':[{'identityKey':'25:base:none','method':'wiild'}]});payload[0]=bad
   page.reload();ready()
   diagnostics=page.evaluate('GOEventRegistry.diagnostics()')
