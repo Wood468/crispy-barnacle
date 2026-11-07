@@ -1099,7 +1099,9 @@
     }
     ((D.rotation) || []).forEach(function (r) {
       [['five', '5-star raids'], ['mega', 'Mega raids'], ['shadow', 'Shadow raids']].forEach(function (k) {
-        var boss = canonicalBoss(r[k[0]]); if (!boss) return;
+        var names=GOLIB.raidBossNames(r[k[0]]);
+        names.concat(names.length>1?[r[k[0]]]:[]).forEach(function(value){
+        var boss = canonicalBoss(value); if (!boss) return;
         var start = pd(r.s), end = pd(r.e);
         if (!Number.isFinite(+start) || !Number.isFinite(+end)) return;
         var name = boss + (k[0] === 'five' ? ' 5-star raids' : ' raids');
@@ -1107,6 +1109,7 @@
         if (seen[key]) return;
         seen[key] = 1;
         out.push({ id: 'raid:' + slug(boss) + ':' + String(r.s).slice(0, 10), name: name, kind: 'raid', start: start, end: end, featured: [{ name: boss }], bonuses: [], notes: [], tags: [], source: 'Raid rotation', rotationBoss: boss });
+        });
       });
     });
     return out;
@@ -1120,13 +1123,17 @@
     function addDay(d,n){return addDays(d,n);}
     function key(d){return dayKey(d);}
     function range(a,b) { return fmtD(a) + ' – ' + fmtD(b); }
-    function rotAt(d) { return rot.filter(function(r){ return pd(r.s) <= d && d < pd(r.e); })[0]; }
+    // Use interval overlap, not weekday samples: short and weekend rotations matter too.
+    function weekRotations(a, end) {
+      return rot.filter(function(r){return pd(r.s)<end&&pd(r.e)>a&&pd(r.e)>t;})
+        .sort(function(x,y){return pd(x.s)-pd(y.s);});
+    }
     function tico(t, ttl) { return '<img class="ti" src="/ico/g/type-' + String(t).toLowerCase() + '.webp" alt="' + esc(t) + '" title="' + esc(t) + '" loading="lazy" decoding="async">'; }
     function raidEvent(name, r) { return raidSlotFor(name, r) || null; }
     function cell(label, name, r) {
       if (!name) return '';
       /* One Pokémon per row. A slot naming both Mega Charizard forms becomes two rows, each with full-size art. */
-      var names = /^Mega Charizard X and Y$/i.test(name) ? ['Mega Charizard X', 'Mega Charizard Y'] : [name];
+      var names = GOLIB.raidBossNames(name);
       return names.map(function (n) {
         var f = window.GOTYPES && GOTYPES.facts(n), real = window.GOLIB && GOLIB.raidEventFor(EV, n, label, pd(r.s).getTime(), pd(r.e).getTime()), ev = real || raidEvent(n, r);
         var ib = ev ? '<button type="button" class="info-open rc-info" data-infographic="' + esc(ev.id) + '" aria-label="Open infographic for ' + esc(n) + '">▧ Infographic</button>' : '';
@@ -1146,8 +1153,8 @@
     function lowTier(r) {
       /* 1-3 star bosses, where a source has published them for that rotation. */
       var l = r && r.low; if (!l) return '<p class="muted rw-low">1–3★ raid bosses are not announced for this rotation yet.</p>';
-      return '<div class="rw-low"><span class="rw-label">1–3★ raids' + (l.shadowOne || l.shadowThree ? ' and Shadow raids' : '') + (l.observed ? ' · as of ' + esc(fmtD(pd(l.observed + 'T12:00'))) : '') + '</span>' + lowSourceLink(l) + '<div class="rcs rcs-low">' +
-        [['1★', l.one], ['3★', l.three], ['Shadow 1★', l.shadowOne], ['Shadow 3★', l.shadowThree]].map(function (g) { return (g[1] || []).map(function (n) { return cell(g[0], n, r); }).join(''); }).join('') + '</div></div>';
+      return '<details class="rw-low"><summary>1–3★ raid bosses</summary><span class="rw-label">1–3★ raids' + (l.shadowOne || l.shadowThree ? ' and Shadow raids' : '') + (l.observed ? ' · as of ' + esc(fmtD(pd(l.observed + 'T12:00'))) : '') + '</span>' + lowSourceLink(l) + '<div class="rcs rcs-low">' +
+        [['1★', l.one], ['3★', l.three], ['Shadow 1★', l.shadowOne], ['Shadow 3★', l.shadowThree]].map(function (g) { return (g[1] || []).map(function (n) { return cell(g[0], n, r); }).join(''); }).join('') + '</div></details>';
     }
     function raidSourceLink(r) {
       var url = String(r && r.sourceUrl || '');
@@ -1155,42 +1162,32 @@
       return '<a class="rw-source" href="' + esc(url) + '" target="_blank" rel="noopener noreferrer" aria-label="Source schedule on Leek Duck">Leek Duck source ↗</a>';
     }
     function weekCard(offset) {
-      var a = addDay(monday, offset * 7), b = addDay(a, 6), mid = addDay(a, 2); mid.setHours(11, 0, 0, 0);
-      var first = rotAt(a), second = rotAt(mid);
-      var mb = max.filter(function(m){ return m[0] <= key(b) && m[1] >= key(a); })[0];
+      var a = addDay(monday, offset * 7), b = addDay(a, 6), end = addDay(a, 7);
+      var battles = max.filter(function(m){ return m[0] < key(end) && m[1] >= key(a); });
       var body = '';
-      var activeRotation = rot.filter(function (r) { return pd(r.s) <= t && t < pd(r.e); })[0];
-      var isCurrentWeek = key(a) <= key(t) && key(t) <= key(b);
-      var rotationRows = [];
-      if (isCurrentWeek) {
-        if (activeRotation) rotationRows.push({ r: activeRotation, label: 'Current raid rotation', cls: 'rw-current' });
-        // If the previous rotation has ended but the next one starts later this week,
-        // keep the upcoming source-published window visible rather than showing an empty card.
-        if (!rotationRows.length) {
-          var upcoming = [first, second].filter(function (r) { return r && pd(r.s) > t && pd(r.e) > t; })
-            .sort(function (x, y) { return new Date(x.s) - new Date(y.s); })[0];
-          if (upcoming) rotationRows.push({ r: upcoming, label: 'Next raid rotation · ' + fmtD(pd(upcoming.s)) + ', ' + fmtT(pd(upcoming.s)), cls: 'rw-next' });
-        }
-      } else if (pd(a) > t) {
-        // Future week cards must be calculated from that week's dates, never the globally active rotation.
-        if (first) rotationRows.push({ r: first, label: 'At start of week', cls: '' });
-        if (second && second !== first) rotationRows.push({ r: second, label: 'From ' + fmtD(pd(second.s)) + ', ' + fmtT(pd(second.s)), cls: 'rw-next' });
-      }
+      var rotationRows = weekRotations(a,end).map(function(r){
+        var active=pd(r.s)<=t&&t<pd(r.e);
+        var upcoming='From '+fmtD(pd(r.s))+', '+fmtT(pd(r.s));
+        var label=active?'Current raid rotation':offset===0?'Next raid rotation · '+fmtD(pd(r.s))+', '+fmtT(pd(r.s)):pd(r.s)<=a?'At start of week':upcoming;
+        return {r:r,label:label,cls:active?'rw-current':'rw-next'};
+      });
       if (!rotationRows.length) body += '<p class="empty">No raid rotation published for this week yet.</p>';
       rotationRows.forEach(function (row) {
         var r = row.r;
-        body += '<div class="rw-raid ' + row.cls + '"><span class="rw-label">' + esc(row.label) + '</span>' + raidSourceLink(r) + '<div class="rcs">' +
+        body += '<div class="rw-raid ' + row.cls + '"><span class="rw-label">' + esc(row.label) + '</span><p class="rw-window">' + esc(fmtD(pd(r.s)) + ', ' + fmtT(pd(r.s)) + ' – ' + fmtD(pd(r.e)) + ', ' + fmtT(pd(r.e))) + ' · local time</p>' + raidSourceLink(r) + '<div class="rcs">' +
           cell('5★', r.five, r) + cell('Mega', r.mega, r) + cell('Shadow', String(r.shadow || '').replace(/, to .*/, ''), r) + '</div>' + lowTier(r) + '<p class="evc-when">Raid Hour: ' + esc(r.rh || 'Not listed') + '</p></div>';
       });
-      body += mb ? '<div class="rw-max"><span class="rw-label">Max Monday · ' + esc(fmtD(pd(mb[0] + 'T12:00'))) + ' · 6 am–9 pm</span><div class="rw-max-pokemon">' + monArt({ kind: 'max', tags: [], name: '' }, { name: mb[2] }, 'ea') + '<div><b>' + esc(mb[2]) + '</b><small>Featured Max Pokémon at Power Spots</small></div></div></div>' :
-        '<div class="rw-max"><span class="rw-label">Max Battles</span><p class="muted">No featured Pokémon published for this week yet.</p></div>';
+      body += battles.length ? battles.map(function(mb){
+        var label='Max Battle rotation';
+        return '<div class="rw-max"><span class="rw-label">'+label+'</span><p class="rw-window">'+esc(fmtD(pd(mb[0]+'T12:00'))+' – '+fmtD(pd(mb[1]+'T12:00')))+' · local dates</p><div class="rw-max-pokemon">'+monArt({kind:'max',tags:[],name:''},{name:mb[2]},'ea')+'<div><b>'+esc(mb[2])+'</b><small>Featured at Power Spots</small></div></div>'+(civil(pd(mb[0]+'T12:00')).weekday===1?'<p class="muted">Max Monday spotlight · '+esc(fmtD(pd(mb[0]+'T12:00')))+' · 6 am–9 pm local time</p>':'')+'</div>';
+      }).join('') : '<div class="rw-max"><span class="rw-label">Max Battles</span><p class="muted">No featured Pokémon published for this week yet.</p></div>';
       return '<article class="rotc rw-card"><div class="rw-week-head"><span class="kind">' + esc(offset === 0 ? 'This week' : 'Week of ' + fmtD(a)) + '</span><b>' + esc(range(a,b)) + '</b></div>' + body + '</article>';
     }
     var labels = [{id:'this',text:'This week'},{id:'next',text:'Next week'},{id:'following',text:'Following week'},{id:'future',text:'Future'}];
     var offsets = rotWeekTab === 'this' ? [0] : rotWeekTab === 'next' ? [1] : rotWeekTab === 'following' ? [2] : [3,4,5];
     var knownOffsets = offsets.filter(function(off){
-      var a = addDay(monday, off * 7), b = addDay(a, 6), mid = addDay(a,2);
-      return !!rotAt(a) || !!rotAt(mid) || max.some(function(m){ return m[0] <= key(b) && m[1] >= key(a); });
+      var a = addDay(monday, off * 7), end = addDay(a, 7);
+      return weekRotations(a,end).length || max.some(function(m){ return m[0] < key(end) && m[1] >= key(a); });
     });
     var tabs = '<div class="rw-tabs" role="tablist" aria-label="Rotation week">' + labels.map(function(x){
       var selected = rotWeekTab === x.id;
@@ -1199,7 +1196,7 @@
     var cards = knownOffsets.map(weekCard).join('');
     el.innerHTML = '<div class="prio-head"><h2 class="sec2">Raid & Max Battle rotation</h2></div>' + tabs +
       (cards ? '<div class="rw-list">' + cards + '</div>' : '<p class="empty">No further rotations are published yet.</p>') +
-      '<p class="note">Raid rotation windows follow their published local times; use the Leek Duck source link where provided. Max Battles feature a new Pokémon on Mondays, 6 am–9 pm local time. Future weeks appear only where schedule data is available.</p>';
+      '<p class="note">Raid rotation windows follow their published local times; use the Leek Duck source link where provided. Max Monday spotlights run 6 am–9 pm local time. Shadow legendary raids are available on weekends within the listed rotation. Future weeks appear only where schedule data is available.</p>';
     addGuideLinks(el);
   }
   /* A "Counters guide" button on each 5-star and Mega boss, shown only when /api/guide finds the guide (so it never links to a missing page). */

@@ -353,8 +353,8 @@ check('Travel mode searches only source-dated physical destinations and preserve
       DASH_CSS_URL in INDEX_HTML and DASH_CSS_URL in SW_JS and
       SHELL_CACHE in SW_JS)
 check('raid rotation cards use source-published local windows and Leek Duck attribution',
-      'function raidSourceLink(r)' in DASH_JS and 'fmtT(pd(second.s))' in DASH_JS and
-      'Next raid rotation' in DASH_JS and 'sourceUrl' in DASH_JS and
+      'function raidSourceLink(r)' in DASH_JS and 'fmtT(pd(r.s))' in DASH_JS and
+      'function weekRotations(a, end)' in DASH_JS and 'sourceUrl' in DASH_JS and
       'Raid rotation windows follow their published local times' in DASH_JS and '.rw-source' in DASH_CSS)
 check('raid share dialog and script are included in the exact offline shell',
       '/raid-share.js?v=20261102b' in INDEX_HTML and '/raid-share.js?v=20261102b' in SW_JS and

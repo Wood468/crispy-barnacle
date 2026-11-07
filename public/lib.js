@@ -4,6 +4,15 @@
 }(typeof self !== 'undefined' ? self : this, function () {
   'use strict';
 
+  // Expand only explicit source group labels; keep form names intact for artwork and tracking.
+  function raidBossNames(value) {
+    var name=String(value||'').replace(/, to .*/, '').trim();
+    if(!name)return [];
+    if(/^Mega Charizard X and Y$/i.test(name))return ['Mega Charizard X','Mega Charizard Y'];
+    if(/^Deoxys \(all four Formes\)$/i.test(name))return ['Deoxys (Normal Forme)','Deoxys (Attack Forme)','Deoxys (Defense Forme)','Deoxys (Speed Forme)'];
+    return name.split(/\s+and\s+/i).map(function(n){return n.trim();}).filter(Boolean);
+  }
+
   // Filter the existing collection opportunities without inferring new ownership or changing order.
   function filterOpportunities(rows, query, mode, followed) {
     var q = norm(query || '');
@@ -341,5 +350,5 @@
     return '';
   }
 
-  return { researchCheckedText: researchCheckedText, filterOpportunities: filterOpportunities, isPrivateLink: isPrivateLink, publicLink: publicLink, esc: esc, rpEstimate: rpEstimate, raidEventFor: raidEventFor, isPlaceholder: isPlaceholder, audify: audify, setTiers: setTiers, loadPrices: loadPrices, getJson: getJson, jsonOrNull: jsonOrNull, priceView: priceView, fmtRp: fmtRp, buildQueue: buildQueue, parseForm: parseForm, formId: formId, merge: merge, reconcileSync: reconcileSync, norm: norm, lev: lev, matchName: matchName, candidates: candidates, isInPersonWorldEvent: isInPersonWorldEvent, isRegionalInGameEvent: isRegionalInGameEvent, liveActivityCounts: liveActivityCounts };
+  return { raidBossNames: raidBossNames, researchCheckedText: researchCheckedText, filterOpportunities: filterOpportunities, isPrivateLink: isPrivateLink, publicLink: publicLink, esc: esc, rpEstimate: rpEstimate, raidEventFor: raidEventFor, isPlaceholder: isPlaceholder, audify: audify, setTiers: setTiers, loadPrices: loadPrices, getJson: getJson, jsonOrNull: jsonOrNull, priceView: priceView, fmtRp: fmtRp, buildQueue: buildQueue, parseForm: parseForm, formId: formId, merge: merge, reconcileSync: reconcileSync, norm: norm, lev: lev, matchName: matchName, candidates: candidates, isInPersonWorldEvent: isInPersonWorldEvent, isRegionalInGameEvent: isRegionalInGameEvent, liveActivityCounts: liveActivityCounts };
 }));

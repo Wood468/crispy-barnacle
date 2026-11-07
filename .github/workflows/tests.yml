@@ -123,7 +123,9 @@ jobs:
 
       - name: Verify premium Today, Schedule and event detail surfaces
         if: matrix.shard == 'b'
-        run: python test/premium_surfaces_browser.py
+        run: |
+          python test/premium_surfaces_browser.py
+          python test/battle_rotation_browser.py
 
       - name: Verify combined source rendering and offline upgrade
         if: matrix.shard == 'b'
@@ -170,6 +172,7 @@ jobs:
           python test/opportunity_planner_browser.py
           python test/research_recovery_browser.py
           python test/premium_surfaces_browser.py
+          python test/battle_rotation_browser.py
           python test/universal_event_browser.py
           python test/worldwide_timezone_browser.py
       - name: Verify combined source rendering, PWA update and preserved player data
