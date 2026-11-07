@@ -38,6 +38,7 @@ test('research names are escaped, and event without sources has no dead Sources 
  const html=render(futureEvent({research:[{task:'A <script>alert(1)<\/script>',rewards:['Mystery reward']}]}));
  assert.doesNotMatch(html,/<script>/);
  assert.match(html,/Mystery reward/);
+ assert.match(html,/<span class="ue-reward-art"><span class="ue-reward-icon" aria-hidden="true">★<\/span><\/span><span><b>Mystery reward<\/b>/);
  assert.doesNotMatch(html,/href="#evd-sources"/);
 });
 test('gallery preserves independent activities with identical display names',()=>{
