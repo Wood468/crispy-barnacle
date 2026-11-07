@@ -40,7 +40,9 @@ with sync_playwright() as p:
         first = page.locator('#home-now .evc').first
         assert 'Sendai' in first.inner_text()
         title = first.locator('.evc-title-row h3')
-        assert title.bounding_box()['y'] + title.bounding_box()['height'] < 820, (width, title.bounding_box())
+        title.wait_for(state='visible')
+        title_box=title.evaluate('(el)=>{const r=el.getBoundingClientRect();return {y:r.y,height:r.height,width:r.width};}')
+        assert title_box['height']>0 and title_box['width']>0 and title_box['y']+title_box['height']<820, (width,title_box)
         brief = page.locator('#today-brief-details')
         assert not brief.evaluate('(el)=>el.open')
         brief.locator('summary').first.focus()

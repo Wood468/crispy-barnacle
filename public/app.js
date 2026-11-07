@@ -314,9 +314,16 @@ Promise.all([
   };
 
   // only from Now does Back leave the site. Tabs use no history entries of their own, so one Back is always one step.
-  window.GONAV={depth:0,internal:false,
-    push:function(){this.depth++;try{history.pushState({gofn:'overlay',d:this.depth},'')}catch(e){this.depth--}},
-    popped:function(){if(this.depth>0){this.depth--;this.internal=true;try{history.back()}catch(e){this.internal=false}}}};
+  window.GONAV={depth:0,internal:false,pending:[],overlays:[],
+    drain:function(){
+      while(!this.internal&&this.pending.length){
+        var op=this.pending.shift();
+        if(op.kind==='push'){try{history.pushState({gofn:'overlay',d:op.depth},'');op.recorded=true}catch(e){op.recorded=false}}
+        else if(op.overlay&&op.overlay.recorded){this.internal=true;try{history.back()}catch(e){this.internal=false}}
+      }
+    },
+    push:function(){var op={kind:'push',depth:++this.depth,recorded:false};this.overlays.push(op);this.pending.push(op);this.drain()},
+    popped:function(){if(this.depth>0){this.depth--;this.pending.push({kind:'back',overlay:this.overlays.pop()});this.drain()}}};
   (function(){
     try{
       var st=history.state;
@@ -325,12 +332,14 @@ Promise.all([
     }catch(e){}
     window.addEventListener('popstate',function(e){
       var N=window.GONAV;
-      if(N.internal){N.internal=false;return}
+      if(N.internal){N.internal=false;N.drain();return}
       if(N.depth>0){
         var g=document.getElementById('goinfo'),d=document.getElementById('evd');
         if(g&&!g.hidden&&window.GOINFOGRAPHIC)window.GOINFOGRAPHIC.close(true);
         else if(d&&!d.hidden&&window.GOEVD)window.GOEVD.close(true);
-        N.depth--;return;
+        N.depth--;N.overlays.pop();
+        var remaining=e.state&&e.state.gofn==='overlay'?e.state.d||0:0;
+        N.overlays.forEach(function(op){if(op.depth>remaining)op.recorded=false});return;
       }
       var st=e.state||{};
       if(st.gofn==='base'){
@@ -1045,7 +1054,7 @@ Promise.all([
     var r=document.getElementById('today-retry');if(r)r.addEventListener('click',function(){window.location.reload()});
     var b=document.getElementById('day-brief');if(b)b.setAttribute('data-state','unavailable');
     var f=document.getElementById('fresh-line');if(f)f.setAttribute('data-released','')}
-  var ds=document.createElement('script');ds.src='/dash.js?v=20261106d';ds.onerror=todayUnavailable;document.body.appendChild(ds);setTimeout(function(){if(!window.GODASH)todayUnavailable()},10000);
+  var ds=document.createElement('script');ds.src='/dash.js?v=20261107a';ds.onerror=todayUnavailable;document.body.appendChild(ds);setTimeout(function(){if(!window.GODASH)todayUnavailable()},10000);
 })();
 
 }).catch(function(){var panel=document.getElementById('load-error');if(panel)panel.hidden=false;var retry=document.getElementById('load-retry');if(retry)retry.addEventListener('click',function(){window.location.reload()},{once:true})});

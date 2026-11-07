@@ -215,6 +215,25 @@
   var EV = [], usingApi = false, usingReadOnly = false;
   /* Set once the event list is final. Today's blocks wait for it, so an early empty render cannot flash and then jump. */
   var EV_READY = false;
+  function syncUniversalCatalogue() {
+    if(!EV_READY||!window.GOEventRegistry)return;
+    var ids=new Set(EV.flatMap(function(e){return [e.id].concat(e.aliasIds||[]);})),unknown=[];
+    GOEventRegistry.events().forEach(function(model){
+      var meta=model.internalValidation||{};
+      if(!(meta.native||!meta.collection||(meta.collection==='source-details'&&model.lifecycle==='announced')))return;
+      if(model.lifecycle==='cancelled'||model.lifecycle==='ended'||model.lifecycle==='reference')return;
+      if(ids.has(model.eventId)||ids.has('cur:'+model.eventId)||(model.aliases||[]).some(function(a){return ids.has(a);}))return;
+      var display=GOEventRegistry.display(model);
+      if(display.instantKnown){EV.push(display);ids.add(model.eventId);}else if(!isHidden(model.eventId))unknown.push(display);
+    });
+    [['tab-now',unknown.filter(function(e){return e.kind==='person'&&(!window.GOTodayVisibility||GOTodayVisibility.todayPlacement(e.universalModel,now(),Intl.DateTimeFormat().resolvedOptions().timeZone).visible);}),'Announced in person'],['sub-timeline',unknown,'Dates to be announced']].forEach(function(row){
+      var host=$(row[0]);if(!host)return;var id='universal-announced-'+row[0],section=$(id);
+      if(!section){section=document.createElement('section');section.id=id;section.className='agenda-section ue-announced';host.appendChild(section);}
+      section.hidden=!row[1].length;
+      section.innerHTML=row[1].length?'<h2 class="sec2">'+esc(row[2])+'</h2>'+row[1].map(function(e){return '<button type="button" class="ue-announcement" data-open="'+esc(e.id)+'"><b>'+esc(e.name)+'</b><span>'+esc(e.region||'')+' · Dates to be announced</span></button>';}).join(''):'';
+    });
+  }
+  if(window.GOEventRegistry)GOEventRegistry.ready.then(function(){if(EV_READY)renderAll();});
   function mergeLiveAndCurated(live, curated) {
     // Only merge titles with the same GODEDUPE.titleKey (or one starting with the other) and a close start time. Token overlap is unsafe:
     // unrelated events can share a Pokémon name ("Zorua Community Day" vs "Zorua Raid Day").
@@ -319,17 +338,24 @@
   /* Pokémon that are not out in Pokémon GO yet cannot be owned, so they are never marked Have or Need. */
   var UNREL = {};
   try { window.GOLIB.jsonOrNull('/release-status.json').then(function (R) { if (!R || !R.unreleased) return; var today = new Date().toISOString().slice(0, 10); R.unreleased.forEach(function (u) { if (u.type === 'pokemon' && !(u.available && u.available <= today)) UNREL[LIB.norm(u.name)] = u.available || true; }); try { renderAll(); } catch (e) { } }).catch(function () { }); } catch (e) { }
-  function ownState(name, costume) {
+  function ownState(name, costume, identity) {
     var p = LIB.parseForm(name), id = DEXBY[p.base.toLowerCase()], d = marks();
     if (UNREL[LIB.norm(p.base)]) return { state: 'unreleased', id: id || 0, base: p.base, why: 'Not released in Pokémon GO yet' };
+    var precise=identity||(window.GOEventAdapter?GOEventAdapter.pokemon({name:name,costume:costume}):null);
+    if(precise&&precise.costumeId)costume=true;
+    if(precise&&/^\d+$/.test(precise.speciesId)&&DEXNAME[+precise.speciesId])id=+precise.speciesId;
     if (!id) return { state: 'unknown', id: 0, base: p.base, why: 'Not in the Pokédex list' };
     var out = { id: id, base: p.base, why: '' };
     if (p.special === 'dynamax') return Object.assign(out, { state: 'form', why: 'Dynamax is a battle state, there is nothing to collect' });
+    if(precise&&precise.formId&&precise.formId!==p.key&&precise.formId!==p.special&&/^[a-z0-9][a-z0-9-]{0,63}$/.test(precise.formId)){
+      var preciseKey='form:'+id+':'+precise.formId,preciseValue=usGet(preciseKey);
+      return Object.assign(out,{tk:preciseKey,state:preciseValue===1?'have':preciseValue===0?'missing':'unknown',why:'Track this exact form.'});
+    }
     if (p.special === 'shadow' || p.special === 'purified') {
       var has = d.m && d.m[p.special] && d.m[p.special][id];
       return Object.assign(out, has ? { state: 'have' } : { state: 'unknown', why: 'Not marked as ' + p.special + ' on your Dex' });
     }
-    var tk = p.key ? 'form:' + id + ':' + p.key : (costume ? 'costume:' + id + ':' + LIB.norm(name) : '');
+    var tk = p.key ? 'form:' + id + ':' + p.key : (costume ? 'costume:' + id + ':' + LIB.norm(precise&&precise.collectionName||name) : '');
     if (tk) {
       var v = usGet(tk); out.tk = tk;
       return Object.assign(out, v === 1 ? { state: 'have' } : v === 0 ? { state: 'missing' } : { state: 'unknown', why: 'Not tracked. Tap Have or Need.' });
@@ -513,7 +539,7 @@
     ev.featured.forEach(function (f) {
       if (f.role === 'shiny_form') return;
       var k = f.name.toLowerCase(); if (seen[k]) return; seen[k] = 1;
-      var o = ownState(f.name, f.costume);
+      var o = ownState(f.name, f.costume, f.identity);
       var cls = 'fc' + (o.state === 'missing' ? ' need' : o.state === 'have' ? ' have' : '');
       out.push('<span class="' + cls + '"><span>' + esc(f.name) + (o.state === 'missing' ? '<b>need</b>' : '') + '</span></span>');
     });
@@ -523,7 +549,7 @@
     var r = [], seen = {};
     ev.featured.forEach(function (f) {
       if (f.role === 'shiny_form') return;
-      var o = ownState(f.name, f.costume), k = o.base.toLowerCase(); if (seen[k]) return; seen[k] = 1;
+      var o = ownState(f.name, f.costume, f.identity), k = o.base.toLowerCase(); if (seen[k]) return; seen[k] = 1;
       if (o.state === 'missing') r.push('You need ' + o.base);
       else if (isFollowed(f.name)) r.push('You follow ' + o.base);
       else if (f.costume) r.push('Costume: ' + (f.label || o.base));
@@ -791,12 +817,13 @@
   var stripRO = null;
   function drawTimeline() {
     var el = $('evtimeline'); if (!el) return;
+    function paint(html) { if(el._gofnTimelineHTML===html)return;el._gofnTimelineHTML=html;el.innerHTML=html; }
     var t = now(), html = '', ws = weekStart(weekOff), we = addDays(ws, 7);
     if (evQ) { // searching: every live and upcoming event that matches, soonest first, whatever week or kind switch is set
       var res = EV.filter(function (e) { return e.end > t && !isHidden(e.id) && matchesQ(e); }).sort(function (a, b) { return a.start - b.start; });
       var regRes = regList().filter(function (e) { return e.end > t && (String(e.name + ' ' + e.place + ' ' + e.area).toLowerCase().indexOf(evQ) >= 0); });
-      el.innerHTML = '<div class="dayhead"><h2 class="sec2">' + (res.length + regRes.length) + ((res.length + regRes.length) === 1 ? ' result' : ' results') + '</h2><button type="button" class="pill all" data-clearq="1">Clear search</button></div>'
-        + (res.length || regRes.length ? res.slice(0, 60).map(function (e) { return card(e); }).join('') + regRes.map(function (e) { return agendaRow(e, true); }).join('') : '<p class="empty">Nothing live or coming up matches that. Try a Pokémon or part of an event name.</p>'); return;
+      paint('<div class="dayhead"><h2 class="sec2">' + (res.length + regRes.length) + ((res.length + regRes.length) === 1 ? ' result' : ' results') + '</h2><button type="button" class="pill all" data-clearq="1">Clear search</button></div>'
+        + (res.length || regRes.length ? res.slice(0, 60).map(function (e) { return card(e); }).join('') + regRes.map(function (e) { return agendaRow(e, true); }).join('') : '<p class="empty">Nothing live or coming up matches that. Try a Pokémon or part of an event name.</p>')); return;
     }
     if (typeSel === 'soon') { // whatever week is shown, this is about the next 24 hours: what is on now, then what pays out next
       var tn = t.getTime();
@@ -806,7 +833,7 @@
       sn.sort(function (a, b) { return a.at - b.at; });
       var lv = sn.filter(function (x) { return x.live; }), up = sn.filter(function (x) { return !x.live; });
       html = (lv.length ? '<h2 class="sec2">Happening now</h2>' + lv.map(function (x) { return x.html; }).join('') : '') + (up.length ? '<h2 class="sec2 dh">Starting in the next 24 hours</h2>' + up.map(function (x) { return x.html; }).join('') : '');
-      el.innerHTML = html || '<p class="empty">Nothing starts in the next 24 hours.</p>'; return;
+      paint(html || '<p class="empty">Nothing starts in the next 24 hours.</p>'); return;
     }
     if (selDay) {
       var d = new Date(selDay + 'T12:00'), evs = filtered(dayEvents(d)).sort(function (a, b) { return a.start - b.start; });
@@ -814,7 +841,7 @@
       html += '<div class="dayhead"><h2 class="sec2">' + esc(fmtD(d)) + '</h2><button type="button" class="pill all" data-clearday="1">Show week</button></div>';
       html += evs.map(function (e) { return card(e); }).join('') + dayRegional.map(function (e) { return agendaRow(e, true); }).join('');
       if (!evs.length && !dayRegional.length) html += '<p class="empty">Nothing listed for this day.</p>';
-      el.innerHTML = html; return;
+      paint(html); return;
     }
     /* The week arrows control both the strip and this list. Show every event overlapping
        the selected Monday–Sunday range; selecting an individual date is optional. */
@@ -842,7 +869,7 @@
       html += '<h2 class="sec2 dh">' + (weekOff === 0 && k === today ? 'Today' : weekOff === 0 && k === tmw ? 'Tomorrow' : esc(fmtD(d))) + '</h2>' + groups[k].map(function (e) { return card(e); }).join('');
     });
     if (!html) html = '<p class="empty">No events match that filter for this week.</p>';
-    el.innerHTML = html;
+    paint(html);
   }
 
   /* ---------- Calendar: month grid, plus a compact Day / Week / Month list, with worldwide in-person events ---------- */
@@ -861,13 +888,13 @@
   function loadWorld(j, seed) {
     var list = (j.events || []).map(function (e) {
       var src = seed ? (e.source && typeof e.source === 'object' && e.source.url ? e.source : j.source) : { url: (e.sources && e.sources[0] && e.sources[0].url) || e.url || '#', n: e.sources ? e.sources.length : 1 };
-      if (!e.start) return { undated: true, name: e.name, place: e.place, area: e.area, scope: e.scope, mode: e.mode || '', src: src };
+      if (!e.start) return { undated: true, catalogueId:e.id, name: e.name, place: e.place, area: e.area, scope: e.scope, mode: e.mode || '', src: src };
       var startValue = String(e.start), startIsDateOnly = /^\d{4}-\d{2}-\d{2}$/.test(startValue);
       /* A date-only start can safely mean the whole local calendar day. A timed event needs an explicit end. */
-      if (!e.end && !startIsDateOnly) return { undated: true, name: e.name, place: e.place, area: e.area, scope: e.scope, mode: e.mode || '', src: src };
+      if (!e.end && !startIsDateOnly) return { undated: true, catalogueId:e.id, name: e.name, place: e.place, area: e.area, scope: e.scope, mode: e.mode || '', src: src };
       var s0 = worldDate(startValue, false), e0 = worldDate(String(e.end || e.start), !!e.end || startIsDateOnly);
-      if (!Number.isFinite(s0.getTime()) || !Number.isFinite(e0.getTime()) || e0 < s0) return { undated: true, name: e.name, place: e.place, area: e.area, scope: e.scope, mode: e.mode || '', src: src };
-      return { id: e.id, name: e.name, place: e.place || '', area: e.scope === 'global' ? 'In the game' : e.area, scope: e.scope || 'regional', mode: e.mode || '', start: s0, end: e0, sourceStart: startValue, sourceEnd: String(e.end || e.start), long: (e0 - s0) > 14 * 864e5, src: src };
+      if (!Number.isFinite(s0.getTime()) || !Number.isFinite(e0.getTime()) || e0 < s0) return { undated: true, catalogueId:e.id, name: e.name, place: e.place, area: e.area, scope: e.scope, mode: e.mode || '', src: src };
+      return { id: e.id, catalogueId:e.id, name: e.name, place: e.place || '', area: e.scope === 'global' ? 'In the game' : e.area, scope: e.scope || 'regional', mode: e.mode || '', start: s0, end: e0, sourceStart: startValue, sourceEnd: String(e.end || e.start), long: (e0 - s0) > 14 * 864e5, src: src };
     });
     /* An announcement with no dates of its own (e.g. Gigantamax Duraludon at the Sendai Wild Area) takes the dates of the
        dated event at the same place whose name it shares a distinctive word with. */
@@ -875,7 +902,7 @@
       if (!x.undated) return;
       var words = String(x.name).toLowerCase().match(/wild area|go fest|safari|community day|go tour|go park/);
       var host = words && list.filter(function (y) { return !y.undated && y.place === x.place && String(y.name).toLowerCase().indexOf(words[0]) >= 0; })[0];
-      if (host) list[i] = { id: 'dated:' + host.id + ':' + i, name: x.name, place: x.place, area: host.area, scope: x.scope || 'regional', mode: x.mode || '', start: host.start, end: host.end, long: host.long, src: x.src };
+      if (host) list[i] = { id: 'dated:' + host.id + ':' + i, catalogueId:x.catalogueId, name: x.name, place: x.place, area: host.area, scope: x.scope || 'regional', mode: x.mode || '', start: host.start, end: host.end, long: host.long, src: x.src };
     });
     UNDATED = list.filter(function (x) { return x.undated; });
     REG = list.filter(function (x) { return !x.undated; });
@@ -926,11 +953,15 @@
     var hide = it.travel ? '' : '<button type="button" class="agx" data-hide="' + esc(it.id) + '" aria-label="Hide ' + esc(it.name) + '" title="Hide this event (show it again from Hidden by you)"><span class="agx-ic" aria-hidden="true">✕</span><span class="agx-cap" aria-hidden="true">Hide</span></button>';
     return '<div class="agw">' + agendaInner(it, isReg) + '<div class="ag-actions">' + pin + ig + hide + '</div></div>';
   }
+  function catalogueDetailAttr(it) {
+    var model=window.GOEventRegistry&&GOEventRegistry.find(it.catalogueId||it.id);
+    return model?' data-open="'+esc(model.eventId)+'"':'';
+  }
   function agendaInner(it, isReg) {
     if (isReg) {
       var mult = it.end.getTime() - it.start.getTime() > 864e5;
       var when = it.travel ? travelDateText(it) : (mult ? fmtD(it.start) + ' to ' + fmtD(it.end) : fmtD(it.start));
-      return '<a class="agr reg" href="' + esc(it.src.url) + '" target="_blank" rel="noopener noreferrer" style="--k:' + REGCOL + '"><i></i><span class="agt"><b>' + esc(it.name) + '</b><small>' + (it.place ? esc(it.place) + ' · ' : '') + esc(when) + '</small></span><em>' + esc(it.area) + '</em></a>';
+      return '<a class="agr reg"'+catalogueDetailAttr(it)+' href="' + esc(it.src.url) + '" target="_blank" rel="noopener noreferrer" style="--k:' + REGCOL + '"><i></i><span class="agt"><b>' + esc(it.name) + '</b><small>' + (it.place ? esc(it.place) + ' · ' : '') + esc(when) + '</small></span><em>' + esc(it.area) + '</em></a>';
     }
     var k = kindOf(it);
     return '<button type="button" class="agr" data-open="' + esc(it.id) + '" style="--k:' + k[1] + '"><i></i><span class="agt"><b>' + esc(it.name) + '</b><small>' + esc(whenText(it)) + '</small></span><em>' + esc(k[0]) + '</em></button>';
@@ -998,7 +1029,7 @@
     var chips = $('calreg');
     var ddOpen = {}; if (chips) Array.prototype.forEach.call(chips.querySelectorAll('details.dd[data-k]'), function (d) { ddOpen[d.getAttribute('data-k')] = d.open; });
     if (chips) chips.innerHTML = '<div class="rgrow">' + REGIONS.map(function (r) { return '<button type="button" class="fchip" data-creg="' + r[0] + '" aria-pressed="' + (regSel === r[0]) + '">' + esc(r[1]) + '</button>'; }).join('') + '</div>'
-      + '<span class="seg" role="group" aria-label="Range">' + [['day', 'Day'], ['week', 'Week'], ['month', 'Month']].map(function (r) { return '<button type="button" class="fchip" data-cscope="' + r[0] + '" aria-pressed="' + (scopeSel === r[0]) + '">' + r[1] + '</button>'; }).join('') + '</span>' + (UNDATED.length && (regSel === 'all' || regSel === 'global') ? '<details class="dd" data-k="undated"><summary>Announced, date not published yet (' + UNDATED.length + ')</summary><div class="body">' + UNDATED.map(function (u) { return '<a class="agr reg" href="' + esc(u.src.url) + '" target="_blank" rel="noopener noreferrer" style="--k:' + REGCOL + '"><i></i><span class="agt"><b>' + esc(u.name) + '</b><small>' + esc(u.place || 'Dates to be announced') + '</small></span><em>' + esc(u.area || '') + '</em></a>'; }).join('') + '</div></details>' : '');
+      + '<span class="seg" role="group" aria-label="Range">' + [['day', 'Day'], ['week', 'Week'], ['month', 'Month']].map(function (r) { return '<button type="button" class="fchip" data-cscope="' + r[0] + '" aria-pressed="' + (scopeSel === r[0]) + '">' + r[1] + '</button>'; }).join('') + '</span>' + (UNDATED.length && (regSel === 'all' || regSel === 'global') ? '<details class="dd" data-k="undated"><summary>Announced, date not published yet (' + UNDATED.length + ')</summary><div class="body">' + UNDATED.map(function (u) { return '<a class="agr reg"'+catalogueDetailAttr(u)+' href="' + esc(u.src.url) + '" target="_blank" rel="noopener noreferrer" style="--k:' + REGCOL + '"><i></i><span class="agt"><b>' + esc(u.name) + '</b><small>' + esc(u.place || 'Dates to be announced') + '</small></span><em>' + esc(u.area || '') + '</em></a>'; }).join('') + '</div></details>' : '');
     var hl = hiddenList().map(function (id) { var e = EV.filter(function (x) { return x.id === id; })[0] || REG.filter(function (x) { return x.id === id; })[0]; return e && e.end > now() ? { id: id, name: e.name } : null; }).filter(Boolean);
     if (chips && hl.length) chips.innerHTML += '<details class="dd" data-k="hidden"><summary>Hidden by you (' + hl.length + ')</summary><div class="body">' + hl.map(function (h) { return '<div class="hid"><span>' + esc(h.name) + '</span><button type="button" class="more" data-unhide="' + esc(h.id) + '">Show again</button></div>'; }).join('') + '</div></details>';
     if (chips) Array.prototype.forEach.call(chips.querySelectorAll('details.dd[data-k]'), function (d) { if (ddOpen[d.getAttribute('data-k')]) d.open = true; });
@@ -1298,7 +1329,7 @@
       if (phase(ev, t) === 'ended' || !announced(ev) || ev.long || ev.start > addDays(t, 28)) return;
       ev.featured.forEach(function (f) {
         if (f.role === 'shiny_form') return;
-        var o = ownState(f.name, f.costume), spec = o.tk || o.state === 'form' || LIB.parseForm(f.name).special, key = (spec ? f.name : o.base).toLowerCase();
+        var o = ownState(f.name, f.costume, f.identity), spec = o.tk || o.state === 'form' || LIB.parseForm(f.name).special, key = (spec ? f.name : o.base).toLowerCase();
         if (!by[key]) by[key] = { name: spec ? f.name : o.base, o: o, evs: [], costume: !!f.costume, label: f.label };
         if (by[key].evs.indexOf(ev) < 0) by[key].evs.push(ev);
       });
@@ -1952,7 +1983,8 @@ function renderHomeBrief(t) {
   }
   document.addEventListener('gofn-view', renderActiveSecondaryView);
   /* Today remains eager; only the currently visible secondary view is rendered or refreshed. */
-  function renderAll() { renderKinds(); renderPrio(); renderHomeAgenda(); renderActionCentre(); renderActiveSecondaryView(); }
+  function renderAll() { syncUniversalCatalogue(); renderKinds(); renderPrio(); renderHomeAgenda(); renderActionCentre(); renderActiveSecondaryView(); }
+  document.addEventListener('gofn-catalogue-ready', function () { if(EV_READY)renderAll(); });
   function tick() { // keep countdowns honest without re-rendering whole views
     var t = now(), byId = {}; EV.forEach(function (e) { byId[e.id] = e; });
     Array.prototype.forEach.call(document.querySelectorAll('.cdn[data-id]'), function (n) { var e = byId[n.getAttribute('data-id')]; if (e) n.textContent = countdown(e, t); });
@@ -2044,7 +2076,7 @@ function renderHomeBrief(t) {
     renderCoverage();
     if (window.GO && GO.refreshDex) GO.refreshDex();
     usSync();
-    var inf = document.createElement('script'); inf.src = '/infographic.js?v=20261103a'; document.body.appendChild(inf); var x = document.createElement('script'); x.src = '/extra.js?v=20261102c'; document.body.appendChild(x); var z = document.createElement('script'); z.src = '/places.js?v=20261103b'; window.GOPLACES_READY = new Promise(function (resolve) { z.onload = function () { resolve(window.GOPLACES || null); }; z.onerror = function () { resolve(null); }; }); var y = document.createElement('script'); y.src = '/detail.js?v=20261106d'; document.body.appendChild(y); document.body.appendChild(z); var w = document.createElement('script'); w.src = '/fresh.js?v=20261103a'; document.body.appendChild(w); var nv = document.createElement('script'); nv.src = '/nudge.js?v=20261102a'; document.body.appendChild(nv); var rv = document.createElement('script'); rv.src = '/review.js?v=20261104b'; document.body.appendChild(rv); var by = document.createElement('script'); by.src = '/buy.js?v=20261103a'; document.body.appendChild(by);
+    var inf = document.createElement('script'); inf.src = '/infographic.js?v=20261103a'; document.body.appendChild(inf); var x = document.createElement('script'); x.src = '/extra.js?v=20261102c'; document.body.appendChild(x); var z = document.createElement('script'); z.src = '/places.js?v=20261103b'; window.GOPLACES_READY = new Promise(function (resolve) { z.onload = function () { resolve(window.GOPLACES || null); }; z.onerror = function () { resolve(null); }; }); var y = document.createElement('script'); y.src = '/detail.js?v=20261107a'; document.body.appendChild(y); document.body.appendChild(z); var w = document.createElement('script'); w.src = '/fresh.js?v=20261103a'; document.body.appendChild(w); var nv = document.createElement('script'); nv.src = '/nudge.js?v=20261102a'; document.body.appendChild(nv); var rv = document.createElement('script'); rv.src = '/review.js?v=20261104b'; document.body.appendChild(rv); var by = document.createElement('script'); by.src = '/buy.js?v=20261103a'; document.body.appendChild(by);
   }
   envBanner();
   /* Bounded waits: a request that never answers must not leave Today blank. After FEED_TIMEOUT_MS the page renders from the curated list
@@ -2095,6 +2127,6 @@ function renderHomeBrief(t) {
     var q = $('travel-q'); if (!q) return;
     q.addEventListener('input', function () { travelQuery = q.value.trim(); renderTravel(); });
   })();
-  window.GODASH = { regionalEvents: function () { return REG.filter(function (x) { return x.scope !== 'global' && x.end > now(); }).map(function (x) { return Object.assign({ world: true, kind: 'event' }, x); }); }, worldEvents: function () { return REG.filter(function (x) { return x.scope === 'global' && x.end > now(); }).map(function (x) { return Object.assign({ world: true, kind: 'event' }, x); }); }, mkEvent: mkEvent, raidSlots: raidSlots, usGet: usGet, usSet: usSet, usStatus: function () { return usStatus; }, renderAll: renderAll, DEXBY: DEXBY, DEXNAME: DEXNAME, art: art, baseOf: baseOf, countdown: countdown, priority: function () { return priority(now()); }, events: function () { return EV; }, eventsState: function () { return feedState; }, mergeLiveAndCurated: mergeLiveAndCurated, ownState: ownState, whenText: whenText, timeMeta: timeMeta, signalTags: signalTags, statusChip: statusChip, kindOf: kindOf, kindHidden: kindHidden, isSaved: isSaved, featArts: featArts, monArt: monArt, signalChips: signalChips, cpRows: cpRows, hundoPair: hundoPair, specialArt: specialArt, hasTag: hasTag, IMG_PARTICLE: IMG_PARTICLE, IMG_POWERSPOT: IMG_POWERSPOT, cpSpecies: cpSpecies, hundoLabels: hundoLabels, genConfirmed: genConfirmed, setGenConfirmed: setGenConfirmed, DEXGEN: DEXGEN, savedCount: savedCount };
+  window.GODASH = { regionalEvents: function () { return REG.filter(function (x) { return x.scope !== 'global' && x.end > now(); }).map(function (x) { return Object.assign({ world: true, kind: 'event' }, x); }); }, worldEvents: function () { return REG.filter(function (x) { return x.scope === 'global' && x.end > now(); }).map(function (x) { return Object.assign({ world: true, kind: 'event' }, x); }); }, mkEvent: mkEvent, raidSlots: raidSlots, usGet: usGet, usSet: usSet, usStatus: function () { return usStatus; }, renderAll: renderAll, DEXBY: DEXBY, DEXNAME: DEXNAME, art: art, baseOf: baseOf, countdown: countdown, priority: function () { return priority(now()); }, events: function () { return EV; }, eventsState: function () { return feedState; }, mergeLiveAndCurated: mergeLiveAndCurated, ownState: ownState, markBtns: markBtns, isFollowed: isFollowed, whenText: whenText, timeMeta: timeMeta, signalTags: signalTags, statusChip: statusChip, kindOf: kindOf, kindHidden: kindHidden, isSaved: isSaved, featArts: featArts, monArt: monArt, signalChips: signalChips, cpRows: cpRows, hundoPair: hundoPair, specialArt: specialArt, hasTag: hasTag, IMG_PARTICLE: IMG_PARTICLE, IMG_POWERSPOT: IMG_POWERSPOT, cpSpecies: cpSpecies, hundoLabels: hundoLabels, genConfirmed: genConfirmed, setGenConfirmed: setGenConfirmed, DEXGEN: DEXGEN, savedCount: savedCount };
   document.dispatchEvent(new Event('gofn-saved-count'));
 })();
