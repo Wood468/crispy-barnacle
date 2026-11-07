@@ -67,6 +67,34 @@ test('colliding aliases hold the candidate rather than choosing an identity winn
  const old={schemaVersion:1,events:[event({aliases:['old-link']})]},candidate={schemaVersion:1,events:[event({aliases:['shared']}),event({eventId:'other-region',aliases:['shared']})]};
  const result=Catalogue.prepare(candidate,old);assert.equal(result.accepted,false);assert.equal(result.index.resolve('old-link').eventId,'synthetic-p0');assert.equal(result.index.resolve('shared'),null);assert.equal(result.diagnostics.conflicts[0].type,'alias-collision');
 });
+test('empty and truncated publications cannot replace a populated last-good catalogue',()=>{
+ const previous={schemaVersion:1,events:Array.from({length:208},(_,i)=>event({eventId:'history:'+i}))};
+ for(const events of [[],previous.events.slice(0,2)]){
+  const result=Catalogue.prepare({schemaVersion:1,events},previous);
+  assert.equal(result.accepted,false);assert.equal(result.events.length,208);assert.ok(result.diagnostics.rejectedCount);assert.equal(result.diagnostics.retained,true);
+ }
+ assert.equal(Catalogue.prepare({schemaVersion:1,events:[]},null).accepted,false);
+});
+test('event continuity accepts cancellations, expired history and canonical replacements with stable aliases',()=>{
+ const old=event({aliases:['historic-link'],schedule}),previous={schemaVersion:1,events:[old]};
+ assert.equal(Catalogue.prepare({schemaVersion:1,events:[event({...old,lifecycle:'cancelled'})]},previous).accepted,true);
+ const replacement=event({eventId:'replacement',aliases:[old.eventId,'historic-link'],schedule});
+ const result=Catalogue.prepare({schemaVersion:1,events:[replacement]},previous);
+ assert.equal(result.accepted,true);assert.equal(result.index.resolve('historic-link').eventId,'replacement');
+ assert.equal(Catalogue.prepare({schemaVersion:1,events:[event({eventId:'replacement',aliases:[old.eventId],schedule})]},previous).accepted,false);
+});
+test('publisher retains published identity history when source discovery is empty',()=>{
+ const previous={schemaVersion:1,events:[event({aliases:['saved-link'],schedule})]};
+ const result=buildCatalogue({data:{events:[]},previous});assert.equal(result.events.length,1);assert.equal(result.events[0].eventId,'synthetic-p0');assert.ok(result.events[0].aliases.includes('saved-link'));
+});
+test('optional Sources navigation always has one real safe section or no link',()=>{
+ const without=UI.render(event(),context);assert.doesNotMatch(without,/href="#evd-sources"/);
+ const trusted=event({sources:[{name:'Published announcement',url:'https://leekduck.com/events/synthetic/'}],internalValidation:{conflicts:[{field:'cosmetic'}]}});
+ const html=UI.render(trusted,context);assert.match(html,/href="#evd-sources"/);assert.equal((html.match(/id="evd-sources"/g)||[]).length,1);assert.doesNotMatch(html,/Some event details conflict/);
+ const supplied=UI.render(trusted,{...context,sources:'<details id="evd-sources"><summary>Sources</summary></details>'});assert.equal((supplied.match(/id="evd-sources"/g)||[]).length,1);
+ assert.doesNotMatch(UI.render(trusted,{...context,sources:'<p>Unavailable</p>'}),/href="#evd-sources"/);
+ for(const url of ['javascript:alert(1)','https://','https://user:secret@example.invalid/','https://discord.com/channels/1/2'])assert.doesNotMatch(UI.render(event({sources:[{url}]}),context),/href="#evd-sources"|target="_blank"/);
+});
 test('publisher reports unsafe normalized records with structured rejection diagnostics',()=>{
  const raw={schemaVersion:1,eventId:'bad-source',title:'Synthetic invalid announcement',pokemon:[{speciesId:'25',methods:['wiild']}]};
  assert.throws(()=>buildCatalogue({data:{events:[raw]}}),error=>{assert.equal(error.diagnostics.rejectedCount,1);assert.equal(error.diagnostics.rejections[0].eventId,'bad-source');return true;});

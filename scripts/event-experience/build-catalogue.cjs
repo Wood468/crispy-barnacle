@@ -60,8 +60,8 @@ function buildCatalogue(input){
  const consumed=new Set([...out.values()].flatMap(e=>e.aliases||[]));
  previous.forEach(e=>{if(!out.has(e.eventId)&&!consumed.has(e.eventId))out.set(e.eventId,e);});
  const events=[...out.values()].sort((a,b)=>a.eventId.localeCompare(b.eventId));
- const checked=Catalogue.validate({schemaVersion:1,events}),conflicts=checked.diagnostics.conflicts;
- if(rejections.length||!checked.valid){const diagnostics={rejectedCount:rejections.length+checked.diagnostics.rejectedCount,rejections:rejections.concat(checked.diagnostics.rejections),conflicts};const error=Error('Catalogue validation failed: '+JSON.stringify(diagnostics));error.diagnostics=diagnostics;throw error;}
+ const checked=Catalogue.prepare({schemaVersion:1,events},input.previous),conflicts=checked.diagnostics.conflicts;
+ if(rejections.length||!checked.accepted){const rejected=rejections.concat(checked.diagnostics.rejections.filter(r=>events.length||!rejections.length||r.eventId));const diagnostics={rejectedCount:rejected.length,rejections:rejected,conflicts};const error=Error('Catalogue validation failed: '+JSON.stringify(diagnostics));error.diagnostics=diagnostics;throw error;}
  return publicValue({schemaVersion:1,species:input.dex||input.previous?.species||[],costumes:costumeRows,events,coverage,excluded:[{collection:'upcoming',reason:'Pokémon release summaries, not independent event instances; existing release views are preserved'},{collection:'regionals',reason:'Geographic Pokémon availability, not event instances'},{collection:'week',reason:'Static week guidance, not event instances'},{collection:'raidNow',reason:'Derived rotation summary, represented by rotation records'},{collection:'pastFests',reason:'Historical reference list, not announced event instances'}],warnings});
 }
 async function publish(root=path.resolve(__dirname,'../..')){async function read(name,fallback={}){try{return JSON.parse(await fs.readFile(path.join(root,'public',name+'.json'),'utf8'));}catch(e){if(e.code==='ENOENT')return fallback;throw e;}}

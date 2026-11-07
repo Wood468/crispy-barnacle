@@ -53,7 +53,9 @@ test('catalogue publication is idempotent and amendments retain stable IDs',()=>
 });
 test('source outage preserves the last validated catalogue',()=>{const first=buildCatalogue({data:{events:[{id:'retained',t:'Synthetic event',art:['Pikachu']}]}});assert.deepEqual(buildCatalogue({previous:first}).events,first.events);});
 test('no provenance or technical timestamps leak into primary presentation',()=>{
- const html=UI.render(event({sources:[{url:'https://example.invalid/private-metadata',confidence:1,updated:'2026-11-07'}],internalValidation:{fields:{bonuses:[{text:'2× Candy',status:'official',sources:['official']}]},warnings:[]}}),{});assert.doesNotMatch(html,/confidence|example.invalid|2026-11-07|Official|Single source|Cross-checked/);
+ const html=UI.render(event({sources:[{url:'https://example.invalid/private-metadata',confidence:1,updated:'2026-11-07'}],internalValidation:{fields:{bonuses:[{text:'2× Candy',status:'official',sources:['official']}]},warnings:[]}}),{});
+ assert.doesNotMatch(html,/confidence|2026-11-07|Official|Single source|Cross-checked/);
+ assert.doesNotMatch(html.split('<details class="ue-sources"')[0],/example.invalid/);
 });
 test('activities reject cycles, dangling parents and dangling encounter references',()=>{
  assert.throws(()=>event({activities:[{id:'one',parentId:'two'},{id:'two',parentId:'one'}]}),/cycle/);

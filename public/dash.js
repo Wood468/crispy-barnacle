@@ -784,7 +784,7 @@
   }
   function weekStart(off) { var t = startOfDay(now()), dow = (civil(t).weekday + 6) % 7; return addDays(t, -dow + off * 7); }
   function dayEvents(day) { // events touching a given calendar day (long ones only on first and last day)
-    var d0 = startOfDay(day).getTime(), d1 = d0 + 864e5;
+    var d0 = startOfDay(day).getTime(), d1 = addDays(startOfDay(day), 1).getTime();
     return EV.filter(function (ev) {
       if (ev.end <= now() || isHidden(ev.id) || (kindHidden(ev.kind) && typeSel !== ev.kind)) return false;
       if (ev.end.getTime() <= d0 || ev.start.getTime() >= d1) return false;
@@ -945,7 +945,7 @@
   /* Regional entries are in person unless the source-backed mode explicitly marks a regional in-game event. */
   function regInPerson(e) { return LIB.isInPersonWorldEvent(e); }
   function regDay(day) {
-    var d0 = startOfDay(day).getTime(), d1 = d0 + 864e5;
+    var d0 = startOfDay(day).getTime(), d1 = addDays(startOfDay(day), 1).getTime();
     return regList().filter(function (r) {
       if (r.end.getTime() <= d0 || r.start.getTime() >= d1) return false;
       return !r.long || startOfDay(r.start).getTime() === d0;

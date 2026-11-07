@@ -89,6 +89,10 @@ with sync_playwright() as p:
   assert page.evaluate('GOEventRegistry.diagnostics().conflicts.length')>0
   assert page.evaluate("GOEventRegistry.find('shared')")==None
   assert page.evaluate('GOEventRegistry.events().length')==len(VALID['events'])
+  for entries in [[],VALID['events'][:1]]:
+   payload[0]={**VALID,'events':entries};page.reload();ready()
+   assert page.evaluate('GOEventRegistry.diagnostics().retained')
+   assert page.evaluate('GOEventRegistry.events().length')==len(VALID['events'])
   payload[0]=copy.deepcopy(VALID);page.reload();ready()
   assert page.evaluate('GOEventRegistry.diagnostics().rejectedCount')==0
   assert page.evaluate("({dex:localStorage.getItem('gofn-dex-v1'),us:localStorage.getItem('gofn-us-v1')})")==before
@@ -98,5 +102,21 @@ with sync_playwright() as p:
   assert page.locator('#timezone-choice').input_value()==''
   assert errors==[],errors
   print(f'PASS worldwide {ENGINE} {width}px: device default, override/reset, DST-safe projection/ICS, preserved collection, held invalid/colliding catalogue, activity identity')
+  context.close()
+ # Calendar membership must follow civil boundaries on both 23- and 25-hour days.
+ for day,next_day in [('2027-03-14','2027-03-15'),('2026-11-01','2026-11-02')]:
+  context=browser.new_context(viewport={'width':390,'height':900},timezone_id='America/New_York',service_workers='block')
+  context.route('**/api/**',stub_api)
+  context.route(re.compile(r'^https://fonts\.'),lambda r:r.fulfill(body='',content_type='text/css'))
+  late={**PLAYER,'eventId':'synthetic-dst-late','title':'Synthetic late DST day','schedule':{'timeBasis':'player-local','start':day+'T23:30','end':day+'T23:45'}}
+  tomorrow={**PLAYER,'eventId':'synthetic-dst-tomorrow','title':'Synthetic following day','schedule':{'timeBasis':'player-local','start':next_day+'T00:15','end':next_day+'T00:30'}}
+  context.route('**/events-v1.json',lambda r:r.fulfill(body=json.dumps({**VALID,'events':[late,tomorrow]}),content_type='application/json'))
+  page=context.new_page();page.clock.install(time=day+'T12:00:00-04:00')
+  page.goto(BASE+'/');ready()
+  page.locator('#tabs [data-tab="events"]').click();page.locator('#subnav-events [data-sub="calendar"]').click()
+  page.locator('#calreg [data-cscope="day"]').click();page.locator('#calgrid [data-cday="'+day+'"]').click()
+  assert page.locator('#calday [data-open="synthetic-dst-late"]').count()==1,day
+  assert page.locator('#calday [data-open="synthetic-dst-tomorrow"]').count()==0,day
+  print(f'PASS {ENGINE} DST calendar membership {day}: late same-day event included, following day excluded')
   context.close()
  browser.close()

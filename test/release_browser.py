@@ -53,6 +53,17 @@ with sync_playwright() as pw:
                 assert integrity['rejectedCount']==0 and not integrity['conflicts'],integrity
                 assert page.evaluate('GOEventRegistry.events().length')>0
                 print('PASS production catalogue validates with no rejected events or identity collisions')
+                before=page.evaluate("({dex:localStorage.getItem('gofn-dex-v1'),us:localStorage.getItem('gofn-us-v1')})")
+                assert page.evaluate('GOEventClock.viewerZone()')=='Australia/Sydney'
+                for choice,expected in [('America/New_York','America/New_York'),('','Australia/Sydney')]:
+                    page.locator('#hmenu').click()
+                    page.locator('#timezonedd > summary').click()
+                    page.locator('#timezone-choice').select_option(choice)
+                    page.locator('#timezone-form button').click()
+                    page.wait_for_function('!!window.GODASH && !!window.GODETAIL && GOEventRegistry.settled()')
+                    assert page.evaluate('GOEventClock.viewerZone()')==expected
+                assert page.evaluate("({dex:localStorage.getItem('gofn-dex-v1'),us:localStorage.getItem('gofn-us-v1')})")==before
+                print('PASS production device time → override → reset with unchanged collection storage')
             page.locator('#tabs [data-tab="events"]').click()
             assert page.locator('.schedule-heading').is_visible()
             page.locator('#tabs [data-tab="collect"]').click()

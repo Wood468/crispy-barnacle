@@ -54,7 +54,14 @@ function render(model,ctx){ctx=ctx||{};var view=V.project(model),fields=model.in
  var cancelled=model.lifecycle==='cancelled'?'<p class="srcdis" role="status">Event cancelled</p>':'';
  var hero='<header class="evd-hero ue-hero"><div class="ue-hero-media">'+(ctx.banner||'')+'<div class="evd-art">'+(ctx.heroArt||'')+'</div></div><div class="ue-hero-copy"><h2 id="evd-t">'+esc(model.title)+'</h2><span class="ue-family">'+esc(view.family==='other'?'Event':view.family.replace(/-/g,' '))+'</span>'+(model.location?'<p class="ue-location">'+esc(typeof model.location==='string'?model.location:model.location.name||'')+'</p>':'')+'<p class="evc-when">'+esc(ctx.when||'Dates to be announced')+'</p>'+(ctx.countdown?'<p class="cdn evd-cd">'+esc(ctx.countdown)+'</p>':'')+'</div></header>';
  var more=section('evd-information','Details',detail+(ctx.moves||'')+(ctx.locations||''));
- return (ctx.toolbar||'')+hero+cancelled+conflict+'<nav class="evd-jump" aria-label="Jump to event details">'+nav+(more?'<a href="#evd-information">Details</a>':'')+'<a href="#evd-sources">Sources</a></nav>'+(ctx.actions||'')+content+more+(ctx.sources||'');
+ var sources=ctx.sources||'';
+ if(!sources){
+  var links=model.sources.filter(function(s){try{var u=new URL(s.url);return u.protocol==='https:'&&!u.username&&!u.password&&!L.isPrivateLink(s.url);}catch(error){return false;}}).map(function(s){return '<li><a href="'+esc(s.url)+'" target="_blank" rel="noopener noreferrer">'+esc(s.name||'Event source')+'</a></li>';}).join('');
+  if(links)sources='<details class="ue-sources" id="evd-sources"><summary>Sources &amp; updates</summary><ul>'+links+'</ul></details>';
+ }
+ var hasSources=/\bid=["']evd-sources["']/.test(sources);
+ var jumps=nav+(more?'<a href="#evd-information">Details</a>':'')+(hasSources?'<a href="#evd-sources">Sources</a>':'');
+ return (ctx.toolbar||'')+hero+cancelled+conflict+(jumps?'<nav class="evd-jump" aria-label="Jump to event details">'+jumps+'</nav>':'')+(ctx.actions||'')+content+more+sources;
 }
 return {render:render,gallery:gallery,rotations:function(model,ctx){return scheduledActivities(model,ctx,'rotation');}};
 }));

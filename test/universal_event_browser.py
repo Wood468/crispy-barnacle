@@ -57,9 +57,11 @@ with sync_playwright() as p:
         page.goto(BASE+'/')
         page.wait_for_function("!!window.GODASH&&!!window.GODETAIL&&GODASH.events().some(e=>e.id==='synthetic-future-community-day')&&GODASH.DEXBY.raichu===26")
         assert page.locator('#universal-announced-tab-now').is_visible(), 'undated overseas announcement hidden'
-        today_target=page.locator('#home-now [data-open]').first
-        today_target.focus()
-        assert today_target.evaluate('(el)=>{GODASH.renderAll();return el.isConnected&&document.activeElement===el;}'), 'unchanged Today refresh replaced the focused event button'
+        assert page.evaluate("""()=>{
+            GODASH.renderAll();
+            const el=document.querySelector('#home-now [data-open]');el.focus();
+            GODASH.renderAll();return el.isConnected&&document.activeElement===el;
+        }"""), 'unchanged Today refresh replaced the focused event button'
         page.locator('#tabs [data-tab="events"]').click()
         target=page.locator('#evtimeline [data-open="synthetic-future-community-day"]')
         target.focus()
@@ -165,7 +167,11 @@ with sync_playwright() as p:
     page.wait_for_function("GODASH.events().some(e=>e.id==='synthetic-future-community-day')")
     page.locator('#tabs [data-tab="events"]').click()
     page.locator('#evtimeline [data-open="synthetic-future-community-day"]').click()
-    page.wait_for_function("document.getElementById('evd-t')?.textContent==='Synthetic Future Community Day'")
+    try:
+        page.wait_for_function("document.getElementById('evd-t')?.textContent==='Synthetic Future Community Day'")
+    except Exception:
+        print('Late catalogue handoff failure:',errors,page.evaluate("({title:document.getElementById('evd-t')?.textContent,hidden:document.getElementById('evd')?.hidden,active:document.activeElement?.outerHTML,depth:GONAV.depth,events:GODASH.events().filter(e=>e.id==='synthetic-future-community-day').map(e=>({id:e.id,name:e.name}))})"),flush=True)
+        raise
     assert errors==[],errors
     print('PASS late catalogue announces future events without a reload or user-state edit')
     context.close()

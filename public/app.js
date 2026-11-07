@@ -388,18 +388,18 @@ Promise.all([
   function fmtT(d){var p=CLOCK.fields(d),h=p.hour,m=p.minute,ap=h>=12?'pm':'am';h=h%12||12;return h+(m?':'+('0'+m).slice(-2):'')+' '+ap}
   function rangeText(s,e){
     var a=pd(s),b=pd(e);
-    var sameDay=a.toDateString()===b.toDateString();
-    var allDay=a.getHours()===0&&b.getHours()===23;
+    var ap=CLOCK.fields(a),bp=CLOCK.fields(b),sameDay=CLOCK.dayKey(a)===CLOCK.dayKey(b);
+    var allDay=ap.hour===0&&bp.hour===23;
     if(sameDay) return allDay?fmtD(a):fmtD(a)+', '+fmtT(a)+' to '+fmtT(b);
-    return fmtD(a)+(a.getHours()===0&&a.getMinutes()===0?'':' '+fmtT(a))+' to '+fmtD(b)+(b.getHours()===23?'':' '+fmtT(b));
+    return fmtD(a)+(ap.hour===0&&ap.minute===0?'':' '+fmtT(a))+' to '+fmtD(b)+(bp.hour===23?'':' '+fmtT(b));
   }
   function status(ev){
     var s=pd(ev.s),e=pd(ev.e);
     if(NOW>e) return {k:'end',t:'Ended'};
     if(NOW>=s) return {k:'live',t:'Live now'};
     var days=Math.ceil((s-NOW)/864e5);
-    var sameDay=s.toDateString()===NOW.toDateString();
-    var tmw=new Date(NOW.getFullYear(),NOW.getMonth(),NOW.getDate()+1).toDateString()===s.toDateString();
+    var sameDay=CLOCK.dayKey(s)===CLOCK.dayKey(NOW);
+    var tmw=CLOCK.dayKey(CLOCK.addDays(NOW,1))===CLOCK.dayKey(s);
     return {k:'up',t:sameDay?'Today':tmw?'Tomorrow':'In '+days+' days'};
   }
 
@@ -425,7 +425,7 @@ Promise.all([
      +'<p class="mono muted">'+esc(p.when)+'</p><ul class="plain">'+p.bullets.map(function(x){return '<li>'+esc(x)+'</li>'}).join('')+'</ul>'+(p.placesQ?'<p><button type="button" class="pill all" data-places="" data-placesq="'+esc(p.placesQ)+'">📍 Where it is and coordinates</button></p>':'')+'</article>';
   }).join('');
   var WE=(D.worldEvents||[]).slice(),wsel='all';
-  function ymd2(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
+  function ymd2(d){return CLOCK.dayKey(d)}
   function wdate(s,e){
     var a=new Date(s+'T12:00'),b=e?new Date(e+'T12:00'):null;
     if(!e)return 'From '+MON[a.getMonth()]+' '+a.getDate()+', '+a.getFullYear();
