@@ -250,6 +250,14 @@ const slug = (s) => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").rep
 // "Mega Charizard X" -> ["charizard-mega-x", "charizard"], "Gigantamax Duraludon" -> ["duraludon-gmax", "duraludon"] ...
 export function artCandidates(raw) {
   let n = String(raw || "").trim().replace(/\s+/g, " ");
+  // Explicit battle forms must resolve to their own sprite, never an ordinary species fallback.
+  const deoxys = /^Deoxys \((Normal|Attack|Defense|Speed) Forme\)$/i.exec(n);
+  if (deoxys) return { base: "deoxys", list: ["deoxys-" + deoxys[1].toLowerCase()], exact: true };
+  const crowned = /^Crowned (Sword Zacian|Shield Zamazenta)$/i.exec(n);
+  if (crowned) {
+    const base = /Zacian$/i.test(crowned[1]) ? "zacian" : "zamazenta";
+    return { base, list: [base + "-crowned"], exact: true };
+  }
   const paren = (n.match(/\(([^)]+)\)/) || [])[1] || "";
   n = n.replace(/\([^)]*\)/g, "").trim();
   let suffix = "";
@@ -390,10 +398,10 @@ async function art(request, env, ctx, url) {
   return singleFlight("art:" + key.url, async () => {
     const cached = await cache.match(key);
     if (cached) return cached;
-    const { base, list } = artCandidates(name);
+    const { base, list, exact } = artCandidates(name);
     let id = 0;
     for (const c of list) { id = await pokeId("pokemon/" + c); if (id) break; }
-    if (!id && base) id = await pokeId("pokemon-species/" + base);
+    if (!id && base && !exact) id = await pokeId("pokemon-species/" + base);
 
     let img = null;
     const sources = [];

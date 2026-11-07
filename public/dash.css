@@ -2133,3 +2133,10 @@ a.evc-source{color:var(--color-link);text-underline-offset:3px}
 .evd-in:has(.ue-hero) .ue-mon .evd-fm small{
   overflow-wrap:anywhere;
 }
+
+/* Published battle windows stay legible beside long form names on small phones. */
+.rw-window{margin:4px 0 10px;color:var(--color-text-muted);font-size:var(--type-meta);line-height:1.5;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.rw-current{border-left:0;padding-left:0}
+.rw-week-head{flex-wrap:wrap;gap:8px}
+.rw-raid .rc b{overflow-wrap:anywhere;line-height:1.3}
+.rw-max-pokemon>div{min-width:0;overflow-wrap:anywhere}
