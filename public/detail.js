@@ -153,7 +153,7 @@
   function findDetails(ev) {
     var D = DATA.details || {}, ids = [];
     if (ev && ev.season && ev.season.detailId) ids.push(ev.season.detailId);
-    if (ev && ev.id) ids.push(ev.id);
+    if (ev && ev.id) { ids.push(ev.id); if(String(ev.id).indexOf('cur:')===0)ids.push(String(ev.id).slice(4)); }
     if (ev && Array.isArray(ev.detailIds)) ids = ids.concat(ev.detailIds);
     var hits = [];
     ids.filter(function (id, i, a) { return id && a.indexOf(id) === i; }).forEach(function (id) {

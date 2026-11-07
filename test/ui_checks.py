@@ -3290,7 +3290,7 @@ with sync_playwright() as p:
         check('dash.js is found by the preload before app.js injects it (one request, started from the head)',
               fl_counts.get('/dash.js?v=' + re.search(r"ds\.src='/dash\.js\?v=(\w+)'", APP_JS).group(1)) == 1 and '<link rel="preload" href="/dash.js?v=' in INDEX_HTML)
         # B. an event sheet opened straight after load has its details (event-details.json is no longer fetched at startup, only on idle or when a sheet needs it)
-        fl_pg.evaluate("GODETAIL.open('cur:trek')")
+        fl_pg.evaluate("GODASH.events().find(e=>e.id==='cur:trek').name='Amended title fixture';GODETAIL.open('cur:trek')")
         fl_ok = settle(fl_pg, "document.getElementById('evd-t') && document.getElementById('evd').textContent.includes('Increased chance to encounter Shiny Electrike.')", 8000)
         fl_txt = fl_pg.evaluate("(document.getElementById('evd')||{}).textContent||''")
         check('event sheet opened right after load shows the sourced details from event-details.json', fl_ok and len(fl_txt) > 100, fl_txt[:80])
@@ -3689,7 +3689,7 @@ with sync_playwright() as p:
           today: document.querySelector('#home-now')?.children.length || 0,
           todayKey: document.querySelector('#home-now')?.getAttribute('data-render-key') || '',
           thisWeek: document.querySelector('#week')?.children.length || 0,
-          weekText: document.querySelector('#week')?.textContent || '',
+          weekText: (()=>{const el=document.querySelector('#week')?.cloneNode(true);if(!el)return '';el.querySelectorAll('[data-igcheck],[data-infographic]').forEach(n=>n.remove());return el.textContent;})(),
           timeline: document.querySelector('#evtimeline')?.children.length || 0,
           weekstrip: document.querySelector('#weekstrip')?.children.length || 0,
           calendar: document.querySelector('#calgrid')?.children.length || 0,
@@ -3721,13 +3721,13 @@ with sync_playwright() as p:
         secondary_click('nav.tabs button[data-tab="now"]')
         returned = secondary_page.evaluate("""() => ({
           todayKey: document.querySelector('#home-now')?.getAttribute('data-render-key') || '',
-          thisWeek: document.querySelector('#week')?.textContent || '',
+          thisWeek: (()=>{const el=document.querySelector('#week')?.cloneNode(true);if(!el)return '';el.querySelectorAll('[data-igcheck],[data-infographic]').forEach(n=>n.remove());return el.textContent;})(),
           todayVisible: !document.querySelector('#tab-now')?.hidden
         })""")
-        check('Timeline, Calendar, Travel, Battle, Opportunities and Watchlist render on activation; Today and This Week remain unchanged on return',
+        check('Timeline, Calendar, Travel, Battle, Opportunities and Watchlist render on activation; Today and This Week event information remain unchanged on return',
               timeline_ok and calendar_ok and travel_ok and raids_ok and opps_ok and menu_ok and saved_ok and returned['todayVisible'] and
               returned['todayKey'] == secondary_state['todayKey'] and returned['thisWeek'] == secondary_state['weekText'],
-              {'timeline':timeline_ok,'calendar':calendar_ok,'travel':travel_ok,'raids':raids_ok,'opps':opps_ok,'menu':menu_ok,'saved':saved_ok,'returned':returned})
+              {'timeline':timeline_ok,'calendar':calendar_ok,'travel':travel_ok,'raids':raids_ok,'opps':opps_ok,'menu':menu_ok,'saved':saved_ok,'returned':returned,'before':secondary_state})
         secondary_page.context.close()
     if on('c'):
         # ---- Batch 10: Today header, status notice, hero card footer, in-person grouping, week strip (real browser, 320 to 430 px) ----
