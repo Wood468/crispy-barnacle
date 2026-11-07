@@ -15,3 +15,10 @@ test('battle forms resolve to exact artwork without ordinary species fallback',(
   assert.deepEqual(artCandidates(name).list,[slug]);assert.equal(artCandidates(name).exact,true);
  }
 });
+test('regional, Mega and parenthetical forms never silently request base artwork',()=>{
+ for(const name of ['Hisuian Sliggoo','Mega Charizard X','Giratina (Altered Forme)','Shadow Tornadus (Incarnate)']){
+  const result=artCandidates(name);assert.equal(result.exact,true);assert.ok(!result.list.includes(result.base),name);
+ }
+ assert.deepEqual(artCandidates('Giratina (Altered Forme)').list,['giratina-altered']);
+ assert.deepEqual(artCandidates('Hisuian Sliggoo').list,['sliggoo-hisui']);
+});

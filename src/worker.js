@@ -270,13 +270,13 @@ export function artCandidates(raw) {
   else if ((m = n.match(/^(Galarian|Hisuian|Alolan|Paldean) (.+)$/i))) { n = m[2]; suffix = { galarian: "galar", hisuian: "hisui", alolan: "alola", paldean: "paldea" }[m[1].toLowerCase()]; }
   const base = slug(n);
   if (!base) return { base: "", list: [] };
-  const form = paren ? slug(paren) : "";
+  const form = paren ? slug(paren).replace(/-forme?$/, "") : "";
   const list = [];
   if (suffix && form) list.push(`${base}-${suffix}-${form}`);
   if (suffix) list.push(`${base}-${suffix}`);
   if (form) list.push(`${base}-${form}`);
-  list.push(base);
-  return { base, list: [...new Set(list)] };
+  if (!suffix && !form) list.push(base);
+  return { base, list: [...new Set(list)], exact: !!(suffix || form) };
 }
 
 // The main picture on an event's own page (its og:image), so an event can show a real image even when no infographic is on file.
@@ -389,8 +389,9 @@ async function art(request, env, ctx, url) {
   const dynamax = url.searchParams.get("dynamax") === "1";
   const gigantamax = /^Gigantamax\s/i.test(name);
   const costume = (url.searchParams.get("c") || "").replace(/[^A-Za-z0-9_]/g, "").slice(0, 40);
+  const candidates = artCandidates(name);
   const cache = caches.default;
-  const key = new Request(url.origin + "/api/art?n=" + encodeURIComponent(name.toLowerCase()) + (shiny ? "&shiny=1" : "") + (shadow ? "&shadow=1" : "") + (dynamax ? "&dynamax=1" : "") + (costume ? "&c=" + costume : ""));
+  const key = new Request(url.origin + "/api/art?n=" + encodeURIComponent(name.toLowerCase()) + (shiny ? "&shiny=1" : "") + (shadow ? "&shadow=1" : "") + (dynamax ? "&dynamax=1" : "") + (costume ? "&c=" + costume : "") + (candidates.exact ? "&forms=2" : ""));
   const hit = await cache.match(key);
   if (hit) return hit;
   const allowance = allowEdgeMiss(request, "art");
@@ -398,7 +399,7 @@ async function art(request, env, ctx, url) {
   return singleFlight("art:" + key.url, async () => {
     const cached = await cache.match(key);
     if (cached) return cached;
-    const { base, list, exact } = artCandidates(name);
+    const { base, list, exact } = candidates;
     let id = 0;
     for (const c of list) { id = await pokeId("pokemon/" + c); if (id) break; }
     if (!id && base && !exact) id = await pokeId("pokemon-species/" + base);
