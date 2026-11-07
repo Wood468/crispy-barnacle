@@ -2096,3 +2096,40 @@ a.evc-source{color:var(--color-link);text-underline-offset:3px}
   width:100%;
   height:100%;
 }
+
+
+/* Missing species/form artwork must not expand a Pokémon tile. */
+.evd-in:has(.ue-hero) .ue-mon-art{
+  position:relative;
+  overflow:hidden;
+  isolation:isolate;
+}
+.evd-in:has(.ue-hero) .ue-mon-art .art.costume-unavailable{
+  display:grid;
+  place-items:center;
+  width:100%;
+  height:80px;
+  min-height:0;
+  max-height:80px;
+  margin:0;
+  padding:8px;
+  overflow:hidden;
+  text-align:center;
+  font-size:11px;
+  line-height:1.25;
+  overflow-wrap:anywhere;
+}
+.evd-in:has(.ue-hero) .ue-mon .evd-fm,
+.evd-in:has(.ue-hero) .ue-mon .ue-signals,
+.evd-in:has(.ue-hero) .ue-mon .ue-mon-controls{
+  width:100%;
+  min-width:0;
+}
+.evd-in:has(.ue-hero) .ue-mon .ue-signals{
+  display:flex;
+  flex-wrap:wrap;
+  gap:4px;
+}
+.evd-in:has(.ue-hero) .ue-mon .evd-fm small{
+  overflow-wrap:anywhere;
+}
