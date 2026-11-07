@@ -135,6 +135,25 @@ with sync_playwright() as p:
     assert errors==[],errors
     print(f'PASS all {len(CATALOGUE["events"])} catalogue records open with universal renderer in {engine}')
     context.close()
+    # A slow catalogue must publish new announcements after Today is already usable.
+    context=browser.new_context(viewport={'width':390,'height':900},timezone_id='Australia/Melbourne',service_workers='block')
+    context.route('**/api/**',api)
+    context.route(re.compile(r'^https://fonts\.'),lambda r:r.fulfill(body='',content_type='text/css'))
+    held=[]
+    context.route('**/events-v1.json',lambda route:held.append(route))
+    page=context.new_page();errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
+    page.clock.install(time='2026-11-07T12:00:00+11:00')
+    page.goto(BASE+'/',wait_until='domcontentloaded')
+    page.wait_for_function("!!window.GODETAIL&&GODASH.eventsState()!=='pending'")
+    assert held and not page.evaluate("GODASH.events().some(e=>e.id==='synthetic-future-community-day')")
+    held[0].fulfill(body=json.dumps({'schemaVersion':1,'species':DEX,'events':[FUTURE]}),content_type='application/json')
+    page.wait_for_function("GODASH.events().some(e=>e.id==='synthetic-future-community-day')")
+    page.locator('#tabs [data-tab="events"]').click()
+    page.locator('#evtimeline [data-open="synthetic-future-community-day"]').click()
+    page.wait_for_function("document.getElementById('evd-t')?.textContent==='Synthetic Future Community Day'")
+    assert errors==[],errors
+    print('PASS late catalogue announces future events without a reload or user-state edit')
+    context.close()
     context=browser.new_context(viewport={'width':390,'height':900},timezone_id='America/New_York',service_workers='block')
     context.route('**/api/**',api)
     dst={**FUTURE,'eventId':'synthetic-dst-gap','title':'Synthetic DST gap','schedule':{'timeBasis':'player-local','start':'2027-03-14T02:30','end':'2027-03-14T03:30'}}

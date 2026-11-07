@@ -1980,6 +1980,7 @@ function renderHomeBrief(t) {
   document.addEventListener('gofn-view', renderActiveSecondaryView);
   /* Today remains eager; only the currently visible secondary view is rendered or refreshed. */
   function renderAll() { syncUniversalCatalogue(); renderKinds(); renderPrio(); renderHomeAgenda(); renderActionCentre(); renderActiveSecondaryView(); }
+  document.addEventListener('gofn-catalogue-ready', function () { if(EV_READY)renderAll(); });
   function tick() { // keep countdowns honest without re-rendering whole views
     var t = now(), byId = {}; EV.forEach(function (e) { byId[e.id] = e; });
     Array.prototype.forEach.call(document.querySelectorAll('.cdn[data-id]'), function (n) { var e = byId[n.getAttribute('data-id')]; if (e) n.textContent = countdown(e, t); });
