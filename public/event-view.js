@@ -29,9 +29,18 @@
     // Ignore empty source placeholders: a section should only appear when it has content.
     function populated(value){return value!==null&&value!==undefined&&value!==''&&typeof value==='object'&&!Array.isArray(value)&&Object.keys(value).length>0;}
     function countRecords(value){return Array.isArray(value)?value.filter(populated).length:0;}
+    // Activity-only announcements may supply Pokémon through method references.
+    // Deduplicate by full form/costume key across methods without changing ownership.
+    var activityPokemon=Object.create(null);
+    activities.forEach(function(a){
+      if(!a||!Array.isArray(a.pokemonRefs))return;
+      a.pokemonRefs.forEach(function(ref){
+        if(typeof ref==='string'&&ref.trim())activityPokemon[ref]=true;
+      });
+    });
     var counts={
       overview:1,
-      encounters:countRecords(ev.encounters),
+      encounters:countRecords(ev.encounters)||Object.keys(activityPokemon).length,
       rotations:activities.filter(function(a){return a&&populated(a.schedule)&&a.presentation==='rotation';}).length,
       schedule:activities.filter(function(a){return a&&populated(a.schedule)&&a.presentation==='schedule';}).length,
       bonuses:countRecords(ev.bonuses),
