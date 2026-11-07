@@ -1,6 +1,39 @@
 {
- "updated": "2026-11-06T20:11:44.006Z",
+ "updated": "2026-11-07T01:29:39.021Z",
  "items": [
+  {
+   "linked": false,
+   "id": "discord:1568374661492768854",
+   "title": "Machamp gmax",
+   "image": "/infographics/g47ix/discord-1568374661492768854.webp",
+   "post": "https://discord.com/channels/@me/1558793395198099618/1568374661492768854",
+   "creator": "",
+   "source": "discord",
+   "publishedAt": "2026-11-06T21:20:58.292000+00:00",
+   "note": "Two events look alike. Please choose.",
+   "history": false,
+   "signals": [
+    "picture text names the event"
+   ],
+   "text": "local time q G, d oo 7 a IS) oY = 10:00 am 11:59 pr aioe ACs GO Wild Area: Gigantamax Machamp Power Up! Ends in 9 days and 13 hours Explore 5 km oe a ae (0) Catch a Pokémon on 2 different days x110 Catch a Pokémon on 3 different e/ ie ais days to) x600 Nc ~~ Catch a Pokémon on 4 different days (0) x45 , Catch a Pokémon on 5 different days to) x800 REWARDS HY 4 | | ny x30,000 x10 GO Wild Area: Gigantamax Machamp Power Up! LOGIN TO GET/FREE RESEARCH GA7IXOO@xXtl DB",
+   "guesses": [
+    {
+     "eventId": "leekduck:into-the-wild-2026",
+     "eventTitle": "Into the Wild",
+     "score": 0.813
+    },
+    {
+     "eventId": "into",
+     "eventTitle": "Into the Wild",
+     "score": 0.8
+    },
+    {
+     "eventId": "leekduck:go-wild-area-gigantamax-machamp-power-up-timed-research",
+     "eventTitle": "GO Wild Area: Gigantamax Machamp Power Up! Timed Research",
+     "score": 0.709
+    }
+   ]
+  },
   {
    "linked": true,
    "id": "discord:1568023752749613163",
