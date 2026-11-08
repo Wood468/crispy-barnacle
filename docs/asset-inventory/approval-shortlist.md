@@ -82,3 +82,27 @@ Source: public/store-log.json and public/costumes.json on main, inspected 2026-1
 - Leek Duck Halloween Part I likewise labels Sinistea wearing a bow: https://leekduck.com/events/halloween-2026-part-1/
 
 **Outcome:** One demonstrably wrong generic image excluded; one historical composite illustration retained only as a research reference. Zero exact, deployable image files approved. Next step is extracting and validating direct artwork URLs from trusted event pages or an authorized asset source, then inspecting their pixels and attribution.
+
+## Artwork acquisition handoff (2026-11-08)
+**Confirmed source pages:** https://pokemongo.com/news/twilight-wishes-2026 and https://leekduck.com/events/twilight-wishes-2026/ (four costume variants, each shiny-eligible); https://pokemongo.com/news/halloween-part-1-2026 (bow Sinistea shiny-eligible). These are *identity* sources, not yet verified direct image URLs.
+
+### Capture and verification pipeline
+1. Extract actual `img[src]`, `img[data-src]`, `srcset`, and relevant embedded JSON image URLs from source pages, preserving the source-page URL, alt text and extraction timestamp.
+2. Match image to **specific identity** and form (Pikachu sun crown vs moon crown; Espeon sun scarf vs Umbreon moon scarf; Sinistea bow Phony vs Antique if separate). Do not match by species alone.
+3. Download candidate bytes using a controlled fetch; verify HTTPS, successful status, content-type, file signature, dimensions, image decoding, and a SHA-256 digest. Inspect rendered pixels, not filenames alone.
+4. Determine usage rights/attribution before copying to the app or R2. Reference images may not be freely reusable.
+5. Confirm separate Shiny artwork only when a visually verified corresponding variant exists; otherwise leave artwork unverified rather than recoloring a normal sprite.
+6. For Purple Tee, classify as avatar clothing, not Pokémon; use GO Pass reward tile and an exact clothing image only after source match.
+7. Generate owner gallery only for unresolved choices: side-by-side image preview, exact identity, original source, SHA-256, normal/shiny/form, and approve/reject. Verified straightforward matches can be documented without owner intervention.
+8. Do not overwrite `public/costumes.json` or R2 objects before review and tests. Do not alter active Release 1.2 files without coordination.
+
+### Current evidence and limitations
+- Five costumed Pokémon identities and one avatar item are classified; **zero image binaries verified**, zero approved replacements.
+- A direct image retrieval attempt from this environment failed because external DNS/network access was unavailable. This is an execution limitation, **not evidence that source assets are missing**.
+- PR #357 has merged, providing snapshot image provenance handling. It does not itself scrape images or prove image identity. Re-run the store snapshot with real image URLs before expecting the 16 existing products to have artwork.
+
+### Acceptance gates for next implementation
+- Each of the six identities has a correct type and documented source; each image status is verified, rejected or missing with evidence.
+- No wrong-form, wrong-costume or invented Shiny artwork; no unapproved redistribution.
+- Web Store images are matched to exact product listing slug and image status, never inferred from title.
+- Test costume fallback, GO Pass reward routing and missing-image handling on mobile; retain overseas event visibility.
