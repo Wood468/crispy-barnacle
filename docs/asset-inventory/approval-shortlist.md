@@ -106,3 +106,15 @@ Source: public/store-log.json and public/costumes.json on main, inspected 2026-1
 - No wrong-form, wrong-costume or invented Shiny artwork; no unapproved redistribution.
 - Web Store images are matched to exact product listing slug and image status, never inferred from title.
 - Test costume fallback, GO Pass reward routing and missing-image handling on mobile; retain overseas event visibility.
+
+## Datamined source evaluation — 2026-11-08
+- **Primary source:** https://github.com/PokeMiners/pogo_assets — `Images` for 2D sprite/item assets, `3D Assets` for models and clothing. Its README confirms both APK and remotely downloaded assets, and points to https://pokeminers.com/scratch for newer unorganised files. Public repository latest indexed update was 2026-10-08, so a November asset may be present only in scratch or absent.
+- **Code-to-name mapping:** https://github-wiki-see.page/m/Hailey-Ross/hailsDotGO/wiki/Data-Sources describes a working costume pipeline that discovers PokeMiners `pm{dex}.{code}.s.icon.png` shiny artwork and cross-checks costume code/labels against WatWowMap Game Master. Adapt the method, not unverified file paths or assumed codes.
+- **Search limitation:** repository code searches for `pm0854`, `pm0025`, `sun crown`, `moon scarf`, `purple tee` returned no results; GitHub code search is not a reliable inventory of binary file paths. **This does not prove images are absent.** A recursive repository tree listing or cloned filename inventory is required.
+- **Critical legal limitation:** PokeMiners explicitly says its assets are provided for educational use, with rights belonging to Niantic / The Pokémon Company. A publicly hosted copy is not a redistribution license; do not automatically ingest into public production assets.
+
+### Proposed automated candidate manifest
+For each candidate, capture `sourceRepository`, `sourceCommit`, `relativePath`, `sourcePage`, `dexNumber`, `costumeCode`, `form`, `shiny`, `assetType`, `sha256`, `dimensions`, `visualReviewStatus`, `rightsStatus`, `matchedIdentity`, `reviewerDecision`. Allow statuses `unverified`, `visually-confirmed`, `rejected`, `approved-for-use` only after provenance and rights checks.
+
+### Immediate next execution gate
+Enumerate `Images` and `3D Assets` filenames using GitHub recursive tree API or a shallow clone; cross-check codes against Game Master, inspect candidate bytes and screenshots; then create the approval gallery with actual direct images. Do not claim gallery is ready from search-result thumbnails alone.
