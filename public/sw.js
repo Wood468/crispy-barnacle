@@ -1,14 +1,14 @@
 /* GO Field Notes offline shell. Never cache /api/*, including private user-state and notification responses. */
-const SHELL_CACHE = 'gofn-shell-v251';
+const SHELL_CACHE = 'gofn-shell-v252';
 const SHELL_URLS = [
   '/', '/index.html', '/offline.html', '/offline.css',
   /* Versioned code and styles are listed once, exactly as index.html, app.js and dash.js request them. Any other ?v= (or unversioned) request is answered offline by the ignoreSearch fallback below. */
   '/timezone.js?v=20261108b', '/event-catalogue.js?v=20261107b', '/event-clock.js?v=20261108b', '/event-contract.js?v=20261107b', '/event-view.js?v=20261107b', '/event-adapter.js?v=20261108b', '/event-components.js?v=20261108d', '/event-registry.js?v=20261107b', '/event-identity.js?v=20261107a', '/event-policy.js?v=20261107a', '/events-v1.json',
-  '/styles.css?v=20261102b', '/dash.css?v=20261108b', '/event-redesign.css?v=20261108b', '/today.css?v=20261108a', '/today.js?v=20261108a', '/today-logic.js?v=20261108a', '/event-art.js?v=20261109a', '/lib.js?v=20261108a', '/dedupe.js?v=20261101b', '/move.js?v=20261102a', '/imgerr.js?v=20261015a', '/whatsnew.js?v=20261102d', '/pin.js?v=20261101b', '/local-state.js?v=20261030a', '/app.js?v=20261108d', '/raid-share.js?v=20261102b', '/dash.js?v=20261108d', '/detail.js?v=20261108d', '/fresh.js?v=20261103a', '/places.js?v=20261103b', '/review.js?v=20261104b', '/nudge.js?v=20261102a', '/account.js?v=20261102a', '/store.js?v=20261102a', '/season.js?v=20261107b', '/research.js?v=20261106c', '/weekly.js?v=20261102a', '/buy.js?v=20261103a', '/extra.js?v=20261102c', '/infographic.js?v=20261103a', '/pwa.js',
+  '/styles.css?v=20261102b', '/dash.css?v=20261110a', '/event-redesign.css?v=20261108b', '/today.css?v=20261108a', '/today.js?v=20261108a', '/today-logic.js?v=20261108a', '/event-art.js?v=20261109a', '/variant-art.js?v=20261110a', '/lib.js?v=20261108a', '/dedupe.js?v=20261101b', '/move.js?v=20261102a', '/imgerr.js?v=20261015a', '/whatsnew.js?v=20261102d', '/pin.js?v=20261101b', '/local-state.js?v=20261030a', '/app.js?v=20261110a', '/raid-share.js?v=20261102b', '/dash.js?v=20261108d', '/detail.js?v=20261108d', '/fresh.js?v=20261103a', '/places.js?v=20261103b', '/review.js?v=20261104b', '/nudge.js?v=20261102a', '/account.js?v=20261102a', '/store.js?v=20261102a', '/season.js?v=20261107b', '/research.js?v=20261106c', '/weekly.js?v=20261102a', '/buy.js?v=20261103a', '/extra.js?v=20261102c', '/infographic.js?v=20261103a', '/pwa.js',
   '/manifest.webmanifest', '/icon.svg', '/icon-maskable.svg', '/icon-180.png', '/icon-192.png', '/icon-512.png',
   '/data.json', '/dex.json', '/event-info.json', '/forms.json', '/moves.json',
   '/places.json', '/event-details.json', '/event-moves.json', '/regional-events.json', '/world-events.json', '/best-by-type.json', '/prices.json', '/pvp.json', '/release-status.json', '/types.json',
-  '/art/index.json', '/costumes.json', '/datamine-news.json', '/data/cp/cp-multipliers.json', '/data/cp/pokemon.json',
+  '/art/index.json', '/costumes.json', '/artwork-manifest.json', '/datamine-news.json', '/data/cp/cp-multipliers.json', '/data/cp/pokemon.json',
   '/season.json', '/weekly.json', '/tickets-external.json', '/store-log.json', '/infographic-queue.json'
 ];
 const SHELL_URL_SET = new Set(SHELL_URLS.map(function (url) { return new URL(url, self.location.origin).href; }));

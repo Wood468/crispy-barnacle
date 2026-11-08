@@ -123,6 +123,27 @@ test("Gigantamax uses the real PokeMiners G-Max asset path", async () => {
   }
 });
 
+test("costume artwork asks PokeMiners for exactly the requested file: f-style by default, c-style on request, shiny and never ordinary art", async () => {
+  const previous = globalThis.caches;
+  globalThis.caches = { default: { match: async () => null, put: async () => {} } };
+  try {
+    remote = {
+      "pokeapi.co/api/v2/pokemon/pikachu": JSON.stringify({ id: 25 }),
+      "pm25.fGOFEST_2024_STIARA.icon.png": "sun crown Pikachu",
+      "pm25.fGOFEST_2024_STIARA.s.icon.png": "shiny sun crown Pikachu",
+      "pm25.cFALL_2018.icon.png": "fall 2018 Pikachu",
+      "official-artwork/25.png": "ordinary Pikachu artwork",
+    };
+    assert.equal(await (await call(mkEnv(), "/api/art?n=Pikachu&c=GOFEST_2024_STIARA")).text(), "sun crown Pikachu");
+    assert.equal(await (await call(mkEnv(), "/api/art?n=Pikachu&c=GOFEST_2024_STIARA&shiny=1")).text(), "shiny sun crown Pikachu");
+    assert.equal(await (await call(mkEnv(), "/api/art?n=Pikachu&c=FALL_2018&cp=c")).text(), "fall 2018 Pikachu");
+    assert.equal((await call(mkEnv(), "/api/art?n=Pikachu&c=FALL_2018")).status, 404, "f-style lookup must not find a c-style file");
+    assert.equal((await call(mkEnv(), "/api/art?n=Pikachu&c=NO_SUCH_COSTUME&cp=c")).status, 404, "a missing costume never falls back to ordinary artwork");
+  } finally {
+    if (previous === undefined) delete globalThis.caches; else globalThis.caches = previous;
+  }
+});
+
 test("PWA caches public shell offline but never caches API responses", () => {
   const sw = fs.readFileSync(new URL("../public/sw.js", import.meta.url), "utf8");
   const pwa = fs.readFileSync(new URL("../public/pwa.js", import.meta.url), "utf8");

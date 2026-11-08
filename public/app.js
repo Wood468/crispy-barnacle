@@ -54,12 +54,17 @@ Promise.all([
   }
   window.GOSD=sdId;
   /* Pictures are animated (Pokémon Showdown) wherever one exists; the still artwork is the fallback. Costume art is the game's own still icon. */
+  var AMAN=null,DEXNO={};
+  function loadArtManifest(){try{Promise.all([fetch('/artwork-manifest.json').then(function(r){return r.ok?r.json():null}).catch(function(){return null}),window.GOLIB.getJson('/dex.json').catch(function(){return null})]).then(function(R){if(R[0]&&R[0].entries)AMAN=R[0];(R[1]||[]).forEach(function(p){DEXNO[String(p[1]).toLowerCase()]=p[0]});setTimeout(function(){try{var need=document.querySelector('.art[data-ck],img[data-gk],.art.costume-unavailable');if(need&&window.GODASH&&GODASH.renderAll)GODASH.renderAll()}catch(e){}},300)}).catch(function(){})}catch(e){}}
+  loadArtManifest();
   var COSTPIC={},COSTSH={},GMX={},GMSH={};try{fetch('/costumes.json').then(function(r){return r.ok?r.json():null}).then(function(j){if(j&&j.pictures&&Object.keys(j.pictures).length){COSTPIC=j.pictures;COSTSH=j.shiny||{};GMX=j.gmax||{};GMSH=j.gmaxShiny||{};setTimeout(function(){try{var need=[].some.call(document.querySelectorAll('.art[data-ck]'),function(i){return COSTPIC[i.getAttribute('data-ck')]})||[].some.call(document.querySelectorAll('img[data-gk]'),function(i){return GMX[i.getAttribute('data-gk')]});if(need&&window.GODASH&&GODASH.renderAll)GODASH.renderAll()}catch(e){}},300)}}).catch(function(){})}catch(e){}
   function costumeUnavailable(o,cls){
     var label=String(o.n||'')+(o.label&&String(o.n||'').toLowerCase().indexOf(String(o.label).toLowerCase())<0?' ('+o.label+')':'');
-    var key=window.GOLIB.parseForm(o.n||'').base.toLowerCase()+'|'+String(o.label||'').toLowerCase();
-    return '<span class="art costume-unavailable'+(cls?' '+cls:'')+'" role="img" aria-label="'+esc(label+' · costume artwork unavailable')+'" data-ck="'+esc(key)+'"><span>'+esc(label)+'</span><small>Costume art unavailable</small></span>';
+    var base=window.GOLIB.parseForm(o.n||'').base,key=base.toLowerCase()+'|'+String(o.label||'').toLowerCase();
+    /* The ordinary species picture is shown small and plainly badged, so the tile is never a blank and never claims to be the costume. */
+    return '<span class="art costume-unavailable'+(cls?' '+cls:'')+'" role="img" aria-label="'+esc(label+' · costume artwork unavailable')+'" data-ck="'+esc(key)+'"><img class="va-base" alt="" loading="lazy" decoding="async" width="48" height="48" src="'+esc(speciesStill(base))+'" data-err="rm"><span>'+esc(label)+'</span><small class="va-badge">Costume art unavailable</small></span>';
   }
+  function speciesStill(name){var q='/api/art?n='+encodeURIComponent(name);return MAN[q]?'/art/'+MAN[q]+'.webp':q}
   function art(n,cls){
     var o=typeof n==='string'?{n:n}:n;
     var q='/api/art?n='+encodeURIComponent(o.n)+(o.shiny?'&shiny=1':'')+(o.shadow?'&shadow=1':'')+(o.dynamax?'&dynamax=1':'')+(o.asset?'&c='+encodeURIComponent(o.asset):'');
@@ -70,12 +75,18 @@ Promise.all([
        The animated sprite is swapped in only while the picture is on screen (see GOANIM below). */
     var src=still;
     /* A costume uses an exact verified mirror or a labelled unavailable state, never ordinary species artwork. */
-    var cks=window.GOLIB.parseForm(o.n).base.toLowerCase()+'|'+String(o.label).toLowerCase();var gk=String(o.n).toLowerCase(),isg=!o.costume&&!o.asset&&/^gigantamax /.test(gk),gm=isg?((o.shiny&&GMSH[gk])||GMX[gk]||''):'';var dbx=(o.costume&&!o.asset&&o.label&&(o.shiny?COSTSH[cks]:COSTPIC[cks]))||gm;
-    if(o.costume&&!o.asset&&!/^\/img\/ext\/[A-Za-z0-9_.-]+\.(?:png|webp|jpe?g)$/i.test(dbx||''))return costumeUnavailable(o,cls);
+    var cks=window.GOLIB.parseForm(o.n).base.toLowerCase()+'|'+String(o.label).toLowerCase();var gk=String(o.n).toLowerCase(),isg=!o.costume&&!o.asset&&/^gigantamax /.test(gk),gm='',dbx='',vres=null;
+    /* One resolver picks the exact approved picture (manifest, then the older costume maps, then a verified source rule). */
+    if((o.costume&&!o.asset&&o.label)||isg){
+      vres=window.GOVARIANTART?window.GOVARIANTART.resolve(o,AMAN,{dexOf:function(n){return DEXNO[n]||0},legacy:{pictures:COSTPIC,shiny:COSTSH,gmax:GMX,gmaxShiny:GMSH}}):null;
+      if(vres&&vres.status==='exact'){dbx=vres.src;if(isg)gm=vres.src}
+      /* A Gigantamax picture that no list knows yet keeps requesting the exact-form route (src is the /api/art Gigantamax URL): it shows when the game files have it, and the labelled "Form art unavailable" fallback in GOARTERR when they do not. */
+    }
+    if(o.costume&&!o.asset&&!/^(?:\/img\/ext\/[A-Za-z0-9_.-]+\.(?:png|webp|jpe?g)|\/api\/art\?[A-Za-z0-9_%=&+.()'~*!-]+)$/i.test(dbx||''))return costumeUnavailable(o,cls);
     if(o.costume&&o.label)alt+=' ('+o.label+')';
     var cstill=dbx&&!o.costume?still:'';if(dbx)src=dbx;
     var ck=(o.costume&&!o.asset&&o.label&&!dbx)?' data-ck="'+esc(cks)+'"':(isg&&!gm?' data-gk="'+esc(gk)+'"':'');
-    var fb=cstill?' data-still="'+esc(cstill)+'" title="'+(gm?'Gigantamax picture: Serebii':'Costume picture: Serebii / Dittobase')+'"':sd?' data-still="'+esc(still)+'" data-gif="https://play.pokemonshowdown.com/sprites/'+(o.shiny?'ani-shiny':'ani')+'/'+sd+'.gif"':'';
+    var fb=cstill?' data-still="'+esc(cstill)+'" title="'+(gm?'Gigantamax picture: '+(vres&&vres.basis==='legacy'?'Serebii':'PokeMiners'):'Costume picture: '+(vres&&vres.basis==='manifest'?'PokeMiners':'Serebii / Dittobase'))+'"':sd?' data-still="'+esc(still)+'" data-gif="https://play.pokemonshowdown.com/sprites/'+(o.shiny?'ani-shiny':'ani')+'/'+sd+'.gif"':'';
     var fc=window.GOTODAYLOGIC&&!o.costume&&!o.asset?window.GOTODAYLOGIC.classifyArt(o):null,ex=fc&&fc.exact&&fc.kind!=='base'?' data-exact="'+esc(fc.label||'Form')+'" data-base="'+esc(fc.base)+'"':'';
     var tg=(o.costume||o.asset)?'':' data-sn="'+esc(o.n)+'"'+(o.shiny?' data-sv="1"':'')+(o.shadow?' data-ss="1"':'')+(o.dynamax?' data-sd="1"':'');
     return '<img class="art'+(sd?' ani':'')+(gm?' gm-real':'')+(cls?' '+cls:'')+'" loading="lazy" decoding="async" width="208" height="256" alt="'+esc(alt)+'" src="'+src+'"'+fb+tg+ck+ex+((o.costume||o.asset)?' data-costume-name="'+esc(o.n)+'" data-costume-label="'+esc(o.label||'')+'"':'')+' data-err="art"'+(cls==='in'?' data-load="has"':'')+'>';
@@ -98,7 +109,9 @@ Promise.all([
       host.setAttribute('role','img');host.setAttribute('aria-label',label+' · costume artwork unavailable');
       host.setAttribute('data-ck',window.GOLIB.parseForm(name).base.toLowerCase()+'|'+outfit.toLowerCase());
       var text=document.createElement('span');text.textContent=label;
-      var note=document.createElement('small');note.textContent='Costume art unavailable';host.append(text,note);i.replaceWith(host);return;
+      var note=document.createElement('small');note.className='va-badge';note.textContent='Costume art unavailable';
+      var bi=document.createElement('img');bi.className='va-base';bi.alt='';bi.loading='lazy';bi.decoding='async';bi.width=48;bi.height=48;bi.setAttribute('data-err','rm');bi.src=speciesStill(window.GOLIB.parseForm(name).base);
+      host.append(bi,text,note);i.replaceWith(host);return;
     }
     if(i.hasAttribute('data-exact')&&!i.hasAttribute('data-fb')){
       /* An exact form (Mega, Gigantamax, regional, named form) never silently shows ordinary artwork: the base sprite appears only with a visible label. */
