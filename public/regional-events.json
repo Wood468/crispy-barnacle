@@ -10,7 +10,7 @@
   {
    "id": "rg-mexico-wild-area",
    "name": "GO Wild Area 2026: Mexico City",
-   "place": "Mexico City, Mexico",
+   "place": "Mexico City, Mexico", "tz": "America/Mexico_City",
    "area": "Americas",
    "start": "2026-11-06",
    "end": "2026-11-08"
@@ -18,7 +18,7 @@
   {
    "id": "rg-sendai-wild-area",
    "name": "GO Wild Area 2026: Sendai and Tohoku",
-   "place": "Sendai and Tohoku, Japan",
+   "place": "Sendai and Tohoku, Japan", "tz": "Asia/Tokyo",
    "area": "Asia",
    "start": "2026-11-06",
    "end": "2026-11-08"
@@ -27,7 +27,7 @@
    "id": "rg-festival-of-lights-india-2026",
    "worldId": "w-celebrate-the-festival-of-lights-with-the-return-o",
    "name": "Festival of Lights",
-   "place": "India",
+   "place": "India", "tz": "Asia/Kolkata",
    "area": "Asia",
    "scope": "regional",
    "mode": "in-game",
@@ -42,7 +42,7 @@
   {
    "id": "rg-boston-safari",
    "name": "City Safari: Boston",
-   "place": "Boston, USA",
+   "place": "Boston, USA", "tz": "America/New_York",
    "area": "Americas",
    "start": "2026-10-24",
    "end": "2026-10-25"
@@ -50,7 +50,7 @@
   {
    "id": "rg-taipei-pokexciting",
    "name": "PokeXciting Taipei",
-   "place": "Taipei, Taiwan",
+   "place": "Taipei, Taiwan", "tz": "Asia/Taipei",
    "area": "Asia",
    "start": "2026-10-10",
    "end": "2026-10-11"
@@ -58,7 +58,7 @@
   {
    "id": "rg-tokyo-lab",
    "name": "Pokémon GO Lab: Big Adventure",
-   "place": "Tokyo, Japan",
+   "place": "Tokyo, Japan", "tz": "Asia/Tokyo",
    "area": "Asia",
    "start": "2026-10-07",
    "end": "2026-10-07"
@@ -66,7 +66,7 @@
   {
    "id": "rg-tokyo-hangul",
    "name": "Hangul Day 2026",
-   "place": "Tokyo, Japan",
+   "place": "Tokyo, Japan", "tz": "Asia/Tokyo",
    "area": "Asia",
    "start": "2026-10-06",
    "end": "2026-10-09"
@@ -90,7 +90,7 @@
   {
    "id": "rg-korea-autumn",
    "name": "Pikachu's Autumn Adventure",
-   "place": "South Korea",
+   "place": "South Korea", "tz": "Asia/Seoul",
    "area": "Asia",
    "start": "2026-09-18",
    "end": "2026-10-11"
@@ -98,7 +98,7 @@
   {
    "id": "rg-japan-jetred",
    "name": "Pokémon Jet Red collaboration",
-   "place": "Japanese airports",
+   "place": "Japanese airports", "tz": "Asia/Tokyo",
    "area": "Asia",
    "start": "2026-07-28",
    "end": "2027-08-31"
@@ -106,7 +106,7 @@
   {
    "id": "rg-chicago-fossil",
    "name": "Pokémon Fossil Museum 2026",
-   "place": "Chicago, USA",
+   "place": "Chicago, USA", "tz": "America/Chicago",
    "area": "Americas",
    "start": "2026-05-22",
    "end": "2027-04-11"
@@ -114,7 +114,7 @@
   {
    "id": "rg-dia-de-muertos-mexico-city",
    "name": "Día de Muertos 2026",
-   "place": "Paseo de la Reforma, Mexico City, Mexico",
+   "place": "Paseo de la Reforma, Mexico City, Mexico", "tz": "America/Mexico_City",
    "area": "Americas",
    "start": "2026-10-31",
    "end": "2026-11-05",
@@ -127,7 +127,7 @@
   {
    "id": "rg-run30-singapore",
    "name": "Pokémon RUN 30: Singapore",
-   "place": "Singapore (The Kallang)",
+   "place": "Singapore (The Kallang)", "tz": "Asia/Singapore",
    "area": "Asia",
    "scope": "regional",
    "start": "2026-11-07",
@@ -140,7 +140,7 @@
   {
    "id": "rg-run30-new-taipei",
    "name": "Pokémon RUN 30: New Taipei",
-   "place": "New Taipei, Taiwan (New Taipei Metropolitan Park)",
+   "place": "New Taipei, Taiwan (New Taipei Metropolitan Park)", "tz": "Asia/Taipei",
    "area": "Asia",
    "scope": "regional",
    "start": "2026-11-14",
@@ -153,7 +153,7 @@
   {
    "id": "rg-run30-kuala-lumpur",
    "name": "Pokémon RUN 30: Kuala Lumpur",
-   "place": "Kuala Lumpur, Malaysia (KLCC Plaza Petronas)",
+   "place": "Kuala Lumpur, Malaysia (KLCC Plaza Petronas)", "tz": "Asia/Kuala_Lumpur",
    "area": "Asia",
    "scope": "regional",
    "start": "2026-11-21",
@@ -166,7 +166,7 @@
   {
    "id": "rg-run30-jakarta",
    "name": "Pokémon RUN 30: Jakarta",
-   "place": "Jakarta, Indonesia (GBK / Gelora Bung Karno)",
+   "place": "Jakarta, Indonesia (GBK / Gelora Bung Karno)", "tz": "Asia/Jakarta",
    "area": "Asia",
    "scope": "regional",
    "start": "2026-12-12",
@@ -179,7 +179,7 @@
   {
    "id": "rg-run30-bangkok",
    "name": "Pokémon RUN 30: Bangkok",
-   "place": "Bangkok, Thailand (outdoor plaza in front of Central World)",
+   "place": "Bangkok, Thailand (outdoor plaza in front of Central World)", "tz": "Asia/Bangkok",
    "area": "Asia",
    "scope": "regional",
    "start": "2027-01-09",
@@ -193,7 +193,7 @@
   {
    "id": "rg-run30-hong-kong",
    "name": "Pokémon RUN 30: Hong Kong",
-   "place": "Hong Kong (Science Park)",
+   "place": "Hong Kong (Science Park)", "tz": "Asia/Hong_Kong",
    "area": "Asia",
    "scope": "regional",
    "start": "2027-01-23",
