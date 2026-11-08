@@ -10383,8 +10383,8 @@
      "end": ""
     },
     "imageReviewed": true,
-    "contentHash": "8be8a553010a7521e8a114722b488f86112d9833fd91dff35333147a3a45a4ba",
-    "revision": 5,
+    "contentHash": "2676d14f7c30743221aa100d0c413e8057f6096b03324fdb3ce477cebe1e1c8a",
+    "revision": 6,
     "amended": true,
     "native": false,
     "collection": "events"
@@ -10962,6 +10962,12 @@
      "access": "unknown"
     },
     {
+     "identityKey": "888:crownedsword:none",
+     "method": "other",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
      "identityKey": "889:base:none",
      "method": "other",
      "activityId": "main",
@@ -10974,6 +10980,12 @@
      "access": "unknown"
     },
     {
+     "identityKey": "889:crownedshield:none",
+     "method": "other",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
      "identityKey": "895:base:none",
      "method": "other",
      "activityId": "main",
@@ -10981,6 +10993,12 @@
     },
     {
      "identityKey": "895:base:none",
+     "method": "other",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "895:dynamax:none",
      "method": "other",
      "activityId": "main",
      "access": "unknown"
@@ -11117,6 +11135,12 @@
       "access": "unknown"
      },
      {
+      "identityKey": "888:crownedsword:none",
+      "method": "other",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
       "identityKey": "889:base:none",
       "method": "other",
       "activityId": "main",
@@ -11129,6 +11153,12 @@
       "access": "unknown"
      },
      {
+      "identityKey": "889:crownedshield:none",
+      "method": "other",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
       "identityKey": "895:base:none",
       "method": "other",
       "activityId": "main",
@@ -11136,6 +11166,12 @@
      },
      {
       "identityKey": "895:base:none",
+      "method": "other",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "895:dynamax:none",
       "method": "other",
       "activityId": "main",
       "access": "unknown"

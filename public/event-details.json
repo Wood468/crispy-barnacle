@@ -15998,7 +15998,81 @@
     ]
    },
    "conflicts": [],
-   "gaps": []
+   "gaps": [],
+   "researchTasks": [
+    {
+     "task": "Power up Dragon‑type Pokémon 5 times",
+     "category": "field",
+     "rewards": [
+      {
+       "type": "encounter",
+       "quantity": 1,
+       "name": "Bagon",
+       "cpMin": 459,
+       "cpMax": 495
+      }
+     ],
+     "eventId": "into",
+     "eventName": "Into the Wild",
+     "eventWindow": {
+      "start": "2026-11-09T10:00",
+      "end": "2026-11-13T20:00"
+     },
+     "checkedAt": "2026-11-08"
+    },
+    {
+     "task": "Catch 10 Pokémon",
+     "category": "field",
+     "rewards": [
+      {
+       "type": "encounter",
+       "quantity": 1,
+       "name": "Magnemite",
+       "cpMin": 544,
+       "cpMax": 583
+      },
+      {
+       "type": "encounter",
+       "quantity": 1,
+       "name": "Horsea",
+       "cpMin": 418,
+       "cpMax": 452
+      },
+      {
+       "type": "encounter",
+       "quantity": 1,
+       "name": "Skrelp",
+       "cpMin": 421,
+       "cpMax": 455
+      }
+     ],
+     "eventId": "into",
+     "eventName": "Into the Wild",
+     "eventWindow": {
+      "start": "2026-11-09T10:00",
+      "end": "2026-11-13T20:00"
+     },
+     "checkedAt": "2026-11-08"
+    },
+    {
+     "task": "Catch a Dynamax Machop",
+     "category": "field",
+     "rewards": [
+      {
+       "type": "item",
+       "name": "Machop Candy",
+       "quantity": 25
+      }
+     ],
+     "eventId": "into",
+     "eventName": "Into the Wild",
+     "eventWindow": {
+      "start": "2026-11-09T10:00",
+      "end": "2026-11-13T20:00"
+     },
+     "checkedAt": "2026-11-08"
+    }
+   ]
   },
   "leekduck:pokemonspotlighthour2026-10-29": {
    "name": "Gastly Spotlight Hour",
