@@ -573,7 +573,12 @@
     var sources=model.sources.map(function(src){var url=safe(src.url);return url?'<li><a href="'+esc(url)+'" target="_blank" rel="noopener noreferrer">'+esc(src.name||src.label||'Event source')+'</a></li>':'';}).filter(function(v,i,a){return v&&a.indexOf(v)===i;}).join('');
     var conflicts=(model.internalValidation&&model.internalValidation.conflicts||[]).map(function(c){var values=[c.a&&c.a.text,c.b&&c.b.text].filter(Boolean);return '<li>'+esc(c.field==='shiny'?'Shiny availability':c.field||'Event detail')+(values.length?': '+values.map(esc).join(' / '):' needs rechecking.')+'</li>';}).join('');
     var catalogue=window.GOEventRegistry&&GOEventRegistry.diagnostics?GOEventRegistry.diagnostics():{},heldUpdate=catalogue.rejectedCount||catalogue.conflicts&&catalogue.conflicts.length;
-    var cands=[ev.img,model.image,d.image,info&&info.image].filter(Boolean).map(function(u){return {url:safe(u),pageUrl:safe(ev.link)||''};}).filter(function(c){return c.url;});
+    var cands=[
+      {url:safe(ev.img),pageUrl:safe(ev.artPageUrl||ev.link)||''},
+      {url:safe(d.image),pageUrl:safe(d.imageProvenance&&d.imageProvenance.sourceUrl)||'',source:d.imageProvenance&&d.imageProvenance.source},
+      {url:safe(model.image),pageUrl:model.image===d.image?safe(d.imageProvenance&&d.imageProvenance.sourceUrl)||'':model.image===ev.img?safe(ev.artPageUrl||ev.link)||'':''},
+      {url:safe(info&&info.image)}
+    ].filter(function(c){return c.url;});
     var seasonThumb=ev.season?safeSeasonThumb(ev.season.thumbnail):'';
     var art=window.GOEVENTART?GOEVENTART.resolve({name:model.title||ev.name,kind:ev.kind,region:(typeof model.location==='string'?model.location:model.location&&model.location.name)||ev.region||'',start:ev.start,end:ev.end,img:''},cands):null;
     if(art&&art.kind==='official'&&seasonThumb){art.src=seasonThumb;art.fullSrc=safe(ev.img)||art.provenance.imageUrl;}
