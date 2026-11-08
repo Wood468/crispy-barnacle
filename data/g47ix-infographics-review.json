@@ -7,6 +7,67 @@
   "eventImages": {},
   "candidates": [
     {
+      "id": "discord:1568890467293069435",
+      "source": "discord",
+      "creator": "",
+      "title": "INTO THE WILD 26",
+      "url": "https://discord.com/channels/@me/1558793395198099618/1568890467293069435",
+      "publishedAt": "2026-11-08T07:30:35.978000+00:00",
+      "imageUrl": "https://cdn.discordapp.com/attachments/886998693897719819/1559975609915023480/INTO_THE_WILD_26.png?ex=6af154c0&is=6af00340&hm=c85ad82ef7075e439ff3b4010cb66bbe7b8bda8cf2d269545279bdc4edb8936f&",
+      "reviewStatus": "needs_review",
+      "decision": "pending",
+      "ocrChecked": true,
+      "ocrText": "local time C' ® = INTO 13 xy NY | NOV NOV THE WILD > | N pokemongo.com/gowildarea 10:00am 8:00pm Shiny Gimmighoul Remote Raid No Remote and Meltan Mystery Box limit 30 Raid Limit will be available cooldown Nov 9 - 13 Nov 14- 15 reduced rs BB R until November 15 poor) ott ++ OOD +4 hs vee by S To. kk VN 12 13 kek as x Nov — NOV =e ry z van) ++ ty tH Y RAID 10 knee * Ae HOUR NOV sO NOV wi Pokémon appearing in 5* Raids and Max Battles will be available throughout the event. They will also be featured during Raid Hours or Max Battle Hours from 6:00 to 7:00 p.m. on the dates shown to their left. ae ei laxw oe ) wa = : + @ -4: ( a ED 4 Gin Wild Area-themed Wild Global Challenge Field Research tasks New Special Background will be available will be available will be available V2 '©| GO Pass: Into the Wild 2 FREE DELUXE QL t+ (Or rN) ~\\ * w\\e Major Milestone Bonuses: &e Additional XP, Candy and Candy XL Major Milestone Bonuse: 1/2 Hatch Distance from Raids and Max Battles, AND MORE AND MORE and powering up Max Movese 3/4 Max Particle cost for unlocking AV There’s no limit to the number of GO Points you can G47IXO @X Follow for more 47ix.pro earn on November 14 and 15!",
+      "eventMatch": {
+        "eventId": "into",
+        "eventTitle": "Into the Wild",
+        "score": 0.831,
+        "confidence": "high",
+        "matchedTerms": [
+          "wild",
+          "raids",
+          "raid",
+          "hour",
+          "nov",
+          "max",
+          "battles",
+          "meltan",
+          "pass",
+          "remote",
+          "limit",
+          "shiny"
+        ],
+        "alternatives": [
+          {
+            "eventId": "into",
+            "eventTitle": "Into the Wild",
+            "score": 0.831
+          },
+          {
+            "eventId": "gopassnov",
+            "eventTitle": "GO Pass: November",
+            "score": 0.815
+          },
+          {
+            "eventId": "wag",
+            "eventTitle": "GO Wild Area: Global",
+            "score": 0.813
+          }
+        ],
+        "method": "title-to-public/data.json heuristic",
+        "requiresHumanVerification": true
+      },
+      "reviewNote": "Two events look alike. Please choose.",
+      "signals": [
+        "caption names the event",
+        "picture text names the event",
+        "date in the picture is inside the event",
+        "posted around the event"
+      ],
+      "matchScore": 7,
+      "stagedPath": "/infographics/g47ix/discord-1568890467293069435.webp"
+    },
+    {
       "id": "discord:1568459371912892468",
       "source": "discord",
       "creator": "",

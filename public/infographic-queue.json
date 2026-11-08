@@ -1,6 +1,42 @@
 {
- "updated": "2026-11-08T00:59:22.400Z",
+ "updated": "2026-11-08T08:24:13.435Z",
  "items": [
+  {
+   "linked": false,
+   "id": "discord:1568890467293069435",
+   "title": "INTO THE WILD 26",
+   "image": "/infographics/g47ix/discord-1568890467293069435.webp",
+   "post": "https://discord.com/channels/@me/1558793395198099618/1568890467293069435",
+   "creator": "",
+   "source": "discord",
+   "publishedAt": "2026-11-08T07:30:35.978000+00:00",
+   "note": "Two events look alike. Please choose.",
+   "history": false,
+   "signals": [
+    "caption names the event",
+    "picture text names the event",
+    "date in the picture is inside the event",
+    "posted around the event"
+   ],
+   "text": "local time C' ® = INTO 13 xy NY | NOV NOV THE WILD > | N pokemongo.com/gowildarea 10:00am 8:00pm Shiny Gimmighoul Remote Raid No Remote and Meltan Mystery Box limit 30 Raid Limit will be available cooldown Nov 9 - 13 Nov 14- 15 reduced rs BB R until November 15 poor) ott ++ OOD +4 hs vee by S To. kk VN 12 13 kek as x Nov — NOV =e ry z van) ++ ty tH Y RAID 10 knee * Ae HOUR NOV sO NOV wi Pokémon appearing in 5* Raids and Max Battles will be available throughout the event. They will also be featured during Raid Hours or Max Battle Hours from 6:00 to 7:00 p.m. on the dates shown to their left. ae ei laxw oe ) wa = : + @ -4: ( a ED 4 Gin Wild Area-themed Wild Global Challenge Field Research task",
+   "guesses": [
+    {
+     "eventId": "into",
+     "eventTitle": "Into the Wild",
+     "score": 0.831
+    },
+    {
+     "eventId": "gopassnov",
+     "eventTitle": "GO Pass: November",
+     "score": 0.815
+    },
+    {
+     "eventId": "wag",
+     "eventTitle": "GO Wild Area: Global",
+     "score": 0.813
+    }
+   ]
+  },
   {
    "linked": true,
    "id": "discord:1568023752749613163",
