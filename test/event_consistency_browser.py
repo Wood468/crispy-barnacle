@@ -45,6 +45,19 @@ with sync_playwright() as p:
         card.locator('[data-open]').first.click()
         page.wait_for_selector('#evd .ev-art--official .evd-banner')
         assert 'into-the-wild-2026' in page.locator('#evd .ev-art--official .evd-banner').first.get_attribute('src')
+        # Merged records show a natural status, never the internal 'reference' type; ambassador photography stays themed; series art is labelled.
+        for event_id in ('into', 'twilightwishes', 'smr2'):
+            page.evaluate(f"GODETAIL.open('{event_id}')")
+            page.wait_for_selector('#evd .ue-hero')
+            assert not re.search(r'\breference\b', page.locator('#evd .ue-hero').inner_text(), re.I), event_id
+        page.evaluate("GODETAIL.open('w-go-wild-area-global-meetup-karlsruhe')")
+        page.wait_for_selector('#evd .ue-hero')
+        assert page.locator('#evd .ev-art--themed').count() == 1 and page.locator('#evd .ev-art--official').count() == 0
+        assert page.locator('#evd .ev-art-tag').is_visible()
+        mall = page.evaluate("GOEventRegistry.events().find(m=>/Mall Exploration/.test(m.title)&&m.image).eventId")
+        page.evaluate(f"GODETAIL.open({mall!r})")
+        page.wait_for_selector('#evd .ev-art--official[data-art-scope="series"]')
+        assert page.locator('#evd .ev-art-scope').is_visible()
         print(f'PASS event consistency across Today, Schedule and Battle at {width}px')
         context.close()
 

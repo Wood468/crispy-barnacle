@@ -9848,7 +9848,7 @@
    "title": "Into the Wild",
    "dateText": "",
    "completeness": "partial",
-   "lifecycle": "reference",
+   "lifecycle": "announced",
    "attendance": "",
    "location": null,
    "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-11-09-into-the-wild-2026/into-the-wild-2026.jpg",
@@ -10383,8 +10383,8 @@
      "end": ""
     },
     "imageReviewed": true,
-    "contentHash": "2676d14f7c30743221aa100d0c413e8057f6096b03324fdb3ce477cebe1e1c8a",
-    "revision": 12,
+    "contentHash": "cc8beb9d1014324995d3e0fd62245f1c3e550397788545c82731365b509810b6",
+    "revision": 15,
     "amended": true,
     "native": false,
     "collection": "events"
@@ -18070,7 +18070,7 @@
     },
     "imageReviewed": true,
     "contentHash": "269f8e3b2de77de99a9c9b96a8583480afcc7d703b67882981cde6a557edee89",
-    "revision": 10,
+    "revision": 13,
     "amended": true,
     "native": false,
     "collection": "source-details"
@@ -20125,7 +20125,7 @@
     },
     "imageReviewed": true,
     "contentHash": "61a5ae1d293acbf4aaa7e8ed75af207faef316785784f266244f3fa89d266906",
-    "revision": 10,
+    "revision": 13,
     "amended": true,
     "native": false,
     "collection": "source-details"
@@ -32306,7 +32306,7 @@
    "title": "Pokémon GO Wild Area 2026: Sendai • Tohoku",
    "dateText": "",
    "completeness": "partial",
-   "lifecycle": "reference",
+   "lifecycle": "announced",
    "attendance": "in-person",
    "location": "Sendai, Japan",
    "image": "https://lh3.googleusercontent.com/mKoeqvHXmLsEsFxHgdhcK2XoC_XhjXUDl8gvBeH0iEfQTCNOuNY_vJ_k7QRoIYJFfVanVY_aE6ERNdqPgOPpOxvRQaw0I4T1YzTnodb8GUY",
@@ -32764,8 +32764,8 @@
      "end": ""
     },
     "imageReviewed": true,
-    "contentHash": "89e75be1fa54507ce0903e180af3ca57a431647a6ea779aee51b56a5b2ba422a",
-    "revision": 8,
+    "contentHash": "de0f004343c103e0d878fd44bb981937e8dd887de7993ba8f76e88592f9e9300",
+    "revision": 9,
     "amended": false,
     "native": false,
     "collection": "events"
@@ -34476,7 +34476,7 @@
    "title": "Super Mega Raid Day",
    "dateText": "",
    "completeness": "partial",
-   "lifecycle": "reference",
+   "lifecycle": "announced",
    "attendance": "",
    "location": null,
    "image": "https://lh3.googleusercontent.com/HyFWaQMZqtZNT3Sb3uFeHyWMBFI8bB_4hNQ2NLrpfBGrH1YijjIr1n0ZNC0YlNAZHPpfiWTq0zzgT9MRUFzlMoEjN4ENEm0AlnuJFZRA9CQ",
@@ -34789,8 +34789,8 @@
      "end": ""
     },
     "imageReviewed": true,
-    "contentHash": "4e1b0baa8d7a743b1970595374e4a64254fedfd13ee066b8bfa8562d96b9d908",
-    "revision": 4,
+    "contentHash": "42bf34d735c55ef847b4d093e6ec357e8a4fc85619d1441ded2cc57361fc69d3",
+    "revision": 5,
     "amended": false,
     "native": false,
     "collection": "events"
@@ -37192,7 +37192,7 @@
    "title": "Twilight Wishes",
    "dateText": "",
    "completeness": "partial",
-   "lifecycle": "reference",
+   "lifecycle": "announced",
    "attendance": "",
    "location": null,
    "image": "https://cdn.leekduck.com/assets/img/events/twilight-wishes-2026.jpg?v2",
@@ -37622,8 +37622,8 @@
      "end": ""
     },
     "imageReviewed": true,
-    "contentHash": "9056f0b6d33eef3c496d9ad53a87394359afa666579a5d90fd6c217d011ce2aa",
-    "revision": 5,
+    "contentHash": "dc1498da5a592d1e45dae848a4d980ca2c022b4196953d1f50ebcf78db5f9cb9",
+    "revision": 6,
     "amended": false,
     "native": false,
     "collection": "events"
@@ -39980,7 +39980,7 @@
    "lifecycle": "announced",
    "attendance": "in-person",
    "location": "Karlsruhe, Germany (Ettlinger Tor)",
-   "image": "https://lh3.googleusercontent.com/44ggmV081gROwILff_vc2fROBHVCfBGTlRPQ8EtwxMt0ePAkWpirNJMtFk0C3qzHyx7zQqfFAbzKsziiRTTz67bHWdZyRKJN1d7b9Z50Q0M",
+   "image": null,
    "notes": [],
    "internalValidation": {
     "warnings": [],
@@ -40054,9 +40054,10 @@
      "start": "2026-11-14",
      "end": "2026-11-15"
     },
+    "imageUnattributed": true,
     "contentHash": "9ff7195a40d6b227179ba07e5be8d80c6d906273aa87d25f3aa5d101b03b072a",
-    "revision": 3,
-    "amended": false,
+    "revision": 5,
+    "amended": true,
     "native": false,
     "collection": "world-events"
    },
@@ -40098,7 +40099,7 @@
    "lifecycle": "announced",
    "attendance": "in-person",
    "location": "Stockholm, Sweden (Kulturhuset Stadsteatern)",
-   "image": "https://lh3.googleusercontent.com/44ggmV081gROwILff_vc2fROBHVCfBGTlRPQ8EtwxMt0ePAkWpirNJMtFk0C3qzHyx7zQqfFAbzKsziiRTTz67bHWdZyRKJN1d7b9Z50Q0M",
+   "image": null,
    "notes": [],
    "internalValidation": {
     "warnings": [],
@@ -40172,9 +40173,10 @@
      "start": "2026-11-14",
      "end": "2026-11-15"
     },
+    "imageUnattributed": true,
     "contentHash": "a3fd2746e9101753d39497a4285defedf74465048ea6b95365f521b8a550e12f",
-    "revision": 3,
-    "amended": false,
+    "revision": 5,
+    "amended": true,
     "native": false,
     "collection": "world-events"
    },
@@ -40768,7 +40770,10 @@
     "revision": 1,
     "amended": false,
     "native": false,
-    "collection": "world-events"
+    "collection": "world-events",
+    "artScope": "series",
+    "artSourceUrl": "https://pokemongo.com/news/apac-mall-exploration-2026/",
+    "artLabel": "Series artwork shared by every location of the Pokémon 30th Anniversary Mall Exploration"
    },
    "schedule": null,
    "activities": [],
@@ -40819,7 +40824,10 @@
     "revision": 2,
     "amended": false,
     "native": false,
-    "collection": "world-events"
+    "collection": "world-events",
+    "artScope": "series",
+    "artSourceUrl": "https://pokemongo.com/news/apac-mall-exploration-2026/",
+    "artLabel": "Series artwork shared by every location of the Pokémon 30th Anniversary Mall Exploration"
    },
    "schedule": null,
    "activities": [],
@@ -40870,7 +40878,10 @@
     "revision": 2,
     "amended": false,
     "native": false,
-    "collection": "world-events"
+    "collection": "world-events",
+    "artScope": "series",
+    "artSourceUrl": "https://pokemongo.com/news/apac-mall-exploration-2026/",
+    "artLabel": "Series artwork shared by every location of the Pokémon 30th Anniversary Mall Exploration"
    },
    "schedule": null,
    "activities": [],
@@ -40904,7 +40915,7 @@
    "lifecycle": "announced",
    "attendance": "in-person",
    "location": "Philippines (SM CDO Downtown)",
-   "image": null,
+   "image": "https://lh3.googleusercontent.com/dFl-bn3on9Th9YzRT-Bs14neMfLhAsomPudR7lZ0l1j-1WERlgWfMrgd-pG9Kk5sVl1L9u3viOCWpGnVSlaLwwBcDrCayaXwSkC-eex8Qg",
    "notes": [],
    "internalValidation": {
     "warnings": [],
@@ -40921,7 +40932,10 @@
     "revision": 2,
     "amended": false,
     "native": false,
-    "collection": "world-events"
+    "collection": "world-events",
+    "artScope": "series",
+    "artSourceUrl": "https://pokemongo.com/news/apac-mall-exploration-2026/",
+    "artLabel": "Series artwork shared by every location of the Pokémon 30th Anniversary Mall Exploration"
    },
    "schedule": null,
    "activities": [],
@@ -40955,7 +40969,7 @@
    "lifecycle": "announced",
    "attendance": "in-person",
    "location": "Philippines (SM Davao)",
-   "image": null,
+   "image": "https://lh3.googleusercontent.com/dFl-bn3on9Th9YzRT-Bs14neMfLhAsomPudR7lZ0l1j-1WERlgWfMrgd-pG9Kk5sVl1L9u3viOCWpGnVSlaLwwBcDrCayaXwSkC-eex8Qg",
    "notes": [],
    "internalValidation": {
     "warnings": [],
@@ -40972,7 +40986,10 @@
     "revision": 2,
     "amended": false,
     "native": false,
-    "collection": "world-events"
+    "collection": "world-events",
+    "artScope": "series",
+    "artSourceUrl": "https://pokemongo.com/news/apac-mall-exploration-2026/",
+    "artLabel": "Series artwork shared by every location of the Pokémon 30th Anniversary Mall Exploration"
    },
    "schedule": null,
    "activities": [],
@@ -41023,7 +41040,10 @@
     "revision": 2,
     "amended": false,
     "native": false,
-    "collection": "world-events"
+    "collection": "world-events",
+    "artScope": "series",
+    "artSourceUrl": "https://pokemongo.com/news/apac-mall-exploration-2026/",
+    "artLabel": "Series artwork shared by every location of the Pokémon 30th Anniversary Mall Exploration"
    },
    "schedule": null,
    "activities": [],
@@ -41074,7 +41094,10 @@
     "revision": 1,
     "amended": false,
     "native": false,
-    "collection": "world-events"
+    "collection": "world-events",
+    "artScope": "series",
+    "artSourceUrl": "https://pokemongo.com/news/apac-mall-exploration-2026/",
+    "artLabel": "Series artwork shared by every location of the Pokémon 30th Anniversary Mall Exploration"
    },
    "schedule": null,
    "activities": [],
@@ -41108,7 +41131,7 @@
    "lifecycle": "announced",
    "attendance": "in-person",
    "location": "Philippines (SM Marikina)",
-   "image": null,
+   "image": "https://lh3.googleusercontent.com/dFl-bn3on9Th9YzRT-Bs14neMfLhAsomPudR7lZ0l1j-1WERlgWfMrgd-pG9Kk5sVl1L9u3viOCWpGnVSlaLwwBcDrCayaXwSkC-eex8Qg",
    "notes": [],
    "internalValidation": {
     "warnings": [],
@@ -41125,7 +41148,10 @@
     "revision": 2,
     "amended": false,
     "native": false,
-    "collection": "world-events"
+    "collection": "world-events",
+    "artScope": "series",
+    "artSourceUrl": "https://pokemongo.com/news/apac-mall-exploration-2026/",
+    "artLabel": "Series artwork shared by every location of the Pokémon 30th Anniversary Mall Exploration"
    },
    "schedule": null,
    "activities": [],
@@ -41176,7 +41202,10 @@
     "revision": 2,
     "amended": false,
     "native": false,
-    "collection": "world-events"
+    "collection": "world-events",
+    "artScope": "series",
+    "artSourceUrl": "https://pokemongo.com/news/apac-mall-exploration-2026/",
+    "artLabel": "Series artwork shared by every location of the Pokémon 30th Anniversary Mall Exploration"
    },
    "schedule": null,
    "activities": [],
@@ -41210,7 +41239,7 @@
    "lifecycle": "announced",
    "attendance": "in-person",
    "location": "Philippines (SM Seaside Cebu)",
-   "image": null,
+   "image": "https://lh3.googleusercontent.com/dFl-bn3on9Th9YzRT-Bs14neMfLhAsomPudR7lZ0l1j-1WERlgWfMrgd-pG9Kk5sVl1L9u3viOCWpGnVSlaLwwBcDrCayaXwSkC-eex8Qg",
    "notes": [],
    "internalValidation": {
     "warnings": [],
@@ -41227,7 +41256,10 @@
     "revision": 2,
     "amended": false,
     "native": false,
-    "collection": "world-events"
+    "collection": "world-events",
+    "artScope": "series",
+    "artSourceUrl": "https://pokemongo.com/news/apac-mall-exploration-2026/",
+    "artLabel": "Series artwork shared by every location of the Pokémon 30th Anniversary Mall Exploration"
    },
    "schedule": null,
    "activities": [],
@@ -41278,7 +41310,10 @@
     "revision": 2,
     "amended": false,
     "native": false,
-    "collection": "world-events"
+    "collection": "world-events",
+    "artScope": "series",
+    "artSourceUrl": "https://pokemongo.com/news/apac-mall-exploration-2026/",
+    "artLabel": "Series artwork shared by every location of the Pokémon 30th Anniversary Mall Exploration"
    },
    "schedule": null,
    "activities": [],
@@ -45053,7 +45088,7 @@
      "end": "2026-11-15T18:00"
     },
     "contentHash": "6e9282cc03603c74671ba530686e762eae832f4865274e54ea4a71730d66e312",
-    "revision": 7,
+    "revision": 10,
     "amended": true,
     "native": false,
     "collection": "events"
@@ -45872,7 +45907,7 @@
     },
     "imageReviewed": true,
     "contentHash": "bc89d53fcf26391f932b1b0f5ba1ec0d78ceddcd48a338d98686e2a858ad1b01",
-    "revision": 10,
+    "revision": 13,
     "amended": true,
     "native": false,
     "collection": "worldEvents"

@@ -119,3 +119,5 @@
 /* Keep the card menu (Mark done / Hide) below a full banner so it never covers the event logo. */
 #tab-now .t1-major:has(.ev-art--official) { container-type: inline-size; }
 #tab-now .t1-major:has(.ev-art--official) .t1-more { top: calc(100cqw * 9 / 16); }
+/* Shared series artwork is always identified on the banner. */
+.ev-art-scope { position: absolute; left: 10px; bottom: 8px; z-index: 2; max-width: 80%; padding: 3px 8px; border-radius: 999px; background: rgba(8,10,16,.72); color: #fff; font: 700 .6rem/1.2 var(--font-body); letter-spacing: .08em; text-transform: uppercase; font-style: normal; backdrop-filter: blur(4px); }

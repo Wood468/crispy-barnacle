@@ -103,3 +103,60 @@ test('an unattributed legacy image yields to the official page whose address nam
   const result = buildCatalogue({ dex, data: { events: [own] }, details, artwork });
   assert.equal(result.events.find(e => e.eventId === 'wag').image, 'https://lh3.googleusercontent.com/wild-area-hero');
 });
+
+const policy = JSON.parse(readFileSync(new URL('../data/artwork-policy.json', import.meta.url), 'utf8'));
+const AMB = 'https://lh3.googleusercontent.com/community-ambassador-photo', SERIES = 'https://lh3.googleusercontent.com/mall-series-hero';
+const ambassadorPage = 'https://pokemongo.com/news/gowa-global-europe-2026', mallPage = 'https://pokemongo.com/news/apac-mall-exploration-2026';
+
+test('community ambassador photography is never event artwork, even when a record already carries it', () => {
+  const meetup = { id: 'karlsruhe', t: 'GO Wild Area Global Meetup: Karlsruhe', s: '2026-11-14', e: '2026-11-15', sourceUrl: ambassadorPage };
+  const details = { events: { karlsruhe: { name: meetup.t, image: AMB, sources: [source(ambassadorPage)] } } };
+  const artwork = { pages: { [ambassadorPage + '/']: { image: AMB, sourceUrl: ambassadorPage } } };
+  const result = buildCatalogue({ dex, data: { events: [meetup] }, details, artwork, artworkPolicy: policy });
+  assert.equal(result.events.find(e => e.eventId === 'karlsruhe').image || null, null, 'themed card instead of photography');
+  const future = buildCatalogue({ dex, data: { events: [{ ...meetup, id: 'future-meetup', t: 'Community Meetups: Oslo', sourceUrl: 'https://pokemongo.com/news/community-meetups-oslo-2026' }] }, artwork: { pages: { 'https://pokemongo.com/news/community-meetups-oslo-2026/': { image: AMB } } }, artworkPolicy: policy });
+  assert.equal(future.events[0].image || null, null, 'a future ambassador-photography page is rejected by the generic rule');
+});
+
+test('a named installment never takes the whole event or a sibling event page art', () => {
+  const globalEvent = { id: 'wag', t: 'GO Wild Area: Global', s: '2026-11-14T10:00', e: '2026-11-15T18:00' };
+  const meetup = { id: 'stockholm', t: 'GO Wild Area Global Meetup: Stockholm', s: '2026-11-14', e: '2026-11-15' };
+  const page = 'https://pokemongo.com/en/gowildarea/global';
+  const details = { events: { wag: { name: globalEvent.t, sources: [source(page)] }, stockholm: { name: meetup.t, sources: [source('https://pokemongo.com/news/no-image-news'), source(page)] } } };
+  const result = buildCatalogue({ dex, data: { events: [globalEvent, meetup] }, details, artwork: { pages: { [page + '/']: { image: 'https://lh3.googleusercontent.com/wild-area-hero' } } }, artworkPolicy: policy });
+  assert.ok(result.events.find(e => e.eventId === 'wag').image);
+  assert.equal(result.events.find(e => e.eventId === 'stockholm').image || null, null);
+});
+
+test('Mall Exploration series artwork is shared across locations and clearly identified; other events are unaffected', () => {
+  const mk = (id, place, s, e) => ({ id, t: 'Pokémon 30th Anniversary Mall Exploration: ' + place, s, e });
+  const events = [mk('m1', 'Changi', '2026-11-07', '2026-11-08'), mk('m2', 'CDO Downtown', '2027-03-13', '2027-03-28'), { id: 'other', t: 'Pokémon Night Out: London', s: '2026-11-10', e: '2026-11-11' }];
+  const result = buildCatalogue({ dex, data: { events }, artwork: { pages: { [mallPage + '/']: { image: SERIES, sourceUrl: mallPage } } }, artworkPolicy: policy });
+  for (const id of ['m1', 'm2']) {
+    const model = result.events.find(e => e.eventId === id);
+    assert.equal(model.image, SERIES, id);
+    assert.equal(model.internalValidation.artScope, 'series');
+    assert.equal(model.internalValidation.artSourceUrl, mallPage);
+  }
+  assert.equal(result.events.find(e => e.eventId === 'other').image || null, null);
+  // without the reviewed allowlist the same data gets no shared art for the 2027 location
+  const strict = buildCatalogue({ dex, data: { events }, artwork: { pages: { [mallPage + '/']: { image: SERIES, sourceUrl: mallPage } } } });
+  assert.equal(strict.events.find(e => e.eventId === 'm2').image || null, null);
+});
+
+test('merged records keep an accurate status and "reference" is never a user-facing status', () => {
+  const catalogue = JSON.parse(readFileSync(new URL('../public/events-v1.json', import.meta.url), 'utf8'));
+  for (const id of ['into', 'twilightwishes', 'smr2']) {
+    const model = catalogue.events.find(e => e.eventId === id);
+    assert.notEqual(model.lifecycle, 'reference', id);
+    assert.equal(model.lifecycle, 'announced', id);
+  }
+  const importerRecord = { name: 'Winter Showcase 2027', sources: [source(ldUrl)], normalizedEvent: { schemaVersion: 1, eventId: 'leekduck:winter-showcase-2027', title: 'Winter Showcase 2027', lifecycle: 'reference', sources: [source(ldUrl)], schedule: null, pokemon: [], encounters: [], activities: [] } };
+  const result = buildCatalogue({ dex, data: { events: [curated] }, details: { events: { 'leekduck:winter-showcase-2027': importerRecord } }, aliases: { same: [['winter', 'leekduck:winter-showcase-2027']] } });
+  assert.equal(result.events.find(e => e.eventId === 'winter').lifecycle, 'announced');
+  for (const model of catalogue.events) {
+    const html = UI.render(model, {});
+    assert.ok(!/class="[^"]*(?:status|lifecycle|state)[^"]*"[^>]*>\s*reference\s*</i.test(html), model.eventId);
+    assert.ok(!/\bStatus:?\s*reference\b/i.test(html), model.eventId);
+  }
+});
