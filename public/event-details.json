@@ -9056,162 +9056,145 @@
    "researchTasks": [],
    "pokemon": [
     {
-     "key": "120:base:none",
-     "speciesId": "120",
-     "formId": null,
-     "costumeId": null,
-     "shiny": "unknown",
-     "assetKey": null,
-     "name": "Staryu",
-     "label": null,
-     "debut": null,
-     "boostedShiny": null,
-     "collectionName": "Staryu"
-    },
-    {
-     "key": "15:mega:none",
-     "speciesId": "15",
-     "formId": "mega",
-     "costumeId": null,
-     "shiny": "unknown",
-     "assetKey": null,
-     "name": "Mega Beedrill",
-     "label": null,
-     "debut": null,
-     "boostedShiny": null,
-     "collectionName": "Mega Beedrill"
-    },
-    {
-     "key": "196:base:none",
-     "speciesId": "196",
-     "formId": null,
-     "costumeId": null,
-     "shiny": "unknown",
-     "assetKey": null,
-     "name": "Espeon",
-     "label": null,
-     "debut": null,
-     "boostedShiny": null,
-     "collectionName": "Espeon"
-    },
-    {
-     "key": "197:base:none",
-     "speciesId": "197",
-     "formId": null,
-     "costumeId": null,
-     "shiny": "unknown",
-     "assetKey": null,
-     "name": "Umbreon",
-     "label": null,
-     "debut": null,
-     "boostedShiny": null,
-     "collectionName": "Umbreon"
-    },
-    {
-     "key": "25:base:none",
-     "speciesId": "25",
-     "formId": null,
-     "costumeId": null,
-     "shiny": "unknown",
-     "assetKey": null,
-     "name": "Pikachu",
-     "label": null,
-     "debut": null,
-     "boostedShiny": null,
-     "collectionName": "Pikachu"
-    },
-    {
-     "key": "302:mega:none",
-     "speciesId": "302",
-     "formId": "mega",
-     "costumeId": null,
-     "shiny": "unknown",
-     "assetKey": null,
-     "name": "Mega Sableye",
-     "label": null,
-     "debut": null,
-     "boostedShiny": null,
-     "collectionName": "Mega Sableye"
-    },
-    {
-     "key": "35:base:none",
      "speciesId": "35",
      "formId": null,
      "costumeId": null,
-     "shiny": "unknown",
-     "assetKey": null,
      "name": "Clefairy",
      "label": null,
+     "collectionName": "Clefairy",
+     "shiny": "unknown",
+     "assetKey": null,
      "debut": null,
      "boostedShiny": null,
-     "collectionName": "Clefairy"
+     "key": "35:base:none"
     },
     {
-     "key": "605:base:none",
+     "speciesId": "120",
+     "formId": null,
+     "costumeId": null,
+     "name": "Staryu",
+     "label": null,
+     "collectionName": "Staryu",
+     "shiny": "unknown",
+     "assetKey": null,
+     "debut": null,
+     "boostedShiny": null,
+     "key": "120:base:none"
+    },
+    {
      "speciesId": "605",
      "formId": null,
      "costumeId": null,
-     "shiny": "unknown",
-     "assetKey": null,
      "name": "Elgyem",
      "label": null,
+     "collectionName": "Elgyem",
+     "shiny": "unknown",
+     "assetKey": null,
      "debut": null,
      "boostedShiny": null,
-     "collectionName": "Elgyem"
+     "key": "605:base:none"
     },
     {
-     "key": "744:base:none",
      "speciesId": "744",
      "formId": null,
      "costumeId": null,
-     "shiny": "unknown",
-     "assetKey": null,
      "name": "Rockruff",
      "label": null,
+     "collectionName": "Rockruff",
+     "shiny": "unknown",
+     "assetKey": null,
      "debut": null,
      "boostedShiny": null,
-     "collectionName": "Rockruff"
+     "key": "744:base:none"
+    },
+    {
+     "speciesId": "25",
+     "formId": null,
+     "costumeId": "suncrown",
+     "name": "Pikachu",
+     "label": "sun crown",
+     "collectionName": "Pikachu (sun crown)",
+     "shiny": "unknown",
+     "assetKey": null,
+     "debut": null,
+     "boostedShiny": null,
+     "key": "25:base:suncrown"
+    },
+    {
+     "speciesId": "25",
+     "formId": null,
+     "costumeId": "mooncrown",
+     "name": "Pikachu",
+     "label": "moon crown",
+     "collectionName": "Pikachu (moon crown)",
+     "shiny": "unknown",
+     "assetKey": null,
+     "debut": null,
+     "boostedShiny": null,
+     "key": "25:base:mooncrown"
+    },
+    {
+     "speciesId": "196",
+     "formId": null,
+     "costumeId": "sunscarf",
+     "name": "Espeon",
+     "label": "sun scarf",
+     "collectionName": "Espeon (sun scarf)",
+     "shiny": "unknown",
+     "assetKey": null,
+     "debut": null,
+     "boostedShiny": null,
+     "key": "196:base:sunscarf"
+    },
+    {
+     "speciesId": "197",
+     "formId": null,
+     "costumeId": "moonscarf",
+     "name": "Umbreon",
+     "label": "moon scarf",
+     "collectionName": "Umbreon (moon scarf)",
+     "shiny": "unknown",
+     "assetKey": null,
+     "debut": null,
+     "boostedShiny": null,
+     "key": "197:base:moonscarf"
+    },
+    {
+     "speciesId": "15",
+     "formId": "mega",
+     "costumeId": null,
+     "name": "Mega Beedrill",
+     "label": null,
+     "collectionName": "Mega Beedrill",
+     "shiny": "unknown",
+     "assetKey": null,
+     "debut": null,
+     "boostedShiny": null,
+     "key": "15:mega:none"
+    },
+    {
+     "speciesId": "302",
+     "formId": "mega",
+     "costumeId": null,
+     "name": "Mega Sableye",
+     "label": null,
+     "collectionName": "Mega Sableye",
+     "shiny": "unknown",
+     "assetKey": null,
+     "debut": null,
+     "boostedShiny": null,
+     "key": "302:mega:none"
     }
    ],
    "encounters": [
     {
-     "identityKey": "15:mega:none",
-     "method": "raid",
-     "activityId": "main",
-     "access": "unknown"
-    },
-    {
-     "identityKey": "196:base:none",
-     "method": "raid",
-     "activityId": "main",
-     "access": "unknown"
-    },
-    {
-     "identityKey": "197:base:none",
-     "method": "raid",
-     "activityId": "main",
-     "access": "unknown"
-    },
-    {
-     "identityKey": "25:base:none",
-     "method": "raid",
-     "activityId": "main",
-     "access": "unknown"
-    },
-    {
-     "identityKey": "302:mega:none",
-     "method": "raid",
-     "activityId": "main",
-     "access": "unknown"
-    },
-    {
-     "identityKey": "120:base:none",
+     "identityKey": "35:base:none",
      "method": "wild",
      "activityId": "main",
      "access": "unknown"
     },
     {
-     "identityKey": "35:base:none",
+     "identityKey": "120:base:none",
      "method": "wild",
      "activityId": "main",
      "access": "unknown"
@@ -9225,6 +9208,48 @@
     {
      "identityKey": "744:base:none",
      "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "120:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "25:base:suncrown",
+     "method": "raid",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "25:base:mooncrown",
+     "method": "raid",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "196:base:sunscarf",
+     "method": "raid",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "197:base:moonscarf",
+     "method": "raid",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "15:mega:none",
+     "method": "raid",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "302:mega:none",
+     "method": "raid",
      "activityId": "main",
      "access": "unknown"
     }
