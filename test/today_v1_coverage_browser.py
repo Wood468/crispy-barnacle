@@ -57,7 +57,11 @@ with sync_playwright() as p:
     browser, page, errors = run(p, [], '2026-11-08T12:00:00+11:00')
     page.goto(BASE); page.wait_for_selector('#today-v1 .t1-glance')
     line = page.locator('#today-v1 .t1-empty-line')
-    assert line.count() == 1 and line.bounding_box()['height'] <= 40, line.bounding_box()
+    line.wait_for(state='visible', timeout=10000)
+    assert line.count() == 1, 'expected exactly one visible empty-boost message'
+    bounds = line.bounding_box()
+    assert bounds is not None, 'empty-boost message has no visible bounding box'
+    assert bounds['height'] <= 40, f'empty-boost message exceeds compact height: {bounds}'
     assert page.locator('#today-v1 .t1-tile--shiny .t1-up').count() == 0
     assert page.locator('#today-v1 .t1-boost').count() == 0
     assert errors == [], errors
