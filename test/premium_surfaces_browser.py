@@ -51,14 +51,37 @@ with sync_playwright() as p:
         }""").json_value()
         assert title_box['height']>0 and title_box['width']>0 and title_box['y']+title_box['height']<820, (width,title_box)
         assert page.locator('#today-v1 .t1-tiles').is_visible()
+        if width <= 430:
+            header = page.locator('header.top').evaluate('''el => {
+                const title = el.querySelector('h1').getBoundingClientRect();
+                const actions = el.querySelector('.hbtns').getBoundingClientRect();
+                return {titleBottom:title.bottom, actionsTop:actions.top, actionsBottom:actions.bottom};
+            }''')
+            assert header['actionsTop'] < header['titleBottom'] and header['actionsBottom'] < 85, (width, header)
         page.evaluate('scrollTo(0,0)')
         capture('today')
+        page.locator('#tabs [data-tab="raids"]').click()
+        page.wait_for_function('document.querySelectorAll("#rotnow .rw-raid .rc").length >= 2')
+        if width <= 430:
+            boss_cards = page.locator('#rotnow .rw-raid .rc').evaluate_all('''els => els.slice(0,2).map(el => {
+                const r = el.getBoundingClientRect(); return {height:r.height,bottom:r.bottom};
+            })''')
+            assert all(c['height'] <= 165 for c in boss_cards), (width, boss_cards)
+            assert boss_cards[1]['bottom'] < 900, (width, boss_cards)
+        capture('raids')
         page.locator('#tabs [data-tab="events"]').click()
         page.wait_for_function('document.querySelector("#evtimeline [data-open]")')
         titles = page.locator('#evtimeline .evc-title-row h3')
         assert titles.first.is_visible()
         assert titles.evaluate_all('(els)=>els.every(e=>e.scrollHeight<=e.clientHeight+1)'), 'event title clipped'
         capture('schedule')
+        page.locator('#subnav-events [data-sub="research"]').click()
+        page.wait_for_selector('#research-list .research-event')
+        assert page.locator('#research-list .research-reward-item img').count() >= 1, 'known item reward icon missing'
+        assert page.locator('#research-list .research-reward-item .research-reward-qty').evaluate_all(
+            '(els)=>els.every(e=>e.querySelector("img,.research-reward-neutral"))'), 'blank item reward art'
+        capture('research')
+        page.locator('#subnav-events [data-sub="timeline"]').click()
         # Select a date with the actual control, retaining keyboard focus and all seven targets.
         next_week = page.locator('#weekstrip [data-wk="1"]')
         next_week.focus()
