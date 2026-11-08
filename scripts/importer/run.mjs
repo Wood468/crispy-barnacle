@@ -294,7 +294,12 @@ async function main() {
   const now = new Date().toISOString(), out = {};
   for (const [id, { event, results }] of byEvent) {
     const merged = { ...mergeSources(results), ...mergeEncounters(results) };
-    const { image, imageProvenance } = selectArtwork(event, results, { retrievedAt: now });
+    const selected = selectArtwork(event, results, { retrievedAt: now });
+    // A temporary source outage must not erase previously verified art for the same event.
+    const previous = old[id];
+    const sameEvent = previous && previous.name === event.t;
+    const image = selected.image || (sameEvent && previous.imageProvenance && previous.image) || null;
+    const imageProvenance = selected.imageProvenance || (image && sameEvent ? previous.imageProvenance : null);
     const researchTasks = (merged.researchTasks || []).map(task => ({
       ...task, eventId: id, eventName: event.t,
       eventWindow: { start: event.start || null, end: event.end || null },
