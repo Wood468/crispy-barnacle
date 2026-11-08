@@ -29,6 +29,16 @@ test('rejects next-year artwork for a prior-year event', () => {
   assert.equal(art.resolve(event, [url.replace('/2026/', '/2027/')]).kind, 'themed');
 });
 
+test('rejects a mixed-year URL and a shared series banner for a named installment', () => {
+  assert.equal(art.resolve(event, [url.replace('sendai-banner', 'sendai-2025-banner')]).kind, 'themed');
+  assert.equal(art.resolve({ name: 'Minior Showers: Leonids 2026', start: '2026-11-14' }, ['https://cdn.leekduck.com/assets/img/events/minior-showers-2026.jpg']).kind, 'themed');
+});
+
+test('accepts an event-specific image with a cache query and rejects a city-wide shared image', () => {
+  assert.equal(art.resolve({ name: 'Twilight Wishes', start: '2026-11-24' }, ['https://cdn.leekduck.com/assets/img/events/twilight-wishes-2026.jpg?v2']).kind, 'official');
+  assert.equal(art.resolve({ name: 'Pokémon Night Out 2026 - London', start: '2026-11-10' }, ['https://cdn.leekduck.com/assets/img/events/pokemon-night-out-2026.jpg']).kind, 'themed');
+});
+
 test('rejects artwork for another venue', () => {
   assert.equal(art.resolve(event, [url.replace('sendai-banner', 'london-banner')]).kind, 'themed');
 });

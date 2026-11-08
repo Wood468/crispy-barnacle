@@ -1,0 +1,33 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
+import artwork from '../public/event-art.js';
+
+const audit = JSON.parse(await readFile(new URL('../data/release1.2-artwork-audit.json', import.meta.url), 'utf8'));
+const details = JSON.parse(await readFile(new URL('../public/event-details.json', import.meta.url), 'utf8')).events;
+const catalogue = JSON.parse(await readFile(new URL('../public/events-v1.json', import.meta.url), 'utf8')).events;
+
+test('every current and upcoming feed row has a unique artwork decision and a dated source when verified', () => {
+  assert.equal(audit.total, 44);
+  assert.equal(new Set(audit.events.map(event => event.id)).size, audit.total);
+  assert.equal(audit.verified + audit.fallback, audit.total);
+  for (const event of audit.events) {
+    if (event.status === 'verified_event_art') {
+      assert.ok(event.artwork && event.source, event.name);
+      assert.ok(artwork.verify(event.artwork, { name: event.name, start: event.start, end: event.end, region: event.location }), event.name);
+    } else assert.equal(event.artwork, null, event.name);
+  }
+});
+
+test('the wrong-year Machamp and Minior images and related Eternatus image are removed from imported details', () => {
+  for (const id of [
+    'leekduck:go-wild-area-gigantamax-machamp-power-up-timed-research',
+    'leekduck:eternamax-eternatus-max-battles-2026',
+    'leekduck:minior-showers-eta-aquariids-2027',
+    'leekduck:minior-showers-southern-delta-aquariids-2027',
+    'leekduck:minior-showers-perseids-2027'
+  ]) assert.equal(details[id]?.image, null, id);
+  for (const id of ['leekduck:go-wild-area-gigantamax-machamp-power-up-timed-research', 'leekduck:eternamax-eternatus-max-battles-2026']) {
+    assert.equal(catalogue.find(event => event.eventId === id)?.image, null, id);
+  }
+});
