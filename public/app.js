@@ -117,7 +117,7 @@ Promise.all([
       /* An exact form (Mega, Gigantamax, regional, named form) never silently shows ordinary artwork: the base sprite appears only with a visible label. */
       var base=i.getAttribute('data-base')||'',form=i.getAttribute('data-exact')||'Form',alt=i.getAttribute('alt')||base;
       var wrap=document.createElement('span');wrap.className='art-fb '+((i.className.match(/\b(ea|in|lg|sm)\b/)||[''])[0]);
-      var base_img=document.createElement('img');base_img.className=i.className.replace(/\bani\b/,'').trim();base_img.alt=base+' (base sprite, '+form+' art unavailable)';base_img.setAttribute('data-fb','1');base_img.setAttribute('data-err','rm');base_img.loading='lazy';base_img.decoding='async';
+      var base_img=document.createElement('img');base_img.className=i.className.replace(/\bani\b/,'').trim();base_img.alt=base+' (base sprite, '+form+' art unavailable)';base_img.setAttribute('data-fb','1');base_img.setAttribute('data-err','rm');base_img.loading='lazy';base_img.decoding='async';base_img.width=208;base_img.height=256;
       var q='/api/art?n='+encodeURIComponent(base);base_img.src=MAN[q]?'/art/'+MAN[q]+'.webp':q;
       var chip=document.createElement('small');chip.className='form-chip';chip.textContent='Form art unavailable';
       wrap.setAttribute('role','img');wrap.setAttribute('aria-label',alt+' · form art unavailable, showing base sprite');wrap.append(base_img,chip);i.replaceWith(wrap);return;

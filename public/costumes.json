@@ -89,12 +89,14 @@
   "gigantamax toxtricity": "/img/ext/849-gi-79889614.png",
   "gigantamax urshifu": "/img/ext/892-gi-347f06d8.png"
  },
+ "avatar": [
+  "tee|purple"
+ ],
  "missing": [
   "sinistea|bow",
   "pikachu (sun crown)|sun crown (no dex number)",
   "pikachu (moon crown)|moon crown (no dex number)",
   "espeon (sun scarf)|sun scarf (no dex number)",
-  "umbreon (moon scarf)|moon scarf (no dex number)",
-  "tee|purple (no dex number)"
+  "umbreon (moon scarf)|moon scarf (no dex number)"
  ]
 }

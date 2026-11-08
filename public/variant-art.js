@@ -100,7 +100,7 @@
       }
       out.status = 'fallback'; out.badge = BADGES[req.kind]; out.speciesSrc = speciesSrc(req.base, false); out.src = out.speciesSrc; return out;
     }
-    out.speciesSrc = speciesSrc(req.name || req.base, req.shiny);
+    out.speciesSrc = speciesSrc(String(req.name || req.base).replace(/^(Shadow|Dynamax|Purified)\s+/i, ''), req.shiny);
     out.src = out.speciesSrc;
     if (req.kind === 'shadow' || req.kind === 'dynamax') { out.status = 'treated'; out.treatment = req.kind; out.badge = BADGES[req.kind]; }
     return out;

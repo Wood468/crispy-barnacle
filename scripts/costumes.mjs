@@ -2,6 +2,7 @@
 // each candidate picture address is checked before it is saved, so the app only ever uses ones that exist.
 // Run: node scripts/costumes.mjs   (writes public/costumes.json)
 import { readFile, writeFile } from "node:fs/promises";
+import { isAvatarItemName } from "./artwork-match.mjs";
 
 const BASE = "https://assets.dittobase.com/go/pokemon-unpadded/";
 const slug = t => String(t).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
@@ -51,7 +52,7 @@ const GMAX_KNOWN = ["Venusaur", "Charizard", "Blastoise", "Pikachu", "Eevee", "M
 export async function main(fetchFn = fetch) {
   const [data, details, dex, old] = await Promise.all([read("public/data.json"), read("public/event-details.json"), read("public/dex.json"), read("public/costumes.json")]);
   const no = {}; for (const p of dex || []) no[String(p[1]).toLowerCase()] = p[0];
-  const res = { updated: new Date().toISOString(), pictures: { ...((old && old.pictures) || {}) }, shiny: { ...((old && old.shiny) || {}) }, gmax: { ...((old && old.gmax) || {}) }, gmaxShiny: { ...((old && old.gmaxShiny) || {}) }, missing: [] };
+  const res = { updated: new Date().toISOString(), pictures: { ...((old && old.pictures) || {}) }, shiny: { ...((old && old.shiny) || {}) }, gmax: { ...((old && old.gmax) || {}) }, gmaxShiny: { ...((old && old.gmaxShiny) || {}) }, avatar: [], missing: [] };
   for (const n of gmaxNames(data, details)) {
     const key = ("gigantamax " + n).toLowerCase(), id = no[n.toLowerCase()]; if (!id || res.gmax[key]) continue;
     const pad = String(id).padStart(3, "0"), url = `${SEREBII}${pad}-gi.png`, sh = `${SEREBII}shiny/${pad}-gi.png`;
@@ -60,6 +61,8 @@ export async function main(fetchFn = fetch) {
   const pages = {};
   for (const [key, { n, label }] of collect(data, details)) {
     if (res.pictures[key]) continue;
+    // Trainer clothing such as "GO Wild Area 2026 Tee (Purple)" matches the "Name (Label)" shape but is never a Pokémon costume.
+    if (isAvatarItemName(n)) { res.avatar.push(key); continue; }
     const id = no[n.toLowerCase()]; if (!id) { res.missing.push(key + " (no dex number)"); continue; }
     try {
       if (!(id in pages)) { const r = await fetchFn(`${SEREBII}${String(id).padStart(3, "0")}.shtml`, { headers: { "user-agent": "Mozilla/5.0 go-field-notes" } }); pages[id] = r.ok ? serebiiForms(await r.text(), id) : {}; }
