@@ -11,7 +11,7 @@ Source: public/store-log.json and public/costumes.json on main, inspected 2026-1
 ## Six identity investigations
 | Registry key | Status | Required evidence |
 |---|---|---|
-| `sinistea|bow` | Unresolved | Find exact official or credible image and verify costume/form identity |
+| `sinistea|bow` | **Identity confirmed; exact artwork unresolved** | Official Pokémon GO Halloween Part I 2026 confirms bow costume and Shiny availability; event data distinguishes Phony and Antique forms. Find source-backed image for each form; do not substitute plain Sinistea. |
 | `pikachu (sun crown)|sun crown (no dex number)` | Unresolved | Find exact official or credible image and verify costume/form identity |
 | `pikachu (moon crown)|moon crown (no dex number)` | Unresolved | Find exact official or credible image and verify costume/form identity |
 | `espeon (sun scarf)|sun scarf (no dex number)` | Unresolved | Find exact official or credible image and verify costume/form identity |
@@ -44,3 +44,8 @@ Source: public/store-log.json and public/costumes.json on main, inspected 2026-1
 3. Check remote availability separately and mark broken only after a real failed request.
 4. Only surface ambiguous candidates to the owner with a side-by-side image, exact name, source URL and approve/reject choice.
 5. No substitutions, removals, merge or deployment from this report.
+## Source-backed identity findings (2026-11-08)
+- Sinistea wearing a bow is officially announced as a Halloween 2026 Part I costume and Shiny-capable: https://pokemongo.com/news/halloween-part-1-2026
+- Leek Duck lists Sinistea bow as a research/raid encounter, including Phony Form: https://leekduck.com/events/halloween-2026-part-1/
+- Snack Nap reports both Phony and Antique bow costumes in game data; treat this as secondary evidence pending exact art verification: https://snacknap.com/events/1523/halloween-2026-part-i
+- No actual image URL has yet been independently verified as an exact, permitted replacement. Owner approval is not requested.
