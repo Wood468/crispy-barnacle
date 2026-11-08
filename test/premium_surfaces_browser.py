@@ -79,13 +79,12 @@ with sync_playwright() as p:
         page.keyboard.press('Enter')
         page.locator('#evd').wait_for(state='visible')
         assert page.locator('#evd-t').is_visible()
-        assert page.locator('.evd-tab').evaluate_all('(els)=>els.every(e=>e.getBoundingClientRect().height>=44)')
+        assert page.locator('.evd-nav-link').evaluate_all('(els)=>els.every(e=>e.getBoundingClientRect().height>=44)')
         hero = page.locator('.evd-hero')
         assert hero.evaluate('(el)=>el.scrollWidth<=el.clientWidth'), 'detail hero overflow'
         capture('detail')
         before_hash = page.evaluate('location.hash')
-        page.locator('#evd-tab-details').focus()
-        page.keyboard.press('Enter')
+        page.locator('.evd-nav-link[data-sec="details"]').click()
         assert page.locator('#evd-sources').is_visible()
         assert page.evaluate('location.hash') == before_hash
         page.keyboard.press('Escape')
@@ -93,7 +92,6 @@ with sync_playwright() as p:
         assert event.evaluate('(el)=>el===document.activeElement'), 'detail close lost trigger focus'
         page.evaluate("GODETAIL.open('cur:gopassnov')")
         page.wait_for_function("document.getElementById('evd-t')?.textContent.includes('GO Pass')")
-        page.locator('#evd #evd-tab-passes').click()
         assert page.locator('#evd .ue-pass-range').count()>=4
         assert page.locator('#evd .ue-pass-stages > li').count()>=90
         page.locator('#evd .ue-pass-range').filter(has_text='Rank 100').locator('summary').click()
@@ -104,7 +102,6 @@ with sync_playwright() as p:
         page.evaluate("GODETAIL.open('leekduck:pokemon-go-wild-area-2026-mexico-city')")
         page.wait_for_function("document.getElementById('evd-t')?.textContent.includes('Mexico')")
         assert page.locator('#evd .research-task').count()==12
-        page.locator('#evd #evd-tab-research').click()
         raid_task=page.locator('#evd .research-task').filter(has_text='Win 2 raids')
         assert raid_task.locator('.research-reward').count()==3
         assert 'Conkeldurr' in raid_task.inner_text()

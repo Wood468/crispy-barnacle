@@ -63,12 +63,19 @@
   }
   function dataAttrs(ev) { return ' data-id="' + esc(ev.id) + '" data-start="' + esc(new Date(+ev.start).toISOString()) + '" data-end="' + esc(new Date(+ev.end).toISOString()) + '"'; }
 
+  /* Same artwork rule as Event Details: verified official banner, else a category-themed banner with one small featured accent. */
+  function bannerFor(ctx, ev, mons) {
+    var A = (typeof GOEVENTART !== 'undefined') ? GOEVENTART : null;
+    if (!A) return '<div class="t1-major-art" aria-hidden="true">' + (mons.length ? mons.map(function (f) { return '<span class="t1-mon">' + artFor(ctx, ev, f, 'ea') + '</span>'; }).join('') : ctx.fallbackArt(ev)) + '</div>';
+    var art = A.resolve({ name: ev.name, kind: ev.kind, region: ev.region || '', start: ev.start, end: ev.end }, ev.img ? [ev.img] : []);
+    var accent = mons.length ? '<span class="ev-art-mon">' + artFor(ctx, ev, mons[0], 'ea') + '</span>' : '';
+    return A.banner(art, { ev: ev, accent: accent, aspect: '2.4 / 1', fit: 'cover', cls: 't1-banner' });
+  }
   function cardMajor(ctx, ev, live) {
     var k = ctx.kindOf(ev), mons = pokemonFor(ev, 3), cd = timeLine(ctx, ev, live);
-    var art = mons.length ? mons.map(function (f) { return '<span class="t1-mon">' + artFor(ctx, ev, f, 'ea') + '</span>'; }).join('') : ctx.fallbackArt(ev);
-    var names = mons.map(function (f) { return f.name; }).join(' · ');
+    var names = mons.map(function (f) { return f.name; }).join(' \u00b7 ');
     return '<article class="t1-card t1-major' + (live ? ' is-live' : '') + '" style="--k:' + k[1] + '"' + dataAttrs(ev) + '>'
-      + '<div class="t1-major-art" aria-hidden="true">' + art + '</div>'
+      + '<div class="t1-major-art" aria-hidden="true">' + bannerFor(ctx, ev, mons) + '</div>'
       + '<button type="button" class="t1-open" data-open="' + esc(ev.id) + '" aria-label="' + esc('Open ' + ev.name + '. ' + cd) + '">'
       + '<span class="t1-badges">' + (live ? '<span class="t1-live">LIVE NOW</span>' : '') + '<span class="t1-kind">' + esc(k[0]) + '</span>' + shinyBadge(shinyKindFor(ctx, ev)) + '<span class="t1-count">' + CLOCK + cdSpan(ctx, live ? ev.end : ev.start, live) + '</span></span>'
       + '<strong class="t1-title">' + esc(ev.name) + '</strong>'

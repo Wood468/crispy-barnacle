@@ -61,14 +61,9 @@ test("Today season cards defer posters and event details load a compact, cacheab
   assert.match(card, /title="Open details to view the full poster"/, "the poster remains discoverable on desktop");
   assert.doesNotMatch(card, /<img\b/i, "the large poster is not requested by the Today banner");
   assert.match(season, /thumbnail:\s*seasonThumbnailPath\(i\.id, i\.img\)/, "the event model carries a deterministic thumbnail path");
-  assert.match(detail, /return '<div data-season-banner><\/div>'/, "event details reserve a constant poster slot without interpolating event data into HTML");
-  assert.match(detail, /document\.createElement\('a'\)/, "the full-size poster link is created with safe DOM APIs");
-  assert.match(detail, /link\.href = original/, "the original poster URL remains available as the link destination");
-  assert.match(detail, /link\.setAttribute\('aria-label', 'Open full-size poster for '/, "the full-size original is keyboard and screen-reader accessible");
-  assert.match(detail, /img\.src = thumb/, "the compact WebP is loaded on demand");
-  assert.match(detail, /img\.src = original/, "a missing thumbnail falls back to the original poster");
-  assert.match(detail, /loadSeasonBanner\(o, ev2\)/, "the thumbnail loader receives the completed event after dialog rendering");
-  assert.match(dashCss, /\.evd-banner-season\{object-fit:contain;background:var\(--color-surface-card\)\}/, "portrait Season posters are shown in full rather than cropped");
+  assert.match(detail, /safeSeasonThumb\(ev\.season\.thumbnail\)/, "event details use the compact cached WebP thumbnail for season posters");
+  assert.match(detail, /art\.fullSrc\s*=/, "the full-size original stays recorded as the artwork provenance image");
+  assert.match(read("../public/event-redesign.css"), /\.ev-art-img\{[^}]*position:absolute/, "banners are shown in full inside a reserved box (object-fit contain)");
 });
 
 test("every versioned local script and stylesheet requested by the page and lazy loaders is precached at its exact URL", () => {

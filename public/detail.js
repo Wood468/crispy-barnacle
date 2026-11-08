@@ -333,21 +333,33 @@
       return '<details class="research-task-source"><summary>Source &amp; update</summary><small>' + label + (links.length ? ' · ' + links.join(' · ') : '') + ' · ' + esc(window.GOLIB.researchCheckedText(task.checkedAt)) + '</small></details>';
     }
 
+    /* Only icons that exist in the repo: Stardust, XP, the two berries, Max Potion/Revive, Mega Energy (Mega symbol). */
+    function itemIcon(n) { n = String(n || ''); return /stardust/i.test(n) ? '/ico/dust.webp' : /silver pinap/i.test(n) ? '/ico/i/silver-pinap.webp' : /golden razz/i.test(n) ? '/ico/i/golden-razz.webp' : /max potion/i.test(n) ? '/ico/i/max-potion.webp' : /max revive/i.test(n) ? '/ico/i/max-revive.webp' : /\bxp\b/i.test(n) ? '/ico/xp.webp' : /mega energy/i.test(n) ? '/ico/g/mega.webp' : ''; }
     function reward(item, field) {
       if (item.type === 'encounter') {
-        var cp = item.cpMin && item.cpMax ? '<small>CP ' + esc(item.cpMin) + '–' + esc(item.cpMax) + '</small>' : '<small>Encounter</small>';
-        return '<div class="research-reward"><span class="ue-reward-art"><span class="ue-reward-fallback" aria-hidden="true">✦</span>' + (window.GOEventAdapter?exactArt(GOEventAdapter.pokemon({name:item.name,costume:item.costume||/wearing|costume/i.test(item.name),label:item.label,formId:item.formId,costumeId:item.costumeId})):X.monArt(ev,{name:item.name,costume:/wearing|costume/i.test(item.name),role:'featured'},'ea')) + '</span><span><b>' + esc(item.name) + '</b>' + cp + '</span></div>';
+        var cp = item.cpMin && item.cpMax ? '<small>CP ' + esc(item.cpMin) + '–' + esc(item.cpMax) + '</small>' : '';
+        return '<div class="research-reward" role="listitem"><span class="ue-reward-art"><span class="ue-reward-fallback" aria-hidden="true">✦</span>' + (window.GOEventAdapter?exactArt(GOEventAdapter.pokemon({name:item.name,costume:item.costume||/wearing|costume/i.test(item.name),label:item.label,formId:item.formId,costumeId:item.costumeId})):X.monArt(ev,{name:item.name,costume:/wearing|costume/i.test(item.name),role:'featured'},'ea')) + '</span><span><b>' + esc(item.name) + '</b>' + cp + '</span></div>';
       }
-      return '<div class="research-reward research-reward-item"><span class="ue-reward-art ue-reward-item-icon" aria-hidden="true">◆</span><span><b>' + (item.quantity > 1 ? esc(item.quantity) + '× ' : '') + esc(item.name) + '</b><small>' + (item.type === 'item' && !field ? 'Item reward' : 'Possible reward') + '</small></span></div>';
+      var icon = itemIcon(item.name);
+      return '<div class="research-reward research-reward-item" role="listitem"><span class="ue-reward-art ue-reward-item-icon" aria-hidden="true">' + (icon ? '<img alt="" loading="lazy" decoding="async" src="' + icon + '" data-err="rm">' : '<i class="ue-reward-dot"></i>') + '</span><span><b>' + (item.quantity > 1 ? esc(item.quantity) + '× ' : '') + esc(item.name) + '</b></span></div>';
     }
-    return '<section class="evd-research"><h3 class="sec2" id="evd-research-title">Research tasks</h3><div class="evd-card research-task-list">'
-      + tasks.map(function (task) {
-        var kind = task.category === 'field' ? 'Field Research' : task.category === 'timed' ? 'Timed Research' : task.category === 'special' ? 'Special Research' : 'Research';
-        return '<article class="research-task"><div class="research-task-head"><span class="research-task-kind">' + kind + '</span><span class="research-task-state">' + (window.GOTODAYLOGIC ? GOTODAYLOGIC.researchRewardLabel(task.category, (task.rewards || []).length) : (task.rewards || []).length + ' possible rewards') + '</span></div><h4>' + esc(task.task) + '</h4><div class="research-rewards">' + (task.rewards || []).map(function (r) { return reward(r, task.category === 'field'); }).join('') + '</div>' + attribution(task) + '</article>';
-      }).join('')
-      + '</div><button type="button" class="pill all research-browse" data-open-research data-event-id="' + esc(ev.id) + '">Browse current research</button></section>';
+    /* Compact rows grouped by category. Field Research rewards are alternatives; timed and special rewards are all given. */
+    var order = ['field', 'timed', 'special'], groups = {};
+    tasks.forEach(function (t) { var c = order.indexOf(t.category) >= 0 ? t.category : 'other'; (groups[c] = groups[c] || []).push(t); });
+    var NAME = { field: 'Field Research', timed: 'Timed Research', special: 'Special Research', other: 'Research' };
+    var NOTE = { field: 'Each task gives one of its listed rewards', timed: 'Rewards are cumulative: you receive all of them', special: 'Rewards are cumulative: you receive all of them', other: '' };
+    var html = order.concat(['other']).filter(function (c) { return groups[c]; }).map(function (c) {
+      var rows = groups[c].map(function (task) {
+        var rw = task.rewards || [], label = window.GOTODAYLOGIC ? GOTODAYLOGIC.researchRewardLabel(task.category, rw.length) : rw.length + ' rewards';
+        return '<li class="research-task"><p class="rs-text">' + esc(task.task) + '</p><div class="research-rewards rs-rewards" role="list" aria-label="' + esc(label) + '">' + rw.map(function (r) { return reward(r, task.category === 'field'); }).join('') + '</div></li>';
+      }).join('');
+      var cites = groups[c].map(attribution).filter(function (h, i, a) { return a.indexOf(h) === i; });
+      return '<div class="rs-group" data-research-category="' + c + '"><h3 class="rs-group-h">' + NAME[c] + (NOTE[c] ? ' <small>· ' + NOTE[c] + '</small>' : '') + '</h3><ul class="rs-list">' + rows + '</ul>'
+        + (cites.length ? '<details class="research-task-source rs-src"><summary>Sources &amp; updates</summary>' + cites.join('').replace(/<\/?details[^>]*>|<summary>[^<]*<\/summary>/g, '') + '</details>' : '') + '</div>';
+    }).join('');
+    return '<section class="evd-research"><h3 class="sec2" id="evd-research-title">Research</h3>' + html
+      + '<button type="button" class="pill all research-browse" data-open-research data-event-id="' + esc(ev.id) + '">Browse current research</button></section>';
   }
-
 
   function seasonPage(ev) {
     var si = ev.season; if (!si) return '';
@@ -528,10 +540,10 @@
     var facts=[];
     var priced=(model.tickets||[]).filter(function(t){return t&&t.price&&Number.isFinite(t.price.amount)&&/^[A-Z]{3}$/.test(t.price.currency);})[0];
     if(priced){try{facts.push(['Ticket',new Intl.NumberFormat('en-AU',{style:'currency',currency:priced.price.currency,currencyDisplay:'code'}).format(priced.price.amount)]);}catch(e){}}
-    else if((model.tickets||[]).length)facts.push(['Tickets','Optional ticket available']);
-    if((model.bonuses||[]).length)facts.push(['Bonuses',String(model.bonuses.length)+(model.bonuses.length===1?' bonus':' bonuses')]);
-    if((model.research||[]).length)facts.push(['Research',String(model.research.length)+(model.research.length===1?' task':' tasks')]);
-    var h=facts.length?'<dl class="ue-facts-grid">'+facts.map(function(f){return '<div><dt>'+esc(f[0])+'</dt><dd>'+esc(f[1])+'</dd></div>';}).join('')+'</dl>':'';
+    else if((model.tickets||[]).length)facts.push(['Tickets','Optional']);
+    if((model.bonuses||[]).length)facts.push(['Bonuses',String(model.bonuses.length)]);
+    if((model.research||[]).length)facts.push(['Research',String(model.research.length)]);
+    var h=facts.length?'<ul class="ue-factchips" aria-label="At a glance">'+facts.map(function(f){return '<li><span>'+esc(f[0])+'</span><b>'+esc(f[1])+'</b></li>';}).join('')+'</ul>':'';
     var debuts=(model.pokemon||[]).filter(function(p){return p.debut;}).slice(0,6);
     if(debuts.length)h+='<div class="ue-debuts"><h3 class="ue-mini-h">Debuts</h3><div class="ue-chips">'+debuts.map(function(p){return '<span class="ue-chip">'+esc(displayName(p))+'</span>';}).join('')+'</div></div>';
     return h;
@@ -561,9 +573,16 @@
     var sources=model.sources.map(function(src){var url=safe(src.url);return url?'<li><a href="'+esc(url)+'" target="_blank" rel="noopener noreferrer">'+esc(src.name||src.label||'Event source')+'</a></li>':'';}).filter(function(v,i,a){return v&&a.indexOf(v)===i;}).join('');
     var conflicts=(model.internalValidation&&model.internalValidation.conflicts||[]).map(function(c){var values=[c.a&&c.a.text,c.b&&c.b.text].filter(Boolean);return '<li>'+esc(c.field==='shiny'?'Shiny availability':c.field||'Event detail')+(values.length?': '+values.map(esc).join(' / '):' needs rechecking.')+'</li>';}).join('');
     var catalogue=window.GOEventRegistry&&GOEventRegistry.diagnostics?GOEventRegistry.diagnostics():{},heldUpdate=catalogue.rejectedCount||catalogue.conflicts&&catalogue.conflicts.length;
-    var footer='<details class="ue-sources" id="evd-sources"><summary>Sources &amp; updates</summary>'+(heldUpdate?'<p class="note">The latest event update was held. Showing the last available information.</p>':'')+(DATA.incomplete?'<p class="note">Some supplementary event information could not be loaded. Showing the available announcement. Reload to try again.</p>':'')+'<ul>'+sources+'</ul>'+(conflicts?'<h4>Details to recheck</h4><ul>'+conflicts+'</ul>':'')+(d.updated?'<p class="note">Last update '+esc(String(d.updated).slice(0,10))+'</p>':'')+(d.goPassParseWarning?'<p class="note">The last complete GO Pass rewards have been retained while the latest update is checked.'+(d.goPassRetainedAt?' Saved rank snapshot: '+esc(String(d.goPassRetainedAt).slice(0,10))+'.':'')+'</p>':'')+'</details>';
+    var cands=[ev.img,model.image,d.image,info&&info.image].filter(Boolean).map(function(u){return {url:safe(u),pageUrl:safe(ev.link)||''};}).filter(function(c){return c.url;});
+    var seasonThumb=ev.season?safeSeasonThumb(ev.season.thumbnail):'';
+    var art=window.GOEVENTART?GOEVENTART.resolve({name:model.title||ev.name,kind:ev.kind,region:(typeof model.location==='string'?model.location:model.location&&model.location.name)||ev.region||'',start:ev.start,end:ev.end,img:''},cands):null;
+    if(art&&art.kind==='official'&&seasonThumb){art.src=seasonThumb;art.fullSrc=safe(ev.img)||art.provenance.imageUrl;}
+    var accentMon=model.pokemon[0],accent=art&&accentMon?'<span class="ev-art-mon">'+exactArt(accentMon)+'</span>':'';
+    var artHtml=art?GOEVENTART.banner(art,{ev:{name:ev.name||model.title,kind:ev.kind,region:ev.region},accent:accent}):'';
+    var artNote=art?'<p class="note evd-art-note" data-art-provenance="'+art.kind+'">'+(art.provenance?'Event artwork: '+esc(art.provenance.source)+' · verified for '+esc(art.provenance.verifiedFor)+(safe(art.provenance.url)?' · <a href="'+esc(art.provenance.imageUrl)+'" target="_blank" rel="noopener noreferrer">image</a>':''):'Themed banner: no verified event artwork is published for this event.')+'</p>':'';
+    var footer='<details class="ue-sources" id="evd-sources"><summary>Sources &amp; updates</summary>'+artNote+(heldUpdate?'<p class="note">The latest event update was held. Showing the last available information.</p>':'')+(DATA.incomplete?'<p class="note">Some supplementary event information could not be loaded. Showing the available announcement. Reload to try again.</p>':'')+'<ul>'+sources+'</ul>'+(conflicts?'<h4>Details to recheck</h4><ul>'+conflicts+'</ul>':'')+(d.updated?'<p class="note">Last update '+esc(String(d.updated).slice(0,10))+'</p>':'')+(d.goPassParseWarning?'<p class="note">The last complete GO Pass rewards have been retained while the latest update is checked.'+(d.goPassRetainedAt?' Saved rank snapshot: '+esc(String(d.goPassRetainedAt).slice(0,10))+'.':'')+'</p>':'')+'</details>';
     return window.GOEventComponents.render(model,{
-      toolbar:toolbarHtml(ev).replace('<span class="tag">EVENT DETAIL</span>',''),clock:window.GOEventClock,viewerZone:GOEventClock.viewerZone(),safe:safe,rewardArt:function(item){return exactArt(GOEventAdapter.pokemon({name:item.name,costume:!!item.costume,label:item.label,formId:item.formId,costumeId:item.costumeId,asset:item.assetKey}));},banner:(ev.img||model.image)?seasonBannerHtml(ev):'',heroArt:model.pokemon.slice(0,3).map(exactArt).join(''),
+      toolbar:toolbarHtml(ev).replace('<span class="tag">EVENT DETAIL</span>',''),clock:window.GOEventClock,viewerZone:GOEventClock.viewerZone(),safe:safe,rewardArt:function(item){return exactArt(GOEventAdapter.pokemon({name:item.name,costume:!!item.costume,label:item.label,formId:item.formId,costumeId:item.costumeId,asset:item.assetKey}));},artHtml:artHtml,
       when:heroWhen(model,ev),overview:overviewTimes(model,ev),artKind:function(p){var c=window.GOTODAYLOGIC&&GOTODAYLOGIC.classifyArt({name:displayName(p),costume:!!p.costumeId});return c&&c.exact?c.label||'Form':'';},countdown:model.schedule&&model.lifecycle!=='cancelled'&&model.lifecycle!=='postponed'&&ev.datesKnown!==false?X.countdown(ev):'',
       nameFor:displayName,art:G.art,artFor:exactArt,bonus:G.bonusChip,
       actions:'<div class="evd-btns">'+(calendar&&model.lifecycle!=='cancelled'&&model.lifecycle!=='postponed'?'<a class="pill all" download="event.ics" href="'+icsFor(calendar)+'">Add to calendar</a>':'')+'</div>',
@@ -641,7 +660,7 @@
       }).join('') + '</div>';
     }).join('');
   }
-  function close(silent) { var o = $('evd'); if (!o || o.hidden) return; o.hidden = true; document.body.style.overflow = ''; try { document.dispatchEvent(new Event('gofn-detail-closed')); } catch (err) { } var target = opener; if ((!target || !target.isConnected) && openerKey) { var candidates = document.querySelectorAll('[data-open]'); for (var i = 0; i < candidates.length; i++) { var candidate = candidates[i]; if (candidate.getClientRects().length && candidate.getAttribute('data-open') === openerKey && (!openerClass || String(candidate.className || '').trim() === openerClass)) { target = candidate; break; } } } if (!target || !target.isConnected || !target.getClientRects().length) { var host = openerHostId ? $(openerHostId) : null; if (!host || !host.getClientRects().length) { host = $('home-now'); if (!host || !host.getClientRects().length) host = document.querySelector('[role="tabpanel"]:not([hidden]) h1, [role="tabpanel"]:not([hidden]) h2, [role="tabpanel"]:not([hidden]) h3'); } if (host) { if (!host.hasAttribute('tabindex')) host.setAttribute('tabindex', '-1'); target = host; } } if (target && target.isConnected && target.focus) target.focus(); opener = null; openerHostId = ''; openerKey = null; openerClass = ''; if (silent !== true && window.GONAV) window.GONAV.popped(); }
+  function close(silent) { var o = $('evd'); if (!o || o.hidden) return; spyDestroy(); o.hidden = true; document.body.style.overflow = ''; try { document.dispatchEvent(new Event('gofn-detail-closed')); } catch (err) { } var target = opener; if ((!target || !target.isConnected) && openerKey) { var candidates = document.querySelectorAll('[data-open]'); for (var i = 0; i < candidates.length; i++) { var candidate = candidates[i]; if (candidate.getClientRects().length && candidate.getAttribute('data-open') === openerKey && (!openerClass || String(candidate.className || '').trim() === openerClass)) { target = candidate; break; } } } if (!target || !target.isConnected || !target.getClientRects().length) { var host = openerHostId ? $(openerHostId) : null; if (!host || !host.getClientRects().length) { host = $('home-now'); if (!host || !host.getClientRects().length) host = document.querySelector('[role="tabpanel"]:not([hidden]) h1, [role="tabpanel"]:not([hidden]) h2, [role="tabpanel"]:not([hidden]) h3'); } if (host) { if (!host.hasAttribute('tabindex')) host.setAttribute('tabindex', '-1'); target = host; } } if (target && target.isConnected && target.focus) target.focus(); opener = null; openerHostId = ''; openerKey = null; openerClass = ''; if (silent !== true && window.GONAV) window.GONAV.popped(); }
   /* The event page's own picture (its og:image), shown at the top when the event has none of its own. */
   function addBanner(o, ev) {
     if (ev.img) return;
@@ -718,14 +737,11 @@
       var ev2 = completeEvent(ev),sourcePoster=findDetails(ev2);
       if(!ev2.img&&sourcePoster&&safe(sourcePoster.image))ev2=Object.assign({},ev2,{img:sourcePoster.image});
       o.innerHTML = '<div class="evd-in">' + render(ev2) + '</div>';
-      loadSeasonBanner(o, ev2);
-      addBanner(o, ev2);
       addBonusTime(o, ev2);
       o.hidden = false; document.body.style.overflow = 'hidden'; o.scrollTop = 0;
       if (!wasOpen && window.GONAV) window.GONAV.push();
       var x = $('evd-x'); if (x) { x.addEventListener('click', function () { close(); }); x.focus(); }
-      var tl = o.querySelector('.evd-tabs'); if (tl) tabEdges(tl);
-      var bar = o.querySelector('.evd-bar'); if (bar) o.style.setProperty('--evd-bar-h', bar.offsetHeight + 'px');
+      spyInit(o, ev2.id);
     });
   }
   document.addEventListener('click', function (e) {
@@ -768,25 +784,75 @@
     if (e.shiftKey && (active === first || !o.contains(active))) { e.preventDefault(); last.focus(); }
     else if (!e.shiftKey && (active === last || !o.contains(active))) { e.preventDefault(); first.focus(); }
   });
-  /* Section tabs: one panel at a time, roving tabindex, arrow/Home/End keys. */
-  function selectTab(tab,focus){
-    var list=tab.closest('[role=tablist]'),root=list.closest('.evd-in')||list.parentNode;
-    list.querySelectorAll('[role=tab]').forEach(function(t){var on=t===tab;t.setAttribute('aria-selected',String(on));t.tabIndex=on?0:-1;});
-    root.querySelectorAll('[role=tabpanel]').forEach(function(p){p.hidden=p.id!==tab.getAttribute('aria-controls');});
-    if(focus)tab.focus({preventScroll:true});
-    list.scrollTo({left:tab.offsetLeft-(list.clientWidth-tab.clientWidth)/2,behavior:'smooth'});
-    tabEdges(list);
-    var o=$('evd');if(o){var wrap=list.parentNode,top=wrap.offsetTop;if(o.scrollTop>top)o.scrollTop=top;}
+  /* Continuous page navigation: tapping a link scrolls to its heading, scrolling updates the active link. The overlay (#evd) is the one scroller. */
+  var spy = null, savedScroll = {}, prevRestoration = null;
+  function spyOffsets(o) {
+    var bar = o.querySelector('.evd-bar'), nav = o.querySelector('.evd-nav'), barH = bar ? bar.offsetHeight : 0, navH = nav ? nav.offsetHeight : 0;
+    o.style.setProperty('--evd-bar-h', barH + 'px'); o.style.setProperty('--evd-stack', (barH + navH) + 'px');
+    return barH + navH;
   }
-  function tabEdges(list){var w=list.parentNode;w.classList.toggle('has-left',list.scrollLeft>4);w.classList.toggle('has-right',list.scrollLeft+list.clientWidth<list.scrollWidth-4);}
-  document.addEventListener('scroll',function(e){if(e.target&&e.target.classList&&e.target.classList.contains('evd-tabs'))tabEdges(e.target);},true);
-  window.addEventListener('resize',function(){var l=document.querySelector('#evd .evd-tabs');if(l)tabEdges(l);});
-  document.addEventListener('click',function(e){var t=e.target.closest&&e.target.closest('.evd-tab');if(t)selectTab(t,false);});
-  document.addEventListener('keydown',function(e){
-    var t=e.target.closest&&e.target.closest('.evd-tab');if(!t)return;
-    var tabs=[].slice.call(t.parentNode.querySelectorAll('[role=tab]')),i=tabs.indexOf(t),n=-1;
-    if(e.key==='ArrowRight')n=(i+1)%tabs.length;else if(e.key==='ArrowLeft')n=(i-1+tabs.length)%tabs.length;else if(e.key==='Home')n=0;else if(e.key==='End')n=tabs.length-1;
-    if(n<0)return;e.preventDefault();selectTab(tabs[n],true);
+  function setActive(o, id) {
+    var links = o.querySelectorAll('.evd-nav-link'), active = null;
+    links.forEach(function (l) { var on = l.getAttribute('data-sec') === id; if (on) { l.setAttribute('aria-current', 'true'); active = l; } else l.removeAttribute('aria-current'); });
+    var strip = o.querySelector('.evd-nav-scroll');
+    if (active && strip) strip.scrollTo({ left: active.offsetLeft - (strip.clientWidth - active.offsetWidth) / 2, behavior: 'auto' });
+    navEdges(o);
+  }
+  function navEdges(o) {
+    var strip = o.querySelector('.evd-nav-scroll'), w = strip && strip.parentNode; if (!w) return;
+    w.classList.toggle('has-left', strip.scrollLeft > 4); w.classList.toggle('has-right', strip.scrollLeft + strip.clientWidth < strip.scrollWidth - 4);
+  }
+  /* Which section is active: the last one whose heading has passed under the sticky stack; the last section once the page is at its bottom. */
+  function computeActive(o) {
+    var secs = [].slice.call(o.querySelectorAll('.evd-sec')); if (!secs.length) return '';
+    var stack = spyOffsets(o), line = o.getBoundingClientRect().top + stack + 24, cur = secs[0].getAttribute('data-sec');
+    secs.forEach(function (sec) { if (sec.getBoundingClientRect().top <= line) cur = sec.getAttribute('data-sec'); });
+    if (o.scrollTop + o.clientHeight >= o.scrollHeight - 4) cur = secs[secs.length - 1].getAttribute('data-sec');
+    return cur;
+  }
+  function spyInit(o, id) {
+    spyDestroy();
+    if (history.scrollRestoration) { prevRestoration = history.scrollRestoration; try { history.scrollRestoration = 'manual'; } catch (e) { } }
+    var state = { o: o, id: id, lock: 0, raf: 0, io: null };
+    function tick() { state.raf = 0; if (state.lock) return; var cur = computeActive(o); if (cur && cur !== state.cur) { state.cur = cur; setActive(o, cur); } }
+    function ask() { if (!state.raf) state.raf = requestAnimationFrame(tick); }
+    state.onScroll = ask; state.onResize = function () { spyOffsets(o); ask(); navEdges(o); };
+    o.addEventListener('scroll', state.onScroll, { passive: true });
+    window.addEventListener('resize', state.onResize); window.addEventListener('orientationchange', state.onResize);
+    if (window.visualViewport) window.visualViewport.addEventListener('resize', state.onResize);
+    if ('IntersectionObserver' in window) { state.io = new IntersectionObserver(ask, { root: o, rootMargin: '-' + spyOffsets(o) + 'px 0px 0px 0px', threshold: [0, 1] }); o.querySelectorAll('.evd-sec').forEach(function (s) { state.io.observe(s); }); }
+    var strip = o.querySelector('.evd-nav-scroll'); if (strip) strip.addEventListener('scroll', function () { navEdges(o); }, { passive: true });
+    spy = state; spyOffsets(o); state.cur = ''; tick();
+    if (savedScroll[id]) { o.scrollTop = savedScroll[id]; tick(); }
+  }
+  function spyDestroy() {
+    if (!spy) return; var o = spy.o;
+    savedScroll[spy.id] = o.scrollTop;
+    o.removeEventListener('scroll', spy.onScroll); window.removeEventListener('resize', spy.onResize); window.removeEventListener('orientationchange', spy.onResize);
+    if (window.visualViewport) window.visualViewport.removeEventListener('resize', spy.onResize);
+    if (spy.io) spy.io.disconnect(); if (spy.raf) cancelAnimationFrame(spy.raf);
+    if (prevRestoration && history.scrollRestoration) { try { history.scrollRestoration = prevRestoration; } catch (e) { } }
+    spy = null;
+  }
+  function goSection(o, id, focus) {
+    var h = o.querySelector('#evd-h-' + id); if (!h || !spy) return;
+    var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches, stack = spyOffsets(o);
+    var top = h.getBoundingClientRect().top - o.getBoundingClientRect().top + o.scrollTop - stack - 8;
+    var max = o.scrollHeight - o.clientHeight, target = Math.max(0, Math.min(top, max));
+    spy.lock = 1; spy.cur = id; setActive(o, id);
+    o.scrollTo({ top: target, behavior: reduce ? 'auto' : 'smooth' });
+    var done = function () { if (!spy) return; spy.lock = 0; clearTimeout(spy.t); o.removeEventListener('scrollend', done); if (focus) h.focus({ preventScroll: true }); spy.cur = ''; spy.raf = 0; spy.onScroll(); };
+    o.addEventListener('scrollend', done); clearTimeout(spy.t); spy.t = setTimeout(done, reduce ? 60 : 900);
+  }
+  document.addEventListener('click', function (e) {
+    var l = e.target.closest && e.target.closest('.evd-nav-link'); if (!l) return;
+    e.preventDefault(); var o = $('evd'); if (o) goSection(o, l.getAttribute('data-sec'), true);
+  });
+  document.addEventListener('keydown', function (e) {
+    var l = e.target.closest && e.target.closest('.evd-nav-link'); if (!l) return;
+    var links = [].slice.call(l.parentNode.querySelectorAll('.evd-nav-link')), i = links.indexOf(l), n = -1;
+    if (e.key === 'ArrowRight') n = (i + 1) % links.length; else if (e.key === 'ArrowLeft') n = (i - 1 + links.length) % links.length; else if (e.key === 'Home') n = 0; else if (e.key === 'End') n = links.length - 1;
+    if (n < 0) return; e.preventDefault(); links[n].focus();
   });
   /* Event overflow menu: infographic, open source, mark done (Today). */
   function closeEvMenu(restore){var m=document.querySelector('.evd-menu');if(!m)return;var b=m.parentNode.querySelector('[data-evmenu]');m.remove();if(b){b.setAttribute('aria-expanded','false');if(restore)b.focus();}}
@@ -829,6 +895,9 @@
     if(e.key==='Escape'){e.stopImmediatePropagation();e.preventDefault();closeSheet();}
     else if(e.key==='Tab'){e.stopImmediatePropagation();e.preventDefault();sh.querySelector('[data-sheet-close]').focus();}
   },true);
+  /* The close button takes focus when the page opens; show its ring only for keyboard users. */
+  document.addEventListener('keydown', function (e) { if (e.key === 'Tab' || e.key.indexOf('Arrow') === 0) document.documentElement.setAttribute('data-kbd', '1'); }, true);
+  document.addEventListener('pointerdown', function () { document.documentElement.removeAttribute('data-kbd'); }, true);
   window.GOEVD = { close: close };
   document.addEventListener('gofn-state', function () { var o = $('evd'); if (o && !o.hidden) { var s = o.querySelector('[data-save]'); if (s) { var on = X.isSaved(s.dataset.save); s.classList.toggle('on', on); s.textContent = on ? '★' : '☆'; s.setAttribute('aria-pressed', on); var l = o.querySelector('.evd-lead'); if (l) l.hidden = !on; } } });
   document.addEventListener('change', function (e) { var sel = e.target.closest && e.target.closest('select[data-lead]'); if (!sel) return; var v = sel.value; X.usSet('pref:lead:' + sel.getAttribute('data-lead'), v === '' ? null : v); });

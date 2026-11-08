@@ -192,7 +192,7 @@
       var kind = PIPE_KIND[x.type] || 'event';
       var featured = Array.isArray(x.featured) ? x.featured : [];
       var bonuses = Array.isArray(x.bonuses) ? x.bonuses : [];
-      return mkEvent({ id: x.id, name: x.name, kind: kind, s: x.start, e: x.end || x.start, bonuses: bonuses, featured: featured, highlights: Array.isArray(x.highlights) ? x.highlights : [], tags: signalTags({name:x.name,kind:kind,type:x.type,bonuses:bonuses,featured:featured}),
+      return mkEvent({ id: x.id, name: x.name, kind: kind, img: (typeof x.image === 'string' && /^https:\/\//.test(x.image)) ? x.image : '', s: x.start, e: x.end || x.start, bonuses: bonuses, featured: featured, highlights: Array.isArray(x.highlights) ? x.highlights : [], tags: signalTags({name:x.name,kind:kind,type:x.type,bonuses:bonuses,featured:featured}),
         status: (x.status === 'community_reported' && (officialLink || reportedOfficial)) ? 'official_confirmed' : x.status,
         source: officialLink ? 'Official Pokémon GO announcement' : (x.reports && x.reports[0] && x.reports[0].source === 'leekduck') ? 'Leek Duck' : (x.source || 'Leek Duck (community-reported)'), link: link,
         utc: x.tzMode === 'utc', region: x.region || '', scope: x.scope, conflict: x.conflict, infographicUrl: x.infographicUrl || x.infographic || '' });
@@ -2013,9 +2013,14 @@ function renderHomeBrief(t) {
     soon.sort(function (a, b) { return a.start - b.start; }); week.sort(function (a, b) { return a.start - b.start; });
     var evPlaces = EV.filter(function (ev) { return ev.region && (phase(ev, t) !== 'ended') && !/^global$/i.test(ev.region); });
     function normT(v) { return String(v || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, ' ').trim(); }
+    function distinct(v) { return normT(v).split(' ').filter(function (w, i, a) { return w.length >= 4 && a.indexOf(w) === i && !/^(pokemon|events?|the|with|from|this|that|2026|2027)$/.test(w); }); }
     var evNames = Object.create(null); EV.forEach(function (ev) { if (phase(ev, t) !== 'ended') evNames[normT(ev.name)] = 1; });
     function covered(r) {
       if (evNames[normT(r.name)] || /worldwide|anywhere|global|in the game/i.test(String(r.place || '') + ' ' + String(r.area || ''))) return true;
+      /* Same real-world occurrence reported by two sources: two or more distinctive words (the place counts) in common and overlapping dates.
+         Night Out London and Night Out Los Angeles share only "night", so they stay separate. */
+      var rw = distinct(r.name + ' ' + (r.place || ''));
+      if (EV.some(function (ev) { if (!(+ev.start <= +r.end + 864e5 && +ev.end >= +r.start - 864e5) || phase(ev, t) === 'ended') return false; var ew = distinct(ev.name + ' ' + (ev.region || '')); return rw.filter(function (w) { return ew.indexOf(w) >= 0; }).length >= 2; })) return true;
       var key = t1PlaceKey(r.place); if (!key) return false;
       return evPlaces.some(function (ev) { return ev.start <= r.end && ev.end >= r.start && String(ev.region).toLowerCase().indexOf(key.split(' ')[0]) >= 0; });
     }
@@ -2048,12 +2053,13 @@ function renderHomeBrief(t) {
       kindOf: kindOf, monArt: monArt, fallbackArt: placeholderArt, overseas: function (ev) { return t1Overseas(ev.region); }, dayLabel: function (d) { return fmtD(d); } };
   }
   var t1Signature = '';
+  function sigEv(e) { return [e.id, e.name, e.region || '', e.img ? 1 : 0, (e.featured || []).length, (e.tags || []).join(',')].join('|'); }
   function renderTodayV1(t, force) {
     var host = $('today-v1'); if (!host || !T1 || !TL || !EV_READY) return;
     t = t || now();
     var sheet = $('evd'); if (sheet && !sheet.hidden) return;
     var ctx = t1Ctx(t);
-    var sig = JSON.stringify([dayKey(t), ctx.live.map(function (e) { return e.id; }), ctx.soon.map(function (e) { return e.id; }), ctx.week.map(function (e) { return e.id; }),
+    var sig = JSON.stringify([dayKey(t), ctx.live.map(sigEv), ctx.soon.map(sigEv), ctx.week.map(sigEv),
       ctx.regLive.map(function (e) { return e.id; }), ctx.ending.map(function (e) { return e.id; }), ctx.regSoon.map(function (e) { return e.id; }), ctx.regWeek.map(function (e) { return e.id; }),
       ctx.boosts.live.map(function (r) { return r.eventId + r.name; }), ctx.boosts.upcoming.map(function (r) { return r.eventId + r.name; }), ctx.seasons, ctx.done.map(function (d) { return d.key; })]);
     if (!force && sig === t1Signature && host.firstChild) { T1.patchCountdowns(host, +t); return; }

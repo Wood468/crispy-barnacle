@@ -208,3 +208,7 @@ header.top .hbtn{width:44px;height:44px}
 .evc .art-fb>img,.today-event .art-fb>img{width:100%;height:100%;object-fit:contain}
 .evc .art-fb .form-chip,.today-event .art-fb .form-chip{position:absolute;left:0;right:0;bottom:0;font-size:0;padding:1px 2px;border-radius:0;line-height:1}
 .evc .art-fb .form-chip::before,.today-event .art-fb .form-chip::before{content:"No form art";font-size:.46rem;font-weight:800;line-height:1}
+/* Release 1.1: Today major cards use the shared banner */
+.t1-major-art{height:auto;padding:0;display:block;background:none;overflow:hidden}
+.t1-major-art .ev-art{border-radius:0}
+.t1-banner .ev-art-accent{width:26%;max-width:92px}

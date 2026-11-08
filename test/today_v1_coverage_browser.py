@@ -56,14 +56,23 @@ with sync_playwright() as p:
     # 5. Empty boost state is one compact line, and the tile shows no arrow at 0.
     browser, page, errors = run(p, [], '2026-11-08T12:00:00+11:00')
     page.goto(BASE); page.wait_for_selector('#today-v1 .t1-glance')
-    line = page.locator('#today-v1 .t1-empty-line')
-    line.wait_for(state='visible', timeout=10000)
-    assert line.count() == 1, 'expected exactly one visible empty-boost message'
-    bounds = line.bounding_box()
-    assert bounds is not None, 'empty-boost message has no visible bounding box'
-    assert bounds['height'] <= 40, f'empty-boost message exceeds compact height: {bounds}'
+    page.wait_for_selector('#today-v1 .t1-empty-line', state='attached', timeout=10000)
+    page.wait_for_load_state('networkidle'); page.wait_for_timeout(600)  # late feeds may repaint once
+    # Read count and geometry in one browser task: a late repaint can replace the node between locator calls.
+    info = page.evaluate("(()=>{const n=document.querySelectorAll('#today-v1 .t1-empty-line');const e=n[0];return {count:n.length,height:e?e.getBoundingClientRect().height:null}})()")
+    assert info['count'] == 1, 'expected exactly one empty-boost message'
+    assert info['height'] is not None and 0 < info['height'] <= 40, f'empty-boost message exceeds compact height: {info}'
     assert page.locator('#today-v1 .t1-tile--shiny .t1-up').count() == 0
     assert page.locator('#today-v1 .t1-boost').count() == 0
+    assert errors == [], errors
+    browser.close()
+    # 6. The same Night Out reported by two sources (Leek Duck event + official world list) shows once; a different city would not be merged.
+    LON = {'id': 'leekduck:pokemon-night-out-london-2026', 'name': 'Pokémon Night Out 2026 - London', 'type': 'event', 'start': '2026-11-10T18:00:00.000Z', 'end': '2026-11-10T22:30:00.000Z',
+           'tzMode': 'utc', 'scope': 'regional', 'status': 'community_reported', 'featured': [], 'bonuses': [], 'reports': [{'source': 'leekduck', 'status': 'community_reported', 'link': 'https://leekduck.com/events/pokemon-night-out-london-2026/'}], 'link': 'https://leekduck.com/events/pokemon-night-out-london-2026/'}
+    browser, page, errors = run(p, [LON], '2026-11-10T12:00:00+11:00')
+    page.goto(BASE); page.wait_for_selector('#today-v1 .t1-glance'); page.wait_for_load_state('networkidle'); page.wait_for_timeout(800)
+    rows = page.locator('#today-v1 article').filter(has_text=re.compile('Night Out', re.I))
+    assert rows.count() == 1, rows.all_inner_texts()
     assert errors == [], errors
     browser.close()
 print('PASS Today v1: boost rail, empty state, Ending soon, undo window, midnight, legacy unreachable')
