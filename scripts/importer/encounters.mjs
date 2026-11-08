@@ -10,11 +10,15 @@ export function extractEncounters(input,{dex=[],names=[],costumes=[]}={}){
  adapter.configureSpecies(dex);adapter.configureCostumes(costumes);
  const known=new Map(dex.map(p=>[p[1].toLowerCase(),{name:p[1],speciesId:String(p[0])}]));
  names.forEach(name=>{if(typeof name==='string')known.set(name.toLowerCase(),{name});});
- costumes.forEach(p=>{if(p&&p.name&&p.label)known.set((p.name+' ('+p.label+')').toLowerCase(),{name:p.name,label:p.label,costume:true});});
+ costumes.forEach(p=>{if(p&&p.name&&p.label)[p.name+' ('+p.label+')',p.name+' wearing '+p.label,p.name+' wearing a '+p.label,p.name+' wearing an '+p.label,p.name+' wearing the '+p.label].forEach(k=>known.set(k.toLowerCase(),{name:p.name,label:p.label,costume:true}));});
+ const speciesByDex=new Map(dex.map(p=>[Number(p[0]),p[1]]));
  const pokemon=new Map(),encounters=[],lines=Array.isArray(input)?input:htmlToLines(input);let method=null,methodLevel=0;
  for(const line of lines){
   if(line.t==='h'){const next=methodForHeading(line.text);if(next){method=next;methodLevel=line.level||2;}else if(!line.level||line.level<=methodLevel){method=null;methodLevel=0;}continue;}
   if(!method||!['li','p'].includes(line.t))continue;
+  // Exact costume identities named by icon file (pm25.fGOFEST_2024_STIARA) + alt text win over any bare species name on the same line.
+  const iconed=(line.icons||[]).map(ref=>({ref,species:speciesByDex.get(ref.dex)})).filter(x=>x.species&&x.ref.label);
+  if(iconed.length){for(const {ref,species} of iconed){const p=adapter.pokemon({name:species,speciesId:String(ref.dex),costume:true,label:ref.label,collectionName:species+' ('+ref.label+')',shiny:'unknown',boostedShiny:null}),prior=pokemon.get(p.key);pokemon.set(p.key,prior?{...prior,...p}:p);encounters.push({identityKey:p.key,method,activityId:'main',access:'unknown'});}continue;}
   for(const item of line.text.split(/,\s*|\s+and\s+/i)){
    let label=item.trim(),shiny='unknown',boostedShiny=null;
    const claim=/\s*\((shiny available|boosted shiny|increased shiny (?:chance|odds)|not shiny eligible)\)$/i.exec(label);
