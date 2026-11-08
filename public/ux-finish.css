@@ -7,7 +7,7 @@
     align-items: center !important;
     flex-wrap: nowrap;
     gap: 8px !important;
-    padding-top: 12px;
+    padding-top: 16px;
   }
   header.top > div:first-child { display: block; min-width: 0; }
   header.top h1 {
