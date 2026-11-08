@@ -104,6 +104,7 @@ with sync_playwright() as p:
         page.evaluate("GODETAIL.open('leekduck:pokemon-go-wild-area-2026-mexico-city')")
         page.wait_for_function("document.getElementById('evd-t')?.textContent.includes('Mexico')")
         assert page.locator('#evd .research-task').count()==12
+        page.locator('#evd #evd-tab-research').click()
         raid_task=page.locator('#evd .research-task').filter(has_text='Win 2 raids')
         assert raid_task.locator('.research-reward').count()==3
         assert 'Conkeldurr' in raid_task.inner_text()

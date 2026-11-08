@@ -127,6 +127,7 @@ jobs:
           python test/premium_surfaces_browser.py
           python test/today_detail_redesign_browser.py
           python test/today_done_browser.py
+          python test/today_v1_coverage_browser.py
           python test/battle_rotation_browser.py
 
       - name: Verify combined source rendering and offline upgrade
@@ -176,6 +177,7 @@ jobs:
           python test/premium_surfaces_browser.py
           python test/today_detail_redesign_browser.py
           python test/today_done_browser.py
+          python test/today_v1_coverage_browser.py
           python test/battle_rotation_browser.py
           python test/universal_event_browser.py
           python test/worldwide_timezone_browser.py

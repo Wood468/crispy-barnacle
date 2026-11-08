@@ -26,7 +26,7 @@ function gallery(model,ctx){
    var kind=ctx.artKind?ctx.artKind(p):'',stars=method==='raid'?((/(\d)-star/i.exec(model.title||'')||[])[1]||''):'',km=method==='egg'?((/(\d{1,2})\s?km/i.exec([activityLabel,p.label,edge.access].join(' '))||[])[1]||''):'';
    var badge='<span class="ue-badge ue-b-'+method+(km?' ue-km-'+km:'')+'">'+(km?km+' km':method==='egg'?'Egg':method==='raid'&&stars?stars+'★ Raid':({wild:'Wild',raid:'Raid',max:'Max',incense:'Incense',research:'Research',lure:'Lure',photobomb:'Snapshot',other:'Featured'})[method])+'</span>';
    var short=({wild:'Wild',raid:'Raid',max:'Max Battle',egg:'Egg',incense:'Incense',research:'Research',lure:'Lure',photobomb:'Snapshot',other:'Featured'})[method];var info={name:name,method:short,badge:km?km+' km egg':stars?stars+'-star raid':'',meta:meta,signals:signals.map(function(x){return x.replace(/<[^>]+>/g,'');}),form:kind};
-   return '<button type="button" class="ue-mon'+(p.debut||p.boostedShiny?' ue-mon-featured':'')+'" data-identity="'+esc(p.key)+'" data-info="'+esc(JSON.stringify(info))+'" aria-haspopup="dialog" aria-label="'+esc(name+', '+(info.badge||short)+'. Show details')+'"><span class="ue-mon-art">'+art+'</span><b>'+esc(name)+'</b>'+badge+(signals.length?'<span class="ue-signals">'+signals.join('')+'</span>':'')+'</button>';
+   var feat=!!(p.debut||p.boostedShiny);return '<button type="button" class="ue-mon'+(feat?' ue-mon-featured':'')+'" data-identity="'+esc(p.key)+'" data-info="'+esc(JSON.stringify(info))+'" aria-haspopup="dialog" aria-label="'+esc(name+', '+(info.badge||short)+'. Show details')+'">'+(feat?'<span class="ue-feat-tag">Featured</span>':'')+'<span class="ue-mon-art">'+art+'</span><b>'+esc(name)+'</b>'+badge+(signals.length?'<span class="ue-signals">'+signals.join('')+'</span>':'')+'</button>';
   }).join('');
   return cards?'<div class="ue-method" data-method="'+method+'">'+(method==='other'&&Object.keys(model.groups).every(function(k){return k==='other'||!model.groups[k].length;})?'':'<h4>'+METHODS[method]+'</h4>')+'<div class="ue-gallery">'+cards+'</div></div>':'';
  }).join('');
@@ -108,7 +108,8 @@ function render(model,ctx){ctx=ctx||{};var view=V.project(model),fields=model.in
  var warnings=model.internalValidation&&model.internalValidation.conflicts||[];
  var conflict=warnings.some(function(c){return c.impact==='planning-critical';})?'<p class="srcdis" role="status">Some event details conflict. Check Sources & updates before making plans.</p>':'';
  var cancelled=model.lifecycle==='cancelled'?'<p class="srcdis" role="status">Event cancelled</p>':'';
- var hero='<header class="evd-hero ue-hero"><div class="ue-hero-media">'+(ctx.banner||'')+'<div class="evd-art">'+(ctx.heroArt||'')+'</div></div><div class="ue-hero-copy"><h2 id="evd-t">'+esc(model.title)+'</h2><span class="ue-family">'+esc(view.family==='other'?'Event':view.family.replace(/-/g,' '))+'</span>'+(model.location?'<p class="ue-location">'+esc(typeof model.location==='string'?model.location:model.location.name||'')+'</p>':'')+'<p class="evc-when">'+esc(ctx.when||'Dates to be announced')+'</p>'+(ctx.countdown?'<p class="cdn evd-cd">'+esc(ctx.countdown)+'</p>':'')+'</div></header>';
+ var hasOverview=!!ctx.overview;
+ var hero='<header class="evd-hero ue-hero"><div class="ue-hero-media">'+(ctx.banner||'')+'<div class="evd-art">'+(ctx.heroArt||'')+'</div></div><div class="ue-hero-copy"><div class="ue-hero-chips"><span class="ue-family">'+esc(view.family==='other'?'Event':view.family.replace(/-/g,' '))+'</span>'+(ctx.countdown?'<span class="cdn evd-cd">'+esc(ctx.countdown)+'</span>':'')+'</div><h2 id="evd-t">'+esc(model.title)+'</h2>'+(model.location?'<p class="ue-location">'+esc(typeof model.location==='string'?model.location:model.location.name||'')+'</p>':'')+(hasOverview?'':'<p class="evc-when">'+esc(ctx.when||'Dates to be announced')+'</p>')+'</div></header>';
  var more=section('evd-information','Details',detail+(ctx.moves||'')+(ctx.locations||''));
  var sources=ctx.sources||'';
  if(!sources){
@@ -120,14 +121,14 @@ function render(model,ctx){ctx=ctx||{};var view=V.project(model),fields=model.in
 
  var panels=[],label={encounters:'Pokémon',bonuses:'Bonuses',research:'Research',passes:'GO Pass',tickets:'Tickets'};
  var incomplete=!selected.length&&!info.length;
- var overview=(ctx.overview||'')+(info.length?'<ul class="ue-facts ue-summary">'+info.slice(0,3).map(function(t){return '<li>'+esc(t)+'</li>';}).join('')+'</ul>':'')+(incomplete||model.completeness==='partial'?'<p class="ue-more-note" role="note">More details to come. Only verified information is shown.</p>':'');
+ var overview=(ctx.overview||'')+(info.length?'<h3 class="ue-mini-h">Highlights</h3><ul class="ue-facts ue-summary">'+info.filter(function(t){var k=String(t).toLowerCase().slice(0,40);return !model.tickets.some(function(x){return value(x).toLowerCase().indexOf(k)>=0;})&&!model.bonuses.some(function(x){return value(x).toLowerCase().indexOf(k)>=0;});}).slice(0,4).map(function(t){return '<li>'+esc(t)+'</li>';}).join('')+'</ul>':'')+(incomplete||(model.completeness==='partial'&&selected.length<2)?'<p class="ue-more-note" role="note">More details to come. Only verified information is shown.</p>':'');
  panels.push({id:'overview',label:'Overview',html:'<div class="ue-overview">'+(cancelled||'')+conflict+overview+(ctx.actions||'')+'</div>'});
  ['encounters','bonuses','research','passes','tickets'].forEach(function(k){if(selected.indexOf(k)>=0&&body[k]&&(k!=='bonuses'||/class="ue-bonus[ "]/.test(body[k])))panels.push({id:k,label:label[k],html:body[k]});});
  var sched=(selected.indexOf('rotations')>=0?body.rotations:'')+(selected.indexOf('schedule')>=0?body.schedule:'');
  if(sched)panels.splice(Math.min(panels.length,2),0,{id:'schedule',label:'Schedule',html:sched});
  var detailsHtml=more+(hasSources?(sources||''):'').replace('<details class="ue-sources"','<details class="ue-sources" open');
  if(detailsHtml.trim())panels.push({id:'details',label:'Details & sources',html:detailsHtml});
- var tablist='<div class="evd-tabs" role="tablist" aria-label="Event sections">'+panels.map(function(t,i){return '<button type="button" role="tab" class="evd-tab" id="evd-tab-'+t.id+'" aria-controls="evd-panel-'+t.id+'" aria-selected="'+(i===0)+'" tabindex="'+(i===0?0:-1)+'" data-tab="'+t.id+'">'+esc(t.label)+'</button>';}).join('')+'</div>';
+ var tablist='<div class="evd-tabs-wrap"><div class="evd-tabs" role="tablist" aria-label="Event sections">'+panels.map(function(t,i){return '<button type="button" role="tab" class="evd-tab" id="evd-tab-'+t.id+'" aria-controls="evd-panel-'+t.id+'" aria-selected="'+(i===0)+'" tabindex="'+(i===0?0:-1)+'" data-tab="'+t.id+'">'+esc(t.label)+'</button>';}).join('')+'</div><span class="evd-tabs-more" aria-hidden="true">›</span></div>';
  var tabpanels=panels.map(function(t,i){return '<div class="evd-panel" role="tabpanel" id="evd-panel-'+t.id+'" aria-labelledby="evd-tab-'+t.id+'" tabindex="0"'+(i?' hidden':'')+'>'+t.html+'</div>';}).join('');
  return (ctx.toolbar||'')+hero+tablist+tabpanels;
 }

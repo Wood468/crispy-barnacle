@@ -70,10 +70,9 @@
     return '<article class="t1-card t1-major' + (live ? ' is-live' : '') + '" style="--k:' + k[1] + '"' + dataAttrs(ev) + '>'
       + '<div class="t1-major-art" aria-hidden="true">' + art + '</div>'
       + '<button type="button" class="t1-open" data-open="' + esc(ev.id) + '" aria-label="' + esc('Open ' + ev.name + '. ' + cd) + '">'
-      + '<span class="t1-badges">' + (live ? '<span class="t1-live">LIVE NOW</span>' : '') + '<span class="t1-kind">' + esc(k[0]) + '</span>' + shinyBadge(shinyKindFor(ctx, ev)) + '</span>'
+      + '<span class="t1-badges">' + (live ? '<span class="t1-live">LIVE NOW</span>' : '') + '<span class="t1-kind">' + esc(k[0]) + '</span>' + shinyBadge(shinyKindFor(ctx, ev)) + '<span class="t1-count">' + CLOCK + cdSpan(ctx, live ? ev.end : ev.start, live) + '</span></span>'
       + '<strong class="t1-title">' + esc(ev.name) + '</strong>'
       + placeChip(ctx, ev)
-      + '<span class="t1-count">' + CLOCK + cdSpan(ctx, live ? ev.end : ev.start, live) + '</span>'
       + (names ? '<span class="t1-feat">' + esc(names) + '</span>' : '')
       + '</button>' + menuButton(ev, ev.name) + '</article>';
   }
@@ -131,11 +130,17 @@
       + '<span class="t1-days" aria-hidden="true">' + days + 'd</span></' + end + '></article>';
   }
 
+  function endingRow(ctx, d) {
+    var title = d.name || 'Ending soon', what = [d.title, d.qualifier].filter(Boolean).join(' · ');
+    var src = d.url && /^https:\/\//.test(d.url) ? '<a class="t1-ending-src" href="' + esc(d.url) + '" target="_blank" rel="noopener noreferrer" aria-label="' + esc('Source: ' + (d.source || 'link') + ' (opens in a new tab)') + '">Source</a>' : '';
+    return '<article class="t1-card t1-ending" style="--k:var(--color-status-caution)" data-ending="' + esc(d.id) + '"><span class="t1-ending-ico" aria-hidden="true">' + CLOCK + '</span>'
+      + '<div class="t1-ending-body"><strong class="t1-title">' + esc(title) + '</strong><span class="t1-sub">' + esc(what) + (what ? ' · ' : '') + cdSpan(ctx, d.end, true) + '</span></div>' + src + '</article>';
+  }
   function boostTile(ctx, r) {
     var f = Object.assign({}, r.art, { name: r.name });
     return '<li class="t1-boost"><button type="button" class="t1-open" data-open="' + esc(r.eventId) + '" aria-label="' + esc(r.name + ' shiny boost confirmed, in ' + r.eventName) + '">'
       + '<span class="t1-boost-art">' + ctx.monArt(r.event, f, 'ea') + shinyBadge('boosted') + '</span>'
-      + '<span class="t1-boost-name">' + esc(r.name) + '</span></button></li>';
+      + '<span class="t1-boost-name">' + esc(r.name) + '</span>' + (r.live ? '<span class="t1-boost-end">' + cdSpan(ctx, r.event.end, true) + '</span>' : '<span class="t1-boost-end">' + cdSpan(ctx, r.event.start, false) + '</span>') + '</button></li>';
   }
   function section(id, title, count, inner, extra) {
     return '<section class="t1-sec" id="' + id + '" aria-labelledby="' + id + '-h"><div class="t1-sec-head"><h2 id="' + id + '-h">' + esc(title) + '</h2>' + (extra || '') + (count != null ? '<span class="t1-count-pill">' + count + '</span>' : '') + '</div>' + inner + '</section>';
@@ -164,12 +169,13 @@
     if (boostCount) {
       h += section('t1-boosts', 'Shiny boosts live', null, '<ul class="t1-boost-rail" role="list" aria-label="Currently active, confirmed shiny boosts">' + ctx.boosts.live.map(function (r) { return boostTile(ctx, r); }).join('') + '</ul>');
     } else {
-      h += '<p class="t1-empty-line" role="status">' + SPARK + '<span>No confirmed shiny boosts are live right now.</span></p>';
+      h += '<p class="t1-empty-line" role="status">' + SPARK + '<span>No confirmed shiny boosts live</span></p>';
     }
     if (ctx.boosts.upcoming.length) {
       h += section('t1-boosts-soon', 'Shiny boosts coming up', null, '<ul class="t1-boost-rail" role="list" aria-label="Upcoming confirmed shiny boosts">' + ctx.boosts.upcoming.map(function (r) { return boostTile(ctx, r); }).join('') + '</ul>');
     }
     h += section('t1-live', 'Happening now', liveCount, liveCards.length ? '<div class="t1-list">' + capped('live', liveCards, 6, 'happening now') + '</div>' : '<p class="t1-empty">Nothing is live right now.</p>');
+    if (ctx.ending && ctx.ending.length) h += section('t1-ending', 'Ending soon', ctx.ending.length, '<div class="t1-list t1-ending-list">' + capped('ending', ctx.ending.map(function (d) { return endingRow(ctx, d); }), 3, 'ending soon') + '</div>');
     h += section('t1-soon', 'Starting soon', soonCount, (soonCards.length ? '<div class="t1-list">' + capped('soon', soonCards, 5, 'starting soon') + '</div>' : '<p class="t1-empty">Nothing starts in the next 24 hours.</p>'), '<span class="t1-sec-note">Next 24 hours</span>');
     h += section('t1-week', 'Next 7 days', null, weekCards.length ? '<div class="t1-week-list">' + capped('week', weekCards, 6, 'this week') + '</div><button type="button" class="t1-seeall" data-quick-go="events">See all in Schedule <span aria-hidden="true">›</span></button>' : '<p class="t1-empty">No further events in the next seven days.</p>');
     if (ctx.seasons.length) {

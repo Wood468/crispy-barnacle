@@ -155,3 +155,58 @@ test('card types: majors, raids and minor rows', () => {
   assert.equal(t('spot', 'Grookey Spotlight Hour'), 'minor');
   assert.equal(t('event', 'Short bonus', 3 * 36e5), 'minor');
 });
+
+test('venue bonus times attach only to the event they belong to (real-shaped Night Out London record)', () => {
+  const london = { name: 'Pokémon Night Out 2026 - London', date: '2026-11-11', zone: 'GMT', timeZone: 'Etc/UTC', note: 'expected, Pokémon GO hours not confirmed yet' };
+  const items = [london];
+  // Sendai, Mexico City and the Global Wild Area share no name with it.
+  for (const name of ['Pokémon GO Wild Area 2026: Sendai • Tohoku', 'Pokémon GO Wild Area 2026: Mexico City', 'GO Wild Area: Global'])
+    assert.deepEqual(L.matchVenueTimes(items, { name, start: '2026-11-06', end: '2026-11-08' }), []);
+  assert.equal(L.matchVenueTimes(items, { name: 'Pokémon Night Out 2026 - London', start: '2026-11-11', end: '2026-11-11' }).length, 1);
+  // Same three-word prefix but a different city or an unrelated date never matches.
+  assert.deepEqual(L.matchVenueTimes(items, { name: 'Pokémon Night Out 2026 - Los Angeles', start: '2026-11-11', end: '2026-11-11' }), []);
+  assert.deepEqual(L.matchVenueTimes(items, { name: 'Pokémon Night Out 2026 - London', start: '2026-12-20', end: '2026-12-20' }), []);
+  assert.equal(L.venueTimeUnconfirmed(london), true);
+  assert.equal(L.venueTimeUnconfirmed({ note: '' }), false);
+});
+
+test('venue zones for single-zone European and Asian places; multi-zone stays unknown', () => {
+  assert.equal(L.venueZone({ place: 'London, UK' }), 'Europe/London');
+  assert.equal(L.venueZone({ place: 'Karlsruhe, Germany (Ettlinger Tor)' }), 'Europe/Berlin');
+  assert.equal(L.venueZone({ place: 'Philippines (SM East Ortigas)' }), 'Asia/Manila');
+  assert.equal(L.venueZone({ place: 'Europe' }), '');
+  assert.equal(L.venueZone({ place: 'Indonesia' }), '');
+  assert.equal(L.venueZone({ place: '' }), '');
+});
+
+test('boost evidence: real-shaped data.json highlight records classify; availability-only records do not', async () => {
+  const fs = await import('node:fs');
+  const data = JSON.parse(fs.readFileSync(new URL('../public/data.json', import.meta.url)));
+  const hl = data.events.flatMap(e => e.highlights || []);
+  const boosted = hl.filter(h => h.type === 'boosted-shiny');
+  assert.ok(boosted.length >= 2, 'fixture has real boosted-shiny highlights');
+  boosted.forEach(h => assert.equal(L.shinyKind(h), 'boosted'));
+  hl.filter(h => h.type !== 'boosted-shiny' && !/shiny/i.test(h.label)).forEach(h => assert.notEqual(L.shinyKind(h), 'boosted'));
+  // The catalogue records "increased shiny chance" event text without per-Pokémon attribution: no tile may be inferred from it.
+  assert.equal(L.shinyKind({ shiny: 'yes', boostedShiny: null, name: 'Palkia' }), 'available');
+  assert.equal(L.shinyKind({ shiny: 'unknown', boostedShiny: null }), 'none');
+});
+
+test('Done boundaries: one occurrence only, across midnight and multi-day events, recurring next occurrence reappears', () => {
+  const s = memory();
+  const wed = '2026-11-11T08:00:00.000Z', nextWed = '2026-11-18T08:00:00.000Z';
+  L.markDone(s, 'raid-hour', wed, Date.parse(wed) + 36e5, Date.parse('2026-11-11T07:00:00Z'));
+  // A Melbourne day change (UTC+11 midnight) does not alter the key or its state.
+  const afterMidnight = L.readDone(s);
+  assert.equal(L.isDone(afterMidnight, 'raid-hour', wed), true);
+  assert.equal(L.isDone(afterMidnight, 'raid-hour', nextWed), false);
+  // A three-day event keeps one key for its whole run, however many days it is viewed on.
+  const start = '2026-11-06T01:00:00.000Z', end = Date.parse('2026-11-08T09:00:00Z');
+  L.markDone(s, 'wild-area', start, end, Date.parse('2026-11-06T02:00:00Z'));
+  for (const day of ['2026-11-06', '2026-11-07', '2026-11-08']) assert.equal(L.isDone(L.readDone(s), 'wild-area', start), true, day);
+  // Another event with the same start is unaffected; the entry survives for a week after it ends, then is pruned.
+  assert.equal(L.isDone(L.readDone(s), 'other', start), false);
+  const later = L.pruneDone(L.readDone(s), end + 8 * 864e5);
+  assert.equal(L.isDone(later, 'wild-area', start), false);
+  assert.equal(L.isDone(L.pruneDone(L.readDone(s), end + 864e5), 'wild-area', start), true);
+});

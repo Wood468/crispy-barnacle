@@ -136,7 +136,9 @@
     ['mexico city', 'America/Mexico_City'], ['boston', 'America/New_York'], ['chicago', 'America/Chicago'], ['los angeles', 'America/Los_Angeles'],
     ['taipei', 'Asia/Taipei'], ['kaohsiung', 'Asia/Taipei'], ['taiwan', 'Asia/Taipei'], ['south korea', 'Asia/Seoul'], ['seoul', 'Asia/Seoul'],
     ['singapore', 'Asia/Singapore'], ['kuala lumpur', 'Asia/Kuala_Lumpur'], ['jakarta', 'Asia/Jakarta'], ['bangkok', 'Asia/Bangkok'],
-    ['hong kong', 'Asia/Hong_Kong'], ['india', 'Asia/Kolkata']
+    ['hong kong', 'Asia/Hong_Kong'], ['india', 'Asia/Kolkata'],
+    ['philippines', 'Asia/Manila'], ['malaysia', 'Asia/Kuala_Lumpur'], ['england', 'Europe/London'], [', uk', 'Europe/London'],
+    ['germany', 'Europe/Berlin'], ['france', 'Europe/Paris'], ['spain', 'Europe/Madrid'], ['netherlands', 'Europe/Amsterdam'], ['belgium', 'Europe/Brussels'], ['sweden', 'Europe/Stockholm']
   ];
   function validZone(zone) { try { new Intl.DateTimeFormat('en', { timeZone: zone }); return typeof zone === 'string' && !!zone; } catch (e) { return false; } }
   /* An explicit tz on the record always wins; the place table is only a fallback for records that have none. */
@@ -207,6 +209,20 @@
     return guess - offset(t);
   }
 
+  /* ---------- Venue bonus times: attach only to the event they are about ---------- */
+  function normName(v) { return String(v || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, ' ').trim(); }
+  function dayOnly(v) { var m = /^(\d{4}-\d{2}-\d{2})/.exec(typeof v === 'string' ? v : new Date(v).toISOString()); return m ? m[1] : ''; }
+  function shiftDay(d, n) { return new Date(Date.parse(d + 'T00:00:00Z') + n * 864e5).toISOString().slice(0, 10); }
+  /* items: /api/venue-times rows. An item belongs to an event only when the full normalised names are equal AND its date lies within the
+     event's own days (one day of slack for zone offsets). A shared three-word prefix ("Pokemon Night Out") is never enough: London and Los Angeles differ. */
+  function matchVenueTimes(items, ev) {
+    var name = normName(ev && ev.name), s = dayOnly(ev && ev.start), e = dayOnly(ev && ev.end) || s;
+    if (!name || !s) return [];
+    return (items || []).filter(function (i) { return i && normName(i.name) === name && i.date >= shiftDay(s, -1) && i.date <= shiftDay(e, 1); });
+  }
+  /* "expected" notes mean the hours are not confirmed: they may be shown, but only as unconfirmed. */
+  function venueTimeUnconfirmed(item) { return !!item && /expected|not confirmed|unconfirmed|tbc|tba/i.test(String(item.note || '')); }
+
   /* ---------- Countdown ---------- */
   function countdownText(ms, nowMs, live) {
     var d = ms - nowMs; if (d <= 0) return live ? 'Ended' : 'Started';
@@ -228,6 +244,6 @@
   return {
     DONE_KEY: DONE_KEY, doneKey: doneKey, readDone: readDone, isDone: isDone, markDone: markDone, undoDone: undoDone, pruneDone: pruneDone, doneList: doneList,
     shinyKind: shinyKind, splitNames: splitNames, classifyArt: classifyArt, artFallback: artFallback,
-    venueZone: venueZone, dualTime: dualTime, venueDays: venueDays, zoneAbbr: zoneAbbr, countdownText: countdownText, cardType: cardType
+    venueZone: venueZone, matchVenueTimes: matchVenueTimes, venueTimeUnconfirmed: venueTimeUnconfirmed, dualTime: dualTime, venueDays: venueDays, zoneAbbr: zoneAbbr, countdownText: countdownText, cardType: cardType
   };
 }));

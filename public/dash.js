@@ -1975,7 +1975,7 @@ function renderHomeBrief(t) {
       if (!name || name.length > 72 || ev.status === 'conflicting' || ev.status === 'datamined' || !shinySource(ev)) return;
       TL.splitNames(name).forEach(function (n) {
         var key = kindKey + '|' + n.toLowerCase(); if (seen[key]) return; seen[key] = 1;
-        list.push({ event: ev, eventId: ev.id, eventName: ev.name, name: n, art: Object.assign({}, artItem || {}, { shiny: true }) });
+        list.push({ live: list === live, event: ev, eventId: ev.id, eventName: ev.name, name: n, art: Object.assign({}, artItem || {}, { shiny: true }) });
       });
     }
     EV.forEach(function (ev) {
@@ -2033,7 +2033,15 @@ function renderHomeBrief(t) {
         seasons.push({ id: s.id, label: s.season.label || 'Season', name: s.name, days: Math.max(0, Math.ceil((+s.end - tn) / 864e5)) });
       });
     } catch (e) { }
-    return { now: t, live: live, soon: soon, week: week, regLive: regLive, regSoon: regSoon, regWeek: regWeek, boosts: t1BoostRecords(t), seasons: seasons, done: hiddenDone,
+    var ending = [], weekMs = tn + 7 * 864e5;
+    try {
+      (window.GOSEASON && GOSEASON.deadlines ? GOSEASON.deadlines() : []).forEach(function (x) {
+        var endMs = x && x.end ? +x.end : NaN;
+        if (x && x.start <= t && Number.isFinite(endMs) && endMs > tn && endMs <= weekMs) ending.push({ id: x.id || (x.name + '|' + endMs), name: x.name, title: x.title, qualifier: x.qualifier || '', end: x.end, source: x.source || '', url: x.url || '' });
+      });
+      ending.sort(function (a, b) { return a.end - b.end; });
+    } catch (e) { }
+    return { now: t, ending: ending, live: live, soon: soon, week: week, regLive: regLive, regSoon: regSoon, regWeek: regWeek, boosts: t1BoostRecords(t), seasons: seasons, done: hiddenDone,
       kindOf: kindOf, monArt: monArt, fallbackArt: placeholderArt, overseas: function (ev) { return t1Overseas(ev.region); }, dayLabel: function (d) { return fmtD(d); } };
   }
   var t1Signature = '';
@@ -2043,7 +2051,7 @@ function renderHomeBrief(t) {
     var sheet = $('evd'); if (sheet && !sheet.hidden) return;
     var ctx = t1Ctx(t);
     var sig = JSON.stringify([dayKey(t), ctx.live.map(function (e) { return e.id; }), ctx.soon.map(function (e) { return e.id; }), ctx.week.map(function (e) { return e.id; }),
-      ctx.regLive.map(function (e) { return e.id; }), ctx.regSoon.map(function (e) { return e.id; }), ctx.regWeek.map(function (e) { return e.id; }),
+      ctx.regLive.map(function (e) { return e.id; }), ctx.ending.map(function (e) { return e.id; }), ctx.regSoon.map(function (e) { return e.id; }), ctx.regWeek.map(function (e) { return e.id; }),
       ctx.boosts.live.map(function (r) { return r.eventId + r.name; }), ctx.boosts.upcoming.map(function (r) { return r.eventId + r.name; }), ctx.seasons, ctx.done.map(function (d) { return d.key; })]);
     if (!force && sig === t1Signature && host.firstChild) { T1.patchCountdowns(host, +t); return; }
     var open = host.querySelector('.t1-menu'); if (open && !force) { T1.patchCountdowns(host, +t); return; }
@@ -2126,6 +2134,8 @@ function renderHomeBrief(t) {
     else if (e.key === 'End') { e.preventDefault(); items[items.length - 1].focus(); }
     else if (e.key === 'Tab') t1CloseMenu(false);
   });
+  document.addEventListener('gofn-season-ready', function () { renderTodayV1(now(), true); });
+  document.addEventListener('gofn-today-done', function () { renderTodayV1(now(), true); });
   window.addEventListener('storage', function (e) { if (e.key === TL.DONE_KEY) renderTodayV1(now(), true); });
   function renderActionCentre() {
     var wrap = $('action-centre'), items = $('action-centre-items'); if (!wrap || !items) return;

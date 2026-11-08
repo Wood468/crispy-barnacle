@@ -476,7 +476,7 @@ with sync_playwright() as p:
                 };
             })();""")
         # These checks exercise the classic Today agenda; the redesigned Today is covered by today_detail_redesign_browser.py and today_done_browser.py.
-        pg.add_init_script("localStorage.setItem('gofn-classic-today','1')")
+        pg.add_init_script("window.__gofnTestClassicToday=true")
         # Event Details sections are tabs now (covered by today_detail_redesign_browser.py). The content assertions below read every section, so reveal all panels.
         pg.add_init_script("""(() => { const show = () => document.querySelectorAll('#evd [role=tabpanel][hidden]').forEach(p => { p.hidden = false; });
           new MutationObserver(show).observe(document, { subtree: true, childList: true, attributes: true, attributeFilter: ['hidden'] }); })()""")
@@ -1360,7 +1360,7 @@ with sync_playwright() as p:
               today_empty_style)
         next_button.click()
         next_page.locator('#evd').wait_for(state='visible')
-        detail_time = next_page.locator('#evd .evd-hero .evc-when').inner_text()
+        detail_time = next_page.locator('#evd .ue-times').inner_text()
         check('Worldwide-local event details keep local-time context visible',
               'Local time wherever you play' in detail_time and 'AEDT' in detail_time,
               detail_time)

@@ -403,12 +403,11 @@
   }
   function hasDetails(ev) { var d = findDetails(ev); return !!(d && d.fields && Object.keys(d.fields).some(function (k) { return (d.fields[k] || []).length; })); }
   function toolbarHtml(ev){
-    var saved=X.isSaved(ev.id);
-    var h = '<div class="evd-bar"><button type="button" class="hbtn" id="evd-x" aria-label="Close event details"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button><span class="tag">EVENT DETAIL</span>'
-      + '<button type="button" class="pill info-open" data-infographic="' + esc(ev.id) + '">▧ Infographic</button>'
-      + '<button type="button" class="pill" data-evlink="' + esc(ev.id) + '" aria-label="Share a link to this event">🔗 Link</button>'
-      + '</div>';
-    return h;
+    var share='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12M8 7l4-4 4 4M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7"/></svg>';
+    var dots='<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="5" cy="12" r="1.4"/><circle cx="12" cy="12" r="1.4"/><circle cx="19" cy="12" r="1.4"/></svg>';
+    return '<div class="evd-bar"><button type="button" class="hbtn" id="evd-x" aria-label="Close event details"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button><span class="tag">EVENT DETAIL</span>'
+      + '<button type="button" class="hbtn" data-evlink="' + esc(ev.id) + '" aria-label="Copy or share a link to this event" title="Copy or share link">' + share + '</button>'
+      + '<button type="button" class="hbtn" data-evmenu="' + esc(ev.id) + '" aria-haspopup="menu" aria-expanded="false" aria-label="More actions" title="More actions">' + dots + '</button></div>';
   }
   function venueHtml(ev,venues){
     if(!venues.length)return '';
@@ -511,7 +510,7 @@
         h=row('Your time',d0.viewer)+row('Local time','Local time wherever you play');
       }else if(model.schedule){
         var r=GOEventClock.range(model.schedule,viewer),d=TL.dualTime(r,vz,viewer);
-        h=row('Your time',d.viewer)+(d.venue?row('Event local ('+(place||d.venueZone)+')',d.venue):'');
+        h=row('Your time',d.viewer)+(d.venue?row('Event local',d.venue):'');
         if(!d.venue&&place&&!vz)h+=row('Location',place);
       }else{
         var pub=model.internalValidation&&model.internalValidation.legacyDates||{};
@@ -519,7 +518,21 @@
       }
     }catch(error){h='';}
     if(!h){var fw=eventWindow(model,ev);if(fw)h=row('When',fw);}
-    return h?'<div class="ue-times" role="group" aria-label="Event times">'+h+'</div>':'';
+    var out=h?'<div class="ue-times evc-when" role="group" aria-label="Event times">'+h+'</div>':'';
+    return out+overviewFacts(model,place);
+  }
+  /* Key facts and debut chips from verified model fields only; absent data is simply not shown. */
+  function overviewFacts(model,place){
+    var facts=[];
+    var priced=(model.tickets||[]).filter(function(t){return t&&t.price&&Number.isFinite(t.price.amount)&&/^[A-Z]{3}$/.test(t.price.currency);})[0];
+    if(priced){try{facts.push(['Ticket',new Intl.NumberFormat('en-AU',{style:'currency',currency:priced.price.currency,currencyDisplay:'code'}).format(priced.price.amount)]);}catch(e){}}
+    else if((model.tickets||[]).length)facts.push(['Tickets','Optional ticket available']);
+    if((model.bonuses||[]).length)facts.push(['Bonuses',String(model.bonuses.length)+(model.bonuses.length===1?' bonus':' bonuses')]);
+    if((model.research||[]).length)facts.push(['Research',String(model.research.length)+(model.research.length===1?' task':' tasks')]);
+    var h=facts.length?'<dl class="ue-facts-grid">'+facts.map(function(f){return '<div><dt>'+esc(f[0])+'</dt><dd>'+esc(f[1])+'</dd></div>';}).join('')+'</dl>':'';
+    var debuts=(model.pokemon||[]).filter(function(p){return p.debut;}).slice(0,6);
+    if(debuts.length)h+='<div class="ue-debuts"><h3 class="ue-mini-h">Debuts</h3><div class="ue-chips">'+debuts.map(function(p){return '<span class="ue-chip">'+esc(displayName(p))+'</span>';}).join('')+'</div></div>';
+    return h;
   }
   function heroWhen(model,ev){return eventWindow(model,ev);}
   function displayName(p){
@@ -531,12 +544,13 @@
     if(p.formId&&!p.costumeId&&!described&&GOLIB.parseForm(p.name).base===p.name)return '<span class="art costume-unavailable ea" role="img" aria-label="'+esc(name+' · form art unavailable')+'"><span>'+esc(name)+'</span><small>Form art unavailable</small></span>';
     return G.art({n:name,costume:!!p.costumeId,label:p.label||p.costumeId,asset:p.assetKey||undefined,dynamax:p.formId==='dynamax'||/-dynamax$/.test(p.formId||'')},'ea');
   }
+  var currentEv=null;
   function render(ev) {
     if(!window.GOEventAdapter || !window.GOEventComponents) return renderLegacy(ev);
     var d=findDetails(ev)||{}, info=findInfo(ev)||{}, snapshot=(DATA.catalogue||[]).find(function(item){return item.eventId===ev.id || item.eventId===String(ev.id).replace(/^cur:/,'') || (item.aliases||[]).indexOf(ev.id)>=0;});
     var model=window.GOEventAdapter.adapt(ev.universalModel || Object.assign({},ev,{id:snapshot?snapshot.eventId:ev.id}),d,info);
     if(snapshot && snapshot.eventId===model.eventId)model=window.GOEventAdapter.retain(snapshot,model);
-    activeModel=model;
+    activeModel=model;currentEv=ev;
     var venues=window.GOPLACES?GOPLACES.forEvent(ev):[];
     var tickets=(info.tickets||[]).map(passCard).join('');
     var pass=ev.season?primary(seasonPage(ev)):'';
@@ -654,10 +668,17 @@
     if(ev.datesKnown===false)return;
     var day = function (v) { return v ? (typeof v === 'string' ? v.slice(0, 10) : new Date(v).toISOString().slice(0, 10)) : ''; };
     fetch('/api/venue-times?name=' + encodeURIComponent(ev.name || '') + '&start=' + encodeURIComponent(day(ev.start)) + '&end=' + encodeURIComponent(day(ev.end)) + venueTimeQuery()).then(function (r) { return r.ok ? r.json() : null; }).then(function (d) {
-      var when = o.querySelector('.evc-when'); if (!d || !d.items || !d.items.length || !when || o.hidden || o.querySelector('.evd-bonus')) return;
-      var p = document.createElement('p'); p.className = 'evd-bonus'; p.style.cssText = 'margin:6px 0;font-weight:600';
-      p.innerHTML = d.items.map(function (i) { return '🎯 ' + (d.items.length > 1 ? esc(String(i.name).replace(/^.* - /, '')) + ': ' : 'Bonuses start ') + (d.items.length > 1 ? 'bonuses start ' : '') + venueTimeLabel(i) + (i.note ? ' <small>(' + esc(i.note) + ')</small>' : ''); }).join('<br>');
-      when.parentNode.insertBefore(p, when.nextSibling);
+      var host = o.querySelector('.ue-times') || o.querySelector('.ue-overview'); if (!d || !d.items || !host || o.hidden || o.querySelector('.evd-bonus')) return;
+      var items = window.GOTODAYLOGIC ? GOTODAYLOGIC.matchVenueTimes(d.items, { name: ev.name, start: day(ev.start), end: day(ev.end) }) : [];
+      if (!items.length) return;
+      var wrap = document.createElement('div'); wrap.className = 'ue-time evd-bonus';
+      items.forEach(function (i) {
+        var unconfirmed = window.GOTODAYLOGIC && GOTODAYLOGIC.venueTimeUnconfirmed(i);
+        var k = document.createElement('span'); k.className = 'k'; k.textContent = unconfirmed ? 'Bonuses (not confirmed)' : 'Bonuses start';
+        var v = document.createElement('span'); v.className = 'v'; v.textContent = String(i.day || '') + ', ' + String(i.show || '') + ' your time' + (i.venueDay && i.venueShow && i.zone ? ' · event local: ' + i.venueDay + ', ' + i.venueShow + ' ' + i.zone : '') + (unconfirmed ? ' (expected; Pokémon GO has not confirmed the hours)' : '');
+        wrap.append(k, v);
+      });
+      host.appendChild(wrap);
     }).catch(function () {});
   }
   /* The same bonus-start time on the cards in the list: cards carry an empty line, filled once the venue times have loaded. */
@@ -672,8 +693,7 @@
       Array.prototype.forEach.call(document.querySelectorAll('.evc-bonus[hidden]:not([data-done])'), function (p) {
         p.setAttribute('data-done', '1');
         var n = p.getAttribute('data-bn') || '', s = p.getAttribute('data-bs') || '', e = p.getAttribute('data-be') || s;
-        var own = items.filter(function (i) { return i.name.toLowerCase() === n.toLowerCase(); });
-        var hit = own.length ? own : (words3(n).split(' ').length < 3 || !s ? [] : items.filter(function (i) { return words3(i.name) === words3(n) && i.date >= shiftDay(s, -1) && i.date <= shiftDay(e || s, 1); }));
+        var hit = window.GOTODAYLOGIC ? GOTODAYLOGIC.matchVenueTimes(items, { name: n, start: s, end: e }) : items.filter(function (i) { return i.name.toLowerCase() === n.toLowerCase(); });
         if (!hit.length) return;
         p.innerHTML = '🎯 Bonuses start ' + hit.slice(0, 3).map(function (i) { return (hit.length > 1 ? esc(String(i.name).replace(/^.* - /, '')) + ' ' : '') + venueTimeLabel(i); }).join(' · ') + (hit.length === 1 && hit[0].note ? ' <small>(' + esc(hit[0].note) + ')</small>' : '');
         p.style.cssText = 'margin:4px 0;font-weight:600'; p.hidden = false;
@@ -702,6 +722,8 @@
       o.hidden = false; document.body.style.overflow = 'hidden'; o.scrollTop = 0;
       if (!wasOpen && window.GONAV) window.GONAV.push();
       var x = $('evd-x'); if (x) { x.addEventListener('click', function () { close(); }); x.focus(); }
+      var tl = o.querySelector('.evd-tabs'); if (tl) tabEdges(tl);
+      var bar = o.querySelector('.evd-bar'); if (bar) o.style.setProperty('--evd-bar-h', bar.offsetHeight + 'px');
     });
   }
   document.addEventListener('click', function (e) {
@@ -746,12 +768,17 @@
   });
   /* Section tabs: one panel at a time, roving tabindex, arrow/Home/End keys. */
   function selectTab(tab,focus){
-    var list=tab.closest('[role=tablist]'),root=list.parentNode;
+    var list=tab.closest('[role=tablist]'),root=list.closest('.evd-in')||list.parentNode;
     list.querySelectorAll('[role=tab]').forEach(function(t){var on=t===tab;t.setAttribute('aria-selected',String(on));t.tabIndex=on?0:-1;});
     root.querySelectorAll('[role=tabpanel]').forEach(function(p){p.hidden=p.id!==tab.getAttribute('aria-controls');});
-    if(focus)tab.focus();
-    var o=$('evd');if(o)o.scrollTop=Math.min(o.scrollTop,list.offsetTop);
+    if(focus)tab.focus({preventScroll:true});
+    list.scrollTo({left:tab.offsetLeft-(list.clientWidth-tab.clientWidth)/2,behavior:'smooth'});
+    tabEdges(list);
+    var o=$('evd');if(o){var wrap=list.parentNode,top=wrap.offsetTop;if(o.scrollTop>top)o.scrollTop=top;}
   }
+  function tabEdges(list){var w=list.parentNode;w.classList.toggle('has-left',list.scrollLeft>4);w.classList.toggle('has-right',list.scrollLeft+list.clientWidth<list.scrollWidth-4);}
+  document.addEventListener('scroll',function(e){if(e.target&&e.target.classList&&e.target.classList.contains('evd-tabs'))tabEdges(e.target);},true);
+  window.addEventListener('resize',function(){var l=document.querySelector('#evd .evd-tabs');if(l)tabEdges(l);});
   document.addEventListener('click',function(e){var t=e.target.closest&&e.target.closest('.evd-tab');if(t)selectTab(t,false);});
   document.addEventListener('keydown',function(e){
     var t=e.target.closest&&e.target.closest('.evd-tab');if(!t)return;
@@ -759,6 +786,28 @@
     if(e.key==='ArrowRight')n=(i+1)%tabs.length;else if(e.key==='ArrowLeft')n=(i-1+tabs.length)%tabs.length;else if(e.key==='Home')n=0;else if(e.key==='End')n=tabs.length-1;
     if(n<0)return;e.preventDefault();selectTab(tabs[n],true);
   });
+  /* Event overflow menu: infographic, open source, mark done (Today). */
+  function closeEvMenu(restore){var m=document.querySelector('.evd-menu');if(!m)return;var b=m.parentNode.querySelector('[data-evmenu]');m.remove();if(b){b.setAttribute('aria-expanded','false');if(restore)b.focus();}}
+  document.addEventListener('click',function(e){
+    var mb=e.target.closest&&e.target.closest('[data-evmenu]');
+    if(!mb){if(!(e.target.closest&&e.target.closest('.evd-menu')))closeEvMenu(false);return;}
+    var was=mb.getAttribute('aria-expanded')==='true';closeEvMenu(false);if(was||!currentEv)return;
+    var ev=currentEv,src=safe(ev.link)||'',m=document.createElement('div');m.className='evd-menu';m.setAttribute('role','menu');
+    m.innerHTML='<button type="button" role="menuitem" class="evd-menuitem" data-infographic="'+esc(ev.id)+'">Infographic</button>'+(src?'<a role="menuitem" class="evd-menuitem" href="'+esc(src)+'" target="_blank" rel="noopener noreferrer">Open source</a>':'')+'<button type="button" role="menuitem" class="evd-menuitem" data-evdone="'+esc(ev.id)+'">Mark done on Today</button>';
+    mb.parentNode.appendChild(m);mb.setAttribute('aria-expanded','true');m.querySelector('[role=menuitem]').focus();
+  });
+  document.addEventListener('click',function(e){
+    var d=e.target.closest&&e.target.closest('[data-evdone]');if(!d||!currentEv||!window.GOTODAYLOGIC)return;
+    var ev=currentEv,ok=false;try{ok=!!GOTODAYLOGIC.markDone(window.localStorage,ev.id,ev.start,ev.end,Date.now());}catch(x){}
+    closeEvMenu(false);toast(ok?'Hidden from Today. It stays in Schedule.':'Could not save on this device');
+    try{document.dispatchEvent(new Event('gofn-today-done'));}catch(x){}
+  });
+  document.addEventListener('keydown',function(e){var m=document.querySelector('.evd-menu');if(!m)return;
+    var items=[].slice.call(m.querySelectorAll('[role=menuitem]')),i=items.indexOf(document.activeElement);
+    if(e.key==='Escape'){e.preventDefault();e.stopImmediatePropagation();closeEvMenu(true);}
+    else if(e.key==='ArrowDown'){e.preventDefault();items[(i+1)%items.length].focus();}
+    else if(e.key==='ArrowUp'){e.preventDefault();items[(i-1+items.length)%items.length].focus();}
+  },true);
   /* Pokémon info sheet: accessible dialog with focus trap, Escape and focus return. */
   var sheetOpener=null;
   function closeSheet(){var sh=$('ue-sheet');if(!sh)return;sh.remove();if(sheetOpener&&sheetOpener.isConnected)sheetOpener.focus();sheetOpener=null;}

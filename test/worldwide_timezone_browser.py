@@ -73,7 +73,7 @@ with sync_playwright() as p:
   assert '6 Nov' in page.locator('#evd-rotations').inner_text()
   assert 'Tokyo' in page.locator('#evd').inner_text() and 'Sendai' in page.locator('#evd').inner_text()
   close_event();open_event(VENUE['eventId'])
-  assert 'Venue:' in page.locator('#evd .evc-when').inner_text()
+  assert 'event local' in page.locator('#evd .evc-when').inner_text().lower(),page.locator('#evd').inner_text()[:400]
   assert page.evaluate("GOEventRegistry.display(GOEventRegistry.find('synthetic-tokyo-venue')).start.toISOString()")=='2026-11-07T05:00:00.000Z'
   close_event();open_event(PLAYER['eventId'])
   ics=page.locator('#evd a[download]').get_attribute('href')
