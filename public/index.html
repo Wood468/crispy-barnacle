@@ -17,8 +17,9 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&family=Hanken+Grotesk:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap">
 <link rel="stylesheet" href="/styles.css?v=20261102b">
 <link rel="stylesheet" href="/dash.css?v=20261108b">
-<link rel="stylesheet" href="/event-redesign.css?v=20261108a">
-<link rel="preload" href="/dash.js?v=20261108c" as="script">
+<link rel="stylesheet" href="/event-redesign.css?v=20261108b">
+<link rel="stylesheet" href="/today.css?v=20261108a">
+<link rel="preload" href="/dash.js?v=20261108d" as="script">
 </head>
 <body>
 <div class="wrap">
@@ -46,6 +47,17 @@
     <section class="panel" id="tab-now" role="tabpanel">
       <div id="prio" class="legacy-test-hook" aria-live="polite" aria-hidden="true" inert></div>
       <details class="dd" id="shdd" hidden><summary>Shiny hunting <span class="cnt" id="shcnt"></span></summary><div class="body"><label><input type="checkbox" id="shhide" checked> Hide ones I already have as a shiny</label><div id="shlist" class="dexlist"></div></div></details>
+      <div id="today-v1" class="t1" aria-busy="true"><p class="t1-loading" role="status">Getting your day ready…</p></div>
+      <div class="today-extras">
+        <section class="agenda-section" id="weekly-sec" aria-labelledby="weekly-title" hidden>
+          <h2 class="sec2" id="weekly-title">Infographics</h2>
+          <div id="weekly" class="weekly-row"></div>
+        </section>
+        <section class="agenda-section" id="buy-sec" hidden>
+          <details class="buyplan"><summary>Purchase planner <small>tickets and passes in the web store</small></summary><div id="buy-body"></div></details>
+        </section>
+      </div>
+      <div id="today-legacy" class="today-legacy">
       <div class="today-top" id="today-top">
         <section class="day-brief" id="day-brief" aria-label="Daily overview" tabindex="-1">
           <strong class="day-brief-title" id="day-brief-title">Getting your day ready</strong>
@@ -84,13 +96,6 @@
           <p class="sub" style="margin:0 0 8px">Live and upcoming events with Pokémon you still need or follow.</p>
           <div id="foryou" class="event-agenda"></div>
         </section>
-        <section class="agenda-section" id="weekly-sec" aria-labelledby="weekly-title" hidden>
-          <h2 class="sec2" id="weekly-title">Infographics</h2>
-          <div id="weekly" class="weekly-row"></div>
-        </section>
-        <section class="agenda-section" id="buy-sec" hidden>
-          <details class="buyplan"><summary>Purchase planner <small>tickets and passes in the web store</small></summary><div id="buy-body"></div></details>
-        </section>
         </div>
       </div>
       <div id="seasonbar" class="seasonbar" hidden role="group" aria-label="Season and GO Pass"></div>
@@ -110,6 +115,8 @@
           <div id="home-later" class="event-agenda"></div>
         </details>
       </section>
+
+      </div>
 
       <p class="note">Times are local to wherever you are playing.</p>
     </section>
@@ -507,10 +514,12 @@
 <script src="/lib.js?v=20261108a"></script>
 <script src="/event-clock.js?v=20261108b"></script>
 <script src="/timezone.js?v=20261108b"></script>
+<script src="/today-logic.js?v=20261108a"></script>
+<script src="/today.js?v=20261108a"></script>
 <script src="/event-contract.js?v=20261107b"></script>
 <script src="/event-view.js?v=20261107b"></script>
 <script src="/event-adapter.js?v=20261108b"></script>
-<script src="/event-components.js?v=20261108c"></script>
+<script src="/event-components.js?v=20261108d"></script>
 <script src="/event-identity.js?v=20261107a"></script>
 <script src="/event-policy.js?v=20261107a"></script>
 <script src="/event-catalogue.js?v=20261107b"></script>
@@ -519,7 +528,7 @@
 <script src="/local-state.js?v=20261030a"></script>
 <script src="/account.js?v=20261102a"></script>
 <script src="/dedupe.js?v=20261101b"></script>
-<script src="/app.js?v=20261108c"></script>
+<script src="/app.js?v=20261108d"></script>
 <script src="/raid-share.js?v=20261102b"></script>
 <script src="/store.js?v=20261102a"></script>
 <script src="/season.js?v=20261107b"></script>

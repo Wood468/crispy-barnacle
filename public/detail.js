@@ -498,6 +498,30 @@
       return 'Your time: '+inZone(viewer)+(model.schedule.timeBasis==='local'&&model.schedule.timeZone!==viewer?' · Venue: '+inZone(model.schedule.timeZone):'');
     }catch(error){return 'Time needs confirmation in your selected time zone.';}
   }
+  /* Overview times: the viewer's time and the event location's own time, each labelled with its zone. DST-safe (Intl + IANA zones). */
+  function overviewTimes(model,ev) {
+    var TL=window.GOTODAYLOGIC; if(!TL)return '';
+    function row(k,v,cls){return '<div class="ue-time'+(cls?' '+cls:'')+'"><span class="k">'+esc(k)+'</span><span class="v">'+esc(v)+'</span></div>';}
+    var place=(typeof model.location==='string'?model.location:model.location&&model.location.name)||ev.region||ev.place||'';
+    var vz=TL.venueZone({tz:ev.tz||ev.timeZone||(model.schedule&&model.schedule.timeBasis==='local'?model.schedule.timeZone:''),place:place});
+    var viewer=GOEventClock.viewerZone(),h='';
+    try{
+      if(model.schedule&&model.schedule.timeBasis==='player-local'){
+        var r0=GOEventClock.range(model.schedule,viewer),d0=TL.dualTime(r0,'',viewer);
+        h=row('Your time',d0.viewer)+row('Local time','Local time wherever you play');
+      }else if(model.schedule){
+        var r=GOEventClock.range(model.schedule,viewer),d=TL.dualTime(r,vz,viewer);
+        h=row('Your time',d.viewer)+(d.venue?row('Event local ('+(place||d.venueZone)+')',d.venue):'');
+        if(!d.venue&&place&&!vz)h+=row('Location',place);
+      }else{
+        var pub=model.internalValidation&&model.internalValidation.legacyDates||{};
+        if(/^\d{4}-\d{2}-\d{2}$/.test(pub.start||'')){var vd=TL.venueDays(pub.start,pub.end||pub.start,vz,viewer);h=row(vz?'Event local dates ('+vd.venueLabel+')':'Dates',vd.days)+(vd.viewerLine?row('Your time',vd.viewerLine):'')+row('Hours','Event times to be confirmed');}
+      }
+    }catch(error){h='';}
+    if(!h){var fw=eventWindow(model,ev);if(fw)h=row('When',fw);}
+    return h?'<div class="ue-times" role="group" aria-label="Event times">'+h+'</div>':'';
+  }
+  function heroWhen(model,ev){return eventWindow(model,ev);}
   function displayName(p){
     if(p.costumeId)return p.name;
     return GOEventAdapter.collectionName(p) || (GOLIB.parseForm(p.name).base!==p.name?p.name:p.name+(p.label?' ('+p.label+')':p.formId?' ('+p.formId+')':''));
@@ -524,7 +548,7 @@
     var footer='<details class="ue-sources" id="evd-sources"><summary>Sources &amp; updates</summary>'+(heldUpdate?'<p class="note">The latest event update was held. Showing the last available information.</p>':'')+(DATA.incomplete?'<p class="note">Some supplementary event information could not be loaded. Showing the available announcement. Reload to try again.</p>':'')+'<ul>'+sources+'</ul>'+(conflicts?'<h4>Details to recheck</h4><ul>'+conflicts+'</ul>':'')+(d.updated?'<p class="note">Last update '+esc(String(d.updated).slice(0,10))+'</p>':'')+(d.goPassParseWarning?'<p class="note">The last complete GO Pass rewards have been retained while the latest update is checked.'+(d.goPassRetainedAt?' Saved rank snapshot: '+esc(String(d.goPassRetainedAt).slice(0,10))+'.':'')+'</p>':'')+'</details>';
     return window.GOEventComponents.render(model,{
       toolbar:toolbarHtml(ev).replace('<span class="tag">EVENT DETAIL</span>',''),clock:window.GOEventClock,viewerZone:GOEventClock.viewerZone(),safe:safe,rewardArt:function(item){return exactArt(GOEventAdapter.pokemon({name:item.name,costume:!!item.costume,label:item.label,formId:item.formId,costumeId:item.costumeId,asset:item.assetKey}));},banner:(ev.img||model.image)?seasonBannerHtml(ev):'',heroArt:model.pokemon.slice(0,3).map(exactArt).join(''),
-      when:eventWindow(model,ev),countdown:model.schedule&&model.lifecycle!=='cancelled'&&model.lifecycle!=='postponed'&&ev.datesKnown!==false?X.countdown(ev):'',
+      when:heroWhen(model,ev),overview:overviewTimes(model,ev),artKind:function(p){var c=window.GOTODAYLOGIC&&GOTODAYLOGIC.classifyArt({name:displayName(p),costume:!!p.costumeId});return c&&c.exact?c.label||'Form':'';},countdown:model.schedule&&model.lifecycle!=='cancelled'&&model.lifecycle!=='postponed'&&ev.datesKnown!==false?X.countdown(ev):'',
       nameFor:displayName,art:G.art,artFor:exactArt,bonus:G.bonusChip,
       actions:'<div class="evd-btns">'+(calendar&&model.lifecycle!=='cancelled'&&model.lifecycle!=='postponed'?'<a class="pill all" download="event.ics" href="'+icsFor(calendar)+'">Add to calendar</a>':'')+'</div>',
       research:primary(researchTasksHtml(ev,d)),passes:pass,tickets:primary(tickets),moves:primary(evMovesHtml(ev,!model.bonuses.length)),
@@ -720,6 +744,40 @@
     if (e.shiftKey && (active === first || !o.contains(active))) { e.preventDefault(); last.focus(); }
     else if (!e.shiftKey && (active === last || !o.contains(active))) { e.preventDefault(); first.focus(); }
   });
+  /* Section tabs: one panel at a time, roving tabindex, arrow/Home/End keys. */
+  function selectTab(tab,focus){
+    var list=tab.closest('[role=tablist]'),root=list.parentNode;
+    list.querySelectorAll('[role=tab]').forEach(function(t){var on=t===tab;t.setAttribute('aria-selected',String(on));t.tabIndex=on?0:-1;});
+    root.querySelectorAll('[role=tabpanel]').forEach(function(p){p.hidden=p.id!==tab.getAttribute('aria-controls');});
+    if(focus)tab.focus();
+    var o=$('evd');if(o)o.scrollTop=Math.min(o.scrollTop,list.offsetTop);
+  }
+  document.addEventListener('click',function(e){var t=e.target.closest&&e.target.closest('.evd-tab');if(t)selectTab(t,false);});
+  document.addEventListener('keydown',function(e){
+    var t=e.target.closest&&e.target.closest('.evd-tab');if(!t)return;
+    var tabs=[].slice.call(t.parentNode.querySelectorAll('[role=tab]')),i=tabs.indexOf(t),n=-1;
+    if(e.key==='ArrowRight')n=(i+1)%tabs.length;else if(e.key==='ArrowLeft')n=(i-1+tabs.length)%tabs.length;else if(e.key==='Home')n=0;else if(e.key==='End')n=tabs.length-1;
+    if(n<0)return;e.preventDefault();selectTab(tabs[n],true);
+  });
+  /* Pokémon info sheet: accessible dialog with focus trap, Escape and focus return. */
+  var sheetOpener=null;
+  function closeSheet(){var sh=$('ue-sheet');if(!sh)return;sh.remove();if(sheetOpener&&sheetOpener.isConnected)sheetOpener.focus();sheetOpener=null;}
+  document.addEventListener('click',function(e){
+    var sh=$('ue-sheet');
+    if(sh&&(e.target.closest('[data-sheet-close]')||e.target===sh)){closeSheet();return;}
+    var b=e.target.closest&&e.target.closest('.ue-mon[data-info]');if(!b)return;
+    var info={};try{info=JSON.parse(b.getAttribute('data-info'));}catch(x){}
+    closeSheet();sheetOpener=b;
+    var d=document.createElement('div');d.id='ue-sheet';d.className='ue-sheet';
+    d.innerHTML='<div class="ue-sheet-card" role="dialog" aria-modal="true" aria-labelledby="ue-sheet-t"><div class="ue-sheet-art">'+b.querySelector('.ue-mon-art').innerHTML+'</div><h3 id="ue-sheet-t">'+esc(info.name||'')+'</h3><p class="ue-sheet-m">'+esc([info.method,info.badge].filter(Boolean).join(' · '))+'</p>'
+      +(info.form?'<p class="ue-sheet-f">Special form: '+esc(info.form)+'</p>':'')+(info.signals&&info.signals.length?'<p>'+info.signals.map(esc).join(' · ')+'</p>':'')+(info.meta&&info.meta.length?'<p class="ue-sheet-m">'+info.meta.map(esc).join(' · ')+'</p>':'')+'<button type="button" class="pill all" data-sheet-close>Close</button></div>';
+    (($('evd'))||document.body).appendChild(d);d.querySelector('[data-sheet-close]').focus();
+  });
+  document.addEventListener('keydown',function(e){
+    var sh=$('ue-sheet');if(!sh)return;
+    if(e.key==='Escape'){e.stopImmediatePropagation();e.preventDefault();closeSheet();}
+    else if(e.key==='Tab'){e.stopImmediatePropagation();e.preventDefault();sh.querySelector('[data-sheet-close]').focus();}
+  },true);
   window.GOEVD = { close: close };
   document.addEventListener('gofn-state', function () { var o = $('evd'); if (o && !o.hidden) { var s = o.querySelector('[data-save]'); if (s) { var on = X.isSaved(s.dataset.save); s.classList.toggle('on', on); s.textContent = on ? '★' : '☆'; s.setAttribute('aria-pressed', on); var l = o.querySelector('.evd-lead'); if (l) l.hidden = !on; } } });
   document.addEventListener('change', function (e) { var sel = e.target.closest && e.target.closest('select[data-lead]'); if (!sel) return; var v = sel.value; X.usSet('pref:lead:' + sel.getAttribute('data-lead'), v === '' ? null : v); });

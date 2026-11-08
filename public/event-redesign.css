@@ -146,3 +146,40 @@
 .evd-in:has(.ue-hero) .ue-ticket-more{padding:0 10px;border:1px solid var(--color-border);border-radius:10px}
 .evd-in:has(.ue-hero) .ue-ticket-more>summary{min-height:44px;display:flex;align-items:center;cursor:pointer;color:var(--color-link);font:750 .76rem var(--font-body)}
 .evd-in:has(.ue-hero) .ue-ticket-more .ue-ticket-facts{padding-bottom:10px}
+
+/* Release 1: section tabs, times, Pokémon tiles and info sheet */
+.evd-tabs{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin:var(--space-3) 0;padding:2px 0}
+.evd-tabs::-webkit-scrollbar{display:none}
+.evd-tab{flex:0 0 auto;min-height:44px;padding:0 var(--space-4);border-radius:var(--radius-pill);border:1px solid var(--border-subtle,var(--color-border));background:var(--color-surface);color:var(--color-text-body);font-weight:700;font-size:var(--type-body-compact);cursor:pointer}
+.evd-tab[aria-selected="true"]{background:linear-gradient(135deg,#7b5cff,#5b3fd6);border-color:transparent;color:#fff}
+.evd-panel{display:grid;gap:var(--space-4);min-width:0}
+.evd-panel[hidden]{display:none}
+.ue-times{display:grid;gap:6px}
+.ue-time{display:grid;grid-template-columns:minmax(0,7.5rem) minmax(0,1fr);gap:var(--space-3);padding:var(--space-3);border-radius:var(--radius-md);border:1px solid var(--color-border);background:var(--color-surface)}
+.ue-time .k{font-size:var(--type-meta);font-weight:700;color:var(--color-text-muted)}
+.ue-time .v{font-weight:700;font-size:var(--type-body-compact);overflow-wrap:anywhere}
+.ue-more-note{padding:var(--space-3);border-radius:var(--radius-md);border:1px dashed var(--color-border);color:var(--color-text-muted);font-size:var(--type-body-compact)}
+.ue-summary{margin:0}
+.ue-gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--space-2)}
+button.ue-mon{display:grid;justify-items:center;align-content:start;gap:4px;min-height:44px;padding:8px 4px;text-align:center;color:inherit;font:inherit;cursor:pointer;border:1px solid var(--color-border);border-radius:14px;background:var(--color-surface)}
+button.ue-mon b{font-size:var(--type-meta);line-height:1.15;overflow-wrap:anywhere}
+button.ue-mon .ue-mon-art{height:78px;width:100%}
+button.ue-mon .ue-signals{display:flex;flex-wrap:wrap;justify-content:center;gap:3px}
+.ue-badge{font-size:.62rem;font-weight:800;letter-spacing:.04em;text-transform:uppercase;padding:2px 7px;border-radius:var(--radius-pill);background:var(--color-surface-raised);border:1px solid var(--color-border)}
+.ue-b-raid{background:var(--color-kind-raid);color:#fff;border-color:transparent}
+.ue-b-max{background:var(--color-kind-max-battle);color:#fff;border-color:transparent}
+.ue-b-egg{background:#3a4254;color:#fff}
+.ue-km-2{background:#2f9e5b;color:#fff}.ue-km-5{background:#e8590c;color:#fff}.ue-km-7{background:#c9a400;color:#1d1700}.ue-km-10{background:#7b5cff;color:#fff}.ue-km-12{background:#d7373c;color:#fff}
+@media (prefers-reduced-motion:no-preference){button.ue-mon-featured .ue-mon-art .art{animation:uefloat 3.2s ease-in-out infinite}}
+@keyframes uefloat{50%{transform:translateY(-3px)}}
+.ue-sheet{position:fixed;inset:0;z-index:1400;display:grid;align-items:end;background:rgba(0,0,0,.55)}
+.ue-sheet-card{display:grid;gap:var(--space-2);justify-items:center;text-align:center;padding:var(--space-5) var(--space-4) calc(var(--space-5) + env(safe-area-inset-bottom,0px));border-radius:var(--radius-xl) var(--radius-xl) 0 0;background:var(--color-surface);border-top:1px solid var(--color-border)}
+.ue-sheet-art .art,.ue-sheet-art .art-fb{width:112px;height:112px;object-fit:contain}
+.ue-sheet-card h3{font-size:1.5rem}
+.ue-sheet-m{color:var(--color-text-muted);font-size:var(--type-body-compact)}
+.evd-in:has(.ue-hero) .ue-gallery{grid-template-columns:repeat(3,minmax(0,1fr))}
+.evd-in:has(.ue-hero) .ue-gallery button.ue-mon{grid-template-rows:auto;padding:8px 4px;gap:4px}
+.evd-in:has(.ue-hero) .ue-gallery button.ue-mon .ue-mon-art{height:72px;background:none}
+.evd-in:has(.ue-hero) .ue-gallery button.ue-mon .ue-mon-art :is(.art.ea,.max-art .art.ea){width:68px;height:68px}
+@media(max-width:560px){.evd-in:has(.ue-hero) .ue-hero-media{height:136px;min-height:136px}.evd-in:has(.ue-hero) .ue-hero .evd-art :is(.art.ea,.max-art .art.ea),.evd-in:has(.ue-hero) .ue-hero .evd-art:has(> :nth-child(3)) :is(.art.ea,.max-art .art.ea){width:104px;height:104px}}
+@media(min-width:760px){.evd-in:has(.ue-hero) .ue-gallery{grid-template-columns:repeat(4,minmax(0,1fr))}}

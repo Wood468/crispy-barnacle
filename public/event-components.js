@@ -23,7 +23,10 @@ function gallery(model,ctx){
    if(edge.access&&edge.access!=='all'&&edge.access!=='unknown')signals.push('<span class="ue-signal">'+esc(edge.access)+'</span>');
    var art=ctx.artFor?ctx.artFor(p):ctx.art?ctx.art({n:name,costume:!!p.costumeId,label:label,asset:p.assetKey},'ea'):'';
    var meta=[p.costumeId&&label?label:'',activityLabel,activity&&activity.schedule?activityTime(activity,ctx):'',activityPlace(activity)].filter(Boolean);
-   return '<article class="ue-mon" data-identity="'+esc(p.key)+'"><div class="ue-mon-art">'+art+'</div><div class="ue-mon-copy"><b>'+esc(name)+'</b>'+(meta.length?'<small>'+meta.map(esc).join(' · ')+'</small>':'')+(signals.length?'<div class="ue-signals">'+signals.join('')+'</div>':'')+'</div></article>';
+   var kind=ctx.artKind?ctx.artKind(p):'',stars=method==='raid'?((/(\d)-star/i.exec(model.title||'')||[])[1]||''):'',km=method==='egg'?((/(\d{1,2})\s?km/i.exec([activityLabel,p.label,edge.access].join(' '))||[])[1]||''):'';
+   var badge='<span class="ue-badge ue-b-'+method+(km?' ue-km-'+km:'')+'">'+(km?km+' km':method==='egg'?'Egg':method==='raid'&&stars?stars+'★ Raid':({wild:'Wild',raid:'Raid',max:'Max',incense:'Incense',research:'Research',lure:'Lure',photobomb:'Snapshot',other:'Featured'})[method])+'</span>';
+   var short=({wild:'Wild',raid:'Raid',max:'Max Battle',egg:'Egg',incense:'Incense',research:'Research',lure:'Lure',photobomb:'Snapshot',other:'Featured'})[method];var info={name:name,method:short,badge:km?km+' km egg':stars?stars+'-star raid':'',meta:meta,signals:signals.map(function(x){return x.replace(/<[^>]+>/g,'');}),form:kind};
+   return '<button type="button" class="ue-mon'+(p.debut||p.boostedShiny?' ue-mon-featured':'')+'" data-identity="'+esc(p.key)+'" data-info="'+esc(JSON.stringify(info))+'" aria-haspopup="dialog" aria-label="'+esc(name+', '+(info.badge||short)+'. Show details')+'"><span class="ue-mon-art">'+art+'</span><b>'+esc(name)+'</b>'+badge+(signals.length?'<span class="ue-signals">'+signals.join('')+'</span>':'')+'</button>';
   }).join('');
   return cards?'<div class="ue-method" data-method="'+method+'">'+(method==='other'&&Object.keys(model.groups).every(function(k){return k==='other'||!model.groups[k].length;})?'':'<h4>'+METHODS[method]+'</h4>')+'<div class="ue-gallery">'+cards+'</div></div>':'';
  }).join('');
@@ -114,7 +117,19 @@ function render(model,ctx){ctx=ctx||{};var view=V.project(model),fields=model.in
  }
  var hasSources=/\bid=["']evd-sources["']/.test(sources);
  var jumps=nav+(more?'<a href="#evd-information">Details</a>':'')+(hasSources?'<a href="#evd-sources">Sources</a>':'');
- return (ctx.toolbar||'')+hero+cancelled+conflict+(jumps?'<nav class="evd-jump" aria-label="Jump to event details">'+jumps+'</nav>':'')+(ctx.actions||'')+content+more+sources;
+
+ var panels=[],label={encounters:'Pokémon',bonuses:'Bonuses',research:'Research',passes:'GO Pass',tickets:'Tickets'};
+ var incomplete=!selected.length&&!info.length;
+ var overview=(ctx.overview||'')+(info.length?'<ul class="ue-facts ue-summary">'+info.slice(0,3).map(function(t){return '<li>'+esc(t)+'</li>';}).join('')+'</ul>':'')+(incomplete||model.completeness==='partial'?'<p class="ue-more-note" role="note">More details to come. Only verified information is shown.</p>':'');
+ panels.push({id:'overview',label:'Overview',html:'<div class="ue-overview">'+(cancelled||'')+conflict+overview+(ctx.actions||'')+'</div>'});
+ ['encounters','bonuses','research','passes','tickets'].forEach(function(k){if(selected.indexOf(k)>=0&&body[k]&&(k!=='bonuses'||body[k].indexOf('class="ue-bonus')>=0))panels.push({id:k,label:label[k],html:body[k]});});
+ var sched=(selected.indexOf('rotations')>=0?body.rotations:'')+(selected.indexOf('schedule')>=0?body.schedule:'');
+ if(sched)panels.splice(Math.min(panels.length,2),0,{id:'schedule',label:'Schedule',html:sched});
+ var detailsHtml=more+(hasSources?(sources||''):'').replace('<details class="ue-sources"','<details class="ue-sources" open');
+ if(detailsHtml.trim())panels.push({id:'details',label:'Details & sources',html:detailsHtml});
+ var tablist='<div class="evd-tabs" role="tablist" aria-label="Event sections">'+panels.map(function(t,i){return '<button type="button" role="tab" class="evd-tab" id="evd-tab-'+t.id+'" aria-controls="evd-panel-'+t.id+'" aria-selected="'+(i===0)+'" tabindex="'+(i===0?0:-1)+'" data-tab="'+t.id+'">'+esc(t.label)+'</button>';}).join('')+'</div>';
+ var tabpanels=panels.map(function(t,i){return '<div class="evd-panel" role="tabpanel" id="evd-panel-'+t.id+'" aria-labelledby="evd-tab-'+t.id+'" tabindex="0"'+(i?' hidden':'')+'>'+t.html+'</div>';}).join('');
+ return (ctx.toolbar||'')+hero+tablist+tabpanels;
 }
 return {render:render,gallery:gallery,rotations:function(model,ctx){return scheduledActivities(model,ctx,'rotation');}};
 }));

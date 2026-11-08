@@ -1957,10 +1957,177 @@ function renderHomeBrief(t) {
     var fyIds = {}; fy.forEach(function (e) { fyIds[e.id] = 1; });
     renderHomeBrief(t);
     renderHomeToday(t, true);
+    renderTodayV1(t, false);
     fill('week', thisWeek, 'No further events are scheduled in the next seven days.');
     fill('spot', nextWeek, 'No events are scheduled for next week yet.', 'agenda-next-count');
     fill('home-later', later, 'No later events are scheduled for the rest of this month yet.', 'agenda-later-count');
   }
+  /* ---------- Today v1 (Release 1): glance, confirmed shiny boosts, Happening now, Starting soon, Next 7 days, Season / GO Pass ---------- */
+  var T1 = window.GOTODAY, TL = window.GOTODAYLOGIC;
+  try { if (window.localStorage.getItem('gofn-classic-today') === '1') document.documentElement.classList.add('classic-today'); } catch (e) { }
+  function t1Storage() { try { return window.localStorage; } catch (e) { return null; } }
+  function t1Done() { var s = t1Storage(); return s ? TL.readDone(s) : {}; }
+  function t1IsDone(map, id, start) { return TL.isDone(map, id, start); }
+  /* Explicit boosts only: a boosted-shiny highlight, a label that says the odds are boosted, or boostedShiny === true. Ordinary shiny availability is never promoted. */
+  function t1BoostRecords(t) {
+    var live = [], upcoming = [], seen = Object.create(null), horizon = addDays(startOfDay(t), 7);
+    function add(list, ev, name, artItem, kindKey) {
+      name = String(name || '').replace(/\s+/g, ' ').trim();
+      if (!name || name.length > 72 || ev.status === 'conflicting' || ev.status === 'datamined' || !shinySource(ev)) return;
+      TL.splitNames(name).forEach(function (n) {
+        var key = kindKey + '|' + n.toLowerCase(); if (seen[key]) return; seen[key] = 1;
+        list.push({ event: ev, eventId: ev.id, eventName: ev.name, name: n, art: Object.assign({}, artItem || {}, { shiny: true }) });
+      });
+    }
+    EV.forEach(function (ev) {
+      var ph = phase(ev, t);
+      if (ph === 'ended' || ev.long || kindHidden(ev.kind) || isHidden(ev.id) || !announced(ev)) return;
+      if (ph === 'soon' && ev.start >= horizon) return;
+      var target = ph === 'live' ? live : upcoming, kindKey = ph === 'live' ? 'l' : 'u';
+      (ev.highlights || []).forEach(function (h) {
+        if (!h || TL.shinyKind(h) !== 'boosted' || (ph === 'live' && !shinyWindowActive(h, t))) return;
+        var name = String(h.label || '').replace(/^BOOSTED SHINY\s*[·:–-]\s*/i, '').replace(/\s*\(.*\)\s*$/, '').trim() || h.pokemon || h.name || '';
+        var match = (ev.featured || []).filter(function (f) { return f && String(f.name || '').toLowerCase() === name.toLowerCase(); })[0];
+        add(target, ev, name, match, kindKey);
+      });
+      (ev.featured || []).forEach(function (f) {
+        if (!f || TL.shinyKind(f) !== 'boosted' || (ph === 'live' && !shinyWindowActive(f, t))) return;
+        add(target, ev, f.name, f, kindKey);
+      });
+    });
+    return { live: live.slice(0, 12), upcoming: upcoming.slice(0, 8) };
+  }
+  function t1Overseas(place) { return !!place && !/australia|melbourne|victoria|sydney|brisbane|perth|adelaide/i.test(place); }
+  function t1PlaceKey(place) { return String(place || '').toLowerCase().split(/[,(]/)[0].trim(); }
+  function t1Ctx(t) {
+    var done = t1Done(), tn = +t, soonEnd = tn + 864e5, weekEnd = tn + 7 * 864e5;
+    function visible(ev) { return announced(ev) && !ev.long && !isHidden(ev.id) && !kindHidden(ev.kind); }
+    var live = [], soon = [], week = [], hiddenDone = [];
+    EV.forEach(function (ev) {
+      if (!visible(ev)) return;
+      var ph = phase(ev, t);
+      if (ph === 'ended') return;
+      var isDoneNow = t1IsDone(done, ev.id, ev.start);
+      if (isDoneNow) { if (ph === 'live' || +ev.start - tn < 7 * 864e5) hiddenDone.push({ key: TL.doneKey(ev.id, ev.start), name: ev.name, when: ph === 'live' ? 'Live now' : fmtD(ev.start) }); return; }
+      if (ph === 'live') live.push(ev); else if (ev.start <= soonEnd) soon.push(ev); else if (ev.start <= weekEnd) week.push(ev);
+    });
+    soon.sort(function (a, b) { return a.start - b.start; }); week.sort(function (a, b) { return a.start - b.start; });
+    var evPlaces = EV.filter(function (ev) { return ev.region && (phase(ev, t) !== 'ended') && !/^global$/i.test(ev.region); });
+    function covered(r) {
+      var key = t1PlaceKey(r.place); if (!key) return false;
+      return evPlaces.some(function (ev) { return ev.start <= r.end && ev.end >= r.start && String(ev.region).toLowerCase().indexOf(key.split(' ')[0]) >= 0; });
+    }
+    var regLive = [], regSoon = [], regWeek = [];
+    regList().forEach(function (r) {
+      if (r.long || r.scope === 'global' || covered(r)) return;
+      var item = { id: r.id, name: r.name, place: r.place || r.area || '', start: r.start, end: r.end, url: (r.src && r.src.url) || '#', overseas: t1Overseas(r.place), inPerson: regInPerson(r), openId: '' };
+      if (!/^https:\/\//.test(item.url)) item.url = '';
+      try { var model = window.GOEventRegistry && GOEventRegistry.find(r.catalogueId || r.id); if (model) item.openId = model.eventId; } catch (e) { }
+      if (!item.openId && !item.url) return;
+      if (t1IsDone(done, r.id, r.start)) { hiddenDone.push({ key: TL.doneKey(r.id, r.start), name: r.name, when: 'In person' }); return; }
+      if (r.start <= t && r.end > t) regLive.push(item); else if (r.start > t && +r.start <= soonEnd) regSoon.push(item); else if (+r.start > soonEnd && +r.start <= weekEnd) regWeek.push(item);
+    });
+    var seasons = [];
+    try {
+      (window.GOSEASON ? GOSEASON.events() : []).forEach(function (s) {
+        if (!(s.start <= t && t < s.end) || !s.season) return;
+        seasons.push({ id: s.id, label: s.season.label || 'Season', name: s.name, days: Math.max(0, Math.ceil((+s.end - tn) / 864e5)) });
+      });
+    } catch (e) { }
+    return { now: t, live: live, soon: soon, week: week, regLive: regLive, regSoon: regSoon, regWeek: regWeek, boosts: t1BoostRecords(t), seasons: seasons, done: hiddenDone,
+      kindOf: kindOf, monArt: monArt, fallbackArt: placeholderArt, overseas: function (ev) { return t1Overseas(ev.region); }, dayLabel: function (d) { return fmtD(d); } };
+  }
+  var t1Signature = '';
+  function renderTodayV1(t, force) {
+    var host = $('today-v1'); if (!host || !T1 || !TL || !EV_READY) return;
+    t = t || now();
+    var sheet = $('evd'); if (sheet && !sheet.hidden) return;
+    var ctx = t1Ctx(t);
+    var sig = JSON.stringify([dayKey(t), ctx.live.map(function (e) { return e.id; }), ctx.soon.map(function (e) { return e.id; }), ctx.week.map(function (e) { return e.id; }),
+      ctx.regLive.map(function (e) { return e.id; }), ctx.regSoon.map(function (e) { return e.id; }), ctx.regWeek.map(function (e) { return e.id; }),
+      ctx.boosts.live.map(function (r) { return r.eventId + r.name; }), ctx.boosts.upcoming.map(function (r) { return r.eventId + r.name; }), ctx.seasons, ctx.done.map(function (d) { return d.key; })]);
+    if (!force && sig === t1Signature && host.firstChild) { T1.patchCountdowns(host, +t); return; }
+    var open = host.querySelector('.t1-menu'); if (open && !force) { T1.patchCountdowns(host, +t); return; }
+    var focusKey = null, a = document.activeElement;
+    if (a && host.contains(a)) focusKey = a.getAttribute('data-t1-menu') ? 'menu:' + a.getAttribute('data-t1-menu') : a.getAttribute('data-t1-undo') ? 'undo:' + a.getAttribute('data-t1-undo') : a.getAttribute('data-open') ? 'open:' + a.getAttribute('data-open') : null;
+    var expanded = {}; host.querySelectorAll('[data-t1-toggle][aria-expanded="true"]').forEach(function (b) { expanded[b.getAttribute('data-t1-toggle')] = 1; });
+    t1Signature = sig; host.innerHTML = T1.render(ctx); host.removeAttribute('aria-busy');
+    Object.keys(expanded).forEach(function (id) { t1Toggle(host, id, true); });
+    if (focusKey) {
+      var sel = focusKey.indexOf('menu:') === 0 ? '[data-t1-menu="' + focusKey.slice(5) + '"]' : focusKey.indexOf('undo:') === 0 ? '[data-t1-undo="' + focusKey.slice(5) + '"]' : '[data-open="' + focusKey.slice(5) + '"]';
+      var again = null; try { again = host.querySelector(sel.replace(/\\/g, '\\\\')); } catch (e) { }
+      if (again) again.focus({ preventScroll: true });
+    }
+  }
+  function t1Toggle(host, id, on) {
+    var btn = host.querySelector('[data-t1-toggle="' + id + '"]'), wrap = host.querySelector('[data-t1-capped="' + id + '"]'); if (!btn || !wrap) return;
+    if (on === undefined) on = btn.getAttribute('aria-expanded') !== 'true';
+    wrap.hidden = !on; btn.setAttribute('aria-expanded', String(on));
+    var n = wrap.children.length; btn.textContent = on ? 'Show fewer' : 'Show ' + wrap.querySelectorAll('.t1-card,.t1-week').length + ' more';
+  }
+  /* Menu, Done and Undo. Done keys one occurrence (event id + start). Nothing is deleted: the event stays in Schedule and every Collection key is untouched. */
+  var t1MenuOpener = null;
+  function t1CloseMenu(restoreFocus) {
+    var m = document.querySelector('.t1-menu'); if (!m) return;
+    var owner = m.parentNode && m.parentNode.querySelector('[data-t1-menu]'); m.remove();
+    if (owner) { owner.setAttribute('aria-expanded', 'false'); if (restoreFocus) owner.focus(); }
+  }
+  function t1Toast(message, undoKey) {
+    var t = $('t1-toast');
+    if (!t) { t = document.createElement('div'); t.id = 't1-toast'; t.className = 't1-toast'; t.setAttribute('role', 'status'); t.setAttribute('aria-live', 'polite'); document.body.appendChild(t); }
+    t.innerHTML = ''; var span = document.createElement('span'); span.textContent = message; t.appendChild(span);
+    if (undoKey) { var b = document.createElement('button'); b.type = 'button'; b.className = 't1-toast-undo'; b.setAttribute('data-t1-undo', undoKey); b.textContent = 'Undo'; t.appendChild(b); }
+    t.hidden = false; clearTimeout(t._h); t._h = setTimeout(function () { t.hidden = true; }, 7000);
+  }
+  document.addEventListener('click', function (e) {
+    var target = e.target, host = $('today-v1'); if (!target || !target.closest) return;
+    var menuBtn = target.closest('[data-t1-menu]');
+    if (menuBtn) {
+      var wasOpen = menuBtn.getAttribute('aria-expanded') === 'true'; t1CloseMenu(false);
+      if (wasOpen) return;
+      var cardEl = menuBtn.closest('[data-id]'); if (!cardEl) return;
+      var menu = document.createElement('div'); menu.className = 't1-menu'; menu.setAttribute('role', 'menu'); menu.setAttribute('aria-label', 'Actions');
+      menu.innerHTML = '<button type="button" role="menuitem" class="t1-menuitem" data-t1-done="1">Mark done <small>Hide this one from Today</small></button>'
+        + (cardEl.querySelector('[data-open]') ? '<button type="button" role="menuitem" class="t1-menuitem" data-t1-details="' + esc(cardEl.getAttribute('data-id')) + '">Open details</button>' : '');
+      menuBtn.parentNode.appendChild(menu); menuBtn.setAttribute('aria-expanded', 'true'); t1MenuOpener = menuBtn;
+      var first = menu.querySelector('[role=menuitem]'); if (first) first.focus();
+      return;
+    }
+    var doneBtn = target.closest('[data-t1-done]');
+    if (doneBtn) {
+      var c = doneBtn.closest('[data-id]'), id = c && c.getAttribute('data-id'), s = c && c.getAttribute('data-start'), en = c && c.getAttribute('data-end');
+      t1CloseMenu(false);
+      if (!id) return;
+      var store = t1Storage(), startIso = s || (c.getAttribute('data-id') && ''), name = (c.querySelector('.t1-title') || {}).textContent || 'Event';
+      if (!s) { var r = null; /* regional rows carry no start attribute: key them by their listed start */ regList().forEach(function (x) { if (x.id === id) r = x; }); if (r) { startIso = new Date(+r.start).toISOString(); en = new Date(+r.end).toISOString(); } }
+      if (!store || !startIso) { t1Toast('Could not save on this device'); return; }
+      var key = TL.markDone(store, id, startIso, Date.parse(en), Date.now());
+      renderTodayV1(now(), true);
+      t1Toast(name + ' marked done', key);
+      return;
+    }
+    var det = target.closest('[data-t1-details]');
+    if (det) { var id2 = det.getAttribute('data-t1-details'), op = document.querySelector('#today-v1 [data-id="' + id2.replace(/"/g, '') + '"] [data-open]'); t1CloseMenu(false); if (op) op.click(); return; }
+    var undo = target.closest('[data-t1-undo]');
+    if (undo) {
+      var store2 = t1Storage(); if (store2) TL.undoDone(store2, undo.getAttribute('data-t1-undo'));
+      var tt = $('t1-toast'); if (tt) tt.hidden = true;
+      renderTodayV1(now(), true); return;
+    }
+    var tg = target.closest('[data-t1-toggle]'); if (tg && host) { t1Toggle(host, tg.getAttribute('data-t1-toggle')); return; }
+    if (!target.closest('.t1-menu')) t1CloseMenu(false);
+  });
+  document.addEventListener('keydown', function (e) {
+    var menu = document.querySelector('.t1-menu'); if (!menu) return;
+    var items = [].slice.call(menu.querySelectorAll('[role=menuitem]')), i = items.indexOf(document.activeElement);
+    if (e.key === 'Escape') { e.preventDefault(); t1CloseMenu(true); }
+    else if (e.key === 'ArrowDown') { e.preventDefault(); items[(i + 1) % items.length].focus(); }
+    else if (e.key === 'ArrowUp') { e.preventDefault(); items[(i - 1 + items.length) % items.length].focus(); }
+    else if (e.key === 'Home') { e.preventDefault(); items[0].focus(); }
+    else if (e.key === 'End') { e.preventDefault(); items[items.length - 1].focus(); }
+    else if (e.key === 'Tab') t1CloseMenu(false);
+  });
+  window.addEventListener('storage', function (e) { if (e.key === TL.DONE_KEY) renderTodayV1(now(), true); });
   function renderActionCentre() {
     var wrap = $('action-centre'), items = $('action-centre-items'); if (!wrap || !items) return;
     var next24 = EV.filter(function (e) { return !isHidden(e.id) && !kindHidden(e.kind) && startsSoon(e); }).length;
@@ -2017,6 +2184,7 @@ function renderHomeBrief(t) {
     Array.prototype.forEach.call(document.querySelectorAll('.cdn[data-rot]'), function (n) { var ms = new Date(n.getAttribute('data-rot')) - t; n.textContent = ms > 0 ? 'Changes in ' + dur(ms) : 'Changed'; });
     renderHomeBrief(t);
     renderHomeToday(t);
+    renderTodayV1(t, false);
     renderActionCentre();
   }
   document.addEventListener('click', function (ev) {
@@ -2102,7 +2270,7 @@ function renderHomeBrief(t) {
     renderCoverage();
     if (window.GO && GO.refreshDex) GO.refreshDex();
     usSync();
-    var inf = document.createElement('script'); inf.src = '/infographic.js?v=20261103a'; document.body.appendChild(inf); var x = document.createElement('script'); x.src = '/extra.js?v=20261102c'; document.body.appendChild(x); var z = document.createElement('script'); z.src = '/places.js?v=20261103b'; window.GOPLACES_READY = new Promise(function (resolve) { z.onload = function () { resolve(window.GOPLACES || null); }; z.onerror = function () { resolve(null); }; }); var y = document.createElement('script'); y.src = '/detail.js?v=20261108c'; document.body.appendChild(y); document.body.appendChild(z); var w = document.createElement('script'); w.src = '/fresh.js?v=20261103a'; document.body.appendChild(w); var nv = document.createElement('script'); nv.src = '/nudge.js?v=20261102a'; document.body.appendChild(nv); var rv = document.createElement('script'); rv.src = '/review.js?v=20261104b'; document.body.appendChild(rv); var by = document.createElement('script'); by.src = '/buy.js?v=20261103a'; document.body.appendChild(by);
+    var inf = document.createElement('script'); inf.src = '/infographic.js?v=20261103a'; document.body.appendChild(inf); var x = document.createElement('script'); x.src = '/extra.js?v=20261102c'; document.body.appendChild(x); var z = document.createElement('script'); z.src = '/places.js?v=20261103b'; window.GOPLACES_READY = new Promise(function (resolve) { z.onload = function () { resolve(window.GOPLACES || null); }; z.onerror = function () { resolve(null); }; }); var y = document.createElement('script'); y.src = '/detail.js?v=20261108d'; document.body.appendChild(y); document.body.appendChild(z); var w = document.createElement('script'); w.src = '/fresh.js?v=20261103a'; document.body.appendChild(w); var nv = document.createElement('script'); nv.src = '/nudge.js?v=20261102a'; document.body.appendChild(nv); var rv = document.createElement('script'); rv.src = '/review.js?v=20261104b'; document.body.appendChild(rv); var by = document.createElement('script'); by.src = '/buy.js?v=20261103a'; document.body.appendChild(by);
   }
   envBanner();
   /* Bounded waits: a request that never answers must not leave Today blank. After FEED_TIMEOUT_MS the page renders from the curated list
