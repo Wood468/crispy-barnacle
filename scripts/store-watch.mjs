@@ -86,6 +86,8 @@ export function diffStore(prev, snap, nowIso) {
     const mixed = !!o && !reset && !!oldCurrency && !!newCurrency && oldCurrency !== newCurrency;
     next[k] = {
       name: i.name,
+      // Preserve official snapshot imagery; never infer a product image from its label.
+      images: Array.isArray(i.imgs) ? i.imgs.filter(u => /^https:\/\//i.test(u)).slice(0, 4) : (o?.images || []),
       price: mixed ? o.price : i.price,
       section: i.section,
       tag: i.tag,
@@ -127,7 +129,7 @@ export function buildMessages(d) {
 
 // The public log the Purchase planner reads: only tickets, passes and boxes, with when each was first and last seen.
 export function storeLog(state) {
-  const row = (k, o) => ({ name: o.name, price: o.price, section: o.section || "", slug: slugOf({ href: k.startsWith("/") ? k : "", name: o.name }), href: k.startsWith("/") ? k : "", endsAt: o.endsAt || null, firstSeen: o.firstSeen, lastSeen: o.lastSeen, goneAt: o.goneAt || null });
+  const row = (k, o) => ({ name: o.name, image: (o.images || [])[0] || null, imageStatus: (o.images || []).length ? "unverified-remote" : "missing", price: o.price, section: o.section || "", slug: slugOf({ href: k.startsWith("/") ? k : "", name: o.name }), href: k.startsWith("/") ? k : "", endsAt: o.endsAt || null, firstSeen: o.firstSeen, lastSeen: o.lastSeen, goneAt: o.goneAt || null });
   const items = [...Object.entries(state.items || {}).map(([k, o]) => row(k, o)), ...Object.entries(state.gone || {}).map(([k, o]) => row(k, o))];
   return { watchStart: state.watchStart || null, updated: state.updated, items: items.filter(i => isTicketOrPass(i.name) || /box|bundle/i.test(i.name)) };
 }
