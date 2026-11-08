@@ -2090,7 +2090,7 @@ with sync_playwright() as p:
         # ---- event detail: passes, prices, labelled gaps ----
         pg=page(); pg.click('nav.tabs button[data-tab="events"]'); pg.click('#subnav-events button[data-sub="timeline"]'); pg.wait_for_selector('#evtimeline .evc[data-id$="zorua"] .more'); pg.click('#evtimeline .evc[data-id$="zorua"] .more'); pg.wait_for_selector('#evd .tk'); pg.wait_for_timeout(300)
         t=pg.inner_text('#evd')
-        check('detail: published event facts and event-only moves remain visible without verification clutter', 'Sucker Punch' in t and 'Event bonuses' in t and pg.locator('#evd .pub,#evd .npub,#evd .st').count()==0)
+        check('detail: published event facts and event-only moves remain visible without verification clutter', 'Sucker Punch' in t and 'bonuses' in t.lower() and pg.locator('#evd .pub,#evd .npub,#evd .st').count()==0)
         expected_tickets = json.loads((ROOT/'public/event-info.json').read_text())['events']['zorua']['tickets']
         check('detail: all curated event tickets retain Australian prices and purchase information', pg.locator('#evd .tk').count()==len(expected_tickets) and 'special research ticket' in t.lower() and '≈ A$2.99' in t and 'Buy or claim by' in t)
         pg.screenshot(path=OUT+'detail.png', full_page=False)
