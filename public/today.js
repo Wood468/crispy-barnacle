@@ -67,7 +67,7 @@
   function bannerFor(ctx, ev, mons) {
     var A = (typeof GOEVENTART !== 'undefined') ? GOEVENTART : null;
     if (!A) return '<div class="t1-major-art" aria-hidden="true">' + (mons.length ? mons.map(function (f) { return '<span class="t1-mon">' + artFor(ctx, ev, f, 'ea') + '</span>'; }).join('') : ctx.fallbackArt(ev)) + '</div>';
-    var art = A.resolve({ name: ev.name, kind: ev.kind, region: ev.region || '', start: ev.start, end: ev.end }, ev.img ? [ev.img] : []);
+    var art = A.resolve({ name: ev.name, kind: ev.kind, region: ev.region || '', start: ev.start, end: ev.end }, ev.img ? [{ url: ev.img, pageUrl: ev.artPageUrl || ev.link || '' }] : []);
     var accent = mons.length ? '<span class="ev-art-mon">' + artFor(ctx, ev, mons[0], 'ea') + '</span>' : '';
     return A.banner(art, { ev: ev, accent: accent, aspect: '2.4 / 1', fit: 'cover', cls: 't1-banner' });
   }
