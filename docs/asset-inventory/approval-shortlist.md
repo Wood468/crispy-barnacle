@@ -12,10 +12,10 @@ Source: public/store-log.json and public/costumes.json on main, inspected 2026-1
 | Registry key | Status | Required evidence |
 |---|---|---|
 | `sinistea|bow` | **Identity confirmed; exact artwork unresolved** | Official Pokémon GO Halloween Part I 2026 confirms bow costume and Shiny availability; event data distinguishes Phony and Antique forms. Find source-backed image for each form; do not substitute plain Sinistea. |
-| `pikachu (sun crown)|sun crown (no dex number)` | Unresolved | Find exact official or credible image and verify costume/form identity |
-| `pikachu (moon crown)|moon crown (no dex number)` | Unresolved | Find exact official or credible image and verify costume/form identity |
-| `espeon (sun scarf)|sun scarf (no dex number)` | Unresolved | Find exact official or credible image and verify costume/form identity |
-| `umbreon (moon scarf)|moon scarf (no dex number)` | Unresolved | Find exact official or credible image and verify costume/form identity |
+| `pikachu (sun crown)|sun crown (no dex number)` | **Identity confirmed; exact artwork unresolved** | Official Twilight Wishes 2026 announcement confirms this exact costumed Pokémon; find matching image and normalize registry key. |
+| `pikachu (moon crown)|moon crown (no dex number)` | **Identity confirmed; exact artwork unresolved** | Official Twilight Wishes 2026 announcement confirms this exact costumed Pokémon; find matching image and normalize registry key. |
+| `espeon (sun scarf)|sun scarf (no dex number)` | **Identity confirmed; exact artwork unresolved** | Official Twilight Wishes 2026 announcement confirms this exact costumed Pokémon; find matching image and normalize registry key. |
+| `umbreon (moon scarf)|moon scarf (no dex number)` | **Identity confirmed; exact artwork unresolved** | Official Twilight Wishes 2026 announcement confirms this exact costumed Pokémon; find matching image and normalize registry key. |
 | `tee|purple (no dex number)` | Unresolved | Confirm avatar-item classification and original source |
 
 ## Store listings — official image capture pending
@@ -49,3 +49,8 @@ Source: public/store-log.json and public/costumes.json on main, inspected 2026-1
 - Leek Duck lists Sinistea bow as a research/raid encounter, including Phony Form: https://leekduck.com/events/halloween-2026-part-1/
 - Snack Nap reports both Phony and Antique bow costumes in game data; treat this as secondary evidence pending exact art verification: https://snacknap.com/events/1523/halloween-2026-part-i
 - No actual image URL has yet been independently verified as an exact, permitted replacement. Owner approval is not requested.
+
+## Twilight Wishes confirmation (2026-11-08)
+- Official event announcement explicitly lists sun-crown Pikachu, moon-crown Pikachu, sun-scarf Espeon and moon-scarf Umbreon in raids: https://pokemongo.com/news/twilight-wishes-2026
+- Leek Duck independently lists the same four variants: https://leekduck.com/events/twilight-wishes-2026/
+- **Five of six identities confirmed** (including Sinistea). The sixth, purple tee, remains unclassified; no image has been verified for replacement.
