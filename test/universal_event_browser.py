@@ -127,6 +127,7 @@ with sync_playwright() as p:
     context.route('**/api/**',api)
     context.route(re.compile(r'^https://fonts\.'),lambda r:r.fulfill(body='',content_type='text/css'))
     page=context.new_page();errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
+    page.clock.install(time='2026-11-06T12:00:00+11:00')
     page.goto(BASE+'/');page.wait_for_function('!!window.GODETAIL&&!!window.GOEventRegistry')
     page.evaluate('GOEventRegistry.ready')
     # Today shows only currently live regional events. A real catalogue may have none
