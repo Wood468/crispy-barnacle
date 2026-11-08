@@ -40,6 +40,7 @@ with sync_playwright() as p:
     row = page.locator('#t1-ending .t1-ending').first
     assert 'Lucky Trinket' in row.inner_text() and re.search(r'Ends in \d', row.inner_text())
     assert row.locator('a[href^="https://"]').count() == 1
+    page.wait_for_load_state('networkidle'); page.wait_for_timeout(500)
     # 3. Done undo window: the toast offers Undo, expires, and the restore list still restores.
     card = page.locator('#today-v1 article.t1-card[data-start]').first
     cid = card.get_attribute('data-id')

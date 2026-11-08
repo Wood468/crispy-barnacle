@@ -16,11 +16,13 @@ with sync_playwright() as p:
     page.goto(BASE)
     page.evaluate("localStorage.setItem('gofn-dex-v1','{\"have\":{\"25\":1}}');localStorage.setItem('gofn-us-v1','{\"a\":{\"v\":1,\"t\":1}}');localStorage.setItem('gofn-stamp','7')")
     page.wait_for_selector('#today-v1 article.t1-card[data-start]')
+    page.wait_for_load_state('networkidle'); page.wait_for_timeout(800)  # late feeds (season, venue times) may repaint once
     keep = "({d:localStorage.getItem('gofn-dex-v1'),u:localStorage.getItem('gofn-us-v1'),s:localStorage.getItem('gofn-stamp')})"
     before = page.evaluate(keep)
     card = page.locator('#today-v1 article.t1-card[data-start]').first
     cid, start = card.get_attribute('data-id'), card.get_attribute('data-start')
     more = card.locator('.t1-more')
+    more.scroll_into_view_if_needed()
     box = more.bounding_box(); assert box['width'] >= 44 and box['height'] >= 44, box
     more.focus(); page.keyboard.press('Enter')
     assert more.get_attribute('aria-expanded') == 'true'

@@ -2137,7 +2137,7 @@ function renderHomeBrief(t) {
     else if (e.key === 'End') { e.preventDefault(); items[items.length - 1].focus(); }
     else if (e.key === 'Tab') t1CloseMenu(false);
   });
-  document.addEventListener('gofn-season-ready', function () { renderTodayV1(now(), true); });
+  document.addEventListener('gofn-season-ready', function () { renderTodayV1(now(), false); });
   document.addEventListener('gofn-today-done', function () { renderTodayV1(now(), true); });
   window.addEventListener('storage', function (e) { if (e.key === TL.DONE_KEY) renderTodayV1(now(), true); });
   function renderActionCentre() {
