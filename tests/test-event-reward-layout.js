@@ -49,7 +49,22 @@ test('gallery preserves independent activities with identical display names',()=
   activities:[{id:'first',title:'Raid hour'},{id:'second',title:'Raid hour'}]
  });
  const html=components.gallery(model,{});
- assert.equal((html.match(/class="ue-mon evd-f"/g)||[]).length,2);
+ assert.equal((html.match(/class="ue-mon"/g)||[]).length,2);
+});
+test('long published bonus and ticket conditions stay available in compact disclosures',()=>{
+ const condition='Two additional Special Trades are available during the ticketed event day, while the published local event window remains active.';
+ const html=render(futureEvent({bonuses:[condition],tickets:[
+  {title:'Choose one ticketed day from the published event dates.'},
+  {title:'Ticket holders receive the announced event benefits.'},
+  {title:'Additional purchases follow the published source terms.'},
+  {title:'A further source condition remains available to read.'}
+ ]}));
+ assert.match(html,/class="ue-bonus ue-bonus-detail"/);
+ assert.match(html,/Two additional Special Trades are available/);
+ assert.match(html,/published local event window remains active/);
+ assert.match(html,/More ticket details \(1\)/);
+ assert.match(html,/A further source condition remains available to read/);
+ assert.doesNotMatch(html,/class="own|ue-mon-controls|ue-follow/);
 });
 
 test('text-only rewards escape hostile content inside the contained artwork layout',()=>{

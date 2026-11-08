@@ -138,13 +138,6 @@
       + '<ul>' + unl + '</ul><div class="ft">' + rows.map(function (r) { return '<div class="kv"><span>' + esc(r[0]) + '</span><b>' + esc(r[1]) + '</b></div>'; }).join('') + variants + '</div>'
       + (p.product ? priceNote(p.product) : '') + srcLine(p.source) + '</article>';
   }
-  function ownChip(name, costume) {
-    var o = X.ownState(name, costume);
-    if (o.state === 'unreleased') return '<span class="own own-unk" title="Not released in Pokémon GO yet">Not out yet</span>';
-    if (o.state === 'have') return '<span class="own own-have">Have</span>';
-    if (o.state === 'missing' && o.tk) return '<span class="own own-need">Need</span>';
-    return '';
-  }
   function icsFor(ev) {
     function f(d, utc) { var p = function (n) { return String(n).padStart(2, '0'); }; return utc ? d.getUTCFullYear() + p(d.getUTCMonth() + 1) + p(d.getUTCDate()) + 'T' + p(d.getUTCHours()) + p(d.getUTCMinutes()) + '00Z' : d.getFullYear() + p(d.getMonth() + 1) + p(d.getDate()) + 'T' + p(d.getHours()) + p(d.getMinutes()) + '00'; }
     var u = !!ev.utc;
@@ -337,15 +330,15 @@
         return url ? '<a href="' + esc(url) + '" target="_blank" rel="noopener noreferrer">' + esc(name) + '</a>' : esc(name);
       }).filter(Boolean);
       var label = task.status === 'official' ? 'Official' : task.status === 'corroborated' ? 'Cross-checked' : 'Single source';
-      return '<small class="research-task-source">' + label + (links.length ? ' · ' + links.join(' · ') : '') + ' · ' + esc(window.GOLIB.researchCheckedText(task.checkedAt)) + '</small>';
+      return '<details class="research-task-source"><summary>Source &amp; update</summary><small>' + label + (links.length ? ' · ' + links.join(' · ') : '') + ' · ' + esc(window.GOLIB.researchCheckedText(task.checkedAt)) + '</small></details>';
     }
 
     function reward(item) {
       if (item.type === 'encounter') {
         var cp = item.cpMin && item.cpMax ? '<small>CP ' + esc(item.cpMin) + '–' + esc(item.cpMax) + '</small>' : '<small>Encounter</small>';
-        return '<div class="research-reward">' + (window.GOEventAdapter?exactArt(GOEventAdapter.pokemon({name:item.name,costume:item.costume||/wearing|costume/i.test(item.name),label:item.label,formId:item.formId,costumeId:item.costumeId})):X.monArt(ev,{name:item.name,costume:/wearing|costume/i.test(item.name),role:'featured'},'ea')) + '<span><b>' + esc(item.name) + '</b>' + cp + '</span></div>';
+        return '<div class="research-reward"><span class="ue-reward-art"><span class="ue-reward-fallback" aria-hidden="true">✦</span>' + (window.GOEventAdapter?exactArt(GOEventAdapter.pokemon({name:item.name,costume:item.costume||/wearing|costume/i.test(item.name),label:item.label,formId:item.formId,costumeId:item.costumeId})):X.monArt(ev,{name:item.name,costume:/wearing|costume/i.test(item.name),role:'featured'},'ea')) + '</span><span><b>' + esc(item.name) + '</b>' + cp + '</span></div>';
       }
-      return '<div class="research-reward research-reward-item"><span class="research-reward-qty">' + (item.quantity > 1 ? esc(item.quantity) + '×' : '•') + '</span><span><b>' + esc(item.name) + '</b><small>' + (item.type === 'item' ? 'Item reward' : 'Possible reward') + '</small></span></div>';
+      return '<div class="research-reward research-reward-item"><span class="ue-reward-art ue-reward-item-icon" aria-hidden="true">◆</span><span><b>' + (item.quantity > 1 ? esc(item.quantity) + '× ' : '') + esc(item.name) + '</b><small>' + (item.type === 'item' ? 'Item reward' : 'Possible reward') + '</small></span></div>';
     }
     return '<section class="evd-research"><h3 class="sec2" id="evd-research-title">Research tasks</h3><div class="evd-card research-task-list">'
       + tasks.map(function (task) {
@@ -414,8 +407,7 @@
     var h = '<div class="evd-bar"><button type="button" class="hbtn" id="evd-x" aria-label="Close event details"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button><span class="tag">EVENT DETAIL</span>'
       + '<button type="button" class="pill info-open" data-infographic="' + esc(ev.id) + '">▧ Infographic</button>'
       + '<button type="button" class="pill" data-evlink="' + esc(ev.id) + '" aria-label="Share a link to this event">🔗 Link</button>'
-      + '<button type="button" class="star' + (saved ? ' on' : '') + '" data-save="' + esc(ev.id) + '" aria-pressed="' + saved + '" aria-label="Save ' + esc(ev.name) + '" title="Saved events send you a Telegram reminder">' + (saved ? '★' : '☆') + '</button></div>';
-    h += '<label class="evd-lead"' + (saved ? '' : ' hidden') + '>🔔 Remind me <select data-lead="' + esc(ev.id) + '" aria-label="When to remind me">' + [['', 'Morning of the event'], ['1440', '1 day before'], ['180', '3 hours before'], ['60', '1 hour before'], ['off', 'Don\'t remind me']].map(function (o) { return '<option value="' + o[0] + '"' + (String(X.usGet('pref:lead:' + ev.id) || '') === o[0] ? ' selected' : '') + '>' + o[1] + '</option>'; }).join('') + '</select></label>';
+      + '</div>';
     return h;
   }
   function venueHtml(ev,venues){
@@ -515,25 +507,6 @@
     if(p.formId&&!p.costumeId&&!described&&GOLIB.parseForm(p.name).base===p.name)return '<span class="art costume-unavailable ea" role="img" aria-label="'+esc(name+' · form art unavailable')+'"><span>'+esc(name)+'</span><small>Form art unavailable</small></span>';
     return G.art({n:name,costume:!!p.costumeId,label:p.label||p.costumeId,asset:p.assetKey||undefined,dynamax:p.formId==='dynamax'||/-dynamax$/.test(p.formId||'')},'ea');
   }
-  function collectionState(p,model){
-    var name=GOEventAdapter.collectionName(p);
-    if(p.formId==='dynamax'||/-dynamax$/.test(p.formId||''))return {state:'form'};
-    if(!name){var id=+p.speciesId;if(id&&X.DEXNAME[id]&&p.formId&&/^[a-z0-9][a-z0-9-]{0,63}$/.test(p.formId)){var tk='form:'+id+':'+p.formId,v=X.usGet(tk);return {state:v===1?'have':v===0?'missing':'unknown',tk:tk};}return {state:'unknown'};}
-    if(p.costumeId&&(model.pokemon||[]).some(function(other){return other.key!==p.key&&GOEventAdapter.collectionName(other)===name;}))return {state:'unknown'};
-    return X.ownState(name,!!p.costumeId);
-  }
-  function refreshOwnership(){
-    var dialog=$('evd');if(!dialog||dialog.hidden||!activeModel)return;
-    dialog.querySelectorAll('.ue-mon').forEach(function(card){
-      var p=activeModel.pokemon.find(function(p){return p.key===card.getAttribute('data-identity');});if(!p)return;
-      var own=collectionState(p,activeModel),label=card.querySelector('.own');
-      if(label){label.textContent=own.state==='have'?'Have':own.state==='missing'?'Need':own.state==='unreleased'?'Not released':'Not tracked';label.className='own '+(own.state==='have'?'own-have':own.state==='missing'?'own-need':'own-unk');}
-      card.querySelectorAll('[data-mark]').forEach(function(button){var value=button.getAttribute('data-val');button.setAttribute('aria-pressed',String(value!==''&&X.usGet(button.getAttribute('data-mark'))===+value));});
-      var follow=card.querySelector('[data-follow]');if(follow){var following=X.isFollowed(follow.getAttribute('data-follow'));follow.textContent=following?'Following':'Follow';follow.setAttribute('aria-pressed',String(following));}
-    });
-  }
-  document.addEventListener('gofn-state',refreshOwnership);
-  document.addEventListener('gofn-marks',refreshOwnership);
   function render(ev) {
     if(!window.GOEventAdapter || !window.GOEventComponents) return renderLegacy(ev);
     var d=findDetails(ev)||{}, info=findInfo(ev)||{}, snapshot=(DATA.catalogue||[]).find(function(item){return item.eventId===ev.id || item.eventId===String(ev.id).replace(/^cur:/,'') || (item.aliases||[]).indexOf(ev.id)>=0;});
@@ -552,7 +525,7 @@
     return window.GOEventComponents.render(model,{
       toolbar:toolbarHtml(ev).replace('<span class="tag">EVENT DETAIL</span>',''),clock:window.GOEventClock,viewerZone:GOEventClock.viewerZone(),safe:safe,rewardArt:function(item){return exactArt(GOEventAdapter.pokemon({name:item.name,costume:!!item.costume,label:item.label,formId:item.formId,costumeId:item.costumeId,asset:item.assetKey}));},banner:(ev.img||model.image)?seasonBannerHtml(ev):'',heroArt:model.pokemon.slice(0,3).map(exactArt).join(''),
       when:eventWindow(model,ev),countdown:model.schedule&&model.lifecycle!=='cancelled'&&model.lifecycle!=='postponed'&&ev.datesKnown!==false?X.countdown(ev):'',
-      ownership:function(p){return collectionState(p,model);},nameFor:displayName,follow:function(p){var name=GOEventAdapter.collectionName(p)||displayName(p),following=X.isFollowed(name);return '<button type="button" class="ue-follow" data-follow="'+esc(name)+'" aria-pressed="'+String(following)+'" aria-label="Follow '+esc(name)+'">'+(following?'Following':'Follow')+'</button>';},marks:typeof X.markBtns==='function'?X.markBtns:null,art:G.art,artFor:exactArt,bonus:G.bonusChip,
+      nameFor:displayName,art:G.art,artFor:exactArt,bonus:G.bonusChip,
       actions:'<div class="evd-btns">'+(calendar&&model.lifecycle!=='cancelled'&&model.lifecycle!=='postponed'?'<a class="pill all" download="event.ics" href="'+icsFor(calendar)+'">Add to calendar</a>':'')+'</div>',
       research:primary(researchTasksHtml(ev,d)),passes:pass,tickets:primary(tickets),moves:primary(evMovesHtml(ev,!model.bonuses.length)),
       locations:venueHtml(ev,venues),sources:footer
@@ -624,7 +597,7 @@
     return visibleGroups.map(function (g, index) {
       return '<h3 class="sec2"' + (highlightTarget && index === 0 ? ' id="evd-highlights"' : '') + '>' + esc(g.title) + '</h3><div class="evd-feat">' + g.rows.map(function (r) {
         var f = r.f, tags = r.sp.keys.map(function (k) { return '<span class="tg tg-' + k + '">' + TAGS[k].i + esc(TAGS[k].t) + '</span>'; }).join('');
-        return '<div class="evd-f"><span>' + X.monArt(ev, f, 'ea') + '</span><div class="evd-fm"><b>' + esc(f.name) + '</b>' + (tags ? '<div class="tgs">' + tags + '</div>' : '') + (f.label ? '<small>' + esc(f.label) + '</small>' : '') + (r.sp.line ? '<small class="ln">' + esc(r.sp.line) + '</small>' : '') + '</div>' + ownChip(f.name, f.costume) + '</div>';
+        return '<div class="evd-f"><span>' + X.monArt(ev, f, 'ea') + '</span><div class="evd-fm"><b>' + esc(f.name) + '</b>' + (tags ? '<div class="tgs">' + tags + '</div>' : '') + (f.label ? '<small>' + esc(f.label) + '</small>' : '') + (r.sp.line ? '<small class="ln">' + esc(r.sp.line) + '</small>' : '') + '</div>' + '</div>';
       }).join('') + '</div>';
     }).join('');
   }
@@ -715,6 +688,10 @@
         /* Native fragment navigation emits popstate and closes the modal. Keep section jumps inside it. */
         e.preventDefault();
         if(target.tagName==='DETAILS')target.open=true;
+        dialog.querySelectorAll('.evd-jump a').forEach(function(link){link.removeAttribute('aria-current');});
+        jump.setAttribute('aria-current','location');
+        var nav=jump.parentElement;
+        nav.scrollTo({left:jump.offsetLeft-(nav.clientWidth-jump.clientWidth)/2,behavior:'smooth'});
         target.setAttribute('tabindex', '-1');
         target.focus({ preventScroll: true });
         target.scrollIntoView({ block: 'start' });

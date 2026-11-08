@@ -57,7 +57,8 @@ with sync_playwright() as p:
   before=page.evaluate("({dex:localStorage.getItem('gofn-dex-v1'),us:localStorage.getItem('gofn-us-v1')})")
   open_event(INSTANT['eventId'])
   assert page.locator('#evd .ue-mon[data-identity="25:base:none"]').count()==2
-  assert page.locator('#evd .ue-mon .own').all_inner_texts()==['Have','Have']
+  assert page.locator('#evd .ue-mon').count()==2
+  assert page.locator('#evd .own,#evd [data-follow],#evd [data-mark]').count()==0
   assert page.locator('#evd .srcdis').count()==0,'minor conflict produced a hero warning'
   assert '7 Nov' in page.locator('#evd .evc-when').inner_text()
   close_event();change_zone('America/New_York')
@@ -145,7 +146,8 @@ with sync_playwright() as p:
  assert page.evaluate('GOEventRegistry.diagnostics().cacheUnavailable')
  before=page.evaluate("localStorage.getItem('gofn-dex-v1')")
  open_event(INSTANT['eventId'])
- assert page.locator('#evd .ue-mon .own').all_inner_texts()==['Have','Have']
+ assert page.locator('#evd .ue-mon').count()==2
+ assert page.locator('#evd .own,#evd [data-follow],#evd [data-mark]').count()==0
  assert page.evaluate("localStorage.getItem('gofn-dex-v1')")==before
  print(f'PASS {ENGINE} restricted storage keeps online events and existing collection marks usable')
  context.close();browser.close()

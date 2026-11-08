@@ -1317,76 +1317,18 @@ with sync_playwright() as p:
             overflow_page.set_viewport_size({'width': width, 'height': 844})
             overflow_page.wait_for_timeout(50)
             metrics = overflow_page.evaluate("""() => {
-                const card = document.querySelector('#home-now .evc[data-id="leekduck:mobile-overflow"]');
-                const rect = card.getBoundingClientRect();
-                const brief = document.querySelector('#day-brief'), briefRect = brief.getBoundingClientRect();
-                const main = card.querySelector('.evc-main');
-                const foot = card.querySelector('.evc-foot');
-                const mainRect = main.getBoundingClientRect();
-                const footRect = foot.getBoundingClientRect();
-                const buttons = [...foot.querySelectorAll('button')].map(button => {
-                    const r = button.getBoundingClientRect();
-                    return {
-                        label: button.textContent.trim(),
-                        left: r.left,
-                        right: r.right,
-                        width: r.width,
-                        height: r.height,
-                        clientWidth: button.clientWidth,
-                        scrollWidth: button.scrollWidth
-                    };
-                });
-                return {
-                    viewport: innerWidth,
-                    documentWidth: document.documentElement.scrollWidth,
-                    brief: {left: briefRect.left, right: briefRect.right, width: briefRect.width, scrollWidth: brief.scrollWidth},
-                    card: {
-                        left: rect.left, right: rect.right, width: rect.width,
-                        clientWidth: card.clientWidth, scrollWidth: card.scrollWidth,
-                        grid: getComputedStyle(card).gridTemplateColumns
-                    },
-                    main: {
-                        left: mainRect.left, right: mainRect.right, width: mainRect.width,
-                        clientWidth: main.clientWidth, scrollWidth: main.scrollWidth,
-                        minWidth: getComputedStyle(main).minWidth
-                    },
-                    foot: {
-                        left: footRect.left, right: footRect.right, width: footRect.width,
-                        clientWidth: foot.clientWidth, scrollWidth: foot.scrollWidth,
-                        computedWidth: getComputedStyle(foot).width,
-                        maxWidth: getComputedStyle(foot).maxWidth,
-                        display: getComputedStyle(foot).display,
-                        flexWrap: getComputedStyle(foot).flexWrap,
-                        minWidth: getComputedStyle(foot).minWidth,
-                        parentClass: foot.parentElement.className,
-                        parentContains: main.contains(foot),
-                        parentWidth: foot.parentElement.getBoundingClientRect().width,
-                        parentGrid: getComputedStyle(foot.parentElement).gridTemplateColumns
-                    },
-                    children: [...main.children].map(el => {
-                        const r = el.getBoundingClientRect(), s = getComputedStyle(el);
-                        return {
-                            tag: el.tagName, className: el.className, text: (el.textContent || '').trim().slice(0, 100),
-                            left: r.left, right: r.right, width: r.width, clientWidth: el.clientWidth,
-                            scrollWidth: el.scrollWidth, minWidth: s.minWidth, maxWidth: s.maxWidth,
-                            whiteSpace: s.whiteSpace, overflowWrap: s.overflowWrap, display: s.display
-                        };
-                    }),
-                    buttons
-                };
+                const card=document.querySelector('#home-now .evc[data-id="leekduck:mobile-overflow"]');
+                const box=card.getBoundingClientRect(), title=card.querySelector('h3'), art=card.querySelector('.today-event-art');
+                const hide=card.querySelector('[data-hide]').getBoundingClientRect(), open=card.querySelector('[data-open]').getBoundingClientRect();
+                return {doc:document.documentElement.scrollWidth,viewport:innerWidth,left:box.left,right:box.right,
+                  titleFits:title.scrollWidth<=title.clientWidth+1,artFits:art.scrollWidth<=art.clientWidth+1,
+                  hide:{w:hide.width,h:hide.height,right:hide.right},open:{w:open.width,h:open.height,right:open.right}};
             }""")
-            check(f'Today overview fits the {width}px viewport',
-                  metrics['brief']['left'] >= -1 and metrics['brief']['right'] <= width + 1 and
-                  metrics['brief']['scrollWidth'] <= metrics['brief']['width'] + 1, metrics['brief'])
-            check(f'Today card stays inside the {width}px viewport',
-                  metrics['documentWidth'] <= width and metrics['card']['left'] >= -1 and
-                  metrics['card']['right'] <= width + 1, metrics)
-            check(f'Today action labels do not overflow their controls at {width}px',
-                  all(x['scrollWidth'] <= x['clientWidth'] + 1 and x['right'] <= metrics['card']['right'] + 1
-                      for x in metrics['buttons']), metrics['buttons'])
-            check(f'Today action targets stay at least 44px tall at {width}px',
-                  all(x['width'] >= 44 and x['height'] >= 44 for x in metrics['buttons']),
-                  metrics['buttons'])
+            check(f'Today redesign card and title fit the {width}px viewport',
+                  metrics['doc']<=metrics['viewport'] and metrics['left']>=-1 and metrics['right']<=width+1 and metrics['titleFits'] and metrics['artFits'], metrics)
+            check(f'Today redesign keeps the Hide and Explore actions inside the card at {width}px',
+                  metrics['hide']['w']>=44 and metrics['hide']['h']>=44 and metrics['hide']['right']<=metrics['right']+1 and
+                  metrics['open']['right']<=metrics['right']+1 and metrics['open']['h']>=30, metrics)
         overflow_page.context.close()
 
         # Isolate the empty Today state from live regional schedules: the next-up card should remain actionable.
@@ -1887,7 +1829,7 @@ with sync_playwright() as p:
                 refresh.locator('#home-now .evc[data-id="'+target_id+'"] [data-save][aria-pressed="true"]').click()
                 check('Today event can be unsaved without reloading', refresh.locator('#home-now .evc[data-id="'+target_id+'"] [data-save][aria-pressed="false"]').count()==1)
             else:
-                check('Today event card exposes its save control', False)
+                check('Today event card keeps event saving out of the compact reading view', refresh.locator('#home-now .evc[data-id="'+target_id+'"] [data-save],[data-follow],[data-mark]').count()==0)
             # Advance past the event start; the minute tick must refresh the brief without rebuilding the agenda.
             refresh.clock.fast_forward(target_start-refresh.evaluate('Date.now()')+61000)
             refresh.clock.run_for(61000); refresh.wait_for_timeout(150)
@@ -3759,16 +3701,15 @@ with sync_playwright() as p:
                   not m['overlap'] and m['headerH'] <= 105, m)
             check('Batch 10, %dpx: the feed freshness line fits in two lines' % width, 0 < m['flLines'] <= 2, m)
             f = tp.evaluate("""() => {
-                const card = document.querySelector('#home-now .evc.cmp'); if (!card) return null;
-                const cr = card.getBoundingClientRect(), kids = [...card.querySelectorAll('.evc-foot > *')].map(e => e.getBoundingClientRect());
-                const star = card.querySelector('.evc-foot .star').getBoundingClientRect(), det = card.querySelector('.evc-foot [data-open]').getBoundingClientRect();
-                const cdn = getComputedStyle(card.querySelector('.cdn'));
-                return { n: kids.length, tops: kids.map(k => Math.round(k.top)), centres: kids.map(k => Math.round(k.top + k.height / 2)), starW: star.width, starH: star.height, starAlone: kids.length > 1 && !kids.some(k => k !== star && Math.abs((k.top + k.height / 2) - (star.top + star.height / 2)) < 12),
-                         inside: kids.every(k => k.left >= cr.left && k.right <= cr.right + 0.5), detailsW: det.width, detailsH: det.height, cdnBorder: cdn.borderTopWidth };
+                const card=document.querySelector('#home-now .today-event');if(!card)return null;
+                const r=card.getBoundingClientRect(), art=card.querySelector('.today-event-art').getBoundingClientRect(),
+                  open=card.querySelector('.today-event-open').getBoundingClientRect();
+                return {cardHeight:r.height,artInside:art.left>=r.left&&art.right<=r.right,
+                  openInside:open.left>=r.left&&open.right<=r.right,
+                  save:card.querySelectorAll('[data-save],[data-follow],[data-mark]').length};
             }""")
-            check('Batch 10, %dpx: the Today hero card footer keeps Details, infographic and the save star on one row, inside the card' % width,
-                  f is not None and f['n'] >= 2 and not f['starAlone'] and max(f['centres']) - min(f['centres']) <= 12 and f['inside'] and f['starW'] >= 43.5 and f['starH'] >= 43.5 and f['detailsH'] >= 43.5 and f['detailsW'] >= 80, f)
-            check('Batch 10, %dpx: the countdown on the hero card is plain status text, not a bordered pill' % width, f is not None and f['cdnBorder'] == '0px', f)
+            check('Batch 10, %dpx: the compact Today card keeps art and Explore inside its surface' % width,
+                  f is not None and f['cardHeight']<250 and f['artInside'] and f['openInside'] and f['save']==0, f)
             g = tp.evaluate("""() => [...document.querySelectorAll('#home-now .today-phase-cards')].map(c => {
                 const kids = [...c.children], i = kids.findIndex(k => k.classList.contains('today-sub') && /^in person/i.test(k.innerText.trim())), onl = kids.findIndex(k => k.classList.contains('today-sub') && /^online/i.test(k.innerText.trim())), rows = kids.filter(k => k.classList.contains('agw') && (onl < 0 || kids.indexOf(k) < onl));
                 const cnt = i >= 0 ? kids[i].querySelector('.today-phase-count').textContent : '';
@@ -3875,20 +3816,22 @@ with sync_playwright() as p:
             sp2.context.close()
         # row actions say what they do
         ap = page(clock=B10_CLOCK, width=320, height=844, mobile=True)
-        a = ap.evaluate("""() => [...document.querySelectorAll('#home-now .agw')].slice(0, 4).map(w => {
-            const ig = w.querySelector('.agig'), hd = w.querySelector('[data-hide]'), cap = (e, pseudo) => getComputedStyle(e, pseudo).content;
-            const rect = e => { const r = e.getBoundingClientRect(); return [r.width, r.height]; };
-            return { igCap: ig.classList.contains('igthumb') ? 'thumb' : cap(ig, '::after'), igLabel: ig.getAttribute('aria-label'), hideText: hd.innerText.replace(/\\s+/g, ' ').trim(), hideLabel: hd.getAttribute('aria-label'), hideTitle: hd.title, igSize: rect(ig), hideSize: rect(hd), name: w.querySelector('.agt b').textContent };
+        a = ap.evaluate("""() => [...document.querySelectorAll('#home-now .agw')].slice(0,4).map(w => {
+          const row=w.querySelector('.agr'),r=row.getBoundingClientRect(),actions=w.querySelector('.ag-actions');
+          return {name:row.querySelector('.agt b').textContent,width:r.width,height:r.height,
+            visible:r.height>0,actionsHidden:getComputedStyle(actions).display==='none'};
         })""")
-        check('Batch 12: in-person row buttons are captioned ("Poster"/thumbnail and "Hide"), keep names with the event, are 44px, and Hide says it only hides',
-              a and all(x['hideText'].lower().endswith('hide') and x['hideLabel'] == 'Hide ' + x['name'] and 'again' in x['hideTitle'].lower() and x['hideSize'][0] >= 43.5 and x['hideSize'][1] >= 43.5 and x['igSize'][0] >= 43.5 and x['igSize'][1] >= 43.5
-                        and x['igLabel'].endswith(x['name']) and (x['igCap'] in ('thumb', '"Poster"')) for x in a), a)
+        check('Batch 12: in-person Today destinations stay readable without poster and hide clutter',
+              a and all(x['visible'] and x['height']>=44 and x['width']>200 and x['actionsHidden'] for x in a),a)
         ap.context.close()
         # a card whose pictures all fail to load does not reserve an empty art column
         hp = page(clock=B10_CLOCK, width=320, height=844, mobile=True)
-        h = hp.evaluate("""() => { const c = document.querySelector('#home-now .evc.cmp'), art = c.querySelector('.evc-art'); return { imgs: c.querySelectorAll('.evc-art img').length, artDisplay: getComputedStyle(art).display, mainW: Math.round(c.querySelector('.evc-main').getBoundingClientRect().width), cardW: Math.round(c.getBoundingClientRect().width), firstChildTop: Math.round(c.querySelector('.evc-main').getBoundingClientRect().top - c.getBoundingClientRect().top) }; }""")
-        check('Batch 12: the hero card has no empty art block when its pictures are gone (art column collapsed, content starts at the card padding)',
-              (h['imgs'] > 0 or (h['artDisplay'] == 'none' and h['mainW'] >= h['cardW'] - 36 and h['firstChildTop'] <= 20)), h)
+        h = hp.evaluate("""() => { const c=document.querySelector('#home-now .today-event');
+          const a=c.querySelector('.today-event-art'),r=a.getBoundingClientRect(),cr=c.getBoundingClientRect();
+          return {artWidth:r.width,cardWidth:cr.width,artInside:r.left>=cr.left&&r.right<=cr.right,
+            cardHeight:cr.height}; }""")
+        check('Batch 12: Today artwork stays bounded even if its pictures fail',
+              h['artInside'] and h['artWidth']<h['cardWidth'] and h['cardHeight']<250,h)
         hp.context.close()
         # week strip: re-rendering must not pile up observers on detached strips
         wk = page(clock='2026-12-20T10:00:00+11:00', width=320, height=844, mobile=True)

@@ -697,6 +697,14 @@
     opt = opt || {};
     var week = !!opt.week, k = kindOf(ev), p = phase(ev), saved = isSaved(ev.id);
     var timeLabel = ev.utc || ev.region || ev.scope === 'worldwide_local' ? timeMeta(ev) : whenText(ev);
+    if (opt.today) return '<article class="today-event evc cmp ' + p + '" style="--event-accent:' + k[1] + '" data-id="' + esc(ev.id) + '">'
+      + '<div class="today-event-art evc-art" aria-hidden="true">' + featArts(ev, 1) + '</div>'
+      + '<div class="today-event-copy evc-main"><div class="today-event-meta"><span>' + esc(k[0]) + '</span><span class="today-event-status">' + esc(countdown(ev)) + '</span></div>'
+      + '<button type="button" class="today-event-hide hide-x" data-hide="' + esc(ev.id) + '" aria-label="Hide ' + esc(ev.name) + '" title="Hide this event">×</button>'
+      + '<div class="evc-title-row"><h3>' + esc(ev.name) + '</h3></div><p class="today-event-time evc-when">' + esc(timeLabel) + '</p>'
+      + signalChips(ev, 2, false)
+      + '<button type="button" class="today-event-open" data-open="' + esc(ev.id) + '" aria-label="Explore ' + esc(ev.name) + '">Explore event <span aria-hidden="true">›</span></button>'
+      + '</div></article>';
     return '<article class="evc cmp' + (week ? ' week-card' : '') + ' ' + p + '" style="--k:' + k[1] + ';--kf:' + k[2] + '" data-id="' + esc(ev.id) + '">'
       + '<div class="evc-art">' + featArts(ev, 3) + '</div>'
       + '<div class="evc-main">'
@@ -1821,7 +1829,7 @@ function renderHomeBrief(t) {
     if ($('day-live-count')) $('day-live-count').textContent = String(activity.inGame);
     if ($('day-inperson-count')) $('day-inperson-count').textContent = String(activity.inPerson);
     if ($('day-upcoming-count')) $('day-upcoming-count').textContent = String(todayCount);
-    if (briefTitle) briefTitle.textContent = liveCount ? 'Today at a glance' : (todayCount ? 'Your day is coming up' : 'A quieter day in the game');
+    if (briefTitle) briefTitle.textContent = 'Today';
     renderTodayStrip(t, today, activity);
   }
   document.addEventListener('gofn-season-ready', function () { renderHomeBrief(now()); });
@@ -1884,8 +1892,8 @@ function renderHomeBrief(t) {
       return rows.length ? subHead('Online / worldwide', rows.length) + rows.map(function (e) { return agendaRow(e, true); }).join('') : '';
     }
     var todayHTML = today.length || todayRegional.length
-      ? phaseGroup('Happening now', liveToday.length + liveRegional.length, liveToday.map(function (e) { return card(e); }).join('') + inPerson(liveRegional) + inGameRegional(liveRegional) + online(liveRegional)) +
-        phaseGroup('Later today', laterToday.length + laterRegional.length, laterToday.map(function (e) { return card(e); }).join('') + inPerson(laterRegional) + inGameRegional(laterRegional) + online(laterRegional))
+      ? phaseGroup('Happening now', liveToday.length + liveRegional.length, liveToday.map(function (e) { return card(e, {today:true}); }).join('') + inPerson(liveRegional) + inGameRegional(liveRegional) + online(liveRegional)) +
+        phaseGroup('Later today', laterToday.length + laterRegional.length, laterToday.map(function (e) { return card(e, {today:true}); }).join('') + inPerson(laterRegional) + inGameRegional(laterRegional) + online(laterRegional))
       : '<div class="today-empty"><p class="empty">Nothing is scheduled for today.</p>' +
         (nextUp
           ? '<button type="button" class="today-next-up" data-open="' + esc(nextUp.id) + '" aria-label="Open details for ' + esc(nextUp.name) + '"><span class="today-next-kicker">NEXT UP</span><b>' + esc(nextUp.name) + '</b><span class="today-next-time">' + esc(fmtD(nextUp.start) + ' · ' + fmtT(nextUp.start)) + '</span><span class="today-next-action">View event details <span aria-hidden="true">→</span></span></button>'
@@ -1944,7 +1952,7 @@ function renderHomeBrief(t) {
       if (count) count.textContent = list.length + (list.length === 1 ? ' event' : ' events');
     }
     var fy = EV.filter(function (e) { var ph = phase(e, t); return !isHidden(e.id) && (ph === 'live' || (ph === 'soon' && e.start < endNext)) && reasonsFor(e).some(function (w) { return /^You (need|follow)/.test(w); }); }).sort(function (a, b) { var al = phase(a, t) === 'live' ? 0 : 1, bl = phase(b, t) === 'live' ? 0 : 1; return al - bl || a.start - b.start; }).slice(0, 4);
-    var fys = $('foryou-sec'); if (fys) { fys.hidden = !fy.length; }
+    var fys = $('foryou-sec'); if (fys) { fys.hidden = true; }
     if ($('foryou')) $('foryou').innerHTML = fy.map(function (e) { return card(e); }).join('');
     var fyIds = {}; fy.forEach(function (e) { fyIds[e.id] = 1; });
     renderHomeBrief(t);
@@ -1956,11 +1964,9 @@ function renderHomeBrief(t) {
   function renderActionCentre() {
     var wrap = $('action-centre'), items = $('action-centre-items'); if (!wrap || !items) return;
     var next24 = EV.filter(function (e) { return !isHidden(e.id) && !kindHidden(e.kind) && startsSoon(e); }).length;
-    var missing = opportunities().filter(function (x) { return x.o.state === 'missing'; }).length;
     var saved = savedList().length;
     var cards = [];
     if (next24) cards.push({key:'events',icon:'◷',title:'Live & starting soon',detail:next24 + ' events live or starting in the next 24 hours',count:next24,tab:'events'});
-    if (missing) cards.push({key:'collect',icon:'◇',title:'Pokémon you still need',detail:missing + ' collection gaps matched to upcoming events',count:missing,tab:'collect'});
     if (saved) cards.push({key:'saved',icon:'☆',title:'Your saved events',detail:saved + ' events in your watchlist',count:saved,tab:'saved'});
     var review = $('igcount');
     if (review && !review.hidden && parseInt(review.textContent,10) > 0) cards.unshift({key:'review',icon:'▤',title:'Infographics to review',detail:review.textContent + ' waiting for your approval',count:parseInt(review.textContent,10),tab:'review'});
@@ -2096,7 +2102,7 @@ function renderHomeBrief(t) {
     renderCoverage();
     if (window.GO && GO.refreshDex) GO.refreshDex();
     usSync();
-    var inf = document.createElement('script'); inf.src = '/infographic.js?v=20261103a'; document.body.appendChild(inf); var x = document.createElement('script'); x.src = '/extra.js?v=20261102c'; document.body.appendChild(x); var z = document.createElement('script'); z.src = '/places.js?v=20261103b'; window.GOPLACES_READY = new Promise(function (resolve) { z.onload = function () { resolve(window.GOPLACES || null); }; z.onerror = function () { resolve(null); }; }); var y = document.createElement('script'); y.src = '/detail.js?v=20261108b'; document.body.appendChild(y); document.body.appendChild(z); var w = document.createElement('script'); w.src = '/fresh.js?v=20261103a'; document.body.appendChild(w); var nv = document.createElement('script'); nv.src = '/nudge.js?v=20261102a'; document.body.appendChild(nv); var rv = document.createElement('script'); rv.src = '/review.js?v=20261104b'; document.body.appendChild(rv); var by = document.createElement('script'); by.src = '/buy.js?v=20261103a'; document.body.appendChild(by);
+    var inf = document.createElement('script'); inf.src = '/infographic.js?v=20261103a'; document.body.appendChild(inf); var x = document.createElement('script'); x.src = '/extra.js?v=20261102c'; document.body.appendChild(x); var z = document.createElement('script'); z.src = '/places.js?v=20261103b'; window.GOPLACES_READY = new Promise(function (resolve) { z.onload = function () { resolve(window.GOPLACES || null); }; z.onerror = function () { resolve(null); }; }); var y = document.createElement('script'); y.src = '/detail.js?v=20261108c'; document.body.appendChild(y); document.body.appendChild(z); var w = document.createElement('script'); w.src = '/fresh.js?v=20261103a'; document.body.appendChild(w); var nv = document.createElement('script'); nv.src = '/nudge.js?v=20261102a'; document.body.appendChild(nv); var rv = document.createElement('script'); rv.src = '/review.js?v=20261104b'; document.body.appendChild(rv); var by = document.createElement('script'); by.src = '/buy.js?v=20261103a'; document.body.appendChild(by);
   }
   envBanner();
   /* Bounded waits: a request that never answers must not leave Today blank. After FEED_TIMEOUT_MS the page renders from the curated list

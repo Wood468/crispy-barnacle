@@ -86,19 +86,13 @@ with sync_playwright() as p:
         alola=page.locator('#evd [data-identity="26:alola:none"]')
         sun=page.locator('#evd [data-identity="25:base:synthetic-sun"]')
         moon=page.locator('#evd [data-identity="25:base:synthetic-moon"]')
-        assert base.locator('.own').inner_text()=='Have'
+        assert 'Pikachu' in base.inner_text()
         assert 'Alolan Raichu' in alola.inner_text()
-        assert alola.locator('.own').inner_text()=='Need', 'form inherited base ownership'
-        assert sun.locator('.own').inner_text()=='Have'
-        assert moon.locator('.own').inner_text()=='Not tracked', 'costume inherited base or sibling ownership'
+        assert sun.count()==1 and moon.count()==1, 'distinct costumes were merged'
         assert sun.locator('img').count()==moon.locator('img').count()==0, 'synthetic costume used ordinary artwork'
         assert moon.locator('.costume-unavailable').count()==1
-        alola.locator('.ue-marking > summary').click()
-        alola.locator('[data-val="1"]').click()
-        assert page.evaluate("GODASH.usGet('form:26:alola')")==1
-        assert alola.locator('.own').inner_text()=='Have'
-        alola.locator('.ue-follow').click()
-        assert alola.locator('.ue-follow').get_attribute('aria-pressed')=='true'
+        assert page.locator('#evd .own,#evd [data-follow],#evd .ue-mon-controls,#evd [data-mark]').count()==0
+        assert page.evaluate("GODASH.usGet('form:26:alola')")!=1, 'reading an event changed collection data'
         assert 'Catch 5 Pokémon' in page.locator('#evd').inner_text()
         assert 'Rare Candy' in page.locator('#evd').inner_text()
         assert 'Synthetic afternoon' in page.locator('#evd').inner_text()
@@ -122,7 +116,7 @@ with sync_playwright() as p:
         assert 'Premium Battle Pass' in page.locator('#evd-pass').inner_text()
         assert errors==[],errors
         context.close()
-        print(f'PASS universal {engine} {width}px: future discovery, optional sections, nested activities, exact artwork/forms, shared ownership, follow, source privacy, no overflow')
+        print(f'PASS universal {engine} {width}px: future discovery, optional sections, nested activities, exact artwork/forms, read-only Pokémon identities, source privacy, no overflow')
     # Every committed catalogue record must open in the real renderer, including date-unknown references.
     context=browser.new_context(viewport={'width':390,'height':900},timezone_id='Australia/Melbourne',service_workers='block')
     context.route('**/api/**',api)
@@ -222,7 +216,8 @@ with sync_playwright() as p:
     page.clock.run_for(8100)
     page.wait_for_function("document.getElementById('evd-t')?.textContent==='Synthetic Future Community Day'")
     assert page.locator('#evd [data-method="wild"]').count()==1
-    assert page.locator('#evd [data-method="wild"] .own').inner_text()=='Have'
+    assert page.locator('#evd [data-method="wild"] .ue-mon').count()==1
+    assert page.locator('#evd .own,#evd [data-follow],#evd [data-mark]').count()==0
     assert page.locator('#evd-research-title').count()==0
     page.locator('#evd-sources > summary').click()
     assert 'supplementary event information could not be loaded' in page.locator('#evd-sources').inner_text()
