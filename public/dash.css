@@ -2173,7 +2173,7 @@ a.evc-source{color:var(--color-link);text-underline-offset:3px}
 
 /* Variant artwork: a costume or form without exact art keeps the ordinary species picture, small and plainly badged. */
 .art.costume-unavailable .va-base{width:min(100%,3rem);height:auto;aspect-ratio:1;object-fit:contain;flex:none}
-.art.costume-unavailable .va-badge{display:inline-block;margin-top:2px;padding:1px 6px;border-radius:999px;background:color-mix(in srgb,var(--color-text-muted) 16%,transparent);font-size:var(--type-caption,.68rem);font-weight:600;line-height:1.3;color:var(--color-text-muted)}
+.art.costume-unavailable .va-badge{display:inline-block;margin-top:2px;padding:1px 6px;border-radius:var(--radius-pill);background:color-mix(in srgb,var(--color-text-muted) 16%,transparent);font-size:var(--type-caption,.68rem);font-weight:600;line-height:1.3;color:var(--color-text-muted)}
 .evd-in:has(.ue-hero) .ue-mon-art .art.costume-unavailable{grid-template-rows:auto auto;gap:2px;align-content:center;overflow:hidden}
 .evd-in:has(.ue-hero) .ue-mon-art .art.costume-unavailable>span{display:none}
 .evd-in:has(.ue-hero) .ue-mon-art .art.costume-unavailable .va-base{width:38px;height:38px}
