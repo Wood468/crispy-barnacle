@@ -1,0 +1,951 @@
+{
+ "schemaVersion": 2,
+ "policy": "Exact variant art only. A missing costume or Gigantamax picture is shown as the ordinary species picture with a visible badge, never as another costume or form. Shadow and Dynamax are labelled treatments of the species picture. Trainer clothing is never a Pokémon costume. No Shiny boost is ever inferred from ordinary Shiny availability.",
+ "sources": {
+  "pokeminers": {
+   "name": "PokeMiners/pogo_assets",
+   "url": "https://github.com/PokeMiners/pogo_assets",
+   "rights": "Niantic / The Pokémon Company / Nintendo / Game Freak IP, educational-use mirror. Reached only through the same-origin /api/art edge proxy; never committed or redistributed here."
+  },
+  "legacy": {
+   "name": "Pictures mirrored to R2 before this manifest (Serebii / Dittobase via scripts/costumes.mjs + scripts/mirror-images.mjs)",
+   "rights": "Existing repository policy; not re-reviewed by the manifest pipeline."
+  }
+ },
+ "pokeminers": {
+  "sourceCommit": "db10df75d6f6f92018d9786af0aecc238fecc4ef",
+  "gigantamax": [
+   3,
+   6,
+   9,
+   12,
+   68,
+   94,
+   99,
+   131,
+   143,
+   812,
+   815,
+   818,
+   849
+  ]
+ },
+ "counts": {
+  "entries": 89,
+  "visuallyConfirmed": 8
+ },
+ "entries": {
+  "12|normal|gigantamax||regular": {
+   "status": "approved",
+   "url": "/img/ext/012-gi-08acfc71.png",
+   "source": "legacy",
+   "review": "legacy-live-not-reviewed",
+   "rights": "Existing repository policy; not re-reviewed by the manifest pipeline.",
+   "sha256": "7fc2781259d8cf56630e91d7c29fd85194a4d5a9f87e14d074c286fe52b3074f",
+   "bytes": 22462
+  },
+  "12|normal|gigantamax||shiny": {
+   "status": "approved",
+   "url": "/img/ext/012-gi-224f7b5c.png",
+   "source": "legacy",
+   "review": "legacy-live-not-reviewed",
+   "rights": "Existing repository policy; not re-reviewed by the manifest pipeline.",
+   "sha256": "2c3e204fd62280bc2fa79c4cc1bc245258125cf64b2246bdbbfc8405bd9d0337",
+   "bytes": 20740
+  },
+  "131|normal|gigantamax||regular": {
+   "status": "approved",
+   "url": "/img/ext/131-gi-e8bc7eef.png",
+   "source": "legacy",
+   "review": "legacy-live-not-reviewed",
+   "rights": "Existing repository policy; not re-reviewed by the manifest pipeline.",
+   "sha256": "9514e4aad184b52758cc84a4e60694bc10dc0aacaeb64d99c25374beb2416c3e",
+   "bytes": 23390
+  },
+  "131|normal|gigantamax||shiny": {
+   "status": "approved",
+   "url": "/img/ext/131-gi-619fdb19.png",
+   "source": "legacy",
+   "review": "legacy-live-not-reviewed",
+   "rights": "Existing repository policy; not re-reviewed by the manifest pipeline.",
+   "sha256": "df17d2490477a35660757f708918075831125a7d8b7b3792dd966f715336ed97",
+   "bytes": 23642
+  },
+  "133|normal|gigantamax||regular": {
+   "status": "approved",
+   "url": "/img/ext/133-gi-877db145.png",
+   "source": "legacy",
+   "review": "legacy-live-not-reviewed",
+   "rights": "Existing repository policy; not re-reviewed by the manifest pipeline.",
+   "sha256": "58671fee6d35a4fbb0de856bfa28d076dcc908dee08391ed8a9304fe7b1d3ec4",
+   "bytes": 17757
+  },
+  "143|normal|gigantamax||regular": {
+   "status": "approved",
+   "url": "/img/ext/143-gi-98329338.png",
+   "source": "legacy",
+   "review": "legacy-live-not-reviewed",
+   "rights": "Existing repository policy; not re-reviewed by the manifest pipeline.",
+   "sha256": "b01b67a6586115cad21e4739ed7257e868707397f46dd3567f7946f982e63d6c",
+   "bytes": 31524
+  },
+  "143|normal|gigantamax||shiny": {
+   "status": "approved",
+   "url": "/img/ext/143-gi-ff342ef4.png",
+   "source": "legacy",
+   "review": "legacy-live-not-reviewed",
+   "rights": "Existing repository policy; not re-reviewed by the manifest pipeline.",
+   "sha256": "60857bd270a965c1099fc2bed5fe13b6271f41a246d1a0fea8adf8eca4f76d19",
+   "bytes": 30812
+  },
+  "196|normal|costume|sun-scarf|regular": {
+   "status": "approved",
+   "url": "/api/art?n=Espeon&c=GOFEST_2024_SSCARF",
+   "source": "pokeminers",
+   "label": "sun scarf",
+   "review": "visually-confirmed",
+   "reviewedBy": "Claude (Sonnet 5.5)",
+   "reviewedOn": "2026-11-08",
+   "asset": "fGOFEST_2024_SSCARF",
+   "sourcePath": "Images/Pokemon/Addressable Assets/pm196.fGOFEST_2024_SSCARF.icon.png",
+   "sourceCommit": "db10df75d6f6f92018d9786af0aecc238fecc4ef",
+   "blobSha": "6a7e43b22195e4570436cd25f2669c12f85f0ef9",
+   "sha256": "e20e8324e015a116e28dc87e1cf474044f713b39778b0ab9ca9f190cf6c1bb3f",
+   "bytes": 11422,
+   "width": 108,
+   "height": 139,
+   "rights": "Rights-sensitive: Niantic / The Pokémon Company / Nintendo / Game Freak IP, published by PokeMiners for educational use. Served only through the existing same-origin edge proxy GET /api/art (30-day edge cache); no binary is committed to this repository or redistributed. Owner may revoke by changing status.",
+   "queueId": "espeon-sun-scarf"
+  },
+  "196|normal|costume|sun-scarf|shiny": {
+   "status": "approved",
+   "url": "/api/art?n=Espeon&c=GOFEST_2024_SSCARF&shiny=1",
+   "source": "pokeminers",
+   "label": "sun scarf",
+   "review": "visually-confirmed",
+   "reviewedBy": "Claude (Sonnet 5.5)",
+   "reviewedOn": "2026-11-08",
+   "asset": "fGOFEST_2024_SSCARF",
+   "sourcePath": "Images/Pokemon/Addressable Assets/pm196.fGOFEST_2024_SSCARF.s.icon.png",
+   "sourceCommit": "db10df75d6f6f92018d9786af0aecc238fecc4ef",
+   "blobSha": "237deb8df05855ad26e5fddbba700b3221f4c6c3",
+   "sha256": "5c46ded854f3ff9adfa31d05c02f1b023a7d3667a895e6f132cf4f11e85cacaf",
+   "bytes": 11241,
+   "width": 108,
+   "height": 139,
+   "rights": "Rights-sensitive: Niantic / The Pokémon Company / Nintendo / Game Freak IP, published by PokeMiners for educational use. Served only through the existing same-origin edge proxy GET /api/art (30-day edge cache); no binary is committed to this repository or redistributed. Owner may revoke by changing status.",
+   "queueId": "espeon-sun-scarf"
+  },
+  "197|normal|costume|moon-scarf|regular": {
+   "status": "approved",
+   "url": "/api/art?n=Umbreon&c=GOFEST_2024_MSCARF",
+   "source": "pokeminers",
+   "label": "moon scarf",
+   "review": "visually-confirmed",
+   "reviewedBy": "Claude (Sonnet 5.5)",
+   "reviewedOn": "2026-11-08",
+   "asset": "fGOFEST_2024_MSCARF",
+   "sourcePath": "Images/Pokemon/Addressable Assets/pm197.fGOFEST_2024_MSCARF.icon.png",
+   "sourceCommit": "db10df75d6f6f92018d9786af0aecc238fecc4ef",
+   "blobSha": "dec36899706c0fe815f365e4da4689172c6c5218",
+   "sha256": "0793ef0c5e829effb713650bf471ffe59a92e1a79dda477d5b8dffd66b6c41d5",
+   "bytes": 10383,
+   "width": 87,
+   "height": 132,
+   "rights": "Rights-sensitive: Niantic / The Pokémon Company / Nintendo / Game Freak IP, published by PokeMiners for educational use. Served only through the existing same-origin edge proxy GET /api/art (30-day edge cache); no binary is committed to this repository or redistributed. Owner may revoke by changing status.",
+   "queueId": "umbreon-moon-scarf"
+  },
+  "197|normal|costume|moon-scarf|shiny": {
+   "status": "approved",
+   "url": "/api/art?n=Umbreon&c=GOFEST_2024_MSCARF&shiny=1",
+   "source": "pokeminers",
+   "label": "moon scarf",
+   "review": "visually-confirmed",
+   "reviewedBy": "Claude (Sonnet 5.5)",
+   "reviewedOn": "2026-11-08",
+   "asset": "fGOFEST_2024_MSCARF",
+   "sourcePath": "Images/Pokemon/Addressable Assets/pm197.fGOFEST_2024_MSCARF.s.icon.png",
+   "sourceCommit": "db10df75d6f6f92018d9786af0aecc238fecc4ef",
+   "blobSha": "075b301c9e8f212003e905854f44ff8f824398d3",
+   "sha256": "73c1c64c31776f4bd9851e42d9cd3d79ebe9bffb59e14e9e5cf1925e9282ccf6",
+   "bytes": 10292,
+   "width": 87,
+   "height": 132,
+   "rights": "Rights-sensitive: Niantic / The Pokémon Company / Nintendo / Game Freak IP, published by PokeMiners for educational use. Served only through the existing same-origin edge proxy GET /api/art (30-day edge cache); no binary is committed to this repository or redistributed. Owner may revoke by changing status.",
+   "queueId": "umbreon-moon-scarf"
+  },
+  "25|normal|costume|astronaut|regular": {
+   "status": "approved",
+   "url": "/img/ext/25-pikachu-astronaut-00a1fb21.png",
+   "source": "legacy",
+   "review": "legacy-live-not-reviewed",
+   "rights": "Existing repository policy; not re-reviewed by the manifest pipeline.",
+   "sha256": "5438153a5857e13c7e2f12252b7b244802a5890484c384f397d07e9decdcf067",
+   "bytes": 10576,
+   "label": "astronaut"
+  },
+  "25|normal|costume|hat-and-capelet|regular": {
+   "status": "approved",
+   "url": "/img/ext/025-halloween2026-0a455e9f.png",
+   "source": "legacy",
+   "review": "legacy-live-not-reviewed",
+   "rights": "Existing repository policy; not re-reviewed by the manifest pipeline.",
+   "sha256": "8a78cae51bf6ea74d57608830cafd681e9c6ab3e61c8e755e79256a746fad320",
+   "bytes": 7995,
+   "label": "hat and capelet"
+  },
+  "25|normal|costume|hat-and-capelet|shiny": {
+   "status": "approved",
+   "url": "/img/ext/025-halloween2026-31e70243.png",
+   "source": "legacy",
+   "review": "legacy-live-not-reviewed",
+   "rights": "Existing repository policy; not re-reviewed by the manifest pipeline.",
+   "sha256": "25a5b235a76c185b6142d9b97b097c14c639969ae6b87a5ffcdd2b74f05dacf7",
+   "bytes": 8066,
+   "label": "hat and capelet"
+  },
+  "25|normal|costume|marathon-visor|regular": {
+   "status": "approved",
+   "url": "/img/ext/025-marathon-8cf5be7d.png",
+   "source": "legacy",
+   "review": "legacy-live-not-reviewed",
+   "rights": "Existing repository policy; not re-reviewed by the manifest pipeline.",
+   "sha256": "e7a65f9010ec54548ef027b47205f89948251c2c9cc2dd27f93ee36ec02ffbc8",
+   "bytes": 7973,
+   "label": "marathon visor"
+  },
+  "25|normal|costume|marathon-visor|shiny": {
+   "status": "approved",
+   "url": "/img/ext/025-marathon-a1644171.png",
+   "source": "legacy",
+   "review": "legacy-live-not-reviewed",
+   "rights": "Existing repository policy; not re-reviewed by the manifest pipeline.",
+   "sha256": "39b4df8bf803618564f8dcd935f1a19ec7a28f22e6172dd599dd636ce266df62",
+   "bytes": 7466,
+   "label": "marathon visor"
+  },
+  "25|normal|costume|moon-crown|regular": {
+   "status": "approved",
+   "url": "/api/art?n=Pikachu&c=GOFEST_2024_MTIARA",
+   "source": "pokeminers",
+   "label": "moon crown",
+   "review": "visually-confirmed",
+   "reviewedBy": "Claude (Sonnet 5.5)",
+   "reviewedOn": "2026-11-08",
+   "asset": "fGOFEST_2024_MTIARA",
+   "sourcePath": "Images/Pokemon/Addressable Assets/pm25.fGOFEST_2024_MTIARA.icon.png",
+   "sourceCommit": "db10df75d6f6f92018d9786af0aecc238fecc4ef",
+   "blobSha": "a1662b11909bb54c0337280cf8b22587b3cd5764",
+   "sha256": "9bf85cf97e3c78172308d89402005870b0004841344b093a37641a5f6f046940",
+   "bytes": 8899,
+   "width": 98,
+   "height": 106,
+   "rights": "Rights-sensitive: Niantic / The Pokémon Company / Nintendo / Game Freak IP, published by PokeMiners for educational use. Served only through the existing same-origin edge proxy GET /api/art (30-day edge cache); no binary is committed to this repository or redistributed. Owner may revoke by changing status.",
+   "queueId": "pikachu-moon-crown"
+  },
+  "25|normal|costume|moon-crown|shiny": {
+   "status": "approved",
+   "url": "/api/art?n=Pikachu&c=GOFEST_2024_MTIARA&shiny=1",
+   "source": "pokeminers",
+   "label": "moon crown",
+   "review": "visually-confirmed",
+   "reviewedBy": "Claude (Sonnet 5.5)",
+   "reviewedOn": "2026-11-08",
+   "asset": "fGOFEST_2024_MTIARA",
+   "sourcePath": "Images/Pokemon/Addressable Assets/pm25.fGOFEST_2024_MTIARA.s.icon.png",
+   "sourceCommit": "db10df75d6f6f92018d9786af0aecc238fecc4ef",
+   "blobSha": "7a7dcd1f06cb4e98fe550aa6d4efa96292d437ac",
+   "sha256": "c0104d535908e25087a6417d9b5cda7ffd36179aee2d1fad817a2f8bbaaf19fd",
+   "bytes": 8651,
+   "width": 98,
+   "height": 106,
+   "rights": "Rights-sensitive: Niantic / The Pokémon Company / Nintendo / Game Freak IP, published by PokeMiners for educational use. Served only through the existing same-origin edge proxy GET /api/art (30-day edge cache); no binary is committed to this repository or redistributed. Owner may revoke by changing status.",
+   "queueId": "pikachu-moon-crown"
+  },
+  "25|normal|costume|sun-crown|regular": {
+   "status": "approved",
+   "url": "/api/art?n=Pikachu&c=GOFEST_2024_STIARA",
+   "source": "pokeminers",
+   "label": "sun crown",
+   "review": "visually-confirmed",
+   "reviewedBy": "Claude (Sonnet 5.5)",
+   "reviewedOn": "2026-11-08",
+   "asset": "fGOFEST_2024_STIARA",
+   "sourcePath": "Images/Pokemon/Addressable Assets/pm25.fGOFEST_2024_STIARA.icon.png",
+   "sourceCommit": "db10df75d6f6f92018d9786af0aecc238fecc4ef",
+   "blobSha": "f0815871cbdef4948334c9cc9bc166f1de4585ef",
+   "sha256": "7a6d1ec38716e10a044054af364f8044d7723c2c4f6f051adbbf3fb6be38684b",
+   "bytes": 8985,
+   "width": 98,
+   "height": 106,
+   "rights": "Rights-sensitive: Niantic / The Pokémon Company / Nintendo / Game Freak IP, published by PokeMiners for educational use. Served only through the existing same-origin edge proxy GET /api/art (30-day edge cache); no binary is committed to this repository or redistributed. Owner may revoke by changing status.",
+   "queueId": "pikachu-sun-crown"
+  },
+  "25|normal|costume|sun-crown|shiny": {
+   "status": "approved",
+   "url": "/api/art?n=Pikachu&c=GOFEST_2024_STIARA&shiny=1",
+   "source": "pokeminers",
+   "label": "sun crown",
+   "review": "visually-confirmed",
+   "reviewedBy": "Claude (Sonnet 5.5)",
+   "reviewedOn": "2026-11-08",
+   "asset": "fGOFEST_2024_STIARA",
+   "sourcePath": "Images/Pokemon/Addressable Assets/pm25.fGOFEST_2024_STIARA.s.icon.png",
+   "sourceCommit": "db10df75d6f6f92018d9786af0aecc238fecc4ef",
+   "blobSha": "993c30fae1ff9cbbd776effb569dbbc41150f485",
+   "sha256": "2e21c772b83e19b87698f8beb818cbf456802b5d6bdd6176d0a2a8beb7160c48",
+   "bytes": 8699,
+   "width": 98,
+   "height": 106,
+   "rights": "Rights-sensitive: Niantic / The Pokémon Company / Nintendo / Game Freak IP, published by PokeMiners for educational use. Served only through the existing same-origin edge proxy GET /api/art (30-day edge cache); no binary is committed to this repository or redistributed. Owner may revoke by changing status.",
+   "queueId": "pikachu-sun-crown"
+  },
+  "25|normal|gigantamax||regular": {
+   "status": "approved",
+   "url": "/img/ext/025-gi-21e3da3b.png",
+   "source": "legacy",
+   "review": "legacy-live-not-reviewed",
+   "rights": "Existing repository policy; not re-reviewed by the manifest pipeline.",
+   "sha256": "e5e46a021f794f5d97b13bd684dc05aa638ff082eb5128ea979c3fcffa4f4c5f",
+   "bytes": 20862
+  },
+  "25|normal|gigantamax||shiny": {
+   "status": "approved",
+   "url": "/img/ext/025-gi-90e7de17.png",
+   "source": "legacy",
+   "review": "legacy-live-not-reviewed",
+   "rights": "Existing repository policy; not re-reviewed by the manifest pipeline.",
+   "sha256": "d131f027d95b187b4e3ff4d59d7bf21555425d2f29ac3d7fdcbddfe155007cef",
+   "bytes": 20950
+  },
+  "393|normal|costume|halloween-mischief|regular": {
+   "status": "approved",
+   "url": "/img/ext/393-halloween2021-3861095b.png",
+   "source": "legacy",
+   "review": "legacy-live-not-reviewed",
+   "rights": "Existing repository policy; not re-reviewed by the manifest pipeline.",
+   "sha256": "02932b389d1cfb21e6195a9c654c888b6c32a387bc172430deccb554303a554d",
+   "bytes": 9762,
+   "label": "halloween mischief"
+  },
+  "393|normal|costume|halloween-mischief|shiny": {
+   "status": "approved",
+   "url": "/img/ext/393-halloween2021-a96dab90.png",
+   "source": "legacy",
+   "review": "legacy-live-not-reviewed",
+   "rights": "Existing repository policy; not re-reviewed by the manifest pipeline.",
+   "sha256": "e1bcc93d5cc386a1cf7723bf5644d59694748c7a1c5ef6f58e3b4541301ef15a",
+   "bytes": 9765,
+   "label": "halloween mischief"
+  },
+  "3|normal|gigantamax||regular": {
+   "status": "approved",
+   "url": "/img/ext/003-gi-1ddc27e6.png",
+   "source": "legacy",
+   "review": "legacy-live-not-reviewed",
+   "rights": "Existing repository policy; not re-reviewed by the manifest pipeline.",
+   "sha256": "f4edf94f6db8aaf69ea3a4da53d41bfc074c8d14adb76d3c98688b3a0eb368c2",
+   "bytes": 23910
+  },
+  "3|normal|gigantamax||shiny": {
+   "status": "approved",
+   "url": "/img/ext/003-gi-c60030cd.png",
+   "source": "legacy",
+   "review": "legacy-live-not-reviewed",
+   "rights": "Existing repository policy; not re-reviewed by the manifest pipeline.",
+   "sha256": "ecf7579d49a8a6b1e416eddca093c64f52fecb8c7292e574ff6cd0fa228c2138",
+   "bytes": 24521
+  },
+  "41|normal|costume|top-hat|regular": {
+   "status": "approved",
+   "url": "/img/ext/041-tophat-ca5244bb.png",
+   "source": "legacy",
+   "review": "legacy-live-not-reviewed",
+   "rights": "Existing repository policy; not re-reviewed by the manifest pipeline.",
+   "sha256": "30b3363e282c2758edf3d5a778ebe6bff31927151c43a3fa037f3ae327006d22",
+   "bytes": 8252,
+   "label": "top hat"
+  },
+  "41|normal|costume|top-hat|shiny": {
+   "status": "approved",
+   "url": "/img/ext/041-tophat-763a8377.png",
+   "source": "legacy",
+   "review": "legacy-live-not-reviewed",
+   "rights": "Existing repository policy; not re-reviewed by the manifest pipeline.",
+   "sha256": "a50917a1657a71daeb6207cd868840d6e9642ea9358431ef572b4e79c62c1c65",
+   "bytes": 8259,
+   "label": "top hat"
+  },
+  "426|normal|costume|halloween-mischief|regular": {
+   "status": "approved",
+   "url": "/img/ext/426-halloween2021-2b24aedc.png",
+   "source": "legacy",
+   "review": "legacy-live-not-reviewed",
+   "rights": "Existing repository policy; not re-reviewed by the manifest pipeline.",
+   "sha256": "463a62f4b3bd9934529acf876dd3c99f561e51a474d13a76d48875a9a0297d87",
+   "bytes": 14090,
+   "label": "halloween mischief"
+  },
+  "426|normal|costume|halloween-mischief|shiny": {
+   "status": "approved",
+   "url": "/img/ext/426-halloween2021-83b9dd58.png",
+   "source": "legacy",
+   "review": "legacy-live-not-reviewed",
+   "rights": "Existing repository policy; not re-reviewed by the manifest pipeline.",
+   "sha256": "ce674e0ab5495f0bfd6bc6b1338af2ebc000aba4d44725bf2a84272627e6ea3f",
+   "bytes": 14484,
+   "label": "halloween mischief"
+  },
+  "52|normal|gigantamax||regular": {
+   "status": "approved",
+   "url": "/img/ext/052-gi-9480e9de.png",
+   "source": "legacy",
+   "review": "legacy-live-not-reviewed",
+   "rights": "Existing repository policy; not re-reviewed by the manifest pipeline.",
+   "sha256": "ffcb1ad653891b11590152b2aec06e17a44ee2bf2e5739fba6108aea2afcacf5",
+   "bytes": 14356
+  },
+  "52|normal|gigantamax||shiny": {
+   "status": "approved",
+   "url": "/img/ext/052-gi-cf3efce3.png",
+   "source": "legacy",
+   "review": "legacy-live-not-reviewed",
+   "rights": "Existing repository policy; not re-reviewed by the manifest pipeline.",
+   "sha256": "dd447cc71cda4046d0a6dc156785c6c7776c8049dd5b58b36d81aee8dc138ac6",
+   "bytes": 14650
+  },
+  "569|normal|gigantamax||regular": {
+   "status": "approved",
+   "url": "/img/ext/569-gi-2804be4e.png",
+   "source": "legacy",
+   "review": "legacy-live-not-reviewed",
+   "rights": "Existing repository policy; not re-reviewed by the manifest pipeline.",
+   "sha256": "0321eeb350f583a9b1c235f202a67bc5befd37dd7fd7683753e611b85f5f1e30",
+   "bytes": 31219
+  },
+  "569|normal|gigantamax||shiny": {
+   "status": "approved",
+   "url": "/img/ext/569-gi-8edef473.png",
+   "source": "legacy",
+   "review": "legacy-live-not-reviewed",
+   "rights": "Existing repository policy; not re-reviewed by the manifest pipeline.",
+   "sha256": "63f73960980b4cfc5a9940d0fa54ce67c19283c6d9b26f1637b207ebc67e7b95",
+   "bytes": 31378
+  },
+  "68|normal|costume|modern-jacket|regular": {
+   "status": "approved",
+   "url": "/img/ext/068-jacket-10b90aea.png",
+   "source": "legacy",
+   "review": "legacy-live-not-reviewed",
+   "rights": "Existing repository policy; not re-reviewed by the manifest pipeline.",
+   "sha256": "2e66f0397e2ad1c4f5f39fa15b36b342f5536268e84a109e4684280517b8ac97",
+   "bytes": 21307,
+   "label": "modern jacket"
+  },
+  "68|normal|costume|modern-jacket|shiny": {
+   "status": "approved",
+   "url": "/img/ext/068-jacket-30bb5b55.png",
+   "source": "legacy",
+   "review": "legacy-live-not-reviewed",
+   "rights": "Existing repository policy; not re-reviewed by the manifest pipeline.",
+   "sha256": "d7bb19c1af9feaa6e8bc51154c6b37828abac1e10b2f03c1a54a62a890745c05",
+   "bytes": 21866,
+   "label": "modern jacket"
+  },
+  "68|normal|gigantamax||regular": {
+   "status": "approved",
+   "url": "/img/ext/068-gi-2a092da8.png",
+   "source": "legacy",
+   "review": "legacy-live-not-reviewed",
+   "rights": "Existing repository policy; not re-reviewed by the manifest pipeline.",
+   "sha256": "77caee1e40aded0d437fc60ae4f22e36c86e15043bb03ff99af71336e772b8c8",
+   "bytes": 27839
+  },
+  "68|normal|gigantamax||shiny": {
+   "status": "approved",
+   "url": "/img/ext/068-gi-77fe271a.png",
+   "source": "legacy",
+   "review": "legacy-live-not-reviewed",
+   "rights": "Existing repository policy; not re-reviewed by the manifest pipeline.",
+   "sha256": "0a83be91b9ff61c8f4ffd81c43834be07714d64894f2f62bdf723954634c1e0d",
+   "bytes": 28084
+  },
+  "6|normal|gigantamax||regular": {
+   "status": "approved",
+   "url": "/img/ext/006-gi-250f4f37.png",
+   "source": "legacy",
+   "review": "legacy-live-not-reviewed",
+   "rights": "Existing repository policy; not re-reviewed by the manifest pipeline.",
+   "sha256": "ea3b6868cc8f96fe2b64da71e4acd3666fe6e5e826d1ec1bebbf28a5f937aba7",
+   "bytes": 25435
+  },
+  "6|normal|gigantamax||shiny": {
+   "status": "approved",
+   "url": "/img/ext/006-gi-5b9d1ec3.png",
+   "source": "legacy",
+   "review": "legacy-live-not-reviewed",
+   "rights": "Existing repository policy; not re-reviewed by the manifest pipeline.",
+   "sha256": "c4f0b55a0cd3284b06615a338e299221511b909746509aa077af466f9732ea1c",
+   "bytes": 27095
+  },
+  "722|normal|costume|halloween-costume|regular": {
+   "status": "approved",
+   "url": "/img/ext/722-halloween-293d67e9.png",
+   "source": "legacy",
+   "review": "legacy-live-not-reviewed",
+   "rights": "Existing repository policy; not re-reviewed by the manifest pipeline.",
+   "sha256": "dca946615497da990a4a9867ae69f9245e0b9e71dec84a86451911a256f4d94e",
+   "bytes": 8270,
+   "label": "halloween costume"
+  },
+  "722|normal|costume|halloween-costume|shiny": {
+   "status": "approved",
+   "url": "/img/ext/722-halloween-31fd907e.png",
+   "source": "legacy",
+   "review": "legacy-live-not-reviewed",
+   "rights": "Existing repository policy; not re-reviewed by the manifest pipeline.",
+   "sha256": "144de20aad161c0d9466561e7a40b7cf727bd664f51169b8b8f8c1c0b2ce2c01",
+   "bytes": 8067,
+   "label": "halloween costume"
+  },
+  "774|normal|costume|blue-core|regular": {
+   "status": "approved",
+   "url": "/img/ext/774-b-02c124bb.png",
+   "source": "legacy",
+   "review": "legacy-live-not-reviewed",
+   "rights": "Existing repository policy; not re-reviewed by the manifest pipeline.",
+   "sha256": "c9631784c32d0ac46bfb7f46865ae40581ef4155c3d0b1d0df2dc1f77b5dace6",
+   "bytes": 6851,
+   "label": "blue core"
+  },
+  "774|normal|costume|blue-core|shiny": {
+   "status": "approved",
+   "url": "/img/ext/774-b-34600456.png",
+   "source": "legacy",
+   "review": "legacy-live-not-reviewed",
+   "rights": "Existing repository policy; not re-reviewed by the manifest pipeline.",
+   "sha256": "40f9261bcab62c2432a7356fae1a756a6415625a99f0c8751ce280abcad1264a",
+   "bytes": 6610,
+   "label": "blue core"
+  },
+  "774|normal|costume|green-core|regular": {
+   "status": "approved",
+   "url": "/img/ext/774-g-3cb8a598.png",
+   "source": "legacy",
+   "review": "legacy-live-not-reviewed",
+   "rights": "Existing repository policy; not re-reviewed by the manifest pipeline.",
+   "sha256": "08bc3ab0987e7b2087eb7cb57b9957815a16ef640e27f7ec5e2d025093e9bf1b",
+   "bytes": 6857,
+   "label": "green core"
+  },
+  "774|normal|costume|green-core|shiny": {
+   "status": "approved",
+   "url": "/img/ext/774-g-6f912714.png",
+   "source": "legacy",
+   "review": "legacy-live-not-reviewed",
+   "rights": "Existing repository policy; not re-reviewed by the manifest pipeline.",
+   "sha256": "34dff11e0e0029555f5f1deef039d4347ef34c763ddac5bf930b163a72a7d995",
+   "bytes": 6610,
+   "label": "green core"
+  },
+  "774|normal|costume|indigo-core|regular": {
+   "status": "approved",
+   "url": "/img/ext/774-i-f9670fc5.png",
+   "source": "legacy",
+   "review": "legacy-live-not-reviewed",
+   "rights": "Existing repository policy; not re-reviewed by the manifest pipeline.",
+   "sha256": "1ade7da1acd6d9bae08a666640fb32692bafa4f1443fb4afb335f898bed871de",
+   "bytes": 6330,
+   "label": "indigo core"
+  },
+  "774|normal|costume|indigo-core|shiny": {
+   "status": "approved",
+   "url": "/img/ext/774-i-4a440459.png",
+   "source": "legacy",
+   "review": "legacy-live-not-reviewed",
+   "rights": "Existing repository policy; not re-reviewed by the manifest pipeline.",
+   "sha256": "ea079cf5de9d4215d9036847edc27550b87e6ca011b0667044b2c301ae96936c",
+   "bytes": 6610,
+   "label": "indigo core"
+  },
+  "774|normal|costume|orange-core|regular": {
+   "status": "approved",
+   "url": "/img/ext/774-o-799f4ae7.png",
+   "source": "legacy",
+   "review": "legacy-live-not-reviewed",
+   "rights": "Existing repository policy; not re-reviewed by the manifest pipeline.",
+   "sha256": "f502c5ba610f652889a447f27634f7e2a19e4b0233059822b5ebb41b19509090",
+   "bytes": 6227,
+   "label": "orange core"
+  },
+  "774|normal|costume|orange-core|shiny": {
+   "status": "approved",
+   "url": "/img/ext/774-o-c6223ca1.png",
+   "source": "legacy",
+   "review": "legacy-live-not-reviewed",
+   "rights": "Existing repository policy; not re-reviewed by the manifest pipeline.",
+   "sha256": "178ccdc2a579d526ed39eb84a40a58b68b36b7c7f5466bd7575635b7447b262e",
+   "bytes": 6610,
+   "label": "orange core"
+  },
+  "774|normal|costume|red-core|regular": {
+   "status": "approved",
+   "url": "/img/ext/774-r-3874c558.png",
+   "source": "legacy",
+   "review": "legacy-live-not-reviewed",
+   "rights": "Existing repository policy; not re-reviewed by the manifest pipeline.",
+   "sha256": "de4ada26fbfcd72f6d959496556189543c7315572bf764bf866c5c6f3faad769",
+   "bytes": 6815,
+   "label": "red core"
+  },
+  "774|normal|costume|red-core|shiny": {
+   "status": "approved",
+   "url": "/img/ext/774-r-dd7b7c2f.png",
+   "source": "legacy",
+   "review": "legacy-live-not-reviewed",
+   "rights": "Existing repository policy; not re-reviewed by the manifest pipeline.",
+   "sha256": "4e76d716d4866e5445e9b2ece48ed33aa90ab9424fb562313b5c5d02391becf4",
+   "bytes": 6610,
+   "label": "red core"
+  },
+  "774|normal|costume|violet-core|regular": {
+   "status": "approved",
+   "url": "/img/ext/774-v-d73eccda.png",
+   "source": "legacy",
+   "review": "legacy-live-not-reviewed",
+   "rights": "Existing repository policy; not re-reviewed by the manifest pipeline.",
+   "sha256": "0a4c83d5a6da7fa7bdd5e60924b6a04e9015bc745002b1bcff672075ad548cdc",
+   "bytes": 6937,
+   "label": "violet core"
+  },
+  "774|normal|costume|violet-core|shiny": {
+   "status": "approved",
+   "url": "/img/ext/774-v-de3e8efe.png",
+   "source": "legacy",
+   "review": "legacy-live-not-reviewed",
+   "rights": "Existing repository policy; not re-reviewed by the manifest pipeline.",
+   "sha256": "8437a401b78e589c206c8fc577b48cf0e7f7b60381cc4adeeb48298f30a98e02",
+   "bytes": 6610,
+   "label": "violet core"
+  },
+  "774|normal|costume|yellow-core|regular": {
+   "status": "approved",
+   "url": "/img/ext/774-y-cdb33b7c.png",
+   "source": "legacy",
+   "review": "legacy-live-not-reviewed",
+   "rights": "Existing repository policy; not re-reviewed by the manifest pipeline.",
+   "sha256": "95f2da662479561cdbb984e5d1f4d5af6db1f2b741e8da8c7c612c45af9cc9be",
+   "bytes": 6222,
+   "label": "yellow core"
+  },
+  "774|normal|costume|yellow-core|shiny": {
+   "status": "approved",
+   "url": "/img/ext/774-y-479ff710.png",
+   "source": "legacy",
+   "review": "legacy-live-not-reviewed",
+   "rights": "Existing repository policy; not re-reviewed by the manifest pipeline.",
+   "sha256": "633f40d921a37f39a5a9495c054ef2168607637c11dde5c9d441912c24f55e0d",
+   "bytes": 6610,
+   "label": "yellow core"
+  },
+  "809|normal|gigantamax||regular": {
+   "status": "approved",
+   "url": "/img/ext/809-gi-f1897f89.png",
+   "source": "legacy",
+   "review": "legacy-live-not-reviewed",
+   "rights": "Existing repository policy; not re-reviewed by the manifest pipeline.",
+   "sha256": "d4b48da05de68457767248eed1f3009fa2891158f623aa5ca2805f1f45e7c878",
+   "bytes": 22449
+  },
+  "812|normal|gigantamax||regular": {
+   "status": "approved",
+   "url": "/img/ext/812-gi-ce52b5fa.png",
+   "source": "legacy",
+   "review": "legacy-live-not-reviewed",
+   "rights": "Existing repository policy; not re-reviewed by the manifest pipeline.",
+   "sha256": "84ab7d79efce650ecd2393c6ad5221c050782a7dd39c4f9cac0a2a62d23acd02",
+   "bytes": 28131
+  },
+  "812|normal|gigantamax||shiny": {
+   "status": "approved",
+   "url": "/img/ext/812-gi-a8f48418.png",
+   "source": "legacy",
+   "review": "legacy-live-not-reviewed",
+   "rights": "Existing repository policy; not re-reviewed by the manifest pipeline.",
+   "sha256": "55651c2794a9448d193388fb598759ae5eadf821f8dfcc6ba41aca9583e13a4b",
+   "bytes": 28369
+  },
+  "815|normal|gigantamax||regular": {
+   "status": "approved",
+   "url": "/img/ext/815-gi-f1a7c893.png",
+   "source": "legacy",
+   "review": "legacy-live-not-reviewed",
+   "rights": "Existing repository policy; not re-reviewed by the manifest pipeline.",
+   "sha256": "27b66e9e8a00f21ff66507a5a6b631438312c276ef4f1e0d73d16e7af01cbe8c",
+   "bytes": 21718
+  },
+  "815|normal|gigantamax||shiny": {
+   "status": "approved",
+   "url": "/img/ext/815-gi-1dbcc545.png",
+   "source": "legacy",
+   "review": "legacy-live-not-reviewed",
+   "rights": "Existing repository policy; not re-reviewed by the manifest pipeline.",
+   "sha256": "1c7ec5f641ea1aaf579a0480b2f0605808256075cedf65cddaa39aeeb96e8621",
+   "bytes": 23225
+  },
+  "818|normal|gigantamax||regular": {
+   "status": "approved",
+   "url": "/img/ext/818-gi-350e8472.png",
+   "source": "legacy",
+   "review": "legacy-live-not-reviewed",
+   "rights": "Existing repository policy; not re-reviewed by the manifest pipeline.",
+   "sha256": "4dd656b9fcf5b6f13c92968d38f3c93fbfcdd66c3d73ccc3e5a44ffa9bbd6ebf",
+   "bytes": 7429
+  },
+  "818|normal|gigantamax||shiny": {
+   "status": "approved",
+   "url": "/img/ext/818-gi-3e5606f2.png",
+   "source": "legacy",
+   "review": "legacy-live-not-reviewed",
+   "rights": "Existing repository policy; not re-reviewed by the manifest pipeline.",
+   "sha256": "ecec177578cac412d6292ec391269412ba26f3c31ce47ea23da06a573f72f15c",
+   "bytes": 7714
+  },
+  "823|normal|gigantamax||regular": {
+   "status": "approved",
+   "url": "/img/ext/823-gi-26dbbdc9.png",
+   "source": "legacy",
+   "review": "legacy-live-not-reviewed",
+   "rights": "Existing repository policy; not re-reviewed by the manifest pipeline.",
+   "sha256": "4042ee103796665c7e0c21887d38045251edf408787ad7b308eec36d2006227b",
+   "bytes": 8752
+  },
+  "826|normal|gigantamax||regular": {
+   "status": "approved",
+   "url": "/img/ext/826-gi-01ef8b9d.png",
+   "source": "legacy",
+   "review": "legacy-live-not-reviewed",
+   "rights": "Existing repository policy; not re-reviewed by the manifest pipeline.",
+   "sha256": "cfff73ba8c3c91f5b117177f62bf5862ad956b4b3869d7489792ac0782ce56cd",
+   "bytes": 14588
+  },
+  "834|normal|gigantamax||regular": {
+   "status": "approved",
+   "url": "/img/ext/834-gi-51743516.png",
+   "source": "legacy",
+   "review": "legacy-live-not-reviewed",
+   "rights": "Existing repository policy; not re-reviewed by the manifest pipeline.",
+   "sha256": "7411c5391aa8a0774a403e5663ae5af6935a300b6ee0bdce108010c81347303c",
+   "bytes": 25200
+  },
+  "839|normal|gigantamax||regular": {
+   "status": "approved",
+   "url": "/img/ext/839-gi-c1cf14a7.png",
+   "source": "legacy",
+   "review": "legacy-live-not-reviewed",
+   "rights": "Existing repository policy; not re-reviewed by the manifest pipeline.",
+   "sha256": "fb3f0ae8962f7651844824ab8bd6d03549104de5f35166a783b691135d03fafd",
+   "bytes": 17536
+  },
+  "841|normal|gigantamax||regular": {
+   "status": "approved",
+   "url": "/img/ext/841-gi-07da2817.png",
+   "source": "legacy",
+   "review": "legacy-live-not-reviewed",
+   "rights": "Existing repository policy; not re-reviewed by the manifest pipeline.",
+   "sha256": "09dd9d54d99991626f48d713ed179f44ff40e1f983f91a6c8cdd41ceec1f6199",
+   "bytes": 15119
+  },
+  "842|normal|gigantamax||regular": {
+   "status": "approved",
+   "url": "/img/ext/842-gi-064cfe4b.png",
+   "source": "legacy",
+   "review": "legacy-live-not-reviewed",
+   "rights": "Existing repository policy; not re-reviewed by the manifest pipeline.",
+   "sha256": "150986a34b366fc457555506bb821665be03c5a24fa563cc29f6056e7564f939",
+   "bytes": 15054
+  },
+  "844|normal|gigantamax||regular": {
+   "status": "approved",
+   "url": "/img/ext/844-gi-373e05b1.png",
+   "source": "legacy",
+   "review": "legacy-live-not-reviewed",
+   "rights": "Existing repository policy; not re-reviewed by the manifest pipeline.",
+   "sha256": "28263eb1de359fd8ffe5fa8d8d23e8cce7e8f0f0d7e78057274037b88f3ed4a0",
+   "bytes": 14098
+  },
+  "849|normal|gigantamax||regular": {
+   "status": "approved",
+   "url": "/img/ext/849-gi-fa38016c.png",
+   "source": "legacy",
+   "review": "legacy-live-not-reviewed",
+   "rights": "Existing repository policy; not re-reviewed by the manifest pipeline.",
+   "sha256": "f8a3644657d90b680e0adfc39025461974fab84d2318cba015b343afb7a180d9",
+   "bytes": 23076
+  },
+  "849|normal|gigantamax||shiny": {
+   "status": "approved",
+   "url": "/img/ext/849-gi-79889614.png",
+   "source": "legacy",
+   "review": "legacy-live-not-reviewed",
+   "rights": "Existing repository policy; not re-reviewed by the manifest pipeline.",
+   "sha256": "8b6ceaa43281903205476695da797536d905c7ad44080c6b4afff73f536d16d2",
+   "bytes": 22769
+  },
+  "851|normal|gigantamax||regular": {
+   "status": "approved",
+   "url": "/img/ext/851-gi-6806465b.png",
+   "source": "legacy",
+   "review": "legacy-live-not-reviewed",
+   "rights": "Existing repository policy; not re-reviewed by the manifest pipeline.",
+   "sha256": "7c9af0f25369249ea501c27f42a3f5d1ea6786e27cf08693c37671f304b5594e",
+   "bytes": 16577
+  },
+  "858|normal|gigantamax||regular": {
+   "status": "approved",
+   "url": "/img/ext/858-gi-6ccc95ec.png",
+   "source": "legacy",
+   "review": "legacy-live-not-reviewed",
+   "rights": "Existing repository policy; not re-reviewed by the manifest pipeline.",
+   "sha256": "cd6f7832ba29dcf245b8cb138436dbfba629c662b7d7f40dc50896d791d70dde",
+   "bytes": 13432
+  },
+  "861|normal|gigantamax||regular": {
+   "status": "approved",
+   "url": "/img/ext/861-gi-0ea1d729.png",
+   "source": "legacy",
+   "review": "legacy-live-not-reviewed",
+   "rights": "Existing repository policy; not re-reviewed by the manifest pipeline.",
+   "sha256": "323716a2915c5bf45d972b3ec8c0c0c29b26e84cecafe2802328226857cee889",
+   "bytes": 11878
+  },
+  "869|normal|gigantamax||regular": {
+   "status": "approved",
+   "url": "/img/ext/869-gi-35ddab4e.png",
+   "source": "legacy",
+   "review": "legacy-live-not-reviewed",
+   "rights": "Existing repository policy; not re-reviewed by the manifest pipeline.",
+   "sha256": "ff8f2ece360b7659c45f6d826b6f6d2d88dbcd7258ab2beab51863b0c0de6c41",
+   "bytes": 16668
+  },
+  "879|normal|gigantamax||regular": {
+   "status": "approved",
+   "url": "/img/ext/879-gi-0691687c.png",
+   "source": "legacy",
+   "review": "legacy-live-not-reviewed",
+   "rights": "Existing repository policy; not re-reviewed by the manifest pipeline.",
+   "sha256": "36d51cdf35997a56580e347db9ed5bd2ad940336cce07c7bd31d4f9c6df912ff",
+   "bytes": 18075
+  },
+  "884|normal|gigantamax||regular": {
+   "status": "approved",
+   "url": "/img/ext/884-gi-fc4c7ccd.png",
+   "source": "legacy",
+   "review": "legacy-live-not-reviewed",
+   "rights": "Existing repository policy; not re-reviewed by the manifest pipeline.",
+   "sha256": "65eb81ee761161bd82956e2327dd7b4ac8e3de472a6dd330ceb02eccdfc16b83",
+   "bytes": 22722
+  },
+  "884|normal|gigantamax||shiny": {
+   "status": "approved",
+   "url": "/img/ext/884-gi-a9ba5c6d.png",
+   "source": "legacy",
+   "review": "legacy-live-not-reviewed",
+   "rights": "Existing repository policy; not re-reviewed by the manifest pipeline.",
+   "sha256": "83957abce348b6f92f7ac1d0c85b3d87e6547fed10babb15172a4401a17607da",
+   "bytes": 22022
+  },
+  "892|normal|gigantamax||regular": {
+   "status": "approved",
+   "url": "/img/ext/892-gi-e7d83034.png",
+   "source": "legacy",
+   "review": "legacy-live-not-reviewed",
+   "rights": "Existing repository policy; not re-reviewed by the manifest pipeline.",
+   "sha256": "935c2ce6259f3105306542890777f286f5a4cb60d446b9a6d926fd9ad0f98606",
+   "bytes": 19878
+  },
+  "892|normal|gigantamax||shiny": {
+   "status": "approved",
+   "url": "/img/ext/892-gi-347f06d8.png",
+   "source": "legacy",
+   "review": "legacy-live-not-reviewed",
+   "rights": "Existing repository policy; not re-reviewed by the manifest pipeline.",
+   "sha256": "2d0fb31ae952d494da9b2071e1b01eeb410e9c19befb85df190697b32c76fa2c",
+   "bytes": 19953
+  },
+  "94|normal|costume|spooky-festival|regular": {
+   "status": "approved",
+   "url": "/img/ext/094-spooky-0bc8ee88.png",
+   "source": "legacy",
+   "review": "legacy-live-not-reviewed",
+   "rights": "Existing repository policy; not re-reviewed by the manifest pipeline.",
+   "sha256": "f1d315d38aa92c73c3b38bc728340b4d9ee245090777cbfaa46799dca4fc7a9b",
+   "bytes": 18703,
+   "label": "spooky festival"
+  },
+  "94|normal|costume|spooky-festival|shiny": {
+   "status": "approved",
+   "url": "/img/ext/094-spooky-ed20e663.png",
+   "source": "legacy",
+   "review": "legacy-live-not-reviewed",
+   "rights": "Existing repository policy; not re-reviewed by the manifest pipeline.",
+   "sha256": "8e86ef1c9e1863b58b0799f6fcec33ecfd17a46a2dac48b9c81f261f06b398b3",
+   "bytes": 18337,
+   "label": "spooky festival"
+  },
+  "94|normal|gigantamax||regular": {
+   "status": "approved",
+   "url": "/img/ext/094-gi-e3b3eba2.png",
+   "source": "legacy",
+   "review": "legacy-live-not-reviewed",
+   "rights": "Existing repository policy; not re-reviewed by the manifest pipeline.",
+   "sha256": "454618f23c6724c6fce1f0e1ad979f3524b82fc2f3d192bed24e582572aa1711",
+   "bytes": 27636
+  },
+  "94|normal|gigantamax||shiny": {
+   "status": "approved",
+   "url": "/img/ext/094-gi-2ab72c36.png",
+   "source": "legacy",
+   "review": "legacy-live-not-reviewed",
+   "rights": "Existing repository policy; not re-reviewed by the manifest pipeline.",
+   "sha256": "a0b9b55c2ec90bbffe5910901564ae4e551a50a2b7600957933a6ed8e86e0a2f",
+   "bytes": 28295
+  },
+  "99|normal|gigantamax||regular": {
+   "status": "approved",
+   "url": "/img/ext/099-gi-9a284633.png",
+   "source": "legacy",
+   "review": "legacy-live-not-reviewed",
+   "rights": "Existing repository policy; not re-reviewed by the manifest pipeline.",
+   "sha256": "560617ef9be1dbb57def48a660fe523e20692e68ad10b279cd3d4210d3cef3f9",
+   "bytes": 29003
+  },
+  "99|normal|gigantamax||shiny": {
+   "status": "approved",
+   "url": "/img/ext/099-gi-6b0be5b5.png",
+   "source": "legacy",
+   "review": "legacy-live-not-reviewed",
+   "rights": "Existing repository policy; not re-reviewed by the manifest pipeline.",
+   "sha256": "657c7be9046e0cc9c73b4dab8b3f0b422146bf7591b1388ad58c55ab53acf5e8",
+   "bytes": 30165
+  },
+  "9|normal|gigantamax||regular": {
+   "status": "approved",
+   "url": "/img/ext/009-gi-cdcaac4b.png",
+   "source": "legacy",
+   "review": "legacy-live-not-reviewed",
+   "rights": "Existing repository policy; not re-reviewed by the manifest pipeline.",
+   "sha256": "0fad8a84c278837a058bc8e18cb57d76fe6434ecaaf941e00170983073fb27bf",
+   "bytes": 38749
+  },
+  "9|normal|gigantamax||shiny": {
+   "status": "approved",
+   "url": "/img/ext/009-gi-0bac5d58.png",
+   "source": "legacy",
+   "review": "legacy-live-not-reviewed",
+   "rights": "Existing repository policy; not re-reviewed by the manifest pipeline.",
+   "sha256": "efd6de8f8a352dd7c8daa20fd320d80cce70a31e82032cd0a431d032a6592d09",
+   "bytes": 36688
+  }
+ }
+}

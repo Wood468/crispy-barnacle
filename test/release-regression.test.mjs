@@ -4,10 +4,11 @@ import fs from 'node:fs';
 import vm from 'node:vm';
 import { createRequire } from 'node:module';
 const lib = createRequire(import.meta.url)('../public/lib.js');
+const variant = createRequire(import.meta.url)('../public/variant-art.js');
 const app = fs.readFileSync(new URL('../public/app.js', import.meta.url), 'utf8');
 const code = app.slice(app.indexOf('  function costumeUnavailable('), app.indexOf('  /* Tap any Pokémon picture'));
-function renderer(pictures = {}) {
-  const context = { window: { GOLIB: lib }, esc: lib.esc, MAN: {}, COSTPIC: pictures, COSTSH: {}, GMX: {}, GMSH: {} };
+function renderer(pictures = {}, manifest = null) {
+  const context = { window: { GOLIB: lib, GOVARIANTART: variant }, esc: lib.esc, MAN: {}, AMAN: manifest, DEXNO: { pikachu: 25, espeon: 196 }, COSTPIC: pictures, COSTSH: {}, GMX: {}, GMSH: {} };
   vm.createContext(context); vm.runInContext(code, context);
   return (value) => context.art(value, 'ea');
 }
@@ -15,7 +16,19 @@ test('unverified costume sprites show a labelled fallback, never ordinary artwor
   const html = renderer()({ n: 'Pikachu (sun crown)', label: 'sun crown', costume: true });
   assert.match(html, /Costume art unavailable/);
   assert.match(html, /Pikachu \(sun crown\)/);
-  assert.doesNotMatch(html, /<img|\/api\/art|\/art\//i);
+  /* The ordinary species picture may appear only as a small decorative image inside the badged tile: never tappable, never claiming the costume. */
+  assert.match(html, /class="va-base" alt=""/);
+  assert.match(html, /class="va-badge">Costume art unavailable/);
+  assert.doesNotMatch(html, /data-sn=|data-costume-name=|data-still=/);
+  assert.equal((html.match(/<img/g) || []).length, 1);
+});
+test('an approved manifest costume resolves to its exact route; shiny asks for the shiny file', () => {
+  const manifest = { entries: { [variant.variantKey({ dex: 25, kind: 'costume', costume: 'sun-crown' })]: { status: 'approved', url: '/api/art?n=Pikachu&c=GOFEST_2024_STIARA' },
+    [variant.variantKey({ dex: 25, kind: 'costume', costume: 'sun-crown', shiny: true })]: { status: 'approved', url: '/api/art?n=Pikachu&c=GOFEST_2024_STIARA&shiny=1' } } };
+  const render = renderer({}, manifest);
+  assert.match(render({ n: 'Pikachu (sun crown)', label: 'sun crown', costume: true }), /src="\/api\/art\?n=Pikachu&c=GOFEST_2024_STIARA"/);
+  assert.match(render({ n: 'Pikachu (sun crown)', label: 'sun crown', costume: true, shiny: true }), /GOFEST_2024_STIARA&shiny=1/);
+  assert.match(render({ n: 'Pikachu (moon crown)', label: 'moon crown', costume: true }), /Costume art unavailable/, 'another costume never borrows this picture');
 });
 test('a verified exact costume uses its mirror, with no ordinary-art fallback', () => {
   const render = renderer({ 'pikachu|sun crown': '/img/ext/verified-sun-crown.png' });

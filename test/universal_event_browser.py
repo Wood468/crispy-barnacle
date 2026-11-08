@@ -140,7 +140,7 @@ with sync_playwright() as p:
         iso=lambda d:d.strftime('%Y-%m-%dT%H:%MZ');day=lambda d:d.strftime('%Y-%m-%d')
         live_world={'updated':day(now),'events':[{'id':CATALOGUE['events'][0]['eventId'],
             'name':'Zzyzx Synthetic Showcase','place':'Reykjavik, Iceland','area':'Asia','scope':'regional',
-            'start':day(now-timedelta(days=1)),'end':day(now+timedelta(days=1)),'datesKnown':True,
+            'start':day(now-timedelta(days=2)),'end':day(now+timedelta(days=3)),'datesKnown':True,
             'sources':[{'id':'official','name':'Synthetic fixture only','url':'https://example.invalid/fixture'}],
             'status':'official','seen':day(now)}]}
         # A fresh context: the app persists catalogue state per origin, so the old context would keep the real data.
@@ -153,9 +153,12 @@ with sync_playwright() as p:
         page.goto(BASE+'/')
         page.wait_for_function('!!window.GODETAIL&&!!window.GOEventRegistry')
         page.evaluate('GOEventRegistry.ready')
-        page.evaluate('GODASH.renderAll&&GODASH.renderAll()')
         regional=page.locator('#today-v1 .t1-reg [data-open]').first
-    regional.wait_for(state='visible')
+    try:regional.wait_for(state='visible')
+    except Exception:
+        print('DIAG used_fixture=%s errors=%s reg=%s'%(used_fixture,errors,page.evaluate("[...document.querySelectorAll('#today-v1 .t1-reg')].map(e=>e.outerHTML.slice(0,260))")))
+        print('DIAG today=%s'%page.evaluate("document.querySelector('#today-v1').innerText.slice(0,400)"))
+        raise
     regional_id=regional.get_attribute('data-open')
     expected_title=page.evaluate('(id)=>GOEventRegistry.find(id).title',regional_id)
     source_url=page.evaluate('(id)=>GOEventRegistry.find(id).sources.map(s=>s.url)[0]',regional_id)

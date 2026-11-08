@@ -389,9 +389,11 @@ async function art(request, env, ctx, url) {
   const dynamax = url.searchParams.get("dynamax") === "1";
   const gigantamax = /^Gigantamax\s/i.test(name);
   const costume = (url.searchParams.get("c") || "").replace(/[^A-Za-z0-9_]/g, "").slice(0, 40);
+  // PokeMiners names a costume pm<dex>.f<CODE> (form-style) or pm<dex>.c<CODE> (costume-style); the caller says which, default f.
+  const costumeKind = url.searchParams.get("cp") === "c" ? "c" : "f";
   const candidates = artCandidates(name);
   const cache = caches.default;
-  const key = new Request(url.origin + "/api/art?n=" + encodeURIComponent(name.toLowerCase()) + (shiny ? "&shiny=1" : "") + (shadow ? "&shadow=1" : "") + (dynamax ? "&dynamax=1" : "") + (costume ? "&c=" + costume : "") + (candidates.exact ? "&forms=2" : ""));
+  const key = new Request(url.origin + "/api/art?n=" + encodeURIComponent(name.toLowerCase()) + (shiny ? "&shiny=1" : "") + (shadow ? "&shadow=1" : "") + (dynamax ? "&dynamax=1" : "") + (costume ? "&c=" + costume + (costumeKind === "c" ? "&cp=c" : "") : "") + (candidates.exact ? "&forms=2" : ""));
   const hit = await cache.match(key);
   if (hit) return hit;
   const allowance = allowEdgeMiss(request, "art");
@@ -406,7 +408,7 @@ async function art(request, env, ctx, url) {
 
     let img = null;
     const sources = [];
-    if (id && costume && id < 1100) sources.push(COSTUME_BASE + "pm" + id + ".f" + costume + (shiny ? ".s" : "") + ".icon.png");
+    if (id && costume && id < 1100) sources.push(COSTUME_BASE + "pm" + id + "." + costumeKind + costume + (shiny ? ".s" : "") + ".icon.png");
     // Shadow and Dynamax have no sprite of their own in the game files; the page draws the aura/smoke.
     if (id && dynamax && gigantamax && id < 1100) sources.push(COSTUME_BASE + "pm" + id + ".fGIGANTAMAX" + (shiny ? ".s" : "") + ".icon.png");
     // A costume or Gigantamax sprite that does not exist is never swapped for ordinary artwork.

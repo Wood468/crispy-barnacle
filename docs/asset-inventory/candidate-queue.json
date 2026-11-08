@@ -1,67 +1,469 @@
 {
-  "schemaVersion": 1,
-  "generatedAt": "2026-11-08",
-  "description": "Evidence-based candidate queue. No image URLs are verified or approved.",
-  "items": [
+ "schemaVersion": 2,
+ "generatedAt": "2026-11-08",
+ "description": "Evidence-based candidate queue. Only items with an approvedAsset are used by public/artwork-manifest.json; everything else is awaiting an exact file, a visual check or owner approval.",
+ "statuses": {
+  "approved": "identity confirmed from several sources, bytes viewed, source allowed by existing policy",
+  "candidate": "identity evidence exists, no usable approved file",
+  "not-found": "searched, nothing found",
+  "rejected": "looked at and wrong"
+ },
+ "searched": [
+  {
+   "source": "PokeMiners/pogo_assets",
+   "commit": "db10df75d6f6f92018d9786af0aecc238fecc4ef",
+   "date": "2026-10-28",
+   "how": "blobless clone + git ls-tree (42,785 paths)",
+   "result": "Images/Pokemon/Addressable Assets: pm<dex>.<f|c><CODE>[.g2][.s].icon.png, Gigantamax as fGIGANTAMAX; no Shadow or Dynamax sprites exist"
+  },
+  {
+   "source": "PokeMiners/game_masters latest.json",
+   "result": "18,812 templates; formSettings isCostume confirms the four GO Fest 2024 forms; no Twilight Wishes, Sinistea bow or Wild Area tee template yet"
+  },
+  {
+   "source": "pokeminers.com/scratch",
+   "result": "302 to a Google Drive folder; not machine-listable"
+  },
+  {
+   "source": "PokeAPI/sprites",
+   "result": "base and form official artwork only; not authoritative for costumes, Shadow, Dynamax or Gigantamax"
+  },
+  {
+   "source": "Leek Duck event pages",
+   "result": "name the pm<dex>.f<CODE> icon next to each costume label (used as identity evidence)"
+  }
+ ],
+ "items": [
+  {
+   "id": "sinistea-bow",
+   "dex": 854,
+   "species": "Sinistea",
+   "kind": "costume",
+   "costume": "bow",
+   "label": "Bow",
+   "form": "phony",
+   "sourcePage": "https://pokemongo.com/news/halloween-part-1-2026",
+   "status": "candidate",
+   "identityEvidence": [
+    "Official Pokémon GO Halloween Part I 2026 announcement lists Sinistea wearing a bow (Shiny-capable): https://pokemongo.com/news/halloween-part-1-2026",
+    "Leek Duck lists pm854.fP_HALLOWEEN_2026_01.icon.png with alt \"Sinistea wearing a bow\" and an article render sinistea-bow.png: https://leekduck.com/events/halloween-2026-part-1/",
+    "Prefix P_ is the Phony form; the same page does not list an Antique-form bow icon"
+   ],
+   "expectedAsset": {
+    "prefix": "f",
+    "code": "P_HALLOWEEN_2026_01"
+   },
+   "candidates": [
     {
-      "id": "sinistea-bow",
-      "dex": 854,
-      "kind": "costume",
-      "costume": "bow",
-      "form": "unresolved-phony-antique",
-      "sourcePage": "https://pokemongo.com/news/halloween-part-1-2026",
-      "status": "awaiting-exact-file",
-      "candidates": [],
-      "approvedAsset": null
+     "source": "leekduck-cdn",
+     "kind": "article-render",
+     "url": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-10-27-halloween-2026-part-1/sinistea-bow.png",
+     "sha256": "5dc8554bd5ad768cfbf2a85595996aa246d15a8070dc178e4bad2efc60d52d01",
+     "bytes": 177083,
+     "width": 533,
+     "height": 533,
+     "review": {
+      "status": "visually-confirmed",
+      "notes": "Viewed: teal Phony-form Sinistea teacup with a purple striped bow and brooch. Exact identity, clean render. Not approved: third-party hosted copy of Niantic art."
+     }
     },
     {
-      "id": "pikachu-sun-crown",
-      "dex": 25,
-      "kind": "costume",
-      "costume": "sun-crown",
-      "sourcePage": "https://pokemongo.com/news/twilight-wishes-2026",
-      "status": "awaiting-exact-file",
-      "candidates": [],
-      "approvedAsset": null
-    },
-    {
-      "id": "pikachu-moon-crown",
-      "dex": 25,
-      "kind": "costume",
-      "costume": "moon-crown",
-      "sourcePage": "https://pokemongo.com/news/twilight-wishes-2026",
-      "status": "awaiting-exact-file",
-      "candidates": [],
-      "approvedAsset": null
-    },
-    {
-      "id": "espeon-sun-scarf",
-      "dex": 196,
-      "kind": "costume",
-      "costume": "sun-scarf",
-      "sourcePage": "https://pokemongo.com/news/twilight-wishes-2026",
-      "status": "awaiting-exact-file",
-      "candidates": [],
-      "approvedAsset": null
-    },
-    {
-      "id": "umbreon-moon-scarf",
-      "dex": 197,
-      "kind": "costume",
-      "costume": "moon-scarf",
-      "sourcePage": "https://pokemongo.com/news/twilight-wishes-2026",
-      "status": "awaiting-exact-file",
-      "candidates": [],
-      "approvedAsset": null
-    },
-    {
-      "id": "wild-area-purple-tee",
-      "kind": "avatar-clothing",
-      "item": "GO Wild Area 2026 Tee (Purple)",
-      "sourcePage": "https://pokemongo.com/en/news/get-ready-for-gowildarea-2026",
-      "status": "awaiting-exact-file",
-      "candidates": [],
-      "approvedAsset": null
+     "source": "leekduck-cdn",
+     "kind": "game-icon-crop",
+     "url": "https://cdn.leekduck.com/assets/img/pokemon_icons_crop/pm854.fP_HALLOWEEN_2026_01.icon.png",
+     "sha256": "091b4595c14dc17c6772de7f41e79807b6305810a7f3f359ffb502027dd7b7f9",
+     "bytes": 3119,
+     "width": 63,
+     "height": 48,
+     "review": {
+      "status": "visually-confirmed",
+      "notes": "Viewed: same costume but only 63x48 px, visibly pixelated. Too small to display."
+     }
     }
-  ]
+   ],
+   "approvedAsset": null,
+   "blockedBy": [
+    "pm854.fP_HALLOWEEN_2026_01 is not in the PokeMiners snapshot (commit db10df7, 2026-10-28; Sinistea has only fPHONY/fANTIQUE) and not in the game master form table yet; pokeminers.com/scratch is a Google Drive folder that cannot be listed from here",
+    "Only third-party hosted copies exist: owner approval needed before any is shown",
+    "Antique-form bow art not found (see sinistea-bow-antique)"
+   ],
+   "nextStep": "Re-run scripts/artwork-candidates.mjs once PokeMiners lands the file; the identity above then resolves through /api/art automatically after a visual check."
+  },
+  {
+   "id": "sinistea-bow-antique",
+   "dex": 854,
+   "species": "Sinistea",
+   "kind": "costume",
+   "costume": "bow",
+   "label": "Bow",
+   "form": "antique",
+   "sourcePage": "https://snacknap.com/events/1523/halloween-2026-part-i",
+   "status": "not-found",
+   "identityEvidence": [
+    "Secondary source (Snack Nap) reports both Phony and Antique bow costumes in game data; not confirmed by the official post"
+   ],
+   "candidates": [],
+   "approvedAsset": null,
+   "blockedBy": [
+    "No Antique-form bow asset found: Leek Duck CDN pm854.fA_HALLOWEEN_2026_01 and pm854.fP_HALLOWEEN_2026_02 both returned 404; PokeMiners snapshot has none"
+   ],
+   "nextStep": "Look again after the next PokeMiners update."
+  },
+  {
+   "id": "pikachu-sun-crown",
+   "dex": 25,
+   "species": "Pikachu",
+   "kind": "costume",
+   "costume": "sun-crown",
+   "label": "sun crown",
+   "form": "normal",
+   "sourcePage": "https://pokemongo.com/news/twilight-wishes-2026",
+   "status": "approved",
+   "identityEvidence": [
+    "Official Pokémon GO announcement lists \"Pikachu wearing a sun crown\": https://pokemongo.com/news/twilight-wishes-2026",
+    "Leek Duck lists exactly pm25.fGOFEST_2024_STIARA.icon.png with alt \"Pikachu wearing a sun crown\": https://leekduck.com/events/twilight-wishes-2026/",
+    "PokeMiners/pogo_assets @ db10df7 contains pm25.fGOFEST_2024_STIARA.icon.png and the shiny .s variant",
+    "Game master formSettings form PIKACHU_GOFEST_2024_STIARA exists with isCostume=true"
+   ],
+   "candidates": [
+    {
+     "source": "pokeminers",
+     "sourceRepository": "PokeMiners/pogo_assets",
+     "sourceCommit": "db10df75d6f6f92018d9786af0aecc238fecc4ef",
+     "asset": {
+      "prefix": "f",
+      "code": "GOFEST_2024_STIARA"
+     },
+     "normal": {
+      "path": "Images/Pokemon/Addressable Assets/pm25.fGOFEST_2024_STIARA.icon.png",
+      "blobSha": "f0815871cbdef4948334c9cc9bc166f1de4585ef",
+      "sha256": "7a6d1ec38716e10a044054af364f8044d7723c2c4f6f051adbbf3fb6be38684b",
+      "bytes": 8985,
+      "width": 98,
+      "height": 106,
+      "url": "https://raw.githubusercontent.com/PokeMiners/pogo_assets/db10df75d6f6f92018d9786af0aecc238fecc4ef/Images/Pokemon/Addressable%20Assets/pm25.fGOFEST_2024_STIARA.icon.png"
+     },
+     "shiny": {
+      "path": "Images/Pokemon/Addressable Assets/pm25.fGOFEST_2024_STIARA.s.icon.png",
+      "blobSha": "993c30fae1ff9cbbd776effb569dbbc41150f485",
+      "sha256": "2e21c772b83e19b87698f8beb818cbf456802b5d6bdd6176d0a2a8beb7160c48",
+      "bytes": 8699,
+      "width": 98,
+      "height": 106,
+      "url": "https://raw.githubusercontent.com/PokeMiners/pogo_assets/db10df75d6f6f92018d9786af0aecc238fecc4ef/Images/Pokemon/Addressable%20Assets/pm25.fGOFEST_2024_STIARA.s.icon.png"
+     }
+    }
+   ],
+   "approvedAsset": {
+    "source": "pokeminers",
+    "sourceRepository": "PokeMiners/pogo_assets",
+    "sourceCommit": "db10df75d6f6f92018d9786af0aecc238fecc4ef",
+    "asset": {
+     "prefix": "f",
+     "code": "GOFEST_2024_STIARA"
+    },
+    "normal": {
+     "path": "Images/Pokemon/Addressable Assets/pm25.fGOFEST_2024_STIARA.icon.png",
+     "blobSha": "f0815871cbdef4948334c9cc9bc166f1de4585ef",
+     "sha256": "7a6d1ec38716e10a044054af364f8044d7723c2c4f6f051adbbf3fb6be38684b",
+     "bytes": 8985,
+     "width": 98,
+     "height": 106,
+     "url": "https://raw.githubusercontent.com/PokeMiners/pogo_assets/db10df75d6f6f92018d9786af0aecc238fecc4ef/Images/Pokemon/Addressable%20Assets/pm25.fGOFEST_2024_STIARA.icon.png"
+    },
+    "shiny": {
+     "path": "Images/Pokemon/Addressable Assets/pm25.fGOFEST_2024_STIARA.s.icon.png",
+     "blobSha": "993c30fae1ff9cbbd776effb569dbbc41150f485",
+     "sha256": "2e21c772b83e19b87698f8beb818cbf456802b5d6bdd6176d0a2a8beb7160c48",
+     "bytes": 8699,
+     "width": 98,
+     "height": 106,
+     "url": "https://raw.githubusercontent.com/PokeMiners/pogo_assets/db10df75d6f6f92018d9786af0aecc238fecc4ef/Images/Pokemon/Addressable%20Assets/pm25.fGOFEST_2024_STIARA.s.icon.png"
+    },
+    "route": "/api/art",
+    "rights": "Rights-sensitive: Niantic / The Pokémon Company / Nintendo / Game Freak IP, published by PokeMiners for educational use. Served only through the existing same-origin edge proxy GET /api/art (30-day edge cache); no binary is committed to this repository or redistributed. Owner may revoke by changing status.",
+    "review": {
+     "status": "visually-confirmed",
+     "by": "Claude (Sonnet 5.5)",
+     "date": "2026-11-08",
+     "notes": "Viewed by Claude (Sonnet 5.5) on 2026-11-08 from the downloaded bytes (contact sheet, 8 images): Pikachu with a small crown carrying an orange sun emblem; shiny variant is the darker-orange shiny Pikachu with the same crown. The GO Fest 2024 asset is named STIARA (sun tiara) but is the costume Leek Duck and the official post present as the sun crown."
+    }
+   }
+  },
+  {
+   "id": "pikachu-moon-crown",
+   "dex": 25,
+   "species": "Pikachu",
+   "kind": "costume",
+   "costume": "moon-crown",
+   "label": "moon crown",
+   "form": "normal",
+   "sourcePage": "https://pokemongo.com/news/twilight-wishes-2026",
+   "status": "approved",
+   "identityEvidence": [
+    "Official Pokémon GO announcement lists \"Pikachu wearing a moon crown\": https://pokemongo.com/news/twilight-wishes-2026",
+    "Leek Duck lists exactly pm25.fGOFEST_2024_MTIARA.icon.png with alt \"Pikachu wearing a moon crown\": https://leekduck.com/events/twilight-wishes-2026/",
+    "PokeMiners/pogo_assets @ db10df7 contains pm25.fGOFEST_2024_MTIARA.icon.png and the shiny .s variant",
+    "Game master formSettings form PIKACHU_GOFEST_2024_MTIARA exists with isCostume=true"
+   ],
+   "candidates": [
+    {
+     "source": "pokeminers",
+     "sourceRepository": "PokeMiners/pogo_assets",
+     "sourceCommit": "db10df75d6f6f92018d9786af0aecc238fecc4ef",
+     "asset": {
+      "prefix": "f",
+      "code": "GOFEST_2024_MTIARA"
+     },
+     "normal": {
+      "path": "Images/Pokemon/Addressable Assets/pm25.fGOFEST_2024_MTIARA.icon.png",
+      "blobSha": "a1662b11909bb54c0337280cf8b22587b3cd5764",
+      "sha256": "9bf85cf97e3c78172308d89402005870b0004841344b093a37641a5f6f046940",
+      "bytes": 8899,
+      "width": 98,
+      "height": 106,
+      "url": "https://raw.githubusercontent.com/PokeMiners/pogo_assets/db10df75d6f6f92018d9786af0aecc238fecc4ef/Images/Pokemon/Addressable%20Assets/pm25.fGOFEST_2024_MTIARA.icon.png"
+     },
+     "shiny": {
+      "path": "Images/Pokemon/Addressable Assets/pm25.fGOFEST_2024_MTIARA.s.icon.png",
+      "blobSha": "7a7dcd1f06cb4e98fe550aa6d4efa96292d437ac",
+      "sha256": "c0104d535908e25087a6417d9b5cda7ffd36179aee2d1fad817a2f8bbaaf19fd",
+      "bytes": 8651,
+      "width": 98,
+      "height": 106,
+      "url": "https://raw.githubusercontent.com/PokeMiners/pogo_assets/db10df75d6f6f92018d9786af0aecc238fecc4ef/Images/Pokemon/Addressable%20Assets/pm25.fGOFEST_2024_MTIARA.s.icon.png"
+     }
+    }
+   ],
+   "approvedAsset": {
+    "source": "pokeminers",
+    "sourceRepository": "PokeMiners/pogo_assets",
+    "sourceCommit": "db10df75d6f6f92018d9786af0aecc238fecc4ef",
+    "asset": {
+     "prefix": "f",
+     "code": "GOFEST_2024_MTIARA"
+    },
+    "normal": {
+     "path": "Images/Pokemon/Addressable Assets/pm25.fGOFEST_2024_MTIARA.icon.png",
+     "blobSha": "a1662b11909bb54c0337280cf8b22587b3cd5764",
+     "sha256": "9bf85cf97e3c78172308d89402005870b0004841344b093a37641a5f6f046940",
+     "bytes": 8899,
+     "width": 98,
+     "height": 106,
+     "url": "https://raw.githubusercontent.com/PokeMiners/pogo_assets/db10df75d6f6f92018d9786af0aecc238fecc4ef/Images/Pokemon/Addressable%20Assets/pm25.fGOFEST_2024_MTIARA.icon.png"
+    },
+    "shiny": {
+     "path": "Images/Pokemon/Addressable Assets/pm25.fGOFEST_2024_MTIARA.s.icon.png",
+     "blobSha": "7a7dcd1f06cb4e98fe550aa6d4efa96292d437ac",
+     "sha256": "c0104d535908e25087a6417d9b5cda7ffd36179aee2d1fad817a2f8bbaaf19fd",
+     "bytes": 8651,
+     "width": 98,
+     "height": 106,
+     "url": "https://raw.githubusercontent.com/PokeMiners/pogo_assets/db10df75d6f6f92018d9786af0aecc238fecc4ef/Images/Pokemon/Addressable%20Assets/pm25.fGOFEST_2024_MTIARA.s.icon.png"
+    },
+    "route": "/api/art",
+    "rights": "Rights-sensitive: Niantic / The Pokémon Company / Nintendo / Game Freak IP, published by PokeMiners for educational use. Served only through the existing same-origin edge proxy GET /api/art (30-day edge cache); no binary is committed to this repository or redistributed. Owner may revoke by changing status.",
+    "review": {
+     "status": "visually-confirmed",
+     "by": "Claude (Sonnet 5.5)",
+     "date": "2026-11-08",
+     "notes": "Viewed by Claude (Sonnet 5.5) on 2026-11-08 from the downloaded bytes (contact sheet, 8 images): Pikachu with a small crown carrying a blue crescent-moon emblem; shiny variant has the same crown on shiny Pikachu."
+    }
+   }
+  },
+  {
+   "id": "espeon-sun-scarf",
+   "dex": 196,
+   "species": "Espeon",
+   "kind": "costume",
+   "costume": "sun-scarf",
+   "label": "sun scarf",
+   "form": "normal",
+   "sourcePage": "https://pokemongo.com/news/twilight-wishes-2026",
+   "status": "approved",
+   "identityEvidence": [
+    "Official Pokémon GO announcement lists \"Espeon wearing a sun scarf\": https://pokemongo.com/news/twilight-wishes-2026",
+    "Leek Duck lists exactly pm196.fGOFEST_2024_SSCARF.icon.png with alt \"Espeon wearing a sun scarf\": https://leekduck.com/events/twilight-wishes-2026/",
+    "PokeMiners/pogo_assets @ db10df7 contains pm196.fGOFEST_2024_SSCARF.icon.png and the shiny .s variant",
+    "Game master formSettings form ESPEON_GOFEST_2024_SSCARF exists with isCostume=true"
+   ],
+   "candidates": [
+    {
+     "source": "pokeminers",
+     "sourceRepository": "PokeMiners/pogo_assets",
+     "sourceCommit": "db10df75d6f6f92018d9786af0aecc238fecc4ef",
+     "asset": {
+      "prefix": "f",
+      "code": "GOFEST_2024_SSCARF"
+     },
+     "normal": {
+      "path": "Images/Pokemon/Addressable Assets/pm196.fGOFEST_2024_SSCARF.icon.png",
+      "blobSha": "6a7e43b22195e4570436cd25f2669c12f85f0ef9",
+      "sha256": "e20e8324e015a116e28dc87e1cf474044f713b39778b0ab9ca9f190cf6c1bb3f",
+      "bytes": 11422,
+      "width": 108,
+      "height": 139,
+      "url": "https://raw.githubusercontent.com/PokeMiners/pogo_assets/db10df75d6f6f92018d9786af0aecc238fecc4ef/Images/Pokemon/Addressable%20Assets/pm196.fGOFEST_2024_SSCARF.icon.png"
+     },
+     "shiny": {
+      "path": "Images/Pokemon/Addressable Assets/pm196.fGOFEST_2024_SSCARF.s.icon.png",
+      "blobSha": "237deb8df05855ad26e5fddbba700b3221f4c6c3",
+      "sha256": "5c46ded854f3ff9adfa31d05c02f1b023a7d3667a895e6f132cf4f11e85cacaf",
+      "bytes": 11241,
+      "width": 108,
+      "height": 139,
+      "url": "https://raw.githubusercontent.com/PokeMiners/pogo_assets/db10df75d6f6f92018d9786af0aecc238fecc4ef/Images/Pokemon/Addressable%20Assets/pm196.fGOFEST_2024_SSCARF.s.icon.png"
+     }
+    }
+   ],
+   "approvedAsset": {
+    "source": "pokeminers",
+    "sourceRepository": "PokeMiners/pogo_assets",
+    "sourceCommit": "db10df75d6f6f92018d9786af0aecc238fecc4ef",
+    "asset": {
+     "prefix": "f",
+     "code": "GOFEST_2024_SSCARF"
+    },
+    "normal": {
+     "path": "Images/Pokemon/Addressable Assets/pm196.fGOFEST_2024_SSCARF.icon.png",
+     "blobSha": "6a7e43b22195e4570436cd25f2669c12f85f0ef9",
+     "sha256": "e20e8324e015a116e28dc87e1cf474044f713b39778b0ab9ca9f190cf6c1bb3f",
+     "bytes": 11422,
+     "width": 108,
+     "height": 139,
+     "url": "https://raw.githubusercontent.com/PokeMiners/pogo_assets/db10df75d6f6f92018d9786af0aecc238fecc4ef/Images/Pokemon/Addressable%20Assets/pm196.fGOFEST_2024_SSCARF.icon.png"
+    },
+    "shiny": {
+     "path": "Images/Pokemon/Addressable Assets/pm196.fGOFEST_2024_SSCARF.s.icon.png",
+     "blobSha": "237deb8df05855ad26e5fddbba700b3221f4c6c3",
+     "sha256": "5c46ded854f3ff9adfa31d05c02f1b023a7d3667a895e6f132cf4f11e85cacaf",
+     "bytes": 11241,
+     "width": 108,
+     "height": 139,
+     "url": "https://raw.githubusercontent.com/PokeMiners/pogo_assets/db10df75d6f6f92018d9786af0aecc238fecc4ef/Images/Pokemon/Addressable%20Assets/pm196.fGOFEST_2024_SSCARF.s.icon.png"
+    },
+    "route": "/api/art",
+    "rights": "Rights-sensitive: Niantic / The Pokémon Company / Nintendo / Game Freak IP, published by PokeMiners for educational use. Served only through the existing same-origin edge proxy GET /api/art (30-day edge cache); no binary is committed to this repository or redistributed. Owner may revoke by changing status.",
+    "review": {
+     "status": "visually-confirmed",
+     "by": "Claude (Sonnet 5.5)",
+     "date": "2026-11-08",
+     "notes": "Viewed by Claude (Sonnet 5.5) on 2026-11-08 from the downloaded bytes (contact sheet, 8 images): Espeon wearing an orange scarf with a sun motif; shiny variant is the green shiny Espeon with the same scarf."
+    }
+   }
+  },
+  {
+   "id": "umbreon-moon-scarf",
+   "dex": 197,
+   "species": "Umbreon",
+   "kind": "costume",
+   "costume": "moon-scarf",
+   "label": "moon scarf",
+   "form": "normal",
+   "sourcePage": "https://pokemongo.com/news/twilight-wishes-2026",
+   "status": "approved",
+   "identityEvidence": [
+    "Official Pokémon GO announcement lists \"Umbreon wearing a moon scarf\": https://pokemongo.com/news/twilight-wishes-2026",
+    "Leek Duck lists exactly pm197.fGOFEST_2024_MSCARF.icon.png with alt \"Umbreon wearing a moon scarf\": https://leekduck.com/events/twilight-wishes-2026/",
+    "PokeMiners/pogo_assets @ db10df7 contains pm197.fGOFEST_2024_MSCARF.icon.png and the shiny .s variant",
+    "Game master formSettings form UMBREON_GOFEST_2024_MSCARF exists with isCostume=true"
+   ],
+   "candidates": [
+    {
+     "source": "pokeminers",
+     "sourceRepository": "PokeMiners/pogo_assets",
+     "sourceCommit": "db10df75d6f6f92018d9786af0aecc238fecc4ef",
+     "asset": {
+      "prefix": "f",
+      "code": "GOFEST_2024_MSCARF"
+     },
+     "normal": {
+      "path": "Images/Pokemon/Addressable Assets/pm197.fGOFEST_2024_MSCARF.icon.png",
+      "blobSha": "dec36899706c0fe815f365e4da4689172c6c5218",
+      "sha256": "0793ef0c5e829effb713650bf471ffe59a92e1a79dda477d5b8dffd66b6c41d5",
+      "bytes": 10383,
+      "width": 87,
+      "height": 132,
+      "url": "https://raw.githubusercontent.com/PokeMiners/pogo_assets/db10df75d6f6f92018d9786af0aecc238fecc4ef/Images/Pokemon/Addressable%20Assets/pm197.fGOFEST_2024_MSCARF.icon.png"
+     },
+     "shiny": {
+      "path": "Images/Pokemon/Addressable Assets/pm197.fGOFEST_2024_MSCARF.s.icon.png",
+      "blobSha": "075b301c9e8f212003e905854f44ff8f824398d3",
+      "sha256": "73c1c64c31776f4bd9851e42d9cd3d79ebe9bffb59e14e9e5cf1925e9282ccf6",
+      "bytes": 10292,
+      "width": 87,
+      "height": 132,
+      "url": "https://raw.githubusercontent.com/PokeMiners/pogo_assets/db10df75d6f6f92018d9786af0aecc238fecc4ef/Images/Pokemon/Addressable%20Assets/pm197.fGOFEST_2024_MSCARF.s.icon.png"
+     }
+    }
+   ],
+   "approvedAsset": {
+    "source": "pokeminers",
+    "sourceRepository": "PokeMiners/pogo_assets",
+    "sourceCommit": "db10df75d6f6f92018d9786af0aecc238fecc4ef",
+    "asset": {
+     "prefix": "f",
+     "code": "GOFEST_2024_MSCARF"
+    },
+    "normal": {
+     "path": "Images/Pokemon/Addressable Assets/pm197.fGOFEST_2024_MSCARF.icon.png",
+     "blobSha": "dec36899706c0fe815f365e4da4689172c6c5218",
+     "sha256": "0793ef0c5e829effb713650bf471ffe59a92e1a79dda477d5b8dffd66b6c41d5",
+     "bytes": 10383,
+     "width": 87,
+     "height": 132,
+     "url": "https://raw.githubusercontent.com/PokeMiners/pogo_assets/db10df75d6f6f92018d9786af0aecc238fecc4ef/Images/Pokemon/Addressable%20Assets/pm197.fGOFEST_2024_MSCARF.icon.png"
+    },
+    "shiny": {
+     "path": "Images/Pokemon/Addressable Assets/pm197.fGOFEST_2024_MSCARF.s.icon.png",
+     "blobSha": "075b301c9e8f212003e905854f44ff8f824398d3",
+     "sha256": "73c1c64c31776f4bd9851e42d9cd3d79ebe9bffb59e14e9e5cf1925e9282ccf6",
+     "bytes": 10292,
+     "width": 87,
+     "height": 132,
+     "url": "https://raw.githubusercontent.com/PokeMiners/pogo_assets/db10df75d6f6f92018d9786af0aecc238fecc4ef/Images/Pokemon/Addressable%20Assets/pm197.fGOFEST_2024_MSCARF.s.icon.png"
+    },
+    "route": "/api/art",
+    "rights": "Rights-sensitive: Niantic / The Pokémon Company / Nintendo / Game Freak IP, published by PokeMiners for educational use. Served only through the existing same-origin edge proxy GET /api/art (30-day edge cache); no binary is committed to this repository or redistributed. Owner may revoke by changing status.",
+    "review": {
+     "status": "visually-confirmed",
+     "by": "Claude (Sonnet 5.5)",
+     "date": "2026-11-08",
+     "notes": "Viewed by Claude (Sonnet 5.5) on 2026-11-08 from the downloaded bytes (contact sheet, 8 images): Umbreon wearing a blue scarf with a crescent-moon motif; shiny variant has blue rings with the same scarf."
+    }
+   }
+  },
+  {
+   "id": "wild-area-purple-tee",
+   "kind": "avatar-clothing",
+   "item": "GO Wild Area 2026 Tee (Purple)",
+   "sourcePage": "https://pokemongo.com/en/news/get-ready-for-gowildarea-2026",
+   "status": "candidate",
+   "identityEvidence": [
+    "Official announcement: free GO Pass: Into the Wild reward; trainer clothing, not a Pokémon costume: https://pokemongo.com/en/news/get-ready-for-gowildarea-2026",
+    "Leek Duck avatar items page shows the tee on a trainer: https://leekduck.com/pokemon-go-wild-area/avatar-items/"
+   ],
+   "candidates": [
+    {
+     "source": "leekduck-cdn",
+     "kind": "avatar-screenshot",
+     "url": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-11-14-pokemon-go-wild-area-2026-global/go-wild-area-2026-tee-purple.jpg",
+     "sha256": "32b53c0ead53bf5f18019adc099978c63dff98b7eb16c5a1a6a1fceb2c37fe61",
+     "bytes": 114564,
+     "width": 1200,
+     "height": 675,
+     "review": {
+      "status": "visually-confirmed",
+      "notes": "Viewed: a trainer avatar in a purple T-shirt with a white Pokémon emblem, GO Wild Area 2026 logo in the corner. A promotional scene, not an item icon."
+     }
+    }
+   ],
+   "approvedAsset": null,
+   "blockedBy": [
+    "Not in PokeMiners Images/Clothing or 3D Assets/Clothing at db10df7 and no matching avatarCustomization template in the game master",
+    "Only candidate is a promotional screenshot hosted by a third party: owner approval needed"
+   ],
+   "nextStep": "Show as a text-only reward tile; never a Pokémon tile. Approve the screenshot or wait for a clothing icon."
+  }
+ ]
 }

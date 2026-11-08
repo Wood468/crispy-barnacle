@@ -37,6 +37,10 @@ jobs:
           node-version: 22
       - name: Run JavaScript regression tests
         run: node --test test/*.test.mjs test/*.test.cjs
+      - name: Check the artwork manifest and owner gallery are current
+        run: |
+          node scripts/artwork-manifest.mjs --check
+          node scripts/artwork-gallery.mjs --check
 
   python:
     runs-on: ubuntu-latest
@@ -134,6 +138,10 @@ jobs:
         if: matrix.shard == 'b'
         run: python test/release_browser.py
 
+      - name: Verify variant artwork (costumes, Shiny, Shadow, Dynamax, Gigantamax, fallbacks)
+        if: matrix.shard == 'b'
+        run: python test/variant_art_browser.py
+
       - name: Verify Today slow-feed fallback and late recovery
         if: matrix.shard == 'c'
         env:
@@ -183,6 +191,8 @@ jobs:
           python test/worldwide_timezone_browser.py
       - name: Verify combined source rendering, PWA update and preserved player data
         run: python test/release_browser.py
+      - name: Verify variant artwork in WebKit
+        run: python test/variant_art_browser.py
       - name: Retain mobile WebKit screenshots
         if: always()
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2

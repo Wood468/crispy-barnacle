@@ -2060,7 +2060,7 @@ function renderHomeBrief(t) {
     var sheet = $('evd'); if (sheet && !sheet.hidden) return;
     var ctx = t1Ctx(t);
     var sig = JSON.stringify([dayKey(t), ctx.live.map(sigEv), ctx.soon.map(sigEv), ctx.week.map(sigEv),
-      ctx.regLive.map(function (e) { return e.id; }), ctx.ending.map(function (e) { return e.id; }), ctx.regSoon.map(function (e) { return e.id; }), ctx.regWeek.map(function (e) { return e.id; }),
+      ctx.regLive.map(function (e) { return e.id + '|' + e.openId; }), ctx.ending.map(function (e) { return e.id; }), ctx.regSoon.map(function (e) { return e.id + '|' + e.openId; }), ctx.regWeek.map(function (e) { return e.id + '|' + e.openId; }),
       ctx.boosts.live.map(function (r) { return r.eventId + r.name; }), ctx.boosts.upcoming.map(function (r) { return r.eventId + r.name; }), ctx.seasons, ctx.done.map(function (d) { return d.key; })]);
     if (!force && sig === t1Signature && host.firstChild) { T1.patchCountdowns(host, +t); return; }
     var open = host.querySelector('.t1-menu'); if (open && !force) { T1.patchCountdowns(host, +t); return; }
