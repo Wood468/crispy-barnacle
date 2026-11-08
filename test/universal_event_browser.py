@@ -155,7 +155,11 @@ with sync_playwright() as p:
         page.evaluate('GOEventRegistry.ready')
         page.evaluate('GODASH.renderAll&&GODASH.renderAll()')
         regional=page.locator('#today-v1 .t1-reg [data-open]').first
-    regional.wait_for(state='visible')
+    try:regional.wait_for(state='visible')
+    except Exception:
+        print('DIAG used_fixture=%s errors=%s reg=%s'%(used_fixture,errors,page.evaluate("[...document.querySelectorAll('#today-v1 .t1-reg')].map(e=>e.outerHTML.slice(0,260))")))
+        print('DIAG today=%s'%page.evaluate("document.querySelector('#today-v1').innerText.slice(0,400)"))
+        raise
     regional_id=regional.get_attribute('data-open')
     expected_title=page.evaluate('(id)=>GOEventRegistry.find(id).title',regional_id)
     source_url=page.evaluate('(id)=>GOEventRegistry.find(id).sources.map(s=>s.url)[0]',regional_id)
