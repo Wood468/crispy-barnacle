@@ -66,4 +66,13 @@ with sync_playwright() as p:
     assert page.locator('#today-v1 .t1-boost').count() == 0
     assert errors == [], errors
     browser.close()
+    # 6. The same Night Out reported by two sources (Leek Duck event + official world list) shows once; a different city would not be merged.
+    LON = {'id': 'leekduck:pokemon-night-out-london-2026', 'name': 'Pokémon Night Out 2026 - London', 'type': 'event', 'start': '2026-11-10T18:00:00.000Z', 'end': '2026-11-10T22:30:00.000Z',
+           'tzMode': 'utc', 'scope': 'regional', 'status': 'community_reported', 'featured': [], 'bonuses': [], 'reports': [{'source': 'leekduck', 'status': 'community_reported', 'link': 'https://leekduck.com/events/pokemon-night-out-london-2026/'}], 'link': 'https://leekduck.com/events/pokemon-night-out-london-2026/'}
+    browser, page, errors = run(p, [LON], '2026-11-10T12:00:00+11:00')
+    page.goto(BASE); page.wait_for_selector('#today-v1 .t1-glance'); page.wait_for_load_state('networkidle'); page.wait_for_timeout(800)
+    rows = page.locator('#today-v1 article').filter(has_text=re.compile('Night Out', re.I))
+    assert rows.count() == 1, rows.all_inner_texts()
+    assert errors == [], errors
+    browser.close()
 print('PASS Today v1: boost rail, empty state, Ending soon, undo window, midnight, legacy unreachable')

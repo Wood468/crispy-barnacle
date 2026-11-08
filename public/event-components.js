@@ -67,11 +67,15 @@ function tickets(items,ctx){
  var factList=function(list){return '<ul class="ue-ticket-facts">'+list.map(function(t){return '<li>'+esc(t)+'</li>';}).join('')+'</ul>';};
  return cards.join('')+(notes.length?'<div class="ue-ticket-guide">'+factList(notes.slice(0,3))+(notes.length>3?'<details class="ue-ticket-more"><summary>More ticket details ('+(notes.length-3)+')</summary>'+factList(notes.slice(3))+'</details>':'')+'</div>':'');
 }
+var BONUS_ICONS=[[/stardust/i,'/ico/dust.webp'],[/\bxp\b|experience/i,'/ico/xp.webp'],[/candy/i,'/ico/candy.webp'],[/incense/i,'/ico/incense.webp'],[/\btrade|trading/i,'/ico/trade.webp'],[/shiny/i,'/ico/shiny.webp'],[/raid pass/i,'/ico/g/raidpass.webp'],[/lucky/i,'/ico/g/lucky.webp'],[/\b12 ?km|12-km/i,'/ico/g/egg-12km.webp'],[/\b10 ?km|10-km/i,'/ico/g/egg-10km.webp'],[/\b7 ?km/i,'/ico/g/egg-7km.webp'],[/\b5 ?km/i,'/ico/g/egg-5km.webp'],[/\b2 ?km/i,'/ico/g/egg-2km.webp'],[/egg|hatch/i,'/ico/egg.webp'],[/mega/i,'/ico/g/mega.webp'],[/raid/i,'/ico/g/raid.webp'],[/shadow/i,'/ico/g/shadow.webp'],[/ticket|pass\b/i,'/ico/pass.webp'],[/medal|research|avatar|background|power spot|lure/i,'/ico/g/event.webp']];
+function bonusIcon(t){for(var i=0;i<BONUS_ICONS.length;i++)if(BONUS_ICONS[i][0].test(t))return BONUS_ICONS[i][1];return '/ico/g/powerup.webp';}
+function bonusBody(t){var m=/^(\d+(?:\.\d+)?x|half|up to \d+)\s+(.*)$/i.exec(t);return m?'<b class="ue-bonus-mult">'+esc(m[1])+'</b> <span>'+esc(m[2])+'</span>':'<span>'+esc(t)+'</span>';}
 function bonusCard(b,ctx){
  var full=value(b);if(!full)return '';
- if(full.length<=125)return '<div class="ue-bonus">'+(ctx.bonus?ctx.bonus(full):esc(full))+'</div>';
- var head=full.split(/[.;]/)[0];if(head.length>95){head=head.slice(0,95);head=head.slice(0,head.lastIndexOf(' '))+'…';}
- return '<details class="ue-bonus ue-bonus-detail"><summary>'+(ctx.bonus?ctx.bonus(head):esc(head))+'</summary><p>'+esc(full)+'</p></details>';
+ var ico='<img class="ue-bonus-ico" alt="" loading="lazy" decoding="async" src="'+bonusIcon(full)+'" data-err="rm">';
+ if(full.length<=125)return '<div class="ue-bonus">'+ico+'<div class="ue-bonus-t">'+bonusBody(full)+'</div></div>';
+ var head=full.split(/[.;:]/)[0];if(head.length>95){head=head.slice(0,95);head=head.slice(0,head.lastIndexOf(' '))+'…';}
+ return '<details class="ue-bonus ue-bonus-detail"><summary>'+ico+'<span class="ue-bonus-t">'+bonusBody(head)+'</span></summary><p>'+esc(full)+'</p></details>';
 }
 function activityTime(a,ctx){
  if(!a||!a.schedule)return '';

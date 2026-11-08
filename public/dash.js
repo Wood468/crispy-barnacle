@@ -2013,9 +2013,14 @@ function renderHomeBrief(t) {
     soon.sort(function (a, b) { return a.start - b.start; }); week.sort(function (a, b) { return a.start - b.start; });
     var evPlaces = EV.filter(function (ev) { return ev.region && (phase(ev, t) !== 'ended') && !/^global$/i.test(ev.region); });
     function normT(v) { return String(v || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, ' ').trim(); }
+    function distinct(v) { return normT(v).split(' ').filter(function (w, i, a) { return w.length >= 4 && a.indexOf(w) === i && !/^(pokemon|events?|the|with|from|this|that|2026|2027)$/.test(w); }); }
     var evNames = Object.create(null); EV.forEach(function (ev) { if (phase(ev, t) !== 'ended') evNames[normT(ev.name)] = 1; });
     function covered(r) {
       if (evNames[normT(r.name)] || /worldwide|anywhere|global|in the game/i.test(String(r.place || '') + ' ' + String(r.area || ''))) return true;
+      /* Same real-world occurrence reported by two sources: two or more distinctive words (the place counts) in common and overlapping dates.
+         Night Out London and Night Out Los Angeles share only "night", so they stay separate. */
+      var rw = distinct(r.name + ' ' + (r.place || ''));
+      if (EV.some(function (ev) { if (!(+ev.start <= +r.end + 864e5 && +ev.end >= +r.start - 864e5) || phase(ev, t) === 'ended') return false; var ew = distinct(ev.name + ' ' + (ev.region || '')); return rw.filter(function (w) { return ew.indexOf(w) >= 0; }).length >= 2; })) return true;
       var key = t1PlaceKey(r.place); if (!key) return false;
       return evPlaces.some(function (ev) { return ev.start <= r.end && ev.end >= r.start && String(ev.region).toLowerCase().indexOf(key.split(' ')[0]) >= 0; });
     }
