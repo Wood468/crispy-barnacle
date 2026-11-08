@@ -1,6 +1,7 @@
 """Universal event rendering with real catalogue plus clearly synthetic future announcements."""
 import json
 import os
+from datetime import datetime,timedelta,timezone
 import re
 from pathlib import Path
 from playwright.sync_api import sync_playwright
@@ -132,16 +133,27 @@ with sync_playwright() as p:
     # at the runner's wall-clock time; verify that case with a deterministic live
     # overseas fixture rather than treating an empty live rail as a product failure.
     regional=page.locator('#today-v1 .t1-reg [data-open]').first
-    if regional.count()==0 or not regional.is_visible():
-        live_overseas={**FESTIVAL,'eventId':'synthetic-live-overseas','title':'Synthetic live overseas',
-            'attendance':'in-person','location':'Tokyo','schedule':{
-                'timeBasis':'instant','start':'2026-11-07T00:00Z','end':'2026-11-09T00:00Z'}}
-        page.clock.install(time='2026-11-07T12:00:00Z')
-        context.route('**/events-v1.json',lambda route:route.fulfill(
-            body=json.dumps({'schemaVersion':1,'species':DEX,'events':[live_overseas]}),
-            content_type='application/json'))
-        page.reload()
-        page.wait_for_function("!!window.GODASH&&GODASH.events().some(e=>e.id==='synthetic-live-overseas')")
+    used_fixture=regional.count()==0 or not regional.is_visible()
+    if used_fixture:
+        # Real wall-clock window (a faked clock stalls in-page wait_for_function polling).
+        now=datetime.now(timezone.utc)
+        iso=lambda d:d.strftime('%Y-%m-%dT%H:%MZ');day=lambda d:d.strftime('%Y-%m-%d')
+        live_world={'updated':day(now),'events':[{'id':CATALOGUE['events'][0]['eventId'],
+            'name':'Zzyzx Synthetic Showcase','place':'Reykjavik, Iceland','area':'Asia','scope':'regional',
+            'start':day(now-timedelta(days=1)),'end':day(now+timedelta(days=1)),'datesKnown':True,
+            'sources':[{'id':'official','name':'Synthetic fixture only','url':'https://example.invalid/fixture'}],
+            'status':'official','seen':day(now)}]}
+        # A fresh context: the app persists catalogue state per origin, so the old context would keep the real data.
+        context.close()
+        context=browser.new_context(viewport={'width':390,'height':900},timezone_id='Australia/Melbourne',service_workers='block')
+        context.route('**/api/**',api)
+        context.route(re.compile(r'^https://fonts\.'),lambda r:r.fulfill(body='',content_type='text/css'))
+        context.route('**/world-events.json',lambda route:route.fulfill(body=json.dumps(live_world),content_type='application/json'))
+        page=context.new_page();page.on('pageerror',lambda e:errors.append(str(e)))
+        page.goto(BASE+'/')
+        page.wait_for_function('!!window.GODETAIL&&!!window.GOEventRegistry')
+        page.evaluate('GOEventRegistry.ready')
+        page.evaluate('GODASH.renderAll&&GODASH.renderAll()')
         regional=page.locator('#today-v1 .t1-reg [data-open]').first
     regional.wait_for(state='visible')
     regional_id=regional.get_attribute('data-open')
@@ -155,10 +167,9 @@ with sync_playwright() as p:
     page.wait_for_function('!GONAV.internal&&GONAV.pending.length===0')
     print('PASS overseas Today listing opens the universal sheet and retains its source link')
     # Restore the unmodified catalogue for the exhaustive real-event sweep.
-    if regional_id=='synthetic-live-overseas':
-        context.unroute('**/events-v1.json')
-        page.clock.resume()
-        page.reload()
+    if used_fixture:
+        context.unroute('**/world-events.json')
+        page.goto(BASE+'/')
         page.wait_for_function('!!window.GODETAIL&&!!window.GOEventRegistry')
         page.evaluate('GOEventRegistry.ready')
     # Exercise every renderer using one sheet session. Hundreds of synthetic push/back
