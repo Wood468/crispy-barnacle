@@ -122,7 +122,7 @@ function render(model,ctx){ctx=ctx||{};var view=V.project(model),fields=model.in
  var incomplete=!selected.length&&!info.length;
  var overview=(ctx.overview||'')+(info.length?'<ul class="ue-facts ue-summary">'+info.slice(0,3).map(function(t){return '<li>'+esc(t)+'</li>';}).join('')+'</ul>':'')+(incomplete||model.completeness==='partial'?'<p class="ue-more-note" role="note">More details to come. Only verified information is shown.</p>':'');
  panels.push({id:'overview',label:'Overview',html:'<div class="ue-overview">'+(cancelled||'')+conflict+overview+(ctx.actions||'')+'</div>'});
- ['encounters','bonuses','research','passes','tickets'].forEach(function(k){if(selected.indexOf(k)>=0&&body[k]&&(k!=='bonuses'||body[k].indexOf('class="ue-bonus')>=0))panels.push({id:k,label:label[k],html:body[k]});});
+ ['encounters','bonuses','research','passes','tickets'].forEach(function(k){if(selected.indexOf(k)>=0&&body[k]&&(k!=='bonuses'||/class="ue-bonus[ "]/.test(body[k])))panels.push({id:k,label:label[k],html:body[k]});});
  var sched=(selected.indexOf('rotations')>=0?body.rotations:'')+(selected.indexOf('schedule')>=0?body.schedule:'');
  if(sched)panels.splice(Math.min(panels.length,2),0,{id:'schedule',label:'Schedule',html:sched});
  var detailsHtml=more+(hasSources?(sources||''):'').replace('<details class="ue-sources"','<details class="ue-sources" open');

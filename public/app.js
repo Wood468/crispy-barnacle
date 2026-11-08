@@ -1,3 +1,4 @@
+try{if(window.localStorage.getItem('gofn-classic-today')==='1')document.documentElement.classList.add('classic-today')}catch(e){}
 var MAN={};
 /* Keep the primary destinations usable while the initial data request is pending or unavailable. */
 (function(){

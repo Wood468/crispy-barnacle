@@ -1964,7 +1964,6 @@ function renderHomeBrief(t) {
   }
   /* ---------- Today v1 (Release 1): glance, confirmed shiny boosts, Happening now, Starting soon, Next 7 days, Season / GO Pass ---------- */
   var T1 = window.GOTODAY, TL = window.GOTODAYLOGIC;
-  try { if (window.localStorage.getItem('gofn-classic-today') === '1') document.documentElement.classList.add('classic-today'); } catch (e) { }
   function t1Storage() { try { return window.localStorage; } catch (e) { return null; } }
   function t1Done() { var s = t1Storage(); return s ? TL.readDone(s) : {}; }
   function t1IsDone(map, id, start) { return TL.isDone(map, id, start); }
