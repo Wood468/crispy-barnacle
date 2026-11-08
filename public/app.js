@@ -33,8 +33,11 @@ var MAN={};
 function withTimeout(p,ms,label){return new Promise(function(resolve,reject){var timer=setTimeout(function(){reject(new Error(label+' timed out'))},ms);Promise.resolve(p).then(function(value){clearTimeout(timer);resolve(value)},function(error){clearTimeout(timer);reject(error)})})}
 Promise.all([
   withTimeout(fetch('/data.json').then(function(r){if(!r.ok)throw new Error('data.json HTTP '+r.status);return r.json()}),12000,'Event data'),
-  withTimeout(fetch('/art/index.json').then(function(r){return r.ok?r.json():{}}).catch(function(){return {}}),8000,'Artwork index').catch(function(){return {}})
-]).then(function(R){var D=R[0];MAN=R[1]||{};
+  withTimeout(fetch('/art/index.json').then(function(r){return r.ok?r.json():{}}).catch(function(){return {}}),8000,'Artwork index').catch(function(){return {}}),
+  /* The variant-art manifest and dex numbers load with the first data, so no picture is chosen before they are known (no late re-render). Both are optional. */
+  withTimeout(fetch('/artwork-manifest.json').then(function(r){return r.ok?r.json():null}).catch(function(){return null}),8000,'Artwork manifest').catch(function(){return null}),
+  withTimeout(window.GOLIB.getJson('/dex.json').catch(function(){return null}),8000,'Dex numbers').catch(function(){return null})
+]).then(function(R){var D=R[0];MAN=R[1]||{};window.__GOART={m:R[2]&&R[2].entries?R[2]:null,d:R[3]||[]};
 (function(){
   var esc = window.GOLIB.esc;
   function $(id){return document.getElementById(id)}
@@ -54,9 +57,9 @@ Promise.all([
   }
   window.GOSD=sdId;
   /* Pictures are animated (Pokémon Showdown) wherever one exists; the still artwork is the fallback. Costume art is the game's own still icon. */
-  var AMAN=null,DEXNO={};
+  var AMAN=(window.__GOART&&window.__GOART.m)||null,DEXNO={};(((window.__GOART&&window.__GOART.d)||[])).forEach(function(p){DEXNO[String(p[1]).toLowerCase()]=p[0]});
   function loadArtManifest(){try{Promise.all([fetch('/artwork-manifest.json').then(function(r){return r.ok?r.json():null}).catch(function(){return null}),window.GOLIB.getJson('/dex.json').catch(function(){return null})]).then(function(R){if(R[0]&&R[0].entries)AMAN=R[0];(R[1]||[]).forEach(function(p){DEXNO[String(p[1]).toLowerCase()]=p[0]});setTimeout(function(){try{var need=[].some.call(document.querySelectorAll('.art[data-ck]'),function(i){var k=String(i.getAttribute('data-ck')).split('|');var r=window.GOVARIANTART&&GOVARIANTART.resolve({n:k[0],costume:true,label:k[1]||''},AMAN,{dexOf:function(n){return DEXNO[n]||0}});return r&&r.status==='exact'})||[].some.call(document.querySelectorAll('img[data-gk]'),function(i){var r=window.GOVARIANTART&&GOVARIANTART.resolve({n:i.getAttribute('data-gk')},AMAN,{dexOf:function(n){return DEXNO[n]||0}});return r&&r.status==='exact'&&r.basis!=='rule'});if(need&&window.GODASH&&GODASH.renderAll)GODASH.renderAll()}catch(e){}},300)}).catch(function(){})}catch(e){}}
-  loadArtManifest();
+  if(!AMAN)loadArtManifest();
   var COSTPIC={},COSTSH={},GMX={},GMSH={};try{fetch('/costumes.json').then(function(r){return r.ok?r.json():null}).then(function(j){if(j&&j.pictures&&Object.keys(j.pictures).length){COSTPIC=j.pictures;COSTSH=j.shiny||{};GMX=j.gmax||{};GMSH=j.gmaxShiny||{};setTimeout(function(){try{var need=[].some.call(document.querySelectorAll('.art[data-ck]'),function(i){return COSTPIC[i.getAttribute('data-ck')]})||[].some.call(document.querySelectorAll('img[data-gk]'),function(i){return GMX[i.getAttribute('data-gk')]});if(need&&window.GODASH&&GODASH.renderAll)GODASH.renderAll()}catch(e){}},300)}}).catch(function(){})}catch(e){}
   function costumeUnavailable(o,cls){
     var label=String(o.n||'')+(o.label&&String(o.n||'').toLowerCase().indexOf(String(o.label).toLowerCase())<0?' ('+o.label+')':'');
