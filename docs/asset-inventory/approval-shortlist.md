@@ -143,3 +143,10 @@ Reference: https://github-wiki-see.page/m/Hailey-Ross/hailsDotGO/wiki/Data-Sourc
 | PokéAPI | Base/form sprites and localization fallback | Not authoritative for GO costumes, Dynamax or Gigantamax art |
 
 **Architecture rule:** retain existing GO Field Notes sources and UI behavior, especially overseas in-person events visible by default. Introduce source health, timestamps, cross-checks and bounded caching rather than replacing established pipelines. Do not ingest third-party art into production without rights review.
+
+## PoGoAPI release-status validation (pending live freshness check)
+
+- Candidate feed: `https://pogoapi.net/api/v1/released_pokemon.json`; monitor `https://pogoapi.net/api/v1/api_hashes.json` to detect upstream changes.
+- Treat released species as a **positive supporting signal** only. Missing entries must not be interpreted as proof of unreleased status; reconcile against official announcements and current event records.
+- Keep species, form, Shiny, costume and Gigantamax release states separate; a species-level flag must never imply all its variants are available.
+- Record fetch timestamp, response/hash and comparison counts before any automatic UI exposure. No release-status production change is authorized by this inventory note.
