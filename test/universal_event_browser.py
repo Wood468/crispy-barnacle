@@ -128,7 +128,21 @@ with sync_playwright() as p:
     page=context.new_page();errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
     page.goto(BASE+'/');page.wait_for_function('!!window.GODETAIL&&!!window.GOEventRegistry')
     page.evaluate('GOEventRegistry.ready')
+    # Today shows only currently live regional events. A real catalogue may have none
+    # at the runner's wall-clock time; verify that case with a deterministic live
+    # overseas fixture rather than treating an empty live rail as a product failure.
     regional=page.locator('#today-v1 .t1-reg [data-open]').first
+    if regional.count()==0 or not regional.is_visible():
+        live_overseas={**FESTIVAL,'eventId':'synthetic-live-overseas','title':'Synthetic live overseas',
+            'attendance':'in-person','location':'Tokyo','schedule':{
+                'timeBasis':'instant','start':'2026-11-07T00:00Z','end':'2026-11-09T00:00Z'}}
+        page.clock.install(time='2026-11-07T12:00:00Z')
+        context.route('**/events-v1.json',lambda route:route.fulfill(
+            body=json.dumps({'schemaVersion':1,'species':DEX,'events':[live_overseas]}),
+            content_type='application/json'))
+        page.reload()
+        page.wait_for_function("!!window.GODASH&&GODASH.events().some(e=>e.id==='synthetic-live-overseas')")
+        regional=page.locator('#today-v1 .t1-reg [data-open]').first
     regional.wait_for(state='visible')
     regional_id=regional.get_attribute('data-open')
     expected_title=page.evaluate('(id)=>GOEventRegistry.find(id).title',regional_id)
@@ -140,6 +154,13 @@ with sync_playwright() as p:
     page.keyboard.press('Escape')
     page.wait_for_function('!GONAV.internal&&GONAV.pending.length===0')
     print('PASS overseas Today listing opens the universal sheet and retains its source link')
+    # Restore the unmodified catalogue for the exhaustive real-event sweep.
+    if regional_id=='synthetic-live-overseas':
+        context.unroute('**/events-v1.json')
+        page.clock.resume()
+        page.reload()
+        page.wait_for_function('!!window.GODETAIL&&!!window.GOEventRegistry')
+        page.evaluate('GOEventRegistry.ready')
     # Exercise every renderer using one sheet session. Hundreds of synthetic push/back
     # operations exceed WebKit's history traversal rate limit and obscure the render checks.
     # Actual close/focus/history journeys are verified separately above and below.
