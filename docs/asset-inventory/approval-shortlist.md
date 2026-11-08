@@ -59,3 +59,17 @@ Source: public/store-log.json and public/costumes.json on main, inspected 2026-1
 - Official announcement: https://pokemongo.com/en/news/get-ready-for-gowildarea-2026 — GO Wild Area 2026 Tee (Purple) is a free GO Pass: Into the Wild avatar reward, not a Pokémon costume.
 - Supporting reference: https://leekduck.com/pokemon-go-wild-area/avatar-items/
 - **All six identities now classified:** five Pokémon costumes, one avatar clothing reward. Exact image provenance/asset matching remains pending for all six. No replacements authorized.
+
+## Implementation-ready identity routing (2026-11-08)
+| Exact identity | Entity type | Target surface | Safe fallback until exact artwork verified |
+|---|---|---|---|
+| Sinistea wearing bow | costumed Pokémon (check Phony/Antique separately) | Event Pokémon gallery / encounters | Species artwork with explicit costume-unverified label; never claim costume art |
+| Pikachu wearing sun crown | costumed Pokémon | Twilight Wishes 1-star raids | Base Pikachu art, clearly labelled sun crown |
+| Pikachu wearing moon crown | costumed Pokémon | Twilight Wishes 1-star raids | Base Pikachu art, clearly labelled moon crown |
+| Espeon wearing sun scarf | costumed Pokémon | Twilight Wishes 3-star raids | Base Espeon art, clearly labelled sun scarf |
+| Umbreon wearing moon scarf | costumed Pokémon | Twilight Wishes 3-star raids | Base Umbreon art, clearly labelled moon scarf |
+| GO Wild Area 2026 Tee (Purple) | avatar clothing reward | GO Pass: Into the Wild free reward | Text-only reward tile with clothing icon; never a Pokémon tile |
+
+**Source of truth:** official Twilight Wishes announcement https://pokemongo.com/news/twilight-wishes-2026 explicitly lists raid tiers, costumes and shiny eligibility. Official Wild Area announcement https://pokemongo.com/en/news/get-ready-for-gowildarea-2026 confirms Purple Tee free GO Pass reward. These sources verify identities, not downloadable artwork URLs or licensing.
+
+**Important:** A base Pokémon fallback must be labelled as an illustration of species, not an exact costume depiction. Do not mark any of the six as asset-approved. No external URLs have been accepted as image files.
