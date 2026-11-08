@@ -8,9 +8,49 @@ const C=require('./contract-v1.js');
 const Catalogue=require('../../public/event-catalogue.js');
 const L=require('../../public/lib.js');
 const {reconcile}=require('./identity-index-v1.cjs');
+const Art=require('../../public/event-art.js');
 function key(url){try{const u=new URL(url);return u.origin+u.pathname.replace(/\/$/,'');}catch{return '';}}
 function publicValue(value){if(typeof value==='string')return L.isPrivateLink(value)?undefined:value;if(Array.isArray(value))return value.map(publicValue).filter(v=>v!==undefined);if(value&&typeof value==='object'){if(typeof value.url==='string'&&L.isPrivateLink(value.url))return undefined;return Object.fromEntries(Object.entries(value).map(([k,v])=>[k,publicValue(v)]).filter(([,v])=>v!==undefined));}return value;}
 function digest(event){return crypto.createHash('sha256').update(JSON.stringify(event,(k,v)=>['sources','internalValidation','revision','amendment'].includes(k)?undefined:v)).digest('hex');}
+
+/* Promotional artwork inheritance. An event never loses a verified banner because its facts arrive in several records:
+   (1) the page-level index written by the importer (official / Leek Duck pages' own og:image) is joined to every event that lists
+   that page as its own source, and (2) an event shares the verified banner of another record that cites the same Leek Duck or
+   official page. Every candidate must pass the Release 1.1 rule (event-art verify: year, article folder, place; never a generic
+   image). A shared official news page must be the event's primary source or its address must name the event. Distinct events are
+   never merged by this step; only the image is carried. */
+function pageKey(url){return String(url||'').replace(/[?#].*$/,'').replace(/\/?$/,'/').toLowerCase();}
+function evidence(model){const d=model.schedule||(model.internalValidation&&model.internalValidation.legacyDates)||{};return {name:model.title,start:d.start||'',end:d.end||d.start||'',region:''};}
+function inheritArtwork(out,artwork){
+ const pages=(artwork&&artwork.pages)||{},models=[...out.values()],byPage=new Map();
+ const ownPages=m=>(m.sources||[]).map(s=>s&&s.url).filter(u=>/^https:\/\/(?:www\.)?(?:pokemongo|leekduck)\.com\//i.test(u||''));
+ models.forEach(m=>ownPages(m).forEach(u=>{const k=pageKey(u);(byPage.get(k)||byPage.set(k,[]).get(k)).push(m);}));
+ const words=v=>String(v||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').split(/[^a-z0-9]+/).filter(w=>w.length>=4&&!/^(pokemon|event|events|with|from|raid|battles|battle|area|2025|2026|2027)$/.test(w));
+ function pageFits(model,url,primary){
+  const slug=new URL(url).pathname.toLowerCase(),title=words(model.title);
+  return primary||title.filter(w=>slug.includes(w)).length>=2;
+ }
+ let carried=0;
+ for(const model of models){
+  if(model.image)continue;
+  const ev=evidence(model),urls=ownPages(model),candidates=[];
+  urls.forEach((url,i)=>{const entry=pages[pageKey(url)];if(entry&&entry.image&&pageFits(model,url,i===0))candidates.push(entry.image);});
+  const mine=words(model.title),similar=other=>{const theirs=words(other.title);if(!mine.length||!theirs.length)return false;const shared=mine.filter(w=>theirs.includes(w)).length;return shared===Math.min(mine.length,theirs.length)||shared/new Set([...mine,...theirs]).size>=0.6;};
+  urls.forEach(url=>(byPage.get(pageKey(url))||[]).forEach(other=>{if(other!==model&&other.image&&similar(other))candidates.push(other.image);}));
+  const years=(url=>(url.match(/20\d{2}/g)||[]).map(Number));
+  for(const image of candidates){
+   if(!Art.verify(image,ev))continue;
+   const claimed=urls.flatMap(years),own=[ev.start,ev.end].map(x=>+String(x).slice(0,4)).filter(Boolean);
+   if(claimed.length&&own.length&&!claimed.some(y=>own.includes(y)))continue;
+   /* An undated event cannot confirm an image's year: a year in the image address must be named by the event's title or its own page addresses. */
+   const imageYears=(image.match(/(?:^|[^0-9])(20\d{2})(?:[^0-9]|$)/g)||[]).map(x=>+x.replace(/\D/g,''));
+   const known=new Set([...own,...claimed,...years(String(model.title))]);
+   if(imageYears.length&&!own.length&&!imageYears.every(y=>known.has(y)))continue;
+   model.image=image;carried++;break;
+  }
+ }
+ return carried;
+}
 function buildCatalogue(input){
  A.configureSpecies(input.dex||input.previous?.species||[]);
  const costumeRows=input.costumeRows||A.costumeDescriptors(input.data,input.costumes);A.configureCostumes(costumeRows);
@@ -68,17 +108,18 @@ function buildCatalogue(input){
  Object.entries(details).forEach(([id,d])=>{if(!out.has(id)&&!referenced.has(id)&&d.name)add(d.normalizedEvent||{id,name:d.name,lifecycle:d.lifecycle||'reference',detailIds:[id],sources:d.sources},'source-details');});
  const consumed=new Set([...out.values()].flatMap(e=>e.aliases||[]));
  previous.forEach(e=>{if(!out.has(e.eventId)&&!consumed.has(e.eventId))out.set(e.eventId,e);});
+ inheritArtwork(out,input.artwork);
  const events=[...out.values()].sort((a,b)=>a.eventId.localeCompare(b.eventId));
  const checked=Catalogue.prepare({schemaVersion:1,events},input.previous),conflicts=checked.diagnostics.conflicts;
  if(rejections.length||!checked.accepted){const rejected=rejections.concat(checked.diagnostics.rejections.filter(r=>events.length||!rejections.length||r.eventId));const diagnostics={rejectedCount:rejected.length,rejections:rejected,conflicts};const error=Error('Catalogue validation failed: '+JSON.stringify(diagnostics));error.diagnostics=diagnostics;throw error;}
  return publicValue({schemaVersion:1,species:input.dex||input.previous?.species||[],costumes:costumeRows,events,coverage,excluded:[{collection:'upcoming',reason:'Pokémon release summaries, not independent event instances; existing release views are preserved'},{collection:'regionals',reason:'Geographic Pokémon availability, not event instances'},{collection:'week',reason:'Static week guidance, not event instances'},{collection:'raidNow',reason:'Derived rotation summary, represented by rotation records'},{collection:'pastFests',reason:'Historical reference list, not announced event instances'}],warnings});
 }
 async function publish(root=path.resolve(__dirname,'../..')){async function read(name,fallback={}){try{return JSON.parse(await fs.readFile(path.join(root,'public',name+'.json'),'utf8'));}catch(e){if(e.code==='ENOENT')return fallback;throw e;}}
- const [data,details,info,world,regional,season,previous,dex,costumes]=await Promise.all(['data','event-details','event-info','world-events','regional-events','season','events-v1','dex','costumes'].map(n=>read(n)));
+ const [data,details,info,world,regional,season,previous,dex,costumes,artwork]=await Promise.all(['data','event-details','event-info','world-events','regional-events','season','events-v1','dex','costumes','event-artwork'].map(n=>read(n)));
  let corrections={schemaVersion:1,events:{}};try{corrections=JSON.parse(await fs.readFile(path.join(root,'data/event-corrections.json'),'utf8'));}catch(error){if(error.code!=='ENOENT')throw error;}
  let aliases={};try{aliases=JSON.parse(await fs.readFile(path.join(root,'data/event-aliases.json'),'utf8'));}catch(error){if(error.code!=='ENOENT')throw error;}
- const result=buildCatalogue({data,details,info,world,regional,season,previous,dex,costumes,aliases,corrections});
+ const result=buildCatalogue({data,details,info,world,regional,season,previous,dex,costumes,aliases,corrections,artwork});
  const target=path.join(root,'public/events-v1.json'),temp=target+'.tmp';await fs.writeFile(temp,JSON.stringify(result,null,1)+'\n');await fs.rename(temp,target);return result;
 }
-module.exports={buildCatalogue,publish,digest};
+module.exports={buildCatalogue,inheritArtwork,publish,digest};
 if(require.main===module)publish().then(result=>console.log('Validated universal catalogue:',result.events.length,'events across',result.coverage.length,'collections')).catch(error=>{console.error(error);process.exitCode=1;});

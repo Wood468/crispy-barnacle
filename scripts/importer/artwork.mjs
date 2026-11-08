@@ -1,4 +1,5 @@
 import artwork from '../../public/event-art.js';
+import { posterFromHtml } from './encounters.mjs';
 
 const normalize = url => String(url || '').replace(/\/?$/, '/');
 function officialPageMatches(event, sourceUrl) {
@@ -32,3 +33,24 @@ export function selectArtwork(event, results, { retrievedAt = null } = {}) {
   const chosen = candidates[0];
   return chosen ? { image: chosen.image, imageProvenance: { source: chosen.source.name, sourceUrl: chosen.source.url, imageUrl: chosen.image, checkedFor: subject.name, checkedAt: new Date().toISOString().slice(0, 10), ...(retrievedAt ? { retrievedAt } : {}) } } : { image: null, imageProvenance: null };
 }
+
+const pageKey = url => String(url || '').replace(/[?#].*$/, '').replace(/\/?$/, '/').toLowerCase();
+// One entry per source page that exposes its own promotional image. A page that is temporarily unreadable keeps its
+// previous entry for 45 days; a page that is read and has no usable image drops it.
+export function pageArtworkIndex(pages, previous = {}, now = new Date().toISOString()) {
+  const out = {}, readKeys = new Set();
+  for (const page of pages || []) {
+    if (!page || !page.url) continue;
+    const key = pageKey(page.url); readKeys.add(key);
+    if (page.source !== 'official' && page.source !== 'leekduck') continue;
+    const image = posterFromHtml(page.html, page.url);
+    if (!image) continue;
+    out[key] = { image, source: page.source === 'official' ? 'Pokémon GO (official)' : 'Leek Duck', sourceUrl: page.url, retrievedAt: now };
+  }
+  for (const [key, entry] of Object.entries(previous || {})) {
+    if (out[key] || readKeys.has(key) || !entry || !entry.image) continue;
+    if (Date.parse(now) - Date.parse(entry.retrievedAt || 0) < 45 * 864e5) out[key] = entry;
+  }
+  return Object.fromEntries(Object.entries(out).sort(([a], [b]) => a.localeCompare(b)));
+}
+export { pageKey };

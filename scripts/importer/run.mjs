@@ -17,12 +17,14 @@ import eventAdapter from "../../public/event-adapter.js";
 import { announcementFromPage } from "./announcements.mjs";
 import { selectArtwork } from "./artwork.mjs";
 import { applyLineCorrections } from "./corrections.mjs";
+import { pageArtworkIndex } from "./artwork.mjs";
 
 const APP = process.env.APP_URL || "https://pogo.michaelpuff.com";
 const OUT = process.env.OUT_FILE || "public/event-details.json";
 const REPORT = process.env.REPORT_FILE || "data/importer-report.json";
 const MAX_PAGES = +(process.env.MAX_PAGES || 80);
 const WORLD_OUT = process.env.WORLD_FILE || "public/world-events.json";
+const ARTWORK_OUT = process.env.ARTWORK_FILE || (OUT === "public/event-details.json" ? "public/event-artwork.json" : null);
 const SEREBII = "https://www.serebii.net/pokemongo/reallifeevents.shtml";
 const SOURCE_NAMES = Object.fromEntries(SOURCES.map(x => [x.id, x.name]).concat([["serebii", "Serebii"]]));
 
@@ -293,6 +295,13 @@ async function main() {
   await writeFile(WORLD_OUT, JSON.stringify({ updated: new Date().toISOString(), events: world }, null, 1) + "\n");
   let old = {}; try { old = JSON.parse(await readFile(OUT, "utf8")).events || {}; } catch { /* first run */ }
   const now = new Date().toISOString(), out = {};
+  // Page-level promotional artwork index: every official / Leek Duck page's own og:image, with its page URL and retrieval date.
+  // The catalogue joins it to any event that lists the page as its own source (never to hub round-ups).
+  if (ARTWORK_OUT) {
+    let previousIndex = {}; try { previousIndex = JSON.parse(await readFile(ARTWORK_OUT, "utf8")).pages || {}; } catch { /* first run */ }
+    const index = pageArtworkIndex(pages, previousIndex, now);
+    await writeFile(ARTWORK_OUT, JSON.stringify({ updated: now, pages: index }, null, 1) + "\n");
+  }
   for (const [id, { event, results }] of byEvent) {
     const merged = { ...mergeSources(results), ...mergeEncounters(results) };
     const selected = selectArtwork(event, results, { retrievedAt: now });

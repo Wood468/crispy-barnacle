@@ -105,3 +105,17 @@
   #tab-raids .rw-raid .rcs { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
   #tab-raids .rw-raid .rc { padding: 12px; }
 }
+
+/* Verified official banners are shown whole (their own 16:9 composition), never squeezed into the compact themed strip.
+   The featured-Pokémon accent only belongs to themed placeholders: a real banner already shows the event's Pokémon. */
+#tab-now .t1-major-art:has(.ev-art--official) { height: auto; padding: 0; }
+#tab-now .t1-major-art .ev-art--official { height: auto; aspect-ratio: 16 / 9 !important; }
+#tab-now .t1-major-art .ev-art--official .ev-art-img { object-position: 50% 30% !important; }
+#tab-now .t1-major-art .ev-art--official .ev-art-accent { display: none; }
+@media (min-width: 900px) {
+  #tab-now .t1-major-art:has(.ev-art--official), #tab-now .t1-major-art .ev-art--official { height: auto; aspect-ratio: 16 / 9 !important; }
+}
+.ev-art-tag { max-width: 70%; text-align: right; line-height: 1.25; }
+/* Keep the card menu (Mark done / Hide) below a full banner so it never covers the event logo. */
+#tab-now .t1-major:has(.ev-art--official) { container-type: inline-size; }
+#tab-now .t1-major:has(.ev-art--official) .t1-more { top: calc(100cqw * 9 / 16); }
