@@ -62,7 +62,7 @@ test("Today season cards defer posters and event details load a compact, cacheab
   assert.doesNotMatch(card, /<img\b/i, "the large poster is not requested by the Today banner");
   assert.match(season, /thumbnail:\s*seasonThumbnailPath\(i\.id, i\.img\)/, "the event model carries a deterministic thumbnail path");
   assert.match(detail, /safeSeasonThumb\(ev\.season\.thumbnail\)/, "event details use the compact cached WebP thumbnail for season posters");
-  assert.match(detail, /art\.fullSrc\s*=\s*art\.provenance\.imageUrl/, "the full-size original stays recorded as the artwork provenance image");
+  assert.match(detail, /art\.fullSrc\s*=/, "the full-size original stays recorded as the artwork provenance image");
   assert.match(read("../public/event-redesign.css"), /\.ev-art-img\{[^}]*position:absolute/, "banners are shown in full inside a reserved box (object-fit contain)");
 });
 

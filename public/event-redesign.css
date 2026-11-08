@@ -331,3 +331,6 @@ button.ue-mon-featured .ue-mon-art .art{animation:none}
 .ue-bonuses details.ue-bonus-detail .ue-bonus-t{writing-mode:horizontal-tb;word-break:normal}
 .evd-in:has(.ue-hero) .ue-bonuses details.ue-bonus-detail{display:block;padding:8px 10px}
 .evd-in:has(.ue-hero) .ue-bonuses .ue-bonus:not(details){grid-template-columns:30px minmax(0,1fr);gap:8px;padding:8px 10px}
+.evd-in:has(.ue-hero) .ev-art .evd-banner-link{position:absolute;inset:0;z-index:1;display:block;width:100%;height:100%;opacity:1;object-fit:contain}
+.evd-in:has(.ue-hero) .ev-art .evd-banner,.evd-in:has(.ue-hero) .ev-art .evd-banner-link img{position:absolute;inset:0;width:100%;height:100%;opacity:1;object-fit:contain;border-radius:0;z-index:1}
+.ev-art .evd-banner-season{object-fit:contain}
