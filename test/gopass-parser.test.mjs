@@ -191,3 +191,11 @@ test("GO Pass parse failures retain real nested field rows, timestamps and sourc
   preserveGoPassRows(out, old, byEvent);
   assert.equal(out.event.fields.tickets.length, 3, "retries never duplicate rewards");
 });
+
+test("alt text worded differently from the visible costume name still validates (Into the Wild rank 75)", () => {
+  const html = wrap(rankBlock(75, reward("Golden Lure Module ×1", "Golden Lure Module"), reward("Machamp wearing a modern jacket", "Modern Jacket Machamp")));
+  const parsed = extractLeekDuckGoPassRewards(html, { allowPartialExcerpt: true });
+  assert.equal(parsed.ranks[0].rank, 75);
+  assert.match(JSON.stringify(parsed.tickets), /Machamp wearing a modern jacket/);
+  assert.throws(() => extractLeekDuckGoPassRewards(wrap(rankBlock(75, reward("Golden Lure Module ×1"), reward("Machamp wearing a modern jacket", "Pikachu"))), { allowPartialExcerpt: true }), /does not match reward-name/);
+});
