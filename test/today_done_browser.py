@@ -19,8 +19,11 @@ with sync_playwright() as p:
     page.wait_for_load_state('networkidle'); page.wait_for_timeout(800)  # late feeds (season, venue times) may repaint once
     keep = "({d:localStorage.getItem('gofn-dex-v1'),u:localStorage.getItem('gofn-us-v1'),s:localStorage.getItem('gofn-stamp')})"
     before = page.evaluate(keep)
-    card = page.locator('#today-v1 article.t1-card[data-start]').first
+    # Use the curated occurrence, whose ID survives late source and catalogue updates.
+    card = page.locator('#today-v1 article.t1-card[data-id="cur:sendai"][data-start]')
+    card.wait_for()
     cid, start = card.get_attribute('data-id'), card.get_attribute('data-start')
+    assert start == page.evaluate("GODASH.events().find(e => e.id === 'cur:sendai').start.toISOString()"), 'Today has a stale occurrence start after a source update'
     more = card.locator('.t1-more')
     more.scroll_into_view_if_needed()
     box = more.bounding_box(); assert box['width'] >= 44 and box['height'] >= 44, box
@@ -34,6 +37,7 @@ with sync_playwright() as p:
     assert page.locator('#t1-toast .t1-toast-undo').is_visible()
     stored = page.evaluate("JSON.parse(localStorage.getItem('gofn-today-done-v1'))")
     assert list(stored) == [f'{cid}@{start}'], stored
+    page.wait_for_selector('#today-v1 .t1-done-list li', timeout=5000)
     assert page.locator('#today-v1 .t1-done-list li').count() == 1
     assert page.evaluate(keep) == before, 'Collection keys changed'
     page.reload(); page.wait_for_selector('#today-v1 .t1-card')
