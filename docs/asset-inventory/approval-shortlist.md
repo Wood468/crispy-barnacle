@@ -16,7 +16,7 @@ Source: public/store-log.json and public/costumes.json on main, inspected 2026-1
 | `pikachu (moon crown)|moon crown (no dex number)` | **Identity confirmed; exact artwork unresolved** | Official Twilight Wishes 2026 announcement confirms this exact costumed Pokémon; find matching image and normalize registry key. |
 | `espeon (sun scarf)|sun scarf (no dex number)` | **Identity confirmed; exact artwork unresolved** | Official Twilight Wishes 2026 announcement confirms this exact costumed Pokémon; find matching image and normalize registry key. |
 | `umbreon (moon scarf)|moon scarf (no dex number)` | **Identity confirmed; exact artwork unresolved** | Official Twilight Wishes 2026 announcement confirms this exact costumed Pokémon; find matching image and normalize registry key. |
-| `tee|purple (no dex number)` | Unresolved | Confirm avatar-item classification and original source |
+| `tee|purple (no dex number)` | **Confirmed avatar item, not Pokémon** | Official GO Wild Area 2026 announcement names GO Wild Area 2026 Tee (Purple), unlocked via free GO Pass: Into the Wild. Reclassify as avatar reward; obtain exact item artwork before displaying. |
 
 ## Store listings — official image capture pending
 | Product | Image status |
@@ -54,3 +54,8 @@ Source: public/store-log.json and public/costumes.json on main, inspected 2026-1
 - Official event announcement explicitly lists sun-crown Pikachu, moon-crown Pikachu, sun-scarf Espeon and moon-scarf Umbreon in raids: https://pokemongo.com/news/twilight-wishes-2026
 - Leek Duck independently lists the same four variants: https://leekduck.com/events/twilight-wishes-2026/
 - **Five of six identities confirmed** (including Sinistea). The sixth, purple tee, remains unclassified; no image has been verified for replacement.
+
+## Purple Tee classification (2026-11-08)
+- Official announcement: https://pokemongo.com/en/news/get-ready-for-gowildarea-2026 — GO Wild Area 2026 Tee (Purple) is a free GO Pass: Into the Wild avatar reward, not a Pokémon costume.
+- Supporting reference: https://leekduck.com/pokemon-go-wild-area/avatar-items/
+- **All six identities now classified:** five Pokémon costumes, one avatar clothing reward. Exact image provenance/asset matching remains pending for all six. No replacements authorized.
