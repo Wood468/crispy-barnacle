@@ -35838,7 +35838,7 @@
     },
     "contentHash": "364296abace01e85f5f27f2db7c612bda011bcc9244ca4830ecca4c67be7cce0",
     "revision": 3,
-    "amended": true,
+    "amended": false,
     "native": false,
     "collection": "events"
    },
@@ -45547,7 +45547,7 @@
    "image": "https://lh3.googleusercontent.com/44ggmV081gROwILff_vc2fROBHVCfBGTlRPQ8EtwxMt0ePAkWpirNJMtFk0C3qzHyx7zQqfFAbzKsziiRTTz67bHWdZyRKJN1d7b9Z50Q0M",
    "notes": [
     "Gigantamax Duraludon debuts in six-star Max Battles. Dynamax Dialga on Saturday, Dynamax Palkia on Sunday.",
-    "Five-star raids: Zekrom and White Kyurem on Saturday, Reshiram and Black Kyurem on Sunday. Machamp wearing a modern jacket appears in three-star raids and can be Shiny.",
+    "Five-star raids: Zekrom and White Kyurem on Saturday, Reshiram and Black Kyurem on Sunday. Machamp wearing a modern jacket appears in three-star raids on Saturday and Sunday; the official event page does not confirm it can be Shiny.",
     "Optional ticket US$11.99 in the web store. Daily Discoveries pause Nov 9 to 15."
    ],
    "internalValidation": {
@@ -45622,8 +45622,8 @@
      "start": "2026-11-14T10:00",
      "end": "2026-11-15T18:00"
     },
-    "contentHash": "6e92f27d9c7936f18fb5b28d976b33f1da0db913f4db4c220c2d93327618dc49",
-    "revision": 5,
+    "contentHash": "6e9282cc03603c74671ba530686e762eae832f4865274e54ea4a71730d66e312",
+    "revision": 6,
     "amended": true,
     "native": false,
     "collection": "events"
