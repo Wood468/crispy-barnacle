@@ -1,5 +1,5 @@
 {
-  "auditedAt": "2026-11-08T09:50:27.743Z",
+  "auditedAt": "2026-11-08T09:54:31.002Z",
   "total": 44,
   "verified": 11,
   "fallback": 33,
@@ -13,7 +13,9 @@
       "location": null,
       "artwork": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-09-08-season-24-twilight-trails/season-24-twilight-trails.jpg",
       "source": "https://leekduck.com/events/season-24-twilight-trails/",
+      "sourceEventId": "season-24-twilight-trails",
       "status": "verified_event_art",
+      "reason": "matched_event_artwork",
       "suppliedImage": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-09-08-season-24-twilight-trails/season-24-twilight-trails.jpg",
       "suppliedImageAccepted": true
     },
@@ -26,7 +28,9 @@
       "location": null,
       "artwork": "https://cdn.leekduck.com/assets/img/events/pokemon-x-adidas-2026.jpg",
       "source": "https://leekduck.com/events/pokemon-x-adidas-2026/",
+      "sourceEventId": "pokemon-x-adidas-2026",
       "status": "verified_event_art",
+      "reason": "matched_event_artwork",
       "suppliedImage": "https://cdn.leekduck.com/assets/img/events/pokemon-x-adidas-2026.jpg",
       "suppliedImageAccepted": true
     },
@@ -39,7 +43,9 @@
       "location": null,
       "artwork": null,
       "source": null,
+      "sourceEventId": null,
       "status": "illustrated_fallback",
+      "reason": "generic_image",
       "suppliedImage": "https://cdn.leekduck.com/assets/img/events/mega-default.jpg",
       "suppliedImageAccepted": false
     },
@@ -52,7 +58,9 @@
       "location": null,
       "artwork": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-11-03-go-pass-november-2026/go-pass-november-2026.jpg",
       "source": "https://leekduck.com/events/go-pass-november-2026/",
+      "sourceEventId": "go-pass-november-2026",
       "status": "verified_event_art",
+      "reason": "matched_event_artwork",
       "suppliedImage": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-11-03-go-pass-november-2026/go-pass-november-2026.jpg",
       "suppliedImageAccepted": true
     },
@@ -65,7 +73,9 @@
       "location": null,
       "artwork": null,
       "source": null,
+      "sourceEventId": null,
       "status": "illustrated_fallback",
+      "reason": "generic_image",
       "suppliedImage": "https://cdn.leekduck.com/assets/img/events/events-default-img.jpg",
       "suppliedImageAccepted": false
     },
@@ -78,7 +88,9 @@
       "location": null,
       "artwork": null,
       "source": null,
+      "sourceEventId": null,
       "status": "illustrated_fallback",
+      "reason": "generic_image",
       "suppliedImage": "https://cdn.leekduck.com/assets/img/events/events-default-img.jpg",
       "suppliedImageAccepted": false
     },
@@ -91,7 +103,9 @@
       "location": null,
       "artwork": null,
       "source": null,
+      "sourceEventId": null,
       "status": "illustrated_fallback",
+      "reason": "shared_or_unverifiable_image",
       "suppliedImage": "https://cdn.leekduck.com/assets/img/events/go-battle-league-season-28-twilight-trails.png",
       "suppliedImageAccepted": false
     },
@@ -104,7 +118,9 @@
       "location": null,
       "artwork": null,
       "source": null,
+      "sourceEventId": null,
       "status": "illustrated_fallback",
+      "reason": "wrong_year",
       "suppliedImage": "https://cdn.leekduck.com/assets/img/events/article-images/2025/2025-05-25-gigantamax-machamp-max-battle-day-may-2025/gigantamax-machamp-max-battles.jpg",
       "suppliedImageAccepted": false
     },
@@ -117,7 +133,9 @@
       "location": "Sendai, Japan",
       "artwork": "https://lh3.googleusercontent.com/mKoeqvHXmLsEsFxHgdhcK2XoC_XhjXUDl8gvBeH0iEfQTCNOuNY_vJ_k7QRoIYJFfVanVY_aE6ERNdqPgOPpOxvRQaw0I4T1YzTnodb8GUY",
       "source": "https://pokemongo.com/en/gowildarea/sendai/",
+      "sourceEventId": "sendai",
       "status": "verified_event_art",
+      "reason": "matched_event_artwork",
       "suppliedImage": null,
       "suppliedImageAccepted": false
     },
@@ -130,7 +148,9 @@
       "location": "Mexico City",
       "artwork": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-11-06-pokemon-go-wild-area-2026-mexico-city/key-art.jpg",
       "source": "https://leekduck.com/events/pokemon-go-wild-area-2026-mexico-city/",
+      "sourceEventId": "pokemon-go-wild-area-2026-mexico-city",
       "status": "verified_event_art",
+      "reason": "matched_event_artwork",
       "suppliedImage": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-11-06-pokemon-go-wild-area-2026-mexico-city/key-art.jpg",
       "suppliedImageAccepted": true
     },
@@ -143,7 +163,9 @@
       "location": null,
       "artwork": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-11-09-into-the-wild-2026/into-the-wild-2026.jpg",
       "source": "https://leekduck.com/events/into-the-wild-2026/",
+      "sourceEventId": "into-the-wild-2026",
       "status": "verified_event_art",
+      "reason": "matched_event_artwork",
       "suppliedImage": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-11-09-into-the-wild-2026/into-the-wild-2026.jpg",
       "suppliedImageAccepted": true
     },
@@ -156,7 +178,9 @@
       "location": null,
       "artwork": null,
       "source": null,
+      "sourceEventId": null,
       "status": "illustrated_fallback",
+      "reason": "no_image_announced",
       "suppliedImage": null,
       "suppliedImageAccepted": false
     },
@@ -169,7 +193,9 @@
       "location": null,
       "artwork": null,
       "source": null,
+      "sourceEventId": null,
       "status": "illustrated_fallback",
+      "reason": "no_image_announced",
       "suppliedImage": null,
       "suppliedImageAccepted": false
     },
@@ -182,7 +208,9 @@
       "location": null,
       "artwork": null,
       "source": null,
+      "sourceEventId": null,
       "status": "illustrated_fallback",
+      "reason": "shared_or_unverifiable_image",
       "suppliedImage": "https://cdn.leekduck.com/assets/img/events/pokemon-night-out-2026.jpg",
       "suppliedImageAccepted": false
     },
@@ -195,7 +223,9 @@
       "location": null,
       "artwork": null,
       "source": null,
+      "sourceEventId": null,
       "status": "illustrated_fallback",
+      "reason": "shared_or_unverifiable_image",
       "suppliedImage": "https://cdn.leekduck.com/assets/img/events/gobattle-greatleague-key.jpg",
       "suppliedImageAccepted": false
     },
@@ -208,7 +238,9 @@
       "location": "Global",
       "artwork": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-11-14-pokemon-go-wild-area-2026-global/key-art.jpg",
       "source": "https://leekduck.com/events/pokemon-go-wild-area-2026-global/",
+      "sourceEventId": "pokemon-go-wild-area-2026-global",
       "status": "verified_event_art",
+      "reason": "matched_event_artwork",
       "suppliedImage": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-11-14-pokemon-go-wild-area-2026-global/key-art.jpg",
       "suppliedImageAccepted": true
     },
@@ -221,7 +253,9 @@
       "location": null,
       "artwork": null,
       "source": null,
+      "sourceEventId": null,
       "status": "illustrated_fallback",
+      "reason": "shared_or_unverifiable_image",
       "suppliedImage": "https://cdn.leekduck.com/assets/img/events/minior-showers-2026.jpg",
       "suppliedImageAccepted": false
     },
@@ -234,7 +268,9 @@
       "location": null,
       "artwork": null,
       "source": null,
+      "sourceEventId": null,
       "status": "illustrated_fallback",
+      "reason": "generic_image",
       "suppliedImage": "https://cdn.leekduck.com/assets/img/events/events-default-img.jpg",
       "suppliedImageAccepted": false
     },
@@ -247,7 +283,9 @@
       "location": null,
       "artwork": null,
       "source": null,
+      "sourceEventId": null,
       "status": "illustrated_fallback",
+      "reason": "shared_or_unverifiable_image",
       "suppliedImage": "https://cdn.leekduck.com/assets/img/events/max-battles-kanto.jpg",
       "suppliedImageAccepted": false
     },
@@ -260,7 +298,9 @@
       "location": null,
       "artwork": null,
       "source": null,
+      "sourceEventId": null,
       "status": "illustrated_fallback",
+      "reason": "generic_image",
       "suppliedImage": "https://cdn.leekduck.com/assets/img/events/mega-default.jpg",
       "suppliedImageAccepted": false
     },
@@ -273,7 +313,9 @@
       "location": null,
       "artwork": null,
       "source": null,
+      "sourceEventId": null,
       "status": "illustrated_fallback",
+      "reason": "generic_image",
       "suppliedImage": "https://cdn.leekduck.com/assets/img/events/events-default-img.jpg",
       "suppliedImageAccepted": false
     },
@@ -286,7 +328,9 @@
       "location": null,
       "artwork": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-11-16-dynamax-trails-2026/dynamax-trails-2026.jpg",
       "source": "https://leekduck.com/events/dynamax-trails-2026/",
+      "sourceEventId": "dynamax-trails-2026",
       "status": "verified_event_art",
+      "reason": "matched_event_artwork",
       "suppliedImage": "https://cdn.leekduck.com/assets/img/events/events-default-img.jpg",
       "suppliedImageAccepted": false
     },
@@ -299,7 +343,9 @@
       "location": null,
       "artwork": null,
       "source": null,
+      "sourceEventId": null,
       "status": "illustrated_fallback",
+      "reason": "shared_or_unverifiable_image",
       "suppliedImage": "https://cdn.leekduck.com/assets/img/events/raidhour.jpg",
       "suppliedImageAccepted": false
     },
@@ -312,7 +358,9 @@
       "location": null,
       "artwork": null,
       "source": null,
+      "sourceEventId": null,
       "status": "illustrated_fallback",
+      "reason": "shared_or_unverifiable_image",
       "suppliedImage": "https://cdn.leekduck.com/assets/img/events/go-battle-league-ultra-league-machamp-swampert.jpg",
       "suppliedImageAccepted": false
     },
@@ -325,7 +373,9 @@
       "location": null,
       "artwork": null,
       "source": null,
+      "sourceEventId": null,
       "status": "illustrated_fallback",
+      "reason": "shared_or_unverifiable_image",
       "suppliedImage": "https://cdn.leekduck.com/assets/img/events/pokemonspotlighthour.jpg",
       "suppliedImageAccepted": false
     },
@@ -338,7 +388,9 @@
       "location": null,
       "artwork": null,
       "source": null,
+      "sourceEventId": null,
       "status": "illustrated_fallback",
+      "reason": "shared_or_unverifiable_image",
       "suppliedImage": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-11-16-dynamax-trails-2026/dynamax-trails-2026.jpg",
       "suppliedImageAccepted": false
     },
@@ -351,7 +403,9 @@
       "location": null,
       "artwork": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-11-21-november-communityday2026/pawniard-november-cd-2026.jpg",
       "source": "https://leekduck.com/events/november-communityday2026/",
+      "sourceEventId": "november-communityday2026",
       "status": "verified_event_art",
+      "reason": "matched_event_artwork",
       "suppliedImage": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-11-21-november-communityday2026/pawniard-november-cd-2026.jpg",
       "suppliedImageAccepted": true
     },
@@ -364,7 +418,9 @@
       "location": null,
       "artwork": null,
       "source": null,
+      "sourceEventId": null,
       "status": "illustrated_fallback",
+      "reason": "shared_or_unverifiable_image",
       "suppliedImage": "https://cdn.leekduck.com/assets/img/events/max-battles-kanto.jpg",
       "suppliedImageAccepted": false
     },
@@ -377,7 +433,9 @@
       "location": null,
       "artwork": "https://cdn.leekduck.com/assets/img/events/twilight-wishes-2026.jpg?v2",
       "source": "https://leekduck.com/events/twilight-wishes-2026/",
+      "sourceEventId": "twilight-wishes-2026",
       "status": "verified_event_art",
+      "reason": "matched_event_artwork",
       "suppliedImage": "https://cdn.leekduck.com/assets/img/events/events-default-img.jpg",
       "suppliedImageAccepted": false
     },
@@ -390,7 +448,9 @@
       "location": null,
       "artwork": null,
       "source": null,
+      "sourceEventId": null,
       "status": "illustrated_fallback",
+      "reason": "generic_image",
       "suppliedImage": "https://cdn.leekduck.com/assets/img/events/events-default-img.jpg",
       "suppliedImageAccepted": false
     },
@@ -403,7 +463,9 @@
       "location": null,
       "artwork": null,
       "source": null,
+      "sourceEventId": null,
       "status": "illustrated_fallback",
+      "reason": "generic_image",
       "suppliedImage": "https://cdn.leekduck.com/assets/img/events/mega-default.jpg",
       "suppliedImageAccepted": false
     },
@@ -416,7 +478,9 @@
       "location": null,
       "artwork": null,
       "source": null,
+      "sourceEventId": null,
       "status": "illustrated_fallback",
+      "reason": "shared_or_unverifiable_image",
       "suppliedImage": "https://cdn.leekduck.com/assets/img/events/gobattleleague-master-key.jpg",
       "suppliedImageAccepted": false
     },
@@ -429,7 +493,9 @@
       "location": null,
       "artwork": null,
       "source": null,
+      "sourceEventId": null,
       "status": "illustrated_fallback",
+      "reason": "no_image_announced",
       "suppliedImage": null,
       "suppliedImageAccepted": false
     },
@@ -442,7 +508,9 @@
       "location": null,
       "artwork": null,
       "source": null,
+      "sourceEventId": null,
       "status": "illustrated_fallback",
+      "reason": "shared_or_unverifiable_image",
       "suppliedImage": "https://cdn.leekduck.com/assets/img/events/raidhour.jpg",
       "suppliedImageAccepted": false
     },
@@ -455,7 +523,9 @@
       "location": null,
       "artwork": null,
       "source": null,
+      "sourceEventId": null,
       "status": "illustrated_fallback",
+      "reason": "shared_or_unverifiable_image",
       "suppliedImage": "https://cdn.leekduck.com/assets/img/events/pokemonspotlighthour.jpg",
       "suppliedImageAccepted": false
     },
@@ -468,7 +538,9 @@
       "location": null,
       "artwork": "https://lh3.googleusercontent.com/HyFWaQMZqtZNT3Sb3uFeHyWMBFI8bB_4hNQ2NLrpfBGrH1YijjIr1n0ZNC0YlNAZHPpfiWTq0zzgT9MRUFzlMoEjN4ENEm0AlnuJFZRA9CQ",
       "source": "https://pokemongo.com/news/clefable-super-mega-raid-day-2026/",
+      "sourceEventId": "clefable-super-mega-raid-day-2026",
       "status": "verified_event_art",
+      "reason": "matched_event_artwork",
       "suppliedImage": "https://cdn.leekduck.com/assets/img/events/events-default-img.jpg",
       "suppliedImageAccepted": false
     },
@@ -481,7 +553,9 @@
       "location": null,
       "artwork": null,
       "source": null,
+      "sourceEventId": null,
       "status": "illustrated_fallback",
+      "reason": "shared_or_unverifiable_image",
       "suppliedImage": "https://cdn.leekduck.com/assets/img/events/max-battles-kanto.jpg",
       "suppliedImageAccepted": false
     },
@@ -494,7 +568,9 @@
       "location": null,
       "artwork": null,
       "source": null,
+      "sourceEventId": null,
       "status": "illustrated_fallback",
+      "reason": "shared_or_unverifiable_image",
       "suppliedImage": "https://cdn.leekduck.com/assets/img/events/minior-showers-2026.jpg",
       "suppliedImageAccepted": false
     },
@@ -507,7 +583,9 @@
       "location": "Alola - Kaohsiung",
       "artwork": null,
       "source": null,
+      "sourceEventId": null,
       "status": "illustrated_fallback",
+      "reason": "generic_image",
       "suppliedImage": "https://cdn.leekduck.com/assets/img/events/events-default-img.jpg",
       "suppliedImageAccepted": false
     },
@@ -520,7 +598,9 @@
       "location": "Alola - Los Angeles",
       "artwork": null,
       "source": null,
+      "sourceEventId": null,
       "status": "illustrated_fallback",
+      "reason": "generic_image",
       "suppliedImage": "https://cdn.leekduck.com/assets/img/events/events-default-img.jpg",
       "suppliedImageAccepted": false
     },
@@ -533,7 +613,9 @@
       "location": "Global",
       "artwork": null,
       "source": null,
+      "sourceEventId": null,
       "status": "illustrated_fallback",
+      "reason": "generic_image",
       "suppliedImage": "https://cdn.leekduck.com/assets/img/events/events-default-img.jpg",
       "suppliedImageAccepted": false
     },
@@ -546,7 +628,9 @@
       "location": null,
       "artwork": null,
       "source": null,
+      "sourceEventId": null,
       "status": "illustrated_fallback",
+      "reason": "wrong_year",
       "suppliedImage": "https://cdn.leekduck.com/assets/img/events/minior-showers-2026.jpg",
       "suppliedImageAccepted": false
     },
@@ -559,7 +643,9 @@
       "location": null,
       "artwork": null,
       "source": null,
+      "sourceEventId": null,
       "status": "illustrated_fallback",
+      "reason": "wrong_year",
       "suppliedImage": "https://cdn.leekduck.com/assets/img/events/minior-showers-2026.jpg",
       "suppliedImageAccepted": false
     },
@@ -572,7 +658,9 @@
       "location": null,
       "artwork": null,
       "source": null,
+      "sourceEventId": null,
       "status": "illustrated_fallback",
+      "reason": "wrong_year",
       "suppliedImage": "https://cdn.leekduck.com/assets/img/events/minior-showers-2026.jpg",
       "suppliedImageAccepted": false
     }
