@@ -55,8 +55,9 @@ with sync_playwright() as p:
             print('Bootstrap errors:', errors)
             raise
         page.evaluate('(theme) => document.documentElement.dataset.theme = theme', theme)
-        page.locator('[data-quick-go="collect"]').click()
-        assert page.locator('#sub-opps').is_visible(), 'Today collection shortcut opens Opportunities'
+        page.locator('nav.tabs button[data-tab="collect"]').click()
+        page.locator('#subnav-collect [data-sub="opps"]').click()
+        assert page.locator('#sub-opps').is_visible(), 'Collection opens Opportunities'
         assert page.locator('#subnav-collect [data-sub="opps"]').get_attribute('aria-pressed') == 'true'
         search = page.locator('#opp-search')
         mode = page.locator('#opp-filter')

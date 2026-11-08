@@ -206,30 +206,20 @@ def main():
                        dimensions["tableWrapOverflow"] == "auto" and dimensions["tableWrapScroll"] >= dimensions["tableWrapClient"],
                        dimensions)
             page.locator('nav.tabs button[data-tab="now"]').click()
-            page.wait_for_selector("#home-now .agr.reg", timeout=10000)
-            overseas = page.locator("#home-now .agr.reg").filter(has_text="Overseas In-Person Fixture")
+            page.wait_for_selector("#today-v1 .t1-reg", timeout=10000)
+            overseas = page.locator("#today-v1 .t1-reg").filter(has_text="Overseas In-Person Fixture")
             overseas_text = overseas.inner_text() if overseas.count() else ""
             expect("overseas in-person event remains visible on Today by default",
                    overseas.count() == 1 and overseas.is_visible() and "Kyoto, Japan" in overseas_text, overseas_text)
-            expect("overseas event stays in the unfolded Today agenda",
-                   overseas.count() == 1 and overseas.evaluate("el => !!el.closest('.today-phase-group') && !el.closest('details')"))
-            regional_game = page.locator("#home-now .agr.reg").filter(has_text="Regional In-Game Fixture")
-            today_groups = page.evaluate("""() => {
-                const groupFor = (title) => {
-                    const link = Array.from(document.querySelectorAll('#home-now .agr.reg')).find(el => el.textContent.includes(title));
-                    const row = link && link.closest('.agw');
-                    let previous = row && row.previousElementSibling;
-                    while (previous && !previous.classList.contains('today-sub')) previous = previous.previousElementSibling;
-                    return previous ? previous.textContent.trim().replace(/\\s+/g, ' ') : '';
-                };
-                return { overseas: groupFor('Overseas In-Person Fixture'), regionalGame: groupFor('Regional In-Game Fixture') };
-            }""")
+            expect("overseas event is labelled and stays in the unfolded Today flow",
+                   overseas.count() == 1 and "Overseas" in overseas_text and not overseas.evaluate("el => !!el.closest('details,[hidden]')"))
+            regional_game = page.locator("#today-v1 .t1-reg").filter(has_text="Regional In-Game Fixture")
+            regional_text = regional_game.inner_text() if regional_game.count() else ""
             expect("regional in-game event remains visible on Today",
                    regional_game.count() == 1 and regional_game.is_visible())
-            expect("overseas in-person event stays under the In person label",
-                   today_groups["overseas"].startswith("In person"), today_groups)
+            expect("overseas in-person event is labelled In person", "In person" in overseas_text, overseas_text)
             expect("regional in-game event is not misclassified as in-person",
-                   today_groups["regionalGame"].startswith("In-game (regional)"), today_groups)
+                   "In person" not in regional_text and "in game" in regional_text, regional_text)
             expect("unverified venue-local time is not invented",
                    "Venue:" not in overseas_text, overseas_text)
             expect("no browser page errors", not page_errors, page_errors)

@@ -1,3 +1,5 @@
+/* Test-only hook: the browser harness sets window.__gofnTestClassicToday before load. There is no user-facing path to the legacy agenda. */
+if(window.__gofnTestClassicToday===true){var reveal=function(){var l=document.getElementById('today-legacy');if(!l)return false;l.hidden=false;l.removeAttribute('inert');l.removeAttribute('aria-hidden');document.documentElement.classList.add('classic-today');return true};if(!reveal())document.addEventListener('DOMContentLoaded',reveal)}
 var MAN={};
 /* Keep the primary destinations usable while the initial data request is pending or unavailable. */
 (function(){
@@ -74,8 +76,9 @@ Promise.all([
     var cstill=dbx&&!o.costume?still:'';if(dbx)src=dbx;
     var ck=(o.costume&&!o.asset&&o.label&&!dbx)?' data-ck="'+esc(cks)+'"':(isg&&!gm?' data-gk="'+esc(gk)+'"':'');
     var fb=cstill?' data-still="'+esc(cstill)+'" title="'+(gm?'Gigantamax picture: Serebii':'Costume picture: Serebii / Dittobase')+'"':sd?' data-still="'+esc(still)+'" data-gif="https://play.pokemonshowdown.com/sprites/'+(o.shiny?'ani-shiny':'ani')+'/'+sd+'.gif"':'';
+    var fc=window.GOTODAYLOGIC&&!o.costume&&!o.asset?window.GOTODAYLOGIC.classifyArt(o):null,ex=fc&&fc.exact&&fc.kind!=='base'?' data-exact="'+esc(fc.label||'Form')+'" data-base="'+esc(fc.base)+'"':'';
     var tg=(o.costume||o.asset)?'':' data-sn="'+esc(o.n)+'"'+(o.shiny?' data-sv="1"':'')+(o.shadow?' data-ss="1"':'')+(o.dynamax?' data-sd="1"':'');
-    return '<img class="art'+(sd?' ani':'')+(gm?' gm-real':'')+(cls?' '+cls:'')+'" loading="lazy" decoding="async" width="208" height="256" alt="'+esc(alt)+'" src="'+src+'"'+fb+tg+ck+((o.costume||o.asset)?' data-costume-name="'+esc(o.n)+'" data-costume-label="'+esc(o.label||'')+'"':'')+' data-err="art"'+(cls==='in'?' data-load="has"':'')+'>';
+    return '<img class="art'+(sd?' ani':'')+(gm?' gm-real':'')+(cls?' '+cls:'')+'" loading="lazy" decoding="async" width="208" height="256" alt="'+esc(alt)+'" src="'+src+'"'+fb+tg+ck+ex+((o.costume||o.asset)?' data-costume-name="'+esc(o.n)+'" data-costume-label="'+esc(o.label||'')+'"':'')+' data-err="art"'+(cls==='in'?' data-load="has"':'')+'>';
   }
   /* Tap any Pokémon picture to flip it between its normal and shiny look; tap again to flip back. Costumes have no flip. */
   document.addEventListener('click',function(e){
@@ -96,6 +99,15 @@ Promise.all([
       host.setAttribute('data-ck',window.GOLIB.parseForm(name).base.toLowerCase()+'|'+outfit.toLowerCase());
       var text=document.createElement('span');text.textContent=label;
       var note=document.createElement('small');note.textContent='Costume art unavailable';host.append(text,note);i.replaceWith(host);return;
+    }
+    if(i.hasAttribute('data-exact')&&!i.hasAttribute('data-fb')){
+      /* An exact form (Mega, Gigantamax, regional, named form) never silently shows ordinary artwork: the base sprite appears only with a visible label. */
+      var base=i.getAttribute('data-base')||'',form=i.getAttribute('data-exact')||'Form',alt=i.getAttribute('alt')||base;
+      var wrap=document.createElement('span');wrap.className='art-fb '+((i.className.match(/\b(ea|in|lg|sm)\b/)||[''])[0]);
+      var base_img=document.createElement('img');base_img.className=i.className.replace(/\bani\b/,'').trim();base_img.alt=base+' (base sprite, '+form+' art unavailable)';base_img.setAttribute('data-fb','1');base_img.setAttribute('data-err','rm');base_img.loading='lazy';base_img.decoding='async';
+      var q='/api/art?n='+encodeURIComponent(base);base_img.src=MAN[q]?'/art/'+MAN[q]+'.webp':q;
+      var chip=document.createElement('small');chip.className='form-chip';chip.textContent='Form art unavailable';
+      wrap.setAttribute('role','img');wrap.setAttribute('aria-label',alt+' · form art unavailable, showing base sprite');wrap.append(base_img,chip);i.replaceWith(wrap);return;
     }
     var s=i.getAttribute('data-still'), u=null;
     try{u=s?new URL(s,window.location.origin):null}catch(e){}
@@ -1053,9 +1065,10 @@ Promise.all([
     /* An error row: role=alert is announced when it is inserted with its text (role=status is only announced if its text changes afterwards). */
     h.innerHTML='<div class="today-status" role="alert"><p>Today\'s events did not load. Your saved collection is unchanged.</p><button type="button" class="pill" id="today-retry">Try again</button></div>';
     var r=document.getElementById('today-retry');if(r)r.addEventListener('click',function(){window.location.reload()});
+    var v=document.getElementById('today-v1');if(v&&v.getAttribute('aria-busy')==='true'){v.removeAttribute('aria-busy');v.innerHTML='<div class="today-status" role="alert"><p>Today\'s events did not load. Your saved collection is unchanged.</p><button type="button" class="pill" id="today-retry-v1">Try again</button></div>';var r2=document.getElementById('today-retry-v1');if(r2)r2.addEventListener('click',function(){window.location.reload()});}
     var b=document.getElementById('day-brief');if(b)b.setAttribute('data-state','unavailable');
     var f=document.getElementById('fresh-line');if(f)f.setAttribute('data-released','')}
-  var ds=document.createElement('script');ds.src='/dash.js?v=20261108b';ds.onerror=todayUnavailable;document.body.appendChild(ds);setTimeout(function(){if(!window.GODASH)todayUnavailable()},10000);
+  var ds=document.createElement('script');ds.src='/dash.js?v=20261108d';ds.onerror=todayUnavailable;document.body.appendChild(ds);setTimeout(function(){if(!window.GODASH)todayUnavailable()},10000);
 })();
 
 }).catch(function(){var panel=document.getElementById('load-error');if(panel)panel.hidden=false;var retry=document.getElementById('load-retry');if(retry)retry.addEventListener('click',function(){window.location.reload()},{once:true})});

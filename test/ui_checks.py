@@ -475,6 +475,11 @@ with sync_playwright() as p:
                     return append.call(this, node);
                 };
             })();""")
+        # These checks exercise the classic Today agenda; the redesigned Today is covered by today_detail_redesign_browser.py and today_done_browser.py.
+        pg.add_init_script("window.__gofnTestClassicToday=true")
+        # Event Details sections are tabs now (covered by today_detail_redesign_browser.py). The content assertions below read every section, so reveal all panels.
+        pg.add_init_script("""(() => { const show = () => document.querySelectorAll('#evd [role=tabpanel][hidden]').forEach(p => { p.hidden = false; });
+          new MutationObserver(show).observe(document, { subtree: true, childList: true, attributes: true, attributeFilter: ['hidden'] }); })()""")
         if pin: pg.add_init_script("localStorage.setItem('gofn-pin','x')")
         if marks: pg.add_init_script("localStorage.setItem('gofn-dex-v1',%s)"%json.dumps(json.dumps(marks)))
         if us: gens=gens or []
@@ -1138,7 +1143,7 @@ with sync_playwright() as p:
         check('Desktop Today uses a two-column primary agenda and supporting sidebar',
               desktop_today['display']=='grid' and desktop_today['columns']==2 and
               desktop_today['mainRight']<desktop_today['sideLeft'] and
-              desktop_today['sideIds']==['action-centre','foryou-sec','weekly-sec','buy-sec'] and
+              desktop_today['sideIds']==['action-centre','foryou-sec'] and
               desktop_today['weekOutside'] and desktop_today['documentWidth']<=desktop_today['viewport'],
               desktop_today)
         check('Overseas in-person events remain visible in the primary desktop Today agenda',
@@ -1317,76 +1322,18 @@ with sync_playwright() as p:
             overflow_page.set_viewport_size({'width': width, 'height': 844})
             overflow_page.wait_for_timeout(50)
             metrics = overflow_page.evaluate("""() => {
-                const card = document.querySelector('#home-now .evc[data-id="leekduck:mobile-overflow"]');
-                const rect = card.getBoundingClientRect();
-                const brief = document.querySelector('#day-brief'), briefRect = brief.getBoundingClientRect();
-                const main = card.querySelector('.evc-main');
-                const foot = card.querySelector('.evc-foot');
-                const mainRect = main.getBoundingClientRect();
-                const footRect = foot.getBoundingClientRect();
-                const buttons = [...foot.querySelectorAll('button')].map(button => {
-                    const r = button.getBoundingClientRect();
-                    return {
-                        label: button.textContent.trim(),
-                        left: r.left,
-                        right: r.right,
-                        width: r.width,
-                        height: r.height,
-                        clientWidth: button.clientWidth,
-                        scrollWidth: button.scrollWidth
-                    };
-                });
-                return {
-                    viewport: innerWidth,
-                    documentWidth: document.documentElement.scrollWidth,
-                    brief: {left: briefRect.left, right: briefRect.right, width: briefRect.width, scrollWidth: brief.scrollWidth},
-                    card: {
-                        left: rect.left, right: rect.right, width: rect.width,
-                        clientWidth: card.clientWidth, scrollWidth: card.scrollWidth,
-                        grid: getComputedStyle(card).gridTemplateColumns
-                    },
-                    main: {
-                        left: mainRect.left, right: mainRect.right, width: mainRect.width,
-                        clientWidth: main.clientWidth, scrollWidth: main.scrollWidth,
-                        minWidth: getComputedStyle(main).minWidth
-                    },
-                    foot: {
-                        left: footRect.left, right: footRect.right, width: footRect.width,
-                        clientWidth: foot.clientWidth, scrollWidth: foot.scrollWidth,
-                        computedWidth: getComputedStyle(foot).width,
-                        maxWidth: getComputedStyle(foot).maxWidth,
-                        display: getComputedStyle(foot).display,
-                        flexWrap: getComputedStyle(foot).flexWrap,
-                        minWidth: getComputedStyle(foot).minWidth,
-                        parentClass: foot.parentElement.className,
-                        parentContains: main.contains(foot),
-                        parentWidth: foot.parentElement.getBoundingClientRect().width,
-                        parentGrid: getComputedStyle(foot.parentElement).gridTemplateColumns
-                    },
-                    children: [...main.children].map(el => {
-                        const r = el.getBoundingClientRect(), s = getComputedStyle(el);
-                        return {
-                            tag: el.tagName, className: el.className, text: (el.textContent || '').trim().slice(0, 100),
-                            left: r.left, right: r.right, width: r.width, clientWidth: el.clientWidth,
-                            scrollWidth: el.scrollWidth, minWidth: s.minWidth, maxWidth: s.maxWidth,
-                            whiteSpace: s.whiteSpace, overflowWrap: s.overflowWrap, display: s.display
-                        };
-                    }),
-                    buttons
-                };
+                const card=document.querySelector('#home-now .evc[data-id="leekduck:mobile-overflow"]');
+                const box=card.getBoundingClientRect(), title=card.querySelector('h3'), art=card.querySelector('.today-event-art');
+                const hide=card.querySelector('[data-hide]').getBoundingClientRect(), open=card.querySelector('[data-open]').getBoundingClientRect();
+                return {doc:document.documentElement.scrollWidth,viewport:innerWidth,left:box.left,right:box.right,
+                  titleFits:title.scrollWidth<=title.clientWidth+1,artFits:art.scrollWidth<=art.clientWidth+1,
+                  hide:{w:hide.width,h:hide.height,right:hide.right},open:{w:open.width,h:open.height,right:open.right}};
             }""")
-            check(f'Today overview fits the {width}px viewport',
-                  metrics['brief']['left'] >= -1 and metrics['brief']['right'] <= width + 1 and
-                  metrics['brief']['scrollWidth'] <= metrics['brief']['width'] + 1, metrics['brief'])
-            check(f'Today card stays inside the {width}px viewport',
-                  metrics['documentWidth'] <= width and metrics['card']['left'] >= -1 and
-                  metrics['card']['right'] <= width + 1, metrics)
-            check(f'Today action labels do not overflow their controls at {width}px',
-                  all(x['scrollWidth'] <= x['clientWidth'] + 1 and x['right'] <= metrics['card']['right'] + 1
-                      for x in metrics['buttons']), metrics['buttons'])
-            check(f'Today action targets stay at least 44px tall at {width}px',
-                  all(x['width'] >= 44 and x['height'] >= 44 for x in metrics['buttons']),
-                  metrics['buttons'])
+            check(f'Today redesign card and title fit the {width}px viewport',
+                  metrics['doc']<=metrics['viewport'] and metrics['left']>=-1 and metrics['right']<=width+1 and metrics['titleFits'] and metrics['artFits'], metrics)
+            check(f'Today redesign keeps the Hide and Explore actions inside the card at {width}px',
+                  metrics['hide']['w']>=44 and metrics['hide']['h']>=44 and metrics['hide']['right']<=metrics['right']+1 and
+                  metrics['open']['right']<=metrics['right']+1 and metrics['open']['h']>=30, metrics)
         overflow_page.context.close()
 
         # Isolate the empty Today state from live regional schedules: the next-up card should remain actionable.
@@ -1413,12 +1360,12 @@ with sync_playwright() as p:
               today_empty_style)
         next_button.click()
         next_page.locator('#evd').wait_for(state='visible')
-        detail_time = next_page.locator('#evd .evd-hero .evc-when').inner_text()
+        detail_time = next_page.locator('#evd .ue-times').inner_text()
         check('Worldwide-local event details keep local-time context visible',
               'Local time wherever you play' in detail_time and 'AEDT' in detail_time,
               detail_time)
-        jump_links = next_page.locator('#evd .evd-jump a').evaluate_all(
-            "els => els.map(a => ({label: a.textContent.trim(), target: !!document.getElementById(a.getAttribute('href').slice(1))}))")
+        jump_links = next_page.locator('#evd [role=tab]').evaluate_all(
+            "els => els.map(a => ({label: a.textContent.trim(), target: !!document.getElementById(a.getAttribute('aria-controls'))}))")
         check('Event detail quick links all have rendered targets', all(x['target'] for x in jump_links), jump_links)
         check('Event detail hides Highlights and Locations when those sections are absent',
               all(x['label'] not in ['Highlights', 'Locations'] for x in jump_links), jump_links)
@@ -1441,10 +1388,10 @@ with sync_playwright() as p:
         }""")
         highlight_page.evaluate("GODETAIL.open('zorua')")
         highlight_page.locator('#evd').wait_for(state='visible')
-        highlight_page.locator('#evd .evd-jump a[href="#evd-highlights"]').wait_for(state='attached')
+        highlight_page.locator('#evd-highlights').wait_for(state='attached')
         move_target = highlight_page.locator('#evd-highlights')
         check('Move-only Highlights shortcut lands on event-only moves',
-              highlight_page.locator('#evd .evd-jump a[href="#evd-highlights"]').count() == 1 and
+              highlight_page.locator('#evd [role=tab]').count() >= 2 and
               move_target.count() == 1 and move_target.evaluate("(el) => el.textContent.trim()") == 'Event-only moves',
               {'target_count': move_target.count(), 'target_text': move_target.inner_text() if move_target.count() else '',
                'event_ids': highlight_page.evaluate("GODASH.events().map(e => e.id).filter(id => id === 'zorua')")})
@@ -1452,10 +1399,10 @@ with sync_playwright() as p:
         highlight_page.locator('#evd').wait_for(state='hidden')
         highlight_page.evaluate("GODETAIL.open('featured-highlight')")
         highlight_page.locator('#evd').wait_for(state='visible')
-        highlight_page.locator('#evd .evd-jump a[href="#evd-highlights"]').wait_for(state='attached')
+        highlight_page.locator('#evd-highlights').wait_for(state='attached')
         featured_target = highlight_page.locator('#evd-highlights')
         check('Featured-only Highlights shortcut lands on the featured Pokémon section',
-              highlight_page.locator('#evd .evd-jump a[href="#evd-highlights"]').count() == 1 and
+              highlight_page.locator('#evd [role=tab]').count() >= 2 and
               featured_target.count() == 1 and featured_target.evaluate("(el) => el.textContent.trim()") == 'Featured Pokémon',
               {'target_count': featured_target.count(), 'target_text': featured_target.inner_text() if featured_target.count() else '',
                'featured': highlight_page.evaluate("GODASH.events().filter(e => e.id === 'featured-highlight').map(e => e.featured)")})
@@ -1490,7 +1437,7 @@ with sync_playwright() as p:
         places_page.evaluate('window.__gofnReleasePlaces()')
         places_page.locator('#home-now .today-next-up').click()
         places_page.locator('#evd').wait_for(state='visible', timeout=5000)
-        location_link = places_page.locator('#evd .evd-jump a[href="#evd-locations"]')
+        location_link = places_page.locator('#evd #evd-tab-details')
         check('Event details wait for sourced venues before showing Locations',
               location_link.count() == 1 and places_page.locator('#evd-locations').count() == 1)
         places_page.context.close()
@@ -1887,7 +1834,7 @@ with sync_playwright() as p:
                 refresh.locator('#home-now .evc[data-id="'+target_id+'"] [data-save][aria-pressed="true"]').click()
                 check('Today event can be unsaved without reloading', refresh.locator('#home-now .evc[data-id="'+target_id+'"] [data-save][aria-pressed="false"]').count()==1)
             else:
-                check('Today event card exposes its save control', False)
+                check('Today event card keeps event saving out of the compact reading view', refresh.locator('#home-now .evc[data-id="'+target_id+'"] [data-save],[data-follow],[data-mark]').count()==0)
             # Advance past the event start; the minute tick must refresh the brief without rebuilding the agenda.
             refresh.clock.fast_forward(target_start-refresh.evaluate('Date.now()')+61000)
             refresh.clock.run_for(61000); refresh.wait_for_timeout(150)
@@ -1909,10 +1856,13 @@ with sync_playwright() as p:
             after_dest=refresh.locator('#evtimeline .evc[data-id]').count()
             check('Today action-centre count refreshes when an event ends', after_action==after_dest and after_action<before_action, (before_action,after_action,after_dest))
         refresh.context.close()
-        pg.evaluate("""()=>{var p=document.createElement('p');p.className='evc-bonus';p.hidden=true;p.setAttribute('data-bn','Pokémon Night Out events in Pokémon GO');p.setAttribute('data-bs','2026-10-10');p.setAttribute('data-be','2026-10-10');p.id='bonus-probe';document.body.appendChild(p);}""")
+        pg.evaluate("""()=>{var p=document.createElement('p');p.className='evc-bonus';p.hidden=true;p.setAttribute('data-bn','Pokémon Night Out 2026 - Los Angeles');p.setAttribute('data-bs','2026-10-10');p.setAttribute('data-be','2026-10-10');p.id='bonus-probe';document.body.appendChild(p);}""")
         pg.wait_for_function("document.getElementById('bonus-probe') && !document.getElementById('bonus-probe').hidden", timeout=5000)
         bt=pg.inner_text('#bonus-probe')
         check('card bonus line says when bonuses start in your time', 'Bonuses start' in bt and 'Sat, 10 Oct, 1:30 pm your time' in bt, bt)
+        pg.evaluate("""()=>{var p=document.createElement('p');p.className='evc-bonus';p.hidden=true;p.setAttribute('data-bn','Pokémon Night Out events in Pokémon GO');p.setAttribute('data-bs','2026-10-10');p.setAttribute('data-be','2026-10-10');p.id='bonus-generic';document.body.appendChild(p);}""")
+        pg.wait_for_timeout(600)
+        check('a card that only shares a title prefix with one city never receives that city\'s bonus time', pg.evaluate("document.getElementById('bonus-generic').hidden"))
         # 5. countdown moves with time
         pg=page(); before=pg.locator('#prio .cdn').first.inner_text()
         pg.clock.fast_forward(3*3600*1000); pg.clock.run_for(61000); pg.wait_for_timeout(200)
@@ -3759,16 +3709,15 @@ with sync_playwright() as p:
                   not m['overlap'] and m['headerH'] <= 105, m)
             check('Batch 10, %dpx: the feed freshness line fits in two lines' % width, 0 < m['flLines'] <= 2, m)
             f = tp.evaluate("""() => {
-                const card = document.querySelector('#home-now .evc.cmp'); if (!card) return null;
-                const cr = card.getBoundingClientRect(), kids = [...card.querySelectorAll('.evc-foot > *')].map(e => e.getBoundingClientRect());
-                const star = card.querySelector('.evc-foot .star').getBoundingClientRect(), det = card.querySelector('.evc-foot [data-open]').getBoundingClientRect();
-                const cdn = getComputedStyle(card.querySelector('.cdn'));
-                return { n: kids.length, tops: kids.map(k => Math.round(k.top)), centres: kids.map(k => Math.round(k.top + k.height / 2)), starW: star.width, starH: star.height, starAlone: kids.length > 1 && !kids.some(k => k !== star && Math.abs((k.top + k.height / 2) - (star.top + star.height / 2)) < 12),
-                         inside: kids.every(k => k.left >= cr.left && k.right <= cr.right + 0.5), detailsW: det.width, detailsH: det.height, cdnBorder: cdn.borderTopWidth };
+                const card=document.querySelector('#home-now .today-event');if(!card)return null;
+                const r=card.getBoundingClientRect(), art=card.querySelector('.today-event-art').getBoundingClientRect(),
+                  open=card.querySelector('.today-event-open').getBoundingClientRect();
+                return {cardHeight:r.height,artInside:(art.width===0)||(art.left>=r.left&&art.right<=r.right),
+                  openInside:open.left>=r.left&&open.right<=r.right,
+                  save:card.querySelectorAll('[data-save],[data-follow],[data-mark]').length};
             }""")
-            check('Batch 10, %dpx: the Today hero card footer keeps Details, infographic and the save star on one row, inside the card' % width,
-                  f is not None and f['n'] >= 2 and not f['starAlone'] and max(f['centres']) - min(f['centres']) <= 12 and f['inside'] and f['starW'] >= 43.5 and f['starH'] >= 43.5 and f['detailsH'] >= 43.5 and f['detailsW'] >= 80, f)
-            check('Batch 10, %dpx: the countdown on the hero card is plain status text, not a bordered pill' % width, f is not None and f['cdnBorder'] == '0px', f)
+            check('Batch 10, %dpx: the compact Today card keeps art and Explore inside its surface' % width,
+                  f is not None and f['cardHeight']<290 and f['artInside'] and f['openInside'] and f['save']==0, f)
             g = tp.evaluate("""() => [...document.querySelectorAll('#home-now .today-phase-cards')].map(c => {
                 const kids = [...c.children], i = kids.findIndex(k => k.classList.contains('today-sub') && /^in person/i.test(k.innerText.trim())), onl = kids.findIndex(k => k.classList.contains('today-sub') && /^online/i.test(k.innerText.trim())), rows = kids.filter(k => k.classList.contains('agw') && (onl < 0 || kids.indexOf(k) < onl));
                 const cnt = i >= 0 ? kids[i].querySelector('.today-phase-count').textContent : '';
@@ -3875,20 +3824,22 @@ with sync_playwright() as p:
             sp2.context.close()
         # row actions say what they do
         ap = page(clock=B10_CLOCK, width=320, height=844, mobile=True)
-        a = ap.evaluate("""() => [...document.querySelectorAll('#home-now .agw')].slice(0, 4).map(w => {
-            const ig = w.querySelector('.agig'), hd = w.querySelector('[data-hide]'), cap = (e, pseudo) => getComputedStyle(e, pseudo).content;
-            const rect = e => { const r = e.getBoundingClientRect(); return [r.width, r.height]; };
-            return { igCap: ig.classList.contains('igthumb') ? 'thumb' : cap(ig, '::after'), igLabel: ig.getAttribute('aria-label'), hideText: hd.innerText.replace(/\\s+/g, ' ').trim(), hideLabel: hd.getAttribute('aria-label'), hideTitle: hd.title, igSize: rect(ig), hideSize: rect(hd), name: w.querySelector('.agt b').textContent };
+        a = ap.evaluate("""() => [...document.querySelectorAll('#home-now .agw')].slice(0,4).map(w => {
+          const row=w.querySelector('.agr'),r=row.getBoundingClientRect(),actions=w.querySelector('.ag-actions');
+          return {name:row.querySelector('.agt b').textContent,width:r.width,height:r.height,
+            visible:r.height>0,actionsHidden:getComputedStyle(actions).display==='none'};
         })""")
-        check('Batch 12: in-person row buttons are captioned ("Poster"/thumbnail and "Hide"), keep names with the event, are 44px, and Hide says it only hides',
-              a and all(x['hideText'].lower().endswith('hide') and x['hideLabel'] == 'Hide ' + x['name'] and 'again' in x['hideTitle'].lower() and x['hideSize'][0] >= 43.5 and x['hideSize'][1] >= 43.5 and x['igSize'][0] >= 43.5 and x['igSize'][1] >= 43.5
-                        and x['igLabel'].endswith(x['name']) and (x['igCap'] in ('thumb', '"Poster"')) for x in a), a)
+        check('Batch 12: in-person Today destinations stay readable without poster and hide clutter',
+              a and all(x['visible'] and x['height']>=44 and x['width']>200 and x['actionsHidden'] for x in a),a)
         ap.context.close()
         # a card whose pictures all fail to load does not reserve an empty art column
         hp = page(clock=B10_CLOCK, width=320, height=844, mobile=True)
-        h = hp.evaluate("""() => { const c = document.querySelector('#home-now .evc.cmp'), art = c.querySelector('.evc-art'); return { imgs: c.querySelectorAll('.evc-art img').length, artDisplay: getComputedStyle(art).display, mainW: Math.round(c.querySelector('.evc-main').getBoundingClientRect().width), cardW: Math.round(c.getBoundingClientRect().width), firstChildTop: Math.round(c.querySelector('.evc-main').getBoundingClientRect().top - c.getBoundingClientRect().top) }; }""")
-        check('Batch 12: the hero card has no empty art block when its pictures are gone (art column collapsed, content starts at the card padding)',
-              (h['imgs'] > 0 or (h['artDisplay'] == 'none' and h['mainW'] >= h['cardW'] - 36 and h['firstChildTop'] <= 20)), h)
+        h = hp.evaluate("""() => { const c=document.querySelector('#home-now .today-event');
+          const a=c.querySelector('.today-event-art'),r=a.getBoundingClientRect(),cr=c.getBoundingClientRect();
+          return {artWidth:r.width,cardWidth:cr.width,artInside:r.width===0||(r.left>=cr.left&&r.right<=cr.right),
+            cardHeight:cr.height}; }""")
+        check('Batch 12: Today artwork stays bounded even if its pictures fail',
+              h['artInside'] and h['artWidth']<h['cardWidth'] and h['cardHeight']<290,h)
         hp.context.close()
         # week strip: re-rendering must not pile up observers on detached strips
         wk = page(clock='2026-12-20T10:00:00+11:00', width=320, height=844, mobile=True)

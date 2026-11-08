@@ -29,7 +29,7 @@ with sync_playwright() as p:
         page.goto(BASE + '/')
         page.wait_for_function('!!window.GODASH && !!window.GODETAIL')
         page.evaluate('(theme)=>document.documentElement.dataset.theme=theme', theme)
-        page.wait_for_function('document.querySelector("#home-now [data-open]")')
+        page.wait_for_function('document.querySelector("#today-v1 .t1-card [data-open]")')
 
         def capture(name):
             assert page.evaluate('document.documentElement.scrollWidth <= innerWidth'), (name, width)
@@ -37,26 +37,20 @@ with sync_playwright() as p:
                 page.screenshot(path=str(Path(OUT) / f'{name}-{width}.png'))
 
         # A live overseas event remains unfolded and starts above the bottom navigation.
-        first = page.locator('#home-now .evc').first
-        assert 'Sendai' in first.inner_text()
-        title = first.locator('.evc-title-row h3')
+        first = page.locator('#today-v1 .t1-card').first
+        assert 'sendai' in first.inner_text().lower()
+        title = first.locator('.t1-title')
         title.wait_for(state='visible')
         # Read the current connected title and its geometry in one browser task: a genuine late
         # source update can replace a card between locator resolution and an element evaluation.
         title_box=page.wait_for_function("""()=>{
-            const el=document.querySelector('#home-now .evc .evc-title-row h3');
+            const el=document.querySelector('#today-v1 .t1-card .t1-title');
             if(!el)return false;
             const r=el.getBoundingClientRect();
             return r.height>0&&r.width>0?{y:r.y,height:r.height,width:r.width}:false;
         }""").json_value()
         assert title_box['height']>0 and title_box['width']>0 and title_box['y']+title_box['height']<820, (width,title_box)
-        brief = page.locator('#today-brief-details')
-        assert not brief.evaluate('(el)=>el.open')
-        brief.locator('summary').first.focus()
-        page.keyboard.press('Enter')
-        assert page.locator('#today-focus-raids').is_visible()
-        assert page.locator('#today-focus-raids').evaluate('(el)=>el.scrollHeight<=el.clientHeight+1')
-        page.keyboard.press('Enter')
+        assert page.locator('#today-v1 .t1-tiles').is_visible()
         page.evaluate('scrollTo(0,0)')
         capture('today')
         page.locator('#tabs [data-tab="events"]').click()
@@ -85,21 +79,21 @@ with sync_playwright() as p:
         page.keyboard.press('Enter')
         page.locator('#evd').wait_for(state='visible')
         assert page.locator('#evd-t').is_visible()
-        assert page.locator('.evd-jump a').evaluate_all('(els)=>els.every(e=>e.getBoundingClientRect().height>=44)')
+        assert page.locator('.evd-tab').evaluate_all('(els)=>els.every(e=>e.getBoundingClientRect().height>=44)')
         hero = page.locator('.evd-hero')
         assert hero.evaluate('(el)=>el.scrollWidth<=el.clientWidth'), 'detail hero overflow'
         capture('detail')
         before_hash = page.evaluate('location.hash')
-        page.locator('.evd-jump a[href="#evd-sources"]').focus()
+        page.locator('#evd-tab-details').focus()
         page.keyboard.press('Enter')
         assert page.locator('#evd-sources').is_visible()
-        assert page.locator('#evd-sources').evaluate('(el)=>el===document.activeElement')
         assert page.evaluate('location.hash') == before_hash
         page.keyboard.press('Escape')
         assert page.locator('#evd').is_hidden()
         assert event.evaluate('(el)=>el===document.activeElement'), 'detail close lost trigger focus'
         page.evaluate("GODETAIL.open('cur:gopassnov')")
         page.wait_for_function("document.getElementById('evd-t')?.textContent.includes('GO Pass')")
+        page.locator('#evd #evd-tab-passes').click()
         assert page.locator('#evd .ue-pass-range').count()>=4
         assert page.locator('#evd .ue-pass-stages > li').count()>=90
         page.locator('#evd .ue-pass-range').filter(has_text='Rank 100').locator('summary').click()
@@ -110,6 +104,7 @@ with sync_playwright() as p:
         page.evaluate("GODETAIL.open('leekduck:pokemon-go-wild-area-2026-mexico-city')")
         page.wait_for_function("document.getElementById('evd-t')?.textContent.includes('Mexico')")
         assert page.locator('#evd .research-task').count()==12
+        page.locator('#evd #evd-tab-research').click()
         raid_task=page.locator('#evd .research-task').filter(has_text='Win 2 raids')
         assert raid_task.locator('.research-reward').count()==3
         assert 'Conkeldurr' in raid_task.inner_text()

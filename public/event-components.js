@@ -6,7 +6,32 @@ var METHODS={wild:'In the wild',raid:'Raid encounters',max:'Max Battles',egg:'Eg
 function value(row){if(typeof row==='string')return row;var v=row&&(row.text||row.title||row.name||row.task||row.label);return typeof v==='string'?v:'';}
 function section(id,title,html){return html?'<section class="ue-section" id="'+esc(id)+'"><h3 class="sec2">'+esc(title)+'</h3>'+html+'</section>':'';}
 function rows(items){return '<ul class="ue-facts">'+items.filter(function(x){return value(x);}).map(function(x){return '<li>'+esc(value(x))+'</li>';}).join('')+'</ul>';}
-function gallery(model,ctx){var byKey={};model.pokemon.forEach(function(p){byKey[p.key]=p;});return Object.keys(METHODS).map(function(method){var edges=model.groups[method]||[],seen=new Set();var cards=edges.map(function(edge){var p=byKey[edge.identityKey];if(!p)return '';var activity=model.activities.find(function(a){return a.id===edge.activityId;}),activityLabel=activity&&(activity.title||activity.name);var k=p.key+'|'+edge.activityId+'|'+(edge.access&&edge.access!=='all'&&edge.access!=='unknown'?edge.access:'');if(seen.has(k))return '';seen.add(k);var name=ctx.nameFor?ctx.nameFor(p):p.name||p.speciesId,label=p.label,collection=p.collectionName||name;if(p.costumeId&&label&&collection.toLowerCase().indexOf(label.toLowerCase())<0)collection+=' ('+label+')';var own=ctx.ownership?ctx.ownership(p):{state:'unknown'},marks=own.tk&&ctx.marks?ctx.marks(own.tk,collection):'';var shinyConflict=(model.internalValidation&&model.internalValidation.conflicts||[]).some(function(c){return c.field==='shiny'&&c.identityKey===p.key;});var tag=p.shiny==='yes'&&!shinyConflict?'<span class="ue-signal ue-shiny">Shiny available</span>':'';if(p.boostedShiny&&!shinyConflict)tag+='<span class="ue-signal ue-shiny">Boosted shiny chance</span>';if(p.debut)tag+='<span class="ue-signal">Debut</span>';if(edge.access&&edge.access!=='all'&&edge.access!=='unknown')tag+='<span class="ue-signal">'+esc(edge.access)+'</span>';return '<article class="ue-mon evd-f" data-identity="'+esc(p.key)+'"><div class="ue-mon-art">'+(ctx.artFor?ctx.artFor(p):ctx.art?ctx.art({n:name,costume:!!p.costumeId,label:label,asset:p.assetKey},'ea'):'')+'</div><div class="evd-fm"><b>'+esc(name)+'</b>'+(p.costumeId&&label?'<small>'+esc(label)+'</small>':'')+(activityLabel?'<small>'+esc(activityLabel)+'</small>':'')+(activity&&activity.schedule?'<small>'+esc(activityTime(activity,ctx))+'</small>':'')+(activityPlace(activity)?'<small>'+esc(activityPlace(activity))+'</small>':'')+(tag?'<div class="ue-signals">'+tag+'</div>':'')+'</div><span class="own '+(own.state==='have'?'own-have':own.state==='missing'?'own-need':'own-unk')+'">'+(own.state==='have'?'Have':own.state==='missing'?'Need':own.state==='unreleased'?'Not released':'Not tracked')+'</span><div class="ue-mon-controls">'+(marks?'<details class="ue-marking"><summary>Track</summary>'+marks+'</details>':'')+(ctx.follow?ctx.follow(p):'')+'</div></article>';}).join('');return cards?'<div class="ue-method" data-method="'+method+'">'+(method==='other'&&Object.keys(model.groups).every(function(k){return k==='other'||!model.groups[k].length;})?'':'<h4>'+METHODS[method]+'</h4>')+'<div class="ue-gallery evd-feat">'+cards+'</div></div>':'';}).join('');}
+function gallery(model,ctx){
+ var byKey={};model.pokemon.forEach(function(p){byKey[p.key]=p;});
+ return Object.keys(METHODS).map(function(method){
+  var seen=new Set(),cards=(model.groups[method]||[]).map(function(edge){
+   var p=byKey[edge.identityKey];if(!p)return '';
+   var activity=model.activities.find(function(a){return a.id===edge.activityId;}),activityLabel=activity&&(activity.title||activity.name);
+   var key=p.key+'|'+edge.activityId+'|'+(edge.access&&edge.access!=='all'&&edge.access!=='unknown'?edge.access:'');
+   if(seen.has(key))return '';seen.add(key);
+   var name=ctx.nameFor?ctx.nameFor(p):p.name||p.speciesId,label=p.label;
+   var conflict=(model.internalValidation&&model.internalValidation.conflicts||[]).some(function(c){return c.field==='shiny'&&c.identityKey===p.key;});
+   var signals=[];
+   if(p.shiny==='yes'&&!conflict)signals.push('<span class="ue-signal ue-shiny">Shiny</span>');
+   if(p.boostedShiny&&!conflict)signals.push('<span class="ue-signal ue-shiny">Boosted shiny</span>');
+   if(p.debut)signals.push('<span class="ue-signal">Debut</span>');
+   if(edge.access&&edge.access!=='all'&&edge.access!=='unknown')signals.push('<span class="ue-signal">'+esc(edge.access)+'</span>');
+   var art=ctx.artFor?ctx.artFor(p):ctx.art?ctx.art({n:name,costume:!!p.costumeId,label:label,asset:p.assetKey},'ea'):'';
+   var meta=[p.costumeId&&label?label:'',activityLabel,activity&&activity.schedule?activityTime(activity,ctx):'',activityPlace(activity)].filter(Boolean);
+   var kind=ctx.artKind?ctx.artKind(p):'',stars=method==='raid'?((/(\d)-star/i.exec(model.title||'')||[])[1]||''):'',km=method==='egg'?((/(\d{1,2})\s?km/i.exec([activityLabel,p.label,edge.access].join(' '))||[])[1]||''):'';
+   var badge='<span class="ue-badge ue-b-'+method+(km?' ue-km-'+km:'')+'">'+(km?km+' km':method==='egg'?'Egg':method==='raid'&&stars?stars+'★ Raid':({wild:'Wild',raid:'Raid',max:'Max',incense:'Incense',research:'Research',lure:'Lure',photobomb:'Snapshot',other:'Featured'})[method])+'</span>';
+   var short=({wild:'Wild',raid:'Raid',max:'Max Battle',egg:'Egg',incense:'Incense',research:'Research',lure:'Lure',photobomb:'Snapshot',other:'Featured'})[method];var info={name:name,method:short,badge:km?km+' km egg':stars?stars+'-star raid':'',meta:meta,signals:signals.map(function(x){return x.replace(/<[^>]+>/g,'');}),form:kind};
+   var feat=!!(p.debut||p.boostedShiny);return '<button type="button" class="ue-mon'+(feat?' ue-mon-featured':'')+'" data-identity="'+esc(p.key)+'" data-info="'+esc(JSON.stringify(info))+'" aria-haspopup="dialog" aria-label="'+esc(name+', '+(info.badge||short)+'. Show details')+'">'+(feat?'<span class="ue-feat-tag">Featured</span>':'')+'<span class="ue-mon-art">'+art+'</span><b>'+esc(name)+'</b>'+badge+(signals.length?'<span class="ue-signals">'+signals.join('')+'</span>':'')+'</button>';
+  }).join('');
+  return cards?'<div class="ue-method" data-method="'+method+'">'+(method==='other'&&Object.keys(model.groups).every(function(k){return k==='other'||!model.groups[k].length;})?'':'<h4>'+METHODS[method]+'</h4>')+'<div class="ue-gallery">'+cards+'</div></div>':'';
+ }).join('');
+}
+
 function reward(item,ctx){
  if(typeof item==='string')return '<div class="research-reward"><span class="ue-reward-art"><span class="ue-reward-icon" aria-hidden="true">★</span></span><span><b>'+esc(item)+'</b></span></div>';
  if(!item||typeof item.name!=='string')return '';
@@ -31,7 +56,23 @@ function passes(items,ctx){
   return '<article class="ue-pass"><h4>'+esc(value(p))+'</h4>'+((p.text&&p.text!==value(p))?'<p>'+esc(p.text)+'</p>':'')+content+'</article>';
  }).join('');
 }
-function tickets(items,ctx){return items.filter(function(t){return value(t);}).map(function(t){var price='';if(t.price&&Number.isFinite(t.price.amount)&&/^[A-Z]{3}$/.test(t.price.currency))try{price=new Intl.NumberFormat('en-AU',{style:'currency',currency:t.price.currency,currencyDisplay:'code'}).format(t.price.amount);}catch(e){}var url=ctx.safe&&ctx.safe(t.url);return '<article class="ue-ticket"><h4>'+esc(value(t))+'</h4>'+(t.access?'<p>'+esc(t.access)+'</p>':'')+(price?'<b>'+esc(price)+'</b>':'')+(url?'<a class="pill" href="'+esc(url)+'" target="_blank" rel="noopener noreferrer">View ticket</a>':'')+'</article>';}).join('');}
+function tickets(items,ctx){
+ var notes=[],cards=[];
+ items.filter(function(t){return value(t);}).forEach(function(t){
+  var price='';if(t.price&&Number.isFinite(t.price.amount)&&/^[A-Z]{3}$/.test(t.price.currency))try{price=new Intl.NumberFormat('en-AU',{style:'currency',currency:t.price.currency,currencyDisplay:'code'}).format(t.price.amount);}catch(e){}
+  var url=ctx.safe&&ctx.safe(t.url);
+  if(!price&&!url&&!t.access){notes.push(value(t));return;}
+  cards.push('<article class="ue-ticket"><h4>'+esc(value(t))+'</h4>'+(t.access?'<p>'+esc(t.access)+'</p>':'')+(price?'<b>'+esc(price)+'</b>':'')+(url?'<a class="pill" href="'+esc(url)+'" target="_blank" rel="noopener noreferrer">View ticket</a>':'')+'</article>');
+ });
+ var factList=function(list){return '<ul class="ue-ticket-facts">'+list.map(function(t){return '<li>'+esc(t)+'</li>';}).join('')+'</ul>';};
+ return cards.join('')+(notes.length?'<div class="ue-ticket-guide">'+factList(notes.slice(0,3))+(notes.length>3?'<details class="ue-ticket-more"><summary>More ticket details ('+(notes.length-3)+')</summary>'+factList(notes.slice(3))+'</details>':'')+'</div>':'');
+}
+function bonusCard(b,ctx){
+ var full=value(b);if(!full)return '';
+ if(full.length<=125)return '<div class="ue-bonus">'+(ctx.bonus?ctx.bonus(full):esc(full))+'</div>';
+ var head=full.split(/[.;]/)[0];if(head.length>95){head=head.slice(0,95);head=head.slice(0,head.lastIndexOf(' '))+'…';}
+ return '<details class="ue-bonus ue-bonus-detail"><summary>'+(ctx.bonus?ctx.bonus(head):esc(head))+'</summary><p>'+esc(full)+'</p></details>';
+}
 function activityTime(a,ctx){
  if(!a||!a.schedule)return '';
  try{var zone=ctx.viewerZone||ctx.clock.viewerZone(),range=ctx.clock.range(a.schedule,zone),format=new Intl.DateTimeFormat('en-AU',{timeZone:zone,weekday:'short',day:'numeric',month:'short',hour:'numeric',minute:'2-digit',timeZoneName:'short'});return format.format(new Date(range.start))+' – '+format.format(new Date(range.end))+(a.schedule.timeBasis==='player-local'?' · local time wherever you play':' · your time');}catch(error){return 'Time needs confirmation in your selected time zone.';}
@@ -42,7 +83,7 @@ function render(model,ctx){ctx=ctx||{};var view=V.project(model),fields=model.in
  var galleryOnly=model.encounters.every(function(e){return e.method==='other';});
  body.encounters=section('evd-pokemon',galleryOnly?'Featured Pokémon':'Pokémon',gallery(model,ctx));
  if(!model.bonuses.length&&!ctx.moves)body.encounters=body.encounters.replace('<h3 class="sec2">','<h3 class="sec2" id="evd-highlights">');
- body.bonuses=section('evd-highlights','Event bonuses','<div class="ue-bonuses">'+model.bonuses.filter(function(b){var t=value(b);return t&&!(model.internalValidation&&model.internalValidation.conflicts||[]).some(function(c){return c.a&&c.a.text===t||c.b&&c.b.text===t;});}).map(function(b){return '<div class="ue-bonus">'+(ctx.bonus?ctx.bonus(value(b)):esc(value(b)))+'</div>';}).join('')+'</div>');if(!body.bonuses.includes('class="ue-bonus"'))body.bonuses='';
+ body.bonuses=section('evd-highlights','Event bonuses','<div class="ue-bonuses">'+model.bonuses.filter(function(b){var t=value(b);return t&&!(model.internalValidation&&model.internalValidation.conflicts||[]).some(function(c){return c.a&&c.a.text===t||c.b&&c.b.text===t;});}).map(function(b){return bonusCard(b,ctx);}).join('')+'</div>');if(!body.bonuses.includes('class="ue-bonus'))body.bonuses='';
  body.rotations=section('evd-rotations','Rotations',scheduledActivities(model,ctx,'rotation'));
  body.schedule=section('evd-schedule','Event schedule',scheduledActivities(model,ctx,'schedule'));
  body.research=(ctx.research||section('evd-research-title','Research',research(model.research,ctx)))+section('evd-research-windows','Research availability',scheduledActivities(model,ctx,'research'));
@@ -67,7 +108,8 @@ function render(model,ctx){ctx=ctx||{};var view=V.project(model),fields=model.in
  var warnings=model.internalValidation&&model.internalValidation.conflicts||[];
  var conflict=warnings.some(function(c){return c.impact==='planning-critical';})?'<p class="srcdis" role="status">Some event details conflict. Check Sources & updates before making plans.</p>':'';
  var cancelled=model.lifecycle==='cancelled'?'<p class="srcdis" role="status">Event cancelled</p>':'';
- var hero='<header class="evd-hero ue-hero"><div class="ue-hero-media">'+(ctx.banner||'')+'<div class="evd-art">'+(ctx.heroArt||'')+'</div></div><div class="ue-hero-copy"><h2 id="evd-t">'+esc(model.title)+'</h2><span class="ue-family">'+esc(view.family==='other'?'Event':view.family.replace(/-/g,' '))+'</span>'+(model.location?'<p class="ue-location">'+esc(typeof model.location==='string'?model.location:model.location.name||'')+'</p>':'')+'<p class="evc-when">'+esc(ctx.when||'Dates to be announced')+'</p>'+(ctx.countdown?'<p class="cdn evd-cd">'+esc(ctx.countdown)+'</p>':'')+'</div></header>';
+ var hasOverview=!!ctx.overview;
+ var hero='<header class="evd-hero ue-hero"><div class="ue-hero-media">'+(ctx.banner||'')+'<div class="evd-art">'+(ctx.heroArt||'')+'</div></div><div class="ue-hero-copy"><div class="ue-hero-chips"><span class="ue-family">'+esc(view.family==='other'?'Event':view.family.replace(/-/g,' '))+'</span>'+(ctx.countdown?'<span class="cdn evd-cd">'+esc(ctx.countdown)+'</span>':'')+'</div><h2 id="evd-t">'+esc(model.title)+'</h2>'+(model.location?'<p class="ue-location">'+esc(typeof model.location==='string'?model.location:model.location.name||'')+'</p>':'')+(hasOverview?'':'<p class="evc-when">'+esc(ctx.when||'Dates to be announced')+'</p>')+'</div></header>';
  var more=section('evd-information','Details',detail+(ctx.moves||'')+(ctx.locations||''));
  var sources=ctx.sources||'';
  if(!sources){
@@ -76,7 +118,19 @@ function render(model,ctx){ctx=ctx||{};var view=V.project(model),fields=model.in
  }
  var hasSources=/\bid=["']evd-sources["']/.test(sources);
  var jumps=nav+(more?'<a href="#evd-information">Details</a>':'')+(hasSources?'<a href="#evd-sources">Sources</a>':'');
- return (ctx.toolbar||'')+hero+cancelled+conflict+(jumps?'<nav class="evd-jump" aria-label="Jump to event details">'+jumps+'</nav>':'')+(ctx.actions||'')+content+more+sources;
+
+ var panels=[],label={encounters:'Pokémon',bonuses:'Bonuses',research:'Research',passes:'GO Pass',tickets:'Tickets'};
+ var incomplete=!selected.length&&!info.length;
+ var overview=(ctx.overview||'')+(info.length?'<h3 class="ue-mini-h">Highlights</h3><ul class="ue-facts ue-summary">'+info.filter(function(t){var k=String(t).toLowerCase().slice(0,40);return !model.tickets.some(function(x){return value(x).toLowerCase().indexOf(k)>=0;})&&!model.bonuses.some(function(x){return value(x).toLowerCase().indexOf(k)>=0;});}).slice(0,4).map(function(t){return '<li>'+esc(t)+'</li>';}).join('')+'</ul>':'')+(incomplete||(model.completeness==='partial'&&selected.length<2)?'<p class="ue-more-note" role="note">More details to come. Only verified information is shown.</p>':'');
+ panels.push({id:'overview',label:'Overview',html:'<div class="ue-overview">'+(cancelled||'')+conflict+overview+(ctx.actions||'')+'</div>'});
+ ['encounters','bonuses','research','passes','tickets'].forEach(function(k){if(selected.indexOf(k)>=0&&body[k]&&(k!=='bonuses'||/class="ue-bonus[ "]/.test(body[k])))panels.push({id:k,label:label[k],html:body[k]});});
+ var sched=(selected.indexOf('rotations')>=0?body.rotations:'')+(selected.indexOf('schedule')>=0?body.schedule:'');
+ if(sched)panels.splice(Math.min(panels.length,2),0,{id:'schedule',label:'Schedule',html:sched});
+ var detailsHtml=more+(hasSources?(sources||''):'').replace('<details class="ue-sources"','<details class="ue-sources" open');
+ if(detailsHtml.trim())panels.push({id:'details',label:'Details & sources',html:detailsHtml});
+ var tablist='<div class="evd-tabs-wrap"><div class="evd-tabs" role="tablist" aria-label="Event sections">'+panels.map(function(t,i){return '<button type="button" role="tab" class="evd-tab" id="evd-tab-'+t.id+'" aria-controls="evd-panel-'+t.id+'" aria-selected="'+(i===0)+'" tabindex="'+(i===0?0:-1)+'" data-tab="'+t.id+'">'+esc(t.label)+'</button>';}).join('')+'</div><span class="evd-tabs-more" aria-hidden="true">›</span></div>';
+ var tabpanels=panels.map(function(t,i){return '<div class="evd-panel" role="tabpanel" id="evd-panel-'+t.id+'" aria-labelledby="evd-tab-'+t.id+'" tabindex="0"'+(i?' hidden':'')+'>'+t.html+'</div>';}).join('');
+ return (ctx.toolbar||'')+hero+tablist+tabpanels;
 }
 return {render:render,gallery:gallery,rotations:function(model,ctx){return scheduledActivities(model,ctx,'rotation');}};
 }));

@@ -114,7 +114,7 @@ with sync_playwright() as pw:
         assert 'sun crown' in page.locator('#release-costumes').inner_text()
         page.locator('[data-open="season:pass-november"]').first.click()
         page.locator('#evd').wait_for(state='visible')
-        page.locator('#evd-sources > summary').click()
+        page.evaluate("document.querySelectorAll('#evd [role=tabpanel]').forEach(p=>p.hidden=false)")
         assert 'Saved rank snapshot: 2026-11-01' in page.locator('#evd').inner_text()
         ranks = page.locator('#evd .ss-tab tbody th').all_text_contents()
         assert ranks == ['2', '3', '100', '200'], ranks

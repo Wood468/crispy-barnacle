@@ -38,6 +38,7 @@ with sync_playwright() as p:
   def open_event(id):
    page.evaluate('(id)=>GODETAIL.open(id)',id)
    page.locator('#evd:not([hidden]) .ue-hero').wait_for()
+   page.evaluate("document.querySelectorAll('#evd [role=tabpanel]').forEach(p=>p.hidden=false)")
   def close_event():
    page.keyboard.press('Escape')
    page.wait_for_function('!GONAV.internal&&GONAV.pending.length===0')
@@ -57,7 +58,8 @@ with sync_playwright() as p:
   before=page.evaluate("({dex:localStorage.getItem('gofn-dex-v1'),us:localStorage.getItem('gofn-us-v1')})")
   open_event(INSTANT['eventId'])
   assert page.locator('#evd .ue-mon[data-identity="25:base:none"]').count()==2
-  assert page.locator('#evd .ue-mon .own').all_inner_texts()==['Have','Have']
+  assert page.locator('#evd .ue-mon').count()==2
+  assert page.locator('#evd .own,#evd [data-follow],#evd [data-mark]').count()==0
   assert page.locator('#evd .srcdis').count()==0,'minor conflict produced a hero warning'
   assert '7 Nov' in page.locator('#evd .evc-when').inner_text()
   close_event();change_zone('America/New_York')
@@ -71,7 +73,7 @@ with sync_playwright() as p:
   assert '6 Nov' in page.locator('#evd-rotations').inner_text()
   assert 'Tokyo' in page.locator('#evd').inner_text() and 'Sendai' in page.locator('#evd').inner_text()
   close_event();open_event(VENUE['eventId'])
-  assert 'Venue:' in page.locator('#evd .evc-when').inner_text()
+  assert 'event local' in page.locator('#evd .evc-when').inner_text().lower(),page.locator('#evd').inner_text()[:400]
   assert page.evaluate("GOEventRegistry.display(GOEventRegistry.find('synthetic-tokyo-venue')).start.toISOString()")=='2026-11-07T05:00:00.000Z'
   close_event();open_event(PLAYER['eventId'])
   ics=page.locator('#evd a[download]').get_attribute('href')
@@ -86,7 +88,7 @@ with sync_playwright() as p:
   diagnostics=page.evaluate('GOEventRegistry.diagnostics()')
   assert diagnostics['retained'] and diagnostics['rejectedCount']==1,diagnostics
   assert page.evaluate('GOEventRegistry.events().length')==len(VALID['events'])
-  open_event(INSTANT['eventId']);page.locator('#evd-sources > summary').click()
+  open_event(INSTANT['eventId']);page.locator('#evd-tab-details').click()
   assert 'latest event update was held' in page.locator('#evd-sources').inner_text()
   close_event()
   bad=copy.deepcopy(VALID);bad['events'][0]['aliases']=['shared'];bad['events'][1]['aliases']=['shared'];payload[0]=bad
@@ -145,7 +147,8 @@ with sync_playwright() as p:
  assert page.evaluate('GOEventRegistry.diagnostics().cacheUnavailable')
  before=page.evaluate("localStorage.getItem('gofn-dex-v1')")
  open_event(INSTANT['eventId'])
- assert page.locator('#evd .ue-mon .own').all_inner_texts()==['Have','Have']
+ assert page.locator('#evd .ue-mon').count()==2
+ assert page.locator('#evd .own,#evd [data-follow],#evd [data-mark]').count()==0
  assert page.evaluate("localStorage.getItem('gofn-dex-v1')")==before
  print(f'PASS {ENGINE} restricted storage keeps online events and existing collection marks usable')
  context.close();browser.close()

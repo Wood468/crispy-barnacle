@@ -17,8 +17,8 @@ export function extractEncounters(input,{dex=[],names=[],costumes=[]}={}){
   if(!method||!['li','p'].includes(line.t))continue;
   for(const item of line.text.split(/,\s*|\s+and\s+/i)){
    let label=item.trim(),shiny='unknown',boostedShiny=null;
-   const claim=/\s*\((shiny available|boosted shiny|not shiny eligible)\)$/i.exec(label);
-   if(claim){shiny=/not /i.test(claim[1])?'no':'yes';boostedShiny=/boosted/i.test(claim[1])?true:null;label=label.slice(0,claim.index).trim();}
+   const claim=/\s*\((shiny available|boosted shiny|increased shiny (?:chance|odds)|not shiny eligible)\)$/i.exec(label);
+   if(claim){shiny=/not /i.test(claim[1])?'no':'yes';boostedShiny=/boosted|increased/i.test(claim[1])?true:null;label=label.slice(0,claim.index).trim();}
    const declared=known.get(label.toLowerCase());if(!declared)continue;
    const p=adapter.pokemon({...declared,shiny,boostedShiny}),prior=pokemon.get(p.key);
    pokemon.set(p.key,prior?{...prior,...p,shiny:p.shiny==='unknown'?prior.shiny:p.shiny}:p);

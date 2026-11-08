@@ -138,13 +138,6 @@
       + '<ul>' + unl + '</ul><div class="ft">' + rows.map(function (r) { return '<div class="kv"><span>' + esc(r[0]) + '</span><b>' + esc(r[1]) + '</b></div>'; }).join('') + variants + '</div>'
       + (p.product ? priceNote(p.product) : '') + srcLine(p.source) + '</article>';
   }
-  function ownChip(name, costume) {
-    var o = X.ownState(name, costume);
-    if (o.state === 'unreleased') return '<span class="own own-unk" title="Not released in Pokémon GO yet">Not out yet</span>';
-    if (o.state === 'have') return '<span class="own own-have">Have</span>';
-    if (o.state === 'missing' && o.tk) return '<span class="own own-need">Need</span>';
-    return '';
-  }
   function icsFor(ev) {
     function f(d, utc) { var p = function (n) { return String(n).padStart(2, '0'); }; return utc ? d.getUTCFullYear() + p(d.getUTCMonth() + 1) + p(d.getUTCDate()) + 'T' + p(d.getUTCHours()) + p(d.getUTCMinutes()) + '00Z' : d.getFullYear() + p(d.getMonth() + 1) + p(d.getDate()) + 'T' + p(d.getHours()) + p(d.getMinutes()) + '00'; }
     var u = !!ev.utc;
@@ -337,20 +330,20 @@
         return url ? '<a href="' + esc(url) + '" target="_blank" rel="noopener noreferrer">' + esc(name) + '</a>' : esc(name);
       }).filter(Boolean);
       var label = task.status === 'official' ? 'Official' : task.status === 'corroborated' ? 'Cross-checked' : 'Single source';
-      return '<small class="research-task-source">' + label + (links.length ? ' · ' + links.join(' · ') : '') + ' · ' + esc(window.GOLIB.researchCheckedText(task.checkedAt)) + '</small>';
+      return '<details class="research-task-source"><summary>Source &amp; update</summary><small>' + label + (links.length ? ' · ' + links.join(' · ') : '') + ' · ' + esc(window.GOLIB.researchCheckedText(task.checkedAt)) + '</small></details>';
     }
 
-    function reward(item) {
+    function reward(item, field) {
       if (item.type === 'encounter') {
         var cp = item.cpMin && item.cpMax ? '<small>CP ' + esc(item.cpMin) + '–' + esc(item.cpMax) + '</small>' : '<small>Encounter</small>';
-        return '<div class="research-reward">' + (window.GOEventAdapter?exactArt(GOEventAdapter.pokemon({name:item.name,costume:item.costume||/wearing|costume/i.test(item.name),label:item.label,formId:item.formId,costumeId:item.costumeId})):X.monArt(ev,{name:item.name,costume:/wearing|costume/i.test(item.name),role:'featured'},'ea')) + '<span><b>' + esc(item.name) + '</b>' + cp + '</span></div>';
+        return '<div class="research-reward"><span class="ue-reward-art"><span class="ue-reward-fallback" aria-hidden="true">✦</span>' + (window.GOEventAdapter?exactArt(GOEventAdapter.pokemon({name:item.name,costume:item.costume||/wearing|costume/i.test(item.name),label:item.label,formId:item.formId,costumeId:item.costumeId})):X.monArt(ev,{name:item.name,costume:/wearing|costume/i.test(item.name),role:'featured'},'ea')) + '</span><span><b>' + esc(item.name) + '</b>' + cp + '</span></div>';
       }
-      return '<div class="research-reward research-reward-item"><span class="research-reward-qty">' + (item.quantity > 1 ? esc(item.quantity) + '×' : '•') + '</span><span><b>' + esc(item.name) + '</b><small>' + (item.type === 'item' ? 'Item reward' : 'Possible reward') + '</small></span></div>';
+      return '<div class="research-reward research-reward-item"><span class="ue-reward-art ue-reward-item-icon" aria-hidden="true">◆</span><span><b>' + (item.quantity > 1 ? esc(item.quantity) + '× ' : '') + esc(item.name) + '</b><small>' + (item.type === 'item' && !field ? 'Item reward' : 'Possible reward') + '</small></span></div>';
     }
     return '<section class="evd-research"><h3 class="sec2" id="evd-research-title">Research tasks</h3><div class="evd-card research-task-list">'
       + tasks.map(function (task) {
         var kind = task.category === 'field' ? 'Field Research' : task.category === 'timed' ? 'Timed Research' : task.category === 'special' ? 'Special Research' : 'Research';
-        return '<article class="research-task"><div class="research-task-head"><span class="research-task-kind">' + kind + '</span><span class="research-task-state">' + (task.rewards || []).length + ' reward' + ((task.rewards || []).length === 1 ? '' : 's') + '</span></div><h4>' + esc(task.task) + '</h4><div class="research-rewards">' + (task.rewards || []).map(reward).join('') + '</div>' + attribution(task) + '</article>';
+        return '<article class="research-task"><div class="research-task-head"><span class="research-task-kind">' + kind + '</span><span class="research-task-state">' + (window.GOTODAYLOGIC ? GOTODAYLOGIC.researchRewardLabel(task.category, (task.rewards || []).length) : (task.rewards || []).length + ' possible rewards') + '</span></div><h4>' + esc(task.task) + '</h4><div class="research-rewards">' + (task.rewards || []).map(function (r) { return reward(r, task.category === 'field'); }).join('') + '</div>' + attribution(task) + '</article>';
       }).join('')
       + '</div><button type="button" class="pill all research-browse" data-open-research data-event-id="' + esc(ev.id) + '">Browse current research</button></section>';
   }
@@ -411,12 +404,12 @@
   function hasDetails(ev) { var d = findDetails(ev); return !!(d && d.fields && Object.keys(d.fields).some(function (k) { return (d.fields[k] || []).length; })); }
   function toolbarHtml(ev){
     var saved=X.isSaved(ev.id);
-    var h = '<div class="evd-bar"><button type="button" class="hbtn" id="evd-x" aria-label="Close event details"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button><span class="tag">EVENT DETAIL</span>'
-      + '<button type="button" class="pill info-open" data-infographic="' + esc(ev.id) + '">▧ Infographic</button>'
-      + '<button type="button" class="pill" data-evlink="' + esc(ev.id) + '" aria-label="Share a link to this event">🔗 Link</button>'
-      + '<button type="button" class="star' + (saved ? ' on' : '') + '" data-save="' + esc(ev.id) + '" aria-pressed="' + saved + '" aria-label="Save ' + esc(ev.name) + '" title="Saved events send you a Telegram reminder">' + (saved ? '★' : '☆') + '</button></div>';
-    h += '<label class="evd-lead"' + (saved ? '' : ' hidden') + '>🔔 Remind me <select data-lead="' + esc(ev.id) + '" aria-label="When to remind me">' + [['', 'Morning of the event'], ['1440', '1 day before'], ['180', '3 hours before'], ['60', '1 hour before'], ['off', 'Don\'t remind me']].map(function (o) { return '<option value="' + o[0] + '"' + (String(X.usGet('pref:lead:' + ev.id) || '') === o[0] ? ' selected' : '') + '>' + o[1] + '</option>'; }).join('') + '</select></label>';
-    return h;
+    var share='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12M8 7l4-4 4 4M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7"/></svg>';
+    var dots='<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="5" cy="12" r="1.4"/><circle cx="12" cy="12" r="1.4"/><circle cx="19" cy="12" r="1.4"/></svg>';
+    return '<div class="evd-bar"><button type="button" class="hbtn" id="evd-x" aria-label="Close event details"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button><span class="tag">EVENT DETAIL</span>'
+      + '<button type="button" class="hbtn star' + (saved ? ' on' : '') + '" data-save="' + esc(ev.id) + '" aria-pressed="' + saved + '" aria-label="Save ' + esc(ev.name) + '" title="Saved events send you a Telegram reminder">' + (saved ? '★' : '☆') + '</button>'
+      + '<button type="button" class="hbtn" data-evlink="' + esc(ev.id) + '" aria-label="Copy or share a link to this event" title="Copy or share link">' + share + '</button>'
+      + '<button type="button" class="hbtn" data-evmenu="' + esc(ev.id) + '" aria-haspopup="menu" aria-expanded="false" aria-label="More actions" title="More actions">' + dots + '</button></div>';
   }
   function venueHtml(ev,venues){
     if(!venues.length)return '';
@@ -506,6 +499,44 @@
       return 'Your time: '+inZone(viewer)+(model.schedule.timeBasis==='local'&&model.schedule.timeZone!==viewer?' · Venue: '+inZone(model.schedule.timeZone):'');
     }catch(error){return 'Time needs confirmation in your selected time zone.';}
   }
+  /* Overview times: the viewer's time and the event location's own time, each labelled with its zone. DST-safe (Intl + IANA zones). */
+  function overviewTimes(model,ev) {
+    var TL=window.GOTODAYLOGIC; if(!TL)return '';
+    function row(k,v,cls){return '<div class="ue-time'+(cls?' '+cls:'')+'"><span class="k">'+esc(k)+'</span><span class="v">'+esc(v)+'</span></div>';}
+    var place=(typeof model.location==='string'?model.location:model.location&&model.location.name)||ev.region||ev.place||'';
+    var vz=TL.venueZone({tz:ev.tz||ev.timeZone||(model.schedule&&model.schedule.timeBasis==='local'?model.schedule.timeZone:''),place:place});
+    var viewer=GOEventClock.viewerZone(),h='';
+    try{
+      if(model.schedule&&model.schedule.timeBasis==='player-local'){
+        var r0=GOEventClock.range(model.schedule,viewer),d0=TL.dualTime(r0,'',viewer);
+        h=row('Your time',d0.viewer)+row('Local time','Local time wherever you play');
+      }else if(model.schedule){
+        var r=GOEventClock.range(model.schedule,viewer),d=TL.dualTime(r,vz,viewer);
+        h=row('Your time',d.viewer)+(d.venue?row('Event local',d.venue):'');
+        if(!d.venue&&place&&!vz)h+=row('Location',place);
+      }else{
+        var pub=model.internalValidation&&model.internalValidation.legacyDates||{};
+        if(/^\d{4}-\d{2}-\d{2}$/.test(pub.start||'')){var vd=TL.venueDays(pub.start,pub.end||pub.start,vz,viewer);h=row(vz?'Event local dates ('+vd.venueLabel+')':'Dates',vd.days)+(vd.viewerLine?row('Your time',vd.viewerLine):'')+row('Hours','Event times to be confirmed');}
+      }
+    }catch(error){h='';}
+    if(!h){var fw=eventWindow(model,ev);if(fw)h=row('When',fw);}
+    var out=h?'<div class="ue-times evc-when" role="group" aria-label="Event times">'+h+'</div>':'';
+    return out+overviewFacts(model,place);
+  }
+  /* Key facts and debut chips from verified model fields only; absent data is simply not shown. */
+  function overviewFacts(model,place){
+    var facts=[];
+    var priced=(model.tickets||[]).filter(function(t){return t&&t.price&&Number.isFinite(t.price.amount)&&/^[A-Z]{3}$/.test(t.price.currency);})[0];
+    if(priced){try{facts.push(['Ticket',new Intl.NumberFormat('en-AU',{style:'currency',currency:priced.price.currency,currencyDisplay:'code'}).format(priced.price.amount)]);}catch(e){}}
+    else if((model.tickets||[]).length)facts.push(['Tickets','Optional ticket available']);
+    if((model.bonuses||[]).length)facts.push(['Bonuses',String(model.bonuses.length)+(model.bonuses.length===1?' bonus':' bonuses')]);
+    if((model.research||[]).length)facts.push(['Research',String(model.research.length)+(model.research.length===1?' task':' tasks')]);
+    var h=facts.length?'<dl class="ue-facts-grid">'+facts.map(function(f){return '<div><dt>'+esc(f[0])+'</dt><dd>'+esc(f[1])+'</dd></div>';}).join('')+'</dl>':'';
+    var debuts=(model.pokemon||[]).filter(function(p){return p.debut;}).slice(0,6);
+    if(debuts.length)h+='<div class="ue-debuts"><h3 class="ue-mini-h">Debuts</h3><div class="ue-chips">'+debuts.map(function(p){return '<span class="ue-chip">'+esc(displayName(p))+'</span>';}).join('')+'</div></div>';
+    return h;
+  }
+  function heroWhen(model,ev){return eventWindow(model,ev);}
   function displayName(p){
     if(p.costumeId)return p.name;
     return GOEventAdapter.collectionName(p) || (GOLIB.parseForm(p.name).base!==p.name?p.name:p.name+(p.label?' ('+p.label+')':p.formId?' ('+p.formId+')':''));
@@ -515,31 +546,13 @@
     if(p.formId&&!p.costumeId&&!described&&GOLIB.parseForm(p.name).base===p.name)return '<span class="art costume-unavailable ea" role="img" aria-label="'+esc(name+' · form art unavailable')+'"><span>'+esc(name)+'</span><small>Form art unavailable</small></span>';
     return G.art({n:name,costume:!!p.costumeId,label:p.label||p.costumeId,asset:p.assetKey||undefined,dynamax:p.formId==='dynamax'||/-dynamax$/.test(p.formId||'')},'ea');
   }
-  function collectionState(p,model){
-    var name=GOEventAdapter.collectionName(p);
-    if(p.formId==='dynamax'||/-dynamax$/.test(p.formId||''))return {state:'form'};
-    if(!name){var id=+p.speciesId;if(id&&X.DEXNAME[id]&&p.formId&&/^[a-z0-9][a-z0-9-]{0,63}$/.test(p.formId)){var tk='form:'+id+':'+p.formId,v=X.usGet(tk);return {state:v===1?'have':v===0?'missing':'unknown',tk:tk};}return {state:'unknown'};}
-    if(p.costumeId&&(model.pokemon||[]).some(function(other){return other.key!==p.key&&GOEventAdapter.collectionName(other)===name;}))return {state:'unknown'};
-    return X.ownState(name,!!p.costumeId);
-  }
-  function refreshOwnership(){
-    var dialog=$('evd');if(!dialog||dialog.hidden||!activeModel)return;
-    dialog.querySelectorAll('.ue-mon').forEach(function(card){
-      var p=activeModel.pokemon.find(function(p){return p.key===card.getAttribute('data-identity');});if(!p)return;
-      var own=collectionState(p,activeModel),label=card.querySelector('.own');
-      if(label){label.textContent=own.state==='have'?'Have':own.state==='missing'?'Need':own.state==='unreleased'?'Not released':'Not tracked';label.className='own '+(own.state==='have'?'own-have':own.state==='missing'?'own-need':'own-unk');}
-      card.querySelectorAll('[data-mark]').forEach(function(button){var value=button.getAttribute('data-val');button.setAttribute('aria-pressed',String(value!==''&&X.usGet(button.getAttribute('data-mark'))===+value));});
-      var follow=card.querySelector('[data-follow]');if(follow){var following=X.isFollowed(follow.getAttribute('data-follow'));follow.textContent=following?'Following':'Follow';follow.setAttribute('aria-pressed',String(following));}
-    });
-  }
-  document.addEventListener('gofn-state',refreshOwnership);
-  document.addEventListener('gofn-marks',refreshOwnership);
+  var currentEv=null;
   function render(ev) {
     if(!window.GOEventAdapter || !window.GOEventComponents) return renderLegacy(ev);
     var d=findDetails(ev)||{}, info=findInfo(ev)||{}, snapshot=(DATA.catalogue||[]).find(function(item){return item.eventId===ev.id || item.eventId===String(ev.id).replace(/^cur:/,'') || (item.aliases||[]).indexOf(ev.id)>=0;});
     var model=window.GOEventAdapter.adapt(ev.universalModel || Object.assign({},ev,{id:snapshot?snapshot.eventId:ev.id}),d,info);
     if(snapshot && snapshot.eventId===model.eventId)model=window.GOEventAdapter.retain(snapshot,model);
-    activeModel=model;
+    activeModel=model;currentEv=ev;
     var venues=window.GOPLACES?GOPLACES.forEvent(ev):[];
     var tickets=(info.tickets||[]).map(passCard).join('');
     var pass=ev.season?primary(seasonPage(ev)):'';
@@ -551,8 +564,8 @@
     var footer='<details class="ue-sources" id="evd-sources"><summary>Sources &amp; updates</summary>'+(heldUpdate?'<p class="note">The latest event update was held. Showing the last available information.</p>':'')+(DATA.incomplete?'<p class="note">Some supplementary event information could not be loaded. Showing the available announcement. Reload to try again.</p>':'')+'<ul>'+sources+'</ul>'+(conflicts?'<h4>Details to recheck</h4><ul>'+conflicts+'</ul>':'')+(d.updated?'<p class="note">Last update '+esc(String(d.updated).slice(0,10))+'</p>':'')+(d.goPassParseWarning?'<p class="note">The last complete GO Pass rewards have been retained while the latest update is checked.'+(d.goPassRetainedAt?' Saved rank snapshot: '+esc(String(d.goPassRetainedAt).slice(0,10))+'.':'')+'</p>':'')+'</details>';
     return window.GOEventComponents.render(model,{
       toolbar:toolbarHtml(ev).replace('<span class="tag">EVENT DETAIL</span>',''),clock:window.GOEventClock,viewerZone:GOEventClock.viewerZone(),safe:safe,rewardArt:function(item){return exactArt(GOEventAdapter.pokemon({name:item.name,costume:!!item.costume,label:item.label,formId:item.formId,costumeId:item.costumeId,asset:item.assetKey}));},banner:(ev.img||model.image)?seasonBannerHtml(ev):'',heroArt:model.pokemon.slice(0,3).map(exactArt).join(''),
-      when:eventWindow(model,ev),countdown:model.schedule&&model.lifecycle!=='cancelled'&&model.lifecycle!=='postponed'&&ev.datesKnown!==false?X.countdown(ev):'',
-      ownership:function(p){return collectionState(p,model);},nameFor:displayName,follow:function(p){var name=GOEventAdapter.collectionName(p)||displayName(p),following=X.isFollowed(name);return '<button type="button" class="ue-follow" data-follow="'+esc(name)+'" aria-pressed="'+String(following)+'" aria-label="Follow '+esc(name)+'">'+(following?'Following':'Follow')+'</button>';},marks:typeof X.markBtns==='function'?X.markBtns:null,art:G.art,artFor:exactArt,bonus:G.bonusChip,
+      when:heroWhen(model,ev),overview:overviewTimes(model,ev),artKind:function(p){var c=window.GOTODAYLOGIC&&GOTODAYLOGIC.classifyArt({name:displayName(p),costume:!!p.costumeId});return c&&c.exact?c.label||'Form':'';},countdown:model.schedule&&model.lifecycle!=='cancelled'&&model.lifecycle!=='postponed'&&ev.datesKnown!==false?X.countdown(ev):'',
+      nameFor:displayName,art:G.art,artFor:exactArt,bonus:G.bonusChip,
       actions:'<div class="evd-btns">'+(calendar&&model.lifecycle!=='cancelled'&&model.lifecycle!=='postponed'?'<a class="pill all" download="event.ics" href="'+icsFor(calendar)+'">Add to calendar</a>':'')+'</div>',
       research:primary(researchTasksHtml(ev,d)),passes:pass,tickets:primary(tickets),moves:primary(evMovesHtml(ev,!model.bonuses.length)),
       locations:venueHtml(ev,venues),sources:footer
@@ -624,7 +637,7 @@
     return visibleGroups.map(function (g, index) {
       return '<h3 class="sec2"' + (highlightTarget && index === 0 ? ' id="evd-highlights"' : '') + '>' + esc(g.title) + '</h3><div class="evd-feat">' + g.rows.map(function (r) {
         var f = r.f, tags = r.sp.keys.map(function (k) { return '<span class="tg tg-' + k + '">' + TAGS[k].i + esc(TAGS[k].t) + '</span>'; }).join('');
-        return '<div class="evd-f"><span>' + X.monArt(ev, f, 'ea') + '</span><div class="evd-fm"><b>' + esc(f.name) + '</b>' + (tags ? '<div class="tgs">' + tags + '</div>' : '') + (f.label ? '<small>' + esc(f.label) + '</small>' : '') + (r.sp.line ? '<small class="ln">' + esc(r.sp.line) + '</small>' : '') + '</div>' + ownChip(f.name, f.costume) + '</div>';
+        return '<div class="evd-f"><span>' + X.monArt(ev, f, 'ea') + '</span><div class="evd-fm"><b>' + esc(f.name) + '</b>' + (tags ? '<div class="tgs">' + tags + '</div>' : '') + (f.label ? '<small>' + esc(f.label) + '</small>' : '') + (r.sp.line ? '<small class="ln">' + esc(r.sp.line) + '</small>' : '') + '</div>' + '</div>';
       }).join('') + '</div>';
     }).join('');
   }
@@ -657,10 +670,17 @@
     if(ev.datesKnown===false)return;
     var day = function (v) { return v ? (typeof v === 'string' ? v.slice(0, 10) : new Date(v).toISOString().slice(0, 10)) : ''; };
     fetch('/api/venue-times?name=' + encodeURIComponent(ev.name || '') + '&start=' + encodeURIComponent(day(ev.start)) + '&end=' + encodeURIComponent(day(ev.end)) + venueTimeQuery()).then(function (r) { return r.ok ? r.json() : null; }).then(function (d) {
-      var when = o.querySelector('.evc-when'); if (!d || !d.items || !d.items.length || !when || o.hidden || o.querySelector('.evd-bonus')) return;
-      var p = document.createElement('p'); p.className = 'evd-bonus'; p.style.cssText = 'margin:6px 0;font-weight:600';
-      p.innerHTML = d.items.map(function (i) { return '🎯 ' + (d.items.length > 1 ? esc(String(i.name).replace(/^.* - /, '')) + ': ' : 'Bonuses start ') + (d.items.length > 1 ? 'bonuses start ' : '') + venueTimeLabel(i) + (i.note ? ' <small>(' + esc(i.note) + ')</small>' : ''); }).join('<br>');
-      when.parentNode.insertBefore(p, when.nextSibling);
+      var host = o.querySelector('.ue-times') || o.querySelector('.ue-overview'); if (!d || !d.items || !host || o.hidden || o.querySelector('.evd-bonus')) return;
+      var items = window.GOTODAYLOGIC ? GOTODAYLOGIC.matchVenueTimes(d.items, { name: ev.name, start: day(ev.start), end: day(ev.end) }) : [];
+      if (!items.length) return;
+      var wrap = document.createElement('div'); wrap.className = 'ue-time evd-bonus';
+      items.forEach(function (i) {
+        var unconfirmed = window.GOTODAYLOGIC && GOTODAYLOGIC.venueTimeUnconfirmed(i);
+        var k = document.createElement('span'); k.className = 'k'; k.textContent = unconfirmed ? 'Bonuses (not confirmed)' : 'Bonuses start';
+        var v = document.createElement('span'); v.className = 'v'; v.textContent = String(i.day || '') + ', ' + String(i.show || '') + ' your time' + (i.venueDay && i.venueShow && i.zone ? ' · event local: ' + i.venueDay + ', ' + i.venueShow + ' ' + i.zone : '') + (unconfirmed ? ' (expected; Pokémon GO has not confirmed the hours)' : '');
+        wrap.append(k, v);
+      });
+      host.appendChild(wrap);
     }).catch(function () {});
   }
   /* The same bonus-start time on the cards in the list: cards carry an empty line, filled once the venue times have loaded. */
@@ -675,8 +695,7 @@
       Array.prototype.forEach.call(document.querySelectorAll('.evc-bonus[hidden]:not([data-done])'), function (p) {
         p.setAttribute('data-done', '1');
         var n = p.getAttribute('data-bn') || '', s = p.getAttribute('data-bs') || '', e = p.getAttribute('data-be') || s;
-        var own = items.filter(function (i) { return i.name.toLowerCase() === n.toLowerCase(); });
-        var hit = own.length ? own : (words3(n).split(' ').length < 3 || !s ? [] : items.filter(function (i) { return words3(i.name) === words3(n) && i.date >= shiftDay(s, -1) && i.date <= shiftDay(e || s, 1); }));
+        var hit = window.GOTODAYLOGIC ? GOTODAYLOGIC.matchVenueTimes(items, { name: n, start: s, end: e }) : items.filter(function (i) { return i.name.toLowerCase() === n.toLowerCase(); });
         if (!hit.length) return;
         p.innerHTML = '🎯 Bonuses start ' + hit.slice(0, 3).map(function (i) { return (hit.length > 1 ? esc(String(i.name).replace(/^.* - /, '')) + ' ' : '') + venueTimeLabel(i); }).join(' · ') + (hit.length === 1 && hit[0].note ? ' <small>(' + esc(hit[0].note) + ')</small>' : '');
         p.style.cssText = 'margin:4px 0;font-weight:600'; p.hidden = false;
@@ -705,6 +724,8 @@
       o.hidden = false; document.body.style.overflow = 'hidden'; o.scrollTop = 0;
       if (!wasOpen && window.GONAV) window.GONAV.push();
       var x = $('evd-x'); if (x) { x.addEventListener('click', function () { close(); }); x.focus(); }
+      var tl = o.querySelector('.evd-tabs'); if (tl) tabEdges(tl);
+      var bar = o.querySelector('.evd-bar'); if (bar) o.style.setProperty('--evd-bar-h', bar.offsetHeight + 'px');
     });
   }
   document.addEventListener('click', function (e) {
@@ -715,6 +736,10 @@
         /* Native fragment navigation emits popstate and closes the modal. Keep section jumps inside it. */
         e.preventDefault();
         if(target.tagName==='DETAILS')target.open=true;
+        dialog.querySelectorAll('.evd-jump a').forEach(function(link){link.removeAttribute('aria-current');});
+        jump.setAttribute('aria-current','location');
+        var nav=jump.parentElement;
+        nav.scrollTo({left:jump.offsetLeft-(nav.clientWidth-jump.clientWidth)/2,behavior:'smooth'});
         target.setAttribute('tabindex', '-1');
         target.focus({ preventScroll: true });
         target.scrollIntoView({ block: 'start' });
@@ -743,6 +768,67 @@
     if (e.shiftKey && (active === first || !o.contains(active))) { e.preventDefault(); last.focus(); }
     else if (!e.shiftKey && (active === last || !o.contains(active))) { e.preventDefault(); first.focus(); }
   });
+  /* Section tabs: one panel at a time, roving tabindex, arrow/Home/End keys. */
+  function selectTab(tab,focus){
+    var list=tab.closest('[role=tablist]'),root=list.closest('.evd-in')||list.parentNode;
+    list.querySelectorAll('[role=tab]').forEach(function(t){var on=t===tab;t.setAttribute('aria-selected',String(on));t.tabIndex=on?0:-1;});
+    root.querySelectorAll('[role=tabpanel]').forEach(function(p){p.hidden=p.id!==tab.getAttribute('aria-controls');});
+    if(focus)tab.focus({preventScroll:true});
+    list.scrollTo({left:tab.offsetLeft-(list.clientWidth-tab.clientWidth)/2,behavior:'smooth'});
+    tabEdges(list);
+    var o=$('evd');if(o){var wrap=list.parentNode,top=wrap.offsetTop;if(o.scrollTop>top)o.scrollTop=top;}
+  }
+  function tabEdges(list){var w=list.parentNode;w.classList.toggle('has-left',list.scrollLeft>4);w.classList.toggle('has-right',list.scrollLeft+list.clientWidth<list.scrollWidth-4);}
+  document.addEventListener('scroll',function(e){if(e.target&&e.target.classList&&e.target.classList.contains('evd-tabs'))tabEdges(e.target);},true);
+  window.addEventListener('resize',function(){var l=document.querySelector('#evd .evd-tabs');if(l)tabEdges(l);});
+  document.addEventListener('click',function(e){var t=e.target.closest&&e.target.closest('.evd-tab');if(t)selectTab(t,false);});
+  document.addEventListener('keydown',function(e){
+    var t=e.target.closest&&e.target.closest('.evd-tab');if(!t)return;
+    var tabs=[].slice.call(t.parentNode.querySelectorAll('[role=tab]')),i=tabs.indexOf(t),n=-1;
+    if(e.key==='ArrowRight')n=(i+1)%tabs.length;else if(e.key==='ArrowLeft')n=(i-1+tabs.length)%tabs.length;else if(e.key==='Home')n=0;else if(e.key==='End')n=tabs.length-1;
+    if(n<0)return;e.preventDefault();selectTab(tabs[n],true);
+  });
+  /* Event overflow menu: infographic, open source, mark done (Today). */
+  function closeEvMenu(restore){var m=document.querySelector('.evd-menu');if(!m)return;var b=m.parentNode.querySelector('[data-evmenu]');m.remove();if(b){b.setAttribute('aria-expanded','false');if(restore)b.focus();}}
+  document.addEventListener('click',function(e){
+    var mb=e.target.closest&&e.target.closest('[data-evmenu]');
+    if(!mb){if(!(e.target.closest&&e.target.closest('.evd-menu')))closeEvMenu(false);return;}
+    var was=mb.getAttribute('aria-expanded')==='true';closeEvMenu(false);if(was||!currentEv)return;
+    var ev=currentEv,src=safe(ev.link)||'',m=document.createElement('div');m.className='evd-menu';m.setAttribute('role','menu');
+    m.innerHTML='<button type="button" role="menuitem" class="evd-menuitem" data-infographic="'+esc(ev.id)+'">Infographic</button>'+(src?'<a role="menuitem" class="evd-menuitem" href="'+esc(src)+'" target="_blank" rel="noopener noreferrer">Open source</a>':'')+'<button type="button" role="menuitem" class="evd-menuitem" data-evdone="'+esc(ev.id)+'">Mark done on Today</button>';
+    mb.parentNode.appendChild(m);mb.setAttribute('aria-expanded','true');m.querySelector('[role=menuitem]').focus();
+  });
+  document.addEventListener('click',function(e){
+    var d=e.target.closest&&e.target.closest('[data-evdone]');if(!d||!currentEv||!window.GOTODAYLOGIC)return;
+    var ev=currentEv,ok=false;try{ok=!!GOTODAYLOGIC.markDone(window.localStorage,ev.id,ev.start,ev.end,Date.now());}catch(x){}
+    closeEvMenu(false);toast(ok?'Hidden from Today. It stays in Schedule.':'Could not save on this device');
+    try{document.dispatchEvent(new Event('gofn-today-done'));}catch(x){}
+  });
+  document.addEventListener('keydown',function(e){var m=document.querySelector('.evd-menu');if(!m)return;
+    var items=[].slice.call(m.querySelectorAll('[role=menuitem]')),i=items.indexOf(document.activeElement);
+    if(e.key==='Escape'){e.preventDefault();e.stopImmediatePropagation();closeEvMenu(true);}
+    else if(e.key==='ArrowDown'){e.preventDefault();items[(i+1)%items.length].focus();}
+    else if(e.key==='ArrowUp'){e.preventDefault();items[(i-1+items.length)%items.length].focus();}
+  },true);
+  /* Pokémon info sheet: accessible dialog with focus trap, Escape and focus return. */
+  var sheetOpener=null;
+  function closeSheet(){var sh=$('ue-sheet');if(!sh)return;sh.remove();if(sheetOpener&&sheetOpener.isConnected)sheetOpener.focus();sheetOpener=null;}
+  document.addEventListener('click',function(e){
+    var sh=$('ue-sheet');
+    if(sh&&(e.target.closest('[data-sheet-close]')||e.target===sh)){closeSheet();return;}
+    var b=e.target.closest&&e.target.closest('.ue-mon[data-info]');if(!b)return;
+    var info={};try{info=JSON.parse(b.getAttribute('data-info'));}catch(x){}
+    closeSheet();sheetOpener=b;
+    var d=document.createElement('div');d.id='ue-sheet';d.className='ue-sheet';
+    d.innerHTML='<div class="ue-sheet-card" role="dialog" aria-modal="true" aria-labelledby="ue-sheet-t"><div class="ue-sheet-art">'+b.querySelector('.ue-mon-art').innerHTML+'</div><h3 id="ue-sheet-t">'+esc(info.name||'')+'</h3><p class="ue-sheet-m">'+esc([info.method,info.badge].filter(Boolean).join(' · '))+'</p>'
+      +(info.form?'<p class="ue-sheet-f">Special form: '+esc(info.form)+'</p>':'')+(info.signals&&info.signals.length?'<p>'+info.signals.map(esc).join(' · ')+'</p>':'')+(info.meta&&info.meta.length?'<p class="ue-sheet-m">'+info.meta.map(esc).join(' · ')+'</p>':'')+'<button type="button" class="pill all" data-sheet-close>Close</button></div>';
+    (($('evd'))||document.body).appendChild(d);d.querySelector('[data-sheet-close]').focus();
+  });
+  document.addEventListener('keydown',function(e){
+    var sh=$('ue-sheet');if(!sh)return;
+    if(e.key==='Escape'){e.stopImmediatePropagation();e.preventDefault();closeSheet();}
+    else if(e.key==='Tab'){e.stopImmediatePropagation();e.preventDefault();sh.querySelector('[data-sheet-close]').focus();}
+  },true);
   window.GOEVD = { close: close };
   document.addEventListener('gofn-state', function () { var o = $('evd'); if (o && !o.hidden) { var s = o.querySelector('[data-save]'); if (s) { var on = X.isSaved(s.dataset.save); s.classList.toggle('on', on); s.textContent = on ? '★' : '☆'; s.setAttribute('aria-pressed', on); var l = o.querySelector('.evd-lead'); if (l) l.hidden = !on; } } });
   document.addEventListener('change', function (e) { var sel = e.target.closest && e.target.closest('select[data-lead]'); if (!sel) return; var v = sel.value; X.usSet('pref:lead:' + sel.getAttribute('data-lead'), v === '' ? null : v); });
