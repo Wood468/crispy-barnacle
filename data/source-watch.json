@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-08T17:55:54.870Z",
+ "updated": "2026-11-08T22:05:52.084Z",
  "status": [
   {
    "id": "hub",
@@ -48,20 +48,6 @@
   {
    "source": "hub",
    "trust": "community",
-   "title": "Super Mega Clefable Raid Day",
-   "link": "https://pokemongohub.net/post/event/super-mega-clefable-raid-day/",
-   "date": "2026-11-05T18:14:11.000Z",
-   "summary": "Mega Clefable debuts during Clefable Super Mega Raid Day on Saturday, November 28, 2026, from 2:00 p.m. to 5:00 p.m. local time. Mega Clefable appears in Super Mega Raids with an increased chance to b",
-   "pokemon": [
-    "Clefable"
-   ],
-   "notInOurData": [
-    "Clefable"
-   ]
-  },
-  {
-   "source": "hub",
-   "trust": "community",
    "title": "Shadow Tornadus (Incarnate) Raid Counters Guide",
    "link": "https://pokemongohub.net/post/guide/shadow-tornadus-incarnate-raid-counters-guide/",
    "date": "2026-11-03T10:07:44.000Z",
@@ -74,11 +60,25 @@
    ]
   },
   {
+   "source": "reddit-silph",
+   "trust": "tip",
+   "title": "Has anyone actually reached Level 108 to get Spiritomb?",
+   "link": "https://www.reddit.com/r/TheSilphRoad/comments/1xle1cz/has_anyone_actually_reached_level_108_to_get/",
+   "date": "2026-11-01T20:49:36.000Z",
+   "summary": "<!-- SC_OFF --><div class=\"md\"><p>I’m genuinely curious how many players have managed to complete this challenge! How much grinding/raids did it take? How many hours did you play, any luck with shiny ",
+   "pokemon": [
+    "Spiritomb"
+   ],
+   "notInOurData": [
+    "Spiritomb"
+   ]
+  },
+  {
    "source": "youtube-pogo",
    "trust": "official",
    "title": "Costumed Machamp debuts in Pokémon GO!",
    "link": "https://www.youtube.com/shorts/Z2OPNHxhNSc",
-   "date": "2026-11-08T14:06:53.000Z",
+   "date": "2026-11-08T19:59:12.000Z",
    "summary": "",
    "pokemon": [
     "Machamp"
@@ -110,23 +110,23 @@
   {
    "source": "reddit-silph",
    "trust": "tip",
-   "title": "Has anyone gotten a shiny costume Machamp from Sendai/Mexico through remote raids?",
-   "link": "https://www.reddit.com/r/TheSilphRoad/comments/1xq1o2z/has_anyone_gotten_a_shiny_costume_machamp_from/",
-   "date": "2026-11-07T08:42:02.000Z",
-   "summary": "<!-- SC_OFF --><div class=\"md\"><p>For people who don’t have the in person ticket, has anyone gotten any shiny Machamp from raids? I did get shiny Gmax Duraludon..</p> </div><!-- SC_ON --> &#32; submit",
-   "pokemon": [
-    "Machamp"
-   ],
-   "notInOurData": []
-  },
-  {
-   "source": "reddit-silph",
-   "trust": "tip",
    "title": "Last time every Costume Pokemon were available (2026 Edition)",
    "link": "https://www.reddit.com/r/TheSilphRoad/comments/1xq0bq0/last_time_every_costume_pokemon_were_available/",
    "date": "2026-11-07T07:16:18.000Z",
    "summary": "<table> <tr><td> <a href=\"https://www.reddit.com/r/TheSilphRoad/comments/1xq0bq0/last_time_every_costume_pokemon_were_available/\"> <img src=\"https://preview.redd.it/uqwvqorv350i1.png?width=140&amp;hei",
    "pokemon": [],
+   "notInOurData": []
+  },
+  {
+   "source": "hub",
+   "trust": "community",
+   "title": "Super Mega Clefable Raid Day",
+   "link": "https://pokemongohub.net/post/event/super-mega-clefable-raid-day/",
+   "date": "2026-11-05T18:14:11.000Z",
+   "summary": "Mega Clefable debuts during Clefable Super Mega Raid Day on Saturday, November 28, 2026, from 2:00 p.m. to 5:00 p.m. local time. Mega Clefable appears in Super Mega Raids with an increased chance to b",
+   "pokemon": [
+    "Clefable"
+   ],
    "notInOurData": []
   },
   {
