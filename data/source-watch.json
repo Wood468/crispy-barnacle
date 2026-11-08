@@ -1,20 +1,20 @@
 {
- "updated": "2026-11-08T00:36:49.264Z",
+ "updated": "2026-11-08T10:23:36.411Z",
  "status": [
   {
    "id": "hub",
    "state": "ok",
-   "items": 5
+   "items": 4
   },
   {
    "id": "miners-assets",
-   "state": "ok",
-   "items": 0
+   "state": "error",
+   "note": "HTTP 504"
   },
   {
    "id": "miners-gm",
-   "state": "ok",
-   "items": 0
+   "state": "error",
+   "note": "HTTP 504"
   },
   {
    "id": "reddit-silph",
@@ -23,8 +23,8 @@
   },
   {
    "id": "youtube-pogo",
-   "state": "error",
-   "note": "HTTP 500"
+   "state": "ok",
+   "items": 2
   }
  ],
  "gaps": 4,
@@ -168,16 +168,23 @@
    "notInOurData": []
   },
   {
-   "source": "hub",
-   "trust": "community",
-   "title": "Pokémon GO Halloween 2026: Part Two",
-   "link": "https://pokemongohub.net/post/event/pokemon-go-halloween-2026-part-two/",
-   "date": "2026-11-01T04:55:14.000Z",
-   "summary": "Pokémon GO&#8217;s Halloween 2026 Part Two event runs from Sunday, November 1, at 10:00 a.m. to Thursday, November 5, 2026, at 8:00 p.m. local time. Shiny Greavard makes its Pokémon GO debut, and Mega",
-   "pokemon": [
-    "Greavard",
-    "Sableye"
-   ],
+   "source": "youtube-pogo",
+   "trust": "official",
+   "title": "New costumed Pokémon make their debuts during Halloween 2026 Part I in Pokémon GO!",
+   "link": "https://www.youtube.com/shorts/I6MvdaExyIg",
+   "date": "2026-10-27T17:00:40.000Z",
+   "summary": "",
+   "pokemon": [],
+   "notInOurData": []
+  },
+  {
+   "source": "youtube-pogo",
+   "trust": "official",
+   "title": "New costumed Pokémon make their debuts during Halloween 2026 Part I in Pokémon GO!",
+   "link": "https://www.youtube.com/watch?v=wyN2y-BgpoU",
+   "date": "2026-10-27T17:00:14.000Z",
+   "summary": "",
+   "pokemon": [],
    "notInOurData": []
   }
  ]
