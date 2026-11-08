@@ -121,15 +121,15 @@ def main():
         page.wait_for_function(
             """() => window.GODASH &&
               window.GODASH.eventsState() === 'degraded' &&
-              document.getElementById('home-now')?.hasAttribute('data-render-key')""",
+              document.querySelector('#today-v1 .t1-glance')""",
             timeout=20000,
         )
         fallback = page.evaluate("""() => {
-          const home = document.getElementById('home-now');
+          const home = document.getElementById('today-v1');
           const bar = document.getElementById('netbar');
           return {
             state: window.GODASH.eventsState(),
-            rendered: !!home && home.hasAttribute('data-render-key'),
+            rendered: !!home && !!home.querySelector('.t1-glance'),
             homeHeight: home ? home.offsetHeight : 0,
             homeTextLength: home ? home.innerText.trim().length : 0,
             noticeVisible: !!bar && !bar.hidden,

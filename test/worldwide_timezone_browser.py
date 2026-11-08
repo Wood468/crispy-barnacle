@@ -38,6 +38,7 @@ with sync_playwright() as p:
   def open_event(id):
    page.evaluate('(id)=>GODETAIL.open(id)',id)
    page.locator('#evd:not([hidden]) .ue-hero').wait_for()
+   page.evaluate("document.querySelectorAll('#evd [role=tabpanel]').forEach(p=>p.hidden=false)")
   def close_event():
    page.keyboard.press('Escape')
    page.wait_for_function('!GONAV.internal&&GONAV.pending.length===0')
@@ -87,7 +88,7 @@ with sync_playwright() as p:
   diagnostics=page.evaluate('GOEventRegistry.diagnostics()')
   assert diagnostics['retained'] and diagnostics['rejectedCount']==1,diagnostics
   assert page.evaluate('GOEventRegistry.events().length')==len(VALID['events'])
-  open_event(INSTANT['eventId']);page.locator('#evd-sources > summary').click()
+  open_event(INSTANT['eventId']);page.locator('#evd-tab-details').click()
   assert 'latest event update was held' in page.locator('#evd-sources').inner_text()
   close_event()
   bad=copy.deepcopy(VALID);bad['events'][0]['aliases']=['shared'];bad['events'][1]['aliases']=['shared'];payload[0]=bad

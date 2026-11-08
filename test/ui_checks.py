@@ -475,6 +475,11 @@ with sync_playwright() as p:
                     return append.call(this, node);
                 };
             })();""")
+        # These checks exercise the classic Today agenda; the redesigned Today is covered by today_detail_redesign_browser.py and today_done_browser.py.
+        pg.add_init_script("localStorage.setItem('gofn-classic-today','1')")
+        # Event Details sections are tabs now (covered by today_detail_redesign_browser.py). The content assertions below read every section, so reveal all panels.
+        pg.add_init_script("""(() => { const show = () => document.querySelectorAll('#evd [role=tabpanel][hidden]').forEach(p => { p.hidden = false; });
+          new MutationObserver(show).observe(document, { subtree: true, childList: true, attributes: true, attributeFilter: ['hidden'] }); })()""")
         if pin: pg.add_init_script("localStorage.setItem('gofn-pin','x')")
         if marks: pg.add_init_script("localStorage.setItem('gofn-dex-v1',%s)"%json.dumps(json.dumps(marks)))
         if us: gens=gens or []
@@ -1138,7 +1143,7 @@ with sync_playwright() as p:
         check('Desktop Today uses a two-column primary agenda and supporting sidebar',
               desktop_today['display']=='grid' and desktop_today['columns']==2 and
               desktop_today['mainRight']<desktop_today['sideLeft'] and
-              desktop_today['sideIds']==['action-centre','foryou-sec','weekly-sec','buy-sec'] and
+              desktop_today['sideIds']==['action-centre','foryou-sec'] and
               desktop_today['weekOutside'] and desktop_today['documentWidth']<=desktop_today['viewport'],
               desktop_today)
         check('Overseas in-person events remain visible in the primary desktop Today agenda',
@@ -1359,8 +1364,8 @@ with sync_playwright() as p:
         check('Worldwide-local event details keep local-time context visible',
               'Local time wherever you play' in detail_time and 'AEDT' in detail_time,
               detail_time)
-        jump_links = next_page.locator('#evd .evd-jump a').evaluate_all(
-            "els => els.map(a => ({label: a.textContent.trim(), target: !!document.getElementById(a.getAttribute('href').slice(1))}))")
+        jump_links = next_page.locator('#evd [role=tab]').evaluate_all(
+            "els => els.map(a => ({label: a.textContent.trim(), target: !!document.getElementById(a.getAttribute('aria-controls'))}))")
         check('Event detail quick links all have rendered targets', all(x['target'] for x in jump_links), jump_links)
         check('Event detail hides Highlights and Locations when those sections are absent',
               all(x['label'] not in ['Highlights', 'Locations'] for x in jump_links), jump_links)
@@ -1383,10 +1388,10 @@ with sync_playwright() as p:
         }""")
         highlight_page.evaluate("GODETAIL.open('zorua')")
         highlight_page.locator('#evd').wait_for(state='visible')
-        highlight_page.locator('#evd .evd-jump a[href="#evd-highlights"]').wait_for(state='attached')
+        highlight_page.locator('#evd-highlights').wait_for(state='attached')
         move_target = highlight_page.locator('#evd-highlights')
         check('Move-only Highlights shortcut lands on event-only moves',
-              highlight_page.locator('#evd .evd-jump a[href="#evd-highlights"]').count() == 1 and
+              highlight_page.locator('#evd [role=tab]').count() >= 2 and
               move_target.count() == 1 and move_target.evaluate("(el) => el.textContent.trim()") == 'Event-only moves',
               {'target_count': move_target.count(), 'target_text': move_target.inner_text() if move_target.count() else '',
                'event_ids': highlight_page.evaluate("GODASH.events().map(e => e.id).filter(id => id === 'zorua')")})
@@ -1394,10 +1399,10 @@ with sync_playwright() as p:
         highlight_page.locator('#evd').wait_for(state='hidden')
         highlight_page.evaluate("GODETAIL.open('featured-highlight')")
         highlight_page.locator('#evd').wait_for(state='visible')
-        highlight_page.locator('#evd .evd-jump a[href="#evd-highlights"]').wait_for(state='attached')
+        highlight_page.locator('#evd-highlights').wait_for(state='attached')
         featured_target = highlight_page.locator('#evd-highlights')
         check('Featured-only Highlights shortcut lands on the featured Pokémon section',
-              highlight_page.locator('#evd .evd-jump a[href="#evd-highlights"]').count() == 1 and
+              highlight_page.locator('#evd [role=tab]').count() >= 2 and
               featured_target.count() == 1 and featured_target.evaluate("(el) => el.textContent.trim()") == 'Featured Pokémon',
               {'target_count': featured_target.count(), 'target_text': featured_target.inner_text() if featured_target.count() else '',
                'featured': highlight_page.evaluate("GODASH.events().filter(e => e.id === 'featured-highlight').map(e => e.featured)")})
@@ -1432,7 +1437,7 @@ with sync_playwright() as p:
         places_page.evaluate('window.__gofnReleasePlaces()')
         places_page.locator('#home-now .today-next-up').click()
         places_page.locator('#evd').wait_for(state='visible', timeout=5000)
-        location_link = places_page.locator('#evd .evd-jump a[href="#evd-locations"]')
+        location_link = places_page.locator('#evd #evd-tab-details')
         check('Event details wait for sourced venues before showing Locations',
               location_link.count() == 1 and places_page.locator('#evd-locations').count() == 1)
         places_page.context.close()

@@ -60,7 +60,7 @@ with sync_playwright() as p:
         assert page.locator('#universal-announced-tab-now').is_visible(), 'undated overseas announcement hidden'
         assert page.evaluate("""()=>{
             GODASH.renderAll();
-            const el=document.querySelector('#home-now [data-open]');el.focus();
+            const el=document.querySelector('#today-v1 [data-open]');el.focus();
             GODASH.renderAll();return el.isConnected&&document.activeElement===el;
         }"""), 'unchanged Today refresh replaced the focused event button'
         page.locator('#tabs [data-tab="events"]').click()
@@ -70,6 +70,7 @@ with sync_playwright() as p:
         target.click()
         try:
             page.wait_for_function("document.getElementById('evd-t')?.textContent==='Synthetic Future Community Day'")
+            page.evaluate("document.querySelectorAll('#evd [role=tabpanel]').forEach(p=>p.hidden=false)")
         except Exception:
             print('Event handoff failure:',errors,page.evaluate("({title:document.getElementById('evd-t')?.textContent,hidden:document.getElementById('evd')?.hidden,active:document.activeElement?.outerHTML,events:GODASH.events().filter(e=>e.id==='synthetic-future-community-day').map(e=>({id:e.id,name:e.name}))})"),flush=True)
             raise
@@ -80,6 +81,7 @@ with sync_playwright() as p:
         page.keyboard.press('Escape')
         page.evaluate("GODETAIL.open('synthetic-future-festival')")
         page.wait_for_function("document.getElementById('evd-t')?.textContent==='Synthetic Future Festival'")
+        page.evaluate("document.querySelectorAll('#evd [role=tabpanel]').forEach(p=>p.hidden=false)")
         for method in ['wild','raid','incense']:
             assert page.locator(f'#evd [data-method="{method}"]').is_visible()
         base=page.locator('#evd [data-method="wild"] [data-identity="25:base:none"]')
@@ -102,16 +104,18 @@ with sync_playwright() as p:
         assert page.locator('#evd .ue-sources').count()==1
         assert 'example.invalid' not in page.locator('#evd').inner_text()
         assert page.locator('#evd').evaluate('(el)=>el.scrollWidth<=el.clientWidth'), (engine,width)
-        page.locator('.evd-jump a[href="#evd-sources"]').click()
-        assert page.locator('#evd-sources').evaluate('(el)=>el.open&&el===document.activeElement')
+        page.locator('#evd-tab-details').click()
+        assert page.locator('#evd-panel-details:not([hidden]) #evd-sources').evaluate('(el)=>el.open')
         page.keyboard.press('Escape')
         page.evaluate("GODETAIL.open('synthetic-undated-overseas')")
         page.wait_for_function("document.getElementById('evd-t')?.textContent==='Synthetic Overseas Announcement'")
+        page.evaluate("document.querySelectorAll('#evd [role=tabpanel]').forEach(p=>p.hidden=false)")
         assert 'Dates to be announced' in page.locator('#evd').inner_text()
         assert 'Invalid Date' not in page.locator('#evd').inner_text()
         page.keyboard.press('Escape')
         page.evaluate("GODETAIL.open('synthetic-native-pass')")
         page.wait_for_function("document.getElementById('evd-t')?.textContent==='Synthetic native GO Pass'")
+        page.evaluate("document.querySelectorAll('#evd [role=tabpanel]').forEach(p=>p.hidden=false)")
         assert 'Rank 2' in page.locator('#evd-pass').inner_text()
         assert 'Premium Battle Pass' in page.locator('#evd-pass').inner_text()
         assert errors==[],errors
@@ -124,11 +128,11 @@ with sync_playwright() as p:
     page=context.new_page();errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
     page.goto(BASE+'/');page.wait_for_function('!!window.GODETAIL&&!!window.GOEventRegistry')
     page.evaluate('GOEventRegistry.ready')
-    regional=page.locator('#home-now .agr.reg[data-open]').first
+    regional=page.locator('#today-v1 .t1-reg [data-open]').first
     regional.wait_for(state='visible')
     regional_id=regional.get_attribute('data-open')
     expected_title=page.evaluate('(id)=>GOEventRegistry.find(id).title',regional_id)
-    source_url=regional.get_attribute('href')
+    source_url=page.evaluate('(id)=>GOEventRegistry.find(id).sources.map(s=>s.url)[0]',regional_id)
     regional.click()
     page.wait_for_function('(title)=>document.getElementById("evd-t")?.textContent===title',arg=expected_title)
     assert len(context.pages)==1, 'known overseas event escaped to its external source'
@@ -182,6 +186,7 @@ with sync_playwright() as p:
     late_target.click()
     try:
         page.wait_for_function("document.getElementById('evd-t')?.textContent==='Synthetic Future Community Day'")
+        page.evaluate("document.querySelectorAll('#evd [role=tabpanel]').forEach(p=>p.hidden=false)")
     except Exception:
         print('Late catalogue handoff failure:',errors,sorted(pending),page.evaluate("({title:document.getElementById('evd-t')?.textContent,hidden:document.getElementById('evd')?.hidden,active:document.activeElement?.outerHTML.slice(0,240),depth:GONAV.depth,settled:GOEventRegistry.settled(),handoff:window.__handoff,places:!!window.GOPLACES,events:GODASH.events().filter(e=>e.id==='synthetic-future-community-day').map(e=>({id:e.id,name:e.name}))})"),flush=True)
         raise
@@ -197,6 +202,7 @@ with sync_playwright() as p:
     page.goto(BASE+'/');page.wait_for_function('!!window.GODETAIL&&!!window.GOEventRegistry');page.evaluate('GOEventRegistry.ready')
     page.evaluate("GODETAIL.open('synthetic-dst-gap')")
     page.wait_for_function("document.getElementById('evd-t')?.textContent==='Synthetic DST gap'")
+    page.evaluate("document.querySelectorAll('#evd [role=tabpanel]').forEach(p=>p.hidden=false)")
     assert page.locator('#evd a[download]').count()==0
     assert errors==[],errors
     print('PASS player-local DST gap keeps detail readable and withholds invalid calendar')
@@ -215,11 +221,11 @@ with sync_playwright() as p:
     page.evaluate("GODETAIL.open('synthetic-future-community-day')")
     page.clock.run_for(8100)
     page.wait_for_function("document.getElementById('evd-t')?.textContent==='Synthetic Future Community Day'")
+    page.evaluate("document.querySelectorAll('#evd [role=tabpanel]').forEach(p=>p.hidden=false)")
     assert page.locator('#evd [data-method="wild"]').count()==1
     assert page.locator('#evd [data-method="wild"] .ue-mon').count()==1
     assert page.locator('#evd .own,#evd [data-follow],#evd [data-mark]').count()==0
     assert page.locator('#evd-research-title').count()==0
-    page.locator('#evd-sources > summary').click()
     assert 'supplementary event information could not be loaded' in page.locator('#evd-sources').inner_text()
     assert page.evaluate("({dex:localStorage.getItem('gofn-dex-v1'),us:localStorage.getItem('gofn-us-v1')})")==before
     for route in stalled:route.abort()

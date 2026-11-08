@@ -26,19 +26,21 @@ with sync_playwright() as p:
         page.on('pageerror', lambda error: errors.append(str(error)))
         page.clock.install(time='2026-11-06T12:00:00+11:00')
         page.goto(BASE)
-        page.wait_for_selector('#home-now .today-event')
-        assert page.locator('#day-brief-title').inner_text() == 'Today'
-        assert page.locator('#home-now .today-event').count() > 0
-        assert page.locator('#home-now .today-event').first.locator('.today-event-art').count() == 1
-        assert page.locator('#home-now .today-event').first.locator('.today-event-status').count() == 1
-        assert page.locator('#home-now .agw .reg').count() > 0, 'overseas events disappeared'
+        page.wait_for_selector('#today-v1 .t1-card')
+        heads = page.locator('#today-v1 .t1-sec-head h2, #today-v1 .t1-h-main').all_inner_texts()
+        assert heads[0].lower() == 'today at a glance' and 'happening now' in [h.lower() for h in heads], heads
+        assert page.locator('#today-v1 .t1-tile').count() == 3
+        assert page.locator('#today-v1 .t1-card').count() > 0
+        assert page.locator('#today-v1 .t1-place em').count() > 0, 'overseas in-person events must stay visible and labelled'
+        assert not page.locator('#today-v1 [data-follow],#today-v1 [data-mark],#today-v1 .own').count()
         assert not page.locator('#foryou-sec').is_visible()
-        assert page.locator('#action-centre [data-quick-go="collect"]').count() == 0
         assert page.evaluate('document.documentElement.scrollWidth <= innerWidth')
+        for box in page.locator('#today-v1 .t1-more').all()[:3]:
+            b = box.bounding_box(); assert b['width'] >= 43.5 and b['height'] >= 43.5, b
         page.screenshot(path=str(OUT / f'redesign-today-{width}.png'))
 
         before = page.evaluate("({dex:localStorage.getItem('gofn-dex-v1'),us:localStorage.getItem('gofn-us-v1')})")
-        page.locator('#home-now .today-event-open').first.click()
+        page.locator('#today-v1 .t1-place').first.locator('xpath=ancestor::article//button[@data-open]').click()
         page.wait_for_selector('#evd .ue-hero')
         assert 'Sendai' in page.locator('#evd-t').inner_text()
         assert page.locator('#evd .ue-mon').count() > 0
@@ -47,20 +49,24 @@ with sync_playwright() as p:
         assert page.evaluate('document.querySelector("#evd").scrollWidth <= innerWidth')
         page.screenshot(path=str(OUT / f'redesign-detail-{width}.png'))
 
-        # Navigate each published section, including a long research list and tickets.
-        for href in ('#evd-pokemon', '#evd-highlights', '#evd-research-title', '#evd-tickets'):
-            jump = page.locator(f'#evd .evd-jump a[href="{href}"]')
-            if not jump.count():
-                continue
-            jump.click()
-            placement = page.evaluate('''(href) => {
-              const target=document.querySelector(href), bar=document.querySelector('#evd .evd-bar'), nav=document.querySelector('#evd .evd-jump');
-              return {target:target.getBoundingClientRect().top, bar:bar.getBoundingClientRect().bottom,
-                      nav:nav.getBoundingClientRect().bottom, current:document.querySelector('#evd .evd-jump [aria-current="location"]')?.getAttribute('href')};
-            }''', href)
-            assert placement['target'] >= placement['nav'] - 1, (width, href, placement)
-            assert placement['nav'] >= placement['bar'] - 1, (width, href, placement)
-            assert placement['current'] == href, (width, href, placement)
+        # Section tabs: one panel at a time, roving tabindex, arrow keys.
+        tabs = page.locator('#evd [role=tab]')
+        assert tabs.count() >= 3 and page.locator('#evd [role=tablist]').count() == 1
+        assert page.locator('#evd [role=tabpanel]:not([hidden])').count() == 1
+        tabs.first.focus(); page.keyboard.press('ArrowRight')
+        assert tabs.nth(1).get_attribute('aria-selected') == 'true' and tabs.nth(1).get_attribute('tabindex') == '0'
+        assert tabs.first.get_attribute('tabindex') == '-1'
+        assert page.locator('#evd [role=tabpanel]:not([hidden])').count() == 1
+        panel_id = tabs.nth(1).get_attribute('aria-controls')
+        assert page.locator(f'#{panel_id}:not([hidden])').count() == 1
+        page.locator('#evd #evd-tab-encounters').click()
+        assert page.locator('#evd .ue-mon').first.bounding_box()['height'] >= 43.5
+        page.locator('#evd .ue-mon').first.click()
+        assert page.locator('#ue-sheet [role=dialog]').count() == 1
+        page.keyboard.press('Escape')
+        assert page.locator('#ue-sheet').count() == 0 and page.locator('#evd').is_visible()
+        assert page.evaluate('document.activeElement.classList.contains("ue-mon")')
+        page.locator('#evd #evd-tab-research').click()
         assert page.locator('#evd .research-task').count() == 12
         assert page.locator('#evd .research-reward').count() > 12
         assert page.locator('#evd .research-reward-item .ue-reward-item-icon').count() > 0
@@ -68,6 +74,8 @@ with sync_playwright() as p:
         assert page.evaluate("({dex:localStorage.getItem('gofn-dex-v1'),us:localStorage.getItem('gofn-us-v1')})") == before
         page.keyboard.press('Escape')
         page.evaluate("GODETAIL.open('cur:gopassnov')")
+        page.wait_for_selector('#evd #evd-tab-passes')
+        page.locator('#evd #evd-tab-passes').click()
         page.wait_for_selector('#evd .ue-pass-range')
         page.locator('#evd .ue-pass-range').first.locator('summary').click()
         assert page.locator('#evd .ue-pass-stages > li').count() >= 90

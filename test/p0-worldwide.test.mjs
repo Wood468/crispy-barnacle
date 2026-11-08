@@ -88,12 +88,12 @@ test('publisher retains published identity history when source discovery is empt
  const result=buildCatalogue({data:{events:[]},previous});assert.equal(result.events.length,1);assert.equal(result.events[0].eventId,'synthetic-p0');assert.ok(result.events[0].aliases.includes('saved-link'));
 });
 test('optional Sources navigation always has one real safe section or no link',()=>{
- const without=UI.render(event(),context);assert.doesNotMatch(without,/href="#evd-sources"/);
+ const without=UI.render(event(),context);assert.doesNotMatch(without,/data-tab="details"/);
  const trusted=event({sources:[{name:'Published announcement',url:'https://leekduck.com/events/synthetic/'}],internalValidation:{conflicts:[{field:'cosmetic'}]}});
- const html=UI.render(trusted,context);assert.match(html,/href="#evd-sources"/);assert.equal((html.match(/id="evd-sources"/g)||[]).length,1);assert.doesNotMatch(html,/Some event details conflict/);
+ const html=UI.render(trusted,context);assert.match(html,/data-tab="details"/);assert.equal((html.match(/id="evd-sources"/g)||[]).length,1);assert.doesNotMatch(html,/Some event details conflict/);
  const supplied=UI.render(trusted,{...context,sources:'<details id="evd-sources"><summary>Sources</summary></details>'});assert.equal((supplied.match(/id="evd-sources"/g)||[]).length,1);
- assert.doesNotMatch(UI.render(trusted,{...context,sources:'<p>Unavailable</p>'}),/href="#evd-sources"/);
- for(const url of ['javascript:alert(1)','https://','https://user:secret@example.invalid/','https://discord.com/channels/1/2'])assert.doesNotMatch(UI.render(event({sources:[{url}]}),context),/href="#evd-sources"|target="_blank"/);
+ assert.doesNotMatch(UI.render(trusted,{...context,sources:'<p>Unavailable</p>'}),/data-tab="details"/);
+ for(const url of ['javascript:alert(1)','https://','https://user:secret@example.invalid/','https://discord.com/channels/1/2'])assert.doesNotMatch(UI.render(event({sources:[{url}]}),context),/data-tab="details"|target="_blank"/);
 });
 test('publisher reports unsafe normalized records with structured rejection diagnostics',()=>{
  const raw={schemaVersion:1,eventId:'bad-source',title:'Synthetic invalid announcement',pokemon:[{speciesId:'25',methods:['wiild']}]};
