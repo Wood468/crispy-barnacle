@@ -37,4 +37,5 @@ test('Today uses the verified primary Sendai artwork and its original source pag
   const sendai = curated.find(event => event.id === 'sendai');
   assert.equal(sendai.img, details.sendai.image);
   assert.equal(sendai.artSourceUrl.replace(/\/$/, ''), details.sendai.imageProvenance.sourceUrl.replace(/\/$/, ''));
+  assert.equal(catalogue.find(event => event.eventId === 'sendai')?.image, sendai.img);
 });

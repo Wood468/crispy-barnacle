@@ -18513,6 +18513,7 @@
      "start": "2026-11-06",
      "end": "2026-11-08"
     },
+    "imageReviewed": true,
     "contentHash": "45071182276be18483c8b6fb1d2700b15600b505bff0bc4344215636fa00131f",
     "revision": 8,
     "amended": false,
@@ -33598,7 +33599,7 @@
    "lifecycle": "reference",
    "attendance": "in-person",
    "location": "Sendai, Japan",
-   "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-11-06-pokemon-go-wild-area-2026-sendai-japan/key-art.jpg",
+   "image": "https://lh3.googleusercontent.com/mKoeqvHXmLsEsFxHgdhcK2XoC_XhjXUDl8gvBeH0iEfQTCNOuNY_vJ_k7QRoIYJFfVanVY_aE6ERNdqPgOPpOxvRQaw0I4T1YzTnodb8GUY",
    "notes": [
     "Ticket ¥4,000 for one day. Registration ran Sep 11 to 15, so check for resale or extra days.",
     "Debuts: Gigantamax Duraludon, Dynamax Dialga and Palkia, Hisuian Sliggoo and Goodra.",
@@ -34052,9 +34053,10 @@
      "start": "",
      "end": ""
     },
-    "contentHash": "7e01fbf9856e7a4353376d08e38a522b53a204b7f35b50d74696be44083f1c99",
-    "revision": 7,
-    "amended": false,
+    "imageReviewed": true,
+    "contentHash": "89e75be1fa54507ce0903e180af3ca57a431647a6ea779aee51b56a5b2ba422a",
+    "revision": 8,
+    "amended": true,
     "native": false,
     "collection": "events"
    },
