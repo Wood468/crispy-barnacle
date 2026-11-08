@@ -15,6 +15,7 @@ import { extractEncounters, mergeEncounters, posterFromHtml } from "./encounters
 import catalogue from "../event-experience/build-catalogue.cjs";
 import eventAdapter from "../../public/event-adapter.js";
 import { announcementFromPage } from "./announcements.mjs";
+import { selectArtwork } from "./artwork.mjs";
 
 const APP = process.env.APP_URL || "https://pogo.michaelpuff.com";
 const OUT = process.env.OUT_FILE || "public/event-details.json";
@@ -76,7 +77,7 @@ export async function appEvents() {
   const evs = [];
   try {
     const j = await (await fetch(APP + "/api/events", { signal: AbortSignal.timeout(20000) })).json();
-    for (const e of j.events || []) evs.push({ id: e.id, t: e.name, link: e.link || "", start: e.start, end: e.end, detailIds: [] });
+    for (const e of j.events || []) evs.push({ id: String(e.id).replace(/^curated:/, ''), t: e.name, link: e.link || (e.reports || []).find(r => sourceFor(r.link))?.link || "", start: e.start, end: e.end, region: e.region || '', detailIds: [] });
   } catch { /* snapshot only */ }
   try {
     const curated = JSON.parse(await readFile("public/data.json", "utf8")).events || [];
@@ -236,6 +237,8 @@ async function main() {
       await new Promise(r => setTimeout(r, 400));
     } catch (e) { errors.push(f.url + ": " + e.message); }
   }
+  // A network outage must never replace the last good catalogue with an empty import.
+  if (!pages.length) throw new Error('Importer read no source pages; keeping the last published event snapshots');
   let dex=[];try{dex=JSON.parse(await readFile('public/dex.json','utf8'));}catch{/* exact unknown identities remain prose */}
   let artNames=[];try{artNames=Object.keys(JSON.parse(await readFile('public/art/index.json','utf8'))).map(url=>new URL(url,'https://app.invalid').searchParams.get('n')).filter(Boolean);}catch{/* optional asset aliases */}
   let costumeNames=[];try{const data=JSON.parse(await readFile('public/data.json','utf8'));const costumeDB=JSON.parse(await readFile('public/costumes.json','utf8'));eventAdapter.configureSpecies(dex);costumeNames=eventAdapter.costumeDescriptors(data,costumeDB);}catch{/* no inferred costumes */}
@@ -291,13 +294,13 @@ async function main() {
   const now = new Date().toISOString(), out = {};
   for (const [id, { event, results }] of byEvent) {
     const merged = { ...mergeSources(results), ...mergeEncounters(results) };
-    const image=results.map(r=>r.image).find(Boolean)||null;
+    const { image, imageProvenance } = selectArtwork(event, results, { retrievedAt: now });
     const researchTasks = (merged.researchTasks || []).map(task => ({
       ...task, eventId: id, eventName: event.t,
       eventWindow: { start: event.start || null, end: event.end || null },
       checkedAt: now.slice(0, 10)
     }));
-    out[id] = { name: event.t, image, updated: now, sources: results.map(r => r.source), ...merged, researchTasks };
+    out[id] = { name: event.t, image, imageProvenance, updated: now, sources: results.map(r => r.source), ...merged, researchTasks };
   }
   // Unmatched source articles are first-class announcements, not just diagnostics.
   for(const page of pages){
@@ -305,7 +308,9 @@ async function main() {
     const announcement=announcementFromPage(page,{dex,names:rewardOptions.pokemonNames,costumes:costumeNames});if(!announcement)continue;
     const split=entriesFromPage(page),represented=split.length>0;
     const {native,...metadata}=announcement.internalValidation;
-    out[announcement.eventId]={name:announcement.title,researchTasks:(page.fields.researchTasks||[]).map(task=>({...task,eventId:announcement.eventId,eventName:announcement.title,eventWindow:{start:announcement.schedule?.start||null,end:announcement.schedule?.end||null},checkedAt:now.slice(0,10)})),updated:now,sources:announcement.sources,image:announcement.image,fields:Object.fromEntries(Object.entries(page.fields||{}).filter(([,v])=>Array.isArray(v)).map(([k,v])=>[k,v.map(text=>typeof text==='string'?{text,sources:[page.source],status:page.source==='official'?'official':'single'}:text)])),
+    const selectedArt=selectArtwork({t:announcement.title,start:announcement.schedule?.start,end:announcement.schedule?.end,link:page.url,place:announcement.location},[{image:announcement.image,source:announcement.sources[0]}],{retrievedAt:now});
+    announcement.image=selectedArt.image;
+    out[announcement.eventId]={name:announcement.title,researchTasks:(page.fields.researchTasks||[]).map(task=>({...task,eventId:announcement.eventId,eventName:announcement.title,eventWindow:{start:announcement.schedule?.start||null,end:announcement.schedule?.end||null},checkedAt:now.slice(0,10)})),updated:now,sources:announcement.sources,image:selectedArt.image,imageProvenance:selectedArt.imageProvenance,fields:Object.fromEntries(Object.entries(page.fields||{}).filter(([,v])=>Array.isArray(v)).map(([k,v])=>[k,v.map(text=>typeof text==='string'?{text,sources:[page.source],status:page.source==='official'?'official':'single'}:text)])),
       ...(represented?{}:{normalizedEvent:announcement}),
       ...(split.length<=1?{pokemon:announcement.pokemon,encounters:announcement.encounters}:{}),
       internalValidation:metadata};

@@ -2578,7 +2578,15 @@
      "access": "unknown"
     }
    ],
-   "encounterConflicts": []
+   "encounterConflicts": [],
+   "imageProvenance": {
+    "source": "Leek Duck",
+    "sourceUrl": "https://leekduck.com/events/pokemon-go-wild-area-2026-mexico-city/",
+    "imageUrl": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-11-06-pokemon-go-wild-area-2026-mexico-city/key-art.jpg",
+    "checkedFor": "Pokémon GO Wild Area 2026: Mexico City",
+    "checkedAt": "2026-11-08",
+    "retrievedAt": "2026-11-07T20:33:39.978Z"
+   }
   },
   "gopassnov": {
    "name": "GO Pass: November",
@@ -3553,7 +3561,15 @@
    "researchTasks": [],
    "pokemon": [],
    "encounters": [],
-   "encounterConflicts": []
+   "encounterConflicts": [],
+   "imageProvenance": {
+    "source": "Pokémon GO (official)",
+    "sourceUrl": "https://pokemongo.com/en/gowildarea/sendai/",
+    "imageUrl": "https://lh3.googleusercontent.com/mKoeqvHXmLsEsFxHgdhcK2XoC_XhjXUDl8gvBeH0iEfQTCNOuNY_vJ_k7QRoIYJFfVanVY_aE6ERNdqPgOPpOxvRQaw0I4T1YzTnodb8GUY",
+    "checkedFor": "GO Wild Area: Sendai",
+    "checkedAt": "2026-11-08",
+    "retrievedAt": "2026-11-07T20:33:39.978Z"
+   }
   },
   "leekduck:super-mega-raid-day-november-2026": {
    "name": "Super Mega Raid Day",
@@ -3888,11 +3904,19 @@
    "researchTasks": [],
    "pokemon": [],
    "encounters": [],
-   "encounterConflicts": []
+   "encounterConflicts": [],
+   "imageProvenance": {
+    "source": "Pokémon GO (official)",
+    "sourceUrl": "https://pokemongo.com/news/clefable-super-mega-raid-day-2026/",
+    "imageUrl": "https://lh3.googleusercontent.com/HyFWaQMZqtZNT3Sb3uFeHyWMBFI8bB_4hNQ2NLrpfBGrH1YijjIr1n0ZNC0YlNAZHPpfiWTq0zzgT9MRUFzlMoEjN4ENEm0AlnuJFZRA9CQ",
+    "checkedFor": "Super Mega Raid Day",
+    "checkedAt": "2026-11-08",
+    "retrievedAt": "2026-11-07T20:33:39.978Z"
+   }
   },
   "leekduck:pokemon-go-wild-area-2026-global": {
    "name": "Pokémon GO Wild Area 2026: Global",
-   "image": "https://lh3.googleusercontent.com/jkmT_jf1BmLdPEEzRG7B6yFKILNPYV34p47qSvsk1ZJKxb1lreNQJkHk3zFFL5Uj0-WFWODr7c2HaB4DqI9wkJILJra1o3VqDvM9ks8-LIM",
+   "image": null,
    "updated": "2026-11-07T20:33:39.978Z",
    "sources": [
     {
@@ -4619,11 +4643,12 @@
      "access": "unknown"
     }
    ],
-   "encounterConflicts": []
+   "encounterConflicts": [],
+   "imageProvenance": null
   },
   "leekduck:into-the-wild-2026": {
    "name": "Into the Wild",
-   "image": "https://lh3.googleusercontent.com/U-aJxlmtiVe7UDPLAEoyI8LKHgyuRe9RpQB9nxZzRj-sCkzCPo9RlTdZ9XXtMSwR1sI80g6EEtGyA9bLRWGnALsEnz5EHR9z6bOWA2frRw",
+   "image": null,
    "updated": "2026-11-07T20:33:39.978Z",
    "sources": [
     {
@@ -5277,7 +5302,8 @@
      "access": "unknown"
     }
    ],
-   "encounterConflicts": []
+   "encounterConflicts": [],
+   "imageProvenance": null
   },
   "dyntrails": {
    "name": "Dynamax Trails",
@@ -6937,7 +6963,7 @@
   },
   "leekduck:mega-sableye-in-mega-raids-october-2026": {
    "name": "Mega Sableye in Mega Raids",
-   "image": "https://cdn.leekduck.com/assets/img/events/mega-default.jpg",
+   "image": null,
    "updated": "2026-11-07T20:33:39.978Z",
    "sources": [
     {
@@ -7016,11 +7042,12 @@
      "access": "unknown"
     }
    ],
-   "encounterConflicts": []
+   "encounterConflicts": [],
+   "imageProvenance": null
   },
   "leekduck:giratina-altered-forme-in-5-star-raid-battles-november-2026": {
    "name": "Giratina (Altered Forme) in 5-star Raid Battles",
-   "image": "https://cdn.leekduck.com/assets/img/events/giratinaaltered.jpg",
+   "image": null,
    "updated": "2026-11-07T20:33:39.978Z",
    "sources": [
     {
@@ -7092,11 +7119,12 @@
    "researchTasks": [],
    "pokemon": [],
    "encounters": [],
-   "encounterConflicts": []
+   "encounterConflicts": [],
+   "imageProvenance": null
   },
   "leekduck:shadow-tornadus-incarnate-forme-in-shadow-raids-november-4-2026": {
    "name": "Shadow Tornadus (Incarnate Forme) in Shadow Raids",
-   "image": "https://cdn.leekduck.com/assets/img/events/tornadus.jpg",
+   "image": null,
    "updated": "2026-11-07T20:33:39.978Z",
    "sources": [
     {
@@ -7139,11 +7167,12 @@
    "researchTasks": [],
    "pokemon": [],
    "encounters": [],
-   "encounterConflicts": []
+   "encounterConflicts": [],
+   "imageProvenance": null
   },
   "leekduck:pokemon-night-out-london-2026": {
    "name": "Pokémon Night Out 2026 - London",
-   "image": "https://cdn.leekduck.com/assets/img/events/pokemon-night-out-2026.jpg",
+   "image": null,
    "updated": "2026-11-07T20:33:39.978Z",
    "sources": [
     {
@@ -7292,11 +7321,12 @@
      "access": "unknown"
     }
    ],
-   "encounterConflicts": []
+   "encounterConflicts": [],
+   "imageProvenance": null
   },
   "leekduck:go-wild-area-gigantamax-machamp-power-up-timed-research": {
    "name": "GO Wild Area: Gigantamax Machamp Power Up! Timed Research",
-   "image": "https://cdn.leekduck.com/assets/img/events/article-images/2025/2025-05-25-gigantamax-machamp-max-battle-day-may-2025/gigantamax-machamp-max-battles.jpg",
+   "image": null,
    "updated": "2026-11-07T20:33:39.978Z",
    "sources": [
     {
@@ -7383,11 +7413,12 @@
    "researchTasks": [],
    "pokemon": [],
    "encounters": [],
-   "encounterConflicts": []
+   "encounterConflicts": [],
+   "imageProvenance": null
   },
   "leekduck:max-mondays-2026-11-16": {
    "name": "Max Monday: Pokémon to be announced",
-   "image": "https://cdn.leekduck.com/assets/img/events/max-battles-kanto.jpg",
+   "image": null,
    "updated": "2026-11-07T20:33:39.978Z",
    "sources": [
     {
@@ -7429,11 +7460,12 @@
    "researchTasks": [],
    "pokemon": [],
    "encounters": [],
-   "encounterConflicts": []
+   "encounterConflicts": [],
+   "imageProvenance": null
   },
   "leekduck:raidhour20261118": {
    "name": "Cresselia and Darkrai Raid Hour",
-   "image": "https://cdn.leekduck.com/assets/img/events/raidhour.jpg",
+   "image": null,
    "updated": "2026-11-07T20:33:39.978Z",
    "sources": [
     {
@@ -7476,11 +7508,12 @@
    "researchTasks": [],
    "pokemon": [],
    "encounters": [],
-   "encounterConflicts": []
+   "encounterConflicts": [],
+   "imageProvenance": null
   },
   "leekduck:pokemonspotlighthour2026-11-19": {
    "name": "Grookey, Scorbunny, and Sobble Spotlight Hour",
-   "image": "https://cdn.leekduck.com/assets/img/events/pokemonspotlighthour.jpg",
+   "image": null,
    "updated": "2026-11-07T20:33:39.978Z",
    "sources": [
     {
@@ -7515,7 +7548,8 @@
    "researchTasks": [],
    "pokemon": [],
    "encounters": [],
-   "encounterConflicts": []
+   "encounterConflicts": [],
+   "imageProvenance": null
   },
   "minior2": {
    "name": "Minior Showers: Leonids",
@@ -7615,7 +7649,7 @@
   },
   "leekduck:eternamax-eternatus-max-battles-2026": {
    "name": "Eternamax Eternatus Returns",
-   "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-11-16-dynamax-trails-2026/dynamax-trails-2026.jpg",
+   "image": null,
    "updated": "2026-11-07T20:33:39.978Z",
    "sources": [
     {
@@ -7695,7 +7729,8 @@
    "researchTasks": [],
    "pokemon": [],
    "encounters": [],
-   "encounterConflicts": []
+   "encounterConflicts": [],
+   "imageProvenance": null
   },
   "leekduck:november-communityday2026": {
    "name": "Pawniard Community Day",
@@ -7956,7 +7991,15 @@
    ],
    "pokemon": [],
    "encounters": [],
-   "encounterConflicts": []
+   "encounterConflicts": [],
+   "imageProvenance": {
+    "source": "Leek Duck",
+    "sourceUrl": "https://leekduck.com/events/november-communityday2026/",
+    "imageUrl": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-11-21-november-communityday2026/pawniard-november-cd-2026.jpg",
+    "checkedFor": "Pawniard Community Day",
+    "checkedAt": "2026-11-08",
+    "retrievedAt": "2026-11-07T20:33:39.978Z"
+   }
   },
   "leekduck:dynamax-trails-2026": {
    "name": "Dynamax Trails",
@@ -8196,11 +8239,19 @@
    "researchTasks": [],
    "pokemon": [],
    "encounters": [],
-   "encounterConflicts": []
+   "encounterConflicts": [],
+   "imageProvenance": {
+    "source": "Leek Duck",
+    "sourceUrl": "https://leekduck.com/events/dynamax-trails-2026/",
+    "imageUrl": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-11-16-dynamax-trails-2026/dynamax-trails-2026.jpg",
+    "checkedFor": "Dynamax Trails",
+    "checkedAt": "2026-11-08",
+    "retrievedAt": "2026-11-07T20:33:39.978Z"
+   }
   },
   "leekduck:max-mondays-2026-11-23": {
    "name": "Dynamax Espurr during Max Monday",
-   "image": "https://cdn.leekduck.com/assets/img/events/max-battles-kanto.jpg",
+   "image": null,
    "updated": "2026-11-07T20:33:39.978Z",
    "sources": [
     {
@@ -8278,11 +8329,12 @@
    "researchTasks": [],
    "pokemon": [],
    "encounters": [],
-   "encounterConflicts": []
+   "encounterConflicts": [],
+   "imageProvenance": null
   },
   "leekduck:cresselia-darkrai-in-5-star-raid-battles-november-2026": {
    "name": "Cresselia and Darkrai in 5-star Raid Battles",
-   "image": "https://cdn.leekduck.com/assets/img/events/legendary-cresselia.jpg",
+   "image": null,
    "updated": "2026-11-07T20:33:39.978Z",
    "sources": [
     {
@@ -8394,11 +8446,12 @@
      "access": "unknown"
     }
    ],
-   "encounterConflicts": []
+   "encounterConflicts": [],
+   "imageProvenance": null
   },
   "leekduck:mega-banette-in-mega-raids-november-2026": {
    "name": "Mega Banette in Mega Raids",
-   "image": "https://cdn.leekduck.com/assets/img/events/mega-default.jpg",
+   "image": null,
    "updated": "2026-11-07T20:33:39.978Z",
    "sources": [
     {
@@ -8484,11 +8537,12 @@
      "access": "unknown"
     }
    ],
-   "encounterConflicts": []
+   "encounterConflicts": [],
+   "imageProvenance": null
   },
   "leekduck:raidhour20261125": {
    "name": "Deoxys (Normal, Defense, Attack, and Speed Formes) Raid Hour",
-   "image": "https://cdn.leekduck.com/assets/img/events/raidhour.jpg",
+   "image": null,
    "updated": "2026-11-07T20:33:39.978Z",
    "sources": [
     {
@@ -8531,11 +8585,12 @@
    "researchTasks": [],
    "pokemon": [],
    "encounters": [],
-   "encounterConflicts": []
+   "encounterConflicts": [],
+   "imageProvenance": null
   },
   "leekduck:pokemonspotlighthour2026-11-26": {
    "name": "Noibat Spotlight Hour",
-   "image": "https://cdn.leekduck.com/assets/img/events/pokemonspotlighthour.jpg",
+   "image": null,
    "updated": "2026-11-07T20:33:39.978Z",
    "sources": [
     {
@@ -8570,7 +8625,8 @@
    "researchTasks": [],
    "pokemon": [],
    "encounters": [],
-   "encounterConflicts": []
+   "encounterConflicts": [],
+   "imageProvenance": null
   },
   "leekduck:twilight-wishes-2026": {
    "name": "Twilight Wishes",
@@ -9173,11 +9229,19 @@
      "access": "unknown"
     }
    ],
-   "encounterConflicts": []
+   "encounterConflicts": [],
+   "imageProvenance": {
+    "source": "Leek Duck",
+    "sourceUrl": "https://leekduck.com/events/twilight-wishes-2026/",
+    "imageUrl": "https://cdn.leekduck.com/assets/img/events/twilight-wishes-2026.jpg?v2",
+    "checkedFor": "Twilight Wishes",
+    "checkedAt": "2026-11-08",
+    "retrievedAt": "2026-11-07T20:33:39.978Z"
+   }
   },
   "leekduck:max-mondays-2026-11-30": {
    "name": "Dynamax Cryogonal during Max Monday",
-   "image": "https://cdn.leekduck.com/assets/img/events/max-battles-kanto.jpg",
+   "image": null,
    "updated": "2026-11-07T20:33:39.978Z",
    "sources": [
     {
@@ -9255,7 +9319,8 @@
    "researchTasks": [],
    "pokemon": [],
    "encounters": [],
-   "encounterConflicts": []
+   "encounterConflicts": [],
+   "imageProvenance": null
   },
   "leekduck:season-24-twilight-trails": {
    "name": "Twilight Trails",
@@ -9481,11 +9546,19 @@
    "researchTasks": [],
    "pokemon": [],
    "encounters": [],
-   "encounterConflicts": []
+   "encounterConflicts": [],
+   "imageProvenance": {
+    "source": "Leek Duck",
+    "sourceUrl": "https://leekduck.com/events/season-24-twilight-trails/",
+    "imageUrl": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-09-08-season-24-twilight-trails/season-24-twilight-trails.jpg",
+    "checkedFor": "Twilight Trails",
+    "checkedAt": "2026-11-08",
+    "retrievedAt": "2026-11-07T20:33:39.978Z"
+   }
   },
   "leekduck:deoxys-normal-defense-attack-speed-formes-in-5-star-raid-battles-november-2026": {
    "name": "Deoxys (Normal, Defense, Attack, and Speed Formes) in 5-star Raid Battles",
-   "image": "https://cdn.leekduck.com/assets/img/events/deoxys-all-formes.jpg",
+   "image": null,
    "updated": "2026-11-07T20:33:39.978Z",
    "sources": [
     {
@@ -9585,11 +9658,12 @@
    "researchTasks": [],
    "pokemon": [],
    "encounters": [],
-   "encounterConflicts": []
+   "encounterConflicts": [],
+   "imageProvenance": null
   },
   "leekduck:mega-metagross-in-mega-raids-november-2026": {
    "name": "Mega Metagross in Mega Raids",
-   "image": "https://cdn.leekduck.com/assets/img/events/mega-default.jpg",
+   "image": null,
    "updated": "2026-11-07T20:33:39.978Z",
    "sources": [
     {
@@ -9682,7 +9756,8 @@
      "access": "unknown"
     }
    ],
-   "encounterConflicts": []
+   "encounterConflicts": [],
+   "imageProvenance": null
   },
   "minior3": {
    "name": "Minior Showers: Geminids",
@@ -9861,11 +9936,19 @@
    "researchTasks": [],
    "pokemon": [],
    "encounters": [],
-   "encounterConflicts": []
+   "encounterConflicts": [],
+   "imageProvenance": {
+    "source": "Leek Duck",
+    "sourceUrl": "https://leekduck.com/events/pokemon-x-adidas-2026/",
+    "imageUrl": "https://cdn.leekduck.com/assets/img/events/pokemon-x-adidas-2026.jpg",
+    "checkedFor": "adidas × Pokémon Timed Research",
+    "checkedAt": "2026-11-08",
+    "retrievedAt": "2026-11-07T20:33:39.978Z"
+   }
   },
   "leekduck:pokemon-go-tour-alola-kaohsiung-2027": {
    "name": "Pokémon GO Tour: Alola - Kaohsiung 2027",
-   "image": "https://cdn.leekduck.com/assets/img/events/events-default-img.jpg",
+   "image": null,
    "updated": "2026-11-07T20:33:39.978Z",
    "sources": [
     {
@@ -9900,11 +9983,12 @@
    "researchTasks": [],
    "pokemon": [],
    "encounters": [],
-   "encounterConflicts": []
+   "encounterConflicts": [],
+   "imageProvenance": null
   },
   "leekduck:pokemon-go-tour-alola-los-angeles-2027": {
    "name": "Pokémon GO Tour: Alola - Los Angeles 2027",
-   "image": "https://cdn.leekduck.com/assets/img/events/events-default-img.jpg",
+   "image": null,
    "updated": "2026-11-07T20:33:39.978Z",
    "sources": [
     {
@@ -9939,11 +10023,12 @@
    "researchTasks": [],
    "pokemon": [],
    "encounters": [],
-   "encounterConflicts": []
+   "encounterConflicts": [],
+   "imageProvenance": null
   },
   "leekduck:pokemon-go-tour-alola-global-2027": {
    "name": "Pokémon GO Tour: Alola - Global 2027",
-   "image": "https://cdn.leekduck.com/assets/img/events/events-default-img.jpg",
+   "image": null,
    "updated": "2026-11-07T20:33:39.978Z",
    "sources": [
     {
@@ -9978,11 +10063,12 @@
    "researchTasks": [],
    "pokemon": [],
    "encounters": [],
-   "encounterConflicts": []
+   "encounterConflicts": [],
+   "imageProvenance": null
   },
   "leekduck:minior-showers-eta-aquariids-2027": {
    "name": "Minior Showers: Eta Aquariids 2027",
-   "image": "https://cdn.leekduck.com/assets/img/events/minior-showers-2026.jpg",
+   "image": null,
    "updated": "2026-11-07T20:33:39.978Z",
    "sources": [
     {
@@ -10081,11 +10167,12 @@
    "researchTasks": [],
    "pokemon": [],
    "encounters": [],
-   "encounterConflicts": []
+   "encounterConflicts": [],
+   "imageProvenance": null
   },
   "leekduck:minior-showers-southern-delta-aquariids-2027": {
    "name": "Minior Showers: Southern Delta Aquariids 2027",
-   "image": "https://cdn.leekduck.com/assets/img/events/minior-showers-2026.jpg",
+   "image": null,
    "updated": "2026-11-07T20:33:39.978Z",
    "sources": [
     {
@@ -10184,11 +10271,12 @@
    "researchTasks": [],
    "pokemon": [],
    "encounters": [],
-   "encounterConflicts": []
+   "encounterConflicts": [],
+   "imageProvenance": null
   },
   "leekduck:minior-showers-perseids-2027": {
    "name": "Minior Showers: Perseids 2027",
-   "image": "https://cdn.leekduck.com/assets/img/events/minior-showers-2026.jpg",
+   "image": null,
    "updated": "2026-11-07T20:33:39.978Z",
    "sources": [
     {
@@ -10280,7 +10368,8 @@
    "researchTasks": [],
    "pokemon": [],
    "encounters": [],
-   "encounterConflicts": []
+   "encounterConflicts": [],
+   "imageProvenance": null
   },
   "leekduck:go-pass-november-2026": {
    "name": "GO Pass: November",
@@ -11292,7 +11381,7 @@
      "url": "https://leekduck.com/events/shadow-tornadus-incarnate-forme-in-shadow-raids-november-16-2026/"
     }
    ],
-   "image": "https://cdn.leekduck.com/assets/img/events/tornadus.jpg",
+   "image": null,
    "fields": {
     "bonuses": [],
     "featured": [],
@@ -11347,7 +11436,7 @@
     "lifecycle": "announced",
     "attendance": "",
     "location": null,
-    "image": "https://cdn.leekduck.com/assets/img/events/tornadus.jpg",
+    "image": null,
     "notes": [],
     "internalValidation": {
      "warnings": [],
@@ -11439,7 +11528,8 @@
      "end": ""
     },
     "conflicts": []
-   }
+   },
+   "imageProvenance": null
   },
   "hub:minior-showers-leonid-november-2026": {
    "name": "Minior Showers: Leonid (November 2026)",
