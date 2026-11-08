@@ -10,6 +10,8 @@ const STATE = process.env.STORE_STATE || "data/store-state.json";
 const STORE = "https://store.pokemongo.com";
 const readJson = async (p, d) => { try { return JSON.parse(await readFile(p, "utf8")); } catch { return d; } };
 const key = i => i.href || i.name;
+// Image URLs are evidence only when supplied by the matching product snapshot.
+export const imageUrls = i => (Array.isArray(i.imgs) ? i.imgs : []).filter(u => { try { const x=new URL(u); return x.protocol === "https:" && !x.username && !x.password; } catch { return false; } }).slice(0,4);
 export const slugOf = i => String(i.href || i.name || "").split("/").filter(Boolean).pop().toLowerCase().replace(/[^a-z0-9_.-]/g, "-").slice(-60);
 export const isTicketOrPass = n => /ticket|go pass|pass deluxe|go fest|tour|safari|city|hatch day/i.test(n);
 
@@ -86,6 +88,8 @@ export function diffStore(prev, snap, nowIso) {
     const mixed = !!o && !reset && !!oldCurrency && !!newCurrency && oldCurrency !== newCurrency;
     next[k] = {
       name: i.name,
+      // Preserve official snapshot imagery; never infer a product image from its label.
+      images: imageUrls(i).length ? imageUrls(i) : (o?.images || []),
       price: mixed ? o.price : i.price,
       section: i.section,
       tag: i.tag,
@@ -127,7 +131,7 @@ export function buildMessages(d) {
 
 // The public log the Purchase planner reads: only tickets, passes and boxes, with when each was first and last seen.
 export function storeLog(state) {
-  const row = (k, o) => ({ name: o.name, price: o.price, section: o.section || "", slug: slugOf({ href: k.startsWith("/") ? k : "", name: o.name }), href: k.startsWith("/") ? k : "", endsAt: o.endsAt || null, firstSeen: o.firstSeen, lastSeen: o.lastSeen, goneAt: o.goneAt || null });
+  const row = (k, o) => ({ name: o.name, image: (o.images || [])[0] || null, imageStatus: (o.images || []).length ? "unverified-remote" : "missing", price: o.price, section: o.section || "", slug: slugOf({ href: k.startsWith("/") ? k : "", name: o.name }), href: k.startsWith("/") ? k : "", endsAt: o.endsAt || null, firstSeen: o.firstSeen, lastSeen: o.lastSeen, goneAt: o.goneAt || null });
   const items = [...Object.entries(state.items || {}).map(([k, o]) => row(k, o)), ...Object.entries(state.gone || {}).map(([k, o]) => row(k, o))];
   return { watchStart: state.watchStart || null, updated: state.updated, items: items.filter(i => isTicketOrPass(i.name) || /box|bundle/i.test(i.name)) };
 }
