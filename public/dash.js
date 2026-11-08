@@ -230,6 +230,8 @@
     var ids=new Set(EV.flatMap(function(e){return [e.id].concat(e.aliasIds||[]);})),unknown=[];
     GOEventRegistry.events().forEach(function(model){
       var matching=EV.find(function(e){return e.id===model.eventId||e.id==='cur:'+model.eventId||(model.aliases||[]).indexOf(e.id)>=0||(e.aliasIds||[]).indexOf(model.eventId)>=0;});
+      /* The same event shows the same banner on Today as in Details: a curated card without art takes the catalogue record's verified image. */
+      if(matching&&!matching.img&&model.image){matching.img=model.image;if(!matching.artPageUrl)matching.artPageUrl=(model.internalValidation&&model.internalValidation.artSourceUrl)||((model.sources||[]).map(function(s){return s&&s.url;}).filter(Boolean)[0])||'';}
       if(matching&&model.schedule){
         var published=GOEventRegistry.display(model);
         if(published.instantKnown){var id=matching.id,name=matching.name,featured=matching.featured;Object.assign(matching,published,{id:id,name:name,featured:featured.length?featured:published.featured,aliasIds:Array.from(new Set((matching.aliasIds||[]).concat(model.aliases||[],[model.eventId])))});}

@@ -10384,7 +10384,7 @@
     },
     "imageReviewed": true,
     "contentHash": "cc8beb9d1014324995d3e0fd62245f1c3e550397788545c82731365b509810b6",
-    "revision": 15,
+    "revision": 17,
     "amended": true,
     "native": false,
     "collection": "events"
@@ -18070,7 +18070,7 @@
     },
     "imageReviewed": true,
     "contentHash": "269f8e3b2de77de99a9c9b96a8583480afcc7d703b67882981cde6a557edee89",
-    "revision": 13,
+    "revision": 15,
     "amended": true,
     "native": false,
     "collection": "source-details"
@@ -20125,7 +20125,7 @@
     },
     "imageReviewed": true,
     "contentHash": "61a5ae1d293acbf4aaa7e8ed75af207faef316785784f266244f3fa89d266906",
-    "revision": 13,
+    "revision": 15,
     "amended": true,
     "native": false,
     "collection": "source-details"
@@ -40054,10 +40054,10 @@
      "start": "2026-11-14",
      "end": "2026-11-15"
     },
-    "imageUnattributed": true,
-    "contentHash": "9ff7195a40d6b227179ba07e5be8d80c6d906273aa87d25f3aa5d101b03b072a",
-    "revision": 5,
-    "amended": true,
+    "imageReviewed": true,
+    "contentHash": "758c635de3aa8f9c71e0e3c54c37d47bf863c44e4080e085818595e6695ec32b",
+    "revision": 6,
+    "amended": false,
     "native": false,
     "collection": "world-events"
    },
@@ -40173,10 +40173,10 @@
      "start": "2026-11-14",
      "end": "2026-11-15"
     },
-    "imageUnattributed": true,
-    "contentHash": "a3fd2746e9101753d39497a4285defedf74465048ea6b95365f521b8a550e12f",
-    "revision": 5,
-    "amended": true,
+    "imageReviewed": true,
+    "contentHash": "274727f8c0455af6e5bd7f5527ff39a18345587a25ac286189ad80ad07b9e104",
+    "revision": 6,
+    "amended": false,
     "native": false,
     "collection": "world-events"
    },
@@ -40928,7 +40928,7 @@
      "start": "2027-03-13",
      "end": "2027-03-28"
     },
-    "contentHash": "db2b9ee12d622590d64dad80fe5b11f94808340597fd03afa804d17fda3aaf06",
+    "contentHash": "9272b4ae8f344739b1c1c32db393548fc07b68a3c9b2b2308fe56cf05d744b37",
     "revision": 2,
     "amended": false,
     "native": false,
@@ -40982,7 +40982,7 @@
      "start": "2027-02-20",
      "end": "2027-03-07"
     },
-    "contentHash": "ee6ed353b0e61923231caa195c2f61b8cc9cf92718dbbeefd9ee2956f821dc3c",
+    "contentHash": "6906e3358f260775ad31811bd5737b6c2532e6140f405e863263558e71d7ec71",
     "revision": 2,
     "amended": false,
     "native": false,
@@ -41144,7 +41144,7 @@
      "start": "2027-01-15",
      "end": "2027-01-31"
     },
-    "contentHash": "5816b9f59810e47733c5af5929c66bb961d51094e06670d84486f44e3a30520c",
+    "contentHash": "67bc247d4ca0c47b7d44bbd2f31058a8704fc805f41eca83f5c0ef29be42e99c",
     "revision": 2,
     "amended": false,
     "native": false,
@@ -41252,7 +41252,7 @@
      "start": "2027-02-05",
      "end": "2027-02-14"
     },
-    "contentHash": "20e70d99faf5016d2d7ecba639e893fdf31dc06e6bdfebcc25eb2cbb58b218b7",
+    "contentHash": "d9a97ee4f23da60dd43598bd48c688d94e11e471c8fd7c2ef2a575bf12b14c86",
     "revision": 2,
     "amended": false,
     "native": false,
@@ -45087,8 +45087,9 @@
      "start": "2026-11-14T10:00",
      "end": "2026-11-15T18:00"
     },
-    "contentHash": "6e9282cc03603c74671ba530686e762eae832f4865274e54ea4a71730d66e312",
-    "revision": 10,
+    "imageReviewed": true,
+    "contentHash": "167da561cadfdec2a7639051d44fbeddf15dd86b71661beafb1d6dc96445c76b",
+    "revision": 12,
     "amended": true,
     "native": false,
     "collection": "events"
@@ -45907,7 +45908,7 @@
     },
     "imageReviewed": true,
     "contentHash": "bc89d53fcf26391f932b1b0f5ba1ec0d78ceddcd48a338d98686e2a858ad1b01",
-    "revision": 13,
+    "revision": 15,
     "amended": true,
     "native": false,
     "collection": "worldEvents"

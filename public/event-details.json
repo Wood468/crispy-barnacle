@@ -3,7 +3,7 @@
  "events": {
   "wag": {
    "name": "GO Wild Area: Global",
-   "image": "https://lh3.googleusercontent.com/44ggmV081gROwILff_vc2fROBHVCfBGTlRPQ8EtwxMt0ePAkWpirNJMtFk0C3qzHyx7zQqfFAbzKsziiRTTz67bHWdZyRKJN1d7b9Z50Q0M",
+   "image": null,
    "updated": "2026-11-07T20:33:39.978Z",
    "sources": [
     {
@@ -80,7 +80,8 @@
    "researchTasks": [],
    "pokemon": [],
    "encounters": [],
-   "encounterConflicts": []
+   "encounterConflicts": [],
+   "imageProvenance": null
   },
   "leekduck:pokemon-go-wild-area-2026-sendai-japan": {
    "name": "Pokémon GO Wild Area 2026: Sendai • Tohoku",

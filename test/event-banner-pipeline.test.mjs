@@ -160,3 +160,13 @@ test('merged records keep an accurate status and "reference" is never a user-fac
     assert.ok(!/\bStatus:?\s*reference\b/i.test(html), model.eventId);
   }
 });
+
+test('no published record or catalogue event carries an image from a rejected (ambassador photography) page', () => {
+  const pages = JSON.parse(readFileSync(new URL('../public/event-artwork.json', import.meta.url), 'utf8')).pages;
+  const rejected = new Set(Object.entries(pages).filter(([url]) => policy.rejectPages.some(r => new RegExp(r.pattern, 'i').test(url))).map(([, entry]) => entry.image));
+  assert.ok(rejected.size >= 1, 'the ambassador page is in the index');
+  const details = JSON.parse(readFileSync(new URL('../public/event-details.json', import.meta.url), 'utf8')).events;
+  for (const [id, record] of Object.entries(details)) assert.ok(!rejected.has(record.image), 'details ' + id);
+  const catalogue = JSON.parse(readFileSync(new URL('../public/events-v1.json', import.meta.url), 'utf8')).events;
+  for (const event of catalogue) assert.ok(!rejected.has(event.image), 'catalogue ' + event.eventId);
+});
