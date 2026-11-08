@@ -118,3 +118,12 @@ For each candidate, capture `sourceRepository`, `sourceCommit`, `relativePath`, 
 
 ### Immediate next execution gate
 Enumerate `Images` and `3D Assets` filenames using GitHub recursive tree API or a shallow clone; cross-check codes against Game Master, inspect candidate bytes and screenshots; then create the approval gallery with actual direct images. Do not claim gallery is ready from search-result thumbnails alone.
+
+## Verified upstream directory reconnaissance (2026-11-08)
+- PokeMiners 2D Pokémon icons: https://github.com/PokeMiners/pogo_assets/tree/master/Images/Pokemon ; nested addressable assets: https://github.com/PokeMiners/pogo_assets/tree/master/Images/Pokemon/Addressable%20Assets . The GitHub browser **truncates this directory to 1,000 entries**, omitting 1,212 others, so browser filename scans cannot establish absence.
+- Avatar apparel 2D assets: https://github.com/PokeMiners/pogo_assets/tree/master/Images/Clothing ; check shirts/tops and icon categories for Purple Tee, as well as 3D Assets/Clothing.
+- The upstream repo already contains multiple Pikachu variants in numbered icon filenames (e.g. `pokemon_icon_025_00_01.png`, `pokemon_icon_025_00_02.png` and corresponding shiny versions), but **these numeric suffixes are not verified as sun/moon crown**. Never assign them by number alone.
+- Upstream issue https://github.com/PokeMiners/pogo_assets/issues/116 documents real mismatches between Game Master `assetBundleSuffix` and filename `pm25.fFLYING_01.icon.png`; mapping must handle canonical and addressable naming schemes, not just a single guessed convention.
+- Container's outbound DNS lookup for GitHub API failed; connected GitHub code search returned no binary matches. Full recursive tree inventory, binary download, checksum and pixel inspection remain **not executed**. Source-page browsing is possible but does not replace that verification.
+
+**Next executable step:** a network-capable GitHub runner or Codex session should request `GET /repos/PokeMiners/pogo_assets/git/trees/master?recursive=1`, check `truncated`, filter paths for `Images/Pokemon/Addressable Assets/`, `Images/Clothing/`, and `3D Assets/Clothing/`; crosswalk candidates with the PokeMiners Game Master; inspect exact image bytes; produce a static, source-linked candidate gallery. Never mark any candidate approved from filenames alone.
