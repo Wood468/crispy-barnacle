@@ -748,7 +748,12 @@ export function debutedSpecies(events, nowMs) {
   return out;
 }
 
-export function computeStatuses(items, events, posts, fresh, released, nowMs, debuts = new Map()) {
+// PoGoAPI lists base species only. A species being listed says nothing about a regional/special form or a named variant, so those never use it.
+export const isPlainSpeciesName = (n) => !/\(.*\)/.test(String(n)) && !/^(Alolan|Galarian|Hisuian|Paldean|Primal|Shadow|Mega|Gigantamax|Dynamax|Purified)\b/i.test(String(n).trim());
+
+// `released` (PoGoAPI) is secondary, positive-only evidence: presence may promote a plain species to Released, absence never means unreleased,
+// and it never overrides an official or event source. `releasedAsOf` is the feed's Last-Modified date (shown so a stale list is visible).
+export function computeStatuses(items, events, posts, fresh, released, nowMs, debuts = new Map(), releasedAsOf = "") {
   const live = events.filter((e) => e.start && Date.parse(e.start) + 3 * 86400000 >= nowMs);
   const out = [];
   for (const it of items) {
@@ -762,7 +767,7 @@ export function computeStatuses(items, events, posts, fresh, released, nowMs, de
         if (started) { rec.status = "Released"; rec.srcLabel = "In the game: " + started.name; rec.srcUrl = started.link; out.push(rec); continue; }
       }
       if (it.s === "unreleased" && !need && debuts.has(sp)) { rec.status = "Released"; rec.srcLabel = "Debuted in " + debuts.get(sp); out.push(rec); continue; }
-      if (it.s === "unreleased" && !/^Mega /i.test(it.n) && released.has(sp)) { rec.status = "Released"; rec.srcLabel = "Listed as released by PoGoAPI"; out.push(rec); continue; }
+      if (it.s === "unreleased" && isPlainSpeciesName(it.n) && released.has(sp)) { rec.status = "Released"; rec.srcLabel = "Listed as released by PoGoAPI" + (releasedAsOf ? " (list dated " + releasedAsOf + ")" : ""); out.push(rec); continue; }
       const ev = live.find((e) => { const t = eventText(e); return lc(t).includes(sp) && (!need || need.test(t)); });
       const post = posts.find((p) => lc(p.title).includes(sp) && (!need || need.test(p.title)) && p.date > nowMs - 120 * 86400000);
       const dm = fresh.find((f) => lc(f.name).includes(sp));
@@ -803,7 +808,7 @@ async function updateUnreleased(env, now) {
   if (!env.ASSETS) return "unreleased: no assets";
   const data = await (await env.ASSETS.fetch(new Request("https://assets.local/data.json"))).json();
   let events = []; try { const r = await fetch(EVENTS); if (r.ok) events = await r.json(); } catch { /* keep going */ }
-  let released = new Set(); try { const r = await fetch(RELEASED); if (r.ok) { const j = await r.json(); const names = Object.values(j).map((x) => lc(x.name || "")); if (names.length > 800) released = new Set(names); } } catch { /* optional source */ }
+  let released = new Set(), releasedAsOf = ""; try { const r = await fetch(RELEASED); if (r.ok) { const lm = Date.parse(r.headers.get("last-modified") || ""); if (Number.isFinite(lm)) releasedAsOf = new Date(lm).toISOString().slice(0, 10); const j = await r.json(); const names = Object.values(j).map((x) => lc(x.name || "")); if (names.length > 800) released = new Set(names); } } catch { /* optional source */ }
   const st = {};
   for (const r of (await env.DB.prepare("SELECT k, v FROM dm_state WHERE k = 'posts'").all()).results) st[r.k] = r.v;
   let posts = []; try { posts = JSON.parse(st.posts || "[]"); } catch { /* ignore */ }
@@ -814,10 +819,10 @@ async function updateUnreleased(env, now) {
   if (shin.length) await env.DB.prepare("INSERT OR REPLACE INTO dm_state (k, v) VALUES ('shiny', ?)").bind(JSON.stringify(shin)).run();
   const tracked = trackedItems(data);
   let prev = null; try { const row = await env.DB.prepare("SELECT v FROM dm_state WHERE k = 'unrel'").first(); if (row) prev = JSON.parse(row.v); } catch { /* first run */ }
-  const items = keepReleased(prev, computeStatuses(tracked, Array.isArray(events) ? events : [], posts, fresh, released, now, debutedSpecies(data.events, now)));
+  const items = keepReleased(prev, computeStatuses(tracked, Array.isArray(events) ? events : [], posts, fresh, released, now, debutedSpecies(data.events, now), releasedAsOf));
   const changes = [...statusChanges(prev, tracked, items, now), ...((prev && prev.changes) || [])].filter((c) => c.at > now - 60 * 86400000).slice(0, 100);
   const snap = Object.fromEntries(items.map((i) => [i.s + "|" + i.n, i.status]));
-  await env.DB.prepare("INSERT OR REPLACE INTO dm_state (k, v) VALUES ('unrel', ?)").bind(JSON.stringify({ updated: now, events: events.length, released: released.size, items: items.filter((i) => i.srcLabel || i.status === "Released"), snap, changes })).run();
+  await env.DB.prepare("INSERT OR REPLACE INTO dm_state (k, v) VALUES ('unrel', ?)").bind(JSON.stringify({ updated: now, events: events.length, released: released.size, releasedAsOf, items: items.filter((i) => i.srcLabel || i.status === "Released"), snap, changes })).run();
   return "unreleased:" + items.length + " (events " + events.length + ", released list " + released.size + ")";
 }
 
