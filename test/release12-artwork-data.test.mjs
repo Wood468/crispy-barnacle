@@ -6,6 +6,7 @@ import artwork from '../public/event-art.js';
 const audit = JSON.parse(await readFile(new URL('../data/release1.2-artwork-audit.json', import.meta.url), 'utf8'));
 const details = JSON.parse(await readFile(new URL('../public/event-details.json', import.meta.url), 'utf8')).events;
 const catalogue = JSON.parse(await readFile(new URL('../public/events-v1.json', import.meta.url), 'utf8')).events;
+const curated = JSON.parse(await readFile(new URL('../public/data.json', import.meta.url), 'utf8')).events;
 
 test('every current and upcoming feed row has a unique artwork decision and a dated source when verified', () => {
   assert.equal(audit.total, 44);
@@ -30,4 +31,10 @@ test('the wrong-year Machamp and Minior images and related Eternatus image are r
   for (const id of ['leekduck:go-wild-area-gigantamax-machamp-power-up-timed-research', 'leekduck:eternamax-eternatus-max-battles-2026']) {
     assert.equal(catalogue.find(event => event.eventId === id)?.image, null, id);
   }
+});
+
+test('Today uses the verified primary Sendai artwork and its original source page', () => {
+  const sendai = curated.find(event => event.id === 'sendai');
+  assert.equal(sendai.img, details.sendai.image);
+  assert.equal(sendai.artSourceUrl.replace(/\/$/, ''), details.sendai.imageProvenance.sourceUrl.replace(/\/$/, ''));
 });
