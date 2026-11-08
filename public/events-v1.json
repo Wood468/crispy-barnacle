@@ -10642,7 +10642,7 @@
    "lifecycle": "reference",
    "attendance": "",
    "location": null,
-   "image": "https://cdn.leekduck.com/assets/img/events/legendary-cresselia.jpg",
+   "image": null,
    "notes": [],
    "internalValidation": {
     "warnings": [],
@@ -10713,8 +10713,9 @@
      "start": "",
      "end": ""
     },
-    "contentHash": "97501de35d3cdb0d4bec47928bb9e71422c896ec8922b641b5448317e73b9886",
-    "revision": 3,
+    "imageReviewed": true,
+    "contentHash": "e6032e0d4ec1758dcafbc4f1cfa689169ee1b0eba9cb6d02264f268e0fbe229d",
+    "revision": 4,
     "amended": false,
     "native": false,
     "collection": "source-details"
@@ -10803,7 +10804,7 @@
    "lifecycle": "reference",
    "attendance": "",
    "location": null,
-   "image": "https://cdn.leekduck.com/assets/img/events/deoxys-all-formes.jpg",
+   "image": null,
    "notes": [],
    "internalValidation": {
     "warnings": [],
@@ -10902,8 +10903,9 @@
      "start": "",
      "end": ""
     },
-    "contentHash": "53556f35c4349f4c6452d62ecfb5a326272dce9f5489bdbf3b6e94a379f409bd",
-    "revision": 3,
+    "imageReviewed": true,
+    "contentHash": "b3cb33b3233d6b84ba94e2c836087707da14cb314a5dd441cf711a43a99e11b3",
+    "revision": 4,
     "amended": false,
     "native": false,
     "collection": "source-details"
@@ -11271,6 +11273,7 @@
      "start": "",
      "end": ""
     },
+    "imageReviewed": true,
     "contentHash": "6003147831969ae815a0b71971a84dd17f55c662a7eb2813159e3b96f5c8eaba",
     "revision": 3,
     "amended": false,
@@ -11643,7 +11646,7 @@
    "lifecycle": "reference",
    "attendance": "",
    "location": null,
-   "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-11-16-dynamax-trails-2026/dynamax-trails-2026.jpg",
+   "image": null,
    "notes": [],
    "internalValidation": {
     "warnings": [],
@@ -11722,8 +11725,9 @@
      "start": "",
      "end": ""
     },
-    "contentHash": "651fe22e17dc3f33193f7d376b2a626ff5a117d25598bafb578ad314fc69db50",
-    "revision": 3,
+    "imageReviewed": true,
+    "contentHash": "fa125120159e9a58ba841208c6b25be4f7168eec6564292c6281f54e27f9b880",
+    "revision": 4,
     "amended": false,
     "native": false,
     "collection": "source-details"
@@ -12145,7 +12149,7 @@
    "lifecycle": "reference",
    "attendance": "",
    "location": null,
-   "image": "https://cdn.leekduck.com/assets/img/events/giratinaaltered.jpg",
+   "image": null,
    "notes": [],
    "internalValidation": {
     "warnings": [],
@@ -12216,8 +12220,9 @@
      "start": "",
      "end": ""
     },
-    "contentHash": "e3961870f255e00bb2480c876b3be567dfe79a94e3bbd4bd1bd5812922c94584",
-    "revision": 3,
+    "imageReviewed": true,
+    "contentHash": "bc9cd6db78bd332253025fa3fbb87859db7b9995faabf69258a3c02848b5bf66",
+    "revision": 4,
     "amended": false,
     "native": false,
     "collection": "source-details"
@@ -12867,7 +12872,7 @@
    "lifecycle": "reference",
    "attendance": "",
    "location": null,
-   "image": "https://cdn.leekduck.com/assets/img/events/article-images/2025/2025-05-25-gigantamax-machamp-max-battle-day-may-2025/gigantamax-machamp-max-battles.jpg",
+   "image": null,
    "notes": [],
    "internalValidation": {
     "warnings": [],
@@ -12953,8 +12958,9 @@
      "start": "",
      "end": ""
     },
-    "contentHash": "2cc7de517d6fcc229629cd40084686142d6deaee754dc7a9eb1350dd39c6cea5",
-    "revision": 2,
+    "imageReviewed": true,
+    "contentHash": "6233e459b7d0600a984239a8178482d30eabd342e8e461b21fb80ea73d59da2d",
+    "revision": 3,
     "amended": false,
     "native": false,
     "collection": "source-details"
@@ -13003,7 +13009,7 @@
    "lifecycle": "reference",
    "attendance": "",
    "location": null,
-   "image": "https://lh3.googleusercontent.com/U-aJxlmtiVe7UDPLAEoyI8LKHgyuRe9RpQB9nxZzRj-sCkzCPo9RlTdZ9XXtMSwR1sI80g6EEtGyA9bLRWGnALsEnz5EHR9z6bOWA2frRw",
+   "image": null,
    "notes": [],
    "internalValidation": {
     "warnings": [],
@@ -13530,8 +13536,9 @@
      "start": "",
      "end": ""
     },
-    "contentHash": "c77d3aff35ec3648818a6222778c83cbf1a858da3d5f78021eb53855fb4e3ec5",
-    "revision": 4,
+    "imageReviewed": true,
+    "contentHash": "d15edf8dd4110e41fe5284044790ad719966cbf045579b539aa9fd5615eeb3f1",
+    "revision": 5,
     "amended": false,
     "native": false,
     "collection": "source-details"
@@ -14754,7 +14761,7 @@
    "lifecycle": "reference",
    "attendance": "",
    "location": null,
-   "image": "https://cdn.leekduck.com/assets/img/events/max-battles-kanto.jpg",
+   "image": null,
    "notes": [],
    "internalValidation": {
     "warnings": [],
@@ -14795,8 +14802,9 @@
      "start": "",
      "end": ""
     },
-    "contentHash": "543de5b2ce1e1380abc4e30effa431ff2f8b1900f8bb9fe057ff19d6064a2449",
-    "revision": 3,
+    "imageReviewed": true,
+    "contentHash": "6ceac660dbd51e26f65930e3c36892b669ac81a4aedb918fb1beaa47e31304f0",
+    "revision": 4,
     "amended": false,
     "native": false,
     "collection": "source-details"
@@ -14830,7 +14838,7 @@
    "lifecycle": "reference",
    "attendance": "",
    "location": null,
-   "image": "https://cdn.leekduck.com/assets/img/events/max-battles-kanto.jpg",
+   "image": null,
    "notes": [],
    "internalValidation": {
     "warnings": [],
@@ -14907,8 +14915,9 @@
      "start": "",
      "end": ""
     },
-    "contentHash": "cf859105a86cb2a0399e53d4bb9d7ca63b007b734829a431542ac1e8b1a938af",
-    "revision": 3,
+    "imageReviewed": true,
+    "contentHash": "d7c05b5b9640c3f7d84d9e6f611e5a4f00a89a0c1340856410a9f5c80958eafb",
+    "revision": 4,
     "amended": false,
     "native": false,
     "collection": "source-details"
@@ -14942,7 +14951,7 @@
    "lifecycle": "reference",
    "attendance": "",
    "location": null,
-   "image": "https://cdn.leekduck.com/assets/img/events/max-battles-kanto.jpg",
+   "image": null,
    "notes": [],
    "internalValidation": {
     "warnings": [],
@@ -15019,8 +15028,9 @@
      "start": "",
      "end": ""
     },
-    "contentHash": "5a0aeb23c41371acf29a1e27461f1f3d5f56486031afff625b553f17db67091c",
-    "revision": 3,
+    "imageReviewed": true,
+    "contentHash": "161776bbfe547838f67855edc658299719fb23612641d9c011c40706502fe771",
+    "revision": 4,
     "amended": false,
     "native": false,
     "collection": "source-details"
@@ -15054,7 +15064,7 @@
    "lifecycle": "reference",
    "attendance": "",
    "location": null,
-   "image": "https://cdn.leekduck.com/assets/img/events/mega-default.jpg",
+   "image": null,
    "notes": [],
    "internalValidation": {
     "warnings": [],
@@ -15118,8 +15128,9 @@
      "start": "",
      "end": ""
     },
-    "contentHash": "a88f813e12be6c50f8d35da3269fb5d9c6002baab39e2f01f82d4553132bd377",
-    "revision": 3,
+    "imageReviewed": true,
+    "contentHash": "4e51f03189fdce4ab8c2e37675e02dd0fe50380503e707feddc906d687c97d23",
+    "revision": 4,
     "amended": false,
     "native": false,
     "collection": "source-details"
@@ -15480,7 +15491,7 @@
    "lifecycle": "reference",
    "attendance": "",
    "location": null,
-   "image": "https://cdn.leekduck.com/assets/img/events/mega-default.jpg",
+   "image": null,
    "notes": [],
    "internalValidation": {
     "warnings": [],
@@ -15551,8 +15562,9 @@
      "start": "",
      "end": ""
     },
-    "contentHash": "efc42bb35cb2adb439d523c4b0d83ecee089325ff13050212fd26d2381d755a1",
-    "revision": 3,
+    "imageReviewed": true,
+    "contentHash": "4ef535665c1617aaeb34e294bf1debb15bb9d626c28b4e86c441525089fcdb12",
+    "revision": 4,
     "amended": false,
     "native": false,
     "collection": "source-details"
@@ -15616,7 +15628,7 @@
    "lifecycle": "reference",
    "attendance": "",
    "location": null,
-   "image": "https://cdn.leekduck.com/assets/img/events/mega-default.jpg",
+   "image": null,
    "notes": [],
    "internalValidation": {
     "warnings": [],
@@ -15673,8 +15685,9 @@
      "start": "",
      "end": ""
     },
-    "contentHash": "293521a23c32545d0b259c282661219113310f409a125ca5748da930bf504f29",
-    "revision": 3,
+    "imageReviewed": true,
+    "contentHash": "96a5553ad5af21f2b195720d1c1520efd8d0c796ddbdb5e0b6d71a364f65970b",
+    "revision": 4,
     "amended": false,
     "native": false,
     "collection": "source-details"
@@ -15738,7 +15751,7 @@
    "lifecycle": "reference",
    "attendance": "",
    "location": null,
-   "image": "https://cdn.leekduck.com/assets/img/events/minior-showers-2026.jpg",
+   "image": null,
    "notes": [],
    "internalValidation": {
     "warnings": [],
@@ -15836,8 +15849,9 @@
      "start": "",
      "end": ""
     },
-    "contentHash": "ec7631727342dc7b4c2a5f113e01739da85923b26832a35e3737ad98860939fe",
-    "revision": 3,
+    "imageReviewed": true,
+    "contentHash": "ce894845b322b3b352baf8b2b2ff53d49d89a004b10b6e70cf6a9eef143ea0e0",
+    "revision": 4,
     "amended": false,
     "native": false,
     "collection": "source-details"
@@ -16386,7 +16400,7 @@
    "lifecycle": "reference",
    "attendance": "",
    "location": null,
-   "image": "https://cdn.leekduck.com/assets/img/events/minior-showers-2026.jpg",
+   "image": null,
    "notes": [],
    "internalValidation": {
     "warnings": [],
@@ -16477,8 +16491,9 @@
      "start": "",
      "end": ""
     },
-    "contentHash": "73770d90830315732f503793b23e782eae5a5ce2376c6ce4d9157cbd3659800c",
-    "revision": 3,
+    "imageReviewed": true,
+    "contentHash": "c4fa335bba0c0f00eaa79c4e3ca2dfc5c70a69a4d11dbec1fd827eeadeb29310",
+    "revision": 4,
     "amended": false,
     "native": false,
     "collection": "source-details"
@@ -16512,7 +16527,7 @@
    "lifecycle": "reference",
    "attendance": "",
    "location": null,
-   "image": "https://cdn.leekduck.com/assets/img/events/minior-showers-2026.jpg",
+   "image": null,
    "notes": [],
    "internalValidation": {
     "warnings": [],
@@ -16610,8 +16625,9 @@
      "start": "",
      "end": ""
     },
-    "contentHash": "e20a3fb48c52c42848ae84eae222ce7a11a85cf126b237fddf4f0b7a3137372d",
-    "revision": 3,
+    "imageReviewed": true,
+    "contentHash": "78331e75ce106453ca7d3015914b8c80b0789d44905560c5a89ebf15dbaf7891",
+    "revision": 4,
     "amended": false,
     "native": false,
     "collection": "source-details"
@@ -16804,6 +16820,7 @@
      "start": "",
      "end": ""
     },
+    "imageReviewed": true,
     "contentHash": "3809b68e9270033aacbf01b39dddf829881a5cac5dbdf7bd57cff86af8df8985",
     "revision": 3,
     "amended": false,
@@ -17358,7 +17375,7 @@
    "lifecycle": "reference",
    "attendance": "",
    "location": null,
-   "image": "https://cdn.leekduck.com/assets/img/events/events-default-img.jpg",
+   "image": null,
    "notes": [],
    "internalValidation": {
     "warnings": [],
@@ -17392,8 +17409,9 @@
      "start": "",
      "end": ""
     },
-    "contentHash": "1f0b04226bbc687058e8e93472d539de1f55b396321c32dd658723fc9f73e54c",
-    "revision": 3,
+    "imageReviewed": true,
+    "contentHash": "2a5efcedf53b8cd1a695db2f8945725cb0791a62b94a60fada035d85392d0f1e",
+    "revision": 4,
     "amended": false,
     "native": false,
     "collection": "source-details"
@@ -17427,7 +17445,7 @@
    "lifecycle": "reference",
    "attendance": "",
    "location": null,
-   "image": "https://cdn.leekduck.com/assets/img/events/events-default-img.jpg",
+   "image": null,
    "notes": [],
    "internalValidation": {
     "warnings": [],
@@ -17461,8 +17479,9 @@
      "start": "",
      "end": ""
     },
-    "contentHash": "7be4ea960871383cbac41617ce80a8990dd7715b2979d5604e6ad34d172a8592",
-    "revision": 3,
+    "imageReviewed": true,
+    "contentHash": "d9cef92a6b280012d6d6aa3eb4529a34d8b23bf7ead136793f225626b378ca53",
+    "revision": 4,
     "amended": false,
     "native": false,
     "collection": "source-details"
@@ -17496,7 +17515,7 @@
    "lifecycle": "reference",
    "attendance": "",
    "location": null,
-   "image": "https://cdn.leekduck.com/assets/img/events/events-default-img.jpg",
+   "image": null,
    "notes": [],
    "internalValidation": {
     "warnings": [],
@@ -17530,8 +17549,9 @@
      "start": "",
      "end": ""
     },
-    "contentHash": "0c101c37cca06d8e1439c0258b456b63bda85f84479ae7e7d42d9a613df9685a",
-    "revision": 3,
+    "imageReviewed": true,
+    "contentHash": "cc66366783d95736efe5f8e761a0cc9780df6868cced0abaf71a441b65104a0f",
+    "revision": 4,
     "amended": false,
     "native": false,
     "collection": "source-details"
@@ -17565,7 +17585,7 @@
    "lifecycle": "reference",
    "attendance": "",
    "location": null,
-   "image": "https://lh3.googleusercontent.com/jkmT_jf1BmLdPEEzRG7B6yFKILNPYV34p47qSvsk1ZJKxb1lreNQJkHk3zFFL5Uj0-WFWODr7c2HaB4DqI9wkJILJra1o3VqDvM9ks8-LIM",
+   "image": null,
    "notes": [],
    "internalValidation": {
     "warnings": [],
@@ -17973,8 +17993,9 @@
      "start": "",
      "end": ""
     },
-    "contentHash": "85140fa61531d3d04c21b6c0033236136afff3da974e28ab8bd7d792e383fb41",
-    "revision": 3,
+    "imageReviewed": true,
+    "contentHash": "269f8e3b2de77de99a9c9b96a8583480afcc7d703b67882981cde6a557edee89",
+    "revision": 4,
     "amended": false,
     "native": false,
     "collection": "source-details"
@@ -18492,9 +18513,10 @@
      "start": "2026-11-06",
      "end": "2026-11-08"
     },
+    "imageReviewed": true,
     "contentHash": "45071182276be18483c8b6fb1d2700b15600b505bff0bc4344215636fa00131f",
     "revision": 8,
-    "amended": true,
+    "amended": false,
     "native": false,
     "collection": "worldEvents"
    },
@@ -19879,7 +19901,7 @@
    "lifecycle": "reference",
    "attendance": "",
    "location": null,
-   "image": "https://cdn.leekduck.com/assets/img/events/pokemon-night-out-2026.jpg",
+   "image": null,
    "notes": [],
    "internalValidation": {
     "warnings": [],
@@ -20026,8 +20048,9 @@
      "start": "",
      "end": ""
     },
-    "contentHash": "f552bbe7d2f0a05962ccc703995cbc9f54170d5a4cd578d540af493e7d374c6e",
-    "revision": 3,
+    "imageReviewed": true,
+    "contentHash": "61a5ae1d293acbf4aaa7e8ed75af207faef316785784f266244f3fa89d266906",
+    "revision": 4,
     "amended": false,
     "native": false,
     "collection": "source-details"
@@ -20607,6 +20630,7 @@
      "start": "",
      "end": ""
     },
+    "imageReviewed": true,
     "contentHash": "29c1cde3d3a9a83f683b63534efc0c95f55c6b93a759b7266ef23e9551004265",
     "revision": 3,
     "amended": false,
@@ -20959,7 +20983,7 @@
    "lifecycle": "reference",
    "attendance": "",
    "location": null,
-   "image": "https://cdn.leekduck.com/assets/img/events/pokemonspotlighthour.jpg",
+   "image": null,
    "notes": [],
    "internalValidation": {
     "warnings": [],
@@ -20993,8 +21017,9 @@
      "start": "",
      "end": ""
     },
-    "contentHash": "8498ef7ad70ca037e83b5337a79e6cf7dfa899dcdab0c94a9c925d98ee15466c",
-    "revision": 3,
+    "imageReviewed": true,
+    "contentHash": "cdfe68f1345bca37dc9cbabb537ac8e1d1dd76b82a9f1d2698bad7bd331646f5",
+    "revision": 4,
     "amended": false,
     "native": false,
     "collection": "source-details"
@@ -21028,7 +21053,7 @@
    "lifecycle": "reference",
    "attendance": "",
    "location": null,
-   "image": "https://cdn.leekduck.com/assets/img/events/pokemonspotlighthour.jpg",
+   "image": null,
    "notes": [],
    "internalValidation": {
     "warnings": [],
@@ -21062,8 +21087,9 @@
      "start": "",
      "end": ""
     },
-    "contentHash": "974270a2e67f7b5f5a4385474b5cc0659973422c35f45cc10116804f221ab7ee",
-    "revision": 3,
+    "imageReviewed": true,
+    "contentHash": "ef2cdd5760178ff32fd6e8271c7f806aba6e81a3ea3fb9ea34b6918666f12a9e",
+    "revision": 4,
     "amended": false,
     "native": false,
     "collection": "source-details"
@@ -21405,7 +21431,7 @@
    "lifecycle": "reference",
    "attendance": "",
    "location": null,
-   "image": "https://cdn.leekduck.com/assets/img/events/raidhour.jpg",
+   "image": null,
    "notes": [],
    "internalValidation": {
     "warnings": [],
@@ -21447,8 +21473,9 @@
      "start": "",
      "end": ""
     },
-    "contentHash": "e2a6f716dd6a8f765ee549567a7ddf30103e1b7bcb3a4ed14e05bdcf476764a9",
-    "revision": 3,
+    "imageReviewed": true,
+    "contentHash": "add48154140e7898b52e8c20cb7ba71fd24152579e49327c9705fd4d497c60d8",
+    "revision": 4,
     "amended": false,
     "native": false,
     "collection": "source-details"
@@ -21482,7 +21509,7 @@
    "lifecycle": "reference",
    "attendance": "",
    "location": null,
-   "image": "https://cdn.leekduck.com/assets/img/events/raidhour.jpg",
+   "image": null,
    "notes": [],
    "internalValidation": {
     "warnings": [],
@@ -21524,8 +21551,9 @@
      "start": "",
      "end": ""
     },
-    "contentHash": "56d2eed07ef48675573f4de738795570a26b3f39ee44b48d41f750f36259a62a",
-    "revision": 3,
+    "imageReviewed": true,
+    "contentHash": "d7f875ecf1e1483e35fc422473f4afaab450558e1ddb7ebefba77769afabca42",
+    "revision": 4,
     "amended": false,
     "native": false,
     "collection": "source-details"
@@ -22097,6 +22125,7 @@
      "start": "",
      "end": ""
     },
+    "imageReviewed": true,
     "contentHash": "5e79b82cf6db73eb18e57ef1aeb99a95df55baf8f71c3c0148543ead52ce76ca",
     "revision": 3,
     "amended": false,
@@ -22289,7 +22318,7 @@
    "lifecycle": "announced",
    "attendance": "",
    "location": null,
-   "image": "https://cdn.leekduck.com/assets/img/events/tornadus.jpg",
+   "image": null,
    "notes": [],
    "internalValidation": {
     "warnings": [],
@@ -22326,8 +22355,9 @@
      "end": ""
     },
     "conflicts": [],
-    "contentHash": "7d5aa66f805d3695e51ff728f54636bf8c9f5b13bf6e4c800e1ffa8617d55bce",
-    "revision": 3,
+    "imageReviewed": true,
+    "contentHash": "885ca68042094c1b775a6d9e5617a5ff902f95f6837244e34d541375b88901f5",
+    "revision": 4,
     "amended": false,
     "collection": "source-details"
    },
@@ -22360,7 +22390,7 @@
    "lifecycle": "reference",
    "attendance": "",
    "location": null,
-   "image": "https://cdn.leekduck.com/assets/img/events/tornadus.jpg",
+   "image": null,
    "notes": [],
    "internalValidation": {
     "warnings": [],
@@ -22402,8 +22432,9 @@
      "start": "",
      "end": ""
     },
-    "contentHash": "c32703ebf183c91fdb3453303c3f715f80a4a379c5e870ce1e8cdaaeeff22d57",
-    "revision": 3,
+    "imageReviewed": true,
+    "contentHash": "6064ff65e91f64523a7f7119792807abab6d65328db0b661824e75c286f08592",
+    "revision": 4,
     "amended": false,
     "native": false,
     "collection": "source-details"
@@ -22742,6 +22773,7 @@
      "start": "",
      "end": ""
     },
+    "imageReviewed": true,
     "contentHash": "da1adb760a4ec0be3af374bf017d9336aec9bd6d9cc6212e6b9484c9b9795237",
     "revision": 3,
     "amended": false,
@@ -23861,6 +23893,7 @@
      "start": "",
      "end": ""
     },
+    "imageReviewed": true,
     "contentHash": "fb3cca5271322c3036ea9fb278025c82f3a1ecbd7b7b21f7ea0bfce95ab53485",
     "revision": 4,
     "amended": false,
@@ -29336,7 +29369,7 @@
    "lifecycle": "announced",
    "attendance": "",
    "location": null,
-   "image": "https://cdn.leekduck.com/assets/img/events/giratinaaltered.jpg",
+   "image": null,
    "notes": [],
    "internalValidation": {
     "warnings": [],
@@ -29405,8 +29438,9 @@
      "start": "2026-11-04T06:00",
      "end": "2026-11-08T22:00"
     },
-    "contentHash": "d8b6f7423669f09531f6c1f3b140c474e6bccfb82b55ab0e535841fa5dc0b802",
-    "revision": 4,
+    "imageReviewed": true,
+    "contentHash": "c7b40956ca715070b2f29924554f436a10b03858f15ed29f9f5800b407c08a0b",
+    "revision": 5,
     "amended": false,
     "native": false,
     "collection": "rotation"
@@ -29695,7 +29729,7 @@
    "lifecycle": "announced",
    "attendance": "",
    "location": null,
-   "image": "https://cdn.leekduck.com/assets/img/events/legendary-cresselia.jpg",
+   "image": null,
    "notes": [],
    "internalValidation": {
     "warnings": [],
@@ -29764,8 +29798,9 @@
      "start": "2026-11-16T06:00",
      "end": "2026-11-24T22:00"
     },
-    "contentHash": "dd0e54713f272d36fce6e4de51549c960e46a481bebbe6a18a60619f255617ee",
-    "revision": 4,
+    "imageReviewed": true,
+    "contentHash": "7457084c8e151d4cf0066aa3db99840e0d1bbd0ff81da04923c675e2f5cb99c6",
+    "revision": 5,
     "amended": false,
     "native": false,
     "collection": "rotation"
@@ -29923,7 +29958,7 @@
    "lifecycle": "announced",
    "attendance": "",
    "location": null,
-   "image": "https://cdn.leekduck.com/assets/img/events/deoxys-all-formes.jpg",
+   "image": null,
    "notes": [],
    "internalValidation": {
     "warnings": [],
@@ -30020,8 +30055,9 @@
      "start": "2026-11-25T06:00",
      "end": "2026-12-01T22:00"
     },
-    "contentHash": "497b46f52c723d49bd4e64423f9b21382dd6742fa1f09a5ca9b1f3091ae30e67",
-    "revision": 4,
+    "imageReviewed": true,
+    "contentHash": "f89c1350b582ffc7580c4b74082381a43d80901a90deb53f3846a72ee61f3186",
+    "revision": 5,
     "amended": false,
     "native": false,
     "collection": "rotation"
@@ -30451,7 +30487,7 @@
    "lifecycle": "announced",
    "attendance": "",
    "location": null,
-   "image": "/img/ext/season-24-twilight-trails-99c978ed.jpg",
+   "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-09-08-season-24-twilight-trails/season-24-twilight-trails.jpg",
    "notes": [
     "Daily Discoveries: Max Monday, Raid Hour on Wednesdays and Friendship Friday trades.",
     "Mega debuts include Staraptor and Chandelure; Dynamax Rhyhorn, Sneasel and Sizzlipede join Max Battles.",
@@ -30675,8 +30711,9 @@
      "start": "2026-09-08T10:00",
      "end": "2026-12-01T10:00"
     },
-    "contentHash": "d27f4a484da5f5cdd2ec94aa3236a187343b17d8dbf779be937f1576cbebd7cd",
-    "revision": 2,
+    "imageReviewed": true,
+    "contentHash": "d00b66a33ea74343db663661e6c0154fc59cba7ba3c7771f470310ab277d988b",
+    "revision": 3,
     "amended": false,
     "native": false,
     "collection": "season"
@@ -33562,7 +33599,7 @@
    "lifecycle": "reference",
    "attendance": "in-person",
    "location": "Sendai, Japan",
-   "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-11-06-pokemon-go-wild-area-2026-sendai-japan/key-art.jpg",
+   "image": "https://lh3.googleusercontent.com/mKoeqvHXmLsEsFxHgdhcK2XoC_XhjXUDl8gvBeH0iEfQTCNOuNY_vJ_k7QRoIYJFfVanVY_aE6ERNdqPgOPpOxvRQaw0I4T1YzTnodb8GUY",
    "notes": [
     "Ticket ¥4,000 for one day. Registration ran Sep 11 to 15, so check for resale or extra days.",
     "Debuts: Gigantamax Duraludon, Dynamax Dialga and Palkia, Hisuian Sliggoo and Goodra.",
@@ -34016,8 +34053,9 @@
      "start": "",
      "end": ""
     },
-    "contentHash": "7e01fbf9856e7a4353376d08e38a522b53a204b7f35b50d74696be44083f1c99",
-    "revision": 7,
+    "imageReviewed": true,
+    "contentHash": "89e75be1fa54507ce0903e180af3ca57a431647a6ea779aee51b56a5b2ba422a",
+    "revision": 8,
     "amended": true,
     "native": false,
     "collection": "events"
@@ -39587,6 +39625,7 @@
      "start": "2026-11-16",
      "end": "2026-11-23"
     },
+    "imageReviewed": true,
     "contentHash": "b806f628f290af041cd4e00988934e38499f8ccf9c6be65e79eb74e30bde3b09",
     "revision": 4,
     "amended": false,
@@ -39719,7 +39758,7 @@
    "lifecycle": "announced",
    "attendance": "",
    "location": null,
-   "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-11-16-dynamax-trails-2026/dynamax-trails-2026.jpg",
+   "image": null,
    "notes": [],
    "internalValidation": {
     "warnings": [],
@@ -39796,8 +39835,9 @@
      "start": "2026-11-21",
      "end": "2026-11-21"
     },
-    "contentHash": "2a6755ba08bdcf87dae11f9b6160c280e2923f74771691d85ede26b8b8afb7ce",
-    "revision": 4,
+    "imageReviewed": true,
+    "contentHash": "4bbe2871a823eb21458a110b1a90a61e5fce0d1ddaa2d47d0d0671f282a84a9d",
+    "revision": 5,
     "amended": false,
     "native": false,
     "collection": "world-events"
@@ -40089,7 +40129,7 @@
    "lifecycle": "announced",
    "attendance": "in-person",
    "location": null,
-   "image": "https://cdn.leekduck.com/assets/img/events/article-images/2025/2025-05-25-gigantamax-machamp-max-battle-day-may-2025/gigantamax-machamp-max-battles.jpg",
+   "image": null,
    "notes": [],
    "internalValidation": {
     "warnings": [],
@@ -40173,8 +40213,9 @@
      "start": "2026-11-06",
      "end": "2026-11-15"
     },
-    "contentHash": "922af43be4edacab58ce02691a4bdd09fb27a9346b3f4648334494b8cf144d38",
-    "revision": 4,
+    "imageReviewed": true,
+    "contentHash": "2bc734bbc0384877a9299bd46137dea24f7131a8ee949d5e9a37646a6cc24dec",
+    "revision": 5,
     "amended": false,
     "native": false,
     "collection": "world-events"
@@ -45748,7 +45789,7 @@
    "lifecycle": "announced",
    "attendance": "in-person",
    "location": "Play from anywhere",
-   "image": "https://cdn.leekduck.com/assets/img/events/events-default-img.jpg",
+   "image": null,
    "notes": [],
    "internalValidation": {
     "warnings": [],
@@ -45780,8 +45821,9 @@
      "start": "2027-02-27",
      "end": "2027-02-28"
     },
-    "contentHash": "7a6fbcaec2ae57a25eb766af39cb46d3379989284e3d1793097f926f52c599c2",
-    "revision": 3,
+    "imageReviewed": true,
+    "contentHash": "05cfd5f4ea64307aba109f1a493b77fb0dc033f78f6511686bb2f3a3b03851e9",
+    "revision": 4,
     "amended": false,
     "native": false,
     "collection": "worldEvents"
@@ -45819,7 +45861,7 @@
    "lifecycle": "announced",
    "attendance": "in-person",
    "location": "Kaohsiung, Taiwan",
-   "image": "https://cdn.leekduck.com/assets/img/events/events-default-img.jpg",
+   "image": null,
    "notes": [],
    "internalValidation": {
     "warnings": [],
@@ -45851,8 +45893,9 @@
      "start": "2027-02-19",
      "end": "2027-02-21"
     },
-    "contentHash": "e9ac2305588aae012cf0e41bd89c9e45f49ae606fdb031091ed80f3c9a776ed9",
-    "revision": 3,
+    "imageReviewed": true,
+    "contentHash": "61cda57a1bfe5747641426372fd9873cfff0515f515b9d191498ad8f793eafa1",
+    "revision": 4,
     "amended": false,
     "native": false,
     "collection": "worldEvents"
@@ -45890,7 +45933,7 @@
    "lifecycle": "announced",
    "attendance": "in-person",
    "location": "Los Angeles, USA",
-   "image": "https://cdn.leekduck.com/assets/img/events/events-default-img.jpg",
+   "image": null,
    "notes": [],
    "internalValidation": {
     "warnings": [],
@@ -45922,8 +45965,9 @@
      "start": "2027-02-19",
      "end": "2027-02-21"
     },
-    "contentHash": "ead3b93481885d91d6da34e4999cc60b22a6588de374201256eec4c2f79bcc69",
-    "revision": 3,
+    "imageReviewed": true,
+    "contentHash": "be51524e53ce9f494620de8f48fd96a4a75d71ea2fc364553517d18d2381d8f1",
+    "revision": 4,
     "amended": false,
     "native": false,
     "collection": "worldEvents"
@@ -45961,7 +46005,7 @@
    "lifecycle": "announced",
    "attendance": "in-person",
    "location": "Play from anywhere",
-   "image": "https://lh3.googleusercontent.com/jkmT_jf1BmLdPEEzRG7B6yFKILNPYV34p47qSvsk1ZJKxb1lreNQJkHk3zFFL5Uj0-WFWODr7c2HaB4DqI9wkJILJra1o3VqDvM9ks8-LIM",
+   "image": null,
    "notes": [],
    "internalValidation": {
     "warnings": [],
@@ -46367,8 +46411,9 @@
      "start": "2026-11-14",
      "end": "2026-11-15"
     },
-    "contentHash": "79031c78d15c83ce1157887a412b950a861cdc21abe821956068b92b2b09d4bc",
-    "revision": 3,
+    "imageReviewed": true,
+    "contentHash": "bc89d53fcf26391f932b1b0f5ba1ec0d78ceddcd48a338d98686e2a858ad1b01",
+    "revision": 4,
     "amended": false,
     "native": false,
     "collection": "worldEvents"
