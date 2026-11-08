@@ -2053,12 +2053,13 @@ function renderHomeBrief(t) {
       kindOf: kindOf, monArt: monArt, fallbackArt: placeholderArt, overseas: function (ev) { return t1Overseas(ev.region); }, dayLabel: function (d) { return fmtD(d); } };
   }
   var t1Signature = '';
+  function sigEv(e) { return [e.id, e.name, e.region || '', e.img ? 1 : 0, (e.featured || []).length, (e.tags || []).join(',')].join('|'); }
   function renderTodayV1(t, force) {
     var host = $('today-v1'); if (!host || !T1 || !TL || !EV_READY) return;
     t = t || now();
     var sheet = $('evd'); if (sheet && !sheet.hidden) return;
     var ctx = t1Ctx(t);
-    var sig = JSON.stringify([dayKey(t), ctx.live.map(function (e) { return e.id; }), ctx.soon.map(function (e) { return e.id; }), ctx.week.map(function (e) { return e.id; }),
+    var sig = JSON.stringify([dayKey(t), ctx.live.map(sigEv), ctx.soon.map(sigEv), ctx.week.map(sigEv),
       ctx.regLive.map(function (e) { return e.id; }), ctx.ending.map(function (e) { return e.id; }), ctx.regSoon.map(function (e) { return e.id; }), ctx.regWeek.map(function (e) { return e.id; }),
       ctx.boosts.live.map(function (r) { return r.eventId + r.name; }), ctx.boosts.upcoming.map(function (r) { return r.eventId + r.name; }), ctx.seasons, ctx.done.map(function (d) { return d.key; })]);
     if (!force && sig === t1Signature && host.firstChild) { T1.patchCountdowns(host, +t); return; }
