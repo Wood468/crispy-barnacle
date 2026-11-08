@@ -1,5 +1,6 @@
 """Redesigned Today: boost rail from a real-shaped record, empty boost state, Ending soon from the real deadlines source,
 undo window, midnight rollover and that the legacy agenda is unreachable for users. Covers the assertions the classic Today checks made."""
+import os
 import json, re
 from playwright.sync_api import sync_playwright
 
@@ -14,7 +15,7 @@ FILLER = [{'id': 'leekduck:filler-%d' % i, 'name': 'Filler Event %d' % i, 'type'
 
 def run(playwright, events, clock):
     events = events + FILLER  # the app only trusts a live feed with at least 10 events
-    browser = playwright.chromium.launch()
+    browser = getattr(playwright, os.environ.get('GO_FIELD_NOTES_TEST_BROWSER', 'chromium')).launch()
     ctx = browser.new_context(viewport={'width': 390, 'height': 844}, timezone_id='Australia/Melbourne', service_workers='block')
     ctx.route('**/api/**', lambda r: r.fulfill(body=json.dumps({'environment': 'production', 'database': True, 'enabled': True, 'readOnly': True, 'events': events}) if '/api/events' in r.request.url else '{}', content_type='application/json'))
     ctx.route(re.compile(r'^https://fonts\.'), lambda r: r.fulfill(body='', content_type='text/css'))

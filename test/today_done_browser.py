@@ -1,10 +1,11 @@
 """Today: per-occurrence Done menu, Undo, restore list, persistence and Collection safety."""
+import os
 import re
 from playwright.sync_api import sync_playwright
 
 BASE = 'http://127.0.0.1:8791/'
 with sync_playwright() as p:
-    browser = p.chromium.launch()
+    browser = getattr(p, os.environ.get('GO_FIELD_NOTES_TEST_BROWSER', 'chromium')).launch()
     context = browser.new_context(viewport={'width': 390, 'height': 844}, timezone_id='Australia/Melbourne', service_workers='block')
     context.route('**/api/**', lambda r: r.fulfill(body='{"enabled":false,"events":[],"sources":[]}', content_type='application/json'))
     context.route(re.compile(r'^https://fonts\.'), lambda r: r.fulfill(body='', content_type='text/css'))

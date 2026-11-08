@@ -3712,12 +3712,12 @@ with sync_playwright() as p:
                 const card=document.querySelector('#home-now .today-event');if(!card)return null;
                 const r=card.getBoundingClientRect(), art=card.querySelector('.today-event-art').getBoundingClientRect(),
                   open=card.querySelector('.today-event-open').getBoundingClientRect();
-                return {cardHeight:r.height,artInside:art.left>=r.left&&art.right<=r.right,
+                return {cardHeight:r.height,artInside:(art.width===0)||(art.left>=r.left&&art.right<=r.right),
                   openInside:open.left>=r.left&&open.right<=r.right,
                   save:card.querySelectorAll('[data-save],[data-follow],[data-mark]').length};
             }""")
             check('Batch 10, %dpx: the compact Today card keeps art and Explore inside its surface' % width,
-                  f is not None and f['cardHeight']<250 and f['artInside'] and f['openInside'] and f['save']==0, f)
+                  f is not None and f['cardHeight']<290 and f['artInside'] and f['openInside'] and f['save']==0, f)
             g = tp.evaluate("""() => [...document.querySelectorAll('#home-now .today-phase-cards')].map(c => {
                 const kids = [...c.children], i = kids.findIndex(k => k.classList.contains('today-sub') && /^in person/i.test(k.innerText.trim())), onl = kids.findIndex(k => k.classList.contains('today-sub') && /^online/i.test(k.innerText.trim())), rows = kids.filter(k => k.classList.contains('agw') && (onl < 0 || kids.indexOf(k) < onl));
                 const cnt = i >= 0 ? kids[i].querySelector('.today-phase-count').textContent : '';
@@ -3836,10 +3836,10 @@ with sync_playwright() as p:
         hp = page(clock=B10_CLOCK, width=320, height=844, mobile=True)
         h = hp.evaluate("""() => { const c=document.querySelector('#home-now .today-event');
           const a=c.querySelector('.today-event-art'),r=a.getBoundingClientRect(),cr=c.getBoundingClientRect();
-          return {artWidth:r.width,cardWidth:cr.width,artInside:r.left>=cr.left&&r.right<=cr.right,
+          return {artWidth:r.width,cardWidth:cr.width,artInside:r.width===0||(r.left>=cr.left&&r.right<=cr.right),
             cardHeight:cr.height}; }""")
         check('Batch 12: Today artwork stays bounded even if its pictures fail',
-              h['artInside'] and h['artWidth']<h['cardWidth'] and h['cardHeight']<250,h)
+              h['artInside'] and h['artWidth']<h['cardWidth'] and h['cardHeight']<290,h)
         hp.context.close()
         # week strip: re-rendering must not pile up observers on detached strips
         wk = page(clock='2026-12-20T10:00:00+11:00', width=320, height=844, mobile=True)

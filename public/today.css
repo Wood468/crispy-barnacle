@@ -203,3 +203,8 @@ header.top .hbtn{width:44px;height:44px}
 .art-fb{display:inline-grid;grid-template-rows:minmax(0,1fr) auto;justify-items:center;align-items:center;gap:2px;max-width:100%}
 .art-fb .form-chip{position:static;transform:none;white-space:normal;text-align:center;max-width:100%;line-height:1.15;font-size:.6rem}
 .art-fb>img{min-height:0;max-height:100%}
+/* Compact card art (Schedule cards, classic cards): the wrapper stays inside the 44px art box and the label shortens */
+.evc .art-fb,.today-event .art-fb{position:relative;display:grid;width:44px;height:44px;max-width:100%;overflow:hidden;grid-template-rows:1fr;align-items:end}
+.evc .art-fb>img,.today-event .art-fb>img{width:100%;height:100%;object-fit:contain}
+.evc .art-fb .form-chip,.today-event .art-fb .form-chip{position:absolute;left:0;right:0;bottom:0;font-size:0;padding:1px 2px;border-radius:0;line-height:1}
+.evc .art-fb .form-chip::before,.today-event .art-fb .form-chip::before{content:"No form art";font-size:.46rem;font-weight:800;line-height:1}
