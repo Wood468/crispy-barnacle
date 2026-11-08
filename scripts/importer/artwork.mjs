@@ -5,7 +5,7 @@ function officialPageMatches(event, sourceUrl) {
   if (normalize(event.link) === normalize(sourceUrl)) return true;
   let slug;
   try { slug = new URL(sourceUrl).pathname.split('/').filter(Boolean).pop().toLowerCase(); } catch { return false; }
-  const year = String(event.start || '').slice(0, 4);
+  const year = String(event.start || '').slice(0, 4) || (String(event.t || event.name || '').match(/20\d{2}/) || [])[0];
   const mentionedYears = slug.match(/20\d{2}/g) || [];
   if (mentionedYears.length && (!year || mentionedYears.some(value => value !== year))) return false;
   const words = value => String(value || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').split(/[^a-z0-9]+/).filter(word => word.length >= 4 && !/^(pokemon|event|events|2025|2026|2027|with|from|raid|battles|battle|area)$/.test(word));

@@ -33,6 +33,13 @@ test('accepts an exact official article when the feed links to a secondary page'
   assert.equal(selected.imageProvenance.sourceUrl, official.url);
 });
 
+test('an undated announcement can use its named year to validate its official article', () => {
+  const selected = selectArtwork({ t: 'GO Wild Area: Sendai 2026', link: leekduck.url }, [
+    { image: 'https://lh3.googleusercontent.com/sendai-event-poster', source: official }
+  ]);
+  assert.equal(selected.imageProvenance.sourceUrl, official.url);
+});
+
 test('rejects previous year, generic and a different event before selecting art', () => {
   const selected = selectArtwork(event, [
     { image: duckArt.replaceAll('2026', '2025'), source: leekduck },
