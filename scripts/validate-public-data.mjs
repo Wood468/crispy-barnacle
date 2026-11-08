@@ -5,6 +5,7 @@ import { join, relative, resolve, sep } from "node:path";
 
 import { IMAGE_CSP_HOSTS } from '../src/image-policy.js';
 import Catalogue from '../public/event-catalogue.js';
+import { validateManifest } from './validate-artwork-manifest.mjs';
 const ROOT = process.cwd();
 const PUBLIC = join(ROOT, "public");
 const errors = [];
@@ -240,6 +241,13 @@ if (ext) {
       }
     }
   }
+}
+
+// Artwork manifest: key vs identity, review records, Shiny provenance, no avatar items as costumes (scripts/validate-artwork-manifest.mjs).
+{
+  const manifest = parsed.get("public/artwork-manifest.json"), dex = parsed.get("public/dex.json");
+  let queue = { items: [] }; try { queue = JSON.parse(await readFile(join(ROOT, "docs/asset-inventory/candidate-queue.json"), "utf8")); } catch { /* optional in partial checkouts */ }
+  if (manifest && dex) for (const message of validateManifest(manifest, { dex, queue })) fail("public/artwork-manifest.json", message);
 }
 
 if (errors.length) {

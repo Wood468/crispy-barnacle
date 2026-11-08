@@ -386,7 +386,8 @@
       "detailIds": [
         "leekduck:pokemon-go-wild-area-2026-sendai-japan"
       ],
-      "img": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-11-06-pokemon-go-wild-area-2026-sendai-japan/key-art.jpg"
+      "img": "https://lh3.googleusercontent.com/mKoeqvHXmLsEsFxHgdhcK2XoC_XhjXUDl8gvBeH0iEfQTCNOuNY_vJ_k7QRoIYJFfVanVY_aE6ERNdqPgOPpOxvRQaw0I4T1YzTnodb8GUY",
+      "artSourceUrl": "https://pokemongo.com/en/gowildarea/sendai/"
     },
     {
       "id": "into",
@@ -423,7 +424,7 @@
       ],
       "p": [
         "Gigantamax Duraludon debuts in six-star Max Battles. Dynamax Dialga on Saturday, Dynamax Palkia on Sunday.",
-        "Five-star raids: Zekrom and White Kyurem on Saturday, Reshiram and Black Kyurem on Sunday.",
+        "Five-star raids: Zekrom and White Kyurem on Saturday, Reshiram and Black Kyurem on Sunday. Machamp wearing a modern jacket appears in three-star raids on Saturday and Sunday; the official event page does not confirm it can be Shiny.",
         "Optional ticket US$11.99 in the web store. Daily Discoveries pause Nov 9 to 15."
       ],
       "art": [
@@ -597,7 +598,9 @@
         "Raids"
       ],
       "p": [
-        "Listed on the season calendar."
+        "Clefable Super Mega Raid Day: Mega Clefable debuts in Super Mega Raids; defeating it lets you encounter Clefable with Mega Level 1 unlocked, with an increased chance of Shiny Clefable.",
+        "Remote Raid limit 20 from Fri Nov 27, 5 pm to Sat Nov 28, 8 pm PST. Up to six free Raid Passes from Gym Photo Discs. Optional US$4.99 ticket: up to 14 Raid Passes, more Rare Candy XL, plus 5,000 XP and 5,000 Stardust from Super Mega Raids.",
+        "Mega Clefable can reach the new Super Max Mega Level and learns Moonblast+. Expected event Timed Research includes a Premium Battle Pass and a Metagross encounter, to be confirmed when the event begins."
       ],
       "sourceUrl": "https://leekduck.com/events/super-mega-raid-day-november-2026/"
     }

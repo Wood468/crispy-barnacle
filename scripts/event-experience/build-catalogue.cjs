@@ -42,7 +42,7 @@ function buildCatalogue(input){
   if(!d&&url){const hits=Object.values(details).filter(x=>(x.sources||[]).some(s=>key(s.url)===url));if(hits.length===1)d=hits[0];}
   const correctedId=rules.get(String(raw.id))||String(raw.id),patch=corrections[correctedId];
   if(patch)raw={...raw,...patch,schedule:raw.schedule||patch.schedule,pokemon:raw.pokemon||patch.pokemon,id:correctedId,aliases:[...(raw.aliases||[]),...(patch.aliases||[]),...(correctionAliases[correctedId]||[]),...(String(raw.id)!==correctedId?[String(raw.id)]:[])]};
-  let model=A.adapt(raw,d,i);const originalId=model.eventId;
+  let model=A.adapt(raw,d,i);if(d&&Object.prototype.hasOwnProperty.call(d,'imageProvenance'))model=C.normalize({...model,image:d.image||null,internalValidation:{...model.internalValidation,imageReviewed:true}});const originalId=model.eventId;
   let canonical=rules.get(originalId)||(oldIndex.resolve(originalId)||{}).eventId;if(canonical===originalId)canonical=null;
   if(!canonical){const matches=[...out.values()].filter(e=>samePublishedEvent(e,model));if(matches.length===1)canonical=matches[0].eventId;}
   if(canonical&&canonical!==model.eventId)model=C.normalize({...model,eventId:canonical,aliases:[...(model.aliases||[]),originalId]});

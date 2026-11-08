@@ -10,7 +10,7 @@
   /* Hosts that carry event-specific key art. Mirrored R2 copies under /img/ext/ keep the source file name, so the same checks apply. */
   var HOSTS = [
     { re: /^https:\/\/cdn\.leekduck\.com\/assets\/img\/events\/article-images\/(\d{4})\//i, source: 'Leek Duck', needsSlug: true },
-    { re: /^https:\/\/cdn\.leekduck\.com\/assets\/img\/events\/[a-z0-9-]+\.(?:jpe?g|png|webp)$/i, source: 'Leek Duck', needsSlug: true, needsYear: true },
+    { re: /^https:\/\/cdn\.leekduck\.com\/assets\/img\/events\/[a-z0-9-]+\.(?:jpe?g|png|webp)(?:\?[^#]*)?$/i, source: 'Leek Duck', needsSlug: true, needsYear: true },
     { re: /^https:\/\/(?:www\.)?pokemongo\.com\/.+\.(?:jpe?g|png|webp)(?:\?|$)/i, source: 'Pokémon GO (official)', needsSlug: false },
     { re: /^https:\/\/(?:lh3\.googleusercontent\.com|cdn\.pokemongolive\.com|storage\.googleapis\.com\/pokemongolive)\//i, source: 'Pokémon GO (official)', needsSlug: false },
     { re: /^\/img\/ext\/([\w.-]+)$/i, source: 'Mirrored event art', needsSlug: true, mirrored: true }
@@ -27,7 +27,7 @@
       var h = HOSTS[i], m = h.re.exec(url); if (!m) continue;
       var years = evYears(ev), inUrl = (url.match(/(?:^|[^0-9])(20\d{2})(?:[^0-9]|$)/g) || []).map(function (x) { return +x.replace(/\D/g, ''); });
       /* Any year in an image URL must match the event start or end year. Never accept next-year artwork solely because the years are adjacent. */
-      if (inUrl.length && years.length && !inUrl.some(function (y) { return years.indexOf(y) >= 0; })) return null;
+      if (inUrl.length && years.length && !inUrl.every(function (y) { return years.indexOf(y) >= 0; })) return null;
       if (h.needsYear && !inUrl.length) return null;
       if (h.needsSlug) {
         var slug = words(decodeURIComponent(url.replace(/^https:\/\/[^/]+/, '')).replace(/\//g, ' ').replace(/[-_.]/g, ' '));
@@ -35,6 +35,12 @@
         var hit = name.filter(function (w) { return slug.indexOf(w) >= 0; }).length;
         /* The article folder must share the event's distinctive words; an event with a place also needs that place in the folder name. */
         if (!hit) return null;
+        /* A shared series banner is not artwork for a named installment. */
+        var variant = String(ev.name || ev.title || '').split(':').slice(1).join(':');
+        var variantWords = words(variant);
+        if (variantWords.length && !variantWords.some(function (w) { return slug.indexOf(w) >= 0; })) return null;
+        var citySuffix = /\s[-–]\s([A-Za-z][A-Za-z\s]+)$/.exec(String(ev.name || ev.title || ''));
+        if (citySuffix && !words(citySuffix[1]).some(function (w) { return slug.indexOf(w) >= 0; })) return null;
         if (place.length && !place.some(function (w) { return slug.indexOf(w) >= 0; })) return null;
       }
       return { source: h.source, url: url, mirrored: !!h.mirrored };
