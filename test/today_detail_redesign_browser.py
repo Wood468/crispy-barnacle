@@ -97,6 +97,9 @@ with sync_playwright() as p:
         assert page.locator('#evd .research-task').count() == 12
         assert page.locator('#evd .research-reward').count() > 12
         assert page.locator('#evd .research-reward-item .ue-reward-item-icon').count() > 0
+        assert page.locator('#evd .rs-rewards .ue-reward-item-icon img[src^="/ico/"]').count() > 0, 'verified item icons replace the generic placeholder'
+        assert page.evaluate("[...document.querySelectorAll('#evd .rs-rewards .research-reward b')].every(b=>getComputedStyle(b).wordBreak!=='break-all'&&getComputedStyle(b).overflowWrap!=='anywhere')")
+        assert page.locator('#evd .ue-bonuses .ue-bonus').count() > 0 and page.locator('#evd .ue-notes .ue-note').count() > 0, 'bonuses and conditions are visually separate'
         page.screenshot(path=str(OUT / f'redesign-research-{width}.png'))
         assert page.evaluate("({dex:localStorage.getItem('gofn-dex-v1'),us:localStorage.getItem('gofn-us-v1')})") == before
         page.keyboard.press('Escape')

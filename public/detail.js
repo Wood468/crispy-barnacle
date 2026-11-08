@@ -333,12 +333,15 @@
       return '<details class="research-task-source"><summary>Source &amp; update</summary><small>' + label + (links.length ? ' · ' + links.join(' · ') : '') + ' · ' + esc(window.GOLIB.researchCheckedText(task.checkedAt)) + '</small></details>';
     }
 
+    /* Only icons that exist in the repo: Stardust, XP, the two berries, Max Potion/Revive, Mega Energy (Mega symbol). */
+    function itemIcon(n) { n = String(n || ''); return /stardust/i.test(n) ? '/ico/dust.webp' : /silver pinap/i.test(n) ? '/ico/i/silver-pinap.webp' : /golden razz/i.test(n) ? '/ico/i/golden-razz.webp' : /max potion/i.test(n) ? '/ico/i/max-potion.webp' : /max revive/i.test(n) ? '/ico/i/max-revive.webp' : /\bxp\b/i.test(n) ? '/ico/xp.webp' : /mega energy/i.test(n) ? '/ico/g/mega.webp' : ''; }
     function reward(item, field) {
       if (item.type === 'encounter') {
         var cp = item.cpMin && item.cpMax ? '<small>CP ' + esc(item.cpMin) + '–' + esc(item.cpMax) + '</small>' : '';
         return '<div class="research-reward" role="listitem"><span class="ue-reward-art"><span class="ue-reward-fallback" aria-hidden="true">✦</span>' + (window.GOEventAdapter?exactArt(GOEventAdapter.pokemon({name:item.name,costume:item.costume||/wearing|costume/i.test(item.name),label:item.label,formId:item.formId,costumeId:item.costumeId})):X.monArt(ev,{name:item.name,costume:/wearing|costume/i.test(item.name),role:'featured'},'ea')) + '</span><span><b>' + esc(item.name) + '</b>' + cp + '</span></div>';
       }
-      return '<div class="research-reward research-reward-item" role="listitem"><span class="ue-reward-art ue-reward-item-icon" aria-hidden="true">◆</span><span><b>' + (item.quantity > 1 ? esc(item.quantity) + '× ' : '') + esc(item.name) + '</b></span></div>';
+      var icon = itemIcon(item.name);
+      return '<div class="research-reward research-reward-item" role="listitem"><span class="ue-reward-art ue-reward-item-icon" aria-hidden="true">' + (icon ? '<img alt="" loading="lazy" decoding="async" src="' + icon + '" data-err="rm">' : '<i class="ue-reward-dot"></i>') + '</span><span><b>' + (item.quantity > 1 ? esc(item.quantity) + '× ' : '') + esc(item.name) + '</b></span></div>';
     }
     /* Compact rows grouped by category. Field Research rewards are alternatives; timed and special rewards are all given. */
     var order = ['field', 'timed', 'special'], groups = {};
@@ -537,10 +540,10 @@
     var facts=[];
     var priced=(model.tickets||[]).filter(function(t){return t&&t.price&&Number.isFinite(t.price.amount)&&/^[A-Z]{3}$/.test(t.price.currency);})[0];
     if(priced){try{facts.push(['Ticket',new Intl.NumberFormat('en-AU',{style:'currency',currency:priced.price.currency,currencyDisplay:'code'}).format(priced.price.amount)]);}catch(e){}}
-    else if((model.tickets||[]).length)facts.push(['Tickets','Optional ticket available']);
-    if((model.bonuses||[]).length)facts.push(['Bonuses',String(model.bonuses.length)+(model.bonuses.length===1?' bonus':' bonuses')]);
-    if((model.research||[]).length)facts.push(['Research',String(model.research.length)+(model.research.length===1?' task':' tasks')]);
-    var h=facts.length?'<dl class="ue-facts-grid">'+facts.map(function(f){return '<div><dt>'+esc(f[0])+'</dt><dd>'+esc(f[1])+'</dd></div>';}).join('')+'</dl>':'';
+    else if((model.tickets||[]).length)facts.push(['Tickets','Optional']);
+    if((model.bonuses||[]).length)facts.push(['Bonuses',String(model.bonuses.length)]);
+    if((model.research||[]).length)facts.push(['Research',String(model.research.length)]);
+    var h=facts.length?'<ul class="ue-factchips" aria-label="At a glance">'+facts.map(function(f){return '<li><span>'+esc(f[0])+'</span><b>'+esc(f[1])+'</b></li>';}).join('')+'</ul>':'';
     var debuts=(model.pokemon||[]).filter(function(p){return p.debut;}).slice(0,6);
     if(debuts.length)h+='<div class="ue-debuts"><h3 class="ue-mini-h">Debuts</h3><div class="ue-chips">'+debuts.map(function(p){return '<span class="ue-chip">'+esc(displayName(p))+'</span>';}).join('')+'</div></div>';
     return h;
@@ -574,7 +577,7 @@
     var seasonThumb=ev.season?safeSeasonThumb(ev.season.thumbnail):'';
     var art=window.GOEVENTART?GOEVENTART.resolve({name:model.title||ev.name,kind:ev.kind,region:(typeof model.location==='string'?model.location:model.location&&model.location.name)||ev.region||'',start:ev.start,end:ev.end,img:''},cands):null;
     if(art&&art.kind==='official'&&seasonThumb){art.src=seasonThumb;art.fullSrc=safe(ev.img)||art.provenance.imageUrl;}
-    var accentMon=model.pokemon[0],accent=art&&art.kind==='themed'&&accentMon?'<span class="ev-art-mon">'+exactArt(accentMon)+'</span>':'';
+    var accentMon=model.pokemon[0],accent=art&&accentMon?'<span class="ev-art-mon">'+exactArt(accentMon)+'</span>':'';
     var artHtml=art?GOEVENTART.banner(art,{ev:{name:ev.name||model.title,kind:ev.kind,region:ev.region},accent:accent}):'';
     var artNote=art?'<p class="note evd-art-note" data-art-provenance="'+art.kind+'">'+(art.provenance?'Event artwork: '+esc(art.provenance.source)+' · verified for '+esc(art.provenance.verifiedFor)+(safe(art.provenance.url)?' · <a href="'+esc(art.provenance.imageUrl)+'" target="_blank" rel="noopener noreferrer">image</a>':''):'Themed banner: no verified event artwork is published for this event.')+'</p>':'';
     var footer='<details class="ue-sources" id="evd-sources"><summary>Sources &amp; updates</summary>'+artNote+(heldUpdate?'<p class="note">The latest event update was held. Showing the last available information.</p>':'')+(DATA.incomplete?'<p class="note">Some supplementary event information could not be loaded. Showing the available announcement. Reload to try again.</p>':'')+'<ul>'+sources+'</ul>'+(conflicts?'<h4>Details to recheck</h4><ul>'+conflicts+'</ul>':'')+(d.updated?'<p class="note">Last update '+esc(String(d.updated).slice(0,10))+'</p>':'')+(d.goPassParseWarning?'<p class="note">The last complete GO Pass rewards have been retained while the latest update is checked.'+(d.goPassRetainedAt?' Saved rank snapshot: '+esc(String(d.goPassRetainedAt).slice(0,10))+'.':'')+'</p>':'')+'</details>';
@@ -892,6 +895,9 @@
     if(e.key==='Escape'){e.stopImmediatePropagation();e.preventDefault();closeSheet();}
     else if(e.key==='Tab'){e.stopImmediatePropagation();e.preventDefault();sh.querySelector('[data-sheet-close]').focus();}
   },true);
+  /* The close button takes focus when the page opens; show its ring only for keyboard users. */
+  document.addEventListener('keydown', function (e) { if (e.key === 'Tab' || e.key.indexOf('Arrow') === 0) document.documentElement.setAttribute('data-kbd', '1'); }, true);
+  document.addEventListener('pointerdown', function () { document.documentElement.removeAttribute('data-kbd'); }, true);
   window.GOEVD = { close: close };
   document.addEventListener('gofn-state', function () { var o = $('evd'); if (o && !o.hidden) { var s = o.querySelector('[data-save]'); if (s) { var on = X.isSaved(s.dataset.save); s.classList.toggle('on', on); s.textContent = on ? '★' : '☆'; s.setAttribute('aria-pressed', on); var l = o.querySelector('.evd-lead'); if (l) l.hidden = !on; } } });
   document.addEventListener('change', function (e) { var sel = e.target.closest && e.target.closest('select[data-lead]'); if (!sel) return; var v = sel.value; X.usSet('pref:lead:' + sel.getAttribute('data-lead'), v === '' ? null : v); });

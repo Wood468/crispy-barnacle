@@ -334,3 +334,49 @@ button.ue-mon-featured .ue-mon-art .art{animation:none}
 .evd-in:has(.ue-hero) .ev-art .evd-banner-link{position:absolute;inset:0;z-index:1;display:block;width:100%;height:100%;opacity:1;object-fit:contain}
 .evd-in:has(.ue-hero) .ev-art .evd-banner,.evd-in:has(.ue-hero) .ev-art .evd-banner-link img{position:absolute;inset:0;width:100%;height:100%;opacity:1;object-fit:contain;border-radius:0;z-index:1}
 .ev-art .evd-banner-season{object-fit:contain}
+
+/* ===== Release 1.1 visual pass ===== */
+/* Research reward tiles: icon on top, whole words, 2 columns at 320 */
+.evd-in:has(.ue-hero) .evd-sec .rs-rewards{grid-template-columns:repeat(auto-fill,minmax(92px,1fr));gap:6px}
+.evd-in:has(.ue-hero) .evd-sec .rs-rewards .research-reward{grid-template-columns:1fr;justify-items:center;text-align:center;gap:3px;padding:8px 4px 6px;min-height:84px;align-content:start}
+.evd-in:has(.ue-hero) .evd-sec .rs-rewards .research-reward>span:last-child{justify-items:center;width:100%}
+.evd-in:has(.ue-hero) .evd-sec .rs-rewards .ue-reward-art,.evd-in:has(.ue-hero) .evd-sec .rs-rewards .ue-reward-item-icon{width:44px;height:44px}
+.evd-in:has(.ue-hero) .evd-sec .rs-rewards .ue-reward-art :is(.art,.art-fb,img){width:44px;height:44px}
+.evd-in:has(.ue-hero) .evd-sec .rs-rewards .ue-reward-item-icon img{width:32px;height:32px;object-fit:contain}
+.ue-reward-dot{width:10px;height:10px;border-radius:50%;background:var(--color-text-muted);opacity:.5;display:block}
+.evd-in:has(.ue-hero) .evd-sec .rs-rewards .research-reward b{font-size:.72rem;line-height:1.15;overflow-wrap:normal;word-break:normal;hyphens:none;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.evd-in:has(.ue-hero) .evd-sec .rs-rewards .research-reward small{font-size:.66rem;white-space:nowrap}
+@media(max-width:340px){.evd-in:has(.ue-hero) .evd-sec .rs-rewards{grid-template-columns:repeat(2,minmax(0,1fr))}}
+/* Themed fallback banner: layered, illustrative, with one small accent Pokémon */
+.ev-art-theme{background:radial-gradient(70% 90% at 82% 100%,color-mix(in srgb,var(--ac) 42%,transparent),transparent 70%),radial-gradient(60% 80% at 0% 0%,rgba(255,255,255,.08),transparent 60%),repeating-linear-gradient(135deg,rgba(255,255,255,.045) 0 2px,transparent 2px 16px),linear-gradient(135deg,var(--c1),var(--c2))}
+.ev-art-mark{position:absolute;left:-6%;top:50%;width:46%;max-width:210px;aspect-ratio:1;transform:translateY(-50%);object-fit:contain;opacity:.1;filter:grayscale(1) brightness(2);pointer-events:none}
+.ev-art-ico{width:26px;height:26px;opacity:.95}
+.ev-art-tag{position:absolute;right:10px;top:9px;font:700 .58rem/1 var(--font-body);letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.55);font-style:normal;border:1px solid rgba(255,255,255,.22);border-radius:99px;padding:3px 7px}
+.ev-art-accent{right:14px;bottom:2px;width:32%;max-width:128px}
+.ev-art-accent::before{content:"";position:absolute;left:8%;right:8%;bottom:4%;height:14%;border-radius:50%;background:rgba(0,0,0,.35);filter:blur(5px)}
+.ev-art-accent .ev-art-mon{position:relative}
+.ev-art-theme b{font-size:.8rem;letter-spacing:.16em}
+/* Overview: compact glance chips */
+.ue-factchips{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:6px}
+.ue-factchips li{display:inline-flex;align-items:baseline;gap:6px;padding:6px 11px;border-radius:var(--radius-pill);border:1px solid var(--color-border);background:var(--color-surface);font-size:.8rem}
+.ue-factchips li span{font-size:.68rem;text-transform:uppercase;letter-spacing:.06em;color:var(--color-text-muted)}
+.ue-factchips li b{font-weight:800}
+.ue-overview{gap:8px}
+.ue-times{gap:4px}.ue-time{padding:7px 12px}
+.evd-sec-h{margin-top:0}.evd-sections{gap:16px}
+.ue-mini-h{margin:2px 0 4px}
+/* Bonuses: real bonuses as tiles, conditions as quiet notes */
+.ue-bonuses .ue-bonus{border-color:color-mix(in srgb,var(--color-kind-debut) 35%,var(--color-border));background:linear-gradient(180deg,color-mix(in srgb,var(--color-kind-debut) 8%,var(--color-surface)),var(--color-surface))}
+.ue-notes{display:grid;gap:4px;margin-top:4px}
+.ue-notes ul{list-style:none;margin:0;padding:0;display:grid;gap:4px}
+.ue-note{position:relative;padding:2px 0 2px 20px;font-size:.78rem;line-height:1.35;color:var(--color-text-muted)}
+.ue-note::before{content:"i";position:absolute;left:0;top:3px;width:14px;height:14px;border-radius:50%;border:1px solid var(--color-text-muted);font:700 .6rem/12px var(--font-body);text-align:center}
+/* Navigation edge: items fade under the arrow instead of colliding with it; focus ring only for keyboard users */
+.evd-nav.has-right .evd-nav-scroll{-webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 64px),transparent calc(100% - 20px));mask-image:linear-gradient(90deg,#000 calc(100% - 64px),transparent calc(100% - 20px))}
+.evd-nav.has-left .evd-nav-scroll{-webkit-mask-image:linear-gradient(270deg,#000 calc(100% - 24px),transparent);mask-image:linear-gradient(270deg,#000 calc(100% - 24px),transparent)}
+.evd-nav.has-left.has-right .evd-nav-scroll{-webkit-mask-image:linear-gradient(90deg,transparent,#000 24px,#000 calc(100% - 64px),transparent calc(100% - 20px));mask-image:linear-gradient(90deg,transparent,#000 24px,#000 calc(100% - 64px),transparent calc(100% - 20px))}
+.evd-nav::before,.evd-nav::after{display:none}
+.evd-nav-scroll{padding-right:56px}
+.evd-nav-more{right:10px;width:30px;height:30px}
+#evd .hbtn:focus-visible,#evd .evd-nav-link:focus-visible{outline:none}
+html[data-kbd] #evd .hbtn:focus-visible,html[data-kbd] #evd .evd-nav-link:focus-visible{outline:3px solid var(--color-text);outline-offset:3px}

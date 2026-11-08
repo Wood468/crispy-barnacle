@@ -68,11 +68,15 @@ function tickets(items,ctx){
  return cards.join('')+(notes.length?'<div class="ue-ticket-guide">'+factList(notes.slice(0,3))+(notes.length>3?'<details class="ue-ticket-more"><summary>More ticket details ('+(notes.length-3)+')</summary>'+factList(notes.slice(3))+'</details>':'')+'</div>':'');
 }
 var BONUS_ICONS=[[/stardust/i,'/ico/dust.webp'],[/\bxp\b|experience/i,'/ico/xp.webp'],[/candy/i,'/ico/candy.webp'],[/incense/i,'/ico/incense.webp'],[/\btrade|trading/i,'/ico/trade.webp'],[/shiny/i,'/ico/shiny.webp'],[/raid pass/i,'/ico/g/raidpass.webp'],[/lucky/i,'/ico/g/lucky.webp'],[/\b12 ?km|12-km/i,'/ico/g/egg-12km.webp'],[/\b10 ?km|10-km/i,'/ico/g/egg-10km.webp'],[/\b7 ?km/i,'/ico/g/egg-7km.webp'],[/\b5 ?km/i,'/ico/g/egg-5km.webp'],[/\b2 ?km/i,'/ico/g/egg-2km.webp'],[/egg|hatch/i,'/ico/egg.webp'],[/mega/i,'/ico/g/mega.webp'],[/raid/i,'/ico/g/raid.webp'],[/shadow/i,'/ico/g/shadow.webp'],[/ticket|pass\b/i,'/ico/pass.webp'],[/medal|research|avatar|background|power spot|lure/i,'/ico/g/event.webp']];
+/* Real bonuses (a gain or multiplier) versus conditions, access rules and disclaimers. Wording is never changed, only grouped. */
+var NOTE_RE=/not guaranteed|\bmay\b|subject to|separate(?:ly)?\b|requires?\b|only if|begin when you claim|last through|local time on|ticket holders (?:receive these benefits|at the)|terms|disclaimer|unavailable|while supplies/i;
+function bonusClass(t){return NOTE_RE.test(t)?'note':'bonus';}
 function bonusIcon(t){for(var i=0;i<BONUS_ICONS.length;i++)if(BONUS_ICONS[i][0].test(t))return BONUS_ICONS[i][1];return '/ico/g/powerup.webp';}
 function bonusBody(t){var m=/^(\d+(?:\.\d+)?x|half|up to \d+)\s+(.*)$/i.exec(t);return m?'<b class="ue-bonus-mult">'+esc(m[1])+'</b> <span>'+esc(m[2])+'</span>':'<span>'+esc(t)+'</span>';}
 function bonusCard(b,ctx){
  var full=value(b);if(!full)return '';
- var ico='<img class="ue-bonus-ico" alt="" loading="lazy" decoding="async" src="'+bonusIcon(full)+'" data-err="rm">';
+ var head0=full.split(/[.;:]/)[0],pick=bonusIcon(head0);if(pick==='/ico/g/powerup.webp')pick=bonusIcon(full);
+ var ico='<img class="ue-bonus-ico" alt="" loading="lazy" decoding="async" src="'+pick+'" data-err="rm">';
  if(full.length<=125)return '<div class="ue-bonus">'+ico+'<div class="ue-bonus-t">'+bonusBody(full)+'</div></div>';
  var head=full.split(/[.;:]/)[0];if(head.length>95){head=head.slice(0,95);head=head.slice(0,head.lastIndexOf(' '))+'…';}
  return '<details class="ue-bonus ue-bonus-detail"><summary>'+ico+'<span class="ue-bonus-t">'+bonusBody(head)+'</span></summary><p>'+esc(full)+'</p></details>';
@@ -87,7 +91,9 @@ function render(model,ctx){ctx=ctx||{};var view=V.project(model),fields=model.in
  var galleryOnly=model.encounters.every(function(e){return e.method==='other';});
  body.encounters=section('evd-pokemon',galleryOnly?'Featured Pokémon':'Pokémon',gallery(model,ctx));
  if(!model.bonuses.length&&!ctx.moves)body.encounters=body.encounters.replace('<h3 class="sec2">','<h3 class="sec2" id="evd-highlights">');
- body.bonuses=section('evd-highlights','Event bonuses','<div class="ue-bonuses">'+model.bonuses.filter(function(b){var t=value(b);return t&&!(model.internalValidation&&model.internalValidation.conflicts||[]).some(function(c){return c.a&&c.a.text===t||c.b&&c.b.text===t;});}).map(function(b){return bonusCard(b,ctx);}).join('')+'</div>');if(!body.bonuses.includes('class="ue-bonus'))body.bonuses='';
+ var bonusList=model.bonuses.filter(function(b){var t=value(b);return t&&!(model.internalValidation&&model.internalValidation.conflicts||[]).some(function(c){return c.a&&c.a.text===t||c.b&&c.b.text===t;});});
+ var realB=bonusList.filter(function(b){return bonusClass(value(b))==='bonus';}),noteB=bonusList.filter(function(b){return bonusClass(value(b))!=='bonus';});
+ body.bonuses=section('evd-highlights','Event bonuses',(realB.length?'<div class="ue-bonuses">'+realB.map(function(b){return bonusCard(b,ctx);}).join('')+'</div>':'')+(noteB.length?'<div class="ue-notes"><h4 class="ue-mini-h">Conditions &amp; notes</h4><ul>'+noteB.map(function(b){return '<li class="ue-note">'+esc(value(b))+'</li>';}).join('')+'</ul></div>':''));if(!/class="ue-(bonus|note)/.test(body.bonuses))body.bonuses='';
  body.rotations=section('evd-rotations','Rotations',scheduledActivities(model,ctx,'rotation'));
  body.schedule=section('evd-schedule','Event schedule',scheduledActivities(model,ctx,'schedule'));
  body.research=(ctx.research||section('evd-research-title','Research',research(model.research,ctx)))+section('evd-research-windows','Research availability',scheduledActivities(model,ctx,'research'));
@@ -127,7 +133,7 @@ function render(model,ctx){ctx=ctx||{};var view=V.project(model),fields=model.in
  var incomplete=!selected.length&&!info.length;
  var overview=(ctx.overview||'')+(info.length?'<h3 class="ue-mini-h">Highlights</h3><ul class="ue-facts ue-summary">'+info.filter(function(t){var k=String(t).toLowerCase().slice(0,40);return !model.tickets.some(function(x){return value(x).toLowerCase().indexOf(k)>=0;})&&!model.bonuses.some(function(x){return value(x).toLowerCase().indexOf(k)>=0;});}).slice(0,4).map(function(t){return '<li>'+esc(t)+'</li>';}).join('')+'</ul>':'')+(incomplete||(model.completeness==='partial'&&selected.length<2)?'<p class="ue-more-note" role="note">More details to come. Only verified information is shown.</p>':'');
  panels.push({id:'overview',label:'Overview',html:'<div class="ue-overview">'+(cancelled||'')+conflict+overview+(ctx.actions||'')+'</div>'});
- ['encounters','bonuses','research','passes','tickets'].forEach(function(k){if(selected.indexOf(k)>=0&&body[k]&&(k!=='bonuses'||/class="ue-bonus[ "]/.test(body[k])))panels.push({id:k,label:label[k],html:body[k]});});
+ ['encounters','bonuses','research','passes','tickets'].forEach(function(k){if(selected.indexOf(k)>=0&&body[k]&&(k!=='bonuses'||/class="ue-(bonus|note)/.test(body[k])))panels.push({id:k,label:label[k],html:body[k]});});
  var sched=(selected.indexOf('rotations')>=0?body.rotations:'')+(selected.indexOf('schedule')>=0?body.schedule:'');
  if(sched)panels.splice(Math.min(panels.length,2),0,{id:'schedule',label:'Schedule',html:sched});
  var detailsHtml=more+(hasSources?(sources||''):'').replace('<details class="ue-sources"','<details class="ue-sources" open');

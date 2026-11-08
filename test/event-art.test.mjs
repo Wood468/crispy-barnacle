@@ -44,3 +44,8 @@ test('events with missing or invalid dates never throw', () => {
   assert.equal(A.resolve({ name: 'Festival of Lights', start: new Date(NaN), end: undefined }, []).kind, 'themed');
   assert.equal(A.resolve({ name: 'x' }, [KEY]).kind, 'themed');
 });
+
+test('themed banner carries the small accent slot and an Illustration tag so it never reads as official promo art', () => {
+  const html = A.banner(A.resolve({ name: 'Giratina in 5-star Raid Battles', kind: 'raid', start: '2026-11-04' }, []), { accent: '<span class="ev-art-mon">x</span>' });
+  assert.match(html, /ev-art-accent/); assert.match(html, /Illustration/); assert.match(html, /data-art-kind="themed"/);
+});
