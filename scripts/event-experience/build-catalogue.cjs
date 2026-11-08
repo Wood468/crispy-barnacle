@@ -32,9 +32,11 @@ function inheritArtwork(out,artwork){
  }
  let carried=0;
  for(const model of models){
-  if(model.image)continue;
+  if(model.image&&!(model.internalValidation&&model.internalValidation.imageUnattributed))continue;
   const ev=evidence(model),urls=ownPages(model),candidates=[];
-  urls.forEach((url,i)=>{const entry=pages[pageKey(url)];if(entry&&entry.image&&pageFits(model,url,i===0))candidates.push(entry.image);});
+  const score=url=>{const slug=new URL(url).pathname.toLowerCase();return words(model.title).filter(w=>slug.includes(w)).length;};
+  /* The page whose own address best names the event comes first; the primary source is the fallback. */
+  urls.map((url,i)=>({url,i,score:score(url)})).sort((a,b)=>b.score-a.score||a.i-b.i).forEach(({url,i})=>{const entry=pages[pageKey(url)];if(entry&&entry.image&&pageFits(model,url,i===0))candidates.push(entry.image);});
   const mine=words(model.title),similar=other=>{const theirs=words(other.title);if(!mine.length||!theirs.length)return false;const shared=mine.filter(w=>theirs.includes(w)).length;return shared===Math.min(mine.length,theirs.length)||shared/new Set([...mine,...theirs]).size>=0.6;};
   urls.forEach(url=>(byPage.get(pageKey(url))||[]).forEach(other=>{if(other!==model&&other.image&&similar(other))candidates.push(other.image);}));
   const years=(url=>(url.match(/20\d{2}/g)||[]).map(Number));
@@ -46,7 +48,7 @@ function inheritArtwork(out,artwork){
    const imageYears=(image.match(/(?:^|[^0-9])(20\d{2})(?:[^0-9]|$)/g)||[]).map(x=>+x.replace(/\D/g,''));
    const known=new Set([...own,...claimed,...years(String(model.title))]);
    if(imageYears.length&&!own.length&&!imageYears.every(y=>known.has(y)))continue;
-   model.image=image;carried++;break;
+   model.image=image;if(model.internalValidation)delete model.internalValidation.imageUnattributed;carried++;break;
   }
  }
  return carried;
@@ -82,7 +84,7 @@ function buildCatalogue(input){
   if(!d&&url){const hits=Object.values(details).filter(x=>(x.sources||[]).some(s=>key(s.url)===url));if(hits.length===1)d=hits[0];}
   const correctedId=rules.get(String(raw.id))||String(raw.id),patch=corrections[correctedId];
   if(patch)raw={...raw,...patch,schedule:raw.schedule||patch.schedule,pokemon:raw.pokemon||patch.pokemon,id:correctedId,aliases:[...(raw.aliases||[]),...(patch.aliases||[]),...(correctionAliases[correctedId]||[]),...(String(raw.id)!==correctedId?[String(raw.id)]:[])]};
-  let model=A.adapt(raw,d,i);if(d&&Object.prototype.hasOwnProperty.call(d,'imageProvenance'))model=C.normalize({...model,image:d.image||null,internalValidation:{...model.internalValidation,imageReviewed:true}});const originalId=model.eventId;
+  let model=A.adapt(raw,d,i);if(d&&Object.prototype.hasOwnProperty.call(d,'imageProvenance'))model=C.normalize({...model,image:d.image||null,internalValidation:{...model.internalValidation,imageReviewed:true}});if(d&&d.image&&!Object.prototype.hasOwnProperty.call(d,'imageProvenance'))model=C.normalize({...model,internalValidation:{...model.internalValidation,imageUnattributed:true}});const originalId=model.eventId;
   let canonical=rules.get(originalId)||(oldIndex.resolve(originalId)||{}).eventId;if(canonical===originalId)canonical=null;
   if(!canonical){const matches=[...out.values()].filter(e=>samePublishedEvent(e,model));if(matches.length===1)canonical=matches[0].eventId;}
   if(canonical&&canonical!==model.eventId)model=C.normalize({...model,eventId:canonical,aliases:[...(model.aliases||[]),originalId]});

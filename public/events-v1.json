@@ -10384,7 +10384,7 @@
     },
     "imageReviewed": true,
     "contentHash": "2676d14f7c30743221aa100d0c413e8057f6096b03324fdb3ce477cebe1e1c8a",
-    "revision": 9,
+    "revision": 12,
     "amended": true,
     "native": false,
     "collection": "events"
@@ -13863,7 +13863,7 @@
     "imageReviewed": true,
     "contentHash": "6233e459b7d0600a984239a8178482d30eabd342e8e461b21fb80ea73d59da2d",
     "revision": 6,
-    "amended": true,
+    "amended": false,
     "native": false,
     "collection": "source-details"
    },
@@ -17660,7 +17660,7 @@
    "lifecycle": "reference",
    "attendance": "",
    "location": null,
-   "image": "https://lh3.googleusercontent.com/jkmT_jf1BmLdPEEzRG7B6yFKILNPYV34p47qSvsk1ZJKxb1lreNQJkHk3zFFL5Uj0-WFWODr7c2HaB4DqI9wkJILJra1o3VqDvM9ks8-LIM",
+   "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-11-14-pokemon-go-wild-area-2026-global/key-art.jpg",
    "notes": [],
    "internalValidation": {
     "warnings": [],
@@ -18070,7 +18070,7 @@
     },
     "imageReviewed": true,
     "contentHash": "269f8e3b2de77de99a9c9b96a8583480afcc7d703b67882981cde6a557edee89",
-    "revision": 7,
+    "revision": 10,
     "amended": true,
     "native": false,
     "collection": "source-details"
@@ -20125,7 +20125,7 @@
     },
     "imageReviewed": true,
     "contentHash": "61a5ae1d293acbf4aaa7e8ed75af207faef316785784f266244f3fa89d266906",
-    "revision": 7,
+    "revision": 10,
     "amended": true,
     "native": false,
     "collection": "source-details"
@@ -21024,6 +21024,7 @@
      "end": ""
     },
     "conflicts": [],
+    "imageUnattributed": true,
     "contentHash": "1d5a2ff8d2a36f4303e462e93dfcba6c078a41a679531a0e71c3dcea6fe032c3",
     "revision": 3,
     "amended": false,
@@ -24155,6 +24156,7 @@
      "start": "2026-11-14T17:00",
      "end": "2026-11-19T23:59"
     },
+    "imageUnattributed": true,
     "contentHash": "7bc8ab834d85ace1a535937873b7e480329c4029c6fc52ddcd48b0669f4305bf",
     "revision": 4,
     "amended": false,
@@ -24328,6 +24330,7 @@
      "start": "2026-12-11T17:00",
      "end": "2026-12-16T23:59"
     },
+    "imageUnattributed": true,
     "contentHash": "1a1f3579d2f7abce868df55b2d213b271adca8a3e4ab3690be3517553c849060",
     "revision": 4,
     "amended": false,
@@ -41871,6 +41874,7 @@
      "start": "2027-01-23",
      "end": "2027-01-24"
     },
+    "imageUnattributed": true,
     "contentHash": "3538dca033905b2d2673111ac9be00251a859fcb88de9b48b6b6688ef32f737b",
     "revision": 3,
     "amended": false,
@@ -43476,6 +43480,7 @@
      "start": "2027-01-09",
      "end": "2027-01-10"
     },
+    "imageUnattributed": true,
     "contentHash": "e0f4cb2100ca9aaccc52682c884b47a58233473baad8844030ab1d5134012464",
     "revision": 3,
     "amended": false,
@@ -44969,7 +44974,7 @@
    "lifecycle": "announced",
    "attendance": "",
    "location": null,
-   "image": "https://lh3.googleusercontent.com/44ggmV081gROwILff_vc2fROBHVCfBGTlRPQ8EtwxMt0ePAkWpirNJMtFk0C3qzHyx7zQqfFAbzKsziiRTTz67bHWdZyRKJN1d7b9Z50Q0M",
+   "image": "https://lh3.googleusercontent.com/YUIF2HkGZlw3tWumDXClx0cVYphD-ugVYTs5VBU5-ccb5o-1UWVTy8NYqJboA-fVPrmtncsb7Ql_6eebA8I-YyxFtIHO2yIiMwmb5qlg3JA",
    "notes": [
     "Gigantamax Duraludon debuts in six-star Max Battles. Dynamax Dialga on Saturday, Dynamax Palkia on Sunday.",
     "Five-star raids: Zekrom and White Kyurem on Saturday, Reshiram and Black Kyurem on Sunday. Machamp wearing a modern jacket appears in three-star raids on Saturday and Sunday; the official event page does not confirm it can be Shiny.",
@@ -45048,8 +45053,8 @@
      "end": "2026-11-15T18:00"
     },
     "contentHash": "6e9282cc03603c74671ba530686e762eae832f4865274e54ea4a71730d66e312",
-    "revision": 6,
-    "amended": false,
+    "revision": 7,
+    "amended": true,
     "native": false,
     "collection": "events"
    },
@@ -45459,7 +45464,7 @@
    "lifecycle": "announced",
    "attendance": "in-person",
    "location": "Play from anywhere",
-   "image": "https://lh3.googleusercontent.com/jkmT_jf1BmLdPEEzRG7B6yFKILNPYV34p47qSvsk1ZJKxb1lreNQJkHk3zFFL5Uj0-WFWODr7c2HaB4DqI9wkJILJra1o3VqDvM9ks8-LIM",
+   "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-11-14-pokemon-go-wild-area-2026-global/key-art.jpg",
    "notes": [],
    "internalValidation": {
     "warnings": [],
@@ -45867,7 +45872,7 @@
     },
     "imageReviewed": true,
     "contentHash": "bc89d53fcf26391f932b1b0f5ba1ec0d78ceddcd48a338d98686e2a858ad1b01",
-    "revision": 7,
+    "revision": 10,
     "amended": true,
     "native": false,
     "collection": "worldEvents"

@@ -94,3 +94,12 @@ test('published catalogue keeps the real Into the Wild banner and every shown ba
   const research = catalogue.events.find(e => /Gigantamax Machamp Power Up/i.test(e.title) && e.image);
   assert.ok(!research || !/into-the-wild/.test(research.image));
 });
+
+test('an unattributed legacy image yields to the official page whose address names the event', () => {
+  const globalPage = 'https://pokemongo.com/en/gowildarea/global', news = 'https://pokemongo.com/news/gowa-global-europe-2026';
+  const own = { id: 'wag', t: 'GO Wild Area: Global', s: '2026-11-14T10:00', e: '2026-11-15T18:00' };
+  const details = { events: { wag: { name: 'GO Wild Area: Global', image: 'https://lh3.googleusercontent.com/ambassador-photo', sources: [source(news), source(globalPage)] } } };
+  const artwork = { pages: { [news + '/']: { image: 'https://lh3.googleusercontent.com/ambassador-photo' }, [globalPage + '/']: { image: 'https://lh3.googleusercontent.com/wild-area-hero' } } };
+  const result = buildCatalogue({ dex, data: { events: [own] }, details, artwork });
+  assert.equal(result.events.find(e => e.eventId === 'wag').image, 'https://lh3.googleusercontent.com/wild-area-hero');
+});
