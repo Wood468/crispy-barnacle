@@ -37,8 +37,8 @@ with sync_playwright() as p:
   assert root.locator('.rw-window').count()==5
   assert page.evaluate('document.documentElement.scrollWidth<=innerWidth'),width
   assert root.evaluate('(el)=>el.scrollWidth<=el.clientWidth'),width
-  for control in root.locator('button').all():
-   assert not control.is_visible() or control.bounding_box()['height']>=43,(width,control.inner_text())
+  controls=root.evaluate("el=>[...el.querySelectorAll('button')].map(button=>({visible:!!button.getClientRects().length,height:button.getBoundingClientRect().height,label:button.textContent}))")
+  assert all(not control['visible'] or control['height']>=43 for control in controls),(width,controls)
   if OUT:
    Path(OUT).mkdir(parents=True,exist_ok=True);page.screenshot(path=str(Path(OUT)/f'battle-{width}.png'),full_page=True)
   root.locator('[data-rotweek="next"]').click()
