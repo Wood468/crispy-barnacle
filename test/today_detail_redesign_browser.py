@@ -36,8 +36,8 @@ with sync_playwright() as p:
         assert not page.locator('#today-v1 [data-follow],#today-v1 [data-mark],#today-v1 .own').count()
         assert not page.locator('#foryou-sec').is_visible()
         assert page.evaluate('document.documentElement.scrollWidth <= innerWidth')
-        for box in page.locator('#today-v1 .t1-more').all()[:3]:
-            b = box.bounding_box(); assert b['width'] >= 43.5 and b['height'] >= 43.5, b
+        menu_boxes = page.evaluate("[...document.querySelectorAll('#today-v1 .t1-more')].slice(0,3).map(el=>{const r=el.getBoundingClientRect();return {width:r.width,height:r.height}})")
+        assert menu_boxes and all(b['width'] >= 43.5 and b['height'] >= 43.5 for b in menu_boxes), menu_boxes
         page.screenshot(path=str(OUT / f'redesign-today-{width}.png'))
 
         before = page.evaluate("({dex:localStorage.getItem('gofn-dex-v1'),us:localStorage.getItem('gofn-us-v1')})")
