@@ -89,8 +89,10 @@
   }
   function fail(img) {
     /* A missing compact thumbnail falls back to the full-size original once before giving up. */
-    var full = img && img.getAttribute && img.getAttribute('data-full');
-    if (full && /^(?:https:\/\/|\/img\/ext\/)[^\s"'<>]+$/.test(full) && img.getAttribute('src') !== full) { img.src = full; return; }
+    var u = null;
+    try { u = new URL(img.getAttribute('data-full') || '', 'https://example.invalid'); } catch (e) { u = null; }
+    if (u && u.protocol === 'https:' && u.hostname !== 'example.invalid' && u.href !== img.src) { img.removeAttribute('data-full'); img.setAttribute('src', u.href); return; }
+    if (img.getAttribute('data-full') && /^\/img\/ext\/[\w.-]+$/.test(img.getAttribute('data-full')) && img.getAttribute('src') !== img.getAttribute('data-full')) { var rel = img.getAttribute('data-full').replace(/[^\w./-]/g, ''); img.removeAttribute('data-full'); img.setAttribute('src', rel); return; }
     var a = img && img.closest && img.closest('.evd-banner-link'); if (a && a.parentNode) a.remove();
     var f = img && img.closest && img.closest('.ev-art'); if (f) { f.classList.add('is-failed'); f.setAttribute('data-art-kind', 'themed'); f.removeAttribute('data-art-source'); } if (img && img.remove) img.remove(); }
   return { resolve: resolve, verify: verify, theme: theme, banner: banner, fail: fail, THEMES: THEMES };
