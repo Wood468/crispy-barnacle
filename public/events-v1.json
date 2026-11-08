@@ -23894,8 +23894,8 @@
      "end": ""
     },
     "imageReviewed": true,
-    "contentHash": "fb3cca5271322c3036ea9fb278025c82f3a1ecbd7b7b21f7ea0bfce95ab53485",
-    "revision": 4,
+    "contentHash": "b8f39f3c58b4f83babfb4598095ec9a1cfdaac21603b80fe739608f60c15cfb2",
+    "revision": 5,
     "amended": false,
     "native": false,
     "collection": "source-details"
@@ -24131,43 +24131,56 @@
      "collectionName": "Mega Beedrill"
     },
     {
-     "key": "196:base:none",
+     "key": "196:base:sunscarf",
      "speciesId": "196",
      "formId": null,
-     "costumeId": null,
+     "costumeId": "sunscarf",
      "shiny": "unknown",
      "assetKey": null,
      "name": "Espeon",
-     "label": null,
+     "label": "sun scarf",
      "debut": null,
      "boostedShiny": null,
-     "collectionName": "Espeon"
+     "collectionName": "Espeon (sun scarf)"
     },
     {
-     "key": "197:base:none",
+     "key": "197:base:moonscarf",
      "speciesId": "197",
      "formId": null,
-     "costumeId": null,
+     "costumeId": "moonscarf",
      "shiny": "unknown",
      "assetKey": null,
      "name": "Umbreon",
-     "label": null,
+     "label": "moon scarf",
      "debut": null,
      "boostedShiny": null,
-     "collectionName": "Umbreon"
+     "collectionName": "Umbreon (moon scarf)"
     },
     {
-     "key": "25:base:none",
+     "key": "25:base:mooncrown",
      "speciesId": "25",
      "formId": null,
-     "costumeId": null,
+     "costumeId": "mooncrown",
      "shiny": "unknown",
      "assetKey": null,
      "name": "Pikachu",
-     "label": null,
+     "label": "moon crown",
      "debut": null,
      "boostedShiny": null,
-     "collectionName": "Pikachu"
+     "collectionName": "Pikachu (moon crown)"
+    },
+    {
+     "key": "25:base:suncrown",
+     "speciesId": "25",
+     "formId": null,
+     "costumeId": "suncrown",
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Pikachu",
+     "label": "sun crown",
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Pikachu (sun crown)"
     },
     {
      "key": "302:mega:none",
@@ -24230,19 +24243,25 @@
      "access": "unknown"
     },
     {
-     "identityKey": "196:base:none",
+     "identityKey": "196:base:sunscarf",
      "method": "raid",
      "activityId": "main",
      "access": "unknown"
     },
     {
-     "identityKey": "197:base:none",
+     "identityKey": "197:base:moonscarf",
      "method": "raid",
      "activityId": "main",
      "access": "unknown"
     },
     {
-     "identityKey": "25:base:none",
+     "identityKey": "25:base:mooncrown",
+     "method": "raid",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "25:base:suncrown",
      "method": "raid",
      "activityId": "main",
      "access": "unknown"
@@ -24287,19 +24306,25 @@
       "access": "unknown"
      },
      {
-      "identityKey": "196:base:none",
+      "identityKey": "196:base:sunscarf",
       "method": "raid",
       "activityId": "main",
       "access": "unknown"
      },
      {
-      "identityKey": "197:base:none",
+      "identityKey": "197:base:moonscarf",
       "method": "raid",
       "activityId": "main",
       "access": "unknown"
      },
      {
-      "identityKey": "25:base:none",
+      "identityKey": "25:base:mooncrown",
+      "method": "raid",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "25:base:suncrown",
       "method": "raid",
       "activityId": "main",
       "access": "unknown"
@@ -34056,7 +34081,7 @@
     "imageReviewed": true,
     "contentHash": "89e75be1fa54507ce0903e180af3ca57a431647a6ea779aee51b56a5b2ba422a",
     "revision": 8,
-    "amended": true,
+    "amended": false,
     "native": false,
     "collection": "events"
    },
@@ -35768,7 +35793,11 @@
    "attendance": "",
    "location": null,
    "image": null,
-   "notes": [],
+   "notes": [
+    "Clefable Super Mega Raid Day: Mega Clefable debuts in Super Mega Raids; defeating it lets you encounter Clefable with Mega Level 1 unlocked, with an increased chance of Shiny Clefable.",
+    "Remote Raid limit 20 from Fri Nov 27, 5 pm to Sat Nov 28, 8 pm PST. Up to six free Raid Passes from Gym Photo Discs. Optional US$4.99 ticket: up to 14 Raid Passes, more Rare Candy XL, plus 5,000 XP and 5,000 Stardust from Super Mega Raids.",
+    "Mega Clefable can reach the new Super Max Mega Level and learns Moonblast+. Expected event Timed Research includes a Premium Battle Pass and a Metagross encounter, to be confirmed when the event begins."
+   ],
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
@@ -35807,8 +35836,8 @@
      "start": "2026-11-28T14:00",
      "end": "2026-11-28T17:00"
     },
-    "contentHash": "d9566fa858cc3bf9576332dda8e4ee4b94ae8626aef5c823a53d95db155aacd7",
-    "revision": 2,
+    "contentHash": "364296abace01e85f5f27f2db7c612bda011bcc9244ca4830ecca4c67be7cce0",
+    "revision": 3,
     "amended": false,
     "native": false,
     "collection": "events"
@@ -45518,7 +45547,7 @@
    "image": "https://lh3.googleusercontent.com/44ggmV081gROwILff_vc2fROBHVCfBGTlRPQ8EtwxMt0ePAkWpirNJMtFk0C3qzHyx7zQqfFAbzKsziiRTTz67bHWdZyRKJN1d7b9Z50Q0M",
    "notes": [
     "Gigantamax Duraludon debuts in six-star Max Battles. Dynamax Dialga on Saturday, Dynamax Palkia on Sunday.",
-    "Five-star raids: Zekrom and White Kyurem on Saturday, Reshiram and Black Kyurem on Sunday.",
+    "Five-star raids: Zekrom and White Kyurem on Saturday, Reshiram and Black Kyurem on Sunday. Machamp wearing a modern jacket appears in three-star raids on Saturday and Sunday; the official event page does not confirm it can be Shiny.",
     "Optional ticket US$11.99 in the web store. Daily Discoveries pause Nov 9 to 15."
    ],
    "internalValidation": {
@@ -45593,9 +45622,9 @@
      "start": "2026-11-14T10:00",
      "end": "2026-11-15T18:00"
     },
-    "contentHash": "7f0b8c2e995e7c74c4887aa62201f00b229f70cddaa4bbbe4809becd3a495c8e",
-    "revision": 4,
-    "amended": false,
+    "contentHash": "6e9282cc03603c74671ba530686e762eae832f4865274e54ea4a71730d66e312",
+    "revision": 6,
+    "amended": true,
     "native": false,
     "collection": "events"
    },
