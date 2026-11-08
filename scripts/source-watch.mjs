@@ -45,6 +45,23 @@ export function review({ items, dex, costumes, dataText, now, weak = false }) {
   });
 }
 
+// Retry only transient upstream failures. Preserve per-feed error reporting.
+export async function fetchFeedWithRetry(url, { fetchImpl = fetch, sleep = ms => new Promise(resolve => setTimeout(resolve, ms)), attempts = 3 } = {}) {
+  for (let attempt = 0; attempt < attempts; attempt++) {
+    try {
+      const res = await fetchImpl(url, {
+        headers: { "user-agent": "go-field-notes source-watch (+https://github.com/Wood468/go-field-notes)", accept: "application/rss+xml, application/atom+xml, text/xml" },
+        signal: AbortSignal.timeout(20000)
+      });
+      if (res.ok) return res;
+      if (![429, 502, 503, 504].includes(res.status) || attempt === attempts - 1) throw new Error("HTTP " + res.status);
+    } catch (error) {
+      if (attempt === attempts - 1 || (error.message?.startsWith("HTTP ") && !/HTTP (429|502|503|504)$/.test(error.message))) throw error;
+    }
+    await sleep(500 * (attempt + 1));
+  }
+}
+
 async function main() {
   const rd = async f => JSON.parse(await readFile(f, "utf8"));
   const [cfg, dex, costumes, data] = await Promise.all([rd("data/source-feeds.json"), rd("public/dex.json"), rd("public/costumes.json"), rd("public/data.json")]);
@@ -52,7 +69,7 @@ async function main() {
   const now = Date.now(), hits = [], status = [];
   for (const f of cfg.feeds) {
     try {
-      const res = await fetch(f.url, { headers: { "user-agent": "go-field-notes source-watch (+https://github.com/Wood468/go-field-notes)", accept: "application/rss+xml, application/atom+xml, text/xml" }, signal: AbortSignal.timeout(20000) });
+      const res = await fetchFeedWithRetry(f.url);
       if (!res.ok) throw new Error("HTTP " + res.status);
       const found = review({ items: parseFeed(await res.text()), dex, costumes, dataText, now, weak: !!f.weak });
       status.push({ id: f.id, state: "ok", items: found.length });
