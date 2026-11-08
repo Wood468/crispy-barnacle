@@ -25,6 +25,10 @@ test('rejects a previous-year banner even when the event name matches', () => {
   assert.equal(result.kind, 'themed');
 });
 
+test('rejects next-year artwork for a prior-year event', () => {
+  assert.equal(art.resolve(event, [url.replace('/2026/', '/2027/')]).kind, 'themed');
+});
+
 test('rejects artwork for another venue', () => {
   assert.equal(art.resolve(event, [url.replace('sendai-banner', 'london-banner')]).kind, 'themed');
 });
