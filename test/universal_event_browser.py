@@ -153,7 +153,6 @@ with sync_playwright() as p:
         page.goto(BASE+'/')
         page.wait_for_function('!!window.GODETAIL&&!!window.GOEventRegistry')
         page.evaluate('GOEventRegistry.ready')
-        page.evaluate('GODASH.renderAll&&GODASH.renderAll()')
         regional=page.locator('#today-v1 .t1-reg [data-open]').first
     try:regional.wait_for(state='visible')
     except Exception:
