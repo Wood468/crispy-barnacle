@@ -1,4 +1,5 @@
 // Turns an article's HTML into a flat list of headings, bullets and paragraphs. No dependencies.
+import { extractIconRefs } from "../artwork-match.mjs";
 const ENT = { amp: "&", lt: "<", gt: ">", quot: '"', apos: "'", nbsp: " ", times: "×", rsquo: "’", lsquo: "‘", ldquo: "“", rdquo: "”", ndash: "–", mdash: "—", eacute: "é", hellip: "…" };
 export function decode(s) {
   return String(s).replace(/&#(\d+);/g, (_, n) => String.fromCodePoint(+n)).replace(/&#x([0-9a-f]+);/gi, (_, n) => String.fromCodePoint(parseInt(n, 16))).replace(/&([a-z]+);/gi, (m, n) => ENT[n.toLowerCase()] ?? m);
@@ -30,7 +31,13 @@ export function htmlToLines(html) {
     const text = clean(inner).replace(/\s*\|[\s|]*$/, "").replace(/^\|\s*/, "");
     if (!text || text.length < 2) continue;
     if (tag[0] === "h") out.push({ t: "h", level: +tag[1], text });
-    else out.push({ t: tag === "li" ? "li" : "p", text });
+    else {
+      const line = { t: tag === "li" ? "li" : "p", text };
+      // Costume identity is often only in the icon file name / alt text ("Pikachu wearing a sun crown"): keep it with the line.
+      const icons = tag === "li" ? extractIconRefs(m[2]).filter(r => r.label) : [];
+      if (icons.length) line.icons = icons;
+      out.push(line);
+    }
   }
   return out;
 }
