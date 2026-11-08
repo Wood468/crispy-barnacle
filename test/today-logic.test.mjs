@@ -210,3 +210,10 @@ test('Done boundaries: one occurrence only, across midnight and multi-day events
   assert.equal(L.isDone(later, 'wild-area', start), false);
   assert.equal(L.isDone(L.pruneDone(L.readDone(s), end + 864e5), 'wild-area', start), true);
 });
+
+test('research reward wording: field rewards are alternatives, timed and special rewards are all given', () => {
+  assert.equal(L.researchRewardLabel('field', 3), 'One of 3 possible rewards');
+  assert.equal(L.researchRewardLabel('field', 1), '1 possible reward');
+  assert.equal(L.researchRewardLabel('timed', 3), '3 rewards');
+  assert.equal(L.researchRewardLabel('special', 1), '1 reward');
+});

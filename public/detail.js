@@ -333,17 +333,17 @@
       return '<details class="research-task-source"><summary>Source &amp; update</summary><small>' + label + (links.length ? ' · ' + links.join(' · ') : '') + ' · ' + esc(window.GOLIB.researchCheckedText(task.checkedAt)) + '</small></details>';
     }
 
-    function reward(item) {
+    function reward(item, field) {
       if (item.type === 'encounter') {
         var cp = item.cpMin && item.cpMax ? '<small>CP ' + esc(item.cpMin) + '–' + esc(item.cpMax) + '</small>' : '<small>Encounter</small>';
         return '<div class="research-reward"><span class="ue-reward-art"><span class="ue-reward-fallback" aria-hidden="true">✦</span>' + (window.GOEventAdapter?exactArt(GOEventAdapter.pokemon({name:item.name,costume:item.costume||/wearing|costume/i.test(item.name),label:item.label,formId:item.formId,costumeId:item.costumeId})):X.monArt(ev,{name:item.name,costume:/wearing|costume/i.test(item.name),role:'featured'},'ea')) + '</span><span><b>' + esc(item.name) + '</b>' + cp + '</span></div>';
       }
-      return '<div class="research-reward research-reward-item"><span class="ue-reward-art ue-reward-item-icon" aria-hidden="true">◆</span><span><b>' + (item.quantity > 1 ? esc(item.quantity) + '× ' : '') + esc(item.name) + '</b><small>' + (item.type === 'item' ? 'Item reward' : 'Possible reward') + '</small></span></div>';
+      return '<div class="research-reward research-reward-item"><span class="ue-reward-art ue-reward-item-icon" aria-hidden="true">◆</span><span><b>' + (item.quantity > 1 ? esc(item.quantity) + '× ' : '') + esc(item.name) + '</b><small>' + (item.type === 'item' && !field ? 'Item reward' : 'Possible reward') + '</small></span></div>';
     }
     return '<section class="evd-research"><h3 class="sec2" id="evd-research-title">Research tasks</h3><div class="evd-card research-task-list">'
       + tasks.map(function (task) {
         var kind = task.category === 'field' ? 'Field Research' : task.category === 'timed' ? 'Timed Research' : task.category === 'special' ? 'Special Research' : 'Research';
-        return '<article class="research-task"><div class="research-task-head"><span class="research-task-kind">' + kind + '</span><span class="research-task-state">' + (task.rewards || []).length + ' reward' + ((task.rewards || []).length === 1 ? '' : 's') + '</span></div><h4>' + esc(task.task) + '</h4><div class="research-rewards">' + (task.rewards || []).map(reward).join('') + '</div>' + attribution(task) + '</article>';
+        return '<article class="research-task"><div class="research-task-head"><span class="research-task-kind">' + kind + '</span><span class="research-task-state">' + (window.GOTODAYLOGIC ? GOTODAYLOGIC.researchRewardLabel(task.category, (task.rewards || []).length) : (task.rewards || []).length + ' possible rewards') + '</span></div><h4>' + esc(task.task) + '</h4><div class="research-rewards">' + (task.rewards || []).map(function (r) { return reward(r, task.category === 'field'); }).join('') + '</div>' + attribution(task) + '</article>';
       }).join('')
       + '</div><button type="button" class="pill all research-browse" data-open-research data-event-id="' + esc(ev.id) + '">Browse current research</button></section>';
   }

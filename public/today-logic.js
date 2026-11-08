@@ -223,6 +223,14 @@
   /* "expected" notes mean the hours are not confirmed: they may be shown, but only as unconfirmed. */
   function venueTimeUnconfirmed(item) { return !!item && /expected|not confirmed|unconfirmed|tbc|tba/i.test(String(item.note || '')); }
 
+  /* ---------- Research reward wording ---------- */
+  /* Field Research rewards are alternatives (one is received from the pool); timed and special research steps give every listed reward. */
+  function researchRewardLabel(category, count) {
+    var n = +count || 0;
+    if (category === 'field') return n > 1 ? 'One of ' + n + ' possible rewards' : n === 1 ? '1 possible reward' : 'No rewards listed';
+    return n + ' reward' + (n === 1 ? '' : 's');
+  }
+
   /* ---------- Countdown ---------- */
   function countdownText(ms, nowMs, live) {
     var d = ms - nowMs; if (d <= 0) return live ? 'Ended' : 'Started';
@@ -244,6 +252,6 @@
   return {
     DONE_KEY: DONE_KEY, doneKey: doneKey, readDone: readDone, isDone: isDone, markDone: markDone, undoDone: undoDone, pruneDone: pruneDone, doneList: doneList,
     shinyKind: shinyKind, splitNames: splitNames, classifyArt: classifyArt, artFallback: artFallback,
-    venueZone: venueZone, matchVenueTimes: matchVenueTimes, venueTimeUnconfirmed: venueTimeUnconfirmed, dualTime: dualTime, venueDays: venueDays, zoneAbbr: zoneAbbr, countdownText: countdownText, cardType: cardType
+    researchRewardLabel: researchRewardLabel, venueZone: venueZone, matchVenueTimes: matchVenueTimes, venueTimeUnconfirmed: venueTimeUnconfirmed, dualTime: dualTime, venueDays: venueDays, zoneAbbr: zoneAbbr, countdownText: countdownText, cardType: cardType
   };
 }));
