@@ -110,7 +110,7 @@ with sync_playwright() as pw:
         }""")
         page.locator('#release-costumes').scroll_into_view_if_needed()
         page.wait_for_function("document.querySelectorAll('#release-costumes .costume-unavailable').length===2")
-        assert page.locator('#release-costumes img').count() == 0
+        assert page.locator('#release-costumes img:not(.va-base)').count() == 0, 'only the small badged species picture may appear in a costume fallback'
         assert 'sun crown' in page.locator('#release-costumes').inner_text()
         page.locator('[data-open="season:pass-november"]').first.click()
         page.locator('#evd').wait_for(state='visible')
