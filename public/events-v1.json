@@ -9840,12 +9840,15 @@
   {
    "schemaVersion": 1,
    "eventId": "into",
-   "aliases": [],
+   "aliases": [
+    "leekduck:into-the-wild-2026",
+    "w-into-the-wild"
+   ],
    "family": "other",
    "title": "Into the Wild",
    "dateText": "",
    "completeness": "partial",
-   "lifecycle": "announced",
+   "lifecycle": "reference",
    "attendance": "",
    "location": null,
    "image": null,
@@ -9856,7 +9859,7 @@
    ],
    "internalValidation": {
     "warnings": [],
-    "lifecycleDeclared": false,
+    "lifecycleDeclared": true,
     "conflicts": [],
     "fields": {
      "bonuses": [
@@ -9871,6 +9874,20 @@
        "text": "Reach these ranks on GO Pass: Into the Wild to unlock the following bonus.",
        "sources": [
         "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Ticket-holding Trainers participating in GO Wild Area: Global will receive a branching Special Research story starting on November 14, 2026, at 10:00 a.m. local time .",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Trainers must choose between researching Steel-type or Dragon-type Pokémon. Each path awards a corresponding in-game medal and unlocks special bonuses for catching mighty Pokémon of that type.",
+       "sources": [
+        "hub"
        ],
        "status": "single"
       },
@@ -9975,10 +9992,94 @@
         "leekduck"
        ],
        "status": "single"
+      },
+      {
+       "text": "New Trainer profile backgrounds, private Max Battle groups, exclusive Research bonuses, and avatar rewards arrive ahead of GO Wild Area 2026.",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "The updates arrive just ahead of GO Wild Area: Mexico City and GO Wild Area: Sendai , which take place from November 6–8, 2026 . The adventure continues worldwide with GO Wild Area: Global on November 14–15, 2026 .",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Here is everything new that Trainers should know before the event begins.",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Gigantamax Duraludon",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "One of the biggest gameplay improvements arriving with GO Wild Area is the ability to join Dynamax Battles privately .",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Previously, entering a Max Battle lobby would automatically match Trainers with other participants. Starting with GO Wild Area 2026, Trainers will have two options when joining a battle:",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Private Group: Enter a group code to join an existing private Max Battle group",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "This should make it easier for coordinated groups to tackle difficult Max Battles without being automatically matched with other players.",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "For more information about their appearances, check out our GO Wild Area 2026: Global guide .",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
       }
      ],
      "eggs": [],
      "research": [
+      {
+       "text": "Trainers who choose the Steel-type path will receive the following bonuses upon earning the Steel Scholar medal.",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "1 additional Candy XL awarded for catching Steel-type mighty Pokémon (Trainers level 31+)",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "These bonuses will be active upon claiming your type-themed in-game medal, and they will expire at the end of Pokémon GO Wild Area: Global on Sunday, November 15, 2026, at 6:00 p.m. local time.",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
       {
        "text": "Pokémon GO Wild Area–themed Field Research tasks will be available throughout the event! Complete the research tasks to earn encounters with event-themed Pokémon and other rewards.",
        "sources": [
@@ -10032,17 +10133,89 @@
       }
      ],
      "moves": [],
-     "costumes": [],
-     "tickets": [
+     "costumes": [
       {
-       "text": "GO Pass: Into the Wild is a free progression track. Complete Pass Tasks to collect GO Points, increase your rank, and unlock rewards.",
+       "text": "Dates: November 6–8, 2026",
        "sources": [
-        "leekduck"
+        "hub"
        ],
        "status": "single"
       },
       {
+       "text": "Locations: Monumento a la Revolución; Parque México; Jardín Pushkin; Cinépolis Diana; Liverpool Polanco; Parque Hundido",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Trainers can pick up a Pikachu, Hawlucha, or Machamp sun visor to add some fun to their journey while exploring Mexico City.",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Distribution times may vary by location. Quantities at each location are limited. Visors will be distributed on a first-come, first-served basis while supplies last.",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Location Backgrounds and Special Backgrounds can now appear on Trainer profiles",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Private groups are coming to Dynamax Battles",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Steel Scholar and Dragon Defender medals unlock special Mighty Pokémon catch bonuses",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "New GO Pass rewards, avatar items, and an exclusive pose",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Pokémon caught in GO Safari Balls can now be transferred to Pokémon HOME",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Select Adventure Effects can be activated directly from Raid and Max Battle lobbies",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      }
+     ],
+     "tickets": [
+      {
        "text": "Trainers will receive the pass automatically on Monday, November 9, at 10:00 a.m. local time . Earn points and rank up until Sunday, November 15, 2026, at 6:00 p.m. local time .",
+       "sources": [
+        "leekduck",
+        "hub"
+       ],
+       "status": "corroborated"
+      },
+      {
+       "text": "GO Pass: Into the Wild is a free progression track. Complete Pass Tasks to collect GO Points, increase your rank, and unlock rewards.",
        "sources": [
         "leekduck"
        ],
@@ -10075,22 +10248,59 @@
         "leekduck"
        ],
        "status": "single"
+      },
+      {
+       "text": "The following items will be available through GO Pass: Into the Wild :",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "GO Wild Area 2026 Tee (Purple) as a Free GO Pass reward",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Duraludon Pants as a Paid GO Pass Deluxe reward",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Duraludon T Shirt as part of the GO Pass Into the Wild",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Trainers have until November 17, 2026, at 11:59 p.m. local time to claim their unlocked rewards.",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
       }
      ],
      "dates": [
       {
        "text": "The following Dynamax Pokémon will appear in Max Battles. Pokémon appearing in five-star Max Battles will also be featured in Max Battles from 6:00 p.m. to 7:00 p.m. local time for one day each on the following schedule.",
        "sources": [
-        "leekduck"
+        "leekduck",
+        "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
        "text": "Trainers will receive the pass automatically on Monday, November 9, at 10:00 a.m. local time . Earn points and rank up until Sunday, November 15, 2026, at 6:00 p.m. local time .",
        "sources": [
-        "leekduck"
+        "leekduck",
+        "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
        "text": "From Monday, November 9, to Friday, November 13, you can collect GO Points up to a daily cap. There’s no limit to the GO Points you can earn on Saturday and Sunday, November 14 to 15!",
@@ -10098,22 +10308,92 @@
         "leekduck"
        ],
        "status": "single"
+      },
+      {
+       "text": "Dates: November 6–8, 2026",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "10:00 a.m. to 12:50 p.m.",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Break from 1:00 p.m. to 3:00 p.m.",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "12:30 p.m. – 1:30 p.m.: Join Jason Marino, Senior 3D Artist, who will be hosting a conference at Cinépolis Diana to discuss the process of bringing art to life in Pokémon GO.",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "A special surprise will light up BBVA Tower to celebrate Pokémon GO Wild Area: Mexico City. Catch it from 6:00 p.m. to midnight on November 6–8.",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "The updates arrive just ahead of GO Wild Area: Mexico City and GO Wild Area: Sendai , which take place from November 6–8, 2026 . The adventure continues worldwide with GO Wild Area: Global on November 14–15, 2026 .",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "November 6, 2026, at 10:00 a.m. local time – Sendai and Mexico City GO Wild Area 2026 Location Backgrounds become available to display",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Trainers have until November 17, 2026, at 11:59 p.m. local time to claim their unlocked rewards.",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Ticket add-on bonuses are active from November 6 through November 8, 2026 , allowing eligible Trainers to benefit throughout the in-person event weekend.",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
       }
      ]
     },
     "info": [],
-    "detailRefs": [],
+    "detailRefs": [
+     "leekduck:into-the-wild-2026"
+    ],
     "legacyDates": {
-     "start": "2026-11-09T10:00",
-     "end": "2026-11-13T20:00"
+     "start": "",
+     "end": ""
     },
-    "contentHash": "bfc785f577a863c6e8619e50432016aa84a2342a5df3946abd014dcc4bc46fb3",
-    "revision": 3,
-    "amended": false,
+    "imageReviewed": true,
+    "contentHash": "8be8a553010a7521e8a114722b488f86112d9833fd91dff35333147a3a45a4ba",
+    "revision": 5,
+    "amended": true,
     "native": false,
     "collection": "events"
    },
-   "schedule": null,
+   "schedule": {
+    "start": "2026-11-09T10:00",
+    "end": "2026-11-13T20:00",
+    "timeBasis": "player-local"
+   },
    "activities": [],
    "bonuses": [
     {
@@ -10131,6 +10411,20 @@
      "status": "single"
     },
     {
+     "text": "Ticket-holding Trainers participating in GO Wild Area: Global will receive a branching Special Research story starting on November 14, 2026, at 10:00 a.m. local time .",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Trainers must choose between researching Steel-type or Dragon-type Pokémon. Each path awards a corresponding in-game medal and unlocks special bonuses for catching mighty Pokémon of that type.",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
+    },
+    {
      "text": "Rank 25: 1/2 Hatch Distance for Eggs placed in Incubators during the event",
      "sources": [
       "leekduck"
@@ -10139,6 +10433,27 @@
     }
    ],
    "research": [
+    {
+     "text": "Trainers who choose the Steel-type path will receive the following bonuses upon earning the Steel Scholar medal.",
+     "sources": [
+      "official"
+     ],
+     "status": "official"
+    },
+    {
+     "text": "1 additional Candy XL awarded for catching Steel-type mighty Pokémon (Trainers level 31+)",
+     "sources": [
+      "official"
+     ],
+     "status": "official"
+    },
+    {
+     "text": "These bonuses will be active upon claiming your type-themed in-game medal, and they will expire at the end of Pokémon GO Wild Area: Global on Sunday, November 15, 2026, at 6:00 p.m. local time.",
+     "sources": [
+      "official"
+     ],
+     "status": "official"
+    },
     {
      "text": "Pokémon GO Wild Area–themed Field Research tasks will be available throughout the event! Complete the research tasks to earn encounters with event-themed Pokémon and other rewards.",
      "sources": [
@@ -10185,14 +10500,15 @@
    "passes": [],
    "tickets": [
     {
-     "text": "GO Pass: Into the Wild is a free progression track. Complete Pass Tasks to collect GO Points, increase your rank, and unlock rewards.",
+     "text": "Trainers will receive the pass automatically on Monday, November 9, at 10:00 a.m. local time . Earn points and rank up until Sunday, November 15, 2026, at 6:00 p.m. local time .",
      "sources": [
-      "leekduck"
+      "leekduck",
+      "hub"
      ],
-     "status": "single"
+     "status": "corroborated"
     },
     {
-     "text": "Trainers will receive the pass automatically on Monday, November 9, at 10:00 a.m. local time . Earn points and rank up until Sunday, November 15, 2026, at 6:00 p.m. local time .",
+     "text": "GO Pass: Into the Wild is a free progression track. Complete Pass Tasks to collect GO Points, increase your rank, and unlock rewards.",
      "sources": [
       "leekduck"
      ],
@@ -10225,6 +10541,41 @@
       "leekduck"
      ],
      "status": "single"
+    },
+    {
+     "text": "The following items will be available through GO Pass: Into the Wild :",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "GO Wild Area 2026 Tee (Purple) as a Free GO Pass reward",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Duraludon Pants as a Paid GO Pass Deluxe reward",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Duraludon T Shirt as part of the GO Pass Into the Wild",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Trainers have until November 17, 2026, at 11:59 p.m. local time to claim their unlocked rewards.",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
     }
    ],
    "sources": [
@@ -10237,9 +10588,238 @@
     {
      "url": "https://pokemongo.com/news/into-the-wild-2026",
      "name": "Official Pokémon GO announcement"
+    },
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "url": "https://leekduck.com/events/into-the-wild-2026/",
+     "auto": true
+    },
+    {
+     "url": "https://leekduck.com/events/into-the-wild-2026/",
+     "name": "Event source"
+    },
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "trust": "official",
+     "url": "https://pokemongo.com/news/get-ready-for-gowildarea-2026/"
+    },
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "trust": "official",
+     "url": "https://pokemongo.com/news/go-wild-area-stamp-rally-details-2026/"
+    },
+    {
+     "id": "hub",
+     "name": "Pokémon GO Hub",
+     "trust": "community",
+     "url": "https://pokemongohub.net/post/event/pokemon-go-wild-area-mexico-city-additional-details-maps-in-person-activities-notable-trainers-etc/"
+    },
+    {
+     "id": "hub",
+     "name": "Pokémon GO Hub",
+     "trust": "community",
+     "url": "https://pokemongohub.net/post/news/pokemon-go-wild-area-2026-brings-trainer-backgrounds-private-dynamax-battles-and-more/"
     }
    ],
    "pokemon": [
+    {
+     "key": "123:base:none",
+     "speciesId": "123",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Scyther",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Scyther"
+    },
+    {
+     "key": "147:base:none",
+     "speciesId": "147",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Dratini",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Dratini"
+    },
+    {
+     "key": "179:base:none",
+     "speciesId": "179",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Mareep",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Mareep"
+    },
+    {
+     "key": "280:dynamax:none",
+     "speciesId": "280",
+     "formId": "dynamax",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Dynamax Ralts",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Dynamax Ralts"
+    },
+    {
+     "key": "303:base:none",
+     "speciesId": "303",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Mawile",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Mawile"
+    },
+    {
+     "key": "304:base:none",
+     "speciesId": "304",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Aron",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Aron"
+    },
+    {
+     "key": "379:dynamax:none",
+     "speciesId": "379",
+     "formId": "dynamax",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Dynamax Registeel",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Dynamax Registeel"
+    },
+    {
+     "key": "380:dynamax:none",
+     "speciesId": "380",
+     "formId": "dynamax",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Dynamax Latias",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Dynamax Latias"
+    },
+    {
+     "key": "381:dynamax:none",
+     "speciesId": "381",
+     "formId": "dynamax",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Dynamax Latios",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Dynamax Latios"
+    },
+    {
+     "key": "621:base:none",
+     "speciesId": "621",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Druddigon",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Druddigon"
+    },
+    {
+     "key": "66:dynamax:none",
+     "speciesId": "66",
+     "formId": "dynamax",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Dynamax Machop",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Dynamax Machop"
+    },
+    {
+     "key": "690:base:none",
+     "speciesId": "690",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Skrelp",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Skrelp"
+    },
+    {
+     "key": "714:base:none",
+     "speciesId": "714",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Noibat",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Noibat"
+    },
+    {
+     "key": "777:base:none",
+     "speciesId": "777",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Togedemaru",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Togedemaru"
+    },
+    {
+     "key": "81:base:none",
+     "speciesId": "81",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Magnemite",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Magnemite"
+    },
     {
      "key": "888:base:none",
      "speciesId": "888",
@@ -10252,6 +10832,19 @@
      "debut": null,
      "boostedShiny": null,
      "collectionName": "Zacian"
+    },
+    {
+     "key": "888:crownedsword:none",
+     "speciesId": "888",
+     "formId": "crownedsword",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Zacian (Crowned Sword)",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Zacian (Crowned Sword)"
     },
     {
      "key": "889:base:none",
@@ -10267,6 +10860,19 @@
      "collectionName": "Zamazenta"
     },
     {
+     "key": "889:crownedshield:none",
+     "speciesId": "889",
+     "formId": "crownedshield",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Zamazenta (Crowned Shield)",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Zamazenta (Crowned Shield)"
+    },
+    {
      "key": "895:base:none",
      "speciesId": "895",
      "formId": null,
@@ -10278,10 +10884,72 @@
      "debut": null,
      "boostedShiny": null,
      "collectionName": "Regidrago"
+    },
+    {
+     "key": "895:dynamax:none",
+     "speciesId": "895",
+     "formId": "dynamax",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Dynamax Regidrago",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Dynamax Regidrago"
+    },
+    {
+     "key": "968:base:none",
+     "speciesId": "968",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Orthworm",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Orthworm"
     }
    ],
    "encounters": [
     {
+     "identityKey": "280:dynamax:none",
+     "method": "max",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "379:dynamax:none",
+     "method": "max",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "380:dynamax:none",
+     "method": "max",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "381:dynamax:none",
+     "method": "max",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "66:dynamax:none",
+     "method": "max",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "895:dynamax:none",
+     "method": "max",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
      "identityKey": "888:base:none",
      "method": "other",
      "activityId": "main",
@@ -10314,11 +10982,127 @@
     {
      "identityKey": "895:base:none",
      "method": "other",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "621:base:none",
+     "method": "raid",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "888:crownedsword:none",
+     "method": "raid",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "889:crownedshield:none",
+     "method": "raid",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "968:base:none",
+     "method": "raid",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "123:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "147:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "179:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "303:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "304:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "690:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "714:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "777:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "81:base:none",
+     "method": "wild",
      "activityId": "main",
      "access": "unknown"
     }
    ],
    "groups": {
+    "max": [
+     {
+      "identityKey": "280:dynamax:none",
+      "method": "max",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "379:dynamax:none",
+      "method": "max",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "380:dynamax:none",
+      "method": "max",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "381:dynamax:none",
+      "method": "max",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "66:dynamax:none",
+      "method": "max",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "895:dynamax:none",
+      "method": "max",
+      "activityId": "main",
+      "access": "unknown"
+     }
+    ],
     "other": [
      {
       "identityKey": "888:base:none",
@@ -10353,6 +11137,88 @@
      {
       "identityKey": "895:base:none",
       "method": "other",
+      "activityId": "main",
+      "access": "unknown"
+     }
+    ],
+    "raid": [
+     {
+      "identityKey": "621:base:none",
+      "method": "raid",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "888:crownedsword:none",
+      "method": "raid",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "889:crownedshield:none",
+      "method": "raid",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "968:base:none",
+      "method": "raid",
+      "activityId": "main",
+      "access": "unknown"
+     }
+    ],
+    "wild": [
+     {
+      "identityKey": "123:base:none",
+      "method": "wild",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "147:base:none",
+      "method": "wild",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "179:base:none",
+      "method": "wild",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "303:base:none",
+      "method": "wild",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "304:base:none",
+      "method": "wild",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "690:base:none",
+      "method": "wild",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "714:base:none",
+      "method": "wild",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "777:base:none",
+      "method": "wild",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "81:base:none",
+      "method": "wild",
       "activityId": "main",
       "access": "unknown"
      }
@@ -12997,833 +13863,6 @@
    "pokemon": [],
    "encounters": [],
    "groups": {}
-  },
-  {
-   "schemaVersion": 1,
-   "eventId": "leekduck:into-the-wild-2026",
-   "aliases": [],
-   "family": "other",
-   "title": "Into the Wild",
-   "dateText": "",
-   "completeness": "partial",
-   "lifecycle": "reference",
-   "attendance": "",
-   "location": null,
-   "image": null,
-   "notes": [],
-   "internalValidation": {
-    "warnings": [],
-    "lifecycleDeclared": true,
-    "conflicts": [],
-    "fields": {
-     "bonuses": [
-      {
-       "text": "Daily Discoveries will not take place from November 9 through November 15, 2026.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Reach these ranks on GO Pass: Into the Wild to unlock the following bonus.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Ticket-holding Trainers participating in GO Wild Area: Global will receive a branching Special Research story starting on November 14, 2026, at 10:00 a.m. local time .",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Trainers must choose between researching Steel-type or Dragon-type Pokémon. Each path awards a corresponding in-game medal and unlocks special bonuses for catching mighty Pokémon of that type.",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Rank 25: 1/2 Hatch Distance for Eggs placed in Incubators during the event",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      }
-     ],
-     "featured": [
-      {
-       "text": "The following Pokémon will appear more frequently in the wild, along with other event-themed Pokémon.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "The free track includes:",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Encounter with Dynamax Meltan",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "GO Wild Area 2026 Tee (Purple)",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Additional rewards",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "GO Pass Deluxe also offers:",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "A Silver Bottle Cap, which can be used to max one stat—Attack, Defense, or HP—on any Pokémon via Hyper Training",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Encounters with Dynamax Meltan",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Duraludon Pants",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Premium items, such as Incense and a Lucky Egg",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      }
-     ],
-     "raids": [
-      {
-       "text": "Regidrago will make its Pokémon GO Dynamax debut in five-star Max Battles, and Meltan will make its Dynamax debut in GO Pass: Into the Wild. If you’re lucky, you may encounter a Shiny one!",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Defeating Crowned Sword Zacian or Crowned Shield Zamazenta in raids will earn you Crowned Sword Energy or Crowned Shield Energy, respectively.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "The following Dynamax Pokémon will appear in Max Battles. Pokémon appearing in five-star Max Battles will also be featured in Max Battles from 6:00 p.m. to 7:00 p.m. local time for one day each on the following schedule.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "New Trainer profile backgrounds, private Max Battle groups, exclusive Research bonuses, and avatar rewards arrive ahead of GO Wild Area 2026.",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "The updates arrive just ahead of GO Wild Area: Mexico City and GO Wild Area: Sendai , which take place from November 6–8, 2026 . The adventure continues worldwide with GO Wild Area: Global on November 14–15, 2026 .",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Here is everything new that Trainers should know before the event begins.",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Gigantamax Duraludon",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "One of the biggest gameplay improvements arriving with GO Wild Area is the ability to join Dynamax Battles privately .",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Previously, entering a Max Battle lobby would automatically match Trainers with other participants. Starting with GO Wild Area 2026, Trainers will have two options when joining a battle:",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Private Group: Enter a group code to join an existing private Max Battle group",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "This should make it easier for coordinated groups to tackle difficult Max Battles without being automatically matched with other players.",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "For more information about their appearances, check out our GO Wild Area 2026: Global guide .",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      }
-     ],
-     "eggs": [],
-     "research": [
-      {
-       "text": "Trainers who choose the Steel-type path will receive the following bonuses upon earning the Steel Scholar medal.",
-       "sources": [
-        "official"
-       ],
-       "status": "official"
-      },
-      {
-       "text": "1 additional Candy XL awarded for catching Steel-type mighty Pokémon (Trainers level 31+)",
-       "sources": [
-        "official"
-       ],
-       "status": "official"
-      },
-      {
-       "text": "These bonuses will be active upon claiming your type-themed in-game medal, and they will expire at the end of Pokémon GO Wild Area: Global on Sunday, November 15, 2026, at 6:00 p.m. local time.",
-       "sources": [
-        "official"
-       ],
-       "status": "official"
-      },
-      {
-       "text": "Pokémon GO Wild Area–themed Field Research tasks will be available throughout the event! Complete the research tasks to earn encounters with event-themed Pokémon and other rewards.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "After you give your trainee a Silver Bottle Cap, Hyper Training begins. Each stat has its own set of themed tasks.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Attack: Battle alongside your trainee.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Defense: Strengthen your bond with your Buddy Pokémon trainee by playing together, exploring, and catching Pokémon.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "HP: Explore alongside your trainee as a buddy. This can include spinning PokéStops, earning Buddy Candy, or other adventures.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "You’ll have 365 days after using your Silver Bottle Cap to finish Hyper Training.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      }
-     ],
-     "shiny": [
-      {
-       "text": "Regidrago will make its Pokémon GO Dynamax debut in five-star Max Battles, and Meltan will make its Dynamax debut in GO Pass: Into the Wild. If you’re lucky, you may encounter a Shiny one!",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      }
-     ],
-     "moves": [],
-     "costumes": [
-      {
-       "text": "Dates: November 6–8, 2026",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Locations: Monumento a la Revolución; Parque México; Jardín Pushkin; Cinépolis Diana; Liverpool Polanco; Parque Hundido",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Trainers can pick up a Pikachu, Hawlucha, or Machamp sun visor to add some fun to their journey while exploring Mexico City.",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Distribution times may vary by location. Quantities at each location are limited. Visors will be distributed on a first-come, first-served basis while supplies last.",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Location Backgrounds and Special Backgrounds can now appear on Trainer profiles",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Private groups are coming to Dynamax Battles",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Steel Scholar and Dragon Defender medals unlock special Mighty Pokémon catch bonuses",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "New GO Pass rewards, avatar items, and an exclusive pose",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Pokémon caught in GO Safari Balls can now be transferred to Pokémon HOME",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Select Adventure Effects can be activated directly from Raid and Max Battle lobbies",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      }
-     ],
-     "tickets": [
-      {
-       "text": "Trainers will receive the pass automatically on Monday, November 9, at 10:00 a.m. local time . Earn points and rank up until Sunday, November 15, 2026, at 6:00 p.m. local time .",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "GO Pass: Into the Wild is a free progression track. Complete Pass Tasks to collect GO Points, increase your rank, and unlock rewards.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "From Monday, November 9, to Friday, November 13, you can collect GO Points up to a daily cap. There’s no limit to the GO Points you can earn on Saturday and Sunday, November 14 to 15!",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Upgrade to GO Pass Deluxe: Into the Wild for US$14.99 * for upgraded rewards. The GO Pass Deluxe: Into the Wild + 10 Ranks option costs US$19.99 * and grants enough GO Points to reach Rank 10.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Deluxe includes rewards from both tracks. You can upgrade at any time and still claim rewards for ranks you have already reached.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Claim all unlocked GO Pass rewards before they expire on Tuesday, November 17, 2026, at 11:59 p.m. local time .",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "The following items will be available through GO Pass: Into the Wild :",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "GO Wild Area 2026 Tee (Purple) as a Free GO Pass reward",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Duraludon Pants as a Paid GO Pass Deluxe reward",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Duraludon T Shirt as part of the GO Pass Into the Wild",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Trainers have until November 17, 2026, at 11:59 p.m. local time to claim their unlocked rewards.",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      }
-     ],
-     "dates": [
-      {
-       "text": "The following Dynamax Pokémon will appear in Max Battles. Pokémon appearing in five-star Max Battles will also be featured in Max Battles from 6:00 p.m. to 7:00 p.m. local time for one day each on the following schedule.",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Trainers will receive the pass automatically on Monday, November 9, at 10:00 a.m. local time . Earn points and rank up until Sunday, November 15, 2026, at 6:00 p.m. local time .",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "From Monday, November 9, to Friday, November 13, you can collect GO Points up to a daily cap. There’s no limit to the GO Points you can earn on Saturday and Sunday, November 14 to 15!",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Dates: November 6–8, 2026",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "10:00 a.m. to 12:50 p.m.",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Break from 1:00 p.m. to 3:00 p.m.",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "12:30 p.m. – 1:30 p.m.: Join Jason Marino, Senior 3D Artist, who will be hosting a conference at Cinépolis Diana to discuss the process of bringing art to life in Pokémon GO.",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "A special surprise will light up BBVA Tower to celebrate Pokémon GO Wild Area: Mexico City. Catch it from 6:00 p.m. to midnight on November 6–8.",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "The updates arrive just ahead of GO Wild Area: Mexico City and GO Wild Area: Sendai , which take place from November 6–8, 2026 . The adventure continues worldwide with GO Wild Area: Global on November 14–15, 2026 .",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "November 6, 2026, at 10:00 a.m. local time – Sendai and Mexico City GO Wild Area 2026 Location Backgrounds become available to display",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Trainers have until November 17, 2026, at 11:59 p.m. local time to claim their unlocked rewards.",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Ticket add-on bonuses are active from November 6 through November 8, 2026 , allowing eligible Trainers to benefit throughout the in-person event weekend.",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      }
-     ]
-    },
-    "info": [],
-    "detailRefs": [
-     "leekduck:into-the-wild-2026"
-    ],
-    "legacyDates": {
-     "start": "",
-     "end": ""
-    },
-    "imageReviewed": true,
-    "contentHash": "d15edf8dd4110e41fe5284044790ad719966cbf045579b539aa9fd5615eeb3f1",
-    "revision": 5,
-    "amended": false,
-    "native": false,
-    "collection": "source-details"
-   },
-   "schedule": null,
-   "activities": [],
-   "bonuses": [
-    {
-     "text": "Daily Discoveries will not take place from November 9 through November 15, 2026.",
-     "sources": [
-      "leekduck"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Reach these ranks on GO Pass: Into the Wild to unlock the following bonus.",
-     "sources": [
-      "leekduck"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Ticket-holding Trainers participating in GO Wild Area: Global will receive a branching Special Research story starting on November 14, 2026, at 10:00 a.m. local time .",
-     "sources": [
-      "hub"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Trainers must choose between researching Steel-type or Dragon-type Pokémon. Each path awards a corresponding in-game medal and unlocks special bonuses for catching mighty Pokémon of that type.",
-     "sources": [
-      "hub"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Rank 25: 1/2 Hatch Distance for Eggs placed in Incubators during the event",
-     "sources": [
-      "leekduck"
-     ],
-     "status": "single"
-    }
-   ],
-   "research": [
-    {
-     "text": "Trainers who choose the Steel-type path will receive the following bonuses upon earning the Steel Scholar medal.",
-     "sources": [
-      "official"
-     ],
-     "status": "official"
-    },
-    {
-     "text": "1 additional Candy XL awarded for catching Steel-type mighty Pokémon (Trainers level 31+)",
-     "sources": [
-      "official"
-     ],
-     "status": "official"
-    },
-    {
-     "text": "These bonuses will be active upon claiming your type-themed in-game medal, and they will expire at the end of Pokémon GO Wild Area: Global on Sunday, November 15, 2026, at 6:00 p.m. local time.",
-     "sources": [
-      "official"
-     ],
-     "status": "official"
-    },
-    {
-     "text": "Pokémon GO Wild Area–themed Field Research tasks will be available throughout the event! Complete the research tasks to earn encounters with event-themed Pokémon and other rewards.",
-     "sources": [
-      "leekduck"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "After you give your trainee a Silver Bottle Cap, Hyper Training begins. Each stat has its own set of themed tasks.",
-     "sources": [
-      "leekduck"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Attack: Battle alongside your trainee.",
-     "sources": [
-      "leekduck"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Defense: Strengthen your bond with your Buddy Pokémon trainee by playing together, exploring, and catching Pokémon.",
-     "sources": [
-      "leekduck"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "HP: Explore alongside your trainee as a buddy. This can include spinning PokéStops, earning Buddy Candy, or other adventures.",
-     "sources": [
-      "leekduck"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "You’ll have 365 days after using your Silver Bottle Cap to finish Hyper Training.",
-     "sources": [
-      "leekduck"
-     ],
-     "status": "single"
-    }
-   ],
-   "passes": [],
-   "tickets": [
-    {
-     "text": "Trainers will receive the pass automatically on Monday, November 9, at 10:00 a.m. local time . Earn points and rank up until Sunday, November 15, 2026, at 6:00 p.m. local time .",
-     "sources": [
-      "leekduck",
-      "hub"
-     ],
-     "status": "corroborated"
-    },
-    {
-     "text": "GO Pass: Into the Wild is a free progression track. Complete Pass Tasks to collect GO Points, increase your rank, and unlock rewards.",
-     "sources": [
-      "leekduck"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "From Monday, November 9, to Friday, November 13, you can collect GO Points up to a daily cap. There’s no limit to the GO Points you can earn on Saturday and Sunday, November 14 to 15!",
-     "sources": [
-      "leekduck"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Upgrade to GO Pass Deluxe: Into the Wild for US$14.99 * for upgraded rewards. The GO Pass Deluxe: Into the Wild + 10 Ranks option costs US$19.99 * and grants enough GO Points to reach Rank 10.",
-     "sources": [
-      "leekduck"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Deluxe includes rewards from both tracks. You can upgrade at any time and still claim rewards for ranks you have already reached.",
-     "sources": [
-      "leekduck"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Claim all unlocked GO Pass rewards before they expire on Tuesday, November 17, 2026, at 11:59 p.m. local time .",
-     "sources": [
-      "leekduck"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "The following items will be available through GO Pass: Into the Wild :",
-     "sources": [
-      "hub"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "GO Wild Area 2026 Tee (Purple) as a Free GO Pass reward",
-     "sources": [
-      "hub"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Duraludon Pants as a Paid GO Pass Deluxe reward",
-     "sources": [
-      "hub"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Duraludon T Shirt as part of the GO Pass Into the Wild",
-     "sources": [
-      "hub"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Trainers have until November 17, 2026, at 11:59 p.m. local time to claim their unlocked rewards.",
-     "sources": [
-      "hub"
-     ],
-     "status": "single"
-    }
-   ],
-   "sources": [
-    {
-     "id": "official",
-     "name": "Pokémon GO (official)",
-     "trust": "official",
-     "url": "https://pokemongo.com/news/get-ready-for-gowildarea-2026/"
-    },
-    {
-     "id": "official",
-     "name": "Pokémon GO (official)",
-     "trust": "official",
-     "url": "https://pokemongo.com/news/go-wild-area-stamp-rally-details-2026/"
-    },
-    {
-     "id": "leekduck",
-     "name": "Leek Duck",
-     "trust": "community",
-     "url": "https://leekduck.com/events/into-the-wild-2026/"
-    },
-    {
-     "id": "leekduck",
-     "name": "Leek Duck",
-     "trust": "community",
-     "url": "https://leekduck.com/events/go-wild-area-gigantamax-machamp-power-up-timed-research/"
-    },
-    {
-     "id": "hub",
-     "name": "Pokémon GO Hub",
-     "trust": "community",
-     "url": "https://pokemongohub.net/post/event/pokemon-go-wild-area-mexico-city-additional-details-maps-in-person-activities-notable-trainers-etc/"
-    },
-    {
-     "id": "hub",
-     "name": "Pokémon GO Hub",
-     "trust": "community",
-     "url": "https://pokemongohub.net/post/news/pokemon-go-wild-area-2026-brings-trainer-backgrounds-private-dynamax-battles-and-more/"
-    }
-   ],
-   "pokemon": [
-    {
-     "key": "621:base:none",
-     "speciesId": "621",
-     "formId": null,
-     "costumeId": null,
-     "shiny": "unknown",
-     "assetKey": null,
-     "name": "Druddigon",
-     "label": null,
-     "debut": null,
-     "boostedShiny": null,
-     "collectionName": "Druddigon"
-    },
-    {
-     "key": "968:base:none",
-     "speciesId": "968",
-     "formId": null,
-     "costumeId": null,
-     "shiny": "unknown",
-     "assetKey": null,
-     "name": "Orthworm",
-     "label": null,
-     "debut": null,
-     "boostedShiny": null,
-     "collectionName": "Orthworm"
-    }
-   ],
-   "encounters": [
-    {
-     "identityKey": "621:base:none",
-     "method": "raid",
-     "activityId": "main",
-     "access": "unknown"
-    },
-    {
-     "identityKey": "968:base:none",
-     "method": "raid",
-     "activityId": "main",
-     "access": "unknown"
-    }
-   ],
-   "groups": {
-    "raid": [
-     {
-      "identityKey": "621:base:none",
-      "method": "raid",
-      "activityId": "main",
-      "access": "unknown"
-     },
-     {
-      "identityKey": "968:base:none",
-      "method": "raid",
-      "activityId": "main",
-      "access": "unknown"
-     }
-    ]
-   }
   },
   {
    "schemaVersion": 1,
@@ -17682,7 +17721,7 @@
        "status": "single"
       },
       {
-       "text": "Machamp wearing a modern jacket appears in three-star raids during event hours and may be Shiny.",
+       "text": "Machamp wearing a modern jacket appears in three-star raids during event hours. Leek Duck says it may be Shiny; the official event page does not confirm this.",
        "sources": [
         "leekduck"
        ],
@@ -17744,7 +17783,7 @@
        "status": "single"
       },
       {
-       "text": "Machamp wearing a modern jacket appears in three-star raids during event hours and may be Shiny.",
+       "text": "Machamp wearing a modern jacket appears in three-star raids during event hours. Leek Duck says it may be Shiny; the official event page does not confirm this.",
        "sources": [
         "leekduck"
        ],
@@ -17790,7 +17829,7 @@
        "status": "single"
       },
       {
-       "text": "Machamp wearing a modern jacket appears in three-star raids during event hours and may be Shiny.",
+       "text": "Machamp wearing a modern jacket appears in three-star raids during event hours. Leek Duck says it may be Shiny; the official event page does not confirm this.",
        "sources": [
         "leekduck"
        ],
@@ -33748,7 +33787,7 @@
        "status": "single"
       },
       {
-       "text": "Machamp wearing a modern jacket appears in three-star raids during event hours and may be Shiny.",
+       "text": "Machamp wearing a modern jacket appears in three-star raids during event hours. Leek Duck says it may be Shiny; the official event page does not confirm this.",
        "sources": [
         "leekduck"
        ],
@@ -33922,7 +33961,7 @@
        "status": "single"
       },
       {
-       "text": "Machamp wearing a modern jacket appears in three-star raids during event hours and may be Shiny.",
+       "text": "Machamp wearing a modern jacket appears in three-star raids during event hours. Leek Duck says it may be Shiny; the official event page does not confirm this.",
        "sources": [
         "leekduck"
        ],
@@ -33967,7 +34006,7 @@
        "status": "single"
       },
       {
-       "text": "Machamp wearing a modern jacket appears in three-star raids during event hours and may be Shiny.",
+       "text": "Machamp wearing a modern jacket appears in three-star raids during event hours. Leek Duck says it may be Shiny; the official event page does not confirm this.",
        "sources": [
         "leekduck"
        ],
@@ -40778,58 +40817,6 @@
   },
   {
    "schemaVersion": 1,
-   "eventId": "w-into-the-wild",
-   "aliases": [],
-   "family": "other",
-   "title": "Into the Wild",
-   "dateText": "",
-   "completeness": "partial",
-   "lifecycle": "announced",
-   "attendance": "",
-   "location": "Play from anywhere",
-   "image": null,
-   "notes": [],
-   "internalValidation": {
-    "warnings": [],
-    "lifecycleDeclared": false,
-    "conflicts": [],
-    "fields": {},
-    "info": [],
-    "detailRefs": [],
-    "legacyDates": {
-     "start": "2026-11-09",
-     "end": "2026-11-13"
-    },
-    "contentHash": "5050d77b48559ed868cb770df3508fcf9462a6e705c808c27c87291731289d3e",
-    "revision": 3,
-    "amended": false,
-    "native": false,
-    "collection": "world-events"
-   },
-   "schedule": null,
-   "activities": [],
-   "bonuses": [],
-   "research": [],
-   "passes": [],
-   "tickets": [],
-   "sources": [
-    {
-     "id": "leekduck",
-     "name": "Leek Duck",
-     "url": "https://leekduck.com/events/into-the-wild-2026/",
-     "auto": true
-    },
-    {
-     "url": "https://leekduck.com/events/into-the-wild-2026/",
-     "name": "Event source"
-    }
-   ],
-   "pokemon": [],
-   "encounters": [],
-   "groups": {}
-  },
-  {
-   "schemaVersion": 1,
    "eventId": "w-ko-gowa-global-on-site-event",
    "aliases": [],
    "family": "other",
@@ -45624,7 +45611,7 @@
     },
     "contentHash": "6e9282cc03603c74671ba530686e762eae832f4865274e54ea4a71730d66e312",
     "revision": 6,
-    "amended": true,
+    "amended": false,
     "native": false,
     "collection": "events"
    },
@@ -46131,7 +46118,7 @@
        "status": "single"
       },
       {
-       "text": "Machamp wearing a modern jacket appears in three-star raids during event hours and may be Shiny.",
+       "text": "Machamp wearing a modern jacket appears in three-star raids during event hours. Leek Duck says it may be Shiny; the official event page does not confirm this.",
        "sources": [
         "leekduck"
        ],
@@ -46193,7 +46180,7 @@
        "status": "single"
       },
       {
-       "text": "Machamp wearing a modern jacket appears in three-star raids during event hours and may be Shiny.",
+       "text": "Machamp wearing a modern jacket appears in three-star raids during event hours. Leek Duck says it may be Shiny; the official event page does not confirm this.",
        "sources": [
         "leekduck"
        ],
@@ -46239,7 +46226,7 @@
        "status": "single"
       },
       {
-       "text": "Machamp wearing a modern jacket appears in three-star raids during event hours and may be Shiny.",
+       "text": "Machamp wearing a modern jacket appears in three-star raids during event hours. Leek Duck says it may be Shiny; the official event page does not confirm this.",
        "sources": [
         "leekduck"
        ],

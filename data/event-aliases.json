@@ -1,6 +1,15 @@
 {
   "how_to_use": "Rulings on events that look alike. 'same': a pair of ids or titles that are one event, so they are joined. 'different': a pair that look alike but are separate events, so they are never joined or flagged again. Each entry is [a, b].",
-  "same": [],
+  "same": [
+    [
+      "into",
+      "leekduck:into-the-wild-2026"
+    ],
+    [
+      "into",
+      "w-into-the-wild"
+    ]
+  ],
   "different": [
     [
       "w-pok-xciting-lands-at-changi-airport-and-jewel-get-",

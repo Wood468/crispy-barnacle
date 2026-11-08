@@ -16,6 +16,7 @@ import catalogue from "../event-experience/build-catalogue.cjs";
 import eventAdapter from "../../public/event-adapter.js";
 import { announcementFromPage } from "./announcements.mjs";
 import { selectArtwork } from "./artwork.mjs";
+import { applyLineCorrections } from "./corrections.mjs";
 
 const APP = process.env.APP_URL || "https://pogo.michaelpuff.com";
 const OUT = process.env.OUT_FILE || "public/event-details.json";
@@ -324,6 +325,7 @@ async function main() {
   }
   preserveGoPassRows(out, old, byEvent);
   for (const [id, v] of Object.entries(old)) if (!out[id] && Date.now() - Date.parse(v.updated || 0) < 45 * 864e5) out[id] = normaliseLegacyStatuses(v); // keep recent entries a source stopped listing, with current terminology
+  try { applyLineCorrections(out, JSON.parse(await readFile("data/line-corrections.json", "utf8")).lines); } catch { /* optional */ }
   await mkdir("data", { recursive: true });
   await writeFile(OUT, JSON.stringify({ updated: now, events: out }, null, 1) + "\n");
   if (OUT === "public/event-details.json" && WORLD_OUT === "public/world-events.json") await catalogue.publish();

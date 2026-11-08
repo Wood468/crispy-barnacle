@@ -206,7 +206,7 @@
       "status": "single"
      },
      {
-      "text": "Machamp wearing a modern jacket appears in three-star raids during event hours and may be Shiny.",
+      "text": "Machamp wearing a modern jacket appears in three-star raids during event hours. Leek Duck says it may be Shiny; the official event page does not confirm this.",
       "sources": [
        "leekduck"
       ],
@@ -380,7 +380,7 @@
       "status": "single"
      },
      {
-      "text": "Machamp wearing a modern jacket appears in three-star raids during event hours and may be Shiny.",
+      "text": "Machamp wearing a modern jacket appears in three-star raids during event hours. Leek Duck says it may be Shiny; the official event page does not confirm this.",
       "sources": [
        "leekduck"
       ],
@@ -425,7 +425,7 @@
       "status": "single"
      },
      {
-      "text": "Machamp wearing a modern jacket appears in three-star raids during event hours and may be Shiny.",
+      "text": "Machamp wearing a modern jacket appears in three-star raids during event hours. Leek Duck says it may be Shiny; the official event page does not confirm this.",
       "sources": [
        "leekduck"
       ],
@@ -1416,7 +1416,7 @@
       "status": "single"
      },
      {
-      "text": "Machamp wearing a modern jacket appears in three-star raids during event hours and may be Shiny.",
+      "text": "Machamp wearing a modern jacket appears in three-star raids during event hours. Leek Duck says it may be Shiny; the official event page does not confirm this.",
       "sources": [
        "leekduck"
       ],
@@ -1590,7 +1590,7 @@
       "status": "single"
      },
      {
-      "text": "Machamp wearing a modern jacket appears in three-star raids during event hours and may be Shiny.",
+      "text": "Machamp wearing a modern jacket appears in three-star raids during event hours. Leek Duck says it may be Shiny; the official event page does not confirm this.",
       "sources": [
        "leekduck"
       ],
@@ -1628,7 +1628,7 @@
       "status": "single"
      },
      {
-      "text": "Machamp wearing a modern jacket appears in three-star raids during event hours and may be Shiny.",
+      "text": "Machamp wearing a modern jacket appears in three-star raids during event hours. Leek Duck says it may be Shiny; the official event page does not confirm this.",
       "sources": [
        "leekduck"
       ],
@@ -4029,7 +4029,7 @@
       "status": "single"
      },
      {
-      "text": "Machamp wearing a modern jacket appears in three-star raids during event hours and may be Shiny.",
+      "text": "Machamp wearing a modern jacket appears in three-star raids during event hours. Leek Duck says it may be Shiny; the official event page does not confirm this.",
       "sources": [
        "leekduck"
       ],
@@ -4091,7 +4091,7 @@
       "status": "single"
      },
      {
-      "text": "Machamp wearing a modern jacket appears in three-star raids during event hours and may be Shiny.",
+      "text": "Machamp wearing a modern jacket appears in three-star raids during event hours. Leek Duck says it may be Shiny; the official event page does not confirm this.",
       "sources": [
        "leekduck"
       ],
@@ -4137,7 +4137,7 @@
       "status": "single"
      },
      {
-      "text": "Machamp wearing a modern jacket appears in three-star raids during event hours and may be Shiny.",
+      "text": "Machamp wearing a modern jacket appears in three-star raids during event hours. Leek Duck says it may be Shiny; the official event page does not confirm this.",
       "sources": [
        "leekduck"
       ],
@@ -5262,6 +5262,123 @@
    "researchTasks": [],
    "pokemon": [
     {
+     "key": "123:base:none",
+     "speciesId": "123",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Scyther",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Scyther"
+    },
+    {
+     "key": "147:base:none",
+     "speciesId": "147",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Dratini",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Dratini"
+    },
+    {
+     "key": "179:base:none",
+     "speciesId": "179",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Mareep",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Mareep"
+    },
+    {
+     "key": "280:dynamax:none",
+     "speciesId": "280",
+     "formId": "dynamax",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Dynamax Ralts",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Dynamax Ralts"
+    },
+    {
+     "key": "303:base:none",
+     "speciesId": "303",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Mawile",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Mawile"
+    },
+    {
+     "key": "304:base:none",
+     "speciesId": "304",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Aron",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Aron"
+    },
+    {
+     "key": "379:dynamax:none",
+     "speciesId": "379",
+     "formId": "dynamax",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Dynamax Registeel",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Dynamax Registeel"
+    },
+    {
+     "key": "380:dynamax:none",
+     "speciesId": "380",
+     "formId": "dynamax",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Dynamax Latias",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Dynamax Latias"
+    },
+    {
+     "key": "381:dynamax:none",
+     "speciesId": "381",
+     "formId": "dynamax",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Dynamax Latios",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Dynamax Latios"
+    },
+    {
      "key": "621:base:none",
      "speciesId": "621",
      "formId": null,
@@ -5273,6 +5390,110 @@
      "debut": null,
      "boostedShiny": null,
      "collectionName": "Druddigon"
+    },
+    {
+     "key": "66:dynamax:none",
+     "speciesId": "66",
+     "formId": "dynamax",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Dynamax Machop",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Dynamax Machop"
+    },
+    {
+     "key": "690:base:none",
+     "speciesId": "690",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Skrelp",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Skrelp"
+    },
+    {
+     "key": "714:base:none",
+     "speciesId": "714",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Noibat",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Noibat"
+    },
+    {
+     "key": "777:base:none",
+     "speciesId": "777",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Togedemaru",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Togedemaru"
+    },
+    {
+     "key": "81:base:none",
+     "speciesId": "81",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Magnemite",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Magnemite"
+    },
+    {
+     "key": "888:crownedsword:none",
+     "speciesId": "888",
+     "formId": "crownedsword",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Zacian (Crowned Sword)",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Zacian (Crowned Sword)"
+    },
+    {
+     "key": "889:crownedshield:none",
+     "speciesId": "889",
+     "formId": "crownedshield",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Zamazenta (Crowned Shield)",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Zamazenta (Crowned Shield)"
+    },
+    {
+     "key": "895:dynamax:none",
+     "speciesId": "895",
+     "formId": "dynamax",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Dynamax Regidrago",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Dynamax Regidrago"
     },
     {
      "key": "968:base:none",
@@ -5290,7 +5511,55 @@
    ],
    "encounters": [
     {
+     "identityKey": "280:dynamax:none",
+     "method": "max",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "379:dynamax:none",
+     "method": "max",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "380:dynamax:none",
+     "method": "max",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "381:dynamax:none",
+     "method": "max",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "66:dynamax:none",
+     "method": "max",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "895:dynamax:none",
+     "method": "max",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
      "identityKey": "621:base:none",
+     "method": "raid",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "888:crownedsword:none",
+     "method": "raid",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "889:crownedshield:none",
      "method": "raid",
      "activityId": "main",
      "access": "unknown"
@@ -5298,6 +5567,60 @@
     {
      "identityKey": "968:base:none",
      "method": "raid",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "123:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "147:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "179:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "303:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "304:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "690:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "714:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "777:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "81:base:none",
+     "method": "wild",
      "activityId": "main",
      "access": "unknown"
     }
