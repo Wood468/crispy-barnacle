@@ -127,3 +127,19 @@ Enumerate `Images` and `3D Assets` filenames using GitHub recursive tree API or 
 - Container's outbound DNS lookup for GitHub API failed; connected GitHub code search returned no binary matches. Full recursive tree inventory, binary download, checksum and pixel inspection remain **not executed**. Source-page browsing is possible but does not replace that verification.
 
 **Next executable step:** a network-capable GitHub runner or Codex session should request `GET /repos/PokeMiners/pogo_assets/git/trees/master?recursive=1`, check `truncated`, filter paths for `Images/Pokemon/Addressable Assets/`, `Images/Clothing/`, and `3D Assets/Clothing/`; crosswalk candidates with the PokeMiners Game Master; inspect exact image bytes; produce a static, source-linked candidate gallery. Never mark any candidate approved from filenames alone.
+
+## hailsDotGO source architecture assessment (2026-11-08)
+Reference: https://github-wiki-see.page/m/Hailey-Ross/hailsDotGO/wiki/Data-Sources
+
+| Source | Proposed GO Field Notes role | Verification caveat |
+|---|---|---|
+| ScrapedDuck (`events.min.json`) | Event discovery/change detection, original LeekDuck URL, timing and artwork candidates | Compare against existing source-watch before adding a duplicate fetcher; feed is not a full research/bonus catalog |
+| LeekDuck event HTML | Supplement individual event details and research/bonus entries | Sanitize content, preserve citations and source timestamp; no automatic claim of completeness |
+| PokeMiners | Costume/Shadow/Max asset candidates and exact form art | Asset-code matching, visual verification and rights gate required |
+| WatWowMap Game Master | Costume pretty names, `isCostume`, form identity crosswalk | `isCostume` has known false negatives; don't discard unflagged visual-only costumes |
+| Dittobase | Secondary costume display names | Suggestions only; never overwrite confirmed identity |
+| pokemon-go-api | Raid/Max Battle/Mega data cross-check | Snapshot has no rotation dates; reconcile with event schedule |
+| PoGoAPI | Shadow list, stats, types and moves | Shiny feed may lag; absence never proves unreleased |
+| PokéAPI | Base/form sprites and localization fallback | Not authoritative for GO costumes, Dynamax or Gigantamax art |
+
+**Architecture rule:** retain existing GO Field Notes sources and UI behavior, especially overseas in-person events visible by default. Introduce source health, timestamps, cross-checks and bounded caching rather than replacing established pipelines. Do not ingest third-party art into production without rights review.
