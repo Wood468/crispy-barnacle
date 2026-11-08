@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-11-08",
+  "description": "Evidence-based candidate queue. No image URLs are verified or approved.",
+  "items": [
+    {
+      "id": "sinistea-bow",
+      "dex": 854,
+      "kind": "costume",
+      "costume": "bow",
+      "form": "unresolved-phony-antique",
+      "sourcePage": "https://pokemongo.com/news/halloween-part-1-2026",
+      "status": "awaiting-exact-file",
+      "candidates": [],
+      "approvedAsset": null
+    },
+    {
+      "id": "pikachu-sun-crown",
+      "dex": 25,
+      "kind": "costume",
+      "costume": "sun-crown",
+      "sourcePage": "https://pokemongo.com/news/twilight-wishes-2026",
+      "status": "awaiting-exact-file",
+      "candidates": [],
+      "approvedAsset": null
+    },
+    {
+      "id": "pikachu-moon-crown",
+      "dex": 25,
+      "kind": "costume",
+      "costume": "moon-crown",
+      "sourcePage": "https://pokemongo.com/news/twilight-wishes-2026",
+      "status": "awaiting-exact-file",
+      "candidates": [],
+      "approvedAsset": null
+    },
+    {
+      "id": "espeon-sun-scarf",
+      "dex": 196,
+      "kind": "costume",
+      "costume": "sun-scarf",
+      "sourcePage": "https://pokemongo.com/news/twilight-wishes-2026",
+      "status": "awaiting-exact-file",
+      "candidates": [],
+      "approvedAsset": null
+    },
+    {
+      "id": "umbreon-moon-scarf",
+      "dex": 197,
+      "kind": "costume",
+      "costume": "moon-scarf",
+      "sourcePage": "https://pokemongo.com/news/twilight-wishes-2026",
+      "status": "awaiting-exact-file",
+      "candidates": [],
+      "approvedAsset": null
+    },
+    {
+      "id": "wild-area-purple-tee",
+      "kind": "avatar-clothing",
+      "item": "GO Wild Area 2026 Tee (Purple)",
+      "sourcePage": "https://pokemongo.com/en/news/get-ready-for-gowildarea-2026",
+      "status": "awaiting-exact-file",
+      "candidates": [],
+      "approvedAsset": null
+    }
+  ]
+}
