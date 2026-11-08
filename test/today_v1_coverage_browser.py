@@ -56,12 +56,12 @@ with sync_playwright() as p:
     # 5. Empty boost state is one compact line, and the tile shows no arrow at 0.
     browser, page, errors = run(p, [], '2026-11-08T12:00:00+11:00')
     page.goto(BASE); page.wait_for_selector('#today-v1 .t1-glance')
-    line = page.locator('#today-v1 .t1-empty-line')
-    line.wait_for(state='visible', timeout=10000)
-    assert line.count() == 1, 'expected exactly one visible empty-boost message'
-    bounds = line.bounding_box()
-    assert bounds is not None, 'empty-boost message has no visible bounding box'
-    assert bounds['height'] <= 40, f'empty-boost message exceeds compact height: {bounds}'
+    page.wait_for_selector('#today-v1 .t1-empty-line', state='attached', timeout=10000)
+    page.wait_for_load_state('networkidle'); page.wait_for_timeout(600)  # late feeds may repaint once
+    # Read count and geometry in one browser task: a late repaint can replace the node between locator calls.
+    info = page.evaluate("(()=>{const n=document.querySelectorAll('#today-v1 .t1-empty-line');const e=n[0];return {count:n.length,height:e?e.getBoundingClientRect().height:null}})()")
+    assert info['count'] == 1, 'expected exactly one empty-boost message'
+    assert info['height'] is not None and 0 < info['height'] <= 40, f'empty-boost message exceeds compact height: {info}'
     assert page.locator('#today-v1 .t1-tile--shiny .t1-up').count() == 0
     assert page.locator('#today-v1 .t1-boost').count() == 0
     assert errors == [], errors
