@@ -73,3 +73,12 @@ Source: public/store-log.json and public/costumes.json on main, inspected 2026-1
 **Source of truth:** official Twilight Wishes announcement https://pokemongo.com/news/twilight-wishes-2026 explicitly lists raid tiers, costumes and shiny eligibility. Official Wild Area announcement https://pokemongo.com/en/news/get-ready-for-gowildarea-2026 confirms Purple Tee free GO Pass reward. These sources verify identities, not downloadable artwork URLs or licensing.
 
 **Important:** A base Pokémon fallback must be labelled as an illustration of species, not an exact costume depiction. Do not mark any of the six as asset-approved. No external URLs have been accepted as image files.
+
+## Image-candidate screening — 2026-11-08
+- **Rejected as costume artwork:** https://db.pokemongohub.net/pokemon/854 shows plain Sinistea render, not the Halloween 2026 bow. Do not register it as `sinistea|bow`.
+- **Candidate reference only, not accepted as deployable asset:** https://media.esports.gg/uploads/2024/07/scarf-espeon-umbreon-1-1024x576.webp is GO Fest 2024 promotional imagery featuring scarf Espeon and Umbreon; the source predates Twilight Wishes. It is a composite scene, not a clean per-Pokémon transparent sprite. Check costume visual match, reuse rights and exact asset provenance before considering it for event hero artwork.
+- Official Twilight Wishes 2026 source confirms the exact four costumes and raid tiers: https://pokemongo.com/news/twilight-wishes-2026
+- Leek Duck Twilight Wishes includes named illustrations of the four costumes, but no direct image URL has been independently extracted and checked: https://leekduck.com/events/twilight-wishes-2026/
+- Leek Duck Halloween Part I likewise labels Sinistea wearing a bow: https://leekduck.com/events/halloween-2026-part-1/
+
+**Outcome:** One demonstrably wrong generic image excluded; one historical composite illustration retained only as a research reference. Zero exact, deployable image files approved. Next step is extracting and validating direct artwork URLs from trusted event pages or an authorized asset source, then inspecting their pixels and attribution.
