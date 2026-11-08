@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-08T10:23:36.411Z",
+ "updated": "2026-11-08T17:55:54.870Z",
  "status": [
   {
    "id": "hub",
@@ -8,26 +8,26 @@
   },
   {
    "id": "miners-assets",
-   "state": "error",
-   "note": "HTTP 504"
+   "state": "ok",
+   "items": 0
   },
   {
    "id": "miners-gm",
-   "state": "error",
-   "note": "HTTP 504"
+   "state": "ok",
+   "items": 0
   },
   {
    "id": "reddit-silph",
    "state": "ok",
-   "items": 7
+   "items": 6
   },
   {
    "id": "youtube-pogo",
    "state": "ok",
-   "items": 2
+   "items": 4
   }
  ],
- "gaps": 4,
+ "gaps": 3,
  "items": [
   {
    "source": "reddit-silph",
@@ -74,18 +74,38 @@
    ]
   },
   {
+   "source": "youtube-pogo",
+   "trust": "official",
+   "title": "Costumed Machamp debuts in Pokémon GO!",
+   "link": "https://www.youtube.com/shorts/Z2OPNHxhNSc",
+   "date": "2026-11-08T14:06:53.000Z",
+   "summary": "",
+   "pokemon": [
+    "Machamp"
+   ],
+   "notInOurData": []
+  },
+  {
+   "source": "youtube-pogo",
+   "trust": "official",
+   "title": "Costumed Machamp debuts in Pokémon GO!",
+   "link": "https://www.youtube.com/watch?v=oe4xCOjA374",
+   "date": "2026-11-08T14:01:21.000Z",
+   "summary": "",
+   "pokemon": [
+    "Machamp"
+   ],
+   "notInOurData": []
+  },
+  {
    "source": "reddit-silph",
    "trust": "tip",
-   "title": "Has anyone actually reached Level 108 to get Spiritomb?",
-   "link": "https://www.reddit.com/r/TheSilphRoad/comments/1xle1cz/has_anyone_actually_reached_level_108_to_get/",
-   "date": "2026-11-01T20:49:36.000Z",
-   "summary": "<!-- SC_OFF --><div class=\"md\"><p>I’m genuinely curious how many players have managed to complete this challenge! How much grinding/raids did it take? How many hours did you play, any luck with shiny ",
-   "pokemon": [
-    "Spiritomb"
-   ],
-   "notInOurData": [
-    "Spiritomb"
-   ]
+   "title": "Shiny Rate: In-Person Go Wild Area",
+   "link": "https://www.reddit.com/r/TheSilphRoad/comments/1xqwyhe/shiny_rate_inperson_go_wild_area/",
+   "date": "2026-11-08T12:07:15.000Z",
+   "summary": "<!-- SC_OFF --><div class=\"md\"><p>Motivation: I decided to do this analysis since I keep hearing people suggesting different Shiny Rates to In-Person events. Some suggested it is 1/48, some suggested ",
+   "pokemon": [],
+   "notInOurData": []
   },
   {
    "source": "reddit-silph",
@@ -151,20 +171,6 @@
    "date": "2026-11-02T09:42:29.000Z",
    "summary": "Hello, Trainers! We hope everyone had a fantastic Halloween! True to one of Pokémon GO’s longest-running traditions, the Halloween 2026 Event is currently underway, bringing a host of spooky spawns, r",
    "pokemon": [],
-   "notInOurData": []
-  },
-  {
-   "source": "reddit-silph",
-   "trust": "tip",
-   "title": "Halloween event - part II feels underwhelming",
-   "link": "https://www.reddit.com/r/TheSilphRoad/comments/1xl450u/halloween_event_part_ii_feels_underwhelming/",
-   "date": "2026-11-01T14:15:45.000Z",
-   "summary": "<!-- SC_OFF --><div class=\"md\"><p>Less spawn variety than p1</p> <p>No new costumes (zubat 💔) </p> <p>Half the costumes compared to p1 </p> <p>The removal of the boxes which made the event genuinely ",
-   "pokemon": [
-    "Drifblim",
-    "Gengar",
-    "Zubat"
-   ],
    "notInOurData": []
   },
   {
