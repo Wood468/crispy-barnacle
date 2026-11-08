@@ -140,7 +140,7 @@ with sync_playwright() as p:
         iso=lambda d:d.strftime('%Y-%m-%dT%H:%MZ');day=lambda d:d.strftime('%Y-%m-%d')
         live_world={'updated':day(now),'events':[{'id':CATALOGUE['events'][0]['eventId'],
             'name':'Zzyzx Synthetic Showcase','place':'Reykjavik, Iceland','area':'Asia','scope':'regional',
-            'start':day(now-timedelta(days=1)),'end':day(now+timedelta(days=1)),'datesKnown':True,
+            'start':day(now-timedelta(days=2)),'end':day(now+timedelta(days=3)),'datesKnown':True,
             'sources':[{'id':'official','name':'Synthetic fixture only','url':'https://example.invalid/fixture'}],
             'status':'official','seen':day(now)}]}
         # A fresh context: the app persists catalogue state per origin, so the old context would keep the real data.
