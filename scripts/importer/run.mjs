@@ -298,8 +298,10 @@ async function main() {
     // A temporary source outage must not erase previously verified art for the same event.
     const previous = old[id];
     const sameEvent = previous && previous.name === event.t;
-    const image = selected.image || (sameEvent && previous.imageProvenance && previous.image) || null;
-    const imageProvenance = selected.imageProvenance || (image && sameEvent ? previous.imageProvenance : null);
+    const retained = !selected.image && sameEvent && previous.imageProvenance && previous.image
+      ? selectArtwork(event, [{ image: previous.image, source: { id: previous.imageProvenance.source === 'Pokémon GO (official)' ? 'official' : previous.imageProvenance.source === 'Leek Duck' ? 'leekduck' : 'other', name: previous.imageProvenance.source, url: previous.imageProvenance.sourceUrl } }], { retrievedAt: previous.imageProvenance.retrievedAt }) : null;
+    const image = selected.image || (retained && retained.image) || null;
+    const imageProvenance = selected.imageProvenance || (retained && retained.image ? previous.imageProvenance : null);
     const researchTasks = (merged.researchTasks || []).map(task => ({
       ...task, eventId: id, eventName: event.t,
       eventWindow: { start: event.start || null, end: event.end || null },
