@@ -171,6 +171,10 @@ with sync_playwright() as p:
     page.clock.install(time='2026-11-07T12:00:00+11:00')
     page.goto(BASE+'/',wait_until='domcontentloaded')
     page.wait_for_function("!!window.GODETAIL&&GODASH.eventsState()!=='pending'")
+    # WebKit can finish the usable Today shell before starting the catalogue request.
+    for _ in range(50):
+        if held: break
+        page.wait_for_timeout(100)
     assert held and not page.evaluate("GODASH.events().some(e=>e.id==='synthetic-future-community-day')")
     held[0].fulfill(body=json.dumps({'schemaVersion':1,'species':DEX,'events':[FUTURE]}),content_type='application/json')
     page.wait_for_function("GODASH.events().some(e=>e.id==='synthetic-future-community-day')")
