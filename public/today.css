@@ -199,3 +199,7 @@ header.top .hbtn{width:44px;height:44px}
 .t1-tile span,.t1-tile--shiny span{white-space:nowrap;font-size:.68rem;flex-wrap:nowrap}
 .t1-tile{padding:6px 8px;gap:6px}
 .t1-ending-src{text-decoration:none}
+/* Fallback chip sits under the base sprite and wraps; never clipped by the tile */
+.art-fb{display:inline-grid;grid-template-rows:minmax(0,1fr) auto;justify-items:center;align-items:center;gap:2px;max-width:100%}
+.art-fb .form-chip{position:static;transform:none;white-space:normal;text-align:center;max-width:100%;line-height:1.15;font-size:.6rem}
+.art-fb>img{min-height:0;max-height:100%}

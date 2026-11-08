@@ -243,3 +243,5 @@ button.ue-mon-featured .ue-mon-art .art{will-change:transform}
 .evd-in:has(.ue-hero) .ue-hero-media{height:112px;min-height:112px}
 .evd-tabs-more{right:8px;width:26px;height:26px;display:grid;place-items:center;border-radius:50%;background:var(--color-surface-raised);border:1px solid var(--color-border);font-size:1.05rem;line-height:1;padding-bottom:2px}
 .evd-tabs-wrap::after{width:48px}
+.evd-in:has(.ue-hero) .ue-gallery button.ue-mon .ue-mon-art .art-fb{width:100%;height:auto;max-height:84px}
+.evd-in:has(.ue-hero) .ue-gallery button.ue-mon .ue-mon-art .art-fb>img{width:56px;height:56px}
