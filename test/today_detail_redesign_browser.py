@@ -50,24 +50,50 @@ with sync_playwright() as p:
         assert page.evaluate('document.querySelector("#evd").scrollWidth <= innerWidth')
         page.screenshot(path=str(OUT / f'redesign-detail-{width}.png'))
 
-        # Section tabs: one panel at a time, roving tabindex, arrow keys.
-        tabs = page.locator('#evd [role=tab]')
-        assert tabs.count() >= 3 and page.locator('#evd [role=tablist]').count() == 1
-        assert page.locator('#evd [role=tabpanel]:not([hidden])').count() == 1
-        tabs.first.focus(); page.keyboard.press('ArrowRight')
-        assert tabs.nth(1).get_attribute('aria-selected') == 'true' and tabs.nth(1).get_attribute('tabindex') == '0'
-        assert tabs.first.get_attribute('tabindex') == '-1'
-        assert page.locator('#evd [role=tabpanel]:not([hidden])').count() == 1
-        panel_id = tabs.nth(1).get_attribute('aria-controls')
-        assert page.locator(f'#{panel_id}:not([hidden])').count() == 1
-        page.locator('#evd #evd-tab-encounters').click()
+        # Continuous page: every section is in the document, nav links (not tabs) scroll to headings.
+        nav = page.locator('#evd nav.evd-nav[aria-label="Event sections"]')
+        links = nav.locator('.evd-nav-link')
+        assert links.count() >= 3 and page.locator('#evd [role=tablist],#evd [role=tabpanel],#evd [hidden].evd-sec').count() == 0
+        assert page.locator('#evd section.evd-sec').count() == links.count()
+        assert links.first.get_attribute('aria-current') == 'true' and page.locator('#evd .evd-nav-link[aria-current="true"]').count() == 1
+        def stack_bottom():
+            return page.evaluate("document.querySelector('#evd .evd-nav').getBoundingClientRect().bottom")
+        def active():
+            return page.evaluate("document.querySelector('#evd .evd-nav-link[aria-current=\"true\"]').dataset.sec")
+        def tap(sec):
+            page.locator(f'#evd .evd-nav-link[data-sec="{sec}"]').click(); page.wait_for_timeout(1300)
+            top = page.evaluate(f"document.querySelector('#evd-h-{sec}').getBoundingClientRect().top")
+            maxed = page.evaluate("(()=>{const o=document.querySelector('#evd');return o.scrollTop+o.clientHeight>=o.scrollHeight-4})()")
+            assert maxed or top >= stack_bottom() - 2, (sec, top, stack_bottom())
+            assert active() == sec, (sec, active())
+        sections = page.evaluate("[...document.querySelectorAll('#evd .evd-sec')].map(s=>s.dataset.sec)")
+        assert 'encounters' in sections and 'research' in sections
+        tap('encounters'); tap('research')
+        # Scrolling (not tapping) updates the active link, including deep inside a long gallery and at the very bottom.
+        page.evaluate("(()=>{const o=document.querySelector('#evd');const s=document.querySelector('#evd-s-encounters');o.scrollTop=s.offsetTop+s.offsetHeight*0.6;})()"); page.wait_for_timeout(500)
+        assert active() == 'encounters', active()
+        # Deep inside the long research list the active link stays Research.
+        page.evaluate("(()=>{const o=document.querySelector('#evd');const s=document.querySelector('#evd-s-research');o.scrollTop=s.offsetTop+s.offsetHeight*0.7;})()"); page.wait_for_timeout(500)
+        assert active() == 'research', active()
+        page.evaluate("(()=>{const o=document.querySelector('#evd');o.scrollTop=o.scrollHeight;})()"); page.wait_for_timeout(500)
+        assert active() == sections[-1], (active(), sections[-1])
+        page.evaluate("document.querySelector('#evd').scrollTop=0"); page.wait_for_timeout(400)
+        assert active() == sections[0], active()
+        # Reduced motion: the jump is immediate.
+        page.emulate_media(reduced_motion='reduce')
+        page.locator('#evd .evd-nav-link[data-sec="research"]').click(); page.wait_for_timeout(250)
+        assert abs(page.evaluate("document.querySelector('#evd-h-research').getBoundingClientRect().top") - stack_bottom()) < 40 and active() == 'research'
+        page.emulate_media(reduced_motion='no-preference')
+        page.locator('#evd .evd-nav-link[data-sec="overview"]').click(); page.wait_for_timeout(1200)
+        assert page.evaluate('document.querySelector("#evd").scrollWidth <= innerWidth')
+        page.locator('#evd .evd-nav-link[data-sec="encounters"]').click(); page.wait_for_timeout(1000)
         assert page.locator('#evd .ue-mon').first.bounding_box()['height'] >= 43.5
         page.locator('#evd .ue-mon').first.click()
         assert page.locator('#ue-sheet [role=dialog]').count() == 1
         page.keyboard.press('Escape')
         assert page.locator('#ue-sheet').count() == 0 and page.locator('#evd').is_visible()
         assert page.evaluate('document.activeElement.classList.contains("ue-mon")')
-        page.locator('#evd #evd-tab-research').click()
+        page.locator('#evd .evd-nav-link[data-sec="research"]').click(); page.wait_for_timeout(1000)
         assert page.locator('#evd .research-task').count() == 12
         assert page.locator('#evd .research-reward').count() > 12
         assert page.locator('#evd .research-reward-item .ue-reward-item-icon').count() > 0
@@ -75,8 +101,7 @@ with sync_playwright() as p:
         assert page.evaluate("({dex:localStorage.getItem('gofn-dex-v1'),us:localStorage.getItem('gofn-us-v1')})") == before
         page.keyboard.press('Escape')
         page.evaluate("GODETAIL.open('cur:gopassnov')")
-        page.wait_for_selector('#evd #evd-tab-passes')
-        page.locator('#evd #evd-tab-passes').click()
+        page.wait_for_selector('#evd .evd-nav-link[data-sec="passes"]')
         page.wait_for_selector('#evd .ue-pass-range')
         page.locator('#evd .ue-pass-range').first.locator('summary').click()
         assert page.locator('#evd .ue-pass-stages > li').count() >= 90

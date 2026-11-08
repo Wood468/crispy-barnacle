@@ -7,6 +7,7 @@
     var a = i.getAttribute('data-err'); if (!a) return;
     if (a === 'rm') i.remove();
     else if (a === 'prm') { if (i.parentNode) i.parentNode.remove(); }
+    else if (a === 'banner') { if (window.GOEVENTART) window.GOEVENTART.fail(i); else i.remove(); }
     else if (a === 'art' && typeof window.GOARTERR === 'function') window.GOARTERR(i);
   }, true);
   document.addEventListener('load', function (e) {

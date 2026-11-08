@@ -104,8 +104,8 @@ with sync_playwright() as p:
         assert page.locator('#evd .ue-sources').count()==1
         assert 'example.invalid' not in page.locator('#evd').inner_text()
         assert page.locator('#evd').evaluate('(el)=>el.scrollWidth<=el.clientWidth'), (engine,width)
-        page.locator('#evd-tab-details').click()
-        assert page.locator('#evd-panel-details:not([hidden]) #evd-sources').evaluate('(el)=>el.open')
+        page.locator('.evd-nav-link[data-sec="details"]').click()
+        assert page.locator('#evd-s-details #evd-sources').evaluate('(el)=>el.open')
         page.keyboard.press('Escape')
         page.evaluate("GODETAIL.open('synthetic-undated-overseas')")
         page.wait_for_function("document.getElementById('evd-t')?.textContent==='Synthetic Overseas Announcement'")

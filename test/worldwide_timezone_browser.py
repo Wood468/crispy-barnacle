@@ -88,7 +88,7 @@ with sync_playwright() as p:
   diagnostics=page.evaluate('GOEventRegistry.diagnostics()')
   assert diagnostics['retained'] and diagnostics['rejectedCount']==1,diagnostics
   assert page.evaluate('GOEventRegistry.events().length')==len(VALID['events'])
-  open_event(INSTANT['eventId']);page.locator('#evd-tab-details').click()
+  open_event(INSTANT['eventId'])
   assert 'latest event update was held' in page.locator('#evd-sources').inner_text()
   close_event()
   bad=copy.deepcopy(VALID);bad['events'][0]['aliases']=['shared'];bad['events'][1]['aliases']=['shared'];payload[0]=bad
