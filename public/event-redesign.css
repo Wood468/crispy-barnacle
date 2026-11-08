@@ -245,3 +245,6 @@ button.ue-mon-featured .ue-mon-art .art{will-change:transform}
 .evd-tabs-wrap::after{width:48px}
 .evd-in:has(.ue-hero) .ue-gallery button.ue-mon .ue-mon-art .art-fb{width:100%;height:auto;max-height:84px}
 .evd-in:has(.ue-hero) .ue-gallery button.ue-mon .ue-mon-art .art-fb>img{width:56px;height:56px}
+.evd-bar .star{font-size:1.35rem;line-height:1;margin-left:auto}
+.evd-bar .star+[data-evlink]{margin-left:0}
+.evd-bar .star.on{color:var(--color-accent)}

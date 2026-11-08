@@ -31,6 +31,7 @@ with sync_playwright() as p:
         assert heads[0].lower() == 'today at a glance' and 'happening now' in [h.lower() for h in heads], heads
         assert page.locator('#today-v1 .t1-tile').count() == 3
         assert page.locator('#today-v1 .t1-card').count() > 0
+        page.wait_for_selector('#today-v1 .t1-place em', state='attached', timeout=8000)
         assert page.locator('#today-v1 .t1-place em').count() > 0, 'overseas in-person events must stay visible and labelled'
         assert not page.locator('#today-v1 [data-follow],#today-v1 [data-mark],#today-v1 .own').count()
         assert not page.locator('#foryou-sec').is_visible()

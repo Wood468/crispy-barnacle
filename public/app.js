@@ -1,5 +1,5 @@
 /* Test-only hook: the browser harness sets window.__gofnTestClassicToday before load. There is no user-facing path to the legacy agenda. */
-if(window.__gofnTestClassicToday===true)document.addEventListener('DOMContentLoaded',function(){var l=document.getElementById('today-legacy');if(l){l.hidden=false;l.removeAttribute('inert');l.removeAttribute('aria-hidden');}document.documentElement.classList.add('classic-today')});
+if(window.__gofnTestClassicToday===true){var reveal=function(){var l=document.getElementById('today-legacy');if(!l)return false;l.hidden=false;l.removeAttribute('inert');l.removeAttribute('aria-hidden');document.documentElement.classList.add('classic-today');return true};if(!reveal())document.addEventListener('DOMContentLoaded',reveal)}
 var MAN={};
 /* Keep the primary destinations usable while the initial data request is pending or unavailable. */
 (function(){

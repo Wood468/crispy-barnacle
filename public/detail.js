@@ -403,9 +403,11 @@
   }
   function hasDetails(ev) { var d = findDetails(ev); return !!(d && d.fields && Object.keys(d.fields).some(function (k) { return (d.fields[k] || []).length; })); }
   function toolbarHtml(ev){
+    var saved=X.isSaved(ev.id);
     var share='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12M8 7l4-4 4 4M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7"/></svg>';
     var dots='<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="5" cy="12" r="1.4"/><circle cx="12" cy="12" r="1.4"/><circle cx="19" cy="12" r="1.4"/></svg>';
     return '<div class="evd-bar"><button type="button" class="hbtn" id="evd-x" aria-label="Close event details"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button><span class="tag">EVENT DETAIL</span>'
+      + '<button type="button" class="hbtn star' + (saved ? ' on' : '') + '" data-save="' + esc(ev.id) + '" aria-pressed="' + saved + '" aria-label="Save ' + esc(ev.name) + '" title="Saved events send you a Telegram reminder">' + (saved ? '★' : '☆') + '</button>'
       + '<button type="button" class="hbtn" data-evlink="' + esc(ev.id) + '" aria-label="Copy or share a link to this event" title="Copy or share link">' + share + '</button>'
       + '<button type="button" class="hbtn" data-evmenu="' + esc(ev.id) + '" aria-haspopup="menu" aria-expanded="false" aria-label="More actions" title="More actions">' + dots + '</button></div>';
   }
