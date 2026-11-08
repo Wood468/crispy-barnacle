@@ -26,8 +26,8 @@
     for (var i = 0; i < HOSTS.length; i++) {
       var h = HOSTS[i], m = h.re.exec(url); if (!m) continue;
       var years = evYears(ev), inUrl = (url.match(/(?:^|[^0-9])(20\d{2})(?:[^0-9]|$)/g) || []).map(function (x) { return +x.replace(/\D/g, ''); });
-      /* A year in the URL must be the event's own year (a late-December event may belong to the next year's article). */
-      if (inUrl.length && years.length && !inUrl.some(function (y) { return years.indexOf(y) >= 0 || years.indexOf(y - 1) >= 0 && y - 1 >= years[0]; })) return null;
+      /* Any year in an image URL must match the event start or end year. Never accept next-year artwork solely because the years are adjacent. */
+      if (inUrl.length && years.length && !inUrl.some(function (y) { return years.indexOf(y) >= 0; })) return null;
       if (h.needsYear && !inUrl.length) return null;
       if (h.needsSlug) {
         var slug = words(decodeURIComponent(url.replace(/^https:\/\/[^/]+/, '')).replace(/\//g, ' ').replace(/[-_.]/g, ' '));
