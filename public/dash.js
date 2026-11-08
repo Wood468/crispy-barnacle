@@ -192,7 +192,7 @@
       var kind = PIPE_KIND[x.type] || 'event';
       var featured = Array.isArray(x.featured) ? x.featured : [];
       var bonuses = Array.isArray(x.bonuses) ? x.bonuses : [];
-      return mkEvent({ id: x.id, name: x.name, kind: kind, img: (typeof x.image === 'string' && /^https:\/\//.test(x.image)) ? x.image : '', s: x.start, e: x.end || x.start, bonuses: bonuses, featured: featured, highlights: Array.isArray(x.highlights) ? x.highlights : [], tags: signalTags({name:x.name,kind:kind,type:x.type,bonuses:bonuses,featured:featured}),
+      return mkEvent({ id: x.id, name: x.name, kind: kind, img: (typeof x.image === 'string' && /^https:\/\//.test(x.image)) ? x.image : '', artPageUrl: (x.imageProvenance && safeUrl(x.imageProvenance.sourceUrl)) || safeUrl(x.artSourceUrl) || link || '', s: x.start, e: x.end || x.start, bonuses: bonuses, featured: featured, highlights: Array.isArray(x.highlights) ? x.highlights : [], tags: signalTags({name:x.name,kind:kind,type:x.type,bonuses:bonuses,featured:featured}),
         status: (x.status === 'community_reported' && (officialLink || reportedOfficial)) ? 'official_confirmed' : x.status,
         source: officialLink ? 'Official Pokémon GO announcement' : (x.reports && x.reports[0] && x.reports[0].source === 'leekduck') ? 'Leek Duck' : (x.source || 'Leek Duck (community-reported)'), link: link,
         utc: x.tzMode === 'utc', region: x.region || '', scope: x.scope, conflict: x.conflict, infographicUrl: x.infographicUrl || x.infographic || '' });
