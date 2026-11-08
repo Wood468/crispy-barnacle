@@ -17,7 +17,7 @@ function officialPageMatches(event, sourceUrl) {
 
 // An image belongs to its source article, not to every event mentioned by it.
 // Opaque official CDN filenames need the event's own linked article as evidence.
-export function selectArtwork(event, results) {
+export function selectArtwork(event, results, { retrievedAt = null } = {}) {
   const subject = { name: event.t || event.name, start: event.start, end: event.end, region: event.region || event.place || '' };
   const candidates = results.flatMap(result => {
     const { image, source } = result;
@@ -30,5 +30,5 @@ export function selectArtwork(event, results) {
     return [{ image, source, priority: source.id === 'official' ? 0 : source.id === 'leekduck' ? 1 : 2 }];
   }).sort((a, b) => a.priority - b.priority);
   const chosen = candidates[0];
-  return chosen ? { image: chosen.image, imageProvenance: { source: chosen.source.name, sourceUrl: chosen.source.url, imageUrl: chosen.image, checkedFor: subject.name, checkedAt: new Date().toISOString().slice(0, 10) } } : { image: null, imageProvenance: null };
+  return chosen ? { image: chosen.image, imageProvenance: { source: chosen.source.name, sourceUrl: chosen.source.url, imageUrl: chosen.image, checkedFor: subject.name, checkedAt: new Date().toISOString().slice(0, 10), ...(retrievedAt ? { retrievedAt } : {}) } } : { image: null, imageProvenance: null };
 }

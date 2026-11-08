@@ -20,7 +20,7 @@ for (const event of feed.events || feed) {
   const imageHost = new URL(original).hostname;
   const sourceId = imageHost === 'cdn.leekduck.com' ? 'leekduck' : 'official';
   const sources = (record.sources || []).filter(source => source.id === sourceId && (sourceId !== 'leekduck' || source.url.replace(/\/?$/, '/') === link.replace(/\/?$/, '/')));
-  const choice = selectArtwork({ t: event.name, start: event.start, end: event.end, region: event.region || local?.location, link }, sources.map(source => ({ image: original, source })));
+  const choice = selectArtwork({ t: event.name, start: event.start, end: event.end, region: event.region || local?.location, link }, sources.map(source => ({ image: original, source })), { retrievedAt: record.updated || null });
   record.image = choice.image;
   record.imageProvenance = choice.imageProvenance;
   if (record.normalizedEvent?.image === original) record.normalizedEvent.image = choice.image;

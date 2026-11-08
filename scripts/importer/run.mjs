@@ -294,7 +294,7 @@ async function main() {
   const now = new Date().toISOString(), out = {};
   for (const [id, { event, results }] of byEvent) {
     const merged = { ...mergeSources(results), ...mergeEncounters(results) };
-    const { image, imageProvenance } = selectArtwork(event, results);
+    const { image, imageProvenance } = selectArtwork(event, results, { retrievedAt: now });
     const researchTasks = (merged.researchTasks || []).map(task => ({
       ...task, eventId: id, eventName: event.t,
       eventWindow: { start: event.start || null, end: event.end || null },
@@ -308,7 +308,7 @@ async function main() {
     const announcement=announcementFromPage(page,{dex,names:rewardOptions.pokemonNames,costumes:costumeNames});if(!announcement)continue;
     const split=entriesFromPage(page),represented=split.length>0;
     const {native,...metadata}=announcement.internalValidation;
-    const selectedArt=selectArtwork({t:announcement.title,start:announcement.schedule?.start,end:announcement.schedule?.end,link:page.url,place:announcement.location},[{image:announcement.image,source:announcement.sources[0]}]);
+    const selectedArt=selectArtwork({t:announcement.title,start:announcement.schedule?.start,end:announcement.schedule?.end,link:page.url,place:announcement.location},[{image:announcement.image,source:announcement.sources[0]}],{retrievedAt:now});
     announcement.image=selectedArt.image;
     out[announcement.eventId]={name:announcement.title,researchTasks:(page.fields.researchTasks||[]).map(task=>({...task,eventId:announcement.eventId,eventName:announcement.title,eventWindow:{start:announcement.schedule?.start||null,end:announcement.schedule?.end||null},checkedAt:now.slice(0,10)})),updated:now,sources:announcement.sources,image:selectedArt.image,imageProvenance:selectedArt.imageProvenance,fields:Object.fromEntries(Object.entries(page.fields||{}).filter(([,v])=>Array.isArray(v)).map(([k,v])=>[k,v.map(text=>typeof text==='string'?{text,sources:[page.source],status:page.source==='official'?'official':'single'}:text)])),
       ...(represented?{}:{normalizedEvent:announcement}),
