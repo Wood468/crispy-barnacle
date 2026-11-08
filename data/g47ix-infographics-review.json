@@ -7,6 +7,110 @@
   "eventImages": {},
   "candidates": [
     {
+      "id": "discord:1569034750339977347",
+      "source": "discord",
+      "creator": "",
+      "title": "Zacian",
+      "url": "https://discord.com/channels/@me/1558793395198099618/1569034750339977347",
+      "publishedAt": "2026-11-08T17:03:55.737000+00:00",
+      "imageUrl": "https://cdn.discordapp.com/attachments/1087756541668630638/1569030668925800610/tr_Counter_Zacian_Sword_.png?ex=6af1f92e&is=6af0a7ae&hm=cc411fd5f1595fb28e8dbc101e339af9a6ef40d0af9c372198dd4e0d175f4efd&",
+      "reviewStatus": "needs_review",
+      "decision": "pending",
+      "ocrChecked": true,
+      "ocrText": "ae 3G co By gw 9-13 NOV Crowned Sword we Bex #888 ZACIAN 67864 CP ~ \\ S mon has slumbered for many years. Some say it’s nta’s el r sister—others say the two Pokémon are rivals.” in ey wD ee Weaknesses _ ry / fil pall Special Crowned Sword Energy iN Us No, = Background will be available. otic SS iy Chance Difficulty: 3+ trainers needed Duo is possible Pw 44 2188 CP %ws 2735 CP Boost & & Cloudy Snow @ Fire Spin @ Mud Shot @ Fire Spin @ Fire Spin A, any @ Mystical Fire: @ Precipice Blad @ Blast Bur: @ Overheat < ae 1) Y a ri > y eal => sc i th @ Fire Fang — @ Fire Spin @ incinerate @ Fire Fang h i > ae @ Fusion Flare @ Magma s! -_ @ Mind Blown (ies @ Fusion Flare 5 => y al => i i >) ot ie @ Mud @ incinerate @ Mud Shot @ Precipice Blad erhea: > @ Sacred Fire+ @ Sandsear Storm VJ ~~ Remember to use proper counters, Party Play Follow for more and Zacian’s Adventure Effect if needed. GA7IX 9@ @X @ | g47ix.pro",
+      "eventMatch": {
+        "eventId": "raid:crowned-sword-zacian-and-crowned-shield-zamazenta:2026-11-09",
+        "eventTitle": "Crowned Sword Zacian and Crowned Shield Zamazenta 5-star raids",
+        "score": 0.343,
+        "confidence": "low",
+        "matchedTerms": [
+          "crowned",
+          "sword",
+          "zacian"
+        ],
+        "alternatives": [
+          {
+            "eventId": "raid:crowned-sword-zacian-and-crowned-shield-zamazenta:2026-11-09",
+            "eventTitle": "Crowned Sword Zacian and Crowned Shield Zamazenta 5-star raids",
+            "score": 0.343
+          },
+          {
+            "eventId": "leekduck:halloween-2026-part-2",
+            "eventTitle": "Pokémon GO Halloween 2026 Part II",
+            "score": 0.32
+          },
+          {
+            "eventId": "leekduck:halloween-2026-part-1",
+            "eventTitle": "Pokémon GO Halloween 2026 Part I",
+            "score": 0.32
+          }
+        ],
+        "method": "title-to-public/data.json heuristic",
+        "requiresHumanVerification": true
+      },
+      "reviewNote": "Match is not strong enough (low).",
+      "signals": [
+        "picture text names the event",
+        "date in the picture is inside the event",
+        "posted around the event"
+      ],
+      "matchScore": 5,
+      "stagedPath": "/infographics/g47ix/discord-1569034750339977347.png"
+    },
+    {
+      "id": "discord:1569032764005548224",
+      "source": "discord",
+      "creator": "",
+      "title": "Zamazenta",
+      "url": "https://discord.com/channels/@me/1558793395198099618/1569032764005548224",
+      "publishedAt": "2026-11-08T16:56:02.158000+00:00",
+      "imageUrl": "https://cdn.discordapp.com/attachments/1087756541668630638/1569028333793058816/Counter_Zamazenta_CROWN.png?ex=6af1f701&is=6af0a581&hm=c840a82ed9a70683ed90202bee747575fb35c3460e85b1d5d824fd58c4ab8124&",
+      "reviewStatus": "needs_review",
+      "decision": "pending",
+      "ocrChecked": true,
+      "ocrText": "~—? La gw 9-13 NOV Crowned Shield ZAMAZENTA “% =e ( Fag 56867 CP ah, ee is Pokémon slept for aeons while in the form of a statue. =i It was asleep for so long, people forgot that it ever existed.” — Q ' Weaknesses (ail @® VA Special Crowned Shield Energy Background will be available. Chance Difficulty: 3+ trainers needed Duo is possible Pw 44 2188 CP %ws 2735 CP Boost © & Cloudy Snow we i\\ WW any ed a\\\\ © a = @ Low Kick @ incinerate @ Double Kick @ Secret Sword @ Mind Blown (5 oa a @ Sacred Sword os CS Remember to use proper counters, Party Play Follow for more ‘ate and Zacian’s Adventure Effect if needed. GA7IX @9@ @ X @ | g47ix.pro",
+      "eventMatch": {
+        "eventId": "raid:crowned-sword-zacian-and-crowned-shield-zamazenta:2026-11-09",
+        "eventTitle": "Crowned Sword Zacian and Crowned Shield Zamazenta 5-star raids",
+        "score": 0.575,
+        "confidence": "medium",
+        "matchedTerms": [
+          "crowned",
+          "sword",
+          "zacian",
+          "shield",
+          "zamazenta"
+        ],
+        "alternatives": [
+          {
+            "eventId": "raid:crowned-sword-zacian-and-crowned-shield-zamazenta:2026-11-09",
+            "eventTitle": "Crowned Sword Zacian and Crowned Shield Zamazenta 5-star raids",
+            "score": 0.575
+          },
+          {
+            "eventId": "leekduck:max-mondays-2026-11-16",
+            "eventTitle": "Max Monday: Pokémon to be announced",
+            "score": 0.319
+          },
+          {
+            "eventId": "leekduck:pokemon-x-adidas-2026",
+            "eventTitle": "adidas × Pokémon Timed Research",
+            "score": 0.319
+          }
+        ],
+        "method": "title-to-public/data.json heuristic",
+        "requiresHumanVerification": true
+      },
+      "reviewNote": "Match is not strong enough (medium).",
+      "signals": [
+        "picture text names the event",
+        "date in the picture is inside the event",
+        "posted around the event"
+      ],
+      "matchScore": 6,
+      "stagedPath": "/infographics/g47ix/discord-1569032764005548224.png"
+    },
+    {
       "id": "discord:1568890467293069435",
       "source": "discord",
       "creator": "",
