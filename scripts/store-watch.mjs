@@ -10,6 +10,8 @@ const STATE = process.env.STORE_STATE || "data/store-state.json";
 const STORE = "https://store.pokemongo.com";
 const readJson = async (p, d) => { try { return JSON.parse(await readFile(p, "utf8")); } catch { return d; } };
 const key = i => i.href || i.name;
+// Image URLs are evidence only when supplied by the matching product snapshot.
+export const imageUrls = i => (Array.isArray(i.imgs) ? i.imgs : []).filter(u => { try { const x=new URL(u); return x.protocol === "https:" && !x.username && !x.password; } catch { return false; } }).slice(0,4);
 export const slugOf = i => String(i.href || i.name || "").split("/").filter(Boolean).pop().toLowerCase().replace(/[^a-z0-9_.-]/g, "-").slice(-60);
 export const isTicketOrPass = n => /ticket|go pass|pass deluxe|go fest|tour|safari|city|hatch day/i.test(n);
 
@@ -87,7 +89,7 @@ export function diffStore(prev, snap, nowIso) {
     next[k] = {
       name: i.name,
       // Preserve official snapshot imagery; never infer a product image from its label.
-      images: Array.isArray(i.imgs) ? i.imgs.filter(u => /^https:\/\//i.test(u)).slice(0, 4) : (o?.images || []),
+      images: imageUrls(i).length ? imageUrls(i) : (o?.images || []),
       price: mixed ? o.price : i.price,
       section: i.section,
       tag: i.tag,
