@@ -60,3 +60,10 @@ test('the importer joins a curated live event to its canonical ID and keeps its 
     assert.equal(sendai[0].link, 'https://pokemongo.com/en/gowildarea/sendai');
   } finally { globalThis.fetch = originalFetch; }
 });
+
+test('a retained banner must be revalidated for a later event year', () => {
+  const previous = { image: duckArt, imageProvenance: { source: 'Leek Duck', sourceUrl: leekduck.url } };
+  const later = { ...event, start: '2027-11-06T10:00:00Z', end: '2027-11-08T18:00:00Z' };
+  const retained = selectArtwork(later, [{ image: previous.image, source: { id: 'leekduck', name: previous.imageProvenance.source, url: previous.imageProvenance.sourceUrl } }]);
+  assert.equal(retained.image, null);
+});

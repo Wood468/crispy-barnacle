@@ -47,7 +47,9 @@
       var art = window.GODASH && GODASH.monArt ? GODASH.monArt(event || {}, { name: reward.name, costume: /wearing|costume/i.test(reward.name), role: 'featured' }, 'ea') : '';
       return '<div class="research-reward">' + art + '<span><b>' + esc(reward.name) + '</b><small>' + esc(cp) + '</small></span></div>';
     }
-    return '<div class="research-reward research-reward-item"><span class="research-reward-qty">' + (reward.quantity > 1 ? esc(reward.quantity) + '×' : '•') + '</span><span><b>' + esc(reward.name) + '</b><small>' + (reward.type === 'item' ? 'Item reward' : 'Possible reward') + '</small></span></div>';
+    var name = String(reward.name || ''), icon = /stardust/i.test(name) ? '/ico/dust.webp' : /silver pinap/i.test(name) ? '/ico/i/silver-pinap.webp' : /golden razz/i.test(name) ? '/ico/i/golden-razz.webp' : /max potion/i.test(name) ? '/ico/i/max-potion.webp' : /max revive/i.test(name) ? '/ico/i/max-revive.webp' : /\bxp\b/i.test(name) ? '/ico/xp.webp' : /mega energy/i.test(name) ? '/ico/g/mega.webp' : '';
+    var picture = icon ? '<img src="' + icon + '" alt="" loading="lazy" decoding="async" data-err="rm">' : '<span class="research-reward-neutral" aria-hidden="true">◆</span>';
+    return '<div class="research-reward research-reward-item"><span class="research-reward-qty" aria-hidden="true">' + picture + '</span><span><b>' + (reward.quantity > 1 ? esc(reward.quantity) + '× ' : '') + esc(name) + '</b><small>' + (reward.type === 'item' ? 'Item reward' : 'Possible reward') + '</small></span></div>';
   }
   function load(fresh) {
     if (loaded && !fresh && !refreshFailed && Date.now() - loadedAt < MAX_AGE) return Promise.resolve(loaded);

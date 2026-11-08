@@ -1,0 +1,107 @@
+/* Frontend finish: one compact rhythm across the daily agenda and rotations. */
+#tab-events:has(#sub-research:not([hidden])) .schedule-heading { display: none; }
+@media (max-width: 600px) {
+  header.top {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center !important;
+    flex-wrap: nowrap;
+    gap: 8px !important;
+    padding-top: 16px;
+  }
+  header.top > div:first-child { display: block; min-width: 0; }
+  header.top h1 {
+    font-size: clamp(1.13rem, 5.2vw, 1.4rem) !important;
+    line-height: 1.08;
+    white-space: nowrap;
+    letter-spacing: -.025em;
+  }
+  header.top .date { margin-top: 3px; }
+  header.top .hbtns { grid-column: 2; grid-row: 1; display: flex; flex-wrap: nowrap; gap: 6px; margin: 0; }
+  header.top .hbtn { flex: none; }
+
+  #tab-now .t1 { gap: 12px; padding-top: 0; }
+  #tab-now .t1-h-main {
+    position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+    overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+  }
+  #tab-now .t1-tiles { gap: 6px; }
+  #tab-now .t1-tile { min-height: 46px; padding: 5px 8px; }
+  #tab-now .t1-tile b { font-size: 1.2rem; }
+  #tab-now .t1-tile span { font-size: .68rem; }
+  #tab-now .t1-empty-line { margin: -4px 0 0; padding: 0 2px; }
+  #tab-now .t1-sec { gap: 7px; }
+  #tab-now .t1-sec-head h2 { font-size: 1.04rem; }
+  #tab-now .t1-major-art { height: 88px; }
+  #tab-now .t1-major-art .ev-art { height: 88px; aspect-ratio: auto; }
+  #tab-now .t1-major .t1-open { padding: 8px 13px 10px; gap: 3px; }
+  #tab-now .t1-major .t1-title { font-size: 1.02rem; line-height: 1.18; }
+  #tab-now .t1-major .t1-feat { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 1; overflow: hidden; }
+  #tab-now .t1-badges { gap: 4px; padding-right: 36px; }
+  #tab-now .t1-badges .t1-kind, #tab-now .t1-badges .t1-live { font-size: .62rem; padding: 3px 6px; }
+  #tab-now .t1-badges .t1-count { font-size: .72rem; }
+
+  #tab-raids .prio-head .sec2 { font-size: 1.5rem; line-height: 1.1; max-width: 18ch; }
+  #tab-raids .rw-tabs { margin: 6px 0 8px; padding: 3px; flex-wrap: nowrap; }
+  #tab-raids .rw-tabs button { min-width: 88px; padding-inline: 10px; }
+  #tab-raids .rw-list { gap: 10px; }
+  #tab-raids .rw-card { gap: 8px; padding: 12px; }
+  #tab-raids .rw-week-head { flex-direction: row; align-items: center; gap: 4px 10px; padding-bottom: 8px; }
+  #tab-raids .rw-week-head > b { font-size: .72rem; }
+  #tab-raids .rw-raid { gap: 4px; }
+  #tab-raids .rw-label { margin-bottom: 0; }
+  #tab-raids .rw-window { margin: 0; line-height: 1.35; }
+  #tab-raids .rw-source { min-height: 44px; padding: 0; font-size: .78rem; justify-self: start; }
+  #tab-raids .rw-raid .rcs { gap: 6px; }
+  #tab-raids .rw-raid .rc { grid-template-columns: repeat(3, minmax(0, 1fr)); padding: 7px 9px; row-gap: 5px; }
+  #tab-raids .rw-raid .rc:not(:has(.rc-best, .rc-guide, .rc-details)) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  #tab-raids .rw-raid .rc-form { gap: 9px; }
+  #tab-raids .rw-raid .rc .art.ea, #tab-raids .rw-raid .rc-form .art.ea { width: 56px; height: 56px; }
+  #tab-raids .rw-raid .rc b { font-size: .9rem; line-height: 1.12; }
+  #tab-raids .rw-raid .rc .rc-info { min-height: 44px; padding: 5px 6px; }
+  #tab-raids .rw-max { padding-top: 8px; }
+  #tab-raids .rw-max-pokemon { padding: 7px 10px; }
+  #tab-raids .rw-max-pokemon img { width: 54px; height: 54px; }
+
+  #tab-events .schedule-heading { gap: 3px; margin: 3px 0 10px; }
+  #tab-events .schedule-heading .sec2 { font-size: 1.7rem; }
+  #tab-events .schedule-heading p { font-size: .82rem; line-height: 1.3; }
+  #tab-events #subnav-events { padding-bottom: 4px; }
+  #tab-events .evsearch { margin-bottom: 5px; }
+  #tab-events .weekstrip { margin-top: 6px; }
+  #sub-research { gap: 9px; }
+  #sub-research .research-page-head { margin: 0; }
+  #sub-research .research-eyebrow { display: none; }
+  #sub-research .research-page-head .sec2 { margin: 0 0 4px; font-size: 1.45rem; }
+  #sub-research .research-about summary { display: inline-flex; align-items: center; min-height: 44px; color: var(--color-link); font-size: .78rem; font-weight: 700; cursor: pointer; }
+  #sub-research .research-about .intro { padding: 0 0 8px; font-size: .78rem; line-height: 1.4; }
+  #sub-research #research-status { margin: 0; font-size: .73rem; line-height: 1.35; }
+  #sub-research [data-research-refresh] { justify-self: start; min-height: 44px; padding-inline: 15px; }
+  #sub-research .research-event-head { gap: 7px; padding: 10px 12px; }
+  #sub-research .research-event-head h3 { font-size: .96rem; line-height: 1.18; }
+  #sub-research .research-event-head .pill { min-height: 44px; }
+  #sub-research .research-reward-qty { background: color-mix(in srgb, var(--color-accent) 10%, var(--color-surface-raised)); color: var(--color-accent); }
+  #sub-research .research-reward-qty img { width: 32px; height: 32px; object-fit: contain; }
+  #sub-research .research-reward-neutral { font-size: 1.1rem; line-height: 1; }
+
+  #evd .evd-nav-scroll { gap: 4px; padding-right: 18px; }
+  #evd .evd-nav-link { min-height: 44px; padding-inline: 10px; font-size: .76rem; }
+  #evd .evd-nav-more, #evd .evd-nav::after { display: none; }
+}
+
+@media (max-width: 350px) {
+  header.top h1 { font-size: 1.08rem !important; }
+  header.top .hbtns { gap: 4px; }
+  #tab-now .t1-tile { gap: 3px; padding-inline: 6px; }
+  #tab-now .t1-tile span { font-size: .61rem; }
+}
+
+@media (min-width: 900px) {
+  #tab-now .t1 { max-width: none; }
+  #tab-now .t1-glance, #tab-now .t1-empty-line { max-width: 46rem; }
+  #tab-now .t1-list, #tab-now .t1-week-list { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; }
+  #tab-now .t1-major-art, #tab-now .t1-major-art .ev-art { height: 158px; aspect-ratio: auto; }
+  #tab-now .t1-major .t1-open { padding: 10px 15px 13px; }
+  #tab-raids .rw-raid .rcs { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  #tab-raids .rw-raid .rc { padding: 12px; }
+}

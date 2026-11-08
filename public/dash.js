@@ -167,7 +167,7 @@
     var out = [];
     (D.events || []).forEach(function (x) {
       var tags = x.tags || [], title = x.t || '', k = tags.some(function (t) { return /twitch\s*drops/i.test(t); }) || /twitch\s*drops/i.test(title) ? 'twitch' : tags.indexOf('Community Day') > -1 || /community day/i.test(title) ? 'cd' : tags.indexOf('Max Battles') > -1 || /max battle|dynamax|gigantamax|max monday/i.test(title) ? 'max' : tags.indexOf('Raids') > -1 || /\braids?\b|raid hour/i.test(title) ? 'raid' : tags.indexOf('In person') > -1 || /in-person|safari zone|city safari|go fest/i.test(title) ? 'person' : tags.indexOf('Debut') > -1 || /\bdebut\b/i.test(title) ? 'debut' : /spotlight hour/i.test(title) ? 'spot' : 'event';
-      out.push(mkEvent({ id: 'cur:' + x.id, detailIds: x.detailIds || [], name: x.t, kind: k, s: x.s, e: x.e, utc: x.utc === true || x.tzMode === 'utc', region: x.region || '', scope: x.scope || '', tags: signalTags({ name:x.t, kind:k, tags:tags, notes:x.p, bonuses:x.bonuses, featured:(x.art||[]).map(function(a){return typeof a==='string'?{name:a}:a;}) }), notes: x.p, bonuses: x.bonuses,
+      out.push(mkEvent({ id: 'cur:' + x.id, detailIds: x.detailIds || [], name: x.t, kind: k, img: x.img || '', artPageUrl: x.artSourceUrl || '', s: x.s, e: x.e, utc: x.utc === true || x.tzMode === 'utc', region: x.region || x.location || '', scope: x.scope || '', tags: signalTags({ name:x.t, kind:k, tags:tags, notes:x.p, bonuses:x.bonuses, featured:(x.art||[]).map(function(a){return typeof a==='string'?{name:a}:a;}) }), notes: x.p, bonuses: x.bonuses,
         featured: (x.art || []).map(function (a) { a = typeof a === 'string' ? { n: a } : a; return { name: a.n, costume: !!a.costume, shiny: !!a.shiny, label: a.label, asset: a.asset, role: 'featured' }; }),
         highlights: Array.isArray(x.highlights) ? x.highlights : [],
         status: x.status || (x.sourceUrl ? 'official_confirmed' : 'community_reported'),
@@ -192,7 +192,7 @@
       var kind = PIPE_KIND[x.type] || 'event';
       var featured = Array.isArray(x.featured) ? x.featured : [];
       var bonuses = Array.isArray(x.bonuses) ? x.bonuses : [];
-      return mkEvent({ id: x.id, name: x.name, kind: kind, img: (typeof x.image === 'string' && /^https:\/\//.test(x.image)) ? x.image : '', s: x.start, e: x.end || x.start, bonuses: bonuses, featured: featured, highlights: Array.isArray(x.highlights) ? x.highlights : [], tags: signalTags({name:x.name,kind:kind,type:x.type,bonuses:bonuses,featured:featured}),
+      return mkEvent({ id: x.id, name: x.name, kind: kind, img: (typeof x.image === 'string' && /^https:\/\//.test(x.image)) ? x.image : '', artPageUrl: (x.imageProvenance && safeUrl(x.imageProvenance.sourceUrl)) || safeUrl(x.artSourceUrl) || link || '', s: x.start, e: x.end || x.start, bonuses: bonuses, featured: featured, highlights: Array.isArray(x.highlights) ? x.highlights : [], tags: signalTags({name:x.name,kind:kind,type:x.type,bonuses:bonuses,featured:featured}),
         status: (x.status === 'community_reported' && (officialLink || reportedOfficial)) ? 'official_confirmed' : x.status,
         source: officialLink ? 'Official Pokémon GO announcement' : (x.reports && x.reports[0] && x.reports[0].source === 'leekduck') ? 'Leek Duck' : (x.source || 'Leek Duck (community-reported)'), link: link,
         utc: x.tzMode === 'utc', region: x.region || '', scope: x.scope, conflict: x.conflict, infographicUrl: x.infographicUrl || x.infographic || '' });
@@ -2053,14 +2053,14 @@ function renderHomeBrief(t) {
       kindOf: kindOf, monArt: monArt, fallbackArt: placeholderArt, overseas: function (ev) { return t1Overseas(ev.region); }, dayLabel: function (d) { return fmtD(d); } };
   }
   var t1Signature = '';
-  function sigEv(e) { return [e.id, e.name, e.region || '', e.img ? 1 : 0, (e.featured || []).length, (e.tags || []).join(',')].join('|'); }
+  function sigEv(e) { return [e.id, e.name, e.region || '', +e.start || 0, +e.end || 0, e.img || '', e.artPageUrl || '', (e.featured || []).length, (e.tags || []).join(',')].join('|'); }
   function renderTodayV1(t, force) {
     var host = $('today-v1'); if (!host || !T1 || !TL || !EV_READY) return;
     t = t || now();
     var sheet = $('evd'); if (sheet && !sheet.hidden) return;
     var ctx = t1Ctx(t);
     var sig = JSON.stringify([dayKey(t), ctx.live.map(sigEv), ctx.soon.map(sigEv), ctx.week.map(sigEv),
-      ctx.regLive.map(function (e) { return e.id + '|' + e.openId; }), ctx.ending.map(function (e) { return e.id; }), ctx.regSoon.map(function (e) { return e.id + '|' + e.openId; }), ctx.regWeek.map(function (e) { return e.id + '|' + e.openId; }),
+      ctx.regLive.map(function (e) { return e.id + '|' + e.openId + '|' + (+e.start) + '|' + (+e.end); }), ctx.ending.map(function (e) { return [e.id, e.name, +e.end || 0, e.title || '', e.url || ''].join('|'); }), ctx.regSoon.map(function (e) { return e.id + '|' + e.openId + '|' + (+e.start) + '|' + (+e.end); }), ctx.regWeek.map(function (e) { return e.id + '|' + e.openId + '|' + (+e.start) + '|' + (+e.end); }),
       ctx.boosts.live.map(function (r) { return r.eventId + r.name; }), ctx.boosts.upcoming.map(function (r) { return r.eventId + r.name; }), ctx.seasons, ctx.done.map(function (d) { return d.key; })]);
     if (!force && sig === t1Signature && host.firstChild) { T1.patchCountdowns(host, +t); return; }
     var open = host.querySelector('.t1-menu'); if (open && !force) { T1.patchCountdowns(host, +t); return; }
@@ -2288,7 +2288,7 @@ function renderHomeBrief(t) {
     renderCoverage();
     if (window.GO && GO.refreshDex) GO.refreshDex();
     usSync();
-    var inf = document.createElement('script'); inf.src = '/infographic.js?v=20261103a'; document.body.appendChild(inf); var x = document.createElement('script'); x.src = '/extra.js?v=20261102c'; document.body.appendChild(x); var z = document.createElement('script'); z.src = '/places.js?v=20261103b'; window.GOPLACES_READY = new Promise(function (resolve) { z.onload = function () { resolve(window.GOPLACES || null); }; z.onerror = function () { resolve(null); }; }); var y = document.createElement('script'); y.src = '/detail.js?v=20261108d'; document.body.appendChild(y); document.body.appendChild(z); var w = document.createElement('script'); w.src = '/fresh.js?v=20261103a'; document.body.appendChild(w); var nv = document.createElement('script'); nv.src = '/nudge.js?v=20261102a'; document.body.appendChild(nv); var rv = document.createElement('script'); rv.src = '/review.js?v=20261104b'; document.body.appendChild(rv); var by = document.createElement('script'); by.src = '/buy.js?v=20261103a'; document.body.appendChild(by);
+    var inf = document.createElement('script'); inf.src = '/infographic.js?v=20261103a'; document.body.appendChild(inf); var x = document.createElement('script'); x.src = '/extra.js?v=20261102c'; document.body.appendChild(x); var z = document.createElement('script'); z.src = '/places.js?v=20261103b'; window.GOPLACES_READY = new Promise(function (resolve) { z.onload = function () { resolve(window.GOPLACES || null); }; z.onerror = function () { resolve(null); }; }); var y = document.createElement('script'); y.src = '/detail.js?v=20261108e'; document.body.appendChild(y); document.body.appendChild(z); var w = document.createElement('script'); w.src = '/fresh.js?v=20261103a'; document.body.appendChild(w); var nv = document.createElement('script'); nv.src = '/nudge.js?v=20261102a'; document.body.appendChild(nv); var rv = document.createElement('script'); rv.src = '/review.js?v=20261104b'; document.body.appendChild(rv); var by = document.createElement('script'); by.src = '/buy.js?v=20261103a'; document.body.appendChild(by);
   }
   envBanner();
   /* Bounded waits: a request that never answers must not leave Today blank. After FEED_TIMEOUT_MS the page renders from the curated list

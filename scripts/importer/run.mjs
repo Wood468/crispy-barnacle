@@ -294,7 +294,14 @@ async function main() {
   const now = new Date().toISOString(), out = {};
   for (const [id, { event, results }] of byEvent) {
     const merged = { ...mergeSources(results), ...mergeEncounters(results) };
-    const { image, imageProvenance } = selectArtwork(event, results, { retrievedAt: now });
+    const selected = selectArtwork(event, results, { retrievedAt: now });
+    // A temporary source outage must not erase previously verified art for the same event.
+    const previous = old[id];
+    const sameEvent = previous && previous.name === event.t;
+    const retained = !selected.image && sameEvent && previous.imageProvenance && previous.image
+      ? selectArtwork(event, [{ image: previous.image, source: { id: previous.imageProvenance.source === 'Pokémon GO (official)' ? 'official' : previous.imageProvenance.source === 'Leek Duck' ? 'leekduck' : 'other', name: previous.imageProvenance.source, url: previous.imageProvenance.sourceUrl } }], { retrievedAt: previous.imageProvenance.retrievedAt }) : null;
+    const image = selected.image || (retained && retained.image) || null;
+    const imageProvenance = selected.imageProvenance || (retained && retained.image ? previous.imageProvenance : null);
     const researchTasks = (merged.researchTasks || []).map(task => ({
       ...task, eventId: id, eventName: event.t,
       eventWindow: { start: event.start || null, end: event.end || null },
@@ -322,7 +329,10 @@ async function main() {
   if (OUT === "public/event-details.json" && WORLD_OUT === "public/world-events.json") await catalogue.publish();
   const gaps = Object.entries(out).flatMap(([id, v]) => (v.gaps || []).map(g => ({ event: v.name, ...g })));
   try { await writeFile("data/importer-lines.json", JSON.stringify(pages.filter(p => /go-pass|pass/i.test(p.url)).map(p => ({ url: p.url, lines: p.lines.slice(0, 260) })), null, 1) + "\n"); } catch { /* debug only */ }
-  await writeFile(REPORT, JSON.stringify({ runAt: now, sources: status, pagesRead: pages.length, events: Object.keys(out).length, worldEvents: world.length, worldUndated: world.filter(w => !w.start).map(w => w.name), unmatchedPages: unmatched.slice(0, 40), intl: intlStatus, serebiiSkipped: serebiiLeft.slice(0, 30), gaps: gaps.slice(0, 80), errors: errors.slice(0, 20) }, null, 1) + "\n");
+  const artworkCoverage = { selected: Object.values(out).filter(v => !!v.image && !!v.imageProvenance).length, missing: Object.values(out).filter(v => !v.image).length, legacyUnattributed: Object.values(out).filter(v => !!v.image && !v.imageProvenance).length, bySource: {} };
+  for (const v of Object.values(out)) if (v.image && v.imageProvenance) { const source = v.imageProvenance.source || "Unknown"; artworkCoverage.bySource[source] = (artworkCoverage.bySource[source] || 0) + 1; }
+  artworkCoverage.missingEvents = Object.entries(out).filter(([, v]) => !v.image).map(([id, v]) => ({ id, name: v.name, sources: (v.sources || []).map(s => s.url).filter(Boolean).slice(0, 2) })).slice(0, 100);
+  await writeFile(REPORT, JSON.stringify({ runAt: now, artworkCoverage, sources: status, pagesRead: pages.length, events: Object.keys(out).length, worldEvents: world.length, worldUndated: world.filter(w => !w.start).map(w => w.name), unmatchedPages: unmatched.slice(0, 40), intl: intlStatus, serebiiSkipped: serebiiLeft.slice(0, 30), gaps: gaps.slice(0, 80), errors: errors.slice(0, 20) }, null, 1) + "\n");
   console.log(`Read ${pages.length} pages for ${byEvent.size} events; ${unmatched.length} pages matched no event; ${errors.length} errors.`);
 }
 if (import.meta.url === "file://" + process.argv[1]) main().catch(failRun);

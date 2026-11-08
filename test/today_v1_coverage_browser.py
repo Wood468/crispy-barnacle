@@ -47,7 +47,8 @@ with sync_playwright() as p:
     card.locator('.t1-more').click(); page.locator('[data-t1-done]').click()
     assert page.locator('#t1-toast .t1-toast-undo').is_visible()
     page.clock.run_for(7500)
-    assert page.locator('#t1-toast').is_hidden() and page.locator('#today-v1 .t1-done-list li').count() == 1
+    assert page.locator('#t1-toast').is_hidden(), 'Undo toast did not expire after 7.5 simulated seconds'
+    assert page.locator('#today-v1 .t1-done-list li').count() == 1, 'Done item missing from restore list after toast expiry'
     # 4. Across Melbourne midnight the same occurrence stays done; a later occurrence is a different key.
     page.clock.run_for(13 * 3600 * 1000)
     assert page.locator(f'#today-v1 article[data-id="{cid}"]').count() == 0 or page.locator(f'#today-v1 article[data-id="{cid}"]').first.get_attribute('data-start') != card.get_attribute('data-start')

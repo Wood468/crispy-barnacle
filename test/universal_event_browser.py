@@ -127,6 +127,7 @@ with sync_playwright() as p:
     context.route('**/api/**',api)
     context.route(re.compile(r'^https://fonts\.'),lambda r:r.fulfill(body='',content_type='text/css'))
     page=context.new_page();errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
+    page.clock.install(time='2026-11-06T12:00:00+11:00')
     page.goto(BASE+'/');page.wait_for_function('!!window.GODETAIL&&!!window.GOEventRegistry')
     page.evaluate('GOEventRegistry.ready')
     # Today shows only currently live regional events. A real catalogue may have none
@@ -206,6 +207,10 @@ with sync_playwright() as p:
     page.clock.install(time='2026-11-07T12:00:00+11:00')
     page.goto(BASE+'/',wait_until='domcontentloaded')
     page.wait_for_function("!!window.GODETAIL&&GODASH.eventsState()!=='pending'")
+    # WebKit can finish the usable Today shell before starting the catalogue request.
+    for _ in range(50):
+        if held: break
+        page.wait_for_timeout(100)
     assert held and not page.evaluate("GODASH.events().some(e=>e.id==='synthetic-future-community-day')")
     held[0].fulfill(body=json.dumps({'schemaVersion':1,'species':DEX,'events':[FUTURE]}),content_type='application/json')
     page.wait_for_function("GODASH.events().some(e=>e.id==='synthetic-future-community-day')")
