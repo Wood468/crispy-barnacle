@@ -54,7 +54,13 @@
     var extra = pendingFor(ev);
     if (!extra.length) return hit;
     var have = (hit.infographics || []).map(function (i) { return i.url; });
-    return Object.assign({}, hit, { infographics: (hit.infographics || []).concat(extra.filter(function (i) { return have.indexOf(i.url) < 0; })) });
+    var added = [];
+    extra.forEach(function (i) {
+      if (!i || !i.url || have.indexOf(i.url) >= 0) return;
+      have.push(i.url);
+      added.push(i);
+    });
+    return Object.assign({}, hit, { infographics: (hit.infographics || []).concat(added) });
   }
   function evById(id) { return X.events().filter(function (e) { return e.id === id; })[0] || (X.raidSlots ? X.raidSlots().filter(function (e) { return e.id === id; })[0] : null) || (X.worldEvents ? X.worldEvents().filter(function (e) { return e.id === id; })[0] : null) || (X.regionalEvents ? X.regionalEvents().filter(function (e) { return e.id === id; })[0] : null); }
   /* Card posters can be large originals from R2. Do not assign their URL until the
