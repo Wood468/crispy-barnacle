@@ -57,7 +57,7 @@
   }
   function regional(data) {
     var R = window.GORegionalPrices; if (!R || !data.regional || !data.regional.length) return '';
-    var obs = data.regional, items = R.catalogue(data.prices || [], obs).filter(function (p) { return p.indonesia || p.india; });
+    var obs = data.regional, items = R.catalogue(data.prices || [], obs);
     var verified = obs.filter(function (o) { return o.region === 'ID' && o.status === 'verified'; }), other = obs.filter(function (o) { return o.status !== 'verified'; });
     var row = function (o) { return '<div class="sp-r sp-regional-row"><span class="sp-n">' + icon(o.product) + esc(o.product) + '</span>' + priceCell(R.exact([o], o.region, o.channel, o.product)) + '</div>'; };
     var balance = Math.max(0, parseInt(lsGet(COINS_KEY), 10) || 0);
@@ -67,7 +67,7 @@
       + '<h4>Cheapest realistic option <small>Indonesia</small></h4><label class="sp-coins">PokéCoins in hand <input type="number" inputmode="numeric" min="0" step="1" value="' + balance + '" data-sp-coins aria-label="PokéCoins you already hold"></label>'
       + '<div data-sp-cheapest>' + cheapestHtml(obs, balance) + '</div>'
       + (other.length ? '<details class="sp-more"><summary>Recorded earlier, not re-checked (' + other.length + ')</summary>' + other.map(row).join('') + '</details>' : '')
-      + (items.length ? '<h4>Australia Web catalogue with regional prices</h4>' + items.map(function (p) {
+      + (items.length ? '<h4>All known Store items and regional prices</h4>' + items.map(function (p) {
         return '<div class="sp-r sp-regional-row"><span class="sp-n">' + icon(p.label) + esc(p.label) + '</span><b class="sp-a">Australia Web: A$' + p.aud.toFixed(2) + ' <small>Verified, ' + esc(when(p.observed)) + '</small></b>'
           + '<span class="sp-n">Indonesia Web</span>' + priceCell(p.indonesia) + '<span class="sp-n">India in-app</span>' + priceCell(p.india) + '</div>';
       }).join('') : '')
