@@ -31,8 +31,8 @@ with sync_playwright() as p:
   z=root.locator('.rc[data-boss="Crowned Sword Zacian"]')
   assert z.count()==1 and 'CP 2,188–2,735' in z.inner_text(),(width,z.inner_text())
   assert z.locator('.rc-tier').inner_text()=='5★'
-  assert 'Raid Hour · Mon Nov 9 · 6–7 pm local' in z.inner_text()
-  assert z.locator('.rc-event[data-open]').count()==1
+  assert 'Raid Hour: Crowned Sword Zacian, Mon Nov 9' in root.inner_text()
+  assert root.locator('.rw-rel .rc-event[data-open]').count()==1
   assert root.locator('.rw-count-live').first.inner_text().startswith('Ends in ')
   assert not root.locator('.rc-shiny').count(),'no shiny chip without confirmed data'
   bosses=root.locator('.rw-max-pokemon[data-max-boss]')
@@ -45,7 +45,7 @@ with sync_playwright() as p:
   assert page.evaluate("[...document.querySelectorAll('.rw-max-pokemon .dyn-logo')].every(i=>i.getBoundingClientRect().width<=20)")
   assert page.evaluate('document.documentElement.scrollWidth<=innerWidth')
   shoot(page,'raids-event-roster',width)
-  page.locator('.rc-event').first.click();page.wait_for_selector('#evd',state='visible')
+  page.locator('#rotnow .rc-event').first.click();page.wait_for_selector('#evd',state='visible')
   assert 'Into the Wild' in page.locator('#evd').inner_text()
   assert not errors,errors;c.close()
   # 2. Synthetic week: Shadow raid, confirmed shiny chip, Gigantamax + Dynamax Max Battles with labelled fallbacks (art blocked).

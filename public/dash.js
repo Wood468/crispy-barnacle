@@ -1158,7 +1158,7 @@
     function cpChip(cp, label) {
       if (!Array.isArray(cp) && typeof cp !== 'number') return '';
       var txt = Array.isArray(cp) ? cp[0].toLocaleString('en-AU') + '–' + cp[1].toLocaleString('en-AU') : cp.toLocaleString('en-AU');
-      return '<span class="rc-cp" title="' + esc(label) + '"><b>CP ' + esc(txt) + '</b><small>' + esc(label) + '</small></span>';
+      return '<span class="rc-cp" title="' + esc(label) + '">CP ' + esc(txt) + '</span>';
     }
     function eventLink(name) {
       var model = name && window.GOEventRegistry && GOEventRegistry.events().filter(function (m) { return m && m.title && GOLIB.norm(m.title) === GOLIB.norm(name); })[0];
@@ -1214,8 +1214,7 @@
         var shareWindow = shareValue && !/,\s*to\s/i.test(String(shareValue)) ? { start: r.s || '', end: r.e || '' } : { start: '', end: '' };
         var share = '<button type="button" class="rc-info rc-share" data-raid-share data-raid-boss="' + esc(n) + '" data-raid-kind="' + esc(label) + '" data-raid-start="' + esc(shareWindow.start) + '" data-raid-end="' + esc(shareWindow.end) + '" aria-label="Share ' + esc(n) + ' ' + esc(label) + ' raid details">↗ Share</button>';
         var cpv = r.cp && r.cp[n], shinyOk = Array.isArray(r.shiny) && r.shiny.indexOf(n) >= 0;
-        var rhm = String(r.rh || '').split(' · ').map(function (c) { var m = /^(.*?),\s+((?:Mon|Tue|Wed|Thu|Fri|Sat|Sun)\b.*)$/.exec(c.trim()); return m && m[1] === n ? m[2] : ''; }).filter(Boolean)[0];
-        var chips = cpChip(cpv, 'Level 20 · weather boosted at 25') + (shinyOk ? '<span class="rc-chip rc-shiny">✦ Shiny available</span>' : '') + (rhm ? '<span class="rc-chip rc-rh">Raid Hour · ' + esc(rhm) + ' · 6–7 pm local</span>' : '') + (label === '5★' || label === '3★' || label === 'Mega' ? eventLink(r.event) : '');
+        var chips = cpChip(cpv, 'Level 20, weather boosted at level 25') + (shinyOk ? '<span class="rc-chip rc-shiny">✦ Shiny available</span>' : '');
         return '<div class="rc" data-boss="' + esc(n) + '"' + (label === '5★' || label === 'Mega' ? ' data-guide="' + esc(n) + '"' : '') + '><div class="rc-form">' + art(n, 'ea') + '<div class="rc-txt"><span class="rl"><i class="rc-tier">' + label + '</i></span><b>' + esc(n) + '</b>' +
           (f ? '<span class="rtype">' + f.types.map(function (t) { return tico(t); }).join('') + '</span><span class="rweak" title="Weak to">▾ ' + f.weak.map(function (t) { return tico(t); }).join('') + '</span>' : '') + (chips ? '<span class="rc-meta">' + chips + '</span>' : '') + '</div></div>' + ib + share + '</div>';
       }).join('');
@@ -1249,7 +1248,7 @@
       if (!rotationRows.length) body += '<p class="empty">No raid rotation published for this week yet.</p>';
       rotationRows.forEach(function (row) {
         var r = row.r;
-        body += '<div class="rw-raid ' + row.cls + '"><span class="rw-label">' + esc(row.label) + '</span><p class="rw-window">' + esc(fmtD(pd(r.s)) + ', ' + fmtT(pd(r.s)) + ' – ' + fmtD(pd(r.e)) + ', ' + fmtT(pd(r.e))) + ' · local time</p>' + windowChip(+pd(r.s), +pd(r.e)) + raidSourceLink(r) + '<div class="rcs">' +
+        body += '<div class="rw-raid ' + row.cls + '"><span class="rw-label">' + esc(row.label) + '</span><p class="rw-window">' + esc(fmtD(pd(r.s)) + ', ' + fmtT(pd(r.s)) + ' – ' + fmtD(pd(r.e)) + ', ' + fmtT(pd(r.e))) + ' · local time</p>' + '<div class="rw-rel">' + windowChip(+pd(r.s), +pd(r.e)) + eventLink(r.event) + '</div>' + raidSourceLink(r) + '<div class="rcs">' +
           cell('5★', r.five, r) + cell('Mega', r.mega, r) + cell('Shadow', String(r.shadow || '').replace(/, to .*/, ''), r) + '</div>' + lowTier(r) + '<p class="evc-when">Raid Hour: ' + esc(r.rh || 'Not listed') + '</p></div>';
       });
       body += battles.length ? battles.map(function(mb){
