@@ -128,5 +128,5 @@ test('Store never claims a cheapest coin-funded price without a separately verif
   assert.doesNotMatch(src, /data-sp-coins/);
   assert.match(src, /o\.kind !== 'coins'/);
   assert.match(src, /o\.channel === 'web'/);
-  assert.match(src, /R\.exact\(obs, 'ID', 'web', o\.product\)/);
+  assert.match(src, /R\.exact\(\[o\], 'ID', 'web', o\.product\)/);
 });
