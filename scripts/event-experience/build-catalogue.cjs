@@ -102,7 +102,9 @@ function buildCatalogue(input){
   let d=ids.map(id=>details[id]).find(Boolean),i=ids.map(id=>info[id]).find(Boolean)||{};
   // Explicit source URL joins only. A shared title is never identity evidence.
   const url=key(raw.link||raw.sourceUrl);
-  if(!d&&url){const hits=Object.values(details).filter(x=>(x.sources||[]).some(s=>key(s.url)===url));if(hits.length===1)d=hits[0];}
+  if(!d&&url){const hits=Object.values(details).filter(x=>(x.sources||[]).some(s=>key(s.url)===url));if(hits.length===1){/* A named installment ("Meetup: Karlsruhe") never takes the details of a sibling or the whole event just because they share an article. */
+    const variant=String(raw.name||raw.t||raw.title||'').split(':').slice(1).join(':').toLowerCase().split(/[^a-z0-9]+/).filter(w=>w.length>=4),hay=(String(hits[0].name||'')+' '+(hits[0].sources||[]).map(x=>x.url).join(' ')).toLowerCase();
+    if(!variant.length||variant.some(w=>hay.includes(w)))d=hits[0];}}
   const correctedId=rules.get(String(raw.id))||String(raw.id),patch=corrections[correctedId];
   if(patch)raw={...raw,...patch,schedule:raw.schedule||patch.schedule,pokemon:raw.pokemon||patch.pokemon,id:correctedId,aliases:[...(raw.aliases||[]),...(patch.aliases||[]),...(correctionAliases[correctedId]||[]),...(String(raw.id)!==correctedId?[String(raw.id)]:[])]};
   let model=A.adapt(raw,d,i);if(d&&Object.prototype.hasOwnProperty.call(d,'imageProvenance'))model=C.normalize({...model,image:d.image||null,internalValidation:{...model.internalValidation,imageReviewed:true}});if(d&&d.image&&!Object.prototype.hasOwnProperty.call(d,'imageProvenance'))model=C.normalize({...model,internalValidation:{...model.internalValidation,imageUnattributed:true}});const originalId=model.eventId;

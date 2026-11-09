@@ -125,6 +125,10 @@ function pageDatesOverlapEvent(page, event) {
 
 // Where a page says the event is (from its title only). "Pokémon GO Wild Area 2026: Mexico City" is the Mexico City event, never the global Into the Wild week.
 export function titlePlaceConflict(page, event) {
+  // A named installment ("GO Wild Area Global Meetup: Karlsruhe") is never matched by a page that does not name that installment (the shared Global page).
+  const variant = String(event.t || event.name || "").split(":").slice(1).join(":").toLowerCase().split(/[^a-z0-9]+/).filter(w => w.length >= 4);
+  const pageText = (String(page.title || "") + " " + String(page.url || "")).toLowerCase();
+  if (variant.length && !variant.some(w => pageText.includes(w))) return true;
   const pagePlace = placeOf(String(page.title || ""), "");
   if (!pagePlace || !pagePlace.place.includes(",")) return false; // only a city/venue ("Mexico City, Mexico"), not a region ("Europe")
   const eventPlace = placeOf(String(event.t || event.name || "") + " " + String(event.place || ""), "");
@@ -184,7 +188,8 @@ export function pickEvent(page, events) {
   const m = matchEvent({ title: page.title || "" }, candidates);
   if (m && m.confidence === "high") {
     const event = candidates.find(e => e.id === m.eventId);
-    if (event && pageDatesOverlapEvent(page, event)) return { event, how: "title" };
+    const pick = preferCurated(event, events);
+    if (pick && pageDatesOverlapEvent(page, pick)) return { event: pick, how: "title" };
   }
   return null;
 }
@@ -358,8 +363,10 @@ async function main() {
   preserveGoPassRows(out, old, byEvent);
   // A feed-derived twin record (leekduck:<slug>) whose every source page is now read into the curated record is a duplicate: keeping it would show every task and Pokémon twice.
   const claimedUrls = new Set([...byEvent.values()].flatMap(group => group.results.map(result => normUrl(result.source.url))));
-  const absorbed = v => (v.sources || []).length > 0 && (v.sources || []).every(source => claimedUrls.has(normUrl(source.url || "")));
-  for (const [id, v] of Object.entries(old)) if (!out[id] && !absorbed(v) && Date.now() - Date.parse(v.updated || 0) < 45 * 864e5) out[id] = normaliseLegacyStatuses(v); // keep recent entries a source stopped listing, with current terminology
+  let sameRulings = []; try { sameRulings = JSON.parse(await readFile("data/event-aliases.json", "utf8")).same || []; } catch { /* no rulings */ }
+  const twinOfCurated = id => sameRulings.some(pair => Array.isArray(pair) && pair.includes(id) && pair.some(other => other !== id && out[other] && byEvent.has(other)));
+  const absorbed = (v, id) => twinOfCurated(id) || ((v.sources || []).length > 0 && (v.sources || []).every(source => claimedUrls.has(normUrl(source.url || ""))));
+  for (const [id, v] of Object.entries(old)) if (!out[id] && !absorbed(v, id) && Date.now() - Date.parse(v.updated || 0) < 45 * 864e5) out[id] = normaliseLegacyStatuses(v); // keep recent entries a source stopped listing, with current terminology
   try { applyLineCorrections(out, JSON.parse(await readFile("data/line-corrections.json", "utf8")).lines); } catch { /* optional */ }
   await mkdir("data", { recursive: true });
   await writeFile(OUT, JSON.stringify({ updated: now, events: out }, null, 1) + "\n");

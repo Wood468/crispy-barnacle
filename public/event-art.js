@@ -20,6 +20,8 @@
   function iso(v) { try { return v && v.toISOString ? v.toISOString() : typeof v === 'string' ? v : ''; } catch (e) { return ''; } }
   function evYears(ev) { var s = yearOf(iso(ev.start) || iso(ev.s)), e = yearOf(iso(ev.end) || iso(ev.e)); return [s, e].filter(Boolean); }
   /* Verify one candidate URL for one event. Returns provenance or null. */
+  /* A worldwide event's "location" ("Play from anywhere") is not a place that must appear in the banner address. */
+  var NOT_A_PLACE = /^(play from anywhere|worldwide|global|everywhere|anywhere|online)$/i;
   function verify(url, ev) {
     if (typeof url !== 'string' || !url || GENERIC.test(url.split('?')[0])) return null;
     if (/default|placeholder/i.test(url)) return null;
@@ -31,7 +33,7 @@
       if (h.needsYear && !inUrl.length) return null;
       if (h.needsSlug) {
         var slug = words(decodeURIComponent(url.replace(/^https:\/\/[^/]+/, '')).replace(/\//g, ' ').replace(/[-_.]/g, ' '));
-        var name = words(ev.name || ev.title), place = words(ev.region || ev.place || '');
+        var name = words(ev.name || ev.title), place = words(NOT_A_PLACE.test(String(ev.region || ev.place || '').trim()) ? '' : (ev.region || ev.place || ''));
         var hit = name.filter(function (w) { return slug.indexOf(w) >= 0; }).length;
         /* The article folder must share the event's distinctive words; an event with a place also needs that place in the folder name. */
         if (!hit) return null;

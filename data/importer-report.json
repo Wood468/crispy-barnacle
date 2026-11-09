@@ -1,12 +1,12 @@
 {
- "runAt": "2026-11-09T12:24:24.290Z",
+ "runAt": "2026-11-09T12:42:27.665Z",
  "artworkCoverage": {
-  "selected": 27,
-  "missing": 66,
+  "selected": 26,
+  "missing": 65,
   "legacyUnattributed": 2,
   "bySource": {
    "Pokémon GO (official)": 19,
-   "Leek Duck": 8
+   "Leek Duck": 7
   },
   "missingEvents": [
    {
@@ -224,13 +224,6 @@
     "name": "Fall Marathon: Buddy Trek",
     "sources": [
      "https://pokemongo.com/news/fall-marathon-buddy-trek-2026/"
-    ]
-   },
-   {
-    "id": "smr2",
-    "name": "Super Mega Raid Day",
-    "sources": [
-     "https://leekduck.com/events/super-mega-raid-day-november-2026/"
     ]
    },
    {
@@ -497,7 +490,7 @@
   }
  },
  "pagesRead": 80,
- "events": 95,
+ "events": 93,
  "worldEvents": 59,
  "worldUndated": [
   "GO Wild Area Stamp Rally"
@@ -890,60 +883,11 @@
    ]
   },
   {
-   "event": "Into the Wild 2026",
-   "field": "bonuses",
-   "missingFrom": [
-    "official"
-   ]
-  },
-  {
-   "event": "Into the Wild 2026",
-   "field": "featured",
-   "missingFrom": [
-    "official"
-   ]
-  },
-  {
-   "event": "Into the Wild 2026",
-   "field": "raids",
-   "missingFrom": [
-    "official"
-   ]
-  },
-  {
-   "event": "Into the Wild 2026",
-   "field": "shiny",
-   "missingFrom": [
-    "official"
-   ]
-  },
-  {
-   "event": "Into the Wild 2026",
-   "field": "moves",
-   "missingFrom": [
-    "official"
-   ]
-  },
-  {
-   "event": "Into the Wild 2026",
-   "field": "tickets",
-   "missingFrom": [
-    "official"
-   ]
-  },
-  {
-   "event": "Into the Wild 2026",
-   "field": "dates",
-   "missingFrom": [
-    "official"
-   ]
-  },
-  {
    "event": "Into the Wild",
    "field": "bonuses",
    "missingFrom": [
     "official",
-    "hub"
+    "official"
    ]
   },
   {
@@ -951,7 +895,7 @@
    "field": "featured",
    "missingFrom": [
     "official",
-    "hub"
+    "official"
    ]
   },
   {
@@ -959,29 +903,36 @@
    "field": "raids",
    "missingFrom": [
     "official",
-    "hub"
+    "official"
    ]
   },
   {
    "event": "Into the Wild",
    "field": "research",
-   "missingFrom": [
-    "official",
-    "hub"
-   ]
+   "missingFrom": []
   },
   {
    "event": "Into the Wild",
    "field": "shiny",
    "missingFrom": [
     "official",
-    "hub"
+    "official"
+   ]
+  },
+  {
+   "event": "Into the Wild",
+   "field": "moves",
+   "missingFrom": [
+    "official",
+    "official",
+    "leekduck"
    ]
   },
   {
    "event": "Into the Wild",
    "field": "tickets",
    "missingFrom": [
+    "official",
     "official"
    ]
   },
@@ -989,6 +940,7 @@
    "event": "Into the Wild",
    "field": "dates",
    "missingFrom": [
+    "official",
     "official"
    ]
   },
