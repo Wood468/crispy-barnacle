@@ -260,7 +260,7 @@ test('Into the Wild highlights Meltan and Gimmighoul shiny methods without claim
  assert.match(html,/Shiny Gimmighoul · Coin Bag/);
  assert.match(html,/Special shiny encounters · through 15 Nov/);
  assert.match(html,/Shiny odds not confirmed boosted/);
- assert.doesNotMatch(html,/Boosted shiny<\\/span>/);
+ assert.ok(!html.includes('Boosted shiny</span>'));
  const other=UI.render(event({title:'Unrelated event',notes:m.notes}),{});
  assert.doesNotMatch(other,/ue-special-shiny/);
 });
@@ -276,5 +276,5 @@ test('published Into the Wild record survives legacy adaptation with both specia
  assert.match(html,/Shiny Meltan · Mystery Box/);
  assert.match(html,/Shiny Gimmighoul · Coin Bag/);
  assert.match(html,/15 Nov, 6 pm/);
- assert.doesNotMatch(html,/Boosted shiny<\\/span>/);
+ assert.ok(!html.includes('Boosted shiny</span>'));
 });
