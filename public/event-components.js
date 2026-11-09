@@ -161,7 +161,7 @@ function schedulePreview(model,ctx){
  activities=activities.slice().sort(function(a,b){return String(a.schedule.start).localeCompare(String(b.schedule.start))||String(a.id||'').localeCompare(String(b.id||'');});
  var count=Math.min(activities.length,5);
  var cards=activities.slice(0,count).map(function(a){
-  return '<li><strong>'+esc(a.title||a.name||'Scheduled activity')+'</strong><span>'+esc(activityTime(a,ctx))+'</span></li>';
+  return '<li><strong>'+esc(a.title||a.name||'Scheduled activity')+'</strong><span>'+esc(activityTime(a,ctx))+'</span>'+(activityPlace(a)?'<small>'+esc(activityPlace(a))+'</small>':'')+'</li>';
  }).join('');
  return '<div class="ue-schedule-preview"><h3 class="ue-mini-h">Event schedule</h3><ol>'+cards+'</ol>'+(activities.length>count?'<p class="ue-more-note">+'+(activities.length-count)+' more scheduled activities below</p>':'')+'</div>';
 }
