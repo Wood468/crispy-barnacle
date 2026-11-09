@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-07T20:33:39.973Z",
+ "updated": "2026-11-09T10:23:31.314Z",
  "events": [
   {
    "id": "w-pokemon-fossil-museum-2026",
@@ -18,7 +18,7 @@
     }
    ],
    "status": "single",
-   "seen": "2026-11-07"
+   "seen": "2026-11-09"
   },
   {
    "id": "w-pokemon-jet-red-collaboration-event",
@@ -37,7 +37,7 @@
     }
    ],
    "status": "single",
-   "seen": "2026-11-07"
+   "seen": "2026-11-09"
   },
   {
    "id": "w-pok-mon-jet-red-collaboration",
@@ -56,7 +56,7 @@
     }
    ],
    "status": "single",
-   "seen": "2026-11-07"
+   "seen": "2026-11-09"
   },
   {
    "id": "w-pokemon-x-adidas",
@@ -99,7 +99,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-11-07"
+   "seen": "2026-11-09"
   },
   {
    "id": "w-pok-mon-go-partners-with-the-european-space-agency",
@@ -123,7 +123,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-11-07"
+   "seen": "2026-11-09"
   },
   {
    "id": "w-pokemon-go-x-esa-london",
@@ -269,25 +269,6 @@
    "seen": "2026-10-27"
   },
   {
-   "id": "w-explore-by-starlight-during-meteor-showers-for-a-c",
-   "name": "Minior Meteor Showers (Orionids)",
-   "place": "",
-   "area": "Worldwide",
-   "scope": "global",
-   "start": "2026-10-19",
-   "end": "2026-10-24",
-   "datesKnown": true,
-   "sources": [
-    {
-     "id": "official",
-     "name": "Pokémon GO (official)",
-     "url": "https://pokemongo.com/news/minior-meteor-showers-2026/"
-    }
-   ],
-   "status": "official",
-   "seen": "2026-11-07"
-  },
-  {
    "id": "w-aeon-mall-halloween",
    "name": "AEON MALL Halloween",
    "place": "Participating AEON Malls, Japan",
@@ -323,98 +304,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-11-07"
-  },
-  {
-   "id": "w-celebrate-the-pok-mon-night-out-events-in-pok-mon-",
-   "name": "Pokémon Night Out events in Pokémon GO!: Los Angeles",
-   "place": "Los Angeles, USA",
-   "area": "Americas",
-   "scope": "regional",
-   "start": "2026-10-24",
-   "end": "2026-10-24",
-   "datesKnown": true,
-   "sources": [
-    {
-     "id": "official",
-     "name": "Pokémon GO (official)",
-     "url": "https://pokemongo.com/news/pokemon-night-out-irl-details2026/"
-    },
-    {
-     "id": "serebii",
-     "name": "Serebii",
-     "url": "https://www.serebii.net/pokemongo/reallifeevents.shtml"
-    }
-   ],
-   "status": "official",
-   "seen": "2026-11-07"
-  },
-  {
-   "id": "w-get-codes-for-exclusive-timed-research-during-the-",
-   "name": "Get codes for exclusive Timed Research during the Pokémon Night Out Twitch broadcast",
-   "place": "",
-   "area": "Worldwide",
-   "scope": "global",
-   "start": "2026-10-24",
-   "end": "2026-10-24",
-   "datesKnown": true,
-   "sources": [
-    {
-     "id": "official",
-     "name": "Pokémon GO (official)",
-     "url": "https://pokemongo.com/news/pokemon-night-out-twitch-drops2026/"
-    }
-   ],
-   "status": "official",
-   "seen": "2026-11-07"
-  },
-  {
-   "id": "w-pok-mon-go-city-safari-boston-update",
-   "name": "City Safari: Boston",
-   "place": "Boston, USA",
-   "area": "Americas",
-   "scope": "regional",
-   "start": "2026-10-24",
-   "end": "2026-10-25",
-   "datesKnown": true,
-   "sources": [
-    {
-     "id": "official",
-     "name": "Pokémon GO (official)",
-     "url": "https://pokemongo.com/news/city-safari-boston-rescheduled/"
-    },
-    {
-     "id": "official",
-     "name": "Pokémon GO (official)",
-     "url": "https://pokemongo.com/news/city-safari-boston-update/"
-    },
-    {
-     "id": "serebii",
-     "name": "Serebii",
-     "url": "https://www.serebii.net/pokemongo/reallifeevents.shtml"
-    }
-   ],
-   "status": "official",
-   "seen": "2026-11-07"
-  },
-  {
-   "id": "w-fc-seoul",
-   "name": "FC Seoul",
-   "place": "Seoul, South Korea",
-   "area": "Asia",
-   "scope": "regional",
-   "start": "2026-10-24",
-   "end": "2026-10-24",
-   "datesKnown": true,
-   "sources": [
-    {
-     "id": "serebii",
-     "name": "Serebii",
-     "url": "https://www.serebii.net/pokemongo/reallifeevents.shtml"
-    }
-   ],
-   "status": "single",
-   "seen": "2026-11-07"
+   "seen": "2026-11-09"
   },
   {
    "id": "w-pok-mon-go-dia-de-muertos-2026-mexico-exclusive-ev",
@@ -441,6 +331,25 @@
    "seen": "2026-10-24"
   },
   {
+   "id": "w-mega-sableye-in-mega-raids",
+   "name": "Mega Sableye in Mega Raids",
+   "place": "",
+   "area": "Worldwide",
+   "scope": "global",
+   "start": "2026-10-28",
+   "end": "2026-11-08",
+   "datesKnown": true,
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "url": "https://leekduck.com/events/mega-sableye-in-mega-raids-october-2026/"
+    }
+   ],
+   "status": "single",
+   "seen": "2026-11-09"
+  },
+  {
    "id": "w-halloween",
    "name": "Halloween 2026 Part 2",
    "place": "",
@@ -463,7 +372,7 @@
   {
    "id": "w-forever-stamp-rally-go-wild-area",
    "name": "Forever Stamp Rally Go Wild Area",
-   "place": "South Korea",
+   "place": "Japan",
    "area": "Asia",
    "scope": "regional",
    "start": "2026-11-03",
@@ -473,11 +382,35 @@
     {
      "id": "official",
      "name": "Pokémon GO (official)",
-     "url": "https://pokemongo.com/ko/news/forever-stamp-rally-go-wild-area-2026/"
+     "url": "https://pokemongo.com/ja/news/forever-stamp-rally-go-wild-area-2026/"
+    },
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "url": "https://pokemongo.com/ja/news/go-wild-area-stamp-rally-details-2026/"
     }
    ],
    "status": "official",
-   "seen": "2026-11-07"
+   "seen": "2026-11-09"
+  },
+  {
+   "id": "w-giratina-altered-forme-in-5-star-raid-battles",
+   "name": "Giratina (Altered Forme) in 5-star Raid Battles",
+   "place": "",
+   "area": "Worldwide",
+   "scope": "global",
+   "start": "2026-11-04",
+   "end": "2026-11-08",
+   "datesKnown": true,
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "url": "https://leekduck.com/events/giratina-altered-forme-in-5-star-raid-battles-november-2026/"
+    }
+   ],
+   "status": "single",
+   "seen": "2026-11-09"
   },
   {
    "id": "w-celebrate-the-festival-of-lights-with-the-return-o",
@@ -496,8 +429,47 @@
     }
    ],
    "status": "official",
-   "seen": "2026-11-07",
+   "seen": "2026-11-09",
    "mode": "in-game"
+  },
+  {
+   "id": "w-pok-mon-go-wild-area-2026-mexico-city",
+   "name": "Pokémon GO Wild Area 2026: Mexico City",
+   "place": "Mexico City, Mexico",
+   "area": "Americas",
+   "scope": "regional",
+   "start": "2026-11-06",
+   "end": "2026-11-08",
+   "datesKnown": true,
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "url": "https://leekduck.com/events/pokemon-go-wild-area-2026-mexico-city/"
+    },
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "url": "https://pokemongo.com/en/gowildarea/mexico-city/"
+    },
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "url": "https://pokemongo.com/news/gowildarea-mexicocity-friday-update/"
+    },
+    {
+     "id": "hub",
+     "name": "Pokémon GO Hub",
+     "url": "https://pokemongohub.net/post/event/pokemon-go-wild-area-mexico-city-additional-details-maps-in-person-activities-notable-trainers-etc/"
+    },
+    {
+     "id": "serebii",
+     "name": "Serebii",
+     "url": "https://www.serebii.net/pokemongo/reallifeevents.shtml"
+    }
+   ],
+   "status": "official",
+   "seen": "2026-11-09"
   },
   {
    "id": "w-this-weekend-only-log-in-november-6-8-for-free-tim",
@@ -521,36 +493,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-11-07"
-  },
-  {
-   "id": "w-go-wild-area-2026-mexico-city",
-   "name": "GO Wild Area 2026 Mexico City",
-   "place": "Mexico City, Mexico",
-   "area": "Americas",
-   "scope": "regional",
-   "start": "2026-11-06",
-   "end": "2026-11-08",
-   "datesKnown": true,
-   "sources": [
-    {
-     "id": "official",
-     "name": "Pokémon GO (official)",
-     "url": "https://pokemongo.com/en/gowildarea/mexico-city"
-    },
-    {
-     "id": "leekduck",
-     "name": "Leek Duck",
-     "url": "https://leekduck.com/events/pokemon-go-wild-area-2026-mexico-city/"
-    },
-    {
-     "id": "serebii",
-     "name": "Serebii",
-     "url": "https://www.serebii.net/pokemongo/reallifeevents.shtml"
-    }
-   ],
-   "status": "official",
-   "seen": "2026-11-07"
+   "seen": "2026-11-09"
   },
   {
    "id": "w-go-wild-area-2026-sendai-tohoku",
@@ -579,7 +522,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-11-07"
+   "seen": "2026-11-09"
   },
   {
    "id": "w-go-wild-area-gigantamax-machamp-power-up-timed-res",
@@ -623,7 +566,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-11-07"
+   "seen": "2026-11-09"
   },
   {
    "id": "w-pok-mon-30th-anniversary-mall-exploration-jewel",
@@ -642,7 +585,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-11-07"
+   "seen": "2026-11-09"
   },
   {
    "id": "w-pok-xciting-lands-at-changi-airport-and-jewel-get-",
@@ -661,7 +604,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-11-07"
+   "seen": "2026-11-09"
   },
   {
    "id": "w-into-the-wild",
@@ -700,7 +643,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-11-07"
+   "seen": "2026-11-09"
   },
   {
    "id": "w-minior-showers-leonid-november-2026",
@@ -719,7 +662,7 @@
     }
    ],
    "status": "single",
-   "seen": "2026-11-07"
+   "seen": "2026-11-09"
   },
   {
    "id": "w-pok-mon-run-30-new-taipei",
@@ -738,7 +681,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-11-07"
+   "seen": "2026-11-09"
   },
   {
    "id": "w-community-meetups-go-wild-area-details-asia-pacifi",
@@ -853,7 +796,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-11-07"
+   "seen": "2026-11-09"
   },
   {
    "id": "w-pok-mon-run-30-malaysia",
@@ -872,7 +815,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-11-07"
+   "seen": "2026-11-09"
   },
   {
    "id": "w-eternamax-eternatus-max-battles",
@@ -931,7 +874,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-11-07"
+   "seen": "2026-11-09"
   },
   {
    "id": "w-minior-showers-geminids",
@@ -970,7 +913,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-11-07"
+   "seen": "2026-11-09"
   },
   {
    "id": "w-pok-mon-run-30-thailand",
@@ -989,7 +932,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-11-07"
+   "seen": "2026-11-09"
   },
   {
    "id": "w-pok-mon-30th-anniversary-mall-exploration-sm-marik",
@@ -1008,7 +951,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-11-07"
+   "seen": "2026-11-09"
   },
   {
    "id": "w-pok-mon-run-30-hong-kong",
@@ -1027,7 +970,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-11-07"
+   "seen": "2026-11-09"
   },
   {
    "id": "w-pok-mon-30th-anniversary-mall-exploration-sm-seasi",
@@ -1046,7 +989,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-11-07"
+   "seen": "2026-11-09"
   },
   {
    "id": "w-save-the-date-pok-mon-go-tour-2027",
@@ -1065,7 +1008,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-11-07"
+   "seen": "2026-11-09"
   },
   {
    "id": "w-pokemon-go-tour-2027-los-angeles",
@@ -1103,7 +1046,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-11-07"
+   "seen": "2026-11-09"
   },
   {
    "id": "w-pokemon-go-tour-2027-global",
@@ -1141,7 +1084,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-11-07"
+   "seen": "2026-11-09"
   },
   {
    "id": "w-go-wild-area-stamp-rally-details",

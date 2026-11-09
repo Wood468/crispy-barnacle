@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-07T20:33:43.305Z",
+ "updated": "2026-11-09T10:23:38.794Z",
  "pictures": {
   "pikachu|astronaut": "/img/ext/25-pikachu-astronaut-00a1fb21.png",
   "pikachu|marathon visor": "/img/ext/025-marathon-8cf5be7d.png",
@@ -90,13 +90,13 @@
   "gigantamax urshifu": "/img/ext/892-gi-347f06d8.png"
  },
  "avatar": [
+  "espeon (sun scarf)|sun scarf",
+  "umbreon (moon scarf)|moon scarf",
   "tee|purple"
  ],
  "missing": [
   "sinistea|bow",
   "pikachu (sun crown)|sun crown (no dex number)",
-  "pikachu (moon crown)|moon crown (no dex number)",
-  "espeon (sun scarf)|sun scarf (no dex number)",
-  "umbreon (moon scarf)|moon scarf (no dex number)"
+  "pikachu (moon crown)|moon crown (no dex number)"
  ]
 }

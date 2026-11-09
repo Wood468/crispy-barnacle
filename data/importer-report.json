@@ -1,8 +1,512 @@
 {
- "runAt": "2026-11-07T20:33:39.978Z",
+ "runAt": "2026-11-09T10:23:31.317Z",
+ "artworkCoverage": {
+  "selected": 27,
+  "missing": 69,
+  "legacyUnattributed": 5,
+  "bySource": {
+   "Pokémon GO (official)": 19,
+   "Leek Duck": 8
+  },
+  "missingEvents": [
+   {
+    "id": "into",
+    "name": "Into the Wild",
+    "sources": [
+     "https://pokemongo.com/news/go-wild-area-stamp-rally-details-2026/",
+     "https://pokemongohub.net/post/guide/go-pass-into-the-wild/"
+    ]
+   },
+   {
+    "id": "leekduck:pokemon-night-out-london-2026",
+    "name": "Pokémon Night Out 2026 - London",
+    "sources": [
+     "https://leekduck.com/events/pokemon-night-out-london-2026/"
+    ]
+   },
+   {
+    "id": "leekduck:go-wild-area-gigantamax-machamp-power-up-timed-research",
+    "name": "GO Wild Area: Gigantamax Machamp Power Up! Timed Research",
+    "sources": [
+     "https://leekduck.com/events/go-wild-area-gigantamax-machamp-power-up-timed-research/"
+    ]
+   },
+   {
+    "id": "leekduck:max-mondays-2026-11-16",
+    "name": "Max Monday: Pokémon to be announced",
+    "sources": [
+     "https://leekduck.com/events/max-mondays-2026-11-16/"
+    ]
+   },
+   {
+    "id": "leekduck:raidhour20261118",
+    "name": "Cresselia and Darkrai Raid Hour",
+    "sources": [
+     "https://leekduck.com/events/raidhour20261118/"
+    ]
+   },
+   {
+    "id": "leekduck:pokemonspotlighthour2026-11-19",
+    "name": "Grookey, Scorbunny, and Sobble Spotlight Hour",
+    "sources": [
+     "https://leekduck.com/events/pokemonspotlighthour2026-11-19/"
+    ]
+   },
+   {
+    "id": "leekduck:minior-showers-leonids-2026",
+    "name": "Minior Showers: Leonids 2026",
+    "sources": [
+     "https://leekduck.com/events/minior-showers-leonids-2026/"
+    ]
+   },
+   {
+    "id": "leekduck:eternamax-eternatus-max-battles-2026",
+    "name": "Eternamax Eternatus Returns",
+    "sources": [
+     "https://leekduck.com/events/eternamax-eternatus-max-battles-2026/"
+    ]
+   },
+   {
+    "id": "leekduck:max-mondays-2026-11-23",
+    "name": "Dynamax Espurr during Max Monday",
+    "sources": [
+     "https://leekduck.com/events/max-mondays-2026-11-23/"
+    ]
+   },
+   {
+    "id": "leekduck:cresselia-darkrai-in-5-star-raid-battles-november-2026",
+    "name": "Cresselia and Darkrai in 5-star Raid Battles",
+    "sources": [
+     "https://leekduck.com/events/cresselia-darkrai-in-5-star-raid-battles-november-2026/"
+    ]
+   },
+   {
+    "id": "leekduck:mega-banette-in-mega-raids-november-2026",
+    "name": "Mega Banette in Mega Raids",
+    "sources": [
+     "https://leekduck.com/events/mega-banette-in-mega-raids-november-2026/"
+    ]
+   },
+   {
+    "id": "leekduck:raidhour20261125",
+    "name": "Deoxys (Normal, Defense, Attack, and Speed Formes) Raid Hour",
+    "sources": [
+     "https://leekduck.com/events/raidhour20261125/"
+    ]
+   },
+   {
+    "id": "leekduck:pokemonspotlighthour2026-11-26",
+    "name": "Noibat Spotlight Hour",
+    "sources": [
+     "https://leekduck.com/events/pokemonspotlighthour2026-11-26/"
+    ]
+   },
+   {
+    "id": "leekduck:max-mondays-2026-11-30",
+    "name": "Dynamax Cryogonal during Max Monday",
+    "sources": [
+     "https://leekduck.com/events/max-mondays-2026-11-30/"
+    ]
+   },
+   {
+    "id": "leekduck:shadow-tornadus-incarnate-forme-in-shadow-raids-november-16-2026",
+    "name": "Shadow Tornadus (Incarnate Forme) in Shadow Raids",
+    "sources": [
+     "https://leekduck.com/events/shadow-tornadus-incarnate-forme-in-shadow-raids-november-16-2026/"
+    ]
+   },
+   {
+    "id": "leekduck:deoxys-normal-defense-attack-speed-formes-in-5-star-raid-battles-november-2026",
+    "name": "Deoxys (Normal, Defense, Attack, and Speed Formes) in 5-star Raid Battles",
+    "sources": [
+     "https://leekduck.com/events/deoxys-normal-defense-attack-speed-formes-in-5-star-raid-battles-november-2026/"
+    ]
+   },
+   {
+    "id": "leekduck:mega-metagross-in-mega-raids-november-2026",
+    "name": "Mega Metagross in Mega Raids",
+    "sources": [
+     "https://leekduck.com/events/mega-metagross-in-mega-raids-november-2026/"
+    ]
+   },
+   {
+    "id": "leekduck:minior-showers-geminids-2026",
+    "name": "Minior Showers: Geminids 2026",
+    "sources": [
+     "https://leekduck.com/events/minior-showers-geminids-2026/"
+    ]
+   },
+   {
+    "id": "leekduck:pokemon-go-tour-alola-kaohsiung-2027",
+    "name": "Pokémon GO Tour: Alola - Kaohsiung 2027",
+    "sources": [
+     "https://leekduck.com/events/pokemon-go-tour-alola-kaohsiung-2027/"
+    ]
+   },
+   {
+    "id": "leekduck:pokemon-go-tour-alola-los-angeles-2027",
+    "name": "Pokémon GO Tour: Alola - Los Angeles 2027",
+    "sources": [
+     "https://leekduck.com/events/pokemon-go-tour-alola-los-angeles-2027/"
+    ]
+   },
+   {
+    "id": "leekduck:pokemon-go-tour-alola-global-2027",
+    "name": "Pokémon GO Tour: Alola - Global 2027",
+    "sources": [
+     "https://leekduck.com/events/pokemon-go-tour-alola-global-2027/"
+    ]
+   },
+   {
+    "id": "leekduck:minior-showers-eta-aquariids-2027",
+    "name": "Minior Showers: Eta Aquariids 2027",
+    "sources": [
+     "https://leekduck.com/events/minior-showers-eta-aquariids-2027/"
+    ]
+   },
+   {
+    "id": "leekduck:minior-showers-southern-delta-aquariids-2027",
+    "name": "Minior Showers: Southern Delta Aquariids 2027",
+    "sources": [
+     "https://leekduck.com/events/minior-showers-southern-delta-aquariids-2027/"
+    ]
+   },
+   {
+    "id": "leekduck:minior-showers-perseids-2027",
+    "name": "Minior Showers: Perseids 2027",
+    "sources": [
+     "https://leekduck.com/events/minior-showers-perseids-2027/"
+    ]
+   },
+   {
+    "id": "leekduck:gbl-twilight-trails_great-league-mega-edition_ultra-league-mega-edition_master-league-mega-edition-split-3",
+    "name": "Great League: Mega Edition, Ultra League: Mega Edition, and Master League: Mega Edition | Twilight Trails",
+    "sources": [
+     "https://leekduck.com/events/gbl-twilight-trails_great-league-mega-edition_ultra-league-mega-edition_master-league-mega-edition-split-3/"
+    ]
+   },
+   {
+    "id": "leekduck:mega-sableye-in-mega-raids-october-2026",
+    "name": "Mega Sableye in Mega Raids",
+    "sources": [
+     "https://leekduck.com/events/mega-sableye-in-mega-raids-october-2026/"
+    ]
+   },
+   {
+    "id": "leekduck:giratina-altered-forme-in-5-star-raid-battles-november-2026",
+    "name": "Giratina (Altered Forme) in 5-star Raid Battles",
+    "sources": [
+     "https://leekduck.com/events/giratina-altered-forme-in-5-star-raid-battles-november-2026/"
+    ]
+   },
+   {
+    "id": "leekduck:shadow-tornadus-incarnate-forme-in-shadow-raids-november-4-2026",
+    "name": "Shadow Tornadus (Incarnate Forme) in Shadow Raids",
+    "sources": [
+     "https://leekduck.com/events/shadow-tornadus-incarnate-forme-in-shadow-raids-november-4-2026/"
+    ]
+   },
+   {
+    "id": "hub:minior-showers-leonid-november-2026",
+    "name": "Minior Showers: Leonid (November 2026)",
+    "sources": [
+     "https://pokemongohub.net/post/event/minior-showers-leonid-november-2026/"
+    ]
+   },
+   {
+    "id": "hub:pokemon-go-wild-area-mexico-city-additional-details-maps-in-person-activities-notable-trainers-etc",
+    "name": "Pokémon GO Wild Area: Mexico City - Additional Details, Maps, In-Person Activities, Notable Trainers etc",
+    "sources": [
+     "https://pokemongohub.net/post/event/pokemon-go-wild-area-mexico-city-additional-details-maps-in-person-activities-notable-trainers-etc/"
+    ]
+   },
+   {
+    "id": "leekduck:go-pass-november-2026",
+    "name": "GO Pass: November",
+    "sources": [
+     "https://pokemongohub.net/post/guide/go-pass-november-2026/"
+    ]
+   },
+   {
+    "id": "twilightwishes",
+    "name": "Twilight Wishes",
+    "sources": [
+     "https://leekduck.com/events/twilight-wishes-2026/"
+    ]
+   },
+   {
+    "id": "trek",
+    "name": "Fall Marathon: Buddy Trek",
+    "sources": [
+     "https://pokemongo.com/news/fall-marathon-buddy-trek-2026/"
+    ]
+   },
+   {
+    "id": "smr2",
+    "name": "Super Mega Raid Day",
+    "sources": [
+     "https://leekduck.com/events/super-mega-raid-day-november-2026/"
+    ]
+   },
+   {
+    "id": "leekduck:raidhour20261104",
+    "name": "Giratina (Altered Forme) Raid Hour",
+    "sources": [
+     "https://leekduck.com/events/raidhour20261104/"
+    ]
+   },
+   {
+    "id": "leekduck:shadow-landorus-incarnate-forme-in-shadow-raids-october-2026",
+    "name": "Shadow Landorus (Incarnate Forme) in Shadow Raids",
+    "sources": [
+     "https://leekduck.com/events/shadow-landorus-incarnate-forme-in-shadow-raids-october-2026/"
+    ]
+   },
+   {
+    "id": "leekduck:giratina-origin-forme-in-5-star-raid-battles-october-2026",
+    "name": "Giratina (Origin Forme) in 5-star Raid Battles",
+    "sources": [
+     "https://leekduck.com/events/giratina-origin-forme-in-5-star-raid-battles-october-2026/"
+    ]
+   },
+   {
+    "id": "leekduck:go-pass-october-2026",
+    "name": "GO Pass: October",
+    "sources": [
+     "https://pokemongo.com/news/go-pass-october-2026/",
+     "https://leekduck.com/events/go-pass-october-2026/"
+    ]
+   },
+   {
+    "id": "leekduck:halloween-2026-part-2",
+    "name": "Pokémon GO Halloween 2026 Part II",
+    "sources": [
+     "https://leekduck.com/events/halloween-2026-part-2/",
+     "https://pokemongohub.net/post/event/pokemon-go-halloween-2026-part-two/"
+    ]
+   },
+   {
+    "id": "leekduck:max-mondays-2026-11-02",
+    "name": "Dynamax Machop during Max Monday",
+    "sources": [
+     "https://leekduck.com/events/max-mondays-2026-11-02/",
+     "https://pokemongohub.net/post/event/dynamax-machop-max-monday/"
+    ]
+   },
+   {
+    "id": "leekduck:halloween-2026-part-1",
+    "name": "Pokémon GO Halloween 2026 Part I",
+    "sources": [
+     "https://leekduck.com/events/halloween-2026-part-1/",
+     "https://leekduck.com/events/halloween-2026-part-2/"
+    ]
+   },
+   {
+    "id": "leekduck:pokemonspotlighthour2026-10-29",
+    "name": "Gastly Spotlight Hour",
+    "sources": [
+     "https://leekduck.com/events/pokemonspotlighthour2026-10-29/"
+    ]
+   },
+   {
+    "id": "leekduck:chandelure-super-mega-raid-day-2026",
+    "name": "Chandelure Super Mega Raid Day",
+    "sources": [
+     "https://leekduck.com/events/chandelure-super-mega-raid-day-2026/",
+     "https://pokemongohub.net/post/guide/super-mega-chandelure-raid-guide/"
+    ]
+   },
+   {
+    "id": "zorua",
+    "name": "Zorua Community Day",
+    "sources": [
+     "https://pokemongo.com/news/communityday-october-2026-zorua/"
+    ]
+   },
+   {
+    "id": "leekduck:raidhour20261028",
+    "name": "Giratina (Origin Forme) Raid Hour",
+    "sources": [
+     "https://leekduck.com/events/raidhour20261028/"
+    ]
+   },
+   {
+    "id": "leekduck:mega-charizard-x-mega-charizard-y-in-mega-raids-october-2026",
+    "name": "Mega Charizard X and Mega Charizard Y in Mega Raids",
+    "sources": [
+     "https://leekduck.com/events/mega-charizard-x-mega-charizard-y-in-mega-raids-october-2026/"
+    ]
+   },
+   {
+    "id": "leekduck:palkia-in-5-star-raid-battles-october-2026",
+    "name": "Palkia in 5-star Raid Battles",
+    "sources": [
+     "https://leekduck.com/events/palkia-in-5-star-raid-battles-october-2026/"
+    ]
+   },
+   {
+    "id": "leekduck:max-mondays-2026-10-26",
+    "name": "Dynamax Sableye during Max Monday",
+    "sources": [
+     "https://leekduck.com/events/max-mondays-2026-10-26/",
+     "https://pokemongohub.net/post/event/dynamax-sableye-max-monday/"
+    ]
+   },
+   {
+    "id": "minior",
+    "name": "Orionids Meteor Shower: Minior Debut",
+    "sources": [
+     "https://leekduck.com/events/minior-showers-orionids-2026/"
+    ]
+   },
+   {
+    "id": "leekduck:pokemon-go-city-safari-boston-2026-rescheduled",
+    "name": "Pokémon GO City Safari: Boston (Rescheduled)",
+    "sources": [
+     "https://pokemongo.com/news/city-safari-boston-rescheduled/",
+     "https://pokemongo.com/news/city-safari-boston-update/"
+    ]
+   },
+   {
+    "id": "leekduck:dynamax-uxie-mesprit-azelf-max-battle-day-2026",
+    "name": "Dynamax Uxie, Mesprit, and Azelf Max Battle Day",
+    "sources": [
+     "https://leekduck.com/events/dynamax-uxie-mesprit-azelf-max-battle-day-2026/"
+    ]
+   },
+   {
+    "id": "leekduck:pokemon-night-out-2026-twitch-drops",
+    "name": "Twitch Drops for Pokémon Night Out 2026",
+    "sources": [
+     "https://leekduck.com/events/pokemon-night-out-2026-twitch-drops/"
+    ]
+   },
+   {
+    "id": "leekduck:pokemon-night-out-los-angeles-2026",
+    "name": "Pokémon Night Out 2026 - Los Angeles",
+    "sources": [
+     "https://leekduck.com/events/pokemon-night-out-los-angeles-2026/"
+    ]
+   },
+   {
+    "id": "leekduck:pokemonspotlighthour2026-10-22",
+    "name": "Morelull Spotlight Hour",
+    "sources": [
+     "https://leekduck.com/events/pokemonspotlighthour2026-10-22/"
+    ]
+   },
+   {
+    "id": "leekduck:raidhour20261021",
+    "name": "Palkia Raid Hour",
+    "sources": [
+     "https://leekduck.com/events/raidhour20261021/"
+    ]
+   },
+   {
+    "id": "leekduck:pokemon-tcg-30th-celebration",
+    "name": "Pokémon TCG: 30th Celebration",
+    "sources": [
+     "https://pokemongo.com/news/tcg-30th-celebration-event/"
+    ]
+   },
+   {
+    "id": "leekduck:dialga-in-5-star-raid-battles-october-2026",
+    "name": "Dialga in 5-star Raid Battles",
+    "sources": [
+     "https://leekduck.com/events/dialga-in-5-star-raid-battles-october-2026/"
+    ]
+   },
+   {
+    "id": "leekduck:mega-dragonite-in-mega-raids-october-2026",
+    "name": "Mega Dragonite in Mega Raids",
+    "sources": [
+     "https://leekduck.com/events/mega-dragonite-in-mega-raids-october-2026/"
+    ]
+   },
+   {
+    "id": "leekduck:max-mondays-2026-10-19",
+    "name": "Dynamax Sneasel during Max Monday",
+    "sources": [
+     "https://leekduck.com/events/max-mondays-2026-10-19/"
+    ]
+   },
+   {
+    "id": "leekduck:fall-marathon-buddy-trek-2026",
+    "name": "Fall Marathon: Buddy Trek",
+    "sources": [
+     "https://leekduck.com/events/fall-marathon-buddy-trek-2026/"
+    ]
+   },
+   {
+    "id": "leekduck:minior-showers-orionids-2026",
+    "name": "Minior Showers: Orionids 2026",
+    "sources": [
+     "https://pokemongohub.net/post/event/minior-showers-orionids-october-2026/"
+    ]
+   },
+   {
+    "id": "space",
+    "name": "World Space Week",
+    "sources": [
+     "https://pokemongo.com/news/world-space-week-2026/"
+    ]
+   },
+   {
+    "id": "leekduck:sandile-hatch-day-2026",
+    "name": "Sandile Hatch Day",
+    "sources": [
+     "https://leekduck.com/events/sandile-hatch-day-2026/",
+     "https://pokemongohub.net/post/event/sandile-hatch-day/"
+    ]
+   },
+   {
+    "id": "leekduck:pokemonspotlighthour2026-10-15",
+    "name": "Stufful Spotlight Hour",
+    "sources": [
+     "https://leekduck.com/events/pokemonspotlighthour2026-10-15/"
+    ]
+   },
+   {
+    "id": "leekduck:raidhour20261014",
+    "name": "Dialga Raid Hour",
+    "sources": [
+     "https://leekduck.com/events/raidhour20261014/"
+    ]
+   },
+   {
+    "id": "leekduck:super-mega-raid-day-october-2026",
+    "name": "Super Mega Raid Day",
+    "sources": [
+     "https://pokemongo.com/news/chandelure-super-mega-raid-day-2026/",
+     "https://leekduck.com/events/chandelure-super-mega-raid-day-2026/"
+    ]
+   },
+   {
+    "id": "leekduck:mega-blastoise-in-mega-raids-october-2026",
+    "name": "Mega Blastoise in Mega Raids",
+    "sources": [
+     "https://leekduck.com/events/mega-blastoise-in-mega-raids-october-2026/"
+    ]
+   },
+   {
+    "id": "leekduck:yveltal-in-5-star-raid-battles-october-2026",
+    "name": "Yveltal in 5-star Raid Battles",
+    "sources": [
+     "https://leekduck.com/events/yveltal-in-5-star-raid-battles-october-2026/"
+    ]
+   },
+   {
+    "id": "leekduck:max-mondays-2026-10-12",
+    "name": "Dynamax Rookidee during Max Monday",
+    "sources": [
+     "https://leekduck.com/events/max-mondays-2026-10-12/"
+    ]
+   }
+  ]
+ },
  "sources": {
   "official": {
-   "listed": 23,
+   "listed": 22,
    "error": ""
   },
   "leekduck": {
@@ -10,13 +514,13 @@
    "error": ""
   },
   "hub": {
-   "listed": 15,
+   "listed": 11,
    "error": ""
   }
  },
  "pagesRead": 80,
- "events": 98,
- "worldEvents": 63,
+ "events": 101,
+ "worldEvents": 59,
  "worldUndated": [
   "GO Wild Area Stamp Rally"
  ],
@@ -25,6 +529,11 @@
    "source": "official",
    "title": "Celebrate the Festival of Lights with the return of Pikachu wearing a saree and Pikachu wearing a kurta! — Pokémon GO",
    "url": "https://pokemongo.com/news/festival-of-lights-2026/"
+  },
+  {
+   "source": "leekduck",
+   "title": "Pokémon GO Wild Area 2026: Mexico City",
+   "url": "https://leekduck.com/events/pokemon-go-wild-area-2026-mexico-city/"
   },
   {
    "source": "official",
@@ -58,8 +567,18 @@
   },
   {
    "source": "official",
+   "title": "Mexico City – GO Wild Area 2026 — Pokémon GO",
+   "url": "https://pokemongo.com/en/gowildarea/mexico-city/"
+  },
+  {
+   "source": "official",
    "title": "This weekend only! Log in November 6–8 for free Timed Research featuring Gigantamax Machamp! — Pokémon GO",
    "url": "https://pokemongo.com/news/gowildarea-2026-timed-research/"
+  },
+  {
+   "source": "official",
+   "title": "Friday experience update for Pokémon GO Wild Area: Mexico City",
+   "url": "https://pokemongo.com/news/gowildarea-mexicocity-friday-update/"
   },
   {
    "source": "official",
@@ -87,14 +606,19 @@
    "url": "https://pokemongo.com/news/minior-meteor-showers-2026/"
   },
   {
-   "source": "official",
-   "title": "Event Update: City Safari Boston — Pokémon GO",
-   "url": "https://pokemongo.com/news/city-safari-boston-update/"
+   "source": "leekduck",
+   "title": "Mega Sableye in Mega Raids",
+   "url": "https://leekduck.com/events/mega-sableye-in-mega-raids-october-2026/"
+  },
+  {
+   "source": "leekduck",
+   "title": "Giratina (Altered Forme) in 5-star Raid Battles",
+   "url": "https://leekduck.com/events/giratina-altered-forme-in-5-star-raid-battles-november-2026/"
   },
   {
    "source": "leekduck",
    "title": "Shadow Tornadus (Incarnate Forme) in Shadow Raids",
-   "url": "https://leekduck.com/events/shadow-tornadus-incarnate-forme-in-shadow-raids-november-16-2026/"
+   "url": "https://leekduck.com/events/shadow-tornadus-incarnate-forme-in-shadow-raids-november-4-2026/"
   },
   {
    "source": "hub",
@@ -105,6 +629,11 @@
    "source": "hub",
    "title": "Free Gigantamax Machamp Timed Research Available This Weekend Only!",
    "url": "https://pokemongohub.net/post/news/free-gigantamax-machamp-timed-research-available-this-weekend-only/"
+  },
+  {
+   "source": "hub",
+   "title": "Pokémon GO Wild Area: Mexico City - Additional Details, Maps, In-Person Activities, Notable Trainers etc",
+   "url": "https://pokemongohub.net/post/event/pokemon-go-wild-area-mexico-city-additional-details-maps-in-person-activities-notable-trainers-etc/"
   },
   {
    "source": "hub",
@@ -120,11 +649,6 @@
    "source": "hub",
    "title": "How to Beat Gigantamax Duraludon: Best Counters and Guide",
    "url": "https://pokemongohub.net/post/guide/how-to-beat-gigantamax-duraludon-best-counters-and-guide/"
-  },
-  {
-   "source": "hub",
-   "title": "Shadow Tornadus (Incarnate) Raid Counters Guide",
-   "url": "https://pokemongohub.net/post/guide/shadow-tornadus-incarnate-raid-counters-guide/"
   }
  ],
  "intl": {
@@ -203,23 +727,7 @@
  ],
  "gaps": [
   {
-   "event": "Pokémon GO Wild Area 2026: Mexico City",
-   "field": "bonuses",
-   "missingFrom": [
-    "official",
-    "official"
-   ]
-  },
-  {
-   "event": "Pokémon GO Wild Area 2026: Mexico City",
-   "field": "featured",
-   "missingFrom": [
-    "official",
-    "official"
-   ]
-  },
-  {
-   "event": "Pokémon GO Wild Area 2026: Mexico City",
+   "event": "GO Wild Area: Global",
    "field": "raids",
    "missingFrom": [
     "official",
@@ -227,7 +735,7 @@
    ]
   },
   {
-   "event": "Pokémon GO Wild Area 2026: Mexico City",
+   "event": "GO Wild Area: Global",
    "field": "eggs",
    "missingFrom": [
     "official",
@@ -235,7 +743,7 @@
    ]
   },
   {
-   "event": "Pokémon GO Wild Area 2026: Mexico City",
+   "event": "GO Wild Area: Global",
    "field": "research",
    "missingFrom": [
     "official",
@@ -243,26 +751,85 @@
    ]
   },
   {
-   "event": "Pokémon GO Wild Area 2026: Mexico City",
+   "event": "GO Wild Area: Global",
    "field": "shiny",
    "missingFrom": [
-    "official",
-    "official"
+    "hub"
    ]
   },
   {
-   "event": "Pokémon GO Wild Area 2026: Mexico City",
-   "field": "costumes",
-   "missingFrom": [
-    "official",
-    "official"
-   ]
-  },
-  {
-   "event": "Pokémon GO Wild Area 2026: Mexico City",
+   "event": "GO Wild Area: Global",
    "field": "tickets",
    "missingFrom": [
     "official",
+    "official"
+   ]
+  },
+  {
+   "event": "GO Wild Area: Global",
+   "field": "dates",
+   "missingFrom": []
+  },
+  {
+   "event": "GO Wild Area: Sendai",
+   "field": "bonuses",
+   "missingFrom": [
+    "official"
+   ]
+  },
+  {
+   "event": "GO Wild Area: Sendai",
+   "field": "featured",
+   "missingFrom": [
+    "official"
+   ]
+  },
+  {
+   "event": "GO Wild Area: Sendai",
+   "field": "raids",
+   "missingFrom": [
+    "official"
+   ]
+  },
+  {
+   "event": "GO Wild Area: Sendai",
+   "field": "eggs",
+   "missingFrom": [
+    "official"
+   ]
+  },
+  {
+   "event": "GO Wild Area: Sendai",
+   "field": "research",
+   "missingFrom": [
+    "official"
+   ]
+  },
+  {
+   "event": "GO Wild Area: Sendai",
+   "field": "shiny",
+   "missingFrom": [
+    "official"
+   ]
+  },
+  {
+   "event": "GO Wild Area: Sendai",
+   "field": "costumes",
+   "missingFrom": [
+    "official"
+   ]
+  },
+  {
+   "event": "GO Wild Area: Sendai",
+   "field": "tickets",
+   "missingFrom": [
+    "official"
+   ]
+  },
+  {
+   "event": "GO Wild Area: Sendai",
+   "field": "dates",
+   "missingFrom": [
     "official"
    ]
   },
@@ -345,63 +912,59 @@
    ]
   },
   {
-   "event": "Into the Wild",
+   "event": "Into the Wild 2026",
    "field": "bonuses",
    "missingFrom": [
-    "official",
     "official"
    ]
   },
   {
-   "event": "Into the Wild",
+   "event": "Into the Wild 2026",
    "field": "featured",
    "missingFrom": [
-    "official",
-    "official",
-    "hub",
-    "hub"
-   ]
-  },
-  {
-   "event": "Into the Wild",
-   "field": "raids",
-   "missingFrom": [
-    "official",
     "official"
    ]
   },
   {
-   "event": "Into the Wild",
-   "field": "research",
+   "event": "Into the Wild 2026",
+   "field": "raids",
    "missingFrom": [
-    "hub",
-    "hub"
+    "official"
    ]
   },
   {
-   "event": "Into the Wild",
+   "event": "Into the Wild 2026",
    "field": "shiny",
    "missingFrom": [
-    "official",
-    "official",
-    "hub",
-    "hub"
+    "official"
    ]
   },
   {
-   "event": "Into the Wild",
-   "field": "costumes",
+   "event": "Into the Wild 2026",
+   "field": "moves",
    "missingFrom": [
     "official",
-    "official",
     "leekduck"
+   ]
+  },
+  {
+   "event": "Into the Wild 2026",
+   "field": "tickets",
+   "missingFrom": [
+    "official"
+   ]
+  },
+  {
+   "event": "Into the Wild 2026",
+   "field": "dates",
+   "missingFrom": [
+    "official"
    ]
   },
   {
    "event": "Into the Wild",
    "field": "tickets",
    "missingFrom": [
-    "official",
     "official"
    ]
   },
@@ -409,7 +972,6 @@
    "event": "Into the Wild",
    "field": "dates",
    "missingFrom": [
-    "official",
     "official"
    ]
   },

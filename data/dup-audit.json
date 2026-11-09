@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-07T20:33:40.613Z",
+ "updated": "2026-11-09T10:23:31.828Z",
  "joinedThisRun": [
   {
    "kept": "w-pokemon-fossil-museum-2026",
@@ -17,11 +17,6 @@
    "why": "same event"
   },
   {
-   "kept": "w-go-wild-area-2026-mexico-city",
-   "dropped": "w-go-wild-area-2026-mexico-city-2026-11-06",
-   "why": "same event"
-  },
-  {
    "kept": "w-go-wild-area-2026-sendai-tohoku",
    "dropped": "w-go-wild-area-2026-sendai-and-tohoku",
    "why": "same event"
@@ -34,25 +29,6 @@
  ],
  "same": [],
  "crossList": [
-  {
-   "keep": {
-    "id": "sendai",
-    "name": "GO Wild Area: Sendai",
-    "place": "",
-    "start": "2026-11-06",
-    "end": "2026-11-08",
-    "list": "curated"
-   },
-   "dupe": {
-    "id": "w-go-wild-area-2026-sendai-tohoku",
-    "name": "GO Wild Area 2026 Sendai Tohoku",
-    "place": "Sendai and Tohoku, Japan",
-    "start": "2026-11-06",
-    "end": "2026-11-08",
-    "list": "world"
-   },
-   "why": "same dates, 3 shared words (100%)"
-  },
   {
    "keep": {
     "id": "into",
@@ -70,7 +46,7 @@
     "end": "2026-11-13",
     "list": "world"
    },
-   "why": "same dates, short matching titles"
+   "why": "ruled by you"
   },
   {
    "keep": {
@@ -184,7 +160,7 @@
     "end": "2026-11-30",
     "list": "world"
    },
-   "why": "same dates, 2 shared words (100%)"
+   "why": "ruled by you"
   }
  ],
  "maybe": [
@@ -204,25 +180,6 @@
     "start": "2026-11-21",
     "end": "2026-11-21",
     "list": "curated"
-   },
-   "why": "dates fit and 1 shared word"
-  },
-  {
-   "a": {
-    "id": "gopassnov",
-    "name": "GO Pass: November",
-    "place": "",
-    "start": "2026-11-03",
-    "end": "2026-12-01",
-    "list": "curated"
-   },
-   "b": {
-    "id": "w-this-weekend-only-log-in-november-6-8-for-free-tim",
-    "name": "This weekend only! Log in November 6–8 for free Timed Research featuring Gigantamax Machamp",
-    "place": "",
-    "start": "2026-11-06",
-    "end": "2026-11-08",
-    "list": "world"
    },
    "why": "dates fit and 1 shared word"
   },
@@ -282,25 +239,6 @@
     "list": "world"
    },
    "why": "dates fit and 2 shared words"
-  },
-  {
-   "a": {
-    "id": "w-this-weekend-only-log-in-november-6-8-for-free-tim",
-    "name": "This weekend only! Log in November 6–8 for free Timed Research featuring Gigantamax Machamp",
-    "place": "",
-    "start": "2026-11-06",
-    "end": "2026-11-08",
-    "list": "world"
-   },
-   "b": {
-    "id": "w-go-wild-area-gigantamax-machamp-power-up-timed-res",
-    "name": "GO Wild Area Gigantamax Machamp Power Up Timed Research",
-    "place": "",
-    "start": "2026-11-06",
-    "end": "2026-11-15",
-    "list": "world"
-   },
-   "why": "dates fit and 4 shared words"
   }
  ],
  "odd": []
