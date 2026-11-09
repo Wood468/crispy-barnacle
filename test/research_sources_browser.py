@@ -114,7 +114,9 @@ with sync_playwright() as p:
         shot(page, f'research-event-into-the-wild-{width}')
         page.locator('#evd [data-open-research]').first.click()
         page.wait_for_selector('#research-list .research-event')
-        assert page.locator('#research-list .research-event').first.evaluate('(el) => el.getBoundingClientRect().top >= 0')
+        # The tab opens on the event it was opened from (an earlier-starting event may sit above it in the list).
+        page.wait_for_timeout(600)
+        assert page.locator('#research-list .research-event', has_text='Into the Wild').first.evaluate('(el) => { const r = el.getBoundingClientRect(); return r.bottom > 0 && r.top < innerHeight; }')
 
         # Search by Pokémon / reward, and an honest no-match state.
         page.fill('#research-search', 'magnemite')
