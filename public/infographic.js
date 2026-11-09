@@ -267,7 +267,13 @@
     var mons = (ev.featured || []).filter(function (f, i, a) {
       return f && f.name && a.findIndex(function (x) { return x && x.name === f.name; }) === i;
     }).slice(0, 8);
-    var images = (extra.infographics || []).filter(function (x) { return x && safe(x.url); });
+    // Published and newly approved queues may overlap: show each poster only once.
+    var posterUrls = Object.create(null);
+    var images = (extra.infographics || []).filter(function (x) {
+      var url=x&&safe(x.url);
+      if(!url||posterUrls[url])return false;
+      posterUrls[url]=true;return true;
+    });
     var direct = safe(ev.infographicUrl || ev.infographic);
     if (!images.length && direct) images.push({ label: ev.name + ' infographic', url: direct, source: ev.source || 'Event source', sourceUrl: ev.link || '', alt: ev.name + ' infographic' });
     var link = safe(ev.link);
