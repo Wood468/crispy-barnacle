@@ -129,6 +129,18 @@ function activityTime(a,ctx){
 }
 function activityPlace(a){var place=a&&(a.location||a.region);return typeof place==='string'?place:place&&typeof place.name==='string'?place.name:'';}
 function scheduledActivities(model,ctx,presentation){return model.activities.filter(function(a){return a.schedule&&a.presentation===presentation;}).map(function(a){return '<article class="'+(presentation==='rotation'?'ue-rotation':'ue-activity-window')+'" data-activity="'+esc(a.id)+'"><h4>'+esc(a.title||a.name||'Activity')+'</h4><p>'+esc(activityTime(a,ctx))+'</p>'+(activityPlace(a)?'<small>'+esc(activityPlace(a))+'</small>':'')+(a.access&&a.access!=='unknown'&&a.access!=='all'?'<small>'+esc(a.access)+'</small>':'')+'</article>';}).join('');}
+// Every event with structured dated activities receives the same compact schedule preview.
+// Never infer times from prose; the validated event contract owns time-zone conversion.
+function schedulePreview(model,ctx){
+ var activities=(model.activities||[]).filter(function(a){return a.schedule&&(a.presentation==='schedule'||a.presentation==='rotation');});
+ if(!activities.length)return '';
+ activities=activities.slice().sort(function(a,b){return String(a.schedule.start).localeCompare(String(b.schedule.start));});
+ var count=Math.min(activities.length,5);
+ var cards=activities.slice(0,count).map(function(a){
+  return '<li><strong>'+esc(a.title||a.name||'Scheduled activity')+'</strong><span>'+esc(activityTime(a,ctx))+'</span></li>';
+ }).join('');
+ return '<div class="ue-schedule-preview"><h3 class="ue-mini-h">Event schedule</h3><ol>'+cards+'</ol>'+(activities.length>count?'<p class="ue-more-note">+'+(activities.length-count)+' more scheduled activities below</p>':'')+'</div>';
+}
 function render(model,ctx){ctx=ctx||{};var view=V.project(model),fields=model.internalValidation&&model.internalValidation.fields||{},body={};
  var galleryOnly=model.encounters.every(function(e){return e.method==='other';});
  body.encounters=section('evd-pokemon',galleryOnly?'Featured Pokémon':'Pokémon',gallery(model,ctx));
@@ -173,7 +185,7 @@ function render(model,ctx){ctx=ctx||{};var view=V.project(model),fields=model.in
 
  var panels=[],label={encounters:'Pokémon',bonuses:'Bonuses',research:'Research',passes:'GO Pass',tickets:'Tickets'};
  var incomplete=!selected.length&&!info.length;
- var overview=(ctx.overview||'')+(info.length?'<h3 class="ue-mini-h">Highlights</h3><ul class="ue-facts ue-summary">'+info.filter(function(t){var k=String(t).toLowerCase().slice(0,40);return !model.tickets.some(function(x){return value(x).toLowerCase().indexOf(k)>=0;})&&!model.bonuses.some(function(x){return value(x).toLowerCase().indexOf(k)>=0;});}).slice(0,4).map(function(t){return '<li>'+esc(t)+'</li>';}).join('')+'</ul>':'')+(incomplete||(model.completeness==='partial'&&selected.length<2)?'<p class="ue-more-note" role="note">More details to come. Only verified information is shown.</p>':'');
+ var overview=(ctx.overview||'')+schedulePreview(model,ctx)+(info.length?'<h3 class="ue-mini-h">Highlights</h3><ul class="ue-facts ue-summary">'+info.filter(function(t){var k=String(t).toLowerCase().slice(0,40);return !model.tickets.some(function(x){return value(x).toLowerCase().indexOf(k)>=0;})&&!model.bonuses.some(function(x){return value(x).toLowerCase().indexOf(k)>=0;});}).slice(0,4).map(function(t){return '<li>'+esc(t)+'</li>';}).join('')+'</ul>':'')+(incomplete||(model.completeness==='partial'&&selected.length<2)?'<p class="ue-more-note" role="note">More details to come. Only verified information is shown.</p>':'');
  panels.push({id:'overview',label:'Overview',html:'<div class="ue-overview">'+(cancelled||'')+conflict+overview+(ctx.actions||'')+'</div>'});
  ['encounters','bonuses','research','passes','tickets'].forEach(function(k){if(selected.indexOf(k)>=0&&body[k]&&(k!=='bonuses'||/class="ue-(bonus|note)/.test(body[k])))panels.push({id:k,label:label[k],html:body[k]});});
  var sched=(selected.indexOf('rotations')>=0?body.rotations:'')+(selected.indexOf('schedule')>=0?body.schedule:'');
