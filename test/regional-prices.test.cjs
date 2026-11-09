@@ -23,7 +23,7 @@ test('catalogue uses latest verified Australian price, not USD or unverified ent
   assert.equal(rows.length,1);
   assert.equal(rows[0].aud,12);
   assert.equal(rows[0].india.basis,'estimated');
-  assert.equal(rows[0].indonesia.amount,40000);
+  assert.equal(rows[0].indonesia,null);
 });
 test('paired confirmed observations calibrate IDR without inventing exchange rates', () => {
   const rows = [
@@ -38,4 +38,15 @@ test('unknown regional channel and invalid dates cannot calibrate local prices',
   const local={product:'store-item',currency:'IDR',region:'ID',amount:40000,verified:true,observed:'2026-11-09'};
   assert.equal(r.estimate(10,'ID','items',r.observations([au,local])),null);
   assert.equal(r.estimate(10,'ID','items',r.observations([au,{...local,channel:'web',observed:'not-a-date'}])),null);
+});
+
+test('Indonesian screenshot tiers keep standalone GO Pass and Ultra Box separate', () => {
+  assert.equal(r.idReference('GO Pass Deluxe: Into the Wild').amount,76000);
+  assert.equal(r.idReference('GO Pass Deluxe: Into the Wild').basis,'verified');
+  assert.equal(r.idReference('GO Pass Deluxe: Future Wild Area').amount,76000);
+  assert.equal(r.idReference('GO Pass Deluxe: Future Wild Area + 10 Ranks Ultra Box').amount,126000);
+  assert.equal(r.idReference('GO Pass Deluxe: December').amount,41000);
+  assert.equal(r.idReference('GO Pass Deluxe: December Ultra Box').amount,76000);
+  assert.equal(r.idReference('Special Research Ticket'),null);
+  assert.equal(r.idReference('Pokemon Storage').amount,10000);
 });
