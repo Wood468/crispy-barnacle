@@ -49,9 +49,9 @@
       if (!au) return;
       ['IN','ID'].forEach(function (region) {
         var currency = region === 'IN' ? 'INR' : 'IDR';
-        var local = list.filter(function (p) { return p.currency === currency && p.region === region && p.verified === true; }).sort(function (a,b) { return String(b.observed).localeCompare(String(a.observed)); })[0];
-        if (!local || !au.observed || !local.observed || Math.abs(Date.parse(au.observed) - Date.parse(local.observed)) > 14 * 86400000) return;
-        out.push({region:region, channel:region === 'IN' ? 'in-app' : 'web', category:category(au), aud:au.amount, local:local.amount, observed:local.observed, product:key});
+        var local = list.filter(function (p) { return p.currency === currency && p.region === region && p.verified === true && p.channel === (region === 'IN' ? 'in-app' : 'web'); }).sort(function (a,b) { return String(b.observed).localeCompare(String(a.observed)); })[0];
+        if (!local || !au.observed || !local.observed || !Number.isFinite(Date.parse(au.observed)) || !Number.isFinite(Date.parse(local.observed)) || Math.abs(Date.parse(au.observed) - Date.parse(local.observed)) > 14 * 86400000) return;
+        if (!out.some(function (x) { return x.product === key && x.region === region; })) out.push({region:region, channel:local.channel, category:category(au), aud:au.amount, local:local.amount, observed:local.observed, product:key});
       });
     });
     return out;
