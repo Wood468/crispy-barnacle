@@ -48,7 +48,7 @@ test('daily Raid and Max hours resolve to 18:00–19:00 in different player time
  for(const zone of ['Australia/Melbourne','America/Los_Angeles','Asia/Tokyo']){
   for(const activity of event.activities){
    const range=clock.range(activity.schedule,zone);
-   const start=clock.fields(Date.parse(range.start),zone),end=clock.fields(Date.parse(range.end),zone);
+   const start=clock.fields(range.start,zone),end=clock.fields(range.end,zone);
    assert.equal(start.hour,18,zone+' '+activity.id+' start');
    assert.equal(end.hour,19,zone+' '+activity.id+' end');
    assert.equal(end.day,start.day,zone+' '+activity.id+' day');
