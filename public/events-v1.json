@@ -25936,7 +25936,7 @@
     },
     "imageReviewed": true,
     "contentHash": "244e1a218c776c7de71a786fe7a96bc90d5ca2212bc0e2a5060da28a5e71b680",
-    "revision": 17,
+    "revision": 19,
     "amended": true,
     "native": false,
     "collection": "source-details"
@@ -51319,7 +51319,7 @@
     },
     "imageReviewed": true,
     "contentHash": "dce45278d164ec7d0efdbec4d901eac6f95e08bdec7b64c64c440d1336263583",
-    "revision": 12,
+    "revision": 14,
     "amended": true,
     "native": false,
     "collection": "world-events"
@@ -52409,7 +52409,7 @@
    "completeness": "partial",
    "lifecycle": "announced",
    "attendance": "in-person",
-   "location": "Japan",
+   "location": "South Korea",
    "image": null,
    "notes": [],
    "internalValidation": {
@@ -52423,8 +52423,8 @@
      "start": "2026-11-03",
      "end": "2026-11-03"
     },
-    "contentHash": "0ca84974cfa677f1be63ebd7712b231d3f83b8d9beb34b2f503e737968fe94fe",
-    "revision": 8,
+    "contentHash": "5cdd55e002ca42377352e7b637a57f2e39afa99cde6bbc64780733a9cc28f6b3",
+    "revision": 9,
     "amended": false,
     "native": false,
     "collection": "world-events"
@@ -60892,7 +60892,7 @@
      "end": "2027-04-11"
     },
     "contentHash": "84950064738e11a798ef98f9fd6ab913640b138fb1594e38612f64db09c4dd24",
-    "revision": 12,
+    "revision": 14,
     "amended": true,
     "native": false,
     "collection": "world-events"
