@@ -8,7 +8,7 @@ const ID = { region: "ID", channel: "web", currency: "IDR", observed: "2026-11-0
 export const OBSERVATIONS = [
   { ...ID, id: "id-itw-deluxe", product: "GO Pass Deluxe: Into the Wild", kind: "event-pass", amount: 76000 },
   { ...ID, id: "id-itw-deluxe-ranks", product: "GO Pass Deluxe: Into the Wild + 10 Ranks", kind: "event-pass-ranks", amount: 101000 },
-  { ...ID, id: "id-itw-deluxe-ranks-ultra", product: "GO Pass Deluxe: Into the Wild + 10 Ranks Ultra Box", kind: "event-pass-ultra", amount: 126000 },
+  { ...ID, id: "id-itw-deluxe-ranks-ultra", product: "GO Pass Deluxe: Into the Wild + 10 Ranks Ultra Box", kind: "event-pass-ranks-ultra", amount: 126000 },
   { ...ID, id: "id-monthly-deluxe", product: "Monthly GO Pass Deluxe", kind: "monthly-pass", amount: 41000, pairAud: { amount: 12.99, ref: "go-pass-oct-deluxe", observed: "2026-10-12" } },
   { ...ID, id: "id-monthly-ultra", product: "Monthly Deluxe Ultra Box", kind: "monthly-pass-ultra", amount: 76000, pairAud: { amount: 22.99, ref: "go-pass-oct-ultrabox", observed: "2026-10-12" } },
   { ...ID, id: "id-storage-50", product: "Pokémon Storage +50", kind: "storage", amount: 10000 },
