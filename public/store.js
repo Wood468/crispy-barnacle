@@ -51,7 +51,7 @@
     var R = window.GORegionalPrices;
     var products = obs.filter(function (o) { return o.region === 'ID' && o.channel === 'web' && o.status === 'verified' && o.kind !== 'coins' && o.amount > 0; });
     return products.map(function (o) {
-      var price = R.exact(obs, 'ID', 'web', o.product);
+      var price = R.exact([o], 'ID', 'web', o.product);
       if (!price) return '';
       var label = 'Observed cash price · Indonesia Web Store · ' + when(price.observed);
       return '<div class="sp-r sp-regional-row"><span class="sp-n">' + icon(o.product) + esc(o.product) + '</span><span class="sp-regional-value"><b>' + esc(R.fmt(price.amount, price.currency)) + '</b> <small>' + esc(label) + '</small></span></div>';
