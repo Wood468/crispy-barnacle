@@ -84,7 +84,7 @@ self.addEventListener('fetch', function (event) {
   // Cache only Leek Duck's event-banner image path, not arbitrary third-party assets.
   // Opaque CDN responses can be cached by the service worker even when CORS is unavailable.
   if (url.protocol === 'https:' && url.hostname === 'cdn.leekduck.com' &&
-      /^\\/assets\\/img\\/events\\//.test(url.pathname) &&
+      url.pathname.startsWith('/assets/img/events/') &&
       request.destination === 'image') {
     event.respondWith((async function () {
       const cache = await caches.open(EVENT_BANNER_CACHE);
