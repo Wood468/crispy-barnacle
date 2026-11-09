@@ -1,6 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
+import { createRequire } from 'node:module';
+const require = createRequire(import.meta.url);
 
 const A = require('../public/event-art.js');
 const ev = { name: 'Into the Wild', start: '2026-11-09T00:00:00Z', end: '2026-11-13T23:00:00Z' };
