@@ -7,6 +7,122 @@
   "eventImages": {},
   "candidates": [
     {
+      "id": "discord:1569252788888674328",
+      "source": "discord",
+      "creator": "",
+      "title": "GO Weekly T 2",
+      "url": "https://discord.com/channels/@me/1558793395198099618/1569252788888674328",
+      "publishedAt": "2026-11-09T07:30:20.178000+00:00",
+      "imageUrl": "https://cdn.discordapp.com/attachments/886998693897719819/1569158128367567010/GO_Weekly_T_2.png?ex=6af26fe3&is=6af11e63&hm=bf208780cf0fc30482fc68616d7d09c35ea2be94df70243bfe752e5160ec8a45&",
+      "reviewStatus": "weekly",
+      "decision": "pending",
+      "ocrChecked": true,
+      "ocrText": "© GOW-L/, | 9-15 NOVEMBER MONDAY TUESDAY WEDNESDAY THURSDAY FRIDAY SATURDAY SUNDAY 9 NOV 10 NOV 11 NOV 12 NOV 13 NOV 14 NOV 15 NOV —_ uu —~n Qu qa DAILY DISCOVERIES PAUSED * NOV 9-15 RAIDS ve —__ fe ie @ Z Wt {\\ RAID Ng ( Vv + eZ LEAGuE i ROTATION MINIOR ° > SHOWERS @© 10:00 am @ 8:00 pm LEONIDS INTO THE WILD — 7 o) INESO) yee eI We ae and ne events 9 @ wid Pokémon Six museums Stamp Rally APAC Cross-Region Observatory ADIDAS collab Mall Explo: Malaysia/Philig @esa across Europe Po. Until 2029 EA until Dec 6 Until January 2027) Until Dec 2026 ee Until 30 APR 2027 Pokémon Center UK NATIONAL . 5 until Aug 2027 _ until Aug 2027 Pokémon Jet Lg <= Ss Le] TRUST SITES v AVcr K. ~ Lae | Until Dec 31 d G47IX 90 @xVea IGH Follow for more g47ix.pro wi",
+      "eventMatch": {
+        "eventId": "into",
+        "eventTitle": "Into the Wild",
+        "score": 0.814,
+        "confidence": "high",
+        "matchedTerms": [
+          "wild",
+          "2026",
+          "raids",
+          "raid",
+          "nov",
+          "until",
+          "daily",
+          "discoveries",
+          "poke",
+          "mon"
+        ],
+        "alternatives": [
+          {
+            "eventId": "into",
+            "eventTitle": "Into the Wild",
+            "score": 0.814
+          },
+          {
+            "eventId": "leekduck:into-the-wild-2026",
+            "eventTitle": "Into the Wild",
+            "score": 0.804
+          },
+          {
+            "eventId": "minior2",
+            "eventTitle": "Minior Showers: Leonids",
+            "score": 0.797
+          }
+        ],
+        "method": "title-to-public/data.json heuristic",
+        "requiresHumanVerification": true
+      },
+      "reviewNote": "Two events look alike. Please choose.",
+      "signals": [
+        "picture text names the event",
+        "date in the picture is inside the event",
+        "posted around the event"
+      ],
+      "matchScore": 6,
+      "stagedPath": "/infographics/g47ix/discord-1569252788888674328.webp"
+    },
+    {
+      "id": "discord:1569163050190246019",
+      "source": "discord",
+      "creator": "",
+      "title": "GO Weekly T 2",
+      "url": "https://discord.com/channels/@me/1558793395198099618/1569163050190246019",
+      "publishedAt": "2026-11-09T01:33:44.805000+00:00",
+      "imageUrl": "https://cdn.discordapp.com/attachments/886998693897719819/1569158128367567010/GO_Weekly_T_2.png?ex=6af26fe3&is=6af11e63&hm=bf208780cf0fc30482fc68616d7d09c35ea2be94df70243bfe752e5160ec8a45&",
+      "reviewStatus": "weekly",
+      "decision": "pending",
+      "ocrChecked": true,
+      "ocrText": "© GOW-L/, | 9-15 NOVEMBER MONDAY TUESDAY WEDNESDAY THURSDAY FRIDAY SATURDAY SUNDAY 9 NOV 10 NOV 11 NOV 12 NOV 13 NOV 14 NOV 15 NOV —_ uu —~n Qu qa DAILY DISCOVERIES PAUSED * NOV 9-15 RAIDS ve —__ fe ie @ Z Wt {\\ RAID Ng ( Vv + eZ LEAGuE i ROTATION MINIOR ° > SHOWERS @© 10:00 am @ 8:00 pm LEONIDS INTO THE WILD — 7 o) INESO) yee eI We ae and ne events 9 @ wid Pokémon Six museums Stamp Rally APAC Cross-Region Observatory ADIDAS collab Mall Explo: Malaysia/Philig @esa across Europe Po. Until 2029 EA until Dec 6 Until January 2027) Until Dec 2026 ee Until 30 APR 2027 Pokémon Center UK NATIONAL . 5 until Aug 2027 _ until Aug 2027 Pokémon Jet Lg <= Ss Le] TRUST SITES v AVcr K. ~ Lae | Until Dec 31 d G47IX 90 @xVea IGH Follow for more g47ix.pro wi",
+      "eventMatch": {
+        "eventId": "into",
+        "eventTitle": "Into the Wild",
+        "score": 0.814,
+        "confidence": "high",
+        "matchedTerms": [
+          "wild",
+          "2026",
+          "raids",
+          "raid",
+          "nov",
+          "until",
+          "daily",
+          "discoveries",
+          "poke",
+          "mon"
+        ],
+        "alternatives": [
+          {
+            "eventId": "into",
+            "eventTitle": "Into the Wild",
+            "score": 0.814
+          },
+          {
+            "eventId": "leekduck:into-the-wild-2026",
+            "eventTitle": "Into the Wild",
+            "score": 0.804
+          },
+          {
+            "eventId": "minior2",
+            "eventTitle": "Minior Showers: Leonids",
+            "score": 0.797
+          }
+        ],
+        "method": "title-to-public/data.json heuristic",
+        "requiresHumanVerification": true
+      },
+      "reviewNote": "Two events look alike. Please choose.",
+      "signals": [
+        "picture text names the event",
+        "date in the picture is inside the event",
+        "posted around the event"
+      ],
+      "matchScore": 6,
+      "stagedPath": "/infographics/g47ix/discord-1569163050190246019.webp"
+    },
+    {
       "id": "discord:1569143538011218021",
       "source": "discord",
       "creator": "",
