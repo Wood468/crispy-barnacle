@@ -132,16 +132,25 @@
   }
   /* Rows for the Store page: every AU catalogue item with the best Indonesian / Indian price known, verified or estimated. */
   function catalogue(prices, obs, now) {
-    var latest = {};
+    var latest = {}, all = {};
     (prices || []).forEach(function (p) {
       if (!p || p.currency !== 'AUD' || p.region !== 'AU' || p.verified !== true || !(p.amount > 0) || !/^store-/.test(p.product)) return;
       if (!latest[p.product] || String(p.observed) > String(latest[p.product].observed)) latest[p.product] = p;
     });
-    return Object.keys(latest).map(function (key) {
-      var p = latest[key], kind = kindOf(p.label || key);
-      return { product: key, label: p.label || key, group: p.group || 'Other', kind: kind, aud: p.amount, observed: p.observed,
-        india: reference({ region: 'IN', channel: 'in-app', product: p.label || key, kind: kind, aud: p.amount }, obs, now),
-        indonesia: reference({ region: 'ID', channel: 'web', product: p.label || key, kind: kind, aud: p.amount }, obs, now) };
+    Object.keys(latest).forEach(function (key) {
+      var p = latest[key], label = p.label || key;
+      all[norm(label)] = { product: key, label: label, group: p.group || 'Other', aud: p.amount, observed: p.observed };
+    });
+    (obs || []).forEach(function (o) {
+      if (!usable(o) || !o.product) return;
+      var key = norm(o.product);
+      if (!all[key]) all[key] = { product: o.id || o.product, label: o.product, group: o.kind || kindOf(o.product), aud: null, observed: o.observed };
+    });
+    return Object.keys(all).map(function (key) {
+      var p = all[key], kind = kindOf(p.label);
+      return { product: p.product, label: p.label, group: p.group, kind: kind, aud: p.aud, observed: p.observed,
+        india: reference({ region: 'IN', channel: 'in-app', product: p.label, kind: kind, aud: p.aud }, obs, now),
+        indonesia: reference({ region: 'ID', channel: 'web', product: p.label, kind: kind, aud: p.aud }, obs, now) };
     });
   }
   function fmt(v, cur) { var sym = cur === 'IDR' ? 'Rp ' : cur === 'INR' ? '₹' : cur === 'AUD' ? 'A$' : ''; return sym + Number(v).toLocaleString('en-AU', cur === 'AUD' ? { minimumFractionDigits: 2, maximumFractionDigits: 2 } : { maximumFractionDigits: 0 }); }
