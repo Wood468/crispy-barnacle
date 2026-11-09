@@ -96,6 +96,7 @@ with sync_playwright() as p:
         assert dex['m']['own']['1'] == 1 and dex['m']['own']['25'] == 1 and dex['have']['25'] == 1, dex
         us = json.loads(page.evaluate("localStorage.getItem('gofn-us-v1')"))
         assert us['a']['v'] == 1, us
+        errors = [e for e in errors if 'access control checks' not in e]  # WebKit reports blocked stub fetches as page errors
         assert not errors, errors
         context.close()
 
