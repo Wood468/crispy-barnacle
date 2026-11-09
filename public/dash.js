@@ -1172,7 +1172,13 @@
     function eventLink(name) {
       var model = name && window.GOEventRegistry && GOEventRegistry.events().filter(function (m) { return m && m.title && GOLIB.norm(m.title) === GOLIB.norm(name); })[0];
       var ev = model && GOEventRegistry.display(model);
-      return ev ? '<button type="button" class="rc-chip rc-event" data-open="' + esc(ev.id) + '" aria-label="Open event details for ' + esc(name) + '">Part of ' + esc(name) + ' ›</button>' : '';
+      // Curated raid rotations can reference a legacy event before its universal
+      // registry record has been hydrated. Keep the event link available in that case.
+      if (!ev && name) {
+        var legacy = (D.events || []).filter(function (e) { return e && GOLIB.norm(e.t || e.name || '') === GOLIB.norm(name); })[0];
+        if (legacy) ev = { id: legacy.id };
+      }
+      return ev && ev.id ? '<button type="button" class="rc-chip rc-event" data-open="' + esc(ev.id) + '" aria-label="Open event details for ' + esc(name) + '">Part of ' + esc(name) + ' ›</button>' : '';
     }
     function windowChip(startMs, endMs) {
       var st = GOLIB.raidWindowState(startMs, endMs, now().getTime());
