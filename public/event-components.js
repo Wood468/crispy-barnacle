@@ -136,8 +136,8 @@ function sourceHighlights(model){
  var rules=[
   {label:'Daily Raid & Max Battle hours',re:/\b(?:raid hour|max battle hour)\b/i,keys:['dates','raids','bonuses']},
   {label:'GO Pass reward',re:/\bsilver bottle cap\b/i,keys:['featured','tickets','bonuses']},
-  {label:'Shiny Gimmighoul · Coin Bag',re:/\\bshiny gimmighoul\\b.*\\bcoin bag\\b|\\bcoin bag\\b.*\\bshiny gimmighoul\\b/i,keys:['bonuses','shiny','featured']},
-  {label:'Shiny Meltan · Mystery Box',re:/\\bshiny meltan\\b.*\\bmystery box\\b|\\bmystery box\\b.*\\bshiny meltan\\b/i,keys:['bonuses','shiny','featured']},
+  {label:'Shiny Gimmighoul · Coin Bag',re:/\bshiny gimmighoul\b.*\bcoin bag\b|\bcoin bag\b.*\bshiny gimmighoul\b/i,keys:['bonuses','shiny','featured']},
+  {label:'Shiny Meltan · Mystery Box',re:/\bshiny meltan\b.*\bmystery box\b|\bmystery box\b.*\bshiny meltan\b/i,keys:['bonuses','shiny','featured']},
   {label:'Raid access',re:/\bremote raid (?:pass )?limit\b|\bno limit on remote raids\b/i,keys:['bonuses','raids']}
  ];
  var used=new Set(),out=[];
