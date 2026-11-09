@@ -16,3 +16,16 @@ test('only exact known products update, with verified source',()=>{
   assert.equal(r.data.prices.at(-1).amount,9.99);
   assert.equal(r.data.prices.at(-1).verified,true);
 });
+
+test('discovers a new AU product only with a valid official purchase slug',()=>{
+  const r=updatePrices(base(),{fetched:'2026-11-09T00:00:00Z',items:[
+    {name:'New GO Pass Deluxe',price:'A$12.99',href:'/purchase/item/web-go-pass-november'},
+    {name:'Bad slug',price:'A$2.99',href:'https://example.com/purchase/item/other'},
+    {name:'No link',price:'A$3.99'}
+  ]});
+  assert.equal(r.changed,1);
+  const added=r.data.prices.at(-1);
+  assert.equal(added.product,'store-auto-web-go-pass-november');
+  assert.equal(added.group,'Tickets');
+  assert.equal(added.url,'https://store.pokemongo.com/purchase/item/web-go-pass-november');
+});
