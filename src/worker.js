@@ -22,6 +22,7 @@ import * as auth from "./auth.js";
 import * as jobs from "./jobs.js";
 import { ogImage, OG_HOSTS } from "./og.js";
 import { IMAGE_CSP_HOSTS } from "./image-policy.js";
+import { OBSERVATIONS as REGIONAL_OBSERVATIONS } from "./regional-observations.js";
 import { venueItems, venueFor, describeVenue } from "./venue-times.js";
 export { ogImage };
 
@@ -563,7 +564,7 @@ async function placesPrivate(request, env) {
 async function pricesPrivate(request, env) {
   if (!request.headers.get("x-pin")) return json({ error: "Owner only." }, 401);
   const denied = await gate(request, env); if (denied) return denied;
-  const res = json(await privateFile(env, "prices"), 200); res.headers.set("cache-control", "private, no-store"); return res;
+  const res = json({ ...(await privateFile(env, "prices")), regional: REGIONAL_OBSERVATIONS }, 200); res.headers.set("cache-control", "private, no-store"); return res;
 }
 async function authRoutes(request, env, url) {
   if (!env.DB || !env.SYNC_PIN) return json({ error: "Not switched on." }, 404);

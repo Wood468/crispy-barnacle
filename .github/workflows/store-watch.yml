@@ -33,9 +33,15 @@ jobs:
         run: |
           pip install playwright
           python -m playwright install --with-deps chromium
-      - name: Test Australian price import safeguards\n        run: node --test test/store-au-prices.test.mjs test/regional-prices.test.cjs\n      - name: Read the store
+      - name: Test regional price safeguards
+        run: node --test test/store-au-prices.test.mjs test/regional-prices.test.cjs test/regional-observations.test.mjs
+      - name: Read the store
         run: python scripts/store_snapshot.py /tmp/store-snapshot.json
-      - name: Refresh verified Australian catalogue when snapshot explicitly uses A$\n        run: node scripts/store-au-prices.mjs /tmp/store-snapshot.json\n      - name: Tell me about anything new
+      - name: Refresh verified Australian catalogue when snapshot explicitly uses A$
+        run: node scripts/store-au-prices.mjs /tmp/store-snapshot.json
+      - name: Regional price review (no screenshots, never fails the watch)
+        run: node scripts/regional-price-review.mjs || true
+      - name: Tell me about anything new
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
