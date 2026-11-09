@@ -67,7 +67,7 @@
       + '<p class="note">Each price keeps its own country, purchase channel and date. Verified means read from that Store on that date. An estimate is modelled from comparable products and is never a checkout price. A channel is only suggested where it has been observed.</p>'
       + '<h4>Verified, Indonesia Web Store</h4>' + verified.map(row).join('')
       + '<h4>Verified direct purchase prices <small>Indonesia</small></h4><p class="note">These are observed Web Store cash prices, not a cross-region cheapest ranking. A coin balance cannot reduce a direct-cash checkout price; a PokéCoin-priced alternative is only comparable when separately observed for that exact product. Regional checkout eligibility is not verified.</p>'
-      + '<div data-sp-cheapest>' + cheapestHtml(obs, balance) + '</div>'
+      + '<div data-sp-cheapest>' + cheapestHtml(obs) + '</div>'
       + (other.length ? '<details class="sp-more"><summary>Recorded earlier, not re-checked (' + other.length + ')</summary>' + other.map(row).join('') + '</details>' : '')
       + (items.length ? '<h4>All known Store items and regional prices</h4>' + items.map(function (p) {
         return '<div class="sp-r sp-regional-row"><span class="sp-n">' + icon(p.label) + esc(p.label) + '</span><b class="sp-a">' + (p.aud > 0 ? 'Australia Web: A$' + p.aud.toFixed(2) + ' <small>Verified, ' + esc(when(p.observed)) + '</small>' : 'Australia Web: no matching product seen') + '</b>'
