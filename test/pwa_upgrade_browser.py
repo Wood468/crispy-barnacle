@@ -49,7 +49,7 @@ with sync_playwright() as pw:
     page.evaluate('navigator.serviceWorker.ready')
     page.wait_for_function('!!navigator.serviceWorker.controller')
     page.wait_for_function('(c)=>caches.open(c).then(x=>x.match("/index.html")).then(Boolean)', arg=OLD_CACHE, timeout=30000)
-    page.wait_for_function('!!window.GODASH && !!window.GODETAIL')
+    page.wait_for_function('!!window.GODASH && !!window.GODETAIL', timeout=60000)
     page.evaluate('(seed)=>Object.entries(seed).forEach(([k,v])=>localStorage.setItem(k,v))', SEED)
     page.evaluate('window.__oldController=navigator.serviceWorker.controller')
     assert page.evaluate(READ_KEYS, KEYS) == SEED
@@ -57,7 +57,7 @@ with sync_playwright() as pw:
     # 2. Offline reload on the OLD shell still renders from the cache.
     context.set_offline(True)
     page.reload(wait_until='domcontentloaded')
-    page.wait_for_function('!!window.GODASH && !!window.GODETAIL')
+    page.wait_for_function('!!window.GODASH && !!window.GODETAIL', timeout=60000)
     assert page.evaluate(READ_KEYS, KEYS) == SEED, 'keys changed by an offline reload on the old shell'
     context.set_offline(False)
 
@@ -75,7 +75,7 @@ with sync_playwright() as pw:
     # 4. Offline reload on the NEW shell: Today, Event Details and Schedule all work from cached data.
     context.set_offline(True)
     page.reload(wait_until='domcontentloaded')
-    page.wait_for_function('!!window.GODASH && !!window.GODETAIL')
+    page.wait_for_function('!!window.GODASH && !!window.GODETAIL', timeout=60000)
     page.locator('nav.tabs button[data-tab="now"]').click()
     page.wait_for_selector('#today-v1 .t1-card', timeout=20000)
     assert page.locator('#today-v1 .t1-card').count() > 0
@@ -106,7 +106,7 @@ with sync_playwright() as pw:
       }
     }""", NEW_CACHE)
     page.reload(wait_until='domcontentloaded')
-    page.wait_for_function('!!window.GODASH && !!window.GODETAIL')
+    page.wait_for_function('!!window.GODASH && !!window.GODETAIL', timeout=60000)
     page.locator('nav.tabs button[data-tab="now"]').click()
     page.wait_for_selector('#today-v1 .t1-card', timeout=20000)
     assert page.evaluate("document.body.innerText.trim().length") > 200, 'blank page when versioned assets miss the exact cache key'

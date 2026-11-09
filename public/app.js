@@ -627,7 +627,7 @@ Promise.all([
     });
     draw();$('up-watch').appendChild(el);
   }).catch(function(){});
-  $('asof').textContent=D.asOf;
+  $('asof').textContent=D.asOf||'';if($('asof-wrap'))$('asof-wrap').hidden=!D.asOf;
 
   /* ---------- best pokemon ---------- */
   var TCOL={Normal:['#9099A1','#0C0F14'],Fighting:['#B8305A','#FFFFFF'],Flying:['#8FA8DD','#0C0F14'],Poison:['#AB6AC8','#0C0F14'],Ground:['#D97746','#0C0F14'],Rock:['#C5B78C','#0C0F14'],Bug:['#91C12F','#0C0F14'],Ghost:['#5269AC','#FFFFFF'],Steel:['#5A8EA2','#0C0F14'],Fire:['#FF9D55','#0C0F14'],Water:['#5090D6','#0C0F14'],Grass:['#63BB5B','#0C0F14'],Electric:['#F4D23C','#0C0F14'],Psychic:['#FA7179','#0C0F14'],Ice:['#73CEC0','#0C0F14'],Dragon:['#0B6DC3','#FFFFFF'],Dark:['#5A5465','#FFFFFF'],Fairy:['#EC8FE6','#0C0F14']};
