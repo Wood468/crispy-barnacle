@@ -134,10 +134,10 @@ function scheduledActivities(model,ctx,presentation){return model.activities.fil
 function sourceHighlights(model){
  var fields=model.internalValidation&&model.internalValidation.fields||{};
  var rules=[
-  {label:'Daily Raid & Max Battle hours',re:/\\b(?:raid hour|max battle hour)\\b/i,keys:['dates','raids','bonuses']},
-  {label:'GO Pass reward',re:/\\bsilver bottle cap\\b/i,keys:['featured','tickets','bonuses']},
-  {label:'Shiny encounter method',re:/\\bshiny (?:meltan|gimmighoul)\\b|\\b(?:mystery box|coin bag)\\b/i,keys:['shiny','bonuses','featured']},
-  {label:'Raid access',re:/\\bremote raid (?:pass )?limit\\b|\\bno limit on remote raids\\b/i,keys:['bonuses','raids']}
+  {label:'Daily Raid & Max Battle hours',re:/\b(?:raid hour|max battle hour)\b/i,keys:['dates','raids','bonuses']},
+  {label:'GO Pass reward',re:/\bsilver bottle cap\b/i,keys:['featured','tickets','bonuses']},
+  {label:'Shiny encounter method',re:/\bshiny (?:meltan|gimmighoul)\b|\b(?:mystery box|coin bag)\b/i,keys:['shiny','bonuses','featured']},
+  {label:'Raid access',re:/\bremote raid (?:pass )?limit\b|\bno limit on remote raids\b/i,keys:['bonuses','raids']}
  ];
  var used=new Set(),out=[];
  rules.forEach(function(rule){
