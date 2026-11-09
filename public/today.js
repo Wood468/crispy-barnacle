@@ -92,6 +92,7 @@
       + '<button type="button" class="t1-open" data-open="' + esc(ev.id) + '" aria-label="' + esc('Open ' + ev.name + '. ' + cd) + '">'
       + '<span class="t1-badges">' + (live ? '<span class="t1-live">LIVE NOW</span>' : '') + stars + shinyBadge(shinyKindFor(ctx, ev)) + '</span>'
       + '<strong class="t1-title">' + esc(ev.name) + '</strong>'
+      + placeChip(ctx, ev)
       + '<span class="t1-count">' + CLOCK + cdSpan(ctx, live ? ev.end : ev.start, live) + '</span>'
       + '</button>' + menuButton(ev, ev.name) + '</article>';
   }
@@ -102,7 +103,7 @@
       + '<span class="t1-minor-art" aria-hidden="true">' + art + '</span>'
       + '<button type="button" class="t1-open" data-open="' + esc(ev.id) + '" aria-label="' + esc('Open ' + ev.name + '. ' + cd) + '">'
       + '<strong class="t1-title">' + esc(ev.name) + '</strong>'
-      + '<span class="t1-sub">' + (ev.region && !/^global$/i.test(ev.region) ? esc(ev.region) + ' · ' : '') + esc(k[0]) + ' · ' + cdSpan(ctx, live ? ev.end : ev.start, live) + '</span>'
+      + '<span class="t1-sub">' + (ev.region && !/^global$/i.test(ev.region) ? esc(ev.region) + (ctx.overseas(ev) ? ' · Overseas' : '') + ' · ' : '') + esc(k[0]) + ' · ' + cdSpan(ctx, live ? ev.end : ev.start, live) + '</span>'
       + '</button>' + shinyBadge(shinyKindFor(ctx, ev)) + menuButton(ev, ev.name) + '</article>';
   }
   function card(ctx, ev, live) {
