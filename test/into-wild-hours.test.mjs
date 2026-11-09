@@ -5,7 +5,7 @@ const data=JSON.parse(readFileSync(new URL('../public/data.json',import.meta.url
 const event=data.events.find(e=>e.id==='into');
 
 test('Into the Wild has a five-day local Raid/Max Hour schedule',()=>{
- assert.equal(event.scope,'worldwide_local');
+ assert.equal(event.scope,undefined,'activity time basis must not silently change event scope');
  assert.equal(event.activities.length,5);
  const expected=[
   ['2026-11-09','Crowned Sword Zacian','raid-hour'],
