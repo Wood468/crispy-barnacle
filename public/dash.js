@@ -68,12 +68,22 @@
   /* ---------- kinds: colour, label, one place ---------- */
   var KIND = {
     cd: ['Community Day', '#F76B15', '#1A0E04'], raid: ['Raids', '#D7373C', '#FFFFFF'], max: ['Max Battles', '#6E56CF', '#FFFFFF'],
-    spot: ['Spotlight Hour', '#FFD43B', '#1D1700'], pvp: ['Battle League', '#3E63DD', '#FFFFFF'], person: ['In person', '#2B8A9E', '#06171B'],
+    spot: ['Spotlight Hour', '#FFD43B', '#1D1700'], pvp: ['Battle League', '#3E63DD', '#FFFFFF'], person: ['In person', '#2B8A9E', '#06171B'], global: ['Global', '#2B8A9E', '#06171B'],
     debut: ['Debut', '#12A594', '#031F1B'], twitch: ['Twitch Drops', '#8B5CF6', '#0C0F14'], event: ['Event', '#5E6A80', '#FFFFFF']
   };
   var STATUS = { official_confirmed: 'Official', community_reported: 'Community reported', datamined: 'Datamined', conflicting: 'Conflicting' };
   var PIPE_KIND = { 'community-day': 'cd', 'raid-battles': 'raid', 'raid-hour': 'raid', 'raid-day': 'raid', 'raid-weekend': 'raid', 'elite-raids': 'raid', 'max-battles': 'max', 'max-mondays': 'max',
     'pokemon-spotlight-hour': 'spot', 'go-battle-league': 'pvp', 'wild-area': 'person', 'pokemon-go-tour': 'person', 'pokemon-go-fest': 'person', 'safari-zone': 'person', 'city-safari': 'person', 'ticketed-event': 'person', 'twitch-drops': 'twitch', 'twitch-drops-event': 'twitch' };
+
+  // Event format is not eligibility: a Wild Area or GO Fest can be global.
+  // Only explicit global eligibility overrides an in-person event-type default.
+  function scopedKind(kind, name, scope, region) {
+    var globalScope = /^(worldwide|worldwide_local|global)$/i.test(String(scope || ''));
+    var globalTitle = /(?:^|[:\s])global(?:$|\b)/i.test(String(name || ''));
+    var localRegion = String(region || '').trim();
+    if (kind === 'person' && (globalScope || (globalTitle && !localRegion))) return 'global';
+    return kind;
+  }
 
   /* Calendar labels and boundaries follow the saved viewer zone, or the device by default. */
   function pad(n) { return ('0' + n).slice(-2); }
@@ -169,7 +179,7 @@
     var out = [];
     (D.events || []).forEach(function (x) {
       var tags = x.tags || [], title = x.t || '', k = tags.some(function (t) { return /twitch\s*drops/i.test(t); }) || /twitch\s*drops/i.test(title) ? 'twitch' : tags.indexOf('Community Day') > -1 || /community day/i.test(title) ? 'cd' : tags.indexOf('Max Battles') > -1 || /max battle|dynamax|gigantamax|max monday/i.test(title) ? 'max' : tags.indexOf('Raids') > -1 || /\braids?\b|raid hour/i.test(title) ? 'raid' : tags.indexOf('In person') > -1 || /in-person|safari zone|city safari|go fest/i.test(title) ? 'person' : tags.indexOf('Debut') > -1 || /\bdebut\b/i.test(title) ? 'debut' : /spotlight hour/i.test(title) ? 'spot' : 'event';
-      out.push(mkEvent({ id: 'cur:' + x.id, detailIds: x.detailIds || [], name: x.t, kind: k, img: x.img || '', artPageUrl: x.artSourceUrl || '', s: x.s, e: x.e, utc: x.utc === true || x.tzMode === 'utc', region: x.region || x.location || '', scope: x.scope || '', tags: signalTags({ name:x.t, kind:k, tags:tags, notes:x.p, bonuses:x.bonuses, featured:(x.art||[]).map(function(a){return typeof a==='string'?{name:a}:a;}) }), notes: x.p, bonuses: x.bonuses,
+      out.push(mkEvent({ id: 'cur:' + x.id, detailIds: x.detailIds || [], name: x.t, kind: scopedKind(k, x.t, x.scope, x.region || x.location), img: x.img || '', artPageUrl: x.artSourceUrl || '', s: x.s, e: x.e, utc: x.utc === true || x.tzMode === 'utc', region: x.region || x.location || '', scope: x.scope || '', tags: signalTags({ name:x.t, kind:k, tags:tags, notes:x.p, bonuses:x.bonuses, featured:(x.art||[]).map(function(a){return typeof a==='string'?{name:a}:a;}) }), notes: x.p, bonuses: x.bonuses,
         featured: (x.art || []).map(function (a) { a = typeof a === 'string' ? { n: a } : a; return { name: a.n, costume: !!a.costume, shiny: !!a.shiny, label: a.label, asset: a.asset, role: 'featured' }; }),
         highlights: Array.isArray(x.highlights) ? x.highlights : [],
         status: x.status || (x.sourceUrl ? 'official_confirmed' : 'community_reported'),
@@ -191,7 +201,7 @@
       var link = safeUrl(x.link); (x.reports || []).forEach(function (r) { if (!link && safeUrl(r.link)) link = r.link; });
       var officialLink = isOfficialUrl(link);
       var reportedOfficial = (x.reports || []).some(function (r) { return r && isOfficialUrl(r.link); });
-      var kind = PIPE_KIND[x.type] || 'event';
+      var kind = scopedKind(PIPE_KIND[x.type] || 'event', x.name, x.scope, x.region);
       var featured = Array.isArray(x.featured) ? x.featured : [];
       var bonuses = Array.isArray(x.bonuses) ? x.bonuses : [];
       return mkEvent({ id: x.id, name: x.name, kind: kind, img: (typeof x.image === 'string' && /^https:\/\//.test(x.image)) ? x.image : '', artPageUrl: (x.imageProvenance && safeUrl(x.imageProvenance.sourceUrl)) || safeUrl(x.artSourceUrl) || link || '', s: x.start, e: x.end || x.start, bonuses: bonuses, featured: featured, highlights: Array.isArray(x.highlights) ? x.highlights : [], tags: signalTags({name:x.name,kind:kind,type:x.type,bonuses:bonuses,featured:featured}),
@@ -469,7 +479,7 @@
   function kindHidden(k) { var v = usGet('hidekind:' + k); return v === undefined ? k === 'pvp' : v === true; }
   function renderKinds() {
     var el = $('kindsbox'); if (!el) return;
-    var order = ['cd', 'raid', 'max', 'spot', 'pvp', 'person', 'twitch', 'debut', 'event'];
+    var order = ['cd', 'raid', 'max', 'spot', 'pvp', 'person', 'global', 'twitch', 'debut', 'event'];
     el.innerHTML = order.map(function (k) { var on = !kindHidden(k); return '<button type="button" class="fchip" data-kindtog="' + k + '" aria-pressed="' + on + '" style="border-left:4px solid ' + KIND[k][1] + '">' + esc(KIND[k][0]) + (on ? '' : ' (hidden)') + '</button>'; }).join('');
   }
   function statusChip(ev) {
