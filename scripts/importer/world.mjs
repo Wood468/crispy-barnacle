@@ -100,6 +100,9 @@ export function fromPage(page, today = new Date().toISOString().slice(0, 10)) {
   if (SKIP.test(title) && !where) return null;
   if (!regional && !range) return null;
   if (!regional) return { name: title, place: "", area: "Worldwide", scope: "global", start: range.start, end: range.end, datesKnown: true, url: page.url, source: page.source };
+  // No venue found but dated: the structured record carries no location, so it is not venue-bound. It is Global
+  // (play from anywhere), whatever its title says. An undated, venue-less announcement stays regional until a place is known.
+  if (!where && range) return { name: title, place: "", area: "Worldwide", scope: "global", start: range.start, end: range.end, datesKnown: true, url: page.url, source: page.source };
   return { name: title, place: where ? where.place : "", area: where ? where.area : "Worldwide", scope: "regional", start: range ? range.start : "", end: range ? range.end : "", datesKnown: !!range, url: page.url, source: page.source };
 }
 

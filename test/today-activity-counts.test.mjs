@@ -22,7 +22,7 @@ test("regional in-game mode is distinct while unmarked regional destinations ret
   assert.equal(LIB.isInPersonWorldEvent({ scope: "regional", mode: "in-game" }), false);
   assert.equal(LIB.isInPersonWorldEvent({ scope: "regional", mode: "in-person" }), true);
   assert.equal(LIB.isInPersonWorldEvent({ scope: "global" }), false);
-  assert.equal(LIB.isInPersonWorldEvent({}), true);
+  assert.equal(LIB.isInPersonWorldEvent({}), false, "no scope and no location data is Global, not in person");
   assert.equal(LIB.isRegionalInGameEvent({ scope: "regional", mode: "in-game" }), true);
   assert.equal(LIB.isRegionalInGameEvent({ scope: "global", mode: "in-game" }), false);
 });
@@ -37,6 +37,7 @@ test("Today keeps overseas events visible and separates live from later-today re
   assert.match(dash, /function regInPerson\(e\) \{ return LIB\.isInPersonWorldEvent\(e\); \}/);
   assert.match(dash, /function inGameRegional\(list\)/);
   assert.match(dash, /subHead\('In-game \(regional\)'/);
+  assert.match(dash, /subHead\('Global'/);
   assert.match(html, /id="day-inperson-count"/);
   assert.match(html, /<b id="day-inperson-count">0<\/b> in person/); // Batch 1: counts are one text line in the brief
   assert.match(html, /id="today-focus-strip"/);

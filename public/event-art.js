@@ -64,7 +64,8 @@
     if (/go pass/i.test(n)) return THEMES.pass;
     if (k === 'max' || /max battle|dynamax|max monday/i.test(n)) return THEMES.max;
     if (k === 'cd' || /community day/i.test(n)) return THEMES.cd;
-    if (k === 'person' || /wild area|safari|go fest|go tour|in[- ]person|night out/i.test(n) || ev && ev.region && !/^global$/i.test(ev.region)) return THEMES.person;
+    /* Structured attendance only (set from eligibility + venue data upstream), never the title or artwork. */
+    if (k === 'person' || ev && ev.attendance === 'in-person') return THEMES.person;
     if (k === 'raid' || /raid/i.test(n)) return THEMES.raid;
     if (k === 'spot' || /spotlight/i.test(n)) return THEMES.spot;
     if (/research/i.test(n)) return THEMES.research;

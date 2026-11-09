@@ -142,7 +142,7 @@
     if (/\bshadow\b/i.test(text) || featured.some(function(f){return f && /^shadow\s/i.test(f.name||'');})) add('Shadow');
     if (/\bmega\b/i.test(text)) add('Mega');
     if (/\bprimal\b/i.test(text)) add('Primal');
-    if (/in-person|in person|live event|safari zone|city safari/i.test(text)) add('In person');
+    if (o.kind === 'person' || o.attendance === 'in-person') add('In person');
     if (/dynamax|gigantamax|max battle|max monday/i.test(text)) add('Dynamax');
     if (/max particle/i.test(text)) add('Max Particles');
     if (/power spot/i.test(text)) add('Power Spots');
@@ -936,7 +936,7 @@
       if (!e.end && !startIsDateOnly) return { undated: true, catalogueId:e.id, name: e.name, place: e.place, area: e.area, scope: e.scope, mode: e.mode || '', src: src };
       var s0 = worldDate(startValue, false), e0 = worldDate(String(e.end || e.start), !!e.end || startIsDateOnly);
       if (!Number.isFinite(s0.getTime()) || !Number.isFinite(e0.getTime()) || e0 < s0) return { undated: true, catalogueId:e.id, name: e.name, place: e.place, area: e.area, scope: e.scope, mode: e.mode || '', src: src };
-      return { id: e.id, catalogueId:e.id, name: e.name, place: e.place || '', area: e.scope === 'global' ? 'In the game' : e.area, scope: e.scope || 'regional', mode: e.mode || '', start: s0, end: e0, sourceStart: startValue, sourceEnd: String(e.end || e.start), long: (e0 - s0) > 14 * 864e5, src: src };
+      return { id: e.id, catalogueId:e.id, name: e.name, place: e.place || '', area: LIB.isGlobalEvent(e) ? 'In the game' : e.area, scope: LIB.isGlobalEvent(e) ? 'global' : (e.scope || 'regional'), mode: e.mode || '', start: s0, end: e0, sourceStart: startValue, sourceEnd: String(e.end || e.start), long: (e0 - s0) > 14 * 864e5, src: src };
     });
     /* An announcement with no dates of its own (e.g. Gigantamax Duraludon at the Sendai Wild Area) takes the dates of the
        dated event at the same place whose name it shares a distinctive word with. */
@@ -1953,10 +1953,10 @@ function renderHomeBrief(t) {
       var rows = list.filter(LIB.isRegionalInGameEvent);
       return rows.length ? subHead('In-game (regional)', rows.length) + rows.map(function (e) { return agendaRow(e, true); }).join('') : '';
     }
-    /* Global play-from-anywhere events remain under their own Online / worldwide label. */
+    /* Global play-from-anywhere events remain under their own Global label. */
     function online(list) {
       var rows = list.filter(function (e) { return e.scope === 'global'; });
-      return rows.length ? subHead('Online / worldwide', rows.length) + rows.map(function (e) { return agendaRow(e, true); }).join('') : '';
+      return rows.length ? subHead('Global', rows.length) + rows.map(function (e) { return agendaRow(e, true); }).join('') : '';
     }
     var todayHTML = today.length || todayRegional.length
       ? phaseGroup('Happening now', liveToday.length + liveRegional.length, liveToday.map(function (e) { return card(e, {today:true}); }).join('') + inPerson(liveRegional) + inGameRegional(liveRegional) + online(liveRegional)) +
