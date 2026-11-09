@@ -1,5 +1,7 @@
 /* GO Field Notes offline shell. Never cache /api/*, including private user-state and notification responses. */
-const SHELL_CACHE = 'gofn-shell-v277';
+const SHELL_CACHE = 'gofn-shell-v278';
+const EVENT_BANNER_CACHE = 'gofn-event-banners-v1';
+const MAX_EVENT_BANNERS = 40;
 const SHELL_URLS = [
   '/', '/index.html', '/offline.html', '/offline.css',
   /* Versioned code and styles are listed once, exactly as index.html, app.js and dash.js request them. Any other ?v= (or unversioned) request is answered offline by the ignoreSearch fallback below. */
@@ -79,6 +81,36 @@ self.addEventListener('fetch', function (event) {
   const request = event.request;
   if (request.method !== 'GET') return;
   const url = new URL(request.url);
+  // Cache only Leek Duck's event-banner image path, not arbitrary third-party assets.
+  // Opaque CDN responses can be cached by the service worker even when CORS is unavailable.
+  if (url.protocol === 'https:' && url.hostname === 'cdn.leekduck.com' &&
+      url.pathname.startsWith('/assets/img/events/') &&
+      request.destination === 'image') {
+    event.respondWith((async function () {
+      const cache = await caches.open(EVENT_BANNER_CACHE);
+      const hit = await cache.match(request);
+      if (hit) return hit;
+      try {
+        const response = await fetch(request);
+        if (response.ok || response.type === 'opaque') {
+          const copy = response.clone();
+          event.waitUntil((async function () {
+            try {
+              await cache.put(request, copy);
+              const keys = await cache.keys();
+              if (keys.length > MAX_EVENT_BANNERS) {
+                await Promise.all(keys.slice(0, keys.length - MAX_EVENT_BANNERS).map(function (key) { return cache.delete(key); }));
+              }
+            } catch (_) { /* A full or disabled cache must not break online images. */ }
+          })());
+        }
+        return response;
+      } catch (_) {
+        return new Response('', { status: 503, headers: { 'cache-control': 'no-store' } });
+      }
+    })());
+    return;
+  }
   if (url.origin !== self.location.origin || url.pathname.startsWith('/api/')) return;
   if (request.mode === 'navigate' && Date.now() - lastStalePurge > 30000) event.waitUntil(purgeStaleShells().catch(function () {}));
   event.respondWith((async function () {
