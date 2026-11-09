@@ -87,7 +87,7 @@
       var base = { channel: channel, channelLabel: CHANNELS[channel] || channel, currency: ref.currency, price: ref, basis: ref.basis, isEstimate: ref.basis === 'estimate',
         coinsUsed: 0, coinsBought: 0, leftoverCoins: balance, packs: [], upfront: upfront };
       if (ref.coins && channel === 'in-app') {
-        var packs = (ctx.packs || []).filter(function (p) { return p.coins > 0 && p.amount > 0 && p.currency === ref.currency; });
+        var packs = (ctx.packs || []).filter(function (p) { return p.coins > 0 && p.amount > 0 && p.currency === ref.currency && !p.oneTime; });
         var need = Math.max(0, ref.coins - balance), best = { cash: 0, coins: 0, picks: [] };
         if (need > 0) {
           best = null;

@@ -78,6 +78,12 @@ test('in-app coin purchase uses the balance, buys the cheapest packs for the sho
   assert.equal(none.coinsBought, 6800); // 3300 alone is short of 4000; 6800 at 200000 beats 2x3300 = 202000
   assert.equal(none.cash, 200000);
 });
+test('one-time promotional coin packs are never counted as a repeatable purchase', () => {
+  const obs = OBS.concat([{id:'a', region:'ID', channel:'in-app', currency:'IDR', observed:'2026-11-09', source:'fixture', status:'verified', product:'Test Bundle', kind:'bundle', amount:999999, coins:4000}]);
+  const packs = [{coins:3300, amount:101000, currency:'IDR'}, {coins:18500, amount:50000, currency:'IDR', oneTime:true}];
+  const r = R.cheapest({region:'ID', product:'Test Bundle'}, obs, {coinBalance:0, packs}, NOW).options.find(o => o.channel === 'in-app');
+  assert.equal(r.cash, 202000); assert.ok(r.packs.every(p => !p.oneTime));
+});
 test('monthly review flags stale, due and unverified observations without screenshots', () => {
   const r = R.review(OBS.concat([id('Old', 'item', 1, {id:'old', observed:'2026-08-01'})]), NOW);
   assert.equal(r.ok, false);
