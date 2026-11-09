@@ -5365,6 +5365,13 @@
        "status": "official"
       },
       {
+       "text": "Additional bonus tasks for this GO Pass will be available during the event.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
        "text": "Rank 15: 2× Catch Stardust",
        "sources": [
         "official",
@@ -5580,7 +5587,7 @@
        "status": "single"
       },
       {
-       "text": "Trainers who claim Tier 1 rewards (Rank 25) on GO Pass: Into the Wild will receive early access on November 14, 2026, at 10 am local time, and a free upgrade to GO Pass Deluxe: Dynamax Trails .",
+       "text": "Trainers who claim Tier 1 rewards* on GO Pass: Into the Wild will receive early access on November 14, 2026, at 10 am local time, and a free upgrade to GO Pass Deluxe: Dynamax Trails .",
        "sources": [
         "leekduck"
        ],
@@ -5619,7 +5626,7 @@
        "status": "single"
       },
       {
-       "text": "Trainers who claim Tier 1 rewards (Rank 25) on GO Pass: Into the Wild will receive early access on November 14, 2026, at 10 am local time, and a free upgrade to GO Pass Deluxe: Dynamax Trails .",
+       "text": "Trainers who claim Tier 1 rewards* on GO Pass: Into the Wild will receive early access on November 14, 2026, at 10 am local time, and a free upgrade to GO Pass Deluxe: Dynamax Trails .",
        "sources": [
         "leekduck"
        ],
@@ -5634,8 +5641,8 @@
      "end": "2026-11-23T20:00"
     },
     "imageReviewed": true,
-    "contentHash": "1adc23a09a61cff4770a504c6e9668640d9a230cbb71876bdfc550dfa59f721b",
-    "revision": 4,
+    "contentHash": "b22fd2aa7cde5136fe9970e135ce532ab8bf4829e1d56c9cf22b9723a24ffe37",
+    "revision": 5,
     "amended": false,
     "native": false,
     "collection": "events"
@@ -5710,6 +5717,13 @@
       "leekduck"
      ],
      "status": "official"
+    },
+    {
+     "text": "Additional bonus tasks for this GO Pass will be available during the event.",
+     "sources": [
+      "leekduck"
+     ],
+     "status": "single"
     },
     {
      "text": "Rank 15: 2× Catch Stardust",
@@ -5813,7 +5827,7 @@
      "status": "single"
     },
     {
-     "text": "Trainers who claim Tier 1 rewards (Rank 25) on GO Pass: Into the Wild will receive early access on November 14, 2026, at 10 am local time, and a free upgrade to GO Pass Deluxe: Dynamax Trails .",
+     "text": "Trainers who claim Tier 1 rewards* on GO Pass: Into the Wild will receive early access on November 14, 2026, at 10 am local time, and a free upgrade to GO Pass Deluxe: Dynamax Trails .",
      "sources": [
       "leekduck"
      ],
@@ -5935,7 +5949,7 @@
     },
     "imageReviewed": true,
     "contentHash": "9c1e84fa3e57a9dc254240da56abb3e0fe3ea75b86697d72cfd7a5408efad52a",
-    "revision": 30,
+    "revision": 32,
     "amended": true,
     "native": false,
     "collection": "events"
@@ -9751,7 +9765,7 @@
     },
     "contentHash": "964d656c81de4abf2daec370b883a8ef9d6e56c852262ab34620fb9fa16f6603",
     "revision": 4,
-    "amended": true,
+    "amended": false,
     "native": false,
     "collection": "inPerson"
    },
@@ -9966,6 +9980,13 @@
       },
       {
        "text": "Rank 25: 1/2 Hatch Distance for Eggs placed in Incubators during the event",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 25: Reach these ranks on GO Pass Deluxe: Into the Wild to unlock the following additional bonuses.",
        "sources": [
         "leekduck"
        ],
@@ -10314,14 +10335,6 @@
        "status": "corroborated"
       },
       {
-       "text": "Encounter Dynamax Meltan and earn a Silver Bottle Cap!",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
        "text": "GO Pass: Into the Wild is a free progression track. Complete Pass Tasks to collect GO Points, increase your rank, and unlock rewards.",
        "sources": [
         "leekduck"
@@ -10357,6 +10370,13 @@
        "status": "single"
       },
       {
+       "text": "Encounter Dynamax Meltan and earn a Silver Bottle Cap!",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
        "text": "Win a raid 15 PTS",
        "sources": [
         "leekduck"
@@ -10383,14 +10403,6 @@
         "hub"
        ],
        "status": "single"
-      },
-      {
-       "text": "Rank 1: Free: GO Wild Area 2026 Tee (Purple) | Deluxe: —",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
       },
       {
        "text": "Rank 4: Free: Potion ×3 | Deluxe: Star Piece ×1",
@@ -10426,14 +10438,6 @@
       },
       {
        "text": "Rank 10: Free: Stardust ×1000 | Deluxe: Golden Razz Berry ×3",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 11: Free: Revive ×3 | Deluxe: Max Potion ×5",
        "sources": [
         "leekduck",
         "hub"
@@ -11081,6 +11085,14 @@
        "status": "corroborated"
       },
       {
+       "text": "Rank 100: Free: Dynamax Meltan | Deluxe: Silver Bottle Cap ×1",
+       "sources": [
+        "leekduck",
+        "hub"
+       ],
+       "status": "corroborated"
+      },
+      {
        "text": "Rank 101: Free: Stardust ×50 | Deluxe: Stardust ×100",
        "sources": [
         "leekduck",
@@ -11095,6 +11107,13 @@
         "hub"
        ],
        "status": "corroborated"
+      },
+      {
+       "text": "Rank 1: Free: GO Wild Area 2026 Tee (Purple) | Deluxe: —",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
       },
       {
        "text": "Rank 2: Free: Poké Ball ×10 | Deluxe: —",
@@ -11119,6 +11138,13 @@
       },
       {
        "text": "Rank 6: Free: Stardust ×1000 | Deluxe: Stardust ×5000",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 11: Free: Revive ×3 | Deluxe: Max Potion ×5",
        "sources": [
         "leekduck"
        ],
@@ -11268,8 +11294,8 @@
      "end": "2026-11-13"
     },
     "imageReviewed": true,
-    "contentHash": "f4eab95f17bc7ed6669617cbea25347226791c40c5db2c593df957dcc76b0595",
-    "revision": 22,
+    "contentHash": "86e7aae660a418da1db45fc6a3810c3f23abef1b34fa3b293285da7542bc9638",
+    "revision": 23,
     "amended": false,
     "native": false,
     "collection": "events"
@@ -11279,7 +11305,68 @@
     "end": "2026-11-13T20:00",
     "timeBasis": "player-local"
    },
-   "activities": [],
+   "activities": [
+    {
+     "id": "into-raid-zacian-20261109",
+     "kind": "raid-hour",
+     "presentation": "schedule",
+     "title": "Crowned Sword Zacian · Raid Hour",
+     "schedule": {
+      "start": "2026-11-09T18:00",
+      "end": "2026-11-09T19:00",
+      "timeBasis": "player-local"
+     },
+     "sourceUrl": "https://pokemongo.com/news/into-the-wild-2026"
+    },
+    {
+     "id": "into-raid-zamazenta-20261110",
+     "kind": "raid-hour",
+     "presentation": "schedule",
+     "title": "Crowned Shield Zamazenta · Raid Hour",
+     "schedule": {
+      "start": "2026-11-10T18:00",
+      "end": "2026-11-10T19:00",
+      "timeBasis": "player-local"
+     },
+     "sourceUrl": "https://pokemongo.com/news/into-the-wild-2026"
+    },
+    {
+     "id": "into-max-registeel-20261111",
+     "kind": "max-battle-hour",
+     "presentation": "schedule",
+     "title": "Dynamax Registeel · Max Battle Hour",
+     "schedule": {
+      "start": "2026-11-11T18:00",
+      "end": "2026-11-11T19:00",
+      "timeBasis": "player-local"
+     },
+     "sourceUrl": "https://pokemongo.com/news/into-the-wild-2026"
+    },
+    {
+     "id": "into-max-regidrago-20261112",
+     "kind": "max-battle-hour",
+     "presentation": "schedule",
+     "title": "Dynamax Regidrago · Max Battle Hour",
+     "schedule": {
+      "start": "2026-11-12T18:00",
+      "end": "2026-11-12T19:00",
+      "timeBasis": "player-local"
+     },
+     "sourceUrl": "https://pokemongo.com/news/into-the-wild-2026"
+    },
+    {
+     "id": "into-max-latias-latios-20261113",
+     "kind": "max-battle-hour",
+     "presentation": "schedule",
+     "title": "Dynamax Latias & Latios · Max Battle Hour",
+     "schedule": {
+      "start": "2026-11-13T18:00",
+      "end": "2026-11-13T19:00",
+      "timeBasis": "player-local"
+     },
+     "sourceUrl": "https://pokemongo.com/news/into-the-wild-2026"
+    }
+   ],
    "bonuses": [
     {
      "text": "Daily Discoveries will not take place from November 9 through November 15, 2026.",
@@ -11339,6 +11426,13 @@
     },
     {
      "text": "Rank 25: 1/2 Hatch Distance for Eggs placed in Incubators during the event",
+     "sources": [
+      "leekduck"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Rank 25: Reach these ranks on GO Pass Deluxe: Into the Wild to unlock the following additional bonuses.",
      "sources": [
       "leekduck"
      ],
@@ -13419,6 +13513,23 @@
        ]
       },
       {
+       "rank": 100,
+       "free": [
+        {
+         "type": "encounter",
+         "name": "Dynamax Meltan",
+         "quantity": 1
+        }
+       ],
+       "deluxe": [
+        {
+         "type": "other",
+         "name": "Silver Bottle Cap",
+         "quantity": 1
+        }
+       ]
+      },
+      {
        "rank": 101,
        "free": [
         {
@@ -13473,14 +13584,6 @@
      "status": "corroborated"
     },
     {
-     "text": "Encounter Dynamax Meltan and earn a Silver Bottle Cap!",
-     "sources": [
-      "leekduck",
-      "hub"
-     ],
-     "status": "corroborated"
-    },
-    {
      "text": "GO Pass: Into the Wild is a free progression track. Complete Pass Tasks to collect GO Points, increase your rank, and unlock rewards.",
      "sources": [
       "leekduck"
@@ -13510,6 +13613,13 @@
     },
     {
      "text": "Claim all unlocked GO Pass rewards before they expire on Tuesday, November 17, 2026, at 11:59 p.m. local time .",
+     "sources": [
+      "leekduck"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Encounter Dynamax Meltan and earn a Silver Bottle Cap!",
      "sources": [
       "leekduck"
      ],
@@ -25804,7 +25914,7 @@
     },
     "imageReviewed": true,
     "contentHash": "244e1a218c776c7de71a786fe7a96bc90d5ca2212bc0e2a5060da28a5e71b680",
-    "revision": 45,
+    "revision": 47,
     "amended": true,
     "native": false,
     "collection": "source-details"
@@ -32688,6 +32798,68 @@
   },
   {
    "schemaVersion": 1,
+   "eventId": "official:save-the-date-s25",
+   "aliases": [],
+   "family": "community-day",
+   "title": "Save the dates for next Season’s Community Days! — Pokémon GO",
+   "dateText": "Saturday and Sunday, December 12–13, 2026",
+   "completeness": "partial",
+   "lifecycle": "announced",
+   "attendance": "",
+   "location": null,
+   "image": "https://lh3.googleusercontent.com/GMESDlJRw5GMsmroW_oK6TLXA4OerLjNY43b0JkjCoSXrez97CwCflnTBTh-uzMhJZYQvQbtA8nK8YPEknYHu0tearwDyBVUoi8",
+   "notes": [],
+   "internalValidation": {
+    "warnings": [],
+    "lifecycleDeclared": false,
+    "native": true,
+    "fields": {
+     "bonuses": [],
+     "featured": [],
+     "raids": [],
+     "eggs": [],
+     "research": [],
+     "shiny": [],
+     "moves": [],
+     "costumes": [],
+     "tickets": [],
+     "dates": [
+      {
+       "text": "Saturday and Sunday, December 12–13, 2026"
+      }
+     ]
+    },
+    "legacyDates": {
+     "start": "",
+     "end": ""
+    },
+    "conflicts": [],
+    "imageReviewed": true,
+    "contentHash": "0963c6c1dd2fab5b1226600bb68efe1b06b3905a7ae2ef5a836fa53c40cfe4f1",
+    "revision": 1,
+    "amended": false,
+    "collection": "source-details"
+   },
+   "schedule": null,
+   "activities": [],
+   "bonuses": [],
+   "research": [],
+   "passes": [],
+   "tickets": [],
+   "sources": [
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "trust": "official",
+     "url": "https://pokemongo.com/news/save-the-date-s25/"
+    }
+   ],
+   "pokemon": [],
+   "encounters": [],
+   "groups": {}
+  },
+  {
+   "schemaVersion": 1,
    "eventId": "rg-boston-safari",
    "aliases": [],
    "family": "city-safari",
@@ -33387,6 +33559,134 @@
    "passes": [],
    "tickets": [],
    "sources": [],
+   "pokemon": [],
+   "encounters": [],
+   "groups": {}
+  },
+  {
+   "schemaVersion": 1,
+   "eventId": "rh-2026-11-09",
+   "aliases": [],
+   "family": "raid-hour",
+   "title": "Crowned Sword Zacian Raid Hour",
+   "dateText": "",
+   "completeness": "partial",
+   "lifecycle": "reference",
+   "attendance": "",
+   "location": null,
+   "image": null,
+   "notes": [],
+   "internalValidation": {
+    "warnings": [],
+    "lifecycleDeclared": true,
+    "conflicts": [],
+    "fields": {
+     "bonuses": [],
+     "featured": [],
+     "raids": [
+      {
+       "text": "Zacian (Crowned Sword) and Zamazenta (Crowned Shield) will be in five-star raid battles from November 9, 2026 to November 13, 2026, during the Into the Wild event.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "These raids start at 10:00 a.m. local time on November 9 and end at 8:00 p.m. local time on November 13.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Defeating Zacian (Crowned Sword) or Zamazenta (Crowned Shield) in raids will earn you Crowned Sword Energy or Crowned Shield Energy, respectively.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "There will also be Raid Hours from 6:00 p.m. to 7:00 p.m. local time on the following dates:",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      }
+     ],
+     "eggs": [],
+     "research": [],
+     "shiny": [
+      {
+       "text": "If you’re lucky, you may encounter Shiny forms of these Pokémon.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Zacian (Crowned Sword)",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Zamazenta (Crowned Shield)",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      }
+     ],
+     "moves": [],
+     "costumes": [],
+     "tickets": [],
+     "dates": [
+      {
+       "text": "Zacian (Crowned Sword) and Zamazenta (Crowned Shield) will be in five-star raid battles from November 9, 2026 to November 13, 2026, during the Into the Wild event.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "There will also be Raid Hours from 6:00 p.m. to 7:00 p.m. local time on the following dates:",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      }
+     ]
+    },
+    "info": [],
+    "detailRefs": [
+     "rh-2026-11-09"
+    ],
+    "legacyDates": {
+     "start": "",
+     "end": ""
+    },
+    "imageReviewed": true,
+    "contentHash": "499b1a791b4d31c9b32cc9d35e0e71ea3734820b6121c7b81c3dd4fbf6c81fa7",
+    "revision": 1,
+    "amended": false,
+    "native": false,
+    "collection": "source-details"
+   },
+   "schedule": null,
+   "activities": [],
+   "bonuses": [],
+   "research": [],
+   "passes": [],
+   "tickets": [],
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/zacian-crowned-sword-zamazenta-crowned-shield-in-5-star-raid-battles-november-2026/"
+    }
+   ],
    "pokemon": [],
    "encounters": [],
    "groups": {}
@@ -35234,6 +35534,13 @@
        "status": "single"
       },
       {
+       "text": "Rank 25: Reach these ranks on GO Pass Deluxe: Into the Wild to unlock the following additional bonuses.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
        "text": "Rank 1 Deluxe: Major Milestone Bonus: Additional 5,000 XP awarded for successful raids",
        "sources": [
         "leekduck"
@@ -35576,14 +35883,6 @@
        "status": "corroborated"
       },
       {
-       "text": "Encounter Dynamax Meltan and earn a Silver Bottle Cap!",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
        "text": "GO Pass: Into the Wild is a free progression track. Complete Pass Tasks to collect GO Points, increase your rank, and unlock rewards.",
        "sources": [
         "leekduck"
@@ -35619,6 +35918,13 @@
        "status": "single"
       },
       {
+       "text": "Encounter Dynamax Meltan and earn a Silver Bottle Cap!",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
        "text": "Win a raid 15 PTS",
        "sources": [
         "leekduck"
@@ -35645,14 +35951,6 @@
         "hub"
        ],
        "status": "single"
-      },
-      {
-       "text": "Rank 1: Free: GO Wild Area 2026 Tee (Purple) | Deluxe: —",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
       },
       {
        "text": "Rank 4: Free: Potion ×3 | Deluxe: Star Piece ×1",
@@ -35688,14 +35986,6 @@
       },
       {
        "text": "Rank 10: Free: Stardust ×1000 | Deluxe: Golden Razz Berry ×3",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 11: Free: Revive ×3 | Deluxe: Max Potion ×5",
        "sources": [
         "leekduck",
         "hub"
@@ -36343,6 +36633,14 @@
        "status": "corroborated"
       },
       {
+       "text": "Rank 100: Free: Dynamax Meltan | Deluxe: Silver Bottle Cap ×1",
+       "sources": [
+        "leekduck",
+        "hub"
+       ],
+       "status": "corroborated"
+      },
+      {
        "text": "Rank 101: Free: Stardust ×50 | Deluxe: Stardust ×100",
        "sources": [
         "leekduck",
@@ -36357,6 +36655,13 @@
         "hub"
        ],
        "status": "corroborated"
+      },
+      {
+       "text": "Rank 1: Free: GO Wild Area 2026 Tee (Purple) | Deluxe: —",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
       },
       {
        "text": "Rank 2: Free: Poké Ball ×10 | Deluxe: —",
@@ -36381,6 +36686,13 @@
       },
       {
        "text": "Rank 6: Free: Stardust ×1000 | Deluxe: Stardust ×5000",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 11: Free: Revive ×3 | Deluxe: Max Potion ×5",
        "sources": [
         "leekduck"
        ],
@@ -36530,8 +36842,8 @@
      "end": "2026-11-13T20:00"
     },
     "imageReviewed": true,
-    "contentHash": "cd43a46268697233bba5c07789d94ba672b42a536917f1543b2a842765f0257f",
-    "revision": 6,
+    "contentHash": "a128c0a56870693ff933972dc8272652e822ad431645d56bff75f54c3d89a35f",
+    "revision": 7,
     "amended": false,
     "native": false,
     "collection": "rotation"
@@ -36601,6 +36913,13 @@
     },
     {
      "text": "Rank 25: 1/2 Hatch Distance for Eggs placed in Incubators during the event",
+     "sources": [
+      "leekduck"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Rank 25: Reach these ranks on GO Pass Deluxe: Into the Wild to unlock the following additional bonuses.",
      "sources": [
       "leekduck"
      ],
@@ -38681,6 +39000,23 @@
        ]
       },
       {
+       "rank": 100,
+       "free": [
+        {
+         "type": "encounter",
+         "name": "Dynamax Meltan",
+         "quantity": 1
+        }
+       ],
+       "deluxe": [
+        {
+         "type": "other",
+         "name": "Silver Bottle Cap",
+         "quantity": 1
+        }
+       ]
+      },
+      {
        "rank": 101,
        "free": [
         {
@@ -38735,14 +39071,6 @@
      "status": "corroborated"
     },
     {
-     "text": "Encounter Dynamax Meltan and earn a Silver Bottle Cap!",
-     "sources": [
-      "leekduck",
-      "hub"
-     ],
-     "status": "corroborated"
-    },
-    {
      "text": "GO Pass: Into the Wild is a free progression track. Complete Pass Tasks to collect GO Points, increase your rank, and unlock rewards.",
      "sources": [
       "leekduck"
@@ -38772,6 +39100,13 @@
     },
     {
      "text": "Claim all unlocked GO Pass rewards before they expire on Tuesday, November 17, 2026, at 11:59 p.m. local time .",
+     "sources": [
+      "leekduck"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Encounter Dynamax Meltan and earn a Silver Bottle Cap!",
      "sources": [
       "leekduck"
      ],
@@ -49697,6 +50032,13 @@
        "status": "single"
       },
       {
+       "text": "Additional bonus tasks for the event GO Pass will be available during the event.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
        "text": "Rank 1: Increased chance to get Lucky Pokémon in trades",
        "sources": [
         "leekduck"
@@ -49945,8 +50287,8 @@
      "end": "2026-11-30"
     },
     "imageReviewed": true,
-    "contentHash": "75e976347a31bb3bf02b0652b7ba016cbcdba6928696ddbebf376f075830db10",
-    "revision": 7,
+    "contentHash": "97aabe5c3a5c17bcbca689ef9428ac671d9a75e86fea27e1212c467d4e8b8619",
+    "revision": 8,
     "amended": false,
     "native": false,
     "collection": "events"
@@ -49956,6 +50298,13 @@
    "bonuses": [
     {
      "text": "Reach Major Milestones on the event GO Pass to unlock the following bonuses.",
+     "sources": [
+      "leekduck"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Additional bonus tasks for the event GO Pass will be available during the event.",
      "sources": [
       "leekduck"
      ],
@@ -50762,8 +51111,8 @@
     },
     "imageReviewed": true,
     "contentHash": "dce45278d164ec7d0efdbec4d901eac6f95e08bdec7b64c64c440d1336263583",
-    "revision": 22,
-    "amended": false,
+    "revision": 24,
+    "amended": true,
     "native": false,
     "collection": "world-events"
    },
@@ -51307,6 +51656,13 @@
        "status": "official"
       },
       {
+       "text": "Additional bonus tasks for this GO Pass will be available during the event.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
        "text": "Rank 15: 2× Catch Stardust",
        "sources": [
         "official",
@@ -51522,7 +51878,7 @@
        "status": "single"
       },
       {
-       "text": "Trainers who claim Tier 1 rewards (Rank 25) on GO Pass: Into the Wild will receive early access on November 14, 2026, at 10 am local time, and a free upgrade to GO Pass Deluxe: Dynamax Trails .",
+       "text": "Trainers who claim Tier 1 rewards* on GO Pass: Into the Wild will receive early access on November 14, 2026, at 10 am local time, and a free upgrade to GO Pass Deluxe: Dynamax Trails .",
        "sources": [
         "leekduck"
        ],
@@ -51561,7 +51917,7 @@
        "status": "single"
       },
       {
-       "text": "Trainers who claim Tier 1 rewards (Rank 25) on GO Pass: Into the Wild will receive early access on November 14, 2026, at 10 am local time, and a free upgrade to GO Pass Deluxe: Dynamax Trails .",
+       "text": "Trainers who claim Tier 1 rewards* on GO Pass: Into the Wild will receive early access on November 14, 2026, at 10 am local time, and a free upgrade to GO Pass Deluxe: Dynamax Trails .",
        "sources": [
         "leekduck"
        ],
@@ -51576,8 +51932,8 @@
      "end": "2026-11-23"
     },
     "imageReviewed": true,
-    "contentHash": "a71a661d37bf69a7710dcbe962786cbc224a61686f4267ff20f3f00f5945d1e9",
-    "revision": 5,
+    "contentHash": "cc4b701e008704ede989f0dfc16d6f6026067f82ef2d8007049e26e2f3c2579e",
+    "revision": 6,
     "amended": false,
     "native": false,
     "collection": "world-events"
@@ -51650,6 +52006,13 @@
       "leekduck"
      ],
      "status": "official"
+    },
+    {
+     "text": "Additional bonus tasks for this GO Pass will be available during the event.",
+     "sources": [
+      "leekduck"
+     ],
+     "status": "single"
     },
     {
      "text": "Rank 15: 2× Catch Stardust",
@@ -51753,7 +52116,7 @@
      "status": "single"
     },
     {
-     "text": "Trainers who claim Tier 1 rewards (Rank 25) on GO Pass: Into the Wild will receive early access on November 14, 2026, at 10 am local time, and a free upgrade to GO Pass Deluxe: Dynamax Trails .",
+     "text": "Trainers who claim Tier 1 rewards* on GO Pass: Into the Wild will receive early access on November 14, 2026, at 10 am local time, and a free upgrade to GO Pass Deluxe: Dynamax Trails .",
      "sources": [
       "leekduck"
      ],
@@ -51878,7 +52241,7 @@
     },
     "imageReviewed": true,
     "contentHash": "4bbe2871a823eb21458a110b1a90a61e5fce0d1ddaa2d47d0d0671f282a84a9d",
-    "revision": 30,
+    "revision": 32,
     "amended": true,
     "native": false,
     "collection": "world-events"
@@ -52053,7 +52416,7 @@
    "completeness": "partial",
    "lifecycle": "announced",
    "attendance": "in-person",
-   "location": "South Korea",
+   "location": "Japan",
    "image": null,
    "notes": [],
    "internalValidation": {
@@ -52067,8 +52430,8 @@
      "start": "2026-11-03",
      "end": "2026-11-03"
     },
-    "contentHash": "5cdd55e002ca42377352e7b637a57f2e39afa99cde6bbc64780733a9cc28f6b3",
-    "revision": 13,
+    "contentHash": "0ca84974cfa677f1be63ebd7712b231d3f83b8d9beb34b2f503e737968fe94fe",
+    "revision": 14,
     "amended": false,
     "native": false,
     "collection": "world-events"
@@ -52393,7 +52756,7 @@
     "imageReviewed": true,
     "contentHash": "c285dfccbadcc7c9acc992c63556c87e19d1214b74259cb4bb788bfab3b0fe82",
     "revision": 7,
-    "amended": true,
+    "amended": false,
     "native": false,
     "collection": "world-events"
    },
@@ -58179,8 +58542,8 @@
      "end": "2027-04-11"
     },
     "contentHash": "84950064738e11a798ef98f9fd6ab913640b138fb1594e38612f64db09c4dd24",
-    "revision": 22,
-    "amended": false,
+    "revision": 24,
+    "amended": true,
     "native": false,
     "collection": "world-events"
    },
@@ -59368,20 +59731,6 @@
        "status": "official"
       },
       {
-       "text": "The best way to experience Pokémon GO Wild Area: Global is in person. We hope to meet you out there, Trainers!",
-       "sources": [
-        "official"
-       ],
-       "status": "official"
-      },
-      {
-       "text": "—The Pokémon GO team",
-       "sources": [
-        "official"
-       ],
-       "status": "official"
-      },
-      {
        "text": "Look at the drip on Machamp! Machamp wearing a modern jacket* will appear in three-star raids on Saturday and Sunday.",
        "sources": [
         "official",
@@ -60118,7 +60467,7 @@
     "imageReviewed": true,
     "contentHash": "d4984a1b75d8845becdda8c883be2bb273c01652cde31f2558f9b34a4f791864",
     "revision": 5,
-    "amended": true,
+    "amended": false,
     "native": false,
     "collection": "worldEvents"
    },
@@ -60701,7 +61050,7 @@
     "imageReviewed": true,
     "contentHash": "3e56995cacd1b88c840fa1163e4fe926d584046b688ca157a33de2d176f49934",
     "revision": 17,
-    "amended": true,
+    "amended": false,
     "native": false,
     "collection": "worldEvents"
    },

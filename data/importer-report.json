@@ -1,11 +1,11 @@
 {
- "runAt": "2026-11-09T12:42:27.665Z",
+ "runAt": "2026-11-09T22:13:10.507Z",
  "artworkCoverage": {
-  "selected": 26,
-  "missing": 65,
+  "selected": 27,
+  "missing": 66,
   "legacyUnattributed": 2,
   "bySource": {
-   "Pokémon GO (official)": 19,
+   "Pokémon GO (official)": 20,
    "Leek Duck": 7
   },
   "missingEvents": [
@@ -14,6 +14,13 @@
     "name": "Pokémon Night Out 2026 - London",
     "sources": [
      "https://leekduck.com/events/pokemon-night-out-london-2026/"
+    ]
+   },
+   {
+    "id": "rh-2026-11-09",
+    "name": "Crowned Sword Zacian Raid Hour",
+    "sources": [
+     "https://leekduck.com/events/zacian-crowned-sword-zamazenta-crowned-shield-in-5-star-raid-battles-november-2026/"
     ]
    },
    {
@@ -171,13 +178,6 @@
     ]
    },
    {
-    "id": "leekduck:gbl-twilight-trails_great-league-mega-edition_ultra-league-mega-edition_master-league-mega-edition-split-3",
-    "name": "Great League: Mega Edition, Ultra League: Mega Edition, and Master League: Mega Edition | Twilight Trails",
-    "sources": [
-     "https://leekduck.com/events/gbl-twilight-trails_great-league-mega-edition_ultra-league-mega-edition_master-league-mega-edition-split-3/"
-    ]
-   },
-   {
     "id": "leekduck:mega-sableye-in-mega-raids-october-2026",
     "name": "Mega Sableye in Mega Raids",
     "sources": [
@@ -210,6 +210,13 @@
     "name": "Pokémon GO Wild Area: Mexico City - Additional Details, Maps, In-Person Activities, Notable Trainers etc",
     "sources": [
      "https://pokemongohub.net/post/event/pokemon-go-wild-area-mexico-city-additional-details-maps-in-person-activities-notable-trainers-etc/"
+    ]
+   },
+   {
+    "id": "leekduck:gbl-twilight-trails_great-league-mega-edition_ultra-league-mega-edition_master-league-mega-edition-split-3",
+    "name": "Great League: Mega Edition, Ultra League: Mega Edition, and Master League: Mega Edition | Twilight Trails",
+    "sources": [
+     "https://leekduck.com/events/gbl-twilight-trails_great-league-mega-edition_ultra-league-mega-edition_master-league-mega-edition-split-3/"
     ]
    },
    {
@@ -481,16 +488,16 @@
    "error": ""
   },
   "leekduck": {
-   "listed": 37,
+   "listed": 38,
    "error": ""
   },
   "hub": {
-   "listed": 11,
+   "listed": 13,
    "error": ""
   }
  },
  "pagesRead": 80,
- "events": 93,
+ "events": 95,
  "worldEvents": 59,
  "worldUndated": [
   "GO Wild Area Stamp Rally"
@@ -540,6 +547,11 @@
    "source": "official",
    "title": "Mexico City – GO Wild Area 2026 — Pokémon GO",
    "url": "https://pokemongo.com/en/gowildarea/mexico-city/"
+  },
+  {
+   "source": "official",
+   "title": "Save the dates for next Season’s Community Days! — Pokémon GO",
+   "url": "https://pokemongo.com/news/save-the-date-s25/"
   },
   {
    "source": "official",
@@ -593,6 +605,16 @@
   },
   {
    "source": "hub",
+   "title": "Save the Dates for Next Season's Community Days and Events!",
+   "url": "https://pokemongohub.net/post/news/save-the-dates-for-next-seasons-community-days-and-events-2/"
+  },
+  {
+   "source": "hub",
+   "title": "How to beat Dynamax Regidrago: Complete Guide",
+   "url": "https://pokemongohub.net/post/guide/how-to-beat-dynamax-regidrago-complete-guide/"
+  },
+  {
+   "source": "hub",
    "title": "Minior Showers: Leonid (November 2026)",
    "url": "https://pokemongohub.net/post/event/minior-showers-leonid-november-2026/"
   },
@@ -610,16 +632,6 @@
    "source": "hub",
    "title": "How to beat Dynamax Dialga: Complete Guide",
    "url": "https://pokemongohub.net/post/news/how-to-beat-dynamax-dialga-complete-guide/"
-  },
-  {
-   "source": "hub",
-   "title": "How to beat Dynamax Palkia: Complete Guide",
-   "url": "https://pokemongohub.net/post/news/how-to-beat-dynamax-palkia-complete-guide/"
-  },
-  {
-   "source": "hub",
-   "title": "How to Beat Gigantamax Duraludon: Best Counters and Guide",
-   "url": "https://pokemongohub.net/post/guide/how-to-beat-gigantamax-duraludon-best-counters-and-guide/"
   }
  ],
  "intl": {
