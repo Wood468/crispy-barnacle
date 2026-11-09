@@ -38,7 +38,7 @@ export function mergeSources(results) {
     const have = results.filter(r => (r.fields[f] || []).length).map(r => r.source.id);
     if (have.length && have.length < results.length) gaps.push({ field: f, missingFrom: results.filter(r => !have.includes(r.source.id)).map(r => r.source.id) });
     const order = { official: 0, corroborated: 1, single: 2 };
-    fields[f] = clusters.map(c => ({ text: c.text, sources: c.sources, status: c.official ? "official" : c.sources.length >= 2 ? "corroborated" : "single" })).sort((a, b) => order[a.status] - order[b.status]); { const isRk = x => /^rank \d+/i.test(x.text), rk = fields[f].filter(isRk).slice(0, 110); fields[f] = fields[f].filter(x => !isRk(x)).slice(0, 12).concat(rk); }
+    fields[f] = clusters.map(c => ({ text: c.text, sources: c.sources, status: c.official ? "official" : c.sources.length >= 2 ? "corroborated" : "single" })).sort((a, b) => order[a.status] - order[b.status]); { const isRk = x => /^rank \d+/i.test(x.text); let rk = fields[f].filter(isRk); /* Leek Duck's structured GO Pass table is the only rank-reward source that is parsed from markup; a prose rank line from another source (misspelt quantities, bonus text) must not sit beside it. */ if (rk.some(x => x.sources.includes("leekduck"))) rk = rk.filter(x => x.sources.includes("leekduck")); rk = rk.slice(0, 110); fields[f] = fields[f].filter(x => !isRk(x)).slice(0, 12).concat(rk); }
   }
   const taskMap = new Map();
   for (const r of sorted) for (const task of (r.fields.researchTasks || [])) {

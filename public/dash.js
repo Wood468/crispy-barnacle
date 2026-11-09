@@ -824,7 +824,7 @@
     for (var i = 0; i < 7; i++) {
       var d = addDays(ws, i), k = dayKey(d), evs = filtered(dayEvents(d));
       var dots = evs.slice(0, 4).map(function (e) { return '<i style="background:' + kindOf(e)[1] + '"></i>'; }).join('');
-      cells += '<button type="button" class="wd' + (k === today ? ' today' : '') + (k === selDay ? ' sel' : '') + '" data-day="' + k + '" aria-pressed="' + (k === selDay) + '"><span>' + DOW[civil(d).weekday] + '</span><b>' + civil(d).day + '</b><em>' + (dots || '') + '</em></button>';
+      cells += '<button type="button" class="wd' + (k === today ? ' today' : '') + (k === selDay ? ' sel' : '') + '" data-day="' + k + '" aria-pressed="' + (k === selDay) + '"' + (k === today ? ' aria-current="date"' : '') + ' aria-label="' + esc(fmtD(d) + (k === today ? ', today' : '') + ', ' + (evs.length ? evs.length + (evs.length === 1 ? ' event' : ' events') : 'no events')) + '"><span>' + DOW[civil(d).weekday] + '</span><b>' + civil(d).day + '</b><em>' + (dots || '') + '</em></button>';
     }
     var a = ws, b = addDays(ws, 6);
     el.innerHTML = '<div class="wk-head"><button type="button" class="calnav" data-wk="-1" aria-label="Previous week">‹</button><span>' + esc(fmtD(a) + ' to ' + fmtD(b)) + (weekOff === 0 ? ' · this week' : '') + '</span><button type="button" class="calnav" data-wk="1" aria-label="Next week">›</button></div><div class="wk-days">' + cells + '</div>';
@@ -846,6 +846,15 @@
     }
   }
   var stripRO = null;
+  /* Honest empty week: a past week lists nothing because ended events are not shown; a future week has nothing announced yet. */
+  function weekEmptyHtml() {
+    var filtered = typeSel !== 'all' && typeSel !== 'soon';
+    var msg = weekOff < 0 ? 'This week is over. Ended events are not listed.'
+      : filtered ? 'No ' + esc(String((TYPEFILTERS.filter(function (f) { return f[0] === typeSel; })[0] || [0, 'matching'])[1]).toLowerCase()) + ' events listed for this week. Try All.'
+      : weekOff > 0 ? 'Nothing announced for this week yet. Events appear here once a source publishes them.'
+      : 'Nothing is scheduled for this week.';
+    return '<div class="wk-empty" role="status"><p class="empty">' + msg + '</p>' + (weekOff !== 0 ? '<button type="button" class="pill all" data-wkreset="1">Back to this week</button>' : '') + '</div>';
+  }
   function drawTimeline() {
     var el = $('evtimeline'); if (!el) return;
     function paint(html) { paintView(el,html); }
@@ -897,9 +906,9 @@
     var today = dayKey(t), tmw = dayKey(addDays(t, 1));
     order.forEach(function (k) {
       var d = pd(k + 'T12:00');
-      html += '<h2 class="sec2 dh">' + (weekOff === 0 && k === today ? 'Today' : weekOff === 0 && k === tmw ? 'Tomorrow' : esc(fmtD(d))) + '</h2>' + groups[k].map(function (e) { return card(e); }).join('');
+      html += '<h2 class="sec2 dh' + (k === today ? ' dh-today' : '') + '" data-daygroup="' + k + '"' + (k === today ? ' aria-current="date"' : '') + '>' + (k === today ? 'Today · ' : k === tmw ? 'Tomorrow · ' : '') + esc(fmtD(d)) + ' <span class="cnt">' + groups[k].length + '</span></h2>' + groups[k].map(function (e) { return card(e); }).join('');
     });
-    if (!html) html = '<p class="empty">No events match that filter for this week.</p>';
+    if (!html) html = weekEmptyHtml();
     paint(html);
   }
 
@@ -992,7 +1001,7 @@
     if (isReg) {
       var mult = it.end.getTime() - it.start.getTime() > 864e5;
       var when = it.travel ? travelDateText(it) : (mult ? fmtD(it.start) + ' to ' + fmtD(it.end) : fmtD(it.start));
-      return '<a class="agr reg"'+catalogueDetailAttr(it)+' href="' + esc(it.src.url) + '" target="_blank" rel="noopener noreferrer" style="--k:' + REGCOL + '"><i></i><span class="agt"><b>' + esc(it.name) + '</b><small>' + (it.place ? esc(it.place) + ' · ' : '') + esc(when) + '</small></span><em>' + esc(it.area) + '</em></a>';
+      return '<a class="agr reg"'+catalogueDetailAttr(it)+' href="' + esc(it.src.url) + '" target="_blank" rel="noopener noreferrer" style="--k:' + REGCOL + '"><i></i><span class="agt"><b>' + esc(it.name) + '</b><small>' + (it.place ? esc(it.place) + ' · ' : '') + esc(when) + '</small></span><em>' + (regInPerson(it) ? 'In person · ' : '') + esc(it.area) + '</em></a>';
     }
     var k = kindOf(it);
     return '<button type="button" class="agr" data-open="' + esc(it.id) + '" style="--k:' + k[1] + '"><i></i><span class="agt"><b>' + esc(it.name) + '</b><small>' + esc(whenText(it)) + '</small></span><em>' + esc(k[0]) + '</em></button>';
@@ -2275,7 +2284,7 @@ function renderHomeBrief(t) {
     renderActionCentre();
   }
   document.addEventListener('click', function (ev) {
-    var b = ev.target.closest && ev.target.closest('[data-mark],[data-save],[data-hide],[data-unhide],[data-follow],[data-type],[data-kindtog],[data-day],[data-wk],[data-clearday],[data-cday],[data-creg],[data-cscope],[data-travel-region]'); if (!b) return;
+    var b = ev.target.closest && ev.target.closest('[data-mark],[data-save],[data-hide],[data-unhide],[data-follow],[data-type],[data-kindtog],[data-day],[data-wk],[data-wkreset],[data-clearday],[data-cday],[data-creg],[data-cscope],[data-travel-region]'); if (!b) return;
     if (b.hasAttribute('data-mark')) { var mv = b.getAttribute('data-val'); var cur = usGet(b.getAttribute('data-mark')); var nv = mv === '' ? null : +mv; if (nv === cur) nv = null; setMark(b.getAttribute('data-mark'), nv); }
     else if (b.hasAttribute('data-hide')) toggleHide(b.getAttribute('data-hide'));
     else if (b.hasAttribute('data-unhide')) toggleHide(b.getAttribute('data-unhide'));
@@ -2284,6 +2293,7 @@ function renderHomeBrief(t) {
     else if (b.hasAttribute('data-kindtog')) { var kk = b.getAttribute('data-kindtog'); usSet('hidekind:' + kk, !kindHidden(kk)); renderAll(); }
     else if (b.hasAttribute('data-type')) { typeSel = b.getAttribute('data-type'); renderTypes(); renderStrip(); renderTimeline(); }
     else if (b.hasAttribute('data-day')) { var k = b.getAttribute('data-day'); selDay = selDay === k ? '' : k; renderStrip(); renderTimeline(); }
+    else if (b.hasAttribute('data-wkreset')) { weekOff = 0; selDay = ''; renderStrip(); renderTimeline(); }
     else if (b.hasAttribute('data-wk')) { weekOff += +b.getAttribute('data-wk'); selDay = ''; renderStrip(); renderTimeline(); }
     else if (b.hasAttribute('data-clearday')) { selDay = ''; renderStrip(); renderTimeline(); }
     else if (b.hasAttribute('data-cday')) { calSel = b.getAttribute('data-cday'); renderCalendar(); }
@@ -2357,7 +2367,7 @@ function renderHomeBrief(t) {
     renderCoverage();
     if (window.GO && GO.refreshDex) GO.refreshDex();
     usSync();
-    var inf = document.createElement('script'); inf.src = '/infographic.js?v=20261103a'; document.body.appendChild(inf); var x = document.createElement('script'); x.src = '/extra.js?v=20261102c'; document.body.appendChild(x); var z = document.createElement('script'); z.src = '/places.js?v=20261103b'; window.GOPLACES_READY = new Promise(function (resolve) { z.onload = function () { resolve(window.GOPLACES || null); }; z.onerror = function () { resolve(null); }; }); var y = document.createElement('script'); y.src = '/detail.js?v=20261111a'; document.body.appendChild(y); document.body.appendChild(z); var w = document.createElement('script'); w.src = '/fresh.js?v=20261103a'; document.body.appendChild(w); var nv = document.createElement('script'); nv.src = '/nudge.js?v=20261102a'; document.body.appendChild(nv); var rv = document.createElement('script'); rv.src = '/review.js?v=20261104b'; document.body.appendChild(rv); var by = document.createElement('script'); by.src = '/buy.js?v=20261103a'; document.body.appendChild(by);
+    var inf = document.createElement('script'); inf.src = '/infographic.js?v=20261103a'; document.body.appendChild(inf); var x = document.createElement('script'); x.src = '/extra.js?v=20261102c'; document.body.appendChild(x); var z = document.createElement('script'); z.src = '/places.js?v=20261103b'; window.GOPLACES_READY = new Promise(function (resolve) { z.onload = function () { resolve(window.GOPLACES || null); }; z.onerror = function () { resolve(null); }; }); var y = document.createElement('script'); y.src = '/detail.js?v=20261113a'; document.body.appendChild(y); document.body.appendChild(z); var w = document.createElement('script'); w.src = '/fresh.js?v=20261103a'; document.body.appendChild(w); var nv = document.createElement('script'); nv.src = '/nudge.js?v=20261102a'; document.body.appendChild(nv); var rv = document.createElement('script'); rv.src = '/review.js?v=20261104b'; document.body.appendChild(rv); var by = document.createElement('script'); by.src = '/buy.js?v=20261103a'; document.body.appendChild(by);
   }
   envBanner();
   /* Bounded waits: a request that never answers must not leave Today blank. After FEED_TIMEOUT_MS the page renders from the curated list

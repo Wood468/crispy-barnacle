@@ -43,19 +43,61 @@ function reward(item,ctx){
  return '<div class="research-reward">'+icon+'<span><b>'+quantity+esc(item.name)+'</b>'+cp+'</span></div>';
 }
 function research(items,ctx){return items.filter(function(r){return value(r);}).map(function(r){return '<article class="research-task"><h4>'+esc(value(r))+'</h4>'+(r.access&&r.access!=='unknown'?'<p>'+esc(r.access)+'</p>':'')+(Array.isArray(r.rewards)?'<div class="research-rewards">'+r.rewards.map(function(x){return reward(x,ctx);}).join('')+'</div>':'')+'</article>';}).join('');}
+var PASS_ICONS=[[/^xp$/i,'/ico/xp.webp'],[/^stardust$/i,'/ico/dust.webp'],[/candy( xl)?$/i,'/ico/candy.webp'],[/^max potion$/i,'/ico/i/max-potion.webp'],[/^max revive$/i,'/ico/i/max-revive.webp'],[/^golden razz/i,'/ico/i/golden-razz.webp'],[/^silver pinap/i,'/ico/i/silver-pinap.webp'],[/incubator/i,'/ico/egg.webp'],[/incense/i,'/ico/incense.webp'],[/(raid|battle) pass/i,'/ico/g/raidpass.webp']];
+function passCategory(item){
+ if(item.type==='encounter')return 'Pokémon';
+ var n=item.name;
+ if(/\bbox\b/i.test(n))return 'Box';
+ if(/candy/i.test(n))return 'Candy';
+ if(/^(xp|stardust|pok[eé]coins?)$/i.test(n))return 'Resource';
+ if(/\b(tee|t-shirt|t shirt|pants|jacket|hat|shirt|pose|sticker|badge|avatar|bag|shoes|glasses|gloves)\b/i.test(n))return 'Avatar item';
+ if(/\b(ball|berry|potion|revive|incubator|incense|pinap|razz|tm|lure|pass|egg|mushroom|star piece|nanab|module|particle|charm)\b/i.test(n))return 'Item';
+ return 'Reward';
+}
+function passReward(raw,ctx){
+ var item=typeof raw==='string'?{name:raw.trim(),type:'other',quantity:1}:raw;
+ if(!item||typeof item.name!=='string'||!item.name||/^[-–—]+$/.test(item.name.trim()))return null;
+ if(typeof raw==='string'){var q=/^(.+?)\s*[×x]\s*(\d+)$/i.exec(item.name);if(q){item={name:q[1].trim(),type:'item',quantity:+q[2]};}}
+ var cat=passCategory(item),art='',fallback=true;
+ if(item.type==='encounter'&&ctx.rewardArt){art=ctx.rewardArt(item)||'';fallback=!/<(img|svg|canvas)\b/i.test(art);if(fallback)art='';}
+ else{var icon=PASS_ICONS.filter(function(r){return r[0].test(item.name);})[0];if(icon){art='<img src="'+esc(icon[1])+'" alt="" width="40" height="40" loading="lazy" decoding="async">';fallback=false;}}
+ var glyph=cat==='Pokémon'?'?':cat==='Avatar item'?'👕':cat==='Box'?'🎁':'◆';
+ var qty=Number.isInteger(item.quantity)&&item.quantity>1?'×'+esc(item.quantity):'';
+ var lvl=item.type==='encounter'&&Number.isInteger(item.level)?' · Level '+esc(item.level):'';
+ return '<div class="ue-pass-reward" data-cat="'+esc(cat)+'"'+(fallback?' data-art="fallback"':'')+'><span class="ue-pass-art" aria-hidden="true">'+(art||'<span class="ue-reward-icon">'+glyph+'</span>')+'</span><span class="ue-pass-name"><b>'+esc(item.name)+'</b><small>'+(qty?qty+' · ':'')+esc(cat)+lvl+(fallback?' · art unavailable':'')+'</small></span></div>';
+}
+function passLane(label,cls,list,empty,ctx){
+ var chips=[].concat(list||[]).map(function(x){return passReward(x,ctx);}).filter(Boolean);
+ return '<div class="ue-lane ue-lane-'+cls+'"><h5>'+label+'</h5>'+(chips.length?chips.join(''):'<p class="ue-lane-empty">'+empty+'</p>')+'</div>';
+}
 function passes(items,ctx){
- function stage(s){return '<li><b>Rank '+esc(s.rank)+'</b>'+(Number.isFinite(s.points)?'<small>'+esc(s.points)+' points</small>':'')+(s.free?'<div><h5>Free</h5>'+[].concat(s.free).map(function(x){return reward(x,ctx);}).join('')+'</div>':'')+(s.deluxe?'<div><h5>Deluxe</h5>'+[].concat(s.deluxe).map(function(x){return reward(x,ctx);}).join('')+'</div>':'')+(Array.isArray(s.rewards)?s.rewards.map(function(x){return reward(x,ctx);}).join(''):'')+'</li>';}
+ function stage(s){
+  var lanes=(s.free||s.deluxe)?passLane('Free','free',s.free,'No free reward',ctx)+passLane('Deluxe','deluxe',s.deluxe,'No extra Deluxe reward',ctx):passLane('Reward','free',s.rewards,'Track not specified by the source',ctx);
+  return '<li class="ue-pass-rank" data-rank="'+esc(s.rank)+'"><b>Rank '+esc(s.rank)+'</b>'+(Number.isFinite(s.points)?'<small>'+esc(s.points)+' points</small>':'')+'<div class="ue-pass-lanes">'+lanes+'</div></li>';
+ }
+ function listWithGaps(list,startPrev){
+  var out='',prev=startPrev===undefined?null:startPrev;
+  list.forEach(function(s){if(prev!==null&&s.rank>prev+1)out+='<li class="ue-pass-gap" role="note">'+(s.rank-prev===2?'Rank '+(prev+1):'Ranks '+(prev+1)+'–'+(s.rank-1))+': no rewards listed by the source</li>';out+=stage(s);prev=s.rank;});
+  return out;
+ }
+ var meta=ctx.passMeta||{};
  return items.filter(function(p){return value(p);}).map(function(p){
   var stages=(Array.isArray(p.stages)?p.stages:[]).filter(function(s){return s&&Number.isInteger(s.rank)&&s.rank>=0;}).slice().sort(function(a,b){return a.rank-b.rank;});
   var content='';
-  if(stages.length<=12)content='<ol class="ue-pass-stages">'+stages.map(stage).join('')+'</ol>';
+  if(!stages.length)content='<p class="note ue-pass-missing">Rank rewards have not been published by the source yet.</p>';
   else{
    var groups={};stages.forEach(function(s){var key=Math.floor(Math.max(0,s.rank-1)/25);(groups[key]||(groups[key]=[])).push(s);});
-   content='<p class="ue-pass-count">'+stages.length+' reward ranks · Expand a range to compare rewards.</p>'+Object.keys(groups).map(function(key){var list=groups[key];return '<details class="ue-pass-range"><summary>'+(list.length===1?'Rank '+esc(list[0].rank):'Ranks '+esc(list[0].rank)+'–'+esc(list[list.length-1].rank))+'</summary><ol class="ue-pass-stages">'+list.map(stage).join('')+'</ol></details>';}).join('');
+   var keys=Object.keys(groups);
+   var first=stages[0].rank,last=stages[stages.length-1].rank;
+   var head='<p class="ue-pass-count">'+stages.length+' reward ranks listed'+(last>first?' (Rank '+first+' to '+last+')':'')+'.'+(first>1?' Ranks 1'+(first>2?'–'+(first-1):'')+' list no track reward; milestone bonuses are shown under Bonuses.':'')+'</p><p class="ue-pass-legend"><span class="ue-key ue-key-free">Free track</span><span class="ue-key ue-key-deluxe">Deluxe track</span> Deluxe also receives every Free reward.</p>';
+   content=head+keys.map(function(key,i){var list=groups[key],before=i?groups[keys[i-1]][groups[keys[i-1]].length-1].rank:null;return '<details class="ue-pass-range"'+(i===0?" open":"")+'><summary>'+(list.length===1?'Rank '+esc(list[0].rank):'Ranks '+esc(list[0].rank)+'–'+esc(list[list.length-1].rank))+'</summary><ol class="ue-pass-stages">'+listWithGaps(list,before)+'</ol></details>';}).join('');
   }
-  return '<article class="ue-pass"><h4>'+esc(value(p))+'</h4>'+((p.text&&p.text!==value(p))?'<p>'+esc(p.text)+'</p>':'')+content+'</article>';
+  var srcs=(model_sources(ctx)||[]).map(function(s){return s;}).join(' · ');
+  var foot='<p class="ue-pass-src">'+(srcs?'Source: '+srcs:'Source not listed')+(meta.updated?' · Data checked '+esc(String(meta.updated).slice(0,10)):' · Freshness unknown')+'. Rewards are as published by the source and can change; anything not listed is not confirmed.'+(meta.warning?' '+esc(meta.warning):'')+'</p>';
+  return '<article class="ue-pass"><h4>'+esc(value(p))+'</h4>'+((p.text&&p.text!==value(p))?'<p>'+esc(p.text)+'</p>':'')+content+foot+'</article>';
  }).join('');
 }
+function model_sources(ctx){return (ctx.passMeta&&ctx.passMeta.sources||[]).map(function(s){var u=s.url&&ctx.safe?ctx.safe(s.url):s.url;return u?'<a href="'+esc(u)+'" target="_blank" rel="noopener noreferrer">'+esc(s.name)+'</a>':esc(s.name);});}
 function tickets(items,ctx){
  var notes=[],cards=[];
  items.filter(function(t){return value(t);}).forEach(function(t){

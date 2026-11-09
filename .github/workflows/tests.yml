@@ -135,6 +135,7 @@ jobs:
           python test/battle_rotation_browser.py
           python test/raids_max_polish_browser.py
           python test/event_consistency_browser.py
+          python test/schedule_gopass_browser.py
 
       - name: Verify combined source rendering and offline upgrade
         if: matrix.shard == 'b'
@@ -193,6 +194,7 @@ jobs:
           python test/today_v1_coverage_browser.py
           python test/battle_rotation_browser.py
           python test/raids_max_polish_browser.py
+          python test/schedule_gopass_browser.py
           python test/universal_event_browser.py
           python test/worldwide_timezone_browser.py
       - name: Verify combined source rendering, PWA update and preserved player data

@@ -22,9 +22,10 @@ function passReward(raw){
  if(quantity){var amount=+(quantity[1]||quantity[4]),label=text(quantity[2]||quantity[3]);if(Number.isSafeInteger(amount)&&amount>0&&amount<=1e9&&!/[|,×·]/.test(label))return {type:/\b(candy|ball|stardust|xp|energy|pass|incubator|revive|potion|coin|pok[eé]coin|incense|lure|egg|berry)\b/i.test(label)?'item':'other',name:label,quantity:amount};}
  return value;
 }
+function splitRewards(v){return String(v).split(/\s+·\s+/).map(function(x){return passReward(x.trim());}).filter(function(x){return x!==''&&!/^[-–—]+$/.test(typeof x==='string'?x:'x');});}
 function passFields(tickets){
  var stages=new Map(),other=[];
- (tickets||[]).forEach(function(row){var value=typeof row==='string'?row:row&&row.text||'',m=/^Rank (\d+)(?:\s+(Deluxe))?\s*:\s*(.+)$/i.exec(value);if(!m){other.push(row);return;}var rank=+m[1],stage=stages.get(rank)||{rank:rank};var pair=/^Free:\s*(.*?)\s*\|\s*Deluxe:\s*(.*)$/i.exec(m[3]);if(pair){stage.free=[passReward(pair[1])];stage.deluxe=[passReward(pair[2])];}else if(m[2])stage.deluxe=[passReward(m[3])];else stage.rewards=[passReward(m[3])];stages.set(rank,stage);});
+ (tickets||[]).forEach(function(row){var value=typeof row==='string'?row:row&&row.text||'',m=/^Rank (\d+)(?:\s+(Deluxe))?\s*:\s*(.+)$/i.exec(value);if(!m){other.push(row);return;}var rank=+m[1],stage=stages.get(rank)||{rank:rank};var pair=/^Free:\s*(.*?)\s*\|\s*Deluxe:\s*(.*)$/i.exec(m[3]);if(pair){stage.free=splitRewards(pair[1]);stage.deluxe=splitRewards(pair[2]);}else if(m[2])stage.deluxe=splitRewards(m[3]);else stage.rewards=splitRewards(m[3]);stages.set(rank,stage);});
  return {tickets:other,passes:stages.size?[{title:'GO Pass rewards',stages:Array.from(stages.values()).sort(function(a,b){return a.rank-b.rank;})}]:[]};
 }
 function adapt(ev,details,info){
