@@ -60,8 +60,16 @@ with sync_playwright() as p:
             return page.evaluate("document.querySelector('#evd .evd-nav').getBoundingClientRect().bottom")
         def active():
             return page.evaluate("document.querySelector('#evd .evd-nav-link[aria-current=\"true\"]').dataset.sec")
+        def scroll_idle(limit=6000):
+            # Smooth scrolling takes as long as the machine lets it (WebKit under CI load is the slow case): wait for the scroll position to stop moving
+            # for several consecutive frames instead of sleeping a fixed time, so the assertion never races the animation.
+            page.wait_for_function('''() => { const o = document.querySelector('#evd'); const now = o.scrollTop;
+                const prev = window.__scrollPrev; window.__scrollPrev = now;
+                window.__scrollStill = prev === now ? (window.__scrollStill || 0) + 1 : 0; return window.__scrollStill >= 8; }''', timeout=limit, polling='raf')
+            page.evaluate('window.__scrollPrev = undefined; window.__scrollStill = 0')
         def tap(sec):
-            page.locator(f'#evd .evd-nav-link[data-sec="{sec}"]').click(); page.wait_for_timeout(1300)
+            page.evaluate('window.__scrollPrev = undefined; window.__scrollStill = 0')
+            page.locator(f'#evd .evd-nav-link[data-sec="{sec}"]').click(); page.wait_for_timeout(120); scroll_idle()
             top = page.evaluate(f"document.querySelector('#evd-h-{sec}').getBoundingClientRect().top")
             maxed = page.evaluate("(()=>{const o=document.querySelector('#evd');return o.scrollTop+o.clientHeight>=o.scrollHeight-4})()")
             assert maxed or top >= stack_bottom() - 2, (sec, top, stack_bottom())
