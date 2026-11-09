@@ -27,7 +27,7 @@ test('the wrong-year Machamp and Minior images and related Eternatus image are r
     'leekduck:minior-showers-eta-aquariids-2027',
     'leekduck:minior-showers-southern-delta-aquariids-2027',
     'leekduck:minior-showers-perseids-2027'
-  ]) assert.equal(details[id]?.image, null, id);
+  ]) assert.equal(details[id]?.image ?? null, null, id); // a record folded into its curated twin has no image either
   assert.equal(catalogue.find(event => event.eventId === 'leekduck:go-wild-area-gigantamax-machamp-power-up-timed-research')?.image, null);
   // The 2026 Eternamax Eternatus event may carry only the artwork of its own official 2026 announcement page, never an older year's image.
   const pages = JSON.parse(await readFile(new URL('../public/event-artwork.json', import.meta.url), 'utf8')).pages || {};
