@@ -39,7 +39,42 @@
       + '<p class="note">Australian prices are verified observations. Overseas prices are modelled, not actual offers. Uncalibrated categories show no price. Regional availability and payment eligibility may differ.</p>'
       + items.map(function (p) {
         return '<div class="sp-r sp-regional-row"><span class="sp-n">' + icon(p.label) + esc(p.label) + '</span>'
-          + '<b class="sp-a">AU Web: A
+          + '<b class="sp-a">AU Web: A          + '<span class="sp-regional-value" title="Indian in-app estimate">India in-app: ' + esc(money(p.india, '₹')) + '</span>'
+          + '<span class="sp-regional-value" title="Indonesian Web estimate">Indonesia Web: ' + esc(money(p.indonesia, 'Rp ')) + '</span>'
+          + '<span class="sp-n">' + esc(p.india ? 'India: estimated (' + p.india.confidence + ' confidence)' : 'India: insufficient observations')
+          + ' · ' + esc(p.indonesia ? 'Indonesia: ' + (p.indonesia.basis === 'verified' ? 'verified screenshot' : 'estimated (' + p.indonesia.confidence + ' confidence)') : 'Indonesia: insufficient observations') + '</span></div>';
+      }).join('') + '</details>';
+  }
+  function go() {
+    var host = document.getElementById('evsource'); if (!host || !window.GOLIB) return;
+    GOLIB.loadPrices().then(function (d) {
+      if (!d || !d.owner) return; /* the Rp store list is for the owner only */ var h = regional(d) + build(d); if (!h) return;
+      var el = document.getElementById('storep-host');
+      if (!el) { el = document.createElement('div'); el.id = 'storep-host'; host.parentNode.insertBefore(el, host); }
+      el.innerHTML = h;
+    }).catch(function () { });
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', go); else go();
+})();
+ + p.aud.toFixed(2) + '</b>'
+          + '<span class="sp-regional-value" title="Indian in-app estimate">' + esc(money(p.india, '₹')) + '</span>'
+          + '<span class="sp-regional-value" title="Indonesian Web estimate">' + esc(money(p.indonesia, 'Rp ')) + '</span>'
+          + '<span class="sp-n">' + esc(p.india ? 'India: estimated (' + p.india.confidence + ' confidence)' : 'India: insufficient observations')
+          + ' · ' + esc(p.indonesia ? 'Indonesia: estimated (' + p.indonesia.confidence + ' confidence)' : 'Indonesia: insufficient observations') + '</span></div>';
+      }).join('') + '</details>';
+  }
+  function go() {
+    var host = document.getElementById('evsource'); if (!host || !window.GOLIB) return;
+    GOLIB.loadPrices().then(function (d) {
+      if (!d || !d.owner) return; /* the Rp store list is for the owner only */ var h = regional(d) + build(d); if (!h) return;
+      var el = document.getElementById('storep-host');
+      if (!el) { el = document.createElement('div'); el.id = 'storep-host'; host.parentNode.insertBefore(el, host); }
+      el.innerHTML = h;
+    }).catch(function () { });
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', go); else go();
+})();
+ + p.aud.toFixed(2) + '</b>'
           + '<span class="sp-regional-value" title="Indian in-app estimate">India in-app: ' + esc(money(p.india, '₹')) + '</span>'
           + '<span class="sp-regional-value" title="Indonesian Web estimate">Indonesia Web: ' + esc(money(p.indonesia, 'Rp ')) + '</span>'
           + '<span class="sp-n">' + esc(p.india ? 'India: estimated (' + p.india.confidence + ' confidence)' : 'India: insufficient observations')
