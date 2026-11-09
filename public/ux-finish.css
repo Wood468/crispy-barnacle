@@ -150,3 +150,4 @@
 @media (min-width:760px){.research-groups .rs-list{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .research-groups .rs-rewards{grid-template-columns:repeat(auto-fill,minmax(136px,1fr))}
 .research-groups .research-event-state.upcoming{background:var(--color-surface-raised);color:var(--color-text);border:1px solid var(--color-border)}
+.src-about-link{display:inline;min-height:44px;padding:0 2px;border:0;background:none;color:var(--color-link);font:inherit;text-decoration:underline;cursor:pointer}
