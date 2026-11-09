@@ -16,8 +16,8 @@ export const OBSERVATIONS = [
   /* 9 Nov owner screenshots: standard Web Store packs. Yellow +10/+60/etc are Reward Road points, not coins. */
   ...[[110,5000],[600,25000],[1300,50000],[2700,101000],[5600,200000],[15500,505000]].map(([coins,amount]) => ({ ...ID, id: "id-coins-standard-" + coins, product: coins.toLocaleString("en-US") + " PokéCoins (standard Web Store pack)", kind: "coins", amount, coins })),
   { ...ID, id: "id-coins-18500-promo", product: "16,500 PokéCoins + 2,000 one-time Web Store bonus (18,500 total)", kind: "coins", amount: 505000, coins: 18500, oneTime: true },
-  { ...ID, id: "id-coins-3300", product: "3,300 total PokéCoins", kind: "coins", amount: 101000, coins: 3300 },
-  { ...ID, id: "id-coins-6800", product: "6,800 total PokéCoins", kind: "coins", amount: 200000, coins: 6800 },
+  { ...ID, id: "id-coins-3300", product: "3,300 total PokéCoins", kind: "coins", amount: 101000, coins: 3300, oneTime: true },
+  { ...ID, id: "id-coins-6800", product: "6,800 total PokéCoins", kind: "coins", amount: 200000, coins: 6800, oneTime: true },
   /* Carried over from the first regional-pricing work (PR #374 baseline); original image not in the repository. */
   ...[["GO Rocket Leader Kit", "bundle", 50000], ["Raid Commander Box", "bundle", 200000], ["Pro Raid Bundle", "bundle", 379000],
     ["Lucky Egg x8", "item", 25000], ["Star Piece x8", "item", 30500], ["Remote Raid Pass x2", "item", 15000], ["Super Incubator x2", "item", 15000],
