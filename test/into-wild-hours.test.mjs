@@ -44,7 +44,8 @@ test('Into the Wild activities are compatible with the universal schedule previe
 });
 
 test('daily Raid and Max hours resolve to 18:00–19:00 in different player time zones',async()=>{
- const clock=await import('../public/event-clock.js');
+ const {createRequire}=await import('node:module');
+ const clock=createRequire(import.meta.url)('../public/event-clock.js');
  for(const zone of ['Australia/Melbourne','America/Los_Angeles','Asia/Tokyo']){
   for(const activity of event.activities){
    const range=clock.range(activity.schedule,zone);
