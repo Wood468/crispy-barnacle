@@ -13,6 +13,9 @@ export const OBSERVATIONS = [
   { ...ID, id: "id-monthly-ultra", product: "Monthly Deluxe Ultra Box", kind: "monthly-pass-ultra", amount: 76000, pairAud: { amount: 22.99, ref: "go-pass-oct-ultrabox", observed: "2026-10-12" } },
   { ...ID, id: "id-storage-50", product: "Pokémon Storage +50", kind: "storage", amount: 10000 },
   { ...ID, id: "id-item-bag", product: "Item Bag upgrade", kind: "storage", amount: 10000 },
+  /* 9 Nov owner screenshots: standard Web Store packs. Yellow +10/+60/etc are Reward Road points, not coins. */
+  ...[[110,5000],[600,25000],[1300,50000],[2700,101000],[5600,200000],[15500,505000]].map(([coins,amount]) => ({ ...ID, id: "id-coins-standard-" + coins, product: coins.toLocaleString("en-US") + " PokéCoins (standard Web Store pack)", kind: "coins", amount, coins })),
+  { ...ID, id: "id-coins-18500-promo", product: "16,500 PokéCoins + 2,000 one-time Web Store bonus (18,500 total)", kind: "coins", amount: 505000, coins: 18500, oneTime: true },
   { ...ID, id: "id-coins-3300", product: "3,300 total PokéCoins", kind: "coins", amount: 101000, coins: 3300 },
   { ...ID, id: "id-coins-6800", product: "6,800 total PokéCoins", kind: "coins", amount: 200000, coins: 6800 },
   /* Carried over from the first regional-pricing work (PR #374 baseline); original image not in the repository. */
