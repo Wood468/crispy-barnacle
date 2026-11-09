@@ -79,7 +79,7 @@
   // Only explicit global eligibility overrides an in-person event-type default.
   function scopedKind(kind, name, scope, region) {
     var globalScope = /^(worldwide|worldwide_local|global)$/i.test(String(scope || ''));
-    var globalTitle = /(?:^|[:\\s])global(?:$|\\b)/i.test(String(name || ''));
+    var globalTitle = /(?:^|[:\s])global(?:$|\b)/i.test(String(name || ''));
     var localRegion = String(region || '').trim();
     if (kind === 'person' && (globalScope || (globalTitle && !localRegion))) return 'global';
     return kind;
