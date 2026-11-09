@@ -422,3 +422,10 @@ h2.dh .cnt{font:600 .75rem/1 var(--font-body);color:var(--color-text-muted);bord
 .wk-empty{display:grid;gap:12px;justify-items:start;padding:12px 0}
 #evtimeline .evc h3,#evtimeline .agt b{overflow-wrap:anywhere}
 .ue-pass-art:empty::after{content:"?";font-weight:700;color:var(--color-text-muted)}
+
+/* Verified, source-backed highlights surfaced before long-form event notes. */
+.ue-source-highlights{margin:16px 0}
+.ue-source-highlights ul{list-style:none;margin:8px 0 0;padding:0;display:grid;gap:9px}
+.ue-source-highlights li{display:grid;gap:4px;padding:12px 14px;border:1px solid var(--border,#303849);border-radius:13px;background:var(--surface,#1a1e27)}
+.ue-source-highlights strong{font-size:12px;letter-spacing:.03em;color:var(--muted,#b9b5cf)}
+.ue-source-highlights span{font-size:14px;line-height:1.45}
