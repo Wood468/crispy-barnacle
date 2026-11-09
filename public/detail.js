@@ -913,6 +913,9 @@
     var b=e.target.closest&&e.target.closest('.ue-mon[data-info]');if(!b)return;
     var info={};try{info=JSON.parse(b.getAttribute('data-info'));}catch(x){}
     closeSheet();sheetOpener=b;
+    // A delayed section-scroll completion must not steal focus from this sheet
+    // or from the Pokémon tile when Escape returns focus to it (WebKit).
+    if(spy){spy.navigation=(spy.navigation||0)+1;clearTimeout(spy.t);spy.lock=0;}
     var d=document.createElement('div');d.id='ue-sheet';d.className='ue-sheet';
     d.innerHTML='<div class="ue-sheet-card" role="dialog" aria-modal="true" aria-labelledby="ue-sheet-t"><div class="ue-sheet-art">'+b.querySelector('.ue-mon-art').innerHTML+'</div><h3 id="ue-sheet-t">'+esc(info.name||'')+'</h3><p class="ue-sheet-m">'+esc([info.method,info.badge].filter(Boolean).join(' · '))+'</p>'
       +(info.form?'<p class="ue-sheet-f">Special form: '+esc(info.form)+'</p>':'')+(info.signals&&info.signals.length?'<p>'+info.signals.map(esc).join(' · ')+'</p>':'')+(info.meta&&info.meta.length?'<p class="ue-sheet-m">'+info.meta.map(esc).join(' · ')+'</p>':'')+'<button type="button" class="pill all" data-sheet-close>Close</button></div>';
