@@ -33,7 +33,7 @@ function harness() {
     if (pending) return new Promise(() => {});
     return Promise.resolve(fail ? null : url.includes('event-details') ? details : { events: [{ id: 'fixture', t: 'Fixture event' }] });
   } } }, document: { getElementById(id) { return id === 'research-list' ? host : status; }, querySelector() { return refresh; }, addEventListener(type, cb) { listeners[type] = cb; } } });
-  return { host, status, requests, attrs, setFail(value) { fail = value; }, setPending() { pending = true; }, advance(ms) { clock += ms; }, open() { listeners['gofn-view']({ detail: { tab: 'events', sub: 'research' } }); }, refresh() { listeners.click({ target: { closest() { return true; } } }); } };
+  return { host, status, requests, attrs, setFail(value) { fail = value; }, setPending() { pending = true; }, advance(ms) { clock += ms; }, open() { listeners['gofn-view']({ detail: { tab: 'events', sub: 'research' } }); }, refresh() { listeners.click({ target: { closest(sel) { return !/more/.test(sel); } } }); } };
 }
 const settled = () => new Promise(resolve => setImmediate(resolve));
 
@@ -74,11 +74,11 @@ test('initial failure offers retry and concurrent renders share one bounded load
 test('event-detail Research uses the same task-only freshness labels and escapes source text', () => {
   const detail = fs.readFileSync(new URL('../public/detail.js', import.meta.url), 'utf8');
   const body = detail.match(/function researchTasksHtml\(ev, d\) \{([\s\S]*?)\n  \}/)[1];
-  const render = new Function('ev', 'd', 'esc', 'window', 'X', 'safe', body);
+  const render = new Function('ev', 'd', 'esc', 'window', 'X', 'safe', 'researchReward', body);
   const html = render({ id: 'fixture' }, { updated: '2026-11-06', researchTasks: [
     { task: 'Catch <3 Pokémon', rewards: [], sources: [], checkedAt: '' },
     { task: 'Win a raid', rewards: [], sources: [], checkedAt: '2026-10-01' }
-  ] }, lib.esc, { GOLIB: { researchCheckedText: value => lib.researchCheckedText(value, NOW) } }, {}, () => '');
+  ] }, lib.esc, { GOLIB: { researchCheckedText: value => lib.researchCheckedText(value, NOW) } }, {}, () => '', () => '');
   assert.match(html, /Source check date unavailable/);
   assert.match(html, /Checked 2026-10-01 · source check may be out of date/);
   assert.match(html, /Catch &lt;3 Pokémon/);

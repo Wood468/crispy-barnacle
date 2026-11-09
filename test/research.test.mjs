@@ -119,7 +119,7 @@ test("event and pass source associations are explicit and the central Research v
   assert.match(research, /researchTasks/);
   assert.match(research, /eventWindow/);
   assert.match(research, /CURRENT DATE/);
-  assert.match(research, /GODASH\.monArt/);
+  assert.match(research, /GODETAIL\.researchReward/, "Research tab reward cells share the Event Details exact-art renderer");
   assert.match(sw, /research\.js\?v=/);
 });
 

@@ -127,3 +127,24 @@
 .t1-banner .ev-art-accent { width: 24%; max-width: 78px; bottom: 6px; }
 .t1-banner .ev-art-tag { right: auto; left: 48px; top: 12px; max-width: calc(100% - 112px); text-align: left; }
 .ev-art-tag { width: max-content; }
+
+/* Research tab: compact task rows grouped by category, search, long-list collapse, freshness */
+.research-tools{display:grid;gap:6px;max-width:920px;margin:0 auto var(--space-3,12px)}
+.research-search{display:grid;gap:4px}
+.research-search-label{font-size:.72rem;font-weight:700;color:var(--color-text-muted)}
+.research-search input{width:100%;min-height:44px;padding:0 12px;border:1px solid var(--color-border);border-radius:var(--radius-md);background:var(--color-surface);color:var(--color-text);font:inherit;font-size:16px}
+.research-fresh{margin:0;font-size:.74rem;line-height:1.35;color:var(--color-text-muted)}
+.research-fresh.rf-delayed{color:var(--color-warning,#b45309)}
+.research-fresh.rf-stale,.research-fresh.rf-unknown{color:var(--color-danger,#b91c1c);font-weight:700}
+.research-groups .research-event-tasks{display:grid;grid-template-columns:minmax(0,1fr);gap:14px;padding:12px}
+.research-groups .rs-group{display:grid;gap:6px;min-width:0}
+.research-groups .research-task{padding:8px 10px;border:1px solid var(--color-border);border-radius:var(--radius-md);background:var(--color-surface);display:grid;gap:4px;min-width:0}
+.research-groups .rs-text{margin:0;font-size:.9rem;line-height:1.25;font-weight:700;overflow-wrap:anywhere}
+.research-groups .rs-alt{margin:0;font-size:.7rem;color:var(--color-text-muted);font-weight:600}
+.research-groups .rs-shiny{color:var(--color-accent);font-weight:700}
+.research-groups .research-more{justify-self:start;min-height:44px}
+.research-groups .research-task-sources{display:grid;gap:2px}
+.research-groups .research-task-source{margin:0;font-size:.68rem}
+.research-unparsed{padding:10px 12px;border:1px dashed var(--color-border);border-radius:var(--radius-md);font-size:.8rem}
+.research-unparsed p{margin:4px 0 0;color:var(--color-text-muted)}
+@media (min-width:760px){.research-groups .rs-list{grid-template-columns:repeat(2,minmax(0,1fr))}}

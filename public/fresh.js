@@ -4,7 +4,7 @@
 (function () {
   'use strict';
   var G = window.GO; if (!G) return;
-  var esc = G.esc, MON = G.MON, S = { jobs: null, api: null, dm: null, pvp: null, prices: null, moves: null, done: false };
+  var esc = G.esc, MON = G.MON, S = { jobs: null, api: null, dm: null, pvp: null, prices: null, moves: null, ed: null, done: false };
   var HOUR = 3600000, DAY = 86400000;
   function $(id) { return document.getElementById(id); }
   function num(t) { var n = Number(t); return t == null || t === '' || !isFinite(n) ? null : n; }
@@ -21,7 +21,7 @@
   function snapshotWarning(snap) { return snapshotStale(snap) ? ' · snapshot may be stale' : ''; }
   function snapshotNote(snap) { return snapshotStale(snap) ? 'as of ' + esc(snap) + snapshotWarning(snap) : 'snapshot as of ' + esc(snap); }  /* one short phrase: the line stays within two lines at 320 px */
   var TRUST = { official: ['Official', 'st-a'], community: ['Community', 'st-n'], curated: ['Community', 'st-n'], datamine: ['Datamined', 'st-d'] };
-  var STATE = { healthy: ['Fresh', 'fresh'], fresh: ['Fresh', 'fresh'], stale: ['Stale', 'stale'], degraded: ['Latest check failed', 'degraded'], failing: ['Failing', 'failed'], failed: ['Failing', 'failed'], never: ['Not checked yet', 'never'], unknown: ['Time not recorded', 'never'], none: ['Not connected', 'never'] };
+  var STATE = { healthy: ['Fresh', 'fresh'], fresh: ['Fresh', 'fresh'], stale: ['Stale', 'stale'], delayed: ['Delayed', 'degraded'], degraded: ['Latest check failed', 'degraded'], failing: ['Failing', 'failed'], failed: ['Failing', 'failed'], never: ['Not checked yet', 'never'], unknown: ['Time not recorded', 'never'], none: ['Not connected', 'never'] };
   function fchip(state) { var s = STATE[state] || STATE.unknown; return '<span class="fr fr-' + s[1] + '">' + s[0] + '</span>'; }
   function tchip(kind) { var t = TRUST[kind]; return t ? '<span class="st ' + t[1] + '">' + t[0] + '</span>' : ''; }
   function kv(k, v) { return '<div class="fx"><span class="k">' + k + '</span><span class="v">' + v + '</span></div>'; }
@@ -80,6 +80,10 @@
     var snap = G.D && G.D.asOf, snapMs = isoMs(snap) || (snap ? Date.parse(snap) : NaN); snapMs = isFinite(snapMs) ? snapMs : null;
     var cst = snapMs === null ? 'unknown' : Date.now() - snapMs > 7 * DAY ? 'stale' : 'fresh'; bump(cst);
     h += fileRow('Curated snapshot', tchip('curated'), cst, kv('As of', esc(snap || 'Not recorded')) + kv('How it is refreshed', 'By hand'), cst === 'stale' ? 'Older than a week. It is kept by hand and may be behind.' : '');
+    /* Event write-ups: written by the hourly importer from the official news, Leek Duck and Pokémon GO Hub pages. A day without a refresh means the importer is failing. */
+    var ED = S.ed, edf = window.GOLIB.freshnessOf(ED && ED.updated, null, 'importer'), edMs = ED && Date.parse(ED.updated);
+    bump(edf.state === 'unknown' ? 'unknown' : edf.state);
+    h += fileRow('Event write-ups and research', tchip('community'), edf.state, kv('Last updated', edf.state === 'unknown' ? 'Not recorded' : esc(edf.label.replace(/^Updated /, '')) + (isFinite(edMs) ? ' (' + abs(edMs) + ')' : '')) + kv('How it is refreshed', 'Hourly check of the sources below'), edf.state === 'stale' ? 'No successful refresh for over 24 hours. Tasks, rewards and dates in event details may be behind the sources.' : edf.state === 'delayed' ? 'The hourly check is running late. Details may be a few hours behind.' : '');
     var D = S.dm, dts = D && ok(D.checked) ? D.checked : null, dst = !D ? 'unknown' : dts === null ? 'never' : Date.now() - dts > 36 * HOUR ? 'stale' : 'fresh'; bump(dst);
     h += fileRow('Game files and datamine posts', tchip('datamine'), dst, kv('Last checked', dts ? when(dts) : (D ? 'Not run yet' : 'Not available')) + kv('Feeds', 'Leaks only. Never counted as announced.'), dst === 'stale' ? 'No check for over 36 hours.' : '');
     var M = window.GOMOVE && GOMOVE.data && GOMOVE.data(), ms = M && M.source ? isoMs(M.source.generated || '') : null, mst = !M ? 'unknown' : ms === null || ms > Date.now() + 5 * 60000 ? 'unknown' : Date.now() - ms > 45 * DAY ? 'stale' : 'fresh'; bump(mst);
@@ -104,6 +108,7 @@
       });
       h += '<p class="fr-note">Checked ' + (ok(Date.parse(Hh.updated)) ? when(Date.parse(Hh.updated)) : 'recently') + '. This list refreshes every few hours.</p>';
     }
+    h += '<h3 class="srch">About this data</h3><div class="srcrow about-data"><p class="fr-note"><b>Where it comes from.</b> <a href="https://pokemongo.com/news" target="_blank" rel="noopener noreferrer">Pokémon GO news (official)</a> for announcements, <a href="https://leekduck.com/events/" target="_blank" rel="noopener noreferrer">Leek Duck</a> and <a href="https://pokemongohub.net/" target="_blank" rel="noopener noreferrer">Pokémon GO Hub</a> for community write-ups, PokeMiners game files for datamined leaks (never counted as announced), and notes curated by hand. Community and datamined information is labelled and is never presented as official.</p><p class="fr-note"><b>How often.</b> Event write-ups, research tasks and GO Pass ranks are re-read every hour; the live event feed on each load; the curated snapshot by hand. Each card shows when it was last checked. When a source has not published something it says <i>Not announced yet</i>, <i>Not available from source</i> or <i>Unverified</i>; a Shiny or boost is shown only when a source states it.</p><p class="fr-note"><b>Artwork and rights.</b> Pokémon and related names, images and game content belong to Niantic, The Pokémon Company, Nintendo, Creatures and Game Freak. This is an unofficial fan tool, not affiliated with or endorsed by them. Pictures are fetched from the sources above and served through this app so they load from one place.</p></div>';
     h += '<p class="fr-note">Freshness says how recently something was refreshed. It never changes whether an event is Official, Community or Datamined.</p><p><a href="/sources.html">Full source health page</a></p>';
     box.innerHTML = h;
     var sum = $('srcsum'); if (sum) { var L = STATE[worst] || STATE.unknown; sum.textContent = worst === 'fresh' || worst === 'healthy' ? 'all current' : L[0].toLowerCase(); sum.className = 'cnt fr-sum fr-sum-' + (L[1]); }
@@ -113,8 +118,8 @@
   /* The empty line reserves its 44px so nothing jumps when the text arrives. If the answers never come, give the space back 8 s after the page started (this script loads after the feed wait, so time already spent counts); a late answer still fills the line. */
   setTimeout(function () { var el = $('fresh-line'); if (!S.done && el && el.hidden) el.setAttribute('data-released', ''); }, Math.max(0, 8000 - Math.round(window.performance && performance.now ? performance.now() : 0)));
   function j(u) { return window.GOLIB.jsonOrNull(u, { init: { cache: 'no-cache' } }); }
-  Promise.all([j('/api/sources'), j('/api/datamine'), j('/api/pvp').then(function (p) { return p || j('/pvp.json'); }), (window.GOLIB ? GOLIB.loadPrices() : j('/prices.json')), j('/health.json')]).then(function (a) {
-    S.api = a[0] && typeof a[0] === 'object' ? a[0] : null; S.dm = a[1]; S.pvp = a[2]; S.prices = a[3]; S.jobs = a[4]; S.done = true; renderAll();
+  Promise.all([j('/api/sources'), j('/api/datamine'), j('/api/pvp').then(function (p) { return p || j('/pvp.json'); }), (window.GOLIB ? GOLIB.loadPrices() : j('/prices.json')), j('/health.json'), j('/event-details.json')]).then(function (a) {
+    S.api = a[0] && typeof a[0] === 'object' ? a[0] : null; S.dm = a[1]; S.pvp = a[2]; S.prices = a[3]; S.jobs = a[4]; S.ed = a[5] && typeof a[5] === 'object' ? a[5] : null; S.done = true; renderAll();
     if (window.GOMOVE) GOMOVE.ready.then(renderAll);
   });
   document.addEventListener('gomoves', renderAll);
