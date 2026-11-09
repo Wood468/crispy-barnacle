@@ -514,7 +514,7 @@ button.igcheck{min-height:44px}
 .evc-art .max-art .art.ea{width:64px;height:64px}
 .evc.cmp .evc-art .max-art .art.ea{width:44px;height:44px}
 .rw-max-pokemon .max-art .art.ea{width:64px;height:64px}
-.rw-max-pokemon 
+.rw-max-pokemon .rtype{display:flex;gap:3px}
 /* Raid hundo CP labels */
 .evc-art .feat-mon{display:flex;flex-direction:column;align-items:center;gap:2px;min-width:0}
 .hundo-cp{display:block;white-space:nowrap;font:800 .59rem/1.2 var(--font-body);letter-spacing:.01em;color:var(--text,#e8eaf0);background:color-mix(in srgb,var(--k,#7c879b) 17%,transparent);border:1px solid color-mix(in srgb,var(--k,#7c879b) 40%,transparent);border-radius:5px;padding:2px var(--space-1);font-variant-numeric:tabular-nums}
@@ -2190,3 +2190,24 @@ a.evc-source{color:var(--color-link);text-underline-offset:3px}
 .storep-regional .sp-none{color:var(--color-text-muted)}
 .storep-regional .sp-coins{display:flex;align-items:center;gap:var(--space-2);flex-wrap:wrap;margin:var(--space-2) 0}
 .storep-regional .sp-coins input{min-height:44px;width:8rem;font:inherit;padding:0 var(--space-2)}
+
+/* Raids and Max Battles polish: tier badge, CP, countdown, relationship chips, tiered Max roster. */
+.rc-tier{justify-self:start;width:fit-content;font-style:normal;display:inline-flex;align-items:center;min-height:20px;padding:0 7px;border-radius:var(--radius-pill);background:color-mix(in srgb,var(--color-text) 12%,transparent);color:var(--color-text);font:800 .68rem/1 var(--font-body);letter-spacing:.04em}
+.rc-meta{display:flex;flex-wrap:wrap;align-items:center;gap:4px;margin-top:2px}
+.rc-cp{display:inline-flex;flex-direction:column;padding:2px 8px;border-radius:8px;border:1px solid var(--border-subtle,rgba(255,255,255,.14));line-height:1.15}
+.rc-cp b{font:800 .78rem var(--font-body);font-variant-numeric:tabular-nums}
+.rc-cp small{font-size:.62rem;color:var(--color-text-muted)}
+.rc-chip{display:inline-flex;align-items:center;min-height:24px;padding:0 8px;border-radius:var(--radius-pill);border:1px solid var(--border-subtle,rgba(255,255,255,.18));background:transparent;color:var(--color-text-body);font:650 .68rem/1.2 var(--font-body);text-align:left}
+button.rc-chip{min-height:44px;cursor:pointer;color:var(--color-link)}
+button.rc-chip:focus-visible{outline:2px solid var(--color-link);outline-offset:2px}
+.rc-shiny{border-color:#d9a400;color:var(--color-text)}
+.rc-debut{border-color:#ff6b97}
+.rw-count{display:inline-flex;align-items:center;min-height:26px;padding:0 10px;margin:0 0 var(--space-2);border-radius:var(--radius-pill);font:800 .74rem var(--font-body);font-variant-numeric:tabular-nums;background:color-mix(in srgb,var(--color-text) 10%,transparent)}
+.rw-count-live{background:color-mix(in srgb,var(--color-success,#2fbf71) 22%,transparent)}
+.rw-max-tier{display:grid;gap:var(--space-2);margin-top:var(--space-3)}
+.rw-tier-head{display:flex;justify-content:space-between;gap:var(--space-2);flex-wrap:wrap;margin:0;font-size:var(--type-meta)}
+.rw-tier-head span{color:var(--color-text-muted)}
+.rw-max-txt{display:grid;gap:3px;min-width:0}
+.rw-max-pokemon .max-art.is-dyn{min-width:84px;min-height:84px}
+.rw-max-pokemon .max-art.is-dyn::before,.rw-max-pokemon .max-art.is-dyn::after{inset:4%;animation:none}
+.rw-empty{padding:var(--space-3);border:1px dashed var(--border-subtle,rgba(255,255,255,.2));border-radius:var(--radius-md)}

@@ -61,7 +61,7 @@
   #tab-raids .rw-raid .rc .rc-info { min-height: 44px; padding: 5px 6px; }
   #tab-raids .rw-max { padding-top: 8px; }
   #tab-raids .rw-max-pokemon { padding: 7px 10px; }
-  #tab-raids .rw-max-pokemon img { width: 54px; height: 54px; }
+  #tab-raids .rw-max-pokemon img.art { width: 54px; height: 54px; }
 
   #tab-events .schedule-heading { gap: 3px; margin: 3px 0 10px; }
   #tab-events .schedule-heading .sec2 { font-size: 1.7rem; }

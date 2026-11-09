@@ -1,5 +1,5 @@
 {
-  "asOf": "30 Oct 2026",
+  "asOf": "9 Nov 2026",
   "events": [
     {
       "id": "space",
@@ -848,6 +848,13 @@
         "source": "Official Into the Wild announcement"
       },
       "rh": "Crowned Sword Zacian, Mon Nov 9 · Crowned Shield Zamazenta, Tue Nov 10",
+      "cp": {
+        "Crowned Sword Zacian": [2188, 2735],
+        "Crowned Shield Zamazenta": [2188, 2735],
+        "Druddigon": [1561, 1951],
+        "Orthworm": [1313, 1642]
+      },
+      "event": "Into the Wild",
       "sourceUrl": "https://leekduck.com/events/into-the-wild-2026/"
     },
     {
@@ -867,6 +874,22 @@
       "shadow": "Shadow Tornadus (Incarnate), to Dec 1",
       "rh": "Deoxys (all four Formes), Wed Nov 25",
       "sourceUrl": "https://leekduck.com/events/deoxys-normal-defense-attack-speed-formes-in-5-star-raid-battles-november-2026/"
+    }
+  ],
+  "maxRosters": [
+    {
+      "event": "Into the Wild",
+      "s": "2026-11-09T10:00",
+      "e": "2026-11-13T20:00",
+      "note": "Five-star Max Battles also run 6 to 7 pm local time on their day.",
+      "sourceUrl": "https://leekduck.com/events/into-the-wild-2026/",
+      "tiers": [
+        { "tier": "1★", "names": ["Ralts"], "cp": { "Ralts": 308 } },
+        { "tier": "2★", "names": ["Machop"], "cp": { "Machop": 730 } },
+        { "tier": "5★", "day": "2026-11-11", "names": ["Registeel"], "cp": { "Registeel": 1398 } },
+        { "tier": "5★", "day": "2026-11-12", "names": ["Regidrago"], "cp": { "Regidrago": 1699 }, "debut": true },
+        { "tier": "5★", "day": "2026-11-13", "names": ["Latias", "Latios"], "cp": { "Latias": 2006, "Latios": 2178 } }
+      ]
     }
   ],
   "maxBattles": [

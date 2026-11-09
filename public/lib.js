@@ -13,6 +13,30 @@
     return name.split(/\s+and\s+/i).map(function(n){return n.trim();}).filter(Boolean);
   }
 
+  /* Raid / Max Battle window state. Pure (milliseconds in, text out) so boundaries are testable: at the start instant the window is
+     live, at the end instant it has ended, and the remaining time never rounds a live window up to "0m left". */
+  function windowDur(ms) {
+    var m = Math.max(1, Math.ceil(ms / 60000));
+    if (m < 60) return m + 'm';
+    var h = Math.floor(m / 60); if (h < 24) return h + 'h' + (m % 60 && h < 6 ? ' ' + (m % 60) + 'm' : '');
+    var d = Math.floor(h / 24); return d + 'd' + (h % 24 && d < 4 ? ' ' + (h % 24) + 'h' : '');
+  }
+  function raidWindowState(startMs, endMs, nowMs) {
+    if (!isFinite(startMs) || !isFinite(endMs) || endMs <= startMs) return { phase: 'unknown', text: '' };
+    if (nowMs >= endMs) return { phase: 'ended', text: 'Ended' };
+    if (nowMs >= startMs) return { phase: 'live', text: 'Ends in ' + windowDur(endMs - nowMs) };
+    return { phase: 'soon', text: 'Starts in ' + windowDur(startMs - nowMs) };
+  }
+  /* Curated per-tier Max Battle rosters (data.json maxRosters). Only an entry whose window overlaps the event and whose title matches is used;
+     nothing is inferred from species. */
+  function maxRosterFor(rosters, eventName, startMs, endMs) {
+    var name = norm(eventName || '');
+    return (rosters || []).filter(function (r) {
+      var rs = Date.parse(r.s), re = Date.parse(r.e);
+      return r && r.event && norm(r.event) === name && Array.isArray(r.tiers) && (!isFinite(rs) || !isFinite(re) || (rs < endMs && re > startMs));
+    })[0] || null;
+  }
+
   // Filter the existing collection opportunities without inferring new ownership or changing order.
   function filterOpportunities(rows, query, mode, followed) {
     var q = norm(query || '');
@@ -390,5 +414,5 @@
   }
   function failingSources() { return Object.keys(failing); }
 
-  return { readJsonKeep: readJsonKeep, reportSave: reportSave, failingSources: failingSources, SAVE_MESSAGE: SAVE_MESSAGE, raidBossNames: raidBossNames, researchCheckedText: researchCheckedText, filterOpportunities: filterOpportunities, isPrivateLink: isPrivateLink, publicLink: publicLink, esc: esc, rpEstimate: rpEstimate, raidEventFor: raidEventFor, isPlaceholder: isPlaceholder, audify: audify, setTiers: setTiers, loadPrices: loadPrices, getJson: getJson, jsonOrNull: jsonOrNull, priceView: priceView, fmtRp: fmtRp, buildQueue: buildQueue, parseForm: parseForm, formId: formId, merge: merge, reconcileSync: reconcileSync, norm: norm, lev: lev, matchName: matchName, candidates: candidates, isInPersonWorldEvent: isInPersonWorldEvent, isRegionalInGameEvent: isRegionalInGameEvent, liveActivityCounts: liveActivityCounts };
+  return { readJsonKeep: readJsonKeep, reportSave: reportSave, failingSources: failingSources, SAVE_MESSAGE: SAVE_MESSAGE, raidBossNames: raidBossNames, raidWindowState: raidWindowState, maxRosterFor: maxRosterFor, researchCheckedText: researchCheckedText, filterOpportunities: filterOpportunities, isPrivateLink: isPrivateLink, publicLink: publicLink, esc: esc, rpEstimate: rpEstimate, raidEventFor: raidEventFor, isPlaceholder: isPlaceholder, audify: audify, setTiers: setTiers, loadPrices: loadPrices, getJson: getJson, jsonOrNull: jsonOrNull, priceView: priceView, fmtRp: fmtRp, buildQueue: buildQueue, parseForm: parseForm, formId: formId, merge: merge, reconcileSync: reconcileSync, norm: norm, lev: lev, matchName: matchName, candidates: candidates, isInPersonWorldEvent: isInPersonWorldEvent, isRegionalInGameEvent: isRegionalInGameEvent, liveActivityCounts: liveActivityCounts };
 }));
