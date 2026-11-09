@@ -1,22 +1,14 @@
 {
- "runAt": "2026-11-09T10:23:31.317Z",
+ "runAt": "2026-11-09T10:48:18.438Z",
  "artworkCoverage": {
-  "selected": 27,
-  "missing": 69,
-  "legacyUnattributed": 5,
+  "selected": 29,
+  "missing": 70,
+  "legacyUnattributed": 3,
   "bySource": {
    "Pokémon GO (official)": 19,
-   "Leek Duck": 8
+   "Leek Duck": 10
   },
   "missingEvents": [
-   {
-    "id": "into",
-    "name": "Into the Wild",
-    "sources": [
-     "https://pokemongo.com/news/go-wild-area-stamp-rally-details-2026/",
-     "https://pokemongohub.net/post/guide/go-pass-into-the-wild/"
-    ]
-   },
    {
     "id": "leekduck:pokemon-night-out-london-2026",
     "name": "Pokémon Night Out 2026 - London",
@@ -53,14 +45,14 @@
     ]
    },
    {
-    "id": "leekduck:minior-showers-leonids-2026",
-    "name": "Minior Showers: Leonids 2026",
+    "id": "minior2",
+    "name": "Minior Showers: Leonids",
     "sources": [
      "https://leekduck.com/events/minior-showers-leonids-2026/"
     ]
    },
    {
-    "id": "leekduck:eternamax-eternatus-max-battles-2026",
+    "id": "eternamax",
     "name": "Eternamax Eternatus Returns",
     "sources": [
      "https://leekduck.com/events/eternamax-eternatus-max-battles-2026/"
@@ -130,8 +122,8 @@
     ]
    },
    {
-    "id": "leekduck:minior-showers-geminids-2026",
-    "name": "Minior Showers: Geminids 2026",
+    "id": "minior3",
+    "name": "Minior Showers: Geminids",
     "sources": [
      "https://leekduck.com/events/minior-showers-geminids-2026/"
     ]
@@ -221,17 +213,31 @@
     ]
    },
    {
+    "id": "leekduck:minior-showers-leonids-2026",
+    "name": "Minior Showers: Leonids 2026",
+    "sources": [
+     "https://leekduck.com/events/minior-showers-leonids-2026/"
+    ]
+   },
+   {
+    "id": "leekduck:minior-showers-geminids-2026",
+    "name": "Minior Showers: Geminids 2026",
+    "sources": [
+     "https://leekduck.com/events/minior-showers-geminids-2026/"
+    ]
+   },
+   {
+    "id": "leekduck:eternamax-eternatus-max-battles-2026",
+    "name": "Eternamax Eternatus Returns",
+    "sources": [
+     "https://leekduck.com/events/eternamax-eternatus-max-battles-2026/"
+    ]
+   },
+   {
     "id": "leekduck:go-pass-november-2026",
     "name": "GO Pass: November",
     "sources": [
      "https://pokemongohub.net/post/guide/go-pass-november-2026/"
-    ]
-   },
-   {
-    "id": "twilightwishes",
-    "name": "Twilight Wishes",
-    "sources": [
-     "https://leekduck.com/events/twilight-wishes-2026/"
     ]
    },
    {
@@ -519,7 +525,7 @@
   }
  },
  "pagesRead": 80,
- "events": 101,
+ "events": 102,
  "worldEvents": 59,
  "worldUndated": [
   "GO Wild Area Stamp Rally"
@@ -943,8 +949,7 @@
    "event": "Into the Wild 2026",
    "field": "moves",
    "missingFrom": [
-    "official",
-    "leekduck"
+    "official"
    ]
   },
   {
@@ -959,6 +964,46 @@
    "field": "dates",
    "missingFrom": [
     "official"
+   ]
+  },
+  {
+   "event": "Into the Wild",
+   "field": "bonuses",
+   "missingFrom": [
+    "official",
+    "hub"
+   ]
+  },
+  {
+   "event": "Into the Wild",
+   "field": "featured",
+   "missingFrom": [
+    "official",
+    "hub"
+   ]
+  },
+  {
+   "event": "Into the Wild",
+   "field": "raids",
+   "missingFrom": [
+    "official",
+    "hub"
+   ]
+  },
+  {
+   "event": "Into the Wild",
+   "field": "research",
+   "missingFrom": [
+    "official",
+    "hub"
+   ]
+  },
+  {
+   "event": "Into the Wild",
+   "field": "shiny",
+   "missingFrom": [
+    "official",
+    "hub"
    ]
   },
   {

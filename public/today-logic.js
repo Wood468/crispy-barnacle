@@ -258,7 +258,7 @@
   /* ---------- Countdown ---------- */
   function countdownText(ms, nowMs, live) {
     var d = ms - nowMs; if (d <= 0) return live ? 'Ended' : 'Started';
-    var m = Math.floor(d / 6e4), h = Math.floor(m / 60), days = Math.floor(h / 24);
+    var m = Math.ceil(d / 6e4), h = Math.floor(m / 60), days = Math.floor(h / 24); /* rounds up like every other countdown, so Today and Schedule agree to the minute */
     var body = days >= 2 ? days + 'd ' + (h % 24) + 'h' : days === 1 ? '1d ' + (h % 24) + 'h' : h >= 1 ? h + 'h ' + (m % 60) + 'm' : Math.max(1, m) + 'm';
     return live ? 'Ends in ' + body : 'Starts in ' + body;
   }

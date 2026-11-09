@@ -197,3 +197,12 @@
 }
 @keyframes t1spin { to { transform: rotate(360deg); } }
 @media (prefers-reduced-motion: reduce) { .t1-loading::before { animation: none; } }
+
+/* Schedule rows (In person / overseas): the area label sits under the title, left-aligned, at every phone width (it floated mid-row from 421 to 600px). */
+@media (max-width: 600px) {
+  .agw > .agr { grid-template-columns: 4px minmax(0, 1fr); }
+  .agw .agr em { grid-column: 2; justify-self: start; text-align: left; max-width: 100%; white-space: normal; font-size: .62rem; letter-spacing: .05em; }
+  .agw .ag-actions { gap: 0; }
+  .agw .ag-actions .agx { min-width: 44px; min-height: 44px; }
+  .agw .ag-actions .agpin { min-height: 44px; }
+}

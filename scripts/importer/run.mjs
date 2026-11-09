@@ -89,12 +89,13 @@ export async function appEvents() {
       const detailIds = Array.isArray(e.detailIds) ? e.detailIds : [];
       const link = e.sourceUrl || e.link || "";
       if (existing) {
+        existing.curated = true;
         existing.t = e.t || existing.t;
         existing.link = link || existing.link;
         existing.start = e.s || existing.start;
         existing.end = e.e || existing.end;
         existing.detailIds = detailIds;
-      } else evs.push({ id: e.id, t: e.t, link, start: e.s, end: e.e, detailIds });
+      } else evs.push({ id: e.id, t: e.t, link, start: e.s, end: e.e, detailIds, curated: true });
     }
   } catch { /* no snapshot */ }
   return evs;
@@ -149,6 +150,17 @@ function pageDetailId(page) {
     return parts.length === 2 && parts[0] === "events" ? "leekduck:" + parts[1] : "";
   } catch { return ""; }
 }
+// The live feed can list the same event under a source-derived id ("leekduck:into-the-wild-2026") next to the curated record ("into").
+// A page that links to the feed record belongs to the curated record, so Event Details, Research and GO Pass read one merged entry.
+function preferCurated(event, events) {
+  if (!event || event.curated) return event;
+  const key = v => String(v || "").toLowerCase().replace(/\b20\d\d\b/g, "").replace(/[^a-z0-9]+/g, " ").trim();
+  const name = key(event.t || event.name);
+  if (!name) return event;
+  const twin = events.find(e => e.curated && e !== event && key(e.t || e.name) === name
+    && String(e.start || "").slice(0, 10) <= String(event.end || event.start || "9999").slice(0, 10) && String(e.end || e.start || "9999").slice(0, 10) >= String(event.start || "").slice(0, 10));
+  return twin || event;
+}
 export function pickEvent(page, events) {
   const pagePart = eventPartNumber(String(page.title || "") + " " + String(page.url || ""));
   const compatible = event => {
@@ -160,14 +172,14 @@ export function pickEvent(page, events) {
   const detailId = pageDetailId(page);
   if (detailId) {
     const exact = events.find(e => Array.isArray(e.detailIds) && e.detailIds.includes(detailId) && compatible(e));
-    if (exact) return pageDatesOverlapEvent(page, exact) ? { event: exact, how: "detail-id" } : null;
+    if (exact) { const pick = preferCurated(exact, events); return pageDatesOverlapEvent(page, pick) ? { event: pick, how: "detail-id" } : null; }
   }
   const normalUrl = value => {
     const text = String(value || "");
     return text.endsWith("/") ? text : text + "/";
   };
   const direct = events.find(e => e.link && normalUrl(e.link) === normalUrl(page.url) && compatible(e));
-  if (direct) return pageDatesOverlapEvent(page, direct) ? { event: direct, how: "linked" } : null;
+  if (direct) { const pick = preferCurated(direct, events); return pageDatesOverlapEvent(page, pick) ? { event: pick, how: "linked" } : null; }
   const candidates = events.filter(e => compatible(e) && !titlePlaceConflict(page, e));
   const m = matchEvent({ title: page.title || "" }, candidates);
   if (m && m.confidence === "high") {
