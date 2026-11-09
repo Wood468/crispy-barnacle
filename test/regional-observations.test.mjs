@@ -39,5 +39,10 @@ test('standard Indonesian coin packs and one-time promotional bonus are faithful
   assert.equal(promo.coins, 18500);
   assert.equal(promo.amount, 505000);
   assert.equal(promo.oneTime, true);
+  for (const coins of [3300, 6800]) {
+    const offer = OBSERVATIONS.find(o => o.coins === coins && o.region === 'ID');
+    assert.ok(offer, 'Missing ' + coins + '-coin promotional pack');
+    assert.equal(offer.oneTime, true, coins + '-coin promotion must not be repeatable');
+  }
   assert.ok(!OBSERVATIONS.some(o => o.coins === 16700 || o.coins === 15620), 'Reward Road points must not be counted as bonus PokéCoins');
 });
