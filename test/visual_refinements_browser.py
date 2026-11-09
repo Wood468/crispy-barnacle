@@ -1,10 +1,10 @@
 """Visual refinements: banner aspect handling (2.4:1, 16:9, square), Raids title, RAID HOUR badge at 320, Travel spacing,
 checkbox targets, footer date, error and empty states. Fixed Sydney clock. Dark. Set GO_FIELD_NOTES_SCREENSHOTS to keep screenshots."""
-import io
 import json
 import os
 import re
-from PIL import Image, ImageDraw
+import struct
+import zlib
 from playwright.sync_api import sync_playwright
 
 BASE = os.environ.get('GO_FIELD_NOTES_BATTLE_URL', 'http://127.0.0.1:8791')
@@ -21,14 +21,25 @@ def shot(page, name):
 
 
 def banner(w, h):
-    img = Image.new('RGB', (w, h), (40, 60, 120))
-    d = ImageDraw.Draw(img)
-    d.rectangle([w * .2, h * .2, w * .8, h * .8], fill=(230, 180, 40))
-    d.rectangle([0, 0, w - 1, h - 1], outline=(255, 255, 255), width=4)
-    out = io.BytesIO(); img.save(out, 'PNG'); return out.getvalue()
+    """A plain PNG (no imaging library in CI): blue field, white border, yellow key area in the middle 60 percent."""
+    rows = bytearray()
+    x0, x1, y0, y1 = int(w * .2), int(w * .8), int(h * .2), int(h * .8)
+    for y in range(h):
+        rows.append(0)
+        for x in range(w):
+            if x < 4 or y < 4 or x >= w - 4 or y >= h - 4:
+                rows += b'\xff\xff\xff'
+            elif x0 <= x < x1 and y0 <= y < y1:
+                rows += b'\xe6\xb4\x28'
+            else:
+                rows += b'\x28\x3c\x78'
+    def chunk(tag, data):
+        body = tag + data
+        return struct.pack('>I', len(data)) + body + struct.pack('>I', zlib.crc32(body) & 0xffffffff)
+    return b'\x89PNG\r\n\x1a\n' + chunk(b'IHDR', struct.pack('>IIBBBBB', w, h, 8, 2, 0, 0, 0)) + chunk(b'IDAT', zlib.compress(bytes(rows), 6)) + chunk(b'IEND', b'')
 
 
-RATIOS = {'wide-2.4': (1200, 500), 'wide-16x9': (1280, 720), 'square': (800, 800)}
+RATIOS = {'wide-2.4': (960, 400), 'wide-16x9': (960, 540), 'square': (600, 600)}
 
 
 def context_for(browser, width, height=860):
