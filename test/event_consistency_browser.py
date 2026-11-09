@@ -31,6 +31,10 @@ with sync_playwright() as p:
         assert not card.locator('.ev-art-tag').is_visible()
         box = card.locator('.ev-art--official').bounding_box()
         assert abs(box['width'] / box['height'] - 16 / 9) < 0.05, box
+        # Equal-or-stricter than the old forced 16:9: the picture fills the reserved box (no letterbox bars) and crops, never stretches.
+        img_box = card.locator('.ev-art--official .ev-art-img').bounding_box()
+        assert abs(img_box['width'] - box['width']) < 1.5 and abs(img_box['height'] - box['height']) < 1.5, (img_box, box)
+        assert card.locator('.ev-art--official .ev-art-img').evaluate('i => getComputedStyle(i).objectFit') in ('cover', 'contain')
         assert card.locator('.t1-more').is_visible()
         page.locator('#tabs [data-tab="events"]').click()
         page.wait_for_selector('#evtimeline [data-open]')
