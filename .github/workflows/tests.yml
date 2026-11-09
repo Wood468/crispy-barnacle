@@ -137,7 +137,10 @@ jobs:
 
       - name: Verify combined source rendering and offline upgrade
         if: matrix.shard == 'b'
-        run: python test/release_browser.py
+        run: |
+          python test/release_browser.py
+          python test/pwa_upgrade_browser.py
+          python test/storage_failure_browser.py
 
       - name: Verify variant artwork (costumes, Shiny, Shadow, Dynamax, Gigantamax, fallbacks)
         if: matrix.shard == 'b'
@@ -191,7 +194,10 @@ jobs:
           python test/universal_event_browser.py
           python test/worldwide_timezone_browser.py
       - name: Verify combined source rendering, PWA update and preserved player data
-        run: python test/release_browser.py
+        run: |
+          python test/release_browser.py
+          python test/pwa_upgrade_browser.py
+          python test/storage_failure_browser.py
       - name: Verify variant artwork in WebKit
         run: python test/variant_art_browser.py
       - name: Retain mobile WebKit screenshots

@@ -389,11 +389,16 @@
      One entry per thing ({v, t}); the newest timestamp wins per entry, so devices can't clobber each other.
      Kept on this device, and synced through /api/userstate when your PIN is set and the server table exists. */
   var US = {}, USKEY = 'gofn-us-v1', usDirty = {}, usTimer = 0, usStatus = 'local';
-  try { US = JSON.parse(localStorage.getItem(USKEY) || '{}') || {}; } catch (e) { US = {}; }
+  var usProtected = false;
+  try { var usRead = window.GOLIB.readJsonKeep(localStorage, USKEY); if (usRead.corrupt && !usRead.kept) usProtected = true; US = (usRead.value && typeof usRead.value === 'object' && !Array.isArray(usRead.value)) ? usRead.value : {}; } catch (e) { US = {}; }
   function oldList(k) { try { var v = JSON.parse(localStorage.getItem(k) || '[]'); return Array.isArray(v) ? v : []; } catch (e) { return []; } }
   oldList('gofn-saved').forEach(function (id) { if (!US['saved:' + id]) US['saved:' + id] = { v: true, t: 1 }; });   // one-time import of the Phase 2 lists
   oldList('gofn-follow').forEach(function (n) { if (!US['follow:' + n.toLowerCase()]) US['follow:' + n.toLowerCase()] = { v: n, t: 1 }; });
-  function usSave() { try { localStorage.setItem(USKEY, JSON.stringify(US)); } catch (e) { /* private mode: memory only */ } }
+  function usSave() {
+    var ok = !usProtected;
+    if (ok) try { localStorage.setItem(USKEY, JSON.stringify(US)); } catch (e) { ok = false; }
+    return LIB.reportSave('us', ok, usSave);   /* a failed write shows the storage alert; the entry stays in memory for this session only */
+  }
   function usGet(k) { var e = US[k]; return e && e.v !== null && e.v !== undefined ? e.v : undefined; }
   function usSet(k, v) { usStall = 0; US[k] = { v: v === undefined ? null : v, t: Date.now() }; usDirty[k] = 1; usSave(); usQueue(); document.dispatchEvent(new Event('gofn-state')); }
   function usKeys(prefix) { return Object.keys(US).filter(function (k) { return k.indexOf(prefix) === 0 && US[k].v !== null && US[k].v !== undefined; }); }
@@ -2103,12 +2108,27 @@ function renderHomeBrief(t) {
     var owner = m.parentNode && m.parentNode.querySelector('[data-t1-menu]'); m.remove();
     if (owner) { owner.setAttribute('aria-expanded', 'false'); if (restoreFocus) owner.focus(); }
   }
-  function t1Toast(message, undoKey) {
+  var T1_SAVE_ERROR = 'Couldn\u2019t save \u2014 storage is full or unavailable', t1Retry = null;
+  function t1Toast(message, undoKey, retry) {
     var t = $('t1-toast');
     if (!t) { t = document.createElement('div'); t.id = 't1-toast'; t.className = 't1-toast'; t.setAttribute('role', 'status'); t.setAttribute('aria-live', 'polite'); document.body.appendChild(t); }
     t.innerHTML = ''; var span = document.createElement('span'); span.textContent = message; t.appendChild(span);
+    t.classList.toggle('t1-toast-error', !!retry);
     if (undoKey) { var b = document.createElement('button'); b.type = 'button'; b.className = 't1-toast-undo'; b.setAttribute('data-t1-undo', undoKey); b.textContent = 'Undo'; t.appendChild(b); }
-    t.hidden = false; clearTimeout(t._h); t._h = setTimeout(function () { t.hidden = true; }, 7000);
+    if (retry) { t1Retry = retry; var r = document.createElement('button'); r.type = 'button'; r.className = 't1-toast-undo t1-toast-retry'; r.setAttribute('data-t1-retry', '1'); r.textContent = 'Try again'; t.appendChild(r); }
+    t.hidden = false; clearTimeout(t._h); t._h = setTimeout(function () { t.hidden = true; }, retry ? 15000 : 7000);
+  }
+  /* Marks one occurrence done. The card is hidden only when the value was really written; on a storage failure nothing changes on screen and the toast offers a retry. */
+  function t1Mark(p) {
+    var store = t1Storage(), res = store ? TL.tryMarkDone(store, p.id, p.startIso, p.end, Date.now()) : { ok: false };
+    if (!res.ok) { t1Toast(T1_SAVE_ERROR, null, function () { t1Mark(p); }); return false; }
+    t1Retry = null; renderTodayV1(now(), true); t1Toast(p.name + ' marked done', res.key); return true;
+  }
+  function t1Unmark(key) {
+    var store = t1Storage(), res = store ? TL.tryUndoDone(store, key) : { ok: false };
+    if (!res.ok) { t1Toast(T1_SAVE_ERROR, null, function () { t1Unmark(key); }); return false; }
+    t1Retry = null; var tt = $('t1-toast'); if (tt) tt.hidden = true;
+    renderTodayV1(now(), true); return true;
   }
   document.addEventListener('click', function (e) {
     var target = e.target, host = $('today-v1'); if (!target || !target.closest) return;
@@ -2131,20 +2151,18 @@ function renderHomeBrief(t) {
       if (!id) return;
       var store = t1Storage(), startIso = s || (c.getAttribute('data-id') && ''), name = (c.querySelector('.t1-title') || {}).textContent || 'Event';
       if (!s) { var r = null; /* regional rows carry no start attribute: key them by their listed start */ regList().forEach(function (x) { if (x.id === id) r = x; }); if (r) { startIso = new Date(+r.start).toISOString(); en = new Date(+r.end).toISOString(); } }
-      if (!store || !startIso) { t1Toast('Could not save on this device'); return; }
-      var key = TL.markDone(store, id, startIso, Date.parse(en), Date.now());
-      renderTodayV1(now(), true);
-      t1Toast(name + ' marked done', key);
+      if (!store || !startIso) { t1Toast(T1_SAVE_ERROR); return; }
+      t1Mark({ id: id, startIso: startIso, end: Date.parse(en), name: name });
       return;
     }
     var det = target.closest('[data-t1-details]');
     if (det) { var id2 = det.getAttribute('data-t1-details'), op = document.querySelector('#today-v1 [data-id="' + id2.replace(/"/g, '') + '"] [data-open]'); t1CloseMenu(false); if (op) op.click(); return; }
     var undo = target.closest('[data-t1-undo]');
     if (undo) {
-      var store2 = t1Storage(); if (store2) TL.undoDone(store2, undo.getAttribute('data-t1-undo'));
-      var tt = $('t1-toast'); if (tt) tt.hidden = true;
-      renderTodayV1(now(), true); return;
+      t1Unmark(undo.getAttribute('data-t1-undo')); return;
     }
+    var retryBtn = target.closest('[data-t1-retry]');
+    if (retryBtn) { var again = t1Retry; if (again) again(); return; }
     var tg = target.closest('[data-t1-toggle]'); if (tg && host) { t1Toggle(host, tg.getAttribute('data-t1-toggle')); return; }
     if (!target.closest('.t1-menu')) t1CloseMenu(false);
   });
@@ -2303,7 +2321,7 @@ function renderHomeBrief(t) {
     renderCoverage();
     if (window.GO && GO.refreshDex) GO.refreshDex();
     usSync();
-    var inf = document.createElement('script'); inf.src = '/infographic.js?v=20261103a'; document.body.appendChild(inf); var x = document.createElement('script'); x.src = '/extra.js?v=20261102c'; document.body.appendChild(x); var z = document.createElement('script'); z.src = '/places.js?v=20261103b'; window.GOPLACES_READY = new Promise(function (resolve) { z.onload = function () { resolve(window.GOPLACES || null); }; z.onerror = function () { resolve(null); }; }); var y = document.createElement('script'); y.src = '/detail.js?v=20261110a'; document.body.appendChild(y); document.body.appendChild(z); var w = document.createElement('script'); w.src = '/fresh.js?v=20261103a'; document.body.appendChild(w); var nv = document.createElement('script'); nv.src = '/nudge.js?v=20261102a'; document.body.appendChild(nv); var rv = document.createElement('script'); rv.src = '/review.js?v=20261104b'; document.body.appendChild(rv); var by = document.createElement('script'); by.src = '/buy.js?v=20261103a'; document.body.appendChild(by);
+    var inf = document.createElement('script'); inf.src = '/infographic.js?v=20261103a'; document.body.appendChild(inf); var x = document.createElement('script'); x.src = '/extra.js?v=20261102c'; document.body.appendChild(x); var z = document.createElement('script'); z.src = '/places.js?v=20261103b'; window.GOPLACES_READY = new Promise(function (resolve) { z.onload = function () { resolve(window.GOPLACES || null); }; z.onerror = function () { resolve(null); }; }); var y = document.createElement('script'); y.src = '/detail.js?v=20261111a'; document.body.appendChild(y); document.body.appendChild(z); var w = document.createElement('script'); w.src = '/fresh.js?v=20261103a'; document.body.appendChild(w); var nv = document.createElement('script'); nv.src = '/nudge.js?v=20261102a'; document.body.appendChild(nv); var rv = document.createElement('script'); rv.src = '/review.js?v=20261104b'; document.body.appendChild(rv); var by = document.createElement('script'); by.src = '/buy.js?v=20261103a'; document.body.appendChild(by);
   }
   envBanner();
   /* Bounded waits: a request that never answers must not leave Today blank. After FEED_TIMEOUT_MS the page renders from the curated list

@@ -350,5 +350,45 @@
     return '';
   }
 
-  return { raidBossNames: raidBossNames, researchCheckedText: researchCheckedText, filterOpportunities: filterOpportunities, isPrivateLink: isPrivateLink, publicLink: publicLink, esc: esc, rpEstimate: rpEstimate, raidEventFor: raidEventFor, isPlaceholder: isPlaceholder, audify: audify, setTiers: setTiers, loadPrices: loadPrices, getJson: getJson, jsonOrNull: jsonOrNull, priceView: priceView, fmtRp: fmtRp, buildQueue: buildQueue, parseForm: parseForm, formId: formId, merge: merge, reconcileSync: reconcileSync, norm: norm, lev: lev, matchName: matchName, candidates: candidates, isInPersonWorldEvent: isInPersonWorldEvent, isRegionalInGameEvent: isRegionalInGameEvent, liveActivityCounts: liveActivityCounts };
+  /* ---------- storage safety for Collection data (gofn-dex-v1, gofn-us-v1, gofn-stamp) ----------
+     readJsonKeep never treats an unreadable value as "nothing saved": it keeps a copy under <key>-corrupt[-time] and reports it.
+     reportSave shows one non-blocking alert while any write is failing, and clears it once every writer succeeds again. */
+  function readJsonKeep(storage, key) {
+    var raw;
+    try { raw = storage.getItem(key); } catch (e) { return { value: null, corrupt: false, unreadable: true, kept: false }; }
+    if (raw == null || raw === '') return { value: null, corrupt: false, unreadable: false, kept: false };
+    try { return { value: JSON.parse(raw), corrupt: false, unreadable: false, kept: false }; } catch (e) { /* keep a copy below */ }
+    var kept = false;
+    try {
+      var name = key + '-corrupt', existing = storage.getItem(name);
+      if (existing === raw) kept = true;
+      else { if (existing != null) name += '-' + Date.now(); storage.setItem(name, raw); kept = true; }
+    } catch (e) { kept = false; }
+    return { value: null, corrupt: true, unreadable: false, kept: kept };
+  }
+  var SAVE_MESSAGE = 'Couldn\u2019t save \u2014 storage is full or unavailable. Changes stay on screen for this session only.';
+  var failing = {}, retryFns = {}, alertDismissed = false;
+  function reportSave(source, ok, retry) {
+    if (typeof document === 'undefined') return ok;
+    if (ok) { delete failing[source]; delete retryFns[source]; } else { failing[source] = 1; retryFns[source] = retry; }
+    var el = document.getElementById('gofn-storage-alert'), any = Object.keys(failing).length > 0;
+    if (!any) { if (el) el.hidden = true; alertDismissed = false; return ok; }
+    if (!ok) alertDismissed = false;
+    if (alertDismissed) return ok;
+    if (!el) {
+      el = document.createElement('div'); el.id = 'gofn-storage-alert'; el.className = 'storage-alert'; el.setAttribute('role', 'alert');
+      el.innerHTML = '<span class="storage-alert-msg"></span><button type="button" class="storage-alert-retry">Try again</button><button type="button" class="storage-alert-x" aria-label="Dismiss">\u00d7</button>';
+      el.querySelector('.storage-alert-retry').addEventListener('click', function () {
+        Object.keys(retryFns).forEach(function (k) { try { retryFns[k] && retryFns[k](); } catch (e) { /* still failing */ } });
+      });
+      el.querySelector('.storage-alert-x').addEventListener('click', function () { alertDismissed = true; el.hidden = true; });
+      document.body.appendChild(el);
+    }
+    el.querySelector('.storage-alert-msg').textContent = SAVE_MESSAGE;
+    el.hidden = false;
+    return ok;
+  }
+  function failingSources() { return Object.keys(failing); }
+
+  return { readJsonKeep: readJsonKeep, reportSave: reportSave, failingSources: failingSources, SAVE_MESSAGE: SAVE_MESSAGE, raidBossNames: raidBossNames, researchCheckedText: researchCheckedText, filterOpportunities: filterOpportunities, isPrivateLink: isPrivateLink, publicLink: publicLink, esc: esc, rpEstimate: rpEstimate, raidEventFor: raidEventFor, isPlaceholder: isPlaceholder, audify: audify, setTiers: setTiers, loadPrices: loadPrices, getJson: getJson, jsonOrNull: jsonOrNull, priceView: priceView, fmtRp: fmtRp, buildQueue: buildQueue, parseForm: parseForm, formId: formId, merge: merge, reconcileSync: reconcileSync, norm: norm, lev: lev, matchName: matchName, candidates: candidates, isInPersonWorldEvent: isInPersonWorldEvent, isRegionalInGameEvent: isRegionalInGameEvent, liveActivityCounts: liveActivityCounts };
 }));
