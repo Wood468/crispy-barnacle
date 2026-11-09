@@ -136,13 +136,14 @@ function sourceHighlights(model){
  var rules=[
   {label:'Daily Raid & Max Battle hours',re:/\b(?:raid hour|max battle hour)\b/i,keys:['dates','raids','bonuses']},
   {label:'GO Pass reward',re:/\bsilver bottle cap\b/i,keys:['featured','tickets','bonuses']},
-  {label:'Shiny encounter method',re:/\bshiny (?:meltan|gimmighoul)\b|\b(?:mystery box|coin bag)\b/i,keys:['shiny','bonuses','featured']},
+  {label:'Shiny Gimmighoul · Coin Bag',re:/\\bshiny gimmighoul\\b.*\\bcoin bag\\b|\\bcoin bag\\b.*\\bshiny gimmighoul\\b/i,keys:['bonuses','shiny','featured']},
+  {label:'Shiny Meltan · Mystery Box',re:/\\bshiny meltan\\b.*\\bmystery box\\b|\\bmystery box\\b.*\\bshiny meltan\\b/i,keys:['bonuses','shiny','featured']},
   {label:'Raid access',re:/\bremote raid (?:pass )?limit\b|\bno limit on remote raids\b/i,keys:['bonuses','raids']}
  ];
  var used=new Set(),out=[];
  rules.forEach(function(rule){
   for(var k=0;k<rule.keys.length;k++){
-   var rows=fields[rule.keys[k]]||[];
+   var rows=(fields[rule.keys[k]]||[]).concat(rule.label.indexOf('Shiny ')===0?(model.notes||[]).map(function(n){return {text:n,status:'single'};}):[]);
    var row=rows.find(function(item){var t=value(item);return rule.re.test(t)&&!used.has(t.toLowerCase())&&t.length<=240&&(!item.status||item.status==='corroborated'||item.status==='verified'||item.status==='single');});
    if(!row)continue;
    var message=value(row);used.add(message.toLowerCase());
