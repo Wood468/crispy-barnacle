@@ -5949,7 +5949,7 @@
     },
     "imageReviewed": true,
     "contentHash": "9c1e84fa3e57a9dc254240da56abb3e0fe3ea75b86697d72cfd7a5408efad52a",
-    "revision": 32,
+    "revision": 34,
     "amended": true,
     "native": false,
     "collection": "events"
@@ -9937,48 +9937,6 @@
        "status": "single"
       },
       {
-       "text": "The event features the following bonuses and debuts.",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Dynamax Regidrago and Dynamax Meltan make their Pokémon GO debut",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "You may encounter a Shiny Gimmighoul when using a Coin Bag",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Daily Raid hour or Max Battle hour from 6pm to 7pm each day featuring Five-Star Bosses",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Remote Raid Pass limit will increase to 30 from Monday, November 9, to Friday, November 13",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "No limit on Remote Raids during Wild Area from Saturday, November 14, to Sunday, November 15",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
        "text": "Rank 25: 1/2 Hatch Distance for Eggs placed in Incubators during the event",
        "sources": [
         "leekduck"
@@ -10025,10 +9983,9 @@
       {
        "text": "The following Pokémon will appear more frequently in the wild, along with other event-themed Pokémon.",
        "sources": [
-        "leekduck",
-        "hub"
+        "leekduck"
        ],
-       "status": "corroborated"
+       "status": "single"
       },
       {
        "text": "Galarian Meowth",
@@ -10099,39 +10056,22 @@
         "leekduck"
        ],
        "status": "single"
-      },
-      {
-       "text": "Dynamax Pokémon Debut",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
       }
      ],
      "raids": [
       {
        "text": "Regidrago will make its Pokémon GO Dynamax debut in five-star Max Battles, and Meltan will make its Dynamax debut in GO Pass: Into the Wild. If you’re lucky, you may encounter a Shiny one!",
        "sources": [
-        "leekduck",
-        "hub"
+        "leekduck"
        ],
-       "status": "corroborated"
+       "status": "single"
       },
       {
        "text": "Defeating Crowned Sword Zacian or Crowned Shield Zamazenta in raids will earn you Crowned Sword Energy or Crowned Shield Energy, respectively.",
        "sources": [
-        "leekduck",
-        "hub"
+        "leekduck"
        ],
-       "status": "corroborated"
-      },
-      {
-       "text": "The following Dynamax Pokémon will appear in Max Battles. Pokémon appearing in five-star Max Battles will also be featured in Max Battles from 6:00 p.m. to 7:00 p.m. local time for one day each on the following schedule.",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
+       "status": "single"
       },
       {
        "text": "Druddigon 100% IV CP Level 20 1561 Level 25 1951 Weather boosted in Counters",
@@ -10141,16 +10081,9 @@
        "status": "single"
       },
       {
-       "text": "Pokémon appearing in Five-Star Max Battles will appear in a dedicated hour of Max Battles from 6-7pm on their featured day. The following Pokémon will appear in Max Battles during the event:",
+       "text": "The following Dynamax Pokémon will appear in Max Battles. Pokémon appearing in five-star Max Battles will also be featured in Max Battles from 6:00 p.m. to 7:00 p.m. local time for one day each on the following schedule.",
        "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "⚔️ Related Raid Guides: Druddigon and Orthworm",
-       "sources": [
-        "hub"
+        "leekduck"
        ],
        "status": "single"
       }
@@ -10179,62 +10112,6 @@
        "status": "official"
       },
       {
-       "text": "Power up Steel‑type Pokémon 5 times POSSIBLE REWARDS Aron Max CP 560 Min CP 522 Magnemite Max CP 583 Min CP 544 Togedemaru Max CP 926 Min CP 876 Galarian Meowth Max CP 443 Min CP 409",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Power up Dragon‑type Pokémon 5 times POSSIBLE REWARDS Bagon Max CP 495 Min CP 459 Skrelp Max CP 455 Min CP 421 Dratini Max CP 430 Min CP 397 Horsea Max CP 452 Min CP 418",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Win a raid POSSIBLE REWARDS Dratini Max CP 430 Min CP 397 ×2 Rare Candy ×2 Scyther Max CP 1160 Min CP 1104",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Catch 10 Pokémon POSSIBLE REWARDS Horsea Max CP 452 Min CP 418 Aron Max CP 560 Min CP 522 Skrelp Max CP 455 Min CP 421 Magnemite Max CP 583 Min CP 544",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Win a Max Battle POSSIBLE REWARDS Bagon Max CP 495 Min CP 459 Mawile Max CP 700 Min CP 658",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Catch a Dynamax Machop POSSIBLE REWARDS ×25 Machop Candy ×25 ×5000 Stardust ×5000",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Attack: Battle alongside your trainee.",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
        "text": "Pokémon GO Wild Area–themed Field Research tasks will be available throughout the event! Complete the research tasks to earn encounters with event-themed Pokémon and other rewards.",
        "sources": [
         "leekduck"
@@ -10242,7 +10119,56 @@
        "status": "single"
       },
       {
+       "text": "Power up Steel‑type Pokémon 5 times POSSIBLE REWARDS Aron Max CP 560 Min CP 522 Magnemite Max CP 583 Min CP 544 Togedemaru Max CP 926 Min CP 876 Galarian Meowth Max CP 443 Min CP 409",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Power up Dragon‑type Pokémon 5 times POSSIBLE REWARDS Bagon Max CP 495 Min CP 459 Skrelp Max CP 455 Min CP 421 Dratini Max CP 430 Min CP 397 Horsea Max CP 452 Min CP 418",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Win a raid POSSIBLE REWARDS Dratini Max CP 430 Min CP 397 ×2 Rare Candy ×2 Scyther Max CP 1160 Min CP 1104",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Catch 10 Pokémon POSSIBLE REWARDS Horsea Max CP 452 Min CP 418 Aron Max CP 560 Min CP 522 Skrelp Max CP 455 Min CP 421 Magnemite Max CP 583 Min CP 544",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Win a Max Battle POSSIBLE REWARDS Bagon Max CP 495 Min CP 459 Mawile Max CP 700 Min CP 658",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Catch a Dynamax Machop POSSIBLE REWARDS ×25 Machop Candy ×25 ×5000 Stardust ×5000",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
        "text": "After you give your trainee a Silver Bottle Cap, Hyper Training begins. Each stat has its own set of themed tasks.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Attack: Battle alongside your trainee.",
        "sources": [
         "leekduck"
        ],
@@ -10256,86 +10182,20 @@
         "leekduck"
        ],
        "status": "single"
-      },
-      {
-       "text": "Dynamax Regidrago and Meltan debut, Shiny Gimmighoul returns, and a packed week of Raids, Max Battles, and GO Pass rewards kicks off the road to GO Wild Area 2026.",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Expect an increased remote raid limit, GO Pass and GO Pass Deluxe , the return of Shiny Gimmighoul to the Coin Bag, and Max Battles Galore! Here’s everything you need to know about the event.",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "You may encounter a Shiny Gimmighoul when using a Coin Bag",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
       }
      ],
-     "moves": [
-      {
-       "text": "When you catch the following Pokémon during the event, they will know the following featured attacks:",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Registeel will know the Fast Attack Metal Claw Steel",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Latias will know the Charged Attack Mist Ball Psychic",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Latios will know the Charged Attack Luster Purge Psychic",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Regidrago will know the Fast Attack Dragon Breath Dragon",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      }
-     ],
+     "moves": [],
      "costumes": [],
      "tickets": [
       {
-       "text": "Trainers will receive the pass automatically on Monday, November 9, at 10:00 a.m. local time . Earn points and rank up until Sunday, November 15, 2026, at 6:00 p.m. local time .",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Complete Pass Tasks to rank up and earn the following rewards. From Monday, November 9, to Friday, November 13, you can earn up to 100 extra GO Points daily by completing certain tasks.",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
        "text": "GO Pass: Into the Wild is a free progression track. Complete Pass Tasks to collect GO Points, increase your rank, and unlock rewards.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Trainers will receive the pass automatically on Monday, November 9, at 10:00 a.m. local time . Earn points and rank up until Sunday, November 15, 2026, at 6:00 p.m. local time .",
        "sources": [
         "leekduck"
        ],
@@ -10370,6 +10230,13 @@
        "status": "single"
       },
       {
+       "text": "Complete Pass Tasks to rank up and earn the following rewards. From Monday, November 9, to Friday, November 13, you can earn up to 100 extra GO Points daily by completing certain tasks.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
        "text": "Encounter Dynamax Meltan and earn a Silver Bottle Cap!",
        "sources": [
         "leekduck"
@@ -10398,717 +10265,6 @@
        "status": "single"
       },
       {
-       "text": "You can collect GO Points and rank up to get additional rewards through Sunday, November 15, 2026, at 6:00 p.m. local time.",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Rank 4: Free: Potion ×3 | Deluxe: Star Piece ×1",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 7: Free: Magnemite | Deluxe: Magnemite Candy ×20",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 8: Free: Magnemite Candy ×5 | Deluxe: Magnemite Candy XL ×10",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 9: Free: XP ×1000 | Deluxe: Silver Pinap Berry ×3",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 10: Free: Stardust ×1000 | Deluxe: Golden Razz Berry ×3",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 12: Free: Noibat | Deluxe: Noibat Candy ×20",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 13: Free: Noibat Candy ×5 | Deluxe: Noibat Candy XL ×10",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 14: Free: Pinap Berry ×3 | Deluxe: Max Revive ×3",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 15: Free: Dynamax Ralts | Deluxe: Premium Battle Pass ×2",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 16: Free: Incense ×1 | Deluxe: Incense ×1",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 17: Free: Togedemaru | Deluxe: Togedemaru Candy ×20",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 18: Free: Togedemaru Candy ×5 | Deluxe: Togedemaru Candy XL ×10",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 19: Free: Poffin ×1 | Deluxe: Lucky Egg ×1",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 20: Free: XP ×1000 | Deluxe: Lure Module ×1",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 21: Free: Stardust ×1000 | Deluxe: Star Piece ×1",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 22: Free: Skrelp | Deluxe: Skrelp Candy ×20",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 23: Free: Skrelp Candy ×5 | Deluxe: Skrelp Candy XL ×10",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 24: Free: Lucky Egg ×1 | Deluxe: Max Potion ×3",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 26: Free: Stardust ×1000 | Deluxe: Stardust ×5000",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 27: Free: Pinap Berry ×10 | Deluxe: Fast TM ×1",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 28: Free: Razz Berry ×10 | Deluxe: Charged TM ×1",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 29: Free: Great Ball ×5 | Deluxe: Great Ball ×25",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 30: Free: Dynamax Machop | Deluxe: Max Mushroom ×1",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 31: Free: Max Particle ×100 | Deluxe: Max Particle ×400",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 32: Free: Tinkatink | Deluxe: Tinkatink Candy ×20",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 33: Free: Tinkatink Candy ×5 | Deluxe: Tinkatink Candy XL ×10",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 34: Free: XP ×1000 | Deluxe: XP ×5000",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 35: Free: Poké Ball ×10 | Deluxe: Ultra Ball ×25",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 36: Free: Stardust ×1000 | Deluxe: Stardust ×5000",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 37: Free: Deino | Deluxe: Deino Candy ×5",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 38: Free: Deino Candy ×5 | Deluxe: Deino Candy XL ×3",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 39: Free: Fast TM ×1 | Deluxe: Lucky Egg ×1",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 40: Free: Charged TM ×1 | Deluxe: Premium Battle Pass ×1",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 41: Free: Super Potion ×3 | Deluxe: Max Potion ×5",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 42: Free: XP ×1000 | Deluxe: XP ×5000",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 43: Free: Meltan Candy ×5 | Deluxe: Meltan Candy ×20",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 44: Free: Meltan Candy ×5 | Deluxe: Meltan Candy XL ×10",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 45: Free: Dynamax Meltan | Deluxe: Dynamax Meltan",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 46: Free: Stardust ×1000 | Deluxe: Stardust ×5000",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 47: Free: Dynamax Drilbur | Deluxe: Drilbur Candy ×20",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 49: Free: Pinap Berry ×5 | Deluxe: Star Piece ×1",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 50: Free: Razz Berry ×5 | Deluxe: Fast TM ×1",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 51: Free: Ultra Ball ×5 | Deluxe: Ultra Ball ×10",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 52: Free: Dynamax Trapinch | Deluxe: Trapinch Candy ×20",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 53: Free: Trapinch Candy ×5 | Deluxe: Trapinch Candy XL ×10",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 54: Free: XP ×1000 | Deluxe: XP ×5000",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 55: Free: Stardust ×1000 | Deluxe: Stardust ×5000",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 57: Free: Rare Candy ×1 | Deluxe: Rare Candy XL ×2",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 58: Free: Max Particle ×100 | Deluxe: Max Particle ×400",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 59: Free: Hyper Potion ×3 | Deluxe: Lure Module ×1",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 61: Free: Dynamax Hatenna | Deluxe: Hatenna Candy ×20",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 62: Free: Hatenna Candy ×5 | Deluxe: Hatenna Candy XL ×10",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 63: Free: Max Particle ×100 | Deluxe: Max Particle ×400",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 64: Free: Poké Ball ×10 | Deluxe: Incense ×1",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 66: Free: Meltan Candy ×5 | Deluxe: Meltan Candy XL ×10",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 67: Free: Dynamax Meltan | Deluxe: Dynamax Meltan",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 68: Free: XP ×1000 | Deluxe: XP ×5000",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 69: Free: Stardust ×1000 | Deluxe: Stardust ×5000",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 70: Free: Poké Ball ×10 | Deluxe: Max Mushroom ×1",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 71: Free: Metal Coat ×3 | Deluxe: Elite Fast TM ×1",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 72: Free: Machop Candy ×5 | Deluxe: Machop Candy XL ×10",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 73: Free: Machop Candy ×5 | Deluxe: Machop Candy XL ×10",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 74: Free: Machop Candy ×5 | Deluxe: Machop Candy XL ×10",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 75: Free: Golden Lure Module ×1 | Deluxe: Machamp wearing a modern jacket",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 76: Free: Great Ball ×10 | Deluxe: Great Ball ×25",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 79: Free: Gimmighoul (Roaming Form) | Deluxe: Gimmighoul (Roaming Form)",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 80: Free: Incense ×1 | Deluxe: Premium Battle Pass ×1",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 81: Free: XP ×1000 | Deluxe: XP ×5000",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 82: Free: Meltan Candy ×5 | Deluxe: Meltan Candy ×20",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 83: Free: Meltan Candy ×5 | Deluxe: Meltan Candy XL ×10",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 84: Free: Dynamax Meltan | Deluxe: Dynamax Meltan",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 86: Free: Razz Berry ×3 | Deluxe: Lure Module ×1",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 87: Free: Pinap Berry ×3 | Deluxe: Premium Battle Pass ×1",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 88: Free: Rare Candy ×2 | Deluxe: Rare Candy XL ×2",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 89: Free: Rare Candy ×2 | Deluxe: Rare Candy XL ×2",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 90: Free: Rare Candy ×2 | Deluxe: Rare Candy XL ×2",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 91: Free: Rare Candy ×2 | Deluxe: Rare Candy XL ×2",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 92: Free: Duraludon Candy ×5 | Deluxe: Duraludon Candy XL ×10",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 93: Free: Duraludon Candy ×5 | Deluxe: Duraludon Candy XL ×10",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 94: Free: Duraludon Candy ×5 | Deluxe: Duraludon Candy XL ×10",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 95: Free: Golden Razz Berry ×1 | Deluxe: Golden Razz Berry ×3",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 96: Free: Silver Pinap Berry ×1 | Deluxe: Silver Pinap Berry ×3",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 97: Free: Ultra Ball ×10 | Deluxe: Ultra Ball ×25",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 98: Free: Meltan Candy ×5 | Deluxe: Meltan Candy XL ×10",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 99: Free: Meltan Candy ×5 | Deluxe: Dynamax Meltan",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 100: Free: Dynamax Meltan | Deluxe: Silver Bottle Cap ×1",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 101: Free: Stardust ×50 | Deluxe: Stardust ×100",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 600: Free: Stardust ×50 | Deluxe: Stardust ×100",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
        "text": "Rank 1: Free: GO Wild Area 2026 Tee (Purple) | Deluxe: —",
        "sources": [
         "leekduck"
@@ -11130,6 +10286,13 @@
        "status": "single"
       },
       {
+       "text": "Rank 4: Free: Potion ×3 | Deluxe: Star Piece ×1",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
        "text": "Rank 5: Free: XP ×1000 | Deluxe: XP ×5000",
        "sources": [
         "leekduck"
@@ -11144,7 +10307,280 @@
        "status": "single"
       },
       {
+       "text": "Rank 7: Free: Magnemite | Deluxe: Magnemite Candy ×20",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 8: Free: Magnemite Candy ×5 | Deluxe: Magnemite Candy XL ×10",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 9: Free: XP ×1000 | Deluxe: Silver Pinap Berry ×3",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 10: Free: Stardust ×1000 | Deluxe: Golden Razz Berry ×3",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
        "text": "Rank 11: Free: Revive ×3 | Deluxe: Max Potion ×5",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 12: Free: Noibat | Deluxe: Noibat Candy ×20",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 13: Free: Noibat Candy ×5 | Deluxe: Noibat Candy XL ×10",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 14: Free: Pinap Berry ×3 | Deluxe: Max Revive ×3",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 15: Free: Dynamax Ralts | Deluxe: Premium Battle Pass ×2",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 16: Free: Incense ×1 | Deluxe: Incense ×1",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 17: Free: Togedemaru | Deluxe: Togedemaru Candy ×20",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 18: Free: Togedemaru Candy ×5 | Deluxe: Togedemaru Candy XL ×10",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 19: Free: Poffin ×1 | Deluxe: Lucky Egg ×1",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 20: Free: XP ×1000 | Deluxe: Lure Module ×1",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 21: Free: Stardust ×1000 | Deluxe: Star Piece ×1",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 22: Free: Skrelp | Deluxe: Skrelp Candy ×20",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 23: Free: Skrelp Candy ×5 | Deluxe: Skrelp Candy XL ×10",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 24: Free: Lucky Egg ×1 | Deluxe: Max Potion ×3",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 26: Free: Stardust ×1000 | Deluxe: Stardust ×5000",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 27: Free: Pinap Berry ×10 | Deluxe: Fast TM ×1",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 28: Free: Razz Berry ×10 | Deluxe: Charged TM ×1",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 29: Free: Great Ball ×5 | Deluxe: Great Ball ×25",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 30: Free: Dynamax Machop | Deluxe: Max Mushroom ×1",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 31: Free: Max Particle ×100 | Deluxe: Max Particle ×400",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 32: Free: Tinkatink | Deluxe: Tinkatink Candy ×20",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 33: Free: Tinkatink Candy ×5 | Deluxe: Tinkatink Candy XL ×10",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 34: Free: XP ×1000 | Deluxe: XP ×5000",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 35: Free: Poké Ball ×10 | Deluxe: Ultra Ball ×25",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 36: Free: Stardust ×1000 | Deluxe: Stardust ×5000",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 37: Free: Deino | Deluxe: Deino Candy ×5",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 38: Free: Deino Candy ×5 | Deluxe: Deino Candy XL ×3",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 39: Free: Fast TM ×1 | Deluxe: Lucky Egg ×1",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 40: Free: Charged TM ×1 | Deluxe: Premium Battle Pass ×1",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 41: Free: Super Potion ×3 | Deluxe: Max Potion ×5",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 42: Free: XP ×1000 | Deluxe: XP ×5000",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 43: Free: Meltan Candy ×5 | Deluxe: Meltan Candy ×20",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 44: Free: Meltan Candy ×5 | Deluxe: Meltan Candy XL ×10",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 45: Free: Dynamax Meltan | Deluxe: Dynamax Meltan",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 46: Free: Stardust ×1000 | Deluxe: Stardust ×5000",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 47: Free: Dynamax Drilbur | Deluxe: Drilbur Candy ×20",
        "sources": [
         "leekduck"
        ],
@@ -11158,7 +10594,77 @@
        "status": "single"
       },
       {
+       "text": "Rank 49: Free: Pinap Berry ×5 | Deluxe: Star Piece ×1",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 50: Free: Razz Berry ×5 | Deluxe: Fast TM ×1",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 51: Free: Ultra Ball ×5 | Deluxe: Ultra Ball ×10",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 52: Free: Dynamax Trapinch | Deluxe: Trapinch Candy ×20",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 53: Free: Trapinch Candy ×5 | Deluxe: Trapinch Candy XL ×10",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 54: Free: XP ×1000 | Deluxe: XP ×5000",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 55: Free: Stardust ×1000 | Deluxe: Stardust ×5000",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
        "text": "Rank 56: Free: Revive ×3 | Deluxe: Charged TM ×1",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 57: Free: Rare Candy ×1 | Deluxe: Rare Candy XL ×2",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 58: Free: Max Particle ×100 | Deluxe: Max Particle ×400",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 59: Free: Hyper Potion ×3 | Deluxe: Lure Module ×1",
        "sources": [
         "leekduck"
        ],
@@ -11172,7 +10678,112 @@
        "status": "single"
       },
       {
+       "text": "Rank 61: Free: Dynamax Hatenna | Deluxe: Hatenna Candy ×20",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 62: Free: Hatenna Candy ×5 | Deluxe: Hatenna Candy XL ×10",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 63: Free: Max Particle ×100 | Deluxe: Max Particle ×400",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 64: Free: Poké Ball ×10 | Deluxe: Incense ×1",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
        "text": "Rank 65: Free: Meltan Candy ×5 | Deluxe: Meltan Candy ×20",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 66: Free: Meltan Candy ×5 | Deluxe: Meltan Candy XL ×10",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 67: Free: Dynamax Meltan | Deluxe: Dynamax Meltan",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 68: Free: XP ×1000 | Deluxe: XP ×5000",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 69: Free: Stardust ×1000 | Deluxe: Stardust ×5000",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 70: Free: Poké Ball ×10 | Deluxe: Max Mushroom ×1",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 71: Free: Metal Coat ×3 | Deluxe: Elite Fast TM ×1",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 72: Free: Machop Candy ×5 | Deluxe: Machop Candy XL ×10",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 73: Free: Machop Candy ×5 | Deluxe: Machop Candy XL ×10",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 74: Free: Machop Candy ×5 | Deluxe: Machop Candy XL ×10",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 75: Free: Golden Lure Module ×1 | Deluxe: Machamp wearing a modern jacket",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 76: Free: Great Ball ×10 | Deluxe: Great Ball ×25",
        "sources": [
         "leekduck"
        ],
@@ -11193,7 +10804,168 @@
        "status": "single"
       },
       {
+       "text": "Rank 79: Free: Gimmighoul (Roaming Form) | Deluxe: Gimmighoul (Roaming Form)",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 80: Free: Incense ×1 | Deluxe: Premium Battle Pass ×1",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 81: Free: XP ×1000 | Deluxe: XP ×5000",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 82: Free: Meltan Candy ×5 | Deluxe: Meltan Candy ×20",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 83: Free: Meltan Candy ×5 | Deluxe: Meltan Candy XL ×10",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 84: Free: Dynamax Meltan | Deluxe: Dynamax Meltan",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
        "text": "Rank 85: Free: Stardust ×1000 | Deluxe: Stardust ×5000",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 86: Free: Razz Berry ×3 | Deluxe: Lure Module ×1",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 87: Free: Pinap Berry ×3 | Deluxe: Premium Battle Pass ×1",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 88: Free: Rare Candy ×2 | Deluxe: Rare Candy XL ×2",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 89: Free: Rare Candy ×2 | Deluxe: Rare Candy XL ×2",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 90: Free: Rare Candy ×2 | Deluxe: Rare Candy XL ×2",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 91: Free: Rare Candy ×2 | Deluxe: Rare Candy XL ×2",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 92: Free: Duraludon Candy ×5 | Deluxe: Duraludon Candy XL ×10",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 93: Free: Duraludon Candy ×5 | Deluxe: Duraludon Candy XL ×10",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 94: Free: Duraludon Candy ×5 | Deluxe: Duraludon Candy XL ×10",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 95: Free: Golden Razz Berry ×1 | Deluxe: Golden Razz Berry ×3",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 96: Free: Silver Pinap Berry ×1 | Deluxe: Silver Pinap Berry ×3",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 97: Free: Ultra Ball ×10 | Deluxe: Ultra Ball ×25",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 98: Free: Meltan Candy ×5 | Deluxe: Meltan Candy XL ×10",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 99: Free: Meltan Candy ×5 | Deluxe: Dynamax Meltan",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 100: Free: Dynamax Meltan | Deluxe: Silver Bottle Cap ×1",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 101: Free: Stardust ×50 | Deluxe: Stardust ×100",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 600: Free: Stardust ×50 | Deluxe: Stardust ×100",
        "sources": [
         "leekduck"
        ],
@@ -11228,62 +11000,6 @@
         "leekduck"
        ],
        "status": "single"
-      },
-      {
-       "text": "From Monday, November 9, at 10:00 a.m. to Sunday, November 15, 2026, at 6:00 p.m. local time, the GO Pass and GO Pass Deluxe for Into the Wild 2026 will be available in Pokémon GO.",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Rewards unlocked in the GO Pass will expire on Tuesday, November 17, 2026, at 11:59 p.m. local time, so be sure to claim your rewards before they expire.",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Pokémon GO’s Into the Wild event runs from November 9 at 10:00 a.m. to November 13 at 8:00 p.m. local time , bringing two new Dynamax Pokémon: Dynamax Regidrago and Dynamax Meltan!",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Daily Raid hour or Max Battle hour from 6pm to 7pm each day featuring Five-Star Bosses",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Remote Raid Pass limit will increase to 30 from Monday, November 9, to Friday, November 13",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "No limit on Remote Raids during Wild Area from Saturday, November 14, to Sunday, November 15",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "You will be able to obtain event themed stickers by spinning Pokéstops and gifts from Monday, November 9 at 10:00 local time, until Sunday, November 15, 6:00pm local time.",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "They will also be available to purchase in the in-game shop from Friday November 6, to Sunday, November 15.",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
       }
      ]
     },
@@ -11294,8 +11010,8 @@
      "end": "2026-11-13"
     },
     "imageReviewed": true,
-    "contentHash": "86e7aae660a418da1db45fc6a3810c3f23abef1b34fa3b293285da7542bc9638",
-    "revision": 23,
+    "contentHash": "d11f88ca7bc12d2b1b7a6ae84993720154e9b21cbc3fff308c463fa44b59adba",
+    "revision": 24,
     "amended": false,
     "native": false,
     "collection": "events"
@@ -11379,48 +11095,6 @@
      "text": "Reach these ranks on GO Pass: Into the Wild to unlock the following bonus.",
      "sources": [
       "leekduck"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "The event features the following bonuses and debuts.",
-     "sources": [
-      "hub"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Dynamax Regidrago and Dynamax Meltan make their Pokémon GO debut",
-     "sources": [
-      "hub"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "You may encounter a Shiny Gimmighoul when using a Coin Bag",
-     "sources": [
-      "hub"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Daily Raid hour or Max Battle hour from 6pm to 7pm each day featuring Five-Star Bosses",
-     "sources": [
-      "hub"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Remote Raid Pass limit will increase to 30 from Monday, November 9, to Friday, November 13",
-     "sources": [
-      "hub"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "No limit on Remote Raids during Wild Area from Saturday, November 14, to Sunday, November 15",
-     "sources": [
-      "hub"
      ],
      "status": "single"
     },
@@ -11802,62 +11476,6 @@
      "status": "official"
     },
     {
-     "text": "Power up Steel‑type Pokémon 5 times POSSIBLE REWARDS Aron Max CP 560 Min CP 522 Magnemite Max CP 583 Min CP 544 Togedemaru Max CP 926 Min CP 876 Galarian Meowth Max CP 443 Min CP 409",
-     "sources": [
-      "leekduck",
-      "hub"
-     ],
-     "status": "corroborated"
-    },
-    {
-     "text": "Power up Dragon‑type Pokémon 5 times POSSIBLE REWARDS Bagon Max CP 495 Min CP 459 Skrelp Max CP 455 Min CP 421 Dratini Max CP 430 Min CP 397 Horsea Max CP 452 Min CP 418",
-     "sources": [
-      "leekduck",
-      "hub"
-     ],
-     "status": "corroborated"
-    },
-    {
-     "text": "Win a raid POSSIBLE REWARDS Dratini Max CP 430 Min CP 397 ×2 Rare Candy ×2 Scyther Max CP 1160 Min CP 1104",
-     "sources": [
-      "leekduck",
-      "hub"
-     ],
-     "status": "corroborated"
-    },
-    {
-     "text": "Catch 10 Pokémon POSSIBLE REWARDS Horsea Max CP 452 Min CP 418 Aron Max CP 560 Min CP 522 Skrelp Max CP 455 Min CP 421 Magnemite Max CP 583 Min CP 544",
-     "sources": [
-      "leekduck",
-      "hub"
-     ],
-     "status": "corroborated"
-    },
-    {
-     "text": "Win a Max Battle POSSIBLE REWARDS Bagon Max CP 495 Min CP 459 Mawile Max CP 700 Min CP 658",
-     "sources": [
-      "leekduck",
-      "hub"
-     ],
-     "status": "corroborated"
-    },
-    {
-     "text": "Catch a Dynamax Machop POSSIBLE REWARDS ×25 Machop Candy ×25 ×5000 Stardust ×5000",
-     "sources": [
-      "leekduck",
-      "hub"
-     ],
-     "status": "corroborated"
-    },
-    {
-     "text": "Attack: Battle alongside your trainee.",
-     "sources": [
-      "leekduck",
-      "hub"
-     ],
-     "status": "corroborated"
-    },
-    {
      "text": "Pokémon GO Wild Area–themed Field Research tasks will be available throughout the event! Complete the research tasks to earn encounters with event-themed Pokémon and other rewards.",
      "sources": [
       "leekduck"
@@ -11865,7 +11483,56 @@
      "status": "single"
     },
     {
+     "text": "Power up Steel‑type Pokémon 5 times POSSIBLE REWARDS Aron Max CP 560 Min CP 522 Magnemite Max CP 583 Min CP 544 Togedemaru Max CP 926 Min CP 876 Galarian Meowth Max CP 443 Min CP 409",
+     "sources": [
+      "leekduck"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Power up Dragon‑type Pokémon 5 times POSSIBLE REWARDS Bagon Max CP 495 Min CP 459 Skrelp Max CP 455 Min CP 421 Dratini Max CP 430 Min CP 397 Horsea Max CP 452 Min CP 418",
+     "sources": [
+      "leekduck"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Win a raid POSSIBLE REWARDS Dratini Max CP 430 Min CP 397 ×2 Rare Candy ×2 Scyther Max CP 1160 Min CP 1104",
+     "sources": [
+      "leekduck"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Catch 10 Pokémon POSSIBLE REWARDS Horsea Max CP 452 Min CP 418 Aron Max CP 560 Min CP 522 Skrelp Max CP 455 Min CP 421 Magnemite Max CP 583 Min CP 544",
+     "sources": [
+      "leekduck"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Win a Max Battle POSSIBLE REWARDS Bagon Max CP 495 Min CP 459 Mawile Max CP 700 Min CP 658",
+     "sources": [
+      "leekduck"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Catch a Dynamax Machop POSSIBLE REWARDS ×25 Machop Candy ×25 ×5000 Stardust ×5000",
+     "sources": [
+      "leekduck"
+     ],
+     "status": "single"
+    },
+    {
      "text": "After you give your trainee a Silver Bottle Cap, Hyper Training begins. Each stat has its own set of themed tasks.",
+     "sources": [
+      "leekduck"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Attack: Battle alongside your trainee.",
      "sources": [
       "leekduck"
      ],
@@ -13568,23 +13235,14 @@
    ],
    "tickets": [
     {
-     "text": "Trainers will receive the pass automatically on Monday, November 9, at 10:00 a.m. local time . Earn points and rank up until Sunday, November 15, 2026, at 6:00 p.m. local time .",
-     "sources": [
-      "leekduck",
-      "hub"
-     ],
-     "status": "corroborated"
-    },
-    {
-     "text": "Complete Pass Tasks to rank up and earn the following rewards. From Monday, November 9, to Friday, November 13, you can earn up to 100 extra GO Points daily by completing certain tasks.",
-     "sources": [
-      "leekduck",
-      "hub"
-     ],
-     "status": "corroborated"
-    },
-    {
      "text": "GO Pass: Into the Wild is a free progression track. Complete Pass Tasks to collect GO Points, increase your rank, and unlock rewards.",
+     "sources": [
+      "leekduck"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Trainers will receive the pass automatically on Monday, November 9, at 10:00 a.m. local time . Earn points and rank up until Sunday, November 15, 2026, at 6:00 p.m. local time .",
      "sources": [
       "leekduck"
      ],
@@ -13619,6 +13277,13 @@
      "status": "single"
     },
     {
+     "text": "Complete Pass Tasks to rank up and earn the following rewards. From Monday, November 9, to Friday, November 13, you can earn up to 100 extra GO Points daily by completing certain tasks.",
+     "sources": [
+      "leekduck"
+     ],
+     "status": "single"
+    },
+    {
      "text": "Encounter Dynamax Meltan and earn a Silver Bottle Cap!",
      "sources": [
       "leekduck"
@@ -13643,13 +13308,6 @@
      "text": "Catch a Pokémon 1 PTS",
      "sources": [
       "leekduck"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "You can collect GO Points and rank up to get additional rewards through Sunday, November 15, 2026, at 6:00 p.m. local time.",
-     "sources": [
-      "hub"
      ],
      "status": "single"
     }
@@ -15047,6 +14705,68 @@
   },
   {
    "schemaVersion": 1,
+   "eventId": "leekduck:december-communityday2026",
+   "aliases": [],
+   "family": "community-day",
+   "title": "December Community Day",
+   "dateText": "The December Community Day event will take place on December 12 and December 13, 2026 from 2 pm to 5 pm each day. Stay tuned for more details.",
+   "completeness": "partial",
+   "lifecycle": "announced",
+   "attendance": "",
+   "location": null,
+   "image": null,
+   "notes": [],
+   "internalValidation": {
+    "warnings": [],
+    "lifecycleDeclared": false,
+    "native": true,
+    "fields": {
+     "bonuses": [],
+     "featured": [],
+     "raids": [],
+     "eggs": [],
+     "research": [],
+     "shiny": [],
+     "moves": [],
+     "costumes": [],
+     "tickets": [],
+     "dates": [
+      {
+       "text": "The December Community Day event will take place on December 12 and December 13, 2026 from 2 pm to 5 pm each day. Stay tuned for more details."
+      }
+     ]
+    },
+    "legacyDates": {
+     "start": "",
+     "end": ""
+    },
+    "conflicts": [],
+    "imageReviewed": true,
+    "contentHash": "c0025046ec4cdc2f9ae5e47adec58ed670acbae9f40b89aabe168f339cb003d1",
+    "revision": 1,
+    "amended": false,
+    "collection": "source-details"
+   },
+   "schedule": null,
+   "activities": [],
+   "bonuses": [],
+   "research": [],
+   "passes": [],
+   "tickets": [],
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/december-communityday2026/"
+    }
+   ],
+   "pokemon": [],
+   "encounters": [],
+   "groups": {}
+  },
+  {
+   "schemaVersion": 1,
    "eventId": "leekduck:deoxys-normal-defense-attack-speed-formes-in-5-star-raid-battles-november-2026",
    "aliases": [],
    "family": "other",
@@ -16392,6 +16112,68 @@
   },
   {
    "schemaVersion": 1,
+   "eventId": "leekduck:february-communityday2027",
+   "aliases": [],
+   "family": "community-day",
+   "title": "February Community Day",
+   "dateText": "The February Community Day event will take place on February 6, 2027 from 2 pm to 5 pm. Stay tuned for more details.",
+   "completeness": "partial",
+   "lifecycle": "announced",
+   "attendance": "",
+   "location": null,
+   "image": null,
+   "notes": [],
+   "internalValidation": {
+    "warnings": [],
+    "lifecycleDeclared": false,
+    "native": true,
+    "fields": {
+     "bonuses": [],
+     "featured": [],
+     "raids": [],
+     "eggs": [],
+     "research": [],
+     "shiny": [],
+     "moves": [],
+     "costumes": [],
+     "tickets": [],
+     "dates": [
+      {
+       "text": "The February Community Day event will take place on February 6, 2027 from 2 pm to 5 pm. Stay tuned for more details."
+      }
+     ]
+    },
+    "legacyDates": {
+     "start": "",
+     "end": ""
+    },
+    "conflicts": [],
+    "imageReviewed": true,
+    "contentHash": "543ce9e55e1403d55fe75f53bd4a528e2e3efdb9029eff4c6759a6a5d1fcf000",
+    "revision": 1,
+    "amended": false,
+    "collection": "source-details"
+   },
+   "schedule": null,
+   "activities": [],
+   "bonuses": [],
+   "research": [],
+   "passes": [],
+   "tickets": [],
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/february-communityday2027/"
+    }
+   ],
+   "pokemon": [],
+   "encounters": [],
+   "groups": {}
+  },
+  {
+   "schemaVersion": 1,
    "eventId": "leekduck:gbl-twilight-trails_great-league-mega-edition_ultra-league-mega-edition_master-league-mega-edition-split-3",
    "aliases": [],
    "family": "other",
@@ -17336,6 +17118,367 @@
      "name": "Leek Duck",
      "trust": "community",
      "url": "https://leekduck.com/events/go-wild-area-gigantamax-machamp-power-up-timed-research/"
+    }
+   ],
+   "pokemon": [],
+   "encounters": [],
+   "groups": {}
+  },
+  {
+   "schemaVersion": 1,
+   "eventId": "leekduck:hatch-day-december-2026",
+   "aliases": [],
+   "family": "other",
+   "title": "Hatch Day",
+   "dateText": "",
+   "completeness": "partial",
+   "lifecycle": "reference",
+   "attendance": "",
+   "location": null,
+   "image": null,
+   "notes": [],
+   "internalValidation": {
+    "warnings": [],
+    "lifecycleDeclared": true,
+    "conflicts": [],
+    "fields": {
+     "bonuses": [],
+     "featured": [],
+     "raids": [],
+     "eggs": [
+      {
+       "text": "The Hatch Day event will take place on December 26, 2026 from 11 am to 5 pm. Stay tuned for more details.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      }
+     ],
+     "research": [],
+     "shiny": [],
+     "moves": [],
+     "costumes": [],
+     "tickets": [],
+     "dates": [
+      {
+       "text": "The Hatch Day event will take place on December 26, 2026 from 11 am to 5 pm. Stay tuned for more details.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      }
+     ],
+     "researchTasks": []
+    },
+    "info": [],
+    "detailRefs": [
+     "leekduck:hatch-day-december-2026"
+    ],
+    "legacyDates": {
+     "start": "",
+     "end": ""
+    },
+    "imageReviewed": true,
+    "contentHash": "5371200a3d096aa911aefaf19ef4ac5713a8ac735b10b53a03ae173b194b5fd3",
+    "revision": 1,
+    "amended": false,
+    "native": false,
+    "collection": "source-details"
+   },
+   "schedule": null,
+   "activities": [],
+   "bonuses": [],
+   "research": [],
+   "passes": [],
+   "tickets": [],
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/hatch-day-december-2026/"
+    }
+   ],
+   "pokemon": [],
+   "encounters": [],
+   "groups": {}
+  },
+  {
+   "schemaVersion": 1,
+   "eventId": "leekduck:january-communityday2027",
+   "aliases": [],
+   "family": "community-day",
+   "title": "January Community Day",
+   "dateText": "The January Community Day event will take place on January 16, 2027 from 2 pm to 5 pm. Stay tuned for more details.",
+   "completeness": "partial",
+   "lifecycle": "announced",
+   "attendance": "",
+   "location": null,
+   "image": null,
+   "notes": [],
+   "internalValidation": {
+    "warnings": [],
+    "lifecycleDeclared": false,
+    "native": true,
+    "fields": {
+     "bonuses": [],
+     "featured": [],
+     "raids": [],
+     "eggs": [],
+     "research": [],
+     "shiny": [],
+     "moves": [],
+     "costumes": [],
+     "tickets": [],
+     "dates": [
+      {
+       "text": "The January Community Day event will take place on January 16, 2027 from 2 pm to 5 pm. Stay tuned for more details."
+      }
+     ]
+    },
+    "legacyDates": {
+     "start": "",
+     "end": ""
+    },
+    "conflicts": [],
+    "imageReviewed": true,
+    "contentHash": "a5914791f6270e2a49b83d6dd639f966d4db49f18b68bffc12bb521096817c93",
+    "revision": 1,
+    "amended": false,
+    "collection": "source-details"
+   },
+   "schedule": null,
+   "activities": [],
+   "bonuses": [],
+   "research": [],
+   "passes": [],
+   "tickets": [],
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/january-communityday2027/"
+    }
+   ],
+   "pokemon": [],
+   "encounters": [],
+   "groups": {}
+  },
+  {
+   "schemaVersion": 1,
+   "eventId": "leekduck:january-communitydayclassic2027",
+   "aliases": [],
+   "family": "community-day",
+   "title": "January Community Day Classic",
+   "dateText": "The January Community Day Classic event will take place on January 2, 2027 from 2 pm to 5 pm. Stay tuned for more details.",
+   "completeness": "partial",
+   "lifecycle": "announced",
+   "attendance": "",
+   "location": null,
+   "image": null,
+   "notes": [],
+   "internalValidation": {
+    "warnings": [],
+    "lifecycleDeclared": false,
+    "native": true,
+    "fields": {
+     "bonuses": [],
+     "featured": [],
+     "raids": [],
+     "eggs": [],
+     "research": [],
+     "shiny": [],
+     "moves": [],
+     "costumes": [],
+     "tickets": [],
+     "dates": [
+      {
+       "text": "The January Community Day Classic event will take place on January 2, 2027 from 2 pm to 5 pm. Stay tuned for more details."
+      }
+     ]
+    },
+    "legacyDates": {
+     "start": "",
+     "end": ""
+    },
+    "conflicts": [],
+    "imageReviewed": true,
+    "contentHash": "18c47a913fe8869f21351d5458ee8b92d2e3cb39a5ef49b7f5d8d464a88d9cb1",
+    "revision": 1,
+    "amended": false,
+    "collection": "source-details"
+   },
+   "schedule": null,
+   "activities": [],
+   "bonuses": [],
+   "research": [],
+   "passes": [],
+   "tickets": [],
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/january-communitydayclassic2027/"
+    }
+   ],
+   "pokemon": [],
+   "encounters": [],
+   "groups": {}
+  },
+  {
+   "schemaVersion": 1,
+   "eventId": "leekduck:max-battle-day-december-2026",
+   "aliases": [],
+   "family": "max-battles",
+   "title": "Max Battle Day",
+   "dateText": "",
+   "completeness": "partial",
+   "lifecycle": "reference",
+   "attendance": "",
+   "location": null,
+   "image": null,
+   "notes": [],
+   "internalValidation": {
+    "warnings": [],
+    "lifecycleDeclared": true,
+    "conflicts": [],
+    "fields": {
+     "bonuses": [],
+     "featured": [],
+     "raids": [
+      {
+       "text": "The Max Battle Day event will take place on December 5, 2026 from 2 pm to 5 pm. Stay tuned for more details.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      }
+     ],
+     "eggs": [],
+     "research": [],
+     "shiny": [],
+     "moves": [],
+     "costumes": [],
+     "tickets": [],
+     "dates": [
+      {
+       "text": "The Max Battle Day event will take place on December 5, 2026 from 2 pm to 5 pm. Stay tuned for more details.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      }
+     ],
+     "researchTasks": []
+    },
+    "info": [],
+    "detailRefs": [
+     "leekduck:max-battle-day-december-2026"
+    ],
+    "legacyDates": {
+     "start": "",
+     "end": ""
+    },
+    "imageReviewed": true,
+    "contentHash": "7ba60723b502af134f525c256d707ef309ab0871b7f99680ea57922d525c8a7f",
+    "revision": 1,
+    "amended": false,
+    "native": false,
+    "collection": "source-details"
+   },
+   "schedule": null,
+   "activities": [],
+   "bonuses": [],
+   "research": [],
+   "passes": [],
+   "tickets": [],
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/max-battle-day-december-2026/"
+    }
+   ],
+   "pokemon": [],
+   "encounters": [],
+   "groups": {}
+  },
+  {
+   "schemaVersion": 1,
+   "eventId": "leekduck:max-battle-day-january-2027",
+   "aliases": [],
+   "family": "max-battles",
+   "title": "Max Battle Day",
+   "dateText": "",
+   "completeness": "partial",
+   "lifecycle": "reference",
+   "attendance": "",
+   "location": null,
+   "image": null,
+   "notes": [],
+   "internalValidation": {
+    "warnings": [],
+    "lifecycleDeclared": true,
+    "conflicts": [],
+    "fields": {
+     "bonuses": [],
+     "featured": [],
+     "raids": [
+      {
+       "text": "The Max Battle Day event will take place on January 23, 2027 from 2 pm to 5 pm. Stay tuned for more details.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      }
+     ],
+     "eggs": [],
+     "research": [],
+     "shiny": [],
+     "moves": [],
+     "costumes": [],
+     "tickets": [],
+     "dates": [
+      {
+       "text": "The Max Battle Day event will take place on January 23, 2027 from 2 pm to 5 pm. Stay tuned for more details.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      }
+     ],
+     "researchTasks": []
+    },
+    "info": [],
+    "detailRefs": [
+     "leekduck:max-battle-day-january-2027"
+    ],
+    "legacyDates": {
+     "start": "",
+     "end": ""
+    },
+    "imageReviewed": true,
+    "contentHash": "b9ba083aa39fe638a8396d49532ce5497b422d73d026a3c5be537f3cae1fe4c8",
+    "revision": 1,
+    "amended": false,
+    "native": false,
+    "collection": "source-details"
+   },
+   "schedule": null,
+   "activities": [],
+   "bonuses": [],
+   "research": [],
+   "passes": [],
+   "tickets": [],
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/max-battle-day-january-2027/"
     }
    ],
    "pokemon": [],
@@ -21358,55 +21501,6 @@
         "leekduck"
        ],
        "status": "single"
-      },
-      {
-       "text": "Pokémon GO pop-up event",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Interactive fun",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Giveaways, available while supplies last",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Photo opportunities to capture the memories",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Activities with your local Community Ambassadors and their communities",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Chance to meet and battle fellow Trainers.",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Timed Research when you check in, with rewards like a Pokémon encounter and items",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
       }
      ],
      "tickets": [
@@ -21499,8 +21593,7 @@
       {
        "text": "Suwon, Korea Date: November 14 and November 15, 2026 Location: Time Villas Suwon, 134 Sehwa-ro, Gwonseon-gu, Suwon-si, Gyeonggi-do, South Korea Time: 10:00 a.m. – 6:00 p.m. (local time) *Event details can be found here .",
        "sources": [
-        "official",
-        "hub"
+        "official"
        ],
        "status": "official"
       },
@@ -25914,7 +26007,7 @@
     },
     "imageReviewed": true,
     "contentHash": "244e1a218c776c7de71a786fe7a96bc90d5ca2212bc0e2a5060da28a5e71b680",
-    "revision": 47,
+    "revision": 49,
     "amended": true,
     "native": false,
     "collection": "source-details"
@@ -27438,6 +27531,138 @@
      }
     ]
    }
+  },
+  {
+   "schemaVersion": 1,
+   "eventId": "leekduck:raid-day-december-2026",
+   "aliases": [],
+   "family": "raid-day",
+   "title": "Raid Day",
+   "dateText": "The Raid Day event will take place on December 19, 2026 from 2 pm to 5 pm. Stay tuned for more details.",
+   "completeness": "partial",
+   "lifecycle": "announced",
+   "attendance": "",
+   "location": null,
+   "image": null,
+   "notes": [],
+   "internalValidation": {
+    "warnings": [],
+    "lifecycleDeclared": false,
+    "native": true,
+    "fields": {
+     "bonuses": [],
+     "featured": [],
+     "raids": [
+      {
+       "text": "The Raid Day event will take place on December 19, 2026 from 2 pm to 5 pm. Stay tuned for more details."
+      }
+     ],
+     "eggs": [],
+     "research": [],
+     "shiny": [],
+     "moves": [],
+     "costumes": [],
+     "tickets": [],
+     "dates": [
+      {
+       "text": "The Raid Day event will take place on December 19, 2026 from 2 pm to 5 pm. Stay tuned for more details."
+      }
+     ]
+    },
+    "legacyDates": {
+     "start": "",
+     "end": ""
+    },
+    "conflicts": [],
+    "imageReviewed": true,
+    "contentHash": "004144c9fbbad1cbdc3ecf0a3d4dfbb7bfc6da19029519a323b41d1271a645f1",
+    "revision": 1,
+    "amended": false,
+    "collection": "source-details"
+   },
+   "schedule": null,
+   "activities": [],
+   "bonuses": [],
+   "research": [],
+   "passes": [],
+   "tickets": [],
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/raid-day-december-2026/"
+    }
+   ],
+   "pokemon": [],
+   "encounters": [],
+   "groups": {}
+  },
+  {
+   "schemaVersion": 1,
+   "eventId": "leekduck:raid-day-february-2027",
+   "aliases": [],
+   "family": "raid-day",
+   "title": "Raid Day",
+   "dateText": "The Raid Day event will take place on February 13, 2027 from 2 pm to 5 pm. Stay tuned for more details.",
+   "completeness": "partial",
+   "lifecycle": "announced",
+   "attendance": "",
+   "location": null,
+   "image": null,
+   "notes": [],
+   "internalValidation": {
+    "warnings": [],
+    "lifecycleDeclared": false,
+    "native": true,
+    "fields": {
+     "bonuses": [],
+     "featured": [],
+     "raids": [
+      {
+       "text": "The Raid Day event will take place on February 13, 2027 from 2 pm to 5 pm. Stay tuned for more details."
+      }
+     ],
+     "eggs": [],
+     "research": [],
+     "shiny": [],
+     "moves": [],
+     "costumes": [],
+     "tickets": [],
+     "dates": [
+      {
+       "text": "The Raid Day event will take place on February 13, 2027 from 2 pm to 5 pm. Stay tuned for more details."
+      }
+     ]
+    },
+    "legacyDates": {
+     "start": "",
+     "end": ""
+    },
+    "conflicts": [],
+    "imageReviewed": true,
+    "contentHash": "e54a8004761484c66dee088cbb3fe226132ab73d726bd901f01c001d18aa335e",
+    "revision": 1,
+    "amended": false,
+    "collection": "source-details"
+   },
+   "schedule": null,
+   "activities": [],
+   "bonuses": [],
+   "research": [],
+   "passes": [],
+   "tickets": [],
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/raid-day-february-2027/"
+    }
+   ],
+   "pokemon": [],
+   "encounters": [],
+   "groups": {}
   },
   {
    "schemaVersion": 1,
@@ -29408,6 +29633,138 @@
      "name": "Leek Duck",
      "trust": "community",
      "url": "https://leekduck.com/events/shadow-tornadus-incarnate-forme-in-shadow-raids-november-4-2026/"
+    }
+   ],
+   "pokemon": [],
+   "encounters": [],
+   "groups": {}
+  },
+  {
+   "schemaVersion": 1,
+   "eventId": "leekduck:super-mega-raid-day-january-2027",
+   "aliases": [],
+   "family": "raid-day",
+   "title": "Super Mega Raid Day",
+   "dateText": "The Super Mega Raid Day event will take place on January 9, 2027 from 2 pm to 5 pm. Stay tuned for more details.",
+   "completeness": "partial",
+   "lifecycle": "announced",
+   "attendance": "",
+   "location": null,
+   "image": null,
+   "notes": [],
+   "internalValidation": {
+    "warnings": [],
+    "lifecycleDeclared": false,
+    "native": true,
+    "fields": {
+     "bonuses": [],
+     "featured": [],
+     "raids": [
+      {
+       "text": "The Super Mega Raid Day event will take place on January 9, 2027 from 2 pm to 5 pm. Stay tuned for more details."
+      }
+     ],
+     "eggs": [],
+     "research": [],
+     "shiny": [],
+     "moves": [],
+     "costumes": [],
+     "tickets": [],
+     "dates": [
+      {
+       "text": "The Super Mega Raid Day event will take place on January 9, 2027 from 2 pm to 5 pm. Stay tuned for more details."
+      }
+     ]
+    },
+    "legacyDates": {
+     "start": "",
+     "end": ""
+    },
+    "conflicts": [],
+    "imageReviewed": true,
+    "contentHash": "4b4f0aa9372f1ad912a61b4f380dfaf66cb1c07dd6e2e38f1d4f58bbcc95a6d3",
+    "revision": 1,
+    "amended": false,
+    "collection": "source-details"
+   },
+   "schedule": null,
+   "activities": [],
+   "bonuses": [],
+   "research": [],
+   "passes": [],
+   "tickets": [],
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/super-mega-raid-day-january-2027/"
+    }
+   ],
+   "pokemon": [],
+   "encounters": [],
+   "groups": {}
+  },
+  {
+   "schemaVersion": 1,
+   "eventId": "leekduck:super-mega-raid-day-january-30-2027",
+   "aliases": [],
+   "family": "raid-day",
+   "title": "Super Mega Raid Day",
+   "dateText": "The Super Mega Raid Day event will take place on January 30, 2027 from 2 pm to 5 pm. Stay tuned for more details.",
+   "completeness": "partial",
+   "lifecycle": "announced",
+   "attendance": "",
+   "location": null,
+   "image": null,
+   "notes": [],
+   "internalValidation": {
+    "warnings": [],
+    "lifecycleDeclared": false,
+    "native": true,
+    "fields": {
+     "bonuses": [],
+     "featured": [],
+     "raids": [
+      {
+       "text": "The Super Mega Raid Day event will take place on January 30, 2027 from 2 pm to 5 pm. Stay tuned for more details."
+      }
+     ],
+     "eggs": [],
+     "research": [],
+     "shiny": [],
+     "moves": [],
+     "costumes": [],
+     "tickets": [],
+     "dates": [
+      {
+       "text": "The Super Mega Raid Day event will take place on January 30, 2027 from 2 pm to 5 pm. Stay tuned for more details."
+      }
+     ]
+    },
+    "legacyDates": {
+     "start": "",
+     "end": ""
+    },
+    "conflicts": [],
+    "imageReviewed": true,
+    "contentHash": "37da2312ef2485f5c87eea5764cb3f1d7759fb904da102d313451c0886f1dcd6",
+    "revision": 1,
+    "amended": false,
+    "collection": "source-details"
+   },
+   "schedule": null,
+   "activities": [],
+   "bonuses": [],
+   "research": [],
+   "passes": [],
+   "tickets": [],
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/super-mega-raid-day-january-30-2027/"
     }
    ],
    "pokemon": [],
@@ -35485,48 +35842,6 @@
        "status": "single"
       },
       {
-       "text": "The event features the following bonuses and debuts.",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Dynamax Regidrago and Dynamax Meltan make their Pokémon GO debut",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "You may encounter a Shiny Gimmighoul when using a Coin Bag",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Daily Raid hour or Max Battle hour from 6pm to 7pm each day featuring Five-Star Bosses",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Remote Raid Pass limit will increase to 30 from Monday, November 9, to Friday, November 13",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "No limit on Remote Raids during Wild Area from Saturday, November 14, to Sunday, November 15",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
        "text": "Rank 25: 1/2 Hatch Distance for Eggs placed in Incubators during the event",
        "sources": [
         "leekduck"
@@ -35573,10 +35888,9 @@
       {
        "text": "The following Pokémon will appear more frequently in the wild, along with other event-themed Pokémon.",
        "sources": [
-        "leekduck",
-        "hub"
+        "leekduck"
        ],
-       "status": "corroborated"
+       "status": "single"
       },
       {
        "text": "Galarian Meowth",
@@ -35647,39 +35961,22 @@
         "leekduck"
        ],
        "status": "single"
-      },
-      {
-       "text": "Dynamax Pokémon Debut",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
       }
      ],
      "raids": [
       {
        "text": "Regidrago will make its Pokémon GO Dynamax debut in five-star Max Battles, and Meltan will make its Dynamax debut in GO Pass: Into the Wild. If you’re lucky, you may encounter a Shiny one!",
        "sources": [
-        "leekduck",
-        "hub"
+        "leekduck"
        ],
-       "status": "corroborated"
+       "status": "single"
       },
       {
        "text": "Defeating Crowned Sword Zacian or Crowned Shield Zamazenta in raids will earn you Crowned Sword Energy or Crowned Shield Energy, respectively.",
        "sources": [
-        "leekduck",
-        "hub"
+        "leekduck"
        ],
-       "status": "corroborated"
-      },
-      {
-       "text": "The following Dynamax Pokémon will appear in Max Battles. Pokémon appearing in five-star Max Battles will also be featured in Max Battles from 6:00 p.m. to 7:00 p.m. local time for one day each on the following schedule.",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
+       "status": "single"
       },
       {
        "text": "Druddigon 100% IV CP Level 20 1561 Level 25 1951 Weather boosted in Counters",
@@ -35689,16 +35986,9 @@
        "status": "single"
       },
       {
-       "text": "Pokémon appearing in Five-Star Max Battles will appear in a dedicated hour of Max Battles from 6-7pm on their featured day. The following Pokémon will appear in Max Battles during the event:",
+       "text": "The following Dynamax Pokémon will appear in Max Battles. Pokémon appearing in five-star Max Battles will also be featured in Max Battles from 6:00 p.m. to 7:00 p.m. local time for one day each on the following schedule.",
        "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "⚔️ Related Raid Guides: Druddigon and Orthworm",
-       "sources": [
-        "hub"
+        "leekduck"
        ],
        "status": "single"
       }
@@ -35727,62 +36017,6 @@
        "status": "official"
       },
       {
-       "text": "Power up Steel‑type Pokémon 5 times POSSIBLE REWARDS Aron Max CP 560 Min CP 522 Magnemite Max CP 583 Min CP 544 Togedemaru Max CP 926 Min CP 876 Galarian Meowth Max CP 443 Min CP 409",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Power up Dragon‑type Pokémon 5 times POSSIBLE REWARDS Bagon Max CP 495 Min CP 459 Skrelp Max CP 455 Min CP 421 Dratini Max CP 430 Min CP 397 Horsea Max CP 452 Min CP 418",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Win a raid POSSIBLE REWARDS Dratini Max CP 430 Min CP 397 ×2 Rare Candy ×2 Scyther Max CP 1160 Min CP 1104",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Catch 10 Pokémon POSSIBLE REWARDS Horsea Max CP 452 Min CP 418 Aron Max CP 560 Min CP 522 Skrelp Max CP 455 Min CP 421 Magnemite Max CP 583 Min CP 544",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Win a Max Battle POSSIBLE REWARDS Bagon Max CP 495 Min CP 459 Mawile Max CP 700 Min CP 658",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Catch a Dynamax Machop POSSIBLE REWARDS ×25 Machop Candy ×25 ×5000 Stardust ×5000",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Attack: Battle alongside your trainee.",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
        "text": "Pokémon GO Wild Area–themed Field Research tasks will be available throughout the event! Complete the research tasks to earn encounters with event-themed Pokémon and other rewards.",
        "sources": [
         "leekduck"
@@ -35790,7 +36024,56 @@
        "status": "single"
       },
       {
+       "text": "Power up Steel‑type Pokémon 5 times POSSIBLE REWARDS Aron Max CP 560 Min CP 522 Magnemite Max CP 583 Min CP 544 Togedemaru Max CP 926 Min CP 876 Galarian Meowth Max CP 443 Min CP 409",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Power up Dragon‑type Pokémon 5 times POSSIBLE REWARDS Bagon Max CP 495 Min CP 459 Skrelp Max CP 455 Min CP 421 Dratini Max CP 430 Min CP 397 Horsea Max CP 452 Min CP 418",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Win a raid POSSIBLE REWARDS Dratini Max CP 430 Min CP 397 ×2 Rare Candy ×2 Scyther Max CP 1160 Min CP 1104",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Catch 10 Pokémon POSSIBLE REWARDS Horsea Max CP 452 Min CP 418 Aron Max CP 560 Min CP 522 Skrelp Max CP 455 Min CP 421 Magnemite Max CP 583 Min CP 544",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Win a Max Battle POSSIBLE REWARDS Bagon Max CP 495 Min CP 459 Mawile Max CP 700 Min CP 658",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Catch a Dynamax Machop POSSIBLE REWARDS ×25 Machop Candy ×25 ×5000 Stardust ×5000",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
        "text": "After you give your trainee a Silver Bottle Cap, Hyper Training begins. Each stat has its own set of themed tasks.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Attack: Battle alongside your trainee.",
        "sources": [
         "leekduck"
        ],
@@ -35804,86 +36087,20 @@
         "leekduck"
        ],
        "status": "single"
-      },
-      {
-       "text": "Dynamax Regidrago and Meltan debut, Shiny Gimmighoul returns, and a packed week of Raids, Max Battles, and GO Pass rewards kicks off the road to GO Wild Area 2026.",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Expect an increased remote raid limit, GO Pass and GO Pass Deluxe , the return of Shiny Gimmighoul to the Coin Bag, and Max Battles Galore! Here’s everything you need to know about the event.",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "You may encounter a Shiny Gimmighoul when using a Coin Bag",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
       }
      ],
-     "moves": [
-      {
-       "text": "When you catch the following Pokémon during the event, they will know the following featured attacks:",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Registeel will know the Fast Attack Metal Claw Steel",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Latias will know the Charged Attack Mist Ball Psychic",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Latios will know the Charged Attack Luster Purge Psychic",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Regidrago will know the Fast Attack Dragon Breath Dragon",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      }
-     ],
+     "moves": [],
      "costumes": [],
      "tickets": [
       {
-       "text": "Trainers will receive the pass automatically on Monday, November 9, at 10:00 a.m. local time . Earn points and rank up until Sunday, November 15, 2026, at 6:00 p.m. local time .",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Complete Pass Tasks to rank up and earn the following rewards. From Monday, November 9, to Friday, November 13, you can earn up to 100 extra GO Points daily by completing certain tasks.",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
        "text": "GO Pass: Into the Wild is a free progression track. Complete Pass Tasks to collect GO Points, increase your rank, and unlock rewards.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Trainers will receive the pass automatically on Monday, November 9, at 10:00 a.m. local time . Earn points and rank up until Sunday, November 15, 2026, at 6:00 p.m. local time .",
        "sources": [
         "leekduck"
        ],
@@ -35918,6 +36135,13 @@
        "status": "single"
       },
       {
+       "text": "Complete Pass Tasks to rank up and earn the following rewards. From Monday, November 9, to Friday, November 13, you can earn up to 100 extra GO Points daily by completing certain tasks.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
        "text": "Encounter Dynamax Meltan and earn a Silver Bottle Cap!",
        "sources": [
         "leekduck"
@@ -35946,717 +36170,6 @@
        "status": "single"
       },
       {
-       "text": "You can collect GO Points and rank up to get additional rewards through Sunday, November 15, 2026, at 6:00 p.m. local time.",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Rank 4: Free: Potion ×3 | Deluxe: Star Piece ×1",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 7: Free: Magnemite | Deluxe: Magnemite Candy ×20",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 8: Free: Magnemite Candy ×5 | Deluxe: Magnemite Candy XL ×10",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 9: Free: XP ×1000 | Deluxe: Silver Pinap Berry ×3",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 10: Free: Stardust ×1000 | Deluxe: Golden Razz Berry ×3",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 12: Free: Noibat | Deluxe: Noibat Candy ×20",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 13: Free: Noibat Candy ×5 | Deluxe: Noibat Candy XL ×10",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 14: Free: Pinap Berry ×3 | Deluxe: Max Revive ×3",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 15: Free: Dynamax Ralts | Deluxe: Premium Battle Pass ×2",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 16: Free: Incense ×1 | Deluxe: Incense ×1",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 17: Free: Togedemaru | Deluxe: Togedemaru Candy ×20",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 18: Free: Togedemaru Candy ×5 | Deluxe: Togedemaru Candy XL ×10",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 19: Free: Poffin ×1 | Deluxe: Lucky Egg ×1",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 20: Free: XP ×1000 | Deluxe: Lure Module ×1",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 21: Free: Stardust ×1000 | Deluxe: Star Piece ×1",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 22: Free: Skrelp | Deluxe: Skrelp Candy ×20",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 23: Free: Skrelp Candy ×5 | Deluxe: Skrelp Candy XL ×10",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 24: Free: Lucky Egg ×1 | Deluxe: Max Potion ×3",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 26: Free: Stardust ×1000 | Deluxe: Stardust ×5000",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 27: Free: Pinap Berry ×10 | Deluxe: Fast TM ×1",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 28: Free: Razz Berry ×10 | Deluxe: Charged TM ×1",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 29: Free: Great Ball ×5 | Deluxe: Great Ball ×25",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 30: Free: Dynamax Machop | Deluxe: Max Mushroom ×1",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 31: Free: Max Particle ×100 | Deluxe: Max Particle ×400",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 32: Free: Tinkatink | Deluxe: Tinkatink Candy ×20",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 33: Free: Tinkatink Candy ×5 | Deluxe: Tinkatink Candy XL ×10",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 34: Free: XP ×1000 | Deluxe: XP ×5000",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 35: Free: Poké Ball ×10 | Deluxe: Ultra Ball ×25",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 36: Free: Stardust ×1000 | Deluxe: Stardust ×5000",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 37: Free: Deino | Deluxe: Deino Candy ×5",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 38: Free: Deino Candy ×5 | Deluxe: Deino Candy XL ×3",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 39: Free: Fast TM ×1 | Deluxe: Lucky Egg ×1",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 40: Free: Charged TM ×1 | Deluxe: Premium Battle Pass ×1",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 41: Free: Super Potion ×3 | Deluxe: Max Potion ×5",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 42: Free: XP ×1000 | Deluxe: XP ×5000",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 43: Free: Meltan Candy ×5 | Deluxe: Meltan Candy ×20",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 44: Free: Meltan Candy ×5 | Deluxe: Meltan Candy XL ×10",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 45: Free: Dynamax Meltan | Deluxe: Dynamax Meltan",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 46: Free: Stardust ×1000 | Deluxe: Stardust ×5000",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 47: Free: Dynamax Drilbur | Deluxe: Drilbur Candy ×20",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 49: Free: Pinap Berry ×5 | Deluxe: Star Piece ×1",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 50: Free: Razz Berry ×5 | Deluxe: Fast TM ×1",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 51: Free: Ultra Ball ×5 | Deluxe: Ultra Ball ×10",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 52: Free: Dynamax Trapinch | Deluxe: Trapinch Candy ×20",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 53: Free: Trapinch Candy ×5 | Deluxe: Trapinch Candy XL ×10",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 54: Free: XP ×1000 | Deluxe: XP ×5000",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 55: Free: Stardust ×1000 | Deluxe: Stardust ×5000",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 57: Free: Rare Candy ×1 | Deluxe: Rare Candy XL ×2",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 58: Free: Max Particle ×100 | Deluxe: Max Particle ×400",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 59: Free: Hyper Potion ×3 | Deluxe: Lure Module ×1",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 61: Free: Dynamax Hatenna | Deluxe: Hatenna Candy ×20",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 62: Free: Hatenna Candy ×5 | Deluxe: Hatenna Candy XL ×10",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 63: Free: Max Particle ×100 | Deluxe: Max Particle ×400",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 64: Free: Poké Ball ×10 | Deluxe: Incense ×1",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 66: Free: Meltan Candy ×5 | Deluxe: Meltan Candy XL ×10",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 67: Free: Dynamax Meltan | Deluxe: Dynamax Meltan",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 68: Free: XP ×1000 | Deluxe: XP ×5000",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 69: Free: Stardust ×1000 | Deluxe: Stardust ×5000",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 70: Free: Poké Ball ×10 | Deluxe: Max Mushroom ×1",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 71: Free: Metal Coat ×3 | Deluxe: Elite Fast TM ×1",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 72: Free: Machop Candy ×5 | Deluxe: Machop Candy XL ×10",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 73: Free: Machop Candy ×5 | Deluxe: Machop Candy XL ×10",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 74: Free: Machop Candy ×5 | Deluxe: Machop Candy XL ×10",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 75: Free: Golden Lure Module ×1 | Deluxe: Machamp wearing a modern jacket",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 76: Free: Great Ball ×10 | Deluxe: Great Ball ×25",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 79: Free: Gimmighoul (Roaming Form) | Deluxe: Gimmighoul (Roaming Form)",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 80: Free: Incense ×1 | Deluxe: Premium Battle Pass ×1",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 81: Free: XP ×1000 | Deluxe: XP ×5000",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 82: Free: Meltan Candy ×5 | Deluxe: Meltan Candy ×20",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 83: Free: Meltan Candy ×5 | Deluxe: Meltan Candy XL ×10",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 84: Free: Dynamax Meltan | Deluxe: Dynamax Meltan",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 86: Free: Razz Berry ×3 | Deluxe: Lure Module ×1",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 87: Free: Pinap Berry ×3 | Deluxe: Premium Battle Pass ×1",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 88: Free: Rare Candy ×2 | Deluxe: Rare Candy XL ×2",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 89: Free: Rare Candy ×2 | Deluxe: Rare Candy XL ×2",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 90: Free: Rare Candy ×2 | Deluxe: Rare Candy XL ×2",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 91: Free: Rare Candy ×2 | Deluxe: Rare Candy XL ×2",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 92: Free: Duraludon Candy ×5 | Deluxe: Duraludon Candy XL ×10",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 93: Free: Duraludon Candy ×5 | Deluxe: Duraludon Candy XL ×10",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 94: Free: Duraludon Candy ×5 | Deluxe: Duraludon Candy XL ×10",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 95: Free: Golden Razz Berry ×1 | Deluxe: Golden Razz Berry ×3",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 96: Free: Silver Pinap Berry ×1 | Deluxe: Silver Pinap Berry ×3",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 97: Free: Ultra Ball ×10 | Deluxe: Ultra Ball ×25",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 98: Free: Meltan Candy ×5 | Deluxe: Meltan Candy XL ×10",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 99: Free: Meltan Candy ×5 | Deluxe: Dynamax Meltan",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 100: Free: Dynamax Meltan | Deluxe: Silver Bottle Cap ×1",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 101: Free: Stardust ×50 | Deluxe: Stardust ×100",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 600: Free: Stardust ×50 | Deluxe: Stardust ×100",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
        "text": "Rank 1: Free: GO Wild Area 2026 Tee (Purple) | Deluxe: —",
        "sources": [
         "leekduck"
@@ -36678,6 +36191,13 @@
        "status": "single"
       },
       {
+       "text": "Rank 4: Free: Potion ×3 | Deluxe: Star Piece ×1",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
        "text": "Rank 5: Free: XP ×1000 | Deluxe: XP ×5000",
        "sources": [
         "leekduck"
@@ -36692,7 +36212,280 @@
        "status": "single"
       },
       {
+       "text": "Rank 7: Free: Magnemite | Deluxe: Magnemite Candy ×20",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 8: Free: Magnemite Candy ×5 | Deluxe: Magnemite Candy XL ×10",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 9: Free: XP ×1000 | Deluxe: Silver Pinap Berry ×3",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 10: Free: Stardust ×1000 | Deluxe: Golden Razz Berry ×3",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
        "text": "Rank 11: Free: Revive ×3 | Deluxe: Max Potion ×5",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 12: Free: Noibat | Deluxe: Noibat Candy ×20",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 13: Free: Noibat Candy ×5 | Deluxe: Noibat Candy XL ×10",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 14: Free: Pinap Berry ×3 | Deluxe: Max Revive ×3",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 15: Free: Dynamax Ralts | Deluxe: Premium Battle Pass ×2",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 16: Free: Incense ×1 | Deluxe: Incense ×1",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 17: Free: Togedemaru | Deluxe: Togedemaru Candy ×20",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 18: Free: Togedemaru Candy ×5 | Deluxe: Togedemaru Candy XL ×10",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 19: Free: Poffin ×1 | Deluxe: Lucky Egg ×1",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 20: Free: XP ×1000 | Deluxe: Lure Module ×1",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 21: Free: Stardust ×1000 | Deluxe: Star Piece ×1",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 22: Free: Skrelp | Deluxe: Skrelp Candy ×20",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 23: Free: Skrelp Candy ×5 | Deluxe: Skrelp Candy XL ×10",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 24: Free: Lucky Egg ×1 | Deluxe: Max Potion ×3",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 26: Free: Stardust ×1000 | Deluxe: Stardust ×5000",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 27: Free: Pinap Berry ×10 | Deluxe: Fast TM ×1",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 28: Free: Razz Berry ×10 | Deluxe: Charged TM ×1",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 29: Free: Great Ball ×5 | Deluxe: Great Ball ×25",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 30: Free: Dynamax Machop | Deluxe: Max Mushroom ×1",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 31: Free: Max Particle ×100 | Deluxe: Max Particle ×400",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 32: Free: Tinkatink | Deluxe: Tinkatink Candy ×20",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 33: Free: Tinkatink Candy ×5 | Deluxe: Tinkatink Candy XL ×10",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 34: Free: XP ×1000 | Deluxe: XP ×5000",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 35: Free: Poké Ball ×10 | Deluxe: Ultra Ball ×25",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 36: Free: Stardust ×1000 | Deluxe: Stardust ×5000",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 37: Free: Deino | Deluxe: Deino Candy ×5",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 38: Free: Deino Candy ×5 | Deluxe: Deino Candy XL ×3",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 39: Free: Fast TM ×1 | Deluxe: Lucky Egg ×1",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 40: Free: Charged TM ×1 | Deluxe: Premium Battle Pass ×1",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 41: Free: Super Potion ×3 | Deluxe: Max Potion ×5",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 42: Free: XP ×1000 | Deluxe: XP ×5000",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 43: Free: Meltan Candy ×5 | Deluxe: Meltan Candy ×20",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 44: Free: Meltan Candy ×5 | Deluxe: Meltan Candy XL ×10",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 45: Free: Dynamax Meltan | Deluxe: Dynamax Meltan",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 46: Free: Stardust ×1000 | Deluxe: Stardust ×5000",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 47: Free: Dynamax Drilbur | Deluxe: Drilbur Candy ×20",
        "sources": [
         "leekduck"
        ],
@@ -36706,7 +36499,77 @@
        "status": "single"
       },
       {
+       "text": "Rank 49: Free: Pinap Berry ×5 | Deluxe: Star Piece ×1",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 50: Free: Razz Berry ×5 | Deluxe: Fast TM ×1",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 51: Free: Ultra Ball ×5 | Deluxe: Ultra Ball ×10",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 52: Free: Dynamax Trapinch | Deluxe: Trapinch Candy ×20",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 53: Free: Trapinch Candy ×5 | Deluxe: Trapinch Candy XL ×10",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 54: Free: XP ×1000 | Deluxe: XP ×5000",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 55: Free: Stardust ×1000 | Deluxe: Stardust ×5000",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
        "text": "Rank 56: Free: Revive ×3 | Deluxe: Charged TM ×1",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 57: Free: Rare Candy ×1 | Deluxe: Rare Candy XL ×2",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 58: Free: Max Particle ×100 | Deluxe: Max Particle ×400",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 59: Free: Hyper Potion ×3 | Deluxe: Lure Module ×1",
        "sources": [
         "leekduck"
        ],
@@ -36720,7 +36583,112 @@
        "status": "single"
       },
       {
+       "text": "Rank 61: Free: Dynamax Hatenna | Deluxe: Hatenna Candy ×20",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 62: Free: Hatenna Candy ×5 | Deluxe: Hatenna Candy XL ×10",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 63: Free: Max Particle ×100 | Deluxe: Max Particle ×400",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 64: Free: Poké Ball ×10 | Deluxe: Incense ×1",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
        "text": "Rank 65: Free: Meltan Candy ×5 | Deluxe: Meltan Candy ×20",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 66: Free: Meltan Candy ×5 | Deluxe: Meltan Candy XL ×10",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 67: Free: Dynamax Meltan | Deluxe: Dynamax Meltan",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 68: Free: XP ×1000 | Deluxe: XP ×5000",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 69: Free: Stardust ×1000 | Deluxe: Stardust ×5000",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 70: Free: Poké Ball ×10 | Deluxe: Max Mushroom ×1",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 71: Free: Metal Coat ×3 | Deluxe: Elite Fast TM ×1",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 72: Free: Machop Candy ×5 | Deluxe: Machop Candy XL ×10",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 73: Free: Machop Candy ×5 | Deluxe: Machop Candy XL ×10",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 74: Free: Machop Candy ×5 | Deluxe: Machop Candy XL ×10",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 75: Free: Golden Lure Module ×1 | Deluxe: Machamp wearing a modern jacket",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 76: Free: Great Ball ×10 | Deluxe: Great Ball ×25",
        "sources": [
         "leekduck"
        ],
@@ -36741,7 +36709,168 @@
        "status": "single"
       },
       {
+       "text": "Rank 79: Free: Gimmighoul (Roaming Form) | Deluxe: Gimmighoul (Roaming Form)",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 80: Free: Incense ×1 | Deluxe: Premium Battle Pass ×1",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 81: Free: XP ×1000 | Deluxe: XP ×5000",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 82: Free: Meltan Candy ×5 | Deluxe: Meltan Candy ×20",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 83: Free: Meltan Candy ×5 | Deluxe: Meltan Candy XL ×10",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 84: Free: Dynamax Meltan | Deluxe: Dynamax Meltan",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
        "text": "Rank 85: Free: Stardust ×1000 | Deluxe: Stardust ×5000",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 86: Free: Razz Berry ×3 | Deluxe: Lure Module ×1",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 87: Free: Pinap Berry ×3 | Deluxe: Premium Battle Pass ×1",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 88: Free: Rare Candy ×2 | Deluxe: Rare Candy XL ×2",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 89: Free: Rare Candy ×2 | Deluxe: Rare Candy XL ×2",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 90: Free: Rare Candy ×2 | Deluxe: Rare Candy XL ×2",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 91: Free: Rare Candy ×2 | Deluxe: Rare Candy XL ×2",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 92: Free: Duraludon Candy ×5 | Deluxe: Duraludon Candy XL ×10",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 93: Free: Duraludon Candy ×5 | Deluxe: Duraludon Candy XL ×10",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 94: Free: Duraludon Candy ×5 | Deluxe: Duraludon Candy XL ×10",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 95: Free: Golden Razz Berry ×1 | Deluxe: Golden Razz Berry ×3",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 96: Free: Silver Pinap Berry ×1 | Deluxe: Silver Pinap Berry ×3",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 97: Free: Ultra Ball ×10 | Deluxe: Ultra Ball ×25",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 98: Free: Meltan Candy ×5 | Deluxe: Meltan Candy XL ×10",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 99: Free: Meltan Candy ×5 | Deluxe: Dynamax Meltan",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 100: Free: Dynamax Meltan | Deluxe: Silver Bottle Cap ×1",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 101: Free: Stardust ×50 | Deluxe: Stardust ×100",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 600: Free: Stardust ×50 | Deluxe: Stardust ×100",
        "sources": [
         "leekduck"
        ],
@@ -36776,62 +36905,6 @@
         "leekduck"
        ],
        "status": "single"
-      },
-      {
-       "text": "From Monday, November 9, at 10:00 a.m. to Sunday, November 15, 2026, at 6:00 p.m. local time, the GO Pass and GO Pass Deluxe for Into the Wild 2026 will be available in Pokémon GO.",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Rewards unlocked in the GO Pass will expire on Tuesday, November 17, 2026, at 11:59 p.m. local time, so be sure to claim your rewards before they expire.",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Pokémon GO’s Into the Wild event runs from November 9 at 10:00 a.m. to November 13 at 8:00 p.m. local time , bringing two new Dynamax Pokémon: Dynamax Regidrago and Dynamax Meltan!",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Daily Raid hour or Max Battle hour from 6pm to 7pm each day featuring Five-Star Bosses",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Remote Raid Pass limit will increase to 30 from Monday, November 9, to Friday, November 13",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "No limit on Remote Raids during Wild Area from Saturday, November 14, to Sunday, November 15",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "You will be able to obtain event themed stickers by spinning Pokéstops and gifts from Monday, November 9 at 10:00 local time, until Sunday, November 15, 6:00pm local time.",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "They will also be available to purchase in the in-game shop from Friday November 6, to Sunday, November 15.",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
       }
      ]
     },
@@ -36842,8 +36915,8 @@
      "end": "2026-11-13T20:00"
     },
     "imageReviewed": true,
-    "contentHash": "a128c0a56870693ff933972dc8272652e822ad431645d56bff75f54c3d89a35f",
-    "revision": 7,
+    "contentHash": "13e667886183b706bb7497f0d22f14a4f891cb4eeac78416366c29fdfd39b52f",
+    "revision": 8,
     "amended": false,
     "native": false,
     "collection": "rotation"
@@ -36866,48 +36939,6 @@
      "text": "Reach these ranks on GO Pass: Into the Wild to unlock the following bonus.",
      "sources": [
       "leekduck"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "The event features the following bonuses and debuts.",
-     "sources": [
-      "hub"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Dynamax Regidrago and Dynamax Meltan make their Pokémon GO debut",
-     "sources": [
-      "hub"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "You may encounter a Shiny Gimmighoul when using a Coin Bag",
-     "sources": [
-      "hub"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Daily Raid hour or Max Battle hour from 6pm to 7pm each day featuring Five-Star Bosses",
-     "sources": [
-      "hub"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Remote Raid Pass limit will increase to 30 from Monday, November 9, to Friday, November 13",
-     "sources": [
-      "hub"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "No limit on Remote Raids during Wild Area from Saturday, November 14, to Sunday, November 15",
-     "sources": [
-      "hub"
      ],
      "status": "single"
     },
@@ -37289,62 +37320,6 @@
      "status": "official"
     },
     {
-     "text": "Power up Steel‑type Pokémon 5 times POSSIBLE REWARDS Aron Max CP 560 Min CP 522 Magnemite Max CP 583 Min CP 544 Togedemaru Max CP 926 Min CP 876 Galarian Meowth Max CP 443 Min CP 409",
-     "sources": [
-      "leekduck",
-      "hub"
-     ],
-     "status": "corroborated"
-    },
-    {
-     "text": "Power up Dragon‑type Pokémon 5 times POSSIBLE REWARDS Bagon Max CP 495 Min CP 459 Skrelp Max CP 455 Min CP 421 Dratini Max CP 430 Min CP 397 Horsea Max CP 452 Min CP 418",
-     "sources": [
-      "leekduck",
-      "hub"
-     ],
-     "status": "corroborated"
-    },
-    {
-     "text": "Win a raid POSSIBLE REWARDS Dratini Max CP 430 Min CP 397 ×2 Rare Candy ×2 Scyther Max CP 1160 Min CP 1104",
-     "sources": [
-      "leekduck",
-      "hub"
-     ],
-     "status": "corroborated"
-    },
-    {
-     "text": "Catch 10 Pokémon POSSIBLE REWARDS Horsea Max CP 452 Min CP 418 Aron Max CP 560 Min CP 522 Skrelp Max CP 455 Min CP 421 Magnemite Max CP 583 Min CP 544",
-     "sources": [
-      "leekduck",
-      "hub"
-     ],
-     "status": "corroborated"
-    },
-    {
-     "text": "Win a Max Battle POSSIBLE REWARDS Bagon Max CP 495 Min CP 459 Mawile Max CP 700 Min CP 658",
-     "sources": [
-      "leekduck",
-      "hub"
-     ],
-     "status": "corroborated"
-    },
-    {
-     "text": "Catch a Dynamax Machop POSSIBLE REWARDS ×25 Machop Candy ×25 ×5000 Stardust ×5000",
-     "sources": [
-      "leekduck",
-      "hub"
-     ],
-     "status": "corroborated"
-    },
-    {
-     "text": "Attack: Battle alongside your trainee.",
-     "sources": [
-      "leekduck",
-      "hub"
-     ],
-     "status": "corroborated"
-    },
-    {
      "text": "Pokémon GO Wild Area–themed Field Research tasks will be available throughout the event! Complete the research tasks to earn encounters with event-themed Pokémon and other rewards.",
      "sources": [
       "leekduck"
@@ -37352,7 +37327,56 @@
      "status": "single"
     },
     {
+     "text": "Power up Steel‑type Pokémon 5 times POSSIBLE REWARDS Aron Max CP 560 Min CP 522 Magnemite Max CP 583 Min CP 544 Togedemaru Max CP 926 Min CP 876 Galarian Meowth Max CP 443 Min CP 409",
+     "sources": [
+      "leekduck"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Power up Dragon‑type Pokémon 5 times POSSIBLE REWARDS Bagon Max CP 495 Min CP 459 Skrelp Max CP 455 Min CP 421 Dratini Max CP 430 Min CP 397 Horsea Max CP 452 Min CP 418",
+     "sources": [
+      "leekduck"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Win a raid POSSIBLE REWARDS Dratini Max CP 430 Min CP 397 ×2 Rare Candy ×2 Scyther Max CP 1160 Min CP 1104",
+     "sources": [
+      "leekduck"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Catch 10 Pokémon POSSIBLE REWARDS Horsea Max CP 452 Min CP 418 Aron Max CP 560 Min CP 522 Skrelp Max CP 455 Min CP 421 Magnemite Max CP 583 Min CP 544",
+     "sources": [
+      "leekduck"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Win a Max Battle POSSIBLE REWARDS Bagon Max CP 495 Min CP 459 Mawile Max CP 700 Min CP 658",
+     "sources": [
+      "leekduck"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Catch a Dynamax Machop POSSIBLE REWARDS ×25 Machop Candy ×25 ×5000 Stardust ×5000",
+     "sources": [
+      "leekduck"
+     ],
+     "status": "single"
+    },
+    {
      "text": "After you give your trainee a Silver Bottle Cap, Hyper Training begins. Each stat has its own set of themed tasks.",
+     "sources": [
+      "leekduck"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Attack: Battle alongside your trainee.",
      "sources": [
       "leekduck"
      ],
@@ -39055,23 +39079,14 @@
    ],
    "tickets": [
     {
-     "text": "Trainers will receive the pass automatically on Monday, November 9, at 10:00 a.m. local time . Earn points and rank up until Sunday, November 15, 2026, at 6:00 p.m. local time .",
-     "sources": [
-      "leekduck",
-      "hub"
-     ],
-     "status": "corroborated"
-    },
-    {
-     "text": "Complete Pass Tasks to rank up and earn the following rewards. From Monday, November 9, to Friday, November 13, you can earn up to 100 extra GO Points daily by completing certain tasks.",
-     "sources": [
-      "leekduck",
-      "hub"
-     ],
-     "status": "corroborated"
-    },
-    {
      "text": "GO Pass: Into the Wild is a free progression track. Complete Pass Tasks to collect GO Points, increase your rank, and unlock rewards.",
+     "sources": [
+      "leekduck"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Trainers will receive the pass automatically on Monday, November 9, at 10:00 a.m. local time . Earn points and rank up until Sunday, November 15, 2026, at 6:00 p.m. local time .",
      "sources": [
       "leekduck"
      ],
@@ -39106,6 +39121,13 @@
      "status": "single"
     },
     {
+     "text": "Complete Pass Tasks to rank up and earn the following rewards. From Monday, November 9, to Friday, November 13, you can earn up to 100 extra GO Points daily by completing certain tasks.",
+     "sources": [
+      "leekduck"
+     ],
+     "status": "single"
+    },
+    {
      "text": "Encounter Dynamax Meltan and earn a Silver Bottle Cap!",
      "sources": [
       "leekduck"
@@ -39130,13 +39152,6 @@
      "text": "Catch a Pokémon 1 PTS",
      "sources": [
       "leekduck"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "You can collect GO Points and rank up to get additional rewards through Sunday, November 15, 2026, at 6:00 p.m. local time.",
-     "sources": [
-      "hub"
      ],
      "status": "single"
     }
@@ -47308,32 +47323,28 @@
       {
        "text": "Remote Raid limit increased to 20 from Friday, November 27, at 5:00 p.m. to Saturday, November 28, 2026, at 8:00 p.m. PST.",
        "sources": [
-        "official",
-        "hub"
+        "official"
        ],
        "status": "official"
       },
       {
        "text": "Receive up to six free Raid Passes from spinning Gym Photo Discs.",
        "sources": [
-        "official",
-        "hub"
+        "official"
        ],
        "status": "official"
       },
       {
        "text": "Clefable caught from Super Mega Raids will have Mega Level 1 unlocked.",
        "sources": [
-        "official",
-        "hub"
+        "official"
        ],
        "status": "official"
       },
       {
        "text": "Increased chance of encountering Shiny Clefable from Super Mega Raids.",
        "sources": [
-        "official",
-        "hub"
+        "official"
        ],
        "status": "official"
       }
@@ -47351,31 +47362,9 @@
        "text": "Mega Clefable*",
        "sources": [
         "official",
-        "leekduck",
-        "hub"
+        "leekduck"
        ],
        "status": "official"
-      },
-      {
-       "text": "Clefable caught from raids has the following CP ranges:",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "From 1322 CP to 1392 CP with no weather boost",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "From 1653 CP to 1741 CP with the Cloudy weather boost",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
       }
      ],
      "raids": [
@@ -47383,8 +47372,7 @@
        "text": "Saturday, November 28, 2026, from 2:00 p.m. to 5:00 p.m. local time",
        "sources": [
         "official",
-        "leekduck",
-        "hub"
+        "leekduck"
        ],
        "status": "official"
       },
@@ -47429,13 +47417,6 @@
         "leekduck"
        ],
        "status": "single"
-      },
-      {
-       "text": "Super Mega Raids take teamwork and only appear at certain Gyms, often in parks and similar locations. The official Pokémon GO map shows where Super Mega Raids might appear during the event, plus raids in progress.",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
       }
      ],
      "eggs": [],
@@ -47453,13 +47434,6 @@
         "official"
        ],
        "status": "official"
-      },
-      {
-       "text": "Complete the event Timed Research for a Premium Battle Pass and an encounter with Metagross , one of the best Mega Clefable counters. Claim the rewards before the research expires.",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
       }
      ],
      "shiny": [
@@ -47467,17 +47441,9 @@
        "text": "Increased chance of encountering Shiny Clefable from Super Mega Raids.",
        "sources": [
         "official",
-        "leekduck",
-        "hub"
+        "leekduck"
        ],
        "status": "official"
-      },
-      {
-       "text": "Regular Sprite | Shiny Sprite",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
       }
      ],
      "moves": [],
@@ -47487,24 +47453,21 @@
        "text": "For US$4.99 (or the equivalent pricing tier in your local currency), you can purchase a ticket that grants the following bonuses.*",
        "sources": [
         "official",
-        "leekduck",
-        "hub"
+        "leekduck"
        ],
        "status": "official"
       },
       {
        "text": "Receive up to 14 Raid Passes from spinning Gym Photo Discs.",
        "sources": [
-        "official",
-        "hub"
+        "official"
        ],
        "status": "official"
       },
       {
        "text": "Increased chance to get Rare Candy XL from Raid Battles.",
        "sources": [
-        "official",
-        "hub"
+        "official"
        ],
        "status": "official"
       },
@@ -47519,8 +47482,7 @@
        "text": "These bonuses will be effective on Saturday, November 28, 2026, from 2:00 p.m. to 5:00 p.m. local time.",
        "sources": [
         "official",
-        "leekduck",
-        "hub"
+        "leekduck"
        ],
        "status": "official"
       },
@@ -47544,27 +47506,6 @@
         "leekduck"
        ],
        "status": "single"
-      },
-      {
-       "text": "5,000 extra XP from Super Mega Raids",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "You can gift tickets to friends you’re at least Great Friends with. Purchases are non-refundable.",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Better deal: The Clefable Super Mega Raid Day Ultra Ticket Box in the Pokémon GO Web Store costs the same US$4.99 and adds a bonus Premium Battle Pass .",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
       }
      ],
      "dates": [
@@ -47572,16 +47513,14 @@
        "text": "Saturday, November 28, 2026, from 2:00 p.m. to 5:00 p.m. local time",
        "sources": [
         "official",
-        "leekduck",
-        "hub"
+        "leekduck"
        ],
        "status": "official"
       },
       {
        "text": "Based on the results of the Global Challenge, Mega Clefable will receive the following bonuses from Monday, November 30, at 12:00 p.m. PST until Sunday, December 13, at 12:00 p.m. PST",
        "sources": [
-        "official",
-        "hub"
+        "official"
        ],
        "status": "official"
       },
@@ -47601,8 +47540,8 @@
      "end": "2026-11-28T17:00"
     },
     "imageReviewed": true,
-    "contentHash": "42bf34d735c55ef847b4d093e6ec357e8a4fc85619d1441ded2cc57361fc69d3",
-    "revision": 5,
+    "contentHash": "7152eb44bdf8553b27ea1cf2f6820911c1ee6fdc1180e9c93bdc5d8984b636ab",
+    "revision": 6,
     "amended": false,
     "native": false,
     "collection": "events"
@@ -47613,32 +47552,28 @@
     {
      "text": "Remote Raid limit increased to 20 from Friday, November 27, at 5:00 p.m. to Saturday, November 28, 2026, at 8:00 p.m. PST.",
      "sources": [
-      "official",
-      "hub"
+      "official"
      ],
      "status": "official"
     },
     {
      "text": "Receive up to six free Raid Passes from spinning Gym Photo Discs.",
      "sources": [
-      "official",
-      "hub"
+      "official"
      ],
      "status": "official"
     },
     {
      "text": "Clefable caught from Super Mega Raids will have Mega Level 1 unlocked.",
      "sources": [
-      "official",
-      "hub"
+      "official"
      ],
      "status": "official"
     },
     {
      "text": "Increased chance of encountering Shiny Clefable from Super Mega Raids.",
      "sources": [
-      "official",
-      "hub"
+      "official"
      ],
      "status": "official"
     }
@@ -47657,13 +47592,6 @@
       "official"
      ],
      "status": "official"
-    },
-    {
-     "text": "Complete the event Timed Research for a Premium Battle Pass and an encounter with Metagross , one of the best Mega Clefable counters. Claim the rewards before the research expires.",
-     "sources": [
-      "hub"
-     ],
-     "status": "single"
     }
    ],
    "passes": [],
@@ -47672,24 +47600,21 @@
      "text": "For US$4.99 (or the equivalent pricing tier in your local currency), you can purchase a ticket that grants the following bonuses.*",
      "sources": [
       "official",
-      "leekduck",
-      "hub"
+      "leekduck"
      ],
      "status": "official"
     },
     {
      "text": "Receive up to 14 Raid Passes from spinning Gym Photo Discs.",
      "sources": [
-      "official",
-      "hub"
+      "official"
      ],
      "status": "official"
     },
     {
      "text": "Increased chance to get Rare Candy XL from Raid Battles.",
      "sources": [
-      "official",
-      "hub"
+      "official"
      ],
      "status": "official"
     },
@@ -47704,8 +47629,7 @@
      "text": "These bonuses will be effective on Saturday, November 28, 2026, from 2:00 p.m. to 5:00 p.m. local time.",
      "sources": [
       "official",
-      "leekduck",
-      "hub"
+      "leekduck"
      ],
      "status": "official"
     },
@@ -47727,27 +47651,6 @@
      "text": "Tickets can be gifted to friends at Great Friends or higher. Purchases, including gifts, are non-refundable, subject to applicable law and the Terms of Service. Tickets cannot be purchased with PokéCoins.",
      "sources": [
       "leekduck"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "5,000 extra XP from Super Mega Raids",
-     "sources": [
-      "hub"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "You can gift tickets to friends you’re at least Great Friends with. Purchases are non-refundable.",
-     "sources": [
-      "hub"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Better deal: The Clefable Super Mega Raid Day Ultra Ticket Box in the Pokémon GO Web Store costs the same US$4.99 and adds a bonus Premium Battle Pass .",
-     "sources": [
-      "hub"
      ],
      "status": "single"
     }
@@ -51111,7 +51014,7 @@
     },
     "imageReviewed": true,
     "contentHash": "dce45278d164ec7d0efdbec4d901eac6f95e08bdec7b64c64c440d1336263583",
-    "revision": 24,
+    "revision": 26,
     "amended": true,
     "native": false,
     "collection": "world-events"
@@ -51563,6 +51466,85 @@
     },
     {
      "url": "https://pokemongo.com/ko/news/community-meetups-go-wild-area-2026-details-asia-pacific/",
+     "name": "Event source"
+    }
+   ],
+   "pokemon": [],
+   "encounters": [],
+   "groups": {}
+  },
+  {
+   "schemaVersion": 1,
+   "eventId": "w-december-communityday2026",
+   "aliases": [],
+   "family": "other",
+   "title": "December Communityday2026",
+   "dateText": "",
+   "completeness": "partial",
+   "lifecycle": "announced",
+   "attendance": "",
+   "location": null,
+   "image": null,
+   "notes": [],
+   "internalValidation": {
+    "warnings": [],
+    "lifecycleDeclared": false,
+    "conflicts": [],
+    "fields": {
+     "bonuses": [],
+     "featured": [],
+     "raids": [],
+     "eggs": [],
+     "research": [],
+     "shiny": [],
+     "moves": [],
+     "costumes": [],
+     "tickets": [],
+     "dates": [
+      {
+       "text": "The December Community Day event will take place on December 12 and December 13, 2026 from 2 pm to 5 pm each day. Stay tuned for more details.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      }
+     ],
+     "researchTasks": []
+    },
+    "info": [],
+    "detailRefs": [],
+    "legacyDates": {
+     "start": "2026-12-12",
+     "end": "2026-12-13"
+    },
+    "imageReviewed": true,
+    "contentHash": "d220f276864aba44b9a38f7fd60cc933f765f365464e3fb915dc2909e5e1bd55",
+    "revision": 1,
+    "amended": false,
+    "native": false,
+    "collection": "world-events"
+   },
+   "schedule": null,
+   "activities": [],
+   "bonuses": [],
+   "research": [],
+   "passes": [],
+   "tickets": [],
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "url": "https://leekduck.com/events/december-communityday2026/",
+     "auto": true
+    },
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/december-communityday2026/"
+    },
+    {
+     "url": "https://leekduck.com/events/december-communityday2026/",
      "name": "Event source"
     }
    ],
@@ -52241,7 +52223,7 @@
     },
     "imageReviewed": true,
     "contentHash": "4bbe2871a823eb21458a110b1a90a61e5fce0d1ddaa2d47d0d0671f282a84a9d",
-    "revision": 32,
+    "revision": 34,
     "amended": true,
     "native": false,
     "collection": "world-events"
@@ -52408,6 +52390,85 @@
   },
   {
    "schemaVersion": 1,
+   "eventId": "w-february-communityday2027",
+   "aliases": [],
+   "family": "other",
+   "title": "February Communityday2027",
+   "dateText": "",
+   "completeness": "partial",
+   "lifecycle": "announced",
+   "attendance": "",
+   "location": null,
+   "image": null,
+   "notes": [],
+   "internalValidation": {
+    "warnings": [],
+    "lifecycleDeclared": false,
+    "conflicts": [],
+    "fields": {
+     "bonuses": [],
+     "featured": [],
+     "raids": [],
+     "eggs": [],
+     "research": [],
+     "shiny": [],
+     "moves": [],
+     "costumes": [],
+     "tickets": [],
+     "dates": [
+      {
+       "text": "The February Community Day event will take place on February 6, 2027 from 2 pm to 5 pm. Stay tuned for more details.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      }
+     ],
+     "researchTasks": []
+    },
+    "info": [],
+    "detailRefs": [],
+    "legacyDates": {
+     "start": "2027-02-06",
+     "end": "2027-02-06"
+    },
+    "imageReviewed": true,
+    "contentHash": "3921bb3ba044412622e8da3ad32e9985da7055d75f35a4e7b5c0d996035a68ef",
+    "revision": 1,
+    "amended": false,
+    "native": false,
+    "collection": "world-events"
+   },
+   "schedule": null,
+   "activities": [],
+   "bonuses": [],
+   "research": [],
+   "passes": [],
+   "tickets": [],
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "url": "https://leekduck.com/events/february-communityday2027/",
+     "auto": true
+    },
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/february-communityday2027/"
+    },
+    {
+     "url": "https://leekduck.com/events/february-communityday2027/",
+     "name": "Event source"
+    }
+   ],
+   "pokemon": [],
+   "encounters": [],
+   "groups": {}
+  },
+  {
+   "schemaVersion": 1,
    "eventId": "w-forever-stamp-rally-go-wild-area",
    "aliases": [],
    "family": "wild-area",
@@ -52416,7 +52477,7 @@
    "completeness": "partial",
    "lifecycle": "announced",
    "attendance": "in-person",
-   "location": "Japan",
+   "location": "South Korea",
    "image": null,
    "notes": [],
    "internalValidation": {
@@ -52430,8 +52491,8 @@
      "start": "2026-11-03",
      "end": "2026-11-03"
     },
-    "contentHash": "0ca84974cfa677f1be63ebd7712b231d3f83b8d9beb34b2f503e737968fe94fe",
-    "revision": 14,
+    "contentHash": "5cdd55e002ca42377352e7b637a57f2e39afa99cde6bbc64780733a9cc28f6b3",
+    "revision": 15,
     "amended": false,
     "native": false,
     "collection": "world-events"
@@ -53155,6 +53216,250 @@
   },
   {
    "schemaVersion": 1,
+   "eventId": "w-hatch-day",
+   "aliases": [],
+   "family": "other",
+   "title": "Hatch Day",
+   "dateText": "",
+   "completeness": "partial",
+   "lifecycle": "announced",
+   "attendance": "",
+   "location": null,
+   "image": null,
+   "notes": [],
+   "internalValidation": {
+    "warnings": [],
+    "lifecycleDeclared": false,
+    "conflicts": [],
+    "fields": {
+     "bonuses": [],
+     "featured": [],
+     "raids": [],
+     "eggs": [
+      {
+       "text": "The Hatch Day event will take place on December 26, 2026 from 11 am to 5 pm. Stay tuned for more details.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      }
+     ],
+     "research": [],
+     "shiny": [],
+     "moves": [],
+     "costumes": [],
+     "tickets": [],
+     "dates": [
+      {
+       "text": "The Hatch Day event will take place on December 26, 2026 from 11 am to 5 pm. Stay tuned for more details.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      }
+     ],
+     "researchTasks": []
+    },
+    "info": [],
+    "detailRefs": [],
+    "legacyDates": {
+     "start": "2026-12-26",
+     "end": "2026-12-26"
+    },
+    "imageReviewed": true,
+    "contentHash": "43efaa98256c417e666e868c6e616b423ab41a0d2de0634a69451a129f443764",
+    "revision": 1,
+    "amended": false,
+    "native": false,
+    "collection": "world-events"
+   },
+   "schedule": null,
+   "activities": [],
+   "bonuses": [],
+   "research": [],
+   "passes": [],
+   "tickets": [],
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "url": "https://leekduck.com/events/hatch-day-december-2026/"
+    },
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/hatch-day-december-2026/"
+    },
+    {
+     "url": "https://leekduck.com/events/hatch-day-december-2026/",
+     "name": "Event source"
+    }
+   ],
+   "pokemon": [],
+   "encounters": [],
+   "groups": {}
+  },
+  {
+   "schemaVersion": 1,
+   "eventId": "w-january-communityday2027",
+   "aliases": [],
+   "family": "other",
+   "title": "January Communityday2027",
+   "dateText": "",
+   "completeness": "partial",
+   "lifecycle": "announced",
+   "attendance": "",
+   "location": null,
+   "image": null,
+   "notes": [],
+   "internalValidation": {
+    "warnings": [],
+    "lifecycleDeclared": false,
+    "conflicts": [],
+    "fields": {
+     "bonuses": [],
+     "featured": [],
+     "raids": [],
+     "eggs": [],
+     "research": [],
+     "shiny": [],
+     "moves": [],
+     "costumes": [],
+     "tickets": [],
+     "dates": [
+      {
+       "text": "The January Community Day event will take place on January 16, 2027 from 2 pm to 5 pm. Stay tuned for more details.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      }
+     ],
+     "researchTasks": []
+    },
+    "info": [],
+    "detailRefs": [],
+    "legacyDates": {
+     "start": "2027-01-16",
+     "end": "2027-01-16"
+    },
+    "imageReviewed": true,
+    "contentHash": "dfa3d334bd86a05fa502a52d58509df45e3b5c6126f0097f732e8ff5820dae26",
+    "revision": 1,
+    "amended": false,
+    "native": false,
+    "collection": "world-events"
+   },
+   "schedule": null,
+   "activities": [],
+   "bonuses": [],
+   "research": [],
+   "passes": [],
+   "tickets": [],
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "url": "https://leekduck.com/events/january-communityday2027/",
+     "auto": true
+    },
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/january-communityday2027/"
+    },
+    {
+     "url": "https://leekduck.com/events/january-communityday2027/",
+     "name": "Event source"
+    }
+   ],
+   "pokemon": [],
+   "encounters": [],
+   "groups": {}
+  },
+  {
+   "schemaVersion": 1,
+   "eventId": "w-january-communitydayclassic2027",
+   "aliases": [],
+   "family": "other",
+   "title": "January Communitydayclassic2027",
+   "dateText": "",
+   "completeness": "partial",
+   "lifecycle": "announced",
+   "attendance": "",
+   "location": null,
+   "image": null,
+   "notes": [],
+   "internalValidation": {
+    "warnings": [],
+    "lifecycleDeclared": false,
+    "conflicts": [],
+    "fields": {
+     "bonuses": [],
+     "featured": [],
+     "raids": [],
+     "eggs": [],
+     "research": [],
+     "shiny": [],
+     "moves": [],
+     "costumes": [],
+     "tickets": [],
+     "dates": [
+      {
+       "text": "The January Community Day Classic event will take place on January 2, 2027 from 2 pm to 5 pm. Stay tuned for more details.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      }
+     ],
+     "researchTasks": []
+    },
+    "info": [],
+    "detailRefs": [],
+    "legacyDates": {
+     "start": "2027-01-02",
+     "end": "2027-01-02"
+    },
+    "imageReviewed": true,
+    "contentHash": "7ec649914eb5f3359ce1e2204ddb74b63c4d621b11a0f5e87f9da20bd6afe195",
+    "revision": 1,
+    "amended": false,
+    "native": false,
+    "collection": "world-events"
+   },
+   "schedule": null,
+   "activities": [],
+   "bonuses": [],
+   "research": [],
+   "passes": [],
+   "tickets": [],
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "url": "https://leekduck.com/events/january-communitydayclassic2027/",
+     "auto": true
+    },
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/january-communitydayclassic2027/"
+    },
+    {
+     "url": "https://leekduck.com/events/january-communitydayclassic2027/",
+     "name": "Event source"
+    }
+   ],
+   "pokemon": [],
+   "encounters": [],
+   "groups": {}
+  },
+  {
+   "schemaVersion": 1,
    "eventId": "w-ko-gowa-global-on-site-event",
    "aliases": [],
    "family": "other",
@@ -53197,6 +53502,178 @@
     },
     {
      "url": "https://pokemongo.com/ko/news/ko-gowa-global-on-site-event-2026/",
+     "name": "Event source"
+    }
+   ],
+   "pokemon": [],
+   "encounters": [],
+   "groups": {}
+  },
+  {
+   "schemaVersion": 1,
+   "eventId": "w-max-battle-day",
+   "aliases": [],
+   "family": "max-battles",
+   "title": "Max Battle Day",
+   "dateText": "",
+   "completeness": "partial",
+   "lifecycle": "announced",
+   "attendance": "",
+   "location": null,
+   "image": null,
+   "notes": [],
+   "internalValidation": {
+    "warnings": [],
+    "lifecycleDeclared": false,
+    "conflicts": [],
+    "fields": {
+     "bonuses": [],
+     "featured": [],
+     "raids": [
+      {
+       "text": "The Max Battle Day event will take place on December 5, 2026 from 2 pm to 5 pm. Stay tuned for more details.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      }
+     ],
+     "eggs": [],
+     "research": [],
+     "shiny": [],
+     "moves": [],
+     "costumes": [],
+     "tickets": [],
+     "dates": [
+      {
+       "text": "The Max Battle Day event will take place on December 5, 2026 from 2 pm to 5 pm. Stay tuned for more details.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      }
+     ],
+     "researchTasks": []
+    },
+    "info": [],
+    "detailRefs": [],
+    "legacyDates": {
+     "start": "2026-12-05",
+     "end": "2026-12-05"
+    },
+    "imageReviewed": true,
+    "contentHash": "4fb81c15d4aadc163967c68a737138ff8b733dfefb3e750d52aaf4abf4a4051a",
+    "revision": 1,
+    "amended": false,
+    "native": false,
+    "collection": "world-events"
+   },
+   "schedule": null,
+   "activities": [],
+   "bonuses": [],
+   "research": [],
+   "passes": [],
+   "tickets": [],
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "url": "https://leekduck.com/events/max-battle-day-december-2026/"
+    },
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/max-battle-day-december-2026/"
+    },
+    {
+     "url": "https://leekduck.com/events/max-battle-day-december-2026/",
+     "name": "Event source"
+    }
+   ],
+   "pokemon": [],
+   "encounters": [],
+   "groups": {}
+  },
+  {
+   "schemaVersion": 1,
+   "eventId": "w-max-battle-day-2027-01-23",
+   "aliases": [],
+   "family": "max-battles",
+   "title": "Max Battle Day",
+   "dateText": "",
+   "completeness": "partial",
+   "lifecycle": "announced",
+   "attendance": "",
+   "location": null,
+   "image": null,
+   "notes": [],
+   "internalValidation": {
+    "warnings": [],
+    "lifecycleDeclared": false,
+    "conflicts": [],
+    "fields": {
+     "bonuses": [],
+     "featured": [],
+     "raids": [
+      {
+       "text": "The Max Battle Day event will take place on January 23, 2027 from 2 pm to 5 pm. Stay tuned for more details.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      }
+     ],
+     "eggs": [],
+     "research": [],
+     "shiny": [],
+     "moves": [],
+     "costumes": [],
+     "tickets": [],
+     "dates": [
+      {
+       "text": "The Max Battle Day event will take place on January 23, 2027 from 2 pm to 5 pm. Stay tuned for more details.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      }
+     ],
+     "researchTasks": []
+    },
+    "info": [],
+    "detailRefs": [],
+    "legacyDates": {
+     "start": "2027-01-23",
+     "end": "2027-01-23"
+    },
+    "imageReviewed": true,
+    "contentHash": "f77a96fac34e079bac3945ea2d76d2b64279965ee0c44cb55166bd0a4e50ddae",
+    "revision": 1,
+    "amended": false,
+    "native": false,
+    "collection": "world-events"
+   },
+   "schedule": null,
+   "activities": [],
+   "bonuses": [],
+   "research": [],
+   "passes": [],
+   "tickets": [],
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "url": "https://leekduck.com/events/max-battle-day-january-2027/"
+    },
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/max-battle-day-january-2027/"
+    },
+    {
+     "url": "https://leekduck.com/events/max-battle-day-january-2027/",
      "name": "Event source"
     }
    ],
@@ -58542,7 +59019,7 @@
      "end": "2027-04-11"
     },
     "contentHash": "84950064738e11a798ef98f9fd6ab913640b138fb1594e38612f64db09c4dd24",
-    "revision": 24,
+    "revision": 26,
     "amended": true,
     "native": false,
     "collection": "world-events"
@@ -59331,6 +59808,180 @@
   },
   {
    "schemaVersion": 1,
+   "eventId": "w-raid-day-december",
+   "aliases": [],
+   "family": "raid-day",
+   "title": "Raid Day December",
+   "dateText": "",
+   "completeness": "partial",
+   "lifecycle": "announced",
+   "attendance": "",
+   "location": null,
+   "image": null,
+   "notes": [],
+   "internalValidation": {
+    "warnings": [],
+    "lifecycleDeclared": false,
+    "conflicts": [],
+    "fields": {
+     "bonuses": [],
+     "featured": [],
+     "raids": [
+      {
+       "text": "The Raid Day event will take place on December 19, 2026 from 2 pm to 5 pm. Stay tuned for more details.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      }
+     ],
+     "eggs": [],
+     "research": [],
+     "shiny": [],
+     "moves": [],
+     "costumes": [],
+     "tickets": [],
+     "dates": [
+      {
+       "text": "The Raid Day event will take place on December 19, 2026 from 2 pm to 5 pm. Stay tuned for more details.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      }
+     ],
+     "researchTasks": []
+    },
+    "info": [],
+    "detailRefs": [],
+    "legacyDates": {
+     "start": "2026-12-19",
+     "end": "2026-12-19"
+    },
+    "imageReviewed": true,
+    "contentHash": "956b18896f43d6c5cdfd91c989e8972f04edea86d1f3157c6fd4ed69a487431a",
+    "revision": 1,
+    "amended": false,
+    "native": false,
+    "collection": "world-events"
+   },
+   "schedule": null,
+   "activities": [],
+   "bonuses": [],
+   "research": [],
+   "passes": [],
+   "tickets": [],
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "url": "https://leekduck.com/events/raid-day-december-2026/",
+     "auto": true
+    },
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/raid-day-december-2026/"
+    },
+    {
+     "url": "https://leekduck.com/events/raid-day-december-2026/",
+     "name": "Event source"
+    }
+   ],
+   "pokemon": [],
+   "encounters": [],
+   "groups": {}
+  },
+  {
+   "schemaVersion": 1,
+   "eventId": "w-raid-day-february",
+   "aliases": [],
+   "family": "raid-day",
+   "title": "Raid Day February",
+   "dateText": "",
+   "completeness": "partial",
+   "lifecycle": "announced",
+   "attendance": "",
+   "location": null,
+   "image": null,
+   "notes": [],
+   "internalValidation": {
+    "warnings": [],
+    "lifecycleDeclared": false,
+    "conflicts": [],
+    "fields": {
+     "bonuses": [],
+     "featured": [],
+     "raids": [
+      {
+       "text": "The Raid Day event will take place on February 13, 2027 from 2 pm to 5 pm. Stay tuned for more details.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      }
+     ],
+     "eggs": [],
+     "research": [],
+     "shiny": [],
+     "moves": [],
+     "costumes": [],
+     "tickets": [],
+     "dates": [
+      {
+       "text": "The Raid Day event will take place on February 13, 2027 from 2 pm to 5 pm. Stay tuned for more details.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      }
+     ],
+     "researchTasks": []
+    },
+    "info": [],
+    "detailRefs": [],
+    "legacyDates": {
+     "start": "2027-02-13",
+     "end": "2027-02-13"
+    },
+    "imageReviewed": true,
+    "contentHash": "f4992837c17928a1dbc7878f89c5cdd78181f7ce269d574b49a6ed9a0669c363",
+    "revision": 1,
+    "amended": false,
+    "native": false,
+    "collection": "world-events"
+   },
+   "schedule": null,
+   "activities": [],
+   "bonuses": [],
+   "research": [],
+   "passes": [],
+   "tickets": [],
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "url": "https://leekduck.com/events/raid-day-february-2027/",
+     "auto": true
+    },
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/raid-day-february-2027/"
+    },
+    {
+     "url": "https://leekduck.com/events/raid-day-february-2027/",
+     "name": "Event source"
+    }
+   ],
+   "pokemon": [],
+   "encounters": [],
+   "groups": {}
+  },
+  {
+   "schemaVersion": 1,
    "eventId": "w-save-the-date-pok-mon-go-tour-2027",
    "aliases": [],
    "family": "go-tour",
@@ -59381,6 +60032,180 @@
      "name": "Pokémon GO (official)",
      "trust": "official",
      "url": "https://pokemongo.com/news/save-the-date-go-tour-2027/"
+    }
+   ],
+   "pokemon": [],
+   "encounters": [],
+   "groups": {}
+  },
+  {
+   "schemaVersion": 1,
+   "eventId": "w-super-mega-raid-day-january",
+   "aliases": [],
+   "family": "raid-day",
+   "title": "Super Mega Raid Day January",
+   "dateText": "",
+   "completeness": "partial",
+   "lifecycle": "announced",
+   "attendance": "",
+   "location": null,
+   "image": null,
+   "notes": [],
+   "internalValidation": {
+    "warnings": [],
+    "lifecycleDeclared": false,
+    "conflicts": [],
+    "fields": {
+     "bonuses": [],
+     "featured": [],
+     "raids": [
+      {
+       "text": "The Super Mega Raid Day event will take place on January 9, 2027 from 2 pm to 5 pm. Stay tuned for more details.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      }
+     ],
+     "eggs": [],
+     "research": [],
+     "shiny": [],
+     "moves": [],
+     "costumes": [],
+     "tickets": [],
+     "dates": [
+      {
+       "text": "The Super Mega Raid Day event will take place on January 9, 2027 from 2 pm to 5 pm. Stay tuned for more details.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      }
+     ],
+     "researchTasks": []
+    },
+    "info": [],
+    "detailRefs": [],
+    "legacyDates": {
+     "start": "2027-01-09",
+     "end": "2027-01-09"
+    },
+    "imageReviewed": true,
+    "contentHash": "628df5f8883e86dbd2d4e920a2d0660a0f25282127d3e975f8aac80cce6b15d3",
+    "revision": 1,
+    "amended": false,
+    "native": false,
+    "collection": "world-events"
+   },
+   "schedule": null,
+   "activities": [],
+   "bonuses": [],
+   "research": [],
+   "passes": [],
+   "tickets": [],
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "url": "https://leekduck.com/events/super-mega-raid-day-january-2027/",
+     "auto": true
+    },
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/super-mega-raid-day-january-2027/"
+    },
+    {
+     "url": "https://leekduck.com/events/super-mega-raid-day-january-2027/",
+     "name": "Event source"
+    }
+   ],
+   "pokemon": [],
+   "encounters": [],
+   "groups": {}
+  },
+  {
+   "schemaVersion": 1,
+   "eventId": "w-super-mega-raid-day-january-30",
+   "aliases": [],
+   "family": "raid-day",
+   "title": "Super Mega Raid Day January 30",
+   "dateText": "",
+   "completeness": "partial",
+   "lifecycle": "announced",
+   "attendance": "",
+   "location": null,
+   "image": null,
+   "notes": [],
+   "internalValidation": {
+    "warnings": [],
+    "lifecycleDeclared": false,
+    "conflicts": [],
+    "fields": {
+     "bonuses": [],
+     "featured": [],
+     "raids": [
+      {
+       "text": "The Super Mega Raid Day event will take place on January 30, 2027 from 2 pm to 5 pm. Stay tuned for more details.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      }
+     ],
+     "eggs": [],
+     "research": [],
+     "shiny": [],
+     "moves": [],
+     "costumes": [],
+     "tickets": [],
+     "dates": [
+      {
+       "text": "The Super Mega Raid Day event will take place on January 30, 2027 from 2 pm to 5 pm. Stay tuned for more details.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      }
+     ],
+     "researchTasks": []
+    },
+    "info": [],
+    "detailRefs": [],
+    "legacyDates": {
+     "start": "2027-01-30",
+     "end": "2027-01-30"
+    },
+    "imageReviewed": true,
+    "contentHash": "2adb56e52935466b78b0f604828e4b5d932f473dd3acbadf3c4719ddd6713723",
+    "revision": 1,
+    "amended": false,
+    "native": false,
+    "collection": "world-events"
+   },
+   "schedule": null,
+   "activities": [],
+   "bonuses": [],
+   "research": [],
+   "passes": [],
+   "tickets": [],
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "url": "https://leekduck.com/events/super-mega-raid-day-january-30-2027/",
+     "auto": true
+    },
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/super-mega-raid-day-january-30-2027/"
+    },
+    {
+     "url": "https://leekduck.com/events/super-mega-raid-day-january-30-2027/",
+     "name": "Event source"
     }
    ],
    "pokemon": [],
@@ -59566,117 +60391,9 @@
     "fields": {
      "bonuses": [],
      "featured": [],
-     "raids": [
-      {
-       "text": "Crowned Sword Zacian",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Crowned Shield Zamazenta",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Dynamax Registeel",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Dynamax Regidrago",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Dynamax Latias",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Dynamax Latios",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      }
-     ],
-     "eggs": [
-      {
-       "text": "The following Pokémon are among this Season’s Egg hatches. These are selected highlights, not the complete hatch pools. Check our current Egg chart and each Egg’s in-game hatch list.",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Wild Area exception: The event’s 10 km Egg lineup includes Honedge, Klefki, Drampa, and Duraludon. See our Wild Area guide for event Egg details.",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Galarian Zigzagoon",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Galarian Meowth",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Galarian Stunfisk",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Hisuian Sneasel",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Galarian Slowpoke",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Galarian Corsola",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      }
-     ],
-     "research": [
-      {
-       "text": "Earn a Research Stamp on seven different days to unlock a Research Breakthrough encounter with one of the following Season-themed Pokémon , as listed in our Field Research and Research Breakthrough guide .",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      }
-     ],
+     "raids": [],
+     "eggs": [],
+     "research": [],
      "shiny": [
       {
        "text": "Looking to enhance your GO Wild Area weekend with exclusive Special Research, additional bonuses, and an increased chance of encountering Shiny Pokémon? Purchase a global event ticket from the Pokémon GO Web Store !",
@@ -59733,8 +60450,7 @@
       {
        "text": "Look at the drip on Machamp! Machamp wearing a modern jacket* will appear in three-star raids on Saturday and Sunday.",
        "sources": [
-        "official",
-        "hub"
+        "official"
        ],
        "status": "official"
       },
@@ -59746,21 +60462,12 @@
        "status": "official"
       }
      ],
-     "tickets": [
-      {
-       "text": "The November GO Pass starts on Tuesday, November 3, at 10:00 a.m. local time , and progression ends on Tuesday, December 1, at 10:00 a.m. local time .",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      }
-     ],
+     "tickets": [],
      "dates": [
       {
        "text": "10:00 a.m. to 6:00 p.m. local time",
        "sources": [
-        "official",
-        "hub"
+        "official"
        ],
        "status": "official"
       },
@@ -59770,55 +60477,6 @@
         "official"
        ],
        "status": "official"
-      },
-      {
-       "text": "Monday, November 9: Into the Wild starts at 10:00 a.m.; Crowned Sword Zacian Raid Hour runs from 6:00–7:00 p.m.",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Tuesday, November 10: Crowned Shield Zamazenta Raid Hour runs from 6:00–7:00 p.m. GO Battle League rotates at 1:00 p.m. PST (9:00 p.m. UTC).",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Wednesday, November 11: Dynamax Registeel features in five-star Max Battles, with a Max Battle Hour from 6:00–7:00 p.m.",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "On Monday, November 9, from 6:00 p.m. to 7:00 p.m. local time , Crowned Sword Zacian will feature in Raid Hour at Gyms.",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "November 9–13: Into the Wild | Crowned Sword Zacian Crowned Shield Zamazenta | Crowned Sword Zacian Crowned Shield Zamazenta",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "No regular Mega Raid boss is listed for November 9–15 in the monthly schedule. Mega Banette is scheduled to return on November 16.",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "November 3–10 | Great League: Mega Edition* Ultra League: Mega Edition* Master League: Mega Edition*",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
       }
      ]
     },
@@ -60851,55 +61509,6 @@
         "leekduck"
        ],
        "status": "single"
-      },
-      {
-       "text": "Pokémon GO pop-up event",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Interactive fun",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Giveaways, available while supplies last",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Photo opportunities to capture the memories",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Activities with your local Community Ambassadors and their communities",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Chance to meet and battle fellow Trainers.",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Timed Research when you check in, with rewards like a Pokémon encounter and items",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
       }
      ],
      "tickets": [
@@ -60992,8 +61601,7 @@
       {
        "text": "Suwon, Korea Date: November 14 and November 15, 2026 Location: Time Villas Suwon, 134 Sehwa-ro, Gwonseon-gu, Suwon-si, Gyeonggi-do, South Korea Time: 10:00 a.m. – 6:00 p.m. (local time) *Event details can be found here .",
        "sources": [
-        "official",
-        "hub"
+        "official"
        ],
        "status": "official"
       },
@@ -63318,7 +63926,7 @@
   },
   {
    "collection": "world-events",
-   "records": 54
+   "records": 64
   },
   {
    "collection": "regional-events",

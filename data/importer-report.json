@@ -1,8 +1,8 @@
 {
- "runAt": "2026-11-09T22:13:10.507Z",
+ "runAt": "2026-11-09T22:45:06.730Z",
  "artworkCoverage": {
   "selected": 27,
-  "missing": 66,
+  "missing": 77,
   "legacyUnattributed": 2,
   "bySource": {
    "Pokémon GO (official)": 20,
@@ -196,6 +196,83 @@
     "name": "Shadow Tornadus (Incarnate Forme) in Shadow Raids",
     "sources": [
      "https://leekduck.com/events/shadow-tornadus-incarnate-forme-in-shadow-raids-november-4-2026/"
+    ]
+   },
+   {
+    "id": "leekduck:max-battle-day-december-2026",
+    "name": "Max Battle Day",
+    "sources": [
+     "https://leekduck.com/events/max-battle-day-december-2026/"
+    ]
+   },
+   {
+    "id": "leekduck:december-communityday2026",
+    "name": "December Community Day",
+    "sources": [
+     "https://leekduck.com/events/december-communityday2026/"
+    ]
+   },
+   {
+    "id": "leekduck:raid-day-december-2026",
+    "name": "Raid Day",
+    "sources": [
+     "https://leekduck.com/events/raid-day-december-2026/"
+    ]
+   },
+   {
+    "id": "leekduck:hatch-day-december-2026",
+    "name": "Hatch Day",
+    "sources": [
+     "https://leekduck.com/events/hatch-day-december-2026/"
+    ]
+   },
+   {
+    "id": "leekduck:january-communitydayclassic2027",
+    "name": "January Community Day Classic",
+    "sources": [
+     "https://leekduck.com/events/january-communitydayclassic2027/"
+    ]
+   },
+   {
+    "id": "leekduck:super-mega-raid-day-january-2027",
+    "name": "Super Mega Raid Day",
+    "sources": [
+     "https://leekduck.com/events/super-mega-raid-day-january-2027/"
+    ]
+   },
+   {
+    "id": "leekduck:january-communityday2027",
+    "name": "January Community Day",
+    "sources": [
+     "https://leekduck.com/events/january-communityday2027/"
+    ]
+   },
+   {
+    "id": "leekduck:max-battle-day-january-2027",
+    "name": "Max Battle Day",
+    "sources": [
+     "https://leekduck.com/events/max-battle-day-january-2027/"
+    ]
+   },
+   {
+    "id": "leekduck:super-mega-raid-day-january-30-2027",
+    "name": "Super Mega Raid Day",
+    "sources": [
+     "https://leekduck.com/events/super-mega-raid-day-january-30-2027/"
+    ]
+   },
+   {
+    "id": "leekduck:february-communityday2027",
+    "name": "February Community Day",
+    "sources": [
+     "https://leekduck.com/events/february-communityday2027/"
+    ]
+   },
+   {
+    "id": "leekduck:raid-day-february-2027",
+    "name": "Raid Day",
+    "sources": [
+     "https://leekduck.com/events/raid-day-february-2027/"
     ]
    },
    {
@@ -488,7 +565,7 @@
    "error": ""
   },
   "leekduck": {
-   "listed": 38,
+   "listed": 49,
    "error": ""
   },
   "hub": {
@@ -497,8 +574,8 @@
   }
  },
  "pagesRead": 80,
- "events": 95,
- "worldEvents": 59,
+ "events": 106,
+ "worldEvents": 61,
  "worldUndated": [
   "GO Wild Area Stamp Rally"
  ],
@@ -604,34 +681,59 @@
    "url": "https://leekduck.com/events/shadow-tornadus-incarnate-forme-in-shadow-raids-november-4-2026/"
   },
   {
-   "source": "hub",
-   "title": "Save the Dates for Next Season's Community Days and Events!",
-   "url": "https://pokemongohub.net/post/news/save-the-dates-for-next-seasons-community-days-and-events-2/"
+   "source": "leekduck",
+   "title": "Max Battle Day",
+   "url": "https://leekduck.com/events/max-battle-day-december-2026/"
   },
   {
-   "source": "hub",
-   "title": "How to beat Dynamax Regidrago: Complete Guide",
-   "url": "https://pokemongohub.net/post/guide/how-to-beat-dynamax-regidrago-complete-guide/"
+   "source": "leekduck",
+   "title": "December Community Day",
+   "url": "https://leekduck.com/events/december-communityday2026/"
   },
   {
-   "source": "hub",
-   "title": "Minior Showers: Leonid (November 2026)",
-   "url": "https://pokemongohub.net/post/event/minior-showers-leonid-november-2026/"
+   "source": "leekduck",
+   "title": "Raid Day",
+   "url": "https://leekduck.com/events/raid-day-december-2026/"
   },
   {
-   "source": "hub",
-   "title": "Free Gigantamax Machamp Timed Research Available This Weekend Only!",
-   "url": "https://pokemongohub.net/post/news/free-gigantamax-machamp-timed-research-available-this-weekend-only/"
+   "source": "leekduck",
+   "title": "Hatch Day",
+   "url": "https://leekduck.com/events/hatch-day-december-2026/"
   },
   {
-   "source": "hub",
-   "title": "Pokémon GO Wild Area: Mexico City - Additional Details, Maps, In-Person Activities, Notable Trainers etc",
-   "url": "https://pokemongohub.net/post/event/pokemon-go-wild-area-mexico-city-additional-details-maps-in-person-activities-notable-trainers-etc/"
+   "source": "leekduck",
+   "title": "January Community Day Classic",
+   "url": "https://leekduck.com/events/january-communitydayclassic2027/"
   },
   {
-   "source": "hub",
-   "title": "How to beat Dynamax Dialga: Complete Guide",
-   "url": "https://pokemongohub.net/post/news/how-to-beat-dynamax-dialga-complete-guide/"
+   "source": "leekduck",
+   "title": "Super Mega Raid Day",
+   "url": "https://leekduck.com/events/super-mega-raid-day-january-2027/"
+  },
+  {
+   "source": "leekduck",
+   "title": "January Community Day",
+   "url": "https://leekduck.com/events/january-communityday2027/"
+  },
+  {
+   "source": "leekduck",
+   "title": "Max Battle Day",
+   "url": "https://leekduck.com/events/max-battle-day-january-2027/"
+  },
+  {
+   "source": "leekduck",
+   "title": "Super Mega Raid Day",
+   "url": "https://leekduck.com/events/super-mega-raid-day-january-30-2027/"
+  },
+  {
+   "source": "leekduck",
+   "title": "February Community Day",
+   "url": "https://leekduck.com/events/february-communityday2027/"
+  },
+  {
+   "source": "leekduck",
+   "title": "Raid Day",
+   "url": "https://leekduck.com/events/raid-day-february-2027/"
   }
  ],
  "intl": {
@@ -711,42 +813,8 @@
  "gaps": [
   {
    "event": "GO Wild Area: Global",
-   "field": "raids",
-   "missingFrom": [
-    "official",
-    "official"
-   ]
-  },
-  {
-   "event": "GO Wild Area: Global",
-   "field": "eggs",
-   "missingFrom": [
-    "official",
-    "official"
-   ]
-  },
-  {
-   "event": "GO Wild Area: Global",
-   "field": "research",
-   "missingFrom": [
-    "official",
-    "official"
-   ]
-  },
-  {
-   "event": "GO Wild Area: Global",
    "field": "shiny",
-   "missingFrom": [
-    "hub"
-   ]
-  },
-  {
-   "event": "GO Wild Area: Global",
-   "field": "tickets",
-   "missingFrom": [
-    "official",
-    "official"
-   ]
+   "missingFrom": []
   },
   {
    "event": "GO Wild Area: Global",
@@ -834,64 +902,56 @@
    "event": "Pokémon GO Wild Area 2026: Global",
    "field": "bonuses",
    "missingFrom": [
-    "official",
-    "hub"
+    "official"
    ]
   },
   {
    "event": "Pokémon GO Wild Area 2026: Global",
    "field": "featured",
    "missingFrom": [
-    "official",
-    "hub"
+    "official"
    ]
   },
   {
    "event": "Pokémon GO Wild Area 2026: Global",
    "field": "raids",
    "missingFrom": [
-    "official",
-    "hub"
+    "official"
    ]
   },
   {
    "event": "Pokémon GO Wild Area 2026: Global",
    "field": "eggs",
    "missingFrom": [
-    "official",
-    "hub"
+    "official"
    ]
   },
   {
    "event": "Pokémon GO Wild Area 2026: Global",
    "field": "research",
    "missingFrom": [
-    "official",
-    "hub"
+    "official"
    ]
   },
   {
    "event": "Pokémon GO Wild Area 2026: Global",
    "field": "shiny",
    "missingFrom": [
-    "official",
-    "hub"
+    "official"
    ]
   },
   {
    "event": "Pokémon GO Wild Area 2026: Global",
    "field": "moves",
    "missingFrom": [
-    "official",
-    "hub"
+    "official"
    ]
   },
   {
    "event": "Pokémon GO Wild Area 2026: Global",
    "field": "tickets",
    "missingFrom": [
-    "official",
-    "hub"
+    "official"
    ]
   },
   {
@@ -929,15 +989,6 @@
    "missingFrom": [
     "official",
     "official"
-   ]
-  },
-  {
-   "event": "Into the Wild",
-   "field": "moves",
-   "missingFrom": [
-    "official",
-    "official",
-    "leekduck"
    ]
   },
   {

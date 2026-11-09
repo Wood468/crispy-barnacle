@@ -1,6 +1,6 @@
 {
- "checked": "2026-11-09T22:13:14.725Z",
- "compared": 42,
+ "checked": "2026-11-09T22:45:19.571Z",
+ "compared": 53,
  "problems": [],
  "missing": [
   {
@@ -53,5 +53,166 @@
    "reason": "official_source_present"
   }
  ],
- "added": []
+ "added": [
+  {
+   "id": "w-december-communityday2026",
+   "name": "December Communityday2026",
+   "place": "",
+   "area": "Worldwide",
+   "scope": "global",
+   "start": "2026-12-12",
+   "end": "2026-12-13",
+   "datesKnown": true,
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "url": "https://leekduck.com/events/december-communityday2026/",
+     "auto": true
+    }
+   ],
+   "status": "single",
+   "seen": "2026-11-09"
+  },
+  {
+   "id": "w-raid-day-december",
+   "name": "Raid Day December",
+   "place": "",
+   "area": "Worldwide",
+   "scope": "global",
+   "start": "2026-12-19",
+   "end": "2026-12-19",
+   "datesKnown": true,
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "url": "https://leekduck.com/events/raid-day-december-2026/",
+     "auto": true
+    }
+   ],
+   "status": "single",
+   "seen": "2026-11-09"
+  },
+  {
+   "id": "w-january-communitydayclassic2027",
+   "name": "January Communitydayclassic2027",
+   "place": "",
+   "area": "Worldwide",
+   "scope": "global",
+   "start": "2027-01-02",
+   "end": "2027-01-02",
+   "datesKnown": true,
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "url": "https://leekduck.com/events/january-communitydayclassic2027/",
+     "auto": true
+    }
+   ],
+   "status": "single",
+   "seen": "2026-11-09"
+  },
+  {
+   "id": "w-super-mega-raid-day-january",
+   "name": "Super Mega Raid Day January",
+   "place": "",
+   "area": "Worldwide",
+   "scope": "global",
+   "start": "2027-01-09",
+   "end": "2027-01-09",
+   "datesKnown": true,
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "url": "https://leekduck.com/events/super-mega-raid-day-january-2027/",
+     "auto": true
+    }
+   ],
+   "status": "single",
+   "seen": "2026-11-09"
+  },
+  {
+   "id": "w-january-communityday2027",
+   "name": "January Communityday2027",
+   "place": "",
+   "area": "Worldwide",
+   "scope": "global",
+   "start": "2027-01-16",
+   "end": "2027-01-16",
+   "datesKnown": true,
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "url": "https://leekduck.com/events/january-communityday2027/",
+     "auto": true
+    }
+   ],
+   "status": "single",
+   "seen": "2026-11-09"
+  },
+  {
+   "id": "w-super-mega-raid-day-january-30",
+   "name": "Super Mega Raid Day January 30",
+   "place": "",
+   "area": "Worldwide",
+   "scope": "global",
+   "start": "2027-01-30",
+   "end": "2027-01-30",
+   "datesKnown": true,
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "url": "https://leekduck.com/events/super-mega-raid-day-january-30-2027/",
+     "auto": true
+    }
+   ],
+   "status": "single",
+   "seen": "2026-11-09"
+  },
+  {
+   "id": "w-february-communityday2027",
+   "name": "February Communityday2027",
+   "place": "",
+   "area": "Worldwide",
+   "scope": "global",
+   "start": "2027-02-06",
+   "end": "2027-02-06",
+   "datesKnown": true,
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "url": "https://leekduck.com/events/february-communityday2027/",
+     "auto": true
+    }
+   ],
+   "status": "single",
+   "seen": "2026-11-09"
+  },
+  {
+   "id": "w-raid-day-february",
+   "name": "Raid Day February",
+   "place": "",
+   "area": "Worldwide",
+   "scope": "global",
+   "start": "2027-02-13",
+   "end": "2027-02-13",
+   "datesKnown": true,
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "url": "https://leekduck.com/events/raid-day-february-2027/",
+     "auto": true
+    }
+   ],
+   "status": "single",
+   "seen": "2026-11-09"
+  }
+ ]
 }

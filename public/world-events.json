@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-09T22:13:10.502Z",
+ "updated": "2026-11-09T22:45:06.724Z",
  "events": [
   {
    "id": "w-pokemon-fossil-museum-2026",
@@ -372,7 +372,7 @@
   {
    "id": "w-forever-stamp-rally-go-wild-area",
    "name": "Forever Stamp Rally Go Wild Area",
-   "place": "Japan",
+   "place": "South Korea",
    "area": "Asia",
    "scope": "regional",
    "start": "2026-11-03",
@@ -382,12 +382,7 @@
     {
      "id": "official",
      "name": "Pokémon GO (official)",
-     "url": "https://pokemongo.com/ja/news/forever-stamp-rally-go-wild-area-2026/"
-    },
-    {
-     "id": "official",
-     "name": "Pokémon GO (official)",
-     "url": "https://pokemongo.com/ja/news/go-wild-area-stamp-rally-details-2026/"
+     "url": "https://pokemongo.com/ko/news/forever-stamp-rally-go-wild-area-2026/"
     }
    ],
    "status": "official",
@@ -458,11 +453,6 @@
      "url": "https://pokemongo.com/news/gowildarea-mexicocity-friday-update/"
     },
     {
-     "id": "hub",
-     "name": "Pokémon GO Hub",
-     "url": "https://pokemongohub.net/post/event/pokemon-go-wild-area-mexico-city-additional-details-maps-in-person-activities-notable-trainers-etc/"
-    },
-    {
      "id": "serebii",
      "name": "Serebii",
      "url": "https://www.serebii.net/pokemongo/reallifeevents.shtml"
@@ -485,11 +475,6 @@
      "id": "official",
      "name": "Pokémon GO (official)",
      "url": "https://pokemongo.com/news/gowildarea-2026-timed-research/"
-    },
-    {
-     "id": "hub",
-     "name": "Pokémon GO Hub",
-     "url": "https://pokemongohub.net/post/news/free-gigantamax-machamp-timed-research-available-this-weekend-only/"
     }
    ],
    "status": "official",
@@ -643,25 +628,6 @@
     }
    ],
    "status": "official",
-   "seen": "2026-11-09"
-  },
-  {
-   "id": "w-minior-showers-leonid-november-2026",
-   "name": "Minior Showers: Leonid (November 2026)",
-   "place": "",
-   "area": "Worldwide",
-   "scope": "global",
-   "start": "2026-11-14",
-   "end": "2026-11-19",
-   "datesKnown": true,
-   "sources": [
-    {
-     "id": "hub",
-     "name": "Pokémon GO Hub",
-     "url": "https://pokemongohub.net/post/event/minior-showers-leonid-november-2026/"
-    }
-   ],
-   "status": "single",
    "seen": "2026-11-09"
   },
   {
@@ -858,6 +824,25 @@
    "seen": "2026-10-19"
   },
   {
+   "id": "w-max-battle-day",
+   "name": "Max Battle Day",
+   "place": "",
+   "area": "Worldwide",
+   "scope": "global",
+   "start": "2026-12-05",
+   "end": "2026-12-05",
+   "datesKnown": true,
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "url": "https://leekduck.com/events/max-battle-day-december-2026/"
+    }
+   ],
+   "status": "single",
+   "seen": "2026-11-09"
+  },
+  {
    "id": "w-pok-mon-30th-anniversary-mall-exploration-sm-north",
    "name": "Pokémon 30th Anniversary Mall Exploration: SM North EDSA",
    "place": "Philippines (SM North EDSA)",
@@ -916,6 +901,25 @@
    "seen": "2026-11-09"
   },
   {
+   "id": "w-hatch-day",
+   "name": "Hatch Day",
+   "place": "",
+   "area": "Worldwide",
+   "scope": "global",
+   "start": "2026-12-26",
+   "end": "2026-12-26",
+   "datesKnown": true,
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "url": "https://leekduck.com/events/hatch-day-december-2026/"
+    }
+   ],
+   "status": "single",
+   "seen": "2026-11-09"
+  },
+  {
    "id": "w-pok-mon-run-30-thailand",
    "name": "Pokémon RUN 30: Bangkok",
    "place": "Bangkok, Thailand (outdoor plaza in front of Central World)",
@@ -970,6 +974,25 @@
     }
    ],
    "status": "official",
+   "seen": "2026-11-09"
+  },
+  {
+   "id": "w-max-battle-day-2027-01-23",
+   "name": "Max Battle Day",
+   "place": "",
+   "area": "Worldwide",
+   "scope": "global",
+   "start": "2027-01-23",
+   "end": "2027-01-23",
+   "datesKnown": true,
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "url": "https://leekduck.com/events/max-battle-day-january-2027/"
+    }
+   ],
+   "status": "single",
    "seen": "2026-11-09"
   },
   {
@@ -1104,6 +1127,166 @@
    ],
    "status": "official",
    "seen": "2026-11-02"
+  },
+  {
+   "id": "w-december-communityday2026",
+   "name": "December Communityday2026",
+   "place": "",
+   "area": "Worldwide",
+   "scope": "global",
+   "start": "2026-12-12",
+   "end": "2026-12-13",
+   "datesKnown": true,
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "url": "https://leekduck.com/events/december-communityday2026/",
+     "auto": true
+    }
+   ],
+   "status": "single",
+   "seen": "2026-11-09"
+  },
+  {
+   "id": "w-raid-day-december",
+   "name": "Raid Day December",
+   "place": "",
+   "area": "Worldwide",
+   "scope": "global",
+   "start": "2026-12-19",
+   "end": "2026-12-19",
+   "datesKnown": true,
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "url": "https://leekduck.com/events/raid-day-december-2026/",
+     "auto": true
+    }
+   ],
+   "status": "single",
+   "seen": "2026-11-09"
+  },
+  {
+   "id": "w-january-communitydayclassic2027",
+   "name": "January Communitydayclassic2027",
+   "place": "",
+   "area": "Worldwide",
+   "scope": "global",
+   "start": "2027-01-02",
+   "end": "2027-01-02",
+   "datesKnown": true,
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "url": "https://leekduck.com/events/january-communitydayclassic2027/",
+     "auto": true
+    }
+   ],
+   "status": "single",
+   "seen": "2026-11-09"
+  },
+  {
+   "id": "w-super-mega-raid-day-january",
+   "name": "Super Mega Raid Day January",
+   "place": "",
+   "area": "Worldwide",
+   "scope": "global",
+   "start": "2027-01-09",
+   "end": "2027-01-09",
+   "datesKnown": true,
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "url": "https://leekduck.com/events/super-mega-raid-day-january-2027/",
+     "auto": true
+    }
+   ],
+   "status": "single",
+   "seen": "2026-11-09"
+  },
+  {
+   "id": "w-january-communityday2027",
+   "name": "January Communityday2027",
+   "place": "",
+   "area": "Worldwide",
+   "scope": "global",
+   "start": "2027-01-16",
+   "end": "2027-01-16",
+   "datesKnown": true,
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "url": "https://leekduck.com/events/january-communityday2027/",
+     "auto": true
+    }
+   ],
+   "status": "single",
+   "seen": "2026-11-09"
+  },
+  {
+   "id": "w-super-mega-raid-day-january-30",
+   "name": "Super Mega Raid Day January 30",
+   "place": "",
+   "area": "Worldwide",
+   "scope": "global",
+   "start": "2027-01-30",
+   "end": "2027-01-30",
+   "datesKnown": true,
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "url": "https://leekduck.com/events/super-mega-raid-day-january-30-2027/",
+     "auto": true
+    }
+   ],
+   "status": "single",
+   "seen": "2026-11-09"
+  },
+  {
+   "id": "w-february-communityday2027",
+   "name": "February Communityday2027",
+   "place": "",
+   "area": "Worldwide",
+   "scope": "global",
+   "start": "2027-02-06",
+   "end": "2027-02-06",
+   "datesKnown": true,
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "url": "https://leekduck.com/events/february-communityday2027/",
+     "auto": true
+    }
+   ],
+   "status": "single",
+   "seen": "2026-11-09"
+  },
+  {
+   "id": "w-raid-day-february",
+   "name": "Raid Day February",
+   "place": "",
+   "area": "Worldwide",
+   "scope": "global",
+   "start": "2027-02-13",
+   "end": "2027-02-13",
+   "datesKnown": true,
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "url": "https://leekduck.com/events/raid-day-february-2027/",
+     "auto": true
+    }
+   ],
+   "status": "single",
+   "seen": "2026-11-09"
   }
  ]
 }
