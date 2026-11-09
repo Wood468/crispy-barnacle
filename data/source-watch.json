@@ -1,10 +1,10 @@
 {
- "updated": "2026-11-08T22:05:52.084Z",
+ "updated": "2026-11-09T06:30:06.336Z",
  "status": [
   {
    "id": "hub",
    "state": "ok",
-   "items": 4
+   "items": 5
   },
   {
    "id": "miners-assets",
@@ -23,11 +23,11 @@
   },
   {
    "id": "youtube-pogo",
-   "state": "ok",
-   "items": 4
+   "state": "error",
+   "note": "HTTP 500"
   }
  ],
- "gaps": 3,
+ "gaps": 2,
  "items": [
   {
    "source": "reddit-silph",
@@ -60,40 +60,28 @@
    ]
   },
   {
-   "source": "reddit-silph",
-   "trust": "tip",
-   "title": "Has anyone actually reached Level 108 to get Spiritomb?",
-   "link": "https://www.reddit.com/r/TheSilphRoad/comments/1xle1cz/has_anyone_actually_reached_level_108_to_get/",
-   "date": "2026-11-01T20:49:36.000Z",
-   "summary": "<!-- SC_OFF --><div class=\"md\"><p>I’m genuinely curious how many players have managed to complete this challenge! How much grinding/raids did it take? How many hours did you play, any luck with shiny ",
+   "source": "hub",
+   "trust": "community",
+   "title": "Into the Wild (2026) Event",
+   "link": "https://pokemongohub.net/post/event/into-the-wild-2026-event/",
+   "date": "2026-11-09T05:00:51.000Z",
+   "summary": "Pokémon GO’s Into the Wild event runs from November 9 at 10:00 a.m. to November 13 at 8:00 p.m. local time, bringing two new Dynamax Pokémon: Dynamax Regidrago and Dynamax Meltan! Expect an increased ",
    "pokemon": [
-    "Spiritomb"
-   ],
-   "notInOurData": [
-    "Spiritomb"
-   ]
-  },
-  {
-   "source": "youtube-pogo",
-   "trust": "official",
-   "title": "Costumed Machamp debuts in Pokémon GO!",
-   "link": "https://www.youtube.com/shorts/Z2OPNHxhNSc",
-   "date": "2026-11-08T19:59:12.000Z",
-   "summary": "",
-   "pokemon": [
-    "Machamp"
+    "Gimmighoul",
+    "Regidrago",
+    "Meltan"
    ],
    "notInOurData": []
   },
   {
-   "source": "youtube-pogo",
-   "trust": "official",
-   "title": "Costumed Machamp debuts in Pokémon GO!",
-   "link": "https://www.youtube.com/watch?v=oe4xCOjA374",
-   "date": "2026-11-08T14:01:21.000Z",
-   "summary": "",
+   "source": "reddit-silph",
+   "trust": "tip",
+   "title": "Reminder: Meltan mystery box shiny encounter chance",
+   "link": "https://www.reddit.com/r/TheSilphRoad/comments/1xri856/reminder_meltan_mystery_box_shiny_encounter_chance/",
+   "date": "2026-11-09T04:23:22.000Z",
+   "summary": "<!-- SC_OFF --><div class=\"md\"><p>Hey all! I'm probably very behind in this but I only recently found out about the setup link with Pokémon Home to get the Mystery Box to catch more Meltan and get mor",
    "pokemon": [
-    "Machamp"
+    "Meltan"
    ],
    "notInOurData": []
   },
@@ -170,26 +158,6 @@
    "link": "https://pokemongohub.net/post/meta/pve-analysis-halloween-event-2026-part-2/",
    "date": "2026-11-02T09:42:29.000Z",
    "summary": "Hello, Trainers! We hope everyone had a fantastic Halloween! True to one of Pokémon GO’s longest-running traditions, the Halloween 2026 Event is currently underway, bringing a host of spooky spawns, r",
-   "pokemon": [],
-   "notInOurData": []
-  },
-  {
-   "source": "youtube-pogo",
-   "trust": "official",
-   "title": "New costumed Pokémon make their debuts during Halloween 2026 Part I in Pokémon GO!",
-   "link": "https://www.youtube.com/shorts/I6MvdaExyIg",
-   "date": "2026-10-27T17:00:40.000Z",
-   "summary": "",
-   "pokemon": [],
-   "notInOurData": []
-  },
-  {
-   "source": "youtube-pogo",
-   "trust": "official",
-   "title": "New costumed Pokémon make their debuts during Halloween 2026 Part I in Pokémon GO!",
-   "link": "https://www.youtube.com/watch?v=wyN2y-BgpoU",
-   "date": "2026-10-27T17:00:14.000Z",
-   "summary": "",
    "pokemon": [],
    "notInOurData": []
   }
