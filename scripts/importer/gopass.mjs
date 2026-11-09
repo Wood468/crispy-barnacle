@@ -108,7 +108,11 @@ function validateAlt(name, alts, rank, track) {
   for (const altText of alts) {
     const alt = normalise(altText);
     if (!alt || GENERIC_ALTS.has(alt)) continue;
-    if (!target.includes(alt)) {
+    // Leek Duck words the same costume differently in alt text and visible name
+    // ("Modern Jacket Machamp" vs "Machamp wearing a modern jacket"): accept an
+    // alt whose every word appears in the name, in any order. Unrelated art still fails.
+    const targetWords = new Set(target.split(" "));
+    if (!target.includes(alt) && !alt.split(" ").every(word => targetWords.has(word))) {
       throw new Error("img alt " + JSON.stringify(altText) + " does not match reward-name at rank " + rank + " (" + track + ")");
     }
   }

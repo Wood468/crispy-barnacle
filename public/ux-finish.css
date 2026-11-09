@@ -105,3 +105,25 @@
   #tab-raids .rw-raid .rcs { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
   #tab-raids .rw-raid .rc { padding: 12px; }
 }
+
+/* Verified official banners are shown whole (their own 16:9 composition), never squeezed into the compact themed strip.
+   The featured-Pokémon accent only belongs to themed placeholders: a real banner already shows the event's Pokémon. */
+#tab-now .t1-major-art:has(.ev-art--official) { height: auto; padding: 0; }
+#tab-now .t1-major-art .ev-art--official { height: auto; aspect-ratio: 16 / 9 !important; }
+#tab-now .t1-major-art .ev-art--official .ev-art-img { object-position: 50% 30% !important; }
+#tab-now .t1-major-art .ev-art--official .ev-art-accent { display: none; }
+@media (min-width: 900px) {
+  #tab-now .t1-major-art:has(.ev-art--official), #tab-now .t1-major-art .ev-art--official { height: auto; aspect-ratio: 16 / 9 !important; }
+}
+.ev-art-tag { max-width: 70%; text-align: right; line-height: 1.25; }
+/* Keep the card menu (Mark done / Hide) below a full banner so it never covers the event logo. */
+#tab-now .t1-major:has(.ev-art--official) { container-type: inline-size; }
+#tab-now .t1-major:has(.ev-art--official) .t1-more { top: calc(100cqw * 9 / 16); }
+/* Shared series artwork is always identified on the banner. */
+.ev-art-scope { position: absolute; left: 10px; bottom: 8px; z-index: 2; max-width: 80%; padding: 3px 8px; border-radius: 999px; background: rgba(8,10,16,.72); color: #fff; font: 700 .6rem/1.2 var(--font-body); letter-spacing: .08em; text-transform: uppercase; font-style: normal; backdrop-filter: blur(4px); }
+/* Themed placeholder label stays readable above the small Pokémon accent (never clipped by it). */
+.ev-art-tag { z-index: 3; padding: 3px 7px; border-radius: 999px; background: rgba(8,10,16,.6); }
+.t1-banner .ev-art-tag { max-width: calc(100% - 64px); font-size: .54rem; }
+.t1-banner .ev-art-accent { width: 24%; max-width: 78px; bottom: 6px; }
+.t1-banner .ev-art-tag { right: auto; left: 48px; top: 12px; max-width: calc(100% - 112px); text-align: left; }
+.ev-art-tag { width: max-content; }

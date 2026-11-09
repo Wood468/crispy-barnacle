@@ -9840,7 +9840,10 @@
   {
    "schemaVersion": 1,
    "eventId": "into",
-   "aliases": [],
+   "aliases": [
+    "leekduck:into-the-wild-2026",
+    "w-into-the-wild"
+   ],
    "family": "other",
    "title": "Into the Wild",
    "dateText": "",
@@ -9848,7 +9851,7 @@
    "lifecycle": "announced",
    "attendance": "",
    "location": null,
-   "image": null,
+   "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-11-09-into-the-wild-2026/into-the-wild-2026.jpg",
    "notes": [
     "Crowned Sword Zacian and Crowned Shield Zamazenta in five-star raids, with Raid Hour at 6 pm on Nov 9 (Zacian) and Nov 10 (Zamazenta). Druddigon and Orthworm in three-star raids.",
     "Dynamax Regidrago debuts in five-star Max Battles on Nov 12; Registeel Nov 11, Latias and Latios Nov 13. Dynamax Meltan debuts in GO Pass.",
@@ -9856,7 +9859,7 @@
    ],
    "internalValidation": {
     "warnings": [],
-    "lifecycleDeclared": false,
+    "lifecycleDeclared": true,
     "conflicts": [],
     "fields": {
      "bonuses": [
@@ -9871,6 +9874,20 @@
        "text": "Reach these ranks on GO Pass: Into the Wild to unlock the following bonus.",
        "sources": [
         "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Ticket-holding Trainers participating in GO Wild Area: Global will receive a branching Special Research story starting on November 14, 2026, at 10:00 a.m. local time .",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Trainers must choose between researching Steel-type or Dragon-type Pokémon. Each path awards a corresponding in-game medal and unlocks special bonuses for catching mighty Pokémon of that type.",
+       "sources": [
+        "hub"
        ],
        "status": "single"
       },
@@ -9975,10 +9992,94 @@
         "leekduck"
        ],
        "status": "single"
+      },
+      {
+       "text": "New Trainer profile backgrounds, private Max Battle groups, exclusive Research bonuses, and avatar rewards arrive ahead of GO Wild Area 2026.",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "The updates arrive just ahead of GO Wild Area: Mexico City and GO Wild Area: Sendai , which take place from November 6–8, 2026 . The adventure continues worldwide with GO Wild Area: Global on November 14–15, 2026 .",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Here is everything new that Trainers should know before the event begins.",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Gigantamax Duraludon",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "One of the biggest gameplay improvements arriving with GO Wild Area is the ability to join Dynamax Battles privately .",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Previously, entering a Max Battle lobby would automatically match Trainers with other participants. Starting with GO Wild Area 2026, Trainers will have two options when joining a battle:",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Private Group: Enter a group code to join an existing private Max Battle group",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "This should make it easier for coordinated groups to tackle difficult Max Battles without being automatically matched with other players.",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "For more information about their appearances, check out our GO Wild Area 2026: Global guide .",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
       }
      ],
      "eggs": [],
      "research": [
+      {
+       "text": "Trainers who choose the Steel-type path will receive the following bonuses upon earning the Steel Scholar medal.",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "1 additional Candy XL awarded for catching Steel-type mighty Pokémon (Trainers level 31+)",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "These bonuses will be active upon claiming your type-themed in-game medal, and they will expire at the end of Pokémon GO Wild Area: Global on Sunday, November 15, 2026, at 6:00 p.m. local time.",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
       {
        "text": "Pokémon GO Wild Area–themed Field Research tasks will be available throughout the event! Complete the research tasks to earn encounters with event-themed Pokémon and other rewards.",
        "sources": [
@@ -10032,17 +10133,89 @@
       }
      ],
      "moves": [],
-     "costumes": [],
-     "tickets": [
+     "costumes": [
       {
-       "text": "GO Pass: Into the Wild is a free progression track. Complete Pass Tasks to collect GO Points, increase your rank, and unlock rewards.",
+       "text": "Dates: November 6–8, 2026",
        "sources": [
-        "leekduck"
+        "hub"
        ],
        "status": "single"
       },
       {
+       "text": "Locations: Monumento a la Revolución; Parque México; Jardín Pushkin; Cinépolis Diana; Liverpool Polanco; Parque Hundido",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Trainers can pick up a Pikachu, Hawlucha, or Machamp sun visor to add some fun to their journey while exploring Mexico City.",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Distribution times may vary by location. Quantities at each location are limited. Visors will be distributed on a first-come, first-served basis while supplies last.",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Location Backgrounds and Special Backgrounds can now appear on Trainer profiles",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Private groups are coming to Dynamax Battles",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Steel Scholar and Dragon Defender medals unlock special Mighty Pokémon catch bonuses",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "New GO Pass rewards, avatar items, and an exclusive pose",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Pokémon caught in GO Safari Balls can now be transferred to Pokémon HOME",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Select Adventure Effects can be activated directly from Raid and Max Battle lobbies",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      }
+     ],
+     "tickets": [
+      {
        "text": "Trainers will receive the pass automatically on Monday, November 9, at 10:00 a.m. local time . Earn points and rank up until Sunday, November 15, 2026, at 6:00 p.m. local time .",
+       "sources": [
+        "leekduck",
+        "hub"
+       ],
+       "status": "corroborated"
+      },
+      {
+       "text": "GO Pass: Into the Wild is a free progression track. Complete Pass Tasks to collect GO Points, increase your rank, and unlock rewards.",
        "sources": [
         "leekduck"
        ],
@@ -10075,22 +10248,59 @@
         "leekduck"
        ],
        "status": "single"
+      },
+      {
+       "text": "The following items will be available through GO Pass: Into the Wild :",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "GO Wild Area 2026 Tee (Purple) as a Free GO Pass reward",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Duraludon Pants as a Paid GO Pass Deluxe reward",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Duraludon T Shirt as part of the GO Pass Into the Wild",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Trainers have until November 17, 2026, at 11:59 p.m. local time to claim their unlocked rewards.",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
       }
      ],
      "dates": [
       {
        "text": "The following Dynamax Pokémon will appear in Max Battles. Pokémon appearing in five-star Max Battles will also be featured in Max Battles from 6:00 p.m. to 7:00 p.m. local time for one day each on the following schedule.",
        "sources": [
-        "leekduck"
+        "leekduck",
+        "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
        "text": "Trainers will receive the pass automatically on Monday, November 9, at 10:00 a.m. local time . Earn points and rank up until Sunday, November 15, 2026, at 6:00 p.m. local time .",
        "sources": [
-        "leekduck"
+        "leekduck",
+        "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
        "text": "From Monday, November 9, to Friday, November 13, you can collect GO Points up to a daily cap. There’s no limit to the GO Points you can earn on Saturday and Sunday, November 14 to 15!",
@@ -10098,22 +10308,92 @@
         "leekduck"
        ],
        "status": "single"
+      },
+      {
+       "text": "Dates: November 6–8, 2026",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "10:00 a.m. to 12:50 p.m.",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Break from 1:00 p.m. to 3:00 p.m.",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "12:30 p.m. – 1:30 p.m.: Join Jason Marino, Senior 3D Artist, who will be hosting a conference at Cinépolis Diana to discuss the process of bringing art to life in Pokémon GO.",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "A special surprise will light up BBVA Tower to celebrate Pokémon GO Wild Area: Mexico City. Catch it from 6:00 p.m. to midnight on November 6–8.",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "The updates arrive just ahead of GO Wild Area: Mexico City and GO Wild Area: Sendai , which take place from November 6–8, 2026 . The adventure continues worldwide with GO Wild Area: Global on November 14–15, 2026 .",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "November 6, 2026, at 10:00 a.m. local time – Sendai and Mexico City GO Wild Area 2026 Location Backgrounds become available to display",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Trainers have until November 17, 2026, at 11:59 p.m. local time to claim their unlocked rewards.",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Ticket add-on bonuses are active from November 6 through November 8, 2026 , allowing eligible Trainers to benefit throughout the in-person event weekend.",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
       }
      ]
     },
     "info": [],
-    "detailRefs": [],
+    "detailRefs": [
+     "leekduck:into-the-wild-2026"
+    ],
     "legacyDates": {
-     "start": "2026-11-09T10:00",
-     "end": "2026-11-13T20:00"
+     "start": "",
+     "end": ""
     },
-    "contentHash": "bfc785f577a863c6e8619e50432016aa84a2342a5df3946abd014dcc4bc46fb3",
-    "revision": 3,
-    "amended": false,
+    "imageReviewed": true,
+    "contentHash": "cc8beb9d1014324995d3e0fd62245f1c3e550397788545c82731365b509810b6",
+    "revision": 17,
+    "amended": true,
     "native": false,
     "collection": "events"
    },
-   "schedule": null,
+   "schedule": {
+    "start": "2026-11-09T10:00",
+    "end": "2026-11-13T20:00",
+    "timeBasis": "player-local"
+   },
    "activities": [],
    "bonuses": [
     {
@@ -10131,6 +10411,20 @@
      "status": "single"
     },
     {
+     "text": "Ticket-holding Trainers participating in GO Wild Area: Global will receive a branching Special Research story starting on November 14, 2026, at 10:00 a.m. local time .",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Trainers must choose between researching Steel-type or Dragon-type Pokémon. Each path awards a corresponding in-game medal and unlocks special bonuses for catching mighty Pokémon of that type.",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
+    },
+    {
      "text": "Rank 25: 1/2 Hatch Distance for Eggs placed in Incubators during the event",
      "sources": [
       "leekduck"
@@ -10139,6 +10433,27 @@
     }
    ],
    "research": [
+    {
+     "text": "Trainers who choose the Steel-type path will receive the following bonuses upon earning the Steel Scholar medal.",
+     "sources": [
+      "official"
+     ],
+     "status": "official"
+    },
+    {
+     "text": "1 additional Candy XL awarded for catching Steel-type mighty Pokémon (Trainers level 31+)",
+     "sources": [
+      "official"
+     ],
+     "status": "official"
+    },
+    {
+     "text": "These bonuses will be active upon claiming your type-themed in-game medal, and they will expire at the end of Pokémon GO Wild Area: Global on Sunday, November 15, 2026, at 6:00 p.m. local time.",
+     "sources": [
+      "official"
+     ],
+     "status": "official"
+    },
     {
      "text": "Pokémon GO Wild Area–themed Field Research tasks will be available throughout the event! Complete the research tasks to earn encounters with event-themed Pokémon and other rewards.",
      "sources": [
@@ -10185,14 +10500,15 @@
    "passes": [],
    "tickets": [
     {
-     "text": "GO Pass: Into the Wild is a free progression track. Complete Pass Tasks to collect GO Points, increase your rank, and unlock rewards.",
+     "text": "Trainers will receive the pass automatically on Monday, November 9, at 10:00 a.m. local time . Earn points and rank up until Sunday, November 15, 2026, at 6:00 p.m. local time .",
      "sources": [
-      "leekduck"
+      "leekduck",
+      "hub"
      ],
-     "status": "single"
+     "status": "corroborated"
     },
     {
-     "text": "Trainers will receive the pass automatically on Monday, November 9, at 10:00 a.m. local time . Earn points and rank up until Sunday, November 15, 2026, at 6:00 p.m. local time .",
+     "text": "GO Pass: Into the Wild is a free progression track. Complete Pass Tasks to collect GO Points, increase your rank, and unlock rewards.",
      "sources": [
       "leekduck"
      ],
@@ -10225,6 +10541,41 @@
       "leekduck"
      ],
      "status": "single"
+    },
+    {
+     "text": "The following items will be available through GO Pass: Into the Wild :",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "GO Wild Area 2026 Tee (Purple) as a Free GO Pass reward",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Duraludon Pants as a Paid GO Pass Deluxe reward",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Duraludon T Shirt as part of the GO Pass Into the Wild",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Trainers have until November 17, 2026, at 11:59 p.m. local time to claim their unlocked rewards.",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
     }
    ],
    "sources": [
@@ -10237,9 +10588,238 @@
     {
      "url": "https://pokemongo.com/news/into-the-wild-2026",
      "name": "Official Pokémon GO announcement"
+    },
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "url": "https://leekduck.com/events/into-the-wild-2026/",
+     "auto": true
+    },
+    {
+     "url": "https://leekduck.com/events/into-the-wild-2026/",
+     "name": "Event source"
+    },
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "trust": "official",
+     "url": "https://pokemongo.com/news/get-ready-for-gowildarea-2026/"
+    },
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "trust": "official",
+     "url": "https://pokemongo.com/news/go-wild-area-stamp-rally-details-2026/"
+    },
+    {
+     "id": "hub",
+     "name": "Pokémon GO Hub",
+     "trust": "community",
+     "url": "https://pokemongohub.net/post/event/pokemon-go-wild-area-mexico-city-additional-details-maps-in-person-activities-notable-trainers-etc/"
+    },
+    {
+     "id": "hub",
+     "name": "Pokémon GO Hub",
+     "trust": "community",
+     "url": "https://pokemongohub.net/post/news/pokemon-go-wild-area-2026-brings-trainer-backgrounds-private-dynamax-battles-and-more/"
     }
    ],
    "pokemon": [
+    {
+     "key": "123:base:none",
+     "speciesId": "123",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Scyther",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Scyther"
+    },
+    {
+     "key": "147:base:none",
+     "speciesId": "147",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Dratini",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Dratini"
+    },
+    {
+     "key": "179:base:none",
+     "speciesId": "179",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Mareep",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Mareep"
+    },
+    {
+     "key": "280:dynamax:none",
+     "speciesId": "280",
+     "formId": "dynamax",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Dynamax Ralts",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Dynamax Ralts"
+    },
+    {
+     "key": "303:base:none",
+     "speciesId": "303",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Mawile",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Mawile"
+    },
+    {
+     "key": "304:base:none",
+     "speciesId": "304",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Aron",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Aron"
+    },
+    {
+     "key": "379:dynamax:none",
+     "speciesId": "379",
+     "formId": "dynamax",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Dynamax Registeel",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Dynamax Registeel"
+    },
+    {
+     "key": "380:dynamax:none",
+     "speciesId": "380",
+     "formId": "dynamax",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Dynamax Latias",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Dynamax Latias"
+    },
+    {
+     "key": "381:dynamax:none",
+     "speciesId": "381",
+     "formId": "dynamax",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Dynamax Latios",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Dynamax Latios"
+    },
+    {
+     "key": "621:base:none",
+     "speciesId": "621",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Druddigon",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Druddigon"
+    },
+    {
+     "key": "66:dynamax:none",
+     "speciesId": "66",
+     "formId": "dynamax",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Dynamax Machop",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Dynamax Machop"
+    },
+    {
+     "key": "690:base:none",
+     "speciesId": "690",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Skrelp",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Skrelp"
+    },
+    {
+     "key": "714:base:none",
+     "speciesId": "714",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Noibat",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Noibat"
+    },
+    {
+     "key": "777:base:none",
+     "speciesId": "777",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Togedemaru",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Togedemaru"
+    },
+    {
+     "key": "81:base:none",
+     "speciesId": "81",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Magnemite",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Magnemite"
+    },
     {
      "key": "888:base:none",
      "speciesId": "888",
@@ -10252,6 +10832,19 @@
      "debut": null,
      "boostedShiny": null,
      "collectionName": "Zacian"
+    },
+    {
+     "key": "888:crownedsword:none",
+     "speciesId": "888",
+     "formId": "crownedsword",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Zacian (Crowned Sword)",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Zacian (Crowned Sword)"
     },
     {
      "key": "889:base:none",
@@ -10267,6 +10860,19 @@
      "collectionName": "Zamazenta"
     },
     {
+     "key": "889:crownedshield:none",
+     "speciesId": "889",
+     "formId": "crownedshield",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Zamazenta (Crowned Shield)",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Zamazenta (Crowned Shield)"
+    },
+    {
      "key": "895:base:none",
      "speciesId": "895",
      "formId": null,
@@ -10278,10 +10884,72 @@
      "debut": null,
      "boostedShiny": null,
      "collectionName": "Regidrago"
+    },
+    {
+     "key": "895:dynamax:none",
+     "speciesId": "895",
+     "formId": "dynamax",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Dynamax Regidrago",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Dynamax Regidrago"
+    },
+    {
+     "key": "968:base:none",
+     "speciesId": "968",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Orthworm",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Orthworm"
     }
    ],
    "encounters": [
     {
+     "identityKey": "280:dynamax:none",
+     "method": "max",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "379:dynamax:none",
+     "method": "max",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "380:dynamax:none",
+     "method": "max",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "381:dynamax:none",
+     "method": "max",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "66:dynamax:none",
+     "method": "max",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "895:dynamax:none",
+     "method": "max",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
      "identityKey": "888:base:none",
      "method": "other",
      "activityId": "main",
@@ -10289,6 +10957,12 @@
     },
     {
      "identityKey": "888:base:none",
+     "method": "other",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "888:crownedsword:none",
      "method": "other",
      "activityId": "main",
      "access": "unknown"
@@ -10306,6 +10980,12 @@
      "access": "unknown"
     },
     {
+     "identityKey": "889:crownedshield:none",
+     "method": "other",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
      "identityKey": "895:base:none",
      "method": "other",
      "activityId": "main",
@@ -10314,11 +10994,133 @@
     {
      "identityKey": "895:base:none",
      "method": "other",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "895:dynamax:none",
+     "method": "other",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "621:base:none",
+     "method": "raid",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "888:crownedsword:none",
+     "method": "raid",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "889:crownedshield:none",
+     "method": "raid",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "968:base:none",
+     "method": "raid",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "123:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "147:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "179:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "303:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "304:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "690:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "714:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "777:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "81:base:none",
+     "method": "wild",
      "activityId": "main",
      "access": "unknown"
     }
    ],
    "groups": {
+    "max": [
+     {
+      "identityKey": "280:dynamax:none",
+      "method": "max",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "379:dynamax:none",
+      "method": "max",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "380:dynamax:none",
+      "method": "max",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "381:dynamax:none",
+      "method": "max",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "66:dynamax:none",
+      "method": "max",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "895:dynamax:none",
+      "method": "max",
+      "activityId": "main",
+      "access": "unknown"
+     }
+    ],
     "other": [
      {
       "identityKey": "888:base:none",
@@ -10333,6 +11135,12 @@
       "access": "unknown"
      },
      {
+      "identityKey": "888:crownedsword:none",
+      "method": "other",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
       "identityKey": "889:base:none",
       "method": "other",
       "activityId": "main",
@@ -10340,6 +11148,12 @@
      },
      {
       "identityKey": "889:base:none",
+      "method": "other",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "889:crownedshield:none",
       "method": "other",
       "activityId": "main",
       "access": "unknown"
@@ -10353,6 +11167,94 @@
      {
       "identityKey": "895:base:none",
       "method": "other",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "895:dynamax:none",
+      "method": "other",
+      "activityId": "main",
+      "access": "unknown"
+     }
+    ],
+    "raid": [
+     {
+      "identityKey": "621:base:none",
+      "method": "raid",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "888:crownedsword:none",
+      "method": "raid",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "889:crownedshield:none",
+      "method": "raid",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "968:base:none",
+      "method": "raid",
+      "activityId": "main",
+      "access": "unknown"
+     }
+    ],
+    "wild": [
+     {
+      "identityKey": "123:base:none",
+      "method": "wild",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "147:base:none",
+      "method": "wild",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "179:base:none",
+      "method": "wild",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "303:base:none",
+      "method": "wild",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "304:base:none",
+      "method": "wild",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "690:base:none",
+      "method": "wild",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "714:base:none",
+      "method": "wild",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "777:base:none",
+      "method": "wild",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "81:base:none",
+      "method": "wild",
       "activityId": "main",
       "access": "unknown"
      }
@@ -10370,7 +11272,7 @@
    "lifecycle": "reference",
    "attendance": "",
    "location": null,
-   "image": null,
+   "image": "https://lh3.googleusercontent.com/6P6KzIHu36YynVJ4Bn6-2y_98P8qbfr5VP6aBOsIC83pPQ6NifL2ZrIWrF12RCzi-yJzdpuVsboYspq5mfkvph2B5OJslcoYMaHnNM8ua8og",
    "notes": [],
    "internalValidation": {
     "warnings": [],
@@ -10579,7 +11481,7 @@
      "start": "",
      "end": ""
     },
-    "contentHash": "0c5c7af6127e0340d6f0bd6110e187f77ca836f04e1e2b764b3c85dfc83a36b9",
+    "contentHash": "f95f470cb5e73be5001ac6a879584cdc40182dc94abca7189d6ae03633d042cd",
     "revision": 2,
     "amended": false,
     "native": false,
@@ -12355,7 +13257,7 @@
    "lifecycle": "reference",
    "attendance": "",
    "location": null,
-   "image": null,
+   "image": "/img/ext/go-pass-october-2026-01ad36e2.jpg",
    "notes": [],
    "internalValidation": {
     "warnings": [],
@@ -12651,7 +13553,7 @@
      "start": "",
      "end": ""
     },
-    "contentHash": "22e0a404ca7b93f97bf645bd3bd42a391baa6cd58c97ac127483d9df47a82cd1",
+    "contentHash": "b7acd14198bee593a12ec8b8772f357c46be036d5ff22d0352d6b21b0103a477",
     "revision": 2,
     "amended": false,
     "native": false,
@@ -12960,7 +13862,7 @@
     },
     "imageReviewed": true,
     "contentHash": "6233e459b7d0600a984239a8178482d30eabd342e8e461b21fb80ea73d59da2d",
-    "revision": 3,
+    "revision": 6,
     "amended": false,
     "native": false,
     "collection": "source-details"
@@ -12997,833 +13899,6 @@
    "pokemon": [],
    "encounters": [],
    "groups": {}
-  },
-  {
-   "schemaVersion": 1,
-   "eventId": "leekduck:into-the-wild-2026",
-   "aliases": [],
-   "family": "other",
-   "title": "Into the Wild",
-   "dateText": "",
-   "completeness": "partial",
-   "lifecycle": "reference",
-   "attendance": "",
-   "location": null,
-   "image": null,
-   "notes": [],
-   "internalValidation": {
-    "warnings": [],
-    "lifecycleDeclared": true,
-    "conflicts": [],
-    "fields": {
-     "bonuses": [
-      {
-       "text": "Daily Discoveries will not take place from November 9 through November 15, 2026.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Reach these ranks on GO Pass: Into the Wild to unlock the following bonus.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Ticket-holding Trainers participating in GO Wild Area: Global will receive a branching Special Research story starting on November 14, 2026, at 10:00 a.m. local time .",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Trainers must choose between researching Steel-type or Dragon-type Pokémon. Each path awards a corresponding in-game medal and unlocks special bonuses for catching mighty Pokémon of that type.",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Rank 25: 1/2 Hatch Distance for Eggs placed in Incubators during the event",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      }
-     ],
-     "featured": [
-      {
-       "text": "The following Pokémon will appear more frequently in the wild, along with other event-themed Pokémon.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "The free track includes:",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Encounter with Dynamax Meltan",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "GO Wild Area 2026 Tee (Purple)",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Additional rewards",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "GO Pass Deluxe also offers:",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "A Silver Bottle Cap, which can be used to max one stat—Attack, Defense, or HP—on any Pokémon via Hyper Training",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Encounters with Dynamax Meltan",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Duraludon Pants",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Premium items, such as Incense and a Lucky Egg",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      }
-     ],
-     "raids": [
-      {
-       "text": "Regidrago will make its Pokémon GO Dynamax debut in five-star Max Battles, and Meltan will make its Dynamax debut in GO Pass: Into the Wild. If you’re lucky, you may encounter a Shiny one!",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Defeating Crowned Sword Zacian or Crowned Shield Zamazenta in raids will earn you Crowned Sword Energy or Crowned Shield Energy, respectively.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "The following Dynamax Pokémon will appear in Max Battles. Pokémon appearing in five-star Max Battles will also be featured in Max Battles from 6:00 p.m. to 7:00 p.m. local time for one day each on the following schedule.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "New Trainer profile backgrounds, private Max Battle groups, exclusive Research bonuses, and avatar rewards arrive ahead of GO Wild Area 2026.",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "The updates arrive just ahead of GO Wild Area: Mexico City and GO Wild Area: Sendai , which take place from November 6–8, 2026 . The adventure continues worldwide with GO Wild Area: Global on November 14–15, 2026 .",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Here is everything new that Trainers should know before the event begins.",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Gigantamax Duraludon",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "One of the biggest gameplay improvements arriving with GO Wild Area is the ability to join Dynamax Battles privately .",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Previously, entering a Max Battle lobby would automatically match Trainers with other participants. Starting with GO Wild Area 2026, Trainers will have two options when joining a battle:",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Private Group: Enter a group code to join an existing private Max Battle group",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "This should make it easier for coordinated groups to tackle difficult Max Battles without being automatically matched with other players.",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "For more information about their appearances, check out our GO Wild Area 2026: Global guide .",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      }
-     ],
-     "eggs": [],
-     "research": [
-      {
-       "text": "Trainers who choose the Steel-type path will receive the following bonuses upon earning the Steel Scholar medal.",
-       "sources": [
-        "official"
-       ],
-       "status": "official"
-      },
-      {
-       "text": "1 additional Candy XL awarded for catching Steel-type mighty Pokémon (Trainers level 31+)",
-       "sources": [
-        "official"
-       ],
-       "status": "official"
-      },
-      {
-       "text": "These bonuses will be active upon claiming your type-themed in-game medal, and they will expire at the end of Pokémon GO Wild Area: Global on Sunday, November 15, 2026, at 6:00 p.m. local time.",
-       "sources": [
-        "official"
-       ],
-       "status": "official"
-      },
-      {
-       "text": "Pokémon GO Wild Area–themed Field Research tasks will be available throughout the event! Complete the research tasks to earn encounters with event-themed Pokémon and other rewards.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "After you give your trainee a Silver Bottle Cap, Hyper Training begins. Each stat has its own set of themed tasks.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Attack: Battle alongside your trainee.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Defense: Strengthen your bond with your Buddy Pokémon trainee by playing together, exploring, and catching Pokémon.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "HP: Explore alongside your trainee as a buddy. This can include spinning PokéStops, earning Buddy Candy, or other adventures.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "You’ll have 365 days after using your Silver Bottle Cap to finish Hyper Training.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      }
-     ],
-     "shiny": [
-      {
-       "text": "Regidrago will make its Pokémon GO Dynamax debut in five-star Max Battles, and Meltan will make its Dynamax debut in GO Pass: Into the Wild. If you’re lucky, you may encounter a Shiny one!",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      }
-     ],
-     "moves": [],
-     "costumes": [
-      {
-       "text": "Dates: November 6–8, 2026",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Locations: Monumento a la Revolución; Parque México; Jardín Pushkin; Cinépolis Diana; Liverpool Polanco; Parque Hundido",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Trainers can pick up a Pikachu, Hawlucha, or Machamp sun visor to add some fun to their journey while exploring Mexico City.",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Distribution times may vary by location. Quantities at each location are limited. Visors will be distributed on a first-come, first-served basis while supplies last.",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Location Backgrounds and Special Backgrounds can now appear on Trainer profiles",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Private groups are coming to Dynamax Battles",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Steel Scholar and Dragon Defender medals unlock special Mighty Pokémon catch bonuses",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "New GO Pass rewards, avatar items, and an exclusive pose",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Pokémon caught in GO Safari Balls can now be transferred to Pokémon HOME",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Select Adventure Effects can be activated directly from Raid and Max Battle lobbies",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      }
-     ],
-     "tickets": [
-      {
-       "text": "Trainers will receive the pass automatically on Monday, November 9, at 10:00 a.m. local time . Earn points and rank up until Sunday, November 15, 2026, at 6:00 p.m. local time .",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "GO Pass: Into the Wild is a free progression track. Complete Pass Tasks to collect GO Points, increase your rank, and unlock rewards.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "From Monday, November 9, to Friday, November 13, you can collect GO Points up to a daily cap. There’s no limit to the GO Points you can earn on Saturday and Sunday, November 14 to 15!",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Upgrade to GO Pass Deluxe: Into the Wild for US$14.99 * for upgraded rewards. The GO Pass Deluxe: Into the Wild + 10 Ranks option costs US$19.99 * and grants enough GO Points to reach Rank 10.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Deluxe includes rewards from both tracks. You can upgrade at any time and still claim rewards for ranks you have already reached.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Claim all unlocked GO Pass rewards before they expire on Tuesday, November 17, 2026, at 11:59 p.m. local time .",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "The following items will be available through GO Pass: Into the Wild :",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "GO Wild Area 2026 Tee (Purple) as a Free GO Pass reward",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Duraludon Pants as a Paid GO Pass Deluxe reward",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Duraludon T Shirt as part of the GO Pass Into the Wild",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Trainers have until November 17, 2026, at 11:59 p.m. local time to claim their unlocked rewards.",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      }
-     ],
-     "dates": [
-      {
-       "text": "The following Dynamax Pokémon will appear in Max Battles. Pokémon appearing in five-star Max Battles will also be featured in Max Battles from 6:00 p.m. to 7:00 p.m. local time for one day each on the following schedule.",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Trainers will receive the pass automatically on Monday, November 9, at 10:00 a.m. local time . Earn points and rank up until Sunday, November 15, 2026, at 6:00 p.m. local time .",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "From Monday, November 9, to Friday, November 13, you can collect GO Points up to a daily cap. There’s no limit to the GO Points you can earn on Saturday and Sunday, November 14 to 15!",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Dates: November 6–8, 2026",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "10:00 a.m. to 12:50 p.m.",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Break from 1:00 p.m. to 3:00 p.m.",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "12:30 p.m. – 1:30 p.m.: Join Jason Marino, Senior 3D Artist, who will be hosting a conference at Cinépolis Diana to discuss the process of bringing art to life in Pokémon GO.",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "A special surprise will light up BBVA Tower to celebrate Pokémon GO Wild Area: Mexico City. Catch it from 6:00 p.m. to midnight on November 6–8.",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "The updates arrive just ahead of GO Wild Area: Mexico City and GO Wild Area: Sendai , which take place from November 6–8, 2026 . The adventure continues worldwide with GO Wild Area: Global on November 14–15, 2026 .",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "November 6, 2026, at 10:00 a.m. local time – Sendai and Mexico City GO Wild Area 2026 Location Backgrounds become available to display",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Trainers have until November 17, 2026, at 11:59 p.m. local time to claim their unlocked rewards.",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Ticket add-on bonuses are active from November 6 through November 8, 2026 , allowing eligible Trainers to benefit throughout the in-person event weekend.",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      }
-     ]
-    },
-    "info": [],
-    "detailRefs": [
-     "leekduck:into-the-wild-2026"
-    ],
-    "legacyDates": {
-     "start": "",
-     "end": ""
-    },
-    "imageReviewed": true,
-    "contentHash": "d15edf8dd4110e41fe5284044790ad719966cbf045579b539aa9fd5615eeb3f1",
-    "revision": 5,
-    "amended": false,
-    "native": false,
-    "collection": "source-details"
-   },
-   "schedule": null,
-   "activities": [],
-   "bonuses": [
-    {
-     "text": "Daily Discoveries will not take place from November 9 through November 15, 2026.",
-     "sources": [
-      "leekduck"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Reach these ranks on GO Pass: Into the Wild to unlock the following bonus.",
-     "sources": [
-      "leekduck"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Ticket-holding Trainers participating in GO Wild Area: Global will receive a branching Special Research story starting on November 14, 2026, at 10:00 a.m. local time .",
-     "sources": [
-      "hub"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Trainers must choose between researching Steel-type or Dragon-type Pokémon. Each path awards a corresponding in-game medal and unlocks special bonuses for catching mighty Pokémon of that type.",
-     "sources": [
-      "hub"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Rank 25: 1/2 Hatch Distance for Eggs placed in Incubators during the event",
-     "sources": [
-      "leekduck"
-     ],
-     "status": "single"
-    }
-   ],
-   "research": [
-    {
-     "text": "Trainers who choose the Steel-type path will receive the following bonuses upon earning the Steel Scholar medal.",
-     "sources": [
-      "official"
-     ],
-     "status": "official"
-    },
-    {
-     "text": "1 additional Candy XL awarded for catching Steel-type mighty Pokémon (Trainers level 31+)",
-     "sources": [
-      "official"
-     ],
-     "status": "official"
-    },
-    {
-     "text": "These bonuses will be active upon claiming your type-themed in-game medal, and they will expire at the end of Pokémon GO Wild Area: Global on Sunday, November 15, 2026, at 6:00 p.m. local time.",
-     "sources": [
-      "official"
-     ],
-     "status": "official"
-    },
-    {
-     "text": "Pokémon GO Wild Area–themed Field Research tasks will be available throughout the event! Complete the research tasks to earn encounters with event-themed Pokémon and other rewards.",
-     "sources": [
-      "leekduck"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "After you give your trainee a Silver Bottle Cap, Hyper Training begins. Each stat has its own set of themed tasks.",
-     "sources": [
-      "leekduck"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Attack: Battle alongside your trainee.",
-     "sources": [
-      "leekduck"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Defense: Strengthen your bond with your Buddy Pokémon trainee by playing together, exploring, and catching Pokémon.",
-     "sources": [
-      "leekduck"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "HP: Explore alongside your trainee as a buddy. This can include spinning PokéStops, earning Buddy Candy, or other adventures.",
-     "sources": [
-      "leekduck"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "You’ll have 365 days after using your Silver Bottle Cap to finish Hyper Training.",
-     "sources": [
-      "leekduck"
-     ],
-     "status": "single"
-    }
-   ],
-   "passes": [],
-   "tickets": [
-    {
-     "text": "Trainers will receive the pass automatically on Monday, November 9, at 10:00 a.m. local time . Earn points and rank up until Sunday, November 15, 2026, at 6:00 p.m. local time .",
-     "sources": [
-      "leekduck",
-      "hub"
-     ],
-     "status": "corroborated"
-    },
-    {
-     "text": "GO Pass: Into the Wild is a free progression track. Complete Pass Tasks to collect GO Points, increase your rank, and unlock rewards.",
-     "sources": [
-      "leekduck"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "From Monday, November 9, to Friday, November 13, you can collect GO Points up to a daily cap. There’s no limit to the GO Points you can earn on Saturday and Sunday, November 14 to 15!",
-     "sources": [
-      "leekduck"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Upgrade to GO Pass Deluxe: Into the Wild for US$14.99 * for upgraded rewards. The GO Pass Deluxe: Into the Wild + 10 Ranks option costs US$19.99 * and grants enough GO Points to reach Rank 10.",
-     "sources": [
-      "leekduck"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Deluxe includes rewards from both tracks. You can upgrade at any time and still claim rewards for ranks you have already reached.",
-     "sources": [
-      "leekduck"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Claim all unlocked GO Pass rewards before they expire on Tuesday, November 17, 2026, at 11:59 p.m. local time .",
-     "sources": [
-      "leekduck"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "The following items will be available through GO Pass: Into the Wild :",
-     "sources": [
-      "hub"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "GO Wild Area 2026 Tee (Purple) as a Free GO Pass reward",
-     "sources": [
-      "hub"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Duraludon Pants as a Paid GO Pass Deluxe reward",
-     "sources": [
-      "hub"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Duraludon T Shirt as part of the GO Pass Into the Wild",
-     "sources": [
-      "hub"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Trainers have until November 17, 2026, at 11:59 p.m. local time to claim their unlocked rewards.",
-     "sources": [
-      "hub"
-     ],
-     "status": "single"
-    }
-   ],
-   "sources": [
-    {
-     "id": "official",
-     "name": "Pokémon GO (official)",
-     "trust": "official",
-     "url": "https://pokemongo.com/news/get-ready-for-gowildarea-2026/"
-    },
-    {
-     "id": "official",
-     "name": "Pokémon GO (official)",
-     "trust": "official",
-     "url": "https://pokemongo.com/news/go-wild-area-stamp-rally-details-2026/"
-    },
-    {
-     "id": "leekduck",
-     "name": "Leek Duck",
-     "trust": "community",
-     "url": "https://leekduck.com/events/into-the-wild-2026/"
-    },
-    {
-     "id": "leekduck",
-     "name": "Leek Duck",
-     "trust": "community",
-     "url": "https://leekduck.com/events/go-wild-area-gigantamax-machamp-power-up-timed-research/"
-    },
-    {
-     "id": "hub",
-     "name": "Pokémon GO Hub",
-     "trust": "community",
-     "url": "https://pokemongohub.net/post/event/pokemon-go-wild-area-mexico-city-additional-details-maps-in-person-activities-notable-trainers-etc/"
-    },
-    {
-     "id": "hub",
-     "name": "Pokémon GO Hub",
-     "trust": "community",
-     "url": "https://pokemongohub.net/post/news/pokemon-go-wild-area-2026-brings-trainer-backgrounds-private-dynamax-battles-and-more/"
-    }
-   ],
-   "pokemon": [
-    {
-     "key": "621:base:none",
-     "speciesId": "621",
-     "formId": null,
-     "costumeId": null,
-     "shiny": "unknown",
-     "assetKey": null,
-     "name": "Druddigon",
-     "label": null,
-     "debut": null,
-     "boostedShiny": null,
-     "collectionName": "Druddigon"
-    },
-    {
-     "key": "968:base:none",
-     "speciesId": "968",
-     "formId": null,
-     "costumeId": null,
-     "shiny": "unknown",
-     "assetKey": null,
-     "name": "Orthworm",
-     "label": null,
-     "debut": null,
-     "boostedShiny": null,
-     "collectionName": "Orthworm"
-    }
-   ],
-   "encounters": [
-    {
-     "identityKey": "621:base:none",
-     "method": "raid",
-     "activityId": "main",
-     "access": "unknown"
-    },
-    {
-     "identityKey": "968:base:none",
-     "method": "raid",
-     "activityId": "main",
-     "access": "unknown"
-    }
-   ],
-   "groups": {
-    "raid": [
-     {
-      "identityKey": "621:base:none",
-      "method": "raid",
-      "activityId": "main",
-      "access": "unknown"
-     },
-     {
-      "identityKey": "968:base:none",
-      "method": "raid",
-      "activityId": "main",
-      "access": "unknown"
-     }
-    ]
-   }
   },
   {
    "schemaVersion": 1,
@@ -17124,7 +17199,7 @@
    "lifecycle": "reference",
    "attendance": "",
    "location": null,
-   "image": null,
+   "image": "https://lh3.googleusercontent.com/5SAHXmMPUCpY_TUiDA81oiN00LXrIbsOXN9CTFtZbjI4pz_0RbQr0tmSACr1JErfEvZqM131RfCU8-LA2uskPRaP7YAom1uS216jhW_JpQ",
    "notes": [],
    "internalValidation": {
     "warnings": [],
@@ -17269,7 +17344,7 @@
      "start": "",
      "end": ""
     },
-    "contentHash": "81f868ba540fb12d3152643e870bf637d5b820c0be8075d8c597192e0a834d14",
+    "contentHash": "a122bfa13febed1ebb836ee3ddf20a8bc89b76c49c3e41a27c9d1dee497cc0fd",
     "revision": 2,
     "amended": false,
     "native": false,
@@ -17585,7 +17660,7 @@
    "lifecycle": "reference",
    "attendance": "",
    "location": null,
-   "image": null,
+   "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-11-14-pokemon-go-wild-area-2026-global/key-art.jpg",
    "notes": [],
    "internalValidation": {
     "warnings": [],
@@ -17682,7 +17757,7 @@
        "status": "single"
       },
       {
-       "text": "Machamp wearing a modern jacket appears in three-star raids during event hours and may be Shiny.",
+       "text": "Machamp wearing a modern jacket appears in three-star raids during event hours. Leek Duck says it may be Shiny; the official event page does not confirm this.",
        "sources": [
         "leekduck"
        ],
@@ -17744,7 +17819,7 @@
        "status": "single"
       },
       {
-       "text": "Machamp wearing a modern jacket appears in three-star raids during event hours and may be Shiny.",
+       "text": "Machamp wearing a modern jacket appears in three-star raids during event hours. Leek Duck says it may be Shiny; the official event page does not confirm this.",
        "sources": [
         "leekduck"
        ],
@@ -17790,7 +17865,7 @@
        "status": "single"
       },
       {
-       "text": "Machamp wearing a modern jacket appears in three-star raids during event hours and may be Shiny.",
+       "text": "Machamp wearing a modern jacket appears in three-star raids during event hours. Leek Duck says it may be Shiny; the official event page does not confirm this.",
        "sources": [
         "leekduck"
        ],
@@ -17995,8 +18070,8 @@
     },
     "imageReviewed": true,
     "contentHash": "269f8e3b2de77de99a9c9b96a8583480afcc7d703b67882981cde6a557edee89",
-    "revision": 4,
-    "amended": false,
+    "revision": 15,
+    "amended": true,
     "native": false,
     "collection": "source-details"
    },
@@ -19901,7 +19976,7 @@
    "lifecycle": "reference",
    "attendance": "",
    "location": null,
-   "image": null,
+   "image": "https://lh3.googleusercontent.com/h81gWCZI7QPWqLC9Kb-LE5utTRCFwXdO225OSVNQf-TkvVGAex0CVs10QchugDtpN3CKtaSdoiJltEVQhfYVHFtlxYwLwpmJ8fXL7kDsqw",
    "notes": [],
    "internalValidation": {
     "warnings": [],
@@ -20050,8 +20125,8 @@
     },
     "imageReviewed": true,
     "contentHash": "61a5ae1d293acbf4aaa7e8ed75af207faef316785784f266244f3fa89d266906",
-    "revision": 4,
-    "amended": false,
+    "revision": 15,
+    "amended": true,
     "native": false,
     "collection": "source-details"
    },
@@ -20182,7 +20257,7 @@
    "lifecycle": "reference",
    "attendance": "",
    "location": null,
-   "image": null,
+   "image": "https://lh3.googleusercontent.com/h81gWCZI7QPWqLC9Kb-LE5utTRCFwXdO225OSVNQf-TkvVGAex0CVs10QchugDtpN3CKtaSdoiJltEVQhfYVHFtlxYwLwpmJ8fXL7kDsqw",
    "notes": [],
    "internalValidation": {
     "warnings": [],
@@ -20344,7 +20419,7 @@
      "start": "",
      "end": ""
     },
-    "contentHash": "505db42e1423069b88c9c9223d8ab05f10caa154a967d48830c344a0dd4bea8a",
+    "contentHash": "7898bba1e40a938948e52b9729488a33507d7ecdaf42b88f4f665d3b5799d040",
     "revision": 2,
     "amended": false,
     "native": false,
@@ -20429,7 +20504,7 @@
    "lifecycle": "reference",
    "attendance": "",
    "location": null,
-   "image": null,
+   "image": "https://lh3.googleusercontent.com/gu1IHS_f2PGLsp57UvnfXLT3fugx6jlQbECfFUQfU5GIEGQfjVspMMywEamItPc6BA36X6bv4rYC1bVoLzjyvLC-ddmUXbkPD5CurRnP8w",
    "notes": [],
    "internalValidation": {
     "warnings": [],
@@ -20494,7 +20569,7 @@
      "start": "",
      "end": ""
     },
-    "contentHash": "e09f419263339d805ac3bcbcaac0934c8d6fd4e50ae8abe6e32df790c3e057c6",
+    "contentHash": "eaf08cf4cd336b4ce9a76602f9215da37b24e2ece58fb236839e2ef2e2295438",
     "revision": 2,
     "amended": false,
     "native": false,
@@ -20949,6 +21024,7 @@
      "end": ""
     },
     "conflicts": [],
+    "imageUnattributed": true,
     "contentHash": "1d5a2ff8d2a36f4303e462e93dfcba6c078a41a679531a0e71c3dcea6fe032c3",
     "revision": 3,
     "amended": false,
@@ -22459,498 +22535,6 @@
   },
   {
    "schemaVersion": 1,
-   "eventId": "leekduck:super-mega-raid-day-november-2026",
-   "aliases": [],
-   "family": "raid-day",
-   "title": "Super Mega Raid Day",
-   "dateText": "",
-   "completeness": "partial",
-   "lifecycle": "reference",
-   "attendance": "",
-   "location": null,
-   "image": "https://lh3.googleusercontent.com/HyFWaQMZqtZNT3Sb3uFeHyWMBFI8bB_4hNQ2NLrpfBGrH1YijjIr1n0ZNC0YlNAZHPpfiWTq0zzgT9MRUFzlMoEjN4ENEm0AlnuJFZRA9CQ",
-   "notes": [],
-   "internalValidation": {
-    "warnings": [],
-    "lifecycleDeclared": true,
-    "conflicts": [],
-    "fields": {
-     "bonuses": [
-      {
-       "text": "Remote Raid limit increased to 20 from Friday, November 27, at 5:00 p.m. to Saturday, November 28, 2026, at 8:00 p.m. PST.",
-       "sources": [
-        "official",
-        "hub"
-       ],
-       "status": "official"
-      },
-      {
-       "text": "Receive up to six free Raid Passes from spinning Gym Photo Discs.",
-       "sources": [
-        "official",
-        "hub"
-       ],
-       "status": "official"
-      },
-      {
-       "text": "Clefable caught from Super Mega Raids will have Mega Level 1 unlocked.",
-       "sources": [
-        "official",
-        "hub"
-       ],
-       "status": "official"
-      },
-      {
-       "text": "Increased chance of encountering Shiny Clefable from Super Mega Raids.",
-       "sources": [
-        "official",
-        "hub"
-       ],
-       "status": "official"
-      }
-     ],
-     "featured": [
-      {
-       "text": "Mega-Evolved Pokémon Debut",
-       "sources": [
-        "official",
-        "leekduck"
-       ],
-       "status": "official"
-      },
-      {
-       "text": "Mega Clefable*",
-       "sources": [
-        "official",
-        "leekduck",
-        "hub"
-       ],
-       "status": "official"
-      },
-      {
-       "text": "Clefable caught from raids has the following CP ranges:",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "From 1322 CP to 1392 CP with no weather boost",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "From 1653 CP to 1741 CP with the Cloudy weather boost",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      }
-     ],
-     "raids": [
-      {
-       "text": "Saturday, November 28, 2026, from 2:00 p.m. to 5:00 p.m. local time",
-       "sources": [
-        "official",
-        "leekduck",
-        "hub"
-       ],
-       "status": "official"
-      },
-      {
-       "text": "Super Mega Raids will take great teamwork and may only appear at certain Gyms, so we’re making it easier to find both these raids and other Trainers to help you take them on!",
-       "sources": [
-        "official"
-       ],
-       "status": "official"
-      },
-      {
-       "text": "You can visit the Map to see the locations where Super Mega Raids might appear during an event, in addition to those in progress.",
-       "sources": [
-        "official"
-       ],
-       "status": "official"
-      },
-      {
-       "text": "Expected event-exclusive Timed Research",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Timed Research will be available during the event, with rewards including one Premium Battle Pass and an encounter with Metagross .",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "The tasks and other rewards below are expected based on Chandelure Super Mega Raid Day and will be confirmed when the event begins.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Complete the Timed Research tasks and claim their rewards before the research expires.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Super Mega Raids take teamwork and only appear at certain Gyms, often in parks and similar locations. The official Pokémon GO map shows where Super Mega Raids might appear during the event, plus raids in progress.",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      }
-     ],
-     "eggs": [],
-     "research": [
-      {
-       "text": "Timed Research will be available to Trainers during the event! Complete the research tasks to earn a Premium Battle Pass and an encounter with Metagross.",
-       "sources": [
-        "official"
-       ],
-       "status": "official"
-      },
-      {
-       "text": "Please note that Timed Research expires. The tasks associated with Timed Research must be completed and their rewards must be claimed before the Timed Research ends.",
-       "sources": [
-        "official"
-       ],
-       "status": "official"
-      },
-      {
-       "text": "Complete the event Timed Research for a Premium Battle Pass and an encounter with Metagross , one of the best Mega Clefable counters. Claim the rewards before the research expires.",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      }
-     ],
-     "shiny": [
-      {
-       "text": "Increased chance of encountering Shiny Clefable from Super Mega Raids.",
-       "sources": [
-        "official",
-        "leekduck",
-        "hub"
-       ],
-       "status": "official"
-      },
-      {
-       "text": "Regular Sprite | Shiny Sprite",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      }
-     ],
-     "moves": [],
-     "costumes": [],
-     "tickets": [
-      {
-       "text": "For US$4.99 (or the equivalent pricing tier in your local currency), you can purchase a ticket that grants the following bonuses.*",
-       "sources": [
-        "official",
-        "leekduck",
-        "hub"
-       ],
-       "status": "official"
-      },
-      {
-       "text": "Receive up to 14 Raid Passes from spinning Gym Photo Discs.",
-       "sources": [
-        "official",
-        "hub"
-       ],
-       "status": "official"
-      },
-      {
-       "text": "Increased chance to get Rare Candy XL from Raid Battles.",
-       "sources": [
-        "official",
-        "hub"
-       ],
-       "status": "official"
-      },
-      {
-       "text": "An additional 5,000 XP from Super Mega Raids.",
-       "sources": [
-        "official"
-       ],
-       "status": "official"
-      },
-      {
-       "text": "These bonuses will be effective on Saturday, November 28, 2026, from 2:00 p.m. to 5:00 p.m. local time.",
-       "sources": [
-        "official",
-        "leekduck",
-        "hub"
-       ],
-       "status": "official"
-      },
-      {
-       "text": "Check it out in the Pokémon GO Web Store soon! You never know what else you may find.",
-       "sources": [
-        "official"
-       ],
-       "status": "official"
-      },
-      {
-       "text": "—The Pokémon GO team",
-       "sources": [
-        "official"
-       ],
-       "status": "official"
-      },
-      {
-       "text": "Tickets can be gifted to friends at Great Friends or higher. Purchases, including gifts, are non-refundable, subject to applicable law and the Terms of Service. Tickets cannot be purchased with PokéCoins.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "5,000 extra XP from Super Mega Raids",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "You can gift tickets to friends you’re at least Great Friends with. Purchases are non-refundable.",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Better deal: The Clefable Super Mega Raid Day Ultra Ticket Box in the Pokémon GO Web Store costs the same US$4.99 and adds a bonus Premium Battle Pass .",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      }
-     ],
-     "dates": [
-      {
-       "text": "Saturday, November 28, 2026, from 2:00 p.m. to 5:00 p.m. local time",
-       "sources": [
-        "official",
-        "leekduck",
-        "hub"
-       ],
-       "status": "official"
-      },
-      {
-       "text": "Based on the results of the Global Challenge, Mega Clefable will receive the following bonuses from Monday, November 30, at 12:00 p.m. PST until Sunday, December 13, at 12:00 p.m. PST",
-       "sources": [
-        "official",
-        "hub"
-       ],
-       "status": "official"
-      },
-      {
-       "text": "The completed tiers determine the strength of the following rewards, available from Monday, November 30, at 12:00 p.m. to Sunday, December 13, 2026, at 12:00 p.m. PST :",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      }
-     ]
-    },
-    "info": [],
-    "detailRefs": [
-     "leekduck:super-mega-raid-day-november-2026"
-    ],
-    "legacyDates": {
-     "start": "",
-     "end": ""
-    },
-    "imageReviewed": true,
-    "contentHash": "da1adb760a4ec0be3af374bf017d9336aec9bd6d9cc6212e6b9484c9b9795237",
-    "revision": 3,
-    "amended": false,
-    "native": false,
-    "collection": "source-details"
-   },
-   "schedule": null,
-   "activities": [],
-   "bonuses": [
-    {
-     "text": "Remote Raid limit increased to 20 from Friday, November 27, at 5:00 p.m. to Saturday, November 28, 2026, at 8:00 p.m. PST.",
-     "sources": [
-      "official",
-      "hub"
-     ],
-     "status": "official"
-    },
-    {
-     "text": "Receive up to six free Raid Passes from spinning Gym Photo Discs.",
-     "sources": [
-      "official",
-      "hub"
-     ],
-     "status": "official"
-    },
-    {
-     "text": "Clefable caught from Super Mega Raids will have Mega Level 1 unlocked.",
-     "sources": [
-      "official",
-      "hub"
-     ],
-     "status": "official"
-    },
-    {
-     "text": "Increased chance of encountering Shiny Clefable from Super Mega Raids.",
-     "sources": [
-      "official",
-      "hub"
-     ],
-     "status": "official"
-    }
-   ],
-   "research": [
-    {
-     "text": "Timed Research will be available to Trainers during the event! Complete the research tasks to earn a Premium Battle Pass and an encounter with Metagross.",
-     "sources": [
-      "official"
-     ],
-     "status": "official"
-    },
-    {
-     "text": "Please note that Timed Research expires. The tasks associated with Timed Research must be completed and their rewards must be claimed before the Timed Research ends.",
-     "sources": [
-      "official"
-     ],
-     "status": "official"
-    },
-    {
-     "text": "Complete the event Timed Research for a Premium Battle Pass and an encounter with Metagross , one of the best Mega Clefable counters. Claim the rewards before the research expires.",
-     "sources": [
-      "hub"
-     ],
-     "status": "single"
-    }
-   ],
-   "passes": [],
-   "tickets": [
-    {
-     "text": "For US$4.99 (or the equivalent pricing tier in your local currency), you can purchase a ticket that grants the following bonuses.*",
-     "sources": [
-      "official",
-      "leekduck",
-      "hub"
-     ],
-     "status": "official"
-    },
-    {
-     "text": "Receive up to 14 Raid Passes from spinning Gym Photo Discs.",
-     "sources": [
-      "official",
-      "hub"
-     ],
-     "status": "official"
-    },
-    {
-     "text": "Increased chance to get Rare Candy XL from Raid Battles.",
-     "sources": [
-      "official",
-      "hub"
-     ],
-     "status": "official"
-    },
-    {
-     "text": "An additional 5,000 XP from Super Mega Raids.",
-     "sources": [
-      "official"
-     ],
-     "status": "official"
-    },
-    {
-     "text": "These bonuses will be effective on Saturday, November 28, 2026, from 2:00 p.m. to 5:00 p.m. local time.",
-     "sources": [
-      "official",
-      "leekduck",
-      "hub"
-     ],
-     "status": "official"
-    },
-    {
-     "text": "Check it out in the Pokémon GO Web Store soon! You never know what else you may find.",
-     "sources": [
-      "official"
-     ],
-     "status": "official"
-    },
-    {
-     "text": "—The Pokémon GO team",
-     "sources": [
-      "official"
-     ],
-     "status": "official"
-    },
-    {
-     "text": "Tickets can be gifted to friends at Great Friends or higher. Purchases, including gifts, are non-refundable, subject to applicable law and the Terms of Service. Tickets cannot be purchased with PokéCoins.",
-     "sources": [
-      "leekduck"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "5,000 extra XP from Super Mega Raids",
-     "sources": [
-      "hub"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "You can gift tickets to friends you’re at least Great Friends with. Purchases are non-refundable.",
-     "sources": [
-      "hub"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Better deal: The Clefable Super Mega Raid Day Ultra Ticket Box in the Pokémon GO Web Store costs the same US$4.99 and adds a bonus Premium Battle Pass .",
-     "sources": [
-      "hub"
-     ],
-     "status": "single"
-    }
-   ],
-   "sources": [
-    {
-     "id": "official",
-     "name": "Pokémon GO (official)",
-     "trust": "official",
-     "url": "https://pokemongo.com/news/clefable-super-mega-raid-day-2026/"
-    },
-    {
-     "id": "leekduck",
-     "name": "Leek Duck",
-     "trust": "community",
-     "url": "https://leekduck.com/events/clefable-super-mega-raid-day-2026/"
-    },
-    {
-     "id": "hub",
-     "name": "Pokémon GO Hub",
-     "trust": "community",
-     "url": "https://pokemongohub.net/post/event/super-mega-clefable-raid-day/"
-    }
-   ],
-   "pokemon": [],
-   "encounters": [],
-   "groups": {}
-  },
-  {
-   "schemaVersion": 1,
    "eventId": "leekduck:super-mega-raid-day-october-2026",
    "aliases": [],
    "family": "raid-day",
@@ -22960,7 +22544,7 @@
    "lifecycle": "reference",
    "attendance": "",
    "location": null,
-   "image": null,
+   "image": "https://lh3.googleusercontent.com/6P6KzIHu36YynVJ4Bn6-2y_98P8qbfr5VP6aBOsIC83pPQ6NifL2ZrIWrF12RCzi-yJzdpuVsboYspq5mfkvph2B5OJslcoYMaHnNM8ua8og",
    "notes": [],
    "internalValidation": {
     "warnings": [],
@@ -23301,7 +22885,7 @@
      "start": "",
      "end": ""
     },
-    "contentHash": "525dd7c67df0e483b7a4900297d21030cdf06351bab59467163b028acf56567e",
+    "contentHash": "1895691a9d4f6ec00bef11ab379bbd78d2c77d7ab6f94c92dce608a46cdd6e24",
     "revision": 2,
     "amended": false,
     "native": false,
@@ -23462,907 +23046,6 @@
    "pokemon": [],
    "encounters": [],
    "groups": {}
-  },
-  {
-   "schemaVersion": 1,
-   "eventId": "leekduck:twilight-wishes-2026",
-   "aliases": [],
-   "family": "other",
-   "title": "Twilight Wishes",
-   "dateText": "",
-   "completeness": "partial",
-   "lifecycle": "reference",
-   "attendance": "",
-   "location": null,
-   "image": "https://cdn.leekduck.com/assets/img/events/twilight-wishes-2026.jpg?v2",
-   "notes": [],
-   "internalValidation": {
-    "warnings": [],
-    "lifecycleDeclared": true,
-    "conflicts": [],
-    "fields": {
-     "bonuses": [
-      {
-       "text": "Reach Major Milestones on the event GO Pass to unlock the following bonuses.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "The following bonuses will be active during Twilight Wishes:",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Increased chance to encounter Shiny Staryu and Shiny Elgyem",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "The event also features special decorations, with stars lighting up the in-game skies throughout Twilight Wishes.",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Additional bonuses, including increased Lucky Trade chances and catch Stardust, can be unlocked through the event GO Pass.",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Rank 1: Increased chance to get Lucky Pokémon in trades",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 10: 2× Stardust for catching Pokémon",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 10: GO Pass Deluxe: 3× Stardust for catching Pokémon",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 1: Increased chance to become Lucky Friends",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Rank 10: Additional bonus tasks for the event GO Pass will be available during the event.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      }
-     ],
-     "featured": [
-      {
-       "text": "The following Pokémon will appear in the wild, along with other event-themed Pokémon.",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "If you’re lucky, you might also encounter Rockruff!",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Espeon wearing a sun scarf, Umbreon wearing a moon scarf, and Rockruff are featured during Twilight Wishes. All three can be Shiny if you’re lucky!",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Staryu and Elgyem have an increased chance of being Shiny during the event.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "The event GO Pass features the following rewards:",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Mega Energy for Beedrill, Houndoom, Sableye, and Manectric",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Additional rewards",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Trainers who upgrade to GO Pass Deluxe can also earn:",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "An event-themed avatar pose",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Premium Battle Passes",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "All featured Pokémon listed above can be encountered as Shiny Pokémon, if you’re lucky.",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      }
-     ],
-     "raids": [
-      {
-       "text": "Pikachu wearing a sun crown",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Espeon wearing a sun scarf",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Mega Manectric",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Umbreon wearing a moon scarf",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Event-themed Pokémon will appear in one-star, three-star, and Mega Raids throughout Twilight Wishes. All Pokémon featured in these event raids have a chance to be encountered as Shiny Pokémon.",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "⚔️ Related raid guides: Espeon Raid Guide , Umbreon Raid Guide",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      }
-     ],
-     "eggs": [],
-     "research": [
-      {
-       "text": "Complete event-themed Field Research tasks to earn Mega Energy and encounters with event-themed Pokémon, including Staryu, Elgyem, and more!",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Celebrate the Twilight Trails Season finale with additional encounters featuring Pokémon from throughout the Season. These Field Research rewards change during the event.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "To celebrate the end of the Twilight Trails Season, additional Field Research encounters will rotate during the event , featuring Pokémon from earlier seasonal events. All Field Research rotation times are local time.",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      }
-     ],
-     "shiny": [
-      {
-       "text": "Staryu and Elgyem have an increased chance of being Shiny during the event.",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Espeon wearing a sun scarf, Umbreon wearing a moon scarf, and Rockruff are featured during Twilight Wishes. All three can be Shiny if you’re lucky!",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Sun Scarf Espeon and Moon Scarf Umbreon return alongside boosted Shiny encounters, themed raids, and a special GO Pass to close out the Twilight Trails Season.",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "The following Pokémon will have an increased chance of appearing as Shiny Pokémon during Twilight Wishes:",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "All featured Pokémon listed above can be encountered as Shiny Pokémon, if you’re lucky.",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Event-themed Pokémon will appear in one-star, three-star, and Mega Raids throughout Twilight Wishes. All Pokémon featured in these event raids have a chance to be encountered as Shiny Pokémon.",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      }
-     ],
-     "moves": [],
-     "costumes": [
-      {
-       "text": "Espeon wearing a sun scarf, Umbreon wearing a moon scarf, and Rockruff are featured during Twilight Wishes. All three can be Shiny if you’re lucky!",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Gengar wearing a Spooky Festival costume",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Pikachu wearing a sun crown",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Drifblim wearing a Halloween Mischief costume",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      }
-     ],
-     "tickets": [
-      {
-       "text": "GO Pass Deluxe costs US$4.99 (or the equivalent local pricing tier). It offers upgraded rewards and faster progression.",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "For US$6.99 (or the equivalent local pricing tier), GO Pass Deluxe + 6 Ranks also provides enough GO Points to reach Rank 7.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Deluxe includes rewards from both tracks. You can upgrade while the pass is available and claim rewards from ranks you have already unlocked. Availability may vary by region.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Claim all unlocked rewards by Wednesday, December 2, 2026, at 8:00 p.m. local time , before they expire.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "A special GO Pass: Twilight Wishes will be available from Tuesday, November 24, at 10:00 a.m. to Monday, November 30, 2026, at 8:00 p.m. local time .",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "The event features a free GO Pass and a paid GO Pass Deluxe, both offering rewards as Trainers collect GO Points and progress through ranks.",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "All Trainers automatically receive the free GO Pass: Twilight Wishes on November 24 at 10:00 a.m. local time.",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Earn GO Points by completing Pass Tasks and rank up through November 30 at 8:00 p.m. local time.",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Additional bonus tasks will become available during the event.",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Complete Pass Tasks and rank up to earn rewards, including:",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Encounters with event-themed Pokémon",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Mega Energy for Beedrill, Houndoom, Sableye, and Manectric",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      }
-     ],
-     "dates": [
-      {
-       "text": "Twilight Wishes runs from Tuesday, November 24, at 10:00 a.m. to Monday, November 30, 2026, at 8:00 p.m. local time .",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      }
-     ]
-    },
-    "info": [],
-    "detailRefs": [
-     "leekduck:twilight-wishes-2026"
-    ],
-    "legacyDates": {
-     "start": "",
-     "end": ""
-    },
-    "imageReviewed": true,
-    "contentHash": "b8f39f3c58b4f83babfb4598095ec9a1cfdaac21603b80fe739608f60c15cfb2",
-    "revision": 5,
-    "amended": false,
-    "native": false,
-    "collection": "source-details"
-   },
-   "schedule": null,
-   "activities": [],
-   "bonuses": [
-    {
-     "text": "Reach Major Milestones on the event GO Pass to unlock the following bonuses.",
-     "sources": [
-      "leekduck"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "The following bonuses will be active during Twilight Wishes:",
-     "sources": [
-      "hub"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Increased chance to encounter Shiny Staryu and Shiny Elgyem",
-     "sources": [
-      "hub"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "The event also features special decorations, with stars lighting up the in-game skies throughout Twilight Wishes.",
-     "sources": [
-      "hub"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Additional bonuses, including increased Lucky Trade chances and catch Stardust, can be unlocked through the event GO Pass.",
-     "sources": [
-      "hub"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Rank 1: Increased chance to get Lucky Pokémon in trades",
-     "sources": [
-      "leekduck",
-      "hub"
-     ],
-     "status": "corroborated"
-    },
-    {
-     "text": "Rank 10: 2× Stardust for catching Pokémon",
-     "sources": [
-      "leekduck",
-      "hub"
-     ],
-     "status": "corroborated"
-    },
-    {
-     "text": "Rank 10: GO Pass Deluxe: 3× Stardust for catching Pokémon",
-     "sources": [
-      "leekduck",
-      "hub"
-     ],
-     "status": "corroborated"
-    },
-    {
-     "text": "Rank 1: Increased chance to become Lucky Friends",
-     "sources": [
-      "leekduck"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Rank 10: Additional bonus tasks for the event GO Pass will be available during the event.",
-     "sources": [
-      "leekduck"
-     ],
-     "status": "single"
-    }
-   ],
-   "research": [
-    {
-     "text": "Complete event-themed Field Research tasks to earn Mega Energy and encounters with event-themed Pokémon, including Staryu, Elgyem, and more!",
-     "sources": [
-      "leekduck",
-      "hub"
-     ],
-     "status": "corroborated"
-    },
-    {
-     "text": "Celebrate the Twilight Trails Season finale with additional encounters featuring Pokémon from throughout the Season. These Field Research rewards change during the event.",
-     "sources": [
-      "leekduck"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "To celebrate the end of the Twilight Trails Season, additional Field Research encounters will rotate during the event , featuring Pokémon from earlier seasonal events. All Field Research rotation times are local time.",
-     "sources": [
-      "hub"
-     ],
-     "status": "single"
-    }
-   ],
-   "passes": [],
-   "tickets": [
-    {
-     "text": "GO Pass Deluxe costs US$4.99 (or the equivalent local pricing tier). It offers upgraded rewards and faster progression.",
-     "sources": [
-      "leekduck",
-      "hub"
-     ],
-     "status": "corroborated"
-    },
-    {
-     "text": "For US$6.99 (or the equivalent local pricing tier), GO Pass Deluxe + 6 Ranks also provides enough GO Points to reach Rank 7.",
-     "sources": [
-      "leekduck"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Deluxe includes rewards from both tracks. You can upgrade while the pass is available and claim rewards from ranks you have already unlocked. Availability may vary by region.",
-     "sources": [
-      "leekduck"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Claim all unlocked rewards by Wednesday, December 2, 2026, at 8:00 p.m. local time , before they expire.",
-     "sources": [
-      "leekduck"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "A special GO Pass: Twilight Wishes will be available from Tuesday, November 24, at 10:00 a.m. to Monday, November 30, 2026, at 8:00 p.m. local time .",
-     "sources": [
-      "hub"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "The event features a free GO Pass and a paid GO Pass Deluxe, both offering rewards as Trainers collect GO Points and progress through ranks.",
-     "sources": [
-      "hub"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "All Trainers automatically receive the free GO Pass: Twilight Wishes on November 24 at 10:00 a.m. local time.",
-     "sources": [
-      "hub"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Earn GO Points by completing Pass Tasks and rank up through November 30 at 8:00 p.m. local time.",
-     "sources": [
-      "hub"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Additional bonus tasks will become available during the event.",
-     "sources": [
-      "hub"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Complete Pass Tasks and rank up to earn rewards, including:",
-     "sources": [
-      "hub"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Encounters with event-themed Pokémon",
-     "sources": [
-      "hub"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Mega Energy for Beedrill, Houndoom, Sableye, and Manectric",
-     "sources": [
-      "hub"
-     ],
-     "status": "single"
-    }
-   ],
-   "sources": [
-    {
-     "id": "leekduck",
-     "name": "Leek Duck",
-     "trust": "community",
-     "url": "https://leekduck.com/events/twilight-wishes-2026/"
-    },
-    {
-     "id": "hub",
-     "name": "Pokémon GO Hub",
-     "trust": "community",
-     "url": "https://pokemongohub.net/post/event/twilight-wishes-2026/"
-    }
-   ],
-   "pokemon": [
-    {
-     "key": "120:base:none",
-     "speciesId": "120",
-     "formId": null,
-     "costumeId": null,
-     "shiny": "unknown",
-     "assetKey": null,
-     "name": "Staryu",
-     "label": null,
-     "debut": null,
-     "boostedShiny": null,
-     "collectionName": "Staryu"
-    },
-    {
-     "key": "15:mega:none",
-     "speciesId": "15",
-     "formId": "mega",
-     "costumeId": null,
-     "shiny": "unknown",
-     "assetKey": null,
-     "name": "Mega Beedrill",
-     "label": null,
-     "debut": null,
-     "boostedShiny": null,
-     "collectionName": "Mega Beedrill"
-    },
-    {
-     "key": "196:base:sunscarf",
-     "speciesId": "196",
-     "formId": null,
-     "costumeId": "sunscarf",
-     "shiny": "unknown",
-     "assetKey": null,
-     "name": "Espeon",
-     "label": "sun scarf",
-     "debut": null,
-     "boostedShiny": null,
-     "collectionName": "Espeon (sun scarf)"
-    },
-    {
-     "key": "197:base:moonscarf",
-     "speciesId": "197",
-     "formId": null,
-     "costumeId": "moonscarf",
-     "shiny": "unknown",
-     "assetKey": null,
-     "name": "Umbreon",
-     "label": "moon scarf",
-     "debut": null,
-     "boostedShiny": null,
-     "collectionName": "Umbreon (moon scarf)"
-    },
-    {
-     "key": "25:base:mooncrown",
-     "speciesId": "25",
-     "formId": null,
-     "costumeId": "mooncrown",
-     "shiny": "unknown",
-     "assetKey": null,
-     "name": "Pikachu",
-     "label": "moon crown",
-     "debut": null,
-     "boostedShiny": null,
-     "collectionName": "Pikachu (moon crown)"
-    },
-    {
-     "key": "25:base:suncrown",
-     "speciesId": "25",
-     "formId": null,
-     "costumeId": "suncrown",
-     "shiny": "unknown",
-     "assetKey": null,
-     "name": "Pikachu",
-     "label": "sun crown",
-     "debut": null,
-     "boostedShiny": null,
-     "collectionName": "Pikachu (sun crown)"
-    },
-    {
-     "key": "302:mega:none",
-     "speciesId": "302",
-     "formId": "mega",
-     "costumeId": null,
-     "shiny": "unknown",
-     "assetKey": null,
-     "name": "Mega Sableye",
-     "label": null,
-     "debut": null,
-     "boostedShiny": null,
-     "collectionName": "Mega Sableye"
-    },
-    {
-     "key": "35:base:none",
-     "speciesId": "35",
-     "formId": null,
-     "costumeId": null,
-     "shiny": "unknown",
-     "assetKey": null,
-     "name": "Clefairy",
-     "label": null,
-     "debut": null,
-     "boostedShiny": null,
-     "collectionName": "Clefairy"
-    },
-    {
-     "key": "605:base:none",
-     "speciesId": "605",
-     "formId": null,
-     "costumeId": null,
-     "shiny": "unknown",
-     "assetKey": null,
-     "name": "Elgyem",
-     "label": null,
-     "debut": null,
-     "boostedShiny": null,
-     "collectionName": "Elgyem"
-    },
-    {
-     "key": "744:base:none",
-     "speciesId": "744",
-     "formId": null,
-     "costumeId": null,
-     "shiny": "unknown",
-     "assetKey": null,
-     "name": "Rockruff",
-     "label": null,
-     "debut": null,
-     "boostedShiny": null,
-     "collectionName": "Rockruff"
-    }
-   ],
-   "encounters": [
-    {
-     "identityKey": "15:mega:none",
-     "method": "raid",
-     "activityId": "main",
-     "access": "unknown"
-    },
-    {
-     "identityKey": "196:base:sunscarf",
-     "method": "raid",
-     "activityId": "main",
-     "access": "unknown"
-    },
-    {
-     "identityKey": "197:base:moonscarf",
-     "method": "raid",
-     "activityId": "main",
-     "access": "unknown"
-    },
-    {
-     "identityKey": "25:base:mooncrown",
-     "method": "raid",
-     "activityId": "main",
-     "access": "unknown"
-    },
-    {
-     "identityKey": "25:base:suncrown",
-     "method": "raid",
-     "activityId": "main",
-     "access": "unknown"
-    },
-    {
-     "identityKey": "302:mega:none",
-     "method": "raid",
-     "activityId": "main",
-     "access": "unknown"
-    },
-    {
-     "identityKey": "120:base:none",
-     "method": "wild",
-     "activityId": "main",
-     "access": "unknown"
-    },
-    {
-     "identityKey": "35:base:none",
-     "method": "wild",
-     "activityId": "main",
-     "access": "unknown"
-    },
-    {
-     "identityKey": "605:base:none",
-     "method": "wild",
-     "activityId": "main",
-     "access": "unknown"
-    },
-    {
-     "identityKey": "744:base:none",
-     "method": "wild",
-     "activityId": "main",
-     "access": "unknown"
-    }
-   ],
-   "groups": {
-    "raid": [
-     {
-      "identityKey": "15:mega:none",
-      "method": "raid",
-      "activityId": "main",
-      "access": "unknown"
-     },
-     {
-      "identityKey": "196:base:sunscarf",
-      "method": "raid",
-      "activityId": "main",
-      "access": "unknown"
-     },
-     {
-      "identityKey": "197:base:moonscarf",
-      "method": "raid",
-      "activityId": "main",
-      "access": "unknown"
-     },
-     {
-      "identityKey": "25:base:mooncrown",
-      "method": "raid",
-      "activityId": "main",
-      "access": "unknown"
-     },
-     {
-      "identityKey": "25:base:suncrown",
-      "method": "raid",
-      "activityId": "main",
-      "access": "unknown"
-     },
-     {
-      "identityKey": "302:mega:none",
-      "method": "raid",
-      "activityId": "main",
-      "access": "unknown"
-     }
-    ],
-    "wild": [
-     {
-      "identityKey": "120:base:none",
-      "method": "wild",
-      "activityId": "main",
-      "access": "unknown"
-     },
-     {
-      "identityKey": "35:base:none",
-      "method": "wild",
-      "activityId": "main",
-      "access": "unknown"
-     },
-     {
-      "identityKey": "605:base:none",
-      "method": "wild",
-      "activityId": "main",
-      "access": "unknown"
-     },
-     {
-      "identityKey": "744:base:none",
-      "method": "wild",
-      "activityId": "main",
-      "access": "unknown"
-     }
-    ]
-   }
   },
   {
    "schemaVersion": 1,
@@ -25473,6 +24156,7 @@
      "start": "2026-11-14T17:00",
      "end": "2026-11-19T23:59"
     },
+    "imageUnattributed": true,
     "contentHash": "7bc8ab834d85ace1a535937873b7e480329c4029c6fc52ddcd48b0669f4305bf",
     "revision": 4,
     "amended": false,
@@ -25646,6 +24330,7 @@
      "start": "2026-12-11T17:00",
      "end": "2026-12-16T23:59"
     },
+    "imageUnattributed": true,
     "contentHash": "1a1f3579d2f7abce868df55b2d213b271adca8a3e4ab3690be3517553c849060",
     "revision": 4,
     "amended": false,
@@ -27238,7 +25923,7 @@
    "lifecycle": "announced",
    "attendance": "in-person",
    "location": "Paseo de la Reforma, Mexico City, Mexico",
-   "image": null,
+   "image": "https://lh3.googleusercontent.com/amZCm7hWvQi5faSuF2MzGHthmh421MKmnfEplatJaH6_H4bWexSV-x9ik-qo46XY6rk2WItYjMlH1UjzgD2fQuheGO1L6X8sAkktyluMBEd0",
    "notes": [],
    "internalValidation": {
     "warnings": [],
@@ -27251,7 +25936,7 @@
      "start": "2026-10-31",
      "end": "2026-11-05"
     },
-    "contentHash": "b39daccebd7c6637857899ef8bc914d495f21faf20fbc6c4039d80fef7b6d015",
+    "contentHash": "d7467da1d9a94bbaaee0a83e3f73ec8d78355a326abdc99ff594b94cf8c76993",
     "revision": 2,
     "amended": false,
     "native": false,
@@ -33621,7 +32306,7 @@
    "title": "Pokémon GO Wild Area 2026: Sendai • Tohoku",
    "dateText": "",
    "completeness": "partial",
-   "lifecycle": "reference",
+   "lifecycle": "announced",
    "attendance": "in-person",
    "location": "Sendai, Japan",
    "image": "https://lh3.googleusercontent.com/mKoeqvHXmLsEsFxHgdhcK2XoC_XhjXUDl8gvBeH0iEfQTCNOuNY_vJ_k7QRoIYJFfVanVY_aE6ERNdqPgOPpOxvRQaw0I4T1YzTnodb8GUY",
@@ -33748,7 +32433,7 @@
        "status": "single"
       },
       {
-       "text": "Machamp wearing a modern jacket appears in three-star raids during event hours and may be Shiny.",
+       "text": "Machamp wearing a modern jacket appears in three-star raids during event hours. Leek Duck says it may be Shiny; the official event page does not confirm this.",
        "sources": [
         "leekduck"
        ],
@@ -33922,7 +32607,7 @@
        "status": "single"
       },
       {
-       "text": "Machamp wearing a modern jacket appears in three-star raids during event hours and may be Shiny.",
+       "text": "Machamp wearing a modern jacket appears in three-star raids during event hours. Leek Duck says it may be Shiny; the official event page does not confirm this.",
        "sources": [
         "leekduck"
        ],
@@ -33967,7 +32652,7 @@
        "status": "single"
       },
       {
-       "text": "Machamp wearing a modern jacket appears in three-star raids during event hours and may be Shiny.",
+       "text": "Machamp wearing a modern jacket appears in three-star raids during event hours. Leek Duck says it may be Shiny; the official event page does not confirm this.",
        "sources": [
         "leekduck"
        ],
@@ -34079,8 +32764,8 @@
      "end": ""
     },
     "imageReviewed": true,
-    "contentHash": "89e75be1fa54507ce0903e180af3ca57a431647a6ea779aee51b56a5b2ba422a",
-    "revision": 8,
+    "contentHash": "de0f004343c103e0d878fd44bb981937e8dd887de7993ba8f76e88592f9e9300",
+    "revision": 9,
     "amended": false,
     "native": false,
     "collection": "events"
@@ -35784,7 +34469,9 @@
   {
    "schemaVersion": 1,
    "eventId": "smr2",
-   "aliases": [],
+   "aliases": [
+    "leekduck:super-mega-raid-day-november-2026"
+   ],
    "family": "raid-day",
    "title": "Super Mega Raid Day",
    "dateText": "",
@@ -35792,7 +34479,7 @@
    "lifecycle": "announced",
    "attendance": "",
    "location": null,
-   "image": null,
+   "image": "https://lh3.googleusercontent.com/HyFWaQMZqtZNT3Sb3uFeHyWMBFI8bB_4hNQ2NLrpfBGrH1YijjIr1n0ZNC0YlNAZHPpfiWTq0zzgT9MRUFzlMoEjN4ENEm0AlnuJFZRA9CQ",
    "notes": [
     "Clefable Super Mega Raid Day: Mega Clefable debuts in Super Mega Raids; defeating it lets you encounter Clefable with Mega Level 1 unlocked, with an increased chance of Shiny Clefable.",
     "Remote Raid limit 20 from Fri Nov 27, 5 pm to Sat Nov 28, 8 pm PST. Up to six free Raid Passes from Gym Photo Discs. Optional US$4.99 ticket: up to 14 Raid Passes, more Rare Candy XL, plus 5,000 XP and 5,000 Stardust from Super Mega Raids.",
@@ -35800,29 +34487,292 @@
    ],
    "internalValidation": {
     "warnings": [],
-    "lifecycleDeclared": false,
+    "lifecycleDeclared": true,
     "conflicts": [],
     "fields": {
-     "bonuses": [],
-     "featured": [],
+     "bonuses": [
+      {
+       "text": "Remote Raid limit increased to 20 from Friday, November 27, at 5:00 p.m. to Saturday, November 28, 2026, at 8:00 p.m. PST.",
+       "sources": [
+        "official",
+        "hub"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Receive up to six free Raid Passes from spinning Gym Photo Discs.",
+       "sources": [
+        "official",
+        "hub"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Clefable caught from Super Mega Raids will have Mega Level 1 unlocked.",
+       "sources": [
+        "official",
+        "hub"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Increased chance of encountering Shiny Clefable from Super Mega Raids.",
+       "sources": [
+        "official",
+        "hub"
+       ],
+       "status": "official"
+      }
+     ],
+     "featured": [
+      {
+       "text": "Mega-Evolved Pokémon Debut",
+       "sources": [
+        "official",
+        "leekduck"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Mega Clefable*",
+       "sources": [
+        "official",
+        "leekduck",
+        "hub"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Clefable caught from raids has the following CP ranges:",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "From 1322 CP to 1392 CP with no weather boost",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "From 1653 CP to 1741 CP with the Cloudy weather boost",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      }
+     ],
      "raids": [
       {
-       "text": "The Super Mega Raid Day event will take place on November 28, 2026 from 2 pm to 5 pm. Stay tuned for more details.",
+       "text": "Saturday, November 28, 2026, from 2:00 p.m. to 5:00 p.m. local time",
+       "sources": [
+        "official",
+        "leekduck",
+        "hub"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Super Mega Raids will take great teamwork and may only appear at certain Gyms, so we’re making it easier to find both these raids and other Trainers to help you take them on!",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "You can visit the Map to see the locations where Super Mega Raids might appear during an event, in addition to those in progress.",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Expected event-exclusive Timed Research",
        "sources": [
         "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Timed Research will be available during the event, with rewards including one Premium Battle Pass and an encounter with Metagross .",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "The tasks and other rewards below are expected based on Chandelure Super Mega Raid Day and will be confirmed when the event begins.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Complete the Timed Research tasks and claim their rewards before the research expires.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Super Mega Raids take teamwork and only appear at certain Gyms, often in parks and similar locations. The official Pokémon GO map shows where Super Mega Raids might appear during the event, plus raids in progress.",
+       "sources": [
+        "hub"
        ],
        "status": "single"
       }
      ],
      "eggs": [],
-     "research": [],
-     "shiny": [],
+     "research": [
+      {
+       "text": "Timed Research will be available to Trainers during the event! Complete the research tasks to earn a Premium Battle Pass and an encounter with Metagross.",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Please note that Timed Research expires. The tasks associated with Timed Research must be completed and their rewards must be claimed before the Timed Research ends.",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Complete the event Timed Research for a Premium Battle Pass and an encounter with Metagross , one of the best Mega Clefable counters. Claim the rewards before the research expires.",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      }
+     ],
+     "shiny": [
+      {
+       "text": "Increased chance of encountering Shiny Clefable from Super Mega Raids.",
+       "sources": [
+        "official",
+        "leekduck",
+        "hub"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Regular Sprite | Shiny Sprite",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      }
+     ],
      "moves": [],
      "costumes": [],
-     "tickets": [],
+     "tickets": [
+      {
+       "text": "For US$4.99 (or the equivalent pricing tier in your local currency), you can purchase a ticket that grants the following bonuses.*",
+       "sources": [
+        "official",
+        "leekduck",
+        "hub"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Receive up to 14 Raid Passes from spinning Gym Photo Discs.",
+       "sources": [
+        "official",
+        "hub"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Increased chance to get Rare Candy XL from Raid Battles.",
+       "sources": [
+        "official",
+        "hub"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "An additional 5,000 XP from Super Mega Raids.",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "These bonuses will be effective on Saturday, November 28, 2026, from 2:00 p.m. to 5:00 p.m. local time.",
+       "sources": [
+        "official",
+        "leekduck",
+        "hub"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Check it out in the Pokémon GO Web Store soon! You never know what else you may find.",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "—The Pokémon GO team",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Tickets can be gifted to friends at Great Friends or higher. Purchases, including gifts, are non-refundable, subject to applicable law and the Terms of Service. Tickets cannot be purchased with PokéCoins.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "5,000 extra XP from Super Mega Raids",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "You can gift tickets to friends you’re at least Great Friends with. Purchases are non-refundable.",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Better deal: The Clefable Super Mega Raid Day Ultra Ticket Box in the Pokémon GO Web Store costs the same US$4.99 and adds a bonus Premium Battle Pass .",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      }
+     ],
      "dates": [
       {
-       "text": "The Super Mega Raid Day event will take place on November 28, 2026 from 2 pm to 5 pm. Stay tuned for more details.",
+       "text": "Saturday, November 28, 2026, from 2:00 p.m. to 5:00 p.m. local time",
+       "sources": [
+        "official",
+        "leekduck",
+        "hub"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Based on the results of the Global Challenge, Mega Clefable will receive the following bonuses from Monday, November 30, at 12:00 p.m. PST until Sunday, December 13, at 12:00 p.m. PST",
+       "sources": [
+        "official",
+        "hub"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "The completed tiers determine the strength of the following rewards, available from Monday, November 30, at 12:00 p.m. to Sunday, December 13, 2026, at 12:00 p.m. PST :",
        "sources": [
         "leekduck"
        ],
@@ -35831,23 +34781,165 @@
      ]
     },
     "info": [],
-    "detailRefs": [],
+    "detailRefs": [
+     "leekduck:super-mega-raid-day-november-2026"
+    ],
     "legacyDates": {
-     "start": "2026-11-28T14:00",
-     "end": "2026-11-28T17:00"
+     "start": "",
+     "end": ""
     },
-    "contentHash": "364296abace01e85f5f27f2db7c612bda011bcc9244ca4830ecca4c67be7cce0",
-    "revision": 3,
+    "imageReviewed": true,
+    "contentHash": "42bf34d735c55ef847b4d093e6ec357e8a4fc85619d1441ded2cc57361fc69d3",
+    "revision": 5,
     "amended": false,
     "native": false,
     "collection": "events"
    },
    "schedule": null,
    "activities": [],
-   "bonuses": [],
-   "research": [],
+   "bonuses": [
+    {
+     "text": "Remote Raid limit increased to 20 from Friday, November 27, at 5:00 p.m. to Saturday, November 28, 2026, at 8:00 p.m. PST.",
+     "sources": [
+      "official",
+      "hub"
+     ],
+     "status": "official"
+    },
+    {
+     "text": "Receive up to six free Raid Passes from spinning Gym Photo Discs.",
+     "sources": [
+      "official",
+      "hub"
+     ],
+     "status": "official"
+    },
+    {
+     "text": "Clefable caught from Super Mega Raids will have Mega Level 1 unlocked.",
+     "sources": [
+      "official",
+      "hub"
+     ],
+     "status": "official"
+    },
+    {
+     "text": "Increased chance of encountering Shiny Clefable from Super Mega Raids.",
+     "sources": [
+      "official",
+      "hub"
+     ],
+     "status": "official"
+    }
+   ],
+   "research": [
+    {
+     "text": "Timed Research will be available to Trainers during the event! Complete the research tasks to earn a Premium Battle Pass and an encounter with Metagross.",
+     "sources": [
+      "official"
+     ],
+     "status": "official"
+    },
+    {
+     "text": "Please note that Timed Research expires. The tasks associated with Timed Research must be completed and their rewards must be claimed before the Timed Research ends.",
+     "sources": [
+      "official"
+     ],
+     "status": "official"
+    },
+    {
+     "text": "Complete the event Timed Research for a Premium Battle Pass and an encounter with Metagross , one of the best Mega Clefable counters. Claim the rewards before the research expires.",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
+    }
+   ],
    "passes": [],
-   "tickets": [],
+   "tickets": [
+    {
+     "text": "For US$4.99 (or the equivalent pricing tier in your local currency), you can purchase a ticket that grants the following bonuses.*",
+     "sources": [
+      "official",
+      "leekduck",
+      "hub"
+     ],
+     "status": "official"
+    },
+    {
+     "text": "Receive up to 14 Raid Passes from spinning Gym Photo Discs.",
+     "sources": [
+      "official",
+      "hub"
+     ],
+     "status": "official"
+    },
+    {
+     "text": "Increased chance to get Rare Candy XL from Raid Battles.",
+     "sources": [
+      "official",
+      "hub"
+     ],
+     "status": "official"
+    },
+    {
+     "text": "An additional 5,000 XP from Super Mega Raids.",
+     "sources": [
+      "official"
+     ],
+     "status": "official"
+    },
+    {
+     "text": "These bonuses will be effective on Saturday, November 28, 2026, from 2:00 p.m. to 5:00 p.m. local time.",
+     "sources": [
+      "official",
+      "leekduck",
+      "hub"
+     ],
+     "status": "official"
+    },
+    {
+     "text": "Check it out in the Pokémon GO Web Store soon! You never know what else you may find.",
+     "sources": [
+      "official"
+     ],
+     "status": "official"
+    },
+    {
+     "text": "—The Pokémon GO team",
+     "sources": [
+      "official"
+     ],
+     "status": "official"
+    },
+    {
+     "text": "Tickets can be gifted to friends at Great Friends or higher. Purchases, including gifts, are non-refundable, subject to applicable law and the Terms of Service. Tickets cannot be purchased with PokéCoins.",
+     "sources": [
+      "leekduck"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "5,000 extra XP from Super Mega Raids",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "You can gift tickets to friends you’re at least Great Friends with. Purchases are non-refundable.",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Better deal: The Clefable Super Mega Raid Day Ultra Ticket Box in the Pokémon GO Web Store costs the same US$4.99 and adds a bonus Premium Battle Pass .",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
+    }
+   ],
    "sources": [
     {
      "id": "leekduck",
@@ -35858,6 +34950,24 @@
     {
      "url": "https://leekduck.com/events/super-mega-raid-day-november-2026/",
      "name": "Event source"
+    },
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "trust": "official",
+     "url": "https://pokemongo.com/news/clefable-super-mega-raid-day-2026/"
+    },
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/clefable-super-mega-raid-day-2026/"
+    },
+    {
+     "id": "hub",
+     "name": "Pokémon GO Hub",
+     "trust": "community",
+     "url": "https://pokemongohub.net/post/event/super-mega-clefable-raid-day/"
     }
    ],
    "pokemon": [],
@@ -38074,7 +37184,10 @@
   {
    "schemaVersion": 1,
    "eventId": "twilightwishes",
-   "aliases": [],
+   "aliases": [
+    "leekduck:twilight-wishes-2026",
+    "w-twilight-wishes"
+   ],
    "family": "other",
    "title": "Twilight Wishes",
    "dateText": "",
@@ -38082,7 +37195,7 @@
    "lifecycle": "announced",
    "attendance": "",
    "location": null,
-   "image": null,
+   "image": "https://cdn.leekduck.com/assets/img/events/twilight-wishes-2026.jpg?v2",
    "notes": [
     "Official event: November 24, 10 am to November 30, 8 pm local time. Increased chance to encounter Shiny Staryu and Shiny Elgyem; no numerical shiny odds were announced.",
     "Wild encounters include shiny-eligible Clefairy, Staryu and Elgyem, with Rockruff appearing if lucky.",
@@ -38093,7 +37206,7 @@
    ],
    "internalValidation": {
     "warnings": [],
-    "lifecycleDeclared": false,
+    "lifecycleDeclared": true,
     "conflicts": [],
     "fields": {
      "bonuses": [
@@ -38105,28 +37218,59 @@
        "status": "single"
       },
       {
-       "text": "Rank 1: Increased chance to get Lucky Pokémon in trades",
+       "text": "The following bonuses will be active during Twilight Wishes:",
        "sources": [
-        "leekduck"
+        "hub"
        ],
        "status": "single"
       },
       {
-       "text": "Rank 1: Increased chance to become Lucky Friends",
+       "text": "Increased chance to encounter Shiny Staryu and Shiny Elgyem",
        "sources": [
-        "leekduck"
+        "hub"
        ],
        "status": "single"
+      },
+      {
+       "text": "The event also features special decorations, with stars lighting up the in-game skies throughout Twilight Wishes.",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Additional bonuses, including increased Lucky Trade chances and catch Stardust, can be unlocked through the event GO Pass.",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 1: Increased chance to get Lucky Pokémon in trades",
+       "sources": [
+        "leekduck",
+        "hub"
+       ],
+       "status": "corroborated"
       },
       {
        "text": "Rank 10: 2× Stardust for catching Pokémon",
        "sources": [
-        "leekduck"
+        "leekduck",
+        "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
        "text": "Rank 10: GO Pass Deluxe: 3× Stardust for catching Pokémon",
+       "sources": [
+        "leekduck",
+        "hub"
+       ],
+       "status": "corroborated"
+      },
+      {
+       "text": "Rank 1: Increased chance to become Lucky Friends",
        "sources": [
         "leekduck"
        ],
@@ -38142,21 +37286,23 @@
      ],
      "featured": [
       {
-       "text": "Espeon wearing a sun scarf, Umbreon wearing a moon scarf, and Rockruff are featured during Twilight Wishes. All three can be Shiny if you’re lucky!",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
        "text": "The following Pokémon will appear in the wild, along with other event-themed Pokémon.",
        "sources": [
-        "leekduck"
+        "leekduck",
+        "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
        "text": "If you’re lucky, you might also encounter Rockruff!",
+       "sources": [
+        "leekduck",
+        "hub"
+       ],
+       "status": "corroborated"
+      },
+      {
+       "text": "Espeon wearing a sun scarf, Umbreon wearing a moon scarf, and Rockruff are featured during Twilight Wishes. All three can be Shiny if you’re lucky!",
        "sources": [
         "leekduck"
        ],
@@ -38210,22 +37356,39 @@
         "leekduck"
        ],
        "status": "single"
+      },
+      {
+       "text": "All featured Pokémon listed above can be encountered as Shiny Pokémon, if you’re lucky.",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
       }
      ],
      "raids": [
       {
        "text": "Pikachu wearing a sun crown",
        "sources": [
-        "leekduck"
+        "leekduck",
+        "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
        "text": "Espeon wearing a sun scarf",
        "sources": [
-        "leekduck"
+        "leekduck",
+        "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
+      },
+      {
+       "text": "Mega Manectric",
+       "sources": [
+        "leekduck",
+        "hub"
+       ],
+       "status": "corroborated"
       },
       {
        "text": "Umbreon wearing a moon scarf",
@@ -38235,9 +37398,16 @@
        "status": "single"
       },
       {
-       "text": "Mega Manectric",
+       "text": "Event-themed Pokémon will appear in one-star, three-star, and Mega Raids throughout Twilight Wishes. All Pokémon featured in these event raids have a chance to be encountered as Shiny Pokémon.",
        "sources": [
-        "leekduck"
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "⚔️ Related raid guides: Espeon Raid Guide , Umbreon Raid Guide",
+       "sources": [
+        "hub"
        ],
        "status": "single"
       }
@@ -38247,9 +37417,10 @@
       {
        "text": "Complete event-themed Field Research tasks to earn Mega Energy and encounters with event-themed Pokémon, including Staryu, Elgyem, and more!",
        "sources": [
-        "leekduck"
+        "leekduck",
+        "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
        "text": "Celebrate the Twilight Trails Season finale with additional encounters featuring Pokémon from throughout the Season. These Field Research rewards change during the event.",
@@ -38257,9 +37428,24 @@
         "leekduck"
        ],
        "status": "single"
+      },
+      {
+       "text": "To celebrate the end of the Twilight Trails Season, additional Field Research encounters will rotate during the event , featuring Pokémon from earlier seasonal events. All Field Research rotation times are local time.",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
       }
      ],
      "shiny": [
+      {
+       "text": "Staryu and Elgyem have an increased chance of being Shiny during the event.",
+       "sources": [
+        "leekduck",
+        "hub"
+       ],
+       "status": "corroborated"
+      },
       {
        "text": "Espeon wearing a sun scarf, Umbreon wearing a moon scarf, and Rockruff are featured during Twilight Wishes. All three can be Shiny if you’re lucky!",
        "sources": [
@@ -38268,9 +37454,30 @@
        "status": "single"
       },
       {
-       "text": "Staryu and Elgyem have an increased chance of being Shiny during the event.",
+       "text": "Sun Scarf Espeon and Moon Scarf Umbreon return alongside boosted Shiny encounters, themed raids, and a special GO Pass to close out the Twilight Trails Season.",
        "sources": [
-        "leekduck"
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "The following Pokémon will have an increased chance of appearing as Shiny Pokémon during Twilight Wishes:",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "All featured Pokémon listed above can be encountered as Shiny Pokémon, if you’re lucky.",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Event-themed Pokémon will appear in one-star, three-star, and Mega Raids throughout Twilight Wishes. All Pokémon featured in these event raids have a chance to be encountered as Shiny Pokémon.",
+       "sources": [
+        "hub"
        ],
        "status": "single"
       }
@@ -38280,19 +37487,21 @@
       {
        "text": "Espeon wearing a sun scarf, Umbreon wearing a moon scarf, and Rockruff are featured during Twilight Wishes. All three can be Shiny if you’re lucky!",
        "sources": [
-        "leekduck"
+        "leekduck",
+        "hub"
        ],
-       "status": "single"
-      },
-      {
-       "text": "Pikachu wearing a sun crown",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
        "text": "Gengar wearing a Spooky Festival costume",
+       "sources": [
+        "leekduck",
+        "hub"
+       ],
+       "status": "corroborated"
+      },
+      {
+       "text": "Pikachu wearing a sun crown",
        "sources": [
         "leekduck"
        ],
@@ -38310,9 +37519,10 @@
       {
        "text": "GO Pass Deluxe costs US$4.99 (or the equivalent local pricing tier). It offers upgraded rewards and faster progression.",
        "sources": [
-        "leekduck"
+        "leekduck",
+        "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
        "text": "For US$6.99 (or the equivalent local pricing tier), GO Pass Deluxe + 6 Ranks also provides enough GO Points to reach Rank 7.",
@@ -38334,26 +37544,86 @@
         "leekduck"
        ],
        "status": "single"
+      },
+      {
+       "text": "A special GO Pass: Twilight Wishes will be available from Tuesday, November 24, at 10:00 a.m. to Monday, November 30, 2026, at 8:00 p.m. local time .",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "The event features a free GO Pass and a paid GO Pass Deluxe, both offering rewards as Trainers collect GO Points and progress through ranks.",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "All Trainers automatically receive the free GO Pass: Twilight Wishes on November 24 at 10:00 a.m. local time.",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Earn GO Points by completing Pass Tasks and rank up through November 30 at 8:00 p.m. local time.",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Additional bonus tasks will become available during the event.",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Complete Pass Tasks and rank up to earn rewards, including:",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Encounters with event-themed Pokémon",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Mega Energy for Beedrill, Houndoom, Sableye, and Manectric",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
       }
      ],
      "dates": [
       {
        "text": "Twilight Wishes runs from Tuesday, November 24, at 10:00 a.m. to Monday, November 30, 2026, at 8:00 p.m. local time .",
        "sources": [
-        "leekduck"
+        "leekduck",
+        "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       }
      ]
     },
     "info": [],
-    "detailRefs": [],
+    "detailRefs": [
+     "leekduck:twilight-wishes-2026"
+    ],
     "legacyDates": {
-     "start": "2026-11-24T10:00",
-     "end": "2026-11-30T20:00"
+     "start": "",
+     "end": ""
     },
-    "contentHash": "43bff98b1e5101584613fa2c70d1406bb1c89f249ea8ea8de1ce45910b1e54fe",
-    "revision": 4,
+    "imageReviewed": true,
+    "contentHash": "dc1498da5a592d1e45dae848a4d980ca2c022b4196953d1f50ebcf78db5f9cb9",
+    "revision": 6,
     "amended": false,
     "native": false,
     "collection": "events"
@@ -38369,28 +37639,59 @@
      "status": "single"
     },
     {
-     "text": "Rank 1: Increased chance to get Lucky Pokémon in trades",
+     "text": "The following bonuses will be active during Twilight Wishes:",
      "sources": [
-      "leekduck"
+      "hub"
      ],
      "status": "single"
     },
     {
-     "text": "Rank 1: Increased chance to become Lucky Friends",
+     "text": "Increased chance to encounter Shiny Staryu and Shiny Elgyem",
      "sources": [
-      "leekduck"
+      "hub"
      ],
      "status": "single"
+    },
+    {
+     "text": "The event also features special decorations, with stars lighting up the in-game skies throughout Twilight Wishes.",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Additional bonuses, including increased Lucky Trade chances and catch Stardust, can be unlocked through the event GO Pass.",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Rank 1: Increased chance to get Lucky Pokémon in trades",
+     "sources": [
+      "leekduck",
+      "hub"
+     ],
+     "status": "corroborated"
     },
     {
      "text": "Rank 10: 2× Stardust for catching Pokémon",
      "sources": [
-      "leekduck"
+      "leekduck",
+      "hub"
      ],
-     "status": "single"
+     "status": "corroborated"
     },
     {
      "text": "Rank 10: GO Pass Deluxe: 3× Stardust for catching Pokémon",
+     "sources": [
+      "leekduck",
+      "hub"
+     ],
+     "status": "corroborated"
+    },
+    {
+     "text": "Rank 1: Increased chance to become Lucky Friends",
      "sources": [
       "leekduck"
      ],
@@ -38408,14 +37709,22 @@
     {
      "text": "Complete event-themed Field Research tasks to earn Mega Energy and encounters with event-themed Pokémon, including Staryu, Elgyem, and more!",
      "sources": [
-      "leekduck"
+      "leekduck",
+      "hub"
      ],
-     "status": "single"
+     "status": "corroborated"
     },
     {
      "text": "Celebrate the Twilight Trails Season finale with additional encounters featuring Pokémon from throughout the Season. These Field Research rewards change during the event.",
      "sources": [
       "leekduck"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "To celebrate the end of the Twilight Trails Season, additional Field Research encounters will rotate during the event , featuring Pokémon from earlier seasonal events. All Field Research rotation times are local time.",
+     "sources": [
+      "hub"
      ],
      "status": "single"
     }
@@ -38425,9 +37734,10 @@
     {
      "text": "GO Pass Deluxe costs US$4.99 (or the equivalent local pricing tier). It offers upgraded rewards and faster progression.",
      "sources": [
-      "leekduck"
+      "leekduck",
+      "hub"
      ],
-     "status": "single"
+     "status": "corroborated"
     },
     {
      "text": "For US$6.99 (or the equivalent local pricing tier), GO Pass Deluxe + 6 Ranks also provides enough GO Points to reach Rank 7.",
@@ -38449,6 +37759,62 @@
       "leekduck"
      ],
      "status": "single"
+    },
+    {
+     "text": "A special GO Pass: Twilight Wishes will be available from Tuesday, November 24, at 10:00 a.m. to Monday, November 30, 2026, at 8:00 p.m. local time .",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "The event features a free GO Pass and a paid GO Pass Deluxe, both offering rewards as Trainers collect GO Points and progress through ranks.",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "All Trainers automatically receive the free GO Pass: Twilight Wishes on November 24 at 10:00 a.m. local time.",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Earn GO Points by completing Pass Tasks and rank up through November 30 at 8:00 p.m. local time.",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Additional bonus tasks will become available during the event.",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Complete Pass Tasks and rank up to earn rewards, including:",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Encounters with event-themed Pokémon",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Mega Energy for Beedrill, Houndoom, Sableye, and Manectric",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
     }
    ],
    "sources": [
@@ -38461,6 +37827,22 @@
     {
      "url": "https://pokemongo.com/news/twilight-wishes-2026",
      "name": "Official Pokémon GO announcement"
+    },
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "url": "https://leekduck.com/events/twilight-wishes-2026/",
+     "auto": true
+    },
+    {
+     "url": "https://leekduck.com/events/twilight-wishes-2026/",
+     "name": "Event source"
+    },
+    {
+     "id": "hub",
+     "name": "Pokémon GO Hub",
+     "trust": "community",
+     "url": "https://pokemongohub.net/post/event/twilight-wishes-2026/"
     }
    ],
    "pokemon": [
@@ -38476,6 +37858,19 @@
      "debut": null,
      "boostedShiny": null,
      "collectionName": "Staryu"
+    },
+    {
+     "key": "15:mega:none",
+     "speciesId": "15",
+     "formId": "mega",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Mega Beedrill",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Mega Beedrill"
     },
     {
      "key": "196:base:sunscarf",
@@ -38528,6 +37923,19 @@
      "debut": null,
      "boostedShiny": null,
      "collectionName": "Pikachu (sun crown)"
+    },
+    {
+     "key": "302:mega:none",
+     "speciesId": "302",
+     "formId": "mega",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Mega Sableye",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Mega Sableye"
     },
     {
      "key": "35:base:none",
@@ -38665,6 +38073,66 @@
      "method": "other",
      "activityId": "main",
      "access": "unknown"
+    },
+    {
+     "identityKey": "15:mega:none",
+     "method": "raid",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "196:base:sunscarf",
+     "method": "raid",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "197:base:moonscarf",
+     "method": "raid",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "25:base:mooncrown",
+     "method": "raid",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "25:base:suncrown",
+     "method": "raid",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "302:mega:none",
+     "method": "raid",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "120:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "35:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "605:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "744:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
     }
    ],
    "groups": {
@@ -38765,6 +38233,70 @@
       "activityId": "main",
       "access": "unknown"
      }
+    ],
+    "raid": [
+     {
+      "identityKey": "15:mega:none",
+      "method": "raid",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "196:base:sunscarf",
+      "method": "raid",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "197:base:moonscarf",
+      "method": "raid",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "25:base:mooncrown",
+      "method": "raid",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "25:base:suncrown",
+      "method": "raid",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "302:mega:none",
+      "method": "raid",
+      "activityId": "main",
+      "access": "unknown"
+     }
+    ],
+    "wild": [
+     {
+      "identityKey": "120:base:none",
+      "method": "wild",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "35:base:none",
+      "method": "wild",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "605:base:none",
+      "method": "wild",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "744:base:none",
+      "method": "wild",
+      "activityId": "main",
+      "access": "unknown"
+     }
     ]
    }
   },
@@ -38779,7 +38311,7 @@
    "lifecycle": "announced",
    "attendance": "in-person",
    "location": "Participating AEON Malls, Japan",
-   "image": null,
+   "image": "https://lh3.googleusercontent.com/0zWMQdO3gvjwUdIIRijnKpqO-PR5Vn76MOYn94NohyV56I7vKscOqKwjvVKHGugW4WBYXN4ji6F0Pn8rSKTNSNaLSZYhe7CyH2s86vmP2v0",
    "notes": [],
    "internalValidation": {
     "warnings": [],
@@ -38792,7 +38324,7 @@
      "start": "2026-10-19",
      "end": "2026-11-01"
     },
-    "contentHash": "88f130c46658dbb085f4c9f08ae2cc1b513855315b08c59f01c71da32dff0d62",
+    "contentHash": "4b81bab5bce78bdefe105270496f9f4337e50bc97c978dd0bb93e2af70b5acb2",
     "revision": 2,
     "amended": false,
     "native": false,
@@ -39218,7 +38750,7 @@
    "lifecycle": "announced",
    "attendance": "in-person",
    "location": "Los Angeles, USA",
-   "image": null,
+   "image": "https://lh3.googleusercontent.com/h81gWCZI7QPWqLC9Kb-LE5utTRCFwXdO225OSVNQf-TkvVGAex0CVs10QchugDtpN3CKtaSdoiJltEVQhfYVHFtlxYwLwpmJ8fXL7kDsqw",
    "notes": [],
    "internalValidation": {
     "warnings": [],
@@ -39270,7 +38802,7 @@
      "start": "2026-10-24",
      "end": "2026-10-24"
     },
-    "contentHash": "1d207bd25aed195a284497c4563eec394de374710cef82a623820fb10c9a847d",
+    "contentHash": "03b9cd821a2bdae689822d2bf66d4eb84e71a3917228b761748e5416fdb8ce1a",
     "revision": 2,
     "amended": false,
     "native": false,
@@ -39319,7 +38851,7 @@
    "lifecycle": "announced",
    "attendance": "in-person",
    "location": "London, UK",
-   "image": null,
+   "image": "https://lh3.googleusercontent.com/h81gWCZI7QPWqLC9Kb-LE5utTRCFwXdO225OSVNQf-TkvVGAex0CVs10QchugDtpN3CKtaSdoiJltEVQhfYVHFtlxYwLwpmJ8fXL7kDsqw",
    "notes": [],
    "internalValidation": {
     "warnings": [],
@@ -39332,7 +38864,7 @@
      "start": "2026-11-10",
      "end": "2026-11-10"
     },
-    "contentHash": "ee623f9710cf71a25d8fcc8d9bced8f84306ae610d80fac3a3dca92342624ce3",
+    "contentHash": "bda545b0935ca0005570fcba0910b7849440e47640058bba52347b6f5cfe17ff",
     "revision": 2,
     "amended": false,
     "native": false,
@@ -39940,7 +39472,7 @@
    "lifecycle": "announced",
    "attendance": "",
    "location": null,
-   "image": null,
+   "image": "https://lh3.googleusercontent.com/u0gcBk4WxvszF4cKKAseYnVDOT8ombVKElMwM2f8545aa98EHjJADmhiyJ6EGXDRhLSlJn6SE4ESV6WVVRLfuQUTIM5Hx7wsKN80mLYxW4rt",
    "notes": [],
    "internalValidation": {
     "warnings": [],
@@ -39953,7 +39485,7 @@
      "start": "2026-10-19",
      "end": "2026-10-24"
     },
-    "contentHash": "7ce855b455799b44c5552b1ded09f9341f4c66bbdf1668d9ee1c55356a19b71e",
+    "contentHash": "e5c158968490ca543a6593a24377807f23596f79e83cc6edcfdea8ea9dab65a0",
     "revision": 3,
     "amended": false,
     "native": false,
@@ -40107,7 +39639,7 @@
    "lifecycle": "announced",
    "attendance": "",
    "location": null,
-   "image": null,
+   "image": "https://lh3.googleusercontent.com/j57haqLgq-cJEc1zh6_1jassToZ0zyuOvp3qcRAaROOH9KN83O6aOjwPcJMn0p0XtVCT5xd0bmbbaEi84t_T9sK1JLRpQj4ID7EGrMf7kZ8",
    "notes": [],
    "internalValidation": {
     "warnings": [],
@@ -40120,7 +39652,7 @@
      "start": "2026-10-24",
      "end": "2026-10-24"
     },
-    "contentHash": "d2b99a8369a5c44d0237b1e4b912325a155a413ed9a4a65e0f0d384c2933cc7a",
+    "contentHash": "eb9cb8b9b296b8d37c06bb8242217761b800d5ef8d70b8ff86d2a2c494982f09",
     "revision": 3,
     "amended": false,
     "native": false,
@@ -40244,7 +39776,7 @@
     },
     "imageReviewed": true,
     "contentHash": "2bc734bbc0384877a9299bd46137dea24f7131a8ee949d5e9a37646a6cc24dec",
-    "revision": 5,
+    "revision": 6,
     "amended": false,
     "native": false,
     "collection": "world-events"
@@ -40448,7 +39980,7 @@
    "lifecycle": "announced",
    "attendance": "in-person",
    "location": "Karlsruhe, Germany (Ettlinger Tor)",
-   "image": "https://lh3.googleusercontent.com/44ggmV081gROwILff_vc2fROBHVCfBGTlRPQ8EtwxMt0ePAkWpirNJMtFk0C3qzHyx7zQqfFAbzKsziiRTTz67bHWdZyRKJN1d7b9Z50Q0M",
+   "image": null,
    "notes": [],
    "internalValidation": {
     "warnings": [],
@@ -40522,8 +40054,9 @@
      "start": "2026-11-14",
      "end": "2026-11-15"
     },
-    "contentHash": "9ff7195a40d6b227179ba07e5be8d80c6d906273aa87d25f3aa5d101b03b072a",
-    "revision": 3,
+    "imageReviewed": true,
+    "contentHash": "758c635de3aa8f9c71e0e3c54c37d47bf863c44e4080e085818595e6695ec32b",
+    "revision": 6,
     "amended": false,
     "native": false,
     "collection": "world-events"
@@ -40566,7 +40099,7 @@
    "lifecycle": "announced",
    "attendance": "in-person",
    "location": "Stockholm, Sweden (Kulturhuset Stadsteatern)",
-   "image": "https://lh3.googleusercontent.com/44ggmV081gROwILff_vc2fROBHVCfBGTlRPQ8EtwxMt0ePAkWpirNJMtFk0C3qzHyx7zQqfFAbzKsziiRTTz67bHWdZyRKJN1d7b9Z50Q0M",
+   "image": null,
    "notes": [],
    "internalValidation": {
     "warnings": [],
@@ -40640,8 +40173,9 @@
      "start": "2026-11-14",
      "end": "2026-11-15"
     },
-    "contentHash": "a3fd2746e9101753d39497a4285defedf74465048ea6b95365f521b8a550e12f",
-    "revision": 3,
+    "imageReviewed": true,
+    "contentHash": "274727f8c0455af6e5bd7f5527ff39a18345587a25ac286189ad80ad07b9e104",
+    "revision": 6,
     "amended": false,
     "native": false,
     "collection": "world-events"
@@ -40735,7 +40269,7 @@
    "lifecycle": "announced",
    "attendance": "",
    "location": null,
-   "image": null,
+   "image": "https://lh3.googleusercontent.com/4QN-7EtDk7S7dxL9bKLbsUF7lbTaUTntnGzOG8qDk4xxOQFyY4dKt3tQQ2msv37JhacLDFrawLGXVAv_kv3tzE_kTXiIh_HbskFdKhNCHjlh",
    "notes": [],
    "internalValidation": {
     "warnings": [],
@@ -40748,7 +40282,7 @@
      "start": "2026-11-01",
      "end": "2026-11-05"
     },
-    "contentHash": "042f03de25257f12446c4feb0a897a2cf3b87ae1b997ae65302f43d3d1b34e7c",
+    "contentHash": "ace37194a4b973922457720f5b76e4a095e0daeccc3d047693832fdd55739964",
     "revision": 3,
     "amended": false,
     "native": false,
@@ -40769,58 +40303,6 @@
     },
     {
      "url": "https://leekduck.com/events/halloween-2026-part-2/",
-     "name": "Event source"
-    }
-   ],
-   "pokemon": [],
-   "encounters": [],
-   "groups": {}
-  },
-  {
-   "schemaVersion": 1,
-   "eventId": "w-into-the-wild",
-   "aliases": [],
-   "family": "other",
-   "title": "Into the Wild",
-   "dateText": "",
-   "completeness": "partial",
-   "lifecycle": "announced",
-   "attendance": "",
-   "location": "Play from anywhere",
-   "image": null,
-   "notes": [],
-   "internalValidation": {
-    "warnings": [],
-    "lifecycleDeclared": false,
-    "conflicts": [],
-    "fields": {},
-    "info": [],
-    "detailRefs": [],
-    "legacyDates": {
-     "start": "2026-11-09",
-     "end": "2026-11-13"
-    },
-    "contentHash": "5050d77b48559ed868cb770df3508fcf9462a6e705c808c27c87291731289d3e",
-    "revision": 3,
-    "amended": false,
-    "native": false,
-    "collection": "world-events"
-   },
-   "schedule": null,
-   "activities": [],
-   "bonuses": [],
-   "research": [],
-   "passes": [],
-   "tickets": [],
-   "sources": [
-    {
-     "id": "leekduck",
-     "name": "Leek Duck",
-     "url": "https://leekduck.com/events/into-the-wild-2026/",
-     "auto": true
-    },
-    {
-     "url": "https://leekduck.com/events/into-the-wild-2026/",
      "name": "Event source"
     }
    ],
@@ -40890,7 +40372,7 @@
    "lifecycle": "announced",
    "attendance": "in-person",
    "location": "Mexico City, Mexico (Paseo de la Reforma)",
-   "image": null,
+   "image": "https://lh3.googleusercontent.com/amZCm7hWvQi5faSuF2MzGHthmh421MKmnfEplatJaH6_H4bWexSV-x9ik-qo46XY6rk2WItYjMlH1UjzgD2fQuheGO1L6X8sAkktyluMBEd0",
    "notes": [],
    "internalValidation": {
     "warnings": [],
@@ -40903,7 +40385,7 @@
      "start": "2026-10-17",
      "end": "2026-11-16"
     },
-    "contentHash": "07273374480baff9b2b3d90af0d46471658046b47a121cbde56d76a9002c2227",
+    "contentHash": "99d85e976b9e9bb18cd4e784030c7b08ffc9b46cde44628a59161618de70cf4e",
     "revision": 2,
     "amended": false,
     "native": false,
@@ -41271,7 +40753,7 @@
    "lifecycle": "announced",
    "attendance": "in-person",
    "location": "Singapore (Changi Airport)",
-   "image": null,
+   "image": "https://lh3.googleusercontent.com/dFl-bn3on9Th9YzRT-Bs14neMfLhAsomPudR7lZ0l1j-1WERlgWfMrgd-pG9Kk5sVl1L9u3viOCWpGnVSlaLwwBcDrCayaXwSkC-eex8Qg",
    "notes": [],
    "internalValidation": {
     "warnings": [],
@@ -41288,7 +40770,10 @@
     "revision": 1,
     "amended": false,
     "native": false,
-    "collection": "world-events"
+    "collection": "world-events",
+    "artScope": "series",
+    "artSourceUrl": "https://pokemongo.com/news/apac-mall-exploration-2026/",
+    "artLabel": "Series artwork shared by every location of the Pokémon 30th Anniversary Mall Exploration"
    },
    "schedule": null,
    "activities": [],
@@ -41322,7 +40807,7 @@
    "lifecycle": "announced",
    "attendance": "in-person",
    "location": "Singapore (Jewel)",
-   "image": null,
+   "image": "https://lh3.googleusercontent.com/dFl-bn3on9Th9YzRT-Bs14neMfLhAsomPudR7lZ0l1j-1WERlgWfMrgd-pG9Kk5sVl1L9u3viOCWpGnVSlaLwwBcDrCayaXwSkC-eex8Qg",
    "notes": [],
    "internalValidation": {
     "warnings": [],
@@ -41335,11 +40820,14 @@
      "start": "2026-11-07",
      "end": "2027-01-31"
     },
-    "contentHash": "bd43368acf6c8fd222bdddc41bf090a5717863bb5ebe84c938c0606931746f8c",
+    "contentHash": "a3504ddc05436b44f78446cffb3593ebdc7bd5e7f9654e220df3e983b9a6a8ba",
     "revision": 2,
     "amended": false,
     "native": false,
-    "collection": "world-events"
+    "collection": "world-events",
+    "artScope": "series",
+    "artSourceUrl": "https://pokemongo.com/news/apac-mall-exploration-2026/",
+    "artLabel": "Series artwork shared by every location of the Pokémon 30th Anniversary Mall Exploration"
    },
    "schedule": null,
    "activities": [],
@@ -41373,7 +40861,7 @@
    "lifecycle": "announced",
    "attendance": "in-person",
    "location": "Malaysia (Ombak KLCC)",
-   "image": null,
+   "image": "https://lh3.googleusercontent.com/dFl-bn3on9Th9YzRT-Bs14neMfLhAsomPudR7lZ0l1j-1WERlgWfMrgd-pG9Kk5sVl1L9u3viOCWpGnVSlaLwwBcDrCayaXwSkC-eex8Qg",
    "notes": [],
    "internalValidation": {
     "warnings": [],
@@ -41386,11 +40874,14 @@
      "start": "2026-10-01",
      "end": "2026-12-31"
     },
-    "contentHash": "76063af8b674cb3c4c97b8725cdcfc309e7fc11e58461f5f58e3633a09518763",
+    "contentHash": "9c31fe45cde1678ce2257647436e3d3b2089dd1fff6cd4c12cd74c4b7d61d270",
     "revision": 2,
     "amended": false,
     "native": false,
-    "collection": "world-events"
+    "collection": "world-events",
+    "artScope": "series",
+    "artSourceUrl": "https://pokemongo.com/news/apac-mall-exploration-2026/",
+    "artLabel": "Series artwork shared by every location of the Pokémon 30th Anniversary Mall Exploration"
    },
    "schedule": null,
    "activities": [],
@@ -41424,7 +40915,7 @@
    "lifecycle": "announced",
    "attendance": "in-person",
    "location": "Philippines (SM CDO Downtown)",
-   "image": null,
+   "image": "https://lh3.googleusercontent.com/dFl-bn3on9Th9YzRT-Bs14neMfLhAsomPudR7lZ0l1j-1WERlgWfMrgd-pG9Kk5sVl1L9u3viOCWpGnVSlaLwwBcDrCayaXwSkC-eex8Qg",
    "notes": [],
    "internalValidation": {
     "warnings": [],
@@ -41437,11 +40928,14 @@
      "start": "2027-03-13",
      "end": "2027-03-28"
     },
-    "contentHash": "db2b9ee12d622590d64dad80fe5b11f94808340597fd03afa804d17fda3aaf06",
+    "contentHash": "9272b4ae8f344739b1c1c32db393548fc07b68a3c9b2b2308fe56cf05d744b37",
     "revision": 2,
     "amended": false,
     "native": false,
-    "collection": "world-events"
+    "collection": "world-events",
+    "artScope": "series",
+    "artSourceUrl": "https://pokemongo.com/news/apac-mall-exploration-2026/",
+    "artLabel": "Series artwork shared by every location of the Pokémon 30th Anniversary Mall Exploration"
    },
    "schedule": null,
    "activities": [],
@@ -41475,7 +40969,7 @@
    "lifecycle": "announced",
    "attendance": "in-person",
    "location": "Philippines (SM Davao)",
-   "image": null,
+   "image": "https://lh3.googleusercontent.com/dFl-bn3on9Th9YzRT-Bs14neMfLhAsomPudR7lZ0l1j-1WERlgWfMrgd-pG9Kk5sVl1L9u3viOCWpGnVSlaLwwBcDrCayaXwSkC-eex8Qg",
    "notes": [],
    "internalValidation": {
     "warnings": [],
@@ -41488,11 +40982,14 @@
      "start": "2027-02-20",
      "end": "2027-03-07"
     },
-    "contentHash": "ee6ed353b0e61923231caa195c2f61b8cc9cf92718dbbeefd9ee2956f821dc3c",
+    "contentHash": "6906e3358f260775ad31811bd5737b6c2532e6140f405e863263558e71d7ec71",
     "revision": 2,
     "amended": false,
     "native": false,
-    "collection": "world-events"
+    "collection": "world-events",
+    "artScope": "series",
+    "artSourceUrl": "https://pokemongo.com/news/apac-mall-exploration-2026/",
+    "artLabel": "Series artwork shared by every location of the Pokémon 30th Anniversary Mall Exploration"
    },
    "schedule": null,
    "activities": [],
@@ -41526,7 +41023,7 @@
    "lifecycle": "announced",
    "attendance": "in-person",
    "location": "Philippines (SM East Ortigas)",
-   "image": null,
+   "image": "https://lh3.googleusercontent.com/dFl-bn3on9Th9YzRT-Bs14neMfLhAsomPudR7lZ0l1j-1WERlgWfMrgd-pG9Kk5sVl1L9u3viOCWpGnVSlaLwwBcDrCayaXwSkC-eex8Qg",
    "notes": [],
    "internalValidation": {
     "warnings": [],
@@ -41539,11 +41036,14 @@
      "start": "2026-10-23",
      "end": "2026-11-08"
     },
-    "contentHash": "775a656350404eac46153f22576a85f64175ffbc7e547e0eb113c9db306a5555",
+    "contentHash": "f63da212422113819389274f088e4c9998d9cc703cceccd522c3b6fc1b0dc78f",
     "revision": 2,
     "amended": false,
     "native": false,
-    "collection": "world-events"
+    "collection": "world-events",
+    "artScope": "series",
+    "artSourceUrl": "https://pokemongo.com/news/apac-mall-exploration-2026/",
+    "artLabel": "Series artwork shared by every location of the Pokémon 30th Anniversary Mall Exploration"
    },
    "schedule": null,
    "activities": [],
@@ -41577,7 +41077,7 @@
    "lifecycle": "announced",
    "attendance": "in-person",
    "location": "Philippines (SM Mall of Asia)",
-   "image": null,
+   "image": "https://lh3.googleusercontent.com/dFl-bn3on9Th9YzRT-Bs14neMfLhAsomPudR7lZ0l1j-1WERlgWfMrgd-pG9Kk5sVl1L9u3viOCWpGnVSlaLwwBcDrCayaXwSkC-eex8Qg",
    "notes": [],
    "internalValidation": {
     "warnings": [],
@@ -41594,7 +41094,10 @@
     "revision": 1,
     "amended": false,
     "native": false,
-    "collection": "world-events"
+    "collection": "world-events",
+    "artScope": "series",
+    "artSourceUrl": "https://pokemongo.com/news/apac-mall-exploration-2026/",
+    "artLabel": "Series artwork shared by every location of the Pokémon 30th Anniversary Mall Exploration"
    },
    "schedule": null,
    "activities": [],
@@ -41628,7 +41131,7 @@
    "lifecycle": "announced",
    "attendance": "in-person",
    "location": "Philippines (SM Marikina)",
-   "image": null,
+   "image": "https://lh3.googleusercontent.com/dFl-bn3on9Th9YzRT-Bs14neMfLhAsomPudR7lZ0l1j-1WERlgWfMrgd-pG9Kk5sVl1L9u3viOCWpGnVSlaLwwBcDrCayaXwSkC-eex8Qg",
    "notes": [],
    "internalValidation": {
     "warnings": [],
@@ -41641,11 +41144,14 @@
      "start": "2027-01-15",
      "end": "2027-01-31"
     },
-    "contentHash": "5816b9f59810e47733c5af5929c66bb961d51094e06670d84486f44e3a30520c",
+    "contentHash": "67bc247d4ca0c47b7d44bbd2f31058a8704fc805f41eca83f5c0ef29be42e99c",
     "revision": 2,
     "amended": false,
     "native": false,
-    "collection": "world-events"
+    "collection": "world-events",
+    "artScope": "series",
+    "artSourceUrl": "https://pokemongo.com/news/apac-mall-exploration-2026/",
+    "artLabel": "Series artwork shared by every location of the Pokémon 30th Anniversary Mall Exploration"
    },
    "schedule": null,
    "activities": [],
@@ -41679,7 +41185,7 @@
    "lifecycle": "announced",
    "attendance": "in-person",
    "location": "Philippines (SM North EDSA)",
-   "image": null,
+   "image": "https://lh3.googleusercontent.com/dFl-bn3on9Th9YzRT-Bs14neMfLhAsomPudR7lZ0l1j-1WERlgWfMrgd-pG9Kk5sVl1L9u3viOCWpGnVSlaLwwBcDrCayaXwSkC-eex8Qg",
    "notes": [],
    "internalValidation": {
     "warnings": [],
@@ -41692,11 +41198,14 @@
      "start": "2026-12-10",
      "end": "2027-01-03"
     },
-    "contentHash": "389403be5257bffaa598bb16b95d99bf1cab72eea1ef7084612a66828fd6a049",
+    "contentHash": "c48dcf7e44697b9cf5cdce601ec62e6d5d4543a336b4bf299ba829feb48d3368",
     "revision": 2,
     "amended": false,
     "native": false,
-    "collection": "world-events"
+    "collection": "world-events",
+    "artScope": "series",
+    "artSourceUrl": "https://pokemongo.com/news/apac-mall-exploration-2026/",
+    "artLabel": "Series artwork shared by every location of the Pokémon 30th Anniversary Mall Exploration"
    },
    "schedule": null,
    "activities": [],
@@ -41730,7 +41239,7 @@
    "lifecycle": "announced",
    "attendance": "in-person",
    "location": "Philippines (SM Seaside Cebu)",
-   "image": null,
+   "image": "https://lh3.googleusercontent.com/dFl-bn3on9Th9YzRT-Bs14neMfLhAsomPudR7lZ0l1j-1WERlgWfMrgd-pG9Kk5sVl1L9u3viOCWpGnVSlaLwwBcDrCayaXwSkC-eex8Qg",
    "notes": [],
    "internalValidation": {
     "warnings": [],
@@ -41743,11 +41252,14 @@
      "start": "2027-02-05",
      "end": "2027-02-14"
     },
-    "contentHash": "20e70d99faf5016d2d7ecba639e893fdf31dc06e6bdfebcc25eb2cbb58b218b7",
+    "contentHash": "d9a97ee4f23da60dd43598bd48c688d94e11e471c8fd7c2ef2a575bf12b14c86",
     "revision": 2,
     "amended": false,
     "native": false,
-    "collection": "world-events"
+    "collection": "world-events",
+    "artScope": "series",
+    "artSourceUrl": "https://pokemongo.com/news/apac-mall-exploration-2026/",
+    "artLabel": "Series artwork shared by every location of the Pokémon 30th Anniversary Mall Exploration"
    },
    "schedule": null,
    "activities": [],
@@ -41781,7 +41293,7 @@
    "lifecycle": "announced",
    "attendance": "in-person",
    "location": "Philippines (SM Southmall)",
-   "image": null,
+   "image": "https://lh3.googleusercontent.com/dFl-bn3on9Th9YzRT-Bs14neMfLhAsomPudR7lZ0l1j-1WERlgWfMrgd-pG9Kk5sVl1L9u3viOCWpGnVSlaLwwBcDrCayaXwSkC-eex8Qg",
    "notes": [],
    "internalValidation": {
     "warnings": [],
@@ -41794,11 +41306,14 @@
      "start": "2026-11-20",
      "end": "2026-11-30"
     },
-    "contentHash": "42fc6dd2da47123477e3769398a8a5c3ba47a05258844573a1a8772491171685",
+    "contentHash": "c037dede024f4da2d1ea0649179b6315b2a2e632bbe1326d68e4306bb44bd432",
     "revision": 2,
     "amended": false,
     "native": false,
-    "collection": "world-events"
+    "collection": "world-events",
+    "artScope": "series",
+    "artSourceUrl": "https://pokemongo.com/news/apac-mall-exploration-2026/",
+    "artLabel": "Series artwork shared by every location of the Pokémon 30th Anniversary Mall Exploration"
    },
    "schedule": null,
    "activities": [],
@@ -41832,7 +41347,7 @@
    "lifecycle": "announced",
    "attendance": "in-person",
    "location": "Boston, USA",
-   "image": null,
+   "image": "https://lh3.googleusercontent.com/5SAHXmMPUCpY_TUiDA81oiN00LXrIbsOXN9CTFtZbjI4pz_0RbQr0tmSACr1JErfEvZqM131RfCU8-LA2uskPRaP7YAom1uS216jhW_JpQ",
    "notes": [],
    "internalValidation": {
     "warnings": [],
@@ -41845,7 +41360,7 @@
      "start": "2026-10-24",
      "end": "2026-10-25"
     },
-    "contentHash": "42880a807788368fa1c8a3a41659662edfa2a263e15d594631ed7352a0e482d7",
+    "contentHash": "2711b24499a6a2e89d23e8484d535b21d00ad27e0a562984dd0e9d665167ff69",
     "revision": 2,
     "amended": false,
     "native": false,
@@ -41970,7 +41485,7 @@
    "lifecycle": "announced",
    "attendance": "in-person",
    "location": "Paseo de la Reforma, Mexico City, Mexico",
-   "image": null,
+   "image": "https://lh3.googleusercontent.com/amZCm7hWvQi5faSuF2MzGHthmh421MKmnfEplatJaH6_H4bWexSV-x9ik-qo46XY6rk2WItYjMlH1UjzgD2fQuheGO1L6X8sAkktyluMBEd0",
    "notes": [],
    "internalValidation": {
     "warnings": [],
@@ -41983,7 +41498,7 @@
      "start": "2026-10-27",
      "end": "2026-11-05"
     },
-    "contentHash": "d93d7ea677c266d87686607309fddd84b054f3c9f7c6f524c4cc10e41ae7b7d0",
+    "contentHash": "d8c6bd38f48cd11610cdbac2b98b3bfa0d23d49ec7a1ec6f381263d6d78a33be",
     "revision": 2,
     "amended": false,
     "native": false,
@@ -42394,6 +41909,7 @@
      "start": "2027-01-23",
      "end": "2027-01-24"
     },
+    "imageUnattributed": true,
     "contentHash": "3538dca033905b2d2673111ac9be00251a859fcb88de9b48b6b6688ef32f737b",
     "revision": 3,
     "amended": false,
@@ -43999,6 +43515,7 @@
      "start": "2027-01-09",
      "end": "2027-01-10"
     },
+    "imageUnattributed": true,
     "contentHash": "e0f4cb2100ca9aaccc52682c884b47a58233473baad8844030ab1d5134012464",
     "revision": 3,
     "amended": false,
@@ -44136,7 +43653,7 @@
    "lifecycle": "announced",
    "attendance": "in-person",
    "location": "Singapore",
-   "image": null,
+   "image": "https://lh3.googleusercontent.com/2MjiTTHSr_Vao03G3MxlKLsDlrZvGrsM1RE38Kxv23qi0DGCozAaP2lFV5-sjtwhPe6G9uG5urCo7rRpHZVYo__bc--idrRrIsKZbDMDOGs",
    "notes": [],
    "internalValidation": {
     "warnings": [],
@@ -44149,7 +43666,7 @@
      "start": "2026-11-07",
      "end": "2026-11-08"
     },
-    "contentHash": "8678bceaa81acedefdc3a84b9e1e522edfef087087afc7529eb260671f8703aa",
+    "contentHash": "14183eec75b49e470842f23f3ea6ade8faeb34e80057a288d48afac280c87e50",
     "revision": 2,
     "amended": false,
     "native": false,
@@ -45483,58 +45000,6 @@
   },
   {
    "schemaVersion": 1,
-   "eventId": "w-twilight-wishes",
-   "aliases": [],
-   "family": "other",
-   "title": "Twilight Wishes",
-   "dateText": "",
-   "completeness": "partial",
-   "lifecycle": "announced",
-   "attendance": "",
-   "location": null,
-   "image": null,
-   "notes": [],
-   "internalValidation": {
-    "warnings": [],
-    "lifecycleDeclared": false,
-    "conflicts": [],
-    "fields": {},
-    "info": [],
-    "detailRefs": [],
-    "legacyDates": {
-     "start": "2026-11-24",
-     "end": "2026-11-30"
-    },
-    "contentHash": "a0e0e017d166fca713825baa55a8579ad10048a2e1590b36616fb32e7f9d85cb",
-    "revision": 3,
-    "amended": false,
-    "native": false,
-    "collection": "world-events"
-   },
-   "schedule": null,
-   "activities": [],
-   "bonuses": [],
-   "research": [],
-   "passes": [],
-   "tickets": [],
-   "sources": [
-    {
-     "id": "leekduck",
-     "name": "Leek Duck",
-     "url": "https://leekduck.com/events/twilight-wishes-2026/",
-     "auto": true
-    },
-    {
-     "url": "https://leekduck.com/events/twilight-wishes-2026/",
-     "name": "Event source"
-    }
-   ],
-   "pokemon": [],
-   "encounters": [],
-   "groups": {}
-  },
-  {
-   "schemaVersion": 1,
    "eventId": "wag",
    "aliases": [],
    "family": "wild-area",
@@ -45544,7 +45009,7 @@
    "lifecycle": "announced",
    "attendance": "",
    "location": null,
-   "image": "https://lh3.googleusercontent.com/44ggmV081gROwILff_vc2fROBHVCfBGTlRPQ8EtwxMt0ePAkWpirNJMtFk0C3qzHyx7zQqfFAbzKsziiRTTz67bHWdZyRKJN1d7b9Z50Q0M",
+   "image": "https://lh3.googleusercontent.com/YUIF2HkGZlw3tWumDXClx0cVYphD-ugVYTs5VBU5-ccb5o-1UWVTy8NYqJboA-fVPrmtncsb7Ql_6eebA8I-YyxFtIHO2yIiMwmb5qlg3JA",
    "notes": [
     "Gigantamax Duraludon debuts in six-star Max Battles. Dynamax Dialga on Saturday, Dynamax Palkia on Sunday.",
     "Five-star raids: Zekrom and White Kyurem on Saturday, Reshiram and Black Kyurem on Sunday. Machamp wearing a modern jacket appears in three-star raids on Saturday and Sunday; the official event page does not confirm it can be Shiny.",
@@ -45622,8 +45087,9 @@
      "start": "2026-11-14T10:00",
      "end": "2026-11-15T18:00"
     },
-    "contentHash": "6e9282cc03603c74671ba530686e762eae832f4865274e54ea4a71730d66e312",
-    "revision": 6,
+    "imageReviewed": true,
+    "contentHash": "167da561cadfdec2a7639051d44fbeddf15dd86b71661beafb1d6dc96445c76b",
+    "revision": 12,
     "amended": true,
     "native": false,
     "collection": "events"
@@ -46034,7 +45500,7 @@
    "lifecycle": "announced",
    "attendance": "in-person",
    "location": "Play from anywhere",
-   "image": null,
+   "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-11-14-pokemon-go-wild-area-2026-global/key-art.jpg",
    "notes": [],
    "internalValidation": {
     "warnings": [],
@@ -46131,7 +45597,7 @@
        "status": "single"
       },
       {
-       "text": "Machamp wearing a modern jacket appears in three-star raids during event hours and may be Shiny.",
+       "text": "Machamp wearing a modern jacket appears in three-star raids during event hours. Leek Duck says it may be Shiny; the official event page does not confirm this.",
        "sources": [
         "leekduck"
        ],
@@ -46193,7 +45659,7 @@
        "status": "single"
       },
       {
-       "text": "Machamp wearing a modern jacket appears in three-star raids during event hours and may be Shiny.",
+       "text": "Machamp wearing a modern jacket appears in three-star raids during event hours. Leek Duck says it may be Shiny; the official event page does not confirm this.",
        "sources": [
         "leekduck"
        ],
@@ -46239,7 +45705,7 @@
        "status": "single"
       },
       {
-       "text": "Machamp wearing a modern jacket appears in three-star raids during event hours and may be Shiny.",
+       "text": "Machamp wearing a modern jacket appears in three-star raids during event hours. Leek Duck says it may be Shiny; the official event page does not confirm this.",
        "sources": [
         "leekduck"
        ],
@@ -46442,8 +45908,8 @@
     },
     "imageReviewed": true,
     "contentHash": "bc89d53fcf26391f932b1b0f5ba1ec0d78ceddcd48a338d98686e2a858ad1b01",
-    "revision": 4,
-    "amended": false,
+    "revision": 15,
+    "amended": true,
     "native": false,
     "collection": "worldEvents"
    },

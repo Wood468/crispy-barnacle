@@ -1,0 +1,9 @@
+{
+  "how_to_use": "Narrow, reviewed exceptions to the event artwork rule. rejectPages: official/Leek Duck pages whose image is community photography, never event artwork (matched against the page address; the page image is dropped from every event). series: pages whose official image is deliberately shared by every location of one named series; the event title must match and the banner is labelled series artwork. Everything else follows the general year / folder / place rule in public/event-art.js.",
+  "rejectPages": [
+    { "pattern": "ambassador|community-meetups?|/gowa-global-europe", "reason": "Community Ambassador photography, not event artwork" }
+  ],
+  "series": [
+    { "pattern": "mall-exploration", "title": "Mall Exploration", "label": "Series artwork shared by every location of the Pokémon 30th Anniversary Mall Exploration" }
+  ]
+}

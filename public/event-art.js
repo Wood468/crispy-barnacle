@@ -87,11 +87,14 @@
   function banner(art, opts) {
     opts = opts || {};
     var t = art.kind === 'official' ? theme(opts.ev || {}) : art.theme, ar = opts.aspect || '16 / 9', accent = opts.accent || '';
-    var themed = '<span class="ev-art-theme" aria-hidden="true" style="--c1:' + t.c1 + ';--c2:' + t.c2 + ';--ac:' + t.accent + '"><img class="ev-art-mark" alt="" src="' + esc(t.icon) + '" data-err="rm"><img class="ev-art-ico" alt="" src="' + esc(t.icon) + '" data-err="rm"><b>' + esc(t.label) + '</b><i class="ev-art-tag">Illustration</i>' + (accent ? '<span class="ev-art-accent">' + accent + '</span>' : '') + '</span>';
+    var themed = '<span class="ev-art-theme" aria-hidden="true" style="--c1:' + t.c1 + ';--c2:' + t.c2 + ';--ac:' + t.accent + '"><img class="ev-art-mark" alt="" src="' + esc(t.icon) + '" data-err="rm"><img class="ev-art-ico" alt="" src="' + esc(t.icon) + '" data-err="rm"><b>' + esc(t.label) + '</b><i class="ev-art-tag">Illustration · no official banner</i>' + (accent ? '<span class="ev-art-accent">' + accent + '</span>' : '') + '</span>';
     var img = art.kind === 'official' ? '<img class="ev-art-img evd-banner" alt="' + esc(art.alt) + '" src="' + esc(art.src) + '"' + (art.fullSrc ? ' data-full="' + esc(art.fullSrc) + '"' : '') + ' decoding="async" data-err="banner" style="object-fit:' + (opts.fit || 'contain') + ';object-position:' + art.focal + '">' : '';
     if (img && art.fullSrc) img = '<a class="evd-banner-link" href="' + esc(art.fullSrc) + '" target="_blank" rel="noopener noreferrer" title="Open full-size poster" aria-label="Open full-size poster for ' + esc(opts.ev && (opts.ev.name || opts.ev.title) || 'event') + '">' + img + '</a>';
-    var prov = art.provenance ? ' data-art-source="' + esc(art.provenance.source) + '" data-art-verified="' + esc(art.provenance.verifiedFor) + '"' : '';
-    return '<figure class="ev-art ev-art--' + art.kind + (opts.cls ? ' ' + opts.cls : '') + '" style="--ar:' + ar + '" data-art-kind="' + art.kind + '"' + prov + '>' + themed + img + '</figure>';
+    var prov = art.provenance ? ' data-art-source="' + esc(art.provenance.source) + '" data-art-verified="' + esc(art.provenance.verifiedFor) + '"' : ''
+    var series = art.provenance && art.provenance.scope === 'series';
+    if (series) prov += ' data-art-scope="series"';
+    var tag = series ? '<i class="ev-art-scope" title="' + esc(art.provenance.label || 'Series artwork') + '">Series artwork</i>' : '';
+    return '<figure class="ev-art ev-art--' + art.kind + (opts.cls ? ' ' + opts.cls : '') + '" style="--ar:' + ar + '" data-art-kind="' + art.kind + '"' + prov + '>' + themed + img + tag + '</figure>';
   }
   function fail(img) {
     /* A missing compact thumbnail falls back to the full-size original once before giving up. */

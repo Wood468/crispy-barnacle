@@ -4,7 +4,7 @@ import {isAllowedOgImage} from '../../src/image-policy.js';
 import {htmlToLines,decode} from './text.mjs';
 import adapter from '../../public/event-adapter.js';
 import contract from '../../public/event-contract.js';
-const HEADS=[['wild',/^(?:wild encounters|in the wild|wild pok[eé]mon|wild spawns|spawns|rotating habitat hours)$/i],['raid',/^(?:(?:one|three|five|[135])-star |mega |shadow )?raids(?: encounters)?$/i],['max',/^(?:max battles|dynamax battles|gigantamax battles)$/i],['egg',/^(?:(?:2|5|7|10|12)\s*km )?eggs(?: hatches)?$/i],['incense',/^incense(?: encounters)?$/i],['lure',/^lure(?: encounters)?$/i],['research',/^research encounters$/i]];
+const HEADS=[['wild',/^(?:wild encounters|in the wild|wild pok[eé]mon|wild spawns|spawns|rotating habitat hours)$/i],['raid',/^(?:(?:(?:one|two|three|four|five|[1-5])-star |mega |shadow )?raids(?: encounters)?|raid hour(?::.*)?)$/i],['max',/^(?:(?:(?:one|two|three|four|five|[1-5])-star )?(?:max|dynamax|gigantamax) battles(?::.*)?)$/i],['egg',/^(?:(?:2|5|7|10|12)\s*km )?eggs(?: hatches)?$/i],['incense',/^incense(?: encounters)?$/i],['lure',/^lure(?: encounters)?$/i],['research',/^research encounters$/i]];
 export function methodForHeading(text){return HEADS.find(([,pattern])=>pattern.test(text))?.[0]||null;}
 export function extractEncounters(input,{dex=[],names=[],costumes=[]}={}){
  adapter.configureSpecies(dex);adapter.configureCostumes(costumes);
@@ -20,10 +20,22 @@ export function extractEncounters(input,{dex=[],names=[],costumes=[]}={}){
   const iconed=(line.icons||[]).map(ref=>({ref,species:speciesByDex.get(ref.dex)})).filter(x=>x.species&&x.ref.label);
   if(iconed.length){for(const {ref,species} of iconed){const p=adapter.pokemon({name:species,speciesId:String(ref.dex),costume:true,label:ref.label,collectionName:species+' ('+ref.label+')',shiny:'unknown',boostedShiny:null}),prior=pokemon.get(p.key);pokemon.set(p.key,prior?{...prior,...p}:p);encounters.push({identityKey:p.key,method,activityId:'main',access:'unknown'});}continue;}
   for(const item of line.text.split(/,\s*|\s+and\s+/i)){
-   let label=item.trim(),shiny='unknown',boostedShiny=null;
+   // Leek Duck rows append the stat card ("Registeel 100% IV CP Level 20 1398 Counters"): only the name is identity.
+   let label=item.replace(/\s+\d+%\s*IV\s+CP\b.*$/i,'').replace(/\s+Counters$/i,'').trim(),shiny='unknown',boostedShiny=null;
    const claim=/\s*\((shiny available|boosted shiny|increased shiny (?:chance|odds)|not shiny eligible)\)$/i.exec(label);
    if(claim){shiny=/not /i.test(claim[1])?'no':'yes';boostedShiny=/boosted|increased/i.test(claim[1])?true:null;label=label.slice(0,claim.index).trim();}
-   const declared=known.get(label.toLowerCase());if(!declared)continue;
+   let declared=known.get(label.toLowerCase());
+   if(!declared){
+    // "Zacian (Crowned Sword)": a published form of a known species is an exact identity (never a costume guess or a base-species substitute).
+    const form=/^(.+?)\s+\(((?:crowned (?:sword|shield)|(?:altered|origin|incarnate|therian|attack|defense|speed|normal|sky|land|east|west|black|white)(?: forme?)?|alolan|galarian|hisuian|paldean))\)$/i.exec(label);
+    const base=form&&known.get(form[1].toLowerCase());
+    if(base&&base.speciesId&&!base.costume)declared={name:label,speciesId:base.speciesId};
+    // Dynamax / Gigantamax rows name the species; the Max Battle heading is the evidence for the treatment.
+    const dyn=/^(dynamax|gigantamax)\s+(.+)$/i.exec(label),dbase=dyn&&known.get(dyn[2].toLowerCase());
+    if(!declared&&dbase&&dbase.speciesId&&!dbase.costume&&method==='max')declared={name:label,speciesId:dbase.speciesId};
+   }
+   if(!declared)continue;
+   if(method==='max'&&!declared.costume&&declared.speciesId&&!/^(?:dynamax|gigantamax)\b|\(/i.test(declared.name))declared={...declared,name:'Dynamax '+declared.name};
    const p=adapter.pokemon({...declared,shiny,boostedShiny}),prior=pokemon.get(p.key);
    pokemon.set(p.key,prior?{...prior,...p,shiny:p.shiny==='unknown'?prior.shiny:p.shiny}:p);
    encounters.push({identityKey:p.key,method,activityId:'main',access:'unknown'});

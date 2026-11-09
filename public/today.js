@@ -107,6 +107,8 @@
   }
   function card(ctx, ev, live) {
     var type = LOGIC.cardType({ kind: ev.kind, name: ev.name, featuredCount: pokemonFor(ev, 9).length, span: +ev.end - +ev.start, tags: ev.tags });
+    /* A raid-kind event that has a verified official banner is that event's own artwork: show it like every other bannered event. */
+    if (type === 'raid' && ev.img && typeof GOEVENTART !== 'undefined' && GOEVENTART.resolve({ name: ev.name, kind: ev.kind, region: ev.region || '', start: ev.start, end: ev.end }, [{ url: ev.img, pageUrl: ev.artPageUrl || ev.link || '' }]).kind === 'official') type = 'major';
     return type === 'major' ? cardMajor(ctx, ev, live) : type === 'raid' ? cardRaid(ctx, ev, live) : cardMinor(ctx, ev, live);
   }
   /* In-person records from the world list that no feed card already covers: always a visible row with its location. */
