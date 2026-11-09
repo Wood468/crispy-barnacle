@@ -211,3 +211,8 @@
 
 /* The follow field matches the other inputs. */
 #followq { flex: 1 1 0; min-width: 0; min-height: 44px; padding: 0 var(--space-3); font-size: 1rem; color: var(--color-text); background: var(--color-surface-card); border: 1px solid var(--color-border-card); border-radius: var(--radius-md); }
+
+/* A failed load shows only the error panel: the empty tab shells under it read as broken screens. */
+main:has(.load-error:not([hidden])) > .panel { display: none; }
+/* Badges and countdowns on Today cards stay on one line down to 320px. */
+#tab-now .t1-kind, #tab-now .t1-live, #tab-now .t1-count { white-space: nowrap; }
