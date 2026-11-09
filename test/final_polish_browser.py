@@ -46,6 +46,8 @@ with sync_playwright() as p:
     for width in (360, 390, 430):
         page = open_page(ctx_for(browser, width))
         # Opportunity cards: names wrap by word, the chip never squeezes a name into broken words.
+        card = page.locator('#today-v1 .t1-card', has_text='Into the Wild').first
+        check(f'{width}: a play-from-anywhere event is not labelled Overseas', 'overseas' not in card.inner_text().lower(), card.inner_text()[:120])
         page.evaluate("GO.showTab('collect','opps')")
         page.wait_for_selector('.opp h3')
         broken = page.evaluate("""()=>[...document.querySelectorAll('.opp-top h3')].filter(h=>{
