@@ -30,10 +30,26 @@
       }).join('')
       + '<p class="note">Rp prices read from the Indonesian web store and converted at ' + esc(String(fx.rate)) + ' A$ per Rp (' + esc(fx.source || '') + ', ' + esc(fx.observed || '') + '). Australian prices from the Australian store. Nothing is converted from US prices.</p></details>';
   }
+  function regional(data) {
+    if (!window.GORegionalPrices) return '';
+    var items = window.GORegionalPrices.catalogue(data.prices || []);
+    if (!items.length) return '';
+    var money = function (p, sym) { return p ? '≈ ' + sym + Number(p.amount).toLocaleString('en-AU') : 'Not calibrated'; };
+    return '<details class="storep"><summary>Regional Store estimates <small>AU Web · India in-app · Indonesia Web</small></summary>'
+      + '<p class="note">Australian prices are verified observations. Overseas prices are modelled, not actual offers. Uncalibrated categories show no price. Regional availability and payment eligibility may differ.</p>'
+      + items.map(function (p) {
+        return '<div class="sp-r"><span class="sp-n">' + icon(p.label) + esc(p.label) + '</span>'
+          + '<b class="sp-a">A$' + p.aud.toFixed(2) + '</b>'
+          + '<span class="sp-o" title="Indian in-app estimate">' + esc(money(p.india, '₹')) + '</span>'
+          + '<span class="sp-o" title="Indonesian Web estimate">' + esc(money(p.indonesia, 'Rp ')) + '</span>'
+          + '<span class="sp-n">' + esc(p.india ? 'India: estimated (' + p.india.confidence + ' confidence)' : 'India: insufficient observations')
+          + ' · ' + esc(p.indonesia ? 'Indonesia: estimated (' + p.indonesia.confidence + ' confidence)' : 'Indonesia: insufficient observations') + '</span></div>';
+      }).join('') + '</details>';
+  }
   function go() {
     var host = document.getElementById('evsource'); if (!host || !window.GOLIB) return;
     GOLIB.loadPrices().then(function (d) {
-      if (!d || !d.owner) return; /* the Rp store list is for the owner only */ var h = build(d); if (!h) return;
+      if (!d || !d.owner) return; /* the Rp store list is for the owner only */ var h = regional(d) + build(d); if (!h) return;
       var el = document.getElementById('storep-host');
       if (!el) { el = document.createElement('div'); el.id = 'storep-host'; host.parentNode.insertBefore(el, host); }
       el.innerHTML = h;
