@@ -38,6 +38,6 @@ test('Into the Wild activities are compatible with the universal schedule previe
  );
  const html=preview({activities:event.activities},{});
  assert.equal((html.match(/<li>/g)||[]).length,5);
- for(const activity of event.activities)assert.ok(html.includes(activity.title),'missing schedule preview: '+activity.title);
+ for(const activity of event.activities)assert.ok(html.includes(activity.title.replaceAll('&','&amp;')),'missing schedule preview: '+activity.title);
  assert.ok(html.indexOf('Crowned Sword Zacian')<html.indexOf('Dynamax Latias'));
 });
