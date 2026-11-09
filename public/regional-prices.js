@@ -7,7 +7,8 @@
 })(typeof window !== 'undefined' ? window : null, function () {
   'use strict';
   var anchors = [
-    { region: 'IN', channel: 'in-app', category: 'tickets', aud: 22.99, local: 439, observed: '2026-11-09', product: 'GO Pass Deluxe: Into the Wild' }
+    { region: 'IN', channel: 'in-app', category: 'tickets', aud: 22.99, local: 439, observed: '2026-11-09', product: 'GO Pass Deluxe: Into the Wild' },
+    { region: 'ID', channel: 'web', category: 'tickets', aud: 22.99, local: 76000, observed: '2026-11-09', product: 'GO Pass Deluxe: Into the Wild', source: 'owner Indonesian Web Store screenshot' }
   ];
   function category(p) {
     var s = ((p.group || '') + ' ' + (p.label || '') + ' ' + (p.product || '')).toLowerCase();
