@@ -410,7 +410,69 @@
         "Dynamax Regidrago"
       ],
       "sourceUrl": "https://pokemongo.com/news/into-the-wild-2026",
-      "source": "Official Pokémon GO announcement"
+      "source": "Official Pokémon GO announcement",
+      "activities": [
+        {
+          "id": "into-raid-zacian-20261109",
+          "kind": "raid-hour",
+          "presentation": "schedule",
+          "title": "Crowned Sword Zacian · Raid Hour",
+          "schedule": {
+            "start": "2026-11-09T18:00",
+            "end": "2026-11-09T19:00",
+            "timeBasis": "player-local"
+          },
+          "sourceUrl": "https://pokemongo.com/news/into-the-wild-2026"
+        },
+        {
+          "id": "into-raid-zamazenta-20261110",
+          "kind": "raid-hour",
+          "presentation": "schedule",
+          "title": "Crowned Shield Zamazenta · Raid Hour",
+          "schedule": {
+            "start": "2026-11-10T18:00",
+            "end": "2026-11-10T19:00",
+            "timeBasis": "player-local"
+          },
+          "sourceUrl": "https://pokemongo.com/news/into-the-wild-2026"
+        },
+        {
+          "id": "into-max-registeel-20261111",
+          "kind": "max-battle-hour",
+          "presentation": "schedule",
+          "title": "Dynamax Registeel · Max Battle Hour",
+          "schedule": {
+            "start": "2026-11-11T18:00",
+            "end": "2026-11-11T19:00",
+            "timeBasis": "player-local"
+          },
+          "sourceUrl": "https://pokemongo.com/news/into-the-wild-2026"
+        },
+        {
+          "id": "into-max-regidrago-20261112",
+          "kind": "max-battle-hour",
+          "presentation": "schedule",
+          "title": "Dynamax Regidrago · Max Battle Hour",
+          "schedule": {
+            "start": "2026-11-12T18:00",
+            "end": "2026-11-12T19:00",
+            "timeBasis": "player-local"
+          },
+          "sourceUrl": "https://pokemongo.com/news/into-the-wild-2026"
+        },
+        {
+          "id": "into-max-latias-latios-20261113",
+          "kind": "max-battle-hour",
+          "presentation": "schedule",
+          "title": "Dynamax Latias & Latios · Max Battle Hour",
+          "schedule": {
+            "start": "2026-11-13T18:00",
+            "end": "2026-11-13T19:00",
+            "timeBasis": "player-local"
+          },
+          "sourceUrl": "https://pokemongo.com/news/into-the-wild-2026"
+        }
+      ]
     },
     {
       "id": "wag",
