@@ -57,7 +57,8 @@ test("production gate ignores a successful preview and waits for the production 
   ];
   let now = 0;
   const result = await waitForWorkersBuild(context({
-    fetchImpl: async () => sequence.shift(),
+    fetchImpl: async url => url.includes("api.github.com") ? sequence.shift() : new Response("live-differs"),
+    readLocal: () => Buffer.from("local"),
     sleep: async ms => { now += ms; },
     now: () => now
   }));
@@ -141,4 +142,65 @@ test("default production gate allows a delayed Cloudflare build queue", async ()
   assert.equal(calls, 10);
   assert.equal(now, 9 * 60 * 1000);
   assert.equal(result.buildId, "build-123");
+});
+
+// Real payloads recorded from the API for main merge commits 6da8e65 (#373) and 34ea8bd (#374):
+// Cloudflare reported only a completed preview-style check, never a /production/builds/ URL.
+import { readFileSync } from "node:fs";
+import { productionServesCommit } from "../scripts/wait-for-workers-build.mjs";
+const recorded = sha => JSON.parse(readFileSync(new URL(`./fixtures/workers-check-runs-${sha}.json`, import.meta.url), "utf8"));
+const bytesResponse = body => new Response(body, { status: 200 });
+
+for (const sha of ["6da8e65", "34ea8bd"]) {
+  test(`recorded ${sha} payload: preview-only is not accepted by itself`, async () => {
+    let now = 0;
+    await assert.rejects(waitForWorkersBuild(context({
+      timeoutMs: 30,
+      fetchImpl: async url => url.includes("api.github.com") ? new Response(JSON.stringify(recorded(sha))) : bytesResponse("old"),
+      readLocal: () => Buffer.from("new"),
+      sleep: async ms => { now += ms; },
+      now: () => now
+    })), /only a preview build is reported.*differs from this commit/);
+  });
+
+  test(`recorded ${sha} payload: accepted once production serves this commit's sw.js and shell`, async () => {
+    let now = 0;
+    let liveReady = false;
+    const result = await waitForWorkersBuild(context({
+      timeoutMs: 1000,
+      fetchImpl: async url => {
+        if (url.includes("api.github.com")) return new Response(JSON.stringify(recorded(sha)));
+        return bytesResponse(liveReady ? "same" : "old");
+      },
+      readLocal: () => Buffer.from("same"),
+      sleep: async ms => { now += ms; liveReady = now >= 20; },
+      now: () => now
+    }));
+    assert.equal(result.verifiedBy, "content");
+    assert.equal(result.buildId, null);
+  });
+}
+
+test("content proof is not attempted when the preview check has not completed successfully", async () => {
+  let now = 0;
+  let liveCalls = 0;
+  await assert.rejects(waitForWorkersBuild(context({
+    timeoutMs: 20,
+    fetchImpl: async url => {
+      if (url.includes("api.github.com")) return response([check("completed", "failure", previewUrl, "p")]);
+      liveCalls += 1;
+      return bytesResponse("same");
+    },
+    readLocal: () => Buffer.from("same"),
+    sleep: async ms => { now += ms; },
+    now: () => now
+  })), /only a preview build/);
+  assert.equal(liveCalls, 0);
+});
+
+test("productionServesCommit reports HTTP errors and network failures as no match", async () => {
+  const http = await productionServesCommit({ fetchImpl: async () => new Response("", { status: 503 }), readLocal: () => Buffer.from("x") });
+  assert.equal(http.match, false);
+  const net = await productionServesCommit({ fetchImpl: async () => { throw new Error("boom"); }, readLocal: () => Buffer.from("x") });
+  assert.match(net.reason, /boom/);
 });

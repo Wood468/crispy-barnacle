@@ -1,0 +1,14 @@
+{
+ "total_count": 13,
+ "check_runs": [
+  {
+   "name": "Workers Builds: go-field-notes",
+   "status": "completed",
+   "conclusion": "success",
+   "external_id": "22fcd718-1ce1-42f0-92db-f53fcd3725cc",
+   "details_url": "https://dash.cloudflare.com/3c9da4c86fd16e5a2b794aead8455e6f/workers/services/view/go-field-notes/production/previews/feature-regional-store-estimates/builds/22fcd718-1ce1-42f0-92db-f53fcd3725cc",
+   "started_at": "2026-11-09T01:27:45Z",
+   "completed_at": "2026-11-09T01:27:45Z"
+  }
+ ]
+}
