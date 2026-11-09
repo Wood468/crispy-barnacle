@@ -8,7 +8,7 @@ const NOW = Date.parse('2026-11-12T00:00:00Z');
 const id = (product, kind, amount, extra) => Object.assign({id: product, region:'ID', channel:'web', currency:'IDR', observed:'2026-11-09', source:'fixture', status:'verified', product, kind, amount}, extra);
 const OBS = [
   id('GO Pass Deluxe: Into the Wild', 'event-pass', 76000),
-  id('GO Pass Deluxe: Into the Wild + 10 Ranks Ultra Box', 'event-pass-ultra', 126000),
+  id('GO Pass Deluxe: Into the Wild + 10 Ranks Ultra Box', 'event-pass-ranks-ultra', 126000),
   id('Monthly GO Pass Deluxe', 'monthly-pass', 41000, {pairAud:{amount:12.99}}),
   id('Monthly Deluxe Ultra Box', 'monthly-pass-ultra', 76000, {pairAud:{amount:22.99}}),
   id('3,300 total PokéCoins', 'coins', 101000, {coins:3300}),
@@ -18,7 +18,7 @@ const OBS = [
 test('product kinds never mix a pass, its rank upgrade and its Ultra Box', () => {
   assert.equal(R.kindOf('GO Pass Deluxe: Into the Wild'), 'event-pass');
   assert.equal(R.kindOf('GO Pass Deluxe: Into the Wild + 10 Ranks'), 'event-pass-ranks');
-  assert.equal(R.kindOf('GO Pass Deluxe: Into the Wild + 10 Ranks Ultra Box'), 'event-pass-ultra');
+  assert.equal(R.kindOf('GO Pass Deluxe: Into the Wild + 10 Ranks Ultra Box'), 'event-pass-ranks-ultra');
   assert.equal(R.kindOf('Monthly GO Pass Deluxe'), 'monthly-pass');
   assert.equal(R.kindOf('Monthly Deluxe Ultra Box'), 'monthly-pass-ultra');
   assert.equal(R.kindOf('6,800 total PokéCoins'), 'coins');
