@@ -118,3 +118,15 @@ test('catalogue retains regional-only products without inventing Australian pric
   assert.equal(idOnly.india, null);
   assert.ok(rows.some(r => r.label === 'GO Pass Deluxe: Into the Wild'));
 });
+
+test('Store never claims a cheapest coin-funded price without a separately verified coin offer for that SKU', () => {
+  const src = fs.readFileSync(path.join(__dirname, '../public/store.js'), 'utf8');
+  assert.match(src, /Verified direct purchase prices/);
+  assert.match(src, /not a cross-region cheapest ranking/);
+  assert.match(src, /A coin balance cannot reduce a direct-cash checkout price/);
+  assert.doesNotMatch(src, /Cheapest realistic option/);
+  assert.doesNotMatch(src, /data-sp-coins/);
+  assert.match(src, /o\.kind !== 'coins'/);
+  assert.match(src, /o\.channel === 'web'/);
+  assert.match(src, /R\.exact\(obs, 'ID', 'web', o\.product\)/);
+});
