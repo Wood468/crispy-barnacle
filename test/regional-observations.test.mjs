@@ -25,3 +25,19 @@ test('Indonesian prices are served only through the owner route, never from publ
   const w = fs.readFileSync(new URL('../src/worker.js', import.meta.url), 'utf8');
   assert.match(w, /async function pricesPrivate[\s\S]{0,300}x-pin[\s\S]{0,400}REGIONAL_OBSERVATIONS/);
 });
+
+test('standard Indonesian coin packs and one-time promotional bonus are faithfully recorded', () => {
+  for (const [coins, amount] of [[110,5000],[600,25000],[1300,50000],[2700,101000],[5600,200000],[15500,505000]]) {
+    const rows = OBSERVATIONS.filter(o => o.id === 'id-coins-standard-' + coins);
+    assert.equal(rows.length, 1);
+    assert.equal(rows[0].coins, coins);
+    assert.equal(rows[0].amount, amount);
+    assert.equal(rows[0].status, 'verified');
+    assert.equal(rows[0].channel, 'web');
+  }
+  const promo = OBSERVATIONS.find(o => o.id === 'id-coins-18500-promo');
+  assert.equal(promo.coins, 18500);
+  assert.equal(promo.amount, 505000);
+  assert.equal(promo.oneTime, true);
+  assert.ok(!OBSERVATIONS.some(o => o.coins === 16700 || o.coins === 15620), 'Reward Road points must not be counted as bonus PokéCoins');
+});
