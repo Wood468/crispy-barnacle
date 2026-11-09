@@ -23,3 +23,21 @@ test('Into the Wild has a five-day local Raid/Max Hour schedule',()=>{
   assert.ok(activity.sourceUrl.startsWith('https://'));
  });
 });
+
+test('Into the Wild activities are compatible with the universal schedule preview',async()=>{
+ const {readFileSync}=await import('node:fs');
+ const {default:vm}=await import('node:vm');
+ const src=readFileSync(new URL('../public/event-components.js',import.meta.url),'utf8');
+ const begin=src.indexOf('function schedulePreview(model,ctx)');
+ const end=src.indexOf('function render(model,ctx)',begin);
+ assert.ok(begin>=0&&end>begin,'universal schedule component exists');
+ const preview=vm.runInNewContext('(function(esc,activityTime,activityPlace){'+src.slice(begin,end)+';return schedulePreview;})')(
+  value=>String(value).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;'),
+  a=>a.schedule.start,
+  ()=>''
+ );
+ const html=preview({activities:event.activities},{});
+ assert.equal((html.match(/<li>/g)||[]).length,5);
+ for(const activity of event.activities)assert.ok(html.includes(activity.title),'missing schedule preview: '+activity.title);
+ assert.ok(html.indexOf('Crowned Sword Zacian')<html.indexOf('Dynamax Latias'));
+});
