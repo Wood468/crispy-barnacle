@@ -2953,8 +2953,12 @@ with sync_playwright() as p:
         seen_before = wn.evaluate("JSON.parse(localStorage.getItem('gofn-seen-events')).ids")
         check('what\'s-new: a normal first visit records the event list', len(seen_before) >= 10, len(seen_before))
         wn.route('**/api/events', hang); wn.reload(wait_until='domcontentloaded')
-        wn.clock.run_for(25000)  # past the feed timeout and past whatsnew's 20 s wait
-        wn.wait_for_function("document.getElementById('home-now').hasAttribute('data-render-key')")
+        # Playwright's clock can advance past the scheduled feed timeout before
+        # the mocked network and Promise microtasks have settled. Wait for the
+        # actual fallback first, then advance past What's New's 20-second guard.
+        wn.clock.run_for(10000)
+        wn.wait_for_function("document.getElementById('home-now').hasAttribute('data-render-key')", timeout=15000)
+        wn.clock.run_for(15000)
         wn.wait_for_timeout(300)
         seen_after = wn.evaluate("JSON.parse(localStorage.getItem('gofn-seen-events')).ids")
         check('what\'s-new: the seen list survives a session whose feed stalled', seen_after == seen_before, [len(seen_before), len(seen_after)])
