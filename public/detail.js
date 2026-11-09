@@ -560,7 +560,8 @@
   }
   function exactArt(p) {
     var name=displayName(p),q='/api/art?n='+encodeURIComponent(name),described=GOEventAdapter.collectionName(p);
-    if(p.formId&&!p.costumeId&&!described&&GOLIB.parseForm(p.name).base===p.name)return '<span class="art costume-unavailable ea" role="img" aria-label="'+esc(name+' · form art unavailable')+'"><span>'+esc(name)+'</span><small>Form art unavailable</small></span>';
+    var classified=window.GOTODAYLOGIC&&GOTODAYLOGIC.classifyArt({name:name});
+    if(p.formId&&!p.costumeId&&!described&&GOLIB.parseForm(p.name).base===p.name&&!(classified&&classified.exact))return '<span class="art costume-unavailable ea" role="img" aria-label="'+esc(name+' · form art unavailable')+'"><span>'+esc(name)+'</span><small>Form art unavailable</small></span>';
     return G.art({n:name,costume:!!p.costumeId,label:p.label||p.costumeId,asset:p.assetKey||undefined,dynamax:p.formId==='dynamax'||/-dynamax$/.test(p.formId||'')},'ea');
   }
   var TRUST_LABEL = { official: 'Official', community: 'Community', datamine: 'Datamined', curated: 'Curated' };
