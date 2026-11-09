@@ -38,7 +38,7 @@ async function storeCopy(key, copy) {
   }
 }
 /* Stable-path pictures (/art, /dex, /ico webp) are served from the cache first: the Worker already lets the browser reuse them for a day. After a day the cached copy is refreshed in the background. */
-const IMAGE_PATH = /^\/(?:art|dex|ico|infographic-thumbs|season-thumbs)\/.+\.webp$/;
+const IMAGE_PATH = /^\/(?:art|dex|ico|infographic-thumbs|season-thumbs)\/.+\.webp$|^\/img\/ext\/[\w.-]+\.(?:webp|png|jpe?g)$/;
 const IMAGE_REFRESH_MS = 86400000;
 /* Offline only: a request may differ from the cached one just by its ?v= or ?t= (older page, other version), so match code, styles and JSON by path. Never used for pages or API calls. */
 const STATIC_PATH = /\.(?:js|css|json)$/;

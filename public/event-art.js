@@ -106,6 +106,30 @@
     if (u && u.protocol === 'https:' && u.hostname !== 'example.invalid' && u.href !== img.src) { img.removeAttribute('data-full'); img.setAttribute('src', u.href); return; }
     if (img.getAttribute('data-full') && /^\/img\/ext\/[\w.-]+$/.test(img.getAttribute('data-full')) && img.getAttribute('src') !== img.getAttribute('data-full')) { var rel = img.getAttribute('data-full').replace(/[^\w./-]/g, ''); img.removeAttribute('data-full'); img.setAttribute('src', rel); return; }
     var a = img && img.closest && img.closest('.evd-banner-link'); if (a && a.parentNode) a.remove();
-    var f = img && img.closest && img.closest('.ev-art'); if (f) { f.classList.add('is-failed'); f.setAttribute('data-art-kind', 'themed'); f.removeAttribute('data-art-source'); } if (img && img.remove) img.remove(); }
-  return { resolve: resolve, verify: verify, theme: theme, banner: banner, fail: fail, THEMES: THEMES };
+    var f = img && img.closest && img.closest('.ev-art');
+    var offline = false; try { offline = typeof navigator !== 'undefined' && navigator.onLine === false; } catch (e) { offline = false; }
+    if (f) {
+      f.classList.add('is-failed'); f.setAttribute('data-art-kind', 'themed');
+      if (offline) {
+        /* The banner exists but could not be fetched: say so, rather than claiming there is no official banner. */
+        var tag = f.querySelector('.ev-art-tag'); if (tag) tag.textContent = OFFLINE_LABEL;
+        f.setAttribute('data-art-offline', '1'); f.__retryImg = img && img.cloneNode ? img.cloneNode(false) : null;
+      } else f.removeAttribute('data-art-source');
+    }
+    if (img && img.remove) img.remove();
+  }
+  var OFFLINE_LABEL = 'Banner unavailable offline';
+  /* Back online: put the banner image back, so the label disappears and the real artwork loads. */
+  function restoreOffline() {
+    var list = document.querySelectorAll('.ev-art[data-art-offline]');
+    for (var i = 0; i < list.length; i++) {
+      var f = list[i], img = f.__retryImg; f.removeAttribute('data-art-offline');
+      if (!img) continue;
+      f.classList.remove('is-failed'); f.setAttribute('data-art-kind', 'official');
+      var tag = f.querySelector('.ev-art-tag'); if (tag) tag.textContent = 'Illustration \u00b7 no official banner';
+      img.setAttribute('src', img.getAttribute('src')); f.appendChild(img); f.__retryImg = null;
+    }
+  }
+  if (typeof window !== 'undefined' && window.addEventListener) window.addEventListener('online', restoreOffline);
+  return { resolve: resolve, verify: verify, theme: theme, banner: banner, fail: fail, THEMES: THEMES, OFFLINE_LABEL: OFFLINE_LABEL };
 }));

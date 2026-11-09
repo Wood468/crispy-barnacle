@@ -22,12 +22,15 @@
     'other':['overview','encounters','rotations','schedule','bonuses','research','passes','tickets']
   };
   var LABEL={overview:'Overview',encounters:'Pokémon',rotations:'Rotations',schedule:'Schedule',bonuses:'Bonuses',research:'Research',passes:'GO Pass',tickets:'Tickets'};
+  /* A research TASK is a parsed task (it has a task text). Source prose lines are not tasks, and neither are availability windows. */
+  function researchTaskCount(list){return Array.isArray(list)?list.filter(function(r){return r&&typeof r.task==='string'&&r.task.trim();}).length:0;}
   function project(ev) {
     if(!ev||ev.schemaVersion!==1||!ev.eventId) throw Error('Normalized v1 event required');
     var family=FAMILY[ev.family]?ev.family:'other';
     var activities=Array.isArray(ev.activities)?ev.activities:[];
     // Ignore empty source placeholders: a section should only appear when it has content.
     function populated(value){return value!==null&&value!==undefined&&value!==''&&typeof value==='object'&&!Array.isArray(value)&&Object.keys(value).length>0;}
+    function taskCount(value){return researchTaskCount(value);}
     function countRecords(value){return Array.isArray(value)?value.filter(populated).length:0;}
     // Activity-only announcements may supply Pokémon through method references.
     // Deduplicate by full form/costume key across methods without changing ownership.
@@ -51,7 +54,7 @@
     var preferred=FAMILY[family], all=FAMILY.other;
     // A family guides order but never suppresses sections actually present.
     var order=preferred.concat(all.filter(function(k){return preferred.indexOf(k)<0;}));
-    return {eventId:ev.eventId,family:family,order:order.slice(),sections:order.filter(function(k){return counts[k]>0;}).map(function(k){return {key:k,label:LABEL[k],count:counts[k]};}),encounterGroups:ev.groups||{}};
+    return {eventId:ev.eventId,family:family,order:order.slice(),researchTasks:taskCount(ev.research),sections:order.filter(function(k){return counts[k]>0;}).map(function(k){return {key:k,label:LABEL[k],count:counts[k]};}),encounterGroups:ev.groups||{}};
   }
-  return {project:project,families:Object.keys(FAMILY)};
+  return {project:project,researchTaskCount:researchTaskCount,families:Object.keys(FAMILY)};
 }));
