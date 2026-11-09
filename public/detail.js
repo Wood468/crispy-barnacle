@@ -860,8 +860,16 @@
     var max = o.scrollHeight - o.clientHeight, target = Math.max(0, Math.min(top, max));
     spy.lock = 1; spy.cur = id; setActive(o, id);
     o.scrollTo({ top: target, behavior: reduce ? 'auto' : 'smooth' });
-    var done = function () { if (!spy) return; spy.lock = 0; clearTimeout(spy.t); o.removeEventListener('scrollend', done); if (focus) h.focus({ preventScroll: true }); spy.cur = ''; spy.raf = 0; spy.onScroll(); };
-    o.addEventListener('scrollend', done); clearTimeout(spy.t); spy.t = setTimeout(done, reduce ? 60 : 900);
+    // WebKit can emit scrollend for an interrupted/earlier smooth scroll. Only the
+    // latest navigation may unlock the spy; otherwise it resets the active link.
+    var navigation = (spy.navigation || 0) + 1; spy.navigation = navigation;
+    clearTimeout(spy.t);
+    spy.t = setTimeout(function () {
+      if (!spy || spy.o !== o || spy.navigation !== navigation) return;
+      spy.lock = 0;
+      if (focus) h.focus({ preventScroll: true });
+      spy.cur = ''; spy.raf = 0; spy.onScroll();
+    }, reduce ? 80 : 1100);
   }
   document.addEventListener('click', function (e) {
     var l = e.target.closest && e.target.closest('.evd-nav-link'); if (!l) return;
