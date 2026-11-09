@@ -3716,7 +3716,7 @@ with sync_playwright() as p:
             check('Batch 10, %dpx: the compact Today card keeps art and Explore inside its surface' % width,
                   f is not None and f['cardHeight']<290 and f['artInside'] and f['openInside'] and f['save']==0, f)
             g = tp.evaluate("""() => [...document.querySelectorAll('#home-now .today-phase-cards')].map(c => {
-                const kids = [...c.children], i = kids.findIndex(k => k.classList.contains('today-sub') && /^in person/i.test(k.innerText.trim())), onl = kids.findIndex(k => k.classList.contains('today-sub') && /^online/i.test(k.innerText.trim())), rows = kids.filter(k => k.classList.contains('agw') && (onl < 0 || kids.indexOf(k) < onl));
+                const kids = [...c.children], i = kids.findIndex(k => k.classList.contains('today-sub') && /^in person/i.test(k.innerText.trim())), onl = kids.findIndex(k => k.classList.contains('today-sub') && /^(online|global)/i.test(k.innerText.trim())), rows = kids.filter(k => k.classList.contains('agw') && (onl < 0 || kids.indexOf(k) < onl));
                 const cnt = i >= 0 ? kids[i].querySelector('.today-phase-count').textContent : '';
                 return { rows: rows.length, subs: kids.filter(k => k.classList.contains('today-sub') && /^in person/i.test(k.innerText.trim())).length, rowsAllAfterSub: i >= 0 && rows.every(r => kids.indexOf(r) > i), label: i >= 0 ? kids[i].innerText.replace(/\\s+/g, ' ') : '', cnt };
             })""")
@@ -3772,8 +3772,8 @@ with sync_playwright() as p:
                   r['labelTotal'] == r['inPersonRows'] == 3 and r['brief'] == 2, r)
             check('Batch 12, %dpx: overseas in-person events (Tokyo, Chicago, Lisbon) are all still listed under "In person"' % width,
                   sorted(r['inPersonNames']) == ['Brimstone Night Lisbon', 'Quillfeather Meetup Chicago', 'Zorblax Expo Tokyo'], r)
-            check('Batch 12, %dpx: global / play-from-anywhere items are never under "In person"; they sit under "Online / worldwide" and still count as in game' % width,
-                  all(n[0] == 'online / worldwide' for n in r['onlineNames']) and sorted(n[1] for n in r['onlineNames']) == ['Plinkerton Play from anywhere', 'Snorfwhistle Worldwide Showcase'] and r['briefGame'] >= 1, r)
+            check('Batch 12, %dpx: global / play-from-anywhere items are never under "In person"; they sit under "Global" and still count as in game' % width,
+                  all(n[0] == 'global' for n in r['onlineNames']) and sorted(n[1] for n in r['onlineNames']) == ['Plinkerton Play from anywhere', 'Snorfwhistle Worldwide Showcase'] and r['briefGame'] >= 1, r)
             wp.context.close()
         # regional-events.json is a fallback, not a second feed: exercise its scope-less source schema
         # separately with an empty world-events.json, matching dash.js's actual loader sequence.

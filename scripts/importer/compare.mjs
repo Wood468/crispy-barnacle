@@ -6,6 +6,8 @@ const canon = s => String(s).replace(/\b1\s?\/\s?4\b/g, "quarter").replace(/\b1\
 export const toks = s => new Set(canon(s).normalize("NFKD").toLowerCase().replace(/[^a-z0-9.×]+/g, " ").split(/\s+/).filter(t => t.length > 1 && !STOP.has(t)));
 export function similar(a, b) {
   const ra = /^rank (\d+)( deluxe)?/i.exec(a), rb = /^rank (\d+)( deluxe)?/i.exec(b);
+  // A structured rank row never merges with prose, however many words they share ("Encounter Dynamax Meltan and earn a Silver Bottle Cap!" swallowed Rank 100).
+  if (!!ra !== !!rb) return false;
   if (ra && rb) { if (ra[1] !== rb[1] || !!ra[2] !== !!rb[2]) return false; const nums = t => [...t.matchAll(/\d[\d,.]*/g)].map(x => x[0]).slice(1).join(","); if (nums(a) !== nums(b)) return false; }
   const A = toks(a), B = toks(b); if (!A.size || !B.size) return false;
   let n = 0; for (const t of A) if (B.has(t)) n++;

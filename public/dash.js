@@ -76,13 +76,11 @@
     'pokemon-spotlight-hour': 'spot', 'go-battle-league': 'pvp', 'wild-area': 'person', 'pokemon-go-tour': 'person', 'pokemon-go-fest': 'person', 'safari-zone': 'person', 'city-safari': 'person', 'ticketed-event': 'person', 'twitch-drops': 'twitch', 'twitch-drops-event': 'twitch' };
 
   // Event format is not eligibility: a Wild Area or GO Fest can be global.
-  // Only explicit global eligibility overrides an in-person event-type default.
-  function scopedKind(kind, name, scope, region) {
-    var globalScope = /^(worldwide|worldwide_local|global)$/i.test(String(scope || ''));
-    var globalTitle = /(?:^|[:\s])global(?:$|\b)/i.test(String(name || ''));
-    var localRegion = String(region || '').trim();
-    if (kind === 'person' && (globalScope || (globalTitle && !localRegion))) return 'global';
-    return kind;
+  // The shared structured classifier decides (scope, venue, declared attendance); the title is never read.
+  // A format default of 'person' with no venue, no declared attendance and no scope is therefore Global.
+  function scopedKind(kind, name, scope, region, declared) {
+    if (kind !== 'person') return kind;
+    return LIB.attendanceOf({ scope: scope || '', location: region || '', attendance: declared ? 'in-person' : '' }) === 'global' ? 'global' : kind;
   }
 
   /* Calendar labels and boundaries follow the saved viewer zone, or the device by default. */
@@ -152,7 +150,7 @@
     if (/\bshadow\b/i.test(text) || featured.some(function(f){return f && /^shadow\s/i.test(f.name||'');})) add('Shadow');
     if (/\bmega\b/i.test(text)) add('Mega');
     if (/\bprimal\b/i.test(text)) add('Primal');
-    if (/in-person|in person|live event|safari zone|city safari/i.test(text)) add('In person');
+    if (o.kind === 'person' || o.attendance === 'in-person') add('In person');
     if (/dynamax|gigantamax|max battle|max monday/i.test(text)) add('Dynamax');
     if (/max particle/i.test(text)) add('Max Particles');
     if (/power spot/i.test(text)) add('Power Spots');
@@ -179,7 +177,7 @@
     var out = [];
     (D.events || []).forEach(function (x) {
       var tags = x.tags || [], title = x.t || '', k = tags.some(function (t) { return /twitch\s*drops/i.test(t); }) || /twitch\s*drops/i.test(title) ? 'twitch' : tags.indexOf('Community Day') > -1 || /community day/i.test(title) ? 'cd' : tags.indexOf('Max Battles') > -1 || /max battle|dynamax|gigantamax|max monday/i.test(title) ? 'max' : tags.indexOf('Raids') > -1 || /\braids?\b|raid hour/i.test(title) ? 'raid' : tags.indexOf('In person') > -1 || /in-person|safari zone|city safari|go fest/i.test(title) ? 'person' : tags.indexOf('Debut') > -1 || /\bdebut\b/i.test(title) ? 'debut' : /spotlight hour/i.test(title) ? 'spot' : 'event';
-      out.push(mkEvent({ id: 'cur:' + x.id, detailIds: x.detailIds || [], name: x.t, kind: scopedKind(k, x.t, x.scope, x.region || x.location), img: x.img || '', artPageUrl: x.artSourceUrl || '', s: x.s, e: x.e, utc: x.utc === true || x.tzMode === 'utc', region: x.region || x.location || '', scope: x.scope || '', tags: signalTags({ name:x.t, kind:k, tags:tags, notes:x.p, bonuses:x.bonuses, featured:(x.art||[]).map(function(a){return typeof a==='string'?{name:a}:a;}) }), notes: x.p, bonuses: x.bonuses,
+      out.push(mkEvent({ id: 'cur:' + x.id, detailIds: x.detailIds || [], name: x.t, kind: scopedKind(k, x.t, x.scope, x.region || x.location, x.attendance === 'in-person' || x.inPerson === true || tags.indexOf('In person') > -1), img: x.img || '', artPageUrl: x.artSourceUrl || '', s: x.s, e: x.e, utc: x.utc === true || x.tzMode === 'utc', region: x.region || x.location || '', scope: x.scope || '', tags: signalTags({ name:x.t, kind:k, tags:tags, notes:x.p, bonuses:x.bonuses, featured:(x.art||[]).map(function(a){return typeof a==='string'?{name:a}:a;}) }), notes: x.p, bonuses: x.bonuses,
         featured: (x.art || []).map(function (a) { a = typeof a === 'string' ? { n: a } : a; return { name: a.n, costume: !!a.costume, shiny: !!a.shiny, label: a.label, asset: a.asset, role: 'featured' }; }),
         highlights: Array.isArray(x.highlights) ? x.highlights : [],
         status: x.status || (x.sourceUrl ? 'official_confirmed' : 'community_reported'),
@@ -201,7 +199,7 @@
       var link = safeUrl(x.link); (x.reports || []).forEach(function (r) { if (!link && safeUrl(r.link)) link = r.link; });
       var officialLink = isOfficialUrl(link);
       var reportedOfficial = (x.reports || []).some(function (r) { return r && isOfficialUrl(r.link); });
-      var kind = scopedKind(PIPE_KIND[x.type] || 'event', x.name, x.scope, x.region);
+      var kind = scopedKind(PIPE_KIND[x.type] || 'event', x.name, x.scope, x.region, x.attendance === 'in-person' || x.inPerson === true);
       var featured = Array.isArray(x.featured) ? x.featured : [];
       var bonuses = Array.isArray(x.bonuses) ? x.bonuses : [];
       return mkEvent({ id: x.id, name: x.name, kind: kind, img: (typeof x.image === 'string' && /^https:\/\//.test(x.image)) ? x.image : '', artPageUrl: (x.imageProvenance && safeUrl(x.imageProvenance.sourceUrl)) || safeUrl(x.artSourceUrl) || link || '', s: x.start, e: x.end || x.start, bonuses: bonuses, featured: featured, highlights: Array.isArray(x.highlights) ? x.highlights : [], tags: signalTags({name:x.name,kind:kind,type:x.type,bonuses:bonuses,featured:featured}),
@@ -946,7 +944,7 @@
       if (!e.end && !startIsDateOnly) return { undated: true, catalogueId:e.id, name: e.name, place: e.place, area: e.area, scope: e.scope, mode: e.mode || '', src: src };
       var s0 = worldDate(startValue, false), e0 = worldDate(String(e.end || e.start), !!e.end || startIsDateOnly);
       if (!Number.isFinite(s0.getTime()) || !Number.isFinite(e0.getTime()) || e0 < s0) return { undated: true, catalogueId:e.id, name: e.name, place: e.place, area: e.area, scope: e.scope, mode: e.mode || '', src: src };
-      return { id: e.id, catalogueId:e.id, name: e.name, place: e.place || '', area: e.scope === 'global' ? 'In the game' : e.area, scope: e.scope || 'regional', mode: e.mode || '', start: s0, end: e0, sourceStart: startValue, sourceEnd: String(e.end || e.start), long: (e0 - s0) > 14 * 864e5, src: src };
+      return { id: e.id, catalogueId:e.id, name: e.name, place: e.place || '', area: LIB.isGlobalEvent(e) ? 'In the game' : e.area, scope: LIB.isGlobalEvent(e) ? 'global' : (e.scope || 'regional'), mode: e.mode || '', start: s0, end: e0, sourceStart: startValue, sourceEnd: String(e.end || e.start), long: (e0 - s0) > 14 * 864e5, src: src };
     });
     /* An announcement with no dates of its own (e.g. Gigantamax Duraludon at the Sendai Wild Area) takes the dates of the
        dated event at the same place whose name it shares a distinctive word with. */
@@ -1963,10 +1961,10 @@ function renderHomeBrief(t) {
       var rows = list.filter(LIB.isRegionalInGameEvent);
       return rows.length ? subHead('In-game (regional)', rows.length) + rows.map(function (e) { return agendaRow(e, true); }).join('') : '';
     }
-    /* Global play-from-anywhere events remain under their own Online / worldwide label. */
+    /* Global play-from-anywhere events remain under their own Global label. */
     function online(list) {
       var rows = list.filter(function (e) { return e.scope === 'global'; });
-      return rows.length ? subHead('Online / worldwide', rows.length) + rows.map(function (e) { return agendaRow(e, true); }).join('') : '';
+      return rows.length ? subHead('Global', rows.length) + rows.map(function (e) { return agendaRow(e, true); }).join('') : '';
     }
     var todayHTML = today.length || todayRegional.length
       ? phaseGroup('Happening now', liveToday.length + liveRegional.length, liveToday.map(function (e) { return card(e, {today:true}); }).join('') + inPerson(liveRegional) + inGameRegional(liveRegional) + online(liveRegional)) +
@@ -2103,8 +2101,8 @@ function renderHomeBrief(t) {
     }
     var regLive = [], regSoon = [], regWeek = [];
     regList().forEach(function (r) {
-      if (r.long || r.scope === 'global' || covered(r)) return;
-      var item = { id: r.id, name: r.name, place: r.place || r.area || '', start: r.start, end: r.end, url: (r.src && r.src.url) || '#', overseas: t1Overseas(r.place), inPerson: regInPerson(r), openId: '' };
+      if (r.long || covered(r)) return;
+      var item = { id: r.id, name: r.name, place: r.place || r.area || '', start: r.start, end: r.end, url: (r.src && r.src.url) || '#', overseas: t1Overseas(r.place), inPerson: regInPerson(r), global: LIB.isGlobalEvent(r), openId: '' };
       if (!/^https:\/\//.test(item.url)) item.url = '';
       try { var model = window.GOEventRegistry && GOEventRegistry.find(r.catalogueId || r.id); if (model) item.openId = model.eventId; } catch (e) { }
       if (!item.openId && !item.url) return;
@@ -2380,7 +2378,7 @@ function renderHomeBrief(t) {
     renderCoverage();
     if (window.GO && GO.refreshDex) GO.refreshDex();
     usSync();
-    var inf = document.createElement('script'); inf.src = '/infographic.js?v=20261103a'; document.body.appendChild(inf); var x = document.createElement('script'); x.src = '/extra.js?v=20261102c'; document.body.appendChild(x); var z = document.createElement('script'); z.src = '/places.js?v=20261103b'; window.GOPLACES_READY = new Promise(function (resolve) { z.onload = function () { resolve(window.GOPLACES || null); }; z.onerror = function () { resolve(null); }; }); var y = document.createElement('script'); y.src = '/detail.js?v=20261114b'; document.body.appendChild(y); document.body.appendChild(z); var w = document.createElement('script'); w.src = '/fresh.js?v=20261114a'; document.body.appendChild(w); var nv = document.createElement('script'); nv.src = '/nudge.js?v=20261102a'; document.body.appendChild(nv); var rv = document.createElement('script'); rv.src = '/review.js?v=20261104b'; document.body.appendChild(rv); var by = document.createElement('script'); by.src = '/buy.js?v=20261103a'; document.body.appendChild(by);
+    var inf = document.createElement('script'); inf.src = '/infographic.js?v=20261103a'; document.body.appendChild(inf); var x = document.createElement('script'); x.src = '/extra.js?v=20261102c'; document.body.appendChild(x); var z = document.createElement('script'); z.src = '/places.js?v=20261103b'; window.GOPLACES_READY = new Promise(function (resolve) { z.onload = function () { resolve(window.GOPLACES || null); }; z.onerror = function () { resolve(null); }; }); var y = document.createElement('script'); y.src = '/detail.js?v=20261116a'; document.body.appendChild(y); document.body.appendChild(z); var w = document.createElement('script'); w.src = '/fresh.js?v=20261114a'; document.body.appendChild(w); var nv = document.createElement('script'); nv.src = '/nudge.js?v=20261102a'; document.body.appendChild(nv); var rv = document.createElement('script'); rv.src = '/review.js?v=20261104b'; document.body.appendChild(rv); var by = document.createElement('script'); by.src = '/buy.js?v=20261103a'; document.body.appendChild(by);
   }
   envBanner();
   /* Bounded waits: a request that never answers must not leave Today blank. After FEED_TIMEOUT_MS the page renders from the curated list

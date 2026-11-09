@@ -1,10 +1,10 @@
 /* GO Field Notes offline shell. Never cache /api/*, including private user-state and notification responses. */
-const SHELL_CACHE = 'gofn-shell-v275';
+const SHELL_CACHE = 'gofn-shell-v276';
 const SHELL_URLS = [
   '/', '/index.html', '/offline.html', '/offline.css',
   /* Versioned code and styles are listed once, exactly as index.html, app.js and dash.js request them. Any other ?v= (or unversioned) request is answered offline by the ignoreSearch fallback below. */
-  '/timezone.js?v=20261108b', '/event-catalogue.js?v=20261107b', '/event-clock.js?v=20261108b', '/event-contract.js?v=20261107b', '/event-view.js?v=20261107b', '/event-adapter.js?v=20261113a', '/event-components.js?v=20261113a', '/event-registry.js?v=20261115a', '/event-identity.js?v=20261107a', '/event-policy.js?v=20261107a', '/events-v1.json',
-  '/styles.css?v=20261112a', '/dash.css?v=20261112c', '/event-redesign.css?v=20261113a', '/today.css?v=20261115a', '/ux-finish.css?v=20261115g', '/today.js?v=20261110a', '/today-logic.js?v=20261115b', '/event-art.js?v=20261115a', '/variant-art.js?v=20261110a', '/lib.js?v=20261115a', '/dedupe.js?v=20261101b', '/move.js?v=20261102a', '/imgerr.js?v=20261015a', '/whatsnew.js?v=20261102d', '/pin.js?v=20261101b', '/local-state.js?v=20261030a', '/app.js?v=20261115b', '/raid-share.js?v=20261102b', '/dash.js?v=20261115b', '/detail.js?v=20261114b', '/fresh.js?v=20261114a', '/places.js?v=20261103b', '/review.js?v=20261104b', '/nudge.js?v=20261102a', '/account.js?v=20261102a', '/regional-prices.js?v=20261110a', '/store.js?v=20261110b', '/season.js?v=20261107b', '/research.js?v=20261114b', '/weekly.js?v=20261115b', '/buy.js?v=20261103a', '/extra.js?v=20261102c', '/infographic.js?v=20261103a', '/pwa.js',
+  '/timezone.js?v=20261108b', '/event-catalogue.js?v=20261107b', '/event-clock.js?v=20261108b', '/event-contract.js?v=20261107b', '/event-view.js?v=20261116a', '/event-adapter.js?v=20261116a', '/event-components.js?v=20261116a', '/event-registry.js?v=20261115a', '/event-identity.js?v=20261107a', '/event-policy.js?v=20261107a', '/events-v1.json',
+  '/styles.css?v=20261112a', '/dash.css?v=20261112c', '/event-redesign.css?v=20261116a', '/today.css?v=20261115a', '/ux-finish.css?v=20261116a', '/today.js?v=20261116a', '/today-logic.js?v=20261115b', '/event-art.js?v=20261116a', '/variant-art.js?v=20261110a', '/lib.js?v=20261116a', '/dedupe.js?v=20261101b', '/move.js?v=20261102a', '/imgerr.js?v=20261015a', '/whatsnew.js?v=20261102d', '/pin.js?v=20261101b', '/local-state.js?v=20261030a', '/app.js?v=20261115b', '/raid-share.js?v=20261102b', '/dash.js?v=20261116a', '/detail.js?v=20261116a', '/fresh.js?v=20261114a', '/places.js?v=20261103b', '/review.js?v=20261104b', '/nudge.js?v=20261102a', '/account.js?v=20261102a', '/regional-prices.js?v=20261110a', '/store.js?v=20261110b', '/season.js?v=20261107b', '/research.js?v=20261114b', '/weekly.js?v=20261115b', '/buy.js?v=20261103a', '/extra.js?v=20261102c', '/infographic.js?v=20261103a', '/pwa.js',
   '/manifest.webmanifest', '/icon.svg', '/icon-maskable.svg', '/icon-180.png', '/icon-192.png', '/icon-512.png',
   '/data.json', '/dex.json', '/event-info.json', '/forms.json', '/moves.json',
   '/places.json', '/event-details.json', '/event-moves.json', '/regional-events.json', '/world-events.json', '/best-by-type.json', '/prices.json', '/pvp.json', '/release-status.json', '/types.json',
@@ -38,7 +38,7 @@ async function storeCopy(key, copy) {
   }
 }
 /* Stable-path pictures (/art, /dex, /ico webp) are served from the cache first: the Worker already lets the browser reuse them for a day. After a day the cached copy is refreshed in the background. */
-const IMAGE_PATH = /^\/(?:art|dex|ico|infographic-thumbs|season-thumbs)\/.+\.webp$/;
+const IMAGE_PATH = /^\/(?:art|dex|ico|infographic-thumbs|season-thumbs)\/.+\.webp$|^\/img\/ext\/[\w.-]+\.(?:webp|png|jpe?g)$/;
 const IMAGE_REFRESH_MS = 86400000;
 /* Offline only: a request may differ from the cached one just by its ?v= or ?t= (older page, other version), so match code, styles and JSON by path. Never used for pages or API calls. */
 const STATIC_PATH = /\.(?:js|css|json)$/;

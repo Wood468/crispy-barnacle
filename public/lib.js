@@ -340,13 +340,46 @@
     var t = T[u.toFixed(2)], idr = t ? t.idr : Math.round(u * m.typical / 500) * 500;
     return { idr: idr, aud: Math.round(idr * fx.rate * 100) / 100, basis: t ? 'seen' : 'modelled', seen: t ? t.seen : '' };
   }
-  // Regional entries are in-person by default. An explicit mode:'in-game' marks a
-  // region-locked gameplay event with no physical venue, so it belongs with game activity.
+  /* ONE attendance classifier for every surface (Today, Schedule, Details, themed cards, catalogue build, importer).
+     It reads structured fields only: scope / eligibility, mode, venue-city-coordinates-ticketing, declared attendance.
+     It never reads a title, a note or artwork. Returns 'global' (play from anywhere), 'in-person' (venue-bound) or
+     'regional-in-game' (region-locked gameplay with no venue). A record with no location data and no venue-bound
+     declaration is Global, so a future import with an unfamiliar title still lands in the right place. */
+  var GLOBAL_SCOPE = /^(global|worldwide|worldwide_local|worldwide-local|remote|online|virtual|everywhere)$/i;
+  var GENERIC_PLACE = /^(play from anywhere|worldwide|global|everywhere|anywhere|online|home|remote|virtual|in game|in-game|n\/a|none|tbc|tba)\.?$/i;
+  function venueOf(r) {
+    var keys = ['location', 'place', 'where', 'venue', 'city', 'placesQ'];
+    for (var i = 0; i < keys.length; i++) {
+      var v = r[keys[i]];
+      if (v && typeof v === 'object') v = v.name || v.city || v.address || '';
+      if (typeof v === 'string' && v.trim() && !GENERIC_PLACE.test(v.trim())) return v.trim();
+    }
+    return '';
+  }
+  function hasCoords(r) {
+    var c = r.coordinates || r.coords || r.geo || r;
+    var lat = c.lat !== undefined ? c.lat : c.latitude, lng = c.lng !== undefined ? c.lng : (c.lon !== undefined ? c.lon : c.longitude);
+    return lat !== null && lat !== undefined && lat !== '' && lng !== null && lng !== undefined && lng !== '' && isFinite(lat) && isFinite(lng);
+  }
+  function attendanceOf(record) {
+    var r = record || {}, scope = String(r.scope || '').trim(), mode = String(r.mode || '').toLowerCase();
+    if (GLOBAL_SCOPE.test(scope)) return 'global';
+    if (mode === 'in-game') return 'regional-in-game';
+    if (venueOf(r) || hasCoords(r) || r.ticketed === true) return 'in-person';
+    if (['location', 'place', 'where'].some(function (k) { return typeof r[k] === 'string' && GENERIC_PLACE.test(r[k].trim()); })) return 'global';
+    if (r.attendance === 'in-person' || r.inPerson === true || r.kind === 'person') return 'in-person';
+    var area = String(r.area || '').trim();
+    if (area && GLOBAL_SCOPE.test(area)) return 'global';
+    return scope ? 'in-person' : 'global';
+  }
   function isInPersonWorldEvent(event) {
-    return !!event && event.scope !== 'global' && event.mode !== 'in-game';
+    return !!event && attendanceOf(event) === 'in-person';
   }
   function isRegionalInGameEvent(event) {
-    return !!event && event.scope !== 'global' && event.mode === 'in-game';
+    return !!event && attendanceOf(event) === 'regional-in-game';
+  }
+  function isGlobalEvent(event) {
+    return !!event && attendanceOf(event) === 'global';
   }
   function liveActivityCounts(events, regional) {
     var inGame = 0, inPerson = 0;
@@ -434,5 +467,5 @@
   }
   function failingSources() { return Object.keys(failing); }
 
-  return { readJsonKeep: readJsonKeep, reportSave: reportSave, failingSources: failingSources, SAVE_MESSAGE: SAVE_MESSAGE, raidBossNames: raidBossNames, raidWindowState: raidWindowState, maxRosterFor: maxRosterFor, researchCheckedText: researchCheckedText, freshnessOf: freshnessOf, missingLabel: missingLabel, filterOpportunities: filterOpportunities, isPrivateLink: isPrivateLink, publicLink: publicLink, esc: esc, rpEstimate: rpEstimate, raidEventFor: raidEventFor, isPlaceholder: isPlaceholder, audify: audify, setTiers: setTiers, loadPrices: loadPrices, getJson: getJson, jsonOrNull: jsonOrNull, priceView: priceView, fmtRp: fmtRp, buildQueue: buildQueue, parseForm: parseForm, formId: formId, merge: merge, reconcileSync: reconcileSync, norm: norm, lev: lev, matchName: matchName, candidates: candidates, isInPersonWorldEvent: isInPersonWorldEvent, isRegionalInGameEvent: isRegionalInGameEvent, liveActivityCounts: liveActivityCounts };
+  return { readJsonKeep: readJsonKeep, reportSave: reportSave, failingSources: failingSources, SAVE_MESSAGE: SAVE_MESSAGE, raidBossNames: raidBossNames, raidWindowState: raidWindowState, maxRosterFor: maxRosterFor, researchCheckedText: researchCheckedText, freshnessOf: freshnessOf, missingLabel: missingLabel, filterOpportunities: filterOpportunities, isPrivateLink: isPrivateLink, publicLink: publicLink, esc: esc, rpEstimate: rpEstimate, raidEventFor: raidEventFor, isPlaceholder: isPlaceholder, audify: audify, setTiers: setTiers, loadPrices: loadPrices, getJson: getJson, jsonOrNull: jsonOrNull, priceView: priceView, fmtRp: fmtRp, buildQueue: buildQueue, parseForm: parseForm, formId: formId, merge: merge, reconcileSync: reconcileSync, norm: norm, lev: lev, matchName: matchName, candidates: candidates, isInPersonWorldEvent: isInPersonWorldEvent, isRegionalInGameEvent: isRegionalInGameEvent, isGlobalEvent: isGlobalEvent, attendanceOf: attendanceOf, liveActivityCounts: liveActivityCounts };
 }));

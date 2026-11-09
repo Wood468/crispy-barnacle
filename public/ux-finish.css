@@ -214,3 +214,8 @@
 
 /* Badges and countdowns on Today cards stay on one line down to 320px. */
 #tab-now .t1-kind, #tab-now .t1-live, #tab-now .t1-count { white-space: nowrap; }
+
+/* Research count beside the section name (parsed tasks only). */
+.evd-sec-h .evd-count { font: 600 var(--type-overline, .72rem) var(--font-body); color: var(--color-text-muted); text-transform: none; letter-spacing: 0; margin-left: var(--space-2, 8px); }
+.evd-nav-count { display: inline-block; min-width: 1.4em; padding: 0 5px; margin-left: 4px; border-radius: 999px; background: rgba(255,255,255,.12); font-size: .72em; line-height: 1.6; text-align: center; }
+.ue-research-notes { margin-top: var(--space-3, 12px); }

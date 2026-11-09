@@ -5935,7 +5935,7 @@
     },
     "imageReviewed": true,
     "contentHash": "9c1e84fa3e57a9dc254240da56abb3e0fe3ea75b86697d72cfd7a5408efad52a",
-    "revision": 29,
+    "revision": 30,
     "amended": true,
     "native": false,
     "collection": "events"
@@ -9729,7 +9729,7 @@
    "dateText": "",
    "completeness": "partial",
    "lifecycle": "announced",
-   "attendance": "in-person",
+   "attendance": "",
    "location": null,
    "image": null,
    "notes": [
@@ -9749,9 +9749,9 @@
      "start": "",
      "end": ""
     },
-    "contentHash": "b0c9ef54169f886b6cf594541110c5df8c1cd9fa5d987fc0461e25d1c9802272",
-    "revision": 3,
-    "amended": false,
+    "contentHash": "964d656c81de4abf2daec370b883a8ef9d6e56c852262ab34620fb9fa16f6603",
+    "revision": 4,
+    "amended": true,
     "native": false,
     "collection": "inPerson"
    },
@@ -25804,7 +25804,7 @@
     },
     "imageReviewed": true,
     "contentHash": "244e1a218c776c7de71a786fe7a96bc90d5ca2212bc0e2a5060da28a5e71b680",
-    "revision": 44,
+    "revision": 45,
     "amended": true,
     "native": false,
     "collection": "source-details"
@@ -51878,7 +51878,7 @@
     },
     "imageReviewed": true,
     "contentHash": "4bbe2871a823eb21458a110b1a90a61e5fce0d1ddaa2d47d0d0671f282a84a9d",
-    "revision": 29,
+    "revision": 30,
     "amended": true,
     "native": false,
     "collection": "world-events"
@@ -52304,7 +52304,7 @@
    "dateText": "",
    "completeness": "partial",
    "lifecycle": "announced",
-   "attendance": "in-person",
+   "attendance": "",
    "location": null,
    "image": null,
    "notes": [],
@@ -52391,9 +52391,9 @@
      "end": "2026-11-15"
     },
     "imageReviewed": true,
-    "contentHash": "2bc734bbc0384877a9299bd46137dea24f7131a8ee949d5e9a37646a6cc24dec",
-    "revision": 6,
-    "amended": false,
+    "contentHash": "c285dfccbadcc7c9acc992c63556c87e19d1214b74259cb4bb788bfab3b0fe82",
+    "revision": 7,
+    "amended": true,
     "native": false,
     "collection": "world-events"
    },
@@ -60081,7 +60081,7 @@
    "dateText": "",
    "completeness": "partial",
    "lifecycle": "announced",
-   "attendance": "in-person",
+   "attendance": "",
    "location": "Play from anywhere",
    "image": null,
    "notes": [],
@@ -60116,9 +60116,9 @@
      "end": "2027-02-28"
     },
     "imageReviewed": true,
-    "contentHash": "05cfd5f4ea64307aba109f1a493b77fb0dc033f78f6511686bb2f3a3b03851e9",
-    "revision": 4,
-    "amended": false,
+    "contentHash": "d4984a1b75d8845becdda8c883be2bb273c01652cde31f2558f9b34a4f791864",
+    "revision": 5,
+    "amended": true,
     "native": false,
     "collection": "worldEvents"
    },
@@ -60297,7 +60297,7 @@
    "dateText": "",
    "completeness": "partial",
    "lifecycle": "announced",
-   "attendance": "in-person",
+   "attendance": "",
    "location": "Play from anywhere",
    "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-11-14-pokemon-go-wild-area-2026-global/key-art.jpg",
    "notes": [],
@@ -60699,9 +60699,9 @@
      "end": "2026-11-15"
     },
     "imageReviewed": true,
-    "contentHash": "14d5cd733569e5de74f0e663e89a37fe5fe75c161089b517dbc4df914cb6d1ea",
-    "revision": 16,
-    "amended": false,
+    "contentHash": "3e56995cacd1b88c840fa1163e4fe926d584046b688ca157a33de2d176f49934",
+    "revision": 17,
+    "amended": true,
     "native": false,
     "collection": "worldEvents"
    },

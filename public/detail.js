@@ -547,7 +547,8 @@
     if(priced){try{facts.push(['Ticket',new Intl.NumberFormat('en-AU',{style:'currency',currency:priced.price.currency,currencyDisplay:'code'}).format(priced.price.amount)]);}catch(e){}}
     else if((model.tickets||[]).length)facts.push(['Tickets','Optional']);
     if((model.bonuses||[]).length)facts.push(['Bonuses',String(model.bonuses.length)]);
-    if((model.research||[]).length)facts.push(['Research',String(model.research.length)]);
+    var rtasks=window.GOEventView?GOEventView.researchTaskCount(model.research):0;
+    if(rtasks)facts.push(['Research',rtasks+(rtasks===1?' task':' tasks')]);else if((model.research||[]).length)facts.push(['Research','No tasks listed yet']);
     var h=facts.length?'<ul class="ue-factchips" aria-label="At a glance">'+facts.map(function(f){return '<li><span>'+esc(f[0])+'</span><b>'+esc(f[1])+'</b></li>';}).join('')+'</ul>':'';
     var debuts=(model.pokemon||[]).filter(function(p){return p.debut;}).slice(0,6);
     if(debuts.length)h+='<div class="ue-debuts"><h3 class="ue-mini-h">Debuts</h3><div class="ue-chips">'+debuts.map(function(p){return '<span class="ue-chip">'+esc(displayName(p))+'</span>';}).join('')+'</div></div>';

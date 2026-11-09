@@ -122,10 +122,10 @@ function buildCatalogue(input){
  function add(raw,collection){try{addRecord(raw,collection);}catch(error){rejections.push({eventId:raw&&(raw.eventId||raw.id)||null,collection,error:error.message});}}
  function batch(name,items,convert){let count=0;if(items!=null&&!Array.isArray(items)){rejections.push({eventId:null,collection:name,error:'Expected event array'});return;}for(const raw of items||[]){try{add(convert?convert(raw):raw,name);}catch(error){rejections.push({eventId:raw&&raw.id||null,collection:name,error:error.message});}count++;}coverage.push({collection:name,records:count});}
  batch('events',data.events);
- batch('worldEvents',data.worldEvents,x=>({...x,id:x.id||'world:'+key(x.link),name:x.t,place:x.where,kind:x.mode==='in-game'||x.scope==='global'?'event':'person'}));
- batch('inPerson',data.inPerson,x=>({...x,id:x.id||'in-person:'+C.classify(x.title)+':'+x.title,notes:x.bullets,name:x.title,kind:'person'}));
- batch('world-events',input.world?.events,x=>({...x,id:x.id||'source:'+key(x.url||(x.sources||[])[0]?.url)+':'+(x.place||''),name:x.name,kind:x.mode==='in-game'||x.scope==='global'?'event':'person',link:x.url||(x.sources||[])[0]?.url,s:x.start,e:x.end}));
- batch('regional-events',input.regional?.events,x=>({...x,id:x.id||'regional:'+key(x.url||(x.sources||[])[0]?.url)+':'+(x.place||x.name||''),name:x.name||x.t,kind:x.mode==='in-game'||x.scope==='global'?'event':'person',link:x.url||(x.sources||[])[0]?.url}));
+ batch('worldEvents',data.worldEvents,x=>({...x,id:x.id||'world:'+key(x.link),name:x.t,place:x.where,kind:L.attendanceOf(x)==='in-person'?'person':'event'}));
+ batch('inPerson',data.inPerson,x=>({...x,id:x.id||'in-person:'+C.classify(x.title)+':'+x.title,notes:x.bullets,name:x.title,kind:L.attendanceOf({...x,place:x.place||x.where})==='in-person'?'person':'event'}));
+ batch('world-events',input.world?.events,x=>({...x,id:x.id||'source:'+key(x.url||(x.sources||[])[0]?.url)+':'+(x.place||''),name:x.name,kind:L.attendanceOf(x)==='in-person'?'person':'event',link:x.url||(x.sources||[])[0]?.url,s:x.start,e:x.end}));
+ batch('regional-events',input.regional?.events,x=>({...x,id:x.id||'regional:'+key(x.url||(x.sources||[])[0]?.url)+':'+(x.place||x.name||''),name:x.name||x.t,kind:L.attendanceOf(x)==='in-person'?'person':'event',link:x.url||(x.sources||[])[0]?.url}));
  batch('season',input.season?.items,x=>({...x,name:x.name,link:x.url,scope:'worldwide_local',detailIds:x.detailId?[x.detailId]:[]}));
  batch('spotlight',data.spotlight,x=>({id:'sp:'+x.d,name:x.n+' Spotlight Hour',s:x.d+'T18:00',e:x.d+'T19:00',scope:'worldwide_local',bonuses:x.b?[x.b]:[],featured:[{name:x.n,methods:['wild']}]}));
  batch('raidHour',data.raidHour,x=>({id:'rh:'+x.d,name:x.n+' Raid Hour',s:x.d+'T18:00',e:x.d+'T19:00',scope:'worldwide_local',featured:[{name:x.n,methods:['raid']}]}));

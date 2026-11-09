@@ -42,7 +42,10 @@ function reward(item,ctx){
  var icon='<span class="ue-reward-art">'+(artwork||fallback)+'</span>';
  return '<div class="research-reward">'+icon+'<span><b>'+quantity+esc(item.name)+'</b>'+cp+'</span></div>';
 }
-function research(items,ctx){return items.filter(function(r){return value(r);}).map(function(r){return '<article class="research-task"><h4>'+esc(value(r))+'</h4>'+(r.access&&r.access!=='unknown'?'<p>'+esc(r.access)+'</p>':'')+(Array.isArray(r.rewards)?'<div class="research-rewards">'+r.rewards.map(function(x){return reward(x,ctx);}).join('')+'</div>':'')+'</article>';}).join('');}
+function researchTask(r,ctx){return '<article class="research-task"><h4>'+esc(value(r))+'</h4>'+(r.access&&r.access!=='unknown'?'<p>'+esc(r.access)+'</p>':'')+(Array.isArray(r.rewards)?'<div class="research-rewards">'+r.rewards.map(function(x){return reward(x,ctx);}).join('')+'</div>':'')+'</article>';}
+/* Parsed tasks are the countable unit. Source prose lines are shown as notes underneath and never counted as tasks. */
+function research(items,ctx){var list=items.filter(function(r){return value(r);}),tasks=list.filter(function(r){return V.researchTaskCount([r]);}),notes=list.filter(function(r){return !V.researchTaskCount([r]);});
+ return tasks.map(function(r){return researchTask(r,ctx);}).join('')+(notes.length?'<ul class="ue-facts ue-research-notes">'+notes.map(function(r){return '<li>'+esc(value(r))+'</li>';}).join('')+'</ul>':'')+(!tasks.length&&notes.length?'<p class="ue-more-note" role="note">No individual research tasks have been published yet.</p>':'');}
 var PASS_ICONS=[[/^xp$/i,'/ico/xp.webp'],[/^stardust$/i,'/ico/dust.webp'],[/candy( xl)?$/i,'/ico/candy.webp'],[/^max potion$/i,'/ico/i/max-potion.webp'],[/^max revive$/i,'/ico/i/max-revive.webp'],[/^golden razz/i,'/ico/i/golden-razz.webp'],[/^silver pinap/i,'/ico/i/silver-pinap.webp'],[/incubator/i,'/ico/egg.webp'],[/incense/i,'/ico/incense.webp'],[/(raid|battle) pass/i,'/ico/g/raidpass.webp']];
 function passCategory(item){
  if(item.type==='encounter')return 'Pokémon';
@@ -89,7 +92,7 @@ function passes(items,ctx){
    var groups={};stages.forEach(function(s){var key=Math.floor(Math.max(0,s.rank-1)/25);(groups[key]||(groups[key]=[])).push(s);});
    var keys=Object.keys(groups);
    var first=stages[0].rank,last=stages[stages.length-1].rank;
-   var head='<p class="ue-pass-count">'+stages.length+' reward ranks listed'+(last>first?' (Rank '+first+' to '+last+')':'')+'.'+(first>1?' Ranks 1'+(first>2?'–'+(first-1):'')+' list no track reward; milestone bonuses are shown under Bonuses.':'')+'</p><p class="ue-pass-legend"><span class="ue-key ue-key-free">Free track</span><span class="ue-key ue-key-deluxe">Deluxe track</span> Deluxe also receives every Free reward.</p>';
+   var head='<p class="ue-pass-count">'+stages.length+(last>stages.length?' of '+last:'')+(stages.length===1?' rank listed':' ranks listed')+(last>first?' (Rank '+first+' to '+last+')':'')+'.'+(first>1?' Ranks 1'+(first>2?'–'+(first-1):'')+' list no track reward; milestone bonuses are shown under Bonuses.':'')+'</p><p class="ue-pass-legend"><span class="ue-key ue-key-free">Free track</span><span class="ue-key ue-key-deluxe">Deluxe track</span> Deluxe also receives every Free reward.</p>';
    content=head+keys.map(function(key,i){var list=groups[key],before=i?groups[keys[i-1]][groups[keys[i-1]].length-1].rank:null;return '<details class="ue-pass-range"'+(i===0?" open":"")+'><summary>'+(list.length===1?'Rank '+esc(list[0].rank):'Ranks '+esc(list[0].rank)+'–'+esc(list[list.length-1].rank))+'</summary><ol class="ue-pass-stages">'+listWithGaps(list,before)+'</ol></details>';}).join('');
   }
   var srcs=(model_sources(ctx)||[]).map(function(s){return s;}).join(' · ');
@@ -208,8 +211,8 @@ function render(model,ctx){ctx=ctx||{};var view=V.project(model),fields=model.in
  var DUP=/^(Pokémon|Event bonuses|Research|Research tasks|GO Pass|Tickets &amp; access|Details)$/;
  function dedupe(html){return String(html).replace(/<h3 class="sec2">([^<]*)<\/h3>/,function(m,t){return DUP.test(t)?'':m;});}
  var sections=panels.filter(function(t){return t.html&&String(t.html).replace(/<[^>]+>/g,'').trim().length>0||/<img|<svg/.test(t.html||'');});
- var nav='<nav class="evd-nav" aria-label="Event sections"><div class="evd-nav-scroll">'+sections.map(function(t,i){return '<a class="evd-nav-link" href="#evd-s-'+t.id+'" data-sec="'+t.id+'"'+(i===0?' aria-current="true"':'')+'>'+esc(t.label)+'</a>';}).join('')+'</div><span class="evd-nav-more" aria-hidden="true">›</span></nav>';
- var secs=sections.map(function(t){return '<section class="evd-sec" id="evd-s-'+t.id+'" aria-labelledby="evd-h-'+t.id+'" data-sec="'+t.id+'"><h2 class="evd-sec-h" id="evd-h-'+t.id+'" tabindex="-1">'+esc(t.label)+'</h2>'+dedupe(t.html)+'</section>';}).join('');
+ var nav='<nav class="evd-nav" aria-label="Event sections"><div class="evd-nav-scroll">'+sections.map(function(t,i){return '<a class="evd-nav-link" href="#evd-s-'+t.id+'" data-sec="'+t.id+'"'+(i===0?' aria-current="true"':'')+'>'+esc(t.label)+(t.id==='research'&&view.researchTasks?' <span class="evd-nav-count">'+view.researchTasks+'</span>':'')+'</a>';}).join('')+'</div><span class="evd-nav-more" aria-hidden="true">›</span></nav>';
+ var secs=sections.map(function(t){return '<section class="evd-sec" id="evd-s-'+t.id+'" aria-labelledby="evd-h-'+t.id+'" data-sec="'+t.id+'"><h2 class="evd-sec-h" id="evd-h-'+t.id+'" tabindex="-1">'+esc(t.label)+(t.id==='research'?' <small class="m evd-count">'+(view.researchTasks?view.researchTasks+(view.researchTasks===1?' task':' tasks'):'no tasks listed yet')+'</small>':'')+'</h2>'+dedupe(t.html)+'</section>';}).join('');
  return (ctx.toolbar||'')+hero+nav+'<div class="evd-sections">'+secs+'</div>';
 }
 return {render:render,gallery:gallery,rotations:function(model,ctx){return scheduledActivities(model,ctx,'rotation');}};

@@ -142,6 +142,7 @@ jobs:
           python test/raids_max_polish_browser.py
           python test/event_consistency_browser.py
           python test/schedule_gopass_browser.py
+          python test/accuracy_fixes_browser.py
 
       - name: Verify combined source rendering and offline upgrade
         if: matrix.shard == 'b'
