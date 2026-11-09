@@ -98,7 +98,10 @@ test('catalogue rows pair every Australian item with a verified or estimated reg
     {product:'store-a', currency:'AUD', region:'AU', amount:3, verified:false, observed:'2026-11-10'},
     {product:'store-b', currency:'USD', region:'global', amount:1, verified:true}
   ], OBS, NOW);
-  assert.equal(rows.length, 1); assert.equal(rows[0].aud, 12); assert.equal(rows[0].indonesia.basis, 'verified'); assert.equal(rows[0].india, null);
+  const matched = rows.find(r => r.product === 'store-a');
+  assert.ok(matched, 'Australian catalogue item is preserved');
+  assert.equal(matched.aud, 12); assert.equal(matched.indonesia.basis, 'verified'); assert.equal(matched.india, null);
+  assert.ok(rows.length > 1, 'Regional-only products are also retained');
 });
 test('Store script and regional module parse in a browser-like context', () => {
   for (const f of ['store.js', 'regional-prices.js']) assert.doesNotThrow(() => new vm.Script(fs.readFileSync(path.join(__dirname, '../public', f), 'utf8')));
