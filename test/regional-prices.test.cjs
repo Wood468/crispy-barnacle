@@ -2,7 +2,7 @@ const assert = require('node:assert/strict');
 const {test} = require('node:test');
 const r = require('../public/regional-prices.js');
 test('only category-matched observed ratios can produce estimates', () => {
-  assert.equal(r.estimate(10, 'ID', 'tickets'), null);
+  assert.equal(r.estimate(22.99, 'ID', 'tickets').amount, 76000);
   assert.equal(r.estimate(10, 'IN', 'bundles'), null);
   const p = r.estimate(22.99, 'IN', 'tickets');
   assert.equal(p.amount, 439);
@@ -23,7 +23,7 @@ test('catalogue uses latest verified Australian price, not USD or unverified ent
   assert.equal(rows.length,1);
   assert.equal(rows[0].aud,12);
   assert.equal(rows[0].india.basis,'estimated');
-  assert.equal(rows[0].indonesia,null);
+  assert.equal(rows[0].indonesia.amount,40000);
 });
 test('paired confirmed observations calibrate IDR without inventing exchange rates', () => {
   const rows = [
