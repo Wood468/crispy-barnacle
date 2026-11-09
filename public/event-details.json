@@ -7679,43 +7679,43 @@
      "collectionName": "Bagon"
     },
     {
-     "key": "379:base:none",
+     "key": "379:dynamax:none",
      "speciesId": "379",
-     "formId": null,
+     "formId": "dynamax",
      "costumeId": null,
      "shiny": "unknown",
      "assetKey": null,
-     "name": "Registeel",
+     "name": "Dynamax Registeel",
      "label": null,
      "debut": null,
      "boostedShiny": null,
-     "collectionName": "Registeel"
+     "collectionName": "Dynamax Registeel"
     },
     {
-     "key": "380:base:none",
+     "key": "380:dynamax:none",
      "speciesId": "380",
-     "formId": null,
+     "formId": "dynamax",
      "costumeId": null,
      "shiny": "unknown",
      "assetKey": null,
-     "name": "Latias",
+     "name": "Dynamax Latias",
      "label": null,
      "debut": null,
      "boostedShiny": null,
-     "collectionName": "Latias"
+     "collectionName": "Dynamax Latias"
     },
     {
-     "key": "381:base:none",
+     "key": "381:dynamax:none",
      "speciesId": "381",
-     "formId": null,
+     "formId": "dynamax",
      "costumeId": null,
      "shiny": "unknown",
      "assetKey": null,
-     "name": "Latios",
+     "name": "Dynamax Latios",
      "label": null,
      "debut": null,
      "boostedShiny": null,
-     "collectionName": "Latios"
+     "collectionName": "Dynamax Latios"
     },
     {
      "key": "52:galar:none",
@@ -7822,17 +7822,17 @@
      "collectionName": "Magnemite"
     },
     {
-     "key": "895:base:none",
+     "key": "895:dynamax:none",
      "speciesId": "895",
-     "formId": null,
+     "formId": "dynamax",
      "costumeId": null,
      "shiny": "unknown",
      "assetKey": null,
-     "name": "Regidrago",
+     "name": "Dynamax Regidrago",
      "label": null,
      "debut": null,
      "boostedShiny": null,
-     "collectionName": "Regidrago"
+     "collectionName": "Dynamax Regidrago"
     },
     {
      "key": "968:base:none",
@@ -7859,6 +7859,32 @@
      "debut": null,
      "boostedShiny": null,
      "collectionName": "Gimmighoul"
+    },
+    {
+     "key": "888:crowned-sword:none",
+     "speciesId": "888",
+     "formId": "crowned-sword",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Crowned Sword Zacian",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Crowned Sword Zacian"
+    },
+    {
+     "key": "889:crowned-shield:none",
+     "speciesId": "889",
+     "formId": "crowned-shield",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Crowned Shield Zamazenta",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Crowned Shield Zamazenta"
     }
    ],
    "encounters": [
@@ -7869,19 +7895,19 @@
      "access": "unknown"
     },
     {
-     "identityKey": "379:base:none",
+     "identityKey": "379:dynamax:none",
      "method": "max",
      "activityId": "main",
      "access": "unknown"
     },
     {
-     "identityKey": "380:base:none",
+     "identityKey": "380:dynamax:none",
      "method": "max",
      "activityId": "main",
      "access": "unknown"
     },
     {
-     "identityKey": "381:base:none",
+     "identityKey": "381:dynamax:none",
      "method": "max",
      "activityId": "main",
      "access": "unknown"
@@ -7893,7 +7919,7 @@
      "access": "unknown"
     },
     {
-     "identityKey": "895:base:none",
+     "identityKey": "895:dynamax:none",
      "method": "max",
      "activityId": "main",
      "access": "unknown"
@@ -7991,6 +8017,18 @@
     {
      "identityKey": "999:base:none",
      "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "888:crowned-sword:none",
+     "method": "raid",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "889:crowned-shield:none",
+     "method": "raid",
      "activityId": "main",
      "access": "unknown"
     }
