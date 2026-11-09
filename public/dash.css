@@ -2180,9 +2180,9 @@ a.evc-source{color:var(--color-link);text-underline-offset:3px}
 .evd-in:has(.ue-hero) .ue-mon-art .art.costume-unavailable .va-badge{font-size:.58rem;margin:0;padding:1px 5px}
 
 /* Regional prices use a separate responsive layout: estimated prices are not crossed out. */
-.storep-regional .sp-regional-row{grid-template-columns:minmax(0,1fr) auto;gap:5px 12px;align-items:start;padding:12px 0}
+.storep-regional .sp-regional-row{grid-template-columns:minmax(0,1fr) auto;gap:var(--space-1) var(--space-3);align-items:start;padding:var(--space-3) 0}
 .storep-regional .sp-regional-row>.sp-n:first-child{grid-column:1/-1;font-weight:700}
 .storep-regional .sp-regional-row>.sp-a{grid-column:1/-1;font-weight:700}
-.storep-regional .sp-regional-value{color:var(--color-text);text-decoration:none;font-variant-numeric:tabular-nums;font-size:.82rem}
-.storep-regional .sp-regional-row>.sp-n:last-child{grid-column:1/-1;font-size:.72rem;color:var(--color-text-muted);font-weight:400}
+.storep-regional .sp-regional-value{color:var(--color-text);text-decoration:none;font-variant-numeric:tabular-nums;font-size:var(--type-meta)}
+.storep-regional .sp-regional-row>.sp-n:last-child{grid-column:1/-1;font-size:var(--type-overline);color:var(--color-text-muted);font-weight:400}
 @media(min-width:600px){.storep-regional .sp-regional-row{grid-template-columns:minmax(0,1fr) auto auto auto}.storep-regional .sp-regional-row>.sp-n:first-child,.storep-regional .sp-regional-row>.sp-a{grid-column:auto}}
