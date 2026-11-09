@@ -1,14 +1,22 @@
 {
- "runAt": "2026-11-09T11:14:11.408Z",
+ "runAt": "2026-11-09T12:12:24.809Z",
  "artworkCoverage": {
   "selected": 27,
-  "missing": 66,
-  "legacyUnattributed": 2,
+  "missing": 69,
+  "legacyUnattributed": 5,
   "bySource": {
    "Pokémon GO (official)": 19,
    "Leek Duck": 8
   },
   "missingEvents": [
+   {
+    "id": "into",
+    "name": "Into the Wild",
+    "sources": [
+     "https://pokemongo.com/news/go-wild-area-stamp-rally-details-2026/",
+     "https://pokemongohub.net/post/guide/go-pass-into-the-wild/"
+    ]
+   },
    {
     "id": "leekduck:pokemon-night-out-london-2026",
     "name": "Pokémon Night Out 2026 - London",
@@ -45,14 +53,14 @@
     ]
    },
    {
-    "id": "minior2",
-    "name": "Minior Showers: Leonids",
+    "id": "leekduck:minior-showers-leonids-2026",
+    "name": "Minior Showers: Leonids 2026",
     "sources": [
      "https://leekduck.com/events/minior-showers-leonids-2026/"
     ]
    },
    {
-    "id": "eternamax",
+    "id": "leekduck:eternamax-eternatus-max-battles-2026",
     "name": "Eternamax Eternatus Returns",
     "sources": [
      "https://leekduck.com/events/eternamax-eternatus-max-battles-2026/"
@@ -122,8 +130,8 @@
     ]
    },
    {
-    "id": "minior3",
-    "name": "Minior Showers: Geminids",
+    "id": "leekduck:minior-showers-geminids-2026",
+    "name": "Minior Showers: Geminids 2026",
     "sources": [
      "https://leekduck.com/events/minior-showers-geminids-2026/"
     ]
@@ -217,6 +225,13 @@
     "name": "GO Pass: November",
     "sources": [
      "https://pokemongohub.net/post/guide/go-pass-november-2026/"
+    ]
+   },
+   {
+    "id": "twilightwishes",
+    "name": "Twilight Wishes",
+    "sources": [
+     "https://leekduck.com/events/twilight-wishes-2026/"
     ]
    },
    {
@@ -388,6 +403,13 @@
     ]
    },
    {
+    "id": "leekduck:pokemon-tcg-30th-celebration",
+    "name": "Pokémon TCG: 30th Celebration",
+    "sources": [
+     "https://pokemongo.com/news/tcg-30th-celebration-event/"
+    ]
+   },
+   {
     "id": "leekduck:dialga-in-5-star-raid-battles-october-2026",
     "name": "Dialga in 5-star Raid Battles",
     "sources": [
@@ -497,7 +519,7 @@
   }
  },
  "pagesRead": 80,
- "events": 95,
+ "events": 101,
  "worldEvents": 59,
  "worldUndated": [
   "GO Wild Area Stamp Rally"
@@ -921,7 +943,8 @@
    "event": "Into the Wild 2026",
    "field": "moves",
    "missingFrom": [
-    "official"
+    "official",
+    "leekduck"
    ]
   },
   {
@@ -936,46 +959,6 @@
    "field": "dates",
    "missingFrom": [
     "official"
-   ]
-  },
-  {
-   "event": "Into the Wild",
-   "field": "bonuses",
-   "missingFrom": [
-    "official",
-    "hub"
-   ]
-  },
-  {
-   "event": "Into the Wild",
-   "field": "featured",
-   "missingFrom": [
-    "official",
-    "hub"
-   ]
-  },
-  {
-   "event": "Into the Wild",
-   "field": "raids",
-   "missingFrom": [
-    "official",
-    "hub"
-   ]
-  },
-  {
-   "event": "Into the Wild",
-   "field": "research",
-   "missingFrom": [
-    "official",
-    "hub"
-   ]
-  },
-  {
-   "event": "Into the Wild",
-   "field": "shiny",
-   "missingFrom": [
-    "official",
-    "hub"
    ]
   },
   {

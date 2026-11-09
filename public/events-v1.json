@@ -5301,8 +5301,7 @@
       {
        "text": "The following bonuses will be active during the event.",
        "sources": [
-        "official",
-        "leekduck"
+        "official"
        ],
        "status": "official"
       },
@@ -5323,8 +5322,7 @@
       {
        "text": "Max Particles cannot be obtained from catches with the Explorer Gadget or a Pokémon GO Plus +.",
        "sources": [
-        "official",
-        "leekduck"
+        "official"
        ],
        "status": "official"
       },
@@ -5359,114 +5357,88 @@
       {
        "text": "Reach Major Milestones on your event GO Pass to unlock the following bonuses.",
        "sources": [
-        "official",
-        "leekduck"
+        "official"
        ],
        "status": "official"
       },
       {
        "text": "Rank 15: 2× Catch Stardust",
        "sources": [
-        "official",
-        "leekduck"
+        "official"
        ],
        "status": "official"
       },
       {
        "text": "Rank 35: 1/2 Candy and Stardust to activate the Dynamax Cannon Adventure Effect",
        "sources": [
-        "official",
-        "leekduck"
+        "official"
        ],
        "status": "official"
       },
       {
        "text": "Rank 55: Additional Candy and Candy XL from Max Battles",
        "sources": [
-        "official",
-        "leekduck"
+        "official"
        ],
        "status": "official"
-      },
-      {
-       "text": "Rank 55: Additional bonus tasks for this GO Pass will be available during the event.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
       }
      ],
      "featured": [
       {
        "text": "You may encounter event-themed Pokémon in the wild, including any Pokémon* that has debuted in Dynamax Max Battles!",
        "sources": [
-        "official",
-        "leekduck"
+        "official"
        ],
        "status": "official"
       },
       {
        "text": "Complete Pass Tasks to rank up your GO Pass to earn the following rewards.",
        "sources": [
-        "official",
-        "leekduck"
+        "official"
        ],
        "status": "official"
       },
       {
        "text": "Encounters with event-themed Dynamax Pokémon with a Special Background",
        "sources": [
-        "official",
-        "leekduck"
+        "official"
        ],
        "status": "official"
       },
       {
        "text": "An encounter with Eternatus, or 100 Eternatus Candy if you have already caught Eternatus",
        "sources": [
-        "official",
-        "leekduck"
+        "official"
        ],
        "status": "official"
       },
       {
        "text": "Eternatus Candy and Candy XL",
        "sources": [
-        "official",
-        "leekduck"
+        "official"
        ],
        "status": "official"
       },
       {
        "text": "Event-themed stickers",
        "sources": [
-        "official",
-        "leekduck"
+        "official"
        ],
        "status": "official"
       },
       {
        "text": "Trainers who upgrade to the GO Pass Deluxe can also earn the following rewards.",
        "sources": [
-        "official",
-        "leekduck"
+        "official"
        ],
        "status": "official"
       },
       {
        "text": "Silver Pinap Berries",
        "sources": [
-        "official",
-        "leekduck"
+        "official"
        ],
        "status": "official"
-      },
-      {
-       "text": "Additional rewards",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
       }
      ],
      "raids": [
@@ -5487,24 +5459,9 @@
       {
        "text": "All Dynamax Pokémon* that have appeared in Pokémon GO may appear in Max Battles.",
        "sources": [
-        "official",
-        "leekduck"
+        "official"
        ],
        "status": "official"
-      },
-      {
-       "text": "Get ready for a week of Max Battles! Dynamax Pokémon return, Max Particles are surging in the wild, and Eternamax Eternatus returns to Power Spots during Dynamax Trails.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "The Dynamax Trails event will take place from November 16, 2026 at 10 am to November 23, 2026 at 8 pm local time.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
       }
      ],
      "eggs": [],
@@ -5512,8 +5469,7 @@
       {
        "text": "Event-themed Field Research tasks will be available! Complete them to earn Stardust, Eternatus Candy, and more!",
        "sources": [
-        "official",
-        "leekduck"
+        "official"
        ],
        "status": "official"
       },
@@ -5560,70 +5516,25 @@
       {
        "text": "Rewards unlocked in the GO Pass will expire on Wednesday, November 25, 2026, at 8:00 p.m. local time, so be sure to claim your rewards before they’re gone!",
        "sources": [
-        "official",
-        "leekduck"
+        "official"
        ],
        "status": "official"
-      },
-      {
-       "text": "GO Pass is a free, limited-time progression track. Collect GO Points and complete Pass Tasks to rank up and earn rewards.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Trainers will automatically receive GO Pass: Dynamax Trails on November 16, 2026, at 10 am local time. GO Points can be collected through November 23, 2026, at 8 pm local time.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Trainers who claim Tier 1 rewards (Rank 25) on GO Pass: Into the Wild will receive early access on November 14, 2026, at 10 am local time, and a free upgrade to GO Pass Deluxe: Dynamax Trails .",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
       }
      ],
      "dates": [
       {
        "text": "Monday, November 16, at 10:00 a.m. to Monday, November 23, 2026, at 8:00 p.m. local time",
        "sources": [
-        "official",
-        "leekduck"
+        "official"
        ],
        "status": "official"
       },
       {
        "text": "From November 20 at 1:00 p.m. to November 21 at 6:00 p.m. PST (GMT −8), the daily Remote Raid limit will increase from 10 to 30.",
        "sources": [
-        "official",
-        "leekduck"
+        "official"
        ],
        "status": "official"
-      },
-      {
-       "text": "The Dynamax Trails event will take place from November 16, 2026 at 10 am to November 23, 2026 at 8 pm local time.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Grookey, Scorbunny, and Sobble will be featured during Pokémon Spotlight Hour on November 19, 2026, from 6 pm to 7 pm local time. The bonus will be 2× Catch Candy .",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Trainers who claim Tier 1 rewards (Rank 25) on GO Pass: Into the Wild will receive early access on November 14, 2026, at 10 am local time, and a free upgrade to GO Pass Deluxe: Dynamax Trails .",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
       }
      ]
     },
@@ -5634,8 +5545,8 @@
      "end": "2026-11-23T20:00"
     },
     "imageReviewed": true,
-    "contentHash": "1adc23a09a61cff4770a504c6e9668640d9a230cbb71876bdfc550dfa59f721b",
-    "revision": 4,
+    "contentHash": "23de28c74aef7292f13a71bea8a0a679da7970653c4f39defc00c87df07321fa",
+    "revision": 3,
     "amended": false,
     "native": false,
     "collection": "events"
@@ -5648,8 +5559,7 @@
     {
      "text": "The following bonuses will be active during the event.",
      "sources": [
-      "official",
-      "leekduck"
+      "official"
      ],
      "status": "official"
     },
@@ -5670,8 +5580,7 @@
     {
      "text": "Max Particles cannot be obtained from catches with the Explorer Gadget or a Pokémon GO Plus +.",
      "sources": [
-      "official",
-      "leekduck"
+      "official"
      ],
      "status": "official"
     },
@@ -5706,49 +5615,37 @@
     {
      "text": "Reach Major Milestones on your event GO Pass to unlock the following bonuses.",
      "sources": [
-      "official",
-      "leekduck"
+      "official"
      ],
      "status": "official"
     },
     {
      "text": "Rank 15: 2× Catch Stardust",
      "sources": [
-      "official",
-      "leekduck"
+      "official"
      ],
      "status": "official"
     },
     {
      "text": "Rank 35: 1/2 Candy and Stardust to activate the Dynamax Cannon Adventure Effect",
      "sources": [
-      "official",
-      "leekduck"
+      "official"
      ],
      "status": "official"
     },
     {
      "text": "Rank 55: Additional Candy and Candy XL from Max Battles",
      "sources": [
-      "official",
-      "leekduck"
+      "official"
      ],
      "status": "official"
-    },
-    {
-     "text": "Rank 55: Additional bonus tasks for this GO Pass will be available during the event.",
-     "sources": [
-      "leekduck"
-     ],
-     "status": "single"
     }
    ],
    "research": [
     {
      "text": "Event-themed Field Research tasks will be available! Complete them to earn Stardust, Eternatus Candy, and more!",
      "sources": [
-      "official",
-      "leekduck"
+      "official"
      ],
      "status": "official"
     },
@@ -5793,31 +5690,9 @@
     {
      "text": "Rewards unlocked in the GO Pass will expire on Wednesday, November 25, 2026, at 8:00 p.m. local time, so be sure to claim your rewards before they’re gone!",
      "sources": [
-      "official",
-      "leekduck"
+      "official"
      ],
      "status": "official"
-    },
-    {
-     "text": "GO Pass is a free, limited-time progression track. Collect GO Points and complete Pass Tasks to rank up and earn rewards.",
-     "sources": [
-      "leekduck"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Trainers will automatically receive GO Pass: Dynamax Trails on November 16, 2026, at 10 am local time. GO Points can be collected through November 23, 2026, at 8 pm local time.",
-     "sources": [
-      "leekduck"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Trainers who claim Tier 1 rewards (Rank 25) on GO Pass: Into the Wild will receive early access on November 14, 2026, at 10 am local time, and a free upgrade to GO Pass Deluxe: Dynamax Trails .",
-     "sources": [
-      "leekduck"
-     ],
-     "status": "single"
     }
    ],
    "sources": [
@@ -5830,12 +5705,6 @@
     {
      "url": "https://pokemongo.com/news/dynamax-trails-eternamax-eternatus-2026",
      "name": "Official Pokémon GO announcement"
-    },
-    {
-     "id": "leekduck",
-     "name": "Leek Duck",
-     "trust": "community",
-     "url": "https://leekduck.com/events/dynamax-trails-2026/"
     }
    ],
    "pokemon": [],
@@ -5867,63 +5736,240 @@
       {
        "text": "The following bonuses will be active during the event.",
        "sources": [
-        "leekduck"
+        "official"
        ],
-       "status": "single"
+       "status": "official"
       },
       {
-       "text": "The daily Remote Raid limit will increase from 10 to 30 from November 20 at 1 pm to November 21 at 6 pm PST (GMT −8).",
+       "text": "A chance to receive Max Particles when catching event-themed Pokémon in the wild or after Max Battles.",
        "sources": [
-        "leekduck"
+        "official"
        ],
-       "status": "single"
+       "status": "official"
+      },
+      {
+       "text": "More Power Spots than usual will be active.",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Max Particles cannot be obtained from catches with the Explorer Gadget or a Pokémon GO Plus +.",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Power Spots will refresh more frequently.",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Max Particle collection limit increased to 2,400.",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "8× Max Particles from Power Spots.",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "From November 20 at 1:00 p.m. to November 21 at 6:00 p.m. PST (GMT −8), the daily Remote Raid limit will increase from 10 to 30.",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Reach Major Milestones on your event GO Pass to unlock the following bonuses.",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Rank 15: 2× Catch Stardust",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Rank 35: 1/2 Candy and Stardust to activate the Dynamax Cannon Adventure Effect",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Rank 55: Additional Candy and Candy XL from Max Battles",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
       }
      ],
-     "featured": [],
+     "featured": [
+      {
+       "text": "You may encounter event-themed Pokémon in the wild, including any Pokémon* that has debuted in Dynamax Max Battles!",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Complete Pass Tasks to rank up your GO Pass to earn the following rewards.",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Encounters with event-themed Dynamax Pokémon with a Special Background",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "An encounter with Eternatus, or 100 Eternatus Candy if you have already caught Eternatus",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Eternatus Candy and Candy XL",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Event-themed stickers",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Trainers who upgrade to the GO Pass Deluxe can also earn the following rewards.",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Silver Pinap Berries",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      }
+     ],
      "raids": [
       {
-       "text": "Eternamax Eternatus",
+       "text": "Monday, November 16, at 10:00 a.m. to Monday, November 23, 2026, at 8:00 p.m. local time",
        "sources": [
-        "leekduck"
+        "official"
        ],
-       "status": "single"
+       "status": "official"
+      },
+      {
+       "text": "Prepare for the return of every Dynamax Pokémon seen in Pokémon GO!",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "All Dynamax Pokémon* that have appeared in Pokémon GO may appear in Max Battles.",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
       }
      ],
      "eggs": [],
-     "research": [],
+     "research": [
+      {
+       "text": "Event-themed Field Research tasks will be available! Complete them to earn Stardust, Eternatus Candy, and more!",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Complete Field Research tasks to earn encounters with event-themed Pokémon.",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      }
+     ],
      "shiny": [],
      "moves": [],
      "costumes": [],
      "tickets": [
       {
-       "text": "Eternatus is available through GO Pass: Dynamax Trails . Trainers who have already caught Eternatus will receive 100 Eternatus Candy instead of another encounter.",
+       "text": "A GO Pass is a free, limited-time progression track available during a specified period. By collecting GO Points, you can increase your rank to earn rewards.",
        "sources": [
-        "leekduck"
+        "official"
        ],
-       "status": "single"
+       "status": "official"
       },
       {
-       "text": "Both the free GO Pass and GO Pass Deluxe provide Eternatus Candy and Candy XL to help power it up.",
+       "text": "You can collect GO Points and rank up to get additional rewards through Monday, November 23, 2026, at 8:00 p.m. local time.",
        "sources": [
-        "leekduck"
+        "official"
        ],
-       "status": "single"
+       "status": "official"
+      },
+      {
+       "text": "For US$4.99*, Trainers can upgrade to the GO Pass Deluxe, a paid version of the GO Pass that offers upgraded rewards and faster progression.",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Trainers who claimed the first tier of rewards in GO Pass: Into the Wild will automatically be upgraded to the GO Pass Deluxe, for free!",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Rewards unlocked in the GO Pass will expire on Wednesday, November 25, 2026, at 8:00 p.m. local time, so be sure to claim your rewards before they’re gone!",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
       }
      ],
      "dates": [
       {
-       "text": "Eternamax Eternatus returns during Dynamax Trails , taking over the majority of Power Spots on November 21, 2026, from 11 am to 2 pm local time.",
+       "text": "Monday, November 16, at 10:00 a.m. to Monday, November 23, 2026, at 8:00 p.m. local time",
        "sources": [
-        "leekduck"
+        "official"
        ],
-       "status": "single"
+       "status": "official"
       },
       {
-       "text": "The daily Remote Raid limit will increase from 10 to 30 from November 20 at 1 pm to November 21 at 6 pm PST (GMT −8).",
+       "text": "From November 20 at 1:00 p.m. to November 21 at 6:00 p.m. PST (GMT −8), the daily Remote Raid limit will increase from 10 to 30.",
        "sources": [
-        "leekduck"
+        "official"
        ],
-       "status": "single"
+       "status": "official"
       }
      ]
     },
@@ -5934,9 +5980,9 @@
      "end": "2026-11-21T14:00"
     },
     "imageReviewed": true,
-    "contentHash": "9c1e84fa3e57a9dc254240da56abb3e0fe3ea75b86697d72cfd7a5408efad52a",
-    "revision": 10,
-    "amended": true,
+    "contentHash": "f7ffd0b4bf6fcd43c514422e4002c65ce944a579ee77ce5cf1ab95e7e966ec44",
+    "revision": 4,
+    "amended": false,
     "native": false,
     "collection": "events"
    },
@@ -5946,16 +5992,86 @@
     {
      "text": "The following bonuses will be active during the event.",
      "sources": [
-      "leekduck"
+      "official"
      ],
-     "status": "single"
+     "status": "official"
     },
     {
-     "text": "The daily Remote Raid limit will increase from 10 to 30 from November 20 at 1 pm to November 21 at 6 pm PST (GMT −8).",
+     "text": "A chance to receive Max Particles when catching event-themed Pokémon in the wild or after Max Battles.",
      "sources": [
-      "leekduck"
+      "official"
      ],
-     "status": "single"
+     "status": "official"
+    },
+    {
+     "text": "More Power Spots than usual will be active.",
+     "sources": [
+      "official"
+     ],
+     "status": "official"
+    },
+    {
+     "text": "Max Particles cannot be obtained from catches with the Explorer Gadget or a Pokémon GO Plus +.",
+     "sources": [
+      "official"
+     ],
+     "status": "official"
+    },
+    {
+     "text": "Power Spots will refresh more frequently.",
+     "sources": [
+      "official"
+     ],
+     "status": "official"
+    },
+    {
+     "text": "Max Particle collection limit increased to 2,400.",
+     "sources": [
+      "official"
+     ],
+     "status": "official"
+    },
+    {
+     "text": "8× Max Particles from Power Spots.",
+     "sources": [
+      "official"
+     ],
+     "status": "official"
+    },
+    {
+     "text": "From November 20 at 1:00 p.m. to November 21 at 6:00 p.m. PST (GMT −8), the daily Remote Raid limit will increase from 10 to 30.",
+     "sources": [
+      "official"
+     ],
+     "status": "official"
+    },
+    {
+     "text": "Reach Major Milestones on your event GO Pass to unlock the following bonuses.",
+     "sources": [
+      "official"
+     ],
+     "status": "official"
+    },
+    {
+     "text": "Rank 15: 2× Catch Stardust",
+     "sources": [
+      "official"
+     ],
+     "status": "official"
+    },
+    {
+     "text": "Rank 35: 1/2 Candy and Stardust to activate the Dynamax Cannon Adventure Effect",
+     "sources": [
+      "official"
+     ],
+     "status": "official"
+    },
+    {
+     "text": "Rank 55: Additional Candy and Candy XL from Max Battles",
+     "sources": [
+      "official"
+     ],
+     "status": "official"
     }
    ],
    "research": [
@@ -5977,18 +6093,39 @@
    "passes": [],
    "tickets": [
     {
-     "text": "Eternatus is available through GO Pass: Dynamax Trails . Trainers who have already caught Eternatus will receive 100 Eternatus Candy instead of another encounter.",
+     "text": "A GO Pass is a free, limited-time progression track available during a specified period. By collecting GO Points, you can increase your rank to earn rewards.",
      "sources": [
-      "leekduck"
+      "official"
      ],
-     "status": "single"
+     "status": "official"
     },
     {
-     "text": "Both the free GO Pass and GO Pass Deluxe provide Eternatus Candy and Candy XL to help power it up.",
+     "text": "You can collect GO Points and rank up to get additional rewards through Monday, November 23, 2026, at 8:00 p.m. local time.",
      "sources": [
-      "leekduck"
+      "official"
      ],
-     "status": "single"
+     "status": "official"
+    },
+    {
+     "text": "For US$4.99*, Trainers can upgrade to the GO Pass Deluxe, a paid version of the GO Pass that offers upgraded rewards and faster progression.",
+     "sources": [
+      "official"
+     ],
+     "status": "official"
+    },
+    {
+     "text": "Trainers who claimed the first tier of rewards in GO Pass: Into the Wild will automatically be upgraded to the GO Pass Deluxe, for free!",
+     "sources": [
+      "official"
+     ],
+     "status": "official"
+    },
+    {
+     "text": "Rewards unlocked in the GO Pass will expire on Wednesday, November 25, 2026, at 8:00 p.m. local time, so be sure to claim your rewards before they’re gone!",
+     "sources": [
+      "official"
+     ],
+     "status": "official"
     }
    ],
    "sources": [
@@ -6001,12 +6138,6 @@
     {
      "url": "https://pokemongo.com/news/dynamax-trails-eternamax-eternatus-2026",
      "name": "Official Pokémon GO announcement"
-    },
-    {
-     "id": "leekduck",
-     "name": "Leek Duck",
-     "trust": "community",
-     "url": "https://leekduck.com/events/eternamax-eternatus-max-battles-2026/"
     }
    ],
    "pokemon": [
@@ -9905,26 +10036,23 @@
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": true,
-    "conflicts": [
-     {
-      "field": "research",
-      "a": {
-       "text": "Win a Raid | Dratini Scyther 2 × Rare Candy",
-       "sources": [
-        "hub"
-       ]
-      },
-      "b": {
-       "text": "Catch a Dynamax Machop | 25 × Machop Candy 5000 × Stardust",
-       "sources": [
-        "hub"
-       ]
-      },
-      "impact": "informational"
-     }
-    ],
+    "conflicts": [],
     "fields": {
      "bonuses": [
+      {
+       "text": "Daily Discoveries will not take place from November 9 through November 15, 2026.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Reach these ranks on GO Pass: Into the Wild to unlock the following bonus.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
       {
        "text": "The event features the following bonuses and debuts.",
        "sources": [
@@ -9968,30 +10096,122 @@
        "status": "single"
       },
       {
-       "text": "Rank 25: Half hatch distance for eggs incubated during the event",
+       "text": "Rank 25: 1/2 Hatch Distance for Eggs placed in Incubators during the event",
        "sources": [
-        "hub"
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 1 Deluxe: Major Milestone Bonus: Additional 5,000 XP awarded for successful raids",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 2 Deluxe: Major Milestone Bonus: Reduced Max Particle cost to unlock and level up Max Moves",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 3 Deluxe: Major Milestone Bonus: One additional Candy from raids",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 25: Major Milestone Bonus: 1/2 Hatch Distance",
+       "sources": [
+        "leekduck"
        ],
        "status": "single"
       }
      ],
      "featured": [
       {
+       "text": "The following Pokémon will appear more frequently in the wild, along with other event-themed Pokémon.",
+       "sources": [
+        "leekduck",
+        "hub"
+       ],
+       "status": "corroborated"
+      },
+      {
+       "text": "Galarian Meowth",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "The free track includes:",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Encounter with Dynamax Meltan",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "GO Wild Area 2026 Tee (Purple)",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Additional rewards",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "GO Pass Deluxe also offers:",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "A Silver Bottle Cap, which can be used to max one stat—Attack, Defense, or HP—on any Pokémon via Hyper Training",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Encounters with Dynamax Meltan",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Duraludon Pants",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Premium items, such as Incense and a Lucky Egg",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
        "text": "Dynamax Pokémon Debut",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "The following Pokémon are appearing more frequently in the wild:",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "When you use a Coin Bag during the event, you’ll be able to encounter Shiny Gimmighoul, if you are lucky! Not sure how to get a Coin Bag in Pokémon GO? Here is our complete guide .",
        "sources": [
         "hub"
        ],
@@ -10000,42 +10220,38 @@
      ],
      "raids": [
       {
-       "text": "The following Dynamax Pokémon will make their debut during the event:",
+       "text": "Regidrago will make its Pokémon GO Dynamax debut in five-star Max Battles, and Meltan will make its Dynamax debut in GO Pass: Into the Wild. If you’re lucky, you may encounter a Shiny one!",
        "sources": [
+        "leekduck",
         "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
-       "text": "Dynamax Regidrago",
+       "text": "Defeating Crowned Sword Zacian or Crowned Shield Zamazenta in raids will earn you Crowned Sword Energy or Crowned Shield Energy, respectively.",
        "sources": [
+        "leekduck",
         "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
-       "text": "Dynamax Meltan",
+       "text": "The following Dynamax Pokémon will appear in Max Battles. Pokémon appearing in five-star Max Battles will also be featured in Max Battles from 6:00 p.m. to 7:00 p.m. local time for one day each on the following schedule.",
        "sources": [
+        "leekduck",
         "hub"
+       ],
+       "status": "corroborated"
+      },
+      {
+       "text": "Druddigon 100% IV CP Level 20 1561 Level 25 1951 Weather boosted in Counters",
+       "sources": [
+        "leekduck"
        ],
        "status": "single"
       },
       {
        "text": "Pokémon appearing in Five-Star Max Battles will appear in a dedicated hour of Max Battles from 6-7pm on their featured day. The following Pokémon will appear in Max Battles during the event:",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Crowned Sword Zacian",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Crowned Shield Zamazenta",
        "sources": [
         "hub"
        ],
@@ -10073,70 +10289,84 @@
        "status": "official"
       },
       {
-       "text": "Power up Steel-type Pokémon 5 times | Aron Magnemite Togedemaru Galarian Meowth",
+       "text": "Power up Steel‑type Pokémon 5 times POSSIBLE REWARDS Aron Max CP 560 Min CP 522 Magnemite Max CP 583 Min CP 544 Togedemaru Max CP 926 Min CP 876 Galarian Meowth Max CP 443 Min CP 409",
        "sources": [
+        "leekduck",
         "hub"
+       ],
+       "status": "corroborated"
+      },
+      {
+       "text": "Power up Dragon‑type Pokémon 5 times POSSIBLE REWARDS Bagon Max CP 495 Min CP 459 Skrelp Max CP 455 Min CP 421 Dratini Max CP 430 Min CP 397 Horsea Max CP 452 Min CP 418",
+       "sources": [
+        "leekduck",
+        "hub"
+       ],
+       "status": "corroborated"
+      },
+      {
+       "text": "Win a raid POSSIBLE REWARDS Dratini Max CP 430 Min CP 397 ×2 Rare Candy ×2 Scyther Max CP 1160 Min CP 1104",
+       "sources": [
+        "leekduck",
+        "hub"
+       ],
+       "status": "corroborated"
+      },
+      {
+       "text": "Catch 10 Pokémon POSSIBLE REWARDS Horsea Max CP 452 Min CP 418 Aron Max CP 560 Min CP 522 Skrelp Max CP 455 Min CP 421 Magnemite Max CP 583 Min CP 544",
+       "sources": [
+        "leekduck",
+        "hub"
+       ],
+       "status": "corroborated"
+      },
+      {
+       "text": "Win a Max Battle POSSIBLE REWARDS Bagon Max CP 495 Min CP 459 Mawile Max CP 700 Min CP 658",
+       "sources": [
+        "leekduck",
+        "hub"
+       ],
+       "status": "corroborated"
+      },
+      {
+       "text": "Catch a Dynamax Machop POSSIBLE REWARDS ×25 Machop Candy ×25 ×5000 Stardust ×5000",
+       "sources": [
+        "leekduck",
+        "hub"
+       ],
+       "status": "corroborated"
+      },
+      {
+       "text": "Attack: Battle alongside your trainee.",
+       "sources": [
+        "leekduck",
+        "hub"
+       ],
+       "status": "corroborated"
+      },
+      {
+       "text": "Pokémon GO Wild Area–themed Field Research tasks will be available throughout the event! Complete the research tasks to earn encounters with event-themed Pokémon and other rewards.",
+       "sources": [
+        "leekduck"
        ],
        "status": "single"
       },
       {
-       "text": "Power up Steel-type Pokémon 5 times | Bagon Skrelp Dratini Horsea",
+       "text": "After you give your trainee a Silver Bottle Cap, Hyper Training begins. Each stat has its own set of themed tasks.",
        "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Win a Raid | Dratini Scyther 2 × Rare Candy",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Catch 10 Pokémon | Magnemite Skrelp Aron Horsea",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Win a Max Battle | Bagon Mawile",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Catch a Dynamax Machop | 25 × Machop Candy 5000 × Stardust",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "The tasks depend on the stat being trained.",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Attack: Battle in Gyms and raids, and defeat Team GO Rocket members with your trainee.",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Defense: Play with your trainee, take snapshots, catch Pokémon and power up Pokémon that share its type.",
-       "sources": [
-        "hub"
+        "leekduck"
        ],
        "status": "single"
       }
      ],
      "shiny": [
+      {
+       "text": "Regidrago will make its Pokémon GO Dynamax debut in five-star Max Battles, and Meltan will make its Dynamax debut in GO Pass: Into the Wild. If you’re lucky, you may encounter a Shiny one!",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
       {
        "text": "Dynamax Regidrago and Meltan debut, Shiny Gimmighoul returns, and a packed week of Raids, Max Battles, and GO Pass rewards kicks off the road to GO Wild Area 2026.",
        "sources": [
@@ -10199,6 +10429,86 @@
      "costumes": [],
      "tickets": [
       {
+       "text": "Trainers will receive the pass automatically on Monday, November 9, at 10:00 a.m. local time . Earn points and rank up until Sunday, November 15, 2026, at 6:00 p.m. local time .",
+       "sources": [
+        "leekduck",
+        "hub"
+       ],
+       "status": "corroborated"
+      },
+      {
+       "text": "Complete Pass Tasks to rank up and earn the following rewards. From Monday, November 9, to Friday, November 13, you can earn up to 100 extra GO Points daily by completing certain tasks.",
+       "sources": [
+        "leekduck",
+        "hub"
+       ],
+       "status": "corroborated"
+      },
+      {
+       "text": "Encounter Dynamax Meltan and earn a Silver Bottle Cap!",
+       "sources": [
+        "leekduck",
+        "hub"
+       ],
+       "status": "corroborated"
+      },
+      {
+       "text": "GO Pass: Into the Wild is a free progression track. Complete Pass Tasks to collect GO Points, increase your rank, and unlock rewards.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "From Monday, November 9, to Friday, November 13, you can collect GO Points up to a daily cap. There’s no limit to the GO Points you can earn on Saturday and Sunday, November 14 to 15!",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Upgrade to GO Pass Deluxe: Into the Wild for US$14.99 * for upgraded rewards. The GO Pass Deluxe: Into the Wild + 10 Ranks option costs US$19.99 * and grants enough GO Points to reach Rank 10.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Deluxe includes rewards from both tracks. You can upgrade at any time and still claim rewards for ranks you have already reached.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Claim all unlocked GO Pass rewards before they expire on Tuesday, November 17, 2026, at 11:59 p.m. local time .",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Win a raid 15 PTS",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Hatch an Egg 5 PTS",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Catch a Pokémon 1 PTS",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
        "text": "From Monday, November 9, at 10:00 a.m. to Sunday, November 15, 2026, at 6:00 p.m. local time, the GO Pass: Into the Wild 2026 and GO Pass Deluxe: Into the Wild 2026 will be available in Pokémon GO.",
        "sources": [
         "hub"
@@ -10206,784 +10516,823 @@
        "status": "single"
       },
       {
-       "text": "You can collect GO Points and rank up to get additional rewards through Sunday, November 15, 2026, at 6:00 p.m. local time.",
+       "text": "Rank 1: Free: GO Wild Area 2026 Tee (Purple) | Deluxe: —",
        "sources": [
+        "leekduck",
         "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
-       "text": "Additionally there is no limit on how many GO Points you can earn between Saturday, November 14 and Sunday, November 15.",
+       "text": "Rank 4: Free: Potion ×3 | Deluxe: Star Piece ×1",
        "sources": [
+        "leekduck",
         "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
-       "text": "Complete Pass Tasks to rank up your GO Pass to earn the following rewards:",
+       "text": "Rank 7: Free: Magnemite | Deluxe: Magnemite Candy ×20",
        "sources": [
+        "leekduck",
         "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
-       "text": "Encounters with Dynamax Meltan",
+       "text": "Rank 8: Free: Magnemite Candy ×5 | Deluxe: Magnemite Candy XL ×10",
        "sources": [
+        "leekduck",
         "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
-       "text": "Encounters with event themed Pokémon",
+       "text": "Rank 9: Free: XP ×1000 | Deluxe: Silver Pinap Berry ×3",
        "sources": [
+        "leekduck",
         "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
-       "text": "GO Wild Area 2026 Tee (purple) avatar item",
+       "text": "Rank 10: Free: Stardust ×1000 | Deluxe: Golden Razz Berry ×3",
        "sources": [
+        "leekduck",
         "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
-       "text": "Reach Major Milestones on your event GO Pass to unlock the following bonuses:",
+       "text": "Rank 12: Free: Noibat | Deluxe: Noibat Candy ×20",
        "sources": [
+        "leekduck",
         "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
-       "text": "Tier | Rewards",
+       "text": "Rank 13: Free: Noibat Candy ×5 | Deluxe: Noibat Candy XL ×10",
        "sources": [
+        "leekduck",
         "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
-       "text": "Level | Regular Reward | Deluxe Reward",
+       "text": "Rank 14: Free: Pinap Berry ×3 | Deluxe: Max Revive ×3",
        "sources": [
+        "leekduck",
         "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
-       "text": "… | …repeats from 101 to 600 each rank… | …",
+       "text": "Rank 15: Free: Dynamax Ralts | Deluxe: Premium Battle Pass ×2",
        "sources": [
+        "leekduck",
         "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
-       "text": "Rank 2: Free: 10 × Poké Ball | Deluxe: 3/4 Max Particle cost for powering up and unlocking Max Moves",
+       "text": "Rank 16: Free: Incense ×1 | Deluxe: Incense ×1",
        "sources": [
+        "leekduck",
         "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
-       "text": "Rank 3: Free: 3 × Razz Berry | Deluxe: 1 additional Candy awarded for completing raids 1 additional Candy XL awarded for completing raids (trainers level 31+ and higher) 1 additional Candy awarded for completing max battles 1 additional Candy XL awarded for completing max battles (trainers level 31+ and higher)",
+       "text": "Rank 17: Free: Togedemaru | Deluxe: Togedemaru Candy ×20",
        "sources": [
+        "leekduck",
         "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
-       "text": "Rank 4: Free: 3 × Potion | Deluxe: 1 × Star Piece",
+       "text": "Rank 18: Free: Togedemaru Candy ×5 | Deluxe: Togedemaru Candy XL ×10",
        "sources": [
+        "leekduck",
         "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
-       "text": "Rank 5: Free: 1000 × XP | Deluxe: 5000 × XP",
+       "text": "Rank 19: Free: Poffin ×1 | Deluxe: Lucky Egg ×1",
        "sources": [
+        "leekduck",
         "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
-       "text": "Rank 6: Free: 1000 × Stardust | Deluxe: 5000 × Stardust",
+       "text": "Rank 20: Free: XP ×1000 | Deluxe: Lure Module ×1",
        "sources": [
+        "leekduck",
         "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
-       "text": "Rank 7: Free: Magnemite | Deluxe: 20 × Magnemite Candy",
+       "text": "Rank 21: Free: Stardust ×1000 | Deluxe: Star Piece ×1",
        "sources": [
+        "leekduck",
         "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
-       "text": "Rank 8: Free: 5 × Magnemite Candy | Deluxe: 10 × Magnemite Candy XL",
+       "text": "Rank 22: Free: Skrelp | Deluxe: Skrelp Candy ×20",
        "sources": [
+        "leekduck",
         "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
-       "text": "Rank 9: Free: 1000 × XP | Deluxe: 3 × Silver Pinap Berry",
+       "text": "Rank 23: Free: Skrelp Candy ×5 | Deluxe: Skrelp Candy XL ×10",
        "sources": [
+        "leekduck",
         "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
-       "text": "Rank 10: Free: 1000 × Stardust | Deluxe: 3 × Golden Razz Berry",
+       "text": "Rank 24: Free: Lucky Egg ×1 | Deluxe: Max Potion ×3",
        "sources": [
+        "leekduck",
         "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
-       "text": "Rank 11: Free: 3 × Revive | Deluxe: 25 × Max Potion",
+       "text": "Rank 26: Free: Stardust ×1000 | Deluxe: Stardust ×5000",
        "sources": [
+        "leekduck",
         "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
-       "text": "Rank 12: Free: Noibat | Deluxe: 20 × Noibat Candy",
+       "text": "Rank 27: Free: Pinap Berry ×10 | Deluxe: Fast TM ×1",
        "sources": [
+        "leekduck",
         "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
-       "text": "Rank 13: Free: 5 × Noibat Candy | Deluxe: 10 × Noibat Candy XL",
+       "text": "Rank 28: Free: Razz Berry ×10 | Deluxe: Charged TM ×1",
        "sources": [
+        "leekduck",
         "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
-       "text": "Rank 14: Free: 3 × Pinap Berry | Deluxe: 3 × Max Revive",
+       "text": "Rank 29: Free: Great Ball ×5 | Deluxe: Great Ball ×25",
        "sources": [
+        "leekduck",
         "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
-       "text": "Rank 15: Free: Dynamax Ralts | Deluxe: 2 × Premium Raid Pass",
+       "text": "Rank 30: Free: Dynamax Machop | Deluxe: Max Mushroom ×1",
        "sources": [
+        "leekduck",
         "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
-       "text": "Rank 16: Free: 1 × Incense | Deluxe: 1 × Incense",
+       "text": "Rank 31: Free: Max Particle ×100 | Deluxe: Max Particle ×400",
        "sources": [
+        "leekduck",
         "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
-       "text": "Rank 17: Free: Togedemaru | Deluxe: 20 × Togedemaru Candy",
+       "text": "Rank 32: Free: Tinkatink | Deluxe: Tinkatink Candy ×20",
        "sources": [
+        "leekduck",
         "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
-       "text": "Rank 18: Free: 5 × Togedemaru Candy | Deluxe: 10 × Togedemaru Candy XL",
+       "text": "Rank 33: Free: Tinkatink Candy ×5 | Deluxe: Tinkatink Candy XL ×10",
        "sources": [
+        "leekduck",
         "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
-       "text": "Rank 19: Free: 1 × Poffin | Deluxe: 1 × Lucky Egg",
+       "text": "Rank 34: Free: XP ×1000 | Deluxe: XP ×5000",
        "sources": [
+        "leekduck",
         "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
-       "text": "Rank 20: Free: 1000 × XP | Deluxe: 1 × Lure Module",
+       "text": "Rank 35: Free: Poké Ball ×10 | Deluxe: Ultra Ball ×25",
        "sources": [
+        "leekduck",
         "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
-       "text": "Rank 21: Free: 1000 × Stardust | Deluxe: 1 × Star Piece",
+       "text": "Rank 36: Free: Stardust ×1000 | Deluxe: Stardust ×5000",
        "sources": [
+        "leekduck",
         "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
-       "text": "Rank 22: Free: Skrelp | Deluxe: 20 × Skrelp Candy",
+       "text": "Rank 37: Free: Deino | Deluxe: Deino Candy ×5",
        "sources": [
+        "leekduck",
         "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
-       "text": "Rank 23: Free: 5 × Skrelp Candy | Deluxe: 10 × Skrelp Candy XL",
+       "text": "Rank 38: Free: Deino Candy ×5 | Deluxe: Deino Candy XL ×3",
        "sources": [
+        "leekduck",
         "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
-       "text": "Rank 24: Free: 1 × Lucky Egg | Deluxe: 3 × Max Potion",
+       "text": "Rank 39: Free: Fast TM ×1 | Deluxe: Lucky Egg ×1",
        "sources": [
+        "leekduck",
         "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
-       "text": "Rank 25: Half hatch distance for eggs incubated during the event",
+       "text": "Rank 40: Free: Charged TM ×1 | Deluxe: Premium Battle Pass ×1",
        "sources": [
+        "leekduck",
         "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
-       "text": "Rank 26: Free: 1000 × Stardust | Deluxe: 5000 × Stardust",
+       "text": "Rank 41: Free: Super Potion ×3 | Deluxe: Max Potion ×5",
        "sources": [
+        "leekduck",
         "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
-       "text": "Rank 27: Free: 10 × Pinap Berry | Deluxe: 1 × Fast TM",
+       "text": "Rank 42: Free: XP ×1000 | Deluxe: XP ×5000",
        "sources": [
+        "leekduck",
         "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
-       "text": "Rank 28: Free: 10 × Razz Berry | Deluxe: 1 × Charged TM",
+       "text": "Rank 43: Free: Meltan Candy ×5 | Deluxe: Meltan Candy ×20",
        "sources": [
+        "leekduck",
         "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
-       "text": "Rank 29: Free: 5 × Great Ball | Deluxe: 25 × Great Ball",
+       "text": "Rank 44: Free: Meltan Candy ×5 | Deluxe: Meltan Candy XL ×10",
        "sources": [
+        "leekduck",
         "hub"
        ],
-       "status": "single"
-      },
-      {
-       "text": "Rank 30: Free: Dynamax Machop | Deluxe: 1 × Max Mushroom",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Rank 31: Free: 100 × Max Particle | Deluxe: 400 × Max Particle",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Rank 32: Free: Tinkatink | Deluxe: 20 × Tinkatink Candy",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Rank 33: Free: 5 × Tinkatink Candy | Deluxe: 10 × Tinkatink Candy XL",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Rank 34: Free: 1000 × XP | Deluxe: 5000 × XP",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Rank 35: Free: 10 × Poké Ball | Deluxe: 25 × Ultra Ball",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Rank 36: Free: 1000 × Stardust | Deluxe: 5000 × Stardust",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Rank 37: Free: Deino | Deluxe: 5 × Deino Candy",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Rank 38: Free: 5 × Deino Candy | Deluxe: 3 × Deino Candy XL",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Rank 39: Free: 1 × Fast TM | Deluxe: 1 × Lucky Egg",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Rank 40: Free: 1 × Charged TM | Deluxe: 1 × Premium Raid Pass",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Rank 41: Free: 3 × Super Potion | Deluxe: 5 × Max Potion",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Rank 42: Free: 1000 × XP | Deluxe: 5000 × XP",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Rank 43: Free: 5 × Meltan Candy | Deluxe: 20 × Meltan Candy",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Rank 44: Free: 5 × Meltan Candy | Deluxe: 10 × Meltan Candy XL",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
        "text": "Rank 45: Free: Dynamax Meltan | Deluxe: Dynamax Meltan",
        "sources": [
+        "leekduck",
         "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
-       "text": "Rank 46: Free: 1000 × Stardust | Deluxe: 5000 × Stardust",
+       "text": "Rank 46: Free: Stardust ×1000 | Deluxe: Stardust ×5000",
        "sources": [
+        "leekduck",
         "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
-       "text": "Rank 47: Free: Dynamax Drilbur | Deluxe: 20 × Drilbur Candy",
+       "text": "Rank 47: Free: Dynamax Drilbur | Deluxe: Drilbur Candy ×20",
        "sources": [
+        "leekduck",
         "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
-       "text": "Rank 48: Free: 5 × Drilbur Candy | Deluxe: 3 × Drilbur Candy XL",
+       "text": "Rank 49: Free: Pinap Berry ×5 | Deluxe: Star Piece ×1",
        "sources": [
+        "leekduck",
         "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
-       "text": "Rank 49: Free: 5 × Pinap Berry | Deluxe: 1 × Star Piece",
+       "text": "Rank 50: Free: Razz Berry ×5 | Deluxe: Fast TM ×1",
        "sources": [
+        "leekduck",
         "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
-       "text": "Rank 50: Free: 5 × Razz Berry | Deluxe: 1 × Fast TM",
+       "text": "Rank 51: Free: Ultra Ball ×5 | Deluxe: Ultra Ball ×10",
        "sources": [
+        "leekduck",
         "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
-       "text": "Rank 51: Free: 5 × Ultra Ball | Deluxe: 10 × Ultra Ball",
+       "text": "Rank 52: Free: Dynamax Trapinch | Deluxe: Trapinch Candy ×20",
        "sources": [
+        "leekduck",
         "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
-       "text": "Rank 52: Free: Dynamax Trapinch | Deluxe: 20 × Trapinch Candy",
+       "text": "Rank 53: Free: Trapinch Candy ×5 | Deluxe: Trapinch Candy XL ×10",
        "sources": [
+        "leekduck",
         "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
-       "text": "Rank 53: Free: 5 × Trapinch Candy | Deluxe: 10 × Trapinch Candy XL",
+       "text": "Rank 54: Free: XP ×1000 | Deluxe: XP ×5000",
        "sources": [
+        "leekduck",
         "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
-       "text": "Rank 54: Free: 1000 × XP | Deluxe: 5000 × XP",
+       "text": "Rank 55: Free: Stardust ×1000 | Deluxe: Stardust ×5000",
        "sources": [
+        "leekduck",
         "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
-       "text": "Rank 55: Free: 1000 × Stardust | Deluxe: 5000 × Stardust",
+       "text": "Rank 57: Free: Rare Candy ×1 | Deluxe: Rare Candy XL ×2",
        "sources": [
+        "leekduck",
         "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
-       "text": "Rank 56: Free: 3 × Revive | Deluxe: 3 × Charged TM",
+       "text": "Rank 58: Free: Max Particle ×100 | Deluxe: Max Particle ×400",
        "sources": [
+        "leekduck",
         "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
-       "text": "Rank 57: Free: 1 × Rare Candy | Deluxe: 2 × Rare Candy XL",
+       "text": "Rank 59: Free: Hyper Potion ×3 | Deluxe: Lure Module ×1",
        "sources": [
+        "leekduck",
         "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
-       "text": "Rank 58: Free: 100 × Max Particle | Deluxe: 400 × Max Particle",
+       "text": "Rank 61: Free: Dynamax Hatenna | Deluxe: Hatenna Candy ×20",
        "sources": [
+        "leekduck",
         "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
-       "text": "Rank 59: Free: 3 × Hyper Potion | Deluxe: 1 × Lure Module",
+       "text": "Rank 62: Free: Hatenna Candy ×5 | Deluxe: Hatenna Candy XL ×10",
        "sources": [
+        "leekduck",
         "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
-       "text": "Rank 60: Free: 1 × Max Mushroom | Deluxe: 1× Duraludon Pants",
+       "text": "Rank 63: Free: Max Particle ×100 | Deluxe: Max Particle ×400",
        "sources": [
+        "leekduck",
         "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
-       "text": "Rank 61: Free: Dynamax Hatenna | Deluxe: 20 × Hatenna Candy",
+       "text": "Rank 64: Free: Poké Ball ×10 | Deluxe: Incense ×1",
        "sources": [
+        "leekduck",
         "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
-       "text": "Rank 62: Free: 5 × Hatenna Candy | Deluxe: 10 × Hatenna Candy XL",
+       "text": "Rank 66: Free: Meltan Candy ×5 | Deluxe: Meltan Candy XL ×10",
        "sources": [
+        "leekduck",
         "hub"
        ],
-       "status": "single"
-      },
-      {
-       "text": "Rank 63: Free: 100 × Max Particle | Deluxe: 400 × Max Particle",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Rank 64: Free: 10 × Poké Ball | Deluxe: 1 × Incense",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Rank 65: Free: 5 × Meltan Candy | Deluxe: 5 × Meltan Candy",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Rank 66: Free: 5 × Meltan Candy | Deluxe: 10 × Meltan Candy XL",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
        "text": "Rank 67: Free: Dynamax Meltan | Deluxe: Dynamax Meltan",
        "sources": [
+        "leekduck",
         "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
-       "text": "Rank 68: Free: 1000 × XP | Deluxe: 5000 × XP",
+       "text": "Rank 68: Free: XP ×1000 | Deluxe: XP ×5000",
        "sources": [
+        "leekduck",
         "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
-       "text": "Rank 69: Free: 1000 × Stardust | Deluxe: 5000 × Stardust",
+       "text": "Rank 69: Free: Stardust ×1000 | Deluxe: Stardust ×5000",
        "sources": [
+        "leekduck",
         "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
-       "text": "Rank 70: Free: 10 × Poké Ball | Deluxe: 1 × Max Mushroom",
+       "text": "Rank 70: Free: Poké Ball ×10 | Deluxe: Max Mushroom ×1",
        "sources": [
+        "leekduck",
         "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
-       "text": "Rank 71: Free: 3 × Metal Coat | Deluxe: 1 × Elite Fast TM",
+       "text": "Rank 71: Free: Metal Coat ×3 | Deluxe: Elite Fast TM ×1",
        "sources": [
+        "leekduck",
         "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
-       "text": "Rank 72: Free: 5 × Machop Candy | Deluxe: 10 × Machop Candy XL",
+       "text": "Rank 72: Free: Machop Candy ×5 | Deluxe: Machop Candy XL ×10",
        "sources": [
+        "leekduck",
         "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
-       "text": "Rank 73: Free: 5 × Machop Candy | Deluxe: 10 × Machop Candy XL",
+       "text": "Rank 73: Free: Machop Candy ×5 | Deluxe: Machop Candy XL ×10",
        "sources": [
+        "leekduck",
         "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
-       "text": "Rank 74: Free: 5 × Machop Candy | Deluxe: 10 × Machop Candy XL",
+       "text": "Rank 74: Free: Machop Candy ×5 | Deluxe: Machop Candy XL ×10",
        "sources": [
+        "leekduck",
         "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
-       "text": "Rank 75: Free: 1× Golden Lure Module | Deluxe: Machamp wearing a modern jacket",
+       "text": "Rank 75: Free: Golden Lure Module ×1 | Deluxe: Machamp wearing a modern jacket",
        "sources": [
+        "leekduck",
         "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
-       "text": "Rank 76: Free: 10 × Great Ball | Deluxe: 25 × Great Ball",
+       "text": "Rank 76: Free: Great Ball ×10 | Deluxe: Great Ball ×25",
        "sources": [
+        "leekduck",
         "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
-       "text": "Rank 77: Free: 5 × Gimmighoul Candy | Deluxe: 520 × Gimmighoul Candy",
+       "text": "Rank 79: Free: Gimmighoul (Roaming Form) | Deluxe: Gimmighoul (Roaming Form)",
        "sources": [
+        "leekduck",
         "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
-       "text": "Rank 78: Free: 5 × Gimmighoul Candy | Deluxe: 3 × Gimmighoul Candy XL",
+       "text": "Rank 80: Free: Incense ×1 | Deluxe: Premium Battle Pass ×1",
        "sources": [
+        "leekduck",
         "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
-       "text": "Rank 79: Free: Gimmighoul Roaming Form | Deluxe: Gimmighoul Roaming Form",
+       "text": "Rank 81: Free: XP ×1000 | Deluxe: XP ×5000",
        "sources": [
+        "leekduck",
         "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
-       "text": "Rank 80: Free: 1 × Incense | Deluxe: 1 × Premium Raid Pass",
+       "text": "Rank 82: Free: Meltan Candy ×5 | Deluxe: Meltan Candy ×20",
        "sources": [
+        "leekduck",
         "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
-       "text": "Rank 81: Free: 1000 × XP | Deluxe: 5000 × XP",
+       "text": "Rank 83: Free: Meltan Candy ×5 | Deluxe: Meltan Candy XL ×10",
        "sources": [
+        "leekduck",
         "hub"
        ],
-       "status": "single"
-      },
-      {
-       "text": "Rank 82: Free: 5 × Meltan Candy | Deluxe: 20 × Meltan Candy",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Rank 83: Free: 5 × Meltan Candy | Deluxe: 10 × Meltan Candy XL",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
        "text": "Rank 84: Free: Dynamax Meltan | Deluxe: Dynamax Meltan",
        "sources": [
+        "leekduck",
         "hub"
+       ],
+       "status": "corroborated"
+      },
+      {
+       "text": "Rank 86: Free: Razz Berry ×3 | Deluxe: Lure Module ×1",
+       "sources": [
+        "leekduck",
+        "hub"
+       ],
+       "status": "corroborated"
+      },
+      {
+       "text": "Rank 87: Free: Pinap Berry ×3 | Deluxe: Premium Battle Pass ×1",
+       "sources": [
+        "leekduck",
+        "hub"
+       ],
+       "status": "corroborated"
+      },
+      {
+       "text": "Rank 88: Free: Rare Candy ×2 | Deluxe: Rare Candy XL ×2",
+       "sources": [
+        "leekduck",
+        "hub"
+       ],
+       "status": "corroborated"
+      },
+      {
+       "text": "Rank 89: Free: Rare Candy ×2 | Deluxe: Rare Candy XL ×2",
+       "sources": [
+        "leekduck",
+        "hub"
+       ],
+       "status": "corroborated"
+      },
+      {
+       "text": "Rank 90: Free: Rare Candy ×2 | Deluxe: Rare Candy XL ×2",
+       "sources": [
+        "leekduck",
+        "hub"
+       ],
+       "status": "corroborated"
+      },
+      {
+       "text": "Rank 91: Free: Rare Candy ×2 | Deluxe: Rare Candy XL ×2",
+       "sources": [
+        "leekduck",
+        "hub"
+       ],
+       "status": "corroborated"
+      },
+      {
+       "text": "Rank 92: Free: Duraludon Candy ×5 | Deluxe: Duraludon Candy XL ×10",
+       "sources": [
+        "leekduck",
+        "hub"
+       ],
+       "status": "corroborated"
+      },
+      {
+       "text": "Rank 93: Free: Duraludon Candy ×5 | Deluxe: Duraludon Candy XL ×10",
+       "sources": [
+        "leekduck",
+        "hub"
+       ],
+       "status": "corroborated"
+      },
+      {
+       "text": "Rank 94: Free: Duraludon Candy ×5 | Deluxe: Duraludon Candy XL ×10",
+       "sources": [
+        "leekduck",
+        "hub"
+       ],
+       "status": "corroborated"
+      },
+      {
+       "text": "Rank 95: Free: Golden Razz Berry ×1 | Deluxe: Golden Razz Berry ×3",
+       "sources": [
+        "leekduck",
+        "hub"
+       ],
+       "status": "corroborated"
+      },
+      {
+       "text": "Rank 96: Free: Silver Pinap Berry ×1 | Deluxe: Silver Pinap Berry ×3",
+       "sources": [
+        "leekduck",
+        "hub"
+       ],
+       "status": "corroborated"
+      },
+      {
+       "text": "Rank 97: Free: Ultra Ball ×10 | Deluxe: Ultra Ball ×25",
+       "sources": [
+        "leekduck",
+        "hub"
+       ],
+       "status": "corroborated"
+      },
+      {
+       "text": "Rank 98: Free: Meltan Candy ×5 | Deluxe: Meltan Candy XL ×10",
+       "sources": [
+        "leekduck",
+        "hub"
+       ],
+       "status": "corroborated"
+      },
+      {
+       "text": "Rank 99: Free: Meltan Candy ×5 | Deluxe: Dynamax Meltan",
+       "sources": [
+        "leekduck",
+        "hub"
+       ],
+       "status": "corroborated"
+      },
+      {
+       "text": "Rank 101: Free: Stardust ×50 | Deluxe: Stardust ×100",
+       "sources": [
+        "leekduck",
+        "hub"
+       ],
+       "status": "corroborated"
+      },
+      {
+       "text": "Rank 600: Free: Stardust ×50 | Deluxe: Stardust ×100",
+       "sources": [
+        "leekduck",
+        "hub"
+       ],
+       "status": "corroborated"
+      },
+      {
+       "text": "Rank 2: Free: Poké Ball ×10 | Deluxe: —",
+       "sources": [
+        "leekduck"
        ],
        "status": "single"
       },
       {
-       "text": "Rank 85: Free: 1000 × Star Piece | Deluxe: 5000 × Star Piece",
+       "text": "Rank 3: Free: Razz Berry ×3 | Deluxe: —",
        "sources": [
-        "hub"
+        "leekduck"
        ],
        "status": "single"
       },
       {
-       "text": "Rank 86: Free: 3 × Razz Berry | Deluxe: 1 × Lure Module",
+       "text": "Rank 5: Free: XP ×1000 | Deluxe: XP ×5000",
        "sources": [
-        "hub"
+        "leekduck"
        ],
        "status": "single"
       },
       {
-       "text": "Rank 87: Free: 3 × Pinap Berry | Deluxe: 1 × Premium Raid Pass",
+       "text": "Rank 6: Free: Stardust ×1000 | Deluxe: Stardust ×5000",
        "sources": [
-        "hub"
+        "leekduck"
        ],
        "status": "single"
       },
       {
-       "text": "Rank 88: Free: 2 × Rare Candy | Deluxe: 2 × Rare Candy XL",
+       "text": "Rank 11: Free: Revive ×3 | Deluxe: Max Potion ×5",
        "sources": [
-        "hub"
+        "leekduck"
        ],
        "status": "single"
       },
       {
-       "text": "Rank 89: Free: 2 × Rare Candy | Deluxe: 2 × Rare Candy XL",
+       "text": "Rank 48: Free: Drilbur Candy ×5 | Deluxe: Drilbur Candy XL ×10",
        "sources": [
-        "hub"
+        "leekduck"
        ],
        "status": "single"
       },
       {
-       "text": "Rank 90: Free: 2 × Rare Candy | Deluxe: 2 × Rare Candy XL",
+       "text": "Rank 56: Free: Revive ×3 | Deluxe: Charged TM ×1",
        "sources": [
-        "hub"
+        "leekduck"
        ],
        "status": "single"
       },
       {
-       "text": "Rank 91: Free: 2 × Rare Candy | Deluxe: 2 × Rare Candy XL",
+       "text": "Rank 60: Free: Max Mushroom ×1 | Deluxe: Duraludon Pants",
        "sources": [
-        "hub"
+        "leekduck"
        ],
        "status": "single"
       },
       {
-       "text": "Rank 92: Free: 5 × Duraludon Candy | Deluxe: 10 × Duraludon Candy XL",
+       "text": "Rank 65: Free: Meltan Candy ×5 | Deluxe: Meltan Candy ×20",
        "sources": [
-        "hub"
+        "leekduck"
        ],
        "status": "single"
       },
       {
-       "text": "Rank 93: Free: 5 × Duraludon Candy | Deluxe: 10 × Duraludon Candy XL",
+       "text": "Rank 77: Free: Gimmighoul Candy ×5 | Deluxe: Gimmighoul Candy ×20",
        "sources": [
-        "hub"
+        "leekduck"
        ],
        "status": "single"
       },
       {
-       "text": "Rank 94: Free: 5 × Duraludon Candy | Deluxe: 10 × Duraludon Candy XL",
+       "text": "Rank 78: Free: Gimmighoul Candy ×5 | Deluxe: Gimmighoul Candy XL ×10",
        "sources": [
-        "hub"
+        "leekduck"
        ],
        "status": "single"
       },
       {
-       "text": "Rank 95: Free: 1 × Golden Razz Berry | Deluxe: 3 × Golden Razz Berry",
+       "text": "Rank 85: Free: Stardust ×1000 | Deluxe: Stardust ×5000",
        "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Rank 96: Free: 1 × Silver Pinap Berry | Deluxe: 3 × Silver Pinap Berry",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Rank 97: Free: 10 × Ultra Ball | Deluxe: 25 × Ultra Ball",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Rank 98: Free: 5 × Meltan Candy | Deluxe: 10 × Meltan Candy XL",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Rank 99: Free: 5 × Meltan Candy | Deluxe: Dynamax Meltan",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Rank 100: Free: Dynamax Meltan | Deluxe: 1× Silver Bottle Cap",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Rank 101: Free: 50 × Stardust | Deluxe: 100 × Stardust",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Rank 600: Free: 50 × Stardust | Deluxe: 100 × Stardust",
-       "sources": [
-        "hub"
+        "leekduck"
        ],
        "status": "single"
       }
      ],
      "dates": [
+      {
+       "text": "The following Dynamax Pokémon will appear in Max Battles. Pokémon appearing in five-star Max Battles will also be featured in Max Battles from 6:00 p.m. to 7:00 p.m. local time for one day each on the following schedule.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Trainers will receive the pass automatically on Monday, November 9, at 10:00 a.m. local time . Earn points and rank up until Sunday, November 15, 2026, at 6:00 p.m. local time .",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "From Monday, November 9, to Friday, November 13, you can collect GO Points up to a daily cap. There’s no limit to the GO Points you can earn on Saturday and Sunday, November 14 to 15!",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Complete Pass Tasks to rank up and earn the following rewards. From Monday, November 9, to Friday, November 13, you can earn up to 100 extra GO Points daily by completing certain tasks.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
       {
        "text": "Pokémon GO’s Into the Wild event runs from November 9 at 10:00 a.m. to November 13 at 8:00 p.m. local time , bringing two new Dynamax Pokémon: Dynamax Regidrago and Dynamax Meltan!",
        "sources": [
@@ -11039,13 +11388,6 @@
         "hub"
        ],
        "status": "single"
-      },
-      {
-       "text": "Your Silver Bottle Cap obtained from the Deluxe GO Pass will expire on Sunday, November 22 2026, at 11:59pm local time, regardless of when you claimed it, so be sure to use it!",
-       "sources": [
-        "hub"
-       ],
-       "status": "single"
       }
      ]
     },
@@ -11058,8 +11400,8 @@
      "end": ""
     },
     "imageReviewed": true,
-    "contentHash": "66d8190e20c4ed79e3dd2f71d846eb96d57dfed7e751f3dcfaab4f133ddde726",
-    "revision": 19,
+    "contentHash": "aefbe7f66ee916a599d7dc61929646cc97545e25c8bec82bcee51effd3bfead1",
+    "revision": 18,
     "amended": false,
     "native": false,
     "collection": "events"
@@ -11071,6 +11413,20 @@
    },
    "activities": [],
    "bonuses": [
+    {
+     "text": "Daily Discoveries will not take place from November 9 through November 15, 2026.",
+     "sources": [
+      "leekduck"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Reach these ranks on GO Pass: Into the Wild to unlock the following bonus.",
+     "sources": [
+      "leekduck"
+     ],
+     "status": "single"
+    },
     {
      "text": "The event features the following bonuses and debuts.",
      "sources": [
@@ -11114,14 +11470,354 @@
      "status": "single"
     },
     {
-     "text": "Rank 25: Half hatch distance for eggs incubated during the event",
+     "text": "Rank 25: 1/2 Hatch Distance for Eggs placed in Incubators during the event",
      "sources": [
-      "hub"
+      "leekduck"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Rank 1 Deluxe: Major Milestone Bonus: Additional 5,000 XP awarded for successful raids",
+     "sources": [
+      "leekduck"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Rank 2 Deluxe: Major Milestone Bonus: Reduced Max Particle cost to unlock and level up Max Moves",
+     "sources": [
+      "leekduck"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Rank 3 Deluxe: Major Milestone Bonus: One additional Candy from raids",
+     "sources": [
+      "leekduck"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Rank 25: Major Milestone Bonus: 1/2 Hatch Distance",
+     "sources": [
+      "leekduck"
      ],
      "status": "single"
     }
    ],
    "research": [
+    {
+     "task": "Catch 10 Pokémon",
+     "category": "field",
+     "rewards": [
+      {
+       "type": "encounter",
+       "quantity": 1,
+       "name": "Horsea",
+       "cpMin": 418,
+       "cpMax": 452
+      },
+      {
+       "type": "encounter",
+       "quantity": 1,
+       "name": "Aron",
+       "cpMin": 522,
+       "cpMax": 560
+      },
+      {
+       "type": "encounter",
+       "quantity": 1,
+       "name": "Skrelp",
+       "cpMin": 421,
+       "cpMax": 455
+      },
+      {
+       "type": "encounter",
+       "quantity": 1,
+       "name": "Magnemite",
+       "cpMin": 544,
+       "cpMax": 583
+      }
+     ],
+     "sources": [
+      "leekduck"
+     ],
+     "sourceRefs": [
+      {
+       "id": "leekduck",
+       "name": "Leek Duck",
+       "trust": "community",
+       "url": "https://leekduck.com/events/into-the-wild-2026/"
+      }
+     ],
+     "status": "single",
+     "eventId": "leekduck:into-the-wild-2026",
+     "eventName": "Into the Wild 2026",
+     "eventWindow": {
+      "start": "2026-11-09T10:00:00.000",
+      "end": "2026-11-13T20:00:00.000"
+     },
+     "checkedAt": "2026-11-09"
+    },
+    {
+     "task": "Catch a Dynamax Machop",
+     "category": "field",
+     "rewards": [
+      {
+       "type": "item",
+       "name": "Machop Candy",
+       "quantity": 25
+      },
+      {
+       "type": "item",
+       "name": "Stardust",
+       "quantity": 5000
+      }
+     ],
+     "sources": [
+      "leekduck"
+     ],
+     "sourceRefs": [
+      {
+       "id": "leekduck",
+       "name": "Leek Duck",
+       "trust": "community",
+       "url": "https://leekduck.com/events/into-the-wild-2026/"
+      }
+     ],
+     "status": "single",
+     "eventId": "leekduck:into-the-wild-2026",
+     "eventName": "Into the Wild 2026",
+     "eventWindow": {
+      "start": "2026-11-09T10:00:00.000",
+      "end": "2026-11-13T20:00:00.000"
+     },
+     "checkedAt": "2026-11-09"
+    },
+    {
+     "task": "Catch a Dynamax Ralts",
+     "category": "field",
+     "rewards": [
+      {
+       "type": "item",
+       "name": "Ralts Candy",
+       "quantity": 25
+      },
+      {
+       "type": "item",
+       "name": "Stardust",
+       "quantity": 5000
+      }
+     ],
+     "sources": [
+      "leekduck"
+     ],
+     "sourceRefs": [
+      {
+       "id": "leekduck",
+       "name": "Leek Duck",
+       "trust": "community",
+       "url": "https://leekduck.com/events/into-the-wild-2026/"
+      }
+     ],
+     "status": "single",
+     "eventId": "leekduck:into-the-wild-2026",
+     "eventName": "Into the Wild 2026",
+     "eventWindow": {
+      "start": "2026-11-09T10:00:00.000",
+      "end": "2026-11-13T20:00:00.000"
+     },
+     "checkedAt": "2026-11-09"
+    },
+    {
+     "task": "Power up Dragon‑type Pokémon 5 times",
+     "category": "field",
+     "rewards": [
+      {
+       "type": "encounter",
+       "quantity": 1,
+       "name": "Bagon",
+       "cpMin": 459,
+       "cpMax": 495
+      },
+      {
+       "type": "encounter",
+       "quantity": 1,
+       "name": "Skrelp",
+       "cpMin": 421,
+       "cpMax": 455
+      },
+      {
+       "type": "encounter",
+       "quantity": 1,
+       "name": "Dratini",
+       "cpMin": 397,
+       "cpMax": 430
+      },
+      {
+       "type": "encounter",
+       "quantity": 1,
+       "name": "Horsea",
+       "cpMin": 418,
+       "cpMax": 452
+      }
+     ],
+     "sources": [
+      "leekduck"
+     ],
+     "sourceRefs": [
+      {
+       "id": "leekduck",
+       "name": "Leek Duck",
+       "trust": "community",
+       "url": "https://leekduck.com/events/into-the-wild-2026/"
+      }
+     ],
+     "status": "single",
+     "eventId": "leekduck:into-the-wild-2026",
+     "eventName": "Into the Wild 2026",
+     "eventWindow": {
+      "start": "2026-11-09T10:00:00.000",
+      "end": "2026-11-13T20:00:00.000"
+     },
+     "checkedAt": "2026-11-09"
+    },
+    {
+     "task": "Power up Steel‑type Pokémon 5 times",
+     "category": "field",
+     "rewards": [
+      {
+       "type": "encounter",
+       "quantity": 1,
+       "name": "Aron",
+       "cpMin": 522,
+       "cpMax": 560
+      },
+      {
+       "type": "encounter",
+       "quantity": 1,
+       "name": "Magnemite",
+       "cpMin": 544,
+       "cpMax": 583
+      },
+      {
+       "type": "encounter",
+       "quantity": 1,
+       "name": "Togedemaru",
+       "cpMin": 876,
+       "cpMax": 926
+      },
+      {
+       "type": "encounter",
+       "quantity": 1,
+       "name": "Galarian Meowth",
+       "cpMin": 409,
+       "cpMax": 443
+      }
+     ],
+     "sources": [
+      "leekduck"
+     ],
+     "sourceRefs": [
+      {
+       "id": "leekduck",
+       "name": "Leek Duck",
+       "trust": "community",
+       "url": "https://leekduck.com/events/into-the-wild-2026/"
+      }
+     ],
+     "status": "single",
+     "eventId": "leekduck:into-the-wild-2026",
+     "eventName": "Into the Wild 2026",
+     "eventWindow": {
+      "start": "2026-11-09T10:00:00.000",
+      "end": "2026-11-13T20:00:00.000"
+     },
+     "checkedAt": "2026-11-09"
+    },
+    {
+     "task": "Win a Max Battle",
+     "category": "field",
+     "rewards": [
+      {
+       "type": "encounter",
+       "quantity": 1,
+       "name": "Bagon",
+       "cpMin": 459,
+       "cpMax": 495
+      },
+      {
+       "type": "encounter",
+       "quantity": 1,
+       "name": "Mawile",
+       "cpMin": 658,
+       "cpMax": 700
+      }
+     ],
+     "sources": [
+      "leekduck"
+     ],
+     "sourceRefs": [
+      {
+       "id": "leekduck",
+       "name": "Leek Duck",
+       "trust": "community",
+       "url": "https://leekduck.com/events/into-the-wild-2026/"
+      }
+     ],
+     "status": "single",
+     "eventId": "leekduck:into-the-wild-2026",
+     "eventName": "Into the Wild 2026",
+     "eventWindow": {
+      "start": "2026-11-09T10:00:00.000",
+      "end": "2026-11-13T20:00:00.000"
+     },
+     "checkedAt": "2026-11-09"
+    },
+    {
+     "task": "Win a raid",
+     "category": "field",
+     "rewards": [
+      {
+       "type": "encounter",
+       "quantity": 1,
+       "name": "Dratini",
+       "cpMin": 397,
+       "cpMax": 430
+      },
+      {
+       "type": "item",
+       "name": "Rare Candy",
+       "quantity": 2
+      },
+      {
+       "type": "encounter",
+       "quantity": 1,
+       "name": "Scyther",
+       "cpMin": 1104,
+       "cpMax": 1160
+      }
+     ],
+     "sources": [
+      "leekduck"
+     ],
+     "sourceRefs": [
+      {
+       "id": "leekduck",
+       "name": "Leek Duck",
+       "trust": "community",
+       "url": "https://leekduck.com/events/into-the-wild-2026/"
+      }
+     ],
+     "status": "single",
+     "eventId": "leekduck:into-the-wild-2026",
+     "eventName": "Into the Wild 2026",
+     "eventWindow": {
+      "start": "2026-11-09T10:00:00.000",
+      "end": "2026-11-13T20:00:00.000"
+     },
+     "checkedAt": "2026-11-09"
+    },
     {
      "text": "Trainers who choose the Steel-type path will receive the following bonuses upon earning the Steel Scholar medal.",
      "sources": [
@@ -11144,65 +11840,72 @@
      "status": "official"
     },
     {
-     "text": "Power up Steel-type Pokémon 5 times | Aron Magnemite Togedemaru Galarian Meowth",
+     "text": "Power up Steel‑type Pokémon 5 times POSSIBLE REWARDS Aron Max CP 560 Min CP 522 Magnemite Max CP 583 Min CP 544 Togedemaru Max CP 926 Min CP 876 Galarian Meowth Max CP 443 Min CP 409",
      "sources": [
+      "leekduck",
       "hub"
+     ],
+     "status": "corroborated"
+    },
+    {
+     "text": "Power up Dragon‑type Pokémon 5 times POSSIBLE REWARDS Bagon Max CP 495 Min CP 459 Skrelp Max CP 455 Min CP 421 Dratini Max CP 430 Min CP 397 Horsea Max CP 452 Min CP 418",
+     "sources": [
+      "leekduck",
+      "hub"
+     ],
+     "status": "corroborated"
+    },
+    {
+     "text": "Win a raid POSSIBLE REWARDS Dratini Max CP 430 Min CP 397 ×2 Rare Candy ×2 Scyther Max CP 1160 Min CP 1104",
+     "sources": [
+      "leekduck",
+      "hub"
+     ],
+     "status": "corroborated"
+    },
+    {
+     "text": "Catch 10 Pokémon POSSIBLE REWARDS Horsea Max CP 452 Min CP 418 Aron Max CP 560 Min CP 522 Skrelp Max CP 455 Min CP 421 Magnemite Max CP 583 Min CP 544",
+     "sources": [
+      "leekduck",
+      "hub"
+     ],
+     "status": "corroborated"
+    },
+    {
+     "text": "Win a Max Battle POSSIBLE REWARDS Bagon Max CP 495 Min CP 459 Mawile Max CP 700 Min CP 658",
+     "sources": [
+      "leekduck",
+      "hub"
+     ],
+     "status": "corroborated"
+    },
+    {
+     "text": "Catch a Dynamax Machop POSSIBLE REWARDS ×25 Machop Candy ×25 ×5000 Stardust ×5000",
+     "sources": [
+      "leekduck",
+      "hub"
+     ],
+     "status": "corroborated"
+    },
+    {
+     "text": "Attack: Battle alongside your trainee.",
+     "sources": [
+      "leekduck",
+      "hub"
+     ],
+     "status": "corroborated"
+    },
+    {
+     "text": "Pokémon GO Wild Area–themed Field Research tasks will be available throughout the event! Complete the research tasks to earn encounters with event-themed Pokémon and other rewards.",
+     "sources": [
+      "leekduck"
      ],
      "status": "single"
     },
     {
-     "text": "Power up Steel-type Pokémon 5 times | Bagon Skrelp Dratini Horsea",
+     "text": "After you give your trainee a Silver Bottle Cap, Hyper Training begins. Each stat has its own set of themed tasks.",
      "sources": [
-      "hub"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Win a Raid | Dratini Scyther 2 × Rare Candy",
-     "sources": [
-      "hub"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Catch 10 Pokémon | Magnemite Skrelp Aron Horsea",
-     "sources": [
-      "hub"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Win a Max Battle | Bagon Mawile",
-     "sources": [
-      "hub"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Catch a Dynamax Machop | 25 × Machop Candy 5000 × Stardust",
-     "sources": [
-      "hub"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "The tasks depend on the stat being trained.",
-     "sources": [
-      "hub"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Attack: Battle in Gyms and raids, and defeat Team GO Rocket members with your trainee.",
-     "sources": [
-      "hub"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Defense: Play with your trainee, take snapshots, catch Pokémon and power up Pokémon that share its type.",
-     "sources": [
-      "hub"
+      "leekduck"
      ],
      "status": "single"
     }
@@ -11212,6 +11915,13 @@
      "title": "GO Pass rewards",
      "stages": [
       {
+       "rank": 1,
+       "free": [
+        "GO Wild Area 2026 Tee (Purple)"
+       ],
+       "deluxe": []
+      },
+      {
        "rank": 2,
        "free": [
         {
@@ -11220,9 +11930,7 @@
          "quantity": 10
         }
        ],
-       "deluxe": [
-        "3/4 Max Particle cost for powering up and unlocking Max Moves"
-       ]
+       "deluxe": []
       },
       {
        "rank": 3,
@@ -11233,9 +11941,7 @@
          "quantity": 3
         }
        ],
-       "deluxe": [
-        "1 additional Candy awarded for completing raids 1 additional Candy XL awarded for completing raids (trainers level 31+ and higher) 1 additional Candy awarded for completing max battles 1 additional Candy XL awarded for completing max battles (trainers level 31+ and higher)"
-       ]
+       "deluxe": []
       },
       {
        "rank": 4,
@@ -11369,7 +12075,7 @@
         {
          "type": "item",
          "name": "Max Potion",
-         "quantity": 25
+         "quantity": 5
         }
        ]
       },
@@ -11436,7 +12142,7 @@
        "deluxe": [
         {
          "type": "item",
-         "name": "Premium Raid Pass",
+         "name": "Premium Battle Pass",
          "quantity": 2
         }
        ]
@@ -11592,12 +12298,6 @@
          "name": "Max Potion",
          "quantity": 3
         }
-       ]
-      },
-      {
-       "rank": 25,
-       "rewards": [
-        "Half hatch distance for eggs incubated during the event"
        ]
       },
       {
@@ -11850,7 +12550,7 @@
        "deluxe": [
         {
          "type": "item",
-         "name": "Premium Raid Pass",
+         "name": "Premium Battle Pass",
          "quantity": 1
         }
        ]
@@ -11987,7 +12687,7 @@
         {
          "type": "item",
          "name": "Drilbur Candy XL",
-         "quantity": 3
+         "quantity": 10
         }
        ]
       },
@@ -12123,7 +12823,7 @@
         {
          "type": "other",
          "name": "Charged TM",
-         "quantity": 3
+         "quantity": 1
         }
        ]
       },
@@ -12188,11 +12888,7 @@
         }
        ],
        "deluxe": [
-        {
-         "type": "other",
-         "name": "Duraludon Pants",
-         "quantity": 1
-        }
+        "Duraludon Pants"
        ]
       },
       {
@@ -12276,7 +12972,7 @@
         {
          "type": "item",
          "name": "Meltan Candy",
-         "quantity": 5
+         "quantity": 20
         }
        ]
       },
@@ -12476,7 +13172,7 @@
         {
          "type": "item",
          "name": "Gimmighoul Candy",
-         "quantity": 520
+         "quantity": 20
         }
        ]
       },
@@ -12493,17 +13189,25 @@
         {
          "type": "item",
          "name": "Gimmighoul Candy XL",
-         "quantity": 3
+         "quantity": 10
         }
        ]
       },
       {
        "rank": 79,
        "free": [
-        "Gimmighoul Roaming Form"
+        {
+         "type": "encounter",
+         "name": "Gimmighoul (Roaming Form)",
+         "quantity": 1
+        }
        ],
        "deluxe": [
-        "Gimmighoul Roaming Form"
+        {
+         "type": "encounter",
+         "name": "Gimmighoul (Roaming Form)",
+         "quantity": 1
+        }
        ]
       },
       {
@@ -12518,7 +13222,7 @@
        "deluxe": [
         {
          "type": "item",
-         "name": "Premium Raid Pass",
+         "name": "Premium Battle Pass",
          "quantity": 1
         }
        ]
@@ -12595,15 +13299,15 @@
        "rank": 85,
        "free": [
         {
-         "type": "other",
-         "name": "Star Piece",
+         "type": "item",
+         "name": "Stardust",
          "quantity": 1000
         }
        ],
        "deluxe": [
         {
-         "type": "other",
-         "name": "Star Piece",
+         "type": "item",
+         "name": "Stardust",
          "quantity": 5000
         }
        ]
@@ -12637,7 +13341,7 @@
        "deluxe": [
         {
          "type": "item",
-         "name": "Premium Raid Pass",
+         "name": "Premium Battle Pass",
          "quantity": 1
         }
        ]
@@ -12847,23 +13551,6 @@
        ]
       },
       {
-       "rank": 100,
-       "free": [
-        {
-         "type": "encounter",
-         "name": "Dynamax Meltan",
-         "quantity": 1
-        }
-       ],
-       "deluxe": [
-        {
-         "type": "other",
-         "name": "Silver Bottle Cap",
-         "quantity": 1
-        }
-       ]
-      },
-      {
        "rank": 101,
        "free": [
         {
@@ -12902,77 +13589,87 @@
    ],
    "tickets": [
     {
+     "text": "Trainers will receive the pass automatically on Monday, November 9, at 10:00 a.m. local time . Earn points and rank up until Sunday, November 15, 2026, at 6:00 p.m. local time .",
+     "sources": [
+      "leekduck",
+      "hub"
+     ],
+     "status": "corroborated"
+    },
+    {
+     "text": "Complete Pass Tasks to rank up and earn the following rewards. From Monday, November 9, to Friday, November 13, you can earn up to 100 extra GO Points daily by completing certain tasks.",
+     "sources": [
+      "leekduck",
+      "hub"
+     ],
+     "status": "corroborated"
+    },
+    {
+     "text": "Encounter Dynamax Meltan and earn a Silver Bottle Cap!",
+     "sources": [
+      "leekduck",
+      "hub"
+     ],
+     "status": "corroborated"
+    },
+    {
+     "text": "GO Pass: Into the Wild is a free progression track. Complete Pass Tasks to collect GO Points, increase your rank, and unlock rewards.",
+     "sources": [
+      "leekduck"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "From Monday, November 9, to Friday, November 13, you can collect GO Points up to a daily cap. There’s no limit to the GO Points you can earn on Saturday and Sunday, November 14 to 15!",
+     "sources": [
+      "leekduck"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Upgrade to GO Pass Deluxe: Into the Wild for US$14.99 * for upgraded rewards. The GO Pass Deluxe: Into the Wild + 10 Ranks option costs US$19.99 * and grants enough GO Points to reach Rank 10.",
+     "sources": [
+      "leekduck"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Deluxe includes rewards from both tracks. You can upgrade at any time and still claim rewards for ranks you have already reached.",
+     "sources": [
+      "leekduck"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Claim all unlocked GO Pass rewards before they expire on Tuesday, November 17, 2026, at 11:59 p.m. local time .",
+     "sources": [
+      "leekduck"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Win a raid 15 PTS",
+     "sources": [
+      "leekduck"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Hatch an Egg 5 PTS",
+     "sources": [
+      "leekduck"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Catch a Pokémon 1 PTS",
+     "sources": [
+      "leekduck"
+     ],
+     "status": "single"
+    },
+    {
      "text": "From Monday, November 9, at 10:00 a.m. to Sunday, November 15, 2026, at 6:00 p.m. local time, the GO Pass: Into the Wild 2026 and GO Pass Deluxe: Into the Wild 2026 will be available in Pokémon GO.",
-     "sources": [
-      "hub"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "You can collect GO Points and rank up to get additional rewards through Sunday, November 15, 2026, at 6:00 p.m. local time.",
-     "sources": [
-      "hub"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Additionally there is no limit on how many GO Points you can earn between Saturday, November 14 and Sunday, November 15.",
-     "sources": [
-      "hub"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Complete Pass Tasks to rank up your GO Pass to earn the following rewards:",
-     "sources": [
-      "hub"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Encounters with Dynamax Meltan",
-     "sources": [
-      "hub"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Encounters with event themed Pokémon",
-     "sources": [
-      "hub"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "GO Wild Area 2026 Tee (purple) avatar item",
-     "sources": [
-      "hub"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Reach Major Milestones on your event GO Pass to unlock the following bonuses:",
-     "sources": [
-      "hub"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Tier | Rewards",
-     "sources": [
-      "hub"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Level | Regular Reward | Deluxe Reward",
-     "sources": [
-      "hub"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "… | …repeats from 101 to 600 each rank… | …",
      "sources": [
       "hub"
      ],
@@ -15223,7 +15920,7 @@
    "lifecycle": "reference",
    "attendance": "",
    "location": null,
-   "image": "https://lh3.googleusercontent.com/1ZxNwH9PkuqgUPjvwhCrCNSTSDktinzgCcLJEkm4tu41LlE_7OdyfM4GkR9qd9atoN_Tairx5bQ6IxBBOULlCO29cCM4qTuvsE4dm-RFup0",
+   "image": null,
    "notes": [],
    "internalValidation": {
     "warnings": [],
@@ -15304,8 +16001,8 @@
     },
     "imageReviewed": true,
     "contentHash": "fa125120159e9a58ba841208c6b25be4f7168eec6564292c6281f54e27f9b880",
-    "revision": 7,
-    "amended": true,
+    "revision": 4,
+    "amended": false,
     "native": false,
     "collection": "source-details"
    },
@@ -25239,7 +25936,7 @@
     },
     "imageReviewed": true,
     "contentHash": "244e1a218c776c7de71a786fe7a96bc90d5ca2212bc0e2a5060da28a5e71b680",
-    "revision": 23,
+    "revision": 19,
     "amended": true,
     "native": false,
     "collection": "source-details"
@@ -30270,7 +30967,7 @@
    "lifecycle": "announced",
    "attendance": "",
    "location": null,
-   "image": null,
+   "image": "https://cdn.leekduck.com/assets/img/events/minior-showers-2026.jpg",
    "notes": [
     "Minior in Meteor Form in the wild, with extra Stardust for catching it.",
     "Best from 5 pm to 9 pm local time each day."
@@ -30362,9 +31059,9 @@
      "start": "2026-11-14T17:00",
      "end": "2026-11-19T23:59"
     },
-    "imageReviewed": true,
-    "contentHash": "5414e42c7f716f855ffa34ab6dcb891bc4ee8a02c258d7e74d8d554f0c904d20",
-    "revision": 5,
+    "imageUnattributed": true,
+    "contentHash": "7bc8ab834d85ace1a535937873b7e480329c4029c6fc52ddcd48b0669f4305bf",
+    "revision": 4,
     "amended": false,
     "native": false,
     "collection": "events"
@@ -30444,7 +31141,7 @@
    "lifecycle": "announced",
    "attendance": "",
    "location": null,
-   "image": null,
+   "image": "https://cdn.leekduck.com/assets/img/events/minior-showers-2026.jpg",
    "notes": [
     "Minior in Meteor Form in the wild, with extra Stardust for catching it.",
     "Best from 5 pm to 9 pm local time each day."
@@ -30536,9 +31233,9 @@
      "start": "2026-12-11T17:00",
      "end": "2026-12-16T23:59"
     },
-    "imageReviewed": true,
-    "contentHash": "0dedc9a7e254838304dcf4b45677519d4b704858687ce078dccbb8a291566192",
-    "revision": 5,
+    "imageUnattributed": true,
+    "contentHash": "1a1f3579d2f7abce868df55b2d213b271adca8a3e4ab3690be3517553c849060",
+    "revision": 4,
     "amended": false,
     "native": false,
     "collection": "events"
@@ -34620,6 +35317,48 @@
        "status": "single"
       },
       {
+       "text": "The event features the following bonuses and debuts.",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Dynamax Regidrago and Dynamax Meltan make their Pokémon GO debut",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "You may encounter a Shiny Gimmighoul when using a Coin Bag",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Daily Raid hour or Max Battle hour from 6pm to 7pm each day featuring Five-Star Bosses",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Remote Raid Pass limit will increase to 30 from Monday, November 9, to Friday, November 13",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "No limit on Remote Raids during Wild Area from Saturday, November 14, to Sunday, November 15",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
        "text": "Rank 25: 1/2 Hatch Distance for Eggs placed in Incubators during the event",
        "sources": [
         "leekduck"
@@ -34659,9 +35398,10 @@
       {
        "text": "The following Pokémon will appear more frequently in the wild, along with other event-themed Pokémon.",
        "sources": [
-        "leekduck"
+        "leekduck",
+        "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
        "text": "Galarian Meowth",
@@ -34732,22 +35472,39 @@
         "leekduck"
        ],
        "status": "single"
+      },
+      {
+       "text": "Dynamax Pokémon Debut",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
       }
      ],
      "raids": [
       {
        "text": "Regidrago will make its Pokémon GO Dynamax debut in five-star Max Battles, and Meltan will make its Dynamax debut in GO Pass: Into the Wild. If you’re lucky, you may encounter a Shiny one!",
        "sources": [
-        "leekduck"
+        "leekduck",
+        "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
        "text": "Defeating Crowned Sword Zacian or Crowned Shield Zamazenta in raids will earn you Crowned Sword Energy or Crowned Shield Energy, respectively.",
        "sources": [
-        "leekduck"
+        "leekduck",
+        "hub"
        ],
-       "status": "single"
+       "status": "corroborated"
+      },
+      {
+       "text": "The following Dynamax Pokémon will appear in Max Battles. Pokémon appearing in five-star Max Battles will also be featured in Max Battles from 6:00 p.m. to 7:00 p.m. local time for one day each on the following schedule.",
+       "sources": [
+        "leekduck",
+        "hub"
+       ],
+       "status": "corroborated"
       },
       {
        "text": "Druddigon 100% IV CP Level 20 1561 Level 25 1951 Weather boosted in Counters",
@@ -34757,15 +35514,99 @@
        "status": "single"
       },
       {
-       "text": "The following Dynamax Pokémon will appear in Max Battles. Pokémon appearing in five-star Max Battles will also be featured in Max Battles from 6:00 p.m. to 7:00 p.m. local time for one day each on the following schedule.",
+       "text": "Pokémon appearing in Five-Star Max Battles will appear in a dedicated hour of Max Battles from 6-7pm on their featured day. The following Pokémon will appear in Max Battles during the event:",
        "sources": [
-        "leekduck"
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "⚔️ Related Raid Guides: Druddigon and Orthworm",
+       "sources": [
+        "hub"
        ],
        "status": "single"
       }
      ],
      "eggs": [],
      "research": [
+      {
+       "text": "Trainers who choose the Steel-type path will receive the following bonuses upon earning the Steel Scholar medal.",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "1 additional Candy XL awarded for catching Steel-type mighty Pokémon (Trainers level 31+)",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "These bonuses will be active upon claiming your type-themed in-game medal, and they will expire at the end of Pokémon GO Wild Area: Global on Sunday, November 15, 2026, at 6:00 p.m. local time.",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Power up Steel‑type Pokémon 5 times POSSIBLE REWARDS Aron Max CP 560 Min CP 522 Magnemite Max CP 583 Min CP 544 Togedemaru Max CP 926 Min CP 876 Galarian Meowth Max CP 443 Min CP 409",
+       "sources": [
+        "leekduck",
+        "hub"
+       ],
+       "status": "corroborated"
+      },
+      {
+       "text": "Power up Dragon‑type Pokémon 5 times POSSIBLE REWARDS Bagon Max CP 495 Min CP 459 Skrelp Max CP 455 Min CP 421 Dratini Max CP 430 Min CP 397 Horsea Max CP 452 Min CP 418",
+       "sources": [
+        "leekduck",
+        "hub"
+       ],
+       "status": "corroborated"
+      },
+      {
+       "text": "Win a raid POSSIBLE REWARDS Dratini Max CP 430 Min CP 397 ×2 Rare Candy ×2 Scyther Max CP 1160 Min CP 1104",
+       "sources": [
+        "leekduck",
+        "hub"
+       ],
+       "status": "corroborated"
+      },
+      {
+       "text": "Catch 10 Pokémon POSSIBLE REWARDS Horsea Max CP 452 Min CP 418 Aron Max CP 560 Min CP 522 Skrelp Max CP 455 Min CP 421 Magnemite Max CP 583 Min CP 544",
+       "sources": [
+        "leekduck",
+        "hub"
+       ],
+       "status": "corroborated"
+      },
+      {
+       "text": "Win a Max Battle POSSIBLE REWARDS Bagon Max CP 495 Min CP 459 Mawile Max CP 700 Min CP 658",
+       "sources": [
+        "leekduck",
+        "hub"
+       ],
+       "status": "corroborated"
+      },
+      {
+       "text": "Catch a Dynamax Machop POSSIBLE REWARDS ×25 Machop Candy ×25 ×5000 Stardust ×5000",
+       "sources": [
+        "leekduck",
+        "hub"
+       ],
+       "status": "corroborated"
+      },
+      {
+       "text": "Attack: Battle alongside your trainee.",
+       "sources": [
+        "leekduck",
+        "hub"
+       ],
+       "status": "corroborated"
+      },
       {
        "text": "Pokémon GO Wild Area–themed Field Research tasks will be available throughout the event! Complete the research tasks to earn encounters with event-themed Pokémon and other rewards.",
        "sources": [
@@ -34774,77 +35615,7 @@
        "status": "single"
       },
       {
-       "text": "Power up Steel‑type Pokémon 5 times POSSIBLE REWARDS Aron Max CP 560 Min CP 522 Magnemite Max CP 583 Min CP 544 Togedemaru Max CP 926 Min CP 876 Galarian Meowth Max CP 443 Min CP 409",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Power up Dragon‑type Pokémon 5 times POSSIBLE REWARDS Bagon Max CP 495 Min CP 459 Skrelp Max CP 455 Min CP 421 Dratini Max CP 430 Min CP 397 Horsea Max CP 452 Min CP 418",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Win a raid POSSIBLE REWARDS Dratini Max CP 430 Min CP 397 ×2 Rare Candy ×2 Scyther Max CP 1160 Min CP 1104",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Catch 10 Pokémon POSSIBLE REWARDS Horsea Max CP 452 Min CP 418 Aron Max CP 560 Min CP 522 Skrelp Max CP 455 Min CP 421 Magnemite Max CP 583 Min CP 544",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Win a Max Battle POSSIBLE REWARDS Bagon Max CP 495 Min CP 459 Mawile Max CP 700 Min CP 658",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Catch a Dynamax Machop POSSIBLE REWARDS ×25 Machop Candy ×25 ×5000 Stardust ×5000",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
        "text": "After you give your trainee a Silver Bottle Cap, Hyper Training begins. Each stat has its own set of themed tasks.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Attack: Battle alongside your trainee.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Defense: Strengthen your bond with your Buddy Pokémon trainee by playing together, exploring, and catching Pokémon.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "HP: Explore alongside your trainee as a buddy. This can include spinning PokéStops, earning Buddy Candy, or other adventures.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "You’ll have 365 days after using your Silver Bottle Cap to finish Hyper Training.",
        "sources": [
         "leekduck"
        ],
@@ -34858,13 +35629,78 @@
         "leekduck"
        ],
        "status": "single"
+      },
+      {
+       "text": "Dynamax Regidrago and Meltan debut, Shiny Gimmighoul returns, and a packed week of Raids, Max Battles, and GO Pass rewards kicks off the road to GO Wild Area 2026.",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Expect an increased remote raid limit, GO Pass and GO Pass Deluxe , the return of Shiny Gimmighoul to the Coin Bag, and Max Battles Galore! Here’s everything you need to know about the event.",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "You may encounter a Shiny Gimmighoul when using a Coin Bag",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
       }
      ],
-     "moves": [],
+     "moves": [
+      {
+       "text": "When you catch the following Pokémon during the event, they will know the following featured attacks:",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Registeel will know the Fast Attack Metal Claw Steel",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Latias will know the Charged Attack Mist Ball Psychic",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Latios will know the Charged Attack Luster Purge Psychic",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Regidrago will know the Fast Attack Dragon Breath Dragon",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      }
+     ],
      "costumes": [],
      "tickets": [
       {
        "text": "Trainers will receive the pass automatically on Monday, November 9, at 10:00 a.m. local time . Earn points and rank up until Sunday, November 15, 2026, at 6:00 p.m. local time .",
+       "sources": [
+        "leekduck",
+        "hub"
+       ],
+       "status": "corroborated"
+      },
+      {
+       "text": "Complete Pass Tasks to rank up and earn the following rewards. From Monday, November 9, to Friday, November 13, you can earn up to 100 extra GO Points daily by completing certain tasks.",
        "sources": [
         "leekduck",
         "hub"
@@ -34915,13 +35751,6 @@
        "status": "single"
       },
       {
-       "text": "Complete Pass Tasks to rank up and earn the following rewards. From Monday, November 9, to Friday, November 13, you can earn up to 100 extra GO Points daily by completing certain tasks.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
        "text": "Win a raid 15 PTS",
        "sources": [
         "leekduck"
@@ -34943,11 +35772,19 @@
        "status": "single"
       },
       {
-       "text": "You can collect GO Points and rank up to get additional rewards through Sunday, November 15, 2026, at 6:00 p.m. local time.",
+       "text": "From Monday, November 9, at 10:00 a.m. to Sunday, November 15, 2026, at 6:00 p.m. local time, the GO Pass: Into the Wild 2026 and GO Pass Deluxe: Into the Wild 2026 will be available in Pokémon GO.",
        "sources": [
         "hub"
        ],
        "status": "single"
+      },
+      {
+       "text": "Rank 1: Free: GO Wild Area 2026 Tee (Purple) | Deluxe: —",
+       "sources": [
+        "leekduck",
+        "hub"
+       ],
+       "status": "corroborated"
       },
       {
        "text": "Rank 4: Free: Potion ×3 | Deluxe: Star Piece ×1",
@@ -34983,14 +35820,6 @@
       },
       {
        "text": "Rank 10: Free: Stardust ×1000 | Deluxe: Golden Razz Berry ×3",
-       "sources": [
-        "leekduck",
-        "hub"
-       ],
-       "status": "corroborated"
-      },
-      {
-       "text": "Rank 11: Free: Revive ×3 | Deluxe: Max Potion ×5",
        "sources": [
         "leekduck",
         "hub"
@@ -35654,13 +36483,6 @@
        "status": "corroborated"
       },
       {
-       "text": "Rank 1: Free: GO Wild Area 2026 Tee (Purple) | Deluxe: —",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
        "text": "Rank 2: Free: Poké Ball ×10 | Deluxe: —",
        "sources": [
         "leekduck"
@@ -35683,6 +36505,13 @@
       },
       {
        "text": "Rank 6: Free: Stardust ×1000 | Deluxe: Stardust ×5000",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rank 11: Free: Revive ×3 | Deluxe: Max Potion ×5",
        "sources": [
         "leekduck"
        ],
@@ -35768,7 +36597,49 @@
        "status": "single"
       },
       {
-       "text": "From Monday, November 9, at 10:00 a.m. to Sunday, November 15, 2026, at 6:00 p.m. local time, the GO Pass and GO Pass Deluxe for Into the Wild 2026 will be available in Pokémon GO.",
+       "text": "Pokémon GO’s Into the Wild event runs from November 9 at 10:00 a.m. to November 13 at 8:00 p.m. local time , bringing two new Dynamax Pokémon: Dynamax Regidrago and Dynamax Meltan!",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Daily Raid hour or Max Battle hour from 6pm to 7pm each day featuring Five-Star Bosses",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Remote Raid Pass limit will increase to 30 from Monday, November 9, to Friday, November 13",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "No limit on Remote Raids during Wild Area from Saturday, November 14, to Sunday, November 15",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "You will be able to obtain event themed stickers by spinning Pokéstops and gifts from Monday, November 9 at 10:00 local time, until Sunday, November 15, 6:00pm local time.",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "They will also be available to purchase in the in-game shop from Friday November 6, to Sunday, November 15.",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "From Monday, November 9, at 10:00 a.m. to Sunday, November 15, 2026, at 6:00 p.m. local time, the GO Pass: Into the Wild 2026 and GO Pass Deluxe: Into the Wild 2026 will be available in Pokémon GO.",
        "sources": [
         "hub"
        ],
@@ -35790,8 +36661,8 @@
      "end": "2026-11-13T20:00"
     },
     "imageReviewed": true,
-    "contentHash": "8a464ab607d14a848081242a2d72c775972844e3eb445eea2997d4b50778226a",
-    "revision": 5,
+    "contentHash": "7b9afd74719cdaa0eacfa75f5090e0711ecc432eb7e3f4093b3c5a7fe9b278d1",
+    "revision": 4,
     "amended": false,
     "native": false,
     "collection": "rotation"
@@ -35814,6 +36685,48 @@
      "text": "Reach these ranks on GO Pass: Into the Wild to unlock the following bonus.",
      "sources": [
       "leekduck"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "The event features the following bonuses and debuts.",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Dynamax Regidrago and Dynamax Meltan make their Pokémon GO debut",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "You may encounter a Shiny Gimmighoul when using a Coin Bag",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Daily Raid hour or Max Battle hour from 6pm to 7pm each day featuring Five-Star Bosses",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Remote Raid Pass limit will increase to 30 from Monday, November 9, to Friday, November 13",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "No limit on Remote Raids during Wild Area from Saturday, November 14, to Sunday, November 15",
+     "sources": [
+      "hub"
      ],
      "status": "single"
     },
@@ -35899,11 +36812,11 @@
       }
      ],
      "status": "single",
-     "eventId": "into",
-     "eventName": "Into the Wild",
+     "eventId": "leekduck:into-the-wild-2026",
+     "eventName": "Into the Wild 2026",
      "eventWindow": {
-      "start": "2026-11-09T10:00",
-      "end": "2026-11-13T20:00"
+      "start": "2026-11-09T10:00:00.000",
+      "end": "2026-11-13T20:00:00.000"
      },
      "checkedAt": "2026-11-09"
     },
@@ -35934,11 +36847,11 @@
       }
      ],
      "status": "single",
-     "eventId": "into",
-     "eventName": "Into the Wild",
+     "eventId": "leekduck:into-the-wild-2026",
+     "eventName": "Into the Wild 2026",
      "eventWindow": {
-      "start": "2026-11-09T10:00",
-      "end": "2026-11-13T20:00"
+      "start": "2026-11-09T10:00:00.000",
+      "end": "2026-11-13T20:00:00.000"
      },
      "checkedAt": "2026-11-09"
     },
@@ -35969,11 +36882,11 @@
       }
      ],
      "status": "single",
-     "eventId": "into",
-     "eventName": "Into the Wild",
+     "eventId": "leekduck:into-the-wild-2026",
+     "eventName": "Into the Wild 2026",
      "eventWindow": {
-      "start": "2026-11-09T10:00",
-      "end": "2026-11-13T20:00"
+      "start": "2026-11-09T10:00:00.000",
+      "end": "2026-11-13T20:00:00.000"
      },
      "checkedAt": "2026-11-09"
     },
@@ -36022,11 +36935,11 @@
       }
      ],
      "status": "single",
-     "eventId": "into",
-     "eventName": "Into the Wild",
+     "eventId": "leekduck:into-the-wild-2026",
+     "eventName": "Into the Wild 2026",
      "eventWindow": {
-      "start": "2026-11-09T10:00",
-      "end": "2026-11-13T20:00"
+      "start": "2026-11-09T10:00:00.000",
+      "end": "2026-11-13T20:00:00.000"
      },
      "checkedAt": "2026-11-09"
     },
@@ -36075,11 +36988,11 @@
       }
      ],
      "status": "single",
-     "eventId": "into",
-     "eventName": "Into the Wild",
+     "eventId": "leekduck:into-the-wild-2026",
+     "eventName": "Into the Wild 2026",
      "eventWindow": {
-      "start": "2026-11-09T10:00",
-      "end": "2026-11-13T20:00"
+      "start": "2026-11-09T10:00:00.000",
+      "end": "2026-11-13T20:00:00.000"
      },
      "checkedAt": "2026-11-09"
     },
@@ -36114,11 +37027,11 @@
       }
      ],
      "status": "single",
-     "eventId": "into",
-     "eventName": "Into the Wild",
+     "eventId": "leekduck:into-the-wild-2026",
+     "eventName": "Into the Wild 2026",
      "eventWindow": {
-      "start": "2026-11-09T10:00",
-      "end": "2026-11-13T20:00"
+      "start": "2026-11-09T10:00:00.000",
+      "end": "2026-11-13T20:00:00.000"
      },
      "checkedAt": "2026-11-09"
     },
@@ -36158,13 +37071,90 @@
       }
      ],
      "status": "single",
-     "eventId": "into",
-     "eventName": "Into the Wild",
+     "eventId": "leekduck:into-the-wild-2026",
+     "eventName": "Into the Wild 2026",
      "eventWindow": {
-      "start": "2026-11-09T10:00",
-      "end": "2026-11-13T20:00"
+      "start": "2026-11-09T10:00:00.000",
+      "end": "2026-11-13T20:00:00.000"
      },
      "checkedAt": "2026-11-09"
+    },
+    {
+     "text": "Trainers who choose the Steel-type path will receive the following bonuses upon earning the Steel Scholar medal.",
+     "sources": [
+      "official"
+     ],
+     "status": "official"
+    },
+    {
+     "text": "1 additional Candy XL awarded for catching Steel-type mighty Pokémon (Trainers level 31+)",
+     "sources": [
+      "official"
+     ],
+     "status": "official"
+    },
+    {
+     "text": "These bonuses will be active upon claiming your type-themed in-game medal, and they will expire at the end of Pokémon GO Wild Area: Global on Sunday, November 15, 2026, at 6:00 p.m. local time.",
+     "sources": [
+      "official"
+     ],
+     "status": "official"
+    },
+    {
+     "text": "Power up Steel‑type Pokémon 5 times POSSIBLE REWARDS Aron Max CP 560 Min CP 522 Magnemite Max CP 583 Min CP 544 Togedemaru Max CP 926 Min CP 876 Galarian Meowth Max CP 443 Min CP 409",
+     "sources": [
+      "leekduck",
+      "hub"
+     ],
+     "status": "corroborated"
+    },
+    {
+     "text": "Power up Dragon‑type Pokémon 5 times POSSIBLE REWARDS Bagon Max CP 495 Min CP 459 Skrelp Max CP 455 Min CP 421 Dratini Max CP 430 Min CP 397 Horsea Max CP 452 Min CP 418",
+     "sources": [
+      "leekduck",
+      "hub"
+     ],
+     "status": "corroborated"
+    },
+    {
+     "text": "Win a raid POSSIBLE REWARDS Dratini Max CP 430 Min CP 397 ×2 Rare Candy ×2 Scyther Max CP 1160 Min CP 1104",
+     "sources": [
+      "leekduck",
+      "hub"
+     ],
+     "status": "corroborated"
+    },
+    {
+     "text": "Catch 10 Pokémon POSSIBLE REWARDS Horsea Max CP 452 Min CP 418 Aron Max CP 560 Min CP 522 Skrelp Max CP 455 Min CP 421 Magnemite Max CP 583 Min CP 544",
+     "sources": [
+      "leekduck",
+      "hub"
+     ],
+     "status": "corroborated"
+    },
+    {
+     "text": "Win a Max Battle POSSIBLE REWARDS Bagon Max CP 495 Min CP 459 Mawile Max CP 700 Min CP 658",
+     "sources": [
+      "leekduck",
+      "hub"
+     ],
+     "status": "corroborated"
+    },
+    {
+     "text": "Catch a Dynamax Machop POSSIBLE REWARDS ×25 Machop Candy ×25 ×5000 Stardust ×5000",
+     "sources": [
+      "leekduck",
+      "hub"
+     ],
+     "status": "corroborated"
+    },
+    {
+     "text": "Attack: Battle alongside your trainee.",
+     "sources": [
+      "leekduck",
+      "hub"
+     ],
+     "status": "corroborated"
     },
     {
      "text": "Pokémon GO Wild Area–themed Field Research tasks will be available throughout the event! Complete the research tasks to earn encounters with event-themed Pokémon and other rewards.",
@@ -36174,77 +37164,7 @@
      "status": "single"
     },
     {
-     "text": "Power up Steel‑type Pokémon 5 times POSSIBLE REWARDS Aron Max CP 560 Min CP 522 Magnemite Max CP 583 Min CP 544 Togedemaru Max CP 926 Min CP 876 Galarian Meowth Max CP 443 Min CP 409",
-     "sources": [
-      "leekduck"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Power up Dragon‑type Pokémon 5 times POSSIBLE REWARDS Bagon Max CP 495 Min CP 459 Skrelp Max CP 455 Min CP 421 Dratini Max CP 430 Min CP 397 Horsea Max CP 452 Min CP 418",
-     "sources": [
-      "leekduck"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Win a raid POSSIBLE REWARDS Dratini Max CP 430 Min CP 397 ×2 Rare Candy ×2 Scyther Max CP 1160 Min CP 1104",
-     "sources": [
-      "leekduck"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Catch 10 Pokémon POSSIBLE REWARDS Horsea Max CP 452 Min CP 418 Aron Max CP 560 Min CP 522 Skrelp Max CP 455 Min CP 421 Magnemite Max CP 583 Min CP 544",
-     "sources": [
-      "leekduck"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Win a Max Battle POSSIBLE REWARDS Bagon Max CP 495 Min CP 459 Mawile Max CP 700 Min CP 658",
-     "sources": [
-      "leekduck"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Catch a Dynamax Machop POSSIBLE REWARDS ×25 Machop Candy ×25 ×5000 Stardust ×5000",
-     "sources": [
-      "leekduck"
-     ],
-     "status": "single"
-    },
-    {
      "text": "After you give your trainee a Silver Bottle Cap, Hyper Training begins. Each stat has its own set of themed tasks.",
-     "sources": [
-      "leekduck"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Attack: Battle alongside your trainee.",
-     "sources": [
-      "leekduck"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Defense: Strengthen your bond with your Buddy Pokémon trainee by playing together, exploring, and catching Pokémon.",
-     "sources": [
-      "leekduck"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "HP: Explore alongside your trainee as a buddy. This can include spinning PokéStops, earning Buddy Candy, or other adventures.",
-     "sources": [
-      "leekduck"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "You’ll have 365 days after using your Silver Bottle Cap to finish Hyper Training.",
      "sources": [
       "leekduck"
      ],
@@ -37938,6 +38858,14 @@
      "status": "corroborated"
     },
     {
+     "text": "Complete Pass Tasks to rank up and earn the following rewards. From Monday, November 9, to Friday, November 13, you can earn up to 100 extra GO Points daily by completing certain tasks.",
+     "sources": [
+      "leekduck",
+      "hub"
+     ],
+     "status": "corroborated"
+    },
+    {
      "text": "Encounter Dynamax Meltan and earn a Silver Bottle Cap!",
      "sources": [
       "leekduck",
@@ -37981,13 +38909,6 @@
      "status": "single"
     },
     {
-     "text": "Complete Pass Tasks to rank up and earn the following rewards. From Monday, November 9, to Friday, November 13, you can earn up to 100 extra GO Points daily by completing certain tasks.",
-     "sources": [
-      "leekduck"
-     ],
-     "status": "single"
-    },
-    {
      "text": "Win a raid 15 PTS",
      "sources": [
       "leekduck"
@@ -38009,7 +38930,7 @@
      "status": "single"
     },
     {
-     "text": "You can collect GO Points and rank up to get additional rewards through Sunday, November 15, 2026, at 6:00 p.m. local time.",
+     "text": "From Monday, November 9, at 10:00 a.m. to Sunday, November 15, 2026, at 6:00 p.m. local time, the GO Pass: Into the Wild 2026 and GO Pass Deluxe: Into the Wild 2026 will be available in Pokémon GO.",
      "sources": [
       "hub"
      ],
@@ -38038,18 +38959,6 @@
      "name": "Pokémon GO Hub",
      "trust": "community",
      "url": "https://pokemongohub.net/post/event/into-the-wild-2026-event/"
-    },
-    {
-     "id": "official",
-     "name": "Pokémon GO (official)",
-     "trust": "official",
-     "url": "https://pokemongo.com/news/go-wild-area-stamp-rally-details-2026/"
-    },
-    {
-     "id": "hub",
-     "name": "Pokémon GO Hub",
-     "trust": "community",
-     "url": "https://pokemongohub.net/post/guide/go-pass-into-the-wild/"
     }
    ],
    "pokemon": [
@@ -43221,7 +44130,7 @@
     "world:https://leekduck.com/events/pokemon-go-wild-area-2026-sendai-japan"
    ],
    "family": "wild-area",
-   "title": "GO Wild Area 2026: Sendai and Tohoku",
+   "title": "Pokémon GO Wild Area 2026: Sendai • Tohoku",
    "dateText": "",
    "completeness": "partial",
    "lifecycle": "announced",
@@ -43237,18 +44146,453 @@
    ],
    "internalValidation": {
     "warnings": [],
-    "lifecycleDeclared": false,
+    "lifecycleDeclared": true,
     "conflicts": [],
-    "fields": {},
+    "fields": {
+     "bonuses": [
+      {
+       "text": "Ticket holders receive these benefits from 12:00 a.m. to 11:59 p.m. local time on their ticketed event day.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Shiny encounters are not guaranteed. To use the increased exploration Max Particle bonus, first collect all available Max Particles in the Nearby menu. Adventure Sync can help track exploration distance.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Ticket holders at the in-person events can earn both type-themed medals and their catch bonuses:",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Steel Scholar medal: Earn 1 additional Candy XL for catching Steel-type mighty Pokémon (Trainers level 31+) and 1,000 additional Stardust for catching Steel-type mighty Pokémon.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Each medal’s bonuses begin when you claim it and last through the end of GO Wild Area: Global on November 15, 2026, at 6:00 p.m. local time .",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Completing the event Special Research also awards a new avatar pose .",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "A separate Global ticket grants access to the Global Special Research the following weekend.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      }
+     ],
+     "featured": [
+      {
+       "text": "Hisuian Sliggoo and Hisuian Goodra Debut",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Use 100 Goomy Candy to evolve Hisuian Sliggoo into Hisuian Goodra.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Steel- and Dragon-themed encounters rotate hourly from 10:00 a.m. to 6:00 p.m. throughout the event area on your ticketed day.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Ticket holders can attract the following mighty Pokémon during the event. These encounters exclude Daily Adventure Incense.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      }
+     ],
+     "raids": [
+      {
+       "text": "Gigantamax Duraludon makes its Pokémon GO debut at Pokémon GO Wild Area! This larger-than-life Pokémon will appear in six-star Max Battles during the event.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "If you’re lucky, you may encounter a Shiny one!",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Dynamax Dialga and Dynamax Palkia make their Pokémon GO debuts during GO Wild Area 2026. Both can be Shiny!",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Starting with GO Wild Area 2026, Dynamax Battle lobbies offer Battle to match automatically with other Trainers or Private Group to join an existing group using its group code.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Machamp wearing a modern jacket appears in three-star raids during event hours. Leek Duck says it may be Shiny; the official event page does not confirm this.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Crowned Sword Zacian and Crowned Shield Zamazenta appear in five-star raids during the event. Lucky Trainers may encounter Shiny Pokémon!",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "All Trainers can earn Crowned Sword Energy or Crowned Shield Energy by defeating the corresponding raid boss.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Dynamax Dialga and Dynamax Palkia appear in Max Battles during the event. Both have a chance to be Shiny.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      }
+     ],
+     "eggs": [
+      {
+       "text": "The following Pokémon hatch from 10 km Eggs obtained during the event. Ticket holders have an increased chance of receiving 10 km Eggs from PokéStops and Gyms.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "The 1/4 Hatch Distance bonus does not stack with other Hatch Distance bonuses.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      }
+     ],
+     "research": [
+      {
+       "text": "Two Timed Research experiences guide you through specially decorated PokéStops across the city. Spin the corresponding stops to progress; these can also help you navigate between Stamp Rally locations.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Extra Day add-ons grant both Timed Research experiences again on each added day. Complete the tasks and claim rewards before 8:00 p.m. local time that day.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Catch 10 Dragon‑type Pokémon POSSIBLE REWARDS Trapinch Max CP 546 Min CP 507 ×2000 Stardust ×2000 ×1 Silver Pinap Berry ×1",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Power up Dragon‑type Pokémon 5 times REWARD Frigibax Max CP 534 Min CP 496",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Win 2 raids POSSIBLE REWARDS Mighty Azumarill Max CP 680 Min CP 637 Mighty Modern Jacket Machamp",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Win a Max Battle POSSIBLE REWARDS Mighty Kommo-o Max CP 1418 Min CP 1357 Mighty Bastiodon Max CP 660 Min CP 615",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Catch a Hisuian Sliggoo REWARD Hisuian Sliggoo",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Hatch an Egg POSSIBLE REWARDS Honedge Max CP 595 Min CP 556 Drampa Max CP 1249 Min CP 1191",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Power up Steel‑type Pokémon 5 times POSSIBLE REWARDS Bronzor Max CP 258 Min CP 229 Skarmory Max CP 903 Min CP 854 Onix Max CP 472 Min CP 435",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Explore 2 km REWARD Mighty Modern Jacket Machamp",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Use a Dragon‑type Charged Attack in a battle REWARD Mighty Kommo-o Max CP 1418 Min CP 1357",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Make an Excellent Throw POSSIBLE REWARDS ×2 Silver Pinap Berry ×2 ×2 Golden Razz Berry ×2",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      }
+     ],
+     "shiny": [
+      {
+       "text": "Shiny encounters are not guaranteed. To use the increased exploration Max Particle bonus, first collect all available Max Particles in the Nearby menu. Adventure Sync can help track exploration distance.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "If you’re lucky, you may encounter a Shiny one!",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Dynamax Dialga and Dynamax Palkia make their Pokémon GO debuts during GO Wild Area 2026. Both can be Shiny!",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Hisuian Sliggoo and Hisuian Goodra debut at the in-person GO Wild Area events. Ticket holders may find Hisuian Sliggoo in the wild during either habitat hour, including its Shiny form.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Ticket holders may attract mighty Latias and Latios with Incense, excluding Daily Adventure Incense, on their ticketed event day. Both can be Shiny and are quick to flee, so keep GO Safari Balls ready.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Mighty Pokémon are more likely to have high Attack, Defense, and HP ratings and be XL or XXL. They are harder to catch, and some may be Shiny. GO Safari Balls improve your chances of catching them.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Machamp wearing a modern jacket appears in three-star raids during event hours. Leek Duck says it may be Shiny; the official event page does not confirm this.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Crowned Sword Zacian and Crowned Shield Zamazenta appear in five-star raids during the event. Lucky Trainers may encounter Shiny Pokémon!",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Dynamax Dialga and Dynamax Palkia appear in Max Battles during the event. Both have a chance to be Shiny.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Gigantamax Machamp from this research has a 5% (1 in 20) chance of being Shiny .",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Hisuian Sliggoo can be encountered as a Shiny Pokémon at the in-person events. Evolve it to obtain Shiny Hisuian Goodra.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      }
+     ],
+     "moves": [],
+     "costumes": [
+      {
+       "text": "Mighty Pokémon can appear during either habitat hour. The in-person lineup includes mighty Machamp wearing a modern jacket, Bastiodon, and Kommo-o, plus mighty Lapras in Sendai.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Machamp wearing a modern jacket appears in three-star raids during event hours. Leek Duck says it may be Shiny; the official event page does not confirm this.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Gigantamax Duraludon, Machamp wearing a modern jacket, Dynamax Dialga, Dynamax Palkia, mighty Latias, and mighty Latios can also be Shiny. Ticket holders have increased Shiny encounter chances during event hours.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      }
+     ],
+     "tickets": [
+      {
+       "text": "The following bonuses apply from 10:00 a.m. to 6:00 p.m. local time on your ticketed event day.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "The following Unown are attracted to Incense on your ticketed day.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Lucky ticket holders may also encounter these mighty Legendary Pokémon from Incense:",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Choose one day: November 6, 7, or 8. Japanese ticket prices include applicable taxes and fees. View tickets and add-ons .",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Battle Ready and Egg-thusiast bonuses are active from November 6 at 12:00 a.m. through November 8, 2026, at 11:59 p.m. local time . Add-ons can be purchased after your initial ticket order.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Tickets can be purchased for eligible friends using their exact Trainer usernames. You must be at least Great Friends. Everyone included in one order receives tickets for the same date and time.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Unlock the GO Wild Area 2026 Tee (Purple) through the free GO Pass: Into the Wild . The paid GO Pass Deluxe: Into the Wild also includes Duraludon Pants as a progression reward.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      }
+     ],
+     "dates": [
+      {
+       "text": "The following bonuses apply from 10:00 a.m. to 6:00 p.m. local time on your ticketed event day.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Ticket holders receive these benefits from 12:00 a.m. to 11:59 p.m. local time on their ticketed event day.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "They can only be used from 10:00 a.m. to 6:00 p.m. local time on event days and become inaccessible after the event ends.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Steel- and Dragon-themed encounters rotate hourly from 10:00 a.m. to 6:00 p.m. throughout the event area on your ticketed day.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Choose one day: November 6, 7, or 8. Japanese ticket prices include applicable taxes and fees. View tickets and add-ons .",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      }
+     ]
+    },
     "info": [],
-    "detailRefs": [],
+    "detailRefs": [
+     "leekduck:pokemon-go-wild-area-2026-sendai-japan"
+    ],
     "legacyDates": {
-     "start": "2026-11-06",
-     "end": "2026-11-08"
+     "start": "",
+     "end": ""
     },
     "imageReviewed": true,
-    "contentHash": "b63e24a31ac0c1b44d1f277adbb11f13c72cf47f234eaa797e97f34a75c8a138",
-    "revision": 11,
+    "contentHash": "060dc3a57d69c34f06b35741663ec1f051487942ffc757b830abb270ad75af93",
+    "revision": 10,
     "amended": false,
     "native": false,
     "collection": "events"
@@ -43318,8 +44662,8 @@
      "rewards": [
       {
        "type": "encounter",
-       "quantity": 1,
        "name": "Trapinch",
+       "quantity": 1,
        "cpMin": 507,
        "cpMax": 546
       },
@@ -43346,13 +44690,13 @@
       }
      ],
      "status": "single",
-     "eventId": "sendai",
-     "eventName": "GO Wild Area: Sendai",
+     "eventId": "leekduck:pokemon-go-wild-area-2026-sendai-japan",
+     "eventName": "Pokémon GO Wild Area 2026: Sendai • Tohoku",
      "eventWindow": {
-      "start": "2026-11-06T10:00",
-      "end": "2026-11-08T18:00"
+      "start": "2026-11-06T01:00:00.000Z",
+      "end": "2026-11-08T09:00:00.000Z"
      },
-     "checkedAt": "2026-11-09"
+     "checkedAt": "2026-11-07"
     },
     {
      "task": "Catch 10 Steel‑type Pokémon",
@@ -43365,8 +44709,8 @@
       },
       {
        "type": "encounter",
-       "quantity": 1,
        "name": "Rookidee",
+       "quantity": 1,
        "cpMin": 258,
        "cpMax": 285
       },
@@ -43388,26 +44732,16 @@
       }
      ],
      "status": "single",
-     "eventId": "sendai",
-     "eventName": "GO Wild Area: Sendai",
+     "eventId": "leekduck:pokemon-go-wild-area-2026-sendai-japan",
+     "eventName": "Pokémon GO Wild Area 2026: Sendai • Tohoku",
      "eventWindow": {
-      "start": "2026-11-06T10:00",
-      "end": "2026-11-08T18:00"
+      "start": "2026-11-06T01:00:00.000Z",
+      "end": "2026-11-08T09:00:00.000Z"
      },
-     "checkedAt": "2026-11-09"
+     "checkedAt": "2026-11-07"
     },
     {
-     "task": "Catch a Hisuian Sliggoo",
      "category": "field",
-     "rewards": [
-      {
-       "type": "encounter",
-       "quantity": 1,
-       "name": "Hisuian Sliggoo",
-       "cpMin": 782,
-       "cpMax": 829
-      }
-     ],
      "sources": [
       "leekduck"
      ],
@@ -43420,47 +44754,56 @@
       }
      ],
      "status": "single",
-     "eventId": "sendai",
-     "eventName": "GO Wild Area: Sendai",
+     "eventId": "leekduck:pokemon-go-wild-area-2026-sendai-japan",
+     "eventName": "Pokémon GO Wild Area 2026: Sendai • Tohoku",
      "eventWindow": {
-      "start": "2026-11-06T10:00",
-      "end": "2026-11-08T18:00"
+      "start": "2026-11-06T01:00:00.000Z",
+      "end": "2026-11-08T09:00:00.000Z"
      },
-     "checkedAt": "2026-11-09"
-    },
-    {
-     "task": "Explore 2 km",
-     "category": "field",
+     "checkedAt": "2026-11-07",
+     "task": "Catch a Hisuian Sliggoo",
      "rewards": [
       {
        "type": "encounter",
+       "name": "Hisuian Sliggoo",
        "quantity": 1,
-       "name": "Machamp (modern jacket)",
+       "formId": "hisui"
+      }
+     ]
+    },
+    {
+     "category": "field",
+     "sources": [
+      "leekduck"
+     ],
+     "sourceRefs": [
+      {
+       "id": "leekduck",
+       "name": "Leek Duck",
+       "trust": "community",
+       "url": "https://leekduck.com/events/pokemon-go-wild-area-2026-sendai-japan/"
+      }
+     ],
+     "status": "single",
+     "eventId": "leekduck:pokemon-go-wild-area-2026-sendai-japan",
+     "eventName": "Pokémon GO Wild Area 2026: Sendai • Tohoku",
+     "eventWindow": {
+      "start": "2026-11-06T01:00:00.000Z",
+      "end": "2026-11-08T09:00:00.000Z"
+     },
+     "checkedAt": "2026-11-07",
+     "task": "Explore 2 km",
+     "rewards": [
+      {
+       "type": "encounter",
+       "name": "Machamp (Modern Jacket)",
+       "quantity": 1,
        "costume": true,
-       "label": "modern jacket",
        "costumeId": "modernjacket",
+       "label": "Modern Jacket",
        "mighty": true
       }
-     ],
-     "sources": [
-      "leekduck"
-     ],
-     "sourceRefs": [
-      {
-       "id": "leekduck",
-       "name": "Leek Duck",
-       "trust": "community",
-       "url": "https://leekduck.com/events/pokemon-go-wild-area-2026-sendai-japan/"
-      }
-     ],
-     "status": "single",
-     "eventId": "sendai",
-     "eventName": "GO Wild Area: Sendai",
-     "eventWindow": {
-      "start": "2026-11-06T10:00",
-      "end": "2026-11-08T18:00"
-     },
-     "checkedAt": "2026-11-09"
+     ]
     },
     {
      "task": "Hatch an Egg",
@@ -43468,15 +44811,15 @@
      "rewards": [
       {
        "type": "encounter",
-       "quantity": 1,
        "name": "Honedge",
+       "quantity": 1,
        "cpMin": 556,
        "cpMax": 595
       },
       {
        "type": "encounter",
-       "quantity": 1,
        "name": "Drampa",
+       "quantity": 1,
        "cpMin": 1191,
        "cpMax": 1249
       }
@@ -43493,13 +44836,13 @@
       }
      ],
      "status": "single",
-     "eventId": "sendai",
-     "eventName": "GO Wild Area: Sendai",
+     "eventId": "leekduck:pokemon-go-wild-area-2026-sendai-japan",
+     "eventName": "Pokémon GO Wild Area 2026: Sendai • Tohoku",
      "eventWindow": {
-      "start": "2026-11-06T10:00",
-      "end": "2026-11-08T18:00"
+      "start": "2026-11-06T01:00:00.000Z",
+      "end": "2026-11-08T09:00:00.000Z"
      },
-     "checkedAt": "2026-11-09"
+     "checkedAt": "2026-11-07"
     },
     {
      "task": "Make an Excellent Throw",
@@ -43528,13 +44871,13 @@
       }
      ],
      "status": "single",
-     "eventId": "sendai",
-     "eventName": "GO Wild Area: Sendai",
+     "eventId": "leekduck:pokemon-go-wild-area-2026-sendai-japan",
+     "eventName": "Pokémon GO Wild Area 2026: Sendai • Tohoku",
      "eventWindow": {
-      "start": "2026-11-06T10:00",
-      "end": "2026-11-08T18:00"
+      "start": "2026-11-06T01:00:00.000Z",
+      "end": "2026-11-08T09:00:00.000Z"
      },
-     "checkedAt": "2026-11-09"
+     "checkedAt": "2026-11-07"
     },
     {
      "task": "Power up Dragon‑type Pokémon 5 times",
@@ -43542,8 +44885,8 @@
      "rewards": [
       {
        "type": "encounter",
-       "quantity": 1,
        "name": "Frigibax",
+       "quantity": 1,
        "cpMin": 496,
        "cpMax": 534
       }
@@ -43560,13 +44903,13 @@
       }
      ],
      "status": "single",
-     "eventId": "sendai",
-     "eventName": "GO Wild Area: Sendai",
+     "eventId": "leekduck:pokemon-go-wild-area-2026-sendai-japan",
+     "eventName": "Pokémon GO Wild Area 2026: Sendai • Tohoku",
      "eventWindow": {
-      "start": "2026-11-06T10:00",
-      "end": "2026-11-08T18:00"
+      "start": "2026-11-06T01:00:00.000Z",
+      "end": "2026-11-08T09:00:00.000Z"
      },
-     "checkedAt": "2026-11-09"
+     "checkedAt": "2026-11-07"
     },
     {
      "task": "Power up Steel‑type Pokémon 5 times",
@@ -43574,22 +44917,22 @@
      "rewards": [
       {
        "type": "encounter",
-       "quantity": 1,
        "name": "Bronzor",
+       "quantity": 1,
        "cpMin": 229,
        "cpMax": 258
       },
       {
        "type": "encounter",
-       "quantity": 1,
        "name": "Skarmory",
+       "quantity": 1,
        "cpMin": 854,
        "cpMax": 903
       },
       {
        "type": "encounter",
-       "quantity": 1,
        "name": "Onix",
+       "quantity": 1,
        "cpMin": 435,
        "cpMax": 472
       }
@@ -43606,13 +44949,13 @@
       }
      ],
      "status": "single",
-     "eventId": "sendai",
-     "eventName": "GO Wild Area: Sendai",
+     "eventId": "leekduck:pokemon-go-wild-area-2026-sendai-japan",
+     "eventName": "Pokémon GO Wild Area 2026: Sendai • Tohoku",
      "eventWindow": {
-      "start": "2026-11-06T10:00",
-      "end": "2026-11-08T18:00"
+      "start": "2026-11-06T01:00:00.000Z",
+      "end": "2026-11-08T09:00:00.000Z"
      },
-     "checkedAt": "2026-11-09"
+     "checkedAt": "2026-11-07"
     },
     {
      "task": "Use a Dragon‑type Charged Attack in a battle",
@@ -43620,11 +44963,11 @@
      "rewards": [
       {
        "type": "encounter",
-       "quantity": 1,
        "name": "Kommo-o",
-       "mighty": true,
+       "quantity": 1,
        "cpMin": 1357,
-       "cpMax": 1418
+       "cpMax": 1418,
+       "mighty": true
       }
      ],
      "sources": [
@@ -43639,13 +44982,13 @@
       }
      ],
      "status": "single",
-     "eventId": "sendai",
-     "eventName": "GO Wild Area: Sendai",
+     "eventId": "leekduck:pokemon-go-wild-area-2026-sendai-japan",
+     "eventName": "Pokémon GO Wild Area 2026: Sendai • Tohoku",
      "eventWindow": {
-      "start": "2026-11-06T10:00",
-      "end": "2026-11-08T18:00"
+      "start": "2026-11-06T01:00:00.000Z",
+      "end": "2026-11-08T09:00:00.000Z"
      },
-     "checkedAt": "2026-11-09"
+     "checkedAt": "2026-11-07"
     },
     {
      "task": "Use a Steel‑type Charged Attack in a battle",
@@ -43653,16 +44996,16 @@
      "rewards": [
       {
        "type": "encounter",
-       "quantity": 1,
        "name": "Bastiodon",
-       "mighty": true,
+       "quantity": 1,
        "cpMin": 615,
-       "cpMax": 660
+       "cpMax": 660,
+       "mighty": true
       },
       {
        "type": "encounter",
-       "quantity": 1,
        "name": "Shieldon",
+       "quantity": 1,
        "cpMin": 348,
        "cpMax": 381
       }
@@ -43679,13 +45022,13 @@
       }
      ],
      "status": "single",
-     "eventId": "sendai",
-     "eventName": "GO Wild Area: Sendai",
+     "eventId": "leekduck:pokemon-go-wild-area-2026-sendai-japan",
+     "eventName": "Pokémon GO Wild Area 2026: Sendai • Tohoku",
      "eventWindow": {
-      "start": "2026-11-06T10:00",
-      "end": "2026-11-08T18:00"
+      "start": "2026-11-06T01:00:00.000Z",
+      "end": "2026-11-08T09:00:00.000Z"
      },
-     "checkedAt": "2026-11-09"
+     "checkedAt": "2026-11-07"
     },
     {
      "task": "Win 2 raids",
@@ -43693,19 +45036,19 @@
      "rewards": [
       {
        "type": "encounter",
-       "quantity": 1,
        "name": "Azumarill",
-       "mighty": true,
+       "quantity": 1,
        "cpMin": 637,
-       "cpMax": 680
+       "cpMax": 680,
+       "mighty": true
       },
       {
        "type": "encounter",
+       "name": "Machamp (Modern Jacket)",
        "quantity": 1,
-       "name": "Machamp (modern jacket)",
        "costume": true,
-       "label": "modern jacket",
        "costumeId": "modernjacket",
+       "label": "Modern Jacket",
        "mighty": true
       }
      ],
@@ -43721,13 +45064,13 @@
       }
      ],
      "status": "single",
-     "eventId": "sendai",
-     "eventName": "GO Wild Area: Sendai",
+     "eventId": "leekduck:pokemon-go-wild-area-2026-sendai-japan",
+     "eventName": "Pokémon GO Wild Area 2026: Sendai • Tohoku",
      "eventWindow": {
-      "start": "2026-11-06T10:00",
-      "end": "2026-11-08T18:00"
+      "start": "2026-11-06T01:00:00.000Z",
+      "end": "2026-11-08T09:00:00.000Z"
      },
-     "checkedAt": "2026-11-09"
+     "checkedAt": "2026-11-07"
     },
     {
      "task": "Win a Max Battle",
@@ -43735,19 +45078,19 @@
      "rewards": [
       {
        "type": "encounter",
-       "quantity": 1,
        "name": "Kommo-o",
-       "mighty": true,
+       "quantity": 1,
        "cpMin": 1357,
-       "cpMax": 1418
+       "cpMax": 1418,
+       "mighty": true
       },
       {
        "type": "encounter",
-       "quantity": 1,
        "name": "Bastiodon",
-       "mighty": true,
+       "quantity": 1,
        "cpMin": 615,
-       "cpMax": 660
+       "cpMax": 660,
+       "mighty": true
       }
      ],
      "sources": [
@@ -43762,13 +45105,13 @@
       }
      ],
      "status": "single",
-     "eventId": "sendai",
-     "eventName": "GO Wild Area: Sendai",
+     "eventId": "leekduck:pokemon-go-wild-area-2026-sendai-japan",
+     "eventName": "Pokémon GO Wild Area 2026: Sendai • Tohoku",
      "eventWindow": {
-      "start": "2026-11-06T10:00",
-      "end": "2026-11-08T18:00"
+      "start": "2026-11-06T01:00:00.000Z",
+      "end": "2026-11-08T09:00:00.000Z"
      },
-     "checkedAt": "2026-11-09"
+     "checkedAt": "2026-11-07"
     },
     {
      "text": "Two Timed Research experiences guide you through specially decorated PokéStops across the city. Spin the corresponding stops to progress; these can also help you navigate between Stamp Rally locations.",
@@ -43813,7 +45156,7 @@
      "status": "single"
     },
     {
-     "text": "Catch a Hisuian Sliggoo REWARD Hisuian Sliggoo Max CP 829 Min CP 782",
+     "text": "Catch a Hisuian Sliggoo REWARD Hisuian Sliggoo",
      "sources": [
       "leekduck"
      ],
@@ -48897,7 +50240,7 @@
    ],
    "internalValidation": {
     "warnings": [],
-    "lifecycleDeclared": false,
+    "lifecycleDeclared": true,
     "conflicts": [],
     "fields": {
      "bonuses": [
@@ -49151,10 +50494,12 @@
      ]
     },
     "info": [],
-    "detailRefs": [],
+    "detailRefs": [
+     "leekduck:twilight-wishes-2026"
+    ],
     "legacyDates": {
-     "start": "2026-11-24",
-     "end": "2026-11-30"
+     "start": "",
+     "end": ""
     },
     "imageReviewed": true,
     "contentHash": "75e976347a31bb3bf02b0652b7ba016cbcdba6928696ddbebf376f075830db10",
@@ -49974,7 +51319,7 @@
     },
     "imageReviewed": true,
     "contentHash": "dce45278d164ec7d0efdbec4d901eac6f95e08bdec7b64c64c440d1336263583",
-    "revision": 18,
+    "revision": 14,
     "amended": true,
     "native": false,
     "collection": "world-events"
@@ -50444,7 +51789,7 @@
    "lifecycle": "announced",
    "attendance": "",
    "location": null,
-   "image": "https://lh3.googleusercontent.com/1ZxNwH9PkuqgUPjvwhCrCNSTSDktinzgCcLJEkm4tu41LlE_7OdyfM4GkR9qd9atoN_Tairx5bQ6IxBBOULlCO29cCM4qTuvsE4dm-RFup0",
+   "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-11-16-dynamax-trails-2026/dynamax-trails-2026.jpg",
    "notes": [],
    "internalValidation": {
     "warnings": [],
@@ -50455,92 +51800,44 @@
       {
        "text": "The following bonuses will be active during the event.",
        "sources": [
-        "official",
         "leekduck"
        ],
-       "status": "official"
-      },
-      {
-       "text": "A chance to receive Max Particles when catching event-themed Pokémon in the wild or after Max Battles.",
-       "sources": [
-        "official"
-       ],
-       "status": "official"
-      },
-      {
-       "text": "More Power Spots than usual will be active.",
-       "sources": [
-        "official"
-       ],
-       "status": "official"
+       "status": "single"
       },
       {
        "text": "Max Particles cannot be obtained from catches with the Explorer Gadget or a Pokémon GO Plus +.",
        "sources": [
-        "official",
         "leekduck"
        ],
-       "status": "official"
+       "status": "single"
       },
       {
-       "text": "Power Spots will refresh more frequently.",
+       "text": "Reach the following ranks on your event GO Pass to unlock these bonuses.",
        "sources": [
-        "official"
-       ],
-       "status": "official"
-      },
-      {
-       "text": "Max Particle collection limit increased to 2,400.",
-       "sources": [
-        "official"
-       ],
-       "status": "official"
-      },
-      {
-       "text": "8× Max Particles from Power Spots.",
-       "sources": [
-        "official"
-       ],
-       "status": "official"
-      },
-      {
-       "text": "From November 20 at 1:00 p.m. to November 21 at 6:00 p.m. PST (GMT −8), the daily Remote Raid limit will increase from 10 to 30.",
-       "sources": [
-        "official"
-       ],
-       "status": "official"
-      },
-      {
-       "text": "Reach Major Milestones on your event GO Pass to unlock the following bonuses.",
-       "sources": [
-        "official",
         "leekduck"
        ],
-       "status": "official"
+       "status": "single"
       },
       {
        "text": "Rank 15: 2× Catch Stardust",
        "sources": [
-        "official",
         "leekduck"
        ],
-       "status": "official"
+       "status": "single"
       },
       {
-       "text": "Rank 35: 1/2 Candy and Stardust to activate the Dynamax Cannon Adventure Effect",
+       "text": "Rank 35: 1/2 Candy and Stardust cost to activate the Dynamax Cannon Adventure Effect",
        "sources": [
-        "official",
         "leekduck"
        ],
-       "status": "official"
+       "status": "single"
       },
       {
        "text": "Rank 55: Additional Candy and Candy XL from Max Battles",
        "sources": [
-        "official",
         "leekduck"
        ],
-       "status": "official"
+       "status": "single"
       },
       {
        "text": "Rank 55: Additional bonus tasks for this GO Pass will be available during the event.",
@@ -50552,68 +51849,46 @@
      ],
      "featured": [
       {
-       "text": "You may encounter event-themed Pokémon in the wild, including any Pokémon* that has debuted in Dynamax Max Battles!",
+       "text": "Event-themed Pokémon will appear in the wild, including any Pokémon that has debuted in Dynamax Max Battles, excluding Legendary and Mythical Pokémon.",
        "sources": [
-        "official",
         "leekduck"
        ],
-       "status": "official"
+       "status": "single"
       },
       {
-       "text": "Complete Pass Tasks to rank up your GO Pass to earn the following rewards.",
+       "text": "Complete Pass Tasks to earn:",
        "sources": [
-        "official",
         "leekduck"
        ],
-       "status": "official"
+       "status": "single"
       },
       {
        "text": "Encounters with event-themed Dynamax Pokémon with a Special Background",
        "sources": [
-        "official",
         "leekduck"
        ],
-       "status": "official"
+       "status": "single"
       },
       {
        "text": "An encounter with Eternatus, or 100 Eternatus Candy if you have already caught Eternatus",
        "sources": [
-        "official",
         "leekduck"
        ],
-       "status": "official"
+       "status": "single"
       },
       {
        "text": "Eternatus Candy and Candy XL",
        "sources": [
-        "official",
         "leekduck"
        ],
-       "status": "official"
+       "status": "single"
       },
       {
        "text": "Event-themed stickers",
        "sources": [
-        "official",
         "leekduck"
        ],
-       "status": "official"
-      },
-      {
-       "text": "Trainers who upgrade to the GO Pass Deluxe can also earn the following rewards.",
-       "sources": [
-        "official",
-        "leekduck"
-       ],
-       "status": "official"
-      },
-      {
-       "text": "Silver Pinap Berries",
-       "sources": [
-        "official",
-        "leekduck"
-       ],
-       "status": "official"
+       "status": "single"
       },
       {
        "text": "Additional rewards",
@@ -50621,31 +51896,23 @@
         "leekduck"
        ],
        "status": "single"
+      },
+      {
+       "text": "GO Pass Deluxe also offers:",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Silver Pinap Berries",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
       }
      ],
      "raids": [
-      {
-       "text": "Monday, November 16, at 10:00 a.m. to Monday, November 23, 2026, at 8:00 p.m. local time",
-       "sources": [
-        "official"
-       ],
-       "status": "official"
-      },
-      {
-       "text": "Prepare for the return of every Dynamax Pokémon seen in Pokémon GO!",
-       "sources": [
-        "official"
-       ],
-       "status": "official"
-      },
-      {
-       "text": "All Dynamax Pokémon* that have appeared in Pokémon GO may appear in Max Battles.",
-       "sources": [
-        "official",
-        "leekduck"
-       ],
-       "status": "official"
-      },
       {
        "text": "Get ready for a week of Max Battles! Dynamax Pokémon return, Max Particles are surging in the wild, and Eternamax Eternatus returns to Power Spots during Dynamax Trails.",
        "sources": [
@@ -50659,66 +51926,29 @@
         "leekduck"
        ],
        "status": "single"
+      },
+      {
+       "text": "All Dynamax Pokémon that have previously appeared in Pokémon GO may appear in Max Battles during the event, excluding Legendary and Mythical Pokémon.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
       }
      ],
      "eggs": [],
      "research": [
       {
-       "text": "Event-themed Field Research tasks will be available! Complete them to earn Stardust, Eternatus Candy, and more!",
+       "text": "Complete event-themed Field Research tasks to earn Stardust, Eternatus Candy, encounters with event-themed Pokémon, and more.",
        "sources": [
-        "official",
         "leekduck"
        ],
-       "status": "official"
-      },
-      {
-       "text": "Complete Field Research tasks to earn encounters with event-themed Pokémon.",
-       "sources": [
-        "official"
-       ],
-       "status": "official"
+       "status": "single"
       }
      ],
      "shiny": [],
      "moves": [],
      "costumes": [],
      "tickets": [
-      {
-       "text": "A GO Pass is a free, limited-time progression track available during a specified period. By collecting GO Points, you can increase your rank to earn rewards.",
-       "sources": [
-        "official"
-       ],
-       "status": "official"
-      },
-      {
-       "text": "You can collect GO Points and rank up to get additional rewards through Monday, November 23, 2026, at 8:00 p.m. local time.",
-       "sources": [
-        "official"
-       ],
-       "status": "official"
-      },
-      {
-       "text": "For US$4.99*, Trainers can upgrade to the GO Pass Deluxe, a paid version of the GO Pass that offers upgraded rewards and faster progression.",
-       "sources": [
-        "official"
-       ],
-       "status": "official"
-      },
-      {
-       "text": "Trainers who claimed the first tier of rewards in GO Pass: Into the Wild will automatically be upgraded to the GO Pass Deluxe, for free!",
-       "sources": [
-        "official"
-       ],
-       "status": "official"
-      },
-      {
-       "text": "Rewards unlocked in the GO Pass will expire on Wednesday, November 25, 2026, at 8:00 p.m. local time, so be sure to claim your rewards before they’re gone!",
-       "sources": [
-        "official",
-        "leekduck"
-       ],
-       "status": "official"
-      },
       {
        "text": "GO Pass is a free, limited-time progression track. Collect GO Points and complete Pass Tasks to rank up and earn rewards.",
        "sources": [
@@ -50739,25 +51969,16 @@
         "leekduck"
        ],
        "status": "single"
+      },
+      {
+       "text": "Claim all unlocked rewards by November 25, 2026, at 8 pm local time , before they expire.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
       }
      ],
      "dates": [
-      {
-       "text": "Monday, November 16, at 10:00 a.m. to Monday, November 23, 2026, at 8:00 p.m. local time",
-       "sources": [
-        "official",
-        "leekduck"
-       ],
-       "status": "official"
-      },
-      {
-       "text": "From November 20 at 1:00 p.m. to November 21 at 6:00 p.m. PST (GMT −8), the daily Remote Raid limit will increase from 10 to 30.",
-       "sources": [
-        "official",
-        "leekduck"
-       ],
-       "status": "official"
-      },
       {
        "text": "The Dynamax Trails event will take place from November 16, 2026 at 10 am to November 23, 2026 at 8 pm local time.",
        "sources": [
@@ -50767,6 +51988,20 @@
       },
       {
        "text": "Grookey, Scorbunny, and Sobble will be featured during Pokémon Spotlight Hour on November 19, 2026, from 6 pm to 7 pm local time. The bonus will be 2× Catch Candy .",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Eternamax Eternatus will take over the majority of Power Spots on November 21, 2026, from 11 am to 2 pm local time.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "The daily Remote Raid limit will increase from 10 to 30 from November 20 at 1 pm to November 21 at 6 pm PST (GMT −8).",
        "sources": [
         "leekduck"
        ],
@@ -50788,8 +52023,8 @@
      "end": "2026-11-23"
     },
     "imageReviewed": true,
-    "contentHash": "a71a661d37bf69a7710dcbe962786cbc224a61686f4267ff20f3f00f5945d1e9",
-    "revision": 5,
+    "contentHash": "b806f628f290af041cd4e00988934e38499f8ccf9c6be65e79eb74e30bde3b09",
+    "revision": 4,
     "amended": false,
     "native": false,
     "collection": "world-events"
@@ -50800,92 +52035,44 @@
     {
      "text": "The following bonuses will be active during the event.",
      "sources": [
-      "official",
       "leekduck"
      ],
-     "status": "official"
-    },
-    {
-     "text": "A chance to receive Max Particles when catching event-themed Pokémon in the wild or after Max Battles.",
-     "sources": [
-      "official"
-     ],
-     "status": "official"
-    },
-    {
-     "text": "More Power Spots than usual will be active.",
-     "sources": [
-      "official"
-     ],
-     "status": "official"
+     "status": "single"
     },
     {
      "text": "Max Particles cannot be obtained from catches with the Explorer Gadget or a Pokémon GO Plus +.",
      "sources": [
-      "official",
       "leekduck"
      ],
-     "status": "official"
+     "status": "single"
     },
     {
-     "text": "Power Spots will refresh more frequently.",
+     "text": "Reach the following ranks on your event GO Pass to unlock these bonuses.",
      "sources": [
-      "official"
-     ],
-     "status": "official"
-    },
-    {
-     "text": "Max Particle collection limit increased to 2,400.",
-     "sources": [
-      "official"
-     ],
-     "status": "official"
-    },
-    {
-     "text": "8× Max Particles from Power Spots.",
-     "sources": [
-      "official"
-     ],
-     "status": "official"
-    },
-    {
-     "text": "From November 20 at 1:00 p.m. to November 21 at 6:00 p.m. PST (GMT −8), the daily Remote Raid limit will increase from 10 to 30.",
-     "sources": [
-      "official"
-     ],
-     "status": "official"
-    },
-    {
-     "text": "Reach Major Milestones on your event GO Pass to unlock the following bonuses.",
-     "sources": [
-      "official",
       "leekduck"
      ],
-     "status": "official"
+     "status": "single"
     },
     {
      "text": "Rank 15: 2× Catch Stardust",
      "sources": [
-      "official",
       "leekduck"
      ],
-     "status": "official"
+     "status": "single"
     },
     {
-     "text": "Rank 35: 1/2 Candy and Stardust to activate the Dynamax Cannon Adventure Effect",
+     "text": "Rank 35: 1/2 Candy and Stardust cost to activate the Dynamax Cannon Adventure Effect",
      "sources": [
-      "official",
       "leekduck"
      ],
-     "status": "official"
+     "status": "single"
     },
     {
      "text": "Rank 55: Additional Candy and Candy XL from Max Battles",
      "sources": [
-      "official",
       "leekduck"
      ],
-     "status": "official"
+     "status": "single"
     },
     {
      "text": "Rank 55: Additional bonus tasks for this GO Pass will be available during the event.",
@@ -50897,59 +52084,15 @@
    ],
    "research": [
     {
-     "text": "Event-themed Field Research tasks will be available! Complete them to earn Stardust, Eternatus Candy, and more!",
+     "text": "Complete event-themed Field Research tasks to earn Stardust, Eternatus Candy, encounters with event-themed Pokémon, and more.",
      "sources": [
-      "official",
       "leekduck"
      ],
-     "status": "official"
-    },
-    {
-     "text": "Complete Field Research tasks to earn encounters with event-themed Pokémon.",
-     "sources": [
-      "official"
-     ],
-     "status": "official"
+     "status": "single"
     }
    ],
    "passes": [],
    "tickets": [
-    {
-     "text": "A GO Pass is a free, limited-time progression track available during a specified period. By collecting GO Points, you can increase your rank to earn rewards.",
-     "sources": [
-      "official"
-     ],
-     "status": "official"
-    },
-    {
-     "text": "You can collect GO Points and rank up to get additional rewards through Monday, November 23, 2026, at 8:00 p.m. local time.",
-     "sources": [
-      "official"
-     ],
-     "status": "official"
-    },
-    {
-     "text": "For US$4.99*, Trainers can upgrade to the GO Pass Deluxe, a paid version of the GO Pass that offers upgraded rewards and faster progression.",
-     "sources": [
-      "official"
-     ],
-     "status": "official"
-    },
-    {
-     "text": "Trainers who claimed the first tier of rewards in GO Pass: Into the Wild will automatically be upgraded to the GO Pass Deluxe, for free!",
-     "sources": [
-      "official"
-     ],
-     "status": "official"
-    },
-    {
-     "text": "Rewards unlocked in the GO Pass will expire on Wednesday, November 25, 2026, at 8:00 p.m. local time, so be sure to claim your rewards before they’re gone!",
-     "sources": [
-      "official",
-      "leekduck"
-     ],
-     "status": "official"
-    },
     {
      "text": "GO Pass is a free, limited-time progression track. Collect GO Points and complete Pass Tasks to rank up and earn rewards.",
      "sources": [
@@ -50966,6 +52109,13 @@
     },
     {
      "text": "Trainers who claim Tier 1 rewards (Rank 25) on GO Pass: Into the Wild will receive early access on November 14, 2026, at 10 am local time, and a free upgrade to GO Pass Deluxe: Dynamax Trails .",
+     "sources": [
+      "leekduck"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Claim all unlocked rewards by November 25, 2026, at 8 pm local time , before they expire.",
      "sources": [
       "leekduck"
      ],
@@ -50988,12 +52138,6 @@
     {
      "url": "https://leekduck.com/events/dynamax-trails-2026/",
      "name": "Event source"
-    },
-    {
-     "id": "official",
-     "name": "Pokémon GO (official)",
-     "trust": "official",
-     "url": "https://pokemongo.com/news/dynamax-trails-eternamax-eternatus-2026/"
     }
    ],
    "pokemon": [],
@@ -51011,7 +52155,7 @@
    "lifecycle": "announced",
    "attendance": "",
    "location": null,
-   "image": "https://lh3.googleusercontent.com/1ZxNwH9PkuqgUPjvwhCrCNSTSDktinzgCcLJEkm4tu41LlE_7OdyfM4GkR9qd9atoN_Tairx5bQ6IxBBOULlCO29cCM4qTuvsE4dm-RFup0",
+   "image": null,
    "notes": [],
    "internalValidation": {
     "warnings": [],
@@ -51090,8 +52234,8 @@
     },
     "imageReviewed": true,
     "contentHash": "4bbe2871a823eb21458a110b1a90a61e5fce0d1ddaa2d47d0d0671f282a84a9d",
-    "revision": 7,
-    "amended": true,
+    "revision": 5,
+    "amended": false,
     "native": false,
     "collection": "world-events"
    },
@@ -51280,7 +52424,7 @@
      "end": "2026-11-03"
     },
     "contentHash": "5cdd55e002ca42377352e7b637a57f2e39afa99cde6bbc64780733a9cc28f6b3",
-    "revision": 11,
+    "revision": 9,
     "amended": false,
     "native": false,
     "collection": "world-events"
@@ -53630,90 +54774,13 @@
     "warnings": [],
     "lifecycleDeclared": false,
     "conflicts": [],
-    "fields": {
-     "bonuses": [],
-     "featured": [
-      {
-       "text": "You may encounter Minior in its Meteor Form in the wild during the event. You’ll receive 1,000 Stardust for catching Minior .",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Minior encounters are more likely from 5:00 p.m. to 9:00 p.m. local time each day .",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      }
-     ],
-     "raids": [],
-     "eggs": [],
-     "research": [],
-     "shiny": [],
-     "moves": [],
-     "costumes": [],
-     "tickets": [],
-     "dates": [
-      {
-       "text": "This Minior Shower runs from December 11, 2026 at 5:00 p.m. to December 16, 2026 at 11:59 p.m. local time .",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "From 5:00 p.m. to 9:00 p.m. local time every day during each Minior Shower, shooting stars will light up the in-game sky. During these hours, you’ll have an increased chance of encountering Minior in the wild!",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Orionids : October 19–24, 2026",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Leonids : November 14–19, 2026",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Eta Aquariids : May 3–8, 2027",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Southern Delta Aquariids : July 28–August 2, 2027",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Perseids : August 10–15, 2027",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      }
-     ]
-    },
+    "fields": {},
     "info": [],
     "detailRefs": [],
     "legacyDates": {
      "start": "2026-12-11",
      "end": "2026-12-16"
     },
-    "imageReviewed": true,
     "contentHash": "e6c615f4956ad98ad3ea82b41b0ba5adfbf576ac80f5adf4c7c24055f75848d7",
     "revision": 3,
     "amended": false,
@@ -53736,12 +54803,6 @@
     {
      "url": "https://leekduck.com/events/minior-showers-geminids-2026/",
      "name": "Event source"
-    },
-    {
-     "id": "leekduck",
-     "name": "Leek Duck",
-     "trust": "community",
-     "url": "https://leekduck.com/events/minior-showers-geminids-2026/"
     }
    ],
    "pokemon": [],
@@ -59831,7 +60892,7 @@
      "end": "2027-04-11"
     },
     "contentHash": "84950064738e11a798ef98f9fd6ab913640b138fb1594e38612f64db09c4dd24",
-    "revision": 18,
+    "revision": 14,
     "amended": true,
     "native": false,
     "collection": "world-events"
