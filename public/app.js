@@ -37,7 +37,13 @@ Promise.all([
   /* The variant-art manifest and dex numbers load with the first data, so no picture is chosen before they are known (no late re-render). Both are optional. */
   withTimeout(fetch('/artwork-manifest.json').then(function(r){return r.ok?r.json():null}).catch(function(){return null}),8000,'Artwork manifest').catch(function(){return null}),
   withTimeout(window.GOLIB.getJson('/dex.json').catch(function(){return null}),8000,'Dex numbers').catch(function(){return null})
-]).then(function(R){var D=R[0];MAN=R[1]||{};window.__GOART={m:R[2]&&R[2].entries?R[2]:null,d:R[3]||[]};
+]).then(function(R){var D=R[0];
+// Imported data can temporarily contain an empty or partial upcoming payload.
+// Keep Today and the rest of the app usable instead of aborting initialization.
+if(!D.upcoming || typeof D.upcoming!=='object' || Array.isArray(D.upcoming))D.upcoming={};
+['announced','gigaReleased','gigaMissing','megaCandidates','dd'].forEach(function(k){if(!Array.isArray(D.upcoming[k]))D.upcoming[k]=[]});
+if(typeof D.upcoming.megaNote!=='string')D.upcoming.megaNote='';
+MAN=R[1]||{};window.__GOART={m:R[2]&&R[2].entries?R[2]:null,d:R[3]||[]};
 (function(){
   var esc = window.GOLIB.esc;
   function $(id){return document.getElementById(id)}
