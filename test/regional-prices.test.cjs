@@ -1,3 +1,5 @@
+const fs = require('node:fs');
+const vm = require('node:vm');
 const assert = require('node:assert/strict');
 const {test} = require('node:test');
 const r = require('../public/regional-prices.js');
@@ -49,4 +51,8 @@ test('Indonesian screenshot tiers keep standalone GO Pass and Ultra Box separate
   assert.equal(r.idReference('GO Pass Deluxe: December Ultra Box').amount,76000);
   assert.equal(r.idReference('Special Research Ticket'),null);
   assert.equal(r.idReference('Pokemon Storage').amount,10000);
+});
+
+test('regional Store browser script parses without syntax errors', () => {
+  assert.doesNotThrow(() => new vm.Script(fs.readFileSync(require('node:path').join(__dirname,'../public/store.js'),'utf8')));
 });
