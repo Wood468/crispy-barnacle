@@ -279,3 +279,18 @@ test('a corrupt Done value is kept as a copy before it is replaced, and never re
   assert.equal(L.tryMarkDone(s2, 'a', START, null, 1).ok, false);
   assert.equal(s2.data.get(L.DONE_KEY), '[1,2', 'corrupt value must be left untouched when no copy can be kept');
 });
+
+test('Crowned Sword and Shield are exact artwork forms, not base-species pictures', () => {
+ for (const [name, base, label] of [
+  ['Crowned Sword Zacian','Zacian','Crowned Sword'],
+  ['Crowned Shield Zamazenta','Zamazenta','Crowned Shield']
+ ]) {
+  const form=L.classifyArt(name);
+  assert.equal(form.exact,true);
+  assert.equal(form.kind,'form');
+  assert.equal(form.base,base);
+  assert.equal(form.label,label);
+  assert.equal(L.artFallback(form).chip,'Form art unavailable');
+ }
+ assert.equal(L.classifyArt('Crowned Shield Zacian').exact,false,'invalid species/form pairing must not be accepted');
+});
