@@ -2192,17 +2192,17 @@ a.evc-source{color:var(--color-link);text-underline-offset:3px}
 .storep-regional .sp-coins input{min-height:44px;width:8rem;font:inherit;padding:0 var(--space-2)}
 
 /* Raids and Max Battles polish: tier badge, CP, countdown, relationship chips, tiered Max roster. */
-.rc-tier{justify-self:start;width:fit-content;font-style:normal;display:inline-flex;align-items:center;min-height:20px;padding:0 7px;border-radius:var(--radius-pill);background:color-mix(in srgb,var(--color-text) 12%,transparent);color:var(--color-text);font:800 .68rem/1 var(--font-body);letter-spacing:.04em}
-.rc-meta{display:flex;flex-wrap:wrap;align-items:center;gap:4px;margin-top:2px}
-.rc-cp{display:inline-flex;flex-direction:column;padding:2px 8px;border-radius:8px;border:1px solid var(--border-subtle,rgba(255,255,255,.14));line-height:1.15}
-.rc-cp b{font:800 .78rem var(--font-body);font-variant-numeric:tabular-nums}
-.rc-cp small{font-size:.62rem;color:var(--color-text-muted)}
-.rc-chip{display:inline-flex;align-items:center;min-height:24px;padding:0 8px;border-radius:var(--radius-pill);border:1px solid var(--border-subtle,rgba(255,255,255,.18));background:transparent;color:var(--color-text-body);font:650 .68rem/1.2 var(--font-body);text-align:left}
+.rc-tier{justify-self:start;width:fit-content;font-style:normal;display:inline-flex;align-items:center;min-height:20px;padding:0 var(--space-2);border-radius:var(--radius-pill);background:color-mix(in srgb,var(--color-text) 12%,transparent);color:var(--color-text);font-family:var(--font-body);font-weight:800;font-size:var(--type-label);line-height:1;letter-spacing:.04em}
+.rc-meta{display:flex;flex-wrap:wrap;align-items:center;gap:var(--space-1);margin-top:2px}
+.rc-cp{display:inline-flex;flex-direction:column;padding:2px var(--space-2);border-radius:var(--radius-md);border:1px solid var(--border-subtle,rgba(255,255,255,.14));line-height:1.15}
+.rc-cp b{font-family:var(--font-body);font-weight:800;font-size:var(--type-meta);font-variant-numeric:tabular-nums}
+.rc-cp small{font-size:var(--type-overline);color:var(--color-text-muted)}
+.rc-chip{display:inline-flex;align-items:center;min-height:24px;padding:0 var(--space-2);border-radius:var(--radius-pill);border:1px solid var(--border-subtle,rgba(255,255,255,.18));background:transparent;color:var(--color-text-body);font-family:var(--font-body);font-weight:650;font-size:var(--type-label);line-height:1.2;text-align:left}
 button.rc-chip{min-height:44px;cursor:pointer;color:var(--color-link)}
 button.rc-chip:focus-visible{outline:2px solid var(--color-link);outline-offset:2px}
 .rc-shiny{border-color:#d9a400;color:var(--color-text)}
 .rc-debut{border-color:#ff6b97}
-.rw-count{display:inline-flex;align-items:center;min-height:26px;padding:0 10px;margin:0 0 var(--space-2);border-radius:var(--radius-pill);font:800 .74rem var(--font-body);font-variant-numeric:tabular-nums;background:color-mix(in srgb,var(--color-text) 10%,transparent)}
+.rw-count{display:inline-flex;align-items:center;min-height:26px;padding:0 var(--space-3);margin:0 0 var(--space-2);border-radius:var(--radius-pill);font-family:var(--font-body);font-weight:800;font-size:var(--type-meta);font-variant-numeric:tabular-nums;background:color-mix(in srgb,var(--color-text) 10%,transparent)}
 .rw-count-live{background:color-mix(in srgb,var(--color-success,#2fbf71) 22%,transparent)}
 .rw-max-tier{display:grid;gap:var(--space-2);margin-top:var(--space-3)}
 .rw-tier-head{display:flex;justify-content:space-between;gap:var(--space-2);flex-wrap:wrap;margin:0;font-size:var(--type-meta)}
