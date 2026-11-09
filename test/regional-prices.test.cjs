@@ -28,7 +28,14 @@ test('catalogue uses latest verified Australian price, not USD or unverified ent
 test('paired confirmed observations calibrate IDR without inventing exchange rates', () => {
   const rows = [
     {product:'store-item',currency:'AUD',region:'AU',amount:5,verified:true,observed:'2026-11-08',group:'Items'},
-    {product:'store-item',currency:'IDR',region:'ID',amount:40000,verified:true,observed:'2026-11-09'},
+    {product:'store-item',currency:'IDR',region:'ID',amount:40000,verified:true,channel:'web',observed:'2026-11-09'},
   ];
   assert.equal(r.estimate(10,'ID','items',r.observations(rows)).amount,80000);
+});
+
+test('unknown regional channel and invalid dates cannot calibrate local prices', () => {
+  const au={product:'store-item',currency:'AUD',region:'AU',amount:5,verified:true,observed:'2026-11-08',group:'Items'};
+  const local={product:'store-item',currency:'IDR',region:'ID',amount:40000,verified:true,observed:'2026-11-09'};
+  assert.equal(r.estimate(10,'ID','items',r.observations([au,local])),null);
+  assert.equal(r.estimate(10,'ID','items',r.observations([au,{...local,channel:'web',observed:'not-a-date'}])),null);
 });
