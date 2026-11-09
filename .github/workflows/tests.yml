@@ -111,6 +111,10 @@ jobs:
         if: matrix.shard == 'b'
         run: python test/schedule_layout_browser.py
 
+      - name: Verify final polish (hit targets, long names, focus, load error, offline tabs)
+        if: matrix.shard == 'c'
+        run: python test/final_polish_browser.py
+
       - name: Verify Collection opportunity planner
         if: matrix.shard == 'b'
         run: python test/opportunity_planner_browser.py
@@ -205,6 +209,9 @@ jobs:
           python test/release_browser.py
           python test/pwa_upgrade_browser.py
           python test/storage_failure_browser.py
+      - name: Verify final polish in WebKit
+        run: python test/final_polish_browser.py
+
       - name: Verify variant artwork in WebKit
         run: python test/variant_art_browser.py
       - name: Retain mobile WebKit screenshots

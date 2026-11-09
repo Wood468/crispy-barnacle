@@ -175,7 +175,7 @@
 
 /* Long names wrap by word and never sit under a badge. */
 .opp-top { flex-wrap: wrap; }
-.opp-top h3 { flex: 1 1 9ch; min-width: 0; overflow-wrap: break-word; word-break: normal; font-size: 1.2rem; line-height: 1.1; }
+.opp-top h3 { flex: 1 1 100%; min-width: 0; overflow-wrap: break-word; word-break: normal; font-size: 1.2rem; line-height: 1.1; }
 .opp-top .chip, .opp-top .st { white-space: nowrap; }
 .mega-mon .mega-name { flex: 1 1 0; min-width: 0; }
 .mega-mon .mega-name h3 { overflow-wrap: break-word; line-height: 1.1; }
