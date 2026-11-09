@@ -49,7 +49,9 @@ test('the PokeMiners Gigantamax list comes from the index and every listed speci
 });
 test('the purple tee is recorded as an avatar item, never as a missing Pokémon costume', () => {
   const c = rd('../public/costumes.json');
-  assert.deepEqual(c.avatar, ['tee|purple']);
+  assert.ok(c.avatar.includes('tee|purple'), 'purple tee stays classified as avatar clothing');
+  assert.ok(c.avatar.includes('espeon (sun scarf)|sun scarf'), 'approved Espeon scarf is retained');
+  assert.ok(c.avatar.includes('umbreon (moon scarf)|moon scarf'), 'approved Umbreon scarf is retained');
   assert.ok(!c.missing.some(m => /^tee\|/.test(m)));
   assert.ok(!Object.values(c.pictures).some(u => /tee/i.test(u)));
 });
