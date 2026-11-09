@@ -1,6 +1,55 @@
 {
- "updated": "2026-11-08T21:32:14.439Z",
+ "updated": "2026-11-09T01:20:54.175Z",
  "items": [
+  {
+   "linked": false,
+   "id": "discord:1569143538011218021",
+   "title": "Wallpaper Wild Area",
+   "image": "/infographics/g47ix/discord-1569143538011218021.png",
+   "post": "https://discord.com/channels/@me/1558793395198099618/1569143538011218021",
+   "creator": "",
+   "source": "discord",
+   "publishedAt": "2026-11-09T00:16:12.739000+00:00",
+   "note": "Two events look alike. Please choose.",
+   "history": false,
+   "signals": [
+    "caption names the event",
+    "picture text names the event"
+   ],
+   "text": "YS Ewe RN ik A\\AN OL Yo) INTO THE WILD + \\ PT so fl Wr L AMR F 2188 CP y ~ 2735 CP 2307 CP eK 2884 CP ( ss y 2042 CP | yy 2553 CP 1746 CP —_ : 2183 CP y 2178 cP 2280 cP NS BNI 1398 cP +*@ ae) a es Ea Wh, a a SB s\\ AN \\794 ce 1753 CP Follow for m G47IX @ MX | g47ix.pro",
+   "guesses": [
+    {
+     "eventId": "leekduck:into-the-wild-2026",
+     "eventTitle": "Into the Wild",
+     "score": 0.8
+    },
+    {
+     "eventId": "into",
+     "eventTitle": "Into the Wild",
+     "score": 0.79
+    },
+    {
+     "eventId": "sendai",
+     "eventTitle": "GO Wild Area: Sendai",
+     "score": 0.54
+    }
+   ]
+  },
+  {
+   "linked": false,
+   "id": "discord:1569120055143440426",
+   "title": "NOV 9, 10 am local time",
+   "image": "/infographics/g47ix/discord-1569120055143440426.png",
+   "post": "https://discord.com/channels/@me/1558793395198099618/1569120055143440426",
+   "creator": "",
+   "source": "discord",
+   "publishedAt": "2026-11-08T22:42:53.987000+00:00",
+   "note": "No event name found in the caption or image text.",
+   "history": false,
+   "signals": [],
+   "text": "P7 DS BRCIAL [A> Ni Mes = 4. _ t net ZS & Pikaghy Ys ' ee “ye os aS sgh an fa fa t ie Aa Se Q profilebackground | se & Pikachu aa Sa sD ny \\y == ef ae ol sees i ~!, %& a kd by 2 i i oe 5 Follow for more GAT7IX £) ax DB www.g47ix.pro",
+   "guesses": []
+  },
   {
    "linked": false,
    "id": "discord:1569034750339977347",

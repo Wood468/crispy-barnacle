@@ -7,6 +7,73 @@
   "eventImages": {},
   "candidates": [
     {
+      "id": "discord:1569143538011218021",
+      "source": "discord",
+      "creator": "",
+      "title": "Wallpaper Wild Area",
+      "url": "https://discord.com/channels/@me/1558793395198099618/1569143538011218021",
+      "publishedAt": "2026-11-09T00:16:12.739000+00:00",
+      "imageUrl": "https://cdn.discordapp.com/attachments/1087756541668630638/1569139320869228745/Wallpaper_Wild_Area.png?ex=6af25e5f&is=6af10cdf&hm=ddaba6b266a3d6ad81afdd47afa663b7c0578ac6bf24023557321bd452f8bf0c&",
+      "reviewStatus": "needs_review",
+      "decision": "pending",
+      "ocrChecked": true,
+      "ocrText": "YS Ewe RN ik A\\AN OL Yo) INTO THE WILD + \\ PT so fl Wr L AMR F 2188 CP y ~ 2735 CP 2307 CP eK 2884 CP ( ss y 2042 CP | yy 2553 CP 1746 CP —_ : 2183 CP y 2178 cP 2280 cP NS BNI 1398 cP +*@ ae) a es Ea Wh, a a SB s\\ AN \\794 ce 1753 CP Follow for m G47IX @ MX | g47ix.pro",
+      "eventMatch": {
+        "eventId": "leekduck:into-the-wild-2026",
+        "eventTitle": "Into the Wild",
+        "score": 0.8,
+        "confidence": "high",
+        "matchedTerms": [
+          "wild",
+          "area"
+        ],
+        "alternatives": [
+          {
+            "eventId": "leekduck:into-the-wild-2026",
+            "eventTitle": "Into the Wild",
+            "score": 0.8
+          },
+          {
+            "eventId": "into",
+            "eventTitle": "Into the Wild",
+            "score": 0.79
+          },
+          {
+            "eventId": "sendai",
+            "eventTitle": "GO Wild Area: Sendai",
+            "score": 0.54
+          }
+        ],
+        "method": "title-to-public/data.json heuristic",
+        "requiresHumanVerification": true
+      },
+      "reviewNote": "Two events look alike. Please choose.",
+      "signals": [
+        "caption names the event",
+        "picture text names the event"
+      ],
+      "matchScore": 4,
+      "stagedPath": "/infographics/g47ix/discord-1569143538011218021.png"
+    },
+    {
+      "id": "discord:1569120055143440426",
+      "source": "discord",
+      "creator": "",
+      "title": "NOV 9, 10 am local time",
+      "url": "https://discord.com/channels/@me/1558793395198099618/1569120055143440426",
+      "publishedAt": "2026-11-08T22:42:53.987000+00:00",
+      "imageUrl": "https://cdn.discordapp.com/attachments/886998693897719819/1569114884212400348/profilebackground.png?ex=6af2479d&is=6af0f61d&hm=1deab202b36f9054157a05c4cc03d4f999b3bd035adc7f5f8ad24d4cf186ede5&",
+      "reviewStatus": "unmatched",
+      "decision": "pending",
+      "ocrChecked": true,
+      "ocrText": "P7 DS BRCIAL [A> Ni Mes = 4. _ t net ZS & Pikaghy Ys ' ee “ye os aS sgh an fa fa t ie Aa Se Q profilebackground | se & Pikachu aa Sa sD ny \\y == ef ae ol sees i ~!, %& a kd by 2 i i oe 5 Follow for more GAT7IX £) ax DB www.g47ix.pro",
+      "eventMatch": null,
+      "reviewNote": "No event name found in the caption or image text.",
+      "signals": [],
+      "matchScore": 0,
+      "stagedPath": "/infographics/g47ix/discord-1569120055143440426.png"
+    },
+    {
       "id": "discord:1569034750339977347",
       "source": "discord",
       "creator": "",
