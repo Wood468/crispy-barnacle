@@ -299,3 +299,17 @@ test("the November GO Pass Leek Duck rank table is watched, matched exactly and 
   assert.ok(page.fields.tickets.includes("Rank 100: Free: Groudon (Level 20) | Deluxe: PokéCoin ×200"));
   assert.ok(page.fields.tickets.includes("Rank 101: Free: Stardust ×50 | Deluxe: Stardust ×100"));
 });
+
+test("GO Pass rank rows: Leek Duck's parsed table wins over another source's prose rank lines", () => {
+  const empty = { bonuses: [], featured: [], raids: [], eggs: [], research: [], shiny: [], moves: [], costumes: [], dates: [] };
+  const m = mergeSources([
+    { source: { id: "leekduck", name: "Leek Duck", trust: "community" }, fields: { ...empty, tickets: ["Rank 77: Free: Gimmighoul Candy ×5 | Deluxe: Gimmighoul Candy ×20", "Rank 78: Free: Gimmighoul Candy ×5 | Deluxe: Gimmighoul Candy XL ×10"] } },
+    { source: { id: "hub", name: "Pokémon GO Hub", trust: "community" }, fields: { ...empty, tickets: ["Rank 77: Free: 5 × Gimmighoul Candy | Deluxe: 520 × Gimmighoul Candy", "Rank 25: Half hatch distance for eggs incubated during the event", "Upgrade to the Deluxe pass for US$14.99"] } }
+  ]);
+  const ranks = m.fields.tickets.filter(x => /^Rank \d+/.test(x.text));
+  assert.deepEqual(ranks.map(x => x.text), ["Rank 77: Free: Gimmighoul Candy ×5 | Deluxe: Gimmighoul Candy ×20", "Rank 78: Free: Gimmighoul Candy ×5 | Deluxe: Gimmighoul Candy XL ×10"]);
+  assert.ok(m.fields.tickets.some(x => /US\$14\.99/.test(x.text)), "non-rank ticket lines from other sources are kept");
+  // Without a Leek Duck table the other source's lines are still kept (nothing is invented or dropped).
+  const hubOnly = mergeSources([{ source: { id: "hub", name: "Hub", trust: "community" }, fields: { ...empty, tickets: ["Rank 25: Half hatch distance"] } }]);
+  assert.equal(hubOnly.fields.tickets.filter(x => /^Rank 25/.test(x.text)).length, 1);
+});

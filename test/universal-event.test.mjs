@@ -214,8 +214,8 @@ test('long GO Pass tracks group exact source ranks into compact expandable range
  const html=UI.render(event({passes:[{title:'Synthetic long GO Pass',stages}]}),{});
  assert.equal((html.match(/class="ue-pass-range"/g)||[]).length,4);
  assert.match(html,/Ranks 2–25/);assert.match(html,/Ranks 76–99/);
- assert.equal((html.match(/<li><b>Rank /g)||[]).length,98);
- assert.doesNotMatch(html,/<li><b>Rank 1<\/b>/);
+ assert.equal((html.match(/<li class="ue-pass-rank" data-rank="/g)||[]).length,98);
+ assert.doesNotMatch(html,/data-rank="1"/);
 });
 test('GO Pass source rewards retain exact encounters, levels and item quantities',()=>{
  A.configureSpecies([[383,'Groudon'],[821,'Rookidee']]);
@@ -224,5 +224,28 @@ test('GO Pass source rewards retain exact encounters, levels and item quantities
  assert.deepEqual(result.passes[0].stages[1].free,[{type:'encounter',name:'Groudon',quantity:1,level:20}]);
  assert.deepEqual(result.passes[0].stages[1].deluxe,[{type:'item',name:'PokéCoin',quantity:200}]);
  const html=UI.render(event({passes:result.passes}),{rewardArt:()=>'<img alt="Exact reward" src="/example.png">'});
- assert.match(html,/Level 20/);assert.match(html,/200× PokéCoin/);assert.match(html,/Exact reward/);
+ assert.match(html,/Level 20/);assert.match(html,/×200 · Resource/);assert.match(html,/Exact reward/);
+});
+
+test('GO Pass timeline: free and Deluxe lanes, rank gaps, categories, fallbacks, source and freshness',()=>{
+ A.configureSpecies([[821,'Rookidee']]);
+ const result=A.passFields([
+  {text:'Rank 2: Free: XP ×10000 | Deluxe: Stardust ×10000'},
+  {text:'Rank 3: Free: Dynamax Rookidee | Deluxe: Rookidee Candy ×5 · Ultra Box'},
+  {text:'Rank 4: Free: Mystery Gizmo | Deluxe: —'},
+  {text:'Rank 8: Free: Modern Tee | Deluxe: Max Potion ×5'}]);
+ const html=UI.render(event({passes:result.passes}),{rewardArt:i=>i.name==='Dynamax Rookidee'?'<img alt="" src="/rookidee.png">':'',passMeta:{updated:'2026-11-07T20:33:39Z',sources:[{name:'Leek Duck',url:'https://leekduck.com/events/x/'}]},safe:u=>u});
+ assert.match(html,/ue-lane-free/);assert.match(html,/ue-lane-deluxe/);
+ assert.match(html,/Ranks 5–7: no rewards listed by the source/);
+ assert.match(html,/data-cat="Box"/);assert.match(html,/data-cat="Candy"/);assert.match(html,/data-cat="Avatar item"/);
+ assert.match(html,/src="\/ico\/xp\.webp"/);assert.match(html,/src="\/ico\/dust\.webp"/);assert.match(html,/\/ico\/i\/max-potion\.webp/);
+ assert.match(html,/data-art="fallback"/);assert.match(html,/art unavailable/);
+ assert.match(html,/No extra Deluxe reward/);
+ assert.doesNotMatch(html,/\$|US\$/);
+ assert.match(html,/Source: <a href="https:\/\/leekduck\.com\/events\/x\/"/);assert.match(html,/Data checked 2026-11-07/);
+ assert.match(html,/Ranks 1 list no track reward/);
+});
+test('GO Pass with no stages says rewards are not published and unknown freshness is stated',()=>{
+ const html=UI.render(event({passes:[{title:'Empty pass',stages:[]}]}),{});
+ assert.match(html,/Rank rewards have not been published by the source yet/);assert.match(html,/Freshness unknown/);
 });
