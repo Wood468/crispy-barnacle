@@ -14,7 +14,8 @@
   /* Product families a price may be compared within. Variants never mix: a pass, its rank upgrade and its Ultra Box are different products. */
   function kindOf(label) {
     var s = String(label || '').toLowerCase().replace(/pok[eé]/g, 'poke');
-    var variant = /ultra box/.test(s) ? '-ultra' : /\+\s*\d+\s*ranks?|rank upgrade/.test(s) ? '-ranks' : '';
+    var hasUltra = /ultra box/.test(s), hasRanks = /\+\s*\d+\s*ranks?|rank upgrade/.test(s);
+    var variant = hasRanks && hasUltra ? '-ranks-ultra' : hasUltra ? '-ultra' : hasRanks ? '-ranks' : '';
     if (/go pass|pass deluxe|deluxe pass|\bdeluxe\b.*(ultra box|ranks?)|monthly deluxe/.test(s)) return (/into the wild|road of legends|wild area|tour|global|go fest|safari|world|event/.test(s) ? 'event-pass' : 'monthly-pass') + variant;
     if (/research ticket|special research|timed research|\bticket\b/.test(s)) return 'research-ticket';
     if (/pokecoins?|\bcoins\b/.test(s)) return 'coins';
@@ -94,7 +95,7 @@
           (function walk(i, picks, cash, coins) {
             if (coins >= need) { if (!best || cash < best.cash || (cash === best.cash && coins < best.coins)) best = { cash: cash, coins: coins, picks: picks.slice() }; return; }
             if (i >= packs.length || picks.length >= 6) return;
-            for (var j = i; j < packs.length; j++) { picks.push(packs[j]); walk(j, picks, cash + packs[j].amount, coins + packs[j].coins); picks.pop(); }
+            for (var j = i; j < packs.length; j++) { if (packs[j].oneTime && picks.indexOf(packs[j]) !== -1) continue; picks.push(packs[j]); walk(j, picks, cash + packs[j].amount, coins + packs[j].coins); picks.pop(); }
           })(0, [], 0, 0);
           if (!best) return;
         }
