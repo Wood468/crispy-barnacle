@@ -105,3 +105,13 @@ test('Store script and regional module parse in a browser-like context', () => {
   const src = fs.readFileSync(path.join(__dirname, '../public/store.js'), 'utf8');
   assert.equal((src.match(/^\(function \(\) \{/gm) || []).length, 1, 'store.js must hold exactly one IIFE');
 });
+
+test('catalogue retains regional-only products without inventing Australian prices', () => {
+  const rows = R.catalogue([], OBS, NOW);
+  const idOnly = rows.find(r => r.label === '3,300 total PokéCoins');
+  assert.ok(idOnly, 'Indonesian-only coin pack must be visible');
+  assert.equal(idOnly.aud, null);
+  assert.equal(idOnly.indonesia.amount, 101000);
+  assert.equal(idOnly.india, null);
+  assert.ok(rows.some(r => r.label === 'GO Pass Deluxe: Into the Wild'));
+});
