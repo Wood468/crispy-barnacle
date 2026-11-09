@@ -249,3 +249,18 @@ test('GO Pass with no stages says rewards are not published and unknown freshnes
  const html=UI.render(event({passes:[{title:'Empty pass',stages:[]}]}),{});
  assert.match(html,/Rank rewards have not been published by the source yet/);assert.match(html,/Freshness unknown/);
 });
+
+test('Into the Wild highlights Meltan and Gimmighoul shiny methods without claiming boosted odds',()=>{
+ const m=event({title:'Into the Wild',notes:[
+  'SHINY MELTAN — Mystery Box encounters can be Shiny from Nov 9 at 10 am until Nov 15 at 6 pm local time.',
+  'SHINY GIMMIGHOUL — Coin Bag encounters can be Shiny from Nov 9 at 10 am until Nov 15 at 6 pm local time.'
+ ]});
+ const html=UI.render(m,{});
+ assert.match(html,/Shiny Meltan · Mystery Box/);
+ assert.match(html,/Shiny Gimmighoul · Coin Bag/);
+ assert.match(html,/Special shiny encounters · through 15 Nov/);
+ assert.match(html,/Shiny odds not confirmed boosted/);
+ assert.doesNotMatch(html,/Boosted shiny<\\/span>/);
+ const other=UI.render(event({title:'Unrelated event',notes:m.notes}),{});
+ assert.doesNotMatch(other,/ue-special-shiny/);
+});
