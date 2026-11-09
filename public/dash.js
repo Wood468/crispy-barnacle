@@ -1155,16 +1155,50 @@
       return GOEventRegistry.events().filter(function(model){return model.schedule&&model.lifecycle!=='cancelled'&&model.groups&&model.groups.max&&model.groups.max.length;}).map(function(model){return GOEventRegistry.display(model);}).filter(function(event){return event.instantKnown&&event.start<end&&event.end>a&&event.end>t;});
     }
     /* No weekly Power Spot rotation yet: show the Max Battle roster the dated event itself publishes (same catalogue record as Today and Details). */
+    function cpChip(cp, label) {
+      if (!Array.isArray(cp) && typeof cp !== 'number') return '';
+      var txt = Array.isArray(cp) ? cp[0].toLocaleString('en-AU') + '–' + cp[1].toLocaleString('en-AU') : cp.toLocaleString('en-AU');
+      return '<span class="rc-cp" title="' + esc(label) + '">CP ' + esc(txt) + '</span>';
+    }
+    function eventLink(name) {
+      var model = name && window.GOEventRegistry && GOEventRegistry.events().filter(function (m) { return m && m.title && GOLIB.norm(m.title) === GOLIB.norm(name); })[0];
+      var ev = model && GOEventRegistry.display(model);
+      return ev ? '<button type="button" class="rc-chip rc-event" data-open="' + esc(ev.id) + '" aria-label="Open event details for ' + esc(name) + '">Part of ' + esc(name) + ' ›</button>' : '';
+    }
+    function windowChip(startMs, endMs) {
+      var st = GOLIB.raidWindowState(startMs, endMs, now().getTime());
+      return st.text ? '<span class="rw-count rw-count-' + st.phase + '" role="text">' + esc(st.text) + '</span>' : '';
+    }
+    /* A curated per-tier roster (data.json maxRosters) when the source published one; otherwise the catalogue roster; otherwise an honest empty state. */
+    function tieredRoster(events){
+      var out=[];
+      events.forEach(function(event){
+        var roster=GOLIB.maxRosterFor(D.maxRosters,event.name,+event.start,+event.end);if(!roster)return;
+        var rows=roster.tiers.map(function(tier){
+          var day=tier.day?fmtD(pd(tier.day+'T12:00')):'';
+          var mons=(tier.names||[]).map(function(n){
+            return '<div class="rw-max-pokemon" data-max-boss="'+esc(n)+'">'+monArt({kind:'max',tags:[],name:''},{name:n},'ea')+'<div class="rw-max-txt"><span class="rc-tier">'+esc(tier.tier)+'</span><b>Dynamax '+esc(n)+'</b>'+
+              ((window.GOTYPES&&GOTYPES.facts(n))?'<span class="rtype">'+GOTYPES.facts(n).types.map(function(t){return tico(t);}).join('')+'</span>':'')+
+              '<span class="rc-meta">'+cpChip(tier.cp&&tier.cp[n],'Level 20 perfect IV')+(tier.debut?'<span class="rc-chip rc-debut">Dynamax debut</span>':'')+'</span></div></div>';
+          }).join('');
+          return '<div class="rw-max-tier"><p class="rw-tier-head"><b>'+esc(tier.tier)+' Max Battles</b>'+(day?'<span>'+esc(day)+' · 6–7 pm local</span>':'<span>All event</span>')+'</p>'+mons+'</div>';
+        }).join('');
+        out.push('<div class="rw-max rw-max-roster"><span class="rw-label">Max Battles · '+esc(event.name)+'</span><p class="rw-window">'+esc(roster.note||'')+'</p>'+windowChip(+event.start,+event.end)+rows+
+          (/^https:\/\/leekduck\.com\/events\/[a-z0-9-]+\/?$/i.test(roster.sourceUrl||'')?'<a class="rw-source" href="'+esc(roster.sourceUrl)+'" target="_blank" rel="noopener noreferrer" aria-label="Max Battle source on Leek Duck">Leek Duck source ↗</a>':'')+'</div>');
+      });
+      return out.join('');
+    }
     function eventMaxRoster(events){
+      var tiered=tieredRoster(events);if(tiered)return tiered;
       var rows=[];
       events.forEach(function(event){
         var model=window.GOEventRegistry&&GOEventRegistry.find(event.id);if(!model||!model.groups||!model.groups.max)return;
         var seen={};model.groups.max.forEach(function(entry){
           var mon=(model.pokemon||[]).filter(function(p){return p.key===entry.identityKey;})[0];if(!mon||seen[mon.key])return;seen[mon.key]=1;
-          rows.push('<div class="rw-max-pokemon">'+monArt({kind:'max',tags:[],name:''},{name:mon.name.replace(/^Dynamax\s+/i,''),shiny:mon.shiny==='yes'?'yes':undefined},'ea')+'<div><b>'+esc(mon.name)+'</b><small>'+esc(event.name)+'</small></div></div>');
+          rows.push('<div class="rw-max-pokemon">'+monArt({kind:'max',tags:[],name:''},{name:mon.name.replace(/^Dynamax\s+/i,''),shiny:mon.shiny==='yes'?'yes':undefined},'ea')+'<div class="rw-max-txt"><b>'+esc(mon.name)+'</b><small>'+esc(event.name)+'</small></div></div>');
         });
       });
-      return '<div class="rw-max"><span class="rw-label">Max Battles</span>'+(rows.length?'<p class="rw-window">Published roster · day-by-day schedule in the event details</p>'+rows.join(''):'<p class="muted">No featured Pokémon published for this week yet.</p>')+'</div>';
+      return '<div class="rw-max"><span class="rw-label">Max Battles</span>'+(rows.length?'<p class="rw-window">Published roster · day-by-day schedule in the event details</p>'+rows.join(''):'<p class="muted rw-empty">Max Battles not announced for this week yet.</p>')+'</div>';
     }
     function tico(t, ttl) { return '<img class="ti" src="/ico/g/type-' + String(t).toLowerCase() + '.webp" alt="' + esc(t) + '" title="' + esc(t) + '" loading="lazy" decoding="async">'; }
     function raidEvent(name, r) { return raidSlotFor(name, r) || null; }
@@ -1179,8 +1213,10 @@
         var shareValue = label === '5★' ? r.five : label === 'Mega' ? r.mega : label === 'Shadow' ? r.shadow : '';
         var shareWindow = shareValue && !/,\s*to\s/i.test(String(shareValue)) ? { start: r.s || '', end: r.e || '' } : { start: '', end: '' };
         var share = '<button type="button" class="rc-info rc-share" data-raid-share data-raid-boss="' + esc(n) + '" data-raid-kind="' + esc(label) + '" data-raid-start="' + esc(shareWindow.start) + '" data-raid-end="' + esc(shareWindow.end) + '" aria-label="Share ' + esc(n) + ' ' + esc(label) + ' raid details">↗ Share</button>';
-        return '<div class="rc" data-boss="' + esc(n) + '"' + (label === '5★' || label === 'Mega' ? ' data-guide="' + esc(n) + '"' : '') + '><div class="rc-form">' + art(n, 'ea') + '<div class="rc-txt"><span class="rl">' + label + '</span><b>' + esc(n) + '</b>' +
-          (f ? '<span class="rtype">' + f.types.map(function (t) { return tico(t); }).join('') + '</span><span class="rweak" title="Weak to">▾ ' + f.weak.map(function (t) { return tico(t); }).join('') + '</span>' : '') + '</div></div>' + ib + share + '</div>';
+        var cpv = r.cp && r.cp[n], shinyOk = Array.isArray(r.shiny) && r.shiny.indexOf(n) >= 0;
+        var chips = cpChip(cpv, 'Level 20, weather boosted at level 25') + (shinyOk ? '<span class="rc-chip rc-shiny">✦ Shiny available</span>' : '');
+        return '<div class="rc" data-boss="' + esc(n) + '"' + (label === '5★' || label === 'Mega' ? ' data-guide="' + esc(n) + '"' : '') + '><div class="rc-form">' + art(n, 'ea') + '<div class="rc-txt"><span class="rl"><i class="rc-tier">' + label + '</i></span><b>' + esc(n) + '</b>' +
+          (f ? '<span class="rtype">' + f.types.map(function (t) { return tico(t); }).join('') + '</span><span class="rweak" title="Weak to">▾ ' + f.weak.map(function (t) { return tico(t); }).join('') + '</span>' : '') + (chips ? '<span class="rc-meta">' + chips + '</span>' : '') + '</div></div>' + ib + share + '</div>';
       }).join('');
     }
     function lowSourceLink(l) {
@@ -1212,7 +1248,7 @@
       if (!rotationRows.length) body += '<p class="empty">No raid rotation published for this week yet.</p>';
       rotationRows.forEach(function (row) {
         var r = row.r;
-        body += '<div class="rw-raid ' + row.cls + '"><span class="rw-label">' + esc(row.label) + '</span><p class="rw-window">' + esc(fmtD(pd(r.s)) + ', ' + fmtT(pd(r.s)) + ' – ' + fmtD(pd(r.e)) + ', ' + fmtT(pd(r.e))) + ' · local time</p>' + raidSourceLink(r) + '<div class="rcs">' +
+        body += '<div class="rw-raid ' + row.cls + '"><span class="rw-label">' + esc(row.label) + '</span><p class="rw-window">' + esc(fmtD(pd(r.s)) + ', ' + fmtT(pd(r.s)) + ' – ' + fmtD(pd(r.e)) + ', ' + fmtT(pd(r.e))) + ' · local time</p>' + '<div class="rw-rel">' + windowChip(+pd(r.s), +pd(r.e)) + eventLink(r.event) + '</div>' + raidSourceLink(r) + '<div class="rcs">' +
           cell('5★', r.five, r) + cell('Mega', r.mega, r) + cell('Shadow', String(r.shadow || '').replace(/, to .*/, ''), r) + '</div>' + lowTier(r) + '<p class="evc-when">Raid Hour: ' + esc(r.rh || 'Not listed') + '</p></div>';
       });
       body += battles.length ? battles.map(function(mb){

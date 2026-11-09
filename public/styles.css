@@ -353,7 +353,7 @@ nav.tabs button[aria-selected="true"] svg{stroke-width:2.6}
 .rw-raid .evc-when{margin:0;color:var(--color-text-muted);font-size:var(--type-body-sm)}
 .rw-max{border-top:1px solid var(--color-border);padding-top:14px}
 .rw-max-pokemon{display:flex;align-items:center;gap:var(--space-3);background:var(--color-surface-raised);border-radius:var(--radius-md);padding:var(--space-3)}
-.rw-max-pokemon img{width:68px;height:68px;object-fit:contain;flex:none}
+.rw-max-pokemon img.art{width:68px;height:68px;object-fit:contain;flex:none}
 .rw-max-pokemon b,.rw-max-pokemon small{display:block}
 .rw-max-pokemon b{font-size:var(--type-intro)}
 .rw-max-pokemon small{color:var(--color-text-muted);font-size:var(--type-meta-compact)}
