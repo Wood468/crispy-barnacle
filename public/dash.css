@@ -2178,3 +2178,15 @@ a.evc-source{color:var(--color-link);text-underline-offset:3px}
 .evd-in:has(.ue-hero) .ue-mon-art .art.costume-unavailable>span{display:none}
 .evd-in:has(.ue-hero) .ue-mon-art .art.costume-unavailable .va-base{width:38px;height:38px}
 .evd-in:has(.ue-hero) .ue-mon-art .art.costume-unavailable .va-badge{font-size:.58rem;margin:0;padding:1px 5px}
+
+/* Regional prices: verified prices are plain, estimates are visibly modelled (never struck through). */
+.storep-regional h4 small{font-weight:400;color:var(--color-text-muted)}
+.storep-regional .sp-regional-row{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--space-1);align-items:start;padding:var(--space-3) 0;border-top:1px solid var(--color-border,rgba(127,127,127,.25))}
+.storep-regional .sp-regional-row>.sp-n:first-child,.storep-regional .sp-regional-row>.sp-a{font-weight:700;overflow-wrap:anywhere}
+.storep-regional .sp-regional-row>.sp-a small,.storep-regional .sp-regional-value small{display:block;font-weight:400;color:var(--color-text-muted);font-size:var(--type-overline);overflow-wrap:anywhere}
+.storep-regional .sp-regional-value{color:var(--color-text);text-decoration:none;font-variant-numeric:tabular-nums;font-size:var(--type-meta);overflow-wrap:anywhere}
+.storep-regional .sp-est{border-left:3px solid var(--color-warning,#c98a00);padding-left:var(--space-2)}
+.storep-regional .sp-est>b{text-transform:uppercase;letter-spacing:.04em;font-size:var(--type-overline)}
+.storep-regional .sp-none{color:var(--color-text-muted)}
+.storep-regional .sp-coins{display:flex;align-items:center;gap:var(--space-2);flex-wrap:wrap;margin:var(--space-2) 0}
+.storep-regional .sp-coins input{min-height:44px;width:8rem;font:inherit;padding:0 var(--space-2)}

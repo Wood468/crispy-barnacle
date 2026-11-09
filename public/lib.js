@@ -269,7 +269,7 @@
     if (!pin) return pub;
     return Promise.all([pub, fetch('/api/prices-private', { headers: { 'x-pin': pin }, cache: 'no-store' }).then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; })]).then(function (a) {
       var d = a[0]; if (!d || !a[1]) return d;
-      return Object.assign({}, d, { fx: a[1].fx, prices: (d.prices || []).concat(a[1].prices || []), tiers_idr: a[1].tiers_idr, rp_per_usd: a[1].rp_per_usd, owner: true });
+      return Object.assign({}, d, { fx: a[1].fx, prices: (d.prices || []).concat(a[1].prices || []), tiers_idr: a[1].tiers_idr, rp_per_usd: a[1].rp_per_usd, regional: a[1].regional || [], owner: true });
     });
   }
 
