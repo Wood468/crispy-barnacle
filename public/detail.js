@@ -872,9 +872,9 @@
   });
   document.addEventListener('click',function(e){
     var d=e.target.closest&&e.target.closest('[data-evdone]');if(!d||!currentEv||!window.GOTODAYLOGIC)return;
-    var ev=currentEv,ok=false;try{ok=!!GOTODAYLOGIC.markDone(window.localStorage,ev.id,ev.start,ev.end,Date.now());}catch(x){}
-    closeEvMenu(false);toast(ok?'Hidden from Today. It stays in Schedule.':'Could not save on this device');
-    try{document.dispatchEvent(new Event('gofn-today-done'));}catch(x){}
+    var ev=currentEv,ok=false;try{ok=!!GOTODAYLOGIC.tryMarkDone(window.localStorage,ev.id,ev.start,ev.end,Date.now()).ok;}catch(x){}
+    closeEvMenu(false);toast(ok?'Hidden from Today. It stays in Schedule.':'Couldn\u2019t save \u2014 storage is full or unavailable. Nothing was hidden.');
+    if(ok)try{document.dispatchEvent(new Event('gofn-today-done'));}catch(x){}
   });
   document.addEventListener('keydown',function(e){var m=document.querySelector('.evd-menu');if(!m)return;
     var items=[].slice.call(m.querySelectorAll('[role=menuitem]')),i=items.indexOf(document.activeElement);

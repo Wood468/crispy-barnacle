@@ -217,3 +217,65 @@ test('research reward wording: field rewards are alternatives, timed and special
   assert.equal(L.researchRewardLabel('timed', 3), '3 rewards');
   assert.equal(L.researchRewardLabel('special', 1), '1 reward');
 });
+
+/* ---- storage that throws: no false success, nothing lost, recovery once storage works again ---- */
+function flaky() {
+  const data = new Map();
+  const s = {
+    failing: false, reads: false,
+    getItem(k) { if (s.reads) throw new DOMException('denied', 'SecurityError'); return data.has(k) ? data.get(k) : null; },
+    setItem(k, v) { if (s.failing) throw new DOMException('full', 'QuotaExceededError'); data.set(k, String(v)); },
+    removeItem(k) { data.delete(k); },
+    data
+  };
+  return s;
+}
+const START = '2026-11-08T00:00:00Z';
+test('markDone does not report success when setItem throws, keeps existing data, and recovers', () => {
+  const s = flaky();
+  assert.equal(L.tryMarkDone(s, 'a', START, null, 1).ok, true);
+  const before = s.data.get(L.DONE_KEY);
+  s.failing = true;
+  const res = L.tryMarkDone(s, 'b', START, null, 2);
+  assert.equal(res.ok, false);
+  assert.equal(res.error, 'storage');
+  assert.equal(L.markDone(s, 'b', START, null, 2), '', 'wrapper must not return a key when nothing was saved');
+  assert.equal(s.data.get(L.DONE_KEY), before, 'existing Done data must be byte-identical');
+  assert.equal(L.isDone(L.readDone(s), 'b', START), false);
+  s.failing = false;
+  const again = L.tryMarkDone(s, 'b', START, null, 3);
+  assert.equal(again.ok, true);
+  assert.equal(L.isDone(L.readDone(s), 'b', START), true);
+  assert.equal(L.isDone(L.readDone(s), 'a', START), true);
+});
+test('undoDone reports failure and keeps the entry when setItem throws', () => {
+  const s = flaky();
+  const key = L.markDone(s, 'a', START, null, 1);
+  const before = s.data.get(L.DONE_KEY);
+  s.failing = true;
+  assert.deepEqual(L.tryUndoDone(s, key), { ok: false, removed: false, error: 'storage' });
+  assert.equal(L.undoDone(s, key), false);
+  assert.equal(s.data.get(L.DONE_KEY), before);
+  s.failing = false;
+  assert.equal(L.tryUndoDone(s, key).removed, true);
+  assert.equal(L.isDone(L.readDone(s), 'a', START), false);
+});
+test('unreadable storage (SecurityError on read) is never overwritten', () => {
+  const s = flaky(); s.reads = true;
+  assert.equal(L.tryMarkDone(s, 'a', START, null, 1).ok, false);
+  assert.equal(s.data.size, 0);
+  assert.equal(L.tryUndoDone(s, 'a@x').ok, false);
+});
+test('a corrupt Done value is kept as a copy before it is replaced, and never replaced if the copy fails', () => {
+  const s = flaky();
+  s.data.set(L.DONE_KEY, '{broken');
+  assert.deepEqual(L.readDone(s), {});
+  assert.equal(L.readDoneState(s).corrupt, true);
+  assert.equal(L.tryMarkDone(s, 'a', START, null, 1).ok, true);
+  assert.equal(s.data.get(L.DONE_KEY + '-corrupt'), '{broken');
+  const s2 = flaky();
+  s2.data.set(L.DONE_KEY, '[1,2');
+  const realSet = s2.setItem; s2.setItem = (k, v) => { if (k.includes('-corrupt')) throw new DOMException('full', 'QuotaExceededError'); return realSet(k, v); };
+  assert.equal(L.tryMarkDone(s2, 'a', START, null, 1).ok, false);
+  assert.equal(s2.data.get(L.DONE_KEY), '[1,2', 'corrupt value must be left untouched when no copy can be kept');
+});

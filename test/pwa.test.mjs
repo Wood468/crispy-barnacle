@@ -178,3 +178,42 @@ test("offline page is readable, responsive, and has no inline JavaScript", () =>
 });
 
 // Keep the PWA-specific checks close to the manifest/service-worker contract.
+
+// Install must not activate on a half-filled shell: activation deletes the previous shell cache.
+import { readFileSync as readSw } from "node:fs";
+async function runInstall(failing) {
+  const handlers = {};
+  const stored = new Map();
+  let skipped = false;
+  const sandbox = {
+    URL, Response, Promise, Date, console, setTimeout,
+    self: { location: { origin: "https://example.test" }, addEventListener: (type, fn) => { handlers[type] = fn; }, skipWaiting: async () => { skipped = true; }, clients: { claim: async () => {} } },
+    caches: { open: async () => ({ put: async (url, response) => { stored.set(String(url), response); } }), keys: async () => [], delete: async () => true },
+    fetch: async url => {
+      if (failing(String(url))) throw new TypeError("network");
+      return { ok: true, type: "basic" };
+    }
+  };
+  sandbox.self.self = sandbox.self;
+  vm.runInNewContext(readSw(new URL("../public/sw.js", import.meta.url), "utf8"), sandbox);
+  let waiting;
+  handlers.install({ waitUntil: p => { waiting = p; } });
+  let error = null;
+  try { await waiting; } catch (e) { error = e; }
+  return { error, skipped, stored };
+}
+test("service worker install fails (keeping the old shell) when a required script cannot be cached", async () => {
+  const r = await runInstall(url => url.includes("/app.js"));
+  assert.match(String(r.error && r.error.message), /Shell precache incomplete.*app\.js/);
+  assert.equal(r.skipped, false);
+});
+test("service worker install tolerates optional data files failing and retries transient failures", async () => {
+  const seen = new Set();
+  const optional = await runInstall(url => url.includes("/prices.json"));
+  assert.equal(optional.error, null);
+  assert.equal(optional.skipped, true);
+  const transient = await runInstall(url => url.includes("/app.js") && (seen.has(url) ? false : (seen.add(url), true)));
+  assert.equal(transient.error, null);
+  assert.equal(transient.skipped, true);
+  assert.ok([...transient.stored.keys()].some(url => url.includes("/app.js")));
+});

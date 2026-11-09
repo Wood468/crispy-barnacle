@@ -1,3 +1,5 @@
+import { createHash } from "node:crypto";
+import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -26,6 +28,41 @@ function isPreviewWorkersBuild(item) {
   return !!parts && parts.length === 10 && parts[1] === "workers" && parts[2] === "services" &&
     parts[3] === "view" && parts[4] === "go-field-notes" && parts[5] === "production" &&
     parts[6] === "previews" && !!parts[7] && parts[8] === "builds" && !!parts[9];
+}
+
+export const PRODUCTION_URL = "https://pogo.michaelpuff.com";
+export const CONTENT_MATCH_FILES = [["/sw.js", "public/sw.js"], ["/", "public/index.html"]];
+
+const digest = bytes => createHash("sha256").update(bytes).digest("hex");
+
+// Cloudflare sometimes reports only a preview-style check on the commit that was merged to main
+// (the production build ran, but the check on the SHA keeps the branch preview URL). A preview
+// check is never accepted as success. Instead we accept proof that production serves exactly the
+// service worker and shell that this commit's public/ folder contains.
+export async function productionServesCommit(options = {}) {
+  const fetchImpl = options.fetchImpl ?? globalThis.fetch;
+  const base = (options.productionUrl ?? PRODUCTION_URL).replace(/\/$/, "");
+  const readLocal = options.readLocal ?? (path => readFileSync(resolve(path)));
+  const mismatched = [];
+  for (const [urlPath, localPath] of CONTENT_MATCH_FILES) {
+    let live;
+    try {
+      const response = await fetchImpl(base + urlPath + (urlPath === "/" ? "" : "?gate=" + Date.now()), {
+        headers: { "Cache-Control": "no-cache", "User-Agent": "go-field-notes-site-check" },
+        signal: AbortSignal.timeout(15000)
+      });
+      if (!response.ok) return { match: false, reason: urlPath + " returned HTTP " + response.status };
+      live = digest(Buffer.from(await response.arrayBuffer()));
+    } catch (error) {
+      return { match: false, reason: urlPath + " request failed: " + (error && error.message || "network error") };
+    }
+    let local;
+    try { local = digest(readLocal(localPath)); } catch { return { match: false, reason: localPath + " is not readable" }; }
+    if (live !== local) mismatched.push(urlPath);
+  }
+  return mismatched.length
+    ? { match: false, reason: "production " + mismatched.join(", ") + " differs from this commit" }
+    : { match: true, reason: "production sw.js and index.html are byte-identical to this commit" };
 }
 
 export async function waitForWorkersBuild(options = {}) {
@@ -97,6 +134,13 @@ export async function waitForWorkersBuild(options = {}) {
       }
     } else if (matching.some(isPreviewWorkersBuild)) {
       lastState = "only a preview build is reported; waiting for a production build";
+      if (matching.some(item => item.status === "completed" && item.conclusion === "success")) {
+        const proof = await productionServesCommit(options);
+        if (proof.match) {
+          return { buildId: null, detailsUrl: null, verifiedBy: "content", note: proof.reason };
+        }
+        lastState += " (" + proof.reason + ")";
+      }
     } else if (matching.length) {
       lastState = "Workers build check does not identify a production deployment";
     }
@@ -111,8 +155,9 @@ export async function waitForWorkersBuild(options = {}) {
 
 if (process.argv[1] && fileURLToPath(import.meta.url) === resolve(process.argv[1])) {
   waitForWorkersBuild().then(result => {
-    console.log("Cloudflare Workers production build succeeded" +
-      (result.buildId ? " (" + result.buildId + ")" : "") + ".");
+    console.log(result.verifiedBy === "content"
+      ? "Cloudflare reported only a preview check; " + result.note + "."
+      : "Cloudflare Workers production build succeeded" + (result.buildId ? " (" + result.buildId + ")" : "") + ".");
   }).catch(error => {
     console.error(error.message);
     process.exitCode = 1;

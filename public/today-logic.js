@@ -20,14 +20,29 @@
     var s = stamp(start);
     return id && s ? String(id) + '@' + s : '';
   }
-  function readDone(storage) {
+  /* Reads the Done map without ever treating unreadable data as empty-and-writable: `corrupt` is true when the stored value is not a JSON object, so a later write must not silently replace it. */
+  function readDoneState(storage) {
+    var raw = null;
+    try { raw = storage.getItem(DONE_KEY); } catch (e) { return { map: {}, corrupt: false, unreadable: true, raw: null }; }
+    if (raw == null || raw === '') return { map: {}, corrupt: false, unreadable: false, raw: null };
     try {
-      var raw = JSON.parse(storage.getItem(DONE_KEY) || '{}');
-      return raw && typeof raw === 'object' && !Array.isArray(raw) ? raw : {};
-    } catch (e) { return {}; }
+      var parsed = JSON.parse(raw);
+      if (parsed && typeof parsed === 'object' && !Array.isArray(parsed)) return { map: parsed, corrupt: false, unreadable: false, raw: raw };
+    } catch (e) { /* fall through */ }
+    return { map: {}, corrupt: true, unreadable: false, raw: raw };
   }
+  function readDone(storage) { return readDoneState(storage).map; }
   function writeDone(storage, map) {
     try { storage.setItem(DONE_KEY, JSON.stringify(map)); return true; } catch (e) { return false; }
+  }
+  /* Before replacing an unreadable value, keep a copy under another key. If that copy cannot be made, the write is refused. */
+  function keepCorruptCopy(storage, raw) {
+    try {
+      var name = DONE_KEY + '-corrupt', existing = storage.getItem(name);
+      if (existing === raw) return true;
+      if (existing != null) name += '-' + Date.now();
+      storage.setItem(name, raw); return true;
+    } catch (e) { return false; }
   }
   function isDone(map, id, start) { var k = doneKey(id, start); return !!k && !!map[k]; }
   /* Entries older than a week past the occurrence end are dropped so the store never grows without bound. */
@@ -40,18 +55,27 @@
     });
     return out;
   }
-  function markDone(storage, id, start, end, nowMs) {
-    var key = doneKey(id, start); if (!key) return '';
-    var map = pruneDone(readDone(storage), nowMs || Date.now());
+  /* Both return {ok, ...}: ok is true only when the value was really written (or there was nothing to change). */
+  function tryMarkDone(storage, id, start, end, nowMs) {
+    var key = doneKey(id, start); if (!key) return { ok: false, key: '', error: 'invalid' };
+    var state = readDoneState(storage);
+    if (state.unreadable) return { ok: false, key: key, error: 'storage' };
+    if (state.corrupt && !keepCorruptCopy(storage, state.raw)) return { ok: false, key: key, error: 'storage' };
+    var map = pruneDone(state.map, nowMs || Date.now());
     map[key] = { at: nowMs || Date.now(), end: Number.isFinite(+end) ? +end : null };
-    writeDone(storage, map);
-    return key;
+    return writeDone(storage, map) ? { ok: true, key: key } : { ok: false, key: key, error: 'storage' };
   }
-  function undoDone(storage, key) {
-    var map = readDone(storage);
-    if (!key || !map[key]) return false;
-    delete map[key]; writeDone(storage, map); return true;
+  function tryUndoDone(storage, key) {
+    var state = readDoneState(storage);
+    if (state.unreadable) return { ok: false, removed: false, error: 'storage' };
+    if (!key || !state.map[key]) return { ok: true, removed: false };
+    if (state.corrupt) return { ok: false, removed: false, error: 'storage' };
+    var map = {}; Object.keys(state.map).forEach(function (k) { if (k !== key) map[k] = state.map[k]; });
+    return writeDone(storage, map) ? { ok: true, removed: true } : { ok: false, removed: false, error: 'storage' };
   }
+  /* Compatibility wrappers: markDone returns the key only when saved ('' otherwise); undoDone is true only when an entry was removed and saved. */
+  function markDone(storage, id, start, end, nowMs) { var r = tryMarkDone(storage, id, start, end, nowMs); return r.ok ? r.key : ''; }
+  function undoDone(storage, key) { var r = tryUndoDone(storage, key); return r.ok && r.removed; }
   function doneList(storage) {
     var map = readDone(storage);
     return Object.keys(map).map(function (k) { return { key: k, id: k.slice(0, k.lastIndexOf('@')), start: k.slice(k.lastIndexOf('@') + 1), at: map[k] && map[k].at }; });
@@ -250,7 +274,7 @@
   }
 
   return {
-    DONE_KEY: DONE_KEY, doneKey: doneKey, readDone: readDone, isDone: isDone, markDone: markDone, undoDone: undoDone, pruneDone: pruneDone, doneList: doneList,
+    DONE_KEY: DONE_KEY, doneKey: doneKey, readDone: readDone, readDoneState: readDoneState, tryMarkDone: tryMarkDone, tryUndoDone: tryUndoDone, isDone: isDone, markDone: markDone, undoDone: undoDone, pruneDone: pruneDone, doneList: doneList,
     shinyKind: shinyKind, splitNames: splitNames, classifyArt: classifyArt, artFallback: artFallback,
     researchRewardLabel: researchRewardLabel, venueZone: venueZone, matchVenueTimes: matchVenueTimes, venueTimeUnconfirmed: venueTimeUnconfirmed, dualTime: dualTime, venueDays: venueDays, zoneAbbr: zoneAbbr, countdownText: countdownText, cardType: cardType
   };

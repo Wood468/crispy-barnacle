@@ -645,7 +645,9 @@ Promise.all([
   var all={};
 
   var dex={have:{},hundo:{},m:{},bt:{}};
-  try{var raw=localStorage.getItem('gofn-dex-v1');if(raw){var o=JSON.parse(raw);dex.have=o.have||{};dex.hundo=o.hundo||{};dex.m=o.m||{};dex.bt=o.bt||{}}}catch(e){}
+  /* Unreadable saved marks are never treated as empty-and-writable: a copy is kept (gofn-dex-v1-corrupt) and, if no copy can be kept, saving is refused so the original value stays untouched. */
+  var dexProtected=false;
+  try{var rd=window.GOLIB.readJsonKeep(localStorage,'gofn-dex-v1');if(rd.corrupt&&!rd.kept)dexProtected=true;var o=rd.value;if(o&&typeof o==='object'){dex.have=o.have||{};dex.hundo=o.hundo||{};dex.m=o.m||{};dex.bt=o.bt||{}}}catch(e){}
 
   var list=$('list');
   var typeSel='All';
@@ -1007,7 +1009,9 @@ Promise.all([
   }
   function setSync(k){renderSyncStatus('sync',k);renderSyncStatus('dsync',k);}
   function has(o){return Object.keys(o.have).length||Object.keys(o.bt||{}).length||Object.keys(o.hundo).length||DEXCATS.some(function(c){return o.m&&o.m[c]&&Object.keys(o.m[c]).length})}
-  function saveLocal(){try{localStorage.setItem('gofn-dex-v1',JSON.stringify(dex));localStorage.setItem('gofn-stamp',String(stamp));localStorage.setItem('gofn-dex-base-v1',String(baseUpdated));if(baselineDex)localStorage.setItem('gofn-dex-baseline-v1',JSON.stringify(baselineDex));else localStorage.removeItem('gofn-dex-baseline-v1')}catch(e){}document.dispatchEvent(new Event('gofn-marks'))}
+  function saveLocal(){var ok=!dexProtected;if(ok)try{localStorage.setItem('gofn-dex-v1',JSON.stringify(dex));localStorage.setItem('gofn-stamp',String(stamp));localStorage.setItem('gofn-dex-base-v1',String(baseUpdated));if(baselineDex)localStorage.setItem('gofn-dex-baseline-v1',JSON.stringify(baselineDex));else localStorage.removeItem('gofn-dex-baseline-v1')}catch(e){ok=false}
+    /* A failed write is reported, never swallowed: the marks stay on screen for this session only and the alert offers a retry. */
+    window.GOLIB.reportSave('dex',ok,saveLocal);document.dispatchEvent(new Event('gofn-marks'));return ok}
   function req(method,body){
     return fetch('/api/dex',{method:method,headers:hdr(),body:body?JSON.stringify(body):undefined});
   }
@@ -1084,7 +1088,7 @@ Promise.all([
     var v=document.getElementById('today-v1');if(v&&v.getAttribute('aria-busy')==='true'){v.removeAttribute('aria-busy');v.innerHTML='<div class="today-status" role="alert"><p>Today\'s events did not load. Your saved collection is unchanged.</p><button type="button" class="pill" id="today-retry-v1">Try again</button></div>';var r2=document.getElementById('today-retry-v1');if(r2)r2.addEventListener('click',function(){window.location.reload()});}
     var b=document.getElementById('day-brief');if(b)b.setAttribute('data-state','unavailable');
     var f=document.getElementById('fresh-line');if(f)f.setAttribute('data-released','')}
-  var ds=document.createElement('script');ds.src='/dash.js?v=20261110f';ds.onerror=todayUnavailable;document.body.appendChild(ds);setTimeout(function(){if(!window.GODASH)todayUnavailable()},10000);
+  var ds=document.createElement('script');ds.src='/dash.js?v=20261111a';ds.onerror=todayUnavailable;document.body.appendChild(ds);setTimeout(function(){if(!window.GODASH)todayUnavailable()},10000);
 })();
 
 }).catch(function(){var panel=document.getElementById('load-error');if(panel)panel.hidden=false;var retry=document.getElementById('load-retry');if(retry)retry.addEventListener('click',function(){window.location.reload()},{once:true})});

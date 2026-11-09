@@ -1,10 +1,10 @@
 /* GO Field Notes offline shell. Never cache /api/*, including private user-state and notification responses. */
-const SHELL_CACHE = 'gofn-shell-v261';
+const SHELL_CACHE = 'gofn-shell-v262';
 const SHELL_URLS = [
   '/', '/index.html', '/offline.html', '/offline.css',
   /* Versioned code and styles are listed once, exactly as index.html, app.js and dash.js request them. Any other ?v= (or unversioned) request is answered offline by the ignoreSearch fallback below. */
   '/timezone.js?v=20261108b', '/event-catalogue.js?v=20261107b', '/event-clock.js?v=20261108b', '/event-contract.js?v=20261107b', '/event-view.js?v=20261107b', '/event-adapter.js?v=20261109a', '/event-components.js?v=20261110a', '/event-registry.js?v=20261107b', '/event-identity.js?v=20261107a', '/event-policy.js?v=20261107a', '/events-v1.json',
-  '/styles.css?v=20261102b', '/dash.css?v=20261110r', '/event-redesign.css?v=20261110a', '/today.css?v=20261108a', '/ux-finish.css?v=20261110g', '/today.js?v=20261110a', '/today-logic.js?v=20261108a', '/event-art.js?v=20261110c', '/variant-art.js?v=20261110a', '/lib.js?v=20261108a', '/dedupe.js?v=20261101b', '/move.js?v=20261102a', '/imgerr.js?v=20261015a', '/whatsnew.js?v=20261102d', '/pin.js?v=20261101b', '/local-state.js?v=20261030a', '/app.js?v=20261110f', '/raid-share.js?v=20261102b', '/dash.js?v=20261110f', '/detail.js?v=20261110a', '/fresh.js?v=20261103a', '/places.js?v=20261103b', '/review.js?v=20261104b', '/nudge.js?v=20261102a', '/account.js?v=20261102a', '/regional-prices.js?v=20261110a', '/store.js?v=20261110b', '/season.js?v=20261107b', '/research.js?v=20261108a', '/weekly.js?v=20261102a', '/buy.js?v=20261103a', '/extra.js?v=20261102c', '/infographic.js?v=20261103a', '/pwa.js',
+  '/styles.css?v=20261102b', '/dash.css?v=20261110r', '/event-redesign.css?v=20261110a', '/today.css?v=20261111b', '/ux-finish.css?v=20261110g', '/today.js?v=20261110a', '/today-logic.js?v=20261111a', '/event-art.js?v=20261110c', '/variant-art.js?v=20261110a', '/lib.js?v=20261111a', '/dedupe.js?v=20261101b', '/move.js?v=20261102a', '/imgerr.js?v=20261015a', '/whatsnew.js?v=20261102d', '/pin.js?v=20261101b', '/local-state.js?v=20261030a', '/app.js?v=20261111a', '/raid-share.js?v=20261102b', '/dash.js?v=20261111a', '/detail.js?v=20261111a', '/fresh.js?v=20261103a', '/places.js?v=20261103b', '/review.js?v=20261104b', '/nudge.js?v=20261102a', '/account.js?v=20261102a', '/regional-prices.js?v=20261110a', '/store.js?v=20261110b', '/season.js?v=20261107b', '/research.js?v=20261108a', '/weekly.js?v=20261102a', '/buy.js?v=20261103a', '/extra.js?v=20261102c', '/infographic.js?v=20261103a', '/pwa.js',
   '/manifest.webmanifest', '/icon.svg', '/icon-maskable.svg', '/icon-180.png', '/icon-192.png', '/icon-512.png',
   '/data.json', '/dex.json', '/event-info.json', '/forms.json', '/moves.json',
   '/places.json', '/event-details.json', '/event-moves.json', '/regional-events.json', '/world-events.json', '/best-by-type.json', '/prices.json', '/pvp.json', '/release-status.json', '/types.json',
@@ -42,22 +42,36 @@ const IMAGE_PATH = /^\/(?:art|dex|ico|infographic-thumbs|season-thumbs)\/.+\.web
 const IMAGE_REFRESH_MS = 86400000;
 /* Offline only: a request may differ from the cached one just by its ?v= or ?t= (older page, other version), so match code, styles and JSON by path. Never used for pages or API calls. */
 const STATIC_PATH = /\.(?:js|css|json)$/;
+/* Code, styles and pages the shell cannot run without. A new worker whose install could not store every one of these must not activate: activation deletes the previous shell cache, which would leave a half-filled cache and a blank offline page. Data files (.json) and images are optional; they are cached again on first use. */
+const REQUIRED_SHELL = /^(?:\/|\/index\.html|\/offline\.html|\/[^?]+\.(?:js|css))(?:\?.*)?$/;
 self.addEventListener('install', function (event) {
   event.waitUntil((async function () {
     const cache = await caches.open(SHELL_CACHE);
-    await Promise.all(SHELL_URLS.map(async function (url) {
+    async function store(url) {
       try {
         const response = await fetch(url, { cache: 'reload' });
-        if (response.ok && response.type === 'basic') await cache.put(url, response);
-      } catch (_) { /* A single optional file must not prevent installation. */ }
-    }));
+        if (response.ok && response.type === 'basic') { await cache.put(url, response); return true; }
+      } catch (_) { /* retried below */ }
+      return false;
+    }
+    const failed = [];
+    await Promise.all(SHELL_URLS.map(async function (url) { if (!(await store(url))) failed.push(url); }));
+    const stillMissing = [];
+    for (const url of failed) { if (!(await store(url)) && REQUIRED_SHELL.test(url)) stillMissing.push(url); }
+    if (stillMissing.length) throw new Error('Shell precache incomplete: ' + stillMissing.slice(0, 3).join(', '));
     await self.skipWaiting();
   })());
 });
+/* Removes superseded shell caches (only gofn-shell-* other than the current one; never other caches and never page storage). The outgoing worker can finish a last runtime-cache write after activation and re-create its cache, so navigations repeat this at most every 30 s. */
+let lastStalePurge = 0;
+async function purgeStaleShells() {
+  lastStalePurge = Date.now();
+  const names = await caches.keys();
+  await Promise.all(names.filter(function (name) { return name.startsWith('gofn-shell-') && name !== SHELL_CACHE; }).map(function (name) { return caches.delete(name); }));
+}
 self.addEventListener('activate', function (event) {
   event.waitUntil((async function () {
-    const names = await caches.keys();
-    await Promise.all(names.filter(function (name) { return name.startsWith('gofn-shell-') && name !== SHELL_CACHE; }).map(function (name) { return caches.delete(name); }));
+    await purgeStaleShells();
     await self.clients.claim();
   })());
 });
@@ -66,6 +80,7 @@ self.addEventListener('fetch', function (event) {
   if (request.method !== 'GET') return;
   const url = new URL(request.url);
   if (url.origin !== self.location.origin || url.pathname.startsWith('/api/')) return;
+  if (request.mode === 'navigate' && Date.now() - lastStalePurge > 30000) event.waitUntil(purgeStaleShells().catch(function () {}));
   event.respondWith((async function () {
     const isImage = IMAGE_PATH.test(url.pathname);
     if (isImage) {
