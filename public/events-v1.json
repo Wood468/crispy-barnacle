@@ -5935,7 +5935,7 @@
     },
     "imageReviewed": true,
     "contentHash": "9c1e84fa3e57a9dc254240da56abb3e0fe3ea75b86697d72cfd7a5408efad52a",
-    "revision": 8,
+    "revision": 10,
     "amended": true,
     "native": false,
     "collection": "events"
@@ -25239,7 +25239,7 @@
     },
     "imageReviewed": true,
     "contentHash": "244e1a218c776c7de71a786fe7a96bc90d5ca2212bc0e2a5060da28a5e71b680",
-    "revision": 21,
+    "revision": 23,
     "amended": true,
     "native": false,
     "collection": "source-details"
@@ -43221,7 +43221,7 @@
     "world:https://leekduck.com/events/pokemon-go-wild-area-2026-sendai-japan"
    ],
    "family": "wild-area",
-   "title": "Pokémon GO Wild Area 2026: Sendai • Tohoku",
+   "title": "GO Wild Area 2026: Sendai and Tohoku",
    "dateText": "",
    "completeness": "partial",
    "lifecycle": "announced",
@@ -43237,453 +43237,18 @@
    ],
    "internalValidation": {
     "warnings": [],
-    "lifecycleDeclared": true,
+    "lifecycleDeclared": false,
     "conflicts": [],
-    "fields": {
-     "bonuses": [
-      {
-       "text": "Ticket holders receive these benefits from 12:00 a.m. to 11:59 p.m. local time on their ticketed event day.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Shiny encounters are not guaranteed. To use the increased exploration Max Particle bonus, first collect all available Max Particles in the Nearby menu. Adventure Sync can help track exploration distance.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Ticket holders at the in-person events can earn both type-themed medals and their catch bonuses:",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Steel Scholar medal: Earn 1 additional Candy XL for catching Steel-type mighty Pokémon (Trainers level 31+) and 1,000 additional Stardust for catching Steel-type mighty Pokémon.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Each medal’s bonuses begin when you claim it and last through the end of GO Wild Area: Global on November 15, 2026, at 6:00 p.m. local time .",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Completing the event Special Research also awards a new avatar pose .",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "A separate Global ticket grants access to the Global Special Research the following weekend.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      }
-     ],
-     "featured": [
-      {
-       "text": "Hisuian Sliggoo and Hisuian Goodra Debut",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Use 100 Goomy Candy to evolve Hisuian Sliggoo into Hisuian Goodra.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Steel- and Dragon-themed encounters rotate hourly from 10:00 a.m. to 6:00 p.m. throughout the event area on your ticketed day.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Ticket holders can attract the following mighty Pokémon during the event. These encounters exclude Daily Adventure Incense.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      }
-     ],
-     "raids": [
-      {
-       "text": "Gigantamax Duraludon makes its Pokémon GO debut at Pokémon GO Wild Area! This larger-than-life Pokémon will appear in six-star Max Battles during the event.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "If you’re lucky, you may encounter a Shiny one!",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Dynamax Dialga and Dynamax Palkia make their Pokémon GO debuts during GO Wild Area 2026. Both can be Shiny!",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Starting with GO Wild Area 2026, Dynamax Battle lobbies offer Battle to match automatically with other Trainers or Private Group to join an existing group using its group code.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Machamp wearing a modern jacket appears in three-star raids during event hours. Leek Duck says it may be Shiny; the official event page does not confirm this.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Crowned Sword Zacian and Crowned Shield Zamazenta appear in five-star raids during the event. Lucky Trainers may encounter Shiny Pokémon!",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "All Trainers can earn Crowned Sword Energy or Crowned Shield Energy by defeating the corresponding raid boss.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Dynamax Dialga and Dynamax Palkia appear in Max Battles during the event. Both have a chance to be Shiny.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      }
-     ],
-     "eggs": [
-      {
-       "text": "The following Pokémon hatch from 10 km Eggs obtained during the event. Ticket holders have an increased chance of receiving 10 km Eggs from PokéStops and Gyms.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "The 1/4 Hatch Distance bonus does not stack with other Hatch Distance bonuses.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      }
-     ],
-     "research": [
-      {
-       "text": "Two Timed Research experiences guide you through specially decorated PokéStops across the city. Spin the corresponding stops to progress; these can also help you navigate between Stamp Rally locations.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Extra Day add-ons grant both Timed Research experiences again on each added day. Complete the tasks and claim rewards before 8:00 p.m. local time that day.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Catch 10 Dragon‑type Pokémon POSSIBLE REWARDS Trapinch Max CP 546 Min CP 507 ×2000 Stardust ×2000 ×1 Silver Pinap Berry ×1",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Power up Dragon‑type Pokémon 5 times REWARD Frigibax Max CP 534 Min CP 496",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Win 2 raids POSSIBLE REWARDS Mighty Azumarill Max CP 680 Min CP 637 Mighty Modern Jacket Machamp",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Win a Max Battle POSSIBLE REWARDS Mighty Kommo-o Max CP 1418 Min CP 1357 Mighty Bastiodon Max CP 660 Min CP 615",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Catch a Hisuian Sliggoo REWARD Hisuian Sliggoo",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Hatch an Egg POSSIBLE REWARDS Honedge Max CP 595 Min CP 556 Drampa Max CP 1249 Min CP 1191",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Power up Steel‑type Pokémon 5 times POSSIBLE REWARDS Bronzor Max CP 258 Min CP 229 Skarmory Max CP 903 Min CP 854 Onix Max CP 472 Min CP 435",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Explore 2 km REWARD Mighty Modern Jacket Machamp",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Use a Dragon‑type Charged Attack in a battle REWARD Mighty Kommo-o Max CP 1418 Min CP 1357",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Make an Excellent Throw POSSIBLE REWARDS ×2 Silver Pinap Berry ×2 ×2 Golden Razz Berry ×2",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      }
-     ],
-     "shiny": [
-      {
-       "text": "Shiny encounters are not guaranteed. To use the increased exploration Max Particle bonus, first collect all available Max Particles in the Nearby menu. Adventure Sync can help track exploration distance.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "If you’re lucky, you may encounter a Shiny one!",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Dynamax Dialga and Dynamax Palkia make their Pokémon GO debuts during GO Wild Area 2026. Both can be Shiny!",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Hisuian Sliggoo and Hisuian Goodra debut at the in-person GO Wild Area events. Ticket holders may find Hisuian Sliggoo in the wild during either habitat hour, including its Shiny form.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Ticket holders may attract mighty Latias and Latios with Incense, excluding Daily Adventure Incense, on their ticketed event day. Both can be Shiny and are quick to flee, so keep GO Safari Balls ready.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Mighty Pokémon are more likely to have high Attack, Defense, and HP ratings and be XL or XXL. They are harder to catch, and some may be Shiny. GO Safari Balls improve your chances of catching them.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Machamp wearing a modern jacket appears in three-star raids during event hours. Leek Duck says it may be Shiny; the official event page does not confirm this.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Crowned Sword Zacian and Crowned Shield Zamazenta appear in five-star raids during the event. Lucky Trainers may encounter Shiny Pokémon!",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Dynamax Dialga and Dynamax Palkia appear in Max Battles during the event. Both have a chance to be Shiny.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Gigantamax Machamp from this research has a 5% (1 in 20) chance of being Shiny .",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Hisuian Sliggoo can be encountered as a Shiny Pokémon at the in-person events. Evolve it to obtain Shiny Hisuian Goodra.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      }
-     ],
-     "moves": [],
-     "costumes": [
-      {
-       "text": "Mighty Pokémon can appear during either habitat hour. The in-person lineup includes mighty Machamp wearing a modern jacket, Bastiodon, and Kommo-o, plus mighty Lapras in Sendai.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Machamp wearing a modern jacket appears in three-star raids during event hours. Leek Duck says it may be Shiny; the official event page does not confirm this.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Gigantamax Duraludon, Machamp wearing a modern jacket, Dynamax Dialga, Dynamax Palkia, mighty Latias, and mighty Latios can also be Shiny. Ticket holders have increased Shiny encounter chances during event hours.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      }
-     ],
-     "tickets": [
-      {
-       "text": "The following bonuses apply from 10:00 a.m. to 6:00 p.m. local time on your ticketed event day.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "The following Unown are attracted to Incense on your ticketed day.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Lucky ticket holders may also encounter these mighty Legendary Pokémon from Incense:",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Choose one day: November 6, 7, or 8. Japanese ticket prices include applicable taxes and fees. View tickets and add-ons .",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Battle Ready and Egg-thusiast bonuses are active from November 6 at 12:00 a.m. through November 8, 2026, at 11:59 p.m. local time . Add-ons can be purchased after your initial ticket order.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Tickets can be purchased for eligible friends using their exact Trainer usernames. You must be at least Great Friends. Everyone included in one order receives tickets for the same date and time.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Unlock the GO Wild Area 2026 Tee (Purple) through the free GO Pass: Into the Wild . The paid GO Pass Deluxe: Into the Wild also includes Duraludon Pants as a progression reward.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      }
-     ],
-     "dates": [
-      {
-       "text": "The following bonuses apply from 10:00 a.m. to 6:00 p.m. local time on your ticketed event day.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Ticket holders receive these benefits from 12:00 a.m. to 11:59 p.m. local time on their ticketed event day.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "They can only be used from 10:00 a.m. to 6:00 p.m. local time on event days and become inaccessible after the event ends.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Steel- and Dragon-themed encounters rotate hourly from 10:00 a.m. to 6:00 p.m. throughout the event area on your ticketed day.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Choose one day: November 6, 7, or 8. Japanese ticket prices include applicable taxes and fees. View tickets and add-ons .",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      }
-     ]
-    },
+    "fields": {},
     "info": [],
-    "detailRefs": [
-     "leekduck:pokemon-go-wild-area-2026-sendai-japan"
-    ],
+    "detailRefs": [],
     "legacyDates": {
-     "start": "",
-     "end": ""
+     "start": "2026-11-06",
+     "end": "2026-11-08"
     },
     "imageReviewed": true,
-    "contentHash": "060dc3a57d69c34f06b35741663ec1f051487942ffc757b830abb270ad75af93",
-    "revision": 10,
+    "contentHash": "b63e24a31ac0c1b44d1f277adbb11f13c72cf47f234eaa797e97f34a75c8a138",
+    "revision": 11,
     "amended": false,
     "native": false,
     "collection": "events"
@@ -43753,8 +43318,8 @@
      "rewards": [
       {
        "type": "encounter",
-       "name": "Trapinch",
        "quantity": 1,
+       "name": "Trapinch",
        "cpMin": 507,
        "cpMax": 546
       },
@@ -43781,13 +43346,13 @@
       }
      ],
      "status": "single",
-     "eventId": "leekduck:pokemon-go-wild-area-2026-sendai-japan",
-     "eventName": "Pokémon GO Wild Area 2026: Sendai • Tohoku",
+     "eventId": "sendai",
+     "eventName": "GO Wild Area: Sendai",
      "eventWindow": {
-      "start": "2026-11-06T01:00:00.000Z",
-      "end": "2026-11-08T09:00:00.000Z"
+      "start": "2026-11-06T10:00",
+      "end": "2026-11-08T18:00"
      },
-     "checkedAt": "2026-11-07"
+     "checkedAt": "2026-11-09"
     },
     {
      "task": "Catch 10 Steel‑type Pokémon",
@@ -43800,8 +43365,8 @@
       },
       {
        "type": "encounter",
-       "name": "Rookidee",
        "quantity": 1,
+       "name": "Rookidee",
        "cpMin": 258,
        "cpMax": 285
       },
@@ -43823,47 +43388,26 @@
       }
      ],
      "status": "single",
-     "eventId": "leekduck:pokemon-go-wild-area-2026-sendai-japan",
-     "eventName": "Pokémon GO Wild Area 2026: Sendai • Tohoku",
+     "eventId": "sendai",
+     "eventName": "GO Wild Area: Sendai",
      "eventWindow": {
-      "start": "2026-11-06T01:00:00.000Z",
-      "end": "2026-11-08T09:00:00.000Z"
+      "start": "2026-11-06T10:00",
+      "end": "2026-11-08T18:00"
      },
-     "checkedAt": "2026-11-07"
+     "checkedAt": "2026-11-09"
     },
     {
-     "category": "field",
-     "sources": [
-      "leekduck"
-     ],
-     "sourceRefs": [
-      {
-       "id": "leekduck",
-       "name": "Leek Duck",
-       "trust": "community",
-       "url": "https://leekduck.com/events/pokemon-go-wild-area-2026-sendai-japan/"
-      }
-     ],
-     "status": "single",
-     "eventId": "leekduck:pokemon-go-wild-area-2026-sendai-japan",
-     "eventName": "Pokémon GO Wild Area 2026: Sendai • Tohoku",
-     "eventWindow": {
-      "start": "2026-11-06T01:00:00.000Z",
-      "end": "2026-11-08T09:00:00.000Z"
-     },
-     "checkedAt": "2026-11-07",
      "task": "Catch a Hisuian Sliggoo",
+     "category": "field",
      "rewards": [
       {
        "type": "encounter",
-       "name": "Hisuian Sliggoo",
        "quantity": 1,
-       "formId": "hisui"
+       "name": "Hisuian Sliggoo",
+       "cpMin": 782,
+       "cpMax": 829
       }
-     ]
-    },
-    {
-     "category": "field",
+     ],
      "sources": [
       "leekduck"
      ],
@@ -43876,25 +43420,47 @@
       }
      ],
      "status": "single",
-     "eventId": "leekduck:pokemon-go-wild-area-2026-sendai-japan",
-     "eventName": "Pokémon GO Wild Area 2026: Sendai • Tohoku",
+     "eventId": "sendai",
+     "eventName": "GO Wild Area: Sendai",
      "eventWindow": {
-      "start": "2026-11-06T01:00:00.000Z",
-      "end": "2026-11-08T09:00:00.000Z"
+      "start": "2026-11-06T10:00",
+      "end": "2026-11-08T18:00"
      },
-     "checkedAt": "2026-11-07",
+     "checkedAt": "2026-11-09"
+    },
+    {
      "task": "Explore 2 km",
+     "category": "field",
      "rewards": [
       {
        "type": "encounter",
-       "name": "Machamp (Modern Jacket)",
        "quantity": 1,
+       "name": "Machamp (modern jacket)",
        "costume": true,
+       "label": "modern jacket",
        "costumeId": "modernjacket",
-       "label": "Modern Jacket",
        "mighty": true
       }
-     ]
+     ],
+     "sources": [
+      "leekduck"
+     ],
+     "sourceRefs": [
+      {
+       "id": "leekduck",
+       "name": "Leek Duck",
+       "trust": "community",
+       "url": "https://leekduck.com/events/pokemon-go-wild-area-2026-sendai-japan/"
+      }
+     ],
+     "status": "single",
+     "eventId": "sendai",
+     "eventName": "GO Wild Area: Sendai",
+     "eventWindow": {
+      "start": "2026-11-06T10:00",
+      "end": "2026-11-08T18:00"
+     },
+     "checkedAt": "2026-11-09"
     },
     {
      "task": "Hatch an Egg",
@@ -43902,15 +43468,15 @@
      "rewards": [
       {
        "type": "encounter",
-       "name": "Honedge",
        "quantity": 1,
+       "name": "Honedge",
        "cpMin": 556,
        "cpMax": 595
       },
       {
        "type": "encounter",
-       "name": "Drampa",
        "quantity": 1,
+       "name": "Drampa",
        "cpMin": 1191,
        "cpMax": 1249
       }
@@ -43927,13 +43493,13 @@
       }
      ],
      "status": "single",
-     "eventId": "leekduck:pokemon-go-wild-area-2026-sendai-japan",
-     "eventName": "Pokémon GO Wild Area 2026: Sendai • Tohoku",
+     "eventId": "sendai",
+     "eventName": "GO Wild Area: Sendai",
      "eventWindow": {
-      "start": "2026-11-06T01:00:00.000Z",
-      "end": "2026-11-08T09:00:00.000Z"
+      "start": "2026-11-06T10:00",
+      "end": "2026-11-08T18:00"
      },
-     "checkedAt": "2026-11-07"
+     "checkedAt": "2026-11-09"
     },
     {
      "task": "Make an Excellent Throw",
@@ -43962,13 +43528,13 @@
       }
      ],
      "status": "single",
-     "eventId": "leekduck:pokemon-go-wild-area-2026-sendai-japan",
-     "eventName": "Pokémon GO Wild Area 2026: Sendai • Tohoku",
+     "eventId": "sendai",
+     "eventName": "GO Wild Area: Sendai",
      "eventWindow": {
-      "start": "2026-11-06T01:00:00.000Z",
-      "end": "2026-11-08T09:00:00.000Z"
+      "start": "2026-11-06T10:00",
+      "end": "2026-11-08T18:00"
      },
-     "checkedAt": "2026-11-07"
+     "checkedAt": "2026-11-09"
     },
     {
      "task": "Power up Dragon‑type Pokémon 5 times",
@@ -43976,8 +43542,8 @@
      "rewards": [
       {
        "type": "encounter",
-       "name": "Frigibax",
        "quantity": 1,
+       "name": "Frigibax",
        "cpMin": 496,
        "cpMax": 534
       }
@@ -43994,13 +43560,13 @@
       }
      ],
      "status": "single",
-     "eventId": "leekduck:pokemon-go-wild-area-2026-sendai-japan",
-     "eventName": "Pokémon GO Wild Area 2026: Sendai • Tohoku",
+     "eventId": "sendai",
+     "eventName": "GO Wild Area: Sendai",
      "eventWindow": {
-      "start": "2026-11-06T01:00:00.000Z",
-      "end": "2026-11-08T09:00:00.000Z"
+      "start": "2026-11-06T10:00",
+      "end": "2026-11-08T18:00"
      },
-     "checkedAt": "2026-11-07"
+     "checkedAt": "2026-11-09"
     },
     {
      "task": "Power up Steel‑type Pokémon 5 times",
@@ -44008,22 +43574,22 @@
      "rewards": [
       {
        "type": "encounter",
-       "name": "Bronzor",
        "quantity": 1,
+       "name": "Bronzor",
        "cpMin": 229,
        "cpMax": 258
       },
       {
        "type": "encounter",
-       "name": "Skarmory",
        "quantity": 1,
+       "name": "Skarmory",
        "cpMin": 854,
        "cpMax": 903
       },
       {
        "type": "encounter",
-       "name": "Onix",
        "quantity": 1,
+       "name": "Onix",
        "cpMin": 435,
        "cpMax": 472
       }
@@ -44040,13 +43606,13 @@
       }
      ],
      "status": "single",
-     "eventId": "leekduck:pokemon-go-wild-area-2026-sendai-japan",
-     "eventName": "Pokémon GO Wild Area 2026: Sendai • Tohoku",
+     "eventId": "sendai",
+     "eventName": "GO Wild Area: Sendai",
      "eventWindow": {
-      "start": "2026-11-06T01:00:00.000Z",
-      "end": "2026-11-08T09:00:00.000Z"
+      "start": "2026-11-06T10:00",
+      "end": "2026-11-08T18:00"
      },
-     "checkedAt": "2026-11-07"
+     "checkedAt": "2026-11-09"
     },
     {
      "task": "Use a Dragon‑type Charged Attack in a battle",
@@ -44054,11 +43620,11 @@
      "rewards": [
       {
        "type": "encounter",
-       "name": "Kommo-o",
        "quantity": 1,
+       "name": "Kommo-o",
+       "mighty": true,
        "cpMin": 1357,
-       "cpMax": 1418,
-       "mighty": true
+       "cpMax": 1418
       }
      ],
      "sources": [
@@ -44073,13 +43639,13 @@
       }
      ],
      "status": "single",
-     "eventId": "leekduck:pokemon-go-wild-area-2026-sendai-japan",
-     "eventName": "Pokémon GO Wild Area 2026: Sendai • Tohoku",
+     "eventId": "sendai",
+     "eventName": "GO Wild Area: Sendai",
      "eventWindow": {
-      "start": "2026-11-06T01:00:00.000Z",
-      "end": "2026-11-08T09:00:00.000Z"
+      "start": "2026-11-06T10:00",
+      "end": "2026-11-08T18:00"
      },
-     "checkedAt": "2026-11-07"
+     "checkedAt": "2026-11-09"
     },
     {
      "task": "Use a Steel‑type Charged Attack in a battle",
@@ -44087,16 +43653,16 @@
      "rewards": [
       {
        "type": "encounter",
-       "name": "Bastiodon",
        "quantity": 1,
+       "name": "Bastiodon",
+       "mighty": true,
        "cpMin": 615,
-       "cpMax": 660,
-       "mighty": true
+       "cpMax": 660
       },
       {
        "type": "encounter",
-       "name": "Shieldon",
        "quantity": 1,
+       "name": "Shieldon",
        "cpMin": 348,
        "cpMax": 381
       }
@@ -44113,13 +43679,13 @@
       }
      ],
      "status": "single",
-     "eventId": "leekduck:pokemon-go-wild-area-2026-sendai-japan",
-     "eventName": "Pokémon GO Wild Area 2026: Sendai • Tohoku",
+     "eventId": "sendai",
+     "eventName": "GO Wild Area: Sendai",
      "eventWindow": {
-      "start": "2026-11-06T01:00:00.000Z",
-      "end": "2026-11-08T09:00:00.000Z"
+      "start": "2026-11-06T10:00",
+      "end": "2026-11-08T18:00"
      },
-     "checkedAt": "2026-11-07"
+     "checkedAt": "2026-11-09"
     },
     {
      "task": "Win 2 raids",
@@ -44127,19 +43693,19 @@
      "rewards": [
       {
        "type": "encounter",
-       "name": "Azumarill",
        "quantity": 1,
+       "name": "Azumarill",
+       "mighty": true,
        "cpMin": 637,
-       "cpMax": 680,
-       "mighty": true
+       "cpMax": 680
       },
       {
        "type": "encounter",
-       "name": "Machamp (Modern Jacket)",
        "quantity": 1,
+       "name": "Machamp (modern jacket)",
        "costume": true,
+       "label": "modern jacket",
        "costumeId": "modernjacket",
-       "label": "Modern Jacket",
        "mighty": true
       }
      ],
@@ -44155,13 +43721,13 @@
       }
      ],
      "status": "single",
-     "eventId": "leekduck:pokemon-go-wild-area-2026-sendai-japan",
-     "eventName": "Pokémon GO Wild Area 2026: Sendai • Tohoku",
+     "eventId": "sendai",
+     "eventName": "GO Wild Area: Sendai",
      "eventWindow": {
-      "start": "2026-11-06T01:00:00.000Z",
-      "end": "2026-11-08T09:00:00.000Z"
+      "start": "2026-11-06T10:00",
+      "end": "2026-11-08T18:00"
      },
-     "checkedAt": "2026-11-07"
+     "checkedAt": "2026-11-09"
     },
     {
      "task": "Win a Max Battle",
@@ -44169,19 +43735,19 @@
      "rewards": [
       {
        "type": "encounter",
-       "name": "Kommo-o",
        "quantity": 1,
+       "name": "Kommo-o",
+       "mighty": true,
        "cpMin": 1357,
-       "cpMax": 1418,
-       "mighty": true
+       "cpMax": 1418
       },
       {
        "type": "encounter",
-       "name": "Bastiodon",
        "quantity": 1,
+       "name": "Bastiodon",
+       "mighty": true,
        "cpMin": 615,
-       "cpMax": 660,
-       "mighty": true
+       "cpMax": 660
       }
      ],
      "sources": [
@@ -44196,13 +43762,13 @@
       }
      ],
      "status": "single",
-     "eventId": "leekduck:pokemon-go-wild-area-2026-sendai-japan",
-     "eventName": "Pokémon GO Wild Area 2026: Sendai • Tohoku",
+     "eventId": "sendai",
+     "eventName": "GO Wild Area: Sendai",
      "eventWindow": {
-      "start": "2026-11-06T01:00:00.000Z",
-      "end": "2026-11-08T09:00:00.000Z"
+      "start": "2026-11-06T10:00",
+      "end": "2026-11-08T18:00"
      },
-     "checkedAt": "2026-11-07"
+     "checkedAt": "2026-11-09"
     },
     {
      "text": "Two Timed Research experiences guide you through specially decorated PokéStops across the city. Spin the corresponding stops to progress; these can also help you navigate between Stamp Rally locations.",
@@ -44247,7 +43813,7 @@
      "status": "single"
     },
     {
-     "text": "Catch a Hisuian Sliggoo REWARD Hisuian Sliggoo",
+     "text": "Catch a Hisuian Sliggoo REWARD Hisuian Sliggoo Max CP 829 Min CP 782",
      "sources": [
       "leekduck"
      ],
@@ -49331,7 +48897,7 @@
    ],
    "internalValidation": {
     "warnings": [],
-    "lifecycleDeclared": true,
+    "lifecycleDeclared": false,
     "conflicts": [],
     "fields": {
      "bonuses": [
@@ -49585,12 +49151,10 @@
      ]
     },
     "info": [],
-    "detailRefs": [
-     "leekduck:twilight-wishes-2026"
-    ],
+    "detailRefs": [],
     "legacyDates": {
-     "start": "",
-     "end": ""
+     "start": "2026-11-24",
+     "end": "2026-11-30"
     },
     "imageReviewed": true,
     "contentHash": "75e976347a31bb3bf02b0652b7ba016cbcdba6928696ddbebf376f075830db10",
@@ -50410,7 +49974,7 @@
     },
     "imageReviewed": true,
     "contentHash": "dce45278d164ec7d0efdbec4d901eac6f95e08bdec7b64c64c440d1336263583",
-    "revision": 16,
+    "revision": 18,
     "amended": true,
     "native": false,
     "collection": "world-events"
@@ -50880,13 +50444,343 @@
    "lifecycle": "announced",
    "attendance": "",
    "location": null,
-   "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-11-16-dynamax-trails-2026/dynamax-trails-2026.jpg",
+   "image": "https://lh3.googleusercontent.com/1ZxNwH9PkuqgUPjvwhCrCNSTSDktinzgCcLJEkm4tu41LlE_7OdyfM4GkR9qd9atoN_Tairx5bQ6IxBBOULlCO29cCM4qTuvsE4dm-RFup0",
    "notes": [],
    "internalValidation": {
     "warnings": [],
     "lifecycleDeclared": false,
     "conflicts": [],
-    "fields": {},
+    "fields": {
+     "bonuses": [
+      {
+       "text": "The following bonuses will be active during the event.",
+       "sources": [
+        "official",
+        "leekduck"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "A chance to receive Max Particles when catching event-themed Pokémon in the wild or after Max Battles.",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "More Power Spots than usual will be active.",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Max Particles cannot be obtained from catches with the Explorer Gadget or a Pokémon GO Plus +.",
+       "sources": [
+        "official",
+        "leekduck"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Power Spots will refresh more frequently.",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Max Particle collection limit increased to 2,400.",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "8× Max Particles from Power Spots.",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "From November 20 at 1:00 p.m. to November 21 at 6:00 p.m. PST (GMT −8), the daily Remote Raid limit will increase from 10 to 30.",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Reach Major Milestones on your event GO Pass to unlock the following bonuses.",
+       "sources": [
+        "official",
+        "leekduck"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Rank 15: 2× Catch Stardust",
+       "sources": [
+        "official",
+        "leekduck"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Rank 35: 1/2 Candy and Stardust to activate the Dynamax Cannon Adventure Effect",
+       "sources": [
+        "official",
+        "leekduck"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Rank 55: Additional Candy and Candy XL from Max Battles",
+       "sources": [
+        "official",
+        "leekduck"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Rank 55: Additional bonus tasks for this GO Pass will be available during the event.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      }
+     ],
+     "featured": [
+      {
+       "text": "You may encounter event-themed Pokémon in the wild, including any Pokémon* that has debuted in Dynamax Max Battles!",
+       "sources": [
+        "official",
+        "leekduck"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Complete Pass Tasks to rank up your GO Pass to earn the following rewards.",
+       "sources": [
+        "official",
+        "leekduck"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Encounters with event-themed Dynamax Pokémon with a Special Background",
+       "sources": [
+        "official",
+        "leekduck"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "An encounter with Eternatus, or 100 Eternatus Candy if you have already caught Eternatus",
+       "sources": [
+        "official",
+        "leekduck"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Eternatus Candy and Candy XL",
+       "sources": [
+        "official",
+        "leekduck"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Event-themed stickers",
+       "sources": [
+        "official",
+        "leekduck"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Trainers who upgrade to the GO Pass Deluxe can also earn the following rewards.",
+       "sources": [
+        "official",
+        "leekduck"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Silver Pinap Berries",
+       "sources": [
+        "official",
+        "leekduck"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Additional rewards",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      }
+     ],
+     "raids": [
+      {
+       "text": "Monday, November 16, at 10:00 a.m. to Monday, November 23, 2026, at 8:00 p.m. local time",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Prepare for the return of every Dynamax Pokémon seen in Pokémon GO!",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "All Dynamax Pokémon* that have appeared in Pokémon GO may appear in Max Battles.",
+       "sources": [
+        "official",
+        "leekduck"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Get ready for a week of Max Battles! Dynamax Pokémon return, Max Particles are surging in the wild, and Eternamax Eternatus returns to Power Spots during Dynamax Trails.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "The Dynamax Trails event will take place from November 16, 2026 at 10 am to November 23, 2026 at 8 pm local time.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      }
+     ],
+     "eggs": [],
+     "research": [
+      {
+       "text": "Event-themed Field Research tasks will be available! Complete them to earn Stardust, Eternatus Candy, and more!",
+       "sources": [
+        "official",
+        "leekduck"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Complete Field Research tasks to earn encounters with event-themed Pokémon.",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      }
+     ],
+     "shiny": [],
+     "moves": [],
+     "costumes": [],
+     "tickets": [
+      {
+       "text": "A GO Pass is a free, limited-time progression track available during a specified period. By collecting GO Points, you can increase your rank to earn rewards.",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "You can collect GO Points and rank up to get additional rewards through Monday, November 23, 2026, at 8:00 p.m. local time.",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "For US$4.99*, Trainers can upgrade to the GO Pass Deluxe, a paid version of the GO Pass that offers upgraded rewards and faster progression.",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Trainers who claimed the first tier of rewards in GO Pass: Into the Wild will automatically be upgraded to the GO Pass Deluxe, for free!",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Rewards unlocked in the GO Pass will expire on Wednesday, November 25, 2026, at 8:00 p.m. local time, so be sure to claim your rewards before they’re gone!",
+       "sources": [
+        "official",
+        "leekduck"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "GO Pass is a free, limited-time progression track. Collect GO Points and complete Pass Tasks to rank up and earn rewards.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Trainers will automatically receive GO Pass: Dynamax Trails on November 16, 2026, at 10 am local time. GO Points can be collected through November 23, 2026, at 8 pm local time.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Trainers who claim Tier 1 rewards (Rank 25) on GO Pass: Into the Wild will receive early access on November 14, 2026, at 10 am local time, and a free upgrade to GO Pass Deluxe: Dynamax Trails .",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      }
+     ],
+     "dates": [
+      {
+       "text": "Monday, November 16, at 10:00 a.m. to Monday, November 23, 2026, at 8:00 p.m. local time",
+       "sources": [
+        "official",
+        "leekduck"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "From November 20 at 1:00 p.m. to November 21 at 6:00 p.m. PST (GMT −8), the daily Remote Raid limit will increase from 10 to 30.",
+       "sources": [
+        "official",
+        "leekduck"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "The Dynamax Trails event will take place from November 16, 2026 at 10 am to November 23, 2026 at 8 pm local time.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Grookey, Scorbunny, and Sobble will be featured during Pokémon Spotlight Hour on November 19, 2026, from 6 pm to 7 pm local time. The bonus will be 2× Catch Candy .",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Trainers who claim Tier 1 rewards (Rank 25) on GO Pass: Into the Wild will receive early access on November 14, 2026, at 10 am local time, and a free upgrade to GO Pass Deluxe: Dynamax Trails .",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      }
+     ]
+    },
     "info": [],
     "detailRefs": [],
     "legacyDates": {
@@ -50894,8 +50788,8 @@
      "end": "2026-11-23"
     },
     "imageReviewed": true,
-    "contentHash": "b806f628f290af041cd4e00988934e38499f8ccf9c6be65e79eb74e30bde3b09",
-    "revision": 4,
+    "contentHash": "a71a661d37bf69a7710dcbe962786cbc224a61686f4267ff20f3f00f5945d1e9",
+    "revision": 5,
     "amended": false,
     "native": false,
     "collection": "world-events"
@@ -50906,44 +50800,92 @@
     {
      "text": "The following bonuses will be active during the event.",
      "sources": [
+      "official",
       "leekduck"
      ],
-     "status": "single"
+     "status": "official"
+    },
+    {
+     "text": "A chance to receive Max Particles when catching event-themed Pokémon in the wild or after Max Battles.",
+     "sources": [
+      "official"
+     ],
+     "status": "official"
+    },
+    {
+     "text": "More Power Spots than usual will be active.",
+     "sources": [
+      "official"
+     ],
+     "status": "official"
     },
     {
      "text": "Max Particles cannot be obtained from catches with the Explorer Gadget or a Pokémon GO Plus +.",
      "sources": [
+      "official",
       "leekduck"
      ],
-     "status": "single"
+     "status": "official"
     },
     {
-     "text": "Reach the following ranks on your event GO Pass to unlock these bonuses.",
+     "text": "Power Spots will refresh more frequently.",
      "sources": [
+      "official"
+     ],
+     "status": "official"
+    },
+    {
+     "text": "Max Particle collection limit increased to 2,400.",
+     "sources": [
+      "official"
+     ],
+     "status": "official"
+    },
+    {
+     "text": "8× Max Particles from Power Spots.",
+     "sources": [
+      "official"
+     ],
+     "status": "official"
+    },
+    {
+     "text": "From November 20 at 1:00 p.m. to November 21 at 6:00 p.m. PST (GMT −8), the daily Remote Raid limit will increase from 10 to 30.",
+     "sources": [
+      "official"
+     ],
+     "status": "official"
+    },
+    {
+     "text": "Reach Major Milestones on your event GO Pass to unlock the following bonuses.",
+     "sources": [
+      "official",
       "leekduck"
      ],
-     "status": "single"
+     "status": "official"
     },
     {
      "text": "Rank 15: 2× Catch Stardust",
      "sources": [
+      "official",
       "leekduck"
      ],
-     "status": "single"
+     "status": "official"
     },
     {
-     "text": "Rank 35: 1/2 Candy and Stardust cost to activate the Dynamax Cannon Adventure Effect",
+     "text": "Rank 35: 1/2 Candy and Stardust to activate the Dynamax Cannon Adventure Effect",
      "sources": [
+      "official",
       "leekduck"
      ],
-     "status": "single"
+     "status": "official"
     },
     {
      "text": "Rank 55: Additional Candy and Candy XL from Max Battles",
      "sources": [
+      "official",
       "leekduck"
      ],
-     "status": "single"
+     "status": "official"
     },
     {
      "text": "Rank 55: Additional bonus tasks for this GO Pass will be available during the event.",
@@ -50955,15 +50897,59 @@
    ],
    "research": [
     {
-     "text": "Complete event-themed Field Research tasks to earn Stardust, Eternatus Candy, encounters with event-themed Pokémon, and more.",
+     "text": "Event-themed Field Research tasks will be available! Complete them to earn Stardust, Eternatus Candy, and more!",
      "sources": [
+      "official",
       "leekduck"
      ],
-     "status": "single"
+     "status": "official"
+    },
+    {
+     "text": "Complete Field Research tasks to earn encounters with event-themed Pokémon.",
+     "sources": [
+      "official"
+     ],
+     "status": "official"
     }
    ],
    "passes": [],
    "tickets": [
+    {
+     "text": "A GO Pass is a free, limited-time progression track available during a specified period. By collecting GO Points, you can increase your rank to earn rewards.",
+     "sources": [
+      "official"
+     ],
+     "status": "official"
+    },
+    {
+     "text": "You can collect GO Points and rank up to get additional rewards through Monday, November 23, 2026, at 8:00 p.m. local time.",
+     "sources": [
+      "official"
+     ],
+     "status": "official"
+    },
+    {
+     "text": "For US$4.99*, Trainers can upgrade to the GO Pass Deluxe, a paid version of the GO Pass that offers upgraded rewards and faster progression.",
+     "sources": [
+      "official"
+     ],
+     "status": "official"
+    },
+    {
+     "text": "Trainers who claimed the first tier of rewards in GO Pass: Into the Wild will automatically be upgraded to the GO Pass Deluxe, for free!",
+     "sources": [
+      "official"
+     ],
+     "status": "official"
+    },
+    {
+     "text": "Rewards unlocked in the GO Pass will expire on Wednesday, November 25, 2026, at 8:00 p.m. local time, so be sure to claim your rewards before they’re gone!",
+     "sources": [
+      "official",
+      "leekduck"
+     ],
+     "status": "official"
+    },
     {
      "text": "GO Pass is a free, limited-time progression track. Collect GO Points and complete Pass Tasks to rank up and earn rewards.",
      "sources": [
@@ -50980,13 +50966,6 @@
     },
     {
      "text": "Trainers who claim Tier 1 rewards (Rank 25) on GO Pass: Into the Wild will receive early access on November 14, 2026, at 10 am local time, and a free upgrade to GO Pass Deluxe: Dynamax Trails .",
-     "sources": [
-      "leekduck"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Claim all unlocked rewards by November 25, 2026, at 8 pm local time , before they expire.",
      "sources": [
       "leekduck"
      ],
@@ -51009,6 +50988,12 @@
     {
      "url": "https://leekduck.com/events/dynamax-trails-2026/",
      "name": "Event source"
+    },
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "trust": "official",
+     "url": "https://pokemongo.com/news/dynamax-trails-eternamax-eternatus-2026/"
     }
    ],
    "pokemon": [],
@@ -51032,7 +51017,71 @@
     "warnings": [],
     "lifecycleDeclared": false,
     "conflicts": [],
-    "fields": {},
+    "fields": {
+     "bonuses": [
+      {
+       "text": "The following bonuses will be active during the event.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "The daily Remote Raid limit will increase from 10 to 30 from November 20 at 1 pm to November 21 at 6 pm PST (GMT −8).",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      }
+     ],
+     "featured": [],
+     "raids": [
+      {
+       "text": "Eternamax Eternatus",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      }
+     ],
+     "eggs": [],
+     "research": [],
+     "shiny": [],
+     "moves": [],
+     "costumes": [],
+     "tickets": [
+      {
+       "text": "Eternatus is available through GO Pass: Dynamax Trails . Trainers who have already caught Eternatus will receive 100 Eternatus Candy instead of another encounter.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Both the free GO Pass and GO Pass Deluxe provide Eternatus Candy and Candy XL to help power it up.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      }
+     ],
+     "dates": [
+      {
+       "text": "Eternamax Eternatus returns during Dynamax Trails , taking over the majority of Power Spots on November 21, 2026, from 11 am to 2 pm local time.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "The daily Remote Raid limit will increase from 10 to 30 from November 20 at 1 pm to November 21 at 6 pm PST (GMT −8).",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      }
+     ]
+    },
     "info": [],
     "detailRefs": [],
     "legacyDates": {
@@ -51040,9 +51089,9 @@
      "end": "2026-11-21"
     },
     "imageReviewed": true,
-    "contentHash": "cecf456407244694b44d2f30a5d102130203de44468d24469dad2707f1d658b9",
-    "revision": 5,
-    "amended": false,
+    "contentHash": "4bbe2871a823eb21458a110b1a90a61e5fce0d1ddaa2d47d0d0671f282a84a9d",
+    "revision": 7,
+    "amended": true,
     "native": false,
     "collection": "world-events"
    },
@@ -51216,7 +51265,7 @@
    "completeness": "partial",
    "lifecycle": "announced",
    "attendance": "in-person",
-   "location": "Japan",
+   "location": "South Korea",
    "image": null,
    "notes": [],
    "internalValidation": {
@@ -51230,8 +51279,8 @@
      "start": "2026-11-03",
      "end": "2026-11-03"
     },
-    "contentHash": "0ca84974cfa677f1be63ebd7712b231d3f83b8d9beb34b2f503e737968fe94fe",
-    "revision": 10,
+    "contentHash": "5cdd55e002ca42377352e7b637a57f2e39afa99cde6bbc64780733a9cc28f6b3",
+    "revision": 11,
     "amended": false,
     "native": false,
     "collection": "world-events"
@@ -53581,13 +53630,90 @@
     "warnings": [],
     "lifecycleDeclared": false,
     "conflicts": [],
-    "fields": {},
+    "fields": {
+     "bonuses": [],
+     "featured": [
+      {
+       "text": "You may encounter Minior in its Meteor Form in the wild during the event. You’ll receive 1,000 Stardust for catching Minior .",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Minior encounters are more likely from 5:00 p.m. to 9:00 p.m. local time each day .",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      }
+     ],
+     "raids": [],
+     "eggs": [],
+     "research": [],
+     "shiny": [],
+     "moves": [],
+     "costumes": [],
+     "tickets": [],
+     "dates": [
+      {
+       "text": "This Minior Shower runs from December 11, 2026 at 5:00 p.m. to December 16, 2026 at 11:59 p.m. local time .",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "From 5:00 p.m. to 9:00 p.m. local time every day during each Minior Shower, shooting stars will light up the in-game sky. During these hours, you’ll have an increased chance of encountering Minior in the wild!",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Orionids : October 19–24, 2026",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Leonids : November 14–19, 2026",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Eta Aquariids : May 3–8, 2027",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Southern Delta Aquariids : July 28–August 2, 2027",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Perseids : August 10–15, 2027",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      }
+     ]
+    },
     "info": [],
     "detailRefs": [],
     "legacyDates": {
      "start": "2026-12-11",
      "end": "2026-12-16"
     },
+    "imageReviewed": true,
     "contentHash": "e6c615f4956ad98ad3ea82b41b0ba5adfbf576ac80f5adf4c7c24055f75848d7",
     "revision": 3,
     "amended": false,
@@ -53610,6 +53736,12 @@
     {
      "url": "https://leekduck.com/events/minior-showers-geminids-2026/",
      "name": "Event source"
+    },
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/minior-showers-geminids-2026/"
     }
    ],
    "pokemon": [],
@@ -59699,7 +59831,7 @@
      "end": "2027-04-11"
     },
     "contentHash": "84950064738e11a798ef98f9fd6ab913640b138fb1594e38612f64db09c4dd24",
-    "revision": 16,
+    "revision": 18,
     "amended": true,
     "native": false,
     "collection": "world-events"

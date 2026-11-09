@@ -1,12 +1,12 @@
 {
- "runAt": "2026-11-09T10:48:18.438Z",
+ "runAt": "2026-11-09T11:14:11.408Z",
  "artworkCoverage": {
-  "selected": 29,
-  "missing": 70,
-  "legacyUnattributed": 3,
+  "selected": 27,
+  "missing": 66,
+  "legacyUnattributed": 2,
   "bySource": {
    "Pokémon GO (official)": 19,
-   "Leek Duck": 10
+   "Leek Duck": 8
   },
   "missingEvents": [
    {
@@ -213,27 +213,6 @@
     ]
    },
    {
-    "id": "leekduck:minior-showers-leonids-2026",
-    "name": "Minior Showers: Leonids 2026",
-    "sources": [
-     "https://leekduck.com/events/minior-showers-leonids-2026/"
-    ]
-   },
-   {
-    "id": "leekduck:minior-showers-geminids-2026",
-    "name": "Minior Showers: Geminids 2026",
-    "sources": [
-     "https://leekduck.com/events/minior-showers-geminids-2026/"
-    ]
-   },
-   {
-    "id": "leekduck:eternamax-eternatus-max-battles-2026",
-    "name": "Eternamax Eternatus Returns",
-    "sources": [
-     "https://leekduck.com/events/eternamax-eternatus-max-battles-2026/"
-    ]
-   },
-   {
     "id": "leekduck:go-pass-november-2026",
     "name": "GO Pass: November",
     "sources": [
@@ -409,13 +388,6 @@
     ]
    },
    {
-    "id": "leekduck:pokemon-tcg-30th-celebration",
-    "name": "Pokémon TCG: 30th Celebration",
-    "sources": [
-     "https://pokemongo.com/news/tcg-30th-celebration-event/"
-    ]
-   },
-   {
     "id": "leekduck:dialga-in-5-star-raid-battles-october-2026",
     "name": "Dialga in 5-star Raid Battles",
     "sources": [
@@ -525,7 +497,7 @@
   }
  },
  "pagesRead": 80,
- "events": 102,
+ "events": 95,
  "worldEvents": 59,
  "worldUndated": [
   "GO Wild Area Stamp Rally"
