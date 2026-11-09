@@ -23,9 +23,25 @@ export function updatePrices(data, snapshot) {
   // A mixed or non-AUD snapshot must not contaminate the Australian catalogue.
   if (items.length < 3 || explicit.length !== items.length) return {data,changed:0,reason:'not a complete explicit AUD snapshot'};
   let changed = 0;
+  const existingIds = new Set(prices.map(p => p.product));
+  const discovered = new Set();
   for (const item of explicit) {
-    const product = known.get(String(item.name || '').trim().toLowerCase());
-    if (!product) continue;
+    const name = String(item.name || '').trim();
+    let product = known.get(name.toLowerCase());
+    const href = String(item.href || '');
+    if (!product) {
+      // New catalogue entries must have an unambiguous store purchase slug.
+      const match = /^\/purchase\/item\/([a-z0-9][a-z0-9-]{2,100})$/.exec(href);
+      if (!match || !name || name.length > 120) continue;
+      product = 'store-auto-' + match[1];
+      if (existingIds.has(product) || discovered.has(product)) continue;
+      discovered.add(product);
+      const lower = name.toLowerCase();
+      const group = /pok.coins/.test(lower) ? 'PokéCoins' : /ticket|go pass|research/.test(lower) ? 'Tickets' : /box|bundle|pack/.test(lower) ? 'Boxes' : 'Items';
+      prices.push({product,label:name,group,currency:'AUD',amount:parseAUD(item.price),region:'AU',verified:true,source:'Pokémon GO Web Store (explicit A$ snapshot)',url:'https://store.pokemongo.com'+href,observed});
+      changed++;
+      continue;
+    }
     const amount = parseAUD(item.price);
     const current = prices.filter(p=>p.product===product && p.region==='AU' && p.currency==='AUD' && p.verified).sort((a,b)=>String(b.observed).localeCompare(String(a.observed)))[0];
     if (current && current.amount === amount) continue;
