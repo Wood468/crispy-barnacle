@@ -62,7 +62,8 @@ export async function main(fetchFn = fetch) {
   for (const [key, { n, label }] of collect(data, details)) {
     if (res.pictures[key]) continue;
     // Trainer clothing such as "GO Wild Area 2026 Tee (Purple)" matches the "Name (Label)" shape but is never a Pokémon costume.
-    if (isAvatarItemName(n)) { res.avatar.push(key); continue; }
+    // A Pokémon costume such as "Espeon (Sun Scarf)" names a species first; only a non-species prefix ("GO Wild Area 2026 Tee") is clothing.
+    if (isAvatarItemName(n) && !no[n.split(" (")[0].toLowerCase()]) { res.avatar.push(key); continue; }
     const id = no[n.toLowerCase()]; if (!id) { res.missing.push(key + " (no dex number)"); continue; }
     try {
       if (!(id in pages)) { const r = await fetchFn(`${SEREBII}${String(id).padStart(3, "0")}.shtml`, { headers: { "user-agent": "Mozilla/5.0 go-field-notes" } }); pages[id] = r.ok ? serebiiForms(await r.text(), id) : {}; }

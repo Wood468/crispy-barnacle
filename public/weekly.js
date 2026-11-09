@@ -34,7 +34,10 @@
     }).filter(function (g) { return g.items.length; });
     row.innerHTML = groups.map(function (g, n) {
       var top = g.items[0];
-      return '<button type="button" class="weekly-card" data-n="' + n + '"><span><b>' + esc(g.label) + '</b><small>' + esc(day(top.publishedAt)) + (g.items.length > 1 ? ' · ' + g.items.length + ' pictures' : '') + '</small></span></button>';
+      var age = top.publishedAt ? (Date.now() - new Date(top.publishedAt).getTime()) / 864e5 : 0;
+      var stale = g.kind === 'week' ? age > 8 : age > 35;
+      var when = (stale ? 'Published ' : '') + day(top.publishedAt);
+      return '<button type="button" class="weekly-card" data-n="' + n + '"><span><b>' + esc(g.label) + '</b><small' + (stale ? ' class="weekly-stale"' : '') + '>' + esc(when) + (g.items.length > 1 ? ' · ' + g.items.length + ' pictures' : '') + (stale ? ' · not updated yet' : '') + '</small></span></button>';
     }).join('');
     row.addEventListener('click', function (e) { var b = e.target.closest('.weekly-card'); if (b) open(groups[+b.getAttribute('data-n')].items, b); });
     sec.hidden = false;
