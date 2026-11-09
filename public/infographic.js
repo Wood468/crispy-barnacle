@@ -340,5 +340,14 @@
   });
   if (document.body) liveRegion(); else document.addEventListener('DOMContentLoaded', liveRegion);
   watchButtons();
-  window.GOINFOGRAPHIC = { open: open, close: close };
+  // Only surface the player-facing shortcut when an approved/published poster exists.
+  function available(id) {
+    var ev = evById(id);
+    if (!ev) return Promise.resolve(false);
+    return loadInfo().then(function (all) {
+      var info = eventInfo(ev, all);
+      return !!((info.infographics || []).some(function (im) { return im && safe(im.url); }) || safe(ev.infographicUrl || ev.infographic));
+    }).catch(function () { return false; });
+  }
+  window.GOINFOGRAPHIC = { open: open, close: close, available: available };
 })();
