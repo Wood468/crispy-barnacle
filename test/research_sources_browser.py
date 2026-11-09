@@ -121,6 +121,7 @@ with sync_playwright() as p:
         assert page.locator('#research-list .research-task').count() >= 1
         assert 'Magnemite' in page.locator('#research-list').inner_text()
         page.fill('#research-search', 'zzzz-nothing')
+        page.wait_for_function("document.querySelector('#research-list').innerText.includes('No task or reward matches')", timeout=5000)
         assert 'No task or reward matches' in page.locator('#research-list').inner_text()
         page.fill('#research-search', '')
         assert page.locator('#research-list .research-event').count() >= 1

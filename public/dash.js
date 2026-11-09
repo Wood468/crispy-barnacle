@@ -78,6 +78,8 @@
   /* Calendar labels and boundaries follow the saved viewer zone, or the device by default. */
   function pad(n) { return ('0' + n).slice(-2); }
   function fmtD(d) { var p=civil(d);return DOW[p.weekday]+' '+p.day+' '+MON[p.month]; }
+  /* A range that runs into another year names both years, so "Fri 22 May to Sun 11 Apr" cannot read as ending before it starts. */
+  function fmtRangeD(a, b) { var pa=civil(a), pb=civil(b); return pa.year!==pb.year ? fmtD(a)+' '+pa.year+' to '+fmtD(b)+' '+pb.year : fmtD(a)+' to '+fmtD(b); }
   function fmtT(d) { var p=civil(d),h=p.hour,m=p.minute,ap=h>=12?'pm':'am';h=h%12||12;return h+(m?':'+pad(m):'')+' '+ap; }
   function dayKey(d) { return CLOCK.dayKey(d); }
   function startOfDay(d) { return CLOCK.startDay(d); }
@@ -1000,7 +1002,7 @@
   function agendaInner(it, isReg) {
     if (isReg) {
       var mult = it.end.getTime() - it.start.getTime() > 864e5;
-      var when = it.travel ? travelDateText(it) : (mult ? fmtD(it.start) + ' to ' + fmtD(it.end) : fmtD(it.start));
+      var when = it.travel ? travelDateText(it) : (mult ? fmtRangeD(it.start, it.end) : fmtD(it.start));
       return '<a class="agr reg"'+catalogueDetailAttr(it)+' href="' + esc(it.src.url) + '" target="_blank" rel="noopener noreferrer" style="--k:' + REGCOL + '"><i></i><span class="agt"><b>' + esc(it.name) + '</b><small>' + (it.place ? esc(it.place) + ' · ' : '') + esc(when) + '</small></span><em>' + (regInPerson(it) ? 'In person · ' : '') + esc(it.area) + '</em></a>';
     }
     var k = kindOf(it);
@@ -2161,7 +2163,8 @@ function renderHomeBrief(t) {
     t.classList.toggle('t1-toast-error', !!retry);
     if (undoKey) { var b = document.createElement('button'); b.type = 'button'; b.className = 't1-toast-undo'; b.setAttribute('data-t1-undo', undoKey); b.textContent = 'Undo'; t.appendChild(b); }
     if (retry) { t1Retry = retry; var r = document.createElement('button'); r.type = 'button'; r.className = 't1-toast-undo t1-toast-retry'; r.setAttribute('data-t1-retry', '1'); r.textContent = 'Try again'; t.appendChild(r); }
-    t.hidden = false; clearTimeout(t._h); t._h = setTimeout(function () { t.hidden = true; }, retry ? 15000 : 7000);
+    var al = document.getElementById('gofn-storage-alert'); if (al && retry) al.hidden = true; // never stack two save errors
+    t.hidden = false; clearTimeout(t._h); t._h = setTimeout(function () { t.hidden = true; }, retry ? 10000 : 7000);
   }
   /* Marks one occurrence done. The card is hidden only when the value was really written; on a storage failure nothing changes on screen and the toast offers a retry. */
   function t1Mark(p) {

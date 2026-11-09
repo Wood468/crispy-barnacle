@@ -407,7 +407,7 @@
     } catch (e) { kept = false; }
     return { value: null, corrupt: true, unreadable: false, kept: kept };
   }
-  var SAVE_MESSAGE = 'Couldn\u2019t save \u2014 storage is full or unavailable. Changes stay on screen for this session only.';
+  var SAVE_MESSAGE = 'Couldn\u2019t save on this device \u2014 storage is full or unavailable. Your change is only on screen for now.';
   var failing = {}, retryFns = {}, alertDismissed = false;
   function reportSave(source, ok, retry) {
     if (typeof document === 'undefined') return ok;
@@ -426,7 +426,10 @@
       document.body.appendChild(el);
     }
     el.querySelector('.storage-alert-msg').textContent = SAVE_MESSAGE;
+    // One message at a time: a save toast with its own retry would repeat this banner, so the banner replaces it.
+    ['t1-toast', 'evtoast'].forEach(function (id) { var t = document.getElementById(id); if (t) t.hidden = true; });
     el.hidden = false;
+    clearTimeout(el._h); el._h = setTimeout(function () { el.hidden = true; }, 12000); // auto-dismiss; a new failed save shows it again
     return ok;
   }
   function failingSources() { return Object.keys(failing); }

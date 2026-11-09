@@ -89,12 +89,13 @@ export async function appEvents() {
       const detailIds = Array.isArray(e.detailIds) ? e.detailIds : [];
       const link = e.sourceUrl || e.link || "";
       if (existing) {
+        existing.curated = true;
         existing.t = e.t || existing.t;
         existing.link = link || existing.link;
         existing.start = e.s || existing.start;
         existing.end = e.e || existing.end;
         existing.detailIds = detailIds;
-      } else evs.push({ id: e.id, t: e.t, link, start: e.s, end: e.e, detailIds });
+      } else evs.push({ id: e.id, t: e.t, link, start: e.s, end: e.e, detailIds, curated: true });
     }
   } catch { /* no snapshot */ }
   return evs;
@@ -124,6 +125,10 @@ function pageDatesOverlapEvent(page, event) {
 
 // Where a page says the event is (from its title only). "Pokémon GO Wild Area 2026: Mexico City" is the Mexico City event, never the global Into the Wild week.
 export function titlePlaceConflict(page, event) {
+  // A named installment ("GO Wild Area Global Meetup: Karlsruhe") is never matched by a page that does not name that installment (the shared Global page).
+  const variant = String(event.t || event.name || "").split(":").slice(1).join(":").toLowerCase().split(/[^a-z0-9]+/).filter(w => w.length >= 4);
+  const pageText = (String(page.title || "") + " " + String(page.url || "")).toLowerCase();
+  if (variant.length && !variant.some(w => pageText.includes(w))) return true;
   const pagePlace = placeOf(String(page.title || ""), "");
   if (!pagePlace || !pagePlace.place.includes(",")) return false; // only a city/venue ("Mexico City, Mexico"), not a region ("Europe")
   const eventPlace = placeOf(String(event.t || event.name || "") + " " + String(event.place || ""), "");
@@ -149,6 +154,17 @@ function pageDetailId(page) {
     return parts.length === 2 && parts[0] === "events" ? "leekduck:" + parts[1] : "";
   } catch { return ""; }
 }
+// The live feed can list the same event under a source-derived id ("leekduck:into-the-wild-2026") next to the curated record ("into").
+// A page that links to the feed record belongs to the curated record, so Event Details, Research and GO Pass read one merged entry.
+function preferCurated(event, events) {
+  if (!event || event.curated) return event;
+  const key = v => String(v || "").toLowerCase().replace(/\b20\d\d\b/g, "").replace(/[^a-z0-9]+/g, " ").trim();
+  const name = key(event.t || event.name);
+  if (!name) return event;
+  const twin = events.find(e => e.curated && e !== event && key(e.t || e.name) === name
+    && String(e.start || "").slice(0, 10) <= String(event.end || event.start || "9999").slice(0, 10) && String(e.end || e.start || "9999").slice(0, 10) >= String(event.start || "").slice(0, 10));
+  return twin || event;
+}
 export function pickEvent(page, events) {
   const pagePart = eventPartNumber(String(page.title || "") + " " + String(page.url || ""));
   const compatible = event => {
@@ -160,19 +176,20 @@ export function pickEvent(page, events) {
   const detailId = pageDetailId(page);
   if (detailId) {
     const exact = events.find(e => Array.isArray(e.detailIds) && e.detailIds.includes(detailId) && compatible(e));
-    if (exact) return pageDatesOverlapEvent(page, exact) ? { event: exact, how: "detail-id" } : null;
+    if (exact) { const pick = preferCurated(exact, events); return pageDatesOverlapEvent(page, pick) ? { event: pick, how: "detail-id" } : null; }
   }
   const normalUrl = value => {
     const text = String(value || "");
     return text.endsWith("/") ? text : text + "/";
   };
   const direct = events.find(e => e.link && normalUrl(e.link) === normalUrl(page.url) && compatible(e));
-  if (direct) return pageDatesOverlapEvent(page, direct) ? { event: direct, how: "linked" } : null;
+  if (direct) { const pick = preferCurated(direct, events); return pageDatesOverlapEvent(page, pick) ? { event: pick, how: "linked" } : null; }
   const candidates = events.filter(e => compatible(e) && !titlePlaceConflict(page, e));
   const m = matchEvent({ title: page.title || "" }, candidates);
   if (m && m.confidence === "high") {
     const event = candidates.find(e => e.id === m.eventId);
-    if (event && pageDatesOverlapEvent(page, event)) return { event, how: "title" };
+    const pick = preferCurated(event, events);
+    if (pick && pageDatesOverlapEvent(page, pick)) return { event: pick, how: "title" };
   }
   return null;
 }
@@ -344,7 +361,12 @@ async function main() {
       internalValidation:metadata};
   }
   preserveGoPassRows(out, old, byEvent);
-  for (const [id, v] of Object.entries(old)) if (!out[id] && Date.now() - Date.parse(v.updated || 0) < 45 * 864e5) out[id] = normaliseLegacyStatuses(v); // keep recent entries a source stopped listing, with current terminology
+  // A feed-derived twin record (leekduck:<slug>) whose every source page is now read into the curated record is a duplicate: keeping it would show every task and Pokémon twice.
+  const claimedUrls = new Set([...byEvent.values()].flatMap(group => group.results.map(result => normUrl(result.source.url))));
+  let sameRulings = []; try { sameRulings = JSON.parse(await readFile("data/event-aliases.json", "utf8")).same || []; } catch { /* no rulings */ }
+  const twinOfCurated = id => sameRulings.some(pair => Array.isArray(pair) && pair.includes(id) && pair.some(other => other !== id && out[other] && byEvent.has(other)));
+  const absorbed = (v, id) => twinOfCurated(id) || ((v.sources || []).length > 0 && (v.sources || []).every(source => claimedUrls.has(normUrl(source.url || ""))));
+  for (const [id, v] of Object.entries(old)) if (!out[id] && !absorbed(v, id) && Date.now() - Date.parse(v.updated || 0) < 45 * 864e5) out[id] = normaliseLegacyStatuses(v); // keep recent entries a source stopped listing, with current terminology
   try { applyLineCorrections(out, JSON.parse(await readFile("data/line-corrections.json", "utf8")).lines); } catch { /* optional */ }
   await mkdir("data", { recursive: true });
   await writeFile(OUT, JSON.stringify({ updated: now, events: out }, null, 1) + "\n");

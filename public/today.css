@@ -214,7 +214,7 @@ header.top .hbtn{width:44px;height:44px}
 .t1-banner .ev-art-accent{width:26%;max-width:92px}
 .t1-toast.t1-toast-error{border-color:var(--bad,#ff8a80);background:#2a1216}
 .t1-toast-retry{background:#fff;color:#111826}
-.storage-alert{position:fixed;left:50%;bottom:calc(150px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:1290;display:flex;align-items:center;gap:8px;width:max-content;max-width:calc(100vw - 32px);padding:8px 8px 8px 14px;border-radius:16px;background:#2a1216;color:#fff;border:1px solid #ff8a80;box-shadow:0 8px 24px rgba(0,0,0,.4);font-size:14px;line-height:1.35}
+.storage-alert{position:fixed;left:50%;bottom:calc(88px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:1290;display:flex;align-items:center;gap:8px;width:max-content;max-width:calc(100vw - 32px);padding:8px 8px 8px 14px;border-radius:16px;background:#2a1216;color:#fff;border:1px solid #ff8a80;box-shadow:0 8px 24px rgba(0,0,0,.4);font-size:14px;line-height:1.35}
 .storage-alert[hidden]{display:none}
 .storage-alert-retry,.storage-alert-x{min-height:44px;min-width:44px;border-radius:999px;border:0;font-weight:800;cursor:pointer}
 .storage-alert-retry{padding:0 14px;background:#fff;color:#111826}

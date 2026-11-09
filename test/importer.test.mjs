@@ -358,3 +358,12 @@ test("research rewards: an item bounded by its repeated quantity does not swallo
   assert.equal(f.researchTasks[0].rewards[2].cpMax, 1160);
   assert.deepEqual(f.researchTasks[1].rewards.map(r => r.name + ":" + r.quantity), ["Pawniard:1", "Great Ball:5", "Ultra Ball:2", "Pinap Berry:2", "Stardust:500"]);
 });
+
+test("a page linked from a feed-derived twin is attached to the curated record with the same name and dates", () => {
+  const evs = [
+    { id: "leekduck:into-the-wild-2026", t: "Into the Wild 2026", link: "https://leekduck.com/events/into-the-wild-2026/", start: "2026-11-09T10:00", end: "2026-11-13T20:00" },
+    { id: "into", t: "Into the Wild", link: "https://pokemongo.com/news/into-the-wild-2026", start: "2026-11-09T10:00", end: "2026-11-13T20:00", curated: true },
+  ];
+  const hit = pickEvent({ url: "https://leekduck.com/events/into-the-wild-2026/", source: "leekduck", title: "Into the Wild", fields: {} }, evs);
+  assert.equal(hit.event.id, "into");
+});

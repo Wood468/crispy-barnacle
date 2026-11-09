@@ -41,7 +41,7 @@
   #tab-now .t1-badges .t1-kind, #tab-now .t1-badges .t1-live { font-size: .62rem; padding: 3px 6px; }
   #tab-now .t1-badges .t1-count { font-size: .72rem; }
 
-  #tab-raids .prio-head .sec2 { font-size: 1.5rem; line-height: 1.1; max-width: 18ch; }
+  #tab-raids .prio-head .sec2 { font: 700 1.7rem/1.1 var(--font-body); text-transform: none; letter-spacing: -.03em; max-width: none; } /* page titles share the Schedule heading style */
   #tab-raids .rw-tabs { margin: 6px 0 8px; padding: 3px; flex-wrap: nowrap; }
   #tab-raids .rw-tabs button { min-width: 88px; padding-inline: 10px; }
   #tab-raids .rw-list { gap: 10px; }
@@ -151,3 +151,66 @@
 .research-groups .rs-rewards{grid-template-columns:repeat(auto-fill,minmax(136px,1fr))}
 .research-groups .research-event-state.upcoming{background:var(--color-surface-raised);color:var(--color-text);border:1px solid var(--color-border)}
 .src-about-link{display:inline;min-height:44px;padding:0 2px;border:0;background:none;color:var(--color-link);font:inherit;text-decoration:underline;cursor:pointer}
+
+/* Final polish (one system): section headers, hit targets, focus, loading/error, long names. */
+:where(a, button, summary, input, select, textarea, [role="tab"], [tabindex]):focus-visible {
+  outline: 2px solid var(--color-link, currentColor);
+  outline-offset: 2px;
+}
+/* Every home section header reads the same: Today's Infographics follows the t1 section style. */
+#tab-now #weekly-sec > .sec2 {
+  margin: 0 0 var(--space-2, 8px);
+  font: 800 1.04rem/1.1 var(--font-display);
+  letter-spacing: .02em;
+  text-transform: uppercase;
+}
+.weekly-card small { opacity: 1; color: var(--color-text-muted); }
+.weekly-card .weekly-stale { color: var(--color-warning, var(--color-text-muted)); }
+
+/* Touch targets: enlarge the hit area without moving the layout. */
+.research-task-source a,
+#sub-world li > b > a { display: inline-block; padding-block: 15px; margin-block: -15px; }
+.fbtn { min-height: 44px; min-width: 44px; }
+.mega-checks label, .mega-goal label { min-height: 44px; }
+
+/* Long names wrap by word and never sit under a badge. */
+.opp-top { flex-wrap: wrap; }
+.opp-top h3 { flex: 1 1 100%; min-width: 0; overflow-wrap: break-word; word-break: normal; font-size: 1.2rem; line-height: 1.1; }
+.opp-top .chip, .opp-top .st { white-space: nowrap; }
+.mega-mon .mega-name { flex: 1 1 0; min-width: 0; }
+.mega-mon .mega-name h3 { overflow-wrap: break-word; line-height: 1.1; }
+.mega-mon .mega-shiny { flex: none; width: 72px; }
+.mega-mon .mega-shiny .art-fb { width: 72px; height: 72px; grid-template-rows: 1fr auto; }
+.mega-mon .mega-shiny .form-chip { font-size: .56rem; letter-spacing: 0; text-transform: none; }
+
+/* Menu accordions share one compact header size (was 1.6rem display, tall rows). */
+/* One accordion header size app-wide (was 1.6rem display: four-line titles and a clipped count at 320px). */
+.dd > summary { font-size: 1.15rem; padding-block: 12px; min-height: 52px; line-height: 1.15; }
+.dd > summary .cnt { white-space: nowrap; flex: none; }
+#tab-saved h2.sec2 { font-size: 1.15rem; margin: 18px 0 8px; }
+
+/* A failed load shows one clear error, not an error plus a stale spinner line. */
+.load-error:not([hidden]) ~ #tab-now .t1-loading { display: none; }
+.t1-loading { display: flex; align-items: center; gap: var(--space-3, 12px); }
+.t1-loading::before {
+  content: ""; width: 18px; height: 18px; border-radius: 50%; flex: none;
+  border: 2px solid color-mix(in srgb, var(--color-text-muted) 35%, transparent);
+  border-top-color: var(--color-link, currentColor); animation: t1spin .9s linear infinite;
+}
+@keyframes t1spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .t1-loading::before { animation: none; } }
+
+/* Schedule rows (In person / overseas): the area label sits under the title, left-aligned, at every phone width (it floated mid-row from 421 to 600px). */
+@media (max-width: 600px) {
+  .agw > .agr { grid-template-columns: 4px minmax(0, 1fr); }
+  .agw .agr em { grid-column: 2; justify-self: start; text-align: left; max-width: 100%; white-space: normal; font-size: .62rem; letter-spacing: .05em; }
+  .agw .ag-actions { gap: 0; }
+  .agw .ag-actions .agx { min-width: 44px; min-height: 44px; }
+  .agw .ag-actions .agpin { min-height: 44px; }
+}
+
+/* The follow field matches the other inputs. */
+#followq { flex: 1 1 0; min-width: 0; min-height: 44px; padding: 0 var(--space-3); font-size: 1rem; color: var(--color-text); background: var(--color-surface-card); border: 1px solid var(--color-border-card); border-radius: var(--radius-md); }
+
+/* Badges and countdowns on Today cards stay on one line down to 320px. */
+#tab-now .t1-kind, #tab-now .t1-live, #tab-now .t1-count { white-space: nowrap; }
