@@ -134,7 +134,7 @@ function scheduledActivities(model,ctx,presentation){return model.activities.fil
 function schedulePreview(model,ctx){
  var activities=(model.activities||[]).filter(function(a){return a.schedule&&(a.presentation==='schedule'||a.presentation==='rotation');});
  if(!activities.length)return '';
- activities=activities.slice().sort(function(a,b){return String(a.schedule.start).localeCompare(String(b.schedule.start));});
+ activities=activities.slice().sort(function(a,b){return String(a.schedule.start).localeCompare(String(b.schedule.start))||String(a.id||'').localeCompare(String(b.id||'');});
  var count=Math.min(activities.length,5);
  var cards=activities.slice(0,count).map(function(a){
   return '<li><strong>'+esc(a.title||a.name||'Scheduled activity')+'</strong><span>'+esc(activityTime(a,ctx))+'</span></li>';
