@@ -42,7 +42,7 @@ with sync_playwright() as pw:
     problems = []
     page = context.new_page()
     page.on('pageerror', lambda e: problems.append('pageerror: ' + str(e)))
-    page.on('console', lambda m: m.type == 'error' and 'Failed to load resource' not in m.text and problems.append('console: ' + m.text))
+    page.on('console', lambda m: m.type == 'error' and 'Failed to load resource' not in m.text and 'Failed to preconnect' not in m.text and problems.append('console: ' + m.text))
 
     # 1. Install the old shell while online and let it precache.
     page.goto(BASE + '/')

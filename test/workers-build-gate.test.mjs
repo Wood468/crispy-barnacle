@@ -11,6 +11,7 @@ const check = (status, conclusion = null, details_url = productionUrl, external_
   external_id,
   details_url
 });
+const isApi = url => new URL(String(url)).hostname === "api.github.com";
 const response = (checkRuns, status = 200) => new Response(
   JSON.stringify({ check_runs: checkRuns }),
   { status, headers: { "content-type": "application/json" } }
@@ -57,7 +58,7 @@ test("production gate ignores a successful preview and waits for the production 
   ];
   let now = 0;
   const result = await waitForWorkersBuild(context({
-    fetchImpl: async url => url.includes("api.github.com") ? sequence.shift() : new Response("live-differs"),
+    fetchImpl: async url => isApi(url) ? sequence.shift() : new Response("live-differs"),
     readLocal: () => Buffer.from("local"),
     sleep: async ms => { now += ms; },
     now: () => now
@@ -156,7 +157,7 @@ for (const sha of ["6da8e65", "34ea8bd"]) {
     let now = 0;
     await assert.rejects(waitForWorkersBuild(context({
       timeoutMs: 30,
-      fetchImpl: async url => url.includes("api.github.com") ? new Response(JSON.stringify(recorded(sha))) : bytesResponse("old"),
+      fetchImpl: async url => isApi(url) ? new Response(JSON.stringify(recorded(sha))) : bytesResponse("old"),
       readLocal: () => Buffer.from("new"),
       sleep: async ms => { now += ms; },
       now: () => now
@@ -169,7 +170,7 @@ for (const sha of ["6da8e65", "34ea8bd"]) {
     const result = await waitForWorkersBuild(context({
       timeoutMs: 1000,
       fetchImpl: async url => {
-        if (url.includes("api.github.com")) return new Response(JSON.stringify(recorded(sha)));
+        if (isApi(url)) return new Response(JSON.stringify(recorded(sha)));
         return bytesResponse(liveReady ? "same" : "old");
       },
       readLocal: () => Buffer.from("same"),
@@ -187,7 +188,7 @@ test("content proof is not attempted when the preview check has not completed su
   await assert.rejects(waitForWorkersBuild(context({
     timeoutMs: 20,
     fetchImpl: async url => {
-      if (url.includes("api.github.com")) return response([check("completed", "failure", previewUrl, "p")]);
+      if (isApi(url)) return response([check("completed", "failure", previewUrl, "p")]);
       liveCalls += 1;
       return bytesResponse("same");
     },
