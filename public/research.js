@@ -154,13 +154,17 @@
       (data.data.events || []).forEach(function (event) {
         [event.id].concat(Array.isArray(event.detailIds) ? event.detailIds : []).forEach(function (id) { if (id) eventMap[id] = event; });
       });
+      /* A write-up filed under its source's own id still belongs to the curated event with the same name ("Into the Wild 2026" and "Into the Wild"). */
+      var byName = Object.create(null);
+      function nameKey(v) { return norm(v).replace(/\b20\d\d\b/g, '').replace(/\bpokemon go\b/g, '').replace(/[^a-z0-9]+/g, ' ').trim(); }
+      (data.data.events || []).forEach(function (event) { var k = nameKey(event.t); if (k && !byName[k]) byName[k] = event; });
       Object.keys(data.details.events).forEach(function (detailId) {
         var record = data.details.events[detailId] || {};
         (record.researchTasks || []).forEach(function (task) {
           var window = task.eventWindow || {}, start = datePart(window.start), end = datePart(window.end);
           if (!start || !end || end < start) { unknownWindows++; return; }
           if (end < today) return;
-          var event = eventMap[task.eventId] || eventMap[detailId] || null;
+          var event = eventMap[task.eventId] || eventMap[detailId] || byName[nameKey(task.eventName || record.name)] || null;
           var key = event ? 'cur:' + event.id : (task.eventId || detailId);
           var group = groups[key] || (groups[key] = { id: key, event: event, name: (event && event.t) || task.eventName || record.name || 'Research event', start: start, end: end, tasks: [] });
           if (start < group.start) group.start = start;

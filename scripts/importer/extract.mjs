@@ -56,7 +56,9 @@ function parseResearchTask(line, category, declaredNames) {
   // Only a named item with an explicit × quantity creates a boundary; Pokémon names stay intact.
   const itemNames = '(?:Golden Razz Berry|Silver Pinap Berry|Razz Berry|Pinap Berry|Nanab Berry|Stardust|XP)';
   const itemBlocks = new RegExp('(?:[×x]\\s*\\d+\\s+' + itemNames + '(?:\\s+[×x]\\s*\\d+)?|' + itemNames + '\\s+[×x]\\s*\\d+)', 'gi');
-  const columns = rewardText.replace(itemBlocks, text => ' | ' + text + ' | ');
+  // Any other item is bounded by its repeated quantity: "×2 Rare Candy ×2 Scyther" is Rare Candy, then the Scyther encounter.
+  const repeated = /[×x]\s*(\d+)\s+\p{Lu}[\p{L}'’.\-]*(?:\s+\p{Lu}[\p{L}'’.\-]*){0,3}\s+[×x]\s*\1(?!\d)/gu;
+  const columns = rewardText.replace(itemBlocks, text => ' | ' + text + ' | ').replace(repeated, text => ' | ' + text + ' | ');
   // Table columns are independent rewards. Encounter CP text must not suppress adjacent items.
   for (const chunk of columns.split(/\s*\|\s*/).map(trim).filter(Boolean)) {
     const cp = /(.+?)\s+Max CP\s+(\d{2,4})\s+Min CP\s+(\d{2,4})/gi;

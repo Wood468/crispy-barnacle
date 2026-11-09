@@ -351,3 +351,10 @@ test("separate ticketed days are read as one window", async () => {
   assert.deepEqual(parseDateRange("Choose one day: November 6, 7, or 8. Mexico City tickets", 2026), { start: "2026-11-06", end: "2026-11-08" });
   assert.deepEqual(parseDateRange("October 24 and 25, 2026", 2026), { start: "2026-10-24", end: "2026-10-25" });
 });
+
+test("research rewards: an item bounded by its repeated quantity does not swallow the next encounter (Leek Duck flattened table)", () => {
+  const f = extractFields('<h2>Field Research</h2><p>Win a raid POSSIBLE REWARDS Dratini Max CP 430 Min CP 397 ×2 Rare Candy ×2 Scyther Max CP 1160 Min CP 1104</p><p>Catch 3 Pawniard POSSIBLE REWARDS Pawniard Max CP 614 Min CP 574 ×5 Great Ball ×5 ×2 Ultra Ball ×2 ×2 Pinap Berry ×2 ×500 Stardust ×500</p>');
+  assert.deepEqual(f.researchTasks[0].rewards.map(r => [r.type, r.name, r.quantity]), [["encounter", "Dratini", 1], ["item", "Rare Candy", 2], ["encounter", "Scyther", 1]]);
+  assert.equal(f.researchTasks[0].rewards[2].cpMax, 1160);
+  assert.deepEqual(f.researchTasks[1].rewards.map(r => r.name + ":" + r.quantity), ["Pawniard:1", "Great Ball:5", "Ultra Ball:2", "Pinap Berry:2", "Stardust:500"]);
+});
