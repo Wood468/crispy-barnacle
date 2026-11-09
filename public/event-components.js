@@ -129,6 +129,29 @@ function activityTime(a,ctx){
 }
 function activityPlace(a){var place=a&&(a.location||a.region);return typeof place==='string'?place:place&&typeof place.name==='string'?place.name:'';}
 function scheduledActivities(model,ctx,presentation){return model.activities.filter(function(a){return a.schedule&&a.presentation===presentation;}).map(function(a){return '<article class="'+(presentation==='rotation'?'ue-rotation':'ue-activity-window')+'" data-activity="'+esc(a.id)+'"><h4>'+esc(a.title||a.name||'Activity')+'</h4><p>'+esc(activityTime(a,ctx))+'</p>'+(activityPlace(a)?'<small>'+esc(activityPlace(a))+'</small>':'')+(a.access&&a.access!=='unknown'&&a.access!=='all'?'<small>'+esc(a.access)+'</small>':'')+'</article>';}).join('');}
+// Promote high-value sourced facts from the importer to Overview without inventing dates,
+// bonuses or reward tiers. This applies to every event with the same source field structure.
+function sourceHighlights(model){
+ var fields=model.internalValidation&&model.internalValidation.fields||{};
+ var rules=[
+  {label:'Daily Raid & Max Battle hours',re:/\\b(?:raid hour|max battle hour)\\b/i,keys:['dates','raids','bonuses']},
+  {label:'GO Pass reward',re:/\\bsilver bottle cap\\b/i,keys:['featured','tickets','bonuses']},
+  {label:'Shiny encounter method',re:/\\bshiny (?:meltan|gimmighoul)\\b|\\b(?:mystery box|coin bag)\\b/i,keys:['shiny','bonuses','featured']},
+  {label:'Raid access',re:/\\bremote raid (?:pass )?limit\\b|\\bno limit on remote raids\\b/i,keys:['bonuses','raids']}
+ ];
+ var used=new Set(),out=[];
+ rules.forEach(function(rule){
+  for(var k=0;k<rule.keys.length;k++){
+   var rows=fields[rule.keys[k]]||[];
+   var row=rows.find(function(item){var t=value(item);return rule.re.test(t)&&!used.has(t.toLowerCase())&&t.length<=240;});
+   if(!row)continue;
+   var message=value(row);used.add(message.toLowerCase());
+   out.push('<li><strong>'+esc(rule.label)+'</strong><span>'+esc(message)+'</span></li>');
+   break;
+  }
+ });
+ return out.length?'<div class="ue-source-highlights"><h3 class="ue-mini-h">Key event details</h3><ul>'+out.join('')+'</ul></div>':'';
+}
 function render(model,ctx){ctx=ctx||{};var view=V.project(model),fields=model.internalValidation&&model.internalValidation.fields||{},body={};
  var galleryOnly=model.encounters.every(function(e){return e.method==='other';});
  body.encounters=section('evd-pokemon',galleryOnly?'Featured Pokémon':'Pokémon',gallery(model,ctx));
@@ -173,7 +196,7 @@ function render(model,ctx){ctx=ctx||{};var view=V.project(model),fields=model.in
 
  var panels=[],label={encounters:'Pokémon',bonuses:'Bonuses',research:'Research',passes:'GO Pass',tickets:'Tickets'};
  var incomplete=!selected.length&&!info.length;
- var overview=(ctx.overview||'')+(info.length?'<h3 class="ue-mini-h">Highlights</h3><ul class="ue-facts ue-summary">'+info.filter(function(t){var k=String(t).toLowerCase().slice(0,40);return !model.tickets.some(function(x){return value(x).toLowerCase().indexOf(k)>=0;})&&!model.bonuses.some(function(x){return value(x).toLowerCase().indexOf(k)>=0;});}).slice(0,4).map(function(t){return '<li>'+esc(t)+'</li>';}).join('')+'</ul>':'')+(incomplete||(model.completeness==='partial'&&selected.length<2)?'<p class="ue-more-note" role="note">More details to come. Only verified information is shown.</p>':'');
+ var overview=(ctx.overview||'')+sourceHighlights(model)+(info.length?'<h3 class="ue-mini-h">Highlights</h3><ul class="ue-facts ue-summary">'+info.filter(function(t){var k=String(t).toLowerCase().slice(0,40);return !model.tickets.some(function(x){return value(x).toLowerCase().indexOf(k)>=0;})&&!model.bonuses.some(function(x){return value(x).toLowerCase().indexOf(k)>=0;});}).slice(0,4).map(function(t){return '<li>'+esc(t)+'</li>';}).join('')+'</ul>':'')+(incomplete||(model.completeness==='partial'&&selected.length<2)?'<p class="ue-more-note" role="note">More details to come. Only verified information is shown.</p>':'');
  panels.push({id:'overview',label:'Overview',html:'<div class="ue-overview">'+(cancelled||'')+conflict+overview+(ctx.actions||'')+'</div>'});
  ['encounters','bonuses','research','passes','tickets'].forEach(function(k){if(selected.indexOf(k)>=0&&body[k]&&(k!=='bonuses'||/class="ue-(bonus|note)/.test(body[k])))panels.push({id:k,label:label[k],html:body[k]});});
  var sched=(selected.indexOf('rotations')>=0?body.rotations:'')+(selected.indexOf('schedule')>=0?body.schedule:'');
