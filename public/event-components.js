@@ -125,7 +125,7 @@ function bonusCard(b,ctx){
 }
 function specialShinyBonuses(model){
  if(!/^Into the Wild\b/i.test(model.title||''))return '';
- var all=[].concat(model.notes||[],model.bonuses||[]).map(value).join(' ');
+ var all=[].concat(model.notes||[],model.bonuses||[],model.internalValidation&&model.internalValidation.info||[]).map(value).join(' ');
  if(!/SHINY MELTAN/i.test(all)||!/SHINY GIMMIGHOUL/i.test(all))return '';
  return '<div class="ue-bonuses ue-special-shiny" aria-label="Special shiny encounter bonuses">'
   +'<article class="ue-bonus"><img class="ue-bonus-ico" src="/ico/shiny.webp" alt="" loading="lazy"><div class="ue-bonus-t"><strong>✨ Shiny Meltan · Mystery Box</strong><p>Shiny available from Mystery Box encounters. Reduced Mystery Box reopening cooldown.</p><small>9 Nov, 10 am – 15 Nov, 6 pm · local time · Shiny odds not confirmed boosted</small></div></article>'
