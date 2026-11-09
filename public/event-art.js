@@ -32,7 +32,9 @@
       if (inUrl.length && years.length && !inUrl.every(function (y) { return years.indexOf(y) >= 0; })) return null;
       if (h.needsYear && !inUrl.length) return null;
       if (h.needsSlug) {
-        var slug = words(decodeURIComponent(url.replace(/^https:\/\/[^/]+/, '')).replace(/\//g, ' ').replace(/[-_.]/g, ' '));
+        var path = url.replace(/^https:\/\/[^/]+/, '');
+        try { path = decodeURIComponent(path); } catch (e) { return null; }
+        var slug = words(path.replace(/\//g, ' ').replace(/[-_.]/g, ' '));
         var name = words(ev.name || ev.title), place = words(NOT_A_PLACE.test(String(ev.region || ev.place || '').trim()) ? '' : (ev.region || ev.place || ''));
         var hit = name.filter(function (w) { return slug.indexOf(w) >= 0; }).length;
         /* The article folder must share the event's distinctive words; an event with a place also needs that place in the folder name. */
@@ -105,8 +107,9 @@
     try { u = new URL(img.getAttribute('data-full') || '', 'https://example.invalid'); } catch (e) { u = null; }
     if (u && u.protocol === 'https:' && u.hostname !== 'example.invalid' && u.href !== img.src) { img.removeAttribute('data-full'); img.setAttribute('src', u.href); return; }
     if (img.getAttribute('data-full') && /^\/img\/ext\/[\w.-]+$/.test(img.getAttribute('data-full')) && img.getAttribute('src') !== img.getAttribute('data-full')) { var rel = img.getAttribute('data-full').replace(/[^\w./-]/g, ''); img.removeAttribute('data-full'); img.setAttribute('src', rel); return; }
-    var a = img && img.closest && img.closest('.evd-banner-link'); if (a && a.parentNode) a.remove();
+    // Capture the figure before removing a linked poster: removing its parent detaches the image.
     var f = img && img.closest && img.closest('.ev-art');
+    var a = img && img.closest && img.closest('.evd-banner-link'); if (a && a.parentNode) a.remove();
     var offline = false; try { offline = typeof navigator !== 'undefined' && navigator.onLine === false; } catch (e) { offline = false; }
     if (f) {
       f.classList.add('is-failed'); f.setAttribute('data-art-kind', 'themed');
