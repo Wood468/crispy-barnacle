@@ -123,6 +123,15 @@ function bonusCard(b,ctx){
  var head=full.split(/[.;:]/)[0];if(head.length>95){head=head.slice(0,95);head=head.slice(0,head.lastIndexOf(' '))+'…';}
  return '<details class="ue-bonus ue-bonus-detail"><summary>'+ico+'<span class="ue-bonus-t">'+bonusBody(head)+'</span></summary><p>'+esc(full)+'</p></details>';
 }
+function specialShinyBonuses(model){
+ if(!/^Into the Wild(?:\\b|$)/i.test(model.title||''))return '';
+ var all=[].concat(model.notes||[],model.bonuses||[]).map(value).join(' ');
+ if(!/SHINY MELTAN/i.test(all)||!/SHINY GIMMIGHOUL/i.test(all))return '';
+ return '<div class="ue-bonuses ue-special-shiny" aria-label="Special shiny encounter bonuses">'
+  +'<article class="ue-bonus"><img class="ue-bonus-ico" src="/ico/shiny.webp" alt="" loading="lazy"><div class="ue-bonus-t"><strong>✨ Shiny Meltan · Mystery Box</strong><p>Shiny available from Mystery Box encounters. Reduced Mystery Box reopening cooldown.</p><small>9 Nov, 10 am – 15 Nov, 6 pm · local time · Shiny odds not confirmed boosted</small></div></article>'
+  +'<article class="ue-bonus"><img class="ue-bonus-ico" src="/ico/shiny.webp" alt="" loading="lazy"><div class="ue-bonus-t"><strong>✨ Shiny Gimmighoul · Coin Bag</strong><p>Shiny available from Coin Bag encounters.</p><small>9 Nov, 10 am – 15 Nov, 6 pm · local time · Shiny odds not confirmed boosted</small></div></article>'
+  +'</div>';
+}
 function activityTime(a,ctx){
  if(!a||!a.schedule)return '';
  try{var zone=ctx.viewerZone||ctx.clock.viewerZone(),range=ctx.clock.range(a.schedule,zone),format=new Intl.DateTimeFormat('en-AU',{timeZone:zone,weekday:'short',day:'numeric',month:'short',hour:'numeric',minute:'2-digit',timeZoneName:'short'});return format.format(new Date(range.start))+' – '+format.format(new Date(range.end))+(a.schedule.timeBasis==='player-local'?' · local time wherever you play':' · your time');}catch(error){return 'Time needs confirmation in your selected time zone.';}
@@ -136,6 +145,7 @@ function render(model,ctx){ctx=ctx||{};var view=V.project(model),fields=model.in
  var bonusList=model.bonuses.filter(function(b){var t=value(b);return t&&!(model.internalValidation&&model.internalValidation.conflicts||[]).some(function(c){return c.a&&c.a.text===t||c.b&&c.b.text===t;});});
  var realB=bonusList.filter(function(b){return bonusClass(value(b))==='bonus';}),noteB=bonusList.filter(function(b){return bonusClass(value(b))!=='bonus';});
  body.bonuses=section('evd-highlights','Event bonuses',(realB.length?'<div class="ue-bonuses">'+realB.map(function(b){return bonusCard(b,ctx);}).join('')+'</div>':'')+(noteB.length?'<div class="ue-notes"><h4 class="ue-mini-h">Conditions &amp; notes</h4><ul>'+noteB.map(function(b){return '<li class="ue-note">'+esc(value(b))+'</li>';}).join('')+'</ul></div>':''));if(!/class="ue-(bonus|note)/.test(body.bonuses))body.bonuses='';
+ var shinyTiles=specialShinyBonuses(model);if(shinyTiles)body.bonuses=section('evd-highlights','Special shiny bonuses',shinyTiles)+(body.bonuses?body.bonuses.replace('id="evd-highlights"','id="evd-bonuses-more"'):'');
  body.rotations=section('evd-rotations','Rotations',scheduledActivities(model,ctx,'rotation'));
  body.schedule=section('evd-schedule','Event schedule',scheduledActivities(model,ctx,'schedule'));
  body.research=(ctx.research||section('evd-research-title','Research',research(model.research,ctx)))+section('evd-research-windows','Research availability',scheduledActivities(model,ctx,'research'));
