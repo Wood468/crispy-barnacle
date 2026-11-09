@@ -42,3 +42,16 @@ test('Into the Wild activities are compatible with the universal schedule previe
  for(const activity of event.activities)assert.ok(html.includes(activity.schedule.start),'missing local start time: '+activity.id);
  assert.ok(html.indexOf('Crowned Sword Zacian')<html.indexOf('Dynamax Latias'));
 });
+
+test('daily Raid and Max hours resolve to 18:00–19:00 in different player time zones',async()=>{
+ const clock=await import('../public/event-clock.js');
+ for(const zone of ['Australia/Melbourne','America/Los_Angeles','Asia/Tokyo']){
+  for(const activity of event.activities){
+   const range=clock.range(activity.schedule,zone);
+   const start=clock.fields(Date.parse(range.start),zone),end=clock.fields(Date.parse(range.end),zone);
+   assert.equal(start.hour,18,zone+' '+activity.id+' start');
+   assert.equal(end.hour,19,zone+' '+activity.id+' end');
+   assert.equal(end.day,start.day,zone+' '+activity.id+' day');
+  }
+ }
+});
