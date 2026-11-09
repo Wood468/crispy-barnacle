@@ -137,6 +137,7 @@
     var core = raw.replace(/\s*\([^)]*\)\s*$/, '').trim(), m;
     var res = { name: raw, base: core, kind: 'base', exact: false, form: paren || '', label: '' };
     if ((m = /^Gigantamax\s+(.+)$/i.exec(core))) { res.kind = 'gigantamax'; res.base = m[1]; res.exact = true; res.label = 'Gigantamax'; }
+    else if ((m = /^Crowned\s+(Sword|Shield)\s+(Zacian|Zamazenta)$/i.exec(core)) && ((m[1].toLowerCase()==='sword'&&m[2].toLowerCase()==='zacian')||(m[1].toLowerCase()==='shield'&&m[2].toLowerCase()==='zamazenta'))) { res.kind = 'form'; res.base = m[2]; res.exact = true; res.label = 'Crowned ' + (m[1].toLowerCase()==='sword'?'Sword':'Shield'); }
     else if ((m = /^Dynamax\s+(.+)$/i.exec(core))) { res.kind = 'dynamax'; res.base = m[1]; res.exact = false; res.label = 'Dynamax'; }
     else if ((m = /^Shadow\s+(.+)$/i.exec(core))) { res.kind = 'shadow'; res.base = m[1]; res.exact = false; res.label = 'Shadow'; }
     else if ((m = /^Mega\s+(.+?)(?:\s+([XY]))?$/i.exec(core))) { res.kind = 'mega'; res.base = m[1]; res.exact = true; res.label = 'Mega' + (m[2] ? ' ' + m[2].toUpperCase() : ''); }

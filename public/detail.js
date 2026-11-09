@@ -561,7 +561,8 @@
   }
   function exactArt(p) {
     var name=displayName(p),q='/api/art?n='+encodeURIComponent(name),described=GOEventAdapter.collectionName(p);
-    if(p.formId&&!p.costumeId&&!described&&GOLIB.parseForm(p.name).base===p.name)return '<span class="art costume-unavailable ea" role="img" aria-label="'+esc(name+' · form art unavailable')+'"><span>'+esc(name)+'</span><small>Form art unavailable</small></span>';
+    var classified=window.GOTODAYLOGIC&&GOTODAYLOGIC.classifyArt({name:name});
+    if(p.formId&&!p.costumeId&&!described&&GOLIB.parseForm(p.name).base===p.name&&!(classified&&classified.exact))return '<span class="art costume-unavailable ea" role="img" aria-label="'+esc(name+' · form art unavailable')+'"><span>'+esc(name)+'</span><small>Form art unavailable</small></span>';
     return G.art({n:name,costume:!!p.costumeId,label:p.label||p.costumeId,asset:p.assetKey||undefined,dynamax:p.formId==='dynamax'||/-dynamax$/.test(p.formId||'')},'ea');
   }
   var TRUST_LABEL = { official: 'Official', community: 'Community', datamine: 'Datamined', curated: 'Curated' };
@@ -861,8 +862,16 @@
     var max = o.scrollHeight - o.clientHeight, target = Math.max(0, Math.min(top, max));
     spy.lock = 1; spy.cur = id; setActive(o, id);
     o.scrollTo({ top: target, behavior: reduce ? 'auto' : 'smooth' });
-    var done = function () { if (!spy) return; spy.lock = 0; clearTimeout(spy.t); o.removeEventListener('scrollend', done); if (focus) h.focus({ preventScroll: true }); spy.cur = ''; spy.raf = 0; spy.onScroll(); };
-    o.addEventListener('scrollend', done); clearTimeout(spy.t); spy.t = setTimeout(done, reduce ? 60 : 900);
+    // WebKit can emit scrollend for an interrupted/earlier smooth scroll. Only the
+    // latest navigation may unlock the spy; otherwise it resets the active link.
+    var navigation = (spy.navigation || 0) + 1; spy.navigation = navigation;
+    clearTimeout(spy.t);
+    spy.t = setTimeout(function () {
+      if (!spy || spy.o !== o || spy.navigation !== navigation) return;
+      spy.lock = 0;
+      if (focus) h.focus({ preventScroll: true });
+      spy.cur = ''; spy.raf = 0; spy.onScroll();
+    }, reduce ? 80 : 1100);
   }
   document.addEventListener('click', function (e) {
     var l = e.target.closest && e.target.closest('.evd-nav-link'); if (!l) return;
@@ -905,6 +914,9 @@
     var b=e.target.closest&&e.target.closest('.ue-mon[data-info]');if(!b)return;
     var info={};try{info=JSON.parse(b.getAttribute('data-info'));}catch(x){}
     closeSheet();sheetOpener=b;
+    // A delayed section-scroll completion must not steal focus from this sheet
+    // or from the Pokémon tile when Escape returns focus to it (WebKit).
+    if(spy){spy.navigation=(spy.navigation||0)+1;clearTimeout(spy.t);spy.lock=0;}
     var d=document.createElement('div');d.id='ue-sheet';d.className='ue-sheet';
     d.innerHTML='<div class="ue-sheet-card" role="dialog" aria-modal="true" aria-labelledby="ue-sheet-t"><div class="ue-sheet-art">'+b.querySelector('.ue-mon-art').innerHTML+'</div><h3 id="ue-sheet-t">'+esc(info.name||'')+'</h3><p class="ue-sheet-m">'+esc([info.method,info.badge].filter(Boolean).join(' · '))+'</p>'
       +(info.form?'<p class="ue-sheet-f">Special form: '+esc(info.form)+'</p>':'')+(info.signals&&info.signals.length?'<p>'+info.signals.map(esc).join(' · ')+'</p>':'')+(info.meta&&info.meta.length?'<p class="ue-sheet-m">'+info.meta.map(esc).join(' · ')+'</p>':'')+'<button type="button" class="pill all" data-sheet-close>Close</button></div>';
