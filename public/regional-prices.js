@@ -25,7 +25,22 @@
     { product:'Pokemon Storage', tier:'storage', amount:10000 },
     { product:'Item Bag', tier:'storage', amount:10000 },
     { product:'2900 Pokecoins + 400 bonus', tier:'coins', amount:101000 },
-    { product:'6000 Pokecoins + 800 bonus', tier:'coins', amount:200000 }
+    { product:'6000 Pokecoins + 800 bonus', tier:'coins', amount:200000 },
+    { product:'GO Rocket Leader Kit', tier:'bundle', amount:50000 },
+    { product:'Raid Commander Box', tier:'bundle', amount:200000 },
+    { product:'Pro Raid Bundle', tier:'bundle', amount:379000 },
+    { product:'Lucky Egg x8', tier:'items', amount:25000 },
+    { product:'Star Piece x8', tier:'items', amount:30500 },
+    { product:'Remote Raid Pass x2', tier:'items', amount:15000 },
+    { product:'Super Incubator x2', tier:'items', amount:15000 },
+    { product:'Egg Incubator x3', tier:'items', amount:15000 },
+    { product:'Premium Battle Pass x3', tier:'items', amount:15000 },
+    { product:'Max Particle Pack x6', tier:'items', amount:41000 },
+    { product:'Max Mushroom x3', tier:'items', amount:50000 },
+    { product:'Silver Pinap Berries x10', tier:'items', amount:10000 },
+    { product:'Golden Razz Berries x15', tier:'items', amount:10000 },
+    { product:'Max Potions x10', tier:'items', amount:10000 },
+    { product:'Max Revive x15', tier:'items', amount:10000 }
   ].map(function (x) { return Object.assign({region:'ID',currency:'IDR',channel:'web',observed:'2026-11-09',source:'owner Web Store screenshot',verified:true},x); });
   function tier(p) {
     var s=String((typeof p==='string' ? p : (p.label || p.product || ''))).toLowerCase();
