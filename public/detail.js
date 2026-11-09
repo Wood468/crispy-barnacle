@@ -749,6 +749,21 @@
       var ev2 = completeEvent(ev),sourcePoster=findDetails(ev2);
       if(!ev2.img&&sourcePoster&&safe(sourcePoster.image))ev2=Object.assign({},ev2,{img:sourcePoster.image});
       o.innerHTML = '<div class="evd-in">' + render(ev2) + '</div>';
+      // Player shortcut: show only when this event has a published/approved infographic.
+      var hero=o.querySelector('.evd-hero');
+      if(hero&&window.GOINFOGRAPHIC&&typeof GOINFOGRAPHIC.available==='function'){
+        var shortcut=document.createElement('button');
+        shortcut.type='button';shortcut.className='evd-infographic-shortcut';
+        shortcut.textContent='▧ View infographics';
+        shortcut.setAttribute('aria-label','View event infographics');
+        shortcut.hidden=true;
+        hero.insertAdjacentElement('afterend',shortcut);
+        shortcut.addEventListener('click',function(){GOINFOGRAPHIC.open(ev2.id,shortcut);});
+        GOINFOGRAPHIC.available(ev2.id).then(function(yes){
+          if(o.hidden||!shortcut.isConnected)return;
+          shortcut.hidden=!yes;
+        });
+      }
       addBonusTime(o, ev2);
       o.hidden = false; document.body.style.overflow = 'hidden'; o.scrollTop = 0;
       if (!wasOpen && window.GONAV) window.GONAV.push();
