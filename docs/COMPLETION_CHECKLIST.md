@@ -30,6 +30,10 @@ Fixed decisions (do not reopen): artwork-led major cards, medium raid cards, com
 
 - [x] Costume importer regression: `scripts/costumes.mjs` filed Espeon (Sun Scarf) / Umbreon (Moon Scarf) as avatar items because the name contains "scarf"; a name that starts with a known species is now a Pokémon costume (`test/artwork-manifest.test.mjs` was red on main after the 9 Nov importer run).
 
+- [x] Importer: a feed-derived twin record (`leekduck:<slug>`) no longer splits a curated event: Leek Duck pages attach to the curated record (`preferCurated` in `scripts/importer/run.mjs`), twin records are folded, named installments (`Meetup: Karlsruhe`) never take a sibling page or details (importer + `scripts/event-experience/build-catalogue.cjs`). Production after #385: Into the Wild shows 7 research tasks, 22 Pokémon, GO Pass rank rows (106 in the record); Sendai keeps its own 12.
+- [x] Polish batch (#385 and follow-up): Schedule In person rows (area chip under the title at every phone width, 44px actions, year-spanning ranges), save errors de-duplicated and auto-dismissing, countdowns round up consistently, stale weekly infographic labelled, worldwide events are never "Overseas".
+- [ ] Known: offline banner art falls back to the labelled illustration when the remote banner is not in the cache; GO Wild Area Machamp timed research shows an "In person" themed card on Today; "Research 19" chip counts source lines, not tasks; physical iPhone check still pending.
+
 ## P3 Final polish (defer)
 - [ ] Individual historical banners, one-off icons, spacing/animation tweaks, non-blocking parser exceptions.
 
