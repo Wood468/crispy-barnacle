@@ -68,7 +68,7 @@
       + '<div data-sp-cheapest>' + cheapestHtml(obs, balance) + '</div>'
       + (other.length ? '<details class="sp-more"><summary>Recorded earlier, not re-checked (' + other.length + ')</summary>' + other.map(row).join('') + '</details>' : '')
       + (items.length ? '<h4>All known Store items and regional prices</h4>' + items.map(function (p) {
-        return '<div class="sp-r sp-regional-row"><span class="sp-n">' + icon(p.label) + esc(p.label) + '</span><b class="sp-a">Australia Web: A$' + p.aud.toFixed(2) + ' <small>Verified, ' + esc(when(p.observed)) + '</small></b>'
+        return '<div class="sp-r sp-regional-row"><span class="sp-n">' + icon(p.label) + esc(p.label) + '</span><b class="sp-a">' + (p.aud > 0 ? 'Australia Web: A$' + p.aud.toFixed(2) + ' <small>Verified, ' + esc(when(p.observed)) + '</small>' : 'Australia Web: no matching product seen') + '</b>'
           + '<span class="sp-n">Indonesia Web</span>' + priceCell(p.indonesia) + '<span class="sp-n">India in-app</span>' + priceCell(p.india) + '</div>';
       }).join('') : '')
       + '</details>';
