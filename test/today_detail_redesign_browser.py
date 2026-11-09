@@ -78,15 +78,26 @@ with sync_playwright() as p:
         assert 'encounters' in sections and 'research' in sections
         tap('encounters'); tap('research')
         # Scrolling (not tapping) updates the active link, including deep inside a long gallery and at the very bottom.
-        page.evaluate("(()=>{const o=document.querySelector('#evd');const s=document.querySelector('#evd-s-encounters');o.scrollTop=s.offsetTop+s.offsetHeight*0.6;})()"); page.wait_for_timeout(500)
-        assert active() == 'encounters', active()
+        # The overlay uses smooth scrolling, so a programmatic scrollTop animates: wait for it to stop, then for the link to follow (never a fixed sleep).
+        def scroll_to(expr):
+            page.evaluate('window.__scrollPrev = undefined; window.__scrollStill = 0')
+            page.evaluate("(()=>{const o=document.querySelector('#evd');" + expr + "})()")
+            page.wait_for_timeout(60); scroll_idle()
+        def expect_active(sec):
+            try:
+                page.wait_for_function('(s) => document.querySelector("#evd .evd-nav-link[aria-current=true]").dataset.sec === s', arg=sec, timeout=6000)
+            except Exception:
+                pass
+            assert active() == sec, (sec, active())
+        scroll_to("const s=document.querySelector('#evd-s-encounters');o.scrollTop=s.offsetTop+s.offsetHeight*0.6;")
+        expect_active('encounters')
         # Deep inside the long research list the active link stays Research.
-        page.evaluate("(()=>{const o=document.querySelector('#evd');const s=document.querySelector('#evd-s-research');o.scrollTop=s.offsetTop+s.offsetHeight*0.7;})()"); page.wait_for_timeout(500)
-        assert active() == 'research', active()
-        page.evaluate("(()=>{const o=document.querySelector('#evd');o.scrollTop=o.scrollHeight;})()"); page.wait_for_timeout(500)
-        assert active() == sections[-1], (active(), sections[-1])
-        page.evaluate("document.querySelector('#evd').scrollTop=0"); page.wait_for_timeout(400)
-        assert active() == sections[0], active()
+        scroll_to("const s=document.querySelector('#evd-s-research');o.scrollTop=s.offsetTop+s.offsetHeight*0.7;")
+        expect_active('research')
+        scroll_to("o.scrollTop=o.scrollHeight;")
+        expect_active(sections[-1])
+        scroll_to("o.scrollTop=0;")
+        expect_active(sections[0])
         # Reduced motion: the jump is immediate.
         page.emulate_media(reduced_motion='reduce')
         page.locator('#evd .evd-nav-link[data-sec="research"]').click(); page.wait_for_timeout(250)
