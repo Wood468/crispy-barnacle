@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-09T06:30:06.336Z",
+ "updated": "2026-11-09T19:50:05.663Z",
  "status": [
   {
    "id": "hub",
@@ -23,8 +23,8 @@
   },
   {
    "id": "youtube-pogo",
-   "state": "error",
-   "note": "HTTP 500"
+   "state": "ok",
+   "items": 4
   }
  ],
  "gaps": 2,
@@ -58,6 +58,40 @@
    "notInOurData": [
     "Tornadus"
    ]
+  },
+  {
+   "source": "reddit-silph",
+   "trust": "tip",
+   "title": "So apparently Galarian Bird Shinies CAN run",
+   "link": "https://www.reddit.com/r/TheSilphRoad/comments/1xrry4r/so_apparently_galarian_bird_shinies_can_run/",
+   "date": "2026-11-09T13:41:46.000Z",
+   "summary": "<!-- SC_OFF --><div class=\"md\"><p>Was using my DAI before work today, encountered a Shiny G-Zapdos. I started the encounter, stood perfectly still, and threw 10 Ultra Balls with Golden Razzberries at ",
+   "pokemon": [],
+   "notInOurData": []
+  },
+  {
+   "source": "youtube-pogo",
+   "trust": "official",
+   "title": "Costumed Machamp debuts in Pokémon GO!",
+   "link": "https://www.youtube.com/watch?v=oe4xCOjA374",
+   "date": "2026-11-09T11:12:47.000Z",
+   "summary": "",
+   "pokemon": [
+    "Machamp"
+   ],
+   "notInOurData": []
+  },
+  {
+   "source": "youtube-pogo",
+   "trust": "official",
+   "title": "Costumed Machamp debuts in Pokémon GO!",
+   "link": "https://www.youtube.com/shorts/Z2OPNHxhNSc",
+   "date": "2026-11-09T10:48:45.000Z",
+   "summary": "",
+   "pokemon": [
+    "Machamp"
+   ],
+   "notInOurData": []
   },
   {
    "source": "hub",
@@ -128,16 +162,6 @@
    "notInOurData": []
   },
   {
-   "source": "reddit-silph",
-   "trust": "tip",
-   "title": "Data from 24 hours of catching costume Cubones during the Dia De Los Muertos event in Mexico",
-   "link": "https://www.reddit.com/r/TheSilphRoad/comments/1xm5k36/data_from_24_hours_of_catching_costume_cubones/",
-   "date": "2026-11-02T18:40:31.000Z",
-   "summary": "<table> <tr><td> <a href=\"https://www.reddit.com/r/TheSilphRoad/comments/1xm5k36/data_from_24_hours_of_catching_costume_cubones/\"> <img src=\"https://preview.redd.it/1mrq61ksu8zh1.jpeg?width=140&amp;he",
-   "pokemon": [],
-   "notInOurData": []
-  },
-  {
    "source": "hub",
    "trust": "community",
    "title": "Pokémon GO Twilight Wishes (2026)",
@@ -158,6 +182,26 @@
    "link": "https://pokemongohub.net/post/meta/pve-analysis-halloween-event-2026-part-2/",
    "date": "2026-11-02T09:42:29.000Z",
    "summary": "Hello, Trainers! We hope everyone had a fantastic Halloween! True to one of Pokémon GO’s longest-running traditions, the Halloween 2026 Event is currently underway, bringing a host of spooky spawns, r",
+   "pokemon": [],
+   "notInOurData": []
+  },
+  {
+   "source": "youtube-pogo",
+   "trust": "official",
+   "title": "New costumed Pokémon make their debuts during Halloween 2026 Part I in Pokémon GO!",
+   "link": "https://www.youtube.com/shorts/I6MvdaExyIg",
+   "date": "2026-10-27T17:00:40.000Z",
+   "summary": "",
+   "pokemon": [],
+   "notInOurData": []
+  },
+  {
+   "source": "youtube-pogo",
+   "trust": "official",
+   "title": "New costumed Pokémon make their debuts during Halloween 2026 Part I in Pokémon GO!",
+   "link": "https://www.youtube.com/watch?v=wyN2y-BgpoU",
+   "date": "2026-10-27T17:00:14.000Z",
+   "summary": "",
    "pokemon": [],
    "notInOurData": []
   }
