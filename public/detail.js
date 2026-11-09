@@ -562,6 +562,9 @@
   function exactArt(p) {
     var name=displayName(p),q='/api/art?n='+encodeURIComponent(name),described=GOEventAdapter.collectionName(p);
     var classified=window.GOTODAYLOGIC&&GOTODAYLOGIC.classifyArt({name:name});
+    // Unknown costumes must never silently borrow the base species artwork.
+    // Only an explicit asset key can authorize a costume-specific image.
+    if(p.costumeId&&!p.assetKey)return '<span class="art costume-unavailable ea" role="img" aria-label="'+esc(name+' · costume art unavailable')+'"><span>'+esc(name)+'</span><small>Costume art unavailable</small></span>';
     if(p.formId&&!p.costumeId&&!described&&GOLIB.parseForm(p.name).base===p.name&&!(classified&&classified.exact))return '<span class="art costume-unavailable ea" role="img" aria-label="'+esc(name+' · form art unavailable')+'"><span>'+esc(name)+'</span><small>Form art unavailable</small></span>';
     return G.art({n:name,costume:!!p.costumeId,label:p.label||p.costumeId,asset:p.assetKey||undefined,dynamax:p.formId==='dynamax'||/-dynamax$/.test(p.formId||'')},'ea');
   }
