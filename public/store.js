@@ -45,14 +45,16 @@
     }
     return '<span class="sp-regional-value sp-ver"><b>' + esc(R.fmt(p.amount, p.currency)) + '</b> <small>' + esc((p.basis === 'verified' ? 'Verified' : 'Recorded, not re-checked') + ' ' + chan(p) + ', ' + when(p.observed)) + '</small></span>';
   }
-  function cheapestHtml(obs, balance) {
-    var R = window.GORegionalPrices, packs = obs.filter(function (o) { return o.kind === 'coins' && o.coins && o.status === 'verified'; }).map(function (o) { return { coins: o.coins, amount: o.amount, currency: o.currency, oneTime: !!o.oneTime }; });
-    var products = obs.filter(function (o) { return o.region === 'ID' && o.status === 'verified' && o.kind !== 'coins' && o.amount > 0; });
+  /* Only compare offers we have actually observed for the exact SKU and payment channel.
+     A web cash price is not evidence of an in-app PokéCoin price. */
+  function cheapestHtml(obs) {
+    var R = window.GORegionalPrices;
+    var products = obs.filter(function (o) { return o.region === 'ID' && o.channel === 'web' && o.status === 'verified' && o.kind !== 'coins' && o.amount > 0; });
     return products.map(function (o) {
-      var r = R.cheapest({ region: 'ID', product: o.product }, obs, { coinBalance: balance, packs: packs });
-      var b = r.best; if (!b) return '';
-      return '<div class="sp-r sp-regional-row"><span class="sp-n">' + esc(o.product) + '</span><span class="sp-regional-value"><b>' + esc(R.fmt(b.cash, b.currency)) + '</b> <small>'
-        + esc((b.isEstimate ? 'Estimate. ' : '') + 'cheapest: ' + b.channelLabel + (b.coinsUsed ? ', using ' + b.coinsUsed + ' coins' : '') + (b.leftoverCoins > 0 ? '; ' + b.leftoverCoins + ' coins left unused' : '')) + '</small></span></div>';
+      var price = R.exact(obs, 'ID', 'web', o.product);
+      if (!price) return '';
+      var label = 'Observed cash price · Indonesia Web Store · ' + when(price.observed);
+      return '<div class="sp-r sp-regional-row"><span class="sp-n">' + icon(o.product) + esc(o.product) + '</span><span class="sp-regional-value"><b>' + esc(R.fmt(price.amount, price.currency)) + '</b> <small>' + esc(label) + '</small></span></div>';
     }).join('');
   }
   function regional(data) {
@@ -60,11 +62,11 @@
     var obs = data.regional, items = R.catalogue(data.prices || [], obs);
     var verified = obs.filter(function (o) { return o.region === 'ID' && o.status === 'verified'; }), other = obs.filter(function (o) { return o.status !== 'verified'; });
     var row = function (o) { return '<div class="sp-r sp-regional-row"><span class="sp-n">' + icon(o.product) + esc(o.product) + '</span>' + priceCell(R.exact([o], o.region, o.channel, o.product)) + '</div>'; };
-    var balance = Math.max(0, parseInt(lsGet(COINS_KEY), 10) || 0);
+
     return '<details class="storep storep-regional"><summary>Regional prices <small>Australia Web, Indonesia Web, India in-app</small></summary>'
       + '<p class="note">Each price keeps its own country, purchase channel and date. Verified means read from that Store on that date. An estimate is modelled from comparable products and is never a checkout price. A channel is only suggested where it has been observed.</p>'
       + '<h4>Verified, Indonesia Web Store</h4>' + verified.map(row).join('')
-      + '<h4>Cheapest realistic option <small>Indonesia</small></h4><label class="sp-coins">PokéCoins in hand <input type="number" inputmode="numeric" min="0" step="1" value="' + balance + '" data-sp-coins aria-label="PokéCoins you already hold"></label>'
+      + '<h4>Verified direct purchase prices <small>Indonesia</small></h4><p class="note">These are observed Web Store cash prices, not a cross-region cheapest ranking. A coin balance cannot reduce a direct-cash checkout price; a PokéCoin-priced alternative is only comparable when separately observed for that exact product. Regional checkout eligibility is not verified.</p>'
       + '<div data-sp-cheapest>' + cheapestHtml(obs, balance) + '</div>'
       + (other.length ? '<details class="sp-more"><summary>Recorded earlier, not re-checked (' + other.length + ')</summary>' + other.map(row).join('') + '</details>' : '')
       + (items.length ? '<h4>All known Store items and regional prices</h4>' + items.map(function (p) {
@@ -80,11 +82,6 @@
       var el = document.getElementById('storep-host');
       if (!el) { el = document.createElement('div'); el.id = 'storep-host'; host.parentNode.insertBefore(el, host); }
       el.innerHTML = h;
-      var inp = el.querySelector('[data-sp-coins]');
-      if (inp) inp.addEventListener('input', function () {
-        var n = Math.max(0, parseInt(inp.value, 10) || 0); lsSet(COINS_KEY, String(n));
-        el.querySelector('[data-sp-cheapest]').innerHTML = cheapestHtml(d.regional, n);
-      });
     }).catch(function () { });
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', go); else go();
