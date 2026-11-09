@@ -121,7 +121,7 @@
       + '<span class="t1-minor-art t1-reg-ico" aria-hidden="true">' + PIN + '</span>'
       + '<' + tag + ' class="t1-open"' + open + ' aria-label="' + esc('Open ' + r.name + ', ' + r.place + '. ' + cd) + '">'
       + '<strong class="t1-title">' + esc(r.name) + '</strong>'
-      + '<span class="t1-sub">' + esc(r.place) + (r.overseas ? ' · Overseas' : '') + (r.inPerson ? ' · In person · ' : ' · Regional, in game · ') + cdSpan(ctx, live ? r.end : r.start, live) + '</span>'
+      + '<span class="t1-sub">' + esc(r.place) + (r.overseas ? ' · Overseas' : '') + (r.inPerson ? ' · In person · ' : r.global ? ' · Global · ' : ' · Regional, in game · ') + cdSpan(ctx, live ? r.end : r.start, live) + '</span>'
       + '</' + end + '></article>';
   }
   function weekRow(ctx, ev) {
