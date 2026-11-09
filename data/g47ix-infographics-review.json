@@ -14,8 +14,8 @@
       "url": "https://discord.com/channels/@me/1558793395198099618/1569143538011218021",
       "publishedAt": "2026-11-09T00:16:12.739000+00:00",
       "imageUrl": "https://cdn.discordapp.com/attachments/1087756541668630638/1569139320869228745/Wallpaper_Wild_Area.png?ex=6af25e5f&is=6af10cdf&hm=ddaba6b266a3d6ad81afdd47afa663b7c0578ac6bf24023557321bd452f8bf0c&",
-      "reviewStatus": "needs_review",
-      "decision": "pending",
+      "reviewStatus": "published",
+      "decision": "approved",
       "ocrChecked": true,
       "ocrText": "YS Ewe RN ik A\\AN OL Yo) INTO THE WILD + \\ PT so fl Wr L AMR F 2188 CP y ~ 2735 CP 2307 CP eK 2884 CP ( ss y 2042 CP | yy 2553 CP 1746 CP —_ : 2183 CP y 2178 cP 2280 cP NS BNI 1398 cP +*@ ae) a es Ea Wh, a a SB s\\ AN \\794 ce 1753 CP Follow for m G47IX @ MX | g47ix.pro",
       "eventMatch": {
@@ -53,7 +53,12 @@
         "picture text names the event"
       ],
       "matchScore": 4,
-      "stagedPath": "/infographics/g47ix/discord-1569143538011218021.png"
+      "stagedPath": "/infographics/g47ix/discord-1569143538011218021.png",
+      "publishedEvent": "w-go-wild-area-global-meetup-karlsruhe",
+      "publishedEvents": [
+        "w-go-wild-area-global-meetup-karlsruhe",
+        "w-go-wild-area-global-meetup-stockholm"
+      ]
     },
     {
       "id": "discord:1569120055143440426",
@@ -63,15 +68,16 @@
       "url": "https://discord.com/channels/@me/1558793395198099618/1569120055143440426",
       "publishedAt": "2026-11-08T22:42:53.987000+00:00",
       "imageUrl": "https://cdn.discordapp.com/attachments/886998693897719819/1569114884212400348/profilebackground.png?ex=6af2479d&is=6af0f61d&hm=1deab202b36f9054157a05c4cc03d4f999b3bd035adc7f5f8ad24d4cf186ede5&",
-      "reviewStatus": "unmatched",
-      "decision": "pending",
+      "reviewStatus": "rejected",
+      "decision": "rejected",
       "ocrChecked": true,
       "ocrText": "P7 DS BRCIAL [A> Ni Mes = 4. _ t net ZS & Pikaghy Ys ' ee “ye os aS sgh an fa fa t ie Aa Se Q profilebackground | se & Pikachu aa Sa sD ny \\y == ef ae ol sees i ~!, %& a kd by 2 i i oe 5 Follow for more GAT7IX £) ax DB www.g47ix.pro",
       "eventMatch": null,
       "reviewNote": "No event name found in the caption or image text.",
       "signals": [],
       "matchScore": 0,
-      "stagedPath": "/infographics/g47ix/discord-1569120055143440426.png"
+      "stagedPath": "/infographics/g47ix/discord-1569120055143440426.png",
+      "publishedEvents": []
     },
     {
       "id": "discord:1569034750339977347",
@@ -81,8 +87,8 @@
       "url": "https://discord.com/channels/@me/1558793395198099618/1569034750339977347",
       "publishedAt": "2026-11-08T17:03:55.737000+00:00",
       "imageUrl": "https://cdn.discordapp.com/attachments/1087756541668630638/1569030668925800610/tr_Counter_Zacian_Sword_.png?ex=6af1f92e&is=6af0a7ae&hm=cc411fd5f1595fb28e8dbc101e339af9a6ef40d0af9c372198dd4e0d175f4efd&",
-      "reviewStatus": "needs_review",
-      "decision": "pending",
+      "reviewStatus": "published",
+      "decision": "approved",
       "ocrChecked": true,
       "ocrText": "ae 3G co By gw 9-13 NOV Crowned Sword we Bex #888 ZACIAN 67864 CP ~ \\ S mon has slumbered for many years. Some say it’s nta’s el r sister—others say the two Pokémon are rivals.” in ey wD ee Weaknesses _ ry / fil pall Special Crowned Sword Energy iN Us No, = Background will be available. otic SS iy Chance Difficulty: 3+ trainers needed Duo is possible Pw 44 2188 CP %ws 2735 CP Boost & & Cloudy Snow @ Fire Spin @ Mud Shot @ Fire Spin @ Fire Spin A, any @ Mystical Fire: @ Precipice Blad @ Blast Bur: @ Overheat < ae 1) Y a ri > y eal => sc i th @ Fire Fang — @ Fire Spin @ incinerate @ Fire Fang h i > ae @ Fusion Flare @ Magma s! -_ @ Mind Blown (ies @ Fusion Flare 5 => y al => i i >) ot ie @ Mud @ incinerate @ Mud Shot @ Precipice Blad erhea: > @ Sacred Fire+ @ Sandsear Storm VJ ~~ Remember to use proper counters, Party Play Follow for more and Zacian’s Adventure Effect if needed. GA7IX 9@ @X @ | g47ix.pro",
       "eventMatch": {
@@ -122,7 +128,11 @@
         "posted around the event"
       ],
       "matchScore": 5,
-      "stagedPath": "/infographics/g47ix/discord-1569034750339977347.png"
+      "stagedPath": "/infographics/g47ix/discord-1569034750339977347.png",
+      "publishedEvent": "raid:crowned-sword-zacian-and-crowned-shield-zamazenta:2026-11-09",
+      "publishedEvents": [
+        "raid:crowned-sword-zacian-and-crowned-shield-zamazenta:2026-11-09"
+      ]
     },
     {
       "id": "discord:1569032764005548224",
@@ -132,8 +142,8 @@
       "url": "https://discord.com/channels/@me/1558793395198099618/1569032764005548224",
       "publishedAt": "2026-11-08T16:56:02.158000+00:00",
       "imageUrl": "https://cdn.discordapp.com/attachments/1087756541668630638/1569028333793058816/Counter_Zamazenta_CROWN.png?ex=6af1f701&is=6af0a581&hm=c840a82ed9a70683ed90202bee747575fb35c3460e85b1d5d824fd58c4ab8124&",
-      "reviewStatus": "needs_review",
-      "decision": "pending",
+      "reviewStatus": "published",
+      "decision": "approved",
       "ocrChecked": true,
       "ocrText": "~—? La gw 9-13 NOV Crowned Shield ZAMAZENTA “% =e ( Fag 56867 CP ah, ee is Pokémon slept for aeons while in the form of a statue. =i It was asleep for so long, people forgot that it ever existed.” — Q ' Weaknesses (ail @® VA Special Crowned Shield Energy Background will be available. Chance Difficulty: 3+ trainers needed Duo is possible Pw 44 2188 CP %ws 2735 CP Boost © & Cloudy Snow we i\\ WW any ed a\\\\ © a = @ Low Kick @ incinerate @ Double Kick @ Secret Sword @ Mind Blown (5 oa a @ Sacred Sword os CS Remember to use proper counters, Party Play Follow for more ‘ate and Zacian’s Adventure Effect if needed. GA7IX @9@ @ X @ | g47ix.pro",
       "eventMatch": {
@@ -175,7 +185,11 @@
         "posted around the event"
       ],
       "matchScore": 6,
-      "stagedPath": "/infographics/g47ix/discord-1569032764005548224.png"
+      "stagedPath": "/infographics/g47ix/discord-1569032764005548224.png",
+      "publishedEvent": "raid:crowned-sword-zacian-and-crowned-shield-zamazenta:2026-11-09",
+      "publishedEvents": [
+        "raid:crowned-sword-zacian-and-crowned-shield-zamazenta:2026-11-09"
+      ]
     },
     {
       "id": "discord:1568890467293069435",

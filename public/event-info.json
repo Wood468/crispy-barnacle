@@ -1565,11 +1565,75 @@
           "source": "G47IX",
           "sourceUrl": "https://discord.com/channels/@me/1558793395198099618/1568019537834676367",
           "alt": "Crowned Sword Zacian and Crowned Shield Zamazenta 5-star raids infographic"
+        },
+        {
+          "label": "Infographic · G47IX",
+          "url": "/infographics/g47ix/discord-1569034750339977347.png",
+          "source": "G47IX",
+          "sourceUrl": "https://discord.com/channels/@me/1558793395198099618/1569034750339977347",
+          "alt": "Crowned Sword Zacian and Crowned Shield Zamazenta 5-star raids infographic"
+        },
+        {
+          "label": "Infographic · G47IX",
+          "url": "/infographics/g47ix/discord-1569032764005548224.png",
+          "source": "G47IX",
+          "sourceUrl": "https://discord.com/channels/@me/1558793395198099618/1569032764005548224",
+          "alt": "Crowned Sword Zacian and Crowned Shield Zamazenta 5-star raids infographic"
         }
       ],
       "start": "2026-11-09",
       "end": "2026-11-13",
       "dateSource": "rotation"
+    },
+    "w-go-wild-area-global-meetup-karlsruhe": {
+      "names": [
+        "GO Wild Area Global Meetup: Karlsruhe"
+      ],
+      "source": {
+        "label": "G47IX",
+        "trust": "community",
+        "url": "https://discord.com/channels/@me/1558793395198099618/1569143538011218021",
+        "observed": "2026-11-09"
+      },
+      "tickets": [],
+      "info": [],
+      "infographics": [
+        {
+          "label": "Infographic · G47IX",
+          "url": "/infographics/g47ix/discord-1569143538011218021.png",
+          "source": "G47IX",
+          "sourceUrl": "https://discord.com/channels/@me/1558793395198099618/1569143538011218021",
+          "alt": "GO Wild Area Global Meetup: Karlsruhe infographic"
+        }
+      ],
+      "start": "2026-11-14",
+      "end": "2026-11-15",
+      "dateSource": "world-events.json"
+    },
+    "w-go-wild-area-global-meetup-stockholm": {
+      "names": [
+        "GO Wild Area Global Meetup: Stockholm"
+      ],
+      "source": {
+        "label": "G47IX",
+        "trust": "community",
+        "url": "https://discord.com/channels/@me/1558793395198099618/1569143538011218021",
+        "observed": "2026-11-09"
+      },
+      "tickets": [],
+      "info": [],
+      "infographics": [
+        {
+          "label": "Infographic · G47IX",
+          "url": "/infographics/g47ix/discord-1569143538011218021.png",
+          "source": "G47IX",
+          "sourceUrl": "https://discord.com/channels/@me/1558793395198099618/1569143538011218021",
+          "alt": "GO Wild Area Global Meetup: Stockholm infographic"
+        }
+      ],
+      "start": "2026-11-14",
+      "end": "2026-11-15",
+      "dateSource": "world-events.json"
     }
   },
   "passes": {
