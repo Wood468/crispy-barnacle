@@ -264,3 +264,17 @@ test('Into the Wild highlights Meltan and Gimmighoul shiny methods without claim
  const other=UI.render(event({title:'Unrelated event',notes:m.notes}),{});
  assert.doesNotMatch(other,/ue-special-shiny/);
 });
+
+test('published Into the Wild record survives legacy adaptation with both special shiny bonuses',()=>{
+ const source=JSON.parse(require('node:fs').readFileSync(new URL('../public/data.json',import.meta.url),'utf8'));
+ const records=Array.isArray(source)?source:Object.values(source).filter(Array.isArray).flat();
+ const raw=records.find(x=>x.id==='into');
+ assert.ok(raw,'Into the Wild event exists');
+ assert.equal(raw.e,'2026-11-13T20:00','main event ends November 13');
+ const model=A.adapt(raw);
+ const html=UI.render(model,{});
+ assert.match(html,/Shiny Meltan · Mystery Box/);
+ assert.match(html,/Shiny Gimmighoul · Coin Bag/);
+ assert.match(html,/15 Nov, 6 pm/);
+ assert.doesNotMatch(html,/Boosted shiny<\\/span>/);
+});
