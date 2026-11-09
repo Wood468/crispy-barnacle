@@ -6,9 +6,10 @@ const src=readFileSync(new URL('../public/event-components.js',import.meta.url),
 const begin=src.indexOf('function schedulePreview(model,ctx)');
 const end=src.indexOf('function render(model,ctx)',begin);
 assert.ok(begin>=0&&end>begin);
-const preview=vm.runInNewContext('(function(esc,activityTime){'+src.slice(begin,end)+';return schedulePreview;})')(
+const preview=vm.runInNewContext('(function(esc,activityTime,activityPlace){'+src.slice(begin,end)+';return schedulePreview;})')(
   value=>String(value).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;'),
-  a=>a.schedule.start
+  a=>a.schedule.start,
+  a=>typeof a.location==='string'?a.location:(a.location?.name||a.region||'')
 );
 const activity=(id,date,presentation='schedule')=>({id,title:id,presentation,schedule:{start:date,end:date,timeBasis:'player-local'}});
 
@@ -30,4 +31,12 @@ test('preview escapes activity titles',()=>{
  const html=preview({activities:[activity('<script>','2026-12-01T18:00')]},{});
  assert.doesNotMatch(html,/<script>/);
  assert.match(html,/&lt;script&gt;/);
+});
+
+test('preview displays an explicit location without inferring one',()=>{
+ const located=activity('Local raid','2026-12-01T18:00');
+ located.location='Melbourne';
+ const html=preview({activities:[located,activity('Other raid','2026-12-02T18:00')]},{});
+ assert.match(html,/<small>Melbourne<\/small>/);
+ assert.equal((html.match(/<small>/g)||[]).length,1);
 });
