@@ -40,3 +40,12 @@ test('preview displays an explicit location without inferring one',()=>{
  assert.match(html,/<small>Melbourne<\/small>/);
  assert.equal((html.match(/<small>/g)||[]).length,1);
 });
+
+test('preview includes rotation activities and escapes location labels',()=>{
+ const rotation=activity('Raid rotation','2026-12-01T18:00','rotation');
+ rotation.location='<img src=x onerror=alert(1)>';
+ const html=preview({activities:[rotation]},{});
+ assert.match(html,/Raid rotation/);
+ assert.match(html,/&lt;img src=x onerror=alert\(1\)&gt;/);
+ assert.doesNotMatch(html,/<img/);
+});
