@@ -2953,8 +2953,11 @@ with sync_playwright() as p:
         seen_before = wn.evaluate("JSON.parse(localStorage.getItem('gofn-seen-events')).ids")
         check('what\'s-new: a normal first visit records the event list', len(seen_before) >= 10, len(seen_before))
         wn.route('**/api/events', hang); wn.reload(wait_until='domcontentloaded')
+        # The fake clock only advances timers that already exist: wait until the dashboard script has started its feed timeout, or a loaded CI machine
+        # can run the 25 s before those timers are registered and the page then waits the real 20 s (seen as a 10 s wait_for_function timeout).
+        wn.wait_for_function('!!window.GODASH', timeout=30000)
         wn.clock.run_for(25000)  # past the feed timeout and past whatsnew's 20 s wait
-        wn.wait_for_function("document.getElementById('home-now').hasAttribute('data-render-key')")
+        wn.wait_for_function("document.getElementById('home-now').hasAttribute('data-render-key')", timeout=30000)
         wn.wait_for_timeout(300)
         seen_after = wn.evaluate("JSON.parse(localStorage.getItem('gofn-seen-events')).ids")
         check('what\'s-new: the seen list survives a session whose feed stalled', seen_after == seen_before, [len(seen_before), len(seen_after)])
