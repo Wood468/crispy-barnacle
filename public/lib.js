@@ -366,10 +366,10 @@
     if (GLOBAL_SCOPE.test(scope)) return 'global';
     if (mode === 'in-game') return 'regional-in-game';
     if (venueOf(r) || hasCoords(r) || r.ticketed === true) return 'in-person';
+    if (['location', 'place', 'where'].some(function (k) { return typeof r[k] === 'string' && GENERIC_PLACE.test(r[k].trim()); })) return 'global';
     if (r.attendance === 'in-person' || r.inPerson === true || r.kind === 'person') return 'in-person';
     var area = String(r.area || '').trim();
     if (area && GLOBAL_SCOPE.test(area)) return 'global';
-    if (['location', 'place', 'where'].some(function (k) { return typeof r[k] === 'string' && GENERIC_PLACE.test(r[k].trim()); })) return 'global';
     return scope ? 'in-person' : 'global';
   }
   function isInPersonWorldEvent(event) {
