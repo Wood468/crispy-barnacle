@@ -17,7 +17,7 @@ export function parseDateRange(text, yearHint = new Date().getUTCFullYear()) {
   for (let m; (m = mdy.exec(t));) {
     const mo = MON[m[1].slice(0, 3).toLowerCase()], d = +m[2]; if (d < 1 || d > 31) continue;
     const after = t.slice(m.index + m[0].length, m.index + m[0].length + 24);
-    const same = after.match(/^\s*(?:–|-|—|and|to|through|&)\s*(\d{1,2})(?!\d|:|\s*(?:a\.?m|p\.?m|[a-z]{3}))/i);
+    const same = after.match(/^(?:\s*,\s*\d{1,2}(?:st|nd|rd|th)?)*\s*,?\s*(?:–|-|—|and|or|to|through|&)\s*(\d{1,2})(?!\d|:|\s*(?:a\.?m|p\.?m|[a-z]{3}))/i); // also "November 6, 7, or 8" (separate ticketed days)
     const ty = m[3] ? +m[3] : (after.match(/^\s*(?:(?:–|-|—|and|to|through|&)\s*\d{1,2}(?:st|nd|rd|th)?)?,?\s+(20\d\d)\b/) || [])[1];
     found.push({ idx: m.index, mo, d, y: ty ? +ty : null, d2: same ? +same[1] : null });
   }

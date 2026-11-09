@@ -313,3 +313,48 @@ test("GO Pass rank rows: Leek Duck's parsed table wins over another source's pro
   const hubOnly = mergeSources([{ source: { id: "hub", name: "Hub", trust: "community" }, fields: { ...empty, tickets: ["Rank 25: Half hatch distance"] } }]);
   assert.equal(hubOnly.fields.tickets.filter(x => /^Rank 25/.test(x.text)).length, 1);
 });
+
+// Regression: the Mexico City Wild Area write-up (Nov 6-8) was merged into the global Into the Wild record (Nov 9-13),
+// so Into the Wild showed Mexico City tickets, dates and "Choose one day" lines.
+const wildEvents = [
+  { id: "leekduck:into-the-wild-2026", t: "Into the Wild 2026", link: "https://leekduck.com/events/into-the-wild-2026/", start: "2026-11-09T10:00:00.000", end: "2026-11-13T20:00:00.000", detailIds: [] },
+  { id: "leekduck:pokemon-go-wild-area-2026-global", t: "Pokémon GO Wild Area 2026: Global", link: "https://leekduck.com/events/pokemon-go-wild-area-2026-global/", start: "2026-11-14T10:00:00.000", end: "2026-11-15T18:00:00.000", detailIds: [] },
+  { id: "sendai", t: "GO Wild Area: Sendai", link: "https://pokemongo.com/en/gowildarea/sendai", start: "2026-11-06T10:00", end: "2026-11-08T18:00", detailIds: ["leekduck:pokemon-go-wild-area-2026-sendai-japan"] }
+];
+const mexicoPage = {
+  source: "leekduck", url: "https://leekduck.com/events/pokemon-go-wild-area-2026-mexico-city/", title: "Pokémon GO Wild Area 2026: Mexico City",
+  fields: { dates: ["Dates: November 6, 7, or 8, 2026 Time: 10:00 a.m. – 6:00 p.m. local time (UTC−6) Location: Mexico City, Mexico", "Choose one day: November 6, 7, or 8. Mexico City ticket prices are subject to applicable taxes and fees."] },
+  lines: [
+    { text: "Dates: November 6, 7, or 8, 2026 Time: 10:00 a.m. – 6:00 p.m. local time (UTC−6) Location: Mexico City, Mexico" },
+    { text: "This feature becomes more widely available starting with Into the Wild on November 9 ." },
+    { text: "November 9, 2026, at 10:00 a.m. local time: The GO Wild Area 2026 Special Background and all previous backgrounds become available." }
+  ]
+};
+test("a Mexico City Wild Area page never matches Into the Wild or the Global event", () => {
+  assert.equal(pickEvent(mexicoPage, wildEvents), null, "no event for Mexico City: it stays its own in-person entry");
+  // Even without any dates, the place in the title keeps it out of an event whose name has no such place.
+  assert.equal(pickEvent({ ...mexicoPage, fields: {}, lines: [] }, wildEvents), null);
+});
+test("the Into the Wild page still matches Into the Wild, and Sendai keeps its own page", () => {
+  const itw = { source: "leekduck", url: "https://leekduck.com/events/into-the-wild-2026/", title: "Into the Wild 2026", fields: { dates: ["Dates: November 9 to 13, 2026"] }, lines: [] };
+  assert.equal(pickEvent(itw, wildEvents).event.id, "leekduck:into-the-wild-2026");
+  const sendai = { source: "leekduck", url: "https://leekduck.com/events/pokemon-go-wild-area-2026-sendai-japan/", title: "Pokémon GO Wild Area 2026: Sendai • Tohoku", fields: { dates: ["Dates: November 6, 7, or 8, 2026"] }, lines: [] };
+  assert.equal(pickEvent(sendai, wildEvents).event.id, "sendai");
+});
+test("a page's own Dates line decides the date overlap, not later events it mentions", () => {
+  const ev = [{ id: "e1", t: "Wild Area Global", start: "2026-11-09T10:00", end: "2026-11-13T20:00", detailIds: [], link: "" }];
+  const page = { source: "official", url: "https://example.invalid/x/", title: "Wild Area Global", fields: { dates: ["Dates: November 6, 7, or 8, 2026", "starting with Into the Wild on November 9"] }, lines: [] };
+  assert.equal(pickEvent(page, ev), null);
+});
+test("separate ticketed days are read as one window", async () => {
+  const { parseDateRange } = await import("../scripts/importer/world.mjs");
+  assert.deepEqual(parseDateRange("Choose one day: November 6, 7, or 8. Mexico City tickets", 2026), { start: "2026-11-06", end: "2026-11-08" });
+  assert.deepEqual(parseDateRange("October 24 and 25, 2026", 2026), { start: "2026-10-24", end: "2026-10-25" });
+});
+
+test("research rewards: an item bounded by its repeated quantity does not swallow the next encounter (Leek Duck flattened table)", () => {
+  const f = extractFields('<h2>Field Research</h2><p>Win a raid POSSIBLE REWARDS Dratini Max CP 430 Min CP 397 ×2 Rare Candy ×2 Scyther Max CP 1160 Min CP 1104</p><p>Catch 3 Pawniard POSSIBLE REWARDS Pawniard Max CP 614 Min CP 574 ×5 Great Ball ×5 ×2 Ultra Ball ×2 ×2 Pinap Berry ×2 ×500 Stardust ×500</p>');
+  assert.deepEqual(f.researchTasks[0].rewards.map(r => [r.type, r.name, r.quantity]), [["encounter", "Dratini", 1], ["item", "Rare Candy", 2], ["encounter", "Scyther", 1]]);
+  assert.equal(f.researchTasks[0].rewards[2].cpMax, 1160);
+  assert.deepEqual(f.researchTasks[1].rewards.map(r => r.name + ":" + r.quantity), ["Pawniard:1", "Great Ball:5", "Ultra Ball:2", "Pinap Berry:2", "Stardust:500"]);
+});

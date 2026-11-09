@@ -315,6 +315,21 @@
     return '<h3 class="sec2">Event details</h3><div class="evd-card evd-groups">' + conf + groups + '</div>' + gaps + '<p class="evd-src">' + (many ? 'Compared: ' : 'Source: ') + links + (many ? '' : ' (single source, not cross-checked)') + ' · comparison data updated ' + esc(checkedAt || 'date unknown') + ' · <span class="src-fresh" data-age="' + (ageDays === null ? 'unknown' : ageDays) + '">' + freshness + '</span></p>' + (sourceNote ? '<p class="note">' + sourceNote + '</p>' : '');
   }
 
+  /* Research reward cell, shared by Event Details and the Research tab. Exact variant art for encounters (forms and costumes), quantities, CP range,
+     "Mighty" and a Shiny tag only when the source itself says the reward can be Shiny (never inferred from boosts or event type). */
+  /* Only icons that exist in the repo: Stardust, XP, the two berries, Max Potion/Revive, Mega Energy (Mega symbol). */
+  function itemIcon(n) { n = String(n || ''); return /stardust/i.test(n) ? '/ico/dust.webp' : /silver pinap/i.test(n) ? '/ico/i/silver-pinap.webp' : /golden razz/i.test(n) ? '/ico/i/golden-razz.webp' : /max potion/i.test(n) ? '/ico/i/max-potion.webp' : /max revive/i.test(n) ? '/ico/i/max-revive.webp' : /\bxp\b/i.test(n) ? '/ico/xp.webp' : /mega energy/i.test(n) ? '/ico/g/mega.webp' : ''; }
+  function researchReward(item, ev) {
+    var shiny = item.shiny === true ? '<small class="rs-shiny">\u2728 Can be Shiny</small>' : '';
+    if (item.type === 'encounter') {
+      var cp = item.cpMin && item.cpMax ? '<small>CP ' + esc(item.cpMin) + '\u2013' + esc(item.cpMax) + '</small>' : (item.mighty ? '' : '<small>Encounter</small>');
+      var mighty = item.mighty ? '<small>Mighty encounter</small>' : '';
+      var art = window.GOEventAdapter ? exactArt(GOEventAdapter.pokemon({ name: item.name, costume: item.costume || /wearing|costume/i.test(item.name), label: item.label, formId: item.formId, costumeId: item.costumeId })) : X.monArt(ev || {}, { name: item.name, costume: /wearing|costume/i.test(item.name), role: 'featured' }, 'ea');
+      return '<div class="research-reward research-reward-encounter" role="listitem"><span class="ue-reward-art"><span class="ue-reward-fallback" aria-hidden="true">\u2726</span>' + art + '</span><span><b>' + esc(item.name) + '</b>' + mighty + cp + shiny + '</span></div>';
+    }
+    var icon = itemIcon(item.name);
+    return '<div class="research-reward research-reward-item" role="listitem"><span class="ue-reward-art ue-reward-item-icon" aria-hidden="true">' + (icon ? '<img alt="" loading="lazy" decoding="async" src="' + icon + '" data-err="rm">' : '<i class="ue-reward-dot"></i>') + '</span><span><b>' + (item.quantity > 1 ? esc(item.quantity) + '\u00d7 ' : '') + esc(item.name) + '</b>' + shiny + '</span></div>';
+  }
   /* Seasons and monthly GO Passes: their own layout, in sections with icons. Curated notes come from season.json; rank rows and prices from the compared write-ups. */
   function researchTasksHtml(ev, d) {
     var tasks = d && Array.isArray(d.researchTasks) ? d.researchTasks : [];
@@ -333,16 +348,6 @@
       return '<details class="research-task-source"><summary>Source &amp; update</summary><small>' + label + (links.length ? ' · ' + links.join(' · ') : '') + ' · ' + esc(window.GOLIB.researchCheckedText(task.checkedAt)) + '</small></details>';
     }
 
-    /* Only icons that exist in the repo: Stardust, XP, the two berries, Max Potion/Revive, Mega Energy (Mega symbol). */
-    function itemIcon(n) { n = String(n || ''); return /stardust/i.test(n) ? '/ico/dust.webp' : /silver pinap/i.test(n) ? '/ico/i/silver-pinap.webp' : /golden razz/i.test(n) ? '/ico/i/golden-razz.webp' : /max potion/i.test(n) ? '/ico/i/max-potion.webp' : /max revive/i.test(n) ? '/ico/i/max-revive.webp' : /\bxp\b/i.test(n) ? '/ico/xp.webp' : /mega energy/i.test(n) ? '/ico/g/mega.webp' : ''; }
-    function reward(item, field) {
-      if (item.type === 'encounter') {
-        var cp = item.cpMin && item.cpMax ? '<small>CP ' + esc(item.cpMin) + '–' + esc(item.cpMax) + '</small>' : '';
-        return '<div class="research-reward" role="listitem"><span class="ue-reward-art"><span class="ue-reward-fallback" aria-hidden="true">✦</span>' + (window.GOEventAdapter?exactArt(GOEventAdapter.pokemon({name:item.name,costume:item.costume||/wearing|costume/i.test(item.name),label:item.label,formId:item.formId,costumeId:item.costumeId})):X.monArt(ev,{name:item.name,costume:/wearing|costume/i.test(item.name),role:'featured'},'ea')) + '</span><span><b>' + esc(item.name) + '</b>' + cp + '</span></div>';
-      }
-      var icon = itemIcon(item.name);
-      return '<div class="research-reward research-reward-item" role="listitem"><span class="ue-reward-art ue-reward-item-icon" aria-hidden="true">' + (icon ? '<img alt="" loading="lazy" decoding="async" src="' + icon + '" data-err="rm">' : '<i class="ue-reward-dot"></i>') + '</span><span><b>' + (item.quantity > 1 ? esc(item.quantity) + '× ' : '') + esc(item.name) + '</b></span></div>';
-    }
     /* Compact rows grouped by category. Field Research rewards are alternatives; timed and special rewards are all given. */
     var order = ['field', 'timed', 'special'], groups = {};
     tasks.forEach(function (t) { var c = order.indexOf(t.category) >= 0 ? t.category : 'other'; (groups[c] = groups[c] || []).push(t); });
@@ -351,7 +356,7 @@
     var html = order.concat(['other']).filter(function (c) { return groups[c]; }).map(function (c) {
       var rows = groups[c].map(function (task) {
         var rw = task.rewards || [], label = window.GOTODAYLOGIC ? GOTODAYLOGIC.researchRewardLabel(task.category, rw.length) : rw.length + ' rewards';
-        return '<li class="research-task"><p class="rs-text">' + esc(task.task) + '</p><div class="research-rewards rs-rewards" role="list" aria-label="' + esc(label) + '">' + rw.map(function (r) { return reward(r, task.category === 'field'); }).join('') + '</div></li>';
+        return '<li class="research-task"><p class="rs-text">' + esc(task.task) + '</p><div class="research-rewards rs-rewards" role="list" aria-label="' + esc(label) + '">' + rw.map(function (r) { return researchReward(r); }).join('') + '</div></li>';
       }).join('');
       var cites = groups[c].map(attribution).filter(function (h, i, a) { return a.indexOf(h) === i; });
       return '<div class="rs-group" data-research-category="' + c + '"><h3 class="rs-group-h">' + NAME[c] + (NOTE[c] ? ' <small>· ' + NOTE[c] + '</small>' : '') + '</h3><ul class="rs-list">' + rows + '</ul>'
@@ -558,6 +563,7 @@
     if(p.formId&&!p.costumeId&&!described&&GOLIB.parseForm(p.name).base===p.name)return '<span class="art costume-unavailable ea" role="img" aria-label="'+esc(name+' · form art unavailable')+'"><span>'+esc(name)+'</span><small>Form art unavailable</small></span>';
     return G.art({n:name,costume:!!p.costumeId,label:p.label||p.costumeId,asset:p.assetKey||undefined,dynamax:p.formId==='dynamax'||/-dynamax$/.test(p.formId||'')},'ea');
   }
+  var TRUST_LABEL = { official: 'Official', community: 'Community', datamine: 'Datamined', curated: 'Curated' };
   var currentEv=null;
   function render(ev) {
     if(!window.GOEventAdapter || !window.GOEventComponents) return renderLegacy(ev);
@@ -570,7 +576,7 @@
     var pass=ev.season?primary(seasonPage(ev)):'';
 
     var calendar=null;try{if(model.schedule)calendar=calendarEvent(ev,model);}catch(error){}
-    var sources=model.sources.map(function(src){var url=safe(src.url);return url?'<li><a href="'+esc(url)+'" target="_blank" rel="noopener noreferrer">'+esc(src.name||src.label||'Event source')+'</a></li>':'';}).filter(function(v,i,a){return v&&a.indexOf(v)===i;}).join('');
+    var sources=model.sources.map(function(src){var url=safe(src.url);return url?'<li><a href="'+esc(url)+'" target="_blank" rel="noopener noreferrer">'+esc(src.name||src.label||'Event source')+'</a>'+(TRUST_LABEL[src.trust]?' <small class="src-trust">'+TRUST_LABEL[src.trust]+'</small>':'')+'</li>':'';}).filter(function(v,i,a){return v&&a.indexOf(v)===i;}).join('')||'<li>'+esc(LIB.missingLabel('unverified'))+': no source link is recorded for this event.</li>';
     var conflicts=(model.internalValidation&&model.internalValidation.conflicts||[]).map(function(c){var values=[c.a&&c.a.text,c.b&&c.b.text].filter(Boolean);return '<li>'+esc(c.field==='shiny'?'Shiny availability':c.field||'Event detail')+(values.length?': '+values.map(esc).join(' / '):' needs rechecking.')+'</li>';}).join('');
     var catalogue=window.GOEventRegistry&&GOEventRegistry.diagnostics?GOEventRegistry.diagnostics():{},heldUpdate=catalogue.rejectedCount||catalogue.conflicts&&catalogue.conflicts.length;
     var cands=[
@@ -586,7 +592,7 @@
     if(art&&art.kind==='official'&&model.internalValidation&&model.internalValidation.artScope==='series'){art.provenance.scope='series';art.provenance.label=model.internalValidation.artLabel||'Series artwork';art.provenance.pageUrl=model.internalValidation.artSourceUrl||'';}
     var artHtml=art?GOEVENTART.banner(art,{ev:{name:ev.name||model.title,kind:ev.kind,region:ev.region},accent:accent}):'';
     var artNote=art?'<p class="note evd-art-note" data-art-provenance="'+art.kind+'">'+(art.provenance?'Event artwork: '+esc(art.provenance.source)+' · verified for '+esc(art.provenance.verifiedFor)+(safe(art.provenance.url)?' · <a href="'+esc(art.provenance.imageUrl)+'" target="_blank" rel="noopener noreferrer">image</a>':''):'Themed banner: no verified event artwork is published for this event.')+'</p>':'';
-    var footer='<details class="ue-sources" id="evd-sources"><summary>Sources &amp; updates</summary>'+artNote+(heldUpdate?'<p class="note">The latest event update was held. Showing the last available information.</p>':'')+(DATA.incomplete?'<p class="note">Some supplementary event information could not be loaded. Showing the available announcement. Reload to try again.</p>':'')+'<ul>'+sources+'</ul>'+(conflicts?'<h4>Details to recheck</h4><ul>'+conflicts+'</ul>':'')+(d.updated?'<p class="note">Last update '+esc(String(d.updated).slice(0,10))+'</p>':'')+(d.goPassParseWarning?'<p class="note">The last complete GO Pass rewards have been retained while the latest update is checked.'+(d.goPassRetainedAt?' Saved rank snapshot: '+esc(String(d.goPassRetainedAt).slice(0,10))+'.':'')+'</p>':'')+'</details>';
+    var footer='<details class="ue-sources" id="evd-sources"><summary>Sources &amp; updates</summary>'+artNote+(heldUpdate?'<p class="note">The latest event update was held. Showing the last available information.</p>':'')+(DATA.incomplete?'<p class="note">Some supplementary event information could not be loaded. Showing the available announcement. Reload to try again.</p>':'')+'<ul>'+sources+'</ul>'+(conflicts?'<h4>Details to recheck</h4><ul>'+conflicts+'</ul>':'')+'<p class="note src-fresh-line" data-fresh="'+esc(LIB.freshnessOf(d.updated,null,'importer').state)+'">'+(d.updated?'Details last updated '+esc(String(d.updated).slice(0,10))+' \u00b7 ':'')+esc(LIB.freshnessOf(d.updated,null,'importer').label)+'. Retrieved from the sources above by an hourly check; <button type="button" class="src-about-link" data-open-sources>How this data is sourced</button></p>'+(d.goPassParseWarning?'<p class="note">The last complete GO Pass rewards have been retained while the latest update is checked.'+(d.goPassRetainedAt?' Saved rank snapshot: '+esc(String(d.goPassRetainedAt).slice(0,10))+'.':'')+'</p>':'')+'</details>';
     return window.GOEventComponents.render(model,{
       toolbar:toolbarHtml(ev).replace('<span class="tag">EVENT DETAIL</span>',''),clock:window.GOEventClock,viewerZone:GOEventClock.viewerZone(),safe:safe,rewardArt:function(item){return exactArt(GOEventAdapter.pokemon({name:item.name,costume:!!item.costume,label:item.label,formId:item.formId,costumeId:item.costumeId,asset:item.assetKey}));},artHtml:artHtml,passMeta:{updated:d.updated||null,warning:d.goPassParseWarning?'The latest GO Pass update could not be read, so the last complete rewards are shown'+(d.goPassRetainedAt?' (saved '+String(d.goPassRetainedAt).slice(0,10)+')':'')+'.':'',sources:(function(){var all=(model.sources||[]).filter(function(x){return x&&x.name&&safe(x.url);}),pass=all.filter(function(x){return /leekduck\.com|pokemongo\.com/i.test(x.url)&&/pass|into-the-wild|season/i.test(x.url);});return (pass.length?pass:all.filter(function(x){return /leekduck\.com|pokemongo\.com/i.test(x.url);})).slice(0,3);})()},
       when:heroWhen(model,ev),overview:overviewTimes(model,ev),artKind:function(p){var c=window.GOTODAYLOGIC&&GOTODAYLOGIC.classifyArt({name:displayName(p),costume:!!p.costumeId});return c&&c.exact?c.label||'Form':'';},countdown:model.schedule&&model.lifecycle!=='cancelled'&&model.lifecycle!=='postponed'&&ev.datesKnown!==false?X.countdown(ev):'',
@@ -768,6 +774,13 @@
       }
       return;
     }
+    var about = e.target.closest('[data-open-sources]');
+    if (about) {
+      e.preventDefault(); close();
+      if (G.showTab) G.showTab('saved', 'menu');
+      setTimeout(function () { var dd = document.getElementById('srcdd'); if (dd) { dd.open = true; dd.scrollIntoView({ block: 'start' }); } }, 60);
+      return;
+    }
     var research = e.target.closest('[data-open-research]');
     if (research) {
       e.preventDefault();
@@ -907,7 +920,7 @@
   window.GOEVD = { close: close };
   document.addEventListener('gofn-state', function () { var o = $('evd'); if (o && !o.hidden) { var s = o.querySelector('[data-save]'); if (s) { var on = X.isSaved(s.dataset.save); s.classList.toggle('on', on); s.textContent = on ? '★' : '☆'; s.setAttribute('aria-pressed', on); var l = o.querySelector('.evd-lead'); if (l) l.hidden = !on; } } });
   document.addEventListener('change', function (e) { var sel = e.target.closest && e.target.closest('select[data-lead]'); if (!sel) return; var v = sel.value; X.usSet('pref:lead:' + sel.getAttribute('data-lead'), v === '' ? null : v); });
-  window.GODETAIL = { open: open, close: close };
+  window.GODETAIL = { open: open, close: close, researchReward: researchReward };
 
   /* Links to one event: https://pogo.michaelpuff.com/#event=<id>. The Link button in the event copies (or shares) one;
      opening one waits for the event list, then shows that event. An event that has ended or been replaced shows a short note. */

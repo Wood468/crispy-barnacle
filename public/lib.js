@@ -57,6 +57,23 @@
     return 'Checked ' + day + (age > 21 ? ' · source check may be out of date' : age > 7 ? ' · source check may be due' : '');
   }
 
+  // How old a recorded refresh time is. Thresholds are in hours: the event importer runs hourly, so a day without a refresh means it failed;
+  // the hand-curated snapshot is edited by hand, so it gets days. A missing, unparsable or future time is "unknown", never "fresh".
+  var FRESH_LIMITS = { importer: { fresh: 6, stale: 24 }, curated: { fresh: 72, stale: 168 } };
+  function ageText(ms) { var m = Math.round(ms / 60000); return m < 2 ? 'just now' : m < 120 ? m + ' min ago' : m < 2880 ? Math.round(m / 60) + ' h ago' : Math.round(m / 1440) + ' days ago'; }
+  function freshnessOf(value, now, kind) {
+    var lim = FRESH_LIMITS[kind] || FRESH_LIMITS.importer, clock = now == null ? Date.now() : now;
+    var ms = typeof value === 'number' ? value : (typeof value === 'string' && /^\d{4}-\d{2}-\d{2}/.test(value) ? Date.parse(value.length === 10 ? value + 'T12:00:00Z' : value) : NaN);
+    if (!Number.isFinite(ms) || ms <= 0 || ms > clock + 5 * 60000) return { state: 'unknown', ageMs: null, label: 'Update time not recorded' };
+    var age = Math.max(0, clock - ms), hours = age / 3600000;
+    if (hours <= lim.fresh) return { state: 'fresh', ageMs: age, label: 'Updated ' + ageText(age) };
+    if (hours <= lim.stale) return { state: 'delayed', ageMs: age, label: 'Update delayed \u00b7 last updated ' + ageText(age) };
+    return { state: 'stale', ageMs: age, label: 'May be out of date \u00b7 last updated ' + ageText(age) };
+  }
+  // Three different reasons a value is absent. Never merged into one "unknown".
+  var MISSING = { 'not-announced': 'Not announced yet', 'not-in-source': 'Not available from source', unverified: 'Unverified' };
+  function missingLabel(reason) { return MISSING[reason] || MISSING.unverified; }
+
   // Escape untrusted values for HTML text and quoted attribute values. Validate URLs separately.
   function esc(value) {
     return String(value == null ? '' : value).replace(/[&<>"']/g, function (c) {
@@ -414,5 +431,5 @@
   }
   function failingSources() { return Object.keys(failing); }
 
-  return { readJsonKeep: readJsonKeep, reportSave: reportSave, failingSources: failingSources, SAVE_MESSAGE: SAVE_MESSAGE, raidBossNames: raidBossNames, raidWindowState: raidWindowState, maxRosterFor: maxRosterFor, researchCheckedText: researchCheckedText, filterOpportunities: filterOpportunities, isPrivateLink: isPrivateLink, publicLink: publicLink, esc: esc, rpEstimate: rpEstimate, raidEventFor: raidEventFor, isPlaceholder: isPlaceholder, audify: audify, setTiers: setTiers, loadPrices: loadPrices, getJson: getJson, jsonOrNull: jsonOrNull, priceView: priceView, fmtRp: fmtRp, buildQueue: buildQueue, parseForm: parseForm, formId: formId, merge: merge, reconcileSync: reconcileSync, norm: norm, lev: lev, matchName: matchName, candidates: candidates, isInPersonWorldEvent: isInPersonWorldEvent, isRegionalInGameEvent: isRegionalInGameEvent, liveActivityCounts: liveActivityCounts };
+  return { readJsonKeep: readJsonKeep, reportSave: reportSave, failingSources: failingSources, SAVE_MESSAGE: SAVE_MESSAGE, raidBossNames: raidBossNames, raidWindowState: raidWindowState, maxRosterFor: maxRosterFor, researchCheckedText: researchCheckedText, freshnessOf: freshnessOf, missingLabel: missingLabel, filterOpportunities: filterOpportunities, isPrivateLink: isPrivateLink, publicLink: publicLink, esc: esc, rpEstimate: rpEstimate, raidEventFor: raidEventFor, isPlaceholder: isPlaceholder, audify: audify, setTiers: setTiers, loadPrices: loadPrices, getJson: getJson, jsonOrNull: jsonOrNull, priceView: priceView, fmtRp: fmtRp, buildQueue: buildQueue, parseForm: parseForm, formId: formId, merge: merge, reconcileSync: reconcileSync, norm: norm, lev: lev, matchName: matchName, candidates: candidates, isInPersonWorldEvent: isInPersonWorldEvent, isRegionalInGameEvent: isRegionalInGameEvent, liveActivityCounts: liveActivityCounts };
 }));

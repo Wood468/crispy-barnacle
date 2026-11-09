@@ -165,10 +165,13 @@ test("global Twitch research stays distinct from the in-person Night Out venue e
   assert.equal(collapsed.events.length, 2, "the global Twitch activity must not be merged into the in-person venue event");
 
   const saved = JSON.parse(readFileSync(new URL("../public/world-events.json", import.meta.url), "utf8"));
+  // Past events leave the generated feed after the importer's 14-day retention window, so this only checks it while it is retained.
   const savedStream = saved.events.find(event => event.id === pair[1]);
-  assert.equal(savedStream.scope, "global");
-  assert.equal(savedStream.place, "");
-  assert.equal(savedStream.area, "Worldwide");
+  if (savedStream) {
+    assert.equal(savedStream.scope, "global");
+    assert.equal(savedStream.place, "");
+    assert.equal(savedStream.area, "Worldwide");
+  }
 });
 
 test("curated watch pages are prioritised ahead of the importer page cap", async () => {
@@ -338,14 +341,18 @@ test("Wild Area city pages retain official source coverage without merging desti
 
   const snapshot = JSON.parse(readFileSync(new URL("../public/world-events.json", import.meta.url), "utf8")).events;
   const watch = JSON.parse(readFileSync(new URL("../data/watch-pages.json", import.meta.url), "utf8")).pages.map(p => p.url);
-  for (const [id, officialUrl, leekduckUrl] of [
-    ["w-go-wild-area-2026-mexico-city", mexicoUrl, "https://leekduck.com/events/pokemon-go-wild-area-2026-mexico-city/"],
-    ["w-go-wild-area-2026-sendai-tohoku", sendaiUrl, "https://leekduck.com/events/pokemon-go-wild-area-2026-sendai-japan/"]
+  // Ids come from the first source that named the event, so find each city's entry by place, not by id.
+  for (const [place, officialUrl, leekduckUrl] of [
+    ["Mexico City, Mexico", mexicoUrl, "https://leekduck.com/events/pokemon-go-wild-area-2026-mexico-city/"],
+    ["Sendai and Tohoku, Japan", sendaiUrl, "https://leekduck.com/events/pokemon-go-wild-area-2026-sendai-japan/"]
   ]) {
-    const event = snapshot.find(e => e.id === id);
+    const event = snapshot.find(e => e.place === place && /wild area/i.test(e.name) && e.scope === "regional");
+    assert.ok(event, place + " Wild Area stays one regional entry");
+    assert.equal(event.start, "2026-11-06");
+    assert.equal(event.end, "2026-11-08", "separate ticketed days " + place + " cover November 6 to 8");
     assert.equal(event.status, "official");
-    assert.ok(event.sources.some(s => s.url === officialUrl));
-    assert.ok(event.sources.some(s => s.url === leekduckUrl));
+    assert.ok(event.sources.some(s => normUrl(s.url) === normUrl(officialUrl)));
+    assert.ok(event.sources.some(s => normUrl(s.url) === normUrl(leekduckUrl)));
     assert.ok(watch.includes(officialUrl), "the official city page remains watched by the importer");
   }
 });

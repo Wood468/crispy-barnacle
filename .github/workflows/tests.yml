@@ -117,7 +117,9 @@ jobs:
 
       - name: Verify Research freshness and recovery
         if: matrix.shard == 'b'
-        run: python test/research_recovery_browser.py
+        run: |
+          python test/research_recovery_browser.py
+          python test/research_sources_browser.py
 
       - name: Verify universal event catalogue and future announcements
         if: matrix.shard == 'b'
@@ -188,6 +190,7 @@ jobs:
         run: |
           python test/opportunity_planner_browser.py
           python test/research_recovery_browser.py
+          python test/research_sources_browser.py
           python test/premium_surfaces_browser.py
           python test/today_detail_redesign_browser.py
           python test/today_done_browser.py

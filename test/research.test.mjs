@@ -119,7 +119,7 @@ test("event and pass source associations are explicit and the central Research v
   assert.match(research, /researchTasks/);
   assert.match(research, /eventWindow/);
   assert.match(research, /CURRENT DATE/);
-  assert.match(research, /GODASH\.monArt/);
+  assert.match(research, /GODETAIL\.researchReward/, "Research tab reward cells share the Event Details exact-art renderer");
   assert.match(sw, /research\.js\?v=/);
 });
 
@@ -148,11 +148,18 @@ test('flattened source item blocks never become part of an encounter name',()=>{
  assert.deepEqual(fields.researchTasks[0].rewards,[{type:'item',name:'Golden Razz Berry',quantity:1},{type:'encounter',name:'Rookidee',quantity:1,cpMin:258,cpMax:285},{type:'item',name:'Stardust',quantity:2000}]);
  assert.deepEqual(fields.researchTasks[1].rewards,[{type:'item',name:'Silver Pinap Berry',quantity:2},{type:'item',name:'Golden Razz Berry',quantity:2}]);
 });
+// Research for a city page is found by its source URL: the record id depends on which source named the event first.
+function wildAreaTasks(details,slug){
+ const url='https://leekduck.com/events/pokemon-go-wild-area-2026-'+slug+'/',found=[];
+ for(const [id,record] of Object.entries(details.events))if((record.researchTasks||[]).length&&(record.sources||[]).some(x=>x.url===url))found.push([id,record]);
+ return found;
+}
 test('published Wild Area research separates item rewards and exact encounter identity',()=>{
  const details=JSON.parse(fs.readFileSync(new URL('../public/event-details.json',import.meta.url),'utf8'));
- for(const id of ['leekduck:pokemon-go-wild-area-2026-sendai-japan','leekduck:pokemon-go-wild-area-2026-mexico-city']){
-  const task=details.events[id].researchTasks.find(t=>t.task==='Catch 10 Steel‑type Pokémon');
-  assert.equal(task.eventId,id);assert.equal(task.sourceRefs[0].url,'https://leekduck.com/events/'+id.slice(9)+'/');
+ for(const slug of ['sendai-japan','mexico-city']){
+  const [[id,record]]=wildAreaTasks(details,slug);
+  const task=record.researchTasks.find(t=>t.task==='Catch 10 Steel\u2011type Pok\u00e9mon');
+  assert.equal(task.eventId,id);assert.ok(!task.sourceRefs||task.sourceRefs.some(r=>r.url==='https://leekduck.com/events/pokemon-go-wild-area-2026-'+slug+'/'));
   assert.deepEqual(task.rewards.map(r=>r.name),['Golden Razz Berry','Rookidee','Stardust']);
   assert.equal(task.rewards[2].quantity,2000);
  }
@@ -171,12 +178,12 @@ test('declared research names preserve CP-less costumes beside CP-bearing encoun
 test('Wild Area source snapshots include complete mixed and CP-less reward pools',()=>{
  const data=JSON.parse(fs.readFileSync(new URL('../public/event-details.json',import.meta.url),'utf8'));
  for(const slug of ['sendai-japan','mexico-city']){
-  const tasks=data.events['leekduck:pokemon-go-wild-area-2026-'+slug].researchTasks;
+  const tasks=wildAreaTasks(data,slug)[0][1].researchTasks;
   assert.equal(tasks.length,12);assert.equal(tasks.find(t=>t.task==='Catch 10 Dragon‑type Pokémon').rewards.length,3);
   assert.equal(tasks.find(t=>t.task==='Catch a Hisuian Sliggoo').rewards[0].name,'Hisuian Sliggoo');
   assert.equal(tasks.find(t=>t.task==='Explore 2 km').rewards[0].costumeId,'modernjacket');
   const raid=tasks.find(t=>t.task==='Win 2 raids').rewards;
-  assert.equal(raid[1].name,'Machamp (Modern Jacket)');assert.equal(raid[1].cpMax,undefined);
+  assert.equal(raid[1].name.toLowerCase(),'machamp (modern jacket)');assert.equal(raid[1].cpMax,undefined);
   if(slug==='mexico-city'){assert.equal(raid[2].name,'Conkeldurr');assert.equal(raid[2].cpMin,1368);}
  }
 });

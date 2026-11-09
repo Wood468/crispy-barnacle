@@ -109,14 +109,25 @@ function pageDatesOverlapEvent(page, event) {
   // early article lines that actually contain a month/day, not arbitrary prose or metadata.
   const monthDay = /\b(?:jan(?:uary)?|feb(?:ruary)?|mar(?:ch)?|apr(?:il)?|may|june?|july?|aug(?:ust)?|sept?(?:ember)?|oct(?:ober)?|nov(?:ember)?|dec(?:ember)?)\.?\s+\d{1,2}\b|\b\d{1,2}(?:st|nd|rd|th)?\s+(?:jan(?:uary)?|feb(?:ruary)?|mar(?:ch)?|apr(?:il)?|may|june?|july?|aug(?:ust)?|sept?(?:ember)?|oct(?:ober)?|nov(?:ember)?|dec(?:ember)?)\b/i;
   const lineDates = (page.lines || []).slice(0, 40).filter(line => monthDay.test(String(line.text || ""))).map(line => line.text);
-  const dateTexts = [
+  let dateTexts = [
     ...(Array.isArray(page.fields?.dates) ? page.fields.dates : []),
     ...lineDates
   ].map(value => String(value || "").trim()).filter(Boolean);
+  // A page's own "Dates:" line is its window. Other lines only mention later or earlier events ("starting with Into the Wild on November 9").
+  const own = dateTexts.filter(value => /^dates?\s*:/i.test(value));
+  if (own.length) dateTexts = own;
   const yearHint = Number(eventStart.slice(0, 4)) || new Date().getUTCFullYear();
   const ranges = dateTexts.map(value => parseDateRange(value, yearHint)).filter(Boolean);
   if (!ranges.length) return true; // Missing source dates are unknown, not evidence of a mismatch.
   return ranges.some(range => range.start <= eventEnd && range.end >= eventStart);
+}
+
+// Where a page says the event is (from its title only). "Pokémon GO Wild Area 2026: Mexico City" is the Mexico City event, never the global Into the Wild week.
+export function titlePlaceConflict(page, event) {
+  const pagePlace = placeOf(String(page.title || ""), "");
+  if (!pagePlace || !pagePlace.place.includes(",")) return false; // only a city/venue ("Mexico City, Mexico"), not a region ("Europe")
+  const eventPlace = placeOf(String(event.t || event.name || "") + " " + String(event.place || ""), "");
+  return !eventPlace || eventPlace.place !== pagePlace.place;
 }
 
 function eventPartNumber(value) {
@@ -157,7 +168,7 @@ export function pickEvent(page, events) {
   };
   const direct = events.find(e => e.link && normalUrl(e.link) === normalUrl(page.url) && compatible(e));
   if (direct) return pageDatesOverlapEvent(page, direct) ? { event: direct, how: "linked" } : null;
-  const candidates = events.filter(compatible);
+  const candidates = events.filter(e => compatible(e) && !titlePlaceConflict(page, e));
   const m = matchEvent({ title: page.title || "" }, candidates);
   if (m && m.confidence === "high") {
     const event = candidates.find(e => e.id === m.eventId);
