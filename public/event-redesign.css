@@ -422,3 +422,14 @@ h2.dh .cnt{font:600 .75rem/1 var(--font-body);color:var(--color-text-muted);bord
 .wk-empty{display:grid;gap:12px;justify-items:start;padding:12px 0}
 #evtimeline .evc h3,#evtimeline .agt b{overflow-wrap:anywhere}
 .ue-pass-art:empty::after{content:"?";font-weight:700;color:var(--color-text-muted)}
+
+/* Player infographic shortcut and known-distance egg markers. */
+.evd-infographic-shortcut{display:block;margin:12px 16px 4px;padding:12px 16px;border:1px solid #6e56cf;border-radius:14px;background:#272044;color:#f7f4ff;font:inherit;font-weight:700;cursor:pointer;min-height:44px}
+.evd-infographic-shortcut[hidden]{display:none}
+.ue-mon{position:relative}
+.ue-egg-corner{position:absolute;top:8px;right:8px;z-index:2;border-radius:9px;padding:4px 6px;font-size:11px;font-weight:800;line-height:1.2;background:#dde2ec;color:#202c3b}
+.ue-egg-2{background:#8bdc96;color:#153b20}
+.ue-egg-5{background:#f6d76c;color:#493800}
+.ue-egg-7{background:#f5a5cd;color:#51213a}
+.ue-egg-10{background:#b6a4f7;color:#28185c}
+.ue-egg-12{background:#e3a06f;color:#50260e}
