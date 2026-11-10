@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createRequire } from 'node:module';
 import { readFileSync } from 'node:fs';
+import { artCandidates } from '../src/worker.js';
 
 const require = createRequire(import.meta.url);
 const Adapter = require('../public/event-adapter.js');
@@ -91,4 +92,13 @@ test('every sourced daily raid lineup remains a distinct day in all future event
   assert.ok(!saturday.includes('Reshiram') && !saturday.includes('Dynamax Palkia'));
   assert.ok(!sunday.includes('White Kyurem') && !sunday.includes('Dynamax Dialga'));
   assert.equal(UI.raidDayRosters([],{}),'');
+});
+
+test('both Kyurem fusions have form-specific art and unavailable-state labels', () => {
+  for(const [name,slug] of [['White Kyurem','kyurem-white'],['Black Kyurem','kyurem-black']]){
+    const candidate=artCandidates(name);
+    assert.equal(candidate.exact,true,name);
+    assert.deepEqual(candidate.list,[slug],name);
+    assert.equal(candidate.base,'kyurem');
+  }
 });
