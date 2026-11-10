@@ -77,6 +77,34 @@ function coinBagRoaming(model,details){
  return C.normalize(Object.assign({},model,{pokemon:pokemon,encounters:encounters}));
 }
 function pokemonForCoinBag(){return pokemon({speciesId:'999',name:'Gimmighoul (Roaming Form)',formId:'roaming',collectionName:'Gimmighoul (Roaming Form)',shiny:'unknown'});}
+
+/* An explicitly complete sourced egg pool takes precedence over a stale
+   catalogue's broader/merged egg roster. Only egg edges are replaced; any
+   independently sourced raids, wild spawns, Collection IDs remain intact. */
+function reconcileSourcedEggs(model,details){
+ var eggNotes=details&&details.fields&&details.fields.eggs||[];
+ var complete=eggNotes.some(function(row){
+  var t=text(row&&row.text||row),status=row&&row.status||'';
+  return /\bthe following pok[eé]mon hatch from\b|\bthese pok[eé]mon will hatch from\b/i.test(t)&&
+    (!status||['official','verified','corroborated','single'].indexOf(status)>=0);
+ });
+ if(!complete)return model;
+ var sourceEggs=(details.encounters||[]).filter(function(e){return e&&e.method==='egg';});
+ if(!sourceEggs.length)return model;
+ var sourcePokemon=new Map((details.pokemon||[]).map(function(p){return [p.key,p];}));
+ if(sourceEggs.some(function(e){return !sourcePokemon.has(e.identityKey);}))return model;
+ var oldEggs=(model.encounters||[]).filter(function(e){return e.method==='egg';});
+ var oldKeys=new Set(oldEggs.map(function(e){return e.identityKey;}));
+ var kept=(model.encounters||[]).filter(function(e){return e.method!=='egg';});
+ var retainedKeys=new Set(kept.map(function(e){return e.identityKey;}));
+ var roster=(model.pokemon||[]).filter(function(p){return !oldKeys.has(p.key)||retainedKeys.has(p.key);});
+ var have=new Set(roster.map(function(p){return p.key;}));
+ sourceEggs.forEach(function(e){var p=sourcePokemon.get(e.identityKey);if(!have.has(p.key)){roster.push(p);have.add(p.key);}});
+ var encounters=kept.concat(sourceEggs.map(function(e){
+  return {identityKey:e.identityKey,method:'egg',activityId:'main',access:e.access||'unknown'};
+ }));
+ return C.normalize(Object.assign({},model,{pokemon:roster,encounters:encounters}));
+}
 function collectionName(p){
  var prefixes={alola:'Alolan',galar:'Galarian',hisui:'Hisuian',paldea:'Paldean',mega:'Mega',primal:'Primal',gmax:'Gigantamax',gigantamax:'Gigantamax',shadow:'Shadow',purified:'Purified',dynamax:'Dynamax'};
  var name=p.collectionName||p.name||p.speciesId,form=lib.parseForm(name);
@@ -94,5 +122,5 @@ function collectionName(p){
  if(p.formId==='mega-x'||p.formId==='mega-y')return 'Mega '+name+' '+p.formId.slice(-1).toUpperCase();
  return null; // An unrecognized form can never inherit base-species ownership.
 }
-return {adapt:adapt,pokemon:pokemon,schedule:schedule,retain:retain,collectionName:collectionName,configureSpecies:configureSpecies,configureCostumes:configureCostumes,costumeDescriptors:costumeDescriptors,passFields:passFields,coinBagRoaming:coinBagRoaming};
+return {adapt:adapt,pokemon:pokemon,schedule:schedule,retain:retain,collectionName:collectionName,configureSpecies:configureSpecies,configureCostumes:configureCostumes,costumeDescriptors:costumeDescriptors,passFields:passFields,coinBagRoaming:coinBagRoaming,reconcileSourcedEggs:reconcileSourcedEggs};
 }));
