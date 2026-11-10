@@ -80,7 +80,10 @@ test('complete published egg roster replaces unrelated imported hatch entries wi
     ]),
     internalValidation:{fields:{eggs:[{text:'Other Pokémon hatch in 2 km Eggs',status:'single'}]}}
   });
-  const corrected = Adapter.reconcileSourcedEggs(withDecoy,src);
+  // The Event Details loader can combine a curated prose-only record with
+  // the source detail. The one complete egg source must remain authoritative.
+  const combined = {fields:{eggs:[{text:'Eggs may change over the season'}]},eggPool:src};
+  const corrected = Adapter.reconcileSourcedEggs(withDecoy,combined);
   const eggRefs = corrected.encounters.filter(e=>e.method==='egg');
   assert.equal(eggRefs.length,4);
   assert.deepEqual(new Set(eggRefs.map(e=>e.identityKey)),keys);
