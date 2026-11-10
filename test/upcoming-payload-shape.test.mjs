@@ -1,3 +1,4 @@
+// Revalidated after the Into the Wild source-data correction landed on main.
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
