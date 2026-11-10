@@ -4,6 +4,7 @@
 // Needs GITHUB_TOKEN and GITHUB_REPOSITORY (set by the workflow). Telegram is optional: TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID.
 import { readFile, writeFile } from "node:fs/promises";
 import { routed } from "../src/tgroute.js";
+import { recoverStaleImporter } from "./importer-recovery.mjs";
 
 const HOUR = 36e5;
 export const JOBS = [
@@ -119,6 +120,18 @@ async function main() {
   for (const t of AI_TASKS) rows.push(await tagRow(t));
   await tidyStrays();
   if (!rows.length) throw new Error("Could not read any job");
+  // The health workflow remains an alerting job, but may recover this one
+  // allowlisted release-critical importer after a long quiet period. A queued,
+  // running or recently attempted import prevents another dispatch.
+  try {
+    const recovery = await recoverStaleImporter(rows.find(row => row.id === "event-importer.yml"));
+    if (recovery.reason !== "not-stale") console.log("Importer recovery: " + recovery.status + " (" + recovery.reason + ")");
+  } catch (error) {
+    // A transient GitHub API failure must not hide the health report or
+    // suppress the stale-job notification already sent by this script.
+    console.log("Importer recovery unavailable: " + (error && error.name || "unknown error"));
+  }
+
   const prev = await readJson("data/health-state.json", { alerted: [] });
   const a = alerts(rows, prev);
   for (const r of a.warn) await tg(warnText(r) + "\n\nhttps://pogo.michaelpuff.com");
