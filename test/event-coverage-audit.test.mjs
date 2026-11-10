@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {auditEvents} from '../scripts/event-coverage-audit.mjs';
+import {spawnSync} from 'node:child_process';
 
 const curated={asOf:'10 Nov 2026',events:[
  {id:'complete',t:'Complete',s:'2026-11-10',e:'2026-11-11',sourceUrl:'https://example.org/event'},
@@ -55,4 +56,42 @@ test('structured research is counted independently from source prose',()=>{
  }});
  assert.equal(report.counts.structuredResearch.present,1);
  assert.equal(report.counts.sourceResearch.present,1);
+});
+
+test('research review queue contains only source-backed research without structured tasks',()=>{
+ const report=auditEvents({events:[
+  {id:'prose',t:'Prose'}, {id:'structured',t:'Structured'}, {id:'none',t:'None'}
+ ]},{events:{
+  prose:{sources:[{url:'https://example.org/prose'}],fields:{research:[{text:'Catch Pokémon',status:'official'}]}},
+  structured:{researchTasks:[{task:'Catch 5 Pokémon',rewards:[{name:'Stardust'}]}]},
+  none:{fields:{research:[{text:'Rejected text',status:'rejected'}]}}
+ }});
+ assert.equal(report.researchReviewCount,1);
+ assert.deepEqual(report.researchReview,[{id:'prose',name:'Prose',origin:'curated',sources:['https://example.org/prose']}]);
+});
+
+test('review queue also includes source-only announcements with research prose',()=>{
+ const report=auditEvents({events:[]},{events:{
+  'future:event':{name:'Future Event',sources:[{url:'https://example.org/future'}],
+   fields:{research:[{text:'Win raids for a reward',status:'single'}]}}
+ }});
+ assert.equal(report.researchReviewCount,1);
+ assert.deepEqual(report.researchReview[0],{
+  id:'future:event',name:'Future Event',origin:'source-only',sources:['https://example.org/future']
+ });
+});
+
+test('research review CLI prints parseable focused report',()=>{
+ const run=spawnSync(process.execPath,['scripts/event-coverage-audit.mjs','--research-review'],{encoding:'utf8'});
+ assert.equal(run.status,0,run.stderr);
+ const report=JSON.parse(run.stdout);
+ assert.equal(typeof report.researchReviewCount,'number');
+ assert.ok(Array.isArray(report.researchReview));
+ assert.equal(report.researchReview.length,report.researchReviewCount);
+ assert.equal(typeof report.structuredResearch,'number');
+ assert.equal(typeof report.sourceResearch,'number');
+ assert.ok(report.sourceResearch >= report.structuredResearch,'structured tasks count as source research');
+ assert.equal(report.researchReviewCount,report.sourceResearch-report.structuredResearch,
+  'every source-backed event without structured tasks should be in the review queue');
+ assert.ok(!Object.hasOwn(report,'events'),'compact output should omit full event inventory');
 });

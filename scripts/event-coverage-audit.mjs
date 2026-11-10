@@ -32,7 +32,11 @@ export function auditEvents(curated,details){
   const counts=Object.fromEntries(Object.keys(events[0]?.checks||{}).map(k=>[k,{
     present:events.filter(e=>e.checks[k]).length,missing:events.filter(e=>!e.checks[k]).length
   }]));
+  // A review queue, not an assertion that every prose mention is a task.
+  const researchReview=events.filter(event=>event.checks.sourceResearch&&!event.checks.structuredResearch)
+    .map(({id,name,origin,sources})=>({id,name,origin,sources}));
   return {asOf:curated?.asOf||null,sourceUpdated:details?.updated||null,
+    researchReviewCount:researchReview.length,researchReview,
     total:events.length,curatedCount:curatedEvents.length,sourceOnlyCount:events.length-curatedEvents.length,counts,events};
 }
 
@@ -44,7 +48,15 @@ async function main(){
     await mkdir('data',{recursive:true});
     await writeFile('data/event-coverage-report.json',JSON.stringify(report,null,2)+'\n');
   }
-  console.log(JSON.stringify(report,null,2));
+  // Compact mode for investigating research coverage without dumping the full inventory.
+  if(process.argv.includes('--research-review')) {
+    console.log(JSON.stringify({
+      asOf:report.asOf,sourceUpdated:report.sourceUpdated,
+      total:report.total,sourceResearch:report.counts.sourceResearch?.present||0,
+      structuredResearch:report.counts.structuredResearch?.present||0,
+      researchReviewCount:report.researchReviewCount,researchReview:report.researchReview
+    },null,2));
+  } else console.log(JSON.stringify(report,null,2));
 }
 if(process.argv[1]&&import.meta.url===new URL('file://'+process.argv[1]).href)
   main().catch(e=>{console.error(e);process.exitCode=1});
