@@ -51,10 +51,10 @@ function parseResearchTask(line, category, declaredNames) {
   // Published research tables may use "Task | 7740 × Stardust" rather
   // than the prose marker "REWARD". Only accept an explicit task verb
   // and a concrete reward cell; do not infer tasks from event descriptions.
-  const cells = String(line || "").split(/\\s*\\|\\s*/).map(trim);
-  if (cells.length === 2 && /^(?:catch|spin|make|win|complete|send|hatch|power up|evolve|take|use|earn|battle|trade|transfer|walk|feed|give|land|defeat|purify|exchange|open|explore|adventure|beat|visit|photograph|level up|collect|get|play|perform|throw|claim reward)\\b/i.test(cells[0]) &&
-      /^(?:\\d[\\d,]*\\s*[×x]\\s*|[×x]\\s*\\d+\\s+|\\d[\\d,]*\\s+|an?\\s+encounter with\\s+)/i.test(cells[1])) {
-    line = cells[0] + " REWARD " + cells[1].replace(/^(\\d[\\d,]*)\\s*[×x]\\s*/i, "×$1 ");
+  const cells = String(line || "").split(/\s*\|\s*/).map(trim);
+  if (cells.length === 2 && /^(?:catch|spin|make|win|complete|send|hatch|power up|evolve|take|use|earn|battle|trade|transfer|walk|feed|give|land|defeat|purify|exchange|open|explore|adventure|beat|visit|photograph|level up|collect|get|play|perform|throw|claim reward)\b/i.test(cells[0]) &&
+      /^(?:\d[\d,]*\s*[×x]\s*|[×x]\s*\d+\s+|\d[\d,]*\s+|an?\s+encounter with\s+)/i.test(cells[1])) {
+    line = cells[0] + " REWARD " + cells[1].replace(/^(\d[\d,]*)\s*[×x]\s*/i, "×$1 ");
   }
   const marker = /\sREWARD\s/i.exec(String(line || "")) || /\b(?:possible\s+)?rewards?\s*:?\s*/i.exec(String(line || ""));
   if (!marker) return null;
