@@ -99,7 +99,7 @@ export function fromPage(page, today = new Date().toISOString().slice(0, 10)) {
   const explicitWindow = datedLines.slice(0, 20).find(line =>
     line.length <= 280 &&
     /\b(?:event|wild area|visits|taking place|takes place|held|celebrat)/i.test(line) &&
-    /\b(?:jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\\.?\s+\d{1,2}\s*(?:–|—|-|to|through)\s*\d{1,2}\b/i.test(line)
+    /\b(?:jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\.?\s+\d{1,2}\s*(?:–|—|-|to|through)\s*\d{1,2}\b/i.test(line)
   );
   const range = parseDateRange(explicitWindow || dateText, +today.slice(0, 4));
   const where = placeOf(title, text);
