@@ -22,6 +22,8 @@ test('reports source coverage without treating absent sections as confirmed omis
  assert.equal(report.total,3);
  assert.equal(report.counts.sourceMatched.present,2);
  assert.equal(report.counts.verifiedArtwork.present,1);
+ assert.equal(report.counts.structuredResearch.present,0);
+ assert.equal(report.counts.sourceResearch.present,1);
  assert.deepEqual(report.events[0].missing,[]);
  assert.ok(report.events[1].missing.includes('sourceBonuses'));
  assert.ok(report.events[1].missing.includes('sourceResearch'));
@@ -45,4 +47,12 @@ test('source-only announcements are included instead of disappearing from the au
  assert.equal(future.name,'Future Event');
  assert.equal(future.origin,'source-only');
  assert.equal(future.checks.sourceResearch,true);
+});
+
+test('structured research is counted independently from source prose',()=>{
+ const report=auditEvents({events:[{id:'research',t:'Research'}]},{events:{
+  research:{researchTasks:[{task:'Catch 5 Pokémon',rewards:['Stardust']}],fields:{research:[]}}
+ }});
+ assert.equal(report.counts.structuredResearch.present,1);
+ assert.equal(report.counts.sourceResearch.present,1);
 });
