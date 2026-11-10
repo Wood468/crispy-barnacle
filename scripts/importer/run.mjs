@@ -247,6 +247,23 @@ export function preserveGoPassRows(out, old, byEvent) {
 }
 
 
+// Keep source-backed research during a temporary feed outage, but never keep
+// outdated rows when the publishing page was actually fetched this run.
+// Only tasks with an explicit source URL are eligible; prose is never promoted.
+export function preserveUnfetchedResearchTasks(out, old, byEvent) {
+  for (const [id, group] of byEvent) {
+    const now = out[id], before = old[id];
+    if (!now || !before || now.name !== before.name || (now.researchTasks || []).length) continue;
+    const fetched = new Set(group.results.map(r => normUrl(r.source?.url || "")).filter(Boolean));
+    const carried = (before.researchTasks || []).filter(task =>
+      Array.isArray(task.sourceRefs) && task.sourceRefs.some(ref =>
+        /^https:\/\//.test(ref.url || "") && !fetched.has(normUrl(ref.url)))
+    );
+    if (carried.length) now.researchTasks = carried;
+  }
+  return out;
+}
+
 async function main() {
   const events = await appEvents();
   const { found, status } = await discover();
@@ -403,6 +420,7 @@ async function main() {
     }
   } catch (error) { console.warn("Curated activity reconciliation skipped:", error.message); }
   preserveGoPassRows(out, old, byEvent);
+  preserveUnfetchedResearchTasks(out, old, byEvent);
   // A feed-derived twin record (leekduck:<slug>) whose every source page is now read into the curated record is a duplicate: keeping it would show every task and Pokémon twice.
   const claimedUrls = new Set([...byEvent.values()].flatMap(group => group.results.map(result => normUrl(result.source.url))));
   let sameRulings = []; try { sameRulings = JSON.parse(await readFile("data/event-aliases.json", "utf8")).same || []; } catch { /* no rulings */ }
