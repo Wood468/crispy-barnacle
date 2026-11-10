@@ -11,7 +11,7 @@ import { entriesFromPage, mergeWorld, collapseWorld, parseDateRange, placeOf, cl
 import { matchEvent } from "../g47ix-review.mjs";
 import { discoverIntl, entryFromIntlPage, INTL_PATTERN } from "./intl.mjs";
 import { failRun } from "../fail-run.mjs";
-import { extractEncounters, mergeEncounters, posterFromHtml } from "./encounters.mjs";
+import { extractEncounters, mergeEncounters, reconcileActivityEncounters, posterFromHtml } from "./encounters.mjs";
 import catalogue from "../event-experience/build-catalogue.cjs";
 import eventAdapter from "../../public/event-adapter.js";
 import { announcementFromPage } from "./announcements.mjs";
@@ -95,7 +95,8 @@ export async function appEvents() {
         existing.start = e.s || existing.start;
         existing.end = e.e || existing.end;
         existing.detailIds = detailIds;
-      } else evs.push({ id: e.id, t: e.t, link, start: e.s, end: e.e, detailIds, curated: true });
+        existing.activities = Array.isArray(e.activities) ? e.activities : [];
+      } else evs.push({ id: e.id, t: e.t, link, start: e.s, end: e.e, detailIds, activities: Array.isArray(e.activities) ? e.activities : [], curated: true });
     }
   } catch { /* no snapshot */ }
   return evs;
@@ -353,7 +354,7 @@ async function main() {
     await writeFile(ARTWORK_OUT, JSON.stringify({ updated: now, pages: index }, null, 1) + "\n");
   }
   for (const [id, { event, results }] of byEvent) {
-    const merged = { ...mergeSources(results), ...mergeEncounters(results) };
+    const merged = { ...mergeSources(results), ...reconcileActivityEncounters(mergeEncounters(results), event.activities, {dex,names:rewardOptions.pokemonNames,costumes:costumeNames}) };
     const selected = selectArtwork(event, results, { retrievedAt: now });
     // A temporary source outage must not erase previously verified art for the same event.
     const previous = old[id];
