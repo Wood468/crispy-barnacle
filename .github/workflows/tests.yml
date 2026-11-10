@@ -226,6 +226,7 @@ jobs:
           python test/today_v1_coverage_browser.py
           python test/battle_rotation_browser.py
           python test/raids_max_polish_browser.py
+          python test/event_specials_browser.py
           python test/schedule_gopass_browser.py
           python test/universal_event_browser.py
           python test/worldwide_timezone_browser.py
