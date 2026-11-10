@@ -392,15 +392,15 @@ test("Hub event articles use an exact detail ID and do not become duplicate Mini
   const curated = data.events.filter(e => ["minior", "minior2", "minior3"].includes(e.id))
     .map(e => ({id:e.id,t:e.t,start:e.s,end:e.e,link:e.sourceUrl,detailIds:e.detailIds,curated:true}));
   const cases = [
-    ["https://pokemongohub.net/post/event/minior-showers-leonid-november-2026/", "Minior Showers: Leonid (November 2026)", "2026-11-14", "minior2"],
-    ["https://pokemongohub.net/post/event/minior-showers-orionids-october-2026/", "Minior Showers: Orionids (October 2026)", "2026-10-19", "minior"]
+    ["https://pokemongohub.net/post/event/minior-showers-leonid-november-2026/", "Minior Showers: Leonid (November 2026)", "November 14, 2026", "minior2"],
+    ["https://pokemongohub.net/post/event/minior-showers-orionids-october-2026/", "Minior Showers: Orionids (October 2026)", "October 19, 2026", "minior"]
   ];
   for (const [url,title,date,id] of cases) {
     const page = {source:"hub",url,title,fields:{dates:[date]},lines:[]};
     const matched = pickEvent(page,curated);
     assert.equal(matched?.event.id,id,url);
     assert.equal(matched?.how,"detail-id",url);
-    assert.equal(pickEvent({...page,fields:{dates:["2027-08-01"]}},curated),null,"a mismatched date must never win on source ID");
+    assert.equal(pickEvent({...page,fields:{dates:["August 1, 2027"]}},curated),null,"a mismatched date must never win on source ID");
   }
   assert.equal(pickEvent({source:"hub",url:"https://evil.example/post/event/minior-showers-leonid-november-2026/",title:"Unknown event",fields:{}},curated),null,"external hosts cannot impersonate a known source ID");
 });
