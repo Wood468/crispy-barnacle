@@ -35,7 +35,7 @@ with sync_playwright() as p:
   assert root.locator('.rw-raid:not(.rw-event-day) .rw-rel .rc-event[data-open]').count()==1
   assert root.locator('.rw-count-live').first.inner_text().startswith('Ends in ')
   assert not root.locator('.rc-shiny').count(),'no shiny chip without confirmed data'
-  bosses=root.locator('.rw-max-pokemon[data-max-boss]')
+  bosses=root.locator('.rw-max-pokemon[data-max-boss]:not(.rw-event-day *)')
   assert [bosses.nth(i).get_attribute('data-max-boss') for i in range(bosses.count())]==['Ralts','Machop','Registeel','Regidrago','Latias','Latios'],width
   assert all('dynamax' in bosses.nth(i).locator('.max-tag').inner_text().lower() for i in range(bosses.count()))
   assert 'CP 1,699' in root.locator('[data-max-boss="Regidrago"]').inner_text() and 'Dynamax debut' in root.locator('[data-max-boss="Regidrago"]').inner_text()
