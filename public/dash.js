@@ -1270,6 +1270,27 @@
         body += '<div class="rw-raid ' + row.cls + '"><span class="rw-label">' + esc(row.label) + '</span><p class="rw-window">' + esc(fmtD(pd(r.s)) + ', ' + fmtT(pd(r.s)) + ' – ' + fmtD(pd(r.e)) + ', ' + fmtT(pd(r.e))) + ' · local time</p>' + '<div class="rw-rel">' + windowChip(+pd(r.s), +pd(r.e)) + eventLink(r.event) + '</div>' + raidSourceLink(r) + '<div class="rcs">' +
           cell('5★', r.five, r) + cell('Mega', r.mega, r) + cell('Shadow', String(r.shadow || '').replace(/, to .*/, ''), r) + '</div>' + lowTier(r) + '<p class="evc-when">Raid Hour: ' + esc(r.rh || 'Not listed') + '</p></div>';
       });
+      // Event-specific raid days are not ordinary continuous rotations. Keep each
+      // published day's five-star raids and Max Battles visible in Battle.
+      (D.events || []).forEach(function(event){
+        if(!Array.isArray(event.raidDays))return;
+        event.raidDays.forEach(function(slot){
+          var start=pd(slot.date+'T00:00'), finish=addDays(start,1);
+          if(!(start<end&&finish>a&&finish>t))return;
+          var source=/^https:\/\/(?:pokemongo\.com|www\.pokemongo\.com)\//.test(event.sourceUrl||'')
+            ? '<a class="rw-source" href="'+esc(event.sourceUrl)+'" target="_blank" rel="noopener noreferrer">Official event source ↗</a>':'';
+          var raidRows=(slot.five||[]).map(function(name){
+            return cell('5★',name,{s:slot.date+'T00:00',e:slot.date+'T23:59',five:name});
+          }).join('');
+          var maxRows=(slot.max||[]).map(function(name){
+            return '<div class="rw-max-pokemon" data-max-boss="'+esc(name)+'">'+monArt({kind:'max',tags:[],name:''},{name:name.replace(/^(?:Dynamax|Gigantamax)\s+/i,'')},'ea')+'<div class="rw-max-txt"><b>'+esc(name)+'</b><small>Event Max Battle</small></div></div>';
+          }).join('');
+          body+='<div class="rw-raid rw-event-day" data-event-raid-day="'+esc(slot.date)+'"><span class="rw-label">'+esc(event.t)+' · '+esc(fmtD(start))+'</span>'+
+            '<p class="rw-window">Event-specific schedule · local date</p><div class="rw-rel">'+eventLink(event.t)+'</div>'+source+
+            (raidRows?'<div class="rcs">'+raidRows+'</div>':'')+
+            (maxRows?'<div class="rw-max"><span class="rw-label">Max Battles</span>'+maxRows+'</div>':'')+'</div>';
+        });
+      });
       body += battles.length ? battles.map(function(mb){
         var label='Max Battle rotation';
         return '<div class="rw-max"><span class="rw-label">'+label+'</span><p class="rw-window">'+esc(fmtD(pd(mb[0]+'T12:00'))+' – '+fmtD(pd(mb[1]+'T12:00')))+' · local dates</p><div class="rw-max-pokemon">'+monArt({kind:'max',tags:[],name:''},{name:mb[2]},'ea')+'<div><b>'+esc(mb[2])+'</b><small>Featured at Power Spots</small></div></div>'+(civil(pd(mb[0]+'T12:00')).weekday===1?'<p class="muted">Max Monday spotlight · '+esc(fmtD(pd(mb[0]+'T12:00')))+' · 6 am–9 pm local time</p>':'')+'</div>';
