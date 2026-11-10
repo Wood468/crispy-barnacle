@@ -382,8 +382,14 @@ async function main() {
       const format = time => { const h = +time.slice(11,13), m = time.slice(14,16); return (h % 12 || 12) + (m === "00" ? "" : ":" + m) + (h >= 12 ? "pm" : "am"); };
       const title = hours.some(a => a.kind === "raid-hour") && hours.some(a => a.kind === "max-battle-hour")
         ? "Daily Raid Hour and Max Battle Hour" : hours[0].kind === "raid-hour" ? "Daily Raid Hour" : "Daily Max Battle Hour";
-      const text = title + ": " + format(first.start) + " to " + format(first.end) + " local time; " +
+      const fullText = title + ": " + format(first.start) + " to " + format(first.end) + " local time; " +
         hours.map(a => a.schedule.start.slice(0,10) + " " + a.title).join("; ");
+      // The Overview source-highlights widget intentionally caps rows at 240
+      // characters. Keep its summary concise; full per-day activities remain
+      // available in the structured schedule preview.
+      const text = fullText.length <= 240 ? fullText :
+        title + ": " + format(first.start) + " to " + format(first.end) + " local time, " +
+        hours[0].schedule.start.slice(0,10) + " to " + hours[hours.length-1].schedule.start.slice(0,10) + ".";
       detail.fields ||= {};
       detail.fields.dates ||= [];
       if (!detail.fields.dates.some(row => row.text === text)) detail.fields.dates.push({
