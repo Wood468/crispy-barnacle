@@ -89,8 +89,19 @@ export function tidyName(name) {
 export function fromPage(page, today = new Date().toISOString().slice(0, 10)) {
   const title = seriesName(cleanTitle(page.title));
   const text = (page.lines || []).map(l => l.text).join(" ");
-  const dateText = [...(page.fields?.dates || []), ...(page.lines || []).slice(0, 40).map(l => l.text)].join(" . ");
-  const range = parseDateRange(dateText, +today.slice(0, 4));
+  const datedLines = (page.lines || []).slice(0, 40).map(l => String(l.text || ""));
+  const dateText = [...(page.fields?.dates || []), ...datedLines].join(" . ");
+  // An event's published date range beats a list of individual ticket days.
+  // On official venue pages the DATE section often lists Friday, Saturday and
+  // Sunday separately; parsing only its first two entries silently ends the
+  // entire event on Saturday. Prefer an explicit event-window sentence near
+  // the top of the same article, not later unrelated activity dates.
+  const explicitWindow = datedLines.slice(0, 20).find(line =>
+    line.length <= 280 &&
+    /\b(?:event|wild area|visits|taking place|takes place|held|celebrat)/i.test(line) &&
+    /\b(?:jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\\.?\s+\d{1,2}\s*(?:–|—|-|to|through)\s*\d{1,2}\b/i.test(line)
+  );
+  const range = parseDateRange(explicitWindow || dateText, +today.slice(0, 4));
   const where = placeOf(title, text);
   // A global stream can mention the physical venue it celebrates; its own title takes precedence.
   // Do not turn an online Twitch broadcast into a second in-person stop at that venue.
