@@ -48,7 +48,15 @@ async function main(){
     await mkdir('data',{recursive:true});
     await writeFile('data/event-coverage-report.json',JSON.stringify(report,null,2)+'\n');
   }
-  // A compact mode for investigating research coverage without dumping the full\n  // event inventory. It uses the same source-backed checks as the full report.\n  if(process.argv.includes('--research-review')) {\n    console.log(JSON.stringify({asOf:report.asOf,sourceUpdated:report.sourceUpdated,\n      total:report.total,sourceResearch:report.counts.sourceResearch?.present||0,\n      structuredResearch:report.counts.structuredResearch?.present||0,\n      researchReviewCount:report.researchReviewCount,researchReview:report.researchReview},null,2));\n  } else console.log(JSON.stringify(report,null,2));
+  // Compact mode for investigating research coverage without dumping the full inventory.
+  if(process.argv.includes('--research-review')) {
+    console.log(JSON.stringify({
+      asOf:report.asOf,sourceUpdated:report.sourceUpdated,
+      total:report.total,sourceResearch:report.counts.sourceResearch?.present||0,
+      structuredResearch:report.counts.structuredResearch?.present||0,
+      researchReviewCount:report.researchReviewCount,researchReview:report.researchReview
+    },null,2));
+  } else console.log(JSON.stringify(report,null,2));
 }
 if(process.argv[1]&&import.meta.url===new URL('file://'+process.argv[1]).href)
   main().catch(e=>{console.error(e);process.exitCode=1});
