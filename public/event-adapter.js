@@ -82,16 +82,19 @@ function pokemonForCoinBag(){return pokemon({speciesId:'999',name:'Gimmighoul (R
    catalogue's broader/merged egg roster. Only egg edges are replaced; any
    independently sourced raids, wild spawns, Collection IDs remain intact. */
 function reconcileSourcedEggs(model,details){
- var eggNotes=details&&details.fields&&details.fields.eggs||[];
+ // The combined source read model may merge prose from several pages while
+ // retaining the one complete source-specific hatch roster separately.
+ var source=details&&details.eggPool||details;
+ var eggNotes=source&&source.fields&&source.fields.eggs||[];
  var complete=eggNotes.some(function(row){
   var t=text(row&&row.text||row),status=row&&row.status||'';
   return /\bthe following pok[eé]mon hatch from\b|\bthese pok[eé]mon will hatch from\b/i.test(t)&&
     (!status||['official','verified','corroborated','single'].indexOf(status)>=0);
  });
  if(!complete)return model;
- var sourceEggs=(details.encounters||[]).filter(function(e){return e&&e.method==='egg';});
+ var sourceEggs=(source.encounters||[]).filter(function(e){return e&&e.method==='egg';});
  if(!sourceEggs.length)return model;
- var sourcePokemon=new Map((details.pokemon||[]).map(function(p){return [p.key,p];}));
+ var sourcePokemon=new Map((source.pokemon||[]).map(function(p){return [p.key,p];}));
  if(sourceEggs.some(function(e){return !sourcePokemon.has(e.identityKey);}))return model;
  var oldEggs=(model.encounters||[]).filter(function(e){return e.method==='egg';});
  var oldKeys=new Set(oldEggs.map(function(e){return e.identityKey;}));
