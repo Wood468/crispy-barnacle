@@ -213,8 +213,8 @@ function raidDayRosters(raidDays,ctx){
  return '<div class="ue-raid-days"><h3 class="ue-mini-h">Raids &amp; Max Battles by day</h3><div class="ue-raid-day-grid">'+cards+'</div></div>';
 }
 function render(model,ctx){ctx=ctx||{};var view=V.project(model),fields=model.internalValidation&&model.internalValidation.fields||{},body={};
- var galleryOnly=model.encounters.every(function(e){return e.method==='other';});
- body.encounters=section('evd-pokemon',galleryOnly?'Featured Pokémon':'Pokémon',gallery(model,ctx));
+ var galleryOnly=!ctx.rotationHtml&&model.encounters.every(function(e){return e.method==='other';});
+ body.encounters=section('evd-pokemon',galleryOnly?'Featured Pokémon':'Pokémon',(ctx.rotationHtml||'')+gallery(model,ctx));
  if(!model.bonuses.length&&!ctx.moves)body.encounters=body.encounters.replace('<h3 class="sec2">','<h3 class="sec2" id="evd-highlights">');
  var bonusList=model.bonuses.filter(function(b){var t=value(b);return t&&!(model.internalValidation&&model.internalValidation.conflicts||[]).some(function(c){return c.a&&c.a.text===t||c.b&&c.b.text===t;});});
  var realB=bonusList.filter(function(b){return bonusClass(value(b))==='bonus';}),noteB=bonusList.filter(function(b){return bonusClass(value(b))!=='bonus';});
@@ -232,6 +232,7 @@ function render(model,ctx){ctx=ctx||{};var view=V.project(model),fields=model.in
  Object.keys(fields).filter(function(k){return ['bonuses','tickets','research'].indexOf(k)<0;}).forEach(function(k){(fields[k]||[]).forEach(function(r){if(r.text&&!excluded.has(r.text)&&!known.has(r.text)){known.add(r.text);info.push(r.text);}});});
  var detail=info.length?'<details class="ue-guide"><summary>Read the event guide</summary>'+rows(info)+'</details>':'';
  var selected=(view.order||view.sections.map(function(s){return s.key;})).filter(function(key){return key!=='overview'&&body[key];});
+ if(ctx.rotationHtml&&selected.indexOf('encounters')<0)selected.unshift('encounters');
  var nav=selected.map(function(key){return {key:key,label:{encounters:'Pokémon',bonuses:'Bonuses',rotations:'Rotations',schedule:'Schedule',research:'Research',passes:'GO Pass',tickets:'Tickets'}[key]};}).map(function(s){var id={encounters:(!model.bonuses.length&&!ctx.moves?'evd-highlights':'evd-pokemon'),bonuses:'evd-highlights',rotations:'evd-rotations',schedule:'evd-schedule',research:'evd-research-title',passes:'evd-pass',tickets:'evd-tickets'}[s.key];return '<a href="#'+id+'">'+esc(s.label)+'</a>';}).join('');
  if(ctx.moves&&!model.bonuses.length)nav+='<a href="#evd-highlights">Moves</a>';
  if(ctx.locations)nav+='<a href="#evd-locations">Locations</a>';
