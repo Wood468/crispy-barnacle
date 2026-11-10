@@ -38,7 +38,7 @@ function gallery(model,ctx){
   var seen=new Set(),cards=(model.groups[method]||[]).map(function(edge){
    var p=byKey[edge.identityKey];if(!p)return '';
    var activity=model.activities.find(function(a){return a.id===edge.activityId;}),activityLabel=activity&&(activity.title||activity.name);
-   var key=p.key+'|'+edge.activityId+'|'+(edge.access&&edge.access!=='all'&&edge.access!=='unknown'?edge.access:'');
+   var key=galleryDisplayIdentity(p)+'|'+edge.activityId+'|'+(edge.access&&edge.access!=='all'&&edge.access!=='unknown'?edge.access:'');
    if(seen.has(key))return '';seen.add(key);
    var name=ctx.nameFor?ctx.nameFor(p):p.name||p.speciesId,label=p.label;
    var conflict=(model.internalValidation&&model.internalValidation.conflicts||[]).some(function(c){return c.field==='shiny'&&c.identityKey===p.key;});
