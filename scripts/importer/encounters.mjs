@@ -29,7 +29,7 @@ export function extractEncounters(input,{dex=[],names=[],costumes=[]}={}){
     // "Zacian (Crowned Sword)": a published form of a known species is an exact identity (never a costume guess or a base-species substitute).
     const form=/^(.+?)\s+\(((?:crowned (?:sword|shield)|(?:altered|origin|incarnate|therian|attack|defense|speed|normal|sky|land|east|west|black|white)(?: forme?)?|alolan|galarian|hisuian|paldean))\)$/i.exec(label);
     const base=form&&known.get(form[1].toLowerCase());
-    if(base&&base.speciesId&&!base.costume)declared={name:label,speciesId:base.speciesId,formId:'crowned-'+crowned[1].toLowerCase(),collectionName:label};
+    if(base&&base.speciesId&&!base.costume)declared={name:label,speciesId:base.speciesId};
     // Dynamax / Gigantamax rows name the species; the Max Battle heading is the evidence for the treatment.
     const dyn=/^(dynamax|gigantamax)\s+(.+)$/i.exec(label),dbase=dyn&&known.get(dyn[2].toLowerCase());
     if(!declared&&dbase&&dbase.speciesId&&!dbase.costume&&method==='max')declared={name:label,speciesId:dbase.speciesId};
