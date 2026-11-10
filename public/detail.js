@@ -572,6 +572,16 @@
     var d=findDetails(ev)||{}, info=findInfo(ev)||{}, snapshot=(DATA.catalogue||[]).find(function(item){return item.eventId===ev.id || item.eventId===String(ev.id).replace(/^cur:/,'') || (item.aliases||[]).indexOf(ev.id)>=0;});
     var model=window.GOEventAdapter.adapt(ev.universalModel || Object.assign({},ev,{id:snapshot?snapshot.eventId:ev.id}),d,info);
     if(snapshot && snapshot.eventId===model.eventId)model=window.GOEventAdapter.retain(snapshot,model);
+    // The Coin Bag emits Roaming Form. Repair the one generic base-form
+    // source card after catalogue retention without changing saved Collection.
+    if(GOEventAdapter.coinBagRoaming)model=GOEventAdapter.coinBagRoaming(model,d);
+    // The same curated, source-backed per-day raid roster feeds Battle and
+    // this event overview; future events carrying raidDays inherit it.
+    var curatedEvent=((G.D&&G.D.events)||[]).find(function(row){
+      return ev.id==='cur:'+row.id||ev.id===row.id||model.eventId===row.id;
+    });
+    var dayRosters=Array.isArray(ev.raidDays)?ev.raidDays:
+      curatedEvent&&Array.isArray(curatedEvent.raidDays)?curatedEvent.raidDays:[];
     activeModel=model;currentEv=ev;
     var venues=window.GOPLACES?GOPLACES.forEvent(ev):[];
     var tickets=(info.tickets||[]).map(passCard).join('');
@@ -597,7 +607,7 @@
     var footer='<details class="ue-sources" id="evd-sources"><summary>Sources &amp; updates</summary>'+artNote+(heldUpdate?'<p class="note">The latest event update was held. Showing the last available information.</p>':'')+(DATA.incomplete?'<p class="note">Some supplementary event information could not be loaded. Showing the available announcement. Reload to try again.</p>':'')+'<ul>'+sources+'</ul>'+(conflicts?'<h4>Details to recheck</h4><ul>'+conflicts+'</ul>':'')+'<p class="note src-fresh-line" data-fresh="'+esc(LIB.freshnessOf(d.updated,null,'importer').state)+'">'+(d.updated?'Details last updated '+esc(String(d.updated).slice(0,10))+' \u00b7 ':'')+esc(LIB.freshnessOf(d.updated,null,'importer').label)+'. Retrieved from the sources above by an hourly check; <button type="button" class="src-about-link" data-open-sources>How this data is sourced</button></p>'+(d.goPassParseWarning?'<p class="note">The last complete GO Pass rewards have been retained while the latest update is checked.'+(d.goPassRetainedAt?' Saved rank snapshot: '+esc(String(d.goPassRetainedAt).slice(0,10))+'.':'')+'</p>':'')+'</details>';
     return window.GOEventComponents.render(model,{
       toolbar:toolbarHtml(ev).replace('<span class="tag">EVENT DETAIL</span>',''),clock:window.GOEventClock,viewerZone:GOEventClock.viewerZone(),safe:safe,rewardArt:function(item){return exactArt(GOEventAdapter.pokemon({name:item.name,costume:!!item.costume,label:item.label,formId:item.formId,costumeId:item.costumeId,asset:item.assetKey}));},artHtml:artHtml,passMeta:{updated:d.updated||null,warning:d.goPassParseWarning?'The latest GO Pass update could not be read, so the last complete rewards are shown'+(d.goPassRetainedAt?' (saved '+String(d.goPassRetainedAt).slice(0,10)+')':'')+'.':'',sources:(function(){var all=(model.sources||[]).filter(function(x){return x&&x.name&&safe(x.url);}),pass=all.filter(function(x){return /leekduck\.com|pokemongo\.com/i.test(x.url)&&/pass|into-the-wild|season/i.test(x.url);});return (pass.length?pass:all.filter(function(x){return /leekduck\.com|pokemongo\.com/i.test(x.url);})).slice(0,3);})()},
-      when:heroWhen(model,ev),overview:overviewTimes(model,ev),artKind:function(p){var c=window.GOTODAYLOGIC&&GOTODAYLOGIC.classifyArt({name:displayName(p),costume:!!p.costumeId});return c&&c.exact?c.label||'Form':'';},countdown:model.schedule&&model.lifecycle!=='cancelled'&&model.lifecycle!=='postponed'&&ev.datesKnown!==false?X.countdown(ev):'',
+      when:heroWhen(model,ev),overview:overviewTimes(model,ev),raidDays:dayRosters,artKind:function(p){var c=window.GOTODAYLOGIC&&GOTODAYLOGIC.classifyArt({name:displayName(p),costume:!!p.costumeId});return c&&c.exact?c.label||'Form':'';},countdown:model.schedule&&model.lifecycle!=='cancelled'&&model.lifecycle!=='postponed'&&ev.datesKnown!==false?X.countdown(ev):'',
       nameFor:displayName,art:G.art,artFor:exactArt,bonus:G.bonusChip,
       actions:'<div class="evd-btns">'+(calendar&&model.lifecycle!=='cancelled'&&model.lifecycle!=='postponed'?'<a class="pill all" download="event.ics" href="'+icsFor(calendar)+'">Add to calendar</a>':'')+'</div>',
       research:primary(researchTasksHtml(ev,d)),passes:pass,tickets:primary(tickets),moves:primary(evMovesHtml(ev,!model.bonuses.length)),
