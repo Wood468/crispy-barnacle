@@ -1264,18 +1264,40 @@
         var label=active?'Current raid rotation':offset===0?'Next raid rotation · '+fmtD(pd(r.s))+', '+fmtT(pd(r.s)):pd(r.s)<=a?'At start of week':upcoming;
         return {r:r,label:label,cls:active?'rw-current':'rw-next'};
       });
-      if (!rotationRows.length) body += '<p class="empty">No raid rotation published for this week yet.</p>';
+      var hasEventRaidDays=(D.events||[]).some(function(ev){return (ev.raidDays||[]).some(function(slot){var start=pd(slot.date+'T00:00');return start<end&&addDays(start,1)>a&&addDays(start,1)>t;});});
+      if (!rotationRows.length && !hasEventRaidDays) body += '<p class="empty">No raid rotation published for this week yet.</p>';
       rotationRows.forEach(function (row) {
         var r = row.r;
         body += '<div class="rw-raid ' + row.cls + '"><span class="rw-label">' + esc(row.label) + '</span><p class="rw-window">' + esc(fmtD(pd(r.s)) + ', ' + fmtT(pd(r.s)) + ' – ' + fmtD(pd(r.e)) + ', ' + fmtT(pd(r.e))) + ' · local time</p>' + '<div class="rw-rel">' + windowChip(+pd(r.s), +pd(r.e)) + eventLink(r.event) + '</div>' + raidSourceLink(r) + '<div class="rcs">' +
           cell('5★', r.five, r) + cell('Mega', r.mega, r) + cell('Shadow', String(r.shadow || '').replace(/, to .*/, ''), r) + '</div>' + lowTier(r) + '<p class="evc-when">Raid Hour: ' + esc(r.rh || 'Not listed') + '</p></div>';
+      });
+      // Event-specific raid days are not ordinary continuous rotations. Keep each
+      // published day's five-star raids and Max Battles visible in Battle.
+      (D.events || []).forEach(function(event){
+        if(!Array.isArray(event.raidDays))return;
+        event.raidDays.forEach(function(slot){
+          var start=pd(slot.date+'T00:00'), finish=addDays(start,1);
+          if(!(start<end&&finish>a&&finish>t))return;
+          var source=/^https:\/\/(?:pokemongo\.com|www\.pokemongo\.com)\//.test(event.sourceUrl||'')
+            ? '<a class="rw-source" href="'+esc(event.sourceUrl)+'" target="_blank" rel="noopener noreferrer">Official event source ↗</a>':'';
+          var raidRows=(slot.five||[]).map(function(name){
+            return cell('5★',name,{s:slot.date+'T00:00',e:slot.date+'T23:59',five:name});
+          }).join('');
+          var maxRows=(slot.max||[]).map(function(name){
+            return '<div class="rw-max-pokemon" data-max-boss="'+esc(name)+'">'+monArt({kind:'max',tags:[],name:''},{name:name.replace(/^(?:Dynamax|Gigantamax)\s+/i,'')},'ea')+'<div class="rw-max-txt"><b>'+esc(name)+'</b><small>Event Max Battle</small></div></div>';
+          }).join('');
+          body+='<div class="rw-raid rw-event-day" data-event-raid-day="'+esc(slot.date)+'"><span class="rw-label">'+esc(event.t)+' · '+esc(fmtD(start))+'</span>'+
+            '<p class="rw-window">Event-specific schedule · local date</p><div class="rw-rel">'+eventLink(event.t)+'</div>'+source+
+            (raidRows?'<div class="rcs">'+raidRows+'</div>':'')+
+            (maxRows?'<div class="rw-max"><span class="rw-label">Max Battles</span>'+maxRows+'</div>':'')+'</div>';
+        });
       });
       body += battles.length ? battles.map(function(mb){
         var label='Max Battle rotation';
         return '<div class="rw-max"><span class="rw-label">'+label+'</span><p class="rw-window">'+esc(fmtD(pd(mb[0]+'T12:00'))+' – '+fmtD(pd(mb[1]+'T12:00')))+' · local dates</p><div class="rw-max-pokemon">'+monArt({kind:'max',tags:[],name:''},{name:mb[2]},'ea')+'<div><b>'+esc(mb[2])+'</b><small>Featured at Power Spots</small></div></div>'+(civil(pd(mb[0]+'T12:00')).weekday===1?'<p class="muted">Max Monday spotlight · '+esc(fmtD(pd(mb[0]+'T12:00')))+' · 6 am–9 pm local time</p>':'')+'</div>';
       }).join('') : '';
       var related=maxEvents(a,end);
-      if(!battles.length)body+=eventMaxRoster(related);
+      if(!battles.length){var publishedMaxRoster=eventMaxRoster(related);if(!hasEventRaidDays||publishedMaxRoster.indexOf('rw-empty')===-1)body+=publishedMaxRoster;}
       if(related.length)body+='<section class="rw-event-links"><h3>Max Battle events</h3>'+related.map(function(event){return '<button type="button" class="rw-max-event" data-open="'+esc(event.id)+'"><b>'+esc(event.name)+'</b><span>'+esc(timeMeta(event))+'</span>'+(event.region?'<small>'+esc(event.region)+'</small>':'')+'</button>';}).join('')+'</section>';
       return '<article class="rotc rw-card"><div class="rw-week-head"><span class="kind">' + esc(offset === 0 ? 'This week' : 'Week of ' + fmtD(a)) + '</span><b>' + esc(range(a,b)) + '</b></div>' + body + '</article>';
     }
@@ -1283,7 +1305,7 @@
     var offsets = rotWeekTab === 'this' ? [0] : rotWeekTab === 'next' ? [1] : rotWeekTab === 'following' ? [2] : [3,4,5];
     var knownOffsets = offsets.filter(function(off){
       var a = addDay(monday, off * 7), end = addDay(a, 7);
-      return weekRotations(a,end).length || maxEvents(a,end).length || max.some(function(m){ return m[0] < key(end) && m[1] >= key(a); });
+      return weekRotations(a,end).length || maxEvents(a,end).length || (D.events||[]).some(function(ev){return (ev.raidDays||[]).some(function(slot){var day=pd(slot.date+'T00:00');return day<end&&addDays(day,1)>a&&addDays(day,1)>t;});}) || max.some(function(m){ return m[0] < key(end) && m[1] >= key(a); });
     });
     var tabs = '<div class="rw-tabs" role="tablist" aria-label="Rotation week">' + labels.map(function(x){
       var selected = rotWeekTab === x.id;

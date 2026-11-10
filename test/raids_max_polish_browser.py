@@ -32,10 +32,10 @@ with sync_playwright() as p:
   assert z.count()==1 and 'CP 2,188–2,735' in z.inner_text(),(width,z.inner_text())
   assert z.locator('.rc-tier').inner_text()=='5★'
   assert 'Raid Hour: Crowned Sword Zacian, Mon Nov 9' in root.inner_text()
-  assert root.locator('.rw-rel .rc-event[data-open]').count()==1
+  assert root.locator('.rw-raid:not(.rw-event-day) .rw-rel .rc-event[data-open]').count()==1
   assert root.locator('.rw-count-live').first.inner_text().startswith('Ends in ')
   assert not root.locator('.rc-shiny').count(),'no shiny chip without confirmed data'
-  bosses=root.locator('.rw-max-pokemon[data-max-boss]')
+  bosses=root.locator('.rw-max-pokemon[data-max-boss]:not(.rw-event-day *)')
   assert [bosses.nth(i).get_attribute('data-max-boss') for i in range(bosses.count())]==['Ralts','Machop','Registeel','Regidrago','Latias','Latios'],width
   assert all('dynamax' in bosses.nth(i).locator('.max-tag').inner_text().lower() for i in range(bosses.count()))
   assert 'CP 1,699' in root.locator('[data-max-boss="Regidrago"]').inner_text() and 'Dynamax debut' in root.locator('[data-max-boss="Regidrago"]').inner_text()
@@ -53,8 +53,8 @@ with sync_playwright() as p:
   page.locator('#tabs [data-tab="raids"]').click();root=page.locator('#rotnow')
   assert root.locator('.rc[data-boss="Shadow Tornadus (Incarnate)"]').count()==1
   assert root.locator('.rc[data-boss="Dialga"] .rc-shiny').count()==1
-  mx=root.locator('.rw-max-pokemon').first.inner_text();assert 'Gigantamax Charizard' in mx or 'Charizard' in mx
-  assert root.locator('.max-tag').first.inner_text().strip().lower() in ('g-max','dynamax')
+  mx=root.locator('.rw-max-pokemon:not(.rw-event-day *)').first.inner_text();assert 'Gigantamax Charizard' in mx or 'Charizard' in mx
+  assert root.locator('.rw-max-pokemon:not(.rw-event-day *) .max-tag').first.inner_text().strip().lower() in ('g-max','dynamax')
   shoot(page,'raids-shadow-gmax',width)
   page.locator('[data-rotweek="next"]').click()
   assert 'Espurr' in root.inner_text();shoot(page,'raids-next-week',width)

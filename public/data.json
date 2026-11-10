@@ -227,7 +227,10 @@
     },
     {
       "id": "halloween1",
-      "detailIds": ["halloween1", "leekduck:halloween-2026-part-1"],
+      "detailIds": [
+        "halloween1",
+        "leekduck:halloween-2026-part-1"
+      ],
       "t": "Halloween 2026, Part One",
       "s": "2026-10-27T10:00",
       "e": "2026-11-01T10:00",
@@ -300,7 +303,10 @@
     },
     {
       "id": "halloween2",
-      "detailIds": ["halloween2", "leekduck:halloween-2026-part-2"],
+      "detailIds": [
+        "halloween2",
+        "leekduck:halloween-2026-part-2"
+      ],
       "t": "Halloween 2026, Part Two",
       "s": "2026-11-01T10:00",
       "e": "2026-11-05T20:00",
@@ -335,7 +341,10 @@
     },
     {
       "id": "gopassnov",
-      "detailIds": ["gopassnov", "leekduck:go-pass-november-2026"],
+      "detailIds": [
+        "gopassnov",
+        "leekduck:go-pass-november-2026"
+      ],
       "t": "GO Pass: November",
       "s": "2026-11-03T10:00",
       "e": "2026-12-01T10:00",
@@ -495,7 +504,31 @@
         "Palkia"
       ],
       "sourceUrl": "https://pokemongo.com/en/gowildarea/global",
-      "source": "Official Pokémon GO announcement"
+      "source": "Official Pokémon GO announcement",
+      "raidDays": [
+        {
+          "date": "2026-11-14",
+          "five": [
+            "Zekrom",
+            "White Kyurem"
+          ],
+          "max": [
+            "Gigantamax Duraludon",
+            "Dynamax Dialga"
+          ]
+        },
+        {
+          "date": "2026-11-15",
+          "five": [
+            "Reshiram",
+            "Black Kyurem"
+          ],
+          "max": [
+            "Gigantamax Duraludon",
+            "Dynamax Palkia"
+          ]
+        }
+      ]
     },
     {
       "id": "minior2",
@@ -894,7 +927,31 @@
       "five": "Giratina (Altered Forme)",
       "mega": "Mega Sableye",
       "shadow": "Shadow Tornadus (Incarnate), to Nov 8",
-      "low": { "one": ["Pikachu", "Antique Sinistea"], "three": ["Cofagrigus", "Trevenant", "Dhelmise"], "shadowOne": ["Shadow Larvitar", "Shadow Mudkip", "Shadow Makuhita", "Shadow Cranidos"], "shadowThree": ["Shadow Prinplup", "Shadow Piloswine", "Shadow Poliwhirl"], "observed": "2026-11-05", "source": "Pokémon GO Hub current raids", "sourceUrl": "https://pokemongohub.net/post/guide/current-go-raids/" },
+      "low": {
+        "one": [
+          "Pikachu",
+          "Antique Sinistea"
+        ],
+        "three": [
+          "Cofagrigus",
+          "Trevenant",
+          "Dhelmise"
+        ],
+        "shadowOne": [
+          "Shadow Larvitar",
+          "Shadow Mudkip",
+          "Shadow Makuhita",
+          "Shadow Cranidos"
+        ],
+        "shadowThree": [
+          "Shadow Prinplup",
+          "Shadow Piloswine",
+          "Shadow Poliwhirl"
+        ],
+        "observed": "2026-11-05",
+        "source": "Pokémon GO Hub current raids",
+        "sourceUrl": "https://pokemongohub.net/post/guide/current-go-raids/"
+      },
       "rh": "Giratina (Altered Forme), Wed Nov 4",
       "sourceUrl": "https://leekduck.com/events/giratina-altered-forme-in-5-star-raid-battles-november-2026/"
     },
@@ -911,10 +968,22 @@
       },
       "rh": "Crowned Sword Zacian, Mon Nov 9 · Crowned Shield Zamazenta, Tue Nov 10",
       "cp": {
-        "Crowned Sword Zacian": [2188, 2735],
-        "Crowned Shield Zamazenta": [2188, 2735],
-        "Druddigon": [1561, 1951],
-        "Orthworm": [1313, 1642]
+        "Crowned Sword Zacian": [
+          2188,
+          2735
+        ],
+        "Crowned Shield Zamazenta": [
+          2188,
+          2735
+        ],
+        "Druddigon": [
+          1561,
+          1951
+        ],
+        "Orthworm": [
+          1313,
+          1642
+        ]
       },
       "event": "Into the Wild",
       "sourceUrl": "https://leekduck.com/events/into-the-wild-2026/"
@@ -946,11 +1015,57 @@
       "note": "Five-star Max Battles also run 6 to 7 pm local time on their day.",
       "sourceUrl": "https://leekduck.com/events/into-the-wild-2026/",
       "tiers": [
-        { "tier": "1★", "names": ["Ralts"], "cp": { "Ralts": 308 } },
-        { "tier": "2★", "names": ["Machop"], "cp": { "Machop": 730 } },
-        { "tier": "5★", "day": "2026-11-11", "names": ["Registeel"], "cp": { "Registeel": 1398 } },
-        { "tier": "5★", "day": "2026-11-12", "names": ["Regidrago"], "cp": { "Regidrago": 1699 }, "debut": true },
-        { "tier": "5★", "day": "2026-11-13", "names": ["Latias", "Latios"], "cp": { "Latias": 2006, "Latios": 2178 } }
+        {
+          "tier": "1★",
+          "names": [
+            "Ralts"
+          ],
+          "cp": {
+            "Ralts": 308
+          }
+        },
+        {
+          "tier": "2★",
+          "names": [
+            "Machop"
+          ],
+          "cp": {
+            "Machop": 730
+          }
+        },
+        {
+          "tier": "5★",
+          "day": "2026-11-11",
+          "names": [
+            "Registeel"
+          ],
+          "cp": {
+            "Registeel": 1398
+          }
+        },
+        {
+          "tier": "5★",
+          "day": "2026-11-12",
+          "names": [
+            "Regidrago"
+          ],
+          "cp": {
+            "Regidrago": 1699
+          },
+          "debut": true
+        },
+        {
+          "tier": "5★",
+          "day": "2026-11-13",
+          "names": [
+            "Latias",
+            "Latios"
+          ],
+          "cp": {
+            "Latias": 2006,
+            "Latios": 2178
+          }
+        }
       ]
     }
   ],
