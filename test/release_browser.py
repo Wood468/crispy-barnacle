@@ -64,6 +64,46 @@ with sync_playwright() as pw:
                     assert page.evaluate('GOEventClock.viewerZone()')==expected
                 assert page.evaluate("({dex:localStorage.getItem('gofn-dex-v1'),us:localStorage.getItem('gofn-us-v1')})")==before
                 print('PASS production Melbourne default → override → explicit device time with unchanged collection storage')
+                # Production-only full core-journey smoke. Source data is live:
+                # choose a published event by its contract, never a fixture ID.
+                page.locator('#tabs [data-tab="now"]').click()
+                page.wait_for_selector('#today-v1 .t1-glance', timeout=15000)
+                assert page.locator('#today-v1 .t1-tiles').count() == 1, 'Today summary did not render'
+                assert not page.locator('#today-v1 [data-follow],#today-v1 [data-mark],#today-v1 .own').count(), 'Follow/Track controls must not appear on Today'
+                assert page.locator('#today-v1').evaluate('(el) => el.scrollWidth <= el.clientWidth'), 'Today overflows on mobile'
+                page.locator('#tabs [data-tab="raids"]').click()
+                page.wait_for_function("document.querySelector('#rotnow')?.innerText?.length > 60", timeout=15000)
+                assert page.locator('#tab-raids').is_visible(), 'Battle panel is missing'
+                assert 'Raid' in page.locator('#rotnow').inner_text(), 'Raid/Max information did not render'
+                assert page.locator('#rotnow').evaluate('(el) => el.scrollWidth <= el.clientWidth'), 'Battle content overflows'
+                page.locator('#tabs [data-tab="events"]').click()
+                event_id = page.evaluate("""() => {
+                    const models = GOEventRegistry.events();
+                    const event = models.find(e => e.schedule && ((e.pokemon || []).length || (e.activities || []).length));
+                    return event && event.eventId;
+                }""")
+                assert event_id, 'No published event with a dated schedule and details'
+                page.evaluate('(id) => GODETAIL.open(id)', event_id)
+                page.wait_for_selector('#evd .ue-hero', timeout=15000)
+                assert page.locator('#evd-t').is_visible(), 'Event title missing'
+                assert page.locator('#evd .evd-nav-link').count() >= 1, 'Universal event navigation missing'
+                assert not page.locator('#evd [data-follow],#evd [data-mark],#evd .own').count(), 'Follow/Track controls must not appear on Event Details'
+                assert page.locator('#evd').evaluate('(el) => el.scrollWidth <= el.clientWidth'), 'Event Details overflows'
+                page.keyboard.press('Escape')
+                page.locator('#evd').wait_for(state='hidden', timeout=15000)
+                pass_id = page.evaluate("""() => {
+                    const event = GOEventRegistry.events().find(e => (e.passes || []).some(p => Array.isArray(p.stages) && p.stages.length));
+                    return event && event.eventId;
+                }""")
+                assert pass_id, 'GO Pass stage information missing from the published catalogue'
+                page.evaluate('(id) => GODETAIL.open(id)', pass_id)
+                page.wait_for_selector('#evd .ue-pass', timeout=15000)
+                assert page.locator('#evd .ue-pass-rank').count() > 0, 'GO Pass rank timeline did not render'
+                assert page.locator('#evd').evaluate('(el) => el.scrollWidth <= el.clientWidth'), 'GO Pass overflows'
+                page.keyboard.press('Escape')
+                page.locator('#evd').wait_for(state='hidden', timeout=15000)
+                assert not blocked, 'Read-only production navigation must not write to a private API'
+                print('PASS production Today → Battle → Event Details → GO Pass mobile read-only smoke; no Track/Follow controls')
             page.locator('#tabs [data-tab="events"]').click()
             assert page.locator('.schedule-heading').is_visible()
             page.locator('#tabs [data-tab="collect"]').click()
