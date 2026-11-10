@@ -208,6 +208,70 @@ def live_event_browser(pw, errors: list) -> list:
                     errors.append(f"{width}px: Event Details overflows horizontally")
                 page.screenshot(path=str(OUT / f"{width}-into-the-wild.png"),
                                 animations="disabled", timeout=20000)
+
+                # The original regression was a *display-level* Chest Form
+                # selection even though the Roaming API itself returned correct
+                # bytes. Keep this live tile assertion separate from the API.
+                coin = page.locator('#evd .ue-mon[data-identity="999:roaming:none"]').first
+                if coin.count() != 1:
+                    errors.append(f"{width}px: Coin Bag Roaming gallery tile absent")
+                else:
+                    img = coin.locator('img.art').first
+                    if img.count() != 1:
+                        errors.append(f"{width}px: Coin Bag Roaming image absent")
+                    else:
+                        try:
+                            img.evaluate("(i) => i.decode()", timeout=20000)
+                        except Exception as exc:
+                            errors.append(f"{width}px: Coin Bag artwork decode failed: {exc}")
+                        src = img.get_attribute("src") or ""
+                        if "Gimmighoul%20(Roaming%20Form)" not in src:
+                            errors.append(f"{width}px: Coin Bag has wrong Gimmighoul artwork: {src}")
+                    if "Coin Bag" not in coin.inner_text():
+                        errors.append(f"{width}px: Coin Bag encounter method not visible")
+                if page.locator('#evd .ue-mon[data-identity="999:base:none"]').count():
+                    errors.append(f"{width}px: Into the Wild still presents Chest Form as wild")
+                row["coinbag_roaming_rendered"] = (
+                    coin.count() == 1 and
+                    "Coin Bag" in coin.inner_text()
+                )
+
+                page.evaluate("() => GODETAIL.open('cur:wag')")
+                page.wait_for_selector('#evd .ue-raid-day[data-raid-date="2026-11-14"]',
+                                       timeout=30000)
+                special = {"egg_icons": page.locator(
+                    '#evd .ue-mon .ue-egg-corner.ue-egg-10').count()}
+                if special["egg_icons"] != 4:
+                    errors.append(f"{width}px: GO Wild Area has {special['egg_icons']} 10 km egg badges; expected 4")
+                egg_species = ("Honedge", "Klefki", "Drampa", "Duraludon")
+                special["hatches"] = {}
+                for name in egg_species:
+                    tile = page.locator('#evd .ue-method[data-method="egg"] .ue-mon', has_text=name).first
+                    matched = tile.count() == 1 and tile.locator(
+                        '.ue-egg-corner img[src="/ico/g/egg-10km.webp"]').count() == 1
+                    special["hatches"][name] = matched
+                    if not matched:
+                        errors.append(f"{width}px: {name} lacks its event-specific 10 km egg icon")
+                first = page.locator('#evd .ue-raid-day[data-raid-date="2026-11-14"]').inner_text()
+                second = page.locator('#evd .ue-raid-day[data-raid-date="2026-11-15"]').inner_text()
+                special["saturday"] = first
+                special["sunday"] = second
+                for name in ("Zekrom", "White Kyurem", "Dynamax Dialga", "Gigantamax Duraludon"):
+                    if name not in first:
+                        errors.append(f"{width}px: Saturday raid roster missing {name}")
+                for name in ("Reshiram", "Black Kyurem", "Dynamax Palkia", "Gigantamax Duraludon"):
+                    if name not in second:
+                        errors.append(f"{width}px: Sunday raid roster missing {name}")
+                if "Reshiram" in first or "White Kyurem" in second:
+                    errors.append(f"{width}px: weekend raid bosses incorrectly grouped into both days")
+                special["horizontal_overflow"] = page.evaluate(
+                    "() => document.documentElement.scrollWidth > window.innerWidth + 1")
+                if special["horizontal_overflow"]:
+                    errors.append(f"{width}px: GO Wild Area Event Details overflows horizontally")
+                page.screenshot(path=str(OUT / f"{width}-go-wild-hatches-raids.png"),
+                                animations="disabled", timeout=20000)
+                row["go_wild_area"] = special
+
             except Exception as exc:
                 row["error"] = str(exc)
                 errors.append(f"{width}px live Event Details check failed: {exc}")
