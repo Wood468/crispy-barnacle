@@ -64,6 +64,40 @@ test('one 10 km event Egg source makes a color-matched icon appear on all four h
   for(const mon of ['Honedge','Klefki','Drampa','Duraludon'])assert.ok(html.includes(mon),mon);
 });
 
+test('complete published egg roster replaces unrelated imported hatch entries without touching other methods', () => {
+  const src = details['leekduck:pokemon-go-wild-area-2026-global'];
+  const sourceEdges = src.encounters.filter(e => e.method === 'egg');
+  const keys = new Set(sourceEdges.map(e => e.identityKey));
+  assert.equal(keys.size, 4, 'source has four specified 10 km hatches');
+  const sourceRoster = src.pokemon.filter(p => keys.has(p.key));
+  const decoy = {speciesId:'147',name:'Dratini'};
+  const withDecoy = Contract.normalize({
+    schemaVersion:1,eventId:'synthetic-contaminated-eggs',title:'Future festival',
+    pokemon:sourceRoster.concat([decoy]),
+    encounters:sourceEdges.concat([
+      {identityKey:'147:base:none',method:'egg'},
+      {identityKey:'147:base:none',method:'wild'}
+    ]),
+    internalValidation:{fields:{eggs:[{text:'Other Pokémon hatch in 2 km Eggs',status:'single'}]}}
+  });
+  const corrected = Adapter.reconcileSourcedEggs(withDecoy,src);
+  const eggRefs = corrected.encounters.filter(e=>e.method==='egg');
+  assert.equal(eggRefs.length,4);
+  assert.deepEqual(new Set(eggRefs.map(e=>e.identityKey)),keys);
+  assert.ok(!eggRefs.some(e=>e.identityKey==='147:base:none'), 'incorrect hatch edge removed');
+  assert.ok(corrected.encounters.some(e=>e.identityKey==='147:base:none'&&e.method==='wild'),
+    'unrelated wild encounters remain');
+  assert.ok(corrected.pokemon.some(p=>p.key==='147:base:none'));
+  const evidence = corrected.internalValidation?.fields?.eggs||src.fields.eggs;
+  const render = UI.gallery({...corrected,internalValidation:{
+    ...(corrected.internalValidation||{}),fields:{eggs:evidence}
+  }},{nameFor:p=>p.name,artFor:p=>'<img alt="'+p.name+'">'});
+  assert.equal((render.match(/class="ue-egg-corner ue-egg-10"/g)||[]).length,4);
+  assert.ok(!render.includes('ue-mon-art"><img alt="Dratini"></span><b>Dratini</b><span class="ue-badge ue-b-egg'));
+  assert.equal(Adapter.reconcileSourcedEggs(withDecoy,{fields:{eggs:[{text:'10 km Eggs available'}]}}),withDecoy,
+    'an incomplete source must not overwrite the existing egg roster');
+});
+
 test('mixed unknown egg distances are not guessed on per-Pokémon tiles', () => {
   const mon={speciesId:'25',name:'Pikachu'};
   const event=Contract.normalize({
