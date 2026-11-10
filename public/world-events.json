@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-09T22:45:06.724Z",
+ "updated": "2026-11-10T04:22:51.525Z",
  "events": [
   {
    "id": "w-pokemon-fossil-museum-2026",
@@ -18,7 +18,7 @@
     }
    ],
    "status": "single",
-   "seen": "2026-11-09"
+   "seen": "2026-11-10"
   },
   {
    "id": "w-pokemon-jet-red-collaboration-event",
@@ -37,7 +37,7 @@
     }
    ],
    "status": "single",
-   "seen": "2026-11-09"
+   "seen": "2026-11-10"
   },
   {
    "id": "w-pok-mon-jet-red-collaboration",
@@ -56,7 +56,7 @@
     }
    ],
    "status": "single",
-   "seen": "2026-11-09"
+   "seen": "2026-11-10"
   },
   {
    "id": "w-pokemon-x-adidas",
@@ -99,7 +99,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-11-09"
+   "seen": "2026-11-10"
   },
   {
    "id": "w-pok-mon-go-partners-with-the-european-space-agency",
@@ -123,7 +123,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-11-09"
+   "seen": "2026-11-10"
   },
   {
    "id": "w-pokemon-go-x-esa-london",
@@ -304,7 +304,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-11-09"
+   "seen": "2026-11-10"
   },
   {
    "id": "w-pok-mon-go-dia-de-muertos-2026-mexico-exclusive-ev",
@@ -347,7 +347,7 @@
     }
    ],
    "status": "single",
-   "seen": "2026-11-09"
+   "seen": "2026-11-10"
   },
   {
    "id": "w-halloween",
@@ -372,7 +372,7 @@
   {
    "id": "w-forever-stamp-rally-go-wild-area",
    "name": "Forever Stamp Rally Go Wild Area",
-   "place": "South Korea",
+   "place": "Japan",
    "area": "Asia",
    "scope": "regional",
    "start": "2026-11-03",
@@ -382,11 +382,16 @@
     {
      "id": "official",
      "name": "Pokémon GO (official)",
-     "url": "https://pokemongo.com/ko/news/forever-stamp-rally-go-wild-area-2026/"
+     "url": "https://pokemongo.com/ja/news/forever-stamp-rally-go-wild-area-2026/"
+    },
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "url": "https://pokemongo.com/ja/news/go-wild-area-stamp-rally-details-2026/"
     }
    ],
    "status": "official",
-   "seen": "2026-11-09"
+   "seen": "2026-11-10"
   },
   {
    "id": "w-giratina-altered-forme-in-5-star-raid-battles",
@@ -405,7 +410,7 @@
     }
    ],
    "status": "single",
-   "seen": "2026-11-09"
+   "seen": "2026-11-10"
   },
   {
    "id": "w-celebrate-the-festival-of-lights-with-the-return-o",
@@ -424,7 +429,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-11-09",
+   "seen": "2026-11-10",
    "mode": "in-game"
   },
   {
@@ -459,7 +464,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-11-09"
+   "seen": "2026-11-10"
   },
   {
    "id": "w-this-weekend-only-log-in-november-6-8-for-free-tim",
@@ -478,7 +483,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-11-09"
+   "seen": "2026-11-10"
   },
   {
    "id": "w-go-wild-area-2026-sendai-tohoku",
@@ -507,7 +512,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-11-09"
+   "seen": "2026-11-10"
   },
   {
    "id": "w-go-wild-area-gigantamax-machamp-power-up-timed-res",
@@ -551,7 +556,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-11-09"
+   "seen": "2026-11-10"
   },
   {
    "id": "w-pok-mon-30th-anniversary-mall-exploration-jewel",
@@ -570,7 +575,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-11-09"
+   "seen": "2026-11-10"
   },
   {
    "id": "w-pok-xciting-lands-at-changi-airport-and-jewel-get-",
@@ -589,7 +594,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-11-09"
+   "seen": "2026-11-10"
   },
   {
    "id": "w-into-the-wild",
@@ -628,7 +633,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-11-09"
+   "seen": "2026-11-10"
   },
   {
    "id": "w-pok-mon-run-30-new-taipei",
@@ -647,7 +652,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-11-09"
+   "seen": "2026-11-10"
   },
   {
    "id": "w-community-meetups-go-wild-area-details-asia-pacifi",
@@ -762,7 +767,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-11-09"
+   "seen": "2026-11-10"
   },
   {
    "id": "w-pok-mon-run-30-malaysia",
@@ -781,7 +786,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-11-09"
+   "seen": "2026-11-10"
   },
   {
    "id": "w-eternamax-eternatus-max-battles",
@@ -840,7 +845,7 @@
     }
    ],
    "status": "single",
-   "seen": "2026-11-09"
+   "seen": "2026-11-10"
   },
   {
    "id": "w-pok-mon-30th-anniversary-mall-exploration-sm-north",
@@ -859,7 +864,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-11-09"
+   "seen": "2026-11-10"
   },
   {
    "id": "w-minior-showers-geminids",
@@ -898,235 +903,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-11-09"
-  },
-  {
-   "id": "w-hatch-day",
-   "name": "Hatch Day",
-   "place": "",
-   "area": "Worldwide",
-   "scope": "global",
-   "start": "2026-12-26",
-   "end": "2026-12-26",
-   "datesKnown": true,
-   "sources": [
-    {
-     "id": "leekduck",
-     "name": "Leek Duck",
-     "url": "https://leekduck.com/events/hatch-day-december-2026/"
-    }
-   ],
-   "status": "single",
-   "seen": "2026-11-09"
-  },
-  {
-   "id": "w-pok-mon-run-30-thailand",
-   "name": "Pokémon RUN 30: Bangkok",
-   "place": "Bangkok, Thailand (outdoor plaza in front of Central World)",
-   "area": "Asia",
-   "scope": "regional",
-   "start": "2027-01-09",
-   "end": "2027-01-10",
-   "datesKnown": true,
-   "sources": [
-    {
-     "id": "official",
-     "name": "Pokémon GO (official)",
-     "url": "https://pokemongo.com/news/pokemon-run-30-2026/"
-    }
-   ],
-   "status": "official",
-   "seen": "2026-11-09"
-  },
-  {
-   "id": "w-pok-mon-30th-anniversary-mall-exploration-sm-marik",
-   "name": "Pokémon 30th Anniversary Mall Exploration: SM Marikina",
-   "place": "Philippines (SM Marikina)",
-   "area": "Asia",
-   "scope": "regional",
-   "start": "2027-01-15",
-   "end": "2027-01-31",
-   "datesKnown": true,
-   "sources": [
-    {
-     "id": "official",
-     "name": "Pokémon GO (official)",
-     "url": "https://pokemongo.com/news/apac-mall-exploration-2026/"
-    }
-   ],
-   "status": "official",
-   "seen": "2026-11-09"
-  },
-  {
-   "id": "w-pok-mon-run-30-hong-kong",
-   "name": "Pokémon RUN 30: Hong Kong",
-   "place": "Hong Kong (Science Park)",
-   "area": "Asia",
-   "scope": "regional",
-   "start": "2027-01-23",
-   "end": "2027-01-24",
-   "datesKnown": true,
-   "sources": [
-    {
-     "id": "official",
-     "name": "Pokémon GO (official)",
-     "url": "https://pokemongo.com/news/pokemon-run-30-2026/"
-    }
-   ],
-   "status": "official",
-   "seen": "2026-11-09"
-  },
-  {
-   "id": "w-max-battle-day-2027-01-23",
-   "name": "Max Battle Day",
-   "place": "",
-   "area": "Worldwide",
-   "scope": "global",
-   "start": "2027-01-23",
-   "end": "2027-01-23",
-   "datesKnown": true,
-   "sources": [
-    {
-     "id": "leekduck",
-     "name": "Leek Duck",
-     "url": "https://leekduck.com/events/max-battle-day-january-2027/"
-    }
-   ],
-   "status": "single",
-   "seen": "2026-11-09"
-  },
-  {
-   "id": "w-pok-mon-30th-anniversary-mall-exploration-sm-seasi",
-   "name": "Pokémon 30th Anniversary Mall Exploration: SM Seaside Cebu",
-   "place": "Philippines (SM Seaside Cebu)",
-   "area": "Asia",
-   "scope": "regional",
-   "start": "2027-02-05",
-   "end": "2027-02-14",
-   "datesKnown": true,
-   "sources": [
-    {
-     "id": "official",
-     "name": "Pokémon GO (official)",
-     "url": "https://pokemongo.com/news/apac-mall-exploration-2026/"
-    }
-   ],
-   "status": "official",
-   "seen": "2026-11-09"
-  },
-  {
-   "id": "w-save-the-date-pok-mon-go-tour-2027",
-   "name": "Pokémon GO Tour 2027: Kaohsiung",
-   "place": "Kaohsiung, Taiwan",
-   "area": "Asia",
-   "scope": "regional",
-   "start": "2027-02-19",
-   "end": "2027-02-21",
-   "datesKnown": true,
-   "sources": [
-    {
-     "id": "official",
-     "name": "Pokémon GO (official)",
-     "url": "https://pokemongo.com/news/save-the-date-go-tour-2027/"
-    }
-   ],
-   "status": "official",
-   "seen": "2026-11-09"
-  },
-  {
-   "id": "w-pokemon-go-tour-2027-los-angeles",
-   "name": "Pokémon GO Tour 2027: Los Angeles",
-   "place": "Los Angeles, USA",
-   "area": "Americas",
-   "scope": "regional",
-   "start": "2027-02-19",
-   "end": "2027-02-21",
-   "datesKnown": true,
-   "sources": [
-    {
-     "id": "official",
-     "name": "Pokémon GO (official)",
-     "url": "https://pokemongo.com/news/save-the-date-go-tour-2027/"
-    }
-   ],
-   "status": "official",
-   "seen": "2026-10-18"
-  },
-  {
-   "id": "w-pok-mon-30th-anniversary-mall-exploration-sm-davao",
-   "name": "Pokémon 30th Anniversary Mall Exploration: SM Davao",
-   "place": "Philippines (SM Davao)",
-   "area": "Asia",
-   "scope": "regional",
-   "start": "2027-02-20",
-   "end": "2027-03-07",
-   "datesKnown": true,
-   "sources": [
-    {
-     "id": "official",
-     "name": "Pokémon GO (official)",
-     "url": "https://pokemongo.com/news/apac-mall-exploration-2026/"
-    }
-   ],
-   "status": "official",
-   "seen": "2026-11-09"
-  },
-  {
-   "id": "w-pokemon-go-tour-2027-global",
-   "name": "Pokémon GO Tour 2027: Global",
-   "place": "Worldwide",
-   "area": "Worldwide",
-   "scope": "global",
-   "start": "2027-02-27",
-   "end": "2027-02-28",
-   "datesKnown": true,
-   "sources": [
-    {
-     "id": "official",
-     "name": "Pokémon GO (official)",
-     "url": "https://pokemongo.com/news/save-the-date-go-tour-2027/"
-    }
-   ],
-   "status": "official",
-   "seen": "2026-10-18"
-  },
-  {
-   "id": "w-pok-mon-30th-anniversary-mall-exploration-sm-cdo-d",
-   "name": "Pokémon 30th Anniversary Mall Exploration: SM CDO Downtown",
-   "place": "Philippines (SM CDO Downtown)",
-   "area": "Asia",
-   "scope": "regional",
-   "start": "2027-03-13",
-   "end": "2027-03-28",
-   "datesKnown": true,
-   "sources": [
-    {
-     "id": "official",
-     "name": "Pokémon GO (official)",
-     "url": "https://pokemongo.com/news/apac-mall-exploration-2026/"
-    }
-   ],
-   "status": "official",
-   "seen": "2026-11-09"
-  },
-  {
-   "id": "w-go-wild-area-stamp-rally-details",
-   "name": "GO Wild Area Stamp Rally",
-   "place": "Sendai and Tohoku, Japan",
-   "area": "Asia",
-   "scope": "regional",
-   "start": "",
-   "end": "",
-   "datesKnown": false,
-   "sources": [
-    {
-     "id": "official",
-     "name": "Pokémon GO (official)",
-     "url": "https://pokemongo.com/ko/news/go-wild-area-stamp-rally-details-2026/"
-    }
-   ],
-   "status": "official",
-   "seen": "2026-11-02"
+   "seen": "2026-11-10"
   },
   {
    "id": "w-december-communityday2026",
@@ -1169,6 +946,25 @@
    "seen": "2026-11-09"
   },
   {
+   "id": "w-hatch-day",
+   "name": "Hatch Day",
+   "place": "",
+   "area": "Worldwide",
+   "scope": "global",
+   "start": "2026-12-26",
+   "end": "2026-12-26",
+   "datesKnown": true,
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "url": "https://leekduck.com/events/hatch-day-december-2026/"
+    }
+   ],
+   "status": "single",
+   "seen": "2026-11-10"
+  },
+  {
    "id": "w-january-communitydayclassic2027",
    "name": "January Communitydayclassic2027",
    "place": "",
@@ -1187,6 +983,25 @@
    ],
    "status": "single",
    "seen": "2026-11-09"
+  },
+  {
+   "id": "w-pok-mon-run-30-thailand",
+   "name": "Pokémon RUN 30: Bangkok",
+   "place": "Bangkok, Thailand (outdoor plaza in front of Central World)",
+   "area": "Asia",
+   "scope": "regional",
+   "start": "2027-01-09",
+   "end": "2027-01-10",
+   "datesKnown": true,
+   "sources": [
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "url": "https://pokemongo.com/news/pokemon-run-30-2026/"
+    }
+   ],
+   "status": "official",
+   "seen": "2026-11-10"
   },
   {
    "id": "w-super-mega-raid-day-january",
@@ -1209,6 +1024,25 @@
    "seen": "2026-11-09"
   },
   {
+   "id": "w-pok-mon-30th-anniversary-mall-exploration-sm-marik",
+   "name": "Pokémon 30th Anniversary Mall Exploration: SM Marikina",
+   "place": "Philippines (SM Marikina)",
+   "area": "Asia",
+   "scope": "regional",
+   "start": "2027-01-15",
+   "end": "2027-01-31",
+   "datesKnown": true,
+   "sources": [
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "url": "https://pokemongo.com/news/apac-mall-exploration-2026/"
+    }
+   ],
+   "status": "official",
+   "seen": "2026-11-10"
+  },
+  {
    "id": "w-january-communityday2027",
    "name": "January Communityday2027",
    "place": "",
@@ -1229,6 +1063,44 @@
    "seen": "2026-11-09"
   },
   {
+   "id": "w-pok-mon-run-30-hong-kong",
+   "name": "Pokémon RUN 30: Hong Kong",
+   "place": "Hong Kong (Science Park)",
+   "area": "Asia",
+   "scope": "regional",
+   "start": "2027-01-23",
+   "end": "2027-01-24",
+   "datesKnown": true,
+   "sources": [
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "url": "https://pokemongo.com/news/pokemon-run-30-2026/"
+    }
+   ],
+   "status": "official",
+   "seen": "2026-11-10"
+  },
+  {
+   "id": "w-max-battle-day-2027-01-23",
+   "name": "Max Battle Day",
+   "place": "",
+   "area": "Worldwide",
+   "scope": "global",
+   "start": "2027-01-23",
+   "end": "2027-01-23",
+   "datesKnown": true,
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "url": "https://leekduck.com/events/max-battle-day-january-2027/"
+    }
+   ],
+   "status": "single",
+   "seen": "2026-11-10"
+  },
+  {
    "id": "w-super-mega-raid-day-january-30",
    "name": "Super Mega Raid Day January 30",
    "place": "",
@@ -1247,6 +1119,25 @@
    ],
    "status": "single",
    "seen": "2026-11-09"
+  },
+  {
+   "id": "w-pok-mon-30th-anniversary-mall-exploration-sm-seasi",
+   "name": "Pokémon 30th Anniversary Mall Exploration: SM Seaside Cebu",
+   "place": "Philippines (SM Seaside Cebu)",
+   "area": "Asia",
+   "scope": "regional",
+   "start": "2027-02-05",
+   "end": "2027-02-14",
+   "datesKnown": true,
+   "sources": [
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "url": "https://pokemongo.com/news/apac-mall-exploration-2026/"
+    }
+   ],
+   "status": "official",
+   "seen": "2026-11-10"
   },
   {
    "id": "w-february-communityday2027",
@@ -1287,6 +1178,120 @@
    ],
    "status": "single",
    "seen": "2026-11-09"
+  },
+  {
+   "id": "w-save-the-date-pok-mon-go-tour-2027",
+   "name": "Pokémon GO Tour 2027: Kaohsiung",
+   "place": "Kaohsiung, Taiwan",
+   "area": "Asia",
+   "scope": "regional",
+   "start": "2027-02-19",
+   "end": "2027-02-21",
+   "datesKnown": true,
+   "sources": [
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "url": "https://pokemongo.com/news/save-the-date-go-tour-2027/"
+    }
+   ],
+   "status": "official",
+   "seen": "2026-11-10"
+  },
+  {
+   "id": "w-pokemon-go-tour-2027-los-angeles",
+   "name": "Pokémon GO Tour 2027: Los Angeles",
+   "place": "Los Angeles, USA",
+   "area": "Americas",
+   "scope": "regional",
+   "start": "2027-02-19",
+   "end": "2027-02-21",
+   "datesKnown": true,
+   "sources": [
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "url": "https://pokemongo.com/news/save-the-date-go-tour-2027/"
+    }
+   ],
+   "status": "official",
+   "seen": "2026-10-18"
+  },
+  {
+   "id": "w-pok-mon-30th-anniversary-mall-exploration-sm-davao",
+   "name": "Pokémon 30th Anniversary Mall Exploration: SM Davao",
+   "place": "Philippines (SM Davao)",
+   "area": "Asia",
+   "scope": "regional",
+   "start": "2027-02-20",
+   "end": "2027-03-07",
+   "datesKnown": true,
+   "sources": [
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "url": "https://pokemongo.com/news/apac-mall-exploration-2026/"
+    }
+   ],
+   "status": "official",
+   "seen": "2026-11-10"
+  },
+  {
+   "id": "w-pokemon-go-tour-2027-global",
+   "name": "Pokémon GO Tour 2027: Global",
+   "place": "Worldwide",
+   "area": "Worldwide",
+   "scope": "global",
+   "start": "2027-02-27",
+   "end": "2027-02-28",
+   "datesKnown": true,
+   "sources": [
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "url": "https://pokemongo.com/news/save-the-date-go-tour-2027/"
+    }
+   ],
+   "status": "official",
+   "seen": "2026-10-18"
+  },
+  {
+   "id": "w-pok-mon-30th-anniversary-mall-exploration-sm-cdo-d",
+   "name": "Pokémon 30th Anniversary Mall Exploration: SM CDO Downtown",
+   "place": "Philippines (SM CDO Downtown)",
+   "area": "Asia",
+   "scope": "regional",
+   "start": "2027-03-13",
+   "end": "2027-03-28",
+   "datesKnown": true,
+   "sources": [
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "url": "https://pokemongo.com/news/apac-mall-exploration-2026/"
+    }
+   ],
+   "status": "official",
+   "seen": "2026-11-10"
+  },
+  {
+   "id": "w-go-wild-area-stamp-rally-details",
+   "name": "GO Wild Area Stamp Rally",
+   "place": "Sendai and Tohoku, Japan",
+   "area": "Asia",
+   "scope": "regional",
+   "start": "",
+   "end": "",
+   "datesKnown": false,
+   "sources": [
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "url": "https://pokemongo.com/ko/news/go-wild-area-stamp-rally-details-2026/"
+    }
+   ],
+   "status": "official",
+   "seen": "2026-11-02"
   }
  ]
 }

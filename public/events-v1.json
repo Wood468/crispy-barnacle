@@ -5585,13 +5585,6 @@
         "leekduck"
        ],
        "status": "single"
-      },
-      {
-       "text": "Trainers who claim Tier 1 rewards* on GO Pass: Into the Wild will receive early access on November 14, 2026, at 10 am local time, and a free upgrade to GO Pass Deluxe: Dynamax Trails .",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
       }
      ],
      "dates": [
@@ -5624,13 +5617,6 @@
         "leekduck"
        ],
        "status": "single"
-      },
-      {
-       "text": "Trainers who claim Tier 1 rewards* on GO Pass: Into the Wild will receive early access on November 14, 2026, at 10 am local time, and a free upgrade to GO Pass Deluxe: Dynamax Trails .",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
       }
      ]
     },
@@ -5641,8 +5627,8 @@
      "end": "2026-11-23T20:00"
     },
     "imageReviewed": true,
-    "contentHash": "b22fd2aa7cde5136fe9970e135ce532ab8bf4829e1d56c9cf22b9723a24ffe37",
-    "revision": 5,
+    "contentHash": "e3e285b1708b5c70bb5de9fcc9e50df2b047dc1f666e4ea0c5dfa4890ca8b015",
+    "revision": 6,
     "amended": false,
     "native": false,
     "collection": "events"
@@ -5825,13 +5811,6 @@
       "leekduck"
      ],
      "status": "single"
-    },
-    {
-     "text": "Trainers who claim Tier 1 rewards* on GO Pass: Into the Wild will receive early access on November 14, 2026, at 10 am local time, and a free upgrade to GO Pass Deluxe: Dynamax Trails .",
-     "sources": [
-      "leekduck"
-     ],
-     "status": "single"
     }
    ],
    "sources": [
@@ -5949,7 +5928,7 @@
     },
     "imageReviewed": true,
     "contentHash": "9c1e84fa3e57a9dc254240da56abb3e0fe3ea75b86697d72cfd7a5408efad52a",
-    "revision": 34,
+    "revision": 36,
     "amended": true,
     "native": false,
     "collection": "events"
@@ -11010,8 +10989,8 @@
      "end": "2026-11-13"
     },
     "imageReviewed": true,
-    "contentHash": "d11f88ca7bc12d2b1b7a6ae84993720154e9b21cbc3fff308c463fa44b59adba",
-    "revision": 24,
+    "contentHash": "a947427a56f5746613a62825e4fc27a964334df9dcc231024d026ec874318383",
+    "revision": 25,
     "amended": false,
     "native": false,
     "collection": "events"
@@ -11193,7 +11172,7 @@
       "start": "2026-11-09T10:00",
       "end": "2026-11-13T20:00"
      },
-     "checkedAt": "2026-11-09"
+     "checkedAt": "2026-11-10"
     },
     {
      "task": "Catch a Dynamax Machop",
@@ -11228,7 +11207,7 @@
       "start": "2026-11-09T10:00",
       "end": "2026-11-13T20:00"
      },
-     "checkedAt": "2026-11-09"
+     "checkedAt": "2026-11-10"
     },
     {
      "task": "Catch a Dynamax Ralts",
@@ -11263,7 +11242,7 @@
       "start": "2026-11-09T10:00",
       "end": "2026-11-13T20:00"
      },
-     "checkedAt": "2026-11-09"
+     "checkedAt": "2026-11-10"
     },
     {
      "task": "Power up Dragon‑type Pokémon 5 times",
@@ -11316,7 +11295,7 @@
       "start": "2026-11-09T10:00",
       "end": "2026-11-13T20:00"
      },
-     "checkedAt": "2026-11-09"
+     "checkedAt": "2026-11-10"
     },
     {
      "task": "Power up Steel‑type Pokémon 5 times",
@@ -11369,7 +11348,7 @@
       "start": "2026-11-09T10:00",
       "end": "2026-11-13T20:00"
      },
-     "checkedAt": "2026-11-09"
+     "checkedAt": "2026-11-10"
     },
     {
      "task": "Win a Max Battle",
@@ -11408,7 +11387,7 @@
       "start": "2026-11-09T10:00",
       "end": "2026-11-13T20:00"
      },
-     "checkedAt": "2026-11-09"
+     "checkedAt": "2026-11-10"
     },
     {
      "task": "Win a raid",
@@ -11452,7 +11431,7 @@
       "start": "2026-11-09T10:00",
       "end": "2026-11-13T20:00"
      },
-     "checkedAt": "2026-11-09"
+     "checkedAt": "2026-11-10"
     },
     {
      "text": "Trainers who choose the Steel-type path will receive the following bonuses upon earning the Steel Scholar medal.",
@@ -20484,8 +20463,8 @@
      "end": ""
     },
     "imageReviewed": true,
-    "contentHash": "6a6827e1807c8bfd7e7752ef3372551f74d057c48923e4404fb98651f0629eaa",
-    "revision": 4,
+    "contentHash": "1c2069d0f41032f7d98061ea90334122d30f31a7fd79d32dfe0ac560ff220b99",
+    "revision": 5,
     "amended": false,
     "native": false,
     "collection": "source-details"
@@ -20580,7 +20559,7 @@
       "start": "2026-11-21T14:00:00.000",
       "end": "2026-11-21T17:00:00.000"
      },
-     "checkedAt": "2026-11-09"
+     "checkedAt": "2026-11-10"
     },
     {
      "task": "Catch 5 Pokemon while in a Party",
@@ -20612,7 +20591,7 @@
       "start": "2026-11-21T14:00:00.000",
       "end": "2026-11-21T17:00:00.000"
      },
-     "checkedAt": "2026-11-09"
+     "checkedAt": "2026-11-10"
     },
     {
      "task": "Catch 50 Pokemon",
@@ -20644,7 +20623,7 @@
       "start": "2026-11-21T14:00:00.000",
       "end": "2026-11-21T17:00:00.000"
      },
-     "checkedAt": "2026-11-09"
+     "checkedAt": "2026-11-10"
     },
     {
      "text": "Catch 3 Pawniard POSSIBLE REWARDS Pawniard Max CP 614 Min CP 574 ×5 Great Ball ×5 ×2 Ultra Ball ×2 +2 ×2 Pinap Berry ×2 ×500 Stardust ×500",
@@ -23392,8 +23371,8 @@
      "end": "2026-11-08"
     },
     "imageReviewed": true,
-    "contentHash": "42270740372174037d60a2e3796608daed9aaf0b30cdfdac5fbb422f7d1bbfd9",
-    "revision": 9,
+    "contentHash": "cef3d9371165ca2a3f7bc98706c66b6214d5d30320c9011435bc847f55141b8b",
+    "revision": 10,
     "amended": false,
     "native": false,
     "collection": "worldEvents"
@@ -23492,7 +23471,7 @@
       "start": null,
       "end": null
      },
-     "checkedAt": "2026-11-09"
+     "checkedAt": "2026-11-10"
     },
     {
      "task": "Power up Dragon‑type Pokémon 5 times",
@@ -23526,7 +23505,7 @@
       "start": null,
       "end": null
      },
-     "checkedAt": "2026-11-09"
+     "checkedAt": "2026-11-10"
     },
     {
      "task": "Win 2 raids",
@@ -23564,7 +23543,7 @@
       "start": null,
       "end": null
      },
-     "checkedAt": "2026-11-09"
+     "checkedAt": "2026-11-10"
     },
     {
      "task": "Win a Max Battle",
@@ -23602,7 +23581,7 @@
       "start": null,
       "end": null
      },
-     "checkedAt": "2026-11-09"
+     "checkedAt": "2026-11-10"
     },
     {
      "task": "Catch 10 Steel‑type Pokémon",
@@ -23632,7 +23611,7 @@
       "start": null,
       "end": null
      },
-     "checkedAt": "2026-11-09"
+     "checkedAt": "2026-11-10"
     },
     {
      "task": "Catch a Hisuian Sliggoo",
@@ -23652,7 +23631,7 @@
       "start": null,
       "end": null
      },
-     "checkedAt": "2026-11-09"
+     "checkedAt": "2026-11-10"
     },
     {
      "task": "Hatch an Egg",
@@ -23679,7 +23658,7 @@
       "start": null,
       "end": null
      },
-     "checkedAt": "2026-11-09"
+     "checkedAt": "2026-11-10"
     },
     {
      "task": "Power up Steel‑type Pokémon 5 times",
@@ -23713,7 +23692,7 @@
       "start": null,
       "end": null
      },
-     "checkedAt": "2026-11-09"
+     "checkedAt": "2026-11-10"
     },
     {
      "task": "Use a Steel‑type Charged Attack in a battle",
@@ -23741,7 +23720,7 @@
       "start": null,
       "end": null
      },
-     "checkedAt": "2026-11-09"
+     "checkedAt": "2026-11-10"
     },
     {
      "task": "Explore 2 km",
@@ -23763,7 +23742,7 @@
       "start": null,
       "end": null
      },
-     "checkedAt": "2026-11-09"
+     "checkedAt": "2026-11-10"
     },
     {
      "task": "Use a Dragon‑type Charged Attack in a battle",
@@ -23784,7 +23763,7 @@
       "start": null,
       "end": null
      },
-     "checkedAt": "2026-11-09"
+     "checkedAt": "2026-11-10"
     },
     {
      "task": "Make an Excellent Throw",
@@ -23816,7 +23795,7 @@
       "start": null,
       "end": null
      },
-     "checkedAt": "2026-11-09"
+     "checkedAt": "2026-11-10"
     },
     {
      "text": "Two Timed Research experiences guide you through specially decorated PokéStops across the city. Spin the corresponding stops to progress; these can also help you navigate between Stamp Rally locations.",
@@ -26007,7 +25986,7 @@
     },
     "imageReviewed": true,
     "contentHash": "244e1a218c776c7de71a786fe7a96bc90d5ca2212bc0e2a5060da28a5e71b680",
-    "revision": 49,
+    "revision": 51,
     "amended": true,
     "native": false,
     "collection": "source-details"
@@ -36915,8 +36894,8 @@
      "end": "2026-11-13T20:00"
     },
     "imageReviewed": true,
-    "contentHash": "13e667886183b706bb7497f0d22f14a4f891cb4eeac78416366c29fdfd39b52f",
-    "revision": 8,
+    "contentHash": "67dba8990c0035de8a603e47f62ec0972565056d5d40bc4b47ac241b9dcf2080",
+    "revision": 9,
     "amended": false,
     "native": false,
     "collection": "rotation"
@@ -37037,7 +37016,7 @@
       "start": "2026-11-09T10:00",
       "end": "2026-11-13T20:00"
      },
-     "checkedAt": "2026-11-09"
+     "checkedAt": "2026-11-10"
     },
     {
      "task": "Catch a Dynamax Machop",
@@ -37072,7 +37051,7 @@
       "start": "2026-11-09T10:00",
       "end": "2026-11-13T20:00"
      },
-     "checkedAt": "2026-11-09"
+     "checkedAt": "2026-11-10"
     },
     {
      "task": "Catch a Dynamax Ralts",
@@ -37107,7 +37086,7 @@
       "start": "2026-11-09T10:00",
       "end": "2026-11-13T20:00"
      },
-     "checkedAt": "2026-11-09"
+     "checkedAt": "2026-11-10"
     },
     {
      "task": "Power up Dragon‑type Pokémon 5 times",
@@ -37160,7 +37139,7 @@
       "start": "2026-11-09T10:00",
       "end": "2026-11-13T20:00"
      },
-     "checkedAt": "2026-11-09"
+     "checkedAt": "2026-11-10"
     },
     {
      "task": "Power up Steel‑type Pokémon 5 times",
@@ -37213,7 +37192,7 @@
       "start": "2026-11-09T10:00",
       "end": "2026-11-13T20:00"
      },
-     "checkedAt": "2026-11-09"
+     "checkedAt": "2026-11-10"
     },
     {
      "task": "Win a Max Battle",
@@ -37252,7 +37231,7 @@
       "start": "2026-11-09T10:00",
       "end": "2026-11-13T20:00"
      },
-     "checkedAt": "2026-11-09"
+     "checkedAt": "2026-11-10"
     },
     {
      "task": "Win a raid",
@@ -37296,7 +37275,7 @@
       "start": "2026-11-09T10:00",
       "end": "2026-11-13T20:00"
      },
-     "checkedAt": "2026-11-09"
+     "checkedAt": "2026-11-10"
     },
     {
      "text": "Trainers who choose the Steel-type path will receive the following bonuses upon earning the Steel Scholar medal.",
@@ -44387,8 +44366,8 @@
      "end": "2026-11-08"
     },
     "imageReviewed": true,
-    "contentHash": "b63e24a31ac0c1b44d1f277adbb11f13c72cf47f234eaa797e97f34a75c8a138",
-    "revision": 11,
+    "contentHash": "18e229f7a1a01c1bc20035493aed4b8a6a8d381802d652ab96000562d6fbb9ae",
+    "revision": 12,
     "amended": false,
     "native": false,
     "collection": "events"
@@ -44492,7 +44471,7 @@
       "start": "2026-11-06T10:00",
       "end": "2026-11-08T18:00"
      },
-     "checkedAt": "2026-11-09"
+     "checkedAt": "2026-11-10"
     },
     {
      "task": "Catch 10 Steel‑type Pokémon",
@@ -44534,7 +44513,7 @@
       "start": "2026-11-06T10:00",
       "end": "2026-11-08T18:00"
      },
-     "checkedAt": "2026-11-09"
+     "checkedAt": "2026-11-10"
     },
     {
      "task": "Catch a Hisuian Sliggoo",
@@ -44566,7 +44545,7 @@
       "start": "2026-11-06T10:00",
       "end": "2026-11-08T18:00"
      },
-     "checkedAt": "2026-11-09"
+     "checkedAt": "2026-11-10"
     },
     {
      "task": "Explore 2 km",
@@ -44600,7 +44579,7 @@
       "start": "2026-11-06T10:00",
       "end": "2026-11-08T18:00"
      },
-     "checkedAt": "2026-11-09"
+     "checkedAt": "2026-11-10"
     },
     {
      "task": "Hatch an Egg",
@@ -44639,7 +44618,7 @@
       "start": "2026-11-06T10:00",
       "end": "2026-11-08T18:00"
      },
-     "checkedAt": "2026-11-09"
+     "checkedAt": "2026-11-10"
     },
     {
      "task": "Make an Excellent Throw",
@@ -44674,7 +44653,7 @@
       "start": "2026-11-06T10:00",
       "end": "2026-11-08T18:00"
      },
-     "checkedAt": "2026-11-09"
+     "checkedAt": "2026-11-10"
     },
     {
      "task": "Power up Dragon‑type Pokémon 5 times",
@@ -44706,7 +44685,7 @@
       "start": "2026-11-06T10:00",
       "end": "2026-11-08T18:00"
      },
-     "checkedAt": "2026-11-09"
+     "checkedAt": "2026-11-10"
     },
     {
      "task": "Power up Steel‑type Pokémon 5 times",
@@ -44752,7 +44731,7 @@
       "start": "2026-11-06T10:00",
       "end": "2026-11-08T18:00"
      },
-     "checkedAt": "2026-11-09"
+     "checkedAt": "2026-11-10"
     },
     {
      "task": "Use a Dragon‑type Charged Attack in a battle",
@@ -44785,7 +44764,7 @@
       "start": "2026-11-06T10:00",
       "end": "2026-11-08T18:00"
      },
-     "checkedAt": "2026-11-09"
+     "checkedAt": "2026-11-10"
     },
     {
      "task": "Use a Steel‑type Charged Attack in a battle",
@@ -44825,7 +44804,7 @@
       "start": "2026-11-06T10:00",
       "end": "2026-11-08T18:00"
      },
-     "checkedAt": "2026-11-09"
+     "checkedAt": "2026-11-10"
     },
     {
      "task": "Win 2 raids",
@@ -44867,7 +44846,7 @@
       "start": "2026-11-06T10:00",
       "end": "2026-11-08T18:00"
      },
-     "checkedAt": "2026-11-09"
+     "checkedAt": "2026-11-10"
     },
     {
      "task": "Win a Max Battle",
@@ -44908,7 +44887,7 @@
       "start": "2026-11-06T10:00",
       "end": "2026-11-08T18:00"
      },
-     "checkedAt": "2026-11-09"
+     "checkedAt": "2026-11-10"
     },
     {
      "text": "Two Timed Research experiences guide you through specially decorated PokéStops across the city. Spin the corresponding stops to progress; these can also help you navigate between Stamp Rally locations.",
@@ -51014,7 +50993,7 @@
     },
     "imageReviewed": true,
     "contentHash": "dce45278d164ec7d0efdbec4d901eac6f95e08bdec7b64c64c440d1336263583",
-    "revision": 26,
+    "revision": 28,
     "amended": true,
     "native": false,
     "collection": "world-events"
@@ -51858,13 +51837,6 @@
         "leekduck"
        ],
        "status": "single"
-      },
-      {
-       "text": "Trainers who claim Tier 1 rewards* on GO Pass: Into the Wild will receive early access on November 14, 2026, at 10 am local time, and a free upgrade to GO Pass Deluxe: Dynamax Trails .",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
       }
      ],
      "dates": [
@@ -51897,13 +51869,6 @@
         "leekduck"
        ],
        "status": "single"
-      },
-      {
-       "text": "Trainers who claim Tier 1 rewards* on GO Pass: Into the Wild will receive early access on November 14, 2026, at 10 am local time, and a free upgrade to GO Pass Deluxe: Dynamax Trails .",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
       }
      ]
     },
@@ -51914,8 +51879,8 @@
      "end": "2026-11-23"
     },
     "imageReviewed": true,
-    "contentHash": "cc4b701e008704ede989f0dfc16d6f6026067f82ef2d8007049e26e2f3c2579e",
-    "revision": 6,
+    "contentHash": "2a59c6fa38b5c69bc9a2140601d5779f172b89a0a8c59975fe47e7ec1c5b0224",
+    "revision": 7,
     "amended": false,
     "native": false,
     "collection": "world-events"
@@ -52096,13 +52061,6 @@
       "leekduck"
      ],
      "status": "single"
-    },
-    {
-     "text": "Trainers who claim Tier 1 rewards* on GO Pass: Into the Wild will receive early access on November 14, 2026, at 10 am local time, and a free upgrade to GO Pass Deluxe: Dynamax Trails .",
-     "sources": [
-      "leekduck"
-     ],
-     "status": "single"
     }
    ],
    "sources": [
@@ -52223,7 +52181,7 @@
     },
     "imageReviewed": true,
     "contentHash": "4bbe2871a823eb21458a110b1a90a61e5fce0d1ddaa2d47d0d0671f282a84a9d",
-    "revision": 34,
+    "revision": 36,
     "amended": true,
     "native": false,
     "collection": "world-events"
@@ -52477,7 +52435,7 @@
    "completeness": "partial",
    "lifecycle": "announced",
    "attendance": "in-person",
-   "location": "South Korea",
+   "location": "Japan",
    "image": null,
    "notes": [],
    "internalValidation": {
@@ -52491,8 +52449,8 @@
      "start": "2026-11-03",
      "end": "2026-11-03"
     },
-    "contentHash": "5cdd55e002ca42377352e7b637a57f2e39afa99cde6bbc64780733a9cc28f6b3",
-    "revision": 15,
+    "contentHash": "0ca84974cfa677f1be63ebd7712b231d3f83b8d9beb34b2f503e737968fe94fe",
+    "revision": 16,
     "amended": false,
     "native": false,
     "collection": "world-events"
@@ -55750,8 +55708,8 @@
      "end": "2026-11-08"
     },
     "imageReviewed": true,
-    "contentHash": "804304bc03deaf176bbe062b5f4c376651e00162f423ee06af83045fffcdc19b",
-    "revision": 1,
+    "contentHash": "becef848d62881ec4f22642f7752091eb0040698de180d529fbd3fac60180c7d",
+    "revision": 2,
     "amended": false,
     "native": false,
     "collection": "world-events"
@@ -55845,7 +55803,7 @@
       "start": null,
       "end": null
      },
-     "checkedAt": "2026-11-09"
+     "checkedAt": "2026-11-10"
     },
     {
      "task": "Power up Dragon‑type Pokémon 5 times",
@@ -55879,7 +55837,7 @@
       "start": null,
       "end": null
      },
-     "checkedAt": "2026-11-09"
+     "checkedAt": "2026-11-10"
     },
     {
      "task": "Win 2 raids",
@@ -55917,7 +55875,7 @@
       "start": null,
       "end": null
      },
-     "checkedAt": "2026-11-09"
+     "checkedAt": "2026-11-10"
     },
     {
      "task": "Win a Max Battle",
@@ -55955,7 +55913,7 @@
       "start": null,
       "end": null
      },
-     "checkedAt": "2026-11-09"
+     "checkedAt": "2026-11-10"
     },
     {
      "task": "Catch 10 Steel‑type Pokémon",
@@ -55985,7 +55943,7 @@
       "start": null,
       "end": null
      },
-     "checkedAt": "2026-11-09"
+     "checkedAt": "2026-11-10"
     },
     {
      "task": "Catch a Hisuian Sliggoo",
@@ -56005,7 +55963,7 @@
       "start": null,
       "end": null
      },
-     "checkedAt": "2026-11-09"
+     "checkedAt": "2026-11-10"
     },
     {
      "task": "Hatch an Egg",
@@ -56032,7 +55990,7 @@
       "start": null,
       "end": null
      },
-     "checkedAt": "2026-11-09"
+     "checkedAt": "2026-11-10"
     },
     {
      "task": "Power up Steel‑type Pokémon 5 times",
@@ -56066,7 +56024,7 @@
       "start": null,
       "end": null
      },
-     "checkedAt": "2026-11-09"
+     "checkedAt": "2026-11-10"
     },
     {
      "task": "Use a Steel‑type Charged Attack in a battle",
@@ -56094,7 +56052,7 @@
       "start": null,
       "end": null
      },
-     "checkedAt": "2026-11-09"
+     "checkedAt": "2026-11-10"
     },
     {
      "task": "Explore 2 km",
@@ -56116,7 +56074,7 @@
       "start": null,
       "end": null
      },
-     "checkedAt": "2026-11-09"
+     "checkedAt": "2026-11-10"
     },
     {
      "task": "Use a Dragon‑type Charged Attack in a battle",
@@ -56137,7 +56095,7 @@
       "start": null,
       "end": null
      },
-     "checkedAt": "2026-11-09"
+     "checkedAt": "2026-11-10"
     },
     {
      "task": "Make an Excellent Throw",
@@ -56169,7 +56127,7 @@
       "start": null,
       "end": null
      },
-     "checkedAt": "2026-11-09"
+     "checkedAt": "2026-11-10"
     },
     {
      "text": "Two Timed Research experiences guide you through specially decorated PokéStops across the city. Spin the corresponding stops to progress; these can also help you navigate between Stamp Rally locations.",
@@ -59019,7 +58977,7 @@
      "end": "2027-04-11"
     },
     "contentHash": "84950064738e11a798ef98f9fd6ab913640b138fb1594e38612f64db09c4dd24",
-    "revision": 26,
+    "revision": 28,
     "amended": true,
     "native": false,
     "collection": "world-events"
