@@ -131,6 +131,14 @@ with sync_playwright() as p:
         assert page.evaluate('document.querySelector("#evd").scrollWidth <= innerWidth')
         page.screenshot(path=str(OUT / f'redesign-gopass-{width}.png'))
         page.keyboard.press('Escape')
+        # Release UX contract: every event detail is informational, not a second
+        # collection tracker. Check both featured events, not only Sendai.
+        for event_id in ('into', 'cur:wag'):
+            page.evaluate("(id) => GODETAIL.open(id)", event_id)
+            page.wait_for_selector('#evd .ue-hero')
+            assert page.locator('#evd .ue-mon-controls,#evd [data-follow],#evd [data-mark],#evd .own').count() == 0, (width, event_id, 'unexpected tracking control')
+            assert page.evaluate('document.querySelector("#evd").scrollWidth <= innerWidth'), (width, event_id, 'horizontal overflow')
+        page.keyboard.press('Escape')
         assert errors == [], errors
         print(f'PASS {ENGINE} Today and detail redesign {width}px: visual geometry, sections, research, pass, read-only collection')
         context.close()
