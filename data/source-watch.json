@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-10T14:54:02.049Z",
+ "updated": "2026-11-10T21:18:19.140Z",
  "status": [
   {
    "id": "hub",
@@ -18,33 +18,17 @@
   },
   {
    "id": "reddit-silph",
-   "state": "ok",
-   "items": 6
+   "state": "error",
+   "note": "HTTP 403"
   },
   {
    "id": "youtube-pogo",
    "state": "ok",
-   "items": 3
+   "items": 2
   }
  ],
- "gaps": 2,
+ "gaps": 1,
  "items": [
-  {
-   "source": "reddit-silph",
-   "trust": "tip",
-   "title": "There’s a chance for a glitched costume Ditto encounter during Teddiursa Spotlight Hour",
-   "link": "https://www.reddit.com/r/TheSilphRoad/comments/1xob52g/theres_a_chance_for_a_glitched_costume_ditto/",
-   "date": "2026-11-05T05:59:32.000Z",
-   "summary": "<table> <tr><td> <a href=\"https://www.reddit.com/r/TheSilphRoad/comments/1xob52g/theres_a_chance_for_a_glitched_costume_ditto/\"> <img src=\"https://preview.redd.it/axk7vshxhqzh1.jpeg?width=140&amp;heig",
-   "pokemon": [
-    "Teddiursa",
-    "Ditto"
-   ],
-   "notInOurData": [
-    "Teddiursa",
-    "Ditto"
-   ]
-  },
   {
    "source": "hub",
    "trust": "community",
@@ -58,18 +42,6 @@
    "notInOurData": [
     "Tornadus"
    ]
-  },
-  {
-   "source": "reddit-silph",
-   "trust": "tip",
-   "title": "Convert Zacian",
-   "link": "https://www.reddit.com/r/TheSilphRoad/comments/1xsoafw/convert_zacian/",
-   "date": "2026-11-10T14:28:29.000Z",
-   "summary": "<!-- SC_OFF --><div class=\"md\"><p>Does anyone know if there will be a research task that says “convert a zacian or zamazenta to its crowned form”? I have a lucky shiny zacian and enough energy but do ",
-   "pokemon": [
-    "Zacian"
-   ],
-   "notInOurData": []
   },
   {
    "source": "youtube-pogo",
@@ -110,38 +82,6 @@
    "notInOurData": []
   },
   {
-   "source": "reddit-silph",
-   "trust": "tip",
-   "title": "Reminder: Meltan mystery box shiny encounter chance",
-   "link": "https://www.reddit.com/r/TheSilphRoad/comments/1xri856/reminder_meltan_mystery_box_shiny_encounter_chance/",
-   "date": "2026-11-09T04:23:22.000Z",
-   "summary": "<!-- SC_OFF --><div class=\"md\"><p>Hey all! I'm probably very behind in this but I only recently found out about the setup link with Pokémon Home to get the Mystery Box to catch more Meltan and get mor",
-   "pokemon": [
-    "Meltan"
-   ],
-   "notInOurData": []
-  },
-  {
-   "source": "reddit-silph",
-   "trust": "tip",
-   "title": "Shiny Rate: In-Person Go Wild Area",
-   "link": "https://www.reddit.com/r/TheSilphRoad/comments/1xqwyhe/shiny_rate_inperson_go_wild_area/",
-   "date": "2026-11-08T12:07:15.000Z",
-   "summary": "<!-- SC_OFF --><div class=\"md\"><p>Motivation: I decided to do this analysis since I keep hearing people suggesting different Shiny Rates to In-Person events. Some suggested it is 1/48, some suggested ",
-   "pokemon": [],
-   "notInOurData": []
-  },
-  {
-   "source": "reddit-silph",
-   "trust": "tip",
-   "title": "Last time every Costume Pokemon were available (2026 Edition)",
-   "link": "https://www.reddit.com/r/TheSilphRoad/comments/1xq0bq0/last_time_every_costume_pokemon_were_available/",
-   "date": "2026-11-07T07:16:18.000Z",
-   "summary": "<table> <tr><td> <a href=\"https://www.reddit.com/r/TheSilphRoad/comments/1xq0bq0/last_time_every_costume_pokemon_were_available/\"> <img src=\"https://preview.redd.it/uqwvqorv350i1.png?width=140&amp;hei",
-   "pokemon": [],
-   "notInOurData": []
-  },
-  {
    "source": "hub",
    "trust": "community",
    "title": "Super Mega Clefable Raid Day",
@@ -151,26 +91,6 @@
    "pokemon": [
     "Clefable"
    ],
-   "notInOurData": []
-  },
-  {
-   "source": "reddit-silph",
-   "trust": "tip",
-   "title": "Mega 4 inquiry",
-   "link": "https://www.reddit.com/r/TheSilphRoad/comments/1xo4g6f/mega_4_inquiry/",
-   "date": "2026-11-05T00:17:11.000Z",
-   "summary": "<table> <tr><td> <a href=\"https://www.reddit.com/r/TheSilphRoad/comments/1xo4g6f/mega_4_inquiry/\"> <img src=\"https://preview.redd.it/5ky6djrusozh1.jpeg?width=640&amp;crop=smart&amp;auto=webp&amp;s=3ca",
-   "pokemon": [],
-   "notInOurData": []
-  },
-  {
-   "source": "youtube-pogo",
-   "trust": "official",
-   "title": "New costumed Pokémon make their debuts during Halloween 2026 Part I in Pokémon GO!",
-   "link": "https://www.youtube.com/shorts/I6MvdaExyIg",
-   "date": "2026-10-27T17:00:40.000Z",
-   "summary": "",
-   "pokemon": [],
    "notInOurData": []
   }
  ]
