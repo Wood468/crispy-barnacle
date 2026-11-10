@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-10T04:22:51.525Z",
+ "updated": "2026-11-10T13:03:07.875Z",
  "events": [
   {
    "id": "w-pokemon-fossil-museum-2026",
@@ -372,7 +372,7 @@
   {
    "id": "w-forever-stamp-rally-go-wild-area",
    "name": "Forever Stamp Rally Go Wild Area",
-   "place": "Japan",
+   "place": "South Korea",
    "area": "Asia",
    "scope": "regional",
    "start": "2026-11-03",
@@ -382,12 +382,7 @@
     {
      "id": "official",
      "name": "Pokémon GO (official)",
-     "url": "https://pokemongo.com/ja/news/forever-stamp-rally-go-wild-area-2026/"
-    },
-    {
-     "id": "official",
-     "name": "Pokémon GO (official)",
-     "url": "https://pokemongo.com/ja/news/go-wild-area-stamp-rally-details-2026/"
+     "url": "https://pokemongo.com/ko/news/forever-stamp-rally-go-wild-area-2026/"
     }
    ],
    "status": "official",
@@ -1022,6 +1017,25 @@
    ],
    "status": "single",
    "seen": "2026-11-09"
+  },
+  {
+   "id": "w-pok-mon-30th-anniversary-mall-exploration-centralw",
+   "name": "Pokémon 30th Anniversary Mall Exploration: centralwOrld, Bangkok",
+   "place": "Thailand (centralwOrld, Bangkok)",
+   "area": "Asia",
+   "scope": "regional",
+   "start": "2027-01-11",
+   "end": "2027-02-28",
+   "datesKnown": true,
+   "sources": [
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "url": "https://pokemongo.com/news/apac-mall-exploration-2026/"
+    }
+   ],
+   "status": "official",
+   "seen": "2026-11-10"
   },
   {
    "id": "w-pok-mon-30th-anniversary-mall-exploration-sm-marik",

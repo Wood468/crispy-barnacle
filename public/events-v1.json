@@ -5928,7 +5928,7 @@
     },
     "imageReviewed": true,
     "contentHash": "9c1e84fa3e57a9dc254240da56abb3e0fe3ea75b86697d72cfd7a5408efad52a",
-    "revision": 36,
+    "revision": 38,
     "amended": true,
     "native": false,
     "collection": "events"
@@ -9889,7 +9889,7 @@
    "lifecycle": "announced",
    "attendance": "",
    "location": "Play from anywhere",
-   "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-11-09-into-the-wild-2026/into-the-wild-2026.jpg",
+   "image": "https://lh3.googleusercontent.com/xQzYXbxguNWaaSXG5thVM5x44Luvbb5Pi8rPlYSPIV6kePCzoS_5NWzlM0yzNGIVs1NzhXIPLcg2HKS0iuizGsHZUvSS_ZcemC5-i4My5yA",
    "notes": [
     "Crowned Sword Zacian and Crowned Shield Zamazenta in five-star raids, with Raid Hour at 6 pm on Nov 9 (Zacian) and Nov 10 (Zamazenta). Druddigon and Orthworm in three-star raids.",
     "Dynamax Regidrago debuts in five-star Max Battles on Nov 12; Registeel Nov 11, Latias and Latios Nov 13. Dynamax Meltan debuts in GO Pass.",
@@ -9901,6 +9901,42 @@
     "conflicts": [],
     "fields": {
      "bonuses": [
+      {
+       "text": "The Remote Raid limit will increase to 30 from Monday, November 9, to Friday, November 13, 2026.",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "There will be no limit on Remote Raids from Saturday, November 14, to Sunday, November 15, 2026.",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "When you use a Coin Bag during this event, you may encounter Shiny Gimmighoul—if you’re lucky!^",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "When you use the Mystery Box during this event, you’ll be able to encounter Shiny Meltan—if you’re lucky!^",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Reach Major Milestones on your GO Pass: Into the Wild to unlock the following bonuses.",
+       "sources": [
+        "official",
+        "leekduck"
+       ],
+       "status": "official"
+      },
       {
        "text": "Daily Discoveries will not take place from November 9 through November 15, 2026.",
        "sources": [
@@ -9918,9 +9954,10 @@
       {
        "text": "Rank 25: 1/2 Hatch Distance for Eggs placed in Incubators during the event",
        "sources": [
+        "official",
         "leekduck"
        ],
-       "status": "single"
+       "status": "official"
       },
       {
        "text": "Rank 25: Reach these ranks on GO Pass Deluxe: Into the Wild to unlock the following additional bonuses.",
@@ -9960,11 +9997,82 @@
      ],
      "featured": [
       {
-       "text": "The following Pokémon will appear more frequently in the wild, along with other event-themed Pokémon.",
+       "text": "Dynamax Pokémon Debut",
        "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "You may encounter event-themed Pokémon in the wild, including Magnemite*, Noibat*, Togedemaru*, and more!",
+       "sources": [
+        "official",
         "leekduck"
        ],
-       "status": "single"
+       "status": "official"
+      },
+      {
+       "text": "Complete Pass Tasks to rank up your GO Pass: Into the Wild to earn the following rewards.",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Encounter with Dynamax Meltan*",
+       "sources": [
+        "official",
+        "leekduck"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "The GO Wild Area 2026 Tee (Purple) avatar item.",
+       "sources": [
+        "official",
+        "leekduck"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Trainers who upgrade to the GO Pass Deluxe can also earn the following rewards.",
+       "sources": [
+        "official",
+        "leekduck"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "A Silver Bottle Cap, which can be used to max one stat—Attack, Defense, or HP—on any Pokémon via Hyper Training!",
+       "sources": [
+        "official",
+        "leekduck"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Encounters with Dynamax Meltan*",
+       "sources": [
+        "official",
+        "leekduck"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "The Duraludon Pants avatar item.",
+       "sources": [
+        "official",
+        "leekduck"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Premium items, such as Incense, a Lucky Egg, and more!",
+       "sources": [
+        "official",
+        "leekduck"
+       ],
+       "status": "official"
       },
       {
        "text": "Galarian Meowth",
@@ -9979,96 +10087,152 @@
         "leekduck"
        ],
        "status": "single"
-      },
-      {
-       "text": "Encounter with Dynamax Meltan",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "GO Wild Area 2026 Tee (Purple)",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Additional rewards",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "GO Pass Deluxe also offers:",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "A Silver Bottle Cap, which can be used to max one stat—Attack, Defense, or HP—on any Pokémon via Hyper Training",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Encounters with Dynamax Meltan",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Duraludon Pants",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Premium items, such as Incense and a Lucky Egg",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
       }
      ],
      "raids": [
       {
-       "text": "Regidrago will make its Pokémon GO Dynamax debut in five-star Max Battles, and Meltan will make its Dynamax debut in GO Pass: Into the Wild. If you’re lucky, you may encounter a Shiny one!",
+       "text": "The following Pokémon will make its Pokémon GO Dynamax debut in five-star Max Battles!",
        "sources": [
+        "official",
         "leekduck"
        ],
-       "status": "single"
+       "status": "official"
       },
       {
-       "text": "Defeating Crowned Sword Zacian or Crowned Shield Zamazenta in raids will earn you Crowned Sword Energy or Crowned Shield Energy, respectively.",
+       "text": "Dynamax Regidrago*",
        "sources": [
-        "leekduck"
+        "official"
        ],
-       "status": "single"
+       "status": "official"
       },
       {
-       "text": "Druddigon 100% IV CP Level 20 1561 Level 25 1951 Weather boosted in Counters",
+       "text": "Dynamax Meltan*",
        "sources": [
-        "leekduck"
+        "official"
        ],
-       "status": "single"
+       "status": "official"
       },
       {
-       "text": "The following Dynamax Pokémon will appear in Max Battles. Pokémon appearing in five-star Max Battles will also be featured in Max Battles from 6:00 p.m. to 7:00 p.m. local time for one day each on the following schedule.",
+       "text": "One-Star Max Battles Ralts*",
        "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Two-Star Max Battles Machop*",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Five-Star Max Battles: Wednesday, November 11 Registeel*",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Five-Star Max Battles: Thursday, November 12 Regidrago*",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Five-Star Max Battles: Friday, November 13 Latias* Latios*",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Trainers will be able to earn Crowned Sword Energy or Crowned Shield Energy by defeating Crowned Sword Zacian or Crowned Shield Zamazenta in Raid Battles.",
+       "sources": [
+        "official",
         "leekduck"
        ],
-       "status": "single"
+       "status": "official"
+      },
+      {
+       "text": "Three-Star Raids Druddigon* Orthworm*",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Five-Star Raids Crowned Sword Zacian* Crowned Shield Zamazenta*",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Raid Hour: Monday, November 9 Crowned Sword Zacian*",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
       }
      ],
      "eggs": [],
      "research": [
+      {
+       "text": "Pokémon GO Wild Area–themed Field Research tasks will be available throughout the event! Complete the research tasks to earn encounters with event themed Pokémon and other rewards.",
+       "sources": [
+        "official",
+        "leekduck"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Once you’ve given your chosen trainee a Silver Bottle Cap, it’s time to start Hyper Training! To train, you will complete various tasks themed to the stat you plan to raise.",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Attack: Battle alongside your trainee.",
+       "sources": [
+        "official",
+        "leekduck"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Defense: Strengthen your bond with your Buddy Pokémon trainee by playing together, exploring, and catching Pokémon.",
+       "sources": [
+        "official",
+        "leekduck"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "HP: Explore alongside your trainee as a buddy. This can include spinning PokéStops, earning Buddy Candy, or other adventures.",
+       "sources": [
+        "official",
+        "leekduck"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Once you use your Silver Bottle Cap, you’ll have 365 days to complete your Hyper Training. It’s a long and challenging course, but once you complete it your trainee will be stronger than ever!",
+       "sources": [
+        "official",
+        "leekduck"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "—The Pokémon GO team",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
       {
        "text": "Trainers who choose the Steel-type path will receive the following bonuses upon earning the Steel Scholar medal.",
        "sources": [
@@ -10091,13 +10255,6 @@
        "status": "official"
       },
       {
-       "text": "Pokémon GO Wild Area–themed Field Research tasks will be available throughout the event! Complete the research tasks to earn encounters with event-themed Pokémon and other rewards.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
        "text": "Power up Steel‑type Pokémon 5 times POSSIBLE REWARDS Aron Max CP 560 Min CP 522 Magnemite Max CP 583 Min CP 544 Togedemaru Max CP 926 Min CP 876 Galarian Meowth Max CP 443 Min CP 409",
        "sources": [
         "leekduck"
@@ -10110,51 +10267,23 @@
         "leekduck"
        ],
        "status": "single"
-      },
-      {
-       "text": "Win a raid POSSIBLE REWARDS Dratini Max CP 430 Min CP 397 ×2 Rare Candy ×2 Scyther Max CP 1160 Min CP 1104",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Catch 10 Pokémon POSSIBLE REWARDS Horsea Max CP 452 Min CP 418 Aron Max CP 560 Min CP 522 Skrelp Max CP 455 Min CP 421 Magnemite Max CP 583 Min CP 544",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Win a Max Battle POSSIBLE REWARDS Bagon Max CP 495 Min CP 459 Mawile Max CP 700 Min CP 658",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Catch a Dynamax Machop POSSIBLE REWARDS ×25 Machop Candy ×25 ×5000 Stardust ×5000",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "After you give your trainee a Silver Bottle Cap, Hyper Training begins. Each stat has its own set of themed tasks.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Attack: Battle alongside your trainee.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
       }
      ],
      "shiny": [
+      {
+       "text": "When you use a Coin Bag during this event, you may encounter Shiny Gimmighoul—if you’re lucky!^",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "When you use the Mystery Box during this event, you’ll be able to encounter Shiny Meltan—if you’re lucky!^",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
       {
        "text": "Regidrago will make its Pokémon GO Dynamax debut in five-star Max Battles, and Meltan will make its Dynamax debut in GO Pass: Into the Wild. If you’re lucky, you may encounter a Shiny one!",
        "sources": [
@@ -10163,9 +10292,82 @@
        "status": "single"
       }
      ],
-     "moves": [],
+     "moves": [
+      {
+       "text": "When you catch the following Pokémon during the event, they will know the following attacks.",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Registeel will know the Fast Attack Metal Claw.",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Latias will know the Charged Attack Mist Ball.",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Latios will know the Charged Attack Luster Purge.",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Regidrago will know the Fast Attack Dragon Breath.",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      }
+     ],
      "costumes": [],
      "tickets": [
+      {
+       "text": "From Monday, November 9, at 10:00 a.m. to Sunday, November 15, at 6:00 p.m. local time, the GO Pass and the GO Pass Deluxe for Into the Wild will be available in Pokémon GO!",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "A GO Pass is a free, limited-time progression track available during a specified period. By collecting GO Points, you can increase your rank to earn rewards.",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "For US$14.99*, Trainers can upgrade to GO Pass Deluxe: Into the Wild, a paid version of the GO Pass that offers upgraded rewards.",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "For US$19.99*, Trainers can upgrade to GO Pass Deluxe: Into the Wild + 10 Ranks to also automatically earn enough GO Points to reach Rank 10.",
+       "sources": [
+        "official",
+        "leekduck"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Rewards unlocked in GO Pass: Into the Wild must be claimed by Tuesday, November 17, at 11:59 p.m. local time, so be sure to collect your rewards before they’re gone!",
+       "sources": [
+        "official",
+        "leekduck"
+       ],
+       "status": "official"
+      },
       {
        "text": "GO Pass: Into the Wild is a free progression track. Complete Pass Tasks to collect GO Points, increase your rank, and unlock rewards.",
        "sources": [
@@ -10188,21 +10390,7 @@
        "status": "single"
       },
       {
-       "text": "Upgrade to GO Pass Deluxe: Into the Wild for US$14.99 * for upgraded rewards. The GO Pass Deluxe: Into the Wild + 10 Ranks option costs US$19.99 * and grants enough GO Points to reach Rank 10.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
        "text": "Deluxe includes rewards from both tracks. You can upgrade at any time and still claim rewards for ranks you have already reached.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Claim all unlocked GO Pass rewards before they expire on Tuesday, November 17, 2026, at 11:59 p.m. local time .",
        "sources": [
         "leekduck"
        ],
@@ -10224,20 +10412,6 @@
       },
       {
        "text": "Win a raid 15 PTS",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Hatch an Egg 5 PTS",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Catch a Pokémon 1 PTS",
        "sources": [
         "leekduck"
        ],
@@ -10953,21 +11127,44 @@
      ],
      "dates": [
       {
+       "text": "Monday, November 9, at 10:00 a.m. to Friday, November 13, 2026, at 8:00 p.m. local time",
+       "sources": [
+        "official",
+        "leekduck"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "The Remote Raid limit will increase to 30 from Monday, November 9, to Friday, November 13, 2026.",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "There will be no limit on Remote Raids from Saturday, November 14, to Sunday, November 15, 2026.",
+       "sources": [
+        "official",
+        "leekduck"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Rewards unlocked in GO Pass: Into the Wild must be claimed by Tuesday, November 17, at 11:59 p.m. local time, so be sure to collect your rewards before they’re gone!",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "The Silver Bottle Cap earned from GO Pass Deluxe: Into the Wild will expire on Sunday, November 22, 2026, at 11:59 p.m. local time, regardless of when you claimed it, so remember to use it!",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
        "text": "The following Dynamax Pokémon will appear in Max Battles. Pokémon appearing in five-star Max Battles will also be featured in Max Battles from 6:00 p.m. to 7:00 p.m. local time for one day each on the following schedule.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Trainers will receive the pass automatically on Monday, November 9, at 10:00 a.m. local time . Earn points and rank up until Sunday, November 15, 2026, at 6:00 p.m. local time .",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "From Monday, November 9, to Friday, November 13, you can collect GO Points up to a daily cap. There’s no limit to the GO Points you can earn on Saturday and Sunday, November 14 to 15!",
        "sources": [
         "leekduck"
        ],
@@ -10979,6 +11176,13 @@
         "leekduck"
        ],
        "status": "single"
+      },
+      {
+       "text": "Daily Raid Hour and Max Battle Hour: 6pm to 7pm local time, 2026-11-09 to 2026-11-13.",
+       "sources": [
+        "https://pokemongo.com/news/into-the-wild-2026"
+       ],
+       "status": "verified"
       }
      ]
     },
@@ -10989,8 +11193,8 @@
      "end": "2026-11-13"
     },
     "imageReviewed": true,
-    "contentHash": "a947427a56f5746613a62825e4fc27a964334df9dcc231024d026ec874318383",
-    "revision": 25,
+    "contentHash": "c961f1461e1ab0b7f3b39019d20b2c9d56c597f4f78690107378d0483e12ae72",
+    "revision": 26,
     "amended": false,
     "native": false,
     "collection": "events"
@@ -11064,6 +11268,42 @@
    ],
    "bonuses": [
     {
+     "text": "The Remote Raid limit will increase to 30 from Monday, November 9, to Friday, November 13, 2026.",
+     "sources": [
+      "official"
+     ],
+     "status": "official"
+    },
+    {
+     "text": "There will be no limit on Remote Raids from Saturday, November 14, to Sunday, November 15, 2026.",
+     "sources": [
+      "official"
+     ],
+     "status": "official"
+    },
+    {
+     "text": "When you use a Coin Bag during this event, you may encounter Shiny Gimmighoul—if you’re lucky!^",
+     "sources": [
+      "official"
+     ],
+     "status": "official"
+    },
+    {
+     "text": "When you use the Mystery Box during this event, you’ll be able to encounter Shiny Meltan—if you’re lucky!^",
+     "sources": [
+      "official"
+     ],
+     "status": "official"
+    },
+    {
+     "text": "Reach Major Milestones on your GO Pass: Into the Wild to unlock the following bonuses.",
+     "sources": [
+      "official",
+      "leekduck"
+     ],
+     "status": "official"
+    },
+    {
      "text": "Daily Discoveries will not take place from November 9 through November 15, 2026.",
      "sources": [
       "leekduck"
@@ -11080,9 +11320,10 @@
     {
      "text": "Rank 25: 1/2 Hatch Distance for Eggs placed in Incubators during the event",
      "sources": [
+      "official",
       "leekduck"
      ],
-     "status": "single"
+     "status": "official"
     },
     {
      "text": "Rank 25: Reach these ranks on GO Pass Deluxe: Into the Wild to unlock the following additional bonuses.",
@@ -11434,6 +11675,60 @@
      "checkedAt": "2026-11-10"
     },
     {
+     "text": "Pokémon GO Wild Area–themed Field Research tasks will be available throughout the event! Complete the research tasks to earn encounters with event themed Pokémon and other rewards.",
+     "sources": [
+      "official",
+      "leekduck"
+     ],
+     "status": "official"
+    },
+    {
+     "text": "Once you’ve given your chosen trainee a Silver Bottle Cap, it’s time to start Hyper Training! To train, you will complete various tasks themed to the stat you plan to raise.",
+     "sources": [
+      "official"
+     ],
+     "status": "official"
+    },
+    {
+     "text": "Attack: Battle alongside your trainee.",
+     "sources": [
+      "official",
+      "leekduck"
+     ],
+     "status": "official"
+    },
+    {
+     "text": "Defense: Strengthen your bond with your Buddy Pokémon trainee by playing together, exploring, and catching Pokémon.",
+     "sources": [
+      "official",
+      "leekduck"
+     ],
+     "status": "official"
+    },
+    {
+     "text": "HP: Explore alongside your trainee as a buddy. This can include spinning PokéStops, earning Buddy Candy, or other adventures.",
+     "sources": [
+      "official",
+      "leekduck"
+     ],
+     "status": "official"
+    },
+    {
+     "text": "Once you use your Silver Bottle Cap, you’ll have 365 days to complete your Hyper Training. It’s a long and challenging course, but once you complete it your trainee will be stronger than ever!",
+     "sources": [
+      "official",
+      "leekduck"
+     ],
+     "status": "official"
+    },
+    {
+     "text": "—The Pokémon GO team",
+     "sources": [
+      "official"
+     ],
+     "status": "official"
+    },
+    {
      "text": "Trainers who choose the Steel-type path will receive the following bonuses upon earning the Steel Scholar medal.",
      "sources": [
       "official"
@@ -11455,13 +11750,6 @@
      "status": "official"
     },
     {
-     "text": "Pokémon GO Wild Area–themed Field Research tasks will be available throughout the event! Complete the research tasks to earn encounters with event-themed Pokémon and other rewards.",
-     "sources": [
-      "leekduck"
-     ],
-     "status": "single"
-    },
-    {
      "text": "Power up Steel‑type Pokémon 5 times POSSIBLE REWARDS Aron Max CP 560 Min CP 522 Magnemite Max CP 583 Min CP 544 Togedemaru Max CP 926 Min CP 876 Galarian Meowth Max CP 443 Min CP 409",
      "sources": [
       "leekduck"
@@ -11470,48 +11758,6 @@
     },
     {
      "text": "Power up Dragon‑type Pokémon 5 times POSSIBLE REWARDS Bagon Max CP 495 Min CP 459 Skrelp Max CP 455 Min CP 421 Dratini Max CP 430 Min CP 397 Horsea Max CP 452 Min CP 418",
-     "sources": [
-      "leekduck"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Win a raid POSSIBLE REWARDS Dratini Max CP 430 Min CP 397 ×2 Rare Candy ×2 Scyther Max CP 1160 Min CP 1104",
-     "sources": [
-      "leekduck"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Catch 10 Pokémon POSSIBLE REWARDS Horsea Max CP 452 Min CP 418 Aron Max CP 560 Min CP 522 Skrelp Max CP 455 Min CP 421 Magnemite Max CP 583 Min CP 544",
-     "sources": [
-      "leekduck"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Win a Max Battle POSSIBLE REWARDS Bagon Max CP 495 Min CP 459 Mawile Max CP 700 Min CP 658",
-     "sources": [
-      "leekduck"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Catch a Dynamax Machop POSSIBLE REWARDS ×25 Machop Candy ×25 ×5000 Stardust ×5000",
-     "sources": [
-      "leekduck"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "After you give your trainee a Silver Bottle Cap, Hyper Training begins. Each stat has its own set of themed tasks.",
-     "sources": [
-      "leekduck"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Attack: Battle alongside your trainee.",
      "sources": [
       "leekduck"
      ],
@@ -13214,6 +13460,43 @@
    ],
    "tickets": [
     {
+     "text": "From Monday, November 9, at 10:00 a.m. to Sunday, November 15, at 6:00 p.m. local time, the GO Pass and the GO Pass Deluxe for Into the Wild will be available in Pokémon GO!",
+     "sources": [
+      "official"
+     ],
+     "status": "official"
+    },
+    {
+     "text": "A GO Pass is a free, limited-time progression track available during a specified period. By collecting GO Points, you can increase your rank to earn rewards.",
+     "sources": [
+      "official"
+     ],
+     "status": "official"
+    },
+    {
+     "text": "For US$14.99*, Trainers can upgrade to GO Pass Deluxe: Into the Wild, a paid version of the GO Pass that offers upgraded rewards.",
+     "sources": [
+      "official"
+     ],
+     "status": "official"
+    },
+    {
+     "text": "For US$19.99*, Trainers can upgrade to GO Pass Deluxe: Into the Wild + 10 Ranks to also automatically earn enough GO Points to reach Rank 10.",
+     "sources": [
+      "official",
+      "leekduck"
+     ],
+     "status": "official"
+    },
+    {
+     "text": "Rewards unlocked in GO Pass: Into the Wild must be claimed by Tuesday, November 17, at 11:59 p.m. local time, so be sure to collect your rewards before they’re gone!",
+     "sources": [
+      "official",
+      "leekduck"
+     ],
+     "status": "official"
+    },
+    {
      "text": "GO Pass: Into the Wild is a free progression track. Complete Pass Tasks to collect GO Points, increase your rank, and unlock rewards.",
      "sources": [
       "leekduck"
@@ -13235,21 +13518,7 @@
      "status": "single"
     },
     {
-     "text": "Upgrade to GO Pass Deluxe: Into the Wild for US$14.99 * for upgraded rewards. The GO Pass Deluxe: Into the Wild + 10 Ranks option costs US$19.99 * and grants enough GO Points to reach Rank 10.",
-     "sources": [
-      "leekduck"
-     ],
-     "status": "single"
-    },
-    {
      "text": "Deluxe includes rewards from both tracks. You can upgrade at any time and still claim rewards for ranks you have already reached.",
-     "sources": [
-      "leekduck"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Claim all unlocked GO Pass rewards before they expire on Tuesday, November 17, 2026, at 11:59 p.m. local time .",
      "sources": [
       "leekduck"
      ],
@@ -13271,20 +13540,6 @@
     },
     {
      "text": "Win a raid 15 PTS",
-     "sources": [
-      "leekduck"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Hatch an Egg 5 PTS",
-     "sources": [
-      "leekduck"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Catch a Pokémon 1 PTS",
      "sources": [
       "leekduck"
      ],
@@ -13347,6 +13602,12 @@
      "name": "Pokémon GO Hub",
      "trust": "community",
      "url": "https://pokemongohub.net/post/event/into-the-wild-2026-event/"
+    },
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "trust": "official",
+     "url": "https://pokemongo.com/news/into-the-wild-2026/"
     }
    ],
    "pokemon": [
@@ -25986,7 +26247,7 @@
     },
     "imageReviewed": true,
     "contentHash": "244e1a218c776c7de71a786fe7a96bc90d5ca2212bc0e2a5060da28a5e71b680",
-    "revision": 51,
+    "revision": 53,
     "amended": true,
     "native": false,
     "collection": "source-details"
@@ -34029,6 +34290,134 @@
   },
   {
    "schemaVersion": 1,
+   "eventId": "rh-2026-11-10",
+   "aliases": [],
+   "family": "raid-hour",
+   "title": "Crowned Shield Zamazenta Raid Hour",
+   "dateText": "",
+   "completeness": "partial",
+   "lifecycle": "reference",
+   "attendance": "",
+   "location": null,
+   "image": null,
+   "notes": [],
+   "internalValidation": {
+    "warnings": [],
+    "lifecycleDeclared": true,
+    "conflicts": [],
+    "fields": {
+     "bonuses": [],
+     "featured": [],
+     "raids": [
+      {
+       "text": "Zacian (Crowned Sword) and Zamazenta (Crowned Shield) will be in five-star raid battles from November 9, 2026 to November 13, 2026, during the Into the Wild event.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "These raids start at 10:00 a.m. local time on November 9 and end at 8:00 p.m. local time on November 13.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Defeating Zacian (Crowned Sword) or Zamazenta (Crowned Shield) in raids will earn you Crowned Sword Energy or Crowned Shield Energy, respectively.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "There will also be Raid Hours from 6:00 p.m. to 7:00 p.m. local time on the following dates:",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      }
+     ],
+     "eggs": [],
+     "research": [],
+     "shiny": [
+      {
+       "text": "If you’re lucky, you may encounter Shiny forms of these Pokémon.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Zacian (Crowned Sword)",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Zamazenta (Crowned Shield)",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      }
+     ],
+     "moves": [],
+     "costumes": [],
+     "tickets": [],
+     "dates": [
+      {
+       "text": "Zacian (Crowned Sword) and Zamazenta (Crowned Shield) will be in five-star raid battles from November 9, 2026 to November 13, 2026, during the Into the Wild event.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "There will also be Raid Hours from 6:00 p.m. to 7:00 p.m. local time on the following dates:",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      }
+     ]
+    },
+    "info": [],
+    "detailRefs": [
+     "rh-2026-11-10"
+    ],
+    "legacyDates": {
+     "start": "",
+     "end": ""
+    },
+    "imageReviewed": true,
+    "contentHash": "0507301dc594d71b37715a61c0be28c3002c53337edcbbbc053bae4f6dc209ed",
+    "revision": 1,
+    "amended": false,
+    "native": false,
+    "collection": "source-details"
+   },
+   "schedule": null,
+   "activities": [],
+   "bonuses": [],
+   "research": [],
+   "passes": [],
+   "tickets": [],
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/zacian-crowned-sword-zamazenta-crowned-shield-in-5-star-raid-battles-november-2026/"
+    }
+   ],
+   "pokemon": [],
+   "encounters": [],
+   "groups": {}
+  },
+  {
+   "schemaVersion": 1,
    "eventId": "rh:2026-10-14",
    "aliases": [],
    "family": "raid-hour",
@@ -35798,7 +36187,7 @@
    "lifecycle": "announced",
    "attendance": "",
    "location": null,
-   "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-11-09-into-the-wild-2026/into-the-wild-2026.jpg",
+   "image": "https://lh3.googleusercontent.com/xQzYXbxguNWaaSXG5thVM5x44Luvbb5Pi8rPlYSPIV6kePCzoS_5NWzlM0yzNGIVs1NzhXIPLcg2HKS0iuizGsHZUvSS_ZcemC5-i4My5yA",
    "notes": [],
    "internalValidation": {
     "warnings": [],
@@ -35806,6 +36195,42 @@
     "conflicts": [],
     "fields": {
      "bonuses": [
+      {
+       "text": "The Remote Raid limit will increase to 30 from Monday, November 9, to Friday, November 13, 2026.",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "There will be no limit on Remote Raids from Saturday, November 14, to Sunday, November 15, 2026.",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "When you use a Coin Bag during this event, you may encounter Shiny Gimmighoul—if you’re lucky!^",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "When you use the Mystery Box during this event, you’ll be able to encounter Shiny Meltan—if you’re lucky!^",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Reach Major Milestones on your GO Pass: Into the Wild to unlock the following bonuses.",
+       "sources": [
+        "official",
+        "leekduck"
+       ],
+       "status": "official"
+      },
       {
        "text": "Daily Discoveries will not take place from November 9 through November 15, 2026.",
        "sources": [
@@ -35823,9 +36248,10 @@
       {
        "text": "Rank 25: 1/2 Hatch Distance for Eggs placed in Incubators during the event",
        "sources": [
+        "official",
         "leekduck"
        ],
-       "status": "single"
+       "status": "official"
       },
       {
        "text": "Rank 25: Reach these ranks on GO Pass Deluxe: Into the Wild to unlock the following additional bonuses.",
@@ -35865,11 +36291,82 @@
      ],
      "featured": [
       {
-       "text": "The following Pokémon will appear more frequently in the wild, along with other event-themed Pokémon.",
+       "text": "Dynamax Pokémon Debut",
        "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "You may encounter event-themed Pokémon in the wild, including Magnemite*, Noibat*, Togedemaru*, and more!",
+       "sources": [
+        "official",
         "leekduck"
        ],
-       "status": "single"
+       "status": "official"
+      },
+      {
+       "text": "Complete Pass Tasks to rank up your GO Pass: Into the Wild to earn the following rewards.",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Encounter with Dynamax Meltan*",
+       "sources": [
+        "official",
+        "leekduck"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "The GO Wild Area 2026 Tee (Purple) avatar item.",
+       "sources": [
+        "official",
+        "leekduck"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Trainers who upgrade to the GO Pass Deluxe can also earn the following rewards.",
+       "sources": [
+        "official",
+        "leekduck"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "A Silver Bottle Cap, which can be used to max one stat—Attack, Defense, or HP—on any Pokémon via Hyper Training!",
+       "sources": [
+        "official",
+        "leekduck"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Encounters with Dynamax Meltan*",
+       "sources": [
+        "official",
+        "leekduck"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "The Duraludon Pants avatar item.",
+       "sources": [
+        "official",
+        "leekduck"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Premium items, such as Incense, a Lucky Egg, and more!",
+       "sources": [
+        "official",
+        "leekduck"
+       ],
+       "status": "official"
       },
       {
        "text": "Galarian Meowth",
@@ -35884,96 +36381,152 @@
         "leekduck"
        ],
        "status": "single"
-      },
-      {
-       "text": "Encounter with Dynamax Meltan",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "GO Wild Area 2026 Tee (Purple)",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Additional rewards",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "GO Pass Deluxe also offers:",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "A Silver Bottle Cap, which can be used to max one stat—Attack, Defense, or HP—on any Pokémon via Hyper Training",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Encounters with Dynamax Meltan",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Duraludon Pants",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Premium items, such as Incense and a Lucky Egg",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
       }
      ],
      "raids": [
       {
-       "text": "Regidrago will make its Pokémon GO Dynamax debut in five-star Max Battles, and Meltan will make its Dynamax debut in GO Pass: Into the Wild. If you’re lucky, you may encounter a Shiny one!",
+       "text": "The following Pokémon will make its Pokémon GO Dynamax debut in five-star Max Battles!",
        "sources": [
+        "official",
         "leekduck"
        ],
-       "status": "single"
+       "status": "official"
       },
       {
-       "text": "Defeating Crowned Sword Zacian or Crowned Shield Zamazenta in raids will earn you Crowned Sword Energy or Crowned Shield Energy, respectively.",
+       "text": "Dynamax Regidrago*",
        "sources": [
-        "leekduck"
+        "official"
        ],
-       "status": "single"
+       "status": "official"
       },
       {
-       "text": "Druddigon 100% IV CP Level 20 1561 Level 25 1951 Weather boosted in Counters",
+       "text": "Dynamax Meltan*",
        "sources": [
-        "leekduck"
+        "official"
        ],
-       "status": "single"
+       "status": "official"
       },
       {
-       "text": "The following Dynamax Pokémon will appear in Max Battles. Pokémon appearing in five-star Max Battles will also be featured in Max Battles from 6:00 p.m. to 7:00 p.m. local time for one day each on the following schedule.",
+       "text": "One-Star Max Battles Ralts*",
        "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Two-Star Max Battles Machop*",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Five-Star Max Battles: Wednesday, November 11 Registeel*",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Five-Star Max Battles: Thursday, November 12 Regidrago*",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Five-Star Max Battles: Friday, November 13 Latias* Latios*",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Trainers will be able to earn Crowned Sword Energy or Crowned Shield Energy by defeating Crowned Sword Zacian or Crowned Shield Zamazenta in Raid Battles.",
+       "sources": [
+        "official",
         "leekduck"
        ],
-       "status": "single"
+       "status": "official"
+      },
+      {
+       "text": "Three-Star Raids Druddigon* Orthworm*",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Five-Star Raids Crowned Sword Zacian* Crowned Shield Zamazenta*",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Raid Hour: Monday, November 9 Crowned Sword Zacian*",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
       }
      ],
      "eggs": [],
      "research": [
+      {
+       "text": "Pokémon GO Wild Area–themed Field Research tasks will be available throughout the event! Complete the research tasks to earn encounters with event themed Pokémon and other rewards.",
+       "sources": [
+        "official",
+        "leekduck"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Once you’ve given your chosen trainee a Silver Bottle Cap, it’s time to start Hyper Training! To train, you will complete various tasks themed to the stat you plan to raise.",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Attack: Battle alongside your trainee.",
+       "sources": [
+        "official",
+        "leekduck"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Defense: Strengthen your bond with your Buddy Pokémon trainee by playing together, exploring, and catching Pokémon.",
+       "sources": [
+        "official",
+        "leekduck"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "HP: Explore alongside your trainee as a buddy. This can include spinning PokéStops, earning Buddy Candy, or other adventures.",
+       "sources": [
+        "official",
+        "leekduck"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Once you use your Silver Bottle Cap, you’ll have 365 days to complete your Hyper Training. It’s a long and challenging course, but once you complete it your trainee will be stronger than ever!",
+       "sources": [
+        "official",
+        "leekduck"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "—The Pokémon GO team",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
       {
        "text": "Trainers who choose the Steel-type path will receive the following bonuses upon earning the Steel Scholar medal.",
        "sources": [
@@ -35996,13 +36549,6 @@
        "status": "official"
       },
       {
-       "text": "Pokémon GO Wild Area–themed Field Research tasks will be available throughout the event! Complete the research tasks to earn encounters with event-themed Pokémon and other rewards.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
        "text": "Power up Steel‑type Pokémon 5 times POSSIBLE REWARDS Aron Max CP 560 Min CP 522 Magnemite Max CP 583 Min CP 544 Togedemaru Max CP 926 Min CP 876 Galarian Meowth Max CP 443 Min CP 409",
        "sources": [
         "leekduck"
@@ -36015,51 +36561,23 @@
         "leekduck"
        ],
        "status": "single"
-      },
-      {
-       "text": "Win a raid POSSIBLE REWARDS Dratini Max CP 430 Min CP 397 ×2 Rare Candy ×2 Scyther Max CP 1160 Min CP 1104",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Catch 10 Pokémon POSSIBLE REWARDS Horsea Max CP 452 Min CP 418 Aron Max CP 560 Min CP 522 Skrelp Max CP 455 Min CP 421 Magnemite Max CP 583 Min CP 544",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Win a Max Battle POSSIBLE REWARDS Bagon Max CP 495 Min CP 459 Mawile Max CP 700 Min CP 658",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Catch a Dynamax Machop POSSIBLE REWARDS ×25 Machop Candy ×25 ×5000 Stardust ×5000",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "After you give your trainee a Silver Bottle Cap, Hyper Training begins. Each stat has its own set of themed tasks.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Attack: Battle alongside your trainee.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
       }
      ],
      "shiny": [
+      {
+       "text": "When you use a Coin Bag during this event, you may encounter Shiny Gimmighoul—if you’re lucky!^",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "When you use the Mystery Box during this event, you’ll be able to encounter Shiny Meltan—if you’re lucky!^",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
       {
        "text": "Regidrago will make its Pokémon GO Dynamax debut in five-star Max Battles, and Meltan will make its Dynamax debut in GO Pass: Into the Wild. If you’re lucky, you may encounter a Shiny one!",
        "sources": [
@@ -36068,9 +36586,82 @@
        "status": "single"
       }
      ],
-     "moves": [],
+     "moves": [
+      {
+       "text": "When you catch the following Pokémon during the event, they will know the following attacks.",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Registeel will know the Fast Attack Metal Claw.",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Latias will know the Charged Attack Mist Ball.",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Latios will know the Charged Attack Luster Purge.",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Regidrago will know the Fast Attack Dragon Breath.",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      }
+     ],
      "costumes": [],
      "tickets": [
+      {
+       "text": "From Monday, November 9, at 10:00 a.m. to Sunday, November 15, at 6:00 p.m. local time, the GO Pass and the GO Pass Deluxe for Into the Wild will be available in Pokémon GO!",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "A GO Pass is a free, limited-time progression track available during a specified period. By collecting GO Points, you can increase your rank to earn rewards.",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "For US$14.99*, Trainers can upgrade to GO Pass Deluxe: Into the Wild, a paid version of the GO Pass that offers upgraded rewards.",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "For US$19.99*, Trainers can upgrade to GO Pass Deluxe: Into the Wild + 10 Ranks to also automatically earn enough GO Points to reach Rank 10.",
+       "sources": [
+        "official",
+        "leekduck"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Rewards unlocked in GO Pass: Into the Wild must be claimed by Tuesday, November 17, at 11:59 p.m. local time, so be sure to collect your rewards before they’re gone!",
+       "sources": [
+        "official",
+        "leekduck"
+       ],
+       "status": "official"
+      },
       {
        "text": "GO Pass: Into the Wild is a free progression track. Complete Pass Tasks to collect GO Points, increase your rank, and unlock rewards.",
        "sources": [
@@ -36093,21 +36684,7 @@
        "status": "single"
       },
       {
-       "text": "Upgrade to GO Pass Deluxe: Into the Wild for US$14.99 * for upgraded rewards. The GO Pass Deluxe: Into the Wild + 10 Ranks option costs US$19.99 * and grants enough GO Points to reach Rank 10.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
        "text": "Deluxe includes rewards from both tracks. You can upgrade at any time and still claim rewards for ranks you have already reached.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Claim all unlocked GO Pass rewards before they expire on Tuesday, November 17, 2026, at 11:59 p.m. local time .",
        "sources": [
         "leekduck"
        ],
@@ -36129,20 +36706,6 @@
       },
       {
        "text": "Win a raid 15 PTS",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Hatch an Egg 5 PTS",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Catch a Pokémon 1 PTS",
        "sources": [
         "leekduck"
        ],
@@ -36858,21 +37421,44 @@
      ],
      "dates": [
       {
+       "text": "Monday, November 9, at 10:00 a.m. to Friday, November 13, 2026, at 8:00 p.m. local time",
+       "sources": [
+        "official",
+        "leekduck"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "The Remote Raid limit will increase to 30 from Monday, November 9, to Friday, November 13, 2026.",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "There will be no limit on Remote Raids from Saturday, November 14, to Sunday, November 15, 2026.",
+       "sources": [
+        "official",
+        "leekduck"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Rewards unlocked in GO Pass: Into the Wild must be claimed by Tuesday, November 17, at 11:59 p.m. local time, so be sure to collect your rewards before they’re gone!",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "The Silver Bottle Cap earned from GO Pass Deluxe: Into the Wild will expire on Sunday, November 22, 2026, at 11:59 p.m. local time, regardless of when you claimed it, so remember to use it!",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
        "text": "The following Dynamax Pokémon will appear in Max Battles. Pokémon appearing in five-star Max Battles will also be featured in Max Battles from 6:00 p.m. to 7:00 p.m. local time for one day each on the following schedule.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Trainers will receive the pass automatically on Monday, November 9, at 10:00 a.m. local time . Earn points and rank up until Sunday, November 15, 2026, at 6:00 p.m. local time .",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "From Monday, November 9, to Friday, November 13, you can collect GO Points up to a daily cap. There’s no limit to the GO Points you can earn on Saturday and Sunday, November 14 to 15!",
        "sources": [
         "leekduck"
        ],
@@ -36884,6 +37470,13 @@
         "leekduck"
        ],
        "status": "single"
+      },
+      {
+       "text": "Daily Raid Hour and Max Battle Hour: 6pm to 7pm local time, 2026-11-09 to 2026-11-13.",
+       "sources": [
+        "https://pokemongo.com/news/into-the-wild-2026"
+       ],
+       "status": "verified"
       }
      ]
     },
@@ -36894,8 +37487,8 @@
      "end": "2026-11-13T20:00"
     },
     "imageReviewed": true,
-    "contentHash": "67dba8990c0035de8a603e47f62ec0972565056d5d40bc4b47ac241b9dcf2080",
-    "revision": 9,
+    "contentHash": "f4ac05874b2065b57bb5615c3bd0df1c4aaeda51f0a57b8d9c5fd7be7825e509",
+    "revision": 10,
     "amended": false,
     "native": false,
     "collection": "rotation"
@@ -36907,6 +37500,42 @@
    },
    "activities": [],
    "bonuses": [
+    {
+     "text": "The Remote Raid limit will increase to 30 from Monday, November 9, to Friday, November 13, 2026.",
+     "sources": [
+      "official"
+     ],
+     "status": "official"
+    },
+    {
+     "text": "There will be no limit on Remote Raids from Saturday, November 14, to Sunday, November 15, 2026.",
+     "sources": [
+      "official"
+     ],
+     "status": "official"
+    },
+    {
+     "text": "When you use a Coin Bag during this event, you may encounter Shiny Gimmighoul—if you’re lucky!^",
+     "sources": [
+      "official"
+     ],
+     "status": "official"
+    },
+    {
+     "text": "When you use the Mystery Box during this event, you’ll be able to encounter Shiny Meltan—if you’re lucky!^",
+     "sources": [
+      "official"
+     ],
+     "status": "official"
+    },
+    {
+     "text": "Reach Major Milestones on your GO Pass: Into the Wild to unlock the following bonuses.",
+     "sources": [
+      "official",
+      "leekduck"
+     ],
+     "status": "official"
+    },
     {
      "text": "Daily Discoveries will not take place from November 9 through November 15, 2026.",
      "sources": [
@@ -36924,9 +37553,10 @@
     {
      "text": "Rank 25: 1/2 Hatch Distance for Eggs placed in Incubators during the event",
      "sources": [
+      "official",
       "leekduck"
      ],
-     "status": "single"
+     "status": "official"
     },
     {
      "text": "Rank 25: Reach these ranks on GO Pass Deluxe: Into the Wild to unlock the following additional bonuses.",
@@ -37278,6 +37908,60 @@
      "checkedAt": "2026-11-10"
     },
     {
+     "text": "Pokémon GO Wild Area–themed Field Research tasks will be available throughout the event! Complete the research tasks to earn encounters with event themed Pokémon and other rewards.",
+     "sources": [
+      "official",
+      "leekduck"
+     ],
+     "status": "official"
+    },
+    {
+     "text": "Once you’ve given your chosen trainee a Silver Bottle Cap, it’s time to start Hyper Training! To train, you will complete various tasks themed to the stat you plan to raise.",
+     "sources": [
+      "official"
+     ],
+     "status": "official"
+    },
+    {
+     "text": "Attack: Battle alongside your trainee.",
+     "sources": [
+      "official",
+      "leekduck"
+     ],
+     "status": "official"
+    },
+    {
+     "text": "Defense: Strengthen your bond with your Buddy Pokémon trainee by playing together, exploring, and catching Pokémon.",
+     "sources": [
+      "official",
+      "leekduck"
+     ],
+     "status": "official"
+    },
+    {
+     "text": "HP: Explore alongside your trainee as a buddy. This can include spinning PokéStops, earning Buddy Candy, or other adventures.",
+     "sources": [
+      "official",
+      "leekduck"
+     ],
+     "status": "official"
+    },
+    {
+     "text": "Once you use your Silver Bottle Cap, you’ll have 365 days to complete your Hyper Training. It’s a long and challenging course, but once you complete it your trainee will be stronger than ever!",
+     "sources": [
+      "official",
+      "leekduck"
+     ],
+     "status": "official"
+    },
+    {
+     "text": "—The Pokémon GO team",
+     "sources": [
+      "official"
+     ],
+     "status": "official"
+    },
+    {
      "text": "Trainers who choose the Steel-type path will receive the following bonuses upon earning the Steel Scholar medal.",
      "sources": [
       "official"
@@ -37299,13 +37983,6 @@
      "status": "official"
     },
     {
-     "text": "Pokémon GO Wild Area–themed Field Research tasks will be available throughout the event! Complete the research tasks to earn encounters with event-themed Pokémon and other rewards.",
-     "sources": [
-      "leekduck"
-     ],
-     "status": "single"
-    },
-    {
      "text": "Power up Steel‑type Pokémon 5 times POSSIBLE REWARDS Aron Max CP 560 Min CP 522 Magnemite Max CP 583 Min CP 544 Togedemaru Max CP 926 Min CP 876 Galarian Meowth Max CP 443 Min CP 409",
      "sources": [
       "leekduck"
@@ -37314,48 +37991,6 @@
     },
     {
      "text": "Power up Dragon‑type Pokémon 5 times POSSIBLE REWARDS Bagon Max CP 495 Min CP 459 Skrelp Max CP 455 Min CP 421 Dratini Max CP 430 Min CP 397 Horsea Max CP 452 Min CP 418",
-     "sources": [
-      "leekduck"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Win a raid POSSIBLE REWARDS Dratini Max CP 430 Min CP 397 ×2 Rare Candy ×2 Scyther Max CP 1160 Min CP 1104",
-     "sources": [
-      "leekduck"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Catch 10 Pokémon POSSIBLE REWARDS Horsea Max CP 452 Min CP 418 Aron Max CP 560 Min CP 522 Skrelp Max CP 455 Min CP 421 Magnemite Max CP 583 Min CP 544",
-     "sources": [
-      "leekduck"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Win a Max Battle POSSIBLE REWARDS Bagon Max CP 495 Min CP 459 Mawile Max CP 700 Min CP 658",
-     "sources": [
-      "leekduck"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Catch a Dynamax Machop POSSIBLE REWARDS ×25 Machop Candy ×25 ×5000 Stardust ×5000",
-     "sources": [
-      "leekduck"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "After you give your trainee a Silver Bottle Cap, Hyper Training begins. Each stat has its own set of themed tasks.",
-     "sources": [
-      "leekduck"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Attack: Battle alongside your trainee.",
      "sources": [
       "leekduck"
      ],
@@ -39058,6 +39693,43 @@
    ],
    "tickets": [
     {
+     "text": "From Monday, November 9, at 10:00 a.m. to Sunday, November 15, at 6:00 p.m. local time, the GO Pass and the GO Pass Deluxe for Into the Wild will be available in Pokémon GO!",
+     "sources": [
+      "official"
+     ],
+     "status": "official"
+    },
+    {
+     "text": "A GO Pass is a free, limited-time progression track available during a specified period. By collecting GO Points, you can increase your rank to earn rewards.",
+     "sources": [
+      "official"
+     ],
+     "status": "official"
+    },
+    {
+     "text": "For US$14.99*, Trainers can upgrade to GO Pass Deluxe: Into the Wild, a paid version of the GO Pass that offers upgraded rewards.",
+     "sources": [
+      "official"
+     ],
+     "status": "official"
+    },
+    {
+     "text": "For US$19.99*, Trainers can upgrade to GO Pass Deluxe: Into the Wild + 10 Ranks to also automatically earn enough GO Points to reach Rank 10.",
+     "sources": [
+      "official",
+      "leekduck"
+     ],
+     "status": "official"
+    },
+    {
+     "text": "Rewards unlocked in GO Pass: Into the Wild must be claimed by Tuesday, November 17, at 11:59 p.m. local time, so be sure to collect your rewards before they’re gone!",
+     "sources": [
+      "official",
+      "leekduck"
+     ],
+     "status": "official"
+    },
+    {
      "text": "GO Pass: Into the Wild is a free progression track. Complete Pass Tasks to collect GO Points, increase your rank, and unlock rewards.",
      "sources": [
       "leekduck"
@@ -39079,21 +39751,7 @@
      "status": "single"
     },
     {
-     "text": "Upgrade to GO Pass Deluxe: Into the Wild for US$14.99 * for upgraded rewards. The GO Pass Deluxe: Into the Wild + 10 Ranks option costs US$19.99 * and grants enough GO Points to reach Rank 10.",
-     "sources": [
-      "leekduck"
-     ],
-     "status": "single"
-    },
-    {
      "text": "Deluxe includes rewards from both tracks. You can upgrade at any time and still claim rewards for ranks you have already reached.",
-     "sources": [
-      "leekduck"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Claim all unlocked GO Pass rewards before they expire on Tuesday, November 17, 2026, at 11:59 p.m. local time .",
      "sources": [
       "leekduck"
      ],
@@ -39115,20 +39773,6 @@
     },
     {
      "text": "Win a raid 15 PTS",
-     "sources": [
-      "leekduck"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Hatch an Egg 5 PTS",
-     "sources": [
-      "leekduck"
-     ],
-     "status": "single"
-    },
-    {
-     "text": "Catch a Pokémon 1 PTS",
      "sources": [
       "leekduck"
      ],
@@ -39169,6 +39813,12 @@
      "name": "Pokémon GO Hub",
      "trust": "community",
      "url": "https://pokemongohub.net/post/guide/go-pass-into-the-wild/"
+    },
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "trust": "official",
+     "url": "https://pokemongo.com/news/into-the-wild-2026/"
     }
    ],
    "pokemon": [
@@ -50993,7 +51643,7 @@
     },
     "imageReviewed": true,
     "contentHash": "dce45278d164ec7d0efdbec4d901eac6f95e08bdec7b64c64c440d1336263583",
-    "revision": 28,
+    "revision": 30,
     "amended": true,
     "native": false,
     "collection": "world-events"
@@ -52181,7 +52831,7 @@
     },
     "imageReviewed": true,
     "contentHash": "4bbe2871a823eb21458a110b1a90a61e5fce0d1ddaa2d47d0d0671f282a84a9d",
-    "revision": 36,
+    "revision": 38,
     "amended": true,
     "native": false,
     "collection": "world-events"
@@ -52435,7 +53085,7 @@
    "completeness": "partial",
    "lifecycle": "announced",
    "attendance": "in-person",
-   "location": "Japan",
+   "location": "South Korea",
    "image": null,
    "notes": [],
    "internalValidation": {
@@ -52449,8 +53099,8 @@
      "start": "2026-11-03",
      "end": "2026-11-03"
     },
-    "contentHash": "0ca84974cfa677f1be63ebd7712b231d3f83b8d9beb34b2f503e737968fe94fe",
-    "revision": 16,
+    "contentHash": "5cdd55e002ca42377352e7b637a57f2e39afa99cde6bbc64780733a9cc28f6b3",
+    "revision": 17,
     "amended": false,
     "native": false,
     "collection": "world-events"
@@ -54228,6 +54878,60 @@
     },
     {
      "url": "https://pokemongohub.net/post/event/minior-showers-leonid-november-2026/",
+     "name": "Event source"
+    }
+   ],
+   "pokemon": [],
+   "encounters": [],
+   "groups": {}
+  },
+  {
+   "schemaVersion": 1,
+   "eventId": "w-pok-mon-30th-anniversary-mall-exploration-centralw",
+   "aliases": [],
+   "family": "other",
+   "title": "Pokémon 30th Anniversary Mall Exploration: centralwOrld, Bangkok",
+   "dateText": "",
+   "completeness": "partial",
+   "lifecycle": "announced",
+   "attendance": "in-person",
+   "location": "Thailand (centralwOrld, Bangkok)",
+   "image": "https://lh3.googleusercontent.com/dFl-bn3on9Th9YzRT-Bs14neMfLhAsomPudR7lZ0l1j-1WERlgWfMrgd-pG9Kk5sVl1L9u3viOCWpGnVSlaLwwBcDrCayaXwSkC-eex8Qg",
+   "notes": [],
+   "internalValidation": {
+    "warnings": [],
+    "lifecycleDeclared": false,
+    "conflicts": [],
+    "fields": {},
+    "info": [],
+    "detailRefs": [],
+    "legacyDates": {
+     "start": "2027-01-11",
+     "end": "2027-02-28"
+    },
+    "contentHash": "4e79bda4185a6f739c589c53cef79bdb129b3db6fe740ffe86d0726be88b6d7c",
+    "revision": 1,
+    "amended": false,
+    "native": false,
+    "collection": "world-events",
+    "artScope": "series",
+    "artSourceUrl": "https://pokemongo.com/news/apac-mall-exploration-2026/",
+    "artLabel": "Series artwork shared by every location of the Pokémon 30th Anniversary Mall Exploration"
+   },
+   "schedule": null,
+   "activities": [],
+   "bonuses": [],
+   "research": [],
+   "passes": [],
+   "tickets": [],
+   "sources": [
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "url": "https://pokemongo.com/news/apac-mall-exploration-2026/"
+    },
+    {
+     "url": "https://pokemongo.com/news/apac-mall-exploration-2026/",
      "name": "Event source"
     }
    ],
@@ -58977,7 +59681,7 @@
      "end": "2027-04-11"
     },
     "contentHash": "84950064738e11a798ef98f9fd6ab913640b138fb1594e38612f64db09c4dd24",
-    "revision": 28,
+    "revision": 30,
     "amended": true,
     "native": false,
     "collection": "world-events"
@@ -63884,7 +64588,7 @@
   },
   {
    "collection": "world-events",
-   "records": 64
+   "records": 65
   },
   {
    "collection": "regional-events",

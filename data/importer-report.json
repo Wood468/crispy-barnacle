@@ -1,12 +1,12 @@
 {
- "runAt": "2026-11-10T04:22:51.531Z",
+ "runAt": "2026-11-10T13:03:07.881Z",
  "artworkCoverage": {
   "selected": 27,
   "missing": 77,
   "legacyUnattributed": 2,
   "bySource": {
-   "Pokémon GO (official)": 20,
-   "Leek Duck": 7
+   "Pokémon GO (official)": 21,
+   "Leek Duck": 6
   },
   "missingEvents": [
    {
@@ -17,8 +17,8 @@
     ]
    },
    {
-    "id": "rh-2026-11-09",
-    "name": "Crowned Sword Zacian Raid Hour",
+    "id": "rh-2026-11-10",
+    "name": "Crowned Shield Zamazenta Raid Hour",
     "sources": [
      "https://leekduck.com/events/zacian-crowned-sword-zamazenta-crowned-shield-in-5-star-raid-battles-november-2026/"
     ]
@@ -171,13 +171,6 @@
     ]
    },
    {
-    "id": "leekduck:minior-showers-perseids-2027",
-    "name": "Minior Showers: Perseids 2027",
-    "sources": [
-     "https://leekduck.com/events/minior-showers-perseids-2027/"
-    ]
-   },
-   {
     "id": "leekduck:mega-sableye-in-mega-raids-october-2026",
     "name": "Mega Sableye in Mega Raids",
     "sources": [
@@ -273,6 +266,13 @@
     "name": "Raid Day",
     "sources": [
      "https://leekduck.com/events/raid-day-february-2027/"
+    ]
+   },
+   {
+    "id": "leekduck:minior-showers-perseids-2027",
+    "name": "Minior Showers: Perseids 2027",
+    "sources": [
+     "https://leekduck.com/events/minior-showers-perseids-2027/"
     ]
    },
    {
@@ -575,7 +575,7 @@
  },
  "pagesRead": 80,
  "events": 106,
- "worldEvents": 69,
+ "worldEvents": 70,
  "worldUndated": [
   "GO Wild Area Stamp Rally"
  ],
@@ -885,6 +885,48 @@
    ]
   },
   {
+   "event": "Into the Wild",
+   "field": "bonuses",
+   "missingFrom": []
+  },
+  {
+   "event": "Into the Wild",
+   "field": "featured",
+   "missingFrom": []
+  },
+  {
+   "event": "Into the Wild",
+   "field": "raids",
+   "missingFrom": []
+  },
+  {
+   "event": "Into the Wild",
+   "field": "research",
+   "missingFrom": []
+  },
+  {
+   "event": "Into the Wild",
+   "field": "shiny",
+   "missingFrom": []
+  },
+  {
+   "event": "Into the Wild",
+   "field": "moves",
+   "missingFrom": [
+    "leekduck"
+   ]
+  },
+  {
+   "event": "Into the Wild",
+   "field": "tickets",
+   "missingFrom": []
+  },
+  {
+   "event": "Into the Wild",
+   "field": "dates",
+   "missingFrom": []
+  },
+  {
    "event": "Super Mega Raid Day",
    "field": "bonuses",
    "missingFrom": [
@@ -951,59 +993,6 @@
    "event": "Pokémon GO Wild Area 2026: Global",
    "field": "tickets",
    "missingFrom": [
-    "official"
-   ]
-  },
-  {
-   "event": "Into the Wild",
-   "field": "bonuses",
-   "missingFrom": [
-    "official",
-    "official"
-   ]
-  },
-  {
-   "event": "Into the Wild",
-   "field": "featured",
-   "missingFrom": [
-    "official",
-    "official"
-   ]
-  },
-  {
-   "event": "Into the Wild",
-   "field": "raids",
-   "missingFrom": [
-    "official",
-    "official"
-   ]
-  },
-  {
-   "event": "Into the Wild",
-   "field": "research",
-   "missingFrom": []
-  },
-  {
-   "event": "Into the Wild",
-   "field": "shiny",
-   "missingFrom": [
-    "official",
-    "official"
-   ]
-  },
-  {
-   "event": "Into the Wild",
-   "field": "tickets",
-   "missingFrom": [
-    "official",
-    "official"
-   ]
-  },
-  {
-   "event": "Into the Wild",
-   "field": "dates",
-   "missingFrom": [
-    "official",
     "official"
    ]
   },
