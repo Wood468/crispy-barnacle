@@ -148,10 +148,15 @@ function eventPartNumber(value) {
   return Number.isInteger(n) && n > 0 ? n : null;
 }
 function pageDetailId(page) {
-  if (page.source !== "leekduck") return "";
   try {
-    const parts = new URL(page.url).pathname.split("/").filter(Boolean);
-    return parts.length === 2 && parts[0] === "events" ? "leekduck:" + parts[1] : "";
+    const url = new URL(page.url), parts = url.pathname.split("/").filter(Boolean);
+    // Stable source IDs also support non-Leek Duck write-ups. Explicitly
+    // mapped Hub pages must join the curated event before fuzzy title matching.
+    if (page.source === "leekduck" && /^(?:www\\.)?leekduck\\.com$/i.test(url.hostname) && parts.length === 2 && parts[0] === "events")
+      return "leekduck:" + parts[1];
+    if (page.source === "hub" && /^(?:www\\.)?pokemongohub\\.net$/i.test(url.hostname) && parts.length === 3 && parts[0] === "post" && parts[1] === "event")
+      return "hub:" + parts[2];
+    return "";
   } catch { return ""; }
 }
 // The live feed can list the same event under a source-derived id ("leekduck:into-the-wild-2026") next to the curated record ("into").
