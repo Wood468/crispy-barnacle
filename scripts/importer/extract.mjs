@@ -15,6 +15,9 @@ const HEAD = [
   ["featured", /featur|wild encounter|spawn|appear|habitat|debut|encounter|incense|lure/i]
 ];
 const LINE = [
+  // Named event bonuses must survive even when the publisher places them
+  // outside a section headed "Bonuses" (for example under a Shiny heading).
+  ["bonuses", /\b(?:shiny gimmighoul\b.*\bcoin bag|coin bag\b.*\bshiny gimmighoul|shiny meltan\b.*\bmystery box|mystery box\b.*\bshiny meltan)\b/i],
   ["tickets", /\b(ticket|go pass)\b.*(\$|A\$|US\$|€|£)|(\$|A\$|US\$)\s?\d/i],
   ["bonuses", /\b(\d(?:\.\d)?\s?[×x]|double|triple|half|\d+%)\b.*\b(xp|stardust|candy|hatch|distance|lure|incense|catch|trade|raid pass|egg)/i],
   ["shiny", /\bshiny\b/i],
