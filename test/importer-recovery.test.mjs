@@ -44,6 +44,7 @@ test('read API failures, invalid repo and fresh state do not dispatch', async ()
     { status: 'unavailable', reason: 'run-history-http-403' });
   assert.equal(requests, 1);
   await recoverStaleImporter(stale, { repository: '../other', token: 'fixture', request: fail, now });
+  await recoverStaleImporter(stale, { repository: 'Wood468/unrelated', token: 'fixture', request: fail, now });
   await recoverStaleImporter({ ...stale, state: 'fresh' }, { repository: 'Wood468/crispy-barnacle', token: 'fixture', request: fail, now });
   assert.equal(requests, 1);
 });
