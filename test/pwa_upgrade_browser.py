@@ -45,7 +45,10 @@ with sync_playwright() as pw:
     page = context.new_page()
     def record_static_failure(request):
         path = urlsplit(request.url).path
-        if re.search(r'\\.(?:js|css)
+        if path.endswith(('.js', '.css')):
+            failed_static.append({'path': path, 'reason': str(request.failure or '')[:160]})
+    page.on('requestfailed', record_static_failure)
+    page.on('pageerror', lambda e: problems.append('pageerror: ' + str(e)))
     page.on('console', lambda m: m.type == 'error' and 'Failed to load resource' not in m.text and 'Failed to preconnect' not in m.text and problems.append('console: ' + m.text))
 
     # 1. Install the old shell while online and let it precache.
