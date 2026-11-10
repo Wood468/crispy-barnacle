@@ -50,3 +50,23 @@ test('unrelated event descriptions cannot create research tasks', () => {
   ]);
   assert.deepEqual(fields.researchTasks, []);
 });
+
+test('does not infer rewards from incomplete or ambiguous task rows', () => {
+ const fields = extractFields([
+  line('Timed Research', 'h'),
+  line('Catch 5 Pokémon REWARD'),
+  line('Win 2 raids REWARD mystery prize'),
+  line('Spin 3 PokéStops for a reward'),
+ ]);
+ assert.deepEqual(fields.researchTasks, []);
+});
+
+test('identical task rows under separate headings are deduplicated', () => {
+ const fields = extractFields([
+  line('Event Details', 'h'),
+  line('Catch 5 Pokémon REWARD ×1000 Stardust'),
+  line('Featured Pokémon', 'h'),
+  line('Catch 5 Pokémon REWARD ×1000 Stardust'),
+ ]);
+ assert.equal(fields.researchTasks.length, 1);
+});
