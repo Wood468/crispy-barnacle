@@ -40,7 +40,9 @@ with sync_playwright() as pw:
     phase = {'new': False}
     context.route('**/sw.js', lambda r: r.fulfill(body=NEW_SW if phase['new'] else OLD_SW, content_type='application/javascript', headers={'cache-control': 'no-store'}))
     problems = []
+    failed_requests = []
     page = context.new_page()
+    page.on('requestfailed', lambda req: failed_requests.append('requestfailed: ' + req.url.split('?')[0].replace(BASE, '') + ' (' + str(req.failure) + ')') if req.url.startswith(BASE + '/') else None)
     page.on('pageerror', lambda e: problems.append('pageerror: ' + str(e)))
     page.on('console', lambda m: m.type == 'error' and 'Failed to load resource' not in m.text and 'Failed to preconnect' not in m.text and problems.append('console: ' + m.text))
 
@@ -75,7 +77,25 @@ with sync_playwright() as pw:
     # 4. Offline reload on the NEW shell: Today, Event Details and Schedule all work from cached data.
     context.set_offline(True)
     page.reload(wait_until='domcontentloaded')
-    page.wait_for_function('!!window.GODASH && !!window.GODETAIL', timeout=60000)
+    try:
+        page.wait_for_function('!!window.GODASH && !!window.GODETAIL', timeout=60000)
+    except Exception:
+        # Diagnose missing application scripts without logging player state.
+        try:
+            diagnostics = page.evaluate("""() => ({
+                readyState: document.readyState,
+                controller: navigator.serviceWorker.controller?.scriptURL || null,
+                dash: !!window.GODASH,
+                detail: !!window.GODETAIL,
+                scriptPaths: Array.from(document.scripts).filter(s => s.src).map(s => new URL(s.src).pathname)
+            })""")
+            print('Offline upgraded shell diagnostic:', json.dumps(diagnostics, sort_keys=True), flush=True)
+        except Exception as err:
+            print('Offline upgraded shell diagnostic error:', str(err), flush=True)
+        print('Shell caches at activation:', json.dumps(names), flush=True)
+        print('Offline upgraded shell failed requests:', json.dumps(failed_requests[-25:]), flush=True)
+        print('Offline upgraded shell browser errors:', json.dumps(problems[-25:]), flush=True)
+        raise
     page.locator('nav.tabs button[data-tab="now"]').click()
     page.wait_for_selector('#today-v1 .t1-card', timeout=20000)
     assert page.locator('#today-v1 .t1-card').count() > 0
