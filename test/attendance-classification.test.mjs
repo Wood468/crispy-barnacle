@@ -32,6 +32,7 @@ test("Night Out, Go Fest city, Community Day and region-locked in-game events", 
 
 test("future overseas in-person events remain venue-bound despite Global wording", () => {
   const futureEvent = {
+    id: "future-kyoto-overseas-venue-2027",
     name: "Pokémon GO Fest 2027: Global Special Edition in Kyoto",
     location: "Kyoto, Japan",
     timeZone: "Asia/Tokyo",
