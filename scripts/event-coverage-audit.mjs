@@ -32,7 +32,7 @@ export function auditEvents(curated,details){
   const counts=Object.fromEntries(Object.keys(events[0]?.checks||{}).map(k=>[k,{
     present:events.filter(e=>e.checks[k]).length,missing:events.filter(e=>!e.checks[k]).length
   }]));
-  return {asOf:curated?.asOf||null,sourceUpdated:details?.updated||null,
+  // A review queue, not an assertion that every prose mention is a task.\n  const researchReview=events.filter(event=>event.checks.sourceResearch&&!event.checks.structuredResearch)\n    .map(({id,name,origin,sources})=>({id,name,origin,sources}));\n  return {asOf:curated?.asOf||null,sourceUpdated:details?.updated||null,\n    researchReviewCount:researchReview.length,researchReview,
     total:events.length,curatedCount:curatedEvents.length,sourceOnlyCount:events.length-curatedEvents.length,counts,events};
 }
 
