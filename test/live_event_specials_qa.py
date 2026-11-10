@@ -33,6 +33,7 @@ def inspect(page, width: int) -> dict:
         "() => !!window.GODETAIL && !!window.GOEventRegistry && GOEventRegistry.settled()",
         timeout=45000,
     )
+    print(f"LIVE_EVENT_QA_STAGE {width}px shell-ready", flush=True)
 
     # Coin Bag should never silently render a Chest Form sprite or wild edge.
     # GODETAIL.open may return a pending promise while content is loading;
@@ -46,6 +47,7 @@ def inspect(page, width: int) -> dict:
         f"{width}px: unverified generic/Chest Gimmighoul on Into the Wild"
     )
     report["coin_bag_roaming"] = True
+    print(f"LIVE_EVENT_QA_STAGE {width}px roaming-ready", flush=True)
 
     page.evaluate("() => { GODETAIL.open('cur:wag'); return true; }")
     page.wait_for_selector('#evd .ue-raid-day[data-raid-date="2026-11-14"]', timeout=30000)
@@ -54,12 +56,18 @@ def inspect(page, width: int) -> dict:
     # 10 km egg art in the top-right of each matching Pokémon tile.
     egg_cards = page.locator('#evd .ue-method[data-method="egg"] .ue-mon')
     report["egg_tiles"] = egg_cards.count()
+    print(f"LIVE_EVENT_QA_STAGE {width}px egg-tiles={report['egg_tiles']}", flush=True)
     if egg_cards.count() != 4:
         # Keep production-only mismatch diagnostics even when the browser
         # assertion blocks the PR. Never mutate the source or player data.
         report["source_join"] = page.evaluate("""async () => {
-          const response = await fetch('/event-details.json', {cache:'no-store'});
-          const details = (await response.json()).events || {};
+          let details = {}, fetchError = null;
+          try {
+            const response = await fetch('/event-details.json', {
+              cache:'no-store', signal:AbortSignal.timeout(15000)
+            });
+            details = (await response.json()).events || {};
+          } catch (error) { fetchError = String(error).slice(0,160); }
           const source = details['leekduck:pokemon-go-wild-area-2026-global'];
           const ev = (GODASH.events()||[]).find(x=>x.id==='cur:wag'||x.id==='wag');
           const curated = ((GO.D&&GO.D.events)||[]).find(x=>x.id==='wag');
@@ -68,6 +76,7 @@ def inspect(page, width: int) -> dict:
           const list = (m) => (m?.encounters||[]).filter(e=>e.method==='egg')
             .map(e=>(m.pokemon||[]).find(p=>p.key===e.identityKey)?.name||e.identityKey);
           return {
+            fetchError,
             eventId:ev?.id, eventDetailIds:ev?.detailIds||null,
             curatedDetailIds:curated?.detailIds||null,
             sourceEggs:list(source), registryEggs:list(model),
@@ -121,6 +130,7 @@ def main() -> int:
         browser = pw.chromium.launch()
         try:
             for width in WIDTHS:
+                print(f"LIVE_EVENT_QA_BEGIN {width}px", flush=True)
                 ctx = browser.new_context(
                     viewport={"width": width, "height": 844},
                     timezone_id="Australia/Melbourne",
