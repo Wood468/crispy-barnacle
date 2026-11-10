@@ -267,6 +267,11 @@ export function artCandidates(raw) {
     const base = crownedSword ? "zacian" : "zamazenta";
     return { base, list: [base + "-crowned"], exact: true };
   }
+  // Published GO Wild Area bosses are named White/Black Kyurem while
+  // PokeAPI IDs are kyurem-white (10023) and kyurem-black (10022).
+  // Preserve exact-form ownership; no ordinary Kyurem substitution.
+  const kyurem = /^(White|Black) Kyurem$/i.exec(n);
+  if (kyurem) return { base: "kyurem", list: ["kyurem-" + kyurem[1].toLowerCase()], exact: true };
   const paren = (n.match(/\(([^)]+)\)/) || [])[1] || "";
   n = n.replace(/\([^)]*\)/g, "").trim();
   let suffix = "";
