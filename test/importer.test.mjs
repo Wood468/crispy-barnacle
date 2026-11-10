@@ -5,7 +5,7 @@ import { htmlToLines, pageTitle } from "../scripts/importer/text.mjs";
 import { extractFields } from "../scripts/importer/extract.mjs";
 import { mergeSources, similar, disagree } from "../scripts/importer/compare.mjs";
 import { linksFrom, feedItems, discover } from "../scripts/importer/discover.mjs";
-import { pickEvent, normaliseLegacyStatuses } from "../scripts/importer/run.mjs";
+import { pickEvent, normaliseLegacyStatuses, preserveUnfetchedResearchTasks } from "../scripts/importer/run.mjs";
 
 const leek = `<html><head><meta property="og:title" content="Zorua Community Day | Leek Duck"></head><body><nav>menu</nav><main>
 <h1>Zorua Community Day</h1><h2>Bonuses</h2><ul><li>3&times; Catch XP</li><li>1/4 Hatch Distance</li></ul>
@@ -384,4 +384,54 @@ test("Minior Showers source research table yields explicit tasks without treatin
     { task: "Claim Reward!", rewards: [{ name: "Star Piece", quantity: 1 }] },
     { task: "Use a Star Piece", rewards: [{ name: "Stardust", quantity: 7740 }] },
   ]);
+});
+
+
+test("Hub event articles use an exact detail ID and do not become duplicate Minior events", () => {
+  const data = JSON.parse(readFileSync("public/data.json", "utf8"));
+  const curated = data.events.filter(e => ["minior", "minior2", "minior3"].includes(e.id))
+    .map(e => ({id:e.id,t:e.t,start:e.s,end:e.e,link:e.sourceUrl,detailIds:e.detailIds,curated:true}));
+  const cases = [
+    ["https://pokemongohub.net/post/event/minior-showers-leonid-november-2026/", "Minior Showers: Leonid (November 2026)", "November 14, 2026", "minior2"],
+    ["https://pokemongohub.net/post/event/minior-showers-orionids-october-2026/", "Minior Showers: Orionids (October 2026)", "October 19, 2026", "minior"]
+  ];
+  for (const [url,title,date,id] of cases) {
+    const page = {source:"hub",url,title,fields:{dates:[date]},lines:[]};
+    const matched = pickEvent(page,curated);
+    assert.equal(matched?.event.id,id,url);
+    assert.equal(matched?.how,"detail-id",url);
+    assert.equal(pickEvent({...page,fields:{dates:["August 1, 2027"]}},curated),null,"a mismatched date must never win on source ID");
+  }
+  assert.equal(pickEvent({source:"hub",url:"https://evil.example/post/event/minior-showers-leonid-november-2026/",title:"Unknown event",fields:{}},curated),null,"external hosts cannot impersonate a known source ID");
+});
+
+
+test("canonical Minior events retain structured source-backed research in the committed snapshot", () => {
+  const data = JSON.parse(readFileSync("public/data.json", "utf8"));
+  const details = JSON.parse(readFileSync("public/event-details.json", "utf8")).events;
+  for (const id of ["minior", "minior2"]) {
+    const event = data.events.find(e => e.id === id), detail = details[id];
+    assert.ok(event && detail, id);
+    assert.equal(detail.researchTasks.length, 2, id);
+    assert.deepEqual(detail.researchTasks.map(t => [t.task, t.rewards[0]?.name, t.rewards[0]?.quantity]), [
+      ["Claim Reward!", "Star Piece", 1], ["Use a Star Piece", "Stardust", 7740]
+    ]);
+    assert.ok(detail.researchTasks.every(t => t.eventId === id && t.eventWindow.start === event.s && t.eventWindow.end === event.e), id);
+    assert.ok(detail.researchTasks.every(t => t.status === "single" && t.sourceRefs.some(s => s.id === "hub" && s.url.includes("pokemongohub.net/post/event/"))), id);
+    assert.ok(!detail.researchTasks.some(t => /^rewards?$/i.test(t.task)), "total reward is not a task");
+  }
+});
+
+test("a research snapshot survives only when its source was not fetched and no new tasks replaced it", () => {
+  const hub = {id:"hub",url:"https://pokemongohub.net/post/event/minior-showers-leonid-november-2026/"};
+  const task = {task:"Use a Star Piece",category:"timed",rewards:[{name:"Stardust",quantity:7740}],sourceRefs:[hub],checkedAt:"2026-11-11"};
+  const before={minior2:{name:"Minior Showers: Leonids",researchTasks:[task]}};
+  const blank=()=>({minior2:{name:"Minior Showers: Leonids",researchTasks:[]}});
+  const missing=new Map([["minior2",{results:[{source:{url:"https://leekduck.com/events/minior-showers-leonids-2026/"}}]}]]);
+  assert.deepEqual(preserveUnfetchedResearchTasks(blank(),before,missing).minior2.researchTasks,[task]);
+  const fetched=new Map([["minior2",{results:[{source:hub}]}]]);
+  assert.deepEqual(preserveUnfetchedResearchTasks(blank(),before,fetched).minior2.researchTasks,[]);
+  const fresh=blank();fresh.minior2.researchTasks=[{task:"Changed official task"}];
+  assert.deepEqual(preserveUnfetchedResearchTasks(fresh,before,missing).minior2.researchTasks,[{task:"Changed official task"}]);
+  assert.deepEqual(preserveUnfetchedResearchTasks({minior2:{name:"Unrelated Event",researchTasks:[]}},before,missing).minior2.researchTasks,[]);
 });

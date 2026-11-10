@@ -5075,45 +5075,6 @@
      "collectionName": "Bagon"
     },
     {
-     "key": "379:base:none",
-     "speciesId": "379",
-     "formId": null,
-     "costumeId": null,
-     "shiny": "unknown",
-     "assetKey": null,
-     "name": "Registeel",
-     "label": null,
-     "debut": null,
-     "boostedShiny": null,
-     "collectionName": "Registeel"
-    },
-    {
-     "key": "380:base:none",
-     "speciesId": "380",
-     "formId": null,
-     "costumeId": null,
-     "shiny": "unknown",
-     "assetKey": null,
-     "name": "Latias",
-     "label": null,
-     "debut": null,
-     "boostedShiny": null,
-     "collectionName": "Latias"
-    },
-    {
-     "key": "381:base:none",
-     "speciesId": "381",
-     "formId": null,
-     "costumeId": null,
-     "shiny": "unknown",
-     "assetKey": null,
-     "name": "Latios",
-     "label": null,
-     "debut": null,
-     "boostedShiny": null,
-     "collectionName": "Latios"
-    },
-    {
      "key": "52:galar:none",
      "speciesId": "52",
      "formId": "galar",
@@ -5205,19 +5166,6 @@
      "collectionName": "Magnemite"
     },
     {
-     "key": "895:base:none",
-     "speciesId": "895",
-     "formId": null,
-     "costumeId": null,
-     "shiny": "unknown",
-     "assetKey": null,
-     "name": "Regidrago",
-     "label": null,
-     "debut": null,
-     "boostedShiny": null,
-     "collectionName": "Regidrago"
-    },
-    {
      "key": "968:base:none",
      "speciesId": "968",
      "formId": null,
@@ -5229,6 +5177,84 @@
      "debut": null,
      "boostedShiny": null,
      "collectionName": "Orthworm"
+    },
+    {
+     "key": "888:crowned-sword:none",
+     "speciesId": "888",
+     "formId": "crowned-sword",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Crowned Sword Zacian",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Crowned Sword Zacian"
+    },
+    {
+     "key": "889:crowned-shield:none",
+     "speciesId": "889",
+     "formId": "crowned-shield",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Crowned Shield Zamazenta",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Crowned Shield Zamazenta"
+    },
+    {
+     "key": "379:dynamax:none",
+     "speciesId": "379",
+     "formId": "dynamax",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Dynamax Registeel",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Dynamax Registeel"
+    },
+    {
+     "key": "895:dynamax:none",
+     "speciesId": "895",
+     "formId": "dynamax",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Dynamax Regidrago",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Dynamax Regidrago"
+    },
+    {
+     "key": "380:dynamax:none",
+     "speciesId": "380",
+     "formId": "dynamax",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Dynamax Latias",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Dynamax Latias"
+    },
+    {
+     "key": "381:dynamax:none",
+     "speciesId": "381",
+     "formId": "dynamax",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Dynamax Latios",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Dynamax Latios"
     }
    ],
    "encounters": [
@@ -5239,31 +5265,7 @@
      "access": "unknown"
     },
     {
-     "identityKey": "379:base:none",
-     "method": "max",
-     "activityId": "main",
-     "access": "unknown"
-    },
-    {
-     "identityKey": "380:base:none",
-     "method": "max",
-     "activityId": "main",
-     "access": "unknown"
-    },
-    {
-     "identityKey": "381:base:none",
-     "method": "max",
-     "activityId": "main",
-     "access": "unknown"
-    },
-    {
      "identityKey": "66:base:none",
-     "method": "max",
-     "activityId": "main",
-     "access": "unknown"
-    },
-    {
-     "identityKey": "895:base:none",
      "method": "max",
      "activityId": "main",
      "access": "unknown"
@@ -5349,6 +5351,42 @@
     {
      "identityKey": "81:base:none",
      "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "888:crowned-sword:none",
+     "method": "raid",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "889:crowned-shield:none",
+     "method": "raid",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "379:dynamax:none",
+     "method": "max",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "895:dynamax:none",
+     "method": "max",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "380:dynamax:none",
+     "method": "max",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "381:dynamax:none",
+     "method": "max",
      "activityId": "main",
      "access": "unknown"
     }
@@ -9666,6 +9704,12 @@
      "name": "Leek Duck",
      "trust": "community",
      "url": "https://leekduck.com/events/minior-showers-leonids-2026/"
+    },
+    {
+     "id": "hub",
+     "name": "Pokémon GO Hub",
+     "trust": "community",
+     "url": "https://pokemongohub.net/post/event/minior-showers-leonid-november-2026/"
     }
    ],
    "fields": {
@@ -9688,7 +9732,36 @@
     ],
     "raids": [],
     "eggs": [],
-    "research": [],
+    "research": [
+     {
+      "text": "Task | Rewards",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Claim Reward! | 1 × Star Piece",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Use a Star Piece | 7740 × Stardust",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rewards | 77,400 × Stardust",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     }
+    ],
     "shiny": [],
     "moves": [],
     "costumes": [],
@@ -9747,7 +9820,68 @@
    },
    "conflicts": [],
    "gaps": [],
-   "researchTasks": [],
+   "researchTasks": [
+    {
+     "task": "Claim Reward!",
+     "category": "timed",
+     "rewards": [
+      {
+       "type": "item",
+       "name": "Star Piece",
+       "quantity": 1
+      }
+     ],
+     "sources": [
+      "hub"
+     ],
+     "sourceRefs": [
+      {
+       "id": "hub",
+       "name": "Pokémon GO Hub",
+       "trust": "community",
+       "url": "https://pokemongohub.net/post/event/minior-showers-leonid-november-2026/"
+      }
+     ],
+     "status": "single",
+     "eventId": "minior2",
+     "eventName": "Minior Showers: Leonids",
+     "eventWindow": {
+      "start": "2026-11-14T17:00",
+      "end": "2026-11-19T23:59"
+     },
+     "checkedAt": "2026-11-11"
+    },
+    {
+     "task": "Use a Star Piece",
+     "category": "timed",
+     "rewards": [
+      {
+       "type": "item",
+       "name": "Stardust",
+       "quantity": 7740
+      }
+     ],
+     "sources": [
+      "hub"
+     ],
+     "sourceRefs": [
+      {
+       "id": "hub",
+       "name": "Pokémon GO Hub",
+       "trust": "community",
+       "url": "https://pokemongohub.net/post/event/minior-showers-leonid-november-2026/"
+      }
+     ],
+     "status": "single",
+     "eventId": "minior2",
+     "eventName": "Minior Showers: Leonids",
+     "eventWindow": {
+      "start": "2026-11-14T17:00",
+      "end": "2026-11-19T23:59"
+     },
+     "checkedAt": "2026-11-11"
+    }
+   ],
    "pokemon": [],
    "encounters": [],
    "encounterConflicts": []
@@ -23240,6 +23374,12 @@
      "name": "Leek Duck",
      "trust": "community",
      "url": "https://leekduck.com/events/minior-showers-orionids-2026/"
+    },
+    {
+     "id": "hub",
+     "name": "Pokémon GO Hub",
+     "trust": "community",
+     "url": "https://pokemongohub.net/post/event/minior-showers-orionids-october-2026/"
     }
    ],
    "fields": {
@@ -23296,6 +23436,34 @@
       "text": "Timed Research will be available during the event. Claim a Star Piece , then complete five Use a Star Piece tasks to earn 7,740 Stardust each. Complete all tasks to earn an additional 77,400 Stardust .",
       "sources": [
        "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Task | Rewards",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Claim Reward! | 1 × Star Piece",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Use a Star Piece | 7740 × Stardust",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rewards | 77,400 × Stardust",
+      "sources": [
+       "hub"
       ],
       "status": "single"
      }
@@ -23357,7 +23525,69 @@
     ]
    },
    "conflicts": [],
-   "gaps": []
+   "gaps": [],
+   "researchTasks": [
+    {
+     "task": "Claim Reward!",
+     "category": "timed",
+     "rewards": [
+      {
+       "type": "item",
+       "name": "Star Piece",
+       "quantity": 1
+      }
+     ],
+     "sources": [
+      "hub"
+     ],
+     "sourceRefs": [
+      {
+       "id": "hub",
+       "name": "Pokémon GO Hub",
+       "trust": "community",
+       "url": "https://pokemongohub.net/post/event/minior-showers-orionids-october-2026/"
+      }
+     ],
+     "status": "single",
+     "eventId": "minior",
+     "eventName": "Orionids Meteor Shower: Minior Debut",
+     "eventWindow": {
+      "start": "2026-10-19T17:00",
+      "end": "2026-10-24T23:59"
+     },
+     "checkedAt": "2026-11-11"
+    },
+    {
+     "task": "Use a Star Piece",
+     "category": "timed",
+     "rewards": [
+      {
+       "type": "item",
+       "name": "Stardust",
+       "quantity": 7740
+      }
+     ],
+     "sources": [
+      "hub"
+     ],
+     "sourceRefs": [
+      {
+       "id": "hub",
+       "name": "Pokémon GO Hub",
+       "trust": "community",
+       "url": "https://pokemongohub.net/post/event/minior-showers-orionids-october-2026/"
+      }
+     ],
+     "status": "single",
+     "eventId": "minior",
+     "eventName": "Orionids Meteor Shower: Minior Debut",
+     "eventWindow": {
+      "start": "2026-10-19T17:00",
+      "end": "2026-10-24T23:59"
+     },
+     "checkedAt": "2026-11-11"
+    }
+   ]
   },
   "leekduck:pokemon-go-city-safari-boston-2026-rescheduled": {
    "name": "Pokémon GO City Safari: Boston (Rescheduled)",

@@ -11,7 +11,7 @@ import { entriesFromPage, mergeWorld, collapseWorld, parseDateRange, placeOf, cl
 import { matchEvent } from "../g47ix-review.mjs";
 import { discoverIntl, entryFromIntlPage, INTL_PATTERN } from "./intl.mjs";
 import { failRun } from "../fail-run.mjs";
-import { extractEncounters, mergeEncounters, posterFromHtml } from "./encounters.mjs";
+import { extractEncounters, mergeEncounters, reconcileActivityEncounters, posterFromHtml } from "./encounters.mjs";
 import catalogue from "../event-experience/build-catalogue.cjs";
 import eventAdapter from "../../public/event-adapter.js";
 import { announcementFromPage } from "./announcements.mjs";
@@ -95,7 +95,8 @@ export async function appEvents() {
         existing.start = e.s || existing.start;
         existing.end = e.e || existing.end;
         existing.detailIds = detailIds;
-      } else evs.push({ id: e.id, t: e.t, link, start: e.s, end: e.e, detailIds, curated: true });
+        existing.activities = Array.isArray(e.activities) ? e.activities : [];
+      } else evs.push({ id: e.id, t: e.t, link, start: e.s, end: e.e, detailIds, activities: Array.isArray(e.activities) ? e.activities : [], curated: true });
     }
   } catch { /* no snapshot */ }
   return evs;
@@ -148,10 +149,15 @@ function eventPartNumber(value) {
   return Number.isInteger(n) && n > 0 ? n : null;
 }
 function pageDetailId(page) {
-  if (page.source !== "leekduck") return "";
   try {
-    const parts = new URL(page.url).pathname.split("/").filter(Boolean);
-    return parts.length === 2 && parts[0] === "events" ? "leekduck:" + parts[1] : "";
+    const url = new URL(page.url), parts = url.pathname.split("/").filter(Boolean);
+    // Stable source IDs also support non-Leek Duck write-ups. Explicitly
+    // mapped Hub pages must join the curated event before fuzzy title matching.
+    if (page.source === "leekduck" && /^(?:www\.)?leekduck\.com$/i.test(url.hostname) && parts.length === 2 && parts[0] === "events")
+      return "leekduck:" + parts[1];
+    if (page.source === "hub" && /^(?:www\.)?pokemongohub\.net$/i.test(url.hostname) && parts.length === 3 && parts[0] === "post" && parts[1] === "event")
+      return "hub:" + parts[2];
+    return "";
   } catch { return ""; }
 }
 // The live feed can list the same event under a source-derived id ("leekduck:into-the-wild-2026") next to the curated record ("into").
@@ -242,6 +248,23 @@ export function preserveGoPassRows(out, old, byEvent) {
 }
 
 
+// Keep source-backed research during a temporary feed outage, but never keep
+// outdated rows when the publishing page was actually fetched this run.
+// Only tasks with an explicit source URL are eligible; prose is never promoted.
+export function preserveUnfetchedResearchTasks(out, old, byEvent) {
+  for (const [id, group] of byEvent) {
+    const now = out[id], before = old[id];
+    if (!now || !before || now.name !== before.name || (now.researchTasks || []).length) continue;
+    const fetched = new Set(group.results.map(r => normUrl(r.source?.url || "")).filter(Boolean));
+    const carried = (before.researchTasks || []).filter(task =>
+      Array.isArray(task.sourceRefs) && task.sourceRefs.some(ref =>
+        /^https:\/\//.test(ref.url || "") && !fetched.has(normUrl(ref.url)))
+    );
+    if (carried.length) now.researchTasks = carried;
+  }
+  return out;
+}
+
 async function main() {
   const events = await appEvents();
   const { found, status } = await discover();
@@ -331,7 +354,7 @@ async function main() {
     await writeFile(ARTWORK_OUT, JSON.stringify({ updated: now, pages: index }, null, 1) + "\n");
   }
   for (const [id, { event, results }] of byEvent) {
-    const merged = { ...mergeSources(results), ...mergeEncounters(results) };
+    const merged = { ...mergeSources(results), ...reconcileActivityEncounters(mergeEncounters(results), event.activities, {dex,names:rewardOptions.pokemonNames,costumes:costumeNames}) };
     const selected = selectArtwork(event, results, { retrievedAt: now });
     // A temporary source outage must not erase previously verified art for the same event.
     const previous = old[id];
@@ -398,6 +421,7 @@ async function main() {
     }
   } catch (error) { console.warn("Curated activity reconciliation skipped:", error.message); }
   preserveGoPassRows(out, old, byEvent);
+  preserveUnfetchedResearchTasks(out, old, byEvent);
   // A feed-derived twin record (leekduck:<slug>) whose every source page is now read into the curated record is a duplicate: keeping it would show every task and Pokémon twice.
   const claimedUrls = new Set([...byEvent.values()].flatMap(group => group.results.map(result => normUrl(result.source.url))));
   let sameRulings = []; try { sameRulings = JSON.parse(await readFile("data/event-aliases.json", "utf8")).same || []; } catch { /* no rulings */ }

@@ -147,7 +147,7 @@ function sourceHighlights(model){
  rules.forEach(function(rule){
   for(var k=0;k<rule.keys.length;k++){
    var rows=(fields[rule.keys[k]]||[]).concat(rule.label.indexOf('Shiny ')===0?(model.notes||[]).map(function(n){return {text:n,status:'single'};}):[]);
-   var row=rows.find(function(item){var t=value(item);return rule.re.test(t)&&!used.has(t.toLowerCase())&&t.length<=240&&(!item.status||item.status==='corroborated'||item.status==='verified'||item.status==='single');});
+   var row=rows.find(function(item){var t=value(item);return rule.re.test(t)&&!used.has(t.toLowerCase())&&t.length<=240&&(!item.status||item.status==='official'||item.status==='corroborated'||item.status==='verified'||item.status==='single');});
    if(!row)continue;
    var message=value(row);used.add(message.toLowerCase());
    out.push('<li><strong>'+esc(rule.label)+'</strong><span>'+esc(message)+'</span></li>');

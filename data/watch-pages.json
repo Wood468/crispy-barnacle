@@ -60,6 +60,14 @@
     {
       "url": "https://pokemongo.com/news/into-the-wild-2026",
       "note": "Into the Wild 2026 official source for Coin Bag, Mystery Box, exact raids and daily Max Battle hours; retain through Nov 18 2026"
+    },
+    {
+      "url": "https://pokemongohub.net/post/event/minior-showers-leonid-november-2026/",
+      "note": "Leonids Nov 14–19 source-backed Timed Research table; remove after Nov 25 2026"
+    },
+    {
+      "url": "https://pokemongohub.net/post/event/minior-showers-orionids-october-2026/",
+      "note": "Historical Orionids research table for canonical Minior event; remove after research snapshot refreshed"
     }
   ]
 }

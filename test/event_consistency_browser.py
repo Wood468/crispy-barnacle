@@ -1,10 +1,16 @@
 """One event, one record: Into the Wild shows the same canonical identity on Today, Schedule, Details and Battle."""
 import base64
+import json
 import os
 import re
+from pathlib import Path
 from playwright.sync_api import sync_playwright
 
 BASE = os.environ.get('GO_FIELD_NOTES_BATTLE_URL', 'http://127.0.0.1:8791')
+EVENT_ART = json.loads((Path(__file__).resolve().parent.parent / 'public/event-details.json').read_text())['events']['into']
+VERIFIED_BANNER = EVENT_ART['image']
+assert EVENT_ART['imageProvenance']['source'] == 'Pokémon GO (official)'
+
 PNG = base64.b64decode('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==')
 with sync_playwright() as p:
     browser = getattr(p, os.environ.get('GO_FIELD_NOTES_TEST_BROWSER', 'chromium')).launch()
@@ -27,7 +33,8 @@ with sync_playwright() as p:
         assert 'Crowned Sword Zacian' in today_text and 'Dynamax Regidrago' in today_text, today_text
         # Verified promotional artwork is the default; the Illustration tag only belongs to themed fallbacks.
         card = page.locator('#today-v1 .t1-card', has_text='Into the Wild').first
-        assert card.locator('.ev-art--official .ev-art-img[src*="into-the-wild-2026"]').count() == 1
+        assert card.locator('.ev-art--official .ev-art-img').count() == 1
+        assert card.locator('.ev-art--official .ev-art-img').first.get_attribute('src') == VERIFIED_BANNER
         assert not card.locator('.ev-art-tag').is_visible()
         box = card.locator('.ev-art--official').bounding_box()
         assert abs(box['width'] / box['height'] - 16 / 9) < 0.05, box
@@ -48,7 +55,7 @@ with sync_playwright() as p:
         page.locator('#tabs [data-tab="now"]').click()
         card.locator('[data-open]').first.click()
         page.wait_for_selector('#evd .ev-art--official .evd-banner')
-        assert 'into-the-wild-2026' in page.locator('#evd .ev-art--official .evd-banner').first.get_attribute('src')
+        assert page.locator('#evd .ev-art--official .evd-banner').first.get_attribute('src') == VERIFIED_BANNER
         # Merged records show a natural status, never the internal 'reference' type; ambassador photography stays themed; series art is labelled.
         for event_id in ('into', 'twilightwishes', 'smr2'):
             page.evaluate(f"GODETAIL.open('{event_id}')")

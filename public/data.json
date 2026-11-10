@@ -178,6 +178,10 @@
     },
     {
       "id": "minior",
+      "detailIds": [
+        "leekduck:minior-showers-orionids-2026",
+        "hub:minior-showers-orionids-october-2026"
+      ],
       "t": "Orionids Meteor Shower: Minior Debut",
       "s": "2026-10-19T17:00",
       "e": "2026-10-24T23:59",
@@ -532,6 +536,10 @@
     },
     {
       "id": "minior2",
+      "detailIds": [
+        "leekduck:minior-showers-leonids-2026",
+        "hub:minior-showers-leonid-november-2026"
+      ],
       "t": "Minior Showers: Leonids",
       "s": "2026-11-14T17:00",
       "e": "2026-11-19T23:59",
