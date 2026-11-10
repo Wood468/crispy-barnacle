@@ -1,0 +1,172 @@
+{
+  "schemaVersion": 1,
+  "policy": "Source-backed event-day and hourly Pokémon groupings. Do not infer shiny boosts, CP, methods or time windows. Groups describe display categories and never change canonical collection identity.",
+  "entries": [
+    {
+      "id": "gowa-2026-global",
+      "eventIds": [
+        "wag",
+        "cur:wag",
+        "leekduck:pokemon-go-wild-area-2026-global"
+      ],
+      "title": "GO Wild Area: Global",
+      "timeBasis": "player-local",
+      "dates": [
+        "2026-11-14",
+        "2026-11-15"
+      ],
+      "activeWindow": {
+        "start": "10:00",
+        "end": "18:00"
+      },
+      "sources": [
+        {
+          "name": "Pokémon GO — GO Wild Area: Global",
+          "url": "https://pokemongo.com/gowildarea/global",
+          "trust": "official"
+        },
+        {
+          "name": "Leek Duck — Wild habitats",
+          "url": "https://leekduck.com/pokemon-go-wild-area/wild/",
+          "trust": "community"
+        },
+        {
+          "name": "Leek Duck — Mighty Pokémon by day",
+          "url": "https://leekduck.com/pokemon-go-wild-area/mighty/",
+          "trust": "community"
+        }
+      ],
+      "habitats": [
+        {
+          "id": "steel",
+          "label": "Solid as Steel Hour",
+          "type": "steel",
+          "startHours": [
+            10,
+            12,
+            14,
+            16
+          ],
+          "durationMinutes": 60,
+          "pokemon": [
+            "Alolan Sandshrew",
+            "Alolan Diglett",
+            "Magnemite",
+            "Shellder",
+            "Onix",
+            "Porygon",
+            "Shuckle",
+            "Skarmory",
+            "Nosepass",
+            "Aron",
+            "Beldum",
+            "Piplup",
+            "Shieldon",
+            "Bronzor",
+            "Lucario",
+            "Drilbur",
+            "Ferroseed",
+            "Klink",
+            "Galarian Stunfisk",
+            "Durant",
+            "Rookidee",
+            "Tinkatink"
+          ]
+        },
+        {
+          "id": "dragon",
+          "label": "Daring as Dragons Hour",
+          "type": "dragon",
+          "startHours": [
+            11,
+            13,
+            15,
+            17
+          ],
+          "durationMinutes": 60,
+          "pokemon": [
+            "Charmander",
+            "Magikarp",
+            "Dratini",
+            "Gligar",
+            "Trapinch",
+            "Swablu",
+            "Barboach",
+            "Bagon",
+            "Gible",
+            "Tynamo",
+            "Axew",
+            "Heatmor",
+            "Deino",
+            "Skrelp",
+            "Tyrunt",
+            "Amaura",
+            "Goomy",
+            "Noibat",
+            "Turtonator",
+            "Jangmo-o",
+            "Sizzlipede",
+            "Frigibax"
+          ]
+        }
+      ],
+      "mightyDays": [
+        {
+          "date": "2026-11-14",
+          "label": "Saturday",
+          "method": "wild",
+          "access": "all",
+          "pokemon": [
+            "Alolan Exeggutor",
+            "Scizor",
+            "Flygon",
+            "Walrein",
+            "Metagross",
+            "Empoleon",
+            "Magnezone",
+            "Conkeldurr",
+            "Haxorus"
+          ]
+        },
+        {
+          "date": "2026-11-15",
+          "label": "Sunday",
+          "method": "wild",
+          "access": "all",
+          "pokemon": [
+            "Azumarill",
+            "Kingdra",
+            "Aggron",
+            "Ferrothorn",
+            "Hydreigon",
+            "Goodra",
+            "Noivern",
+            "Tinkaton",
+            "Clodsire"
+          ]
+        }
+      ],
+      "display": {
+        "mightySummary": "Mighty Pokémon appear in the wild and on Routes. Their lineup changes each day, not with the hourly habitat.",
+        "habitatsSummary": "Steel and Dragon habitat spawns alternate every hour on both days, 10 a.m.–6 p.m. player-local time."
+      },
+      "mightyShared": [
+        {
+          "id": "ticket-incense",
+          "title": "Both days · Ticket-only Incense",
+          "method": "incense",
+          "access": "ticket",
+          "dates": [
+            "2026-11-14",
+            "2026-11-15"
+          ],
+          "pokemon": [
+            "Latias",
+            "Latios"
+          ],
+          "sourceUrl": "https://pokemongo.com/gowildarea/global"
+        }
+      ]
+    }
+  ]
+}
