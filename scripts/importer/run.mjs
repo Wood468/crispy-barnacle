@@ -164,6 +164,14 @@ function pageDetailId(page) {
 // A page that links to the feed record belongs to the curated record, so Event Details, Research and GO Pass read one merged entry.
 function preferCurated(event, events) {
   if (!event || event.curated) return event;
+  // A feed's source-derived ID may be explicitly linked by a curated
+  // canonical event even when the titles differ ("Pokémon GO Wild Area
+  // 2026: Global" vs "GO Wild Area: Global"). Prefer that exact relationship
+  // before fuzzy name matching, so unrelated source/article snapshots cannot
+  // overwrite a second, source-namespaced event record.
+  const owned = events.find(e => e.curated && e !== event &&
+    Array.isArray(e.detailIds) && e.detailIds.includes(event.id));
+  if (owned) return owned;
   const key = v => String(v || "").toLowerCase().replace(/\b20\d\d\b/g, "").replace(/[^a-z0-9]+/g, " ").trim();
   const name = key(event.t || event.name);
   if (!name) return event;
