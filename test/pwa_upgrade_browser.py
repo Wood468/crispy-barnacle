@@ -40,8 +40,9 @@ with sync_playwright() as pw:
     phase = {'new': False}
     context.route('**/sw.js', lambda r: r.fulfill(body=NEW_SW if phase['new'] else OLD_SW, content_type='application/javascript', headers={'cache-control': 'no-store'}))
     problems = []
+    failed_requests = []
     page = context.new_page()
-    page.on('requestfailed', lambda req: problems.append('requestfailed: ' + req.url.split('?')[0].replace(BASE, '') + ' (' + str(req.failure) + ')') if req.url.startswith(BASE + '/') else None)
+    page.on('requestfailed', lambda req: failed_requests.append('requestfailed: ' + req.url.split('?')[0].replace(BASE, '') + ' (' + str(req.failure) + ')') if req.url.startswith(BASE + '/') else None)
     page.on('pageerror', lambda e: problems.append('pageerror: ' + str(e)))
     page.on('console', lambda m: m.type == 'error' and 'Failed to load resource' not in m.text and 'Failed to preconnect' not in m.text and problems.append('console: ' + m.text))
 
@@ -92,6 +93,7 @@ with sync_playwright() as pw:
         except Exception as err:
             print('Offline upgraded shell diagnostic error:', str(err), flush=True)
         print('Shell caches at activation:', json.dumps(names), flush=True)
+        print('Offline upgraded shell failed requests:', json.dumps(failed_requests[-25:]), flush=True)
         print('Offline upgraded shell browser errors:', json.dumps(problems[-25:]), flush=True)
         raise
     page.locator('nav.tabs button[data-tab="now"]').click()
