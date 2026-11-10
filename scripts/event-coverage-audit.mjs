@@ -21,6 +21,7 @@ export function auditEvents(curated,details){
       verifiedArtwork:!!(source?.image&&source?.imageProvenance?.sourceUrl),
       sourceBonuses:hasField('bonuses'),
       sourceResearch:hasField('research')||!!source?.researchTasks?.length,
+      structuredResearch:!!source?.researchTasks?.length,
       sourceEncounters:!!(source?.encounters?.length||source?.pokemon?.length)||hasField('featured')||hasField('raids'),
       sourceTimeDetails:hasField('dates'),
     };
