@@ -86,8 +86,7 @@ with sync_playwright() as pw:
                 controller: navigator.serviceWorker.controller?.scriptURL || null,
                 globals: { dash: !!window.GODASH, detail: !!window.GODETAIL },
                 scripts: [...document.scripts].filter(s => s.src).map(s => ({
-                    path: new URL(s.src).pathname,
-                    loaded: !!s.dataset.loaded
+                    path: new URL(s.src).pathname
                 })),
                 caches: await Promise.all((await caches.keys()).map(async name => ({
                     name,
