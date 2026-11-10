@@ -68,3 +68,14 @@ test('research review queue contains only source-backed research without structu
  assert.equal(report.researchReviewCount,1);
  assert.deepEqual(report.researchReview,[{id:'prose',name:'Prose',origin:'curated',sources:['https://example.org/prose']}]);
 });
+
+test('review queue also includes source-only announcements with research prose',()=>{
+ const report=auditEvents({events:[]},{events:{
+  'future:event':{name:'Future Event',sources:[{url:'https://example.org/future'}],
+   fields:{research:[{text:'Win raids for a reward',status:'single'}]}}
+ }});
+ assert.equal(report.researchReviewCount,1);
+ assert.deepEqual(report.researchReview[0],{
+  id:'future:event',name:'Future Event',origin:'source-only',sources:['https://example.org/future']
+ });
+});
