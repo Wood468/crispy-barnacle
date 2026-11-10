@@ -1,24 +1,35 @@
 # GO Field Notes — Active Sprint and Release Roadmap
 
-> Operational roadmap. Last reviewed 10 November 2026. **Always check GitHub PRs, Actions and production before treating any status here as current.** Detailed historical work remains in [ROADMAP.md](ROADMAP.md).
+> Operational roadmap. Last reviewed 11 November 2026. **Always check GitHub PRs, Actions and production before treating any status here as current.** Detailed historical work remains in [ROADMAP.md](ROADMAP.md).
 
 ## North star
 Ship a complete, reliable, premium mobile-first Pokémon GO companion with trustworthy source-backed events, research, raids, shiny boosts, GO Pass, Schedule and Collection. Future events must work through reusable templates and importer rules, not event-specific patches. Preserve public/private boundaries. Do not add Pokémon Track/Follow controls to Today or Event Details.
 
-## Current sprint — Release stabilisation (Sprint 1)
-**Objective:** close data and CI reliability gaps, then produce an evidence-based release-blocker list.
+## Current sprint — Release acceptance and importer integrity (11 November 2026)
 
-- [x] PR #426: parallel browser shards, WebKit cache and research reward-name correction; merged after green CI
-- [x] PR #430: Minior Showers research regression (replaces closed #427); merged after all nine CI jobs passed
-- [x] PR #431: informational raid rotation and Raid Hour coverage audit; merged after all nine CI jobs passed
-- [x] PR #433: event-specific GO Wild Area raid and Max Battle display; merged after all nine CI jobs passed (production deployment still requires separate verification)
-- [ ] Regenerate and verify event-details data for source-backed Minior Leonid/Orionids research (never invent tasks)
-- [ ] Audit importer identity joins, source freshness, timezone/DST, recurring events and future-event coverage
-- [ ] Verify form-specific Pokémon artwork (crowned Zacian/Zamazenta, Dynamax/Gigantamax), fallback behavior and raid rotations
-- [ ] Review CI, source freshness, artwork and coverage checks for automated scheduling and actionable reporting
-- [ ] Classify remaining whole-app defects as P0/P1/P2 with evidence and owners
+**Release goal:** accurate reusable event records, working Today/Event Details/Battle/Schedule/Research/GO Pass/Collection, green required CI and verified production. Issue [#428](https://github.com/Wood468/crispy-barnacle/issues/428), open PRs and current GitHub Actions outrank this handoff; **these are observations, not deployment claims**.
 
-**Exit:** all critical tests green, reproducible source-backed data, no untriaged P0 issues, release candidate scope frozen.
+### Recently merged work (do not recreate)
+- **#441 / #443 / #451:** exact-form artwork QA, mobile production journey checks and the registry-only source-join fix (#451 still requires live re-verification).
+- **#442:** self-recovery for stalled hourly import runs.
+- **#444:** Roaming Gimmighoul Coin Bag, egg-distance artwork and date-specific GO Wild raid cards; subsequent live QA found a separate fallback-route regression.
+- **#445 / #447:** regenerate after importer/contract changes, validate the generated output before commit, preserve rejected snapshots for diagnostics.
+- **#446:** day-specific Mighty encounters and hourly Wild Area habitats in reusable Event Details components.
+- **#448 / #449:** preserve official event windows, Minior research and full source-backed dates across duplicate records.
+- Earlier foundation #426, #430, #431, #433, #434, #437 and #438 are already merged; use the release tracker for details.
+
+### Current P0 work (independent ownership; avoid overlapping branches)
+1. **Importer exact-form preservation — [#453](https://github.com/Wood468/crispy-barnacle/pull/453), with complementary draft [#454](https://github.com/Wood468/crispy-barnacle/pull/454).** A real refresh of main `95c3e4da` ([run 42904661195](https://github.com/Wood468/crispy-barnacle/actions/runs/42904661195)) failed the strict source-backed Crowned and Dynamax form checks; the workflow stopped before committing generated data. Test a fresh end-to-end importer run after #453, not just synthetic unit tests. Preserve Minior task/reward/source URLs and 6–8 November Mexico City dates too.
+2. **Registry-only Event Details source join — [#451](https://github.com/Wood468/crispy-barnacle/pull/451), merged as `47b7f3e`.** Live post-#444 QA found 12 egg tiles instead of four sourced Wild Area Global 10 km hatches when an event opened outside Today/Schedule's visible list. The fix uses canonical curated `detailIds`, without fuzzy title matches. **Post-merge production QA remains outstanding:** #450 must verify the deployed 360/390/430px UI; do not weaken the egg-count assertion.
+3. **Production-only QA — [#450](https://github.com/Wood468/crispy-barnacle/pull/450).** Read-only 360/390/430px live WebKit/Chromium acceptance should verify four correct egg images, Saturday/Sunday raid differences, Roaming Gimmighoul and exact-form artwork after approved deployment. Initial live failure is evidence of the real bug, not a test to suppress.
+4. **Release gate — [#428](https://github.com/Wood468/crispy-barnacle/issues/428).** Required JS/Python/browser A–E/WebKit/CodeQL/Cloudflare checks must be green on the actual merge heads. Confirm production deployment and critical user journeys separately. Do not confuse a Cloudflare preview with live production or assert the importer is fixed until regenerated output is verified.
+
+### P1, P2 and later decisions
+- **P1 parallel:** complete verified event information and exact artwork without expanding scope; audit source freshness, mobile accessibility and major-screen hierarchy. Keep overseas in-person events visible on Today.
+- **Deferred notification preference — [#452](https://github.com/Wood468/crispy-barnacle/issues/452):** decide Telegram system topic versus opted-in PWA push **after** current correctness gates. Neither new alert channel is verified for this use case. Alert only on actionable source-backed information that cannot be mapped/rendered, deduplicated with evidence; do not expose private diagnostics publicly.
+- **P2:** optional animation, speculative data and decoration. No Track/Follow controls on Today or Event Details.
+
+**Release acceptance:** complete importer regeneration with preserved research/forms/dates; passing required merge and main CI; no known critical false encounter cards, blank core screens or private-data leakage; successful live mobile/PWA check against the deployed build. If a gate fails, keep previous validated data, triage its logs and continue other independent tasks.
 
 ## Parallel workstreams (phases overlap; not calendar weeks)
 
