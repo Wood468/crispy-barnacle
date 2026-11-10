@@ -9666,6 +9666,12 @@
      "name": "Leek Duck",
      "trust": "community",
      "url": "https://leekduck.com/events/minior-showers-leonids-2026/"
+    },
+    {
+     "id": "hub",
+     "name": "Pokémon GO Hub",
+     "trust": "community",
+     "url": "https://pokemongohub.net/post/event/minior-showers-leonid-november-2026/"
     }
    ],
    "fields": {
@@ -9688,7 +9694,36 @@
     ],
     "raids": [],
     "eggs": [],
-    "research": [],
+    "research": [
+     {
+      "text": "Task | Rewards",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Claim Reward! | 1 × Star Piece",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Use a Star Piece | 7740 × Stardust",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rewards | 77,400 × Stardust",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     }
+    ],
     "shiny": [],
     "moves": [],
     "costumes": [],
@@ -9747,7 +9782,68 @@
    },
    "conflicts": [],
    "gaps": [],
-   "researchTasks": [],
+   "researchTasks": [
+    {
+     "task": "Claim Reward!",
+     "category": "timed",
+     "rewards": [
+      {
+       "type": "item",
+       "name": "Star Piece",
+       "quantity": 1
+      }
+     ],
+     "sources": [
+      "hub"
+     ],
+     "sourceRefs": [
+      {
+       "id": "hub",
+       "name": "Pokémon GO Hub",
+       "trust": "community",
+       "url": "https://pokemongohub.net/post/event/minior-showers-leonid-november-2026/"
+      }
+     ],
+     "status": "single",
+     "eventId": "minior2",
+     "eventName": "Minior Showers: Leonids",
+     "eventWindow": {
+      "start": "2026-11-14T17:00",
+      "end": "2026-11-19T23:59"
+     },
+     "checkedAt": "2026-11-11"
+    },
+    {
+     "task": "Use a Star Piece",
+     "category": "timed",
+     "rewards": [
+      {
+       "type": "item",
+       "name": "Stardust",
+       "quantity": 7740
+      }
+     ],
+     "sources": [
+      "hub"
+     ],
+     "sourceRefs": [
+      {
+       "id": "hub",
+       "name": "Pokémon GO Hub",
+       "trust": "community",
+       "url": "https://pokemongohub.net/post/event/minior-showers-leonid-november-2026/"
+      }
+     ],
+     "status": "single",
+     "eventId": "minior2",
+     "eventName": "Minior Showers: Leonids",
+     "eventWindow": {
+      "start": "2026-11-14T17:00",
+      "end": "2026-11-19T23:59"
+     },
+     "checkedAt": "2026-11-11"
+    }
+   ],
    "pokemon": [],
    "encounters": [],
    "encounterConflicts": []
@@ -23240,6 +23336,12 @@
      "name": "Leek Duck",
      "trust": "community",
      "url": "https://leekduck.com/events/minior-showers-orionids-2026/"
+    },
+    {
+     "id": "hub",
+     "name": "Pokémon GO Hub",
+     "trust": "community",
+     "url": "https://pokemongohub.net/post/event/minior-showers-orionids-october-2026/"
     }
    ],
    "fields": {
@@ -23296,6 +23398,34 @@
       "text": "Timed Research will be available during the event. Claim a Star Piece , then complete five Use a Star Piece tasks to earn 7,740 Stardust each. Complete all tasks to earn an additional 77,400 Stardust .",
       "sources": [
        "leekduck"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Task | Rewards",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Claim Reward! | 1 × Star Piece",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Use a Star Piece | 7740 × Stardust",
+      "sources": [
+       "hub"
+      ],
+      "status": "single"
+     },
+     {
+      "text": "Rewards | 77,400 × Stardust",
+      "sources": [
+       "hub"
       ],
       "status": "single"
      }
@@ -23357,7 +23487,69 @@
     ]
    },
    "conflicts": [],
-   "gaps": []
+   "gaps": [],
+   "researchTasks": [
+    {
+     "task": "Claim Reward!",
+     "category": "timed",
+     "rewards": [
+      {
+       "type": "item",
+       "name": "Star Piece",
+       "quantity": 1
+      }
+     ],
+     "sources": [
+      "hub"
+     ],
+     "sourceRefs": [
+      {
+       "id": "hub",
+       "name": "Pokémon GO Hub",
+       "trust": "community",
+       "url": "https://pokemongohub.net/post/event/minior-showers-orionids-october-2026/"
+      }
+     ],
+     "status": "single",
+     "eventId": "minior",
+     "eventName": "Orionids Meteor Shower: Minior Debut",
+     "eventWindow": {
+      "start": "2026-10-19T17:00",
+      "end": "2026-10-24T23:59"
+     },
+     "checkedAt": "2026-11-11"
+    },
+    {
+     "task": "Use a Star Piece",
+     "category": "timed",
+     "rewards": [
+      {
+       "type": "item",
+       "name": "Stardust",
+       "quantity": 7740
+      }
+     ],
+     "sources": [
+      "hub"
+     ],
+     "sourceRefs": [
+      {
+       "id": "hub",
+       "name": "Pokémon GO Hub",
+       "trust": "community",
+       "url": "https://pokemongohub.net/post/event/minior-showers-orionids-october-2026/"
+      }
+     ],
+     "status": "single",
+     "eventId": "minior",
+     "eventName": "Orionids Meteor Shower: Minior Debut",
+     "eventWindow": {
+      "start": "2026-10-19T17:00",
+      "end": "2026-10-24T23:59"
+     },
+     "checkedAt": "2026-11-11"
+    }
+   ]
   },
   "leekduck:pokemon-go-city-safari-boston-2026-rescheduled": {
    "name": "Pokémon GO City Safari: Boston (Rescheduled)",
