@@ -436,3 +436,26 @@ h2.dh .cnt{font:600 .75rem/1 var(--font-body);color:var(--color-text-muted);bord
 .ue-schedule-preview li{display:grid;gap:4px;padding:11px 13px;border:1px solid var(--border,#303849);border-radius:12px;background:var(--surface,#1a1e27)}
 .ue-schedule-preview strong{font-size:14px;line-height:1.3}
 .ue-schedule-preview span{font-size:12px;line-height:1.45;color:var(--muted,#b9b5cf)}
+
+
+/* Sourced hatch-distance icons appear at the top-right of Pokémon artwork. */
+.ue-mon{position:relative}
+.ue-egg-corner{position:absolute;z-index:3;right:7px;top:7px;display:flex;align-items:center;gap:2px;padding:2px 5px 2px 2px;min-height:31px;border:1px solid rgba(255,255,255,.3);border-radius:10px;background:#b5a4f5;color:#24194b;box-shadow:0 2px 8px rgba(0,0,0,.22);font:800 10px/1.1 var(--font-body,system-ui)}
+.ue-egg-corner img{width:29px;height:29px;object-fit:contain;flex-shrink:0}
+.ue-egg-2{background:#8bdc96;color:#143c24}
+.ue-egg-5{background:#f6d76c;color:#453509}
+.ue-egg-7{background:#f5a5cd;color:#50223d}
+.ue-egg-10{background:#b6a4f7;color:#28185c}
+.ue-egg-12{background:#e3a06f;color:#50260e}
+/* Explicit Saturday/Sunday (or other dated) raid/Max boss panels. */
+.ue-raid-days{margin:15px 0 18px}
+.ue-raid-day-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.ue-raid-day{min-width:0;border:1px solid var(--border-subtle,rgba(255,255,255,.13));border-radius:16px;padding:12px;background:var(--surface-2,rgba(255,255,255,.04))}
+.ue-raid-day h4{font-size:14px;font-weight:800;margin:0 0 10px}
+.ue-raid-day-group{margin-top:10px}
+.ue-raid-day-group h5{font-size:11px;letter-spacing:.02em;opacity:.8;margin:0 0 6px}
+.ue-raid-day-group ul{list-style:none;padding:0;margin:0;display:grid;gap:5px}
+.ue-raid-day-group li{display:flex;align-items:center;gap:6px;font-size:12px;line-height:1.25;font-weight:650;overflow-wrap:anywhere}
+.ue-raid-day-art{width:28px;height:32px;flex:0 0 28px;display:grid;place-items:center}
+.ue-raid-day-art .art{max-width:28px;max-height:32px;object-fit:contain}
+@media(max-width:350px){.ue-raid-day-grid{grid-template-columns:1fr}}
