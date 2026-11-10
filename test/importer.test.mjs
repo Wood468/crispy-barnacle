@@ -367,3 +367,21 @@ test("a page linked from a feed-derived twin is attached to the curated record w
   const hit = pickEvent({ url: "https://leekduck.com/events/into-the-wild-2026/", source: "leekduck", title: "Into the Wild", fields: {} }, evs);
   assert.equal(hit.event.id, "into");
 });
+
+test("Minior Showers source research table yields explicit tasks without treating the total as a task", () => {
+  // Regression for Leonid and Orionids GO Hub tables in event-details.json.
+  const fields = extractFields([
+    { text: "Timed Research", t: "h" },
+    { text: "Task | Rewards", t: "p" },
+    { text: "Claim Reward! | 1 × Star Piece", t: "p" },
+    { text: "Use a Star Piece | 7740 × Stardust", t: "p" },
+    { text: "Rewards | 77,400 × Stardust", t: "p" },
+  ]);
+  assert.deepEqual(fields.researchTasks.map(({ task, rewards }) => ({
+    task,
+    rewards: rewards.map(({ name, quantity }) => ({ name, quantity })),
+  })), [
+    { task: "Claim Reward!", rewards: [{ name: "Star Piece", quantity: 1 }] },
+    { task: "Use a Star Piece", rewards: [{ name: "Stardust", quantity: 7740 }] },
+  ]);
+});
