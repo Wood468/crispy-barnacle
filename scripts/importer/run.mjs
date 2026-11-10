@@ -265,8 +265,24 @@ export function preserveUnfetchedResearchTasks(out, old, byEvent) {
   return out;
 }
 
+// The API feed can supply a lightweight copy of an already curated event.
+// Never let that copy drop an exactly matched, published source-backed activity
+// schedule: its typed Raid / Max Hour bosses are authoritative for form IDs.
+// This is an exact canonical-ID join, not a name or species guess.
+export function sourceBackedActivitiesFor(id, event, curatedById) {
+  const record=curatedById.get(id);
+  const curated=record&&Array.isArray(record.activities)?record.activities:[];
+  return curated.length?curated:(Array.isArray(event?.activities)?event.activities:[]);
+}
+
 async function main() {
   const events = await appEvents();
+  let curatedById = new Map();
+  try {
+    const records = JSON.parse(await readFile("public/data.json","utf8")).events || [];
+    curatedById = new Map(records.filter(record=>record&&typeof record.id==="string")
+      .map(record=>[record.id,record]));
+  } catch { /* API-only deployments still reconcile their own activity schedules */ }
   const { found, status } = await discover();
   // every event's own source link is read too, so a linked write-up is never missed by discovery
   for (const e of events) if (e.link && sourceFor(e.link) && !found.some(f => f.url === e.link.replace(/\/?$/, "/"))) found.push({ source: sourceFor(e.link).id, url: e.link.replace(/\/?$/, "/"), title: e.t });
@@ -354,7 +370,8 @@ async function main() {
     await writeFile(ARTWORK_OUT, JSON.stringify({ updated: now, pages: index }, null, 1) + "\n");
   }
   for (const [id, { event, results }] of byEvent) {
-    const merged = { ...mergeSources(results), ...reconcileActivityEncounters(mergeEncounters(results), event.activities, {dex,names:rewardOptions.pokemonNames,costumes:costumeNames}) };
+    const activitySchedule = sourceBackedActivitiesFor(id, event, curatedById);
+    const merged = { ...mergeSources(results), ...reconcileActivityEncounters(mergeEncounters(results), activitySchedule, {dex,names:rewardOptions.pokemonNames,costumes:costumeNames}) };
     const selected = selectArtwork(event, results, { retrievedAt: now });
     // A temporary source outage must not erase previously verified art for the same event.
     const previous = old[id];
