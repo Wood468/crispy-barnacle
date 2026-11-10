@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {auditEvents} from '../scripts/event-coverage-audit.mjs';
+import {spawnSync} from 'node:child_process';
 
 const curated={asOf:'10 Nov 2026',events:[
  {id:'complete',t:'Complete',s:'2026-11-10',e:'2026-11-11',sourceUrl:'https://example.org/event'},
@@ -78,4 +79,16 @@ test('review queue also includes source-only announcements with research prose',
  assert.deepEqual(report.researchReview[0],{
   id:'future:event',name:'Future Event',origin:'source-only',sources:['https://example.org/future']
  });
+});
+
+test('research review CLI prints parseable focused report',()=>{
+ const run=spawnSync(process.execPath,['scripts/event-coverage-audit.mjs','--research-review'],{encoding:'utf8'});
+ assert.equal(run.status,0,run.stderr);
+ const report=JSON.parse(run.stdout);
+ assert.equal(typeof report.researchReviewCount,'number');
+ assert.ok(Array.isArray(report.researchReview));
+ assert.equal(report.researchReview.length,report.researchReviewCount);
+ assert.equal(typeof report.structuredResearch,'number');
+ assert.equal(typeof report.sourceResearch,'number');
+ assert.ok(!Object.hasOwn(report,'events'),'compact output should omit full event inventory');
 });
