@@ -1,4 +1,5 @@
 // CI guard: a changed, directly referenced JS/CSS asset must receive a new URL version.
+// Revalidated after the source-backed event data correction landed on main.
 // Uses the PR base SHA (or push-before SHA) and avoids importer-owned data.
 import {execFileSync} from 'node:child_process';
 import {readFileSync} from 'node:fs';
