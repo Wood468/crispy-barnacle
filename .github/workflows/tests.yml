@@ -43,6 +43,8 @@ jobs:
         run: node scripts/check-asset-versions.mjs
       - name: Run JavaScript regression tests
         run: node --test test/*.test.mjs test/*.test.cjs
+      - name: Report raid schedule coverage gaps (informational)
+        run: node scripts/audit-raid-coverage.mjs
       - name: Check the artwork manifest and owner gallery are current
         run: |
           node scripts/artwork-manifest.mjs --check
