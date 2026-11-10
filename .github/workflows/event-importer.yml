@@ -107,3 +107,18 @@ jobs:
           git pull -q --rebase --autostash origin main
           node scripts/validate-public-data.mjs
           git push origin HEAD:main
+
+      - name: Retain rejected source regeneration for diagnosis
+        # When a gate rejects regenerated content, keep the candidate snapshots
+        # for review rather than publishing or guessing at a correction.
+        if: failure()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: rejected-event-import-${{ github.run_id }}
+          path: |
+            public/event-details.json
+            public/world-events.json
+            data/importer-report.json
+            data/dup-audit.json
+          if-no-files-found: ignore
+          retention-days: 3
