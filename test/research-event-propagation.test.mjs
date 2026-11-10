@@ -24,10 +24,17 @@ for (const id of ['minior','minior2']) {
   assert.equal(matches.length,1,'a source write-up must not create a duplicate');
   const event=matches[0];
   const tasks=event.research.filter(row=>row&&typeof row.task==='string');
-  assert.equal(View.researchTaskCount(event.research),2,'only individual tasks count');
-  assert.deepEqual(tasks.map(row=>[row.task,row.rewards?.[0]?.name,row.rewards?.[0]?.quantity]),[
-   ['Claim Reward!','Star Piece',1],['Use a Star Piece','Stardust',7740]
-  ]);
+  const sourcedTasks=detail.researchTasks;
+  assert.ok(sourcedTasks.length>=2,'expected published source-backed tasks');
+  assert.equal(View.researchTaskCount(event.research),sourcedTasks.length,
+    'every imported individual task, including optional bonus tracks, reaches the event contract');
+  const signature=row=>JSON.stringify([row.category,row.task,(row.rewards||[]).map(reward=>[reward.name,reward.quantity])]);
+  assert.deepEqual(tasks.map(signature).sort(),sourcedTasks.map(signature).sort(),
+    'the reusable event contract must preserve the imported tasks and rewards');
+  for(const [name,reward,quantity] of [['Claim Reward!','Star Piece',1],['Use a Star Piece','Stardust',7740]]) {
+   assert.ok(tasks.some(task=>task.task===name&&task.rewards?.some(r=>r.name===reward&&r.quantity===quantity)),
+     'missing published research reward '+name);
+  }
   for(const task of tasks){
    assert.equal(task.eventId,id);
    assert.equal(task.eventWindow.start,curated.s);
@@ -36,8 +43,10 @@ for (const id of ['minior','minior2']) {
   }
   const html=UI.render(event,{});
   assert.match(html,/data-sec="research"/,'universal details navigation exposes Research');
-  assert.match(html,/2 tasks/,'task count is not inflated by source prose or total rewards');
-  assert.equal((html.match(/<article class="research-task"/g)||[]).length,2);
+  assert.match(html,new RegExp(sourcedTasks.length+' tasks?'),
+    'displayed task count is consistent with sourced individual tasks');
+  assert.equal((html.match(/<article class="research-task"/g)||[]).length,sourcedTasks.length,
+    'the Event Details gallery must not drop optional sourced research tasks');
   assert.match(html,/Claim Reward!/);
   assert.match(html,/Use a Star Piece/);
   assert.match(html,/Star Piece/);
