@@ -51,6 +51,13 @@ function collectionName(p){
  var prefixes={alola:'Alolan',galar:'Galarian',hisui:'Hisuian',paldea:'Paldean',mega:'Mega',primal:'Primal',gmax:'Gigantamax',gigantamax:'Gigantamax',shadow:'Shadow',purified:'Purified',dynamax:'Dynamax'};
  var name=p.collectionName||p.name||p.speciesId,form=lib.parseForm(name);
  if(p.costumeId){var label=p.label||p.costumeId;if(name.toLowerCase().indexOf(label.toLowerCase())<0)name+=' ('+label+')';return name;}
+ // Explicit species/form identities map to the name understood by /api/art.
+ // Both legacy labels and structured imports use these names on every event/raid.
+ var exactFormNames={'888|crownedsword':'Crowned Sword Zacian','889|crownedshield':'Crowned Shield Zamazenta','999|roaming':'Gimmighoul (Roaming Form)','999|roamingform':'Gimmighoul (Roaming Form)'};
+ // Form IDs from different sources contain separators inconsistently. Only
+ // *artwork display* normalises the key; encounter and Collection IDs do not change.
+ var formKey=String(p.speciesId||'')+'|'+lib.norm(p.formId||'');
+ if(p.formId&&exactFormNames[formKey])return exactFormNames[formKey];
  if(p.formId&&/-shadow$|-purified$|-dynamax$/.test(p.formId))return null;
  if(!p.formId||p.formId==='base'||form.key||form.special)return name;
  if(prefixes[p.formId])return prefixes[p.formId]+' '+name;
