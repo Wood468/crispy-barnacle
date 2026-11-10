@@ -32,9 +32,15 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: 22
+      - name: Verify changed asset cache-bust versions
+        env:
+          GOFN_BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
+        run: node scripts/check-asset-versions.mjs
       - name: Run JavaScript regression tests
         run: node --test test/*.test.mjs test/*.test.cjs
       - name: Check the artwork manifest and owner gallery are current
