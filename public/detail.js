@@ -575,6 +575,8 @@
     // The Coin Bag emits Roaming Form. Repair the one generic base-form
     // source card after catalogue retention without changing saved Collection.
     if(GOEventAdapter.coinBagRoaming)model=GOEventAdapter.coinBagRoaming(model,d);
+    // Prefer the complete, source-backed hatch roster over stale merged egg lists.
+    if(GOEventAdapter.reconcileSourcedEggs)model=GOEventAdapter.reconcileSourcedEggs(model,d);
     // Source-declared Egg pools are attached even when the catalogue's
     // canonical model lacks the source's descriptive egg fields.
     if(d&&d.fields&&Array.isArray(d.fields.eggs)&&d.fields.eggs.length){
