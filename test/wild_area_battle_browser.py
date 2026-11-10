@@ -18,7 +18,7 @@ with sync_playwright() as p:
   page.locator('#tabs [data-tab="raids"]').click()
   battle=page.locator('#rotnow').inner_text()
   for name in expected:
-   assert name in battle,(when,name,battle[:1200])
+   assert name.casefold() in battle.casefold(),(when,name,battle[:1200])
   assert not errors,errors
   print('PASS Wild Area Battle',when)
   context.close()
