@@ -133,6 +133,25 @@ def live_event_browser(pw, errors: list) -> list:
                 page.evaluate("() => GODETAIL.open('into')")
                 page.wait_for_selector("#evd .ue-mon", timeout=30000)
                 row["tile_count"] = page.locator("#evd .ue-mon").count()
+                # The Coin Bag and GO Pass may use the correct *name* but
+                # still accidentally point to the default Chest Form picture.
+                row["gimmighoul_art"] = page.evaluate("""() => [
+                    ...document.querySelectorAll('#evd img[alt*="Gimmighoul"]')
+                ].map(i => ({
+                    alt: i.alt, src: i.getAttribute('src'),
+                    near: i.closest('.ue-mon,.ue-pass-rank,.research-reward')?.textContent?.slice(0,160)
+                }))""")
+                row["gimmighoul_models"] = page.evaluate("""() => ({
+                    catalogue: (GOEventRegistry.find('into')?.pokemon || []).filter(
+                        p => /gimmighoul/i.test(p.name||'') || String(p.speciesId)==='999'
+                    ),
+                    pass: (GOEventRegistry.find('into')?.passes || []).filter(
+                        p => JSON.stringify(p).toLowerCase().includes('gimmighoul')
+                    ).map(p => ({ title: p.title, ranks: (p.stages || []).filter(
+                        s => JSON.stringify(s).toLowerCase().includes('gimmighoul')
+                    ) }))
+                })""")
+
                 for name in DISPLAY_NAMES:
                     mon = {"name": name}
                     tile = page.locator("#evd .ue-mon").filter(has_text=name).first
