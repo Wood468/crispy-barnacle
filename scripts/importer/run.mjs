@@ -360,6 +360,43 @@ async function main() {
       ...(split.length<=1?{pokemon:announcement.pokemon,encounters:announcement.encounters}:{}),
       internalValidation:metadata};
   }
+  // Reconcile explicitly sourced, curated activity schedules into the imported
+  // detail contract. Importer extraction can omit schedule prose when a feed
+  // changes its headings; the validated curated schedule remains authoritative.
+  try {
+    const curated = JSON.parse(await readFile("public/data.json", "utf8")).events || [];
+    for (const event of curated) {
+      const detail = out[event.id];
+      if (!detail || !Array.isArray(event.activities)) continue;
+      const hours = event.activities.filter(a =>
+        (a.kind === "raid-hour" || a.kind === "max-battle-hour") &&
+        a.schedule?.timeBasis === "player-local" &&
+        /^https:\/\//.test(a.sourceUrl || "") &&
+        /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/.test(a.schedule.start || "") &&
+        /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/.test(a.schedule.end || "")
+      );
+      if (!hours.length) continue;
+      const first = hours[0].schedule;
+      if (!hours.every(a => a.schedule.start.slice(11) === first.start.slice(11) &&
+                               a.schedule.end.slice(11) === first.end.slice(11))) continue;
+      const format = time => { const h = +time.slice(11,13), m = time.slice(14,16); return (h % 12 || 12) + (m === "00" ? "" : ":" + m) + (h >= 12 ? "pm" : "am"); };
+      const title = hours.some(a => a.kind === "raid-hour") && hours.some(a => a.kind === "max-battle-hour")
+        ? "Daily Raid Hour and Max Battle Hour" : hours[0].kind === "raid-hour" ? "Daily Raid Hour" : "Daily Max Battle Hour";
+      const fullText = title + ": " + format(first.start) + " to " + format(first.end) + " local time; " +
+        hours.map(a => a.schedule.start.slice(0,10) + " " + a.title).join("; ");
+      // The Overview source-highlights widget intentionally caps rows at 240
+      // characters. Keep its summary concise; full per-day activities remain
+      // available in the structured schedule preview.
+      const text = fullText.length <= 240 ? fullText :
+        title + ": " + format(first.start) + " to " + format(first.end) + " local time, " +
+        hours[0].schedule.start.slice(0,10) + " to " + hours[hours.length-1].schedule.start.slice(0,10) + ".";
+      detail.fields ||= {};
+      detail.fields.dates ||= [];
+      if (!detail.fields.dates.some(row => row.text === text)) detail.fields.dates.push({
+        text, sources: [...new Set(hours.map(a => a.sourceUrl))], status: "verified"
+      });
+    }
+  } catch (error) { console.warn("Curated activity reconciliation skipped:", error.message); }
   preserveGoPassRows(out, old, byEvent);
   // A feed-derived twin record (leekduck:<slug>) whose every source page is now read into the curated record is a duplicate: keeping it would show every task and Pokémon twice.
   const claimedUrls = new Set([...byEvent.values()].flatMap(group => group.results.map(result => normUrl(result.source.url))));

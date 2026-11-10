@@ -34,6 +34,13 @@ export function extractEncounters(input,{dex=[],names=[],costumes=[]}={}){
     const dyn=/^(dynamax|gigantamax)\s+(.+)$/i.exec(label),dbase=dyn&&known.get(dyn[2].toLowerCase());
     if(!declared&&dbase&&dbase.speciesId&&!dbase.costume&&method==='max')declared={name:label,speciesId:dbase.speciesId};
    }
+   if(!declared){
+    // Published Crowned Sword Zacian / Crowned Shield Zamazenta names are
+    // exact form identities, not ordinary Zacian or Zamazenta sprites.
+    const crowned=/^Crowned (Sword|Shield) (Zacian|Zamazenta)$/i.exec(label);
+    const base=crowned&&known.get(crowned[2].toLowerCase());
+    if(base&&base.speciesId&&((crowned[1].toLowerCase()==='sword'&&crowned[2].toLowerCase()==='zacian')||(crowned[1].toLowerCase()==='shield'&&crowned[2].toLowerCase()==='zamazenta')))declared={name:label,speciesId:base.speciesId,formId:'crowned-'+crowned[1].toLowerCase(),collectionName:label};
+   }
    if(!declared)continue;
    if(method==='max'&&!declared.costume&&declared.speciesId&&!/^(?:dynamax|gigantamax)\b|\(/i.test(declared.name))declared={...declared,name:'Dynamax '+declared.name};
    const p=adapter.pokemon({...declared,shiny,boostedShiny}),prior=pokemon.get(p.key);

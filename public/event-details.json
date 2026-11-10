@@ -5183,6 +5183,10 @@
      "name": "Leek Duck",
      "trust": "community",
      "url": "https://leekduck.com/events/into-the-wild-2026/"
+    },
+    {
+     "id": "official",
+     "url": "https://pokemongo.com/news/into-the-wild-2026"
     }
    ],
    "fields": {
@@ -5242,6 +5246,20 @@
        "leekduck"
       ],
       "status": "single"
+     },
+     {
+      "text": "During the event, using a Coin Bag gives a chance to encounter Shiny Gimmighoul, from November 9 at 10am to November 15 at 6pm local time.",
+      "sources": [
+       "https://pokemongo.com/news/into-the-wild-2026"
+      ],
+      "status": "verified"
+     },
+     {
+      "text": "During the event, using the Mystery Box gives a chance to encounter Shiny Meltan, from November 9 at 10am to November 15 at 6pm local time.",
+      "sources": [
+       "https://pokemongo.com/news/into-the-wild-2026"
+      ],
+      "status": "verified"
      }
     ],
     "featured": [
@@ -6265,6 +6283,13 @@
        "leekduck"
       ],
       "status": "single"
+     },
+     {
+      "text": "Daily Raid Hour and Max Battle Hour: 6pm to 7pm local time, November 9–13. Zacian Nov 9; Zamazenta Nov 10; Registeel Nov 11; Regidrago Nov 12; Latias and Latios Nov 13.",
+      "sources": [
+       "https://pokemongo.com/news/into-the-wild-2026"
+      ],
+      "status": "verified"
      }
     ]
    },
@@ -6891,6 +6916,84 @@
      "debut": null,
      "boostedShiny": null,
      "collectionName": "Orthworm"
+    },
+    {
+     "key": "888:crowned-sword:none",
+     "speciesId": "888",
+     "formId": "crowned-sword",
+     "costumeId": null,
+     "shiny": "yes",
+     "assetKey": null,
+     "name": "Crowned Sword Zacian",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Crowned Sword Zacian"
+    },
+    {
+     "key": "889:crowned-shield:none",
+     "speciesId": "889",
+     "formId": "crowned-shield",
+     "costumeId": null,
+     "shiny": "yes",
+     "assetKey": null,
+     "name": "Crowned Shield Zamazenta",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Crowned Shield Zamazenta"
+    },
+    {
+     "key": "379:dynamax:none",
+     "speciesId": "379",
+     "formId": "dynamax",
+     "costumeId": null,
+     "shiny": "yes",
+     "assetKey": null,
+     "name": "Dynamax Registeel",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Dynamax Registeel"
+    },
+    {
+     "key": "380:dynamax:none",
+     "speciesId": "380",
+     "formId": "dynamax",
+     "costumeId": null,
+     "shiny": "yes",
+     "assetKey": null,
+     "name": "Dynamax Latias",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Dynamax Latias"
+    },
+    {
+     "key": "381:dynamax:none",
+     "speciesId": "381",
+     "formId": "dynamax",
+     "costumeId": null,
+     "shiny": "yes",
+     "assetKey": null,
+     "name": "Dynamax Latios",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Dynamax Latios"
+    },
+    {
+     "key": "895:dynamax:none",
+     "speciesId": "895",
+     "formId": "dynamax",
+     "costumeId": null,
+     "shiny": "yes",
+     "assetKey": null,
+     "name": "Dynamax Regidrago",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Dynamax Regidrago"
     }
    ],
    "encounters": [
@@ -6901,31 +7004,7 @@
      "access": "unknown"
     },
     {
-     "identityKey": "379:base:none",
-     "method": "max",
-     "activityId": "main",
-     "access": "unknown"
-    },
-    {
-     "identityKey": "380:base:none",
-     "method": "max",
-     "activityId": "main",
-     "access": "unknown"
-    },
-    {
-     "identityKey": "381:base:none",
-     "method": "max",
-     "activityId": "main",
-     "access": "unknown"
-    },
-    {
      "identityKey": "66:base:none",
-     "method": "max",
-     "activityId": "main",
-     "access": "unknown"
-    },
-    {
-     "identityKey": "895:base:none",
      "method": "max",
      "activityId": "main",
      "access": "unknown"
@@ -7011,6 +7090,42 @@
     {
      "identityKey": "81:base:none",
      "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "888:crowned-sword:none",
+     "method": "raid",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "889:crowned-shield:none",
+     "method": "raid",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "379:dynamax:none",
+     "method": "max",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "380:dynamax:none",
+     "method": "max",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "381:dynamax:none",
+     "method": "max",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "895:dynamax:none",
+     "method": "max",
      "activityId": "main",
      "access": "unknown"
     }
