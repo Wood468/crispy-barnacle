@@ -53,7 +53,7 @@ function collectionName(p){
  if(p.costumeId){var label=p.label||p.costumeId;if(name.toLowerCase().indexOf(label.toLowerCase())<0)name+=' ('+label+')';return name;}
  // Explicit species/form identities map to the name understood by /api/art.
  // Both legacy labels and structured imports use these names on every event/raid.
- var exactFormNames={'888|crownedsword':'Crowned Sword Zacian','889|crownedshield':'Crowned Shield Zamazenta','999|roaming':'Gimmighoul (Roaming Form)','999|roamingform':'Gimmighoul (Roaming Form)'};
+ var exactFormNames={'888|crownedsword':'Crowned Sword Zacian','889|crownedshield':'Crowned Shield Zamazenta','999|roaming':'Gimmighoul (Roaming Form)','999|roamingform':'Gimmighoul (Roaming Form)','999|chest':'Gimmighoul (Chest Form)','999|chestform':'Gimmighoul (Chest Form)'};
  // Form IDs from different sources contain separators inconsistently. Only
  // *artwork display* normalises the key; encounter and Collection IDs do not change.
  var formKey=String(p.speciesId||'')+'|'+lib.norm(p.formId||'');

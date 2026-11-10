@@ -50,6 +50,9 @@ test('Roaming, Chest and unknown Gimmighoul forms cannot silently substitute one
   assert.deepEqual(artCandidates('Gimmighoul (unannounced future Form)').list, ['gimmighoul-unannounced-future']);
   assert.equal(artCandidates('Gimmighoul (unannounced future Form)').exact, true);
   assert.equal(adapter.collectionName({ name: 'Gimmighoul', speciesId: '999', formId: 'roaming-form' }), 'Gimmighoul (Roaming Form)');
+  assert.equal(adapter.collectionName({ name: 'Gimmighoul', speciesId: '999', formId: 'chest' }), 'Gimmighoul (Chest Form)');
+  assert.equal(adapter.collectionName({ name: 'Gimmighoul', speciesId: '999', formId: 'chest-form' }), 'Gimmighoul (Chest Form)');
+  assert.deepEqual(artCandidates(adapter.collectionName({ name: 'Gimmighoul', speciesId: '999', formId: 'chest' })).list, ['gimmighoul']);
   assert.equal(adapter.collectionName({ name: 'Gimmighoul', speciesId: '999', formId: 'unconfirmed' }), null);
 });
 
