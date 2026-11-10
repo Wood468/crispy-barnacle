@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-10T21:49:28.570Z",
+ "updated": "2026-11-10T22:30:41.211Z",
  "events": [
   {
    "id": "w-pokemon-fossil-museum-2026",
@@ -377,7 +377,7 @@
   {
    "id": "w-forever-stamp-rally-go-wild-area",
    "name": "Forever Stamp Rally Go Wild Area",
-   "place": "Japan",
+   "place": "South Korea",
    "area": "Asia",
    "scope": "regional",
    "start": "2026-11-03",
@@ -387,12 +387,7 @@
     {
      "id": "official",
      "name": "Pokémon GO (official)",
-     "url": "https://pokemongo.com/ja/news/forever-stamp-rally-go-wild-area-2026/"
-    },
-    {
-     "id": "official",
-     "name": "Pokémon GO (official)",
-     "url": "https://pokemongo.com/ja/news/go-wild-area-stamp-rally-details-2026/"
+     "url": "https://pokemongo.com/ko/news/forever-stamp-rally-go-wild-area-2026/"
     }
    ],
    "status": "official",
@@ -815,6 +810,26 @@
    "seen": "2026-10-19"
   },
   {
+   "id": "w-max-battle-day-december",
+   "name": "Max Battle Day December",
+   "place": "",
+   "area": "Worldwide",
+   "scope": "global",
+   "start": "2026-12-05",
+   "end": "2026-12-05",
+   "datesKnown": true,
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "url": "https://leekduck.com/events/max-battle-day-december-2026/",
+     "auto": true
+    }
+   ],
+   "status": "single",
+   "seen": "2026-11-10"
+  },
+  {
    "id": "w-pok-mon-30th-anniversary-mall-exploration-sm-north",
    "name": "Pokémon 30th Anniversary Mall Exploration: SM North EDSA",
    "place": "Philippines (SM North EDSA)",
@@ -911,6 +926,26 @@
    ],
    "status": "single",
    "seen": "2026-11-09"
+  },
+  {
+   "id": "w-hatch-day-december",
+   "name": "Hatch Day December",
+   "place": "",
+   "area": "Worldwide",
+   "scope": "global",
+   "start": "2026-12-26",
+   "end": "2026-12-26",
+   "datesKnown": true,
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "url": "https://leekduck.com/events/hatch-day-december-2026/",
+     "auto": true
+    }
+   ],
+   "status": "single",
+   "seen": "2026-11-10"
   },
   {
    "id": "w-january-communitydayclassic2027",
@@ -1046,6 +1081,26 @@
     }
    ],
    "status": "official",
+   "seen": "2026-11-10"
+  },
+  {
+   "id": "w-max-battle-day-january",
+   "name": "Max Battle Day January",
+   "place": "",
+   "area": "Worldwide",
+   "scope": "global",
+   "start": "2027-01-23",
+   "end": "2027-01-23",
+   "datesKnown": true,
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "url": "https://leekduck.com/events/max-battle-day-january-2027/",
+     "auto": true
+    }
+   ],
+   "status": "single",
    "seen": "2026-11-10"
   },
   {
@@ -1240,66 +1295,6 @@
    ],
    "status": "official",
    "seen": "2026-11-02"
-  },
-  {
-   "id": "w-max-battle-day-december",
-   "name": "Max Battle Day December",
-   "place": "",
-   "area": "Worldwide",
-   "scope": "global",
-   "start": "2026-12-05",
-   "end": "2026-12-05",
-   "datesKnown": true,
-   "sources": [
-    {
-     "id": "leekduck",
-     "name": "Leek Duck",
-     "url": "https://leekduck.com/events/max-battle-day-december-2026/",
-     "auto": true
-    }
-   ],
-   "status": "single",
-   "seen": "2026-11-10"
-  },
-  {
-   "id": "w-hatch-day-december",
-   "name": "Hatch Day December",
-   "place": "",
-   "area": "Worldwide",
-   "scope": "global",
-   "start": "2026-12-26",
-   "end": "2026-12-26",
-   "datesKnown": true,
-   "sources": [
-    {
-     "id": "leekduck",
-     "name": "Leek Duck",
-     "url": "https://leekduck.com/events/hatch-day-december-2026/",
-     "auto": true
-    }
-   ],
-   "status": "single",
-   "seen": "2026-11-10"
-  },
-  {
-   "id": "w-max-battle-day-january",
-   "name": "Max Battle Day January",
-   "place": "",
-   "area": "Worldwide",
-   "scope": "global",
-   "start": "2027-01-23",
-   "end": "2027-01-23",
-   "datesKnown": true,
-   "sources": [
-    {
-     "id": "leekduck",
-     "name": "Leek Duck",
-     "url": "https://leekduck.com/events/max-battle-day-january-2027/",
-     "auto": true
-    }
-   ],
-   "status": "single",
-   "seen": "2026-11-10"
   }
  ]
 }

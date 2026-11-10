@@ -5928,7 +5928,7 @@
     },
     "imageReviewed": true,
     "contentHash": "9c1e84fa3e57a9dc254240da56abb3e0fe3ea75b86697d72cfd7a5408efad52a",
-    "revision": 40,
+    "revision": 42,
     "amended": true,
     "native": false,
     "collection": "events"
@@ -26508,7 +26508,7 @@
     },
     "imageReviewed": true,
     "contentHash": "244e1a218c776c7de71a786fe7a96bc90d5ca2212bc0e2a5060da28a5e71b680",
-    "revision": 55,
+    "revision": 57,
     "amended": true,
     "native": false,
     "collection": "source-details"
@@ -53150,7 +53150,7 @@
     },
     "imageReviewed": true,
     "contentHash": "dce45278d164ec7d0efdbec4d901eac6f95e08bdec7b64c64c440d1336263583",
-    "revision": 32,
+    "revision": 34,
     "amended": true,
     "native": false,
     "collection": "world-events"
@@ -54337,7 +54337,7 @@
     },
     "imageReviewed": true,
     "contentHash": "4bbe2871a823eb21458a110b1a90a61e5fce0d1ddaa2d47d0d0671f282a84a9d",
-    "revision": 40,
+    "revision": 42,
     "amended": true,
     "native": false,
     "collection": "world-events"
@@ -54590,7 +54590,7 @@
    "completeness": "partial",
    "lifecycle": "announced",
    "attendance": "in-person",
-   "location": "Japan",
+   "location": "South Korea",
    "image": null,
    "notes": [],
    "internalValidation": {
@@ -54604,8 +54604,8 @@
      "start": "2026-11-03",
      "end": "2026-11-03"
     },
-    "contentHash": "0ca84974cfa677f1be63ebd7712b231d3f83b8d9beb34b2f503e737968fe94fe",
-    "revision": 18,
+    "contentHash": "5cdd55e002ca42377352e7b637a57f2e39afa99cde6bbc64780733a9cc28f6b3",
+    "revision": 19,
     "amended": false,
     "native": false,
     "collection": "world-events"
@@ -61508,7 +61508,7 @@
      "end": "2027-04-11"
     },
     "contentHash": "84950064738e11a798ef98f9fd6ab913640b138fb1594e38612f64db09c4dd24",
-    "revision": 32,
+    "revision": 34,
     "amended": true,
     "native": false,
     "collection": "world-events"
@@ -63102,6 +63102,20 @@
        "status": "official"
       },
       {
+       "text": "The best way to experience Pokémon GO Wild Area is in-person. Meet you out there, Trainers!",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "—The Pokémon GO team",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
        "text": "Machamp wearing a modern jacket appears in three-star raids during event hours. Leek Duck says it may be Shiny; the official event page does not confirm this.",
        "sources": [
         "leekduck"
@@ -63391,6 +63405,12 @@
      "name": "Leek Duck",
      "trust": "community",
      "url": "https://leekduck.com/events/pokemon-go-wild-area-2026-global/"
+    },
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "trust": "official",
+     "url": "https://pokemongo.com/news/community-meetups-go-wild-area-2026-details-asia-pacific/"
     }
    ],
    "pokemon": [
@@ -65931,6 +65951,20 @@
        "sources": [
         "official",
         "leekduck"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "The best way to experience Pokémon GO Wild Area is in-person. Meet you out there, Trainers!",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "—The Pokémon GO team",
+       "sources": [
+        "official"
        ],
        "status": "official"
       },

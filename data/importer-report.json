@@ -1,12 +1,12 @@
 {
- "runAt": "2026-11-10T21:49:28.575Z",
+ "runAt": "2026-11-10T22:30:41.217Z",
  "artworkCoverage": {
-  "selected": 27,
+  "selected": 26,
   "missing": 75,
   "legacyUnattributed": 2,
   "bySource": {
    "Pokémon GO (official)": 21,
-   "Leek Duck": 6
+   "Leek Duck": 5
   },
   "missingEvents": [
    {
@@ -561,8 +561,8 @@
   }
  },
  "pagesRead": 80,
- "events": 104,
- "worldEvents": 66,
+ "events": 103,
+ "worldEvents": 69,
  "worldUndated": [
   "GO Wild Area Stamp Rally"
  ],
@@ -733,6 +733,7 @@
    "field": "bonuses",
    "missingFrom": [
     "official",
+    "official",
     "official"
    ]
   },
@@ -740,6 +741,7 @@
    "event": "GO Wild Area: Global",
    "field": "featured",
    "missingFrom": [
+    "official",
     "official",
     "official"
    ]
@@ -749,6 +751,7 @@
    "field": "raids",
    "missingFrom": [
     "official",
+    "official",
     "official"
    ]
   },
@@ -757,6 +760,7 @@
    "field": "eggs",
    "missingFrom": [
     "official",
+    "official",
     "official"
    ]
   },
@@ -764,6 +768,7 @@
    "event": "GO Wild Area: Global",
    "field": "research",
    "missingFrom": [
+    "official",
     "official",
     "official"
    ]
@@ -778,6 +783,7 @@
    "field": "moves",
    "missingFrom": [
     "official",
+    "official",
     "official"
    ]
   },
@@ -785,6 +791,7 @@
    "event": "GO Wild Area: Global",
    "field": "tickets",
    "missingFrom": [
+    "official",
     "official",
     "official"
    ]
