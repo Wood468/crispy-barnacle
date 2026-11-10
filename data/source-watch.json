@@ -1,10 +1,10 @@
 {
- "updated": "2026-11-10T03:34:54.109Z",
+ "updated": "2026-11-10T14:54:02.049Z",
  "status": [
   {
    "id": "hub",
    "state": "ok",
-   "items": 5
+   "items": 3
   },
   {
    "id": "miners-assets",
@@ -23,8 +23,8 @@
   },
   {
    "id": "youtube-pogo",
-   "state": "error",
-   "note": "HTTP 404"
+   "state": "ok",
+   "items": 3
   }
  ],
  "gaps": 2,
@@ -60,9 +60,45 @@
    ]
   },
   {
+   "source": "reddit-silph",
+   "trust": "tip",
+   "title": "Convert Zacian",
+   "link": "https://www.reddit.com/r/TheSilphRoad/comments/1xsoafw/convert_zacian/",
+   "date": "2026-11-10T14:28:29.000Z",
+   "summary": "<!-- SC_OFF --><div class=\"md\"><p>Does anyone know if there will be a research task that says “convert a zacian or zamazenta to its crowned form”? I have a lucky shiny zacian and enough energy but do ",
+   "pokemon": [
+    "Zacian"
+   ],
+   "notInOurData": []
+  },
+  {
+   "source": "youtube-pogo",
+   "trust": "official",
+   "title": "Costumed Machamp debuts in Pokémon GO!",
+   "link": "https://www.youtube.com/watch?v=oe4xCOjA374",
+   "date": "2026-11-09T11:12:47.000Z",
+   "summary": "",
+   "pokemon": [
+    "Machamp"
+   ],
+   "notInOurData": []
+  },
+  {
+   "source": "youtube-pogo",
+   "trust": "official",
+   "title": "Costumed Machamp debuts in Pokémon GO!",
+   "link": "https://www.youtube.com/shorts/Z2OPNHxhNSc",
+   "date": "2026-11-09T10:48:45.000Z",
+   "summary": "",
+   "pokemon": [
+    "Machamp"
+   ],
+   "notInOurData": []
+  },
+  {
    "source": "hub",
    "trust": "community",
-   "title": "Into the Wild (2026) Event",
+   "title": "Pokémon GO Into the Wild (2026)",
    "link": "https://pokemongohub.net/post/event/into-the-wild-2026-event/",
    "date": "2026-11-09T05:00:51.000Z",
    "summary": "Pokémon GO’s Into the Wild event runs from November 9 at 10:00 a.m. to November 13 at 8:00 p.m. local time, bringing two new Dynamax Pokémon: Dynamax Regidrago and Dynamax Meltan! Expect an increased ",
@@ -128,36 +164,12 @@
    "notInOurData": []
   },
   {
-   "source": "reddit-silph",
-   "trust": "tip",
-   "title": "Data from 24 hours of catching costume Cubones during the Dia De Los Muertos event in Mexico",
-   "link": "https://www.reddit.com/r/TheSilphRoad/comments/1xm5k36/data_from_24_hours_of_catching_costume_cubones/",
-   "date": "2026-11-02T18:40:31.000Z",
-   "summary": "<table> <tr><td> <a href=\"https://www.reddit.com/r/TheSilphRoad/comments/1xm5k36/data_from_24_hours_of_catching_costume_cubones/\"> <img src=\"https://preview.redd.it/1mrq61ksu8zh1.jpeg?width=140&amp;he",
-   "pokemon": [],
-   "notInOurData": []
-  },
-  {
-   "source": "hub",
-   "trust": "community",
-   "title": "Pokémon GO Twilight Wishes (2026)",
-   "link": "https://pokemongohub.net/post/event/twilight-wishes-2026/",
-   "date": "2026-11-02T17:55:29.000Z",
-   "summary": "Pokémon GO&#8217;s Twilight Wishes event runs from November 24 at 10:00 a.m. to November 30, 2026, at 8:00 p.m. local time, bringing back Sun Scarf Espeon and Moon Scarf Umbreon alongside Sun Crown an",
-   "pokemon": [
-    "Pikachu",
-    "Umbreon",
-    "Espeon"
-   ],
-   "notInOurData": []
-  },
-  {
-   "source": "hub",
-   "trust": "community",
-   "title": "PvE Analysis: Halloween Event 2026 Part 2",
-   "link": "https://pokemongohub.net/post/meta/pve-analysis-halloween-event-2026-part-2/",
-   "date": "2026-11-02T09:42:29.000Z",
-   "summary": "Hello, Trainers! We hope everyone had a fantastic Halloween! True to one of Pokémon GO’s longest-running traditions, the Halloween 2026 Event is currently underway, bringing a host of spooky spawns, r",
+   "source": "youtube-pogo",
+   "trust": "official",
+   "title": "New costumed Pokémon make their debuts during Halloween 2026 Part I in Pokémon GO!",
+   "link": "https://www.youtube.com/shorts/I6MvdaExyIg",
+   "date": "2026-10-27T17:00:40.000Z",
+   "summary": "",
    "pokemon": [],
    "notInOurData": []
   }
