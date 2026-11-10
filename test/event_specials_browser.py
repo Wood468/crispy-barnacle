@@ -42,6 +42,26 @@ with sync_playwright() as pw:
         page.evaluate("GODETAIL.open('cur:wag')")
         page.wait_for_selector('#evd .ue-raid-days [data-raid-date="2026-11-14"]',timeout=25000)
         egg=page.locator('#evd .ue-mon .ue-egg-corner.ue-egg-10')
+
+        if egg.count()!=4:
+            debug=page.evaluate("""async () => {
+                const data=await fetch('/event-details.json').then(r=>r.json());
+                const src=data.events['leekduck:pokemon-go-wild-area-2026-global'];
+                const model=GOEventRegistry.find('wag');
+                const known=GOEventAdapter.reconcileSourcedEggs(model,src);
+                const ev=GODASH.events().find(e=>e.id==='cur:wag'||e.id==='wag');
+                return {
+                    eventRecord:ev&&{id:ev.id,detailIds:ev.detailIds,sourceIds:ev.aliasIds},
+                    sourceEggNotes:src?.fields?.eggs,
+                    sourceEggCount:src?.encounters?.filter(e=>e.method==='egg').length,
+                    registryId:model?.eventId,
+                    registryEggCount:model?.encounters?.filter(e=>e.method==='egg').length,
+                    reconciledEggCount:known?.encounters?.filter(e=>e.method==='egg').length,
+                    reconciledEggNames:(known?.encounters||[]).filter(e=>e.method==='egg').map(e=>(known?.pokemon||[]).find(p=>p.key===e.identityKey)?.name),
+                    activities:(model?.activities||[]).filter(a=>(a.pokemonRefs||[]).length).map(a=>({id:a.id,kind:a.kind,method:a.encounterMethod,refCount:a.pokemonRefs.length})).slice(0,10)
+                };
+            }""")
+            print('EVENT_EGG_DIAGNOSTICS',debug,flush=True)
         assert egg.count()==4,(width,egg.count(),page.locator('#evd .ue-method[data-method="egg"]').inner_text())
         for item in ('Honedge','Klefki','Drampa','Duraludon'):
             mon=page.locator('#evd .ue-mon',has_text=item).first
