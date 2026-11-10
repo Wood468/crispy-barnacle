@@ -48,12 +48,20 @@ function researchRewardNames(options){
 }
 
 function parseResearchTask(line, category, declaredNames) {
-  const marker = /\b(?:possible\s+)?rewards?\s*:?\s*/i.exec(String(line || ""));
+  // Published research tables may use "Task | 7740 × Stardust" rather
+  // than the prose marker "REWARD". Only accept an explicit task verb
+  // and a concrete reward cell; do not infer tasks from event descriptions.
+  const cells = String(line || "").split(/\s*\|\s*/).map(trim);
+  if (cells.length === 2 && /^(?:catch|spin|make|win|complete|send|hatch|power up|evolve|take|use|earn|battle|trade|transfer|walk|feed|give|land|defeat|purify|exchange|open|explore|adventure|beat|visit|photograph|level up|collect|get|play|perform|throw|claim reward)\b/i.test(cells[0]) &&
+      /^(?:\d[\d,]*\s*[×x]\s*|[×x]\s*\d+\s+|\d[\d,]*\s+|an?\s+encounter with\s+)/i.test(cells[1])) {
+    line = cells[0] + " REWARD " + cells[1].replace(/^(\d[\d,]*)\s*[×x]\s*/i, "×$1 ");
+  }
+  const marker = /\sREWARD\s/i.exec(String(line || "")) || /\b(?:possible\s+)?rewards?\s*:?\s*/i.exec(String(line || ""));
   if (!marker) return null;
   const task = trim(String(line).slice(0, marker.index)).replace(/[|:–—-]+$/, "").trim();
   const rewardText = trim(String(line).slice(marker.index + marker[0].length));
   if (!task || /^task$/i.test(task) || task.length < 4 || !rewardText || /^(possible )?rewards?$/i.test(rewardText)) return null;
-  if (!/^(catch|spin|make|win|complete|send|hatch|power up|evolve|take|use|earn|battle|trade|transfer|walk|feed|give|land|defeat|purify|exchange|open|explore|adventure|beat|visit|photograph|level up|collect|get|play|perform|throw)\b/i.test(task)) return null;
+  if (!/^(catch|spin|make|win|complete|send|hatch|power up|evolve|take|use|earn|battle|trade|transfer|walk|feed|give|land|defeat|purify|exchange|open|explore|adventure|beat|visit|photograph|level up|collect|get|play|perform|throw|claim reward)\b/i.test(task)) return null;
   const rewards = [];
   // Some feeds flatten adjacent item blocks and repeat the quantity around an icon.
   // Only a named item with an explicit × quantity creates a boundary; Pokémon names stay intact.
@@ -94,7 +102,7 @@ function parseResearchTask(line, category, declaredNames) {
     }
     if (!Number.isSafeInteger(quantity) || quantity < 1 || quantity > 1e9) continue;
     const encounter = /^(?:an?\s+)?encounter with\s+(.+)$/i.exec(name);
-    const knownItem = /\b(candy|ball|stardust|xp|energy|pass|incubator|revive|potion|pok[eé]coin|rare candy|incense|lure|egg|berry)\b/i.test(name);
+    const knownItem = /\b(candy|ball|stardust|xp|energy|pass|incubator|revive|potion|pok[eé]coin|rare candy|incense|lure|egg|berry|star piece)\b/i.test(name);
     const explicitQuantity = !!(qty[1] || qty[3] || numeric);
     if (!encounter && !knownItem && !explicitQuantity) continue;
     if (encounter) name = trim(encounter[1]);
