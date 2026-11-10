@@ -32,7 +32,7 @@ with sync_playwright() as p:
   assert z.count()==1 and 'CP 2,188–2,735' in z.inner_text(),(width,z.inner_text())
   assert z.locator('.rc-tier').inner_text()=='5★'
   assert 'Raid Hour: Crowned Sword Zacian, Mon Nov 9' in root.inner_text()
-  assert root.locator('.rw-rel .rc-event[data-open]').count()==1
+  assert root.locator('.rw-raid:not(.rw-event-day) .rw-rel .rc-event[data-open]').count()==1
   assert root.locator('.rw-count-live').first.inner_text().startswith('Ends in ')
   assert not root.locator('.rc-shiny').count(),'no shiny chip without confirmed data'
   bosses=root.locator('.rw-max-pokemon[data-max-boss]')
