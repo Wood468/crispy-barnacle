@@ -30,6 +30,25 @@ test("Night Out, Go Fest city, Community Day and region-locked in-game events", 
   assert.equal(att({ name: "Regional Day", scope: "regional", mode: "in-game", area: "Asia" }), "regional-in-game");
 });
 
+test("future overseas in-person events remain venue-bound despite Global wording", () => {
+  const futureEvent = {
+    id: "future-kyoto-overseas-venue-2027",
+    name: "Pokémon GO Fest 2027: Global Special Edition in Kyoto",
+    location: "Kyoto, Japan",
+    timeZone: "Asia/Tokyo",
+    scope: "regional"
+  };
+  assert.equal(att(futureEvent), "in-person");
+  const adapted = A.adapt(futureEvent, null, {});
+  assert.equal(adapted.attendance, "in-person");
+  
+  const worldwideLocalCommunityDay = { name: "Community Day", scope: "worldwide_local" };
+  assert.equal(att(worldwideLocalCommunityDay), "global");
+
+  const regionLockedInGame = { name: "Regional In-Game Challenge", scope: "regional", mode: "in-game", area: "Asia" };
+  assert.equal(att(regionLockedInGame), "regional-in-game");
+});
+
 test("classification ignores titles: a future record decides by structured data only", () => {
   // Title is full of in-person words but the record is global with no location data.
   assert.equal(att({ name: "Safari Zone Night Out Go Fest Wild Area In-Person Tour", scope: "global" }), "global");
