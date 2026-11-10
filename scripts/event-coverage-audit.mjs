@@ -35,8 +35,24 @@ export function auditEvents(curated,details){
   // A review queue, not an assertion that every prose mention is a task.
   const researchReview=events.filter(event=>event.checks.sourceResearch&&!event.checks.structuredResearch)
     .map(({id,name,origin,sources})=>({id,name,origin,sources}));
+  // Declared source IDs are contracts for Event Details handoff. A source
+  // may disappear while the canonical event still has valid information:
+  // report this for review, never claim that the public page is blank.
+  const sourceJoinReview=curatedEvents.flatMap(event=>{
+    const declared=Array.isArray(event.detailIds)?[...new Set(event.detailIds.filter(
+      id=>typeof id==='string'&&id.trim()
+    ))]:[];
+    const missingDetailIds=declared.filter(id=>!Object.hasOwn(sourceEvents,id));
+    if(!missingDetailIds.length)return [];
+    return [{
+      id:event.id,name:event.t,missingDetailIds,
+      hasCanonicalDetail:Object.hasOwn(sourceEvents,event.id),
+      sourceUrl:event.sourceUrl||null
+    }];
+  });
   return {asOf:curated?.asOf||null,sourceUpdated:details?.updated||null,
     researchReviewCount:researchReview.length,researchReview,
+    sourceJoinReviewCount:sourceJoinReview.length,sourceJoinReview,
     total:events.length,curatedCount:curatedEvents.length,sourceOnlyCount:events.length-curatedEvents.length,counts,events};
 }
 
@@ -49,7 +65,13 @@ async function main(){
     await writeFile('data/event-coverage-report.json',JSON.stringify(report,null,2)+'\n');
   }
   // Compact mode for investigating research coverage without dumping the full inventory.
-  if(process.argv.includes('--research-review')) {
+  if(process.argv.includes('--source-join-review')) {
+    console.log(JSON.stringify({
+      asOf:report.asOf,sourceUpdated:report.sourceUpdated,
+      total:report.total,sourceJoinReviewCount:report.sourceJoinReviewCount,
+      sourceJoinReview:report.sourceJoinReview
+    },null,2));
+  } else if(process.argv.includes('--research-review')) {
     console.log(JSON.stringify({
       asOf:report.asOf,sourceUpdated:report.sourceUpdated,
       total:report.total,sourceResearch:report.counts.sourceResearch?.present||0,
