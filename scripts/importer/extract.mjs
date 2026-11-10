@@ -89,7 +89,9 @@ function parseResearchTask(line, category, declaredNames) {
     if(declared){for(const p of declared)rewards.push({type:'encounter',quantity:1,...p});continue;}
     const qty = /^(?:[×x]\s*(\d+)\s*)?(.+?)(?:\s+[×x]\s*(\d+))?$/i.exec(chunk);
     if (!qty) continue;
-    let name = trim(qty[2]);
+    // Flattened source tables sometimes repeat the REWARD label after an item name.
+    // It is presentation text, not part of the reward's name.
+    let name = trim(qty[2]).replace(/\s+REWARD$/i, "");
     if (!name || /^(possible )?rewards?$/i.test(name) || name.length > 100) continue;
     let quantity = Number(qty[1] || qty[3] || 1);
     if (qty[1] && qty[3] && Number(qty[1]) !== Number(qty[3])) continue;

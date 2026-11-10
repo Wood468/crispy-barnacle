@@ -60,13 +60,13 @@ jobs:
         run: python -m unittest discover -s test -p 'test_*.py'
 
   browser:
-    # Three parallel shards of test/ui_checks.py (UI_SHARD a, b, c), so a change waits for a third of the checks.
+    # Five parallel shards: the existing UI_SHARD a/b/c plus d/e for the longer browser suites.
     runs-on: ubuntu-latest
     timeout-minutes: 15   # hard stop for a runaway shard; individual browser waits are bounded below
     strategy:
       fail-fast: false
       matrix:
-        shard: [a, b, c]
+        shard: [a, b, c, d, e]
     env:
       UI_SHARD: ${{ matrix.shard }}
     steps:
@@ -94,6 +94,7 @@ jobs:
           cat /tmp/go-field-notes-http.log
           exit 1
       - name: Run browser regression tests
+        if: contains(fromJSON('["a","b","c"]'), matrix.shard)
         shell: bash
         run: |
           set +e
@@ -138,7 +139,7 @@ jobs:
           python test/worldwide_timezone_browser.py
 
       - name: Verify premium Today, Schedule and event detail surfaces
-        if: matrix.shard == 'b'
+        if: matrix.shard == 'd'
         run: |
           python test/premium_surfaces_browser.py
           python test/today_detail_redesign_browser.py
@@ -152,14 +153,14 @@ jobs:
           python test/accuracy_fixes_browser.py
 
       - name: Verify combined source rendering and offline upgrade
-        if: matrix.shard == 'b'
+        if: matrix.shard == 'e'
         run: |
           python test/release_browser.py
           python test/pwa_upgrade_browser.py
           python test/storage_failure_browser.py
 
       - name: Verify variant artwork (costumes, Shiny, Shadow, Dynamax, Gigantamax, fallbacks)
-        if: matrix.shard == 'b'
+        if: matrix.shard == 'e'
         run: python test/variant_art_browser.py
 
       - name: Verify Today slow-feed fallback and late recovery
@@ -186,10 +187,22 @@ jobs:
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: 22
-      - name: Install Playwright WebKit
-        run: |
-          pip install playwright
-          python -m playwright install --with-deps webkit
+      - name: Install Playwright Python package
+        run: pip install playwright
+      - name: Resolve Playwright browser revision
+        id: playwright-version
+        run: echo "version=$(python -c 'import importlib.metadata; print(importlib.metadata.version("playwright"))')" >> "$GITHUB_OUTPUT"
+      - name: Cache Playwright WebKit browser
+        id: webkit-cache
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-webkit-${{ runner.os }}-${{ steps.playwright-version.outputs.version }}
+      - name: Install Playwright WebKit system dependencies
+        run: python -m playwright install-deps webkit
+      - name: Install Playwright WebKit browser
+        if: steps.webkit-cache.outputs.cache-hit != 'true'
+        run: python -m playwright install webkit
       - name: Start static app server
         run: |
           python -m http.server 8791 --directory public > /tmp/go-field-notes-http.log 2>&1 &
