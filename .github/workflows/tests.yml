@@ -146,6 +146,7 @@ jobs:
           python test/today_done_browser.py
           python test/today_v1_coverage_browser.py
           python test/battle_rotation_browser.py
+          python test/wild_area_battle_browser.py
           python test/raids_max_polish_browser.py
           python test/event_consistency_browser.py
           python test/schedule_gopass_browser.py
