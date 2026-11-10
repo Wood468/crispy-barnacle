@@ -575,10 +575,17 @@
     // The Coin Bag emits Roaming Form. Repair the one generic base-form
     // source card after catalogue retention without changing saved Collection.
     if(GOEventAdapter.coinBagRoaming)model=GOEventAdapter.coinBagRoaming(model,d);
+    // Source-declared Egg pools are attached even when the catalogue's
+    // canonical model lacks the source's descriptive egg fields.
+    if(d&&d.fields&&Array.isArray(d.fields.eggs)&&d.fields.eggs.length){
+      var validation=model.internalValidation||{};
+      model.internalValidation=Object.assign({},validation,{fields:Object.assign({},validation.fields||{},{eggs:d.fields.eggs})});
+    }
     // The same curated, source-backed per-day raid roster feeds Battle and
     // this event overview; future events carrying raidDays inherit it.
     var curatedEvent=((G.D&&G.D.events)||[]).find(function(row){
-      return ev.id==='cur:'+row.id||ev.id===row.id||model.eventId===row.id;
+      return ev.id==='cur:'+row.id||ev.id===row.id||model.eventId===row.id||
+        (row.detailIds||[]).indexOf(ev.id)>=0||(row.detailIds||[]).indexOf(model.eventId)>=0;
     });
     var dayRosters=Array.isArray(ev.raidDays)?ev.raidDays:
       curatedEvent&&Array.isArray(curatedEvent.raidDays)?curatedEvent.raidDays:[];
