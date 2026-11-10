@@ -56,7 +56,7 @@ function parseResearchTask(line, category, declaredNames) {
       /^(?:\\d[\\d,]*\\s*[×x]\\s*|[×x]\\s*\\d+\\s+|\\d[\\d,]*\\s+|an?\\s+encounter with\\s+)/i.test(cells[1])) {
     line = cells[0] + " REWARD " + cells[1].replace(/^(\\d[\\d,]*)\\s*[×x]\\s*/i, "×$1 ");
   }
-  const marker = /\b(?:possible\s+)?rewards?\s*:?\s*/i.exec(String(line || ""));
+  const marker = /\sREWARD\s/i.exec(String(line || "")) || /\b(?:possible\s+)?rewards?\s*:?\s*/i.exec(String(line || ""));
   if (!marker) return null;
   const task = trim(String(line).slice(0, marker.index)).replace(/[|:–—-]+$/, "").trim();
   const rewardText = trim(String(line).slice(marker.index + marker[0].length));
