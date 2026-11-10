@@ -165,6 +165,9 @@ button.ue-mon{display:grid;justify-items:center;align-content:start;gap:4px;min-
 button.ue-mon b{font-size:var(--type-meta);line-height:1.15;overflow-wrap:anywhere}
 button.ue-mon .ue-mon-art{height:78px;width:100%}
 button.ue-mon .ue-signals{display:flex;flex-wrap:wrap;justify-content:center;gap:3px}
+/* Shiny is a subtle sparkle; confirmed boosted shiny gets one gold up-arrow badge. */
+button.ue-mon .ue-shiny-mark{font-weight:900;line-height:1;font-size:.8rem}
+button.ue-mon .ue-shiny-boost{display:inline-flex;align-items:center;gap:3px;padding:2px 6px;border-radius:var(--radius-pill);background:var(--color-kind-shiny);color:var(--color-on-kind-shiny)}
 .ue-badge{font-size:.62rem;font-weight:800;letter-spacing:.04em;text-transform:uppercase;padding:2px 7px;border-radius:var(--radius-pill);background:var(--color-surface-raised);border:1px solid var(--color-border)}
 .ue-b-raid{background:var(--color-kind-raid);color:#fff;border-color:transparent}
 .ue-b-max{background:var(--color-kind-max-battle);color:#fff;border-color:transparent}
