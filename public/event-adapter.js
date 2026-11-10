@@ -47,6 +47,36 @@ function retain(previous,next){if(!previous)return next;if(previous.eventId!==ne
  if(next.completeness!=='complete'){var seen=new Map();(previous.pokemon||[]).concat(next.pokemon||[]).forEach(function(p){var old=seen.get(p.key);var merged=Object.assign({},old||{},p);if(old){['debut','boostedShiny','assetKey'].forEach(function(k){if(p[k]===null||p[k]===undefined)merged[k]=old[k];});if(p.shiny==='unknown'&&!(next.internalValidation&&next.internalValidation.conflicts||[]).some(function(c){return c.identityKey===p.key;}))merged.shiny=old.shiny;}seen.set(p.key,merged);});out.pokemon=Array.from(seen.values());out.encounters=unique((previous.encounters||[]).concat(next.encounters||[]));var acts=new Map();(previous.activities||[]).concat(next.activities||[]).forEach(function(a){acts.set(a.id,a);});out.activities=Array.from(acts.values());}
  if(!out.schedule)out.schedule=previous.schedule||null;if(!out.image&&!(next.internalValidation&&next.internalValidation.imageReviewed))out.image=previous.image||null;
  }out.aliases=unique((previous.aliases||[]).concat(next.aliases||[]));out.sources=unique((previous.sources||[]).concat(next.sources||[]));return C.normalize(out);}
+
+/* When a verified source ties Gimmighoul to Coin Bag, the encountered form
+   is Roaming, not the default Chest. This is view-only identity repair,
+   generic to future sourced Coin Bag events, and never mutates Collection. */
+function coinBagRoaming(model,details){
+ var fields=details&&details.fields||model.internalValidation&&model.internalValidation.fields||{};
+ var confirmed=['bonuses','shiny'].some(function(k){return (fields[k]||[]).some(function(row){
+  var t=text(row&&row.text||row),status=row&&row.status||'';
+  return /\bcoin bag\b/i.test(t)&&/\bgimmighoul\b/i.test(t)&&
+    (!status||['official','verified','corroborated','single'].indexOf(status)>=0);
+ });});
+ if(!confirmed)return model;
+ var original=(model.pokemon||[]).filter(function(p){return String(p.speciesId)==='999'&&!p.formId&&!p.costumeId;});
+ var oldKeys=new Set(original.map(function(p){return p.key;}));
+ // The loose importer classified the Coin Bag's ordinary "Gimmighoul"
+ // source illustration as a wild Chest Form. Remove only base-form wild/other
+ // edges, not independently sourced raids, eggs or costumes.
+ var encounters=(model.encounters||[]).filter(function(e){
+  return !oldKeys.has(e.identityKey)||!['wild','other'].includes(e.method);
+ });
+ var inUse=new Set(encounters.map(function(e){return e.identityKey;}));
+ var pokemon=(model.pokemon||[]).filter(function(p){return !oldKeys.has(p.key)||inUse.has(p.key);});
+ var roaming=pokemon.find(function(p){return String(p.speciesId)==='999'&&lib.norm(p.formId)==='roaming'&&!p.costumeId;});
+ if(!roaming){roaming=pokemonForCoinBag();pokemon.push(roaming);}
+ if(!encounters.some(function(e){return e.identityKey===roaming.key&&e.access==='Coin Bag';})){
+  encounters.push({identityKey:roaming.key,method:'other',activityId:'main',access:'Coin Bag'});
+ }
+ return C.normalize(Object.assign({},model,{pokemon:pokemon,encounters:encounters}));
+}
+function pokemonForCoinBag(){return pokemon({speciesId:'999',name:'Gimmighoul (Roaming Form)',formId:'roaming',collectionName:'Gimmighoul (Roaming Form)',shiny:'unknown'});}
 function collectionName(p){
  var prefixes={alola:'Alolan',galar:'Galarian',hisui:'Hisuian',paldea:'Paldean',mega:'Mega',primal:'Primal',gmax:'Gigantamax',gigantamax:'Gigantamax',shadow:'Shadow',purified:'Purified',dynamax:'Dynamax'};
  var name=p.collectionName||p.name||p.speciesId,form=lib.parseForm(name);
@@ -64,5 +94,5 @@ function collectionName(p){
  if(p.formId==='mega-x'||p.formId==='mega-y')return 'Mega '+name+' '+p.formId.slice(-1).toUpperCase();
  return null; // An unrecognized form can never inherit base-species ownership.
 }
-return {adapt:adapt,pokemon:pokemon,schedule:schedule,retain:retain,collectionName:collectionName,configureSpecies:configureSpecies,configureCostumes:configureCostumes,costumeDescriptors:costumeDescriptors,passFields:passFields};
+return {adapt:adapt,pokemon:pokemon,schedule:schedule,retain:retain,collectionName:collectionName,configureSpecies:configureSpecies,configureCostumes:configureCostumes,costumeDescriptors:costumeDescriptors,passFields:passFields,coinBagRoaming:coinBagRoaming};
 }));
