@@ -315,6 +315,49 @@ test("event-level headline date range wins over individual ticket-day listings",
   assert.equal(result.end, "2026-11-08", "the published event includes the third ticket day");
 });
 
+test("matching event sources retain the widest published dates, regardless of read order", async () => {
+  const { mergeWorld } = await import("../scripts/importer/world.mjs");
+  const base = {
+    name: "Mexico City – GO Wild Area 2026", place: "Mexico City, Mexico",
+    scope: "regional", area: "Americas", start: "2026-11-06",
+    datesKnown: true
+  };
+  const ticketDays = {
+    ...base, end: "2026-11-07", source: "leekduck",
+    url: "https://leekduck.com/events/pokemon-go-wild-area-2026-mexico-city/"
+  };
+  const officialFullEvent = {
+    ...base, end: "2026-11-08", source: "official",
+    url: "https://pokemongo.com/en/gowildarea/mexico-city/"
+  };
+  const fridayUpdate = {
+    ...base, end: "2026-11-06", source: "official",
+    url: "https://pokemongo.com/news/gowildarea-mexicocity-friday-update/"
+  };
+  const distinctCity = {
+    ...base, name: "Sendai – GO Wild Area 2026",
+    place: "Sendai and Tohoku, Japan", area: "Asia",
+    end: "2026-11-08", source: "official",
+    url: "https://pokemongo.com/en/gowildarea/sendai/"
+  };
+  const names = { official: "Pokémon GO (official)", leekduck: "Leek Duck" };
+  for (const rows of [
+    [fridayUpdate, ticketDays, officialFullEvent, distinctCity],
+    [officialFullEvent, ticketDays, fridayUpdate, distinctCity]
+  ]) {
+    const entries = mergeWorld(rows, names);
+    assert.equal(entries.length, 2, "different destinations stay independent");
+    const mexico = entries.find(e => e.place === base.place);
+    assert.ok(mexico);
+    assert.equal(mexico.start, "2026-11-06");
+    assert.equal(mexico.end, "2026-11-08", "an update mentioning Friday cannot truncate the published weekend");
+    assert.equal(mexico.sources.length, 3, "all source links remain for provenance");
+  }
+  const onlyTicketDays = mergeWorld([fridayUpdate,ticketDays], names);
+  assert.equal(onlyTicketDays[0].end, "2026-11-07",
+    "never infer an unsourced Sunday when its published window is unavailable");
+});
+
 test("Wild Area city pages retain official source coverage without merging destinations", async () => {
   const { entriesFromPage, mergeWorld, keepOldWorld, normUrl } = await import("../scripts/importer/world.mjs");
   const mexicoUrl = "https://pokemongo.com/en/gowildarea/mexico-city";
