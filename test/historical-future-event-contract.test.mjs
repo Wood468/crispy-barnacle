@@ -108,6 +108,6 @@ test('synthetic future multi-day raid schedule passes the real event contract an
     ...raw,
     activities: [makeDay('bad', 'Nonexistent raid date', '2027-02-30')]
   };
-  assert.throws(() => Contract.normalize(invalid), /Invalid schedule datetime/);
+  assert.throws(() => Contract.normalize(invalid), /Invalid (?:player-local )?schedule datetime/);
   assert.throws(() => Contract.normalize({ ...raw, activities: [raw.activities[0], raw.activities[0]] }), /Duplicate activity id/);
 });
