@@ -90,5 +90,8 @@ test('research review CLI prints parseable focused report',()=>{
  assert.equal(report.researchReview.length,report.researchReviewCount);
  assert.equal(typeof report.structuredResearch,'number');
  assert.equal(typeof report.sourceResearch,'number');
+ assert.ok(report.sourceResearch >= report.structuredResearch,'structured tasks count as source research');
+ assert.equal(report.researchReviewCount,report.sourceResearch-report.structuredResearch,
+  'every source-backed event without structured tasks should be in the review queue');
  assert.ok(!Object.hasOwn(report,'events'),'compact output should omit full event inventory');
 });
