@@ -992,12 +992,6 @@
       "s": "2026-11-14T10:00",
       "e": "2026-11-14T23:59",
       "five": "Zekrom and White Kyurem",
-      "low": {
-        "three": [
-          "Machamp (modern jacket)"
-        ],
-        "source": "Official GO Wild Area: Global announcement"
-      },
       "event": "GO Wild Area: Global",
       "sourceUrl": "https://leekduck.com/events/pokemon-go-wild-area-2026-global/"
     },
@@ -1005,12 +999,6 @@
       "s": "2026-11-15T00:00",
       "e": "2026-11-15T18:00",
       "five": "Reshiram and Black Kyurem",
-      "low": {
-        "three": [
-          "Machamp (modern jacket)"
-        ],
-        "source": "Official GO Wild Area: Global announcement"
-      },
       "event": "GO Wild Area: Global",
       "sourceUrl": "https://leekduck.com/events/pokemon-go-wild-area-2026-global/"
     },
@@ -1091,34 +1079,6 @@
             "Latias": 2006,
             "Latios": 2178
           }
-        }
-      ]
-    },
-    {
-      "event": "GO Wild Area: Global",
-      "s": "2026-11-14T10:00",
-      "e": "2026-11-15T18:00",
-      "sourceUrl": "https://pokemongo.com/en/gowildarea/global",
-      "tiers": [
-        {
-          "tier": "6★",
-          "names": [
-            "Gigantamax Duraludon"
-          ]
-        },
-        {
-          "tier": "5★",
-          "day": "2026-11-14",
-          "names": [
-            "Dynamax Dialga"
-          ]
-        },
-        {
-          "tier": "5★",
-          "day": "2026-11-15",
-          "names": [
-            "Dynamax Palkia"
-          ]
         }
       ]
     }
