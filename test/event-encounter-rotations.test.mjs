@@ -21,6 +21,7 @@ test('each sourced event rotation is valid, indexed by canonical aliases and fut
   future.id = 'future-rotating-festival';
   future.eventIds = ['future-2030'];
   future.dates = ['2030-01-01','2030-01-02'];
+  future.mightyShared.forEach(g=>{g.dates=future.dates.slice();});
   future.mightyDays = [
     {date:'2030-01-01',label:'Day 1',method:'wild',pokemon:['Pikachu']},
     {date:'2030-01-02',label:'Day 2',method:'wild',pokemon:['Eevee']},
