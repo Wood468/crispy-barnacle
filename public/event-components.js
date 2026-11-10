@@ -24,13 +24,21 @@ function eggKm(model,p,edge,activity){
  });
  return distances.size===1?Array.from(distances)[0]:'';
 }
+/* Different feeds spell these two Crowned form IDs with or without a dash.
+   Collapse only equivalent raid-gallery aliases; never rewrite encounter or
+   Collection keys, nor hide distinct methods, activities or access rules. */
+function galleryDisplayIdentity(p){
+ var species=String(p.speciesId||''),form=String(p.formId||'').toLowerCase().replace(/[^a-z0-9]/g,'');
+ if(!p.costumeId&&((species==='888'&&form==='crownedsword')||(species==='889'&&form==='crownedshield')))return species+':'+form+':none';
+ return p.key;
+}
 function gallery(model,ctx){
  var featOnce=false,byKey={};model.pokemon.forEach(function(p){byKey[p.key]=p;});
  return Object.keys(METHODS).map(function(method){
   var seen=new Set(),cards=(model.groups[method]||[]).map(function(edge){
    var p=byKey[edge.identityKey];if(!p)return '';
    var activity=model.activities.find(function(a){return a.id===edge.activityId;}),activityLabel=activity&&(activity.title||activity.name);
-   var key=p.key+'|'+edge.activityId+'|'+(edge.access&&edge.access!=='all'&&edge.access!=='unknown'?edge.access:'');
+   var key=galleryDisplayIdentity(p)+'|'+edge.activityId+'|'+(edge.access&&edge.access!=='all'&&edge.access!=='unknown'?edge.access:'');
    if(seen.has(key))return '';seen.add(key);
    var name=ctx.nameFor?ctx.nameFor(p):p.name||p.speciesId,label=p.label;
    var conflict=(model.internalValidation&&model.internalValidation.conflicts||[]).some(function(c){return c.field==='shiny'&&c.identityKey===p.key;});
