@@ -157,6 +157,16 @@
     if (ev && ev.season && ev.season.detailId) ids.push(ev.season.detailId);
     if (ev && ev.id) { ids.push(ev.id); if(String(ev.id).indexOf('cur:')===0)ids.push(String(ev.id).slice(4)); }
     if (ev && Array.isArray(ev.detailIds)) ids = ids.concat(ev.detailIds);
+    // Registry-only event links can open a canonical event that has fallen
+    // outside Today/Schedule's current window. The generic registry display
+    // model does not carry the curated record's detailIds, even when the
+    // curated entry explicitly links a complete source encounter pool.
+    // Recover those exact source IDs from the same canonical event, never
+    // by guessing from its title or from a nearby event's artwork.
+    var canonicalId=String(ev&&ev.universalModel&&ev.universalModel.eventId||
+      ev&&ev.id||'').replace(/^cur:/,'');
+    var curated=((G.D&&G.D.events)||[]).find(function(row){return row.id===canonicalId;});
+    if(curated&&Array.isArray(curated.detailIds))ids=ids.concat(curated.detailIds);
     var hits = [];
     ids.filter(function (id, i, a) { return id && a.indexOf(id) === i; }).forEach(function (id) {
       if (D[id] && hits.indexOf(D[id]) < 0) hits.push(D[id]);

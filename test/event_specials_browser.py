@@ -77,5 +77,28 @@ with sync_playwright() as pw:
         assert not errors,errors
         page.screenshot(path=str(SHOTS/f'go-wild-eggs-raids-{width}.png'))
         print('PASS Wild Area 10 km Eggs and day-separated Raids at',width)
+
+        # Regression from the deployed site: a canonical registry link can open
+        # after the event has left the dashboard's visible list. In this path
+        # GOEventRegistry.display() has no detailIds. It must still join the
+        # curated event's exact source IDs and render only the 4 sourced eggs.
+        if width == 360:
+            page.evaluate("""() => {
+                window.__originalGODASHEvents = GODASH.events;
+                GODASH.events = () => [];
+            }""")
+            try:
+                page.evaluate("GODETAIL.open('wag')")
+                page.wait_for_selector('#evd [data-evlink="wag"]', timeout=25000)
+                canonical_eggs = page.locator('#evd .ue-method[data-method="egg"] .ue-mon')
+                assert canonical_eggs.count() == 4, (
+                    'Registry-only event fallback lost its verified hatch pool',
+                    canonical_eggs.count(), canonical_eggs.all_inner_texts()
+                )
+                assert canonical_eggs.locator('.ue-egg-corner.ue-egg-10').count() == 4
+                page.screenshot(path=str(SHOTS/'go-wild-registry-only-eggs-360.png'))
+                print('PASS registry-only event source join retains the four official hatch tiles')
+            finally:
+                page.evaluate("GODASH.events = window.__originalGODASHEvents")
         ctx.close()
     browser.close()
