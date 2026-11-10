@@ -102,7 +102,7 @@ function parseResearchTask(line, category, declaredNames) {
     }
     if (!Number.isSafeInteger(quantity) || quantity < 1 || quantity > 1e9) continue;
     const encounter = /^(?:an?\s+)?encounter with\s+(.+)$/i.exec(name);
-    const knownItem = /\b(candy|ball|stardust|xp|energy|pass|incubator|revive|potion|pok[eé]coin|rare candy|incense|lure|egg|berry)\b/i.test(name);
+    const knownItem = /\b(candy|ball|stardust|xp|energy|pass|incubator|revive|potion|pok[eé]coin|rare candy|incense|lure|egg|berry|star piece)\b/i.test(name);
     const explicitQuantity = !!(qty[1] || qty[3] || numeric);
     if (!encounter && !knownItem && !explicitQuantity) continue;
     if (encounter) name = trim(encounter[1]);
