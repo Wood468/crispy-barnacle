@@ -94,6 +94,7 @@ jobs:
           cat /tmp/go-field-notes-http.log
           exit 1
       - name: Run browser regression tests
+        if: contains(fromJSON('["a","b","c"]'), matrix.shard)
         shell: bash
         run: |
           set +e
