@@ -1,6 +1,40 @@
 {
- "updated": "2026-11-10T03:57:44.795Z",
+ "updated": "2026-11-10T11:58:56.705Z",
  "items": [
+  {
+   "linked": false,
+   "id": "discord:1569615204751511613",
+   "title": "GOWILD 2026",
+   "image": "/infographics/g47ix/discord-1569615204751511613.webp",
+   "post": "https://discord.com/channels/@me/1558793395198099618/1569615204751511613",
+   "creator": "",
+   "source": "discord",
+   "publishedAt": "2026-11-10T07:30:26.853000+00:00",
+   "note": "Two events look alike. Please choose.",
+   "history": false,
+   "signals": [
+    "picture text names the event",
+    "posted around the event"
+   ],
+   "text": "local time GO G CP Gea ++ 14°15 WILD. .., B ++ NOV NOV AREA gt ~\" “Y Ng 10:00 am - 6:00 pm each day 2026 “ 7 A eee 2 15 14, Machamp New wearing a modern jacket NOV NOV knee Dynamax ij (both days) ule P Mu Te oe QR) \\ ee \\ ) (ge \\ &® =. Event themed MP collection limit 8h Up to 3 free Raid 3 event snapshots Mighty Pokémon Passes per day Field Research encounter per day increased to 1600 Party Play on Routes Mighty Canbe mmm More likely to aa More difficult More likely to cy Pokémon shiny game have high IVs be XL or XXL &. @ a are back! ae to catch Z WY i$, ©, 4 > 0 ties 7 Bed GO Safari Ball 7 willbe available @ 2 res sah 7% lete eae “er Orrae a ++ “ag vi m Me os © x Le Ak ix ie: Ow) wk a+ Ye ",
+   "guesses": [
+    {
+     "eventId": "novcd",
+     "eventTitle": "November Community Day",
+     "score": 0.81
+    },
+    {
+     "eventId": "into",
+     "eventTitle": "Into the Wild",
+     "score": 0.803
+    },
+    {
+     "eventId": "leekduck:raid-day-december-2026",
+     "eventTitle": "Raid Day",
+     "score": 0.785
+    }
+   ]
+  },
   {
    "linked": true,
    "id": "discord:1569143538011218021",
