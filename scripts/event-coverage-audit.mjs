@@ -5,7 +5,11 @@ import {readFile,writeFile,mkdir} from 'node:fs/promises';
 
 export function auditEvents(curated,details){
   const sourceEvents=details?.events||{};
-  const events=(curated?.events||[]).map(event=>{
+  const curatedEvents=curated?.events||[];
+  const curatedById=new Map(curatedEvents.map(event=>[event.id,event]));
+  const ids=[...new Set([...curatedEvents.map(event=>event.id),...Object.keys(sourceEvents)])];
+  const events=ids.map(id=>{
+    const event=curatedById.get(id)||{id,t:sourceEvents[id]?.name||id,s:null,e:null};
     const source=sourceEvents[event.id]||null;
     const fields=source?.fields||{};
     const hasField=key=>Array.isArray(fields[key])&&fields[key].some(row=>
@@ -21,14 +25,14 @@ export function auditEvents(curated,details){
       sourceTimeDetails:hasField('dates'),
     };
     const missing=Object.entries(checks).filter(([,ok])=>!ok).map(([key])=>key);
-    return {id:event.id,name:event.t,start:event.s,end:event.e,checks,missing,
+    return {id:event.id,name:event.t,start:event.s,end:event.e,origin:curatedById.has(id)?'curated':'source-only',checks,missing,
       sources:(source?.sources||[]).map(x=>x.url).filter(Boolean).slice(0,3)};
   });
   const counts=Object.fromEntries(Object.keys(events[0]?.checks||{}).map(k=>[k,{
     present:events.filter(e=>e.checks[k]).length,missing:events.filter(e=>!e.checks[k]).length
   }]));
   return {asOf:curated?.asOf||null,sourceUpdated:details?.updated||null,
-    total:events.length,counts,events};
+    total:events.length,curatedCount:curatedEvents.length,sourceOnlyCount:events.length-curatedEvents.length,counts,events};
 }
 
 async function main(){
