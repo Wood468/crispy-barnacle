@@ -97,11 +97,23 @@ def inspect(page, width: int) -> dict:
         # Locator.evaluate can await img.decode() indefinitely: the locator
         # timeout covers element resolution, not a pending image Promise.
         # Bound the decode itself and fail with actionable evidence.
-        image.first.evaluate("""img => Promise.race([
-            img.decode(),
-            new Promise((_, reject) => setTimeout(
-                () => reject(new Error('10 km egg icon decode timed out')), 10000))
-        ])""")
+        # Egg tiles are below the initial phone viewport, and the icon can be
+        # lazy-loaded. Scroll the actual icon into view before decoding it.
+        # Preserve the real-byte image requirement; never accept a placeholder.
+        image.first.scroll_into_view_if_needed(timeout=10000)
+        try:
+            image.first.evaluate("""img => Promise.race([
+                img.decode(),
+                new Promise((_, reject) => setTimeout(
+                    () => reject(new Error('10 km egg icon decode timed out')), 10000))
+            ])""")
+        except Exception as exc:
+            state = image.first.evaluate("""img => ({
+                src: img.getAttribute('src'), loading: img.loading,
+                complete: img.complete, naturalWidth: img.naturalWidth,
+                currentSrc: img.currentSrc
+            })""")
+            raise AssertionError(f"{width}px: {name} 10 km egg image not decoded: {state}") from exc
         report["eggs"].append(name)
     egg_resource = page.request.get(BASE + "/ico/g/egg-10km.webp", timeout=20000)
     assert egg_resource.status == 200 and "image/" in egg_resource.headers.get("content-type", ""), (
