@@ -55,7 +55,7 @@ jobs:
         # on the universal Event Details and Battle path.
         run: |
           node --test test/importer.test.mjs test/importer-world.test.mjs test/dedupe.test.mjs
-          node --test test/research-event-propagation.test.mjs test/into-wild-form-identity.test.mjs
+          node --test test/research-event-propagation.test.mjs test/into-wild-form-identity.test.mjs test/importer-final-form-invariant.test.mjs
       - name: Tell me on Telegram about newly found events
         continue-on-error: true
         env:

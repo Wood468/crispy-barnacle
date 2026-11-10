@@ -12,6 +12,7 @@ import { matchEvent } from "../g47ix-review.mjs";
 import { discoverIntl, entryFromIntlPage, INTL_PATTERN } from "./intl.mjs";
 import { failRun } from "../fail-run.mjs";
 import { extractEncounters, mergeEncounters, reconcileActivityEncounters, posterFromHtml } from "./encounters.mjs";
+import {restoreVerifiedCuratedForms} from "./curated-forms.mjs";
 import catalogue from "../event-experience/build-catalogue.cjs";
 import eventAdapter from "../../public/event-adapter.js";
 import { announcementFromPage } from "./announcements.mjs";
@@ -429,6 +430,15 @@ async function main() {
   const absorbed = (v, id) => twinOfCurated(id) || ((v.sources || []).length > 0 && (v.sources || []).every(source => claimedUrls.has(normUrl(source.url || ""))));
   for (const [id, v] of Object.entries(old)) if (!out[id] && !absorbed(v, id) && Date.now() - Date.parse(v.updated || 0) < 45 * 864e5) out[id] = normaliseLegacyStatuses(v); // keep recent entries a source stopped listing, with current terminology
   try { applyLineCorrections(out, JSON.parse(await readFile("data/line-corrections.json", "utf8")).lines); } catch { /* optional */ }
+  // Final gate: a fresh source image/label must not silently downgrade
+  // exact Crowned/Dynamax identities from the verified curated event schedule.
+  // Apply after source and duplicate retention, before any generated files
+  // are written or published. This is generic to all dated Raid/Max events.
+  const curatedEvents = JSON.parse(await readFile("public/data.json", "utf8")).events || [];
+  const restoredForms = restoreVerifiedCuratedForms(out, curatedEvents, {
+    dex, names: rewardOptions.pokemonNames, costumes: costumeNames
+  });
+  if (restoredForms.length) console.log("Restored verified curated activity forms: " + restoredForms.join(", "));
   await mkdir("data", { recursive: true });
   await writeFile(OUT, JSON.stringify({ updated: now, events: out }, null, 1) + "\n");
   if (OUT === "public/event-details.json" && WORLD_OUT === "public/world-events.json") await catalogue.publish();
