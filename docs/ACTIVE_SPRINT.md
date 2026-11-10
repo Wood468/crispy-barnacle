@@ -9,7 +9,9 @@ Ship a complete, reliable, premium mobile-first Pokémon GO companion with trust
 **Objective:** close data and CI reliability gaps, then produce an evidence-based release-blocker list.
 
 - [x] PR #426: parallel browser shards, WebKit cache and research reward-name correction; merged after green CI
-- [ ] PR #427: Minior Showers research regression; rebase/update against merged #426 and pass CI
+- [x] PR #430: Minior Showers research regression (replaces closed #427); merged after all nine CI jobs passed
+- [x] PR #431: informational raid rotation and Raid Hour coverage audit; merged after all nine CI jobs passed
+- [x] PR #433: event-specific GO Wild Area raid and Max Battle display; merged after all nine CI jobs passed (production deployment still requires separate verification)
 - [ ] Regenerate and verify event-details data for source-backed Minior Leonid/Orionids research (never invent tasks)
 - [ ] Audit importer identity joins, source freshness, timezone/DST, recurring events and future-event coverage
 - [ ] Verify form-specific Pokémon artwork (crowned Zacian/Zamazenta, Dynamax/Gigantamax), fallback behavior and raid rotations
