@@ -3,6 +3,7 @@
 const HOUR = 36e5;
 const ACTIVE = new Set(['queued', 'in_progress', 'requested', 'waiting', 'pending']);
 const GITHUB = 'https://api.github.com/repos/';
+const REPOSITORY = 'Wood468/crispy-barnacle';
 
 export function recoveryDecision(row, runs, now = Date.now()) {
   if (!row || row.id !== 'event-importer.yml' || row.state !== 'stale')
@@ -29,7 +30,7 @@ export async function recoverStaleImporter(row, {
     return { status: 'skipped', reason: 'not-stale' };
   // Fixed repository host, workflow filename and main branch. Never allow
   // arbitrary job names, URLs, user prompts or branch choices.
-  if (!/^[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+$/.test(repository || '') || !token)
+  if (repository !== REPOSITORY || !token)
     return { status: 'unavailable', reason: 'github-credentials-unavailable' };
   const base = GITHUB + repository + '/actions/workflows/event-importer.yml';
   const headers = {
