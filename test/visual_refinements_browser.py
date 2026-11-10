@@ -13,6 +13,9 @@ if SHOTS:
     os.makedirs(SHOTS, exist_ok=True)
 ROOT = os.path.join(os.path.dirname(__file__), '..', 'public')
 DATA = json.load(open(os.path.join(ROOT, 'data.json')))
+DETAILS = json.load(open(os.path.join(ROOT, 'event-details.json')))
+INTO_BANNER = DETAILS['events']['into']['image']
+assert DETAILS['events']['into']['imageProvenance']['source'] == 'Pokémon GO (official)'
 
 
 def shot(page, name):
@@ -81,7 +84,7 @@ with sync_playwright() as p:
             holder = {}
 
             body = banner(bw, bh)
-            c.route(re.compile(r'into-the-wild-2026'), lambda route, request, body=body: route.fulfill(body=body, content_type='image/png'))
+            c.route(INTO_BANNER, lambda route, request, body=body: route.fulfill(body=body, content_type='image/png'))
             page = c.new_page()
             errors = []
             page.on('pageerror', lambda e: errors.append(str(e)))
