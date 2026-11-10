@@ -95,3 +95,38 @@ test('research review CLI prints parseable focused report',()=>{
   'every source-backed event without structured tasks should be in the review queue');
  assert.ok(!Object.hasOwn(report,'events'),'compact output should omit full event inventory');
 });
+
+test('source-detail join review flags only explicitly declared missing IDs, not unpublished optional sections',()=>{
+ const curated={events:[
+  {id:'complete',t:'Complete',detailIds:['source:complete']},
+  {id:'fallback',t:'Fallback',sourceUrl:'https://example.org/fallback',detailIds:['source:missing','source:present','source:missing']},
+  {id:'unavailable',t:'Unavailable source',detailIds:['source:unknown']},
+  {id:'no-refs',t:'No source pages declared'}
+ ]};
+ const details={events:{
+  complete:{name:'Complete'},'source:complete':{name:'Complete source'},
+  fallback:{name:'Fallback canonical details'},'source:present':{name:'Present source'}
+ }};
+ const report=auditEvents(curated,details);
+ assert.equal(report.sourceJoinReviewCount,2);
+ assert.deepEqual(report.sourceJoinReview,[
+  {id:'fallback',name:'Fallback',missingDetailIds:['source:missing'],
+    hasCanonicalDetail:true,sourceUrl:'https://example.org/fallback'},
+  {id:'unavailable',name:'Unavailable source',missingDetailIds:['source:unknown'],
+    hasCanonicalDetail:false,sourceUrl:null}
+ ]);
+ assert.equal(report.events.find(e=>e.id==='fallback').checks.sourceMatched,true,
+   'missing an optional source alias does not erase valid canonical detail');
+});
+
+test('compact source-detail join review CLI is stable and contains no full event inventory',()=>{
+ const run=spawnSync(process.execPath,['scripts/event-coverage-audit.mjs','--source-join-review'],{encoding:'utf8'});
+ assert.equal(run.status,0,run.stderr);
+ const report=JSON.parse(run.stdout);
+ assert.equal(typeof report.sourceJoinReviewCount,'number');
+ assert.ok(Array.isArray(report.sourceJoinReview));
+ assert.equal(report.sourceJoinReview.length,report.sourceJoinReviewCount);
+ assert.ok(!Object.hasOwn(report,'events'));
+ assert.ok(report.sourceJoinReview.every(x=>x.id&&x.name&&Array.isArray(x.missingDetailIds)
+   &&x.missingDetailIds.length>0&&typeof x.hasCanonicalDetail==='boolean'));
+});
