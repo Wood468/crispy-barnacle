@@ -1304,7 +1304,7 @@
     var offsets = rotWeekTab === 'this' ? [0] : rotWeekTab === 'next' ? [1] : rotWeekTab === 'following' ? [2] : [3,4,5];
     var knownOffsets = offsets.filter(function(off){
       var a = addDay(monday, off * 7), end = addDay(a, 7);
-      return weekRotations(a,end).length || maxEvents(a,end).length || max.some(function(m){ return m[0] < key(end) && m[1] >= key(a); });
+      return weekRotations(a,end).length || maxEvents(a,end).length || (D.events||[]).some(function(ev){return (ev.raidDays||[]).some(function(slot){var day=pd(slot.date+'T00:00');return day<end&&addDays(day,1)>a&&addDays(day,1)>t;});}) || max.some(function(m){ return m[0] < key(end) && m[1] >= key(a); });
     });
     var tabs = '<div class="rw-tabs" role="tablist" aria-label="Rotation week">' + labels.map(function(x){
       var selected = rotWeekTab === x.id;
