@@ -368,6 +368,33 @@ test("a page linked from a feed-derived twin is attached to the curated record w
   assert.equal(hit.event.id, "into");
 });
 
+test("explicit source-detail ownership beats a similarly titled feed alias during regeneration", () => {
+  const alias = {
+    id: "leekduck:pokemon-go-wild-area-2026-global",
+    t: "Pokémon GO Wild Area 2026: Global",
+    link: "https://leekduck.com/events/pokemon-go-wild-area-2026-global/",
+    start: "2026-11-14T10:00", end: "2026-11-15T18:00", detailIds: []
+  };
+  const curated = {
+    id: "wag", t: "GO Wild Area: Global",
+    link: "https://pokemongo.com/en/gowildarea/global/",
+    start: "2026-11-14T10:00", end: "2026-11-15T18:00",
+    detailIds: [alias.id], curated: true
+  };
+  // This official regional meetups write-up previously got attached to the
+  // Leek Duck-namespaced alias, leaving an empty duplicate alongside wag.
+  const article = {
+    source: "official",
+    url: "https://pokemongo.com/news/community-meetups-go-wild-area-2026-details-asia-pacific/",
+    title: alias.t, fields: {}, lines: []
+  };
+  assert.equal(pickEvent(article, [alias, curated]).event.id, "wag",
+    "exact curated detail-ID ownership must beat a source-derived alias title");
+  const other = {...curated, id: "unrelated", detailIds: []};
+  assert.equal(pickEvent(article, [alias, other]).event.id, alias.id,
+    "do not borrow a different event without explicit source ownership");
+});
+
 test("Minior Showers source research table yields explicit tasks without treating the total as a task", () => {
   // Regression for Leonid and Orionids GO Hub tables in event-details.json.
   const fields = extractFields([
