@@ -43,8 +43,10 @@ function gallery(model,ctx){
    var name=ctx.nameFor?ctx.nameFor(p):p.name||p.speciesId,label=p.label;
    var conflict=(model.internalValidation&&model.internalValidation.conflicts||[]).some(function(c){return c.field==='shiny'&&c.identityKey===p.key;});
    var signals=[];
-   if(p.shiny==='yes'&&!conflict)signals.push('<span class="ue-signal ue-shiny">Shiny</span>');
-   if(p.boostedShiny&&!conflict)signals.push('<span class="ue-signal ue-shiny">Boosted shiny</span>');
+   /* A verified boost supersedes the ordinary shiny chip; do not display two
+      contradictory-looking badges for the same encounter. */
+   if(!conflict&&p.boostedShiny)signals.push('<span class="ue-signal ue-shiny ue-shiny-boost"><span class="ue-shiny-mark" aria-hidden="true">↑✦</span> Boosted shiny</span>');
+   else if(!conflict&&p.shiny==='yes')signals.push('<span class="ue-signal ue-shiny"><span class="ue-shiny-mark" aria-hidden="true">✦</span> Shiny</span>');
    if(p.debut)signals.push('<span class="ue-signal">Debut</span>');
    if(edge.access&&edge.access!=='all'&&edge.access!=='unknown')signals.push('<span class="ue-signal">'+esc(edge.access)+'</span>');
    var art=ctx.artFor?ctx.artFor(p):ctx.art?ctx.art({n:name,costume:!!p.costumeId,label:label,asset:p.assetKey},'ea'):'';
