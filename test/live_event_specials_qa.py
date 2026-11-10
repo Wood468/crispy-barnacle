@@ -35,7 +35,10 @@ def inspect(page, width: int) -> dict:
     )
 
     # Coin Bag should never silently render a Chest Form sprite or wild edge.
-    page.evaluate("() => GODETAIL.open('into')")
+    # GODETAIL.open may return a pending promise while content is loading;
+    # do not let Playwright wait forever on its return value. The selector
+    # assertion below is the bounded, user-visible readiness check.
+    page.evaluate("() => { GODETAIL.open('into'); return true; }")
     page.wait_for_selector('#evd .ue-mon[data-identity="999:roaming:none"]', timeout=30000)
     coin = page.locator('#evd .ue-mon[data-identity="999:roaming:none"]').first
     assert "Coin Bag" in coin.inner_text(), f"{width}px: Roaming encounter lacks Coin Bag access"
@@ -44,7 +47,7 @@ def inspect(page, width: int) -> dict:
     )
     report["coin_bag_roaming"] = True
 
-    page.evaluate("() => GODETAIL.open('cur:wag')")
+    page.evaluate("() => { GODETAIL.open('cur:wag'); return true; }")
     page.wait_for_selector('#evd .ue-raid-day[data-raid-date="2026-11-14"]', timeout=30000)
 
     # Source-declared hatch distance must be shown as the actual colour-specific
