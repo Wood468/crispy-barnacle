@@ -61,7 +61,7 @@ function parseResearchTask(line, category, declaredNames) {
   const task = trim(String(line).slice(0, marker.index)).replace(/[|:–—-]+$/, "").trim();
   const rewardText = trim(String(line).slice(marker.index + marker[0].length));
   if (!task || /^task$/i.test(task) || task.length < 4 || !rewardText || /^(possible )?rewards?$/i.test(rewardText)) return null;
-  if (!/^(catch|spin|make|win|complete|send|hatch|power up|evolve|take|use|earn|battle|trade|transfer|walk|feed|give|land|defeat|purify|exchange|open|explore|adventure|beat|visit|photograph|level up|collect|get|play|perform|throw)\b/i.test(task)) return null;
+  if (!/^(catch|spin|make|win|complete|send|hatch|power up|evolve|take|use|earn|battle|trade|transfer|walk|feed|give|land|defeat|purify|exchange|open|explore|adventure|beat|visit|photograph|level up|collect|get|play|perform|throw|claim reward)\b/i.test(task)) return null;
   const rewards = [];
   // Some feeds flatten adjacent item blocks and repeat the quantity around an icon.
   // Only a named item with an explicit × quantity creates a boundary; Pokémon names stay intact.
