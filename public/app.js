@@ -942,8 +942,11 @@ MAN=R[1]||{};window.__GOART={m:R[2]&&R[2].entries?R[2]:null,d:R[3]||[]};
   var PV=null;
   function renderPvp(){
     if(!PV)return;
-    var lg=$('pvplg').value,list=(PV.leagues||{})[lg]||[];
-    $('pvpcnt').textContent='top '+list.length;
+    var leagues=PV.leagues||{},lg=$('pvplg').value,list=Array.isArray(leagues[lg])?leagues[lg]:[];
+    var available=['great','ultra','master'].some(function(k){return Array.isArray(leagues[k])&&leagues[k].length>0});
+    var section=$('pvpdd');if(section)section.hidden=!available;
+    if(!available)return;
+    $('pvpcnt').textContent=list.length?'top '+list.length:'No rankings';
     $('pvpnote').textContent='Top picks from PvPoke\'s rankings, refreshed every night. Updated '+fmtTs(PV.updated)+'. Rankings change with every balance update. "Owned" means you have ticked that species on the Dex tab.';
     $('pvplist').innerHTML=list.map(function(x,i){
       var id=dexIdOf(x.name),own=id&&dm('own')[id];
