@@ -24,6 +24,14 @@ function eggKm(model,p,edge,activity){
  });
  return distances.size===1?Array.from(distances)[0]:'';
 }
+/* Different feeds spell these two Crowned form IDs with or without a dash.
+   Collapse only equivalent raid-gallery aliases; never rewrite encounter or
+   Collection keys, nor hide distinct methods, activities or access rules. */
+function galleryDisplayIdentity(p){
+ var species=String(p.speciesId||''),form=String(p.formId||'').toLowerCase().replace(/[^a-z0-9]/g,'');
+ if(!p.costumeId&&((species==='888'&&form==='crownedsword')||(species==='889'&&form==='crownedshield')))return species+':'+form+':none';
+ return p.key;
+}
 function gallery(model,ctx){
  var featOnce=false,byKey={};model.pokemon.forEach(function(p){byKey[p.key]=p;});
  return Object.keys(METHODS).map(function(method){
