@@ -254,9 +254,17 @@ export function artCandidates(raw) {
   // Explicit battle forms must resolve to their own sprite, never an ordinary species fallback.
   const deoxys = /^Deoxys \((Normal|Attack|Defense|Speed) Forme\)$/i.exec(n);
   if (deoxys) return { base: "deoxys", list: ["deoxys-" + deoxys[1].toLowerCase()], exact: true };
-  const crowned = /^Crowned (Sword Zacian|Shield Zamazenta)$/i.exec(n);
-  if (crowned) {
-    const base = /Zacian$/i.test(crowned[1]) ? "zacian" : "zamazenta";
+  // PokeAPI uses "gimmighoul-roaming" (not "-roaming-form") for the
+  // exact Coin Bag/GO Pass encounter. Chest Form is the default species.
+  // Keep exact=true: a missing form must never silently display the other one.
+  const gimmighoul = /^Gimmighoul\s*\((Roaming|Chest)\s+Form\)$/i.exec(n);
+  if (gimmighoul) return { base: "gimmighoul", list: [gimmighoul[1].toLowerCase() === "roaming" ? "gimmighoul-roaming" : "gimmighoul"], exact: true };
+  // Source articles also say "Zacian (Crowned Sword)"; both spellings
+  // are the *same exact form*, and neither may borrow Hero-of-Many-Battles art.
+  const crownedSword = /^(?:Crowned Sword Zacian|Zacian\s*\(Crowned Sword\))$/i.test(n);
+  const crownedShield = /^(?:Crowned Shield Zamazenta|Zamazenta\s*\(Crowned Shield\))$/i.test(n);
+  if (crownedSword || crownedShield) {
+    const base = crownedSword ? "zacian" : "zamazenta";
     return { base, list: [base + "-crowned"], exact: true };
   }
   const paren = (n.match(/\(([^)]+)\)/) || [])[1] || "";
@@ -394,7 +402,7 @@ async function art(request, env, ctx, url) {
   const costumeKind = url.searchParams.get("cp") === "c" ? "c" : "f";
   const candidates = artCandidates(name);
   const cache = caches.default;
-  const key = new Request(url.origin + "/api/art?n=" + encodeURIComponent(name.toLowerCase()) + (shiny ? "&shiny=1" : "") + (shadow ? "&shadow=1" : "") + (dynamax ? "&dynamax=1" : "") + (costume ? "&c=" + costume + (costumeKind === "c" ? "&cp=c" : "") : "") + (candidates.exact ? "&forms=2" : ""));
+  const key = new Request(url.origin + "/api/art?n=" + encodeURIComponent(name.toLowerCase()) + (shiny ? "&shiny=1" : "") + (shadow ? "&shadow=1" : "") + (dynamax ? "&dynamax=1" : "") + (costume ? "&c=" + costume + (costumeKind === "c" ? "&cp=c" : "") : "") + (candidates.exact ? "&forms=3" : ""));
   const hit = await cache.match(key);
   if (hit) return hit;
   const allowance = allowEdgeMiss(request, "art");
