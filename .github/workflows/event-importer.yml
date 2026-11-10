@@ -5,6 +5,18 @@ on:
     # Hourly at :52 UTC. Shifted from :20 after repeated missing scheduled runs; GitHub may still delay starts.
     - cron: "52 * * * *"
   workflow_dispatch:
+  # Importer and contract changes must immediately regenerate their output
+  # after an approved main-branch merge. Generated data files are intentionally
+  # NOT in this list, so an importer commit cannot trigger itself recursively.
+  push:
+    branches: [main]
+    paths:
+      - "scripts/importer/**"
+      - "scripts/event-experience/**"
+      - "public/event-adapter.js"
+      - "public/event-contract.js"
+      - "data/watch-pages.json"
+      - ".github/workflows/event-importer.yml"
 
 permissions:
   contents: write
