@@ -24,7 +24,7 @@ test('reports source coverage without treating absent sections as confirmed omis
  assert.equal(report.counts.verifiedArtwork.present,1);
  assert.equal(report.counts.structuredResearch.present,0);
  assert.equal(report.counts.sourceResearch.present,1);
- assert.deepEqual(report.events[0].missing,[]);
+ assert.deepEqual(report.events[0].missing,['structuredResearch']);
  assert.ok(report.events[1].missing.includes('sourceBonuses'));
  assert.ok(report.events[1].missing.includes('sourceResearch'));
  assert.ok(report.events[2].missing.includes('sourceMatched'));
