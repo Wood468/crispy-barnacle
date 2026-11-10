@@ -94,6 +94,9 @@ def inspect(page, width: int) -> dict:
         assert card.count() == 1, f"{width}px: missing/duplicate egg encounter {name}"
         image = card.locator('.ue-egg-corner.ue-egg-10 img[src="/ico/g/egg-10km.webp"]')
         assert image.count() == 1, f"{width}px: {name} lacks correct colour/distance egg image"
+        # The gallery sits below Overview and the icon has loading="lazy".
+        # Scroll to trigger the real user-visible request before decoding.
+        image.first.scroll_into_view_if_needed(timeout=15000)
         # Locator.evaluate can await img.decode() indefinitely: the locator
         # timeout covers element resolution, not a pending image Promise.
         # Bound the decode itself and fail with actionable evidence.
@@ -114,6 +117,9 @@ def inspect(page, width: int) -> dict:
                 currentSrc: img.currentSrc
             })""")
             raise AssertionError(f"{width}px: {name} 10 km egg image not decoded: {state}") from exc
+        assert image.first.evaluate("(img) => img.complete && img.naturalWidth > 0"), (
+            f"{width}px: {name} 10 km egg art did not render"
+        )
         report["eggs"].append(name)
     egg_resource = page.request.get(BASE + "/ico/g/egg-10km.webp", timeout=20000)
     assert egg_resource.status == 200 and "image/" in egg_resource.headers.get("content-type", ""), (
