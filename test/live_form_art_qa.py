@@ -29,6 +29,9 @@ CASES = (
     ("Gimmighoul (Chest Form)", 999, "Gimmighoul", 999),
 )
 CROWNED = CASES[:2]
+DYNAMAX = ("Dynamax Registeel", "Dynamax Regidrago",
+           "Dynamax Latias", "Dynamax Latios")
+DISPLAY_NAMES = tuple(item[0] for item in CROWNED) + DYNAMAX
 PNG = b"\x89PNG\r\n\x1a\n"
 
 
@@ -130,7 +133,7 @@ def live_event_browser(pw, errors: list) -> list:
                 page.evaluate("() => GODETAIL.open('into')")
                 page.wait_for_selector("#evd .ue-mon", timeout=30000)
                 row["tile_count"] = page.locator("#evd .ue-mon").count()
-                for name, _, _, _ in CROWNED:
+                for name in DISPLAY_NAMES:
                     mon = {"name": name}
                     tile = page.locator("#evd .ue-mon").filter(has_text=name).first
                     if tile.count() == 0:
@@ -164,6 +167,13 @@ def live_event_browser(pw, errors: list) -> list:
                     src_name = parse_qs(urlsplit(mon.get("src", "")).query).get("n", [""])[0]
                     if src_name != name:
                         errors.append(f"{width}px: {name} uses unexpected art URL {mon.get('src')}")
+                    if name in DYNAMAX:
+                        # Game Dynamax is a species image with a visible Dynamax
+                        # treatment, not an invented independent sprite.
+                        route_params = parse_qs(urlsplit(mon.get("src", "")).query)
+                        mon["dynamax_treatment"] = route_params.get("dynamax") == ["1"]
+                        if not mon["dynamax_treatment"]:
+                            errors.append(f"{width}px: {name} is missing its Dynamax treatment flag")
                     if name.lower() not in str(mon.get("alt", "")).lower():
                         errors.append(f"{width}px: {name} image has incorrect alt {mon.get('alt')}")
                     try:
