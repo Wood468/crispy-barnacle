@@ -12,6 +12,19 @@ Adapter.configureSpecies(JSON.parse(readFileSync(new URL('../public/dex.json', i
 const details = JSON.parse(readFileSync(new URL('../public/event-details.json', import.meta.url), 'utf8')).events;
 const data = JSON.parse(readFileSync(new URL('../public/data.json', import.meta.url), 'utf8'));
 const event = id => data.events.find(e => e.id === id);
+// Imported source pages are canonicalized into the curated event. The
+// source-derived alias can legitimately be absent or have unrelated prose:
+// never use it as the authoritative egg roster after regeneration.
+const sourcedWildArea = () => {
+  const row = event('wag');
+  assert.ok(row?.detailIds?.includes('leekduck:pokemon-go-wild-area-2026-global'));
+  const detail = details[row.id];
+  assert.ok(detail, 'canonical GO Wild Area event details are present');
+  assert.ok((detail.sources || []).some(source => source.id === 'leekduck' &&
+    /^https:\/\/leekduck\.com\/events\/pokemon-go-wild-area-2026-global\/?$/.test(source.url)),
+    'four-hatch source is linked to the canonical event, not a similarly titled article');
+  return detail;
+};
 const base = (fields = {}) => Contract.normalize({
   schemaVersion: 1, eventId: 'synthetic-form-and-eggs',
   title: 'Synthetic Future Wild Weekend',
@@ -48,7 +61,7 @@ test('unverified prose, a plain species, and an unrelated Chest Form retain thei
 });
 
 test('one 10 km event Egg source makes a color-matched icon appear on all four hatch tiles', () => {
-  const src = details['leekduck:pokemon-go-wild-area-2026-global'];
+  const src = sourcedWildArea();
   const eggKeys = new Set(src.encounters.filter(e=>e.method==='egg').map(e=>e.identityKey));
   assert.equal(eggKeys.size,4);
   const roster = src.pokemon.filter(p=>eggKeys.has(p.key));
@@ -65,7 +78,7 @@ test('one 10 km event Egg source makes a color-matched icon appear on all four h
 });
 
 test('complete published egg roster replaces unrelated imported hatch entries without touching other methods', () => {
-  const src = details['leekduck:pokemon-go-wild-area-2026-global'];
+  const src = sourcedWildArea();
   const sourceEdges = src.encounters.filter(e => e.method === 'egg');
   const keys = new Set(sourceEdges.map(e => e.identityKey));
   assert.equal(keys.size, 4, 'source has four specified 10 km hatches');
