@@ -58,6 +58,53 @@ export function mergeEncounters(results){
  const normalized=contract.normalize({schemaVersion:1,eventId:'source-merge',title:'Source merge',pokemon:[...pokemon.values()],encounters});
  return {pokemon:normalized.pokemon,encounters:normalized.encounters,encounterConflicts:conflicts};
 }
+
+/** Restore only explicitly sourced, dated bosses from the curated activity schedule.
+ *  The importer may flatten form labels from a publisher's icon markup;
+ *  a verified Raid/Max Hour title remains the exact species/form evidence.
+ *  Works for all events carrying the standard activity contract.
+ */
+export function reconcileActivityEncounters(existing, activities, options={}) {
+ if (!Array.isArray(activities) || !activities.length) return existing;
+ const rows=[];
+ for (const activity of activities) {
+  const kind=activity.kind;
+  if (kind!=='raid-hour' && kind!=='max-battle-hour') continue;
+  if (activity.schedule?.timeBasis!=='player-local' || !/^https:\/\//.test(activity.sourceUrl||'')) continue;
+  const suffix=kind==='raid-hour'?'Raid Hour':'Max Battle Hour';
+  const title=String(activity.title||'');
+  if (!title.endsWith(' · '+suffix)) continue;
+  const published=title.slice(0,-(' · '+suffix).length).trim();
+  // Two bosses with a shared explicit Max variant: "Dynamax Latias & Latios".
+  const duo=/^(Dynamax|Gigantamax) ([^&]+?)\s*&\s*([^&]+)$/i.exec(published);
+  const names=duo?[duo[1]+' '+duo[2].trim(),duo[1]+' '+duo[3].trim()]:[published];
+  rows.push({text:kind==='raid-hour'?'Raids':'Max Battles',t:'h',level:2});
+  for(const name of names) rows.push({text:name,t:'li'});
+ }
+ if (!rows.length) return existing;
+ const verified=extractEncounters(rows,options);
+ if (!verified.encounters.length) return existing;
+ const accepted=new Map(verified.pokemon.map(p=>[p.key,p]));
+ const typed=new Set(verified.encounters.map(e=>{
+  const p=accepted.get(e.identityKey);
+  return p?e.method+'|'+p.speciesId:'';
+ }).filter(Boolean));
+ const existingPokemon=existing.pokemon||[],byKey=new Map(existingPokemon.map(p=>[p.key,p]));
+ // A source icon marked an ordinary Regidrago as a Max encounter: replace it
+ // only in the same method, never erase its possible ordinary wild/raid use.
+ const retained=(existing.encounters||[]).filter(e=>{
+  const p=byKey.get(e.identityKey);
+  return !(p && !p.formId && typed.has(e.method+'|'+p.speciesId));
+ });
+ const used=new Set(retained.map(e=>e.identityKey));
+ const pokemon=existingPokemon.filter(p=>used.has(p.key)||!(existing.encounters||[]).some(e=>e.identityKey===p.key));
+ const rebuilt=mergeEncounters([
+  {fields:{eventEncounters:{pokemon,encounters:retained}}},
+  {fields:{eventEncounters:verified}}
+ ]);
+ return {...rebuilt,encounterConflicts:[...(existing.encounterConflicts||[]),...(rebuilt.encounterConflicts||[])]};
+}
+
 export function posterFromHtml(html,pageUrl){
  const tags=String(html).match(/<meta\b[^>]*>/gi)||[];
  for(const tag of tags){if(!/\b(?:property|name)\s*=\s*["']og:image["']/i.test(tag))continue;const m=/\bcontent\s*=\s*(["'])(.*?)\1/i.exec(tag);if(!m)continue;try{const url=new URL(decode(m[2]),pageUrl);if(isAllowedOgImage(url.href))return url.href;}catch{}}
