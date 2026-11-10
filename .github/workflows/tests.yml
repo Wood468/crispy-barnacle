@@ -151,6 +151,7 @@ jobs:
           python test/wild_area_battle_browser.py
           python test/raids_max_polish_browser.py
           python test/event_consistency_browser.py
+          python test/event_specials_browser.py
           python test/schedule_gopass_browser.py
           python test/visual_refinements_browser.py
           python test/accuracy_fixes_browser.py
