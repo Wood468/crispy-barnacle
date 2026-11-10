@@ -53,8 +53,8 @@ with sync_playwright() as p:
   page.locator('#tabs [data-tab="raids"]').click();root=page.locator('#rotnow')
   assert root.locator('.rc[data-boss="Shadow Tornadus (Incarnate)"]').count()==1
   assert root.locator('.rc[data-boss="Dialga"] .rc-shiny').count()==1
-  mx=root.locator('.rw-max-pokemon').first.inner_text();assert 'Gigantamax Charizard' in mx or 'Charizard' in mx
-  assert root.locator('.max-tag').first.inner_text().strip().lower() in ('g-max','dynamax')
+  mx=root.locator('.rw-max-pokemon:not(.rw-event-day *)').first.inner_text();assert 'Gigantamax Charizard' in mx or 'Charizard' in mx
+  assert root.locator('.rw-max-pokemon:not(.rw-event-day *) .max-tag').first.inner_text().strip().lower() in ('g-max','dynamax')
   shoot(page,'raids-shadow-gmax',width)
   page.locator('[data-rotweek="next"]').click()
   assert 'Espurr' in root.inner_text();shoot(page,'raids-next-week',width)
