@@ -187,10 +187,22 @@ jobs:
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: 22
-      - name: Install Playwright WebKit
-        run: |
-          pip install playwright
-          python -m playwright install --with-deps webkit
+      - name: Install Playwright Python package
+        run: pip install playwright
+      - name: Resolve Playwright browser revision
+        id: playwright-version
+        run: echo "version=$(python -c 'import importlib.metadata; print(importlib.metadata.version("playwright"))')" >> "$GITHUB_OUTPUT"
+      - name: Cache Playwright WebKit browser
+        id: webkit-cache
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-webkit-${{ runner.os }}-${{ steps.playwright-version.outputs.version }}
+      - name: Install Playwright WebKit system dependencies
+        run: python -m playwright install-deps webkit
+      - name: Install Playwright WebKit browser
+        if: steps.webkit-cache.outputs.cache-hit != 'true'
+        run: python -m playwright install webkit
       - name: Start static app server
         run: |
           python -m http.server 8791 --directory public > /tmp/go-field-notes-http.log 2>&1 &
