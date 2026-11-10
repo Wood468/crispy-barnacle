@@ -8,6 +8,7 @@ on:
     branches: [main]
     paths:
       - "test/live_form_art_qa.py"
+      - "test/live_event_specials_qa.py"
       - ".github/workflows/live-form-art-qa.yml"
   push:
     branches: [main]
@@ -61,11 +62,18 @@ jobs:
           GOFN_ART_QA_URL: https://pogo.michaelpuff.com
           GOFN_ART_QA_OUT: artifacts/live-form-art
         run: python test/live_form_art_qa.py
+      - name: Verify live Coin Bag form, 10 km eggs and Saturday/Sunday raid cards
+        env:
+          GOFN_ART_QA_URL: https://pogo.michaelpuff.com
+          GOFN_EVENT_QA_OUT: artifacts/live-event-specials
+        run: python test/live_event_specials_qa.py
       - name: Preserve JSON diagnostics and phone screenshots, even on failure
         if: always()
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: live-form-art-${{ github.run_id }}
-          path: artifacts/live-form-art
+          path: |
+            artifacts/live-form-art
+            artifacts/live-event-specials
           if-no-files-found: warn
           retention-days: 30
