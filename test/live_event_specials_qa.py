@@ -51,6 +51,30 @@ def inspect(page, width: int) -> dict:
     # 10 km egg art in the top-right of each matching Pokémon tile.
     egg_cards = page.locator('#evd .ue-method[data-method="egg"] .ue-mon')
     report["egg_tiles"] = egg_cards.count()
+    if egg_cards.count() != 4:
+        # Keep production-only mismatch diagnostics even when the browser
+        # assertion blocks the PR. Never mutate the source or player data.
+        report["source_join"] = page.evaluate("""async () => {
+          const response = await fetch('/event-details.json', {cache:'no-store'});
+          const details = (await response.json()).events || {};
+          const source = details['leekduck:pokemon-go-wild-area-2026-global'];
+          const ev = (GODASH.events()||[]).find(x=>x.id==='cur:wag'||x.id==='wag');
+          const curated = ((GO.D&&GO.D.events)||[]).find(x=>x.id==='wag');
+          const model = GOEventRegistry.find('wag');
+          const trySource = source&&model&&GOEventAdapter.reconcileSourcedEggs(model,source);
+          const list = (m) => (m?.encounters||[]).filter(e=>e.method==='egg')
+            .map(e=>(m.pokemon||[]).find(p=>p.key===e.identityKey)?.name||e.identityKey);
+          return {
+            eventId:ev?.id, eventDetailIds:ev?.detailIds||null,
+            curatedDetailIds:curated?.detailIds||null,
+            sourceEggs:list(source), registryEggs:list(model),
+            reconciledFromDirectSource:list(trySource),
+            directSourceComplete:!!source?.fields?.eggs?.some(e=>/the following pok/i.test(e.text||'')),
+            appSupportsEggPool:String(GOEventAdapter.reconcileSourcedEggs).includes('eggPool'),
+            worldVersion:document.querySelector('link[href*="event-redesign.css"]')?.getAttribute('href')
+          };
+        }""")
+        print("LIVE_EGG_SOURCE_JOIN", json.dumps(report["source_join"]), flush=True)
     assert egg_cards.count() == 4, f"{width}px: expected 4 sourced egg encounters, got {egg_cards.count()}"
     report["eggs"] = []
     for name in EGGS:
