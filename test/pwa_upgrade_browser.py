@@ -75,7 +75,30 @@ with sync_playwright() as pw:
     # 4. Offline reload on the NEW shell: Today, Event Details and Schedule all work from cached data.
     context.set_offline(True)
     page.reload(wait_until='domcontentloaded')
-    page.wait_for_function('!!window.GODASH && !!window.GODETAIL', timeout=60000)
+    try:
+        page.wait_for_function('!!window.GODASH && !!window.GODETAIL', timeout=60000)
+    except Exception:
+        # Preserve actionable WebKit diagnostics for intermittent offline reloads.
+        # Only local script URLs, cache keys and browser errors are printed, never player data.
+        try:
+            diagnostics = page.evaluate("""async () => ({
+                readyState: document.readyState,
+                controller: navigator.serviceWorker.controller?.scriptURL || null,
+                globals: { dash: !!window.GODASH, detail: !!window.GODETAIL },
+                scripts: [...document.scripts].filter(s => s.src).map(s => ({
+                    path: new URL(s.src).pathname,
+                    loaded: !!s.dataset.loaded
+                })),
+                caches: await Promise.all((await caches.keys()).map(async name => ({
+                    name,
+                    count: (await (await caches.open(name)).keys()).length
+                })))
+            })""")
+            print('Offline upgraded shell diagnostic:', json.dumps(diagnostics, sort_keys=True), flush=True)
+        except Exception as diagnostic_error:
+            print('Could not collect offline upgraded shell diagnostic:', str(diagnostic_error), flush=True)
+        print('Offline upgraded shell browser errors:', json.dumps(problems[-20:]), flush=True)
+        raise
     page.locator('nav.tabs button[data-tab="now"]').click()
     page.wait_for_selector('#today-v1 .t1-card', timeout=20000)
     assert page.locator('#today-v1 .t1-card').count() > 0
