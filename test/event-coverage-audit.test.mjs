@@ -56,3 +56,15 @@ test('structured research is counted independently from source prose',()=>{
  assert.equal(report.counts.structuredResearch.present,1);
  assert.equal(report.counts.sourceResearch.present,1);
 });
+
+test('research review queue contains only source-backed research without structured tasks',()=>{
+ const report=auditEvents({events:[
+  {id:'prose',t:'Prose'}, {id:'structured',t:'Structured'}, {id:'none',t:'None'}
+ ]},{events:{
+  prose:{sources:[{url:'https://example.org/prose'}],fields:{research:[{text:'Catch Pokémon',status:'official'}]}},
+  structured:{researchTasks:[{task:'Catch 5 Pokémon',rewards:[{name:'Stardust'}]}]},
+  none:{fields:{research:[{text:'Rejected text',status:'rejected'}]}}
+ }});
+ assert.equal(report.researchReviewCount,1);
+ assert.deepEqual(report.researchReview,[{id:'prose',name:'Prose',origin:'curated',sources:['https://example.org/prose']}]);
+});
