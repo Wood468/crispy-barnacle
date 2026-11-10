@@ -94,7 +94,14 @@ def inspect(page, width: int) -> dict:
         assert card.count() == 1, f"{width}px: missing/duplicate egg encounter {name}"
         image = card.locator('.ue-egg-corner.ue-egg-10 img[src="/ico/g/egg-10km.webp"]')
         assert image.count() == 1, f"{width}px: {name} lacks correct colour/distance egg image"
-        image.first.evaluate("(img) => img.decode()", timeout=20000)
+        # Locator.evaluate can await img.decode() indefinitely: the locator
+        # timeout covers element resolution, not a pending image Promise.
+        # Bound the decode itself and fail with actionable evidence.
+        image.first.evaluate("""img => Promise.race([
+            img.decode(),
+            new Promise((_, reject) => setTimeout(
+                () => reject(new Error('10 km egg icon decode timed out')), 10000))
+        ])""")
         report["eggs"].append(name)
     egg_resource = page.request.get(BASE + "/ico/g/egg-10km.webp", timeout=20000)
     assert egg_resource.status == 200 and "image/" in egg_resource.headers.get("content-type", ""), (
