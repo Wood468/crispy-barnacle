@@ -88,7 +88,9 @@ test('complete published egg roster replaces unrelated imported hatch entries wi
   assert.ok(corrected.encounters.some(e=>e.identityKey==='147:base:none'&&e.method==='wild'),
     'unrelated wild encounters remain');
   assert.ok(corrected.pokemon.some(p=>p.key==='147:base:none'));
-  const evidence = corrected.internalValidation?.fields?.eggs||src.fields.eggs;
+  // Event Details attaches the selected complete source's egg field after
+  // reconciliation; a retained stale model's original 2 km note is not authoritative.
+  const evidence = src.fields.eggs;
   const render = UI.gallery({...corrected,internalValidation:{
     ...(corrected.internalValidation||{}),fields:{eggs:evidence}
   }},{nameFor:p=>p.name,artFor:p=>'<img alt="'+p.name+'">'});
