@@ -239,6 +239,24 @@ export function mergeWorld(entries, sources) {
       }
       if (!hit.sources.some(s => s.url === src.url)) hit.sources.push(src);
       if (!hit.start && e.start) { hit.start = e.start; hit.end = e.end; hit.datesKnown = true; }
+      else if (hit.start && e.start && hit.datesKnown !== false && e.datesKnown !== false) {
+        // Once place, title and overlapping dates have established the SAME
+        // event, a later source may contain its fuller published date range.
+        // Do not let the first matched single-day ticket/update truncate it.
+        // Accept only plausible, explicitly sourced ranges; the separate
+        // calendar-identity check above still prevents different cities or
+        // non-overlapping occurrences from being joined.
+        const existingEnd = hit.end || hit.start, incomingEnd = e.end || e.start;
+        const plausible = (start, end) => /^20\d{2}-\d{2}-\d{2}$/.test(start) &&
+          /^20\d{2}-\d{2}-\d{2}$/.test(end) &&
+          (Date.parse(end) - Date.parse(start)) / 864e5 >= 0 &&
+          (Date.parse(end) - Date.parse(start)) / 864e5 <= 366;
+        if (plausible(hit.start, existingEnd) && plausible(e.start, incomingEnd)) {
+          hit.start = hit.start < e.start ? hit.start : e.start;
+          hit.end = existingEnd > incomingEnd ? existingEnd : incomingEnd;
+          hit.datesKnown = true;
+        }
+      }
       const identity = dd.same(hit, e);
       if (identity.verdict === "same" && identity.why === "same dates, same series, one place inside the other" && placeDetailScore(e.place) > placeDetailScore(hit.place)) {
         const currentSeries = String(hit.name || "").split(":")[0].trim().toLowerCase();
