@@ -198,6 +198,17 @@
       (d.conflicts || []).forEach(function (x) { uniquePush(out.conflicts, x); });
       (d.gaps || []).forEach(function (x) { uniquePush(out.gaps, x); });
     });
+    // Preserve a single complete source-specific hatch pool. The generic
+    // merged read model intentionally holds prose/research but not every
+    // source encounter edge; joining unrelated pools would mislabel eggs.
+    var completeEggSources=hits.filter(function(source){
+      return source&&Array.isArray(source.pokemon)&&Array.isArray(source.encounters)&&
+        source.encounters.some(function(e){return e.method==='egg';})&&
+        (source.fields&&source.fields.eggs||[]).some(function(line){
+          return /\bthe following pok[eé]mon hatch from\b|\bthese pok[eé]mon will hatch from\b/i.test(String(line.text||line));
+        });
+    });
+    if(completeEggSources.length===1)out.eggPool=completeEggSources[0];
     return out;
   }
   function srcName(d, id) { var s = (d.sources || []).filter(function (x) { return x.id === id; })[0]; return s ? s.name : id; }
@@ -579,9 +590,10 @@
     if(GOEventAdapter.reconcileSourcedEggs)model=GOEventAdapter.reconcileSourcedEggs(model,d);
     // Source-declared Egg pools are attached even when the catalogue's
     // canonical model lacks the source's descriptive egg fields.
-    if(d&&d.fields&&Array.isArray(d.fields.eggs)&&d.fields.eggs.length){
+    var hatchFields=d&&d.eggPool&&d.eggPool.fields&&d.eggPool.fields.eggs||d&&d.fields&&d.fields.eggs;
+    if(Array.isArray(hatchFields)&&hatchFields.length){
       var validation=model.internalValidation||{};
-      model.internalValidation=Object.assign({},validation,{fields:Object.assign({},validation.fields||{},{eggs:d.fields.eggs})});
+      model.internalValidation=Object.assign({},validation,{fields:Object.assign({},validation.fields||{},{eggs:hatchFields})});
     }
     // The same curated, source-backed per-day raid roster feeds Battle and
     // this event overview; future events carrying raidDays inherit it.
