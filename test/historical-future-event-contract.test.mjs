@@ -100,7 +100,10 @@ test('synthetic future multi-day raid schedule passes the real event contract an
   assert.match(html, /Saturday: Species Alpha raid/);
   assert.match(html, /Sunday: Dynamax Species Beta battle/);
   assert.match(html, /data-sec="schedule"/, 'future activities appear in the universal Schedule section');
-  assert.doesNotMatch(html, /No scheduled activities|More details to come/, 'published activities must not look empty');
+  assert.doesNotMatch(html, /No scheduled activities/, 'published schedules must not look empty');
+  assert.equal((html.match(/class="ue-activity-window"/g) || []).length, 2, 'both days have their own visible schedule rows');
+  // Other event sections really are incomplete: the universal "More details to come"
+  // message is accurate and must not be suppressed by a schedule-only fixture.
   const invalid = {
     ...raw,
     activities: [makeDay('bad', 'Nonexistent raid date', '2027-02-30')]
