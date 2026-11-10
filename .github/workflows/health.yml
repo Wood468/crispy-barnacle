@@ -2,12 +2,14 @@ name: Job health
 
 on:
   schedule:
-    - cron: "40 */3 * * *"
+    # Check hourly on an off-peak minute so missed importer schedules recover sooner.
+    - cron: "23 * * * *"
   workflow_dispatch:
 
 permissions:
   contents: write
-  actions: read
+  # Only dispatch the existing event-importer.yml on main when stale.
+  actions: write
 
 concurrency:
   group: health
