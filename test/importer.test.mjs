@@ -406,19 +406,28 @@ test("Hub event articles use an exact detail ID and do not become duplicate Mini
 });
 
 
-test("canonical Minior events retain structured source-backed research in the committed snapshot", () => {
+test("canonical Minior research retains sourced tasks across optional bonus tracks", () => {
   const data = JSON.parse(readFileSync("public/data.json", "utf8"));
   const details = JSON.parse(readFileSync("public/event-details.json", "utf8")).events;
   for (const id of ["minior", "minior2"]) {
     const event = data.events.find(e => e.id === id), detail = details[id];
     assert.ok(event && detail, id);
-    assert.equal(detail.researchTasks.length, 2, id);
-    assert.deepEqual(detail.researchTasks.map(t => [t.task, t.rewards[0]?.name, t.rewards[0]?.quantity]), [
+    const tasks = detail.researchTasks || [];
+    assert.ok(tasks.length >= 2, id + " must retain published research tasks");
+    // GO Hub now publishes a regular track plus an optional bonus track.
+    // A source refresh can legitimately add new task/reward variants, so the
+    // importer must not pin the snapshot to exactly two tasks.
+    for (const [task, reward, amount] of [
       ["Claim Reward!", "Star Piece", 1], ["Use a Star Piece", "Stardust", 7740]
-    ]);
-    assert.ok(detail.researchTasks.every(t => t.eventId === id && t.eventWindow.start === event.s && t.eventWindow.end === event.e), id);
-    assert.ok(detail.researchTasks.every(t => t.status === "single" && t.sourceRefs.some(s => s.id === "hub" && s.url.includes("pokemongohub.net/post/event/"))), id);
-    assert.ok(!detail.researchTasks.some(t => /^rewards?$/i.test(t.task)), "total reward is not a task");
+    ]) {
+      assert.ok(tasks.some(t => t.task === task && t.rewards?.some(r => r.name === reward && r.quantity === amount)),
+        id + ": missing sourced task " + task + " / " + amount + " " + reward);
+    }
+    assert.equal(new Set(tasks.map(t => JSON.stringify([t.category, t.task, t.rewards]))).size, tasks.length,
+      id + " must not duplicate identical tasks within one named research track");
+    assert.ok(tasks.every(t => t.eventId === id && t.eventWindow.start === event.s && t.eventWindow.end === event.e), id);
+    assert.ok(tasks.every(t => t.status === "single" && t.sourceRefs.some(s => s.id === "hub" && s.url.includes("pokemongohub.net/post/event/"))), id);
+    assert.ok(!tasks.some(t => /^rewards?$/i.test(t.task)), "total reward is not a task");
   }
 });
 

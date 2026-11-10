@@ -292,6 +292,29 @@ test("unchanged world events retain last-good source attribution when a refresh 
   assert.deepEqual(unmonitored.sources.map(source => source.id).sort(), ["official", "serebii"], "unwatched prior sources are not carried forward");
 });
 
+test("event-level headline date range wins over individual ticket-day listings", async () => {
+  const { fromPage } = await import("../scripts/importer/world.mjs");
+  // Real official event pages publish the overall window in their headline,
+  // then enumerate single-day tickets below it. Do not stop after ticket day 2.
+  const page = {
+    title: "Mexico City – GO Wild Area 2026",
+    url: "https://pokemongo.com/en/gowildarea/mexico-city/",
+    source: "official",
+    fields: { dates: ["November 6, 2026", "November 7, 2026", "November 8, 2026"] },
+    lines: [
+      { text: "Pokémon GO Wild Area Visits Mexico City, Mexico, November 6–8, 2026" },
+      { text: "Experience an exclusive in-person Pokémon GO event in Mexico City." },
+      { text: "DATE" }, { text: "November 6, 2026" },
+      { text: "November 7, 2026" }, { text: "November 8, 2026" }
+    ]
+  };
+  const result = fromPage(page, "2026-11-11");
+  assert.ok(result);
+  assert.equal(result.place, "Mexico City, Mexico");
+  assert.equal(result.start, "2026-11-06");
+  assert.equal(result.end, "2026-11-08", "the published event includes the third ticket day");
+});
+
 test("Wild Area city pages retain official source coverage without merging destinations", async () => {
   const { entriesFromPage, mergeWorld, keepOldWorld, normUrl } = await import("../scripts/importer/world.mjs");
   const mexicoUrl = "https://pokemongo.com/en/gowildarea/mexico-city";
