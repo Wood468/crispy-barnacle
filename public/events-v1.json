@@ -5928,7 +5928,7 @@
     },
     "imageReviewed": true,
     "contentHash": "9c1e84fa3e57a9dc254240da56abb3e0fe3ea75b86697d72cfd7a5408efad52a",
-    "revision": 38,
+    "revision": 40,
     "amended": true,
     "native": false,
     "collection": "events"
@@ -11193,8 +11193,8 @@
      "end": "2026-11-13"
     },
     "imageReviewed": true,
-    "contentHash": "c961f1461e1ab0b7f3b39019d20b2c9d56c597f4f78690107378d0483e12ae72",
-    "revision": 26,
+    "contentHash": "1fa39fe5e7b93c620790b449b3231921af04693d52c37155a08db0747c851d23",
+    "revision": 27,
     "amended": false,
     "native": false,
     "collection": "events"
@@ -13937,9 +13937,9 @@
      "collectionName": "Zacian"
     },
     {
-     "key": "888:crownedsword:none",
+     "key": "888:crowned-sword:none",
      "speciesId": "888",
-     "formId": "crownedsword",
+     "formId": "crowned-sword",
      "costumeId": null,
      "shiny": "unknown",
      "assetKey": null,
@@ -13948,6 +13948,19 @@
      "debut": null,
      "boostedShiny": null,
      "collectionName": "Crowned Sword Zacian"
+    },
+    {
+     "key": "888:crownedsword:none",
+     "speciesId": "888",
+     "formId": "crownedsword",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Zacian (Crowned Sword)",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Zacian (Crowned Sword)"
     },
     {
      "key": "889:base:none",
@@ -13963,9 +13976,9 @@
      "collectionName": "Zamazenta"
     },
     {
-     "key": "889:crownedshield:none",
+     "key": "889:crowned-shield:none",
      "speciesId": "889",
-     "formId": "crownedshield",
+     "formId": "crowned-shield",
      "costumeId": null,
      "shiny": "unknown",
      "assetKey": null,
@@ -13974,6 +13987,19 @@
      "debut": null,
      "boostedShiny": null,
      "collectionName": "Crowned Shield Zamazenta"
+    },
+    {
+     "key": "889:crownedshield:none",
+     "speciesId": "889",
+     "formId": "crownedshield",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Zamazenta (Crowned Shield)",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Zamazenta (Crowned Shield)"
     },
     {
      "key": "895:base:none",
@@ -14162,7 +14188,19 @@
      "access": "unknown"
     },
     {
+     "identityKey": "888:crowned-sword:none",
+     "method": "raid",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
      "identityKey": "888:crownedsword:none",
+     "method": "raid",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "889:crowned-shield:none",
      "method": "raid",
      "activityId": "main",
      "access": "unknown"
@@ -14403,7 +14441,19 @@
       "access": "unknown"
      },
      {
+      "identityKey": "888:crowned-sword:none",
+      "method": "raid",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
       "identityKey": "888:crownedsword:none",
+      "method": "raid",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "889:crowned-shield:none",
       "method": "raid",
       "activityId": "main",
       "access": "unknown"
@@ -14949,7 +14999,7 @@
    "aliases": [],
    "family": "community-day",
    "title": "December Community Day",
-   "dateText": "The December Community Day event will take place on December 12 and December 13, 2026 from 2 pm to 5 pm each day. Stay tuned for more details.",
+   "dateText": "",
    "completeness": "partial",
    "lifecycle": "announced",
    "attendance": "",
@@ -14958,8 +15008,8 @@
    "notes": [],
    "internalValidation": {
     "warnings": [],
-    "lifecycleDeclared": false,
-    "native": true,
+    "lifecycleDeclared": true,
+    "conflicts": [],
     "fields": {
      "bonuses": [],
      "featured": [],
@@ -14972,19 +15022,27 @@
      "tickets": [],
      "dates": [
       {
-       "text": "The December Community Day event will take place on December 12 and December 13, 2026 from 2 pm to 5 pm each day. Stay tuned for more details."
+       "text": "The December Community Day event will take place on December 12 and December 13, 2026 from 2 pm to 5 pm each day. Stay tuned for more details.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
       }
      ]
     },
+    "info": [],
+    "detailRefs": [
+     "leekduck:december-communityday2026"
+    ],
     "legacyDates": {
      "start": "",
      "end": ""
     },
-    "conflicts": [],
     "imageReviewed": true,
-    "contentHash": "c0025046ec4cdc2f9ae5e47adec58ed670acbae9f40b89aabe168f339cb003d1",
-    "revision": 1,
+    "contentHash": "f8c913329bbbdbceed1777df532b318408e73461a77abf898c11ec88a4c6cfaf",
+    "revision": 2,
     "amended": false,
+    "native": false,
     "collection": "source-details"
    },
    "schedule": null,
@@ -15116,8 +15174,8 @@
      "end": ""
     },
     "imageReviewed": true,
-    "contentHash": "b3cb33b3233d6b84ba94e2c836087707da14cb314a5dd441cf711a43a99e11b3",
-    "revision": 4,
+    "contentHash": "315bd32d521c994c1a01663c93125c692a9ffc7e442778cae2401a1fa5891b17",
+    "revision": 5,
     "amended": false,
     "native": false,
     "collection": "source-details"
@@ -15136,9 +15194,114 @@
      "url": "https://leekduck.com/events/deoxys-normal-defense-attack-speed-formes-in-5-star-raid-battles-november-2026/"
     }
    ],
-   "pokemon": [],
-   "encounters": [],
-   "groups": {}
+   "pokemon": [
+    {
+     "key": "386:attack:none",
+     "speciesId": "386",
+     "formId": "attack",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Deoxys (Attack)",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Deoxys (Attack)"
+    },
+    {
+     "key": "386:defense:none",
+     "speciesId": "386",
+     "formId": "defense",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Deoxys (Defense)",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Deoxys (Defense)"
+    },
+    {
+     "key": "386:normal:none",
+     "speciesId": "386",
+     "formId": "normal",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Deoxys (Normal)",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Deoxys (Normal)"
+    },
+    {
+     "key": "386:speed:none",
+     "speciesId": "386",
+     "formId": "speed",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Deoxys (Speed)",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Deoxys (Speed)"
+    }
+   ],
+   "encounters": [
+    {
+     "identityKey": "386:attack:none",
+     "method": "raid",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "386:defense:none",
+     "method": "raid",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "386:normal:none",
+     "method": "raid",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "386:speed:none",
+     "method": "raid",
+     "activityId": "main",
+     "access": "unknown"
+    }
+   ],
+   "groups": {
+    "raid": [
+     {
+      "identityKey": "386:attack:none",
+      "method": "raid",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "386:defense:none",
+      "method": "raid",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "386:normal:none",
+      "method": "raid",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "386:speed:none",
+      "method": "raid",
+      "activityId": "main",
+      "access": "unknown"
+     }
+    ]
+   }
   },
   {
    "schemaVersion": 1,
@@ -16356,7 +16519,7 @@
    "aliases": [],
    "family": "community-day",
    "title": "February Community Day",
-   "dateText": "The February Community Day event will take place on February 6, 2027 from 2 pm to 5 pm. Stay tuned for more details.",
+   "dateText": "",
    "completeness": "partial",
    "lifecycle": "announced",
    "attendance": "",
@@ -16365,8 +16528,8 @@
    "notes": [],
    "internalValidation": {
     "warnings": [],
-    "lifecycleDeclared": false,
-    "native": true,
+    "lifecycleDeclared": true,
+    "conflicts": [],
     "fields": {
      "bonuses": [],
      "featured": [],
@@ -16379,19 +16542,27 @@
      "tickets": [],
      "dates": [
       {
-       "text": "The February Community Day event will take place on February 6, 2027 from 2 pm to 5 pm. Stay tuned for more details."
+       "text": "The February Community Day event will take place on February 6, 2027 from 2 pm to 5 pm. Stay tuned for more details.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
       }
      ]
     },
+    "info": [],
+    "detailRefs": [
+     "leekduck:february-communityday2027"
+    ],
     "legacyDates": {
      "start": "",
      "end": ""
     },
-    "conflicts": [],
     "imageReviewed": true,
-    "contentHash": "543ce9e55e1403d55fe75f53bd4a528e2e3efdb9029eff4c6759a6a5d1fcf000",
-    "revision": 1,
+    "contentHash": "f6b25d627ffca4b8c9285357dd0c24c246144abc02d4726103f5360be5ed8a36",
+    "revision": 2,
     "amended": false,
+    "native": false,
     "collection": "source-details"
    },
    "schedule": null,
@@ -17407,8 +17578,7 @@
        ],
        "status": "single"
       }
-     ],
-     "researchTasks": []
+     ]
     },
     "info": [],
     "detailRefs": [
@@ -17449,7 +17619,7 @@
    "aliases": [],
    "family": "community-day",
    "title": "January Community Day",
-   "dateText": "The January Community Day event will take place on January 16, 2027 from 2 pm to 5 pm. Stay tuned for more details.",
+   "dateText": "",
    "completeness": "partial",
    "lifecycle": "announced",
    "attendance": "",
@@ -17458,8 +17628,8 @@
    "notes": [],
    "internalValidation": {
     "warnings": [],
-    "lifecycleDeclared": false,
-    "native": true,
+    "lifecycleDeclared": true,
+    "conflicts": [],
     "fields": {
      "bonuses": [],
      "featured": [],
@@ -17472,19 +17642,27 @@
      "tickets": [],
      "dates": [
       {
-       "text": "The January Community Day event will take place on January 16, 2027 from 2 pm to 5 pm. Stay tuned for more details."
+       "text": "The January Community Day event will take place on January 16, 2027 from 2 pm to 5 pm. Stay tuned for more details.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
       }
      ]
     },
+    "info": [],
+    "detailRefs": [
+     "leekduck:january-communityday2027"
+    ],
     "legacyDates": {
      "start": "",
      "end": ""
     },
-    "conflicts": [],
     "imageReviewed": true,
-    "contentHash": "a5914791f6270e2a49b83d6dd639f966d4db49f18b68bffc12bb521096817c93",
-    "revision": 1,
+    "contentHash": "66455e35d74b0b5856ef80fe63287d6d6131f30840686484a59f1d1383e92cf9",
+    "revision": 2,
     "amended": false,
+    "native": false,
     "collection": "source-details"
    },
    "schedule": null,
@@ -17511,7 +17689,7 @@
    "aliases": [],
    "family": "community-day",
    "title": "January Community Day Classic",
-   "dateText": "The January Community Day Classic event will take place on January 2, 2027 from 2 pm to 5 pm. Stay tuned for more details.",
+   "dateText": "",
    "completeness": "partial",
    "lifecycle": "announced",
    "attendance": "",
@@ -17520,8 +17698,8 @@
    "notes": [],
    "internalValidation": {
     "warnings": [],
-    "lifecycleDeclared": false,
-    "native": true,
+    "lifecycleDeclared": true,
+    "conflicts": [],
     "fields": {
      "bonuses": [],
      "featured": [],
@@ -17534,19 +17712,27 @@
      "tickets": [],
      "dates": [
       {
-       "text": "The January Community Day Classic event will take place on January 2, 2027 from 2 pm to 5 pm. Stay tuned for more details."
+       "text": "The January Community Day Classic event will take place on January 2, 2027 from 2 pm to 5 pm. Stay tuned for more details.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
       }
      ]
     },
+    "info": [],
+    "detailRefs": [
+     "leekduck:january-communitydayclassic2027"
+    ],
     "legacyDates": {
      "start": "",
      "end": ""
     },
-    "conflicts": [],
     "imageReviewed": true,
-    "contentHash": "18c47a913fe8869f21351d5458ee8b92d2e3cb39a5ef49b7f5d8d464a88d9cb1",
-    "revision": 1,
+    "contentHash": "57cd7ab01c5be49989e4b6cfdd62183ce78bbcd379f78c342a218e2c83e09b0f",
+    "revision": 2,
     "amended": false,
+    "native": false,
     "collection": "source-details"
    },
    "schedule": null,
@@ -17610,8 +17796,7 @@
        ],
        "status": "single"
       }
-     ],
-     "researchTasks": []
+     ]
     },
     "info": [],
     "detailRefs": [
@@ -17689,8 +17874,7 @@
        ],
        "status": "single"
       }
-     ],
-     "researchTasks": []
+     ]
     },
     "info": [],
     "detailRefs": [
@@ -23632,8 +23816,8 @@
      "end": "2026-11-08"
     },
     "imageReviewed": true,
-    "contentHash": "cef3d9371165ca2a3f7bc98706c66b6214d5d30320c9011435bc847f55141b8b",
-    "revision": 10,
+    "contentHash": "a23e23d0e3e18e4969942a4d4e4103ea19e031cb99a40f13584268023e24b5f7",
+    "revision": 11,
     "amended": false,
     "native": false,
     "collection": "worldEvents"
@@ -25080,6 +25264,45 @@
      "collectionName": "Gigantamax Duraludon"
     },
     {
+     "key": "888:crowned-sword:none",
+     "speciesId": "888",
+     "formId": "crowned-sword",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Crowned Sword Zacian",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Crowned Sword Zacian"
+    },
+    {
+     "key": "888:crownedsword:none",
+     "speciesId": "888",
+     "formId": "crownedsword",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Zacian (Crowned Sword)",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Zacian (Crowned Sword)"
+    },
+    {
+     "key": "889:crownedshield:none",
+     "speciesId": "889",
+     "formId": "crownedshield",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Zamazenta (Crowned Shield)",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Zamazenta (Crowned Shield)"
+    },
+    {
      "key": "90:base:none",
      "speciesId": "90",
      "formId": null,
@@ -25269,6 +25492,24 @@
     {
      "identityKey": "706:hisui:none",
      "method": "other",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "888:crowned-sword:none",
+     "method": "raid",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "888:crownedsword:none",
+     "method": "raid",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "889:crownedshield:none",
+     "method": "raid",
      "activityId": "main",
      "access": "unknown"
     },
@@ -25686,6 +25927,26 @@
      {
       "identityKey": "706:hisui:none",
       "method": "other",
+      "activityId": "main",
+      "access": "unknown"
+     }
+    ],
+    "raid": [
+     {
+      "identityKey": "888:crowned-sword:none",
+      "method": "raid",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "888:crownedsword:none",
+      "method": "raid",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "889:crownedshield:none",
+      "method": "raid",
       "activityId": "main",
       "access": "unknown"
      }
@@ -26247,7 +26508,7 @@
     },
     "imageReviewed": true,
     "contentHash": "244e1a218c776c7de71a786fe7a96bc90d5ca2212bc0e2a5060da28a5e71b680",
-    "revision": 53,
+    "revision": 55,
     "amended": true,
     "native": false,
     "collection": "source-details"
@@ -27778,7 +28039,7 @@
    "aliases": [],
    "family": "raid-day",
    "title": "Raid Day",
-   "dateText": "The Raid Day event will take place on December 19, 2026 from 2 pm to 5 pm. Stay tuned for more details.",
+   "dateText": "",
    "completeness": "partial",
    "lifecycle": "announced",
    "attendance": "",
@@ -27787,14 +28048,18 @@
    "notes": [],
    "internalValidation": {
     "warnings": [],
-    "lifecycleDeclared": false,
-    "native": true,
+    "lifecycleDeclared": true,
+    "conflicts": [],
     "fields": {
      "bonuses": [],
      "featured": [],
      "raids": [
       {
-       "text": "The Raid Day event will take place on December 19, 2026 from 2 pm to 5 pm. Stay tuned for more details."
+       "text": "The Raid Day event will take place on December 19, 2026 from 2 pm to 5 pm. Stay tuned for more details.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
       }
      ],
      "eggs": [],
@@ -27805,19 +28070,27 @@
      "tickets": [],
      "dates": [
       {
-       "text": "The Raid Day event will take place on December 19, 2026 from 2 pm to 5 pm. Stay tuned for more details."
+       "text": "The Raid Day event will take place on December 19, 2026 from 2 pm to 5 pm. Stay tuned for more details.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
       }
      ]
     },
+    "info": [],
+    "detailRefs": [
+     "leekduck:raid-day-december-2026"
+    ],
     "legacyDates": {
      "start": "",
      "end": ""
     },
-    "conflicts": [],
     "imageReviewed": true,
-    "contentHash": "004144c9fbbad1cbdc3ecf0a3d4dfbb7bfc6da19029519a323b41d1271a645f1",
-    "revision": 1,
+    "contentHash": "4f6bf5850ba3b31a8dee72addd456db2d226926ae3182319ab5dc625e8d9b653",
+    "revision": 2,
     "amended": false,
+    "native": false,
     "collection": "source-details"
    },
    "schedule": null,
@@ -27844,7 +28117,7 @@
    "aliases": [],
    "family": "raid-day",
    "title": "Raid Day",
-   "dateText": "The Raid Day event will take place on February 13, 2027 from 2 pm to 5 pm. Stay tuned for more details.",
+   "dateText": "",
    "completeness": "partial",
    "lifecycle": "announced",
    "attendance": "",
@@ -27853,14 +28126,18 @@
    "notes": [],
    "internalValidation": {
     "warnings": [],
-    "lifecycleDeclared": false,
-    "native": true,
+    "lifecycleDeclared": true,
+    "conflicts": [],
     "fields": {
      "bonuses": [],
      "featured": [],
      "raids": [
       {
-       "text": "The Raid Day event will take place on February 13, 2027 from 2 pm to 5 pm. Stay tuned for more details."
+       "text": "The Raid Day event will take place on February 13, 2027 from 2 pm to 5 pm. Stay tuned for more details.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
       }
      ],
      "eggs": [],
@@ -27871,19 +28148,27 @@
      "tickets": [],
      "dates": [
       {
-       "text": "The Raid Day event will take place on February 13, 2027 from 2 pm to 5 pm. Stay tuned for more details."
+       "text": "The Raid Day event will take place on February 13, 2027 from 2 pm to 5 pm. Stay tuned for more details.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
       }
      ]
     },
+    "info": [],
+    "detailRefs": [
+     "leekduck:raid-day-february-2027"
+    ],
     "legacyDates": {
      "start": "",
      "end": ""
     },
-    "conflicts": [],
     "imageReviewed": true,
-    "contentHash": "e54a8004761484c66dee088cbb3fe226132ab73d726bd901f01c001d18aa335e",
-    "revision": 1,
+    "contentHash": "4a84d804547a4cd1bbdc5a4a672c7ac15a8a654dd3a8802da4979654d05cba8b",
+    "revision": 2,
     "amended": false,
+    "native": false,
     "collection": "source-details"
    },
    "schedule": null,
@@ -29783,8 +30068,8 @@
      "end": ""
     },
     "imageReviewed": true,
-    "contentHash": "95e0dbf0039c919528d8852ac8426f01da976b97170b469632e3001364927aa0",
-    "revision": 5,
+    "contentHash": "3e34b9b52764fd2860c7974d4bb13e145899a000729fc37a7eb07b7a266bf15d",
+    "revision": 6,
     "amended": false,
     "native": false,
     "collection": "source-details"
@@ -29803,9 +30088,39 @@
      "url": "https://leekduck.com/events/shadow-tornadus-incarnate-forme-in-shadow-raids-november-16-2026/"
     }
    ],
-   "pokemon": [],
-   "encounters": [],
-   "groups": {}
+   "pokemon": [
+    {
+     "key": "641:incarnate:none",
+     "speciesId": "641",
+     "formId": "incarnate",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Tornadus (Incarnate)",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Tornadus (Incarnate)"
+    }
+   ],
+   "encounters": [
+    {
+     "identityKey": "641:incarnate:none",
+     "method": "raid",
+     "activityId": "main",
+     "access": "unknown"
+    }
+   ],
+   "groups": {
+    "raid": [
+     {
+      "identityKey": "641:incarnate:none",
+      "method": "raid",
+      "activityId": "main",
+      "access": "unknown"
+     }
+    ]
+   }
   },
   {
    "schemaVersion": 1,
@@ -29885,7 +30200,7 @@
    "aliases": [],
    "family": "raid-day",
    "title": "Super Mega Raid Day",
-   "dateText": "The Super Mega Raid Day event will take place on January 9, 2027 from 2 pm to 5 pm. Stay tuned for more details.",
+   "dateText": "",
    "completeness": "partial",
    "lifecycle": "announced",
    "attendance": "",
@@ -29894,14 +30209,18 @@
    "notes": [],
    "internalValidation": {
     "warnings": [],
-    "lifecycleDeclared": false,
-    "native": true,
+    "lifecycleDeclared": true,
+    "conflicts": [],
     "fields": {
      "bonuses": [],
      "featured": [],
      "raids": [
       {
-       "text": "The Super Mega Raid Day event will take place on January 9, 2027 from 2 pm to 5 pm. Stay tuned for more details."
+       "text": "The Super Mega Raid Day event will take place on January 9, 2027 from 2 pm to 5 pm. Stay tuned for more details.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
       }
      ],
      "eggs": [],
@@ -29912,19 +30231,27 @@
      "tickets": [],
      "dates": [
       {
-       "text": "The Super Mega Raid Day event will take place on January 9, 2027 from 2 pm to 5 pm. Stay tuned for more details."
+       "text": "The Super Mega Raid Day event will take place on January 9, 2027 from 2 pm to 5 pm. Stay tuned for more details.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
       }
      ]
     },
+    "info": [],
+    "detailRefs": [
+     "leekduck:super-mega-raid-day-january-2027"
+    ],
     "legacyDates": {
      "start": "",
      "end": ""
     },
-    "conflicts": [],
     "imageReviewed": true,
-    "contentHash": "4b4f0aa9372f1ad912a61b4f380dfaf66cb1c07dd6e2e38f1d4f58bbcc95a6d3",
-    "revision": 1,
+    "contentHash": "26f7168e1b8a61b036f435c15282309edc6df65bb0a98a173d97b6f243dfb78c",
+    "revision": 2,
     "amended": false,
+    "native": false,
     "collection": "source-details"
    },
    "schedule": null,
@@ -29951,7 +30278,7 @@
    "aliases": [],
    "family": "raid-day",
    "title": "Super Mega Raid Day",
-   "dateText": "The Super Mega Raid Day event will take place on January 30, 2027 from 2 pm to 5 pm. Stay tuned for more details.",
+   "dateText": "",
    "completeness": "partial",
    "lifecycle": "announced",
    "attendance": "",
@@ -29960,14 +30287,18 @@
    "notes": [],
    "internalValidation": {
     "warnings": [],
-    "lifecycleDeclared": false,
-    "native": true,
+    "lifecycleDeclared": true,
+    "conflicts": [],
     "fields": {
      "bonuses": [],
      "featured": [],
      "raids": [
       {
-       "text": "The Super Mega Raid Day event will take place on January 30, 2027 from 2 pm to 5 pm. Stay tuned for more details."
+       "text": "The Super Mega Raid Day event will take place on January 30, 2027 from 2 pm to 5 pm. Stay tuned for more details.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
       }
      ],
      "eggs": [],
@@ -29978,19 +30309,27 @@
      "tickets": [],
      "dates": [
       {
-       "text": "The Super Mega Raid Day event will take place on January 30, 2027 from 2 pm to 5 pm. Stay tuned for more details."
+       "text": "The Super Mega Raid Day event will take place on January 30, 2027 from 2 pm to 5 pm. Stay tuned for more details.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
       }
      ]
     },
+    "info": [],
+    "detailRefs": [
+     "leekduck:super-mega-raid-day-january-30-2027"
+    ],
     "legacyDates": {
      "start": "",
      "end": ""
     },
-    "conflicts": [],
     "imageReviewed": true,
-    "contentHash": "37da2312ef2485f5c87eea5764cb3f1d7759fb904da102d313451c0886f1dcd6",
-    "revision": 1,
+    "contentHash": "ec420e56ec6c02e60330c0a93bc5875f486396c8816f5f4011a3e6b98382b83b",
+    "revision": 2,
     "amended": false,
+    "native": false,
     "collection": "source-details"
    },
    "schedule": null,
@@ -30623,6 +30962,189 @@
    "pokemon": [],
    "encounters": [],
    "groups": {}
+  },
+  {
+   "schemaVersion": 1,
+   "eventId": "leekduck:zacian-crowned-sword-zamazenta-crowned-shield-in-5-star-raid-battles-november-2026",
+   "aliases": [],
+   "family": "other",
+   "title": "Zacian (Crowned Sword) and Zamazenta (Crowned Shield) in 5-star Raid Battles",
+   "dateText": "",
+   "completeness": "partial",
+   "lifecycle": "reference",
+   "attendance": "",
+   "location": null,
+   "image": null,
+   "notes": [],
+   "internalValidation": {
+    "warnings": [],
+    "lifecycleDeclared": true,
+    "conflicts": [],
+    "fields": {
+     "bonuses": [],
+     "featured": [],
+     "raids": [
+      {
+       "text": "Zacian (Crowned Sword) and Zamazenta (Crowned Shield) will be in five-star raid battles from November 9, 2026 to November 13, 2026, during the Into the Wild event.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "These raids start at 10:00 a.m. local time on November 9 and end at 8:00 p.m. local time on November 13.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Defeating Zacian (Crowned Sword) or Zamazenta (Crowned Shield) in raids will earn you Crowned Sword Energy or Crowned Shield Energy, respectively.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "There will also be Raid Hours from 6:00 p.m. to 7:00 p.m. local time on the following dates:",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      }
+     ],
+     "eggs": [],
+     "research": [],
+     "shiny": [
+      {
+       "text": "If you’re lucky, you may encounter Shiny forms of these Pokémon.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Zacian (Crowned Sword)",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Zamazenta (Crowned Shield)",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      }
+     ],
+     "moves": [],
+     "costumes": [],
+     "tickets": [],
+     "dates": [
+      {
+       "text": "Zacian (Crowned Sword) and Zamazenta (Crowned Shield) will be in five-star raid battles from November 9, 2026 to November 13, 2026, during the Into the Wild event.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "There will also be Raid Hours from 6:00 p.m. to 7:00 p.m. local time on the following dates:",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      }
+     ]
+    },
+    "info": [],
+    "detailRefs": [
+     "leekduck:zacian-crowned-sword-zamazenta-crowned-shield-in-5-star-raid-battles-november-2026"
+    ],
+    "legacyDates": {
+     "start": "",
+     "end": ""
+    },
+    "imageReviewed": true,
+    "contentHash": "3c35a2275517c7fb87a9b6f3053ce63a9191a06ef59bc1c2d64c32dcfe1ea8b7",
+    "revision": 1,
+    "amended": false,
+    "native": false,
+    "collection": "source-details"
+   },
+   "schedule": null,
+   "activities": [],
+   "bonuses": [],
+   "research": [],
+   "passes": [],
+   "tickets": [],
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/zacian-crowned-sword-zamazenta-crowned-shield-in-5-star-raid-battles-november-2026/"
+    }
+   ],
+   "pokemon": [
+    {
+     "key": "888:crownedsword:none",
+     "speciesId": "888",
+     "formId": "crownedsword",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Zacian (Crowned Sword)",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Zacian (Crowned Sword)"
+    },
+    {
+     "key": "889:crownedshield:none",
+     "speciesId": "889",
+     "formId": "crownedshield",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Zamazenta (Crowned Shield)",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Zamazenta (Crowned Shield)"
+    }
+   ],
+   "encounters": [
+    {
+     "identityKey": "888:crownedsword:none",
+     "method": "raid",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "889:crownedshield:none",
+     "method": "raid",
+     "activityId": "main",
+     "access": "unknown"
+    }
+   ],
+   "groups": {
+    "raid": [
+     {
+      "identityKey": "888:crownedsword:none",
+      "method": "raid",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "889:crownedshield:none",
+      "method": "raid",
+      "activityId": "main",
+      "access": "unknown"
+     }
+    ]
+   }
   },
   {
    "schemaVersion": 1,
@@ -31312,39 +31834,88 @@
     "fields": {
      "bonuses": [
       {
-       "text": "Event-exclusive Timed Research for very lucky Trainers",
+       "text": "1,000 Stardust for catching Minior",
        "sources": [
-        "leekduck"
+        "hub"
        ],
        "status": "single"
       },
       {
-       "text": "Timed Research tasks must be completed and all rewards claimed by October 24, 2026, at 11:59 p.m. local time .",
+       "text": "Increased chance to encounter Minior from 5:00 p.m. to 9:00 p.m. local time each day",
        "sources": [
-        "leekduck"
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Shooting stars will light up the in-game sky",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Free Timed Research rewarding 116,100 Stardust",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Very lucky Trainers may receive Bonus Timed Research rewarding one million Stardust!",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "This special research requires only a Star Piece task and rewards an additional 774 Stardust before the massive completion reward.",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Claim Reward! | 1 × Star Piece",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rewards | 1000000 × Stardust",
+       "sources": [
+        "hub"
        ],
        "status": "single"
       }
      ],
      "featured": [
       {
-       "text": "Minior (Green Core) , the Meteor Pokémon, will make its Pokémon GO debut during the Orionids meteor shower, beginning October 19, 2026, at 5:00 p.m. local time !",
+       "text": "Green Core Minior makes its Pokémon GO debut during the Orionids meteor shower.",
        "sources": [
-        "leekduck"
+        "hub"
        ],
        "status": "single"
       },
       {
-       "text": "You may encounter Minior in its Meteor Form in the wild during the event. You’ll receive 1,000 Stardust for catching Minior .",
+       "text": "Minior is a Rock and Flying -type Pokémon, making it weak to Electric , Ice , Rock , Steel and Water -type attacks.",
        "sources": [
-        "leekduck"
+        "hub"
        ],
        "status": "single"
       },
       {
-       "text": "Minior encounters are more likely from 5:00 p.m. to 9:00 p.m. local time each day .",
+       "text": "You’ll encounter Minior in the wild in its Meteor Form during Minior Showers events and receive 1,000 Stardust for catching it.",
        "sources": [
-        "leekduck"
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Green Core Minior is the first to debut, with the remaining colors arriving during future meteor showers.",
+       "sources": [
+        "hub"
        ],
        "status": "single"
       }
@@ -31353,84 +31924,124 @@
      "eggs": [],
      "research": [
       {
-       "text": "Event-exclusive Timed Research",
+       "text": "Free Timed Research is available during Minior Showers, rewarding a Star Piece and a total of 116,100 Stardust .",
        "sources": [
-        "leekduck"
+        "hub"
        ],
        "status": "single"
       },
       {
-       "text": "Timed Research will be available during the event. Claim a Star Piece , then complete five Use a Star Piece tasks to earn 7,740 Stardust each. Complete all tasks to earn an additional 77,400 Stardust .",
+       "text": "Claiming all the Stardust rewards while a Star Piece is active increases the total to 174,150 Stardust !",
        "sources": [
-        "leekduck"
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Task | Rewards",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Claim Reward! | 1 × Star Piece",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Use a Star Piece | 7740 × Stardust",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rewards | 77,400 × Stardust",
+       "sources": [
+        "hub"
        ],
        "status": "single"
       }
      ],
-     "shiny": [],
+     "shiny": [
+      {
+       "text": "Shiny Minior is not available during the Orionids Minior Shower. Its Shiny debut has not been announced.",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      }
+     ],
      "moves": [],
      "costumes": [],
      "tickets": [],
      "dates": [
       {
-       "text": "This Minior Shower runs from October 19, 2026 at 5:00 p.m. to October 24, 2026 at 11:59 p.m. local time .",
+       "text": "Increased chance to encounter Minior from 5:00 p.m. to 9:00 p.m. local time each day",
        "sources": [
-        "leekduck"
+        "hub"
        ],
        "status": "single"
       },
       {
-       "text": "From 5:00 p.m. to 9:00 p.m. local time every day during each Minior Shower, shooting stars will light up the in-game sky. During these hours, you’ll have an increased chance of encountering Minior in the wild!",
+       "text": "Orionids | October 19–24, 2026 | Green",
        "sources": [
-        "leekduck"
+        "hub"
        ],
        "status": "single"
       },
       {
-       "text": "Leonids : November 14–19, 2026",
+       "text": "Leonids | November 14–19, 2026 | TBA",
        "sources": [
-        "leekduck"
+        "hub"
        ],
        "status": "single"
       },
       {
-       "text": "Geminids : December 11–16, 2026",
+       "text": "Geminids | December 11–16, 2026 | Two colors, one per hemisphere",
        "sources": [
-        "leekduck"
+        "hub"
        ],
        "status": "single"
       },
       {
-       "text": "Eta Aquariids : May 3–8, 2027",
+       "text": "Eta Aquariids | May 3–8, 2027 | TBA",
        "sources": [
-        "leekduck"
+        "hub"
        ],
        "status": "single"
       },
       {
-       "text": "Southern Delta Aquariids : July 28–August 2, 2027",
+       "text": "Southern Delta Aquariids | July 28–August 2, 2027 | TBA",
        "sources": [
-        "leekduck"
+        "hub"
        ],
        "status": "single"
       },
       {
-       "text": "Perseids : August 10–15, 2027",
+       "text": "Perseids | August 10–15, 2027 | TBA",
        "sources": [
-        "leekduck"
+        "hub"
        ],
        "status": "single"
       }
      ]
     },
     "info": [],
-    "detailRefs": [],
+    "detailRefs": [
+     "leekduck:minior-showers-orionids-2026",
+     "hub:minior-showers-orionids-october-2026"
+    ],
     "legacyDates": {
      "start": "2026-10-19T17:00",
      "end": "2026-10-24T23:59"
     },
-    "contentHash": "7c36a7392c57a49d793be5de1790eb3dc2f87c93e25774e3894ce1bd9e18321f",
-    "revision": 3,
+    "imageReviewed": true,
+    "contentHash": "e57beda84a47943488cd48789410a13021af2efb09c52ac6a2d2bd5f2db561cf",
+    "revision": 4,
     "amended": false,
     "native": false,
     "collection": "events"
@@ -31441,32 +32052,222 @@
     "Extra Stardust for catches",
     "Best 5 pm to 9 pm daily",
     {
-     "text": "Event-exclusive Timed Research for very lucky Trainers",
+     "text": "1,000 Stardust for catching Minior",
      "sources": [
-      "leekduck"
+      "hub"
      ],
      "status": "single"
     },
     {
-     "text": "Timed Research tasks must be completed and all rewards claimed by October 24, 2026, at 11:59 p.m. local time .",
+     "text": "Increased chance to encounter Minior from 5:00 p.m. to 9:00 p.m. local time each day",
      "sources": [
-      "leekduck"
+      "hub"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Shooting stars will light up the in-game sky",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Free Timed Research rewarding 116,100 Stardust",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Very lucky Trainers may receive Bonus Timed Research rewarding one million Stardust!",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "This special research requires only a Star Piece task and rewards an additional 774 Stardust before the massive completion reward.",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Claim Reward! | 1 × Star Piece",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Rewards | 1000000 × Stardust",
+     "sources": [
+      "hub"
      ],
      "status": "single"
     }
    ],
    "research": [
     {
-     "text": "Event-exclusive Timed Research",
+     "task": "Claim Reward!",
+     "category": "research",
+     "rewards": [
+      {
+       "type": "item",
+       "name": "Star Piece",
+       "quantity": 1
+      }
+     ],
      "sources": [
-      "leekduck"
+      "hub"
+     ],
+     "sourceRefs": [
+      {
+       "id": "hub",
+       "name": "Pokémon GO Hub",
+       "trust": "community",
+       "url": "https://pokemongohub.net/post/event/minior-showers-orionids-october-2026/"
+      }
+     ],
+     "status": "single",
+     "eventId": "minior",
+     "eventName": "Orionids Meteor Shower: Minior Debut",
+     "eventWindow": {
+      "start": "2026-10-19T17:00",
+      "end": "2026-10-24T23:59"
+     },
+     "checkedAt": "2026-11-10"
+    },
+    {
+     "task": "Use a Star Piece",
+     "category": "research",
+     "rewards": [
+      {
+       "type": "item",
+       "name": "Stardust",
+       "quantity": 774
+      }
+     ],
+     "sources": [
+      "hub"
+     ],
+     "sourceRefs": [
+      {
+       "id": "hub",
+       "name": "Pokémon GO Hub",
+       "trust": "community",
+       "url": "https://pokemongohub.net/post/event/minior-showers-orionids-october-2026/"
+      }
+     ],
+     "status": "single",
+     "eventId": "minior",
+     "eventName": "Orionids Meteor Shower: Minior Debut",
+     "eventWindow": {
+      "start": "2026-10-19T17:00",
+      "end": "2026-10-24T23:59"
+     },
+     "checkedAt": "2026-11-10"
+    },
+    {
+     "task": "Claim Reward!",
+     "category": "timed",
+     "rewards": [
+      {
+       "type": "item",
+       "name": "Star Piece",
+       "quantity": 1
+      }
+     ],
+     "sources": [
+      "hub"
+     ],
+     "sourceRefs": [
+      {
+       "id": "hub",
+       "name": "Pokémon GO Hub",
+       "trust": "community",
+       "url": "https://pokemongohub.net/post/event/minior-showers-orionids-october-2026/"
+      }
+     ],
+     "status": "single",
+     "eventId": "minior",
+     "eventName": "Orionids Meteor Shower: Minior Debut",
+     "eventWindow": {
+      "start": "2026-10-19T17:00",
+      "end": "2026-10-24T23:59"
+     },
+     "checkedAt": "2026-11-10"
+    },
+    {
+     "task": "Use a Star Piece",
+     "category": "timed",
+     "rewards": [
+      {
+       "type": "item",
+       "name": "Stardust",
+       "quantity": 7740
+      }
+     ],
+     "sources": [
+      "hub"
+     ],
+     "sourceRefs": [
+      {
+       "id": "hub",
+       "name": "Pokémon GO Hub",
+       "trust": "community",
+       "url": "https://pokemongohub.net/post/event/minior-showers-orionids-october-2026/"
+      }
+     ],
+     "status": "single",
+     "eventId": "minior",
+     "eventName": "Orionids Meteor Shower: Minior Debut",
+     "eventWindow": {
+      "start": "2026-10-19T17:00",
+      "end": "2026-10-24T23:59"
+     },
+     "checkedAt": "2026-11-10"
+    },
+    {
+     "text": "Free Timed Research is available during Minior Showers, rewarding a Star Piece and a total of 116,100 Stardust .",
+     "sources": [
+      "hub"
      ],
      "status": "single"
     },
     {
-     "text": "Timed Research will be available during the event. Claim a Star Piece , then complete five Use a Star Piece tasks to earn 7,740 Stardust each. Complete all tasks to earn an additional 77,400 Stardust .",
+     "text": "Claiming all the Stardust rewards while a Star Piece is active increases the total to 174,150 Stardust !",
      "sources": [
-      "leekduck"
+      "hub"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Task | Rewards",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Claim Reward! | 1 × Star Piece",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Use a Star Piece | 7740 × Stardust",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Rewards | 77,400 × Stardust",
+     "sources": [
+      "hub"
      ],
      "status": "single"
     }
@@ -31483,6 +32284,12 @@
     {
      "url": "https://leekduck.com/events/minior-showers-orionids-2026/",
      "name": "Official announcement, matches Leek Duck"
+    },
+    {
+     "id": "hub",
+     "name": "Pokémon GO Hub",
+     "trust": "community",
+     "url": "https://pokemongohub.net/post/event/minior-showers-orionids-october-2026/"
     }
    ],
    "pokemon": [
@@ -31552,8 +32359,79 @@
     "lifecycleDeclared": false,
     "conflicts": [],
     "fields": {
-     "bonuses": [],
+     "bonuses": [
+      {
+       "text": "1000 Stardust for catching Minior",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Increased chance to encounter Minior from 5:00 p.m. to 9:00 p.m. local time each day",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Shooting stars will light up the in-game sky",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "If you are very lucky, you may get a Bonus Timed Research that rewards one million stardust!",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "A very small amount of trainers have shared that they also have an extra Bonus Timed Research, that rewards a whopping one million stardust!",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Task | Rewards",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Claim Reward! | 1 × Star Piece",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Use a Star Piece | 7740 × Stardust",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rewards | 1000000 × Stardust",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      }
+     ],
      "featured": [
+      {
+       "text": "The second Minior to make their Pokémon GO debut during the Leonid Meteor Shower is ??? Core Minior.",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
       {
        "text": "You may encounter Minior in its Meteor Form in the wild during the event. You’ll receive 1,000 Stardust for catching Minior .",
        "sources": [
@@ -31571,21 +32449,51 @@
      ],
      "raids": [],
      "eggs": [],
-     "research": [],
+     "research": [
+      {
+       "text": "Task | Rewards",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Claim Reward! | 1 × Star Piece",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Use a Star Piece | 7740 × Stardust",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Rewards | 77,400 × Stardust",
+       "sources": [
+        "hub"
+       ],
+       "status": "single"
+      }
+     ],
      "shiny": [],
      "moves": [],
      "costumes": [],
      "tickets": [],
      "dates": [
       {
-       "text": "This Minior Shower runs from November 14, 2026 at 5:00 p.m. to November 19, 2026 at 11:59 p.m. local time .",
+       "text": "Increased chance to encounter Minior from 5:00 p.m. to 9:00 p.m. local time each day",
        "sources": [
+        "hub",
         "leekduck"
        ],
-       "status": "single"
+       "status": "corroborated"
       },
       {
-       "text": "From 5:00 p.m. to 9:00 p.m. local time every day during each Minior Shower, shooting stars will light up the in-game sky. During these hours, you’ll have an increased chance of encountering Minior in the wild!",
+       "text": "This Minior Shower runs from November 14, 2026 at 5:00 p.m. to November 19, 2026 at 11:59 p.m. local time .",
        "sources": [
         "leekduck"
        ],
@@ -31629,22 +32537,238 @@
      ]
     },
     "info": [],
-    "detailRefs": [],
+    "detailRefs": [
+     "leekduck:minior-showers-leonids-2026",
+     "hub:minior-showers-leonid-november-2026"
+    ],
     "legacyDates": {
      "start": "2026-11-14T17:00",
      "end": "2026-11-19T23:59"
     },
     "imageReviewed": true,
-    "contentHash": "5414e42c7f716f855ffa34ab6dcb891bc4ee8a02c258d7e74d8d554f0c904d20",
-    "revision": 5,
+    "contentHash": "43d2c5a5e512762218f990682ee5edc4c0e9486997b3bc6708a7ef432ca7996b",
+    "revision": 6,
     "amended": false,
     "native": false,
     "collection": "events"
    },
    "schedule": null,
    "activities": [],
-   "bonuses": [],
-   "research": [],
+   "bonuses": [
+    {
+     "text": "1000 Stardust for catching Minior",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Increased chance to encounter Minior from 5:00 p.m. to 9:00 p.m. local time each day",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Shooting stars will light up the in-game sky",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "If you are very lucky, you may get a Bonus Timed Research that rewards one million stardust!",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "A very small amount of trainers have shared that they also have an extra Bonus Timed Research, that rewards a whopping one million stardust!",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Task | Rewards",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Claim Reward! | 1 × Star Piece",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Use a Star Piece | 7740 × Stardust",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Rewards | 1000000 × Stardust",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
+    }
+   ],
+   "research": [
+    {
+     "task": "Claim Reward!",
+     "category": "research",
+     "rewards": [
+      {
+       "type": "item",
+       "name": "Star Piece",
+       "quantity": 1
+      }
+     ],
+     "sources": [
+      "hub"
+     ],
+     "sourceRefs": [
+      {
+       "id": "hub",
+       "name": "Pokémon GO Hub",
+       "trust": "community",
+       "url": "https://pokemongohub.net/post/event/minior-showers-leonid-november-2026/"
+      }
+     ],
+     "status": "single",
+     "eventId": "minior2",
+     "eventName": "Minior Showers: Leonids",
+     "eventWindow": {
+      "start": "2026-11-14T17:00",
+      "end": "2026-11-19T23:59"
+     },
+     "checkedAt": "2026-11-10"
+    },
+    {
+     "task": "Use a Star Piece",
+     "category": "research",
+     "rewards": [
+      {
+       "type": "item",
+       "name": "Stardust",
+       "quantity": 7740
+      }
+     ],
+     "sources": [
+      "hub"
+     ],
+     "sourceRefs": [
+      {
+       "id": "hub",
+       "name": "Pokémon GO Hub",
+       "trust": "community",
+       "url": "https://pokemongohub.net/post/event/minior-showers-leonid-november-2026/"
+      }
+     ],
+     "status": "single",
+     "eventId": "minior2",
+     "eventName": "Minior Showers: Leonids",
+     "eventWindow": {
+      "start": "2026-11-14T17:00",
+      "end": "2026-11-19T23:59"
+     },
+     "checkedAt": "2026-11-10"
+    },
+    {
+     "task": "Claim Reward!",
+     "category": "timed",
+     "rewards": [
+      {
+       "type": "item",
+       "name": "Star Piece",
+       "quantity": 1
+      }
+     ],
+     "sources": [
+      "hub"
+     ],
+     "sourceRefs": [
+      {
+       "id": "hub",
+       "name": "Pokémon GO Hub",
+       "trust": "community",
+       "url": "https://pokemongohub.net/post/event/minior-showers-leonid-november-2026/"
+      }
+     ],
+     "status": "single",
+     "eventId": "minior2",
+     "eventName": "Minior Showers: Leonids",
+     "eventWindow": {
+      "start": "2026-11-14T17:00",
+      "end": "2026-11-19T23:59"
+     },
+     "checkedAt": "2026-11-10"
+    },
+    {
+     "task": "Use a Star Piece",
+     "category": "timed",
+     "rewards": [
+      {
+       "type": "item",
+       "name": "Stardust",
+       "quantity": 7740
+      }
+     ],
+     "sources": [
+      "hub"
+     ],
+     "sourceRefs": [
+      {
+       "id": "hub",
+       "name": "Pokémon GO Hub",
+       "trust": "community",
+       "url": "https://pokemongohub.net/post/event/minior-showers-leonid-november-2026/"
+      }
+     ],
+     "status": "single",
+     "eventId": "minior2",
+     "eventName": "Minior Showers: Leonids",
+     "eventWindow": {
+      "start": "2026-11-14T17:00",
+      "end": "2026-11-19T23:59"
+     },
+     "checkedAt": "2026-11-10"
+    },
+    {
+     "text": "Task | Rewards",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Claim Reward! | 1 × Star Piece",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Use a Star Piece | 7740 × Stardust",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Rewards | 77,400 × Stardust",
+     "sources": [
+      "hub"
+     ],
+     "status": "single"
+    }
+   ],
    "passes": [],
    "tickets": [],
    "sources": [
@@ -31657,6 +32781,12 @@
     {
      "url": "https://leekduck.com/events/minior-showers-leonids-2026/",
      "name": "Leek Duck"
+    },
+    {
+     "id": "hub",
+     "name": "Pokémon GO Hub",
+     "trust": "community",
+     "url": "https://pokemongohub.net/post/event/minior-showers-leonid-november-2026/"
     }
    ],
    "pokemon": [
@@ -37487,8 +38617,8 @@
      "end": "2026-11-13T20:00"
     },
     "imageReviewed": true,
-    "contentHash": "f4ac05874b2065b57bb5615c3bd0df1c4aaeda51f0a57b8d9c5fd7be7825e509",
-    "revision": 10,
+    "contentHash": "814c8f50750db55886c2239422af22c000e16c86ef415e4b897ca461898f89a6",
+    "revision": 11,
     "amended": false,
     "native": false,
     "collection": "rotation"
@@ -39888,6 +41018,19 @@
      "collectionName": "Ralts"
     },
     {
+     "key": "280:dynamax:none",
+     "speciesId": "280",
+     "formId": "dynamax",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Dynamax Ralts",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Dynamax Ralts"
+    },
+    {
      "key": "303:base:none",
      "speciesId": "303",
      "formId": null,
@@ -39940,6 +41083,19 @@
      "collectionName": "Registeel"
     },
     {
+     "key": "379:dynamax:none",
+     "speciesId": "379",
+     "formId": "dynamax",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Dynamax Registeel",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Dynamax Registeel"
+    },
+    {
      "key": "380:base:none",
      "speciesId": "380",
      "formId": null,
@@ -39953,6 +41109,19 @@
      "collectionName": "Latias"
     },
     {
+     "key": "380:dynamax:none",
+     "speciesId": "380",
+     "formId": "dynamax",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Dynamax Latias",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Dynamax Latias"
+    },
+    {
      "key": "381:base:none",
      "speciesId": "381",
      "formId": null,
@@ -39964,6 +41133,19 @@
      "debut": null,
      "boostedShiny": null,
      "collectionName": "Latios"
+    },
+    {
+     "key": "381:dynamax:none",
+     "speciesId": "381",
+     "formId": "dynamax",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Dynamax Latios",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Dynamax Latios"
     },
     {
      "key": "52:galar:none",
@@ -40003,6 +41185,19 @@
      "debut": null,
      "boostedShiny": null,
      "collectionName": "Machop"
+    },
+    {
+     "key": "66:dynamax:none",
+     "speciesId": "66",
+     "formId": "dynamax",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Dynamax Machop",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Dynamax Machop"
     },
     {
      "key": "690:base:none",
@@ -40070,9 +41265,9 @@
      "collectionName": "Magnemite"
     },
     {
-     "key": "888:crownedsword:none",
+     "key": "888:crowned-sword:none",
      "speciesId": "888",
-     "formId": "crownedsword",
+     "formId": "crowned-sword",
      "costumeId": null,
      "shiny": "unknown",
      "assetKey": null,
@@ -40083,9 +41278,22 @@
      "collectionName": "Crowned Sword Zacian"
     },
     {
-     "key": "889:crownedshield:none",
+     "key": "888:crownedsword:none",
+     "speciesId": "888",
+     "formId": "crownedsword",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Zacian (Crowned Sword)",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Zacian (Crowned Sword)"
+    },
+    {
+     "key": "889:crowned-shield:none",
      "speciesId": "889",
-     "formId": "crownedshield",
+     "formId": "crowned-shield",
      "costumeId": null,
      "shiny": "unknown",
      "assetKey": null,
@@ -40094,6 +41302,19 @@
      "debut": null,
      "boostedShiny": null,
      "collectionName": "Crowned Shield Zamazenta"
+    },
+    {
+     "key": "889:crownedshield:none",
+     "speciesId": "889",
+     "formId": "crownedshield",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Zamazenta (Crowned Shield)",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Zamazenta (Crowned Shield)"
     },
     {
      "key": "895:base:none",
@@ -40107,6 +41328,19 @@
      "debut": null,
      "boostedShiny": null,
      "collectionName": "Regidrago"
+    },
+    {
+     "key": "895:dynamax:none",
+     "speciesId": "895",
+     "formId": "dynamax",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Dynamax Regidrago",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Dynamax Regidrago"
     },
     {
      "key": "968:base:none",
@@ -40169,7 +41403,19 @@
      "access": "unknown"
     },
     {
+     "identityKey": "280:dynamax:none",
+     "method": "max",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
      "identityKey": "379:base:none",
+     "method": "max",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "379:dynamax:none",
      "method": "max",
      "activityId": "main",
      "access": "unknown"
@@ -40181,7 +41427,19 @@
      "access": "unknown"
     },
     {
+     "identityKey": "380:dynamax:none",
+     "method": "max",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
      "identityKey": "381:base:none",
+     "method": "max",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "381:dynamax:none",
      "method": "max",
      "activityId": "main",
      "access": "unknown"
@@ -40193,7 +41451,19 @@
      "access": "unknown"
     },
     {
+     "identityKey": "66:dynamax:none",
+     "method": "max",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
      "identityKey": "895:base:none",
+     "method": "max",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "895:dynamax:none",
      "method": "max",
      "activityId": "main",
      "access": "unknown"
@@ -40205,7 +41475,19 @@
      "access": "unknown"
     },
     {
+     "identityKey": "888:crowned-sword:none",
+     "method": "raid",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
      "identityKey": "888:crownedsword:none",
+     "method": "raid",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "889:crowned-shield:none",
      "method": "raid",
      "activityId": "main",
      "access": "unknown"
@@ -40328,7 +41610,19 @@
       "access": "unknown"
      },
      {
+      "identityKey": "280:dynamax:none",
+      "method": "max",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
       "identityKey": "379:base:none",
+      "method": "max",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "379:dynamax:none",
       "method": "max",
       "activityId": "main",
       "access": "unknown"
@@ -40340,7 +41634,19 @@
       "access": "unknown"
      },
      {
+      "identityKey": "380:dynamax:none",
+      "method": "max",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
       "identityKey": "381:base:none",
+      "method": "max",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "381:dynamax:none",
       "method": "max",
       "activityId": "main",
       "access": "unknown"
@@ -40352,7 +41658,19 @@
       "access": "unknown"
      },
      {
+      "identityKey": "66:dynamax:none",
+      "method": "max",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
       "identityKey": "895:base:none",
+      "method": "max",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "895:dynamax:none",
       "method": "max",
       "activityId": "main",
       "access": "unknown"
@@ -40366,7 +41684,19 @@
       "access": "unknown"
      },
      {
+      "identityKey": "888:crowned-sword:none",
+      "method": "raid",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
       "identityKey": "888:crownedsword:none",
+      "method": "raid",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "889:crowned-shield:none",
       "method": "raid",
       "activityId": "main",
       "access": "unknown"
@@ -40822,8 +42152,8 @@
      "end": "2026-12-01T22:00"
     },
     "imageReviewed": true,
-    "contentHash": "f89c1350b582ffc7580c4b74082381a43d80901a90deb53f3846a72ee61f3186",
-    "revision": 5,
+    "contentHash": "2e1796aa63f10beb6972ae8315da19c98697821d50ef203dd5446cfc82107023",
+    "revision": 6,
     "amended": false,
     "native": false,
     "collection": "rotation"
@@ -40863,6 +42193,58 @@
      "debut": null,
      "boostedShiny": null,
      "collectionName": "Mega Metagross"
+    },
+    {
+     "key": "386:attack:none",
+     "speciesId": "386",
+     "formId": "attack",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Deoxys (Attack)",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Deoxys (Attack)"
+    },
+    {
+     "key": "386:defense:none",
+     "speciesId": "386",
+     "formId": "defense",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Deoxys (Defense)",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Deoxys (Defense)"
+    },
+    {
+     "key": "386:normal:none",
+     "speciesId": "386",
+     "formId": "normal",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Deoxys (Normal)",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Deoxys (Normal)"
+    },
+    {
+     "key": "386:speed:none",
+     "speciesId": "386",
+     "formId": "speed",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Deoxys (Speed)",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Deoxys (Speed)"
     }
    ],
    "encounters": [
@@ -40874,6 +42256,30 @@
     },
     {
      "identityKey": "376:mega:none",
+     "method": "raid",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "386:attack:none",
+     "method": "raid",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "386:defense:none",
+     "method": "raid",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "386:normal:none",
+     "method": "raid",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "386:speed:none",
      "method": "raid",
      "activityId": "main",
      "access": "unknown"
@@ -40889,6 +42295,30 @@
      },
      {
       "identityKey": "376:mega:none",
+      "method": "raid",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "386:attack:none",
+      "method": "raid",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "386:defense:none",
+      "method": "raid",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "386:normal:none",
+      "method": "raid",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "386:speed:none",
       "method": "raid",
       "activityId": "main",
       "access": "unknown"
@@ -45016,8 +46446,8 @@
      "end": "2026-11-08"
     },
     "imageReviewed": true,
-    "contentHash": "18e229f7a1a01c1bc20035493aed4b8a6a8d381802d652ab96000562d6fbb9ae",
-    "revision": 12,
+    "contentHash": "b6a317f0772fe397a39d0bda8fa18b2eb119a9840b36f87d460116c33c734053",
+    "revision": 13,
     "amended": false,
     "native": false,
     "collection": "events"
@@ -46572,6 +48002,45 @@
      "collectionName": "Gigantamax Duraludon"
     },
     {
+     "key": "888:crowned-sword:none",
+     "speciesId": "888",
+     "formId": "crowned-sword",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Crowned Sword Zacian",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Crowned Sword Zacian"
+    },
+    {
+     "key": "888:crownedsword:none",
+     "speciesId": "888",
+     "formId": "crownedsword",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Zacian (Crowned Sword)",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Zacian (Crowned Sword)"
+    },
+    {
+     "key": "889:crownedshield:none",
+     "speciesId": "889",
+     "formId": "crownedshield",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Zamazenta (Crowned Shield)",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Zamazenta (Crowned Shield)"
+    },
+    {
      "key": "90:base:none",
      "speciesId": "90",
      "formId": null,
@@ -46791,6 +48260,24 @@
     {
      "identityKey": "884:gmax:none",
      "method": "other",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "888:crowned-sword:none",
+     "method": "raid",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "888:crownedsword:none",
+     "method": "raid",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "889:crownedshield:none",
+     "method": "raid",
      "activityId": "main",
      "access": "unknown"
     },
@@ -47238,6 +48725,26 @@
      {
       "identityKey": "884:gmax:none",
       "method": "other",
+      "activityId": "main",
+      "access": "unknown"
+     }
+    ],
+    "raid": [
+     {
+      "identityKey": "888:crowned-sword:none",
+      "method": "raid",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "888:crownedsword:none",
+      "method": "raid",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "889:crownedshield:none",
+      "method": "raid",
       "activityId": "main",
       "access": "unknown"
      }
@@ -51643,7 +53150,7 @@
     },
     "imageReviewed": true,
     "contentHash": "dce45278d164ec7d0efdbec4d901eac6f95e08bdec7b64c64c440d1336263583",
-    "revision": 30,
+    "revision": 32,
     "amended": true,
     "native": false,
     "collection": "world-events"
@@ -51960,7 +53467,7 @@
     "detailRefs": [],
     "legacyDates": {
      "start": "2026-10-24",
-     "end": "2026-10-24"
+     "end": "2026-11-10"
     },
     "contentHash": "03b9cd821a2bdae689822d2bf66d4eb84e71a3917228b761748e5416fdb8ce1a",
     "revision": 2,
@@ -52137,8 +53644,7 @@
        ],
        "status": "single"
       }
-     ],
-     "researchTasks": []
+     ]
     },
     "info": [],
     "detailRefs": [],
@@ -52831,7 +54337,7 @@
     },
     "imageReviewed": true,
     "contentHash": "4bbe2871a823eb21458a110b1a90a61e5fce0d1ddaa2d47d0d0671f282a84a9d",
-    "revision": 38,
+    "revision": 40,
     "amended": true,
     "native": false,
     "collection": "world-events"
@@ -53031,8 +54537,7 @@
        ],
        "status": "single"
       }
-     ],
-     "researchTasks": []
+     ]
     },
     "info": [],
     "detailRefs": [],
@@ -53085,7 +54590,7 @@
    "completeness": "partial",
    "lifecycle": "announced",
    "attendance": "in-person",
-   "location": "South Korea",
+   "location": "Japan",
    "image": null,
    "notes": [],
    "internalValidation": {
@@ -53099,8 +54604,8 @@
      "start": "2026-11-03",
      "end": "2026-11-03"
     },
-    "contentHash": "5cdd55e002ca42377352e7b637a57f2e39afa99cde6bbc64780733a9cc28f6b3",
-    "revision": 17,
+    "contentHash": "0ca84974cfa677f1be63ebd7712b231d3f83b8d9beb34b2f503e737968fe94fe",
+    "revision": 18,
     "amended": false,
     "native": false,
     "collection": "world-events"
@@ -53910,6 +55415,92 @@
   },
   {
    "schemaVersion": 1,
+   "eventId": "w-hatch-day-december",
+   "aliases": [],
+   "family": "other",
+   "title": "Hatch Day December",
+   "dateText": "",
+   "completeness": "partial",
+   "lifecycle": "announced",
+   "attendance": "",
+   "location": null,
+   "image": null,
+   "notes": [],
+   "internalValidation": {
+    "warnings": [],
+    "lifecycleDeclared": false,
+    "conflicts": [],
+    "fields": {
+     "bonuses": [],
+     "featured": [],
+     "raids": [],
+     "eggs": [
+      {
+       "text": "The Hatch Day event will take place on December 26, 2026 from 11 am to 5 pm. Stay tuned for more details.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      }
+     ],
+     "research": [],
+     "shiny": [],
+     "moves": [],
+     "costumes": [],
+     "tickets": [],
+     "dates": [
+      {
+       "text": "The Hatch Day event will take place on December 26, 2026 from 11 am to 5 pm. Stay tuned for more details.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      }
+     ]
+    },
+    "info": [],
+    "detailRefs": [],
+    "legacyDates": {
+     "start": "2026-12-26",
+     "end": "2026-12-26"
+    },
+    "imageReviewed": true,
+    "contentHash": "3a3e549399c37646f1b2b2f2fbcc048cf2b46036736a2d17cc5c5f8ffb6fa1d5",
+    "revision": 1,
+    "amended": false,
+    "native": false,
+    "collection": "world-events"
+   },
+   "schedule": null,
+   "activities": [],
+   "bonuses": [],
+   "research": [],
+   "passes": [],
+   "tickets": [],
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "url": "https://leekduck.com/events/hatch-day-december-2026/",
+     "auto": true
+    },
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/hatch-day-december-2026/"
+    },
+    {
+     "url": "https://leekduck.com/events/hatch-day-december-2026/",
+     "name": "Event source"
+    }
+   ],
+   "pokemon": [],
+   "encounters": [],
+   "groups": {}
+  },
+  {
+   "schemaVersion": 1,
    "eventId": "w-january-communityday2027",
    "aliases": [],
    "family": "other",
@@ -53943,8 +55534,7 @@
        ],
        "status": "single"
       }
-     ],
-     "researchTasks": []
+     ]
     },
     "info": [],
     "detailRefs": [],
@@ -54022,8 +55612,7 @@
        ],
        "status": "single"
       }
-     ],
-     "researchTasks": []
+     ]
     },
     "info": [],
     "detailRefs": [],
@@ -54291,6 +55880,178 @@
   },
   {
    "schemaVersion": 1,
+   "eventId": "w-max-battle-day-december",
+   "aliases": [],
+   "family": "max-battles",
+   "title": "Max Battle Day December",
+   "dateText": "",
+   "completeness": "partial",
+   "lifecycle": "announced",
+   "attendance": "",
+   "location": null,
+   "image": null,
+   "notes": [],
+   "internalValidation": {
+    "warnings": [],
+    "lifecycleDeclared": false,
+    "conflicts": [],
+    "fields": {
+     "bonuses": [],
+     "featured": [],
+     "raids": [
+      {
+       "text": "The Max Battle Day event will take place on December 5, 2026 from 2 pm to 5 pm. Stay tuned for more details.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      }
+     ],
+     "eggs": [],
+     "research": [],
+     "shiny": [],
+     "moves": [],
+     "costumes": [],
+     "tickets": [],
+     "dates": [
+      {
+       "text": "The Max Battle Day event will take place on December 5, 2026 from 2 pm to 5 pm. Stay tuned for more details.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      }
+     ]
+    },
+    "info": [],
+    "detailRefs": [],
+    "legacyDates": {
+     "start": "2026-12-05",
+     "end": "2026-12-05"
+    },
+    "imageReviewed": true,
+    "contentHash": "85ea472238a0e9a7d0cb89b556a2864680eb7a776bb6d60c55f467d4641bb5af",
+    "revision": 1,
+    "amended": false,
+    "native": false,
+    "collection": "world-events"
+   },
+   "schedule": null,
+   "activities": [],
+   "bonuses": [],
+   "research": [],
+   "passes": [],
+   "tickets": [],
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "url": "https://leekduck.com/events/max-battle-day-december-2026/",
+     "auto": true
+    },
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/max-battle-day-december-2026/"
+    },
+    {
+     "url": "https://leekduck.com/events/max-battle-day-december-2026/",
+     "name": "Event source"
+    }
+   ],
+   "pokemon": [],
+   "encounters": [],
+   "groups": {}
+  },
+  {
+   "schemaVersion": 1,
+   "eventId": "w-max-battle-day-january",
+   "aliases": [],
+   "family": "max-battles",
+   "title": "Max Battle Day January",
+   "dateText": "",
+   "completeness": "partial",
+   "lifecycle": "announced",
+   "attendance": "",
+   "location": null,
+   "image": null,
+   "notes": [],
+   "internalValidation": {
+    "warnings": [],
+    "lifecycleDeclared": false,
+    "conflicts": [],
+    "fields": {
+     "bonuses": [],
+     "featured": [],
+     "raids": [
+      {
+       "text": "The Max Battle Day event will take place on January 23, 2027 from 2 pm to 5 pm. Stay tuned for more details.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      }
+     ],
+     "eggs": [],
+     "research": [],
+     "shiny": [],
+     "moves": [],
+     "costumes": [],
+     "tickets": [],
+     "dates": [
+      {
+       "text": "The Max Battle Day event will take place on January 23, 2027 from 2 pm to 5 pm. Stay tuned for more details.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      }
+     ]
+    },
+    "info": [],
+    "detailRefs": [],
+    "legacyDates": {
+     "start": "2027-01-23",
+     "end": "2027-01-23"
+    },
+    "imageReviewed": true,
+    "contentHash": "0246080980d817f2821c56ca8c7e8dd6f22bdb9614f08a9caff2f03cfbf101e7",
+    "revision": 1,
+    "amended": false,
+    "native": false,
+    "collection": "world-events"
+   },
+   "schedule": null,
+   "activities": [],
+   "bonuses": [],
+   "research": [],
+   "passes": [],
+   "tickets": [],
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "url": "https://leekduck.com/events/max-battle-day-january-2027/",
+     "auto": true
+    },
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/max-battle-day-january-2027/"
+    },
+    {
+     "url": "https://leekduck.com/events/max-battle-day-january-2027/",
+     "name": "Event source"
+    }
+   ],
+   "pokemon": [],
+   "encounters": [],
+   "groups": {}
+  },
+  {
+   "schemaVersion": 1,
    "eventId": "w-mega-sableye-in-mega-raids",
    "aliases": [],
    "family": "other",
@@ -54419,6 +56180,72 @@
      }
     ]
    }
+  },
+  {
+   "schemaVersion": 1,
+   "eventId": "w-mexico-city-go-wild-area-2026",
+   "aliases": [],
+   "family": "wild-area",
+   "title": "Mexico City – GO Wild Area 2026",
+   "dateText": "",
+   "completeness": "partial",
+   "lifecycle": "announced",
+   "attendance": "in-person",
+   "location": "Mexico City, Mexico",
+   "image": "https://lh3.googleusercontent.com/NXf0bE0hth-k0bhU5KrTvSCe3O_ljWV8l6xevxlflPmzKQAndjYiBS_b0Dx4WkrhaehlqxBIFl8xAoapgJxLewPTqWBI-18vpJT124rauBIK",
+   "notes": [],
+   "internalValidation": {
+    "warnings": [],
+    "lifecycleDeclared": false,
+    "conflicts": [],
+    "fields": {},
+    "info": [],
+    "detailRefs": [],
+    "legacyDates": {
+     "start": "2026-11-06",
+     "end": "2026-11-08"
+    },
+    "contentHash": "7b51f01677d9f8325fdf5b131ebd898ccea0bd5b0e63f9e136c3b9ecd0ebc2c0",
+    "revision": 1,
+    "amended": false,
+    "native": false,
+    "collection": "world-events"
+   },
+   "schedule": null,
+   "activities": [],
+   "bonuses": [],
+   "research": [],
+   "passes": [],
+   "tickets": [],
+   "sources": [
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "url": "https://pokemongo.com/en/gowildarea/mexico-city/"
+    },
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "url": "https://leekduck.com/events/pokemon-go-wild-area-2026-mexico-city/"
+    },
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "url": "https://pokemongo.com/news/gowildarea-mexicocity-friday-update/"
+    },
+    {
+     "id": "serebii",
+     "name": "Serebii",
+     "url": "https://www.serebii.net/pokemongo/reallifeevents.shtml"
+    },
+    {
+     "url": "https://pokemongo.com/en/gowildarea/mexico-city/",
+     "name": "Event source"
+    }
+   ],
+   "pokemon": [],
+   "encounters": [],
+   "groups": {}
   },
   {
    "schemaVersion": 1,
@@ -59681,7 +61508,7 @@
      "end": "2027-04-11"
     },
     "contentHash": "84950064738e11a798ef98f9fd6ab913640b138fb1594e38612f64db09c4dd24",
-    "revision": 30,
+    "revision": 32,
     "amended": true,
     "native": false,
     "collection": "world-events"
@@ -60511,8 +62338,7 @@
        ],
        "status": "single"
       }
-     ],
-     "researchTasks": []
+     ]
     },
     "info": [],
     "detailRefs": [],
@@ -60598,8 +62424,7 @@
        ],
        "status": "single"
       }
-     ],
-     "researchTasks": []
+     ]
     },
     "info": [],
     "detailRefs": [],
@@ -60743,8 +62568,7 @@
        ],
        "status": "single"
       }
-     ],
-     "researchTasks": []
+     ]
     },
     "info": [],
     "detailRefs": [],
@@ -60830,8 +62654,7 @@
        ],
        "status": "single"
       }
-     ],
-     "researchTasks": []
+     ]
     },
     "info": [],
     "detailRefs": [],
@@ -61051,11 +62874,121 @@
     "lifecycleDeclared": false,
     "conflicts": [],
     "fields": {
-     "bonuses": [],
-     "featured": [],
-     "raids": [],
-     "eggs": [],
-     "research": [],
+     "bonuses": [
+      {
+       "text": "The following bonuses apply from 10:00 a.m. to 6:00 p.m. local time on both event days.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Daily Discoveries will be paused from November 9 at 12:01 a.m. through November 15, 2026, at 11:59 p.m. local time.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Ticket holders receive these benefits from 12:00 a.m. to 11:59 p.m. local time on both event days.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      }
+     ],
+     "featured": [
+      {
+       "text": "Steel- and Dragon-themed encounters rotate hourly from 10:00 a.m. to 6:00 p.m. on both event days.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "All Trainers can attract these mighty Pokémon on both event days. These encounters exclude Daily Adventure Incense.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Alolan Exeggutor",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      }
+     ],
+     "raids": [
+      {
+       "text": "Gigantamax Duraludon makes its Pokémon GO debut at Pokémon GO Wild Area! This larger-than-life Pokémon will appear in six-star Max Battles during the event.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "If you’re lucky, you may encounter a Shiny one!",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Dynamax Dialga and Dynamax Palkia make their Pokémon GO debuts during GO Wild Area 2026. Both can be Shiny!",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "For Global, Dynamax Dialga appears on Saturday, November 14 , and Dynamax Palkia appears on Sunday, November 15 .",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Starting with GO Wild Area 2026, Dynamax Battle lobbies offer Battle to match automatically with other Trainers or Private Group to join an existing group using its group code.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Machamp wearing a modern jacket appears in three-star raids during event hours. Leek Duck says it may be Shiny; the official event page does not confirm this.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Modern Jacket Machamp 100% IV CP Level 20 1746 Level 25 2183 Weather boosted in Counters",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      }
+     ],
+     "eggs": [
+      {
+       "text": "The following Pokémon hatch from 10 km Eggs obtained during the event. Ticket holders have an increased chance of receiving 10 km Eggs from PokéStops and Gyms.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      }
+     ],
+     "research": [
+      {
+       "text": "Event-themed Field Research is more likely to appear during the event. Complete tasks for encounters with event-themed Pokémon. Tasks and individual rewards have not yet been announced.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      }
+     ],
      "shiny": [
       {
        "text": "Looking to enhance your GO Wild Area weekend with exclusive Special Research, additional bonuses, and an increased chance of encountering Shiny Pokémon? Purchase a global event ticket from the Pokémon GO Web Store !",
@@ -61067,12 +63000,56 @@
       {
        "text": "Trainers may even encounter Shiny mighty Pokémon, if they’re lucky! Using the event-exclusive GO Safari Ball when trying to capture these Pokémon will greatly improve your chance of success.",
        "sources": [
-        "official"
+        "official",
+        "leekduck"
        ],
        "status": "official"
+      },
+      {
+       "text": "Dynamax Dialga and Dynamax Palkia make their Pokémon GO debuts during GO Wild Area 2026. Both can be Shiny!",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Ticket holders may attract mighty Latias and Latios with Incense, excluding Daily Adventure Incense, on both event days. Both can be Shiny and are quick to flee, so keep GO Safari Balls ready.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Mighty Pokémon are more likely to have high Attack, Defense, and HP ratings and be XL or XXL. They are harder to catch, and some may be Shiny. GO Safari Balls improve your chances of catching them.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Machamp wearing a modern jacket appears in three-star raids during event hours. Leek Duck says it may be Shiny; the official event page does not confirm this.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Lucky Trainers may encounter Shiny Pokémon. Completing Black Kyurem and White Kyurem raids awards Fusion Energy. Kyurem encountered in raids may know the Charged Attack Glaciate .",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
       }
      ],
-     "moves": [],
+     "moves": [
+      {
+       "text": "Certain Pokémon caught or evolved during the event will know the following featured attacks:",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      }
+     ],
      "costumes": [
       {
        "text": "Photo opportunities to capture the memories",
@@ -61119,17 +63096,111 @@
       {
        "text": "During the event, Machamp wearing a modern jacket, Dynamax Dialga, Dynamax Palkia, Reshiram, Zekrom, Kyurem, and Gigantamax Duraludon will all have a chance to have a new Special Background!",
        "sources": [
-        "official"
+        "official",
+        "leekduck"
        ],
        "status": "official"
+      },
+      {
+       "text": "Machamp wearing a modern jacket appears in three-star raids during event hours. Leek Duck says it may be Shiny; the official event page does not confirm this.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
       }
      ],
-     "tickets": [],
+     "tickets": [
+      {
+       "text": "These benefits apply from 10:00 a.m. to 6:00 p.m. local time on both event days. The ticketed Raid Pass and Max Particle limits replace the free limits.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Ticket holders can also attract the following Unown on both days.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Lucky ticket holders may also encounter these mighty Legendary Pokémon from Incense:",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Claim the event Special Research beginning November 14, 2026, at 10:00 a.m. local time . Choose a Steel-type or Dragon-type path ; your choice determines certain rewards and bonuses.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Steel Scholar medal: Earn 1 additional Candy XL for catching Steel-type mighty Pokémon (Trainers level 31+) and 1,000 additional Stardust for catching Steel-type mighty Pokémon.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Your chosen path’s bonuses begin when you claim its medal and last until November 15, 2026, at 6:00 p.m. local time . Start the research early to make the most of them!",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Completing the event Special Research also awards a new avatar pose .",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Trainers who attended an in-person GO Wild Area event can also receive this research by purchasing a separate Global ticket.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "The ticket covers both November 14 and 15 and includes the ticket holder bonuses, branching Special Research, additional Incense encounters, and hourly GO Safari Ball Supply Balloons described above.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Purchase the Global ticket .",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Unlock the GO Wild Area 2026 Tee (Purple) through the free GO Pass: Into the Wild . The paid GO Pass Deluxe: Into the Wild also includes Duraludon Pants as a progression reward.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Read the official announcement about the new GO Wild Area features .",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      }
+     ],
      "dates": [
       {
        "text": "10:00 a.m. to 6:00 p.m. local time",
        "sources": [
-        "official"
+        "official",
+        "leekduck"
        ],
        "status": "official"
       },
@@ -61139,30 +63210,68 @@
         "official"
        ],
        "status": "official"
+      },
+      {
+       "text": "Steel- and Dragon-themed encounters rotate hourly from 10:00 a.m. to 6:00 p.m. on both event days.",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
+      },
+      {
+       "text": "Your chosen path’s bonuses begin when you claim its medal and last until November 15, 2026, at 6:00 p.m. local time . Start the research early to make the most of them!",
+       "sources": [
+        "leekduck"
+       ],
+       "status": "single"
       }
      ]
     },
     "info": [],
-    "detailRefs": [],
+    "detailRefs": [
+     "leekduck:pokemon-go-wild-area-2026-global"
+    ],
     "legacyDates": {
      "start": "2026-11-14T10:00",
      "end": "2026-11-15T18:00"
     },
     "imageReviewed": true,
-    "contentHash": "d6f9a8f7aeff13fd556eb0e1be298037c819cc60ce3c3c4aaaa7729c5b54fe97",
-    "revision": 15,
+    "contentHash": "31e966418057bca88945bfbb0a9042f4533986237b5e41dd9a7de24bea669daf",
+    "revision": 16,
     "amended": false,
     "native": false,
     "collection": "events"
    },
    "schedule": null,
    "activities": [],
-   "bonuses": [],
+   "bonuses": [
+    {
+     "text": "The following bonuses apply from 10:00 a.m. to 6:00 p.m. local time on both event days.",
+     "sources": [
+      "leekduck"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Daily Discoveries will be paused from November 9 at 12:01 a.m. through November 15, 2026, at 11:59 p.m. local time.",
+     "sources": [
+      "leekduck"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Ticket holders receive these benefits from 12:00 a.m. to 11:59 p.m. local time on both event days.",
+     "sources": [
+      "leekduck"
+     ],
+     "status": "single"
+    }
+   ],
    "research": [
     {
-     "text": "Earn a Research Stamp on seven different days to unlock a Research Breakthrough encounter with one of the following Season-themed Pokémon , as listed in our Field Research and Research Breakthrough guide .",
+     "text": "Event-themed Field Research is more likely to appear during the event. Complete tasks for encounters with event-themed Pokémon. Tasks and individual rewards have not yet been announced.",
      "sources": [
-      "hub"
+      "leekduck"
      ],
      "status": "single"
     }
@@ -61170,9 +63279,86 @@
    "passes": [],
    "tickets": [
     {
-     "text": "The November GO Pass starts on Tuesday, November 3, at 10:00 a.m. local time , and progression ends on Tuesday, December 1, at 10:00 a.m. local time .",
+     "text": "These benefits apply from 10:00 a.m. to 6:00 p.m. local time on both event days. The ticketed Raid Pass and Max Particle limits replace the free limits.",
      "sources": [
-      "hub"
+      "leekduck"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Ticket holders can also attract the following Unown on both days.",
+     "sources": [
+      "leekduck"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Lucky ticket holders may also encounter these mighty Legendary Pokémon from Incense:",
+     "sources": [
+      "leekduck"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Claim the event Special Research beginning November 14, 2026, at 10:00 a.m. local time . Choose a Steel-type or Dragon-type path ; your choice determines certain rewards and bonuses.",
+     "sources": [
+      "leekduck"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Steel Scholar medal: Earn 1 additional Candy XL for catching Steel-type mighty Pokémon (Trainers level 31+) and 1,000 additional Stardust for catching Steel-type mighty Pokémon.",
+     "sources": [
+      "leekduck"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Your chosen path’s bonuses begin when you claim its medal and last until November 15, 2026, at 6:00 p.m. local time . Start the research early to make the most of them!",
+     "sources": [
+      "leekduck"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Completing the event Special Research also awards a new avatar pose .",
+     "sources": [
+      "leekduck"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Trainers who attended an in-person GO Wild Area event can also receive this research by purchasing a separate Global ticket.",
+     "sources": [
+      "leekduck"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "The ticket covers both November 14 and 15 and includes the ticket holder bonuses, branching Special Research, additional Incense encounters, and hourly GO Safari Ball Supply Balloons described above.",
+     "sources": [
+      "leekduck"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Purchase the Global ticket .",
+     "sources": [
+      "leekduck"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Unlock the GO Wild Area 2026 Tee (Purple) through the free GO Pass: Into the Wild . The paid GO Pass Deluxe: Into the Wild also includes Duraludon Pants as a progression reward.",
+     "sources": [
+      "leekduck"
+     ],
+     "status": "single"
+    },
+    {
+     "text": "Read the official announcement about the new GO Wild Area features .",
+     "sources": [
+      "leekduck"
      ],
      "status": "single"
     }
@@ -61199,9 +63385,54 @@
      "name": "Pokémon GO Hub",
      "trust": "community",
      "url": "https://pokemongohub.net/post/event/this-week-in-pokemon-go-november-9-15-go-wild-area-global-into-the-wild-and-minior-showers/"
+    },
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "trust": "community",
+     "url": "https://leekduck.com/events/pokemon-go-wild-area-2026-global/"
     }
    ],
    "pokemon": [
+    {
+     "key": "103:alola:none",
+     "speciesId": "103",
+     "formId": "alola",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Alolan Exeggutor",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Alolan Exeggutor"
+    },
+    {
+     "key": "129:base:none",
+     "speciesId": "129",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Magikarp",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Magikarp"
+    },
+    {
+     "key": "137:base:none",
+     "speciesId": "137",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Porygon",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Porygon"
+    },
     {
      "key": "147:base:none",
      "speciesId": "147",
@@ -61214,6 +63445,84 @@
      "debut": null,
      "boostedShiny": null,
      "collectionName": "Dratini"
+    },
+    {
+     "key": "184:base:none",
+     "speciesId": "184",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Azumarill",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Azumarill"
+    },
+    {
+     "key": "207:base:none",
+     "speciesId": "207",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Gligar",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Gligar"
+    },
+    {
+     "key": "212:base:none",
+     "speciesId": "212",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Scizor",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Scizor"
+    },
+    {
+     "key": "213:base:none",
+     "speciesId": "213",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Shuckle",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Shuckle"
+    },
+    {
+     "key": "227:base:none",
+     "speciesId": "227",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Skarmory",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Skarmory"
+    },
+    {
+     "key": "230:base:none",
+     "speciesId": "230",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Kingdra",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Kingdra"
     },
     {
      "key": "239:base:none",
@@ -61255,6 +63564,19 @@
      "collectionName": "Galarian Zigzagoon"
     },
     {
+     "key": "27:alola:none",
+     "speciesId": "27",
+     "formId": "alola",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Alolan Sandshrew",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Alolan Sandshrew"
+    },
+    {
      "key": "298:base:none",
      "speciesId": "298",
      "formId": null,
@@ -61268,6 +63590,214 @@
      "collectionName": "Azurill"
     },
     {
+     "key": "299:base:none",
+     "speciesId": "299",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Nosepass",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Nosepass"
+    },
+    {
+     "key": "304:base:none",
+     "speciesId": "304",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Aron",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Aron"
+    },
+    {
+     "key": "306:base:none",
+     "speciesId": "306",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Aggron",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Aggron"
+    },
+    {
+     "key": "328:base:none",
+     "speciesId": "328",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Trapinch",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Trapinch"
+    },
+    {
+     "key": "330:base:none",
+     "speciesId": "330",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Flygon",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Flygon"
+    },
+    {
+     "key": "333:base:none",
+     "speciesId": "333",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Swablu",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Swablu"
+    },
+    {
+     "key": "339:base:none",
+     "speciesId": "339",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Barboach",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Barboach"
+    },
+    {
+     "key": "371:base:none",
+     "speciesId": "371",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Bagon",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Bagon"
+    },
+    {
+     "key": "374:base:none",
+     "speciesId": "374",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Beldum",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Beldum"
+    },
+    {
+     "key": "380:base:none",
+     "speciesId": "380",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Latias",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Latias"
+    },
+    {
+     "key": "381:base:none",
+     "speciesId": "381",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Latios",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Latios"
+    },
+    {
+     "key": "393:base:none",
+     "speciesId": "393",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Piplup",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Piplup"
+    },
+    {
+     "key": "395:base:none",
+     "speciesId": "395",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Empoleon",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Empoleon"
+    },
+    {
+     "key": "410:base:none",
+     "speciesId": "410",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Shieldon",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Shieldon"
+    },
+    {
+     "key": "436:base:none",
+     "speciesId": "436",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Bronzor",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Bronzor"
+    },
+    {
+     "key": "443:base:none",
+     "speciesId": "443",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Gible",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Gible"
+    },
+    {
      "key": "446:base:none",
      "speciesId": "446",
      "formId": null,
@@ -61279,6 +63809,32 @@
      "debut": null,
      "boostedShiny": null,
      "collectionName": "Munchlax"
+    },
+    {
+     "key": "448:base:none",
+     "speciesId": "448",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Lucario",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Lucario"
+    },
+    {
+     "key": "462:base:none",
+     "speciesId": "462",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Magnezone",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Magnezone"
     },
     {
      "key": "483:base:none",
@@ -61307,6 +63863,45 @@
      "collectionName": "Palkia"
     },
     {
+     "key": "4:base:none",
+     "speciesId": "4",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Charmander",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Charmander"
+    },
+    {
+     "key": "50:alola:none",
+     "speciesId": "50",
+     "formId": "alola",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Alolan Diglett",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Alolan Diglett"
+    },
+    {
+     "key": "529:base:none",
+     "speciesId": "529",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Drilbur",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Drilbur"
+    },
+    {
      "key": "52:galar:none",
      "speciesId": "52",
      "formId": "galar",
@@ -61318,6 +63913,71 @@
      "debut": null,
      "boostedShiny": null,
      "collectionName": "Galarian Meowth"
+    },
+    {
+     "key": "534:base:none",
+     "speciesId": "534",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Conkeldurr",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Conkeldurr"
+    },
+    {
+     "key": "597:base:none",
+     "speciesId": "597",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Ferroseed",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Ferroseed"
+    },
+    {
+     "key": "599:base:none",
+     "speciesId": "599",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Klink",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Klink"
+    },
+    {
+     "key": "602:base:none",
+     "speciesId": "602",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Tynamo",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Tynamo"
+    },
+    {
+     "key": "610:base:none",
+     "speciesId": "610",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Axew",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Axew"
     },
     {
      "key": "618:galar:none",
@@ -61346,6 +64006,110 @@
      "collectionName": "Druddigon"
     },
     {
+     "key": "631:base:none",
+     "speciesId": "631",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Heatmor",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Heatmor"
+    },
+    {
+     "key": "632:base:none",
+     "speciesId": "632",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Durant",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Durant"
+    },
+    {
+     "key": "633:base:none",
+     "speciesId": "633",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Deino",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Deino"
+    },
+    {
+     "key": "635:base:none",
+     "speciesId": "635",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Hydreigon",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Hydreigon"
+    },
+    {
+     "key": "643:base:none",
+     "speciesId": "643",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Reshiram",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Reshiram"
+    },
+    {
+     "key": "644:base:none",
+     "speciesId": "644",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Zekrom",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Zekrom"
+    },
+    {
+     "key": "646:black:none",
+     "speciesId": "646",
+     "formId": "black",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Kyurem (Black)",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Kyurem (Black)"
+    },
+    {
+     "key": "646:white:none",
+     "speciesId": "646",
+     "formId": "white",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Kyurem (White)",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Kyurem (White)"
+    },
+    {
      "key": "679:base:none",
      "speciesId": "679",
      "formId": null,
@@ -61370,6 +64134,149 @@
      "debut": null,
      "boostedShiny": null,
      "collectionName": "Machamp (modern jacket)"
+    },
+    {
+     "key": "690:base:none",
+     "speciesId": "690",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Skrelp",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Skrelp"
+    },
+    {
+     "key": "696:base:none",
+     "speciesId": "696",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Tyrunt",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Tyrunt"
+    },
+    {
+     "key": "698:base:none",
+     "speciesId": "698",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Amaura",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Amaura"
+    },
+    {
+     "key": "704:base:none",
+     "speciesId": "704",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Goomy",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Goomy"
+    },
+    {
+     "key": "707:base:none",
+     "speciesId": "707",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Klefki",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Klefki"
+    },
+    {
+     "key": "714:base:none",
+     "speciesId": "714",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Noibat",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Noibat"
+    },
+    {
+     "key": "776:base:none",
+     "speciesId": "776",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Turtonator",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Turtonator"
+    },
+    {
+     "key": "780:base:none",
+     "speciesId": "780",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Drampa",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Drampa"
+    },
+    {
+     "key": "782:base:none",
+     "speciesId": "782",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Jangmo-o",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Jangmo-o"
+    },
+    {
+     "key": "81:base:none",
+     "speciesId": "81",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Magnemite",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Magnemite"
+    },
+    {
+     "key": "821:base:none",
+     "speciesId": "821",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Rookidee",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Rookidee"
     },
     {
      "key": "850:base:none",
@@ -61398,6 +64305,19 @@
      "collectionName": "Impidimp"
     },
     {
+     "key": "884:base:none",
+     "speciesId": "884",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Duraludon",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Duraludon"
+    },
+    {
      "key": "884:gmax:none",
      "speciesId": "884",
      "formId": "gmax",
@@ -61409,6 +64329,19 @@
      "debut": null,
      "boostedShiny": null,
      "collectionName": "Gigantamax Duraludon"
+    },
+    {
+     "key": "90:base:none",
+     "speciesId": "90",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Shellder",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Shellder"
     },
     {
      "key": "926:base:none",
@@ -61424,6 +64357,32 @@
      "collectionName": "Fidough"
     },
     {
+     "key": "957:base:none",
+     "speciesId": "957",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Tinkatink",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Tinkatink"
+    },
+    {
+     "key": "95:base:none",
+     "speciesId": "95",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Onix",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Onix"
+    },
+    {
      "key": "968:base:none",
      "speciesId": "968",
      "formId": null,
@@ -61435,6 +64394,19 @@
      "debut": null,
      "boostedShiny": null,
      "collectionName": "Orthworm"
+    },
+    {
+     "key": "996:base:none",
+     "speciesId": "996",
+     "formId": null,
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Frigibax",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Frigibax"
     }
    ],
    "encounters": [
@@ -61493,6 +64465,18 @@
      "access": "unknown"
     },
     {
+     "identityKey": "707:base:none",
+     "method": "egg",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "780:base:none",
+     "method": "egg",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
      "identityKey": "850:base:none",
      "method": "egg",
      "activityId": "main",
@@ -61505,8 +64489,86 @@
      "access": "unknown"
     },
     {
+     "identityKey": "884:base:none",
+     "method": "egg",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
      "identityKey": "926:base:none",
      "method": "egg",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "103:alola:none",
+     "method": "incense",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "184:base:none",
+     "method": "incense",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "212:base:none",
+     "method": "incense",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "230:base:none",
+     "method": "incense",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "306:base:none",
+     "method": "incense",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "330:base:none",
+     "method": "incense",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "380:base:none",
+     "method": "incense",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "381:base:none",
+     "method": "incense",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "395:base:none",
+     "method": "incense",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "462:base:none",
+     "method": "incense",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "534:base:none",
+     "method": "incense",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "635:base:none",
+     "method": "incense",
      "activityId": "main",
      "access": "unknown"
     },
@@ -61553,6 +64615,30 @@
      "access": "unknown"
     },
     {
+     "identityKey": "643:base:none",
+     "method": "raid",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "644:base:none",
+     "method": "raid",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "646:black:none",
+     "method": "raid",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "646:white:none",
+     "method": "raid",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
      "identityKey": "68:base:modernjacket",
      "method": "raid",
      "activityId": "main",
@@ -61561,6 +64647,270 @@
     {
      "identityKey": "968:base:none",
      "method": "raid",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "129:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "137:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "147:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "207:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "213:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "227:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "27:alola:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "299:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "304:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "328:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "333:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "339:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "371:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "374:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "393:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "4:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "410:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "436:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "443:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "448:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "50:alola:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "529:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "597:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "599:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "602:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "610:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "618:galar:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "631:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "632:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "633:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "690:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "696:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "698:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "704:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "714:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "776:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "782:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "81:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "821:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "850:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "90:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "95:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "957:base:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "996:base:none",
+     "method": "wild",
      "activityId": "main",
      "access": "unknown"
     }
@@ -61622,6 +64972,18 @@
       "access": "unknown"
      },
      {
+      "identityKey": "707:base:none",
+      "method": "egg",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "780:base:none",
+      "method": "egg",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
       "identityKey": "850:base:none",
       "method": "egg",
       "activityId": "main",
@@ -61634,8 +64996,88 @@
       "access": "unknown"
      },
      {
+      "identityKey": "884:base:none",
+      "method": "egg",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
       "identityKey": "926:base:none",
       "method": "egg",
+      "activityId": "main",
+      "access": "unknown"
+     }
+    ],
+    "incense": [
+     {
+      "identityKey": "103:alola:none",
+      "method": "incense",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "184:base:none",
+      "method": "incense",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "212:base:none",
+      "method": "incense",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "230:base:none",
+      "method": "incense",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "306:base:none",
+      "method": "incense",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "330:base:none",
+      "method": "incense",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "380:base:none",
+      "method": "incense",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "381:base:none",
+      "method": "incense",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "395:base:none",
+      "method": "incense",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "462:base:none",
+      "method": "incense",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "534:base:none",
+      "method": "incense",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "635:base:none",
+      "method": "incense",
       "activityId": "main",
       "access": "unknown"
      }
@@ -61686,6 +65128,30 @@
       "access": "unknown"
      },
      {
+      "identityKey": "643:base:none",
+      "method": "raid",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "644:base:none",
+      "method": "raid",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "646:black:none",
+      "method": "raid",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "646:white:none",
+      "method": "raid",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
       "identityKey": "68:base:modernjacket",
       "method": "raid",
       "activityId": "main",
@@ -61694,6 +65160,272 @@
      {
       "identityKey": "968:base:none",
       "method": "raid",
+      "activityId": "main",
+      "access": "unknown"
+     }
+    ],
+    "wild": [
+     {
+      "identityKey": "129:base:none",
+      "method": "wild",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "137:base:none",
+      "method": "wild",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "147:base:none",
+      "method": "wild",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "207:base:none",
+      "method": "wild",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "213:base:none",
+      "method": "wild",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "227:base:none",
+      "method": "wild",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "27:alola:none",
+      "method": "wild",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "299:base:none",
+      "method": "wild",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "304:base:none",
+      "method": "wild",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "328:base:none",
+      "method": "wild",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "333:base:none",
+      "method": "wild",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "339:base:none",
+      "method": "wild",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "371:base:none",
+      "method": "wild",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "374:base:none",
+      "method": "wild",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "393:base:none",
+      "method": "wild",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "4:base:none",
+      "method": "wild",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "410:base:none",
+      "method": "wild",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "436:base:none",
+      "method": "wild",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "443:base:none",
+      "method": "wild",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "448:base:none",
+      "method": "wild",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "50:alola:none",
+      "method": "wild",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "529:base:none",
+      "method": "wild",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "597:base:none",
+      "method": "wild",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "599:base:none",
+      "method": "wild",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "602:base:none",
+      "method": "wild",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "610:base:none",
+      "method": "wild",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "618:galar:none",
+      "method": "wild",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "631:base:none",
+      "method": "wild",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "632:base:none",
+      "method": "wild",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "633:base:none",
+      "method": "wild",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "690:base:none",
+      "method": "wild",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "696:base:none",
+      "method": "wild",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "698:base:none",
+      "method": "wild",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "704:base:none",
+      "method": "wild",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "714:base:none",
+      "method": "wild",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "776:base:none",
+      "method": "wild",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "782:base:none",
+      "method": "wild",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "81:base:none",
+      "method": "wild",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "821:base:none",
+      "method": "wild",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "850:base:none",
+      "method": "wild",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "90:base:none",
+      "method": "wild",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "95:base:none",
+      "method": "wild",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "957:base:none",
+      "method": "wild",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "996:base:none",
+      "method": "wild",
       "activityId": "main",
       "access": "unknown"
      }
@@ -61968,7 +65700,7 @@
    "lifecycle": "announced",
    "attendance": "",
    "location": "Play from anywhere",
-   "image": "https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-11-14-pokemon-go-wild-area-2026-global/key-art.jpg",
+   "image": "https://lh3.googleusercontent.com/YUIF2HkGZlw3tWumDXClx0cVYphD-ugVYTs5VBU5-ccb5o-1UWVTy8NYqJboA-fVPrmtncsb7Ql_6eebA8I-YyxFtIHO2yIiMwmb5qlg3JA",
    "notes": [],
    "internalValidation": {
     "warnings": [],
@@ -62092,11 +65824,19 @@
      ],
      "shiny": [
       {
-       "text": "If you’re lucky, you may encounter a Shiny one!",
+       "text": "Looking to enhance your GO Wild Area weekend with exclusive Special Research, additional bonuses, and an increased chance of encountering Shiny Pokémon? Purchase a global event ticket from the Pokémon GO Web Store !",
        "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Trainers may even encounter Shiny mighty Pokémon, if they’re lucky! Using the event-exclusive GO Safari Ball when trying to capture these Pokémon will greatly improve your chance of success.",
+       "sources": [
+        "official",
         "leekduck"
        ],
-       "status": "single"
+       "status": "official"
       },
       {
        "text": "Dynamax Dialga and Dynamax Palkia make their Pokémon GO debuts during GO Wild Area 2026. Both can be Shiny!",
@@ -62145,25 +65885,54 @@
      ],
      "costumes": [
       {
-       "text": "The best way to experience Pokémon GO Wild Area is in-person. Meet you out there, Trainers!",
+       "text": "Photo opportunities to capture the memories",
        "sources": [
         "official"
        ],
        "status": "official"
       },
       {
-       "text": "—The Pokémon GO team",
+       "text": "Fun activities with local Community Ambassadors and their communities",
        "sources": [
         "official"
        ],
        "status": "official"
       },
       {
-       "text": "After a successful catch from raids or Max Battles, Machamp wearing a modern jacket, Dynamax Dialga, Dynamax Palkia, Reshiram, Zekrom, Kyurem, and Gigantamax Duraludon have a chance to have a new Special Background .",
+       "text": "Pokémon GO event pins and prints (while supplies last)",
        "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Timed Research when you check in at the official meetup",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "We are also partnering with local Community Ambassadors to add more PokéStops, Gyms, and Powerspots near the event area for these community meetups.",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Look at the drip on Machamp! Machamp wearing a modern jacket* will appear in three-star raids on Saturday and Sunday.",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "During the event, Machamp wearing a modern jacket, Dynamax Dialga, Dynamax Palkia, Reshiram, Zekrom, Kyurem, and Gigantamax Duraludon will all have a chance to have a new Special Background!",
+       "sources": [
+        "official",
         "leekduck"
        ],
-       "status": "single"
+       "status": "official"
       },
       {
        "text": "Machamp wearing a modern jacket appears in three-star raids during event hours. Leek Duck says it may be Shiny; the official event page does not confirm this.",
@@ -62261,42 +66030,22 @@
      ],
      "dates": [
       {
-       "text": "Suwon, Korea Date: November 14 and November 15, 2026 Location: Time Villas Suwon, 134 Sehwa-ro, Gwonseon-gu, Suwon-si, Gyeonggi-do, South Korea Time: 10:00 a.m. – 6:00 p.m. (local time) *Event details can be found here .",
+       "text": "10:00 a.m. to 6:00 p.m. local time",
+       "sources": [
+        "official",
+        "leekduck"
+       ],
+       "status": "official"
+      },
+      {
+       "text": "Please note that Daily Discoveries will not take place from November 9 at 12:01 a.m. to November 15, 2026, at 11:59 p.m. local time.",
        "sources": [
         "official"
        ],
        "status": "official"
       },
       {
-       "text": "The following bonuses apply from 10:00 a.m. to 6:00 p.m. local time on both event days.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Ticket holders receive these benefits from 12:00 a.m. to 11:59 p.m. local time on both event days.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "They can only be used from 10:00 a.m. to 6:00 p.m. local time on event days and become inaccessible after the event ends.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
        "text": "Steel- and Dragon-themed encounters rotate hourly from 10:00 a.m. to 6:00 p.m. on both event days.",
-       "sources": [
-        "leekduck"
-       ],
-       "status": "single"
-      },
-      {
-       "text": "Claim the event Special Research beginning November 14, 2026, at 10:00 a.m. local time . Choose a Steel-type or Dragon-type path ; your choice determines certain rewards and bonuses.",
        "sources": [
         "leekduck"
        ],
@@ -62318,8 +66067,8 @@
      "end": "2026-11-15"
     },
     "imageReviewed": true,
-    "contentHash": "3e56995cacd1b88c840fa1163e4fe926d584046b688ca157a33de2d176f49934",
-    "revision": 17,
+    "contentHash": "1aff4df80f6d0be7fc22992c550a19f6d7150b92cf461bdc0590e8c359464f8f",
+    "revision": 18,
     "amended": false,
     "native": false,
     "collection": "worldEvents"
@@ -62467,6 +66216,18 @@
     {
      "url": "https://leekduck.com/events/pokemon-go-wild-area-2026-global/",
      "name": "Event source"
+    },
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "trust": "official",
+     "url": "https://pokemongo.com/news/gowa-global-europe-2026/"
+    },
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "trust": "official",
+     "url": "https://pokemongo.com/en/gowildarea/global/"
     }
    ],
    "pokemon": [
@@ -63043,6 +66804,32 @@
      "collectionName": "Zekrom"
     },
     {
+     "key": "646:black:none",
+     "speciesId": "646",
+     "formId": "black",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Kyurem (Black)",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Kyurem (Black)"
+    },
+    {
+     "key": "646:white:none",
+     "speciesId": "646",
+     "formId": "white",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Kyurem (White)",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Kyurem (White)"
+    },
+    {
      "key": "679:base:none",
      "speciesId": "679",
      "formId": null,
@@ -63382,6 +67169,18 @@
     },
     {
      "identityKey": "644:base:none",
+     "method": "raid",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "646:black:none",
+     "method": "raid",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "646:white:none",
      "method": "raid",
      "activityId": "main",
      "access": "unknown"
@@ -63761,6 +67560,18 @@
      },
      {
       "identityKey": "644:base:none",
+      "method": "raid",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "646:black:none",
+      "method": "raid",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "646:white:none",
       "method": "raid",
       "activityId": "main",
       "access": "unknown"
@@ -64588,7 +68399,7 @@
   },
   {
    "collection": "world-events",
-   "records": 65
+   "records": 64
   },
   {
    "collection": "regional-events",

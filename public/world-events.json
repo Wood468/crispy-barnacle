@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-10T13:03:07.875Z",
+ "updated": "2026-11-10T21:49:28.570Z",
  "events": [
   {
    "id": "w-pokemon-fossil-museum-2026",
@@ -307,6 +307,30 @@
    "seen": "2026-11-10"
   },
   {
+   "id": "w-celebrate-the-pok-mon-night-out-events-in-pok-mon-",
+   "name": "Pokémon Night Out events in Pokémon GO!: Los Angeles",
+   "place": "Los Angeles, USA",
+   "area": "Americas",
+   "scope": "regional",
+   "start": "2026-10-24",
+   "end": "2026-11-10",
+   "datesKnown": true,
+   "sources": [
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "url": "https://pokemongo.com/news/pokemon-night-out-irl-details2026/"
+    },
+    {
+     "id": "serebii",
+     "name": "Serebii",
+     "url": "https://www.serebii.net/pokemongo/reallifeevents.shtml"
+    }
+   ],
+   "status": "official",
+   "seen": "2026-11-10"
+  },
+  {
    "id": "w-pok-mon-go-dia-de-muertos-2026-mexico-exclusive-ev",
    "name": "Dia de Muertos 2026: Mexico",
    "place": "Paseo de la Reforma, Mexico City, Mexico",
@@ -331,25 +355,6 @@
    "seen": "2026-10-24"
   },
   {
-   "id": "w-mega-sableye-in-mega-raids",
-   "name": "Mega Sableye in Mega Raids",
-   "place": "",
-   "area": "Worldwide",
-   "scope": "global",
-   "start": "2026-10-28",
-   "end": "2026-11-08",
-   "datesKnown": true,
-   "sources": [
-    {
-     "id": "leekduck",
-     "name": "Leek Duck",
-     "url": "https://leekduck.com/events/mega-sableye-in-mega-raids-october-2026/"
-    }
-   ],
-   "status": "single",
-   "seen": "2026-11-10"
-  },
-  {
    "id": "w-halloween",
    "name": "Halloween 2026 Part 2",
    "place": "",
@@ -372,7 +377,7 @@
   {
    "id": "w-forever-stamp-rally-go-wild-area",
    "name": "Forever Stamp Rally Go Wild Area",
-   "place": "South Korea",
+   "place": "Japan",
    "area": "Asia",
    "scope": "regional",
    "start": "2026-11-03",
@@ -382,29 +387,15 @@
     {
      "id": "official",
      "name": "Pokémon GO (official)",
-     "url": "https://pokemongo.com/ko/news/forever-stamp-rally-go-wild-area-2026/"
+     "url": "https://pokemongo.com/ja/news/forever-stamp-rally-go-wild-area-2026/"
+    },
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "url": "https://pokemongo.com/ja/news/go-wild-area-stamp-rally-details-2026/"
     }
    ],
    "status": "official",
-   "seen": "2026-11-10"
-  },
-  {
-   "id": "w-giratina-altered-forme-in-5-star-raid-battles",
-   "name": "Giratina (Altered Forme) in 5-star Raid Battles",
-   "place": "",
-   "area": "Worldwide",
-   "scope": "global",
-   "start": "2026-11-04",
-   "end": "2026-11-08",
-   "datesKnown": true,
-   "sources": [
-    {
-     "id": "leekduck",
-     "name": "Leek Duck",
-     "url": "https://leekduck.com/events/giratina-altered-forme-in-5-star-raid-battles-november-2026/"
-    }
-   ],
-   "status": "single",
    "seen": "2026-11-10"
   },
   {
@@ -428,8 +419,8 @@
    "mode": "in-game"
   },
   {
-   "id": "w-pok-mon-go-wild-area-2026-mexico-city",
-   "name": "Pokémon GO Wild Area 2026: Mexico City",
+   "id": "w-mexico-city-go-wild-area-2026",
+   "name": "Mexico City – GO Wild Area 2026",
    "place": "Mexico City, Mexico",
    "area": "Americas",
    "scope": "regional",
@@ -438,14 +429,14 @@
    "datesKnown": true,
    "sources": [
     {
-     "id": "leekduck",
-     "name": "Leek Duck",
-     "url": "https://leekduck.com/events/pokemon-go-wild-area-2026-mexico-city/"
-    },
-    {
      "id": "official",
      "name": "Pokémon GO (official)",
      "url": "https://pokemongo.com/en/gowildarea/mexico-city/"
+    },
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "url": "https://leekduck.com/events/pokemon-go-wild-area-2026-mexico-city/"
     },
     {
      "id": "official",
@@ -824,25 +815,6 @@
    "seen": "2026-10-19"
   },
   {
-   "id": "w-max-battle-day",
-   "name": "Max Battle Day",
-   "place": "",
-   "area": "Worldwide",
-   "scope": "global",
-   "start": "2026-12-05",
-   "end": "2026-12-05",
-   "datesKnown": true,
-   "sources": [
-    {
-     "id": "leekduck",
-     "name": "Leek Duck",
-     "url": "https://leekduck.com/events/max-battle-day-december-2026/"
-    }
-   ],
-   "status": "single",
-   "seen": "2026-11-10"
-  },
-  {
    "id": "w-pok-mon-30th-anniversary-mall-exploration-sm-north",
    "name": "Pokémon 30th Anniversary Mall Exploration: SM North EDSA",
    "place": "Philippines (SM North EDSA)",
@@ -939,25 +911,6 @@
    ],
    "status": "single",
    "seen": "2026-11-09"
-  },
-  {
-   "id": "w-hatch-day",
-   "name": "Hatch Day",
-   "place": "",
-   "area": "Worldwide",
-   "scope": "global",
-   "start": "2026-12-26",
-   "end": "2026-12-26",
-   "datesKnown": true,
-   "sources": [
-    {
-     "id": "leekduck",
-     "name": "Leek Duck",
-     "url": "https://leekduck.com/events/hatch-day-december-2026/"
-    }
-   ],
-   "status": "single",
-   "seen": "2026-11-10"
   },
   {
    "id": "w-january-communitydayclassic2027",
@@ -1093,25 +1046,6 @@
     }
    ],
    "status": "official",
-   "seen": "2026-11-10"
-  },
-  {
-   "id": "w-max-battle-day-2027-01-23",
-   "name": "Max Battle Day",
-   "place": "",
-   "area": "Worldwide",
-   "scope": "global",
-   "start": "2027-01-23",
-   "end": "2027-01-23",
-   "datesKnown": true,
-   "sources": [
-    {
-     "id": "leekduck",
-     "name": "Leek Duck",
-     "url": "https://leekduck.com/events/max-battle-day-january-2027/"
-    }
-   ],
-   "status": "single",
    "seen": "2026-11-10"
   },
   {
@@ -1306,6 +1240,66 @@
    ],
    "status": "official",
    "seen": "2026-11-02"
+  },
+  {
+   "id": "w-max-battle-day-december",
+   "name": "Max Battle Day December",
+   "place": "",
+   "area": "Worldwide",
+   "scope": "global",
+   "start": "2026-12-05",
+   "end": "2026-12-05",
+   "datesKnown": true,
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "url": "https://leekduck.com/events/max-battle-day-december-2026/",
+     "auto": true
+    }
+   ],
+   "status": "single",
+   "seen": "2026-11-10"
+  },
+  {
+   "id": "w-hatch-day-december",
+   "name": "Hatch Day December",
+   "place": "",
+   "area": "Worldwide",
+   "scope": "global",
+   "start": "2026-12-26",
+   "end": "2026-12-26",
+   "datesKnown": true,
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "url": "https://leekduck.com/events/hatch-day-december-2026/",
+     "auto": true
+    }
+   ],
+   "status": "single",
+   "seen": "2026-11-10"
+  },
+  {
+   "id": "w-max-battle-day-january",
+   "name": "Max Battle Day January",
+   "place": "",
+   "area": "Worldwide",
+   "scope": "global",
+   "start": "2027-01-23",
+   "end": "2027-01-23",
+   "datesKnown": true,
+   "sources": [
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "url": "https://leekduck.com/events/max-battle-day-january-2027/",
+     "auto": true
+    }
+   ],
+   "status": "single",
+   "seen": "2026-11-10"
   }
  ]
 }
