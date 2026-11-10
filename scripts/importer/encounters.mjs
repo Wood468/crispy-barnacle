@@ -39,7 +39,7 @@ export function extractEncounters(input,{dex=[],names=[],costumes=[]}={}){
     // exact form identities, not ordinary Zacian or Zamazenta sprites.
     const crowned=/^Crowned (Sword|Shield) (Zacian|Zamazenta)$/i.exec(label);
     const base=crowned&&known.get(crowned[2].toLowerCase());
-    if(base&&base.speciesId&&((crowned[1].toLowerCase()==='sword'&&crowned[2].toLowerCase()==='zacian')||(crowned[1].toLowerCase()==='shield'&&crowned[2].toLowerCase()==='zamazenta')))declared={name:label,speciesId:base.speciesId};
+    if(base&&base.speciesId&&((crowned[1].toLowerCase()==='sword'&&crowned[2].toLowerCase()==='zacian')||(crowned[1].toLowerCase()==='shield'&&crowned[2].toLowerCase()==='zamazenta')))declared={name:label,speciesId:base.speciesId,formId:'crowned-'+crowned[1].toLowerCase(),collectionName:label};
    }
    if(!declared)continue;
    if(method==='max'&&!declared.costume&&declared.speciesId&&!/^(?:dynamax|gigantamax)\b|\(/i.test(declared.name))declared={...declared,name:'Dynamax '+declared.name};
