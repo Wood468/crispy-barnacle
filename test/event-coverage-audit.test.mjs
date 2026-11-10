@@ -32,3 +32,17 @@ test('empty inputs produce stable zero-event report',()=>{
  assert.equal(report.total,0);
  assert.deepEqual(report.counts,{});
 });
+
+test('source-only announcements are included instead of disappearing from the audit',()=>{
+ const report=auditEvents({events:[{id:'known',t:'Known'}]},{events:{
+   known:{fields:{}},
+   'leekduck:future-event':{name:'Future Event',fields:{research:[{text:'Catch five',status:'single'}]}}
+ }});
+ assert.equal(report.total,2);
+ assert.equal(report.curatedCount,1);
+ assert.equal(report.sourceOnlyCount,1);
+ const future=report.events.find(e=>e.id==='leekduck:future-event');
+ assert.equal(future.name,'Future Event');
+ assert.equal(future.origin,'source-only');
+ assert.equal(future.checks.sourceResearch,true);
+});
