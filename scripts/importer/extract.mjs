@@ -148,12 +148,14 @@ export function extractFields(html, options={}) {
       continue;
     }
     if (cur) add(cur, l.text);
-    if (cur === "research") {
-      const task = parseResearchTask(l.text, researchKind, declaredNames);
-      if (task) {
-        const key = JSON.stringify([task.category, task.task.toLowerCase(), task.rewards]);
-        if (!out.researchTasks.some(x => JSON.stringify([x.category, x.task.toLowerCase(), x.rewards]) === key)) out.researchTasks.push(task);
-      }
+    // Explicit task + reward rows can appear beneath event, raid or general
+    // headings. Parse only self-contained rows with a recognizable task verb
+    // and reward, never infer a reward from surrounding descriptive prose.
+    const task = parseResearchTask(l.text, cur === "research" ? researchKind : "research", declaredNames);
+    if (task) {
+      const key = JSON.stringify([task.category, task.task.toLowerCase(), task.rewards]);
+      if (!out.researchTasks.some(x => JSON.stringify([x.category, x.task.toLowerCase(), x.rewards]) === key)) out.researchTasks.push(task);
+      add("research", l.text);
     }
     for (const [f, re] of LINE) if (re.test(l.text) && f !== cur) add(f, l.text);
   }
