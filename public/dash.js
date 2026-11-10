@@ -1264,7 +1264,8 @@
         var label=active?'Current raid rotation':offset===0?'Next raid rotation · '+fmtD(pd(r.s))+', '+fmtT(pd(r.s)):pd(r.s)<=a?'At start of week':upcoming;
         return {r:r,label:label,cls:active?'rw-current':'rw-next'};
       });
-      if (!rotationRows.length) body += '<p class="empty">No raid rotation published for this week yet.</p>';
+      var hasEventRaidDays=(D.events||[]).some(function(ev){return (ev.raidDays||[]).some(function(slot){var start=pd(slot.date+'T00:00');return start<end&&addDays(start,1)>a&&addDays(start,1)>t;});});
+      if (!rotationRows.length && !hasEventRaidDays) body += '<p class="empty">No raid rotation published for this week yet.</p>';
       rotationRows.forEach(function (row) {
         var r = row.r;
         body += '<div class="rw-raid ' + row.cls + '"><span class="rw-label">' + esc(row.label) + '</span><p class="rw-window">' + esc(fmtD(pd(r.s)) + ', ' + fmtT(pd(r.s)) + ' – ' + fmtD(pd(r.e)) + ', ' + fmtT(pd(r.e))) + ' · local time</p>' + '<div class="rw-rel">' + windowChip(+pd(r.s), +pd(r.e)) + eventLink(r.event) + '</div>' + raidSourceLink(r) + '<div class="rcs">' +
@@ -1296,7 +1297,7 @@
         return '<div class="rw-max"><span class="rw-label">'+label+'</span><p class="rw-window">'+esc(fmtD(pd(mb[0]+'T12:00'))+' – '+fmtD(pd(mb[1]+'T12:00')))+' · local dates</p><div class="rw-max-pokemon">'+monArt({kind:'max',tags:[],name:''},{name:mb[2]},'ea')+'<div><b>'+esc(mb[2])+'</b><small>Featured at Power Spots</small></div></div>'+(civil(pd(mb[0]+'T12:00')).weekday===1?'<p class="muted">Max Monday spotlight · '+esc(fmtD(pd(mb[0]+'T12:00')))+' · 6 am–9 pm local time</p>':'')+'</div>';
       }).join('') : '';
       var related=maxEvents(a,end);
-      if(!battles.length)body+=eventMaxRoster(related);
+      if(!battles.length && !hasEventRaidDays)body+=eventMaxRoster(related);
       if(related.length)body+='<section class="rw-event-links"><h3>Max Battle events</h3>'+related.map(function(event){return '<button type="button" class="rw-max-event" data-open="'+esc(event.id)+'"><b>'+esc(event.name)+'</b><span>'+esc(timeMeta(event))+'</span>'+(event.region?'<small>'+esc(event.region)+'</small>':'')+'</button>';}).join('')+'</section>';
       return '<article class="rotc rw-card"><div class="rw-week-head"><span class="kind">' + esc(offset === 0 ? 'This week' : 'Week of ' + fmtD(a)) + '</span><b>' + esc(range(a,b)) + '</b></div>' + body + '</article>';
     }
