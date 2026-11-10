@@ -1,5 +1,5 @@
 /* GO Field Notes offline shell. Never cache /api/*, including private user-state and notification responses. */
-const SHELL_CACHE = 'gofn-shell-v278';
+const SHELL_CACHE = 'gofn-shell-v279';
 const SHELL_URLS = [
   '/', '/index.html', '/offline.html', '/offline.css',
   /* Versioned code and styles are listed once, exactly as index.html, app.js and dash.js request them. Any other ?v= (or unversioned) request is answered offline by the ignoreSearch fallback below. */
