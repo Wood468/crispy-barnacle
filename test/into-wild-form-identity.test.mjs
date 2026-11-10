@@ -59,3 +59,37 @@ test('a lightweight API event cannot erase exact form schedule from matching cur
  assert.deepEqual(sourceBackedActivitiesFor('unrelated',feedCopy,curated),[],
   'do not borrow a different event\'s bosses from a similar name or date');
 });
+
+test('real importer artwork-name options cannot erase Dex IDs or exact Crowned/Dynamax forms', async()=> {
+ const {researchOptions}=await import('../scripts/importer/extract.mjs');
+ const {reconcileActivityEncounters,extractEncounters}=await import('../scripts/importer/encounters.mjs');
+ const data=JSON.parse(readFileSync(new URL('../public/data.json',import.meta.url),'utf8'));
+ const dex=JSON.parse(readFileSync(new URL('../public/dex.json',import.meta.url),'utf8'));
+ const activities=data.events.find(e=>e.id==='into').activities;
+ // Actual importer passes *all* Dex names plus art/form names. Previously
+ // the aliases overwrote known speciesIds, and explicit form aliases became
+ // truthy untyped candidates, preventing correct Crowned / Max identities.
+ const names=researchOptions({dex,names:[
+  'Crowned Sword Zacian','Crowned Shield Zamazenta',
+  'Dynamax Registeel','Dynamax Regidrago',
+  'Dynamax Latias','Dynamax Latios'
+ ]}).pokemonNames;
+ const seed={pokemon:[{key:'379:base:none',speciesId:'379',formId:null,costumeId:null,name:'Registeel',shiny:'unknown'}],
+  encounters:[{identityKey:'379:base:none',method:'max',activityId:'main',access:'unknown'}],encounterConflicts:[]};
+ const result=reconcileActivityEncounters(seed,activities,{dex,names});
+ for(const [id,form,method] of [
+  ['888','crowned-sword','raid'],['889','crowned-shield','raid'],
+  ['379','dynamax','max'],['895','dynamax','max'],
+  ['380','dynamax','max'],['381','dynamax','max']
+ ]){
+  const p=result.pokemon.find(p=>p.speciesId===id&&p.formId===form);
+  assert.ok(p,'missing exact '+id+':'+form+' with artwork alias candidates');
+  assert.ok(result.encounters.some(e=>e.method===method&&e.identityKey===p.key));
+  assert.ok(!result.encounters.some(e=>e.method===method&&e.identityKey===id+':base:none'),
+    'wrong base sprite must not survive the typed method');
+ }
+ const plain=extractEncounters([{text:'Raids',t:'h',level:2},{text:'Zacian',t:'li'}],{dex,names});
+ const p=plain.pokemon.find(p=>p.speciesId==='888');
+ assert.ok(p&&p.formId===null,'plain species from the Dex retains its species ID');
+ assert.ok(plain.encounters.some(e=>e.method==='raid'&&e.identityKey===p.key));
+});

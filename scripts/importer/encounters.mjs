@@ -9,7 +9,11 @@ export function methodForHeading(text){return HEADS.find(([,pattern])=>pattern.t
 export function extractEncounters(input,{dex=[],names=[],costumes=[]}={}){
  adapter.configureSpecies(dex);adapter.configureCostumes(costumes);
  const known=new Map(dex.map(p=>[p[1].toLowerCase(),{name:p[1],speciesId:String(p[0])}]));
- names.forEach(name=>{if(typeof name==='string')known.set(name.toLowerCase(),{name});});
+ // Supplementary artwork/reward names are candidate labels, not a new Dex.
+ // The real importer includes every Dex name in this list: overwriting those
+ // entries would discard speciesId, and exact Crowned/Dynamax names would
+ // become truthy, untyped aliases that bypass the form-specific resolver.
+ names.forEach(name=>{if(typeof name==='string'&&!known.has(name.toLowerCase()))known.set(name.toLowerCase(),{name});});
  costumes.forEach(p=>{if(p&&p.name&&p.label)[p.name+' ('+p.label+')',p.name+' wearing '+p.label,p.name+' wearing a '+p.label,p.name+' wearing an '+p.label,p.name+' wearing the '+p.label].forEach(k=>known.set(k.toLowerCase(),{name:p.name,label:p.label,costume:true}));});
  const speciesByDex=new Map(dex.map(p=>[Number(p[0]),p[1]]));
  const pokemon=new Map(),encounters=[],lines=Array.isArray(input)?input:htmlToLines(input);let method=null,methodLevel=0;
@@ -24,7 +28,11 @@ export function extractEncounters(input,{dex=[],names=[],costumes=[]}={}){
    let label=item.replace(/\s+\d+%\s*IV\s+CP\b.*$/i,'').replace(/\s+Counters$/i,'').trim(),shiny='unknown',boostedShiny=null;
    const claim=/\s*\((shiny available|boosted shiny|increased shiny (?:chance|odds)|not shiny eligible)\)$/i.exec(label);
    if(claim){shiny=/not /i.test(claim[1])?'no':'yes';boostedShiny=/boosted|increased/i.test(claim[1])?true:null;label=label.slice(0,claim.index).trim();}
-   let declared=known.get(label.toLowerCase());
+   const candidate=known.get(label.toLowerCase());
+   // An art-only alias lacks a species identity. Resolve its explicit form
+   // against a real Dex base first; retain unknown aliases only as a final
+   // conservative fallback after the declared form checks below.
+   let declared=candidate&&candidate.speciesId?candidate:null;
    if(!declared){
     // "Zacian (Crowned Sword)": a published form of a known species is an exact identity (never a costume guess or a base-species substitute).
     const form=/^(.+?)\s+\(((?:crowned (?:sword|shield)|(?:altered|origin|incarnate|therian|attack|defense|speed|normal|sky|land|east|west|black|white)(?: forme?)?|alolan|galarian|hisuian|paldean))\)$/i.exec(label);
@@ -41,6 +49,7 @@ export function extractEncounters(input,{dex=[],names=[],costumes=[]}={}){
     const base=crowned&&known.get(crowned[2].toLowerCase());
     if(base&&base.speciesId&&((crowned[1].toLowerCase()==='sword'&&crowned[2].toLowerCase()==='zacian')||(crowned[1].toLowerCase()==='shield'&&crowned[2].toLowerCase()==='zamazenta')))declared={name:label,speciesId:base.speciesId,formId:'crowned-'+crowned[1].toLowerCase(),collectionName:label};
    }
+   if(!declared)declared=candidate||null;
    if(!declared)continue;
    if(method==='max'&&!declared.costume&&declared.speciesId&&!/^(?:dynamax|gigantamax)\b|\(/i.test(declared.name))declared={...declared,name:'Dynamax '+declared.name};
    const p=adapter.pokemon({...declared,shiny,boostedShiny}),prior=pokemon.get(p.key);
