@@ -35,3 +35,9 @@ test("browser renderers consume the one shared esc implementation", () => {
   assert.match(lib, /esc: esc/);
   assert.match(app, /esc:esc/);
 });
+
+test("HTML entity-encoded event labels remain literal after escaping", () => {
+  const input = "Pokémon & Mighty Incense: <svg onload=alert(1)> &lt;img&gt; &#x3c;script&#x3e;";
+  const expected = "Pokémon &amp; Mighty Incense: &lt;svg onload=alert(1)&gt; &amp;lt;img&amp;gt; &amp;#x3c;script&amp;#x3e;";
+  assert.equal(GOLIB.esc(input), expected);
+});
