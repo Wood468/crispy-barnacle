@@ -52,7 +52,7 @@
       var r = R.cheapest({ region: 'ID', product: o.product }, obs, { coinBalance: balance, packs: packs });
       var b = r.best; if (!b) return '';
       return '<div class="sp-r sp-regional-row"><span class="sp-n">' + esc(o.product) + '</span><span class="sp-regional-value"><b>' + esc(R.fmt(b.cash, b.currency)) + '</b> <small>'
-        + esc((b.isEstimate ? 'Estimate. ' : '') + 'cheapest: ' + b.channelLabel + (b.coinsUsed ? ', using ' + b.coinsUsed + ' coins' : '') + (b.leftoverCoins > 0 ? '; ' + b.leftoverCoins + ' coins left unused' : '')) + '</small></span></div>';
+        + esc('Lowest verified observed: ' + b.channelLabel + ', checked ' + when(b.price.observed) + (b.coinsUsed ? ', using ' + b.coinsUsed + ' coins' : '') + (b.leftoverCoins > 0 ? '; ' + b.leftoverCoins + ' coins left unused' : '') + '. Not a live checkout quote.') + '</small></span></div>';
     }).join('');
   }
   function regional(data) {
@@ -64,7 +64,7 @@
     return '<details class="storep storep-regional"><summary>Regional prices <small>Australia Web, Indonesia Web, India in-app</small></summary>'
       + '<p class="note">Each price keeps its own country, purchase channel and date. Verified means read from that Store on that date. An estimate is modelled from comparable products and is never a checkout price. A channel is only suggested where it has been observed.</p>'
       + '<h4>Verified, Indonesia Web Store</h4>' + verified.map(row).join('')
-      + '<h4>Cheapest realistic option <small>Indonesia</small></h4><label class="sp-coins">PokéCoins in hand <input type="number" inputmode="numeric" min="0" step="1" value="' + balance + '" data-sp-coins aria-label="PokéCoins you already hold"></label>'
+      + '<h4>Lowest verified observed option <small>Indonesia, comparable offers only</small></h4><p class="note">Recorded and estimated prices are informational, not candidates for lowest price. Different currencies are never compared without sourced conversion.</p><label class="sp-coins">PokéCoins in hand <input type="number" inputmode="numeric" min="0" step="1" value="' + balance + '" data-sp-coins aria-label="PokéCoins you already hold"></label>'
       + '<div data-sp-cheapest>' + cheapestHtml(obs, balance) + '</div>'
       + (other.length ? '<details class="sp-more"><summary>Recorded earlier, not re-checked (' + other.length + ')</summary>' + other.map(row).join('') + '</details>' : '')
       + (items.length ? '<h4>All known Store items and regional prices</h4>' + items.map(function (p) {
