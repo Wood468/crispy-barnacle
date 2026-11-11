@@ -414,6 +414,44 @@ test("Minior Showers source research table yields explicit tasks without treatin
 });
 
 
+
+test("repeated research rows are separate source-backed tasks, but matching sources do not multiply them", () => {
+  // Both Minior Shower research pages list five identical Use a Star Piece
+  // rows in the regular 1/1 stage. These are five tasks, not one duplicated
+  // piece of article prose. Completion rewards must never become tasks.
+  const rows = [
+    { text: "Minior Shower Timed Research (1/1)", t: "h" },
+    { text: "Task | Rewards", t: "p" },
+    { text: "Claim Reward! | 1 × Star Piece", t: "p" },
+    ...Array.from({ length: 5 }, () => ({
+      text: "Use a Star Piece | 7740 × Stardust", t: "p"
+    })),
+    { text: "Rewards | 77,400 × Stardust", t: "p" },
+    { text: "Bonus Timed Research (1/1)", t: "h" },
+    { text: "Claim Reward! | 1 × Star Piece", t: "p" },
+    { text: "Use a Star Piece | 774 × Stardust", t: "p" },
+    { text: "Rewards | 1000000 × Stardust", t: "p" },
+  ];
+  const source = extractFields(rows);
+  const regular = source.researchTasks.filter(t => t.task === "Use a Star Piece" &&
+    t.rewards.some(r => r.name === "Stardust" && r.quantity === 7740));
+  assert.equal(regular.length, 5, "every identical published row is a distinct task");
+  assert.deepEqual(regular.map(t => t.occurrence), [1, 2, 3, 4, 5]);
+  assert.equal(source.researchTasks.length, 8, "main and bonus research contain eight individual tasks");
+  assert.equal(source.researchTasks.filter(t => /reward/i.test(t.task) && /^Rewards$/i.test(t.task)).length, 0);
+
+  const merged = mergeSources([
+    { source: { id: "hub", name: "GO Hub", trust: "community", url: "https://example.org/minior" }, fields: source },
+    { source: { id: "second", name: "Independent source", trust: "community", url: "https://example.org/other" }, fields: extractFields(rows) }
+  ]);
+  assert.equal(merged.researchTasks.length, 8,
+    "two matching write-ups must corroborate eight tasks, not create sixteen");
+  const mergedRegular = merged.researchTasks.filter(t => t.task === "Use a Star Piece" &&
+    t.rewards.some(r => r.quantity === 7740));
+  assert.deepEqual(mergedRegular.map(t => t.occurrence), [1, 2, 3, 4, 5]);
+  assert.ok(merged.researchTasks.every(t => t.status === "corroborated" && t.sourceRefs.length === 2));
+});
+
 test("Hub event articles use an exact detail ID and do not become duplicate Minior events", () => {
   const data = JSON.parse(readFileSync("public/data.json", "utf8"));
   const curated = data.events.filter(e => ["minior", "minior2", "minior3"].includes(e.id))
@@ -450,7 +488,7 @@ test("canonical Minior research retains sourced tasks across optional bonus trac
       assert.ok(tasks.some(t => t.task === task && t.rewards?.some(r => r.name === reward && r.quantity === amount)),
         id + ": missing sourced task " + task + " / " + amount + " " + reward);
     }
-    assert.equal(new Set(tasks.map(t => JSON.stringify([t.category, t.task, t.rewards]))).size, tasks.length,
+    assert.equal(new Set(tasks.map(t => JSON.stringify([t.category, t.task, t.rewards, t.occurrence || 1]))).size, tasks.length,
       id + " must not duplicate identical tasks within one named research track");
     assert.ok(tasks.every(t => t.eventId === id && t.eventWindow.start === event.s && t.eventWindow.end === event.e), id);
     assert.ok(tasks.every(t => t.status === "single" && t.sourceRefs.some(s => s.id === "hub" && s.url.includes("pokemongohub.net/post/event/"))), id);
