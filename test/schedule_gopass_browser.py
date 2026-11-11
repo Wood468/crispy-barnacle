@@ -104,7 +104,7 @@ with sync_playwright() as p:
         for rank in ('Rank 45', 'Rank 100'):
             milestone = ranges.filter(has_text=rank).first
             assert milestone.count() == 1, (width, rank, 'published milestone missing')
-            if not milestone.evaluate('(el) => el.open):
+            if not milestone.evaluate('(el) => el.open'):
                 milestone.locator('summary').click()
         into_pass = page.locator('#evd .evd-sec[data-sec="passes"]').inner_text()
         assert 'Dynamax Meltan' in into_pass and 'Silver Bottle Cap' in into_pass, into_pass[:600]
