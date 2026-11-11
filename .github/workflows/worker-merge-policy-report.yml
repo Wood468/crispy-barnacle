@@ -1,0 +1,51 @@
+name: Worker merge eligibility (report only)
+
+# This workflow uses trusted default-branch code only, no PR-head checkout,
+# and a read-only GitHub token. It NEVER merges, approves or deploys.
+on:
+  pull_request_target:
+    types: [opened, reopened, synchronize, ready_for_review, converted_to_draft, edited, labeled, unlabeled]
+  workflow_run:
+    workflows: ["Tests"]
+    types: [completed]
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        description: "Existing worker PR to assess without mutation"
+        required: true
+        type: number
+
+permissions:
+  contents: read
+  pull-requests: read
+  issues: read
+  actions: read
+
+jobs:
+  report:
+    # Do not run any untrusted code from the PR head. PR heads from other
+    # actors are excluded; all metadata is checked again by the evaluator.
+    if: >-
+      (github.event_name == 'workflow_dispatch') ||
+      (github.event_name == 'pull_request_target' &&
+       startsWith(github.event.pull_request.head.ref, 'worker/review-')) ||
+      (github.event_name == 'workflow_run' &&
+       github.event.workflow_run.event == 'pull_request' &&
+       startsWith(github.event.workflow_run.head_branch, 'worker/review-'))
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout trusted default-branch policy only
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: main
+          persist-credentials: false
+      - name: Use Node.js
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: "22"
+      - name: Evaluate approved worker contract and full CI (non-blocking)
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          POLICY_PR_NUMBER: ${{ github.event.pull_request.number || github.event.workflow_run.pull_requests[0].number || inputs.pr_number }}
+        run: node scripts/worker-merge-policy-report.mjs
