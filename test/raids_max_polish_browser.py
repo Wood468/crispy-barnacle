@@ -31,8 +31,8 @@ with sync_playwright() as p:
   z=root.locator('.rc[data-boss="Crowned Sword Zacian"]')
   assert z.count()==1 and '100% IV 2,188' in z.inner_text() and 'Weather 2,735' in z.inner_text(),(width,z.inner_text())
   assert z.locator('.rc-tier-corner').inner_text()=='5★'
-   assert z.locator('.rc-tier-corner img[src="/ico/g/raid.webp"]').count()==1
-   assert z.locator('.rc-iv-catch[aria-label*="100% IV raid catch CP"]').count()==1
+  assert z.locator('.rc-tier-corner img[src="/ico/g/raid.webp"]').count()==1
+  assert z.locator('.rc-iv-catch[aria-label*="100% IV raid catch CP"]').count()==1
   assert 'Raid Hour: Crowned Sword Zacian, Mon Nov 9' in root.inner_text()
   assert root.locator('.rw-raid:not(.rw-event-day) .rw-rel .rc-event[data-open]').count()==1
   assert root.locator('.rw-count-live').first.inner_text().startswith('Ends in ')
