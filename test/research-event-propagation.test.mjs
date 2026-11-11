@@ -26,6 +26,7 @@ for (const id of ['minior','minior2']) {
   const tasks=event.research.filter(row=>row&&typeof row.task==='string');
   const sourcedTasks=detail.researchTasks;
   assert.ok(sourcedTasks.length>=2,'expected published source-backed tasks');
+  // Five separately claimable identical Timed Research steps must survive\n  // regeneration, canonical compilation and the rendered task gallery.\n  const timedStarPieces=rows=>rows.filter(row=>row.category==='timed'&&row.task==='Use a Star Piece'&&\n    row.rewards?.some(reward=>reward.name==='Stardust'&&reward.quantity===7740));\n  assert.deepEqual(timedStarPieces(sourcedTasks).map(row=>row.occurrence),[1,2,3,4,5],\n    'regeneration must retain five source-backed individual Timed Research occurrences');\n  assert.equal(timedStarPieces(tasks).length,5,\n    'canonical event contract must not collapse repeated Timed Research steps');
   assert.equal(View.researchTaskCount(event.research),sourcedTasks.length,
     'every imported individual task, including optional bonus tracks, reaches the event contract');
   const signature=row=>JSON.stringify([row.category,row.task,(row.rewards||[]).map(reward=>[reward.name,reward.quantity])]);
