@@ -111,6 +111,9 @@ with sync_playwright() as p:
             assert page.locator('#evd .evd-nav-link[tabindex="0"]').count() == 1
             assert page.locator('#evd .evd-nav-link[tabindex="-1"]').count() == page.locator('#evd .evd-nav-link').count()-1
             assert page.evaluate('document.querySelector("#evd").scrollWidth <= innerWidth')
+            if sec != 'overview':
+                heading = page.locator(f'#evd-h-{sec}').bounding_box()
+                assert heading and 0 <= heading['y'] < 844, (width, sec, heading, 'selected heading offscreen')
 
         def tap(sec):
             page.locator(f'#evd .evd-nav-link[data-sec="{sec}"]').click()
