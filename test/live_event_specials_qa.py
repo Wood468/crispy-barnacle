@@ -198,7 +198,10 @@ def inspect(page, width: int) -> dict:
             if name.startswith(("Dynamax ", "Gigantamax ")):
                 art = boss.locator(".ue-raid-day-art img.art").first
                 assert art.count() == 1, f"{width}px: {date} {name} missing form artwork"
-                art.scroll_into_view_if_needed(timeout=15000)
+                # CSS animates the Dynamax glow continuously, so Playwright's
+                # scroll_into_view_if_needed() will never see a "stable" image.
+                # Browser-native scrolling has no stability precondition.
+                art.evaluate("(img) => img.scrollIntoView({block: 'center', behavior: 'instant'})")
                 art.evaluate("(img) => img.decode()", timeout=20000)
                 visual = art.evaluate("""(img) => ({
                     src: img.getAttribute('src'),
