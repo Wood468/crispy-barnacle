@@ -52,6 +52,24 @@ def main():
          "start": "2026-11-06",
          "end": "2026-11-08",
          "sources": [{"url": "https://example.test/mexico"}]},
+        {"id": "fixture-ongoing-sendai",
+         "name": "Ongoing Stamp Rally: Sendai",
+         "place": "Sendai and Tohoku, Japan",
+         "area": "Asia",
+         "scope": "regional",
+         "start": "2026-10-25T16:00:00-07:00",
+         "end": "",
+         "ongoing": True,
+         "sources": [{"url": "https://example.test/stamp-rally"}]},
+        {"id": "fixture-ongoing-mexico",
+         "name": "Ongoing Stamp Rally: Mexico City",
+         "place": "Mexico City, Mexico",
+         "area": "Americas",
+         "scope": "regional",
+         "start": "2026-10-25T16:00:00-07:00",
+         "end": "",
+         "ongoing": True,
+         "sources": [{"url": "https://example.test/stamp-rally"}]},
         {"id": "fixture-global",
          "name": "Global In-Game Fixture",
          "place": "",
@@ -140,6 +158,15 @@ def main():
             expect("Travel shows physical destinations but excludes global and regional in-game events",
                    "Kyoto, Japan" in travel_text and "Mexico City, Mexico" in travel_text and
                    "Global In-Game Fixture" not in travel_text and "Regional In-Game Fixture" not in travel_text, travel_text)
+            ongoing_travel = page.locator("#travel-results").inner_text()
+            expect("ongoing Sendai and Mexico City both appear as independently labelled destinations",
+                   "Ongoing Stamp Rally: Sendai" in ongoing_travel and
+                   "Ongoing Stamp Rally: Mexico City" in ongoing_travel and
+                   ongoing_travel.count("Ongoing · no announced end") >= 2,
+                   ongoing_travel)
+            expect("open-ended source does not leak an invented year-9999 end into Travel",
+                   "9999" not in ongoing_travel and "31 Dec" not in ongoing_travel,
+                   ongoing_travel)
             expect("Travel is independent of per-event hide preferences and has no global hide control",
                    "Mexico City Wild Area Fixture" in travel_text and
                    page.locator("#travel-results [data-hide]").count() == 0, travel_text)
@@ -213,6 +240,14 @@ def main():
                    overseas.count() == 1 and overseas.is_visible() and "Kyoto, Japan" in overseas_text, overseas_text)
             expect("overseas event is labelled and stays in the unfolded Today flow",
                    overseas.count() == 1 and "Overseas" in overseas_text and not overseas.evaluate("el => !!el.closest('details,[hidden]')"))
+            stamp_rows = page.locator("#today-v1 .t1-reg").filter(has_text="Ongoing Stamp Rally")
+            stamp_text = stamp_rows.all_inner_texts()
+            expect("ongoing multi-city Stamp Rallies stay visible on Today as two overseas rows",
+                   stamp_rows.count() == 2 and all("Overseas" in t and "In person" in t for t in stamp_text),
+                   stamp_text)
+            expect("ongoing cards have honest labels, not an end countdown or fake calendar end",
+                   all("Ongoing · no announced end" in t and "9999" not in t for t in stamp_text),
+                   stamp_text)
             regional_game = page.locator("#today-v1 .t1-reg").filter(has_text="Regional In-Game Fixture")
             regional_text = regional_game.inner_text() if regional_game.count() else ""
             expect("regional in-game event remains visible on Today",

@@ -207,6 +207,13 @@ test("service worker install fails (keeping the old shell) when a required scrip
   assert.match(String(r.error && r.error.message), /Shell precache incomplete.*app\.js/);
   assert.equal(r.skipped, false);
 });
+test("service worker refuses to activate when required event data cannot be cached, preserving the old installed shell", async () => {
+  const missing = await runInstall(url => url === "/data.json");
+  assert.match(String(missing.error && missing.error.message), /Shell precache incomplete.*data\.json/);
+  assert.equal(missing.skipped, false, "must not call skipWaiting before core data exists");
+  assert.equal(missing.stored.has("/data.json"), false, "a missing bootstrap file cannot masquerade as precached");
+  assert.ok(missing.stored.has("/index.html"), "an incomplete new shell may contain pages but never activates");
+});
 test("service worker install tolerates optional data files failing and retries transient failures", async () => {
   const seen = new Set();
   const optional = await runInstall(url => url.includes("/prices.json"));

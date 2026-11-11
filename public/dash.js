@@ -941,10 +941,11 @@
       if (!e.start) return { undated: true, catalogueId:e.id, name: e.name, place: e.place, area: e.area, scope: e.scope, mode: e.mode || '', src: src };
       var startValue = String(e.start), startIsDateOnly = /^\d{4}-\d{2}-\d{2}$/.test(startValue);
       /* A date-only start can safely mean the whole local calendar day. A timed event needs an explicit end. */
-      if (!e.end && !startIsDateOnly) return { undated: true, catalogueId:e.id, name: e.name, place: e.place, area: e.area, scope: e.scope, mode: e.mode || '', src: src };
-      var s0 = worldDate(startValue, false), e0 = worldDate(String(e.end || e.start), !!e.end || startIsDateOnly);
+      if (!e.end && !startIsDateOnly && !e.ongoing) return { undated: true, catalogueId:e.id, name: e.name, place: e.place, area: e.area, scope: e.scope, mode: e.mode || '', src: src };
+      /* Internal validity horizon only. The source-backed record keeps end:"", and every visible date label uses "ongoing" rather than this sentinel. */
+      var s0 = worldDate(startValue, false), e0 = e.ongoing && !e.end ? new Date('9999-12-31T23:59:59Z') : worldDate(String(e.end || e.start), !!e.end || startIsDateOnly);
       if (!Number.isFinite(s0.getTime()) || !Number.isFinite(e0.getTime()) || e0 < s0) return { undated: true, catalogueId:e.id, name: e.name, place: e.place, area: e.area, scope: e.scope, mode: e.mode || '', src: src };
-      return { id: e.id, catalogueId:e.id, name: e.name, place: e.place || '', area: LIB.isGlobalEvent(e) ? 'In the game' : e.area, scope: LIB.isGlobalEvent(e) ? 'global' : (e.scope || 'regional'), mode: e.mode || '', start: s0, end: e0, sourceStart: startValue, sourceEnd: String(e.end || e.start), long: (e0 - s0) > 14 * 864e5, src: src };
+      return { id: e.id, catalogueId:e.id, name: e.name, place: e.place || '', area: LIB.isGlobalEvent(e) ? 'In the game' : e.area, scope: LIB.isGlobalEvent(e) ? 'global' : (e.scope || 'regional'), mode: e.mode || '', start: s0, end: e0, sourceStart: startValue, sourceEnd: e.ongoing && !e.end ? '' : String(e.end || e.start), ongoing: !!(e.ongoing && !e.end), long: !!e.ongoing || (e0 - s0) > 14 * 864e5, src: src };
     });
     /* An announcement with no dates of its own (e.g. Gigantamax Duraludon at the Sendai Wild Area) takes the dates of the
        dated event at the same place whose name it shares a distinctive word with. */
@@ -1010,7 +1011,7 @@
   function agendaInner(it, isReg) {
     if (isReg) {
       var mult = it.end.getTime() - it.start.getTime() > 864e5;
-      var when = it.travel ? travelDateText(it) : (mult ? fmtRangeD(it.start, it.end) : fmtD(it.start));
+      var when = it.ongoing ? 'Ongoing · no announced end' : it.travel ? travelDateText(it) : (mult ? fmtRangeD(it.start, it.end) : fmtD(it.start));
       return '<a class="agr reg"'+catalogueDetailAttr(it)+' href="' + esc(it.src.url) + '" target="_blank" rel="noopener noreferrer" style="--k:' + REGCOL + '"><i></i><span class="agt"><b>' + esc(it.name) + '</b><small>' + (it.place ? esc(it.place) + ' · ' : '') + esc(when) + '</small></span><em>' + (regInPerson(it) ? 'In person · ' : '') + esc(it.area) + '</em></a>';
     }
     var k = kindOf(it);
@@ -1027,6 +1028,7 @@
     return day + ' ' + MON[month] + ' ' + year;
   }
   function travelDateText(it) {
+    if (it.ongoing) return 'Ongoing · no announced end';
     var a = travelDateLabel(it.sourceStart), b = travelDateLabel(it.sourceEnd);
     if (a && b) return a === b ? a : a + ' – ' + b;
     return it.start && it.end ? (fmtD(it.start) === fmtD(it.end) ? fmtD(it.start) : fmtD(it.start) + ' – ' + fmtD(it.end)) : 'Dates listed by source';
@@ -1035,7 +1037,7 @@
     var host = $('travel-results'); if (!host) return;
     /* Only real-world regional listings belong in destination plans; global and regional in-game items stay in the schedule, not Travel. */
     var candidates = REG.filter(function (x) {
-      return x.end > now() && LIB.isInPersonWorldEvent(x) && x.place && x.sourceStart && x.sourceEnd &&
+      return x.end > now() && LIB.isInPersonWorldEvent(x) && x.place && x.sourceStart && (x.ongoing || x.sourceEnd) &&
         x.src && String(x.src.url || '').indexOf('https://') === 0 && !/^dated:/.test(String(x.id || ''));
     });
     var places = {};
@@ -2123,8 +2125,8 @@ function renderHomeBrief(t) {
     }
     var regLive = [], regSoon = [], regWeek = [];
     regList().forEach(function (r) {
-      if (r.long || covered(r)) return;
-      var item = { id: r.id, name: r.name, place: r.place || r.area || '', start: r.start, end: r.end, url: (r.src && r.src.url) || '#', overseas: t1Overseas(r.place), inPerson: regInPerson(r), global: LIB.isGlobalEvent(r), openId: '' };
+      if ((r.long && !r.ongoing) || (!r.ongoing && covered(r))) return; // a permanent city activity is distinct from a similarly named finite event
+      var item = { id: r.id, name: r.name, place: r.place || r.area || '', start: r.start, end: r.end, url: (r.src && r.src.url) || '#', ongoing: !!r.ongoing, overseas: t1Overseas(r.place), inPerson: regInPerson(r), global: LIB.isGlobalEvent(r), openId: '' };
       if (!/^https:\/\//.test(item.url)) item.url = '';
       try { var model = window.GOEventRegistry && GOEventRegistry.find(r.catalogueId || r.id); if (model) item.openId = model.eventId; } catch (e) { }
       if (!item.openId && !item.url) return;

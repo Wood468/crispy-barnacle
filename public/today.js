@@ -114,7 +114,8 @@
   }
   /* In-person records from the world list that no feed card already covers: always a visible row with its location. */
   function regRow(ctx, r, live) {
-    var cd = LOGIC.countdownText(live ? +r.end : +r.start, +ctx.now, live);
+    var cd = r.ongoing ? 'Ongoing · no announced end' : LOGIC.countdownText(live ? +r.end : +r.start, +ctx.now, live);
+    var clock = r.ongoing ? '<span class="t1-cd t1-ongoing">Ongoing · no announced end</span>' : cdSpan(ctx, live ? r.end : r.start, live);
     var open = r.openId ? ' data-open="' + esc(r.openId) + '"' : '';
     var tag = r.openId ? 'button type="button"' : 'a href="' + esc(r.url) + '" target="_blank" rel="noopener noreferrer"';
     var end = r.openId ? 'button' : 'a';
@@ -122,7 +123,7 @@
       + '<span class="t1-minor-art t1-reg-ico" aria-hidden="true">' + PIN + '</span>'
       + '<' + tag + ' class="t1-open"' + open + ' aria-label="' + esc('Open ' + r.name + ', ' + r.place + '. ' + cd) + '">'
       + '<strong class="t1-title">' + esc(r.name) + '</strong>'
-      + '<span class="t1-sub">' + esc(r.place) + (r.overseas ? ' · Overseas' : '') + (r.inPerson ? ' · In person · ' : r.global ? ' · Global · ' : ' · Regional, in game · ') + cdSpan(ctx, live ? r.end : r.start, live) + '</span>'
+      + '<span class="t1-sub">' + esc(r.place) + (r.overseas ? ' · Overseas' : '') + (r.inPerson ? ' · In person · ' : r.global ? ' · Global · ' : ' · Regional, in game · ') + clock + '</span>'
       + '</' + end + '></article>';
   }
   function weekRow(ctx, ev) {
