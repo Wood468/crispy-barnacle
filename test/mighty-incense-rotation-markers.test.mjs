@@ -41,7 +41,7 @@ test('future events mark Mighty per encounter, not every occurrence of the same 
   assert.deepEqual(rotations.validate(future), []);
   const html = render(future);
   const steel = html.match(/<article class="uer-habitat uer-habitat-steel"[\s\S]*?<\/article>/)?.[0] || '';
-  const normal = steel.match(/<div class="uer-pokemon-tile" data-pokemon="Latias"[\s\S]*?<\/div>/)?.[0] || '';
+  const normal = steel.match(/<div class="uer-pokemon-tile" role="group" data-pokemon="Latias"[\s\S]*?<\/div>/)?.[0] || '';
   assert.match(normal, /data-method="wild"/);
   assert.doesNotMatch(normal, /data-mighty|uer-mighty-corner|uer-incense-corner/);
   assert.match(html, /data-pokemon="Latias" data-method="incense" data-mighty="true"/);
