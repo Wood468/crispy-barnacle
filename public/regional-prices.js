@@ -140,7 +140,7 @@
   function officialStorePrice(p) {
     if (!p || !p.product || p.region !== 'AU' || p.currency !== 'AUD' ||
         p.verified !== true || !(p.amount > 0)) return false;
-    if (/^store-/.test(p.product)) return true; /* existing hand-curated product IDs */
+    if (/^store-/.test(p.product) && !p.url) return true; /* legacy verified in-repo IDs */
     try {
       var u = new URL(p.url);
       return u.protocol === 'https:' && u.hostname === 'store.pokemongo.com' &&
