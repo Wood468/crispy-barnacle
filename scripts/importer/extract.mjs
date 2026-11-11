@@ -175,7 +175,8 @@ export function extractFields(html, options={}) {
       const count = out.researchTasks.filter(x =>
         JSON.stringify([x.category, x.task.toLowerCase(), x.rewards]) === key).length;
       // Bound malformed source tables rather than allowing unbounded repeats.
-      if (count === 0 || (researchTable && /\s\|\s/.test(l.text) && count < 20))\n        out.researchTasks.push({ ...task, occurrence: count + 1 });
+      if (count === 0 || (researchTable && /\s\|\s/.test(l.text) && count < 20))
+        out.researchTasks.push({ ...task, occurrence: count + 1 });
       add("research", l.text);
     }
     for (const [f, re] of LINE) if (re.test(l.text) && f !== cur) add(f, l.text);
