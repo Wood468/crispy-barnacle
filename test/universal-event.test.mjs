@@ -292,3 +292,31 @@ test('verified egg distances render icon-only corners without inventing unknown 
  assert.doesNotMatch(tile(unknown),/ue-badge ue-b-egg/);
  assert.equal(m.encounters.length,3,'published encounter data remains intact');
 });
+
+
+test('source-backed Incense encounters use only a compact corner icon, preserving method and access',()=>{
+ const incense={speciesId:'380',name:'Latias'};
+ const hatch={speciesId:'782',name:'Jangmo-o'};
+ const wild={speciesId:'25',name:'Pikachu'};
+ const m=event({
+  pokemon:[incense,hatch,wild],
+  activities:[{id:'hatch-5',title:'5 km Eggs',encounterMethod:'egg',eggDistanceKm:5,pokemonRefs:[C.identity(hatch)]}],
+  encounters:[
+   {identityKey:C.identity(incense),method:'incense',access:'ticket holders'},
+   {identityKey:C.identity(wild),method:'wild'}
+  ]
+ });
+ const html=UI.gallery(m,{});
+ const tile=p=>(html.split('data-identity="'+C.identity(p)+'"')[1]||'').split('</button>')[0];
+ assert.match(html,/Incense encounters/);
+ assert.match(tile(incense),/ue-incense-corner/);
+ assert.match(tile(incense),/src="\/ico\/incense\.webp"/);
+ assert.match(tile(incense),/width="20" height="20"/);
+ assert.match(tile(incense),/aria-label="Latias, Incense\. Show details"/);
+ assert.match(tile(incense),/ticket holders/);
+ assert.doesNotMatch(tile(incense),/ue-badge ue-b-incense|ue-egg-corner|>Incense<\/span>/);
+ assert.match(tile(hatch),/ue-egg-corner ue-egg-5/);
+ assert.doesNotMatch(tile(hatch),/ue-incense-corner/);
+ assert.doesNotMatch(tile(wild),/ue-incense-corner|ue-egg-corner/);
+ assert.equal(m.encounters.filter(x=>x.method==='incense').length,1);
+});
