@@ -49,6 +49,17 @@ test('named Max title identifies its own form, not another featured Pokémon', (
   assert.equal(form(ev, 'Palkia'), '');
 });
 
+test('single-boss Gigantamax Raid Days remain exact, mixed rosters do not', () => {
+  const single = { name: 'Gigantamax Raid Day', kind: 'max', featured: [{ name: 'Charizard', role: 'raid_boss' }] };
+  assert.equal(form(single, 'Charizard'), 'gigantamax');
+  assert.match(monArt(single, single.featured[0], 'ea'), /Gigantamax Charizard/);
+  const mixed = { ...single, featured: [...single.featured, { name: 'Dialga', role: 'featured' }] };
+  assert.equal(form(mixed, 'Dialga'), '');
+  assert.equal(form(mixed, 'Charizard'), '', 'a generic title alone cannot select a species in a mixed gallery');
+  const research = { ...single, name: 'Gigantamax Research' };
+  assert.equal(form(research, 'Charizard'), '', 'research does not invent a G-Max boss form');
+});
+
 test('the Max Monday and collective Dynamax rosters retain existing Max cues', () => {
   const trio = { name: 'Dynamax Uxie, Mesprit and Azelf', kind: 'max' };
   for (const name of ['Uxie', 'Mesprit', 'Azelf']) assert.equal(form(trio, name), 'dynamax');
