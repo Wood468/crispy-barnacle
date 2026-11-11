@@ -2,10 +2,10 @@
    Reusable across future events: this module does not branch on event IDs,
    edit source/Collection records, infer shiny rates, or add follow controls. */
 (function(root,factory){
-  var api=factory(root);
+  var api=factory();
   if(typeof module==='object'&&module.exports)module.exports=api;
   else root.GOEventEncounterRotations=api;
-}(typeof globalThis!=='undefined'?globalThis:this,function(root){
+}(typeof globalThis!=='undefined'?globalThis:this,function(){
 'use strict';
 function esc(raw){return String(raw==null?'':raw).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
 function norm(v){return String(v||'').trim().replace(/\s+/g,' ').toLowerCase();}
@@ -103,49 +103,22 @@ function dayLabel(iso){
    never infer Incense from species identity, a Mighty label, or an event title.
    Activity-specific Incense can only mark that same activity; this generic
    grouping intentionally accepts event-wide 'main' edges only. */
-function incenseByName(model){
- var roster=new Map((model&&model.pokemon||[]).map(function(p){return [p.key,p];}));
- var result=new Map();
- (model&&model.encounters||[]).forEach(function(e){
-  if(e.method!=='incense'||e.activityId!=='main')return;
-  var p=roster.get(e.identityKey);if(!p)return;
-  var name=norm(p.name),prior=result.get(name)||[];
-  if(prior.indexOf(e.access)<0)prior.push(e.access);
-  result.set(name,prior);
- });
- return result;
-}
-function pokemonCards(names,ctx,opts){
- opts=opts||{};
- var incenseBySpecies=ctx.incenseBySpecies||new Map();
+function pokemonCards(names,ctx,options){
+ options=options||{};
+ var mighty=options.mighty===true,incense=options.method==='incense';
+ var method=incense?'Incense':options.method==='route'?'Route':options.method==='wild'?'Wild':'';
+ var access=options.access==='ticket'||options.access==='paid'?'Ticket-only':options.access==='all'||options.access==='free'?'All trainers':'';
  return '<div class="uer-pokemon">'+(names||[]).map(function(name){
   var art=ctx.art?ctx.art({n:name},'sm'):'';
-  var sourced=incenseBySpecies.get(norm(name))||[];
-  var incense=opts.method==='incense'; // a wild day/habitat tile cannot inherit another encounter's method
-  var mighty=!!opts.mighty;
-  var access=opts.access==='ticket'||opts.access==='paid'?'ticket-only':
-    opts.access==='free'||opts.access==='all'?'available to all Trainers':'';
-  var method=incense?'Incense encounter'+(access?', '+access:''):opts.method==='wild'?'Wild encounter':'';
-  var label=[name,mighty?'Mighty Pokémon':'',method].filter(Boolean).join(', ');
-  var markers=(mighty?'<span class="uer-mighty-mark" aria-hidden="true">!!!</span>':'')+
-    (incense?'<span class="uer-incense-corner" aria-hidden="true"><img src="/ico/incense.webp" alt="" width="20" height="20" loading="lazy" decoding="async"></span>':'');
-  return '<div class="uer-pokemon-tile" data-pokemon="'+esc(name)+'"'+
-    (mighty?' data-mighty="true"':'')+(incense?' data-incense="true"':'')+
-    (label?' role="group" aria-label="'+esc(label)+'"':'')+'>'+
-    '<span class="uer-pokemon-art">'+markers+art+'</span><span class="uer-pokemon-name">'+esc(name)+'</span></div>';
+  var announced=(mighty?'Mighty ':'')+name+(method?', '+method+' encounter':'')+(access?', '+access:'');
+  var corners=(mighty?'<span class="uer-mighty-corner" aria-hidden="true">!!!</span>':'')+
+   (incense?'<span class="uer-incense-corner" aria-hidden="true"><img src="/ico/incense.webp" alt="" width="20" height="20" loading="lazy" decoding="async"></span>':'');
+  return '<div class="uer-pokemon-tile" role="group" data-pokemon="'+esc(name)+'" data-method="'+esc(options.method||'')+'"'+(mighty?' data-mighty="true"':'')+' aria-label="'+esc(announced)+'"><span class="uer-pokemon-art">'+art+corners+'</span><span class="uer-pokemon-name">'+esc(name)+'</span></div>';
  }).join('')+'</div>';
 }
 function render(entry,ctx){
  ctx=ctx||{};
  if(!entry||validate(entry).length)return '';
- // Explicit `ctx.model` is preferred. Legacy Event Details screens pass
- // only artwork/clock, so find the same public canonical event from the
- // registry. Never consult private state or infer methods from the card title.
- var model=ctx.model;
- if(!model&&root&&root.GOEventRegistry&&typeof root.GOEventRegistry.find==='function'){
-   model=(entry.eventIds||[]).map(function(id){return root.GOEventRegistry.find(id);}).find(Boolean)||null;
- }
- ctx=Object.assign({},ctx,{incenseBySpecies:incenseByName(model)});
  var now=active(entry,ctx),html='';
  if((entry.habitats||[]).length){
  html+='<section class="uer-section uer-habitats" aria-label="Rotating wild habitats"><h3>Wild Pokémon by hour</h3>';
