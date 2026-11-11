@@ -41,6 +41,14 @@ with sync_playwright() as pw:
             page.goto(BASE+'/')
             page.wait_for_function('!!window.GODETAIL && !!window.GOEventRegistry && GOEventRegistry.settled()',timeout=40000)
             page.evaluate("GODETAIL.open('cur:wag')")
+            # Day-specific raid and Max Battle rosters live in Overview.
+            page.locator('#evd .ue-raid-day[data-raid-date="2026-11-14"]').wait_for(state='visible',timeout=30000)
+            raid_sat=page.locator('#evd .ue-raid-day[data-raid-date="2026-11-14"]')
+            raid_sun=page.locator('#evd .ue-raid-day[data-raid-date="2026-11-15"]')
+            assert all(x in raid_sat.inner_text() for x in ('Zekrom','White Kyurem','Dynamax Dialga','Gigantamax Duraludon')),(width,label,'Saturday raids')
+            assert all(x in raid_sun.inner_text() for x in ('Reshiram','Black Kyurem','Dynamax Palkia','Gigantamax Duraludon')),(width,label,'Sunday raids')
+            assert 'Reshiram' not in raid_sat.inner_text() and 'White Kyurem' not in raid_sun.inner_text(),(width,label,'day cross-contamination')
+            page.locator('#evd .evd-nav-link[data-sec="encounters"]').click()
             root=page.locator('#evd-s-encounters .uer-root')
             root.wait_for(state='visible',timeout=30000)
             assert root.get_attribute('data-rotation-id')=='gowa-2026-global',(width,label)
@@ -65,11 +73,6 @@ with sync_playwright() as pw:
             assert root.locator('a[href="https://leekduck.com/pokemon-go-wild-area/mighty/"]').count()==1,(width,label)
             assert page.locator('#evd .ue-method[data-method="wild"] .ue-mon',has_text='Magnemite').count()==0,'no duplicate hourly wild'
             assert page.locator('#evd .ue-method[data-method="incense"] .ue-mon',has_text='Metagross').count()==0,'Mighty is not ordinary Incense'
-            raid_sat=page.locator('#evd .ue-raid-day[data-raid-date="2026-11-14"]')
-            raid_sun=page.locator('#evd .ue-raid-day[data-raid-date="2026-11-15"]')
-            assert all(x in raid_sat.inner_text() for x in ('Zekrom','White Kyurem','Dynamax Dialga','Gigantamax Duraludon')),(width,label,'Saturday raids')
-            assert all(x in raid_sun.inner_text() for x in ('Reshiram','Black Kyurem','Dynamax Palkia','Gigantamax Duraludon')),(width,label,'Sunday raids')
-            assert 'Reshiram' not in raid_sat.inner_text() and 'White Kyurem' not in raid_sun.inner_text(),(width,label,'day cross-contamination')
             assert not errors,(width,label,errors)
             assert not page.evaluate('document.documentElement.scrollWidth>innerWidth+1'),(width,label,'overflow')
             root.scroll_into_view_if_needed()
