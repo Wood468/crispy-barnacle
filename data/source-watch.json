@@ -1,10 +1,10 @@
 {
- "updated": "2026-11-10T21:18:19.140Z",
+ "updated": "2026-11-11T06:21:09.026Z",
  "status": [
   {
    "id": "hub",
    "state": "ok",
-   "items": 3
+   "items": 4
   },
   {
    "id": "miners-assets",
@@ -23,8 +23,8 @@
   },
   {
    "id": "youtube-pogo",
-   "state": "ok",
-   "items": 2
+   "state": "error",
+   "note": "HTTP 404"
   }
  ],
  "gaps": 1,
@@ -44,26 +44,14 @@
    ]
   },
   {
-   "source": "youtube-pogo",
-   "trust": "official",
-   "title": "Costumed Machamp debuts in Pokémon GO!",
-   "link": "https://www.youtube.com/watch?v=oe4xCOjA374",
-   "date": "2026-11-09T11:12:47.000Z",
-   "summary": "",
+   "source": "hub",
+   "trust": "community",
+   "title": "How to Beat Dynamax Registeel: Best Counters &#038; Guide",
+   "link": "https://pokemongohub.net/post/news/how-to-beat-dynamax-registeel-best-counters-guide/",
+   "date": "2026-11-11T05:00:59.000Z",
+   "summary": "Dynamax Registeel is a Tier 5 Max Battle in Pokémon GO. It will cost 800 Max Particles to participate in this Max Battle, which will only be consumed if you defeat Registeel successfully. Dynamax Regi",
    "pokemon": [
-    "Machamp"
-   ],
-   "notInOurData": []
-  },
-  {
-   "source": "youtube-pogo",
-   "trust": "official",
-   "title": "Costumed Machamp debuts in Pokémon GO!",
-   "link": "https://www.youtube.com/shorts/Z2OPNHxhNSc",
-   "date": "2026-11-09T10:48:45.000Z",
-   "summary": "",
-   "pokemon": [
-    "Machamp"
+    "Registeel"
    ],
    "notInOurData": []
   },
