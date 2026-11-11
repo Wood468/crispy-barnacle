@@ -1938,7 +1938,16 @@ with sync_playwright() as p:
         check('raids: historical rotations are not labelled Earlier this week', 'Earlier this week' not in pg.inner_text('#rotnow'), pg.inner_text('#rotnow')[:1200])
         pg.click('#rotnow [data-rotweek="following"]'); pg.wait_for_timeout(100)
         paired=pg.locator('#rotnow .rc-form b').all_text_contents()
-        check('raids: Mega Charizard X and Y each have a separate image and label', 'MEGA CHARIZARD X' in [x.strip().upper() for x in paired] and 'MEGA CHARIZARD Y' in [x.strip().upper() for x in paired] and pg.locator('#rotnow .rc-form > img.art[alt*="Charizard"]').count()==2, paired)
+        mega_x=pg.locator('#rotnow .rc[data-boss="Mega Charizard X"] .rc-raid-art img.art')
+        mega_y=pg.locator('#rotnow .rc[data-boss="Mega Charizard Y"] .rc-raid-art img.art')
+        mega_images=[{'alt':item.get_attribute('alt'), 'src':item.get_attribute('src')} for item in (mega_x,mega_y)] if mega_x.count()==1 and mega_y.count()==1 else []
+        check('raids: Mega Charizard X and Y each have a separate image and label',
+              'MEGA CHARIZARD X' in [x.strip().upper() for x in paired] and
+              'MEGA CHARIZARD Y' in [x.strip().upper() for x in paired] and
+              len(mega_images)==2 and
+              [item['alt'] for item in mega_images]==['Mega Charizard X','Mega Charizard Y'] and
+              all(item['src'] for item in mega_images) and mega_images[0]['src']!=mega_images[1]['src'],
+              (paired, mega_images))
         following_text=pg.inner_text('#rotnow')
         following_lower=following_text.lower()
         check('raids: future week does not repeat the globally current Yveltal rotation', 'current raid rotation' not in following_lower and 'at start of week' in following_lower and 'dialga' in following_lower and 'palkia' in following_lower and 'yveltal' not in following_lower, following_text[:1800])
