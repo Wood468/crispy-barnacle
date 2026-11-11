@@ -43,12 +43,21 @@ test("every place that shows a source or post link to visitors goes through the 
   assert.match(review, /isPrivateLink\(it\.post\) \? 'Open in Discord \(owner only\)'/, "the owner's review screen keeps the Discord link, clearly labelled");
 });
 
-test("published data may still hold Discord links, and the presentation layer hides them without touching the data", () => {
+test("published infographic data contains no private Discord channel references", () => {
   const info = JSON.parse(read("event-info.json")).events;
-  let private_ = 0;
-  for (const e of Object.values(info)) {
-    if (e.source && LIB.isPrivateLink(e.source.url)) private_++;
-    for (const i of e.infographics || []) if (LIB.isPrivateLink(i.sourceUrl)) { private_++; assert.equal(LIB.publicLink(i.sourceUrl), ""); }
+  for (const [id, event] of Object.entries(info)) {
+    if (event.source && event.source.url) assert.equal(LIB.isPrivateLink(event.source.url), false, id + " source");
+    for (const infographic of event.infographics || []) {
+      assert.ok(infographic.url, id + " retains image asset");
+      if (infographic.sourceUrl) assert.equal(LIB.isPrivateLink(infographic.sourceUrl), false, id + " infographic");
+    }
   }
-  assert.ok(private_ > 0, "the stored data is left as it is");
+  for (const file of ["infographic-queue.json", "weekly.json"]) {
+    const feed = JSON.parse(read(file));
+    for (const item of feed.items || []) {
+      if (item.post) assert.equal(LIB.isPrivateLink(item.post), false, file + " post");
+    }
+  }
+  // Still reject unsafe historical responses if they ever bypass the publisher.
+  assert.equal(LIB.publicLink("https://discord.com/channels/@me/1/2"), "");
 });
