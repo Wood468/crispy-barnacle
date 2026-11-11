@@ -298,6 +298,14 @@ test("Discord channel deep links stay out of publicly shipped infographic metada
   assert.equal(publicSourceUrl(privateMessage), "");
   assert.equal(publicSourceUrl(privateChannel), "");
   assert.equal(publicSourceUrl("https://www.discord.com/channels/@me/111/222"), "");
+  for (const disguised of [
+    "https://ptb.discord.com/channels/111/222",
+    "https://user@discord.com/channels/@me/111/222",
+    "https://discord.com./channels/111/222",
+    "https://discord.com/%63hannels/111/222",
+    "https://discord.com\\\\channels\\\\111\\\\222"
+  ]) assert.equal(publicSourceUrl(disguised), "", "private Discord source rejected");
+
   assert.equal(publicSourceUrl("javascript:alert(1)"), "");
   assert.equal(publicSourceUrl(publicArticle), publicArticle);
 
