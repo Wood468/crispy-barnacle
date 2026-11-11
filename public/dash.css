@@ -797,15 +797,15 @@ button.igcheck{min-height:44px}
 
 /* Reusable raid-tier artwork marker and correctly labelled perfect-IV catch CP. */
 .rw-raid .rc-raid-art{position:relative;display:grid;place-items:center;flex:none;min-width:76px;min-height:80px}
-.rw-raid .rc-tier-corner{position:absolute;top:0;left:0;z-index:2;display:inline-flex;align-items:center;gap:3px;min-height:21px;max-width:100%;padding:2px 5px;border-radius:7px;background:color-mix(in srgb,var(--color-canvas) 94%,#203853);border:1px solid var(--color-border);box-shadow:0 1px 4px rgba(0,0,0,.3);font-size:.64rem;line-height:1;white-space:nowrap;pointer-events:none}
+.rw-raid .rc-tier-corner{position:absolute;top:0;left:0;z-index:2;display:inline-flex;align-items:center;gap:var(--space-1);min-height:21px;max-width:100%;padding:var(--space-1) var(--space-2);border-radius:7px;background:color-mix(in srgb,var(--color-canvas) 94%,#203853);border:1px solid var(--color-border);box-shadow:0 1px 4px rgba(0,0,0,.3);font-size:.64rem;line-height:1;white-space:nowrap;pointer-events:none}
 .rw-raid .rc-tier-corner img{width:12px;height:12px;object-fit:contain;flex:none}
 .rw-raid .rc-iv-catch{display:flex;align-items:center;gap:var(--space-1);flex-wrap:wrap;max-width:100%}
-.rw-raid .rc-iv-catch .rc-cp{display:inline-flex;align-items:center;gap:3px;min-height:23px;padding:3px 6px;border:1px solid color-mix(in srgb,var(--color-accent) 40%,var(--color-border));border-radius:7px;background:var(--color-surface-raised);font:800 .69rem/1.2 var(--font-body);font-variant-numeric:tabular-nums;white-space:nowrap}
+.rw-raid .rc-iv-catch .rc-cp{display:inline-flex;align-items:center;gap:var(--space-1);min-height:23px;padding:var(--space-1) var(--space-2);border:1px solid color-mix(in srgb,var(--color-accent) 40%,var(--color-border));border-radius:7px;background:var(--color-surface-raised);font:800 .69rem/1.2 var(--font-body);font-variant-numeric:tabular-nums;white-space:nowrap}
 .rw-raid .rc-iv-catch .rc-cp small{font:750 .62rem/1 var(--font-body);color:var(--color-text-muted)}
 .rw-raid .rc-iv-catch .rc-weather{border-color:var(--color-border);background:transparent}
 .rw-low .rc-raid-art{min-width:60px;min-height:60px}
-.rw-low .rc-tier-corner{font-size:.57rem;padding:2px 4px}
-@media(max-width:360px){.rw-raid .rc-raid-art{min-width:64px}.rw-raid .rc-iv-catch .rc-cp{font-size:.64rem;padding:3px var(--space-1)}.rw-raid .rc-iv-catch .rc-cp small{font-size:.57rem}}
+.rw-low .rc-tier-corner{font-size:.57rem;padding:var(--space-1) var(--space-1)}
+@media(max-width:360px){.rw-raid .rc-raid-art{min-width:64px}.rw-raid .rc-iv-catch .rc-cp{font-size:.64rem;padding:var(--space-1)}.rw-raid .rc-iv-catch .rc-cp small{font-size:.57rem}}
 
 /* Mega tiles: normal sprite left, name centre, shiny right */
 .mega-mon{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:var(--space-3)}
