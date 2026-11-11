@@ -133,6 +133,33 @@ def live_event_browser(pw, errors: list) -> list:
                 page.evaluate("() => GODETAIL.open('into')")
                 page.wait_for_selector("#evd .ue-mon", timeout=30000)
                 row["tile_count"] = page.locator("#evd .ue-mon").count()
+                # Some sources use hyphenated Crowned form IDs while others
+                # omit the separator. Both keys remain valid in Collection;
+                # the raid gallery must display each physical boss only once.
+                row["crowned_raid_tiles"] = {}
+                for species, canonical, alias in (
+                    ("888", "crowned-sword", "crownedsword"),
+                    ("889", "crowned-shield", "crownedshield"),
+                ):
+                    selector = ", ".join(
+                        f'#evd .ue-method[data-method="raid"] '
+                        f'.ue-mon[data-identity="{species}:{form}:none"]'
+                        for form in (canonical, alias)
+                    )
+                    tiles = page.locator(selector)
+                    count = tiles.count()
+                    row["crowned_raid_tiles"][species] = {
+                        "count": count,
+                        "identities": [
+                            tiles.nth(i).get_attribute("data-identity")
+                            for i in range(count)
+                        ],
+                    }
+                    if count != 1:
+                        errors.append(
+                            f"{width}px: expected one Crowned raid tile for "
+                            f"species {species}, found {count}"
+                        )
                 # The Coin Bag and GO Pass may use the correct *name* but
                 # still accidentally point to the default Chest Form picture.
                 row["gimmighoul_art"] = page.evaluate("""() => [
