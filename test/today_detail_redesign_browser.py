@@ -48,6 +48,26 @@ with sync_playwright() as p:
         assert page.locator('#evd .ue-gallery').count() > 0
         assert page.locator('#evd .own,#evd [data-follow],#evd [data-mark],#evd .ue-mon-controls').count() == 0
         assert page.evaluate('document.querySelector("#evd").scrollWidth <= innerWidth')
+        # The top of Event Details stays compact at every mobile width.
+        # All debut forms remain available by horizontal scrolling, never
+        # truncated or replaced by a summary count.
+        glance = page.evaluate("""() => {
+            const stats = document.querySelector('#evd .ue-factchips');
+            const debut = document.querySelector('#evd .ue-debuts .ue-chips');
+            return {
+                stats: stats?.children.length,
+                columns: stats ? getComputedStyle(stats).gridTemplateColumns.split(' ').length : 0,
+                debutCount: debut?.children.length,
+                debutScrollable: debut ? debut.scrollWidth > debut.clientWidth : false,
+                debutKeyboard: debut?.tabIndex === 0,
+                debutRole: debut?.getAttribute('role'),
+                debutOverflow: debut ? getComputedStyle(debut).overflowX : '',
+            };
+        }""")
+        assert glance['stats'] == 3 and glance['columns'] == 3, (width, glance)
+        assert glance['debutCount'] >= 5, (width, glance)
+        assert glance['debutScrollable'] and glance['debutKeyboard'] and glance['debutRole'] == 'region', (width, glance)
+        assert glance['debutOverflow'] == 'auto', (width, glance)
         page.screenshot(path=str(OUT / f'redesign-detail-{width}.png'))
 
         # Continuous page: every section is in the document, nav links (not tabs) scroll to headings.
