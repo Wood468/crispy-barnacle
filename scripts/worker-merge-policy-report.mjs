@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // REPORT ONLY. Never performs a GitHub write or authorizes a merge.
 // This trusted-base script is executed by a read-only, no-PR-checkout workflow.
-import { appendFileSync, readFileSync } from "node:fs";
+import { appendFileSync } from "node:fs";
 
 const REPO = "Wood468/crispy-barnacle";
 const API = "https://api.github.com/repos/" + REPO;
@@ -31,7 +31,7 @@ export function contractOf(issue) {
     return obj;
   } catch { return null; }
 }
-export function scopeDecision(pr, issue, changed, baseFile) {
+export function scopeDecision(pr, issue, changed, baseFile, options = {}) {
   const reasons = [];
   const taskId = exactMarker(pr?.body, /^Source task: #([1-9][0-9]{0,9})$/gm);
   const source = contractOf(issue);
@@ -42,8 +42,17 @@ export function scopeDecision(pr, issue, changed, baseFile) {
       || !issue.labels.some(label => label?.name === "go-worker-approved")) {
     reasons.push("Task identity, approval or single-file contract is invalid");
   }
-  if (pr?.state !== "open" || pr?.draft !== false || pr?.mergeable !== true) {
+  if (pr?.state !== "open"
+      || (!options.allowDraft && pr?.draft !== false)
+      || (pr?.draft !== true && pr?.draft !== false)
+      || pr?.mergeable !== true) {
     reasons.push("PR is draft, closed or not independently mergeable");
+  }
+  // Explicit opt-in is attached to the OWNER-AUTHORED source issue,
+  // never to PR metadata the coding worker can forge.
+  if (options.requireAutoMergeLabel
+      && !issue?.labels?.some(label => label?.name === "go-worker-auto-merge-approved")) {
+    reasons.push("Source issue lacks explicit test-only automatic merge approval");
   }
   if (!BRANCH.test(pr?.head?.ref || "") || !SHA.test(pr?.head?.sha || "")
       || pr?.head?.repo?.full_name !== REPO || pr?.base?.ref !== "main"
@@ -122,7 +131,7 @@ async function pages(get, url, maxPages, perPage, validate = () => true, collect
   }
   throw Error("GitHub pagination exceeded policy cap");
 }
-export async function assess(prNumber, get) {
+export async function assess(prNumber, get, options = {}) {
   if (!Number.isSafeInteger(prNumber) || prNumber < 1 || prNumber > 999999999)
     return deny("Invalid PR identifier");
   try {
@@ -138,7 +147,7 @@ export async function assess(prNumber, get) {
     const source = contractOf(issue);
     const regular = source ? await get(API + "/contents/" + source.path
       + "?ref=" + pr.base.sha) : null;
-    const scope = scopeDecision(pr, issue, files, regular);
+    const scope = scopeDecision(pr, issue, files, regular, options);
     if (scope.reasons.length) return scope;
 
     const allRuns = await pages(get, API + "/actions/runs?head_sha="
@@ -166,7 +175,11 @@ export async function assess(prNumber, get) {
     }
 
     const reviews = await pages(get, API + "/pulls/" + prNumber + "/reviews", 3, 100);
-    const review = reviewDecision(reviews, pr);
+    const review = options.requireAutoMergeLabel
+      ? ([...reviews].some(r => r?.state === "CHANGES_REQUESTED")
+        ? deny("A reviewer requested changes: never override rejection")
+        : { status: "REVIEW_OK", reasons: [] })
+      : reviewDecision(reviews, pr);
     if (review.reasons.length) return review;
 
     // Avoid merging into another simultaneously active PR editing this test.
@@ -179,14 +192,16 @@ export async function assess(prNumber, get) {
       if (otherFiles.some(f => f.filename === source.path))
         return deny("Another open pull request edits the approved file");
     }
-    return { status: "ELIGIBLE_REPORT_ONLY", reasons: [], prNumber,
-      head: pr.head.sha, task: Number(taskId), ciRun: ci.runId };
+    return { status: options.requireAutoMergeLabel
+        ? "AUTO_MERGE_ELIGIBLE" : "ELIGIBLE_REPORT_ONLY",
+      reasons: [], prNumber, head: pr.head.sha, task: Number(taskId),
+      ciRun: ci.runId, base: pr.base.sha };
   } catch {
     // The full exception may contain privileged HTTP request context.
     return deny("Unable to verify all required GitHub evidence");
   }
 }
-async function githubGet(url) {
+export async function githubGet(url) {
   if (!url.startsWith(API + "/")) throw Error("Invalid read target");
   const token = process.env.GITHUB_TOKEN;
   if (!token) throw Error("No read-only token");
