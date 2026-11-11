@@ -479,3 +479,17 @@ h2.dh .cnt{font:600 .75rem/1 var(--font-body);color:var(--color-text-muted);bord
 .ue-raid-day-art{width:28px;height:32px;flex:0 0 28px;display:grid;place-items:center}
 .ue-raid-day-art .art{max-width:28px;max-height:32px;object-fit:contain}
 @media(max-width:350px){.ue-raid-day-grid{grid-template-columns:1fr}}
+
+/* Event Details: tier icon overlay and the same source-safe perfect raid CP as Battle. */
+#evd .ue-raid-tier-corner{position:absolute;top:3px;left:3px;z-index:4;display:inline-flex;align-items:center;gap:2px;padding:2px 4px;border:1px solid var(--color-border);border-radius:6px;background:var(--color-surface-raised);font:800 .58rem/1.1 var(--font-body);white-space:nowrap;pointer-events:none}
+#evd .ue-raid-tier-corner img{width:12px;height:12px;object-fit:contain;flex:none}
+#evd .ue-raid-cp{display:flex;justify-content:center;flex-wrap:wrap;gap:3px;font:800 .58rem/1.1 var(--font-body);font-variant-numeric:tabular-nums;text-align:center}
+#evd .ue-raid-cp>span{display:inline-flex;align-items:center;padding:3px 4px;border:1px solid var(--color-border);border-radius:5px;background:var(--color-surface-raised);white-space:nowrap}
+#evd .ue-raid-cp-weather{color:var(--color-text-muted)}
+#evd .ue-raid-day-art{position:relative;width:36px;height:37px;flex-basis:36px;overflow:visible}
+#evd .ue-raid-day-art .art{max-width:34px;max-height:34px}
+#evd .ue-raid-day-art .ue-raid-tier-corner{top:-3px;left:0;padding:1px 2px;font-size:.53rem}
+#evd .ue-raid-day-art .ue-raid-tier-corner img{width:10px;height:10px}
+#evd .ue-raid-day-info{display:flex;flex-direction:column;align-items:flex-start;gap:3px;min-width:0}
+#evd .ue-raid-day-info .ue-raid-cp{justify-content:flex-start;font-size:.57rem}
+@media(max-width:390px){#evd .ue-raid-day-grid{grid-template-columns:1fr}}

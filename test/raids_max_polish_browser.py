@@ -49,6 +49,23 @@ with sync_playwright() as p:
   shoot(page,'raids-event-roster',width)
   page.locator('#rotnow .rc-event').first.click();page.wait_for_selector('#evd',state='visible')
   assert 'Into the Wild' in page.locator('#evd').inner_text()
+  # Event Details previously omitted the Battle screen's verified tier/100% IV
+  # markers. Check both its dated roster and universal raid encounter cards.
+  page.keyboard.press('Escape')
+  page.evaluate("GODETAIL.open('cur:wag')")
+  sat=page.locator('#evd .ue-raid-day[data-raid-date="2026-11-14"]')
+  sat.wait_for(state='visible',timeout=30000)
+  assert sat.locator('[data-roster="five"] .ue-raid-tier-corner[aria-label="5 star raid tier"]').count()>=1,(width,'missing tier on event overview')
+  zekrom=sat.locator('[data-roster="five"] li',has_text='Zekrom')
+  assert zekrom.count()==1 and zekrom.locator('.ue-raid-cp-normal',has_text='100%').count()==1,(width,'missing perfect CP on event overview')
+  assert zekrom.locator('.ue-raid-cp-weather',has_text='WB').count()==1,(width,'missing conditional boosted CP')
+  assert sat.locator('[data-roster="max"] .ue-raid-tier-corner,[data-roster="max"] .ue-raid-cp').count()==0,(width,'Max is not a raid tier')
+  encounter_tab=page.locator('#evd .evd-nav-link[data-sec="encounters"]')
+  if encounter_tab.count():encounter_tab.click()
+  raid_gallery=page.locator('#evd .ue-method[data-method="raid"]')
+  raid_gallery.wait_for(state='visible',timeout=30000)
+  assert raid_gallery.locator('.ue-raid-tier-corner').count()>=1,(width,'missing raid artwork tier icon')
+  assert raid_gallery.locator('.ue-raid-cp-normal',has_text='100%').count()>=1,(width,'missing perfect CP on encounter art')
   assert not errors,errors;c.close()
   # 2. Synthetic week: Shadow raid, confirmed shiny chip, Gigantamax + Dynamax Max Battles with labelled fallbacks (art blocked).
   c,page,errors=make(browser,width,SYN,'2026-11-09T12:00:00+11:00')
