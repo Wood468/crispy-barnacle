@@ -168,3 +168,26 @@ test('rendered source text is escaped to prevent injected HTML in future announc
   assert.match(html, /&lt;script&gt;/);
   assert.ok(!html.includes('<script>'));
 });
+
+test('future rotations reject impossible dates and invalid venue timezones without inferred local hours',()=>{
+ const impossible=copy(fixture);
+ impossible.dates=['2028-02-30','2028-02-31'];
+ impossible.mightyDays=[];
+ impossible.mightyShared=[];
+ assert.ok(Rot.validate(impossible).some(s=>/Explicit ISO local event dates/.test(s)));
+ assert.equal(Rot.render(impossible,{}),'');
+ const leap=copy(fixture);
+ leap.dates=['2028-02-29'];
+ leap.mightyDays=[];
+ leap.mightyShared=[];
+ assert.deepEqual(Rot.validate(leap),[], 'real leap day is allowed');
+ const badZone=copy(fixture);
+ badZone.timeBasis='venue-local';
+ badZone.timeZone='Australia/NotARealVenue';
+ assert.ok(Rot.validate(badZone).some(s=>/valid IANA timezone/.test(s)));
+ assert.equal(Rot.render(badZone,{}),'','invalid venue timezone must not publish a clock roster');
+ const validZone=copy(fixture);
+ validZone.timeBasis='venue-local';
+ validZone.timeZone='Australia/Melbourne';
+ assert.deepEqual(Rot.validate(validZone),[]);
+});
