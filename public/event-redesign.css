@@ -359,6 +359,12 @@ button.ue-mon-featured .ue-mon-art .art{animation:none}
 .ev-art-accent::before{content:"";position:absolute;left:8%;right:8%;bottom:4%;height:14%;border-radius:50%;background:rgba(0,0,0,.35);filter:blur(5px)}
 .ev-art-accent .ev-art-mon{position:relative}
 .ev-art-theme b{font-size:.8rem;letter-spacing:.16em}
+/* Approved poster action: visible only when the infographic source confirms
+   published/approved media. Preserve the compact hero and 44px tap target. */
+.evd-in .evd-infographic-shortcut{display:flex;align-items:center;justify-content:center;width:100%;min-height:44px;margin:8px 0 0;padding:9px 14px;border:1px solid var(--color-border);border-radius:var(--radius-md);background:var(--color-surface-raised);color:var(--color-text);font:750 .82rem/1.25 var(--font-body);cursor:pointer}
+.evd-in .evd-infographic-shortcut:hover{border-color:var(--color-accent)}
+.evd-in .evd-infographic-shortcut:focus-visible{outline:3px solid var(--color-text);outline-offset:2px}
+.evd-in .evd-infographic-shortcut[hidden]{display:none}
 /* Overview: compact glance chips */
 .ue-factchips{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:6px}
 .ue-factchips li{display:inline-flex;align-items:baseline;gap:6px;padding:6px 11px;border-radius:var(--radius-pill);border:1px solid var(--color-border);background:var(--color-surface);font-size:.8rem}
