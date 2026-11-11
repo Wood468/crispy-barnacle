@@ -29,6 +29,22 @@ function harness(options = {}) {
   const get = async url => {
     actions.push("GET:" + url);
     if (url === API + "/pulls/800") return pr();
+    if (url === API + "/issues/777") return {
+      number: 777, state: "open", title: "[GO-WORKER] Test task",
+      user: { login: "Wood468" },
+      labels: options.issueRevoked
+        ? [{ name: "go-worker-approved" }]
+        : [{ name: "go-worker-approved" },
+           { name: "go-worker-auto-merge-approved" },
+           { name: "independent-label" }],
+      body: "GO_WORKER_TASK_JSON:" + JSON.stringify({
+        path: "test/escape.test.mjs",
+        instruction: "Append exactly one deterministic security regression to the existing test."
+      })
+    };
+    if (url === API + "/branches/main") return {
+      commit: { sha: options.mainChanged ? "d".repeat(40) : MERGED }
+    };
     throw Error("Unexpected read call");
   };
   const graph = async (query, variables) => {
@@ -48,6 +64,23 @@ function harness(options = {}) {
     if (options.putFails) return { merged: false };
     return { merged: true, sha: MERGED };
   };
+  const closeIssue = async (url, body) => {
+    actions.push("CLOSE_ISSUE");
+    assert.equal(url, API + "/issues/777");
+    assert.deepEqual(body, {
+      state: "closed", state_reason: "completed", labels: ["independent-label"]
+    });
+    if (options.closeFails) throw Error("private GH response");
+    return { number: 777, state: "closed",
+             labels: [{ name: "independent-label" }] };
+  };
+  const dispatch = async (url, body) => {
+    actions.push("DISPATCH_TESTS");
+    assert.equal(url, API + "/actions/workflows/tests.yml/dispatches");
+    assert.deepEqual(body, { ref: "main" });
+    if (options.dispatchFails) throw Error("private GH response");
+    return { accepted: true };
+  };
   let checks = 0;
   const judge = async (number, getter, opts) => {
     checks++;
@@ -60,7 +93,8 @@ function harness(options = {}) {
     return { ...approval(), ...(options.approval || {}) };
   };
   const wait = async () => {};
-  return { get, graph, put, judge, wait, actions, get checks() { return checks; } };
+  return { get, graph, put, dispatch, closeIssue, judge, wait, actions,
+    get checks() { return checks; } };
 }
 
 test("only one completed exact-head original Tests run is eligible for consideration", () => {
@@ -82,12 +116,15 @@ test("approved isolated draft is marked ready and merged with exact SHA independ
   const outcome = await execute(original(), h);
   assert.deepEqual(outcome, {
     status: "MERGED", pr: 800, issue: 777, head: HEAD,
-    mergeSha: MERGED, ciRun: 901
+    mergeSha: MERGED, ciRun: 901, issueClosed: true,
+    mainTestsDispatched: true
   });
   assert.equal(h.checks, 2);
   assert.equal(h.actions.filter(x => x === "GRAPHQL").length, 1);
   assert.equal(h.actions.filter(x => x === "MERGE").length, 1);
   assert.ok(h.actions.indexOf("GRAPHQL") < h.actions.indexOf("MERGE"));
+  assert.ok(h.actions.indexOf("MERGE") < h.actions.indexOf("CLOSE_ISSUE"));
+  assert.ok(h.actions.indexOf("MERGE") < h.actions.indexOf("DISPATCH_TESTS"));
 });
 
 test("already-ready PR merges without redundant draft promotion", async () => {
@@ -121,6 +158,34 @@ test("an invalid event or wrong repository cannot consume a merge token", async 
   const r = await execute({ ...original(), conclusion: "failure" }, h);
   assert.equal(r.status, "DENIED");
   assert.deepEqual(h.actions, []);
+});
+
+test("post-merge release follow-ups are independently verified, never assumed", async () => {
+  for (const options of [
+    { closeFails: true }, { issueRevoked: true },
+    { dispatchFails: true }, { mainChanged: true }
+  ]) {
+    const h = harness(options);
+    const output = await execute(original(), h);
+    assert.equal(output.status, "MERGED_FOLLOWUP_PENDING",
+      "successful merge is distinct from post-merge cleanup");
+    assert.equal(output.mergeSha, MERGED);
+    assert.equal(output.issueClosed, !(options.closeFails || options.issueRevoked));
+    assert.equal(output.mainTestsDispatched, !(options.dispatchFails || options.mainChanged));
+    if (options.mainChanged) assert.ok(!h.actions.includes("DISPATCH_TESTS"),
+      "never dispatch tests for an unverified different main SHA");
+  }
+});
+
+test("failed or unapproved merge must never close source issue or dispatch Tests", async () => {
+  for (const options of [{ denyFirst: true }, { denySecond: true },
+                         { putFails: true }, { graphFails: true }]) {
+    const h = harness(options);
+    const output = await execute(original(), h);
+    assert.equal(output.status, "DENIED");
+    assert.equal(h.actions.includes("CLOSE_ISSUE"), false);
+    assert.equal(h.actions.includes("DISPATCH_TESTS"), false);
+  }
 });
 
 test("source approval missing or revoked never becomes eligible in policy evaluator", async () => {

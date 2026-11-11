@@ -2,7 +2,7 @@
 // Independent, narrowly scoped AUTOMERGE executor (not the coding worker).
 // Only trusted main code runs; never executes PR-head code or GH CLI from PR.
 import { appendFileSync } from "node:fs";
-import { assess, githubGet } from "./worker-merge-policy-report.mjs";
+import { assess, githubGet, contractOf } from "./worker-merge-policy-report.mjs";
 
 const REPO = "Wood468/crispy-barnacle";
 const API = "https://api.github.com/repos/" + REPO;
@@ -24,7 +24,60 @@ export function eventOf(input) {
       || p?.head?.sha !== input.head_sha) return null;
   return { number: p.number, sha: input.head_sha, runId: input.id };
 }
-export async function execute(event, { get, graph, put, wait = sleep, judge = assess }) {
+// Trusted GitHub follow-up after an *already confirmed* automatic squash merge.
+// No worker/Gemini authority is extended. All write targets and data are fixed
+// by the earlier independent policy decision and exact merged commit SHA.
+export async function finishMergedTask(taskNumber, mergeSha, { get, dispatch, closeIssue }) {
+  const state = { issueClosed: false, mainTestsDispatched: false };
+  if (!Number.isSafeInteger(taskNumber) || taskNumber < 1
+      || !SHA.test(mergeSha || "")) return state;
+
+  // Close only the original, still verifiably owner-approved task. Preserve
+  // unrelated labels, remove the two worker approval flags permanently.
+  try {
+    const issue = await get(API + "/issues/" + taskNumber);
+    if (issue?.number === taskNumber && ["open", "closed"].includes(issue.state)
+        && issue?.user?.login?.toLowerCase() === "wood468"
+        && issue?.title?.startsWith("[GO-WORKER] ")
+        && contractOf(issue)
+        && Array.isArray(issue.labels)
+        && issue.labels.some(x => x?.name === "go-worker-approved")
+        && issue.labels.some(x => x?.name === "go-worker-auto-merge-approved")) {
+      const others = issue.labels.map(x => x?.name).filter(x =>
+        typeof x === "string" && x !== "go-worker-approved"
+        && x !== "go-worker-auto-merge-approved");
+      const result = await closeIssue(API + "/issues/" + taskNumber, {
+        state: "closed", state_reason: "completed", labels: others
+      });
+      state.issueClosed = result?.number === taskNumber
+        && result.state === "closed"
+        && Array.isArray(result.labels)
+        && !result.labels.some(x => ["go-worker-approved",
+          "go-worker-auto-merge-approved"].includes(x?.name));
+    }
+  } catch {
+    // The merge is already immutable. Never conceal incomplete follow-up:
+    // the result is marked pending and must be reconciled separately.
+  }
+
+  // A GITHUB_TOKEN merge doesn't trigger normal push workflows. Dispatch
+  // Tests on the *exact* confirmed main commit, rather than relying on push.
+  // If main has advanced, refuse to associate a different SHA with this merge.
+  try {
+    const main = await get(API + "/branches/main");
+    if (main?.commit?.sha === mergeSha) {
+      const response = await dispatch(API + "/actions/workflows/tests.yml/dispatches",
+        { ref: "main" });
+      state.mainTestsDispatched = response?.accepted === true;
+    }
+  } catch {
+    // A read/API failure or unexpected dispatch result is NOT verification.
+  }
+  return state;
+}
+
+export async function execute(event, { get, graph, put, dispatch, closeIssue,
+  wait = sleep, judge = assess }) {
   const record = eventOf(event);
   if (!record) return deny("Not one completed successful original worker PR CI run");
   let approval = await judge(record.number, get, {
@@ -82,12 +135,21 @@ export async function execute(event, { get, graph, put, wait = sleep, judge = as
   });
   if (merge?.merged !== true || !SHA.test(merge.sha || ""))
     return deny("Merge not confirmed; inspect GitHub before replay");
-  return { status: "MERGED", pr: record.number, issue: approval.task,
-    head: record.sha, mergeSha: merge.sha, ciRun: approval.ciRun };
+  const next = await finishMergedTask(approval.task, merge.sha,
+    { get, dispatch, closeIssue });
+  return { status: next.issueClosed && next.mainTestsDispatched
+      ? "MERGED" : "MERGED_FOLLOWUP_PENDING",
+    pr: record.number, issue: approval.task, head: record.sha,
+    mergeSha: merge.sha, ciRun: approval.ciRun, ...next };
 }
 async function request(url, method, body, token) {
-  if (!(url === "https://api.github.com/graphql" || url.startsWith(API + "/pulls/")))
-    throw Error("Forbidden write target");
+  const allowed = (url === "https://api.github.com/graphql" && method === "POST")
+    || (/^\/pulls\/[1-9][0-9]{0,9}\/merge$/.test(url.slice(API.length))
+      && method === "PUT")
+    || (url === API + "/actions/workflows/tests.yml/dispatches" && method === "POST")
+    || (/^\/issues\/[1-9][0-9]{0,9}$/.test(url.slice(API.length))
+      && method === "PATCH");
+  if (!allowed) throw Error("Forbidden write target");
   const response = await fetch(url, {
     method,
     headers: { Authorization: "Bearer " + token, Accept: "application/vnd.github+json",
@@ -96,6 +158,10 @@ async function request(url, method, body, token) {
     signal: AbortSignal.timeout(15000)
   });
   if (!response.ok) throw Error("GitHub write rejected (safe-category)");
+  if (response.status === 204 && method === "POST"
+      && url === API + "/actions/workflows/tests.yml/dispatches") {
+    return { accepted: true };
+  }
   const raw = await response.text();
   if (raw.length > 30000) throw Error("GitHub write response too large");
   return JSON.parse(raw);
@@ -108,6 +174,10 @@ export async function run(input, token, dependencies = {}) {
     graph: dependencies.graph || ((query, variables) =>
       request("https://api.github.com/graphql", "POST", { query, variables }, token)),
     put: dependencies.put || ((url, body) => request(url, "PUT", body, token)),
+    dispatch: dependencies.dispatch || ((url, body) =>
+      request(url, "POST", body, token)),
+    closeIssue: dependencies.closeIssue || ((url, body) =>
+      request(url, "PATCH", body, token)),
     wait: dependencies.wait,
     judge: dependencies.judge
   });
@@ -124,9 +194,13 @@ if (process.argv[1] && import.meta.url === new URL("file://" + process.argv[1]).
   }
   const summary = "## GO Aider safe worker auto-merge\n\n"
     + "**Outcome:** " + outcome.status + "\n\n"
-    + (outcome.reason ? outcome.reason : outcome.status === "MERGED"
+    + (outcome.reason ? outcome.reason : outcome.mergeSha
       ? "PR #" + outcome.pr + " merged " + outcome.mergeSha
         + " from exact tested head " + outcome.head + " and CI run " + outcome.ciRun
+        + "\n\nSource task closed and approvals cleared: "
+        + (outcome.issueClosed ? "yes" : "PENDING")
+        + "\nFull post-merge main Tests workflow dispatched: "
+        + (outcome.mainTestsDispatched ? "yes" : "PENDING")
       : "No merge attempted") + "\n";
   if (process.env.GITHUB_STEP_SUMMARY) appendFileSync(process.env.GITHUB_STEP_SUMMARY, summary);
   console.log("GO_WORKER_SAFE_AUTOMERGE=" + outcome.status);
