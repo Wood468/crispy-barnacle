@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-11T08:27:03.567Z",
+ "updated": "2026-11-11T09:19:11.080Z",
  "events": [
   {
    "id": "w-pokemon-fossil-museum-2026",
@@ -375,24 +375,40 @@
    "seen": "2026-10-30"
   },
   {
-   "id": "w-forever-stamp-rally-go-wild-area",
-   "name": "Forever Stamp Rally Go Wild Area",
-   "place": "Japan",
+   "id": "w-pok-mon-go-stamp-rally-sendai-and-tohoku",
+   "name": "Pokémon GO Stamp Rally: Sendai and Tohoku",
+   "place": "Sendai and Tohoku, Japan",
    "area": "Asia",
    "scope": "regional",
-   "start": "2026-11-03",
-   "end": "2026-11-03",
+   "start": "2026-11-02T16:00:00-08:00",
+   "end": "",
    "datesKnown": true,
+   "ongoing": true,
    "sources": [
     {
      "id": "official",
      "name": "Pokémon GO (official)",
-     "url": "https://pokemongo.com/ja/news/forever-stamp-rally-go-wild-area-2026/"
-    },
+     "url": "https://pokemongo.com/en/news/forever-stamp-rally-go-wild-area-2026/"
+    }
+   ],
+   "status": "official",
+   "seen": "2026-11-11"
+  },
+  {
+   "id": "w-pok-mon-go-stamp-rally-mexico-city",
+   "name": "Pokémon GO Stamp Rally: Mexico City",
+   "place": "Mexico City, Mexico",
+   "area": "Americas",
+   "scope": "regional",
+   "start": "2026-11-02T16:00:00-08:00",
+   "end": "",
+   "datesKnown": true,
+   "ongoing": true,
+   "sources": [
     {
      "id": "official",
      "name": "Pokémon GO (official)",
-     "url": "https://pokemongo.com/ja/news/go-wild-area-stamp-rally-details-2026/"
+     "url": "https://pokemongo.com/en/news/forever-stamp-rally-go-wild-area-2026/"
     }
    ],
    "status": "official",

@@ -1,5 +1,5 @@
 {
- "runAt": "2026-11-11T08:27:03.572Z",
+ "runAt": "2026-11-11T09:19:11.086Z",
  "artworkCoverage": {
   "selected": 26,
   "missing": 75,
@@ -249,17 +249,17 @@
     ]
    },
    {
-    "id": "leekduck:minior-showers-perseids-2027",
-    "name": "Minior Showers: Perseids 2027",
-    "sources": [
-     "https://leekduck.com/events/minior-showers-perseids-2027/"
-    ]
-   },
-   {
     "id": "leekduck:pokemon-night-out-london-2026",
     "name": "Pokémon Night Out 2026 - London",
     "sources": [
      "https://leekduck.com/events/pokemon-night-out-london-2026/"
+    ]
+   },
+   {
+    "id": "leekduck:minior-showers-perseids-2027",
+    "name": "Minior Showers: Perseids 2027",
+    "sources": [
+     "https://leekduck.com/events/minior-showers-perseids-2027/"
     ]
    },
    {
@@ -562,7 +562,7 @@
  },
  "pagesRead": 80,
  "events": 103,
- "worldEvents": 69,
+ "worldEvents": 70,
  "worldUndated": [
   "GO Wild Area Stamp Rally"
  ],
@@ -571,6 +571,11 @@
    "source": "official",
    "title": "Celebrate the Festival of Lights with the return of Pikachu wearing a saree and Pikachu wearing a kurta! — Pokémon GO",
    "url": "https://pokemongo.com/news/festival-of-lights-2026/"
+  },
+  {
+   "source": "official",
+   "title": "Discover new city adventures starting today! All Trainers can join brand-new Pokémon GO Stamp Rallies in Sendai • Tohoku, Japan, and Mexico City, Mexico.",
+   "url": "https://pokemongo.com/en/news/forever-stamp-rally-go-wild-area-2026/"
   },
   {
    "source": "official",

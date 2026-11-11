@@ -5928,7 +5928,7 @@
     },
     "imageReviewed": true,
     "contentHash": "9c1e84fa3e57a9dc254240da56abb3e0fe3ea75b86697d72cfd7a5408efad52a",
-    "revision": 48,
+    "revision": 50,
     "amended": true,
     "native": false,
     "collection": "events"
@@ -26596,7 +26596,7 @@
     },
     "imageReviewed": true,
     "contentHash": "244e1a218c776c7de71a786fe7a96bc90d5ca2212bc0e2a5060da28a5e71b680",
-    "revision": 63,
+    "revision": 65,
     "amended": true,
     "native": false,
     "collection": "source-details"
@@ -57823,7 +57823,7 @@
     },
     "imageReviewed": true,
     "contentHash": "dce45278d164ec7d0efdbec4d901eac6f95e08bdec7b64c64c440d1336263583",
-    "revision": 40,
+    "revision": 42,
     "amended": true,
     "native": false,
     "collection": "world-events"
@@ -59020,7 +59020,7 @@
     },
     "imageReviewed": true,
     "contentHash": "4bbe2871a823eb21458a110b1a90a61e5fce0d1ddaa2d47d0d0671f282a84a9d",
-    "revision": 48,
+    "revision": 50,
     "amended": true,
     "native": false,
     "collection": "world-events"
@@ -62344,6 +62344,108 @@
      }
     ]
    }
+  },
+  {
+   "schemaVersion": 1,
+   "eventId": "w-pok-mon-go-stamp-rally-mexico-city",
+   "aliases": [],
+   "family": "other",
+   "title": "Pokémon GO Stamp Rally: Mexico City",
+   "dateText": "",
+   "completeness": "partial",
+   "lifecycle": "announced",
+   "attendance": "in-person",
+   "location": "Mexico City, Mexico",
+   "image": "https://lh3.googleusercontent.com/M9HsqPfmLn15sC1MyDWRVZDzmVDI1nGsjHYREQU0mGjgTkgamrO5mtCve6AQBUdnnHSUH1doO1yPywHyFkuulCuPq15YBjORFm-nBkE42UE",
+   "notes": [],
+   "internalValidation": {
+    "warnings": [],
+    "lifecycleDeclared": false,
+    "conflicts": [],
+    "fields": {},
+    "info": [],
+    "detailRefs": [],
+    "legacyDates": {
+     "start": "2026-11-02T16:00:00-08:00",
+     "end": ""
+    },
+    "contentHash": "6e8f307be5f2fa61159ec871c547ed3982e3e2b0bcd6b89b0de17e90041a2260",
+    "revision": 1,
+    "amended": false,
+    "native": false,
+    "collection": "world-events"
+   },
+   "schedule": null,
+   "activities": [],
+   "bonuses": [],
+   "research": [],
+   "passes": [],
+   "tickets": [],
+   "sources": [
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "url": "https://pokemongo.com/en/news/forever-stamp-rally-go-wild-area-2026/"
+    },
+    {
+     "url": "https://pokemongo.com/en/news/forever-stamp-rally-go-wild-area-2026/",
+     "name": "Event source"
+    }
+   ],
+   "pokemon": [],
+   "encounters": [],
+   "groups": {}
+  },
+  {
+   "schemaVersion": 1,
+   "eventId": "w-pok-mon-go-stamp-rally-sendai-and-tohoku",
+   "aliases": [],
+   "family": "other",
+   "title": "Pokémon GO Stamp Rally: Sendai and Tohoku",
+   "dateText": "",
+   "completeness": "partial",
+   "lifecycle": "announced",
+   "attendance": "in-person",
+   "location": "Sendai and Tohoku, Japan",
+   "image": "https://lh3.googleusercontent.com/M9HsqPfmLn15sC1MyDWRVZDzmVDI1nGsjHYREQU0mGjgTkgamrO5mtCve6AQBUdnnHSUH1doO1yPywHyFkuulCuPq15YBjORFm-nBkE42UE",
+   "notes": [],
+   "internalValidation": {
+    "warnings": [],
+    "lifecycleDeclared": false,
+    "conflicts": [],
+    "fields": {},
+    "info": [],
+    "detailRefs": [],
+    "legacyDates": {
+     "start": "2026-11-02T16:00:00-08:00",
+     "end": ""
+    },
+    "contentHash": "8a0bf74b4655995f084122b33c39d2504cfc01d109af3b2664cde740880429ec",
+    "revision": 1,
+    "amended": false,
+    "native": false,
+    "collection": "world-events"
+   },
+   "schedule": null,
+   "activities": [],
+   "bonuses": [],
+   "research": [],
+   "passes": [],
+   "tickets": [],
+   "sources": [
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "url": "https://pokemongo.com/en/news/forever-stamp-rally-go-wild-area-2026/"
+    },
+    {
+     "url": "https://pokemongo.com/en/news/forever-stamp-rally-go-wild-area-2026/",
+     "name": "Event source"
+    }
+   ],
+   "pokemon": [],
+   "encounters": [],
+   "groups": {}
   },
   {
    "schemaVersion": 1,
@@ -66226,7 +66328,7 @@
      "end": "2027-04-11"
     },
     "contentHash": "84950064738e11a798ef98f9fd6ab913640b138fb1594e38612f64db09c4dd24",
-    "revision": 40,
+    "revision": 42,
     "amended": true,
     "native": false,
     "collection": "world-events"
@@ -73166,7 +73268,7 @@
   },
   {
    "collection": "world-events",
-   "records": 64
+   "records": 65
   },
   {
    "collection": "regional-events",
