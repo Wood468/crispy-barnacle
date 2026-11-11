@@ -57,6 +57,17 @@
     return Object.assign({}, hit, { infographics: (hit.infographics || []).concat(extra.filter(function (i) { return have.indexOf(i.url) < 0; })) });
   }
   function evById(id) { return X.events().filter(function (e) { return e.id === id; })[0] || (X.raidSlots ? X.raidSlots().filter(function (e) { return e.id === id; })[0] : null) || (X.worldEvents ? X.worldEvents().filter(function (e) { return e.id === id; })[0] : null) || (X.regionalEvents ? X.regionalEvents().filter(function (e) { return e.id === id; })[0] : null); }
+  /* A direct Event Details shortcut is shown only for published or
+     owner-approved poster URLs. Unknown and pending queue entries stay hidden. */
+  function available(id) {
+    var ev = evById(id);
+    if (!ev) return Promise.resolve(false);
+    return loadInfo().then(function (all) {
+      var info = eventInfo(ev, all) || {};
+      return !!((info.infographics || []).some(function (im) { return im && safe(im.url); }) ||
+               safe(ev.infographicUrl || ev.infographic));
+    }).catch(function () { return false; });
+  }
   /* Card posters can be large originals from R2. Do not assign their URL until the
      44px card control is about to enter the viewport; hidden tabs stay network-idle. */
   function loadThumb(button) {
@@ -340,5 +351,7 @@
   });
   if (document.body) liveRegion(); else document.addEventListener('DOMContentLoaded', liveRegion);
   watchButtons();
-  window.GOINFOGRAPHIC = { open: open, close: close };
+  window.GOINFOGRAPHIC = { open: open, close: close, available: available };
+  // Dynamically loaded scripts may finish after Event Details has opened.
+  if (window.Event && typeof document.dispatchEvent === 'function') document.dispatchEvent(new window.Event('gofn-infographic-ready'));
 })();
