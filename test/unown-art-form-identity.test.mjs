@@ -129,5 +129,14 @@ test('live Worker artwork handler fetches exact official Unown letter PNGs, incl
     }
   }
   assert.equal(upstream.length, cases.length * 2, 'each request resolves exactly one form-specific image');
+  // Allow punctuation only when it genuinely belongs to one exact Unown
+  // glyph. Invalid mixed/unknown forms must not trigger any upstream fetch.
+  for (const bad of ['Pikachu!', 'Unown !!!', 'Unown ! (?)', 'Unown ? (!)', 'Unown A!']) {
+    const url = new URL('https://pogo.test/api/art?n=' + encodeURIComponent(bad));
+    const before = upstream.length;
+    const response = await handler(new Request(url), {}, { waitUntil() {} }, url);
+    assert.equal(response.status, 400, 'reject malformed artwork name: ' + bad);
+    assert.equal(upstream.length, before, 'no upstream lookup for ' + bad);
+  }
   assert.deepEqual(checks, [], 'no unrelated Pokemon species or variety lookups are made');
 });
