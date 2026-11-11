@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-11T05:55:13.330Z",
+ "updated": "2026-11-11T08:27:03.567Z",
  "events": [
   {
    "id": "w-pokemon-fossil-museum-2026",
@@ -377,7 +377,7 @@
   {
    "id": "w-forever-stamp-rally-go-wild-area",
    "name": "Forever Stamp Rally Go Wild Area",
-   "place": "South Korea",
+   "place": "Japan",
    "area": "Asia",
    "scope": "regional",
    "start": "2026-11-03",
@@ -387,7 +387,12 @@
     {
      "id": "official",
      "name": "Pokémon GO (official)",
-     "url": "https://pokemongo.com/ko/news/forever-stamp-rally-go-wild-area-2026/"
+     "url": "https://pokemongo.com/ja/news/forever-stamp-rally-go-wild-area-2026/"
+    },
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "url": "https://pokemongo.com/ja/news/go-wild-area-stamp-rally-details-2026/"
     }
    ],
    "status": "official",
