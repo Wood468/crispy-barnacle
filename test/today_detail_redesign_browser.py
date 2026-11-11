@@ -79,59 +79,67 @@ with sync_playwright() as p:
         assert glance['debutOverflow'] == 'auto', (width, glance)
         page.screenshot(path=str(OUT / f'redesign-detail-{width}.png'))
 
-        # Continuous page: every section is in the document, nav links (not tabs) scroll to headings.
+        # Accessible single-panel navigation: Overview is initially the only
+        # visible panel. All source-backed panels stay mounted but are hidden
+        # from sight and the accessibility tree until selected.
         nav = page.locator('#evd nav.evd-nav[aria-label="Event sections"]')
         links = nav.locator('.evd-nav-link')
-        assert links.count() >= 3 and page.locator('#evd [role=tablist],#evd [role=tabpanel],#evd [hidden].evd-sec').count() == 0
-        assert page.locator('#evd section.evd-sec').count() == links.count()
-        assert links.first.get_attribute('aria-current') == 'true' and page.locator('#evd .evd-nav-link[aria-current="true"]').count() == 1
-        def stack_bottom():
-            return page.evaluate("document.querySelector('#evd .evd-nav').getBoundingClientRect().bottom")
-        def active():
-            return page.evaluate("document.querySelector('#evd .evd-nav-link[aria-current=\"true\"]').dataset.sec")
-        def scroll_idle(limit=6000):
-            # Smooth scrolling takes as long as the machine lets it (WebKit under CI load is the slow case): wait for the scroll position to stop moving
-            # for several consecutive frames instead of sleeping a fixed time, so the assertion never races the animation.
-            page.wait_for_function('''() => { const o = document.querySelector('#evd'); const now = o.scrollTop;
-                const prev = window.__scrollPrev; window.__scrollPrev = now;
-                window.__scrollStill = prev === now ? (window.__scrollStill || 0) + 1 : 0; return window.__scrollStill >= 8; }''', timeout=limit, polling='raf')
-            page.evaluate('window.__scrollPrev = undefined; window.__scrollStill = 0')
-        def tap(sec):
-            page.evaluate('window.__scrollPrev = undefined; window.__scrollStill = 0')
-            page.locator(f'#evd .evd-nav-link[data-sec="{sec}"]').click(); page.wait_for_timeout(120); scroll_idle()
-            top = page.evaluate(f"document.querySelector('#evd-h-{sec}').getBoundingClientRect().top")
-            maxed = page.evaluate("(()=>{const o=document.querySelector('#evd');return o.scrollTop+o.clientHeight>=o.scrollHeight-4})()")
-            assert maxed or top >= stack_bottom() - 2, (sec, top, stack_bottom())
-            assert active() == sec, (sec, active())
         sections = page.evaluate("[...document.querySelectorAll('#evd .evd-sec')].map(s=>s.dataset.sec)")
-        assert 'encounters' in sections and 'research' in sections
-        tap('encounters'); tap('research')
-        # Scrolling (not tapping) updates the active link, including deep inside a long gallery and at the very bottom.
-        # The overlay uses smooth scrolling, so a programmatic scrollTop animates: wait for it to stop, then for the link to follow (never a fixed sleep).
-        def scroll_to(expr):
-            page.evaluate('window.__scrollPrev = undefined; window.__scrollStill = 0')
-            page.evaluate("(()=>{const o=document.querySelector('#evd');" + expr + "})()")
-            page.wait_for_timeout(60); scroll_idle()
-        def expect_active(sec):
-            try:
-                page.wait_for_function('(s) => document.querySelector("#evd .evd-nav-link[aria-current=true]").dataset.sec === s', arg=sec, timeout=6000)
-            except Exception:
-                pass
-            assert active() == sec, (sec, active())
-        scroll_to("const s=document.querySelector('#evd-s-encounters');o.scrollTop=s.offsetTop+s.offsetHeight*0.6;")
-        expect_active('encounters')
-        # Deep inside the long research list the active link stays Research.
-        scroll_to("const s=document.querySelector('#evd-s-research');o.scrollTop=s.offsetTop+s.offsetHeight*0.7;")
-        expect_active('research')
-        scroll_to("o.scrollTop=o.scrollHeight;")
-        expect_active(sections[-1])
-        scroll_to("o.scrollTop=0;")
-        expect_active(sections[0])
-        # Reduced motion: the jump is immediate.
+        assert sections[0] == 'overview' and 'encounters' in sections and 'research' in sections
+        assert len(sections) == links.count() and links.count() >= 3
+        assert nav.locator('[role="tablist"]').count() == 1
+        assert links.count() == page.locator('#evd [role="tab"]').count()
+        assert page.locator('#evd [role="tabpanel"]').count() == len(sections)
+
+        def active():
+            return page.evaluate("document.querySelector('#evd .evd-nav-link[aria-selected=\"true\"]').dataset.sec")
+
+        def only_panel(sec):
+            state = page.evaluate("""() => {
+                const panels=[...document.querySelectorAll('#evd .evd-sec')];
+                const tabs=[...document.querySelectorAll('#evd .evd-nav-link')];
+                return {
+                    visible: panels.filter(p => !p.hidden && getComputedStyle(p).display!=='none').map(p => p.dataset.sec),
+                    selected: tabs.filter(t => t.getAttribute('aria-selected')==='true').map(t => t.dataset.sec),
+                    current: tabs.filter(t => t.getAttribute('aria-current')==='true').map(t => t.dataset.sec),
+                    hiddenCorrect: panels.every(p => p.dataset.sec===sec ? !p.hidden && p.getAttribute('aria-hidden')==='false' : p.hidden && p.getAttribute('aria-hidden')==='true'),
+                    links: tabs.every(t => t.getAttribute('aria-controls')==='evd-s-'+t.dataset.sec && t.getAttribute('role')==='tab'),
+                };
+            }""")
+            assert state['visible'] == [sec] and state['selected'] == [sec] and state['current'] == [sec], (width, sec, state)
+            assert state['hiddenCorrect'] and state['links'], (width, sec, state)
+            assert page.locator('#evd .evd-nav-link[tabindex="0"]').count() == 1
+            assert page.locator('#evd .evd-nav-link[tabindex="-1"]').count() == len(sections)-1
+            assert page.evaluate('document.querySelector("#evd").scrollWidth <= innerWidth')
+
+        def tap(sec):
+            page.locator(f'#evd .evd-nav-link[data-sec="{sec}"]').click()
+            only_panel(sec)
+            assert active() == sec
+
+        only_panel('overview')
+        tap('encounters')
+        tap('research')
+        assert not page.locator('#evd [data-sec="passes"].evd-sec').is_visible() if 'passes' in sections else True
+        assert not page.locator('#evd [data-sec="encounters"].evd-sec').is_visible()
+
+        # Arrow navigation activates the next panel while retaining keyboard
+        # focus on its tab. Home and End work at both ends of the strip.
+        nav.locator('[data-sec="research"]').focus()
+        page.keyboard.press('ArrowRight')
+        successor = sections[(sections.index('research')+1) % len(sections)]
+        only_panel(successor)
+        assert page.evaluate('document.activeElement.dataset.sec') == successor
+        page.keyboard.press('Home')
+        only_panel(sections[0])
+        assert page.evaluate('document.activeElement.dataset.sec') == sections[0]
+        page.keyboard.press('End')
+        only_panel(sections[-1])
+        assert page.evaluate('document.activeElement.dataset.sec') == sections[-1]
         page.emulate_media(reduced_motion='reduce')
-        page.locator('#evd .evd-nav-link[data-sec="research"]').click(); page.wait_for_timeout(250)
-        assert abs(page.evaluate("document.querySelector('#evd-h-research').getBoundingClientRect().top") - stack_bottom()) < 40 and active() == 'research'
+        tap('research')
         page.emulate_media(reduced_motion='no-preference')
+
         page.locator('#evd .evd-nav-link[data-sec="overview"]').click(); page.wait_for_timeout(1200)
         assert page.evaluate('document.querySelector("#evd").scrollWidth <= innerWidth')
         page.locator('#evd .evd-nav-link[data-sec="encounters"]').click(); page.wait_for_timeout(1000)
@@ -153,6 +161,7 @@ with sync_playwright() as p:
         page.keyboard.press('Escape')
         page.evaluate("GODETAIL.open('cur:gopassnov')")
         page.wait_for_selector('#evd .evd-nav-link[data-sec="passes"]')
+        tap('passes')
         page.wait_for_selector('#evd .ue-pass-range')
         page.locator('#evd .ue-pass-range').first.locator('summary').click()
         assert page.locator('#evd .ue-pass-stages > li').count() >= 90
