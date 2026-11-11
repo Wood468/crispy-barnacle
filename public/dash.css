@@ -2211,3 +2211,33 @@ button.rc-chip:focus-visible{outline:2px solid var(--color-link);outline-offset:
 .rw-max-pokemon .max-art.is-dyn{min-width:84px;min-height:84px}
 .rw-max-pokemon .max-art.is-dyn::before,.rw-max-pokemon .max-art.is-dyn::after{inset:4%;animation:none}
 .rw-empty{padding:var(--space-3);border:1px dashed var(--border-subtle,rgba(255,255,255,.2));border-radius:var(--radius-md)}
+
+
+/* #521 — Dynamax and ordinary Pokémon intentionally share the species model,
+   not the visual identity. The universal Event Details gallery / reward lanes
+   render their artwork directly (without monArt's Max wrapper), so use the
+   existing exact data-sd flag to show a visible Max treatment there too.
+   This is static and stays legible with reduced motion enabled. */
+#evd :is(.ue-mon-art,.ue-reward-art,.ue-pass-art):has(> img.art[data-sd="1"]){
+  position:relative;isolation:isolate
+}
+#evd :is(.ue-mon-art,.ue-reward-art,.ue-pass-art):has(> img.art[data-sd="1"])::before{
+  content:"";position:absolute;inset:7%;z-index:0;pointer-events:none;
+  border:2px solid rgba(255,92,148,.9);border-radius:50%;
+  background:radial-gradient(circle at 50% 62%,rgba(250,72,131,.34) 5%,rgba(144,23,93,.28) 52%,transparent 78%);
+  box-shadow:inset 0 0 10px rgba(255,67,138,.28),0 0 10px rgba(231,45,116,.5)
+}
+#evd :is(.ue-mon-art,.ue-reward-art,.ue-pass-art) > img.art[data-sd="1"]{
+  position:relative;z-index:1;filter:drop-shadow(0 1px 5px rgba(255,72,135,.75))
+}
+#evd .ue-mon-art:has(> img.art[data-sd="1"])::after{
+  content:"DYNAMAX";position:absolute;right:2px;bottom:2px;z-index:2;
+  padding:2px 5px;border-radius:999px;background:#9e1649;color:#fff;
+  font:800 .54rem/1.2 var(--font-body);letter-spacing:.025em;
+  box-shadow:0 1px 4px rgba(0,0,0,.5);pointer-events:none
+}
+#evd :is(.ue-reward-art,.ue-pass-art):has(> img.art[data-sd="1"])::after{
+  content:"MAX";position:absolute;right:0;bottom:0;z-index:2;
+  padding:1px 3px;border-radius:4px;background:#9e1649;color:#fff;
+  font:800 .46rem/1.1 var(--font-body);letter-spacing:.01em;pointer-events:none
+}
