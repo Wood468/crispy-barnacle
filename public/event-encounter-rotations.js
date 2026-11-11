@@ -162,25 +162,29 @@ function withoutDuplicateFlatEncounters(model,entry){
  (entry.mightyDays||[]).forEach(function(d){(d.pokemon||[]).forEach(function(n){mighty.add(norm(n));});});
  (entry.mightyShared||[]).forEach(function(d){(d.pokemon||[]).forEach(function(n){shared.add(norm(n));});});
  var byKey={};(model.pokemon||[]).forEach(function(p){byKey[p.key]=norm(p.name);});
+ function accessCategory(v){
+  var a=norm(v).replace(/[-_]+/g,' ').replace(/\s+/g,' ');
+  return /^(paid|ticket|ticket only|ticket holder|ticket holders)$/.test(a)?'ticket':
+    /^(free|all|all trainer|all trainers)$/.test(a)?'all':'';
+ }
+ function edgeKey(e){return [e.identityKey,e.method,e.activityId||'main'].join('|');}
+ // The retained catalogue may have an older unknown-access edge alongside
+ // a refreshed authoritative access edge for this SAME exact method/activity.
+ // It is not a second encounter; don't mutate the underlying source model.
+ var explicit=new Set((model.encounters||[]).filter(function(e){return !!accessCategory(e.access);}).map(edgeKey));
  function keep(e){
   var name=byKey[e.identityKey];
   if(!name)return true;
-  // These are distinct encounter methods: a Pokémon may be wild Mighty
-  // *and* independently available from Free Incense. Only suppress the flat
-  // Incense edge if the same identity/method/access is already represented
-  // by the verified ticket/shared Incense group. Do not conflate wild with
-  // Incense merely because the species name matches.
+  if(!accessCategory(e.access)&&norm(e.access)==='unknown'&&explicit.has(edgeKey(e)))return false;
+  // A wild Mighty encounter is independent of an Incense method for the same
+  // Pokémon. Suppress an Incense edge only when the exact sourced method,
+  // declared access, and main activity are already covered by the same
+  // verified shared Incense group (ticket-only Latias/Latios).
   if(e.method==='incense'){
-   var sourceAccess=norm(e.access),activity=String(e.activityId||'main');
+   var sourceAccess=accessCategory(e.access),activity=String(e.activityId||'main');
    return !(entry.mightyShared||[]).some(function(group){
-    var groupAccess=norm(group.access);
-    var sameAccess=sourceAccess===groupAccess||
-      (sourceAccess==='paid'&&groupAccess==='ticket')||
-      (sourceAccess==='ticket'&&groupAccess==='paid')||
-      (sourceAccess==='free'&&groupAccess==='all')||
-      (sourceAccess==='all'&&groupAccess==='free');
-    return activity==='main'&&sourceAccess!=='unknown'&&
-      norm(group.method)==='incense'&&sameAccess&&
+    return activity==='main'&&sourceAccess&&
+      norm(group.method)==='incense'&&sourceAccess===accessCategory(group.access)&&
       (group.pokemon||[]).some(function(item){return norm(item)===name;});
    });
   }
