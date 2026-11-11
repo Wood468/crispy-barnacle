@@ -71,7 +71,7 @@ with sync_playwright() as p:
         target.click()
         try:
             page.wait_for_function("document.getElementById('evd-t')?.textContent==='Synthetic Future Community Day'")
-            page.evaluate("document.querySelectorAll('#evd [role=tabpanel]').forEach(p=>p.hidden=false)")
+            page.locator('#evd .evd-nav-link[data-sec="encounters"]').click()
         except Exception:
             print('Event handoff failure:',errors,page.evaluate("({title:document.getElementById('evd-t')?.textContent,hidden:document.getElementById('evd')?.hidden,active:document.activeElement?.outerHTML,events:GODASH.events().filter(e=>e.id==='synthetic-future-community-day').map(e=>({id:e.id,name:e.name}))})"),flush=True)
             raise
@@ -82,7 +82,7 @@ with sync_playwright() as p:
         page.keyboard.press('Escape')
         page.evaluate("GODETAIL.open('synthetic-future-festival')")
         page.wait_for_function("document.getElementById('evd-t')?.textContent==='Synthetic Future Festival'")
-        page.evaluate("document.querySelectorAll('#evd [role=tabpanel]').forEach(p=>p.hidden=false)")
+        page.locator('#evd .evd-nav-link[data-sec="encounters"]').click()
         for method in ['wild','raid','incense']:
             assert page.locator(f'#evd [data-method="{method}"]').is_visible()
         base=page.locator('#evd [data-method="wild"] [data-identity="25:base:none"]')
@@ -96,10 +96,19 @@ with sync_playwright() as p:
         assert moon.locator('.costume-unavailable').count()==1
         assert page.locator('#evd .own,#evd [data-follow],#evd .ue-mon-controls,#evd [data-mark]').count()==0
         assert page.evaluate("GODASH.usGet('form:26:alola')")!=1, 'reading an event changed collection data'
+        page.locator('#evd .evd-nav-link[data-sec="research"]').click()
         assert 'Catch 5 Pokémon' in page.locator('#evd').inner_text()
         assert 'Rare Candy' in page.locator('#evd').inner_text()
+        # The nested activity is source-backed, but may be grouped under its
+        # own Schedule section; reveal the owning section before asserting text.
+        afternoon = page.locator('#evd .evd-sec').filter(has_text='Synthetic afternoon').first
+        afternoon_sec = afternoon.get_attribute('data-sec')
+        assert afternoon_sec, 'synthetic activity lost from universal event panels'
+        page.locator(f'#evd .evd-nav-link[data-sec="{afternoon_sec}"]').click()
         assert 'Synthetic afternoon' in page.locator('#evd').inner_text()
+        page.locator('#evd .evd-nav-link[data-sec="passes"]').click()
         assert 'Rank 2' in page.locator('#evd').inner_text()
+        page.locator('#evd .evd-nav-link[data-sec="tickets"]').click()
         assert 'JPY' in page.locator('#evd').inner_text()
         assert page.locator('#evd .st,#evd .evd-claim-source,#evd .research-task-source,#evd .evd-fresh').count()==0
         assert page.locator('#evd .ue-sources').count()==1
@@ -110,13 +119,12 @@ with sync_playwright() as p:
         page.keyboard.press('Escape')
         page.evaluate("GODETAIL.open('synthetic-undated-overseas')")
         page.wait_for_function("document.getElementById('evd-t')?.textContent==='Synthetic Overseas Announcement'")
-        page.evaluate("document.querySelectorAll('#evd [role=tabpanel]').forEach(p=>p.hidden=false)")
         assert 'Dates to be announced' in page.locator('#evd').inner_text()
         assert 'Invalid Date' not in page.locator('#evd').inner_text()
         page.keyboard.press('Escape')
         page.evaluate("GODETAIL.open('synthetic-native-pass')")
         page.wait_for_function("document.getElementById('evd-t')?.textContent==='Synthetic native GO Pass'")
-        page.evaluate("document.querySelectorAll('#evd [role=tabpanel]').forEach(p=>p.hidden=false)")
+        page.locator('#evd .evd-nav-link[data-sec="passes"]').click()
         assert 'Rank 2' in page.locator('#evd-pass').inner_text()
         assert 'Premium Battle Pass' in page.locator('#evd-pass').inner_text()
         assert errors==[],errors
