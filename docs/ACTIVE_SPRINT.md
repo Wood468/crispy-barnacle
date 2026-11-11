@@ -5,24 +5,27 @@
 ## North star
 Ship a complete, reliable, premium mobile-first Pokémon GO companion with trustworthy source-backed events, research, raids, shiny boosts, GO Pass, Schedule and Collection. Future events must work through reusable templates and importer rules, not event-specific patches. Preserve public/private boundaries. Do not add Pokémon Track/Follow controls to Today or Event Details.
 
-## Current sprint — Release acceptance and importer integrity (11 November 2026)
+## Current sprint — Phase 1 foundation accepted; finish core and release verification (11 November 2026)
 
-**Release goal:** accurate reusable event records, working Today/Event Details/Battle/Schedule/Research/GO Pass/Collection, green required CI and verified production. Issue [#428](https://github.com/Wood468/crispy-barnacle/issues/428), open PRs and current GitHub Actions outrank this handoff; **these are observations, not deployment claims**.
+**Phase 1: COMPLETE for the verified 11 November foundation baseline.** This is a milestone acceptance, **not** a claim that the whole application/release #428 is complete. Always recheck actual GitHub CI and production for new commits.
 
-### Recently merged work (do not recreate)
-- **#441 / #443 / #451:** exact-form artwork QA, mobile production journey checks and the registry-only source-join fix (#451 still requires live re-verification).
-- **#442:** self-recovery for stalled hourly import runs.
-- **#444:** Roaming Gimmighoul Coin Bag, egg-distance artwork and date-specific GO Wild raid cards; subsequent live QA found a separate fallback-route regression.
-- **#445 / #447:** regenerate after importer/contract changes, validate the generated output before commit, preserve rejected snapshots for diagnostics.
-- **#446:** day-specific Mighty encounters and hourly Wild Area habitats in reusable Event Details components.
-- **#448 / #449:** preserve official event windows, Minior research and full source-backed dates across duplicate records.
-- Earlier foundation #426, #430, #431, #433, #434, #437 and #438 are already merged; use the release tracker for details.
+### Phase 1 evidence (source-backed, independently verified)
 
-### Current P0 work (independent ownership; avoid overlapping branches)
-1. **Importer exact-form preservation — [#453](https://github.com/Wood468/crispy-barnacle/pull/453), with complementary draft [#454](https://github.com/Wood468/crispy-barnacle/pull/454).** A real refresh of main `95c3e4da` ([run 42904661195](https://github.com/Wood468/crispy-barnacle/actions/runs/42904661195)) failed the strict source-backed Crowned and Dynamax form checks; the workflow stopped before committing generated data. Test a fresh end-to-end importer run after #453, not just synthetic unit tests. Preserve Minior task/reward/source URLs and 6–8 November Mexico City dates too.
-2. **Registry-only Event Details source join — [#451](https://github.com/Wood468/crispy-barnacle/pull/451), merged as `47b7f3e`.** Live post-#444 QA found 12 egg tiles instead of four sourced Wild Area Global 10 km hatches when an event opened outside Today/Schedule's visible list. The fix uses canonical curated `detailIds`, without fuzzy title matches. **Post-merge production QA remains outstanding:** #450 must verify the deployed 360/390/430px UI; do not weaken the egg-count assertion.
-3. **Production-only QA — [#450](https://github.com/Wood468/crispy-barnacle/pull/450).** Read-only 360/390/430px live WebKit/Chromium acceptance should verify four correct egg images, Saturday/Sunday raid differences, Roaming Gimmighoul and exact-form artwork after approved deployment. Initial live failure is evidence of the real bug, not a test to suppress.
-4. **Release gate — [#428](https://github.com/Wood468/crispy-barnacle/issues/428).** Required JS/Python/browser A–E/WebKit/CodeQL/Cloudflare checks must be green on the actual merge heads. Confirm production deployment and critical user journeys separately. Do not confuse a Cloudflare preview with live production or assert the importer is fixed until regenerated output is verified.
+- **Importer root cause corrected:** the old run [#42935062659](https://github.com/Wood468/crispy-barnacle/actions/runs/42935062659) stopped *before import* on stale hard-coded infographic-count tests; dynamic counts are now tested. [PR #495](https://github.com/Wood468/crispy-barnacle/pull/495) merged as `c0d37ae` after all 9 required checks; dedupe/research/form contract edits now trigger regeneration, excluding generated JSON to avoid loops.
+- **Real regeneration succeeded:** [Event details importer #42968681082](https://github.com/Wood468/crispy-barnacle/actions/runs/42968681082) passed R2 restore, dedupe, fetch, source reconciliation, importer/research/form regression checks, validation and commit. [Generated commit `c5f989e`](https://github.com/Wood468/crispy-barnacle/commit/c5f989e74e8510b6907dceae37ca59c1175b80a8) refreshed `public/event-details.json` and `data/importer-report.json` at **2026-11-11T05:55:13.338Z**: 103 details records, 80 pages read, **zero reported importer errors**.
+- **Essential identity/data retained:** both Minior events have eight source-attributed research tasks apiece, including separate 7,740 Stardust occurrences; verified Crowned, Dynamax and Roaming Gimmighoul identities, 64 world-event IDs and source-backed raid/egg/method detail retained. Before/after review of all 103 details records found no substantive record loss. Known fallback and source-join defects (#451/#444) have subsequent real production coverage.
+- **Live data parity and public/privacy gate:** [PR #498](https://github.com/Wood468/crispy-barnacle/pull/498) merged as `2e5b2d1` after 9/9 CI plus CodeQL. The read-only [Site check #42970871140](https://github.com/Wood468/crispy-barnacle/actions/runs/42970871140) passed, including semantic equality of the deployed Event Details catalogue to validated main (ignoring timestamp-only changes) and the existing public/privacy checks.
+- **Actual iPhone-width event acceptance:** [Live form and event QA #42968129055](https://github.com/Wood468/crispy-barnacle/actions/runs/42968129055) passed at 360/390/430px, checking Roaming Gimmighoul, exact Crowned art, four 10 km hatch icons, separate Saturday/Sunday raid bosses, 22+22 hour habitats, 9+9 daily Mighty and no horizontal overflow/browser errors. Source and form regression fixtures are retained.
+- **Latest checked foundation merge-head CI:** [main Tests #42975512255](https://github.com/Wood468/crispy-barnacle/actions/runs/42975512255) passed JavaScript, Python, Chromium shards a–e and WebKit on `4db05ef9`; production-image-audit was explicitly skipped in that push run, **not counted as a pass**. The preceding change's [PR Tests #42974377492](https://github.com/Wood468/crispy-barnacle/actions/runs/42974377492) had a passing production image audit. Post-merge Site check #42975512231 passed. Current main has subsequently moved (e.g. #503): verify its separate checks, not silently inherit those statuses.
+
+### Active next-phase work — do not reopen Phase 1 without a new reproducible P0
+
+- **Phase 2:** complete/review real-data journeys and remaining core features. [PR #503](https://github.com/Wood468/crispy-barnacle/pull/503) merged, adding real read-only mobile Today, both active GO Passes, Schedule, Research, Battle and Collection with screenshots and actual rank 45 Dynamax Meltan / rank 100 Deluxe Silver Bottle Cap; verify any newer main-run checks.
+- **Phase 3:** finish premium artwork cards, accessible event hierarchy, egg markers and visual inspection. A new verified, material identity/artwork bug is P1 or P0 by severity, not a reason to re-open all foundation contracts.
+- **Phase 4:** complete latest-head required CI, production deployment, mobile Safari/PWA/offline, public/private regression and release #428 acceptance. Preserve successful previous validated data if a later importer/source refresh fails.
+- **Worker lane:** GO Aider is not a release gate. Its #475 test-only queue attempt failed and was marked needs-review; editing/queue/publishing were disabled and approval withdrawn. Do not stall app completion for a worker capability upgrade.
+
+**No remaining *known reproducible* Phase 1 importer/identity/data blocker as of this checkpoint.** Distinguish future newly observed P0 failures from deferred phase 2/3/4 work. Never mark the overall release done while required latest-main CI or device/PWA production acceptance is outstanding.
 
 ### P1, P2 and later decisions
 - **P1 parallel:** complete verified event information and exact artwork without expanding scope; audit source freshness, mobile accessibility and major-screen hierarchy. Keep overseas in-person events visible on Today.
@@ -35,7 +38,7 @@ Ship a complete, reliable, premium mobile-first Pokémon GO companion with trust
 
 | Phase | Scope | Exit evidence | Parallel with |
 | --- | --- | --- | --- |
-| 1. Foundation | Importer accuracy, identity, sources, CI, coverage and tests | Green checks; importer output verified | 2, 3 |
+| 1. Foundation — **accepted 11 Nov 2026** | Importer accuracy, identity, sources, CI, coverage and tests | Real #42968681082 regeneration; validated output; live JSON parity; green foundation CI | 2, 3 |
 | 2. Core completion | Today, Event Details, Schedule, Raids, Research, GO Pass, Collection | Main user journeys tested with real data | 1, 3 |
 | 3. Premium UX | PokeRadar-inspired event cards, compact Pokémon grids, shiny boosts, GO Pass stages, mobile navigation, correct artwork | Screenshots and mobile accessibility review | 1, 2 |
 | 4. Release candidate | End-to-end regression, privacy, deployment, iPhone/PWA and production checks | Verified deployed release and acceptance checklist | Final fixes from 1–3 |
