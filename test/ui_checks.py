@@ -2773,12 +2773,30 @@ with sync_playwright() as p:
         # Cumulative layout shift of a cold Today load, summed over every shift (user input is not excluded: there is none). Measured un-throttled on purpose: the big
         # shifts (the footer jumping a screen when the agenda arrives, the freshness line and deadlines row growing, the date and tab bar filling in) happen at any speed, so
         # this is deterministic in CI. Batch 4 measured 0.62 (390px) and 1.09 (1280px) before the fix; Google's "good" threshold is 0.1. Throttled 20-run numbers are in docs/ROADMAP.md.
-        CLS_OBSERVER = "window.__cls=0;new PerformanceObserver(l=>{for(const e of l.getEntries())window.__cls+=e.value}).observe({type:'layout-shift',buffered:true})"
+        CLS_OBSERVER = """window.__cls=0;window.__clsShifts=[];new PerformanceObserver(l=>{
+            for(const e of l.getEntries()){
+                window.__cls+=e.value;
+                if(window.__clsShifts.length>=30)continue;
+                window.__clsShifts.push({value:Number(e.value.toFixed(5)),at:Math.round(e.startTime),
+                    sources:(e.sources||[]).slice(0,6).map(s=>{
+                        const n=s.node;
+                        const tag=n?.tagName?.toLowerCase()||'unknown';
+                        const cls=typeof n?.className==='string' ? n.className.trim().split(/\\s+/).slice(0,3).join('.') : '';
+                        const label=tag+(n?.id?'#'+n.id:'')+(cls?'.'+cls:'');
+                        return {node:label,previous:s.previousRect,current:s.currentRect};
+                    })});
+            }
+        }).observe({type:'layout-shift',buffered:true})"""
         for cls_w in (390, 1280):
             cpg = page(width=cls_w, mobile=cls_w < 500, pre=lambda p: p.add_init_script(CLS_OBSERVER))
             settle(cpg, "!!(window.GOFRESH&&window.GOFRESH.state().done&&window.GOINFOGRAPHIC&&window.GOEXTRA)")  # the late scripts and the freshness line are part of the load
             cpg.wait_for_timeout(1500)
             cls_val = cpg.evaluate("window.__cls")
+            if cls_val >= 0.1:
+                # Preserve the strict performance gate; report the actual elements
+                # contributing the largest shift rather than guessing from timing.
+                shifts = cpg.evaluate("window.__clsShifts.slice().sort((a,b)=>b.value-a.value).slice(0,12)")
+                print('CLS_DIAGNOSTICS %dpx %s' % (cls_w, json.dumps(shifts, separators=(',', ':'))), flush=True)
             check('Today cold load at %dpx has a cumulative layout shift under 0.1' % cls_w, cls_val < 0.1, 'measured %.4f' % cls_val)
             cpg.context.close()
 
