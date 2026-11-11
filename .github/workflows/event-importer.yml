@@ -15,6 +15,17 @@ on:
       - "scripts/event-experience/**"
       - "public/event-adapter.js"
       - "public/event-contract.js"
+      # Matching and provenance contracts are part of the importer acceptance gate.
+      # They must trigger an actual source regeneration after a reviewed merge,
+      # rather than waiting for an unreliable scheduled run. These files are
+      # hand-maintained, not importer outputs, so this cannot trigger a loop.
+      - "public/dedupe.js"
+      - "scripts/dup-audit.mjs"
+      - "test/dedupe.test.mjs"
+      - "test/importer.test.mjs"
+      - "test/importer-world.test.mjs"
+      - "test/research-event-propagation.test.mjs"
+      - "test/into-wild-form-identity.test.mjs"
       - "data/watch-pages.json"
       - ".github/workflows/event-importer.yml"
 
