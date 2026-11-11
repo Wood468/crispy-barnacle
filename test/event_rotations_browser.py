@@ -41,11 +41,14 @@ with sync_playwright() as pw:
             page.goto(BASE+'/')
             page.wait_for_function('!!window.GODETAIL && !!window.GOEventRegistry && GOEventRegistry.settled()',timeout=40000)
             page.evaluate("GODETAIL.open('cur:wag')")
-            # Compatible with both the current universal sheet and the
-            # upcoming one-panel-at-a-time Event Details navigation.
-            encounter_tab=page.locator('#evd .evd-nav-link[data-sec="encounters"]')
-            if encounter_tab.count():
-                encounter_tab.click()
+            # Check sourced day-specific raid bosses in Overview before changing tabs.
+            page.locator('#evd .ue-raid-day[data-raid-date="2026-11-14"]').wait_for(state='visible',timeout=30000)
+            raid_sat=page.locator('#evd .ue-raid-day[data-raid-date="2026-11-14"]')
+            raid_sun=page.locator('#evd .ue-raid-day[data-raid-date="2026-11-15"]')
+            assert all(n in raid_sat.inner_text() for n in ('Zekrom','White Kyurem','Dynamax Dialga','Gigantamax Duraludon')),(width,label,'Saturday raids')
+            assert all(n in raid_sun.inner_text() for n in ('Reshiram','Black Kyurem','Dynamax Palkia','Gigantamax Duraludon')),(width,label,'Sunday raids')
+            assert 'Reshiram' not in raid_sat.inner_text() and 'White Kyurem' not in raid_sun.inner_text(),(width,label,'day cross-contamination')
+            page.locator('#evd .evd-nav-link[data-sec="encounters"]').click()
             root=page.locator('#evd-s-encounters .uer-root')
             root.wait_for(state='visible',timeout=30000)
             assert root.get_attribute('data-rotation-id')=='gowa-2026-global',(width,label)
@@ -109,11 +112,6 @@ with sync_playwright() as pw:
                 name=tile.get_attribute('data-pokemon')
                 label_text=tile.get_attribute('aria-label') or ''
                 assert 'Mighty' in label_text and 'Incense' in label_text,(width,label,name,label_text)
-            raid_sat=page.locator('#evd .ue-raid-day[data-raid-date="2026-11-14"]')
-            raid_sun=page.locator('#evd .ue-raid-day[data-raid-date="2026-11-15"]')
-            assert all(x in raid_sat.inner_text() for x in ('Zekrom','White Kyurem','Dynamax Dialga','Gigantamax Duraludon')),(width,label,'Saturday raids')
-            assert all(x in raid_sun.inner_text() for x in ('Reshiram','Black Kyurem','Dynamax Palkia','Gigantamax Duraludon')),(width,label,'Sunday raids')
-            assert 'Reshiram' not in raid_sat.inner_text() and 'White Kyurem' not in raid_sun.inner_text(),(width,label,'day cross-contamination')
             assert not errors,(width,label,errors)
             assert not page.evaluate('document.documentElement.scrollWidth>innerWidth+1'),(width,label,'overflow')
             root.scroll_into_view_if_needed()

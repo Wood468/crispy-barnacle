@@ -90,9 +90,12 @@ with sync_playwright() as p:
         assert re.search(r'\d+ of 600 ranks listed', pc), pc
         listed = int(re.match(r'(\d+) of', pc).group(1))
         assert listed >= 100, listed
+        # Single-panel Event Details keeps Research hidden until selected.
+        page.locator('#evd .evd-nav-link[data-sec="research"]').click()
         page.locator('#evd #evd-h-research').scroll_into_view_if_needed()
         page.evaluate('window.scrollBy(0, -110)')
         shot(page, f'accuracy-research-count-{width}')
+        page.locator('#evd .evd-nav-link[data-sec="passes"]').click()
         page.locator('#evd .ue-pass-count').first.scroll_into_view_if_needed()
         page.evaluate('window.scrollBy(0, -110)')
         shot(page, f'accuracy-gopass-total-{width}')

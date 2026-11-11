@@ -95,16 +95,30 @@ with sync_playwright() as p:
         active_pass = page.locator('#seasonbar .ssn-card', has_text='GO Pass: Into the Wild')
         assert active_pass.count() == 1, 'current special GO Pass was omitted from Today'
         page.evaluate("GODETAIL.open('season:pass-into-wild-2026')")
+        page.locator('#evd .evd-nav-link[data-sec="passes"]').click()
         page.wait_for_selector('#evd .ue-pass')
-        into_pass = page.locator('#evd').inner_text()
-        assert 'Dynamax Meltan' in into_pass and 'Silver Bottle Cap' in into_pass, into_pass[:500]
-        assert '17 Nov' in into_pass or '17 November' in into_pass, into_pass[:500]
+        # The published rank 45 and rank 100 milestones live in collapsed
+        # ranges. Open the ranges as a user would, rather than counting hidden
+        # rewards in the whole Event Details document.
+        ranges = page.locator('#evd .ue-pass-range')
+        for rank in ('Rank 45', 'Rank 100'):
+            milestone = ranges.filter(has_text=rank).first
+            assert milestone.count() == 1, (width, rank, 'published milestone missing')
+            if not milestone.evaluate('(el) => el.open'):
+                milestone.locator('summary').click()
+        into_pass = page.locator('#evd .evd-sec[data-sec="passes"]').inner_text()
+        assert 'Dynamax Meltan' in into_pass and 'Silver Bottle Cap' in into_pass, into_pass[:600]
+        # The claim deadline is source-backed outside the reward-only Pass panel.
+        page.locator('#evd .evd-nav-link[data-sec="overview"]').click()
+        full_overview = page.locator('#evd .evd-sec[data-sec="overview"]').inner_text()
+        assert '17 Nov' in full_overview or '17 November' in full_overview, full_overview[:600]
         assert page.locator('#evd').evaluate('(el)=>el.scrollWidth<=el.clientWidth'), ('Into the Wild pass overflow', width)
         page.keyboard.press('Escape')
 
         # GO Pass: illustrated free/Deluxe timeline, bounded ranges, gaps, fallbacks, source and freshness.
         eid = page.evaluate("GOEventRegistry.events().find(m=>/GO Pass.*November/i.test(m.title)).eventId")
         page.evaluate(f"GODETAIL.open({eid!r})")
+        page.locator('#evd .evd-nav-link[data-sec="passes"]').click()
         page.wait_for_selector('#evd .ue-pass')
         pass_el = page.locator('#evd .ue-pass')
         assert pass_el.locator('.ue-lane-free').count() >= 90 and pass_el.locator('.ue-lane-deluxe').count() >= 90

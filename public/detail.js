@@ -833,6 +833,11 @@
       if (dialog && target && dialog.contains(target)) {
         /* Native fragment navigation emits popstate and closes the modal. Keep section jumps inside it. */
         e.preventDefault();
+        // Legacy in-sheet anchors may point into another universal panel.
+        // Reveal that panel before focusing the target; otherwise the anchor
+        // stays inaccessible, despite the current hash remaining unchanged.
+        var ownerPanel = target.closest && target.closest('.evd-sec');
+        if (ownerPanel && ownerPanel.hidden) goSection(dialog, ownerPanel.getAttribute('data-sec'), false);
         if(target.tagName==='DETAILS')target.open=true;
         dialog.querySelectorAll('.evd-jump a').forEach(function(link){link.removeAttribute('aria-current');});
         jump.setAttribute('aria-current','location');
@@ -899,47 +904,78 @@
     if (o.scrollTop + o.clientHeight >= o.scrollHeight - 4) cur = secs[secs.length - 1].getAttribute('data-sec');
     return cur;
   }
+  /* Section tabs: keep the existing source-backed panels mounted, but expose only one
+     at a time. This prevents Research from leaking into GO Pass or Tickets. */
+  function showPanel(o, id, focus) {
+    // Preserve each event's panel scroll depth while switching sections.
+    var previous = spy && spy.cur;
+    if (previous && previous !== id && spy && spy.id) savedScroll[spy.id + '|' + previous] = o.scrollTop;
+    var sections = [].slice.call(o.querySelectorAll('.evd-sec'));
+    var selected = sections.find(function (section) { return section.getAttribute('data-sec') === id; });
+    if (!selected) return;
+    sections.forEach(function (section) {
+      var active = section === selected;
+      section.hidden = !active;
+      section.style.display = active ? '' : 'none';
+      section.setAttribute('aria-hidden', active ? 'false' : 'true');
+    });
+    o.querySelectorAll('.evd-nav-link').forEach(function (link) {
+      var active = link.getAttribute('data-sec') === id;
+      link.setAttribute('aria-selected', active ? 'true' : 'false');
+      link.setAttribute('tabindex', active ? '0' : '-1');
+    });
+    if (spy) spy.cur = id;
+    setActive(o, id);
+    var heading = selected.querySelector('.evd-sec-h') || selected;
+    // Keep the selected panel in view below the sticky toolbar and tab strip.
+    // Returning to Overview instead starts at the hero.
+    var restored = previous && spy ? savedScroll[spy.id + '|' + id] : undefined;
+    if (Number.isFinite(restored)) o.scrollTop = Math.min(Math.max(0, restored), Math.max(0, o.scrollHeight - o.clientHeight));
+    else if (id === 'overview') o.scrollTop = 0;
+    else {
+      var stack = spyOffsets(o);
+      var targetTop = heading.getBoundingClientRect().top - o.getBoundingClientRect().top + o.scrollTop - stack - 8;
+      o.scrollTop = Math.max(0, targetTop);
+    }
+    if (focus) {
+      heading.setAttribute('tabindex', '-1');
+      heading.focus({ preventScroll: true });
+    }
+  }
   function spyInit(o, id) {
     spyDestroy();
-    if (history.scrollRestoration) { prevRestoration = history.scrollRestoration; try { history.scrollRestoration = 'manual'; } catch (e) { } }
-    var state = { o: o, id: id, lock: 0, raf: 0, io: null };
-    function tick() { state.raf = 0; if (state.lock) return; var cur = computeActive(o); if (cur && cur !== state.cur) { state.cur = cur; setActive(o, cur); } }
-    function ask() { if (!state.raf) state.raf = requestAnimationFrame(tick); }
-    state.onScroll = ask; state.onResize = function () { spyOffsets(o); ask(); navEdges(o); };
-    o.addEventListener('scroll', state.onScroll, { passive: true });
-    window.addEventListener('resize', state.onResize); window.addEventListener('orientationchange', state.onResize);
-    if (window.visualViewport) window.visualViewport.addEventListener('resize', state.onResize);
-    if ('IntersectionObserver' in window) { state.io = new IntersectionObserver(ask, { root: o, rootMargin: '-' + spyOffsets(o) + 'px 0px 0px 0px', threshold: [0, 1] }); o.querySelectorAll('.evd-sec').forEach(function (s) { state.io.observe(s); }); }
-    var strip = o.querySelector('.evd-nav-scroll'); if (strip) strip.addEventListener('scroll', function () { navEdges(o); }, { passive: true });
-    spy = state; spyOffsets(o); state.cur = ''; tick();
-    if (savedScroll[id]) { o.scrollTop = savedScroll[id]; tick(); }
+    spy = { o: o, id: id, cur: '' };
+    spyOffsets(o);
+    // Author the accessible tab relationship without editing the shared
+    // event-components renderer (which is also used by GO Pass work).
+    var strip = o.querySelector('.evd-nav-scroll');
+    if (strip) {
+      strip.setAttribute('role', 'tablist');
+      strip.setAttribute('aria-label', 'Event sections');
+    }
+    o.querySelectorAll('.evd-nav-link').forEach(function (link) {
+      var sec = link.getAttribute('data-sec');
+      link.setAttribute('role', 'tab');
+      link.setAttribute('id', 'evd-tab-' + sec);
+      link.setAttribute('aria-controls', 'evd-s-' + sec);
+    });
+    var sections = o.querySelectorAll('.evd-sec');
+    sections.forEach(function (section) {
+      var sec = section.getAttribute('data-sec');
+      section.setAttribute('role', 'tabpanel');
+      section.setAttribute('aria-labelledby', 'evd-tab-' + sec);
+      section.setAttribute('tabindex', '0');
+    });
+    if (sections.length) showPanel(o, sections[0].getAttribute('data-sec'), false);
+    else setActive(o, 'overview');
   }
   function spyDestroy() {
-    if (!spy) return; var o = spy.o;
-    savedScroll[spy.id] = o.scrollTop;
-    o.removeEventListener('scroll', spy.onScroll); window.removeEventListener('resize', spy.onResize); window.removeEventListener('orientationchange', spy.onResize);
-    if (window.visualViewport) window.visualViewport.removeEventListener('resize', spy.onResize);
-    if (spy.io) spy.io.disconnect(); if (spy.raf) cancelAnimationFrame(spy.raf);
-    if (prevRestoration && history.scrollRestoration) { try { history.scrollRestoration = prevRestoration; } catch (e) { } }
+    if (!spy) return;
     spy = null;
   }
   function goSection(o, id, focus) {
-    var h = o.querySelector('#evd-h-' + id); if (!h || !spy) return;
-    var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches, stack = spyOffsets(o);
-    var top = h.getBoundingClientRect().top - o.getBoundingClientRect().top + o.scrollTop - stack - 8;
-    var max = o.scrollHeight - o.clientHeight, target = Math.max(0, Math.min(top, max));
-    spy.lock = 1; spy.cur = id; setActive(o, id);
-    o.scrollTo({ top: target, behavior: reduce ? 'auto' : 'smooth' });
-    // WebKit can emit scrollend for an interrupted/earlier smooth scroll. Only the
-    // latest navigation may unlock the spy; otherwise it resets the active link.
-    var navigation = (spy.navigation || 0) + 1; spy.navigation = navigation;
-    clearTimeout(spy.t);
-    spy.t = setTimeout(function () {
-      if (!spy || spy.o !== o || spy.navigation !== navigation) return;
-      spy.lock = 0;
-      if (focus) h.focus({ preventScroll: true });
-      spy.cur = ''; spy.raf = 0; spy.onScroll();
-    }, reduce ? 80 : 1100);
+    if (!spy || spy.o !== o) return;
+    showPanel(o, id, focus);
   }
   document.addEventListener('click', function (e) {
     var l = e.target.closest && e.target.closest('.evd-nav-link'); if (!l) return;
@@ -949,7 +985,14 @@
     var l = e.target.closest && e.target.closest('.evd-nav-link'); if (!l) return;
     var links = [].slice.call(l.parentNode.querySelectorAll('.evd-nav-link')), i = links.indexOf(l), n = -1;
     if (e.key === 'ArrowRight') n = (i + 1) % links.length; else if (e.key === 'ArrowLeft') n = (i - 1 + links.length) % links.length; else if (e.key === 'Home') n = 0; else if (e.key === 'End') n = links.length - 1;
-    if (n < 0) return; e.preventDefault(); links[n].focus();
+    if (n < 0) {
+      if (e.key === ' ' || e.key === 'Spacebar') { e.preventDefault(); goSection($('evd'), l.getAttribute('data-sec'), false); }
+      return;
+    }
+    e.preventDefault();
+    var next = links[n], dialog = $('evd');
+    if (dialog) goSection(dialog, next.getAttribute('data-sec'), false);
+    next.focus();
   });
   /* Event overflow menu: infographic, open source, mark done (Today). */
   function closeEvMenu(restore){var m=document.querySelector('.evd-menu');if(!m)return;var b=m.parentNode.querySelector('[data-evmenu]');m.remove();if(b){b.setAttribute('aria-expanded','false');if(restore)b.focus();}}

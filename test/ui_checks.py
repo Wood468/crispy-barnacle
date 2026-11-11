@@ -22,6 +22,15 @@ def settle(pg,js,timeout=10000):
 def check(name,cond,extra=''):
     print(('PASS ' if cond else 'FAIL ')+name+(' '+str(extra) if extra and not cond else ''))
     if not cond: fails.append(name)
+def reveal_detail_target(pg, selector):
+    """Select the real Event Details panel that owns a visible interaction."""
+    target = pg.locator(selector).first
+    target.wait_for(state='attached')
+    panel = target.evaluate("(el) => el.closest('.evd-sec')?.getAttribute('data-sec') || ''")
+    if panel:
+        pg.locator('#evd .evd-nav-link[data-sec="' + panel + '"]').click()
+    target.wait_for(state='visible')
+    return target
 
 # Design-token contract: semantic roles are shared by the base and dashboard layers,
 # and versioned stylesheets are included in the offline shell.
@@ -2094,9 +2103,12 @@ with sync_playwright() as p:
         check('legacy gofn-tab=dex opens Collect > Dex', pg.locator('#tab-dex').is_visible())
 
         # ---- event detail: passes, prices, labelled gaps ----
-        pg=page(); pg.click('nav.tabs button[data-tab="events"]'); pg.click('#subnav-events button[data-sub="timeline"]'); pg.wait_for_selector('#evtimeline .evc[data-id$="zorua"] .more'); pg.click('#evtimeline .evc[data-id$="zorua"] .more'); pg.wait_for_selector('#evd .tk'); pg.wait_for_timeout(300)
+        pg=page(); pg.click('nav.tabs button[data-tab="events"]'); pg.click('#subnav-events button[data-sub="timeline"]'); pg.wait_for_selector('#evtimeline .evc[data-id$="zorua"] .more'); pg.click('#evtimeline .evc[data-id$="zorua"] .more')
+        reveal_detail_target(pg, '#evd .mvb')
+        moves_text=pg.inner_text('#evd')
+        reveal_detail_target(pg, '#evd .tk')
         t=pg.inner_text('#evd')
-        check('detail: published event facts and event-only moves remain visible without verification clutter', 'Sucker Punch' in t and 'bonuses' in t.lower() and pg.locator('#evd .pub,#evd .npub,#evd .st').count()==0)
+        check('detail: published event facts and event-only moves remain visible without verification clutter', 'Sucker Punch' in moves_text and 'bonuses' in moves_text.lower() and pg.locator('#evd .pub,#evd .npub,#evd .st').count()==0)
         expected_tickets = json.loads((ROOT/'public/event-info.json').read_text())['events']['zorua']['tickets']
         check('detail: all curated event tickets retain Australian prices and purchase information', pg.locator('#evd .tk').count()==len(expected_tickets) and 'special research ticket' in t.lower() and '≈ A$2.99' in t and 'Buy or claim by' in t)
         pg.screenshot(path=OUT+'detail.png', full_page=False)
@@ -2105,7 +2117,8 @@ with sync_playwright() as p:
         # with an Indonesian price added to the data file the card converts it, without any code change
         # the prices are asked for once per load and shared, so the Indonesian price is served from the start
         pg2=page(pin=True,extra={'**/api/prices-private':(json.dumps({"fx":{"from":"IDR","to":"AUD","rate":0.0001,"source":"test","url":"https://x.test","observed":"2026-10-10"},"prices":[{"product":"zorua-cd-research","currency":"IDR","amount":50000,"region":"ID","source":"test store","url":"https://x.test","observed":"2026-10-10"}]}),200),'**/prices.json':(json.dumps({"prices":[{"product":"zorua-cd-research","currency":"AUD","amount":8,"region":"AU","verified":True,"source":"test au","url":"https://x.test","observed":"2026-10-10"}]}),200)})
-        pg2.click('nav.tabs button[data-tab="events"]'); pg2.click('#subnav-events button[data-sub="timeline"]'); pg2.wait_for_selector('#evtimeline .evc[data-id$="zorua"] .more'); pg2.click('#evtimeline .evc[data-id$="zorua"] .more'); pg2.wait_for_selector('#evd .tk'); pg2.wait_for_timeout(300)
+        pg2.click('nav.tabs button[data-tab="events"]'); pg2.click('#subnav-events button[data-sub="timeline"]'); pg2.wait_for_selector('#evtimeline .evc[data-id$="zorua"] .more'); pg2.click('#evtimeline .evc[data-id$="zorua"] .more')
+        reveal_detail_target(pg2, '#evd .tk')
         t2=pg2.inner_text('#evd')
         check('detail: Rp price converts to A$, shows Originally A$ in Australia and a verified saving, and never the Rp amount', '≈ A$5.00' in t2 and 'Originally A$8.00 in Australia' in t2 and 'Save A$3.00 (38%)' in t2 and 'Rp 50' not in t2 and '50,000' not in t2, t2[:0])
 
@@ -2455,7 +2468,8 @@ with sync_playwright() as p:
         api=json.dumps({'enabled':True,'events':[{'id':'leekduck:f%d'%i,'name':'Filler %d'%i,'type':'event','start':'2026-11-%02dT10:00:00.000'%(i+1),'end':'2026-11-%02dT12:00:00.000'%(i+1),'tzMode':'local','status':'community_reported','announced':True,'missing':False,'featured':[],'bonuses':[],'reports':[]} for i in range(11)]+[{'id':'leekduck:safari','name':'City Safari: Brisbane','type':'event','start':'2026-09-26T10:00:00.000','end':'2026-09-27T18:00:00.000','tzMode':'local','status':'community_reported','announced':True,'missing':False,'featured':[],'bonuses':[],'link':'https://leekduck.com/events/safari/','reports':[]}],'sources':[]})
         pg=page(api=api,sources='{"environment":"preview","database":true,"enabled":true,"sources":[]}',extra={'**/places.json':(PLACES_FIXTURE,200)})
         pg.wait_for_function("!!window.GOPLACES && !!window.GODETAIL")  # places.js is appended after first render; wait for it
-        pg.evaluate("GOPLACES.load()"); pg.evaluate("GODETAIL.open('leekduck:safari')"); pg.wait_for_selector('#evd [data-places]'); pg.wait_for_timeout(200)
+        pg.evaluate("GOPLACES.load()"); pg.evaluate("GODETAIL.open('leekduck:safari')")
+        reveal_detail_target(pg, '#evd [data-places]')
         check('event detail: an in-person event links to its sourced venues', pg.locator('#evd [data-places]').count()==2)
         # event-to-place matching: exact name AND overlapping dates, nothing fuzzy
         m=lambda name,s,e: pg.evaluate("GOPLACES.forEvent({name:%s,start:new Date(%s),end:new Date(%s)}).map(p=>p.id)"%(json.dumps(name),json.dumps(s),json.dumps(e)))
@@ -2527,7 +2541,8 @@ with sync_playwright() as p:
         pg=mk(sparse); R2=pg.evaluate("[...document.querySelectorAll('#pvplist .mvb')].slice(0,3).map(m=>m.querySelector('.mty').getAttribute('aria-label'))")
         check('moves: with a sparse table every missing move is Type unknown', R2==['Type unknown']*3, R2)
         # event detail: explicit move type from the source is shown; no Elite claim without a Pokémon
-        pg=page(); pg.evaluate("GODETAIL.open('cur:zorua')"); pg.wait_for_selector('#evd .mvb'); pg.wait_for_timeout(300)
+        pg=page(); pg.evaluate("GODETAIL.open('cur:zorua')")
+        reveal_detail_target(pg, '#evd .mvb')
         check('moves: event detail shows Sucker Punch as Dark with no Elite claim', pg.get_attribute('#evd .mvb .mty','aria-label')=='Dark type' and pg.locator('#evd .etm').count()==0)
 
         # ---- freshness ----

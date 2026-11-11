@@ -154,8 +154,16 @@ with sync_playwright() as pw:
         assert 'sun crown' in page.locator('#release-costumes').inner_text()
         page.locator('[data-open="season:pass-november"]').first.click()
         page.locator('#evd').wait_for(state='visible')
-        page.evaluate("document.querySelectorAll('#evd [role=tabpanel]').forEach(p=>p.hidden=false)")
-        assert 'Saved rank snapshot: 2026-11-01' in page.locator('#evd').inner_text()
+        # The retained-snapshot provenance belongs under Details & sources,
+        # not the adjacent GO Pass reward panel. Verify both separately.
+        details_tab = page.locator('#evd .evd-nav-link[data-sec="details"]')
+        details_tab.click()
+        assert details_tab.get_attribute('aria-selected') == 'true'
+        assert 'Saved rank snapshot: 2026-11-01' in page.locator('#evd .evd-sec[data-sec="details"]').inner_text()
+        pass_tab = page.locator('#evd .evd-nav-link[data-sec="passes"]')
+        pass_tab.click()
+        assert pass_tab.get_attribute('aria-selected') == 'true'
+        assert page.locator('#evd .evd-sec:not([hidden])').count() == 1
         ranks = page.locator('#evd .ss-tab tbody th').all_text_contents()
         assert ranks == ['2', '3', '100', '200'], ranks
         assert 'Groudon' in page.locator('#evd').inner_text()

@@ -31,6 +31,7 @@ with sync_playwright() as pw:
         page.goto(BASE+'/')
         page.wait_for_function('!!window.GODETAIL&&!!window.GOEventRegistry&&GOEventRegistry.settled()')
         page.evaluate("GODETAIL.open('into')")
+        page.locator('#evd .evd-nav-link[data-sec="encounters"]').click()
         page.wait_for_selector('#evd .ue-mon[data-identity="999:roaming:none"]',timeout=25000)
         roaming=page.locator('#evd .ue-mon[data-identity="999:roaming:none"]').first
         assert 'Coin Bag' in roaming.inner_text(),(width,roaming.inner_text())
@@ -41,6 +42,16 @@ with sync_playwright() as pw:
 
         page.evaluate("GODETAIL.open('cur:wag')")
         page.wait_for_selector('#evd .ue-raid-days [data-raid-date="2026-11-14"]',timeout=25000)
+        # Day-specific raid rosters belong on Overview; test them before
+        # opening the separate Pokémon panel.
+        saturday=page.locator('#evd .ue-raid-day[data-raid-date="2026-11-14"]').inner_text()
+        sunday=page.locator('#evd .ue-raid-day[data-raid-date="2026-11-15"]').inner_text()
+        for boss in ('Zekrom','White Kyurem','Dynamax Dialga','Gigantamax Duraludon'):
+            assert boss in saturday,(width,boss,saturday)
+        for boss in ('Reshiram','Black Kyurem','Dynamax Palkia','Gigantamax Duraludon'):
+            assert boss in sunday,(width,boss,sunday)
+        assert 'Reshiram' not in saturday and 'White Kyurem' not in sunday
+        page.screenshot(path=str(SHOTS/f'go-wild-raid-days-{width}.png'))
         # The source record contains published Incense encounters even when
         # the curated dashboard has not joined that method into its flat gallery.
         # Exercise one real source-backed edge through the shared renderer, not
@@ -82,6 +93,8 @@ with sync_playwright() as pw:
         incense_tile.screenshot(path=str(SHOTS/f'go-wild-incense-icon-{width}.png'),animations='disabled')
         print('PASS published GO Wild Area Incense source edge icon-only:',source_incense['name'],'at',width)
 
+        page.locator('#evd .evd-nav-link[data-sec="encounters"]').click()
+        assert page.locator('#evd .evd-sec:not([hidden])').count()==1
         egg=page.locator('#evd .ue-mon .ue-egg-corner.ue-egg-10')
 
         if egg.count()!=4:
@@ -124,13 +137,6 @@ with sync_playwright() as pw:
             assert visual['border']=='0px' and visual['shadow']=='none',(width,item,visual)
             assert mon.locator('.ue-b-egg,.ue-km-10').count()==0,(width,item,'redundant egg pill')
             assert '10 km egg' in mon.get_attribute('aria-label'),(width,item,'lost accessible hatch distance')
-        saturday=page.locator('#evd .ue-raid-day[data-raid-date="2026-11-14"]').inner_text()
-        sunday=page.locator('#evd .ue-raid-day[data-raid-date="2026-11-15"]').inner_text()
-        for boss in ('Zekrom','White Kyurem','Dynamax Dialga','Gigantamax Duraludon'):
-            assert boss in saturday,(width,boss,saturday)
-        for boss in ('Reshiram','Black Kyurem','Dynamax Palkia','Gigantamax Duraludon'):
-            assert boss in sunday,(width,boss,sunday)
-        assert 'Reshiram' not in saturday and 'White Kyurem' not in sunday
         assert not page.evaluate('document.documentElement.scrollWidth>window.innerWidth+1'),width
         assert not errors,errors
         page.screenshot(path=str(SHOTS/f'go-wild-eggs-raids-{width}.png'))
@@ -148,6 +154,7 @@ with sync_playwright() as pw:
             try:
                 page.evaluate("GODETAIL.open('wag')")
                 page.wait_for_selector('#evd [data-evlink="wag"]', timeout=25000)
+                page.locator('#evd .evd-nav-link[data-sec="encounters"]').click()
                 canonical_eggs = page.locator('#evd .ue-method[data-method="egg"] .ue-mon')
                 assert canonical_eggs.count() == 4, (
                     'Registry-only event fallback lost its verified hatch pool',
