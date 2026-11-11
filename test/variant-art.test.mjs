@@ -109,3 +109,26 @@ test('future Pokémon announcement: a brand-new species and costume work with on
 test('the c-style PokeMiners prefix is requested explicitly', () => {
   assert.equal(V.costumeRoute({ base: 'Pikachu' }, { prefix: 'c', code: 'FALL_2018' }, true), '/api/art?n=Pikachu&c=FALL_2018&cp=c&shiny=1');
 });
+
+test('Crowned dogs and Roaming Gimmighoul keep distinct artwork requests', () => {
+  for (const [variant, base] of [
+    ['Crowned Sword Zacian', 'Zacian'],
+    ['Crowned Shield Zamazenta', 'Zamazenta'],
+  ]) {
+    const crowned = r({ n: variant }), ordinary = r({ n: base });
+    assert.equal(crowned.request.name, variant);
+    assert.equal(crowned.src, '/api/art?n=' + encodeURIComponent(variant));
+    assert.notEqual(crowned.src, ordinary.src, 'never silently substitute ordinary form');
+    assert.notEqual(crowned.src, '', 'form-specific route remains present');
+  }
+  const roaming = r({ n: 'Gimmighoul (Roaming Form)' });
+  const chest = r({ n: 'Gimmighoul (Chest Form)' });
+  const ordinary = r({ n: 'Gimmighoul' });
+  assert.equal(roaming.src, '/api/art?n=' + encodeURIComponent('Gimmighoul (Roaming Form)'));
+  assert.equal(chest.src, '/api/art?n=' + encodeURIComponent('Gimmighoul (Chest Form)'));
+  assert.equal(roaming.request.form, 'roaming-form');
+  assert.equal(chest.request.form, 'chest-form');
+  assert.notEqual(roaming.src, chest.src);
+  assert.notEqual(roaming.src, ordinary.src);
+  assert.notEqual(chest.src, ordinary.src);
+});
