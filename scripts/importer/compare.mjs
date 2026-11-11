@@ -44,7 +44,7 @@ export function mergeSources(results) {
   }
   const taskMap = new Map();
   for (const r of sorted) for (const task of (r.fields.researchTasks || [])) {
-    const key = JSON.stringify([task.category || "research", String(task.task || "").toLowerCase().replace(/\s+/g, " ").trim(), (task.rewards || []).map(x => [x.type, x.name, x.quantity, x.cpMin, x.cpMax])]);
+    const key = JSON.stringify([task.category || "research", String(task.task || "").toLowerCase().replace(/\s+/g, " ").trim(), (task.rewards || []).map(x => [x.type, x.name, x.quantity, x.cpMin, x.cpMax]), task.occurrence || 1]);
     let item = taskMap.get(key);
     if (!item) { item = { ...task, sources: [], sourceRefs: [], official: false }; taskMap.set(key, item); }
     if (!item.sources.includes(r.source.id)) item.sources.push(r.source.id);
