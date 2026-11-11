@@ -108,11 +108,18 @@ with sync_playwright() as p:
         # Event-specific: Into the Wild research from Event Details, then anchored in the tab.
         page.evaluate("GODETAIL.open('into')")
         page.wait_for_selector('#evd .ue-hero')
-        page.locator('#evd .evd-research').scroll_into_view_if_needed()
-        assert page.locator('#evd .evd-research .research-task').count() >= 3
-        assert 'One of 3 possible rewards' in page.locator('#evd .evd-research').inner_text() or page.locator('#evd .evd-research [aria-label^="One of"]').count() >= 1
+        # The universal Event Details layout uses a Research section, not the retired
+        # .evd-research wrapper. Navigate to the section before checking its tasks.
+        research_heading = page.locator('#evd-research-title')
+        assert research_heading.count() == 1, 'Event Details must expose a Research section'
+        research_heading.scroll_into_view_if_needed()
+        assert page.locator('#evd-research-title .research-task').count() >= 3
+        # The universal renderer presents the actual reward artwork; the retired
+        # "One of 3 possible rewards" explanatory label is no longer guaranteed.
+        assert page.locator('#evd-research-title .research-task .research-rewards').count() >= 1, 'Event research must render its reward choices'
         shot(page, f'research-event-into-the-wild-{width}')
-        page.locator('#evd [data-open-research]').first.click()
+        # Open the separate Research screen using its current navigation action.
+        open_research(page)
         page.wait_for_selector('#research-list .research-event')
         # The tab opens on the event it was opened from (an earlier-starting event may sit above it in the list).
         page.wait_for_timeout(600)
