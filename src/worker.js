@@ -259,7 +259,7 @@ export function artCandidates(raw) {
   // Importer labels and display adapters may spell the same identity as
   // "Unown D", "Unown (D)" or "Unown D (d)". Never guess another letter.
   const unown = /^Unown\s*(?:\(\s*([A-Z])(?:\s+Form)?\s*\)|([A-Z])(?:\s*\(\s*\2\s*\))?)$/i.exec(n);
-  if (unown) return { base: "unown", list: ["unown-" + (unown[1] || unown[2]).toLowerCase()], exact: true };
+  if (unown) { const letter = (unown[1] || unown[2]).toLowerCase(); return { base: "unown", list: ["unown-" + letter], exact: true, officialArtworkFile: "201-" + letter + ".png" }; }
   // PokeAPI uses "gimmighoul-roaming" (not "-roaming-form") for the
   // exact Coin Bag/GO Pass encounter. Chest Form is the default species.
   // Keep exact=true: a missing form must never silently display the other one.
@@ -423,11 +423,18 @@ async function art(request, env, ctx, url) {
     if (cached) return cached;
     const { base, list, exact } = candidates;
     let id = 0;
-    for (const c of list) { id = await pokeId("pokemon/" + c); if (id) break; }
-    if (!id && base && !exact) id = await pokeId("pokemon-species/" + base);
+    // Cosmetic Unown letters are Pokémon *forms* in PokeAPI, not separate
+    // /pokemon varieties. Their verified form-specific 201-d.png etc. live
+    // in the same official-artwork collection as ordinary species assets.
+    // Never request generic 201.png when the encounter names a letter.
+    if (!candidates.officialArtworkFile) {
+      for (const c of list) { id = await pokeId("pokemon/" + c); if (id) break; }
+      if (!id && base && !exact) id = await pokeId("pokemon-species/" + base);
+    }
 
     let img = null;
     const sources = [];
+    if (candidates.officialArtworkFile && !costume && !dynamax) sources.push(ART_BASE + (shiny ? "shiny/" : "") + candidates.officialArtworkFile);
     if (id && costume && id < 1100) sources.push(COSTUME_BASE + "pm" + id + "." + costumeKind + costume + (shiny ? ".s" : "") + ".icon.png");
     // Shadow and Dynamax have no sprite of their own in the game files; the page draws the aura/smoke.
     if (id && dynamax && gigantamax && id < 1100) sources.push(COSTUME_BASE + "pm" + id + ".fGIGANTAMAX" + (shiny ? ".s" : "") + ".icon.png");
