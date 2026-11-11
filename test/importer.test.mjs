@@ -428,6 +428,7 @@ test("repeated research rows are separate source-backed tasks, but matching sour
     })),
     { text: "Rewards | 77,400 × Stardust", t: "p" },
     { text: "Bonus Timed Research (1/1)", t: "h" },
+    { text: "Task | Rewards", t: "p" },
     { text: "Claim Reward! | 1 × Star Piece", t: "p" },
     { text: "Use a Star Piece | 774 × Stardust", t: "p" },
     { text: "Rewards | 1000000 × Stardust", t: "p" },
