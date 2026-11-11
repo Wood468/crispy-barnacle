@@ -32,6 +32,26 @@ function galleryDisplayIdentity(p){
  if(!p.costumeId&&((species==='888'&&form==='crownedsword')||(species==='889'&&form==='crownedshield')))return species+':'+form+':none';
  return p.key;
 }
+
+/* Event raid cards share Battle's Game Master hundo calculator. A published CP
+   pair takes precedence; no unsupported species/form values are invented. */
+function eventRaidCp(name,raw){
+ var dash=typeof globalThis!=='undefined'&&globalThis.GODASH;
+ var pair=dash&&typeof dash.hundoPair==='function'?dash.hundoPair({kind:'raid'},{name:name}):null;
+ var ok=function(n){return Number.isSafeInteger(n)&&n>=10&&n<=10000;};
+ if(Array.isArray(raw)&&raw.length===2&&ok(raw[0])&&ok(raw[1])&&raw[1]>=raw[0])return {normal:raw[0],boosted:raw[1]};
+ if(ok(raw))return {normal:raw,boosted:pair&&pair.n===raw&&ok(pair.b)?pair.b:null};
+ return pair&&ok(pair.n)&&ok(pair.b)?{normal:pair.n,boosted:pair.b}:null;
+}
+function eventRaidCpHtml(name,raw){
+ var cp=eventRaidCp(name,raw);if(!cp)return '';
+ return '<span class="ue-raid-cp" role="text" aria-label="'+esc('100% IV raid catch CP '+cp.normal+(cp.boosted?', possible weather-boosted 100% IV '+cp.boosted:''))+'"><span class="ue-raid-cp-normal" title="Perfect 15/15/15 raid catch at Level 20">100% '+cp.normal.toLocaleString('en-AU')+'</span>'+(cp.boosted?'<span class="ue-raid-cp-weather" title="Possible weather-boosted perfect raid catch at Level 25">WB '+cp.boosted.toLocaleString('en-AU')+'</span>':'')+'</span>';
+}
+function eventRaidTierHtml(tier){
+ var t=/^(?:[1-9]★|Mega|Primal|Elite|Shadow)$/.test(String(tier||''))?tier:'Raid';
+ var a=t==='Raid'?'Raid encounter; tier not specified':t.replace(/([1-9])★/g,'$1 star')+' raid tier';
+ return '<span class="ue-raid-tier-corner" aria-label="'+esc(a)+'"><img src="/ico/g/raid.webp" alt="" width="12" height="12" loading="lazy" decoding="async">'+esc(t)+'</span>';
+}
 function gallery(model,ctx){
  var featOnce=false,byKey={};model.pokemon.forEach(function(p){byKey[p.key]=p;});
  return Object.keys(METHODS).map(function(method){
@@ -56,9 +76,11 @@ function gallery(model,ctx){
       retain exact distance in the accessible tile label and details only. */
    var badge=(method==='egg'||method==='incense')?'':'<span class="ue-badge ue-b-'+method+'">'+(method==='raid'&&stars?stars+'★ Raid':({wild:'Wild',raid:'Raid',max:'Max',incense:'Incense',research:'Research',lure:'Lure',photobomb:'Snapshot',other:'Featured'})[method])+'</span>';
    var mighty=method==='incense'&&edge.mighty===true;
+   var raidTier=method==='raid'?eventRaidTierHtml(stars?stars+'★':'Raid'):'';
+   var raidCp=method==='raid'?eventRaidCpHtml(name,null):'';
    if(mighty)signals.unshift('<span class="ue-signal">Mighty Pokémon</span>');
    var short=({wild:'Wild',raid:'Raid',max:'Max Battle',egg:'Egg',incense:'Incense',research:'Research',lure:'Lure',photobomb:'Snapshot',other:'Featured'})[method];var info={name:name,method:short,badge:km?km+' km egg':stars?stars+'-star raid':'',meta:meta,signals:signals.map(function(x){return x.replace(/<[^>]+>/g,'');}),form:kind};
-   var feat=!!(p.debut||p.boostedShiny),tag=feat&&!featOnce;if(tag)featOnce=true;return '<button type="button" class="ue-mon'+(feat?' ue-mon-featured':'')+'" data-identity="'+esc(p.key)+'" data-info="'+esc(JSON.stringify(info))+'" aria-haspopup="dialog" aria-label="'+esc((mighty?'Mighty ':'')+name+(p.costumeId&&label?' ('+label+')':'')+', '+(info.badge||short)+'. Show details')+'">'+(tag?'<span class="ue-feat-tag">Featured</span>':'')+(mighty?'<span class="ue-mighty-corner" aria-hidden="true">!!!</span>':'')+(method==='egg'&&km?'<span class="ue-egg-corner ue-egg-'+esc(km)+'" aria-hidden="true"><img src="/ico/g/egg-'+esc(km)+'km.webp" alt="" loading="lazy" decoding="async" width="20" height="20"></span>':method==='incense'?'<span class="ue-incense-corner" aria-hidden="true"><img src="/ico/incense.webp" alt="" loading="lazy" decoding="async" width="20" height="20"></span>':'')+'<span class="ue-mon-art">'+art+'</span><b>'+esc(name)+'</b>'+(p.costumeId&&label?'<small class="ue-costume">'+esc(label)+'</small>':'')+badge+(signals.length?'<span class="ue-signals">'+signals.join('')+'</span>':'')+'</button>';
+   var feat=!!(p.debut||p.boostedShiny),tag=feat&&!featOnce;if(tag)featOnce=true;return '<button type="button" class="ue-mon'+(feat?' ue-mon-featured':'')+'" data-identity="'+esc(p.key)+'" data-info="'+esc(JSON.stringify(info))+'" aria-haspopup="dialog" aria-label="'+esc((mighty?'Mighty ':'')+name+(p.costumeId&&label?' ('+label+')':'')+', '+(info.badge||short)+'. Show details')+'">'+(tag?'<span class="ue-feat-tag">Featured</span>':'')+(mighty?'<span class="ue-mighty-corner" aria-hidden="true">!!!</span>':'')+raidTier+(method==='egg'&&km?'<span class="ue-egg-corner ue-egg-'+esc(km)+'" aria-hidden="true"><img src="/ico/g/egg-'+esc(km)+'km.webp" alt="" loading="lazy" decoding="async" width="20" height="20"></span>':method==='incense'?'<span class="ue-incense-corner" aria-hidden="true"><img src="/ico/incense.webp" alt="" loading="lazy" decoding="async" width="20" height="20"></span>':'')+'<span class="ue-mon-art">'+art+'</span><b>'+esc(name)+'</b>'+raidCp+(p.costumeId&&label?'<small class="ue-costume">'+esc(label)+'</small>':'')+badge+(signals.length?'<span class="ue-signals">'+signals.join('')+'</span>':'')+'</button>';
   }).join('');
   return cards?'<div class="ue-method" data-method="'+method+'">'+(method==='other'&&Object.keys(model.groups).every(function(k){return k==='other'||!model.groups[k].length;})?'':'<h4>'+METHODS[method]+'</h4>')+'<div class="ue-gallery">'+cards+'</div></div>':'';
  }).join('');
@@ -251,7 +273,9 @@ function raidDayRosters(raidDays,ctx){
    if(!pokemon.length)return '';
    return '<div class="ue-raid-day-group" data-roster="'+g[0]+'"><h5>'+esc(g[1])+'</h5><ul>'+
     pokemon.map(function(name){var img=ctx.art?ctx.art({n:name,dynamax:/^Dynamax\s/i.test(name)},'sm'):'';
-     return '<li><span class="ue-raid-day-art">'+img+'</span><span>'+esc(name)+'</span></li>';
+     var isRaid=g[0]!=='max',tier=isRaid?eventRaidTierHtml(g[0]==='five'?'5★':'3★'):'';
+     var cp=isRaid?eventRaidCpHtml(name,day.cp&&day.cp[name]):'';
+     return '<li><span class="ue-raid-day-art">'+img+tier+'</span><span class="ue-raid-day-info"><b>'+esc(name)+'</b>'+cp+'</span></li>';
     }).join('')+'</ul></div>';
   }).join('');
   return '<article class="ue-raid-day" data-raid-date="'+esc(day.date)+'"><h4>'+esc(label)+'</h4>'+panels+'</article>';
