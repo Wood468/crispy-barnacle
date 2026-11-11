@@ -462,15 +462,11 @@ h2.dh .cnt{font:600 .75rem/1 var(--font-body);color:var(--color-text-muted);bord
 .ue-schedule-preview .ue-schedule-now{justify-self:start;padding:2px 7px;border-radius:var(--radius-pill);background:var(--color-status-live);color:var(--color-on-status-live);font-size:.67rem;font-weight:800;letter-spacing:.02em}
 
 
-/* Sourced hatch-distance icons appear at the top-right of Pokémon artwork. */
+/* Source-backed egg distance stays in the image choice and accessible tile
+   details; its corner marker is the bare egg icon, never an opaque km pill. */
 .ue-mon{position:relative}
-.ue-egg-corner{position:absolute;z-index:3;right:7px;top:7px;display:flex;align-items:center;gap:2px;padding:2px 5px 2px 2px;min-height:31px;border:1px solid rgba(255,255,255,.3);border-radius:10px;background:#b5a4f5;color:#24194b;box-shadow:0 2px 8px rgba(0,0,0,.22);font:800 10px/1.1 var(--font-body,system-ui)}
-.ue-egg-corner img{width:29px;height:29px;object-fit:contain;flex-shrink:0}
-.ue-egg-2{background:#8bdc96;color:#143c24}
-.ue-egg-5{background:#f6d76c;color:#453509}
-.ue-egg-7{background:#f5a5cd;color:#50223d}
-.ue-egg-10{background:#b6a4f7;color:#28185c}
-.ue-egg-12{background:#e3a06f;color:#50260e}
+.ue-egg-corner{position:absolute;z-index:3;right:4px;top:4px;display:block;width:20px;height:20px;margin:0;padding:0;border:0;border-radius:0;background:transparent;box-shadow:none;line-height:0;pointer-events:none}
+.ue-egg-corner img{display:block;width:20px;height:20px;object-fit:contain}
 /* Explicit Saturday/Sunday (or other dated) raid/Max boss panels. */
 .ue-raid-days{margin:15px 0 18px}
 .ue-raid-day-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}

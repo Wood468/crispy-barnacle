@@ -267,7 +267,7 @@ test('event gallery marks normal and boosted shiny differently, without duplicat
 });
 
 
-test('verified egg distances render coloured corner icons without inventing unknown egg pools',()=>{
+test('verified egg distances render icon-only corners without inventing unknown egg pools',()=>{
  const two={speciesId:'25',name:'Pikachu'};
  const ten={speciesId:'133',name:'Eevee'};
  const unknown={speciesId:'1',name:'Bulbasaur'};
@@ -279,9 +279,16 @@ test('verified egg distances render coloured corner icons without inventing unkn
  const tile=p=>(html.split('data-identity="'+C.identity(p)+'"')[1]||'').split('</button>')[0];
  assert.match(tile(two),/ue-egg-corner ue-egg-2/);
  assert.match(tile(two),/\/ico\/g\/egg-2km\.webp/);
+ assert.match(tile(two),/aria-label="Pikachu, 2 km egg\. Show details"/);
+ assert.doesNotMatch(tile(two),/>2 km<|ue-badge ue-b-egg|ue-km-2/);
+ assert.match(tile(two),/width="20" height="20"/);
  assert.match(tile(ten),/ue-egg-corner ue-egg-10/);
  assert.match(tile(ten),/\/ico\/g\/egg-10km\.webp/);
+ assert.match(tile(ten),/aria-label="Eevee, 10 km egg\. Show details"/);
+ assert.doesNotMatch(tile(ten),/>10 km<|ue-badge ue-b-egg|ue-km-10/);
+ assert.match(tile(ten),/width="20" height="20"/);
  assert.doesNotMatch(tile(unknown),/ue-egg-corner|ue-egg-\d/);
- assert.match(tile(unknown),/ue-badge ue-b-egg/);
+ assert.match(tile(unknown),/aria-label="Bulbasaur, Egg\. Show details"/);
+ assert.doesNotMatch(tile(unknown),/ue-badge ue-b-egg/);
  assert.equal(m.encounters.length,3,'published encounter data remains intact');
 });
