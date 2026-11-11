@@ -88,6 +88,19 @@ with sync_playwright() as p:
         # A type with nothing in the week says so instead of a blank list.
         assert page.evaluate('document.documentElement.scrollWidth<=innerWidth')
 
+        # During GO Wild Area week, the separate event GO Pass must appear in
+        # the generic season/pass Today strip and open the existing pass layout.
+        page.wait_for_function("() => window.GOSEASON && GOSEASON.events().some(e=>e.id==='season:pass-into-wild-2026')")
+        active_pass = page.locator('#seasonbar .ssn-card', has_text='GO Pass: Into the Wild')
+        assert active_pass.count() == 1, 'current special GO Pass was omitted from Today'
+        page.evaluate("GODETAIL.open('season:pass-into-wild-2026')")
+        page.wait_for_selector('#evd .ue-pass')
+        into_pass = page.locator('#evd').inner_text()
+        assert 'Dynamax Meltan' in into_pass and 'Silver Bottle Cap' in into_pass, into_pass[:500]
+        assert '17 Nov' in into_pass or '17 November' in into_pass, into_pass[:500]
+        assert page.locator('#evd').evaluate('(el)=>el.scrollWidth<=el.clientWidth'), ('Into the Wild pass overflow', width)
+        page.keyboard.press('Escape')
+
         # GO Pass: illustrated free/Deluxe timeline, bounded ranges, gaps, fallbacks, source and freshness.
         eid = page.evaluate("GOEventRegistry.events().find(m=>/GO Pass.*November/i.test(m.title)).eventId")
         page.evaluate(f"GODETAIL.open({eid!r})")
