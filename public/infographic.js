@@ -336,7 +336,7 @@
   document.addEventListener('keydown', function (e) {
     var host = document.getElementById('goinfo');
     if (!host || host.hidden) return;
-    if (e.key === 'Escape') { close(); return; }
+    if (e.key === 'Escape') { e.preventDefault(); e.stopImmediatePropagation(); close(); return; }
     if (e.key !== 'Tab') return;
     var items = focusable(host);
     if (!items.length) {
@@ -348,7 +348,7 @@
     var first = items[0], last = items[items.length - 1], active = document.activeElement;
     if (e.shiftKey && (active === first || !host.contains(active))) { e.preventDefault(); last.focus(); }
     else if (!e.shiftKey && (active === last || !host.contains(active))) { e.preventDefault(); first.focus(); }
-  });
+  }, true);
   if (document.body) liveRegion(); else document.addEventListener('DOMContentLoaded', liveRegion);
   watchButtons();
   window.GOINFOGRAPHIC = { open: open, close: close, available: available };
