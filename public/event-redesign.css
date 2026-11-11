@@ -439,6 +439,8 @@ h2.dh .cnt{font:600 .75rem/1 var(--font-body);color:var(--color-text-muted);bord
 .ue-schedule-preview li{display:grid;gap:4px;padding:11px 13px;border:1px solid var(--border,#303849);border-radius:12px;background:var(--surface,#1a1e27)}
 .ue-schedule-preview strong{font-size:14px;line-height:1.3}
 .ue-schedule-preview span{font-size:12px;line-height:1.45;color:var(--muted,#b9b5cf)}
+.ue-schedule-preview .ue-schedule-caption{margin:2px 0 6px;font:650 .74rem/1.3 var(--font-body);color:var(--color-text-muted)}
+.ue-schedule-preview .ue-schedule-now{justify-self:start;padding:2px 7px;border-radius:var(--radius-pill);background:var(--color-status-live);color:var(--color-on-status-live);font-size:.67rem;font-weight:800;letter-spacing:.02em}
 
 
 /* Sourced hatch-distance icons appear at the top-right of Pokémon artwork. */
