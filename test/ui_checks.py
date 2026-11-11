@@ -2107,6 +2107,33 @@ with sync_playwright() as p:
         t2=pg2.inner_text('#evd')
         check('detail: Rp price converts to A$, shows Originally A$ in Australia and a verified saving, and never the Rp amount', '≈ A$5.00' in t2 and 'Originally A$8.00 in Australia' in t2 and 'Save A$3.00 (38%)' in t2 and 'Rp 50' not in t2 and '50,000' not in t2, t2[:0])
 
+        # Collection's initial phone viewport prioritises a usable Dex search
+        # and actual Pokémon, rather than optional setup/help above both.
+        for width in (360,390,430):
+            dex_phone=page(width=width,height=844,mobile=True)
+            dex_phone.click('nav.tabs button[data-tab="collect"]')
+            dex_phone.click('#subnav-collect button[data-sub="dex"]')
+            dex_phone.wait_for_selector('#dexlist .drow',state='visible')
+            m=dex_phone.evaluate("""() => {
+              const box=s=>document.querySelector(s)?.getBoundingClientRect();
+              const q=box('#dq'),first=box('#dexlist .drow'),nav=box('nav.tabs'),progress=box('#tab-dex .prog');
+              const el=s=>document.querySelector(s);
+              return {searchBottom:q?.bottom,firstRowTop:first?.top,navTop:nav?.top,
+                progressHeight:progress?.height,searchBeforeProgress:!!(el('#dq').compareDocumentPosition(el('#tab-dex .prog'))&Node.DOCUMENT_POSITION_FOLLOWING),
+                coverageAfterProgress:!!(el('#tab-dex .prog').compareDocumentPosition(el('#gencov'))&Node.DOCUMENT_POSITION_FOLLOWING),
+                helpAfterResults:!!(el('#dexlist').compareDocumentPosition(el('#tab-dex .dexhow'))&Node.DOCUMENT_POSITION_FOLLOWING),
+                regionalAfterResults:!!(el('#dexlist').compareDocumentPosition(el('#regdd'))&Node.DOCUMENT_POSITION_FOLLOWING)};
+            }""")
+            check(f'Collection {width}px keeps search above the bottom nav and ahead of setup panels',
+                  m['searchBottom'] < m['navTop']-6 and m['searchBeforeProgress'] and
+                  m['coverageAfterProgress'] and m['helpAfterResults'] and m['regionalAfterResults'], m)
+            check(f'Collection {width}px shows a compact progress card and starts the Dex list in the first phone viewport',
+                  m['progressHeight'] <= 140 and m['firstRowTop'] < m['navTop']+8, m)
+            check(f'Collection {width}px keeps all original search, generation, need and regional controls',
+                  all(dex_phone.locator(sel).count()==1 for sel in ('#dq','#dgen','#dstat','#genchips','#gencov details','#regdd','#dunrel','#dexlist')) and
+                  dex_phone.evaluate('document.documentElement.scrollWidth<=innerWidth'))
+            dex_phone.context.close()
+
         # ---- collection integrity: unknown is never Need ----
         pg=page(); pg.click('nav.tabs button[data-tab="collect"]'); pg.click('#subnav-collect button[data-sub="dex"]'); pg.wait_for_selector('#gencov .gc',state='attached'); pg.evaluate("document.querySelector('#gencov details').open=true"); pg.wait_for_timeout(300)
         pg.evaluate("localStorage.setItem('gofn-dex', JSON.stringify({m:{own:{25:1}}}))")
