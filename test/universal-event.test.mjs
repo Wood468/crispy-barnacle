@@ -249,3 +249,19 @@ test('GO Pass with no stages says rewards are not published and unknown freshnes
  const html=UI.render(event({passes:[{title:'Empty pass',stages:[]}]}),{});
  assert.match(html,/Rank rewards have not been published by the source yet/);assert.match(html,/Freshness unknown/);
 });
+
+test('event gallery marks normal and boosted shiny differently, without duplicate chips',()=>{
+ const normal={speciesId:'25',name:'Pikachu',shiny:'yes'};
+ const boosted={speciesId:'133',name:'Eevee',shiny:'yes',boostedShiny:true};
+ const unconfirmed={speciesId:'1',name:'Bulbasaur',shiny:'unknown'};
+ const mons=[normal,boosted,unconfirmed];
+ const m=event({pokemon:mons,encounters:mons.map(p=>({identityKey:C.identity(p),method:'wild'}))});
+ const html=UI.gallery(m,{});
+ const tile=p=>(html.split('data-identity="'+C.identity(p)+'"')[1]||'').split('</button>')[0];
+ assert.match(tile(normal),/class="ue-shiny-mark" aria-hidden="true">✦<\/span> Shiny/);
+ assert.doesNotMatch(tile(normal),/ue-shiny-boost/);
+ assert.match(tile(boosted),/ue-shiny-boost/);
+ assert.match(tile(boosted),/aria-hidden="true">↑✦<\/span> Boosted shiny/);
+ assert.doesNotMatch(tile(boosted),/>Shiny<\/span>/);
+ assert.doesNotMatch(tile(unconfirmed),/ue-shiny-mark|ue-shiny-boost/);
+});
