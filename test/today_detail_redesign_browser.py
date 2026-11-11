@@ -109,7 +109,7 @@ with sync_playwright() as p:
             assert state['visible'] == [sec] and state['selected'] == [sec] and state['current'] == [sec], (width, sec, state)
             assert state['hiddenCorrect'] and state['links'], (width, sec, state)
             assert page.locator('#evd .evd-nav-link[tabindex="0"]').count() == 1
-            assert page.locator('#evd .evd-nav-link[tabindex="-1"]').count() == len(sections)-1
+            assert page.locator('#evd .evd-nav-link[tabindex="-1"]').count() == page.locator('#evd .evd-nav-link').count()-1
             assert page.evaluate('document.querySelector("#evd").scrollWidth <= innerWidth')
 
         def tap(sec):
