@@ -417,7 +417,7 @@ check('all HTML renderers use one shared apostrophe-safe escape helper',
       all(not re.search(r'function\s+esc\s*\(', source) and
           not re.search(r'var\s+esc\s*=\s*function', source) for source in ESC_RENDERERS))
 check('versioned infographic script is referenced by the dashboard and precached offline',
-      '/infographic.js?v=20261103a' in DASH_JS and '/infographic.js?v=20261103a' in SW_JS)
+      bool((m := re.search(r"/infographic\.js\?v=[0-9A-Za-z]+", DASH_JS))) and m.group(0) in SW_JS)
 check('infographic card previews prefer static WebP thumbnails and stay lazy until visible',
       'function cardThumbUrl(original)' in INFO_JS and '/infographic-thumbs/' in INFO_JS and
       'data-thumb-src' in INFO_JS and 'data-igfallback' in INFO_JS and
