@@ -80,9 +80,11 @@ with sync_playwright() as pw:
             for tile in incense.all():
                 assert tile.locator('.ue-incense-corner img[src="/ico/incense.webp"]').count()==1,(width,label,'missing Incense corner')
                 assert 'paid' in tile.inner_text().lower(),(width,label,'missing source ticket label')
-            assert all(page.locator('#evd-s-encounters .ue-method[data-method="incense"] .ue-mon',
-                has_text=name).count()==0 for name in ('Alolan Exeggutor','Azumarill','Scizor','Latias','Latios')),
-                (width,label,'source-backed day-Mighty or shared ticket duplicates')
+            duplicate_names=('Alolan Exeggutor','Azumarill','Scizor','Latias','Latios')
+            duplicate_tiles=[name for name in duplicate_names if page.locator(
+                '#evd-s-encounters .ue-method[data-method="incense"] .ue-mon',
+                has_text=name).count()>0]
+            assert not duplicate_tiles,(width,label,'source-backed day-Mighty or shared ticket duplicates',duplicate_tiles)
             raid_sat=page.locator('#evd .ue-raid-day[data-raid-date="2026-11-14"]')
             raid_sun=page.locator('#evd .ue-raid-day[data-raid-date="2026-11-15"]')
             assert all(x in raid_sat.inner_text() for x in ('Zekrom','White Kyurem','Dynamax Dialga','Gigantamax Duraludon')),(width,label,'Saturday raids')
