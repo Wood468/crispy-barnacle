@@ -518,6 +518,12 @@
     if (!name) return '';
     var escaped = name.replace(/[^a-z0-9]/gi, function(c) { return '\\' + c; });
     if (new RegExp('(?:^|\\W)Gigantamax\\s+' + escaped + '(?=$|\\W)', 'i').test(title)) return 'gigantamax';
+    /* An unnamed single-boss Gigantamax Raid Day/Max Battle is explicit
+       enough to identify its sole boss. Never stretch this to a research
+       activity or a multi-Pokémon featured gallery. */
+    if (ev && ev.kind === 'max' && Array.isArray(ev.featured) && ev.featured.length === 1 &&
+        /\bGigantamax\b/i.test(title) && /\b(?:Raid Day|Max Battles?|Max Monday)\b/i.test(title) &&
+        !/\bResearch\b/i.test(title)) return 'gigantamax';
     var isNamed = new RegExp('(?:^|\\W)' + escaped + '(?=$|\\W)', 'i').test(title);
     if (isNamed && /\bDynamax\b/i.test(title)) return 'dynamax';
     /* Max Battle/Max Monday records may only name their boss in the feed;
