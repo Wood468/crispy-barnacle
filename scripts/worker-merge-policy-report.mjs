@@ -103,15 +103,22 @@ export function reviewDecision(reviews, pr) {
   return approved ? { status: "REVIEW_OK", reasons: [] }
     : deny("No independent latest-head approval (worker cannot approve itself)");
 }
-async function pages(get, url, maxPages, perPage, validate = () => true) {
+async function pages(get, url, maxPages, perPage, validate = () => true, collection = null) {
   const all = [];
   for (let page = 1; page <= maxPages; page++) {
-    const data = await get(url + (url.includes("?") ? "&" : "?")
+    const response = await get(url + (url.includes("?") ? "&" : "?")
       + "per_page=" + perPage + "&page=" + page);
-    if (!Array.isArray(data) || data.length > perPage || !data.every(validate))
+    const data = collection ? response?.[collection] : response;
+    if (!Array.isArray(data) || data.length > perPage || !data.every(validate)
+        || (collection && (!Number.isInteger(response?.total_count)
+          || response.total_count > maxPages * perPage)))
       throw Error("Incomplete GitHub pagination");
     all.push(...data);
-    if (data.length < perPage) return all;
+    if (data.length < perPage) {
+      if (collection && all.length !== response.total_count)
+        throw Error("GitHub returned a truncated collection");
+      return all;
+    }
   }
   throw Error("GitHub pagination exceeded policy cap");
 }
@@ -135,11 +142,11 @@ export async function assess(prNumber, get) {
     if (scope.reasons.length) return scope;
 
     const allRuns = await pages(get, API + "/actions/runs?head_sha="
-      + pr.head.sha, 2, 100, r => !!r && Number.isInteger(r.id));
+      + pr.head.sha, 2, 100, r => !!r && Number.isInteger(r.id), "workflow_runs");
     const candidate = allRuns.filter(r => r.name === "Tests" && r.event === "pull_request"
       && r.head_sha === pr.head.sha).sort((a, b) => b.run_number - a.run_number)[0];
     const jobs = candidate ? await pages(get, API + "/actions/runs/" + candidate.id
-      + "/jobs", 3, 100, j => !!j && typeof j.name === "string") : [];
+      + "/jobs", 3, 100, j => !!j && typeof j.name === "string", "jobs") : [];
     const ci = ciDecision(allRuns, jobs, pr);
     if (ci.reasons.length) return ci;
 
