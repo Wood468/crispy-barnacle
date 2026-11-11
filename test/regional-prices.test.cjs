@@ -149,6 +149,15 @@ test('catalogue includes non-store-prefixed verified official AU Web Store offer
   assert.equal(result.some(p => p.product === 'safari-brisbane-2day'), false);
 });
 
+test('new regional observations appear before older historical AU-only Store offers', () => {
+  const older = [{ product:'go-pass-oct-deluxe',currency:'AUD',region:'AU',amount:12.99,
+    verified:true,observed:'2026-10-12',url:'https://store.pokemongo.com/' }];
+  const rows = R.catalogue(older, [id('Latest Official Box', 'bundle', 41000)], NOW);
+  assert.equal(rows[0].label, 'Latest Official Box');
+  assert.equal(rows[1].product, 'go-pass-oct-deluxe');
+  assert.equal(rows[1].aud, 12.99);
+});
+
 test('the official AU offer gate rejects spoofed domains and unverified currency or prices', () => {
   const base = { product:'go-pass-authentic',currency:'AUD',region:'AU',amount:12.99,
     verified:true,observed:'2026-10-12',url:'https://store.pokemongo.com/' };
