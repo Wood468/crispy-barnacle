@@ -22,3 +22,8 @@ test('event banner cache is bounded and does not replace the offline shell cache
 test('service worker source remains valid JavaScript', () => {
   assert.doesNotThrow(() => new vm.Script(source));
 });
+
+test('Leek Duck image cache requires HTTPS before interception', () => {
+  assert.match(source, /url\.protocol === 'https:'/);
+  assert.match(source, /url\.hostname === 'cdn\.leekduck\.com'/);
+});
