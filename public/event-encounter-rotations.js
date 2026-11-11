@@ -2,10 +2,10 @@
    Reusable across future events: this module does not branch on event IDs,
    edit source/Collection records, infer shiny rates, or add follow controls. */
 (function(root,factory){
-  var api=factory();
+  var api=factory(root);
   if(typeof module==='object'&&module.exports)module.exports=api;
   else root.GOEventEncounterRotations=api;
-}(typeof globalThis!=='undefined'?globalThis:this,function(){
+}(typeof globalThis!=='undefined'?globalThis:this,function(root){
 'use strict';
 function esc(raw){return String(raw==null?'':raw).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
 function norm(v){return String(v||'').trim().replace(/\s+/g,' ').toLowerCase();}
@@ -96,15 +96,54 @@ function slots(h){
 function dayLabel(iso){
  return new Intl.DateTimeFormat('en-AU',{timeZone:'UTC',weekday:'long',month:'short',day:'numeric'}).format(new Date(iso+'T12:00:00Z'));
 }
-function pokemonCards(names,ctx,prefix){
+/* A shared group tile may summarize multiple independently sourced encounter
+   methods. Get the exact `incense` edge from the public canonical model —
+   never infer Incense from species identity, a Mighty label, or an event title.
+   Activity-specific Incense can only mark that same activity; this generic
+   grouping intentionally accepts event-wide 'main' edges only. */
+function incenseByName(model){
+ var roster=new Map((model&&model.pokemon||[]).map(function(p){return [p.key,p];}));
+ var result=new Map();
+ (model&&model.encounters||[]).forEach(function(e){
+  if(e.method!=='incense'||e.activityId!=='main')return;
+  var p=roster.get(e.identityKey);if(!p)return;
+  var name=norm(p.name),prior=result.get(name)||[];
+  if(prior.indexOf(e.access)<0)prior.push(e.access);
+  result.set(name,prior);
+ });
+ return result;
+}
+function pokemonCards(names,ctx,opts){
+ opts=opts||{};
+ var incenseBySpecies=ctx.incenseBySpecies||new Map();
  return '<div class="uer-pokemon">'+(names||[]).map(function(name){
   var art=ctx.art?ctx.art({n:name},'sm'):'';
-  return '<div class="uer-pokemon-tile" data-pokemon="'+esc(name)+'"><span class="uer-pokemon-art">'+art+'</span><span class="uer-pokemon-name">'+esc(name)+'</span></div>';
+  var sourced=incenseBySpecies.get(norm(name))||[];
+  var incense=opts.method==='incense'||sourced.length>0;
+  var mighty=!!opts.mighty;
+  var access=sourced.includes('paid')||opts.access==='ticket'||opts.access==='paid'?'ticket-only':
+    sourced.includes('free')||opts.access==='free'?'available to all Trainers':'';
+  var method=incense?'Incense encounter'+(access?', '+access:''):opts.method==='wild'?'Wild encounter':'';
+  var label=[name,mighty?'Mighty Pokémon':'',method].filter(Boolean).join(', ');
+  var markers=(mighty?'<span class="uer-mighty-mark" aria-hidden="true">!!!</span>':'')+
+    (incense?'<span class="uer-incense-corner" aria-hidden="true"><img src="/ico/incense.webp" alt="" width="20" height="20" loading="lazy" decoding="async"></span>':'');
+  return '<div class="uer-pokemon-tile" data-pokemon="'+esc(name)+'"'+
+    (mighty?' data-mighty="true"':'')+(incense?' data-incense="true"':'')+
+    (label?' role="group" aria-label="'+esc(label)+'"':'')+'>'+
+    '<span class="uer-pokemon-art">'+markers+art+'</span><span class="uer-pokemon-name">'+esc(name)+'</span></div>';
  }).join('')+'</div>';
 }
 function render(entry,ctx){
  ctx=ctx||{};
  if(!entry||validate(entry).length)return '';
+ // Explicit `ctx.model` is preferred. Legacy Event Details screens pass
+ // only artwork/clock, so find the same public canonical event from the
+ // registry. Never consult private state or infer methods from the card title.
+ var model=ctx.model;
+ if(!model&&root&&root.GOEventRegistry&&typeof root.GOEventRegistry.find==='function'){
+   model=(entry.eventIds||[]).map(function(id){return root.GOEventRegistry.find(id);}).find(Boolean)||null;
+ }
+ ctx=Object.assign({},ctx,{incenseBySpecies:incenseByName(model)});
  var now=active(entry,ctx),html='';
  if((entry.habitats||[]).length){
  html+='<section class="uer-section uer-habitats" aria-label="Rotating wild habitats"><h3>Wild Pokémon by hour</h3>';
@@ -115,7 +154,7 @@ function render(entry,ctx){
   html+='<article class="uer-habitat uer-habitat-'+esc(h.type||h.id)+'" data-habitat="'+esc(h.id)+'"'+(live?' data-active="true"':'')+'>';
   html+='<h4>'+esc(h.label)+(live?' <span class="uer-live">Active now</span>':'')+'</h4>';
   html+='<p class="uer-hours">'+esc(slots(h).join(' · '))+'</p>';
-  html+=pokemonCards(h.pokemon,ctx);html+='</article>';
+  html+=pokemonCards(h.pokemon,ctx,{method:'wild'});html+='</article>';
  });
  html+='</div></section>';
  }
@@ -127,13 +166,13 @@ function render(entry,ctx){
   var today=now.date===day.date;
   html+='<article class="uer-mighty-day" data-mighty-date="'+esc(day.date)+'"'+(today?' data-current-day="true"':'')+'>';
   html+='<h4>'+esc(dayLabel(day.date))+(today?' <span class="uer-live">Today</span>':'')+'</h4>';
-  html+=pokemonCards(day.pokemon,ctx);html+='</article>';
+  html+=pokemonCards(day.pokemon,ctx,{method:day.method,mighty:true,access:day.access});html+='</article>';
  });
  html+='</div>';
  (entry.mightyShared||[]).forEach(function(group){
   html+='<article class="uer-mighty-shared" data-shared-id="'+esc(group.id)+'"><h4>'+esc(group.title)+'</h4>';
   html+='<p class="uer-hours">Available '+esc((group.dates||[]).map(dayLabel).join(' and '))+'</p>';
-  html+=pokemonCards(group.pokemon,ctx);
+  html+=pokemonCards(group.pokemon,ctx,{method:group.method,mighty:true,access:group.access});
   html+='</article>';
  });
  html+='</section>';
