@@ -97,7 +97,7 @@ with sync_playwright() as pw:
                         return {mightyRight:a.right,incenseLeft:b.left,iconWidth:b.width,iconHeight:b.height};
                     }""")
                     assert corners['mightyRight']<corners['incenseLeft'] and 0<corners['iconWidth']<=22 and 0<corners['iconHeight']<=22,(width,label,key,corners)
-            assert incense.locator('[data-identity="380:base:none"],[data-identity="381:base:none"]').count()==0,(width,label,'paid legends belong to shared Mighty')
+            assert page.locator('#evd-s-encounters .ue-method[data-method="incense"] .ue-mon[data-identity="380:base:none"],#evd-s-encounters .ue-method[data-method="incense"] .ue-mon[data-identity="381:base:none"]').count()==0,(width,label,'paid legends belong to shared Mighty')
             days=root.locator('.uer-mighty-day .uer-pokemon-tile')
             ticketed=root.locator('.uer-mighty-shared .uer-pokemon-tile')
             assert days.count()==18 and ticketed.count()==2,(width,label,'Mighty roster tiles')
