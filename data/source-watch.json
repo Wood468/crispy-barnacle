@@ -1,10 +1,10 @@
 {
- "updated": "2026-11-11T06:21:09.026Z",
+ "updated": "2026-11-11T17:08:19.790Z",
  "status": [
   {
    "id": "hub",
    "state": "ok",
-   "items": 4
+   "items": 3
   },
   {
    "id": "miners-assets",
@@ -23,26 +23,12 @@
   },
   {
    "id": "youtube-pogo",
-   "state": "error",
-   "note": "HTTP 404"
+   "state": "ok",
+   "items": 2
   }
  ],
- "gaps": 1,
+ "gaps": 0,
  "items": [
-  {
-   "source": "hub",
-   "trust": "community",
-   "title": "Shadow Tornadus (Incarnate) Raid Counters Guide",
-   "link": "https://pokemongohub.net/post/guide/shadow-tornadus-incarnate-raid-counters-guide/",
-   "date": "2026-11-03T10:07:44.000Z",
-   "summary": "Shadow Tornadus Incarnate is a Tier 5 Shadow Raid Boss. It&#8217;s a pure type Pokémon, making it weak to and type attacks. It can be shiny! Shadow Tornadus Incarnate can be caught with the following ",
-   "pokemon": [
-    "Tornadus"
-   ],
-   "notInOurData": [
-    "Tornadus"
-   ]
-  },
   {
    "source": "hub",
    "trust": "community",
@@ -52,6 +38,30 @@
    "summary": "Dynamax Registeel is a Tier 5 Max Battle in Pokémon GO. It will cost 800 Max Particles to participate in this Max Battle, which will only be consumed if you defeat Registeel successfully. Dynamax Regi",
    "pokemon": [
     "Registeel"
+   ],
+   "notInOurData": []
+  },
+  {
+   "source": "youtube-pogo",
+   "trust": "official",
+   "title": "Costumed Machamp debuts in Pokémon GO!",
+   "link": "https://www.youtube.com/watch?v=oe4xCOjA374",
+   "date": "2026-11-09T11:12:47.000Z",
+   "summary": "",
+   "pokemon": [
+    "Machamp"
+   ],
+   "notInOurData": []
+  },
+  {
+   "source": "youtube-pogo",
+   "trust": "official",
+   "title": "Costumed Machamp debuts in Pokémon GO!",
+   "link": "https://www.youtube.com/shorts/Z2OPNHxhNSc",
+   "date": "2026-11-09T10:48:45.000Z",
+   "summary": "",
+   "pokemon": [
+    "Machamp"
    ],
    "notInOurData": []
   },
