@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { decide, addToEventInfo, distinctiveTokens, detailsAsEvents } from "../scripts/g47ix-publish.mjs";
+import { decide, addToEventInfo, distinctiveTokens, detailsAsEvents, buildQueue, publicSourceUrl, sanitizePublicInfographicSources, sanitizeRegistrySources } from "../scripts/g47ix-publish.mjs";
 
 const events = [{ id: "kyogre-oct", t: "Kyogre in 5-star Raid Battles" }, { id: "zorua-cd", t: "Zorua Community Day" }];
 test("confident only when the image text names the event", () => {
@@ -287,4 +287,62 @@ test("validator rejects a dateSource with no start", () => {
   assert.match(bad.stdout + bad.stderr, /dateSource without start/);
   const good = check({ x: { names: ["X"], start: "2026-10-01", end: "2026-10-02", dateSource: "data.json" } });
   assert.equal(good.status, 0, good.stdout + good.stderr);
+});
+
+test("Discord channel deep links stay out of publicly shipped infographic metadata", () => {
+  const privateMessage = "https://discord.com/channels/@me/111/222";
+  const privateChannel = "https://discord.com/channels/111/222/333";
+  const publicArticle = "https://example.test/creator-post";
+  const artwork = "/infographics/g47ix/synthetic.webp";
+
+  assert.equal(publicSourceUrl(privateMessage), "");
+  assert.equal(publicSourceUrl(privateChannel), "");
+  assert.equal(publicSourceUrl("https://www.discord.com/channels/@me/111/222"), "");
+  assert.equal(publicSourceUrl("javascript:alert(1)"), "");
+  assert.equal(publicSourceUrl(publicArticle), publicArticle);
+
+  const event = { id: "source-privacy-fixture", t: "Synthetic Event" };
+  const info = { events: {} };
+  assert.equal(addToEventInfo(info, event, {
+    url: artwork, creator: "G47IX", sourceUrl: privateMessage, observed: "2026-11-11",
+    alt: "Synthetic infographic"
+  }), true);
+  assert.equal(info.events[event.id].source.url, undefined);
+  assert.equal(info.events[event.id].infographics[0].sourceUrl, undefined);
+  assert.equal(info.events[event.id].infographics[0].url, artwork);
+  assert.equal(info.events[event.id].infographics[0].source, "G47IX");
+
+  // Preserve usable public source links and sanitize older already-approved records.
+  const old = { events: {
+    x: { source: { label: "G47IX", trust: "community", url: privateMessage },
+      infographics: [{ url: artwork, sourceUrl: privateChannel, source: "G47IX" }] },
+    y: { source: { label: "G47IX", url: publicArticle },
+      infographics: [{ url: "/infographics/g47ix/public.webp", sourceUrl: publicArticle }] }
+  } };
+  sanitizePublicInfographicSources(old);
+  assert.equal(old.events.x.source.label, "G47IX");
+  assert.equal(old.events.x.source.url, undefined);
+  assert.equal(old.events.x.infographics[0].sourceUrl, undefined);
+  assert.equal(old.events.y.source.url, publicArticle);
+  assert.equal(old.events.y.infographics[0].sourceUrl, publicArticle);
+
+  const candidate = { id: "discord:synthetic", stagedPath: artwork, reviewStatus: "needs_review",
+    source: "discord", title: "Weekly synthetic infographic", creator: "G47IX",
+    url: privateMessage, overview: "week", publishedAt: "2026-11-11T00:00:00Z" };
+  const reg = { candidates: [candidate] };
+  assert.equal(buildQueue(reg).items[0].post, "");
+  assert.equal(buildWeekly(reg, Date.UTC(2026, 10, 11)).items[0].post, "");
+  sanitizeRegistrySources(reg);
+  assert.equal(reg.candidates[0].url, undefined);
+  assert.equal(reg.candidates[0].id, "discord:synthetic");
+  assert.equal(reg.candidates[0].stagedPath, artwork);
+  assert.equal(buildQueue(reg).items[0].image, artwork);
+});
+
+test("committed public infographic feeds and tracked review registry contain no Discord channel links", () => {
+  for (const path of ["../public/event-info.json", "../public/infographic-queue.json",
+                       "../public/weekly.json", "../data/g47ix-infographics-review.json"]) {
+    const raw = readFileSync(new URL(path, import.meta.url), "utf8");
+    assert.doesNotMatch(raw, /https:\/\/(?:www\.)?discord(?:app)?\.com\/channels\//i, path);
+  }
 });
