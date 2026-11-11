@@ -508,10 +508,28 @@
     var id = showdownId(name); if (!id) return '';
     return '<img class="dyn-ani" alt="" loading="lazy" decoding="async" src="https://play.pokemonshowdown.com/sprites/ani/' + id + '.gif" data-err="rm">';
   }
+  /* Form identity belongs to the featured Pokémon, not every Pokémon on an
+     event whose title mentions a Max form. A title may source an otherwise
+     unprefixed species only if it actually names that species. */
+  function maxArtKind(ev, f) {
+    var name = String(f && f.name || '').trim(), title = String(ev && ev.name || '');
+    if (/^Gigantamax\s/i.test(name)) return 'gigantamax';
+    if (/^Dynamax\s/i.test(name)) return 'dynamax';
+    if (!name) return '';
+    var escaped = name.replace(/[^a-z0-9]/gi, function(c) { return '\\' + c; });
+    if (new RegExp('(?:^|\\W)Gigantamax\\s+' + escaped + '(?=$|\\W)', 'i').test(title)) return 'gigantamax';
+    var isNamed = new RegExp('(?:^|\\W)' + escaped + '(?=$|\\W)', 'i').test(title);
+    if (isNamed && /\bDynamax\b/i.test(title)) return 'dynamax';
+    /* Max Battle/Max Monday records may only name their boss in the feed;
+       preserve an existing Dynamax cue, but never infer one for unrelated
+       Pokémon in a headline that explicitly advertises Gigantamax. */
+    if (ev && ev.kind === 'max' && !/\bGigantamax\b/i.test(title)) return 'dynamax';
+    return '';
+  }
   function monArt(ev, f, cls) {
     var isShadow = hasTag(ev, 'Shadow') || /^Shadow\s/i.test(f.name);
-    var isGmax = /^Gigantamax\s/i.test(f.name) || (/gigantamax/i.test(ev.name || '') && !/dynamax.*gigantamax/i.test(ev.name || ''));
-    var isMax = ev.kind === 'max' || /^(Dynamax|Gigantamax)\s/i.test(f.name) || /\b(dynamax|gigantamax)\b/i.test(ev.name || '');
+    var formKind = maxArtKind(ev, f);
+    var isGmax = formKind === 'gigantamax', isMax = !!formKind;
     var spriteName = isGmax && !/^Gigantamax\s/i.test(f.name) ? 'Gigantamax ' + f.name : f.name;
     var sprite = art({ n: spriteName, costume: f.costume, label: f.label, asset: f.asset, shiny: f.shiny, shadow: isShadow, dynamax: isMax }, cls || 'ea');
     var inc = incenseNames(ev)[String(f.name).toLowerCase()] ? INC_IMG : '';
