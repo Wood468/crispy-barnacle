@@ -129,6 +129,7 @@ with sync_playwright() as p:
 
         # Event Details: the four approved costumes use their own exact files; unapproved ones are badged species pictures.
         page.evaluate("GODETAIL.open('synthetic-variant-showcase')")
+        page.locator('#evd .evd-nav-link[data-sec="encounters"]').click()
         page.wait_for_function('document.querySelectorAll("#evd .ue-mon").length>=9')
         page.wait_for_timeout(500)
         tiles={t['text']:t for t in page.evaluate(COLLECT)}
@@ -185,7 +186,9 @@ with sync_playwright() as p:
 
         # Real Twilight Wishes and Halloween events from the catalogue.
         for ev_id,slug in [('twilightwishes','twilight-wishes'),('halloween1','halloween-1')]:
-            page.evaluate("(id)=>GODETAIL.open(id)",ev_id);page.wait_for_function('document.querySelectorAll("#evd .ue-mon").length>=1');page.wait_for_timeout(500)
+            page.evaluate("(id)=>GODETAIL.open(id)",ev_id)
+            page.locator('#evd .evd-nav-link[data-sec="encounters"]').click()
+            page.wait_for_function('document.querySelectorAll("#evd .ue-mon").length>=1');page.wait_for_timeout(500)
             real=page.evaluate(COLLECT)
             if slug=='twilight-wishes':
                 for sub,code in [('sun crown','GOFEST_2024_STIARA'),('moon crown','GOFEST_2024_MTIARA'),('sun scarf','GOFEST_2024_SSCARF'),('moon scarf','GOFEST_2024_MSCARF')]:
@@ -224,7 +227,9 @@ with sync_playwright() as p:
     context.route('**/events-v1.json',lambda r:r.fulfill(body=json.dumps({**cat,'events':cat['events']+[FUTURE]}),content_type='application/json'))
     page=context.new_page();errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
     page.goto(BASE+'/');page.wait_for_function('!!window.GODETAIL&&!!window.GOEventRegistry');page.evaluate('GOEventRegistry.ready')
-    page.evaluate("GODETAIL.open('synthetic-variant-showcase')");page.wait_for_function('document.querySelectorAll("#evd .ue-mon").length>=9');page.wait_for_timeout(800)
+    page.evaluate("GODETAIL.open('synthetic-variant-showcase')")
+    page.locator('#evd .evd-nav-link[data-sec="encounters"]').click()
+    page.wait_for_function('document.querySelectorAll("#evd .ue-mon").length>=9');page.wait_for_timeout(800)
     assert page.evaluate(BROKEN)==[],'no broken image may remain when every picture request fails'
     assert errors==[],errors
     print('PASS variant artwork: every picture request failing leaves no broken image and no page error')
