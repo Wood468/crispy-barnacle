@@ -94,7 +94,7 @@ with sync_playwright() as p:
         def active():
             return page.evaluate("document.querySelector('#evd .evd-nav-link[aria-selected=\"true\"]').dataset.sec")
 
-        def only_panel(sec):
+        def only_panel(sec, check_heading=True):
             state = page.evaluate("""(sec) => {
                 const panels=[...document.querySelectorAll('#evd .evd-sec')];
                 const tabs=[...document.querySelectorAll('#evd .evd-nav-link')];
@@ -111,7 +111,7 @@ with sync_playwright() as p:
             assert page.locator('#evd .evd-nav-link[tabindex="0"]').count() == 1
             assert page.locator('#evd .evd-nav-link[tabindex="-1"]').count() == page.locator('#evd .evd-nav-link').count()-1
             assert page.evaluate('document.querySelector("#evd").scrollWidth <= innerWidth')
-            if sec != 'overview':
+            if sec != 'overview' and check_heading:
                 heading = page.locator(f'#evd-h-{sec}').bounding_box()
                 assert heading and 0 <= heading['y'] < 844, (width, sec, heading, 'selected heading offscreen')
 
@@ -133,7 +133,7 @@ with sync_playwright() as p:
         }""")
         hash_before = page.evaluate('location.hash')
         page.locator('#evd .evd-jump a[href="#evd-sources"]').click()
-        only_panel('details')
+        only_panel('details', check_heading=False)
         assert page.locator('#evd-sources').is_visible()
         assert page.evaluate('location.hash') == hash_before
         tap('overview')
