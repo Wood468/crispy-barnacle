@@ -918,9 +918,16 @@
     });
     if (spy) spy.cur = id;
     setActive(o, id);
-    o.scrollTop = 0;
+    var heading = selected.querySelector('.evd-sec-h') || selected;
+    // Keep the selected panel in view below the sticky toolbar and tab strip.
+    // Returning to Overview instead starts at the hero.
+    if (id === 'overview') o.scrollTop = 0;
+    else {
+      var stack = spyOffsets(o);
+      var targetTop = heading.getBoundingClientRect().top - o.getBoundingClientRect().top + o.scrollTop - stack - 8;
+      o.scrollTop = Math.max(0, targetTop);
+    }
     if (focus) {
-      var heading = selected.querySelector('.evd-sec-h') || selected;
       heading.setAttribute('tabindex', '-1');
       heading.focus({ preventScroll: true });
     }
