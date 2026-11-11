@@ -12,6 +12,7 @@ import { createRequire } from "node:module";
 import { matchEvent } from "./g47ix-review.mjs";
 
 const GODEDUPE = createRequire(import.meta.url)("../public/dedupe.js");
+const GOLIB = createRequire(import.meta.url)("../public/lib.js");
 
 const DISCORD_FILE = process.env.DISCORD_FILE || "infographics.json";
 const REG = process.env.REGISTRY_FILE || "data/g47ix-infographics-review.json";
@@ -157,14 +158,9 @@ export function datedEvents({ data, details, world } = {}, now = 0) {
 // deep links. The review registry retains its stable candidate IDs and image
 // attribution, but not Discord channel URLs in this public repository.
 export function publicSourceUrl(value) {
-  if (typeof value !== "string" || !value) return "";
-  try {
-    const url = new URL(value);
-    if (url.protocol !== "https:") return "";
-    if (/^(?:www\.)?discord(?:app)?\.com$/i.test(url.hostname) &&
-        /^\/channels(?:\/|$)/i.test(url.pathname)) return "";
-    return value;
-  } catch { return ""; }
+  // Reuse the tested browser policy: handles subdomains, URL userinfo, encoded
+  // paths, backslashes, trailing dots and invalid-port Discord channel URLs.
+  return GOLIB.publicLink(value);
 }
 
 export function sanitizePublicInfographicSources(info) {
