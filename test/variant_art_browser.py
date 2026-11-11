@@ -67,11 +67,12 @@ FUTURE={'schemaVersion':1,'eventId':'synthetic-variant-showcase','title':'Synthe
             {'speciesId':'854','name':'Sinistea','costumeId':'bow','label':'Bow'},
             {'speciesId':'133','name':'Eevee','costumeId':'partyhat','label':'party hat'},
             {'speciesId':'68','name':'Shadow Machamp','formId':'shadow'},
+            {'speciesId':'483','name':'Dialga'},
             {'speciesId':'483','name':'Dynamax Dialga','formId':'dynamax'},
             {'speciesId':'6','name':'Gigantamax Charizard','formId':'gmax'},
             {'speciesId':'80','name':'Gigantamax Slowbro','formId':'gmax'},
             {'speciesId':'26','name':'Raichu','formId':'alola'}],
- 'encounters':[{'identityKey':k,'method':'raid'} for k in ['25:base:none','25:base:suncrown','196:base:sunscarf','854:base:bow','133:base:partyhat','68:shadow:none','483:dynamax:none','6:gmax:none','80:gmax:none','26:alola:none']],
+ 'encounters':[{'identityKey':k,'method':'raid'} for k in ['25:base:none','25:base:suncrown','196:base:sunscarf','854:base:bow','133:base:partyhat','68:shadow:none','483:base:none','483:dynamax:none','6:gmax:none','80:gmax:none','26:alola:none']],
  'internalValidation':{'native':True},'sources':[{'name':'Synthetic fixture only','url':'https://example.invalid/fixture'}]}
 
 def data_fixture():
@@ -148,6 +149,29 @@ with sync_playwright() as p:
         assert not gch['chip'],('an exact Gigantamax picture needs no fallback chip',gch)
         shadow=tile('Shadow Machamp');assert shadow['src'] and 'c=' not in shadow['src'],shadow
         dyn=tile('Dynamax Dialga');assert dyn['src'] and 'Dynamax' not in dyn['badge'],dyn
+        # Normal and Dynamax share the species model, but cannot be visually identical.
+        # The universal gallery bypasses monArt(), so verify its explicit Max CSS cue.
+        appearance=page.evaluate("""() => {
+            const cards=[...document.querySelectorAll('#evd .ue-mon')];
+            const find=name=>cards.find(c=>[...c.querySelectorAll('b')].some(b=>b.textContent.trim()===name));
+            const normal=find('Dialga'),max=find('Dynamax Dialga');
+            if(!normal||!max)return {};
+            const a=normal.querySelector('.ue-mon-art'),b=max.querySelector('.ue-mon-art');
+            return {ordinaryFlag:a.querySelector('img.art')?.getAttribute('data-sd')||'',
+                    dynamaxFlag:b.querySelector('img.art')?.getAttribute('data-sd')||'',
+                    ordinaryChip:getComputedStyle(a,'::after').content,
+                    dynamaxChip:getComputedStyle(b,'::after').content,
+                    ordinaryRing:getComputedStyle(a,'::before').borderTopWidth,
+                    dynamaxRing:getComputedStyle(b,'::before').borderTopWidth};
+        }""")
+        assert appearance.get('ordinaryFlag')=='' and appearance.get('dynamaxFlag')=='1',appearance
+        assert 'DYNAMAX' in appearance['dynamaxChip'] and 'DYNAMAX' not in appearance['ordinaryChip'],appearance
+        assert appearance['dynamaxRing']!='0px' and appearance['ordinaryRing']!='2px',appearance
+        page.emulate_media(reduced_motion='reduce')
+        assert page.evaluate("""() => {
+            const node=[...document.querySelectorAll('#evd .ue-mon')].find(c=>c.querySelector('b')?.textContent.trim()==='Dynamax Dialga');
+            return !!node && getComputedStyle(node.querySelector('.ue-mon-art'),'::after').content.includes('DYNAMAX');
+        }"""),'Max identity badge must remain visible in reduced-motion mode'
         assert all(t['lazy'] for t in tiles.values()),'gallery pictures must be lazy, async and size-reserved'
         assert page.evaluate(BROKEN)==[],('broken images in Event Details',page.evaluate(BROKEN))
         assert page.evaluate("document.documentElement.scrollWidth<=window.innerWidth+1"),'Event Details overflows at %dpx'%width
