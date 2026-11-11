@@ -38,7 +38,7 @@
   /* One price cell. Verified prices are plain; estimates always say "Estimate", show a range, a confidence and their basis. */
   function priceCell(p) {
     var R = window.GORegionalPrices;
-    if (!p) return '<span class="sp-regional-value sp-none">Not calibrated</span>';
+    if (!p) return '<span class="sp-regional-value sp-none">Not observed</span>';
     if (p.basis === 'estimate') {
       return '<span class="sp-regional-value sp-est"><b>Estimate</b> ' + esc(R.fmt(p.min, p.currency) + ' to ' + R.fmt(p.max, p.currency)) + ' <small>' + esc(p.confidence) + ' confidence</small>'
         + '<small class="sp-basis">' + esc(chan(p) + '. Basis: ' + p.basisText + '. Not a checkout price.') + '</small></span>';
@@ -68,7 +68,7 @@
       + '<div data-sp-cheapest>' + cheapestHtml(obs, balance) + '</div>'
       + (other.length ? '<details class="sp-more"><summary>Recorded earlier, not re-checked (' + other.length + ')</summary>' + other.map(row).join('') + '</details>' : '')
       + (items.length ? '<h4>All known Store items and regional prices</h4>' + items.map(function (p) {
-        return '<div class="sp-r sp-regional-row"><span class="sp-n">' + icon(p.label) + esc(p.label) + '</span><b class="sp-a">' + (p.aud > 0 ? 'Australia Web: A$' + p.aud.toFixed(2) + ' <small>Verified, ' + esc(when(p.observed)) + '</small>' : 'Australia Web: no matching product seen') + '</b>'
+        return '<div class="sp-r sp-regional-row"><span class="sp-n">' + icon(p.label) + esc(p.label) + '</span><b class="sp-a">' + (p.aud > 0 ? 'Australia Web: A$' + p.aud.toFixed(2) + ' <small>Verified, ' + esc(when(p.observed)) + '</small>' : 'Australia Web: not observed') + '</b>'
           + '<span class="sp-n">Indonesia Web</span>' + priceCell(p.indonesia) + '<span class="sp-n">India in-app</span>' + priceCell(p.india) + '</div>';
       }).join('') : '')
       + '</details>';
