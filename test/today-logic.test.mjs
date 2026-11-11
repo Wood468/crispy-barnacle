@@ -294,3 +294,5 @@ test('Crowned Sword and Shield are exact artwork forms, not base-species picture
  }
  assert.equal(L.classifyArt('Crowned Shield Zacian').exact,false,'invalid species/form pairing must not be accepted');
 });
+
+// GO Aider v0.5.10 safe paired editor acceptance; never merge.

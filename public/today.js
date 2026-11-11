@@ -207,3 +207,4 @@
   }
   return { patchCountdowns: patchCountdowns, render: render, pokemonFor: pokemonFor, raidTier: raidTier, shinyBadge: shinyBadge, esc: esc };
 }));
+// GO Aider v0.5.10 safe paired editor acceptance; never merge.
