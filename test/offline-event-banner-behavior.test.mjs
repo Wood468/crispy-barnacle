@@ -76,3 +76,17 @@ test('offline uncached event banners fail without poisoning the cache', async ()
   assert.equal(result.response.status, 503);
   assert.equal(sw.entries.size, 0);
 });
+
+test('event banner cache evicts oldest image after forty saved banners', async () => {
+  const sw = harness(async () => new Response('banner-bytes', { status: 200, headers: { 'content-type': 'image/jpeg' } }));
+  const urls = [];
+  for (let i = 0; i <= 40; i++) {
+    const url = `https://cdn.leekduck.com/assets/img/events/worker-cache-${i}.jpg`;
+    urls.push(url);
+    const result = await sw.request(url);
+    assert.equal(result.intercepted, true);
+  }
+  assert.equal(sw.entries.size, 40);
+  assert.equal(sw.entries.has(urls[0]), false);
+  assert.equal(sw.entries.has(urls[40]), true);
+});
