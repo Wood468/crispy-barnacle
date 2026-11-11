@@ -96,10 +96,20 @@ function slots(h){
 function dayLabel(iso){
  return new Intl.DateTimeFormat('en-AU',{timeZone:'UTC',weekday:'long',month:'short',day:'numeric'}).format(new Date(iso+'T12:00:00Z'));
 }
-function pokemonCards(names,ctx,prefix){
+/* Method and Mighty belong to this sourced encounter group, not the species.
+   A Pokémon appearing as ordinary in a habitat and Mighty via Incense keeps
+   different indicators on those two encounter tiles. */
+function pokemonCards(names,ctx,options){
+ options=options||{};
+ var mighty=options.mighty===true,incense=options.method==='incense';
+ var method=incense?'Incense':options.method==='route'?'Route':options.method==='wild'?'Wild':'';
+ var access=options.access==='ticket'||options.access==='paid'?'Ticket-only':options.access==='all'||options.access==='free'?'All trainers':'';
  return '<div class="uer-pokemon">'+(names||[]).map(function(name){
   var art=ctx.art?ctx.art({n:name},'sm'):'';
-  return '<div class="uer-pokemon-tile" data-pokemon="'+esc(name)+'"><span class="uer-pokemon-art">'+art+'</span><span class="uer-pokemon-name">'+esc(name)+'</span></div>';
+  var announced=(mighty?'Mighty ':'')+name+(method?', '+method+' encounter':'')+(access?', '+access:'');
+  var corners=(mighty?'<span class="uer-mighty-corner" aria-hidden="true">!!!</span>':'')+
+   (incense?'<span class="uer-incense-corner" aria-hidden="true"><img src="/ico/incense.webp" alt="" width="20" height="20" loading="lazy" decoding="async"></span>':'');
+  return '<div class="uer-pokemon-tile" role="group" data-pokemon="'+esc(name)+'" data-method="'+esc(options.method||'')+'"'+(mighty?' data-mighty="true"':'')+' aria-label="'+esc(announced)+'"><span class="uer-pokemon-art">'+art+corners+'</span><span class="uer-pokemon-name">'+esc(name)+'</span></div>';
  }).join('')+'</div>';
 }
 function render(entry,ctx){
@@ -115,7 +125,7 @@ function render(entry,ctx){
   html+='<article class="uer-habitat uer-habitat-'+esc(h.type||h.id)+'" data-habitat="'+esc(h.id)+'"'+(live?' data-active="true"':'')+'>';
   html+='<h4>'+esc(h.label)+(live?' <span class="uer-live">Active now</span>':'')+'</h4>';
   html+='<p class="uer-hours">'+esc(slots(h).join(' · '))+'</p>';
-  html+=pokemonCards(h.pokemon,ctx);html+='</article>';
+  html+=pokemonCards(h.pokemon,ctx,{method:'wild'});html+='</article>';
  });
  html+='</div></section>';
  }
@@ -127,13 +137,13 @@ function render(entry,ctx){
   var today=now.date===day.date;
   html+='<article class="uer-mighty-day" data-mighty-date="'+esc(day.date)+'"'+(today?' data-current-day="true"':'')+'>';
   html+='<h4>'+esc(dayLabel(day.date))+(today?' <span class="uer-live">Today</span>':'')+'</h4>';
-  html+=pokemonCards(day.pokemon,ctx);html+='</article>';
+  html+=pokemonCards(day.pokemon,ctx,{method:day.method,access:day.access,mighty:true});html+='</article>';
  });
  html+='</div>';
  (entry.mightyShared||[]).forEach(function(group){
   html+='<article class="uer-mighty-shared" data-shared-id="'+esc(group.id)+'"><h4>'+esc(group.title)+'</h4>';
   html+='<p class="uer-hours">Available '+esc((group.dates||[]).map(dayLabel).join(' and '))+'</p>';
-  html+=pokemonCards(group.pokemon,ctx);
+  html+=pokemonCards(group.pokemon,ctx,{method:group.method,access:group.access,mighty:true});
   html+='</article>';
  });
  html+='</section>';
