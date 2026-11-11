@@ -40,6 +40,12 @@ def inspect(page, width: int) -> dict:
     # do not let Playwright wait forever on its return value. The selector
     # assertion below is the bounded, user-visible readiness check.
     page.evaluate("() => { GODETAIL.open('into'); return true; }")
+    page.wait_for_selector('#evd .evd-nav-link[data-sec="encounters"]', timeout=30000)
+    # In the one-panel release the first visible screen is Overview, so
+    # open Pokémon before waiting for the sourced Coin Bag tile.
+    into_tab = page.locator('#evd .evd-nav-link[data-sec="encounters"]')
+    if into_tab.count() and not page.locator('#evd-s-encounters').is_visible():
+        into_tab.click()
     page.wait_for_selector('#evd .ue-mon[data-identity="999:roaming:none"]', timeout=30000)
     coin = page.locator('#evd .ue-mon[data-identity="999:roaming:none"]').first
     assert "Coin Bag" in coin.inner_text(), f"{width}px: Roaming encounter lacks Coin Bag access"
