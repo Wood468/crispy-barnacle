@@ -37,10 +37,44 @@ test('base Unown remains ordinary and unexpected or mismatched letter labels can
   const a = resolve('Unown A');
   assert.equal(a.exact, true);
   assert.deepEqual(Array.from(a.list), ['unown-a']);
+  assert.equal(a.officialArtworkFile, '201.png', 'A is the default Unown form, not a 201-a.png file');
   const mismatched = resolve('Unown D (I)');
   assert.equal(mismatched.exact, true);
   assert.ok(!mismatched.list.includes('unown-d'));
   assert.ok(!mismatched.list.includes('unown-i'));
+});
+
+test('future announcements resolve all 28 Unown glyphs without hand-coded event names', () => {
+  const all = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').map(letter => ({
+    glyph: letter, form: letter.toLowerCase(),
+    file: letter === 'A' ? '201.png' : '201-' + letter.toLowerCase() + '.png'
+  })).concat([
+    { glyph: '!', form: 'exclamation', file: '201-exclamation.png' },
+    { glyph: '?', form: 'question', file: '201-question.png' }
+  ]);
+  assert.equal(all.length, 28);
+  for (const { glyph, form, file } of all) {
+    const labels = [
+      'Unown ' + glyph,
+      'Unown (' + glyph + ')',
+      'Unown ' + glyph + ' (' + form + ')',
+      'Unown (' + glyph + ' Form)'
+    ];
+    if (glyph === '!') labels.push('Unown Exclamation', 'Unown (Exclamation Mark)');
+    if (glyph === '?') labels.push('Unown Question', 'Unown (Question Mark)');
+    for (const label of labels) {
+      const result = resolve(label);
+      assert.equal(result.base, 'unown', label);
+      assert.equal(result.exact, true, label);
+      assert.deepEqual(Array.from(result.list), ['unown-' + form], label);
+      assert.equal(result.officialArtworkFile, file, label);
+    }
+  }
+  // Bad importer labels must not be silently "fixed" to another glyph.
+  for (const label of ['Unown A (B)', 'Unown D (I)', 'Unown ! (?)', 'Unown ? (!)']) {
+    const invalid = resolve(label);
+    assert.equal(invalid.officialArtworkFile, undefined, label);
+  }
 });
 
 test('existing exact Crowned/Gimmighoul/Gigantamax and ordinary Dynamax routes are unchanged', () => {
@@ -78,16 +112,22 @@ test('live Worker artwork handler fetches exact official Unown letter PNGs, incl
     ART_BASE: base, COSTUME_BASE: '', DAY: 86400,
     Request, Response
   });
-  for (const letter of ['D', 'I', 'L', 'W']) {
+  const cases = [
+    ['A', 'a', '201.png'], ['B', 'b', '201-b.png'], ['D', 'd', '201-d.png'],
+    ['I', 'i', '201-i.png'], ['L', 'l', '201-l.png'], ['W', 'w', '201-w.png'],
+    ['Z', 'z', '201-z.png'], ['!', 'exclamation', '201-exclamation.png'],
+    ['?', 'question', '201-question.png']
+  ];
+  for (const [glyph, form, file] of cases) {
     for (const shiny of [false, true]) {
-      const name = 'Unown ' + letter + ' (' + letter.toLowerCase() + ')';
+      const name = 'Unown ' + glyph + ' (' + form + ')';
       const url = new URL('https://pogo.test/api/art?n=' + encodeURIComponent(name) + (shiny ? '&shiny=1' : ''));
       const out = await handler(new Request(url), {}, { waitUntil() {} }, url);
       assert.equal(out.status, 200, name);
       assert.equal(out.headers.get('content-type'), 'image/png');
-      assert.equal(upstream.at(-1), base + (shiny ? 'shiny/' : '') + '201-' + letter.toLowerCase() + '.png', name);
+      assert.equal(upstream.at(-1), base + (shiny ? 'shiny/' : '') + file, name);
     }
   }
-  assert.equal(upstream.length, 8, 'each request resolves exactly one verified form-specific image');
+  assert.equal(upstream.length, cases.length * 2, 'each request resolves exactly one form-specific image');
   assert.deepEqual(checks, [], 'no unrelated Pokemon species or variety lookups are made');
 });
