@@ -140,6 +140,38 @@ def inspect(page, width: int) -> dict:
     assert "Reshiram" not in page.locator('[data-raid-date="2026-11-14"]').inner_text()
     assert "White Kyurem" not in page.locator('[data-raid-date="2026-11-15"]').inner_text()
 
+    # Verify the actual deployed page, not only a fixture, preserves the
+    # two hourly habitats and two different Mighty day lineups. These are
+    # informational tiles, never Collection Track/Follow controls.
+    rotations = page.locator('#evd-s-encounters .uer-root[data-rotation-id="gowa-2026-global"]')
+    assert rotations.count() == 1, f"{width}px: source-backed Wild Area rotations missing"
+    habitat_counts = {
+        kind: rotations.locator(f'[data-habitat="{kind}"] .uer-pokemon-tile').count()
+        for kind in ("steel", "dragon")
+    }
+    assert habitat_counts == {"steel": 22, "dragon": 22}, (
+        f"{width}px: wrong published hourly habitat roster: {habitat_counts}"
+    )
+    mighty = {
+        day: rotations.locator(f'[data-mighty-date="{day}"]')
+        for day in ("2026-11-14", "2026-11-15")
+    }
+    assert all(tile.locator('.uer-pokemon-tile').count() == 9 for tile in mighty.values()), (
+        f"{width}px: day-specific Mighty Pokémon roster missing"
+    )
+    assert "Metagross" in mighty["2026-11-14"].inner_text() and "Hydreigon" not in mighty["2026-11-14"].inner_text()
+    assert "Hydreigon" in mighty["2026-11-15"].inner_text() and "Metagross" not in mighty["2026-11-15"].inner_text()
+    ticket_only = rotations.locator('[data-shared-id="ticket-incense"]')
+    assert ticket_only.locator('.uer-pokemon-tile').count() == 2
+    assert all(x in ticket_only.inner_text() for x in ("Latias", "Latios", "Ticket-only Incense"))
+    assert rotations.locator('.uer-pokemon-tile').count() == 64
+    assert not rotations.locator('[data-track],[data-follow],.ue-mon-controls').count()
+    report["wild_area_rotations"] = {
+        "habitats": habitat_counts,
+        "mighty": {"2026-11-14": 9, "2026-11-15": 9},
+        "ticket_incense": ["Latias", "Latios"],
+    }
+
     report["horizontal_overflow"] = page.evaluate(
         "() => document.documentElement.scrollWidth > window.innerWidth + 1"
     )
