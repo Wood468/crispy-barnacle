@@ -66,6 +66,23 @@ with sync_playwright() as pw:
         for item in ('Honedge','Klefki','Drampa','Duraludon'):
             mon=page.locator('#evd .ue-mon',has_text=item).first
             assert mon.count() and mon.locator('.ue-egg-corner img[src="/ico/g/egg-10km.webp"]').count()==1,(width,item)
+            # An icon, not a coloured 10 km plate or a second Egg pill.
+            marker=mon.locator('.ue-egg-corner')
+            visual=marker.evaluate("""el => {
+                const cs=getComputedStyle(el), r=el.getBoundingClientRect();
+                const img=el.querySelector('img');
+                return {children:el.children.length, text:el.textContent.trim(),
+                    width:r.width, height:r.height,
+                    background:cs.backgroundColor, border:cs.borderTopWidth,
+                    shadow:cs.boxShadow, imgWidth:img?.getBoundingClientRect().width};
+            }""")
+            assert visual['children']==1 and visual['text']=='',(width,item,visual)
+            assert 0<visual['width']<=22 and 0<visual['height']<=22,(width,item,visual)
+            assert visual['imgWidth']<=22,(width,item,visual)
+            assert visual['background']=='rgba(0, 0, 0, 0)',(width,item,visual)
+            assert visual['border']=='0px' and visual['shadow']=='none',(width,item,visual)
+            assert mon.locator('.ue-b-egg,.ue-km-10').count()==0,(width,item,'redundant egg pill')
+            assert '10 km egg' in mon.get_attribute('aria-label'),(width,item,'lost accessible hatch distance')
         saturday=page.locator('#evd .ue-raid-day[data-raid-date="2026-11-14"]').inner_text()
         sunday=page.locator('#evd .ue-raid-day[data-raid-date="2026-11-15"]').inner_text()
         for boss in ('Zekrom','White Kyurem','Dynamax Dialga','Gigantamax Duraludon'):
