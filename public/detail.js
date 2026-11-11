@@ -833,6 +833,11 @@
       if (dialog && target && dialog.contains(target)) {
         /* Native fragment navigation emits popstate and closes the modal. Keep section jumps inside it. */
         e.preventDefault();
+        // Legacy in-sheet anchors may point into another universal panel.
+        // Reveal that panel before focusing the target; otherwise the anchor
+        // stays inaccessible, despite the current hash remaining unchanged.
+        var ownerPanel = target.closest && target.closest('.evd-sec');
+        if (ownerPanel && ownerPanel.hidden) goSection(dialog, ownerPanel.getAttribute('data-sec'), false);
         if(target.tagName==='DETAILS')target.open=true;
         dialog.querySelectorAll('.evd-jump a').forEach(function(link){link.removeAttribute('aria-current');});
         jump.setAttribute('aria-current','location');
