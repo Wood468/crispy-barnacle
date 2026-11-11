@@ -266,6 +266,15 @@ test('GO Pass milestones show sourced encounters and premium rewards without exp
  assert.match(html,/Source not listed/);
 });
 
+test('GO Pass keeps published Rank 45 and Rank 100 in four-card highlights despite many encounters',()=>{
+ const stages=[2,3,4,5,6,7,45,100].map(rank=>({rank,free:[{type:'encounter',name:rank===45?'Dynamax Meltan':'Featured Pokémon '+rank,quantity:1}],deluxe:rank===100?[{type:'item',name:'Silver Bottle Cap',quantity:1}]:[]}));
+ const html=UI.render(event({passes:[{title:'Crowded published milestones',stages}]}),{});
+ assert.equal((html.match(/class="ue-pass-highlight"/g)||[]).length,4);
+ assert.match(html,/data-milestone-rank="45"/);
+ assert.match(html,/data-milestone-rank="100"/);
+ assert.equal((html.match(/<li class="ue-pass-rank" data-rank="/g)||[]).length,8);
+});
+
 test('GO Pass with no stages says rewards are not published and unknown freshness is stated',()=>{
  const html=UI.render(event({passes:[{title:'Empty pass',stages:[]}]}),{});
  assert.match(html,/Rank rewards have not been published by the source yet/);assert.match(html,/Freshness unknown/);
