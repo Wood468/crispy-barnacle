@@ -157,7 +157,7 @@ function withoutDuplicateFlatEncounters(model,entry){
   if(!name)return true;
   if(e.method==='incense'&&shared.has(name))return false;
   var access=norm(e.access);
-  if(access&&access!=='unknown'&&access!=='all')return true;
+  if(access&&access!=='unknown'&&access!=='all'&&access!=='free')return true; // published Free/all-Trainer access is not a separate ticketed encounter
   return !((e.method==='wild'&&wild.has(name))||((e.method==='incense'||e.method==='wild')&&mighty.has(name)));
  }
  var out=Object.assign({},model,{encounters:(model.encounters||[]).filter(keep)});
