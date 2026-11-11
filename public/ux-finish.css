@@ -257,8 +257,13 @@ input[type="checkbox"] { touch-action: manipulation; }
 #tab-dex #dsync{margin-top:0!important;margin-bottom:0}
 #tab-dex .gencov{padding:0;border:0;background:transparent}
 #tab-dex .gencov>.dd{border:1px solid var(--color-border-card)}
+#tab-dex{gap:8px}
+#tab-dex .gencov>.dd>summary{min-height:44px;padding-block:9px}
 @media(max-width:560px){
- #tab-dex .dexbar .tools{gap:6px}
- #tab-dex .dexbar .tools input[type=search]{flex-basis:100%;width:100%}
- #tab-dex .dexbar .tools select{flex:1 1 auto}
+ #tab-dex .dexbar{grid-template-columns:minmax(0,1fr) minmax(110px,38%);align-items:center;gap:6px}
+ #tab-dex .dexbar .tools{display:contents}
+ #tab-dex .dexbar #dq{grid-column:1;grid-row:1;flex-basis:auto;width:100%}
+ #tab-dex .dexbar #dstat{grid-column:2;grid-row:1;width:100%;min-width:0}
+ #tab-dex .dexbar #dgen{display:none}
+ #tab-dex .dexbar .genchips{grid-column:1/-1;grid-row:2}
 }
