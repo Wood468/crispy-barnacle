@@ -17,13 +17,12 @@
 .uer-live{display:inline-flex;align-items:center;border:1px solid #e0bc72;color:#f9d496;border-radius:99px;padding:3px 6px;font:700 .62rem/1 var(--font-body,system-ui);white-space:nowrap}
 .uer-hours{font:600 .68rem/1.5 var(--font-body,system-ui);color:var(--muted,#b6c1d2);margin:0 0 11px}
 .uer-pokemon{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}
-.uer-pokemon-tile{position:relative;min-width:0;border:1px solid rgba(255,255,255,.08);border-radius:12px;background:rgba(255,255,255,.035);padding:7px 5px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:2px}
-.uer-pokemon-art{width:100%;min-height:65px;display:grid;place-items:center}
+.uer-pokemon-tile{min-width:0;border:1px solid rgba(255,255,255,.08);border-radius:12px;background:rgba(255,255,255,.035);padding:7px 5px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:2px}
+.uer-pokemon-art{position:relative;width:100%;min-height:65px;display:grid;place-items:center}
+.uer-mighty-corner{position:absolute;inset-block-start:0;inset-inline-start:0;z-index:1;min-width:21px;min-height:20px;display:grid;place-items:center;padding:2px 3px;border:1px solid #eac478;border-radius:7px;background:#48300d;color:#ffe2a0;font:900 10px/1 var(--font-body,system-ui);letter-spacing:-.4px;box-shadow:0 2px 8px rgba(0,0,0,.25);pointer-events:none}
+.uer-incense-corner{position:absolute;inset-block-start:0;inset-inline-end:0;z-index:1;width:20px;height:20px;display:grid;place-items:center;pointer-events:none}
+.uer-incense-corner img{display:block;width:20px;height:20px;max-width:20px;object-fit:contain}
 .uer-pokemon-art img.art{width:100%;height:68px;max-width:78px;object-fit:contain}
-/* Source-backed per-encounter corners: Mighty and Incense coexist without hiding the Pokémon. */
-.uer-mighty-mark{position:absolute;z-index:1;top:5px;left:5px;pointer-events:none;font:900 .85rem/1 var(--font-body,system-ui);letter-spacing:-.055em;color:#f7c45d;text-shadow:0 1px 2px #14151f,0 0 7px rgba(246,183,68,.4)}
-.uer-incense-corner{position:absolute;z-index:1;top:5px;right:5px;pointer-events:none;width:19px;height:19px;display:grid;place-items:center;background:transparent;border:0;box-shadow:none}
-.uer-incense-corner img{display:block;width:19px;height:19px;max-width:19px;object-fit:contain}
 .uer-pokemon-name{font:700 .68rem/1.25 var(--font-body,system-ui);overflow-wrap:anywhere;color:var(--text,#f3f5ff)}
 .uer-sources{margin:0;color:var(--muted,#b6c1d2);font:500 .67rem/1.55 var(--font-body,system-ui)}
 .uer-sources a{color:var(--accent,#a7bff6);text-decoration:underline;text-underline-offset:2px}
