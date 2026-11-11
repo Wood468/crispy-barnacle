@@ -180,6 +180,8 @@ def inspect(page, width: int) -> dict:
     )
 
     report["raid_days"] = {}
+    report["raid_form_art"] = {}
+    gigantamax_sources = set()
     for date, names in BOSSES.items():
         day = page.locator(f'#evd .ue-raid-day[data-raid-date="{date}"]')
         assert day.count() == 1, f"{width}px: missing or duplicate day-specific raid block {date}"
@@ -189,7 +191,48 @@ def inspect(page, width: int) -> dict:
             boss = day.locator("li").filter(has_text=name)
             assert boss.count() == 1, f"{width}px: {date} duplicate/missing {name} artwork row"
             assert boss.locator("img").count() >= 1, f"{width}px: {name} has no image element"
+            # For each published Max form, verify the *displayed* image, not
+            # just the existence of an img tag or an inferred event-title badge.
+            # This is a reusable form-identity assertion: future event rosters
+            # that use Dynamax/Gigantamax prefixes inherit the same check.
+            if name.startswith(("Dynamax ", "Gigantamax ")):
+                art = boss.locator(".ue-raid-day-art img.art").first
+                assert art.count() == 1, f"{width}px: {date} {name} missing form artwork"
+                # CSS animates the Dynamax glow continuously, so Playwright's
+                # scroll_into_view_if_needed() will never see a "stable" image.
+                # Browser-native scrolling has no stability precondition.
+                art.evaluate("(img) => img.scrollIntoView({block: 'center', behavior: 'instant'})")
+                art.evaluate("(img) => img.decode()", timeout=20000)
+                visual = art.evaluate("""(img) => ({
+                    src: img.getAttribute('src'),
+                    alt: img.alt,
+                    loaded: img.complete && img.naturalWidth > 0,
+                    dynamax: img.getAttribute('data-sd') === '1',
+                    gigantamax: img.classList.contains('gm-real'),
+                    glow: getComputedStyle(img).filter
+                })""")
+                assert visual["loaded"], f"{width}px: {date} {name} image has no pixels"
+                assert visual["alt"].startswith(name), f"{width}px: {name} lost its form-specific alt text"
+                if name.startswith("Dynamax "):
+                    assert visual["dynamax"] and visual["glow"] != "none", (
+                        f"{width}px: {name} appears without its visible Dynamax treatment: {visual}"
+                    )
+                else:
+                    assert visual["gigantamax"], (
+                        f"{width}px: {name} is using an unverified/non-Gigantamax sprite: {visual}"
+                    )
+                    gigantamax_sources.add(visual["src"])
+                report["raid_form_art"][f"{date}:{name}"] = visual
         report["raid_days"][date] = list(names)
+
+    # The same species appears as ordinary Duraludon in the sourced 10 km
+    # hatch gallery; Gigantamax Duraludon must not reuse its ordinary icon.
+    ordinary_duraludon = egg_cards.filter(has_text="Duraludon").first.locator("img.art").first
+    assert ordinary_duraludon.count() == 1, f"{width}px: ordinary Duraludon egg art missing"
+    ordinary_src = ordinary_duraludon.get_attribute("src")
+    assert len(gigantamax_sources) == 1 and ordinary_src not in gigantamax_sources, (
+        f"{width}px: Gigantamax Duraludon uses normal sprite or varies by raid day"
+    )
     assert "Reshiram" not in page.locator('[data-raid-date="2026-11-14"]').inner_text()
     assert "White Kyurem" not in page.locator('[data-raid-date="2026-11-15"]').inner_text()
 
