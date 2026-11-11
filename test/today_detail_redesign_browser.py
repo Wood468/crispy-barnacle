@@ -50,7 +50,7 @@ with sync_playwright() as p:
         if shortcut.is_visible():
             assert shortcut.bounding_box()['height'] >= 43.5, 'Visible poster action must be thumb-sized'
             shortcut.click()
-            page.wait_for_selector('#goinfo:not([hidden]) [role="dialog"]')
+            page.wait_for_selector('#goinfo[role="dialog"]:not([hidden])')
             page.keyboard.press('Escape')
             assert page.locator('#evd').is_visible(), 'Closing an infographic returns to Event Details'
         assert page.locator('#evd .ue-mon').count() > 0
