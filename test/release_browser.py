@@ -97,8 +97,17 @@ with sync_playwright() as pw:
                 }""")
                 assert pass_id, 'GO Pass stage information missing from the published catalogue'
                 page.evaluate('(id) => GODETAIL.open(id)', pass_id)
-                page.wait_for_selector('#evd .ue-pass', timeout=15000)
-                assert page.locator('#evd .ue-pass-rank').count() > 0, 'GO Pass rank timeline did not render'
+                # One-panel Event Details opens Overview first. A hidden pass
+                # is correctly mounted, but the real user must select GO Pass.
+                pass_tab = page.locator('#evd .evd-nav-link[data-sec="passes"]')
+                pass_tab.wait_for(state='visible', timeout=15000)
+                pass_tab.click()
+                pass_panel = page.locator('#evd-s-passes')
+                pass_panel.wait_for(state='visible', timeout=15000)
+                assert pass_tab.get_attribute('aria-selected') == 'true', 'GO Pass tab not selected'
+                page.wait_for_selector('#evd-s-passes .ue-pass', timeout=15000)
+                assert pass_panel.locator('.ue-pass-rank').count() > 0, 'GO Pass rank timeline did not render'
+                assert page.locator('#evd .evd-sec:not([hidden])').count() == 1, 'GO Pass leaked into other sections'
                 assert page.locator('#evd').evaluate('(el) => el.scrollWidth <= el.clientWidth'), 'GO Pass overflows'
                 page.keyboard.press('Escape')
                 page.locator('#evd').wait_for(state='hidden', timeout=15000)
