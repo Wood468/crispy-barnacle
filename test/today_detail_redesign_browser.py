@@ -121,6 +121,22 @@ with sync_playwright() as p:
             assert active() == sec
 
         only_panel('overview')
+        # A legacy in-sheet anchor can lead into an initially hidden panel.
+        # It must activate the owning tab rather than focus an invisible node
+        # or mutate the URL fragment (which can close the modal on popstate).
+        assert page.locator('#evd-sources').count() == 1
+        page.evaluate("""() => {
+            const nav=document.createElement('nav');
+            nav.className='evd-jump';
+            nav.innerHTML='<a href="#evd-sources">Sources</a>';
+            document.querySelector('#evd-s-overview').append(nav);
+        }""")
+        hash_before = page.evaluate('location.hash')
+        page.locator('#evd .evd-jump a[href="#evd-sources"]').click()
+        only_panel('details')
+        assert page.locator('#evd-sources').is_visible()
+        assert page.evaluate('location.hash') == hash_before
+        tap('overview')
         tap('encounters')
         tap('research')
         assert not page.locator('#evd [data-sec="passes"].evd-sec').is_visible() if 'passes' in sections else True
