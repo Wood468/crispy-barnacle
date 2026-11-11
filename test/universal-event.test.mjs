@@ -236,15 +236,36 @@ test('GO Pass timeline: free and Deluxe lanes, rank gaps, categories, fallbacks,
   {text:'Rank 8: Free: Modern Tee | Deluxe: Max Potion ×5'}]);
  const html=UI.render(event({passes:result.passes}),{rewardArt:i=>i.name==='Dynamax Rookidee'?'<img alt="" src="/rookidee.png">':'',passMeta:{updated:'2026-11-07T20:33:39Z',sources:[{name:'Leek Duck',url:'https://leekduck.com/events/x/'}]},safe:u=>u});
  assert.match(html,/ue-lane-free/);assert.match(html,/ue-lane-deluxe/);
- assert.match(html,/Ranks 5–7: no rewards listed by the source/);
+ assert.match(html,/Ranks 5–7: no reward entries published by the source/);
  assert.match(html,/data-cat="Box"/);assert.match(html,/data-cat="Candy"/);assert.match(html,/data-cat="Avatar item"/);
- assert.match(html,/src="\/ico\/xp\.webp"/);assert.match(html,/src="\/ico\/dust\.webp"/);assert.match(html,/\/ico\/i\/max-potion\.webp/);
- assert.match(html,/data-art="fallback"/);assert.match(html,/art unavailable/);
- assert.match(html,/No extra Deluxe reward/);
+ assert.match(html,/ue-reward-icon">XP<\/span>/);assert.match(html,/src="\/ico\/dust\.webp"/);assert.match(html,/\/ico\/i\/max-potion\.webp/);
+ assert.match(html,/data-art="category"/);assert.doesNotMatch(html,/art unavailable/);
+ assert.doesNotMatch(html,/No extra Deluxe reward/);
  assert.doesNotMatch(html,/\$|US\$/);
  assert.match(html,/Source: <a href="https:\/\/leekduck\.com\/events\/x\/"/);assert.match(html,/Data checked 2026-11-07/);
- assert.match(html,/Ranks 1 list no track reward/);
+ assert.match(html,/Ranks 1 have no track-reward entries published/);
 });
+
+test('GO Pass milestones show sourced encounters and premium rewards without expanding 600 ranks',()=>{
+ const stages=[
+  {rank:1,free:[{type:'item',name:'XP',quantity:1000}],deluxe:[]},
+  {rank:45,free:[{type:'encounter',name:'Dynamax Meltan',quantity:1}],deluxe:[]},
+  {rank:100,free:[{type:'item',name:'Rare Candy XL',quantity:2}],deluxe:[{type:'item',name:'Silver Bottle Cap',quantity:1}]},
+  {rank:600,free:[{type:'item',name:'XP',quantity:5000}],deluxe:[]}
+ ];
+ const html=UI.render(event({passes:[{title:'Synthetic 600-rank pass',stages}]}),{});
+ assert.match(html,/4 ranks with published entries · through Rank 600/);
+ assert.match(html,/Published milestones/);
+ assert.match(html,/data-milestone-rank="45"/);
+ assert.match(html,/data-milestone-rank="100"/);
+ assert.match(html,/Dynamax Meltan/);
+ assert.match(html,/Silver Bottle Cap/);
+ assert.match(html,/ue-reward-icon">XL<\/span>/);
+ assert.doesNotMatch(html,/<details class="ue-pass-range" open/);
+ assert.doesNotMatch(html,/No extra Deluxe reward|art unavailable|101 of 600/);
+ assert.match(html,/Source not listed/);
+});
+
 test('GO Pass with no stages says rewards are not published and unknown freshness is stated',()=>{
  const html=UI.render(event({passes:[{title:'Empty pass',stages:[]}]}),{});
  assert.match(html,/Rank rewards have not been published by the source yet/);assert.match(html,/Freshness unknown/);
