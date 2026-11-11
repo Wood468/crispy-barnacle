@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import { parseTiers, sane, pickRotation, mayReplace, applyLow, cleanName, sameLow, tell, SOURCE_URL } from "../scripts/low-raids.mjs";
+import { parseTiers, sane, pickRotation, mayReplace, coveredCuratedSpecialEvent, applyLow, cleanName, sameLow, tell, SOURCE_URL } from "../scripts/low-raids.mjs";
 
 const LISTS = `<h2>1-Star Raids</h2><ul><li>Axew</li><li>Goomy</li><li>Jangmo-o</li><li>Frigibax</li></ul>
 <h2>3-Star Raids</h2><ul><li>Alola Ninetales</li><li>Alola Raichu</li><li>Alola Muk</li></ul>
@@ -142,4 +142,40 @@ test("the failure note is only sent when Telegram is set up", async () => {
 test("a changed raid page fails the scheduled job instead of reporting stale data as successful", () => {
   const source = readFileSync("scripts/low-raids.mjs", "utf8");
   assert.match(source, /if \(!sane\(t\)\)[\s\S]*?process\.exitCode = 1; return;/);
+});
+
+
+test("special-event missing 1★ lineup is safe to skip only for matching existing official 3★ source data", () => {
+  const source = '<h2>Current Pokémon GO Raid Bosses</h2><h3>5-Star Raids</h3>'
+    + '<ul><li>Crowned Sword Zacian</li><li>Crowned Shield Zamazenta</li></ul>'
+    + '<h3>3-Star Raids</h3><ul><li>Druddigon</li><li>Orthworm</li></ul>'
+    + '<h2>Current Shadow Raid Bosses</h2>'
+    + '<h3>3-Star Shadow Raids</h3><ul><li>Shadow Piloswine</li></ul>';
+  const parsed = parseTiers(source);
+  assert.deepEqual(parsed.one, [], "the announcement does not list regular 1-star bosses");
+  assert.deepEqual(parsed.three, ["Druddigon", "Orthworm"]);
+  assert.equal(sane(parsed), false, "an ordinary uncatalogued update still needs a complete source");
+  const data = JSON.parse(readFileSync("public/data.json", "utf8"));
+  const observed = Date.parse("2026-11-11T12:00:00Z");
+  const match = coveredCuratedSpecialEvent(data.rotation, parsed, observed);
+  assert.ok(match, "the current, uniquely matched rotation must be recognized");
+  assert.match(match.five, /Crowned Sword Zacian and Crowned Shield Zamazenta/);
+  assert.equal(match.low.source, "Official Into the Wild announcement");
+  assert.deepEqual(match.low.three, parsed.three);
+  assert.equal(match.low.one, undefined, "do not fabricate a regular 1-star roster");
+
+  assert.equal(coveredCuratedSpecialEvent(data.rotation, {...parsed, three:["Orthworm"]}, observed), null,
+    "partial or changed three-star roster must be reviewed instead of masked");
+  assert.equal(coveredCuratedSpecialEvent(data.rotation, {...parsed, five:["Mewtwo"]}, observed), null,
+    "unrelated five-star listing must not silence a parser failure");
+  assert.equal(coveredCuratedSpecialEvent(data.rotation, {...parsed, three:[]}, observed), null,
+    "a broken or missing three-star block is not acceptable");
+  assert.equal(coveredCuratedSpecialEvent(data.rotation, {...parsed, one:["Axew"]}, observed), null,
+    "when the page publishes one-star bosses, the normal parser must validate them");
+  const ambiguous = [match, {...match,s:"2026-11-10T10:00",e:"2026-11-13T20:00"}];
+  assert.equal(coveredCuratedSpecialEvent(ambiguous,parsed,observed), null,
+    "ambiguous overlapping matching rotations must not be accepted");
+  const editable = [{...match,low:{source:"Pokémon GO Hub current raids",three:["Druddigon","Orthworm"]}}];
+  assert.equal(coveredCuratedSpecialEvent(editable,parsed,observed), null,
+    "only independently curated official records can use this no-op");
 });

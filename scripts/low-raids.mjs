@@ -74,6 +74,17 @@ export function pickRotation(rotation, five, nowMs = Date.now()) {
 
 // The same low block that is already there, or one we may replace (empty, or written by this job).
 export const mayReplace = r => !r.low || String(r.low.source || "").startsWith(SOURCE);
+// A limited event may publish only 3★/5★ encounters. If the unique, current
+// rotation already has the *same* official 3★ roster and intentionally no 1★,
+// there is nothing trustworthy to overwrite. An incomplete/unrelated page
+// must still fail the normal parsing safety gate.
+export function coveredCuratedSpecialEvent(rotation, tiers, nowMs = Date.now()) {
+  if (!tiers || !Array.isArray(tiers.one) || tiers.one.length || !saneList(tiers.three, 1) || !saneList(tiers.five, 1, 4)) return null;
+  const r = pickRotation(rotation, tiers.five, nowMs);
+  if (!r || mayReplace(r) || !r.low || (r.low.one || []).length || !saneList(r.low.three, 1)) return null;
+  const same = (a, b) => a.length === b.length && a.every(n => b.some(m => norm(m) === norm(n)));
+  return same(r.low.three, tiers.three) ? r : null;
+}
 export const sameLow = (a, b) => !!a && JSON.stringify([a.one, a.three, a.shadowOne || [], a.shadowThree || [], a.sourceUrl || ""]) === JSON.stringify([b.one, b.three, b.shadowOne || [], b.shadowThree || [], b.sourceUrl || ""]);
 
 // Rewrites just the one rotation object in the file's text, keeping its other lines and the rest of the file exactly as they were.
@@ -110,8 +121,13 @@ async function main() {
   })();
   const t = parseTiers(html);
   console.log("Parsed:", JSON.stringify(t));
-  if (!sane(t)) { console.log("::warning::1-3 star raids: the page did not parse into sensible lists (" + JSON.stringify(t) + "). Nothing changed."); await tell("⚠️ The weekly 1–3★ raid job could not read Pokémon GO Hub's raid page (its layout may have changed). This week's 1–3★ and Shadow raid bosses were not updated.\n\nhttps://github.com/Wood468/crispy-barnacle/actions/workflows/low-raids.yml"); process.exitCode = 1; return; }
   const raw = await readFile(DATA, "utf8"), data = JSON.parse(raw);
+  const curated = coveredCuratedSpecialEvent(data.rotation, t);
+  if (curated) {
+    console.log("::notice::1-3 star raids: " + curated.five + " has an existing official 3★ roster that matches the page, and no published regular 1★ lineup. Preserved the source-backed record without inventing bosses.");
+    return;
+  }
+  if (!sane(t)) { console.log("::warning::1-3 star raids: the page did not parse into sensible lists (" + JSON.stringify(t) + "). Nothing changed."); await tell("⚠️ The weekly 1–3★ raid job could not read Pokémon GO Hub's raid page (its layout may have changed). This week's 1–3★ and Shadow raid bosses were not updated.\n\nhttps://github.com/Wood468/crispy-barnacle/actions/workflows/low-raids.yml"); process.exitCode = 1; return; }
   const r = pickRotation(data.rotation, t.five);
   if (!r) { console.log("::notice::1-3 star raids: the page's 5-star boss (" + t.five.join(", ") + ") matches no current or upcoming rotation. Nothing changed."); return; }
   if (!mayReplace(r)) { console.log("::notice::1-3 star raids: the " + r.five + " rotation already has hand-entered data from " + r.low.source + ". Left alone."); return; }
