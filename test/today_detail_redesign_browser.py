@@ -44,6 +44,15 @@ with sync_playwright() as p:
         page.locator('#today-v1 .t1-place').first.locator('xpath=ancestor::article//button[@data-open]').click()
         page.wait_for_selector('#evd .ue-hero')
         assert 'Sendai' in page.locator('#evd-t').inner_text()
+        shortcut = page.locator('#evd .evd-infographic-shortcut')
+        assert shortcut.count() == 1, 'Event Details has one poster shortcut slot'
+        assert shortcut.get_attribute('data-infographic'), 'The poster action is bound to an event'
+        if shortcut.is_visible():
+            assert shortcut.bounding_box()['height'] >= 43.5, 'Visible poster action must be thumb-sized'
+            shortcut.click()
+            page.wait_for_selector('#goinfo:not([hidden]) [role="dialog"]')
+            page.keyboard.press('Escape')
+            assert page.locator('#evd').is_visible(), 'Closing an infographic returns to Event Details'
         assert page.locator('#evd .ue-mon').count() > 0
         assert page.locator('#evd .ue-gallery').count() > 0
         assert page.locator('#evd .own,#evd [data-follow],#evd [data-mark],#evd .ue-mon-controls').count() == 0
