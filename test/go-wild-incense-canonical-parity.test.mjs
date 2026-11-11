@@ -63,4 +63,46 @@ test("GO Wild Incense access and Unown forms survive source → canonical model 
   assert.equal((html.match(/ue-incense-corner/g) || []).length, 4);
   assert.doesNotMatch(html, /data-follow|data-track|ue-mon-controls/,
     "Today/Event Details must not gain Pokémon Follow/Track controls");
+
+  // The single grouped artwork tile conveys ALL of its source-backed
+  // methods; flat duplicates are suppressed only after preserving this.
+  const dayHtml = rotator.render(entry, { model, art: () => '<img class="art" alt="">' });
+  assert.equal((dayHtml.match(/class="uer-mighty-mark"/g) || []).length,20,
+    "both dated wild Mighty lineups and the two shared Mighty legends keep !!!");
+  assert.equal((dayHtml.match(/class="uer-incense-corner"/g) || []).length,12,
+    "10 Free Mighty Incense plus 2 ticket legends retain their corner method icon");
+  assert.equal((dayHtml.match(/data-incense="true"/g) || []).length,12);
+  assert.match(dayHtml, /aria-label="Latias, Mighty Pok[eé]mon, Incense encounter, ticket-only"/);
+  assert.match(dayHtml, /aria-label="Alolan Exeggutor, Mighty Pok[eé]mon, Incense encounter, available to all Trainers"/);
+  assert.match(dayHtml, /aria-label="Walrein, Mighty Pok[eé]mon, Wild encounter"/);
+  assert.doesNotMatch(dayHtml, /aria-label="Walrein[^"]*Incense/,
+    "a wild-only Mighty individual must not inherit Incense from its neighbours");
+});
+
+test("future mixed wild/Incense Mighty lists annotate only exact sourced method/identity, not the event title", () => {
+  const entry = read("event-encounter-rotations.json").entries[0];
+  const mixed = { ...entry,
+    habitats:[],
+    mightyShared:[],
+    mightyDays:[{...entry.mightyDays[0],pokemon:["Sample A","Sample B"]}] };
+  const model = {
+    pokemon:[{key:"a:base:none",name:"Sample A"},{key:"b:base:none",name:"Sample B"}],
+    encounters:[
+      {identityKey:"a:base:none",method:"incense",activityId:"main",access:"free"},
+      {identityKey:"b:base:none",method:"wild",activityId:"main",access:"all"}
+    ]
+  };
+  const html = rotator.render(mixed,{model,art:()=>''});
+  assert.equal((html.match(/class="uer-incense-corner"/g)||[]).length,1);
+  assert.equal((html.match(/class="uer-mighty-mark"/g)||[]).length,2);
+  assert.match(html,/aria-label="Sample A, Mighty Pok[eé]mon, Incense encounter, available to all Trainers"/);
+  assert.match(html,/aria-label="Sample B, Mighty Pok[eé]mon, Wild encounter"/);
+  assert.doesNotMatch(html,/aria-label="Sample B[^"]*Incense/,
+    "method classification must never spread from one species to another");
+  const activityScoped={...model,encounters:[
+    {identityKey:"a:base:none",method:"incense",activityId:"separate-ticket-activity",access:"paid"}
+  ]};
+  const scoped=rotator.render(mixed,{model:activityScoped});
+  assert.doesNotMatch(scoped,/class="uer-incense-corner"/,
+    "an unrelated activity-specific Incense edge cannot relabel a wild Mighty day");
 });
