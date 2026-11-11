@@ -33,6 +33,9 @@ CROWNED = CASES[:2]
 # Wild roster; assert the publicly deployed art API directly without inventing
 # an event encounter. Form IDs are verified Pokémon IDs, not base Dex IDs.
 PRIMALS = (("Primal Kyogre", 10077, 382), ("Primal Groudon", 10078, 383))
+# PokeAPI's separate Mega Charizard varieties: X=10034 and Y=10035.
+# These must not render ordinary Charizard (6) or each other's artwork.
+MEGAS = (("Mega Charizard X", 10034, 6), ("Mega Charizard Y", 10035, 6))
 DYNAMAX = ("Dynamax Registeel", "Dynamax Regidrago",
            "Dynamax Latias", "Dynamax Latios")
 DISPLAY_NAMES = tuple(item[0] for item in CROWNED) + DYNAMAX
@@ -273,23 +276,24 @@ def main() -> int:
                     if not match:
                         errors.append(f"{name}: live bytes do not match exact PokeAPI form {pokemon_id}")
                     report["form_art"].append(row)
-                # Cover both normal and shiny *Primal* artwork. A successful
-                # ordinary Kyogre/Groudon image is not an acceptable stand-in.
-                for primal, form_id, species_id in PRIMALS:
+                # Compare deployed normal and Shiny PNGs byte-for-byte with
+                # exact PokeAPI varieties. Base Charizard cannot stand in for
+                # either Mega X/Y; the two Mega forms cannot alias one another.
+                for form_name, form_id, species_id in PRIMALS + MEGAS:
                     for shiny in (False, True):
                         variant = "shiny" if shiny else "regular"
-                        live_url = BASE + "/api/art?n=" + quote(primal, safe="") + ("&shiny=1" if shiny else "")
+                        live_url = BASE + "/api/art?n=" + quote(form_name, safe="") + ("&shiny=1" if shiny else "")
                         expected_url = UPSTREAM + ("shiny/" if shiny else "") + str(form_id) + ".png"
-                        live, live_body = get_image(request, live_url, errors, primal + " " + variant + " live")
-                        expected, expected_body = get_image(request, expected_url, errors, primal + " " + variant + " reference")
+                        live, live_body = get_image(request, live_url, errors, form_name + " " + variant + " live")
+                        expected, expected_body = get_image(request, expected_url, errors, form_name + " " + variant + " reference")
                         match = bool(live_body and expected_body and live_body == expected_body)
                         report["form_art"].append({
-                            "name": primal, "dex_id": species_id, "expected_form_id": form_id,
+                            "name": form_name, "dex_id": species_id, "expected_form_id": form_id,
                             "shiny": shiny, "live": live, "reference": expected,
                             "matches_exact_png": match,
                         })
                         if not match:
-                            errors.append(f"{primal} ({variant}): live bytes do not match exact PokeAPI form {form_id}")
+                            errors.append(f"{form_name} ({variant}): live bytes do not match exact PokeAPI form {form_id}")
                 # Every ticket Incense Unown letter is a distinct exact form;
                 # compare both normal and Shiny production bytes, never base 201.png.
                 for letter in ("D", "I", "L", "W"):
