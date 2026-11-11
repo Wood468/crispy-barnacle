@@ -97,8 +97,17 @@ with sync_playwright() as p:
         page.evaluate("GODETAIL.open('season:pass-into-wild-2026')")
         page.locator('#evd .evd-nav-link[data-sec="passes"]').click()
         page.wait_for_selector('#evd .ue-pass')
-        into_pass = page.locator('#evd').inner_text()
-        assert 'Dynamax Meltan' in into_pass and 'Silver Bottle Cap' in into_pass, into_pass[:500]
+        # The published rank 45 and rank 100 milestones live in collapsed
+        # ranges. Open the ranges as a user would, rather than counting hidden
+        # rewards in the whole Event Details document.
+        ranges = page.locator('#evd .ue-pass-range')
+        for rank in ('Rank 45', 'Rank 100'):
+            milestone = ranges.filter(has_text=rank).first
+            assert milestone.count() == 1, (width, rank, 'published milestone missing')
+            if not milestone.evaluate('(el) => el.open):
+                milestone.locator('summary').click()
+        into_pass = page.locator('#evd .evd-sec[data-sec="passes"]').inner_text()
+        assert 'Dynamax Meltan' in into_pass and 'Silver Bottle Cap' in into_pass, into_pass[:600]
         assert '17 Nov' in into_pass or '17 November' in into_pass, into_pass[:500]
         assert page.locator('#evd').evaluate('(el)=>el.scrollWidth<=el.clientWidth'), ('Into the Wild pass overflow', width)
         page.keyboard.press('Escape')
