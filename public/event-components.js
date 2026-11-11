@@ -121,7 +121,7 @@ function passGlyph(item,cat){
  if(cat==='Avatar item')return '👕';
  if(cat==='Box')return '▣';
  if(/stardust|star piece/i.test(item.name))return '✦';
- if(/pok[eé]coin/i.test(item.name))return '₽';
+ if(/pok[eé]coin/i.test(item.name))return '◎';
  if(/potion|revive/i.test(item.name))return '+';
  if(/ball/i.test(item.name))return '●';
  if(/berry|pinap|razz/i.test(item.name))return '◉';
