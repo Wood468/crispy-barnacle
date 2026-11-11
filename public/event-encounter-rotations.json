@@ -166,7 +166,70 @@
           ],
           "sourceUrl": "https://pokemongo.com/gowildarea/global"
         }
-      ]
+      ],
+      "mightyIncense": [
+        {
+          "identityKey": "103:alola:none",
+          "method": "incense",
+          "activityId": "main",
+          "access": "free"
+        },
+        {
+          "identityKey": "184:base:none",
+          "method": "incense",
+          "activityId": "main",
+          "access": "free"
+        },
+        {
+          "identityKey": "212:base:none",
+          "method": "incense",
+          "activityId": "main",
+          "access": "free"
+        },
+        {
+          "identityKey": "230:base:none",
+          "method": "incense",
+          "activityId": "main",
+          "access": "free"
+        },
+        {
+          "identityKey": "306:base:none",
+          "method": "incense",
+          "activityId": "main",
+          "access": "free"
+        },
+        {
+          "identityKey": "330:base:none",
+          "method": "incense",
+          "activityId": "main",
+          "access": "free"
+        },
+        {
+          "identityKey": "395:base:none",
+          "method": "incense",
+          "activityId": "main",
+          "access": "free"
+        },
+        {
+          "identityKey": "462:base:none",
+          "method": "incense",
+          "activityId": "main",
+          "access": "free"
+        },
+        {
+          "identityKey": "534:base:none",
+          "method": "incense",
+          "activityId": "main",
+          "access": "free"
+        },
+        {
+          "identityKey": "635:base:none",
+          "method": "incense",
+          "activityId": "main",
+          "access": "free"
+        }
+      ],
+      "mightyIncenseSource": "https://leekduck.com/pokemon-go-wild-area/incense/"
     }
   ]
 }

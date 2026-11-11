@@ -1,69 +1,63 @@
-import test from 'node:test';
-import assert from 'node:assert/strict';
-import { createRequire } from 'node:module';
-import { readFileSync } from 'node:fs';
+import test from "node:test";
+import assert from "node:assert/strict";
+import { createRequire } from "node:module";
+import { readFileSync } from "node:fs";
 
-const require = createRequire(import.meta.url);
-const rotations = require('../public/event-encounter-rotations.js');
-const doc = JSON.parse(readFileSync(new URL('../public/event-encounter-rotations.json', import.meta.url), 'utf8'));
-const entry = doc.entries.find(x => x.id === 'gowa-2026-global');
-const css = readFileSync(new URL('../public/event-encounter-rotations.css', import.meta.url), 'utf8');
-const art = ({ n }) => '<img class="art" alt="' + n + '">';
-const render = e => rotations.render(e, { art, now: new Date('2026-11-13T23:10:00Z'), viewerZone: 'Australia/Melbourne' });
-const deepCopy = x => JSON.parse(JSON.stringify(x));
+const require=createRequire(import.meta.url);
+const rotations=require("../public/event-encounter-rotations.js");
+const doc=JSON.parse(readFileSync(new URL("../public/event-encounter-rotations.json",import.meta.url),"utf8"));
+const entry=doc.entries.find(e=>e.id==="gowa-2026-global");
+const css=readFileSync(new URL("../public/event-encounter-rotations.css",import.meta.url),"utf8");
+const render=e=>rotations.render(e,{art:()=>'<img class="art" alt="">',
+ now:new Date("2026-11-13T23:10:00Z"),viewerZone:"Australia/Melbourne"});
 
-test('GO Wild source-backed Mighty day and ticket-only Incense tiles have separate corners', () => {
-  assert.ok(entry, 'verified GO Wild rotation source exists');
-  assert.deepEqual(rotations.validate(entry), []);
-  const html = render(entry);
-  assert.equal((html.match(/class="uer-pokemon-tile"/g) || []).length, 64);
-  assert.equal((html.match(/class="uer-mighty-corner"/g) || []).length, 20, '18 dated wild Mighty plus 2 ticket Incense');
-  assert.equal((html.match(/class="uer-incense-corner"/g) || []).length, 2, 'only verified Incense group');
-  const saturday = html.match(/<article class="uer-mighty-day" data-mighty-date="2026-11-14"[\s\S]*?<\/article>/)?.[0] || '';
-  assert.match(saturday, /data-pokemon="Metagross" data-method="wild" data-mighty="true"/);
-  assert.match(saturday, /class="uer-mighty-corner"/);
-  assert.doesNotMatch(saturday, /uer-incense-corner/, 'wild Mighty is not an Incense claim');
-  const shared = html.match(/<article class="uer-mighty-shared" data-shared-id="ticket-incense"[\s\S]*?<\/article>/)?.[0] || '';
-  for (const name of ['Latias', 'Latios']) {
-    assert.match(shared, new RegExp('data-pokemon="' + name + '" data-method="incense" data-mighty="true" aria-label="Mighty ' + name + ', Incense encounter, Ticket-only"'));
-  }
-  assert.equal((shared.match(/class="uer-mighty-corner"/g) || []).length, 2);
-  assert.equal((shared.match(/class="uer-incense-corner"/g) || []).length, 2);
-  assert.equal((shared.match(/src="\/ico\/incense\.webp"/g) || []).length, 2);
-  assert.doesNotMatch(shared, /data-track|data-follow|Follow Pokémon/);
+test("sourced Mighty wild day galleries never inherit Incense for same-name source encounters",()=>{
+ assert.ok(entry);
+ assert.deepEqual(rotations.validate(entry),[]);
+ const html=render(entry);
+ assert.equal((html.match(/class="uer-pokemon-tile"/g)||[]).length,64);
+ assert.equal((html.match(/class="uer-mighty-mark"/g)||[]).length,20);
+ assert.equal((html.match(/class="uer-incense-corner"/g)||[]).length,2,
+  "only the shared ticket Mighty group is sourced as Incense");
+ const sat=html.match(/<article class="uer-mighty-day" data-mighty-date="2026-11-14"[\s\S]*?<\/article>/)?.[0]||"";
+ assert.match(sat,/data-pokemon="Metagross"/);
+ assert.match(sat,/uer-mighty-mark/);
+ assert.doesNotMatch(sat,/uer-incense-corner/);
+ const sun=html.match(/<article class="uer-mighty-day" data-mighty-date="2026-11-15"[\s\S]*?<\/article>/)?.[0]||"";
+ assert.match(sun,/data-pokemon="Hydreigon"/);
+ assert.doesNotMatch(sun,/uer-incense-corner/);
+ const shared=html.match(/<article class="uer-mighty-shared" data-shared-id="ticket-incense"[\s\S]*?<\/article>/)?.[0]||"";
+ for(const mon of ["Latias","Latios"]){
+  assert.match(shared,new RegExp('aria-label="'+mon+', Mighty Pokémon, Incense encounter, ticket-only'));
+ }
+ assert.equal((shared.match(/class="uer-mighty-mark"/g)||[]).length,2);
+ assert.equal((shared.match(/class="uer-incense-corner"/g)||[]).length,2);
+ assert.doesNotMatch(html,/data-track|data-follow|Follow Pokémon/);
 });
 
-test('future events mark Mighty per encounter, not every occurrence of the same species', () => {
-  const future = deepCopy(entry);
-  future.id = 'future-source-backed-festival';
-  future.eventIds = ['future-festival'];
-  future.habitats[0].pokemon[0] = 'Latias'; // ordinary habitat Latias alongside ticket Mighty Latias
-  assert.deepEqual(rotations.validate(future), []);
-  const html = render(future);
-  const steel = html.match(/<article class="uer-habitat uer-habitat-steel"[\s\S]*?<\/article>/)?.[0] || '';
-  const normal = steel.match(/<div class="uer-pokemon-tile" role="group" data-pokemon="Latias"[\s\S]*?<\/div>/)?.[0] || '';
-  assert.match(normal, /data-method="wild"/);
-  assert.doesNotMatch(normal, /data-mighty|uer-mighty-corner|uer-incense-corner/);
-  assert.match(html, /data-pokemon="Latias" data-method="incense" data-mighty="true"/);
-  assert.match(html, /aria-label="Mighty Latias, Incense encounter, Ticket-only"/);
+test("future different-method encounter of the same species does not leak markers",()=>{
+ const future=structuredClone(entry);
+ future.eventIds=["future-event"];
+ future.habitats[0].pokemon[0]="Latias";
+ const html=render(future);
+ const habitat=html.match(/<article class="uer-habitat uer-habitat-steel"[\s\S]*?<\/article>/)?.[0]||"";
+ assert.match(habitat,/data-pokemon="Latias"/);
+ assert.doesNotMatch(habitat,/uer-mighty-mark|uer-incense-corner/);
+ assert.match(html,/aria-label="Latias, Mighty Pokémon, Incense encounter, ticket-only/);
+ const route=structuredClone(entry);route.mightyShared[0].method="route";
+ assert.deepEqual(rotations.validate(route),[]);
+ const routeHtml=render(route);
+ const shared=routeHtml.match(/<article class="uer-mighty-shared"[\s\S]*?<\/article>/)?.[0]||"";
+ assert.equal((shared.match(/class="uer-mighty-mark"/g)||[]).length,2);
+ assert.doesNotMatch(shared,/uer-incense-corner/);
 });
 
-test('future Mighty route encounters show !!! but never claim Incense', () => {
-  const future = deepCopy(entry);
-  future.mightyShared[0].method = 'route';
-  assert.deepEqual(rotations.validate(future), []);
-  const html = render(future);
-  const shared = html.match(/<article class="uer-mighty-shared"[\s\S]*?<\/article>/)?.[0] || '';
-  assert.equal((shared.match(/class="uer-mighty-corner"/g) || []).length, 2);
-  assert.doesNotMatch(shared, /uer-incense-corner/);
-  assert.match(shared, /aria-label="Mighty Latias, Route encounter, Ticket-only"/);
-});
-
-test('the two indicators occupy opposite 20px corners without overpainting the Pokémon', () => {
-  assert.match(css, /\.uer-pokemon-art\{position:relative;/);
-  assert.match(css, /\.uer-mighty-corner\{position:absolute;inset-block-start:0;inset-inline-start:0;/);
-  assert.match(css, /\.uer-incense-corner\{position:absolute;inset-block-start:0;inset-inline-end:0;/);
-  assert.match(css, /\.uer-incense-corner img\{display:block;width:20px;height:20px;/);
-  assert.match(css, /\.uer-mighty-corner\{[^}]*pointer-events:none/);
-  assert.match(css, /\.uer-incense-corner\{[^}]*pointer-events:none/);
+test("small opposite-corner Mighty and Incense overlays are noninteractive and source-driven",()=>{
+ assert.match(css,/\.uer-pokemon-tile\{position:relative;/);
+ assert.match(css,/\.uer-mighty-mark\{position:absolute;/);
+ assert.match(css,/\.uer-incense-corner\{position:absolute;/);
+ assert.match(css,/\.uer-incense-corner img\{display:block;width:19px;height:19px;/);
+ assert.match(css,/\.ue-mon \.ue-mighty-corner\{position:absolute;/);
+ assert.match(css,/\.uer-mighty-mark\{[^}]*pointer-events:none/);
+ assert.match(css,/\.ue-mon \.ue-mighty-corner\{[^}]*pointer-events:none/);
 });

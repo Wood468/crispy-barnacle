@@ -132,7 +132,7 @@ test('unknown or conflicting schedule cannot produce a seemingly verified displa
   assert.ok(Rot.validate(noSource).some(s=>/Source URLs/.test(s)));
 });
 
-test('legacy flat wild and misclassified Incense display items are hidden, not mutated', () => {
+test('flat wild and unknown-access duplicate edges are hidden, while distinct Incense methods remain unmodified', () => {
   const model={
     pokemon:[
       {key:'steel',name:'Magnemite'},
@@ -152,9 +152,9 @@ test('legacy flat wild and misclassified Incense display items are hidden, not m
   };
   model.groups={wild:[model.encounters[0],model.encounters[1]],incense:model.encounters.slice(2,5),raid:[model.encounters[5]]};
   const out=Rot.withoutDuplicateFlatEncounters(model,fixture);
-  assert.equal(out.encounters.length,2);
+  assert.equal(out.encounters.length,3);
   assert.equal(out.groups.wild.length,0);
-  assert.equal(out.groups.incense.length,1);
+  assert.equal(out.groups.incense.length,2);
   assert.equal(out.groups.raid.length,1);
   assert.equal(model.encounters.length,6,'canonical source data untouched');
   assert.equal(model.groups.incense.length,3,'Collection/source identity untouched');
