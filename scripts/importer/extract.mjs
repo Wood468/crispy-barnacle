@@ -118,7 +118,7 @@ export function extractFields(html, options={}) {
   const lines = Array.isArray(html) ? html : htmlToLines(html);
   const out = Object.fromEntries(FIELDS.map(f => [f, []])); out.researchTasks = [];
   const add = (f, s) => { s = trim(s); if (keep(s) && !out[f].includes(s) && out[f].filter(x => /^rank \d+/i.test(x) === /^rank \d+/i.test(s)).length < (/^rank \d+/i.test(s) ? 110 : 14)) out[f].push(s); };
-  let cur = null, rank = 0, headSeen = "", deluxe = false, taken = 0, researchKind = "research";
+  let cur = null, rank = 0, headSeen = "", deluxe = false, taken = 0, researchKind = "research", researchTable = false;
   for (const l of lines) {
     // "Tier 2 – Rank 25" style labels: remember the rank so the bonus lines under it say which rank unlocks them.
     const rm = RANKLABEL.exec(l.text);
@@ -150,21 +150,33 @@ export function extractFields(html, options={}) {
     if (l.t === "li" && rank && cur === "bonuses") {
       if (++taken > 6 || /https?:|last update|categories|editor in chief/i.test(l.text)) { rank = 0; continue; } add("bonuses", `Rank ${rank}${deluxe ? " Deluxe" : ""}: ${l.text}`); continue; }
     if (l.t === "h") {
-      rank = 0; deluxe = false; headSeen = l.text;
+      rank = 0; deluxe = false; headSeen = l.text; researchTable = false;
       const hit = HEAD.find(([, re]) => re.test(l.text));
       cur = hit ? hit[0] : null;
       researchKind = /field\s+research/i.test(l.text) ? "field" : /timed\s+research/i.test(l.text) ? "timed" : /special\s+research/i.test(l.text) ? "special" : "research";
       if (/\bdebut\b/i.test(l.text) && !/shiny/i.test(l.text)) add("featured", l.text);
       continue;
     }
+    // Only explicit table rows imply multiple identical claimable tasks.
+    // Repeated prose outside a task/reward table is often publisher duplication.
+    if (/^task\s*\|\s*(?:possible\s+)?rewards?$/i.test(l.text)) researchTable = true;
     if (cur) add(cur, l.text);
     // Explicit task + reward rows can appear beneath event, raid or general
     // headings. Parse only self-contained rows with a recognizable task verb
     // and reward, never infer a reward from surrounding descriptive prose.
     const task = parseResearchTask(l.text, cur === "research" ? researchKind : "research", declaredNames);
     if (task) {
+      // A published task/reward TABLE may list the *same* task five times in
+      // one stage (Minior Showers). An identical row still means another
+      // individual task; deduplication here silently drops real rewards.
+      // Assign an occurrence index so cross-source merging can coalesce the
+      // Nth occurrence instead of multiplying it or losing it.
       const key = JSON.stringify([task.category, task.task.toLowerCase(), task.rewards]);
-      if (!out.researchTasks.some(x => JSON.stringify([x.category, x.task.toLowerCase(), x.rewards]) === key)) out.researchTasks.push(task);
+      const count = out.researchTasks.filter(x =>
+        JSON.stringify([x.category, x.task.toLowerCase(), x.rewards]) === key).length;
+      // Bound malformed source tables rather than allowing unbounded repeats.
+      if (count === 0 || (researchTable && /\s\|\s/.test(l.text) && count < 20))
+        out.researchTasks.push({ ...task, occurrence: count + 1 });
       add("research", l.text);
     }
     for (const [f, re] of LINE) if (re.test(l.text) && f !== cur) add(f, l.text);
