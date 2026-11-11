@@ -5928,7 +5928,7 @@
     },
     "imageReviewed": true,
     "contentHash": "9c1e84fa3e57a9dc254240da56abb3e0fe3ea75b86697d72cfd7a5408efad52a",
-    "revision": 50,
+    "revision": 52,
     "amended": true,
     "native": false,
     "collection": "events"
@@ -23891,8 +23891,8 @@
      "end": "2026-11-08"
     },
     "imageReviewed": true,
-    "contentHash": "cf063f260b9ab8efa7310cdba07e1adb18058d76ba4ed474a3d6aa633ca5278b",
-    "revision": 12,
+    "contentHash": "a8d62d8f90ba2d7dadf0850bbea0eb268620fa204cdadc15735c4ac42af08998",
+    "revision": 13,
     "amended": false,
     "native": false,
     "collection": "worldEvents"
@@ -24582,6 +24582,84 @@
      "debut": null,
      "boostedShiny": null,
      "collectionName": "Azumarill"
+    },
+    {
+     "key": "201:c:none",
+     "speciesId": "201",
+     "formId": "c",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Unown C",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Unown C"
+    },
+    {
+     "key": "201:e:none",
+     "speciesId": "201",
+     "formId": "e",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Unown E",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Unown E"
+    },
+    {
+     "key": "201:i:none",
+     "speciesId": "201",
+     "formId": "i",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Unown I",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Unown I"
+    },
+    {
+     "key": "201:m:none",
+     "speciesId": "201",
+     "formId": "m",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Unown M",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Unown M"
+    },
+    {
+     "key": "201:o:none",
+     "speciesId": "201",
+     "formId": "o",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Unown O",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Unown O"
+    },
+    {
+     "key": "201:x:none",
+     "speciesId": "201",
+     "formId": "x",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Unown X",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Unown X"
     },
     {
      "key": "207:base:none",
@@ -25484,7 +25562,55 @@
      "identityKey": "184:base:none",
      "method": "incense",
      "activityId": "main",
+     "access": "paid"
+    },
+    {
+     "identityKey": "184:base:none",
+     "method": "incense",
+     "activityId": "main",
      "access": "unknown"
+    },
+    {
+     "identityKey": "201:c:none",
+     "method": "incense",
+     "activityId": "main",
+     "access": "paid"
+    },
+    {
+     "identityKey": "201:e:none",
+     "method": "incense",
+     "activityId": "main",
+     "access": "paid"
+    },
+    {
+     "identityKey": "201:i:none",
+     "method": "incense",
+     "activityId": "main",
+     "access": "paid"
+    },
+    {
+     "identityKey": "201:m:none",
+     "method": "incense",
+     "activityId": "main",
+     "access": "paid"
+    },
+    {
+     "identityKey": "201:o:none",
+     "method": "incense",
+     "activityId": "main",
+     "access": "paid"
+    },
+    {
+     "identityKey": "201:x:none",
+     "method": "incense",
+     "activityId": "main",
+     "access": "paid"
+    },
+    {
+     "identityKey": "212:base:none",
+     "method": "incense",
+     "activityId": "main",
+     "access": "paid"
     },
     {
      "identityKey": "212:base:none",
@@ -25496,7 +25622,19 @@
      "identityKey": "230:base:none",
      "method": "incense",
      "activityId": "main",
+     "access": "paid"
+    },
+    {
+     "identityKey": "230:base:none",
+     "method": "incense",
+     "activityId": "main",
      "access": "unknown"
+    },
+    {
+     "identityKey": "306:base:none",
+     "method": "incense",
+     "activityId": "main",
+     "access": "paid"
     },
     {
      "identityKey": "306:base:none",
@@ -25508,7 +25646,19 @@
      "identityKey": "330:base:none",
      "method": "incense",
      "activityId": "main",
+     "access": "paid"
+    },
+    {
+     "identityKey": "330:base:none",
+     "method": "incense",
+     "activityId": "main",
      "access": "unknown"
+    },
+    {
+     "identityKey": "380:base:none",
+     "method": "incense",
+     "activityId": "main",
+     "access": "paid"
     },
     {
      "identityKey": "380:base:none",
@@ -25520,7 +25670,19 @@
      "identityKey": "381:base:none",
      "method": "incense",
      "activityId": "main",
+     "access": "paid"
+    },
+    {
+     "identityKey": "381:base:none",
+     "method": "incense",
+     "activityId": "main",
      "access": "unknown"
+    },
+    {
+     "identityKey": "395:base:none",
+     "method": "incense",
+     "activityId": "main",
+     "access": "paid"
     },
     {
      "identityKey": "395:base:none",
@@ -25532,7 +25694,19 @@
      "identityKey": "411:base:none",
      "method": "incense",
      "activityId": "main",
+     "access": "paid"
+    },
+    {
+     "identityKey": "411:base:none",
+     "method": "incense",
+     "activityId": "main",
      "access": "unknown"
+    },
+    {
+     "identityKey": "534:base:none",
+     "method": "incense",
+     "activityId": "main",
+     "access": "paid"
     },
     {
      "identityKey": "534:base:none",
@@ -25544,13 +25718,31 @@
      "identityKey": "635:base:none",
      "method": "incense",
      "activityId": "main",
+     "access": "paid"
+    },
+    {
+     "identityKey": "635:base:none",
+     "method": "incense",
+     "activityId": "main",
      "access": "unknown"
     },
     {
      "identityKey": "701:base:none",
      "method": "incense",
      "activityId": "main",
+     "access": "paid"
+    },
+    {
+     "identityKey": "701:base:none",
+     "method": "incense",
+     "activityId": "main",
      "access": "unknown"
+    },
+    {
+     "identityKey": "784:base:none",
+     "method": "incense",
+     "activityId": "main",
+     "access": "paid"
     },
     {
      "identityKey": "784:base:none",
@@ -25915,7 +26107,55 @@
       "identityKey": "184:base:none",
       "method": "incense",
       "activityId": "main",
+      "access": "paid"
+     },
+     {
+      "identityKey": "184:base:none",
+      "method": "incense",
+      "activityId": "main",
       "access": "unknown"
+     },
+     {
+      "identityKey": "201:c:none",
+      "method": "incense",
+      "activityId": "main",
+      "access": "paid"
+     },
+     {
+      "identityKey": "201:e:none",
+      "method": "incense",
+      "activityId": "main",
+      "access": "paid"
+     },
+     {
+      "identityKey": "201:i:none",
+      "method": "incense",
+      "activityId": "main",
+      "access": "paid"
+     },
+     {
+      "identityKey": "201:m:none",
+      "method": "incense",
+      "activityId": "main",
+      "access": "paid"
+     },
+     {
+      "identityKey": "201:o:none",
+      "method": "incense",
+      "activityId": "main",
+      "access": "paid"
+     },
+     {
+      "identityKey": "201:x:none",
+      "method": "incense",
+      "activityId": "main",
+      "access": "paid"
+     },
+     {
+      "identityKey": "212:base:none",
+      "method": "incense",
+      "activityId": "main",
+      "access": "paid"
      },
      {
       "identityKey": "212:base:none",
@@ -25927,7 +26167,19 @@
       "identityKey": "230:base:none",
       "method": "incense",
       "activityId": "main",
+      "access": "paid"
+     },
+     {
+      "identityKey": "230:base:none",
+      "method": "incense",
+      "activityId": "main",
       "access": "unknown"
+     },
+     {
+      "identityKey": "306:base:none",
+      "method": "incense",
+      "activityId": "main",
+      "access": "paid"
      },
      {
       "identityKey": "306:base:none",
@@ -25939,7 +26191,19 @@
       "identityKey": "330:base:none",
       "method": "incense",
       "activityId": "main",
+      "access": "paid"
+     },
+     {
+      "identityKey": "330:base:none",
+      "method": "incense",
+      "activityId": "main",
       "access": "unknown"
+     },
+     {
+      "identityKey": "380:base:none",
+      "method": "incense",
+      "activityId": "main",
+      "access": "paid"
      },
      {
       "identityKey": "380:base:none",
@@ -25951,7 +26215,19 @@
       "identityKey": "381:base:none",
       "method": "incense",
       "activityId": "main",
+      "access": "paid"
+     },
+     {
+      "identityKey": "381:base:none",
+      "method": "incense",
+      "activityId": "main",
       "access": "unknown"
+     },
+     {
+      "identityKey": "395:base:none",
+      "method": "incense",
+      "activityId": "main",
+      "access": "paid"
      },
      {
       "identityKey": "395:base:none",
@@ -25963,7 +26239,19 @@
       "identityKey": "411:base:none",
       "method": "incense",
       "activityId": "main",
+      "access": "paid"
+     },
+     {
+      "identityKey": "411:base:none",
+      "method": "incense",
+      "activityId": "main",
       "access": "unknown"
+     },
+     {
+      "identityKey": "534:base:none",
+      "method": "incense",
+      "activityId": "main",
+      "access": "paid"
      },
      {
       "identityKey": "534:base:none",
@@ -25975,13 +26263,31 @@
       "identityKey": "635:base:none",
       "method": "incense",
       "activityId": "main",
+      "access": "paid"
+     },
+     {
+      "identityKey": "635:base:none",
+      "method": "incense",
+      "activityId": "main",
       "access": "unknown"
      },
      {
       "identityKey": "701:base:none",
       "method": "incense",
       "activityId": "main",
+      "access": "paid"
+     },
+     {
+      "identityKey": "701:base:none",
+      "method": "incense",
+      "activityId": "main",
       "access": "unknown"
+     },
+     {
+      "identityKey": "784:base:none",
+      "method": "incense",
+      "activityId": "main",
+      "access": "paid"
      },
      {
       "identityKey": "784:base:none",
@@ -26595,8 +26901,8 @@
      "end": ""
     },
     "imageReviewed": true,
-    "contentHash": "244e1a218c776c7de71a786fe7a96bc90d5ca2212bc0e2a5060da28a5e71b680",
-    "revision": 65,
+    "contentHash": "5ef2469d0bea8fc2039b70990141252fa3192ca3c7909b2b4a02b856cb222a87",
+    "revision": 67,
     "amended": true,
     "native": false,
     "collection": "source-details"
@@ -26710,6 +27016,45 @@
      "debut": null,
      "boostedShiny": null,
      "collectionName": "Murkrow"
+    },
+    {
+     "key": "201:n:none",
+     "speciesId": "201",
+     "formId": "n",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Unown N",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Unown N"
+    },
+    {
+     "key": "201:o:none",
+     "speciesId": "201",
+     "formId": "o",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Unown O",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Unown O"
+    },
+    {
+     "key": "201:p:none",
+     "speciesId": "201",
+     "formId": "p",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Unown P",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Unown P"
     },
     {
      "key": "228:base:none",
@@ -26906,6 +27251,24 @@
      "access": "unknown"
     },
     {
+     "identityKey": "201:n:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "201:o:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
+     "identityKey": "201:p:none",
+     "method": "wild",
+     "activityId": "main",
+     "access": "unknown"
+    },
+    {
      "identityKey": "228:base:none",
      "method": "wild",
      "activityId": "main",
@@ -27002,6 +27365,24 @@
      },
      {
       "identityKey": "198:base:none",
+      "method": "wild",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "201:n:none",
+      "method": "wild",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "201:o:none",
+      "method": "wild",
+      "activityId": "main",
+      "access": "unknown"
+     },
+     {
+      "identityKey": "201:p:none",
       "method": "wild",
       "activityId": "main",
       "access": "unknown"
@@ -34431,6 +34812,77 @@
      "name": "Pokémon GO (official)",
      "trust": "official",
      "url": "https://pokemongo.com/news/gowildarea-2026-timed-research/"
+    }
+   ],
+   "pokemon": [],
+   "encounters": [],
+   "groups": {}
+  },
+  {
+   "schemaVersion": 1,
+   "eventId": "official:gowildarea-global-2026-osaka-gameplay-update",
+   "aliases": [],
+   "family": "wild-area",
+   "title": "Notice Regarding Gameplay in Osaka During Pokémon GO Wild Area: Global",
+   "dateText": "",
+   "completeness": "partial",
+   "lifecycle": "reference",
+   "attendance": "",
+   "location": null,
+   "image": "https://lh3.googleusercontent.com/bup0wWISTZ3O0vrWPQWqhldwW4KfZ5NK5ryVAi4WH9QbIhTbOruURsTgNo1YkmRqIHNjE8y_1rwotBus0gXX6_F--7Aww_qvO-Aw-yTgw9M",
+   "notes": [],
+   "internalValidation": {
+    "warnings": [],
+    "lifecycleDeclared": true,
+    "conflicts": [],
+    "fields": {
+     "bonuses": [],
+     "featured": [],
+     "raids": [],
+     "eggs": [],
+     "research": [],
+     "shiny": [],
+     "moves": [],
+     "costumes": [],
+     "tickets": [],
+     "dates": [
+      {
+       "text": "Another mobile game will be hosting an in-person event in the Namba area of Osaka on November 14–15, coinciding with Pokémon GO Wild Area: Global.",
+       "sources": [
+        "official"
+       ],
+       "status": "official"
+      }
+     ],
+     "researchTasks": []
+    },
+    "info": [],
+    "detailRefs": [
+     "official:gowildarea-global-2026-osaka-gameplay-update"
+    ],
+    "legacyDates": {
+     "start": "",
+     "end": ""
+    },
+    "imageReviewed": true,
+    "contentHash": "54b5f0f5697679c7b80f0fa05808b4341d96044871b53c958b3cb23938ab49d9",
+    "revision": 1,
+    "amended": false,
+    "native": false,
+    "collection": "source-details"
+   },
+   "schedule": null,
+   "activities": [],
+   "bonuses": [],
+   "research": [],
+   "passes": [],
+   "tickets": [],
+   "sources": [
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "trust": "official",
+     "url": "https://pokemongo.com/news/gowildarea-global-2026-osaka-gameplay-update/"
     }
    ],
    "pokemon": [],
@@ -51092,8 +51544,8 @@
      "end": "2026-11-08"
     },
     "imageReviewed": true,
-    "contentHash": "3b0d5b03dbf10999a288a1889dd4b95e4fe7be35024bc45271d1643f6ec90200",
-    "revision": 14,
+    "contentHash": "e38b858fc2017ab1a2805e9d16be52932ec0b11511166b62bbf148ef3967535b",
+    "revision": 15,
     "amended": false,
     "native": false,
     "collection": "events"
@@ -51883,6 +52335,84 @@
      "debut": null,
      "boostedShiny": null,
      "collectionName": "Azumarill"
+    },
+    {
+     "key": "201:a:none",
+     "speciesId": "201",
+     "formId": "a",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Unown A",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Unown A"
+    },
+    {
+     "key": "201:d:none",
+     "speciesId": "201",
+     "formId": "d",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Unown D",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Unown D"
+    },
+    {
+     "key": "201:e:none",
+     "speciesId": "201",
+     "formId": "e",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Unown E",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Unown E"
+    },
+    {
+     "key": "201:i:none",
+     "speciesId": "201",
+     "formId": "i",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Unown I",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Unown I"
+    },
+    {
+     "key": "201:n:none",
+     "speciesId": "201",
+     "formId": "n",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Unown N",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Unown N"
+    },
+    {
+     "key": "201:s:none",
+     "speciesId": "201",
+     "formId": "s",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Unown S",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Unown S"
     },
     {
      "key": "207:base:none",
@@ -52798,13 +53328,67 @@
      "identityKey": "131:base:none",
      "method": "incense",
      "activityId": "main",
+     "access": "paid"
+    },
+    {
+     "identityKey": "131:base:none",
+     "method": "incense",
+     "activityId": "main",
      "access": "unknown"
     },
     {
      "identityKey": "184:base:none",
      "method": "incense",
      "activityId": "main",
+     "access": "paid"
+    },
+    {
+     "identityKey": "184:base:none",
+     "method": "incense",
+     "activityId": "main",
      "access": "unknown"
+    },
+    {
+     "identityKey": "201:a:none",
+     "method": "incense",
+     "activityId": "main",
+     "access": "paid"
+    },
+    {
+     "identityKey": "201:d:none",
+     "method": "incense",
+     "activityId": "main",
+     "access": "paid"
+    },
+    {
+     "identityKey": "201:e:none",
+     "method": "incense",
+     "activityId": "main",
+     "access": "paid"
+    },
+    {
+     "identityKey": "201:i:none",
+     "method": "incense",
+     "activityId": "main",
+     "access": "paid"
+    },
+    {
+     "identityKey": "201:n:none",
+     "method": "incense",
+     "activityId": "main",
+     "access": "paid"
+    },
+    {
+     "identityKey": "201:s:none",
+     "method": "incense",
+     "activityId": "main",
+     "access": "paid"
+    },
+    {
+     "identityKey": "212:base:none",
+     "method": "incense",
+     "activityId": "main",
+     "access": "paid"
     },
     {
      "identityKey": "212:base:none",
@@ -52816,7 +53400,19 @@
      "identityKey": "230:base:none",
      "method": "incense",
      "activityId": "main",
+     "access": "paid"
+    },
+    {
+     "identityKey": "230:base:none",
+     "method": "incense",
+     "activityId": "main",
      "access": "unknown"
+    },
+    {
+     "identityKey": "306:base:none",
+     "method": "incense",
+     "activityId": "main",
+     "access": "paid"
     },
     {
      "identityKey": "306:base:none",
@@ -52828,7 +53424,19 @@
      "identityKey": "330:base:none",
      "method": "incense",
      "activityId": "main",
+     "access": "paid"
+    },
+    {
+     "identityKey": "330:base:none",
+     "method": "incense",
+     "activityId": "main",
      "access": "unknown"
+    },
+    {
+     "identityKey": "380:base:none",
+     "method": "incense",
+     "activityId": "main",
+     "access": "paid"
     },
     {
      "identityKey": "380:base:none",
@@ -52840,7 +53448,19 @@
      "identityKey": "381:base:none",
      "method": "incense",
      "activityId": "main",
+     "access": "paid"
+    },
+    {
+     "identityKey": "381:base:none",
+     "method": "incense",
+     "activityId": "main",
      "access": "unknown"
+    },
+    {
+     "identityKey": "395:base:none",
+     "method": "incense",
+     "activityId": "main",
+     "access": "paid"
     },
     {
      "identityKey": "395:base:none",
@@ -52852,7 +53472,19 @@
      "identityKey": "411:base:none",
      "method": "incense",
      "activityId": "main",
+     "access": "paid"
+    },
+    {
+     "identityKey": "411:base:none",
+     "method": "incense",
+     "activityId": "main",
      "access": "unknown"
+    },
+    {
+     "identityKey": "534:base:none",
+     "method": "incense",
+     "activityId": "main",
+     "access": "paid"
     },
     {
      "identityKey": "534:base:none",
@@ -52864,7 +53496,19 @@
      "identityKey": "635:base:none",
      "method": "incense",
      "activityId": "main",
+     "access": "paid"
+    },
+    {
+     "identityKey": "635:base:none",
+     "method": "incense",
+     "activityId": "main",
      "access": "unknown"
+    },
+    {
+     "identityKey": "784:base:none",
+     "method": "incense",
+     "activityId": "main",
+     "access": "paid"
     },
     {
      "identityKey": "784:base:none",
@@ -53259,13 +53903,67 @@
       "identityKey": "131:base:none",
       "method": "incense",
       "activityId": "main",
+      "access": "paid"
+     },
+     {
+      "identityKey": "131:base:none",
+      "method": "incense",
+      "activityId": "main",
       "access": "unknown"
      },
      {
       "identityKey": "184:base:none",
       "method": "incense",
       "activityId": "main",
+      "access": "paid"
+     },
+     {
+      "identityKey": "184:base:none",
+      "method": "incense",
+      "activityId": "main",
       "access": "unknown"
+     },
+     {
+      "identityKey": "201:a:none",
+      "method": "incense",
+      "activityId": "main",
+      "access": "paid"
+     },
+     {
+      "identityKey": "201:d:none",
+      "method": "incense",
+      "activityId": "main",
+      "access": "paid"
+     },
+     {
+      "identityKey": "201:e:none",
+      "method": "incense",
+      "activityId": "main",
+      "access": "paid"
+     },
+     {
+      "identityKey": "201:i:none",
+      "method": "incense",
+      "activityId": "main",
+      "access": "paid"
+     },
+     {
+      "identityKey": "201:n:none",
+      "method": "incense",
+      "activityId": "main",
+      "access": "paid"
+     },
+     {
+      "identityKey": "201:s:none",
+      "method": "incense",
+      "activityId": "main",
+      "access": "paid"
+     },
+     {
+      "identityKey": "212:base:none",
+      "method": "incense",
+      "activityId": "main",
+      "access": "paid"
      },
      {
       "identityKey": "212:base:none",
@@ -53277,7 +53975,19 @@
       "identityKey": "230:base:none",
       "method": "incense",
       "activityId": "main",
+      "access": "paid"
+     },
+     {
+      "identityKey": "230:base:none",
+      "method": "incense",
+      "activityId": "main",
       "access": "unknown"
+     },
+     {
+      "identityKey": "306:base:none",
+      "method": "incense",
+      "activityId": "main",
+      "access": "paid"
      },
      {
       "identityKey": "306:base:none",
@@ -53289,7 +53999,19 @@
       "identityKey": "330:base:none",
       "method": "incense",
       "activityId": "main",
+      "access": "paid"
+     },
+     {
+      "identityKey": "330:base:none",
+      "method": "incense",
+      "activityId": "main",
       "access": "unknown"
+     },
+     {
+      "identityKey": "380:base:none",
+      "method": "incense",
+      "activityId": "main",
+      "access": "paid"
      },
      {
       "identityKey": "380:base:none",
@@ -53301,7 +54023,19 @@
       "identityKey": "381:base:none",
       "method": "incense",
       "activityId": "main",
+      "access": "paid"
+     },
+     {
+      "identityKey": "381:base:none",
+      "method": "incense",
+      "activityId": "main",
       "access": "unknown"
+     },
+     {
+      "identityKey": "395:base:none",
+      "method": "incense",
+      "activityId": "main",
+      "access": "paid"
      },
      {
       "identityKey": "395:base:none",
@@ -53313,7 +54047,19 @@
       "identityKey": "411:base:none",
       "method": "incense",
       "activityId": "main",
+      "access": "paid"
+     },
+     {
+      "identityKey": "411:base:none",
+      "method": "incense",
+      "activityId": "main",
       "access": "unknown"
+     },
+     {
+      "identityKey": "534:base:none",
+      "method": "incense",
+      "activityId": "main",
+      "access": "paid"
      },
      {
       "identityKey": "534:base:none",
@@ -53325,7 +54071,19 @@
       "identityKey": "635:base:none",
       "method": "incense",
       "activityId": "main",
+      "access": "paid"
+     },
+     {
+      "identityKey": "635:base:none",
+      "method": "incense",
+      "activityId": "main",
       "access": "unknown"
+     },
+     {
+      "identityKey": "784:base:none",
+      "method": "incense",
+      "activityId": "main",
+      "access": "paid"
      },
      {
       "identityKey": "784:base:none",
@@ -57823,7 +58581,7 @@
     },
     "imageReviewed": true,
     "contentHash": "dce45278d164ec7d0efdbec4d901eac6f95e08bdec7b64c64c440d1336263583",
-    "revision": 42,
+    "revision": 44,
     "amended": true,
     "native": false,
     "collection": "world-events"
@@ -59020,7 +59778,7 @@
     },
     "imageReviewed": true,
     "contentHash": "4bbe2871a823eb21458a110b1a90a61e5fce0d1ddaa2d47d0d0671f282a84a9d",
-    "revision": 50,
+    "revision": 52,
     "amended": true,
     "native": false,
     "collection": "world-events"
@@ -59961,6 +60719,71 @@
     },
     {
      "url": "https://pokemongo.com/ko/news/go-wild-area-stamp-rally-details-2026/",
+     "name": "Event source"
+    },
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "url": "https://pokemongo.com/ja/news/go-wild-area-stamp-rally-details-2026/"
+    },
+    {
+     "url": "https://pokemongo.com/ja/news/go-wild-area-stamp-rally-details-2026/",
+     "name": "Event source"
+    }
+   ],
+   "pokemon": [],
+   "encounters": [],
+   "groups": {}
+  },
+  {
+   "schemaVersion": 1,
+   "eventId": "w-gowildarea-global-osaka-gameplay-update",
+   "aliases": [],
+   "family": "other",
+   "title": "Gowildarea Global Osaka Gameplay Update",
+   "dateText": "",
+   "completeness": "partial",
+   "lifecycle": "announced",
+   "attendance": "in-person",
+   "location": "Osaka, Japan",
+   "image": "https://lh3.googleusercontent.com/bup0wWISTZ3O0vrWPQWqhldwW4KfZ5NK5ryVAi4WH9QbIhTbOruURsTgNo1YkmRqIHNjE8y_1rwotBus0gXX6_F--7Aww_qvO-Aw-yTgw9M",
+   "notes": [],
+   "internalValidation": {
+    "warnings": [],
+    "lifecycleDeclared": false,
+    "conflicts": [],
+    "fields": {},
+    "info": [],
+    "detailRefs": [],
+    "legacyDates": {
+     "start": "2026-11-14",
+     "end": "2026-11-14"
+    },
+    "contentHash": "821380ce8d17f40ae7b19606ba688cf8d67fdba9e78006c39b8dfce9d6cb25e3",
+    "revision": 1,
+    "amended": false,
+    "native": false,
+    "collection": "world-events"
+   },
+   "schedule": null,
+   "activities": [],
+   "bonuses": [],
+   "research": [],
+   "passes": [],
+   "tickets": [],
+   "sources": [
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "url": "https://pokemongo.com/ja/news/gowildarea-global-2026-osaka-gameplay-update/"
+    },
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "url": "https://pokemongo.com/news/gowildarea-global-2026-osaka-gameplay-update/"
+    },
+    {
+     "url": "https://pokemongo.com/ja/news/gowildarea-global-2026-osaka-gameplay-update/",
      "name": "Event source"
     }
    ],
@@ -66328,7 +67151,7 @@
      "end": "2027-04-11"
     },
     "contentHash": "84950064738e11a798ef98f9fd6ab913640b138fb1594e38612f64db09c4dd24",
-    "revision": 42,
+    "revision": 44,
     "amended": true,
     "native": false,
     "collection": "world-events"
@@ -68080,8 +68903,8 @@
      "end": "2026-11-15T18:00"
     },
     "imageReviewed": true,
-    "contentHash": "31e966418057bca88945bfbb0a9042f4533986237b5e41dd9a7de24bea669daf",
-    "revision": 16,
+    "contentHash": "535458d548842aa33a7aaf93f32e6a967731dad3b5e6ddbf8027da4dce19d1af",
+    "revision": 17,
     "amended": false,
     "native": false,
     "collection": "events"
@@ -68313,6 +69136,58 @@
      "debut": null,
      "boostedShiny": null,
      "collectionName": "Azumarill"
+    },
+    {
+     "key": "201:d:none",
+     "speciesId": "201",
+     "formId": "d",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Unown D",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Unown D"
+    },
+    {
+     "key": "201:i:none",
+     "speciesId": "201",
+     "formId": "i",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Unown I",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Unown I"
+    },
+    {
+     "key": "201:l:none",
+     "speciesId": "201",
+     "formId": "l",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Unown L",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Unown L"
+    },
+    {
+     "key": "201:w:none",
+     "speciesId": "201",
+     "formId": "w",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Unown W",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Unown W"
     },
     {
      "key": "207:base:none",
@@ -69359,13 +70234,55 @@
      "identityKey": "103:alola:none",
      "method": "incense",
      "activityId": "main",
+     "access": "free"
+    },
+    {
+     "identityKey": "103:alola:none",
+     "method": "incense",
+     "activityId": "main",
      "access": "unknown"
     },
     {
      "identityKey": "184:base:none",
      "method": "incense",
      "activityId": "main",
+     "access": "free"
+    },
+    {
+     "identityKey": "184:base:none",
+     "method": "incense",
+     "activityId": "main",
      "access": "unknown"
+    },
+    {
+     "identityKey": "201:d:none",
+     "method": "incense",
+     "activityId": "main",
+     "access": "paid"
+    },
+    {
+     "identityKey": "201:i:none",
+     "method": "incense",
+     "activityId": "main",
+     "access": "paid"
+    },
+    {
+     "identityKey": "201:l:none",
+     "method": "incense",
+     "activityId": "main",
+     "access": "paid"
+    },
+    {
+     "identityKey": "201:w:none",
+     "method": "incense",
+     "activityId": "main",
+     "access": "paid"
+    },
+    {
+     "identityKey": "212:base:none",
+     "method": "incense",
+     "activityId": "main",
+     "access": "free"
     },
     {
      "identityKey": "212:base:none",
@@ -69377,7 +70294,19 @@
      "identityKey": "230:base:none",
      "method": "incense",
      "activityId": "main",
+     "access": "free"
+    },
+    {
+     "identityKey": "230:base:none",
+     "method": "incense",
+     "activityId": "main",
      "access": "unknown"
+    },
+    {
+     "identityKey": "306:base:none",
+     "method": "incense",
+     "activityId": "main",
+     "access": "free"
     },
     {
      "identityKey": "306:base:none",
@@ -69389,7 +70318,19 @@
      "identityKey": "330:base:none",
      "method": "incense",
      "activityId": "main",
+     "access": "free"
+    },
+    {
+     "identityKey": "330:base:none",
+     "method": "incense",
+     "activityId": "main",
      "access": "unknown"
+    },
+    {
+     "identityKey": "380:base:none",
+     "method": "incense",
+     "activityId": "main",
+     "access": "paid"
     },
     {
      "identityKey": "380:base:none",
@@ -69401,7 +70342,19 @@
      "identityKey": "381:base:none",
      "method": "incense",
      "activityId": "main",
+     "access": "paid"
+    },
+    {
+     "identityKey": "381:base:none",
+     "method": "incense",
+     "activityId": "main",
      "access": "unknown"
+    },
+    {
+     "identityKey": "395:base:none",
+     "method": "incense",
+     "activityId": "main",
+     "access": "free"
     },
     {
      "identityKey": "395:base:none",
@@ -69413,13 +70366,31 @@
      "identityKey": "462:base:none",
      "method": "incense",
      "activityId": "main",
+     "access": "free"
+    },
+    {
+     "identityKey": "462:base:none",
+     "method": "incense",
+     "activityId": "main",
      "access": "unknown"
     },
     {
      "identityKey": "534:base:none",
      "method": "incense",
      "activityId": "main",
+     "access": "free"
+    },
+    {
+     "identityKey": "534:base:none",
+     "method": "incense",
+     "activityId": "main",
      "access": "unknown"
+    },
+    {
+     "identityKey": "635:base:none",
+     "method": "incense",
+     "activityId": "main",
+     "access": "free"
     },
     {
      "identityKey": "635:base:none",
@@ -69868,13 +70839,55 @@
       "identityKey": "103:alola:none",
       "method": "incense",
       "activityId": "main",
+      "access": "free"
+     },
+     {
+      "identityKey": "103:alola:none",
+      "method": "incense",
+      "activityId": "main",
       "access": "unknown"
      },
      {
       "identityKey": "184:base:none",
       "method": "incense",
       "activityId": "main",
+      "access": "free"
+     },
+     {
+      "identityKey": "184:base:none",
+      "method": "incense",
+      "activityId": "main",
       "access": "unknown"
+     },
+     {
+      "identityKey": "201:d:none",
+      "method": "incense",
+      "activityId": "main",
+      "access": "paid"
+     },
+     {
+      "identityKey": "201:i:none",
+      "method": "incense",
+      "activityId": "main",
+      "access": "paid"
+     },
+     {
+      "identityKey": "201:l:none",
+      "method": "incense",
+      "activityId": "main",
+      "access": "paid"
+     },
+     {
+      "identityKey": "201:w:none",
+      "method": "incense",
+      "activityId": "main",
+      "access": "paid"
+     },
+     {
+      "identityKey": "212:base:none",
+      "method": "incense",
+      "activityId": "main",
+      "access": "free"
      },
      {
       "identityKey": "212:base:none",
@@ -69886,7 +70899,19 @@
       "identityKey": "230:base:none",
       "method": "incense",
       "activityId": "main",
+      "access": "free"
+     },
+     {
+      "identityKey": "230:base:none",
+      "method": "incense",
+      "activityId": "main",
       "access": "unknown"
+     },
+     {
+      "identityKey": "306:base:none",
+      "method": "incense",
+      "activityId": "main",
+      "access": "free"
      },
      {
       "identityKey": "306:base:none",
@@ -69898,7 +70923,19 @@
       "identityKey": "330:base:none",
       "method": "incense",
       "activityId": "main",
+      "access": "free"
+     },
+     {
+      "identityKey": "330:base:none",
+      "method": "incense",
+      "activityId": "main",
       "access": "unknown"
+     },
+     {
+      "identityKey": "380:base:none",
+      "method": "incense",
+      "activityId": "main",
+      "access": "paid"
      },
      {
       "identityKey": "380:base:none",
@@ -69910,7 +70947,19 @@
       "identityKey": "381:base:none",
       "method": "incense",
       "activityId": "main",
+      "access": "paid"
+     },
+     {
+      "identityKey": "381:base:none",
+      "method": "incense",
+      "activityId": "main",
       "access": "unknown"
+     },
+     {
+      "identityKey": "395:base:none",
+      "method": "incense",
+      "activityId": "main",
+      "access": "free"
      },
      {
       "identityKey": "395:base:none",
@@ -69922,13 +70971,31 @@
       "identityKey": "462:base:none",
       "method": "incense",
       "activityId": "main",
+      "access": "free"
+     },
+     {
+      "identityKey": "462:base:none",
+      "method": "incense",
+      "activityId": "main",
       "access": "unknown"
      },
      {
       "identityKey": "534:base:none",
       "method": "incense",
       "activityId": "main",
+      "access": "free"
+     },
+     {
+      "identityKey": "534:base:none",
+      "method": "incense",
+      "activityId": "main",
       "access": "unknown"
+     },
+     {
+      "identityKey": "635:base:none",
+      "method": "incense",
+      "activityId": "main",
+      "access": "free"
      },
      {
       "identityKey": "635:base:none",
@@ -70936,8 +72003,8 @@
      "end": "2026-11-15"
     },
     "imageReviewed": true,
-    "contentHash": "1aff4df80f6d0be7fc22992c550a19f6d7150b92cf461bdc0590e8c359464f8f",
-    "revision": 18,
+    "contentHash": "b88ff6f5d93567e807eff8c62123cfcaee2f8c7284431535ba8d273dbe7c4094",
+    "revision": 19,
     "amended": false,
     "native": false,
     "collection": "worldEvents"
@@ -71164,6 +72231,58 @@
      "debut": null,
      "boostedShiny": null,
      "collectionName": "Azumarill"
+    },
+    {
+     "key": "201:d:none",
+     "speciesId": "201",
+     "formId": "d",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Unown D",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Unown D"
+    },
+    {
+     "key": "201:i:none",
+     "speciesId": "201",
+     "formId": "i",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Unown I",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Unown I"
+    },
+    {
+     "key": "201:l:none",
+     "speciesId": "201",
+     "formId": "l",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Unown L",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Unown L"
+    },
+    {
+     "key": "201:w:none",
+     "speciesId": "201",
+     "formId": "w",
+     "costumeId": null,
+     "shiny": "unknown",
+     "assetKey": null,
+     "name": "Unown W",
+     "label": null,
+     "debut": null,
+     "boostedShiny": null,
+     "collectionName": "Unown W"
     },
     {
      "key": "207:base:none",
@@ -71962,13 +73081,55 @@
      "identityKey": "103:alola:none",
      "method": "incense",
      "activityId": "main",
+     "access": "free"
+    },
+    {
+     "identityKey": "103:alola:none",
+     "method": "incense",
+     "activityId": "main",
      "access": "unknown"
     },
     {
      "identityKey": "184:base:none",
      "method": "incense",
      "activityId": "main",
+     "access": "free"
+    },
+    {
+     "identityKey": "184:base:none",
+     "method": "incense",
+     "activityId": "main",
      "access": "unknown"
+    },
+    {
+     "identityKey": "201:d:none",
+     "method": "incense",
+     "activityId": "main",
+     "access": "paid"
+    },
+    {
+     "identityKey": "201:i:none",
+     "method": "incense",
+     "activityId": "main",
+     "access": "paid"
+    },
+    {
+     "identityKey": "201:l:none",
+     "method": "incense",
+     "activityId": "main",
+     "access": "paid"
+    },
+    {
+     "identityKey": "201:w:none",
+     "method": "incense",
+     "activityId": "main",
+     "access": "paid"
+    },
+    {
+     "identityKey": "212:base:none",
+     "method": "incense",
+     "activityId": "main",
+     "access": "free"
     },
     {
      "identityKey": "212:base:none",
@@ -71980,7 +73141,19 @@
      "identityKey": "230:base:none",
      "method": "incense",
      "activityId": "main",
+     "access": "free"
+    },
+    {
+     "identityKey": "230:base:none",
+     "method": "incense",
+     "activityId": "main",
      "access": "unknown"
+    },
+    {
+     "identityKey": "306:base:none",
+     "method": "incense",
+     "activityId": "main",
+     "access": "free"
     },
     {
      "identityKey": "306:base:none",
@@ -71992,7 +73165,19 @@
      "identityKey": "330:base:none",
      "method": "incense",
      "activityId": "main",
+     "access": "free"
+    },
+    {
+     "identityKey": "330:base:none",
+     "method": "incense",
+     "activityId": "main",
      "access": "unknown"
+    },
+    {
+     "identityKey": "380:base:none",
+     "method": "incense",
+     "activityId": "main",
+     "access": "paid"
     },
     {
      "identityKey": "380:base:none",
@@ -72004,7 +73189,19 @@
      "identityKey": "381:base:none",
      "method": "incense",
      "activityId": "main",
+     "access": "paid"
+    },
+    {
+     "identityKey": "381:base:none",
+     "method": "incense",
+     "activityId": "main",
      "access": "unknown"
+    },
+    {
+     "identityKey": "395:base:none",
+     "method": "incense",
+     "activityId": "main",
+     "access": "free"
     },
     {
      "identityKey": "395:base:none",
@@ -72016,13 +73213,31 @@
      "identityKey": "462:base:none",
      "method": "incense",
      "activityId": "main",
+     "access": "free"
+    },
+    {
+     "identityKey": "462:base:none",
+     "method": "incense",
+     "activityId": "main",
      "access": "unknown"
     },
     {
      "identityKey": "534:base:none",
      "method": "incense",
      "activityId": "main",
+     "access": "free"
+    },
+    {
+     "identityKey": "534:base:none",
+     "method": "incense",
+     "activityId": "main",
      "access": "unknown"
+    },
+    {
+     "identityKey": "635:base:none",
+     "method": "incense",
+     "activityId": "main",
+     "access": "free"
     },
     {
      "identityKey": "635:base:none",
@@ -72351,13 +73566,55 @@
       "identityKey": "103:alola:none",
       "method": "incense",
       "activityId": "main",
+      "access": "free"
+     },
+     {
+      "identityKey": "103:alola:none",
+      "method": "incense",
+      "activityId": "main",
       "access": "unknown"
      },
      {
       "identityKey": "184:base:none",
       "method": "incense",
       "activityId": "main",
+      "access": "free"
+     },
+     {
+      "identityKey": "184:base:none",
+      "method": "incense",
+      "activityId": "main",
       "access": "unknown"
+     },
+     {
+      "identityKey": "201:d:none",
+      "method": "incense",
+      "activityId": "main",
+      "access": "paid"
+     },
+     {
+      "identityKey": "201:i:none",
+      "method": "incense",
+      "activityId": "main",
+      "access": "paid"
+     },
+     {
+      "identityKey": "201:l:none",
+      "method": "incense",
+      "activityId": "main",
+      "access": "paid"
+     },
+     {
+      "identityKey": "201:w:none",
+      "method": "incense",
+      "activityId": "main",
+      "access": "paid"
+     },
+     {
+      "identityKey": "212:base:none",
+      "method": "incense",
+      "activityId": "main",
+      "access": "free"
      },
      {
       "identityKey": "212:base:none",
@@ -72369,7 +73626,19 @@
       "identityKey": "230:base:none",
       "method": "incense",
       "activityId": "main",
+      "access": "free"
+     },
+     {
+      "identityKey": "230:base:none",
+      "method": "incense",
+      "activityId": "main",
       "access": "unknown"
+     },
+     {
+      "identityKey": "306:base:none",
+      "method": "incense",
+      "activityId": "main",
+      "access": "free"
      },
      {
       "identityKey": "306:base:none",
@@ -72381,7 +73650,19 @@
       "identityKey": "330:base:none",
       "method": "incense",
       "activityId": "main",
+      "access": "free"
+     },
+     {
+      "identityKey": "330:base:none",
+      "method": "incense",
+      "activityId": "main",
       "access": "unknown"
+     },
+     {
+      "identityKey": "380:base:none",
+      "method": "incense",
+      "activityId": "main",
+      "access": "paid"
      },
      {
       "identityKey": "380:base:none",
@@ -72393,7 +73674,19 @@
       "identityKey": "381:base:none",
       "method": "incense",
       "activityId": "main",
+      "access": "paid"
+     },
+     {
+      "identityKey": "381:base:none",
+      "method": "incense",
+      "activityId": "main",
       "access": "unknown"
+     },
+     {
+      "identityKey": "395:base:none",
+      "method": "incense",
+      "activityId": "main",
+      "access": "free"
      },
      {
       "identityKey": "395:base:none",
@@ -72405,13 +73698,31 @@
       "identityKey": "462:base:none",
       "method": "incense",
       "activityId": "main",
+      "access": "free"
+     },
+     {
+      "identityKey": "462:base:none",
+      "method": "incense",
+      "activityId": "main",
       "access": "unknown"
      },
      {
       "identityKey": "534:base:none",
       "method": "incense",
       "activityId": "main",
+      "access": "free"
+     },
+     {
+      "identityKey": "534:base:none",
+      "method": "incense",
+      "activityId": "main",
       "access": "unknown"
+     },
+     {
+      "identityKey": "635:base:none",
+      "method": "incense",
+      "activityId": "main",
+      "access": "free"
      },
      {
       "identityKey": "635:base:none",
@@ -73268,7 +74579,7 @@
   },
   {
    "collection": "world-events",
-   "records": 65
+   "records": 66
   },
   {
    "collection": "regional-events",
