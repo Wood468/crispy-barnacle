@@ -91,6 +91,7 @@ with sync_playwright() as p:
         # During GO Wild Area week, the separate event GO Pass must appear in
         # the generic season/pass Today strip and open the existing pass layout.
         page.wait_for_function("() => window.GOSEASON && GOSEASON.events().some(e=>e.id==='season:pass-into-wild-2026')")
+        assert page.evaluate("GOSEASON.events().find(e=>e.id==='season:pass-into-wild-2026').source") == 'Pokémon GO (official)'
         active_pass = page.locator('#seasonbar .ssn-card', has_text='GO Pass: Into the Wild')
         assert active_pass.count() == 1, 'current special GO Pass was omitted from Today'
         page.evaluate("GODETAIL.open('season:pass-into-wild-2026')")
