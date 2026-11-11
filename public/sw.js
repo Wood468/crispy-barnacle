@@ -1,12 +1,12 @@
 /* GO Field Notes offline shell. Never cache /api/*, including private user-state and notification responses. */
-const SHELL_CACHE = 'gofn-shell-v297';
+const SHELL_CACHE = 'gofn-shell-v298';
 const EVENT_BANNER_CACHE = 'gofn-event-banners-v1';
 const MAX_EVENT_BANNERS = 40;
 const SHELL_URLS = [
   '/', '/index.html', '/offline.html', '/offline.css',
   /* Versioned code and styles are listed once, exactly as index.html, app.js and dash.js request them. Any other ?v= (or unversioned) request is answered offline by the ignoreSearch fallback below. */
   '/timezone.js?v=20261108b', '/event-catalogue.js?v=20261107b', '/event-clock.js?v=20261108b', '/event-contract.js?v=20261107b', '/event-view.js?v=20261116a', '/event-adapter.js?v=20261117a', '/event-components.js?v=20261117g', '/event-encounter-rotations.js?v=20261111b', '/event-registry.js?v=20261115a', '/event-identity.js?v=20261107a', '/event-policy.js?v=20261107a', '/events-v1.json',
-  '/styles.css?v=20261112a', '/dash.css?v=20261112d', '/event-redesign.css?v=20261117g', '/event-encounter-rotations.css?v=20261111a', '/today.css?v=20261115a', '/ux-finish.css?v=20261116d', '/today.js?v=20261116a', '/today-logic.js?v=20261117a', '/event-art.js?v=20261116b', '/variant-art.js?v=20261111b', '/lib.js?v=20261116a', '/dedupe.js?v=20261101b', '/move.js?v=20261102a', '/imgerr.js?v=20261015a', '/whatsnew.js?v=20261102d', '/pin.js?v=20261101b', '/local-state.js?v=20261030a', '/app.js?v=20261117g', '/raid-share.js?v=20261102b', '/dash.js?v=20261117h', '/detail.js?v=20261117f', '/fresh.js?v=20261114a', '/places.js?v=20261103b', '/review.js?v=20261104b', '/nudge.js?v=20261102a', '/account.js?v=20261102a', '/regional-prices.js?v=20261110a', '/store.js?v=20261110b', '/season.js?v=20261107c', '/research.js?v=20261114b', '/weekly.js?v=20261115b', '/buy.js?v=20261103a', '/extra.js?v=20261102c', '/infographic.js?v=20261103b', '/pwa.js',
+  '/styles.css?v=20261112a', '/dash.css?v=20261112d', '/event-redesign.css?v=20261117g', '/event-encounter-rotations.css?v=20261111a', '/today.css?v=20261115a', '/ux-finish.css?v=20261116d', '/today.js?v=20261117b', '/today-logic.js?v=20261117a', '/event-art.js?v=20261116b', '/variant-art.js?v=20261111b', '/lib.js?v=20261116a', '/dedupe.js?v=20261101b', '/move.js?v=20261102a', '/imgerr.js?v=20261015a', '/whatsnew.js?v=20261102d', '/pin.js?v=20261101b', '/local-state.js?v=20261030a', '/app.js?v=20261117h', '/raid-share.js?v=20261102b', '/dash.js?v=20261117i', '/detail.js?v=20261117f', '/fresh.js?v=20261114a', '/places.js?v=20261103b', '/review.js?v=20261104b', '/nudge.js?v=20261102a', '/account.js?v=20261102a', '/regional-prices.js?v=20261110a', '/store.js?v=20261110b', '/season.js?v=20261107c', '/research.js?v=20261114b', '/weekly.js?v=20261115b', '/buy.js?v=20261103a', '/extra.js?v=20261102c', '/infographic.js?v=20261103b', '/pwa.js',
   '/manifest.webmanifest', '/icon.svg', '/icon-maskable.svg', '/icon-180.png', '/icon-192.png', '/icon-512.png',
   '/data.json', '/dex.json', '/event-info.json', '/forms.json', '/moves.json',
   '/places.json', '/event-details.json', '/event-encounter-rotations.json', '/event-moves.json', '/regional-events.json', '/world-events.json', '/best-by-type.json', '/prices.json', '/pvp.json', '/release-status.json', '/types.json',
@@ -45,7 +45,8 @@ const IMAGE_REFRESH_MS = 86400000;
 /* Offline only: a request may differ from the cached one just by its ?v= or ?t= (older page, other version), so match code, styles and JSON by path. Never used for pages or API calls. */
 const STATIC_PATH = /\.(?:js|css|json)$/;
 /* Code, styles and pages the shell cannot run without. A new worker whose install could not store every one of these must not activate: activation deletes the previous shell cache, which would leave a half-filled cache and a blank offline page. Data files (.json) and images are optional; they are cached again on first use. */
-const REQUIRED_SHELL = /^(?:\/|\/index\.html|\/offline\.html|\/[^?]+\.(?:js|css))(?:\?.*)?$/;
+/* /data.json is necessary to boot Today, Schedule and Collection offline: do not activate a new worker that failed to store it. Other JSON remains best-effort. */
+const REQUIRED_SHELL = /^(?:\/|\/index\.html|\/offline\.html|\/data\.json|\/[^?]+\.(?:js|css))(?:\?.*)?$/;
 self.addEventListener('install', function (event) {
   event.waitUntil((async function () {
     const cache = await caches.open(SHELL_CACHE);
