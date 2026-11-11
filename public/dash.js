@@ -1205,6 +1205,28 @@
       var txt = Array.isArray(cp) ? cp[0].toLocaleString('en-AU') + '–' + cp[1].toLocaleString('en-AU') : cp.toLocaleString('en-AU');
       return '<span class="rc-cp" title="' + esc(label) + '">CP ' + esc(txt) + '</span>';
     }
+
+    /* A verified source CP pair takes precedence; when the source has no CP,
+       reuse our existing Game Master 15/15/15 calculation. Never fabricate a
+       boosted value, change the catch form or claim an actual weather boost. */
+    function raidCatchValues(cp,boss) {
+      var p=hundoPair({kind:'raid'}, {name:boss});
+      var good=function(n){return Number.isSafeInteger(n)&&n>=10&&n<=10000;};
+      if(Array.isArray(cp)&&cp.length===2&&good(cp[0])&&good(cp[1])&&cp[1]>=cp[0])
+        return {normal:cp[0],boosted:cp[1],source:'published'};
+      if(good(cp))return {normal:cp,boosted:p&&p.n===cp?p.b:null,source:'published'};
+      return p?{normal:p.n,boosted:p.b,source:'game-master'}:null;
+    }
+    function raidTierCorner(tier) {
+      var label=String(tier||'').trim();
+      if(!/^(?:[1-9]★|Mega|Primal|Elite|Shadow(?: [1-9]★)?)$/.test(label))return '';
+      var readable=label.replace(/([1-9])★/g,'$1 star');
+      return '<span class="rc-tier rc-tier-corner" aria-label="'+esc(readable+' raid tier')+'"><img src="/ico/g/raid.webp" alt="" loading="lazy" decoding="async" width="12" height="12">'+esc(label)+'</span>';
+    }
+    function raidCatchChips(cp,boss) {
+      var p=raidCatchValues(cp,boss);if(!p)return '';
+      return '<span class="rc-iv-catch" role="text" aria-label="'+esc('100% IV raid catch CP '+p.normal+(p.boosted?', weather boosted '+p.boosted:''))+'"><span class="rc-cp rc-perfect" title="Perfect 15/15/15 raid catch at Level 20"><small>100% IV</small> '+p.normal.toLocaleString('en-AU')+'</span>'+(p.boosted?'<span class="rc-cp rc-weather" title="Possible weather-boosted perfect 15/15/15 raid catch at Level 25"><small>Weather</small> '+p.boosted.toLocaleString('en-AU')+'</span>':'')+'</span>';
+    }
     function eventLink(name) {
       var model = name && window.GOEventRegistry && GOEventRegistry.events().filter(function (m) { return m && m.title && GOLIB.norm(m.title) === GOLIB.norm(name); })[0];
       var ev = model && GOEventRegistry.display(model);
@@ -1259,8 +1281,8 @@
         var shareWindow = shareValue && !/,\s*to\s/i.test(String(shareValue)) ? { start: r.s || '', end: r.e || '' } : { start: '', end: '' };
         var share = '<button type="button" class="rc-info rc-share" data-raid-share data-raid-boss="' + esc(n) + '" data-raid-kind="' + esc(label) + '" data-raid-start="' + esc(shareWindow.start) + '" data-raid-end="' + esc(shareWindow.end) + '" aria-label="Share ' + esc(n) + ' ' + esc(label) + ' raid details">↗ Share</button>';
         var cpv = r.cp && r.cp[n], shinyOk = Array.isArray(r.shiny) && r.shiny.indexOf(n) >= 0;
-        var chips = cpChip(cpv, 'Level 20, weather boosted at level 25') + (shinyOk ? '<span class="rc-chip rc-shiny">✦ Shiny available</span>' : '');
-        return '<div class="rc" data-boss="' + esc(n) + '"' + (label === '5★' || label === 'Mega' ? ' data-guide="' + esc(n) + '"' : '') + '><div class="rc-form">' + art(n, 'ea') + '<div class="rc-txt"><span class="rl"><i class="rc-tier">' + label + '</i></span><b>' + esc(n) + '</b>' +
+        var chips = raidCatchChips(cpv, n) + (shinyOk ? '<span class="rc-chip rc-shiny">✦ Shiny available</span>' : '');
+        return '<div class="rc" data-boss="' + esc(n) + '"' + (label === '5★' || label === 'Mega' ? ' data-guide="' + esc(n) + '"' : '') + '><div class="rc-form"><span class="rc-raid-art">' + art(n, 'ea') + raidTierCorner(label) + '</span><div class="rc-txt"><b>' + esc(n) + '</b>' +
           (f ? '<span class="rtype">' + f.types.map(function (t) { return tico(t); }).join('') + '</span><span class="rweak" title="Weak to">▾ ' + f.weak.map(function (t) { return tico(t); }).join('') + '</span>' : '') + (chips ? '<span class="rc-meta">' + chips + '</span>' : '') + '</div></div>' + ib + share + '</div>';
       }).join('');
     }
