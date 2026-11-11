@@ -10,7 +10,7 @@ const BRANCH = /^worker\/review-[a-f0-9]{12}$/;
 const TEST = /^test\/[A-Za-z0-9][A-Za-z0-9_.-]{0,100}\.test\.mjs$/;
 const REQUIRED = ["javascript", "python", "browser (a)", "browser (b)",
   "browser (c)", "browser (d)", "browser (e)", "webkit"];
-const SAFE_GENERATED = /^(?:data\/|public\/[^/]+\.json$|infographics\.json$|[^/]+\.md$|docs\/.*\.md$)/;
+const SAFE_GENERATED = /^(?:data\/[A-Za-z0-9_.\/-]+\.json|public\/[^/]+\.json|infographics\.json|(?:docs\/)?[A-Za-z0-9_.\/-]+\.md)$/;
 
 function deny(reason) { return { status: "DENIED", reasons: [reason] }; }
 function exactMarker(body, expression) {
@@ -144,7 +144,10 @@ export async function assess(prNumber, get) {
     const allRuns = await pages(get, API + "/actions/runs?head_sha="
       + pr.head.sha, 2, 100, r => !!r && Number.isInteger(r.id), "workflow_runs");
     const candidate = allRuns.filter(r => r.name === "Tests" && r.event === "pull_request"
-      && r.head_sha === pr.head.sha).sort((a, b) => b.run_number - a.run_number)[0];
+      && r.head_sha === pr.head.sha
+      && r.pull_requests?.some(p => p?.number === pr.number
+        && p?.head?.sha === pr.head.sha))
+      .sort((a, b) => b.run_number - a.run_number)[0];
     const jobs = candidate ? await pages(get, API + "/actions/runs/" + candidate.id
       + "/jobs", 3, 100, j => !!j && typeof j.name === "string", "jobs") : [];
     const ci = ciDecision(allRuns, jobs, pr);
