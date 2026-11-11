@@ -163,8 +163,16 @@ export function extractFields(html, options={}) {
     // and reward, never infer a reward from surrounding descriptive prose.
     const task = parseResearchTask(l.text, cur === "research" ? researchKind : "research", declaredNames);
     if (task) {
+      // A published research table may list the *same* task five times in
+      // one stage (Minior Showers). An identical row still means another
+      // individual task; deduplication here silently drops real rewards.
+      // Assign an occurrence index so cross-source merging can coalesce the
+      // Nth occurrence instead of multiplying it or losing it.
       const key = JSON.stringify([task.category, task.task.toLowerCase(), task.rewards]);
-      if (!out.researchTasks.some(x => JSON.stringify([x.category, x.task.toLowerCase(), x.rewards]) === key)) out.researchTasks.push(task);
+      const count = out.researchTasks.filter(x =>
+        JSON.stringify([x.category, x.task.toLowerCase(), x.rewards]) === key).length;
+      // Bound malformed source tables rather than allowing unbounded repeats.
+      if (count < 20) out.researchTasks.push({ ...task, occurrence: count + 1 });
       add("research", l.text);
     }
     for (const [f, re] of LINE) if (re.test(l.text) && f !== cur) add(f, l.text);
