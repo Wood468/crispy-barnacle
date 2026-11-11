@@ -32,6 +32,14 @@ with sync_playwright() as p:
    assert root.locator(f'.rc[data-boss="{name}"]').count()==1,(width,name)
   assert root.locator('.rw-max-event[data-open="synthetic-gigantamax-weekend"]').count()==1
   assert root.locator('.rw-raid').count()==3
+  for boss in ['Giratina (Altered Forme)','Cresselia','Mega Charizard X']:
+   card=root.locator(f'.rc[data-boss="{boss}"]')
+   assert card.locator('.rc-raid-art .rc-tier-corner img[src="/ico/g/raid.webp"]').count()==1,(width,boss)
+   assert card.locator('.rc-tier-corner').get_attribute('aria-label').endswith('raid tier')
+  # No curated CP in this synthetic rotation: reuse the loaded Game Master.
+  page.wait_for_function("""() => !!document.querySelector('#rotnow .rc[data-boss="Cresselia"] .rc-perfect')""",timeout=15000)
+  assert root.locator('.rc[data-boss="Cresselia"] .rc-perfect').inner_text().startswith('100% IV')
+  assert root.locator('.rc[data-boss="Cresselia"] .rc-weather').count()==1
   assert root.locator('.rw-max-pokemon').count()==2
   assert '6 am–9 pm' in root.inner_text()
   assert root.locator('.rw-window').count()==5

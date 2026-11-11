@@ -29,8 +29,10 @@ with sync_playwright() as p:
   c,page,errors=make(browser,width,REAL,'2026-11-09T12:00:00+11:00')
   page.locator('#tabs [data-tab="raids"]').click();root=page.locator('#rotnow')
   z=root.locator('.rc[data-boss="Crowned Sword Zacian"]')
-  assert z.count()==1 and 'CP 2,188–2,735' in z.inner_text(),(width,z.inner_text())
-  assert z.locator('.rc-tier').inner_text()=='5★'
+  assert z.count()==1 and all(x in z.locator('.rc-perfect').inner_text() for x in ('100% IV','2,188')) and all(x in z.locator('.rc-weather').inner_text() for x in ('Weather','2,735')),(width,z.inner_text())
+  assert z.locator('.rc-tier-corner').inner_text()=='5★'
+  assert z.locator('.rc-tier-corner img[src="/ico/g/raid.webp"]').count()==1
+  assert z.locator('.rc-iv-catch[aria-label*="100% IV raid catch CP"]').count()==1
   assert 'Raid Hour: Crowned Sword Zacian, Mon Nov 9' in root.inner_text()
   assert root.locator('.rw-raid:not(.rw-event-day) .rw-rel .rc-event[data-open]').count()==1
   assert root.locator('.rw-count-live').first.inner_text().startswith('Ends in ')
