@@ -410,7 +410,11 @@ async function pokeId(path) {
 
 async function art(request, env, ctx, url) {
   const name = (url.searchParams.get("n") || "").slice(0, 60);
-  if (!/^[\p{L}0-9 ()'’.\-]+$/u.test(name)) return new Response("Bad name", { status: 400 });
+  const candidates = artCandidates(name);
+  // Punctuation is valid only for a recognised Unown !/? glyph; never
+  // broaden the public art endpoint to arbitrary punctuation or aliases.
+  if (!/^[\p{L}0-9 ()'’.\-!?]+$/u.test(name) ||
+      (/[!?]/.test(name) && !candidates.officialArtworkFile)) return new Response("Bad name", { status: 400 });
   const shiny = url.searchParams.get("shiny") === "1";
   const shadow = url.searchParams.get("shadow") === "1";
   const dynamax = url.searchParams.get("dynamax") === "1";
@@ -418,7 +422,6 @@ async function art(request, env, ctx, url) {
   const costume = (url.searchParams.get("c") || "").replace(/[^A-Za-z0-9_]/g, "").slice(0, 40);
   // PokeMiners names a costume pm<dex>.f<CODE> (form-style) or pm<dex>.c<CODE> (costume-style); the caller says which, default f.
   const costumeKind = url.searchParams.get("cp") === "c" ? "c" : "f";
-  const candidates = artCandidates(name);
   const cache = caches.default;
   const key = new Request(url.origin + "/api/art?n=" + encodeURIComponent(name.toLowerCase()) + (shiny ? "&shiny=1" : "") + (shadow ? "&shadow=1" : "") + (dynamax ? "&dynamax=1" : "") + (costume ? "&c=" + costume + (costumeKind === "c" ? "&cp=c" : "") : "") + (candidates.exact ? "&forms=3" : ""));
   const hit = await cache.match(key);
