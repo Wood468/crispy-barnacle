@@ -54,6 +54,8 @@ function validate(entry){
   if(!Array.isArray(group.dates)||!group.dates.length||group.dates.some(function(d){return !(entry.dates||[]).includes(d);}))errors.push('Shared Mighty published event dates required');
   if(new Set((group.pokemon||[]).map(norm)).size!==(group.pokemon||[]).length)errors.push('Duplicate shared Mighty Pokémon');
  });
+ if((entry.mightyIncense||[]).some(function(e){return !e||!e.identityKey||e.method!=='incense'||!e.activityId||!['free','paid'].includes(e.access);}))errors.push('Mighty Incense requires explicit encounter identity, method, activity and access');
+ if(new Set((entry.mightyIncense||[]).map(function(e){return [e.identityKey,e.method,e.activityId,e.access].join('|');})).size!==(entry.mightyIncense||[]).length)errors.push('Duplicate Mighty Incense encounter identity');
  if((entry.habitats||[]).length&&(!entry.activeWindow||!isTime(entry.activeWindow.start)||!isTime(entry.activeWindow.end)||clockMinutes(entry.activeWindow.start)>=clockMinutes(entry.activeWindow.end)))errors.push('Invalid local habitat active window');
  if(!Array.isArray(entry.sources)||!entry.sources.length||entry.sources.some(function(s){return !s.name||!/^https:\/\/[^/@?#]+(?:\/|$)/i.test(s.url||'');}))errors.push('Source URLs must be HTTPS');
  return Array.from(new Set(errors));
@@ -96,9 +98,11 @@ function slots(h){
 function dayLabel(iso){
  return new Intl.DateTimeFormat('en-AU',{timeZone:'UTC',weekday:'long',month:'short',day:'numeric'}).format(new Date(iso+'T12:00:00Z'));
 }
-/* Method and Mighty belong to this sourced encounter group, not the species.
-   A Pokémon appearing as ordinary in a habitat and Mighty via Incense keeps
-   different indicators on those two encounter tiles. */
+/* A shared group tile may summarize multiple independently sourced encounter
+   methods. Get the exact `incense` edge from the public canonical model —
+   never infer Incense from species identity, a Mighty label, or an event title.
+   Activity-specific Incense can only mark that same activity; this generic
+   grouping intentionally accepts event-wide 'main' edges only. */
 function pokemonCards(names,ctx,options){
  options=options||{};
  var mighty=options.mighty===true,incense=options.method==='incense';
@@ -137,13 +141,13 @@ function render(entry,ctx){
   var today=now.date===day.date;
   html+='<article class="uer-mighty-day" data-mighty-date="'+esc(day.date)+'"'+(today?' data-current-day="true"':'')+'>';
   html+='<h4>'+esc(dayLabel(day.date))+(today?' <span class="uer-live">Today</span>':'')+'</h4>';
-  html+=pokemonCards(day.pokemon,ctx,{method:day.method,access:day.access,mighty:true});html+='</article>';
+  html+=pokemonCards(day.pokemon,ctx,{method:day.method,mighty:true,access:day.access});html+='</article>';
  });
  html+='</div>';
  (entry.mightyShared||[]).forEach(function(group){
   html+='<article class="uer-mighty-shared" data-shared-id="'+esc(group.id)+'"><h4>'+esc(group.title)+'</h4>';
   html+='<p class="uer-hours">Available '+esc((group.dates||[]).map(dayLabel).join(' and '))+'</p>';
-  html+=pokemonCards(group.pokemon,ctx,{method:group.method,access:group.access,mighty:true});
+  html+=pokemonCards(group.pokemon,ctx,{method:group.method,mighty:true,access:group.access});
   html+='</article>';
  });
  html+='</section>';
@@ -157,22 +161,51 @@ function render(entry,ctx){
    Ticket-labelled Incense, raid, egg and research edges are preserved. */
 function withoutDuplicateFlatEncounters(model,entry){
  if(!model||!entry)return model;
- var wild=new Set(),mighty=new Set(),shared=new Set();
- (entry.habitats||[]).forEach(function(h){(h.pokemon||[]).forEach(function(n){wild.add(norm(n));});});
- (entry.mightyDays||[]).forEach(function(d){(d.pokemon||[]).forEach(function(n){mighty.add(norm(n));});});
- (entry.mightyShared||[]).forEach(function(d){(d.pokemon||[]).forEach(function(n){shared.add(norm(n));});});
- var byKey={};(model.pokemon||[]).forEach(function(p){byKey[p.key]=norm(p.name);});
- function keep(e){
-  var name=byKey[e.identityKey];
-  if(!name)return true;
-  if(e.method==='incense'&&shared.has(name))return false;
-  var access=norm(e.access);
-  if(access&&access!=='unknown'&&access!=='all')return true;
-  return !((e.method==='wild'&&wild.has(name))||((e.method==='incense'||e.method==='wild')&&mighty.has(name)));
+ var habitatWild=new Set(),datedWild=new Set();
+ (entry.habitats||[]).forEach(function(group){(group.pokemon||[]).forEach(function(n){habitatWild.add(norm(n));});});
+ (entry.mightyDays||[]).forEach(function(group){if(group.method==='wild')(group.pokemon||[]).forEach(function(n){datedWild.add(norm(n));});});
+ var mightyIncense=new Set((entry.mightyIncense||[]).map(function(e){
+   return [e.identityKey,e.method,e.activityId,e.access].join('|');
+ }));
+ var byKey=new Map((model.pokemon||[]).map(function(p){return [p.key,norm(p.name)];}));
+ // Normalized feeds may contain an earlier unknown-access edge beside a
+ // later sourced free/paid edge for the exact same encounter. Show the
+ // specific access once, but retain every raw encounter in canonical data.
+ var specificAccess=new Set((model.encounters||[]).filter(function(e){
+   return e.access&&norm(e.access)!=='unknown';
+ }).map(function(e){return [e.identityKey,e.method,e.activityId].join('|');}));
+ var namesCount=new Map();
+ (model.pokemon||[]).forEach(function(p){var n=norm(p.name);namesCount.set(n,(namesCount.get(n)||0)+1);});
+ function sharedMatches(e,name){
+  // Never collapse a distinct encounter method, access tier or activity.
+  // A display name representing several form identities is ambiguous.
+  if((namesCount.get(name)||0)!==1)return false;
+  return (entry.mightyShared||[]).some(function(group){
+    if(group.method!==e.method||e.activityId!=='main')return false;
+    var access=group.access==='ticket'?'paid':group.access;
+    if(access!==e.access&&!(access==='all'&&e.access==='free'))return false;
+    return (group.pokemon||[]).some(function(n){return norm(n)===name;});
+  });
  }
- var out=Object.assign({},model,{encounters:(model.encounters||[]).filter(keep)});
+ function keep(e){
+  var name=byKey.get(e.identityKey);if(!name)return true;
+  if((!e.access||norm(e.access)==='unknown')&&specificAccess.has([e.identityKey,e.method,e.activityId].join('|')))return false;
+  if(sharedMatches(e,name))return false;
+  // Incense, wild, research, raids and eggs are different encounter methods.
+  // An Incense encounter on both days is not a duplicate of a dated wild Mighty.
+  if(e.method!=='wild'||(e.activityId&&e.activityId!=='main'))return true;
+  var access=norm(e.access);
+  if(access&&access!=='unknown'&&access!=='all'&&access!=='free')return true;
+  return !((namesCount.get(name)||0)===1&&(habitatWild.has(name)||datedWild.has(name)));
+ }
+ function decorate(e){
+  var key=[e.identityKey,e.method,e.activityId,e.access].join('|');
+  return mightyIncense.has(key)?Object.assign({},e,{mighty:true}):e;
+ }
+ var out=Object.assign({},model,{encounters:(model.encounters||[]).filter(keep).map(decorate)});
  if(model.groups){
-  var groups={};Object.keys(model.groups).forEach(function(k){groups[k]=(model.groups[k]||[]).filter(keep);});out.groups=groups;
+   var groups={};Object.keys(model.groups).forEach(function(k){groups[k]=(model.groups[k]||[]).filter(keep).map(decorate);});
+   out.groups=groups;
  }
  return out;
 }

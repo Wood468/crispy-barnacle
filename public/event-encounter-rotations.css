@@ -28,3 +28,7 @@
 .uer-sources a{color:var(--accent,#a7bff6);text-decoration:underline;text-underline-offset:2px}
 @media(max-width:730px){.uer-habitat-grid,.uer-day-grid{grid-template-columns:1fr}}
 @media(max-width:360px){.uer-pokemon{gap:5px}.uer-pokemon-art img.art{height:58px}.uer-pokemon-art{min-height:55px}.uer-pokemon-name{font-size:.65rem}}
+
+/* Universal encounter galleries: only explicitly sourced Mighty Incense edges. */
+.ue-mon{position:relative}
+.ue-mon .ue-mighty-corner{position:absolute;z-index:2;top:5px;left:5px;pointer-events:none;font:900 .85rem/1 var(--font-body,system-ui);letter-spacing:-.055em;color:#f7c45d;text-shadow:0 1px 2px #14151f,0 0 7px rgba(246,183,68,.4)}
