@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-11T11:53:36.847Z",
+ "updated": "2026-11-11T12:16:05.636Z",
  "events": [
   {
    "id": "w-pokemon-fossil-museum-2026",
@@ -643,6 +643,25 @@
    "seen": "2026-11-11"
   },
   {
+   "id": "w-pok-mon-run-30-new-taipei",
+   "name": "Pokémon RUN 30: New Taipei",
+   "place": "New Taipei, Taiwan (New Taipei Metropolitan Park)",
+   "area": "Asia",
+   "scope": "regional",
+   "start": "2026-11-14",
+   "end": "2026-11-15",
+   "datesKnown": true,
+   "sources": [
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "url": "https://pokemongo.com/news/pokemon-run-30-2026/"
+    }
+   ],
+   "status": "official",
+   "seen": "2026-11-11"
+  },
+  {
    "id": "w-gowildarea-global-osaka-gameplay-update",
    "name": "Gowildarea Global Osaka Gameplay Update",
    "place": "Osaka, Japan",
@@ -661,25 +680,6 @@
      "id": "official",
      "name": "Pokémon GO (official)",
      "url": "https://pokemongo.com/news/gowildarea-global-2026-osaka-gameplay-update/"
-    }
-   ],
-   "status": "official",
-   "seen": "2026-11-11"
-  },
-  {
-   "id": "w-pok-mon-run-30-new-taipei",
-   "name": "Pokémon RUN 30: New Taipei",
-   "place": "New Taipei, Taiwan (New Taipei Metropolitan Park)",
-   "area": "Asia",
-   "scope": "regional",
-   "start": "2026-11-14",
-   "end": "2026-11-15",
-   "datesKnown": true,
-   "sources": [
-    {
-     "id": "official",
-     "name": "Pokémon GO (official)",
-     "url": "https://pokemongo.com/news/pokemon-run-30-2026/"
     }
    ],
    "status": "official",
@@ -1340,7 +1340,7 @@
     {
      "id": "official",
      "name": "Pokémon GO (official)",
-     "url": "https://pokemongo.com/ja/news/go-wild-area-stamp-rally-details-2026/"
+     "url": "https://pokemongo.com/ko/news/go-wild-area-stamp-rally-details-2026/"
     }
    ],
    "status": "official",
