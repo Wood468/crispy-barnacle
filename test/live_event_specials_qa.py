@@ -40,6 +40,12 @@ def inspect(page, width: int) -> dict:
     # do not let Playwright wait forever on its return value. The selector
     # assertion below is the bounded, user-visible readiness check.
     page.evaluate("() => { GODETAIL.open('into'); return true; }")
+    page.wait_for_selector('#evd .evd-nav-link[data-sec="encounters"]', timeout=30000)
+    # In the one-panel release the first visible screen is Overview, so
+    # open Pokémon before waiting for the sourced Coin Bag tile.
+    into_tab = page.locator('#evd .evd-nav-link[data-sec="encounters"]')
+    if into_tab.count() and not page.locator('#evd-s-encounters').is_visible():
+        into_tab.click()
     page.wait_for_selector('#evd .ue-mon[data-identity="999:roaming:none"]', timeout=30000)
     coin = page.locator('#evd .ue-mon[data-identity="999:roaming:none"]').first
     assert "Coin Bag" in coin.inner_text(), f"{width}px: Roaming encounter lacks Coin Bag access"
@@ -52,6 +58,10 @@ def inspect(page, width: int) -> dict:
     page.evaluate("() => { GODETAIL.open('cur:wag'); return true; }")
     page.wait_for_selector('#evd .ue-raid-day[data-raid-date="2026-11-14"]', timeout=30000)
 
+    # Old and new Event Details must both expose the same sourced gallery.
+    encounters_tab = page.locator('#evd .evd-nav-link[data-sec="encounters"]')
+    if encounters_tab.count() and not page.locator('#evd-s-encounters').is_visible():
+        encounters_tab.click()
     # Source-declared hatch distance must be shown as the actual colour-specific
     # 10 km egg art in the top-right of each matching Pokémon tile.
     egg_cards = page.locator('#evd .ue-method[data-method="egg"] .ue-mon')
@@ -179,6 +189,9 @@ def inspect(page, width: int) -> dict:
         "The live 10 km icon did not return an image"
     )
 
+    overview_tab = page.locator('#evd .evd-nav-link[data-sec="overview"]')
+    if overview_tab.count() and not page.locator('#evd-s-overview').is_visible():
+        overview_tab.click()
     report["raid_days"] = {}
     report["raid_form_art"] = {}
     gigantamax_sources = set()
@@ -239,6 +252,8 @@ def inspect(page, width: int) -> dict:
     # Verify the actual deployed page, not only a fixture, preserves the
     # two hourly habitats and two different Mighty day lineups. These are
     # informational tiles, never Collection Track/Follow controls.
+    if encounters_tab.count() and not page.locator('#evd-s-encounters').is_visible():
+        encounters_tab.click()
     rotations = page.locator('#evd-s-encounters .uer-root[data-rotation-id="gowa-2026-global"]')
     assert rotations.count() == 1, f"{width}px: source-backed Wild Area rotations missing"
     habitat_counts = {
@@ -267,6 +282,55 @@ def inspect(page, width: int) -> dict:
         "mighty": {"2026-11-14": 9, "2026-11-15": 9},
         "ticket_incense": ["Latias", "Latios"],
     }
+
+    # Live 360/390/430px acceptance for opposite corner icons. No species-wide
+    # Mighty/Incense inference, no duplicate ticket-only encounters.
+    free_keys = {
+        "103:alola:none", "184:base:none", "212:base:none",
+        "230:base:none", "306:base:none", "330:base:none",
+        "395:base:none", "462:base:none", "534:base:none",
+        "635:base:none",
+    }
+    paid_unown = {"201:d:none", "201:i:none", "201:l:none", "201:w:none"}
+    incense = page.locator('#evd .ue-method[data-method="incense"] .ue-mon')
+    assert incense.count() == 14, (width, "expected 10 free Mighty and 4 paid Unown")
+    ids = set(incense.evaluate_all("(els) => els.map(el => el.dataset.identity)"))
+    assert ids == free_keys | paid_unown, (width, ids)
+    report["incense_mighty_corners"] = {"free": 0, "paid": 0}
+    for tile in incense.all():
+        key = tile.get_attribute("data-identity")
+        assert tile.locator('.ue-incense-corner img[src="/ico/incense.webp"]').count() == 1, (width, key)
+        box = tile.evaluate("""el => {
+            const i = el.querySelector('.ue-incense-corner'), m = el.querySelector('.ue-mighty-corner');
+            const a = i?.getBoundingClientRect(), b = m?.getBoundingClientRect();
+            const tile = el.getBoundingClientRect(), style = i && getComputedStyle(i);
+            return {width:a?.width,height:a?.height,left:a?.left,right:a?.right,
+                    tileLeft:tile.left,tileRight:tile.right,mightyRight:b?.right,
+                    mighty:!!m,text:i?.textContent.trim(),
+                    background:style?.backgroundColor,border:style?.borderTopWidth,shadow:style?.boxShadow};
+        }""")
+        assert 0 < box["width"] <= 22 and 0 < box["height"] <= 22, (width, key, box)
+        assert box["tileLeft"] - 1 <= box["left"] < box["right"] <= box["tileRight"] + 1, (width, key, box)
+        assert box["text"] == "" and box["background"] in ("transparent", "rgba(0, 0, 0, 0)"), (width, key, box)
+        assert box["border"] == "0px" and box["shadow"] == "none", (width, key, box)
+        assert box["mighty"] == (key in free_keys), (width, key, box)
+        if key in free_keys:
+            assert box["mightyRight"] < box["left"], (width, key, "corner overlap", box)
+            report["incense_mighty_corners"]["free"] += 1
+        else:
+            report["incense_mighty_corners"]["paid"] += 1
+    shared = rotations.locator('[data-shared-id="ticket-incense"] .uer-pokemon-tile')
+    assert shared.count() == 2
+    for tile in shared.all():
+        assert tile.locator('.uer-incense-corner img[src="/ico/incense.webp"]').count() == 1
+        assert tile.locator('.uer-mighty-corner').count() == 1
+    assert rotations.locator('.uer-mighty-day .uer-incense-corner').count() == 0
+    assert rotations.locator('.uer-habitat .uer-incense-corner,.uer-habitat .uer-mighty-corner').count() == 0
+    page.locator('#evd .ue-method[data-method="incense"]').first.screenshot(
+        path=str(OUT / f"go-wild-incense-mighty-corners-{width}.png"),
+        animations="disabled", timeout=15000,
+    )
+    print(f"LIVE_MIGHTY_INCENSE_CORNERS {width}px " + json.dumps(report["incense_mighty_corners"]), flush=True)
 
     report["horizontal_overflow"] = page.evaluate(
         "() => document.documentElement.scrollWidth > window.innerWidth + 1"
