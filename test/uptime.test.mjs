@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { extractCoreAssetUrls, runChecks, previousLiveCheckConclusion } from "../scripts/uptime.mjs";
+import { extractCoreAssetUrls, runChecks, previousLiveCheckConclusion, containsPrivateDiscordSource } from "../scripts/uptime.mjs";
 
 const HTML = [
   "<html><head>",
@@ -41,8 +41,15 @@ function mockFetch(options = {}) {
     if (path === "/data.json") return ok({ events: [{ id: "event-1" }] });
     if (path === "/world-events.json") return ok({ events: [] });
     if (path === "/prices.json") return ok({});
-    if (path === "/weekly.json") return ok({ items: [{ image: "/infographics/a.png" }] });
-    if (path === "/infographic-queue.json") return ok({ items: [] });
+    const privateLink = "https://discord.com/channels/@me/111/222";
+    if (path === "/event-info.json") return ok({ events: {
+      fixture: { source: { label: "G47IX", ...(options.privateFile === "event-info" ? { url: privateLink } : {}) },
+        infographics: [{ url: "/infographics/a.png", source: "G47IX" }] }
+    } });
+    if (path === "/weekly.json") return ok({ items: [{ image: "/infographics/a.png",
+      ...(options.privateFile === "weekly" ? { post: privateLink } : {}) }] });
+    if (path === "/infographic-queue.json") return ok({ items: options.privateFile === "queue"
+      ? [{ image: "/infographics/a.png", post: privateLink }] : [] });
     if (path === "/infographics/a.png") {
       return options.r2Status && options.r2Status !== 200
         ? new Response("", { status: options.r2Status })
@@ -80,6 +87,25 @@ test("core assets match the homepage and exact offline-shell versions", () => {
     "/styles.css?v=1", "/dash.css?v=2", "/app.js?v=5",
     "/dash.js?v=4", "/lib.js?v=3", "/pwa.js", "/review.js?v=6", "/sw.js"
   ]);
+});
+
+test("privacy scanner rejects disguised Discord channel links without confusing public sources", () => {
+  assert.equal(containsPrivateDiscordSource({ event: {
+    source: { url: "https://ptb.discord.com/%63hannels/111/222" }
+  } }), true);
+  assert.equal(containsPrivateDiscordSource({ source: { url: "https://discord.com/invite/sample" },
+    infographics: [{ url: "/infographics/a.png", source: "G47IX" }] }), false);
+});
+
+test("live uptime check fails closed on private links in each public infographic feed", async () => {
+  for (const privateFile of ["event-info", "queue", "weekly"]) {
+    await withFetch({ privateFile }, async () => {
+      const problems = await runChecks();
+      assert.equal(problems.length, 1, privateFile);
+      assert.match(problems[0], /public infographic provenance: \/(?:event-info|infographic-queue|weekly)\.json/);
+      assert.doesNotMatch(problems.join("\n"), /@me|111|222/, "never log private channel/message IDs");
+    });
+  }
 });
 
 test("uptime check passes when the page, data, images and app assets are healthy", async () => {
