@@ -243,3 +243,22 @@
 /* Every checkbox is at least a 44px target through its label (the visible box can stay small). */
 label:has(input[type="checkbox"]) { min-width: 44px; min-height: 44px; }
 input[type="checkbox"] { touch-action: manipulation; }
+
+/* Collection My Dex: source-backed search and Pokémon, not setup accordions, lead the phone viewport. */
+#tab-dex .dexbar{padding-top:0}
+#tab-dex .prog{background:var(--color-surface-card);color:var(--color-text);border:1px solid var(--color-border-card);border-radius:var(--radius-lg);padding:12px 14px;gap:7px}
+#tab-dex .prog .nums{align-items:center}
+#tab-dex .prog .n{font-size:clamp(1.85rem,8vw,2.6rem);line-height:1}
+#tab-dex .prog .n small{font-size:.55em;opacity:.72}
+#tab-dex .prog .l{font-size:var(--type-caption-compact);margin-top:4px;letter-spacing:.06em}
+#tab-dex .prog .bar{height:6px;background:var(--color-border)}
+#tab-dex .prog .bar i{background:var(--color-accent)}
+#tab-dex .prog .dmini{margin-top:1px;font-size:var(--type-caption);gap:5px 10px}
+#tab-dex #dsync{margin-top:0!important;margin-bottom:0}
+#tab-dex .gencov{padding:0;border:0;background:transparent}
+#tab-dex .gencov>.dd{border:1px solid var(--color-border-card)}
+@media(max-width:560px){
+ #tab-dex .dexbar .tools{gap:6px}
+ #tab-dex .dexbar .tools input[type=search]{flex-basis:100%;width:100%}
+ #tab-dex .dexbar .tools select{flex:1 1 auto}
+}
