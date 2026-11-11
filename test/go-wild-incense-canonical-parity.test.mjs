@@ -106,3 +106,27 @@ test("future mixed wild/Incense Mighty lists annotate only exact sourced method/
   assert.doesNotMatch(scoped,/class="uer-incense-corner"/,
     "an unrelated activity-specific Incense edge cannot relabel a wild Mighty day");
 });
+
+
+test("the same species in ordinary wild habitat and Mighty Incense keeps independent per-tile method icons", () => {
+  const entry = read("event-encounter-rotations.json").entries.find(x => x.id === "gowa-2026-global");
+  const source = read("events-v1.json");
+  const model = source.events.find(event => event.eventId === "wag" || (event.aliases || []).includes("wag"));
+  assert.ok(model && entry);
+  const future = structuredClone(entry);
+  // This same species is independently sourced for Incense on a Mighty day.
+  // A *normal* hourly habitat occurrence must not inherit that method.
+  future.habitats[0].pokemon[0] = "Alolan Exeggutor";
+  assert.deepEqual(rotator.validate(future), []);
+  const html = rotator.render(future, { model, art: () => '<img class="art" alt="">' });
+  const habitat = html.match(/<article class="uer-habitat uer-habitat-steel"[\s\S]*?<\/article>/)?.[0] || "";
+  const saturday = html.match(/<article class="uer-mighty-day" data-mighty-date="2026-11-14"[\s\S]*?<\/article>/)?.[0] || "";
+  assert.match(habitat, /data-pokemon="Alolan Exeggutor"/);
+  assert.doesNotMatch(habitat, /uer-incense-corner|uer-mighty-mark|data-incense="true"/,
+    "ordinary wild habitat cards must never inherit another method's badge");
+  assert.match(habitat, /aria-label="Alolan Exeggutor, Wild encounter"/);
+  assert.match(saturday, /data-pokemon="Alolan Exeggutor"[^>]*data-mighty="true"[^>]*data-incense="true"/);
+  assert.match(saturday, /class="uer-mighty-mark"/);
+  assert.match(saturday, /class="uer-incense-corner"/);
+  assert.match(saturday, /aria-label="Alolan Exeggutor, Mighty Pok[eé]mon, Incense encounter, available to all Trainers"/);
+});
