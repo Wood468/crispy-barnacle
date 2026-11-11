@@ -624,7 +624,7 @@
     activeModel=model;currentEv=ev;
     var venues=window.GOPLACES?GOPLACES.forEvent(ev):[];
     var tickets=(info.tickets||[]).map(passCard).join('');
-    var pass=ev.season?primary(seasonPage(ev)):'';
+    var pass=ev.season&&!(model.passes||[]).length?primary(seasonPage(ev)):'';
 
     var calendar=null;try{if(model.schedule)calendar=calendarEvent(ev,model);}catch(error){}
     var sources=model.sources.map(function(src){var url=safe(src.url);return url?'<li><a href="'+esc(url)+'" target="_blank" rel="noopener noreferrer">'+esc(src.name||src.label||'Event source')+'</a>'+(TRUST_LABEL[src.trust]?' <small class="src-trust">'+TRUST_LABEL[src.trust]+'</small>':'')+'</li>':'';}).filter(function(v,i,a){return v&&a.indexOf(v)===i;}).join('')||'<li>'+esc(LIB.missingLabel('unverified'))+': no source link is recorded for this event.</li>';
