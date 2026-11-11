@@ -191,7 +191,7 @@ function schedulePreview(model,ctx){
  var activities=(model.activities||[]).filter(function(a){return a.schedule&&(a.presentation==='schedule'||a.presentation==='rotation');});
  if(!activities.length)return '';
  var entries=activities.map(function(a){return {a:a,start:String(a.schedule.start||''),end:null};});
- entries.sort(function(x,y){return x.start.localeCompare(y.start)||String(x.a.id||'').localeCompare(String(y.a.id||'');});
+ entries.sort(function(x,y){return x.start.localeCompare(y.start)||String(x.a.id||'').localeCompare(String(y.a.id||''));});
  var now=typeof ctx.now==='number'&&Number.isFinite(ctx.now)?ctx.now:Date.now(),allPast=false,hasTimeStatus=false;
  /* Prefer current and upcoming events only when every source-backed schedule
     resolves in the user's time zone. An invalid schedule is shown in published
@@ -208,7 +208,7 @@ function schedulePreview(model,ctx){
     });
     if(dated.every(Boolean)){
      hasTimeStatus=true;
-     dated.sort(function(a,b){return a.start-b.start||String(a.a.id||'').localeCompare(String(b.a.id||'');});
+     dated.sort(function(a,b){return a.start-b.start||String(a.a.id||'').localeCompare(String(b.a.id||''));});
      var remaining=dated.filter(function(item){return item.end>now;});
      if(remaining.length)entries=remaining;
      else{entries=dated.slice(-5);allPast=true;}
