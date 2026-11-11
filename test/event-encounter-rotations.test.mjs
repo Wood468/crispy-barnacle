@@ -191,3 +191,12 @@ test('future rotations reject impossible dates and invalid venue timezones witho
  validZone.timeZone='Australia/Melbourne';
  assert.deepEqual(Rot.validate(validZone),[]);
 });
+
+test('future rotation fixture retains distinct venue-local time basis', () => {
+  const futureCopy = copy(fixture);
+  futureCopy.id = 'future-rotation-fixture';
+  futureCopy.eventIds = ['future-rotation-2031'];
+  assert.equal(futureCopy.timeBasis, fixture.timeBasis);
+  const roundtripped = JSON.parse(JSON.stringify(futureCopy));
+  assert.equal(roundtripped.timeZone, fixture.timeZone);
+});
