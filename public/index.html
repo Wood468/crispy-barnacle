@@ -20,8 +20,8 @@
 <link rel="stylesheet" href="/event-redesign.css?v=20261117g">
 <link rel="stylesheet" href="/event-encounter-rotations.css?v=20261111a">
 <link rel="stylesheet" href="/today.css?v=20261115a">
-<link rel="stylesheet" href="/ux-finish.css?v=20261116b">
-<link rel="preload" href="/dash.js?v=20261117f" as="script">
+<link rel="stylesheet" href="/ux-finish.css?v=20261116d">
+<link rel="preload" href="/dash.js?v=20261117h" as="script">
 </head>
 <body>
 <div class="wrap">
@@ -233,24 +233,6 @@
       <section class="panel" id="sub-mydex" hidden>
         <div class="subnav inner" id="mode-collect-dex" role="group" aria-label="My Dex views"></div>
         <section class="panel" id="tab-dex">
-        <details class="dd dexhow"><summary>How this works</summary><div class="body"><p class="sub" style="margin:0">Every Pokémon, #1 to #1025. Tick what you have, then shiny, lucky, shadow, purified and 100% IV. Anything you mark is counted as owned. Marks sync with the device PIN managed in Menu → Sync & accounts.</p></div></details>
-        <div class="prog">
-          <div class="nums">
-            <div><div class="n"><span id="dOwn">0</span><small> / <span id="dTotal">0</span></small></div><div class="l">OWNED IN POKÉMON GO</div></div>
-            <div style="text-align:right"><div class="n" id="dShiny">0</div><div class="l">SHINY</div></div>
-          </div>
-          <div class="bar" aria-hidden="true"><i id="dBar"></i></div>
-          <div class="dmini" id="dMini"></div>
-        </div>
-        <p class="sync" id="dsync" role="status" style="margin-top:-24px"></p>
-        <details class="dd" id="regdd">
-          <summary>Regional finder <span class="cnt" id="regcnt"></span></summary>
-          <div class="body">
-            <p class="sub" id="regnote" style="margin:0"></p>
-            <div class="tools"><select id="rsel" aria-label="Show regionals"><option value="mel">Catchable from Melbourne</option><option value="miss">Catchable from Melbourne, not owned</option><option value="all">All regional Pokémon</option></select></div>
-            <div id="reglist" class="dexlist"></div>
-          </div>
-        </details>
         <div class="dexbar"><div class="tools">
           <input type="search" id="dq" placeholder="Search name or number" aria-label="Search name or number">
           <select id="dgen" aria-label="Generation"><option value="0">All generations</option></select>
@@ -265,10 +247,28 @@
           </select>
         </div>
         <div class="genchips" id="genchips" role="group" aria-label="Jump to generation"></div></div>
+        <div class="prog">
+          <div class="nums">
+            <div><div class="n"><span id="dOwn">0</span><small> / <span id="dTotal">0</span></small></div><div class="l">OWNED IN POKÉMON GO</div></div>
+            <div style="text-align:right"><div class="n" id="dShiny">0</div><div class="l">SHINY</div></div>
+          </div>
+          <div class="bar" aria-hidden="true"><i id="dBar"></i></div>
+          <div class="dmini" id="dMini"></div>
+        </div>
         <label class="dchk"><input type="checkbox" id="dunrel"> Show Pokémon that are not in Pokémon GO yet</label>
         <div id="dexlist" class="dexlist"></div>
         <p class="note" id="dnone" hidden>No Pokémon match.</p>
         <button type="button" class="pill all" id="dmore" hidden style="justify-self:center">Show more</button>
+        <p class="sync" id="dsync" role="status"></p>
+        <details class="dd" id="regdd">
+          <summary>Regional finder <span class="cnt" id="regcnt"></span></summary>
+          <div class="body">
+            <p class="sub" id="regnote" style="margin:0"></p>
+            <div class="tools"><select id="rsel" aria-label="Show regionals"><option value="mel">Catchable from Melbourne</option><option value="miss">Catchable from Melbourne, not owned</option><option value="all">All regional Pokémon</option></select></div>
+            <div id="reglist" class="dexlist"></div>
+          </div>
+        </details>
+        <details class="dd dexhow"><summary>How this works</summary><div class="body"><p class="sub" style="margin:0">Every Pokémon, #1 to #1025. Tick what you have, then shiny, lucky, shadow, purified and 100% IV. Anything you mark is counted as owned. Marks sync with the device PIN managed in Menu → Sync & accounts.</p></div></details>
       </section>
         <section class="panel" id="sub-forms" hidden>
         <p class="intro">Regional forms, Mega, Primal and Gigantamax. These are the forms the main series has; not every one is in GO yet. Tap <b>Have</b> or <b>Need</b> only for ones you know. Nothing is assumed.</p>
@@ -534,7 +534,7 @@
 <script src="/local-state.js?v=20261030a"></script>
 <script src="/account.js?v=20261102a"></script>
 <script src="/dedupe.js?v=20261101b"></script>
-<script src="/app.js?v=20261117f"></script>
+<script src="/app.js?v=20261117g"></script>
 <script src="/raid-share.js?v=20261102b"></script>
 <script src="/regional-prices.js?v=20261110a"></script>
 <script src="/store.js?v=20261110b"></script>

@@ -1373,7 +1373,7 @@
   function renderCoverage() {
     var tab = $('tab-dex'); if (!tab || !Object.keys(DEXGEN).length) return;
     var host = $('gencov');
-    if (!host) { host = document.createElement('div'); host.id = 'gencov'; host.className = 'gencov'; tab.insertBefore(host, tab.firstChild); host.addEventListener('click', function (e) { var b = e.target.closest('[data-gen]'); if (!b) return; setGenConfirmed(+b.dataset.gen, b.getAttribute('aria-pressed') !== 'true'); renderCoverage(); renderAll(); if (window.GO && GO.refreshDex) GO.refreshDex(); }); }
+    if (!host) { host = document.createElement('div'); host.id = 'gencov'; host.className = 'gencov'; var summary=tab.querySelector('.prog'); if(summary&&summary.parentElement===tab)summary.insertAdjacentElement('afterend',host); else tab.insertBefore(host,tab.firstChild); host.addEventListener('click', function (e) { var b = e.target.closest('[data-gen]'); if (!b) return; setGenConfirmed(+b.dataset.gen, b.getAttribute('aria-pressed') !== 'true'); renderCoverage(); renderAll(); if (window.GO && GO.refreshDex) GO.refreshDex(); }); }
     var d = marks(), own = (d.m && d.m.own) || {}, gens = {}, total = 0, owned = 0, conf = [], auto = [];
     Object.keys(DEXGEN).forEach(function (id) { var g = DEXGEN[id]; gens[g] = (gens[g] || 0) + 1; if (genConfirmed(g)) { total++; if (own[id]) owned++; } });
     Object.keys(gens).sort(function (a, b) { return a - b; }).forEach(function (g) { if (genConfirmed(+g)) { conf.push(g); if (genAutoComplete(+g) && usGet('pref:gen:' + g) !== true) auto.push(g); } });
