@@ -98,13 +98,30 @@ def inspect(page, width: int, failures: list) -> dict:
                 f"{width}px: GO Pass details overflow"
             )
             if choice["id"] == "season:pass-into-wild-2026":
-                content = page.locator("#evd .ue-pass").inner_text()
-                assert "Dynamax Meltan" in content and "Silver Bottle Cap" in content, (
-                    f"{width}px: verified Into the Wild pass rewards missing"
-                )
                 assert choice["source"] == "Pokémon GO (official)", (
                     f"{width}px: Into the Wild pass lost official provenance"
                 )
+                # Ranks outside the first expanded group are hidden from
+                # inner_text() until the player opens their range. Test the
+                # actual visible reward after expanding Rank 45 and Rank 100;
+                # reading the hidden DOM alone would mask a real UX defect.
+                nav = page.locator('#evd .evd-nav-link[data-sec="passes"]')
+                assert nav.count() == 1, f"{width}px: special GO Pass section inaccessible"
+                nav.click()
+                for rank, name in ((45, "Dynamax Meltan"), (100, "Silver Bottle Cap")):
+                    tile = page.locator(f'#evd .ue-pass-rank[data-rank="{rank}"]')
+                    assert tile.count() == 1, f"{width}px: source-backed Rank {rank} missing"
+                    group = tile.locator(
+                        "xpath=ancestor::details[contains(@class, 'ue-pass-range')]"
+                    ).first
+                    assert group.count() == 1, f"{width}px: Rank {rank} has no expandable range"
+                    if not group.evaluate("(el) => el.open"):
+                        group.locator("summary").click()
+                    tile.scroll_into_view_if_needed(timeout=10000)
+                    assert tile.is_visible() and name in tile.inner_text(), (
+                        f"{width}px: {name} not visible at verified Rank {rank}"
+                    )
+                    screenshot(page, width, f"gopass-{rank}-" + choice["id"].split(":")[-1], failures)
             row["screens"]["pass"]["checked"].append({
                 "source": choice["source"], "id": choice["id"], "rank_ranges": ranges.count()
             })
