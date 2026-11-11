@@ -2232,7 +2232,7 @@ button.rc-chip:focus-visible{outline:2px solid var(--color-link);outline-offset:
 }
 #evd .ue-mon-art:has(> img.art[data-sd="1"])::after{
   content:"DYNAMAX";position:absolute;right:2px;bottom:2px;z-index:2;
-  padding:2px 5px;border-radius:999px;background:#9e1649;color:#fff;
+  padding:2px 5px;border-radius:var(--radius-pill);background:#9e1649;color:#fff;
   font:800 .54rem/1.2 var(--font-body);letter-spacing:.025em;
   box-shadow:0 1px 4px rgba(0,0,0,.5);pointer-events:none
 }
