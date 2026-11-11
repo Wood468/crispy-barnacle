@@ -787,6 +787,24 @@
   var fillTimer = 0;
   if (window.MutationObserver) new MutationObserver(function () { clearTimeout(fillTimer); fillTimer = setTimeout(fillBonus, 200); }).observe(document.body, { childList: true, subtree: true });
   fillBonus();
+  function addInfographicShortcut(o, ev) {
+    var hero=o.querySelector('.ue-hero'); if(!hero||!ev||!ev.id)return;
+    var button=document.createElement('button');
+    button.type='button';button.className='evd-infographic-shortcut';
+    button.setAttribute('data-infographic',ev.id);
+    button.textContent='View infographics';button.hidden=true;
+    hero.insertAdjacentElement('afterend',button);
+    function update(){
+      var api=window.GOINFOGRAPHIC;
+      if(!button.isConnected||!api||typeof api.available!=='function')return;
+      api.available(ev.id).then(function(yes){
+        if(button.isConnected&&o.contains(button)&&!o.hidden)button.hidden=!yes;
+      }).catch(function(){});
+    }
+    update();
+    if(!window.GOINFOGRAPHIC||typeof window.GOINFOGRAPHIC.available!=='function')
+      document.addEventListener('gofn-infographic-ready',update,{once:true});
+  }
   function open(id, from) {
     var ev = X.events().concat(window.GOSEASON ? window.GOSEASON.events() : []).filter(function (e) { return e.id === id; })[0];
     if(!ev){if(!DATA){load().then(function(){open(id,from);});return;}var model=window.GOEventRegistry&&GOEventRegistry.find(id);if(!model)return;ev=X.events().find(function(item){return item.id==='cur:'+model.eventId||(model.aliases||[]).indexOf(item.id)>=0;})||GOEventRegistry.display(model);}
@@ -802,6 +820,7 @@
       o.innerHTML = '<div class="evd-in">' + render(ev2) + '</div>';
       addBonusTime(o, ev2);
       o.hidden = false; document.body.style.overflow = 'hidden'; o.scrollTop = 0;
+      addInfographicShortcut(o, ev2);
       if (!wasOpen && window.GONAV) window.GONAV.push();
       var x = $('evd-x'); if (x) { x.addEventListener('click', function () { close(); }); x.focus(); }
       spyInit(o, ev2.id);
