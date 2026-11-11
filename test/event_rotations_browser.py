@@ -85,6 +85,30 @@ with sync_playwright() as pw:
                 '#evd-s-encounters .ue-method[data-method="incense"] .ue-mon',
                 has_text=name).count()>0]
             assert not duplicate_tiles,(width,label,'source-backed day-Mighty or shared ticket duplicates',duplicate_tiles)
+            # Shared day-specific Mighty group tiles retain both source-backed
+            # statuses without a second flat encounter. Exactly 10 public
+            # Mighty have an Incense source edge, plus ticket Lati@s.
+            days=root.locator('.uer-mighty-day .uer-pokemon-tile')
+            ticketed=root.locator('.uer-mighty-shared .uer-pokemon-tile')
+            assert days.count()==18 and ticketed.count()==2,(width,label,'Mighty roster tiles')
+            assert root.locator('.uer-mighty-mark').count()==20,(width,label,'missing Mighty !!!')
+            assert root.locator('.uer-mighty-day [data-incense="true"] .uer-incense-corner img[src="/ico/incense.webp"]').count()==10,(width,label,'Free Mighty Incense markers')
+            assert ticketed.locator('.uer-incense-corner img[src="/ico/incense.webp"]').count()==2,(width,label,'paid Latias/Latios Incense markers')
+            assert root.locator('.uer-habitat .uer-mighty-mark,.uer-habitat .uer-incense-corner').count()==0,(width,label,'ordinary rotating wild must not inherit methods')
+            for tile in root.locator('.uer-mighty-day [data-incense="true"],.uer-mighty-shared [data-incense="true"]').all():
+                name=tile.get_attribute('data-pokemon')
+                label_text=tile.get_attribute('aria-label') or ''
+                assert 'Mighty' in label_text and 'Incense' in label_text,(width,label,name,label_text)
+                markers=tile.evaluate("""el => {
+                    const a=el.querySelector('.uer-mighty-mark').getBoundingClientRect();
+                    const b=el.querySelector('.uer-incense-corner').getBoundingClientRect();
+                    const c=el.getBoundingClientRect();
+                    return {left:a.right,right:b.left,iconW:b.width,iconH:b.height,
+                        tileLeft:c.left,tileRight:c.right};
+                }""")
+                assert markers['left']<markers['right'] and 0<markers['iconW']<=22 and 0<markers['iconH']<=22,(width,label,name,markers)
+            for tile in incense.all():
+                assert tile.locator('.uer-mighty-mark,.uer-incense-corner').count()==0,(width,label,'ordinary Unown must not be mighty')
             raid_sat=page.locator('#evd .ue-raid-day[data-raid-date="2026-11-14"]')
             raid_sun=page.locator('#evd .ue-raid-day[data-raid-date="2026-11-15"]')
             assert all(x in raid_sat.inner_text() for x in ('Zekrom','White Kyurem','Dynamax Dialga','Gigantamax Duraludon')),(width,label,'Saturday raids')
