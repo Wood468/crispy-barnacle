@@ -76,7 +76,7 @@
   function go() {
     var host = document.getElementById('evsource'); if (!host || !window.GOLIB) return;
     GOLIB.loadPrices().then(function (d) {
-      if (!d || !d.owner) return; /* the Rp store list is for the owner only */ var h = regional(d) + build(d); if (!h) return;
+      if (!d || !d.owner) return; /* the Rp store list is for the owner only */ var h = regional(d) || build(d); /* Prefer the complete regional catalogue; avoid repeating the older IDR summary. */ if (!h) return;
       var el = document.getElementById('storep-host');
       if (!el) { el = document.createElement('div'); el.id = 'storep-host'; host.parentNode.insertBefore(el, host); }
       el.innerHTML = h;
