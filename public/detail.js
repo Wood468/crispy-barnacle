@@ -929,7 +929,26 @@
     spyDestroy();
     spy = { o: o, id: id, cur: '' };
     spyOffsets(o);
+    // Author the accessible tab relationship without editing the shared
+    // event-components renderer (which is also used by GO Pass work).
+    var strip = o.querySelector('.evd-nav-scroll');
+    if (strip) {
+      strip.setAttribute('role', 'tablist');
+      strip.setAttribute('aria-label', 'Event sections');
+    }
+    o.querySelectorAll('.evd-nav-link').forEach(function (link) {
+      var sec = link.getAttribute('data-sec');
+      link.setAttribute('role', 'tab');
+      link.setAttribute('id', 'evd-tab-' + sec);
+      link.setAttribute('aria-controls', 'evd-s-' + sec);
+    });
     var sections = o.querySelectorAll('.evd-sec');
+    sections.forEach(function (section) {
+      var sec = section.getAttribute('data-sec');
+      section.setAttribute('role', 'tabpanel');
+      section.setAttribute('aria-labelledby', 'evd-tab-' + sec);
+      section.setAttribute('tabindex', '0');
+    });
     if (sections.length) showPanel(o, sections[0].getAttribute('data-sec'), false);
     else setActive(o, 'overview');
   }
@@ -949,7 +968,14 @@
     var l = e.target.closest && e.target.closest('.evd-nav-link'); if (!l) return;
     var links = [].slice.call(l.parentNode.querySelectorAll('.evd-nav-link')), i = links.indexOf(l), n = -1;
     if (e.key === 'ArrowRight') n = (i + 1) % links.length; else if (e.key === 'ArrowLeft') n = (i - 1 + links.length) % links.length; else if (e.key === 'Home') n = 0; else if (e.key === 'End') n = links.length - 1;
-    if (n < 0) return; e.preventDefault(); links[n].focus();
+    if (n < 0) {
+      if (e.key === ' ' || e.key === 'Spacebar') { e.preventDefault(); goSection($('evd'), l.getAttribute('data-sec'), false); }
+      return;
+    }
+    e.preventDefault();
+    var next = links[n], dialog = $('evd');
+    if (dialog) goSection(dialog, next.getAttribute('data-sec'), false);
+    next.focus();
   });
   /* Event overflow menu: infographic, open source, mark done (Today). */
   function closeEvMenu(restore){var m=document.querySelector('.evd-menu');if(!m)return;var b=m.parentNode.querySelector('[data-evmenu]');m.remove();if(b){b.setAttribute('aria-expanded','false');if(restore)b.focus();}}
