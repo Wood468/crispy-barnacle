@@ -7,7 +7,7 @@ import { discover, get } from "./discover.mjs";
 import { extractFields, hasContent, researchOptions } from "./extract.mjs";
 import { mergeSources } from "./compare.mjs";
 import { pageTitle, htmlToLines } from "./text.mjs";
-import { entriesFromPage, mergeWorld, collapseWorld, parseDateRange, placeOf, cleanTitle, tidyName, keepOldWorld, normUrl, sameWriteupRulings, preserveWorldSources, prioritizeWatchedPages, regionalSeedEntries } from "./world.mjs";
+import { entriesFromPage, mergeWorld, collapseWorld, parseDateRange, placeOf, cleanTitle, tidyName, keepOldWorld, normUrl, sameWriteupRulings, preserveWorldSources, prioritizeWatchedPages, regionalSeedEntries, sharedArticleKey } from "./world.mjs";
 import { matchEvent } from "../g47ix-review.mjs";
 import { discoverIntl, entryFromIntlPage, INTL_PATTERN } from "./intl.mjs";
 import { failRun } from "../fail-run.mjs";
@@ -343,7 +343,9 @@ async function main() {
     const knownUrls = new Set(knownWorld.flatMap(w => (w.sources || []).map(x => String(x.url || "").replace(/\/?$/, "/"))));
     let watched = []; try { watched = (JSON.parse(await readFile("data/watch-pages.json", "utf8")).pages || []).map(w => w.url).filter(u => INTL_PATTERN.test(String(u).replace(/\/?$/, "/"))); } catch { /* none */ }
     const intl = await discoverIntl(get, watched); intlStatus = intl.status;
+    const splitArticles = new Set([...splitUrls].map(sharedArticleKey));
     for (const f of intl.found.slice(0, 40)) {
+      if (splitArticles.has(sharedArticleKey(f.url))) continue; // do not recreate a country-only locale alias of split city events
       if (knownUrls.has(f.url)) continue; // already in the app (read before, or added by hand): never a second entry
       try { const html = await get(f.url); const e = entryFromIntlPage({ ...f, title: pageTitle(html) || f.title, lines: htmlToLines(html) }); if (e) entries.push(e); await new Promise(r => setTimeout(r, 400)); } catch (err) { errors.push(f.url + ": " + err.message); }
     }
@@ -354,7 +356,7 @@ async function main() {
   const today = new Date().toISOString().slice(0, 10), cutoff = new Date(Date.now() - 14 * 864e5).toISOString().slice(0, 10);
   let oldWorld = []; try { oldWorld = JSON.parse(await readFile(WORLD_OUT, "utf8")).events || []; } catch { /* first run */ }
   let watchUrls = new Set(); try { watchUrls = new Set((JSON.parse(await readFile("data/watch-pages.json", "utf8")).pages || []).map(w => normUrl(w.url))); } catch { /* no watch list */ }
-  let world = mergeWorld(entries, SOURCE_NAMES).filter(w => !w.start || (w.end || w.start) >= cutoff);
+  let world = mergeWorld(entries, SOURCE_NAMES).filter(w => w.ongoing || !w.start || (w.end || w.start) >= cutoff);
   const stopRulings = sameWriteupRulings(world.filter(w => (w.sources || []).length === 1));
   // Detect split destinations from this run before retaining only explicitly watched prior sources.
   world = preserveWorldSources(world, oldWorld, { watchUrls });
