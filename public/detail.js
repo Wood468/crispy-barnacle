@@ -899,47 +899,47 @@
     if (o.scrollTop + o.clientHeight >= o.scrollHeight - 4) cur = secs[secs.length - 1].getAttribute('data-sec');
     return cur;
   }
+  /* Section tabs: keep the existing source-backed panels mounted, but expose only one
+     at a time. This prevents Research from leaking into GO Pass or Tickets. */
+  function showPanel(o, id, focus) {
+    var sections = [].slice.call(o.querySelectorAll('.evd-sec'));
+    var selected = sections.find(function (section) { return section.getAttribute('data-sec') === id; });
+    if (!selected) return;
+    sections.forEach(function (section) {
+      var active = section === selected;
+      section.hidden = !active;
+      section.style.display = active ? '' : 'none';
+      section.setAttribute('aria-hidden', active ? 'false' : 'true');
+    });
+    o.querySelectorAll('.evd-nav-link').forEach(function (link) {
+      var active = link.getAttribute('data-sec') === id;
+      link.setAttribute('aria-selected', active ? 'true' : 'false');
+      link.setAttribute('tabindex', active ? '0' : '-1');
+    });
+    if (spy) spy.cur = id;
+    setActive(o, id);
+    o.scrollTop = 0;
+    if (focus) {
+      var heading = selected.querySelector('.evd-sec-h') || selected;
+      heading.setAttribute('tabindex', '-1');
+      heading.focus({ preventScroll: true });
+    }
+  }
   function spyInit(o, id) {
     spyDestroy();
-    if (history.scrollRestoration) { prevRestoration = history.scrollRestoration; try { history.scrollRestoration = 'manual'; } catch (e) { } }
-    var state = { o: o, id: id, lock: 0, raf: 0, io: null };
-    function tick() { state.raf = 0; if (state.lock) return; var cur = computeActive(o); if (cur && cur !== state.cur) { state.cur = cur; setActive(o, cur); } }
-    function ask() { if (!state.raf) state.raf = requestAnimationFrame(tick); }
-    state.onScroll = ask; state.onResize = function () { spyOffsets(o); ask(); navEdges(o); };
-    o.addEventListener('scroll', state.onScroll, { passive: true });
-    window.addEventListener('resize', state.onResize); window.addEventListener('orientationchange', state.onResize);
-    if (window.visualViewport) window.visualViewport.addEventListener('resize', state.onResize);
-    if ('IntersectionObserver' in window) { state.io = new IntersectionObserver(ask, { root: o, rootMargin: '-' + spyOffsets(o) + 'px 0px 0px 0px', threshold: [0, 1] }); o.querySelectorAll('.evd-sec').forEach(function (s) { state.io.observe(s); }); }
-    var strip = o.querySelector('.evd-nav-scroll'); if (strip) strip.addEventListener('scroll', function () { navEdges(o); }, { passive: true });
-    spy = state; spyOffsets(o); state.cur = ''; tick();
-    if (savedScroll[id]) { o.scrollTop = savedScroll[id]; tick(); }
+    spy = { o: o, id: id, cur: '' };
+    spyOffsets(o);
+    var sections = o.querySelectorAll('.evd-sec');
+    if (sections.length) showPanel(o, sections[0].getAttribute('data-sec'), false);
+    else setActive(o, 'overview');
   }
   function spyDestroy() {
-    if (!spy) return; var o = spy.o;
-    savedScroll[spy.id] = o.scrollTop;
-    o.removeEventListener('scroll', spy.onScroll); window.removeEventListener('resize', spy.onResize); window.removeEventListener('orientationchange', spy.onResize);
-    if (window.visualViewport) window.visualViewport.removeEventListener('resize', spy.onResize);
-    if (spy.io) spy.io.disconnect(); if (spy.raf) cancelAnimationFrame(spy.raf);
-    if (prevRestoration && history.scrollRestoration) { try { history.scrollRestoration = prevRestoration; } catch (e) { } }
+    if (!spy) return;
     spy = null;
   }
   function goSection(o, id, focus) {
-    var h = o.querySelector('#evd-h-' + id); if (!h || !spy) return;
-    var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches, stack = spyOffsets(o);
-    var top = h.getBoundingClientRect().top - o.getBoundingClientRect().top + o.scrollTop - stack - 8;
-    var max = o.scrollHeight - o.clientHeight, target = Math.max(0, Math.min(top, max));
-    spy.lock = 1; spy.cur = id; setActive(o, id);
-    o.scrollTo({ top: target, behavior: reduce ? 'auto' : 'smooth' });
-    // WebKit can emit scrollend for an interrupted/earlier smooth scroll. Only the
-    // latest navigation may unlock the spy; otherwise it resets the active link.
-    var navigation = (spy.navigation || 0) + 1; spy.navigation = navigation;
-    clearTimeout(spy.t);
-    spy.t = setTimeout(function () {
-      if (!spy || spy.o !== o || spy.navigation !== navigation) return;
-      spy.lock = 0;
-      if (focus) h.focus({ preventScroll: true });
-      spy.cur = ''; spy.raf = 0; spy.onScroll();
-    }, reduce ? 80 : 1100);
+    if (!spy || spy.o !== o) return;
+    showPanel(o, id, focus);
   }
   document.addEventListener('click', function (e) {
     var l = e.target.closest && e.target.closest('.evd-nav-link'); if (!l) return;
