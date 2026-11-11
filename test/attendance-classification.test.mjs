@@ -49,6 +49,21 @@ test("future overseas in-person events remain venue-bound despite Global wording
   assert.equal(att(regionLockedInGame), "regional-in-game");
 });
 
+test("structured attendance edge cases for future event imports", () => {
+  const venueObjRec = { name: "Synthetic Venue Event", venue: { name: "Sample Arena, Osaka, Japan" } };
+  assert.equal(att(venueObjRec), "in-person");
+  assert.equal(LIB.isInPersonWorldEvent(venueObjRec), true);
+
+  const geoCoordRec = { name: "Synthetic Geo Event", coordinates: { lat: 0, lng: 139.65 } };
+  assert.equal(att(geoCoordRec), "in-person");
+
+  const regionalInGameRec = { name: "Synthetic Regional In-Game", mode: "in-game", scope: "regional", city: "Tokyo" };
+  assert.equal(att(regionalInGameRec), "regional-in-game");
+
+  const worldwideTbcRec = { name: "Synthetic Worldwide Activity", location: "TBC", area: "Worldwide" };
+  assert.equal(att(worldwideTbcRec), "global");
+});
+
 test("classification ignores titles: a future record decides by structured data only", () => {
   // Title is full of in-person words but the record is global with no location data.
   assert.equal(att({ name: "Safari Zone Night Out Go Fest Wild Area In-Person Tour", scope: "global" }), "global");
