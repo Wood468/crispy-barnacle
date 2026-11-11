@@ -41,6 +41,31 @@ with sync_playwright() as pw:
 
         page.evaluate("GODETAIL.open('cur:wag')")
         page.wait_for_selector('#evd .ue-raid-days [data-raid-date="2026-11-14"]',timeout=25000)
+        # Incense uses the exact same subtle 20px corner treatment as eggs,
+        # without hiding paid-access signals or changing the encounter method.
+        incense=page.locator('#evd .ue-method[data-method="incense"] .ue-mon')
+        incense.first.wait_for(state='attached',timeout=15000)
+        incense_tile=incense.first
+        icon=incense_tile.locator('.ue-incense-corner img[src="/ico/incense.webp"]')
+        assert icon.count()==1,(width,'missing Incense corner artwork')
+        icon.scroll_into_view_if_needed(timeout=10000)
+        appearance=icon.evaluate("""img => {
+            const marker=img.parentElement, box=marker.getBoundingClientRect(), style=getComputedStyle(marker);
+            return {width:box.width,height:box.height,content:marker.textContent.trim(),
+                children:marker.children.length,background:style.backgroundColor,
+                border:style.borderTopWidth,shadow:style.boxShadow,
+                imgWidth:img.getBoundingClientRect().width};
+        }""")
+        assert appearance['children']==1 and not appearance['content'],(width,appearance)
+        assert 0<appearance['width']<=22 and 0<appearance['height']<=22,(width,appearance)
+        assert appearance['imgWidth']<=22,(width,appearance)
+        assert appearance['background']=='rgba(0, 0, 0, 0)',(width,appearance)
+        assert appearance['border']=='0px' and appearance['shadow']=='none',(width,appearance)
+        assert not incense_tile.locator('.ue-b-incense').count(),(width,'redundant Incense pill')
+        assert 'Incense' in (incense_tile.get_attribute('aria-label') or ''),(width,'lost accessible method')
+        incense_tile.screenshot(path=str(SHOTS/f'go-wild-incense-icon-{width}.png'),animations='disabled')
+        print('PASS GO Wild Area source-backed Incense icon-only tile at',width)
+
         egg=page.locator('#evd .ue-mon .ue-egg-corner.ue-egg-10')
 
         if egg.count()!=4:
