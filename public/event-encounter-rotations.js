@@ -9,7 +9,15 @@
 'use strict';
 function esc(raw){return String(raw==null?'':raw).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
 function norm(v){return String(v||'').trim().replace(/\s+/g,' ').toLowerCase();}
-function isDay(v){return /^\d{4}-\d{2}-\d{2}$/.test(v||'')&&Number.isFinite(Date.parse(v+'T12:00:00Z'));}
+function isDay(v){
+ if(!/^\d{4}-\d{2}-\d{2}$/.test(v||''))return false;
+ var date=new Date(v+'T12:00:00Z');
+ return Number.isFinite(+date)&&date.toISOString().slice(0,10)===v;
+}
+function isIanaZone(zone){
+ if(typeof zone!=='string'||!zone.trim())return false;
+ try{new Intl.DateTimeFormat('en',{timeZone:zone});return true;}catch(error){return false;}
+}
 function isTime(v){return /^(?:[01]\d|2[0-3]):[0-5]\d$/.test(String(v||''));}
 function clockMinutes(value){return Number(value.slice(0,2))*60+Number(value.slice(3,5));}
 function validate(entry){
@@ -18,7 +26,7 @@ function validate(entry){
  if(!entry.id||!Array.isArray(entry.eventIds)||!entry.eventIds.length)errors.push('A stable id and eventIds are required');
  if(!Array.isArray(entry.dates)||!entry.dates.length||entry.dates.some(function(d){return !isDay(d);}))errors.push('Explicit ISO local event dates are required');
  if(entry.timeBasis!=='player-local'&&entry.timeBasis!=='venue-local')errors.push('timeBasis must be player-local or venue-local');
- if(entry.timeBasis==='venue-local'&&!entry.timeZone)errors.push('venue-local events must identify an IANA timezone');
+ if(entry.timeBasis==='venue-local'&&!isIanaZone(entry.timeZone))errors.push('venue-local events must identify a valid IANA timezone');
  var seen={};
  (entry.habitats||[]).forEach(function(h){
   if(!h.id||!h.label||!Array.isArray(h.pokemon)||!h.pokemon.length)errors.push('Habitat needs id, label, and Pokémon');
