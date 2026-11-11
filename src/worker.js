@@ -254,15 +254,15 @@ export function artCandidates(raw) {
   // Explicit battle forms must resolve to their own sprite, never an ordinary species fallback.
   const deoxys = /^Deoxys \((Normal|Attack|Defense|Speed) Forme\)$/i.exec(n);
   if (deoxys) return { base: "deoxys", list: ["deoxys-" + deoxys[1].toLowerCase()], exact: true };
-  // PokeAPI uses "gimmighoul-roaming" (not "-roaming-form") for the
-  // exact Coin Bag/GO Pass encounter. Chest Form is the default species.
-  // Keep exact=true: a missing form must never silently display the other one.
   // GO Wild Area ticket Incense lists Unown D/I/L/W. PokeAPI stores each
   // alphabet letter as its own Pokémon form (unown-d, etc.), not base Unown.
   // Importer labels and display adapters may spell the same identity as
   // "Unown D", "Unown (D)" or "Unown D (d)". Never guess another letter.
   const unown = /^Unown\s*(?:\(\s*([A-Z])(?:\s+Form)?\s*\)|([A-Z])(?:\s*\(\s*\2\s*\))?)$/i.exec(n);
   if (unown) return { base: "unown", list: ["unown-" + (unown[1] || unown[2]).toLowerCase()], exact: true };
+  // PokeAPI uses "gimmighoul-roaming" (not "-roaming-form") for the
+  // exact Coin Bag/GO Pass encounter. Chest Form is the default species.
+  // Keep exact=true: a missing form must never silently display the other one.
   const gimmighoul = /^Gimmighoul\s*\((Roaming|Chest)\s+Form\)$/i.exec(n);
   if (gimmighoul) return { base: "gimmighoul", list: [gimmighoul[1].toLowerCase() === "roaming" ? "gimmighoul-roaming" : "gimmighoul"], exact: true };
   // Source articles also say "Zacian (Crowned Sword)"; both spellings
