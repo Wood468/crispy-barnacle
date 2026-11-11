@@ -2998,7 +2998,11 @@ with sync_playwright() as p:
         check('what\'s-new: after the next normal load no event is falsely listed as new', 'New events' not in headings, headings)
         wn.context.close()
         # 5. empty day: one calm line instead of 0 / 0 / 0; no decorative aria-label on the counts; "Got it" keeps its visible name
-        ed = page(clock='2027-09-15T03:00:00+10:00')
+        # Permanent, verified city rallies can now be active years after their start.
+        # An empty-day fixture must explicitly supply an empty world source rather
+        # than assuming every real event expires by September 2027.
+        ed = page(clock='2027-09-15T03:00:00+10:00',
+                  extra={'**/world-events.json': (json.dumps({'events': []}), 200)})
         st = ed.evaluate(TODAY_STATE_JS)
         check('empty day: the brief says so in one calm line instead of three zeros', ed.locator('#day-brief-empty').is_visible() and not st['statsShown'] and 'Nothing' in ed.locator('#day-brief-empty').inner_text(), st)
         ed.context.close()
