@@ -87,8 +87,9 @@ with sync_playwright() as p:
         assert f'{n} tasks' in header, header
         assert page.locator('#evd .evd-nav-link[data-sec="research"] .evd-nav-count').inner_text() == str(n)
         pc = page.locator('#evd .ue-pass-count').first.inner_text()
-        assert re.search(r'\d+ of 600 ranks listed', pc), pc
-        listed = int(re.match(r'(\d+) of', pc).group(1))
+        assert re.search(r'\d+ ranks with published entries · through Rank 600', pc), pc
+        listed = int(re.match(r'(\d+) ranks with published entries', pc).group(1))
+        assert 'of 600 ranks listed' not in pc, pc  # Do not imply every rank has published rewards.
         assert listed >= 100, listed
         # Single-panel Event Details keeps Research hidden until selected.
         page.locator('#evd .evd-nav-link[data-sec="research"]').click()
