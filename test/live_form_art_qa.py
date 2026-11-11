@@ -290,6 +290,25 @@ def main() -> int:
                         })
                         if not match:
                             errors.append(f"{primal} ({variant}): live bytes do not match exact PokeAPI form {form_id}")
+                # Every ticket Incense Unown letter is a distinct exact form;
+                # compare both normal and Shiny production bytes, never base 201.png.
+                for letter in ("D", "I", "L", "W"):
+                    for shiny in (False, True):
+                        variant = "shiny" if shiny else "regular"
+                        name = f"Unown {letter} ({letter.lower()})"
+                        live_url = BASE + "/api/art?n=" + quote(name, safe="") + ("&shiny=1" if shiny else "")
+                        image_path = ("shiny/" if shiny else "") + f"201-{letter.lower()}.png"
+                        expected_url = UPSTREAM + image_path
+                        live, live_body = get_image(request, live_url, errors, name + " " + variant + " live")
+                        expected, expected_body = get_image(request, expected_url, errors, name + " " + variant + " reference")
+                        match = bool(live_body and expected_body and live_body == expected_body)
+                        report["form_art"].append({
+                            "name": name, "expected_form_artwork": image_path,
+                            "shiny": shiny, "live": live, "reference": expected,
+                            "matches_exact_png": match,
+                        })
+                        if not match:
+                            errors.append(f"{name} ({variant}): live bytes do not match exact PokeAPI {image_path}")
                 # Explicitly reject a fabricated, unpublished future form.
                 missing_url = BASE + "/api/art?n=" + quote("Gimmighoul (unannounced future Form)", safe="")
                 response = request.get(missing_url, timeout=30000)
