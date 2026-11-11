@@ -364,6 +364,19 @@ button.ue-mon-featured .ue-mon-art .art{animation:none}
 .ue-factchips li{display:inline-flex;align-items:baseline;gap:6px;padding:6px 11px;border-radius:var(--radius-pill);border:1px solid var(--color-border);background:var(--color-surface);font-size:.8rem}
 .ue-factchips li span{font-size:.68rem;text-transform:uppercase;letter-spacing:.06em;color:var(--color-text-muted)}
 .ue-factchips li b{font-weight:800}
+/* Mobile Overview: three scannable facts, one horizontally discoverable
+   debut rail. All chips remain present in the document and keyboard reachable. */
+@media(max-width:560px){
+ .evd-in .ue-factchips{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+ .evd-in .ue-factchips li{display:flex;min-width:0;flex-direction:column;align-items:flex-start;justify-content:center;gap:1px;padding:7px 8px;border-radius:var(--radius-md);line-height:1.25}
+ .evd-in .ue-factchips li span{font-size:.65rem}
+ .evd-in .ue-factchips li b{font-size:.78rem;overflow-wrap:anywhere}
+ .evd-in .ue-debuts{min-width:0}
+ .evd-in .ue-debuts .ue-chips{display:flex;flex-wrap:nowrap;gap:7px;min-width:0;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x proximity;scrollbar-width:thin;scrollbar-color:var(--color-border) transparent;padding:2px 2px 8px}
+ .evd-in .ue-debuts .ue-chip{display:inline-flex;align-items:center;min-height:34px;flex:0 0 auto;white-space:nowrap;scroll-snap-align:start}
+}
+#evd .ue-debuts .ue-chips:focus-visible{outline:3px solid var(--color-text);outline-offset:2px}
+
 .ue-overview{gap:8px}
 .ue-times{gap:4px}.ue-time{padding:7px 12px}
 .evd-sec-h{margin-top:0}.evd-sections{gap:16px}
