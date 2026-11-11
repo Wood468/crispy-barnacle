@@ -164,6 +164,7 @@ test('the official AU offer gate rejects spoofed domains and unverified currency
   const rows = [
     base,
     { ...base,product:'spoof-host',url:'https://store.pokemongo.com.evil.test/' },
+    { ...base,product:'store-spoof',url:'https://store.pokemongo.com.evil.test/' },
     { ...base,product:'userinfo',url:'https://attacker@store.pokemongo.com/' },
     { ...base,product:'insecure',url:'http://store.pokemongo.com/' },
     { ...base,product:'missing-url',url:undefined },
