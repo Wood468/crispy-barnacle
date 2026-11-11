@@ -126,6 +126,55 @@ test('catalogue rows pair every Australian item with a verified or estimated reg
   assert.equal(matched.aud, 12); assert.equal(matched.indonesia.basis, 'verified'); assert.equal(matched.india, null);
   assert.ok(rows.length > 1, 'Regional-only products are also retained');
 });
+
+test('catalogue includes non-store-prefixed verified official AU Web Store offers without guessing labels', () => {
+  const offers = [
+    { product:'go-pass-oct-deluxe', currency:'AUD', region:'AU', amount:12.99, verified:true,
+      observed:'2026-10-11', source:'Official Web Store', url:'https://store.pokemongo.com/' },
+    { product:'go-pass-oct-deluxe', currency:'AUD', region:'AU', amount:13.99, verified:true,
+      observed:'2026-10-12', source:'Official Web Store, later verified observation', url:'https://store.pokemongo.com/' },
+    { product:'wild-area-2026-global-ultra-box', currency:'AUD', region:'AU', amount:17.99, verified:true,
+      observed:'2026-10-12', source:'Official Web Store', url:'https://store.pokemongo.com' },
+    { product:'safari-brisbane-2day', currency:'AUD', region:'AU', amount:17, verified:true,
+      observed:'2026-10-12', source:'Third-party event listing', url:'https://pokemongohub.net/post/event/example' },
+  ];
+  const result = R.catalogue(offers, [], NOW);
+  assert.equal(result.length, 2, 'both official SKU identities retained, external event offer excluded');
+  const latest = result.find(p => p.product === 'go-pass-oct-deluxe');
+  assert.equal(latest.aud, 13.99);
+  assert.equal(latest.observed, '2026-10-12');
+  assert.equal(latest.displayNameVerified, false, 'unknown human-readable product names must not be invented');
+  assert.ok(latest.label.includes('go-pass-oct-deluxe'), 'keep exact offer ID visible until a verified label is available');
+  assert.equal(latest.auSource, 'Official Web Store, later verified observation');
+  assert.equal(result.some(p => p.product === 'safari-brisbane-2day'), false);
+});
+
+test('new regional observations appear before older historical AU-only Store offers', () => {
+  const older = [{ product:'go-pass-oct-deluxe',currency:'AUD',region:'AU',amount:12.99,
+    verified:true,observed:'2026-10-12',url:'https://store.pokemongo.com/' }];
+  const rows = R.catalogue(older, [id('Latest Official Box', 'bundle', 41000)], NOW);
+  assert.equal(rows[0].label, 'Latest Official Box');
+  assert.equal(rows[1].product, 'go-pass-oct-deluxe');
+  assert.equal(rows[1].aud, 12.99);
+});
+
+test('the official AU offer gate rejects spoofed domains and unverified currency or prices', () => {
+  const base = { product:'go-pass-authentic',currency:'AUD',region:'AU',amount:12.99,
+    verified:true,observed:'2026-10-12',url:'https://store.pokemongo.com/' };
+  const rows = [
+    base,
+    { ...base,product:'spoof-host',url:'https://store.pokemongo.com.evil.test/' },
+    { ...base,product:'store-spoof',url:'https://store.pokemongo.com.evil.test/' },
+    { ...base,product:'userinfo',url:'https://attacker@store.pokemongo.com/' },
+    { ...base,product:'insecure',url:'http://store.pokemongo.com/' },
+    { ...base,product:'missing-url',url:undefined },
+    { ...base,product:'wrong-currency',currency:'USD' },
+    { ...base,product:'unverified',verified:false },
+    { ...base,product:'free',amount:0 },
+  ];
+  assert.deepEqual(R.catalogue(rows, [], NOW).map(p=>p.product), ['go-pass-authentic']);
+});
+
 test('Store script and regional module parse in a browser-like context', () => {
   for (const f of ['store.js', 'regional-prices.js']) assert.doesNotThrow(() => new vm.Script(fs.readFileSync(path.join(__dirname, '../public', f), 'utf8')));
   const src = fs.readFileSync(path.join(__dirname, '../public/store.js'), 'utf8');

@@ -134,16 +134,33 @@
     });
     return { flags: flags, ok: !flags.some(function (f) { return f.level === 'error' || f.level === 'stale'; }), checked: Object.keys(latest).length };
   }
-  /* Rows for the Store page: every AU catalogue item with the best Indonesian / Indian price known, verified or estimated. */
+  /* The old Store catalogue used a store- ID prefix. Older verified official
+     Web Store offers have other IDs. Trust their actual purchase host, never an
+     arbitrary external event ticket or a $ price with unknown currency. */
+  function officialStorePrice(p) {
+    if (!p || !p.product || p.region !== 'AU' || p.currency !== 'AUD' ||
+        p.verified !== true || !(p.amount > 0)) return false;
+    if (/^store-/.test(p.product) && !p.url) return true; /* legacy verified in-repo IDs */
+    try {
+      var u = new URL(p.url);
+      return u.protocol === 'https:' && u.hostname === 'store.pokemongo.com' &&
+        !u.username && !u.password && !u.port;
+    } catch (e) { return false; }
+  }
+  /* Rows for the Store page: every verified official AU SKU + regional-only items.
+     Never assign a product name not actually present in source metadata. */
   function catalogue(prices, obs, now) {
     var latest = {}, all = {};
     (prices || []).forEach(function (p) {
-      if (!p || p.currency !== 'AUD' || p.region !== 'AU' || p.verified !== true || !(p.amount > 0) || !/^store-/.test(p.product)) return;
+      if (!officialStorePrice(p)) return;
       if (!latest[p.product] || String(p.observed) > String(latest[p.product].observed)) latest[p.product] = p;
     });
     Object.keys(latest).forEach(function (key) {
-      var p = latest[key], label = p.label || key;
-      all[norm(label)] = { product: key, label: label, group: p.group || 'Other', aud: p.amount, observed: p.observed };
+      var p = latest[key], hasLabel = typeof p.label === 'string' && !!p.label.trim();
+      var label = hasLabel ? p.label : 'Official Store offer (' + key + ')';
+      all[norm(label)] = { product: key, label: label, group: p.group || 'Official Store offers',
+        aud: p.amount, observed: p.observed, auSource: p.source || null,
+        displayNameVerified: hasLabel };
     });
     (obs || []).forEach(function (o) {
       if (!usable(o) || !o.product) return;
@@ -153,8 +170,14 @@
     return Object.keys(all).map(function (key) {
       var p = all[key], kind = kindOf(p.label);
       return { product: p.product, label: p.label, group: p.group, kind: kind, aud: p.aud, observed: p.observed,
+        auSource: p.auSource || null, displayNameVerified: p.displayNameVerified === true,
         india: reference({ region: 'IN', channel: 'in-app', product: p.label, kind: kind, aud: p.aud }, obs, now),
         indonesia: reference({ region: 'ID', channel: 'web', product: p.label, kind: kind, aud: p.aud }, obs, now) };
+    }).sort(function (a, b) {
+      /* Recent observations first: old verified October offers remain findable,
+         without displacing newer products in a compact mobile catalogue. */
+      return String(b.observed || '').localeCompare(String(a.observed || '')) ||
+        String(a.label).localeCompare(String(b.label));
     });
   }
   function fmt(v, cur) { var sym = cur === 'IDR' ? 'Rp ' : cur === 'INR' ? '₹' : cur === 'AUD' ? 'A$' : ''; return sym + Number(v).toLocaleString('en-AU', cur === 'AUD' ? { minimumFractionDigits: 2, maximumFractionDigits: 2 } : { maximumFractionDigits: 0 }); }
