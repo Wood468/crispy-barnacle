@@ -5558,7 +5558,7 @@
        "status": "official"
       },
       {
-       "text": "Trainers who claimed the first tier of rewards in GO Pass: Into the Wild will automatically be upgraded to the GO Pass Deluxe, for free!",
+       "text": "Trainers who claimed the first rank of rewards in GO Pass: Into the Wild will automatically be upgraded to the GO Pass Deluxe, for free!",
        "sources": [
         "official"
        ],
@@ -5627,8 +5627,8 @@
      "end": "2026-11-23T20:00"
     },
     "imageReviewed": true,
-    "contentHash": "e3e285b1708b5c70bb5de9fcc9e50df2b047dc1f666e4ea0c5dfa4890ca8b015",
-    "revision": 6,
+    "contentHash": "86c7f4e3f7f209f6efad958e40a6dff3e63ec6d64c145a1d79b9a2affd417917",
+    "revision": 7,
     "amended": false,
     "native": false,
     "collection": "events"
@@ -5784,7 +5784,7 @@
      "status": "official"
     },
     {
-     "text": "Trainers who claimed the first tier of rewards in GO Pass: Into the Wild will automatically be upgraded to the GO Pass Deluxe, for free!",
+     "text": "Trainers who claimed the first rank of rewards in GO Pass: Into the Wild will automatically be upgraded to the GO Pass Deluxe, for free!",
      "sources": [
       "official"
      ],
@@ -5928,7 +5928,7 @@
     },
     "imageReviewed": true,
     "contentHash": "9c1e84fa3e57a9dc254240da56abb3e0fe3ea75b86697d72cfd7a5408efad52a",
-    "revision": 42,
+    "revision": 44,
     "amended": true,
     "native": false,
     "collection": "events"
@@ -11193,8 +11193,8 @@
      "end": "2026-11-13"
     },
     "imageReviewed": true,
-    "contentHash": "1fa39fe5e7b93c620790b449b3231921af04693d52c37155a08db0747c851d23",
-    "revision": 27,
+    "contentHash": "ddbbf0104b0c688b7463e89a24651002d6bd894a68b3d5a2abdcfdf41c34e681",
+    "revision": 28,
     "amended": false,
     "native": false,
     "collection": "events"
@@ -11395,6 +11395,7 @@
        "cpMax": 583
       }
      ],
+     "occurrence": 1,
      "sources": [
       "leekduck"
      ],
@@ -11413,7 +11414,7 @@
       "start": "2026-11-09T10:00",
       "end": "2026-11-13T20:00"
      },
-     "checkedAt": "2026-11-10"
+     "checkedAt": "2026-11-11"
     },
     {
      "task": "Catch a Dynamax Machop",
@@ -11430,6 +11431,7 @@
        "quantity": 5000
       }
      ],
+     "occurrence": 1,
      "sources": [
       "leekduck"
      ],
@@ -11448,7 +11450,7 @@
       "start": "2026-11-09T10:00",
       "end": "2026-11-13T20:00"
      },
-     "checkedAt": "2026-11-10"
+     "checkedAt": "2026-11-11"
     },
     {
      "task": "Catch a Dynamax Ralts",
@@ -11465,6 +11467,7 @@
        "quantity": 5000
       }
      ],
+     "occurrence": 1,
      "sources": [
       "leekduck"
      ],
@@ -11483,7 +11486,7 @@
       "start": "2026-11-09T10:00",
       "end": "2026-11-13T20:00"
      },
-     "checkedAt": "2026-11-10"
+     "checkedAt": "2026-11-11"
     },
     {
      "task": "Power up Dragon‑type Pokémon 5 times",
@@ -11518,6 +11521,7 @@
        "cpMax": 452
       }
      ],
+     "occurrence": 1,
      "sources": [
       "leekduck"
      ],
@@ -11536,7 +11540,7 @@
       "start": "2026-11-09T10:00",
       "end": "2026-11-13T20:00"
      },
-     "checkedAt": "2026-11-10"
+     "checkedAt": "2026-11-11"
     },
     {
      "task": "Power up Steel‑type Pokémon 5 times",
@@ -11571,6 +11575,7 @@
        "cpMax": 443
       }
      ],
+     "occurrence": 1,
      "sources": [
       "leekduck"
      ],
@@ -11589,7 +11594,7 @@
       "start": "2026-11-09T10:00",
       "end": "2026-11-13T20:00"
      },
-     "checkedAt": "2026-11-10"
+     "checkedAt": "2026-11-11"
     },
     {
      "task": "Win a Max Battle",
@@ -11610,6 +11615,7 @@
        "cpMax": 700
       }
      ],
+     "occurrence": 1,
      "sources": [
       "leekduck"
      ],
@@ -11628,7 +11634,7 @@
       "start": "2026-11-09T10:00",
       "end": "2026-11-13T20:00"
      },
-     "checkedAt": "2026-11-10"
+     "checkedAt": "2026-11-11"
     },
     {
      "task": "Win a raid",
@@ -11654,6 +11660,7 @@
        "cpMax": 1160
       }
      ],
+     "occurrence": 1,
      "sources": [
       "leekduck"
      ],
@@ -11672,7 +11679,7 @@
       "start": "2026-11-09T10:00",
       "end": "2026-11-13T20:00"
      },
-     "checkedAt": "2026-11-10"
+     "checkedAt": "2026-11-11"
     },
     {
      "text": "Pokémon GO Wild Area–themed Field Research tasks will be available throughout the event! Complete the research tasks to earn encounters with event themed Pokémon and other rewards.",
@@ -20908,8 +20915,8 @@
      "end": ""
     },
     "imageReviewed": true,
-    "contentHash": "1c2069d0f41032f7d98061ea90334122d30f31a7fd79d32dfe0ac560ff220b99",
-    "revision": 5,
+    "contentHash": "0a877a0d6cc77b9e9bc35f3b9a7d5578afec473eac2aeaef6f0e0cd8a84f6210",
+    "revision": 6,
     "amended": false,
     "native": false,
     "collection": "source-details"
@@ -20986,6 +20993,7 @@
        "quantity": 500
       }
      ],
+     "occurrence": 1,
      "sources": [
       "leekduck"
      ],
@@ -21004,7 +21012,7 @@
       "start": "2026-11-21T14:00:00.000",
       "end": "2026-11-21T17:00:00.000"
      },
-     "checkedAt": "2026-11-10"
+     "checkedAt": "2026-11-11"
     },
     {
      "task": "Catch 5 Pokemon while in a Party",
@@ -21018,6 +21026,7 @@
        "cpMax": 614
       }
      ],
+     "occurrence": 1,
      "sources": [
       "leekduck"
      ],
@@ -21036,7 +21045,7 @@
       "start": "2026-11-21T14:00:00.000",
       "end": "2026-11-21T17:00:00.000"
      },
-     "checkedAt": "2026-11-10"
+     "checkedAt": "2026-11-11"
     },
     {
      "task": "Catch 50 Pokemon",
@@ -21050,6 +21059,7 @@
        "cpMax": 614
       }
      ],
+     "occurrence": 1,
      "sources": [
       "leekduck"
      ],
@@ -21068,7 +21078,7 @@
       "start": "2026-11-21T14:00:00.000",
       "end": "2026-11-21T17:00:00.000"
      },
-     "checkedAt": "2026-11-10"
+     "checkedAt": "2026-11-11"
     },
     {
      "text": "Catch 3 Pawniard POSSIBLE REWARDS Pawniard Max CP 614 Min CP 574 ×5 Great Ball ×5 ×2 Ultra Ball ×2 +2 ×2 Pinap Berry ×2 ×500 Stardust ×500",
@@ -23816,8 +23826,8 @@
      "end": "2026-11-08"
     },
     "imageReviewed": true,
-    "contentHash": "a23e23d0e3e18e4969942a4d4e4103ea19e031cb99a40f13584268023e24b5f7",
-    "revision": 11,
+    "contentHash": "cf063f260b9ab8efa7310cdba07e1adb18058d76ba4ed474a3d6aa633ca5278b",
+    "revision": 12,
     "amended": false,
     "native": false,
     "collection": "worldEvents"
@@ -23910,13 +23920,14 @@
        "quantity": 1
       }
      ],
+     "occurrence": 1,
      "eventId": "leekduck:pokemon-go-wild-area-2026-mexico-city",
      "eventName": "Pokémon GO Wild Area 2026: Mexico City",
      "eventWindow": {
       "start": null,
       "end": null
      },
-     "checkedAt": "2026-11-10"
+     "checkedAt": "2026-11-11"
     },
     {
      "task": "Power up Dragon‑type Pokémon 5 times",
@@ -23944,13 +23955,14 @@
        "cpMax": 418
       }
      ],
+     "occurrence": 1,
      "eventId": "leekduck:pokemon-go-wild-area-2026-mexico-city",
      "eventName": "Pokémon GO Wild Area 2026: Mexico City",
      "eventWindow": {
       "start": null,
       "end": null
      },
-     "checkedAt": "2026-11-10"
+     "checkedAt": "2026-11-11"
     },
     {
      "task": "Win 2 raids",
@@ -23982,13 +23994,14 @@
        "cpMax": 1430
       }
      ],
+     "occurrence": 1,
      "eventId": "leekduck:pokemon-go-wild-area-2026-mexico-city",
      "eventName": "Pokémon GO Wild Area 2026: Mexico City",
      "eventWindow": {
       "start": null,
       "end": null
      },
-     "checkedAt": "2026-11-10"
+     "checkedAt": "2026-11-11"
     },
     {
      "task": "Win a Max Battle",
@@ -24020,13 +24033,14 @@
        "mighty": true
       }
      ],
+     "occurrence": 1,
      "eventId": "leekduck:pokemon-go-wild-area-2026-mexico-city",
      "eventName": "Pokémon GO Wild Area 2026: Mexico City",
      "eventWindow": {
       "start": null,
       "end": null
      },
-     "checkedAt": "2026-11-10"
+     "checkedAt": "2026-11-11"
     },
     {
      "task": "Catch 10 Steel‑type Pokémon",
@@ -24050,13 +24064,14 @@
        "quantity": 2000
       }
      ],
+     "occurrence": 1,
      "eventId": "leekduck:pokemon-go-wild-area-2026-mexico-city",
      "eventName": "Pokémon GO Wild Area 2026: Mexico City",
      "eventWindow": {
       "start": null,
       "end": null
      },
-     "checkedAt": "2026-11-10"
+     "checkedAt": "2026-11-11"
     },
     {
      "task": "Catch a Hisuian Sliggoo",
@@ -24070,13 +24085,14 @@
        "cpMax": 829
       }
      ],
+     "occurrence": 1,
      "eventId": "leekduck:pokemon-go-wild-area-2026-mexico-city",
      "eventName": "Pokémon GO Wild Area 2026: Mexico City",
      "eventWindow": {
       "start": null,
       "end": null
      },
-     "checkedAt": "2026-11-10"
+     "checkedAt": "2026-11-11"
     },
     {
      "task": "Hatch an Egg",
@@ -24097,13 +24113,14 @@
        "cpMax": 1249
       }
      ],
+     "occurrence": 1,
      "eventId": "leekduck:pokemon-go-wild-area-2026-mexico-city",
      "eventName": "Pokémon GO Wild Area 2026: Mexico City",
      "eventWindow": {
       "start": null,
       "end": null
      },
-     "checkedAt": "2026-11-10"
+     "checkedAt": "2026-11-11"
     },
     {
      "task": "Power up Steel‑type Pokémon 5 times",
@@ -24131,13 +24148,14 @@
        "cpMax": 472
       }
      ],
+     "occurrence": 1,
      "eventId": "leekduck:pokemon-go-wild-area-2026-mexico-city",
      "eventName": "Pokémon GO Wild Area 2026: Mexico City",
      "eventWindow": {
       "start": null,
       "end": null
      },
-     "checkedAt": "2026-11-10"
+     "checkedAt": "2026-11-11"
     },
     {
      "task": "Use a Steel‑type Charged Attack in a battle",
@@ -24159,13 +24177,14 @@
        "cpMax": 381
       }
      ],
+     "occurrence": 1,
      "eventId": "leekduck:pokemon-go-wild-area-2026-mexico-city",
      "eventName": "Pokémon GO Wild Area 2026: Mexico City",
      "eventWindow": {
       "start": null,
       "end": null
      },
-     "checkedAt": "2026-11-10"
+     "checkedAt": "2026-11-11"
     },
     {
      "task": "Explore 2 km",
@@ -24181,13 +24200,14 @@
        "mighty": true
       }
      ],
+     "occurrence": 1,
      "eventId": "leekduck:pokemon-go-wild-area-2026-mexico-city",
      "eventName": "Pokémon GO Wild Area 2026: Mexico City",
      "eventWindow": {
       "start": null,
       "end": null
      },
-     "checkedAt": "2026-11-10"
+     "checkedAt": "2026-11-11"
     },
     {
      "task": "Use a Dragon‑type Charged Attack in a battle",
@@ -24202,13 +24222,14 @@
        "cpMax": 1418
       }
      ],
+     "occurrence": 1,
      "eventId": "leekduck:pokemon-go-wild-area-2026-mexico-city",
      "eventName": "Pokémon GO Wild Area 2026: Mexico City",
      "eventWindow": {
       "start": null,
       "end": null
      },
-     "checkedAt": "2026-11-10"
+     "checkedAt": "2026-11-11"
     },
     {
      "task": "Make an Excellent Throw",
@@ -24234,13 +24255,14 @@
        "mighty": true
       }
      ],
+     "occurrence": 1,
      "eventId": "leekduck:pokemon-go-wild-area-2026-mexico-city",
      "eventName": "Pokémon GO Wild Area 2026: Mexico City",
      "eventWindow": {
       "start": null,
       "end": null
      },
-     "checkedAt": "2026-11-10"
+     "checkedAt": "2026-11-11"
     },
     {
      "text": "Two Timed Research experiences guide you through specially decorated PokéStops across the city. Spin the corresponding stops to progress; these can also help you navigate between Stamp Rally locations.",
@@ -26457,7 +26479,8 @@
      "moves": [],
      "costumes": [],
      "tickets": [],
-     "dates": []
+     "dates": [],
+     "researchTasks": []
     },
     "info": [
      {
@@ -26508,7 +26531,7 @@
     },
     "imageReviewed": true,
     "contentHash": "244e1a218c776c7de71a786fe7a96bc90d5ca2212bc0e2a5060da28a5e71b680",
-    "revision": 57,
+    "revision": 59,
     "amended": true,
     "native": false,
     "collection": "source-details"
@@ -32040,8 +32063,8 @@
      "end": "2026-10-24T23:59"
     },
     "imageReviewed": true,
-    "contentHash": "e57beda84a47943488cd48789410a13021af2efb09c52ac6a2d2bd5f2db561cf",
-    "revision": 4,
+    "contentHash": "a8b9e87bb8c28d26ea9693bc5e38a03d70befd8aa025260d3be8ae4c750a8415",
+    "revision": 5,
     "amended": false,
     "native": false,
     "collection": "events"
@@ -32119,6 +32142,7 @@
        "quantity": 1
       }
      ],
+     "occurrence": 1,
      "sources": [
       "hub"
      ],
@@ -32137,7 +32161,7 @@
       "start": "2026-10-19T17:00",
       "end": "2026-10-24T23:59"
      },
-     "checkedAt": "2026-11-10"
+     "checkedAt": "2026-11-11"
     },
     {
      "task": "Use a Star Piece",
@@ -32149,6 +32173,7 @@
        "quantity": 774
       }
      ],
+     "occurrence": 1,
      "sources": [
       "hub"
      ],
@@ -32167,7 +32192,7 @@
       "start": "2026-10-19T17:00",
       "end": "2026-10-24T23:59"
      },
-     "checkedAt": "2026-11-10"
+     "checkedAt": "2026-11-11"
     },
     {
      "task": "Claim Reward!",
@@ -32179,6 +32204,7 @@
        "quantity": 1
       }
      ],
+     "occurrence": 1,
      "sources": [
       "hub"
      ],
@@ -32197,7 +32223,7 @@
       "start": "2026-10-19T17:00",
       "end": "2026-10-24T23:59"
      },
-     "checkedAt": "2026-11-10"
+     "checkedAt": "2026-11-11"
     },
     {
      "task": "Use a Star Piece",
@@ -32209,6 +32235,7 @@
        "quantity": 7740
       }
      ],
+     "occurrence": 1,
      "sources": [
       "hub"
      ],
@@ -32227,7 +32254,131 @@
       "start": "2026-10-19T17:00",
       "end": "2026-10-24T23:59"
      },
-     "checkedAt": "2026-11-10"
+     "checkedAt": "2026-11-11"
+    },
+    {
+     "task": "Use a Star Piece",
+     "category": "timed",
+     "rewards": [
+      {
+       "type": "item",
+       "name": "Stardust",
+       "quantity": 7740
+      }
+     ],
+     "occurrence": 2,
+     "sources": [
+      "hub"
+     ],
+     "sourceRefs": [
+      {
+       "id": "hub",
+       "name": "Pokémon GO Hub",
+       "trust": "community",
+       "url": "https://pokemongohub.net/post/event/minior-showers-orionids-october-2026/"
+      }
+     ],
+     "status": "single",
+     "eventId": "minior",
+     "eventName": "Orionids Meteor Shower: Minior Debut",
+     "eventWindow": {
+      "start": "2026-10-19T17:00",
+      "end": "2026-10-24T23:59"
+     },
+     "checkedAt": "2026-11-11"
+    },
+    {
+     "task": "Use a Star Piece",
+     "category": "timed",
+     "rewards": [
+      {
+       "type": "item",
+       "name": "Stardust",
+       "quantity": 7740
+      }
+     ],
+     "occurrence": 3,
+     "sources": [
+      "hub"
+     ],
+     "sourceRefs": [
+      {
+       "id": "hub",
+       "name": "Pokémon GO Hub",
+       "trust": "community",
+       "url": "https://pokemongohub.net/post/event/minior-showers-orionids-october-2026/"
+      }
+     ],
+     "status": "single",
+     "eventId": "minior",
+     "eventName": "Orionids Meteor Shower: Minior Debut",
+     "eventWindow": {
+      "start": "2026-10-19T17:00",
+      "end": "2026-10-24T23:59"
+     },
+     "checkedAt": "2026-11-11"
+    },
+    {
+     "task": "Use a Star Piece",
+     "category": "timed",
+     "rewards": [
+      {
+       "type": "item",
+       "name": "Stardust",
+       "quantity": 7740
+      }
+     ],
+     "occurrence": 4,
+     "sources": [
+      "hub"
+     ],
+     "sourceRefs": [
+      {
+       "id": "hub",
+       "name": "Pokémon GO Hub",
+       "trust": "community",
+       "url": "https://pokemongohub.net/post/event/minior-showers-orionids-october-2026/"
+      }
+     ],
+     "status": "single",
+     "eventId": "minior",
+     "eventName": "Orionids Meteor Shower: Minior Debut",
+     "eventWindow": {
+      "start": "2026-10-19T17:00",
+      "end": "2026-10-24T23:59"
+     },
+     "checkedAt": "2026-11-11"
+    },
+    {
+     "task": "Use a Star Piece",
+     "category": "timed",
+     "rewards": [
+      {
+       "type": "item",
+       "name": "Stardust",
+       "quantity": 7740
+      }
+     ],
+     "occurrence": 5,
+     "sources": [
+      "hub"
+     ],
+     "sourceRefs": [
+      {
+       "id": "hub",
+       "name": "Pokémon GO Hub",
+       "trust": "community",
+       "url": "https://pokemongohub.net/post/event/minior-showers-orionids-october-2026/"
+      }
+     ],
+     "status": "single",
+     "eventId": "minior",
+     "eventName": "Orionids Meteor Shower: Minior Debut",
+     "eventWindow": {
+      "start": "2026-10-19T17:00",
+      "end": "2026-10-24T23:59"
+     },
+     "checkedAt": "2026-11-11"
     },
     {
      "text": "Free Timed Research is available during Minior Showers, rewarding a Star Piece and a total of 116,100 Stardust .",
@@ -32546,8 +32697,8 @@
      "end": "2026-11-19T23:59"
     },
     "imageReviewed": true,
-    "contentHash": "43d2c5a5e512762218f990682ee5edc4c0e9486997b3bc6708a7ef432ca7996b",
-    "revision": 6,
+    "contentHash": "3743d9eb2a76a7d9449848404bc9cee3a89566747059547c7e0e0a14fac12bc3",
+    "revision": 7,
     "amended": false,
     "native": false,
     "collection": "events"
@@ -32630,6 +32781,7 @@
        "quantity": 1
       }
      ],
+     "occurrence": 1,
      "sources": [
       "hub"
      ],
@@ -32648,7 +32800,7 @@
       "start": "2026-11-14T17:00",
       "end": "2026-11-19T23:59"
      },
-     "checkedAt": "2026-11-10"
+     "checkedAt": "2026-11-11"
     },
     {
      "task": "Use a Star Piece",
@@ -32660,6 +32812,7 @@
        "quantity": 7740
       }
      ],
+     "occurrence": 1,
      "sources": [
       "hub"
      ],
@@ -32678,7 +32831,7 @@
       "start": "2026-11-14T17:00",
       "end": "2026-11-19T23:59"
      },
-     "checkedAt": "2026-11-10"
+     "checkedAt": "2026-11-11"
     },
     {
      "task": "Claim Reward!",
@@ -32690,6 +32843,7 @@
        "quantity": 1
       }
      ],
+     "occurrence": 1,
      "sources": [
       "hub"
      ],
@@ -32708,7 +32862,7 @@
       "start": "2026-11-14T17:00",
       "end": "2026-11-19T23:59"
      },
-     "checkedAt": "2026-11-10"
+     "checkedAt": "2026-11-11"
     },
     {
      "task": "Use a Star Piece",
@@ -32720,6 +32874,7 @@
        "quantity": 7740
       }
      ],
+     "occurrence": 1,
      "sources": [
       "hub"
      ],
@@ -32738,7 +32893,131 @@
       "start": "2026-11-14T17:00",
       "end": "2026-11-19T23:59"
      },
-     "checkedAt": "2026-11-10"
+     "checkedAt": "2026-11-11"
+    },
+    {
+     "task": "Use a Star Piece",
+     "category": "timed",
+     "rewards": [
+      {
+       "type": "item",
+       "name": "Stardust",
+       "quantity": 7740
+      }
+     ],
+     "occurrence": 2,
+     "sources": [
+      "hub"
+     ],
+     "sourceRefs": [
+      {
+       "id": "hub",
+       "name": "Pokémon GO Hub",
+       "trust": "community",
+       "url": "https://pokemongohub.net/post/event/minior-showers-leonid-november-2026/"
+      }
+     ],
+     "status": "single",
+     "eventId": "minior2",
+     "eventName": "Minior Showers: Leonids",
+     "eventWindow": {
+      "start": "2026-11-14T17:00",
+      "end": "2026-11-19T23:59"
+     },
+     "checkedAt": "2026-11-11"
+    },
+    {
+     "task": "Use a Star Piece",
+     "category": "timed",
+     "rewards": [
+      {
+       "type": "item",
+       "name": "Stardust",
+       "quantity": 7740
+      }
+     ],
+     "occurrence": 3,
+     "sources": [
+      "hub"
+     ],
+     "sourceRefs": [
+      {
+       "id": "hub",
+       "name": "Pokémon GO Hub",
+       "trust": "community",
+       "url": "https://pokemongohub.net/post/event/minior-showers-leonid-november-2026/"
+      }
+     ],
+     "status": "single",
+     "eventId": "minior2",
+     "eventName": "Minior Showers: Leonids",
+     "eventWindow": {
+      "start": "2026-11-14T17:00",
+      "end": "2026-11-19T23:59"
+     },
+     "checkedAt": "2026-11-11"
+    },
+    {
+     "task": "Use a Star Piece",
+     "category": "timed",
+     "rewards": [
+      {
+       "type": "item",
+       "name": "Stardust",
+       "quantity": 7740
+      }
+     ],
+     "occurrence": 4,
+     "sources": [
+      "hub"
+     ],
+     "sourceRefs": [
+      {
+       "id": "hub",
+       "name": "Pokémon GO Hub",
+       "trust": "community",
+       "url": "https://pokemongohub.net/post/event/minior-showers-leonid-november-2026/"
+      }
+     ],
+     "status": "single",
+     "eventId": "minior2",
+     "eventName": "Minior Showers: Leonids",
+     "eventWindow": {
+      "start": "2026-11-14T17:00",
+      "end": "2026-11-19T23:59"
+     },
+     "checkedAt": "2026-11-11"
+    },
+    {
+     "task": "Use a Star Piece",
+     "category": "timed",
+     "rewards": [
+      {
+       "type": "item",
+       "name": "Stardust",
+       "quantity": 7740
+      }
+     ],
+     "occurrence": 5,
+     "sources": [
+      "hub"
+     ],
+     "sourceRefs": [
+      {
+       "id": "hub",
+       "name": "Pokémon GO Hub",
+       "trust": "community",
+       "url": "https://pokemongohub.net/post/event/minior-showers-leonid-november-2026/"
+      }
+     ],
+     "status": "single",
+     "eventId": "minior2",
+     "eventName": "Minior Showers: Leonids",
+     "eventWindow": {
+      "start": "2026-11-14T17:00",
+      "end": "2026-11-19T23:59"
+     },
+     "checkedAt": "2026-11-11"
     },
     {
      "text": "Task | Rewards",
@@ -38617,8 +38896,8 @@
      "end": "2026-11-13T20:00"
     },
     "imageReviewed": true,
-    "contentHash": "814c8f50750db55886c2239422af22c000e16c86ef415e4b897ca461898f89a6",
-    "revision": 11,
+    "contentHash": "27b690f3e49faf1ec5de66a2665837719779d7bf16852dc175cee2b6d5b9c44d",
+    "revision": 12,
     "amended": false,
     "native": false,
     "collection": "rotation"
@@ -38758,6 +39037,7 @@
        "cpMax": 583
       }
      ],
+     "occurrence": 1,
      "sources": [
       "leekduck"
      ],
@@ -38776,7 +39056,7 @@
       "start": "2026-11-09T10:00",
       "end": "2026-11-13T20:00"
      },
-     "checkedAt": "2026-11-10"
+     "checkedAt": "2026-11-11"
     },
     {
      "task": "Catch a Dynamax Machop",
@@ -38793,6 +39073,7 @@
        "quantity": 5000
       }
      ],
+     "occurrence": 1,
      "sources": [
       "leekduck"
      ],
@@ -38811,7 +39092,7 @@
       "start": "2026-11-09T10:00",
       "end": "2026-11-13T20:00"
      },
-     "checkedAt": "2026-11-10"
+     "checkedAt": "2026-11-11"
     },
     {
      "task": "Catch a Dynamax Ralts",
@@ -38828,6 +39109,7 @@
        "quantity": 5000
       }
      ],
+     "occurrence": 1,
      "sources": [
       "leekduck"
      ],
@@ -38846,7 +39128,7 @@
       "start": "2026-11-09T10:00",
       "end": "2026-11-13T20:00"
      },
-     "checkedAt": "2026-11-10"
+     "checkedAt": "2026-11-11"
     },
     {
      "task": "Power up Dragon‑type Pokémon 5 times",
@@ -38881,6 +39163,7 @@
        "cpMax": 452
       }
      ],
+     "occurrence": 1,
      "sources": [
       "leekduck"
      ],
@@ -38899,7 +39182,7 @@
       "start": "2026-11-09T10:00",
       "end": "2026-11-13T20:00"
      },
-     "checkedAt": "2026-11-10"
+     "checkedAt": "2026-11-11"
     },
     {
      "task": "Power up Steel‑type Pokémon 5 times",
@@ -38934,6 +39217,7 @@
        "cpMax": 443
       }
      ],
+     "occurrence": 1,
      "sources": [
       "leekduck"
      ],
@@ -38952,7 +39236,7 @@
       "start": "2026-11-09T10:00",
       "end": "2026-11-13T20:00"
      },
-     "checkedAt": "2026-11-10"
+     "checkedAt": "2026-11-11"
     },
     {
      "task": "Win a Max Battle",
@@ -38973,6 +39257,7 @@
        "cpMax": 700
       }
      ],
+     "occurrence": 1,
      "sources": [
       "leekduck"
      ],
@@ -38991,7 +39276,7 @@
       "start": "2026-11-09T10:00",
       "end": "2026-11-13T20:00"
      },
-     "checkedAt": "2026-11-10"
+     "checkedAt": "2026-11-11"
     },
     {
      "task": "Win a raid",
@@ -39017,6 +39302,7 @@
        "cpMax": 1160
       }
      ],
+     "occurrence": 1,
      "sources": [
       "leekduck"
      ],
@@ -39035,7 +39321,7 @@
       "start": "2026-11-09T10:00",
       "end": "2026-11-13T20:00"
      },
-     "checkedAt": "2026-11-10"
+     "checkedAt": "2026-11-11"
     },
     {
      "text": "Pokémon GO Wild Area–themed Field Research tasks will be available throughout the event! Complete the research tasks to earn encounters with event themed Pokémon and other rewards.",
@@ -46446,8 +46732,8 @@
      "end": "2026-11-08"
     },
     "imageReviewed": true,
-    "contentHash": "b6a317f0772fe397a39d0bda8fa18b2eb119a9840b36f87d460116c33c734053",
-    "revision": 13,
+    "contentHash": "3b0d5b03dbf10999a288a1889dd4b95e4fe7be35024bc45271d1643f6ec90200",
+    "revision": 14,
     "amended": false,
     "native": false,
     "collection": "events"
@@ -46533,6 +46819,7 @@
        "quantity": 1
       }
      ],
+     "occurrence": 1,
      "sources": [
       "leekduck"
      ],
@@ -46551,7 +46838,7 @@
       "start": "2026-11-06T10:00",
       "end": "2026-11-08T18:00"
      },
-     "checkedAt": "2026-11-10"
+     "checkedAt": "2026-11-11"
     },
     {
      "task": "Catch 10 Steel‑type Pokémon",
@@ -46575,6 +46862,7 @@
        "quantity": 2000
       }
      ],
+     "occurrence": 1,
      "sources": [
       "leekduck"
      ],
@@ -46593,7 +46881,7 @@
       "start": "2026-11-06T10:00",
       "end": "2026-11-08T18:00"
      },
-     "checkedAt": "2026-11-10"
+     "checkedAt": "2026-11-11"
     },
     {
      "task": "Catch a Hisuian Sliggoo",
@@ -46607,6 +46895,7 @@
        "cpMax": 829
       }
      ],
+     "occurrence": 1,
      "sources": [
       "leekduck"
      ],
@@ -46625,7 +46914,7 @@
       "start": "2026-11-06T10:00",
       "end": "2026-11-08T18:00"
      },
-     "checkedAt": "2026-11-10"
+     "checkedAt": "2026-11-11"
     },
     {
      "task": "Explore 2 km",
@@ -46641,6 +46930,7 @@
        "mighty": true
       }
      ],
+     "occurrence": 1,
      "sources": [
       "leekduck"
      ],
@@ -46659,7 +46949,7 @@
       "start": "2026-11-06T10:00",
       "end": "2026-11-08T18:00"
      },
-     "checkedAt": "2026-11-10"
+     "checkedAt": "2026-11-11"
     },
     {
      "task": "Hatch an Egg",
@@ -46680,6 +46970,7 @@
        "cpMax": 1249
       }
      ],
+     "occurrence": 1,
      "sources": [
       "leekduck"
      ],
@@ -46698,7 +46989,7 @@
       "start": "2026-11-06T10:00",
       "end": "2026-11-08T18:00"
      },
-     "checkedAt": "2026-11-10"
+     "checkedAt": "2026-11-11"
     },
     {
      "task": "Make an Excellent Throw",
@@ -46715,6 +47006,7 @@
        "quantity": 2
       }
      ],
+     "occurrence": 1,
      "sources": [
       "leekduck"
      ],
@@ -46733,7 +47025,7 @@
       "start": "2026-11-06T10:00",
       "end": "2026-11-08T18:00"
      },
-     "checkedAt": "2026-11-10"
+     "checkedAt": "2026-11-11"
     },
     {
      "task": "Power up Dragon‑type Pokémon 5 times",
@@ -46747,6 +47039,7 @@
        "cpMax": 534
       }
      ],
+     "occurrence": 1,
      "sources": [
       "leekduck"
      ],
@@ -46765,7 +47058,7 @@
       "start": "2026-11-06T10:00",
       "end": "2026-11-08T18:00"
      },
-     "checkedAt": "2026-11-10"
+     "checkedAt": "2026-11-11"
     },
     {
      "task": "Power up Steel‑type Pokémon 5 times",
@@ -46793,6 +47086,7 @@
        "cpMax": 472
       }
      ],
+     "occurrence": 1,
      "sources": [
       "leekduck"
      ],
@@ -46811,7 +47105,7 @@
       "start": "2026-11-06T10:00",
       "end": "2026-11-08T18:00"
      },
-     "checkedAt": "2026-11-10"
+     "checkedAt": "2026-11-11"
     },
     {
      "task": "Use a Dragon‑type Charged Attack in a battle",
@@ -46826,6 +47120,7 @@
        "cpMax": 1418
       }
      ],
+     "occurrence": 1,
      "sources": [
       "leekduck"
      ],
@@ -46844,7 +47139,7 @@
       "start": "2026-11-06T10:00",
       "end": "2026-11-08T18:00"
      },
-     "checkedAt": "2026-11-10"
+     "checkedAt": "2026-11-11"
     },
     {
      "task": "Use a Steel‑type Charged Attack in a battle",
@@ -46866,6 +47161,7 @@
        "cpMax": 381
       }
      ],
+     "occurrence": 1,
      "sources": [
       "leekduck"
      ],
@@ -46884,7 +47180,7 @@
       "start": "2026-11-06T10:00",
       "end": "2026-11-08T18:00"
      },
-     "checkedAt": "2026-11-10"
+     "checkedAt": "2026-11-11"
     },
     {
      "task": "Win 2 raids",
@@ -46908,6 +47204,7 @@
        "mighty": true
       }
      ],
+     "occurrence": 1,
      "sources": [
       "leekduck"
      ],
@@ -46926,7 +47223,7 @@
       "start": "2026-11-06T10:00",
       "end": "2026-11-08T18:00"
      },
-     "checkedAt": "2026-11-10"
+     "checkedAt": "2026-11-11"
     },
     {
      "task": "Win a Max Battle",
@@ -46949,6 +47246,7 @@
        "cpMax": 660
       }
      ],
+     "occurrence": 1,
      "sources": [
       "leekduck"
      ],
@@ -46967,7 +47265,7 @@
       "start": "2026-11-06T10:00",
       "end": "2026-11-08T18:00"
      },
-     "checkedAt": "2026-11-10"
+     "checkedAt": "2026-11-11"
     },
     {
      "text": "Two Timed Research experiences guide you through specially decorated PokéStops across the city. Spin the corresponding stops to progress; these can also help you navigate between Stamp Rally locations.",
@@ -53150,7 +53448,7 @@
     },
     "imageReviewed": true,
     "contentHash": "dce45278d164ec7d0efdbec4d901eac6f95e08bdec7b64c64c440d1336263583",
-    "revision": 34,
+    "revision": 36,
     "amended": true,
     "native": false,
     "collection": "world-events"
@@ -53552,6 +53850,11 @@
     {
      "url": "https://pokemongo.com/news/pokemon-night-out-irl-details2026/",
      "name": "Event source"
+    },
+    {
+     "id": "leekduck",
+     "name": "Leek Duck",
+     "url": "https://leekduck.com/events/pokemon-night-out-london-2026/"
     }
    ],
    "pokemon": [],
@@ -53966,7 +54269,7 @@
        "status": "official"
       },
       {
-       "text": "Trainers who claimed the first tier of rewards in GO Pass: Into the Wild will automatically be upgraded to the GO Pass Deluxe, for free!",
+       "text": "Trainers who claimed the first rank of rewards in GO Pass: Into the Wild will automatically be upgraded to the GO Pass Deluxe, for free!",
        "sources": [
         "official"
        ],
@@ -54035,8 +54338,8 @@
      "end": "2026-11-23"
     },
     "imageReviewed": true,
-    "contentHash": "2a59c6fa38b5c69bc9a2140601d5779f172b89a0a8c59975fe47e7ec1c5b0224",
-    "revision": 7,
+    "contentHash": "055c3302a20469eef5d87681fc411ad65c739696bf03d509b1eacd4a3adb5e8a",
+    "revision": 8,
     "amended": false,
     "native": false,
     "collection": "world-events"
@@ -54190,7 +54493,7 @@
      "status": "official"
     },
     {
-     "text": "Trainers who claimed the first tier of rewards in GO Pass: Into the Wild will automatically be upgraded to the GO Pass Deluxe, for free!",
+     "text": "Trainers who claimed the first rank of rewards in GO Pass: Into the Wild will automatically be upgraded to the GO Pass Deluxe, for free!",
      "sources": [
       "official"
      ],
@@ -54337,7 +54640,7 @@
     },
     "imageReviewed": true,
     "contentHash": "4bbe2871a823eb21458a110b1a90a61e5fce0d1ddaa2d47d0d0671f282a84a9d",
-    "revision": 42,
+    "revision": 44,
     "amended": true,
     "native": false,
     "collection": "world-events"
@@ -54590,7 +54893,7 @@
    "completeness": "partial",
    "lifecycle": "announced",
    "attendance": "in-person",
-   "location": "South Korea",
+   "location": "Japan",
    "image": null,
    "notes": [],
    "internalValidation": {
@@ -54604,8 +54907,8 @@
      "start": "2026-11-03",
      "end": "2026-11-03"
     },
-    "contentHash": "5cdd55e002ca42377352e7b637a57f2e39afa99cde6bbc64780733a9cc28f6b3",
-    "revision": 19,
+    "contentHash": "0ca84974cfa677f1be63ebd7712b231d3f83b8d9beb34b2f503e737968fe94fe",
+    "revision": 20,
     "amended": false,
     "native": false,
     "collection": "world-events"
@@ -61508,7 +61811,7 @@
      "end": "2027-04-11"
     },
     "contentHash": "84950064738e11a798ef98f9fd6ab913640b138fb1594e38612f64db09c4dd24",
-    "revision": 34,
+    "revision": 36,
     "amended": true,
     "native": false,
     "collection": "world-events"

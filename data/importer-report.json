@@ -1,5 +1,5 @@
 {
- "runAt": "2026-11-10T22:30:41.217Z",
+ "runAt": "2026-11-11T00:14:13.589Z",
  "artworkCoverage": {
   "selected": 26,
   "missing": 75,
@@ -22,13 +22,6 @@
     "name": "Orionids Meteor Shower: Minior Debut",
     "sources": [
      "https://pokemongohub.net/post/event/minior-showers-orionids-october-2026/"
-    ]
-   },
-   {
-    "id": "leekduck:pokemon-night-out-london-2026",
-    "name": "Pokémon Night Out 2026 - London",
-    "sources": [
-     "https://leekduck.com/events/pokemon-night-out-london-2026/"
     ]
    },
    {
@@ -260,6 +253,13 @@
     "name": "Minior Showers: Perseids 2027",
     "sources": [
      "https://leekduck.com/events/minior-showers-perseids-2027/"
+    ]
+   },
+   {
+    "id": "leekduck:pokemon-night-out-london-2026",
+    "name": "Pokémon Night Out 2026 - London",
+    "sources": [
+     "https://leekduck.com/events/pokemon-night-out-london-2026/"
     ]
    },
    {
@@ -651,6 +651,11 @@
    "source": "official",
    "title": "Explore by starlight during meteor showers for a chance to encounter Minior! — Pokémon GO",
    "url": "https://pokemongo.com/news/minior-meteor-showers-2026/"
+  },
+  {
+   "source": "leekduck",
+   "title": "Pokémon Night Out 2026 - London",
+   "url": "https://leekduck.com/events/pokemon-night-out-london-2026/"
   }
  ],
  "intl": {
