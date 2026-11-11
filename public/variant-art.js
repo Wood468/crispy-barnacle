@@ -73,7 +73,7 @@
     if (!legacy) return '';
     var base = req.base.toLowerCase();
     if (req.kind === 'costume') { var k = base + '|' + String(req.label || '').toLowerCase(); return (req.shiny ? (legacy.shiny || {})[k] : (legacy.pictures || {})[k]) || ''; }
-    if (req.kind === 'gigantamax') { var g = 'gigantamax ' + base; return (req.shiny && (legacy.gmaxShiny || {})[g]) || (legacy.gmax || {})[g] || ''; }
+    if (req.kind === 'gigantamax') { var g = 'gigantamax ' + base; return (req.shiny ? (legacy.gmaxShiny || {})[g] : (legacy.gmax || {})[g]) || ''; }
     return '';
   }
   /* The same-origin PokeMiners proxy (/api/art) is the only route to pogo_assets; nothing is committed or redistributed. */
