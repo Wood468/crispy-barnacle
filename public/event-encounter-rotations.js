@@ -119,8 +119,10 @@ function pokemonCards(names,ctx,opts){
  return '<div class="uer-pokemon">'+(names||[]).map(function(name){
   var art=ctx.art?ctx.art({n:name},'sm'):'';
   var sourced=incenseBySpecies.get(norm(name))||[];
-  var incense=opts.method==='incense'||sourced.length>0;
   var mighty=!!opts.mighty;
+  // A source-backed Incense method can decorate a grouped Mighty occurrence,
+  // never the same species' independently sourced ordinary wild habitat tile.
+  var incense=opts.method==='incense'||(mighty&&sourced.length>0);
   var access=sourced.includes('paid')||opts.access==='ticket'||opts.access==='paid'?'ticket-only':
     sourced.includes('free')||opts.access==='free'?'available to all Trainers':'';
   var method=incense?'Incense encounter'+(access?', '+access:''):opts.method==='wild'?'Wild encounter':'';
