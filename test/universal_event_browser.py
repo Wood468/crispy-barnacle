@@ -97,8 +97,12 @@ with sync_playwright() as p:
         assert page.locator('#evd .own,#evd [data-follow],#evd .ue-mon-controls,#evd [data-mark]').count()==0
         assert page.evaluate("GODASH.usGet('form:26:alola')")!=1, 'reading an event changed collection data'
         page.locator('#evd .evd-nav-link[data-sec="research"]').click()
-        assert 'Catch 5 Pokémon' in page.locator('#evd').inner_text()
-        assert 'Rare Candy' in page.locator('#evd').inner_text()
+        research_panel=page.locator('#evd-s-research')
+        assert research_panel.is_visible(), 'the selected Research panel is hidden'
+        assert 'Catch 5 Pokémon' in research_panel.inner_text()
+        reward_tiles=research_panel.locator('.research-reward')
+        matching_rewards=reward_tiles.filter(has_text='Rare Candy')
+        assert matching_rewards.count()==1 and matching_rewards.first.is_visible(), ('synthetic research reward unavailable', research_panel.inner_html()[:1500])
         # The nested activity is source-backed, but may be grouped under its
         # own Schedule section; reveal the owning section before asserting text.
         afternoon = page.locator('#evd .evd-sec').filter(has_text='Synthetic afternoon').first
