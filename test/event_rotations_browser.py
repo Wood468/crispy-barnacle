@@ -101,10 +101,10 @@ with sync_playwright() as pw:
             days=root.locator('.uer-mighty-day .uer-pokemon-tile')
             ticketed=root.locator('.uer-mighty-shared .uer-pokemon-tile')
             assert days.count()==18 and ticketed.count()==2,(width,label,'Mighty roster tiles')
-            assert root.locator('.uer-mighty-mark').count()==20,(width,label,'missing Mighty !!!')
+            assert root.locator('.uer-mighty-corner').count()==20,(width,label,'missing Mighty !!!')
             assert root.locator('.uer-mighty-day .uer-incense-corner').count()==0,(width,label,'dated wild Mighty must remain wild')
             assert ticketed.locator('.uer-incense-corner img[src="/ico/incense.webp"]').count()==2,(width,label,'paid Latias/Latios Incense markers')
-            assert root.locator('.uer-habitat .uer-mighty-mark,.uer-habitat .uer-incense-corner').count()==0,(width,label,'ordinary rotating wild must not inherit methods')
+            assert root.locator('.uer-habitat .uer-mighty-corner,.uer-habitat .uer-incense-corner').count()==0,(width,label,'ordinary rotating wild must not inherit methods')
             for tile in ticketed.all():
                 name=tile.get_attribute('data-pokemon')
                 label_text=tile.get_attribute('aria-label') or ''
