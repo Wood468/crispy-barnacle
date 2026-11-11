@@ -61,6 +61,50 @@ def inspect(page, width: int, failures: list) -> dict:
     row["screens"]["today"] = {"cards": cards, "overview_tiles": 3}
     screenshot(page, width, "today", failures)
 
+    # The primary touch navigation must remain reachable and named on iPhone.
+    nav_targets = page.evaluate("""() => [...document.querySelectorAll('#tabs [data-tab]')]
+      .filter(el => el.getClientRects().length > 0)
+      .map(el => { const r = el.getBoundingClientRect();
+        return {width:r.width,height:r.height,label:(el.getAttribute('aria-label') || el.innerText || '').trim()};
+      })""")
+    assert len(nav_targets) >= 4, f"{width}px: core navigation has too few accessible tabs"
+    for target in nav_targets:
+        assert target["width"] >= 44 and target["height"] >= 44, (
+            f"{width}px: navigation touch target below 44px"
+        )
+        assert target["label"], f"{width}px: navigation tab without accessible name"
+    row["screens"]["navigation"] = {
+        "tabs": len(nav_targets), "min_hit_px": min(int(min(t["width"], t["height"])) for t in nav_targets)
+    }
+
+    # Follow a real Today event card through its Event Details modal and back.
+    # Pass-only tests do not catch broken links from the most-used home screen.
+    event_open = page.locator("#today-v1 article.t1-card button.t1-open[data-open]").first
+    event_open.wait_for(state="visible", timeout=15000)
+    opened_id = event_open.get_attribute("data-open")
+    event_open.scroll_into_view_if_needed()
+    event_open.focus()
+    event_open.click()
+    page.locator("#evd .ue-hero").wait_for(state="visible", timeout=20000)
+    assert page.locator('#evd .evd-nav-link[data-sec="overview"]').count() == 1, (
+        f"{width}px: event details missing Overview navigation"
+    )
+    assert page.locator("#evd [data-follow],#evd [data-mark],#evd .ue-mon-controls").count() == 0, (
+        f"{width}px: forbidden Pokémon tracking actions in Event Details"
+    )
+    page.keyboard.press("Tab")
+    assert page.evaluate("document.getElementById('evd').contains(document.activeElement)"), (
+        f"{width}px: keyboard focus escaped open Event Details"
+    )
+    assert page.locator("#evd").evaluate("(el) => el.scrollWidth <= el.clientWidth + 2"), (
+        f"{width}px: Event Details horizontal overflow"
+    )
+    screenshot(page, width, "today-event-details", failures)
+    page.keyboard.press("Escape")
+    page.locator("#evd").wait_for(state="hidden", timeout=10000)
+    assert page.locator("#today-v1").is_visible(), f"{width}px: closing details lost Today"
+    row["screens"]["event_details"] = {"opened_from_today": opened_id, "returned_to_today": True}
+
     # Season/pass feed loads independently of the main event catalogue.
     page.wait_for_function("() => !!window.GOSEASON", timeout=30000)
     active_passes = page.evaluate("""() => {
@@ -143,6 +187,24 @@ def inspect(page, width: int, failures: list) -> dict:
     no_overflow(page, width, "Schedule")
     row["screens"]["schedule"] = {"event_rows": page.locator("#evtimeline [data-open]").count()}
     screenshot(page, width, "schedule", failures)
+
+    # A Schedule card must open the same Event Details view without
+    # navigating away or losing the selected Schedule tab.
+    if row["screens"]["schedule"]["event_rows"]:
+        schedule_open = page.locator("#evtimeline [data-open]").first
+        schedule_id = schedule_open.get_attribute("data-open")
+        schedule_open.scroll_into_view_if_needed()
+        schedule_open.click()
+        page.locator("#evd .ue-hero").wait_for(state="visible", timeout=20000)
+        screenshot(page, width, "schedule-event-details", failures)
+        page.keyboard.press("Escape")
+        page.locator("#evd").wait_for(state="hidden", timeout=10000)
+        assert page.locator("#tab-events").is_visible(), (
+            f"{width}px: closing Schedule details lost the Schedule view"
+        )
+        row["screens"]["schedule"]["opened_event_id"] = schedule_id
+    else:
+        row["screens"]["schedule"]["detail_link_skipped"] = "No schedule events in the live week"
 
     # Research must render real verified groups, not a perpetual loading placeholder.
     page.evaluate("() => { GO.showTab('events', 'research'); return true; }")
