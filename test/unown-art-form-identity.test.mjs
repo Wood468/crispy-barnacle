@@ -24,6 +24,7 @@ test('all four source-backed GO Wild Incense Unown letters retain exact form art
       assert.equal(out.base, 'unown', name);
       assert.equal(out.exact, true, name);
       assert.deepEqual(Array.from(out.list), ['unown-' + letter.toLowerCase()], name);
+      assert.equal(out.officialArtworkFile, '201-' + letter.toLowerCase() + '.png', name);
       assert.ok(!out.list.includes('unown'), name + ' must not fall back to base artwork');
     }
   }
@@ -56,4 +57,37 @@ test('existing exact Crowned/Gimmighoul/Gigantamax and ordinary Dynamax routes a
   const max = resolve('Dynamax Dialga');
   assert.equal(max.exact, false);
   assert.deepEqual(Array.from(max.list), ['dialga']);
+});
+
+
+test('live Worker artwork handler fetches exact official Unown letter PNGs, including shiny, without a base fallback', async () => {
+  const artStart = source.indexOf('async function art(request, env, ctx, url) {');
+  const artEnd = source.indexOf('// ---------------------------------------------------------------- marks', artStart);
+  assert.ok(artStart >= 0 && artEnd > artStart, 'Worker artwork handler must remain extractable');
+  const upstream = [];
+  const checks = [];
+  const base = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/';
+  const handler = vm.runInNewContext('(function(){' + source.slice(artStart, artEnd) + '; return art;})()', {
+    artCandidates: resolve,
+    caches: { default: { match: async () => null, put: async () => {} } },
+    allowEdgeMiss: () => ({ allowed: true }),
+    edgeMissLimited: () => { throw new Error('Unexpected miss limit'); },
+    singleFlight: async (_key, fn) => fn(),
+    pokeId: async (path) => { checks.push(path); throw new Error('Unown letter must not query /pokemon: ' + path); },
+    fetch: async (url) => { upstream.push(url); return new Response(new Uint8Array([137, 80, 78, 71]), { status: 200 }); },
+    ART_BASE: base, COSTUME_BASE: '', DAY: 86400,
+    Request, Response
+  });
+  for (const letter of ['D', 'I', 'L', 'W']) {
+    for (const shiny of [false, true]) {
+      const name = 'Unown ' + letter + ' (' + letter.toLowerCase() + ')';
+      const url = new URL('https://pogo.test/api/art?n=' + encodeURIComponent(name) + (shiny ? '&shiny=1' : ''));
+      const out = await handler(new Request(url), {}, { waitUntil() {} }, url);
+      assert.equal(out.status, 200, name);
+      assert.equal(out.headers.get('content-type'), 'image/png');
+      assert.equal(upstream.at(-1), base + (shiny ? 'shiny/' : '') + '201-' + letter.toLowerCase() + '.png', name);
+    }
+  }
+  assert.equal(upstream.length, 8, 'each request resolves exactly one verified form-specific image');
+  assert.deepEqual(checks, [], 'no unrelated Pokemon species or variety lookups are made');
 });
