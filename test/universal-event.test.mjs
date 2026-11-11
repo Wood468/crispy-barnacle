@@ -265,3 +265,23 @@ test('event gallery marks normal and boosted shiny differently, without duplicat
  assert.doesNotMatch(tile(boosted),/>Shiny<\/span>/);
  assert.doesNotMatch(tile(unconfirmed),/ue-shiny-mark|ue-shiny-boost/);
 });
+
+
+test('verified egg distances render coloured corner icons without inventing unknown egg pools',()=>{
+ const two={speciesId:'25',name:'Pikachu'};
+ const ten={speciesId:'133',name:'Eevee'};
+ const unknown={speciesId:'1',name:'Bulbasaur'};
+ const m=event({pokemon:[two,ten,unknown],activities:[
+  {id:'egg-2km',title:'Event egg pool A',encounterMethod:'egg',eggDistanceKm:2,pokemonRefs:[C.identity(two)]},
+  {id:'egg-10km',title:'Event egg pool B',encounterMethod:'egg',eggDistanceKm:10,pokemonRefs:[C.identity(ten)]}
+ ],encounters:[{identityKey:C.identity(unknown),method:'egg'}]});
+ const html=UI.gallery(m,{});
+ const tile=p=>(html.split('data-identity="'+C.identity(p)+'"')[1]||'').split('</button>')[0];
+ assert.match(tile(two),/ue-egg-corner ue-egg-2/);
+ assert.match(tile(two),/\/ico\/g\/egg-2km\.webp/);
+ assert.match(tile(ten),/ue-egg-corner ue-egg-10/);
+ assert.match(tile(ten),/\/ico\/g\/egg-10km\.webp/);
+ assert.doesNotMatch(tile(unknown),/ue-egg-corner|ue-egg-\d/);
+ assert.match(tile(unknown),/ue-badge ue-b-egg/);
+ assert.equal(m.encounters.length,3,'published encounter data remains intact');
+});
