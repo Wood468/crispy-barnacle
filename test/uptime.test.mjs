@@ -1,6 +1,11 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { extractCoreAssetUrls, runChecks, previousLiveCheckConclusion, containsPrivateDiscordSource } from "../scripts/uptime.mjs";
+import { readFileSync } from "node:fs";
+import { extractCoreAssetUrls, runChecks, previousLiveCheckConclusion, containsPrivateDiscordSource, equivalentEventDetails } from "../scripts/uptime.mjs";
+
+const EXPECTED_EVENT_DETAILS = JSON.parse(
+  readFileSync(new URL("../public/event-details.json", import.meta.url), "utf8")
+);
 
 const HTML = [
   "<html><head>",
@@ -41,6 +46,15 @@ function mockFetch(options = {}) {
     if (path === "/data.json") return ok({ events: [{ id: "event-1" }] });
     if (path === "/world-events.json") return ok({ events: [] });
     if (path === "/prices.json") return ok({});
+    if (path === "/event-details.json") {
+      const catalogue = options.mismatchedDetails ? structuredClone(EXPECTED_EVENT_DETAILS) : EXPECTED_EVENT_DETAILS;
+      if (options.mismatchedDetails) {
+        const first = Object.keys(catalogue.events)[0];
+        catalogue.events[first].name = "Incorrect unsourced event";
+      }
+      return ok(catalogue);
+    }
+
     const privateLink = "https://discord.com/channels/@me/111/222";
     if (path === "/event-info.json") return ok({ events: {
       fixture: { source: { label: "G47IX", ...(options.privateFile === "event-info" ? { url: privateLink } : {}) },
@@ -106,6 +120,33 @@ test("live uptime check fails closed on private links in each public infographic
       assert.doesNotMatch(problems.join("\n"), /@me|111|222/, "never log private channel/message IDs");
     });
   }
+});
+
+test("production catalogue parity ignores timestamp-only refreshes and JSON field order", () => {
+  const expected = {
+    updated: "2026-11-11T00:00:00Z",
+    events: { synthetic: { name: "Synthetic event", updated: "2026-11-11T00:00:00Z",
+      researchTasks: [{ task: "Catch 5 Pokémon", rewards: [{ name: "Stardust", quantity: 500 }] }] } }
+  };
+  const copy = {
+    events: { synthetic: { researchTasks: [{ rewards: [{ quantity: 500, name: "Stardust" }],
+      task: "Catch 5 Pokémon" }], updated: "2026-11-11T05:55:00Z", name: "Synthetic event" } },
+    updated: "2026-11-11T05:55:00Z"
+  };
+  assert.equal(equivalentEventDetails(expected, copy), true);
+  copy.events.synthetic.researchTasks[0].rewards[0].quantity = 100;
+  assert.equal(equivalentEventDetails(expected, copy), false, "reward changes must be deployed");
+  assert.equal(equivalentEventDetails(expected, { events: {} }), false, "missing events cannot pass");
+  assert.equal(equivalentEventDetails(expected, null), false);
+});
+
+test("live site check catches stale event details without leaking event data", async () => {
+  await withFetch({ mismatchedDetails: true }, async () => {
+    const problems = await runChecks();
+    assert.equal(problems.length, 1);
+    assert.match(problems[0], /event-details\.json production parity: deployed Event Details differs from validated main/);
+    assert.doesNotMatch(problems.join("\n"), /Incorrect unsourced event|Catch 5 Pokémon|Stardust/);
+  });
 });
 
 test("uptime check passes when the page, data, images and app assets are healthy", async () => {
