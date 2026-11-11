@@ -100,7 +100,9 @@ function researchTask(r,ctx){return '<article class="research-task"><h4>'+esc(va
 /* Parsed tasks are the countable unit. Source prose lines are shown as notes underneath and never counted as tasks. */
 function research(items,ctx){var list=items.filter(function(r){return value(r);}),tasks=list.filter(function(r){return V.researchTaskCount([r]);}),notes=list.filter(function(r){return !V.researchTaskCount([r]);});
  return tasks.map(function(r){return researchTask(r,ctx);}).join('')+(notes.length?'<ul class="ue-facts ue-research-notes">'+notes.map(function(r){return '<li>'+esc(value(r))+'</li>';}).join('')+'</ul>':'')+(!tasks.length&&notes.length?'<p class="ue-more-note" role="note">No individual research tasks have been published yet.</p>':'');}
-var PASS_ICONS=[[/^xp$/i,'/ico/xp.webp'],[/^stardust$/i,'/ico/dust.webp'],[/candy( xl)?$/i,'/ico/candy.webp'],[/^max potion$/i,'/ico/i/max-potion.webp'],[/^max revive$/i,'/ico/i/max-revive.webp'],[/^golden razz/i,'/ico/i/golden-razz.webp'],[/^silver pinap/i,'/ico/i/silver-pinap.webp'],[/incubator/i,'/ico/egg.webp'],[/incense/i,'/ico/incense.webp'],[/(raid|battle) pass/i,'/ico/g/raidpass.webp']];
+/* Only use icons whose published app assets identify the actual reward.
+   XP and Candy XL deliberately use category symbols instead of misleading art. */
+var PASS_ICONS=[[/^stardust$/i,'/ico/dust.webp'],[/^max potion$/i,'/ico/i/max-potion.webp'],[/^max revive$/i,'/ico/i/max-revive.webp'],[/^golden razz/i,'/ico/i/golden-razz.webp'],[/^silver pinap/i,'/ico/i/silver-pinap.webp'],[/^incense$/i,'/ico/incense.webp'],[/(raid|battle) pass/i,'/ico/g/raidpass.webp']];
 function passCategory(item){
  if(item.type==='encounter')return 'Pokémon';
  var n=item.name;
@@ -111,31 +113,70 @@ function passCategory(item){
  if(/\b(ball|berry|potion|revive|incubator|incense|pinap|razz|tm|lure|pass|egg|mushroom|star piece|nanab|module|particle|charm)\b/i.test(n))return 'Item';
  return 'Reward';
 }
+function passGlyph(item,cat){
+ if(/^xp$/i.test(item.name))return 'XP';
+ if(/candy xl/i.test(item.name))return 'XL';
+ if(/candy/i.test(item.name))return 'C';
+ if(cat==='Pokémon')return '?';
+ if(cat==='Avatar item')return '👕';
+ if(cat==='Box')return '▣';
+ if(/stardust|star piece/i.test(item.name))return '✦';
+ if(/pok[eé]coin/i.test(item.name))return '◎';
+ if(/potion|revive/i.test(item.name))return '+';
+ if(/ball/i.test(item.name))return '●';
+ if(/berry|pinap|razz/i.test(item.name))return '◉';
+ return '◇';
+}
 function passReward(raw,ctx){
  var item=typeof raw==='string'?{name:raw.trim(),type:'other',quantity:1}:raw;
  if(!item||typeof item.name!=='string'||!item.name||/^[-–—]+$/.test(item.name.trim()))return null;
  if(typeof raw==='string'){var q=/^(.+?)\s*[×x]\s*(\d+)$/i.exec(item.name);if(q){item={name:q[1].trim(),type:'item',quantity:+q[2]};}}
- var cat=passCategory(item),art='',fallback=true;
- if(item.type==='encounter'&&ctx.rewardArt){art=ctx.rewardArt(item)||'';fallback=!/<(img|svg|canvas)\b/i.test(art);if(fallback)art='';}
- else{var icon=PASS_ICONS.filter(function(r){return r[0].test(item.name);})[0];if(icon){art='<img src="'+esc(icon[1])+'" alt="" width="40" height="40" loading="lazy" decoding="async">';fallback=false;}}
- var glyph=cat==='Pokémon'?'?':cat==='Avatar item'?'👕':cat==='Box'?'🎁':'◆';
+ var cat=passCategory(item),art='',hasArt=false;
+ if(item.type==='encounter'&&ctx.rewardArt){
+  art=ctx.rewardArt(item)||'';
+  hasArt=/<(img|svg|canvas)\b/i.test(art);
+  if(!hasArt)art='';
+ }else{
+  var icon=PASS_ICONS.filter(function(r){return r[0].test(item.name);})[0];
+  if(icon){art='<img src="'+esc(icon[1])+'" alt="" width="40" height="40" loading="lazy" decoding="async">';hasArt=true;}
+ }
  var qty=Number.isInteger(item.quantity)&&item.quantity>1?'×'+esc(item.quantity):'';
  var lvl=item.type==='encounter'&&Number.isInteger(item.level)?' · Level '+esc(item.level):'';
- return '<div class="ue-pass-reward" data-cat="'+esc(cat)+'"'+(fallback?' data-art="fallback"':'')+'><span class="ue-pass-art" aria-hidden="true">'+(art||'<span class="ue-reward-icon">'+glyph+'</span>')+'</span><span class="ue-pass-name"><b>'+esc(item.name)+'</b><small>'+(qty?qty+' · ':'')+esc(cat)+lvl+(fallback?' · art unavailable':'')+'</small></span></div>';
+ var symbol=passGlyph(item,cat);
+ return '<div class="ue-pass-reward" data-cat="'+esc(cat)+'"'+(hasArt?'':' data-art="category"')+'><span class="ue-pass-art" aria-hidden="true">'+(art||'<span class="ue-reward-icon">'+esc(symbol)+'</span>')+'</span><span class="ue-pass-name"><b>'+esc(item.name)+'</b><small>'+(qty?qty+' · ':'')+esc(cat)+lvl+'</small></span></div>';
 }
-function passLane(label,cls,list,empty,ctx){
+function passLane(label,cls,list,ctx){
  var chips=[].concat(list||[]).map(function(x){return passReward(x,ctx);}).filter(Boolean);
- return '<div class="ue-lane ue-lane-'+cls+'"><h5>'+label+'</h5>'+(chips.length?chips.join(''):'<p class="ue-lane-empty">'+empty+'</p>')+'</div>';
+ return chips.length?'<div class="ue-lane ue-lane-'+cls+'"><h5>'+label+'</h5>'+chips.join('')+'</div>':'';
+}
+function passStageLanes(s,ctx){
+ if(s.free||s.deluxe)return passLane('Free','free',s.free,ctx)+passLane('Deluxe','deluxe',s.deluxe,ctx);
+ return passLane('Reward · track not specified','free',s.rewards,ctx);
+}
+function passStageRewards(s){
+ return [].concat(s.free||[],s.deluxe||[],s.rewards||[]).filter(function(x){return x&&typeof x==='object'&&typeof x.name==='string'||typeof x==='string'&&x.trim();});
+}
+function passHighlightScore(s){
+ return passStageRewards(s).reduce(function(score,item){
+  var name=typeof item==='string'?item:item.name;
+  if(/bottle cap|dynamax meltan|gold bottle cap/i.test(name))return Math.max(score,8);
+  if((typeof item==='object'&&item.type==='encounter')||/\b(encounter|lucky trinket)\b/i.test(name))return Math.max(score,6);
+  if(/elite (charged|fast) tm|rare candy xl/i.test(name))return Math.max(score,4);
+  return score;
+ },0);
 }
 function passes(items,ctx){
  function stage(s){
-  var lanes=(s.free||s.deluxe)?passLane('Free','free',s.free,'No free reward',ctx)+passLane('Deluxe','deluxe',s.deluxe,'No extra Deluxe reward',ctx):passLane('Reward','free',s.rewards,'Track not specified by the source',ctx);
-  return '<li class="ue-pass-rank" data-rank="'+esc(s.rank)+'"><b>Rank '+esc(s.rank)+'</b>'+(Number.isFinite(s.points)?'<small>'+esc(s.points)+' points</small>':'')+'<div class="ue-pass-lanes">'+lanes+'</div></li>';
+  var lanes=passStageLanes(s,ctx);
+  return '<li class="ue-pass-rank" data-rank="'+esc(s.rank)+'"><b>Rank '+esc(s.rank)+'</b>'+(Number.isFinite(s.points)?'<small>'+esc(s.points)+' points</small>':'')+'<div class="ue-pass-lanes">'+(lanes||'<p class="ue-pass-unlisted">Track rewards not specified for this rank.</p>')+'</div></li>';
  }
  function listWithGaps(list,startPrev){
   var out='',prev=startPrev===undefined?null:startPrev;
-  list.forEach(function(s){if(prev!==null&&s.rank>prev+1)out+='<li class="ue-pass-gap" role="note">'+(s.rank-prev===2?'Rank '+(prev+1):'Ranks '+(prev+1)+'–'+(s.rank-1))+': no rewards listed by the source</li>';out+=stage(s);prev=s.rank;});
+  list.forEach(function(s){if(prev!==null&&s.rank>prev+1)out+='<li class="ue-pass-gap" role="note">'+(s.rank-prev===2?'Rank '+(prev+1):'Ranks '+(prev+1)+'–'+(s.rank-1))+': no reward entries published by the source</li>';out+=stage(s);prev=s.rank;});
   return out;
+ }
+ function highlight(s){
+  return '<li class="ue-pass-highlight" data-milestone-rank="'+esc(s.rank)+'"><strong>Rank '+esc(s.rank)+'</strong><div class="ue-pass-lanes">'+passStageLanes(s,ctx)+'</div></li>';
  }
  var meta=ctx.passMeta||{};
  return items.filter(function(p){return value(p);}).map(function(p){
@@ -144,10 +185,18 @@ function passes(items,ctx){
   if(!stages.length)content='<p class="note ue-pass-missing">Rank rewards have not been published by the source yet.</p>';
   else{
    var groups={};stages.forEach(function(s){var key=Math.floor(Math.max(0,s.rank-1)/25);(groups[key]||(groups[key]=[])).push(s);});
-   var keys=Object.keys(groups);
-   var first=stages[0].rank,last=stages[stages.length-1].rank;
-   var head='<p class="ue-pass-count">'+stages.length+(last>stages.length?' of '+last:'')+(stages.length===1?' rank listed':' ranks listed')+(last>first?' (Rank '+first+' to '+last+')':'')+'.'+(first>1?' Ranks 1'+(first>2?'–'+(first-1):'')+' list no track reward; milestone bonuses are shown under Bonuses.':'')+'</p><p class="ue-pass-legend"><span class="ue-key ue-key-free">Free track</span><span class="ue-key ue-key-deluxe">Deluxe track</span> Deluxe also receives every Free reward.</p>';
-   content=head+keys.map(function(key,i){var list=groups[key],before=i?groups[keys[i-1]][groups[keys[i-1]].length-1].rank:null;return '<details class="ue-pass-range"'+(i===0?" open":"")+'><summary>'+(list.length===1?'Rank '+esc(list[0].rank):'Ranks '+esc(list[0].rank)+'–'+esc(list[list.length-1].rank))+'</summary><ol class="ue-pass-stages">'+listWithGaps(list,before)+'</ol></details>';}).join('');
+   var keys=Object.keys(groups),first=stages[0].rank,last=stages[stages.length-1].rank;
+   var head='<p class="ue-pass-count">'+stages.length+' '+(stages.length===1?'rank with a published entry':'ranks with published entries')+' · through Rank '+last+'.'+(first>1?' Ranks 1'+(first>2?'–'+(first-1):'')+' have no track-reward entries published; milestone bonuses are shown under Bonuses.':'')+'</p><p class="ue-pass-legend"><span class="ue-key ue-key-free">Free track</span><span class="ue-key ue-key-deluxe">Deluxe track</span> Deluxe also receives every Free reward.</p>';
+   var ranked=stages.map(function(s){return {stage:s,score:passHighlightScore(s)};}).filter(function(x){return x.score>0;});
+   ranked.sort(function(a,b){return b.score-a.score||a.stage.rank-b.stage.rank;});
+   /* Source-listed reward milestones at the familiar 45/100 thresholds stay visible
+      even when an event publishes many other interesting encounter ranks. */
+   var pinned=stages.filter(function(s){return (s.rank===45||s.rank===100)&&passStageRewards(s).length>0;});
+   var featured=pinned.concat(ranked.filter(function(x){return pinned.indexOf(x.stage)<0;}).slice(0,Math.max(0,4-pinned.length)).map(function(x){return x.stage;}));
+   if(!featured.length&&stages.length)featured=[stages[0],stages[Math.floor((stages.length-1)/2)],stages[stages.length-1]].filter(function(s,i,arr){return arr.indexOf(s)===i&&passStageRewards(s).length;});
+   featured.sort(function(a,b){return a.rank-b.rank;});
+   var overview=featured.length?'<div class="ue-pass-overview"><h5>Published milestones</h5><ul class="ue-pass-highlights">'+featured.map(highlight).join('')+'</ul></div>':'';
+   content=head+overview+'<h5 class="ue-pass-all-title">All published rank entries</h5>'+keys.map(function(key,i){var list=groups[key],before=i?groups[keys[i-1]][groups[keys[i-1]].length-1].rank:null;return '<details class="ue-pass-range"><summary>'+(list.length===1?'Rank '+esc(list[0].rank):'Ranks '+esc(list[0].rank)+'–'+esc(list[list.length-1].rank))+' · '+list.length+' listed</summary><ol class="ue-pass-stages">'+listWithGaps(list,before)+'</ol></details>';}).join('');
   }
   var srcs=(model_sources(ctx)||[]).map(function(s){return s;}).join(' · ');
   var foot='<p class="ue-pass-src">'+(srcs?'Source: '+srcs:'Source not listed')+(meta.updated?' · Data checked '+esc(String(meta.updated).slice(0,10)):' · Freshness unknown')+'. Rewards are as published by the source and can change; anything not listed is not confirmed.'+(meta.warning?' '+esc(meta.warning):'')+'</p>';
