@@ -41,11 +41,27 @@ with sync_playwright() as pw:
 
         page.evaluate("GODETAIL.open('cur:wag')")
         page.wait_for_selector('#evd .ue-raid-days [data-raid-date="2026-11-14"]',timeout=25000)
-        # Incense uses the exact same subtle 20px corner treatment as eggs,
-        # without hiding paid-access signals or changing the encounter method.
-        incense=page.locator('#evd .ue-method[data-method="incense"] .ue-mon')
-        incense.first.wait_for(state='attached',timeout=15000)
-        incense_tile=incense.first
+        # The source record contains published Incense encounters even when
+        # the curated dashboard has not joined that method into its flat gallery.
+        # Exercise one real source-backed edge through the shared renderer, not
+        # an invented Incense availability claim or an assumed live panel.
+        source_incense=page.evaluate("""async () => {
+            const source=(await fetch('/event-details.json').then(r=>r.json())).events.wag;
+            const edge=(source.encounters||[]).find(e=>e.method==='incense');
+            const pokemon=edge&&(source.pokemon||[]).find(p=>p.key===edge.identityKey);
+            if(!edge||!pokemon)throw new Error('Published Incense edge missing');
+            const section=document.createElement('section');
+            section.id='qa-incense-fixture';
+            section.innerHTML=GOEventComponents.gallery({
+                title:source.name,pokemon:[pokemon],groups:{incense:[edge]},
+                activities:[{id:edge.activityId,title:'Published Incense encounter'}],
+                internalValidation:{}
+            },{artFor:()=>'<span class="art ea" aria-hidden="true">◆</span>'});
+            document.querySelector('#evd .evd-in').appendChild(section);
+            return {name:pokemon.name,key:pokemon.key};
+        }""")
+        incense_tile=page.locator('#qa-incense-fixture .ue-method[data-method="incense"] .ue-mon').first
+        incense_tile.wait_for(state='attached',timeout=15000)
         icon=incense_tile.locator('.ue-incense-corner img[src="/ico/incense.webp"]')
         assert icon.count()==1,(width,'missing Incense corner artwork')
         icon.scroll_into_view_if_needed(timeout=10000)
@@ -64,7 +80,7 @@ with sync_playwright() as pw:
         assert not incense_tile.locator('.ue-b-incense').count(),(width,'redundant Incense pill')
         assert 'Incense' in (incense_tile.get_attribute('aria-label') or ''),(width,'lost accessible method')
         incense_tile.screenshot(path=str(SHOTS/f'go-wild-incense-icon-{width}.png'),animations='disabled')
-        print('PASS GO Wild Area source-backed Incense icon-only tile at',width)
+        print('PASS published GO Wild Area Incense source edge icon-only:',source_incense['name'],'at',width)
 
         egg=page.locator('#evd .ue-mon .ue-egg-corner.ue-egg-10')
 
