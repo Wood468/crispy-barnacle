@@ -47,6 +47,8 @@ test("GO Wild's 16 published Incense encounters remain visible as 14 exact flat 
       name+": independently sourced Free Incense must not disappear into a wild Mighty group");
   }
   assert.equal(flat.length,14,"ten distinct Free Incense plus four ticket-only Unown remain in Incense gallery");
+  assert.equal(flat.filter(e=>e.access==="unknown").length,0,
+    "legacy unknown-access Incense edges are hidden only where source-declared access covers the same method/activity");
   assert.deepEqual(flat.filter(e=>e.access==="paid").map(e=>e.identityKey).sort(),
     ["201:d:none","201:i:none","201:l:none","201:w:none"]);
 
@@ -83,6 +85,7 @@ test("future same-species wild/Incense methods stay independent, and suppress on
     {identityKey:"2:base:none",method:"incense",activityId:"main",access:"paid"},
     {identityKey:"2:base:none",method:"incense",activityId:"separate-hour",access:"paid"},
     {identityKey:"2:base:none",method:"incense",activityId:"main",access:"unknown"},
+    {identityKey:"2:base:none",method:"incense",activityId:"unclassified-other-hour",access:"unknown"},
     {identityKey:"2:base:none",method:"wild",activityId:"main",access:"paid"}
   ];
   const projected=rotator.withoutDuplicateFlatEncounters({pokemon,encounters},entry);
@@ -90,6 +93,9 @@ test("future same-species wild/Incense methods stay independent, and suppress on
   assert.ok(projected.encounters.some(e=>e.identityKey==="1:base:none"&&e.method==="incense"&&e.access==="free"),"same Pokémon's separate Incense method survives");
   assert.ok(!projected.encounters.some(e=>e.identityKey==="2:base:none"&&e.method==="incense"&&e.activityId==="main"&&e.access==="paid"),"equivalent paid shared Incense is represented once");
   assert.ok(projected.encounters.some(e=>e.identityKey==="2:base:none"&&e.method==="incense"&&e.activityId==="separate-hour"),"different activity must survive");
-  assert.ok(projected.encounters.some(e=>e.identityKey==="2:base:none"&&e.method==="incense"&&e.access==="unknown"),"unverified access must not be guessed from group");
+  assert.ok(!projected.encounters.some(e=>e.identityKey==="2:base:none"&&e.method==="incense"&&e.activityId==="main"&&e.access==="unknown"),
+    "old unclassified access on the same method/activity is superseded by explicit paid source");
+  assert.ok(projected.encounters.some(e=>e.identityKey==="2:base:none"&&e.method==="incense"&&e.activityId==="unclassified-other-hour"&&e.access==="unknown"),
+    "unknown access in a genuinely separate activity must remain unguessed");
   assert.ok(projected.encounters.some(e=>e.identityKey==="2:base:none"&&e.method==="wild"&&e.access==="paid"),"other wild entitlement cannot inherit an Incense group");
 });
