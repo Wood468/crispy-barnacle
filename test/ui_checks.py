@@ -286,8 +286,10 @@ check('season pass and deadline data is structured, source-attributed and ordere
       all(item_id in {item.get('id') for item in SEASON_DATA.get('items', [])}
           for item_id in ['season:pass-halloween', 'season:pass-november']) and
       len(SEASON_DATA.get('deadlines', [])) >= 5 and
-      all(d.get('source') == 'Leek Duck' and d.get('url', '').startswith('https://leekduck.com/') and
-          d.get('s') and d.get('e') and d['s'] < d['e'] for d in SEASON_DATA.get('deadlines', [])) and
+      all(d.get('s') and d.get('e') and d['s'] < d['e'] and
+          ((d.get('source') == 'Leek Duck' and d.get('url', '').startswith('https://leekduck.com/')) or
+           (d.get('source') == 'Pokémon GO (official)' and d.get('url', '').startswith('https://pokemongo.com/')))
+          for d in SEASON_DATA.get('deadlines', [])) and
       'deadlines: function () { return deadlines; }' in SEASON_JS)
 check('official exclusive-move windows carry source provenance into Today deadlines',
       any(m.get('eventId') == 'novcd' and m.get('move') == 'Kowtow Cleave' and
@@ -705,7 +707,9 @@ with sync_playwright() as p:
             '**/regional-events.json': (empty_world, 200),
             '**/event-moves.json': (community_move_fixture, 200)
         })
-        unverified_move_page.wait_for_function("document.getElementById('today-focus-ending')?.textContent.includes('Nothing timed in the next 6h')")
+        # Other official event/pass deadlines may now be active: test the
+        # unverified move's absence, not a frozen empty-state message.
+        unverified_move_page.wait_for_function("() => !!window.GODASH && !!window.GOSEASON && !!document.getElementById('today-focus-ending')?.textContent.trim().length")
         unverified_move_meta = unverified_move_page.locator('#today-focus-ending-meta').inner_text()
         check('Community-only move attribution is not promoted to an official Today deadline',
               'Kowtow Cleave' not in unverified_move_meta and 'Exclusive move window ends' not in unverified_move_page.locator('#today-focus-ending').inner_text(),
