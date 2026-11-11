@@ -61,12 +61,12 @@ test("source-backed Incense stays distinct from day-specific wild Mighty, with p
   assert.doesNotMatch(html,/data-follow|data-track|ue-mon-controls/);
 
   const grouped = rotator.render(entry,{model,art:()=>'<img class="art" alt="">'});
-  assert.equal((grouped.match(/class="uer-mighty-mark"/g)||[]).length,20);
+  assert.equal((grouped.match(/class="uer-mighty-corner"/g)||[]).length,20);
   assert.equal((grouped.match(/class="uer-incense-corner"/g)||[]).length,2,
     "only Latias/Latios group is method=incense; wild day Mighty are wild");
-  assert.match(grouped,/aria-label="Alolan Exeggutor, Mighty Pokémon, Wild encounter/);
-  assert.doesNotMatch(grouped,/aria-label="Alolan Exeggutor[^\"]*Incense/);
-  assert.match(grouped,/aria-label="Latias, Mighty Pokémon, Incense encounter, ticket-only/);
+  assert.match(grouped,/aria-label="Mighty Alolan Exeggutor, Wild encounter/);
+  assert.doesNotMatch(grouped,/aria-label="Mighty Alolan Exeggutor[^\"]*Incense/);
+  assert.match(grouped,/aria-label="Mighty Latias, Incense encounter, Ticket-only/);
 });
 
 test("future same-species wild habitat, dated Mighty wild and Mighty Incense remain separate", () => {
@@ -89,7 +89,7 @@ test("future same-species wild habitat, dated Mighty wild and Mighty Incense rem
   assert.match(habitat,/data-pokemon="Sample A"/);
   assert.doesNotMatch(habitat,/uer-incense-corner|data-incense="true"/);
   assert.match(day,/data-pokemon="Sample A"/);
-  assert.match(day,/uer-mighty-mark/);
+  assert.match(day,/uer-mighty-corner/);
   assert.doesNotMatch(day,/uer-incense-corner|data-incense="true"/);
   const projected=rotator.withoutDuplicateFlatEncounters(model,entry);
   const flat=projected.encounters.filter(e=>e.method==="incense");
