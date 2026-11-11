@@ -72,38 +72,48 @@ def inspect(page, width: int, failures: list) -> dict:
           Number.isFinite(end) && start <= now && now < end;
       }).map(e => ({id:e.id,name:e.name,source:e.source}));
     }""")
-    row["screens"]["pass"] = {"active_passes": len(active_passes)}
+    row["screens"]["pass"] = {"active_passes": len(active_passes), "checked": []}
     if active_passes:
-        choice = active_passes[0]
-        card = page.locator("#seasonbar .ssn-card", has_text=choice["name"])
-        assert card.count() == 1, f"{width}px: active GO Pass missing on Today"
-        page.evaluate("(id) => { GODETAIL.open(id); return true; }", choice["id"])
-        page.locator("#evd .ue-pass").wait_for(timeout=30000)
-        assert page.locator("#evd .ue-pass-range").count() >= 1, (
-            f"{width}px: pass has no illustrated rank stages"
-        )
-        assert page.locator("#evd .ue-pass-src a[href^='https://']").count() >= 1, (
-            f"{width}px: GO Pass has no published source link"
-        )
-        assert page.locator("#evd [data-follow],#evd [data-mark],#evd .ue-mon-controls").count() == 0, (
-            f"{width}px: forbidden tracking controls in pass details"
-        )
-        assert page.locator("#evd").evaluate("(el) => el.scrollWidth <= el.clientWidth + 2"), (
-            f"{width}px: GO Pass details overflow"
-        )
-        if choice["id"] == "season:pass-into-wild-2026":
-            text = page.locator("#evd .ue-pass").inner_text()
-            assert "Dynamax Meltan" in text and "Silver Bottle Cap" in text, (
-                f"{width}px: verified Into the Wild pass rewards missing"
+        # Verify the special live pass as well as the long-running monthly pass.
+        # Selecting only the first active item would silently miss Into the Wild.
+        choices = sorted(
+            active_passes, key=lambda item: (
+                item["id"] != "season:pass-into-wild-2026", item["id"]
             )
-            assert choice["source"] == "Pokémon GO (official)", (
-                f"{width}px: Into the Wild pass lost official provenance"
+        )[:3]
+        for choice in choices:
+            card = page.locator("#seasonbar .ssn-card", has_text=choice["name"])
+            assert card.count() == 1, f"{width}px: active GO Pass {choice['id']} missing on Today"
+            page.evaluate("(id) => { GODETAIL.open(id); return true; }", choice["id"])
+            page.locator("#evd .ue-pass").wait_for(timeout=30000)
+            ranges = page.locator("#evd .ue-pass-range")
+            assert ranges.count() >= 1, f"{width}px: {choice['id']} has no illustrated rank stages"
+            assert page.locator("#evd .ue-pass-src a[href^='https://']").count() >= 1, (
+                f"{width}px: {choice['id']} has no published source link"
             )
-        row["screens"]["pass"]["source"] = choice["source"]
-        row["screens"]["pass"]["id"] = choice["id"]
-        row["screens"]["pass"]["rank_ranges"] = page.locator("#evd .ue-pass-range").count()
-        screenshot(page, width, "gopass", failures)
-        page.keyboard.press("Escape")
+            assert page.locator("#evd [data-follow],#evd [data-mark],#evd .ue-mon-controls").count() == 0, (
+                f"{width}px: forbidden tracking controls in pass details"
+            )
+            assert page.locator("#evd").evaluate("(el) => el.scrollWidth <= el.clientWidth + 2"), (
+                f"{width}px: GO Pass details overflow"
+            )
+            if choice["id"] == "season:pass-into-wild-2026":
+                content = page.locator("#evd .ue-pass").inner_text()
+                assert "Dynamax Meltan" in content and "Silver Bottle Cap" in content, (
+                    f"{width}px: verified Into the Wild pass rewards missing"
+                )
+                assert choice["source"] == "Pokémon GO (official)", (
+                    f"{width}px: Into the Wild pass lost official provenance"
+                )
+            row["screens"]["pass"]["checked"].append({
+                "source": choice["source"], "id": choice["id"], "rank_ranges": ranges.count()
+            })
+            suffix = choice["id"].replace("season:", "").replace(":", "-")
+            screenshot(page, width, "gopass-" + suffix, failures)
+            # Capture the actual illustrated stages, not just the Overview hero.
+            ranges.first.scroll_into_view_if_needed(timeout=10000)
+            screenshot(page, width, "gopass-stages-" + suffix, failures)
+            page.keyboard.press("Escape")
     else:
         row["screens"]["pass"]["note"] = "No currently active verified GO Pass; no rewards inferred"
 
