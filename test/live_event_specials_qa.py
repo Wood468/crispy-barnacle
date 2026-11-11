@@ -89,6 +89,7 @@ def inspect(page, width: int) -> dict:
         print("LIVE_EGG_SOURCE_JOIN", json.dumps(report["source_join"]), flush=True)
     assert egg_cards.count() == 4, f"{width}px: expected 4 sourced egg encounters, got {egg_cards.count()}"
     report["eggs"] = []
+    report["egg_marker_visual"] = {}
     for name in EGGS:
         card = egg_cards.filter(has_text=name)
         assert card.count() == 1, f"{width}px: missing/duplicate egg encounter {name}"
@@ -121,6 +122,58 @@ def inspect(page, width: int) -> dict:
             f"{width}px: {name} 10 km egg art did not render"
         )
         report["eggs"].append(name)
+        # Production CSS must match the approved icon-only UI, not merely
+        # return an image successfully. Test all four hatch tiles at phone widths.
+        visual = image.first.evaluate("""img => {
+            const marker = img.parentElement, tile = img.closest('button.ue-mon');
+            const style = getComputedStyle(marker);
+            const box = marker.getBoundingClientRect();
+            const icon = img.getBoundingClientRect();
+            const art = tile?.querySelector('.ue-mon-art')?.getBoundingClientRect();
+            return {
+                width: box.width, height: box.height,
+                iconWidth: icon.width, iconHeight: icon.height,
+                artWidth: art?.width || 0,
+                background: style.backgroundColor,
+                border: style.borderTopWidth,
+                shadow: style.boxShadow,
+                text: marker.textContent.trim(),
+                children: marker.children.length,
+                extraEggPill: !!tile?.querySelector('.ue-b-egg, .ue-km-10'),
+                accessible: tile?.getAttribute('aria-label') || '',
+                insideTile: !!tile && box.right <= tile.getBoundingClientRect().right + 1
+                    && box.left >= tile.getBoundingClientRect().left - 1
+            };
+        }""")
+        assert visual["children"] == 1 and visual["text"] == "", (
+            f"{width}px: {name} has an oversized text-bearing egg marker: {visual}"
+        )
+        assert 0 < visual["width"] <= 22 and 0 < visual["height"] <= 22, (
+            f"{width}px: {name} corner marker is too large: {visual}"
+        )
+        assert 0 < visual["iconWidth"] <= 22 and 0 < visual["iconHeight"] <= 22, (
+            f"{width}px: {name} egg artwork is too large: {visual}"
+        )
+        assert visual["background"] in ("transparent", "rgba(0, 0, 0, 0)"), (
+            f"{width}px: {name} still has a filled badge behind its egg: {visual}"
+        )
+        assert visual["border"] == "0px" and visual["shadow"] == "none", (
+            f"{width}px: {name} egg marker still has a badge border/shadow: {visual}"
+        )
+        assert not visual["extraEggPill"] and "10 km egg" in visual["accessible"], (
+            f"{width}px: {name} has a redundant km badge or missing accessible distance: {visual}"
+        )
+        assert visual["insideTile"] and visual["artWidth"] >= 50, (
+            f"{width}px: {name} egg marker overlaps outside the Pokémon tile: {visual}"
+        )
+        report["egg_marker_visual"][name] = visual
+    # Capture the actual in-production egg gallery, not only the page's hero.
+    # This makes the user's reported obscured Pokémon art visually reviewable.
+    page.locator('#evd .ue-method[data-method="egg"]').first.screenshot(
+        path=str(OUT / f"go-wild-egg-icons-{width}.png"),
+        animations="disabled", timeout=15000,
+    )
+    print(f"LIVE_EGG_ICON_ONLY_QA {width}px " + json.dumps(report["egg_marker_visual"]), flush=True)
     egg_resource = page.request.get(BASE + "/ico/g/egg-10km.webp", timeout=20000)
     assert egg_resource.status == 200 and "image/" in egg_resource.headers.get("content-type", ""), (
         "The live 10 km icon did not return an image"
