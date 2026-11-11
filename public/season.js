@@ -84,7 +84,7 @@
       if (!window.GODASH || !GODASH.mkEvent) { if (tries++ < 40) return setTimeout(mk, 150); return; }
       evs = items.map(function (i) {
         var season = Object.assign({}, i, { thumbnail: seasonThumbnailPath(i.id, i.img) });
-        return GODASH.mkEvent({ id: i.id, name: i.name, kind: 'event', s: i.s, e: i.e, tags: [], status: 'official_confirmed', source: 'Leek Duck', link: i.url, notes: [], featured: [], img: i.img, season: season });
+        return GODASH.mkEvent({ id: i.id, name: i.name, kind: 'event', s: i.s, e: i.e, tags: [], status: 'official_confirmed', source: /^https:\/\/(?:www\.)?pokemongo\.com\//i.test(i.url || '') ? 'Pokémon GO (official)' : 'Leek Duck', link: i.url, notes: i.notes || [], featured: [], img: i.img, season: season });
       }).filter(Boolean);
       window.GOSEASON = { events: function () { return evs; }, deadlines: function () { return deadlines; } };
       document.dispatchEvent(new Event('gofn-season-ready'));
