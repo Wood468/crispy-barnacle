@@ -2783,7 +2783,8 @@ with sync_playwright() as p:
                         const tag=n?.tagName?.toLowerCase()||'unknown';
                         const cls=typeof n?.className==='string' ? n.className.trim().split(/\\s+/).slice(0,3).join('.') : '';
                         const label=tag+(n?.id?'#'+n.id:'')+(cls?'.'+cls:'');
-                        return {node:label,previous:s.previousRect,current:s.currentRect};
+                        const rect=r=>r?{x:Math.round(r.x),y:Math.round(r.y),width:Math.round(r.width),height:Math.round(r.height)}:null;
+                        return {node:label,previous:rect(s.previousRect),current:rect(s.currentRect)};
                     })});
             }
         }).observe({type:'layout-shift',buffered:true})"""
