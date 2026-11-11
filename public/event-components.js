@@ -187,14 +187,46 @@ function sourceHighlights(model){
 // Every event with structured dated activities receives the same compact schedule preview.
 // Never infer times from prose; the validated event contract owns time-zone conversion.
 function schedulePreview(model,ctx){
+ ctx=ctx||{};
  var activities=(model.activities||[]).filter(function(a){return a.schedule&&(a.presentation==='schedule'||a.presentation==='rotation');});
  if(!activities.length)return '';
- activities=activities.slice().sort(function(a,b){return String(a.schedule.start).localeCompare(String(b.schedule.start))||String(a.id||'').localeCompare(String(b.id||''));});
- var count=Math.min(activities.length,5);
- var cards=activities.slice(0,count).map(function(a){
-  return '<li><strong>'+esc(a.title||a.name||'Scheduled activity')+'</strong><span>'+esc(activityTime(a,ctx))+'</span>'+(activityPlace(a)?'<small>'+esc(activityPlace(a))+'</small>':'')+'</li>';
+ var entries=activities.map(function(a){return {a:a,start:String(a.schedule.start||''),end:null};});
+ entries.sort(function(x,y){return x.start.localeCompare(y.start)||String(x.a.id||'').localeCompare(String(y.a.id||''));});
+ var now=typeof ctx.now==='number'&&Number.isFinite(ctx.now)?ctx.now:Date.now(),allPast=false,hasTimeStatus=false;
+ /* Prefer current and upcoming events only when every source-backed schedule
+    resolves in the user's time zone. An invalid schedule is shown in published
+    order instead of being silently discarded. Full Schedule keeps all entries. */
+ if(ctx.clock&&typeof ctx.clock.range==='function'){
+  try{
+   var zone=ctx.viewerZone||(typeof ctx.clock.viewerZone==='function'?ctx.clock.viewerZone():'');
+   if(zone){
+    var dated=entries.map(function(item){
+     try{
+      var r=ctx.clock.range(item.a.schedule,zone);
+      return Number.isFinite(r.start)&&Number.isFinite(r.end)&&r.end>r.start?{a:item.a,start:r.start,end:r.end}:null;
+     }catch(error){return null;}
+    });
+    if(dated.every(Boolean)){
+     hasTimeStatus=true;
+     dated.sort(function(a,b){return a.start-b.start||String(a.a.id||'').localeCompare(String(b.a.id||''));});
+     var remaining=dated.filter(function(item){return item.end>now;});
+     if(remaining.length)entries=remaining;
+     else{entries=dated.slice(-5);allPast=true;}
+    }
+   }
+  }catch(error){}
+ }
+ var count=Math.min(entries.length,5);
+ var cards=entries.slice(0,count).map(function(item){
+  var a=item.a,live=Number.isFinite(item.end)&&item.start<=now&&item.end>now;
+  return '<li>'+(live?'<small class="ue-schedule-now">Live now</small>':'')+
+   '<strong>'+esc(a.title||a.name||'Scheduled activity')+'</strong><span>'+esc(activityTime(a,ctx))+'</span>'+
+   (activityPlace(a)?'<small>'+esc(activityPlace(a))+'</small>':'')+'</li>';
  }).join('');
- return '<div class="ue-schedule-preview"><h3 class="ue-mini-h">Event schedule</h3><ol>'+cards+'</ol>'+(activities.length>count?'<p class="ue-more-note">+'+(activities.length-count)+' more scheduled activities below</p>':'')+'</div>';
+ return '<div class="ue-schedule-preview"><h3 class="ue-mini-h">Event schedule</h3>'+
+  (hasTimeStatus?'<p class="ue-schedule-caption">'+(allPast?'Recent activities':'Current &amp; upcoming activities')+'</p>':'')+
+  '<ol>'+cards+'</ol>'+(entries.length>count?'<p class="ue-more-note">+'+(entries.length-count)+' more scheduled activities below</p>':'')+
+  (allPast?'<p class="ue-more-note">No upcoming timed activities are listed.</p>':'')+'</div>';
 }
 
 /* Generic dated raid/Max rosters from curated published raidDays.
