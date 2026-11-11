@@ -572,7 +572,7 @@
     if(rtasks)facts.push(['Research',rtasks+(rtasks===1?' task':' tasks')]);else if((model.research||[]).length)facts.push(['Research','No tasks listed yet']);
     var h=facts.length?'<ul class="ue-factchips" aria-label="At a glance">'+facts.map(function(f){return '<li><span>'+esc(f[0])+'</span><b>'+esc(f[1])+'</b></li>';}).join('')+'</ul>':'';
     var debuts=(model.pokemon||[]).filter(function(p){return p.debut;}).slice(0,6);
-    if(debuts.length)h+='<div class="ue-debuts"><h3 class="ue-mini-h">Debuts</h3><div class="ue-chips">'+debuts.map(function(p){return '<span class="ue-chip">'+esc(displayName(p))+'</span>';}).join('')+'</div></div>';
+    if(debuts.length)h+='<div class="ue-debuts"><h3 class="ue-mini-h">Debuts</h3><div class="ue-chips" role="region" tabindex="0" aria-label="Debuting Pokémon; scroll horizontally for more">'+debuts.map(function(p){return '<span class="ue-chip">'+esc(displayName(p))+'</span>';}).join('')+'</div></div>';
     return h;
   }
   function heroWhen(model,ev){return eventWindow(model,ev);}
