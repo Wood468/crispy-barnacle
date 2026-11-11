@@ -90,3 +90,10 @@ test('event banner cache evicts oldest image after forty saved banners', async (
   assert.equal(sw.entries.has(urls[0]), false);
   assert.equal(sw.entries.has(urls[40]), true);
 });
+
+test('script requests to Leek Duck event paths bypass the image cache', async () => {
+  const sw = harness(async () => { throw new Error('must not fetch'); });
+  const result = await sw.request('https://cdn.leekduck.com/assets/img/events/not-an-image.js', 'script');
+  assert.equal(result.intercepted, false);
+  assert.equal(sw.entries.size, 0);
+});
