@@ -95,7 +95,7 @@ with sync_playwright() as p:
             return page.evaluate("document.querySelector('#evd .evd-nav-link[aria-selected=\"true\"]').dataset.sec")
 
         def only_panel(sec):
-            state = page.evaluate("""() => {
+            state = page.evaluate("""(sec) => {
                 const panels=[...document.querySelectorAll('#evd .evd-sec')];
                 const tabs=[...document.querySelectorAll('#evd .evd-nav-link')];
                 return {
@@ -105,7 +105,7 @@ with sync_playwright() as p:
                     hiddenCorrect: panels.every(p => p.dataset.sec===sec ? !p.hidden && p.getAttribute('aria-hidden')==='false' : p.hidden && p.getAttribute('aria-hidden')==='true'),
                     links: tabs.every(t => t.getAttribute('aria-controls')==='evd-s-'+t.dataset.sec && t.getAttribute('role')==='tab'),
                 };
-            }""")
+            }""", sec)
             assert state['visible'] == [sec] and state['selected'] == [sec] and state['current'] == [sec], (width, sec, state)
             assert state['hiddenCorrect'] and state['links'], (width, sec, state)
             assert page.locator('#evd .evd-nav-link[tabindex="0"]').count() == 1
