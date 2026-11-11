@@ -27,7 +27,8 @@ export function eventOf(input) {
 // Trusted GitHub follow-up after an *already confirmed* automatic squash merge.
 // No worker/Gemini authority is extended. All write targets and data are fixed
 // by the earlier independent policy decision and exact merged commit SHA.
-export async function finishMergedTask(taskNumber, mergeSha, { get, dispatch, closeIssue }) {
+export async function finishMergedTask(taskNumber, mergeSha,
+  { get, dispatch, closeIssue, removeLabel }) {
   const state = { issueClosed: false, mainTestsDispatched: false };
   if (!Number.isSafeInteger(taskNumber) || taskNumber < 1
       || !SHA.test(mergeSha || "")) return state;
@@ -43,16 +44,28 @@ export async function finishMergedTask(taskNumber, mergeSha, { get, dispatch, cl
         && Array.isArray(issue.labels)
         && issue.labels.some(x => x?.name === "go-worker-approved")
         && issue.labels.some(x => x?.name === "go-worker-auto-merge-approved")) {
-      const others = issue.labels.map(x => x?.name).filter(x =>
-        typeof x === "string" && x !== "go-worker-approved"
-        && x !== "go-worker-auto-merge-approved");
-      const result = await closeIssue(API + "/issues/" + taskNumber, {
-        state: "closed", state_reason: "completed", labels: others
-      });
-      state.issueClosed = result?.number === taskNumber
-        && result.state === "closed"
-        && Array.isArray(result.labels)
-        && !result.labels.some(x => ["go-worker-approved",
+      // GitHub may already have closed the task from the squash commit's
+      // "Closes #N" footer. Re-sending the close state together with labels
+      // can be rejected; close only if still open.
+      if (issue.state === "open") {
+        const result = await closeIssue(API + "/issues/" + taskNumber, {
+          state: "closed", state_reason: "completed"
+        });
+        if (result?.number !== taskNumber || result.state !== "closed")
+          throw Error("Issue closure not confirmed");
+      }
+      // DELETE ONLY the two exact worker approval labels, preserving every
+      // unrelated label. This is independent of whether auto-close occurred.
+      const prefix = API + "/issues/" + taskNumber + "/labels/";
+      for (const name of ["go-worker-approved", "go-worker-auto-merge-approved"]) {
+        await removeLabel(prefix + name);
+      }
+      // A successful HTTP write is not sufficient: inspect durable state.
+      const confirmed = await get(API + "/issues/" + taskNumber);
+      state.issueClosed = confirmed?.number === taskNumber
+        && confirmed.state === "closed"
+        && Array.isArray(confirmed.labels)
+        && !confirmed.labels.some(x => ["go-worker-approved",
           "go-worker-auto-merge-approved"].includes(x?.name));
     }
   } catch {
@@ -77,7 +90,7 @@ export async function finishMergedTask(taskNumber, mergeSha, { get, dispatch, cl
 }
 
 export async function execute(event, { get, graph, put, dispatch, closeIssue,
-  wait = sleep, judge = assess }) {
+  removeLabel, wait = sleep, judge = assess }) {
   const record = eventOf(event);
   if (!record) return deny("Not one completed successful original worker PR CI run");
   let approval = await judge(record.number, get, {
@@ -136,7 +149,7 @@ export async function execute(event, { get, graph, put, dispatch, closeIssue,
   if (merge?.merged !== true || !SHA.test(merge.sha || ""))
     return deny("Merge not confirmed; inspect GitHub before replay");
   const next = await finishMergedTask(approval.task, merge.sha,
-    { get, dispatch, closeIssue });
+    { get, dispatch, closeIssue, removeLabel });
   return { status: next.issueClosed && next.mainTestsDispatched
       ? "MERGED" : "MERGED_FOLLOWUP_PENDING",
     pr: record.number, issue: approval.task, head: record.sha,
@@ -148,7 +161,9 @@ async function request(url, method, body, token) {
       && method === "PUT")
     || (url === API + "/actions/workflows/tests.yml/dispatches" && method === "POST")
     || (/^\/issues\/[1-9][0-9]{0,9}$/.test(url.slice(API.length))
-      && method === "PATCH");
+      && method === "PATCH")
+    || (/^\/issues\/[1-9][0-9]{0,9}\/labels\/(go-worker-approved|go-worker-auto-merge-approved)$/
+      .test(url.slice(API.length)) && method === "DELETE");
   if (!allowed) throw Error("Forbidden write target");
   const response = await fetch(url, {
     method,
@@ -164,6 +179,7 @@ async function request(url, method, body, token) {
   }
   const raw = await response.text();
   if (raw.length > 30000) throw Error("GitHub write response too large");
+  if (!raw && method === "DELETE") return { accepted: true };
   return JSON.parse(raw);
 }
 export async function run(input, token, dependencies = {}) {
@@ -178,6 +194,8 @@ export async function run(input, token, dependencies = {}) {
       request(url, "POST", body, token)),
     closeIssue: dependencies.closeIssue || ((url, body) =>
       request(url, "PATCH", body, token)),
+    removeLabel: dependencies.removeLabel || ((url) =>
+      request(url, "DELETE", null, token)),
     wait: dependencies.wait,
     judge: dependencies.judge
   });
