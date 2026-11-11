@@ -4,7 +4,7 @@
 // attaches approved pictures to the chosen event in public/event-info.json, and drops rejected ones.
 // The owner's tap in the app is the approval, so the workflow commits this straight to main.
 import { readFile, writeFile, rm } from "node:fs/promises";
-import { addToEventInfo, datedEvents } from "./g47ix-publish.mjs";
+import {addToEventInfo, datedEvents, publicSourceUrl, sanitizePublicInfographicSources, sanitizeRegistrySources } from "./g47ix-publish.mjs";
 
 const APP = process.env.APP_URL || "https://pogo.michaelpuff.com";
 const REG = process.env.REGISTRY_FILE || "data/g47ix-infographics-review.json";
@@ -76,11 +76,11 @@ async function main() {
   const eventOf = id => { const hit = events.find(e => e.id === id) || events.find(e => bare(e.id) === bare(id)); return hit ? { s: hit.s, e: hit.e, src: hit.src } : null; };
   const res = applyDecisions(reg, info, decisions, undefined, eventOf);
   for (const c of res.rejected) if (c.stagedPath) await rm("public" + c.stagedPath, { force: true });
-  await writeFile(REG, JSON.stringify(reg, null, 2) + "\n");
-  await writeFile(INFO, JSON.stringify(info, null, 2) + "\n");
+  await writeFile(REG, JSON.stringify(sanitizeRegistrySources(reg), null, 2) + "\n");
+  await writeFile(INFO, JSON.stringify(sanitizePublicInfographicSources(info), null, 2) + "\n");
   try {
     const q = JSON.parse(await readFile(QUEUE, "utf8")), gone = new Set(res.rejected.map(c => c.id)), live = new Set([...res.published, ...res.changed].filter(c => c.reviewStatus === "published").map(c => c.id));
-    q.items = (q.items || []).filter(i => !gone.has(i.id)).map(i => live.has(i.id) ? { ...i, linked: true } : i); await writeFile(QUEUE, JSON.stringify(q, null, 1) + "\n");
+    q.items = (q.items || []).filter(i => !gone.has(i.id)).map(i => ({ ...i, ...(live.has(i.id) ? { linked: true } : {}), post: publicSourceUrl(i.post) })); await writeFile(QUEUE, JSON.stringify(q, null, 1) + "\n");
   } catch { /* no queue yet */ }
   console.log("Published " + res.published.length + ", rejected " + res.rejected.length + ", changed " + res.changed.length + ", skipped " + res.skipped.length + ".");
 }
