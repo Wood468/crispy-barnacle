@@ -30,6 +30,14 @@ with sync_playwright() as p:
   root=page.locator('#rotnow')
   for name in ['Giratina (Altered Forme)','Cresselia','Darkrai','Mega Charizard X','Mega Charizard Y','Deoxys (Normal Forme)','Deoxys (Attack Forme)','Deoxys (Defense Forme)','Deoxys (Speed Forme)']:
    assert root.locator(f'.rc[data-boss="{name}"]').count()==1,(width,name)
+  # Form identity must survive the raid-card renderer; do not silently alias X/Y.
+  mega_cards=[root.locator(f'.rc[data-boss="Mega Charizard {form}"]') for form in ('X','Y')]
+  mega_art=[card.locator('.rc-raid-art img.art').first for card in mega_cards]
+  mega_identity=[{'alt':img.get_attribute('alt'),'src':img.get_attribute('src'),'form':img.get_attribute('data-exact')} for img in mega_art]
+  assert all(img.count()==1 for img in mega_art),(width,mega_identity)
+  assert [item['alt'] for item in mega_identity]==['Mega Charizard X','Mega Charizard Y'],(width,mega_identity)
+  assert mega_identity[0]['src']!=mega_identity[1]['src'],(width,mega_identity)
+  assert all(item['form'] for item in mega_identity),(width,mega_identity)
   assert root.locator('.rw-max-event[data-open="synthetic-gigantamax-weekend"]').count()==1
   assert root.locator('.rw-raid').count()==3
   for boss in ['Giratina (Altered Forme)','Cresselia','Mega Charizard X']:
