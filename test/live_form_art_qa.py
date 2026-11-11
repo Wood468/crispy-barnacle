@@ -29,6 +29,10 @@ CASES = (
     ("Gimmighoul (Chest Form)", 999, "Gimmighoul", 999),
 )
 CROWNED = CASES[:2]
+# The two documented Primal Reversions are not part of this week's Into the
+# Wild roster; assert the publicly deployed art API directly without inventing
+# an event encounter. Form IDs are verified Pokémon IDs, not base Dex IDs.
+PRIMALS = (("Primal Kyogre", 10077, 382), ("Primal Groudon", 10078, 383))
 DYNAMAX = ("Dynamax Registeel", "Dynamax Regidrago",
            "Dynamax Latias", "Dynamax Latios")
 DISPLAY_NAMES = tuple(item[0] for item in CROWNED) + DYNAMAX
@@ -133,6 +137,33 @@ def live_event_browser(pw, errors: list) -> list:
                 page.evaluate("() => GODETAIL.open('into')")
                 page.wait_for_selector("#evd .ue-mon", timeout=30000)
                 row["tile_count"] = page.locator("#evd .ue-mon").count()
+                # Some sources use hyphenated Crowned form IDs while others
+                # omit the separator. Both keys remain valid in Collection;
+                # the raid gallery must display each physical boss only once.
+                row["crowned_raid_tiles"] = {}
+                for species, canonical, alias in (
+                    ("888", "crowned-sword", "crownedsword"),
+                    ("889", "crowned-shield", "crownedshield"),
+                ):
+                    selector = ", ".join(
+                        f'#evd .ue-method[data-method="raid"] '
+                        f'.ue-mon[data-identity="{species}:{form}:none"]'
+                        for form in (canonical, alias)
+                    )
+                    tiles = page.locator(selector)
+                    count = tiles.count()
+                    row["crowned_raid_tiles"][species] = {
+                        "count": count,
+                        "identities": [
+                            tiles.nth(i).get_attribute("data-identity")
+                            for i in range(count)
+                        ],
+                    }
+                    if count != 1:
+                        errors.append(
+                            f"{width}px: expected one Crowned raid tile for "
+                            f"species {species}, found {count}"
+                        )
                 # The Coin Bag and GO Pass may use the correct *name* but
                 # still accidentally point to the default Chest Form picture.
                 row["gimmighoul_art"] = page.evaluate("""() => [
@@ -242,6 +273,23 @@ def main() -> int:
                     if not match:
                         errors.append(f"{name}: live bytes do not match exact PokeAPI form {pokemon_id}")
                     report["form_art"].append(row)
+                # Cover both normal and shiny *Primal* artwork. A successful
+                # ordinary Kyogre/Groudon image is not an acceptable stand-in.
+                for primal, form_id, species_id in PRIMALS:
+                    for shiny in (False, True):
+                        variant = "shiny" if shiny else "regular"
+                        live_url = BASE + "/api/art?n=" + quote(primal, safe="") + ("&shiny=1" if shiny else "")
+                        expected_url = UPSTREAM + ("shiny/" if shiny else "") + str(form_id) + ".png"
+                        live, live_body = get_image(request, live_url, errors, primal + " " + variant + " live")
+                        expected, expected_body = get_image(request, expected_url, errors, primal + " " + variant + " reference")
+                        match = bool(live_body and expected_body and live_body == expected_body)
+                        report["form_art"].append({
+                            "name": primal, "dex_id": species_id, "expected_form_id": form_id,
+                            "shiny": shiny, "live": live, "reference": expected,
+                            "matches_exact_png": match,
+                        })
+                        if not match:
+                            errors.append(f"{primal} ({variant}): live bytes do not match exact PokeAPI form {form_id}")
                 # Explicitly reject a fabricated, unpublished future form.
                 missing_url = BASE + "/api/art?n=" + quote("Gimmighoul (unannounced future Form)", safe="")
                 response = request.get(missing_url, timeout=30000)

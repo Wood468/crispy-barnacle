@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-11T09:19:11.080Z",
+ "updated": "2026-11-11T12:16:05.636Z",
  "events": [
   {
    "id": "w-pokemon-fossil-museum-2026",
@@ -415,26 +415,6 @@
    "seen": "2026-11-11"
   },
   {
-   "id": "w-celebrate-the-festival-of-lights-with-the-return-o",
-   "name": "Festival of Lights",
-   "place": "India",
-   "area": "Asia",
-   "scope": "regional",
-   "start": "2026-11-06",
-   "end": "2026-11-08",
-   "datesKnown": true,
-   "sources": [
-    {
-     "id": "official",
-     "name": "Pokémon GO (official)",
-     "url": "https://pokemongo.com/news/festival-of-lights-2026/"
-    }
-   ],
-   "status": "official",
-   "seen": "2026-11-11",
-   "mode": "in-game"
-  },
-  {
    "id": "w-mexico-city-go-wild-area-2026",
    "name": "Mexico City – GO Wild Area 2026",
    "place": "Mexico City, Mexico",
@@ -467,6 +447,26 @@
    ],
    "status": "official",
    "seen": "2026-11-11"
+  },
+  {
+   "id": "w-celebrate-the-festival-of-lights-with-the-return-o",
+   "name": "Festival of Lights",
+   "place": "India",
+   "area": "Asia",
+   "scope": "regional",
+   "start": "2026-11-06",
+   "end": "2026-11-08",
+   "datesKnown": true,
+   "sources": [
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "url": "https://pokemongo.com/news/festival-of-lights-2026/"
+    }
+   ],
+   "status": "official",
+   "seen": "2026-11-11",
+   "mode": "in-game"
   },
   {
    "id": "w-this-weekend-only-log-in-november-6-8-for-free-tim",
@@ -656,6 +656,30 @@
      "id": "official",
      "name": "Pokémon GO (official)",
      "url": "https://pokemongo.com/news/pokemon-run-30-2026/"
+    }
+   ],
+   "status": "official",
+   "seen": "2026-11-11"
+  },
+  {
+   "id": "w-gowildarea-global-osaka-gameplay-update",
+   "name": "Gowildarea Global Osaka Gameplay Update",
+   "place": "Osaka, Japan",
+   "area": "Asia",
+   "scope": "regional",
+   "start": "2026-11-14",
+   "end": "2026-11-14",
+   "datesKnown": true,
+   "sources": [
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "url": "https://pokemongo.com/ja/news/gowildarea-global-2026-osaka-gameplay-update/"
+    },
+    {
+     "id": "official",
+     "name": "Pokémon GO (official)",
+     "url": "https://pokemongo.com/news/gowildarea-global-2026-osaka-gameplay-update/"
     }
    ],
    "status": "official",
@@ -1320,7 +1344,7 @@
     }
    ],
    "status": "official",
-   "seen": "2026-11-02"
+   "seen": "2026-11-11"
   }
  ]
 }

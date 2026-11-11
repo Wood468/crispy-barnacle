@@ -1,11 +1,11 @@
 {
- "runAt": "2026-11-11T09:19:11.086Z",
+ "runAt": "2026-11-11T12:16:05.642Z",
  "artworkCoverage": {
-  "selected": 26,
+  "selected": 27,
   "missing": 75,
   "legacyUnattributed": 2,
   "bySource": {
-   "Pokémon GO (official)": 21,
+   "Pokémon GO (official)": 22,
    "Leek Duck": 5
   },
   "missingEvents": [
@@ -242,17 +242,17 @@
     ]
    },
    {
-    "id": "leekduck:minior-showers-southern-delta-aquariids-2027",
-    "name": "Minior Showers: Southern Delta Aquariids 2027",
-    "sources": [
-     "https://leekduck.com/events/minior-showers-southern-delta-aquariids-2027/"
-    ]
-   },
-   {
     "id": "leekduck:pokemon-night-out-london-2026",
     "name": "Pokémon Night Out 2026 - London",
     "sources": [
      "https://leekduck.com/events/pokemon-night-out-london-2026/"
+    ]
+   },
+   {
+    "id": "leekduck:minior-showers-southern-delta-aquariids-2027",
+    "name": "Minior Showers: Southern Delta Aquariids 2027",
+    "sources": [
+     "https://leekduck.com/events/minior-showers-southern-delta-aquariids-2027/"
     ]
    },
    {
@@ -556,22 +556,17 @@
    "error": ""
   },
   "hub": {
-   "listed": 13,
+   "listed": 14,
    "error": ""
   }
  },
  "pagesRead": 80,
- "events": 103,
- "worldEvents": 70,
+ "events": 104,
+ "worldEvents": 71,
  "worldUndated": [
   "GO Wild Area Stamp Rally"
  ],
  "unmatchedPages": [
-  {
-   "source": "official",
-   "title": "Celebrate the Festival of Lights with the return of Pikachu wearing a saree and Pikachu wearing a kurta! — Pokémon GO",
-   "url": "https://pokemongo.com/news/festival-of-lights-2026/"
-  },
   {
    "source": "official",
    "title": "Discover new city adventures starting today! All Trainers can join brand-new Pokémon GO Stamp Rallies in Sendai • Tohoku, Japan, and Mexico City, Mexico.",
@@ -616,6 +611,16 @@
    "source": "leekduck",
    "title": "Pokémon GO Wild Area 2026: Mexico City",
    "url": "https://leekduck.com/events/pokemon-go-wild-area-2026-mexico-city/"
+  },
+  {
+   "source": "official",
+   "title": "Celebrate the Festival of Lights with the return of Pikachu wearing a saree and Pikachu wearing a kurta! — Pokémon GO",
+   "url": "https://pokemongo.com/news/festival-of-lights-2026/"
+  },
+  {
+   "source": "official",
+   "title": "Notice Regarding Gameplay in Osaka During Pokémon GO Wild Area: Global",
+   "url": "https://pokemongo.com/news/gowildarea-global-2026-osaka-gameplay-update/"
   },
   {
    "source": "official",
