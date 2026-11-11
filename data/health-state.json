@@ -1,10 +1,8 @@
 {
  "alerted": [
   "event-importer.yml",
-  "source-watch.yml",
   "low-raids.yml",
   "g47ix-infographics.yml",
-  "store-watch.yml",
   "discord_sync.yml",
   "ai-heartbeat-pipeline",
   "ai-heartbeat-shiny"
