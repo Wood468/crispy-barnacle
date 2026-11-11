@@ -173,6 +173,11 @@
         auSource: p.auSource || null, displayNameVerified: p.displayNameVerified === true,
         india: reference({ region: 'IN', channel: 'in-app', product: p.label, kind: kind, aud: p.aud }, obs, now),
         indonesia: reference({ region: 'ID', channel: 'web', product: p.label, kind: kind, aud: p.aud }, obs, now) };
+    }).sort(function (a, b) {
+      /* Recent observations first: old verified October offers remain findable,
+         without displacing newer products in a compact mobile catalogue. */
+      return String(b.observed || '').localeCompare(String(a.observed || '')) ||
+        String(a.label).localeCompare(String(b.label));
     });
   }
   function fmt(v, cur) { var sym = cur === 'IDR' ? 'Rp ' : cur === 'INR' ? '₹' : cur === 'AUD' ? 'A$' : ''; return sym + Number(v).toLocaleString('en-AU', cur === 'AUD' ? { minimumFractionDigits: 2, maximumFractionDigits: 2 } : { maximumFractionDigits: 0 }); }
