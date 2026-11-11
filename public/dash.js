@@ -2125,7 +2125,7 @@ function renderHomeBrief(t) {
     }
     var regLive = [], regSoon = [], regWeek = [];
     regList().forEach(function (r) {
-      if ((r.long && !r.ongoing) || covered(r)) return;
+      if ((r.long && !r.ongoing) || (!r.ongoing && covered(r))) return; // a permanent city activity is distinct from a similarly named finite event
       var item = { id: r.id, name: r.name, place: r.place || r.area || '', start: r.start, end: r.end, url: (r.src && r.src.url) || '#', ongoing: !!r.ongoing, overseas: t1Overseas(r.place), inPerson: regInPerson(r), global: LIB.isGlobalEvent(r), openId: '' };
       if (!/^https:\/\//.test(item.url)) item.url = '';
       try { var model = window.GOEventRegistry && GOEventRegistry.find(r.catalogueId || r.id); if (model) item.openId = model.eventId; } catch (e) { }
