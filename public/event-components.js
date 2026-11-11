@@ -189,7 +189,10 @@ function passes(items,ctx){
    var head='<p class="ue-pass-count">'+stages.length+' '+(stages.length===1?'rank with a published entry':'ranks with published entries')+' · through Rank '+last+'.'+(first>1?' Ranks 1'+(first>2?'–'+(first-1):'')+' have no track-reward entries published; milestone bonuses are shown under Bonuses.':'')+'</p><p class="ue-pass-legend"><span class="ue-key ue-key-free">Free track</span><span class="ue-key ue-key-deluxe">Deluxe track</span> Deluxe also receives every Free reward.</p>';
    var ranked=stages.map(function(s){return {stage:s,score:passHighlightScore(s)};}).filter(function(x){return x.score>0;});
    ranked.sort(function(a,b){return b.score-a.score||a.stage.rank-b.stage.rank;});
-   var featured=ranked.slice(0,4).map(function(x){return x.stage;});
+   /* Source-listed reward milestones at the familiar 45/100 thresholds stay visible
+      even when an event publishes many other interesting encounter ranks. */
+   var pinned=stages.filter(function(s){return (s.rank===45||s.rank===100)&&passStageRewards(s).length>0;});
+   var featured=pinned.concat(ranked.filter(function(x){return pinned.indexOf(x.stage)<0;}).slice(0,Math.max(0,4-pinned.length)).map(function(x){return x.stage;}));
    if(!featured.length&&stages.length)featured=[stages[0],stages[Math.floor((stages.length-1)/2)],stages[stages.length-1]].filter(function(s,i,arr){return arr.indexOf(s)===i&&passStageRewards(s).length;});
    featured.sort(function(a,b){return a.rank-b.rank;});
    var overview=featured.length?'<div class="ue-pass-overview"><h5>Published milestones</h5><ul class="ue-pass-highlights">'+featured.map(highlight).join('')+'</ul></div>':'';
