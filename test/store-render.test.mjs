@@ -16,7 +16,13 @@ test('owner Store view renders verified Indonesian prices and regional-only rows
   const ctx = vm.createContext(win);
   vm.runInContext(fs.readFileSync(new URL('../public/store.js', import.meta.url), 'utf8'), ctx);
   await new Promise(r => setTimeout(r, 20));
-  for (const t of ['Rp 76,000', 'Rp 101,000', 'Rp 126,000', 'Rp 41,000', 'Rp 10,000', 'Rp 200,000', 'Verified Indonesia Web Store', 'Australia Web: no matching product seen', 'Australia Web: A$7.99'])
+  for (const t of ['Rp 76,000', 'Rp 101,000', 'Rp 126,000', 'Rp 41,000', 'Rp 10,000', 'Rp 200,000', 'Verified Indonesia Web Store', 'Not observed', 'A$7.99'])
     assert.ok(el.innerHTML.includes(t), 'missing ' + t);
+  assert.equal((el.innerHTML.match(/spc-catalogue/g) || []).length, 1);
+  assert.ok(!el.innerHTML.includes('PokéCoins in hand'));
+  assert.ok(!el.innerHTML.includes('Cheapest realistic option'));
+  assert.ok(!el.innerHTML.includes('Save A
+});
+));
   assert.ok(!/undefined|NaN|\[object/.test(el.innerHTML));
 });
