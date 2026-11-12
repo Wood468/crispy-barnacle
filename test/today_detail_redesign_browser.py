@@ -140,7 +140,7 @@ with sync_playwright() as p:
         page.evaluate("""() => {
             const o=document.querySelector('#evd'), h=document.querySelector('#evd-h-research');
             const offset=parseFloat(getComputedStyle(o).getPropertyValue('--evd-stack'))||110;
-            o.scrollTop += h.getBoundingClientRect().top - o.getBoundingClientRect().top - offset - 36;
+            o.scrollTop += h.getBoundingClientRect().top - o.getBoundingClientRect().top - offset + 8;
         }""")
         page.wait_for_function("""() => document.querySelector('#evd .evd-nav-link[data-sec="research"]').getAttribute('aria-current')==='true'""")
         assert visible_sections() == 'research'
