@@ -22,11 +22,17 @@ with sync_playwright() as p:
   page.locator('#dq').fill('raichu');assert page.locator('#dexlist .dex-tile').count()==1
   page.locator('#dstat').select_option('own');assert page.locator('#dexlist .dex-tile').count()==1
   assert page.evaluate("GODASH.ownState('Raichu').state")=='unknown','regional ownership leaked to base form'
-  page.locator('#dstat').select_option('all');page.locator('#dq').fill('');page.evaluate('window.scrollTo(0,0)');page.evaluate("() => Promise.all([...document.querySelectorAll('#dexlist img')].map(i=>{i.loading='eager';return i.decode().catch(()=>{})}))");page.screenshot(path=str(OUT/f'dex-{engine}-{width}.png'));page.screenshot(path=str(OUT/f'dex-{engine}-{width}-full.png'),full_page=True)
+  page.locator('#dstat').select_option('all');page.locator('#dq').fill('')
+  page.locator('#dexlist [data-id="1"] .dex-marks summary').click()
+  small=page.locator('#dexlist [data-id="1"] .tg').evaluate_all('(els)=>els.filter(e=>{const r=e.getBoundingClientRect();return r.width<44||r.height<44}).map(e=>e.dataset.c)')
+  assert small==[],small
+  page.locator('#dexlist [data-id="1"] .dex-marks summary').click();page.evaluate('window.scrollTo(0,0)');page.evaluate("() => Promise.all([...document.querySelectorAll('#dexlist img')].map(i=>{i.loading='eager';return i.decode().catch(()=>{})}))");page.screenshot(path=str(OUT/f'dex-{engine}-{width}.png'));page.screenshot(path=str(OUT/f'dex-{engine}-{width}-full.png'),full_page=True)
   page.locator('#dexlist [data-species="26"]').click();assert page.locator('#dex-species-name').inner_text()=='Raichu'
   assert page.locator('#dex-species [data-mark="form:26:alola"][data-val="1"]').get_attribute('aria-pressed')=='true'
   if width==390:page.screenshot(path=str(OUT/f'dex-species-{engine}.png'),full_page=True)
-  page.locator('#dex-add-record').click();page.locator('#dex-record-form [name="formId"]').select_option('alola');page.locator('#dex-record-form [name="cp"]').fill('1234')
+  page.locator('#dex-add-record').click()
+  if width==390:page.screenshot(path=str(OUT/f'dex-editor-{engine}.png'),full_page=True)
+  page.locator('#dex-record-form [name="formId"]').select_option('alola');page.locator('#dex-record-form [name="cp"]').fill('1234')
   page.locator('#dex-record-form [type="submit"]').click();page.wait_for_function('GOInventory.records().length===1')
   record=page.evaluate('GOInventory.records()[0]');assert record['identity']['formId']=='alola';assert record['attributes']['cp']==1234;assert record['attributes']['ivs']==None;assert record['identity']['shiny']==None
   assert page.evaluate("GODASH.ownState('Raichu').state")=='unknown'

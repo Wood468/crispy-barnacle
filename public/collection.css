@@ -17,3 +17,5 @@
 #dexlist .dex-art img{background:transparent}
 
 #tab-dex .dchk{min-height:44px}#tab-dex .dchk input{width:20px;height:20px;min-height:20px;flex:0 0 20px}.dex-quick .tg{flex:0 0 44px;min-width:44px}
+
+#dexlist .dex-tile .tg{min-width:44px}
