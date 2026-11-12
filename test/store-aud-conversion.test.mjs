@@ -51,13 +51,13 @@ test('owner Store shows one AUD placeholder before each local price without wait
   assert.doesNotMatch(el.innerHTML,/undefined|NaN/);
   // Some catalogue products legitimately have no Indonesian observation.
   // Assert against the specific sourced market cell, not the first product.
-  const idCells = [...el.innerHTML.matchAll(/Indonesia <small>Web<\\/small><\\/span>([\\s\\S]*?)<\\/div>/g)]
+  const idCells = [...el.innerHTML.matchAll(/Indonesia <small>Web<\/small><\/span>([\s\S]*?)<\/div>/g)]
     .map(match => match[1]);
   const pricedCell = idCells.find(cell => cell.includes('Rp 76,000'));
   assert.ok(pricedCell, 'expected an observed Indonesian market cell');
   assert.equal((pricedCell.match(/class="sp-aud-equivalent"/g)||[]).length,1);
   assert.ok(pricedCell.indexOf('sp-aud-equivalent')<pricedCell.indexOf('Rp 76,000'));
-  assert.match(pricedCell,/A\\$ rate unavailable/);
+  assert.match(pricedCell,/A\$ rate unavailable/);
   assert.ok(idCells.some(cell => cell.includes('Not observed')),
     'unobserved regional prices remain explicitly labelled');
   resolveFx({ok:true,json:async()=>({result:'success',base_code:'AUD',
