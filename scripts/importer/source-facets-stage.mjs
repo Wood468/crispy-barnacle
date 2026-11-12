@@ -34,8 +34,12 @@ export function collectSourceFacetStaging(pages = []) {
     // defensive against corrupted fixtures or a future unbounded caller.
     if (eligiblePages >= LIMITS.maxPages) break;
     const url = page.url;
-    if (seen.has(url)) { duplicates++; continue; }
-    seen.add(url);
+    // LeekDuck's www and apex hosts serve equivalent event pages. They
+    // must not multiply bonus/move claims when both appear in a watch list.
+    const parsed = new URL(url);
+    const key = parsed.hostname.replace(/^www\./, '') + parsed.pathname.replace(/\/$/, '');
+    if (seen.has(key)) { duplicates++; continue; }
+    seen.add(key);
     eligiblePages++;
     if (typeof page.html !== 'string' || !page.html.trim()) continue;
     if (page.html.length > LIMITS.maxHtmlBytes) { skippedLarge++; continue; }
