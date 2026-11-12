@@ -11,6 +11,7 @@ test('owner Store view renders verified Indonesian prices and regional-only rows
   const host = { parentNode: { insertBefore: (n) => { Object.assign(el, n); } } };
   const prices = { prices: [
     { product: 'store-x', label: 'Lucky Egg x8', group: 'Items', currency: 'AUD', amount: 7.99, region: 'AU', verified: true, observed: '2026-10-12' },
+    { product: 'store-box-test', label: 'Ultra Training Box', group: 'Boxes', currency: 'AUD', amount: 46.99, region: 'AU', verified: true, observed: '2026-10-12' },
     { product: 'store-idr-legacy', label: 'GO Pass Deluxe', group: 'Tickets', currency: 'IDR', amount: 76000, region: 'ID', verified: true, observed: '2026-11-09' }
   ], regional: OBSERVATIONS, owner: true };
   const win = { GORegionalPrices: R, GOLIB: { esc: s => String(s).replace(/[&<>"']/g, c => '&#' + c.charCodeAt(0) + ';'), loadPrices: () => Promise.resolve(prices), priceView: () => ({ sub: '', save: '', main: '' }) }, GODASH: {} };
@@ -35,4 +36,23 @@ test('owner Store view renders verified Indonesian prices and regional-only rows
   assert.ok(el.innerHTML.includes('Not a live checkout quote.'), 'price choice must be dated and qualified');
   assert.ok(!el.innerHTML.includes('cheapest:'), 'a regional comparison is not a guaranteed checkout price');
   assert.ok(!/undefined|NaN|\[object/.test(el.innerHTML));
+  const positions = ['passes', 'storage', 'coins', 'boxes', 'items'].map(group => el.innerHTML.indexOf('data-sp-group="' + group + '"'));
+  assert.ok(positions.every(pos => pos >= 0), 'Store must expose all five browsing categories');
+  assert.deepEqual([...positions].sort((a, b) => a - b), positions,
+    'passes/tickets come first, followed by storage, coins, boxes and items');
+  for (const group of ['passes', 'storage', 'coins'])
+    assert.match(el.innerHTML, new RegExp('data-sp-group="' + group + '" data-sp-default-open="yes" open'),
+      group + ' must be visible by default');
+  for (const group of ['boxes', 'items'])
+    assert.match(el.innerHTML, new RegExp('data-sp-group="' + group + '" data-sp-default-open="no"'),
+      group + ' must remain browsable without a huge first scroll');
+  assert.ok(el.innerHTML.includes('No source-backed price') || el.innerHTML.includes('no source-backed price'),
+    'explain unobserved prices rather than presenting missing data as zero');
+  assert.doesNotMatch(el.innerHTML, /src="\/ico\/(?:xp|egg|dust)\.webp"/,
+    'XP, egg and Stardust images must not masquerade as Coins, Incubators or Star Pieces');
+  assert.doesNotMatch(el.innerHTML, /src="\/ico\/g\/event\.webp"/,
+    'generic event artwork must not masquerade as a particular Store box');
+  assert.match(el.innerHTML, /class="sp-i-token"[^>]*>◎<\/span>/,
+    'PokéCoin rows use a distinct neutral coin token rather than XP artwork');
+
 });

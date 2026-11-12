@@ -224,3 +224,41 @@ test("service worker install tolerates optional data files failing and retries t
   assert.equal(transient.skipped, true);
   assert.ok([...transient.stored.keys()].some(url => url.includes("/app.js")));
 });
+
+
+test("service worker never intercepts private, user-state or notification API requests, including queries", () => {
+  const listeners = {};
+  const origin = "https://app.test";
+  const unexpectedCalls = [];
+  const unexpected = (operation) => () => {
+    unexpectedCalls.push(operation);
+    assert.fail("API requests must not use " + operation);
+  };
+  const self = {
+    location: { origin },
+    addEventListener(name, handler) { listeners[name] = handler; }
+  };
+  const caches = {
+    open: unexpected("caches.open"),
+    match: unexpected("caches.match"),
+    has: unexpected("caches.has"),
+    keys: unexpected("caches.keys"),
+    delete: unexpected("caches.delete")
+  };
+  vm.runInNewContext(sw, { self, caches, fetch: unexpected("fetch"), URL, Request });
+  assert.equal(typeof listeners.fetch, "function", "the real fetch listener is registered");
+
+  for (const path of ["/api/private", "/api/user-state", "/api/notifications"]) {
+    for (const query of ["", "?page=1&filter=unread"]) {
+      const url = origin + path + query;
+      let respondWithCalls = 0;
+      listeners.fetch({
+        request: new Request(url),
+        respondWith() { respondWithCalls++; },
+        waitUntil: unexpected("waitUntil")
+      });
+      assert.equal(respondWithCalls, 0, "must not intercept " + url);
+      assert.deepEqual(unexpectedCalls, [], "must not fetch, cache or schedule work for " + url);
+    }
+  }
+});

@@ -29,7 +29,15 @@
   }
   function round(v, cur) { var r = ROUND[cur] || 1; return Math.round(v / r) * r; }
   function ageDays(observed, now) { var t = Date.parse(observed); return Number.isFinite(t) ? Math.floor(((now == null ? Date.now() : now) - t) / DAY) : null; }
-  function norm(s) { return String(s || '').toLowerCase().replace(/pok[eé]/g, 'poke').replace(/[^a-z0-9+]+/g, ' ').trim(); }
+  function norm(s) {
+    var name = String(s || '').toLowerCase().replace(/pok[eé]/g, 'poke').trim();
+    /* Only the literal standard Web Store suffix is a safe alias: a 600-coin
+       standard pack is the same quantity in AU and ID. Bonus and one-time
+       packs MUST remain distinct SKUs even where the headline amount matches. */
+    if (/^[\d,]+\s+pokecoins?\s*\(standard web store pack\)$/.test(name))
+      name = name.replace(/\s*\(standard web store pack\)$/, '');
+    return name.replace(/[^a-z0-9+]+/g, ' ').trim();
+  }
   function usable(o) { return o && o.amount > 0 && o.currency && o.region && o.channel && Number.isFinite(Date.parse(o.observed)); }
   function newest(list) { return list.slice().sort(function (a, b) { return String(b.observed).localeCompare(String(a.observed)); })[0] || null; }
   /* Which purchase channels may be suggested in a region: only those with at least one real observation there. */
