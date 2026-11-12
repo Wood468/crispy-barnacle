@@ -63,9 +63,32 @@ test('cheapest option: web only where the region has an observed Web channel', (
   assert.deepEqual(india.options.map(o => o.channel), ['in-app']);
   assert.equal(R.cheapest({region:'AU', product:'GO Pass Deluxe: Into the Wild'}, OBS, {}, NOW).best, null);
 });
-test('cheapest option marks estimates and adds upfront costs', () => {
+test('estimated prices retain their upfront costs but can never win a cheapest-price claim', () => {
   const r = R.cheapest({region:'ID', product:'GO Pass Deluxe: Future', kind:'event-pass'}, OBS, {upfront:[{label:'Pokémon Storage +50', amount:10000}]}, NOW);
-  assert.equal(r.best.isEstimate, true); assert.equal(r.best.cash, 86000); assert.equal(r.best.upfront, 10000);
+  assert.equal(r.best, null, 'a modelled estimate is not a checkout price');
+  assert.equal(r.options[0].isEstimate, true); assert.equal(r.options[0].cash, 86000); assert.equal(r.options[0].upfront, 10000);
+});
+test('only verified observations qualify for lowest option, even if recorded offers seem cheaper', () => {
+  const obs = [
+    id('Example Item', 'item', 90000),
+    id('Example Item', 'item', 40000, {id:'recorded-app', channel:'in-app', status:'recorded'}),
+  ];
+  const result = R.cheapest({region:'ID', product:'Example Item'}, obs, {}, NOW);
+  assert.equal(result.options.length, 2, 'recorded offers remain visible for context');
+  assert.equal(result.best.channel, 'web'); assert.equal(result.best.cash, 90000);
+  assert.equal(result.best.basis, 'verified');
+  const onlyRecorded = R.cheapest({region:'ID', product:'Example Item'}, obs.slice(1), {}, NOW);
+  assert.equal(onlyRecorded.best, null, 'a recorded-only price cannot establish a lowest verified offer');
+});
+test('different currencies in the same comparison cannot establish a lowest observed option', () => {
+  const obs = [
+    id('Example Item', 'item', 90000),
+    id('Example Item', 'item', 200, {id:'other-currency', channel:'in-app', currency:'INR'}),
+  ];
+  const result = R.cheapest({region:'ID', product:'Example Item'}, obs, {}, NOW);
+  assert.equal(result.options.length, 2, 'do not silently drop prices just because currencies differ');
+  assert.deepEqual(result.options.map(p => p.currency).sort(), ['IDR','INR']);
+  assert.equal(result.best, null, 'without a dated FX rate nominal amounts cannot be ranked');
 });
 test('in-app coin purchase uses the balance, buys the cheapest packs for the shortfall and reports unused coins', () => {
   const obs = OBS.concat([{id:'a', region:'ID', channel:'in-app', currency:'IDR', observed:'2026-11-09', source:'fixture', status:'verified', product:'Test Bundle', kind:'bundle', amount:999999, coins:4000}]);
