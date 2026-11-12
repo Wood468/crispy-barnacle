@@ -30,26 +30,31 @@ test('FX provider outage retains only a fresh owner-sourced IDR quote', async ()
   assert.deepEqual(await FX.retrieve(null,{...fx,observed:'2026-01-01'},NOW),{});
 });
 
-test('owner Store renders AUD reference before IDR and INR local prices', async () => {
-  const el = {innerHTML:'',querySelector:()=>null};
+test('owner Store shows one AUD placeholder before each local price without waiting for FX', async () => {
+  let resolveFx;
+  const el = {innerHTML:'',querySelector:()=>null,querySelectorAll:()=>[],addEventListener(){}};
   const host = {parentNode:{insertBefore:()=>{}}};
   const prices = {owner:true,prices:[],regional:OBSERVATIONS};
   const win = {GOStoreFX:FX,GORegionalPrices:R,
-    fetch:async()=>({ok:true,json:async()=>({result:'success',base_code:'AUD',time_last_update_unix:Date.parse('2026-11-12')/1000,rates:{IDR:11000,INR:60}})}),
-    GOLIB:{esc:s=>String(s),loadPrices:async()=>prices},localStorage:{getItem:()=>null,setItem(){}},console};
-  const doc={readyState:'complete',getElementById:id=>id==='evsource'?host:id==='storep-host'?null:null,
+    fetch:()=>new Promise(resolve=>{resolveFx=resolve;}),
+    GOLIB:{esc:s=>String(s),loadPrices:async()=>prices},
+    localStorage:{getItem:()=>null,setItem(){}},console};
+  const doc={readyState:'complete',getElementById:id=>id==='evsource'?host:id==='storep-host'?el:null,
     createElement:()=>el,addEventListener(){}};
   win.window=win;win.document=doc;
   vm.runInNewContext(fs.readFileSync(new URL('../public/store.js',import.meta.url),'utf8'),win);
-  await new Promise(resolve=>setTimeout(resolve,40));
-  assert.match(el.innerHTML,/sp-aud-reference/);
-  assert.match(el.innerHTML,/≈ A\$[\d,.]+/);
+  await new Promise(resolve=>setTimeout(resolve,20));
+  assert.equal(typeof resolveFx,'function');
   assert.match(el.innerHTML,/Rp 76,000/);
   assert.match(el.innerHTML,/₹/);
+  assert.doesNotMatch(el.innerHTML,/sp-aud-reference/);
+  assert.doesNotMatch(el.innerHTML,/undefined|NaN/);
   const id=el.innerHTML.indexOf('Indonesia <small>Web</small>');
   assert.ok(id>=0);
-  const idChunk=el.innerHTML.slice(id,id+750);
-  assert.ok(idChunk.indexOf('sp-aud-reference')<idChunk.indexOf('Rp 76,000'));
-  assert.match(el.innerHTML,/AUD approx · 2026-11-12/);
-  assert.doesNotMatch(el.innerHTML,/undefined|NaN/);
+  const idChunk=el.innerHTML.slice(id,id+850);
+  assert.equal((idChunk.match(/sp-aud-equivalent/g)||[]).length,1);
+  assert.ok(idChunk.indexOf('sp-aud-equivalent')<idChunk.indexOf('Rp 76,000'));
+  assert.match(idChunk,/A\$ rate unavailable/);
+  resolveFx({ok:true,json:async()=>({result:'success',base_code:'AUD',
+    time_last_update_unix:Date.parse('2026-11-12')/1000,rates:{IDR:11000,INR:60}})});
 });
