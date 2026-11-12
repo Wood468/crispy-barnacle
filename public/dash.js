@@ -16,6 +16,7 @@
   }
   function now() { return new Date(); }
   function safeUrl(u) { return typeof u === 'string' && !(window.GOLIB && window.GOLIB.isPrivateLink(u)) && (/^https:\/\//.test(u) || /^\/img\/ext\/[\w.-]+$/.test(u)) ? u : ''; }
+  // Official attribution requires an exact Pokemon GO hostname or its subdomain; lookalike hosts are not official.
   function isOfficialUrl(u) { try { var h = new URL(String(u || '')).hostname.toLowerCase(); return h === 'pokemongo.com' || /\.pokemongo\.com$/.test(h); } catch (e) { return false; } }
 
   /* Raid hundo CP reference data (PvPoke Game Master, MIT); only exact known species/forms are labelled. */

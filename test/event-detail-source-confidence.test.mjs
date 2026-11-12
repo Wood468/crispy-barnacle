@@ -101,3 +101,12 @@ test("future source trust values remain unknown and cannot inject badge markup",
     assert.equal(renderTrust(val), '<span class="st st-u">Trust not labelled</span>');
   }
 });
+
+
+test("dashboard official-source attribution rejects future lookalike hosts", () => {
+  const line = fs.readFileSync(new URL("../public/dash.js", import.meta.url), "utf8").split(String.fromCharCode(10)).find(x => x.trim().startsWith("function isOfficialUrl(u)"));
+  assert.ok(line);
+  const check = new Function("u", line.slice(line.indexOf("{") + 1, line.lastIndexOf("}")));
+  for (const u of ["https://pokemongo.com/news", "https://www.pokemongo.com/news"]) assert.equal(check(u), true);
+  for (const u of ["https://pokemongo.com.evil.example/news", "https://evilpokemongo.com/news", "https://example.com/?next=pokemongo.com", "not a url", null]) assert.equal(check(u), false);
+});
