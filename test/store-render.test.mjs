@@ -31,6 +31,19 @@ test('owner Store view renders verified Indonesian prices and regional-only rows
   assert.ok(el.innerHTML.includes('sp-market-grid'), 'regional prices share one compact grid');
   assert.ok(el.innerHTML.includes('sp-market-au'), 'Australia price is visually grouped with the other regions');
   assert.ok(el.innerHTML.includes('data-sp-product'), 'each item renders once in the browseable catalogue');
+  assert.doesNotMatch(el.innerHTML, /class="sp-product-group"/,
+    'internal event-pass/sku classifier strings must not be exposed as product labels');
+  assert.doesNotMatch(el.innerHTML, />event-pass-ranks-ultra</,
+    'machine-readable product kind must not be visible in Store cards');
+  const storeCss = fs.readFileSync(new URL('../public/dash.css', import.meta.url), 'utf8');
+  const mobileCss = storeCss.slice(storeCss.lastIndexOf('/* Mobile Store QA: three tall'));
+  assert.match(mobileCss, /@media\(max-width:659px\)/,
+    'compact Store rows must apply at phone widths');
+  assert.match(mobileCss, /\.storep-regional \.sp-market-grid\{display:grid;grid-template-columns:minmax\(0,1fr\);gap:0\}/,
+    'phone catalogue must use stacked independent country rows, not equal-height three-column tiles');
+  assert.match(mobileCss, /\.sp-market\+\.sp-market\{border-top:/,
+    'country rows must have a visible separator without losing source-backed missing prices');
+
   assert.ok(el.innerHTML.includes('Advanced comparison'), 'cash/coin optimisation is disclosed only when requested');
   assert.ok(el.innerHTML.includes('Lowest verified observed options'));
   assert.ok(el.innerHTML.includes('Not a live checkout quote.'), 'price choice must be dated and qualified');
