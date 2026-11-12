@@ -180,7 +180,7 @@ function passes(items,ctx){
  }
  var meta=ctx.passMeta||{};
  return items.filter(function(p){return value(p);}).map(function(p){
-  var stages=(Array.isArray(p.stages)?p.stages:[]).filter(function(s){return s&&Number.isInteger(s.rank)&&s.rank>=0;}).slice().sort(function(a,b){return a.rank-b.rank;});
+  var stages=(Array.isArray(p.stages)?p.stages:[]).filter(function(s){return s&&Number.isInteger(s.rank)&&s.rank>=0&&passStageRewards(s).some(function(r){return passReward(r,ctx)!==null;});}).slice().sort(function(a,b){return a.rank-b.rank;});
   var content='';
   if(!stages.length)content='<p class="note ue-pass-missing">Rank rewards have not been published by the source yet.</p>';
   else{
