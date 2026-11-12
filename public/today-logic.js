@@ -144,6 +144,14 @@
     else if ((m = /^Mega\s+(.+?)(?:\s+([XY]))?$/i.exec(core))) { res.kind = 'mega'; res.base = m[1]; res.exact = true; res.label = 'Mega' + (m[2] ? ' ' + m[2].toUpperCase() : ''); }
     else if ((m = /^Primal\s+(.+)$/i.exec(core))) { res.kind = 'primal'; res.base = m[1]; res.exact = true; res.label = 'Primal'; }
     else if ((m = /^(Alolan|Galarian|Hisuian|Paldean)\s+(.+)$/i.exec(core))) { res.kind = 'regional'; res.base = m[2]; res.exact = true; res.label = REGIONAL[m[1].toLowerCase()]; }
+    /* Forme-first names match the Worker's exact PokeAPI variety resolver.
+       A missing exact image must show a form-unavailable label, never silently
+       present the ordinary species sprite as the named Forme. */
+    else if ((m = /^(Normal|Attack|Defense|Speed|Origin|Altered|Incarnate|Therian|Land|Sky)\s+Forme\s+(.+)$/i.exec(core))) {
+      res.kind = 'form'; res.base = m[2].trim(); res.exact = true;
+      res.label = m[1][0].toUpperCase() + m[1].slice(1).toLowerCase() + ' Forme';
+      res.form = res.label;
+    }
     if (o.dynamax && res.kind === 'base') res.kind = 'dynamax';
     if (o.shadow && res.kind === 'base') res.kind = 'shadow';
     if (o.costume || o.costumeId) { res.kind = res.kind === 'base' ? 'costume' : res.kind; res.exact = true; res.label = res.label || o.label || paren || 'Costume'; }
