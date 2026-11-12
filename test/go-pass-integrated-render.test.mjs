@@ -33,7 +33,7 @@ test('wired renderer uses only exact approved item art and honest category token
  // Remote Raid Pass is a separate item with a category glyph.
  assert.equal((html.match(/src="\/ico\/g\/raidpass\.webp"/g)||[]).length,1);
  assert.match(html,/ue-reward-icon">XP<\/span>/);
- assert.match(html,/ue-reward-icon">XL<\/span>/);
+ assert.match(html,/ue-reward-icon">RXL<\/span>/);
  assert.doesNotMatch(html,/\/ico\/xp\.webp/);
  assert.match(html,/<b>Remote Raid Pass<\/b>/);
  assert.match(html,/<b>Rare Candy XL<\/b>/);
@@ -43,10 +43,27 @@ test('unattributed published rewards survive empty named tracks, with no fabrica
  assert.match(html,/data-rank="45"/);
  assert.doesNotMatch(html,/data-rank="46"/);
  assert.match(html,/Silver Bottle Cap/);
- assert.match(html,/Reward · track not specified/);
+ assert.match(html,/Track not specified/);
  assert.doesNotMatch(html,/Track rewards not specified for this rank/);
  assert.equal(nav.indexRanks([45]).count,1);
  assert.equal(nav.lookup(nav.indexRanks([45]),46).status,'unlisted');
+}));
+test('published mixed-track rank preserves unmatched unattributed rewards without false Free attribution', () => withSemantic(() => {
+ const html=UI.render(model([{rank:45,
+  free:[{name:'Incense',type:'item',quantity:1}],
+  deluxe:[{name:'Silver Bottle Cap',type:'item'}],
+  rewards:[{name:'Incense',type:'item',quantity:1},{name:'Incense',type:'item',quantity:2},{name:'Remote Raid Pass',type:'item'}]
+ }]),{});
+ const row=html.match(/<li class="ue-pass-rank" data-rank="45">([\s\S]*?)<\/li>/);
+ assert.ok(row,'published rank exists');
+ const detail=row[1];
+ assert.match(detail,/<div class="ue-lane ue-lane-free"><h5>Free<\/h5>/);
+ assert.match(detail,/<div class="ue-lane ue-lane-deluxe"><h5>Deluxe<\/h5>/);
+ assert.match(detail,/<div class="ue-lane ue-lane-unspecified"><h5>Track not specified<\/h5>/);
+ assert.equal((detail.match(/<b>Incense<\/b>/g)||[]).length,2,'different quantities remain separate, identical Free reward is not doubled');
+ assert.match(detail,/<b>Remote Raid Pass<\/b>/);
+ assert.match(detail,/×2 · Item/);
+ assert.doesNotMatch(detail,/ue-lane ue-lane-free[^]*?Track not specified<\/h5>/);
 }));
 test('published Rank 45 and Rank 100 remain pinned, closed range entries preserve source numbers', () => withSemantic(() => {
  const stages=[{rank:1,free:[{name:'Incense',type:'item'}]},{rank:45,free:[{name:'Dynamax Meltan',type:'encounter'}]},{rank:100,deluxe:[{name:'Silver Bottle Cap',type:'item'}]},{rank:600,free:[{name:'XP',type:'item'}]}];
