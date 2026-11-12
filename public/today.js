@@ -25,7 +25,7 @@
     if (/mega raid|mega edition|\bmega\b/i.test(n) && ev.kind === 'raid') return { stars: 0, label: 'Mega' };
     if (/shadow/i.test(n) && ev.kind === 'raid') return { stars: 0, label: 'Shadow' };
     if (/raid hour/i.test(n)) return { stars: 0, label: 'Raid Hour' };
-    if (ev.kind === 'max' || /(?:max|dynamax|gigantamax)/i.test(n)) return { stars: 0, label: 'Max Battle' };
+    if (ev.kind === 'max' || /\b(?:max|dynamax|gigantamax)\b/i.test(n)) return { stars: 0, label: 'Max Battle' };
     return null;
   }
   /* Featured Pokémon for a card: unique, separate tiles for "A and B" strings, shiny duplicates and bases of a listed Mega dropped. */
