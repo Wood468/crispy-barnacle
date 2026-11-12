@@ -101,6 +101,31 @@ test('invalid provenance and untrusted hosts are omitted rather than attributed'
  assert.ok(result.warnings.length>=2);
 });
 
+test('an attacker-controlled host cannot impersonate official provenance or corroboration',()=>{
+ const fake='https://pokemongo.com.attacker.example/news/synthetic/';
+ const wrongHost='https://leekduck.com/events/synthetic/';
+ const claim=(url)=>benefit('ticket','Up to six free Raid Passes',url);
+ const d=normalizeEventSourceFacets('wag',[
+   mk('leekduck',duck,{benefits:[claim(duck)]}),
+   mk('official',fake,{benefits:[claim(fake)]}),
+   mk('official',wrongHost,{benefits:[claim(wrongHost)]})
+ ]);
+ assert.equal(d.benefits.length,1);
+ assert.equal(d.benefits[0].status,'source-claimed');
+ assert.deepEqual(d.benefits[0].sourceRefs.map(x=>x.sourceId),['leekduck']);
+ assert.equal(d.warnings.length,2);
+});
+
+test('only explicit Raid Pass and Max Particle claims can supersede free limits',()=>{
+ const d=normalizeEventSourceFacets('wag',[
+   mk('leekduck',duck,{benefits:[{
+     label:'Additional Candy for catching Pokémon',kind:'candy',access:'ticket',
+     replacesFreeLimit:true,source:source(duck,'Ticket Extras')
+   }]})
+ ]);
+ assert.equal(d.benefits[0].replacesFreeLimit,false);
+});
+
 test('source order, duplicate records and omitted optional fields do not affect stable output',()=>{
  const b=benefit('free','Increased catch XP',duck,{kind:'xp',replacesFreeLimit:false});
  const d=mk('leekduck',duck,{benefits:[b,b]});
