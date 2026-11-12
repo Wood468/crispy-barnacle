@@ -111,7 +111,7 @@ with sync_playwright() as p:
         def tap(sec, focus=True):
             # Use native click, but do not rely on changes to the URL fragment.
             page.evaluate("""(sec) => document.querySelector('#evd .evd-nav-link[data-sec="'+sec+'"]').click()""", sec)
-            page.wait_for_function("""(sec) => document.querySelector('#evd .evd-nav-link[data-sec="'+sec+'"]').getAttribute('aria-current')==='location'""", arg=sec)
+            page.wait_for_function("""(sec) => document.querySelector('#evd .evd-nav-link[data-sec="'+sec+'"]').getAttribute('aria-current')==='true'""", arg=sec)
             assert visible_sections() == sec, (width,sec)
             heading = page.locator(f'#evd-h-{sec}').bounding_box()
             assert heading and 0 <= heading['y'] < 844, (width,sec,heading,'jump heading offscreen')
@@ -142,7 +142,7 @@ with sync_playwright() as p:
             const offset=parseFloat(getComputedStyle(o).getPropertyValue('--evd-stack'))||110;
             o.scrollTop += h.getBoundingClientRect().top - o.getBoundingClientRect().top - offset - 36;
         }""")
-        page.wait_for_function("""() => document.querySelector('#evd .evd-nav-link[data-sec="research"]').getAttribute('aria-current')==='location'""")
+        page.wait_for_function("""() => document.querySelector('#evd .evd-nav-link[data-sec="research"]').getAttribute('aria-current')==='true'""")
         assert visible_sections() == 'research'
         assert page.locator('#evd-s-encounters').is_visible(), 'Encounter cards should remain naturally scrollable'
         assert page.locator('#evd-s-research').is_visible()
