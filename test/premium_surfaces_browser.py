@@ -118,7 +118,7 @@ with sync_playwright() as p:
         assert page.locator('#evd .ue-pass-range').count()>=4
         assert page.locator('#evd .ue-pass-stages > li').count()>=90
         page.locator('#evd .evd-nav-link[data-sec="passes"]').click()
-        assert page.locator('#evd .evd-sec:not([hidden])').count() == 1
+        assert page.locator('#evd .evd-sec:not([hidden])').count() == page.locator('#evd .evd-sec').count(), 'all sourced sections remain accessible in continuous mode'
         page.locator('#evd .ue-pass-range').filter(has_text='Rank 100').locator('summary').click()
         assert 'Rank 100' in page.locator('#evd').inner_text()
         assert page.locator('#evd').evaluate('(el)=>el.scrollWidth<=el.clientWidth'), ('GO Pass',width)
@@ -133,7 +133,7 @@ with sync_playwright() as p:
         costume_reward=raid_task.locator('.research-reward').filter(has_text='Machamp (Modern Jacket)')
         assert costume_reward.count()==1 and 'CP ' not in costume_reward.inner_text()
         page.locator('#evd .evd-nav-link[data-sec="research"]').click()
-        assert page.locator('#evd .evd-sec:not([hidden])').count() == 1
+        assert page.locator('#evd .evd-sec:not([hidden])').count() == page.locator('#evd .evd-sec').count(), 'all sourced sections remain accessible in continuous mode'
         raid_task.scroll_into_view_if_needed()
         assert page.locator('#evd').evaluate('(el)=>el.scrollWidth<=el.clientWidth'), ('Research rewards',width)
         capture('research-rewards')
