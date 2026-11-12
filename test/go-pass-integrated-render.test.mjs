@@ -98,6 +98,10 @@ test('sparse future passes keep every unpublished rank note within its actual 25
  assert.match(html,/<p class="ue-pass-gap ue-pass-gap-between" role="note">Ranks 126–175: no reward entries published by the source<\/p>/);
  assert.match(html,/<p class="ue-pass-gap ue-pass-gap-between" role="note">Ranks 201–575: no reward entries published by the source<\/p>/);
  assert.equal((html.match(/class="ue-pass-gap ue-pass-gap-between"/g)||[]).length,3);
+ const prevGroupEnd=html.indexOf('</details>',html.indexOf('Ranks 101–125 · 1 published'));
+ const nextGroupStart=html.lastIndexOf('<details class="ue-pass-range">',html.indexOf('Ranks 176–200 · 1 published'));
+ const boundaryGap=html.indexOf('>Ranks 126–175: no reward entries published');
+ assert.ok(boundaryGap>prevGroupEnd&&boundaryGap<nextGroupStart,'whole missing bands sit between group disclosures');
  assert.equal((html.match(/class="ue-pass-rank" data-rank="/g)||[]).length,4,'published source ranks are unchanged');
  assert.equal(nav.lookup(nav.indexRanks([1,101,200,600]),175).status,'unlisted');
 }));
