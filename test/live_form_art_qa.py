@@ -138,7 +138,13 @@ def live_event_browser(pw, errors: list) -> list:
                     timeout=45000,
                 )
                 page.evaluate("() => GODETAIL.open('into')")
-                page.wait_for_selector("#evd .ue-mon", timeout=30000)
+                # Current Event Details shows one section at a time. A
+                # hidden Encounter tile is not a failed artwork lookup:
+                # open the actual Pokémon panel before decoding sprites.
+                encounter_tab = page.locator('#evd .evd-nav-link[data-sec="encounters"]')
+                encounter_tab.wait_for(state="visible", timeout=30000)
+                encounter_tab.click()
+                page.wait_for_selector("#evd-s-encounters .ue-mon", state="visible", timeout=30000)
                 row["tile_count"] = page.locator("#evd .ue-mon").count()
                 # Some sources use hyphenated Crowned form IDs while others
                 # omit the separator. Both keys remain valid in Collection;
