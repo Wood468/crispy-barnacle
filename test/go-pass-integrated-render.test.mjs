@@ -66,7 +66,7 @@ test('load order, offline references and post-render mount form a complete PWA i
   '/go-pass-navigation.js?v=20261118b',
   '/go-pass-reward-art.js?v=20261118a',
   '/event-components.js?v=20261118a',
-  '/dash.js?v=20261118b'
+  '/dash.js?v=20261118c'
  ];
  for(const asset of assets){assert.ok(index.includes(asset),asset+' absent from index');assert.ok(sw.includes(asset),asset+' absent from PWA shell');}
  assert.ok(index.indexOf('/go-pass-reward-art.js?v=')<index.indexOf('/event-components.js?v='),'semantic registry must load before renderer');
@@ -77,7 +77,7 @@ test('load order, offline references and post-render mount form a complete PWA i
  const mountAt=detail.indexOf('GOGoPassNavigation.mount(o)',renderAt);
  assert.ok(renderAt>=0&&mountAt>renderAt&&mountAt<renderAt+300,'mount after actual event render');
  assert.match(components,/GOGoPassRewardArt\.resolve/);
- assert.match(sw,/SHELL_CACHE = 'gofn-shell-v311'/);
+ assert.match(sw,/SHELL_CACHE = 'gofn-shell-v312'/);
 });
 
 test('exact Pokémon encounter artwork stays delegated to the existing resolver', () => withSemantic(() => {
