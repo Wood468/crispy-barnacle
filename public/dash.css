@@ -2255,3 +2255,20 @@ button.rc-chip:focus-visible{outline:2px solid var(--color-link);outline-offset:
   background:#9e1649 url("/img/ext/BreadRaidEmblem-71f25669.png") no-repeat 2px center / 10px 10px;
   font:800 .46rem/1.1 var(--font-body);letter-spacing:.01em;pointer-events:none
 }
+
+
+/* Owner-only Store: compact source-backed regional comparison cards. */
+#storep-host .sp-intro{margin:12px 0 16px;color:var(--color-text-muted);font-size:.9rem;line-height:1.5}
+#storep-host .sp-catalogue{display:grid;gap:10px;margin-top:12px}
+#storep-host .sp-product{padding:14px;border:1px solid var(--border-subtle,rgba(255,255,255,.15));border-radius:14px;background:rgba(255,255,255,.025);min-width:0}
+#storep-host .sp-product-head{display:flex;align-items:center;gap:10px;margin-bottom:12px;line-height:1.35}
+#storep-host .sp-product-head strong{font-size:.96rem;overflow-wrap:anywhere}
+#storep-host .sp-product-head .sp-i{width:32px;height:32px;object-fit:contain;flex-shrink:0}
+#storep-host .sp-markets{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+#storep-host .sp-market{min-width:0;padding:10px 8px;border-radius:10px;background:rgba(255,255,255,.035);display:flex;flex-direction:column;gap:6px}
+#storep-host .sp-market-label{font-size:.71rem;line-height:1.3;color:var(--color-text-muted);font-weight:700}
+#storep-host .sp-market .sp-regional-value{display:flex;flex-direction:column;gap:3px;min-width:0;font-size:.85rem;overflow-wrap:anywhere}
+#storep-host .sp-market .sp-regional-value b{font-size:.94rem;font-variant-numeric:tabular-nums}
+#storep-host .sp-market small{font-size:.69rem;line-height:1.4;color:var(--color-text-muted);overflow-wrap:anywhere}
+#storep-host .sp-market .sp-none{font-size:.76rem;color:var(--color-text-muted)}
+@media(max-width:360px){#storep-host .sp-markets{grid-template-columns:1fr}#storep-host .sp-market{flex-direction:row;align-items:baseline;justify-content:space-between;gap:12px}#storep-host .sp-market-label{max-width:42%}}
