@@ -81,10 +81,10 @@ test('published Rank 45 and Rank 100 remain pinned, closed range entries preserv
 test('load order, offline references and post-render mount form a complete PWA integration', () => {
  const index=file('index.html'),sw=file('sw.js'),dash=file('dash.js'),detail=file('detail.js'),components=file('event-components.js');
  const assets=[
-  '/go-pass-navigation.css?v=20261118a',
+  '/go-pass-navigation.css?v=20261118c',
   '/go-pass-navigation.js?v=20261118b',
-  '/go-pass-reward-art.js?v=20261118a',
-  '/event-components.js?v=20261118a',
+  '/go-pass-reward-art.js?v=20261118c',
+  '/event-components.js?v=20261118c',
   '/dash.js?v=20261118b'
  ];
  for(const asset of assets){assert.ok(index.includes(asset),asset+' absent from index');assert.ok(sw.includes(asset),asset+' absent from PWA shell');}
@@ -96,7 +96,7 @@ test('load order, offline references and post-render mount form a complete PWA i
  const mountAt=detail.indexOf('GOGoPassNavigation.mount(o)',renderAt);
  assert.ok(renderAt>=0&&mountAt>renderAt&&mountAt<renderAt+300,'mount after actual event render');
  assert.match(components,/GOGoPassRewardArt\.resolve/);
- assert.match(sw,/SHELL_CACHE = 'gofn-shell-v311'/);
+ assert.match(sw,/SHELL_CACHE = 'gofn-shell-v312'/);
 });
 
 test('exact Pokémon encounter artwork stays delegated to the existing resolver', () => withSemantic(() => {
