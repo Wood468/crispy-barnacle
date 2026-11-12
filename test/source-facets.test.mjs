@@ -119,3 +119,56 @@ test('source URL is required; empty or invalid input is rejected without constru
   assert.throws(()=>extractEventSourceFacets(''),/HTML source/);
   assert.throws(()=>extractEventSourceFacets('<main></main>',{sourceUrl:'http://invalid.example/a'}),/HTTPS source/);
 });
+
+test('LeekDuck move-art icon labels yield correct types without concatenated type prefixes',()=>{
+  const html='<main><h2>Moves</h2><h2>Featured Attacks</h2>'+
+    '<h4>Venusaur</h4><p>Evolve Ivysaur to get Venusaur with its featured attack; Venusaur can also be caught after Mega Raids.</p>'+
+    '<img alt="GrassFrenzy Plant Charged Attack">'+
+    '<h4>Tyranitar</h4><p>Evolve Pupitar to get Tyranitar with its featured attack.</p>'+
+    '<img alt="RockSmack Down Fast Attack"></main>';
+  const d=extractEventSourceFacets(html,{sourceUrl:'https://leekduck.com/events/synthetic-kalos/'});
+  assert.deepEqual(d.featuredMoves.map(m=>[m.pokemonLabel,m.move,m.moveKind]),[
+    ['Venusaur','Frenzy Plant','charged'],['Tyranitar','Smack Down','fast']
+  ]);
+  assert.deepEqual(d.featuredMoves[0].acquisitionMethods,['evolve','catch','raid']);
+  assert.deepEqual(d.featuredMoves[1].acquisitionMethods,['evolve']);
+});
+
+test('Kalos X/Y branching options are recorded only from an explicit choice',()=>{
+  const html='<main><h2>Research</h2><h3>Special Research (Ticket Holder Exclusive)</h3>'+
+    '<p>Choose between two Special Research paths: X Version and Y Version.</p>'+
+    '<div>Part 1 of the story (1/6)</div><div>Part 2 of the story (2/6)</div></main>';
+  const d=extractEventSourceFacets(html,{sourceUrl:'https://leekduck.com/events/synthetic-kalos/'});
+  assert.equal(d.researchPrograms[0].kind,'special');
+  assert.equal(d.researchPrograms[0].access,'ticket');
+  assert.deepEqual(d.researchPrograms[0].paths,['X Version','Y Version']);
+  assert.deepEqual(d.researchPrograms[0].steps.map(x=>x.step),[1,2]);
+  assert.ok(d.researchPrograms[0].steps.every(x=>x.taskRewardEvidence==='not-extracted'));
+});
+
+test('paid add-on benefits retain add-on identity and do not leak into the base ticket',()=>{
+  const html='<main><h2>Add-ons</h2>'+
+    '<h3>Raid Lover — MXN$200</h3>'+
+    '<img alt="Up to 18 free Raid Passes per day from Gyms">'+
+    '<img alt="6 additional Candy for catching Pokémon in raids">'+
+    '<h3>Egg-thusiast — MXN$200</h3>'+
+    '<img alt="1/4 Egg Hatch Distance">'+
+    '<img alt="3× Hatch Stardust"></main>';
+  const d=extractEventSourceFacets(html,{sourceUrl:'https://leekduck.com/events/synthetic-mexico/'});
+  assert.equal(d.benefits.length,4);
+  assert.ok(d.benefits.every(x=>x.access==='addon'));
+  assert.equal(d.benefits[0].addonLabel,'Raid Lover — MXN$200');
+  assert.equal(d.benefits[2].addonLabel,'Egg-thusiast — MXN$200');
+  assert.equal(d.benefits[2].replacesFreeLimit,false);
+});
+
+test('source-caveated Safari Ball substitution never becomes a verified entitlement',()=>{
+  const html='<main><h2>Additional Ticket Holder Bonuses</h2>'+
+    '<img alt="GO Safari Balls instead of Premier Balls for raids and Max Battles***">'+
+    '<p>***This behavior is not yet confirmed by the official source.</p></main>';
+  const d=extractEventSourceFacets(html,{sourceUrl:'https://leekduck.com/events/synthetic-global/'});
+  assert.equal(d.benefits.length,1);
+  assert.equal(d.benefits[0].kind,'safari-balls');
+  assert.equal(d.benefits[0].status,'unconfirmed');
+  assert.equal(d.benefits[0].access,'ticket');
+});
