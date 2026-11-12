@@ -9,7 +9,7 @@
   'use strict';
   var serial = 0;
   function rank(value) {
-    var n = typeof value === 'string' && value.trim() ? Number(value) : value;
+    var n = typeof value === 'string' ? (/^\d+$/.test(value.trim()) ? Number(value.trim()) : null) : value;
     return Number.isSafeInteger(n) && n >= 1 ? n : null;
   }
   function rangeAt(value, width) {
@@ -70,7 +70,7 @@
       input.inputMode = 'numeric';
       input.min = '1';
       input.step = '1';
-      input.max = String(index.last);
+      form.noValidate = true; // Report missing ranks honestly, even above the last listed rank.
       input.placeholder = 'e.g. 45';
       go.type = 'submit';
       go.className = 'pill';
