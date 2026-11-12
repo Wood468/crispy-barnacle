@@ -1,0 +1,12 @@
+/* GO Pass optional direct-rank navigation. Loaded together with go-pass-navigation.js. */
+.ue-pass-nav{display:grid;grid-template-columns:minmax(0,1fr);gap:8px;margin:12px 0;padding:12px;border-radius:var(--radius-md,12px);background:var(--color-surface);border:1px solid var(--color-border)}
+.ue-pass-jump{display:grid;grid-template-columns:minmax(0,1fr) minmax(74px,100px) auto;align-items:end;gap:8px}
+.ue-pass-jump label{align-self:center}
+.ue-pass-nav label{font:700 .78rem/1.3 var(--font-body);color:var(--color-text-body)}
+.ue-pass-nav input,.ue-pass-nav select{width:100%;min-width:0;min-height:44px;padding:8px 10px;color:var(--color-text);background:var(--color-surface-raised);border:1px solid var(--color-border);border-radius:var(--radius-sm,8px);font:inherit}
+.ue-pass-nav select{font-size:.84rem}
+.ue-pass-nav button{min-width:44px;min-height:44px}
+.ue-pass-nav :is(input,select,button):focus-visible{outline:2px solid var(--color-accent);outline-offset:2px}
+.ue-pass-nav-status{margin:0;font-size:.78rem;line-height:1.4;color:var(--color-text-muted)}
+.ue-pass-nav-status:empty{display:none}
+@media(max-width:380px){.ue-pass-jump{grid-template-columns:minmax(0,1fr) auto}.ue-pass-jump label{grid-column:1/-1}.ue-pass-jump input{grid-column:1}}

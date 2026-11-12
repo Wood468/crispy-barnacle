@@ -842,6 +842,8 @@
       var ev2 = completeEvent(ev),sourcePoster=findDetails(ev2);
       if(!ev2.img&&sourcePoster&&safe(sourcePoster.image))ev2=Object.assign({},ev2,{img:sourcePoster.image});
       o.innerHTML = '<div class="evd-in">' + render(ev2) + '</div>';
+      // Mount after each actual Event Details render; no polling or DOM observers.
+      if(window.GOGoPassNavigation)window.GOGoPassNavigation.mount(o);
       addBonusTime(o, ev2);
       o.hidden = false; document.body.style.overflow = 'hidden'; o.scrollTop = 0;
       addInfographicShortcut(o, ev2);
