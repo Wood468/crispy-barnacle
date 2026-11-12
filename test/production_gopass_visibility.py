@@ -12,7 +12,12 @@ from playwright.sync_api import sync_playwright
 URL = os.environ.get("GO_FIELD_NOTES_LIVE_GO_PASS_URL", "https://pogo.michaelpuff.com").rstrip("/")
 OUT = Path(os.environ.get("GO_FIELD_NOTES_LIVE_GO_PASS_SCREENSHOTS", "/tmp/gopass-live-check"))
 OUT.mkdir(parents=True, exist_ok=True)
-report = {"site": URL, "checks": [], "pass_results": [], "page_errors": []}
+expected_url = next(
+    ("/" + fragment.split('"', 1)[0])
+    for fragment in (Path(__file__).resolve().parent.parent / "public/index.html").read_text().split('<script src="/')
+    if fragment.startswith("go-pass-navigation.js?v=")
+)
+report = {"site": URL, "expectedNavAsset": expected_url, "checks": [], "pass_results": [], "page_errors": []}
 
 with sync_playwright() as playwright:
     browser = playwright.chromium.launch()
@@ -129,3 +134,12 @@ has_published_pass = any(p.get("rankCount", 0)>0 for check in report["checks"] f
 has_visible_control = any(p.get("navVisible") for check in report["checks"] for p in check.get("passes", []))
 if not has_published_pass or not has_visible_control:
     raise SystemExit("Live published GO Pass/navigator not confirmed; inspect screenshot and JSON report")
+if os.environ.get("GOFN_EXPECT_NAV_FIRST") == "1":
+    for check in report["checks"]:
+        actual = check.get("browserGlobals", {}).get("version") or ""
+        if not actual.endswith(expected_url):
+            raise SystemExit("Production still serves stale navigator URL: " + actual)
+        for item in check.get("passes", []):
+            if item.get("rankCount", 0) and not item.get("navBeforeOverview"):
+                raise SystemExit("GO Pass navigator still below milestones for " + item["name"])
+
