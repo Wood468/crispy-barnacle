@@ -78,6 +78,42 @@ test('published Rank 45 and Rank 100 remain pinned, closed range entries preserv
  assert.match(html,/class="ue-pass-range"/);
  assert.doesNotMatch(html,/>101 of 600 ranks listed</);
 }));
+test('sparse future passes keep every unpublished rank note within its actual 25-rank band', () => withSemantic(() => {
+ const stages=[1,101,200,600].map(rank=>({rank,free:[{type:'item',name:'Incense'}]}));
+ const html=UI.render(model(stages),{});
+ const panels=[...html.matchAll(/<details class="ue-pass-range"><summary>([^<]+)<\/summary><ol class="ue-pass-stages">([\s\S]*?)<\/ol><\/details>/g)]
+  .map(match=>({label:match[1],body:match[2]}));
+ assert.deepEqual(panels.map(p=>p.label),[
+  'Ranks 1–25 · 1 published',
+  'Ranks 101–125 · 1 published',
+  'Ranks 176–200 · 1 published',
+  'Ranks 576–600 · 1 published'
+ ]);
+ assert.match(panels[0].body,/Ranks 2–25: no reward entries published by the source/);
+ assert.match(panels[1].body,/Ranks 102–125: no reward entries published by the source/);
+ assert.match(panels[2].body,/Ranks 176–199: no reward entries published by the source/);
+ assert.match(panels[3].body,/Ranks 576–599: no reward entries published by the source/);
+ assert.doesNotMatch(panels[2].body,/Ranks 102–199|Ranks 126–175/);
+ assert.match(html,/<p class="ue-pass-gap ue-pass-gap-between" role="note">Ranks 26–100: no reward entries published by the source<\/p>/);
+ assert.match(html,/<p class="ue-pass-gap ue-pass-gap-between" role="note">Ranks 126–175: no reward entries published by the source<\/p>/);
+ assert.match(html,/<p class="ue-pass-gap ue-pass-gap-between" role="note">Ranks 201–575: no reward entries published by the source<\/p>/);
+ assert.equal((html.match(/class="ue-pass-gap ue-pass-gap-between"/g)||[]).length,3);
+ assert.equal((html.match(/class="ue-pass-rank" data-rank="/g)||[]).length,4,'published source ranks are unchanged');
+ assert.equal(nav.lookup(nav.indexRanks([1,101,200,600]),175).status,'unlisted');
+}));
+
+test('dense and single-rank groups avoid cross-boundary gaps and do not fabricate rewards', () => withSemantic(() => {
+ const stages=[1,2,25,26,45,50].map(rank=>({rank,deluxe:[{type:'item',name:'Lucky Egg'}]}));
+ const html=UI.render(model(stages),{});
+ const panels=[...html.matchAll(/<details class="ue-pass-range"><summary>([^<]+)<\/summary><ol class="ue-pass-stages">([\s\S]*?)<\/ol><\/details>/g)];
+ assert.equal(panels.length,2);
+ assert.match(panels[0][2],/Ranks 3–24: no reward entries published by the source/);
+ assert.match(panels[1][2],/Ranks 27–44: no reward entries published by the source/);
+ assert.match(panels[1][2],/Ranks 46–49: no reward entries published by the source/);
+ assert.doesNotMatch(html,/class="ue-pass-gap ue-pass-gap-between"/,'no whole 25-rank group is missing');
+ assert.equal((html.match(/class="ue-pass-rank" data-rank="/g)||[]).length,6);
+}));
+
 test('load order, offline references and post-render mount form a complete PWA integration', () => {
  const index=file('index.html'),sw=file('sw.js'),dash=file('dash.js'),detail=file('detail.js'),components=file('event-components.js');
  const assets=[
