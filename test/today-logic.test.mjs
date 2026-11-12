@@ -294,3 +294,16 @@ test('Crowned Sword and Shield are exact artwork forms, not base-species picture
  }
  assert.equal(L.classifyArt('Crowned Shield Zacian').exact,false,'invalid species/form pairing must not be accepted');
 });
+
+test('raidTier recognizes whole-word Max/Dynamax/Gigantamax or kind max, ignores Climax/Maximum, and preserves raids/megas', () => {
+  const t = (kind, name) => L.raidTier({ kind, name });
+  assert.equal(t('event', 'Climax Celebration'), null);
+  assert.equal(t('event', 'Maximum Rewards'), null);
+  assert.equal(t('max', 'Some Random Name'), 0);
+  assert.equal(t('raid', 'Max Monday: Pokémon to be announced'), 0);
+  assert.equal(t('raid', 'Dynamax Battles'), 0);
+  assert.equal(t('raid', 'Gigantamax Battle Day'), 0);
+  assert.equal(t('raid', 'dynamax battle'), 0);
+  assert.equal(t('raid', '5-star Raid Battles'), 5);
+  assert.equal(t('raid', 'Mega Raid'), 'mega');
+});
