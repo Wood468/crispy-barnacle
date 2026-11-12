@@ -22,3 +22,24 @@
 .ue-pass-find-results{display:grid;gap:5px;max-height:290px;overflow-y:auto;overscroll-behavior:contain}
 .ue-pass-find-result{display:block;width:100%;min-height:44px;padding:9px 11px;border:1px solid var(--color-border);border-radius:8px;background:var(--color-surface-raised);color:var(--color-text);font:650 .76rem/1.35 var(--font-body);text-align:left;overflow-wrap:anywhere;cursor:pointer}
 .ue-pass-find-result:hover{border-color:var(--color-accent)}
+
+
+/* Compact GO Pass: published milestones are a swipeable rail instead of four
+   tall reward panels before rank navigation. Full Free/Deluxe source detail
+   remains available in the closed 25-rank disclosures below. */
+.ue-pass .ue-pass-overview{gap:5px;margin:8px 0 10px;min-width:0}
+.ue-pass .ue-pass-overview>h5{display:flex;align-items:baseline;gap:8px}
+.ue-pass .ue-pass-overview>h5 small{font-size:.7rem;font-weight:500;color:var(--color-text-muted)}
+.ue-pass .ue-pass-highlights{display:flex;gap:8px;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x proximity;overscroll-behavior-x:contain;scrollbar-width:thin;-webkit-overflow-scrolling:touch;padding:1px 1px 8px;max-width:100%}
+.ue-pass .ue-pass-highlight{flex:0 0 min(76%,245px);scroll-snap-align:start;min-width:0;padding:8px;gap:5px}
+.ue-pass .ue-pass-highlight .ue-pass-lanes{gap:4px}
+.ue-pass .ue-pass-highlight .ue-pass-reward{gap:5px}
+.ue-pass .ue-pass-highlight .ue-pass-art{width:29px;height:29px}
+.ue-pass .ue-pass-highlight .ue-pass-art :is(img,.art,svg,canvas){width:27px;height:27px;max-width:27px;max-height:27px}
+.ue-pass .ue-pass-all-title{margin:6px 0 2px}
+.ue-pass .ue-pass-range>summary{min-height:44px;padding:8px 2px}
+.ue-pass .ue-pass-nav{margin:8px 0;padding:10px;gap:6px}
+.ue-pass .ue-pass-gap-between{font-size:.72rem;line-height:1.4;margin:8px 0}
+@media(min-width:640px){
+  .ue-pass .ue-pass-highlight{flex-basis:min(36%,285px)}
+}
