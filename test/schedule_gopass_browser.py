@@ -106,6 +106,13 @@ with sync_playwright() as p:
         # phones and preserve native disclosure, focus and unknown-rank semantics.
         navigator = page.locator('#evd .ue-pass-nav')
         assert navigator.count() == 1, 'GO Pass rank navigator did not mount after event render'
+        milestone_box = page.locator('#evd .ue-pass-overview').bounding_box()
+        nav_box = navigator.bounding_box()
+        assert milestone_box and nav_box and nav_box['y'] < milestone_box['y'], (
+            'Rank navigator must appear above the long milestone cards', width)
+        assert nav_box['y'] < page.viewport_size['height'], (
+            'Rank navigator is still below the first phone screen', width)
+        shot(page, f'gopass-nav-firstscreen-{width}')
         rank_input = navigator.locator('input[type="number"]')
         rank_input.fill('45')
         navigator.locator('button[type="submit"]').click()

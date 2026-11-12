@@ -106,8 +106,10 @@
         if (chosen) openRank(chosen.ranks[0], true);
       });
       nav.append(form, groupLabel, select, status);
-      var heading = article.querySelector('.ue-pass-all-title');
-      if (heading) heading.parentNode.insertBefore(nav, heading);
+      /* Put the controls ahead of milestone cards: on a phone several tall
+         milestone cards previously hid the navigator below the first screen. */
+      var anchor = article.querySelector('.ue-pass-overview') || article.querySelector('.ue-pass-all-title');
+      if (anchor) anchor.parentNode.insertBefore(nav, anchor);
       else article.appendChild(nav);
       mounted++;
     });
