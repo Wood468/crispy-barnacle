@@ -140,7 +140,7 @@
         + '<div class="sp-group-items">' + bySection[s.id].map(productCard).join('') + '</div></details>';
     }).join('');
     return '<details class="storep storep-regional" open><summary>Regional Store prices <small>' + items.length + ' products · AU / ID / IN</small></summary>'
-      + '<p class="sp-intro">Browse tickets first, then storage, coins and items. Observations are dated, not live checkout quotes. <b>Not observed</b> means no source-backed price for that channel, not free or unavailable to buy.</p>'
+      + '<p class="sp-intro">Browse tickets first, then storage, coins and items. Observations are dated, not live checkout quotes. AUD conversions are reference estimates using dated FX rates (provider: <a href="https://www.exchangerate-api.com/" target="_blank" rel="noopener noreferrer">ExchangeRate-API</a> when available). <b>Not observed</b> means no source-backed price for that channel, not free or unavailable to buy.</p>'
       + '<label class="sp-search"><span>Find a product</span><input type="search" data-sp-search placeholder="Search passes, storage, coins or items" aria-label="Search Store products" autocomplete="off"></label>'
       + '<p class="sp-results" data-sp-results aria-live="polite">' + items.length + ' products · ' + sections.filter(function (s) {return bySection[s.id].length;}).length + ' categories</p>'
       + '<div class="sp-catalogue">' + catalogue + '</div>'
