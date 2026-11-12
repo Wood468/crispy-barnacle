@@ -64,18 +64,35 @@
   function lsSet(k, v) { try { localStorage.setItem(k, v); } catch (e) { } }
   function when(iso) { var d = new Date(iso + 'T00:00:00Z'); return isNaN(d) ? String(iso) : d.toLocaleDateString('en-AU', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' }); }
   function chan(p) { var R = window.GORegionalPrices; return R.REGIONS[p.region] + ' ' + R.CHANNELS[p.channel]; }
-  /* One price cell. Verified prices are plain; estimates always say "Estimate", show a range, a confidence and their basis. */
-  function priceCell(p) {
+  /* The approximate AUD reference goes ABOVE the local checkout currency. */
+  function audPlaceholder(p, quotes) {
+    var FX = window.GOStoreFX;
+    var amount = FX && FX.display ? FX.display(p.basis === 'estimate'
+      ? { currency: p.currency, min: p.min, max: p.max }
+      : { currency: p.currency, amount: p.amount }, quotes) : null;
+    var min = p.basis === 'estimate' ? p.min : p.amount;
+    var attrs = ' data-sp-aud-currency="' + esc(p.currency) + '" data-sp-aud-min="' + esc(min) + '"';
+    if (p.basis === 'estimate') attrs += ' data-sp-aud-max="' + esc(p.max) + '"';
+    var title = amount ? 'Reference exchange rate: ' + amount.source + ', ' + amount.observed + '; not a checkout price'
+      : 'Australian dollar reference conversion not available';
+    return '<strong class="sp-aud-equivalent"' + attrs + ' title="' + esc(title) + '">'
+      + esc(amount ? amount.text : 'A$ rate unavailable') + '</strong>';
+  }
+  /* Exact observed local prices are preserved, and estimates retain ranges. */
+  function priceCell(p, quotes) {
     var R = window.GORegionalPrices;
     if (!p) return '<span class="sp-regional-value sp-none" title="No sourced price observed for this region and channel">Not observed</span>';
     if (p.basis === 'estimate') {
-      return '<span class="sp-regional-value sp-est"><b>Estimate ' + esc(R.fmt(p.min, p.currency) + '–' + R.fmt(p.max, p.currency)) + '</b>'
+      return '<span class="sp-regional-value sp-est">' + audPlaceholder(p, quotes)
+        + '<b class="sp-local-price">Estimate ' + esc(R.fmt(p.min, p.currency) + '–' + R.fmt(p.max, p.currency)) + '</b>'
         + '<small>' + esc(p.confidence) + ' confidence · not a checkout price</small>'
         + '<small class="sp-basis">' + esc('Based on ' + p.basisText + ' · ' + chan(p)) + '</small></span>';
     }
     var state = p.basis === 'verified' ? 'Verified' : 'Recorded · not re-checked';
     var source = state + ' · ' + chan(p) + ' · ' + when(p.observed);
-    return '<span class="sp-regional-value sp-ver" aria-label="' + esc(R.fmt(p.amount, p.currency) + '. ' + source) + '"><b>' + esc(R.fmt(p.amount, p.currency)) + '</b>'
+    return '<span class="sp-regional-value sp-ver" aria-label="' + esc(R.fmt(p.amount, p.currency) + '. ' + source) + '">'
+      + audPlaceholder(p, quotes)
+      + '<b class="sp-local-price">' + esc(R.fmt(p.amount, p.currency)) + '</b>'
       + '<small>' + esc(state + ' · ' + when(p.observed)) + '</small></span>';
   }
   function cheapestHtml(obs, balance) {
