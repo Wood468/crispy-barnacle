@@ -33,7 +33,7 @@ test('wired renderer uses only exact approved item art and honest category token
  // Remote Raid Pass is a separate item with a category glyph.
  assert.equal((html.match(/src="\/ico\/g\/raidpass\.webp"/g)||[]).length,1);
  assert.match(html,/ue-reward-icon">XP<\/span>/);
- assert.match(html,/ue-reward-icon">XL<\/span>/);
+ assert.match(html,/ue-reward-icon">RXL<\/span>/);
  assert.doesNotMatch(html,/\/ico\/xp\.webp/);
  assert.match(html,/<b>Remote Raid Pass<\/b>/);
  assert.match(html,/<b>Rare Candy XL<\/b>/);
@@ -43,10 +43,29 @@ test('unattributed published rewards survive empty named tracks, with no fabrica
  assert.match(html,/data-rank="45"/);
  assert.doesNotMatch(html,/data-rank="46"/);
  assert.match(html,/Silver Bottle Cap/);
- assert.match(html,/Reward · track not specified/);
+ assert.match(html,/Track not specified/);
  assert.doesNotMatch(html,/Track rewards not specified for this rank/);
  assert.equal(nav.indexRanks([45]).count,1);
  assert.equal(nav.lookup(nav.indexRanks([45]),46).status,'unlisted');
+}));
+test('published mixed-track rank preserves unmatched unattributed rewards without false Free attribution', () => withSemantic(() => {
+ const html=UI.render(model([{rank:45,
+  free:[{name:'Incense',type:'item',quantity:1}],
+  deluxe:[{name:'Silver Bottle Cap',type:'item'}],
+  rewards:[{name:'Incense',type:'item',quantity:1},{name:'Incense',type:'item',quantity:2},{name:'Remote Raid Pass',type:'item'}]
+ }]),{});
+ const row=html.match(/<li class="ue-pass-rank" data-rank="45">([\s\S]*?)<\/li>/);
+ assert.ok(row,'published rank exists');
+ const detail=row[1];
+ assert.match(detail,/<div class="ue-lane ue-lane-free"><h5>Free<\/h5>/);
+ assert.match(detail,/<div class="ue-lane ue-lane-deluxe"><h5>Deluxe<\/h5>/);
+ assert.match(detail,/<div class="ue-lane ue-lane-unspecified"><h5>Track not specified<\/h5>/);
+ assert.equal((detail.match(/<b>Incense<\/b>/g)||[]).length,2,'different quantities remain separate, identical Free reward is not doubled');
+ assert.match(detail,/<b>Remote Raid Pass<\/b>/);
+ assert.match(detail,/×2 · Item/);
+ const unspecifiedAt=detail.indexOf('<div class="ue-lane ue-lane-unspecified">');
+ assert.ok(unspecifiedAt>detail.indexOf('<div class="ue-lane ue-lane-deluxe">'));
+ assert.ok(detail.indexOf('<b>Remote Raid Pass</b>')>unspecifiedAt,'unattributed reward is rendered in neutral lane');
 }));
 test('published Rank 45 and Rank 100 remain pinned, closed range entries preserve source numbers', () => withSemantic(() => {
  const stages=[{rank:1,free:[{name:'Incense',type:'item'}]},{rank:45,free:[{name:'Dynamax Meltan',type:'encounter'}]},{rank:100,deluxe:[{name:'Silver Bottle Cap',type:'item'}]},{rank:600,free:[{name:'XP',type:'item'}]}];
@@ -59,13 +78,53 @@ test('published Rank 45 and Rank 100 remain pinned, closed range entries preserv
  assert.match(html,/class="ue-pass-range"/);
  assert.doesNotMatch(html,/>101 of 600 ranks listed</);
 }));
+test('sparse future passes keep every unpublished rank note within its actual 25-rank band', () => withSemantic(() => {
+ const stages=[1,101,200,600].map(rank=>({rank,free:[{type:'item',name:'Incense'}]}));
+ const html=UI.render(model(stages),{});
+ const panels=[...html.matchAll(/<details class="ue-pass-range"><summary>([^<]+)<\/summary><ol class="ue-pass-stages">([\s\S]*?)<\/ol><\/details>/g)]
+  .map(match=>({label:match[1],body:match[2]}));
+ assert.deepEqual(panels.map(p=>p.label),[
+  'Ranks 1–25 · 1 published',
+  'Ranks 101–125 · 1 published',
+  'Ranks 176–200 · 1 published',
+  'Ranks 576–600 · 1 published'
+ ]);
+ assert.match(panels[0].body,/Ranks 2–25: no reward entries published by the source/);
+ assert.match(panels[1].body,/Ranks 102–125: no reward entries published by the source/);
+ assert.match(panels[2].body,/Ranks 176–199: no reward entries published by the source/);
+ assert.match(panels[3].body,/Ranks 576–599: no reward entries published by the source/);
+ assert.doesNotMatch(panels[2].body,/Ranks 102–199|Ranks 126–175/);
+ assert.match(html,/<p class="ue-pass-gap ue-pass-gap-between" role="note">Ranks 26–100: no reward entries published by the source<\/p>/);
+ assert.match(html,/<p class="ue-pass-gap ue-pass-gap-between" role="note">Ranks 126–175: no reward entries published by the source<\/p>/);
+ assert.match(html,/<p class="ue-pass-gap ue-pass-gap-between" role="note">Ranks 201–575: no reward entries published by the source<\/p>/);
+ assert.equal((html.match(/class="ue-pass-gap ue-pass-gap-between"/g)||[]).length,3);
+ const prevGroupEnd=html.indexOf('</details>',html.indexOf('Ranks 101–125 · 1 published'));
+ const nextGroupStart=html.lastIndexOf('<details class="ue-pass-range">',html.indexOf('Ranks 176–200 · 1 published'));
+ const boundaryGap=html.indexOf('>Ranks 126–175: no reward entries published');
+ assert.ok(boundaryGap>prevGroupEnd&&boundaryGap<nextGroupStart,'whole missing bands sit between group disclosures');
+ assert.equal((html.match(/class="ue-pass-rank" data-rank="/g)||[]).length,4,'published source ranks are unchanged');
+ assert.equal(nav.lookup(nav.indexRanks([1,101,200,600]),175).status,'unlisted');
+}));
+
+test('dense and single-rank groups avoid cross-boundary gaps and do not fabricate rewards', () => withSemantic(() => {
+ const stages=[1,2,25,26,45,50].map(rank=>({rank,deluxe:[{type:'item',name:'Lucky Egg'}]}));
+ const html=UI.render(model(stages),{});
+ const panels=[...html.matchAll(/<details class="ue-pass-range"><summary>([^<]+)<\/summary><ol class="ue-pass-stages">([\s\S]*?)<\/ol><\/details>/g)];
+ assert.equal(panels.length,2);
+ assert.match(panels[0][2],/Ranks 3–24: no reward entries published by the source/);
+ assert.match(panels[1][2],/Ranks 27–44: no reward entries published by the source/);
+ assert.match(panels[1][2],/Ranks 46–49: no reward entries published by the source/);
+ assert.doesNotMatch(html,/class="ue-pass-gap ue-pass-gap-between"/,'no whole 25-rank group is missing');
+ assert.equal((html.match(/class="ue-pass-rank" data-rank="/g)||[]).length,6);
+}));
+
 test('load order, offline references and post-render mount form a complete PWA integration', () => {
  const index=file('index.html'),sw=file('sw.js'),dash=file('dash.js'),detail=file('detail.js'),components=file('event-components.js');
  const assets=[
-  '/go-pass-navigation.css?v=20261118a',
-  '/go-pass-navigation.js?v=20261118b',
-  '/go-pass-reward-art.js?v=20261118a',
-  '/event-components.js?v=20261118a',
+  '/go-pass-navigation.css?v=20261118f',
+  '/go-pass-navigation.js?v=20261118f',
+  '/go-pass-reward-art.js?v=20261118d',
+  '/event-components.js?v=20261118e',
   '/dash.js?v=20261118c'
  ];
  for(const asset of assets){assert.ok(index.includes(asset),asset+' absent from index');assert.ok(sw.includes(asset),asset+' absent from PWA shell');}
@@ -77,7 +136,7 @@ test('load order, offline references and post-render mount form a complete PWA i
  const mountAt=detail.indexOf('GOGoPassNavigation.mount(o)',renderAt);
  assert.ok(renderAt>=0&&mountAt>renderAt&&mountAt<renderAt+300,'mount after actual event render');
  assert.match(components,/GOGoPassRewardArt\.resolve/);
- assert.match(sw,/^const SHELL_CACHE = 'gofn-shell-v[1-9][0-9]*';$/m);
+ assert.match(sw,/SHELL_CACHE = 'gofn-shell-v314'/);
 });
 
 test('exact Pokémon encounter artwork stays delegated to the existing resolver', () => withSemantic(() => {
