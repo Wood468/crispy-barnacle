@@ -107,9 +107,13 @@
       }
       out.push(Object.assign(base, { cash: ref.amount + upfront, effective: ref.amount + upfront, via: 'direct' }));
     });
-    out = out.filter(function (o, _, all) { return all.every(function (x) { return x.currency === o.currency; }); });
-    out.sort(function (a, b) { return a.effective - b.effective; });
-    return { options: out, best: out[0] || null };
+    /* Keep all observed options visible, but only rank verified prices in one
+       currency. Estimates are not checkout quotes; recorded prices may have
+       changed; and nominal amounts in different currencies are incomparable. */
+    var verified = out.filter(function (o) { return o.basis === 'verified'; });
+    var comparable = verified.length > 0 && verified.every(function (o) { return o.currency === verified[0].currency; });
+    var best = comparable ? verified.slice().sort(function (a, b) { return a.effective - b.effective; })[0] : null;
+    return { options: out, best: best };
   }
   /* Monthly review without screenshots: flags stale observations, products that exist only as estimates, and regions with no live channel. */
   function review(obs, now, opts) {

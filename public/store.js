@@ -38,7 +38,7 @@
   /* One price cell. Verified prices are plain; estimates always say "Estimate", show a range, a confidence and their basis. */
   function priceCell(p) {
     var R = window.GORegionalPrices;
-    if (!p) return '<span class="sp-regional-value sp-none">Not calibrated</span>';
+    if (!p) return '<span class="sp-regional-value sp-none">Not observed</span>';
     if (p.basis === 'estimate') {
       return '<span class="sp-regional-value sp-est"><b>Estimate</b> ' + esc(R.fmt(p.min, p.currency) + ' to ' + R.fmt(p.max, p.currency)) + ' <small>' + esc(p.confidence) + ' confidence</small>'
         + '<small class="sp-basis">' + esc(chan(p) + '. Basis: ' + p.basisText + '. Not a checkout price.') + '</small></span>';
@@ -52,34 +52,55 @@
       var r = R.cheapest({ region: 'ID', product: o.product }, obs, { coinBalance: balance, packs: packs });
       var b = r.best; if (!b) return '';
       return '<div class="sp-r sp-regional-row"><span class="sp-n">' + esc(o.product) + '</span><span class="sp-regional-value"><b>' + esc(R.fmt(b.cash, b.currency)) + '</b> <small>'
-        + esc((b.isEstimate ? 'Estimate. ' : '') + 'cheapest: ' + b.channelLabel + (b.coinsUsed ? ', using ' + b.coinsUsed + ' coins' : '') + (b.leftoverCoins > 0 ? '; ' + b.leftoverCoins + ' coins left unused' : '')) + '</small></span></div>';
+        + esc('Lowest verified observed: ' + b.channelLabel + ', checked ' + when(b.price.observed) + (b.coinsUsed ? ', using ' + b.coinsUsed + ' coins' : '') + (b.leftoverCoins > 0 ? '; ' + b.leftoverCoins + ' coins left unused' : '') + '. Not a live checkout quote.') + '</small></span></div>';
     }).join('');
   }
+  /* Product-first regional comparison. One card per known item, with price provenance
+     close to the number; optional purchasing maths stays behind a disclosure. */
   function regional(data) {
     var R = window.GORegionalPrices; if (!R || !data.regional || !data.regional.length) return '';
     var obs = data.regional, items = R.catalogue(data.prices || [], obs);
-    var verified = obs.filter(function (o) { return o.region === 'ID' && o.status === 'verified'; }), other = obs.filter(function (o) { return o.status !== 'verified'; });
-    var row = function (o) { return '<div class="sp-r sp-regional-row"><span class="sp-n">' + icon(o.product) + esc(o.product) + '</span>' + priceCell(R.exact([o], o.region, o.channel, o.product)) + '</div>'; };
     var balance = Math.max(0, parseInt(lsGet(COINS_KEY), 10) || 0);
-    return '<details class="storep storep-regional"><summary>Regional prices <small>Australia Web, Indonesia Web, India in-app</small></summary>'
-      + '<p class="note">Each price keeps its own country, purchase channel and date. Verified means read from that Store on that date. An estimate is modelled from comparable products and is never a checkout price. A channel is only suggested where it has been observed.</p>'
-      + '<h4>Verified, Indonesia Web Store</h4>' + verified.map(row).join('')
-      + '<h4>Cheapest realistic option <small>Indonesia</small></h4><label class="sp-coins">PokéCoins in hand <input type="number" inputmode="numeric" min="0" step="1" value="' + balance + '" data-sp-coins aria-label="PokéCoins you already hold"></label>'
-      + '<div data-sp-cheapest>' + cheapestHtml(obs, balance) + '</div>'
-      + (other.length ? '<details class="sp-more"><summary>Recorded earlier, not re-checked (' + other.length + ')</summary>' + other.map(row).join('') + '</details>' : '')
-      + (items.length ? '<h4>All known Store items and regional prices</h4>' + items.map(function (p) {
-        return '<div class="sp-r sp-regional-row"><span class="sp-n">' + icon(p.label) + esc(p.label) + '</span><b class="sp-a">' + (p.aud > 0 ? 'Australia Web: A$' + p.aud.toFixed(2) + ' <small>Verified, ' + esc(when(p.observed)) + '</small>' : 'Australia Web: no matching product seen') + '</b>'
-          + '<span class="sp-n">Indonesia Web</span>' + priceCell(p.indonesia) + '<span class="sp-n">India in-app</span>' + priceCell(p.india) + '</div>';
-      }).join('') : '')
-      + '</details>';
+    function productCard(p) {
+      var au = p.aud > 0
+        ? '<span class="sp-regional-value sp-ver"><b>' + esc(R.fmt(p.aud, 'AUD')) + '</b><small>Verified · ' + esc(when(p.observed)) + '</small></span>'
+        : '<span class="sp-regional-value sp-none">Not observed</span>';
+      var search = (p.label + ' ' + p.group).toLowerCase();
+      return '<article class="sp-product" data-sp-product data-sp-name="' + esc(search) + '">'
+        + '<header class="sp-product-head"><span class="sp-product-name">' + icon(p.label) + '<b>' + esc(p.label) + '</b></span><small class="sp-product-group">' + esc(p.group) + '</small></header>'
+        + '<div class="sp-market-grid">'
+        + '<div class="sp-market sp-market-au"><span class="sp-market-label">Australia <small>Web</small></span>' + au + '</div>'
+        + '<div class="sp-market"><span class="sp-market-label">Indonesia <small>Web</small></span>' + priceCell(p.indonesia) + '</div>'
+        + '<div class="sp-market"><span class="sp-market-label">India <small>in-app</small></span>' + priceCell(p.india) + '</div>'
+        + '</div></article>';
+    }
+    return '<details class="storep storep-regional"><summary>Regional Store prices <small>' + items.length + ' products · AU / ID / IN</small></summary>'
+      + '<p class="sp-intro">Official Store observations by country and channel. Prices are dated, not live checkout quotes. Estimates are clearly marked.</p>'
+      + '<label class="sp-search"><span>Find a product</span><input type="search" data-sp-search placeholder="Search items, passes or bundles" aria-label="Search Store products" autocomplete="off"></label>'
+      + '<p class="sp-results" data-sp-results aria-live="polite">' + items.length + ' products</p>'
+      + '<div class="sp-catalogue">' + items.map(productCard).join('') + '</div>'
+      + '<details class="sp-compare-more"><summary>Lowest verified observed options <small>Advanced comparison</small></summary>'
+      + '<p class="note">Only verified, directly comparable offers qualify. Recorded and modelled prices cannot win. Your existing PokéCoins may reduce cash cost; estimates are never checkout quotes.</p>'
+      + '<label class="sp-coins">PokéCoins in hand <input type="number" inputmode="numeric" min="0" step="1" value="' + balance + '" data-sp-coins aria-label="PokéCoins you already hold"></label>'
+      + '<div data-sp-cheapest>' + cheapestHtml(obs, balance) + '</div></details></details>';
   }
   function go() {
     var host = document.getElementById('evsource'); if (!host || !window.GOLIB) return;
     GOLIB.loadPrices().then(function (d) {
-      if (!d || !d.owner) return; /* the Rp store list is for the owner only */ var h = regional(d) + build(d); if (!h) return;
+      if (!d || !d.owner) return; /* the Rp store list is for the owner only */ var h = regional(d) || build(d); /* Prefer the complete regional catalogue; avoid repeating the older IDR summary. */ if (!h) return;
       var el = document.getElementById('storep-host');
       if (!el) { el = document.createElement('div'); el.id = 'storep-host'; host.parentNode.insertBefore(el, host); }
       el.innerHTML = h;
+      var search = el.querySelector('[data-sp-search]');
+      if (search) search.addEventListener('input', function () {
+        var q = search.value.trim().toLowerCase(), shown = 0;
+        el.querySelectorAll('[data-sp-product]').forEach(function (card) {
+          var match = (card.getAttribute('data-sp-name') || '').includes(q);
+          card.hidden = !match; if (match) shown++;
+        });
+        var result = el.querySelector('[data-sp-results]');
+        if (result) result.textContent = shown + (shown === 1 ? ' product' : ' products') + ' shown';
+      });
       var inp = el.querySelector('[data-sp-coins]');
       if (inp) inp.addEventListener('input', function () {
         var n = Math.max(0, parseInt(inp.value, 10) || 0); lsSet(COINS_KEY, String(n));
