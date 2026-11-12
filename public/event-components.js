@@ -151,9 +151,27 @@ function passLane(label,cls,list,ctx){
  var chips=[].concat(list||[]).map(function(x){return passReward(x,ctx);}).filter(Boolean);
  return chips.length?'<div class="ue-lane ue-lane-'+cls+'"><h5>'+label+'</h5>'+chips.join('')+'</div>':'';
 }
+/* Stages can combine identified Free/Deluxe tracks with additional published
+   rewards whose track has not been attributed. Never silently hide the latter
+   or label them Free; avoid double-showing a reward already in a named track. */
+function passRewardIdentity(raw){
+ var name=typeof raw==='string'?raw:raw&&raw.name;
+ if(typeof name!=='string')return '';
+ var quantity=raw&&typeof raw==='object'&&Number.isInteger(raw.quantity)&&raw.quantity>0?raw.quantity:1;
+ if(typeof raw==='string'){
+  var match=/^(.+?)\s*[×x]\s*(\d+)$/i.exec(name);
+  if(match){name=match[1];quantity=Number(match[2]);}
+ }
+ return name.trim().replace(/\s+/g,' ').toLowerCase()+'|'+quantity;
+}
 function passStageLanes(s,ctx){
- var specified=passLane('Free','free',s.free,ctx)+passLane('Deluxe','deluxe',s.deluxe,ctx);
- return specified||passLane('Reward · track not specified','free',s.rewards,ctx);
+ var free=[].concat(s.free||[]),deluxe=[].concat(s.deluxe||[]);
+ var identified=new Set(free.concat(deluxe).map(passRewardIdentity).filter(Boolean));
+ var unspecified=[].concat(s.rewards||[]).filter(function(item){
+  var identity=passRewardIdentity(item);
+  return identity&&!identified.has(identity);
+ });
+ return passLane('Free','free',free,ctx)+passLane('Deluxe','deluxe',deluxe,ctx)+passLane('Track not specified','unspecified',unspecified,ctx);
 }
 function passStageRewards(s){
  return [].concat(s.free||[],s.deluxe||[],s.rewards||[]).filter(function(x){return x&&typeof x==='object'&&typeof x.name==='string'||typeof x==='string'&&x.trim();});
@@ -172,9 +190,18 @@ function passes(items,ctx){
   var lanes=passStageLanes(s,ctx);
   return '<li class="ue-pass-rank" data-rank="'+esc(s.rank)+'"><b>Rank '+esc(s.rank)+'</b>'+(Number.isFinite(s.points)?'<small>'+esc(s.points)+' points</small>':'')+'<div class="ue-pass-lanes">'+(lanes||'<p class="ue-pass-unlisted">Track rewards not specified for this rank.</p>')+'</div></li>';
  }
- function listWithGaps(list,startPrev){
-  var out='',prev=startPrev===undefined?null:startPrev;
-  list.forEach(function(s){if(prev!==null&&s.rank>prev+1)out+='<li class="ue-pass-gap" role="note">'+(s.rank-prev===2?'Rank '+(prev+1):'Ranks '+(prev+1)+'–'+(s.rank-1))+': no reward entries published by the source</li>';out+=stage(s);prev=s.rank;});
+ /* A disclosure must describe only its own 25-rank span. Missing whole
+    groups are reported between disclosures, never inside a different group. */
+ function gapLabel(first,last){
+  return (first===last?'Rank '+esc(first):'Ranks '+esc(first)+'–'+esc(last))+': no reward entries published by the source';
+ }
+ function listWithGaps(list,rangeStart,rangeEnd){
+  var out='',prev=rangeStart-1;
+  list.forEach(function(s){
+   if(s.rank>prev+1)out+='<li class="ue-pass-gap" role="note">'+gapLabel(prev+1,s.rank-1)+'</li>';
+   out+=stage(s);prev=s.rank;
+  });
+  if(prev<rangeEnd)out+='<li class="ue-pass-gap" role="note">'+gapLabel(prev+1,rangeEnd)+'</li>';
   return out;
  }
  function highlight(s){
@@ -198,7 +225,12 @@ function passes(items,ctx){
    if(!featured.length&&stages.length)featured=[stages[0],stages[Math.floor((stages.length-1)/2)],stages[stages.length-1]].filter(function(s,i,arr){return arr.indexOf(s)===i&&passStageRewards(s).length;});
    featured.sort(function(a,b){return a.rank-b.rank;});
    var overview=featured.length?'<div class="ue-pass-overview"><h5>Published milestones</h5><ul class="ue-pass-highlights">'+featured.map(highlight).join('')+'</ul></div>':'';
-   content=head+overview+'<h5 class="ue-pass-all-title">All published rank entries</h5>'+keys.map(function(key,i){var list=groups[key],before=i?groups[keys[i-1]][groups[keys[i-1]].length-1].rank:null;return '<details class="ue-pass-range"><summary>'+'Ranks '+esc(Number(key)*25+1)+'–'+esc((Number(key)+1)*25)+' · '+list.length+' published</summary><ol class="ue-pass-stages">'+listWithGaps(list,before)+'</ol></details>';}).join('');
+   content=head+overview+'<h5 class="ue-pass-all-title">All published rank entries</h5>'+keys.map(function(key,i){
+    var list=groups[key],start=Number(key)*25+1,end=start+24;
+    var previousEnd=i?(Number(keys[i-1])+1)*25:0;
+    var missingGroups=i&&previousEnd+1<start?'<p class="ue-pass-gap ue-pass-gap-between" role="note">'+gapLabel(previousEnd+1,start-1)+'</p>':'';
+    return missingGroups+'<details class="ue-pass-range"><summary>'+'Ranks '+esc(start)+'–'+esc(end)+' · '+list.length+' published</summary><ol class="ue-pass-stages">'+listWithGaps(list,start,end)+'</ol></details>';
+   }).join('');
   }
   var srcs=(model_sources(ctx)||[]).map(function(s){return s;}).join(' · ');
   var foot='<p class="ue-pass-src">'+(srcs?'Source: '+srcs:'Source not listed')+(meta.updated?' · Data checked '+esc(String(meta.updated).slice(0,10)):' · Freshness unknown')+'. Rewards are as published by the source and can change; anything not listed is not confirmed.'+(meta.warning?' '+esc(meta.warning):'')+'</p>';
