@@ -104,7 +104,7 @@ with sync_playwright() as pw:
                 pass_tab.click()
                 pass_panel = page.locator('#evd-s-passes')
                 pass_panel.wait_for(state='visible', timeout=15000)
-                assert pass_tab.get_attribute('aria-current') == 'location', 'GO Pass jump link did not become current'
+                assert pass_tab.get_attribute('aria-current') == 'true', 'GO Pass jump link did not become current'
                 page.wait_for_selector('#evd-s-passes .ue-pass', timeout=15000)
                 assert pass_panel.locator('.ue-pass-rank').count() > 0, 'GO Pass rank timeline did not render'
                 assert page.locator('#evd .evd-sec:not([hidden])').count() == page.locator('#evd .evd-sec').count(), 'continuous view hid other published sections'
@@ -167,11 +167,11 @@ with sync_playwright() as pw:
         # not the adjacent GO Pass reward panel. Verify both separately.
         details_tab = page.locator('#evd .evd-nav-link[data-sec="details"]')
         details_tab.click()
-        assert details_tab.get_attribute('aria-current') == 'location'
+        assert details_tab.get_attribute('aria-current') == 'true'
         assert 'Saved rank snapshot: 2026-11-01' in page.locator('#evd .evd-sec[data-sec="details"]').inner_text()
         pass_tab = page.locator('#evd .evd-nav-link[data-sec="passes"]')
         pass_tab.click()
-        assert pass_tab.get_attribute('aria-current') == 'location'
+        assert pass_tab.get_attribute('aria-current') == 'true'
         assert page.locator('#evd .evd-sec:not([hidden])').count() == page.locator('#evd .evd-sec').count()
         ranks = page.locator('#evd .ss-tab tbody th').all_text_contents()
         assert ranks == ['2', '3', '100', '200'], ranks
