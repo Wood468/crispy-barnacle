@@ -40,7 +40,8 @@ test('similar items do not borrow incorrect images', () => {
 test('XP, Candy XL and Rare Candy distinguish source items with honest category glyphs', () => {
   assert.deepEqual(R.resolve({name:'XP'}),{kind:'symbol',category:'Resource',symbol:'XP',src:null});
   assert.equal(R.resolve({name:'Candy XL'}).symbol,'XL');
-  assert.equal(R.resolve({name:'Rare Candy XL'}).symbol,'XL');
+  assert.equal(R.resolve({name:'Rare Candy XL'}).symbol,'RXL');
+  assert.notEqual(R.resolve({name:'Rare Candy XL'}).symbol,R.resolve({name:'Candy XL'}).symbol);
   assert.equal(R.resolve({name:'Rare Candy'}).symbol,'RC');
   assert.equal(R.resolve({name:'Silver Bottle Cap'}).symbol,'CAP');
   assert.equal(R.resolve({name:'Poké Ball'}).symbol,'PB');
