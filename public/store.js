@@ -95,16 +95,6 @@
       + '<b class="sp-local-price">' + esc(R.fmt(p.amount, p.currency)) + '</b>'
       + '<small>' + esc(state + ' · ' + when(p.observed)) + '</small></span>';
   }
-  function audReference(p, quotes) {
-    var FX = window.GOStoreFX;
-    if (!p || !FX || !quotes) return '';
-    var converted = FX.display(p.basis === 'estimate'
-      ? { currency: p.currency, min: p.min, max: p.max }
-      : { currency: p.currency, amount: p.amount }, quotes);
-    if (!converted) return '';
-    return '<span class="sp-aud-reference" title="' + esc('Reference conversion only · ' + converted.source + ' · ' + converted.observed + '. Not a checkout quote.') + '">'
-      + '<b>' + esc(converted.text) + '</b><small>' + esc('AUD approx · ' + converted.observed) + '</small></span>';
-  }
   function cheapestHtml(obs, balance) {
     var R = window.GORegionalPrices, packs = obs.filter(function (o) { return o.kind === 'coins' && o.coins && o.status === 'verified'; }).map(function (o) { return { coins: o.coins, amount: o.amount, currency: o.currency, oneTime: !!o.oneTime }; });
     var products = obs.filter(function (o) { return o.region === 'ID' && o.status === 'verified' && /pass|ultra/i.test(o.product); });
@@ -140,8 +130,8 @@
         + '<header class="sp-product-head"><span class="sp-product-name">' + icon(p.label) + '<b>' + esc(p.label) + '</b></span><small class="sp-product-group">' + esc(p.group) + '</small></header>'
         + '<div class="sp-market-grid">'
         + '<div class="sp-market sp-market-au"><span class="sp-market-label">Australia <small>Web</small></span>' + au + '</div>'
-        + '<div class="sp-market"><span class="sp-market-label">Indonesia <small>Web</small></span>' + audReference(p.indonesia, data.audQuotes) + priceCell(p.indonesia) + '</div>'
-        + '<div class="sp-market"><span class="sp-market-label">India <small>in-app</small></span>' + audReference(p.india, data.audQuotes) + priceCell(p.india) + '</div>'
+        + '<div class="sp-market"><span class="sp-market-label">Indonesia <small>Web</small></span>' + priceCell(p.indonesia, data.audQuotes) + '</div>'
+        + '<div class="sp-market"><span class="sp-market-label">India <small>in-app</small></span>' + priceCell(p.india, data.audQuotes) + '</div>'
         + '</div></article>';
     }
     var catalogue = sections.filter(function (s) { return bySection[s.id].length; }).map(function (s) {
@@ -163,14 +153,36 @@
     var host = document.getElementById('evsource'); if (!host || !window.GOLIB) return;
     GOLIB.loadPrices().then(async function (d) {
       if (!d || !d.owner) return; /* Owner-only regional prices stay private. */
-      if (window.GOStoreFX && d.regional && d.regional.length) {
-        var fetcher = typeof window.fetch === 'function' ? window.fetch.bind(window) : null;
-        d.audQuotes = await window.GOStoreFX.retrieve(fetcher, d.fx);
-      }
+      /* Render local observed prices immediately; an external FX request must
+         never delay the Store, including when a provider hangs. */
       var h = regional(d) || build(d); /* Prefer the complete regional catalogue; avoid repeating the older IDR summary. */ if (!h) return;
       var el = document.getElementById('storep-host');
       if (!el) { el = document.createElement('div'); el.id = 'storep-host'; host.parentNode.insertBefore(el, host); }
       el.innerHTML = h;
+      /* FX is reference-only. Hydrate each existing AUD placeholder in place,
+         preserving search, disclosure and coin controls while offline. */
+      if (window.GOStoreFX && d.regional && d.regional.length) {
+        var fetcher = typeof window.fetch === 'function' ? window.fetch.bind(window) : null;
+        window.GOStoreFX.retrieve(fetcher, d.fx).then(function (quotes) {
+          if (!el.querySelectorAll) return;
+          el.querySelectorAll('[data-sp-aud-currency]').forEach(function (node) {
+            var currency = node.getAttribute('data-sp-aud-currency');
+            var min = Number(node.getAttribute('data-sp-aud-min'));
+            var max = node.getAttribute('data-sp-aud-max');
+            var converted = window.GOStoreFX.display({
+              currency: currency, min: min, max: max == null ? null : Number(max)
+            }, quotes);
+            if (!converted) return;
+            node.textContent = converted.text;
+            node.setAttribute('title', 'Approximate AUD reference · ' + converted.source
+              + ' · ' + converted.observed + ' · not a checkout price');
+            var note = document.createElement('small');
+            note.className = 'sp-aud-source';
+            note.textContent = 'AUD approx · ' + converted.source + ' · ' + converted.observed;
+            node.appendChild(note);
+          });
+        }).catch(function () { /* Keep original regional prices visible. */ });
+      }
       var search = el.querySelector('[data-sp-search]');
       if (search) search.addEventListener('input', function () {
         var q = search.value.trim().toLowerCase(), shown = 0;
