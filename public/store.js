@@ -12,12 +12,13 @@
     [/^max revives?(?:\s*[×x]\s*\d+)?$/i, '/ico/i/max-revive.webp'],
     [/^golden razz berr(?:y|ies)(?:\s*[×x]\s*\d+)?$/i, '/ico/i/golden-razz.webp'],
     [/^silver pinap berr(?:y|ies)(?:\s*[×x]\s*\d+)?$/i, '/ico/i/silver-pinap.webp'],
-    [/^lucky eggs?(?:\s*[×x]\s*\d+)?$/i, '/ico/g/lucky.webp']
+    [/^incense$/i, '/ico/incense.webp']
   ];
   function kindToken(label) {
     if (/pok[eé]coins?/i.test(label)) return '◎';
     if (/storage|item bag|bag upgrade|capacity/i.test(label)) return '↑';
     if (/^go pass|monthly.*pass|(?:event|admission).*ticket/i.test(label)) return 'PASS';
+    if (/lucky eggs?/i.test(label)) return 'LE';
     if (/star pieces?/i.test(label)) return 'SP';
     if (/incubator/i.test(label)) return 'INC';
     if (/max particle/i.test(label)) return 'MP';
