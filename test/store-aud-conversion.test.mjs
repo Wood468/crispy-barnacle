@@ -56,7 +56,8 @@ test('owner Store shows one AUD placeholder before each local price without wait
   const pricedCell = idCells.find(cell => cell.includes('Rp 76,000'));
   assert.ok(pricedCell, 'expected an observed Indonesian market cell');
   assert.equal((pricedCell.match(/class="sp-aud-equivalent"/g)||[]).length,1);
-  assert.ok(pricedCell.indexOf('sp-aud-equivalent')<pricedCell.indexOf('Rp 76,000'));
+  assert.ok(pricedCell.indexOf('class="sp-aud-equivalent"')<pricedCell.indexOf('class="sp-local-price"'),
+    'AUD placeholder precedes the visible local-price element (not its aria-label)');
   assert.match(pricedCell,/A\$ rate unavailable/);
   assert.ok(idCells.some(cell => cell.includes('Not observed')),
     'unobserved regional prices remain explicitly labelled');
