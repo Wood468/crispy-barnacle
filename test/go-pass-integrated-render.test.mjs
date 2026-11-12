@@ -79,3 +79,14 @@ test('load order, offline references and post-render mount form a complete PWA i
  assert.match(components,/GOGoPassRewardArt\.resolve/);
  assert.match(sw,/SHELL_CACHE = 'gofn-shell-v310'/);
 });
+
+test('exact Pokémon encounter artwork stays delegated to the existing resolver', () => withSemantic(() => {
+ const html=UI.render(model([{rank:45,free:[{type:'encounter',name:'Crowned Sword Zacian'}]}]),{
+  rewardArt: item => item.name==='Crowned Sword Zacian'?
+   '<img class="exact-form-art" src="/art/zacian-crowned-test.webp" alt="">':''
+ });
+ assert.match(html,/Crowned Sword Zacian/);
+ assert.match(html,/class="exact-form-art"/);
+ assert.match(html,/src="\/art\/zacian-crowned-test\.webp"/);
+ assert.doesNotMatch(html,/Form art unavailable|generic-zacian/);
+}));
