@@ -32,6 +32,7 @@
   function symbol(n, cat) {
     // These glyphs identify types, not alleged photographic representations.
     if (/^xp$/i.test(n)) return 'XP';
+    if (/rare candy xl/i.test(n)) return 'RXL';
     if (/candy xl/i.test(n)) return 'XL';
     if (/rare candy/i.test(n)) return 'RC';
     if (/candy/i.test(n)) return 'C';
