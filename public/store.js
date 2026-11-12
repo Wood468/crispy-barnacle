@@ -66,12 +66,16 @@
   /* One price cell. Verified prices are plain; estimates always say "Estimate", show a range, a confidence and their basis. */
   function priceCell(p) {
     var R = window.GORegionalPrices;
-    if (!p) return '<span class="sp-regional-value sp-none">Not observed</span>';
+    if (!p) return '<span class="sp-regional-value sp-none" title="No sourced price observed for this region and channel">Not observed</span>';
     if (p.basis === 'estimate') {
-      return '<span class="sp-regional-value sp-est"><b>Estimate</b> ' + esc(R.fmt(p.min, p.currency) + ' to ' + R.fmt(p.max, p.currency)) + ' <small>' + esc(p.confidence) + ' confidence</small>'
-        + '<small class="sp-basis">' + esc(chan(p) + '. Basis: ' + p.basisText + '. Not a checkout price.') + '</small></span>';
+      return '<span class="sp-regional-value sp-est"><b>Estimate ' + esc(R.fmt(p.min, p.currency) + '–' + R.fmt(p.max, p.currency)) + '</b>'
+        + '<small>' + esc(p.confidence) + ' confidence · not a checkout price</small>'
+        + '<small class="sp-basis">' + esc('Based on ' + p.basisText + ' · ' + chan(p)) + '</small></span>';
     }
-    return '<span class="sp-regional-value sp-ver"><b>' + esc(R.fmt(p.amount, p.currency)) + '</b> <small>' + esc((p.basis === 'verified' ? 'Verified' : 'Recorded, not re-checked') + ' ' + chan(p) + ', ' + when(p.observed)) + '</small></span>';
+    var state = p.basis === 'verified' ? 'Verified' : 'Recorded · not re-checked';
+    var source = state + ' · ' + chan(p) + ' · ' + when(p.observed);
+    return '<span class="sp-regional-value sp-ver" aria-label="' + esc(R.fmt(p.amount, p.currency) + '. ' + source) + '"><b>' + esc(R.fmt(p.amount, p.currency)) + '</b>'
+      + '<small>' + esc(state + ' · ' + when(p.observed)) + '</small></span>';
   }
   function cheapestHtml(obs, balance) {
     var R = window.GORegionalPrices, packs = obs.filter(function (o) { return o.kind === 'coins' && o.coins && o.status === 'verified'; }).map(function (o) { return { coins: o.coins, amount: o.amount, currency: o.currency, oneTime: !!o.oneTime }; });
