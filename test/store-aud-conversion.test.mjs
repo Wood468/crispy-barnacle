@@ -49,12 +49,17 @@ test('owner Store shows one AUD placeholder before each local price without wait
   assert.match(el.innerHTML,/₹/);
   assert.doesNotMatch(el.innerHTML,/sp-aud-reference/);
   assert.doesNotMatch(el.innerHTML,/undefined|NaN/);
-  const id=el.innerHTML.indexOf('Indonesia <small>Web</small>');
-  assert.ok(id>=0);
-  const idChunk=el.innerHTML.slice(id,id+850);
-  assert.equal((idChunk.slice(0,idChunk.indexOf('Rp 76,000')).match(/class="sp-aud-equivalent"/g)||[]).length,1);
-  assert.ok(idChunk.indexOf('sp-aud-equivalent')<idChunk.indexOf('Rp 76,000'));
-  assert.match(idChunk,/A\$ rate unavailable/);
+  // Some catalogue products legitimately have no Indonesian observation.
+  // Assert against the specific sourced market cell, not the first product.
+  const idCells = [...el.innerHTML.matchAll(/Indonesia <small>Web<\\/small><\\/span>([\\s\\S]*?)<\\/div>/g)]
+    .map(match => match[1]);
+  const pricedCell = idCells.find(cell => cell.includes('Rp 76,000'));
+  assert.ok(pricedCell, 'expected an observed Indonesian market cell');
+  assert.equal((pricedCell.match(/class="sp-aud-equivalent"/g)||[]).length,1);
+  assert.ok(pricedCell.indexOf('sp-aud-equivalent')<pricedCell.indexOf('Rp 76,000'));
+  assert.match(pricedCell,/A\\$ rate unavailable/);
+  assert.ok(idCells.some(cell => cell.includes('Not observed')),
+    'unobserved regional prices remain explicitly labelled');
   resolveFx({ok:true,json:async()=>({result:'success',base_code:'AUD',
     time_last_update_unix:Date.parse('2026-11-12')/1000,rates:{IDR:11000,INR:60}})});
 });
