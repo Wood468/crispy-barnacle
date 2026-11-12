@@ -92,8 +92,23 @@ with sync_playwright() as p:
         assert 'Pikachu' in base.inner_text()
         assert 'Alolan Raichu' in alola.inner_text()
         assert sun.count()==1 and moon.count()==1, 'distinct costumes were merged'
-        assert sun.locator('img').count()==moon.locator('img').count()==0, 'synthetic costume used ordinary artwork'
-        assert moon.locator('.costume-unavailable').count()==1
+        # A synthetic costume may show the text-only "Form art unavailable"
+        # fallback or the badged "Costume art unavailable" placeholder with
+        # an alt-empty base-species thumbnail. Neither is exact costume art.
+        # Do not reject the decorative thumbnail, but NEVER accept an img.art
+        # claiming the ordinary species picture is the costume itself.
+        for costume_tile in (sun, moon):
+            assert costume_tile.locator('img.art').count()==0, 'synthetic costume used ordinary artwork'
+            unavailable=costume_tile.locator('.costume-unavailable')
+            assert unavailable.count()==1, 'synthetic costume missing labelled unavailable state'
+            assert 'art unavailable' in unavailable.inner_text().lower(), 'synthetic costume missing unavailable message'
+            thumbnails=unavailable.locator('img')
+            assert thumbnails.count()<=1, 'unavailable fallback contains an unapproved image'
+            if thumbnails.count():
+                thumb=thumbnails.first
+                assert 'va-base' in (thumb.get_attribute('class') or '').split(), 'unavailable fallback used unlabelled species artwork'
+                assert thumb.get_attribute('alt')=='', 'unavailable thumbnail must be decorative'
+                assert unavailable.locator('.va-badge').inner_text()=='Costume art unavailable'
         assert page.locator('#evd .own,#evd [data-follow],#evd .ue-mon-controls,#evd [data-mark]').count()==0
         assert page.evaluate("GODASH.usGet('form:26:alola')")!=1, 'reading an event changed collection data'
         page.locator('#evd .evd-nav-link[data-sec="research"]').click()
