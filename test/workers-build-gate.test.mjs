@@ -205,3 +205,39 @@ test("productionServesCommit reports HTTP errors and network failures as no matc
   const net = await productionServesCommit({ fetchImpl: async () => { throw new Error("boom"); }, readLocal: () => Buffer.from("x") });
   assert.match(net.reason, /boom/);
 });
+
+
+test("productionServesCommit requires both the service worker and shell to match", async () => {
+  const local = {
+    "public/sw.js": Buffer.from("local service worker"),
+    "public/index.html": Buffer.from("local shell")
+  };
+  const cases = [
+    {
+      sw: "different service worker", shell: "local shell", match: false,
+      reason: "production /sw.js differs from this commit"
+    },
+    {
+      sw: "local service worker", shell: "different shell", match: false,
+      reason: "production / differs from this commit"
+    },
+    { sw: "local service worker", shell: "local shell", match: true }
+  ];
+  for (const scenario of cases) {
+    const live = { "/sw.js": scenario.sw, "/": scenario.shell };
+    const result = await productionServesCommit({
+      productionUrl: "https://production.invalid",
+      fetchImpl: async url => {
+        const path = new URL(url).pathname;
+        assert.ok(Object.hasOwn(live, path));
+        return new Response(live[path]);
+      },
+      readLocal: path => {
+        assert.ok(Object.hasOwn(local, path));
+        return local[path];
+      }
+    });
+    assert.equal(result.match, scenario.match);
+    if (!scenario.match) assert.equal(result.reason, scenario.reason);
+  }
+});
