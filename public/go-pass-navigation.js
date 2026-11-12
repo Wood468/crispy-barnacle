@@ -40,6 +40,38 @@
   function hasReward(node) {
     return !!(node && typeof node.querySelector === 'function' && node.querySelector('.ue-pass-reward'));
   }
+  function cleanName(name) {
+    return String(name || '').normalize('NFKD').replace(/[\u0300-\u036f]/g, '').replace(/\s+/g, ' ').trim().toLowerCase();
+  }
+  /* Search only actual labelled reward tiles within published rank rows.
+     A source may omit track labels; never attribute them to Free by default. */
+  function indexRewardEntries(rows) {
+    var entries = [], seen = new Set();
+    (rows || []).forEach(function (row) {
+      var n = rank(row && typeof row.getAttribute === 'function' ? row.getAttribute('data-rank') : null);
+      if (n === null || !hasReward(row)) return;
+      Array.from(row.querySelectorAll('.ue-pass-reward')).forEach(function (tile) {
+        var container = tile.querySelector('.ue-pass-name');
+        var textNode = container && container.querySelector('b');
+        var name = textNode && String(textNode.textContent || '').trim();
+        if (!name) return;
+        var track = tile.closest('.ue-lane-deluxe') ? 'deluxe' : tile.closest('.ue-lane-free') ? 'free' : 'unknown';
+        var key = n + '|' + track + '|' + cleanName(name);
+        if (seen.has(key)) return;
+        seen.add(key);
+        entries.push({rank:n,name:name,track:track});
+      });
+    });
+    return entries.sort(function (a, b) { return a.rank-b.rank || a.name.localeCompare(b.name); });
+  }
+  function findRewards(entries, query, limit) {
+    var needle = cleanName(query), cap = Number.isSafeInteger(limit) && limit > 0 ? Math.min(30, limit) : 8;
+    if (needle.length < 2) return {total:0,entries:[]};
+    var found = (entries || []).filter(function (item) {
+      return item && rank(item.rank)!==null && cleanName(item.name).includes(needle);
+    });
+    return {total:found.length,entries:found.slice(0,cap)};
+  }
   function focus(node) {
     if (!node) return;
     node.tabIndex = -1;
@@ -58,6 +90,7 @@
       nodes.forEach(function (node) { var n = rank(node.getAttribute('data-rank')); if (n !== null && !byRank.has(n)) byRank.set(n, node); });
       var index = indexRanks(Array.from(byRank.keys()));
       if (!index.count) return;
+      var rewardEntries = indexRewardEntries(Array.from(byRank.values()));
       var doc = article.ownerDocument, nav = doc.createElement('nav'), form = doc.createElement('form'), numLabel = doc.createElement('label'), input = doc.createElement('input'), go = doc.createElement('button'), groupLabel = doc.createElement('label'), select = doc.createElement('select'), status = doc.createElement('p');
       var suffix = 'ue-pass-quick-' + (++serial);
       nav.className = 'ue-pass-nav';
@@ -105,7 +138,54 @@
         var chosen = index.groups.find(function (g) { return String(g.start) === select.value; });
         if (chosen) openRank(chosen.ranks[0], true);
       });
-      nav.append(form, groupLabel, select, status);
+      /* A collapsed, optional name finder avoids pushing the rank controls out
+         of the first mobile viewport. It indexes rendered source rewards only. */
+      var finder = doc.createElement('details'), finderSummary = doc.createElement('summary');
+      var finderBody = doc.createElement('div'), finderLabel = doc.createElement('label');
+      var finderInput = doc.createElement('input'), finderResults = doc.createElement('div');
+      var finderStatus = doc.createElement('p');
+      finder.className = 'ue-pass-finder';
+      finderSummary.textContent = 'Find a reward by name';
+      finderBody.className = 'ue-pass-find-body';
+      finderLabel.htmlFor = suffix + '-find';
+      finderLabel.textContent = 'Search published rewards';
+      finderInput.id = suffix + '-find';
+      finderInput.type = 'search';
+      finderInput.placeholder = 'e.g. Bottle Cap';
+      finderInput.autocomplete = 'off';
+      finderResults.className = 'ue-pass-find-results';
+      finderResults.setAttribute('aria-label', 'Matching published rewards');
+      finderStatus.className = 'ue-pass-find-status';
+      finderStatus.setAttribute('role', 'status');
+      finderStatus.setAttribute('aria-live', 'polite');
+      function renderRewardResults() {
+        var term = finderInput.value.trim();
+        finderResults.replaceChildren();
+        if (cleanName(term).length < 2) {
+          finderStatus.textContent = 'Enter at least 2 characters to search published rewards.';
+          return;
+        }
+        var found = findRewards(rewardEntries, term, 8);
+        finderStatus.textContent = found.total ?
+          'Showing ' + found.entries.length + ' of ' + found.total + ' matching published rewards.' :
+          'No published reward entry matches "' + term + '".';
+        found.entries.forEach(function (item) {
+          var button = doc.createElement('button');
+          button.type = 'button';
+          button.className = 'ue-pass-find-result';
+          var lane = item.track === 'free' ? 'Free' : item.track === 'deluxe' ? 'Deluxe' : 'Track not specified';
+          button.textContent = 'Rank ' + item.rank + ' · ' + item.name + ' · ' + lane;
+          button.addEventListener('click', function () {
+            openRank(item.rank, false);
+            finderStatus.textContent = 'Opened Rank ' + item.rank + ' · ' + item.name + ' (' + lane + ').';
+          });
+          finderResults.appendChild(button);
+        });
+      }
+      finderInput.addEventListener('input', renderRewardResults);
+      finderBody.append(finderLabel, finderInput, finderStatus, finderResults);
+      finder.append(finderSummary, finderBody);
+      nav.append(form, groupLabel, select, finder, status);
       /* Put the controls ahead of milestone cards: on a phone several tall
          milestone cards previously hid the navigator below the first screen. */
       var anchor = article.querySelector('.ue-pass-overview') || article.querySelector('.ue-pass-all-title');
@@ -115,5 +195,5 @@
     });
     return mounted;
   }
-  return { rank: rank, rangeAt: rangeAt, indexRanks: indexRanks, lookup: lookup, mount: mount };
+  return { rank: rank, rangeAt: rangeAt, indexRanks: indexRanks, lookup: lookup, indexRewardEntries: indexRewardEntries, findRewards: findRewards, mount: mount };
 }));
