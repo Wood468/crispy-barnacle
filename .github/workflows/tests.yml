@@ -136,6 +136,10 @@ jobs:
           python test/research_recovery_browser.py
           python test/research_sources_browser.py
 
+      - name: Verify canonical Dex, inventory persistence and account isolation
+        if: matrix.shard == 'c'
+        run: python test/p1_dex_browser.py
+
       - name: Verify universal event catalogue and future announcements
         if: matrix.shard == 'b'
         run: |
@@ -234,6 +238,8 @@ jobs:
           python test/schedule_gopass_browser.py
           python test/universal_event_browser.py
           python test/worldwide_timezone_browser.py
+      - name: Verify canonical Dex and private inventory in WebKit
+        run: python test/p1_dex_browser.py
       - name: Verify combined source rendering, PWA update and preserved player data
         run: |
           python test/release_browser.py

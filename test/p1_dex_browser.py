@@ -22,9 +22,10 @@ with sync_playwright() as p:
   page.locator('#dq').fill('raichu');assert page.locator('#dexlist .dex-tile').count()==1
   page.locator('#dstat').select_option('own');assert page.locator('#dexlist .dex-tile').count()==1
   assert page.evaluate("GODASH.ownState('Raichu').state")=='unknown','regional ownership leaked to base form'
-  page.locator('#dstat').select_option('all');page.locator('#dq').fill('');page.screenshot(path=str(OUT/f'dex-{engine}-{width}.png'))
+  page.locator('#dstat').select_option('all');page.locator('#dq').fill('');page.evaluate('window.scrollTo(0,0)');page.screenshot(path=str(OUT/f'dex-{engine}-{width}.png'));page.screenshot(path=str(OUT/f'dex-{engine}-{width}-full.png'),full_page=True)
   page.locator('#dexlist [data-species="26"]').click();assert page.locator('#dex-species-name').inner_text()=='Raichu'
   assert page.locator('#dex-species [data-mark="form:26:alola"][data-val="1"]').get_attribute('aria-pressed')=='true'
+  if width==390:page.screenshot(path=str(OUT/f'dex-species-{engine}.png'),full_page=True)
   page.locator('#dex-add-record').click();page.locator('#dex-record-form [name="formId"]').select_option('alola');page.locator('#dex-record-form [name="cp"]').fill('1234')
   page.locator('#dex-record-form [type="submit"]').click();page.wait_for_function('GOInventory.records().length===1')
   record=page.evaluate('GOInventory.records()[0]');assert record['identity']['formId']=='alola';assert record['attributes']['cp']==1234;assert record['attributes']['ivs']==None;assert record['identity']['shiny']==None
@@ -32,10 +33,13 @@ with sync_playwright() as p:
   assert page.evaluate("GODASH.ownState('Alolan Raichu').state")=='have'
   page.locator('#dex-back').click();page.locator('#dex-categories').select_option('regional');assert page.locator('#dexlist [data-mark="form:26:alola"]').get_attribute('aria-pressed')=='true'
   page.locator('#dex-categories').select_option('all');page.locator('#dq').fill('Pikachu');page.locator('#dexlist [data-species="25"]').click();page.locator('#dex-add-record').click()
-  page.locator('#dex-record-form [name="cp"]').fill('250');page.locator('#dex-record-form details').filter(has_text='Mega & Max capability').locator('summary').click();page.locator('#dex-record-form [name="dynamax"]').select_option('true')
+  page.locator('#dex-record-form [name="formId"]').select_option('');page.locator('#dex-record-form [name="cp"]').fill('250');page.locator('#dex-record-form details').filter(has_text='Mega & Max capability').locator('summary').click();page.locator('#dex-record-form [name="dynamax"]').select_option('true')
   page.locator('#dex-record-form [type="submit"]').click();page.wait_for_function('GOInventory.records().length===2')
   assert page.evaluate("GODASH.ownState('Dynamax Pikachu').state")=='have'
   page.locator('#dex-back').click();page.locator('#dex-categories').select_option('dynamax');assert page.locator('#dexlist .dex-tile').count()==1
+  # Atomic conflict rejection: a preceding new record in the same transaction is rolled back.
+  integrity=page.evaluate('''async()=>{const cat=GOCollectionUI.catalogue(),existing=GOInventory.records()[0],copy=GOInventory.records();copy[0].attributes.cp=999;const detached=GOInventory.records()[0].attributes.cp!==999;let conflict=false;try{await GOInventory.add([{...existing,id:'should-rollback'},{...existing,attributes:{...existing.attributes,cp:4321}}],cat)}catch(e){conflict=/different details/.test(e.message)}await GOInventory.refresh();return {detached,conflict,count:GOInventory.records().length,rollback:!GOInventory.records().some(r=>r.id==='should-rollback'),repeat:await GOInventory.add([existing],cat)}}''')
+  assert integrity=={'detached':True,'conflict':True,'count':2,'rollback':True,'repeat':[]},integrity
   assert page.evaluate('document.documentElement.scrollWidth<=innerWidth'),width
   # Persistence and account partitioning do not modify legacy marks.
   page.reload();page.wait_for_function('!!window.GOInventory&&GOInventory.ready()&&!!window.GODASH')

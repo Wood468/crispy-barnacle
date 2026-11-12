@@ -374,7 +374,7 @@
     if(precise&&/^\d+$/.test(precise.speciesId)&&DEXNAME[+precise.speciesId])id=+precise.speciesId;
     if (!id) return { state: 'unknown', id: 0, base: p.base, why: 'Not in the Pokédex list' };
     var out = { id: id, base: p.base, why: '' };
-    if (p.special === 'dynamax') { var maxOwned=window.GOInventory&&GOInventory.records().some(function(r){return r.identity.speciesId===String(id)&&r.identity.capabilities.dynamax===true;});return Object.assign(out,maxOwned?{state:'have'}:{ state: 'form', why: 'Track Dynamax-capable individual Pokémon separately from species registration.' }); }
+    if (p.special === 'dynamax') { var maxOwned=window.GOInventory&&window.GOCollectionModel&&(!costume||precise&&precise.costumeId)&&GOCollectionModel.capabilityOwned(GOInventory.records(),{speciesId:id,formId:precise&&precise.formId&&precise.formId!=='dynamax'?GOCollectionModel.canonicalForm(precise.formId):null,costumeId:precise&&precise.costumeId||null},'dynamax');return Object.assign(out,maxOwned?{state:'have'}:{ state: 'form', why: 'Track Dynamax-capable individual Pokémon separately from species registration.' }); }
     var collectionCat=window.GOCollectionUI&&GOCollectionUI.catalogue();
     if(precise&&precise.formId&&collectionCat&&window.GOCollectionModel){var collectionForm=GOCollectionModel.canonicalForm(precise.formId);if(collectionCat.forSpecies(id).some(function(v){return v.formId===collectionForm;})){var collectionIdentity={speciesId:String(id),formId:collectionForm,costumeId:precise.costumeId||null},collectionValue=GOCollectionModel.variantValue(collectionIdentity,US,collectionCat);if(collectionValue!==undefined)return Object.assign(out,{tk:GOCollectionModel.legacyKey(collectionIdentity,collectionCat),state:collectionValue===1?'have':'missing'});}}
     if(precise&&precise.formId&&precise.formId!==p.key&&precise.formId!==p.special&&/^[a-z0-9][a-z0-9-]{0,63}$/.test(precise.formId)){
@@ -1421,7 +1421,7 @@
 
   /* ---------- Collection: what I know about your Dex ---------- */
   function renderCoverage() {
-    var tab = $('tab-dex'); if (!tab || !Object.keys(DEXGEN).length) return;
+    var tab = $('dex-coverage') || $('tab-dex'); if (!tab || !Object.keys(DEXGEN).length) return;
     var host = $('gencov');
     if (!host) { host = document.createElement('div'); host.id = 'gencov'; host.className = 'gencov'; var summary=tab.querySelector('.prog'); if(summary&&summary.parentElement===tab)summary.insertAdjacentElement('afterend',host); else tab.insertBefore(host,tab.firstChild); host.addEventListener('click', function (e) { var b = e.target.closest('[data-gen]'); if (!b) return; setGenConfirmed(+b.dataset.gen, b.getAttribute('aria-pressed') !== 'true'); renderCoverage(); renderAll(); if (window.GO && GO.refreshDex) GO.refreshDex(); }); }
     var d = marks(), own = (d.m && d.m.own) || {}, gens = {}, total = 0, owned = 0, conf = [], auto = [];

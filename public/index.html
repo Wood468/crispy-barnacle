@@ -237,13 +237,31 @@
         <section id="dex-species" hidden aria-labelledby="dex-species-name"></section>
         <section id="dex-record-editor" hidden aria-label="Add an individual Pokémon"></section>
         <div id="dex-overview">
-        <header class="dex-heading"><h2>Your Pokédex</h2><p>One collection. Every discovery.</p></header>
+        <header class="dex-heading"><h2>Your Pokédex</h2></header>
         <section class="dex-progress" aria-label="National Pokédex progress">
           <div class="dex-progress-main"><strong><span id="dOwn">0</span><span class="dex-total"> / <span id="dTotal">1025</span></span></strong><span>species registered</span></div>
           <div class="dex-progress-counts"><span><b id="dMissing">0</b> confirmed missing</span><span><b id="dShiny">0</b> shiny</span><span><b id="dUntracked">0</b> not tracked / unreleased</span></div>
-          <div class="bar" aria-hidden="true"><i id="dBar"></i></div><p id="dex-progress" class="note" role="status"></p><div class="dmini" id="dMini" hidden></div>
+          <div class="bar" aria-hidden="true"><i id="dBar"></i></div><p id="dex-progress" class="sr-only" role="status"></p><div class="dmini" id="dMini" hidden></div>
         </section>
-        <details class="dd dexhow"><summary>Progress by generation</summary><div class="body"><div id="dex-generation-progress"></div><p class="note">Only confirmed generations count unmarked Pokémon as missing. Form marks and individual records stay separate.</p></div></details>
+        <div class="dexbar"><label class="dex-category-label" for="dex-categories">Collection category</label><select id="dex-categories" aria-label="Collection category"><option value="all">National Dex</option></select><p class="note" id="dex-category-note"></p><div class="tools">
+          <input type="search" id="dq" placeholder="Search name or number" aria-label="Search name or number">
+          <select id="dgen" aria-label="Generation"><option value="0">All generations</option></select>
+          <select id="dstat" aria-label="Show">
+            <option value="all">All</option>
+            <option value="missing">Need (confirmed generations)</option><option value="untracked">Not tracked</option>
+            <option value="own">Owned</option><option value="unreleased">Unreleased</option>
+            <option value="noshiny">No shiny recorded</option>
+            <option value="shiny">Shiny</option>
+            <option value="nolucky">No lucky recorded</option>
+            <option value="nohundo">No 100% recorded</option>
+          </select>
+        </div>
+        <div class="genchips" id="genchips" role="group" aria-label="Jump to generation"></div></div>
+        <label class="dchk"><input type="checkbox" id="dunrel"> Show Pokémon that are not in Pokémon GO yet</label>
+        <div id="dexlist" class="dexlist dex-grid"></div>
+        <p class="note" id="dnone" hidden>No Pokémon match.</p>
+        <button type="button" class="pill all" id="dmore" hidden style="justify-self:center">Show more</button>
+        <details class="dd dexhow"><summary>Progress &amp; tracking</summary><div class="body"><div id="dex-generation-progress"></div><div id="dex-coverage"></div><p class="note">Only confirmed generations count unmarked Pokémon as missing. Form marks and individual records stay separate.</p></div></details>
         <p class="sync" id="dsync" role="status" style="margin-top:-24px"></p>
         <details class="dd" id="regdd">
           <summary>Regional finder <span class="cnt" id="regcnt"></span></summary>
@@ -253,24 +271,7 @@
             <div id="reglist" class="dexlist"></div>
           </div>
         </details>
-        <div class="dexbar"><label class="dex-category-label" for="dex-categories">Collection category</label><select id="dex-categories" aria-label="Collection category"><option value="all">National Dex</option></select><p class="note" id="dex-category-note"></p><div class="tools">
-          <input type="search" id="dq" placeholder="Search name or number" aria-label="Search name or number">
-          <select id="dgen" aria-label="Generation"><option value="0">All generations</option></select>
-          <select id="dstat" aria-label="Show">
-            <option value="all">All</option>
-            <option value="missing">Need (confirmed generations)</option><option value="untracked">Not tracked</option>
-            <option value="own">Owned</option><option value="unreleased">Unreleased</option>
-            <option value="noshiny">No shiny yet</option>
-            <option value="shiny">Shiny</option>
-            <option value="nolucky">No lucky yet</option>
-            <option value="nohundo">No 100% yet</option>
-          </select>
-        </div>
-        <div class="genchips" id="genchips" role="group" aria-label="Jump to generation"></div></div>
-        <label class="dchk"><input type="checkbox" id="dunrel"> Show Pokémon that are not in Pokémon GO yet</label>
-        <div id="dexlist" class="dexlist dex-grid"></div>
-        <p class="note" id="dnone" hidden>No Pokémon match.</p>
-        <button type="button" class="pill all" id="dmore" hidden style="justify-self:center">Show more</button>
+
         </div>
       </section>
         <section class="panel" id="sub-forms" hidden>
@@ -545,7 +546,7 @@
 <script src="/raid-share.js?v=20261102b"></script>
 <script src="/regional-prices.js?v=20261110a"></script>
 <script src="/store.js?v=20261110b"></script>
-<script src="/season.js?v=20261112p1"></script>
+<script src="/season.js?v=20261107c"></script>
 <script src="/research.js?v=20261114b"></script>
 <script src="/weekly.js?v=20261115b"></script>
 <script src="/pin.js?v=20261101b"></script>
