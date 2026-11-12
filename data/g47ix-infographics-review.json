@@ -7,6 +7,111 @@
   "eventImages": {},
   "candidates": [
     {
+      "id": "discord:1570487718994120835",
+      "source": "discord",
+      "creator": "",
+      "title": "Zekrom",
+      "publishedAt": "2026-11-12T17:17:30.459000+00:00",
+      "imageUrl": "https://cdn.discordapp.com/attachments/1087756541668630638/1570483351033225337/tr_NOV_12_6PM_Counter_Zekrom.png?ex=6af74219&is=6af5f099&hm=8aec326a2df9a01f660c946fcc4bcc05f8eeb636ac765f5a7ee235b98a2c6172&",
+      "reviewStatus": "needs_review",
+      "decision": "pending",
+      "ocrChecked": true,
+      "ocrText": "#64497 45,4 fo} || 53394 CP “This legendary Pokémon can scorch the world with lightning. It assists those who want to build an ideal world.” sa8 &™. _— Fee | A iS i a Special ne 3 <3 =f SS iy Chance Background Difficulty: 2+ trainers needed Boost J %] @ %2307 cP we2884 cP Rainy Windy ran 44 = @ Dragon Tail ® Dragon Tail EN, A ® Dragon Tail ® Dragon Tail 6 Dynamax Cannon n ® Breaking S wi \\ 6 Outrage+ @ Freeze Shock (1 ~ * ‘y 7 Z. - @ Mud Shot - @ Mud of ot ® Ice Fang @ Precipice Blad @ Earth Powe @ Ice Burn (5 Precipice Blad 2, 6 Dragon Tail 6 Dragon Tail ® Dragon Breath ® Dragon Breath © Spacial Rend : 6 Bache Swi ® Glaive Rush (5 ® Roar of Time ” Follow for more: Remember to use proper counters, Party Play ‘wat and Zacian’s Adventure Effect if needed. oy Sy) G47IXO OMX B | g47ix.pro",
+      "eventMatch": {
+        "eventId": "dyntrails",
+        "eventTitle": "Dynamax Trails",
+        "score": 0.408,
+        "confidence": "low",
+        "matchedTerms": [
+          "dynamax",
+          "poke",
+          "mon",
+          "legendary",
+          "chance",
+          "those"
+        ],
+        "alternatives": [
+          {
+            "eventId": "dyntrails",
+            "eventTitle": "Dynamax Trails",
+            "score": 0.408
+          },
+          {
+            "eventId": "leekduck:max-mondays-2026-11-16",
+            "eventTitle": "Max Monday: Pokémon to be announced",
+            "score": 0.318
+          },
+          {
+            "eventId": "leekduck:pokemon-x-adidas-2026",
+            "eventTitle": "adidas × Pokémon Timed Research",
+            "score": 0.318
+          }
+        ],
+        "method": "title-to-public/data.json heuristic",
+        "requiresHumanVerification": true
+      },
+      "reviewNote": "Match is not strong enough (low).",
+      "signals": [
+        "picture text names the event",
+        "posted around the event"
+      ],
+      "matchScore": 3,
+      "stagedPath": "/infographics/g47ix/discord-1570487718994120835.png"
+    },
+    {
+      "id": "discord:1570487591273242727",
+      "source": "discord",
+      "creator": "",
+      "title": "tr NOV 12 6PM Counter Zekrom",
+      "publishedAt": "2026-11-12T17:17:00.008000+00:00",
+      "imageUrl": "https://cdn.discordapp.com/attachments/1087756541668630638/1570483323229306920/tr_NOV_12_6PM_Counter_Zekrom.png?ex=6af74212&is=6af5f092&hm=14ead7c8c8e12e44e8a2e9bd3f4903f1db4898ea141f79d5965698dd7810494e&",
+      "reviewStatus": "needs_review",
+      "decision": "pending",
+      "ocrChecked": true,
+      "ocrText": "#64497 45,4 fo} || 53394 CP “This legendary Pokémon can scorch the world with lightning. It assists those who want to build an ideal world.” sa8 &™. _— Fee | A iS i a Special ne 3 <3 =f SS iy Chance Background Difficulty: 2+ trainers needed Boost J %] @ %2307 cP we2884 cP Rainy Windy ran 44 = @ Dragon Tail ® Dragon Tail EN, A ® Dragon Tail ® Dragon Tail 6 Dynamax Cannon n ® Breaking S wi \\ 6 Outrage+ @ Freeze Shock (1 ~ * ‘y 7 Z. - @ Mud Shot - @ Mud of ot ® Ice Fang @ Precipice Blad @ Earth Powe @ Ice Burn (5 Precipice Blad 2, 6 Dragon Tail 6 Dragon Tail ® Dragon Breath ® Dragon Breath © Spacial Rend : 6 Bache Swi ® Glaive Rush (5 ® Roar of Time ” Follow for more: Remember to use proper counters, Party Play ‘wat and Zacian’s Adventure Effect if needed. oy Sy) G47IXO OMX B | g47ix.pro",
+      "eventMatch": {
+        "eventId": "dyntrails",
+        "eventTitle": "Dynamax Trails",
+        "score": 0.411,
+        "confidence": "low",
+        "matchedTerms": [
+          "dynamax",
+          "poke",
+          "mon",
+          "legendary",
+          "chance",
+          "those",
+          "nov"
+        ],
+        "alternatives": [
+          {
+            "eventId": "dyntrails",
+            "eventTitle": "Dynamax Trails",
+            "score": 0.411
+          },
+          {
+            "eventId": "leekduck:max-mondays-2026-11-16",
+            "eventTitle": "Max Monday: Pokémon to be announced",
+            "score": 0.318
+          },
+          {
+            "eventId": "leekduck:pokemon-x-adidas-2026",
+            "eventTitle": "adidas × Pokémon Timed Research",
+            "score": 0.318
+          }
+        ],
+        "method": "title-to-public/data.json heuristic",
+        "requiresHumanVerification": true
+      },
+      "reviewNote": "Match is not strong enough (low).",
+      "signals": [
+        "picture text names the event",
+        "posted around the event"
+      ],
+      "matchScore": 3,
+      "stagedPath": "/infographics/g47ix/discord-1570487591273242727.png"
+    },
+    {
       "id": "discord:1570442649834360894",
       "source": "discord",
       "creator": "",

@@ -2326,3 +2326,28 @@ button.rc-chip:focus-visible{outline:2px solid var(--color-link);outline-offset:
 .storep-regional .sp-aud-equivalent{display:block;min-width:0;line-height:1.28;color:var(--color-text-body);font-variant-numeric:tabular-nums;font-size:var(--type-body-sm);overflow-wrap:anywhere}
 .storep-regional .sp-aud-equivalent .sp-aud-source{display:block;font-size:var(--type-caption-compact);font-weight:400;color:var(--color-text-muted)}
 .storep-regional .sp-aud-equivalent+.sp-local-price{display:block;padding-top:3px;border-top:1px solid var(--color-border);margin-top:3px}
+
+/* Mobile Store QA: three tall equal-height country boxes created a 39-product
+   scroll marathon. Keep every country, dated price and unavailable state but
+   present them as short, individually sized comparison rows. */
+@media(max-width:659px){
+  .storep-regional .sp-product{padding:var(--space-2)}
+  .storep-regional .sp-product-head{margin-bottom:var(--space-1)}
+  .storep-regional .sp-market-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:0}
+  .storep-regional .sp-market,
+  .storep-regional .sp-market-au{
+    display:grid;grid-column:auto;grid-template-columns:minmax(72px,86px) minmax(0,1fr);
+    align-items:start;gap:var(--space-2);padding:var(--space-2) 0;
+    border:0;border-radius:0;background:transparent;overflow-wrap:normal
+  }
+  .storep-regional .sp-market+.sp-market{border-top:1px solid var(--color-border)}
+  .storep-regional .sp-market-label{font-size:var(--type-meta);line-height:1.25}
+  .storep-regional .sp-market-label small{display:block;font-size:var(--type-caption-compact)}
+  .storep-regional .sp-market .sp-regional-value{min-width:0;line-height:1.25}
+  .storep-regional .sp-market .sp-regional-value>b{font-size:var(--type-body-sm)}
+  .storep-regional .sp-market .sp-regional-value small{font-size:var(--type-caption-compact);line-height:1.25}
+  .storep-regional .sp-market .sp-none{font-size:var(--type-caption);color:var(--color-text-muted)}
+  .storep-regional .sp-aud-equivalent{display:block;line-height:1.25}
+  .storep-regional .sp-aud-equivalent .sp-aud-source{display:inline;margin-left:var(--space-1)}
+  .storep-regional .sp-aud-equivalent+.sp-local-price{border:0;margin:0;padding:0}
+}
