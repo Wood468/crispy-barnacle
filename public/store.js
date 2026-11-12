@@ -93,11 +93,21 @@
     var R = window.GORegionalPrices; if (!R || !data.regional || !data.regional.length) return '';
     var obs = data.regional, items = R.catalogue(data.prices || [], obs);
     var balance = Math.max(0, parseInt(lsGet(COINS_KEY), 10) || 0);
+    var sections = [
+      { id: 'passes', label: 'Passes & tickets', open: true },
+      { id: 'storage', label: 'Storage upgrades', open: true },
+      { id: 'coins', label: 'PokéCoins', open: true },
+      { id: 'boxes', label: 'Boxes & bundles', open: false },
+      { id: 'items', label: 'Items & other', open: false }
+    ];
+    var bySection = {};
+    sections.forEach(function (s) { bySection[s.id] = []; });
+    items.forEach(function (p) { bySection[priority(p)].push(p); });
     function productCard(p) {
       var au = p.aud > 0
         ? '<span class="sp-regional-value sp-ver"><b>' + esc(R.fmt(p.aud, 'AUD')) + '</b><small>Verified · ' + esc(when(p.observed)) + '</small></span>'
-        : '<span class="sp-regional-value sp-none">Not observed</span>';
-      var search = (p.label + ' ' + p.group).toLowerCase();
+        : '<span class="sp-regional-value sp-none" title="No verified Australian Web Store price observed">Not observed</span>';
+      var search = (p.label + ' ' + p.group + ' ' + priority(p)).toLowerCase();
       return '<article class="sp-product" data-sp-product data-sp-name="' + esc(search) + '">'
         + '<header class="sp-product-head"><span class="sp-product-name">' + icon(p.label) + '<b>' + esc(p.label) + '</b></span><small class="sp-product-group">' + esc(p.group) + '</small></header>'
         + '<div class="sp-market-grid">'
@@ -106,11 +116,16 @@
         + '<div class="sp-market"><span class="sp-market-label">India <small>in-app</small></span>' + priceCell(p.india) + '</div>'
         + '</div></article>';
     }
-    return '<details class="storep storep-regional"><summary>Regional Store prices <small>' + items.length + ' products · AU / ID / IN</small></summary>'
-      + '<p class="sp-intro">Official Store observations by country and channel. Prices are dated, not live checkout quotes. Estimates are clearly marked.</p>'
-      + '<label class="sp-search"><span>Find a product</span><input type="search" data-sp-search placeholder="Search items, passes or bundles" aria-label="Search Store products" autocomplete="off"></label>'
-      + '<p class="sp-results" data-sp-results aria-live="polite">' + items.length + ' products</p>'
-      + '<div class="sp-catalogue">' + items.map(productCard).join('') + '</div>'
+    var catalogue = sections.filter(function (s) { return bySection[s.id].length; }).map(function (s) {
+      return '<details class="sp-group" data-sp-group="' + s.id + '" data-sp-default-open="' + (s.open ? 'yes' : 'no') + '"' + (s.open ? ' open' : '') + '>'
+        + '<summary>' + esc(s.label) + ' <small>' + bySection[s.id].length + ' products</small></summary>'
+        + '<div class="sp-group-items">' + bySection[s.id].map(productCard).join('') + '</div></details>';
+    }).join('');
+    return '<details class="storep storep-regional" open><summary>Regional Store prices <small>' + items.length + ' products · AU / ID / IN</small></summary>'
+      + '<p class="sp-intro">Browse tickets first, then storage, coins and items. Observations are dated, not live checkout quotes. <b>Not observed</b> means no source-backed price for that channel, not free or unavailable to buy.</p>'
+      + '<label class="sp-search"><span>Find a product</span><input type="search" data-sp-search placeholder="Search passes, storage, coins or items" aria-label="Search Store products" autocomplete="off"></label>'
+      + '<p class="sp-results" data-sp-results aria-live="polite">' + items.length + ' products · ' + sections.filter(function (s) {return bySection[s.id].length;}).length + ' categories</p>'
+      + '<div class="sp-catalogue">' + catalogue + '</div>'
       + '<details class="sp-compare-more"><summary>Lowest verified observed options <small>Advanced comparison</small></summary>'
       + '<p class="note">Only verified, directly comparable offers qualify. Recorded and modelled prices cannot win. Your existing PokéCoins may reduce cash cost; estimates are never checkout quotes.</p>'
       + '<label class="sp-coins">PokéCoins in hand <input type="number" inputmode="numeric" min="0" step="1" value="' + balance + '" data-sp-coins aria-label="PokéCoins you already hold"></label>'
@@ -126,13 +141,30 @@
       var search = el.querySelector('[data-sp-search]');
       if (search) search.addEventListener('input', function () {
         var q = search.value.trim().toLowerCase(), shown = 0;
-        el.querySelectorAll('[data-sp-product]').forEach(function (card) {
-          var match = (card.getAttribute('data-sp-name') || '').includes(q);
-          card.hidden = !match; if (match) shown++;
+        el.querySelectorAll('[data-sp-group]').forEach(function (group) {
+          var count = 0;
+          group.querySelectorAll('[data-sp-product]').forEach(function (card) {
+            var match = (card.getAttribute('data-sp-name') || '').includes(q);
+            card.hidden = !match; if (match) { shown++; count++; }
+          });
+          group.hidden = !count;
+          if (q && count) group.open = true;
+          else if (!q) group.open = group.getAttribute('data-sp-default-open') === 'yes';
         });
         var result = el.querySelector('[data-sp-results]');
         if (result) result.textContent = shown + (shown === 1 ? ' product' : ' products') + ' shown';
       });
+      /* Capture an exact-asset load failure and substitute an honest token.
+         Never leave a broken image or substitute an unrelated product image. */
+      if (el.addEventListener) el.addEventListener('error', function (event) {
+        var bad = event.target;
+        if (!bad || !bad.matches || !bad.matches('img.sp-i')) return;
+        var fallback = document.createElement('span');
+        fallback.className = 'sp-i-token';
+        fallback.setAttribute('aria-hidden', 'true');
+        fallback.textContent = bad.getAttribute('data-sp-fallback') || '·';
+        bad.replaceWith(fallback);
+      }, true);
       var inp = el.querySelector('[data-sp-coins]');
       if (inp) inp.addEventListener('input', function () {
         var n = Math.max(0, parseInt(inp.value, 10) || 0); lsSet(COINS_KEY, String(n));
