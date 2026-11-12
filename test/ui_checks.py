@@ -2154,16 +2154,16 @@ with sync_playwright() as p:
             dex_phone.wait_for_selector('#dexlist .drow',state='visible')
             m=dex_phone.evaluate("""() => {
               const box=s=>document.querySelector(s)?.getBoundingClientRect();
-              const q=box('#dq'),first=box('#dexlist .drow'),nav=box('nav.tabs'),progress=box('#tab-dex .prog');
+              const q=box('#dq'),first=box('#dexlist .drow'),nav=box('nav.tabs'),progress=box('#tab-dex .dex-progress');
               const el=s=>document.querySelector(s);
               return {searchBottom:q?.bottom,firstRowTop:first?.top,navTop:nav?.top,
-                progressHeight:progress?.height,searchBeforeProgress:!!(el('#dq').compareDocumentPosition(el('#tab-dex .prog'))&Node.DOCUMENT_POSITION_FOLLOWING),
-                coverageAfterProgress:!!(el('#tab-dex .prog').compareDocumentPosition(el('#gencov'))&Node.DOCUMENT_POSITION_FOLLOWING),
+                progressHeight:progress?.height,searchBeforeSetup:!!(el('#dq').compareDocumentPosition(el('#gencov'))&Node.DOCUMENT_POSITION_FOLLOWING),
+                coverageAfterProgress:!!(el('#tab-dex .dex-progress').compareDocumentPosition(el('#gencov'))&Node.DOCUMENT_POSITION_FOLLOWING),
                 helpAfterResults:!!(el('#dexlist').compareDocumentPosition(el('#tab-dex .dexhow'))&Node.DOCUMENT_POSITION_FOLLOWING),
                 regionalAfterResults:!!(el('#dexlist').compareDocumentPosition(el('#regdd'))&Node.DOCUMENT_POSITION_FOLLOWING)};
             }""")
             check(f'Collection {width}px keeps search above the bottom nav and ahead of setup panels',
-                  m['searchBottom'] < m['navTop']-6 and m['searchBeforeProgress'] and
+                  m['searchBottom'] < m['navTop']-6 and m['searchBeforeSetup'] and
                   m['coverageAfterProgress'] and m['helpAfterResults'] and m['regionalAfterResults'], m)
             check(f'Collection {width}px shows a compact progress card and starts the Dex list in the first phone viewport',
                   m['progressHeight'] <= 140 and m['firstRowTop'] < m['navTop']+8, m)
@@ -2173,7 +2173,7 @@ with sync_playwright() as p:
             dex_phone.context.close()
 
         # ---- collection integrity: unknown is never Need ----
-        pg=page(); pg.click('nav.tabs button[data-tab="collect"]'); pg.click('#subnav-collect button[data-sub="dex"]'); pg.wait_for_selector('#gencov .gc',state='attached'); pg.evaluate("document.querySelector('#gencov details').open=true"); pg.wait_for_timeout(300)
+        pg=page(); pg.click('nav.tabs button[data-tab="collect"]'); pg.click('#subnav-collect button[data-sub="dex"]'); pg.wait_for_selector('#gencov .gc',state='attached'); pg.evaluate("document.querySelector('#tab-dex .dexhow').open=true;document.querySelector('#gencov details').open=true"); pg.wait_for_timeout(300)
         pg.evaluate("localStorage.setItem('gofn-dex', JSON.stringify({m:{own:{25:1}}}))")
         base=pg.evaluate("[...document.querySelectorAll('#dexlist .drow')].slice(0,5).map(r=>(r.querySelector('.own')||{textContent:''}).textContent)")
         check('dex: with nothing confirmed no Pokémon shows Need', 'Need' not in base and all(b in ('Have','') for b in base), base)
@@ -2388,7 +2388,7 @@ with sync_playwright() as p:
         check('forms: an explicit Need on a form is respected and Have on the base does not clear it', S('Alolan Vulpix')=='missing')
         check('forms: Dynamax is never collectible, so never Need', S('Dynamax Charizard')=='form')
         # Not tracked is never rendered as a Need chip
-        pg.click('nav.tabs button[data-tab="collect"]'); pg.click('#subnav-collect button[data-sub="dex"]'); pg.wait_for_selector('#gencov .gc',state='attached'); pg.evaluate("document.querySelector('#gencov details').open=true"); pg.wait_for_timeout(300)
+        pg.click('nav.tabs button[data-tab="collect"]'); pg.click('#subnav-collect button[data-sub="dex"]'); pg.wait_for_selector('#gencov .gc',state='attached'); pg.evaluate("document.querySelector('#tab-dex .dexhow').open=true;document.querySelector('#gencov details').open=true"); pg.wait_for_timeout(300)
         pg.fill('#dq','togepi') if pg.locator('#dq').count() else None
         pg.wait_for_timeout(200)
         dx=pg.inner_text('#dexlist').lower()

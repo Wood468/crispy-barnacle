@@ -15,3 +15,5 @@
 @media(min-width:375px) and (max-width:599px){#dexlist.dex-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}#dexlist .dex-tile{padding:6px}.dex-art{height:90px}.dex-art img{width:84px;height:84px}.dex-tile .tg{padding:4px;min-width:40px}.dex-open .nm{font-size:.8rem}}
 #dex-overview,#dex-overview>*{min-width:0}#dex-overview{grid-template-columns:minmax(0,1fr)}#dex-progress{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
 #dexlist .dex-art img{background:transparent}
+
+#tab-dex .dchk{min-height:44px}#tab-dex .dchk input{width:20px;height:20px;min-height:20px;flex:0 0 20px}.dex-quick .tg{flex:0 0 44px;min-width:44px}

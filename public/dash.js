@@ -2450,7 +2450,7 @@ function renderHomeBrief(t) {
     renderCoverage();
     if (window.GO && GO.refreshDex) GO.refreshDex();
     usSync();
-    var inf = document.createElement('script'); inf.src = '/infographic.js?v=20261103b'; document.body.appendChild(inf); var x = document.createElement('script'); x.src = '/extra.js?v=20261102c'; document.body.appendChild(x); var z = document.createElement('script'); z.src = '/places.js?v=20261103b'; window.GOPLACES_READY = new Promise(function (resolve) { z.onload = function () { resolve(window.GOPLACES || null); }; z.onerror = function () { resolve(null); }; }); var y = document.createElement('script'); y.src = '/detail.js?v=20261117i'; document.body.appendChild(y); document.body.appendChild(z); var w = document.createElement('script'); w.src = '/fresh.js?v=20261114a'; document.body.appendChild(w); var nv = document.createElement('script'); nv.src = '/nudge.js?v=20261102a'; document.body.appendChild(nv); var rv = document.createElement('script'); rv.src = '/review.js?v=20261104b'; document.body.appendChild(rv); var by = document.createElement('script'); by.src = '/buy.js?v=20261103a'; document.body.appendChild(by);
+    var inf = document.createElement('script'); inf.src = '/infographic.js?v=20261103b'; document.body.appendChild(inf); var x = document.createElement('script'); x.src = '/extra.js?v=20261112p1'; document.body.appendChild(x); var z = document.createElement('script'); z.src = '/places.js?v=20261103b'; window.GOPLACES_READY = new Promise(function (resolve) { z.onload = function () { resolve(window.GOPLACES || null); }; z.onerror = function () { resolve(null); }; }); var y = document.createElement('script'); y.src = '/detail.js?v=20261117i'; document.body.appendChild(y); document.body.appendChild(z); var w = document.createElement('script'); w.src = '/fresh.js?v=20261114a'; document.body.appendChild(w); var nv = document.createElement('script'); nv.src = '/nudge.js?v=20261102a'; document.body.appendChild(nv); var rv = document.createElement('script'); rv.src = '/review.js?v=20261104b'; document.body.appendChild(rv); var by = document.createElement('script'); by.src = '/buy.js?v=20261103a'; document.body.appendChild(by);
   }
   envBanner();
   /* Bounded waits: a request that never answers must not leave Today blank. After FEED_TIMEOUT_MS the page renders from the curated list
@@ -2467,7 +2467,7 @@ function renderHomeBrief(t) {
   var dexP = window.GOLIB.getJson('/dex.json').catch(function () { return []; });
   var apiP = fetch('/api/events').then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; });
   var cpP = Promise.all([
-    fetch('/data/cp/pokemon.json').then(function (r) { return r.ok ? r.json() : null; }),
+    window.GOLIB.jsonOrNull('/data/cp/pokemon.json'),
     fetch('/data/cp/cp-multipliers.json').then(function (r) { return r.ok ? r.json() : null; })
   ]).then(function (a) { return a[0] && a[1] ? { pokemon: a[0], cpms: a[1] } : null; }).catch(function () { return null; });
   /* The CP table (215 KB) is only a garnish on raid cards: once the dex and the feed have answered it gets a short grace period (never past the 8 s total), then Today draws without it and it is applied when it lands. */
