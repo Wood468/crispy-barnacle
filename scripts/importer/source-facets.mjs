@@ -117,14 +117,20 @@ export function extractEventSourceFacets(html,{sourceUrl}={}){
   const cleanHtml=html.replace(/<(script|style|noscript)\b[^>]*>[\s\S]*?<\/\1>/gi,' ');
   const sectionList=headings(cleanHtml);
   const benefits=[],featuredMoves=[],researchPrograms=[],seen=new Set();
-  for(const s of sectionList){
+  for(let i=0;i<sectionList.length;i++){
+    const s=sectionList[i];
+    // A subgroup can have a different entitlement or effective time window.
+    // In the real Global source, an h3 "Trading Bonuses" sits beneath h2
+    // "Additional Ticket Holder Bonuses" but applies all day, not 10am–6pm.
+    // Never inherit the entire parent h2 body into its benefits.
+    const ownBody=cleanHtml.slice(s.end,sectionList[i+1]?.start??cleanHtml.length);
     if(/\b(?:bonus(?:es)?|perks?)\b/i.test(s.heading)){
-      const access=groupAccess(s.heading);
+      const access=accessType(s.heading,ownBody);
       if(access==='unknown')continue; // generic parent "Bonuses" is not a grant
-      const windowText=entryWindow(s.body);
-      const raw=[...imgAlts(s.body),...paragraphs(s.body)];
-      const override=/\b(?:replace|instead of)\b.{0,80}\b(?:free|all[-\s]?trainer)\b.{0,50}\b(?:limits?|bonuses?)\b/i.test(text(s.body))
-        ||/\b(?:ticketed|paid)\b.{0,50}\blimits?\s+replace\s+the\s+free\s+limits?\b/i.test(text(s.body));
+      const windowText=entryWindow(ownBody);
+      const raw=[...imgAlts(ownBody),...paragraphs(ownBody)];
+      const override=/\b(?:replace|instead of)\b.{0,80}\b(?:free|all[-\s]?trainer)\b.{0,50}\b(?:limits?|bonuses?)\b/i.test(text(ownBody))
+        ||/\b(?:ticketed|paid)\b.{0,50}\blimits?\s+replace\s+the\s+free\s+limits?\b/i.test(text(ownBody));
       for(const item of raw){
         const benefit=item.replace(/\*+$/g,'').trim();
         if(!isBenefit(benefit))continue;
