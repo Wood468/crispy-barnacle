@@ -92,3 +92,12 @@ test("event detail categories use a consistent accessible line-icon treatment", 
   assert.match(detailCss, /\.evd-icon\{[^}]*width:28px/);
   assert.match(detailCss, /\.evd-grp \.ci,[^}]*width:15px/);
 });
+
+test("future source trust values remain unknown and cannot inject badge markup", () => {
+  const match = detail.match(/function trust\(t\) \{([\s\S]*?)\n  \}/);
+  assert.ok(match, "trust renderer exists");
+  const renderTrust = new Function("t", match[1]);
+  for (const val of ["unverified", "partner", "OFFICIAL", "Community", "<img src=x onerror=alert(1)>", undefined, 0, false]) {
+    assert.equal(renderTrust(val), '<span class="st st-u">Trust not labelled</span>');
+  }
+});

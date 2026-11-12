@@ -102,6 +102,24 @@ with sync_playwright() as p:
         assert page.locator('#evd .ue-pass-highlight[data-milestone-rank="45"]').count() == 1
         assert page.locator('#evd .ue-pass-highlight[data-milestone-rank="100"]').count() == 1
         assert page.locator('#evd .ue-pass-range[open]').count() == 0
+        # Sprint 3: the actual published-rank navigator must work on narrow
+        # phones and preserve native disclosure, focus and unknown-rank semantics.
+        navigator = page.locator('#evd .ue-pass-nav')
+        assert navigator.count() == 1, 'GO Pass rank navigator did not mount after event render'
+        rank_input = navigator.locator('input[type="number"]')
+        rank_input.fill('45')
+        navigator.locator('button[type="submit"]').click()
+        chosen = page.locator('#evd .ue-pass-rank[data-rank="45"]')
+        assert chosen.is_visible(), ('Rank 45 not visible after direct jump', width)
+        assert chosen.evaluate('(el) => document.activeElement === el'), ('Rank 45 focus not restored', width)
+        assert 'Opened published Rank 45' in navigator.locator('[role="status"]').inner_text()
+        rank_input.fill('601')
+        navigator.locator('button[type="submit"]').click()
+        assert 'No published reward entry for Rank 601' in navigator.locator('[role="status"]').inner_text()
+        navigator.locator('select').select_option('76')
+        assert page.locator('#evd .ue-pass-rank[data-rank="100"]').is_visible()
+        assert page.locator('#evd').evaluate('(el)=>el.scrollWidth<=el.clientWidth'), ('GO Pass navigator overflows mobile sheet', width)
+        shot(page, f'gopass-direct-jump-{width}')
         # Open the full ranges as a user would, rather than counting hidden
         # rewards in the whole Event Details document.
         ranges = page.locator('#evd .ue-pass-range')

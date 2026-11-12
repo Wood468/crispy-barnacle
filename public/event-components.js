@@ -132,17 +132,19 @@ function passReward(raw,ctx){
  if(!item||typeof item.name!=='string'||!item.name||/^[-–—]+$/.test(item.name.trim()))return null;
  if(typeof raw==='string'){var q=/^(.+?)\s*[×x]\s*(\d+)$/i.exec(item.name);if(q){item={name:q[1].trim(),type:'item',quantity:+q[2]};}}
  var cat=passCategory(item),art='',hasArt=false;
+ var semantic=typeof globalThis!=='undefined'&&globalThis.GOGoPassRewardArt&&typeof globalThis.GOGoPassRewardArt.resolve==='function'?globalThis.GOGoPassRewardArt.resolve(item):null;
  if(item.type==='encounter'&&ctx.rewardArt){
   art=ctx.rewardArt(item)||'';
   hasArt=/<(img|svg|canvas)\b/i.test(art);
   if(!hasArt)art='';
  }else{
-  var icon=PASS_ICONS.filter(function(r){return r[0].test(item.name);})[0];
+  /* Exact-only semantic art module supersedes ambiguous legacy name matching. */
+  var icon=semantic?(semantic.kind==='image'?[/^.*$/,semantic.src]:null):PASS_ICONS.filter(function(r){return r[0].test(item.name);})[0];
   if(icon){art='<img src="'+esc(icon[1])+'" alt="" width="40" height="40" loading="lazy" decoding="async">';hasArt=true;}
  }
  var qty=Number.isInteger(item.quantity)&&item.quantity>1?'×'+esc(item.quantity):'';
  var lvl=item.type==='encounter'&&Number.isInteger(item.level)?' · Level '+esc(item.level):'';
- var symbol=passGlyph(item,cat);
+ var symbol=semantic&&semantic.kind==='symbol'?semantic.symbol:passGlyph(item,cat);
  return '<div class="ue-pass-reward" data-cat="'+esc(cat)+'"'+(hasArt?'':' data-art="category"')+'><span class="ue-pass-art" aria-hidden="true">'+(art||'<span class="ue-reward-icon">'+esc(symbol)+'</span>')+'</span><span class="ue-pass-name"><b>'+esc(item.name)+'</b><small>'+(qty?qty+' · ':'')+esc(cat)+lvl+'</small></span></div>';
 }
 function passLane(label,cls,list,ctx){
@@ -150,8 +152,8 @@ function passLane(label,cls,list,ctx){
  return chips.length?'<div class="ue-lane ue-lane-'+cls+'"><h5>'+label+'</h5>'+chips.join('')+'</div>':'';
 }
 function passStageLanes(s,ctx){
- if(s.free||s.deluxe)return passLane('Free','free',s.free,ctx)+passLane('Deluxe','deluxe',s.deluxe,ctx);
- return passLane('Reward · track not specified','free',s.rewards,ctx);
+ var specified=passLane('Free','free',s.free,ctx)+passLane('Deluxe','deluxe',s.deluxe,ctx);
+ return specified||passLane('Reward · track not specified','free',s.rewards,ctx);
 }
 function passStageRewards(s){
  return [].concat(s.free||[],s.deluxe||[],s.rewards||[]).filter(function(x){return x&&typeof x==='object'&&typeof x.name==='string'||typeof x==='string'&&x.trim();});
@@ -180,7 +182,7 @@ function passes(items,ctx){
  }
  var meta=ctx.passMeta||{};
  return items.filter(function(p){return value(p);}).map(function(p){
-  var stages=(Array.isArray(p.stages)?p.stages:[]).filter(function(s){return s&&Number.isInteger(s.rank)&&s.rank>=0;}).slice().sort(function(a,b){return a.rank-b.rank;});
+  var stages=(Array.isArray(p.stages)?p.stages:[]).filter(function(s){return s&&Number.isInteger(s.rank)&&s.rank>=0&&passStageRewards(s).some(function(r){return passReward(r,ctx)!==null;});}).slice().sort(function(a,b){return a.rank-b.rank;});
   var content='';
   if(!stages.length)content='<p class="note ue-pass-missing">Rank rewards have not been published by the source yet.</p>';
   else{
@@ -196,7 +198,7 @@ function passes(items,ctx){
    if(!featured.length&&stages.length)featured=[stages[0],stages[Math.floor((stages.length-1)/2)],stages[stages.length-1]].filter(function(s,i,arr){return arr.indexOf(s)===i&&passStageRewards(s).length;});
    featured.sort(function(a,b){return a.rank-b.rank;});
    var overview=featured.length?'<div class="ue-pass-overview"><h5>Published milestones</h5><ul class="ue-pass-highlights">'+featured.map(highlight).join('')+'</ul></div>':'';
-   content=head+overview+'<h5 class="ue-pass-all-title">All published rank entries</h5>'+keys.map(function(key,i){var list=groups[key],before=i?groups[keys[i-1]][groups[keys[i-1]].length-1].rank:null;return '<details class="ue-pass-range"><summary>'+(list.length===1?'Rank '+esc(list[0].rank):'Ranks '+esc(list[0].rank)+'–'+esc(list[list.length-1].rank))+' · '+list.length+' listed</summary><ol class="ue-pass-stages">'+listWithGaps(list,before)+'</ol></details>';}).join('');
+   content=head+overview+'<h5 class="ue-pass-all-title">All published rank entries</h5>'+keys.map(function(key,i){var list=groups[key],before=i?groups[keys[i-1]][groups[keys[i-1]].length-1].rank:null;return '<details class="ue-pass-range"><summary>'+'Ranks '+esc(Number(key)*25+1)+'–'+esc((Number(key)+1)*25)+' · '+list.length+' published</summary><ol class="ue-pass-stages">'+listWithGaps(list,before)+'</ol></details>';}).join('');
   }
   var srcs=(model_sources(ctx)||[]).map(function(s){return s;}).join(' · ');
   var foot='<p class="ue-pass-src">'+(srcs?'Source: '+srcs:'Source not listed')+(meta.updated?' · Data checked '+esc(String(meta.updated).slice(0,10)):' · Freshness unknown')+'. Rewards are as published by the source and can change; anything not listed is not confirmed.'+(meta.warning?' '+esc(meta.warning):'')+'</p>';
