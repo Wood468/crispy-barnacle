@@ -2111,6 +2111,29 @@ with sync_playwright() as p:
         check('detail: published event facts and event-only moves remain visible without verification clutter', 'Sucker Punch' in moves_text and 'bonuses' in moves_text.lower() and pg.locator('#evd .pub,#evd .npub,#evd .st').count()==0)
         expected_tickets = json.loads((ROOT/'public/event-info.json').read_text())['events']['zorua']['tickets']
         check('detail: all curated event tickets retain Australian prices and purchase information', pg.locator('#evd .tk').count()==len(expected_tickets) and 'special research ticket' in t.lower() and '≈ A$2.99' in t and 'Buy or claim by' in t)
+        # Ticket content is grouped by priority, but every source-backed benefit
+        # and secondary condition remains available in accessible disclosures.
+        ticket=pg.locator('#evd .tk[data-pass="zorua-cd-research"]')
+        check('detail: ticket claim dates are visible without expanding secondary terms',
+              ticket.locator('.tk-essential').is_visible() and
+              'Buy or claim by' in ticket.locator('.tk-essential').inner_text() and
+              'Optional' in ticket.locator('.tk-essential').inner_text())
+        more_benefits=ticket.locator('details.tk-more-benefits')
+        check('detail: ticket lists three initial benefits and preserves the rest collapsed',
+              ticket.locator('.tk-benefits > ul > li').count()==3 and
+              more_benefits.locator('li').count()==1 and
+              not more_benefits.locator('li').first.is_visible())
+        more_benefits.locator('summary').focus()
+        pg.keyboard.press('Enter')
+        check('detail: additional ticket benefits are reachable by keyboard',
+              more_benefits.locator('li').first.is_visible() and
+              'Even more goodies' in more_benefits.inner_text())
+        more_terms=ticket.locator('details.tk-more-terms')
+        more_terms.locator('summary').click()
+        check('detail: secondary ticket terms keep their published source facts',
+              more_terms.is_visible() and 'Good to know' in more_terms.inner_text() and
+              'Non-refundable' in more_terms.inner_text())
+
         pg.screenshot(path=OUT+'detail.png', full_page=False)
         pg.keyboard.press('Escape'); pg.wait_for_timeout(200)
         check('detail closes on Escape', pg.locator('#evd').is_hidden())
@@ -2773,12 +2796,31 @@ with sync_playwright() as p:
         # Cumulative layout shift of a cold Today load, summed over every shift (user input is not excluded: there is none). Measured un-throttled on purpose: the big
         # shifts (the footer jumping a screen when the agenda arrives, the freshness line and deadlines row growing, the date and tab bar filling in) happen at any speed, so
         # this is deterministic in CI. Batch 4 measured 0.62 (390px) and 1.09 (1280px) before the fix; Google's "good" threshold is 0.1. Throttled 20-run numbers are in docs/ROADMAP.md.
-        CLS_OBSERVER = "window.__cls=0;new PerformanceObserver(l=>{for(const e of l.getEntries())window.__cls+=e.value}).observe({type:'layout-shift',buffered:true})"
+        CLS_OBSERVER = """window.__cls=0;window.__clsShifts=[];new PerformanceObserver(l=>{
+            for(const e of l.getEntries()){
+                window.__cls+=e.value;
+                if(window.__clsShifts.length>=30)continue;
+                window.__clsShifts.push({value:Number(e.value.toFixed(5)),at:Math.round(e.startTime),
+                    sources:(e.sources||[]).slice(0,6).map(s=>{
+                        const n=s.node;
+                        const tag=n?.tagName?.toLowerCase()||'unknown';
+                        const cls=typeof n?.className==='string' ? n.className.trim().split(/\\s+/).slice(0,3).join('.') : '';
+                        const label=tag+(n?.id?'#'+n.id:'')+(cls?'.'+cls:'');
+                        const rect=r=>r?{x:Math.round(r.x),y:Math.round(r.y),width:Math.round(r.width),height:Math.round(r.height)}:null;
+                        return {node:label,previous:rect(s.previousRect),current:rect(s.currentRect)};
+                    })});
+            }
+        }).observe({type:'layout-shift',buffered:true})"""
         for cls_w in (390, 1280):
             cpg = page(width=cls_w, mobile=cls_w < 500, pre=lambda p: p.add_init_script(CLS_OBSERVER))
             settle(cpg, "!!(window.GOFRESH&&window.GOFRESH.state().done&&window.GOINFOGRAPHIC&&window.GOEXTRA)")  # the late scripts and the freshness line are part of the load
             cpg.wait_for_timeout(1500)
             cls_val = cpg.evaluate("window.__cls")
+            if cls_val >= 0.1:
+                # Preserve the strict performance gate; report the actual elements
+                # contributing the largest shift rather than guessing from timing.
+                shifts = cpg.evaluate("window.__clsShifts.slice().sort((a,b)=>b.value-a.value).slice(0,12)")
+                print('CLS_DIAGNOSTICS %dpx %s' % (cls_w, json.dumps(shifts, separators=(',', ':'))), flush=True)
             check('Today cold load at %dpx has a cumulative layout shift under 0.1' % cls_w, cls_val < 0.1, 'measured %.4f' % cls_val)
             cpg.context.close()
 
@@ -3691,7 +3733,7 @@ with sync_playwright() as p:
           today: document.querySelector('#home-now')?.children.length || 0,
           todayKey: document.querySelector('#home-now')?.getAttribute('data-render-key') || '',
           thisWeek: document.querySelector('#week')?.children.length || 0,
-          weekText: (()=>{const el=document.querySelector('#week')?.cloneNode(true);if(!el)return '';el.querySelectorAll('[data-igcheck],[data-infographic]').forEach(n=>n.remove());return el.textContent;})(),
+          weekText: (()=>{const el=document.querySelector('#week')?.cloneNode(true);if(!el)return '';el.querySelectorAll('[data-igcheck],[data-infographic],.art-fb,.costume-unavailable').forEach(n=>n.remove());return el.textContent;})(),
           timeline: document.querySelector('#evtimeline')?.children.length || 0,
           weekstrip: document.querySelector('#weekstrip')?.children.length || 0,
           calendar: document.querySelector('#calgrid')?.children.length || 0,
@@ -3723,7 +3765,7 @@ with sync_playwright() as p:
         secondary_click('nav.tabs button[data-tab="now"]')
         returned = secondary_page.evaluate("""() => ({
           todayKey: document.querySelector('#home-now')?.getAttribute('data-render-key') || '',
-          thisWeek: (()=>{const el=document.querySelector('#week')?.cloneNode(true);if(!el)return '';el.querySelectorAll('[data-igcheck],[data-infographic]').forEach(n=>n.remove());return el.textContent;})(),
+          thisWeek: (()=>{const el=document.querySelector('#week')?.cloneNode(true);if(!el)return '';el.querySelectorAll('[data-igcheck],[data-infographic],.art-fb,.costume-unavailable').forEach(n=>n.remove());return el.textContent;})(),
           todayVisible: !document.querySelector('#tab-now')?.hidden
         })""")
         check('Timeline, Calendar, Travel, Battle, Opportunities and Watchlist render on activation; Today and This Week event information remain unchanged on return',

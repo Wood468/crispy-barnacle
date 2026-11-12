@@ -97,8 +97,12 @@ with sync_playwright() as p:
         page.evaluate("GODETAIL.open('season:pass-into-wild-2026')")
         page.locator('#evd .evd-nav-link[data-sec="passes"]').click()
         page.wait_for_selector('#evd .ue-pass')
-        # The published rank 45 and rank 100 milestones live in collapsed
-        # ranges. Open the ranges as a user would, rather than counting hidden
+        # Published rank 45 and rank 100 rewards appear as visible milestones
+        # while all complete rank entries remain available in collapsed ranges.
+        assert page.locator('#evd .ue-pass-highlight[data-milestone-rank="45"]').count() == 1
+        assert page.locator('#evd .ue-pass-highlight[data-milestone-rank="100"]').count() == 1
+        assert page.locator('#evd .ue-pass-range[open]').count() == 0
+        # Open the full ranges as a user would, rather than counting hidden
         # rewards in the whole Event Details document.
         ranges = page.locator('#evd .ue-pass-range')
         for rank in ('Rank 45', 'Rank 100'):
@@ -123,10 +127,10 @@ with sync_playwright() as p:
         pass_el = page.locator('#evd .ue-pass')
         assert pass_el.locator('.ue-lane-free').count() >= 90 and pass_el.locator('.ue-lane-deluxe').count() >= 90
         assert pass_el.locator('.ue-pass-range').count() >= 4
-        assert pass_el.locator('.ue-pass-range[open]').count() == 1
+        assert pass_el.locator('.ue-pass-range[open]').count() == 0
         pass_el.locator('.ue-pass-range').last.locator('summary').click()
-        assert pass_el.locator('.ue-pass-gap', has_text='no rewards listed by the source').count() >= 1
-        assert pass_el.locator('.ue-pass-reward[data-art="fallback"]').count() >= 1
+        assert pass_el.locator('.ue-pass-gap', has_text='no reward entries published by the source').count() >= 1
+        assert pass_el.locator('.ue-pass-reward[data-art="category"]').count() >= 1
         assert pass_el.locator('.ue-pass-reward img[src="/ico/dust.webp"]').count() >= 1
         assert pass_el.locator('.ue-pass-art:visible').count() >= 1
         text = pass_el.inner_text()

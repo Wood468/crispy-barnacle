@@ -33,10 +33,13 @@ test("zero parsed tasks gives an honest empty state instead of a count of source
   assert.equal((html.match(/<article class="research-task"/g) || []).length, 0);
 });
 
-test("GO Pass header states N of M ranks listed from the real data", () => {
+test("GO Pass header separates published entries from the highest rank without inventing rewards", () => {
   const stages = [...Array.from({ length: 99 }, (_, i) => i + 1), 100, 101, 600].map(r => ({ rank: r, free: ["Stardust ×" + r], deluxe: ["Stardust ×" + r * 2] }));
   const html = UI.render(ev({ family: "go-pass", passes: [{ title: "GO Pass rewards", stages }] }), {});
-  assert.match(text(html), /102 of 600 ranks listed \(Rank 1 to 600\)/);
+  assert.match(text(html), /102 ranks with published entries · through Rank 600/);
+  assert.doesNotMatch(text(html), /102 of 600 ranks listed/);
+  assert.equal((html.match(/<li class="ue-pass-rank" data-rank="/g) || []).length, 102, "all 102 source rank entries remain available");
+  assert.doesNotMatch(html, /<details class="ue-pass-range" open/, "rank groups start collapsed");
 });
 
 test("importer: a structured Rank 100 row is never merged into a prose sentence that shares its words", () => {

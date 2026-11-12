@@ -19,6 +19,11 @@ const approval = () => ({
 });
 function harness(options = {}) {
   let draft = options.initialDraft ?? true;
+  let issueState = options.issueAlreadyClosed ? "closed" : "open";
+  let labels = options.issueRevoked
+    ? [{ name: "go-worker-approved" }]
+    : [{ name: "go-worker-approved" }, { name: "go-worker-auto-merge-approved" },
+       { name: "independent-label" }];
   const actions = [];
   const pr = () => ({
     number: 800, state: "open", draft, mergeable: options.mergeable ?? true,
@@ -29,6 +34,17 @@ function harness(options = {}) {
   const get = async url => {
     actions.push("GET:" + url);
     if (url === API + "/pulls/800") return pr();
+    if (url === API + "/issues/777") return {
+      number: 777, state: issueState, title: "[GO-WORKER] Test task",
+      user: { login: "Wood468" }, labels,
+      body: "GO_WORKER_TASK_JSON:" + JSON.stringify({
+        path: "test/escape.test.mjs",
+        instruction: "Append exactly one deterministic security regression to the existing test."
+      })
+    };
+    if (url === API + "/branches/main") return {
+      commit: { sha: options.mainChanged ? "d".repeat(40) : MERGED }
+    };
     throw Error("Unexpected read call");
   };
   const graph = async (query, variables) => {
@@ -48,6 +64,31 @@ function harness(options = {}) {
     if (options.putFails) return { merged: false };
     return { merged: true, sha: MERGED };
   };
+  const closeIssue = async (url, body) => {
+    actions.push("CLOSE_ISSUE");
+    assert.equal(url, API + "/issues/777");
+    assert.deepEqual(body, { state: "closed", state_reason: "completed" });
+    if (options.closeFails) throw Error("private GH response");
+    issueState = "closed";
+    return { number: 777, state: "closed", labels };
+  };
+  const removeLabel = async url => {
+    actions.push("REMOVE_LABEL");
+    const prefix = API + "/issues/777/labels/";
+    assert.ok(url.startsWith(prefix));
+    const name = url.slice(prefix.length);
+    assert.ok(["go-worker-approved", "go-worker-auto-merge-approved"].includes(name));
+    if (options.removeFails) throw Error("private GH response");
+    labels = labels.filter(label => label.name !== name);
+    return { accepted: true };
+  };
+  const dispatch = async (url, body) => {
+    actions.push("DISPATCH_TESTS");
+    assert.equal(url, API + "/actions/workflows/tests.yml/dispatches");
+    assert.deepEqual(body, { ref: "main" });
+    if (options.dispatchFails) throw Error("private GH response");
+    return { accepted: true };
+  };
   let checks = 0;
   const judge = async (number, getter, opts) => {
     checks++;
@@ -60,7 +101,8 @@ function harness(options = {}) {
     return { ...approval(), ...(options.approval || {}) };
   };
   const wait = async () => {};
-  return { get, graph, put, judge, wait, actions, get checks() { return checks; } };
+  return { get, graph, put, dispatch, closeIssue, removeLabel, judge, wait, actions,
+    get checks() { return checks; } };
 }
 
 test("only one completed exact-head original Tests run is eligible for consideration", () => {
@@ -82,12 +124,17 @@ test("approved isolated draft is marked ready and merged with exact SHA independ
   const outcome = await execute(original(), h);
   assert.deepEqual(outcome, {
     status: "MERGED", pr: 800, issue: 777, head: HEAD,
-    mergeSha: MERGED, ciRun: 901
+    mergeSha: MERGED, ciRun: 901, issueClosed: true,
+    mainTestsDispatched: true
   });
   assert.equal(h.checks, 2);
   assert.equal(h.actions.filter(x => x === "GRAPHQL").length, 1);
   assert.equal(h.actions.filter(x => x === "MERGE").length, 1);
   assert.ok(h.actions.indexOf("GRAPHQL") < h.actions.indexOf("MERGE"));
+  assert.ok(h.actions.indexOf("MERGE") < h.actions.indexOf("CLOSE_ISSUE"));
+  assert.equal(h.actions.filter(x => x === "REMOVE_LABEL").length, 2);
+  assert.ok(h.actions.indexOf("CLOSE_ISSUE") < h.actions.indexOf("REMOVE_LABEL"));
+  assert.ok(h.actions.indexOf("MERGE") < h.actions.indexOf("DISPATCH_TESTS"));
 });
 
 test("already-ready PR merges without redundant draft promotion", async () => {
@@ -121,6 +168,53 @@ test("an invalid event or wrong repository cannot consume a merge token", async 
   const r = await execute({ ...original(), conclusion: "failure" }, h);
   assert.equal(r.status, "DENIED");
   assert.deepEqual(h.actions, []);
+});
+
+test("post-merge release follow-ups are independently verified, never assumed", async () => {
+  for (const options of [
+    { closeFails: true }, { issueRevoked: true }, { removeFails: true },
+    { dispatchFails: true }, { mainChanged: true }
+  ]) {
+    const h = harness(options);
+    const output = await execute(original(), h);
+    assert.equal(output.status, "MERGED_FOLLOWUP_PENDING",
+      "successful merge is distinct from post-merge cleanup");
+    assert.equal(output.mergeSha, MERGED);
+    assert.equal(output.issueClosed,
+      !(options.closeFails || options.issueRevoked || options.removeFails));
+    assert.equal(output.mainTestsDispatched, !(options.dispatchFails || options.mainChanged));
+    if (options.mainChanged) assert.ok(!h.actions.includes("DISPATCH_TESTS"),
+      "never dispatch tests for an unverified different main SHA");
+  }
+});
+
+test("failed or unapproved merge must never close source issue or dispatch Tests", async () => {
+  for (const options of [{ denyFirst: true }, { denySecond: true },
+                         { putFails: true }, { graphFails: true }]) {
+    const h = harness(options);
+    const output = await execute(original(), h);
+    assert.equal(output.status, "DENIED");
+    assert.equal(h.actions.includes("CLOSE_ISSUE"), false);
+    assert.equal(h.actions.includes("REMOVE_LABEL"), false);
+    assert.equal(h.actions.includes("DISPATCH_TESTS"), false);
+  }
+});
+
+test("squash auto-closed source task is not redundantly closed but labels are removed", async () => {
+  const h = harness({ issueAlreadyClosed: true });
+  const outcome = await execute(original(), h);
+  assert.equal(outcome.status, "MERGED");
+  assert.equal(outcome.issueClosed, true);
+  assert.equal(h.actions.includes("CLOSE_ISSUE"), false);
+  assert.equal(h.actions.filter(a => a === "REMOVE_LABEL").length, 2);
+});
+
+test("failed label cleanup on an auto-closed issue is not mistaken for success", async () => {
+  const h = harness({ issueAlreadyClosed: true, removeFails: true });
+  const outcome = await execute(original(), h);
+  assert.equal(outcome.status, "MERGED_FOLLOWUP_PENDING");
+  assert.equal(outcome.issueClosed, false);
+  assert.equal(outcome.mainTestsDispatched, true);
 });
 
 test("source approval missing or revoked never becomes eligible in policy evaluator", async () => {

@@ -129,7 +129,12 @@ def inspect(page, width: int, failures: list) -> dict:
             card = page.locator("#seasonbar .ssn-card", has_text=choice["name"])
             assert card.count() == 1, f"{width}px: active GO Pass {choice['id']} missing on Today"
             page.evaluate("(id) => { GODETAIL.open(id); return true; }", choice["id"])
-            page.locator("#evd .ue-pass").wait_for(timeout=30000)
+            # Event Details is now one visible panel at a time. Exercise
+            # the actual GO Pass tab instead of waiting on hidden rank cards.
+            pass_tab = page.locator('#evd .evd-nav-link[data-sec="passes"]')
+            pass_tab.wait_for(state="visible", timeout=30000)
+            pass_tab.click()
+            page.locator("#evd .ue-pass").wait_for(state="visible", timeout=30000)
             ranges = page.locator("#evd .ue-pass-range")
             assert ranges.count() >= 1, f"{width}px: {choice['id']} has no illustrated rank stages"
             assert page.locator("#evd .ue-pass-src a[href^='https://']").count() >= 1, (
@@ -149,9 +154,9 @@ def inspect(page, width: int, failures: list) -> dict:
                 # inner_text() until the player opens their range. Test the
                 # actual visible reward after expanding Rank 45 and Rank 100;
                 # reading the hidden DOM alone would mask a real UX defect.
-                nav = page.locator('#evd .evd-nav-link[data-sec="passes"]')
-                assert nav.count() == 1, f"{width}px: special GO Pass section inaccessible"
-                nav.click()
+                assert pass_tab.count() == 1 and pass_tab.is_visible(), (
+                    f"{width}px: special GO Pass section inaccessible"
+                )
                 for rank, name in ((45, "Dynamax Meltan"), (100, "Silver Bottle Cap")):
                     tile = page.locator(f'#evd .ue-pass-rank[data-rank="{rank}"]')
                     assert tile.count() == 1, f"{width}px: source-backed Rank {rank} missing"

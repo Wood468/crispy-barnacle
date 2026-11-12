@@ -22,3 +22,12 @@ test('regional, Mega and parenthetical forms never silently request base artwork
  assert.deepEqual(artCandidates('Giratina (Altered Forme)').list,['giratina-altered']);
  assert.deepEqual(artCandidates('Hisuian Sliggoo').list,['sliggoo-hisui']);
 });
+test('compound raid forms preserve identities with extra source whitespace',()=>{
+ assert.deepEqual(raidBossNames('  Crowned Sword Zacian   and   Crowned Shield Zamazenta  '),['Crowned Sword Zacian','Crowned Shield Zamazenta']);
+ assert.deepEqual(raidBossNames('  Mega Charizard X and Y  '),['Mega Charizard X','Mega Charizard Y']);
+});
+test('Deoxys all-formes source label is case and whitespace insensitive',()=>{
+ const expected=['Deoxys (Normal Forme)','Deoxys (Attack Forme)','Deoxys (Defense Forme)','Deoxys (Speed Forme)'];
+ assert.deepEqual(raidBossNames('  dEoXyS (ALL FOUR FORMES)  '),expected);
+ assert.deepEqual(raidBossNames('Deoxys (all four Formes)'),expected);
+});
