@@ -192,3 +192,20 @@ test('mounted find-by-name control opens only a real published rank and never ch
   assert.match(status.textContent,/at least 2 characters/);
   assert.equal(N.mount(f.root),0,'no duplicate navigator after repeated mounting');
 });
+
+test('reward finder ignores milestone-only artwork and unlisted rank placeholders', () => {
+  const f=fixture(),doc=f.article.ownerDocument;
+  const milestone=doc.createElement('div');milestone.className='ue-pass-reward';
+  const name=doc.createElement('span');name.className='ue-pass-name';
+  const strong=doc.createElement('b');strong.textContent='Unpublished Test Trophy';
+  name.appendChild(strong);milestone.appendChild(name);f.overview.appendChild(milestone);
+  assert.equal(N.mount(f.root),1);
+  const finder=f.article.querySelector('.ue-pass-finder');
+  const input=finder.querySelector('input');
+  const results=finder.querySelector('.ue-pass-find-results');
+  const status=finder.querySelector('.ue-pass-find-status');
+  input.value='unpublished';input.dispatch('input');
+  assert.equal(results.children.length,0,'milestone-only extra is not listed as an actual rank reward');
+  assert.match(status.textContent,/No published reward entry/);
+  assert.equal(f.article.querySelectorAll('.ue-pass-rank[data-rank]').length,5,'fixture includes a deliberately unlisted row');
+});
