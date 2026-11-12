@@ -77,7 +77,14 @@ test('load order, offline references and post-render mount form a complete PWA i
  const mountAt=detail.indexOf('GOGoPassNavigation.mount(o)',renderAt);
  assert.ok(renderAt>=0&&mountAt>renderAt&&mountAt<renderAt+300,'mount after actual event render');
  assert.match(components,/GOGoPassRewardArt\.resolve/);
- assert.match(sw,/SHELL_CACHE = 'gofn-shell-v310'/);
+ const shellVersion = sw.match(/const SHELL_CACHE = 'gofn-shell-v(\\d+)'/);
+ assert.ok(shellVersion, 'offline shell must retain an explicit numbered cache generation');
+ assert.ok(Number(shellVersion[1])>=310, 'do not regress below the feature integration cache generation');
+ // Separate future code releases advance cache numbers independently; all
+ // actual JS/CSS URLs must still match between the entry page and precache.
+ const todayAsset = index.match(/\/today-logic\\.js\\?v=[0-9a-z]+/);
+ assert.ok(todayAsset, 'Today logic needs a versioned script tag');
+ assert.ok(sw.includes(todayAsset[0]), 'offline shell must cache the matching Today logic asset');
 });
 
 test('exact Pokémon encounter artwork stays delegated to the existing resolver', () => withSemantic(() => {
