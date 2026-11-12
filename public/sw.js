@@ -1,5 +1,5 @@
 /* GO Field Notes offline shell. Never cache /api/*, including private user-state and notification responses. */
-const SHELL_CACHE = 'gofn-shell-v310';
+const SHELL_CACHE = 'gofn-shell-v311';
 const EVENT_BANNER_CACHE = 'gofn-event-banners-v1';
 const MAX_EVENT_BANNERS = 40;
 const SHELL_URLS = [
