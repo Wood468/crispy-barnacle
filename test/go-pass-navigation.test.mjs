@@ -95,6 +95,7 @@ function fixture() {
   }
   const root=doc.createElement('main'),article=doc.createElement('article');
   article.className='ue-pass';root.appendChild(article);
+  const overview=doc.createElement('div');overview.className='ue-pass-overview';article.appendChild(overview);
   const rows={};const groups={};
   for (const n of [1,45,100,600]) {
     const start=Math.floor((n-1)/25)*25+1;
@@ -107,7 +108,7 @@ function fixture() {
   const unlisted=doc.createElement('li');unlisted.className='ue-pass-rank';unlisted.setAttribute('data-rank',46);
   article.appendChild(unlisted); // Empty rank must not enter navigation.
   const heading=doc.createElement('h5');heading.className='ue-pass-all-title';article.appendChild(heading);
-  return {root,article,rows,groups,heading};
+  return {root,article,rows,groups,heading,overview};
 }
 
 test('mounted navigator searches exact reward ranks, opens the proper group and preserves unknown gaps', () => {
@@ -118,6 +119,7 @@ test('mounted navigator searches exact reward ranks, opens the proper group and 
   const input=nav.querySelector('input'),select=nav.querySelector('select');
   const status=nav.querySelector('.ue-pass-nav-status');
   assert.ok(nav);assert.ok(f.article.children.indexOf(nav)<f.article.children.indexOf(f.heading));
+  assert.ok(f.article.children.indexOf(nav)<f.article.children.indexOf(f.overview),'rank navigation must precede milestone cards');
   assert.equal(select.children.length,5,'placeholder plus four published ranges');
   input.value='45';form.dispatch('submit');
   assert.equal(f.groups[26].details.open,true);
