@@ -10,3 +10,5 @@
 .ue-pass-nav-status{margin:0;font-size:.78rem;line-height:1.4;color:var(--color-text-muted)}
 .ue-pass-nav-status:empty{display:none}
 @media(max-width:380px){.ue-pass-jump{grid-template-columns:minmax(0,1fr) auto}.ue-pass-jump label{grid-column:1/-1}.ue-pass-jump input{grid-column:1}}
+/* Unattributed source rewards must not inherit Free (green) or Deluxe (gold) track colours. */
+.ue-pass .ue-lane-unspecified{--ue-lane:var(--color-border)}
