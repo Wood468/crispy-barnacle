@@ -111,7 +111,7 @@ with sync_playwright() as p:
         def tap(sec, focus=True):
             # Use native click, but do not rely on changes to the URL fragment.
             page.evaluate("""(sec) => document.querySelector('#evd .evd-nav-link[data-sec="'+sec+'"]').click()""", sec)
-            page.wait_for_function("""(sec) => document.querySelector('#evd .evd-nav-link[data-sec="'+sec+'"]').getAttribute('aria-current')==='location'""", sec)
+            page.wait_for_function("""(sec) => document.querySelector('#evd .evd-nav-link[data-sec="'+sec+'"]').getAttribute('aria-current')==='location'""", arg=sec)
             assert visible_sections() == sec, (width,sec)
             heading = page.locator(f'#evd-h-{sec}').bounding_box()
             assert heading and 0 <= heading['y'] < 844, (width,sec,heading,'jump heading offscreen')
