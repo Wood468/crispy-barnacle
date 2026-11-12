@@ -2237,8 +2237,8 @@ a.evc-source{color:var(--color-link);text-underline-offset:3px}
   .storep-regional .sp-market-au{grid-column:auto;grid-template-columns:minmax(0,1fr);align-items:start}
   .storep-regional .sp-market{padding:7px 5px;overflow-wrap:anywhere}
   .storep-regional .sp-market-label{font-size:.66rem}
-  .storep-regional .sp-market .sp-regional-value>b{font-size:.82rem}
-  .storep-regional .sp-market .sp-regional-value small{font-size:.62rem}
+  .storep-regional .sp-market .sp-regional-value>b{font-size:var(--type-body-sm)}
+  .storep-regional .sp-market .sp-regional-value small{font-size:var(--type-caption-compact)}
 }
 @media(min-width:660px){.storep-regional .sp-market-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.storep-regional .sp-market-au{grid-column:auto;grid-template-columns:minmax(0,1fr);align-items:start}}
 
