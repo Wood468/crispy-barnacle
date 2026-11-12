@@ -8,14 +8,14 @@ const globalHtml = [
   '<h3>Bonuses for All Trainers</h3>',
   '<p>The following bonuses apply from 10:00 a.m. to 6:00 p.m. local time on both event days.</p>',
   '<img alt="Up to 3 free Raid Passes per day from Gyms">',
-  '<h3>Additional Ticket Holder Bonuses</h3>',
+  '<h2>Additional Ticket Holder Bonuses</h2>',
   '<p>These benefits apply from 10:00 a.m. to 6:00 p.m. local time on both event days. The ticketed Raid Pass and Max Particle limits replace the free limits.</p>',
   '<img alt="Up to 6 free Raid Passes per day from Gyms">',
   '<img alt="Daily Max Particle collection limit increased to 3,200">',
   '<img alt="Increased chance to encounter Shiny Pokémon*">',
   '<p>Up to 6 free Raid Passes per day from Gyms</p>',
-  '<h3>Ticket Holder Trading Bonuses</h3>',
-  '<p>For Global ticket holders between 12:00 a.m. and 11:59 p.m. local time on both event days.</p>',
+  '<h3>Trading Bonuses</h3>',
+  '<p>Ticket holders receive these benefits from 12:00 a.m. to 11:59 p.m. local time on both event days.</p>',
   '<img alt="Up to 6 Special Trades per day">',
   '<img alt="1/2 Stardust cost for trades">',
   '<h2>Research</h2>',
@@ -51,7 +51,7 @@ test('source bonus groups preserve free versus ticket access, hours, overrides a
   assert.equal(paid.dayScope,'both-event-days');
   assert.match(paid.windowText,/10:00 a.m. to 6:00 p.m./);
   assert.equal(trade.access,'ticket');
-  assert.match(trade.windowText,/12:00 a.m. and 11:59 p.m./);
+  assert.match(trade.windowText,/12:00 a.m. to 11:59 p.m./);
   assert.equal(trade.source.url,'https://leekduck.com/events/synthetic/');
   assert.equal(data.benefits.filter(x=>x.label===paid.label).length,1);
 });
