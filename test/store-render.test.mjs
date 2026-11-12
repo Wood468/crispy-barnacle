@@ -21,12 +21,6 @@ test('owner Store view renders verified Indonesian prices and regional-only rows
   assert.equal((el.innerHTML.match(/spc-catalogue/g) || []).length, 1);
   assert.ok(!el.innerHTML.includes('PokéCoins in hand'));
   assert.ok(!el.innerHTML.includes('Cheapest realistic option'));
-  assert.ok(!el.innerHTML.includes('Save A});
-));
-  assert.ok(!/undefined|NaN|\[object/.test(el.innerHTML));
-});
-)
-});
-));
+  assert.ok(!el.innerHTML.includes('Save A' + '$'));
   assert.ok(!/undefined|NaN|\[object/.test(el.innerHTML));
 });
