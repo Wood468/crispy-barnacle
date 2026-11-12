@@ -121,8 +121,8 @@ test('dense and single-rank groups avoid cross-boundary gaps and do not fabricat
 test('load order, offline references and post-render mount form a complete PWA integration', () => {
  const index=file('index.html'),sw=file('sw.js'),dash=file('dash.js'),detail=file('detail.js'),components=file('event-components.js');
  const assets=[
-  '/go-pass-navigation.css?v=20261118c',
-  '/go-pass-navigation.js?v=20261118b',
+  '/go-pass-navigation.css?v=20261118e',
+  '/go-pass-navigation.js?v=20261118e',
   '/go-pass-reward-art.js?v=20261118c',
   '/event-components.js?v=20261118d',
   '/dash.js?v=20261118b'
@@ -136,7 +136,7 @@ test('load order, offline references and post-render mount form a complete PWA i
  const mountAt=detail.indexOf('GOGoPassNavigation.mount(o)',renderAt);
  assert.ok(renderAt>=0&&mountAt>renderAt&&mountAt<renderAt+300,'mount after actual event render');
  assert.match(components,/GOGoPassRewardArt\.resolve/);
- assert.match(sw,/SHELL_CACHE = 'gofn-shell-v313'/);
+ assert.match(sw,/SHELL_CACHE = 'gofn-shell-v314'/);
 });
 
 test('exact Pokémon encounter artwork stays delegated to the existing resolver', () => withSemantic(() => {
