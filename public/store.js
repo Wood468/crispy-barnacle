@@ -55,36 +55,37 @@
         + esc((b.isEstimate ? 'Estimate. ' : '') + 'cheapest: ' + b.channelLabel + (b.coinsUsed ? ', using ' + b.coinsUsed + ' coins' : '') + (b.leftoverCoins > 0 ? '; ' + b.leftoverCoins + ' coins left unused' : '')) + '</small></span></div>';
     }).join('');
   }
+  // One source-backed catalogue; do not repeat legacy savings or claim a cheapest option.
   function regional(data) {
-    var R = window.GORegionalPrices; if (!R || !data.regional || !data.regional.length) return '';
-    var obs = data.regional, items = R.catalogue(data.prices || [], obs);
-    var verified = obs.filter(function (o) { return o.region === 'ID' && o.status === 'verified'; }), other = obs.filter(function (o) { return o.status !== 'verified'; });
-    var row = function (o) { return '<div class="sp-r sp-regional-row"><span class="sp-n">' + icon(o.product) + esc(o.product) + '</span>' + priceCell(R.exact([o], o.region, o.channel, o.product)) + '</div>'; };
-    var balance = Math.max(0, parseInt(lsGet(COINS_KEY), 10) || 0);
-    return '<details class="storep storep-regional"><summary>Regional prices <small>Australia Web, Indonesia Web, India in-app</small></summary>'
-      + '<p class="note">Each price keeps its own country, purchase channel and date. Verified means read from that Store on that date. An estimate is modelled from comparable products and is never a checkout price. A channel is only suggested where it has been observed.</p>'
-      + '<h4>Verified, Indonesia Web Store</h4>' + verified.map(row).join('')
-      + '<h4>Cheapest realistic option <small>Indonesia</small></h4><label class="sp-coins">PokéCoins in hand <input type="number" inputmode="numeric" min="0" step="1" value="' + balance + '" data-sp-coins aria-label="PokéCoins you already hold"></label>'
-      + '<div data-sp-cheapest>' + cheapestHtml(obs, balance) + '</div>'
-      + (other.length ? '<details class="sp-more"><summary>Recorded earlier, not re-checked (' + other.length + ')</summary>' + other.map(row).join('') + '</details>' : '')
-      + (items.length ? '<h4>All known Store items and regional prices</h4>' + items.map(function (p) {
-        return '<div class="sp-r sp-regional-row"><span class="sp-n">' + icon(p.label) + esc(p.label) + '</span><b class="sp-a">' + (p.aud > 0 ? 'Australia Web: A$' + p.aud.toFixed(2) + ' <small>Verified, ' + esc(when(p.observed)) + '</small>' : 'Australia Web: no matching product seen') + '</b>'
-          + '<span class="sp-n">Indonesia Web</span>' + priceCell(p.indonesia) + '<span class="sp-n">India in-app</span>' + priceCell(p.india) + '</div>';
-      }).join('') : '')
-      + '</details>';
+    var R = window.GORegionalPrices;
+    if (!R || !Array.isArray(data.regional) || !data.regional.length) return '';
+    var items = R.catalogue(data.prices || [], data.regional);
+    if (!items.length) return '';
+    function regionCell(label, value) {
+      return '<div class="spc-region"><span class="spc-region-name">' + label + '</span>' + value + '</div>';
+    }
+    var cards = items.map(function (p) {
+      var aud = p.aud > 0
+        ? '<strong>A$' + Number(p.aud).toFixed(2) + '</strong><small>Observed ' + esc(when(p.observed)) + '</small>'
+        : '<span class="spc-missing">Not observed</span>';
+      return '<article class="spc-card"><div class="spc-heading">' + icon(p.label)
+        + '<h4>' + esc(p.label) + '</h4></div><div class="spc-regions">'
+        + regionCell('Australia · Web', aud)
+        + regionCell('Indonesia · Web', priceCell(p.indonesia))
+        + regionCell('India · in-app', priceCell(p.india))
+        + '</div></article>';
+    }).join('');
+    return '<details class="storep storep-regional spc-catalogue"><summary>Regional prices <small>Compare available store prices</small></summary>'
+      + '<p class="spc-intro">Observed prices are dated snapshots, not live checkout quotes. Estimates are labelled and never treated as confirmed savings. Missing prices are not assumed.</p>'
+      + '<div class="spc-grid">' + cards + '</div></details>';
   }
   function go() {
     var host = document.getElementById('evsource'); if (!host || !window.GOLIB) return;
     GOLIB.loadPrices().then(function (d) {
-      if (!d || !d.owner) return; /* the Rp store list is for the owner only */ var h = regional(d) + build(d); if (!h) return;
+      if (!d || !d.owner) return; /* the Rp store list is for the owner only */ var h = regional(d); if (!h) return;
       var el = document.getElementById('storep-host');
       if (!el) { el = document.createElement('div'); el.id = 'storep-host'; host.parentNode.insertBefore(el, host); }
       el.innerHTML = h;
-      var inp = el.querySelector('[data-sp-coins]');
-      if (inp) inp.addEventListener('input', function () {
-        var n = Math.max(0, parseInt(inp.value, 10) || 0); lsSet(COINS_KEY, String(n));
-        el.querySelector('[data-sp-cheapest]').innerHTML = cheapestHtml(d.regional, n);
-      });
     }).catch(function () { });
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', go); else go();
