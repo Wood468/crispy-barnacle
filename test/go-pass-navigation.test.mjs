@@ -75,6 +75,7 @@ function fixture() {
     append(...nodes) {nodes.forEach(node=>this.appendChild(node));}
     appendChild(node) {node.parentNode=this;this.children.push(node);return node;}
     insertBefore(node, sibling) {const i=this.children.indexOf(sibling);assert.ok(i>=0);node.parentNode=this;this.children.splice(i,0,node);return node;}
+    replaceChildren(...nodes) {this.children.forEach(child=>child.parentNode=null);this.children=[];this.textContent='';this.append(...nodes);}
     setAttribute(k,v) {this.attrs[k]=String(v);}
     getAttribute(k) {return this.attrs[k]??null;}
     matches(selector) {
@@ -102,7 +103,11 @@ function fixture() {
     const details=doc.createElement('details');details.className='ue-pass-range';
     const summary=doc.createElement('summary');details.appendChild(summary);
     const row=doc.createElement('li');row.className='ue-pass-rank';row.setAttribute('data-rank',n);
-    const reward=doc.createElement('div');reward.className='ue-pass-reward';row.appendChild(reward);
+    const lane=doc.createElement('div');lane.className='ue-lane '+(n===100?'ue-lane-deluxe':n===600?'ue-lane-unspecified':'ue-lane-free');
+    const reward=doc.createElement('div');reward.className='ue-pass-reward';
+    const named=doc.createElement('span');named.className='ue-pass-name';
+    const title=doc.createElement('b');title.textContent=({1:'Incense',45:'Pokémon Candy XL',100:'Silver Bottle Cap',600:'XP'})[n];
+    named.appendChild(title);reward.appendChild(named);lane.appendChild(reward);row.appendChild(lane);
     details.appendChild(row);article.appendChild(details);rows[n]=row;groups[start]={details,summary};
   }
   const unlisted=doc.createElement('li');unlisted.className='ue-pass-rank';unlisted.setAttribute('data-rank',46);
@@ -134,4 +139,56 @@ test('mounted navigator searches exact reward ranks, opens the proper group and 
   assert.equal(f.groups[576].details.open,true);
   assert.equal(f.groups[576].summary.focused,true);
   assert.match(status.textContent,/1 published/);
+});
+
+test('finder indexes only rendered published rank tiles and source tracks, including Unicode names', () => {
+  const f=fixture();
+  const items=N.indexRewardEntries(Object.values(f.rows).concat(f.article.querySelectorAll('.ue-pass-rank[data-rank]').at(-1)));
+  assert.deepEqual(items,[
+    {rank:1,name:'Incense',track:'free'},
+    {rank:45,name:'Pokémon Candy XL',track:'free'},
+    {rank:100,name:'Silver Bottle Cap',track:'deluxe'},
+    {rank:600,name:'XP',track:'unknown'}
+  ]);
+  assert.deepEqual(N.findRewards(items,'POKEMON',8),{total:1,entries:[items[1]]});
+  assert.deepEqual(N.findRewards(items,'cap',8),{total:1,entries:[items[2]]});
+  assert.equal(N.findRewards(items,'x',8).total,0,'short searches cannot flood the UI');
+  assert.equal(N.findRewards(items,'unknown item',8).total,0,'never infer unlisted rewards');
+});
+test('finder supports duplicate names at different published ranks and bounds result counts', () => {
+  const items=Array.from({length:12},(_,i)=>({rank:i*25+1,name:'Rare Candy XL',track:i%2?'deluxe':'free'}));
+  const results=N.findRewards(items,'rare candy',8);
+  assert.equal(results.total,12);
+  assert.equal(results.entries.length,8);
+  assert.deepEqual(results.entries[0],items[0]);
+  assert.equal(N.findRewards(items,'rare candy',100).entries.length,12);
+  assert.equal(N.findRewards(items,'rare candy',1).entries.length,1);
+});
+test('mounted find-by-name control opens only a real published rank and never changes other passes', () => {
+  const f=fixture();assert.equal(N.mount(f.root),1);
+  const nav=f.article.querySelector('.ue-pass-nav');
+  const finder=nav.querySelector('.ue-pass-finder');
+  assert.ok(finder);
+  assert.equal(finder.open,false,'finder stays collapsed to protect first-screen density');
+  const input=finder.querySelector('input'),status=finder.querySelector('.ue-pass-find-status');
+  const results=finder.querySelector('.ue-pass-find-results');
+  assert.equal(input.type,'search');
+  input.value='Bottle';input.dispatch('input');
+  assert.equal(results.children.length,1);
+  const button=results.children[0];
+  assert.equal(button.textContent,'Rank 100 · Silver Bottle Cap · Deluxe');
+  button.dispatch('click');
+  assert.equal(f.groups[76].details.open,true);
+  assert.equal(f.rows[100].focused,true);
+  assert.match(status.textContent,/Opened Rank 100 · Silver Bottle Cap/);
+  input.value='pokemon';input.dispatch('input');
+  assert.equal(results.children.length,1,'case-insensitive accent-free match');
+  assert.match(results.children[0].textContent,/Rank 45.*Pokémon Candy XL.*Free/);
+  input.value='unpublished item';input.dispatch('input');
+  assert.equal(results.children.length,0);
+  assert.match(status.textContent,/No published reward entry matches/);
+  input.value='x';input.dispatch('input');
+  assert.equal(results.children.length,0);
+  assert.match(status.textContent,/at least 2 characters/);
+  assert.equal(N.mount(f.root),0,'no duplicate navigator after repeated mounting');
 });
