@@ -362,6 +362,11 @@ button.ue-mon-featured .ue-mon-art .art{animation:none}
 .evd-in:has(.ue-hero) .evd-sec .rs-rewards .ue-reward-art :is(.art,.art-fb,img){width:44px;height:44px}
 .evd-in:has(.ue-hero) .evd-sec .rs-rewards .ue-reward-item-icon img{width:32px;height:32px;object-fit:contain}
 .ue-reward-dot{width:10px;height:10px;border-radius:50%;background:var(--color-text-muted);opacity:.5;display:block}
+/* Honest category glyphs when the exact Rare Candy item art is not approved.
+   Never substitute a different Candy image or mislabel XL as ordinary Candy. */
+.evd-in:has(.ue-hero) .evd-sec .rs-rewards .ue-reward-category{display:grid;place-items:center;width:36px;height:36px;border:1px solid var(--color-border);border-radius:10px;background:color-mix(in srgb,var(--color-accent) 12%,var(--color-surface-raised));color:var(--color-accent);font:850 .78rem/1 var(--font-body);letter-spacing:.01em}
+.evd-in:has(.ue-hero) .evd-sec .rs-rewards .ue-reward-category[data-item-glyph="rare-candy-xl"]{border-style:double;border-width:2px}
+
 .evd-in:has(.ue-hero) .evd-sec .rs-rewards .research-reward b{font-size:.72rem;line-height:1.15;overflow-wrap:normal;word-break:normal;hyphens:none;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
 .evd-in:has(.ue-hero) .evd-sec .rs-rewards .research-reward small{font-size:.66rem;white-space:nowrap}
 @media(max-width:340px){.evd-in:has(.ue-hero) .evd-sec .rs-rewards{grid-template-columns:repeat(2,minmax(0,1fr))}}
