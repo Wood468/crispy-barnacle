@@ -51,3 +51,16 @@ test('no two cache entries represent different versions of the same JS or CSS mo
     versions.set(path, url);
   }
 });
+
+test('lazy-loaded dashboard modules match the offline precache exactly', () => {
+  const dash = read('dash.js');
+  const shellBlock = sw.match(/const SHELL_URLS\s*=\s*\[([\s\S]*?)\];/);
+  assert.ok(shellBlock);
+  const cached = [...shellBlock[1].matchAll(/['"](\/[^'"]+)['"]/g)].map(m => m[1]);
+  const modules = [...dash.matchAll(/\/[-\w]+\.js\?v=[0-9a-z]+/gi)].map(m => m[0]);
+  assert.ok(modules.length >= 5, 'expected multiple lazy-loaded dashboard modules');
+  for (const moduleUrl of new Set(modules)) {
+    assert.equal(cached.filter(url => url === moduleUrl).length, 1,
+      moduleUrl + ' lazy-loaded module must be precached exactly once');
+  }
+});
