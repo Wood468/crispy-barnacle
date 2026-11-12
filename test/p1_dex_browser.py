@@ -3,7 +3,7 @@ import os,re
 from pathlib import Path
 from playwright.sync_api import sync_playwright
 BASE='http://127.0.0.1:8791'
-OUT=Path(os.environ.get('GO_FIELD_NOTES_SCREENSHOTS','/workspace/p1-review'));OUT.mkdir(parents=True,exist_ok=True)
+OUT=Path(os.environ.get('GO_FIELD_NOTES_SCREENSHOTS',str(Path(os.environ.get('RUNNER_TEMP','/tmp'))/'gofn-p1-review')));OUT.mkdir(parents=True,exist_ok=True)
 with sync_playwright() as p:
  engine=os.environ.get('GO_FIELD_NOTES_TEST_BROWSER','chromium');browser=getattr(p,engine).launch()
  for width in [320,390,1440]:
