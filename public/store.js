@@ -64,18 +64,35 @@
   function lsSet(k, v) { try { localStorage.setItem(k, v); } catch (e) { } }
   function when(iso) { var d = new Date(iso + 'T00:00:00Z'); return isNaN(d) ? String(iso) : d.toLocaleDateString('en-AU', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' }); }
   function chan(p) { var R = window.GORegionalPrices; return R.REGIONS[p.region] + ' ' + R.CHANNELS[p.channel]; }
-  /* One price cell. Verified prices are plain; estimates always say "Estimate", show a range, a confidence and their basis. */
-  function priceCell(p) {
+  /* The approximate AUD reference goes ABOVE the local checkout currency. */
+  function audPlaceholder(p, quotes) {
+    var FX = window.GOStoreFX;
+    var amount = FX && FX.display ? FX.display(p.basis === 'estimate'
+      ? { currency: p.currency, min: p.min, max: p.max }
+      : { currency: p.currency, amount: p.amount }, quotes) : null;
+    var min = p.basis === 'estimate' ? p.min : p.amount;
+    var attrs = ' data-sp-aud-currency="' + esc(p.currency) + '" data-sp-aud-min="' + esc(min) + '"';
+    if (p.basis === 'estimate') attrs += ' data-sp-aud-max="' + esc(p.max) + '"';
+    var title = amount ? 'Reference exchange rate: ' + amount.source + ', ' + amount.observed + '; not a checkout price'
+      : 'Australian dollar reference conversion not available';
+    return '<strong class="sp-aud-equivalent"' + attrs + ' title="' + esc(title) + '">'
+      + esc(amount ? amount.text : 'A$ rate unavailable') + '</strong>';
+  }
+  /* Exact observed local prices are preserved, and estimates retain ranges. */
+  function priceCell(p, quotes) {
     var R = window.GORegionalPrices;
     if (!p) return '<span class="sp-regional-value sp-none" title="No sourced price observed for this region and channel">Not observed</span>';
     if (p.basis === 'estimate') {
-      return '<span class="sp-regional-value sp-est"><b>Estimate ' + esc(R.fmt(p.min, p.currency) + '–' + R.fmt(p.max, p.currency)) + '</b>'
+      return '<span class="sp-regional-value sp-est">' + audPlaceholder(p, quotes)
+        + '<b class="sp-local-price">Estimate ' + esc(R.fmt(p.min, p.currency) + '–' + R.fmt(p.max, p.currency)) + '</b>'
         + '<small>' + esc(p.confidence) + ' confidence · not a checkout price</small>'
         + '<small class="sp-basis">' + esc('Based on ' + p.basisText + ' · ' + chan(p)) + '</small></span>';
     }
     var state = p.basis === 'verified' ? 'Verified' : 'Recorded · not re-checked';
     var source = state + ' · ' + chan(p) + ' · ' + when(p.observed);
-    return '<span class="sp-regional-value sp-ver" aria-label="' + esc(R.fmt(p.amount, p.currency) + '. ' + source) + '"><b>' + esc(R.fmt(p.amount, p.currency)) + '</b>'
+    return '<span class="sp-regional-value sp-ver" aria-label="' + esc(R.fmt(p.amount, p.currency) + '. ' + source) + '">'
+      + audPlaceholder(p, quotes)
+      + '<b class="sp-local-price">' + esc(R.fmt(p.amount, p.currency)) + '</b>'
       + '<small>' + esc(state + ' · ' + when(p.observed)) + '</small></span>';
   }
   function cheapestHtml(obs, balance) {
@@ -113,8 +130,8 @@
         + '<header class="sp-product-head"><span class="sp-product-name">' + icon(p.label) + '<b>' + esc(p.label) + '</b></span><small class="sp-product-group">' + esc(p.group) + '</small></header>'
         + '<div class="sp-market-grid">'
         + '<div class="sp-market sp-market-au"><span class="sp-market-label">Australia <small>Web</small></span>' + au + '</div>'
-        + '<div class="sp-market"><span class="sp-market-label">Indonesia <small>Web</small></span>' + priceCell(p.indonesia) + '</div>'
-        + '<div class="sp-market"><span class="sp-market-label">India <small>in-app</small></span>' + priceCell(p.india) + '</div>'
+        + '<div class="sp-market"><span class="sp-market-label">Indonesia <small>Web</small></span>' + priceCell(p.indonesia, data.audQuotes) + '</div>'
+        + '<div class="sp-market"><span class="sp-market-label">India <small>in-app</small></span>' + priceCell(p.india, data.audQuotes) + '</div>'
         + '</div></article>';
     }
     var catalogue = sections.filter(function (s) { return bySection[s.id].length; }).map(function (s) {
@@ -134,11 +151,38 @@
   }
   function go() {
     var host = document.getElementById('evsource'); if (!host || !window.GOLIB) return;
-    GOLIB.loadPrices().then(function (d) {
-      if (!d || !d.owner) return; /* the Rp store list is for the owner only */ var h = regional(d) || build(d); /* Prefer the complete regional catalogue; avoid repeating the older IDR summary. */ if (!h) return;
+    GOLIB.loadPrices().then(async function (d) {
+      if (!d || !d.owner) return; /* Owner-only regional prices stay private. */
+      /* Render local observed prices immediately; an external FX request must
+         never delay the Store, including when a provider hangs. */
+      var h = regional(d) || build(d); /* Prefer the complete regional catalogue; avoid repeating the older IDR summary. */ if (!h) return;
       var el = document.getElementById('storep-host');
       if (!el) { el = document.createElement('div'); el.id = 'storep-host'; host.parentNode.insertBefore(el, host); }
       el.innerHTML = h;
+      /* FX is reference-only. Hydrate each existing AUD placeholder in place,
+         preserving search, disclosure and coin controls while offline. */
+      if (window.GOStoreFX && d.regional && d.regional.length) {
+        var fetcher = typeof window.fetch === 'function' ? window.fetch.bind(window) : null;
+        window.GOStoreFX.retrieve(fetcher, d.fx).then(function (quotes) {
+          if (!el.querySelectorAll) return;
+          el.querySelectorAll('[data-sp-aud-currency]').forEach(function (node) {
+            var currency = node.getAttribute('data-sp-aud-currency');
+            var min = Number(node.getAttribute('data-sp-aud-min'));
+            var max = node.getAttribute('data-sp-aud-max');
+            var converted = window.GOStoreFX.display({
+              currency: currency, min: min, max: max == null ? null : Number(max)
+            }, quotes);
+            if (!converted) return;
+            node.textContent = converted.text;
+            node.setAttribute('title', 'Approximate AUD reference · ' + converted.source
+              + ' · ' + converted.observed + ' · not a checkout price');
+            var note = document.createElement('small');
+            note.className = 'sp-aud-source';
+            note.textContent = 'AUD approx · ' + converted.source + ' · ' + converted.observed;
+            node.appendChild(note);
+          });
+        }).catch(function () { /* Keep original regional prices visible. */ });
+      }
       var search = el.querySelector('[data-sp-search]');
       if (search) search.addEventListener('input', function () {
         var q = search.value.trim().toLowerCase(), shown = 0;
