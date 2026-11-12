@@ -36,7 +36,7 @@
     if (/ticket|event.pass|monthly.pass|go pass/i.test(label + ' ' + group + ' ' + kind)) return 'passes';
     if (/storage|item bag|bag upgrade|capacity/i.test(label + ' ' + group + ' ' + kind)) return 'storage';
     if (/pok[eé]coins?|\bcoins?\b/i.test(label + ' ' + group + ' ' + kind)) return 'coins';
-    if (/\bbox\b|\bbundle\b/i.test(label + ' ' + group)) return 'boxes';
+    if (/\bboxes?\b|\bbundles?\b/i.test(label + ' ' + group)) return 'boxes';
     return 'items';
   }
   function build(data) {
