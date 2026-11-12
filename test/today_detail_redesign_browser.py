@@ -94,6 +94,7 @@ with sync_playwright() as p:
                 const all=[...document.querySelectorAll('#evd .evd-sec')];
                 const links=[...document.querySelectorAll('#evd .evd-nav-link')];
                 return {
+                    mounted:all.map(p=>p.dataset.sec),
                     visible:all.filter(p=>!p.hidden&&getComputedStyle(p).display!=='none').map(p=>p.dataset.sec),
                     readable:all.every(p=>!p.hasAttribute('aria-hidden')&&p.getAttribute('aria-labelledby')==='evd-h-'+p.dataset.sec),
                     linkSemantics:links.every(a=>a.tagName==='A'&&!a.hasAttribute('role')&&!a.hasAttribute('aria-selected')&&a.tabIndex===0&&a.getAttribute('aria-controls')==='evd-s-'+a.dataset.sec),
@@ -103,7 +104,7 @@ with sync_playwright() as p:
 
         def visible_sections():
             current = state()
-            assert current['visible'] == sections and current['readable'] and current['linkSemantics'], (width,current)
+            assert current['visible'] == current['mounted'] and current['readable'] and current['linkSemantics'], (width,current)
             assert len(current['current']) == 1, (width,current)
             assert page.evaluate('document.querySelector("#evd").scrollWidth <= innerWidth')
             return current['current'][0]
