@@ -294,14 +294,24 @@ def main() -> int:
                         })
                         if not match:
                             errors.append(f"{form_name} ({variant}): live bytes do not match exact PokeAPI form {form_id}")
-                # Every ticket Incense Unown letter is a distinct exact form;
-                # compare both normal and Shiny production bytes, never base 201.png.
-                for letter in ("D", "I", "L", "W"):
+                # A reusable form-art contract for future events: A is Unown's
+                # default 201.png, B-Z use their own form assets, punctuation
+                # uses named sprites, and shiny is a separate verified file.
+                # Full A-Z/!/?: unit tests in unown-art-form-identity.test.mjs.
+                for glyph, form, artwork in (
+                    ("A", "a", "201.png"),
+                    ("D", "d", "201-d.png"),
+                    ("I", "i", "201-i.png"),
+                    ("L", "l", "201-l.png"),
+                    ("W", "w", "201-w.png"),
+                    ("!", "exclamation", "201-exclamation.png"),
+                    ("?", "question", "201-question.png"),
+                ):
                     for shiny in (False, True):
                         variant = "shiny" if shiny else "regular"
-                        name = f"Unown {letter} ({letter.lower()})"
+                        name = f"Unown {glyph} ({form})"
                         live_url = BASE + "/api/art?n=" + quote(name, safe="") + ("&shiny=1" if shiny else "")
-                        image_path = ("shiny/" if shiny else "") + f"201-{letter.lower()}.png"
+                        image_path = ("shiny/" if shiny else "") + artwork
                         expected_url = UPSTREAM + image_path
                         live, live_body = get_image(request, live_url, errors, name + " " + variant + " live")
                         expected, expected_body = get_image(request, expected_url, errors, name + " " + variant + " reference")
