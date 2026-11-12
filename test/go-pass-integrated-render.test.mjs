@@ -63,7 +63,7 @@ test('load order, offline references and post-render mount form a complete PWA i
  const index=file('index.html'),sw=file('sw.js'),dash=file('dash.js'),detail=file('detail.js'),components=file('event-components.js');
  const assets=[
   '/go-pass-navigation.css?v=20261118a',
-  '/go-pass-navigation.js?v=20261118a',
+  '/go-pass-navigation.js?v=20261118b',
   '/go-pass-reward-art.js?v=20261118a',
   '/event-components.js?v=20261118a',
   '/dash.js?v=20261118b'
