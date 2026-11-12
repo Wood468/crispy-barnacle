@@ -9,7 +9,10 @@ const trim = x => typeof x==='string'?x.trim():'';
 const norm = x => trim(x).normalize('NFKC').toLowerCase().replace(/\s+/g,' ');
 const atom = x => norm(x).replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0,160);
 const unique = xs => [...new Set(xs)].sort();
-const SOURCE_IDS = new Set(['official','leekduck','hub','serebii']);
+// Source identity is verified against the actual hostname, not a caller's
+// claimed sourceId; this excludes lookalike / userinfo authority spoofing.
+const SOURCE_HOSTS = Object.freeze({official:['pokemongo.com','www.pokemongo.com'],leekduck:['leekduck.com','www.leekduck.com'],hub:['pokemongohub.net','www.pokemongohub.net'],serebii:['serebii.net','www.serebii.net']});
+const SOURCE_IDS = new Set(Object.keys(SOURCE_HOSTS));
 const ACCESS = new Set(['free','ticket','addon','unknown']);
 const MOVE_KIND = new Set(['fast','charged']);
 const RESEARCH_KIND = new Set(['special','timed','field']);
@@ -35,7 +38,7 @@ const cleanMoveMethods = methods => {
 const provenance = (record,kind) => {
   if(!record||!SOURCE_IDS.has(record.sourceId))return null;
   const url=cleanUrl(record.sourceUrl);
-  if(!url)return null;
+  if(!url||!SOURCE_HOSTS[record.sourceId]?.includes(new URL(url).hostname))return null;
   const f=record.facets;
   if(!f||!Array.isArray(f[kind])||cleanUrl(f.sourceUrl)!==url)return null;
   return {sourceId:record.sourceId,url};
@@ -54,7 +57,7 @@ function normalizeClaim(type,raw,source){
     const dayScope=DAY_SCOPE.has(raw.dayScope)?raw.dayScope:null;
     const addonLabel=access==='addon'?safe(raw.addonLabel,140)||null:null;
     return { ...core,id:atom(['benefit',kind,access,addonLabel,dayScope,windowText,label].join('|')),
-      label,kind,dayScope,windowText,addonLabel,replacesFreeLimit:raw.replacesFreeLimit===true,
+      label,kind,dayScope,windowText,addonLabel,replacesFreeLimit:raw.replacesFreeLimit===true&&(kind==='raid-passes'||kind==='max-particles'),
       _key:fmtKey([kind,access,addonLabel,dayScope,windowText,label,raw.replacesFreeLimit===true])};
   }
   if(type==='featuredMoves'){
