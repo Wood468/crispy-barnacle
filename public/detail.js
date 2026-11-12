@@ -354,6 +354,14 @@
      "Mighty" and a Shiny tag only when the source itself says the reward can be Shiny (never inferred from boosts or event type). */
   /* Only icons that exist in the repo: Stardust, XP, the two berries, Max Potion/Revive, Mega Energy (Mega symbol). */
   function itemIcon(n) { n = String(n || ''); return /stardust/i.test(n) ? '/ico/dust.webp' : /silver pinap/i.test(n) ? '/ico/i/silver-pinap.webp' : /golden razz/i.test(n) ? '/ico/i/golden-razz.webp' : /max potion/i.test(n) ? '/ico/i/max-potion.webp' : /max revive/i.test(n) ? '/ico/i/max-revive.webp' : /\bxp\b/i.test(n) ? '/ico/xp.webp' : /mega energy/i.test(n) ? '/ico/g/mega.webp' : ''; }
+  /* A clearly typographic category fallback, never counterfeit item art.
+     Exact Rare Candy and Rare Candy XL images are not in the approved ico set. */
+  function researchItemGlyph(name) {
+    name = String(name || '');
+    if (/\\brare candy xl\\b/i.test(name)) return { kind: 'rare-candy-xl', text: 'XL' };
+    if (/\\brare candy\\b/i.test(name)) return { kind: 'rare-candy', text: 'RC' };
+    return null;
+  }
   function researchReward(item, ev) {
     var shiny = item.shiny === true ? '<small class="rs-shiny">\u2728 Can be Shiny</small>' : '';
     if (item.type === 'encounter') {
@@ -363,7 +371,9 @@
       return '<div class="research-reward research-reward-encounter" role="listitem"><span class="ue-reward-art"><span class="ue-reward-fallback" aria-hidden="true">\u2726</span>' + art + '</span><span><b>' + esc(item.name) + '</b>' + mighty + cp + shiny + '</span></div>';
     }
     var icon = itemIcon(item.name);
-    return '<div class="research-reward research-reward-item" role="listitem"><span class="ue-reward-art ue-reward-item-icon" aria-hidden="true">' + (icon ? '<img alt="" loading="lazy" decoding="async" src="' + icon + '" data-err="rm">' : '<i class="ue-reward-dot"></i>') + '</span><span><b>' + (item.quantity > 1 ? esc(item.quantity) + '\u00d7 ' : '') + esc(item.name) + '</b>' + shiny + '</span></div>';
+    var glyph = icon ? null : researchItemGlyph(item.name);
+    var fallback = glyph ? '<span class="ue-reward-category" data-item-glyph="' + glyph.kind + '" aria-hidden="true">' + glyph.text + '</span>' : '<i class="ue-reward-dot"></i>';
+    return '<div class="research-reward research-reward-item" role="listitem"><span class="ue-reward-art ue-reward-item-icon" aria-hidden="true">' + (icon ? '<img alt="" loading="lazy" decoding="async" src="' + icon + '" data-err="rm">' : fallback) + '</span><span><b>' + (item.quantity > 1 ? esc(item.quantity) + '\u00d7 ' : '') + esc(item.name) + '</b>' + shiny + '</span></div>';
   }
   /* Seasons and monthly GO Passes: their own layout, in sections with icons. Curated notes come from season.json; rank rows and prices from the compared write-ups. */
   function researchTasksHtml(ev, d) {
