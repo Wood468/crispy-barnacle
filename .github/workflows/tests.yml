@@ -281,3 +281,14 @@ jobs:
         env:
           GO_FIELD_NOTES_AUDIT_URL: https://pogo.michaelpuff.com/
         run: python test/production_image_audit.py
+      - name: Probe actual live GO Pass controls (read-only, no local fixtures)
+        env:
+          GO_FIELD_NOTES_LIVE_GO_PASS_URL: https://pogo.michaelpuff.com
+        run: python test/production_gopass_visibility.py
+      - name: Retain live GO Pass screen evidence
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: production-gopass-visibility
+          path: /tmp/gopass-live-check
+          if-no-files-found: ignore
