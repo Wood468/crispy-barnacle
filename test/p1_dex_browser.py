@@ -51,3 +51,22 @@ with sync_playwright() as p:
   assert errors==[],errors
   context.close();print(f'PASS {engine} {width}px: National counts, silhouettes, search/filter, exact forms, manual records, Dynamax eligibility, persisted account isolation and unchanged legacy data',flush=True)
  browser.close()
+# Real service-worker cache: the Dex and private records must still load with networking disabled.
+with sync_playwright() as p:
+ engine=os.environ.get('GO_FIELD_NOTES_TEST_BROWSER','chromium');browser=getattr(p,engine).launch()
+ context=browser.new_context(viewport={'width':390,'height':900},service_workers='allow')
+ context.route('**/api/**',lambda r:r.fulfill(body='{"enabled":false,"events":[],"sources":[]}',content_type='application/json'))
+ context.route(re.compile(r'^https://fonts\.'),lambda r:r.fulfill(body='',content_type='text/css'))
+ page=context.new_page();page.goto(BASE+'/');page.wait_for_function('window.GOInventory&&GOInventory.ready()&&window.GODASH&&window.GOCollectionUI&&GOCollectionUI.catalogue()')
+ page.wait_for_function('navigator.serviceWorker.controller')
+ page.evaluate('''async()=>{const cat=GOCollectionUI.catalogue(),identity=GOCollectionModel.identity({speciesId:'25',formKnown:false},cat);await GOInventory.add([{schemaVersion:1,kind:'registration',id:'offline-registration',identity}],cat)}''')
+ snapshot=page.evaluate("({dex:localStorage.getItem('gofn-dex-v1'),us:localStorage.getItem('gofn-us-v1')})")
+ context.set_offline(True);page.reload();page.wait_for_function('window.GOInventory&&GOInventory.ready()&&window.GODASH&&window.GOCollectionUI&&GOCollectionUI.catalogue()')
+ page.locator('#tabs [data-tab="collect"]').click();page.locator('#subnav-collect [data-sub="dex"]').click()
+ page.locator('#dq').fill('Pikachu');assert page.locator('#dexlist .dex-tile').count()==1
+ assert page.locator('#dOwn').inner_text()=='1'
+ assert page.evaluate("GOInventory.records()[0].kind")=='registration'
+ assert page.evaluate("GODASH.ownState('Pikachu').state")=='unknown','species-only registration became base form ownership'
+ assert page.evaluate("({dex:localStorage.getItem('gofn-dex-v1'),us:localStorage.getItem('gofn-us-v1')})")==snapshot
+ print(f'PASS {engine}: real offline Dex reload, local registration retained, no invented base ownership, unchanged legacy data',flush=True)
+ context.close();browser.close()
