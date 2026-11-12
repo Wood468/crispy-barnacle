@@ -2255,3 +2255,19 @@ button.rc-chip:focus-visible{outline:2px solid var(--color-link);outline-offset:
   background:#9e1649 url("/img/ext/BreadRaidEmblem-71f25669.png") no-repeat 2px center / 10px 10px;
   font:800 .46rem/1.1 var(--font-body);letter-spacing:.01em;pointer-events:none
 }
+
+/* Compact owner-only regional Store catalogue. */
+.spc-catalogue .spc-intro{font-size:.85rem;line-height:1.5;color:var(--color-text-muted);margin:12px 0 16px}
+.spc-catalogue .spc-grid{display:grid;gap:12px}
+.spc-catalogue .spc-card{min-width:0;padding:14px;border:1px solid var(--border-subtle,rgba(255,255,255,.14));border-radius:14px;background:color-mix(in srgb,var(--color-text) 3%,transparent)}
+.spc-catalogue .spc-heading{display:flex;align-items:center;gap:10px;margin-bottom:12px;min-width:0}
+.spc-catalogue .spc-heading h4{margin:0;font-size:.95rem;line-height:1.35;min-width:0;overflow-wrap:anywhere}
+.spc-catalogue .spc-heading .sp-i{flex:0 0 32px;width:32px;height:32px;object-fit:contain}
+.spc-catalogue .spc-regions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.spc-catalogue .spc-region{min-width:0;display:flex;flex-direction:column;gap:5px;padding:9px 7px;border-radius:9px;background:color-mix(in srgb,var(--color-text) 5%,transparent);overflow-wrap:anywhere}
+.spc-catalogue .spc-region-name{font-size:.69rem;line-height:1.25;color:var(--color-text-muted);font-weight:700}
+.spc-catalogue .spc-region strong,.spc-catalogue .spc-region b{font-size:.89rem;line-height:1.3}
+.spc-catalogue .spc-region small{display:block;font-size:.68rem;line-height:1.35;color:var(--color-text-muted)}
+.spc-catalogue .spc-missing,.spc-catalogue .sp-none{color:var(--color-text-muted);font-size:.78rem}
+.spc-catalogue .spc-region .sp-regional-value{font-size:.82rem}
+@media(max-width:360px){.spc-catalogue .spc-regions{gap:5px}.spc-catalogue .spc-region{padding:8px 5px}.spc-catalogue .spc-region-name{font-size:.64rem}}
