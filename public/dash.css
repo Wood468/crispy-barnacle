@@ -2203,6 +2203,46 @@ a.evc-source{color:var(--color-link);text-underline-offset:3px}
 .storep-regional .sp-coins{display:flex;align-items:center;gap:var(--space-2);flex-wrap:wrap;margin:var(--space-2) 0}
 .storep-regional .sp-coins input{min-height:44px;width:8rem;font:inherit;padding:0 var(--space-2)}
 
+/* Store: browse by product first; show sources alongside prices, not in three repeated lists. */
+.storep-regional{padding:var(--space-3);border-radius:var(--radius-card)}
+.storep-regional>summary{display:flex;flex-wrap:wrap;align-items:center;gap:var(--space-2);min-height:44px;font-size:1rem}
+.storep-regional>summary small{font-size:var(--type-caption);letter-spacing:0}
+.storep-regional .sp-intro{font-size:var(--type-meta);line-height:1.45;color:var(--color-text-muted);margin:var(--space-2) 0 var(--space-3)}
+.storep-regional .sp-search{display:grid;gap:var(--space-1);font-size:var(--type-meta);font-weight:650;margin:var(--space-2) 0}
+.storep-regional .sp-search input{width:100%;min-width:0;min-height:44px;padding:var(--space-2) var(--space-3);border-radius:var(--radius-control);border:1px solid var(--color-border);background:var(--color-canvas);color:var(--color-text);font:inherit}
+.storep-regional .sp-search input:focus-visible{outline:2px solid var(--color-accent);outline-offset:2px}
+.storep-regional .sp-results{font:600 var(--type-overline) var(--font-body);color:var(--color-text-muted);margin:var(--space-2) 0}
+.storep-regional .sp-catalogue{display:grid;gap:var(--space-2)}
+.storep-regional .sp-product{border:1px solid var(--color-border);border-radius:var(--radius-card);background:var(--color-surface-raised);padding:var(--space-3);min-width:0}
+.storep-regional .sp-product[hidden]{display:none}
+.storep-regional .sp-product-head{display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:var(--space-2);margin:0 0 var(--space-2)}
+.storep-regional .sp-product-name{display:inline-flex;align-items:center;gap:var(--space-2);min-width:0;flex:1 1 140px;line-height:1.28}
+.storep-regional .sp-product-name b{font-size:var(--type-body-emphasis);overflow-wrap:anywhere}
+.storep-regional .sp-product-group{color:var(--color-text-muted);font-size:var(--type-overline);line-height:1.35;max-width:100%;text-align:right}
+.storep-regional .sp-market-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--space-2)}
+.storep-regional .sp-market{display:grid;align-content:start;gap:var(--space-1);min-width:0;border:1px solid var(--color-border);background:var(--color-canvas);border-radius:var(--radius-md);padding:var(--space-2)}
+.storep-regional .sp-market-au{grid-column:1/-1;grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:center}
+.storep-regional .sp-market-label{font-size:.7rem;font-weight:750;line-height:1.3}
+.storep-regional .sp-market-label small{display:block;font-weight:450;color:var(--color-text-muted)}
+.storep-regional .sp-market .sp-regional-value{display:block;font-size:var(--type-meta);line-height:1.3;min-width:0}
+.storep-regional .sp-market .sp-regional-value>b{display:block;font-size:var(--type-body-emphasis);font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.storep-regional .sp-market .sp-regional-value small{font-size:.64rem;line-height:1.4;margin-top:2px}
+.storep-regional .sp-market .sp-est{padding-left:var(--space-2)}
+.storep-regional .sp-compare-more{border-top:1px solid var(--color-border);margin-top:var(--space-4);padding-top:var(--space-2)}
+.storep-regional .sp-compare-more>summary{min-height:44px}
+.storep-regional .sp-compare-more>summary small{font-size:var(--type-overline)}
+/* At standard phone widths show all three regions together; keep two columns on narrow devices. */
+@media(min-width:390px) and (max-width:659px){
+  .storep-regional .sp-market-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+  .storep-regional .sp-market-au{grid-column:auto;grid-template-columns:minmax(0,1fr);align-items:start}
+  .storep-regional .sp-market{padding:7px 5px;overflow-wrap:anywhere}
+  .storep-regional .sp-market-label{font-size:.66rem}
+  .storep-regional .sp-market .sp-regional-value>b{font-size:.82rem}
+  .storep-regional .sp-market .sp-regional-value small{font-size:.62rem}
+}
+@media(min-width:660px){.storep-regional .sp-market-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.storep-regional .sp-market-au{grid-column:auto;grid-template-columns:minmax(0,1fr);align-items:start}}
+
+
 /* Raids and Max Battles polish: tier badge, CP, countdown, relationship chips, tiered Max roster. */
 .rc-tier{justify-self:start;width:fit-content;font-style:normal;display:inline-flex;align-items:center;min-height:20px;padding:0 var(--space-2);border-radius:var(--radius-pill);background:color-mix(in srgb,var(--color-text) 12%,transparent);color:var(--color-text);font-family:var(--font-body);font-weight:800;font-size:var(--type-label);line-height:1;letter-spacing:.04em}
 .rc-meta{display:flex;flex-wrap:wrap;align-items:center;gap:var(--space-1);margin-top:2px}
