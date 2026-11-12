@@ -358,8 +358,8 @@
      Exact Rare Candy and Rare Candy XL images are not in the approved ico set. */
   function researchItemGlyph(name) {
     name = String(name || '');
-    if (/\\brare candy xl\\b/i.test(name)) return { kind: 'rare-candy-xl', text: 'XL' };
-    if (/\\brare candy\\b/i.test(name)) return { kind: 'rare-candy', text: 'RC' };
+    if (/\brare candy xl\b/i.test(name)) return { kind: 'rare-candy-xl', text: 'XL' };
+    if (/\brare candy\b/i.test(name)) return { kind: 'rare-candy', text: 'RC' };
     return null;
   }
   function researchReward(item, ev) {
