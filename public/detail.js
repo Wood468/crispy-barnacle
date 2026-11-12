@@ -126,17 +126,31 @@
   }
   function passCard(id) {
     var p = DATA.info.passes[id]; if (!p) return '';
-    var unl = (p.unlocks || []).map(function (u) { var o = typeof u === 'string' ? { text: u } : u; return '<li class="' + (o.unpublished ? 'up' : '') + '">' + esc(o.text) + (o.unpublished ? ' <b>not listed yet</b>' : '') + '</li>'; }).join('');
-    var rows = [['Optional', p.optional || 'Not stated'], ['Buy or claim by', p.buyBy || 'Not published yet']];
-    if (!p.free && !p.product) rows = rows;
-    if (p.releaseTime !== undefined) rows.push(['Release time', p.releaseTime || 'Not published yet']);
-    (p.expires || []).forEach(function (e) { rows.push(e); });
-    (p.facts || []).forEach(function (e) { rows.push(e); });
-    var variants = (p.variants || []).map(function (v) { var pv = LIB.priceView(DATA.prices, v.product); return '<div class="kv"><span>' + esc(v.label) + '</span><b>' + esc(pv.main) + (pv.sub ? ' · ' + esc(pv.sub) : '') + (pv.save ? ' · ' + esc(pv.save) : '') + '</b></div>'; }).join('');
-    return '<article class="tk" data-pass="' + esc(id) + '"><div class="hd"><div><h3>' + esc(p.name) + '</h3><div class="note">' + esc(p.sub || '') + '</div></div>'
-      + (p.free ? '<span class="free">Free</span>' : p.product ? priceBlock(p.product) : '') + '</div>'
-      + '<ul>' + unl + '</ul><div class="ft">' + rows.map(function (r) { return '<div class="kv"><span>' + esc(r[0]) + '</span><b>' + esc(r[1]) + '</b></div>'; }).join('') + variants + '</div>'
-      + (p.product ? priceNote(p.product) : '') + srcLine(p.source) + '</article>';
+    // Keep the source wording intact, while letting the first screen answer
+    // the two time-critical questions: is it optional and when must I claim?
+    var benefits = (p.unlocks || []).map(function (u) {
+      var o = typeof u === 'string' ? { text: u } : u;
+      return '<li class="' + (o.unpublished ? 'up' : '') + '">' + esc(o.text) + (o.unpublished ? ' <b>not listed yet</b>' : '') + '</li>';
+    });
+    var primaryRows = [['Optional', p.optional || 'Not stated'], ['Buy or claim by', p.buyBy || 'Not published yet']];
+    var otherRows = [];
+    if (p.releaseTime !== undefined) otherRows.push(['Release time', p.releaseTime || 'Not published yet']);
+    (p.expires || []).forEach(function (e) { otherRows.push(e); });
+    (p.facts || []).forEach(function (e) { otherRows.push(e); });
+    var row = function (r) { return '<div class="kv"><span>' + esc(r[0]) + '</span><b>' + esc(r[1]) + '</b></div>'; };
+    var variants = (p.variants || []).map(function (v) {
+      var pv = LIB.priceView(DATA.prices, v.product);
+      return row([v.label, pv.main + (pv.sub ? ' · ' + pv.sub : '') + (pv.save ? ' · ' + pv.save : '')]);
+    }).join('');
+    var secondary = otherRows.map(row).join('') + variants;
+    var benefitsHtml = benefits.length ? '<section class="tk-benefits" aria-label="Ticket benefits"><h4>Included benefits</h4><ul>' + benefits.slice(0, 3).join('') + '</ul>' +
+      (benefits.length > 3 ? '<details class="ue-ticket-more tk-more-benefits"><summary>Show ' + (benefits.length - 3) + ' more benefits</summary><ul>' + benefits.slice(3).join('') + '</ul></details>' : '') + '</section>' : '';
+    return '<article class="tk" data-pass="' + esc(id) + '"><div class="hd"><div><h3>' + esc(p.name) + '</h3><div class="note">' + esc(p.sub || '') + '</div></div>' +
+      (p.free ? '<span class="free">Free</span>' : p.product ? priceBlock(p.product) : '') + '</div>' +
+      '<section class="tk-essential" aria-label="Ticket availability and claim dates"><h4>Availability &amp; claiming</h4><div class="ft">' + primaryRows.map(row).join('') + '</div></section>' +
+      benefitsHtml +
+      (secondary ? '<details class="ue-ticket-more tk-more-terms"><summary>Further terms (' + (otherRows.length + (p.variants || []).length) + ')</summary><div class="ft">' + secondary + '</div></details>' : '') +
+      (p.product ? priceNote(p.product) : '') + srcLine(p.source) + '</article>';
   }
   function icsFor(ev) {
     function f(d, utc) { var p = function (n) { return String(n).padStart(2, '0'); }; return utc ? d.getUTCFullYear() + p(d.getUTCMonth() + 1) + p(d.getUTCDate()) + 'T' + p(d.getUTCHours()) + p(d.getUTCMinutes()) + '00Z' : d.getFullYear() + p(d.getMonth() + 1) + p(d.getDate()) + 'T' + p(d.getHours()) + p(d.getMinutes()) + '00'; }

@@ -104,6 +104,21 @@
 .evd-in:has(.ue-hero) .tk .kv{display:grid;grid-template-columns:minmax(88px,.35fr) minmax(0,1fr);gap:10px;padding:8px 0;border-bottom:1px solid var(--color-border);font-size:.75rem;line-height:1.35}
 .evd-in:has(.ue-hero) .tk .kv b{font-weight:600;overflow-wrap:anywhere}
 .evd-in:has(.ue-hero) .tk ul{padding-left:18px;font-size:.77rem;line-height:1.42}
+/* Ticket first-screen hierarchy: readable deadlines and price stay outside
+   collapsible secondary terms; source wording is kept verbatim. */
+.evd-in:has(.ue-hero) .tk .tk-essential{display:grid;gap:5px;padding:10px 12px;border:1px solid var(--color-border);border-radius:10px;background:var(--color-surface-raised)}
+.evd-in:has(.ue-hero) .tk :is(.tk-essential,.tk-benefits)>h4{margin:0;font:800 .76rem/1.3 var(--font-body);color:var(--color-text)}
+.evd-in:has(.ue-hero) .tk .tk-essential .kv{grid-template-columns:minmax(105px,.38fr) minmax(0,1fr);padding:6px 0}
+.evd-in:has(.ue-hero) .tk .tk-essential .kv:last-child{border-bottom:0}
+.evd-in:has(.ue-hero) .tk .tk-benefits{display:grid;gap:5px;min-width:0}
+.evd-in:has(.ue-hero) .tk .tk-benefits>ul{margin:0;display:grid;gap:5px;padding-left:19px}
+.evd-in:has(.ue-hero) .tk .ue-ticket-more{margin:0;min-width:0;padding:0 10px;border:1px solid var(--color-border);border-radius:10px;background:var(--color-surface)}
+.evd-in:has(.ue-hero) .tk .ue-ticket-more>summary{display:flex;align-items:center;min-height:44px;cursor:pointer;font:750 .76rem/1.3 var(--font-body);color:var(--color-link)}
+.evd-in:has(.ue-hero) .tk .ue-ticket-more:focus-within{border-color:var(--color-accent)}
+.evd-in:has(.ue-hero) .tk .ue-ticket-more>ul{display:grid;gap:6px;margin:0;padding:0 0 10px 19px}
+.evd-in:has(.ue-hero) .tk .ue-ticket-more>.ft{padding-bottom:10px}
+@media(max-width:360px){.evd-in:has(.ue-hero) .tk .tk-essential .kv{grid-template-columns:minmax(88px,.38fr) minmax(0,1fr);gap:8px}}
+
 .evd-in:has(.ue-hero) .ue-pass-range{padding:0 10px;border:1px solid var(--color-border);border-radius:10px}
 @media(min-width:760px){.evd-in:has(.ue-hero) .ue-gallery{grid-template-columns:repeat(4,minmax(0,1fr))}.evd-in:has(.ue-hero) .ue-hero{grid-template-columns:45% 55%;min-height:260px}.evd-in:has(.ue-hero) .ue-hero-media{height:100%}.evd-in:has(.ue-hero) .ue-hero-copy{align-content:center}}
 #home-now .today-phase-cards>.today-sub{grid-column:1/-1;margin-top:5px}

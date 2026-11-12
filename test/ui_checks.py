@@ -2111,6 +2111,29 @@ with sync_playwright() as p:
         check('detail: published event facts and event-only moves remain visible without verification clutter', 'Sucker Punch' in moves_text and 'bonuses' in moves_text.lower() and pg.locator('#evd .pub,#evd .npub,#evd .st').count()==0)
         expected_tickets = json.loads((ROOT/'public/event-info.json').read_text())['events']['zorua']['tickets']
         check('detail: all curated event tickets retain Australian prices and purchase information', pg.locator('#evd .tk').count()==len(expected_tickets) and 'special research ticket' in t.lower() and '≈ A$2.99' in t and 'Buy or claim by' in t)
+        # Ticket content is grouped by priority, but every source-backed benefit
+        # and secondary condition remains available in accessible disclosures.
+        ticket=pg.locator('#evd .tk[data-pass="zorua-cd-research"]')
+        check('detail: ticket claim dates are visible without expanding secondary terms',
+              ticket.locator('.tk-essential').is_visible() and
+              'Buy or claim by' in ticket.locator('.tk-essential').inner_text() and
+              'Optional' in ticket.locator('.tk-essential').inner_text())
+        more_benefits=ticket.locator('details.tk-more-benefits')
+        check('detail: ticket lists three initial benefits and preserves the rest collapsed',
+              ticket.locator('.tk-benefits > ul > li').count()==3 and
+              more_benefits.locator('li').count()==1 and
+              not more_benefits.locator('li').first.is_visible())
+        more_benefits.locator('summary').focus()
+        pg.keyboard.press('Enter')
+        check('detail: additional ticket benefits are reachable by keyboard',
+              more_benefits.locator('li').first.is_visible() and
+              'Even more goodies' in more_benefits.inner_text())
+        more_terms=ticket.locator('details.tk-more-terms')
+        more_terms.locator('summary').click()
+        check('detail: secondary ticket terms keep their published source facts',
+              more_terms.is_visible() and 'Good to know' in more_terms.inner_text() and
+              'Non-refundable' in more_terms.inner_text())
+
         pg.screenshot(path=OUT+'detail.png', full_page=False)
         pg.keyboard.press('Escape'); pg.wait_for_timeout(200)
         check('detail closes on Escape', pg.locator('#evd').is_hidden())
