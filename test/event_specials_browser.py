@@ -94,7 +94,7 @@ with sync_playwright() as pw:
         print('PASS published GO Wild Area Incense source edge icon-only:',source_incense['name'],'at',width)
 
         page.locator('#evd .evd-nav-link[data-sec="encounters"]').click()
-        assert page.locator('#evd .evd-sec:not([hidden])').count()==1
+        assert page.locator('#evd .evd-sec:not([hidden])').count() == page.locator('#evd .evd-sec').count(), 'event sections remain visible while reviewing Egg encounters'
         egg=page.locator('#evd .ue-mon .ue-egg-corner.ue-egg-10')
 
         if egg.count()!=4:

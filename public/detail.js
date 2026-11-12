@@ -904,107 +904,111 @@
     if (e.shiftKey && (active === first || !o.contains(active))) { e.preventDefault(); last.focus(); }
     else if (!e.shiftKey && (active === last || !o.contains(active))) { e.preventDefault(); first.focus(); }
   });
-  /* Continuous page navigation: tapping a link scrolls to its heading, scrolling updates the active link. The overlay (#evd) is the one scroller. */
-  var spy = null, savedScroll = {}, prevRestoration = null;
+  /* Continuous Event Details: the overlay is one vertical scroller. Source-backed
+     sections stay visible in document order; sticky chips are optional shortcuts,
+     not mandatory one-panel tabs. Scroll position and focus stay in the modal. */
+  var spy = null, savedScroll = Object.create(null);
   function spyOffsets(o) {
     var bar = o.querySelector('.evd-bar'), nav = o.querySelector('.evd-nav'), barH = bar ? bar.offsetHeight : 0, navH = nav ? nav.offsetHeight : 0;
     o.style.setProperty('--evd-bar-h', barH + 'px'); o.style.setProperty('--evd-stack', (barH + navH) + 'px');
     return barH + navH;
   }
-  function setActive(o, id) {
-    var links = o.querySelectorAll('.evd-nav-link'), active = null;
-    links.forEach(function (l) { var on = l.getAttribute('data-sec') === id; if (on) { l.setAttribute('aria-current', 'true'); active = l; } else l.removeAttribute('aria-current'); });
-    var strip = o.querySelector('.evd-nav-scroll');
-    if (active && strip) strip.scrollTo({ left: active.offsetLeft - (strip.clientWidth - active.offsetWidth) / 2, behavior: 'auto' });
-    navEdges(o);
-  }
   function navEdges(o) {
     var strip = o.querySelector('.evd-nav-scroll'), w = strip && strip.parentNode; if (!w) return;
     w.classList.toggle('has-left', strip.scrollLeft > 4); w.classList.toggle('has-right', strip.scrollLeft + strip.clientWidth < strip.scrollWidth - 4);
   }
-  /* Which section is active: the last one whose heading has passed under the sticky stack; the last section once the page is at its bottom. */
+  function setActive(o, id) {
+    if (!id) return;
+    var previous = spy && spy.o === o ? spy.cur : '';
+    if (spy && spy.o === o) spy.cur = id;
+    var links = o.querySelectorAll('.evd-nav-link'), active = null;
+    links.forEach(function (l) {
+      var on = l.getAttribute('data-sec') === id;
+      if (on) { l.setAttribute('aria-current', 'true'); active = l; }
+      else l.removeAttribute('aria-current');
+    });
+    var strip = o.querySelector('.evd-nav-scroll');
+    // Avoid moving the horizontal strip on every vertical scroll frame.
+    if (previous !== id && active && strip) strip.scrollTo({ left: active.offsetLeft - (strip.clientWidth - active.offsetWidth) / 2, behavior: 'auto' });
+    navEdges(o);
+  }
+  /* Active = section most recently passed beneath the sticky toolbar/chips;
+     at page end the last section is always reachable. */
   function computeActive(o) {
-    var secs = [].slice.call(o.querySelectorAll('.evd-sec')); if (!secs.length) return '';
+    var secs = [].slice.call(o.querySelectorAll('.evd-sec')).filter(function (s) { return !s.hidden; });
+    if (!secs.length) return '';
     var stack = spyOffsets(o), line = o.getBoundingClientRect().top + stack + 24, cur = secs[0].getAttribute('data-sec');
     secs.forEach(function (sec) { if (sec.getBoundingClientRect().top <= line) cur = sec.getAttribute('data-sec'); });
-    if (o.scrollTop + o.clientHeight >= o.scrollHeight - 4) cur = secs[secs.length - 1].getAttribute('data-sec');
+    if (o.scrollTop + o.clientHeight >= o.scrollHeight - 4 && o.scrollHeight > o.clientHeight) cur = secs[secs.length - 1].getAttribute('data-sec');
     return cur;
   }
-  /* Section tabs: keep the existing source-backed panels mounted, but expose only one
-     at a time. This prevents Research from leaking into GO Pass or Tickets. */
-  function showPanel(o, id, focus) {
-    // Preserve each event's panel scroll depth while switching sections.
-    var previous = spy && spy.cur;
-    if (previous && previous !== id && spy && spy.id) savedScroll[spy.id + '|' + previous] = o.scrollTop;
+  function spyDestroy() {
+    if (!spy) return;
+    var old = spy;
+    savedScroll[old.id] = old.o.scrollTop;
+    old.o.removeEventListener('scroll', old.onScroll);
+    if (old.frame) cancelAnimationFrame(old.frame);
+    spy = null;
+  }
+  function spyInit(o, id) {
+    spyDestroy();
     var sections = [].slice.call(o.querySelectorAll('.evd-sec'));
-    var selected = sections.find(function (section) { return section.getAttribute('data-sec') === id; });
-    if (!selected) return;
-    sections.forEach(function (section) {
-      var active = section === selected;
-      section.hidden = !active;
-      section.style.display = active ? '' : 'none';
-      section.setAttribute('aria-hidden', active ? 'false' : 'true');
-    });
+    var strip = o.querySelector('.evd-nav-scroll');
+    // Links are genuine in-dialog anchors, not ARIA tabs: every section
+    // remains visible and accessible by normal touch/keyboard scrolling.
+    if (strip) strip.removeAttribute('role');
     o.querySelectorAll('.evd-nav-link').forEach(function (link) {
-      var active = link.getAttribute('data-sec') === id;
-      link.setAttribute('aria-selected', active ? 'true' : 'false');
-      link.setAttribute('tabindex', active ? '0' : '-1');
+      var sec = link.getAttribute('data-sec');
+      link.removeAttribute('role');
+      link.removeAttribute('aria-selected');
+      link.removeAttribute('tabindex');
+      link.setAttribute('aria-controls', 'evd-s-' + sec);
     });
-    if (spy) spy.cur = id;
-    setActive(o, id);
-    var heading = selected.querySelector('.evd-sec-h') || selected;
-    // Keep the selected panel in view below the sticky toolbar and tab strip.
-    // Returning to Overview instead starts at the hero.
-    var restored = previous && spy ? savedScroll[spy.id + '|' + id] : undefined;
-    if (Number.isFinite(restored)) o.scrollTop = Math.min(Math.max(0, restored), Math.max(0, o.scrollHeight - o.clientHeight));
-    else if (id === 'overview') o.scrollTop = 0;
+    sections.forEach(function (section) {
+      section.hidden = false;
+      section.style.removeProperty('display');
+      section.removeAttribute('aria-hidden');
+      section.removeAttribute('role');
+      section.removeAttribute('tabindex');
+    });
+    var current = { o: o, id: id, cur: '', frame: 0, onScroll: null };
+    current.onScroll = function () {
+      if (current.frame || spy !== current) return;
+      current.frame = requestAnimationFrame(function () {
+        current.frame = 0;
+        if (spy === current && !o.hidden) {
+          savedScroll[id] = o.scrollTop;
+          setActive(o, computeActive(o));
+        }
+      });
+    };
+    spy = current;
+    spyOffsets(o);
+    o.addEventListener('scroll', current.onScroll, { passive: true });
+    var previous = savedScroll[id];
+    o.scrollTop = Number.isFinite(previous) ? Math.min(previous, Math.max(0, o.scrollHeight - o.clientHeight)) : 0;
+    setActive(o, computeActive(o) || 'overview');
+  }
+  function goSection(o, id, focus) {
+    if (!spy || spy.o !== o) return;
+    var section = [].slice.call(o.querySelectorAll('.evd-sec')).find(function (s) { return s.getAttribute('data-sec') === id; });
+    if (!section) return;
+    var heading = section.querySelector('.evd-sec-h') || section;
+    if (id === 'overview') o.scrollTop = 0;
     else {
       var stack = spyOffsets(o);
       var targetTop = heading.getBoundingClientRect().top - o.getBoundingClientRect().top + o.scrollTop - stack - 8;
-      o.scrollTop = Math.max(0, targetTop);
+      o.scrollTop = Math.min(Math.max(0, targetTop), Math.max(0, o.scrollHeight - o.clientHeight));
     }
+    setActive(o, id);
     if (focus) {
       heading.setAttribute('tabindex', '-1');
       heading.focus({ preventScroll: true });
     }
   }
-  function spyInit(o, id) {
-    spyDestroy();
-    spy = { o: o, id: id, cur: '' };
-    spyOffsets(o);
-    // Author the accessible tab relationship without editing the shared
-    // event-components renderer (which is also used by GO Pass work).
-    var strip = o.querySelector('.evd-nav-scroll');
-    if (strip) {
-      strip.setAttribute('role', 'tablist');
-      strip.setAttribute('aria-label', 'Event sections');
-    }
-    o.querySelectorAll('.evd-nav-link').forEach(function (link) {
-      var sec = link.getAttribute('data-sec');
-      link.setAttribute('role', 'tab');
-      link.setAttribute('id', 'evd-tab-' + sec);
-      link.setAttribute('aria-controls', 'evd-s-' + sec);
-    });
-    var sections = o.querySelectorAll('.evd-sec');
-    sections.forEach(function (section) {
-      var sec = section.getAttribute('data-sec');
-      section.setAttribute('role', 'tabpanel');
-      section.setAttribute('aria-labelledby', 'evd-tab-' + sec);
-      section.setAttribute('tabindex', '0');
-    });
-    if (sections.length) showPanel(o, sections[0].getAttribute('data-sec'), false);
-    else setActive(o, 'overview');
-  }
-  function spyDestroy() {
-    if (!spy) return;
-    spy = null;
-  }
-  function goSection(o, id, focus) {
-    if (!spy || spy.o !== o) return;
-    showPanel(o, id, focus);
-  }
   document.addEventListener('click', function (e) {
     var l = e.target.closest && e.target.closest('.evd-nav-link'); if (!l) return;
+    // An anchor's default fragment navigation would close the overlay on popstate.
     e.preventDefault(); var o = $('evd'); if (o) goSection(o, l.getAttribute('data-sec'), true);
   });
   document.addEventListener('keydown', function (e) {
@@ -1012,13 +1016,13 @@
     var links = [].slice.call(l.parentNode.querySelectorAll('.evd-nav-link')), i = links.indexOf(l), n = -1;
     if (e.key === 'ArrowRight') n = (i + 1) % links.length; else if (e.key === 'ArrowLeft') n = (i - 1 + links.length) % links.length; else if (e.key === 'Home') n = 0; else if (e.key === 'End') n = links.length - 1;
     if (n < 0) {
-      if (e.key === ' ' || e.key === 'Spacebar') { e.preventDefault(); goSection($('evd'), l.getAttribute('data-sec'), false); }
+      if (e.key === ' ' || e.key === 'Spacebar') { e.preventDefault(); goSection($('evd'), l.getAttribute('data-sec'), true); }
       return;
     }
     e.preventDefault();
     var next = links[n], dialog = $('evd');
+    next.focus({ preventScroll: true });
     if (dialog) goSection(dialog, next.getAttribute('data-sec'), false);
-    next.focus();
   });
   /* Event overflow menu: infographic, open source, mark done (Today). */
   function closeEvMenu(restore){var m=document.querySelector('.evd-menu');if(!m)return;var b=m.parentNode.querySelector('[data-evmenu]');m.remove();if(b){b.setAttribute('aria-expanded','false');if(restore)b.focus();}}
