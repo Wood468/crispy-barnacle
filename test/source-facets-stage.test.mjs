@@ -19,7 +19,7 @@ test('stages only verified LeekDuck URLs and counts structured facts without pub
   const { byUrl, report } = collectSourceFacetStaging([
     { source: 'official', url: 'https://pokemongo.com/news/pokemon-go-global', html },
     { source: 'leekduck', url: base, title: 'Synthetic Global', html },
-    { source: 'leekduck', url: base, html },
+    { source: 'leekduck', url: 'https://www.leekduck.com/events/synthetic-global/', html },
     { source: 'leekduck', url: 'https://leekduck.com.evil.test/events/synthetic/', html },
     { source: 'leekduck', url: 'http://leekduck.com/events/synthetic/', html },
     { source: 'hub', url: 'https://pokemongohub.net/post/event/example/', html }
