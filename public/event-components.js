@@ -224,7 +224,7 @@ function passes(items,ctx){
    var featured=pinned.concat(ranked.filter(function(x){return pinned.indexOf(x.stage)<0;}).slice(0,Math.max(0,4-pinned.length)).map(function(x){return x.stage;}));
    if(!featured.length&&stages.length)featured=[stages[0],stages[Math.floor((stages.length-1)/2)],stages[stages.length-1]].filter(function(s,i,arr){return arr.indexOf(s)===i&&passStageRewards(s).length;});
    featured.sort(function(a,b){return a.rank-b.rank;});
-   var overview=featured.length?'<div class="ue-pass-overview"><h5>Published milestones</h5><ul class="ue-pass-highlights">'+featured.map(highlight).join('')+'</ul></div>':'';
+   var overview=featured.length?'<div class="ue-pass-overview"><h5>Published milestones'+(featured.length>1?' <small>Swipe for more</small>':'')+'</h5><ul class="ue-pass-highlights" aria-label="Published milestone rewards">'+featured.map(highlight).join('')+'</ul></div>':'';
    content=head+overview+'<h5 class="ue-pass-all-title">All published rank entries</h5>'+keys.map(function(key,i){
     var list=groups[key],start=Number(key)*25+1,end=start+24;
     var previousEnd=i?(Number(keys[i-1])+1)*25:0;
