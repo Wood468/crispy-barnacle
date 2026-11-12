@@ -64,3 +64,25 @@ test('lazy-loaded dashboard modules match the offline precache exactly', () => {
       moduleUrl + ' lazy-loaded module must be precached exactly once');
   }
 });
+
+test('Store and GO Pass feature assets are present and precached with matching versions', () => {
+  const assets = versionedEntryAssets(index);
+  const shellBlock = sw.match(/const SHELL_URLS\s*=\s*\[([\s\S]*?)\];/);
+  assert.ok(shellBlock);
+  const cached = [...shellBlock[1].matchAll(/['"](\/[^'"]+)['"]/g)].map(m => m[1]);
+  const featurePaths = [
+    '/store.js',
+    '/regional-prices.js',
+    '/go-pass-navigation.js',
+    '/go-pass-navigation.css',
+    '/go-pass-reward-art.js',
+    '/event-components.js'
+  ];
+  for (const featurePath of featurePaths) {
+    const matching = assets.filter(url => url.split('?')[0] === featurePath);
+    assert.equal(matching.length, 1, 'expected exactly one versioned entry asset for ' + featurePath);
+    const assetUrl = matching[0];
+    assert.equal(cached.filter(url => url === assetUrl).length, 1,
+      assetUrl + ' must be precached once with its exact version');
+  }
+});
