@@ -141,3 +141,26 @@ test('catalogue retains regional-only products without inventing Australian pric
   assert.equal(idOnly.india, null);
   assert.ok(rows.some(r => r.label === 'GO Pass Deluxe: Into the Wild'));
 });
+
+test('standard Web Store PokéCoin labels pair AU and Indonesia without hiding a real price', () => {
+  const prices = [
+    {product:'store-au-110', label:'110 PokéCoins', group:'PokéCoins', currency:'AUD', region:'AU', amount:1.59, verified:true, observed:'2026-11-09'},
+    {product:'store-au-600', label:'600 PokéCoins', group:'PokéCoins', currency:'AUD', region:'AU', amount:7.99, verified:true, observed:'2026-11-09'}
+  ];
+  const observations = [
+    id('110 PokéCoins (standard Web Store pack)', 'coins', 5000),
+    id('600 PokéCoins (standard Web Store pack)', 'coins', 25000),
+    id('110 PokéCoins + 30 one-time Web Store bonus', 'coins', 8000, {oneTime:true})
+  ];
+  const rows = R.catalogue(prices, observations, NOW);
+  assert.equal(rows.length, 3, 'two equivalent standard packs and one distinct bonus offer');
+  for (const [label, amount, au] of [['110 PokéCoins', 5000, 1.59], ['600 PokéCoins', 25000, 7.99]]) {
+    const matched = rows.filter(r => r.label === label);
+    assert.equal(matched.length, 1, label + ' must appear once');
+    assert.equal(matched[0].aud, au);
+    assert.equal(matched[0].indonesia.amount, amount);
+    assert.equal(matched[0].indonesia.basis, 'verified');
+  }
+  const bonus = rows.find(r => r.label.includes('one-time Web Store bonus'));
+  assert.ok(bonus && bonus.aud === null, 'one-time bonus pack must stay separate');
+});
