@@ -56,12 +56,13 @@ jobs:
           python -m playwright install --with-deps chromium
       - name: Verify live mobile journeys at 360, 390 and 430px
         env:
-          GO_FIELD_NOTES_RELEASE_URL: https://pogo.michaelpuff.com
+          GOFN_ART_QA_URL: https://pogo.michaelpuff.com
+          GOFN_CORE_QA_OUT: artifacts/live-core-mobile
         run: python test/live_core_journey_qa.py
       - name: Upload production QA evidence
         if: always()
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: production-verification-evidence
-          path: /tmp/gofn-live-core-qa
+          path: artifacts/live-core-mobile
           if-no-files-found: ignore
