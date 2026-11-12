@@ -113,16 +113,42 @@ with sync_playwright() as p:
         assert nav_box['y'] < page.viewport_size['height'], (
             'Rank navigator is still below the first phone screen', width)
         shot(page, f'gopass-nav-firstscreen-{width}')
+        # P1: optional published-reward finder starts collapsed and never
+        # infers rewards at gaps or assigns an unspecified track.
+        finder = navigator.locator('.ue-pass-finder')
+        assert finder.count() == 1 and not finder.evaluate('(el) => el.open'), (
+            'Reward finder should preserve the first-screen rank controls', width)
+        finder.locator('summary').click()
+        finder_input = finder.locator('input[type="search"]')
+        finder_input.fill('Silver Bottle Cap')
+        find_results = finder.locator('.ue-pass-find-results button')
+        assert find_results.count() >= 1, ('source-listed Bottle Cap reward not searchable', width)
+        match = find_results.filter(has_text='Rank 100').first
+        assert match.count() == 1, ('source-listed Silver Bottle Cap must point to published Rank 100', width)
+        match.click()
+        matched_rank = page.locator('#evd .ue-pass-rank[data-rank="100"]')
+        assert matched_rank.is_visible() and matched_rank.evaluate('(el) => document.activeElement === el'), (
+            'Reward search did not open and focus published Rank 100', width)
+        assert 'Opened Rank 100' in finder.locator('.ue-pass-find-status').inner_text()
+        finder_input.fill('unpublished-item-never-listed')
+        assert finder.locator('.ue-pass-find-results button').count() == 0, (
+            'Finder fabricated a result for an unpublished reward', width)
+        assert 'No published reward entry' in finder.locator('.ue-pass-find-status').inner_text()
+        assert page.locator('#evd').evaluate('(el)=>el.scrollWidth<=el.clientWidth'), (
+            'GO Pass reward finder overflows narrow mobile sheet', width)
+        finder_input.fill('Bottle Cap')
+        shot(page, f'gopass-find-reward-{width}')
+        finder.locator('summary').click()
         rank_input = navigator.locator('input[type="number"]')
         rank_input.fill('45')
         navigator.locator('button[type="submit"]').click()
         chosen = page.locator('#evd .ue-pass-rank[data-rank="45"]')
         assert chosen.is_visible(), ('Rank 45 not visible after direct jump', width)
         assert chosen.evaluate('(el) => document.activeElement === el'), ('Rank 45 focus not restored', width)
-        assert 'Opened published Rank 45' in navigator.locator('[role="status"]').inner_text()
+        assert 'Opened published Rank 45' in navigator.locator('.ue-pass-nav-status').inner_text()
         rank_input.fill('601')
         navigator.locator('button[type="submit"]').click()
-        assert 'No published reward entry for Rank 601' in navigator.locator('[role="status"]').inner_text()
+        assert 'No published reward entry for Rank 601' in navigator.locator('.ue-pass-nav-status').inner_text()
         navigator.locator('select').select_option('76')
         assert page.locator('#evd .ue-pass-rank[data-rank="100"]').is_visible()
         assert page.locator('#evd').evaluate('(el)=>el.scrollWidth<=el.clientWidth'), ('GO Pass navigator overflows mobile sheet', width)
