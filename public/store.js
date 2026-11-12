@@ -4,12 +4,40 @@
   'use strict';
   var esc = window.GOLIB.esc;
   /* Picture for each item: the game's own item art where I have it, the site's own icons otherwise. */
-  var ICO = [[/max potion/i, '/ico/i/max-potion.webp'], [/max revive/i, '/ico/i/max-revive.webp'], [/golden razz/i, '/ico/i/golden-razz.webp'], [/silver pinap/i, '/ico/i/silver-pinap.webp'],
-    [/remote raid pass/i, '/ico/g/raidpass.webp'], [/battle pass/i, '/ico/pass.webp'], [/lucky egg/i, '/ico/g/lucky.webp'], [/star piece/i, '/ico/dust.webp'], [/incubator/i, '/ico/egg.webp'],
-    [/max particle/i, 'PARTICLE'], [/pok.?coins/i, '/ico/xp.webp'], [/box|pack/i, '/ico/g/event.webp']];
-  function icon(label) {
-    for (var i = 0; i < ICO.length; i++) if (ICO[i][0].test(label)) { var u = ICO[i][1] === 'PARTICLE' ? (window.GODASH && GODASH.IMG_PARTICLE) : ICO[i][1]; return u ? '<img class="sp-i" src="' + esc(u) + '" alt="" width="28" height="28" loading="lazy" decoding="async" data-err="rm">' : ''; }
+  /* Only exact, checked item artwork. A PokéCoin is not XP, an Incubator
+     is not an Egg, and a Star Piece is not a Stardust icon. When no exact
+     asset exists, an honest category token is preferable to a wrong picture. */
+  var ICO = [
+    [/^max potions?(?:\s*[×x]\s*\d+)?$/i, '/ico/i/max-potion.webp'],
+    [/^max revives?(?:\s*[×x]\s*\d+)?$/i, '/ico/i/max-revive.webp'],
+    [/^golden razz berr(?:y|ies)(?:\s*[×x]\s*\d+)?$/i, '/ico/i/golden-razz.webp'],
+    [/^silver pinap berr(?:y|ies)(?:\s*[×x]\s*\d+)?$/i, '/ico/i/silver-pinap.webp'],
+    [/^lucky eggs?(?:\s*[×x]\s*\d+)?$/i, '/ico/g/lucky.webp']
+  ];
+  function kindToken(label) {
+    if (/pok[eé]coins?/i.test(label)) return '◎';
+    if (/storage|item bag|bag upgrade|capacity/i.test(label)) return '↑';
+    if (/^go pass|monthly.*pass|(?:event|admission).*ticket/i.test(label)) return 'PASS';
+    if (/star pieces?/i.test(label)) return 'SP';
+    if (/incubator/i.test(label)) return 'INC';
+    if (/max particle/i.test(label)) return 'MP';
+    if (/\bbox\b|\bbundle\b|\bpack\b/i.test(label)) return '▣';
     return '';
+  }
+  function icon(label) {
+    var token = kindToken(label);
+    for (var i = 0; i < ICO.length; i++) if (ICO[i][0].test(label)) {
+      return '<img class="sp-i" src="' + esc(ICO[i][1]) + '" alt="" width="28" height="28" loading="lazy" decoding="async" data-sp-fallback="' + esc(token || '·') + '">';
+    }
+    return token ? '<span class="sp-i-token" aria-hidden="true">' + esc(token) + '</span>' : '';
+  }
+  function priority(p) {
+    var label = String(p.label || ''), group = String(p.group || ''), kind = String(p.kind || '');
+    if (/ticket|event.pass|monthly.pass|go pass/i.test(label + ' ' + group + ' ' + kind)) return 'passes';
+    if (/storage|item bag|bag upgrade|capacity/i.test(label + ' ' + group + ' ' + kind)) return 'storage';
+    if (/pok[eé]coins?|\bcoins?\b/i.test(label + ' ' + group + ' ' + kind)) return 'coins';
+    if (/\bbox\b|\bbundle\b/i.test(label + ' ' + group)) return 'boxes';
+    return 'items';
   }
   function build(data) {
     var seen = {}, groups = {}, order = [];
