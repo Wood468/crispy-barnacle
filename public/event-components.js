@@ -132,17 +132,19 @@ function passReward(raw,ctx){
  if(!item||typeof item.name!=='string'||!item.name||/^[-–—]+$/.test(item.name.trim()))return null;
  if(typeof raw==='string'){var q=/^(.+?)\s*[×x]\s*(\d+)$/i.exec(item.name);if(q){item={name:q[1].trim(),type:'item',quantity:+q[2]};}}
  var cat=passCategory(item),art='',hasArt=false;
+ var semantic=typeof globalThis!=='undefined'&&globalThis.GOGoPassRewardArt&&typeof globalThis.GOGoPassRewardArt.resolve==='function'?globalThis.GOGoPassRewardArt.resolve(item):null;
  if(item.type==='encounter'&&ctx.rewardArt){
   art=ctx.rewardArt(item)||'';
   hasArt=/<(img|svg|canvas)\b/i.test(art);
   if(!hasArt)art='';
  }else{
-  var icon=PASS_ICONS.filter(function(r){return r[0].test(item.name);})[0];
+  /* Exact-only semantic art module supersedes ambiguous legacy name matching. */
+  var icon=semantic?(semantic.kind==='image'?[/^.*$/,semantic.src]:null):PASS_ICONS.filter(function(r){return r[0].test(item.name);})[0];
   if(icon){art='<img src="'+esc(icon[1])+'" alt="" width="40" height="40" loading="lazy" decoding="async">';hasArt=true;}
  }
  var qty=Number.isInteger(item.quantity)&&item.quantity>1?'×'+esc(item.quantity):'';
  var lvl=item.type==='encounter'&&Number.isInteger(item.level)?' · Level '+esc(item.level):'';
- var symbol=passGlyph(item,cat);
+ var symbol=semantic&&semantic.kind==='symbol'?semantic.symbol:passGlyph(item,cat);
  return '<div class="ue-pass-reward" data-cat="'+esc(cat)+'"'+(hasArt?'':' data-art="category"')+'><span class="ue-pass-art" aria-hidden="true">'+(art||'<span class="ue-reward-icon">'+esc(symbol)+'</span>')+'</span><span class="ue-pass-name"><b>'+esc(item.name)+'</b><small>'+(qty?qty+' · ':'')+esc(cat)+lvl+'</small></span></div>';
 }
 function passLane(label,cls,list,ctx){
@@ -150,8 +152,8 @@ function passLane(label,cls,list,ctx){
  return chips.length?'<div class="ue-lane ue-lane-'+cls+'"><h5>'+label+'</h5>'+chips.join('')+'</div>':'';
 }
 function passStageLanes(s,ctx){
- if(s.free||s.deluxe)return passLane('Free','free',s.free,ctx)+passLane('Deluxe','deluxe',s.deluxe,ctx);
- return passLane('Reward · track not specified','free',s.rewards,ctx);
+ var specified=passLane('Free','free',s.free,ctx)+passLane('Deluxe','deluxe',s.deluxe,ctx);
+ return specified||passLane('Reward · track not specified','free',s.rewards,ctx);
 }
 function passStageRewards(s){
  return [].concat(s.free||[],s.deluxe||[],s.rewards||[]).filter(function(x){return x&&typeof x==='object'&&typeof x.name==='string'||typeof x==='string'&&x.trim();});
