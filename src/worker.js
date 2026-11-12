@@ -293,7 +293,10 @@ export function artCandidates(raw) {
   if ((m = n.match(/^Gigantamax (.+)$/i))) { n = m[1]; suffix = "gmax"; }
   else if ((m = n.match(/^Mega (.+?)(?: ([XY]))?(?: and [XY])?$/i))) { n = m[1]; suffix = "mega" + (m[2] ? "-" + m[2].toLowerCase() : ""); }
   else if ((m = n.match(/^Primal (.+)$/i))) { n = m[1]; suffix = "primal"; }
-  else if ((m = n.match(/^Origin Forme (.+)$/i))) { n = m[1]; suffix = "origin"; }
+  // Forme-first source headings and species-first labels describe the same
+  // exact PokeAPI varieties (e.g. Therian Forme Landorus = landorus-therian).
+  // Keep the lookup exact: a missing variety must not silently use base art.
+  else if ((m = n.match(/^(Normal|Attack|Defense|Speed|Origin|Altered|Incarnate|Therian|Land|Sky) Forme (.+)$/i))) { n = m[2]; suffix = m[1].toLowerCase(); }
   else if ((m = n.match(/^(Galarian|Hisuian|Alolan|Paldean) (.+)$/i))) { n = m[2]; suffix = { galarian: "galar", hisuian: "hisui", alolan: "alola", paldean: "paldea" }[m[1].toLowerCase()]; }
   const base = slug(n);
   if (!base) return { base: "", list: [] };
