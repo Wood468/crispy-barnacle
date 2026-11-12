@@ -79,92 +79,88 @@ with sync_playwright() as p:
         assert glance['debutOverflow'] == 'auto', (width, glance)
         page.screenshot(path=str(OUT / f'redesign-detail-{width}.png'))
 
-        # Accessible single-panel navigation: Overview is initially the only
-        # visible panel. All source-backed panels stay mounted but are hidden
-        # from sight and the accessibility tree until selected.
+        # Continuous Event Details: all source-backed sections stay visible.
+        # Sticky chips are accessible jump links, not one-panel tab controls.
         nav = page.locator('#evd nav.evd-nav[aria-label="Event sections"]')
         links = nav.locator('.evd-nav-link')
         sections = page.evaluate("[...document.querySelectorAll('#evd .evd-sec')].map(s=>s.dataset.sec)")
         assert sections[0] == 'overview' and 'encounters' in sections and 'research' in sections
         assert len(sections) == links.count() and links.count() >= 3
-        assert nav.locator('[role="tablist"]').count() == 1
-        assert links.count() == page.locator('#evd [role="tab"]').count()
-        assert page.locator('#evd [role="tabpanel"]').count() == len(sections)
+        assert nav.locator('[role="tablist"]').count() == 0
+        assert page.locator('#evd [role="tab"],#evd [role="tabpanel"]').count() == 0
 
-        def active():
-            return page.evaluate("document.querySelector('#evd .evd-nav-link[aria-selected=\"true\"]').dataset.sec")
-
-        def only_panel(sec, check_heading=True):
-            state = page.evaluate("""(sec) => {
-                const panels=[...document.querySelectorAll('#evd .evd-sec')];
-                const tabs=[...document.querySelectorAll('#evd .evd-nav-link')];
+        def state():
+            return page.evaluate("""() => {
+                const all=[...document.querySelectorAll('#evd .evd-sec')];
+                const links=[...document.querySelectorAll('#evd .evd-nav-link')];
                 return {
-                    visible: panels.filter(p => !p.hidden && getComputedStyle(p).display!=='none').map(p => p.dataset.sec),
-                    selected: tabs.filter(t => t.getAttribute('aria-selected')==='true').map(t => t.dataset.sec),
-                    current: tabs.filter(t => t.getAttribute('aria-current')==='true').map(t => t.dataset.sec),
-                    hiddenCorrect: panels.every(p => p.dataset.sec===sec ? !p.hidden && p.getAttribute('aria-hidden')==='false' : p.hidden && p.getAttribute('aria-hidden')==='true'),
-                    links: tabs.every(t => t.getAttribute('aria-controls')==='evd-s-'+t.dataset.sec && t.getAttribute('role')==='tab'),
+                    visible:all.filter(p=>!p.hidden&&getComputedStyle(p).display!=='none').map(p=>p.dataset.sec),
+                    readable:all.every(p=>!p.hasAttribute('aria-hidden')&&p.getAttribute('aria-labelledby')==='evd-h-'+p.dataset.sec),
+                    linkSemantics:links.every(a=>a.tagName==='A'&&!a.hasAttribute('role')&&!a.hasAttribute('aria-selected')&&a.tabIndex===0&&a.getAttribute('aria-controls')==='evd-s-'+a.dataset.sec),
+                    current:links.filter(a=>a.hasAttribute('aria-current')).map(a=>a.dataset.sec),
                 };
-            }""", sec)
-            assert state['visible'] == [sec] and state['selected'] == [sec] and state['current'] == [sec], (width, sec, state)
-            assert state['hiddenCorrect'] and state['links'], (width, sec, state)
-            assert page.locator('#evd .evd-nav-link[tabindex="0"]').count() == 1
-            assert page.locator('#evd .evd-nav-link[tabindex="-1"]').count() == page.locator('#evd .evd-nav-link').count()-1
+            }""")
+
+        def visible_sections():
+            current = state()
+            assert current['visible'] == sections and current['readable'] and current['linkSemantics'], (width,current)
+            assert len(current['current']) == 1, (width,current)
             assert page.evaluate('document.querySelector("#evd").scrollWidth <= innerWidth')
-            if sec != 'overview' and check_heading:
-                heading = page.locator(f'#evd-h-{sec}').bounding_box()
-                assert heading and 0 <= heading['y'] < 844, (width, sec, heading, 'selected heading offscreen')
+            return current['current'][0]
 
-        def tap(sec):
-            page.locator(f'#evd .evd-nav-link[data-sec="{sec}"]').click()
-            only_panel(sec)
-            assert active() == sec
+        def tap(sec, focus=True):
+            # Use native click, but do not rely on changes to the URL fragment.
+            page.evaluate("""(sec) => document.querySelector('#evd .evd-nav-link[data-sec="'+sec+'"]').click()""", sec)
+            page.wait_for_function("""(sec) => document.querySelector('#evd .evd-nav-link[data-sec="'+sec+'"]').getAttribute('aria-current')==='location'""", sec)
+            assert visible_sections() == sec, (width,sec)
+            heading = page.locator(f'#evd-h-{sec}').bounding_box()
+            assert heading and 0 <= heading['y'] < 844, (width,sec,heading,'jump heading offscreen')
+            if focus:
+                assert page.evaluate('document.activeElement.id') == 'evd-h-'+sec, (width,sec,'jump failed to focus heading')
 
-        only_panel('overview')
-        # A legacy in-sheet anchor can lead into an initially hidden panel.
-        # It must activate the owning tab rather than focus an invisible node
-        # or mutate the URL fragment (which can close the modal on popstate).
+        assert visible_sections() == 'overview'
+        # Existing in-sheet source links still scroll to targets without changing
+        # the page hash, opening another browser route or hiding their peers.
         assert page.locator('#evd-sources').count() == 1
         page.evaluate("""() => {
-            const nav=document.createElement('nav');
-            nav.className='evd-jump';
-            nav.innerHTML='<a href="#evd-sources">Sources</a>';
-            document.querySelector('#evd-s-overview').append(nav);
+            const bar=document.createElement('nav');
+            bar.className='evd-jump';
+            bar.innerHTML='<a href="#evd-sources">Sources</a>';
+            document.querySelector('#evd-s-overview').append(bar);
         }""")
         hash_before = page.evaluate('location.hash')
         page.locator('#evd .evd-jump a[href="#evd-sources"]').click()
-        only_panel('details', check_heading=False)
         assert page.locator('#evd-sources').is_visible()
         assert page.evaluate('location.hash') == hash_before
-        tap('overview')
-        tap('encounters')
-        # A long event gallery retains its depth across panel switches.
-        encounter_pos=page.evaluate("""() => {const o=document.querySelector('#evd');const max=o.scrollHeight-o.clientHeight;o.scrollTop=Math.min(max,Math.max(o.scrollTop+240,max*0.55));return o.scrollTop;}""")
-        assert encounter_pos>100,(width,'encounters panel unexpectedly not scrollable',encounter_pos)
-        # Trigger the same tab-click handler without Playwright scrolling the
-        # sticky tab into view before the handler captures the gallery position.
-        page.evaluate("document.querySelector('#evd .evd-nav-link[data-sec=\"research\"]').click()")
-        only_panel('research')
-        page.evaluate("document.querySelector('#evd .evd-nav-link[data-sec=\"encounters\"]').click()")
-        only_panel('encounters', check_heading=False)
-        actual_pos=page.evaluate("document.querySelector('#evd').scrollTop")
-        assert abs(actual_pos-encounter_pos)<=8,(width,'encounters scroll was lost',encounter_pos,actual_pos)
-        tap('research')
-        assert not page.locator('#evd [data-sec="passes"].evd-sec').is_visible() if 'passes' in sections else True
-        assert not page.locator('#evd [data-sec="encounters"].evd-sec').is_visible()
+        visible_sections()
 
-        # Arrow navigation activates the next panel while retaining keyboard
-        # focus on its tab. Home and End work at both ends of the strip.
+        # The content now flows naturally between encounter and research,
+        # independently of a chip tap. Scroll-spy marks the new reading area.
+        tap('encounters')
+        page.evaluate("""() => {
+            const o=document.querySelector('#evd'), h=document.querySelector('#evd-h-research');
+            const offset=parseFloat(getComputedStyle(o).getPropertyValue('--evd-stack'))||110;
+            o.scrollTop += h.getBoundingClientRect().top - o.getBoundingClientRect().top - offset - 36;
+        }""")
+        page.wait_for_function("""() => document.querySelector('#evd .evd-nav-link[data-sec="research"]').getAttribute('aria-current')==='location'""")
+        assert visible_sections() == 'research'
+        assert page.locator('#evd-s-encounters').is_visible(), 'Encounter cards should remain naturally scrollable'
+        assert page.locator('#evd-s-research').is_visible()
+        if 'passes' in sections:
+            assert page.locator('#evd-s-passes').is_visible(), 'GO Pass must follow Research without mandatory tabs'
+
+        # The existing chip strip remains a keyboard-friendly optional shortcut.
+        # Arrows/Home/End navigate headings and retain focus on the chosen link.
         nav.locator('[data-sec="research"]').focus()
         page.keyboard.press('ArrowRight')
-        successor = sections[(sections.index('research')+1) % len(sections)]
-        only_panel(successor)
+        successor = sections[(sections.index('research') + 1) % len(sections)]
+        assert visible_sections() == successor
         assert page.evaluate('document.activeElement.dataset.sec') == successor
         page.keyboard.press('Home')
-        only_panel(sections[0])
+        assert visible_sections() == sections[0]
         assert page.evaluate('document.activeElement.dataset.sec') == sections[0]
         page.keyboard.press('End')
-        only_panel(sections[-1])
+        assert visible_sections() == sections[-1]
         assert page.evaluate('document.activeElement.dataset.sec') == sections[-1]
         page.emulate_media(reduced_motion='reduce')
         tap('research')
