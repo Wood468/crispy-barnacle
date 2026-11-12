@@ -120,7 +120,7 @@ test('load order, offline references and post-render mount form a complete PWA i
   '/go-pass-navigation.css?v=20261118c',
   '/go-pass-navigation.js?v=20261118b',
   '/go-pass-reward-art.js?v=20261118c',
-  '/event-components.js?v=20261118c',
+  '/event-components.js?v=20261118d',
   '/dash.js?v=20261118b'
  ];
  for(const asset of assets){assert.ok(index.includes(asset),asset+' absent from index');assert.ok(sw.includes(asset),asset+' absent from PWA shell');}
@@ -132,7 +132,7 @@ test('load order, offline references and post-render mount form a complete PWA i
  const mountAt=detail.indexOf('GOGoPassNavigation.mount(o)',renderAt);
  assert.ok(renderAt>=0&&mountAt>renderAt&&mountAt<renderAt+300,'mount after actual event render');
  assert.match(components,/GOGoPassRewardArt\.resolve/);
- assert.match(sw,/SHELL_CACHE = 'gofn-shell-v312'/);
+ assert.match(sw,/SHELL_CACHE = 'gofn-shell-v313'/);
 });
 
 test('exact Pokémon encounter artwork stays delegated to the existing resolver', () => withSemantic(() => {
