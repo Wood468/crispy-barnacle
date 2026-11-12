@@ -924,7 +924,7 @@
     var links = o.querySelectorAll('.evd-nav-link'), active = null;
     links.forEach(function (l) {
       var on = l.getAttribute('data-sec') === id;
-      if (on) { l.setAttribute('aria-current', 'location'); active = l; }
+      if (on) { l.setAttribute('aria-current', 'true'); active = l; }
       else l.removeAttribute('aria-current');
     });
     var strip = o.querySelector('.evd-nav-scroll');
