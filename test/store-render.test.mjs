@@ -59,7 +59,7 @@ test('owner Store view renders verified Indonesian prices and regional-only rows
   for (const group of ['boxes', 'items'])
     assert.match(el.innerHTML, new RegExp('data-sp-group="' + group + '" data-sp-default-open="no"'),
       group + ' must remain browsable without a huge first scroll');
-  assert.ok(el.innerHTML.includes('No source-backed price') || el.innerHTML.includes('no source-backed price'),
+  assert.ok(el.innerHTML.includes('no sourced price for that region') && el.innerHTML.includes('Not observed'),
     'explain unobserved prices rather than presenting missing data as zero');
   assert.doesNotMatch(el.innerHTML, /src="\/ico\/(?:xp|egg|dust)\.webp"/,
     'XP, egg and Stardust images must not masquerade as Coins, Incubators or Star Pieces');
