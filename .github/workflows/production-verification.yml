@@ -7,9 +7,6 @@ on:
       - "public/**"
       - "src/**"
       - "wrangler.toml"
-      - "scripts/wait-for-workers-build.mjs"
-      - "test/live_core_journey_qa.py"
-      - ".github/workflows/production-verification.yml"
   workflow_dispatch:
 
 permissions:
