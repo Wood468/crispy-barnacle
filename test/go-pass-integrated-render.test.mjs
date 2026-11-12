@@ -63,7 +63,9 @@ test('published mixed-track rank preserves unmatched unattributed rewards withou
  assert.equal((detail.match(/<b>Incense<\/b>/g)||[]).length,2,'different quantities remain separate, identical Free reward is not doubled');
  assert.match(detail,/<b>Remote Raid Pass<\/b>/);
  assert.match(detail,/×2 · Item/);
- assert.doesNotMatch(detail,/ue-lane ue-lane-free[^]*?Track not specified<\/h5>/);
+ const unspecifiedAt=detail.indexOf('<div class="ue-lane ue-lane-unspecified">');
+ assert.ok(unspecifiedAt>detail.indexOf('<div class="ue-lane ue-lane-deluxe">'));
+ assert.ok(detail.indexOf('<b>Remote Raid Pass</b>')>unspecifiedAt,'unattributed reward is rendered in neutral lane');
 }));
 test('published Rank 45 and Rank 100 remain pinned, closed range entries preserve source numbers', () => withSemantic(() => {
  const stages=[{rank:1,free:[{name:'Incense',type:'item'}]},{rank:45,free:[{name:'Dynamax Meltan',type:'encounter'}]},{rank:100,deluxe:[{name:'Silver Bottle Cap',type:'item'}]},{rank:600,free:[{name:'XP',type:'item'}]}];
