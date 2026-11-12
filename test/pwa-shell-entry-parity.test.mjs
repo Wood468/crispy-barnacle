@@ -38,3 +38,16 @@ test('offline shell version remains explicit and private API URLs are not precac
   assert.equal(cached.filter(url => url.startsWith('/api/')).length, 0,
     'private API responses must never enter the offline shell');
 });
+
+test('no two cache entries represent different versions of the same JS or CSS module', () => {
+  const shellBlock = sw.match(/const SHELL_URLS\s*=\s*\[([\s\S]*?)\];/);
+  assert.ok(shellBlock);
+  const cached = [...shellBlock[1].matchAll(/['"](\/[^'"]+)['"]/g)].map(m => m[1]);
+  const versions = new Map();
+  for (const url of cached) {
+    if (!/\.(?:js|css)\?v=/i.test(url)) continue;
+    const path = url.split('?')[0];
+    assert.ok(!versions.has(path), path + ' has multiple offline versions: ' + versions.get(path) + ' and ' + url);
+    versions.set(path, url);
+  }
+});
