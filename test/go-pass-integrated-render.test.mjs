@@ -77,7 +77,7 @@ test('load order, offline references and post-render mount form a complete PWA i
  const mountAt=detail.indexOf('GOGoPassNavigation.mount(o)',renderAt);
  assert.ok(renderAt>=0&&mountAt>renderAt&&mountAt<renderAt+300,'mount after actual event render');
  assert.match(components,/GOGoPassRewardArt\.resolve/);
- assert.match(sw,/SHELL_CACHE = 'gofn-shell-v311'/);
+ assert.match(sw,/^const SHELL_CACHE = 'gofn-shell-v[1-9][0-9]*';$/m);
 });
 
 test('exact Pokémon encounter artwork stays delegated to the existing resolver', () => withSemantic(() => {

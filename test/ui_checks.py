@@ -3332,7 +3332,7 @@ with sync_playwright() as p:
         fl_dups = sorted((u, n) for u, n in fl_counts.items() if n > 1 and not u.startswith('https://fonts.'))
         check('cold Today load requests no JSON, API or script URL more than once', not fl_dups, fl_dups)
         check('dash.js is found by the preload before app.js injects it (one request, started from the head)',
-              fl_counts.get('/dash.js?v=' + re.search(r"ds\.src='/dash\.js\?v=(\w+)'", APP_JS).group(1)) == 1 and '<link rel="preload" href="/dash.js?v=' in INDEX_HTML)
+              fl_counts.get('/dash.js?v=' + re.search(r"ds\.src='/dash\.js\?v=([\w-]+)'", APP_JS).group(1)) == 1 and '<link rel="preload" href="/dash.js?v=' in INDEX_HTML)
         # B. an event sheet opened straight after load has its details (event-details.json is no longer fetched at startup, only on idle or when a sheet needs it)
         fl_pg.evaluate("GODASH.events().find(e=>e.id==='cur:trek').name='Amended title fixture';GODETAIL.open('cur:trek')")
         fl_ok = settle(fl_pg, "document.getElementById('evd-t') && document.getElementById('evd').textContent.includes('Increased chance to encounter Shiny Electrike.')", 8000)
@@ -3363,7 +3363,7 @@ with sync_playwright() as p:
         fl_fresh = re.search(r"w\.src = '(/fresh\.js\?v=\w+)'", DASH_JS).group(1)
         fl_ready = settle(fl_sw, "navigator.serviceWorker.controller&&window.GOFRESH", 30000)
         fl_cached = fl_sw.evaluate("""async (u) => { const n = (await caches.keys()).find(k => k.startsWith('gofn-shell-')); if (!n) return {name: null}; const c = await caches.open(n);
-            return {name: n, keys: (await c.keys()).length, fresh: !!(await c.match(u)), dashjs: !!(await c.match('/dash.js?v=' + %s))}; }""" % json.dumps(re.search(r"ds\.src='/dash\.js\?v=(\w+)'", APP_JS).group(1)), fl_fresh)
+            return {name: n, keys: (await c.keys()).length, fresh: !!(await c.match(u)), dashjs: !!(await c.match('/dash.js?v=' + %s))}; }""" % json.dumps(re.search(r"ds\.src='/dash\.js\?v=([\w-]+)'", APP_JS).group(1)), fl_fresh)
         check('service worker installs on the first visit and its cache holds the versioned fresh.js and dash.js', fl_ready and fl_cached.get('fresh') and fl_cached.get('dashjs') and fl_cached.get('keys', 0) >= 50, fl_cached)
         fl_ctx.set_offline(True)
         fl_sw.reload(wait_until='domcontentloaded')
