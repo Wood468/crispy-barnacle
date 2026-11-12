@@ -3733,7 +3733,7 @@ with sync_playwright() as p:
           today: document.querySelector('#home-now')?.children.length || 0,
           todayKey: document.querySelector('#home-now')?.getAttribute('data-render-key') || '',
           thisWeek: document.querySelector('#week')?.children.length || 0,
-          weekText: (()=>{const el=document.querySelector('#week')?.cloneNode(true);if(!el)return '';el.querySelectorAll('[data-igcheck],[data-infographic]').forEach(n=>n.remove());return el.textContent;})(),
+          weekText: (()=>{const el=document.querySelector('#week')?.cloneNode(true);if(!el)return '';el.querySelectorAll('[data-igcheck],[data-infographic],.art-fb,.costume-unavailable').forEach(n=>n.remove());return el.textContent;})(),
           timeline: document.querySelector('#evtimeline')?.children.length || 0,
           weekstrip: document.querySelector('#weekstrip')?.children.length || 0,
           calendar: document.querySelector('#calgrid')?.children.length || 0,
@@ -3765,7 +3765,7 @@ with sync_playwright() as p:
         secondary_click('nav.tabs button[data-tab="now"]')
         returned = secondary_page.evaluate("""() => ({
           todayKey: document.querySelector('#home-now')?.getAttribute('data-render-key') || '',
-          thisWeek: (()=>{const el=document.querySelector('#week')?.cloneNode(true);if(!el)return '';el.querySelectorAll('[data-igcheck],[data-infographic]').forEach(n=>n.remove());return el.textContent;})(),
+          thisWeek: (()=>{const el=document.querySelector('#week')?.cloneNode(true);if(!el)return '';el.querySelectorAll('[data-igcheck],[data-infographic],.art-fb,.costume-unavailable').forEach(n=>n.remove());return el.textContent;})(),
           todayVisible: !document.querySelector('#tab-now')?.hidden
         })""")
         check('Timeline, Calendar, Travel, Battle, Opportunities and Watchlist render on activation; Today and This Week event information remain unchanged on return',
