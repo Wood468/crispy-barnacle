@@ -34,7 +34,9 @@ test('owner Store shows one AUD placeholder before each local price without wait
   let resolveFx;
   const el = {innerHTML:'',querySelector:()=>null,querySelectorAll:()=>[],addEventListener(){}};
   const host = {parentNode:{insertBefore:()=>{}}};
-  const prices = {owner:true,prices:[],regional:OBSERVATIONS};
+  // An Australian-only verified item guarantees an honest unobserved ID/IN cell.
+  const prices = {owner:true,prices:[{product:'store-test-au-only',label:'AU-only fixture',
+    region:'AU',currency:'AUD',verified:true,amount:5,group:'Items',observed:'2026-11-12'}],regional:OBSERVATIONS};
   const win = {GOStoreFX:FX,GORegionalPrices:R,
     fetch:()=>new Promise(resolve=>{resolveFx=resolve;}),
     GOLIB:{esc:s=>String(s),loadPrices:async()=>prices},
