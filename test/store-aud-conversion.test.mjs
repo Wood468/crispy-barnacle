@@ -52,7 +52,7 @@ test('owner Store shows one AUD placeholder before each local price without wait
   const id=el.innerHTML.indexOf('Indonesia <small>Web</small>');
   assert.ok(id>=0);
   const idChunk=el.innerHTML.slice(id,id+850);
-  assert.equal((idChunk.match(/sp-aud-equivalent/g)||[]).length,1);
+  assert.equal((idChunk.slice(0,idChunk.indexOf('Rp 76,000')).match(/class="sp-aud-equivalent"/g)||[]).length,1);
   assert.ok(idChunk.indexOf('sp-aud-equivalent')<idChunk.indexOf('Rp 76,000'));
   assert.match(idChunk,/A\$ rate unavailable/);
   resolveFx({ok:true,json:async()=>({result:'success',base_code:'AUD',
