@@ -26,7 +26,7 @@ with sync_playwright() as playwright:
             # Do not write to the user's production account endpoints.
             if route.request.method not in ("GET", "HEAD", "OPTIONS"):
                 route.fulfill(status=204, body="")
-            elif "/api/" in route.request.url:
+            elif "/api/" in route.request.url and "/api/art?" not in route.request.url:
                 route.fulfill(status=200, content_type="application/json",
                               body='{"enabled":false,"events":[],"sources":[]}')
             else:
@@ -46,6 +46,18 @@ with sync_playwright() as playwright:
                 try {const r=await fetch(path,{cache:'reload'});return {path,status:r.status,bytes:(await r.text()).length};}
                 catch(error){return {path,error:String(error)}}
               }));
+            }""")
+            item["artDebug"] = page.evaluate("""() => {
+                const names=['Dynamax Meltan','Meltan','Sandygast','Dynamax Rookidee','Rookidee','Groudon'];
+                return names.map(name=>{
+                  const p=GOEventAdapter.pokemon({name});
+                  const parsed=GOLIB.parseForm(name);
+                  let art='';
+                  try{art=GO.art({n:name,dynamax:/^Dynamax /i.test(name)},'ea')||'';}
+                  catch(error){art=String(error);}
+                  return {name,parsed,formId:p.formId,speciesId:p.speciesId,collectionName:GOEventAdapter.collectionName(p),
+                          html:art.slice(0,300)};
+                })
             }""")
             item["browserGlobals"] = page.evaluate("""() => ({
                 navigator: typeof window.GOGoPassNavigation,
@@ -82,6 +94,10 @@ with sync_playwright() as playwright:
                          rankCount:pass?.querySelectorAll('.ue-pass-rank[data-rank]').length||0,
                          rewardCount:pass?.querySelectorAll('.ue-pass-reward').length||0,
                          navCount:pass?.querySelectorAll('.ue-pass-nav').length||0,
+                         navBeforeOverview:!!nav&&!!pass?.querySelector('.ue-pass-overview')
+                           &&!!(nav.compareDocumentPosition(pass.querySelector('.ue-pass-overview')) & 4),
+                         sampleRewards:[...(pass?.querySelectorAll('.ue-pass-reward')||[])].slice(0,5)
+                           .map(el=>({text:el.innerText.slice(0,100),html:el.innerHTML.slice(0,280)})),
                          navVisible:!!nav&&!!box&&box.width>0&&box.height>0,
                          navText:nav?.innerText?.slice(0,260)||'',
                          passText:pass?.innerText?.slice(0,250)||'',
