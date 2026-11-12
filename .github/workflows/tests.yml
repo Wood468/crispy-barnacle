@@ -286,7 +286,7 @@ jobs:
   production-gopass-visibility:
     # Dedicated, read-only production check. Run separately from long image audit
     # so a slow image waterfall cannot mask or postpone feature visibility proof.
-    if: github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch'
+    if: github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch' || github.event_name == 'push'
     runs-on: ubuntu-latest
     timeout-minutes: 8
     continue-on-error: true
@@ -299,9 +299,15 @@ jobs:
         run: |
           pip install playwright
           python -m playwright install --with-deps chromium
+      - name: Wait for matching production Cloudflare build after merge
+        if: github.event_name == 'push'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: node scripts/wait-for-workers-build.mjs
       - name: Probe actual live GO Pass controls (no local fixtures)
         env:
           GO_FIELD_NOTES_LIVE_GO_PASS_URL: https://pogo.michaelpuff.com
+          GOFN_EXPECT_NAV_FIRST: ${{ github.event_name == 'push' && '1' || '0' }}
         run: python test/production_gopass_visibility.py
       - name: Retain live GO Pass screenshots
         if: always()
