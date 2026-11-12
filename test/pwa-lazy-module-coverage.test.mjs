@@ -15,7 +15,7 @@ function versionedModules(code) {
 test('app bootstrap and dashboard lazy imports use precisely cached versions', () => {
   const appModules = versionedModules(source('app.js'));
   const dashModules = versionedModules(source('dash.js'));
-  assert.ok(appModules.includes('/dash.js?v=20261118b') || appModules.some(url => url.startsWith('/dash.js?v=')),
+  assert.ok(appModules.some(url => url.startsWith('/dash.js?v=')),
     'app bootstrap must expose the versioned dashboard entry');
   assert.ok(dashModules.length >= 5, 'dashboard should declare multiple lazy modules');
   for (const url of new Set([...appModules, ...dashModules])) {
