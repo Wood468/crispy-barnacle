@@ -374,7 +374,9 @@
     if(precise&&/^\d+$/.test(precise.speciesId)&&DEXNAME[+precise.speciesId])id=+precise.speciesId;
     if (!id) return { state: 'unknown', id: 0, base: p.base, why: 'Not in the Pokédex list' };
     var out = { id: id, base: p.base, why: '' };
-    if (p.special === 'dynamax') return Object.assign(out, { state: 'form', why: 'Dynamax is a battle state, there is nothing to collect' });
+    if (p.special === 'dynamax') { var maxOwned=window.GOInventory&&window.GOCollectionModel&&(!costume||precise&&precise.costumeId)&&GOCollectionModel.capabilityOwned(GOInventory.records(),{speciesId:id,formId:precise&&precise.formId&&precise.formId!=='dynamax'?GOCollectionModel.canonicalForm(precise.formId):null,costumeId:precise&&precise.costumeId||null},'dynamax');return Object.assign(out,maxOwned?{state:'have'}:{ state: 'form', why: 'Track Dynamax-capable individual Pokémon separately from species registration.' }); }
+    var collectionCat=window.GOCollectionUI&&GOCollectionUI.catalogue();
+    if(precise&&precise.formId&&collectionCat&&window.GOCollectionModel){var collectionForm=GOCollectionModel.canonicalForm(precise.formId);if(collectionCat.forSpecies(id).some(function(v){return v.formId===collectionForm;})){var collectionIdentity={speciesId:String(id),formId:collectionForm,costumeId:precise.costumeId||null},collectionValue=GOCollectionModel.variantValue(collectionIdentity,US,collectionCat);if(collectionValue!==undefined)return Object.assign(out,{tk:GOCollectionModel.legacyKey(collectionIdentity,collectionCat),state:collectionValue===1?'have':'missing'});}}
     if(precise&&precise.formId&&precise.formId!==p.key&&precise.formId!==p.special&&/^[a-z0-9][a-z0-9-]{0,63}$/.test(precise.formId)){
       var preciseKey='form:'+id+':'+precise.formId,preciseValue=usGet(preciseKey);
       return Object.assign(out,{tk:preciseKey,state:preciseValue===1?'have':preciseValue===0?'missing':'unknown',why:'Track this exact form.'});
@@ -1419,7 +1421,7 @@
 
   /* ---------- Collection: what I know about your Dex ---------- */
   function renderCoverage() {
-    var tab = $('tab-dex'); if (!tab || !Object.keys(DEXGEN).length) return;
+    var tab = $('dex-coverage') || $('tab-dex'); if (!tab || !Object.keys(DEXGEN).length) return;
     var host = $('gencov');
     if (!host) { host = document.createElement('div'); host.id = 'gencov'; host.className = 'gencov'; var summary=tab.querySelector('.prog'); if(summary&&summary.parentElement===tab)summary.insertAdjacentElement('afterend',host); else tab.insertBefore(host,tab.firstChild); host.addEventListener('click', function (e) { var b = e.target.closest('[data-gen]'); if (!b) return; setGenConfirmed(+b.dataset.gen, b.getAttribute('aria-pressed') !== 'true'); renderCoverage(); renderAll(); if (window.GO && GO.refreshDex) GO.refreshDex(); }); }
     var d = marks(), own = (d.m && d.m.own) || {}, gens = {}, total = 0, owned = 0, conf = [], auto = [];
@@ -2448,7 +2450,7 @@ function renderHomeBrief(t) {
     renderCoverage();
     if (window.GO && GO.refreshDex) GO.refreshDex();
     usSync();
-    var inf = document.createElement('script'); inf.src = '/infographic.js?v=20261103b'; document.body.appendChild(inf); var x = document.createElement('script'); x.src = '/extra.js?v=20261102c'; document.body.appendChild(x); var z = document.createElement('script'); z.src = '/places.js?v=20261103b'; window.GOPLACES_READY = new Promise(function (resolve) { z.onload = function () { resolve(window.GOPLACES || null); }; z.onerror = function () { resolve(null); }; }); var y = document.createElement('script'); y.src = '/detail.js?v=20261117i'; document.body.appendChild(y); document.body.appendChild(z); var w = document.createElement('script'); w.src = '/fresh.js?v=20261114a'; document.body.appendChild(w); var nv = document.createElement('script'); nv.src = '/nudge.js?v=20261102a'; document.body.appendChild(nv); var rv = document.createElement('script'); rv.src = '/review.js?v=20261104b'; document.body.appendChild(rv); var by = document.createElement('script'); by.src = '/buy.js?v=20261103a'; document.body.appendChild(by);
+    var inf = document.createElement('script'); inf.src = '/infographic.js?v=20261103b'; document.body.appendChild(inf); var x = document.createElement('script'); x.src = '/extra.js?v=20261112p1b'; document.body.appendChild(x); var z = document.createElement('script'); z.src = '/places.js?v=20261103b'; window.GOPLACES_READY = new Promise(function (resolve) { z.onload = function () { resolve(window.GOPLACES || null); }; z.onerror = function () { resolve(null); }; }); var y = document.createElement('script'); y.src = '/detail.js?v=20261117i'; document.body.appendChild(y); document.body.appendChild(z); var w = document.createElement('script'); w.src = '/fresh.js?v=20261114a'; document.body.appendChild(w); var nv = document.createElement('script'); nv.src = '/nudge.js?v=20261102a'; document.body.appendChild(nv); var rv = document.createElement('script'); rv.src = '/review.js?v=20261104b'; document.body.appendChild(rv); var by = document.createElement('script'); by.src = '/buy.js?v=20261103a'; document.body.appendChild(by);
   }
   envBanner();
   /* Bounded waits: a request that never answers must not leave Today blank. After FEED_TIMEOUT_MS the page renders from the curated list
@@ -2465,7 +2467,7 @@ function renderHomeBrief(t) {
   var dexP = window.GOLIB.getJson('/dex.json').catch(function () { return []; });
   var apiP = fetch('/api/events').then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; });
   var cpP = Promise.all([
-    fetch('/data/cp/pokemon.json').then(function (r) { return r.ok ? r.json() : null; }),
+    window.GOLIB.jsonOrNull('/data/cp/pokemon.json'),
     fetch('/data/cp/cp-multipliers.json').then(function (r) { return r.ok ? r.json() : null; })
   ]).then(function (a) { return a[0] && a[1] ? { pokemon: a[0], cpms: a[1] } : null; }).catch(function () { return null; });
   /* The CP table (215 KB) is only a garnish on raid cards: once the dex and the feed have answered it gets a short grace period (never past the 8 s total), then Today draws without it and it is applied when it lands. */
