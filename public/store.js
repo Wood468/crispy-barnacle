@@ -127,7 +127,7 @@
         : '<span class="sp-regional-value sp-none" title="No verified Australian Web Store price observed">Not observed</span>';
       var search = (p.label + ' ' + p.group + ' ' + priority(p)).toLowerCase();
       return '<article class="sp-product" data-sp-product data-sp-name="' + esc(search) + '">'
-        + '<header class="sp-product-head"><span class="sp-product-name">' + icon(p.label) + '<b>' + esc(p.label) + '</b></span><small class="sp-product-group">' + esc(p.group) + '</small></header>'
+        + '<header class="sp-product-head"><span class="sp-product-name">' + icon(p.label) + '<b>' + esc(p.label) + '</b></span></header>'
         + '<div class="sp-market-grid">'
         + '<div class="sp-market sp-market-au"><span class="sp-market-label">Australia <small>Web</small></span>' + au + '</div>'
         + '<div class="sp-market"><span class="sp-market-label">Indonesia <small>Web</small></span>' + priceCell(p.indonesia, data.audQuotes) + '</div>'
@@ -140,7 +140,7 @@
         + '<div class="sp-group-items">' + bySection[s.id].map(productCard).join('') + '</div></details>';
     }).join('');
     return '<details class="storep storep-regional" open><summary>Regional Store prices <small>' + items.length + ' products · AU / ID / IN</small></summary>'
-      + '<p class="sp-intro">Browse tickets first, then storage, coins and items. Observations are dated, not live checkout quotes. AUD conversions are reference estimates using dated FX rates (provider: <a href="https://www.exchangerate-api.com/" target="_blank" rel="noopener noreferrer">ExchangeRate-API</a> when available). <b>Not observed</b> means no source-backed price for that channel, not free or unavailable to buy.</p>'
+      + '<p class="sp-intro">Dated Store observations, not live checkout quotes. Approximate A$ values use <a href="https://www.exchangerate-api.com/" target="_blank" rel="noopener noreferrer">ExchangeRate-API</a> reference rates. “Not observed” means no sourced price for that region.</p>'
       + '<label class="sp-search"><span>Find a product</span><input type="search" data-sp-search placeholder="Search passes, storage, coins or items" aria-label="Search Store products" autocomplete="off"></label>'
       + '<p class="sp-results" data-sp-results aria-live="polite">' + items.length + ' products · ' + sections.filter(function (s) {return bySection[s.id].length;}).length + ' categories</p>'
       + '<div class="sp-catalogue">' + catalogue + '</div>'
@@ -178,7 +178,7 @@
               + ' · ' + converted.observed + ' · not a checkout price');
             var note = document.createElement('small');
             note.className = 'sp-aud-source';
-            note.textContent = 'AUD approx · ' + converted.source + ' · ' + converted.observed;
+            note.textContent = 'FX · ' + when(converted.observed);
             node.appendChild(note);
           });
         }).catch(function () { /* Keep original regional prices visible. */ });
