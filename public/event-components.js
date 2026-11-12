@@ -151,9 +151,27 @@ function passLane(label,cls,list,ctx){
  var chips=[].concat(list||[]).map(function(x){return passReward(x,ctx);}).filter(Boolean);
  return chips.length?'<div class="ue-lane ue-lane-'+cls+'"><h5>'+label+'</h5>'+chips.join('')+'</div>':'';
 }
+/* Stages can combine identified Free/Deluxe tracks with additional published
+   rewards whose track has not been attributed. Never silently hide the latter
+   or label them Free; avoid double-showing a reward already in a named track. */
+function passRewardIdentity(raw){
+ var name=typeof raw==='string'?raw:raw&&raw.name;
+ if(typeof name!=='string')return '';
+ var quantity=raw&&typeof raw==='object'&&Number.isInteger(raw.quantity)&&raw.quantity>0?raw.quantity:1;
+ if(typeof raw==='string'){
+  var match=/^(.+?)\s*[×x]\s*(\d+)$/i.exec(name);
+  if(match){name=match[1];quantity=Number(match[2]);}
+ }
+ return name.trim().replace(/\s+/g,' ').toLowerCase()+'|'+quantity;
+}
 function passStageLanes(s,ctx){
- var specified=passLane('Free','free',s.free,ctx)+passLane('Deluxe','deluxe',s.deluxe,ctx);
- return specified||passLane('Reward · track not specified','free',s.rewards,ctx);
+ var free=[].concat(s.free||[]),deluxe=[].concat(s.deluxe||[]);
+ var identified=new Set(free.concat(deluxe).map(passRewardIdentity).filter(Boolean));
+ var unspecified=[].concat(s.rewards||[]).filter(function(item){
+  var identity=passRewardIdentity(item);
+  return identity&&!identified.has(identity);
+ });
+ return passLane('Free','free',free,ctx)+passLane('Deluxe','deluxe',deluxe,ctx)+passLane('Track not specified','unspecified',unspecified,ctx);
 }
 function passStageRewards(s){
  return [].concat(s.free||[],s.deluxe||[],s.rewards||[]).filter(function(x){return x&&typeof x==='object'&&typeof x.name==='string'||typeof x==='string'&&x.trim();});
