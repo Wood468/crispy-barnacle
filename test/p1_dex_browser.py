@@ -12,8 +12,8 @@ with sync_playwright() as p:
   context.route(re.compile(r'^https://fonts\.'),lambda r:r.fulfill(body='',content_type='text/css'))
   context.add_init_script("if(!localStorage.getItem('gofn-dex-v1'))localStorage.setItem('gofn-dex-v1',JSON.stringify({have:{Mewtwo:1},m:{own:{25:1},shiny:{25:1}}}));if(!localStorage.getItem('gofn-us-v1'))localStorage.setItem('gofn-us-v1',JSON.stringify({'form:26:alola':{v:1,t:1},'saved:cur:wag':{v:1,t:1}}));")
   page=context.new_page();errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
-  page.goto(BASE+'/');page.wait_for_function('!!window.GODASH&&!!window.GOCollectionUI&&GOCollectionUI.catalogue()?.forSpecies(26).some(v=>v.formId==="alola")&&GOInventory.ready()')
-  page.locator('#tabs [data-tab="collect"]').click();page.locator('#subnav-collect [data-sub="dex"]').click()
+  page.goto(BASE+'/');page.wait_for_function('!!window.GODASH&&!!window.GOCollectionUI&&GOCollectionUI.catalogue()&&GOInventory.ready()')
+  page.locator('#tabs [data-tab="collect"]').click();page.locator('#subnav-collect [data-sub="dex"]').click();page.evaluate('GOCollectionUI.loadCatalogue()')
   assert page.locator('#dTotal').inner_text()=='1025'
   assert page.locator('#dOwn').inner_text()=='3'
   assert page.locator('#dexlist .dex-tile').count()==60

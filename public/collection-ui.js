@@ -56,6 +56,8 @@ document.addEventListener('click',function(e){var b=e.target.closest('[data-spec
 $('dex-categories').addEventListener('change',function(){category=this.value;if(window.GO)GO.refreshDex();});
 document.addEventListener('keydown',function(e){if(e.key==='Escape'&&active&&!$('tab-collect').hidden){e.preventDefault();closeSpecies();}});
 ['gofn-state','gofn-inventory'].forEach(function(type){document.addEventListener(type,function(){if(window.GO)GO.refreshDex();});});
-Promise.all([L.jsonOrNull('/forms.json'),window.GOEventRegistry?GOEventRegistry.ready:Promise.resolve(null),L.jsonOrNull('/data/cp/pokemon.json')]).then(function(values){catalogueForms=values[0]&&values[0].f||[];catalogueCostumes=values[1]&&values[1].costumes||[];combatForms=values[2]||[];if(last){rebuildCatalogue(last.rows);GO.refreshDex();}});
-window.GOCollectionUI={render:render,catalogue:function(){return cat;},projection:projection,open:renderSpecies,close:closeSpecies,active:function(){return active;},editor:function(on){editing=on;$('dex-record-editor').hidden=!on;if(on)$('dex-species').hidden=true;else if(active)renderSpecies(active,true);}};
+var metadata=null;
+function loadCatalogue(){if(metadata)return metadata;metadata=Promise.all([L.jsonOrNull('/forms.json'),window.GOEventRegistry?GOEventRegistry.ready:Promise.resolve(null),L.jsonOrNull('/data/cp/pokemon.json')]).then(function(values){catalogueForms=values[0]&&values[0].f||[];catalogueCostumes=values[1]&&values[1].costumes||[];combatForms=values[2]||[];if(last){rebuildCatalogue(last.rows);GO.refreshDex();}});return metadata;}
+document.addEventListener('gofn-view',function(e){if(e.detail&&e.detail.tab==='collect')loadCatalogue();});
+window.GOCollectionUI={loadCatalogue:loadCatalogue,render:render,catalogue:function(){return cat;},projection:projection,open:renderSpecies,close:closeSpecies,active:function(){return active;},editor:function(on){editing=on;$('dex-record-editor').hidden=!on;if(on)$('dex-species').hidden=true;else if(active)renderSpecies(active,true);}};
 }());
