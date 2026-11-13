@@ -135,6 +135,17 @@ test('normalized replacement rule deduplicates unsupported stacking flags',()=>{
  assert.equal(out.benefits[0].replacesFreeLimit,false);
 });
 
+test('long benefit descriptions retain unique stable IDs beyond readable-slug truncation',()=>{
+ const shared='Additional bonus when catching Pokémon at the selected ticketed session, under the independently verified event accessibility conditions, available only from your paid event day: ';
+ const first=benefit('ticket',shared+'special research bonus for path Steel-type',duck,{kind:'candy'});
+ const second=benefit('ticket',shared+'special research bonus for path Dragon-type',duck,{kind:'candy'});
+ const one=normalizeEventSourceFacets('wag',[mk('leekduck',duck,{benefits:[first,second]})]);
+ const two=normalizeEventSourceFacets('wag',[mk('leekduck',duck,{benefits:[second,first]})]);
+ assert.equal(one.benefits.length,2);
+ assert.equal(new Set(one.benefits.map(b=>b.id)).size,2);
+ assert.deepEqual(one.benefits.map(b=>b.id),two.benefits.map(b=>b.id));
+});
+
 test('source order, duplicate records and omitted optional fields do not affect stable output',()=>{
  const b=benefit('free','Increased catch XP',duck,{kind:'xp',replacesFreeLimit:false});
  const d=mk('leekduck',duck,{benefits:[b,b]});
