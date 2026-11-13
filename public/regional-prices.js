@@ -272,15 +272,9 @@
     var current = snapshot.items.filter(matching);
     var past = snapshot.gone.filter(matching);
     var row = current.length === 1 ? current[0] : past.length === 1 ? past[0] : null;
-    var artwork = row && sourceArt(row.image) ? row.image : null;
-    /* Safe icon aliasing is NOT a SKU join or proof of checkout price. */
-    if (!artwork) {
-      var artKey = key.replace(/(?:\s+(?:x|×)\s*\d+|\s+\+\s*1)$/, '');
-      var variants = snapshot.items.concat(snapshot.gone).filter(function (item) {
-        return item && norm(item.name) === artKey && sourceArt(item.image);
-      });
-      if (variants.length === 1) artwork = variants[0].image;
-    }
+    var artwork = null; /* Publisher images are review candidates, not approved runtime artwork. */
+    /* Exact publisher image URLs remain in the read-only snapshot solely for
+       the existing asset-approval workflow; never promote them to runtime. */
     if (current.length !== 1) return past.length === 1
       ? {status:'archived',image:artwork,lastSeen:row.lastSeen||null,goneAt:row.goneAt||null,endAt:row.endsAt||null,note:'Removed from the observed Store listing'}
       : {status:'unconfirmed',image:artwork,lastSeen:null,goneAt:null,endAt:null,note:'Not confirmed in recent Store snapshot'};
