@@ -83,6 +83,20 @@ test('real published schedule allows exact source-backed selection, not entire D
  assert.ok(upcoming.some(x=>x.dex[1]==='Zamazenta'));
  assert.ok(upcoming.some(x=>x.dex[1]==='Duraludon' && x.modes.includes('gigantamax')));
 });
+test('picker uses the same timezone-aware clock as the Battle schedule',()=>{
+ const clock=require('../public/event-clock.js');
+ const data={rotation:[{s:'2026-11-14T10:00',e:'2026-11-14T11:00',five:'Zacian'}]};
+ const now=+clock.parseDate('2026-11-14T11:10','Australia/Melbourne');
+ assert.ok(picker.options(data,dex,now,lib.raidBossNames).some(x=>x.dex[1]==='Zacian'),
+  'device-clock parsing would wrongly retain a boss after its Melbourne end');
+ assert.deepEqual(picker.options(data,dex,now,lib.raidBossNames,
+  value=>clock.parseDate(value,'Australia/Melbourne')),[],
+  'schedule ends at the same Melbourne instant used by Battle');
+});
+test('invalid calendar dates do not fabricate a raid window',()=>{
+ const bad={rotation:[{s:'2026-02-30T10:00',e:'2026-03-10T10:00',five:'Bulbasaur'}]};
+ assert.deepEqual(picker.options(bad,dex,at('2026-03-01T12:00'),lib.raidBossNames),[]);
+});
 test('UI always uses schedule allowlist for datalist AND save-time mode validation',()=>{
  const s=readFileSync(new URL('../public/review.js',import.meta.url),'utf8');
  assert.match(s,/function currentBossChoices\(\)/);
