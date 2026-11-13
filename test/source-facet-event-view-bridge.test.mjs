@@ -24,7 +24,7 @@ test('exact canonical event only: no fuzzy lookups or inferred event links',()=>
   const f=feed();
   assert.equal(verifiedFacetPanelsForEvent(f,'wild-area:global.2026').eventId,
     'wild-area:global.2026');
-  assert.equal(verifiedFacetPanelsForEvent(f,'wild area global 2026'),null);
+  assert.equal(verifiedFacetPanelsForEvent(f,'wild-area-global-2026'),null);
   assert.equal(verifiedFacetPanelsForEvent(f,'wild-area:other.2026'),null);
   assert.throws(()=>verifiedFacetPanelsForEvent(f,'../wild-area'),/Exact canonical/);
 });
