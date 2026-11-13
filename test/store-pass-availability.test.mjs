@@ -73,8 +73,10 @@ test('an expired event window is not purchase expiry; claim window is separate',
 
 test('malformed dates, URLs, locales and timestamps fail closed', () => {
   assert.equal(availability.classify({ listingEvidence: { ...listing, sourceUrl: 'javascript:alert(1)' } }, NOW).availability, 'unknown');
+  assert.equal(availability.classify({ listingEvidence: { ...listing, sourceUrl: 'https://untrusted.example/offer' } }, NOW).availability, 'unknown');
   assert.equal(availability.classify({ listingEvidence: { ...listing, checkedAt: 'yesterday' } }, NOW).availability, 'unknown');
   assert.equal(availability.classify({ purchaseEndAt: '2026-13-99', retirementEvidence: retired }, NOW).availability, 'unknown');
+  assert.equal(availability.classify({ purchaseEndAt: '2026-02-31', retirementEvidence: retired }, NOW).availability, 'unknown');
   assert.throws(() => availability.classify({}, 'not-a-date'), /evaluation time/);
   assert.throws(() => availability.classify({}, NOW, -1), /maxAgeDays/);
 });

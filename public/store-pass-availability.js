@@ -12,12 +12,23 @@
   function time(value) {
     if (typeof value !== 'string' || !/^[0-9]{4}-[0-9]{2}-[0-9]{2}(?:T.*Z)?$/.test(value)) return null;
     var parsed = Date.parse(value);
-    return Number.isFinite(parsed) ? parsed : null;
+    if (!Number.isFinite(parsed)) return null;
+    /* Date.parse normalises some impossible dates (e.g. Feb 31); reject them. */
+    if (new Date(parsed).toISOString().slice(0, 10) !== value.slice(0, 10)) return null;
+    return parsed;
   }
   function evidenceValid(e) {
-    return !!(e && e.confirmed === true && typeof e.sourceUrl === 'string' &&
-      e.sourceUrl.indexOf('https://') === 0 && typeof e.locale === 'string' &&
-      e.locale.trim() && typeof e.channel === 'string' && e.channel.trim());
+    if (!(e && e.confirmed === true && typeof e.sourceUrl === 'string' &&
+      typeof e.locale === 'string' && e.locale.trim() &&
+      typeof e.channel === 'string' && e.channel.trim())) return false;
+    try {
+      var url = new URL(e.sourceUrl);
+      var host = url.hostname.toLowerCase();
+      var official = ['store.pokemongo.com', 'pokemongo.com', 'pokemongolive.com', 'nianticlabs.com', 'pokemon.com'];
+      return url.protocol === 'https:' && official.some(function (domain) {
+        return host === domain || host.endsWith('.' + domain);
+      });
+    } catch (_) { return false; }
   }
   function classifyEventWindow(offer, now) {
     var start = time(offer.eventStartAt), end = time(offer.eventEndsAt);
