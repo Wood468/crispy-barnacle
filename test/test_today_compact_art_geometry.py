@@ -93,19 +93,7 @@ def test_real_today_renderer_geometry():
                   const img = document.querySelector('[data-id="fixture-compact"] .t1-minor-art img');
                   return !!img && img.complete && img.naturalWidth > 0;
                 }""", timeout=10000)
-                result = page.evaluate("""(png) => {
-                  const now = Date.UTC(2026,10,14,10), hour = 3600000;
-                  const minor = {id:'fixture-compact',name:'GO Wild Area: Global — long compact artwork containment fixture',
-                    kind:'spot',start:now+hour,end:now+2*hour,region:'Global',
-                    featured:[{name:'Fixture Pokémon'}],tags:[]};
-                  const major = {id:'fixture-major',name:'Minior Showers: Leonids — major card fixture',
-                    kind:'event',start:now+hour,end:now+48*hour,region:'Global',
-                    featured:[{name:'Minior'}],tags:[]};
-                  const ctx = {now,live:[],soon:[minor,major],week:[],regLive:[],regSoon:[],regWeek:[],
-                    boosts:{live:[],upcoming:[]},seasons:[],done:[],hidden:[],ending:[],
-                    kindOf:()=>['Event','#27a4b0'],overseas:()=>false,dayLabel:()=> 'Saturday',
-                    fallbackArt:()=>'',monArt:()=>'<span class="art-fb" style="width:150px;height:150px"><img class="art" src="'+png+'" alt="Featured Pokémon"><span class="form-chip">Special form</span></span>'};
-
+                result = page.evaluate("""() => {
                   const compact = document.querySelector('[data-id="fixture-compact"]');
                   const majorCard = document.querySelector('[data-id="fixture-major"]');
                   const slot = compact && compact.querySelector('.t1-minor-art');
@@ -122,7 +110,7 @@ def test_real_today_renderer_geometry():
                     separated:!!majorCard&&c.bottom<=rect(majorCard).top+1,
                     titleClear:!!title&&!!menu&&!overlap(rect(title),rect(menu)),
                     noOverflow:document.documentElement.scrollWidth<=innerWidth+1};
-                }""", PNG)
+                }""")
                 assert all(result.values()), (browser_type.name, width, result)
                 page.close()
         finally:
