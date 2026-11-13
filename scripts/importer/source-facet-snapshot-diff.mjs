@@ -43,6 +43,7 @@ export function compareFacetSnapshotForReview(previous,next){
       previous.publication!=='verified'||previous.eventId!==next.eventId))
     throw new TypeError('Matching previously verified snapshot required');
   const changes={};let needsReview=false;
+  const massRemovalTypes=[];
   for(const type of TYPES){
     const old=previous?records(previous,type):new Map();
     const proposed=records(next,type);
@@ -51,8 +52,14 @@ export function compareFacetSnapshotForReview(previous,next){
     const changed=[...proposed.keys()].filter(id=>old.has(id)&&old.get(id)!==proposed.get(id)).sort();
     const unchanged=[...proposed.keys()].filter(id=>old.has(id)&&old.get(id)===proposed.get(id)).length;
     if(added.length||removed.length||changed.length)needsReview=true;
+    // Missing provider data must never silently clear last-known-good
+    // snapshots. Large removals need separate explicit reviewer attention.
+    if(old.size>0&&removed.length>0&&removed.length*2>=old.size)
+      massRemovalTypes.push(type);
     changes[type]={added,removed,changed,unchanged};
   }
   return {schemaVersion:1,publication:'audit-only',eventId:next.eventId,
-    requiresIndependentReview:true,hasChanges:needsReview,changes};
+    requiresIndependentReview:true,hasChanges:needsReview,
+    requiresRemovalReview:massRemovalTypes.length>0,
+    massRemovalTypes,changes};
 }
