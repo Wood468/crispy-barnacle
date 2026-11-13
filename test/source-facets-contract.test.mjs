@@ -136,7 +136,8 @@ test('normalized replacement rule deduplicates unsupported stacking flags',()=>{
 });
 
 test('long benefit descriptions retain unique stable IDs beyond readable-slug truncation',()=>{
- const shared='Additional bonus when catching Pokémon at the selected ticketed session, under the independently verified event accessibility conditions, available only from your paid event day: ';
+ const shared='Synthetic ticketed-day benefit for a specific Special Research branch: '+'A'.repeat(67)+' ';
+ assert.ok(shared.length>128&&shared.length<160);
  const first=benefit('ticket',shared+'special research bonus for path Steel-type',duck,{kind:'candy'});
  const second=benefit('ticket',shared+'special research bonus for path Dragon-type',duck,{kind:'candy'});
  const one=normalizeEventSourceFacets('wag',[mk('leekduck',duck,{benefits:[first,second]})]);
