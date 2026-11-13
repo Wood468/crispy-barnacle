@@ -271,8 +271,11 @@ export function artCandidates(raw) {
   // PokeAPI uses "gimmighoul-roaming" (not "-roaming-form") for the
   // exact Coin Bag/GO Pass encounter. Chest Form is the default species.
   // Keep exact=true: a missing form must never silently display the other one.
-  const gimmighoul = /^Gimmighoul\s*\((Roaming|Chest)\s+Form\)$/i.exec(n);
-  if (gimmighoul) return { base: "gimmighoul", list: [gimmighoul[1].toLowerCase() === "roaming" ? "gimmighoul-roaming" : "gimmighoul"], exact: true };
+  // Both the official "Gimmighoul (Roaming Form)" and publisher/source
+  // "Roaming Form Gimmighoul" describe the same exact Pokémon variety.
+  // Chest is the default PokeAPI form, not a substitute for Roaming.
+  const gimmighoul = /^(?:Gimmighoul\s*\((Roaming|Chest)\s+Form\)|(Roaming|Chest)\s+Form\s+Gimmighoul)$/i.exec(n);
+  if (gimmighoul) return { base: "gimmighoul", list: [(gimmighoul[1] || gimmighoul[2]).toLowerCase() === "roaming" ? "gimmighoul-roaming" : "gimmighoul"], exact: true };
   // Source articles also say "Zacian (Crowned Sword)"; both spellings
   // are the *same exact form*, and neither may borrow Hero-of-Many-Battles art.
   const crownedSword = /^(?:Crowned Sword Zacian|Zacian\s*\(Crowned Sword\))$/i.test(n);
