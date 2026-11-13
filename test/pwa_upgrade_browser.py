@@ -133,10 +133,12 @@ with sync_playwright() as pw:
     page.keyboard.press('Escape')
     page.locator('nav.tabs button[data-tab="events"]').click()
     page.wait_for_selector('#tab-events:not([hidden])')
-    # A hidden first event card may precede the visible Schedule cards;
-    # check actual visible content instead of waiting on the first DOM match.
+    # A hidden/filtered first card is valid (for example a compact GO Pass row).
+    # Playwright's default wait_for_selector checks the FIRST matching element,
+    # so request a genuinely visible card rather than failing on a hidden sibling.
+    # Still fail when the selected Schedule view has no visible event cards.
     page.wait_for_selector('#tab-events .evc:visible', timeout=15000)
-    assert page.locator('#tab-events .evc:visible').count() > 0, 'no visible Schedule cards after offline PWA upgrade'
+    assert page.locator('#tab-events .evc:visible').count() > 0
     assert page.evaluate(READ_KEYS, KEYS) == SEED, 'keys changed after offline navigation on the new shell'
     assert page.evaluate('GO.dex().m.own[25]') == 1
 
