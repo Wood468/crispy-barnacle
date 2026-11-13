@@ -85,12 +85,34 @@ export function auditStoreArtwork({source='',items=[]}={}) {
     invalidLocalIcons:icons.filter(x=>!x.valid).length};
   return {policy:'Remote product images are publisher candidates only until visually reviewed against exact purchase slugs and rights. Shared imagery is ambiguous; never substitute a different SKU picture.',counts,localIcons:icons,remoteListings:entries,duplicateImages,invalid};
 }
+/* Audit the freshly fetched source, not just the filtered public log (which
+   includes passes/tickets/boxes but excludes standalone items). Rows remain
+   publisher image *candidates*, with no runtime approval or price values. */
+export function snapshotArtworkRows(snapshot) {
+  if(!snapshot||!Array.isArray(snapshot.items)||snapshot.items.length<3)
+    throw new Error('No usable Store snapshot for artwork audit');
+  return snapshot.items.map((row,index)=>{
+    if(!row||typeof row.name!=='string'||!row.name.trim())
+      throw new Error('Malformed Store snapshot item #'+(index+1)+': missing name');
+    const images=Array.isArray(row.imgs)?row.imgs:[];
+    return {
+      name:row.name,
+      href:typeof row.href==='string'?row.href:'',
+      image:images.length?images[0]:null,
+      imageStatus:images.length?'unverified-snapshot':'missing',
+      lastSeen:typeof snapshot.fetched==='string'?snapshot.fetched:null
+    };
+  });
+}
 export {remoteAsset,iconPaths,validateIcon};
 
 if(process.argv[1]&&pathToFileURL(resolve(process.argv[1])).href===import.meta.url){
   const source=readFileSync(join(ROOT,'public/store.js'),'utf8');
-  const log=JSON.parse(readFileSync(join(ROOT,'public/store-log.json'),'utf8'));
-  const result=auditStoreArtwork({source,items:log.items});
-  console.log(JSON.stringify(result,null,2));
+  const snapshotPath=process.argv[2];
+  const rows=snapshotPath
+    ? snapshotArtworkRows(JSON.parse(readFileSync(resolve(snapshotPath),'utf8')))
+    : JSON.parse(readFileSync(join(ROOT,'public/store-log.json'),'utf8')).items;
+  const result=auditStoreArtwork({source,items:rows});
+  console.log(JSON.stringify({input:snapshotPath?'fresh-store-snapshot':'public-store-log',...result},null,2));
   if(result.counts.invalidLocalIcons)process.exitCode=1;
 }
