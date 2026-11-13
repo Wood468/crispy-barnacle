@@ -329,15 +329,19 @@
          never delay the Store, including when a provider hangs. */
       if (typeof window.fetch === 'function') {
         try {
-          var statusResponse = await window.fetch('/store-current-snapshot.json', {cache:'no-store'});
-          if (statusResponse && statusResponse.ok) {
-            var sourceSnapshot = await statusResponse.json();
-            if (sourceSnapshot && sourceSnapshot.version === 1 &&
-                Array.isArray(sourceSnapshot.items) && Array.isArray(sourceSnapshot.gone))
-              d.storeSnapshot = sourceSnapshot;
-          }
-        } catch (_) { /* Never substitute a guessed current-offer list. */ }
+          var request = window.fetch('/store-current-snapshot.json', {cache:'no-store'})
+            .then(function (response) { return response && response.ok ? response.json() : null; })
+            .catch(function () { return null; });
+          var sourceSnapshot = await Promise.race([
+            request,
+            new Promise(function (resolve) { setTimeout(function () { resolve(null); }, 1600); })
+          ]);
+          if (sourceSnapshot && sourceSnapshot.version === 1 &&
+              Array.isArray(sourceSnapshot.items) && Array.isArray(sourceSnapshot.gone))
+            d.storeSnapshot = sourceSnapshot;
+        } catch (_) { /* Never infer active stock from historical prices. */ }
       }
+      if (!d.storeSnapshot) d.storeSnapshot = {version:1,updated:null,items:[],gone:[]};
       var h = regional(d) || build(d); /* Prefer the complete regional catalogue; avoid repeating the older IDR summary. */ if (!h) return;
       var el = document.getElementById('storep-host');
       if (!el) { el = document.createElement('div'); el.id = 'storep-host'; host.parentNode.insertBefore(el, host); }
