@@ -254,6 +254,98 @@
         indonesia: p.unpricedOfficial || ambiguous ? null : regionPrice({ region: 'ID', channel: 'web', product: p.label, kind: kind, aud: p.aud }) };
     });
   }
+  /* A very-low-confidence model for the otherwise sparse Indian shop.
+     Require an actual SAME-NAME IDR/INR observation pair; never infer a
+     market ratio from unrelated boxes or from USD/AUD FX conversion. */
+  function indianTrendFromIdr(idRef, obs, now) {
+    if (!idRef || idRef.basis !== 'estimate' || idRef.currency !== 'IDR' ||
+        !/pass/.test(String(idRef.kind))) return null;
+    var rows=(obs||[]).filter(function (o) {
+      return usable(o) && /pass/.test(String(o.kind || kindOf(o.product)))
+        && (o.region === 'ID' && o.channel === 'web' && o.currency === 'IDR'
+          || o.region === 'IN' && o.channel === 'in-app' && o.currency === 'INR');
+    });
+    var pairs=[];
+    rows.forEach(function (id) {
+      if (id.region !== 'ID') return;
+      var hits=rows.filter(function (x) { return x.region === 'IN' &&
+        norm(x.product) === norm(id.product) &&
+        (x.kind || kindOf(x.product)) === (id.kind || kindOf(id.product)); });
+      hits.forEach(function (indian) {
+        var ageId=ageDays(id.observed,now),ageIn=ageDays(indian.observed,now);
+        if (ageId===null || ageIn===null || ageId<0 || ageIn<0 ||
+            ageId>45 || ageIn>45 || id.amount<=0 || indian.amount<=0) return;
+        pairs.push({id:id,inr:indian,ratio:indian.amount/id.amount});
+      });
+    });
+    if (pairs.length !== 1) return null; // contradictory or multiple ratios require review
+    var pair=pairs[0], ratio=pair.ratio;
+    if (!Number.isFinite(ratio) || ratio<=0) return null;
+    var mid=Math.round(idRef.amount*ratio);
+    return {amount:mid,min:Math.max(1,Math.floor(idRef.min*ratio*0.70)),
+      max:Math.ceil(idRef.max*ratio*1.30),
+      currency:'INR',region:'IN',channel:'in-app',basis:'estimate',
+      label:'Estimate',confidence:'very low',samples:1,
+      observed:pair.inr.observed,kind:idRef.kind,
+      basisText:'Single historical same-product Indonesia/India pass ratio (' +
+        pair.id.product + ', ' + pair.inr.observed +
+        '); 30% extra uncertainty on an Indonesian tier estimate. Not an Indian checkout quote.'};
+  }
+  /* The latest public snapshot proves which exact SKUs were observed on the
+     official Web Store. It is not a checkout quote or regional price feed. */
+  var STORE_SLUG_ALIASES = {
+    'pokemon storage +1':'web-pokemon-storage-bundle',
+    'item bag +1':'web-item-storage-bundle',
+    'lucky egg x8':'web-luckyegg-bundle-8',
+    'star piece x8':'web-starpiece-bundle',
+    'remote raid pass x2':'web-remote-raidpass-bundle',
+    'egg incubator x3':'web-basic-incubator-3pack',
+    'super incubator x2':'web-super-incubator-2pack',
+    'premium battle pass x3':'web-premium-battle-pass-3',
+    'max particle pack x6':'web-mp-pack.6',
+    'max mushroom x3':'web-max-mushroom-3',
+    'silver pinap berries x10':'web-10-silver-pinap',
+    'golden razz berries x15':'web-15-gold-razz',
+    'max potions x10':'web-10-max-potions'
+  };
+  function currentCatalogue(items, snapshot, now, obs) {
+    var at=now==null?Date.now():now;
+    var seen=Date.parse(snapshot && snapshot.updated);
+    var valid=Number.isFinite(seen) && seen<=at && at-seen<=2*DAY &&
+      Array.isArray(snapshot.items) && snapshot.version===1;
+    var source=valid?snapshot.items:[], matching=new Map();
+    source.forEach(function (r) {
+      if (!r || typeof r.name!=='string' || typeof r.slug!=='string' ||
+          !/^[a-z0-9._-]+$/.test(r.slug) || !Number.isFinite(Date.parse(r.seenAt)) ||
+          Date.parse(r.seenAt)>seen || seen-Date.parse(r.seenAt)>60*60*1000) return;
+      var key=norm(r.name);
+      if (!matching.has(key)) matching.set(key,[]);
+      matching.get(key).push(r);
+    });
+    var current=[], historical=[];
+    (items||[]).forEach(function (item) {
+      var key=norm(item.label), matches=matching.get(key)||[];
+      if (!matches.length && STORE_SLUG_ALIASES[key]) {
+        matches=source.filter(function (x) { return x && x.slug===STORE_SLUG_ALIASES[key]; });
+      }
+      // Ambiguous name joins must never claim a specific SKU is currently sold.
+      if (matches.length!==1) { historical.push(item); return; }
+      var row=matches[0], art=typeof row.image==='string' &&
+        /^https:\/\/assets\.pgo\.webstore\.nianticlabs\.com\/pgo\/image_variants\/v1\/sku_assets\/[a-z0-9_.%()-]+\/w256\.webp$/i.test(row.image)
+          ? row.image : null;
+      var model = {};
+      if (item.unpricedOfficial) {
+        // A publisher announcement is not a checkout price. Only a separately
+        // confirmed current listing may show an explicitly labelled model.
+        var kind = kindOf(item.label);
+        model.indonesia = estimate({region:'ID',channel:'web',product:item.label,kind:kind,aud:item.aud},obs,at);
+        model.india = estimate({region:'IN',channel:'in-app',product:item.label,kind:kind,aud:item.aud},obs,at)
+          || indianTrendFromIdr(model.indonesia,obs,at);
+      }
+      current.push(Object.assign({},item,model,{storeSlug:row.slug,storeArt:art,listedAt:row.seenAt}));
+    });
+    return {current:current,historical:historical,checkedAt:valid?snapshot.updated:null,stale:!valid};
+  }
   /* Owner-only audit of source coverage, not a live checkout or a price
      prediction. Keep absent, modelled and recorded prices distinguishable. */
   function coverage(rows, now, reviewDays) {
@@ -289,5 +381,5 @@
     return result;
   }
   function fmt(v, cur) { var sym = cur === 'IDR' ? 'Rp ' : cur === 'INR' ? '₹' : cur === 'AUD' ? 'A$' : ''; return sym + Number(v).toLocaleString('en-AU', cur === 'AUD' ? { minimumFractionDigits: 2, maximumFractionDigits: 2 } : { maximumFractionDigits: 0 }); }
-  return { kindOf: kindOf, exact: exact, estimate: estimate, reference: reference, cheapest: cheapest, review: review, catalogue: catalogue, coverage: coverage, channels: channels, confidence: confidence, fmt: fmt, ageDays: ageDays, REGIONS: REGIONS, CHANNELS: CHANNELS };
+  return { kindOf: kindOf, exact: exact, estimate: estimate, reference: reference, cheapest: cheapest, review: review, catalogue: catalogue, currentCatalogue: currentCatalogue, coverage: coverage, channels: channels, confidence: confidence, fmt: fmt, ageDays: ageDays, REGIONS: REGIONS, CHANNELS: CHANNELS };
 });

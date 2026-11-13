@@ -45,8 +45,14 @@ test('owner Store shows one AUD placeholder before each local price without wait
   // An Australian-only verified item guarantees an honest unobserved ID/IN cell.
   const prices = {owner:true,prices:[{product:'store-test-au-only',label:'AU-only fixture',
     region:'AU',currency:'AUD',verified:true,amount:5,group:'Items',observed:'2026-11-12'}],regional:OBSERVATIONS};
+  const fresh=new Date().toISOString();
   const win = {GOStoreFX:FX,GORegionalPrices:R,
-    fetch:()=>new Promise(resolve=>{resolveFx=resolve;}),
+    fetch:url=>url==='/store-current.json'
+      ? Promise.resolve({ok:true,json:async()=>({version:1,updated:fresh,items:[
+        {name:'GO Pass Deluxe: Into the Wild',slug:'web-event-pass-gowa-26',seenAt:fresh},
+        {name:'AU-only fixture',slug:'fixture-au',seenAt:fresh}
+      ]})})
+      : new Promise(resolve=>{resolveFx=resolve;}),
     GOLIB:{esc:s=>String(s),loadPrices:async()=>prices},
     localStorage:{getItem:()=>null,setItem(){}},console};
   const doc={readyState:'complete',getElementById:id=>id==='evsource'?host:id==='storep-host'?el:null,

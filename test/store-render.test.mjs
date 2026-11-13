@@ -151,8 +151,8 @@ test('owner Store view renders verified Indonesian prices and regional-only rows
     'XP, egg and Stardust images must not masquerade as Coins, Incubators or Star Pieces');
   assert.doesNotMatch(el.innerHTML, /src="\/ico\/g\/event\.webp"/,
     'generic event artwork must not masquerade as a particular Store box');
-  assert.match(el.innerHTML, /class="sp-i-token"[^>]*>◎<\/span>/,
-    'PokéCoin rows use a distinct neutral coin token rather than XP artwork');
+  assert.match(el.innerHTML, /class="sp-i-token sp-i-glyph"[^>]*data-sp-icon-kind="coin"[^>]*><svg/,
+    'PokéCoin rows use a distinct original coin pictogram rather than XP artwork');
 
   const itemCards = (el.innerHTML.match(/<article class="sp-product"[\s\S]*?<\/article>/g) || []);
   const cardFor = label => itemCards.find(card => card.includes('<b>' + label + '</b>'));

@@ -4,6 +4,7 @@ Run against the real static application served on localhost:8791. No owner API
 response, credentials or actual regional price data enter CI artifacts.
 """
 import json
+from datetime import datetime, timezone
 from pathlib import Path
 from playwright.sync_api import sync_playwright
 
@@ -35,6 +36,14 @@ with sync_playwright() as p:
                                       service_workers="block", locale="en-AU")
         page = context.new_page()
         page.route("**/api/**", lambda route: route.fulfill(status=404, body="{}"))
+        now = datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
+        # Current-SKU membership is public and contains no prices. Route only
+        # the exact synthetic fixture; do not use the owner's real checkout data.
+        source = {"version": 1, "updated": now, "items": [
+            {"name": "Synthetic Test Ticket", "slug": "synthetic-test-ticket", "seenAt": now}
+        ]}
+        page.route("**/store-current.json", lambda route: route.fulfill(
+            status=200, content_type="application/json", body=json.dumps(source)))
         page.goto(BASE, wait_until="domcontentloaded")
         # The regional Store is rendered inside the Events timeline panel.
         # Activate that real app surface before checking visibility or layout.
@@ -58,7 +67,7 @@ with sync_playwright() as p:
                 document.body.appendChild(host);
             }
         }""", FIXTURE)
-        page.add_script_tag(url="/store.js?v=20261113q-store770a11y")
+        page.add_script_tag(url="/store.js?v=20261114a-store798")
         # Wait for attachment first: the product may live in a collapsed category.
         target = ".storep-regional [data-sp-name*='synthetic test ticket']"
         page.wait_for_selector(target, state="attached")

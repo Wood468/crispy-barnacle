@@ -28,8 +28,8 @@
     if (/^incense(?:\s*[×x]\s*[1-9]\d*)?$/i.test(name)) return 'INS';
     if (/pok[eé]coins?/i.test(name)) return '◎';
     if (/storage|item bag|bag upgrade|capacity/i.test(name)) return '↑';
-    if (/^go[- ]pass|monthly.*pass|(?:event|admission).*ticket/i.test(name)) return 'PASS';
-    if (/\s\+\s/.test(name) || /\b(?:boxes?|bundles?)\b/i.test(name)) return '▣';
+    if (/^go[- ]pass|monthly.*(?:pass|deluxe)|(?:event|admission).*ticket|wild area.*ticket/i.test(name)) return 'PASS';
+    if (/\s\+\s/.test(name) || /\b(?:box(?:es)?|bundle(?:s)?)\b/i.test(name)) return '▣';
     if (/^(?:remote )?raid pass(?:es)?(?:\s*[×x]\s*\d+)?$|^premium battle pass(?:es)?(?:\s*[×x]\s*\d+)?$/i.test(name)) return 'PASS';
     if (/^elite (?:fast|charged) tm(?:s)?(?:\s*[×x]\s*\d+)?$/i.test(name)) return 'TM';
     if (/lucky eggs?/i.test(name)) return 'LE';
@@ -46,12 +46,39 @@
     if (/\bpack\b/i.test(name)) return '▣';
     return '·';
   }
+  /* Original neutral vector symbols for not-yet-approved publisher item art.
+     A meaningful category icon is better than a PASS/UP/placeholder text badge,
+     but never pretends to be Niantic's exact item artwork. */
+  function fallbackGlyph(label, token) {
+    var kind = /item bag/i.test(label) ? 'bag'
+      : /storage|capacity/i.test(label) ? 'storage'
+      : /pok[eé]coins?/i.test(label) ? 'coin'
+      : /lucky egg/i.test(label) ? 'egg'
+      : /star piece/i.test(label) ? 'star'
+      : /incubator/i.test(label) ? 'incubator'
+      : /go pass|monthly deluxe|ticket/i.test(label) ? 'ticket'
+      : /box|bundle|pack|kit/i.test(label) ? 'box' : 'item';
+    var paths = {
+      bag:'<path d="M5 8h14l1 13H4L5 8Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/>',
+      storage:'<rect x="3" y="5" width="18" height="14" rx="3"/><path d="M8 12h8m-4-4v8"/>',
+      coin:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="M10 10h4m-2-2v8"/>',
+      egg:'<path d="M12 3c-4 0-7 7-7 12a7 7 0 0 0 14 0c0-5-3-12-7-12Z"/><path d="M9 15l2 2 4-4"/>',
+      star:'<path d="m12 2 2.3 7.7L22 12l-7.7 2.3L12 22l-2.3-7.7L2 12l7.7-2.3Z"/>',
+      incubator:'<path d="M9 3h6m-5 0v7l-5 7a3 3 0 0 0 3 4h8a3 3 0 0 0 3-4l-5-7V3"/><path d="M7 16h10"/>',
+      ticket:'<path d="M3 7h18v4a2 2 0 0 0 0 4v3H3v-3a2 2 0 0 0 0-4Z"/><path d="M13 7v2m0 3v1m0 3v2"/>',
+      box:'<path d="m3 7 9-4 9 4v10l-9 4-9-4Z"/><path d="m3 7 9 4 9-4m-9 4v10"/>',
+      item:'<rect x="5" y="5" width="14" height="14" rx="4"/><path d="M12 9v6m-3-3h6"/>'
+    };
+    return '<span class="sp-i-token sp-i-glyph" aria-hidden="true" data-sp-art="category-token" data-sp-icon-kind="' + kind + '">'
+      + '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'
+      + paths[kind] + '</svg></span>';
+  }
   function icon(label) {
     var token = kindToken(label);
     for (var i = 0; i < ICO.length; i++) if (ICO[i][0].test(label)) {
       return '<img class="sp-i" src="' + esc(ICO[i][1]) + '" alt="" width="28" height="28" loading="lazy" decoding="async" data-sp-fallback="' + esc(token || '·') + '">';
     }
-    return '<span class="sp-i-token" aria-hidden="true" data-sp-art="category-token">' + esc(token) + '</span>';
+    return fallbackGlyph(label, token);
   }
   function priority(p) {
     var label = String(p.label || ''), group = String(p.group || ''), kind = String(p.kind || '');
@@ -248,10 +275,14 @@
        regional observation feed is empty, delayed or unavailable. */
     var obs = Array.isArray(data.regional) ? data.regional : [];
     var prices = Array.isArray(data.prices) ? data.prices : [];
-    var items = R.catalogue(prices, obs, undefined, window.GOStoreOfferIdentities);
-    if (!items.length) return '';
+    var allItems = R.catalogue(prices, obs, undefined, window.GOStoreOfferIdentities);
+    if (!allItems.length) return '';
+    var membership = data.currentStore === undefined
+      ? {current:allItems,historical:[],checkedAt:null,stale:false}
+      : R.currentCatalogue(allItems, data.currentStore, Date.now(), obs);
+    var items = membership.current, archived = membership.historical;
     var comparableOffers = verifiedOptionsHtml(obs);
-    var reviewPanel = coveragePanel(items, R);
+    var reviewPanel = coveragePanel(allItems, R);
     var sections = [
       { id: 'passes', label: 'Passes & tickets', open: true },
       { id: 'storage', label: 'Storage upgrades', open: true },
@@ -289,12 +320,20 @@
         + '<summary>' + esc(s.label) + ' <small>' + bySection[s.id].length + ' products</small></summary>'
         + '<div class="sp-group-items">' + bySection[s.id].map(productCard).join('') + '</div></details>';
     }).join('');
-    return '<details class="storep storep-regional" open><summary>Regional Store prices <small>' + items.length + ' products · AU / ID / IN</small></summary>'
-      + '<p class="sp-intro">Dated Store observations, not live checkout quotes. Approximate A$ values use <a href="https://www.exchangerate-api.com/" target="_blank" rel="noopener noreferrer">ExchangeRate-API</a> reference rates. “Not observed” means no sourced price for that region.</p>'
+    var checked = membership.checkedAt ? when(membership.checkedAt.slice(0,10)) : '';
+    var archive = archived.length ? '<details class="sp-compare-more sp-archive" data-sp-archive>'
+      + '<summary>Historical price observations <small>' + archived.length + ' past or unconfirmed</small></summary>'
+      + '<p class="note">These are retained for pricing research, not confirmed for purchase today. Expand only when comparing previous offers.</p>'
+      + '<ul>' + archived.map(function (p) { return '<li>' + esc(p.label) + '</li>'; }).join('') + '</ul></details>' : '';
+    return '<details class="storep storep-regional" open><summary>Regional Store prices <small>' + items.length + ' recently listed · AU / ID / IN</small></summary>'
+      + '<p class="sp-intro">' + (membership.stale
+        ? 'Current official Store membership cannot be confirmed. Historical prices are kept below, not presented as live.'
+        : 'Official Store products last observed ' + esc(checked) + '. Regional checkout prices are historical observations or clearly labelled estimates, never live quotes.')
+        + ' “Not observed” means no sourced price for that region. Approximate A$ values use <a href="https://www.exchangerate-api.com/" target="_blank" rel="noopener noreferrer">ExchangeRate-API</a> reference rates.</p>'
       + reviewPanel
       + '<label class="sp-search"><span>Find a product</span><input type="search" data-sp-search placeholder="Search passes, storage, coins or items" aria-label="Search Store products" autocomplete="off"></label>'
       + '<p class="sp-results" data-sp-results aria-live="polite">' + items.length + ' products · ' + sections.filter(function (s) {return bySection[s.id].length;}).length + ' categories</p>'
-      + '<div class="sp-catalogue">' + catalogue + '</div>'
+      + '<div class="sp-catalogue">' + catalogue + '</div>' + archive
       + (comparableOffers ? '<details class="sp-compare-more"><summary>Verified regional purchase options <small>Advanced comparison</small></summary>'
       + '<p class="note">Source-verified regional items, passes, storage and coin packs are listed by exact product and channel. A lowest observed cash price is named only when two or more channels share an explicit verified product SKU and currency. Estimated, recorded-only and ambiguous boxes cannot win; no result is a live checkout quote.</p>'
       + '<div data-sp-cheapest>' + comparableOffers + '</div></details>' : '') + '</details>';
@@ -303,6 +342,14 @@
     var host = document.getElementById('evsource'); if (!host || !window.GOLIB) return;
     GOLIB.loadPrices().then(async function (d) {
       if (!d || !d.owner) return; /* Owner-only regional prices stay private. */
+      // Public current-SKU membership contains NO private prices.
+      // Fail closed if it is missing or stale; never resurrect retired passes.
+      if (typeof window.fetch === 'function') {
+        try {
+          var response = await window.fetch('/store-current.json', {cache:'no-store'});
+          d.currentStore = response.ok ? await response.json() : {version:0,items:[]};
+        } catch (_) { d.currentStore = {version:0,items:[]}; }
+      }
       /* Render local observed prices immediately; an external FX request must
          never delay the Store, including when a provider hangs. */
       var h = regional(d) || build(d); /* Prefer the complete regional catalogue; avoid repeating the older IDR summary. */ if (!h) return;

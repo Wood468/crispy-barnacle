@@ -74,7 +74,8 @@ test('quantity wording does not permit using exact art for bundles or other item
 test('Store icon code and offline shell share the new source version',()=>{
   const index=readFileSync(new URL('../public/index.html',import.meta.url),'utf8');
   const sw=readFileSync(new URL('../public/sw.js',import.meta.url),'utf8');
-  assert.match(index,/store\.js\?v=20261113q-store770a11y/);
-  assert.match(sw,/store\.js\?v=20261113q-store770a11y/);
+  const current=index.match(/\/store\.js\?v=\d{8}[a-z](?:-[a-z0-9]+)?/i);
+  assert.ok(current,'Store entry script must carry a versioned asset URL');
+  assert.ok(sw.includes(current[0]),'PWA shell must cache the same Store script version');
   assert.doesNotMatch(sw,/store\.js\?v=20261113m/);
 });
