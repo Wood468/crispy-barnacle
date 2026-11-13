@@ -1,5 +1,5 @@
 {
- "runAt": "2026-11-13T00:40:54.456Z",
+ "runAt": "2026-11-13T00:50:19.832Z",
  "artworkCoverage": {
   "selected": 27,
   "missing": 75,
@@ -1406,7 +1406,16 @@
      "featuredMoves": 0,
      "researchPrograms": 2
     }
-   ]
+   ],
+   "normalizedCounts": {
+    "events": 37,
+    "benefits": 19,
+    "featuredMoves": 4,
+    "researchPrograms": 12,
+    "disputed": 0,
+    "unconfirmed": 0,
+    "warnings": 0
+   }
   }
  }
 }
