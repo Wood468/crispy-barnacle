@@ -167,7 +167,16 @@
   document.addEventListener('keydown',function (e) {
     var h=$('boss-guide-dialog');if(!h||h.hidden)return;
     if(e.key==='Escape'){e.preventDefault();close();}
-    else if(e.key==='Tab'){e.preventDefault();var b=h.querySelector('[data-boss-guide-close]');if(b)b.focus();}
+    else if(e.key==='Tab'){
+      /* Keep keyboard focus in the dialog without blocking the creator/source links. */
+      var focusable=[].slice.call(h.querySelectorAll('button:not([disabled]),a[href]')).filter(function (el) {
+        return !el.hidden && el.tabIndex >= 0;
+      });
+      if(!focusable.length){e.preventDefault();return;}
+      var first=focusable[0],last=focusable[focusable.length-1],active=document.activeElement;
+      if(e.shiftKey && (active===first || !h.contains(active))){e.preventDefault();last.focus();}
+      else if(!e.shiftKey && (active===last || !h.contains(active))){e.preventDefault();first.focus();}
+    }
   },true);
   var input=$('boss-guide-search');if(input)input.addEventListener('input',function(){
     search=input.value.trim().toLowerCase();render();
