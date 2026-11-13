@@ -49,3 +49,32 @@ test('event approval and additional event links select the event field, never th
   assert.match(handlers,/card\.querySelector\('select\[aria-label="Link to another event"\]'\)/);
   assert.doesNotMatch(handlers,/card\.querySelector\('select'\)/);
 });
+
+
+test('header action is the sole owner review CTA, with a fallback for older shells',async()=>{
+  const {runInNewContext}=await import('node:vm');
+  const fn=review.slice(review.indexOf('  function banner(n) {'),review.indexOf('  function gotoReview() {'));
+  assert.ok(fn.startsWith('  function banner(n) {'));
+  function exercise(headerPresent,oldBannerPresent){
+    let banner=oldBannerPresent?{removed:false,remove(){this.removed=true}}:null, created=0;
+    const action=headerPresent?{hidden:true,attrs:{},classList:{toggle(){}},setAttribute(k,v){this.attrs[k]=v}}:null;
+    const count={hidden:true,textContent:''};
+    const doc={getElementById:()=>({insertBefore(x){banner=x}}),createElement(tag){created++;return {tag,hidden:true,textContent:''}}};
+    const scope={isOwner:()=>true,hideOwnerUi(){throw Error('owner unexpectedly hidden')},document:doc,
+      $:id=>id==='hireview'?action:id==='igcount'?count:id==='igbanner'?banner:null};
+    runInNewContext(fn+'; banner(5);',scope);
+    return {action,count,banner,created};
+  }
+  const owner=exercise(true,false);
+  assert.equal(owner.action.hidden,false);
+  assert.equal(owner.action.attrs['aria-label'],'5 infographics waiting for review');
+  assert.equal(owner.count.textContent,'5');
+  assert.equal(owner.count.hidden,false);
+  assert.equal(owner.banner,null,'no second full-width Today CTA should be created');
+  assert.equal(owner.created,0);
+  const existing=exercise(true,true);
+  assert.equal(existing.banner.removed,true,'stale old banner must be removed');
+  const fallback=exercise(false,false);
+  assert.equal(fallback.created,1,'older shells without the header action retain review access');
+  assert.match(fallback.banner.textContent,/5 infographics waiting for your review/);
+});
