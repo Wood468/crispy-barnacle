@@ -3,7 +3,6 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { createRequire } from 'node:module';
 import { storeCurrentSnapshot } from '../scripts/store-watch.mjs';
-import { IMAGE_CSP_HOSTS } from '../src/image-policy.js';
 const require = createRequire(import.meta.url);
 const R = require('../public/regional-prices.js');
 const snapshot = JSON.parse(readFileSync(new URL('../public/store-current-snapshot.json', import.meta.url)));
@@ -50,17 +49,17 @@ test('November, Into the Wild and standard coin pack are recently observed, neve
     const result = R.sourceOffer(name, fixture, NOW);
     assert.equal(result.status, 'listed', name);
     assert.match(result.note, /Seen in|latest Store snapshot/i);
-    assert.ok(R.sourceArt(result.image), name);
+    assert.equal(result.image, null, 'unapproved publisher artwork stays out of runtime');
   }
 });
 
 test('matching an item-family icon never conflates distinct store variants for availability', () => {
   const storage = R.sourceOffer('Pokémon Storage +1', fixture, NOW);
   assert.equal(storage.status, 'unconfirmed');
-  assert.ok(R.sourceArt(storage.image), 'exact storage item art may decorate an unconfirmed pack');
+  assert.equal(storage.image, null, 'item-family publisher art cannot be approved by name similarity');
   const lucky = R.sourceOffer('Lucky Egg x8', fixture, NOW);
   assert.equal(lucky.status, 'unconfirmed', 'item-family art does not prove the package SKU');
-  assert.ok(R.sourceArt(lucky.image));
+  assert.equal(lucky.image, null);
   const unknown = R.sourceOffer('Entirely New Mystery Ultra Box', fixture, NOW);
   assert.equal(unknown.status, 'unconfirmed');
   assert.equal(unknown.image, null);
@@ -107,7 +106,8 @@ test('India in-app coin packs are recorded separately from AU Web packs and neve
   assert.equal(OBSERVATIONS.find(x => x.id === 'in-itw-deluxe')?.amount,439);
 });
 
-test('exact official artwork CDN is image-only allowlisted, without wildcard hosts', () => {
-  assert.ok(IMAGE_CSP_HOSTS.includes('https://assets.pgo.webstore.nianticlabs.com'));
-  assert.ok(!IMAGE_CSP_HOSTS.some(host => host.includes('*')));
+test('publisher image candidates remain unapproved for runtime display', () => {
+  const { IMAGE_CSP_HOSTS } = require('../src/image-policy.js');
+  assert.equal(IMAGE_CSP_HOSTS.includes('https://assets.pgo.webstore.nianticlabs.com'),false);
+  assert.equal(R.sourceOffer('GO Pass Deluxe: November', fixture, NOW).image,null);
 });
