@@ -15,12 +15,36 @@ const FIELDS={
 };
 const clone=value=>JSON.parse(JSON.stringify(value));
 const identifier=value=>typeof value==='string'&&/^[a-z0-9][a-z0-9:._-]{0,159}$/i.test(value);
+const safeText=(value,max)=>typeof value==='string'?value.slice(0,max):'';
+const sourceReference=ref=>{
+  // Public review citations must not carry query-string credentials or
+  // arbitrary nested metadata supplied by an upstream collector.
+  const u=new URL(ref.url);
+  u.search='';u.hash='';
+  return {
+    sourceId:safeText(ref.sourceId,30),
+    url:u.toString(),
+    section:safeText(ref.section,160)
+  };
+};
 const project=(type,record)=>{
   const result={};
-  for(const field of FIELDS[type])if(Object.hasOwn(record,field))result[field]=clone(record[field]);
-  result.sourceRefs=record.sourceRefs.map(ref=>({
-    sourceId:ref.sourceId,url:ref.url,section:ref.section
-  }));
+  for(const field of FIELDS[type]){
+    if(!Object.hasOwn(record,field)||record[field]===undefined)continue;
+    if(field==='steps'){
+      result.steps=Array.isArray(record.steps)?record.steps.map(step=>({
+        step:step.step,outOf:step.outOf,
+        title:safeText(step.title,160),
+        taskRewardEvidence:safeText(step.taskRewardEvidence,40)
+      })):[];
+    }else if(field==='paths'){
+      result.paths=Array.isArray(record.paths)?record.paths.map(path=>safeText(path,100)):[];
+    }else if(field==='acquisitionMethods'){
+      result.acquisitionMethods=Array.isArray(record.acquisitionMethods)?
+        record.acquisitionMethods.filter(x=>['catch','evolve','raid'].includes(x)):[];
+    }else result[field]=clone(record[field]);
+  }
+  result.sourceRefs=record.sourceRefs.map(sourceReference);
   return result;
 };
 
