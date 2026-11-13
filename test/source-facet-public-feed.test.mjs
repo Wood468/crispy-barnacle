@@ -132,3 +132,21 @@ test('unreconciled existing feed cannot be replaced even with its correct hash',
     expectedPreviousFeedSha256:digest(corrupt)}),/cannot be safely reconciled/);
   assert.deepEqual(await readFile(target),corrupt);
 }));
+
+test('signed but disputed claim status cannot enter public feed',async()=>sandbox(async rootDir=>{
+  const record={...verified(),benefits:[{...benefit,status:'disputed'}]};
+  const signature=await seed(rootDir,record);
+  await assert.rejects(publishApprovedFacetFeed({rootDir,
+    expectedSha256ByEvent:{'synthetic:global.2026':signature}}),
+    /Invalid verified facet claim/);
+  await assert.rejects(readFile(join(rootDir,'public','verified-event-facets.json')),/ENOENT/);
+}));
+test('nonstandard HTTPS ports cannot masquerade as exact official source origins',async()=>sandbox(async rootDir=>{
+  const record={...verified(),benefits:[{...benefit,sourceRefs:[{...source,
+    url:'https://pokemongo.com:8443/news/synthetic/'}]}]};
+  const signature=await seed(rootDir,record);
+  await assert.rejects(publishApprovedFacetFeed({rootDir,
+    expectedSha256ByEvent:{'synthetic:global.2026':signature}}),
+    /Invalid source provenance/);
+  await assert.rejects(readFile(join(rootDir,'public','verified-event-facets.json')),/ENOENT/);
+}));
