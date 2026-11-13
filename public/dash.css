@@ -2354,10 +2354,10 @@ button.rc-chip:focus-visible{outline:2px solid var(--color-link);outline-offset:
 
 
 /* Owner infographic approval: one exact source-backed raid boss, iPhone-safe. */
-.ig-boss-controls{display:grid;grid-template-columns:minmax(0,1fr);gap:8px;padding:12px;border:1px solid var(--color-border,#343d51);border-radius:12px;background:var(--color-surface-raised,#1c2330)}
-.ig-boss-controls label{display:grid;grid-template-columns:minmax(0,1fr);gap:7px;min-width:0;font-size:.82rem;font-weight:700}
-.ig-boss-controls select{box-sizing:border-box;display:block;width:100%;min-width:0;min-height:48px;padding:10px 12px;border-radius:10px;border:1px solid var(--color-border,#455169);background:var(--color-surface,#141b27);color:var(--color-text,#f2f4fa);font-size:16px;line-height:1.4;color-scheme:dark}
+.ig-boss-controls{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--space-2);padding:var(--space-3);border:1px solid var(--color-border,#343d51);border-radius:var(--radius-md);background:var(--color-surface-raised,#1c2330)}
+.ig-boss-controls label{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--space-2);min-width:0;font-size:var(--type-body-sm);font-weight:700}
+.ig-boss-controls select{box-sizing:border-box;display:block;width:100%;min-width:0;min-height:48px;padding:var(--space-2) var(--space-3);border-radius:var(--radius-control);border:1px solid var(--color-border,#455169);background:var(--color-surface,#141b27);color:var(--color-text,#f2f4fa);font-size:var(--type-body);line-height:1.4;color-scheme:dark}
 .ig-boss-controls select:focus-visible{outline:2px solid #8baaff;outline-offset:2px}
 .ig-boss-controls .pill{justify-self:start;min-height:44px}
 .ig-boss-controls .pill:disabled{opacity:.48;cursor:not-allowed}
-.ig-boss-controls small{font-size:.76rem;line-height:1.5;color:var(--color-text-muted,#9ba6b8)}
+.ig-boss-controls small{font-size:var(--type-meta-compact);line-height:1.5;color:var(--color-text-muted,#9ba6b8)}
