@@ -279,7 +279,9 @@
         earlier.push(p);
       else bySection[category].push(p);
     });
-    var listedCount = items.length - earlier.length;
+    var visibleItems = sections.reduce(function (all, section) { return all.concat(bySection[section.id]); }, []);
+    var listedCount = snapshot ? visibleItems.filter(function (p) { return p.sourceOffer.status === 'listed'; }).length : 0;
+    var unconfirmedCount = snapshot ? visibleItems.filter(function (p) { return p.sourceOffer.status !== 'listed'; }).length : 0;
     function productCard(p) {
       var au = p.aud > 0
         ? '<span class="sp-regional-value sp-ver"><b>' + esc(R.fmt(p.aud, 'AUD')) + '</b><small>Verified · ' + esc(when(p.observed)) + '</small></span>'
@@ -322,11 +324,11 @@
         + '<p class="sp-intro">These are retained for comparison, not offered as live checkout products. Missing from one regional snapshot is not proof of global retirement.</p>'
         + '<div class="sp-group-items">' + earlier.map(productCard).join('') + '</div></details>';
     }
-    return '<details class="storep storep-regional" open><summary>Regional Store prices <small>' + (snapshot ? listedCount + ' recently listed · ' + earlier.length + ' historical/unconfirmed' : items.length + ' historical price records') + '</small></summary>'
+    return '<details class="storep storep-regional" open><summary>Regional Store prices <small>' + (snapshot ? listedCount + ' recently listed · ' + unconfirmedCount + ' visible unconfirmed · ' + earlier.length + ' previous/unconfirmed' : items.length + ' historical price records') + '</small></summary>'
       + '<p class="sp-intro">Recently listed offers appear in the main list; stable items with historical prices may also appear clearly marked unconfirmed. Earlier observations remain searchable under Previous / unconfirmed offers. Store availability varies by region, purchase channel and account. Dated prices are not live checkout quotes. Approximate A$ values use <a href="https://www.exchangerate-api.com/" target="_blank" rel="noopener noreferrer">ExchangeRate-API</a> reference rates. “Not observed” means no sourced price for that region.</p>'
       + reviewPanel
       + '<label class="sp-search"><span>Find a product</span><input type="search" data-sp-search placeholder="Search passes, storage, coins or items" aria-label="Search Store products" autocomplete="off"></label>'
-      + '<p class="sp-results" data-sp-results aria-live="polite">' + (snapshot ? listedCount + ' recently listed · ' + earlier.length + ' previous/unconfirmed' : items.length + ' priced products · snapshot unavailable') + '</p>'
+      + '<p class="sp-results" data-sp-results aria-live="polite">' + (snapshot ? listedCount + ' recently listed · ' + unconfirmedCount + ' visible unconfirmed · ' + earlier.length + ' previous/unconfirmed' : items.length + ' priced products · snapshot unavailable') + '</p>'
       + '<div class="sp-catalogue">' + catalogue + '</div>'
       + (comparableOffers ? '<details class="sp-compare-more"><summary>Verified regional purchase options <small>Advanced comparison</small></summary>'
       + '<p class="note">Source-verified regional items, passes, storage and coin packs are listed by exact product and channel. A lowest observed cash price is named only when two or more channels share an explicit verified product SKU and currency. Estimated, recorded-only and ambiguous boxes cannot win; no result is a live checkout quote.</p>'
