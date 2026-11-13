@@ -181,6 +181,9 @@ with sync_playwright() as p:
         page.locator('#evd #evd-h-research').scroll_into_view_if_needed()
         page.evaluate('window.scrollBy(0, -110)')
         shot(page, f'accuracy-research-count-{width}')
+        if SHOTS:
+            # Capture the complete panel, not merely the visible first screen.
+            page.locator('#evd-s-research').screenshot(path=f'{SHOTS}/accuracy-research-panel-{width}.png')
         page.locator('#evd .evd-nav-link[data-sec="passes"]').click()
         page.locator('#evd .ue-pass-count').first.scroll_into_view_if_needed()
         page.evaluate('window.scrollBy(0, -110)')
