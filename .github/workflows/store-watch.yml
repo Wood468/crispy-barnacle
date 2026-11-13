@@ -35,6 +35,10 @@ jobs:
           python -m playwright install --with-deps chromium
       - name: Test regional price safeguards
         run: node --test test/store-au-prices.test.mjs test/regional-prices.test.cjs test/regional-observations.test.mjs
+      - name: Audit known publisher-only listings and missing regional prices
+        run: |
+          node --test test/store-catalogue-audit.test.mjs
+          node scripts/store-catalogue-audit.mjs
       - name: Read the store
         run: python scripts/store_snapshot.py /tmp/store-snapshot.json
       - name: Refresh verified Australian catalogue when snapshot explicitly uses A$
