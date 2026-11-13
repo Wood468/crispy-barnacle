@@ -73,7 +73,7 @@ def test_real_today_renderer_geometry():
                 page.add_style_tag(content=CSS)
                 page.add_script_tag(content=(ROOT / "public" / "today-logic.js").read_text())
                 page.add_script_tag(content=(ROOT / "public" / "today.js").read_text())
-                page.evaluate("""(png) => {{
+                page.evaluate("""(png) => {
                   const now = Date.UTC(2026,10,14,10), hour = 3600000;
                   const minor = {id:'fixture-compact',name:'GO Wild Area: Global — long compact artwork containment fixture',
                     kind:'spot',start:now+hour,end:now+2*hour,region:'Global',
