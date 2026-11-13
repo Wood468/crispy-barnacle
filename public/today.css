@@ -124,6 +124,10 @@
 .t1-done-note{margin:0}
 .t1-done-list li{display:flex;align-items:center;justify-content:space-between;gap:var(--space-3);padding:4px 4px 4px var(--space-3);border-radius:var(--radius-md);border:1px dashed var(--border-subtle);font-size:var(--type-body-compact)}
 .t1-done-list small{color:var(--color-text-muted)}
+/* Keep long event names and venue/type metadata on separate lines in restore rows. */
+.t1-done-list li > span:first-child{display:grid;flex:1 1 auto;gap:3px;min-width:0;line-height:1.3;overflow-wrap:anywhere}
+.t1-done-list li > span:first-child small{display:block;min-width:0;line-height:1.35;overflow-wrap:anywhere}
+.t1-done-list li > .t1-restore{flex:0 0 auto}
 .t1-restore{min-height:44px;min-width:44px;padding:0 var(--space-4);border-radius:var(--radius-control);border:1px solid var(--border-subtle);background:var(--color-surface);font-weight:700}
 .today-extras{display:grid;gap:var(--space-4);margin-top:var(--space-5)}
 
