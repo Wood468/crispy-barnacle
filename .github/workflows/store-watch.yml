@@ -77,7 +77,7 @@ jobs:
           # The live planner reads public/store-log.json from the deployed site, so a real change (an item appeared, left or changed
           # price) must be deployed. A new "checked" time on its own is not worth a deploy, so that commit stays [skip ci].
           msg="Store watch: remember what was seen [skip ci]"
-          if git diff --cached -U0 -- public/store-log.json public/prices.json | grep -E '^[+-] ' | grep -v -E '"(updated|lastSeen)"' | grep -q .; then
+          if git diff --cached -U0 -- public/store-log.json public/store-current-snapshot.json public/prices.json | grep -E '^[+-] ' | grep -v -E '"(updated|lastSeen)"' | grep -q .; then
             msg="Store watch: the store changed"
           fi
           git config user.name "github-actions[bot]"
