@@ -5,6 +5,7 @@
  */
 import { collectSourceFacetStaging } from './source-facets-stage.mjs';
 import { linkStagedFacetsToCanonicalEvents } from './source-facet-event-links.mjs';
+import { normalizeEventSourceFacets } from './source-facets-contract.mjs';
 
 /**
  * Run an audit on the pages already fetched by the importer, using its
@@ -15,6 +16,23 @@ export function collectCanonicalSourceFacetAudit(pages,events){
   if(!Array.isArray(events))throw new TypeError('Verified canonical events array required');
   const stage=collectSourceFacetStaging(pages);
   const links=linkStagedFacetsToCanonicalEvents(events,stage.byUrl);
+  // The normalized source contract remains in memory. Do not publish a
+  // ticket entitlement merely because its event alias can be resolved.
+  const normalizedByEvent=new Map([...links.byEvent.entries()].map(([id,records])=>
+    [id,normalizeEventSourceFacets(id,records)]
+  ));
+  const normalizedCounts={
+    events:normalizedByEvent.size,benefits:0,featuredMoves:0,
+    researchPrograms:0,disputed:0,unconfirmed:0,warnings:0
+  };
+  for(const value of normalizedByEvent.values()){
+    normalizedCounts.warnings+=value.warnings.length;
+    for(const kind of ['benefits','featuredMoves','researchPrograms']){
+      normalizedCounts[kind]+=value[kind].length;
+      normalizedCounts.disputed+=value[kind].filter(x=>x.status==='disputed').length;
+      normalizedCounts.unconfirmed+=value[kind].filter(x=>x.status==='unconfirmed').length;
+    }
+  }
   const linkedExamples=[...links.byEvent.entries()]
     .map(([eventId,records])=>({
       eventId,
@@ -27,10 +45,11 @@ export function collectCanonicalSourceFacetAudit(pages,events){
     .slice(0,20);
   return {
     byEvent:links.byEvent,
+    normalizedByEvent,
     report:{
       ...stage.report,
       publication:'audit-only',
-      canonicalLinks:{...links.report,linkedExamples}
+      canonicalLinks:{...links.report,linkedExamples,normalizedCounts}
     }
   };
 }
