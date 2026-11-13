@@ -1,5 +1,5 @@
 {
- "runAt": "2026-11-13T11:10:47.472Z",
+ "runAt": "2026-11-13T11:26:12.366Z",
  "artworkCoverage": {
   "selected": 27,
   "missing": 75,
@@ -1220,9 +1220,9 @@
   "canonicalLinks": {
    "publication": "staging-only",
    "eligiblePages": 44,
-   "linkedPages": 27,
+   "linkedPages": 43,
    "unlinkedPages": 1,
-   "ambiguousPages": 16,
+   "ambiguousPages": 0,
    "duplicatePages": 0,
    "rejectedPages": 0,
    "unlinkedExamples": [
@@ -1231,92 +1231,7 @@
      "expectedAlias": "leekduck:clefable-super-mega-raid-day-2026"
     }
    ],
-   "ambiguousExamples": [
-    {
-     "sourceUrl": "https://leekduck.com/events/december-communityday2026",
-     "candidateIds": [
-      "leekduck:december-communityday2026",
-      "w-december-communityday2026"
-     ]
-    },
-    {
-     "sourceUrl": "https://leekduck.com/events/dynamax-trails-2026",
-     "candidateIds": [
-      "leekduck:dynamax-trails-2026",
-      "w-dynamax-trails"
-     ]
-    },
-    {
-     "sourceUrl": "https://leekduck.com/events/eternamax-eternatus-max-battles-2026",
-     "candidateIds": [
-      "leekduck:eternamax-eternatus-max-battles-2026",
-      "w-eternamax-eternatus-max-battles"
-     ]
-    },
-    {
-     "sourceUrl": "https://leekduck.com/events/february-communityday2027",
-     "candidateIds": [
-      "leekduck:february-communityday2027",
-      "w-february-communityday2027"
-     ]
-    },
-    {
-     "sourceUrl": "https://leekduck.com/events/go-wild-area-gigantamax-machamp-power-up-timed-research",
-     "candidateIds": [
-      "leekduck:go-wild-area-gigantamax-machamp-power-up-timed-research",
-      "w-go-wild-area-gigantamax-machamp-power-up-timed-res"
-     ]
-    },
-    {
-     "sourceUrl": "https://leekduck.com/events/hatch-day-december-2026",
-     "candidateIds": [
-      "leekduck:hatch-day-december-2026",
-      "w-hatch-day-december"
-     ]
-    },
-    {
-     "sourceUrl": "https://leekduck.com/events/into-the-wild-2026",
-     "candidateIds": [
-      "leekduck:into-the-wild-2026",
-      "w-into-the-wild"
-     ]
-    },
-    {
-     "sourceUrl": "https://leekduck.com/events/january-communityday2027",
-     "candidateIds": [
-      "leekduck:january-communityday2027",
-      "w-january-communityday2027"
-     ]
-    },
-    {
-     "sourceUrl": "https://leekduck.com/events/january-communitydayclassic2027",
-     "candidateIds": [
-      "leekduck:january-communitydayclassic2027",
-      "w-january-communitydayclassic2027"
-     ]
-    },
-    {
-     "sourceUrl": "https://leekduck.com/events/max-battle-day-december-2026",
-     "candidateIds": [
-      "leekduck:max-battle-day-december-2026",
-      "w-max-battle-day-december"
-     ]
-    },
-    {
-     "sourceUrl": "https://leekduck.com/events/max-battle-day-january-2027",
-     "candidateIds": [
-      "leekduck:max-battle-day-january-2027",
-      "w-max-battle-day-january"
-     ]
-    },
-    {
-     "sourceUrl": "https://leekduck.com/events/raid-day-december-2026",
-     "candidateIds": [
-      "leekduck:raid-day-december-2026",
-      "w-raid-day-december"
-     ]
-    }
-   ],
+   "ambiguousExamples": [],
    "linkedExamples": [
     {
      "eventId": "gopassnov",
@@ -1337,9 +1252,108 @@
      "researchPrograms": 0
     },
     {
+     "eventId": "leekduck:december-communityday2026",
+     "sourceUrls": [
+      "https://leekduck.com/events/december-communityday2026/"
+     ],
+     "benefits": 0,
+     "featuredMoves": 0,
+     "researchPrograms": 0
+    },
+    {
      "eventId": "leekduck:deoxys-normal-defense-attack-speed-formes-in-5-star-raid-battles-november-2026",
      "sourceUrls": [
       "https://leekduck.com/events/deoxys-normal-defense-attack-speed-formes-in-5-star-raid-battles-november-2026/"
+     ],
+     "benefits": 0,
+     "featuredMoves": 0,
+     "researchPrograms": 0
+    },
+    {
+     "eventId": "leekduck:dynamax-trails-2026",
+     "sourceUrls": [
+      "https://leekduck.com/events/dynamax-trails-2026/"
+     ],
+     "benefits": 0,
+     "featuredMoves": 0,
+     "researchPrograms": 1
+    },
+    {
+     "eventId": "leekduck:eternamax-eternatus-max-battles-2026",
+     "sourceUrls": [
+      "https://leekduck.com/events/eternamax-eternatus-max-battles-2026/"
+     ],
+     "benefits": 0,
+     "featuredMoves": 0,
+     "researchPrograms": 0
+    },
+    {
+     "eventId": "leekduck:february-communityday2027",
+     "sourceUrls": [
+      "https://leekduck.com/events/february-communityday2027/"
+     ],
+     "benefits": 0,
+     "featuredMoves": 0,
+     "researchPrograms": 0
+    },
+    {
+     "eventId": "leekduck:go-wild-area-gigantamax-machamp-power-up-timed-research",
+     "sourceUrls": [
+      "https://leekduck.com/events/go-wild-area-gigantamax-machamp-power-up-timed-research/"
+     ],
+     "benefits": 0,
+     "featuredMoves": 0,
+     "researchPrograms": 2
+    },
+    {
+     "eventId": "leekduck:hatch-day-december-2026",
+     "sourceUrls": [
+      "https://leekduck.com/events/hatch-day-december-2026/"
+     ],
+     "benefits": 0,
+     "featuredMoves": 0,
+     "researchPrograms": 0
+    },
+    {
+     "eventId": "leekduck:into-the-wild-2026",
+     "sourceUrls": [
+      "https://leekduck.com/events/into-the-wild-2026/"
+     ],
+     "benefits": 0,
+     "featuredMoves": 4,
+     "researchPrograms": 1
+    },
+    {
+     "eventId": "leekduck:january-communityday2027",
+     "sourceUrls": [
+      "https://leekduck.com/events/january-communityday2027/"
+     ],
+     "benefits": 0,
+     "featuredMoves": 0,
+     "researchPrograms": 0
+    },
+    {
+     "eventId": "leekduck:january-communitydayclassic2027",
+     "sourceUrls": [
+      "https://leekduck.com/events/january-communitydayclassic2027/"
+     ],
+     "benefits": 0,
+     "featuredMoves": 0,
+     "researchPrograms": 0
+    },
+    {
+     "eventId": "leekduck:max-battle-day-december-2026",
+     "sourceUrls": [
+      "https://leekduck.com/events/max-battle-day-december-2026/"
+     ],
+     "benefits": 0,
+     "featuredMoves": 0,
+     "researchPrograms": 0
+    },
+    {
+     "eventId": "leekduck:max-battle-day-january-2027",
+     "sourceUrls": [
+      "https://leekduck.com/events/max-battle-day-january-2027/"
      ],
      "benefits": 0,
      "featuredMoves": 0,
@@ -1398,112 +1412,13 @@
      "benefits": 0,
      "featuredMoves": 0,
      "researchPrograms": 0
-    },
-    {
-     "eventId": "leekduck:november-communityday2026",
-     "sourceUrls": [
-      "https://leekduck.com/events/november-communityday2026/"
-     ],
-     "benefits": 0,
-     "featuredMoves": 0,
-     "researchPrograms": 2
-    },
-    {
-     "eventId": "leekduck:pokemon-go-tour-alola-global-2027",
-     "sourceUrls": [
-      "https://leekduck.com/events/pokemon-go-tour-alola-global-2027/"
-     ],
-     "benefits": 0,
-     "featuredMoves": 0,
-     "researchPrograms": 0
-    },
-    {
-     "eventId": "leekduck:pokemon-go-tour-alola-kaohsiung-2027",
-     "sourceUrls": [
-      "https://leekduck.com/events/pokemon-go-tour-alola-kaohsiung-2027/"
-     ],
-     "benefits": 0,
-     "featuredMoves": 0,
-     "researchPrograms": 0
-    },
-    {
-     "eventId": "leekduck:pokemon-go-tour-alola-los-angeles-2027",
-     "sourceUrls": [
-      "https://leekduck.com/events/pokemon-go-tour-alola-los-angeles-2027/"
-     ],
-     "benefits": 0,
-     "featuredMoves": 0,
-     "researchPrograms": 0
-    },
-    {
-     "eventId": "leekduck:pokemon-x-adidas-2026",
-     "sourceUrls": [
-      "https://leekduck.com/events/pokemon-x-adidas-2026/"
-     ],
-     "benefits": 0,
-     "featuredMoves": 0,
-     "researchPrograms": 2
-    },
-    {
-     "eventId": "leekduck:pokemonspotlighthour2026-11-19",
-     "sourceUrls": [
-      "https://leekduck.com/events/pokemonspotlighthour2026-11-19/"
-     ],
-     "benefits": 0,
-     "featuredMoves": 0,
-     "researchPrograms": 0
-    },
-    {
-     "eventId": "leekduck:pokemonspotlighthour2026-11-26",
-     "sourceUrls": [
-      "https://leekduck.com/events/pokemonspotlighthour2026-11-26/"
-     ],
-     "benefits": 0,
-     "featuredMoves": 0,
-     "researchPrograms": 0
-    },
-    {
-     "eventId": "leekduck:raidhour20261118",
-     "sourceUrls": [
-      "https://leekduck.com/events/raidhour20261118/"
-     ],
-     "benefits": 0,
-     "featuredMoves": 0,
-     "researchPrograms": 0
-    },
-    {
-     "eventId": "leekduck:raidhour20261125",
-     "sourceUrls": [
-      "https://leekduck.com/events/raidhour20261125/"
-     ],
-     "benefits": 0,
-     "featuredMoves": 0,
-     "researchPrograms": 0
-    },
-    {
-     "eventId": "leekduck:season-24-twilight-trails",
-     "sourceUrls": [
-      "https://leekduck.com/events/season-24-twilight-trails/"
-     ],
-     "benefits": 0,
-     "featuredMoves": 0,
-     "researchPrograms": 0
-    },
-    {
-     "eventId": "leekduck:shadow-tornadus-incarnate-forme-in-shadow-raids-november-16-2026",
-     "sourceUrls": [
-      "https://leekduck.com/events/shadow-tornadus-incarnate-forme-in-shadow-raids-november-16-2026/"
-     ],
-     "benefits": 0,
-     "featuredMoves": 0,
-     "researchPrograms": 0
     }
    ],
    "normalizedCounts": {
-    "events": 27,
+    "events": 43,
     "benefits": 69,
-    "featuredMoves": 7,
-    "researchPrograms": 13,
+    "featuredMoves": 11,
+    "researchPrograms": 18,
     "disputed": 0,
     "unconfirmed": 1,
     "warnings": 0

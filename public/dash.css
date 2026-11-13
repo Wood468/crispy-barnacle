@@ -1383,6 +1383,10 @@ select,
 
 /* ---- Today first screen: one brief card (headline, counts, Next / Ending soon / Raids & Max), one "new" row, season strip ---- */
 .today-top{display:grid;gap:var(--space-2);min-width:0}
+/* Reserve the 50px New-since-last-visit row before its async feed mounts it.
+   Keep the same slot when no updates are available, so late insertion or hiding
+   cannot push the event list down after first paint. */
+#today-top:not(:has(.whatsnew:not([hidden])))::after{content:"";display:block;height:50px;pointer-events:none}
 .day-brief{display:grid;gap:var(--space-2);min-width:0;margin:0;padding:var(--space-4);border:1px solid var(--color-border-card);border-radius:var(--radius-lg);background:var(--color-surface-card-solid)}
 .day-brief:focus{outline:none}
 .day-brief-title{display:block;min-height:1em;font:800 var(--type-heading)/1 var(--font-display);letter-spacing:.01em;text-transform:uppercase;text-wrap:balance;color:var(--color-text)}
