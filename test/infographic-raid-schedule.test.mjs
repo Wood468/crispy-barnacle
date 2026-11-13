@@ -100,8 +100,8 @@ test('invalid calendar dates do not fabricate a raid window',()=>{
 test('UI always uses schedule allowlist for datalist AND save-time mode validation',()=>{
  const s=readFileSync(new URL('../public/review.js',import.meta.url),'utf8');
  assert.match(s,/function currentBossChoices\(\)/);
- assert.match(s,/currentBossChoices\(\)\.map\(function \(p\)/);
- assert.match(s,/var found = currentBossChoices\(\)\.filter/);
- assert.match(s,/selected\.modes\.indexOf\(mode\.value\) >= 0/);
- assert.doesNotMatch(s,/pokemonCatalogue\.map\(function \(p\) \{ return '<option/);
+ assert.match(s,/exactScheduledChoices\(\)\.filter\(function \(row\)/);
+ assert.match(s,/var target = matches\[0\]\.target/);
+ assert.match(s,/data-ig-boss-choice/);
+ assert.doesNotMatch(s,/data-ig-boss-name|data-ig-boss-form|data-ig-boss-mode/);
 });

@@ -67,8 +67,12 @@
         var mon = byName[speciesName(name).toLocaleLowerCase()];
         if (!mon) return;
         var id = String(mon[0]);
-        if (!allowed[id]) allowed[id] = { dex: mon, modes: [] };
+        if (!allowed[id]) allowed[id] = { dex: mon, modes: [], variants: [] };
         if (allowed[id].modes.indexOf(mode) < 0) allowed[id].modes.push(mode);
+        var existing = allowed[id].variants.filter(function (v) { return v.name === name && v.battleMode === mode; })[0];
+        var phase = from <= nowMs ? 'live' : 'upcoming';
+        if (!existing) allowed[id].variants.push({ name: name, battleMode: mode, phase: phase });
+        else if (phase === 'live') existing.phase = 'live';
       });
     }
     (Array.isArray(data.rotation) ? data.rotation : []).forEach(function (r) {
@@ -113,5 +117,102 @@
     return Object.keys(allowed).map(function (id) { return allowed[id]; })
       .sort(function (a, b) { return a.dex[1].localeCompare(b.dex[1]); });
   }
-  return { options: options, speciesName: speciesName };
+  /* Compare an explicitly named form with source-backed form labels. Exact
+     Pokémon + modifier matching prevents White Kyurem being saved as base or
+     Black, and prevents Mega X artwork from attaching to Mega Y. */
+  function descriptor(name, species) {
+    var raw = String(name || '').trim()
+      .replace(/^(?:Shadow|Dynamax|Gigantamax|Mega|Primal)(?:\s+|$)/i, '');
+    var base = String(species || '');
+    var at = base ? raw.toLocaleLowerCase().indexOf(base.toLocaleLowerCase()) : -1;
+    if (at >= 0) raw = raw.slice(0, at) + raw.slice(at + base.length);
+    return raw.replace(/\bforme?\b/gi, '').replace(/[^a-z0-9]+/gi, '').toLowerCase();
+  }
+  function formMatches(form, mode) {
+    if (!Array.isArray(form)) return false;
+    if (mode === 'gigantamax') return form[3] === 'gmax';
+    if (mode === 'primal') return form[1] === 'primal';
+    if (mode === 'mega') return form[3] === 'mega' && form[1] !== 'primal';
+    return form[3] !== 'gmax' && form[3] !== 'mega' && form[3] !== 'primal';
+  }
+  function targetChoices(data, dex, forms, detailData, nowMs, splitBosses, parseClock) {
+    if (!Array.isArray(forms)) forms = [];
+    var candidates = options(data, dex, nowMs, splitBosses, parseClock), sourceForms = [];
+    var events = detailData && detailData.events;
+    if (events && typeof events === 'object' && !Array.isArray(events)) {
+      Object.keys(events).slice(0, 500).forEach(function (key) {
+        (Array.isArray(events[key] && events[key].pokemon) ? events[key].pokemon : []).slice(0, 600).forEach(function (p) {
+          if (p && /^\d{1,4}$/.test(String(p.speciesId || '')) &&
+              /^[a-z0-9][a-z0-9._-]{0,79}$/i.test(p.formId || '') &&
+              typeof p.name === 'string') sourceForms.push(p);
+        });
+      });
+    }
+    var byId = Object.create(null);
+    candidates.forEach(function (entry) {
+      var mon = entry.dex, species = mon[1];
+      (entry.variants || []).forEach(function (v) {
+        var modifier = descriptor(v.name, species);
+        var mode = v.battleMode;
+        var formId = null;
+        if (modifier) {
+          var found = sourceForms.filter(function (p) {
+            return +p.speciesId === +mon[0] && descriptor(p.name, species) === modifier;
+          });
+          /* A literal match to the scheduled label is more reliable than an
+             alternate punctuation alias in a different source record. */
+          var exact = found.filter(function (p) { return p.name.toLowerCase() === v.name.toLowerCase(); });
+          if (exact.length) found = exact;
+          var ids = [];
+          found.forEach(function (p) { if (ids.indexOf(p.formId) < 0) ids.push(p.formId); });
+          if (ids.length === 1) formId = ids[0];
+          if (!formId) {
+            var matching = forms.filter(function (f) {
+              return +f[0] === +mon[0] && formMatches(f, mode) &&
+                (descriptor(f[2], species) === modifier || descriptor(f[1], species) === modifier);
+            });
+            if (matching.length === 1) formId = matching[0][1];
+          }
+          if (!formId) return; /* Special form unknown: never silently use base. */
+        } else if (['mega','primal','gigantamax'].indexOf(mode) >= 0) {
+          var generic = forms.filter(function (f) {
+            return +f[0] === +mon[0] && formMatches(f, mode) && !descriptor(f[2], species);
+          });
+          if (generic.length !== 1) return;
+          formId = generic[0][1];
+        }
+        var target = { type: 'raid-boss', pokemonId: String(mon[0]).padStart(3, '0'),
+          formId: formId, battleMode: mode };
+        var value = [target.pokemonId, target.formId || '', target.battleMode].join('|');
+        var item = { value: value, name: v.name, battleMode: mode,
+          phase: v.phase, target: target };
+        if (!byId[value] || (v.phase === 'live' && byId[value].phase !== 'live')) byId[value] = item;
+      });
+    });
+    return Object.keys(byId).map(function (key) { return byId[key]; })
+      .sort(function (a, b) {
+        return (a.phase === b.phase ? 0 : a.phase === 'live' ? -1 : 1) ||
+          a.name.localeCompare(b.name) || a.battleMode.localeCompare(b.battleMode);
+      });
+  }
+  /* Persistent guides can outlive the source rotation. Match visible Battle
+     rows to approved Pokémon/form/mode identity, not similar-looking names. */
+  function matchesTarget(raw, mode, target, dex) {
+    if (!target || typeof target.pokemonId !== 'string' || !Array.isArray(dex) ||
+        mode !== target.battleMode) return false;
+    var mon = dex.filter(function (row) {
+      return row && String(row[0]).padStart(3, '0') === target.pokemonId;
+    })[0];
+    if (!mon || typeof raw !== 'string' ||
+        speciesName(raw).toLocaleLowerCase() !== String(mon[1]).toLocaleLowerCase()) return false;
+    var modifier = descriptor(raw, mon[1]);
+    var form = String(target.formId || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+    if (mode === 'mega') form = form === 'mega' ? '' : form.replace(/^mega/, '');
+    if (mode === 'primal' && form === 'primal') form = '';
+    if (mode === 'gigantamax' && form === 'gmax') form = '';
+    return modifier === form;
+  }
+  return { options: options, speciesName: speciesName, targetChoices: targetChoices,
+    descriptor: descriptor, matchesTarget: matchesTarget };
+
 });

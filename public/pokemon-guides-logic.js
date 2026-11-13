@@ -45,8 +45,16 @@
     var mon = (Array.isArray(dex) ? dex : []).filter(function (d) { return d && +d[0] === number; })[0];
     var base = mon ? mon[1] : '#' + g.pokemonId;
     var form = (Array.isArray(forms) ? forms : []).filter(function (f) { return f && +f[0] === number && f[1] === g.formId; })[0];
-    var name = form ? String(form[2]) : (g.formId ? g.formId : '');
+    var name = form ? String(form[2]) : (g.formId ? String(g.formId).replace(/[-_]/g,' ').replace(/\b[a-z]/g,function(c){return c.toUpperCase();}) : '');
     var mode = g.battleMode;
+    /* Source-backed named raid variants must not be labelled as their base
+       species, and unknown forms are rendered clearly in the guide library. */
+    if (mode === 'normal' && /^crowned[ -]?(?:sword|shield)$/i.test(String(g.formId || '')))
+      return name + ' ' + base;
+    if (mode === 'normal' && base === 'Kyurem' && /^(White|Black)$/i.test(name))
+      return name + ' ' + base;
+    if (mode === 'normal' && base === 'Deoxys' && /^(Normal|Attack|Defense|Speed)$/i.test(name))
+      return base + ' (' + name + ' Forme)';
     if (mode === 'mega') {
       var part = /^Mega(?:\s+(.+))?$/i.exec(name);
       return 'Mega ' + base + (part && part[1] ? ' ' + part[1] : (name && !part ? ' (' + name + ')' : ''));
