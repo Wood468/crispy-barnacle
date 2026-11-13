@@ -70,3 +70,26 @@ test('source-only official November product receives only labelled comparable es
  assert.ok(row.indonesia.min<row.indonesia.max);
  assert.equal(row.india,null);
 });
+
+test('Indian estimated range uses only one historical exact same-product cross-market pair',()=>{
+ const matched=[
+  {region:'ID',channel:'web',currency:'IDR',product:'Monthly GO Pass Deluxe',
+   kind:'monthly-pass',amount:41000,status:'verified',observed:'2026-11-09'},
+  {region:'ID',channel:'web',currency:'IDR',product:'GO Pass Deluxe: Into the Wild',
+   kind:'event-pass',amount:76000,status:'verified',observed:'2026-11-09'},
+  {region:'IN',channel:'in-app',currency:'INR',product:'GO Pass Deluxe: Into the Wild',
+   kind:'event-pass',amount:439,status:'recorded',observed:'2026-11-09'}
+ ];
+ const row=R.currentCatalogue([{label:'GO Pass Deluxe: November',unpricedOfficial:true}],
+   live,now,matched).current[0];
+ assert.equal(row.indonesia.basis,'estimate');
+ assert.equal(row.india?.basis,'estimate');
+ assert.equal(row.india.confidence,'very low');
+ assert.equal(row.india.currency,'INR');
+ assert.equal(row.india.amount,237);
+ assert.ok(row.india.min<row.india.amount && row.india.max>row.india.amount);
+ assert.match(row.india.basisText,/Not an Indian checkout quote/);
+ const mismatched=matched.map(x=>x.region==='IN'?{...x,product:'Different Deluxe Pass'}:x);
+ assert.equal(R.currentCatalogue([{label:'GO Pass Deluxe: November',unpricedOfficial:true}],
+   live,now,mismatched).current[0].india,null,'mismatched titles cannot establish a ratio');
+});
