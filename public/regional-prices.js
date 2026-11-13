@@ -261,8 +261,10 @@
   /* Source-only listing state. Store price observations are historical receipts:
      they are NEVER evidence that a product remains on sale. Match the exact
      official display name, not a similar event, tier, quantity or bonus. */
-  function sourceOffer(label, snapshot, now) {
+  function sourceOffer(label, snapshot, now, options) {
     var empty = {status:'unconfirmed', image:null, lastSeen:null, goneAt:null, endAt:null, note:'Not confirmed in recent Store snapshot'};
+    if (options && options.ambiguousSku)
+      return Object.assign({}, empty, {note:'Source SKU/contents are ambiguous; exact storefront identity not proven'});
     if (!snapshot || !Array.isArray(snapshot.items) || !Array.isArray(snapshot.gone)) return empty;
     var key = norm(label), checkTime = now == null ? Date.now() : now;
     var sourceFresh = typeof snapshot.updated === 'string' &&
