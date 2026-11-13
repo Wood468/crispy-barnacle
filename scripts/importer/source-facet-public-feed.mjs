@@ -95,8 +95,13 @@ function checkedSnapshot(bytes,eventId,expectedHash){
 /**
  * Publish ONLY hashes pinned by a trusted release controller.
  * The destination is fixed under public/ and written atomically.
+ * Existing feeds require an exact prior SHA and may only retain/add event IDs.
  */
-export async function publishApprovedFacetFeed({rootDir,expectedSha256ByEvent}={}){
+export async function publishApprovedFacetFeed({
+  rootDir,expectedSha256ByEvent,expectedPreviousFeedSha256=null
+}={}){
+  if(expectedPreviousFeedSha256!==null&&!HASH.test(expectedPreviousFeedSha256))
+    throw new TypeError('Expected previous public feed SHA-256 required');
   if(typeof rootDir!=='string'||!rootDir.trim()||!plain(expectedSha256ByEvent))
     throw new TypeError('Trusted root and explicit release hash map required');
   const entries=Object.entries(expectedSha256ByEvent);
@@ -116,15 +121,47 @@ export async function publishApprovedFacetFeed({rootDir,expectedSha256ByEvent}={
     throw new TypeError('Published feed exceeds size limit');
   const dir=join(root,'public');await mkdir(dir,{recursive:true});
   const target=join(dir,'verified-event-facets.json');
-  const temporary=join(dir,'.verified-event-facets.'+randomBytes(12).toString('hex')+'.tmp');
-  const file=await open(temporary,'wx',0o600);
+  const lockPath=target+'.lock';
+  let lock=null,temporary=null;
   try{
-    await file.writeFile(payload,'utf8');await file.sync();await file.close();
+    // A separate release controller must serialize its own publish decisions,
+    // and this exclusive lock prevents concurrent exporters from racing.
+    lock=await open(lockPath,'wx',0o600);
+    let previousBytes=null;
+    try{previousBytes=await readFile(target)}
+    catch(e){if(e?.code!=='ENOENT')throw e}
+    const previousHash=previousBytes?sha256(previousBytes):null;
+    if(previousHash!==expectedPreviousFeedSha256)
+      throw new TypeError('Public feed changed since release review');
+    if(previousBytes){
+      if(previousBytes.length>8*1024*1024)throw new TypeError('Existing public feed too large');
+      const previous=JSON.parse(previousBytes.toString('utf8'));
+      if(!plain(previous)||previous.schemaVersion!==1||
+         previous.publication!=='verified-feed'||!Array.isArray(previous.events))
+        throw new TypeError('Existing public feed cannot be safely reconciled');
+      const previousIds=previous.events.map(e=>e?.eventId);
+      if(previousIds.some(id=>typeof id!=='string')||
+         new Set(previousIds).size!==previousIds.length)
+        throw new TypeError('Existing public feed has invalid event IDs');
+      const nextIds=new Set(events.map(e=>e.eventId));
+      // A partial source fetch, missing manifest entry, or outage may never
+      // erase last-known-good public events. Deletion requires a separately
+      // designed, authenticated retirement process.
+      if(previousIds.some(id=>!nextIds.has(id)))
+        throw new TypeError('Public feed removal requires separate review');
+    }
+    temporary=join(dir,'.verified-event-facets.'+randomBytes(12).toString('hex')+'.tmp');
+    const file=await open(temporary,'wx',0o600);
+    try{await file.writeFile(payload,'utf8');await file.sync()}
+    finally{await file.close()}
     await rename(temporary,target);
-  }catch(e){
-    try{await file.close()}catch{}
-    try{await unlink(temporary)}catch{}
-    throw e;
+    temporary=null;
+  }finally{
+    if(temporary)try{await unlink(temporary)}catch{}
+    if(lock){
+      try{await lock.close()}
+      finally{try{await unlink(lockPath)}catch{}}
+    }
   }
   return {publication:'verified-feed',eventCount:events.length,
     sha256:sha256(Buffer.from(payload)),path:'public/verified-event-facets.json'};
