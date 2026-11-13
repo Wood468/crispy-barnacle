@@ -51,6 +51,8 @@ async function sandbox(fn){
   const rootDir=join(base,'checkout'),durableStateDir=join(base,'trusted-ledger');
   await (await import('node:fs/promises')).mkdir(rootDir,{recursive:true});
   await (await import('node:fs/promises')).mkdir(durableStateDir,{recursive:true});
+  await (await import('node:fs/promises')).writeFile(join(durableStateDir,'promotion-ledger.json'),
+    JSON.stringify({schemaVersion:1,publication:'promotion-ledger',releases:[],pending:null}));
   try{await fn(rootDir,durableStateDir)}finally{await rm(base,{recursive:true,force:true})}
 }
 test('source-backed review through two signatures and replay-safe public feed works as one journey',async()=>sandbox(async (rootDir,durableStateDir)=>{

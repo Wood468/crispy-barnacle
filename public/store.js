@@ -205,6 +205,8 @@
       + '<ul>'
       + '<li>Verified source prices: Australia ' + data.auVerified + ', Indonesia '
       + data.idVerified + ', India ' + data.inVerified + ' of ' + data.total + ' product cards.</li>'
+      + '<li>Official listings awaiting regional prices: ' + data.sourceOnly.length + '.'
+      + examples(data.sourceOnly) + '</li>'
       + '<li>Missing Australian product names: ' + data.unlabelled.length + '.'
       + examples(data.unlabelled) + '</li>'
       + '<li>Regional SKU/contents not safely paired: ' + data.unpaired.length + '.'
@@ -229,7 +231,7 @@
        regional observation feed is empty, delayed or unavailable. */
     var obs = Array.isArray(data.regional) ? data.regional : [];
     var prices = Array.isArray(data.prices) ? data.prices : [];
-    var items = R.catalogue(prices, obs);
+    var items = R.catalogue(prices, obs, undefined, window.GOStoreOfferIdentities);
     if (!items.length) return '';
     var comparableOffers = verifiedOptionsHtml(obs);
     var reviewPanel = coveragePanel(items, R);
@@ -248,7 +250,9 @@
         ? '<span class="sp-regional-value sp-ver"><b>' + esc(R.fmt(p.aud, 'AUD')) + '</b><small>Verified · ' + esc(when(p.observed)) + '</small></span>'
         : '<span class="sp-regional-value sp-none" title="No verified Australian Web Store price observed">Not observed</span>';
       var search = storeSearchKey(p.label + ' ' + p.product + ' ' + p.group + ' ' + priority(p));
-      var identityNote = p.ambiguousSku
+      var identityNote = p.unpricedOfficial
+        ? '<small class="sp-source-id-note">Official published product · no matched AU / ID / IN checkout observation · regional availability not verified</small>'
+        : p.ambiguousSku
         ? '<small class="sp-source-id-note">Distinct official SKU: ' + esc(p.product) + ' · other-region price cannot be matched safely</small>'
         : p.regionalUnmatched
           ? '<small class="sp-source-id-note">Regional observation · no exact AU SKU pairing established</small>'

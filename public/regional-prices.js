@@ -176,7 +176,7 @@
       return false;
     return true;
   }
-  function catalogue(prices, obs, now) {
+  function catalogue(prices, obs, now, officialOffers) {
     var latest = {}, all = {}, auByLabel = {};
     obs = Array.isArray(obs) ? obs : [];
     (prices || []).forEach(function (p) {
@@ -214,6 +214,22 @@
         regionalUnmatched: owners.length > 0, strictRegionalIndex: distinct ? index : null
       };
     });
+    /* Publisher-announced products without a verified AU/ID/IN quote stay
+       separate from the price-observation union. A matching title is not a
+       source-backed SKU join, even when an ID/IN price is later recorded. */
+    (Array.isArray(officialOffers) ? officialOffers : []).forEach(function (offer) {
+      if (!offer || offer.noPriceObservation !== true
+        || typeof offer.id !== 'string' || !/^official:[a-z0-9:-]+$/.test(offer.id)
+        || typeof offer.label !== 'string' || !offer.label.trim()
+        || typeof offer.sourceUrl !== 'string'
+        || !/^https:\/\/pokemongo\.com\/news\/[a-z0-9-]+$/.test(offer.sourceUrl)
+        || !Array.isArray(offer.contents)) return;
+      var key = 'source-only:' + offer.id;
+      if (all[key]) return;
+      all[key] = {product:offer.id,label:offer.label,group:offer.group || 'Passes & tickets',
+        aud:null,observed:null,unpricedOfficial:true,contents:offer.contents,
+        contentsSource:offer.sourceUrl};
+    });
     return Object.keys(all).map(function (key) {
       var p = all[key], kind = kindOf(p.label);
       var ambiguous = p.aud != null && (auByLabel[norm(p.label)] || []).length > 1;
@@ -231,10 +247,11 @@
       }
       return { product: p.product, label: p.label, group: p.group, kind: kind,
         sourceIdOnly: !!p.sourceIdOnly, ambiguousSku: ambiguous,
-        regionalUnmatched: !!p.regionalUnmatched, aud: p.aud, observed: p.observed,
+        regionalUnmatched: !!p.regionalUnmatched, unpricedOfficial: !!p.unpricedOfficial,
+        aud: p.aud, observed: p.observed,
         contents: p.contents || [], contentsSource: p.contentsSource || null,
-        india: ambiguous ? null : regionPrice({ region: 'IN', channel: 'in-app', product: p.label, kind: kind, aud: p.aud }),
-        indonesia: ambiguous ? null : regionPrice({ region: 'ID', channel: 'web', product: p.label, kind: kind, aud: p.aud }) };
+        india: p.unpricedOfficial || ambiguous ? null : regionPrice({ region: 'IN', channel: 'in-app', product: p.label, kind: kind, aud: p.aud }),
+        indonesia: p.unpricedOfficial || ambiguous ? null : regionPrice({ region: 'ID', channel: 'web', product: p.label, kind: kind, aud: p.aud }) };
     });
   }
   /* Owner-only audit of source coverage, not a live checkout or a price
@@ -243,7 +260,7 @@
     var products = Array.isArray(rows) ? rows : [];
     var threshold = Number.isSafeInteger(reviewDays) && reviewDays > 0 ? reviewDays : 30;
     var result = { total: products.length, auVerified: 0, idVerified: 0, inVerified: 0,
-      unlabelled: [], unpaired: [], missingAu: [], missingId: [], missingIn: [],
+      unlabelled: [], unpaired: [], sourceOnly: [], missingAu: [], missingId: [], missingIn: [],
       unverifiedId: [], unverifiedIn: [], reviewDue: [], reviewDays: threshold };
     function due(observed) {
       var age = ageDays(observed, now);
@@ -253,6 +270,7 @@
       if (!p) return;
       var label = String(p.label || p.product || 'Unnamed offer');
       if (p.sourceIdOnly) result.unlabelled.push(label);
+      if (p.unpricedOfficial) result.sourceOnly.push(label);
       if (p.ambiguousSku || p.regionalUnmatched) result.unpaired.push(label);
       if (p.aud > 0) {
         result.auVerified++;

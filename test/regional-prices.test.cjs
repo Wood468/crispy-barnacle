@@ -394,3 +394,40 @@ test('official descriptions preserve exact historic pass variants and original A
   for (const row of rows.filter(r=>Object.hasOwn(expected,r.product)))
     assert.equal(row.indonesia,null,'named historical item must not invent any Indonesian checkout estimate');
 });
+
+test('official current November pass listings remain unpriced and preserve exact published variants', () => {
+  const official = require('../public/store-offer-identities.js');
+  const prices = require('../public/prices.json').prices;
+  assert.equal(official.length,3,'three independently announced November product variants');
+  const rows = R.catalogue(prices, OBS, NOW, official);
+  const sourceOnly=rows.filter(p=>p.unpricedOfficial);
+  assert.equal(sourceOnly.length,3);
+  const expected = [
+    ['GO Pass Deluxe: November',0,1],
+    ['GO Pass Deluxe: November + 10 Ranks',10,2],
+    ['GO Pass Deluxe: November Ultra Box',10,5]
+  ];
+  for(const [label,ranks,passes] of expected){
+    const item=sourceOnly.find(p=>p.label===label);
+    assert.ok(item,'missing official listing: '+label);
+    assert.equal(item.aud,null,'US public product descriptions are not an AU checkout price');
+    assert.equal(item.indonesia,null);
+    assert.equal(item.india,null);
+    assert.equal(item.contentsSource,'https://pokemongo.com/news/go-pass-november-2026');
+    assert.equal(item.contents.find(x=>x.item==='Bonus Ranks')?.quantity||0,ranks);
+    assert.equal(item.contents.find(x=>x.item==='Premium Battle Pass').quantity,passes);
+  }
+  const aggregate=R.coverage(rows,NOW);
+  assert.equal(aggregate.sourceOnly.length,3);
+  assert.ok(aggregate.missingAu.includes('GO Pass Deluxe: November Ultra Box'));
+  assert.ok(aggregate.missingId.includes('GO Pass Deluxe: November Ultra Box'));
+  assert.ok(aggregate.missingIn.includes('GO Pass Deluxe: November Ultra Box'));
+
+  const regional=[id('GO Pass Deluxe: November','monthly-pass',41000,{sourceSku:'regional-unmatched',id:'regional-november'})];
+  const separate=R.catalogue([],regional,NOW,official);
+  assert.equal(separate.filter(p=>p.label==='GO Pass Deluxe: November').length,2,
+    'a region-only offer must stay separate from an announcement without a common SKU');
+  assert.equal(separate.find(p=>p.unpricedOfficial).indonesia,null);
+  assert.equal(separate.find(p=>!p.unpricedOfficial).indonesia.amount,41000);
+  assert.equal(R.catalogue([],[],NOW,[]).length,0);
+});
