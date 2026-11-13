@@ -5,6 +5,7 @@ import { readFile, writeFile, mkdir } from "node:fs/promises";
 import { SOURCES, sourceFor } from "./sources.mjs";
 import { discover, get } from "./discover.mjs";
 import { extractFields, hasContent, researchOptions } from "./extract.mjs";
+import { collectSourceFacetStaging } from "./source-facets-stage.mjs";
 import { mergeSources } from "./compare.mjs";
 import { pageTitle, htmlToLines } from "./text.mjs";
 import { entriesFromPage, mergeWorld, collapseWorld, parseDateRange, placeOf, cleanTitle, tidyName, keepOldWorld, normUrl, sameWriteupRulings, preserveWorldSources, prioritizeWatchedPages, regionalSeedEntries, sharedArticleKey } from "./world.mjs";
@@ -323,6 +324,9 @@ async function main() {
   let formData={f:[]};try{formData=JSON.parse(await readFile('public/forms.json','utf8'));}catch{/* undeclared forms remain source prose */}
   const rewardOptions=researchOptions({dex,names:artNames,costumes:costumeNames,forms:formData});
   for(const page of pages)page.fields=extractFields(page.html,rewardOptions);
+  // Staging only: count additional verified-source claims for importer QA.
+  // Do not merge these preliminary facets into published event-details data.
+  const sourceFacetStaging = collectSourceFacetStaging(pages).report;
   const byEvent = new Map(), unmatched = [];
   for (const p of pages) {
     const hit = pickEvent(p, events);
@@ -464,7 +468,7 @@ async function main() {
   const artworkCoverage = { selected: Object.values(out).filter(v => !!v.image && !!v.imageProvenance).length, missing: Object.values(out).filter(v => !v.image).length, legacyUnattributed: Object.values(out).filter(v => !!v.image && !v.imageProvenance).length, bySource: {} };
   for (const v of Object.values(out)) if (v.image && v.imageProvenance) { const source = v.imageProvenance.source || "Unknown"; artworkCoverage.bySource[source] = (artworkCoverage.bySource[source] || 0) + 1; }
   artworkCoverage.missingEvents = Object.entries(out).filter(([, v]) => !v.image).map(([id, v]) => ({ id, name: v.name, sources: (v.sources || []).map(s => s.url).filter(Boolean).slice(0, 2) })).slice(0, 100);
-  await writeFile(REPORT, JSON.stringify({ runAt: now, artworkCoverage, sources: status, pagesRead: pages.length, events: Object.keys(out).length, worldEvents: world.length, worldUndated: world.filter(w => !w.start).map(w => w.name), unmatchedPages: unmatched.slice(0, 40), intl: intlStatus, serebiiSkipped: serebiiLeft.slice(0, 30), gaps: gaps.slice(0, 80), errors: errors.slice(0, 20) }, null, 1) + "\n");
+  await writeFile(REPORT, JSON.stringify({ runAt: now, artworkCoverage, sources: status, pagesRead: pages.length, events: Object.keys(out).length, worldEvents: world.length, worldUndated: world.filter(w => !w.start).map(w => w.name), unmatchedPages: unmatched.slice(0, 40), intl: intlStatus, serebiiSkipped: serebiiLeft.slice(0, 30), gaps: gaps.slice(0, 80), errors: errors.slice(0, 20), sourceFacetStaging }, null, 1) + "\n");
   console.log(`Read ${pages.length} pages for ${byEvent.size} events; ${unmatched.length} pages matched no event; ${errors.length} errors.`);
 }
 if (import.meta.url === "file://" + process.argv[1]) main().catch(failRun);
