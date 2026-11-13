@@ -57,6 +57,13 @@ test('owner Store shows one AUD placeholder before each local price without wait
     .map(match => match[1]);
   const pricedCell = idCells.find(cell => cell.includes('Rp 76,000'));
   assert.ok(pricedCell, 'expected an observed Indonesian market cell');
+  /* A parent aria-label containing only the local Rp amount masks the
+     child AUD reference in VoiceOver, despite correct visual ordering. */
+  assert.doesNotMatch(pricedCell, /<span class="sp-regional-value sp-ver" aria-label=/,
+    'regional values must expose both the AUD reference and the local checkout price to a screen reader');
+  assert.match(pricedCell, /title="Australian dollar reference conversion not available"/,
+    'unknown FX remains an explicit status, not a guessed checkout rate');
+  assert.match(pricedCell, /<small>Verified ·/,'source state and observation date remain readable');
   assert.equal((pricedCell.match(/class="sp-aud-equivalent"/g)||[]).length,1);
   assert.ok(pricedCell.indexOf('class="sp-aud-equivalent"')<pricedCell.indexOf('class="sp-local-price"'),
     'AUD placeholder precedes the visible local-price element (not its aria-label)');
