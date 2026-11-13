@@ -166,3 +166,41 @@ test('curated status alone never grants ownership without an exact URL or alias'
   assert.ok(byEvent.has(alias));
   assert.ok(!byEvent.has('similar-event'));
 });
+
+test('query, fragment and alternate HTTPS ports do not pass exact source-page authorization',()=>{
+  const polluted=[
+    wild+'?ticket=unrelated',
+    wild+'#alternate',
+    'https://leekduck.com:8443/events/pokemon-go-wild-area-2026-global/',
+    'https://x@leekduck.com/events/pokemon-go-wild-area-2026-global/',
+    'https://leekduck.com/events/pokemon-go-wild-area-2026-global/extra'
+  ];
+  const {byEvent,report}=linkStagedFacetsToCanonicalEvents(
+    records,new Map(polluted.map(url=>[url,page(url)])));
+  assert.equal(report.rejectedPages,polluted.length);
+  assert.equal(report.linkedPages,0);
+  assert.equal(byEvent.size,0);
+});
+test('poisoned known-owner URL cannot claim a clean source page',()=>{
+  const poisoned=[
+    wild+'?audience=other',
+    wild+'#not-the-same-article',
+    'https://www.leekduck.com:8443/events/pokemon-go-wild-area-2026-global/'
+  ];
+  for(const link of poisoned){
+    const {byEvent,report}=linkStagedFacetsToCanonicalEvents(
+      [{id:'custom-global',link}],new Map([[wild,page(wild)]]));
+    assert.equal(report.unlinkedPages,1);
+    assert.equal(report.linkedPages,0);
+    assert.equal(byEvent.size,0);
+  }
+});
+test('clean apex and www exact LeekDuck event URLs still link and deduplicate',()=>{
+  const www='https://www.leekduck.com/events/pokemon-go-wild-area-2026-global/';
+  const {byEvent,report}=linkStagedFacetsToCanonicalEvents(
+    [{id:'global-owner',sourceUrl:www}],
+    new Map([[wild,page(wild)],[www,page(www)]]));
+  assert.equal(report.linkedPages,1);
+  assert.equal(report.duplicatePages,1);
+  assert.equal(byEvent.get('global-owner').length,1);
+});
