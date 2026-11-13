@@ -238,3 +238,66 @@ test('speculative replacement prose cannot establish a paid-ticket override',()=
   assert.equal(result.benefits[0].replacesFreeLimit,false);
   assert.equal(result.benefits[0].replacementEvidence,null);
 });
+
+test('ticket Special Research keeps separately titled six-step story without inventing tasks',()=>{
+ const story=['<main><h2>Research</h2>',
+   '<h2>Special Research — Ticket Holders</h2>',
+   '<h2>GO Wild Area: Mexico City – The Suspense Is Building</h2>',
+   '<p>Event-exclusive Special Research rewards include a Gigantamax Duraludon encounter with a Location Background.</p>',
+   '<p>Claim Special Research during your ticketed session. Special Research is granted only once, even with Extra Day add-ons.</p>',
+   ...Array.from({length:6},(_,i)=>'<div class="stage">STEP '+(i+1)+'<div>GO Wild Area: Mexico City – The Suspense Is Building ('+(i+1)+'/6)</div></div>'),
+   '<ul><li>Steel Scholar medal: Earn 1 additional Candy XL for catching Steel-type mighty Pokémon.</li>',
+   '<li>Dragon Defender medal: Earn 1,000 additional Stardust for catching Dragon-type mighty Pokémon.</li></ul>',
+   '<p>Each medal’s bonuses begin when you claim its medal and last until November 15, 2026, at 6:00 p.m. local time.</p>',
+   '<p>Completing the event Special Research also awards a new avatar pose.</p>',
+   '<h2>GO Stamp Rally</h2><p>Extra days do not grant a second rally.</p>',
+   '<h2>Steel- and Dragon-Type Timed Research</h2>',
+   '<p>Extra Day add-ons grant both Timed Research experiences again on each added day.</p>',
+   '<p>Complete the tasks and claim rewards before 8:00 p.m. local time that day.</p>',
+   '<h2>Field Research</h2><p>Find tasks and Pokémon encounters.</p></main>'].join('\n');
+ const d=extractEventSourceFacets(story,{sourceUrl:'https://leekduck.com/events/synthetic-mexico-city/'});
+ const special=d.researchPrograms.find(x=>x.kind==='special');
+ const timed=d.researchPrograms.find(x=>x.kind==='timed');
+ assert.equal(special.access,'ticket');
+ assert.equal(special.storyTitle,'GO Wild Area: Mexico City – The Suspense Is Building');
+ assert.deepEqual(special.steps.map(x=>x.step),[1,2,3,4,5,6]);
+ assert.ok(special.steps.every(x=>x.outOf===6&&x.taskRewardEvidence==='not-extracted'));
+ assert.equal(special.onceOnly,true);
+ assert.equal(special.medalEffects.length,2);
+ assert.equal(special.medalEffects[0].medalLabel,'Steel Scholar medal');
+ assert.equal(special.medalEffects[1].medalLabel,'Dragon Defender medal');
+ assert.match(special.bonusActivationText,/bonuses begin when you claim/);
+ assert.match(special.completionRewardText,/new avatar pose/);
+ assert.equal(timed.onceOnly,false);
+ assert.match(timed.completionDeadlineText,/before 8:00 p.m./);
+ assert.equal(d.researchPrograms.length,3);
+});
+
+test('Global ticket research keeps claim instructions, separate medal bonuses and path choices',()=>{
+ const html='<main><h2>Research</h2><h2>Special Research — Ticket Holders</h2>'+
+   '<p>Claim the event Special Research beginning November 14, 2026, at 10:00 a.m. local time. Choose a Steel-type or Dragon-type path.</p>'+
+   '<ul><li>Steel Scholar medal: Earn 1 additional Candy XL for catching Steel-type mighty Pokémon.</li>'+
+   '<li>Dragon Defender medal: Earn 1,000 additional Stardust for catching Dragon-type mighty Pokémon.</li></ul>'+
+   '<p>Your chosen path’s bonuses begin when you claim its medal and last until November 15, 2026, at 6:00 p.m. local time.</p>'+
+   '<p>Completing the event Special Research also awards a new avatar pose.</p>'+
+   '<h2>Field Research</h2><p>Tasks and rewards have not yet been announced.</p></main>';
+ const d=extractEventSourceFacets(html,{sourceUrl:'https://leekduck.com/events/synthetic-global/'});
+ const special=d.researchPrograms.find(x=>x.kind==='special');
+ assert.deepEqual(special.paths,['Steel-type','Dragon-type']);
+ assert.match(special.claimInstructionsText,/November 14, 2026/);
+ assert.equal(special.medalEffects.length,2);
+ assert.ok(special.bonusActivationText.includes('claim its medal'));
+ assert.equal(special.steps.length,0);
+ assert.ok(!JSON.stringify(special).includes('unverified stage reward'));
+});
+
+test('detached unrelated stage lists cannot be adopted as paid Special Research',()=>{
+ const html='<main><h2>Special Research — Ticket Holders</h2>'+
+   '<p>More details will be announced.</p>'+
+   '<h2>GO Stamp Rally</h2><p>Special Research previews may appear later.</p>'+
+   '<div>GO Stamp Rally (1/6) with six checkpoints</div>'+
+   '<h2>Field Research</h2><p>Research tasks not published.</p></main>';
+ const d=extractEventSourceFacets(html,{sourceUrl:'https://leekduck.com/events/synthetic-preview/'});
+ assert.equal(d.researchPrograms.find(x=>x.kind==='special').steps.length,0);
+ assert.equal(d.researchPrograms.find(x=>x.kind==='special').storyTitle,null);
+});
