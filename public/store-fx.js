@@ -93,7 +93,9 @@
       ? Math.min(3000, maxWaitMs) : 3000;
     var timer;
     var live = Promise.resolve().then(function () {
-      return fetchImpl(ENDPOINT, { mode: 'cors', credentials: 'omit', cache: 'force-cache' });
+      /* Revalidate a dated rate online; force-cache could replay an expired
+         HTTP response indefinitely and erase both AUD references on iOS. */
+      return fetchImpl(ENDPOINT, { mode: 'cors', credentials: 'omit', cache: 'no-cache' });
     }).then(function (response) {
       if (!response || !response.ok) throw new Error('FX provider unavailable');
       return response.json();
