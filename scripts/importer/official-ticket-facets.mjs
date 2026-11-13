@@ -29,7 +29,9 @@ const kindOf=s=>/\braid passes?\b/i.test(s)?'raid-passes'
   : /\bstardust\b/i.test(s)?'stardust'
   : /\bXP\b/i.test(s)?'xp':'other';
 const looksLikePerk=s=>s.length>=12&&s.length<=190
-  &&/^(?:up to|increased|daily|additional|extra|lure modules?|six\b|two\b|\d+(?:\/\d+)?\s*[×x])\b/i.test(s)
+  &&(/^(?:up to|increased|daily|additional|extra|lure modules?|six\b|two\b)/i.test(s)
+    ||/^\d+(?:\/\d+)?\s*[×x](?=\s|\w)/i.test(s)
+    ||/^\d+\/\d+\s+stardust cost for trades?\b/i.test(s))
   && !/\b(?:not (?:yet )?confirmed|speculative|not guaranteed|may be available|check back|this bonus to apply)\b/i.test(s)
   && kindOf(s)!=='other';
 const allowedUrl=url=>{
