@@ -38,6 +38,10 @@ PRIMALS = (("Primal Kyogre", 10077, 382), ("Primal Groudon", 10078, 383))
 MEGAS = (("Mega Charizard X", 10034, 6), ("Mega Charizard Y", 10035, 6))
 DYNAMAX = ("Dynamax Registeel", "Dynamax Regidrago",
            "Dynamax Latias", "Dynamax Latios")
+# GO Pass encounter art uses the real species still plus an independent
+# Dynamax treatment; these art routes must never return a generic MAX icon.
+# This tests artwork availability, not in-game shiny eligibility.
+GO_PASS_DYNAMAX = (("Dynamax Meltan", 808), ("Dynamax Rookidee", 821))
 DISPLAY_NAMES = tuple(item[0] for item in CROWNED) + DYNAMAX
 PNG = b"\x89PNG\r\n\x1a\n"
 
@@ -300,6 +304,25 @@ def main() -> int:
                         })
                         if not match:
                             errors.append(f"{form_name} ({variant}): live bytes do not match exact PokeAPI form {form_id}")
+                # GO Pass reward images: the Dynamax overlay must not replace
+                # the named species artwork (normal and shiny source files).
+                for name, species_id in GO_PASS_DYNAMAX:
+                    for shiny in (False, True):
+                        suffix = "&shiny=1" if shiny else ""
+                        live_url = BASE + "/api/art?n=" + quote(name, safe="") + "&dynamax=1" + suffix
+                        image_file = ("shiny/" if shiny else "") + str(species_id) + ".png"
+                        upstream_url = UPSTREAM + image_file
+                        variant = "shiny" if shiny else "regular"
+                        live, live_body = get_image(request, live_url, errors, name + " " + variant + " live")
+                        expected, expected_body = get_image(request, upstream_url, errors, name + " " + variant + " upstream")
+                        match = bool(live_body and expected_body and live_body == expected_body)
+                        report["form_art"].append({
+                            "name": name, "expected_species_artwork": image_file,
+                            "dynamax_treatment": True, "shiny": shiny,
+                            "live": live, "reference": expected, "matches_exact_png": match
+                        })
+                        if not match:
+                            errors.append(f"{name} ({variant}): live bytes do not match exact species {image_file}")
                 # A reusable form-art contract for future events: A is Unown's
                 # default 201.png, B-Z use their own form assets, punctuation
                 # uses named sprites, and shiny is a separate verified file.
