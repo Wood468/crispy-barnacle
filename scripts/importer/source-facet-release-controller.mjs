@@ -13,6 +13,8 @@
  * Operators must pre-provision a persistent directory and a verified ledger
  * JSON {schemaVersion:1,publication:'promotion-ledger',releases:[],pending:null};
  * never initialize that ledger automatically on first release or after loss.
+ * The trusted release workflow must also pin a fresh importer-report.json
+ * digest with no unresolved exact canonical page ownership.
  */
 import {open,readFile,rename,unlink,realpath} from 'node:fs/promises';
 import {resolve,join,sep,dirname} from 'node:path';
@@ -20,6 +22,7 @@ import {createHash,randomBytes} from 'node:crypto';
 import {facetPromotionManifestMessage} from './source-facet-promotion-manifest.mjs';
 import {preflightFacetPromotion} from './source-facet-promotion-preflight.mjs';
 import {publishApprovedFacetFeed} from './source-facet-public-feed.mjs';
+import {auditSourceIdentityCoverage} from './source-facet-identity-coverage.mjs';
 
 const HASH=/^[a-f0-9]{64}$/;
 const RELEASE=/^[a-z0-9][a-z0-9_-]{7,99}$/i;
@@ -96,7 +99,8 @@ async function writeLedger(path,ledger){
  */
 export async function commitFacetPromotion(manifest,signature,{
   rootDir,durableStateDir,allowLocalWrite=false,trustedReleasePublicKey,environment,
-  trustedCommitSha,now,trustedCanonicalEventIds,trustedPrivateReceipts
+  trustedCommitSha,now,trustedCanonicalEventIds,trustedPrivateReceipts,
+  expectedImporterReportSha256
 }={}){
   if(allowLocalWrite!==true||typeof rootDir!=='string'||!rootDir.trim()||
      typeof durableStateDir!=='string'||!durableStateDir.trim())
@@ -125,6 +129,24 @@ export async function commitFacetPromotion(manifest,signature,{
     // Concurrent local release attempts must not interleave ledger reads.
     // Never auto-remove a lock created by another process, even if stale.
     lock=await open(lockPath,'wx',0o600);
+    // Source ownership is an independent release prerequisite, not a claim
+    // made by a signed manifest or the importer itself. The trusted CI
+    // controller pins the EXACT audited importer report bytes for this build.
+    if(!HASH.test(expectedImporterReportSha256||''))
+      throw new TypeError('Pinned canonical source audit SHA-256 required');
+    const importerBytes=await readFile(join(root,'data','importer-report.json'));
+    if(importerBytes.length>2*1024*1024||
+       sha256(importerBytes)!==expectedImporterReportSha256)
+      throw new TypeError('Canonical source audit changed since trusted CI review');
+    const importerReport=JSON.parse(importerBytes.toString('utf8'));
+    const sourceAudit=auditSourceIdentityCoverage(importerReport);
+    const importerTime=Date.parse(importerReport.runAt),reviewTime=Date.parse(now);
+    if(!Number.isFinite(importerTime)||!Number.isFinite(reviewTime)||
+       importerTime>reviewTime||reviewTime-importerTime>24*60*60*1000)
+      throw new TypeError('Fresh canonical source audit required for release');
+    if(sourceAudit.sourceLinkReviewRequired)
+      throw new TypeError('Unresolved canonical source ownership blocks release: '+
+        sourceAudit.reviewBlockers.join(','));
     const ledger=await readLedger(ledgerPath);
     if(ledger.pending!==null)
       throw new TypeError('Unreconciled pending promotion blocks all releases');
