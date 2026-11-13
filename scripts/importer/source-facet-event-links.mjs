@@ -48,7 +48,22 @@ export function linkStagedFacetsToCanonicalEvents(events,facetByUrl){
     if(seen.has(key)){report.duplicatePages++;continue;}
     seen.add(key);report.eligiblePages++;
     const alias=idForUrl(url);
-    const matchingIds=new Set(events.filter(event=>matchesEvent(event,key,alias)).map(event=>event.id));
+    const matched=events.filter(event=>matchesEvent(event,key,alias));
+    const matchingIds=new Set(matched.map(event=>event.id));
+    // The live feed may include a source-generated copy alongside an owner's
+    // curated event. Prefer the curated ID only when it itself declares this
+    // exact publisher URL or alias, and when precisely ONE such owner exists.
+    // Names, dates, proximity and arbitrary "curated" flags are not proof.
+    if(matchingIds.size>1){
+      const curatedOwners=new Set(matched.filter(event=>event.curated===true&&event.id!==alias&&(
+        (Array.isArray(event.detailIds)&&event.detailIds.includes(alias))||
+        [event.link,event.sourceUrl].some(value=>sourceKey(value)===key)
+      )).map(event=>event.id));
+      if(curatedOwners.size===1){
+        matchingIds.clear();
+        matchingIds.add([...curatedOwners][0]);
+      }
+    }
     // Report a bounded, scrubbed source locator and exact candidate IDs so
     // reviewers can resolve omissions without fuzzy title/date guesses.
     // Never emit source page prose, user state, tokens or raw query strings.
