@@ -64,9 +64,6 @@
       }).join('')
       + '<p class="note">Rp prices read from the Indonesian web store and converted at ' + esc(String(fx.rate)) + ' A$ per Rp (' + esc(fx.source || '') + ', ' + esc(fx.observed || '') + '). Australian prices from the Australian store. Nothing is converted from US prices.</p></details>';
   }
-  var COINS_KEY = 'gofn-store-coins-v1';
-  function lsGet(k) { try { return localStorage.getItem(k) || ''; } catch (e) { return ''; } }
-  function lsSet(k, v) { try { localStorage.setItem(k, v); } catch (e) { } }
   function when(iso) { var d = new Date(iso + 'T00:00:00Z'); return isNaN(d) ? String(iso) : d.toLocaleDateString('en-AU', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' }); }
   function chan(p) { var R = window.GORegionalPrices; return R.REGIONS[p.region] + ' ' + R.CHANNELS[p.channel]; }
   /* The approximate AUD reference goes ABOVE the local checkout currency. */
@@ -103,7 +100,7 @@
   /* A source-verified channel ledger for EVERY known regional product.
      Only claim a cheapest option when two or more channels sell that exact
      named product in the same currency; one recorded channel is not a win. */
-  function cheapestHtml(obs, balance) {
+  function verifiedOptionsHtml(obs) {
     var R = window.GORegionalPrices, rows = Array.isArray(obs) ? obs : [];
     var observed = rows.filter(function (o) {
       return o && o.status === 'verified' && o.product && o.region && o.channel
@@ -169,8 +166,7 @@
     var prices = Array.isArray(data.prices) ? data.prices : [];
     var items = R.catalogue(prices, obs);
     if (!items.length) return '';
-    var balance = Math.max(0, parseInt(lsGet(COINS_KEY), 10) || 0);
-    var comparableOffers = cheapestHtml(obs, balance);
+    var comparableOffers = verifiedOptionsHtml(obs);
     var sections = [
       { id: 'passes', label: 'Passes & tickets', open: true },
       { id: 'storage', label: 'Storage upgrades', open: true },
