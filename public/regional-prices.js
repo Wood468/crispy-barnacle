@@ -250,9 +250,55 @@
         regionalUnmatched: !!p.regionalUnmatched, unpricedOfficial: !!p.unpricedOfficial,
         aud: p.aud, observed: p.observed,
         contents: p.contents || [], contentsSource: p.contentsSource || null,
-        india: p.unpricedOfficial || ambiguous ? null : regionPrice({ region: 'IN', channel: 'in-app', product: p.label, kind: kind, aud: p.aud }),
-        indonesia: p.unpricedOfficial || ambiguous ? null : regionPrice({ region: 'ID', channel: 'web', product: p.label, kind: kind, aud: p.aud }) };
+        india: ambiguous ? null : regionPrice({ region: 'IN', channel: 'in-app', product: p.label, kind: kind, aud: p.aud }),
+        indonesia: ambiguous ? null : regionPrice({ region: 'ID', channel: 'web', product: p.label, kind: kind, aud: p.aud }) };
     });
+  }
+  /* The latest public snapshot proves which exact SKUs were observed on the
+     official Web Store. It is not a checkout quote or regional price feed. */
+  var STORE_SLUG_ALIASES = {
+    'pokemon storage +1':'web-pokemon-storage-bundle',
+    'item bag +1':'web-item-storage-bundle',
+    'lucky egg x8':'web-luckyegg-bundle-8',
+    'star piece x8':'web-starpiece-bundle',
+    'remote raid pass x2':'web-remote-raidpass-bundle',
+    'egg incubator x3':'web-basic-incubator-3pack',
+    'super incubator x2':'web-super-incubator-2pack',
+    'premium battle pass x3':'web-premium-battle-pass-3',
+    'max particle pack x6':'web-mp-pack.6',
+    'max mushroom x3':'web-max-mushroom-3',
+    'silver pinap berries x10':'web-10-silver-pinap',
+    'golden razz berries x15':'web-15-gold-razz',
+    'max potions x10':'web-10-max-potions'
+  };
+  function currentCatalogue(items, snapshot, now) {
+    var at=now==null?Date.now():now;
+    var seen=Date.parse(snapshot && snapshot.updated);
+    var valid=Number.isFinite(seen) && seen<=at && at-seen<=2*DAY &&
+      Array.isArray(snapshot.items) && snapshot.version===1;
+    var source=valid?snapshot.items:[], matching=new Map();
+    source.forEach(function (r) {
+      if (!r || typeof r.name!=='string' || typeof r.slug!=='string' ||
+          !/^[a-z0-9._-]+$/.test(r.slug) || !Number.isFinite(Date.parse(r.seenAt)) ||
+          Date.parse(r.seenAt)>seen || seen-Date.parse(r.seenAt)>60*60*1000) return;
+      var key=norm(r.name);
+      if (!matching.has(key)) matching.set(key,[]);
+      matching.get(key).push(r);
+    });
+    var current=[], historical=[];
+    (items||[]).forEach(function (item) {
+      var key=norm(item.label), matches=matching.get(key)||[];
+      if (!matches.length && STORE_SLUG_ALIASES[key]) {
+        matches=source.filter(function (x) { return x && x.slug===STORE_SLUG_ALIASES[key]; });
+      }
+      // Ambiguous name joins must never claim a specific SKU is currently sold.
+      if (matches.length!==1) { historical.push(item); return; }
+      var row=matches[0], art=typeof row.image==='string' &&
+        /^https:\/\/assets\.pgo\.webstore\.nianticlabs\.com\/pgo\/image_variants\/v1\/sku_assets\/[a-z0-9_.%()-]+\/w256\.webp$/i.test(row.image)
+          ? row.image : null;
+      current.push(Object.assign({},item,{storeSlug:row.slug,storeArt:art,listedAt:row.seenAt}));
+    });
+    return {current:current,historical:historical,checkedAt:valid?snapshot.updated:null,stale:!valid};
   }
   /* Owner-only audit of source coverage, not a live checkout or a price
      prediction. Keep absent, modelled and recorded prices distinguishable. */
@@ -289,5 +335,5 @@
     return result;
   }
   function fmt(v, cur) { var sym = cur === 'IDR' ? 'Rp ' : cur === 'INR' ? '₹' : cur === 'AUD' ? 'A$' : ''; return sym + Number(v).toLocaleString('en-AU', cur === 'AUD' ? { minimumFractionDigits: 2, maximumFractionDigits: 2 } : { maximumFractionDigits: 0 }); }
-  return { kindOf: kindOf, exact: exact, estimate: estimate, reference: reference, cheapest: cheapest, review: review, catalogue: catalogue, coverage: coverage, channels: channels, confidence: confidence, fmt: fmt, ageDays: ageDays, REGIONS: REGIONS, CHANNELS: CHANNELS };
+  return { kindOf: kindOf, exact: exact, estimate: estimate, reference: reference, cheapest: cheapest, review: review, catalogue: catalogue, currentCatalogue: currentCatalogue, coverage: coverage, channels: channels, confidence: confidence, fmt: fmt, ageDays: ageDays, REGIONS: REGIONS, CHANNELS: CHANNELS };
 });
