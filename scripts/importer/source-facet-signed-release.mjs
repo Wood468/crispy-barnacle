@@ -47,9 +47,10 @@ export function facetReleaseAttestationMessage({eventId,candidateSha256,acknowle
  * a release lock. This function verifies cryptographic signatures only.
  */
 export function authorizeFacetSnapshot(reviewPlan,{
-  reviewPublicKey,releasePublicKey,reviewSignature,releaseSignature,
-  acknowledgeMassRemoval=false,verifiedAt
-}={}){
+  reviewSignature,releaseSignature,acknowledgeMassRemoval=false,verifiedAt
+}={},trustedKeys={}){
+  // Public keys are pinned independently by the release controller.
+  const {reviewPublicKey,releasePublicKey}=trustedKeys;
   if(!reviewPlan||reviewPlan.schemaVersion!==1||
     reviewPlan.publication!=='audit-only'||reviewPlan.requiresIndependentReview!==true||
     reviewPlan.requiresExternalReviewerAuthentication!==true||
