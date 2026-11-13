@@ -125,7 +125,8 @@
   function setLocal(id, d) { if (d) applyLocal(d); else { delete decs[id]; delete decided[id]; } }
   function undoDiscard() {
     var u = undos[undos.length - 1]; if (!u) return; dropUndo(u); drawUndo(false);
-    var back = u.prev ? { id: u.id, status: u.prev.status, eventId: u.prev.eventId || '', eventTitle: u.prev.eventTitle || '', targets: u.prev.targets || [] } : { id: u.id, status: 'reset', eventId: '', eventTitle: '' };
+    var back = u.prev ? { id: u.id, status: u.prev.status, eventId: u.prev.eventId || '', eventTitle: u.prev.eventTitle || '' } : { id: u.id, status: 'reset', eventId: '', eventTitle: '' };
+    if (u.prev && Array.isArray(u.prev.targets) && u.prev.targets.some(function(t){return t && t.type === 'raid-boss';})) back.targets = u.prev.targets;
     queued(u.id, function () {
       return recheckFirst(u.id).then(function (go) { if (!go) return; return readServer(u.id).then(function (now) {
         if (!now || now.status !== 'rejected') { setLocal(u.id, now); msg = 'That picture was changed somewhere else since you discarded it, so Undo did nothing.'; render(); return; }
@@ -178,11 +179,11 @@
   function bossLabel(t) {
     return bossName(t.pokemonId) + (t.formId ? ' · ' + t.formId : '') + ' · ' + t.battleMode;
   }
-  function bossControls() {
+  function bossControls(it) {
     return '<div class="igr-o ig-boss-controls" role="group" aria-label="Attach infographic to a Pokémon">'
       + '<label>Pokémon<input type="search" data-ig-boss-name list="ig-boss-list" placeholder="Exact Pokémon name" autocomplete="off" maxlength="90"></label>'
-      + '<label>Battle type<select data-ig-boss-mode><option value="normal">Normal</option><option value="shadow">Shadow</option><option value="dynamax">Dynamax</option><option value="gigantamax">Gigantamax</option><option value="mega">Mega</option><option value="primal">Primal</option></select></label>'
-      + '<label>Exact form<select data-ig-boss-form><option value="">Base/default</option></select></label>'
+      + '<label>Battle type<input type="text" data-ig-boss-mode list="ig-boss-mode-list" value="normal" maxlength="15" autocomplete="off" aria-label="Battle type: normal, shadow, dynamax, gigantamax, mega or primal"></label>'
+      + '<label>Exact form<input type="text" data-ig-boss-form list="ig-boss-form-' + esc(it.id) + '" value="" maxlength="80" autocomplete="off" placeholder="Base/default" aria-label="Exact form"><datalist id="ig-boss-form-' + esc(it.id) + '" data-ig-boss-form-options></datalist></label>'
       + '<button type="button" class="pill" data-ig-boss-save>Attach to Pokémon</button></div>';
   }
   function bossFormCompatible(row, mode) {
@@ -206,10 +207,9 @@
     var opts = formCatalogue.filter(function (f) {
       return mon && +f[0] === +mon[0] && bossFormCompatible(f, mode.value);
     });
-    field.innerHTML = '<option value="">Base/default</option>' + opts.map(function (f) {
-      return '<option value="' + esc(f[1]) + '">' + esc(f[2]) + '</option>';
-    }).join('');
-    if (opts.some(function (f) { return f[1] === was; })) field.value = was;
+    var choices = card.querySelector('[data-ig-boss-form-options]');
+    if (choices) choices.innerHTML = opts.map(function (f) { return '<option value="' + esc(f[1]) + '" label="' + esc(f[2]) + '"></option>'; }).join('');
+    field.value = opts.some(function (f) { return f[1] === was; }) ? was : '';
   }
   function linkedOf(id) {
     var d = decs[id]; if (!d || d.status !== 'approved' || !d.eventId) return [];
@@ -223,7 +223,7 @@
       + '<div class="igr-b"><b>' + esc(it.title || 'Untitled graphic') + '</b>'
       + '<div class="igr-g">' + bossTargets(it.id).map(function (t,n) { return '<button type="button" class="pill all" data-ig-boss-unlink="' + n + '" aria-label="Unlink ' + esc(bossLabel(t)) + '">' + esc(bossLabel(t)) + ' ✕</button>'; }).join('') + L.map(function (l, n) { return '<button type="button" class="pill all" data-ig-unlink="' + n + '" aria-label="Unlink from ' + esc(l.title) + '">' + esc(l.title) + ' ✕</button>'; }).join('') + '</div>'
       + '<div class="igr-o"><select aria-label="Link to another event"><option value="">Also link to…</option>' + eventOptions() + '</select><button type="button" class="pill" data-ig-add aria-label="Add event: ' + esc(it.title || 'Untitled graphic') + '">Add</button><button type="button" class="pill" data-ig-no aria-label="Discard: ' + esc(it.title || 'Untitled graphic') + '">Discard</button></div>'
-      + bossControls()
+      + bossControls(it)
       + '<div class="igr-o"><button type="button" class="pill" data-ig-ov="week">📅 This week\'s picture</button><button type="button" class="pill" data-ig-ov="month">🗓 Month overview</button></div>'
       + '</div></article>';
   }
@@ -239,7 +239,7 @@
       + (it.signals && it.signals.length ? '<div class="igr-s">' + it.signals.map(function (s) { return '<span>' + esc(s) + '</span>'; }).join('') + '</div>' : '')
       + '<div class="igr-g">' + (g.length ? g.map(function (x) { return '<button type="button" class="pill all" data-ig-ok="' + esc(x.eventId) + '" data-t="' + esc(x.eventTitle) + '">Approve: ' + esc(x.eventTitle) + '</button>'; }).join('') : '<small>No likely event found.</small>') + '</div>'
       + '<div class="igr-o"><select aria-label="Choose another event"><option value="">Another event…</option>' + eventOptions() + '</select><button type="button" class="pill" data-ig-pick aria-label="Approve: ' + esc(it.title || 'Untitled graphic') + '">Approve</button><button type="button" class="pill" data-ig-no aria-label="Discard: ' + esc(it.title || 'Untitled graphic') + '">Discard</button></div>'
-      + bossControls()
+      + bossControls(it)
       + '<div class="igr-o"><button type="button" class="pill" data-ig-ov="week">📅 This week\'s picture</button><button type="button" class="pill" data-ig-ov="month">🗓 Month overview</button></div>'
       + (safeUrl(it.post) ? '<small><a href="' + esc(it.post) + '" target="_blank" rel="noopener noreferrer">' + (window.GOLIB.isPrivateLink(it.post) ? 'Open in Discord (owner only)' : 'Original post') + '</a>' + (it.creator ? ' · ' + esc(it.creator) : '') + '</small>' : '')
       + '</div></article>';
@@ -256,13 +256,13 @@
     var linked = items.filter(function (i) { return linkedOf(i.id).length || bossTargets(i.id).length; });
     if (!decsOk) {
       host.hidden = false;
-      host.innerHTML = '<datalist id="ig-boss-list">' + pokemonCatalogue.map(function (p) { return '<option value="' + esc(p[1]) + '">'; }).join('') + '</datalist><details class="dd" open><summary>Infographic review <span class="cnt">' + open.length + '</span></summary><div class="body"><p class="igr-msg" role="alert">Could not read your saved decisions, so review is paused. Nothing can be approved or discarded until they load, so a choice you made elsewhere is never overwritten.</p>' + (msg ? '<p class="igr-msg" role="status">' + esc(msg) + '</p>' : '') + '<button type="button" class="pill all" data-ig-retry="1">Retry</button></div></details>';
+      host.innerHTML = '<datalist id="ig-boss-list">' + pokemonCatalogue.map(function (p) { return '<option value="' + esc(p[1]) + '">'; }).join('') + '</datalist><datalist id="ig-boss-mode-list"><option value="normal"><option value="shadow"><option value="dynamax"><option value="gigantamax"><option value="mega"><option value="primal"></datalist><details class="dd" open><summary>Infographic review <span class="cnt">' + open.length + '</span></summary><div class="body"><p class="igr-msg" role="alert">Could not read your saved decisions, so review is paused. Nothing can be approved or discarded until they load, so a choice you made elsewhere is never overwritten.</p>' + (msg ? '<p class="igr-msg" role="status">' + esc(msg) + '</p>' : '') + '<button type="button" class="pill all" data-ig-retry="1">Retry</button></div></details>';
       return;
     }
     if (!open.length && !msg && !capped && !linked.length) { host.hidden = true; host.innerHTML = ''; return; }
     host.hidden = false;
     var kl = document.getElementById('iglinked'), keepLinked = !!(kl && kl.open);
-    host.innerHTML = '<datalist id="ig-boss-list">' + pokemonCatalogue.map(function (p) { return '<option value="' + esc(p[1]) + '">'; }).join('') + '</datalist><details class="dd" open><summary>Infographic review <span class="cnt">' + open.length + '</span></summary><div class="body">'
+    host.innerHTML = '<datalist id="ig-boss-list">' + pokemonCatalogue.map(function (p) { return '<option value="' + esc(p[1]) + '">'; }).join('') + '</datalist><datalist id="ig-boss-mode-list"><option value="normal"><option value="shadow"><option value="dynamax"><option value="gigantamax"><option value="mega"><option value="primal"></datalist><details class="dd" open><summary>Infographic review <span class="cnt">' + open.length + '</span></summary><div class="body">'
       + '<p class="note" style="margin:0 0 8px">Discord and Telegram pictures appear here until you link them. Check the image text and date before approving; nothing appears on an event or Pokémon until you approve it.</p>'
       + capNote + (msg ? '<p class="igr-msg" role="status">' + esc(msg) + '</p>' : '') + open.slice(0, shown).map(card).join('') + (open.length > shown ? '<button type="button" class="pill all" data-ig-more="1">Show 10 more (' + (open.length - shown) + ' left)</button>' : '') + queueRetry + '</div></details>'
       + (linked.length ? '<details class="dd"' + (keepLinked ? ' open' : '') + ' id="iglinked"><summary>Linked infographics <span class="cnt">' + linked.length + '</span></summary><div class="body"><p class="note" style="margin:0 0 8px">Tap ✕ to unlink from one event, add more events, or discard. Changes reach the event within a few hours.</p>' + linked.map(linkedCard).join('') + '</div></details>' : '');
