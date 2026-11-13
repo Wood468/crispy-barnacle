@@ -61,7 +61,10 @@ test('source-only official November product receives only labelled comparable es
  const obs=[{region:'ID',channel:'web',currency:'IDR',product:'Monthly GO Pass Deluxe',
   kind:'monthly-pass',amount:41000,status:'verified',observed:'2026-11-09'}];
  const offers=[{id:'official:november',label:'GO Pass Deluxe: November',sourceUrl:'https://pokemongo.com/news/go-pass-november-2026',contents:[],noPriceObservation:true}];
- const row=R.catalogue([],obs,now,offers).find(x=>x.unpricedOfficial);
+ const announced=R.catalogue([],obs,now,offers).find(x=>x.unpricedOfficial);
+ assert.ok(announced);
+ assert.equal(announced.indonesia,null,'announcement alone cannot supply even a modelled price');
+ const row=R.currentCatalogue([announced],live,now,obs).current.find(x=>x.unpricedOfficial);
  assert.ok(row);
  assert.equal(row.indonesia?.basis,'estimate');
  assert.ok(row.indonesia.min<row.indonesia.max);
