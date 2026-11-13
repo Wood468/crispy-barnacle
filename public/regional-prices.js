@@ -277,9 +277,17 @@
     var artwork = null; /* Publisher images are review candidates, not approved runtime artwork. */
     /* Exact publisher image URLs remain in the read-only snapshot solely for
        the existing asset-approval workflow; never promote them to runtime. */
-    if (current.length !== 1) return past.length === 1
-      ? {status:'archived',image:artwork,lastSeen:row.lastSeen||null,goneAt:row.goneAt||null,endAt:row.endsAt||null,note:'Removed from the observed Store listing'}
-      : {status:'unconfirmed',image:artwork,lastSeen:null,goneAt:null,endAt:null,note:'Not confirmed in recent Store snapshot'};
+    if (current.length !== 1) {
+      /* An old removal record is not proof of today's availability. Only a
+         fresh source snapshot may classify a missing offer as removed. */
+      if (past.length === 1 && sourceFresh) {
+        var goneTime = Date.parse(row.goneAt || '');
+        if (Number.isFinite(goneTime) && goneTime <= checkTime &&
+            checkTime - goneTime <= 7 * DAY)
+          return {status:'archived',image:artwork,lastSeen:row.lastSeen||null,goneAt:row.goneAt,endAt:row.endsAt||null,note:'Removed from the observed Store listing'};
+      }
+      return {status:'unconfirmed',image:artwork,lastSeen:row&&row.lastSeen||null,goneAt:row&&row.goneAt||null,endAt:row&&row.endsAt||null,note:'Current Store availability not confirmed'};
+    }
     var end = Date.parse(row.endsAt || '');
     if (Number.isFinite(end) && end <= checkTime)
       return {status:'archived',image:artwork,lastSeen:row.lastSeen||null,goneAt:null,endAt:row.endsAt,note:'Published purchase window ended'};
