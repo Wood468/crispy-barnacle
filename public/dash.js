@@ -950,6 +950,10 @@
 
   /* ---------- Calendar: month grid, plus a compact Day / Week / Month list, with worldwide in-person events ---------- */
   var REG = [], regSel = 'all', scopeSel = 'month', REGCOL = '#2bb3a3';
+  /* Home's first layout must include the world feed (or its definitive failure).
+     Otherwise late overseas rows push the supporting panels into the viewport
+     and cause a large non-user-initiated layout shift on phones. */
+  var WORLD_READY = false;
   var REGIONS = [['all', 'Everything'], ['global', 'In the game'], ['Asia', 'Asia'], ['Americas', 'Americas'], ['Europe', 'Europe'], ['Oceania', 'Oceania']];
   var TRAVEL_REGIONS = [['all', 'All destinations'], ['Asia', 'Asia'], ['Americas', 'Americas'], ['Europe', 'Europe'], ['Oceania', 'Oceania']];
   var travelRegion = 'all', travelQuery = '';
@@ -994,10 +998,34 @@
     }
     renderCalendar(); renderHomeAgenda(); renderTimeline(); renderTravel();
   }
-  fetch('/world-events.json').then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; }).then(function (j) {
+  /* Wait only for the initial, bounded source request before revealing the
+     Today agenda. Source failures cannot keep Today blank indefinitely, and
+     an expired request must not insert overseas cards after that first paint. */
+  var worldExpired = false, worldAbort = typeof AbortController === 'function'
+    ? new AbortController() : null;
+  var worldOptions = worldAbort ? {signal: worldAbort.signal} : {};
+  function finishWorldSource() {
+    if (WORLD_READY) return;
+    WORLD_READY = true;
+    if (EV_READY) renderHomeAgenda();
+  }
+  var worldDeadline = setTimeout(function () {
+    worldExpired = true;
+    if (worldAbort) worldAbort.abort();
+    finishWorldSource();
+  }, 5000);
+  fetch('/world-events.json', worldOptions).then(function (r) {
+    return r.ok ? r.json() : null;
+  }).catch(function () { return null; }).then(function (j) {
+    if (worldExpired) return;
     if (j && (j.events || []).length) return loadWorld(j, false);
-    return fetch('/regional-events.json').then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; }).then(function (k) { if (k) loadWorld(k, true); });
-  });
+    return fetch('/regional-events.json', worldOptions).then(function (r) {
+      return r.ok ? r.json() : null;
+    }).catch(function () { return null; }).then(function (k) {
+      if (!worldExpired && k) loadWorld(k, true);
+    });
+  }).catch(function () { /* Source failure leaves the curated Today usable. */ })
+    .finally(function () { clearTimeout(worldDeadline); finishWorldSource(); });
   function words(n) { return String(n).toLowerCase().replace(/[^a-z ]/g, ' ').split(/\s+/).filter(function (w) { return w.length > 4 && !/^(pokemon|event|festival|during|enjoy|bountiful|debut|chance|encounter|storms|fireball|rescue|explore)$/.test(w); }); }
   function regList() { // an announced game event the live feed already shows is not listed twice
     return REG.filter(function (x) {
@@ -1982,7 +2010,7 @@ function renderHomeBrief(t) {
   document.addEventListener('gofn-season-ready', function () { renderHomeBrief(now()); });
   /* Refresh only today's list when its visible event phases change. This keeps the rest of the agenda and focused controls intact. */
   function renderHomeToday(t, force) {
-    if (!EV_READY) return;
+    if (!EV_READY || !WORLD_READY) return;
     t = t || now();
     renderTodayShiny(t);
     var endDay = addDays(startOfDay(t), 1);
