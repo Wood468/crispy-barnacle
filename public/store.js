@@ -164,6 +164,42 @@
         + esc(observedText + '. Not a live checkout quote.') + '</small></span></div>';
     }).join('');
   }
+  function coveragePanel(items, R) {
+    var data = R.coverage(items);
+    var withExactArt = items.filter(function (p) {
+      return ICO.some(function (record) { return record[0].test(String(p.label || '')); });
+    }).length;
+    function examples(labels) {
+      var unique = Array.from(new Set(labels));
+      return unique.length ? ' Examples: ' + unique.slice(0, 5).map(esc).join(', ')
+        + (unique.length > 5 ? ' (+' + (unique.length - 5) + ' more)' : '') + '.' : '';
+    }
+    return '<details class="sp-compare-more sp-coverage" data-sp-coverage>'
+      + '<summary>Source coverage & refresh checklist <small>'
+      + data.unlabelled.length + ' names · ' + data.unpaired.length + ' unmatched · '
+      + data.reviewDue.length + ' review due</small></summary>'
+      + '<p class="note">Owner-only data review. Dated observations are not live checkout offers. '
+      + '“Verified” means verified on the recorded date, not available today. Review due after '
+      + data.reviewDays + ' days.</p>'
+      + '<ul>'
+      + '<li>Verified source prices: Australia ' + data.auVerified + ', Indonesia '
+      + data.idVerified + ', India ' + data.inVerified + ' of ' + data.total + ' product cards.</li>'
+      + '<li>Missing Australian product names: ' + data.unlabelled.length + '.'
+      + examples(data.unlabelled) + '</li>'
+      + '<li>Regional SKU/contents not safely paired: ' + data.unpaired.length + '.'
+      + examples(data.unpaired) + '</li>'
+      + '<li>No observed Indonesian source price: ' + data.missingId.length
+      + '; observed or modelled but not verified: ' + data.unverifiedId.length + '.</li>'
+      + '<li>No observed Indian source price: ' + data.missingIn.length
+      + '; recorded or estimated but not verified: ' + data.unverifiedIn.length + '.</li>'
+      + '<li>Observations due for a new source check: ' + data.reviewDue.length + '.'
+      + examples(data.reviewDue) + '</li>'
+      + '<li>Exact item-art mappings: ' + withExactArt + ' of ' + data.total
+      + '; other cards use safe category symbols until exact artwork is verified.</li>'
+      + '</ul><p class="note">Record a new dated Store observation and confirm exact pack contents '
+      + 'or source SKU before comparing offers. Never reuse a box image or price from a similar name.</p>'
+      + '</details>';
+  }
   /* Product-first regional comparison. One card per known item, with price provenance
      close to the number; optional purchasing maths stays behind a disclosure. */
   function regional(data) {
@@ -175,6 +211,7 @@
     var items = R.catalogue(prices, obs);
     if (!items.length) return '';
     var comparableOffers = verifiedOptionsHtml(obs);
+    var reviewPanel = coveragePanel(items, R);
     var sections = [
       { id: 'passes', label: 'Passes & tickets', open: true },
       { id: 'storage', label: 'Storage upgrades', open: true },
@@ -212,6 +249,7 @@
     }).join('');
     return '<details class="storep storep-regional" open><summary>Regional Store prices <small>' + items.length + ' products · AU / ID / IN</small></summary>'
       + '<p class="sp-intro">Dated Store observations, not live checkout quotes. Approximate A$ values use <a href="https://www.exchangerate-api.com/" target="_blank" rel="noopener noreferrer">ExchangeRate-API</a> reference rates. “Not observed” means no sourced price for that region.</p>'
+      + reviewPanel
       + '<label class="sp-search"><span>Find a product</span><input type="search" data-sp-search placeholder="Search passes, storage, coins or items" aria-label="Search Store products" autocomplete="off"></label>'
       + '<p class="sp-results" data-sp-results aria-live="polite">' + items.length + ' products · ' + sections.filter(function (s) {return bySection[s.id].length;}).length + ' categories</p>'
       + '<div class="sp-catalogue">' + catalogue + '</div>'
