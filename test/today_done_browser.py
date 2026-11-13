@@ -46,7 +46,22 @@ with sync_playwright() as p:
     # Reload can show the saved Done list before late curated/season feeds finish
     # repainting Today. Wait for the exact restored occurrence, not any card.
     restored = page.locator(f'#today-v1 article[data-id="{cid}"][data-start="{start}"]')
-    restored.wait_for(state='attached', timeout=8000)
+    try:
+        restored.wait_for(state='attached', timeout=8000)
+    except Exception:
+        # Preserve the exact occurrence assertion; emit bounded state only on failure.
+        # This distinguishes a stale Today repaint from a changed source occurrence.
+        diagnostic = page.evaluate("""({
+          storedDone: localStorage.getItem('gofn-today-done-v1'),
+          event: typeof GODASH !== 'undefined' && GODASH.events ?
+            GODASH.events().filter(e => e.id === 'cur:sendai').map(e => ({id:e.id, start:e.start && e.start.toISOString()})) : null,
+          cards: [...document.querySelectorAll('#today-v1 article[data-id]')].slice(0, 30).map(e => ({id:e.dataset.id, start:e.dataset.start})),
+          restoreKeys: [...document.querySelectorAll('#today-v1 [data-t1-undo]')].map(e => e.getAttribute('data-t1-undo')),
+          todayBusy: document.getElementById('today-v1')?.getAttribute('aria-busy'),
+          pageErrors: document.querySelector('#today-v1 .t1-error')?.textContent || null
+        })""")
+        print('TODAY_RESTORE_WEBKIT_DIAGNOSTIC', {'expected': {'id': cid, 'start': start}, 'state': diagnostic, 'pageErrors': errors}, flush=True)
+        raise
     assert restored.count() >= 1, 'restore failed'
     assert page.evaluate("localStorage.getItem('gofn-today-done-v1')") in ('{}', None)
     page.locator(f'#today-v1 article[data-id="{cid}"] .t1-more').first.click(); page.locator('[data-t1-done]').click()
