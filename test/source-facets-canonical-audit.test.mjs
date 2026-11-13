@@ -145,3 +145,56 @@ test('two generated world events claiming the same source stay ambiguous',()=>{
   assert.equal(audit.report.canonicalLinks.ambiguousPages,1);
   assert.equal(audit.normalizedByEvent.size,0);
 });
+
+test('known canonical LeekDuck owners replace duplicate generated world owner without losing overseas events',()=>{
+  const dynamax='https://leekduck.com/events/dynamax-trails-2026/';
+  const london='https://leekduck.com/events/pokemon-night-out-london-2026/';
+  const world=[
+    {id:'w-dynamax-trails',sources:[{id:'leekduck',url:dynamax}]},
+    {id:'w-global',sources:[{id:'leekduck',url:global}]},
+    {id:'w-mexico',sources:[{id:'leekduck',url:mexico}]},
+    {id:'w-london',sources:[{id:'leekduck',url:london}]}
+  ];
+  const known=[
+    {id:'leekduck:dynamax-trails-2026'},
+    {id:'wag',curated:true,detailIds:['leekduck:pokemon-go-wild-area-2026-global']}
+  ];
+  assert.deepEqual(worldSourceFacetCandidates(world,known),[
+    {id:'w-mexico',sourceUrl:mexico},
+    {id:'w-london',sourceUrl:london}
+  ]);
+  const bySource=[{id:'known',sources:[{id:'leekduck',
+    url:'https://www.leekduck.com/events/dynamax-trails-2026/'}]}];
+  assert.deepEqual(worldSourceFacetCandidates(world,bySource).map(x=>x.id),
+    ['w-global','w-mexico','w-london']);
+  assert.throws(()=>worldSourceFacetCandidates(world,{}),/Known canonical events array/);
+});
+test('query, fragment, nonstandard port and credentialed known URLs cannot suppress a clean world page',()=>{
+  const clean='https://leekduck.com/events/pokemon-go-wild-area-2026-mexico-city/';
+  const untrusted=[
+    clean+'?access=unknown',
+    clean+'#other',
+    'https://leekduck.com:8443/events/pokemon-go-wild-area-2026-mexico-city/',
+    'https://unknown@leekduck.com/events/pokemon-go-wild-area-2026-mexico-city/'
+  ];
+  const world=[{id:'w-mexico',sources:[{id:'leekduck',url:clean}]}];
+  const known=untrusted.map((link,i)=>({id:'source-'+i,link}));
+  assert.deepEqual(worldSourceFacetCandidates(world,known),[
+    {id:'w-mexico',sourceUrl:clean}
+  ]);
+  for(const link of untrusted){
+    const asCandidate=[{id:'w-invalid',sources:[{id:'leekduck',url:link}]}];
+    assert.deepEqual(worldSourceFacetCandidates(asCandidate),[]);
+  }
+});
+test('world-source suppression never infers identity from title, dates or unrelated official links',()=>{
+  const world=[{id:'w-mexico',sources:[{id:'leekduck',url:mexico}]}];
+  const known=[
+    {id:'similar',t:'GO Wild Area Mexico City',start:'2026-11-07'},
+    {id:'official-only',link:'https://pokemongo.com/en/gowildarea/mexico-city/'},
+    {id:'same-title',t:'GO Wild Area Mexico City',sources:[{id:'official',url:mexico}]}
+  ];
+  assert.deepEqual(worldSourceFacetCandidates(world,known),[
+    {id:'w-mexico',sourceUrl:mexico}
+  ]);
+});
