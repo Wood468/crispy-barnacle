@@ -8,12 +8,19 @@
 import { sourceFor } from './sources.mjs';
 
 function sourceKey(value) {
+  if(typeof value!=='string'||value!==value.trim()||value.includes('\\'))return null;
   try {
     const u=new URL(value);
     const provider=sourceFor(value);
-    if(u.protocol!=='https:'||u.username||u.password||!provider||
-       provider.id!=='leekduck'||!provider.pattern.test(value))return null;
-    return u.hostname.replace(/^www\./,'')+u.pathname.replace(/\/$/,'');
+    // Hostname+path is an exact source identity ONLY on the canonical
+    // HTTPS origin. Query, fragment and alternate-port URLs must not
+    // masquerade as clean known owner links or as accepted source pages.
+    if(u.protocol!=='https:'||u.username||u.password||u.search||u.hash||u.port||
+       !['leekduck.com','www.leekduck.com'].includes(u.hostname.toLowerCase())||
+       !/^\/events\/[a-z0-9_-]+\/?$/i.test(u.pathname)||
+       !provider||provider.id!=='leekduck'||!provider.pattern.test(value))
+      return null;
+    return 'leekduck.com'+u.pathname.replace(/\/$/,'');
   } catch {
     return null;
   }
