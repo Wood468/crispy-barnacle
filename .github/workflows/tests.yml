@@ -11,8 +11,7 @@ jobs:
       fail-fast: false
       matrix:
         target:
-          - 41bc38a633e57f6e14b09e6b98d2b0c374fefd7f
-          - cbd99d70351525a0f430ecfe7f51b431cdc3527c
+          - bd07104c447f05351d70ee34a0aacacbb563a006
         trial: [1, 2]
     env:
       GO_FIELD_NOTES_TEST_BROWSER: webkit
