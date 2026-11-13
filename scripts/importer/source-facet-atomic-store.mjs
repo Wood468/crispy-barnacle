@@ -13,7 +13,7 @@ import {authorizeFacetSnapshot} from './source-facet-signed-release.mjs';
 import {compareFacetSnapshotForReview} from './source-facet-snapshot-diff.mjs';
 import {fingerprintFacetReview} from './source-facet-review-fingerprint.mjs';
 
-const ID=/^[a-z0-9][a-z0-9_-]{0,100}$/i;
+const ID=/^[a-z0-9][a-z0-9:._-]{0,159}$/i;
 const digest=bytes=>createHash('sha256').update(bytes).digest('hex');
 const canonical=value=>{
   if(Array.isArray(value))return value.map(canonical);
