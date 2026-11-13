@@ -60,6 +60,12 @@ const reasonsFor=(record,type,semanticConflicts)=>{
     const methods=record.acquisitionMethods;
     if(!Array.isArray(methods)||!methods.some(x=>['catch','evolve','raid'].includes(x))||
        methods.some(x=>!['catch','evolve','raid'].includes(x)))reasons.push('acquisition-unverified');
+    // A paid featured attack can be available only during a selected session.
+    // An event-wide date or unspecified ticket window is not enough evidence
+    // to publish a time-bound paid acquisition claim.
+    const verifiedDayScope=['ticketed-day','both-event-days','all-day'].includes(record.dayScope);
+    if((access==='ticket'||access==='addon')&&!safe(record.windowText)&&!verifiedDayScope)
+      reasons.push('paid-move-window-unverified');
   } else if(type==='researchPrograms'){
     if(!['special','timed','field'].includes(record.kind)||!safe(record.title,200))
       reasons.push('missing-research-program');

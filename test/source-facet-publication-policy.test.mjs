@@ -164,3 +164,58 @@ test('last verified snapshot survives a short outage only for its original event
   assert.equal(retain('wag',previous,{now:'invalid'}),null);
   assert.equal(retain('wag',previous,{now:'2026-11-13T12:00:00.000Z',maxAgeHours:0}),null);
 });
+
+test('ticket-only featured attacks without sourced session timing cannot qualify for publication',()=>{
+  const move={
+    id:'synthetic-ticket-move',pokemonLabel:'Synthetic Dragon',move:'Synthetic Beam',
+    moveKind:'charged',access:'ticket',status:'source-claimed',
+    acquisitionMethods:['raid'],sourceRefs:[proof('official',official)]
+  };
+  const held=assess(staged({featuredMoves:[move]}));
+  assert.equal(held.eligible.featuredMoves.length,0);
+  assert.ok(held.held.featuredMoves[0].reasons.includes('paid-move-window-unverified'));
+  const scoped=assess(staged({featuredMoves:[{
+    ...move,windowText:'Saturday from 10:00 a.m. to 6:00 p.m.',
+    dayScope:'ticketed-day',sessionLabel:'Saturday'
+  }]}));
+  assert.equal(scoped.eligible.featuredMoves.length,1);
+  assert.equal(scoped.eligible.featuredMoves[0].windowText,
+    'Saturday from 10:00 a.m. to 6:00 p.m.');
+});
+
+test('free featured moves do not inherit an invented event window',()=>{
+  const move={
+    id:'synthetic-free-move',pokemonLabel:'Synthetic Dragon',move:'Synthetic Beam',
+    moveKind:'charged',access:'free',status:'source-claimed',
+    acquisitionMethods:['evolve'],sourceRefs:[proof('official',official)]
+  };
+  const result=assess(staged({featuredMoves:[move]}));
+  assert.equal(result.eligible.featuredMoves.length,1);
+  assert.equal(result.eligible.featuredMoves[0].windowText,undefined);
+});
+
+test('paid add-on featured attacks also require explicit day or timing evidence',()=>{
+  const move={
+    id:'synthetic-addon-move',pokemonLabel:'Synthetic Dragon',move:'Synthetic Beam',
+    moveKind:'fast',access:'addon',status:'source-claimed',
+    acquisitionMethods:['catch'],sourceRefs:[proof('official',official)]
+  };
+  const result=assess(staged({featuredMoves:[move]}));
+  assert.ok(result.held.featuredMoves[0].reasons.includes('paid-move-window-unverified'));
+  assert.equal(result.eligible.featuredMoves.length,0);
+});
+
+test('invalid paid move day scope and session label alone cannot bypass publication gate',()=>{
+  const move={
+    id:'synthetic-invalid-session',pokemonLabel:'Synthetic Dragon',
+    move:'Synthetic Beam',moveKind:'charged',access:'ticket',
+    status:'source-claimed',acquisitionMethods:['raid'],
+    sourceRefs:[proof('official',official)],
+    dayScope:'every-saturday',sessionLabel:'Saturday',windowText:null
+  };
+  const invalid=assess(staged({featuredMoves:[move]}));
+  assert.equal(invalid.eligible.featuredMoves.length,0);
+  assert.ok(invalid.held.featuredMoves[0].reasons.includes('paid-move-window-unverified'));
+  const valid=assess(staged({featuredMoves:[{...move,dayScope:'ticketed-day'}]}));
+  assert.equal(valid.eligible.featuredMoves.length,1);
+});
