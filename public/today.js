@@ -113,18 +113,28 @@
     return type === 'major' ? cardMajor(ctx, ev, live) : type === 'raid' ? cardRaid(ctx, ev, live) : cardMinor(ctx, ev, live);
   }
   /* In-person records from the world list that no feed card already covers: always a visible row with its location. */
+  /* Use exact start/end so repeated regional IDs do not hide the wrong occurrence. */
+  function regionalAttrs(r) {
+    function iso(v) {
+      if (v == null || v === '') return '';
+      var n = +v;
+      return Number.isFinite(n) && Math.abs(n) <= 8640000000000000 ? new Date(n).toISOString() : '';
+    }
+    var start = iso(r.start), end = iso(r.end);
+    return ' data-id="' + esc(r.id) + '"' + (start ? ' data-start="' + start + '"' : '') + (end ? ' data-end="' + end + '"' : '');
+  }
   function regRow(ctx, r, live) {
     var cd = r.ongoing ? 'Ongoing · no announced end' : LOGIC.countdownText(live ? +r.end : +r.start, +ctx.now, live);
     var clock = r.ongoing ? '<span class="t1-cd t1-ongoing">Ongoing · no announced end</span>' : cdSpan(ctx, live ? r.end : r.start, live);
     var open = r.openId ? ' data-open="' + esc(r.openId) + '"' : '';
     var tag = r.openId ? 'button type="button"' : 'a href="' + esc(r.url) + '" target="_blank" rel="noopener noreferrer"';
     var end = r.openId ? 'button' : 'a';
-    return '<article class="t1-card t1-minor t1-reg' + (live ? ' is-live' : '') + '" style="--k:var(--color-kind-in-person)" data-id="' + esc(r.id) + '">'
+    return '<article class="t1-card t1-minor t1-reg' + (live ? ' is-live' : '') + '" style="--k:var(--color-kind-in-person)"' + regionalAttrs(r) + '>'
       + '<span class="t1-minor-art t1-reg-ico" aria-hidden="true">' + PIN + '</span>'
       + '<' + tag + ' class="t1-open"' + open + ' aria-label="' + esc('Open ' + r.name + ', ' + r.place + '. ' + cd) + '">'
       + '<strong class="t1-title">' + esc(r.name) + '</strong>'
       + '<span class="t1-sub">' + esc(r.place) + (r.overseas ? ' · Overseas' : '') + (r.inPerson ? ' · In person · ' : r.global ? ' · Global · ' : ' · Regional, in game · ') + clock + '</span>'
-      + '</' + end + '></article>';
+      + '</' + end + '>' + menuButton(r, r.name) + '</article>';
   }
   function weekRow(ctx, ev) {
     var days = Math.max(1, Math.round((+ev.start - +ctx.now) / 864e5));
@@ -136,9 +146,9 @@
   function regWeekRow(ctx, r) {
     var days = Math.max(1, Math.round((+r.start - +ctx.now) / 864e5)), when = ctx.dayLabel(r.start);
     var tag = r.openId ? 'button type="button" data-open="' + esc(r.openId) + '"' : 'a href="' + esc(r.url) + '" target="_blank" rel="noopener noreferrer"', end = r.openId ? 'button' : 'a';
-    return '<article class="t1-week" style="--k:var(--color-kind-in-person)" data-id="' + esc(r.id) + '"><' + tag + ' class="t1-open" aria-label="' + esc('Open ' + r.name + ', ' + r.place + '. Starts ' + when + ', in ' + days + ' days') + '">'
+    return '<article class="t1-week" style="--k:var(--color-kind-in-person)"' + regionalAttrs(r) + '><' + tag + ' class="t1-open" aria-label="' + esc('Open ' + r.name + ', ' + r.place + '. Starts ' + when + ', in ' + days + ' days') + '">'
       + '<span class="t1-week-main"><strong class="t1-title">' + esc(r.name) + '</strong><span class="t1-sub">' + esc(when) + ' · In person · ' + esc(r.place) + (r.overseas ? ' · Overseas' : '') + '</span></span>'
-      + '<span class="t1-days" aria-hidden="true">' + days + 'd</span></' + end + '></article>';
+      + '<span class="t1-days" aria-hidden="true">' + days + 'd</span></' + end + '>' + menuButton(r, r.name) + '</article>';
   }
 
   function endingRow(ctx, d) {
@@ -163,7 +173,7 @@
   }
 
   /* Whole Today view. ctx supplies: now, live[], soon[], week[], regLive[], regSoon[], regWeek[], boosts{live[],upcoming[]},
-     seasons[], done (list of {key,id,start}), kindOf, monArt, fallbackArt, overseas, dayLabel. */
+     seasons[], done (list of {key,id,start}), hidden (list of {key,id,start}), kindOf, monArt, fallbackArt, overseas, dayLabel. */
   function render(ctx) {
     var live = ctx.live, soon = ctx.soon, rank = { major: 0, raid: 1, minor: 2 };
     function typeOf(ev) { return LOGIC.cardType({ kind: ev.kind, name: ev.name, featuredCount: pokemonFor(ev, 9).length, span: +ev.end - +ev.start, tags: ev.tags }); }
@@ -194,9 +204,14 @@
         + ctx.seasons.map(function (s) { return '<li><button type="button" class="t1-open" data-open="' + esc(s.id) + '"><span class="t1-season-kind">' + esc(s.label) + '</span><span class="t1-season-name">' + esc(s.name) + '</span><span class="t1-season-days">' + s.days + (s.days === 1 ? ' day' : ' days') + ' left</span></button></li>'; }).join('')
         + '</ul></section>';
     }
+    if (ctx.hidden && ctx.hidden.length) {
+      h += '<section class="t1-sec t1-done t1-hidden" aria-labelledby="t1-hidden-h"><div class="t1-sec-head"><h2 id="t1-hidden-h">Hidden by you</h2><span class="t1-count-pill">' + ctx.hidden.length + '</span></div>'
+        + '<p class="t1-sec-note t1-done-note">Hidden from Today only. Events remain in Schedule and Event Details.</p><ul class="t1-done-list">'
+        + ctx.hidden.map(function (d) { return '<li><span>' + esc(d.name) + ' <small>' + esc(d.when) + '</small></span><button type="button" class="t1-restore" data-t1-unhide="' + esc(d.key) + '" aria-label="' + esc('Restore ' + d.name + ' to Today') + '">Restore</button></li>'; }).join('') + '</ul></section>';
+    }
     if (ctx.done.length) {
       h += '<section class="t1-sec t1-done" aria-labelledby="t1-done-h"><div class="t1-sec-head"><h2 id="t1-done-h">Marked done</h2><span class="t1-count-pill">' + ctx.done.length + '</span></div>'
-        + '<p class="t1-sec-note t1-done-note">Hidden from Today only. They stay in Schedule.</p><ul class="t1-done-list">'
+        + '<p class="t1-sec-note t1-done-note">Completed for you. These events remain in Schedule.</p><ul class="t1-done-list">'
         + ctx.done.map(function (d) { return '<li><span>' + esc(d.name) + ' <small>' + esc(d.when) + '</small></span><button type="button" class="t1-restore" data-t1-undo="' + esc(d.key) + '" aria-label="' + esc('Restore ' + d.name + ' to Today') + '">Restore</button></li>'; }).join('') + '</ul></section>';
     }
     return h;
