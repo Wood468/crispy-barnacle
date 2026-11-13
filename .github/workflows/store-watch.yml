@@ -56,6 +56,14 @@ jobs:
           TELEGRAM_TOPIC_SYSTEM: ${{ secrets.TELEGRAM_TOPIC_SYSTEM || secrets.TELEGRAM_TOPICS_SYSTEM }}
           DRY_RUN: ${{ github.event.inputs.dry_run || 'false' }}
         run: node scripts/store-watch.mjs /tmp/store-snapshot.json
+      # Read only: identify image candidates reused between distinct purchase
+      # slugs, source CDN problems, and any unreviewed local item icon mappings.
+      # Never auto-approve or publish a picture based on these logs alone.
+      - name: Audit Store product artwork candidates (report only)
+        continue-on-error: true
+        run: |
+          node --test test/store-artwork-coverage.test.mjs
+          node scripts/store-artwork-coverage.mjs
       - name: Remember what was seen
         shell: bash
         run: |
