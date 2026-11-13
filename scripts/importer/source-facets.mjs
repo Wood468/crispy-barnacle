@@ -163,8 +163,15 @@ export function extractEventSourceFacets(html,{sourceUrl}={}){
       if(access==='unknown')continue; // generic parent "Bonuses" is not a grant
       const windowText=entryWindow(ownBody);
       const raw=[...imgAlts(ownBody),...paragraphs(ownBody)];
-      const override=/\b(?:replace|instead of)\b.{0,80}\b(?:free|all[-\s]?trainer)\b.{0,50}\b(?:limits?|bonuses?)\b/i.test(text(ownBody))
-        ||/\b(?:ticketed|paid)\b.{0,50}\blimits?\s+replace\s+the\s+free\s+limits?\b/i.test(text(ownBody));
+      // Preserve the publisher's actual sentence that proves a ticketed
+      // Raid Pass/Max Particle cap replaces the free limit. A boolean alone
+      // is not enough evidence for the normalized contract.
+      const replacementEvidence=paragraphs(ownBody).find(p=>
+        p.length<=240 && /\b(?:replaces?|replaced|instead of)\b/i.test(p)
+        && /\bfree\b/i.test(p) && /\blimits?\b/i.test(p)
+        && !/\b(?:not yet confirmed|speculative|unverified)\b/i.test(p)
+      )||null;
+      const override=Boolean(replacementEvidence);
       for(const item of raw){
         const marker=/\*{1,4}$/.exec(item.trim())?.[0]||'';
         const benefit=item.replace(/\*+$/g,'').trim();
@@ -177,6 +184,7 @@ export function extractEventSourceFacets(html,{sourceUrl}={}){
           addonLabel:addon?s.heading:null,status:caveat?'unconfirmed':'source-claimed',
           windowText:windowText||null,dayScope:dayScope(windowText||''),
           replacesFreeLimit:override&&(kind==='raid-passes'||kind==='max-particles'),
+          replacementEvidence:override&&(kind==='raid-passes'||kind==='max-particles')?replacementEvidence:null,
           source:sourceRef(sourceUrl,s.heading)});
       }
     }
