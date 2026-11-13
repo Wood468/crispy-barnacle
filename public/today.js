@@ -121,7 +121,7 @@
       return Number.isFinite(n) && Math.abs(n) <= 8640000000000000 ? new Date(n).toISOString() : '';
     }
     var start = iso(r.start), end = iso(r.end);
-    return '' + regionalAttrs(r) + '' + (start ? ' data-start="' + start + '"' : '') + (end ? ' data-end="' + end + '"' : '');
+    return ' data-id="' + esc(r.id) + '"' + (start ? ' data-start="' + start + '"' : '') + (end ? ' data-end="' + end + '"' : '');
   }
   function regRow(ctx, r, live) {
     var cd = r.ongoing ? 'Ongoing · no announced end' : LOGIC.countdownText(live ? +r.end : +r.start, +ctx.now, live);
