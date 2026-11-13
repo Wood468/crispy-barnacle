@@ -112,8 +112,10 @@
         + '<small class="sp-basis">' + esc('Based on ' + p.basisText + ' · ' + chan(p)) + '</small></span>';
     }
     var state = p.basis === 'verified' ? 'Verified' : 'Recorded · not re-checked';
-    var source = state + ' · ' + chan(p) + ' · ' + when(p.observed);
-    return '<span class="sp-regional-value sp-ver" aria-label="' + esc(R.fmt(p.amount, p.currency) + '. ' + source) + '">'
+    /* Do not put a local-price-only aria-label on the whole row: it hides
+       the preceding AUD conversion from VoiceOver on iPhone. Read the
+       two visible values in order, including the dated FX note. */
+    return '<span class="sp-regional-value sp-ver">'
       + audPlaceholder(p, quotes)
       + '<b class="sp-local-price">' + esc(R.fmt(p.amount, p.currency)) + '</b>'
       + '<small>' + esc(state + ' · ' + when(p.observed)) + '</small></span>';
