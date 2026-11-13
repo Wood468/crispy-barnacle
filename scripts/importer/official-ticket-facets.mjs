@@ -16,7 +16,7 @@ const isTicketIntro=text=>/\b(?:ticket[\s-]*holders?|ticket[\s-]*holding)\s+trai
   &&/\b(?:receive|bonuses?|rewards?)\b/i.test(text)
   &&/\b(?:between|from)\b/i.test(text)
   &&/\b(?:a\.?m\.?|p\.?m\.?|\d{1,2}:\d\d)\b/i.test(text);
-const scopeFrom=s=>/\b12:00\s*a\.?m\.?\b.{0,110}\b11:59\s*p\.?m\.?\b/i.test(s)?'all-day':null;
+const scopeFrom=s=>/\b12:00\s*a\.?m\.?.{0,110}\b11:59\s*p\.?m\.?/i.test(s)?'all-day':null;
 const kindOf=s=>/\braid passes?\b/i.test(s)?'raid-passes'
   : /\bmax particles?\b/i.test(s)?'max-particles'
   : /\bincense\b/i.test(s)?'incense'
