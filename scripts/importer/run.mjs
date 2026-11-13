@@ -377,7 +377,7 @@ async function main() {
   // not present in the curated/API feed. Join only its explicit LeekDuck URL
   // and keep all ticket/move/research claims staging-only until publication QA.
   const sourceFacetStaging = collectCanonicalSourceFacetAudit(
-    pages,events.concat(worldSourceFacetCandidates(world))
+    pages,events.concat(worldSourceFacetCandidates(world,events))
   ).report;
   await writeFile(WORLD_OUT, JSON.stringify({ updated: new Date().toISOString(), events: world }, null, 1) + "\n");
   let old = {}; try { old = JSON.parse(await readFile(OUT, "utf8")).events || {}; } catch { /* first run */ }
