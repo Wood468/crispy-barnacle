@@ -21,7 +21,11 @@ FIXTURE = {
         {"id": "synthetic-id-ticket", "product": "Synthetic Test Ticket",
          "kind": "ticket", "region": "ID", "channel": "web",
          "currency": "IDR", "amount": 76000, "observed": "2026-11-01",
-         "source": "synthetic-test-only", "status": "verified"}
+         "source": "synthetic-test-only", "status": "verified"},
+        {"id": "synthetic-in-ticket", "product": "Synthetic Test Ticket",
+         "kind": "ticket", "region": "IN", "channel": "in-app",
+         "currency": "INR", "amount": 439, "observed": "2026-11-01",
+         "source": "synthetic-test-only", "status": "recorded"}
     ],
 }
 with sync_playwright() as p:
@@ -37,19 +41,24 @@ with sync_playwright() as p:
         page.locator('nav.tabs button[data-tab="events"]').click()
         page.wait_for_selector("#tab-events:not([hidden])")
         page.wait_for_selector("#sub-timeline:not([hidden])")
-        page.wait_for_function("Boolean(window.GOLIB && window.GORegionalPrices && window.GOStoreOfferIdentities)")
+        page.wait_for_function("Boolean(window.GOLIB && window.GORegionalPrices && window.GOStoreOfferIdentities && window.GOStoreFX)")
         # Replace the private loader before rerunning the real Store renderer.
         # Only synthetic data is rendered or saved to the artifact.
         page.evaluate("""fixture => {
             window.GOLIB.loadPrices = async () => fixture;
-            window.GOStoreFX = null;
+            // Deterministic synthetic FX, no private prices or network.
+            window.GOStoreFX.retrieve = async () => window.GOStoreFX.fromApi({
+                result: 'success', base_code: 'AUD',
+                time_last_update_unix: Date.parse('2026-11-12T00:00:00Z') / 1000,
+                rates: {IDR: 11000, INR: 60}
+            }, Date.parse('2026-11-13T00:00:00Z'));
             if (!document.getElementById('evsource')) {
                 const host = document.createElement('div');
                 host.id = 'evsource';
                 document.body.appendChild(host);
             }
         }""", FIXTURE)
-        page.add_script_tag(url="/store.js?v=20261113o-store770")
+        page.add_script_tag(url="/store.js?v=20261113q-store770a11y")
         # Wait for attachment first: the product may live in a collapsed category.
         target = ".storep-regional [data-sp-name*='synthetic test ticket']"
         page.wait_for_selector(target, state="attached")
@@ -63,6 +72,11 @@ with sync_playwright() as p:
             card.scrollIntoView({block: "center"});
         }""", target)
         page.wait_for_selector(target + " .sp-market-grid", state="visible")
+        page.wait_for_function("""selector => {
+            const cells = [...document.querySelector(selector).querySelectorAll('.sp-market')];
+            return cells.length === 3 && cells.slice(1).every(cell =>
+                cell.querySelector('.sp-aud-equivalent')?.textContent.includes('≈ A$'));
+        }""", target)
         metrics = page.evaluate("""selector => {
             const card = document.querySelector(selector);
             if (!card || !card.getClientRects().length) throw new Error("Synthetic Store card is not visible");
@@ -85,7 +99,19 @@ with sync_playwright() as p:
                     const channel = c.querySelector('.sp-market-label small');
                     return !!channel && getComputedStyle(channel).display !== 'none';
                 }),
-                localPrice: cells[1].querySelector('.sp-local-price')?.textContent.trim() || null
+                markets: cells.map(c => {
+                    const aud = c.querySelector('.sp-aud-equivalent');
+                    const local = c.querySelector('.sp-local-price');
+                    const parent = c.querySelector('.sp-regional-value');
+                    return {
+                        aud: aud?.textContent.trim() || null,
+                        local: local?.textContent.trim() || null,
+                        audBeforeLocal: !!aud && !!local &&
+                            !!(aud.compareDocumentPosition(local) & Node.DOCUMENT_POSITION_FOLLOWING),
+                        localOnlyAriaLabel: !!parent?.hasAttribute('aria-label'),
+                        fxProvenance: aud?.querySelector('.sp-aud-source')?.textContent.trim() || null
+                    };
+                })
             };
         }""", target)
         (OUT / f"store-{width}.json").write_text(json.dumps(metrics, indent=2))
@@ -100,6 +126,15 @@ with sync_playwright() as p:
         assert all(x in " ".join(metrics["labels"]) for x in ("Australia", "Indonesia", "India"))
         assert all(metrics["channelsVisible"]), f"{width}px purchase channels must remain visible: {metrics}"
         assert all(x in " ".join(metrics["labels"]) for x in ("Web", "in-app"))
+        indonesia, india = metrics["markets"][1:]
+        assert indonesia["aud"] == "≈ A$6.91FX · 12 Nov 2026", f"{width}px IDR reference: {indonesia}"
+        assert indonesia["local"] == "Rp 76,000", f"{width}px original IDR price: {indonesia}"
+        assert india["aud"] == "≈ A$7.32FX · 12 Nov 2026", f"{width}px INR reference: {india}"
+        assert india["local"] and "439" in india["local"] and "₹" in india["local"], f"{width}px INR local: {india}"
+        for market in (indonesia, india):
+            assert market["audBeforeLocal"], f"{width}px AUD must precede local checkout price: {market}"
+            assert not market["localOnlyAriaLabel"], f"{width}px parent label masks AUD for VoiceOver: {market}"
+            assert market["fxProvenance"] == "FX · 12 Nov 2026", f"{width}px dated FX provenance: {market}"
         print(f"PASS Store synthetic owner layout {width}px: {json.dumps(metrics)}", flush=True)
         context.close()
     browser.close()
