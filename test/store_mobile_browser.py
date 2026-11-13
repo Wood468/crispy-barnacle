@@ -51,10 +51,11 @@ with sync_playwright() as p:
         page.evaluate("""selector => {
             const card = document.querySelector(selector);
             if (!card) throw new Error("Synthetic Store fixture card was not rendered");
-            const regional = card.closest("details.storep-regional");
-            const group = card.closest("details[data-sp-group]");
-            if (regional) regional.open = true;
-            if (group) group.open = true;
+            if (card.hidden) throw new Error("Synthetic Store fixture card is hidden by filtering");
+            for (let node = card; node; node = node.parentElement) {
+                if (node instanceof HTMLDetailsElement) node.open = true;
+            }
+            card.scrollIntoView({block: "center"});
         }""", target)
         page.wait_for_selector(target + " .sp-market-grid", state="visible")
         metrics = page.evaluate("""selector => {
@@ -75,6 +76,10 @@ with sync_playwright() as p:
                 cellCount: cells.length,
                 bounds,
                 labels: cells.map(c => c.querySelector('.sp-market-label')?.textContent.trim()),
+                channelsVisible: cells.map(c => {
+                    const channel = c.querySelector('.sp-market-label small');
+                    return !!channel && getComputedStyle(channel).display !== 'none';
+                }),
                 localPrice: cells[1].querySelector('.sp-local-price')?.textContent.trim() || null
             };
         }""", target)
@@ -88,6 +93,8 @@ with sync_playwright() as p:
         assert all(abs(metrics["bounds"][i]["left"] - metrics["bounds"][0]["left"]) > 1
                    for i in (1, 2)), f"{width}px columns stacked rather than aligned"
         assert all(x in " ".join(metrics["labels"]) for x in ("Australia", "Indonesia", "India"))
+        assert all(metrics["channelsVisible"]), f"{width}px purchase channels must remain visible: {metrics}"
+        assert all(x in " ".join(metrics["labels"]) for x in ("Web", "in-app"))
         print(f"PASS Store synthetic owner layout {width}px: {json.dumps(metrics)}", flush=True)
         context.close()
     browser.close()

@@ -2381,7 +2381,7 @@ button.rc-chip:focus-visible{outline:2px solid var(--color-link);outline-offset:
   .storep-regional .sp-market,.storep-regional .sp-market-au{display:flex;flex-direction:column;grid-column:auto;min-width:0;align-items:stretch;gap:var(--space-1);padding:var(--space-2) var(--space-1);border:1px solid var(--color-border);border-radius:var(--radius-sm);background:var(--color-surface-raised);overflow-wrap:anywhere}
   .storep-regional .sp-market+.sp-market{border-top:1px solid var(--color-border)}
   .storep-regional .sp-market-label{display:flex;flex-direction:column;align-items:center;gap:var(--space-1);text-align:center;font-size:.7rem;line-height:1.25}
-  .storep-regional .sp-market-label small{display:none}
+  .storep-regional .sp-market-label small{display:block;font-size:.6rem;font-weight:650;color:var(--color-text-muted);line-height:1.15}
   .storep-regional .sp-market .sp-regional-value{display:block;min-width:0;text-align:center;font-variant-numeric:tabular-nums}
   .storep-regional .sp-market .sp-regional-value>b,.storep-regional .sp-market .sp-aud-equivalent{font-size:clamp(.69rem,2.9vw,.89rem);font-weight:800;line-height:1.3;overflow-wrap:anywhere}
   .storep-regional .sp-market .sp-regional-value small{display:block;font-size:var(--type-caption-compact);line-height:1.25;color:var(--color-text-muted);overflow-wrap:anywhere}
