@@ -76,6 +76,15 @@ test('expired purchase end and stale source never claim current listing', () => 
   assert.equal(R.sourceOffer('Timed GO Pass', null, NOW).status,'unconfirmed');
 });
 
+test('stale removal evidence is unconfirmed, but a fresh watcher may retain an older confirmed removal', () => {
+  const stale = { ...fixture, updated:'2026-10-20T00:00:00Z', items:[],
+    gone:[row('GO Pass Deluxe: October', {goneAt:'2026-10-21T00:00:00Z'})] };
+  assert.equal(R.sourceOffer('GO Pass Deluxe: October', stale, NOW).status, 'unconfirmed');
+  assert.equal(R.sourceOffer('GO Pass Deluxe: October', fixture, NOW).status, 'archived');
+  const missingRemovalDate = { ...fixture, items:[], gone:[row('GO Pass Deluxe: October')] };
+  assert.equal(R.sourceOffer('GO Pass Deluxe: October', missingRemovalDate, NOW).status, 'unconfirmed');
+});
+
 test('duplicate product names cannot authorize ambiguous source SKUs', () => {
   const normal = R.sourceOffer('GO Pass Deluxe: November', fixture, NOW);
   assert.equal(normal.status,'listed');
