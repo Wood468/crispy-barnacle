@@ -8,7 +8,7 @@ const prefix='/pgo/image_variants/v1/sku_assets/';
 
 test('official item image observations are strict publisher references, never approval or prices',()=>{
   assert.equal(data.schemaVersion,1);
-  assert.match(data.observedDate,/^20\\d{2}-\\d{2}-\\d{2}$/);
+  assert.match(data.observedDate,/^20\d{2}-\d{2}-\d{2}$/);
   assert.equal(data.sourcePage,'https://store.pokemongo.com/?hl=en_us');
   assert.equal(data.runtimeUseAuthorized,false);
   assert.equal(data.approvedImages,0);
@@ -31,7 +31,7 @@ test('official item image observations are strict publisher references, never ap
     assert.equal(url.search,'');
     assert.equal(url.hash,'');
     assert.ok(url.pathname.startsWith(prefix),'unexpected publisher image path');
-    assert.match(url.pathname,/\\/w128\\.webp$/);
+    assert.match(url.pathname,/\/w128\.webp$/);
     assert.ok(!urls.has(item.publisherImageUrl),'duplicate source icon URL');
     urls.add(item.publisherImageUrl);
     assert.equal(item.visualStatus,'publisher-listing-observed');
