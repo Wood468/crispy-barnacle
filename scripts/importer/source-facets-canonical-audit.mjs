@@ -8,11 +8,6 @@ import { linkStagedFacetsToCanonicalEvents } from './source-facet-event-links.mj
 import { normalizeEventSourceFacets } from './source-facets-contract.mjs';
 
 /**
- * Run an audit on the pages already fetched by the importer, using its
- * existing canonical events list (not inferred names or source headlines).
- * All full source-facet records stay ephemeral in byEvent.
- */
-/**
  * Link the already-validated generated world-event catalogue back to staged
  * source pages. The world catalogue has explicit source URLs but is produced
  * after the curated/API event list. These are audit candidates only.
@@ -41,6 +36,11 @@ export function worldSourceFacetCandidates(world){
   return out;
 }
 
+/**
+ * Run an audit on the pages already fetched by the importer, using its
+ * existing canonical events list (not inferred names or source headlines).
+ * All full source-facet records stay ephemeral in byEvent.
+ */
 export function collectCanonicalSourceFacetAudit(pages,events){
   if(!Array.isArray(events))throw new TypeError('Verified canonical events array required');
   const stage=collectSourceFacetStaging(pages);
