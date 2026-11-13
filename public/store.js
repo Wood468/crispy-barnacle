@@ -46,13 +46,8 @@
     if (/\bpack\b/i.test(name)) return '▣';
     return '·';
   }
-  function icon(label, officialArt) {
+  function icon(label) {
     var token = kindToken(label);
-    // Only unique, exact-SKU images from the official current Store snapshot.
-    if (typeof officialArt === 'string' &&
-        /^https:\/\/assets\.pgo\.webstore\.nianticlabs\.com\/pgo\/image_variants\/v1\/sku_assets\/[a-z0-9_.%()-]+\/w256\.webp$/i.test(officialArt)) {
-      return '<img class="sp-i sp-i-store" src="' + esc(officialArt) + '" alt="" width="28" height="28" loading="lazy" decoding="async" referrerpolicy="no-referrer" data-sp-fallback="' + esc(token) + '">';
-    }
     for (var i = 0; i < ICO.length; i++) if (ICO[i][0].test(label)) {
       return '<img class="sp-i" src="' + esc(ICO[i][1]) + '" alt="" width="28" height="28" loading="lazy" decoding="async" data-sp-fallback="' + esc(token || '·') + '">';
     }
@@ -285,7 +280,7 @@
           : p.sourceIdOnly
             ? '<small class="sp-source-id-note">Official AU observation · exact SKU; item name not recorded</small>' : '';
       return '<article class="sp-product" data-sp-product data-sp-name="' + esc(search) + '">'
-        + '<header class="sp-product-head"><span class="sp-product-name">' + icon(p.label, p.storeArt) + '<b>' + esc(p.label) + '</b></span>'
+        + '<header class="sp-product-head"><span class="sp-product-name">' + icon(p.label) + '<b>' + esc(p.label) + '</b></span>'
         + identityNote + '</header>'
         + '<div class="sp-market-grid">'
         + '<div class="sp-market sp-market-au"><span class="sp-market-label"><span aria-hidden="true">🇦🇺</span> Australia <small>Web</small></span>' + au + '</div>'
