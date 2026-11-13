@@ -84,7 +84,7 @@ test('viewer accepts only owner-approved explicit targets, ignores captions and 
  assert.equal(L.identity(normal),'006||normal');
 });
 test('form labels remain distinct and source links are never leaked',()=>{
- assert.equal(L.label(target('mega','006','mega-x'),[[6,'Charizard',1]],[[6,'mega-x','Mega X','mega']]),'Mega X Charizard');
+ assert.equal(L.label(target('mega','006','mega-x'),[[6,'Charizard',1]],[[6,'mega-x','Mega X','mega']]), 'Mega Charizard X');
  assert.equal(L.label(target('shadow','006'),[[6,'Charizard',1]],[]),'Shadow Charizard');
  const info={events:{},pokemonGuides:[{...target('normal'),infographics:[{url:image,sourceUrl:'https://discord.com/channels/1/2',source:'Private'}]}]};
  sanitizePublicInfographicSources(info);
