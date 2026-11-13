@@ -204,6 +204,7 @@ test('advanced Store channel coverage never ranks same-name boxes, recorded pric
     verified('box-inapp','Raid Day Box','in-app',100000,{kind:'bundle'}),
     verified('pass-web','Premium Battle Pass x3','web',30000,{sourceSku:'same-verified-pack'}),
     verified('pass-inapp','Premium Battle Pass x3','in-app',28000,{sourceSku:'same-verified-pack'}),
+    verified('pass-promo','Premium Battle Pass x3','web',26000,{sourceSku:'same-verified-pack',oneTime:true}),
     verified('remote-web','Remote Raid Pass x2','web',15000,{sourceSku:'same-currency-test'}),
     verified('remote-inapp','Remote Raid Pass x2','in-app',250,{currency:'INR',sourceSku:'same-currency-test'}),
     verified('coins-bonus','18,500 PokéCoins one-time bonus','web',505000,{kind:'coins',oneTime:true}),
@@ -234,6 +235,8 @@ test('advanced Store channel coverage never ranks same-name boxes, recorded pric
     'recorded-only prices do not enter the verified purchasing review');
   assert.equal((review.match(/data-sp-compared="yes"/g)||[]).length,1,
     'only a verified exact SKU across distinct checkout channels can be cash-ranked');
+  assert.equal((review.match(/Indonesia · Premium Battle Pass x3/g)||[]).length,2,
+    'a one-time promotional pack stays separate even when another channel reuses its SKU');
   assert.match(review,/Lowest verified cash price across 2 exact-SKU channels:.*in-app shop · Rp 28,000/,
     'same-SKU same-currency checkout comparison can choose the verified cheaper channel');
   assert.match(review,/Different currencies: no reliable lowest-price comparison/,
