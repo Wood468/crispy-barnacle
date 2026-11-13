@@ -1,5 +1,5 @@
 {
- "runAt": "2026-11-13T11:51:51.879Z",
+ "runAt": "2026-11-13T18:08:31.502Z",
  "artworkCoverage": {
   "selected": 27,
   "missing": 75,
@@ -242,17 +242,17 @@
     ]
    },
    {
-    "id": "leekduck:pokemon-night-out-london-2026",
-    "name": "Pokémon Night Out 2026 - London",
-    "sources": [
-     "https://leekduck.com/events/pokemon-night-out-london-2026/"
-    ]
-   },
-   {
     "id": "leekduck:minior-showers-southern-delta-aquariids-2027",
     "name": "Minior Showers: Southern Delta Aquariids 2027",
     "sources": [
      "https://leekduck.com/events/minior-showers-southern-delta-aquariids-2027/"
+    ]
+   },
+   {
+    "id": "leekduck:pokemon-night-out-london-2026",
+    "name": "Pokémon Night Out 2026 - London",
+    "sources": [
+     "https://leekduck.com/events/pokemon-night-out-london-2026/"
     ]
    },
    {
@@ -552,7 +552,7 @@
    "error": ""
   },
   "leekduck": {
-   "listed": 44,
+   "listed": 43,
    "error": ""
   },
   "hub": {
@@ -661,11 +661,6 @@
    "source": "official",
    "title": "Explore by starlight during meteor showers for a chance to encounter Minior! — Pokémon GO",
    "url": "https://pokemongo.com/news/minior-meteor-showers-2026/"
-  },
-  {
-   "source": "leekduck",
-   "title": "Pokémon Night Out 2026 - London",
-   "url": "https://leekduck.com/events/pokemon-night-out-london-2026/"
   }
  ],
  "intl": {
@@ -1145,13 +1140,13 @@
   "publication": "audit-only",
   "sourceId": "leekduck",
   "eligiblePages": 44,
-  "pagesWithFacets": 10,
+  "pagesWithFacets": 9,
   "duplicates": 0,
   "skippedLarge": 0,
   "counts": {
    "benefits": 69,
    "featuredMoves": 11,
-   "researchPrograms": 18,
+   "researchPrograms": 17,
    "unconfirmed": 1
   },
   "examples": [
@@ -1166,12 +1161,6 @@
     "benefitCount": 19,
     "featuredMoveCount": 0,
     "researchProgramCount": 3
-   },
-   {
-    "sourceUrl": "https://leekduck.com/events/pokemon-night-out-london-2026/",
-    "benefitCount": 0,
-    "featuredMoveCount": 0,
-    "researchProgramCount": 1
    },
    {
     "sourceUrl": "https://leekduck.com/events/into-the-wild-2026/",
@@ -1413,7 +1402,7 @@
     "events": 44,
     "benefits": 69,
     "featuredMoves": 11,
-    "researchPrograms": 18,
+    "researchPrograms": 17,
     "disputed": 0,
     "unconfirmed": 1,
     "warnings": 0

@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-13T10:59:11.781Z",
+ "updated": "2026-11-13T19:42:17.893Z",
  "recorded": [
   "pokemon-us",
   "pokemon-uk",
@@ -10,7 +10,7 @@
   {
    "id": "pokemon-us",
    "state": "ok",
-   "links": 1
+   "links": 2
   },
   {
    "id": "pokemon-uk",
@@ -36,6 +36,8 @@
   "https://www.pokemon.com/us/news/battle-with-mimikyu-in-the-play-pokemon-pokemon-go-championship-series/": "2026-11-02",
   "https://www.pokemon.com/uk/news/battle-with-mimikyu-in-the-play-pokemon-pokemon-go-championship-series/": "2026-11-02",
   "https://www.pokemon.com/us/news/dynamax-regidrago-and-dynamax-meltan-debut-in-pokemon-go-into-the-wild-event/": "2026-11-10",
-  "https://www.pokemon.com/uk/news/dynamax-regidrago-and-dynamax-meltan-debut-in-pokemon-go-into-the-wild-event/": "2026-11-12"
+  "https://www.pokemon.com/uk/news/dynamax-regidrago-and-dynamax-meltan-debut-in-pokemon-go-into-the-wild-event/": "2026-11-12",
+  "https://www.pokemon.com/us/news/gigantamax-duraludon-debuts-in-pokemon-go-wild-area-global-event/": "2026-11-13",
+  "https://www.pokemon.com/uk/news/gigantamax-duraludon-debuts-in-pokemon-go-wild-area-global-event/": "2026-11-13"
  }
 }

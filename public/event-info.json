@@ -298,6 +298,12 @@
           "url": "/infographics/g47ix/discord-1570142493692006461.webp",
           "source": "G47IX",
           "alt": "GO Wild Area: Global infographic"
+        },
+        {
+          "label": "Infographic · G47IX",
+          "url": "/infographics/g47ix/discord-1570339976657506324.webp",
+          "source": "G47IX",
+          "alt": "GO Wild Area: Global infographic"
         }
       ],
       "start": "2026-11-14",
@@ -1651,5 +1657,39 @@
         "observed": "2026-10-09"
       }
     }
-  }
+  },
+  "pokemonGuides": [
+    {
+      "pokemonId": "644",
+      "formId": null,
+      "battleMode": "normal",
+      "infographics": [
+        {
+          "url": "/infographics/g47ix/discord-1570487591273242727.png",
+          "label": "Raid boss guide · G47IX",
+          "source": "G47IX",
+          "alt": "tr NOV 12 6PM Counter Zekrom"
+        },
+        {
+          "url": "/infographics/g47ix/discord-1570487718994120835.png",
+          "label": "Raid boss guide · G47IX",
+          "source": "G47IX",
+          "alt": "Zekrom"
+        }
+      ]
+    },
+    {
+      "pokemonId": "483",
+      "formId": null,
+      "battleMode": "dynamax",
+      "infographics": [
+        {
+          "url": "/infographics/g47ix/discord-1570729091731292201.webp",
+          "label": "Raid boss guide · G47IX",
+          "source": "G47IX",
+          "alt": "Dialga"
+        }
+      ]
+    }
+  ]
 }

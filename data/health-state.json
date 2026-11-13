@@ -1,7 +1,8 @@
 {
  "alerted": [
-  "source-watch.yml",
+  "event-importer.yml",
   "g47ix-infographics.yml",
+  "ai-heartbeat-event-check",
   "ai-heartbeat-pipeline",
   "ai-heartbeat-shiny"
  ],

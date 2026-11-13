@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-13T11:51:51.870Z",
+ "updated": "2026-11-13T18:08:31.495Z",
  "events": [
   {
    "id": "w-pokemon-fossil-museum-2026",
@@ -632,11 +632,6 @@
      "id": "official",
      "name": "Pokémon GO (official)",
      "url": "https://pokemongo.com/news/pokemon-night-out-irl-details2026/"
-    },
-    {
-     "id": "leekduck",
-     "name": "Leek Duck",
-     "url": "https://leekduck.com/events/pokemon-night-out-london-2026/"
     }
    ],
    "status": "official",
