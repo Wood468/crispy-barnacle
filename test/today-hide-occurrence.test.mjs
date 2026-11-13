@@ -62,3 +62,27 @@ test('in-person Today rows expose the same occurrence actions as regular cards',
  assert.match(html,/International GO Event/);
  assert.doesNotMatch(html,/data-track|data-follow/);
 });
+
+
+test('long hidden and done titles keep their venue/type metadata as a separate wrapping line',async()=>{
+  const {readFileSync}=await import('node:fs');
+  const css=readFileSync(new URL('../public/today.css',import.meta.url),'utf8');
+  const ux=readFileSync(new URL('../public/ux-finish.css',import.meta.url),'utf8');
+  const title='Pokémon GO City Safari – An exceptionally long localized event name in Osaka and Tohoku';
+  const when='In person · Osaka, Japan · Overseas · 13 November 2026';
+  const ctx={now:new Date(Date.parse(start)),live:[],soon:[],week:[],regLive:[],regSoon:[],regWeek:[],boosts:{live:[],upcoming:[]},seasons:[],ending:[],
+    done:[{key:'done@'+new Date(start).toISOString(),name:title,when}],
+    hidden:[{key:'hidden@'+new Date(start).toISOString(),name:title,when}],
+    kindOf:()=>['In person','#aaa'],monArt:()=>'',fallbackArt:()=>'',overseas:()=>true};
+  const html=T.render(ctx);
+  assert.equal((html.match(/<small>In person · Osaka, Japan · Overseas · 13 November 2026<\\/small>/g)||[]).length,2);
+  assert.equal((html.match(/data-t1-(?:unhide|undo)=/g)||[]).length,2);
+  assert.match(html,/data-t1-unhide=/);
+  assert.match(html,/data-t1-undo=/);
+  assert.match(css,/\\.t1-done-list li > span:first-child\\{display:grid;[^}]*overflow-wrap:anywhere/);
+  assert.match(css,/\\.t1-done-list li > span:first-child small\\{display:block;/);
+  assert.match(css,/\\.t1-done-list li > \\.t1-restore\\{flex:0 0 auto/);
+  assert.doesNotMatch(html,/data-track|data-follow/);
+  assert.match(ux,/#tab-now \\.t1-major > \\.t1-major-art\\{[^}]*grid-row:1;[^}]*overflow:hidden/);
+  assert.match(ux,/#tab-now \\.t1-major > \\.t1-open\\{[^}]*grid-row:2;[^}]*z-index:1;[^}]*background:var\\(--color-surface\\)/);
+});
