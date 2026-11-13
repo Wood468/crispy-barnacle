@@ -32,6 +32,11 @@ with sync_playwright() as p:
         page = context.new_page()
         page.route("**/api/**", lambda route: route.fulfill(status=404, body="{}"))
         page.goto(BASE, wait_until="domcontentloaded")
+        # The regional Store is rendered inside the Events timeline panel.
+        # Activate that real app surface before checking visibility or layout.
+        page.locator('nav.tabs button[data-tab="events"]').click()
+        page.wait_for_selector("#tab-events:not([hidden])")
+        page.wait_for_selector("#sub-timeline:not([hidden])")
         page.wait_for_function("Boolean(window.GOLIB && window.GORegionalPrices && window.GOStoreOfferIdentities)")
         # Replace the private loader before rerunning the real Store renderer.
         # Only synthetic data is rendered or saved to the artifact.
