@@ -18,10 +18,10 @@ async function render(labels) {
     region:'AU',currency:'AUD',amount:2.99,verified:true,observed:'2026-11-13'
   }));
   const doc={readyState:'complete',getElementById:id=>id==='evsource'?host:null,
-    createElement:()=>({className:'',textContent:'',setAttribute(name,value){this[name]=value;}}),
+    createElement:tag=>tag==='div' ? el : {
+      className:'',textContent:'',setAttribute(name,value){this[name]=value;}
+    },
     addEventListener(){}};
-  // The Store inserts a created host node; retain the markup in a single stub.
-  doc.createElement=()=>el;
   const win={document:doc,GORegionalPrices:R,
     GOLIB:{esc:value=>String(value).replace(/[&<>"']/g,c=>'&#'+c.charCodeAt(0)+';'),
       loadPrices:()=>Promise.resolve({owner:true,prices,regional:[]}),
