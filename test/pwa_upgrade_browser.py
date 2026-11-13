@@ -6,6 +6,7 @@ see docs/IPHONE_PWA_VERIFICATION.md for the manual protocol.
 import json
 import os
 import re
+import time
 from pathlib import Path
 from playwright.sync_api import sync_playwright
 
@@ -30,6 +31,17 @@ SEED = {
 }
 READ_KEYS = "(keys)=>Object.fromEntries(keys.map(k=>[k,localStorage.getItem(k)]))"
 
+def wait_for_async(page, predicate, *, arg=None, timeout=30000):
+    """Await each predicate result; wait_for_function treats a Promise as truthy."""
+    deadline = time.monotonic() + timeout / 1000
+    while True:
+        if page.evaluate(predicate, arg):
+            return
+        if time.monotonic() >= deadline:
+            raise AssertionError('Timed out waiting for asynchronous PWA state')
+        page.wait_for_timeout(50)  # Poll the condition, not a fixed readiness delay.
+
+
 with sync_playwright() as pw:
     browser = getattr(pw, ENGINE).launch()
     context = browser.new_context(viewport={'width': 390, 'height': 844}, timezone_id='Australia/Melbourne', service_workers='allow')
@@ -50,7 +62,7 @@ with sync_playwright() as pw:
     page.goto(BASE + '/')
     page.evaluate('navigator.serviceWorker.ready')
     page.wait_for_function('!!navigator.serviceWorker.controller')
-    page.wait_for_function('(c)=>caches.open(c).then(x=>x.match("/index.html")).then(Boolean)', arg=OLD_CACHE, timeout=30000)
+    wait_for_async(page, '(c)=>caches.open(c).then(x=>x.match("/index.html")).then(Boolean)', arg=OLD_CACHE, timeout=30000)
     page.wait_for_function('!!window.GODASH && !!window.GODETAIL', timeout=60000)
     page.evaluate('(seed)=>Object.entries(seed).forEach(([k,v])=>localStorage.setItem(k,v))', SEED)
     assert page.evaluate(READ_KEYS, KEYS) == SEED
@@ -68,8 +80,8 @@ with sync_playwright() as pw:
     page.evaluate("caches.open('gofn-unrelated-cache').then(c=>c.put('/x',new Response('keep')))")
     phase['new'] = True
     page.evaluate('navigator.serviceWorker.getRegistration().then(r=>r.update())')
-    page.wait_for_function('(c)=>caches.keys().then(k=>k.includes(c)&&!k.includes("gofn-shell-v1-previous"))', arg=NEW_CACHE, timeout=40000)
-    page.wait_for_function("""async (oldController) => {
+    wait_for_async(page, '(c)=>caches.keys().then(k=>k.includes(c)&&!k.includes("gofn-shell-v1-previous"))', arg=NEW_CACHE, timeout=40000)
+    wait_for_async(page, """async (oldController) => {
         const registration = await navigator.serviceWorker.getRegistration();
         const controller = navigator.serviceWorker.controller;
         return !!controller && controller !== oldController &&
@@ -78,7 +90,7 @@ with sync_playwright() as pw:
     old_controller.dispose()
     # The cache name/index alone can appear before all startup resources are stored.
     # Prove the new shell can boot before the harness disconnects its network.
-    page.wait_for_function("""async (name) => {
+    wait_for_async(page, """async (name) => {
         const cache = await caches.open(name);
         const required = ['/index.html', '/data.json', '/app.js', '/dash.js', '/detail.js'];
         const responses = await Promise.all(required.map(path => cache.match(path, {ignoreSearch: true})));
@@ -114,7 +126,7 @@ with sync_playwright() as pw:
     page.wait_for_selector('#today-v1 .t1-card', timeout=20000)
     assert page.locator('#today-v1 .t1-card').count() > 0
     # Only superseded gofn-shell-* caches are removed (the outgoing worker may re-create its cache once; a navigation purges it).
-    page.wait_for_function('(c)=>caches.keys().then(k=>k.filter(n=>n.startsWith("gofn-shell-")).join()===c&&k.includes("gofn-unrelated-cache"))', arg=NEW_CACHE, timeout=15000)
+    wait_for_async(page, '(c)=>caches.keys().then(k=>k.filter(n=>n.startsWith("gofn-shell-")).join()===c&&k.includes("gofn-unrelated-cache"))', arg=NEW_CACHE, timeout=15000)
     page.locator('#today-v1 article.t1-card button[data-open]').first.click()
     page.wait_for_selector('#evd .ue-hero', timeout=15000)
     assert page.locator('#evd-t').inner_text().strip()
