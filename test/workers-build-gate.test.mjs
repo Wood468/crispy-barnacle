@@ -205,3 +205,63 @@ test("productionServesCommit reports HTTP errors and network failures as no matc
   const net = await productionServesCommit({ fetchImpl: async () => { throw new Error("boom"); }, readLocal: () => Buffer.from("x") });
   assert.match(net.reason, /boom/);
 });
+
+
+test("production build gate refuses forged Cloudflare build links", async () => {
+  const forgedUrls = [
+    "https://dash.cloudflare.com.evil.example/123/workers/services/view/go-field-notes/production/builds/build-123",
+    "http://dash.cloudflare.com/123/workers/services/view/go-field-notes/production/builds/build-123",
+    "https://dash.cloudflare.com/123/workers/services/view/other-worker/production/builds/build-123",
+    "https://dash.cloudflare.com/123/workers/services/view/go-field-notes/production/builds/build-123/extra"
+  ];
+  for (const forgedUrl of forgedUrls) {
+    let now = 0;
+    await assert.rejects(
+      waitForWorkersBuild(context({
+        timeoutMs: 20,
+        fetchImpl: async url => {
+          assert.ok(isApi(url));
+          return response([check("completed", "success", forgedUrl)]);
+        },
+        sleep: async ms => { now += ms; },
+        now: () => now
+      })),
+      /Workers build check does/
+    );
+  }
+});
+
+test("productionServesCommit requires both the service worker and shell to match", async () => {
+  const local = {
+    "public/sw.js": Buffer.from("local service worker"),
+    "public/index.html": Buffer.from("local shell")
+  };
+  const cases = [
+    {
+      sw: "different service worker", shell: "local shell", match: false,
+      reason: "production /sw.js differs from this commit"
+    },
+    {
+      sw: "local service worker", shell: "different shell", match: false,
+      reason: "production / differs from this commit"
+    },
+    { sw: "local service worker", shell: "local shell", match: true }
+  ];
+  for (const scenario of cases) {
+    const live = { "/sw.js": scenario.sw, "/": scenario.shell };
+    const result = await productionServesCommit({
+      productionUrl: "https://production.invalid",
+      fetchImpl: async url => {
+        const path = new URL(url).pathname;
+        assert.ok(Object.hasOwn(live, path));
+        return new Response(live[path]);
+      },
+      readLocal: path => {
+        assert.ok(Object.hasOwn(local, path));
+        return local[path];
+      }
+    });
+    assert.equal(result.match, scenario.match);
+    if (!scenario.match) assert.equal(result.reason, scenario.reason);
+  }
+});

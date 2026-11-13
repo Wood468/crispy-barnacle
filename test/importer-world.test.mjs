@@ -292,6 +292,72 @@ test("unchanged world events retain last-good source attribution when a refresh 
   assert.deepEqual(unmonitored.sources.map(source => source.id).sort(), ["official", "serebii"], "unwatched prior sources are not carried forward");
 });
 
+test("event-level headline date range wins over individual ticket-day listings", async () => {
+  const { fromPage } = await import("../scripts/importer/world.mjs");
+  // Real official event pages publish the overall window in their headline,
+  // then enumerate single-day tickets below it. Do not stop after ticket day 2.
+  const page = {
+    title: "Mexico City – GO Wild Area 2026",
+    url: "https://pokemongo.com/en/gowildarea/mexico-city/",
+    source: "official",
+    fields: { dates: ["November 6, 2026", "November 7, 2026", "November 8, 2026"] },
+    lines: [
+      { text: "Pokémon GO Wild Area Visits Mexico City, Mexico, November 6–8, 2026" },
+      { text: "Experience an exclusive in-person Pokémon GO event in Mexico City." },
+      { text: "DATE" }, { text: "November 6, 2026" },
+      { text: "November 7, 2026" }, { text: "November 8, 2026" }
+    ]
+  };
+  const result = fromPage(page, "2026-11-11");
+  assert.ok(result);
+  assert.equal(result.place, "Mexico City, Mexico");
+  assert.equal(result.start, "2026-11-06");
+  assert.equal(result.end, "2026-11-08", "the published event includes the third ticket day");
+});
+
+test("matching event sources retain the widest published dates, regardless of read order", async () => {
+  const { mergeWorld } = await import("../scripts/importer/world.mjs");
+  const base = {
+    name: "Mexico City – GO Wild Area 2026", place: "Mexico City, Mexico",
+    scope: "regional", area: "Americas", start: "2026-11-06",
+    datesKnown: true
+  };
+  const ticketDays = {
+    ...base, end: "2026-11-07", source: "leekduck",
+    url: "https://leekduck.com/events/pokemon-go-wild-area-2026-mexico-city/"
+  };
+  const officialFullEvent = {
+    ...base, end: "2026-11-08", source: "official",
+    url: "https://pokemongo.com/en/gowildarea/mexico-city/"
+  };
+  const fridayUpdate = {
+    ...base, end: "2026-11-06", source: "official",
+    url: "https://pokemongo.com/news/gowildarea-mexicocity-friday-update/"
+  };
+  const distinctCity = {
+    ...base, name: "Sendai – GO Wild Area 2026",
+    place: "Sendai and Tohoku, Japan", area: "Asia",
+    end: "2026-11-08", source: "official",
+    url: "https://pokemongo.com/en/gowildarea/sendai/"
+  };
+  const names = { official: "Pokémon GO (official)", leekduck: "Leek Duck" };
+  for (const rows of [
+    [fridayUpdate, ticketDays, officialFullEvent, distinctCity],
+    [officialFullEvent, ticketDays, fridayUpdate, distinctCity]
+  ]) {
+    const entries = mergeWorld(rows, names);
+    assert.equal(entries.length, 2, "different destinations stay independent");
+    const mexico = entries.find(e => e.place === base.place);
+    assert.ok(mexico);
+    assert.equal(mexico.start, "2026-11-06");
+    assert.equal(mexico.end, "2026-11-08", "an update mentioning Friday cannot truncate the published weekend");
+    assert.equal(mexico.sources.length, 3, "all source links remain for provenance");
+  }
+  const onlyTicketDays = mergeWorld([fridayUpdate,ticketDays], names);
+  assert.equal(onlyTicketDays[0].end, "2026-11-07",
+    "never infer an unsourced Sunday when its published window is unavailable");
+});
+
 test("Wild Area city pages retain official source coverage without merging destinations", async () => {
   const { entriesFromPage, mergeWorld, keepOldWorld, normUrl } = await import("../scripts/importer/world.mjs");
   const mexicoUrl = "https://pokemongo.com/en/gowildarea/mexico-city";
@@ -484,4 +550,63 @@ test("conflicting world-event modes fail closed instead of silently merging unli
     { ...base, id: "festival-a", mode: "in-game", sources: [{ id: "official", name: "Pokémon GO (official)", url }] },
     { ...base, id: "festival-b", mode: "in-person", sources: [{ id: "official", name: "Pokémon GO (official)", url }] }
   ]), /Conflicting world-event modes/);
+});
+
+
+test("ongoing official announcement retains two independent cities and an open end", async () => {
+  const { entriesFromPage, mergeWorld, collapseWorld, sameWriteupRulings, fromPage } = await import("../scripts/importer/world.mjs");
+  const url = "https://pokemongo.com/en/news/forever-stamp-rally-go-wild-area-2026/";
+  const page = {
+    title: "All Trainers can join brand-new Pokémon GO Stamp Rallies in Sendai • Tohoku, Japan, and Mexico City, Mexico.",
+    url, source: "official",
+    lines: [
+      { text: "Beginning November 2, 2026, at 4:00 p.m. PST, Trainers visiting Sendai • Tohoku or Mexico City may participate." },
+      { text: "This Stamp Rally will be available moving forward with no planned end date at this time." },
+      { text: "Sendai rewards Lapras. Mexico City rewards Hawlucha. The event-weekend rallies are separate." }
+    ]
+  };
+  const events = entriesFromPage(page, "2026-11-11");
+  assert.deepEqual(events.map(e => [e.place, e.area]), [
+    ["Sendai and Tohoku, Japan", "Asia"], ["Mexico City, Mexico", "Americas"]
+  ]);
+  for (const event of events) {
+    assert.equal(event.start, "2026-11-02T16:00:00-08:00", "preserve the actual published starting instant");
+    assert.equal(event.end, "", "the source does not publish an ending");
+    assert.equal(event.ongoing, true);
+    assert.equal(event.scope, "regional");
+    assert.equal(event.url, url);
+  }
+  const merged = mergeWorld(events, { official: "Pokémon GO (official)" });
+  assert.equal(merged.length, 2);
+  assert.deepEqual(sameWriteupRulings(merged), [[merged[0].id, merged[1].id]]);
+  const collapsed = collapseWorld(merged, { different: sameWriteupRulings(merged) }).events;
+  assert.equal(collapsed.length, 2);
+  assert.ok(collapsed.every(e => e.status === "official" && e.ongoing && !e.end));
+  const one = { ...page, title: "Pokémon GO Stamp Rally in Mexico City, Mexico." };
+  assert.equal(entriesFromPage(one, "2026-11-11").length, 1);
+  assert.equal(fromPage(one, "2026-11-11").end, "", "single-city ongoing events cannot become one-day events");
+  const finite = { ...page, lines: [{ text: "Event on November 2, 2026, from 10 a.m. to 8 p.m. local time." }] };
+  assert.ok(entriesFromPage(finite, "2026-11-11").every(e => !e.ongoing), "ticketed event dates remain finite");
+});
+
+test("multilingual country alias does not survive a source-confirmed city split", async () => {
+  const { sharedArticleKey, keepOldWorld, mergeWorld, collapseWorld } = await import("../scripts/importer/world.mjs");
+  const en = "https://pokemongo.com/en/news/forever-stamp-rally-go-wild-area-2026/";
+  const ja = "https://pokemongo.com/ja/news/forever-stamp-rally-go-wild-area-2026/";
+  assert.equal(sharedArticleKey(en), sharedArticleKey(ja));
+  assert.notEqual(sharedArticleKey(en), sharedArticleKey("https://pokemongo.com/ja/news/go-wild-area-stamp-rally-details-2026/"));
+  const old = { name: "Forever Stamp Rally Go Wild Area", place: "Japan", start: "2026-11-03", end: "2026-11-03",
+    seen: "2026-11-11", sources: [{ id: "official", name: "Pokémon GO (official)", url: ja }] };
+  const context = { cutoff: "2026-10-28", today: "2026-11-11", now: Date.parse("2026-11-11T12:00:00Z") };
+  assert.equal(keepOldWorld(old, { ...context, splitUrls: new Set([en]) }), false);
+  assert.equal(keepOldWorld(old, { ...context, splitUrls: new Set(["https://pokemongo.com/en/news/different-announcement-2026/"]) }), true);
+  const base = { name: "Pokémon GO Stamp Rally: Mexico City", place: "Mexico City, Mexico", area: "Americas",
+    start: "2026-11-02", end: "2026-11-02", datesKnown: true, source: "official" };
+  const finite = { ...base, url: "https://pokemongo.com/news/ticketed-stamp-rally-2026/" };
+  const ongoing = { ...base, start: "2026-11-02T16:00:00-08:00", end: "", ongoing: true, url: en };
+  const different = mergeWorld([finite, ongoing], { official: "Pokémon GO (official)" });
+  assert.equal(different.length, 2, "ticketed and ongoing activities do not share an event identity");
+  assert.equal(collapseWorld(different).events.length, 2);
+  const watched = JSON.parse(readFileSync(new URL("../data/watch-pages.json", import.meta.url), "utf8"));
+  assert.ok(watched.pages.some(p => p.url === en), "canonical English page survives the importer discovery cap");
 });

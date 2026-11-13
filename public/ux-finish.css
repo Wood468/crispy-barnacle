@@ -41,7 +41,6 @@
   #tab-now .t1-badges .t1-kind, #tab-now .t1-badges .t1-live { font-size: .62rem; padding: 3px 6px; }
   #tab-now .t1-badges .t1-count { font-size: .72rem; }
 
-  #tab-raids .prio-head .sec2 { font: 700 1.7rem/1.1 var(--font-body); text-transform: none; letter-spacing: -.03em; max-width: none; } /* page titles share the Schedule heading style */
   #tab-raids .rw-tabs { margin: 6px 0 8px; padding: 3px; flex-wrap: nowrap; }
   #tab-raids .rw-tabs button { min-width: 88px; padding-inline: 10px; }
   #tab-raids .rw-list { gap: 10px; }
@@ -106,19 +105,26 @@
   #tab-raids .rw-raid .rc { padding: 12px; }
 }
 
-/* Verified official banners are shown whole (their own 16:9 composition), never squeezed into the compact themed strip.
+/* Verified official banners fill a reserved box (no letterbox bars, no stretching, no layout shift) and crop around the art-directed
+   focal point. The box is 16:9 on phones and 2.4:1 from 900px, so the wide official banners are not blown up into tall slabs.
+   Square or portrait art (ratio under 1.45) is shown whole over a blurred copy of itself instead of being cropped (event-art.js sets .is-tall).
    The featured-Pokémon accent only belongs to themed placeholders: a real banner already shows the event's Pokémon. */
+#tab-now .t1-major { --art-ratio: 1.7778; }
 #tab-now .t1-major-art:has(.ev-art--official) { height: auto; padding: 0; }
-#tab-now .t1-major-art .ev-art--official { height: auto; aspect-ratio: 16 / 9 !important; }
-#tab-now .t1-major-art .ev-art--official .ev-art-img { object-position: 50% 30% !important; }
+#tab-now .t1-major-art .ev-art--official { height: auto; aspect-ratio: var(--art-ratio) !important; }
+.ev-art--official .ev-art-img { object-fit: cover !important; object-position: var(--art-focal, 50% 30%) !important; }
 #tab-now .t1-major-art .ev-art--official .ev-art-accent { display: none; }
+.ev-art.is-tall { background-image: var(--art-fill, none); background-size: cover; background-position: center; }
+.ev-art.is-tall::before { content: ''; position: absolute; inset: 0; z-index: 0; backdrop-filter: blur(22px) brightness(.55); -webkit-backdrop-filter: blur(22px) brightness(.55); }
+.ev-art.is-tall .ev-art-img { object-fit: contain !important; }
 @media (min-width: 900px) {
-  #tab-now .t1-major-art:has(.ev-art--official), #tab-now .t1-major-art .ev-art--official { height: auto; aspect-ratio: 16 / 9 !important; }
+  #tab-now .t1-major { --art-ratio: 2.4; }
+  #tab-now .t1-major-art:has(.ev-art--official), #tab-now .t1-major-art .ev-art--official { height: auto; aspect-ratio: var(--art-ratio) !important; }
 }
 .ev-art-tag { max-width: 70%; text-align: right; line-height: 1.25; }
 /* Keep the card menu (Mark done / Hide) below a full banner so it never covers the event logo. */
 #tab-now .t1-major:has(.ev-art--official) { container-type: inline-size; }
-#tab-now .t1-major:has(.ev-art--official) .t1-more { top: calc(100cqw * 9 / 16); }
+#tab-now .t1-major:has(.ev-art--official) .t1-more { top: calc(100cqw / var(--art-ratio, 1.7778)); }
 /* Shared series artwork is always identified on the banner. */
 .ev-art-scope { position: absolute; left: 10px; bottom: 8px; z-index: 2; max-width: 80%; padding: 3px 8px; border-radius: 999px; background: rgba(8,10,16,.72); color: #fff; font: 700 .6rem/1.2 var(--font-body); letter-spacing: .08em; text-transform: uppercase; font-style: normal; backdrop-filter: blur(4px); }
 /* Themed placeholder label stays readable above the small Pokémon accent (never clipped by it). */
@@ -219,3 +225,45 @@
 .evd-sec-h .evd-count { font: 600 var(--type-overline, .72rem) var(--font-body); color: var(--color-text-muted); text-transform: none; letter-spacing: 0; margin-left: var(--space-2, 8px); }
 .evd-nav-count { display: inline-block; min-width: 1.4em; padding: 0 5px; margin-left: 4px; border-radius: 999px; background: rgba(255,255,255,.12); font-size: .72em; line-height: 1.6; text-align: center; }
 .ue-research-notes { margin-top: var(--space-3, 12px); }
+
+/* Raids page title: the same heading style as the phone layout (and Schedule) at every width. */
+#tab-raids .prio-head .sec2 { font: 700 1.7rem/1.1 var(--font-body); text-transform: none; letter-spacing: -.03em; max-width: none; }
+@media (min-width: 900px) { #tab-raids .prio-head .sec2 { font-size: 1.9rem; } }
+
+/* Today badges never wrap their own words (the RAID HOUR kind chip broke over two lines at 320px). */
+#tab-now .t1-badges .t1-kind, #tab-now .t1-badges .t1-live, #tab-now .t1-badges .t1-tier { white-space: nowrap; flex: none; }
+@media (max-width: 340px) { #tab-now .t1-badges { padding-right: 32px; } #tab-now .t1-badges .t1-kind, #tab-now .t1-badges .t1-live, #tab-now .t1-badges .t1-tier { letter-spacing: .02em; } }
+
+/* Travel mode: heading, intro and search read as one block instead of three 40px-apart islands. */
+#sub-travel { gap: var(--space-3, 12px); }
+#sub-travel .intro { margin: 0; font-size: var(--type-body, 1rem); line-height: 1.45; }
+#sub-travel .travel-search { margin: var(--space-2, 8px) 0 0; }
+#sub-travel #travel-regions { margin: 0; }
+
+/* Every checkbox is at least a 44px target through its label (the visible box can stay small). */
+label:has(input[type="checkbox"]) { min-width: 44px; min-height: 44px; }
+input[type="checkbox"] { touch-action: manipulation; }
+
+/* Collection My Dex: source-backed search and Pokémon, not setup accordions, lead the phone viewport. */
+#tab-dex .dexbar{padding-top:0}
+#tab-dex .prog{background:var(--color-surface-card);color:var(--color-text);border:1px solid var(--color-border-card);border-radius:var(--radius-lg);padding:12px 14px;gap:7px}
+#tab-dex .prog .nums{align-items:center}
+#tab-dex .prog .n{font-size:clamp(1.85rem,8vw,2.6rem);line-height:1}
+#tab-dex .prog .n small{font-size:.55em;opacity:.72}
+#tab-dex .prog .l{font-size:var(--type-caption-compact);margin-top:4px;letter-spacing:.06em}
+#tab-dex .prog .bar{height:6px;background:var(--color-border)}
+#tab-dex .prog .bar i{background:var(--color-accent)}
+#tab-dex .prog .dmini{margin-top:1px;font-size:var(--type-caption);gap:5px 10px}
+#tab-dex #dsync{margin-top:0!important;margin-bottom:0}
+#tab-dex .gencov{padding:0;border:0;background:transparent}
+#tab-dex .gencov>.dd{border:1px solid var(--color-border-card)}
+#tab-dex{gap:8px}
+#tab-dex .gencov>.dd>summary{min-height:44px;padding-block:9px}
+@media(max-width:560px){
+ #tab-dex .dexbar{grid-template-columns:minmax(0,1fr) minmax(110px,38%);align-items:center;gap:6px}
+ #tab-dex .dexbar .tools{display:contents}
+ #tab-dex .dexbar #dq{grid-column:1;grid-row:1;flex-basis:auto;width:100%}
+ #tab-dex .dexbar #dstat{grid-column:2;grid-row:1;width:100%;min-width:0}
+ #tab-dex .dexbar #dgen{display:none}
+ #tab-dex .dexbar .genchips{grid-column:1/-1;grid-row:2}
+}

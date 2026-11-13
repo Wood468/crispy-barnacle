@@ -213,7 +213,7 @@ test('long GO Pass tracks group exact source ranks into compact expandable range
  const stages=Array.from({length:98},(_,i)=>({rank:i+2,free:['Rare Candy'],deluxe:['Premium Battle Pass']}));
  const html=UI.render(event({passes:[{title:'Synthetic long GO Pass',stages}]}),{});
  assert.equal((html.match(/class="ue-pass-range"/g)||[]).length,4);
- assert.match(html,/Ranks 2–25/);assert.match(html,/Ranks 76–99/);
+ assert.match(html,/Ranks 1–25 · 24 published/);assert.match(html,/Ranks 76–100 · 24 published/);
  assert.equal((html.match(/<li class="ue-pass-rank" data-rank="/g)||[]).length,98);
  assert.doesNotMatch(html,/data-rank="1"/);
 });
@@ -236,16 +236,117 @@ test('GO Pass timeline: free and Deluxe lanes, rank gaps, categories, fallbacks,
   {text:'Rank 8: Free: Modern Tee | Deluxe: Max Potion ×5'}]);
  const html=UI.render(event({passes:result.passes}),{rewardArt:i=>i.name==='Dynamax Rookidee'?'<img alt="" src="/rookidee.png">':'',passMeta:{updated:'2026-11-07T20:33:39Z',sources:[{name:'Leek Duck',url:'https://leekduck.com/events/x/'}]},safe:u=>u});
  assert.match(html,/ue-lane-free/);assert.match(html,/ue-lane-deluxe/);
- assert.match(html,/Ranks 5–7: no rewards listed by the source/);
+ assert.match(html,/Ranks 5–7: no reward entries published by the source/);
  assert.match(html,/data-cat="Box"/);assert.match(html,/data-cat="Candy"/);assert.match(html,/data-cat="Avatar item"/);
- assert.match(html,/src="\/ico\/xp\.webp"/);assert.match(html,/src="\/ico\/dust\.webp"/);assert.match(html,/\/ico\/i\/max-potion\.webp/);
- assert.match(html,/data-art="fallback"/);assert.match(html,/art unavailable/);
- assert.match(html,/No extra Deluxe reward/);
+ assert.match(html,/ue-reward-icon">XP<\/span>/);assert.match(html,/src="\/ico\/dust\.webp"/);assert.match(html,/\/ico\/i\/max-potion\.webp/);
+ assert.match(html,/data-art="category"/);assert.doesNotMatch(html,/art unavailable/);
+ assert.doesNotMatch(html,/No extra Deluxe reward/);
  assert.doesNotMatch(html,/\$|US\$/);
  assert.match(html,/Source: <a href="https:\/\/leekduck\.com\/events\/x\/"/);assert.match(html,/Data checked 2026-11-07/);
- assert.match(html,/Ranks 1 list no track reward/);
+ assert.match(html,/Ranks 1 have no track-reward entries published/);
 });
+
+test('GO Pass milestones show sourced encounters and premium rewards without expanding 600 ranks',()=>{
+ const stages=[
+  {rank:1,free:[{type:'item',name:'XP',quantity:1000}],deluxe:[]},
+  {rank:45,free:[{type:'encounter',name:'Dynamax Meltan',quantity:1}],deluxe:[]},
+  {rank:100,free:[{type:'item',name:'Rare Candy XL',quantity:2}],deluxe:[{type:'item',name:'Silver Bottle Cap',quantity:1}]},
+  {rank:600,free:[{type:'item',name:'XP',quantity:5000}],deluxe:[]}
+ ];
+ const html=UI.render(event({passes:[{title:'Synthetic 600-rank pass',stages}]}),{});
+ assert.match(html,/4 ranks with published entries · through Rank 600/);
+ assert.match(html,/Published milestones/);
+ assert.match(html,/data-milestone-rank="45"/);
+ assert.match(html,/data-milestone-rank="100"/);
+ assert.match(html,/Dynamax Meltan/);
+ assert.match(html,/Silver Bottle Cap/);
+ assert.match(html,/ue-reward-icon">XL<\/span>/);
+ assert.doesNotMatch(html,/<details class="ue-pass-range" open/);
+ assert.doesNotMatch(html,/No extra Deluxe reward|art unavailable|101 of 600/);
+ assert.match(html,/Source not listed/);
+});
+
+test('GO Pass keeps published Rank 45 and Rank 100 in four-card highlights despite many encounters',()=>{
+ const stages=[2,3,4,5,6,7,45,100].map(rank=>({rank,free:[{type:'encounter',name:rank===45?'Dynamax Meltan':'Featured Pokémon '+rank,quantity:1}],deluxe:rank===100?[{type:'item',name:'Silver Bottle Cap',quantity:1}]:[]}));
+ const html=UI.render(event({passes:[{title:'Crowded published milestones',stages}]}),{});
+ assert.equal((html.match(/class="ue-pass-highlight"/g)||[]).length,4);
+ assert.match(html,/data-milestone-rank="45"/);
+ assert.match(html,/data-milestone-rank="100"/);
+ assert.equal((html.match(/<li class="ue-pass-rank" data-rank="/g)||[]).length,8);
+});
+
 test('GO Pass with no stages says rewards are not published and unknown freshness is stated',()=>{
  const html=UI.render(event({passes:[{title:'Empty pass',stages:[]}]}),{});
  assert.match(html,/Rank rewards have not been published by the source yet/);assert.match(html,/Freshness unknown/);
+});
+
+test('event gallery marks normal and boosted shiny differently, without duplicate chips',()=>{
+ const normal={speciesId:'25',name:'Pikachu',shiny:'yes'};
+ const boosted={speciesId:'133',name:'Eevee',shiny:'yes',boostedShiny:true};
+ const unconfirmed={speciesId:'1',name:'Bulbasaur',shiny:'unknown'};
+ const mons=[normal,boosted,unconfirmed];
+ const m=event({pokemon:mons,encounters:mons.map(p=>({identityKey:C.identity(p),method:'wild'}))});
+ const html=UI.gallery(m,{});
+ const tile=p=>(html.split('data-identity="'+C.identity(p)+'"')[1]||'').split('</button>')[0];
+ assert.match(tile(normal),/class="ue-shiny-mark" aria-hidden="true">✦<\/span> Shiny/);
+ assert.doesNotMatch(tile(normal),/ue-shiny-boost/);
+ assert.match(tile(boosted),/ue-shiny-boost/);
+ assert.match(tile(boosted),/aria-hidden="true">↑✦<\/span> Boosted shiny/);
+ assert.doesNotMatch(tile(boosted),/>Shiny<\/span>/);
+ assert.doesNotMatch(tile(unconfirmed),/ue-shiny-mark|ue-shiny-boost/);
+});
+
+
+test('verified egg distances render icon-only corners without inventing unknown egg pools',()=>{
+ const two={speciesId:'25',name:'Pikachu'};
+ const ten={speciesId:'133',name:'Eevee'};
+ const unknown={speciesId:'1',name:'Bulbasaur'};
+ const m=event({pokemon:[two,ten,unknown],activities:[
+  {id:'egg-2km',title:'Event egg pool A',encounterMethod:'egg',eggDistanceKm:2,pokemonRefs:[C.identity(two)]},
+  {id:'egg-10km',title:'Event egg pool B',encounterMethod:'egg',eggDistanceKm:10,pokemonRefs:[C.identity(ten)]}
+ ],encounters:[{identityKey:C.identity(unknown),method:'egg'}]});
+ const html=UI.gallery(m,{});
+ const tile=p=>(html.split('data-identity="'+C.identity(p)+'"')[1]||'').split('</button>')[0];
+ assert.match(tile(two),/ue-egg-corner ue-egg-2/);
+ assert.match(tile(two),/\/ico\/g\/egg-2km\.webp/);
+ assert.match(tile(two),/aria-label="Pikachu, 2 km egg\. Show details"/);
+ assert.doesNotMatch(tile(two),/>2 km<|ue-badge ue-b-egg|ue-km-2/);
+ assert.match(tile(two),/width="20" height="20"/);
+ assert.match(tile(ten),/ue-egg-corner ue-egg-10/);
+ assert.match(tile(ten),/\/ico\/g\/egg-10km\.webp/);
+ assert.match(tile(ten),/aria-label="Eevee, 10 km egg\. Show details"/);
+ assert.doesNotMatch(tile(ten),/>10 km<|ue-badge ue-b-egg|ue-km-10/);
+ assert.match(tile(ten),/width="20" height="20"/);
+ assert.doesNotMatch(tile(unknown),/ue-egg-corner|ue-egg-\d/);
+ assert.match(tile(unknown),/aria-label="Bulbasaur, Egg\. Show details"/);
+ assert.doesNotMatch(tile(unknown),/ue-badge ue-b-egg/);
+ assert.equal(m.encounters.length,3,'published encounter data remains intact');
+});
+
+
+test('source-backed Incense encounters use only a compact corner icon, preserving method and access',()=>{
+ const incense={speciesId:'380',name:'Latias'};
+ const hatch={speciesId:'782',name:'Jangmo-o'};
+ const wild={speciesId:'25',name:'Pikachu'};
+ const m=event({
+  pokemon:[incense,hatch,wild],
+  activities:[{id:'hatch-5',title:'5 km Eggs',encounterMethod:'egg',eggDistanceKm:5,pokemonRefs:[C.identity(hatch)]}],
+  encounters:[
+   {identityKey:C.identity(incense),method:'incense',access:'ticket holders'},
+   {identityKey:C.identity(wild),method:'wild'}
+  ]
+ });
+ const html=UI.gallery(m,{});
+ const tile=p=>(html.split('data-identity="'+C.identity(p)+'"')[1]||'').split('</button>')[0];
+ assert.match(html,/Incense encounters/);
+ assert.match(tile(incense),/ue-incense-corner/);
+ assert.match(tile(incense),/src="\/ico\/incense\.webp"/);
+ assert.match(tile(incense),/width="20" height="20"/);
+ assert.match(tile(incense),/aria-label="Latias, Incense\. Show details"/);
+ assert.match(tile(incense),/ticket holders/);
+ assert.doesNotMatch(tile(incense),/ue-badge ue-b-incense|ue-egg-corner|>Incense<\/span>/);
+ assert.match(tile(hatch),/ue-egg-corner ue-egg-5/);
+ assert.doesNotMatch(tile(hatch),/ue-incense-corner/);
+ assert.doesNotMatch(tile(wild),/ue-incense-corner|ue-egg-corner/);
+ assert.equal(m.encounters.filter(x=>x.method==='incense').length,1);
 });

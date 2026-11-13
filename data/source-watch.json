@@ -1,10 +1,10 @@
 {
- "updated": "2026-11-09T19:50:05.663Z",
+ "updated": "2026-11-13T01:50:01.553Z",
  "status": [
   {
    "id": "hub",
    "state": "ok",
-   "items": 5
+   "items": 3
   },
   {
    "id": "miners-assets",
@@ -18,85 +18,33 @@
   },
   {
    "id": "reddit-silph",
-   "state": "ok",
-   "items": 6
+   "state": "error",
+   "note": "HTTP 403"
   },
   {
    "id": "youtube-pogo",
-   "state": "ok",
-   "items": 4
+   "state": "error",
+   "note": "HTTP 404"
   }
  ],
- "gaps": 2,
+ "gaps": 0,
  "items": [
   {
-   "source": "reddit-silph",
-   "trust": "tip",
-   "title": "There’s a chance for a glitched costume Ditto encounter during Teddiursa Spotlight Hour",
-   "link": "https://www.reddit.com/r/TheSilphRoad/comments/1xob52g/theres_a_chance_for_a_glitched_costume_ditto/",
-   "date": "2026-11-05T05:59:32.000Z",
-   "summary": "<table> <tr><td> <a href=\"https://www.reddit.com/r/TheSilphRoad/comments/1xob52g/theres_a_chance_for_a_glitched_costume_ditto/\"> <img src=\"https://preview.redd.it/axk7vshxhqzh1.jpeg?width=140&amp;heig",
-   "pokemon": [
-    "Teddiursa",
-    "Ditto"
-   ],
-   "notInOurData": [
-    "Teddiursa",
-    "Ditto"
-   ]
-  },
-  {
    "source": "hub",
    "trust": "community",
-   "title": "Shadow Tornadus (Incarnate) Raid Counters Guide",
-   "link": "https://pokemongohub.net/post/guide/shadow-tornadus-incarnate-raid-counters-guide/",
-   "date": "2026-11-03T10:07:44.000Z",
-   "summary": "Shadow Tornadus Incarnate is a Tier 5 Shadow Raid Boss. It&#8217;s a pure type Pokémon, making it weak to and type attacks. It can be shiny! Shadow Tornadus Incarnate can be caught with the following ",
+   "title": "How to Beat Dynamax Registeel: Best Counters &#038; Guide",
+   "link": "https://pokemongohub.net/post/news/how-to-beat-dynamax-registeel-best-counters-guide/",
+   "date": "2026-11-11T05:00:59.000Z",
+   "summary": "Dynamax Registeel is a Tier 5 Max Battle in Pokémon GO. It will cost 800 Max Particles to participate in this Max Battle, which will only be consumed if you defeat Registeel successfully. Dynamax Regi",
    "pokemon": [
-    "Tornadus"
-   ],
-   "notInOurData": [
-    "Tornadus"
-   ]
-  },
-  {
-   "source": "reddit-silph",
-   "trust": "tip",
-   "title": "So apparently Galarian Bird Shinies CAN run",
-   "link": "https://www.reddit.com/r/TheSilphRoad/comments/1xrry4r/so_apparently_galarian_bird_shinies_can_run/",
-   "date": "2026-11-09T13:41:46.000Z",
-   "summary": "<!-- SC_OFF --><div class=\"md\"><p>Was using my DAI before work today, encountered a Shiny G-Zapdos. I started the encounter, stood perfectly still, and threw 10 Ultra Balls with Golden Razzberries at ",
-   "pokemon": [],
-   "notInOurData": []
-  },
-  {
-   "source": "youtube-pogo",
-   "trust": "official",
-   "title": "Costumed Machamp debuts in Pokémon GO!",
-   "link": "https://www.youtube.com/watch?v=oe4xCOjA374",
-   "date": "2026-11-09T11:12:47.000Z",
-   "summary": "",
-   "pokemon": [
-    "Machamp"
-   ],
-   "notInOurData": []
-  },
-  {
-   "source": "youtube-pogo",
-   "trust": "official",
-   "title": "Costumed Machamp debuts in Pokémon GO!",
-   "link": "https://www.youtube.com/shorts/Z2OPNHxhNSc",
-   "date": "2026-11-09T10:48:45.000Z",
-   "summary": "",
-   "pokemon": [
-    "Machamp"
+    "Registeel"
    ],
    "notInOurData": []
   },
   {
    "source": "hub",
    "trust": "community",
-   "title": "Into the Wild (2026) Event",
+   "title": "Pokémon GO Into the Wild (2026)",
    "link": "https://pokemongohub.net/post/event/into-the-wild-2026-event/",
    "date": "2026-11-09T05:00:51.000Z",
    "summary": "Pokémon GO’s Into the Wild event runs from November 9 at 10:00 a.m. to November 13 at 8:00 p.m. local time, bringing two new Dynamax Pokémon: Dynamax Regidrago and Dynamax Meltan! Expect an increased ",
@@ -105,38 +53,6 @@
     "Regidrago",
     "Meltan"
    ],
-   "notInOurData": []
-  },
-  {
-   "source": "reddit-silph",
-   "trust": "tip",
-   "title": "Reminder: Meltan mystery box shiny encounter chance",
-   "link": "https://www.reddit.com/r/TheSilphRoad/comments/1xri856/reminder_meltan_mystery_box_shiny_encounter_chance/",
-   "date": "2026-11-09T04:23:22.000Z",
-   "summary": "<!-- SC_OFF --><div class=\"md\"><p>Hey all! I'm probably very behind in this but I only recently found out about the setup link with Pokémon Home to get the Mystery Box to catch more Meltan and get mor",
-   "pokemon": [
-    "Meltan"
-   ],
-   "notInOurData": []
-  },
-  {
-   "source": "reddit-silph",
-   "trust": "tip",
-   "title": "Shiny Rate: In-Person Go Wild Area",
-   "link": "https://www.reddit.com/r/TheSilphRoad/comments/1xqwyhe/shiny_rate_inperson_go_wild_area/",
-   "date": "2026-11-08T12:07:15.000Z",
-   "summary": "<!-- SC_OFF --><div class=\"md\"><p>Motivation: I decided to do this analysis since I keep hearing people suggesting different Shiny Rates to In-Person events. Some suggested it is 1/48, some suggested ",
-   "pokemon": [],
-   "notInOurData": []
-  },
-  {
-   "source": "reddit-silph",
-   "trust": "tip",
-   "title": "Last time every Costume Pokemon were available (2026 Edition)",
-   "link": "https://www.reddit.com/r/TheSilphRoad/comments/1xq0bq0/last_time_every_costume_pokemon_were_available/",
-   "date": "2026-11-07T07:16:18.000Z",
-   "summary": "<table> <tr><td> <a href=\"https://www.reddit.com/r/TheSilphRoad/comments/1xq0bq0/last_time_every_costume_pokemon_were_available/\"> <img src=\"https://preview.redd.it/uqwvqorv350i1.png?width=140&amp;hei",
-   "pokemon": [],
    "notInOurData": []
   },
   {
@@ -149,60 +65,6 @@
    "pokemon": [
     "Clefable"
    ],
-   "notInOurData": []
-  },
-  {
-   "source": "reddit-silph",
-   "trust": "tip",
-   "title": "Mega 4 inquiry",
-   "link": "https://www.reddit.com/r/TheSilphRoad/comments/1xo4g6f/mega_4_inquiry/",
-   "date": "2026-11-05T00:17:11.000Z",
-   "summary": "<table> <tr><td> <a href=\"https://www.reddit.com/r/TheSilphRoad/comments/1xo4g6f/mega_4_inquiry/\"> <img src=\"https://preview.redd.it/5ky6djrusozh1.jpeg?width=640&amp;crop=smart&amp;auto=webp&amp;s=3ca",
-   "pokemon": [],
-   "notInOurData": []
-  },
-  {
-   "source": "hub",
-   "trust": "community",
-   "title": "Pokémon GO Twilight Wishes (2026)",
-   "link": "https://pokemongohub.net/post/event/twilight-wishes-2026/",
-   "date": "2026-11-02T17:55:29.000Z",
-   "summary": "Pokémon GO&#8217;s Twilight Wishes event runs from November 24 at 10:00 a.m. to November 30, 2026, at 8:00 p.m. local time, bringing back Sun Scarf Espeon and Moon Scarf Umbreon alongside Sun Crown an",
-   "pokemon": [
-    "Pikachu",
-    "Umbreon",
-    "Espeon"
-   ],
-   "notInOurData": []
-  },
-  {
-   "source": "hub",
-   "trust": "community",
-   "title": "PvE Analysis: Halloween Event 2026 Part 2",
-   "link": "https://pokemongohub.net/post/meta/pve-analysis-halloween-event-2026-part-2/",
-   "date": "2026-11-02T09:42:29.000Z",
-   "summary": "Hello, Trainers! We hope everyone had a fantastic Halloween! True to one of Pokémon GO’s longest-running traditions, the Halloween 2026 Event is currently underway, bringing a host of spooky spawns, r",
-   "pokemon": [],
-   "notInOurData": []
-  },
-  {
-   "source": "youtube-pogo",
-   "trust": "official",
-   "title": "New costumed Pokémon make their debuts during Halloween 2026 Part I in Pokémon GO!",
-   "link": "https://www.youtube.com/shorts/I6MvdaExyIg",
-   "date": "2026-10-27T17:00:40.000Z",
-   "summary": "",
-   "pokemon": [],
-   "notInOurData": []
-  },
-  {
-   "source": "youtube-pogo",
-   "trust": "official",
-   "title": "New costumed Pokémon make their debuts during Halloween 2026 Part I in Pokémon GO!",
-   "link": "https://www.youtube.com/watch?v=wyN2y-BgpoU",
-   "date": "2026-10-27T17:00:14.000Z",
-   "summary": "",
-   "pokemon": [],
    "notInOurData": []
   }
  ]

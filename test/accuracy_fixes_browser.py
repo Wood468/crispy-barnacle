@@ -87,12 +87,27 @@ with sync_playwright() as p:
         assert f'{n} tasks' in header, header
         assert page.locator('#evd .evd-nav-link[data-sec="research"] .evd-nav-count').inner_text() == str(n)
         pc = page.locator('#evd .ue-pass-count').first.inner_text()
-        assert re.search(r'\d+ of 600 ranks listed', pc), pc
-        listed = int(re.match(r'(\d+) of', pc).group(1))
+        assert re.search(r'\d+ ranks with published entries · through Rank 600', pc), pc
+        listed = int(re.match(r'(\d+) ranks with published entries', pc).group(1))
+        assert 'of 600 ranks listed' not in pc, pc  # Do not imply every rank has published rewards.
         assert listed >= 100, listed
+        # Single-panel Event Details keeps Research hidden until selected.
+        page.locator('#evd .evd-nav-link[data-sec="research"]').click()
+        # Source-backed Into the Wild task "Win a raid" lists 2× Rare Candy.
+        # The approved asset list has no exact Rare Candy item picture, so the
+        # readable RC glyph must appear, not a fake regular-Candy image/dot.
+        rare = page.locator('#evd-s-research .research-reward-item', has_text='Rare Candy').first
+        assert rare.count() == 1 and rare.is_visible(), (width, 'Rare Candy research reward hidden')
+        assert '2× Rare Candy' in rare.inner_text(), (width, rare.inner_text())
+        symbol = rare.locator('.ue-reward-category[data-item-glyph="rare-candy"]')
+        assert symbol.count() == 1 and symbol.inner_text() == 'RC', (width, rare.inner_html())
+        box = symbol.bounding_box()
+        assert box and box['width'] >= 34 and box['height'] >= 34, (width, box)
+        assert rare.locator('.ue-reward-item-icon img, .ue-reward-dot').count() == 0, (width, 'ambiguous item art/dot')
         page.locator('#evd #evd-h-research').scroll_into_view_if_needed()
         page.evaluate('window.scrollBy(0, -110)')
         shot(page, f'accuracy-research-count-{width}')
+        page.locator('#evd .evd-nav-link[data-sec="passes"]').click()
         page.locator('#evd .ue-pass-count').first.scroll_into_view_if_needed()
         page.evaluate('window.scrollBy(0, -110)')
         shot(page, f'accuracy-gopass-total-{width}')

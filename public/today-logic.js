@@ -81,6 +81,52 @@
     return Object.keys(map).map(function (k) { return { key: k, id: k.slice(0, k.lastIndexOf('@')), start: k.slice(k.lastIndexOf('@') + 1), at: map[k] && map[k].at }; });
   }
 
+
+  /* Today-only Hide is separate from Done and uses the same exact occurrence key. */
+  var HIDE_KEY = 'gofn-today-hidden-v1';
+  function readHideState(storage) {
+    var raw;
+    try { raw = storage.getItem(HIDE_KEY); } catch (e) { return { map: {}, unreadable: true }; }
+    if (raw == null || raw === '') return { map: {}, corrupt: false };
+    try {
+      var map = JSON.parse(raw);
+      if (map && typeof map === 'object' && !Array.isArray(map)) return { map: map, corrupt: false };
+    } catch (e) { /* keep the original on corruption */ }
+    return { map: {}, corrupt: true, raw: raw };
+  }
+  function readHidden(storage) { return readHideState(storage).map; }
+  function isHiddenToday(map, id, start) { var k = doneKey(id, start); return !!k && !!(map && map[k]); }
+  function writeHidden(storage, map) {
+    try { var raw = JSON.stringify(map); storage.setItem(HIDE_KEY, raw); return storage.getItem(HIDE_KEY) === raw; }
+    catch (e) { return false; }
+  }
+  function tryHideToday(storage, id, start, end, nowMs) {
+    var key = doneKey(id, start);
+    if (!key) return { ok: false, error: 'invalid' };
+    var state = readHideState(storage);
+    if (state.unreadable) return { ok: false, error: 'storage' };
+    if (state.corrupt) {
+      try {
+        var backup = HIDE_KEY + '-corrupt';
+        if (storage.getItem(backup) !== state.raw) {
+          if (storage.getItem(backup) != null) backup += '-' + Date.now();
+          storage.setItem(backup, state.raw);
+          if (storage.getItem(backup) !== state.raw) return { ok: false, error: 'storage' };
+        }
+      } catch (e) { return { ok: false, error: 'storage' }; }
+    }
+    var map = pruneDone(state.map, nowMs || Date.now());
+    map[key] = { at: nowMs || Date.now(), end: Number.isFinite(+end) ? +end : null };
+    return writeHidden(storage, map) ? { ok: true, key: key } : { ok: false, error: 'storage' };
+  }
+  function tryRestoreHidden(storage, key) {
+    var state = readHideState(storage);
+    if (state.unreadable || state.corrupt) return { ok: false, error: 'storage' };
+    if (!key || !state.map[key]) return { ok: true, restored: false };
+    var map = {}; Object.keys(state.map).forEach(function (k) { if (k !== key) map[k] = state.map[k]; });
+    return writeHidden(storage, map) ? { ok: true, restored: true } : { ok: false, error: 'storage' };
+  }
+
   /* ---------- Shiny: a boost needs an explicit confirmation; ordinary availability never implies one ---------- */
   var BOOST_LABEL = /\b(boost(?:ed)?|increased|higher|better)\b[^.]{0,30}\bshiny\b|\bshiny\b[^.]{0,30}\b(boost(?:ed)?|odds? (?:are )?(?:boosted|increased)|chance (?:is )?(?:boosted|increased))/i;
   /* Returns 'boosted' | 'debut' | 'available' | 'none'. Inputs are only fields that state the fact:
@@ -136,13 +182,41 @@
     var paren = (/\(([^)]+)\)\s*$/.exec(raw) || [])[1] || '';
     var core = raw.replace(/\s*\([^)]*\)\s*$/, '').trim(), m;
     var res = { name: raw, base: core, kind: 'base', exact: false, form: paren || '', label: '' };
-    if ((m = /^Gigantamax\s+(.+)$/i.exec(core))) { res.kind = 'gigantamax'; res.base = m[1]; res.exact = true; res.label = 'Gigantamax'; }
+    /* The art Worker treats every explicit Unown glyph as exact, including
+       bare "Unown D" and "Unown !" names without a parenthesised form.
+       Keep the UI fallback contract aligned so unavailable exact artwork
+       displays a labelled base sprite instead of silently disappearing. */
+    var unown = /^Unown\s*(?:\(\s*([A-Z!?]|exclamation(?:\s+mark)?|question(?:\s+mark)?)(?:\s+form)?\s*\)|([A-Z!?])(?:\s*\(\s*([A-Z!?]|exclamation|question)\s*\))?|\s*(exclamation(?:\s+mark)?|question(?:\s+mark)?))$/i.exec(raw);
+    if (unown) {
+      var glyph = function (s) { s = s.toLowerCase().replace(/\s+mark$/, ''); return s === '!' ? 'exclamation' : s === '?' ? 'question' : s; };
+      var form = glyph(unown[1] || unown[2] || unown[4]);
+      var mismatch = !!unown[3] && glyph(unown[3]) !== form;
+      res.kind = 'form'; res.base = 'Unown'; res.exact = true;
+      res.form = mismatch ? '' : (form === 'exclamation' ? '!' : form === 'question' ? '?' : form.toUpperCase());
+      res.label = mismatch ? 'Unown form' : 'Unown ' + res.form;
+    }
+    /* Source feeds may lead with the form. Keep exact artwork and the
+       unavailable-art badge aligned with the Worker for both spellings. */
+    else if ((m = /^(Roaming|Chest)\s+Form\s+Gimmighoul$/i.exec(core))) {
+      res.kind = 'form'; res.base = 'Gimmighoul'; res.exact = true;
+      res.label = m[1][0].toUpperCase() + m[1].slice(1).toLowerCase() + ' Form'; res.form = res.label;
+    }
+    else if ((m = /^Gigantamax\s+(.+)$/i.exec(core))) { res.kind = 'gigantamax'; res.base = m[1]; res.exact = true; res.label = 'Gigantamax'; }
     else if ((m = /^Crowned\s+(Sword|Shield)\s+(Zacian|Zamazenta)$/i.exec(core)) && ((m[1].toLowerCase()==='sword'&&m[2].toLowerCase()==='zacian')||(m[1].toLowerCase()==='shield'&&m[2].toLowerCase()==='zamazenta'))) { res.kind = 'form'; res.base = m[2]; res.exact = true; res.label = 'Crowned ' + (m[1].toLowerCase()==='sword'?'Sword':'Shield'); }
+    else if ((m = /^(White|Black) Kyurem$/i.exec(core))) { res.kind = 'form'; res.base = 'Kyurem'; res.exact = true; res.label = m[1] + ' Kyurem'; }
     else if ((m = /^Dynamax\s+(.+)$/i.exec(core))) { res.kind = 'dynamax'; res.base = m[1]; res.exact = false; res.label = 'Dynamax'; }
     else if ((m = /^Shadow\s+(.+)$/i.exec(core))) { res.kind = 'shadow'; res.base = m[1]; res.exact = false; res.label = 'Shadow'; }
     else if ((m = /^Mega\s+(.+?)(?:\s+([XY]))?$/i.exec(core))) { res.kind = 'mega'; res.base = m[1]; res.exact = true; res.label = 'Mega' + (m[2] ? ' ' + m[2].toUpperCase() : ''); }
     else if ((m = /^Primal\s+(.+)$/i.exec(core))) { res.kind = 'primal'; res.base = m[1]; res.exact = true; res.label = 'Primal'; }
     else if ((m = /^(Alolan|Galarian|Hisuian|Paldean)\s+(.+)$/i.exec(core))) { res.kind = 'regional'; res.base = m[2]; res.exact = true; res.label = REGIONAL[m[1].toLowerCase()]; }
+    /* Forme-first names match the Worker's exact PokeAPI variety resolver.
+       A missing exact image must show a form-unavailable label, never silently
+       present the ordinary species sprite as the named Forme. */
+    else if ((m = /^(Normal|Attack|Defense|Speed|Origin|Altered|Incarnate|Therian|Land|Sky)\s+Forme\s+(.+)$/i.exec(core))) {
+      res.kind = 'form'; res.base = m[2].trim(); res.exact = true;
+      res.label = m[1][0].toUpperCase() + m[1].slice(1).toLowerCase() + ' Forme';
+      res.form = res.label;
+    }
     if (o.dynamax && res.kind === 'base') res.kind = 'dynamax';
     if (o.shadow && res.kind === 'base') res.kind = 'shadow';
     if (o.costume || o.costumeId) { res.kind = res.kind === 'base' ? 'costume' : res.kind; res.exact = true; res.label = res.label || o.label || paren || 'Costume'; }
@@ -276,6 +350,7 @@
 
   return {
     DONE_KEY: DONE_KEY, doneKey: doneKey, readDone: readDone, readDoneState: readDoneState, tryMarkDone: tryMarkDone, tryUndoDone: tryUndoDone, isDone: isDone, markDone: markDone, undoDone: undoDone, pruneDone: pruneDone, doneList: doneList,
+    HIDE_KEY: HIDE_KEY, readHideState: readHideState, readHidden: readHidden, isHiddenToday: isHiddenToday, tryHideToday: tryHideToday, tryRestoreHidden: tryRestoreHidden,
     shinyKind: shinyKind, splitNames: splitNames, classifyArt: classifyArt, artFallback: artFallback,
     researchRewardLabel: researchRewardLabel, venueZone: venueZone, matchVenueTimes: matchVenueTimes, venueTimeUnconfirmed: venueTimeUnconfirmed, dualTime: dualTime, venueDays: venueDays, zoneAbbr: zoneAbbr, countdownText: countdownText, cardType: cardType
   };

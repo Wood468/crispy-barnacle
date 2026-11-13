@@ -32,7 +32,9 @@
       if (inUrl.length && years.length && !inUrl.every(function (y) { return years.indexOf(y) >= 0; })) return null;
       if (h.needsYear && !inUrl.length) return null;
       if (h.needsSlug) {
-        var slug = words(decodeURIComponent(url.replace(/^https:\/\/[^/]+/, '')).replace(/\//g, ' ').replace(/[-_.]/g, ' '));
+        var path = url.replace(/^https:\/\/[^/]+/, '');
+        try { path = decodeURIComponent(path); } catch (e) { return null; }
+        var slug = words(path.replace(/\//g, ' ').replace(/[-_.]/g, ' '));
         var name = words(ev.name || ev.title), place = words(NOT_A_PLACE.test(String(ev.region || ev.place || '').trim()) ? '' : (ev.region || ev.place || ''));
         var hit = name.filter(function (w) { return slug.indexOf(w) >= 0; }).length;
         /* The article folder must share the event's distinctive words; an event with a place also needs that place in the folder name. */
@@ -91,7 +93,7 @@
     opts = opts || {};
     var t = art.kind === 'official' ? theme(opts.ev || {}) : art.theme, ar = opts.aspect || '16 / 9', accent = opts.accent || '';
     var themed = '<span class="ev-art-theme" aria-hidden="true" style="--c1:' + t.c1 + ';--c2:' + t.c2 + ';--ac:' + t.accent + '"><img class="ev-art-mark" alt="" src="' + esc(t.icon) + '" data-err="rm"><img class="ev-art-ico" alt="" src="' + esc(t.icon) + '" data-err="rm"><b>' + esc(t.label) + '</b><i class="ev-art-tag">Illustration · no official banner</i>' + (accent ? '<span class="ev-art-accent">' + accent + '</span>' : '') + '</span>';
-    var img = art.kind === 'official' ? '<img class="ev-art-img evd-banner" alt="' + esc(art.alt) + '" src="' + esc(art.src) + '"' + (art.fullSrc ? ' data-full="' + esc(art.fullSrc) + '"' : '') + ' decoding="async" data-err="banner" style="object-fit:' + (opts.fit || 'contain') + ';object-position:' + art.focal + '">' : '';
+    var img = art.kind === 'official' ? '<img class="ev-art-img evd-banner" alt="' + esc(art.alt) + '" src="' + esc(art.src) + '"' + (art.fullSrc ? ' data-full="' + esc(art.fullSrc) + '"' : '') + ' decoding="async" data-err="banner" style="object-fit:' + (opts.fit || 'cover') + ';object-position:' + art.focal + '">' : '';
     if (img && art.fullSrc) img = '<a class="evd-banner-link" href="' + esc(art.fullSrc) + '" target="_blank" rel="noopener noreferrer" title="Open full-size poster" aria-label="Open full-size poster for ' + esc(opts.ev && (opts.ev.name || opts.ev.title) || 'event') + '">' + img + '</a>';
     var prov = art.provenance ? ' data-art-source="' + esc(art.provenance.source) + '" data-art-verified="' + esc(art.provenance.verifiedFor) + '"' : ''
     var series = art.provenance && art.provenance.scope === 'series';
@@ -105,8 +107,9 @@
     try { u = new URL(img.getAttribute('data-full') || '', 'https://example.invalid'); } catch (e) { u = null; }
     if (u && u.protocol === 'https:' && u.hostname !== 'example.invalid' && u.href !== img.src) { img.removeAttribute('data-full'); img.setAttribute('src', u.href); return; }
     if (img.getAttribute('data-full') && /^\/img\/ext\/[\w.-]+$/.test(img.getAttribute('data-full')) && img.getAttribute('src') !== img.getAttribute('data-full')) { var rel = img.getAttribute('data-full').replace(/[^\w./-]/g, ''); img.removeAttribute('data-full'); img.setAttribute('src', rel); return; }
-    var a = img && img.closest && img.closest('.evd-banner-link'); if (a && a.parentNode) a.remove();
+    // Capture the figure before removing a linked poster: removing its parent detaches the image.
     var f = img && img.closest && img.closest('.ev-art');
+    var a = img && img.closest && img.closest('.evd-banner-link'); if (a && a.parentNode) a.remove();
     var offline = false; try { offline = typeof navigator !== 'undefined' && navigator.onLine === false; } catch (e) { offline = false; }
     if (f) {
       f.classList.add('is-failed'); f.setAttribute('data-art-kind', 'themed');
@@ -119,6 +122,16 @@
     if (img && img.remove) img.remove();
   }
   var OFFLINE_LABEL = 'Banner unavailable offline';
+  /* Square or portrait art is shown whole over a blurred copy of itself; the box never changes size, so nothing shifts. */
+  function markTall(img) {
+    try {
+      if (!img || !img.classList || !img.classList.contains('ev-art-img') || !img.naturalWidth || !img.naturalHeight) return;
+      var f = img.closest('.ev-art'); if (!f) return;
+      if (img.naturalWidth / img.naturalHeight < 1.45) { f.classList.add('is-tall'); f.style.setProperty('--art-fill', 'url("' + String(img.currentSrc || img.src).replace(/["\\\n]/g, '') + '")'); }
+      else f.classList.remove('is-tall');
+    } catch (e) { /* cosmetic only */ }
+  }
+  if (typeof document !== 'undefined' && document.addEventListener) document.addEventListener('load', function (e) { markTall(e.target); }, true);
   /* Back online: put the banner image back, so the label disappears and the real artwork loads. */
   function restoreOffline() {
     var list = document.querySelectorAll('.ev-art[data-art-offline]');
@@ -131,5 +144,5 @@
     }
   }
   if (typeof window !== 'undefined' && window.addEventListener) window.addEventListener('online', restoreOffline);
-  return { resolve: resolve, verify: verify, theme: theme, banner: banner, fail: fail, THEMES: THEMES, OFFLINE_LABEL: OFFLINE_LABEL };
+  return { resolve: resolve, verify: verify, theme: theme, banner: banner, fail: fail, THEMES: THEMES, OFFLINE_LABEL: OFFLINE_LABEL, markTall: markTall };
 }));

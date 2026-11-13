@@ -5,13 +5,14 @@ import { readFile, writeFile, mkdir } from "node:fs/promises";
 import { SOURCES, sourceFor } from "./sources.mjs";
 import { discover, get } from "./discover.mjs";
 import { extractFields, hasContent, researchOptions } from "./extract.mjs";
+import { collectCanonicalSourceFacetAudit, worldSourceFacetCandidates } from "./source-facets-canonical-audit.mjs";
 import { mergeSources } from "./compare.mjs";
 import { pageTitle, htmlToLines } from "./text.mjs";
-import { entriesFromPage, mergeWorld, collapseWorld, parseDateRange, placeOf, cleanTitle, tidyName, keepOldWorld, normUrl, sameWriteupRulings, preserveWorldSources, prioritizeWatchedPages, regionalSeedEntries } from "./world.mjs";
+import { entriesFromPage, mergeWorld, collapseWorld, parseDateRange, placeOf, cleanTitle, tidyName, keepOldWorld, normUrl, sameWriteupRulings, preserveWorldSources, prioritizeWatchedPages, regionalSeedEntries, sharedArticleKey } from "./world.mjs";
 import { matchEvent } from "../g47ix-review.mjs";
 import { discoverIntl, entryFromIntlPage, INTL_PATTERN } from "./intl.mjs";
 import { failRun } from "../fail-run.mjs";
-import { extractEncounters, mergeEncounters, posterFromHtml } from "./encounters.mjs";
+import { extractEncounters, mergeEncounters, reconcileActivityEncounters, posterFromHtml } from "./encounters.mjs";
 import catalogue from "../event-experience/build-catalogue.cjs";
 import eventAdapter from "../../public/event-adapter.js";
 import { announcementFromPage } from "./announcements.mjs";
@@ -95,7 +96,8 @@ export async function appEvents() {
         existing.start = e.s || existing.start;
         existing.end = e.e || existing.end;
         existing.detailIds = detailIds;
-      } else evs.push({ id: e.id, t: e.t, link, start: e.s, end: e.e, detailIds, curated: true });
+        existing.activities = Array.isArray(e.activities) ? e.activities : [];
+      } else evs.push({ id: e.id, t: e.t, link, start: e.s, end: e.e, detailIds, activities: Array.isArray(e.activities) ? e.activities : [], curated: true });
     }
   } catch { /* no snapshot */ }
   return evs;
@@ -148,16 +150,29 @@ function eventPartNumber(value) {
   return Number.isInteger(n) && n > 0 ? n : null;
 }
 function pageDetailId(page) {
-  if (page.source !== "leekduck") return "";
   try {
-    const parts = new URL(page.url).pathname.split("/").filter(Boolean);
-    return parts.length === 2 && parts[0] === "events" ? "leekduck:" + parts[1] : "";
+    const url = new URL(page.url), parts = url.pathname.split("/").filter(Boolean);
+    // Stable source IDs also support non-Leek Duck write-ups. Explicitly
+    // mapped Hub pages must join the curated event before fuzzy title matching.
+    if (page.source === "leekduck" && /^(?:www\.)?leekduck\.com$/i.test(url.hostname) && parts.length === 2 && parts[0] === "events")
+      return "leekduck:" + parts[1];
+    if (page.source === "hub" && /^(?:www\.)?pokemongohub\.net$/i.test(url.hostname) && parts.length === 3 && parts[0] === "post" && parts[1] === "event")
+      return "hub:" + parts[2];
+    return "";
   } catch { return ""; }
 }
 // The live feed can list the same event under a source-derived id ("leekduck:into-the-wild-2026") next to the curated record ("into").
 // A page that links to the feed record belongs to the curated record, so Event Details, Research and GO Pass read one merged entry.
 function preferCurated(event, events) {
   if (!event || event.curated) return event;
+  // A feed's source-derived ID may be explicitly linked by a curated
+  // canonical event even when the titles differ ("Pokémon GO Wild Area
+  // 2026: Global" vs "GO Wild Area: Global"). Prefer that exact relationship
+  // before fuzzy name matching, so unrelated source/article snapshots cannot
+  // overwrite a second, source-namespaced event record.
+  const owned = events.find(e => e.curated && e !== event &&
+    Array.isArray(e.detailIds) && e.detailIds.includes(event.id));
+  if (owned) return owned;
   const key = v => String(v || "").toLowerCase().replace(/\b20\d\d\b/g, "").replace(/[^a-z0-9]+/g, " ").trim();
   const name = key(event.t || event.name);
   if (!name) return event;
@@ -242,8 +257,41 @@ export function preserveGoPassRows(out, old, byEvent) {
 }
 
 
+// Keep source-backed research during a temporary feed outage, but never keep
+// outdated rows when the publishing page was actually fetched this run.
+// Only tasks with an explicit source URL are eligible; prose is never promoted.
+export function preserveUnfetchedResearchTasks(out, old, byEvent) {
+  for (const [id, group] of byEvent) {
+    const now = out[id], before = old[id];
+    if (!now || !before || now.name !== before.name || (now.researchTasks || []).length) continue;
+    const fetched = new Set(group.results.map(r => normUrl(r.source?.url || "")).filter(Boolean));
+    const carried = (before.researchTasks || []).filter(task =>
+      Array.isArray(task.sourceRefs) && task.sourceRefs.some(ref =>
+        /^https:\/\//.test(ref.url || "") && !fetched.has(normUrl(ref.url)))
+    );
+    if (carried.length) now.researchTasks = carried;
+  }
+  return out;
+}
+
+// The API feed can supply a lightweight copy of an already curated event.
+// Never let that copy drop an exactly matched, published source-backed activity
+// schedule: its typed Raid / Max Hour bosses are authoritative for form IDs.
+// This is an exact canonical-ID join, not a name or species guess.
+export function sourceBackedActivitiesFor(id, event, curatedById) {
+  const record=curatedById.get(id);
+  const curated=record&&Array.isArray(record.activities)?record.activities:[];
+  return curated.length?curated:(Array.isArray(event?.activities)?event.activities:[]);
+}
+
 async function main() {
   const events = await appEvents();
+  let curatedById = new Map();
+  try {
+    const records = JSON.parse(await readFile("public/data.json","utf8")).events || [];
+    curatedById = new Map(records.filter(record=>record&&typeof record.id==="string")
+      .map(record=>[record.id,record]));
+  } catch { /* API-only deployments still reconcile their own activity schedules */ }
   const { found, status } = await discover();
   // every event's own source link is read too, so a linked write-up is never missed by discovery
   for (const e of events) if (e.link && sourceFor(e.link) && !found.some(f => f.url === e.link.replace(/\/?$/, "/"))) found.push({ source: sourceFor(e.link).id, url: e.link.replace(/\/?$/, "/"), title: e.t });
@@ -276,6 +324,9 @@ async function main() {
   let formData={f:[]};try{formData=JSON.parse(await readFile('public/forms.json','utf8'));}catch{/* undeclared forms remain source prose */}
   const rewardOptions=researchOptions({dex,names:artNames,costumes:costumeNames,forms:formData});
   for(const page of pages)page.fields=extractFields(page.html,rewardOptions);
+  // Staging only: count additional verified-source claims for importer QA.
+  // Do not merge these preliminary facets into published event-details data.
+  // Exact source-facet auditing happens after generated world-event identities are resolved.
   const byEvent = new Map(), unmatched = [];
   for (const p of pages) {
     const hit = pickEvent(p, events);
@@ -296,7 +347,9 @@ async function main() {
     const knownUrls = new Set(knownWorld.flatMap(w => (w.sources || []).map(x => String(x.url || "").replace(/\/?$/, "/"))));
     let watched = []; try { watched = (JSON.parse(await readFile("data/watch-pages.json", "utf8")).pages || []).map(w => w.url).filter(u => INTL_PATTERN.test(String(u).replace(/\/?$/, "/"))); } catch { /* none */ }
     const intl = await discoverIntl(get, watched); intlStatus = intl.status;
+    const splitArticles = new Set([...splitUrls].map(sharedArticleKey));
     for (const f of intl.found.slice(0, 40)) {
+      if (splitArticles.has(sharedArticleKey(f.url))) continue; // do not recreate a country-only locale alias of split city events
       if (knownUrls.has(f.url)) continue; // already in the app (read before, or added by hand): never a second entry
       try { const html = await get(f.url); const e = entryFromIntlPage({ ...f, title: pageTitle(html) || f.title, lines: htmlToLines(html) }); if (e) entries.push(e); await new Promise(r => setTimeout(r, 400)); } catch (err) { errors.push(f.url + ": " + err.message); }
     }
@@ -307,7 +360,7 @@ async function main() {
   const today = new Date().toISOString().slice(0, 10), cutoff = new Date(Date.now() - 14 * 864e5).toISOString().slice(0, 10);
   let oldWorld = []; try { oldWorld = JSON.parse(await readFile(WORLD_OUT, "utf8")).events || []; } catch { /* first run */ }
   let watchUrls = new Set(); try { watchUrls = new Set((JSON.parse(await readFile("data/watch-pages.json", "utf8")).pages || []).map(w => normUrl(w.url))); } catch { /* no watch list */ }
-  let world = mergeWorld(entries, SOURCE_NAMES).filter(w => !w.start || (w.end || w.start) >= cutoff);
+  let world = mergeWorld(entries, SOURCE_NAMES).filter(w => w.ongoing || !w.start || (w.end || w.start) >= cutoff);
   const stopRulings = sameWriteupRulings(world.filter(w => (w.sources || []).length === 1));
   // Detect split destinations from this run before retaining only explicitly watched prior sources.
   world = preserveWorldSources(world, oldWorld, { watchUrls });
@@ -320,6 +373,12 @@ async function main() {
   let nameFixes = {}; try { nameFixes = JSON.parse(await readFile("data/name-overrides.json", "utf8")).names || {}; } catch { /* none */ }
   world = world.map(w => ({ ...w, name: nameFixes[w.id] || ((w.sources || []).some(x => x.id === "official") && !(w.sources || []).some(x => x.auto) ? tidyName(w.name) : w.name) }));
   world = world.map(w => ({ ...w, seen: w.seen && !entries.some(e => e.name === w.name) ? w.seen : today })).sort((a, b) => String(a.start || "9").localeCompare(String(b.start || "9")));
+  // A source can belong to an independently discovered in-person world event
+  // not present in the curated/API feed. Join only its explicit LeekDuck URL
+  // and keep all ticket/move/research claims staging-only until publication QA.
+  const sourceFacetStaging = collectCanonicalSourceFacetAudit(
+    pages,events.concat(worldSourceFacetCandidates(world))
+  ).report;
   await writeFile(WORLD_OUT, JSON.stringify({ updated: new Date().toISOString(), events: world }, null, 1) + "\n");
   let old = {}; try { old = JSON.parse(await readFile(OUT, "utf8")).events || {}; } catch { /* first run */ }
   const now = new Date().toISOString(), out = {};
@@ -331,7 +390,8 @@ async function main() {
     await writeFile(ARTWORK_OUT, JSON.stringify({ updated: now, pages: index }, null, 1) + "\n");
   }
   for (const [id, { event, results }] of byEvent) {
-    const merged = { ...mergeSources(results), ...mergeEncounters(results) };
+    const activitySchedule = sourceBackedActivitiesFor(id, event, curatedById);
+    const merged = { ...mergeSources(results), ...reconcileActivityEncounters(mergeEncounters(results), activitySchedule, {dex,names:rewardOptions.pokemonNames,costumes:costumeNames}) };
     const selected = selectArtwork(event, results, { retrievedAt: now });
     // A temporary source outage must not erase previously verified art for the same event.
     const previous = old[id];
@@ -360,7 +420,45 @@ async function main() {
       ...(split.length<=1?{pokemon:announcement.pokemon,encounters:announcement.encounters}:{}),
       internalValidation:metadata};
   }
+  // Reconcile explicitly sourced, curated activity schedules into the imported
+  // detail contract. Importer extraction can omit schedule prose when a feed
+  // changes its headings; the validated curated schedule remains authoritative.
+  try {
+    const curated = JSON.parse(await readFile("public/data.json", "utf8")).events || [];
+    for (const event of curated) {
+      const detail = out[event.id];
+      if (!detail || !Array.isArray(event.activities)) continue;
+      const hours = event.activities.filter(a =>
+        (a.kind === "raid-hour" || a.kind === "max-battle-hour") &&
+        a.schedule?.timeBasis === "player-local" &&
+        /^https:\/\//.test(a.sourceUrl || "") &&
+        /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/.test(a.schedule.start || "") &&
+        /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/.test(a.schedule.end || "")
+      );
+      if (!hours.length) continue;
+      const first = hours[0].schedule;
+      if (!hours.every(a => a.schedule.start.slice(11) === first.start.slice(11) &&
+                               a.schedule.end.slice(11) === first.end.slice(11))) continue;
+      const format = time => { const h = +time.slice(11,13), m = time.slice(14,16); return (h % 12 || 12) + (m === "00" ? "" : ":" + m) + (h >= 12 ? "pm" : "am"); };
+      const title = hours.some(a => a.kind === "raid-hour") && hours.some(a => a.kind === "max-battle-hour")
+        ? "Daily Raid Hour and Max Battle Hour" : hours[0].kind === "raid-hour" ? "Daily Raid Hour" : "Daily Max Battle Hour";
+      const fullText = title + ": " + format(first.start) + " to " + format(first.end) + " local time; " +
+        hours.map(a => a.schedule.start.slice(0,10) + " " + a.title).join("; ");
+      // The Overview source-highlights widget intentionally caps rows at 240
+      // characters. Keep its summary concise; full per-day activities remain
+      // available in the structured schedule preview.
+      const text = fullText.length <= 240 ? fullText :
+        title + ": " + format(first.start) + " to " + format(first.end) + " local time, " +
+        hours[0].schedule.start.slice(0,10) + " to " + hours[hours.length-1].schedule.start.slice(0,10) + ".";
+      detail.fields ||= {};
+      detail.fields.dates ||= [];
+      if (!detail.fields.dates.some(row => row.text === text)) detail.fields.dates.push({
+        text, sources: [...new Set(hours.map(a => a.sourceUrl))], status: "verified"
+      });
+    }
+  } catch (error) { console.warn("Curated activity reconciliation skipped:", error.message); }
   preserveGoPassRows(out, old, byEvent);
+  preserveUnfetchedResearchTasks(out, old, byEvent);
   // A feed-derived twin record (leekduck:<slug>) whose every source page is now read into the curated record is a duplicate: keeping it would show every task and Pokémon twice.
   const claimedUrls = new Set([...byEvent.values()].flatMap(group => group.results.map(result => normUrl(result.source.url))));
   let sameRulings = []; try { sameRulings = JSON.parse(await readFile("data/event-aliases.json", "utf8")).same || []; } catch { /* no rulings */ }
@@ -376,7 +474,7 @@ async function main() {
   const artworkCoverage = { selected: Object.values(out).filter(v => !!v.image && !!v.imageProvenance).length, missing: Object.values(out).filter(v => !v.image).length, legacyUnattributed: Object.values(out).filter(v => !!v.image && !v.imageProvenance).length, bySource: {} };
   for (const v of Object.values(out)) if (v.image && v.imageProvenance) { const source = v.imageProvenance.source || "Unknown"; artworkCoverage.bySource[source] = (artworkCoverage.bySource[source] || 0) + 1; }
   artworkCoverage.missingEvents = Object.entries(out).filter(([, v]) => !v.image).map(([id, v]) => ({ id, name: v.name, sources: (v.sources || []).map(s => s.url).filter(Boolean).slice(0, 2) })).slice(0, 100);
-  await writeFile(REPORT, JSON.stringify({ runAt: now, artworkCoverage, sources: status, pagesRead: pages.length, events: Object.keys(out).length, worldEvents: world.length, worldUndated: world.filter(w => !w.start).map(w => w.name), unmatchedPages: unmatched.slice(0, 40), intl: intlStatus, serebiiSkipped: serebiiLeft.slice(0, 30), gaps: gaps.slice(0, 80), errors: errors.slice(0, 20) }, null, 1) + "\n");
+  await writeFile(REPORT, JSON.stringify({ runAt: now, artworkCoverage, sources: status, pagesRead: pages.length, events: Object.keys(out).length, worldEvents: world.length, worldUndated: world.filter(w => !w.start).map(w => w.name), unmatchedPages: unmatched.slice(0, 40), intl: intlStatus, serebiiSkipped: serebiiLeft.slice(0, 30), gaps: gaps.slice(0, 80), errors: errors.slice(0, 20), sourceFacetStaging }, null, 1) + "\n");
   console.log(`Read ${pages.length} pages for ${byEvent.size} events; ${unmatched.length} pages matched no event; ${errors.length} errors.`);
 }
 if (import.meta.url === "file://" + process.argv[1]) main().catch(failRun);

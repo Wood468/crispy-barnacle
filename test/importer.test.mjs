@@ -5,7 +5,7 @@ import { htmlToLines, pageTitle } from "../scripts/importer/text.mjs";
 import { extractFields } from "../scripts/importer/extract.mjs";
 import { mergeSources, similar, disagree } from "../scripts/importer/compare.mjs";
 import { linksFrom, feedItems, discover } from "../scripts/importer/discover.mjs";
-import { pickEvent, normaliseLegacyStatuses } from "../scripts/importer/run.mjs";
+import { pickEvent, normaliseLegacyStatuses, preserveUnfetchedResearchTasks } from "../scripts/importer/run.mjs";
 
 const leek = `<html><head><meta property="og:title" content="Zorua Community Day | Leek Duck"></head><body><nav>menu</nav><main>
 <h1>Zorua Community Day</h1><h2>Bonuses</h2><ul><li>3&times; Catch XP</li><li>1/4 Hatch Distance</li></ul>
@@ -366,4 +366,147 @@ test("a page linked from a feed-derived twin is attached to the curated record w
   ];
   const hit = pickEvent({ url: "https://leekduck.com/events/into-the-wild-2026/", source: "leekduck", title: "Into the Wild", fields: {} }, evs);
   assert.equal(hit.event.id, "into");
+});
+
+test("explicit source-detail ownership beats a similarly titled feed alias during regeneration", () => {
+  const alias = {
+    id: "leekduck:pokemon-go-wild-area-2026-global",
+    t: "Pokémon GO Wild Area 2026: Global",
+    link: "https://leekduck.com/events/pokemon-go-wild-area-2026-global/",
+    start: "2026-11-14T10:00", end: "2026-11-15T18:00", detailIds: []
+  };
+  const curated = {
+    id: "wag", t: "GO Wild Area: Global",
+    link: "https://pokemongo.com/en/gowildarea/global/",
+    start: "2026-11-14T10:00", end: "2026-11-15T18:00",
+    detailIds: [alias.id], curated: true
+  };
+  // This official regional meetups write-up previously got attached to the
+  // Leek Duck-namespaced alias, leaving an empty duplicate alongside wag.
+  const article = {
+    source: "official",
+    url: "https://pokemongo.com/news/community-meetups-go-wild-area-2026-details-asia-pacific/",
+    title: alias.t, fields: {}, lines: []
+  };
+  assert.equal(pickEvent(article, [alias, curated]).event.id, "wag",
+    "exact curated detail-ID ownership must beat a source-derived alias title");
+  const other = {...curated, id: "unrelated", detailIds: []};
+  assert.equal(pickEvent(article, [alias, other]).event.id, alias.id,
+    "do not borrow a different event without explicit source ownership");
+});
+
+test("Minior Showers source research table yields explicit tasks without treating the total as a task", () => {
+  // Regression for Leonid and Orionids GO Hub tables in event-details.json.
+  const fields = extractFields([
+    { text: "Timed Research", t: "h" },
+    { text: "Task | Rewards", t: "p" },
+    { text: "Claim Reward! | 1 × Star Piece", t: "p" },
+    { text: "Use a Star Piece | 7740 × Stardust", t: "p" },
+    { text: "Rewards | 77,400 × Stardust", t: "p" },
+  ]);
+  assert.deepEqual(fields.researchTasks.map(({ task, rewards }) => ({
+    task,
+    rewards: rewards.map(({ name, quantity }) => ({ name, quantity })),
+  })), [
+    { task: "Claim Reward!", rewards: [{ name: "Star Piece", quantity: 1 }] },
+    { task: "Use a Star Piece", rewards: [{ name: "Stardust", quantity: 7740 }] },
+  ]);
+});
+
+
+
+test("repeated research rows are separate source-backed tasks, but matching sources do not multiply them", () => {
+  // Both Minior Shower research pages list five identical Use a Star Piece
+  // rows in the regular 1/1 stage. These are five tasks, not one duplicated
+  // piece of article prose. Completion rewards must never become tasks.
+  const rows = [
+    { text: "Minior Shower Timed Research (1/1)", t: "h" },
+    { text: "Task | Rewards", t: "p" },
+    { text: "Claim Reward! | 1 × Star Piece", t: "p" },
+    ...Array.from({ length: 5 }, () => ({
+      text: "Use a Star Piece | 7740 × Stardust", t: "p"
+    })),
+    { text: "Rewards | 77,400 × Stardust", t: "p" },
+    { text: "Bonus Timed Research (1/1)", t: "h" },
+    { text: "Task | Rewards", t: "p" },
+    { text: "Claim Reward! | 1 × Star Piece", t: "p" },
+    { text: "Use a Star Piece | 774 × Stardust", t: "p" },
+    { text: "Rewards | 1000000 × Stardust", t: "p" },
+  ];
+  const source = extractFields(rows);
+  const regular = source.researchTasks.filter(t => t.task === "Use a Star Piece" &&
+    t.rewards.some(r => r.name === "Stardust" && r.quantity === 7740));
+  assert.equal(regular.length, 5, "every identical published row is a distinct task");
+  assert.deepEqual(regular.map(t => t.occurrence), [1, 2, 3, 4, 5]);
+  assert.equal(source.researchTasks.length, 8, "main and bonus research contain eight individual tasks");
+  assert.equal(source.researchTasks.filter(t => /reward/i.test(t.task) && /^Rewards$/i.test(t.task)).length, 0);
+
+  const merged = mergeSources([
+    { source: { id: "hub", name: "GO Hub", trust: "community", url: "https://example.org/minior" }, fields: source },
+    { source: { id: "second", name: "Independent source", trust: "community", url: "https://example.org/other" }, fields: extractFields(rows) }
+  ]);
+  assert.equal(merged.researchTasks.length, 8,
+    "two matching write-ups must corroborate eight tasks, not create sixteen");
+  const mergedRegular = merged.researchTasks.filter(t => t.task === "Use a Star Piece" &&
+    t.rewards.some(r => r.quantity === 7740));
+  assert.deepEqual(mergedRegular.map(t => t.occurrence), [1, 2, 3, 4, 5]);
+  assert.ok(merged.researchTasks.every(t => t.status === "corroborated" && t.sourceRefs.length === 2));
+});
+
+test("Hub event articles use an exact detail ID and do not become duplicate Minior events", () => {
+  const data = JSON.parse(readFileSync("public/data.json", "utf8"));
+  const curated = data.events.filter(e => ["minior", "minior2", "minior3"].includes(e.id))
+    .map(e => ({id:e.id,t:e.t,start:e.s,end:e.e,link:e.sourceUrl,detailIds:e.detailIds,curated:true}));
+  const cases = [
+    ["https://pokemongohub.net/post/event/minior-showers-leonid-november-2026/", "Minior Showers: Leonid (November 2026)", "November 14, 2026", "minior2"],
+    ["https://pokemongohub.net/post/event/minior-showers-orionids-october-2026/", "Minior Showers: Orionids (October 2026)", "October 19, 2026", "minior"]
+  ];
+  for (const [url,title,date,id] of cases) {
+    const page = {source:"hub",url,title,fields:{dates:[date]},lines:[]};
+    const matched = pickEvent(page,curated);
+    assert.equal(matched?.event.id,id,url);
+    assert.equal(matched?.how,"detail-id",url);
+    assert.equal(pickEvent({...page,fields:{dates:["August 1, 2027"]}},curated),null,"a mismatched date must never win on source ID");
+  }
+  assert.equal(pickEvent({source:"hub",url:"https://evil.example/post/event/minior-showers-leonid-november-2026/",title:"Unknown event",fields:{}},curated),null,"external hosts cannot impersonate a known source ID");
+});
+
+
+test("canonical Minior research retains sourced tasks across optional bonus tracks", () => {
+  const data = JSON.parse(readFileSync("public/data.json", "utf8"));
+  const details = JSON.parse(readFileSync("public/event-details.json", "utf8")).events;
+  for (const id of ["minior", "minior2"]) {
+    const event = data.events.find(e => e.id === id), detail = details[id];
+    assert.ok(event && detail, id);
+    const tasks = detail.researchTasks || [];
+    assert.ok(tasks.length >= 2, id + " must retain published research tasks");
+    // GO Hub now publishes a regular track plus an optional bonus track.
+    // A source refresh can legitimately add new task/reward variants, so the
+    // importer must not pin the snapshot to exactly two tasks.
+    for (const [task, reward, amount] of [
+      ["Claim Reward!", "Star Piece", 1], ["Use a Star Piece", "Stardust", 7740]
+    ]) {
+      assert.ok(tasks.some(t => t.task === task && t.rewards?.some(r => r.name === reward && r.quantity === amount)),
+        id + ": missing sourced task " + task + " / " + amount + " " + reward);
+    }
+    assert.equal(new Set(tasks.map(t => JSON.stringify([t.category, t.task, t.rewards, t.occurrence || 1]))).size, tasks.length,
+      id + " must not duplicate identical tasks within one named research track");
+    assert.ok(tasks.every(t => t.eventId === id && t.eventWindow.start === event.s && t.eventWindow.end === event.e), id);
+    assert.ok(tasks.every(t => t.status === "single" && t.sourceRefs.some(s => s.id === "hub" && s.url.includes("pokemongohub.net/post/event/"))), id);
+    assert.ok(!tasks.some(t => /^rewards?$/i.test(t.task)), "total reward is not a task");
+  }
+});
+
+test("a research snapshot survives only when its source was not fetched and no new tasks replaced it", () => {
+  const hub = {id:"hub",url:"https://pokemongohub.net/post/event/minior-showers-leonid-november-2026/"};
+  const task = {task:"Use a Star Piece",category:"timed",rewards:[{name:"Stardust",quantity:7740}],sourceRefs:[hub],checkedAt:"2026-11-11"};
+  const before={minior2:{name:"Minior Showers: Leonids",researchTasks:[task]}};
+  const blank=()=>({minior2:{name:"Minior Showers: Leonids",researchTasks:[]}});
+  const missing=new Map([["minior2",{results:[{source:{url:"https://leekduck.com/events/minior-showers-leonids-2026/"}}]}]]);
+  assert.deepEqual(preserveUnfetchedResearchTasks(blank(),before,missing).minior2.researchTasks,[task]);
+  const fetched=new Map([["minior2",{results:[{source:hub}]}]]);
+  assert.deepEqual(preserveUnfetchedResearchTasks(blank(),before,fetched).minior2.researchTasks,[]);
+  const fresh=blank();fresh.minior2.researchTasks=[{task:"Changed official task"}];
+  assert.deepEqual(preserveUnfetchedResearchTasks(fresh,before,missing).minior2.researchTasks,[{task:"Changed official task"}]);
+  assert.deepEqual(preserveUnfetchedResearchTasks({minior2:{name:"Unrelated Event",researchTasks:[]}},before,missing).minior2.researchTasks,[]);
 });

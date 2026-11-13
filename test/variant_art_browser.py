@@ -67,11 +67,12 @@ FUTURE={'schemaVersion':1,'eventId':'synthetic-variant-showcase','title':'Synthe
             {'speciesId':'854','name':'Sinistea','costumeId':'bow','label':'Bow'},
             {'speciesId':'133','name':'Eevee','costumeId':'partyhat','label':'party hat'},
             {'speciesId':'68','name':'Shadow Machamp','formId':'shadow'},
+            {'speciesId':'483','name':'Dialga'},
             {'speciesId':'483','name':'Dynamax Dialga','formId':'dynamax'},
             {'speciesId':'6','name':'Gigantamax Charizard','formId':'gmax'},
             {'speciesId':'80','name':'Gigantamax Slowbro','formId':'gmax'},
             {'speciesId':'26','name':'Raichu','formId':'alola'}],
- 'encounters':[{'identityKey':k,'method':'raid'} for k in ['25:base:none','25:base:suncrown','196:base:sunscarf','854:base:bow','133:base:partyhat','68:shadow:none','483:dynamax:none','6:gmax:none','80:gmax:none','26:alola:none']],
+ 'encounters':[{'identityKey':k,'method':'raid'} for k in ['25:base:none','25:base:suncrown','196:base:sunscarf','854:base:bow','133:base:partyhat','68:shadow:none','483:base:none','483:dynamax:none','6:gmax:none','80:gmax:none','26:alola:none']],
  'internalValidation':{'native':True},'sources':[{'name':'Synthetic fixture only','url':'https://example.invalid/fixture'}]}
 
 def data_fixture():
@@ -128,6 +129,7 @@ with sync_playwright() as p:
 
         # Event Details: the four approved costumes use their own exact files; unapproved ones are badged species pictures.
         page.evaluate("GODETAIL.open('synthetic-variant-showcase')")
+        page.locator('#evd .evd-nav-link[data-sec="encounters"]').click()
         page.wait_for_function('document.querySelectorAll("#evd .ue-mon").length>=9')
         page.wait_for_timeout(500)
         tiles={t['text']:t for t in page.evaluate(COLLECT)}
@@ -148,6 +150,29 @@ with sync_playwright() as p:
         assert not gch['chip'],('an exact Gigantamax picture needs no fallback chip',gch)
         shadow=tile('Shadow Machamp');assert shadow['src'] and 'c=' not in shadow['src'],shadow
         dyn=tile('Dynamax Dialga');assert dyn['src'] and 'Dynamax' not in dyn['badge'],dyn
+        # Normal and Dynamax share the species model, but cannot be visually identical.
+        # The universal gallery bypasses monArt(), so verify its explicit Max CSS cue.
+        appearance=page.evaluate("""() => {
+            const cards=[...document.querySelectorAll('#evd .ue-mon')];
+            const find=name=>cards.find(c=>[...c.querySelectorAll('b')].some(b=>b.textContent.trim()===name));
+            const normal=find('Dialga'),max=find('Dynamax Dialga');
+            if(!normal||!max)return {};
+            const a=normal.querySelector('.ue-mon-art'),b=max.querySelector('.ue-mon-art');
+            return {ordinaryFlag:a.querySelector('img.art')?.getAttribute('data-sd')||'',
+                    dynamaxFlag:b.querySelector('img.art')?.getAttribute('data-sd')||'',
+                    ordinaryChip:getComputedStyle(a,'::after').content,
+                    dynamaxChip:getComputedStyle(b,'::after').content,
+                    ordinaryRing:getComputedStyle(a,'::before').borderTopWidth,
+                    dynamaxRing:getComputedStyle(b,'::before').borderTopWidth};
+        }""")
+        assert appearance.get('ordinaryFlag')=='' and appearance.get('dynamaxFlag')=='1',appearance
+        assert 'DYNAMAX' in appearance['dynamaxChip'] and 'DYNAMAX' not in appearance['ordinaryChip'],appearance
+        assert appearance['dynamaxRing']!='0px' and appearance['ordinaryRing']!='2px',appearance
+        page.emulate_media(reduced_motion='reduce')
+        assert page.evaluate("""() => {
+            const node=[...document.querySelectorAll('#evd .ue-mon')].find(c=>c.querySelector('b')?.textContent.trim()==='Dynamax Dialga');
+            return !!node && getComputedStyle(node.querySelector('.ue-mon-art'),'::after').content.includes('DYNAMAX');
+        }"""),'Max identity badge must remain visible in reduced-motion mode'
         assert all(t['lazy'] for t in tiles.values()),'gallery pictures must be lazy, async and size-reserved'
         assert page.evaluate(BROKEN)==[],('broken images in Event Details',page.evaluate(BROKEN))
         assert page.evaluate("document.documentElement.scrollWidth<=window.innerWidth+1"),'Event Details overflows at %dpx'%width
@@ -161,7 +186,9 @@ with sync_playwright() as p:
 
         # Real Twilight Wishes and Halloween events from the catalogue.
         for ev_id,slug in [('twilightwishes','twilight-wishes'),('halloween1','halloween-1')]:
-            page.evaluate("(id)=>GODETAIL.open(id)",ev_id);page.wait_for_function('document.querySelectorAll("#evd .ue-mon").length>=1');page.wait_for_timeout(500)
+            page.evaluate("(id)=>GODETAIL.open(id)",ev_id)
+            page.locator('#evd .evd-nav-link[data-sec="encounters"]').click()
+            page.wait_for_function('document.querySelectorAll("#evd .ue-mon").length>=1');page.wait_for_timeout(500)
             real=page.evaluate(COLLECT)
             if slug=='twilight-wishes':
                 for sub,code in [('sun crown','GOFEST_2024_STIARA'),('moon crown','GOFEST_2024_MTIARA'),('sun scarf','GOFEST_2024_SSCARF'),('moon scarf','GOFEST_2024_MSCARF')]:
@@ -200,7 +227,9 @@ with sync_playwright() as p:
     context.route('**/events-v1.json',lambda r:r.fulfill(body=json.dumps({**cat,'events':cat['events']+[FUTURE]}),content_type='application/json'))
     page=context.new_page();errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
     page.goto(BASE+'/');page.wait_for_function('!!window.GODETAIL&&!!window.GOEventRegistry');page.evaluate('GOEventRegistry.ready')
-    page.evaluate("GODETAIL.open('synthetic-variant-showcase')");page.wait_for_function('document.querySelectorAll("#evd .ue-mon").length>=9');page.wait_for_timeout(800)
+    page.evaluate("GODETAIL.open('synthetic-variant-showcase')")
+    page.locator('#evd .evd-nav-link[data-sec="encounters"]').click()
+    page.wait_for_function('document.querySelectorAll("#evd .ue-mon").length>=9');page.wait_for_timeout(800)
     assert page.evaluate(BROKEN)==[],'no broken image may remain when every picture request fails'
     assert errors==[],errors
     print('PASS variant artwork: every picture request failing leaves no broken image and no page error')

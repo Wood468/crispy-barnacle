@@ -88,17 +88,109 @@ with sync_playwright() as p:
         # A type with nothing in the week says so instead of a blank list.
         assert page.evaluate('document.documentElement.scrollWidth<=innerWidth')
 
+        # During GO Wild Area week, the separate event GO Pass must appear in
+        # the generic season/pass Today strip and open the existing pass layout.
+        page.wait_for_function("() => window.GOSEASON && GOSEASON.events().some(e=>e.id==='season:pass-into-wild-2026')")
+        assert page.evaluate("GOSEASON.events().find(e=>e.id==='season:pass-into-wild-2026').source") == 'Pokémon GO (official)'
+        active_pass = page.locator('#seasonbar .ssn-card', has_text='GO Pass: Into the Wild')
+        assert active_pass.count() == 1, 'current special GO Pass was omitted from Today'
+        page.evaluate("GODETAIL.open('season:pass-into-wild-2026')")
+        page.locator('#evd .evd-nav-link[data-sec="passes"]').click()
+        page.wait_for_selector('#evd .ue-pass')
+        # Published rank 45 and rank 100 rewards appear as visible milestones
+        # while all complete rank entries remain available in collapsed ranges.
+        assert page.locator('#evd .ue-pass-highlight[data-milestone-rank="45"]').count() == 1
+        assert page.locator('#evd .ue-pass-highlight[data-milestone-rank="100"]').count() == 1
+        assert page.locator('#evd .ue-pass-range[open]').count() == 0
+        # Sprint 3: the actual published-rank navigator must work on narrow
+        # phones and preserve native disclosure, focus and unknown-rank semantics.
+        navigator = page.locator('#evd .ue-pass-nav')
+        assert navigator.count() == 1, 'GO Pass rank navigator did not mount after event render'
+        milestone_box = page.locator('#evd .ue-pass-overview').bounding_box()
+        nav_box = navigator.bounding_box()
+        assert milestone_box and nav_box and nav_box['y'] < milestone_box['y'], (
+            'Rank navigator must appear above the long milestone cards', width)
+        assert nav_box['y'] < page.viewport_size['height'], (
+            'Rank navigator is still below the first phone screen', width)
+        shot(page, f'gopass-nav-firstscreen-{width}')
+        # P1: optional published-reward finder starts collapsed and never
+        # infers rewards at gaps or assigns an unspecified track.
+        finder = navigator.locator('.ue-pass-finder')
+        assert finder.count() == 1 and not finder.evaluate('(el) => el.open'), (
+            'Reward finder should preserve the first-screen rank controls', width)
+        finder.locator('summary').click()
+        finder_input = finder.locator('input[type="search"]')
+        finder_input.fill('Silver Bottle Cap')
+        find_results = finder.locator('.ue-pass-find-results button')
+        assert find_results.count() >= 1, ('source-listed Bottle Cap reward not searchable', width)
+        match = find_results.filter(has_text='Rank 100').first
+        assert match.count() == 1, ('source-listed Silver Bottle Cap must point to published Rank 100', width)
+        match.click()
+        matched_rank = page.locator('#evd .ue-pass-rank[data-rank="100"]')
+        # Finder results target the selected source-backed REWARD, not merely
+        # its surrounding rank (which may contain multiple Free/Deluxe tiles).
+        matched_tile = matched_rank.locator('.ue-lane-deluxe .ue-pass-reward', has_text='Silver Bottle Cap').first
+        assert matched_rank.is_visible() and matched_tile.is_visible() and matched_tile.evaluate(
+            '(el) => document.activeElement === el'), (
+            'Reward search did not focus the actual Rank 100 Deluxe Silver Bottle Cap tile', width)
+        assert not matched_rank.evaluate('(el) => document.activeElement === el'), (
+            'Source-known reward finder should not focus only the surrounding rank', width)
+        assert matched_tile.evaluate(
+            '(el) => { const style = getComputedStyle(el); return style.outlineStyle !== "none" && parseFloat(style.outlineWidth) >= 2; }'), (
+            'Exact reward focus must be visually apparent on a narrow phone', width)
+        assert 'Opened Rank 100' in finder.locator('.ue-pass-find-status').inner_text()
+        finder_input.fill('unpublished-item-never-listed')
+        assert finder.locator('.ue-pass-find-results button').count() == 0, (
+            'Finder fabricated a result for an unpublished reward', width)
+        assert 'No published reward entry' in finder.locator('.ue-pass-find-status').inner_text()
+        assert page.locator('#evd').evaluate('(el)=>el.scrollWidth<=el.clientWidth'), (
+            'GO Pass reward finder overflows narrow mobile sheet', width)
+        finder_input.fill('Bottle Cap')
+        shot(page, f'gopass-find-reward-{width}')
+        finder.locator('summary').click()
+        rank_input = navigator.locator('input[type="number"]')
+        rank_input.fill('45')
+        navigator.locator('button[type="submit"]').click()
+        chosen = page.locator('#evd .ue-pass-rank[data-rank="45"]')
+        assert chosen.is_visible(), ('Rank 45 not visible after direct jump', width)
+        assert chosen.evaluate('(el) => document.activeElement === el'), ('Rank 45 focus not restored', width)
+        assert 'Opened published Rank 45' in navigator.locator('.ue-pass-nav-status').inner_text()
+        rank_input.fill('601')
+        navigator.locator('button[type="submit"]').click()
+        assert 'No published reward entry for Rank 601' in navigator.locator('.ue-pass-nav-status').inner_text()
+        navigator.locator('select').select_option('76')
+        assert page.locator('#evd .ue-pass-rank[data-rank="100"]').is_visible()
+        assert page.locator('#evd').evaluate('(el)=>el.scrollWidth<=el.clientWidth'), ('GO Pass navigator overflows mobile sheet', width)
+        shot(page, f'gopass-direct-jump-{width}')
+        # Open the full ranges as a user would, rather than counting hidden
+        # rewards in the whole Event Details document.
+        ranges = page.locator('#evd .ue-pass-range')
+        for rank in ('Rank 45', 'Rank 100'):
+            milestone = ranges.filter(has_text=rank).first
+            assert milestone.count() == 1, (width, rank, 'published milestone missing')
+            if not milestone.evaluate('(el) => el.open'):
+                milestone.locator('summary').click()
+        into_pass = page.locator('#evd .evd-sec[data-sec="passes"]').inner_text()
+        assert 'Dynamax Meltan' in into_pass and 'Silver Bottle Cap' in into_pass, into_pass[:600]
+        # The claim deadline is source-backed outside the reward-only Pass panel.
+        page.locator('#evd .evd-nav-link[data-sec="overview"]').click()
+        full_overview = page.locator('#evd .evd-sec[data-sec="overview"]').inner_text()
+        assert '17 Nov' in full_overview or '17 November' in full_overview, full_overview[:600]
+        assert page.locator('#evd').evaluate('(el)=>el.scrollWidth<=el.clientWidth'), ('Into the Wild pass overflow', width)
+        page.keyboard.press('Escape')
+
         # GO Pass: illustrated free/Deluxe timeline, bounded ranges, gaps, fallbacks, source and freshness.
         eid = page.evaluate("GOEventRegistry.events().find(m=>/GO Pass.*November/i.test(m.title)).eventId")
         page.evaluate(f"GODETAIL.open({eid!r})")
+        page.locator('#evd .evd-nav-link[data-sec="passes"]').click()
         page.wait_for_selector('#evd .ue-pass')
         pass_el = page.locator('#evd .ue-pass')
         assert pass_el.locator('.ue-lane-free').count() >= 90 and pass_el.locator('.ue-lane-deluxe').count() >= 90
         assert pass_el.locator('.ue-pass-range').count() >= 4
-        assert pass_el.locator('.ue-pass-range[open]').count() == 1
+        assert pass_el.locator('.ue-pass-range[open]').count() == 0
         pass_el.locator('.ue-pass-range').last.locator('summary').click()
-        assert pass_el.locator('.ue-pass-gap', has_text='no rewards listed by the source').count() >= 1
-        assert pass_el.locator('.ue-pass-reward[data-art="fallback"]').count() >= 1
+        assert pass_el.locator('.ue-pass-gap', has_text='no reward entries published by the source').count() >= 1
+        assert pass_el.locator('.ue-pass-reward[data-art="category"]').count() >= 1
         assert pass_el.locator('.ue-pass-reward img[src="/ico/dust.webp"]').count() >= 1
         assert pass_el.locator('.ue-pass-art:visible').count() >= 1
         text = pass_el.inner_text()

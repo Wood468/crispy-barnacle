@@ -38,7 +38,6 @@ with sync_playwright() as p:
   def open_event(id):
    page.evaluate('(id)=>GODETAIL.open(id)',id)
    page.locator('#evd:not([hidden]) .ue-hero').wait_for()
-   page.evaluate("document.querySelectorAll('#evd [role=tabpanel]').forEach(p=>p.hidden=false)")
   def close_event():
    page.keyboard.press('Escape')
    page.wait_for_function('!GONAV.internal&&GONAV.pending.length===0')
@@ -70,6 +69,8 @@ with sync_playwright() as p:
   assert page.locator('#calgrid .cc.today').get_attribute('data-cday')=='2026-11-06'
   open_event(INSTANT['eventId'])
   assert '6 Nov' in page.locator('#evd .evc-when').inner_text()
+  page.locator('#evd .evd-nav-link[data-sec="schedule"]').click()
+  assert page.locator('#evd-rotations').is_visible()
   assert '6 Nov' in page.locator('#evd-rotations').inner_text()
   assert 'Tokyo' in page.locator('#evd').inner_text() and 'Sendai' in page.locator('#evd').inner_text()
   close_event();open_event(VENUE['eventId'])
@@ -80,7 +81,14 @@ with sync_playwright() as p:
   from urllib.parse import unquote
   assert 'DTSTART:20261107T190000Z' in unquote(ics), 'calendar export used device zone instead of selected zone'
   close_event();open_event(WINDOWS['eventId'])
-  assert page.locator('#evd-research-title').is_visible() and page.locator('#evd-tickets').is_visible()
+  # Continuous Event Details: section chips jump through one scrollable page;
+  # selecting a section must not hide other source-backed sections.
+  page.locator('#evd .evd-nav-link[data-sec="research"]').click()
+  assert page.locator('#evd-research-title').is_visible()
+  assert page.locator('#evd-tickets').is_visible(), 'Tickets must stay visible during Research'
+  page.locator('#evd .evd-nav-link[data-sec="tickets"]').click()
+  assert page.locator('#evd-tickets').is_visible()
+  assert page.locator('#evd-research-title').is_visible(), 'Research must remain visible during Tickets'
   assert page.locator('#evd-rotations').count()==0
   close_event()
   bad=copy.deepcopy(VALID);bad['events'].append({'schemaVersion':1,'eventId':'synthetic-invalid-new','title':'Synthetic invalid','pokemon':[{'speciesId':'25'}],'encounters':[{'identityKey':'25:base:none','method':'wiild'}]});payload[0]=bad
@@ -89,6 +97,7 @@ with sync_playwright() as p:
   assert diagnostics['retained'] and diagnostics['rejectedCount']==1,diagnostics
   assert page.evaluate('GOEventRegistry.events().length')==len(VALID['events'])
   open_event(INSTANT['eventId'])
+  page.locator('#evd .evd-nav-link[data-sec="details"]').click()
   assert 'latest event update was held' in page.locator('#evd-sources').inner_text()
   close_event()
   bad=copy.deepcopy(VALID);bad['events'][0]['aliases']=['shared'];bad['events'][1]['aliases']=['shared'];payload[0]=bad

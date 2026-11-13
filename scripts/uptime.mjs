@@ -2,6 +2,9 @@
 // Fetches the home page, the main data files and one R2-served picture. A Telegram message (System topic) goes out only when the
 // state changes: once when the site starts failing, once when it recovers. The previous state is the last finished run of this workflow.
 import { routed } from "../src/tgroute.js";
+import { createRequire } from "node:module";
+import { readFileSync } from "node:fs";
+const GOLIB = createRequire(import.meta.url)("../public/lib.js");
 const BASE = (process.env.SITE_URL || "https://pogo.michaelpuff.com").replace(/\/$/, "");
 
 async function get(path, tries = 2) {
@@ -109,6 +112,38 @@ export function extractCoreAssetUrls(homeHtml, serviceWorker) {
   return { cacheName: cacheMatch[2], assets };
 }
 
+// Uptime must enforce the same source-link privacy boundary as the publisher.
+// Read-only: never log the channel or message identifier that caused a failure.
+export function containsPrivateDiscordSource(value) {
+  if (typeof value === "string") return GOLIB.isPrivateLink(value);
+  if (Array.isArray(value)) return value.some(containsPrivateDiscordSource);
+  if (value && typeof value === "object")
+    return Object.values(value).some(containsPrivateDiscordSource);
+  return false;
+}
+
+// Compare the deployed catalogue with the source-backed generated snapshot.
+// The importer can refresh fetch timestamps without changing event facts;
+// ignoring only the "updated" fields avoids false outage alerts for such runs.
+function stableEventData(value) {
+  if (Array.isArray(value)) return value.map(stableEventData);
+  if (value && typeof value === "object") {
+    const result = {};
+    for (const key of Object.keys(value).filter(key => key !== "updated").sort()) {
+      result[key] = stableEventData(value[key]);
+    }
+    return result;
+  }
+  return value;
+}
+
+export function equivalentEventDetails(expected, deployed) {
+  if (!expected || !deployed || !expected.events || !deployed.events ||
+      typeof expected.events !== "object" || typeof deployed.events !== "object" ||
+      Array.isArray(expected.events) || Array.isArray(deployed.events)) return false;
+  return JSON.stringify(stableEventData(expected)) === JSON.stringify(stableEventData(deployed));
+}
+
 export async function runChecks() {
   const problems = [];
   let homeHtml = "";
@@ -143,6 +178,21 @@ export async function runChecks() {
   await check("data.json", async () => { const d = await json("/data.json"); if (!Array.isArray(d.events) || !d.events.length) throw new Error("no events"); });
   await check("world-events.json", async () => { const d = await json("/world-events.json"); if (!Array.isArray(d.events)) throw new Error("no events list"); });
   await check("prices.json", async () => { await json("/prices.json"); });
+  await check("event-details.json production parity", async () => {
+    const checkedIn = JSON.parse(readFileSync(new URL("../public/event-details.json", import.meta.url), "utf8"));
+    const deployed = await json("/event-details.json");
+    if (!equivalentEventDetails(checkedIn, deployed)) {
+      // Never print source payloads or potentially private URL identifiers in logs.
+      throw new Error("deployed Event Details differs from validated main");
+    }
+  });
+  await check("public infographic provenance", async () => {
+    for (const path of ["/event-info.json", "/infographic-queue.json", "/weekly.json"]) {
+      const data = await json(path);
+      if (!data || typeof data !== "object" || containsPrivateDiscordSource(data))
+        throw new Error(path + " missing, malformed or contains private Discord channel links");
+    }
+  });
   await check("R2 picture", async () => {
     const w = await json("/weekly.json").catch(() => ({}));
     const q = await json("/infographic-queue.json").catch(() => ({}));

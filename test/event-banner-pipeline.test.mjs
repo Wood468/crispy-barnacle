@@ -87,7 +87,13 @@ test('generic, wrong-year and wrong-event images are still rejected', () => {
 test('published catalogue keeps the real Into the Wild banner and every shown banner is verifiable at render time', () => {
   const catalogue = JSON.parse(readFileSync(new URL('../public/events-v1.json', import.meta.url), 'utf8'));
   const into = catalogue.events.find(e => e.eventId === 'into');
-  assert.match(into.image, /2026-11-09-into-the-wild-2026\/into-the-wild-2026\.jpg$/);
+  const sourceDetails = JSON.parse(readFileSync(new URL('../public/event-details.json', import.meta.url), 'utf8')).events.into;
+  assert.equal(into.image, sourceDetails.image, 'catalogue uses the verified latest event art');
+  assert.equal(sourceDetails.imageProvenance?.source, 'Pokémon GO (official)');
+  const officialPage = new URL(sourceDetails.imageProvenance.sourceUrl);
+  assert.equal(officialPage.hostname, 'pokemongo.com');
+  assert.equal(officialPage.pathname.replace(/\/$/, ''), '/news/into-the-wild-2026');
+  assert.ok(!/events-default-img|ambassador/i.test(into.image), 'no generic or unrelated banner');
   const dates = into.schedule;
   assert.equal(Art.resolve({ name: into.title, start: dates.start, end: dates.end }, [into.image]).kind, 'official');
   // The Machamp research card cites the Into the Wild page but is a different event: it must not borrow the banner.

@@ -22,6 +22,15 @@ def settle(pg,js,timeout=10000):
 def check(name,cond,extra=''):
     print(('PASS ' if cond else 'FAIL ')+name+(' '+str(extra) if extra and not cond else ''))
     if not cond: fails.append(name)
+def reveal_detail_target(pg, selector):
+    """Select the real Event Details panel that owns a visible interaction."""
+    target = pg.locator(selector).first
+    target.wait_for(state='attached')
+    panel = target.evaluate("(el) => el.closest('.evd-sec')?.getAttribute('data-sec') || ''")
+    if panel:
+        pg.locator('#evd .evd-nav-link[data-sec="' + panel + '"]').click()
+    target.wait_for(state='visible')
+    return target
 
 # Design-token contract: semantic roles are shared by the base and dashboard layers,
 # and versioned stylesheets are included in the offline shell.
@@ -286,8 +295,10 @@ check('season pass and deadline data is structured, source-attributed and ordere
       all(item_id in {item.get('id') for item in SEASON_DATA.get('items', [])}
           for item_id in ['season:pass-halloween', 'season:pass-november']) and
       len(SEASON_DATA.get('deadlines', [])) >= 5 and
-      all(d.get('source') == 'Leek Duck' and d.get('url', '').startswith('https://leekduck.com/') and
-          d.get('s') and d.get('e') and d['s'] < d['e'] for d in SEASON_DATA.get('deadlines', [])) and
+      all(d.get('s') and d.get('e') and d['s'] < d['e'] and
+          ((d.get('source') == 'Leek Duck' and d.get('url', '').startswith('https://leekduck.com/')) or
+           (d.get('source') == 'Pokémon GO (official)' and d.get('url', '').startswith('https://pokemongo.com/')))
+          for d in SEASON_DATA.get('deadlines', [])) and
       'deadlines: function () { return deadlines; }' in SEASON_JS)
 check('official exclusive-move windows carry source provenance into Today deadlines',
       any(m.get('eventId') == 'novcd' and m.get('move') == 'Kowtow Cleave' and
@@ -417,7 +428,7 @@ check('all HTML renderers use one shared apostrophe-safe escape helper',
       all(not re.search(r'function\s+esc\s*\(', source) and
           not re.search(r'var\s+esc\s*=\s*function', source) for source in ESC_RENDERERS))
 check('versioned infographic script is referenced by the dashboard and precached offline',
-      '/infographic.js?v=20261103a' in DASH_JS and '/infographic.js?v=20261103a' in SW_JS)
+      bool((m := re.search(r"/infographic\.js\?v=[0-9A-Za-z]+", DASH_JS))) and m.group(0) in SW_JS)
 check('infographic card previews prefer static WebP thumbnails and stay lazy until visible',
       'function cardThumbUrl(original)' in INFO_JS and '/infographic-thumbs/' in INFO_JS and
       'data-thumb-src' in INFO_JS and 'data-igfallback' in INFO_JS and
@@ -705,7 +716,9 @@ with sync_playwright() as p:
             '**/regional-events.json': (empty_world, 200),
             '**/event-moves.json': (community_move_fixture, 200)
         })
-        unverified_move_page.wait_for_function("document.getElementById('today-focus-ending')?.textContent.includes('Nothing timed in the next 6h')")
+        # Other official event/pass deadlines may now be active: test the
+        # unverified move's absence, not a frozen empty-state message.
+        unverified_move_page.wait_for_function("() => !!window.GODASH && !!window.GOSEASON && !!document.getElementById('today-focus-ending')?.textContent.trim().length")
         unverified_move_meta = unverified_move_page.locator('#today-focus-ending-meta').inner_text()
         check('Community-only move attribution is not promoted to an official Today deadline',
               'Kowtow Cleave' not in unverified_move_meta and 'Exclusive move window ends' not in unverified_move_page.locator('#today-focus-ending').inner_text(),
@@ -1934,7 +1947,9 @@ with sync_playwright() as p:
         check('raids: historical rotations are not labelled Earlier this week', 'Earlier this week' not in pg.inner_text('#rotnow'), pg.inner_text('#rotnow')[:1200])
         pg.click('#rotnow [data-rotweek="following"]'); pg.wait_for_timeout(100)
         paired=pg.locator('#rotnow .rc-form b').all_text_contents()
-        check('raids: Mega Charizard X and Y each have a separate image and label', 'MEGA CHARIZARD X' in [x.strip().upper() for x in paired] and 'MEGA CHARIZARD Y' in [x.strip().upper() for x in paired] and pg.locator('#rotnow .rc-form > img.art[alt*="Charizard"]').count()==2, paired)
+        charizard_art=pg.locator('#rotnow .rc[data-boss^="Mega Charizard"] .rc-raid-art > img.art[alt*="Charizard"]')
+        charizard_sources=charizard_art.evaluate_all("(imgs) => imgs.map(img => img.getAttribute('src') || '')")
+        check('raids: Mega Charizard X and Y each have a separate image and label', 'MEGA CHARIZARD X' in [x.strip().upper() for x in paired] and 'MEGA CHARIZARD Y' in [x.strip().upper() for x in paired] and charizard_art.count()==2 and len(set(charizard_sources))==2, (paired,charizard_sources))
         following_text=pg.inner_text('#rotnow')
         following_lower=following_text.lower()
         check('raids: future week does not repeat the globally current Yveltal rotation', 'current raid rotation' not in following_lower and 'at start of week' in following_lower and 'dialga' in following_lower and 'palkia' in following_lower and 'yveltal' not in following_lower, following_text[:1800])
@@ -2088,20 +2103,74 @@ with sync_playwright() as p:
         check('legacy gofn-tab=dex opens Collect > Dex', pg.locator('#tab-dex').is_visible())
 
         # ---- event detail: passes, prices, labelled gaps ----
-        pg=page(); pg.click('nav.tabs button[data-tab="events"]'); pg.click('#subnav-events button[data-sub="timeline"]'); pg.wait_for_selector('#evtimeline .evc[data-id$="zorua"] .more'); pg.click('#evtimeline .evc[data-id$="zorua"] .more'); pg.wait_for_selector('#evd .tk'); pg.wait_for_timeout(300)
+        pg=page(); pg.click('nav.tabs button[data-tab="events"]'); pg.click('#subnav-events button[data-sub="timeline"]'); pg.wait_for_selector('#evtimeline .evc[data-id$="zorua"] .more'); pg.click('#evtimeline .evc[data-id$="zorua"] .more')
+        reveal_detail_target(pg, '#evd .mvb')
+        moves_text=pg.inner_text('#evd')
+        reveal_detail_target(pg, '#evd .tk')
         t=pg.inner_text('#evd')
-        check('detail: published event facts and event-only moves remain visible without verification clutter', 'Sucker Punch' in t and 'bonuses' in t.lower() and pg.locator('#evd .pub,#evd .npub,#evd .st').count()==0)
+        check('detail: published event facts and event-only moves remain visible without verification clutter', 'Sucker Punch' in moves_text and 'bonuses' in moves_text.lower() and pg.locator('#evd .pub,#evd .npub,#evd .st').count()==0)
         expected_tickets = json.loads((ROOT/'public/event-info.json').read_text())['events']['zorua']['tickets']
         check('detail: all curated event tickets retain Australian prices and purchase information', pg.locator('#evd .tk').count()==len(expected_tickets) and 'special research ticket' in t.lower() and '≈ A$2.99' in t and 'Buy or claim by' in t)
+        # Ticket content is grouped by priority, but every source-backed benefit
+        # and secondary condition remains available in accessible disclosures.
+        ticket=pg.locator('#evd .tk[data-pass="zorua-cd-research"]')
+        check('detail: ticket claim dates are visible without expanding secondary terms',
+              ticket.locator('.tk-essential').is_visible() and
+              'Buy or claim by' in ticket.locator('.tk-essential').inner_text() and
+              'Optional' in ticket.locator('.tk-essential').inner_text())
+        more_benefits=ticket.locator('details.tk-more-benefits')
+        check('detail: ticket lists three initial benefits and preserves the rest collapsed',
+              ticket.locator('.tk-benefits > ul > li').count()==3 and
+              more_benefits.locator('li').count()==1 and
+              not more_benefits.locator('li').first.is_visible())
+        more_benefits.locator('summary').focus()
+        pg.keyboard.press('Enter')
+        check('detail: additional ticket benefits are reachable by keyboard',
+              more_benefits.locator('li').first.is_visible() and
+              'Even more goodies' in more_benefits.inner_text())
+        more_terms=ticket.locator('details.tk-more-terms')
+        more_terms.locator('summary').click()
+        check('detail: secondary ticket terms keep their published source facts',
+              more_terms.is_visible() and 'Good to know' in more_terms.inner_text() and
+              'Non-refundable' in more_terms.inner_text())
+
         pg.screenshot(path=OUT+'detail.png', full_page=False)
         pg.keyboard.press('Escape'); pg.wait_for_timeout(200)
         check('detail closes on Escape', pg.locator('#evd').is_hidden())
         # with an Indonesian price added to the data file the card converts it, without any code change
         # the prices are asked for once per load and shared, so the Indonesian price is served from the start
         pg2=page(pin=True,extra={'**/api/prices-private':(json.dumps({"fx":{"from":"IDR","to":"AUD","rate":0.0001,"source":"test","url":"https://x.test","observed":"2026-10-10"},"prices":[{"product":"zorua-cd-research","currency":"IDR","amount":50000,"region":"ID","source":"test store","url":"https://x.test","observed":"2026-10-10"}]}),200),'**/prices.json':(json.dumps({"prices":[{"product":"zorua-cd-research","currency":"AUD","amount":8,"region":"AU","verified":True,"source":"test au","url":"https://x.test","observed":"2026-10-10"}]}),200)})
-        pg2.click('nav.tabs button[data-tab="events"]'); pg2.click('#subnav-events button[data-sub="timeline"]'); pg2.wait_for_selector('#evtimeline .evc[data-id$="zorua"] .more'); pg2.click('#evtimeline .evc[data-id$="zorua"] .more'); pg2.wait_for_selector('#evd .tk'); pg2.wait_for_timeout(300)
+        pg2.click('nav.tabs button[data-tab="events"]'); pg2.click('#subnav-events button[data-sub="timeline"]'); pg2.wait_for_selector('#evtimeline .evc[data-id$="zorua"] .more'); pg2.click('#evtimeline .evc[data-id$="zorua"] .more')
+        reveal_detail_target(pg2, '#evd .tk')
         t2=pg2.inner_text('#evd')
         check('detail: Rp price converts to A$, shows Originally A$ in Australia and a verified saving, and never the Rp amount', '≈ A$5.00' in t2 and 'Originally A$8.00 in Australia' in t2 and 'Save A$3.00 (38%)' in t2 and 'Rp 50' not in t2 and '50,000' not in t2, t2[:0])
+
+        # Collection's initial phone viewport prioritises a usable Dex search
+        # and actual Pokémon, rather than optional setup/help above both.
+        for width in (360,390,430):
+            dex_phone=page(width=width,height=844,mobile=True)
+            dex_phone.click('nav.tabs button[data-tab="collect"]')
+            dex_phone.click('#subnav-collect button[data-sub="dex"]')
+            dex_phone.wait_for_selector('#dexlist .drow',state='visible')
+            m=dex_phone.evaluate("""() => {
+              const box=s=>document.querySelector(s)?.getBoundingClientRect();
+              const q=box('#dq'),first=box('#dexlist .drow'),nav=box('nav.tabs'),progress=box('#tab-dex .prog');
+              const el=s=>document.querySelector(s);
+              return {searchBottom:q?.bottom,firstRowTop:first?.top,navTop:nav?.top,
+                progressHeight:progress?.height,searchBeforeProgress:!!(el('#dq').compareDocumentPosition(el('#tab-dex .prog'))&Node.DOCUMENT_POSITION_FOLLOWING),
+                coverageAfterProgress:!!(el('#tab-dex .prog').compareDocumentPosition(el('#gencov'))&Node.DOCUMENT_POSITION_FOLLOWING),
+                helpAfterResults:!!(el('#dexlist').compareDocumentPosition(el('#tab-dex .dexhow'))&Node.DOCUMENT_POSITION_FOLLOWING),
+                regionalAfterResults:!!(el('#dexlist').compareDocumentPosition(el('#regdd'))&Node.DOCUMENT_POSITION_FOLLOWING)};
+            }""")
+            check(f'Collection {width}px keeps search above the bottom nav and ahead of setup panels',
+                  m['searchBottom'] < m['navTop']-6 and m['searchBeforeProgress'] and
+                  m['coverageAfterProgress'] and m['helpAfterResults'] and m['regionalAfterResults'], m)
+            check(f'Collection {width}px shows a compact progress card and starts the Dex list in the first phone viewport',
+                  m['progressHeight'] <= 140 and m['firstRowTop'] < m['navTop']+8, m)
+            check(f'Collection {width}px keeps all original search, generation, need and regional controls',
+                  all(dex_phone.locator(sel).count()==1 for sel in ('#dq','#dgen','#dstat','#genchips','#gencov details','#regdd','#dunrel','#dexlist')) and
+                  dex_phone.evaluate('document.documentElement.scrollWidth<=innerWidth'))
+            dex_phone.context.close()
 
         # ---- collection integrity: unknown is never Need ----
         pg=page(); pg.click('nav.tabs button[data-tab="collect"]'); pg.click('#subnav-collect button[data-sub="dex"]'); pg.wait_for_selector('#gencov .gc',state='attached'); pg.evaluate("document.querySelector('#gencov details').open=true"); pg.wait_for_timeout(300)
@@ -2422,7 +2491,8 @@ with sync_playwright() as p:
         api=json.dumps({'enabled':True,'events':[{'id':'leekduck:f%d'%i,'name':'Filler %d'%i,'type':'event','start':'2026-11-%02dT10:00:00.000'%(i+1),'end':'2026-11-%02dT12:00:00.000'%(i+1),'tzMode':'local','status':'community_reported','announced':True,'missing':False,'featured':[],'bonuses':[],'reports':[]} for i in range(11)]+[{'id':'leekduck:safari','name':'City Safari: Brisbane','type':'event','start':'2026-09-26T10:00:00.000','end':'2026-09-27T18:00:00.000','tzMode':'local','status':'community_reported','announced':True,'missing':False,'featured':[],'bonuses':[],'link':'https://leekduck.com/events/safari/','reports':[]}],'sources':[]})
         pg=page(api=api,sources='{"environment":"preview","database":true,"enabled":true,"sources":[]}',extra={'**/places.json':(PLACES_FIXTURE,200)})
         pg.wait_for_function("!!window.GOPLACES && !!window.GODETAIL")  # places.js is appended after first render; wait for it
-        pg.evaluate("GOPLACES.load()"); pg.evaluate("GODETAIL.open('leekduck:safari')"); pg.wait_for_selector('#evd [data-places]'); pg.wait_for_timeout(200)
+        pg.evaluate("GOPLACES.load()"); pg.evaluate("GODETAIL.open('leekduck:safari')")
+        reveal_detail_target(pg, '#evd [data-places]')
         check('event detail: an in-person event links to its sourced venues', pg.locator('#evd [data-places]').count()==2)
         # event-to-place matching: exact name AND overlapping dates, nothing fuzzy
         m=lambda name,s,e: pg.evaluate("GOPLACES.forEvent({name:%s,start:new Date(%s),end:new Date(%s)}).map(p=>p.id)"%(json.dumps(name),json.dumps(s),json.dumps(e)))
@@ -2494,7 +2564,8 @@ with sync_playwright() as p:
         pg=mk(sparse); R2=pg.evaluate("[...document.querySelectorAll('#pvplist .mvb')].slice(0,3).map(m=>m.querySelector('.mty').getAttribute('aria-label'))")
         check('moves: with a sparse table every missing move is Type unknown', R2==['Type unknown']*3, R2)
         # event detail: explicit move type from the source is shown; no Elite claim without a Pokémon
-        pg=page(); pg.evaluate("GODETAIL.open('cur:zorua')"); pg.wait_for_selector('#evd .mvb'); pg.wait_for_timeout(300)
+        pg=page(); pg.evaluate("GODETAIL.open('cur:zorua')")
+        reveal_detail_target(pg, '#evd .mvb')
         check('moves: event detail shows Sucker Punch as Dark with no Elite claim', pg.get_attribute('#evd .mvb .mty','aria-label')=='Dark type' and pg.locator('#evd .etm').count()==0)
 
         # ---- freshness ----
@@ -2725,12 +2796,31 @@ with sync_playwright() as p:
         # Cumulative layout shift of a cold Today load, summed over every shift (user input is not excluded: there is none). Measured un-throttled on purpose: the big
         # shifts (the footer jumping a screen when the agenda arrives, the freshness line and deadlines row growing, the date and tab bar filling in) happen at any speed, so
         # this is deterministic in CI. Batch 4 measured 0.62 (390px) and 1.09 (1280px) before the fix; Google's "good" threshold is 0.1. Throttled 20-run numbers are in docs/ROADMAP.md.
-        CLS_OBSERVER = "window.__cls=0;new PerformanceObserver(l=>{for(const e of l.getEntries())window.__cls+=e.value}).observe({type:'layout-shift',buffered:true})"
+        CLS_OBSERVER = """window.__cls=0;window.__clsShifts=[];new PerformanceObserver(l=>{
+            for(const e of l.getEntries()){
+                window.__cls+=e.value;
+                if(window.__clsShifts.length>=30)continue;
+                window.__clsShifts.push({value:Number(e.value.toFixed(5)),at:Math.round(e.startTime),
+                    sources:(e.sources||[]).slice(0,6).map(s=>{
+                        const n=s.node;
+                        const tag=n?.tagName?.toLowerCase()||'unknown';
+                        const cls=typeof n?.className==='string' ? n.className.trim().split(/\\s+/).slice(0,3).join('.') : '';
+                        const label=tag+(n?.id?'#'+n.id:'')+(cls?'.'+cls:'');
+                        const rect=r=>r?{x:Math.round(r.x),y:Math.round(r.y),width:Math.round(r.width),height:Math.round(r.height)}:null;
+                        return {node:label,previous:rect(s.previousRect),current:rect(s.currentRect)};
+                    })});
+            }
+        }).observe({type:'layout-shift',buffered:true})"""
         for cls_w in (390, 1280):
             cpg = page(width=cls_w, mobile=cls_w < 500, pre=lambda p: p.add_init_script(CLS_OBSERVER))
             settle(cpg, "!!(window.GOFRESH&&window.GOFRESH.state().done&&window.GOINFOGRAPHIC&&window.GOEXTRA)")  # the late scripts and the freshness line are part of the load
             cpg.wait_for_timeout(1500)
             cls_val = cpg.evaluate("window.__cls")
+            if cls_val >= 0.1:
+                # Preserve the strict performance gate; report the actual elements
+                # contributing the largest shift rather than guessing from timing.
+                shifts = cpg.evaluate("window.__clsShifts.slice().sort((a,b)=>b.value-a.value).slice(0,12)")
+                print('CLS_DIAGNOSTICS %dpx %s' % (cls_w, json.dumps(shifts, separators=(',', ':'))), flush=True)
             check('Today cold load at %dpx has a cumulative layout shift under 0.1' % cls_w, cls_val < 0.1, 'measured %.4f' % cls_val)
             cpg.context.close()
 
@@ -2953,8 +3043,11 @@ with sync_playwright() as p:
         seen_before = wn.evaluate("JSON.parse(localStorage.getItem('gofn-seen-events')).ids")
         check('what\'s-new: a normal first visit records the event list', len(seen_before) >= 10, len(seen_before))
         wn.route('**/api/events', hang); wn.reload(wait_until='domcontentloaded')
+        # The fake clock only advances timers that already exist: wait until the dashboard script has started its feed timeout, or a loaded CI machine
+        # can run the 25 s before those timers are registered and the page then waits the real 20 s (seen as a 10 s wait_for_function timeout).
+        wn.wait_for_function('!!window.GODASH', timeout=30000)
         wn.clock.run_for(25000)  # past the feed timeout and past whatsnew's 20 s wait
-        wn.wait_for_function("document.getElementById('home-now').hasAttribute('data-render-key')")
+        wn.wait_for_function("document.getElementById('home-now').hasAttribute('data-render-key')", timeout=30000)
         wn.wait_for_timeout(300)
         seen_after = wn.evaluate("JSON.parse(localStorage.getItem('gofn-seen-events')).ids")
         check('what\'s-new: the seen list survives a session whose feed stalled', seen_after == seen_before, [len(seen_before), len(seen_after)])
@@ -2964,7 +3057,11 @@ with sync_playwright() as p:
         check('what\'s-new: after the next normal load no event is falsely listed as new', 'New events' not in headings, headings)
         wn.context.close()
         # 5. empty day: one calm line instead of 0 / 0 / 0; no decorative aria-label on the counts; "Got it" keeps its visible name
-        ed = page(clock='2027-09-15T03:00:00+10:00')
+        # Permanent, verified city rallies can now be active years after their start.
+        # An empty-day fixture must explicitly supply an empty world source rather
+        # than assuming every real event expires by September 2027.
+        ed = page(clock='2027-09-15T03:00:00+10:00',
+                  extra={'**/world-events.json': (json.dumps({'events': []}), 200)})
         st = ed.evaluate(TODAY_STATE_JS)
         check('empty day: the brief says so in one calm line instead of three zeros', ed.locator('#day-brief-empty').is_visible() and not st['statsShown'] and 'Nothing' in ed.locator('#day-brief-empty').inner_text(), st)
         ed.context.close()
@@ -3235,7 +3332,7 @@ with sync_playwright() as p:
         fl_dups = sorted((u, n) for u, n in fl_counts.items() if n > 1 and not u.startswith('https://fonts.'))
         check('cold Today load requests no JSON, API or script URL more than once', not fl_dups, fl_dups)
         check('dash.js is found by the preload before app.js injects it (one request, started from the head)',
-              fl_counts.get('/dash.js?v=' + re.search(r"ds\.src='/dash\.js\?v=(\w+)'", APP_JS).group(1)) == 1 and '<link rel="preload" href="/dash.js?v=' in INDEX_HTML)
+              fl_counts.get('/dash.js?v=' + re.search(r"ds\.src='/dash\.js\?v=([\w-]+)'", APP_JS).group(1)) == 1 and '<link rel="preload" href="/dash.js?v=' in INDEX_HTML)
         # B. an event sheet opened straight after load has its details (event-details.json is no longer fetched at startup, only on idle or when a sheet needs it)
         fl_pg.evaluate("GODASH.events().find(e=>e.id==='cur:trek').name='Amended title fixture';GODETAIL.open('cur:trek')")
         fl_ok = settle(fl_pg, "document.getElementById('evd-t') && document.getElementById('evd').textContent.includes('Increased chance to encounter Shiny Electrike.')", 8000)
@@ -3266,7 +3363,7 @@ with sync_playwright() as p:
         fl_fresh = re.search(r"w\.src = '(/fresh\.js\?v=\w+)'", DASH_JS).group(1)
         fl_ready = settle(fl_sw, "navigator.serviceWorker.controller&&window.GOFRESH", 30000)
         fl_cached = fl_sw.evaluate("""async (u) => { const n = (await caches.keys()).find(k => k.startsWith('gofn-shell-')); if (!n) return {name: null}; const c = await caches.open(n);
-            return {name: n, keys: (await c.keys()).length, fresh: !!(await c.match(u)), dashjs: !!(await c.match('/dash.js?v=' + %s))}; }""" % json.dumps(re.search(r"ds\.src='/dash\.js\?v=(\w+)'", APP_JS).group(1)), fl_fresh)
+            return {name: n, keys: (await c.keys()).length, fresh: !!(await c.match(u)), dashjs: !!(await c.match('/dash.js?v=' + %s))}; }""" % json.dumps(re.search(r"ds\.src='/dash\.js\?v=([\w-]+)'", APP_JS).group(1)), fl_fresh)
         check('service worker installs on the first visit and its cache holds the versioned fresh.js and dash.js', fl_ready and fl_cached.get('fresh') and fl_cached.get('dashjs') and fl_cached.get('keys', 0) >= 50, fl_cached)
         fl_ctx.set_offline(True)
         fl_sw.reload(wait_until='domcontentloaded')
@@ -3310,6 +3407,9 @@ with sync_playwright() as p:
         link_txt = opg.locator('#igreview .igr[data-id="discord:b9-solo"] a[href*="discord.com/channels"]').inner_text()
         check('review (owner only): the Discord post link stays, clearly labelled', link_txt == 'Open in Discord (owner only)', link_txt)
         check('review: Discard and Approve buttons say which picture they are for', opg.locator('#igreview .igr[data-id="discord:b9-solo"] [data-ig-no]').get_attribute('aria-label') == 'Discard: Solo picture')
+        check('review: event approval and exact scheduled Pokémon selectors remain distinct',
+              opg.locator('#igreview .igr[data-id="discord:b9-solo"] select[aria-label="Choose another event"]').count() == 1 and
+              opg.locator('#igreview .igr[data-id="discord:b9-solo"] select[data-ig-boss-choice]').count() == 1)
         n_gets = len(gets)
         opg.locator('#igreview .igr[data-id="discord:b9-solo"] [data-ig-no]').click(); opg.wait_for_selector('#igundo')
         check('Discard posts one rejected decision and the card leaves the list', posts == [{'id': 'discord:b9-solo', 'status': 'rejected', 'eventId': '', 'eventTitle': ''}] and opg.locator('#igreview .igr[data-id="discord:b9-solo"]').count() == 0, posts)
@@ -3397,7 +3497,7 @@ with sync_playwright() as p:
         card_sel = '#igreview .igr[data-id="discord:b9-solo"]'
         gpg.locator(card_sel + ' [data-ig-no]').click(); gpg.wait_for_timeout(300)
         check('B11: a Discard still in flight is held at the server', len(gsrv['held']) == 1 and gsrv['posts'] == [])
-        sel_ev = gpg.locator(card_sel + ' select'); sel_ev.select_option(index=1)
+        sel_ev = gpg.locator(card_sel + ' select[aria-label="Choose another event"]'); sel_ev.select_option(index=1)
         gpg.locator(card_sel + ' [data-ig-pick]').click(); gpg.wait_for_timeout(400)
         check('B11: an Approve tapped on the same card meanwhile is NOT sent while the Discard is unfinished', len(gsrv['held']) == 1 and gsrv['posts'] == [], (len(gsrv['held']), gsrv['posts']))
         gsrv['hold'] = False; gsrv['held'].pop(0)(); gpg.wait_for_timeout(500)
@@ -3436,7 +3536,7 @@ with sync_playwright() as p:
         check('B13: with 500 rows and the picture missing, Discard is refused calmly (it was re-read, nothing written, card stays, no Undo)', gsrv['gets'] > g0 and gsrv['posts'] == [] and gpg.locator(SOLO).count() == 1 and gpg.locator('#igundo').count() == 0 and 'Not discarded' in gpg.inner_text('#igreview .igr-msg:not(.igr-cap)'), (gsrv['gets'], gsrv['posts']))
         dlg = []
         gpg.once('dialog', lambda d: (dlg.append(d.message), d.dismiss()))
-        gpg.locator(SOLO + ' select').select_option(index=1); gpg.locator(SOLO + ' [data-ig-pick]').click(); gpg.wait_for_timeout(300)
+        gpg.locator(SOLO + ' select[aria-label="Choose another event"]').select_option(index=1); gpg.locator(SOLO + ' [data-ig-pick]').click(); gpg.wait_for_timeout(300)
         check('B13: at the cap, Approve of a picture with no visible decision asks first, and a "no" writes nothing', len(dlg) == 1 and gsrv['posts'] == [] and gpg.locator(SOLO).count() == 1, (dlg, gsrv['posts']))
         gpg.once('dialog', lambda d: d.accept())
         gpg.locator(SOLO + ' [data-ig-pick]').click(); gpg.wait_for_selector('#iglinked .igr[data-id="discord:b9-solo"]', state='attached', timeout=5000)
@@ -3461,7 +3561,7 @@ with sync_playwright() as p:
         # (d) A POST that never answers: after about 15 s the calm error shows, the card stays, the queue is free, and the next action re-reads before writing.
         gpg, gsrv = b11_owner([])
         gsrv['hold'] = True
-        gpg.locator(SOLO + ' select').select_option(index=1); gpg.locator(SOLO + ' [data-ig-pick]').click(); gpg.wait_for_timeout(300)
+        gpg.locator(SOLO + ' select[aria-label="Choose another event"]').select_option(index=1); gpg.locator(SOLO + ' [data-ig-pick]').click(); gpg.wait_for_timeout(300)
         check('B13: the hung write is waiting at the server', len(gsrv['held']) == 1 and gsrv['posts'] == [])
         gpg.clock.fast_forward(16000); gpg.wait_for_function("((document.querySelector('#igreview .igr-msg:not(.igr-cap)')||{}).textContent||'').includes('too long')", timeout=5000)
         check('B13: a write that times out shows the calm error and keeps the card (nothing is assumed saved)', gpg.locator(SOLO).count() == 1 and gpg.locator('#iglinked').count() == 0, gpg.inner_text('#igreview'))
@@ -3636,7 +3736,7 @@ with sync_playwright() as p:
           today: document.querySelector('#home-now')?.children.length || 0,
           todayKey: document.querySelector('#home-now')?.getAttribute('data-render-key') || '',
           thisWeek: document.querySelector('#week')?.children.length || 0,
-          weekText: (()=>{const el=document.querySelector('#week')?.cloneNode(true);if(!el)return '';el.querySelectorAll('[data-igcheck],[data-infographic]').forEach(n=>n.remove());return el.textContent;})(),
+          weekText: (()=>{const el=document.querySelector('#week')?.cloneNode(true);if(!el)return '';el.querySelectorAll('[data-igcheck],[data-infographic],.art-fb,.costume-unavailable').forEach(n=>n.remove());return el.textContent;})(),
           timeline: document.querySelector('#evtimeline')?.children.length || 0,
           weekstrip: document.querySelector('#weekstrip')?.children.length || 0,
           calendar: document.querySelector('#calgrid')?.children.length || 0,
@@ -3668,7 +3768,7 @@ with sync_playwright() as p:
         secondary_click('nav.tabs button[data-tab="now"]')
         returned = secondary_page.evaluate("""() => ({
           todayKey: document.querySelector('#home-now')?.getAttribute('data-render-key') || '',
-          thisWeek: (()=>{const el=document.querySelector('#week')?.cloneNode(true);if(!el)return '';el.querySelectorAll('[data-igcheck],[data-infographic]').forEach(n=>n.remove());return el.textContent;})(),
+          thisWeek: (()=>{const el=document.querySelector('#week')?.cloneNode(true);if(!el)return '';el.querySelectorAll('[data-igcheck],[data-infographic],.art-fb,.costume-unavailable').forEach(n=>n.remove());return el.textContent;})(),
           todayVisible: !document.querySelector('#tab-now')?.hidden
         })""")
         check('Timeline, Calendar, Travel, Battle, Opportunities and Watchlist render on activation; Today and This Week event information remain unchanged on return',

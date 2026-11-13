@@ -62,7 +62,7 @@ function placeOfStop(t) {
   const hits = PLACES.map(p => ({ p, i: t.search(p.re) })).filter(x => x.i >= 0).sort((a, b) => (b.p.label.includes(",") - a.p.label.includes(",")) || a.i - b.i);
   return hits.length ? { place: hits[0].p.label, area: hits[0].p.area } : null;
 }
-export const IN_PERSON = /pok[eé]mon[ -]run|city safari|safari zone|wild area|go fest|go tour|pok[eé]xciting|airport|in[- ]person|taking place at|venue|know before you go|anniversary|collaborat|partners? with|museum|stadium|pok[eé]mon center|go lab|\blab\b|tour\b|festival of lights|exclusive|only available in|limited to/i;
+export const IN_PERSON = /pok[eé]mon[ -]run|city safari|safari zone|wild area|go fest|go tour|pok[eé]xciting|airport|in[- ]person|taking place at|venue|know before you go|anniversary|collaborat|partners? with|museum|stadium|pok[eé]mon center|go lab|\blab\b|tour\b|festival of lights|exclusive|only available in|limited to|stamp rall(?:y|ies)/i;
 export const SKIP_NEWS = /this week in|news this week|weekly roundup|pok[eé]mon news/i;
 const SKIP = /community day|spotlight hour|raid hour|raid day|max monday|battle league|go pass|season |research breakthrough|shadow raid/i;
 
@@ -85,12 +85,68 @@ export function tidyName(name) {
   return t.charAt(0).toUpperCase() + t.slice(1);
 }
 
+// An explicitly open-ended source has a published start, not an assumed one-day finish.
+function ongoingStart(page, today) {
+  const text = [page.title || "", ...(page.lines || []).slice(0, 35).map(line => line.text || "")].join(" ").slice(0, 7000);
+  if (!/\b(?:no\s+(?:(?:planned|announced|scheduled)\s+)?end\s+date|no\s+planned\s+ending|until\s+further\s+notice)\b/i.test(text)) return null;
+  const date = new RegExp("\\b(?:beginning|starting(?:\\s+on)?|available\\s+from|since)\\s+(" +
+    MONRE + "\\.?\\s+\\d{1,2}(?:st|nd|rd|th)?\\s*,?\\s*20\\d{2})\\b", "i").exec(text);
+  if (!date) return { start: "", datesKnown: false };
+  const range = parseDateRange(date[1], +today.slice(0, 4));
+  if (!range) return { start: "", datesKnown: false };
+  let start = range.start;
+  const after = text.slice(date.index + date[0].length, date.index + date[0].length + 70);
+  const time = /^\s*,?\s*(?:at\s+)?(\d{1,2}):(\d{2})\s*([ap])\.?m\.?\s*(PST|PDT|UTC|GMT)\b/i.exec(after);
+  if (time && +time[1] >= 1 && +time[1] <= 12 && +time[2] <= 59) {
+    const hour = (+time[1] % 12) + (time[3].toLowerCase() === "p" ? 12 : 0);
+    const offset = { PST: "-08:00", PDT: "-07:00", UTC: "Z", GMT: "Z" }[time[4].toUpperCase()];
+    start += "T" + String(hour).padStart(2, "0") + ":" + time[2] + ":00" + offset;
+  }
+  return { start, datesKnown: true };
+}
+
+// Distinct city activities from one permanent announcement retain exact source provenance.
+// Use specific cities in the headline, never its language URL as a location guess.
+export function ongoingStopsFromPage(page, today = new Date().toISOString().slice(0, 10)) {
+  const title = seriesName(cleanTitle(page.title));
+  const start = ongoingStart(page, today);
+  if (!start || !start.datesKnown || !(IN_PERSON.test(title) ||
+    IN_PERSON.test((page.lines || []).slice(0, 10).map(line => line.text || "").join(" ")))) return [];
+  const places = [], seen = new Set();
+  const hits = PLACES.map(p => ({ p, index: title.search(p.re) }))
+    .filter(x => x.index >= 0 && (x.p.label.includes(",") || x.p.label === "Singapore" || x.p.label === "Hong Kong"))
+    .sort((a, b) => a.index - b.index);
+  for (const hit of hits) if (!seen.has(hit.p.label)) {
+    seen.add(hit.p.label); places.push(hit.p);
+  }
+  if (places.length < 2) return [];
+  const series = /stamp\s+rall(?:y|ies)/i.test(title) ? "Pokémon GO Stamp Rally" : tidyName(title);
+  return places.map(p => ({
+    name: series + ": " + p.label.split(",")[0],
+    place: p.label, area: p.area, scope: "regional",
+    start: start.start, end: "", datesKnown: true, ongoing: true,
+    url: page.url, source: page.source
+  }));
+}
+
 // One write-up -> one world-events entry, or null when it is not a regional or new event.
 export function fromPage(page, today = new Date().toISOString().slice(0, 10)) {
   const title = seriesName(cleanTitle(page.title));
   const text = (page.lines || []).map(l => l.text).join(" ");
-  const dateText = [...(page.fields?.dates || []), ...(page.lines || []).slice(0, 40).map(l => l.text)].join(" . ");
-  const range = parseDateRange(dateText, +today.slice(0, 4));
+  const datedLines = (page.lines || []).slice(0, 40).map(l => String(l.text || ""));
+  const dateText = [...(page.fields?.dates || []), ...datedLines].join(" . ");
+  // An event's published date range beats a list of individual ticket days.
+  // On official venue pages the DATE section often lists Friday, Saturday and
+  // Sunday separately; parsing only its first two entries silently ends the
+  // entire event on Saturday. Prefer an explicit event-window sentence near
+  // the top of the same article, not later unrelated activity dates.
+  const explicitWindow = datedLines.slice(0, 20).find(line =>
+    line.length <= 280 &&
+    /\b(?:event|wild area|visits|taking place|takes place|held|celebrat)/i.test(line) &&
+    /\b(?:jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\.?\s+\d{1,2}\s*(?:–|—|-|to|through)\s*\d{1,2}\b/i.test(line)
+  );
+  const ongoing = ongoingStart(page, today);
+  const range = ongoing ? null : parseDateRange(explicitWindow || dateText, +today.slice(0, 4));
   const where = placeOf(title, text);
   // A global stream can mention the physical venue it celebrates; its own title takes precedence.
   // Do not turn an online Twitch broadcast into a second in-person stop at that venue.
@@ -103,6 +159,7 @@ export function fromPage(page, today = new Date().toISOString().slice(0, 10)) {
   // No venue found but dated: the structured record carries no location, so it is not venue-bound. It is Global
   // (play from anywhere), whatever its title says. An undated, venue-less announcement stays regional until a place is known.
   if (!where && range) return { name: title, place: "", area: "Worldwide", scope: "global", start: range.start, end: range.end, datesKnown: true, url: page.url, source: page.source };
+  if (ongoing && where) return { name: title, place: where.place, area: where.area, scope: "regional", start: ongoing.start, end: "", datesKnown: ongoing.datesKnown, ongoing: true, url: page.url, source: page.source };
   return { name: title, place: where ? where.place : "", area: where ? where.area : "Worldwide", scope: "regional", start: range ? range.start : "", end: range ? range.end : "", datesKnown: !!range, url: page.url, source: page.source };
 }
 
@@ -158,6 +215,8 @@ export function venueStopsFromPage(page, today = new Date().toISOString().slice(
 }
 // One write-up -> its entries: every stop of a multi-stop event, otherwise the single entry fromPage finds.
 export function entriesFromPage(page, today) {
+  const ongoing = ongoingStopsFromPage(page, today);
+  if (ongoing.length) return ongoing;
   const venues = venueStopsFromPage(page, today);
   if (venues.length) return venues;
   const stops = stopsFromPage(page, today);
@@ -211,6 +270,7 @@ export function mergeWorld(entries, sources) {
     const stableId = typeof e.worldId === "string" && /^w-[a-z0-9-]+$/.test(e.worldId) ? e.worldId : "";
     const hit = out.find(o => {
       if (!similar(o.name, e.name)) return false;
+      if (!!o.ongoing !== !!e.ongoing) return false; // a ticketed day is not the ongoing activity
       if (o.name !== e.name && o.sources.some(x => x.url === src.url)) return false;
       if (o.start && e.start && !(o.start <= (e.end || e.start) && e.start <= (o.end || o.start))) return false;
       // A shared series title/date is not enough to merge two distinct destinations.
@@ -228,6 +288,24 @@ export function mergeWorld(entries, sources) {
       }
       if (!hit.sources.some(s => s.url === src.url)) hit.sources.push(src);
       if (!hit.start && e.start) { hit.start = e.start; hit.end = e.end; hit.datesKnown = true; }
+      else if (hit.start && e.start && hit.datesKnown !== false && e.datesKnown !== false) {
+        // Once place, title and overlapping dates have established the SAME
+        // event, a later source may contain its fuller published date range.
+        // Do not let the first matched single-day ticket/update truncate it.
+        // Accept only plausible, explicitly sourced ranges; the separate
+        // calendar-identity check above still prevents different cities or
+        // non-overlapping occurrences from being joined.
+        const existingEnd = hit.end || hit.start, incomingEnd = e.end || e.start;
+        const plausible = (start, end) => /^20\d{2}-\d{2}-\d{2}$/.test(start) &&
+          /^20\d{2}-\d{2}-\d{2}$/.test(end) &&
+          (Date.parse(end) - Date.parse(start)) / 864e5 >= 0 &&
+          (Date.parse(end) - Date.parse(start)) / 864e5 <= 366;
+        if (plausible(hit.start, existingEnd) && plausible(e.start, incomingEnd)) {
+          hit.start = hit.start < e.start ? hit.start : e.start;
+          hit.end = existingEnd > incomingEnd ? existingEnd : incomingEnd;
+          hit.datesKnown = true;
+        }
+      }
       const identity = dd.same(hit, e);
       if (identity.verdict === "same" && identity.why === "same dates, same series, one place inside the other" && placeDetailScore(e.place) > placeDetailScore(hit.place)) {
         const currentSeries = String(hit.name || "").split(":")[0].trim().toLowerCase();
@@ -236,11 +314,12 @@ export function mergeWorld(entries, sources) {
         hit.place = e.place;
         hit.area = e.area || hit.area;
       } else if (!hit.place && e.place) { hit.place = e.place; hit.area = e.area; }
+      if (hit.ongoing || e.ongoing) { hit.ongoing = true; hit.end = ""; }
       continue;
     }
     const slug = stableId || ("w-" + e.name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 50));
     let id = slug; for (let n = 2; out.some(o => o.id === id); n++) id = slug + "-" + (e.start || n);
-    out.push({ id, name: e.name, place: e.place, area: e.area, scope: e.scope, ...(e.mode ? { mode: e.mode } : {}), start: e.start, end: e.end, datesKnown: e.datesKnown, sources: [src] });
+    out.push({ id, name: e.name, place: e.place, area: e.area, scope: e.scope, ...(e.mode ? { mode: e.mode } : {}), start: e.start, end: e.end, datesKnown: e.datesKnown, ...(e.ongoing ? { ongoing: true } : {}), sources: [src] });
   }
   return out.map(o => ({ ...o, status: o.sources.some(s => s.id === "official") ? "official" : o.sources.length > 1 ? "corroborated" : "single" }));
 }
@@ -272,6 +351,18 @@ export function sameWriteupRulings(world) {
 // Normally for 30 days after it was last seen; an entry whose official page is on data/watch-pages.json (a hand-added tour leg, say)
 // stays until its own end date passes. `watchUrls` is a Set of normalised page URLs (trailing slash, see normUrl).
 export const normUrl = u => String(u || "").trim().toLowerCase().replace(/\/?$/, "/");
+// Match the same official article across language-localised news URLs.
+export function sharedArticleKey(url) {
+  const normal = normUrl(url);
+  try {
+    const u = new URL(normal);
+    if (/^(?:www\.)?pokemongo\.com$/i.test(u.hostname)) {
+      const match = /^\/(?:[a-z]{2}(?:[_-][a-z]{2,5})?\/)?news\/([a-z0-9-]+)\/?$/i.exec(u.pathname);
+      if (match) return "pokemongo-news:" + match[1].toLowerCase();
+    }
+  } catch { /* keep exact URL for unknown sources */ }
+  return normal;
+}
 
 // Curated watch pages must survive the discovery cap, while preserving source order within each group.
 export function prioritizeWatchedPages(pages, watchedUrls = []) {
@@ -314,7 +405,8 @@ export function keepOldWorld(o, { cutoff, today, now = Date.now(), watchUrls = n
   const srcs = o.sources || [];
   if (!srcs.length || !srcs.some(x => /official/i.test(x.name || "") || x.auto) || /this week|news this week/i.test(o.name)) return false;
   if (o.start && (o.end || o.start) < cutoff) return false;
-  if (srcs.some(x => splitUrls.has(normUrl(x.url)))) return false; // its page now yields separate entries: do not bring the old combined one back
+  const splitArticles = new Set([...splitUrls].map(sharedArticleKey));
+  if (srcs.some(x => splitArticles.has(sharedArticleKey(x.url)))) return false; // includes translated country-only aliases
   if (now - Date.parse(o.seen || 0) < 30 * 864e5) return true;
   return !!o.start && (o.end || o.start) >= today && srcs.some(x => /official/i.test(x.name || "") && watchUrls.has(normUrl(x.url)));
 }
@@ -324,7 +416,15 @@ export function keepOldWorld(o, { cutoff, today, now = Date.now(), watchUrls = n
 export function collapseWorld(world, rules = null) {
   const rank = e => (e.sources || []).length * 10 + (e.place ? 3 : 0) + (e.status === "official" ? 5 : 0) - String(e.id || "").length / 100;
   const dated = world.filter(w => w.start), merged = [], drop = new Set();
-  for (const g of dd.groups(dated, rules, rank)) {
+  // Do not collapse an ongoing venue activity with its finite ticketed counterpart.
+  const lifecyclePairs = [];
+  for (let i = 0; i < dated.length; i++) for (let j = i + 1; j < dated.length; j++) {
+    if (!!dated[i].ongoing !== !!dated[j].ongoing) lifecyclePairs.push([dated[i].id, dated[j].id]);
+  }
+  const safeRules = lifecyclePairs.length
+    ? { ...(rules || {}), different: [...((rules || {}).different || []), ...lifecyclePairs] }
+    : rules;
+  for (const g of dd.groups(dated, safeRules, rank)) {
     for (const { event: d, why } of g.dupes) {
       const k = g.keep;
       if (d.mode) {
@@ -341,6 +441,7 @@ export function collapseWorld(world, rules = null) {
       const span = e => (Date.parse(e.end || e.start) - Date.parse(e.start)) / 864e5;
       if (span(k) > 3 * 365 && span(d) <= 3 * 365) k.end = d.end; // a typo year (2076) on one copy
       if (k.scope === "global" && d.scope === "regional" && d.place) { /* keep the keeper's scope */ }
+      if (k.ongoing || d.ongoing) { k.ongoing = true; k.end = ""; }
       drop.add(d); merged.push({ kept: k.id, dropped: d.id, why });
     }
   }

@@ -28,10 +28,10 @@ class El {
   closest(sel) { const m = /^\[([\w-]+)\]$/.exec(sel); return m && this.hasAttribute(m[1]) ? this : null; }
 }
 
-function setup({ events, info }) {
+function setup({ events, info, queue = {}, decisions = {} }) {
   const buttons = [], docListeners = {}, timers = [];
   let live = null, fetches = 0;
-  const net = { info, failMs: -1 };                       // what /event-info.json answers: object | "500" | "throw" | "badjson"
+  const net = { info, queue, decisions, failMs: -1 };                       // what /event-info.json answers: object | "500" | "throw" | "badjson"
   const document = {
     hidden: false, body: { style: {}, appendChild: (c) => { if (c.id === "iglive") live = c; return c; } },
     querySelectorAll: () => buttons.filter((b) => b.hasAttribute("data-infographic") || b.hasAttribute("data-igcard")),
@@ -46,6 +46,8 @@ function setup({ events, info }) {
       if (net.info === "badjson") return Promise.resolve({ ok: true, text: () => Promise.resolve("{bad") });
       return Promise.resolve({ ok: true, text: () => Promise.resolve(JSON.stringify(net.info)) });
     }
+    if (/infographic-queue/.test(url)) return Promise.resolve({ ok: true, text: () => Promise.resolve(JSON.stringify(net.queue)) });
+    if (/\/api\/ig-decisions/.test(url)) return Promise.resolve({ ok: true, text: () => Promise.resolve(JSON.stringify(net.decisions)) });
     return Promise.resolve({ ok: true, text: () => Promise.resolve("{}") });
   };
   const X = { events: () => events, raidSlots: () => [], kindOf: () => ["Event", "#000", "#fff"], whenText: () => "", countdown: () => "" };
@@ -57,7 +59,7 @@ function setup({ events, info }) {
   const runTimers = (ms) => timers.forEach((t) => { if (!t.dead && !t.ran && (ms == null || t.ms === ms)) { t.ran = true; t.f(); } });
   vm.runInContext(code, ctx);
   const card = (id) => { const b = new El("button"); b.setAttribute("data-igcard", id); buttons.push(b); return b; };
-  return { card, docListeners, timers, runTimers, net, get live() { return live; }, get fetches() { return fetches; }, click: (b) => docListeners.click({ target: b, preventDefault() {}, stopPropagation() {} }), refresh: () => docListeners.visibilitychange() };
+  return { card, api: window.GOINFOGRAPHIC, docListeners, timers, runTimers, net, get live() { return live; }, get fetches() { return fetches; }, click: (b) => docListeners.click({ target: b, preventDefault() {}, stopPropagation() {} }), refresh: () => docListeners.visibilitychange() };
 }
 const settle = async () => { for (let i = 0; i < 12; i++) await new Promise((r) => setImmediate(r)); };
 const day = (n) => new Date(Date.UTC(2026, 10, n));
@@ -324,4 +326,26 @@ test("two buttons: A's re-tap leaves B's current message in the region", async (
   assert.equal(t.live.textContent, NOPE, "A's re-tap did not clear B's message");
   await settle();
   assert.equal(t.live.textContent, NOPE, "A's found path did not clear B's message");
+});
+
+
+test("Event Details shortcut availability requires a published or approved poster", async () => {
+  const events = [{ id: "a", name: "Alpha", start: day(1), end: day(2) },
+                  { id: "b", name: "Beta", start: day(3), end: day(4) }];
+  const t = setup({ events, info: withPic });
+  assert.equal(await t.api.available("a"), true, "published poster");
+  assert.equal(await t.api.available("b"), false, "missing poster");
+  assert.equal(await t.api.available("nonexistent"), false, "unknown event never gets a shortcut");
+  const direct = setup({ events: [{ ...events[0], infographicUrl: "https://example.com/poster.png" }], info: { events: {} } });
+  assert.equal(await direct.api.available("a"), true, "trusted direct poster");
+  const bad = setup({ events: [{ ...events[0], infographicUrl: "javascript:alert(1)" }], info: { events: {} } });
+  assert.equal(await bad.api.available("a"), false, "unsafe URL cannot activate shortcut");
+  const pending = setup({ events, info: { events: {} },
+    queue: { items: [{ id: "img-1", image: "https://example.com/pending.png", creator: "Artist" }] },
+    decisions: { decisions: [{ id: "img-1", eventId: "a", status: "pending" }] } });
+  assert.equal(await pending.api.available("a"), false, "unapproved candidate hidden");
+  const approved = setup({ events, info: { events: {} },
+    queue: { items: [{ id: "img-1", image: "https://example.com/approved.png", creator: "Artist" }] },
+    decisions: { decisions: [{ id: "img-1", eventId: "a", status: "approved" }] } });
+  assert.equal(await approved.api.available("a"), true, "approved poster visible before scheduled publish");
 });

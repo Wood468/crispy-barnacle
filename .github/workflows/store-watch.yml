@@ -35,6 +35,10 @@ jobs:
           python -m playwright install --with-deps chromium
       - name: Test regional price safeguards
         run: node --test test/store-au-prices.test.mjs test/regional-prices.test.cjs test/regional-observations.test.mjs
+      - name: Audit known publisher-only listings and missing regional prices
+        run: |
+          node --test test/store-catalogue-audit.test.mjs
+          node scripts/store-catalogue-audit.mjs
       - name: Read the store
         run: python scripts/store_snapshot.py /tmp/store-snapshot.json
       - name: Refresh verified Australian catalogue when snapshot explicitly uses A$
@@ -52,6 +56,14 @@ jobs:
           TELEGRAM_TOPIC_SYSTEM: ${{ secrets.TELEGRAM_TOPIC_SYSTEM || secrets.TELEGRAM_TOPICS_SYSTEM }}
           DRY_RUN: ${{ github.event.inputs.dry_run || 'false' }}
         run: node scripts/store-watch.mjs /tmp/store-snapshot.json
+      # Read only: inspect ALL newly fetched purchase SKUs, including standalone
+      # items that are intentionally absent from the filtered public Store log.
+      # Never approve, publish or substitute publisher image candidates.
+      - name: Audit Store product artwork candidates (report only)
+        continue-on-error: true
+        run: |
+          node --test test/store-artwork-coverage.test.mjs
+          node scripts/store-artwork-coverage.mjs /tmp/store-snapshot.json
       - name: Remember what was seen
         shell: bash
         run: |

@@ -159,9 +159,14 @@ test("infographic lookup: genuine title matches still work with the event list g
   // The live "leekduck:" copy is a separate card with the same dates: it does not block the curated card.
   const live = { id: "leekduck:halloween-2026-part-1", name: "Pokémon GO Halloween 2026 Part I", start: h1.start, end: h1.end };
   assert.equal(dd.findEventInfo(h1, info, [h1, live]).infographics.length, info["leekduck:halloween-2026-part-1"].infographics.length);
-  // Wild Area Global pools its four pictures through the alias; no list needed.
+  // The canonical event's approved poster collection grows as new infographics arrive.
+  // An alias must resolve all of them, not a stale fixed count.
   const wag = { id: "leekduck:pokemon-go-wild-area-2026-global", aliasIds: ["cur:wag"], name: "Pokémon GO Wild Area 2026: Global", start: new Date("2026-11-20"), end: new Date("2026-11-22") };
-  assert.equal(dd.findEventInfo(wag, info, [wag]).infographics.length, 4);
+  const approvedWildAreaPosters = info["cur:wag"].infographics;
+  assert.ok(approvedWildAreaPosters.length >= 4, "canonical Wild Area artwork remains present");
+  assert.equal(new Set(approvedWildAreaPosters.map(p => p.url)).size, approvedWildAreaPosters.length, "curated posters must be distinct");
+  assert.ok(approvedWildAreaPosters.every(p => p.source === "G47IX" && /^\/infographics\/g47ix\//.test(p.url)), "approved Wild Area poster provenance");
+  assert.equal(dd.findEventInfo(wag, info, [wag]).infographics.length, approvedWildAreaPosters.length);
 });
 
 test("regional infographic data stays linked to its source event", () => {
@@ -299,9 +304,9 @@ test("dated entries: the real event-info.json", () => {
   const smr1 = card("cur:smr1", "Super Mega Raid Day", "2026-10-31"), smr2 = card("cur:smr2", "Super Mega Raid Day", "2026-11-28");
   for (const others of [[], [smr2], [smr1, smr2]]) assert.equal(dd.findEventInfo(smr2, info, others), null);
   assert.equal(dd.findEventInfo(smr1, info, [smr2]).infographics.length, info.smr1.infographics.length);
-  // Wild Area Global still pools its four pictures, and Halloween Part 1 still finds the live entry.
+  // Wild Area Global retains every canonical curated poster as source data changes.
   const wag = { id: "leekduck:pokemon-go-wild-area-2026-global", aliasIds: ["cur:wag"], name: "Pokémon GO Wild Area 2026: Global", start: new Date("2026-11-14"), end: new Date("2026-11-15") };
-  assert.equal(dd.findEventInfo(wag, info, [wag]).infographics.length, 4);
+  assert.equal(dd.findEventInfo(wag, info, [wag]).infographics.length, info["cur:wag"].infographics.length);
   assert.equal(pics({ id: "cur:halloween1", name: "Halloween 2026, Part One", start: new Date("2026-10-27T10:00"), end: new Date("2026-11-01T10:00") }), info["leekduck:halloween-2026-part-1"].infographics.length);
   // Every date written is well formed, ordered, and says where it came from.
   for (const [k, e] of Object.entries(info)) {

@@ -16,7 +16,7 @@
   }
   function now() { return new Date(); }
   function safeUrl(u) { return typeof u === 'string' && !(window.GOLIB && window.GOLIB.isPrivateLink(u)) && (/^https:\/\//.test(u) || /^\/img\/ext\/[\w.-]+$/.test(u)) ? u : ''; }
-  function isOfficialUrl(u) { try { var h = new URL(String(u || '')).hostname.toLowerCase(); return h === 'pokemongo.com' || /\.pokemongo\.com$/.test(h); } catch (e) { return false; } }
+  function isOfficialUrl(u) { if (typeof u !== 'string') return false; try { var parsed = new URL(u), h = parsed.hostname.toLowerCase(); return parsed.protocol === 'https:' && !parsed.username && !parsed.password && (h === 'pokemongo.com' || /\.pokemongo\.com$/.test(h)); } catch (e) { return false; } }
 
   /* Raid hundo CP reference data (PvPoke Game Master, MIT); only exact known species/forms are labelled. */
   var CP_STATS = {}, CPMS = [], CP_READY = false;
@@ -56,8 +56,10 @@
   /* One tidy block of CP numbers for a card: the boss(es) by name when there are several. */
   function cpRows(ev) {
     var seen = {}, rows = [];
-    ev.featured.forEach(function (f) {
-      var k = String(f.name).toLowerCase(); if (seen[k]) return; seen[k] = 1;
+    var featured = (ev && Array.isArray(ev.featured)) ? ev.featured : [];
+    featured.forEach(function (f) {
+      if (!f || typeof f.name !== 'string') return;
+      var k = f.name.toLowerCase(); if (seen[k]) return; seen[k] = 1;
       var l = hundoLabels(ev, f); if (l) rows.push({ name: f.name, html: l });
     });
     if (!rows.length) return '';
@@ -180,8 +182,8 @@
       out.push(mkEvent({ id: 'cur:' + x.id, detailIds: x.detailIds || [], name: x.t, kind: scopedKind(k, x.t, x.scope, x.region || x.location, x.attendance === 'in-person' || x.inPerson === true || tags.indexOf('In person') > -1), img: x.img || '', artPageUrl: x.artSourceUrl || '', s: x.s, e: x.e, utc: x.utc === true || x.tzMode === 'utc', region: x.region || x.location || '', scope: x.scope || '', tags: signalTags({ name:x.t, kind:k, tags:tags, notes:x.p, bonuses:x.bonuses, featured:(x.art||[]).map(function(a){return typeof a==='string'?{name:a}:a;}) }), notes: x.p, bonuses: x.bonuses,
         featured: (x.art || []).map(function (a) { a = typeof a === 'string' ? { n: a } : a; return { name: a.n, costume: !!a.costume, shiny: !!a.shiny, label: a.label, asset: a.asset, role: 'featured' }; }),
         highlights: Array.isArray(x.highlights) ? x.highlights : [],
-        status: x.status || (x.sourceUrl ? 'official_confirmed' : 'community_reported'),
-        source: x.source || (x.sourceUrl ? 'Official Pokémon GO announcement' : 'Curated community calendar'),
+        status: x.status || (isOfficialUrl(safeUrl(x.sourceUrl)) ? 'official_confirmed' : 'community_reported'),
+        source: x.source || (isOfficialUrl(safeUrl(x.sourceUrl)) ? 'Official Pokémon GO announcement' : 'Curated community calendar'),
         link: x.sourceUrl || '', infographicUrl: x.infographicUrl || x.infographic || '' }));
     });
     (D.spotlight || []).forEach(function (x) {
@@ -508,10 +510,34 @@
     var id = showdownId(name); if (!id) return '';
     return '<img class="dyn-ani" alt="" loading="lazy" decoding="async" src="https://play.pokemonshowdown.com/sprites/ani/' + id + '.gif" data-err="rm">';
   }
+  /* Form identity belongs to the featured Pokémon, not every Pokémon on an
+     event whose title mentions a Max form. A title may source an otherwise
+     unprefixed species only if it actually names that species. */
+  function maxArtKind(ev, f) {
+    var name = String(f && f.name || '').trim(), title = String(ev && ev.name || '');
+    if (/^Gigantamax\s/i.test(name)) return 'gigantamax';
+    if (/^Dynamax\s/i.test(name)) return 'dynamax';
+    if (!name) return '';
+    var escaped = name.replace(/[^a-z0-9]/gi, function(c) { return '\\' + c; });
+    if (new RegExp('(?:^|\\W)Gigantamax\\s+' + escaped + '(?=$|\\W)', 'i').test(title)) return 'gigantamax';
+    /* An unnamed single-boss Gigantamax Raid Day/Max Battle is explicit
+       enough to identify its sole boss. Never stretch this to a research
+       activity or a multi-Pokémon featured gallery. */
+    if (ev && ev.kind === 'max' && Array.isArray(ev.featured) && ev.featured.length === 1 &&
+        /\bGigantamax\b/i.test(title) && /\b(?:Raid Day|Max Battles?|Max Monday)\b/i.test(title) &&
+        !/\bResearch\b/i.test(title)) return 'gigantamax';
+    var isNamed = new RegExp('(?:^|\\W)' + escaped + '(?=$|\\W)', 'i').test(title);
+    if (isNamed && /\bDynamax\b/i.test(title)) return 'dynamax';
+    /* Max Battle/Max Monday records may only name their boss in the feed;
+       preserve an existing Dynamax cue, but never infer one for unrelated
+       Pokémon in a headline that explicitly advertises Gigantamax. */
+    if (ev && ev.kind === 'max' && !/\bGigantamax\b/i.test(title)) return 'dynamax';
+    return '';
+  }
   function monArt(ev, f, cls) {
     var isShadow = hasTag(ev, 'Shadow') || /^Shadow\s/i.test(f.name);
-    var isGmax = /^Gigantamax\s/i.test(f.name) || (/gigantamax/i.test(ev.name || '') && !/dynamax.*gigantamax/i.test(ev.name || ''));
-    var isMax = ev.kind === 'max' || /^(Dynamax|Gigantamax)\s/i.test(f.name) || /\b(dynamax|gigantamax)\b/i.test(ev.name || '');
+    var formKind = maxArtKind(ev, f);
+    var isGmax = formKind === 'gigantamax', isMax = !!formKind;
     var spriteName = isGmax && !/^Gigantamax\s/i.test(f.name) ? 'Gigantamax ' + f.name : f.name;
     var sprite = art({ n: spriteName, costume: f.costume, label: f.label, asset: f.asset, shiny: f.shiny, shadow: isShadow, dynamax: isMax }, cls || 'ea');
     var inc = incenseNames(ev)[String(f.name).toLowerCase()] ? INC_IMG : '';
@@ -941,10 +967,11 @@
       if (!e.start) return { undated: true, catalogueId:e.id, name: e.name, place: e.place, area: e.area, scope: e.scope, mode: e.mode || '', src: src };
       var startValue = String(e.start), startIsDateOnly = /^\d{4}-\d{2}-\d{2}$/.test(startValue);
       /* A date-only start can safely mean the whole local calendar day. A timed event needs an explicit end. */
-      if (!e.end && !startIsDateOnly) return { undated: true, catalogueId:e.id, name: e.name, place: e.place, area: e.area, scope: e.scope, mode: e.mode || '', src: src };
-      var s0 = worldDate(startValue, false), e0 = worldDate(String(e.end || e.start), !!e.end || startIsDateOnly);
+      if (!e.end && !startIsDateOnly && !e.ongoing) return { undated: true, catalogueId:e.id, name: e.name, place: e.place, area: e.area, scope: e.scope, mode: e.mode || '', src: src };
+      /* Internal validity horizon only. The source-backed record keeps end:"", and every visible date label uses "ongoing" rather than this sentinel. */
+      var s0 = worldDate(startValue, false), e0 = e.ongoing && !e.end ? new Date('9999-12-31T23:59:59Z') : worldDate(String(e.end || e.start), !!e.end || startIsDateOnly);
       if (!Number.isFinite(s0.getTime()) || !Number.isFinite(e0.getTime()) || e0 < s0) return { undated: true, catalogueId:e.id, name: e.name, place: e.place, area: e.area, scope: e.scope, mode: e.mode || '', src: src };
-      return { id: e.id, catalogueId:e.id, name: e.name, place: e.place || '', area: LIB.isGlobalEvent(e) ? 'In the game' : e.area, scope: LIB.isGlobalEvent(e) ? 'global' : (e.scope || 'regional'), mode: e.mode || '', start: s0, end: e0, sourceStart: startValue, sourceEnd: String(e.end || e.start), long: (e0 - s0) > 14 * 864e5, src: src };
+      return { id: e.id, catalogueId:e.id, name: e.name, place: e.place || '', area: LIB.isGlobalEvent(e) ? 'In the game' : e.area, scope: LIB.isGlobalEvent(e) ? 'global' : (e.scope || 'regional'), mode: e.mode || '', start: s0, end: e0, sourceStart: startValue, sourceEnd: e.ongoing && !e.end ? '' : String(e.end || e.start), ongoing: !!(e.ongoing && !e.end), long: !!e.ongoing || (e0 - s0) > 14 * 864e5, src: src };
     });
     /* An announcement with no dates of its own (e.g. Gigantamax Duraludon at the Sendai Wild Area) takes the dates of the
        dated event at the same place whose name it shares a distinctive word with. */
@@ -1010,7 +1037,7 @@
   function agendaInner(it, isReg) {
     if (isReg) {
       var mult = it.end.getTime() - it.start.getTime() > 864e5;
-      var when = it.travel ? travelDateText(it) : (mult ? fmtRangeD(it.start, it.end) : fmtD(it.start));
+      var when = it.ongoing ? 'Ongoing · no announced end' : it.travel ? travelDateText(it) : (mult ? fmtRangeD(it.start, it.end) : fmtD(it.start));
       return '<a class="agr reg"'+catalogueDetailAttr(it)+' href="' + esc(it.src.url) + '" target="_blank" rel="noopener noreferrer" style="--k:' + REGCOL + '"><i></i><span class="agt"><b>' + esc(it.name) + '</b><small>' + (it.place ? esc(it.place) + ' · ' : '') + esc(when) + '</small></span><em>' + (regInPerson(it) ? 'In person · ' : '') + esc(it.area) + '</em></a>';
     }
     var k = kindOf(it);
@@ -1027,6 +1054,7 @@
     return day + ' ' + MON[month] + ' ' + year;
   }
   function travelDateText(it) {
+    if (it.ongoing) return 'Ongoing · no announced end';
     var a = travelDateLabel(it.sourceStart), b = travelDateLabel(it.sourceEnd);
     if (a && b) return a === b ? a : a + ' – ' + b;
     return it.start && it.end ? (fmtD(it.start) === fmtD(it.end) ? fmtD(it.start) : fmtD(it.start) + ' – ' + fmtD(it.end)) : 'Dates listed by source';
@@ -1035,7 +1063,7 @@
     var host = $('travel-results'); if (!host) return;
     /* Only real-world regional listings belong in destination plans; global and regional in-game items stay in the schedule, not Travel. */
     var candidates = REG.filter(function (x) {
-      return x.end > now() && LIB.isInPersonWorldEvent(x) && x.place && x.sourceStart && x.sourceEnd &&
+      return x.end > now() && LIB.isInPersonWorldEvent(x) && x.place && x.sourceStart && (x.ongoing || x.sourceEnd) &&
         x.src && String(x.src.url || '').indexOf('https://') === 0 && !/^dated:/.test(String(x.id || ''));
     });
     var places = {};
@@ -1179,6 +1207,28 @@
       var txt = Array.isArray(cp) ? cp[0].toLocaleString('en-AU') + '–' + cp[1].toLocaleString('en-AU') : cp.toLocaleString('en-AU');
       return '<span class="rc-cp" title="' + esc(label) + '">CP ' + esc(txt) + '</span>';
     }
+
+    /* A verified source CP pair takes precedence; when the source has no CP,
+       reuse our existing Game Master 15/15/15 calculation. Never fabricate a
+       boosted value, change the catch form or claim an actual weather boost. */
+    function raidCatchValues(cp,boss) {
+      var p=hundoPair({kind:'raid'}, {name:boss});
+      var good=function(n){return Number.isSafeInteger(n)&&n>=10&&n<=10000;};
+      if(Array.isArray(cp)&&cp.length===2&&good(cp[0])&&good(cp[1])&&cp[1]>=cp[0])
+        return {normal:cp[0],boosted:cp[1],source:'published'};
+      if(good(cp))return {normal:cp,boosted:p&&p.n===cp?p.b:null,source:'published'};
+      return p?{normal:p.n,boosted:p.b,source:'game-master'}:null;
+    }
+    function raidTierCorner(tier) {
+      var label=String(tier||'').trim();
+      if(!/^(?:[1-9]★|Mega|Primal|Elite|Shadow(?: [1-9]★)?)$/.test(label))return '';
+      var readable=label.replace(/([1-9])★/g,'$1 star');
+      return '<span class="rc-tier rc-tier-corner" aria-label="'+esc(readable+' raid tier')+'"><img src="/ico/g/raid.webp" alt="" loading="lazy" decoding="async" width="12" height="12">'+esc(label)+'</span>';
+    }
+    function raidCatchChips(cp,boss) {
+      var p=raidCatchValues(cp,boss);if(!p)return '';
+      return '<span class="rc-iv-catch" role="text" aria-label="'+esc('100% IV raid catch CP '+p.normal+(p.boosted?', weather boosted '+p.boosted:''))+'"><span class="rc-cp rc-perfect" title="Perfect 15/15/15 raid catch at Level 20"><small>100% IV</small> '+p.normal.toLocaleString('en-AU')+'</span>'+(p.boosted?'<span class="rc-cp rc-weather" title="Possible weather-boosted perfect 15/15/15 raid catch at Level 25"><small>Weather</small> '+p.boosted.toLocaleString('en-AU')+'</span>':'')+'</span>';
+    }
     function eventLink(name) {
       var model = name && window.GOEventRegistry && GOEventRegistry.events().filter(function (m) { return m && m.title && GOLIB.norm(m.title) === GOLIB.norm(name); })[0];
       var ev = model && GOEventRegistry.display(model);
@@ -1233,8 +1283,8 @@
         var shareWindow = shareValue && !/,\s*to\s/i.test(String(shareValue)) ? { start: r.s || '', end: r.e || '' } : { start: '', end: '' };
         var share = '<button type="button" class="rc-info rc-share" data-raid-share data-raid-boss="' + esc(n) + '" data-raid-kind="' + esc(label) + '" data-raid-start="' + esc(shareWindow.start) + '" data-raid-end="' + esc(shareWindow.end) + '" aria-label="Share ' + esc(n) + ' ' + esc(label) + ' raid details">↗ Share</button>';
         var cpv = r.cp && r.cp[n], shinyOk = Array.isArray(r.shiny) && r.shiny.indexOf(n) >= 0;
-        var chips = cpChip(cpv, 'Level 20, weather boosted at level 25') + (shinyOk ? '<span class="rc-chip rc-shiny">✦ Shiny available</span>' : '');
-        return '<div class="rc" data-boss="' + esc(n) + '"' + (label === '5★' || label === 'Mega' ? ' data-guide="' + esc(n) + '"' : '') + '><div class="rc-form">' + art(n, 'ea') + '<div class="rc-txt"><span class="rl"><i class="rc-tier">' + label + '</i></span><b>' + esc(n) + '</b>' +
+        var chips = raidCatchChips(cpv, n) + (shinyOk ? '<span class="rc-chip rc-shiny">✦ Shiny available</span>' : '');
+        return '<div class="rc" data-boss="' + esc(n) + '"' + (label === '5★' || label === 'Mega' ? ' data-guide="' + esc(n) + '"' : '') + '><div class="rc-form"><span class="rc-raid-art">' + art(n, 'ea') + raidTierCorner(label) + '</span><div class="rc-txt"><b>' + esc(n) + '</b>' +
           (f ? '<span class="rtype">' + f.types.map(function (t) { return tico(t); }).join('') + '</span><span class="rweak" title="Weak to">▾ ' + f.weak.map(function (t) { return tico(t); }).join('') + '</span>' : '') + (chips ? '<span class="rc-meta">' + chips + '</span>' : '') + '</div></div>' + ib + share + '</div>';
       }).join('');
     }
@@ -1264,18 +1314,40 @@
         var label=active?'Current raid rotation':offset===0?'Next raid rotation · '+fmtD(pd(r.s))+', '+fmtT(pd(r.s)):pd(r.s)<=a?'At start of week':upcoming;
         return {r:r,label:label,cls:active?'rw-current':'rw-next'};
       });
-      if (!rotationRows.length) body += '<p class="empty">No raid rotation published for this week yet.</p>';
+      var hasEventRaidDays=(D.events||[]).some(function(ev){return (ev.raidDays||[]).some(function(slot){var start=pd(slot.date+'T00:00');return start<end&&addDays(start,1)>a&&addDays(start,1)>t;});});
+      if (!rotationRows.length && !hasEventRaidDays) body += '<p class="empty">No raid rotation published for this week yet.</p>';
       rotationRows.forEach(function (row) {
         var r = row.r;
         body += '<div class="rw-raid ' + row.cls + '"><span class="rw-label">' + esc(row.label) + '</span><p class="rw-window">' + esc(fmtD(pd(r.s)) + ', ' + fmtT(pd(r.s)) + ' – ' + fmtD(pd(r.e)) + ', ' + fmtT(pd(r.e))) + ' · local time</p>' + '<div class="rw-rel">' + windowChip(+pd(r.s), +pd(r.e)) + eventLink(r.event) + '</div>' + raidSourceLink(r) + '<div class="rcs">' +
           cell('5★', r.five, r) + cell('Mega', r.mega, r) + cell('Shadow', String(r.shadow || '').replace(/, to .*/, ''), r) + '</div>' + lowTier(r) + '<p class="evc-when">Raid Hour: ' + esc(r.rh || 'Not listed') + '</p></div>';
+      });
+      // Event-specific raid days are not ordinary continuous rotations. Keep each
+      // published day's five-star raids and Max Battles visible in Battle.
+      (D.events || []).forEach(function(event){
+        if(!Array.isArray(event.raidDays))return;
+        event.raidDays.forEach(function(slot){
+          var start=pd(slot.date+'T00:00'), finish=addDays(start,1);
+          if(!(start<end&&finish>a&&finish>t))return;
+          var source=/^https:\/\/(?:pokemongo\.com|www\.pokemongo\.com)\//.test(event.sourceUrl||'')
+            ? '<a class="rw-source" href="'+esc(event.sourceUrl)+'" target="_blank" rel="noopener noreferrer">Official event source ↗</a>':'';
+          var raidRows=(slot.five||[]).map(function(name){
+            return cell('5★',name,{s:slot.date+'T00:00',e:slot.date+'T23:59',five:name});
+          }).join('');
+          var maxRows=(slot.max||[]).map(function(name){
+            return '<div class="rw-max-pokemon" data-max-boss="'+esc(name)+'">'+monArt({kind:'max',tags:[],name:''},{name:name.replace(/^(?:Dynamax|Gigantamax)\s+/i,'')},'ea')+'<div class="rw-max-txt"><b>'+esc(name)+'</b><small>Event Max Battle</small></div></div>';
+          }).join('');
+          body+='<div class="rw-raid rw-event-day" data-event-raid-day="'+esc(slot.date)+'"><span class="rw-label">'+esc(event.t)+' · '+esc(fmtD(start))+'</span>'+
+            '<p class="rw-window">Event-specific schedule · local date</p><div class="rw-rel">'+eventLink(event.t)+'</div>'+source+
+            (raidRows?'<div class="rcs">'+raidRows+'</div>':'')+
+            (maxRows?'<div class="rw-max"><span class="rw-label">Max Battles</span>'+maxRows+'</div>':'')+'</div>';
+        });
       });
       body += battles.length ? battles.map(function(mb){
         var label='Max Battle rotation';
         return '<div class="rw-max"><span class="rw-label">'+label+'</span><p class="rw-window">'+esc(fmtD(pd(mb[0]+'T12:00'))+' – '+fmtD(pd(mb[1]+'T12:00')))+' · local dates</p><div class="rw-max-pokemon">'+monArt({kind:'max',tags:[],name:''},{name:mb[2]},'ea')+'<div><b>'+esc(mb[2])+'</b><small>Featured at Power Spots</small></div></div>'+(civil(pd(mb[0]+'T12:00')).weekday===1?'<p class="muted">Max Monday spotlight · '+esc(fmtD(pd(mb[0]+'T12:00')))+' · 6 am–9 pm local time</p>':'')+'</div>';
       }).join('') : '';
       var related=maxEvents(a,end);
-      if(!battles.length)body+=eventMaxRoster(related);
+      if(!battles.length){var publishedMaxRoster=eventMaxRoster(related);if(!hasEventRaidDays||publishedMaxRoster.indexOf('rw-empty')===-1)body+=publishedMaxRoster;}
       if(related.length)body+='<section class="rw-event-links"><h3>Max Battle events</h3>'+related.map(function(event){return '<button type="button" class="rw-max-event" data-open="'+esc(event.id)+'"><b>'+esc(event.name)+'</b><span>'+esc(timeMeta(event))+'</span>'+(event.region?'<small>'+esc(event.region)+'</small>':'')+'</button>';}).join('')+'</section>';
       return '<article class="rotc rw-card"><div class="rw-week-head"><span class="kind">' + esc(offset === 0 ? 'This week' : 'Week of ' + fmtD(a)) + '</span><b>' + esc(range(a,b)) + '</b></div>' + body + '</article>';
     }
@@ -1283,7 +1355,7 @@
     var offsets = rotWeekTab === 'this' ? [0] : rotWeekTab === 'next' ? [1] : rotWeekTab === 'following' ? [2] : [3,4,5];
     var knownOffsets = offsets.filter(function(off){
       var a = addDay(monday, off * 7), end = addDay(a, 7);
-      return weekRotations(a,end).length || maxEvents(a,end).length || max.some(function(m){ return m[0] < key(end) && m[1] >= key(a); });
+      return weekRotations(a,end).length || maxEvents(a,end).length || (D.events||[]).some(function(ev){return (ev.raidDays||[]).some(function(slot){var day=pd(slot.date+'T00:00');return day<end&&addDays(day,1)>a&&addDays(day,1)>t;});}) || max.some(function(m){ return m[0] < key(end) && m[1] >= key(a); });
     });
     var tabs = '<div class="rw-tabs" role="tablist" aria-label="Rotation week">' + labels.map(function(x){
       var selected = rotWeekTab === x.id;
@@ -1351,7 +1423,7 @@
   function renderCoverage() {
     var tab = $('tab-dex'); if (!tab || !Object.keys(DEXGEN).length) return;
     var host = $('gencov');
-    if (!host) { host = document.createElement('div'); host.id = 'gencov'; host.className = 'gencov'; tab.insertBefore(host, tab.firstChild); host.addEventListener('click', function (e) { var b = e.target.closest('[data-gen]'); if (!b) return; setGenConfirmed(+b.dataset.gen, b.getAttribute('aria-pressed') !== 'true'); renderCoverage(); renderAll(); if (window.GO && GO.refreshDex) GO.refreshDex(); }); }
+    if (!host) { host = document.createElement('div'); host.id = 'gencov'; host.className = 'gencov'; var summary=tab.querySelector('.prog'); if(summary&&summary.parentElement===tab)summary.insertAdjacentElement('afterend',host); else tab.insertBefore(host,tab.firstChild); host.addEventListener('click', function (e) { var b = e.target.closest('[data-gen]'); if (!b) return; setGenConfirmed(+b.dataset.gen, b.getAttribute('aria-pressed') !== 'true'); renderCoverage(); renderAll(); if (window.GO && GO.refreshDex) GO.refreshDex(); }); }
     var d = marks(), own = (d.m && d.m.own) || {}, gens = {}, total = 0, owned = 0, conf = [], auto = [];
     Object.keys(DEXGEN).forEach(function (id) { var g = DEXGEN[id]; gens[g] = (gens[g] || 0) + 1; if (genConfirmed(g)) { total++; if (own[id]) owned++; } });
     Object.keys(gens).sort(function (a, b) { return a - b; }).forEach(function (g) { if (genConfirmed(+g)) { conf.push(g); if (genAutoComplete(+g) && usGet('pref:gen:' + g) !== true) auto.push(g); } });
@@ -2041,9 +2113,12 @@ function renderHomeBrief(t) {
   var T1 = window.GOTODAY, TL = window.GOTODAYLOGIC;
   function t1Storage() { try { return window.localStorage; } catch (e) { return null; } }
   function t1Done() { var s = t1Storage(); return s ? TL.readDone(s) : {}; }
+  function t1Hidden() { var s = t1Storage(); return s ? TL.readHidden(s) : {}; }
   function t1IsDone(map, id, start) { return TL.isDone(map, id, start); }
+  function t1IsHidden(map, id, start) { return TL.isHiddenToday(map, id, start); }
   /* Explicit boosts only: a boosted-shiny highlight, a label that says the odds are boosted, or boostedShiny === true. Ordinary shiny availability is never promoted. */
   function t1BoostRecords(t) {
+    var hide = t1Hidden();
     var live = [], upcoming = [], seen = Object.create(null), horizon = addDays(startOfDay(t), 7);
     function add(list, ev, name, artItem, kindKey) {
       name = String(name || '').replace(/\s+/g, ' ').trim();
@@ -2055,7 +2130,7 @@ function renderHomeBrief(t) {
     }
     EV.forEach(function (ev) {
       var ph = phase(ev, t);
-      if (ph === 'ended' || ev.long || kindHidden(ev.kind) || isHidden(ev.id) || !announced(ev)) return;
+      if (ph === 'ended' || ev.long || kindHidden(ev.kind) || isHidden(ev.id) || t1IsHidden(hide, ev.id, ev.start) || !announced(ev)) return;
       if (ph === 'soon' && ev.start >= horizon) return;
       var target = ph === 'live' ? live : upcoming, kindKey = ph === 'live' ? 'l' : 'u';
       (ev.highlights || []).forEach(function (h) {
@@ -2074,15 +2149,16 @@ function renderHomeBrief(t) {
   function t1Overseas(place) { return !!place && !/australia|melbourne|victoria|sydney|brisbane|perth|adelaide/i.test(place); }
   function t1PlaceKey(place) { return String(place || '').toLowerCase().split(/[,(]/)[0].trim(); }
   function t1Ctx(t) {
-    var done = t1Done(), tn = +t, soonEnd = tn + 864e5, weekEnd = tn + 7 * 864e5;
+    var done = t1Done(), hide = t1Hidden(), tn = +t, soonEnd = tn + 864e5, weekEnd = tn + 7 * 864e5;
     function visible(ev) { return announced(ev) && !ev.long && !isHidden(ev.id) && !kindHidden(ev.kind); }
-    var live = [], soon = [], week = [], hiddenDone = [];
+    var live = [], soon = [], week = [], hiddenDone = [], hiddenByYou = [];
     EV.forEach(function (ev) {
       if (!visible(ev)) return;
       var ph = phase(ev, t);
       if (ph === 'ended') return;
       var isDoneNow = t1IsDone(done, ev.id, ev.start);
       if (isDoneNow) { if (ph === 'live' || +ev.start - tn < 7 * 864e5) hiddenDone.push({ key: TL.doneKey(ev.id, ev.start), name: ev.name, when: ph === 'live' ? 'Live now' : fmtD(ev.start) }); return; }
+      if (t1IsHidden(hide, ev.id, ev.start)) { if (ph === 'live' || +ev.start - tn < 7 * 864e5) hiddenByYou.push({ key: TL.doneKey(ev.id, ev.start), name: ev.name, when: ph === 'live' ? 'Live now' : fmtD(ev.start) }); return; }
       if (ph === 'live') live.push(ev); else if (ev.start <= soonEnd) soon.push(ev); else if (ev.start <= weekEnd) week.push(ev);
     });
     soon.sort(function (a, b) { return a.start - b.start; }); week.sort(function (a, b) { return a.start - b.start; });
@@ -2101,12 +2177,13 @@ function renderHomeBrief(t) {
     }
     var regLive = [], regSoon = [], regWeek = [];
     regList().forEach(function (r) {
-      if (r.long || covered(r)) return;
-      var item = { id: r.id, name: r.name, place: r.place || r.area || '', start: r.start, end: r.end, url: (r.src && r.src.url) || '#', overseas: t1Overseas(r.place), inPerson: regInPerson(r), global: LIB.isGlobalEvent(r), openId: '' };
+      if ((r.long && !r.ongoing) || (!r.ongoing && covered(r))) return; // a permanent city activity is distinct from a similarly named finite event
+      var item = { id: r.id, name: r.name, place: r.place || r.area || '', start: r.start, end: r.end, url: (r.src && r.src.url) || '#', ongoing: !!r.ongoing, overseas: t1Overseas(r.place), inPerson: regInPerson(r), global: LIB.isGlobalEvent(r), openId: '' };
       if (!/^https:\/\//.test(item.url)) item.url = '';
       try { var model = window.GOEventRegistry && GOEventRegistry.find(r.catalogueId || r.id); if (model) item.openId = model.eventId; } catch (e) { }
       if (!item.openId && !item.url) return;
       if (t1IsDone(done, r.id, r.start)) { hiddenDone.push({ key: TL.doneKey(r.id, r.start), name: r.name, when: 'In person' }); return; }
+      if (t1IsHidden(hide, r.id, r.start)) { hiddenByYou.push({ key: TL.doneKey(r.id, r.start), name: r.name, when: 'In person' }); return; }
       if (r.start <= t && r.end > t) regLive.push(item); else if (r.start > t && +r.start <= soonEnd) regSoon.push(item); else if (+r.start > soonEnd && +r.start <= weekEnd) regWeek.push(item);
     });
     var seasons = [];
@@ -2124,7 +2201,7 @@ function renderHomeBrief(t) {
       });
       ending.sort(function (a, b) { return a.end - b.end; });
     } catch (e) { }
-    return { now: t, ending: ending, live: live, soon: soon, week: week, regLive: regLive, regSoon: regSoon, regWeek: regWeek, boosts: t1BoostRecords(t), seasons: seasons, done: hiddenDone,
+    return { now: t, ending: ending, live: live, soon: soon, week: week, regLive: regLive, regSoon: regSoon, regWeek: regWeek, boosts: t1BoostRecords(t), seasons: seasons, done: hiddenDone, hidden: hiddenByYou,
       kindOf: kindOf, monArt: monArt, fallbackArt: placeholderArt, overseas: function (ev) { return t1Overseas(ev.region); }, dayLabel: function (d) { return fmtD(d); } };
   }
   var t1Signature = '';
@@ -2136,16 +2213,16 @@ function renderHomeBrief(t) {
     var ctx = t1Ctx(t);
     var sig = JSON.stringify([dayKey(t), ctx.live.map(sigEv), ctx.soon.map(sigEv), ctx.week.map(sigEv),
       ctx.regLive.map(function (e) { return e.id + '|' + e.openId + '|' + (+e.start) + '|' + (+e.end); }), ctx.ending.map(function (e) { return [e.id, e.name, +e.end || 0, e.title || '', e.url || ''].join('|'); }), ctx.regSoon.map(function (e) { return e.id + '|' + e.openId + '|' + (+e.start) + '|' + (+e.end); }), ctx.regWeek.map(function (e) { return e.id + '|' + e.openId + '|' + (+e.start) + '|' + (+e.end); }),
-      ctx.boosts.live.map(function (r) { return r.eventId + r.name; }), ctx.boosts.upcoming.map(function (r) { return r.eventId + r.name; }), ctx.seasons, ctx.done.map(function (d) { return d.key; })]);
+      ctx.boosts.live.map(function (r) { return r.eventId + r.name; }), ctx.boosts.upcoming.map(function (r) { return r.eventId + r.name; }), ctx.seasons, ctx.done.map(function (d) { return d.key; }), ctx.hidden.map(function (d) { return d.key; })]);
     if (!force && sig === t1Signature && host.firstChild) { T1.patchCountdowns(host, +t); return; }
     var open = host.querySelector('.t1-menu'); if (open && !force) { T1.patchCountdowns(host, +t); return; }
     var focusKey = null, a = document.activeElement;
-    if (a && host.contains(a)) focusKey = a.getAttribute('data-t1-menu') ? 'menu:' + a.getAttribute('data-t1-menu') : a.getAttribute('data-t1-undo') ? 'undo:' + a.getAttribute('data-t1-undo') : a.getAttribute('data-open') ? 'open:' + a.getAttribute('data-open') : null;
+    if (a && host.contains(a)) focusKey = a.getAttribute('data-t1-menu') ? 'menu:' + a.getAttribute('data-t1-menu') : a.getAttribute('data-t1-unhide') ? 'unhide:' + a.getAttribute('data-t1-unhide') : a.getAttribute('data-t1-undo') ? 'undo:' + a.getAttribute('data-t1-undo') : a.getAttribute('data-open') ? 'open:' + a.getAttribute('data-open') : null;
     var expanded = {}; host.querySelectorAll('[data-t1-toggle][aria-expanded="true"]').forEach(function (b) { expanded[b.getAttribute('data-t1-toggle')] = 1; });
     t1Signature = sig; host.innerHTML = T1.render(ctx); host.removeAttribute('aria-busy');
     Object.keys(expanded).forEach(function (id) { t1Toggle(host, id, true); });
     if (focusKey) {
-      var sel = focusKey.indexOf('menu:') === 0 ? '[data-t1-menu="' + focusKey.slice(5) + '"]' : focusKey.indexOf('undo:') === 0 ? '[data-t1-undo="' + focusKey.slice(5) + '"]' : '[data-open="' + focusKey.slice(5) + '"]';
+      var sel = focusKey.indexOf('menu:') === 0 ? '[data-t1-menu="' + focusKey.slice(5) + '"]' : focusKey.indexOf('unhide:') === 0 ? '[data-t1-unhide="' + focusKey.slice(7) + '"]' : focusKey.indexOf('undo:') === 0 ? '[data-t1-undo="' + focusKey.slice(5) + '"]' : '[data-open="' + focusKey.slice(5) + '"]';
       var again = null; try { again = host.querySelector(sel.replace(/\\/g, '\\\\')); } catch (e) { }
       if (again) again.focus({ preventScroll: true });
     }
@@ -2164,12 +2241,12 @@ function renderHomeBrief(t) {
     if (owner) { owner.setAttribute('aria-expanded', 'false'); if (restoreFocus) owner.focus(); }
   }
   var T1_SAVE_ERROR = 'Couldn\u2019t save \u2014 storage is full or unavailable', t1Retry = null;
-  function t1Toast(message, undoKey, retry) {
+  function t1Toast(message, undoKey, retry, hidden) {
     var t = $('t1-toast');
     if (!t) { t = document.createElement('div'); t.id = 't1-toast'; t.className = 't1-toast'; t.setAttribute('role', 'status'); t.setAttribute('aria-live', 'polite'); document.body.appendChild(t); }
     t.innerHTML = ''; var span = document.createElement('span'); span.textContent = message; t.appendChild(span);
     t.classList.toggle('t1-toast-error', !!retry);
-    if (undoKey) { var b = document.createElement('button'); b.type = 'button'; b.className = 't1-toast-undo'; b.setAttribute('data-t1-undo', undoKey); b.textContent = 'Undo'; t.appendChild(b); }
+    if (undoKey) { var b = document.createElement('button'); b.type = 'button'; b.className = 't1-toast-undo'; b.setAttribute(hidden ? 'data-t1-unhide' : 'data-t1-undo', undoKey); b.textContent = 'Undo'; t.appendChild(b); }
     if (retry) { t1Retry = retry; var r = document.createElement('button'); r.type = 'button'; r.className = 't1-toast-undo t1-toast-retry'; r.setAttribute('data-t1-retry', '1'); r.textContent = 'Try again'; t.appendChild(r); }
     var al = document.getElementById('gofn-storage-alert'); if (al && retry) al.hidden = true; // never stack two save errors
     t.hidden = false; clearTimeout(t._h); t._h = setTimeout(function () { t.hidden = true; }, retry ? 10000 : 7000);
@@ -2179,6 +2256,16 @@ function renderHomeBrief(t) {
     var store = t1Storage(), res = store ? TL.tryMarkDone(store, p.id, p.startIso, p.end, Date.now()) : { ok: false };
     if (!res.ok) { t1Toast(T1_SAVE_ERROR, null, function () { t1Mark(p); }); return false; }
     t1Retry = null; renderTodayV1(now(), true); t1Toast(p.name + ' marked done', res.key); return true;
+  }
+  function t1Hide(p) {
+    var s = t1Storage(), res = s ? TL.tryHideToday(s,p.id,p.startIso,p.end,Date.now()) : {ok:false};
+    if(!res.ok){t1Toast(T1_SAVE_ERROR,null,function(){t1Hide(p);});return false;}
+    t1Retry=null;renderTodayV1(now(),true);t1Toast(p.name+' hidden from Today',res.key,null,true);return true;
+  }
+  function t1Restore(key) {
+    var s=t1Storage(), res=s?TL.tryRestoreHidden(s,key):{ok:false};
+    if(!res.ok){t1Toast(T1_SAVE_ERROR,null,function(){t1Restore(key);});return false;}
+    t1Retry=null;var t=$('t1-toast');if(t)t.hidden=true;renderTodayV1(now(),true);return true;
   }
   function t1Unmark(key) {
     var store = t1Storage(), res = store ? TL.tryUndoDone(store, key) : { ok: false };
@@ -2194,13 +2281,14 @@ function renderHomeBrief(t) {
       if (wasOpen) return;
       var cardEl = menuBtn.closest('[data-id]'); if (!cardEl) return;
       var menu = document.createElement('div'); menu.className = 't1-menu'; menu.setAttribute('role', 'menu'); menu.setAttribute('aria-label', 'Actions');
-      menu.innerHTML = '<button type="button" role="menuitem" class="t1-menuitem" data-t1-done="1">Mark done <small>Hide this one from Today</small></button>'
+      menu.innerHTML = '<button type="button" role="menuitem" class="t1-menuitem" data-t1-hide="1">Hide from Today <small>Only this occurrence</small></button>'
+        + '<button type="button" role="menuitem" class="t1-menuitem" data-t1-done="1">Mark done <small>Mark this occurrence complete</small></button>'
         + (cardEl.querySelector('[data-open]') ? '<button type="button" role="menuitem" class="t1-menuitem" data-t1-details="' + esc(cardEl.getAttribute('data-id')) + '">Open details</button>' : '');
       menuBtn.parentNode.appendChild(menu); menuBtn.setAttribute('aria-expanded', 'true'); t1MenuOpener = menuBtn;
       var first = menu.querySelector('[role=menuitem]'); if (first) first.focus();
       return;
     }
-    var doneBtn = target.closest('[data-t1-done]');
+    var doneBtn = target.closest('[data-t1-done],[data-t1-hide]');
     if (doneBtn) {
       var c = doneBtn.closest('[data-id]'), id = c && c.getAttribute('data-id'), s = c && c.getAttribute('data-start'), en = c && c.getAttribute('data-end');
       t1CloseMenu(false);
@@ -2208,11 +2296,13 @@ function renderHomeBrief(t) {
       var store = t1Storage(), startIso = s || (c.getAttribute('data-id') && ''), name = (c.querySelector('.t1-title') || {}).textContent || 'Event';
       if (!s) { var r = null; /* regional rows carry no start attribute: key them by their listed start */ regList().forEach(function (x) { if (x.id === id) r = x; }); if (r) { startIso = new Date(+r.start).toISOString(); en = new Date(+r.end).toISOString(); } }
       if (!store || !startIso) { t1Toast(T1_SAVE_ERROR); return; }
-      t1Mark({ id: id, startIso: startIso, end: Date.parse(en), name: name });
+      var payload={id:id,startIso:startIso,end:Date.parse(en),name:name};
+      if(doneBtn.hasAttribute('data-t1-hide'))t1Hide(payload);else t1Mark(payload);
       return;
     }
     var det = target.closest('[data-t1-details]');
     if (det) { var id2 = det.getAttribute('data-t1-details'), op = document.querySelector('#today-v1 [data-id="' + id2.replace(/"/g, '') + '"] [data-open]'); t1CloseMenu(false); if (op) op.click(); return; }
+    var unhide=target.closest('[data-t1-unhide]');if(unhide){t1Restore(unhide.getAttribute('data-t1-unhide'));return;}
     var undo = target.closest('[data-t1-undo]');
     if (undo) {
       t1Unmark(undo.getAttribute('data-t1-undo')); return;
@@ -2234,7 +2324,7 @@ function renderHomeBrief(t) {
   });
   document.addEventListener('gofn-season-ready', function () { renderTodayV1(now(), false); });
   document.addEventListener('gofn-today-done', function () { renderTodayV1(now(), true); });
-  window.addEventListener('storage', function (e) { if (e.key === TL.DONE_KEY) renderTodayV1(now(), true); });
+  window.addEventListener('storage', function (e) { if (e.key === TL.DONE_KEY || e.key === TL.HIDE_KEY) renderTodayV1(now(), true); });
   function renderActionCentre() {
     var wrap = $('action-centre'), items = $('action-centre-items'); if (!wrap || !items) return;
     var next24 = EV.filter(function (e) { return !isHidden(e.id) && !kindHidden(e.kind) && startsSoon(e); }).length;
@@ -2378,7 +2468,7 @@ function renderHomeBrief(t) {
     renderCoverage();
     if (window.GO && GO.refreshDex) GO.refreshDex();
     usSync();
-    var inf = document.createElement('script'); inf.src = '/infographic.js?v=20261103a'; document.body.appendChild(inf); var x = document.createElement('script'); x.src = '/extra.js?v=20261102c'; document.body.appendChild(x); var z = document.createElement('script'); z.src = '/places.js?v=20261103b'; window.GOPLACES_READY = new Promise(function (resolve) { z.onload = function () { resolve(window.GOPLACES || null); }; z.onerror = function () { resolve(null); }; }); var y = document.createElement('script'); y.src = '/detail.js?v=20261116a'; document.body.appendChild(y); document.body.appendChild(z); var w = document.createElement('script'); w.src = '/fresh.js?v=20261114a'; document.body.appendChild(w); var nv = document.createElement('script'); nv.src = '/nudge.js?v=20261102a'; document.body.appendChild(nv); var rv = document.createElement('script'); rv.src = '/review.js?v=20261104b'; document.body.appendChild(rv); var by = document.createElement('script'); by.src = '/buy.js?v=20261103a'; document.body.appendChild(by);
+    var inf = document.createElement('script'); inf.src = '/infographic.js?v=20261103b'; document.body.appendChild(inf); var x = document.createElement('script'); x.src = '/extra.js?v=20261102c'; document.body.appendChild(x); var z = document.createElement('script'); z.src = '/places.js?v=20261103b'; window.GOPLACES_READY = new Promise(function (resolve) { z.onload = function () { resolve(window.GOPLACES || null); }; z.onerror = function () { resolve(null); }; }); var y = document.createElement('script'); y.src = '/detail.js?v=20261118b'; document.body.appendChild(y); document.body.appendChild(z); var w = document.createElement('script'); w.src = '/fresh.js?v=20261114a'; document.body.appendChild(w); var nv = document.createElement('script'); nv.src = '/nudge.js?v=20261102a'; document.body.appendChild(nv); var rv = document.createElement('script'); rv.src = '/review.js?v=20261113ui737'; document.body.appendChild(rv); var by = document.createElement('script'); by.src = '/buy.js?v=20261103a'; document.body.appendChild(by);
   }
   envBanner();
   /* Bounded waits: a request that never answers must not leave Today blank. After FEED_TIMEOUT_MS the page renders from the curated list

@@ -12,6 +12,7 @@ import { createRequire } from "node:module";
 import { matchEvent } from "./g47ix-review.mjs";
 
 const GODEDUPE = createRequire(import.meta.url)("../public/dedupe.js");
+const GOLIB = createRequire(import.meta.url)("../public/lib.js");
 
 const DISCORD_FILE = process.env.DISCORD_FILE || "infographics.json";
 const REG = process.env.REGISTRY_FILE || "data/g47ix-infographics-review.json";
@@ -153,7 +154,42 @@ export function datedEvents({ data, details, world } = {}, now = 0) {
   const tag = (list, src) => (list || []).map(e => ({ ...e, src }));
   return [...tag(data && data.events, "data.json"), ...tag(worldAsEvents(world).filter(w => DAY.test(w.s)), "world-events.json"), ...tag(raidSlots(data && data.rotation, now), "rotation"), ...tag(detailsAsEvents(details).filter(d => d.s), "event-details.json")];
 }
+// Published JSON and the public review feeds must not disclose channel/message
+// deep links. The review registry retains its stable candidate IDs and image
+// attribution, but not Discord channel URLs in this public repository.
+export function publicSourceUrl(value) {
+  // Reuse the tested browser policy: handles subdomains, URL userinfo, encoded
+  // paths, backslashes, trailing dots and invalid-port Discord channel URLs.
+  return GOLIB.publicLink(value);
+}
+
+export function sanitizePublicInfographicSources(info) {
+  for (const event of Object.values(info.events || {})) {
+    if (!event || typeof event !== "object") continue;
+    if (event.source && event.source.url && !publicSourceUrl(event.source.url)) delete event.source.url;
+    for (const graphic of event.infographics || []) {
+      if (graphic && graphic.sourceUrl && !publicSourceUrl(graphic.sourceUrl)) delete graphic.sourceUrl;
+    }
+  }
+  // Persistent boss guides use the same public-only source policy as events.
+  // An owner-approved private Discord URL must never reach public JSON.
+  for (const guide of info.pokemonGuides || []) {
+    for (const graphic of guide.infographics || []) {
+      if (graphic && graphic.sourceUrl && !publicSourceUrl(graphic.sourceUrl)) delete graphic.sourceUrl;
+    }
+  }
+  return info;
+}
+
+export function sanitizeRegistrySources(reg) {
+  for (const candidate of reg.candidates || []) {
+    if (candidate && candidate.url && !publicSourceUrl(candidate.url)) delete candidate.url;
+  }
+  return reg;
+}
+
 export function addToEventInfo(info, event, graphic) {
+  const sourceUrl = publicSourceUrl(graphic.sourceUrl);
   info.events = info.events || {};
   const title = String(event.t || event.title || "").toLowerCase(), when = eventDates(event);
   // A title match is only reused for the same instance: a dated entry whose window is clearly another one (next month's repeat) is left alone.
@@ -161,7 +197,7 @@ export function addToEventInfo(info, event, graphic) {
   let key = Object.keys(info.events).find(k => k === event.id || sameTitle(k));
   if (!key) {
     key = event.id;
-    info.events[key] = { names: [event.t || event.title], source: { label: graphic.creator || "G47IX", trust: "community", url: graphic.sourceUrl, observed: graphic.observed }, tickets: [], info: [], infographics: [] };
+    info.events[key] = { names: [event.t || event.title], source: { label: graphic.creator || "G47IX", trust: "community", ...(sourceUrl ? { url: sourceUrl } : {}), observed: graphic.observed }, tickets: [], info: [], infographics: [] };
   }
   const e = info.events[key];
   // Dates are written once. An entry that already has them keeps them: the title match above only reuses an entry for the same instance
@@ -170,7 +206,7 @@ export function addToEventInfo(info, event, graphic) {
   e.infographics = e.infographics || [];
   if (e.infographics.some(g => g.url === graphic.url)) return false;
   const who = graphic.creator || "G47IX";
-  e.infographics.push({ label: "Infographic · " + who, url: graphic.url, source: who, sourceUrl: graphic.sourceUrl, alt: graphic.alt });
+  e.infographics.push({ label: "Infographic · " + who, url: graphic.url, source: who, ...(sourceUrl ? { sourceUrl: sourceUrl } : {}), alt: graphic.alt });
   return true;
 }
 
@@ -266,7 +302,7 @@ export function buildWeekly(reg, now = Date.now()) {
   const clean = t => String(t || "").replace(/^tr\s+/i, "").replace(/\s+/g, " ").trim().slice(0, 80);
   const pick = (test, days, max, kind, label) => (reg.candidates || []).filter(c => c.stagedPath && c.decision !== "rejected" && !(kind === "month" && comingMonth(c, now)) && (c.overview === kind || (test(c) && !c.overview && Date.parse(c.publishedAt || "") > now - days * 864e5)))
     .sort((a, b) => (b.overview === kind) - (a.overview === kind) || Date.parse(b.publishedAt) - Date.parse(a.publishedAt)).slice(0, max)
-    .map(c => ({ id: c.id, kind, title: kind === "month" ? label(c) : clean(c.title), image: c.stagedPath, post: c.url || "", publishedAt: c.publishedAt }));
+    .map(c => ({ id: c.id, kind, title: kind === "month" ? label(c) : clean(c.title), image: c.stagedPath, post: publicSourceUrl(c.url), publishedAt: c.publishedAt }));
   const monthName = c => { const m = String(c.title || "").concat(" ", String(c.imageUrl || "").split("?")[0]).match(new RegExp("(" + MONTH_NAMES + ")[ _-]*content", "i")); return m ? "Month overview: " + m[1].slice(0, 1).toUpperCase() + m[1].slice(1).toLowerCase() : "Month overview"; };
   // One picture per button: a picture you chose still comes first, and among those the newest wins, so a new one replaces the old instead of stacking behind it.
   const items = [...pick(isWeekly, 10, 1, "week"), ...pick(isMonthly, 40, 1, "month", monthName)];
@@ -293,7 +329,7 @@ export function withAi(c, guesses) {
 export function buildQueue(reg) {
   const items = (reg.candidates || []).filter(c => c.stagedPath && ["needs_review", "unmatched", "published"].includes(c.reviewStatus) && c.decision !== "rejected").map(c => ({
     linked: c.reviewStatus === "published",
-    id: c.id, title: String(c.title || "").slice(0, 160), image: c.stagedPath, post: c.url || "", creator: c.creator || "", source: c.source || "unknown", publishedAt: c.publishedAt || "",
+    id: c.id, title: String(c.title || "").slice(0, 160), image: c.stagedPath, post: publicSourceUrl(c.url), creator: c.creator || "", source: c.source || "unknown", publishedAt: c.publishedAt || "",
     note: c.reviewNote || "", history: !!c.history, signals: c.signals || [], text: String(c.ocrText || "").slice(0, 700),
     guesses: withAi(c, (c.eventMatch && c.eventMatch.alternatives) || (c.eventMatch ? [{ eventId: c.eventMatch.eventId, eventTitle: c.eventMatch.eventTitle, score: c.eventMatch.score }] : []))
   }));
@@ -352,13 +388,13 @@ async function main() {
       if (isOverview(c)) { c.reviewStatus = "weekly"; continue; } // shown on the home page instead
       if (!d.confident) { c.reviewStatus = d.match || d.guess || c.eventMatch ? "needs_review" : "unmatched"; continue; }
       const added = addToEventInfo(info, d.event, { url: c.stagedPath, sourceUrl: c.url, observed: new Date().toISOString().slice(0, 10), alt: (d.event.t || "Event") + " infographic", creator: c.creator });
-      if (added) { c.reviewStatus = "proposed"; proposed.push(d.event.t + " ← " + c.url); }
+      if (added) { c.reviewStatus = "proposed"; proposed.push(d.event.t + " ← " + (publicSourceUrl(c.url) || "private source")); }
     } catch (err) { c.reviewNote = "Could not check image: " + err.message; }
   }
-  await writeFile(REG, JSON.stringify(reg, null, 2) + "\n");
+  await writeFile(REG, JSON.stringify(sanitizeRegistrySources(reg), null, 2) + "\n");
   await writeFile(QUEUE, JSON.stringify(buildQueue(reg), null, 1) + "\n");
   await writeFile(WEEKLY, JSON.stringify(buildWeekly(reg), null, 1) + "\n");
-  await writeFile(INFO, JSON.stringify(info, null, 2) + "\n");
+  await writeFile(INFO, JSON.stringify(sanitizePublicInfographicSources(info), null, 2) + "\n");
   console.log(proposed.length ? "Proposed:\n" + proposed.join("\n") : "Nothing confident enough to propose.");
 }
 if (import.meta.url === "file://" + process.argv[1]) main().catch(e => { console.error(e.message); process.exit(1); });

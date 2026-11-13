@@ -15,6 +15,9 @@ const HEAD = [
   ["featured", /featur|wild encounter|spawn|appear|habitat|debut|encounter|incense|lure/i]
 ];
 const LINE = [
+  // Named event bonuses must survive even when the publisher places them
+  // outside a section headed "Bonuses" (for example under a Shiny heading).
+  ["bonuses", /\b(?:shiny gimmighoul\b.*\bcoin bag|coin bag\b.*\bshiny gimmighoul|shiny meltan\b.*\bmystery box|mystery box\b.*\bshiny meltan)\b/i],
   ["tickets", /\b(ticket|go pass)\b.*(\$|A\$|US\$|€|£)|(\$|A\$|US\$)\s?\d/i],
   ["bonuses", /\b(\d(?:\.\d)?\s?[×x]|double|triple|half|\d+%)\b.*\b(xp|stardust|candy|hatch|distance|lure|incense|catch|trade|raid pass|egg)/i],
   ["shiny", /\bshiny\b/i],
@@ -45,12 +48,20 @@ function researchRewardNames(options){
 }
 
 function parseResearchTask(line, category, declaredNames) {
-  const marker = /\b(?:possible\s+)?rewards?\s*:?\s*/i.exec(String(line || ""));
+  // Published research tables may use "Task | 7740 × Stardust" rather
+  // than the prose marker "REWARD". Only accept an explicit task verb
+  // and a concrete reward cell; do not infer tasks from event descriptions.
+  const cells = String(line || "").split(/\s*\|\s*/).map(trim);
+  if (cells.length === 2 && /^(?:catch|spin|make|win|complete|send|hatch|power up|evolve|take|use|earn|battle|trade|transfer|walk|feed|give|land|defeat|purify|exchange|open|explore|adventure|beat|visit|photograph|level up|collect|get|play|perform|throw|claim reward)\b/i.test(cells[0]) &&
+      /^(?:\d[\d,]*\s*[×x]\s*|[×x]\s*\d+\s+|\d[\d,]*\s+|an?\s+encounter with\s+)/i.test(cells[1])) {
+    line = cells[0] + " REWARD " + cells[1].replace(/^(\d[\d,]*)\s*[×x]\s*/i, "×$1 ");
+  }
+  const marker = /\sREWARD\s/i.exec(String(line || "")) || /\b(?:possible\s+)?rewards?\s*:?\s*/i.exec(String(line || ""));
   if (!marker) return null;
   const task = trim(String(line).slice(0, marker.index)).replace(/[|:–—-]+$/, "").trim();
   const rewardText = trim(String(line).slice(marker.index + marker[0].length));
   if (!task || /^task$/i.test(task) || task.length < 4 || !rewardText || /^(possible )?rewards?$/i.test(rewardText)) return null;
-  if (!/^(catch|spin|make|win|complete|send|hatch|power up|evolve|take|use|earn|battle|trade|transfer|walk|feed|give|land|defeat|purify|exchange|open|explore|adventure|beat|visit|photograph|level up|collect|get|play|perform|throw)\b/i.test(task)) return null;
+  if (!/^(catch|spin|make|win|complete|send|hatch|power up|evolve|take|use|earn|battle|trade|transfer|walk|feed|give|land|defeat|purify|exchange|open|explore|adventure|beat|visit|photograph|level up|collect|get|play|perform|throw|claim reward)\b/i.test(task)) return null;
   const rewards = [];
   // Some feeds flatten adjacent item blocks and repeat the quantity around an icon.
   // Only a named item with an explicit × quantity creates a boundary; Pokémon names stay intact.
@@ -78,7 +89,9 @@ function parseResearchTask(line, category, declaredNames) {
     if(declared){for(const p of declared)rewards.push({type:'encounter',quantity:1,...p});continue;}
     const qty = /^(?:[×x]\s*(\d+)\s*)?(.+?)(?:\s+[×x]\s*(\d+))?$/i.exec(chunk);
     if (!qty) continue;
-    let name = trim(qty[2]);
+    // Flattened source tables sometimes repeat the REWARD label after an item name.
+    // It is presentation text, not part of the reward's name.
+    let name = trim(qty[2]).replace(/\s+REWARD$/i, "");
     if (!name || /^(possible )?rewards?$/i.test(name) || name.length > 100) continue;
     let quantity = Number(qty[1] || qty[3] || 1);
     if (qty[1] && qty[3] && Number(qty[1]) !== Number(qty[3])) continue;
@@ -91,7 +104,7 @@ function parseResearchTask(line, category, declaredNames) {
     }
     if (!Number.isSafeInteger(quantity) || quantity < 1 || quantity > 1e9) continue;
     const encounter = /^(?:an?\s+)?encounter with\s+(.+)$/i.exec(name);
-    const knownItem = /\b(candy|ball|stardust|xp|energy|pass|incubator|revive|potion|pok[eé]coin|rare candy|incense|lure|egg|berry)\b/i.test(name);
+    const knownItem = /\b(candy|ball|stardust|xp|energy|pass|incubator|revive|potion|pok[eé]coin|rare candy|incense|lure|egg|berry|star piece)\b/i.test(name);
     const explicitQuantity = !!(qty[1] || qty[3] || numeric);
     if (!encounter && !knownItem && !explicitQuantity) continue;
     if (encounter) name = trim(encounter[1]);
@@ -105,7 +118,7 @@ export function extractFields(html, options={}) {
   const lines = Array.isArray(html) ? html : htmlToLines(html);
   const out = Object.fromEntries(FIELDS.map(f => [f, []])); out.researchTasks = [];
   const add = (f, s) => { s = trim(s); if (keep(s) && !out[f].includes(s) && out[f].filter(x => /^rank \d+/i.test(x) === /^rank \d+/i.test(s)).length < (/^rank \d+/i.test(s) ? 110 : 14)) out[f].push(s); };
-  let cur = null, rank = 0, headSeen = "", deluxe = false, taken = 0, researchKind = "research";
+  let cur = null, rank = 0, headSeen = "", deluxe = false, taken = 0, researchKind = "research", researchTable = false;
   for (const l of lines) {
     // "Tier 2 – Rank 25" style labels: remember the rank so the bonus lines under it say which rank unlocks them.
     const rm = RANKLABEL.exec(l.text);
@@ -137,20 +150,34 @@ export function extractFields(html, options={}) {
     if (l.t === "li" && rank && cur === "bonuses") {
       if (++taken > 6 || /https?:|last update|categories|editor in chief/i.test(l.text)) { rank = 0; continue; } add("bonuses", `Rank ${rank}${deluxe ? " Deluxe" : ""}: ${l.text}`); continue; }
     if (l.t === "h") {
-      rank = 0; deluxe = false; headSeen = l.text;
+      rank = 0; deluxe = false; headSeen = l.text; researchTable = false;
       const hit = HEAD.find(([, re]) => re.test(l.text));
       cur = hit ? hit[0] : null;
       researchKind = /field\s+research/i.test(l.text) ? "field" : /timed\s+research/i.test(l.text) ? "timed" : /special\s+research/i.test(l.text) ? "special" : "research";
       if (/\bdebut\b/i.test(l.text) && !/shiny/i.test(l.text)) add("featured", l.text);
       continue;
     }
+    // Only explicit table rows imply multiple identical claimable tasks.
+    // Repeated prose outside a task/reward table is often publisher duplication.
+    if (/^task\s*\|\s*(?:possible\s+)?rewards?$/i.test(l.text)) researchTable = true;
     if (cur) add(cur, l.text);
-    if (cur === "research") {
-      const task = parseResearchTask(l.text, researchKind, declaredNames);
-      if (task) {
-        const key = JSON.stringify([task.category, task.task.toLowerCase(), task.rewards]);
-        if (!out.researchTasks.some(x => JSON.stringify([x.category, x.task.toLowerCase(), x.rewards]) === key)) out.researchTasks.push(task);
-      }
+    // Explicit task + reward rows can appear beneath event, raid or general
+    // headings. Parse only self-contained rows with a recognizable task verb
+    // and reward, never infer a reward from surrounding descriptive prose.
+    const task = parseResearchTask(l.text, cur === "research" ? researchKind : "research", declaredNames);
+    if (task) {
+      // A published task/reward TABLE may list the *same* task five times in
+      // one stage (Minior Showers). An identical row still means another
+      // individual task; deduplication here silently drops real rewards.
+      // Assign an occurrence index so cross-source merging can coalesce the
+      // Nth occurrence instead of multiplying it or losing it.
+      const key = JSON.stringify([task.category, task.task.toLowerCase(), task.rewards]);
+      const count = out.researchTasks.filter(x =>
+        JSON.stringify([x.category, x.task.toLowerCase(), x.rewards]) === key).length;
+      // Bound malformed source tables rather than allowing unbounded repeats.
+      if (count === 0 || (researchTable && /\s\|\s/.test(l.text) && count < 20))
+        out.researchTasks.push({ ...task, occurrence: count + 1 });
+      add("research", l.text);
     }
     for (const [f, re] of LINE) if (re.test(l.text) && f !== cur) add(f, l.text);
   }

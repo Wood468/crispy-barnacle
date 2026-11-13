@@ -6,27 +6,81 @@ var METHODS={wild:'In the wild',raid:'Raid encounters',max:'Max Battles',egg:'Eg
 function value(row){if(typeof row==='string')return row;var v=row&&(row.text||row.title||row.name||row.task||row.label);return typeof v==='string'?v:'';}
 function section(id,title,html){return html?'<section class="ue-section" id="'+esc(id)+'"><h3 class="sec2">'+esc(title)+'</h3>'+html+'</section>':'';}
 function rows(items){return '<ul class="ue-facts">'+items.filter(function(x){return value(x);}).map(function(x){return '<li>'+esc(value(x))+'</li>';}).join('')+'</ul>';}
+
+/* Use only a sourced hatch distance. Multiple unassigned distances in one
+   event leave individual tiles unlabeled rather than guessing the egg pool. */
+function eggKm(model,p,edge,activity){
+ var allowed={'2':1,'5':1,'7':1,'10':1,'12':1};
+ var exact=[edge.eggDistanceKm,edge.distanceKm,p.eggDistanceKm,activity&&activity.eggDistanceKm];
+ for(var i=0;i<exact.length;i++){var num=String(exact[i]||'');if(allowed[num])return num;}
+ var match=/\b(2|5|7|10|12)\s*km\b/i.exec([activity&&activity.title,activity&&activity.name,p.label,edge.access].filter(Boolean).join(' '));
+ if(match)return match[1];
+ var fields=model.internalValidation&&model.internalValidation.fields||{},distances=new Set();
+ (fields.eggs||[]).forEach(function(row){
+  var t=value(row);if(!/\beggs?\b|\bhatch/i.test(t))return;
+  (t.match(/\b(?:2|5|7|10|12)\s*km\b/gi)||[]).forEach(function(item){
+   var digits=/\d+/.exec(item);if(digits)distances.add(digits[0]);
+  });
+ });
+ return distances.size===1?Array.from(distances)[0]:'';
+}
+/* Different feeds spell these two Crowned form IDs with or without a dash.
+   Collapse only equivalent raid-gallery aliases; never rewrite encounter or
+   Collection keys, nor hide distinct methods, activities or access rules. */
+function galleryDisplayIdentity(p){
+ var species=String(p.speciesId||''),form=String(p.formId||'').toLowerCase().replace(/[^a-z0-9]/g,'');
+ if(!p.costumeId&&((species==='888'&&form==='crownedsword')||(species==='889'&&form==='crownedshield')))return species+':'+form+':none';
+ return p.key;
+}
+
+/* Event raid cards share Battle's Game Master hundo calculator. A published CP
+   pair takes precedence; no unsupported species/form values are invented. */
+function eventRaidCp(name,raw){
+ var dash=typeof globalThis!=='undefined'&&globalThis.GODASH;
+ var pair=dash&&typeof dash.hundoPair==='function'?dash.hundoPair({kind:'raid'},{name:name}):null;
+ var ok=function(n){return Number.isSafeInteger(n)&&n>=10&&n<=10000;};
+ if(Array.isArray(raw)&&raw.length===2&&ok(raw[0])&&ok(raw[1])&&raw[1]>=raw[0])return {normal:raw[0],boosted:raw[1]};
+ if(ok(raw))return {normal:raw,boosted:pair&&pair.n===raw&&ok(pair.b)?pair.b:null};
+ return pair&&ok(pair.n)&&ok(pair.b)?{normal:pair.n,boosted:pair.b}:null;
+}
+function eventRaidCpHtml(name,raw){
+ var cp=eventRaidCp(name,raw);if(!cp)return '';
+ return '<span class="ue-raid-cp" role="text" aria-label="'+esc('100% IV raid catch CP '+cp.normal+(cp.boosted?', possible weather-boosted 100% IV '+cp.boosted:''))+'"><span class="ue-raid-cp-normal" title="Perfect 15/15/15 raid catch at Level 20">100% '+cp.normal.toLocaleString('en-AU')+'</span>'+(cp.boosted?'<span class="ue-raid-cp-weather" title="Possible weather-boosted perfect raid catch at Level 25">WB '+cp.boosted.toLocaleString('en-AU')+'</span>':'')+'</span>';
+}
+function eventRaidTierHtml(tier){
+ var t=/^(?:[1-9]★|Mega|Primal|Elite|Shadow)$/.test(String(tier||''))?tier:'Raid';
+ var a=t==='Raid'?'Raid encounter; tier not specified':t.replace(/([1-9])★/g,'$1 star')+' raid tier';
+ return '<span class="ue-raid-tier-corner" aria-label="'+esc(a)+'"><img src="/ico/g/raid.webp" alt="" width="12" height="12" loading="lazy" decoding="async">'+esc(t)+'</span>';
+}
 function gallery(model,ctx){
  var featOnce=false,byKey={};model.pokemon.forEach(function(p){byKey[p.key]=p;});
  return Object.keys(METHODS).map(function(method){
   var seen=new Set(),cards=(model.groups[method]||[]).map(function(edge){
    var p=byKey[edge.identityKey];if(!p)return '';
    var activity=model.activities.find(function(a){return a.id===edge.activityId;}),activityLabel=activity&&(activity.title||activity.name);
-   var key=p.key+'|'+edge.activityId+'|'+(edge.access&&edge.access!=='all'&&edge.access!=='unknown'?edge.access:'');
+   var key=galleryDisplayIdentity(p)+'|'+edge.activityId+'|'+(edge.access&&edge.access!=='all'&&edge.access!=='unknown'?edge.access:'');
    if(seen.has(key))return '';seen.add(key);
    var name=ctx.nameFor?ctx.nameFor(p):p.name||p.speciesId,label=p.label;
    var conflict=(model.internalValidation&&model.internalValidation.conflicts||[]).some(function(c){return c.field==='shiny'&&c.identityKey===p.key;});
    var signals=[];
-   if(p.shiny==='yes'&&!conflict)signals.push('<span class="ue-signal ue-shiny">Shiny</span>');
-   if(p.boostedShiny&&!conflict)signals.push('<span class="ue-signal ue-shiny">Boosted shiny</span>');
+   /* A verified boost supersedes the ordinary shiny chip; do not display two
+      contradictory-looking badges for the same encounter. */
+   if(!conflict&&p.boostedShiny)signals.push('<span class="ue-signal ue-shiny ue-shiny-boost"><span class="ue-shiny-mark" aria-hidden="true">↑✦</span> Boosted shiny</span>');
+   else if(!conflict&&p.shiny==='yes')signals.push('<span class="ue-signal ue-shiny"><span class="ue-shiny-mark" aria-hidden="true">✦</span> Shiny</span>');
    if(p.debut)signals.push('<span class="ue-signal">Debut</span>');
    if(edge.access&&edge.access!=='all'&&edge.access!=='unknown')signals.push('<span class="ue-signal">'+esc(edge.access)+'</span>');
    var art=ctx.artFor?ctx.artFor(p):ctx.art?ctx.art({n:name,costume:!!p.costumeId,label:label,asset:p.assetKey},'ea'):'';
    var meta=[p.costumeId&&label?label:'',activityLabel,activity&&activity.schedule?activityTime(activity,ctx):'',activityPlace(activity)].filter(Boolean);
-   var kind=ctx.artKind?ctx.artKind(p):'',stars=method==='raid'?((/(\d)-star/i.exec(model.title||'')||[])[1]||''):'',km=method==='egg'?((/(\d{1,2})\s?km/i.exec([activityLabel,p.label,edge.access].join(' '))||[])[1]||''):'';
-   var badge='<span class="ue-badge ue-b-'+method+(km?' ue-km-'+km:'')+'">'+(km?km+' km':method==='egg'?'Egg':method==='raid'&&stars?stars+'★ Raid':({wild:'Wild',raid:'Raid',max:'Max',incense:'Incense',research:'Research',lure:'Lure',photobomb:'Snapshot',other:'Featured'})[method])+'</span>';
+   var kind=ctx.artKind?ctx.artKind(p):'',stars=method==='raid'?((/(\d)-star/i.exec(model.title||'')||[])[1]||''):'',km=method==='egg'?eggKm(model,p,edge,activity):'';
+   /* Egg and Incense section headings plus compact corner icons carry their visual method;
+      retain exact distance in the accessible tile label and details only. */
+   var badge=(method==='egg'||method==='incense')?'':'<span class="ue-badge ue-b-'+method+'">'+(method==='raid'&&stars?stars+'★ Raid':({wild:'Wild',raid:'Raid',max:'Max',incense:'Incense',research:'Research',lure:'Lure',photobomb:'Snapshot',other:'Featured'})[method])+'</span>';
+   var mighty=method==='incense'&&edge.mighty===true;
+   var raidTier=method==='raid'?eventRaidTierHtml(stars?stars+'★':'Raid'):'';
+   var raidCp=method==='raid'?eventRaidCpHtml(name,null):'';
+   if(mighty)signals.unshift('<span class="ue-signal">Mighty Pokémon</span>');
    var short=({wild:'Wild',raid:'Raid',max:'Max Battle',egg:'Egg',incense:'Incense',research:'Research',lure:'Lure',photobomb:'Snapshot',other:'Featured'})[method];var info={name:name,method:short,badge:km?km+' km egg':stars?stars+'-star raid':'',meta:meta,signals:signals.map(function(x){return x.replace(/<[^>]+>/g,'');}),form:kind};
-   var feat=!!(p.debut||p.boostedShiny),tag=feat&&!featOnce;if(tag)featOnce=true;return '<button type="button" class="ue-mon'+(feat?' ue-mon-featured':'')+'" data-identity="'+esc(p.key)+'" data-info="'+esc(JSON.stringify(info))+'" aria-haspopup="dialog" aria-label="'+esc(name+(p.costumeId&&label?' ('+label+')':'')+', '+(info.badge||short)+'. Show details')+'">'+(tag?'<span class="ue-feat-tag">Featured</span>':'')+'<span class="ue-mon-art">'+art+'</span><b>'+esc(name)+'</b>'+(p.costumeId&&label?'<small class="ue-costume">'+esc(label)+'</small>':'')+badge+(signals.length?'<span class="ue-signals">'+signals.join('')+'</span>':'')+'</button>';
+   var feat=!!(p.debut||p.boostedShiny),tag=feat&&!featOnce;if(tag)featOnce=true;return '<button type="button" class="ue-mon'+(feat?' ue-mon-featured':'')+'" data-identity="'+esc(p.key)+'" data-info="'+esc(JSON.stringify(info))+'" aria-haspopup="dialog" aria-label="'+esc((mighty?'Mighty ':'')+name+(p.costumeId&&label?' ('+label+')':'')+', '+(info.badge||short)+'. Show details')+'">'+(tag?'<span class="ue-feat-tag">Featured</span>':'')+(mighty?'<span class="ue-mighty-corner" aria-hidden="true">!!!</span>':'')+raidTier+(method==='egg'&&km?'<span class="ue-egg-corner ue-egg-'+esc(km)+'" aria-hidden="true"><img src="/ico/g/egg-'+esc(km)+'km.webp" alt="" loading="lazy" decoding="async" width="20" height="20"></span>':method==='incense'?'<span class="ue-incense-corner" aria-hidden="true"><img src="/ico/incense.webp" alt="" loading="lazy" decoding="async" width="20" height="20"></span>':'')+'<span class="ue-mon-art">'+art+'</span><b>'+esc(name)+'</b>'+raidCp+(p.costumeId&&label?'<small class="ue-costume">'+esc(label)+'</small>':'')+badge+(signals.length?'<span class="ue-signals">'+signals.join('')+'</span>':'')+'</button>';
   }).join('');
   return cards?'<div class="ue-method" data-method="'+method+'">'+(method==='other'&&Object.keys(model.groups).every(function(k){return k==='other'||!model.groups[k].length;})?'':'<h4>'+METHODS[method]+'</h4>')+'<div class="ue-gallery">'+cards+'</div></div>':'';
  }).join('');
@@ -46,7 +100,11 @@ function researchTask(r,ctx){return '<article class="research-task"><h4>'+esc(va
 /* Parsed tasks are the countable unit. Source prose lines are shown as notes underneath and never counted as tasks. */
 function research(items,ctx){var list=items.filter(function(r){return value(r);}),tasks=list.filter(function(r){return V.researchTaskCount([r]);}),notes=list.filter(function(r){return !V.researchTaskCount([r]);});
  return tasks.map(function(r){return researchTask(r,ctx);}).join('')+(notes.length?'<ul class="ue-facts ue-research-notes">'+notes.map(function(r){return '<li>'+esc(value(r))+'</li>';}).join('')+'</ul>':'')+(!tasks.length&&notes.length?'<p class="ue-more-note" role="note">No individual research tasks have been published yet.</p>':'');}
-var PASS_ICONS=[[/^xp$/i,'/ico/xp.webp'],[/^stardust$/i,'/ico/dust.webp'],[/candy( xl)?$/i,'/ico/candy.webp'],[/^max potion$/i,'/ico/i/max-potion.webp'],[/^max revive$/i,'/ico/i/max-revive.webp'],[/^golden razz/i,'/ico/i/golden-razz.webp'],[/^silver pinap/i,'/ico/i/silver-pinap.webp'],[/incubator/i,'/ico/egg.webp'],[/incense/i,'/ico/incense.webp'],[/(raid|battle) pass/i,'/ico/g/raidpass.webp']];
+/* Only use icons whose published app assets identify the actual reward.
+   XP and Candy XL deliberately use category symbols instead of misleading art. */
+/* Exact-only fallback for when the semantic artwork helper is unavailable.
+   Never reuse standard Raid Pass art for Remote/Premium Battle Passes. */
+var PASS_ICONS=[[/^stardust$/i,'/ico/dust.webp'],[/^max potion$/i,'/ico/i/max-potion.webp'],[/^max revive$/i,'/ico/i/max-revive.webp'],[/^golden razz berry$/i,'/ico/i/golden-razz.webp'],[/^silver pinap berry$/i,'/ico/i/silver-pinap.webp'],[/^incense$/i,'/ico/incense.webp'],[/^raid pass$/i,'/ico/g/raidpass.webp']];
 function passCategory(item){
  if(item.type==='encounter')return 'Pokémon';
  var n=item.name;
@@ -57,43 +115,156 @@ function passCategory(item){
  if(/\b(ball|berry|potion|revive|incubator|incense|pinap|razz|tm|lure|pass|egg|mushroom|star piece|nanab|module|particle|charm)\b/i.test(n))return 'Item';
  return 'Reward';
 }
+function passGlyph(item,cat){
+ if(/^xp$/i.test(item.name))return 'XP';
+ if(/candy xl/i.test(item.name))return 'XL';
+ if(/candy/i.test(item.name))return 'C';
+ if(cat==='Pokémon')return 'PKM'; /* Honest encounter category, not missing artwork. */
+ if(cat==='Avatar item')return '👕';
+ if(cat==='Box')return '▣';
+ if(/stardust|star piece/i.test(item.name))return '✦';
+ if(/pok[eé]coin/i.test(item.name))return '◎';
+ if(/potion|revive/i.test(item.name))return '+';
+ if(/ball/i.test(item.name))return '●';
+ if(/berry|pinap|razz/i.test(item.name))return '◉';
+ return '◇';
+}
 function passReward(raw,ctx){
  var item=typeof raw==='string'?{name:raw.trim(),type:'other',quantity:1}:raw;
  if(!item||typeof item.name!=='string'||!item.name||/^[-–—]+$/.test(item.name.trim()))return null;
- if(typeof raw==='string'){var q=/^(.+?)\s*[×x]\s*(\d+)$/i.exec(item.name);if(q){item={name:q[1].trim(),type:'item',quantity:+q[2]};}}
- var cat=passCategory(item),art='',fallback=true;
- if(item.type==='encounter'&&ctx.rewardArt){art=ctx.rewardArt(item)||'';fallback=!/<(img|svg|canvas)\b/i.test(art);if(fallback)art='';}
- else{var icon=PASS_ICONS.filter(function(r){return r[0].test(item.name);})[0];if(icon){art='<img src="'+esc(icon[1])+'" alt="" width="40" height="40" loading="lazy" decoding="async">';fallback=false;}}
- var glyph=cat==='Pokémon'?'?':cat==='Avatar item'?'👕':cat==='Box'?'🎁':'◆';
+ /* Both source string and structured reward names can contain a quantity.
+    Show it once and resolve art against the real item name, but never silently
+    override a disagreeing explicit source quantity. */
+ var q=/^(.+?)\s*[×x]\s*(\d+)$/i.exec(item.name.trim());
+ if(q){
+  var stated=raw&&typeof raw==='object'&&Number.isInteger(raw.quantity)&&raw.quantity>0?raw.quantity:null;
+  var inlineQty=Number(q[2]);
+  if(stated===null||stated===inlineQty){
+   item=Object.assign({},item,{name:q[1].trim(),type:typeof raw==='string'?'item':item.type,quantity:stated||inlineQty});
+  }
+ }
+ var cat=passCategory(item),art='',hasArt=false;
+ var semantic=typeof globalThis!=='undefined'&&globalThis.GOGoPassRewardArt&&typeof globalThis.GOGoPassRewardArt.resolve==='function'?globalThis.GOGoPassRewardArt.resolve(item):null;
+ if(item.type==='encounter'&&ctx.rewardArt){
+  art=ctx.rewardArt(item)||'';
+  hasArt=/<(img|svg|canvas)\b/i.test(art);
+  if(!hasArt)art='';
+ }else{
+  /* Exact-only semantic art module supersedes ambiguous legacy name matching. */
+  var icon=semantic?(semantic.kind==='image'?[/^.*$/,semantic.src]:null):PASS_ICONS.filter(function(r){return r[0].test(item.name);})[0];
+  if(icon){art='<img src="'+esc(icon[1])+'" alt="" width="40" height="40" loading="lazy" decoding="async">';hasArt=true;}
+ }
  var qty=Number.isInteger(item.quantity)&&item.quantity>1?'×'+esc(item.quantity):'';
  var lvl=item.type==='encounter'&&Number.isInteger(item.level)?' · Level '+esc(item.level):'';
- return '<div class="ue-pass-reward" data-cat="'+esc(cat)+'"'+(fallback?' data-art="fallback"':'')+'><span class="ue-pass-art" aria-hidden="true">'+(art||'<span class="ue-reward-icon">'+glyph+'</span>')+'</span><span class="ue-pass-name"><b>'+esc(item.name)+'</b><small>'+(qty?qty+' · ':'')+esc(cat)+lvl+(fallback?' · art unavailable':'')+'</small></span></div>';
+ var symbol=semantic&&semantic.kind==='symbol'?semantic.symbol:passGlyph(item,cat);
+ return '<div class="ue-pass-reward" data-cat="'+esc(cat)+'"'+(hasArt?'':' data-art="category"')+'><span class="ue-pass-art" aria-hidden="true">'+(art||'<span class="ue-reward-icon">'+esc(symbol)+'</span>')+'</span><span class="ue-pass-name"><b>'+esc(item.name)+'</b><small>'+(qty?qty+' · ':'')+esc(cat)+lvl+'</small></span></div>';
 }
-function passLane(label,cls,list,empty,ctx){
+function passLane(label,cls,list,ctx){
  var chips=[].concat(list||[]).map(function(x){return passReward(x,ctx);}).filter(Boolean);
- return '<div class="ue-lane ue-lane-'+cls+'"><h5>'+label+'</h5>'+(chips.length?chips.join(''):'<p class="ue-lane-empty">'+empty+'</p>')+'</div>';
+ return chips.length?'<div class="ue-lane ue-lane-'+cls+'"><h5>'+label+'</h5>'+chips.join('')+'</div>':'';
+}
+/* Stages can combine identified Free/Deluxe tracks with additional published
+   rewards whose track has not been attributed. Never silently hide the latter
+   or label them Free; avoid double-showing a reward already in a named track. */
+function passRewardIdentity(raw){
+ var name=typeof raw==='string'?raw:raw&&raw.name;
+ if(typeof name!=='string')return '';
+ var quantity=raw&&typeof raw==='object'&&Number.isInteger(raw.quantity)&&raw.quantity>0?raw.quantity:1;
+ /* Source feeds encode quantities either as a structured field or in the
+    item label. Normalize both for identity, without changing display text.
+    If two explicit quantities disagree, preserve that conflict instead of
+    silently assuming two rewards are identical. */
+ var match=/^(.+?)\s*[×x]\s*(\d+)$/i.exec(name.trim());
+ if(match){
+  var stated=raw&&typeof raw==='object'&&Number.isInteger(raw.quantity)&&raw.quantity>0?raw.quantity:null;
+  var inlineQty=Number(match[2]);
+  if(stated===null||stated===inlineQty){
+   name=match[1];quantity=inlineQty;
+  }
+ }
+ return name.trim().normalize('NFKD').replace(/[\u0300-\u036f]/g,'')
+  .replace(/\s+/g,' ').toLowerCase()+'|'+quantity;
+}
+function passUnspecified(s){
+ var free=[].concat(s.free||[]),deluxe=[].concat(s.deluxe||[]);
+ var identified=new Set(free.concat(deluxe).map(passRewardIdentity).filter(Boolean));
+ return [].concat(s.rewards||[]).filter(function(item){
+  var identity=passRewardIdentity(item);
+  return identity&&!identified.has(identity);
+ });
+}
+function passStageLanes(s,ctx){
+ return passLane('Free','free',s.free,ctx)+passLane('Deluxe','deluxe',s.deluxe,ctx)
+  +passLane('Track not specified','unspecified',passUnspecified(s),ctx);
+}
+function passStageRewards(s){
+ return [].concat(s.free||[],s.deluxe||[],s.rewards||[]).filter(function(x){return x&&typeof x==='object'&&typeof x.name==='string'||typeof x==='string'&&x.trim();});
+}
+function passHighlightScore(s){
+ return passStageRewards(s).reduce(function(score,item){
+  var name=typeof item==='string'?item:item.name;
+  if(/bottle cap|dynamax meltan|gold bottle cap/i.test(name))return Math.max(score,8);
+  if((typeof item==='object'&&item.type==='encounter')||/\b(encounter|lucky trinket)\b/i.test(name))return Math.max(score,6);
+  if(/elite (charged|fast) tm|rare candy xl/i.test(name))return Math.max(score,4);
+  return score;
+ },0);
 }
 function passes(items,ctx){
  function stage(s){
-  var lanes=(s.free||s.deluxe)?passLane('Free','free',s.free,'No free reward',ctx)+passLane('Deluxe','deluxe',s.deluxe,'No extra Deluxe reward',ctx):passLane('Reward','free',s.rewards,'Track not specified by the source',ctx);
-  return '<li class="ue-pass-rank" data-rank="'+esc(s.rank)+'"><b>Rank '+esc(s.rank)+'</b>'+(Number.isFinite(s.points)?'<small>'+esc(s.points)+' points</small>':'')+'<div class="ue-pass-lanes">'+lanes+'</div></li>';
+  var lanes=passStageLanes(s,ctx);
+  return '<li class="ue-pass-rank" data-rank="'+esc(s.rank)+'"><b>Rank '+esc(s.rank)+'</b>'+(Number.isFinite(s.points)?'<small>'+esc(s.points)+' points</small>':'')+'<div class="ue-pass-lanes">'+(lanes||'<p class="ue-pass-unlisted">Track rewards not specified for this rank.</p>')+'</div></li>';
  }
- function listWithGaps(list,startPrev){
-  var out='',prev=startPrev===undefined?null:startPrev;
-  list.forEach(function(s){if(prev!==null&&s.rank>prev+1)out+='<li class="ue-pass-gap" role="note">'+(s.rank-prev===2?'Rank '+(prev+1):'Ranks '+(prev+1)+'–'+(s.rank-1))+': no rewards listed by the source</li>';out+=stage(s);prev=s.rank;});
+ /* A disclosure must describe only its own 25-rank span. Missing whole
+    groups are reported between disclosures, never inside a different group. */
+ function gapLabel(first,last){
+  return (first===last?'Rank '+esc(first):'Ranks '+esc(first)+'–'+esc(last))+': no reward entries published by the source';
+ }
+ function listWithGaps(list,rangeStart,rangeEnd){
+  var out='',prev=rangeStart-1;
+  list.forEach(function(s){
+   if(s.rank>prev+1)out+='<li class="ue-pass-gap" role="note">'+gapLabel(prev+1,s.rank-1)+'</li>';
+   out+=stage(s);prev=s.rank;
+  });
+  if(prev<rangeEnd)out+='<li class="ue-pass-gap" role="note">'+gapLabel(prev+1,rangeEnd)+'</li>';
   return out;
+ }
+ function highlight(s){
+  return '<li class="ue-pass-highlight" data-milestone-rank="'+esc(s.rank)+'"><strong>Rank '+esc(s.rank)+'</strong><div class="ue-pass-lanes">'+passStageLanes(s,ctx)+'</div></li>';
  }
  var meta=ctx.passMeta||{};
  return items.filter(function(p){return value(p);}).map(function(p){
-  var stages=(Array.isArray(p.stages)?p.stages:[]).filter(function(s){return s&&Number.isInteger(s.rank)&&s.rank>=0;}).slice().sort(function(a,b){return a.rank-b.rank;});
+  var stages=(Array.isArray(p.stages)?p.stages:[]).filter(function(s){return s&&Number.isInteger(s.rank)&&s.rank>=0&&passStageRewards(s).some(function(r){return passReward(r,ctx)!==null;});}).slice().sort(function(a,b){return a.rank-b.rank;});
   var content='';
   if(!stages.length)content='<p class="note ue-pass-missing">Rank rewards have not been published by the source yet.</p>';
   else{
    var groups={};stages.forEach(function(s){var key=Math.floor(Math.max(0,s.rank-1)/25);(groups[key]||(groups[key]=[])).push(s);});
-   var keys=Object.keys(groups);
-   var first=stages[0].rank,last=stages[stages.length-1].rank;
-   var head='<p class="ue-pass-count">'+stages.length+(last>stages.length?' of '+last:'')+(stages.length===1?' rank listed':' ranks listed')+(last>first?' (Rank '+first+' to '+last+')':'')+'.'+(first>1?' Ranks 1'+(first>2?'–'+(first-1):'')+' list no track reward; milestone bonuses are shown under Bonuses.':'')+'</p><p class="ue-pass-legend"><span class="ue-key ue-key-free">Free track</span><span class="ue-key ue-key-deluxe">Deluxe track</span> Deluxe also receives every Free reward.</p>';
-   content=head+keys.map(function(key,i){var list=groups[key],before=i?groups[keys[i-1]][groups[keys[i-1]].length-1].rank:null;return '<details class="ue-pass-range"'+(i===0?" open":"")+'><summary>'+(list.length===1?'Rank '+esc(list[0].rank):'Ranks '+esc(list[0].rank)+'–'+esc(list[list.length-1].rank))+'</summary><ol class="ue-pass-stages">'+listWithGaps(list,before)+'</ol></details>';}).join('');
+   var keys=Object.keys(groups),first=stages[0].rank,last=stages[stages.length-1].rank;
+   /* A legend must reflect *published* track assignments; source records
+      without attribution must not masquerade as Free or Deluxe rewards. */
+   var hasFree=stages.some(function(s){return [].concat(s.free||[]).some(function(x){return passReward(x,ctx)!==null;});});
+   var hasDeluxe=stages.some(function(s){return [].concat(s.deluxe||[]).some(function(x){return passReward(x,ctx)!==null;});});
+   var hasUnspecified=stages.some(function(s){return passUnspecified(s).some(function(x){return passReward(x,ctx)!==null;});});
+   var legend=[];
+   if(hasFree)legend.push('<span class="ue-key ue-key-free">Free track</span>');
+   if(hasDeluxe)legend.push('<span class="ue-key ue-key-deluxe">Deluxe track</span>');
+   if(hasUnspecified)legend.push('<span class="ue-key ue-key-unspecified">Track not specified</span>');
+   if(hasFree&&hasDeluxe)legend.push('Deluxe also receives every Free reward.');
+   var head='<p class="ue-pass-count">'+stages.length+' '+(stages.length===1?'rank with a published entry':'ranks with published entries')+' · through Rank '+last+'.'+(first>1?' Ranks 1'+(first>2?'–'+(first-1):'')+' have no track-reward entries published; milestone bonuses are shown under Bonuses.':'')+'</p><p class="ue-pass-legend">'+legend.join(' ')+'</p>';
+   var ranked=stages.map(function(s){return {stage:s,score:passHighlightScore(s)};}).filter(function(x){return x.score>0;});
+   ranked.sort(function(a,b){return b.score-a.score||a.stage.rank-b.stage.rank;});
+   /* Source-listed reward milestones at the familiar 45/100 thresholds stay visible
+      even when an event publishes many other interesting encounter ranks. */
+   var pinned=stages.filter(function(s){return (s.rank===45||s.rank===100)&&passStageRewards(s).length>0;});
+   var featured=pinned.concat(ranked.filter(function(x){return pinned.indexOf(x.stage)<0;}).slice(0,Math.max(0,4-pinned.length)).map(function(x){return x.stage;}));
+   if(!featured.length&&stages.length)featured=[stages[0],stages[Math.floor((stages.length-1)/2)],stages[stages.length-1]].filter(function(s,i,arr){return arr.indexOf(s)===i&&passStageRewards(s).length;});
+   featured.sort(function(a,b){return a.rank-b.rank;});
+   var overview=featured.length?'<div class="ue-pass-overview"><h5>Published milestones'+(featured.length>1?' <small>Swipe for more</small>':'')+'</h5><ul class="ue-pass-highlights" aria-label="Published milestone rewards">'+featured.map(highlight).join('')+'</ul></div>':'';
+   content=head+overview+'<h5 class="ue-pass-all-title">All published rank entries</h5>'+keys.map(function(key,i){
+    var list=groups[key],start=Number(key)*25+1,end=start+24;
+    var previousEnd=i?(Number(keys[i-1])+1)*25:0;
+    var missingGroups=i&&previousEnd+1<start?'<p class="ue-pass-gap ue-pass-gap-between" role="note">'+gapLabel(previousEnd+1,start-1)+'</p>':'';
+    return missingGroups+'<details class="ue-pass-range"><summary>'+'Ranks '+esc(start)+'–'+esc(end)+' · '+list.length+' published</summary><ol class="ue-pass-stages">'+listWithGaps(list,start,end)+'</ol></details>';
+   }).join('');
   }
   var srcs=(model_sources(ctx)||[]).map(function(s){return s;}).join(' · ');
   var foot='<p class="ue-pass-src">'+(srcs?'Source: '+srcs:'Source not listed')+(meta.updated?' · Data checked '+esc(String(meta.updated).slice(0,10)):' · Freshness unknown')+'. Rewards are as published by the source and can change; anything not listed is not confirmed.'+(meta.warning?' '+esc(meta.warning):'')+'</p>';
@@ -147,7 +318,7 @@ function sourceHighlights(model){
  rules.forEach(function(rule){
   for(var k=0;k<rule.keys.length;k++){
    var rows=(fields[rule.keys[k]]||[]).concat(rule.label.indexOf('Shiny ')===0?(model.notes||[]).map(function(n){return {text:n,status:'single'};}):[]);
-   var row=rows.find(function(item){var t=value(item);return rule.re.test(t)&&!used.has(t.toLowerCase())&&t.length<=240&&(!item.status||item.status==='corroborated'||item.status==='verified'||item.status==='single');});
+   var row=rows.find(function(item){var t=value(item);return rule.re.test(t)&&!used.has(t.toLowerCase())&&t.length<=240&&(!item.status||item.status==='official'||item.status==='corroborated'||item.status==='verified'||item.status==='single');});
    if(!row)continue;
    var message=value(row);used.add(message.toLowerCase());
    out.push('<li><strong>'+esc(rule.label)+'</strong><span>'+esc(message)+'</span></li>');
@@ -159,18 +330,78 @@ function sourceHighlights(model){
 // Every event with structured dated activities receives the same compact schedule preview.
 // Never infer times from prose; the validated event contract owns time-zone conversion.
 function schedulePreview(model,ctx){
+ ctx=ctx||{};
  var activities=(model.activities||[]).filter(function(a){return a.schedule&&(a.presentation==='schedule'||a.presentation==='rotation');});
  if(!activities.length)return '';
- activities=activities.slice().sort(function(a,b){return String(a.schedule.start).localeCompare(String(b.schedule.start))||String(a.id||'').localeCompare(String(b.id||''));});
- var count=Math.min(activities.length,5);
- var cards=activities.slice(0,count).map(function(a){
-  return '<li><strong>'+esc(a.title||a.name||'Scheduled activity')+'</strong><span>'+esc(activityTime(a,ctx))+'</span>'+(activityPlace(a)?'<small>'+esc(activityPlace(a))+'</small>':'')+'</li>';
+ var entries=activities.map(function(a){return {a:a,start:String(a.schedule.start||''),end:null};});
+ entries.sort(function(x,y){return x.start.localeCompare(y.start)||String(x.a.id||'').localeCompare(String(y.a.id||''));});
+ var now=typeof ctx.now==='number'&&Number.isFinite(ctx.now)?ctx.now:Date.now(),allPast=false,hasTimeStatus=false;
+ /* Prefer current and upcoming events only when every source-backed schedule
+    resolves in the user's time zone. An invalid schedule is shown in published
+    order instead of being silently discarded. Full Schedule keeps all entries. */
+ if(ctx.clock&&typeof ctx.clock.range==='function'){
+  try{
+   var zone=ctx.viewerZone||(typeof ctx.clock.viewerZone==='function'?ctx.clock.viewerZone():'');
+   if(zone){
+    var dated=entries.map(function(item){
+     try{
+      var r=ctx.clock.range(item.a.schedule,zone);
+      return Number.isFinite(r.start)&&Number.isFinite(r.end)&&r.end>r.start?{a:item.a,start:r.start,end:r.end}:null;
+     }catch(error){return null;}
+    });
+    if(dated.every(Boolean)){
+     hasTimeStatus=true;
+     dated.sort(function(a,b){return a.start-b.start||String(a.a.id||'').localeCompare(String(b.a.id||''));});
+     var remaining=dated.filter(function(item){return item.end>now;});
+     if(remaining.length)entries=remaining;
+     else{entries=dated.slice(-5);allPast=true;}
+    }
+   }
+  }catch(error){}
+ }
+ var count=Math.min(entries.length,5);
+ var cards=entries.slice(0,count).map(function(item){
+  var a=item.a,live=Number.isFinite(item.end)&&item.start<=now&&item.end>now;
+  return '<li>'+(live?'<small class="ue-schedule-now">Live now</small>':'')+
+   '<strong>'+esc(a.title||a.name||'Scheduled activity')+'</strong><span>'+esc(activityTime(a,ctx))+'</span>'+
+   (activityPlace(a)?'<small>'+esc(activityPlace(a))+'</small>':'')+'</li>';
  }).join('');
- return '<div class="ue-schedule-preview"><h3 class="ue-mini-h">Event schedule</h3><ol>'+cards+'</ol>'+(activities.length>count?'<p class="ue-more-note">+'+(activities.length-count)+' more scheduled activities below</p>':'')+'</div>';
+ return '<div class="ue-schedule-preview"><h3 class="ue-mini-h">Event schedule</h3>'+
+  (hasTimeStatus?'<p class="ue-schedule-caption">'+(allPast?'Recent activities':'Current &amp; upcoming activities')+'</p>':'')+
+  '<ol>'+cards+'</ol>'+(entries.length>count?'<p class="ue-more-note">+'+(entries.length-count)+' more scheduled activities below</p>':'')+
+  (allPast?'<p class="ue-more-note">No upcoming timed activities are listed.</p>':'')+'</div>';
+}
+
+/* Generic dated raid/Max rosters from curated published raidDays.
+   Bosses remain separated by event day, including different Max battles. */
+function raidDayRosters(raidDays,ctx){
+ var days=(Array.isArray(raidDays)?raidDays:[]).filter(function(day){
+  return day&&/^\d{4}-\d{2}-\d{2}$/.test(String(day.date||''))&&
+    ['five','three','max'].some(function(k){return Array.isArray(day[k])&&day[k].length;});
+ }).slice().sort(function(a,b){return a.date.localeCompare(b.date);});
+ var seen=new Set();days=days.filter(function(day){if(seen.has(day.date))return false;seen.add(day.date);return true;});
+ if(!days.length)return '';
+ var groups=[['five','5★ Raids'],['three','3★ Raids'],['max','Max Battles']];
+ var cards=days.map(function(day){
+  var stamp=Date.parse(day.date+'T12:00:00Z'),label=Number.isFinite(stamp)?
+    new Intl.DateTimeFormat('en-AU',{timeZone:'UTC',weekday:'long',day:'numeric',month:'short'}).format(new Date(stamp)):day.date;
+  var panels=groups.map(function(g){
+   var pokemon=(day[g[0]]||[]).filter(function(name){return typeof name==='string'&&name.trim();});
+   if(!pokemon.length)return '';
+   return '<div class="ue-raid-day-group" data-roster="'+g[0]+'"><h5>'+esc(g[1])+'</h5><ul>'+
+    pokemon.map(function(name){var img=ctx.art?ctx.art({n:name,dynamax:/^Dynamax\s/i.test(name)},'sm'):'';
+     var isRaid=g[0]!=='max',tier=isRaid?eventRaidTierHtml(g[0]==='five'?'5★':'3★'):'';
+     var cp=isRaid?eventRaidCpHtml(name,day.cp&&day.cp[name]):'';
+     return '<li><span class="ue-raid-day-art">'+img+tier+'</span><span class="ue-raid-day-info"><b>'+esc(name)+'</b>'+cp+'</span></li>';
+    }).join('')+'</ul></div>';
+  }).join('');
+  return '<article class="ue-raid-day" data-raid-date="'+esc(day.date)+'"><h4>'+esc(label)+'</h4>'+panels+'</article>';
+ }).join('');
+ return '<div class="ue-raid-days"><h3 class="ue-mini-h">Raids &amp; Max Battles by day</h3><div class="ue-raid-day-grid">'+cards+'</div></div>';
 }
 function render(model,ctx){ctx=ctx||{};var view=V.project(model),fields=model.internalValidation&&model.internalValidation.fields||{},body={};
- var galleryOnly=model.encounters.every(function(e){return e.method==='other';});
- body.encounters=section('evd-pokemon',galleryOnly?'Featured Pokémon':'Pokémon',gallery(model,ctx));
+ var galleryOnly=!ctx.rotationHtml&&model.encounters.every(function(e){return e.method==='other';});
+ body.encounters=section('evd-pokemon',galleryOnly?'Featured Pokémon':'Pokémon',(ctx.rotationHtml||'')+gallery(model,ctx));
  if(!model.bonuses.length&&!ctx.moves)body.encounters=body.encounters.replace('<h3 class="sec2">','<h3 class="sec2" id="evd-highlights">');
  var bonusList=model.bonuses.filter(function(b){var t=value(b);return t&&!(model.internalValidation&&model.internalValidation.conflicts||[]).some(function(c){return c.a&&c.a.text===t||c.b&&c.b.text===t;});});
  var realB=bonusList.filter(function(b){return bonusClass(value(b))==='bonus';}),noteB=bonusList.filter(function(b){return bonusClass(value(b))!=='bonus';});
@@ -188,6 +419,7 @@ function render(model,ctx){ctx=ctx||{};var view=V.project(model),fields=model.in
  Object.keys(fields).filter(function(k){return ['bonuses','tickets','research'].indexOf(k)<0;}).forEach(function(k){(fields[k]||[]).forEach(function(r){if(r.text&&!excluded.has(r.text)&&!known.has(r.text)){known.add(r.text);info.push(r.text);}});});
  var detail=info.length?'<details class="ue-guide"><summary>Read the event guide</summary>'+rows(info)+'</details>':'';
  var selected=(view.order||view.sections.map(function(s){return s.key;})).filter(function(key){return key!=='overview'&&body[key];});
+ if(ctx.rotationHtml&&selected.indexOf('encounters')<0)selected.unshift('encounters');
  var nav=selected.map(function(key){return {key:key,label:{encounters:'Pokémon',bonuses:'Bonuses',rotations:'Rotations',schedule:'Schedule',research:'Research',passes:'GO Pass',tickets:'Tickets'}[key]};}).map(function(s){var id={encounters:(!model.bonuses.length&&!ctx.moves?'evd-highlights':'evd-pokemon'),bonuses:'evd-highlights',rotations:'evd-rotations',schedule:'evd-schedule',research:'evd-research-title',passes:'evd-pass',tickets:'evd-tickets'}[s.key];return '<a href="#'+id+'">'+esc(s.label)+'</a>';}).join('');
  if(ctx.moves&&!model.bonuses.length)nav+='<a href="#evd-highlights">Moves</a>';
  if(ctx.locations)nav+='<a href="#evd-locations">Locations</a>';
@@ -212,7 +444,7 @@ function render(model,ctx){ctx=ctx||{};var view=V.project(model),fields=model.in
 
  var panels=[],label={encounters:'Pokémon',bonuses:'Bonuses',research:'Research',passes:'GO Pass',tickets:'Tickets'};
  var incomplete=!selected.length&&!info.length;
- var overview=(ctx.overview||'')+schedulePreview(model,ctx)+sourceHighlights(model)+(info.length?'<h3 class="ue-mini-h">Highlights</h3><ul class="ue-facts ue-summary">'+info.filter(function(t){var k=String(t).toLowerCase().slice(0,40);return !model.tickets.some(function(x){return value(x).toLowerCase().indexOf(k)>=0;})&&!model.bonuses.some(function(x){return value(x).toLowerCase().indexOf(k)>=0;});}).slice(0,4).map(function(t){return '<li>'+esc(t)+'</li>';}).join('')+'</ul>':'')+(incomplete||(model.completeness==='partial'&&selected.length<2)?'<p class="ue-more-note" role="note">More details to come. Only verified information is shown.</p>':'');
+ var overview=(ctx.overview||'')+schedulePreview(model,ctx)+raidDayRosters(ctx.raidDays,ctx)+sourceHighlights(model)+(info.length?'<h3 class="ue-mini-h">Highlights</h3><ul class="ue-facts ue-summary">'+info.filter(function(t){var k=String(t).toLowerCase().slice(0,40);return !model.tickets.some(function(x){return value(x).toLowerCase().indexOf(k)>=0;})&&!model.bonuses.some(function(x){return value(x).toLowerCase().indexOf(k)>=0;});}).slice(0,4).map(function(t){return '<li>'+esc(t)+'</li>';}).join('')+'</ul>':'')+(incomplete||(model.completeness==='partial'&&selected.length<2)?'<p class="ue-more-note" role="note">More details to come. Only verified information is shown.</p>':'');
  panels.push({id:'overview',label:'Overview',html:'<div class="ue-overview">'+(cancelled||'')+conflict+overview+(ctx.actions||'')+'</div>'});
  ['encounters','bonuses','research','passes','tickets'].forEach(function(k){if(selected.indexOf(k)>=0&&body[k]&&(k!=='bonuses'||/class="ue-(bonus|note)/.test(body[k])))panels.push({id:k,label:label[k],html:body[k]});});
  var sched=(selected.indexOf('rotations')>=0?body.rotations:'')+(selected.indexOf('schedule')>=0?body.schedule:'');
@@ -227,5 +459,5 @@ function render(model,ctx){ctx=ctx||{};var view=V.project(model),fields=model.in
  var secs=sections.map(function(t){return '<section class="evd-sec" id="evd-s-'+t.id+'" aria-labelledby="evd-h-'+t.id+'" data-sec="'+t.id+'"><h2 class="evd-sec-h" id="evd-h-'+t.id+'" tabindex="-1">'+esc(t.label)+(t.id==='research'?' <small class="m evd-count">'+(view.researchTasks?view.researchTasks+(view.researchTasks===1?' task':' tasks'):'no tasks listed yet')+'</small>':'')+'</h2>'+dedupe(t.html)+'</section>';}).join('');
  return (ctx.toolbar||'')+hero+nav+'<div class="evd-sections">'+secs+'</div>';
 }
-return {render:render,gallery:gallery,rotations:function(model,ctx){return scheduledActivities(model,ctx,'rotation');}};
+return {render:render,gallery:gallery,rotations:function(model,ctx){return scheduledActivities(model,ctx,'rotation');},raidDayRosters:raidDayRosters,eggKm:eggKm};
 }));

@@ -22,6 +22,7 @@ import * as auth from "./auth.js";
 import * as jobs from "./jobs.js";
 import { ogImage, OG_HOSTS } from "./og.js";
 import { IMAGE_CSP_HOSTS } from "./image-policy.js";
+import { encodeInfographicTargets, decodeInfographicTargets } from "./infographic-decision-wire.mjs";
 import { OBSERVATIONS as REGIONAL_OBSERVATIONS } from "./regional-observations.js";
 import { venueItems, venueFor, describeVenue } from "./venue-times.js";
 export { ogImage };
@@ -183,9 +184,9 @@ const handler = {
   },
 };
 
-// Browser security headers on every response. script-src allows only our own files (no inline scripts or handlers); inline styles are still allowed. The rest of the policy still stops framing, plugins, form hijacking and calls to other sites (so a stolen PIN has nowhere to go).
+// Browser security headers on every response. script-src allows only our own files (no inline scripts or handlers); inline styles are still allowed. The only cross-origin connect-src exception is the fixed, public AUD-reference FX GET endpoint (no cookies or user data). Framing, plugins, form hijacking and all other cross-origin connections stay blocked.
 export const SECURITY_HEADERS = {
-  "content-security-policy": `default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob: ${IMAGE_CSP_HOSTS.join(" ")}; connect-src 'self'; worker-src 'self'; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'`,
+  "content-security-policy": `default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob: ${IMAGE_CSP_HOSTS.join(" ")}; connect-src 'self' https://open.er-api.com/v6/latest/AUD; worker-src 'self'; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'`,
   "x-frame-options": "DENY",
   "x-content-type-options": "nosniff",
   "referrer-policy": "strict-origin-when-cross-origin",
@@ -254,11 +255,40 @@ export function artCandidates(raw) {
   // Explicit battle forms must resolve to their own sprite, never an ordinary species fallback.
   const deoxys = /^Deoxys \((Normal|Attack|Defense|Speed) Forme\)$/i.exec(n);
   if (deoxys) return { base: "deoxys", list: ["deoxys-" + deoxys[1].toLowerCase()], exact: true };
-  const crowned = /^Crowned (Sword Zacian|Shield Zamazenta)$/i.exec(n);
-  if (crowned) {
-    const base = /Zacian$/i.test(crowned[1]) ? "zacian" : "zamazenta";
+  // Every Unown glyph has an exact form. PokéAPI's default Unown A is
+  // 201.png (never 201-a.png), while B–Z, ! and ? are 201-<form>.png.
+  // Recognise source/adapter spelling, including a matching form suffix,
+  // without ever guessing a different letter from inconsistent source text.
+  const unown = /^Unown\s*(?:\(\s*([A-Z!?]|exclamation(?:\s+mark)?|question(?:\s+mark)?)(?:\s+form)?\s*\)|([A-Z!?])(?:\s*\(\s*([A-Z!?]|exclamation|question)\s*\))?|\s*(exclamation(?:\s+mark)?|question(?:\s+mark)?))$/i.exec(n);
+  if (unown) {
+    const glyph = s => { s = s.toLowerCase().replace(/\s+mark$/, ""); return s === "!" ? "exclamation" : s === "?" ? "question" : s; };
+    const form = glyph(unown[1] || unown[2] || unown[4]);
+    if (!unown[3] || glyph(unown[3]) === form) {
+      return { base: "unown", list: ["unown-" + form], exact: true,
+        officialArtworkFile: form === "a" ? "201.png" : "201-" + form + ".png" };
+    }
+  }
+  // PokeAPI uses "gimmighoul-roaming" (not "-roaming-form") for the
+  // exact Coin Bag/GO Pass encounter. Chest Form is the default species.
+  // Keep exact=true: a missing form must never silently display the other one.
+  // Both the official "Gimmighoul (Roaming Form)" and publisher/source
+  // "Roaming Form Gimmighoul" describe the same exact Pokémon variety.
+  // Chest is the default PokeAPI form, not a substitute for Roaming.
+  const gimmighoul = /^(?:Gimmighoul\s*\((Roaming|Chest)\s+Form\)|(Roaming|Chest)\s+Form\s+Gimmighoul)$/i.exec(n);
+  if (gimmighoul) return { base: "gimmighoul", list: [(gimmighoul[1] || gimmighoul[2]).toLowerCase() === "roaming" ? "gimmighoul-roaming" : "gimmighoul"], exact: true };
+  // Source articles also say "Zacian (Crowned Sword)"; both spellings
+  // are the *same exact form*, and neither may borrow Hero-of-Many-Battles art.
+  const crownedSword = /^(?:Crowned Sword Zacian|Zacian\s*\(Crowned Sword\))$/i.test(n);
+  const crownedShield = /^(?:Crowned Shield Zamazenta|Zamazenta\s*\(Crowned Shield\))$/i.test(n);
+  if (crownedSword || crownedShield) {
+    const base = crownedSword ? "zacian" : "zamazenta";
     return { base, list: [base + "-crowned"], exact: true };
   }
+  // Published GO Wild Area bosses are named White/Black Kyurem while
+  // PokeAPI IDs are kyurem-white (10023) and kyurem-black (10022).
+  // Preserve exact-form ownership; no ordinary Kyurem substitution.
+  const kyurem = /^(White|Black) Kyurem$/i.exec(n);
+  if (kyurem) return { base: "kyurem", list: ["kyurem-" + kyurem[1].toLowerCase()], exact: true };
   const paren = (n.match(/\(([^)]+)\)/) || [])[1] || "";
   n = n.replace(/\([^)]*\)/g, "").trim();
   let suffix = "";
@@ -267,7 +297,10 @@ export function artCandidates(raw) {
   if ((m = n.match(/^Gigantamax (.+)$/i))) { n = m[1]; suffix = "gmax"; }
   else if ((m = n.match(/^Mega (.+?)(?: ([XY]))?(?: and [XY])?$/i))) { n = m[1]; suffix = "mega" + (m[2] ? "-" + m[2].toLowerCase() : ""); }
   else if ((m = n.match(/^Primal (.+)$/i))) { n = m[1]; suffix = "primal"; }
-  else if ((m = n.match(/^Origin Forme (.+)$/i))) { n = m[1]; suffix = "origin"; }
+  // Forme-first source headings and species-first labels describe the same
+  // exact PokeAPI varieties (e.g. Therian Forme Landorus = landorus-therian).
+  // Keep the lookup exact: a missing variety must not silently use base art.
+  else if ((m = n.match(/^(Normal|Attack|Defense|Speed|Origin|Altered|Incarnate|Therian|Land|Sky) Forme (.+)$/i))) { n = m[2]; suffix = m[1].toLowerCase(); }
   else if ((m = n.match(/^(Galarian|Hisuian|Alolan|Paldean) (.+)$/i))) { n = m[2]; suffix = { galarian: "galar", hisuian: "hisui", alolan: "alola", paldean: "paldea" }[m[1].toLowerCase()]; }
   const base = slug(n);
   if (!base) return { base: "", list: [] };
@@ -384,7 +417,11 @@ async function pokeId(path) {
 
 async function art(request, env, ctx, url) {
   const name = (url.searchParams.get("n") || "").slice(0, 60);
-  if (!/^[\p{L}0-9 ()'’.\-]+$/u.test(name)) return new Response("Bad name", { status: 400 });
+  const candidates = artCandidates(name);
+  // Punctuation is valid only for a recognised Unown !/? glyph; never
+  // broaden the public art endpoint to arbitrary punctuation or aliases.
+  if (!/^[\p{L}0-9 ()'’.\-!?]+$/u.test(name) ||
+      (/[!?]/.test(name) && !candidates.officialArtworkFile)) return new Response("Bad name", { status: 400 });
   const shiny = url.searchParams.get("shiny") === "1";
   const shadow = url.searchParams.get("shadow") === "1";
   const dynamax = url.searchParams.get("dynamax") === "1";
@@ -392,9 +429,8 @@ async function art(request, env, ctx, url) {
   const costume = (url.searchParams.get("c") || "").replace(/[^A-Za-z0-9_]/g, "").slice(0, 40);
   // PokeMiners names a costume pm<dex>.f<CODE> (form-style) or pm<dex>.c<CODE> (costume-style); the caller says which, default f.
   const costumeKind = url.searchParams.get("cp") === "c" ? "c" : "f";
-  const candidates = artCandidates(name);
   const cache = caches.default;
-  const key = new Request(url.origin + "/api/art?n=" + encodeURIComponent(name.toLowerCase()) + (shiny ? "&shiny=1" : "") + (shadow ? "&shadow=1" : "") + (dynamax ? "&dynamax=1" : "") + (costume ? "&c=" + costume + (costumeKind === "c" ? "&cp=c" : "") : "") + (candidates.exact ? "&forms=2" : ""));
+  const key = new Request(url.origin + "/api/art?n=" + encodeURIComponent(name.toLowerCase()) + (shiny ? "&shiny=1" : "") + (shadow ? "&shadow=1" : "") + (dynamax ? "&dynamax=1" : "") + (costume ? "&c=" + costume + (costumeKind === "c" ? "&cp=c" : "") : "") + (candidates.exact ? "&forms=3" : ""));
   const hit = await cache.match(key);
   if (hit) return hit;
   const allowance = allowEdgeMiss(request, "art");
@@ -404,11 +440,18 @@ async function art(request, env, ctx, url) {
     if (cached) return cached;
     const { base, list, exact } = candidates;
     let id = 0;
-    for (const c of list) { id = await pokeId("pokemon/" + c); if (id) break; }
-    if (!id && base && !exact) id = await pokeId("pokemon-species/" + base);
+    // Cosmetic Unown letters are Pokémon *forms* in PokeAPI, not separate
+    // /pokemon varieties. Their verified form-specific 201-d.png etc. live
+    // in the same official-artwork collection as ordinary species assets.
+    // Never request generic 201.png when the encounter names a letter.
+    if (!candidates.officialArtworkFile) {
+      for (const c of list) { id = await pokeId("pokemon/" + c); if (id) break; }
+      if (!id && base && !exact) id = await pokeId("pokemon-species/" + base);
+    }
 
     let img = null;
     const sources = [];
+    if (candidates.officialArtworkFile && !costume && !dynamax) sources.push(ART_BASE + (shiny ? "shiny/" : "") + candidates.officialArtworkFile);
     if (id && costume && id < 1100) sources.push(COSTUME_BASE + "pm" + id + "." + costumeKind + costume + (shiny ? ".s" : "") + ".icon.png");
     // Shadow and Dynamax have no sprite of their own in the game files; the page draws the aura/smoke.
     if (id && dynamax && gigantamax && id < 1100) sources.push(COSTUME_BASE + "pm" + id + ".fGIGANTAMAX" + (shiny ? ".s" : "") + ".icon.png");
@@ -1057,17 +1100,28 @@ async function pinned(request, env) {
 export function cleanDecision(b) {
   const id = String(b && b.id || ""), status = String(b && b.status || "");
   if (!/^[a-z0-9:_.-]{1,90}$/i.test(id) || !["approved", "rejected", "reset", "unlinked", "week", "month"].includes(status)) return null;
-  // An infographic can sit on several events: ids are comma-separated, titles are separated by " | ", in the same order.
-  const eventId = String(b.eventId || "").slice(0, 700), eventTitle = String(b.eventTitle || "").replace(/[<>]/g, "").slice(0, 900);
-  if (status === "approved" && !/^[\w:.-]{1,90}(,[\w:.-]{1,90}){0,7}$/.test(eventId)) return null;
-  return { id, status, eventId: status === "approved" ? eventId : "", eventTitle: status === "approved" ? eventTitle : "" };
+  // An existing D1 TEXT column stores both legacy event IDs and new explicitly
+  // chosen Pokémon targets. No inferred form, unapproved event or schema change.
+  const eventTitle = String(b.eventTitle || "").replace(/[<>]/g, "").slice(0, 900);
+  let eventId = "";
+  if (status === "approved") {
+    try { eventId = encodeInfographicTargets({eventId: b.eventId, targets: b.targets}).stored; }
+    catch { return null; }
+  }
+  return { id, status, eventId, eventTitle: status === "approved" ? eventTitle : "" };
 }
 async function igDecisions(request, env) {
   if (!env.DB) return json({ decisions: [] });
   await env.DB.prepare("CREATE TABLE IF NOT EXISTS ig_decisions (id TEXT PRIMARY KEY, status TEXT NOT NULL, event_id TEXT NOT NULL, event_title TEXT NOT NULL, at INTEGER NOT NULL)").run();
   if (request.method === "GET") {
     const rows = (await env.DB.prepare("SELECT id, status, event_id, event_title, at FROM ig_decisions ORDER BY at DESC LIMIT 500").all()).results || [];
-    return json({ decisions: rows.map(r => ({ id: r.id, status: r.status, eventId: r.event_id, eventTitle: r.event_title, at: r.at })) });
+    // Reject corrupt target envelopes rather than silently changing someone's
+    // previously approved attachments on the next owner action.
+    return json({ decisions: rows.map(r => {
+      const parsed = decodeInfographicTargets(r.event_id);
+      return { id: r.id, status: r.status, eventId: parsed.eventId, targets: parsed.targets,
+        eventTitle: r.event_title, at: r.at };
+    }) });
   }
   if (request.method !== "POST") return json({ error: "Method not allowed." }, 405);
   const denied = await pinned(request, env); if (denied) return denied;

@@ -49,3 +49,19 @@ test('themed banner carries the small accent slot and an Illustration tag so it 
   const html = A.banner(A.resolve({ name: 'Giratina in 5-star Raid Battles', kind: 'raid', start: '2026-11-04' }, []), { accent: '<span class="ev-art-mon">x</span>' });
   assert.match(html, /ev-art-accent/); assert.match(html, /Illustration/); assert.match(html, /data-art-kind="themed"/);
 });
+
+test('future poster selection rejects stale and wrong-city banners before exact event match', () => {
+  const future = {name: 'GO Fest 2027: Osaka', kind: 'person', region: 'Osaka, Japan',
+    start: '2027-06-12T10:00', end: '2027-06-14T18:00'};
+  const oldYear = 'https://cdn.leekduck.com/assets/img/events/article-images/2026/2026-06-12-go-fest-2026-osaka/banner.jpg';
+  const wrongCity = 'https://cdn.leekduck.com/assets/img/events/article-images/2027/2027-06-12-go-fest-2027-paris/banner.jpg';
+  const exact = 'https://cdn.leekduck.com/assets/img/events/article-images/2027/2027-06-12-go-fest-2027-osaka/banner.jpg';
+  // Representative URL strings only: no request, download or rights claim.
+  const selected = A.resolve(future, [oldYear, wrongCity, exact]);
+  assert.equal(selected.kind, 'official');
+  assert.equal(selected.src, exact);
+  assert.equal(selected.provenance.source, 'Leek Duck');
+  const unmatched = A.resolve(future, [oldYear, wrongCity]);
+  assert.equal(unmatched.kind, 'themed');
+  assert.equal(unmatched.provenance, null);
+});

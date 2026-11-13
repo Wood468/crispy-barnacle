@@ -795,6 +795,18 @@ button.igcheck{min-height:44px}
 .rw-raid .rc .rc-info+.rc-info{margin-left:0}
 .rw-low .rc .rc-info{margin-left:64px}
 
+/* Reusable raid-tier artwork marker and correctly labelled perfect-IV catch CP. */
+.rw-raid .rc-raid-art{position:relative;display:grid;place-items:center;flex:none;min-width:76px;min-height:80px}
+.rw-raid .rc-tier-corner{position:absolute;top:0;left:0;z-index:2;display:inline-flex;align-items:center;gap:3px;min-height:21px;max-width:100%;padding:2px 5px;border-radius:7px;background:color-mix(in srgb,var(--color-canvas) 94%,#203853);border:1px solid var(--color-border);box-shadow:0 1px 4px rgba(0,0,0,.3);font-size:.64rem;line-height:1;white-space:nowrap;pointer-events:none}
+.rw-raid .rc-tier-corner img{width:12px;height:12px;object-fit:contain;flex:none}
+.rw-raid .rc-iv-catch{display:flex;align-items:center;gap:var(--space-1);flex-wrap:wrap;max-width:100%}
+.rw-raid .rc-iv-catch .rc-cp{display:inline-flex;align-items:center;gap:3px;min-height:23px;padding:3px 6px;border:1px solid color-mix(in srgb,var(--color-accent) 40%,var(--color-border));border-radius:7px;background:var(--color-surface-raised);font:800 .69rem/1.2 var(--font-body);font-variant-numeric:tabular-nums;white-space:nowrap}
+.rw-raid .rc-iv-catch .rc-cp small{font:750 .62rem/1 var(--font-body);color:var(--color-text-muted)}
+.rw-raid .rc-iv-catch .rc-weather{border-color:var(--color-border);background:transparent}
+.rw-low .rc-raid-art{min-width:60px;min-height:60px}
+.rw-low .rc-tier-corner{font-size:.57rem;padding:2px var(--space-1)}
+@media(max-width:360px){.rw-raid .rc-raid-art{min-width:64px}.rw-raid .rc-iv-catch .rc-cp{font-size:.64rem;padding:3px var(--space-1)}.rw-raid .rc-iv-catch .rc-cp small{font-size:.57rem}}
+
 /* Mega tiles: normal sprite left, name centre, shiny right */
 .mega-mon{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:var(--space-3)}
 .mega-mon .mega-pair .art,.mega-mon .mega-shiny .art{width:72px;height:72px}
@@ -2191,6 +2203,72 @@ a.evc-source{color:var(--color-link);text-underline-offset:3px}
 .storep-regional .sp-coins{display:flex;align-items:center;gap:var(--space-2);flex-wrap:wrap;margin:var(--space-2) 0}
 .storep-regional .sp-coins input{min-height:44px;width:8rem;font:inherit;padding:0 var(--space-2)}
 
+/* Store: browse by product first; show sources alongside prices, not in three repeated lists. */
+.storep-regional{padding:var(--space-3);border-radius:var(--radius-card)}
+.storep-regional>summary{display:flex;flex-wrap:wrap;align-items:center;gap:var(--space-2);min-height:44px;font-size:1rem}
+.storep-regional>summary small{font-size:var(--type-caption);letter-spacing:0}
+.storep-regional .sp-intro{font-size:var(--type-meta);line-height:1.45;color:var(--color-text-muted);margin:var(--space-2) 0 var(--space-3)}
+.storep-regional .sp-search{display:grid;gap:var(--space-1);font-size:var(--type-meta);font-weight:650;margin:var(--space-2) 0}
+.storep-regional .sp-search input{width:100%;min-width:0;min-height:44px;padding:var(--space-2) var(--space-3);border-radius:var(--radius-control);border:1px solid var(--color-border);background:var(--color-canvas);color:var(--color-text);font:inherit}
+.storep-regional .sp-search input:focus-visible{outline:2px solid var(--color-accent);outline-offset:2px}
+.storep-regional .sp-results{font:600 var(--type-overline) var(--font-body);color:var(--color-text-muted);margin:var(--space-2) 0}
+.storep-regional .sp-catalogue{display:grid;gap:var(--space-2)}
+.storep-regional .sp-product{border:1px solid var(--color-border);border-radius:var(--radius-card);background:var(--color-surface-raised);padding:var(--space-3);min-width:0}
+.storep-regional .sp-product[hidden]{display:none}
+.storep-regional .sp-product-head{display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:var(--space-2);margin:0 0 var(--space-2)}
+.storep-regional .sp-product-name{display:inline-flex;align-items:center;gap:var(--space-2);min-width:0;flex:1 1 140px;line-height:1.28}
+.storep-regional .sp-product-name b{font-size:var(--type-body-emphasis);overflow-wrap:anywhere}
+.storep-regional .sp-product-group{color:var(--color-text-muted);font-size:var(--type-overline);line-height:1.35;max-width:100%;text-align:right}
+.storep-regional .sp-market-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--space-2)}
+.storep-regional .sp-market{display:grid;align-content:start;gap:var(--space-1);min-width:0;border:1px solid var(--color-border);background:var(--color-canvas);border-radius:var(--radius-md);padding:var(--space-2)}
+.storep-regional .sp-market-au{grid-column:1/-1;grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:center}
+.storep-regional .sp-market-label{font-size:.7rem;font-weight:750;line-height:1.3}
+.storep-regional .sp-market-label small{display:block;font-weight:450;color:var(--color-text-muted)}
+.storep-regional .sp-market .sp-regional-value{display:block;font-size:var(--type-meta);line-height:1.3;min-width:0}
+.storep-regional .sp-market .sp-regional-value>b{display:block;font-size:var(--type-body-emphasis);font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.storep-regional .sp-market .sp-regional-value small{font-size:.64rem;line-height:1.4;margin-top:2px}
+.storep-regional .sp-market .sp-est{padding-left:var(--space-2)}
+.storep-regional .sp-compare-more{border-top:1px solid var(--color-border);margin-top:var(--space-4);padding-top:var(--space-2)}
+.storep-regional .sp-compare-more>summary{min-height:44px}
+.storep-regional .sp-compare-more>summary small{font-size:var(--type-overline)}
+/* At standard phone widths show all three regions together; keep two columns on narrow devices. */
+@media(min-width:390px) and (max-width:659px){
+  .storep-regional .sp-market-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+  .storep-regional .sp-market-au{grid-column:auto;grid-template-columns:minmax(0,1fr);align-items:start}
+  .storep-regional .sp-market{padding:7px 5px;overflow-wrap:anywhere}
+  .storep-regional .sp-market-label{font-size:.66rem}
+  .storep-regional .sp-market .sp-regional-value>b{font-size:var(--type-body-sm)}
+  .storep-regional .sp-market .sp-regional-value small{font-size:var(--type-caption-compact)}
+}
+@media(min-width:660px){.storep-regional .sp-market-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.storep-regional .sp-market-au{grid-column:auto;grid-template-columns:minmax(0,1fr);align-items:start}}
+
+
+
+/* Store mobile UX: tiered browsing keeps tickets and upgrades ahead of coins and
+   lets the remaining catalogue stay available without a 45-card first scroll. */
+.storep-regional .sp-catalogue{display:grid;gap:var(--space-3)}
+.storep-regional .sp-group{min-width:0;border-top:1px solid var(--color-border);padding-top:var(--space-1)}
+.storep-regional .sp-group[hidden]{display:none}
+.storep-regional .sp-group>summary{display:flex;align-items:center;gap:var(--space-2);min-height:48px;cursor:pointer;font-size:var(--type-body-emphasis);font-weight:800}
+.storep-regional .sp-group>summary small{margin-left:auto;color:var(--color-text-muted);font-size:var(--type-overline);font-weight:600;white-space:nowrap}
+.storep-regional .sp-group>summary:focus-visible{outline:2px solid var(--color-accent);outline-offset:2px}
+.storep-regional .sp-group-items{display:grid;gap:var(--space-2);padding-top:var(--space-2)}
+.storep-regional .sp-product{padding:var(--space-2);border-radius:var(--radius-md)}
+.storep-regional .sp-product-head{gap:var(--space-1);margin-bottom:var(--space-2)}
+.storep-regional .sp-product-name{gap:var(--space-2);flex-basis:170px}
+.storep-regional .sp-product-name b{font-size:var(--type-body-sm);line-height:1.3}
+.storep-regional .sp-product-group{font-size:var(--type-caption-compact)}
+.storep-regional .sp-market{gap:2px}
+.storep-regional .sp-market .sp-regional-value small{line-height:1.3;color:var(--color-text-muted)}
+.storep-regional .sp-i-token{flex:none;display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:var(--radius-sm);border:1px solid var(--color-border);background:var(--color-canvas);color:var(--color-text-body);font-size:.69rem;font-weight:850;line-height:1}
+.storep-regional .sp-i{flex:none;object-fit:contain;width:28px;height:28px}
+@media(min-width:390px) and (max-width:659px){
+  .storep-regional .sp-market-grid{gap:5px}
+  .storep-regional .sp-market{padding:6px}
+  .storep-regional .sp-market .sp-regional-value>b{font-size:.86rem}
+  .storep-regional .sp-market .sp-regional-value small{font-size:.65rem}
+}
+
 /* Raids and Max Battles polish: tier badge, CP, countdown, relationship chips, tiered Max roster. */
 .rc-tier{justify-self:start;width:fit-content;font-style:normal;display:inline-flex;align-items:center;min-height:20px;padding:0 var(--space-2);border-radius:var(--radius-pill);background:color-mix(in srgb,var(--color-text) 12%,transparent);color:var(--color-text);font-family:var(--font-body);font-weight:800;font-size:var(--type-label);line-height:1;letter-spacing:.04em}
 .rc-meta{display:flex;flex-wrap:wrap;align-items:center;gap:var(--space-1);margin-top:2px}
@@ -2211,3 +2289,75 @@ button.rc-chip:focus-visible{outline:2px solid var(--color-link);outline-offset:
 .rw-max-pokemon .max-art.is-dyn{min-width:84px;min-height:84px}
 .rw-max-pokemon .max-art.is-dyn::before,.rw-max-pokemon .max-art.is-dyn::after{inset:4%;animation:none}
 .rw-empty{padding:var(--space-3);border:1px dashed var(--border-subtle,rgba(255,255,255,.2));border-radius:var(--radius-md)}
+
+
+/* #521 — Dynamax and ordinary Pokémon intentionally share the species model,
+   not the visual identity. The universal Event Details gallery / reward lanes
+   render their artwork directly (without monArt's Max wrapper), so use the
+   existing exact data-sd flag to show a visible Max treatment there too.
+   This is static and stays legible with reduced motion enabled. */
+#evd :is(.ue-mon-art,.ue-reward-art,.ue-pass-art):has(> img.art[data-sd="1"]){
+  position:relative;isolation:isolate
+}
+#evd :is(.ue-mon-art,.ue-reward-art,.ue-pass-art):has(> img.art[data-sd="1"])::before{
+  content:"";position:absolute;inset:7%;z-index:0;pointer-events:none;
+  border:2px solid rgba(255,92,148,.9);border-radius:50%;
+  background:radial-gradient(circle at 50% 62%,rgba(250,72,131,.34) 5%,rgba(144,23,93,.28) 52%,transparent 78%);
+  box-shadow:inset 0 0 10px rgba(255,67,138,.28),0 0 10px rgba(231,45,116,.5)
+}
+#evd :is(.ue-mon-art,.ue-reward-art,.ue-pass-art) > img.art[data-sd="1"]{
+  position:relative;z-index:1;filter:drop-shadow(0 1px 5px rgba(255,72,135,.75))
+}
+#evd .ue-mon-art:has(> img.art[data-sd="1"])::after{
+  content:"DYNAMAX";position:absolute;right:2px;bottom:2px;z-index:2;
+  padding:2px 5px 2px 17px;border-radius:var(--radius-pill);color:#fff;
+  background:#9e1649 url("/img/ext/BreadRaidEmblem-71f25669.png") no-repeat 3px center / 12px 12px;
+  font:800 .54rem/1.2 var(--font-body);letter-spacing:.025em;
+  box-shadow:0 1px 4px rgba(0,0,0,.5);pointer-events:none
+}
+#evd :is(.ue-reward-art,.ue-pass-art):has(> img.art[data-sd="1"])::after{
+  content:"MAX";position:absolute;right:0;bottom:0;z-index:2;
+  padding:1px 3px 1px 13px;border-radius:4px;color:#fff;
+  background:#9e1649 url("/img/ext/BreadRaidEmblem-71f25669.png") no-repeat 2px center / 10px 10px;
+  font:800 .46rem/1.1 var(--font-body);letter-spacing:.01em;pointer-events:none
+}
+
+/* Store: one approximate AUD reference above the original local price. */
+.storep-regional .sp-aud-equivalent{display:block;min-width:0;line-height:1.28;color:var(--color-text-body);font-variant-numeric:tabular-nums;font-size:var(--type-body-sm);overflow-wrap:anywhere}
+.storep-regional .sp-aud-equivalent .sp-aud-source{display:block;font-size:var(--type-caption-compact);font-weight:400;color:var(--color-text-muted)}
+.storep-regional .sp-aud-equivalent+.sp-local-price{display:block;padding-top:3px;border-top:1px solid var(--color-border);margin-top:3px}
+
+/* Mobile Store QA: three tall equal-height country boxes created a 39-product
+   scroll marathon. Keep every country, dated price and unavailable state but
+   present them as short, individually sized comparison rows. */
+@media(max-width:659px){
+  .storep-regional .sp-product{padding:var(--space-2)}
+  .storep-regional .sp-product-head{margin-bottom:var(--space-1)}
+  .storep-regional .sp-market-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:0}
+  .storep-regional .sp-market,
+  .storep-regional .sp-market-au{
+    display:grid;grid-column:auto;grid-template-columns:minmax(72px,86px) minmax(0,1fr);
+    align-items:start;gap:var(--space-2);padding:var(--space-2) 0;
+    border:0;border-radius:0;background:transparent;overflow-wrap:normal
+  }
+  .storep-regional .sp-market+.sp-market{border-top:1px solid var(--color-border)}
+  .storep-regional .sp-market-label{font-size:var(--type-meta);line-height:1.25}
+  .storep-regional .sp-market-label small{display:block;font-size:var(--type-caption-compact)}
+  .storep-regional .sp-market .sp-regional-value{min-width:0;line-height:1.25}
+  .storep-regional .sp-market .sp-regional-value>b{font-size:var(--type-body-sm)}
+  .storep-regional .sp-market .sp-regional-value small{font-size:var(--type-caption-compact);line-height:1.25}
+  .storep-regional .sp-market .sp-none{font-size:var(--type-caption);color:var(--color-text-muted)}
+  .storep-regional .sp-aud-equivalent{display:block;line-height:1.25}
+  .storep-regional .sp-aud-equivalent .sp-aud-source{display:inline;margin-left:var(--space-1)}
+  .storep-regional .sp-aud-equivalent+.sp-local-price{border:0;margin:0;padding:0}
+}
+
+
+/* Owner infographic approval: one exact source-backed raid boss, iPhone-safe. */
+.ig-boss-controls{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--space-2);padding:var(--space-3);border:1px solid var(--color-border,#343d51);border-radius:var(--radius-md);background:var(--color-surface-raised,#1c2330)}
+.ig-boss-controls label{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--space-2);min-width:0;font-size:var(--type-body-sm);font-weight:700}
+.ig-boss-controls select{box-sizing:border-box;display:block;width:100%;min-width:0;min-height:48px;padding:var(--space-2) var(--space-3);border-radius:var(--radius-control);border:1px solid var(--color-border,#455169);background:var(--color-surface,#141b27);color:var(--color-text,#f2f4fa);font-size:var(--type-body);line-height:1.4;color-scheme:dark}
+.ig-boss-controls select:focus-visible{outline:2px solid #8baaff;outline-offset:2px}
+.ig-boss-controls .pill{justify-self:start;min-height:44px}
+.ig-boss-controls .pill:disabled{opacity:.48;cursor:not-allowed}
+.ig-boss-controls small{font-size:var(--type-meta-compact);line-height:1.5;color:var(--color-text-muted,#9ba6b8)}

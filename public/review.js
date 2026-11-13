@@ -8,6 +8,7 @@
   /* GET /api/ig-decisions returns only the newest rows: src/worker.js igDecisions() runs "ORDER BY at DESC LIMIT 500" and has no per-picture query.
      A list this long may be cut off, so a picture missing from it is UNKNOWN (it may hold an older decision), never "nothing stored". */
   var DECISIONS_CAP = 500;
+  var pokemonCatalogue = [], formCatalogue = [], detailCatalogue = null;
   var NET_TIMEOUT_MS = 15000;
   function unknownErr() { var e = new Error('unknown'); e.unknown = true; return e; }
   /* fetch with a time limit: a hung request ends in a timeout error instead of blocking the picture's queue forever. */
@@ -107,7 +108,7 @@
       var hit = list.filter(function (d) { return d && d.id === id; })[0] || null;
       /* A full-length list that does not mention the picture proves nothing: older rows may have been cut off. */
       if (!hit && list.length >= DECISIONS_CAP) throw unknownErr();
-      return hit ? { id: id, status: hit.status, eventId: hit.eventId || '', eventTitle: hit.eventTitle || '' } : null;
+      return hit ? { id: id, status: hit.status, eventId: hit.eventId || '', eventTitle: hit.eventTitle || '', targets: hit.targets || [] } : null;
     });
   }
   var CAP_MSG = 'The saved decisions list is full (' + DECISIONS_CAP + ' shown), so this picture\'s saved state cannot be checked. Nothing was changed.';
@@ -125,6 +126,7 @@
   function undoDiscard() {
     var u = undos[undos.length - 1]; if (!u) return; dropUndo(u); drawUndo(false);
     var back = u.prev ? { id: u.id, status: u.prev.status, eventId: u.prev.eventId || '', eventTitle: u.prev.eventTitle || '' } : { id: u.id, status: 'reset', eventId: '', eventTitle: '' };
+    if (u.prev && Array.isArray(u.prev.targets) && u.prev.targets.some(function(t){return t && t.type === 'raid-boss';})) back.targets = u.prev.targets;
     queued(u.id, function () {
       return recheckFirst(u.id).then(function (go) { if (!go) return; return readServer(u.id).then(function (now) {
         if (!now || now.status !== 'rejected') { setLocal(u.id, now); msg = 'That picture was changed somewhere else since you discarded it, so Undo did nothing.'; render(); return; }
@@ -165,6 +167,57 @@
     var ids = o.getAttribute('data-ids'); if (!ids) return [{ id: o.value, title: o.getAttribute('data-t') }];
     var ts = o.getAttribute('data-t').split(' | '); return ids.split(',').map(function (x, i) { return { id: x, title: ts[i] || x }; });
   }
+  /* Only bosses actually published on the current/upcoming Battle schedule.
+     The full Dex remains available to resolve exact IDs, never to offer arbitrary choices. */
+  function currentBossChoices() {
+    var picker = window.GOINFOGRAPHICRAIDPICKER;
+    var data = window.GO && window.GO.D;
+    return picker && data && window.GOLIB && window.GOLIB.raidBossNames
+      ? picker.options(data, pokemonCatalogue, Date.now(), window.GOLIB.raidBossNames, window.GOEventClock && window.GOEventClock.parseDate) : [];
+  }
+  function bossTargets(id) {
+    var d = decs[id];
+    return d && d.status === 'approved' && Array.isArray(d.targets)
+      ? d.targets.filter(function (t) { return t && t.type === 'raid-boss'; }) : [];
+  }
+  function bossName(id) {
+    var match = pokemonCatalogue.filter(function (p) { return String(p[0]).padStart(3,'0') === String(id); })[0];
+    return match ? match[1] : '#' + String(id);
+  }
+  function bossLabel(t) {
+    return bossName(t.pokemonId) + (t.formId ? ' · ' + t.formId : '') + ' · ' + t.battleMode;
+  }
+  function exactScheduledChoices() {
+    var picker = window.GOINFOGRAPHICRAIDPICKER, data = window.GO && window.GO.D;
+    return picker && data && window.GOLIB && window.GOLIB.raidBossNames
+      ? picker.targetChoices(data, pokemonCatalogue, formCatalogue, detailCatalogue,
+          Date.now(), window.GOLIB.raidBossNames,
+          window.GOEventClock && window.GOEventClock.parseDate) : [];
+  }
+  function bossControls(it) {
+    var choices = exactScheduledChoices();
+    var options = choices.map(function (row) {
+      var label = (row.phase === 'live' ? 'Live · ' : 'Upcoming · ') + row.name +
+        ' · ' + (row.battleMode === 'normal' ? 'Raid' : row.battleMode);
+      return '<option value="' + esc(row.value) + '">' + esc(label) + '</option>';
+    }).join('');
+    return '<div class="igr-o ig-boss-controls" role="group" aria-label="Attach infographic to a scheduled raid or Max Battle boss">'
+      + '<label>Raid or Max Battle Pokémon<select data-ig-boss-choice aria-label="Choose exact scheduled raid boss and form"><option value="">Choose an exact scheduled boss…</option>'
+      + options + '</select></label>'
+      + '<button type="button" class="pill" data-ig-boss-save' + (choices.length ? '' : ' disabled') + '>Attach to Pokémon</button>'
+      + '<small>' + (choices.length
+        ? 'Only published live and upcoming bosses are offered. Pokémon forms and battle types are fixed to the schedule.'
+        : 'No exact scheduled boss choices available. Check the raid schedule or retry loading the source data.') + '</small></div>';
+  }
+  function bossFormCompatible(row, mode) {
+    var kind = row[3];
+    // forms.json classifies Primal Kyogre/Groudon in its broader 'mega'
+    // family. The exact formId, not category alone, separates these modes.
+    if (mode === 'mega') return kind === 'mega' && row[1] !== 'primal';
+    if (mode === 'primal') return kind === 'mega' && row[1] === 'primal';
+    if (mode === 'gigantamax') return kind === 'gmax';
+    return kind !== 'mega' && kind !== 'primal' && kind !== 'gmax';
+  }
   function linkedOf(id) {
     var d = decs[id]; if (!d || d.status !== 'approved' || !d.eventId) return [];
     var ids = String(d.eventId).split(','), ts = String(d.eventTitle || '').split(' | ');
@@ -175,8 +228,9 @@
     return '<article class="igr" data-id="' + esc(it.id) + '">'
       + '<a class="igr-img" href="' + esc(it.image) + '" target="_blank" rel="noopener"><img src="' + esc(it.image) + '" alt="' + esc(it.title || 'Infographic') + '" loading="lazy" decoding="async"></a>'
       + '<div class="igr-b"><b>' + esc(it.title || 'Untitled graphic') + '</b>'
-      + '<div class="igr-g">' + L.map(function (l, n) { return '<button type="button" class="pill all" data-ig-unlink="' + n + '" aria-label="Unlink from ' + esc(l.title) + '">' + esc(l.title) + ' ✕</button>'; }).join('') + '</div>'
+      + '<div class="igr-g">' + bossTargets(it.id).map(function (t,n) { return '<button type="button" class="pill all" data-ig-boss-unlink="' + n + '" aria-label="Unlink ' + esc(bossLabel(t)) + '">' + esc(bossLabel(t)) + ' ✕</button>'; }).join('') + L.map(function (l, n) { return '<button type="button" class="pill all" data-ig-unlink="' + n + '" aria-label="Unlink from ' + esc(l.title) + '">' + esc(l.title) + ' ✕</button>'; }).join('') + '</div>'
       + '<div class="igr-o"><select aria-label="Link to another event"><option value="">Also link to…</option>' + eventOptions() + '</select><button type="button" class="pill" data-ig-add aria-label="Add event: ' + esc(it.title || 'Untitled graphic') + '">Add</button><button type="button" class="pill" data-ig-no aria-label="Discard: ' + esc(it.title || 'Untitled graphic') + '">Discard</button></div>'
+      + bossControls(it)
       + '<div class="igr-o"><button type="button" class="pill" data-ig-ov="week">📅 This week\'s picture</button><button type="button" class="pill" data-ig-ov="month">🗓 Month overview</button></div>'
       + '</div></article>';
   }
@@ -192,6 +246,7 @@
       + (it.signals && it.signals.length ? '<div class="igr-s">' + it.signals.map(function (s) { return '<span>' + esc(s) + '</span>'; }).join('') + '</div>' : '')
       + '<div class="igr-g">' + (g.length ? g.map(function (x) { return '<button type="button" class="pill all" data-ig-ok="' + esc(x.eventId) + '" data-t="' + esc(x.eventTitle) + '">Approve: ' + esc(x.eventTitle) + '</button>'; }).join('') : '<small>No likely event found.</small>') + '</div>'
       + '<div class="igr-o"><select aria-label="Choose another event"><option value="">Another event…</option>' + eventOptions() + '</select><button type="button" class="pill" data-ig-pick aria-label="Approve: ' + esc(it.title || 'Untitled graphic') + '">Approve</button><button type="button" class="pill" data-ig-no aria-label="Discard: ' + esc(it.title || 'Untitled graphic') + '">Discard</button></div>'
+      + bossControls(it)
       + '<div class="igr-o"><button type="button" class="pill" data-ig-ov="week">📅 This week\'s picture</button><button type="button" class="pill" data-ig-ov="month">🗓 Month overview</button></div>'
       + (safeUrl(it.post) ? '<small><a href="' + esc(it.post) + '" target="_blank" rel="noopener noreferrer">' + (window.GOLIB.isPrivateLink(it.post) ? 'Open in Discord (owner only)' : 'Original post') + '</a>' + (it.creator ? ' · ' + esc(it.creator) : '') + '</small>' : '')
       + '</div></article>';
@@ -205,7 +260,7 @@
     banner(open.length);
     var capNote = capped ? '<p class="igr-msg igr-cap" role="status">Showing the ' + DECISIONS_CAP + ' most recent decisions; older ones may be hidden. A picture that shows no decision here may still have one, so Discard is refused and Approve asks first.</p>' : '';
     var queueRetry = queueFailed ? '<button type="button" class="pill all" data-ig-retry="1">Retry</button>' : '';
-    var linked = items.filter(function (i) { return linkedOf(i.id).length; });
+    var linked = items.filter(function (i) { return linkedOf(i.id).length || bossTargets(i.id).length; });
     if (!decsOk) {
       host.hidden = false;
       host.innerHTML = '<details class="dd" open><summary>Infographic review <span class="cnt">' + open.length + '</span></summary><div class="body"><p class="igr-msg" role="alert">Could not read your saved decisions, so review is paused. Nothing can be approved or discarded until they load, so a choice you made elsewhere is never overwritten.</p>' + (msg ? '<p class="igr-msg" role="status">' + esc(msg) + '</p>' : '') + '<button type="button" class="pill all" data-ig-retry="1">Retry</button></div></details>';
@@ -215,18 +270,20 @@
     host.hidden = false;
     var kl = document.getElementById('iglinked'), keepLinked = !!(kl && kl.open);
     host.innerHTML = '<details class="dd" open><summary>Infographic review <span class="cnt">' + open.length + '</span></summary><div class="body">'
-      + '<p class="note" style="margin:0 0 8px">Discord and Telegram pictures appear here until you link them. Check the image text and date before approving; nothing is attached to an event until you approve it.</p>'
+      + '<p class="note" style="margin:0 0 8px">Discord and Telegram pictures appear here until you link them. Check the image text and date before approving; nothing appears on an event or Pokémon until you approve it.</p>'
       + capNote + (msg ? '<p class="igr-msg" role="status">' + esc(msg) + '</p>' : '') + open.slice(0, shown).map(card).join('') + (open.length > shown ? '<button type="button" class="pill all" data-ig-more="1">Show 10 more (' + (open.length - shown) + ' left)</button>' : '') + queueRetry + '</div></details>'
       + (linked.length ? '<details class="dd"' + (keepLinked ? ' open' : '') + ' id="iglinked"><summary>Linked infographics <span class="cnt">' + linked.length + '</span></summary><div class="body"><p class="note" style="margin:0 0 8px">Tap ✕ to unlink from one event, add more events, or discard. Changes reach the event within a few hours.</p>' + linked.map(linkedCard).join('') + '</div></details>' : '');
   }
-  function send(it, status, eventId, title, note) {
+  function send(it, status, eventId, title, note, specifiedBossTargets) {
     if (!isOwner()) { hideOwnerUi(); return; }
     if (!decsOk) { msg = 'Saved decisions could not be read, so nothing can be changed yet. Tap Retry.'; render(); return; }
     if (!pin()) { msg = 'Set your Sync PIN in Menu → Sync & accounts before reviewing.'; render(); return; }
     /* Older decisions may be hidden (list at the cap): this picture could already hold one, so overwriting it needs a yes. Discard is refused further down. */
     if (capped && status !== 'rejected' && status !== 'unlinked' && !decs[it.id] && !window.confirm('Older saved decisions are hidden, so this picture may already have a saved decision. Replace it?')) return;
     if (status === 'rejected') { if (pendingDiscard[it.id]) return; pendingDiscard[it.id] = true; }
+    var targets = specifiedBossTargets === undefined ? bossTargets(it.id) : specifiedBossTargets;
     var body = { id: it.id, status: status, eventId: eventId || '', eventTitle: title || '' };
+    if (status === 'approved' && targets && targets.length) body.targets = targets;
     queued(it.id, function () {
       return recheckFirst(it.id).then(function (go) {
         if (!go) return;
@@ -235,7 +292,7 @@
       return before.then(function (b) {
         if (b.fail) { msg = b.fail.unknown ? 'Not discarded: ' + CAP_MSG : 'Could not check the saved decision for this picture, so it was not discarded. Try again.'; render(); return; }
         return post(body).then(function () {
-          applyLocal({ id: it.id, status: status, eventId: eventId || '', eventTitle: title || '' });
+          applyLocal({ id: it.id, status: status, eventId: eventId || '', eventTitle: title || '', targets: status === 'approved' ? targets : [] });
           if (status === 'rejected') { msg = ''; showUndo(it, b.prev); } else { clearUndo(it.id); msg = note || (status === 'approved' ? 'Linked. It will appear on the event after the next scheduled update.' : status === 'unlinked' ? 'Unlinked. It is back in the review list.' : 'Discarded.'); }
           render(); document.dispatchEvent(new CustomEvent('gofn-review-updated', { detail: { decided: true } }));
         });
@@ -244,7 +301,7 @@
     }).then(function () { delete pendingDiscard[it.id]; });
   }
   function setLinks(it, list) {
-    if (!list.length) return send(it, 'unlinked');
+    if (!list.length) return bossTargets(it.id).length ? send(it, 'approved', '', '', undefined, bossTargets(it.id)) : send(it, 'unlinked');
     send(it, 'approved', list.map(function (l) { return l.id; }).join(','), list.map(function (l) { return l.title; }).join(' | '));
   }
   function banner(n) {
@@ -272,6 +329,34 @@
     var it = items.filter(function (i) { return i.id === card.getAttribute('data-id'); })[0]; if (!it) return;
     var ok = e.target.closest('[data-ig-ok]');
     if (ok) return send(it, 'approved', ok.getAttribute('data-ig-ok'), ok.getAttribute('data-t'));
+    var bossRemove = e.target.closest('[data-ig-boss-unlink]');
+    if (bossRemove) {
+      var selected = bossTargets(it.id), idx = +bossRemove.getAttribute('data-ig-boss-unlink');
+      if (!Number.isInteger(idx) || idx < 0 || idx >= selected.length) return;
+      var next = selected.filter(function (_, n) { return n !== idx; });
+      var old = decs[it.id] || {};
+      return !next.length && !old.eventId ? send(it, 'unlinked') :
+        send(it, 'approved', old.eventId || '', old.eventTitle || '', undefined, next);
+    }
+    var bossSave = e.target.closest('[data-ig-boss-save]');
+    if (bossSave) {
+      var field = card.querySelector('[data-ig-boss-choice]'),
+          matches = exactScheduledChoices().filter(function (row) {
+            return field && row.value === field.value && !!field.value;
+          });
+      if (matches.length !== 1) {
+        msg = 'Choose an exact current or upcoming raid/Max Battle boss from the published schedule.';
+        return render();
+      }
+      /* Derive the saved identity again from trusted schedule data. A manually
+         altered option value never authorizes an unlisted Pokémon or form. */
+      var target = matches[0].target, current = bossTargets(it.id);
+      if (!current.some(function (b) { return b.pokemonId === target.pokemonId &&
+          b.formId === target.formId && b.battleMode === target.battleMode; })) current.push(target);
+      var prior = decs[it.id] || {};
+      return send(it, 'approved', prior.eventId || '', prior.eventTitle || '',
+        'Exact Pokémon guide approved. It will remain available after the raid ends.', current);
+    }
     var un = e.target.closest('[data-ig-unlink]');
     if (un) { var L = linkedOf(it.id), gone = L[Number(un.getAttribute('data-ig-unlink'))]; return setLinks(it, L.filter(function (x) { return x !== gone; })); }
     if (e.target.closest('[data-ig-add]')) {
@@ -340,6 +425,18 @@
       decsOk = !!R[1]; if (R[1]) takeDecisions(R[1].decisions);
       if (!ensureHost()) return;
       render(); document.dispatchEvent(new Event('gofn-review-updated'));
+      // Catalogues are optional; unknown Pokémon names never get guessed IDs.
+      Promise.all([
+        timedFetch('/dex.json').then(function (r) { return r.ok ? r.json() : []; }),
+        timedFetch('/forms.json').then(function (r) { return r.ok ? r.json() : {}; }),
+        timedFetch('/event-details.json').then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; })
+      ]).then(function (catalogue) {
+        if (token !== loadToken || !isOwner()) return;
+        pokemonCatalogue = Array.isArray(catalogue[0]) ? catalogue[0] : [];
+        formCatalogue = Array.isArray(catalogue[1] && catalogue[1].f) ? catalogue[1].f : [];
+        detailCatalogue = catalogue[2] && typeof catalogue[2].events === 'object' ? catalogue[2] : null;
+        render();
+      }).catch(function () { /* do not guess when the catalogue cannot load */ });
       if (location.hash === '#review') gotoReview();
     });
   }

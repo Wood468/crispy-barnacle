@@ -38,7 +38,7 @@
     }); }
     function j(u) { return window.GOLIB.jsonOrNull(u, { maxAge: 600000, init: { cache: 'no-cache' } }); }
     var placesP = window.GOPLACES_READY ? window.GOPLACES_READY.then(function (places) { return places && places.load ? places.load() : null; }) : (window.GOPLACES ? window.GOPLACES.load() : null);
-    loadPending = Promise.all([j('/event-info.json'), (window.GOLIB ? GOLIB.loadPrices() : j('/prices.json')), placesP, j('/event-details.json'), j('/event-moves.json'), (window.GOEventRegistry?GOEventRegistry.ready:j('/events-v1.json'))].map(optional)).then(function (a) { EVM = (a[4] && a[4].moves) || []; if(window.GOEventAdapter&&a[5]){GOEventAdapter.configureSpecies(a[5].species||[]);GOEventAdapter.configureCostumes(a[5].costumes||[]);} DATA = { incomplete:incomplete, info: a[0] || { events: {}, passes: {} }, prices: a[1] || { prices: [], fx: null }, details: (a[3] && a[3].events) || {}, catalogue: a[5] && a[5].schemaVersion===1 ? a[5].events || [] : [] }; return DATA; });
+    loadPending = Promise.all([j('/event-info.json'), (window.GOLIB ? GOLIB.loadPrices() : j('/prices.json')), placesP, j('/event-details.json'), j('/event-moves.json'), (window.GOEventRegistry?GOEventRegistry.ready:j('/events-v1.json')),j('/event-encounter-rotations.json')].map(optional)).then(function (a) { EVM = (a[4] && a[4].moves) || []; if(window.GOEventAdapter&&a[5]){GOEventAdapter.configureSpecies(a[5].species||[]);GOEventAdapter.configureCostumes(a[5].costumes||[]);} DATA = { incomplete:incomplete, info: a[0] || { events: {}, passes: {} }, prices: a[1] || { prices: [], fx: null }, details: (a[3] && a[3].events) || {}, catalogue: a[5] && a[5].schemaVersion===1 ? a[5].events || [] : [], rotations: a[6] && a[6].schemaVersion===1 ? a[6] : { entries:[] } }; return DATA; });
     return loadPending;
   }
   function fmtDay(iso) { var d = new Date(iso + 'T12:00'); return isNaN(d) ? esc(iso) : d.getDate() + ' ' + G.MON[d.getMonth()]; }
@@ -126,17 +126,31 @@
   }
   function passCard(id) {
     var p = DATA.info.passes[id]; if (!p) return '';
-    var unl = (p.unlocks || []).map(function (u) { var o = typeof u === 'string' ? { text: u } : u; return '<li class="' + (o.unpublished ? 'up' : '') + '">' + esc(o.text) + (o.unpublished ? ' <b>not listed yet</b>' : '') + '</li>'; }).join('');
-    var rows = [['Optional', p.optional || 'Not stated'], ['Buy or claim by', p.buyBy || 'Not published yet']];
-    if (!p.free && !p.product) rows = rows;
-    if (p.releaseTime !== undefined) rows.push(['Release time', p.releaseTime || 'Not published yet']);
-    (p.expires || []).forEach(function (e) { rows.push(e); });
-    (p.facts || []).forEach(function (e) { rows.push(e); });
-    var variants = (p.variants || []).map(function (v) { var pv = LIB.priceView(DATA.prices, v.product); return '<div class="kv"><span>' + esc(v.label) + '</span><b>' + esc(pv.main) + (pv.sub ? ' · ' + esc(pv.sub) : '') + (pv.save ? ' · ' + esc(pv.save) : '') + '</b></div>'; }).join('');
-    return '<article class="tk" data-pass="' + esc(id) + '"><div class="hd"><div><h3>' + esc(p.name) + '</h3><div class="note">' + esc(p.sub || '') + '</div></div>'
-      + (p.free ? '<span class="free">Free</span>' : p.product ? priceBlock(p.product) : '') + '</div>'
-      + '<ul>' + unl + '</ul><div class="ft">' + rows.map(function (r) { return '<div class="kv"><span>' + esc(r[0]) + '</span><b>' + esc(r[1]) + '</b></div>'; }).join('') + variants + '</div>'
-      + (p.product ? priceNote(p.product) : '') + srcLine(p.source) + '</article>';
+    // Keep the source wording intact, while letting the first screen answer
+    // the two time-critical questions: is it optional and when must I claim?
+    var benefits = (p.unlocks || []).map(function (u) {
+      var o = typeof u === 'string' ? { text: u } : u;
+      return '<li class="' + (o.unpublished ? 'up' : '') + '">' + esc(o.text) + (o.unpublished ? ' <b>not listed yet</b>' : '') + '</li>';
+    });
+    var primaryRows = [['Optional', p.optional || 'Not stated'], ['Buy or claim by', p.buyBy || 'Not published yet']];
+    var otherRows = [];
+    if (p.releaseTime !== undefined) otherRows.push(['Release time', p.releaseTime || 'Not published yet']);
+    (p.expires || []).forEach(function (e) { otherRows.push(e); });
+    (p.facts || []).forEach(function (e) { otherRows.push(e); });
+    var row = function (r) { return '<div class="kv"><span>' + esc(r[0]) + '</span><b>' + esc(r[1]) + '</b></div>'; };
+    var variants = (p.variants || []).map(function (v) {
+      var pv = LIB.priceView(DATA.prices, v.product);
+      return row([v.label, pv.main + (pv.sub ? ' · ' + pv.sub : '') + (pv.save ? ' · ' + pv.save : '')]);
+    }).join('');
+    var secondary = otherRows.map(row).join('') + variants;
+    var benefitsHtml = benefits.length ? '<section class="tk-benefits" aria-label="Ticket benefits"><h4>Included benefits</h4><ul>' + benefits.slice(0, 3).join('') + '</ul>' +
+      (benefits.length > 3 ? '<details class="ue-ticket-more tk-more-benefits"><summary>Show ' + (benefits.length - 3) + ' more benefits</summary><ul>' + benefits.slice(3).join('') + '</ul></details>' : '') + '</section>' : '';
+    return '<article class="tk" data-pass="' + esc(id) + '"><div class="hd"><div><h3>' + esc(p.name) + '</h3><div class="note">' + esc(p.sub || '') + '</div></div>' +
+      (p.free ? '<span class="free">Free</span>' : p.product ? priceBlock(p.product) : '') + '</div>' +
+      '<section class="tk-essential" aria-label="Ticket availability and claim dates"><h4>Availability &amp; claiming</h4><div class="ft">' + primaryRows.map(row).join('') + '</div></section>' +
+      benefitsHtml +
+      (secondary ? '<details class="ue-ticket-more tk-more-terms"><summary>Further terms (' + (otherRows.length + (p.variants || []).length) + ')</summary><div class="ft">' + secondary + '</div></details>' : '') +
+      (p.product ? priceNote(p.product) : '') + srcLine(p.source) + '</article>';
   }
   function icsFor(ev) {
     function f(d, utc) { var p = function (n) { return String(n).padStart(2, '0'); }; return utc ? d.getUTCFullYear() + p(d.getUTCMonth() + 1) + p(d.getUTCDate()) + 'T' + p(d.getUTCHours()) + p(d.getUTCMinutes()) + '00Z' : d.getFullYear() + p(d.getMonth() + 1) + p(d.getDate()) + 'T' + p(d.getHours()) + p(d.getMinutes()) + '00'; }
@@ -157,6 +171,16 @@
     if (ev && ev.season && ev.season.detailId) ids.push(ev.season.detailId);
     if (ev && ev.id) { ids.push(ev.id); if(String(ev.id).indexOf('cur:')===0)ids.push(String(ev.id).slice(4)); }
     if (ev && Array.isArray(ev.detailIds)) ids = ids.concat(ev.detailIds);
+    // Registry-only event links can open a canonical event that has fallen
+    // outside Today/Schedule's current window. The generic registry display
+    // model does not carry the curated record's detailIds, even when the
+    // curated entry explicitly links a complete source encounter pool.
+    // Recover those exact source IDs from the same canonical event, never
+    // by guessing from its title or from a nearby event's artwork.
+    var canonicalId=String(ev&&ev.universalModel&&ev.universalModel.eventId||
+      ev&&ev.id||'').replace(/^cur:/,'');
+    var curated=((G.D&&G.D.events)||[]).find(function(row){return row.id===canonicalId;});
+    if(curated&&Array.isArray(curated.detailIds))ids=ids.concat(curated.detailIds);
     var hits = [];
     ids.filter(function (id, i, a) { return id && a.indexOf(id) === i; }).forEach(function (id) {
       if (D[id] && hits.indexOf(D[id]) < 0) hits.push(D[id]);
@@ -198,6 +222,17 @@
       (d.conflicts || []).forEach(function (x) { uniquePush(out.conflicts, x); });
       (d.gaps || []).forEach(function (x) { uniquePush(out.gaps, x); });
     });
+    // Preserve a single complete source-specific hatch pool. The generic
+    // merged read model intentionally holds prose/research but not every
+    // source encounter edge; joining unrelated pools would mislabel eggs.
+    var completeEggSources=hits.filter(function(source){
+      return source&&Array.isArray(source.pokemon)&&Array.isArray(source.encounters)&&
+        source.encounters.some(function(e){return e.method==='egg';})&&
+        (source.fields&&source.fields.eggs||[]).some(function(line){
+          return /\bthe following pok[eé]mon hatch from\b|\bthese pok[eé]mon will hatch from\b/i.test(String(line.text||line));
+        });
+    });
+    if(completeEggSources.length===1)out.eggPool=completeEggSources[0];
     return out;
   }
   function srcName(d, id) { var s = (d.sources || []).filter(function (x) { return x.id === id; })[0]; return s ? s.name : id; }
@@ -319,6 +354,14 @@
      "Mighty" and a Shiny tag only when the source itself says the reward can be Shiny (never inferred from boosts or event type). */
   /* Only icons that exist in the repo: Stardust, XP, the two berries, Max Potion/Revive, Mega Energy (Mega symbol). */
   function itemIcon(n) { n = String(n || ''); return /stardust/i.test(n) ? '/ico/dust.webp' : /silver pinap/i.test(n) ? '/ico/i/silver-pinap.webp' : /golden razz/i.test(n) ? '/ico/i/golden-razz.webp' : /max potion/i.test(n) ? '/ico/i/max-potion.webp' : /max revive/i.test(n) ? '/ico/i/max-revive.webp' : /\bxp\b/i.test(n) ? '/ico/xp.webp' : /mega energy/i.test(n) ? '/ico/g/mega.webp' : ''; }
+  /* A clearly typographic category fallback, never counterfeit item art.
+     Exact Rare Candy and Rare Candy XL images are not in the approved ico set. */
+  function researchItemGlyph(name) {
+    name = String(name || '');
+    if (/\brare candy xl\b/i.test(name)) return { kind: 'rare-candy-xl', text: 'XL' };
+    if (/\brare candy\b/i.test(name)) return { kind: 'rare-candy', text: 'RC' };
+    return null;
+  }
   function researchReward(item, ev) {
     var shiny = item.shiny === true ? '<small class="rs-shiny">\u2728 Can be Shiny</small>' : '';
     if (item.type === 'encounter') {
@@ -328,7 +371,9 @@
       return '<div class="research-reward research-reward-encounter" role="listitem"><span class="ue-reward-art"><span class="ue-reward-fallback" aria-hidden="true">\u2726</span>' + art + '</span><span><b>' + esc(item.name) + '</b>' + mighty + cp + shiny + '</span></div>';
     }
     var icon = itemIcon(item.name);
-    return '<div class="research-reward research-reward-item" role="listitem"><span class="ue-reward-art ue-reward-item-icon" aria-hidden="true">' + (icon ? '<img alt="" loading="lazy" decoding="async" src="' + icon + '" data-err="rm">' : '<i class="ue-reward-dot"></i>') + '</span><span><b>' + (item.quantity > 1 ? esc(item.quantity) + '\u00d7 ' : '') + esc(item.name) + '</b>' + shiny + '</span></div>';
+    var glyph = icon ? null : researchItemGlyph(item.name);
+    var fallback = glyph ? '<span class="ue-reward-category" data-item-glyph="' + glyph.kind + '" aria-hidden="true">' + glyph.text + '</span>' : '<i class="ue-reward-dot"></i>';
+    return '<div class="research-reward research-reward-item" role="listitem"><span class="ue-reward-art ue-reward-item-icon" aria-hidden="true">' + (icon ? '<img alt="" loading="lazy" decoding="async" src="' + icon + '" data-err="rm">' : fallback) + '</span><span><b>' + (item.quantity > 1 ? esc(item.quantity) + '\u00d7 ' : '') + esc(item.name) + '</b>' + shiny + '</span></div>';
   }
   /* Seasons and monthly GO Passes: their own layout, in sections with icons. Curated notes come from season.json; rank rows and prices from the compared write-ups. */
   function researchTasksHtml(ev, d) {
@@ -551,7 +596,7 @@
     if(rtasks)facts.push(['Research',rtasks+(rtasks===1?' task':' tasks')]);else if((model.research||[]).length)facts.push(['Research','No tasks listed yet']);
     var h=facts.length?'<ul class="ue-factchips" aria-label="At a glance">'+facts.map(function(f){return '<li><span>'+esc(f[0])+'</span><b>'+esc(f[1])+'</b></li>';}).join('')+'</ul>':'';
     var debuts=(model.pokemon||[]).filter(function(p){return p.debut;}).slice(0,6);
-    if(debuts.length)h+='<div class="ue-debuts"><h3 class="ue-mini-h">Debuts</h3><div class="ue-chips">'+debuts.map(function(p){return '<span class="ue-chip">'+esc(displayName(p))+'</span>';}).join('')+'</div></div>';
+    if(debuts.length)h+='<div class="ue-debuts"><h3 class="ue-mini-h">Debuts</h3><div class="ue-chips" role="region" tabindex="0" aria-label="Debuting Pokémon; scroll horizontally for more">'+debuts.map(function(p){return '<span class="ue-chip">'+esc(displayName(p))+'</span>';}).join('')+'</div></div>';
     return h;
   }
   function heroWhen(model,ev){return eventWindow(model,ev);}
@@ -572,10 +617,38 @@
     var d=findDetails(ev)||{}, info=findInfo(ev)||{}, snapshot=(DATA.catalogue||[]).find(function(item){return item.eventId===ev.id || item.eventId===String(ev.id).replace(/^cur:/,'') || (item.aliases||[]).indexOf(ev.id)>=0;});
     var model=window.GOEventAdapter.adapt(ev.universalModel || Object.assign({},ev,{id:snapshot?snapshot.eventId:ev.id}),d,info);
     if(snapshot && snapshot.eventId===model.eventId)model=window.GOEventAdapter.retain(snapshot,model);
+    // The Coin Bag emits Roaming Form. Repair the one generic base-form
+    // source card after catalogue retention without changing saved Collection.
+    if(GOEventAdapter.coinBagRoaming)model=GOEventAdapter.coinBagRoaming(model,d);
+    // Prefer the complete, source-backed hatch roster over stale merged egg lists.
+    if(GOEventAdapter.reconcileSourcedEggs)model=GOEventAdapter.reconcileSourcedEggs(model,d);
+    // Source-declared Egg pools are attached even when the catalogue's
+    // canonical model lacks the source's descriptive egg fields.
+    var hatchFields=d&&d.eggPool&&d.eggPool.fields&&d.eggPool.fields.eggs||d&&d.fields&&d.fields.eggs;
+    if(Array.isArray(hatchFields)&&hatchFields.length){
+      var validation=model.internalValidation||{};
+      model.internalValidation=Object.assign({},validation,{fields:Object.assign({},validation.fields||{},{eggs:hatchFields})});
+    }
+    // The same curated, source-backed per-day raid roster feeds Battle and
+    // this event overview; future events carrying raidDays inherit it.
+    var curatedEvent=((G.D&&G.D.events)||[]).find(function(row){
+      return ev.id==='cur:'+row.id||ev.id===row.id||model.eventId===row.id||
+        (row.detailIds||[]).indexOf(ev.id)>=0||(row.detailIds||[]).indexOf(model.eventId)>=0;
+    });
+    var dayRosters=Array.isArray(ev.raidDays)?ev.raidDays:
+      curatedEvent&&Array.isArray(curatedEvent.raidDays)?curatedEvent.raidDays:[];
+    // Reusable source-backed hourly habitat / day-specific Mighty encounter
+    // sections. This is only display grouping: imported and Collection IDs
+    // remain unchanged, and independently sourced research/eggs/raids remain.
+    var rotator=window.GOEventEncounterRotations;
+    var rotation=rotator?rotator.find(DATA.rotations,[ev.id,model.eventId,curatedEvent&&curatedEvent.id]
+      .concat(ev.detailIds||[],curatedEvent&&curatedEvent.detailIds||[])):null;
+    var rotationHtml=rotation?rotator.render(rotation,{art:G.art,viewerZone:GOEventClock.viewerZone()}):'';
+    if(rotationHtml)model=rotator.withoutDuplicateFlatEncounters(model,rotation);
     activeModel=model;currentEv=ev;
     var venues=window.GOPLACES?GOPLACES.forEvent(ev):[];
     var tickets=(info.tickets||[]).map(passCard).join('');
-    var pass=ev.season?primary(seasonPage(ev)):'';
+    var pass=ev.season&&(!(model.passes||[]).length||d.goPassParseWarning)?primary(seasonPage(ev)):'';
 
     var calendar=null;try{if(model.schedule)calendar=calendarEvent(ev,model);}catch(error){}
     var sources=model.sources.map(function(src){var url=safe(src.url);return url?'<li><a href="'+esc(url)+'" target="_blank" rel="noopener noreferrer">'+esc(src.name||src.label||'Event source')+'</a>'+(TRUST_LABEL[src.trust]?' <small class="src-trust">'+TRUST_LABEL[src.trust]+'</small>':'')+'</li>':'';}).filter(function(v,i,a){return v&&a.indexOf(v)===i;}).join('')||'<li>'+esc(LIB.missingLabel('unverified'))+': no source link is recorded for this event.</li>';
@@ -597,7 +670,7 @@
     var footer='<details class="ue-sources" id="evd-sources"><summary>Sources &amp; updates</summary>'+artNote+(heldUpdate?'<p class="note">The latest event update was held. Showing the last available information.</p>':'')+(DATA.incomplete?'<p class="note">Some supplementary event information could not be loaded. Showing the available announcement. Reload to try again.</p>':'')+'<ul>'+sources+'</ul>'+(conflicts?'<h4>Details to recheck</h4><ul>'+conflicts+'</ul>':'')+'<p class="note src-fresh-line" data-fresh="'+esc(LIB.freshnessOf(d.updated,null,'importer').state)+'">'+(d.updated?'Details last updated '+esc(String(d.updated).slice(0,10))+' \u00b7 ':'')+esc(LIB.freshnessOf(d.updated,null,'importer').label)+'. Retrieved from the sources above by an hourly check; <button type="button" class="src-about-link" data-open-sources>How this data is sourced</button></p>'+(d.goPassParseWarning?'<p class="note">The last complete GO Pass rewards have been retained while the latest update is checked.'+(d.goPassRetainedAt?' Saved rank snapshot: '+esc(String(d.goPassRetainedAt).slice(0,10))+'.':'')+'</p>':'')+'</details>';
     return window.GOEventComponents.render(model,{
       toolbar:toolbarHtml(ev).replace('<span class="tag">EVENT DETAIL</span>',''),clock:window.GOEventClock,viewerZone:GOEventClock.viewerZone(),safe:safe,rewardArt:function(item){return exactArt(GOEventAdapter.pokemon({name:item.name,costume:!!item.costume,label:item.label,formId:item.formId,costumeId:item.costumeId,asset:item.assetKey}));},artHtml:artHtml,passMeta:{updated:d.updated||null,warning:d.goPassParseWarning?'The latest GO Pass update could not be read, so the last complete rewards are shown'+(d.goPassRetainedAt?' (saved '+String(d.goPassRetainedAt).slice(0,10)+')':'')+'.':'',sources:(function(){var all=(model.sources||[]).filter(function(x){return x&&x.name&&safe(x.url);}),pass=all.filter(function(x){return /leekduck\.com|pokemongo\.com/i.test(x.url)&&/pass|into-the-wild|season/i.test(x.url);});return (pass.length?pass:all.filter(function(x){return /leekduck\.com|pokemongo\.com/i.test(x.url);})).slice(0,3);})()},
-      when:heroWhen(model,ev),overview:overviewTimes(model,ev),artKind:function(p){var c=window.GOTODAYLOGIC&&GOTODAYLOGIC.classifyArt({name:displayName(p),costume:!!p.costumeId});return c&&c.exact?c.label||'Form':'';},countdown:model.schedule&&model.lifecycle!=='cancelled'&&model.lifecycle!=='postponed'&&ev.datesKnown!==false?X.countdown(ev):'',
+      when:heroWhen(model,ev),overview:overviewTimes(model,ev),raidDays:dayRosters,rotationHtml:rotationHtml,artKind:function(p){var c=window.GOTODAYLOGIC&&GOTODAYLOGIC.classifyArt({name:displayName(p),costume:!!p.costumeId});return c&&c.exact?c.label||'Form':'';},countdown:model.schedule&&model.lifecycle!=='cancelled'&&model.lifecycle!=='postponed'&&ev.datesKnown!==false?X.countdown(ev):'',
       nameFor:displayName,art:G.art,artFor:exactArt,bonus:G.bonusChip,
       actions:'<div class="evd-btns">'+(calendar&&model.lifecycle!=='cancelled'&&model.lifecycle!=='postponed'?'<a class="pill all" download="event.ics" href="'+icsFor(calendar)+'">Add to calendar</a>':'')+'</div>',
       research:primary(researchTasksHtml(ev,d)),passes:pass,tickets:primary(tickets),moves:primary(evMovesHtml(ev,!model.bonuses.length)),
@@ -738,6 +811,24 @@
   var fillTimer = 0;
   if (window.MutationObserver) new MutationObserver(function () { clearTimeout(fillTimer); fillTimer = setTimeout(fillBonus, 200); }).observe(document.body, { childList: true, subtree: true });
   fillBonus();
+  function addInfographicShortcut(o, ev) {
+    var hero=o.querySelector('.ue-hero'); if(!hero||!ev||!ev.id)return;
+    var button=document.createElement('button');
+    button.type='button';button.className='evd-infographic-shortcut';
+    button.setAttribute('data-infographic',ev.id);
+    button.textContent='View infographics';button.hidden=true;
+    hero.insertAdjacentElement('afterend',button);
+    function update(){
+      var api=window.GOINFOGRAPHIC;
+      if(!button.isConnected||!api||typeof api.available!=='function')return;
+      api.available(ev.id).then(function(yes){
+        if(button.isConnected&&o.contains(button)&&!o.hidden)button.hidden=!yes;
+      }).catch(function(){});
+    }
+    update();
+    if(!window.GOINFOGRAPHIC||typeof window.GOINFOGRAPHIC.available!=='function')
+      document.addEventListener('gofn-infographic-ready',update,{once:true});
+  }
   function open(id, from) {
     var ev = X.events().concat(window.GOSEASON ? window.GOSEASON.events() : []).filter(function (e) { return e.id === id; })[0];
     if(!ev){if(!DATA){load().then(function(){open(id,from);});return;}var model=window.GOEventRegistry&&GOEventRegistry.find(id);if(!model)return;ev=X.events().find(function(item){return item.id==='cur:'+model.eventId||(model.aliases||[]).indexOf(item.id)>=0;})||GOEventRegistry.display(model);}
@@ -751,8 +842,11 @@
       var ev2 = completeEvent(ev),sourcePoster=findDetails(ev2);
       if(!ev2.img&&sourcePoster&&safe(sourcePoster.image))ev2=Object.assign({},ev2,{img:sourcePoster.image});
       o.innerHTML = '<div class="evd-in">' + render(ev2) + '</div>';
+      // Mount after each actual Event Details render; no polling or DOM observers.
+      if(window.GOGoPassNavigation)window.GOGoPassNavigation.mount(o);
       addBonusTime(o, ev2);
       o.hidden = false; document.body.style.overflow = 'hidden'; o.scrollTop = 0;
+      addInfographicShortcut(o, ev2);
       if (!wasOpen && window.GONAV) window.GONAV.push();
       var x = $('evd-x'); if (x) { x.addEventListener('click', function () { close(); }); x.focus(); }
       spyInit(o, ev2.id);
@@ -765,6 +859,11 @@
       if (dialog && target && dialog.contains(target)) {
         /* Native fragment navigation emits popstate and closes the modal. Keep section jumps inside it. */
         e.preventDefault();
+        // Legacy in-sheet anchors may point into another universal panel.
+        // Reveal that panel before focusing the target; otherwise the anchor
+        // stays inaccessible, despite the current hash remaining unchanged.
+        var ownerPanel = target.closest && target.closest('.evd-sec');
+        if (ownerPanel && ownerPanel.hidden) goSection(dialog, ownerPanel.getAttribute('data-sec'), false);
         if(target.tagName==='DETAILS')target.open=true;
         dialog.querySelectorAll('.evd-jump a').forEach(function(link){link.removeAttribute('aria-current');});
         jump.setAttribute('aria-current','location');
@@ -805,83 +904,125 @@
     if (e.shiftKey && (active === first || !o.contains(active))) { e.preventDefault(); last.focus(); }
     else if (!e.shiftKey && (active === last || !o.contains(active))) { e.preventDefault(); first.focus(); }
   });
-  /* Continuous page navigation: tapping a link scrolls to its heading, scrolling updates the active link. The overlay (#evd) is the one scroller. */
-  var spy = null, savedScroll = {}, prevRestoration = null;
+  /* Continuous Event Details: the overlay is one vertical scroller. Source-backed
+     sections stay visible in document order; sticky chips are optional shortcuts,
+     not mandatory one-panel tabs. Scroll position and focus stay in the modal. */
+  var spy = null, savedScroll = Object.create(null);
   function spyOffsets(o) {
     var bar = o.querySelector('.evd-bar'), nav = o.querySelector('.evd-nav'), barH = bar ? bar.offsetHeight : 0, navH = nav ? nav.offsetHeight : 0;
     o.style.setProperty('--evd-bar-h', barH + 'px'); o.style.setProperty('--evd-stack', (barH + navH) + 'px');
     return barH + navH;
   }
-  function setActive(o, id) {
-    var links = o.querySelectorAll('.evd-nav-link'), active = null;
-    links.forEach(function (l) { var on = l.getAttribute('data-sec') === id; if (on) { l.setAttribute('aria-current', 'true'); active = l; } else l.removeAttribute('aria-current'); });
-    var strip = o.querySelector('.evd-nav-scroll');
-    if (active && strip) strip.scrollTo({ left: active.offsetLeft - (strip.clientWidth - active.offsetWidth) / 2, behavior: 'auto' });
-    navEdges(o);
-  }
   function navEdges(o) {
     var strip = o.querySelector('.evd-nav-scroll'), w = strip && strip.parentNode; if (!w) return;
     w.classList.toggle('has-left', strip.scrollLeft > 4); w.classList.toggle('has-right', strip.scrollLeft + strip.clientWidth < strip.scrollWidth - 4);
   }
-  /* Which section is active: the last one whose heading has passed under the sticky stack; the last section once the page is at its bottom. */
+  function setActive(o, id) {
+    if (!id) return;
+    var previous = spy && spy.o === o ? spy.cur : '';
+    if (spy && spy.o === o) spy.cur = id;
+    var links = o.querySelectorAll('.evd-nav-link'), active = null;
+    links.forEach(function (l) {
+      var on = l.getAttribute('data-sec') === id;
+      if (on) { l.setAttribute('aria-current', 'true'); active = l; }
+      else l.removeAttribute('aria-current');
+    });
+    var strip = o.querySelector('.evd-nav-scroll');
+    // Avoid moving the horizontal strip on every vertical scroll frame.
+    if (previous !== id && active && strip) strip.scrollTo({ left: active.offsetLeft - (strip.clientWidth - active.offsetWidth) / 2, behavior: 'auto' });
+    navEdges(o);
+  }
+  /* Active = section most recently passed beneath the sticky toolbar/chips;
+     at page end the last section is always reachable. */
   function computeActive(o) {
-    var secs = [].slice.call(o.querySelectorAll('.evd-sec')); if (!secs.length) return '';
+    var secs = [].slice.call(o.querySelectorAll('.evd-sec')).filter(function (s) { return !s.hidden; });
+    if (!secs.length) return '';
     var stack = spyOffsets(o), line = o.getBoundingClientRect().top + stack + 24, cur = secs[0].getAttribute('data-sec');
     secs.forEach(function (sec) { if (sec.getBoundingClientRect().top <= line) cur = sec.getAttribute('data-sec'); });
-    if (o.scrollTop + o.clientHeight >= o.scrollHeight - 4) cur = secs[secs.length - 1].getAttribute('data-sec');
+    if (o.scrollTop + o.clientHeight >= o.scrollHeight - 4 && o.scrollHeight > o.clientHeight) cur = secs[secs.length - 1].getAttribute('data-sec');
     return cur;
+  }
+  function spyDestroy() {
+    if (!spy) return;
+    var old = spy;
+    savedScroll[old.id] = old.o.scrollTop;
+    old.o.removeEventListener('scroll', old.onScroll);
+    if (old.frame) cancelAnimationFrame(old.frame);
+    spy = null;
   }
   function spyInit(o, id) {
     spyDestroy();
-    if (history.scrollRestoration) { prevRestoration = history.scrollRestoration; try { history.scrollRestoration = 'manual'; } catch (e) { } }
-    var state = { o: o, id: id, lock: 0, raf: 0, io: null };
-    function tick() { state.raf = 0; if (state.lock) return; var cur = computeActive(o); if (cur && cur !== state.cur) { state.cur = cur; setActive(o, cur); } }
-    function ask() { if (!state.raf) state.raf = requestAnimationFrame(tick); }
-    state.onScroll = ask; state.onResize = function () { spyOffsets(o); ask(); navEdges(o); };
-    o.addEventListener('scroll', state.onScroll, { passive: true });
-    window.addEventListener('resize', state.onResize); window.addEventListener('orientationchange', state.onResize);
-    if (window.visualViewport) window.visualViewport.addEventListener('resize', state.onResize);
-    if ('IntersectionObserver' in window) { state.io = new IntersectionObserver(ask, { root: o, rootMargin: '-' + spyOffsets(o) + 'px 0px 0px 0px', threshold: [0, 1] }); o.querySelectorAll('.evd-sec').forEach(function (s) { state.io.observe(s); }); }
-    var strip = o.querySelector('.evd-nav-scroll'); if (strip) strip.addEventListener('scroll', function () { navEdges(o); }, { passive: true });
-    spy = state; spyOffsets(o); state.cur = ''; tick();
-    if (savedScroll[id]) { o.scrollTop = savedScroll[id]; tick(); }
-  }
-  function spyDestroy() {
-    if (!spy) return; var o = spy.o;
-    savedScroll[spy.id] = o.scrollTop;
-    o.removeEventListener('scroll', spy.onScroll); window.removeEventListener('resize', spy.onResize); window.removeEventListener('orientationchange', spy.onResize);
-    if (window.visualViewport) window.visualViewport.removeEventListener('resize', spy.onResize);
-    if (spy.io) spy.io.disconnect(); if (spy.raf) cancelAnimationFrame(spy.raf);
-    if (prevRestoration && history.scrollRestoration) { try { history.scrollRestoration = prevRestoration; } catch (e) { } }
-    spy = null;
+    var sections = [].slice.call(o.querySelectorAll('.evd-sec'));
+    var strip = o.querySelector('.evd-nav-scroll');
+    // Links are genuine in-dialog anchors, not ARIA tabs: every section
+    // remains visible and accessible by normal touch/keyboard scrolling.
+    if (strip) strip.removeAttribute('role');
+    o.querySelectorAll('.evd-nav-link').forEach(function (link) {
+      var sec = link.getAttribute('data-sec');
+      link.removeAttribute('role');
+      link.removeAttribute('aria-selected');
+      link.removeAttribute('tabindex');
+      link.setAttribute('aria-controls', 'evd-s-' + sec);
+    });
+    sections.forEach(function (section) {
+      section.hidden = false;
+      section.style.removeProperty('display');
+      section.removeAttribute('aria-hidden');
+      section.removeAttribute('role');
+      section.removeAttribute('tabindex');
+    });
+    var current = { o: o, id: id, cur: '', frame: 0, onScroll: null };
+    current.onScroll = function () {
+      if (current.frame || spy !== current) return;
+      current.frame = requestAnimationFrame(function () {
+        current.frame = 0;
+        if (spy === current && !o.hidden) {
+          savedScroll[id] = o.scrollTop;
+          setActive(o, computeActive(o));
+        }
+      });
+    };
+    spy = current;
+    spyOffsets(o);
+    o.addEventListener('scroll', current.onScroll, { passive: true });
+    var previous = savedScroll[id];
+    o.scrollTop = Number.isFinite(previous) ? Math.min(previous, Math.max(0, o.scrollHeight - o.clientHeight)) : 0;
+    setActive(o, computeActive(o) || 'overview');
   }
   function goSection(o, id, focus) {
-    var h = o.querySelector('#evd-h-' + id); if (!h || !spy) return;
-    var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches, stack = spyOffsets(o);
-    var top = h.getBoundingClientRect().top - o.getBoundingClientRect().top + o.scrollTop - stack - 8;
-    var max = o.scrollHeight - o.clientHeight, target = Math.max(0, Math.min(top, max));
-    spy.lock = 1; spy.cur = id; setActive(o, id);
-    o.scrollTo({ top: target, behavior: reduce ? 'auto' : 'smooth' });
-    // WebKit can emit scrollend for an interrupted/earlier smooth scroll. Only the
-    // latest navigation may unlock the spy; otherwise it resets the active link.
-    var navigation = (spy.navigation || 0) + 1; spy.navigation = navigation;
-    clearTimeout(spy.t);
-    spy.t = setTimeout(function () {
-      if (!spy || spy.o !== o || spy.navigation !== navigation) return;
-      spy.lock = 0;
-      if (focus) h.focus({ preventScroll: true });
-      spy.cur = ''; spy.raf = 0; spy.onScroll();
-    }, reduce ? 80 : 1100);
+    if (!spy || spy.o !== o) return;
+    var section = [].slice.call(o.querySelectorAll('.evd-sec')).find(function (s) { return s.getAttribute('data-sec') === id; });
+    if (!section) return;
+    var heading = section.querySelector('.evd-sec-h') || section;
+    if (id === 'overview') o.scrollTop = 0;
+    else {
+      var stack = spyOffsets(o);
+      var targetTop = heading.getBoundingClientRect().top - o.getBoundingClientRect().top + o.scrollTop - stack - 8;
+      o.scrollTop = Math.min(Math.max(0, targetTop), Math.max(0, o.scrollHeight - o.clientHeight));
+    }
+    setActive(o, id);
+    if (focus) {
+      heading.setAttribute('tabindex', '-1');
+      heading.focus({ preventScroll: true });
+    }
   }
   document.addEventListener('click', function (e) {
     var l = e.target.closest && e.target.closest('.evd-nav-link'); if (!l) return;
+    // An anchor's default fragment navigation would close the overlay on popstate.
     e.preventDefault(); var o = $('evd'); if (o) goSection(o, l.getAttribute('data-sec'), true);
   });
   document.addEventListener('keydown', function (e) {
     var l = e.target.closest && e.target.closest('.evd-nav-link'); if (!l) return;
     var links = [].slice.call(l.parentNode.querySelectorAll('.evd-nav-link')), i = links.indexOf(l), n = -1;
     if (e.key === 'ArrowRight') n = (i + 1) % links.length; else if (e.key === 'ArrowLeft') n = (i - 1 + links.length) % links.length; else if (e.key === 'Home') n = 0; else if (e.key === 'End') n = links.length - 1;
-    if (n < 0) return; e.preventDefault(); links[n].focus();
+    if (n < 0) {
+      if (e.key === ' ' || e.key === 'Spacebar') { e.preventDefault(); goSection($('evd'), l.getAttribute('data-sec'), true); }
+      return;
+    }
+    e.preventDefault();
+    var next = links[n], dialog = $('evd');
+    next.focus({ preventScroll: true });
+    if (dialog) goSection(dialog, next.getAttribute('data-sec'), false);
   });
   /* Event overflow menu: infographic, open source, mark done (Today). */
   function closeEvMenu(restore){var m=document.querySelector('.evd-menu');if(!m)return;var b=m.parentNode.querySelector('[data-evmenu]');m.remove();if(b){b.setAttribute('aria-expanded','false');if(restore)b.focus();}}

@@ -79,7 +79,15 @@
   "discord:1569034750339977347",
   "discord:1569032764005548224",
   "discord:1569143538011218021",
-  "discord:1569120055143440426"
+  "discord:1569120055143440426",
+  "discord:1569615204751511613",
+  "discord:1569809252376256523",
+  "discord:1570079999069786305",
+  "discord:1570142493692006461",
+  "discord:1570442649834360894",
+  "discord:1570339976657506324",
+  "discord:1570487718994120835",
+  "discord:1570487591273242727"
  ],
  "conflicts": [],
  "events": [
@@ -119,6 +127,13 @@
   "e:into",
   "rh:2026-11-09",
   "w-into-the-wild",
-  "rh:2026-11-10"
+  "rh:2026-11-10",
+  "v:leekduck:pokemon-night-out-london-2026",
+  "e:wag",
+  "e:minior2",
+  "w-pok-mon-run-30-new-taipei",
+  "w-gowildarea-global-osaka-gameplay-update",
+  "w-community-meetups-go-wild-area-details-asia-pacifi",
+  "w-ko-gowa-global-on-site-event"
  ]
 }

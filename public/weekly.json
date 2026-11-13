@@ -1,20 +1,20 @@
 {
- "updated": "2026-11-09T20:20:50.422Z",
+ "updated": "2026-11-13T02:28:44.913Z",
  "items": [
   {
-   "id": "discord:1566749490084319334",
+   "id": "discord:1569252788888674328",
    "kind": "week",
-   "title": "GO Weekly TT",
-   "image": "/infographics/g47ix/discord-1566749490084319334.webp",
-   "post": "https://discord.com/channels/@me/1558793395198099618/1566749490084319334",
-   "publishedAt": "2026-11-02T09:43:07.234000+00:00"
+   "title": "GO Weekly T 2",
+   "image": "/infographics/g47ix/discord-1569252788888674328.webp",
+   "post": "",
+   "publishedAt": "2026-11-09T07:30:20.178000+00:00"
   },
   {
    "id": "discord:1565629054319591515",
    "kind": "month",
    "title": "Month overview: Nov",
    "image": "/infographics/g47ix/discord-1565629054319591515.webp",
-   "post": "https://discord.com/channels/@me/1558793395198099618/1565629054319591515",
+   "post": "",
    "publishedAt": "2026-10-30T07:30:54.531000+00:00"
   }
  ]

@@ -1,0 +1,91 @@
+{
+  "schemaVersion": 1,
+  "checkedAt": "2026-11-13",
+  "sourceRepository": "PokeMiners/pogo_assets",
+  "sourceCommit": "db10df75d6f6f92018d9786af0aecc238fecc4ef",
+  "sourceDisclaimer": "PokeMiners educational-use mirror of Niantic / The Pokémon Company IP. File existence and filename do NOT establish visual identity or use permission.",
+  "runtimeUseAuthorized": false,
+  "entries": [
+    {
+      "id": "lucky-egg",
+      "item": "Lucky Egg",
+      "sourcePath": "Images/Items/luckyegg.png",
+      "sourceBlobSha": "c7a0af4ba6dcb19211c463deb8d5ae2c2e55f6b5",
+      "bytes": 32680,
+      "status": "candidate-not-verified",
+      "approvedForRuntime": false
+    },
+    {
+      "id": "star-piece",
+      "item": "Star Piece",
+      "sourcePath": "Images/Items/starpiece.png",
+      "sourceBlobSha": "eb6b9ee81d3dfb8cb7bb4c91842586330ee4d9c6",
+      "bytes": 22057,
+      "status": "candidate-not-verified",
+      "approvedForRuntime": false
+    },
+    {
+      "id": "egg-incubator",
+      "item": "Egg Incubator",
+      "sourcePath": "Images/Items/EggIncubatorIAP_Empty.png",
+      "sourceBlobSha": "ced0a77b034961f983d8aad6b1bbb52af9951b28",
+      "bytes": 54174,
+      "status": "candidate-not-verified",
+      "approvedForRuntime": false
+    },
+    {
+      "id": "super-incubator",
+      "item": "Super Incubator",
+      "sourcePath": "Images/Items/EggIncubatorSuper_Empty.png",
+      "sourceBlobSha": "3be87400e600c71482e5afb003aac83ae7610e92",
+      "bytes": 43067,
+      "status": "candidate-not-verified",
+      "approvedForRuntime": false
+    },
+    {
+      "id": "pokecoin",
+      "item": "PokéCoins",
+      "sourcePath": "Images/Items/Item_COIN_01.png",
+      "sourceBlobSha": "0ad72ac49672bd60cdf4efeeb7c7a086b0d419f7",
+      "bytes": 22463,
+      "status": "candidate-not-verified",
+      "approvedForRuntime": false
+    },
+    {
+      "id": "pokecoin-stack",
+      "item": "PokéCoins (stack)",
+      "sourcePath": "Images/Items/Item_COIN_STACK_01.png",
+      "sourceBlobSha": "b20075d90f6257a95f242104a5a1ccf624cd9dcd",
+      "bytes": 37401,
+      "status": "candidate-not-verified",
+      "approvedForRuntime": false
+    },
+    {
+      "id": "pokemon-storage",
+      "item": "Pokémon Storage",
+      "sourcePath": "Images/Items/pokemonstorageupgrade.1.png",
+      "sourceBlobSha": "55d9d7cd1a6e553aad98797d1a563e3cbb134bb3",
+      "bytes": 61305,
+      "status": "candidate-not-verified",
+      "approvedForRuntime": false
+    },
+    {
+      "id": "item-bag",
+      "item": "Item Bag Upgrade",
+      "sourcePath": "Images/Items/itemstorageupgrade.1.png",
+      "sourceBlobSha": "0714ecdec6e90b7076bd084972245e3bba11cf41",
+      "bytes": 41203,
+      "status": "candidate-not-verified",
+      "approvedForRuntime": false
+    },
+    {
+      "id": "max-particle-pack",
+      "item": "Max Particle Pack",
+      "sourcePath": "Images/Items/mp_pack.png",
+      "sourceBlobSha": "b4e31a6ad39a160894521c3a15c206e6124c96f1",
+      "bytes": 17424,
+      "status": "candidate-not-verified",
+      "approvedForRuntime": false
+    }
+  ]
+}

@@ -32,11 +32,19 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: 22
+      - name: Verify changed asset cache-bust versions
+        env:
+          GOFN_BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
+        run: node scripts/check-asset-versions.mjs
       - name: Run JavaScript regression tests
         run: node --test test/*.test.mjs test/*.test.cjs
+      - name: Report raid schedule coverage gaps (informational)
+        run: node scripts/audit-raid-coverage.mjs
       - name: Check the artwork manifest and owner gallery are current
         run: |
           node scripts/artwork-manifest.mjs --check
@@ -50,17 +58,19 @@ jobs:
       - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7
         with:
           python-version: "3.12"
+      - name: Validate Python browser test syntax before expensive Playwright shards
+        run: python -m compileall -q test
       - name: Run Discord scraper regression tests
         run: python -m unittest discover -s test -p 'test_*.py'
 
   browser:
-    # Three parallel shards of test/ui_checks.py (UI_SHARD a, b, c), so a change waits for a third of the checks.
+    # Five parallel shards: the existing UI_SHARD a/b/c plus d/e for the longer browser suites.
     runs-on: ubuntu-latest
     timeout-minutes: 15   # hard stop for a runaway shard; individual browser waits are bounded below
     strategy:
       fail-fast: false
       matrix:
-        shard: [a, b, c]
+        shard: [a, b, c, d, e]
     env:
       UI_SHARD: ${{ matrix.shard }}
     steps:
@@ -88,6 +98,7 @@ jobs:
           cat /tmp/go-field-notes-http.log
           exit 1
       - name: Run browser regression tests
+        if: contains(fromJSON('["a","b","c"]'), matrix.shard)
         shell: bash
         run: |
           set +e
@@ -132,27 +143,31 @@ jobs:
           python test/worldwide_timezone_browser.py
 
       - name: Verify premium Today, Schedule and event detail surfaces
-        if: matrix.shard == 'b'
+        if: matrix.shard == 'd'
         run: |
           python test/premium_surfaces_browser.py
           python test/today_detail_redesign_browser.py
           python test/today_done_browser.py
           python test/today_v1_coverage_browser.py
           python test/battle_rotation_browser.py
+          python test/wild_area_battle_browser.py
           python test/raids_max_polish_browser.py
           python test/event_consistency_browser.py
+          python test/event_specials_browser.py
+          python test/event_rotations_browser.py
           python test/schedule_gopass_browser.py
+          python test/visual_refinements_browser.py
           python test/accuracy_fixes_browser.py
 
       - name: Verify combined source rendering and offline upgrade
-        if: matrix.shard == 'b'
+        if: matrix.shard == 'e'
         run: |
           python test/release_browser.py
           python test/pwa_upgrade_browser.py
           python test/storage_failure_browser.py
 
       - name: Verify variant artwork (costumes, Shiny, Shadow, Dynamax, Gigantamax, fallbacks)
-        if: matrix.shard == 'b'
+        if: matrix.shard == 'e'
         run: python test/variant_art_browser.py
 
       - name: Verify Today slow-feed fallback and late recovery
@@ -179,10 +194,22 @@ jobs:
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: 22
-      - name: Install Playwright WebKit
-        run: |
-          pip install playwright
-          python -m playwright install --with-deps webkit
+      - name: Install Playwright Python package
+        run: pip install playwright
+      - name: Resolve Playwright browser revision
+        id: playwright-version
+        run: echo "version=$(python -c 'import importlib.metadata; print(importlib.metadata.version("playwright"))')" >> "$GITHUB_OUTPUT"
+      - name: Cache Playwright WebKit browser
+        id: webkit-cache
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-webkit-${{ runner.os }}-${{ steps.playwright-version.outputs.version }}
+      - name: Install Playwright WebKit system dependencies
+        run: python -m playwright install-deps webkit
+      - name: Install Playwright WebKit browser
+        if: steps.webkit-cache.outputs.cache-hit != 'true'
+        run: python -m playwright install webkit
       - name: Start static app server
         run: |
           python -m http.server 8791 --directory public > /tmp/go-field-notes-http.log 2>&1 &
@@ -202,6 +229,8 @@ jobs:
           python test/today_v1_coverage_browser.py
           python test/battle_rotation_browser.py
           python test/raids_max_polish_browser.py
+          python test/event_specials_browser.py
+          python test/event_rotations_browser.py
           python test/schedule_gopass_browser.py
           python test/universal_event_browser.py
           python test/worldwide_timezone_browser.py
@@ -252,3 +281,38 @@ jobs:
         env:
           GO_FIELD_NOTES_AUDIT_URL: https://pogo.michaelpuff.com/
         run: python test/production_image_audit.py
+
+
+  production-gopass-visibility:
+    # Dedicated, read-only production check. Run separately from long image audit
+    # so a slow image waterfall cannot mask or postpone feature visibility proof.
+    if: github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch' || github.event_name == 'push'
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7
+        with:
+          python-version: "3.12"
+      - name: Install Playwright Chromium
+        run: |
+          pip install playwright
+          python -m playwright install --with-deps chromium
+      - name: Wait for matching production Cloudflare build after merge
+        if: github.event_name == 'push'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: node scripts/wait-for-workers-build.mjs
+      - name: Probe actual live GO Pass controls (no local fixtures)
+        env:
+          GO_FIELD_NOTES_LIVE_GO_PASS_URL: https://pogo.michaelpuff.com
+          GOFN_EXPECT_NAV_FIRST: ${{ github.event_name == 'push' && '1' || '0' }}
+        run: python test/production_gopass_visibility.py
+      - name: Retain live GO Pass screenshots
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: production-gopass-visibility
+          path: /tmp/gopass-live-check
+          if-no-files-found: ignore

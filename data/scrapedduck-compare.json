@@ -1,8 +1,15 @@
 {
- "updated": "2026-11-09T19:50:05.823Z",
+ "updated": "2026-11-13T01:50:01.799Z",
  "state": "ok",
- "scrapedDuckEvents": 41,
- "missingHere": [],
+ "scrapedDuckEvents": 48,
+ "missingHere": [
+  {
+   "name": "Raid Day",
+   "type": "raid-day",
+   "start": "2026-12-19T14:00:00.000",
+   "link": "https://leekduck.com/events/raid-day-december-2026/"
+  }
+ ],
  "missingThere": [
   {
    "id": "gopassnov",
@@ -98,6 +105,11 @@
    "id": "w-pok-mon-run-30-jakarta",
    "name": "Pokémon RUN 30: Jakarta",
    "start": "2026-12-12"
+  },
+  {
+   "id": "w-raid-day-december",
+   "name": "Raid Day December",
+   "start": "2026-12-19"
   }
  ],
  "shinyDisagree": []

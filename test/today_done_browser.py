@@ -43,11 +43,16 @@ with sync_playwright() as p:
     page.reload(); page.wait_for_selector('#today-v1 .t1-card')
     assert page.locator(f'#today-v1 article[data-id="{cid}"][data-start="{start}"]').count() == 0, 'not persisted'
     page.locator('#today-v1 .t1-restore').first.click()
-    assert page.locator(f'#today-v1 article[data-id="{cid}"]').count() >= 1, 'restore failed'
+    # Reload can show the saved Done list before late curated/season feeds finish
+    # repainting Today. Wait for the exact restored occurrence, not any card.
+    restored = page.locator(f'#today-v1 article[data-id="{cid}"][data-start="{start}"]')
+    restored.wait_for(state='attached', timeout=8000)
+    assert restored.count() >= 1, 'restore failed'
     assert page.evaluate("localStorage.getItem('gofn-today-done-v1')") in ('{}', None)
     page.locator(f'#today-v1 article[data-id="{cid}"] .t1-more').first.click(); page.locator('[data-t1-done]').click()
     page.locator('.t1-toast-undo').click()
-    assert page.locator(f'#today-v1 article[data-id="{cid}"]').count() >= 1, 'toast undo failed'
+    restored.wait_for(state='attached', timeout=8000)
+    assert restored.count() >= 1, 'toast undo failed'
     assert page.evaluate(keep) == before
     assert errors == [], errors
     print('PASS Today Done menu, undo, restore, persistence, Collection untouched')

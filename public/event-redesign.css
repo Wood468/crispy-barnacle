@@ -104,6 +104,21 @@
 .evd-in:has(.ue-hero) .tk .kv{display:grid;grid-template-columns:minmax(88px,.35fr) minmax(0,1fr);gap:10px;padding:8px 0;border-bottom:1px solid var(--color-border);font-size:.75rem;line-height:1.35}
 .evd-in:has(.ue-hero) .tk .kv b{font-weight:600;overflow-wrap:anywhere}
 .evd-in:has(.ue-hero) .tk ul{padding-left:18px;font-size:.77rem;line-height:1.42}
+/* Ticket first-screen hierarchy: readable deadlines and price stay outside
+   collapsible secondary terms; source wording is kept verbatim. */
+.evd-in:has(.ue-hero) .tk .tk-essential{display:grid;gap:5px;padding:10px 12px;border:1px solid var(--color-border);border-radius:10px;background:var(--color-surface-raised)}
+.evd-in:has(.ue-hero) .tk :is(.tk-essential,.tk-benefits)>h4{margin:0;font:800 .76rem/1.3 var(--font-body);color:var(--color-text)}
+.evd-in:has(.ue-hero) .tk .tk-essential .kv{grid-template-columns:minmax(105px,.38fr) minmax(0,1fr);padding:6px 0}
+.evd-in:has(.ue-hero) .tk .tk-essential .kv:last-child{border-bottom:0}
+.evd-in:has(.ue-hero) .tk .tk-benefits{display:grid;gap:5px;min-width:0}
+.evd-in:has(.ue-hero) .tk .tk-benefits>ul{margin:0;display:grid;gap:5px;padding-left:19px}
+.evd-in:has(.ue-hero) .tk .ue-ticket-more{margin:0;min-width:0;padding:0 10px;border:1px solid var(--color-border);border-radius:10px;background:var(--color-surface)}
+.evd-in:has(.ue-hero) .tk .ue-ticket-more>summary{display:flex;align-items:center;min-height:44px;cursor:pointer;font:750 .76rem/1.3 var(--font-body);color:var(--color-link)}
+.evd-in:has(.ue-hero) .tk .ue-ticket-more:focus-within{border-color:var(--color-accent)}
+.evd-in:has(.ue-hero) .tk .ue-ticket-more>ul{display:grid;gap:6px;margin:0;padding:0 0 10px 19px}
+.evd-in:has(.ue-hero) .tk .ue-ticket-more>.ft{padding-bottom:10px}
+@media(max-width:360px){.evd-in:has(.ue-hero) .tk .tk-essential .kv{grid-template-columns:minmax(88px,.38fr) minmax(0,1fr);gap:8px}}
+
 .evd-in:has(.ue-hero) .ue-pass-range{padding:0 10px;border:1px solid var(--color-border);border-radius:10px}
 @media(min-width:760px){.evd-in:has(.ue-hero) .ue-gallery{grid-template-columns:repeat(4,minmax(0,1fr))}.evd-in:has(.ue-hero) .ue-hero{grid-template-columns:45% 55%;min-height:260px}.evd-in:has(.ue-hero) .ue-hero-media{height:100%}.evd-in:has(.ue-hero) .ue-hero-copy{align-content:center}}
 #home-now .today-phase-cards>.today-sub{grid-column:1/-1;margin-top:5px}
@@ -165,6 +180,9 @@ button.ue-mon{display:grid;justify-items:center;align-content:start;gap:4px;min-
 button.ue-mon b{font-size:var(--type-meta);line-height:1.15;overflow-wrap:anywhere}
 button.ue-mon .ue-mon-art{height:78px;width:100%}
 button.ue-mon .ue-signals{display:flex;flex-wrap:wrap;justify-content:center;gap:3px}
+/* Shiny is a subtle sparkle; confirmed boosted shiny gets one gold up-arrow badge. */
+button.ue-mon .ue-shiny-mark{font-weight:900;line-height:1;font-size:.8rem}
+button.ue-mon .ue-shiny-boost{display:inline-flex;align-items:center;gap:3px;padding:2px 6px;border-radius:var(--radius-pill);background:var(--color-kind-shiny);color:var(--color-on-kind-shiny)}
 .ue-badge{font-size:.62rem;font-weight:800;letter-spacing:.04em;text-transform:uppercase;padding:2px 7px;border-radius:var(--radius-pill);background:var(--color-surface-raised);border:1px solid var(--color-border)}
 .ue-b-raid{background:var(--color-kind-raid);color:#fff;border-color:transparent}
 .ue-b-max{background:var(--color-kind-max-battle);color:#fff;border-color:transparent}
@@ -344,6 +362,11 @@ button.ue-mon-featured .ue-mon-art .art{animation:none}
 .evd-in:has(.ue-hero) .evd-sec .rs-rewards .ue-reward-art :is(.art,.art-fb,img){width:44px;height:44px}
 .evd-in:has(.ue-hero) .evd-sec .rs-rewards .ue-reward-item-icon img{width:32px;height:32px;object-fit:contain}
 .ue-reward-dot{width:10px;height:10px;border-radius:50%;background:var(--color-text-muted);opacity:.5;display:block}
+/* Honest category glyphs when the exact Rare Candy item art is not approved.
+   Never substitute a different Candy image or mislabel XL as ordinary Candy. */
+.evd-in:has(.ue-hero) .evd-sec .rs-rewards .ue-reward-category{display:grid;place-items:center;width:36px;height:36px;border:1px solid var(--color-border);border-radius:10px;background:color-mix(in srgb,var(--color-accent) 12%,var(--color-surface-raised));color:var(--color-accent);font:850 .78rem/1 var(--font-body);letter-spacing:.01em}
+.evd-in:has(.ue-hero) .evd-sec .rs-rewards .ue-reward-category[data-item-glyph="rare-candy-xl"]{border-style:double;border-width:2px}
+
 .evd-in:has(.ue-hero) .evd-sec .rs-rewards .research-reward b{font-size:.72rem;line-height:1.15;overflow-wrap:normal;word-break:normal;hyphens:none;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
 .evd-in:has(.ue-hero) .evd-sec .rs-rewards .research-reward small{font-size:.66rem;white-space:nowrap}
 @media(max-width:340px){.evd-in:has(.ue-hero) .evd-sec .rs-rewards{grid-template-columns:repeat(2,minmax(0,1fr))}}
@@ -356,11 +379,30 @@ button.ue-mon-featured .ue-mon-art .art{animation:none}
 .ev-art-accent::before{content:"";position:absolute;left:8%;right:8%;bottom:4%;height:14%;border-radius:50%;background:rgba(0,0,0,.35);filter:blur(5px)}
 .ev-art-accent .ev-art-mon{position:relative}
 .ev-art-theme b{font-size:.8rem;letter-spacing:.16em}
+/* Approved poster action: visible only when the infographic source confirms
+   published/approved media. Preserve the compact hero and 44px tap target. */
+.evd-in .evd-infographic-shortcut{display:flex;align-items:center;justify-content:center;width:100%;min-height:44px;margin:8px 0 0;padding:9px 14px;border:1px solid var(--color-border);border-radius:var(--radius-md);background:var(--color-surface-raised);color:var(--color-text);font:750 .82rem/1.25 var(--font-body);cursor:pointer}
+.evd-in .evd-infographic-shortcut:hover{border-color:var(--color-accent)}
+.evd-in .evd-infographic-shortcut:focus-visible{outline:3px solid var(--color-text);outline-offset:2px}
+.evd-in .evd-infographic-shortcut[hidden]{display:none}
 /* Overview: compact glance chips */
 .ue-factchips{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:6px}
 .ue-factchips li{display:inline-flex;align-items:baseline;gap:6px;padding:6px 11px;border-radius:var(--radius-pill);border:1px solid var(--color-border);background:var(--color-surface);font-size:.8rem}
 .ue-factchips li span{font-size:.68rem;text-transform:uppercase;letter-spacing:.06em;color:var(--color-text-muted)}
 .ue-factchips li b{font-weight:800}
+/* Mobile Overview: three scannable facts, one horizontally discoverable
+   debut rail. All chips remain present in the document and keyboard reachable. */
+@media(max-width:560px){
+ .evd-in .ue-factchips{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+ .evd-in .ue-factchips li{display:flex;min-width:0;flex-direction:column;align-items:flex-start;justify-content:center;gap:1px;padding:7px 8px;border-radius:var(--radius-md);line-height:1.25}
+ .evd-in .ue-factchips li span{font-size:.65rem}
+ .evd-in .ue-factchips li b{font-size:.78rem;overflow-wrap:anywhere}
+ .evd-in .ue-debuts{min-width:0}
+ .evd-in .ue-debuts .ue-chips{display:flex;flex-wrap:nowrap;gap:7px;min-width:0;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x proximity;scrollbar-width:thin;scrollbar-color:var(--color-border) transparent;padding:2px 2px 8px}
+ .evd-in .ue-debuts .ue-chip{display:inline-flex;align-items:center;min-height:34px;flex:0 0 auto;white-space:nowrap;scroll-snap-align:start}
+}
+#evd .ue-debuts .ue-chips:focus-visible{outline:3px solid var(--color-text);outline-offset:2px}
+
 .ue-overview{gap:8px}
 .ue-times{gap:4px}.ue-time{padding:7px 12px}
 .evd-sec-h{margin-top:0}.evd-sections{gap:16px}
@@ -416,6 +458,38 @@ html[data-kbd] #evd .hbtn:focus-visible,html[data-kbd] #evd .evd-nav-link:focus-
 .ue-pass-src{margin:0;font-size:var(--type-meta);line-height:1.5;color:var(--color-text-muted);overflow-wrap:anywhere}
 .ue-pass-range[open]>summary{border-bottom:1px solid var(--color-border);margin-bottom:var(--space-3)}
 
+/* GO Pass: milestone-first, compact, and collapsed until the reader chooses a range.
+   Category symbols are intentional, not missing item images. */
+.ue-pass-overview{display:grid;gap:8px;margin:12px 0 16px}
+.ue-pass-overview>h5,.ue-pass-all-title{margin:0;font:800 .8rem/1.3 var(--font-body);color:var(--color-text)}
+.ue-pass-highlights{list-style:none;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:8px;margin:0;padding:0}
+.ue-pass-highlight{min-width:0;display:grid;align-content:start;gap:7px;padding:10px 11px;border:1px solid color-mix(in srgb,var(--color-accent) 26%,var(--color-border));border-radius:12px;background:var(--color-surface)}
+.ue-pass-highlight>strong{font:800 .82rem/1.2 var(--font-body);color:var(--color-accent)}
+.ue-pass-highlight .ue-pass-lanes{gap:5px}
+.ue-pass-all-title{margin:10px 0 6px}
+.ue-pass-range>summary{display:flex;align-items:center;min-height:44px;cursor:pointer;font:750 .78rem/1.35 var(--font-body);overflow-wrap:anywhere}
+.ue-pass-range>summary:focus-visible{outline:2px solid var(--color-accent);outline-offset:3px;border-radius:4px}
+.ue-pass-stages{list-style:none;display:grid;gap:0;margin:0;padding:0 0 8px}
+.ue-pass-stages>li.ue-pass-rank{display:grid;grid-template-columns:minmax(64px,74px) minmax(0,1fr);align-items:start;gap:3px 9px;padding:9px 0;border-bottom:1px solid var(--color-border)}
+.ue-pass-stages>li.ue-pass-rank:last-child{border-bottom:0}
+.ue-pass-rank>b{font:800 .76rem/1.3 var(--font-body)}
+.ue-pass-rank>small{grid-column:1;font-size:.65rem;color:var(--color-text-muted)}
+.ue-pass-rank .ue-pass-lanes{grid-column:2;grid-row:1/span 2}
+.ue-pass-lanes{display:grid;gap:5px;min-width:0}
+.ue-lane{gap:4px;padding:0 0 0 8px;border-left-width:2px}
+.ue-lane h5{font-size:.64rem;line-height:1.2}
+.ue-pass-reward{gap:7px;font-size:.75rem;line-height:1.22}
+.ue-pass-art{width:32px;height:32px;border-radius:8px}
+.ue-pass-art :is(img,.art,svg,canvas){width:30px;height:30px;max-width:30px;max-height:30px}
+.ue-pass-reward[data-art="category"] .ue-pass-art{border:1px solid var(--color-border);background:var(--color-surface-raised)}
+.ue-pass-reward .ue-reward-icon{font:850 .78rem/1 var(--font-body);color:var(--color-text);text-align:center}
+.ue-pass-reward[data-cat="Candy"] .ue-reward-icon{color:var(--color-accent)}
+.ue-pass-name b{font-size:.75rem;line-height:1.3}
+.ue-pass-name small{font-size:.67rem;line-height:1.3}
+.ue-pass-unlisted{margin:0;font-size:.69rem;line-height:1.3;color:var(--color-text-muted)}
+.ue-pass-gap{margin:6px 0;padding:7px 9px}
+@media(max-width:375px){.ue-pass-stages>li.ue-pass-rank{grid-template-columns:minmax(58px,65px) minmax(0,1fr);gap:6px}.ue-pass-highlight{padding:9px}}
+
 /* Schedule: today marker on day headings, honest empty week */
 h2.dh-today{color:var(--color-accent,#f5c518)}
 h2.dh .cnt{font:600 .75rem/1 var(--font-body);color:var(--color-text-muted);border:1px solid var(--color-border);border-radius:999px;padding:3px 8px;vertical-align:middle;margin-left:6px}
@@ -436,3 +510,38 @@ h2.dh .cnt{font:600 .75rem/1 var(--font-body);color:var(--color-text-muted);bord
 .ue-schedule-preview li{display:grid;gap:4px;padding:11px 13px;border:1px solid var(--border,#303849);border-radius:12px;background:var(--surface,#1a1e27)}
 .ue-schedule-preview strong{font-size:14px;line-height:1.3}
 .ue-schedule-preview span{font-size:12px;line-height:1.45;color:var(--muted,#b9b5cf)}
+.ue-schedule-preview .ue-schedule-caption{margin:2px 0 6px;font:650 .74rem/1.3 var(--font-body);color:var(--color-text-muted)}
+.ue-schedule-preview .ue-schedule-now{justify-self:start;padding:2px 7px;border-radius:var(--radius-pill);background:var(--color-status-live);color:var(--color-on-status-live);font-size:.67rem;font-weight:800;letter-spacing:.02em}
+
+
+/* Source-backed Egg and Incense methods use the same small icon-only corner.
+   Keep distances and encounter methods in accessible tile details, not a pill. */
+.ue-mon{position:relative}
+.ue-egg-corner,.ue-incense-corner{position:absolute;z-index:3;right:4px;top:4px;display:block;width:20px;height:20px;margin:0;padding:0;border:0;border-radius:0;background:transparent;box-shadow:none;line-height:0;pointer-events:none}
+.ue-egg-corner img,.ue-incense-corner img{display:block;width:20px;height:20px;object-fit:contain}
+/* Explicit Saturday/Sunday (or other dated) raid/Max boss panels. */
+.ue-raid-days{margin:15px 0 18px}
+.ue-raid-day-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.ue-raid-day{min-width:0;border:1px solid var(--border-subtle,rgba(255,255,255,.13));border-radius:16px;padding:12px;background:var(--surface-2,rgba(255,255,255,.04))}
+.ue-raid-day h4{font-size:14px;font-weight:800;margin:0 0 10px}
+.ue-raid-day-group{margin-top:10px}
+.ue-raid-day-group h5{font-size:11px;letter-spacing:.02em;opacity:.8;margin:0 0 6px}
+.ue-raid-day-group ul{list-style:none;padding:0;margin:0;display:grid;gap:5px}
+.ue-raid-day-group li{display:flex;align-items:center;gap:6px;font-size:12px;line-height:1.25;font-weight:650;overflow-wrap:anywhere}
+.ue-raid-day-art{width:28px;height:32px;flex:0 0 28px;display:grid;place-items:center}
+.ue-raid-day-art .art{max-width:28px;max-height:32px;object-fit:contain}
+@media(max-width:350px){.ue-raid-day-grid{grid-template-columns:1fr}}
+
+/* Event Details: tier icon overlay and the same source-safe perfect raid CP as Battle. */
+#evd .ue-raid-tier-corner{position:absolute;top:3px;left:3px;z-index:4;display:inline-flex;align-items:center;gap:2px;padding:2px 4px;border:1px solid var(--color-border);border-radius:6px;background:var(--color-surface-raised);font:800 .58rem/1.1 var(--font-body);white-space:nowrap;pointer-events:none}
+#evd .ue-raid-tier-corner img{width:12px;height:12px;object-fit:contain;flex:none}
+#evd .ue-raid-cp{display:flex;justify-content:center;flex-wrap:wrap;gap:3px;font:800 .58rem/1.1 var(--font-body);font-variant-numeric:tabular-nums;text-align:center}
+#evd .ue-raid-cp>span{display:inline-flex;align-items:center;padding:3px 4px;border:1px solid var(--color-border);border-radius:5px;background:var(--color-surface-raised);white-space:nowrap}
+#evd .ue-raid-cp-weather{color:var(--color-text-muted)}
+#evd .ue-raid-day-art{position:relative;width:36px;height:37px;flex-basis:36px;overflow:visible}
+#evd .ue-raid-day-art .art{max-width:34px;max-height:34px}
+#evd .ue-raid-day-art .ue-raid-tier-corner{top:-3px;left:0;padding:1px 2px;font-size:.53rem}
+#evd .ue-raid-day-art .ue-raid-tier-corner img{width:10px;height:10px}
+#evd .ue-raid-day-info{display:flex;flex-direction:column;align-items:flex-start;gap:3px;min-width:0}
+#evd .ue-raid-day-info .ue-raid-cp{justify-content:flex-start;font-size:.57rem}
+@media(max-width:390px){#evd .ue-raid-day-grid{grid-template-columns:1fr}}

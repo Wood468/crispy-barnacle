@@ -2,6 +2,10 @@
   "how_to_use": "Event write-ups the importer reads on every run even when they are no longer linked from a news list page (a series announced months ago, such as a multi-city tour). Add { \"url\": \"https://pokemongo.com/news/...\", \"note\": \"why\" }. Only pokemongo.com, leekduck.com and pokemongohub.net pages are read. Remove an entry once the event is over.",
   "pages": [
     {
+      "url": "https://pokemongo.com/en/news/forever-stamp-rally-go-wild-area-2026/",
+      "note": "Ongoing multi-city GO Stamp Rallies in Sendai, Japan and Mexico City, Mexico; no published end date"
+    },
+    {
       "url": "https://pokemongo.com/ja/news/202610aeonmall-halloween",
       "note": "AEON MALL Halloween, Japan, Oct 19 to Nov 1 2026 (remove after Nov 15)"
     },
@@ -56,6 +60,18 @@
     {
       "url": "https://leekduck.com/events/go-pass-november-2026/",
       "note": "GO Pass: November 2026 Basic and Deluxe rank table; remove after 10 Dec 2026"
+    },
+    {
+      "url": "https://pokemongo.com/news/into-the-wild-2026",
+      "note": "Into the Wild 2026 official source for Coin Bag, Mystery Box, exact raids and daily Max Battle hours; retain through Nov 18 2026"
+    },
+    {
+      "url": "https://pokemongohub.net/post/event/minior-showers-leonid-november-2026/",
+      "note": "Leonids Nov 14–19 source-backed Timed Research table; remove after Nov 25 2026"
+    },
+    {
+      "url": "https://pokemongohub.net/post/event/minior-showers-orionids-october-2026/",
+      "note": "Historical Orionids research table for canonical Minior event; remove after research snapshot refreshed"
     }
   ]
 }

@@ -226,6 +226,57 @@
     }
    ],
    "img_credit": "Leek Duck"
+  },
+  {
+   "id": "season:pass-into-wild-2026",
+   "detailId": "into",
+   "label": "GO Pass",
+   "name": "GO Pass: Into the Wild",
+   "s": "2026-11-09T10:00",
+   "e": "2026-11-15T18:00",
+   "img": "",
+   "url": "https://pokemongo.com/news/into-the-wild-2026",
+   "notes": [
+    "The free GO Pass runs 9–15 November 2026; it is separate from the monthly GO Pass.",
+    "Earn Dynamax Meltan encounters and the GO Wild Area 2026 Tee (Purple).",
+    "Deluxe adds a Silver Bottle Cap for Hyper Training, Dynamax Meltan encounters and Duraludon Pants.",
+    "Claim unlocked rewards by 17 November, 11:59 pm local time."
+   ],
+   "milestones": [
+    {
+     "rank": 25,
+     "items": [
+      "Half Egg Hatch Distance for Eggs placed in Incubators during the event."
+     ]
+    },
+    {
+     "rank": 100,
+     "items": [
+      "Deluxe: Silver Bottle Cap for Hyper Training one stat."
+     ]
+    }
+   ],
+   "sections": [
+    {
+     "t": "GO Pass",
+     "icon": "/ico/pass.webp",
+     "items": [
+      "The free GO Pass runs from 9 November at 10:00 am until 15 November 2026 at 6:00 pm local time.",
+      "The free track includes Dynamax Meltan encounters and the GO Wild Area 2026 Tee (Purple).",
+      "The Deluxe track offers a Silver Bottle Cap, additional Dynamax Meltan encounters and Duraludon Pants.",
+      "Complete Pass Tasks to earn GO Points. The daily cap on extra points ends for the 14–15 November weekend."
+     ]
+    },
+    {
+     "t": "Rewards and deadlines",
+     "icon": "/ico/dust.webp",
+     "items": [
+      "Claim unlocked GO Pass rewards by Tuesday 17 November 2026 at 11:59 pm local time.",
+      "The Deluxe Silver Bottle Cap expires on Sunday 22 November 2026 at 11:59 pm local time, even if already claimed."
+     ]
+    }
+   ],
+   "img_credit": "Pokémon GO (official)"
   }
  ],
  "deadlines": [
@@ -279,6 +330,27 @@
    "e": "2026-12-03T10:00",
    "source": "Leek Duck",
    "url": "https://leekduck.com/events/go-pass-november-2026/"
+  },
+  {
+   "id": "go-pass-into-wild-rewards",
+   "name": "GO Pass: Into the Wild rewards",
+   "title": "Rewards expire",
+   "action": "claim by",
+   "s": "2026-11-15T18:00",
+   "e": "2026-11-17T23:59",
+   "source": "Pokémon GO (official)",
+   "url": "https://pokemongo.com/news/into-the-wild-2026"
+  },
+  {
+   "id": "go-pass-into-wild-silver-bottle-cap",
+   "name": "GO Pass Deluxe: Into the Wild Silver Bottle Cap",
+   "title": "Deluxe item expires",
+   "action": "use by",
+   "qualifier": "Deluxe track only",
+   "s": "2026-11-09T10:00",
+   "e": "2026-11-22T23:59",
+   "source": "Leek Duck",
+   "url": "https://leekduck.com/pokemon-go-wild-area/go-pass/"
   }
  ]
 }

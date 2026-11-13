@@ -120,3 +120,10 @@ test("art cache hits bypass the uncached-artwork miss limit", async (t) => {
   assert.equal(blocked.headers.get("cache-control"), "no-store");
   assert.equal((await artwork("Pokemon 000")).status, 200, "cached artwork remains available over quota");
 });
+
+test('guide misses without a trusted Cloudflare client IP bypass rolling limits', () => {
+  for (let i = 0; i < EDGE_MISS_LIMITS.guide.requests + 3; i++) {
+    assert.deepEqual(allowEdgeMiss(request(null), 'guide', 120000), { allowed: true, skipped: true, retryAfter: 0 });
+  }
+  assert.equal(allowEdgeMiss(request('198.51.100.250'), 'guide', 120000).allowed, true);
+});

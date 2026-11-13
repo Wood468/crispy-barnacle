@@ -64,6 +64,55 @@ with sync_playwright() as pw:
                     assert page.evaluate('GOEventClock.viewerZone()')==expected
                 assert page.evaluate("({dex:localStorage.getItem('gofn-dex-v1'),us:localStorage.getItem('gofn-us-v1')})")==before
                 print('PASS production Melbourne default → override → explicit device time with unchanged collection storage')
+                # Production-only full core-journey smoke. Source data is live:
+                # choose a published event by its contract, never a fixture ID.
+                page.locator('#tabs [data-tab="now"]').click()
+                page.wait_for_selector('#today-v1 .t1-glance', timeout=15000)
+                assert page.locator('#today-v1 .t1-tiles').count() == 1, 'Today summary did not render'
+                assert not page.locator('#today-v1 [data-follow],#today-v1 [data-mark],#today-v1 .own').count(), 'Follow/Track controls must not appear on Today'
+                assert page.locator('#today-v1').evaluate('(el) => el.scrollWidth <= el.clientWidth'), 'Today overflows on mobile'
+                page.locator('#tabs [data-tab="raids"]').click()
+                page.wait_for_function("document.querySelector('#rotnow')?.innerText?.length > 60", timeout=15000)
+                assert page.locator('#tab-raids').is_visible(), 'Battle panel is missing'
+                assert 'Raid' in page.locator('#rotnow').inner_text(), 'Raid/Max information did not render'
+                assert page.locator('#rotnow').evaluate('(el) => el.scrollWidth <= el.clientWidth'), 'Battle content overflows'
+                page.locator('#tabs [data-tab="events"]').click()
+                event_id = page.evaluate("""() => {
+                    const models = GOEventRegistry.events();
+                    const event = models.find(e => e.schedule && ((e.pokemon || []).length || (e.activities || []).length));
+                    return event && event.eventId;
+                }""")
+                assert event_id, 'No published event with a dated schedule and details'
+                page.evaluate('(id) => GODETAIL.open(id)', event_id)
+                page.wait_for_selector('#evd .ue-hero', timeout=15000)
+                assert page.locator('#evd-t').is_visible(), 'Event title missing'
+                assert page.locator('#evd .evd-nav-link').count() >= 1, 'Universal event navigation missing'
+                assert not page.locator('#evd [data-follow],#evd [data-mark],#evd .own').count(), 'Follow/Track controls must not appear on Event Details'
+                assert page.locator('#evd').evaluate('(el) => el.scrollWidth <= el.clientWidth'), 'Event Details overflows'
+                page.keyboard.press('Escape')
+                page.locator('#evd').wait_for(state='hidden', timeout=15000)
+                pass_id = page.evaluate("""() => {
+                    const event = GOEventRegistry.events().find(e => (e.passes || []).some(p => Array.isArray(p.stages) && p.stages.length));
+                    return event && event.eventId;
+                }""")
+                assert pass_id, 'GO Pass stage information missing from the published catalogue'
+                page.evaluate('(id) => GODETAIL.open(id)', pass_id)
+                # One-panel Event Details opens Overview first. A hidden pass
+                # is correctly mounted, but the real user must select GO Pass.
+                pass_tab = page.locator('#evd .evd-nav-link[data-sec="passes"]')
+                pass_tab.wait_for(state='visible', timeout=15000)
+                pass_tab.click()
+                pass_panel = page.locator('#evd-s-passes')
+                pass_panel.wait_for(state='visible', timeout=15000)
+                assert pass_tab.get_attribute('aria-current') == 'true', 'GO Pass jump link did not become current'
+                page.wait_for_selector('#evd-s-passes .ue-pass', timeout=15000)
+                assert pass_panel.locator('.ue-pass-rank').count() > 0, 'GO Pass rank timeline did not render'
+                assert page.locator('#evd .evd-sec:not([hidden])').count() == page.locator('#evd .evd-sec').count(), 'continuous view hid other published sections'
+                assert page.locator('#evd').evaluate('(el) => el.scrollWidth <= el.clientWidth'), 'GO Pass overflows'
+                page.keyboard.press('Escape')
+                page.locator('#evd').wait_for(state='hidden', timeout=15000)
+                assert not blocked, 'Read-only production navigation must not write to a private API'
+                print('PASS production Today → Battle → Event Details → GO Pass mobile read-only smoke; no Track/Follow controls')
             page.locator('#tabs [data-tab="events"]').click()
             assert page.locator('.schedule-heading').is_visible()
             page.locator('#tabs [data-tab="collect"]').click()
@@ -114,8 +163,16 @@ with sync_playwright() as pw:
         assert 'sun crown' in page.locator('#release-costumes').inner_text()
         page.locator('[data-open="season:pass-november"]').first.click()
         page.locator('#evd').wait_for(state='visible')
-        page.evaluate("document.querySelectorAll('#evd [role=tabpanel]').forEach(p=>p.hidden=false)")
-        assert 'Saved rank snapshot: 2026-11-01' in page.locator('#evd').inner_text()
+        # The retained-snapshot provenance belongs under Details & sources,
+        # not the adjacent GO Pass reward panel. Verify both separately.
+        details_tab = page.locator('#evd .evd-nav-link[data-sec="details"]')
+        details_tab.click()
+        assert details_tab.get_attribute('aria-current') == 'true'
+        assert 'Saved rank snapshot: 2026-11-01' in page.locator('#evd .evd-sec[data-sec="details"]').inner_text()
+        pass_tab = page.locator('#evd .evd-nav-link[data-sec="passes"]')
+        pass_tab.click()
+        assert pass_tab.get_attribute('aria-current') == 'true'
+        assert page.locator('#evd .evd-sec:not([hidden])').count() == page.locator('#evd .evd-sec').count()
         ranks = page.locator('#evd .ss-tab tbody th').all_text_contents()
         assert ranks == ['2', '3', '100', '200'], ranks
         assert 'Groudon' in page.locator('#evd').inner_text()

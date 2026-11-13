@@ -1,6 +1,5 @@
 {
  "alerted": [
-  "store-watch.yml",
   "ai-heartbeat-pipeline",
   "ai-heartbeat-shiny"
  ],
