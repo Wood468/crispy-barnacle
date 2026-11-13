@@ -198,3 +198,31 @@ test('world-source suppression never infers identity from title, dates or unrela
     {id:'w-mexico',sourceUrl:mexico}
   ]);
 });
+
+test('canonical source audit links each exact page once after world owner reconciliation',()=>{
+  const dynamax='https://leekduck.com/events/dynamax-trails-2026/';
+  const london='https://leekduck.com/events/pokemon-night-out-london-2026/';
+  const world=[
+    {id:'w-dynamax',sources:[{id:'leekduck',url:dynamax}]},
+    {id:'w-global',sources:[{id:'leekduck',url:global}]},
+    {id:'w-mexico',sources:[{id:'leekduck',url:mexico}]},
+    {id:'w-london',sources:[{id:'leekduck',url:london}]}
+  ];
+  const known=[
+    {id:'wag',detailIds:['leekduck:pokemon-go-wild-area-2026-global']},
+    {id:'leekduck:dynamax-trails-2026'}
+  ];
+  const audit=collectCanonicalSourceFacetAudit(
+    [page(global),page(dynamax),page(mexico),page(london)],
+    known.concat(worldSourceFacetCandidates(world,known)));
+  assert.equal(audit.report.canonicalLinks.eligiblePages,4);
+  assert.equal(audit.report.canonicalLinks.linkedPages,4);
+  assert.equal(audit.report.canonicalLinks.ambiguousPages,0);
+  assert.equal(audit.report.canonicalLinks.unlinkedPages,0);
+  assert.ok(audit.byEvent.has('wag'));
+  assert.ok(audit.byEvent.has('w-mexico'));
+  assert.ok(audit.byEvent.has('w-london'));
+  assert.ok(!audit.byEvent.has('w-global'));
+  assert.ok(!audit.byEvent.has('w-dynamax'));
+  assert.equal(audit.report.publication,'audit-only');
+});
