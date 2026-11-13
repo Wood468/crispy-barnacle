@@ -111,6 +111,7 @@
     var total = model.list.reduce(function (n, g) { return n + g.tasks.length; }, 0);
     if (!html) {
       host.innerHTML = query ? '<div class="research-empty"><b>No task or reward matches \u201c' + esc(query) + '\u201d</b><p>Try a Pok\u00e9mon name or an item such as Stardust. Only tasks in the saved source snapshot are searched.</p></div>' : '';
+      status.textContent = query ? 'Search: 0 of ' + total + ' tasks match.' : model.summary;
       return;
     }
     host.innerHTML = html + (query ? '' : model.unparsed);
