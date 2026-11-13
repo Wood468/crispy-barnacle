@@ -126,6 +126,17 @@ jobs:
         if: matrix.shard == 'c'
         run: python test/final_polish_browser.py
 
+      - name: Verify synthetic owner Store layout at 320/390/430px
+        if: matrix.shard == 'e'
+        run: python test/store_mobile_browser.py
+      - name: Retain synthetic Store mobile screenshots and measurements
+        if: always() && matrix.shard == 'e'
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: store-mobile-visual-acceptance
+          path: /tmp/gofn-store-visual
+          if-no-files-found: error
+
       - name: Verify Collection opportunity planner
         if: matrix.shard == 'b'
         run: python test/opportunity_planner_browser.py
