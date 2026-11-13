@@ -86,11 +86,11 @@ test('real published schedule allows exact source-backed selection, not entire D
 test('picker uses the same timezone-aware clock as the Battle schedule',()=>{
  const clock=require('../public/event-clock.js');
  const data={rotation:[{s:'2026-11-14T10:00',e:'2026-11-14T11:00',five:'Zacian'}]};
- const now=+clock.parseDate('2026-11-14T11:10','Australia/Melbourne');
- assert.ok(picker.options(data,dex,now,lib.raidBossNames).some(x=>x.dex[1]==='Zacian'),
-  'device-clock parsing would wrongly retain a boss after its Melbourne end');
- assert.deepEqual(picker.options(data,dex,now,lib.raidBossNames,
-  value=>clock.parseDate(value,'Australia/Melbourne')),[],
+ const parse=value=>clock.parseDate(value,'Australia/Melbourne');
+ const live=+clock.parseDate('2026-11-14T10:30','Australia/Melbourne');
+ const ended=+clock.parseDate('2026-11-14T11:10','Australia/Melbourne');
+ assert.ok(picker.options(data,dex,live,lib.raidBossNames,parse).some(x=>x.dex[1]==='Zacian'));
+ assert.deepEqual(picker.options(data,dex,ended,lib.raidBossNames,parse),[],
   'schedule ends at the same Melbourne instant used by Battle');
 });
 test('invalid calendar dates do not fabricate a raid window',()=>{
