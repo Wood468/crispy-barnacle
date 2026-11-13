@@ -30,10 +30,12 @@ export async function preflightFacetPromotion(manifest,signature,{
   });
   if(typeof rootDir!=='string'||!rootDir.trim()||
      !Array.isArray(trustedCanonicalEventIds)||
+     trustedCanonicalEventIds.length<1||trustedCanonicalEventIds.length>10000||
      trustedCanonicalEventIds.some(id=>!ID.test(id))||
      new Set(trustedCanonicalEventIds).size!==trustedCanonicalEventIds.length||
      !plain(trustedPrivateReceipts)||
-     !Array.isArray(usedReleaseIds)||usedReleaseIds.some(x=>typeof x!=='string'))
+     !Array.isArray(usedReleaseIds)||usedReleaseIds.length>100000||
+     usedReleaseIds.some(x=>typeof x!=='string'||x.length>100))
     throw new TypeError('Trusted canonical catalogue, private receipts and durable replay state required');
   if(usedReleaseIds.includes(approval.releaseId))
     throw new TypeError('Promotion release ID already used');
@@ -44,7 +46,7 @@ export async function preflightFacetPromotion(manifest,signature,{
     throw new TypeError('Promotion contains unknown canonical event ID');
   const root=resolve(rootDir);
   for(const id of eventIds){
-    const receipt=trustedPrivateReceipts[id];
+    const receipt=Object.hasOwn(trustedPrivateReceipts,id)?trustedPrivateReceipts[id]:null;
     if(!plain(receipt)||!HASH.test(receipt.sha256||'')||
        !HASH.test(receipt.reviewFingerprint||'')||
        receipt.sha256!==eventHashes[id])
