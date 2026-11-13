@@ -58,3 +58,6 @@ def test_compact_today_artwork_contained():
                     page.close()
             finally:
                 browser.close()
+
+if __name__ == '__main__':
+    test_compact_today_artwork_contained()
