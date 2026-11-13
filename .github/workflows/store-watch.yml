@@ -64,6 +64,8 @@ jobs:
         run: |
           node --test test/store-artwork-coverage.test.mjs
           node scripts/store-artwork-coverage.mjs /tmp/store-snapshot.json
+      - name: Publish sanitized current Store SKU membership
+        run: node scripts/store-current-snapshot.mjs data/store-state.json public/store-current.json
       # A manual dry-run must never publish the AU price importer’s local changes.
       # Scheduled watches and explicitly live manual runs continue to save state.
       - name: Remember what was seen
@@ -71,7 +73,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          git add -- data/store-state.json public/store-log.json public/prices.json 2>/dev/null || true
+          git add -- data/store-state.json public/store-log.json public/store-current.json public/prices.json 2>/dev/null || true
           node scripts/validate-public-data.mjs
           if git diff --cached --quiet; then exit 0; fi
           # The live planner reads public/store-log.json from the deployed site, so a real change (an item appeared, left or changed
