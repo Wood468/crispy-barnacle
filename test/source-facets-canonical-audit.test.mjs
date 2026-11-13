@@ -136,6 +136,42 @@ test('world-source candidates require exact trusted event links and valid canoni
   assert.throws(()=>worldSourceFacetCandidates({}),/World event records array required/);
 });
 
+test('world sources skip already owned exact API aliases and curated source links',()=>{
+  const dynamax='https://leekduck.com/events/dynamax-trails-2026/';
+  const london='https://leekduck.com/events/pokemon-night-out-london-2026/';
+  const world=[
+    {id:'w-dynamax-trails',sources:[{id:'leekduck',url:dynamax}]},
+    {id:'w-global',sources:[{id:'leekduck',url:global}]},
+    {id:'w-mexico',sources:[{id:'leekduck',url:mexico}]},
+    {id:'w-london',sources:[{id:'leekduck',url:london}]}
+  ];
+  const known=[
+    {id:'leekduck:dynamax-trails-2026'},
+    {id:'wag',curated:true,detailIds:['leekduck:pokemon-go-wild-area-2026-global']}
+  ];
+  const candidates=worldSourceFacetCandidates(world,known);
+  assert.deepEqual(candidates,[
+    {id:'w-mexico',sourceUrl:mexico},
+    {id:'w-london',sourceUrl:london}
+  ]);
+  // An exact external link is sufficient as well even when the ID differs.
+  assert.deepEqual(worldSourceFacetCandidates(world,[
+    {id:'known-dynamax',link:'https://www.leekduck.com/events/dynamax-trails-2026/'}
+  ]).map(x=>x.id),['w-global','w-mexico','w-london']);
+});
+
+test('known candidate suppression never uses titles, nearby dates or false source claims',()=>{
+  const world=[{id:'w-mexico',sources:[{id:'leekduck',url:mexico}]}];
+  const known=[
+    {id:'similar',t:'GO Wild Area Mexico City',start:'2026-11-07'},
+    {id:'official-only',link:'https://pokemongo.com/en/gowildarea/mexico-city/'}
+  ];
+  assert.deepEqual(worldSourceFacetCandidates(world,known),[
+    {id:'w-mexico',sourceUrl:mexico}
+  ]);
+  assert.throws(()=>worldSourceFacetCandidates(world,{}),/Known canonical events array required/);
+});
+
 test('two generated world events claiming the same source stay ambiguous',()=>{
   const candidates=worldSourceFacetCandidates([
     {id:'world-a',sources:[{id:'leekduck',url:mexico}]},
