@@ -252,7 +252,7 @@
     if (!items.length) return '';
     var snapshot = data.storeSnapshot && Array.isArray(data.storeSnapshot.items)
       && Array.isArray(data.storeSnapshot.gone) ? data.storeSnapshot : null;
-    if (snapshot) items.forEach(function (p) { p.sourceOffer = R.sourceOffer(p.label, snapshot); });
+    items.forEach(function (p) { p.sourceOffer = R.sourceOffer(p.label, snapshot); });
     var comparableOffers = verifiedOptionsHtml(obs);
     var reviewPanel = coveragePanel(items, R);
     var sections = [
@@ -265,8 +265,15 @@
     var bySection = {}, earlier = [];
     sections.forEach(function (s) { bySection[s.id] = []; });
     items.forEach(function (p) {
-      if (snapshot && p.sourceOffer.status !== 'listed') earlier.push(p);
-      else bySection[priority(p)].push(p);
+      var category = priority(p), status = p.sourceOffer.status;
+      /* A missing source does not remove the useful historical category list.
+         An explicit retirement always leaves the main list; uncertainty for
+         time-limited passes/boxes is separated, while stable items/coin/store
+         upgrades remain visible but clearly marked unconfirmed. */
+      if (snapshot && (status === 'archived' ||
+          (status === 'unconfirmed' && (category === 'passes' || category === 'boxes'))))
+        earlier.push(p);
+      else bySection[category].push(p);
     });
     var listedCount = items.length - earlier.length;
     function productCard(p) {
@@ -341,7 +348,6 @@
             d.storeSnapshot = sourceSnapshot;
         } catch (_) { /* Never infer active stock from historical prices. */ }
       }
-      if (!d.storeSnapshot) d.storeSnapshot = {version:1,updated:null,items:[],gone:[]};
       var h = regional(d) || build(d); /* Prefer the complete regional catalogue; avoid repeating the older IDR summary. */ if (!h) return;
       var el = document.getElementById('storep-host');
       if (!el) { el = document.createElement('div'); el.id = 'storep-host'; host.parentNode.insertBefore(el, host); }
