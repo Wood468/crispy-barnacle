@@ -7,6 +7,9 @@
 .ue-pass-nav select{font-size:.84rem}
 .ue-pass-nav button{min-width:44px;min-height:44px}
 .ue-pass-nav :is(input,select,button):focus-visible{outline:2px solid var(--color-accent);outline-offset:2px}
+/* A searched item receives direct keyboard focus; show the precise tile
+   without expanding the mobile sheet or changing source lane colours. */
+.ue-pass .ue-pass-rank .ue-pass-reward:focus{outline:2px solid var(--color-accent);outline-offset:-2px;border-radius:8px;scroll-margin-block:12px}
 .ue-pass-nav-status{margin:0;font-size:.78rem;line-height:1.4;color:var(--color-text-muted)}
 .ue-pass-nav-status:empty{display:none}
 @media(max-width:380px){.ue-pass-jump{grid-template-columns:minmax(0,1fr) auto}.ue-pass-jump label{grid-column:1/-1}.ue-pass-jump input{grid-column:1}}
