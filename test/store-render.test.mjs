@@ -14,8 +14,15 @@ test('owner Store view renders verified Indonesian prices and regional-only rows
     { product: 'store-box-test', label: 'Ultra Training Box', group: 'Boxes', currency: 'AUD', amount: 46.99, region: 'AU', verified: true, observed: '2026-10-12' },
     { product: 'store-idr-legacy', label: 'GO Pass Deluxe', group: 'Tickets', currency: 'IDR', amount: 76000, region: 'ID', verified: true, observed: '2026-11-09' },
     { product: 'go-pass-oct-deluxe', currency: 'AUD', region: 'AU', amount: 12.99,
-      verified: true, observed: '2026-10-12', url: 'https://store.pokemongo.com/' }
-  ], regional: OBSERVATIONS, owner: true };
+      verified: true, observed: '2026-10-12', url: 'https://store.pokemongo.com/' },
+    { product: 'store-raid-day-a', label: 'Raid Day Box', group: 'Boxes', currency: 'AUD',
+      region: 'AU', amount: 9.99, verified: true, observed: '2026-11-09' },
+    { product: 'store-raid-day-b', label: 'Raid Day Box', group: 'Boxes', currency: 'AUD',
+      region: 'AU', amount: 14.99, verified: true, observed: '2026-11-09' }
+  ], regional: OBSERVATIONS.concat([{
+    id: 'id-raid-day-test', product: 'Raid Day Box', kind: 'bundle', region: 'ID', channel: 'web',
+    currency: 'IDR', amount: 50000, observed: '2026-11-09', source: 'fixture', status: 'verified'
+  }]), owner: true };
   const win = { GORegionalPrices: R, GOLIB: { esc: s => String(s).replace(/[&<>"']/g, c => '&#' + c.charCodeAt(0) + ';'), loadPrices: () => Promise.resolve(prices), priceView: () => ({ sub: '', save: '', main: '' }) }, GODASH: {} };
   const doc = { readyState: 'complete', getElementById: id => id === 'evsource' ? host : id === 'storep-host' ? null : null, createElement: () => el, addEventListener() {} };
   Object.assign(win, { document: doc, localStorage: { getItem: () => null, setItem() {} }, console }); win.window = win;
@@ -36,6 +43,16 @@ test('owner Store view renders verified Indonesian prices and regional-only rows
   assert.ok(el.innerHTML.includes('go-pass-oct-deluxe'), 'verified official AU pass offer is not silently filtered out');
   assert.ok(el.innerHTML.includes('exact SKU; item name not recorded'),
     'unlabelled source offer cannot masquerade as a verified product name');
+  assert.ok(el.innerHTML.includes('Distinct official SKU: store-raid-day-a'));
+  assert.ok(el.innerHTML.includes('Distinct official SKU: store-raid-day-b'));
+  assert.ok(el.innerHTML.includes('no exact AU SKU pairing established'),
+    'the same-name Indonesian offer must not be attributed to either AU box');
+  assert.equal((el.innerHTML.match(/Distinct official SKU: store-raid-day-/g)||[]).length,2);
+  const raidCards = (el.innerHTML.match(/<article class="sp-product"[\s\S]*?<\/article>/g)||[])
+    .filter(card => card.includes('Raid Day Box'));
+  assert.equal(raidCards.length,3,'two AU SKUs plus one unpaired local observation');
+  assert.equal(raidCards.filter(card=>card.includes('Rp 50,000')).length,1,
+    'one regional observation cannot become two independently verified SKU prices');
   assert.doesNotMatch(el.innerHTML, /class="sp-product-group"/,
     'internal event-pass/sku classifier strings must not be exposed as product labels');
   assert.doesNotMatch(el.innerHTML, />event-pass-ranks-ultra</,

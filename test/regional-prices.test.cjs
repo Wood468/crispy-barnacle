@@ -223,3 +223,49 @@ test('verified Store SKU variants remain distinct and region-only records keep t
   assert.equal(rows.find(r=>r.label==='GO Pass Deluxe: Into the Wild').aud,null,
     'do not claim an unrelated AU price for a regional-only event pass');
 });
+
+test('distinct verified Australian SKUs with the same label are never overwritten or falsely paired', () => {
+  const prices=[
+    {product:'store-raid-box-a',label:'Raid Day Box',group:'Boxes',currency:'AUD',
+      region:'AU',amount:9.99,verified:true,observed:'2026-11-09'},
+    {product:'store-raid-box-b',label:'Raid Day Box',group:'Boxes',currency:'AUD',
+      region:'AU',amount:14.99,verified:true,observed:'2026-11-09'},
+    {product:'store-raid-box-b',label:'Raid Day Box',group:'Boxes',currency:'AUD',
+      region:'AU',amount:15.99,verified:true,observed:'2026-11-10'}
+  ];
+  const regional=[id('Raid Day Box','bundle',50000)];
+  const rows=R.catalogue(prices,regional,NOW);
+  assert.equal(rows.length,3,'two distinct AU offers and one unmatched regional observation');
+  const a=rows.find(r=>r.product==='store-raid-box-a');
+  const b=rows.find(r=>r.product==='store-raid-box-b');
+  assert.ok(a&&b,'both verified SKUs must remain visible');
+  assert.equal(a.aud,9.99);
+  assert.equal(b.aud,15.99,'latest observation of one exact SKU wins');
+  for(const row of [a,b]){
+    assert.equal(row.ambiguousSku,true);
+    assert.equal(row.indonesia,null,'same-name local price must not be assigned to both AU variants');
+    assert.equal(row.india,null);
+  }
+  const unpaired=rows.find(r=>r.aud===null&&r.label==='Raid Day Box');
+  assert.equal(unpaired.regionalUnmatched,true);
+  assert.equal(unpaired.indonesia.amount,50000);
+});
+
+test('a unique exact label remains matchable and bonus coin packs stay separate', () => {
+  const prices=[
+    {product:'store-110-pokecoins',label:'110 PokéCoins',group:'PokéCoins',
+      currency:'AUD',region:'AU',amount:1.59,verified:true,observed:'2026-11-09'}
+  ];
+  const obs=[
+    id('110 PokéCoins (standard Web Store pack)','coins',5000),
+    id('110 PokéCoins + 30 one-time Web Store bonus','coins',8000,{oneTime:true})
+  ];
+  const rows=R.catalogue(prices,obs,NOW);
+  assert.equal(rows.length,2);
+  const standard=rows.find(r=>r.product==='store-110-pokecoins');
+  assert.equal(standard.indonesia.amount,5000);
+  assert.equal(standard.ambiguousSku,false);
+  const bonus=rows.find(r=>r.label.includes('one-time Web Store bonus'));
+  assert.equal(bonus.aud,null);
+  assert.equal(bonus.indonesia.amount,8000);
+});
