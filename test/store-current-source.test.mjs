@@ -76,6 +76,15 @@ test('expired purchase end and stale source never claim current listing', () => 
   assert.equal(R.sourceOffer('Timed GO Pass', null, NOW).status,'unconfirmed');
 });
 
+test('duplicate product names cannot authorize ambiguous source SKUs', () => {
+  const normal = R.sourceOffer('GO Pass Deluxe: November', fixture, NOW);
+  assert.equal(normal.status,'listed');
+  const ambiguous = R.sourceOffer('GO Pass Deluxe: November', fixture, NOW, {ambiguousSku:true});
+  assert.equal(ambiguous.status,'unconfirmed');
+  assert.match(ambiguous.note,/SKU\/contents are ambiguous/);
+  assert.equal(ambiguous.image,null);
+});
+
 test('safe art requires the exact official asset URL host; no tracking or injected URLs', () => {
   assert.equal(R.sourceArt('https://evil.example/pgo/image_variants/v1/sku_assets/foo/w256.webp'),false);
   assert.equal(R.sourceArt('javascript:alert(1)'),false);
