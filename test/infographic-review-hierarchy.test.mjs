@@ -43,3 +43,9 @@ test('event suggestions are touch-sized, keyboard focusable, and use shared desi
   assert.match(css,/\.igr-event-suggestions\{[^}]*var\(--radius-md\)/);
   assert.match(css,/\.igr-event-suggestions \.igr-g\{[^}]*var\(--space-3\)/);
 });
+
+test('event approval and additional event links select the event field, never the first Pokémon dropdown',()=>{
+  assert.match(handlers,/card\.querySelector\('select\[aria-label="Choose another event"\]'\)/);
+  assert.match(handlers,/card\.querySelector\('select\[aria-label="Link to another event"\]'\)/);
+  assert.doesNotMatch(handlers,/card\.querySelector\('select'\)/);
+});
