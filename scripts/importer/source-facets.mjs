@@ -218,6 +218,7 @@ export function extractEventSourceFacets(html,{sourceUrl}={}){
       const next=sectionList[i+1];
       const detachedStory=next&&next.level===s.level&&
         !/\b(?:special|timed|field)\s+research\b|^(?:bonuses?|features?|spawns?|eggs?|raids?|max battles?|moves?|sales?|shiny|go stamp rally)$/i.test(next.heading)&&
+        /\bSpecial Research\b/i.test(text(next.body).slice(0,800))&&
         /\(\s*1\s*\/\s*(?:[2-9]|[12]\d)\s*\)/.test(text(next.body));
       const researchSection=detachedStory?{...s,body:s.body+next.body,storyTitle:next.heading}:s;
       const program=parseResearch(researchSection,sourceUrl);
