@@ -12,6 +12,15 @@ const PRODUCT='/pgo/image_variants/v1/sku_assets/';
 const localIcon=/^\/ico\/(?:i\/|g\/)?[a-z0-9-]+\.webp$/;
 const purchase=/^\/purchase\/item\/[a-z0-9-]+$/;
 
+/* Existing exact Store item paths, not carte blanche to add generic raid or
+   egg imagery. A newly mapped path needs independent source+visual review. */
+const baselineExact=new Set([
+  '/ico/i/max-potion.webp','/ico/i/max-revive.webp',
+  '/ico/i/golden-razz.webp','/ico/i/silver-pinap.webp',
+  '/ico/incense.webp','/ico/g/elite-fast-tm.webp',
+  '/ico/g/elite-charged-tm.webp','/ico/g/raidpass.webp'
+]);
+
 function remoteAsset(url) {
   try {
     const u=new URL(url);
@@ -39,7 +48,11 @@ function validateIcon(relative,exists=existsSync,size=p=>statSync(p).size) {
   return {path:relative,valid:true,bytes:content.length};
 }
 export function auditStoreArtwork({source='',items=[]}={}) {
-  const icons=iconPaths(source).map(path=>validateIcon(path));
+  const icons=iconPaths(source).map(path=>{
+    const result=validateIcon(path);
+    return baselineExact.has(path)?result:
+      {path,valid:false,reason:'new exact-item artwork requires independent source/visual review'};
+  });
   const entries=[],shared=new Map(),invalid=[];
   for(const [index,row] of (Array.isArray(items)?items:[]).entries()) {
     if(!row||typeof row.name!=='string')continue;
