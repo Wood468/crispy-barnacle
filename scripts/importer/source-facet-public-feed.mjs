@@ -42,7 +42,8 @@ function sourceRef(ref){
 }
 function project(type,record){
   if(!plain(record)||typeof record.id!=='string'||!record.id.trim()||record.id.length>160||
-     record.status!=='source-claimed')
+     record.status!=='source-claimed'||
+     !['free','ticket','addon','unknown'].includes(record.access))
     throw new TypeError('Invalid verified facet claim');
   if(!Array.isArray(record.sourceRefs)||!record.sourceRefs.length||record.sourceRefs.length>12)
     throw new TypeError('Verified claim missing bounded sources');
