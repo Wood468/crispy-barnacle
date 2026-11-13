@@ -192,7 +192,10 @@
       var id = 'au:' + key;
       all[id] = { product: key, label: label, group: group,
         sourceIdOnly: !p.label, aud: p.amount, observed: p.observed,
-        oneTime: !!p.oneTime, sourceSku: p.sourceSku };
+        oneTime: !!p.oneTime, sourceSku: p.sourceSku,
+        contents: Array.isArray(p.contents) ? p.contents : [],
+        contentsSource: p.contentsSource || null,
+        disableRegionalEstimates: p.disableRegionalEstimates === true };
       (auByLabel[labelKey] || (auByLabel[labelKey] = [])).push(id);
     });
     obs.forEach(function (o, index) {
@@ -220,11 +223,18 @@
              prohibiting unsafe same-name exact matches. */
           return !!o && (norm(o.product) !== norm(p.label) || sameStoreIdentity(p, o));
         }) : obs;
+      function regionPrice(spec) {
+        // Historical, source-named passes may show exact checkout observations,
+        // but must not borrow an unrelated monthly/event-pass price estimate.
+        return p.disableRegionalEstimates ? exact(rowObs, spec.region, spec.channel, spec.product)
+          : reference(spec, rowObs, now);
+      }
       return { product: p.product, label: p.label, group: p.group, kind: kind,
         sourceIdOnly: !!p.sourceIdOnly, ambiguousSku: ambiguous,
         regionalUnmatched: !!p.regionalUnmatched, aud: p.aud, observed: p.observed,
-        india: ambiguous ? null : reference({ region: 'IN', channel: 'in-app', product: p.label, kind: kind, aud: p.aud }, rowObs, now),
-        indonesia: ambiguous ? null : reference({ region: 'ID', channel: 'web', product: p.label, kind: kind, aud: p.aud }, rowObs, now) };
+        contents: p.contents || [], contentsSource: p.contentsSource || null,
+        india: ambiguous ? null : regionPrice({ region: 'IN', channel: 'in-app', product: p.label, kind: kind, aud: p.aud }),
+        indonesia: ambiguous ? null : regionPrice({ region: 'ID', channel: 'web', product: p.label, kind: kind, aud: p.aud }) };
     });
   }
   /* Owner-only audit of source coverage, not a live checkout or a price

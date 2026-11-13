@@ -17,6 +17,12 @@ test('owner Store view renders verified Indonesian prices and regional-only rows
     { product: 'store-idr-legacy', label: 'GO Pass Deluxe', group: 'Tickets', currency: 'IDR', amount: 76000, region: 'ID', verified: true, observed: '2026-11-09' },
     { product: 'go-pass-oct-deluxe', currency: 'AUD', region: 'AU', amount: 12.99,
       verified: true, observed: '2026-10-12', url: 'https://store.pokemongo.com/' },
+    { product: 'store-official-source-fixture', label: 'Source-backed Fixture Pass',
+      group: 'Tickets', currency: 'AUD', region: 'AU', amount: 9.99,
+      verified: true, observed: '2026-10-12',
+      contents: [{item:'Ultra Ball',quantity:20},{item:'Premium Battle Pass',quantity:5}],
+      contentsSource:'https://pokemongo.com/news/go-pass-october-2026',
+      disableRegionalEstimates:true },
     { product: 'store-raid-day-a', label: 'Raid Day Box', group: 'Boxes', currency: 'AUD',
       region: 'AU', amount: 9.99, verified: true, observed: '2026-11-09' },
     { product: 'store-raid-day-b', label: 'Raid Day Box', group: 'Boxes', currency: 'AUD',
@@ -53,6 +59,13 @@ test('owner Store view renders verified Indonesian prices and regional-only rows
   assert.ok(el.innerHTML.includes('Not observed'), 'missing source prices should not look like zero or a calibration failure');
   assert.ok(el.innerHTML.includes('data-sp-search'), 'search appears ahead of the product cards');
   assert.ok(el.innerHTML.includes('data-sp-coverage'), 'owner can inspect source completeness without another pricing panel');
+  assert.ok(el.innerHTML.includes('sp-offer-contents'), 'verified official offer breakdown can be expanded');
+  assert.ok(el.innerHTML.includes('Ultra Ball ×20') && el.innerHTML.includes('Premium Battle Pass ×5'),
+    'published item quantities appear without replacing regional prices');
+  assert.ok(el.innerHTML.includes('Official offer description'), 'link to Niantic source is visible');
+  assert.ok(el.innerHTML.includes('not proof this historical offer is still for sale'),
+    'published contents are not represented as live checkout availability');
+
   assert.ok(el.innerHTML.includes('Missing Australian product names'), 'unattributed official SKUs stay actionable');
   assert.ok(el.innerHTML.includes('Regional SKU/contents not safely paired'), 'unmatched packs are visible for review');
   assert.ok(el.innerHTML.includes('No observed Indian source price'), 'missing India evidence is not described as verified');
