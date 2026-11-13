@@ -171,6 +171,13 @@ export function sanitizePublicInfographicSources(info) {
       if (graphic && graphic.sourceUrl && !publicSourceUrl(graphic.sourceUrl)) delete graphic.sourceUrl;
     }
   }
+  // Persistent boss guides use the same public-only source policy as events.
+  // An owner-approved private Discord URL must never reach public JSON.
+  for (const guide of info.pokemonGuides || []) {
+    for (const graphic of guide.infographics || []) {
+      if (graphic && graphic.sourceUrl && !publicSourceUrl(graphic.sourceUrl)) delete graphic.sourceUrl;
+    }
+  }
   return info;
 }
 
