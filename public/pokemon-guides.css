@@ -19,3 +19,7 @@
 .ig-boss-controls input,.ig-boss-controls select {width:100%;min-height:44px;max-width:240px}
 .ig-boss-controls button {min-height:44px}
 @media(max-width:480px){#boss-guide-library{padding:12px}.boss-guide-tools [data-boss-guide-filter]{flex:1 1 auto}}
+
+/* Existing raid/Max cards gain a guide action only for one exact approved form. */
+.boss-guide-inline {min-width:44px;min-height:44px;display:inline-flex;align-items:center;justify-content:center;padding:8px 12px;margin:5px 6px 5px 0;border-radius:10px;cursor:pointer}
+.boss-guide-inline:focus-visible {outline:3px solid var(--accent,#71bdf1);outline-offset:2px}
