@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { createRequire } from 'node:module';
 import { storeCurrentSnapshot } from '../scripts/store-watch.mjs';
+import { IMAGE_CSP_HOSTS } from '../src/image-policy.js';
 const require = createRequire(import.meta.url);
 const R = require('../public/regional-prices.js');
 const snapshot = JSON.parse(readFileSync(new URL('../public/store-current-snapshot.json', import.meta.url)));
@@ -93,4 +94,9 @@ test('India in-app coin packs are recorded separately from AU Web packs and neve
   assert.ok(indian.every(x => /\+ \d+ in-app bonus/.test(x.product)));
   assert.equal(OBSERVATIONS.find(x => x.id === 'in-itw-ticket')?.amount,349);
   assert.equal(OBSERVATIONS.find(x => x.id === 'in-itw-deluxe')?.amount,439);
+});
+
+test('exact official artwork CDN is image-only allowlisted, without wildcard hosts', () => {
+  assert.ok(IMAGE_CSP_HOSTS.includes('https://assets.pgo.webstore.nianticlabs.com'));
+  assert.ok(!IMAGE_CSP_HOSTS.some(host => host.includes('*')));
 });
