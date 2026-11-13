@@ -91,8 +91,9 @@ with sync_playwright() as p:
                        'title': 'Weekly source-backed preview', 'publishedAt': '2026-11-09T00:00:00Z'}
         if width != 320:
             weekly_item['post'] = 'https://leekduck.com/events/'
-        ctx.route('**/weekly.json*', lambda r, item=weekly_item: r.fulfill(
-            content_type='application/json', body=json.dumps({'items': [item]})))
+        fixture_json = json.dumps({'items': [weekly_item]})
+        ctx.route('**/weekly.json*', lambda r: r.fulfill(
+            content_type='application/json', body=fixture_json))
         ctx.route('**/infographics/test-week.png', lambda r: r.fulfill(
             content_type='image/png', body=bytes.fromhex(
                 '89504e470d0a1a0a0000000d49484452000000010000000108060000001f15c489'
