@@ -56,8 +56,10 @@
   /* One tidy block of CP numbers for a card: the boss(es) by name when there are several. */
   function cpRows(ev) {
     var seen = {}, rows = [];
-    ev.featured.forEach(function (f) {
-      var k = String(f.name).toLowerCase(); if (seen[k]) return; seen[k] = 1;
+    var featured = (ev && Array.isArray(ev.featured)) ? ev.featured : [];
+    featured.forEach(function (f) {
+      if (!f || typeof f.name !== 'string') return;
+      var k = f.name.toLowerCase(); if (seen[k]) return; seen[k] = 1;
       var l = hundoLabels(ev, f); if (l) rows.push({ name: f.name, html: l });
     });
     if (!rows.length) return '';
