@@ -40,7 +40,7 @@ const audience = raw => {
 const safe = (x,max=500) => trim(x).slice(0,max);
 const safeEvidence = (value,max=400) => safe(value,max*2)
   .replace(/<[^>]*>/g,' ').replace(/[\u0000-\u001f\u007f]/g,' ')
-  .replace(/\s+/g,' ').trim().slice(0,max)||null;
+  .replace(/\s+/g,' ').trim().replace(/\s+([.,;:!?])/g,'$1').slice(0,max)||null;
 function researchSourceEvidence(raw,source,section){
   const medalEffects=[];
   for(const entry of (Array.isArray(raw.medalEffects)?raw.medalEffects:[]).slice(0,8)){
