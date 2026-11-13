@@ -11,13 +11,26 @@
   var DEFAULT_MAX_AGE_DAYS = 7;
   function time(value) {
     if (typeof value !== 'string' || !/^[0-9]{4}-[0-9]{2}-[0-9]{2}(?:T.*Z)?$/.test(value)) return null;
+    // Reject calendar overflow and non-canonical timestamps that Date.parse may normalize.
+    var match = /^(\d{4})-(\d{2})-(\d{2})(?:T(\d{2}):(\d{2}):(\d{2})(?:\.(\d{1,3}))?Z)?$/.exec(value);
+    if (!match) return null;
     var parsed = Date.parse(value);
-    return Number.isFinite(parsed) ? parsed : null;
+    if (!Number.isFinite(parsed)) return null;
+    var d = new Date(parsed);
+    if (d.getUTCFullYear() !== Number(match[1]) ||
+        d.getUTCMonth() + 1 !== Number(match[2]) ||
+        d.getUTCDate() !== Number(match[3])) return null;
+    return parsed;
   }
-  function evidenceValid(e) {
-    return !!(e && e.confirmed === true && typeof e.sourceUrl === 'string' &&
-      e.sourceUrl.indexOf('https://') === 0 && typeof e.locale === 'string' &&
-      e.locale.trim() && typeof e.channel === 'string' && e.channel.trim());
+  function evidenceValid(e, offer, now, maxAge) {
+    if (!(e && e.confirmed === true && typeof e.sourceUrl === 'string' &&
+      /^https:\/\/[^/\s?#]+(?:[/?#]|$)/.test(e.sourceUrl) &&
+      typeof e.locale === 'string' && e.locale.trim() &&
+      typeof e.channel === 'string' && e.channel.trim())) return false;
+    if (offer.locale != null && offer.locale !== e.locale) return false;
+    if (offer.channel != null && offer.channel !== e.channel) return false;
+    var checked = time(e.checkedAt);
+    return checked !== null && checked <= now && now - checked <= maxAge * DAY;
   }
   function classifyEventWindow(offer, now) {
     var start = time(offer.eventStartAt), end = time(offer.eventEndsAt);
@@ -40,21 +53,20 @@
     var purchaseEnd = time(offer.purchaseEndAt), retirement = offer.retirementEvidence;
     var availability = 'unknown';
     var reason = 'No fresh, locale-specific official listing or explicit retirement evidence';
-    if (purchaseEnd !== null && purchaseEnd <= now && evidenceValid(retirement)) {
+    var listing = offer.listingEvidence;
+    var live = listing && listing.listed === true && evidenceValid(listing, offer, now, maxAge);
+    var ended = purchaseEnd !== null && purchaseEnd <= now &&
+      evidenceValid(retirement, offer, now, maxAge);
+    if (live && ended && time(listing.checkedAt) > purchaseEnd) {
+      reason = 'Conflicting official listing and retirement evidence requires reconciliation';
+    } else if (ended) {
       availability = 'confirmed-retired';
-      reason = 'Explicit purchase end date has passed and is backed by source evidence';
-    } else {
-      var listing = offer.listingEvidence, checked = listing && time(listing.checkedAt);
-      if (listing && listing.listed === true && evidenceValid(listing) && checked !== null) {
-        var age = now - checked;
-        if (age >= 0 && age <= maxAge * DAY) {
-          availability = 'confirmed-listed';
-          reason = 'Official offer listing was observed recently for this locale and channel';
-        } else if (age < 0) reason = 'Listing evidence is dated in the future';
-        else reason = 'Official listing evidence is stale and needs rechecking';
-      } else if (purchaseEnd !== null && purchaseEnd <= now) {
-        reason = 'Purchase end date lacks corroborating retirement evidence';
-      }
+      reason = 'Explicit purchase end date has passed and is backed by recent matching evidence';
+    } else if (live) {
+      availability = 'confirmed-listed';
+      reason = 'Official offer listing was observed recently for this locale and channel';
+    } else if (purchaseEnd !== null && purchaseEnd <= now) {
+      reason = 'Purchase end date lacks fresh corroborating retirement evidence';
     }
     return {
       availability: availability, reason: reason,
