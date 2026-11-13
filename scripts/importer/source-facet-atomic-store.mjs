@@ -30,7 +30,7 @@ const absent=e=>e?.code==='ENOENT';
  *  must be null for creation or the last verified on-disk bytes SHA-256.
  */
 export async function persistSignedFacetSnapshot(plan,authorization,{
-  rootDir,expectedPreviousSha256=null
+  rootDir,expectedPreviousSha256=null,trustedKeys
 }={}){
   if(!plan||!ID.test(plan.eventId)||typeof rootDir!=='string'||!rootDir.trim()||
       (expectedPreviousSha256!==null&&!/^[a-f0-9]{64}$/.test(expectedPreviousSha256)))
@@ -65,7 +65,7 @@ export async function persistSignedFacetSnapshot(plan,authorization,{
     const actualFingerprint=fingerprintFacetReview(plan.candidate,currentDelta);
     if(!equal(actualFingerprint,plan.fingerprint))
       throw new TypeError('Review fingerprint does not match stored snapshot');
-    const verified=authorizeFacetSnapshot(plan,authorization);
+    const verified=authorizeFacetSnapshot(plan,authorization,trustedKeys);
     const serialized=JSON.stringify(verified,null,2)+'\n';
     if(Buffer.byteLength(serialized)>1024*1024)
       throw new TypeError('Verified output exceeds size limit');
