@@ -51,6 +51,18 @@ const provenance = (record,kind) => {
   return {sourceId:record.sourceId,url};
 };
 const fmtKey = values => values.map(x=>norm(String(x??''))).join('\u001f');
+// A source's boolean is NOT evidence that a paid limit replaces a free limit.
+// Require explicit, attributable wording; absent evidence stays unknown.
+function replacementRule(raw,kind){
+  if(kind!=='raid-passes'&&kind!=='max-particles')return {rule:false,evidence:null,missing:false};
+  const evidence=safe(raw.replacementEvidence,240);
+  const mentionsFree=/\bfree\b/i.test(evidence)&&/\blimits?\b/i.test(evidence);
+  const replaces=mentionsFree&&/\b(?:replaces?|replaced|instead of)\b/i.test(evidence);
+  const stacks=mentionsFree&&/\b(?:stack(?:s|ed)?|in addition to|on top of)\b/i.test(evidence);
+  if(replaces&&!stacks&&raw.replacesFreeLimit===true)return {rule:true,evidence,missing:false};
+  if(stacks&&!replaces&&raw.replacesFreeLimit===false)return {rule:false,evidence,missing:false};
+  return {rule:null,evidence:null,missing:raw.replacesFreeLimit===true};
+}
 function normalizeClaim(type,raw,source){
   if(!raw||typeof raw!=='object')return null;
   const src=raw.source;
@@ -63,10 +75,14 @@ function normalizeClaim(type,raw,source){
     const windowText=safe(raw.windowText,400)||null;
     const dayScope=DAY_SCOPE.has(raw.dayScope)?raw.dayScope:null;
     const addonLabel=access==='addon'?safe(raw.addonLabel,140)||null:null;
-    const replacesFreeLimit=raw.replacesFreeLimit===true&&(kind==='raid-passes'||kind==='max-particles');
-    return { ...core,id:atom(['benefit',kind,access,addonLabel,dayScope,windowText,label,replacesFreeLimit].join('|')),
-      label,kind,dayScope,windowText,addonLabel,replacesFreeLimit,
-      _key:fmtKey([kind,access,addonLabel,dayScope,windowText,label,replacesFreeLimit])};
+    const replacement=replacementRule(raw,kind);
+    return { ...core,id:atom(['benefit',kind,access,addonLabel,dayScope,windowText,label].join('|')),
+      label,kind,dayScope,windowText,addonLabel,
+      replacesFreeLimit:replacement.rule,replacementEvidence:replacement.evidence,
+      _replacementStates:replacement.rule===null?[]:[replacement.rule],
+      _warnings:replacement.missing?['replacement-evidence-missing']:[],
+      _disputes:[],
+      _key:fmtKey([kind,access,addonLabel,dayScope,windowText,label])};
   }
   if(type==='featuredMoves'){
     const pokemonLabel=safe(raw.pokemonLabel,100),move=safe(raw.move,90),moveKind=trim(raw.moveKind);
@@ -83,9 +99,10 @@ function normalizeClaim(type,raw,source){
     const steps=(Array.isArray(raw.steps)?raw.steps:[]).filter(s=>
       Number.isInteger(s?.step)&&Number.isInteger(s?.outOf)&&s.step>0&&s.outOf<=100&&s.step<=s.outOf
     ).slice(0,100).map(s=>({step:s.step,outOf:s.outOf,title:safe(s.title,160),taskRewardEvidence:'not-extracted'}));
-    const onceOnly=raw.onceOnly===true?true:null;
+    const onceOnly=typeof raw.onceOnly==='boolean'?raw.onceOnly:null;
     return {...core,id:atom(['research',kind,title,access,paths.join(',')].join('|')),
       kind,title,paths,steps,onceOnly,
+      _onceStates:onceOnly===null?[]:[onceOnly],_disputes:[],
       _key:fmtKey([kind,title,access,paths.join(',')])};
   }
   return null;
@@ -112,24 +129,59 @@ export function normalizeEventSourceFacets(eventId,sourceRecords){
         const proof=claim.sourceRefs[0];
         if(!old.sourceRefs.some(s=>s.sourceId===proof.sourceId&&s.url===proof.url&&s.section===proof.section))
           old.sourceRefs.push(proof);
-        // A source that flags an item as unconfirmed cannot turn it into
-        // a confirmed bonus just because another source repeats the wording.
+        // Unconfirmed claims cannot become confirmed merely by repetition.
         if(claim.status==='unconfirmed')old.status='unconfirmed';
         else if(old.status!=='unconfirmed'&&new Set(old.sourceRefs.map(s=>s.sourceId)).size>=2)old.status='corroborated';
-        // Keep stage evidence from sources without creating fictitious rewards.
+        if(type==='benefits'){
+          old._warnings=unique([...old._warnings,...claim._warnings]);
+          old._replacementStates=unique([...old._replacementStates,...claim._replacementStates]);
+          if(old._replacementStates.length>1){
+            old.replacesFreeLimit=null;
+            old.replacementEvidence=null;
+            if(!old._disputes.includes('replacement-rule-disagreement'))
+              old._disputes.push('replacement-rule-disagreement');
+          }else if(old._replacementStates.length===1){
+            old.replacesFreeLimit=old._replacementStates[0];
+            old.replacementEvidence=[old.replacementEvidence,claim.replacementEvidence]
+              .filter(Boolean).sort()[0]??null;
+          }
+        }
         if(type==='researchPrograms'){
-          const has=new Set(old.steps.map(s=>s.step+'/'+s.outOf));
-          for(const step of claim.steps)if(!has.has(step.step+'/'+step.outOf)){old.steps.push(step);has.add(step.step+'/'+step.outOf);}
-          old.steps.sort((a,b)=>a.step-b.step);
+          // "One time" and "repeatable on extra days" are not equivalent.
+          old._onceStates=unique([...old._onceStates,...claim._onceStates]);
+          if(old._onceStates.length>1){
+            old.onceOnly=null;
+            if(!old._disputes.includes('research-once-only-disagreement'))
+              old._disputes.push('research-once-only-disagreement');
+          }else old.onceOnly=old._onceStates[0]??null;
+          for(const step of claim.steps){
+            const matched=old.steps.find(s=>s.step===step.step&&s.outOf===step.outOf);
+            if(!matched){old.steps.push(step);continue;}
+            if(matched.taskRewardEvidence==='disputed')continue;
+            if(norm(matched.title)!==norm(step.title)){
+              matched.title='';
+              matched.taskRewardEvidence='disputed';
+              const reason='research-stage-disagreement:'+step.step+'/'+step.outOf;
+              if(!old._disputes.includes(reason))old._disputes.push(reason);
+            }else matched.title=[matched.title,step.title].sort()[0];
+          }
+          old.steps.sort((a,b)=>a.step-b.step||a.outOf-b.outOf);
         }
       }
     }
   }
   const out={schemaVersion:1,publication:'staging-only',eventId};
-  for(const type of TYPES)out[type]=[...groups[type].values()].map(({_key,...record})=>({
-    ...record,sourceRefs:record.sourceRefs.sort((a,b)=>
-      (a.sourceId+'|'+a.url+'|'+a.section).localeCompare(b.sourceId+'|'+b.url+'|'+b.section))
-  })).sort((a,b)=>a.id.localeCompare(b.id));
-  out.warnings=warnings.slice(0,30);
+  for(const type of TYPES)out[type]=[...groups[type].values()].map(record=>{
+    for(const reason of record._warnings||[])warnings.push({id:record.id,field:type,reason});
+    for(const reason of record._disputes||[])warnings.push({id:record.id,field:type,reason});
+    const {_key,_replacementStates,_onceStates,_warnings,_disputes,...visible}=record;
+    return {
+      ...visible,
+      status:(record._disputes||[]).length?'disputed':record.status,
+      sourceRefs:visible.sourceRefs.sort((a,b)=>
+        (a.sourceId+'|'+a.url+'|'+a.section).localeCompare(b.sourceId+'|'+b.url+'|'+b.section))
+    };
+  }).sort((a,b)=>a.id.localeCompare(b.id));
+  out.warnings=warnings.sort((a,b)=>JSON.stringify(a).localeCompare(JSON.stringify(b))).slice(0,30);
   return out;
 }
