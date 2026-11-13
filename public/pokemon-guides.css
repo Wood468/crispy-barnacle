@@ -1,0 +1,25 @@
+/* Exact approved Pokémon guide library; matches the dark Raids view. */
+#boss-guide-library {margin:16px 0 20px;padding:16px;border:1px solid var(--line, #354354);border-radius:18px;background:var(--panel,#17212d)}
+#boss-guide-library h2 {font-size:1.12rem;margin:0 0 5px}
+#boss-guide-library p {margin:5px 0 12px}
+.boss-guide-tools {display:flex;align-items:center;flex-wrap:wrap;gap:9px;margin:10px 0 14px}
+.boss-guide-tools input {min-height:44px;flex:1 1 170px;min-width:0;padding:9px 12px;border-radius:12px;background:var(--bg,#0d1620);border:1px solid var(--line,#354354);color:inherit}
+.boss-guide-tools [data-boss-guide-filter] {min-height:44px;padding:8px 12px;white-space:nowrap}
+.boss-guide-tools [aria-pressed="true"] {border-color:var(--accent,#71bdf1);box-shadow:inset 0 0 0 1px var(--accent,#71bdf1)}
+.boss-guide-grid {display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:10px}
+.boss-guide-card {min-width:0;overflow:hidden;border:1px solid var(--line,#354354);border-radius:14px;background:var(--bg,#0d1620)}
+.boss-guide-card button {width:100%;min-height:74px;display:flex;align-items:center;text-align:left;gap:12px;padding:9px;color:inherit;border:0;background:transparent;cursor:pointer}
+.boss-guide-card button:focus-visible {outline:3px solid var(--accent,#71bdf1);outline-offset:-4px}
+.boss-guide-card img {width:58px;height:58px;object-fit:cover;border-radius:10px;background:#233243;flex:none}
+.boss-guide-info {min-width:0;display:grid;gap:4px}
+.boss-guide-info b {font-size:.93rem;overflow-wrap:anywhere}
+.boss-guide-info small {font-size:.75rem;opacity:.78}
+.ig-boss-controls {border-top:1px solid var(--line,#354354);margin-top:10px;padding-top:10px}
+.ig-boss-controls label {display:grid;gap:4px;min-width:min(100%,130px);font-size:.78rem}
+.ig-boss-controls input,.ig-boss-controls select {width:100%;min-height:44px;max-width:240px}
+.ig-boss-controls button {min-height:44px}
+@media(max-width:480px){#boss-guide-library{padding:12px}.boss-guide-tools [data-boss-guide-filter]{flex:1 1 auto}}
+
+/* Existing raid/Max cards gain a guide action only for one exact approved form. */
+.boss-guide-inline {min-width:44px;min-height:44px;display:inline-flex;align-items:center;justify-content:center;padding:8px 12px;margin:5px 6px 5px 0;border-radius:10px;cursor:pointer}
+.boss-guide-inline:focus-visible {outline:3px solid var(--accent,#71bdf1);outline-offset:2px}

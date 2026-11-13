@@ -22,6 +22,7 @@ import * as auth from "./auth.js";
 import * as jobs from "./jobs.js";
 import { ogImage, OG_HOSTS } from "./og.js";
 import { IMAGE_CSP_HOSTS } from "./image-policy.js";
+import { encodeInfographicTargets, decodeInfographicTargets } from "./infographic-decision-wire.mjs";
 import { OBSERVATIONS as REGIONAL_OBSERVATIONS } from "./regional-observations.js";
 import { venueItems, venueFor, describeVenue } from "./venue-times.js";
 export { ogImage };
@@ -1096,17 +1097,28 @@ async function pinned(request, env) {
 export function cleanDecision(b) {
   const id = String(b && b.id || ""), status = String(b && b.status || "");
   if (!/^[a-z0-9:_.-]{1,90}$/i.test(id) || !["approved", "rejected", "reset", "unlinked", "week", "month"].includes(status)) return null;
-  // An infographic can sit on several events: ids are comma-separated, titles are separated by " | ", in the same order.
-  const eventId = String(b.eventId || "").slice(0, 700), eventTitle = String(b.eventTitle || "").replace(/[<>]/g, "").slice(0, 900);
-  if (status === "approved" && !/^[\w:.-]{1,90}(,[\w:.-]{1,90}){0,7}$/.test(eventId)) return null;
-  return { id, status, eventId: status === "approved" ? eventId : "", eventTitle: status === "approved" ? eventTitle : "" };
+  // An existing D1 TEXT column stores both legacy event IDs and new explicitly
+  // chosen Pokémon targets. No inferred form, unapproved event or schema change.
+  const eventTitle = String(b.eventTitle || "").replace(/[<>]/g, "").slice(0, 900);
+  let eventId = "";
+  if (status === "approved") {
+    try { eventId = encodeInfographicTargets({eventId: b.eventId, targets: b.targets}).stored; }
+    catch { return null; }
+  }
+  return { id, status, eventId, eventTitle: status === "approved" ? eventTitle : "" };
 }
 async function igDecisions(request, env) {
   if (!env.DB) return json({ decisions: [] });
   await env.DB.prepare("CREATE TABLE IF NOT EXISTS ig_decisions (id TEXT PRIMARY KEY, status TEXT NOT NULL, event_id TEXT NOT NULL, event_title TEXT NOT NULL, at INTEGER NOT NULL)").run();
   if (request.method === "GET") {
     const rows = (await env.DB.prepare("SELECT id, status, event_id, event_title, at FROM ig_decisions ORDER BY at DESC LIMIT 500").all()).results || [];
-    return json({ decisions: rows.map(r => ({ id: r.id, status: r.status, eventId: r.event_id, eventTitle: r.event_title, at: r.at })) });
+    // Reject corrupt target envelopes rather than silently changing someone's
+    // previously approved attachments on the next owner action.
+    return json({ decisions: rows.map(r => {
+      const parsed = decodeInfographicTargets(r.event_id);
+      return { id: r.id, status: r.status, eventId: parsed.eventId, targets: parsed.targets,
+        eventTitle: r.event_title, at: r.at };
+    }) });
   }
   if (request.method !== "POST") return json({ error: "Method not allowed." }, 405);
   const denied = await pinned(request, env); if (denied) return denied;
