@@ -114,10 +114,16 @@ test("static HTML receives narrow security headers without changing asset cache 
   }
   assert.doesNotMatch(csp, /'unsafe-eval'|script-src[^;]*'unsafe-inline'/);
   assert.equal(csp.split(";").map(value => value.trim()).filter(Boolean).length,
-    new Set(csp.split(";").map(value => value.trim().split(/\\s+/)[0]).filter(Boolean)).size,
+    new Set(csp.split(";").map(value => value.trim().split(/\s+/)[0]).filter(Boolean)).size,
     "CSP directives must not be duplicated");
   assert.equal(headers.has("cache-control"), false, "HTML must retain default revalidation");
   for (const path of ["/app.js", "/dash.css", "/world-events.json", "/api/events"]) {
     assert.equal([...rules.keys()].filter(pattern => matches(pattern, path)).length, 0, path);
   }
+});
+
+test("malformed header patterns and orphan header lines fail closed", () => {
+  assert.throws(() => parseRules("X-Frame-Options: DENY"), /unexpected header pattern/);
+  assert.throws(() => parseRules("  X-Frame-Options: DENY"), /header value must follow a pattern/);
+  assert.throws(() => parseRules("/\\n  X-Frame-Options: DENY\\n/\\n  X-Frame-Options: DENY"), /duplicate header pattern/);
 });
