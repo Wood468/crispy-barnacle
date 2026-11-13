@@ -71,7 +71,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          git add -- data/store-state.json public/store-log.json public/prices.json 2>/dev/null || true
+          git add -- data/store-state.json public/store-log.json public/store-current-snapshot.json public/prices.json 2>/dev/null || true
           node scripts/validate-public-data.mjs
           if git diff --cached --quiet; then exit 0; fi
           # The live planner reads public/store-log.json from the deployed site, so a real change (an item appeared, left or changed
