@@ -254,6 +254,43 @@
         indonesia: p.unpricedOfficial || ambiguous ? null : regionPrice({ region: 'ID', channel: 'web', product: p.label, kind: kind, aud: p.aud }) };
     });
   }
+  /* A very-low-confidence model for the otherwise sparse Indian shop.
+     Require an actual SAME-NAME IDR/INR observation pair; never infer a
+     market ratio from unrelated boxes or from USD/AUD FX conversion. */
+  function indianTrendFromIdr(idRef, obs, now) {
+    if (!idRef || idRef.basis !== 'estimate' || idRef.currency !== 'IDR' ||
+        !/pass/.test(String(idRef.kind))) return null;
+    var rows=(obs||[]).filter(function (o) {
+      return usable(o) && /pass/.test(String(o.kind || kindOf(o.product)))
+        && (o.region === 'ID' && o.channel === 'web' && o.currency === 'IDR'
+          || o.region === 'IN' && o.channel === 'in-app' && o.currency === 'INR');
+    });
+    var pairs=[];
+    rows.forEach(function (id) {
+      if (id.region !== 'ID') return;
+      var hits=rows.filter(function (x) { return x.region === 'IN' &&
+        norm(x.product) === norm(id.product) &&
+        (x.kind || kindOf(x.product)) === (id.kind || kindOf(id.product)); });
+      hits.forEach(function (indian) {
+        var ageId=ageDays(id.observed,now),ageIn=ageDays(indian.observed,now);
+        if (ageId===null || ageIn===null || ageId<0 || ageIn<0 ||
+            ageId>45 || ageIn>45 || id.amount<=0 || indian.amount<=0) return;
+        pairs.push({id:id,inr:indian,ratio:indian.amount/id.amount});
+      });
+    });
+    if (pairs.length !== 1) return null; // contradictory or multiple ratios require review
+    var pair=pairs[0], ratio=pair.ratio;
+    if (!Number.isFinite(ratio) || ratio<=0) return null;
+    var mid=Math.round(idRef.amount*ratio);
+    return {amount:mid,min:Math.max(1,Math.floor(idRef.min*ratio*0.70)),
+      max:Math.ceil(idRef.max*ratio*1.30),
+      currency:'INR',region:'IN',channel:'in-app',basis:'estimate',
+      label:'Estimate',confidence:'very low',samples:1,
+      observed:pair.inr.observed,kind:idRef.kind,
+      basisText:'Single historical same-product Indonesia/India pass ratio (' +
+        pair.id.product + ', ' + pair.inr.observed +
+        '); 30% extra uncertainty on an Indonesian tier estimate. Not an Indian checkout quote.'};
+  }
   /* The latest public snapshot proves which exact SKUs were observed on the
      official Web Store. It is not a checkout quote or regional price feed. */
   var STORE_SLUG_ALIASES = {
@@ -302,7 +339,8 @@
         // confirmed current listing may show an explicitly labelled model.
         var kind = kindOf(item.label);
         model.indonesia = estimate({region:'ID',channel:'web',product:item.label,kind:kind,aud:item.aud},obs,at);
-        model.india = estimate({region:'IN',channel:'in-app',product:item.label,kind:kind,aud:item.aud},obs,at);
+        model.india = estimate({region:'IN',channel:'in-app',product:item.label,kind:kind,aud:item.aud},obs,at)
+          || indianTrendFromIdr(model.indonesia,obs,at);
       }
       current.push(Object.assign({},item,model,{storeSlug:row.slug,storeArt:art,listedAt:row.seenAt}));
     });
