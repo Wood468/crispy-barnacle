@@ -252,7 +252,11 @@
     if (!items.length) return '';
     var snapshot = data.storeSnapshot && Array.isArray(data.storeSnapshot.items)
       && Array.isArray(data.storeSnapshot.gone) ? data.storeSnapshot : null;
-    items.forEach(function (p) { p.sourceOffer = R.sourceOffer(p.label, snapshot); });
+    items.forEach(function (p) {
+      p.sourceOffer = R.sourceOffer(p.label, snapshot, undefined, {
+        ambiguousSku: !!(p.ambiguousSku || p.regionalUnmatched)
+      });
+    });
     var comparableOffers = verifiedOptionsHtml(obs);
     var reviewPanel = coveragePanel(items, R);
     var sections = [
