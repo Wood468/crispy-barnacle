@@ -39,7 +39,7 @@ const benefitKind = s => /safari balls?|premier balls?/i.test(s)?'safari-balls'
   : /stardust/i.test(s)?'stardust'
   : /xp\b/i.test(s)?'xp':'other';
 const isBenefit = s => s.length>=13&&s.length<=190
-  && /\b(?:up to|increased|chance|double|triple|earn|cost|limit|duration|daily|extra|additional|raid passes?|special trades?|stardust|candy|eggs?|lure modules?|supply balloons?|max particles?|snapshot|party play|safari balls?|premier balls?|instead of)\b|\d+(?:\/\d+)?\s*[×x]/i.test(s)
+  && /\b(?:up to|increased|chance|double|triple|earn|cost|limit|duration|daily|extra|additional|raid passes?|special trades?|stardust|candy|eggs?|lure modules?|supply balloons?|max particles?|snapshot|cp boost|party play|safari balls?|premier balls?|instead of)\b|\d+(?:\/\d+)?\s*[×x]/i.test(s)
   && !/^(?:the following|for .*trainers|to use the|bonuses begin|shiny encounters are not guaranteed|these benefits apply)/i.test(s);
 const attr=(tag,name)=>{const m=new RegExp('\\b'+name+'\\s*=\\s*(?:"([^"]*)"|\'([^\']*)\'|([^\\s>]+))','i').exec(tag);return m?decode(m[1]??m[2]??m[3]):'';};
 const paragraphs=html=>[...String(html).matchAll(/<(?:p|li|figcaption)\b[^>]*>([\s\S]*?)<\/(?:p|li|figcaption)>/gi)].map(m=>text(m[1])).filter(Boolean);
@@ -51,6 +51,10 @@ const dayScope = s => /\byour ticketed (?:event )?day\b/i.test(s)?'ticketed-day'
   : null;
 const accessType=(title,body)=>{const heading=groupAccess(title);if(heading!=='unknown')return heading;
   const paragraph=paragraphs(body).slice(0,2).join(' ');
+  // LeekDuck's "General Bonuses" title often establishes entitlement only
+  // in the first sentence: "All Trainers will receive...". A generic heading
+  // alone cannot prove the same benefit is free.
+  if(/\b(?:all trainers|every trainer|everyone)\b.{0,90}\b(?:receive|enjoy|benefits?|bonuses?)\b/i.test(paragraph))return 'free';
   return /\b(ticket-holding trainers|ticket holders|ticketed session)\b/i.test(paragraph)?'ticket':'unknown';
 };
 const moveRegex=/([A-Z][\p{L}’'-]+(?:\s+[A-Z][\p{L}’'-]+){0,3})\s+(Fast|Charged)\s+Attack\b/gu;

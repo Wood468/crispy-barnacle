@@ -172,3 +172,29 @@ test('source-caveated Safari Ball substitution never becomes a verified entitlem
   assert.equal(d.benefits[0].status,'unconfirmed');
   assert.equal(d.benefits[0].access,'ticket');
 });
+
+test('Kalos-style General Bonuses use explicit All Trainers entitlement and include CP boosts',()=>{
+  const html='<main><h2>Bonuses</h2><h2>General Bonuses</h2>'+
+    '<p>All Trainers will receive the following bonuses between 10:00 a.m. and 6:00 p.m. local time on event days.</p>'+
+    '<img alt="Mega-Evolved Pokémon will receive a CP boost">'+
+    '<img alt="1/2 Hatch Distance for Eggs placed in Incubators during the event">'+
+    '<h2>Ticket Holder Exclusive Bonuses</h2>'+
+    '<p>Ticket holders will receive the following bonuses between 12:00 a.m. and 11:59 p.m. local time on event days.</p>'+
+    '<img alt="Increased chance of encountering Shiny Pokémon"></main>';
+  const x=extractEventSourceFacets(html,{sourceUrl:'https://leekduck.com/events/synthetic-kalos-global/'});
+  const free=x.benefits.filter(b=>b.access==='free'), paid=x.benefits.filter(b=>b.access==='ticket');
+  assert.equal(free.length,2);
+  assert.ok(free.some(b=>b.label.includes('CP boost')));
+  assert.ok(free.some(b=>b.kind==='eggs'));
+  assert.equal(paid.length,1);
+  assert.match(free[0].windowText,/10:00 a.m./);
+  assert.match(paid[0].windowText,/12:00 a.m./);
+});
+
+test('Generic bonus headings with no published audience do not grant free access',()=>{
+  const html='<main><h2>General Bonuses</h2>'+
+    '<p>More information will be released soon.</p>'+
+    '<img alt="Increased chance of encountering Shiny Pokémon"></main>';
+  const x=extractEventSourceFacets(html,{sourceUrl:'https://leekduck.com/events/synthetic-unannounced/'});
+  assert.deepEqual(x.benefits,[]);
+});
