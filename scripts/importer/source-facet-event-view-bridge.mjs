@@ -35,7 +35,7 @@ function citations(claim){
 }
 function checkedClaim(claim){
   if(!plain(claim)||!ID.test(claim.id||'')||
-     !['free','ticket','unknown','all'].includes(claim.access)||
+     !['free','ticket','addon','unknown'].includes(claim.access)||
      claim.status!=='source-claimed')
     throw new TypeError('Invalid verified facet claim identity');
   return citations(claim);
