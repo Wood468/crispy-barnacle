@@ -15,7 +15,10 @@ FIXTURE = {
     "prices": [
         {"product": "store-synthetic-ticket", "label": "Synthetic Test Ticket",
          "group": "Tickets", "currency": "AUD", "amount": 9.99,
-         "region": "AU", "verified": True, "observed": "2026-11-01"}
+         "region": "AU", "verified": True, "observed": "2026-11-01"},
+        {"product": "store-synthetic-october-pass", "label": "GO Pass Deluxe: October",
+         "group": "Tickets", "currency": "AUD", "amount": 12.99,
+         "region": "AU", "verified": True, "observed": "2026-10-12"}
     ],
     "regional": [
         {"id": "synthetic-id-ticket", "product": "Synthetic Test Ticket",
@@ -58,10 +61,30 @@ with sync_playwright() as p:
                 document.body.appendChild(host);
             }
         }""", FIXTURE)
-        page.add_script_tag(url="/store.js?v=20261113q-store770a11y")
+        page.add_script_tag(url="/store.js?v=20261114a-source797")
         # Wait for attachment first: the product may live in a collapsed category.
         target = ".storep-regional [data-sp-name*='synthetic test ticket']"
         page.wait_for_selector(target, state="attached")
+        # The real price-free Store snapshot must separate retired exact offers
+        # from current official listings, and use their own Niantic SKU art.
+        listing = page.evaluate("""() => {
+            const cards = [...document.querySelectorAll('.sp-product')];
+            const october = cards.find(x => x.querySelector('.sp-product-name b')?.textContent === 'GO Pass Deluxe: October');
+            const november = cards.find(x => x.querySelector('.sp-product-name b')?.textContent === 'GO Pass Deluxe: November');
+            const octoberGroup = october?.closest('[data-sp-group]');
+            return {
+                octoberStatus: october?.getAttribute('data-sp-listing'),
+                octoberGroup: octoberGroup?.getAttribute('data-sp-group'),
+                novemberStatus: november?.getAttribute('data-sp-listing'),
+                novemberArt: november?.querySelector('img[data-sp-art="official"]')?.getAttribute('src')
+            };
+        }""")
+        assert listing["octoberStatus"] == "archived", f"{width}px expired October pass mixed with active offers: {listing}"
+        assert listing["octoberGroup"] == "earlier", f"{width}px October pass must be in previous offers: {listing}"
+        assert listing["novemberStatus"] == "listed", f"{width}px November official listing missing: {listing}"
+        assert listing["novemberArt"] and listing["novemberArt"].startswith(
+            "https://assets.pgo.webstore.nianticlabs.com/"), f"{width}px official SKU artwork absent: {listing}"
+
         page.evaluate("""selector => {
             const card = document.querySelector(selector);
             if (!card) throw new Error("Synthetic Store fixture card was not rendered");
