@@ -257,7 +257,7 @@
     if (!allItems.length) return '';
     var membership = data.currentStore === undefined
       ? {current:allItems,historical:[],checkedAt:null,stale:false}
-      : R.currentCatalogue(allItems, data.currentStore, Date.now());
+      : R.currentCatalogue(allItems, data.currentStore, Date.now(), obs);
     var items = membership.current, archived = membership.historical;
     var comparableOffers = verifiedOptionsHtml(obs);
     var reviewPanel = coveragePanel(allItems, R);
