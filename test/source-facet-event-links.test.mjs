@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {linkStagedFacetsToCanonicalEvents} from '../scripts/importer/source-facet-event-links.mjs';
+import {canonicalLeekDuckEventKey,linkStagedFacetsToCanonicalEvents} from '../scripts/importer/source-facet-event-links.mjs';
 
 const wild='https://leekduck.com/events/pokemon-go-wild-area-2026-global/';
 const mexico='https://www.leekduck.com/events/pokemon-go-wild-area-2026-mexico-city/';
@@ -203,4 +203,22 @@ test('clean apex and www exact LeekDuck event URLs still link and deduplicate',(
   assert.equal(report.linkedPages,1);
   assert.equal(report.duplicatePages,1);
   assert.equal(byEvent.get('global-owner').length,1);
+});
+
+
+test('shared canonical identity rejects poisoned world and staged source URLs identically',()=>{
+  const clean='https://leekduck.com/events/pokemon-go-wild-area-2026-global/';
+  const expected='leekduck.com/events/pokemon-go-wild-area-2026-global';
+  assert.equal(canonicalLeekDuckEventKey(clean),expected);
+  assert.equal(canonicalLeekDuckEventKey(clean.replace('leekduck.com','www.leekduck.com')),expected);
+  assert.equal(canonicalLeekDuckEventKey(clean.slice(0,-1)),expected);
+  for(const poisoned of [
+    clean+'?ticket=unrelated',clean+'#other',
+    clean.replace('leekduck.com','leekduck.com:8443'),
+    clean.replace('https://','https://user@'),
+    clean+'extra/path',' '+clean,clean+' ',
+    'https://leekduck.com/events/invalid%2fslug/',
+    'https://leekduck.com/events/a\\b/',
+    'http://leekduck.com/events/pokemon-go-wild-area-2026-global/'
+  ])assert.equal(canonicalLeekDuckEventKey(poisoned),null,poisoned);
 });
