@@ -122,7 +122,7 @@
      Black, and prevents Mega X artwork from attaching to Mega Y. */
   function descriptor(name, species) {
     var raw = String(name || '').trim()
-      .replace(/^(?:Shadow|Dynamax|Gigantamax|Mega|Primal)\s+/i, '');
+      .replace(/^(?:Shadow|Dynamax|Gigantamax|Mega|Primal)(?:\s+|$)/i, '');
     var base = String(species || '');
     var at = base ? raw.toLocaleLowerCase().indexOf(base.toLocaleLowerCase()) : -1;
     if (at >= 0) raw = raw.slice(0, at) + raw.slice(at + base.length);
