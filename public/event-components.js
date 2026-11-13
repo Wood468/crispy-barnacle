@@ -102,7 +102,9 @@ function research(items,ctx){var list=items.filter(function(r){return value(r);}
  return tasks.map(function(r){return researchTask(r,ctx);}).join('')+(notes.length?'<ul class="ue-facts ue-research-notes">'+notes.map(function(r){return '<li>'+esc(value(r))+'</li>';}).join('')+'</ul>':'')+(!tasks.length&&notes.length?'<p class="ue-more-note" role="note">No individual research tasks have been published yet.</p>':'');}
 /* Only use icons whose published app assets identify the actual reward.
    XP and Candy XL deliberately use category symbols instead of misleading art. */
-var PASS_ICONS=[[/^stardust$/i,'/ico/dust.webp'],[/^max potion$/i,'/ico/i/max-potion.webp'],[/^max revive$/i,'/ico/i/max-revive.webp'],[/^golden razz/i,'/ico/i/golden-razz.webp'],[/^silver pinap/i,'/ico/i/silver-pinap.webp'],[/^incense$/i,'/ico/incense.webp'],[/(raid|battle) pass/i,'/ico/g/raidpass.webp']];
+/* Exact-only fallback for when the semantic artwork helper is unavailable.
+   Never reuse standard Raid Pass art for Remote/Premium Battle Passes. */
+var PASS_ICONS=[[/^stardust$/i,'/ico/dust.webp'],[/^max potion$/i,'/ico/i/max-potion.webp'],[/^max revive$/i,'/ico/i/max-revive.webp'],[/^golden razz berry$/i,'/ico/i/golden-razz.webp'],[/^silver pinap berry$/i,'/ico/i/silver-pinap.webp'],[/^incense$/i,'/ico/incense.webp'],[/^raid pass$/i,'/ico/g/raidpass.webp']];
 function passCategory(item){
  if(item.type==='encounter')return 'Pokémon';
  var n=item.name;
@@ -117,7 +119,7 @@ function passGlyph(item,cat){
  if(/^xp$/i.test(item.name))return 'XP';
  if(/candy xl/i.test(item.name))return 'XL';
  if(/candy/i.test(item.name))return 'C';
- if(cat==='Pokémon')return '?';
+ if(cat==='Pokémon')return 'PKM'; /* Honest encounter category, not missing artwork. */
  if(cat==='Avatar item')return '👕';
  if(cat==='Box')return '▣';
  if(/stardust|star piece/i.test(item.name))return '✦';
