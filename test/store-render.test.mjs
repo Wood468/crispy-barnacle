@@ -12,6 +12,11 @@ test('owner Store view renders verified Indonesian prices and regional-only rows
     addEventListener: (name, fn) => { eventHandlers[name] = fn; } };
   const host = { parentNode: { insertBefore: (n) => { Object.assign(el, n); } } };
   const prices = { prices: [
+    { product: 'store-incense-multi', label: 'Incense ×3', group: 'Items', currency: 'AUD', amount: 2.99, region: 'AU', verified: true, observed: '2026-11-09' },
+    { product: 'store-max-potion-multi', label: 'Max Potion ×3', group: 'Items', currency: 'AUD', amount: 2.99, region: 'AU', verified: true, observed: '2026-11-09' },
+    { product: 'store-max-revive-multi', label: 'Max Revive ×3', group: 'Items', currency: 'AUD', amount: 2.99, region: 'AU', verified: true, observed: '2026-11-09' },
+    { product: 'store-golden-razz-multi', label: 'Golden Razz Berry ×3', group: 'Items', currency: 'AUD', amount: 2.99, region: 'AU', verified: true, observed: '2026-11-09' },
+    { product: 'store-silver-pinap-multi', label: 'Silver Pinap Berry ×3', group: 'Items', currency: 'AUD', amount: 2.99, region: 'AU', verified: true, observed: '2026-11-09' },
     { product: 'store-x', label: 'Lucky Egg x8', group: 'Items', currency: 'AUD', amount: 7.99, region: 'AU', verified: true, observed: '2026-10-12' },
     { product: 'store-max-mushroom-x3', label: 'Max Mushroom x3', group: 'Items', currency: 'AUD', amount: 14.99, region: 'AU', verified: true, observed: '2026-11-09' },
     { product: 'store-link-charge', label: '600 Link Charge', group: 'Items', currency: 'AUD', amount: 4.49, region: 'AU', verified: true, observed: '2026-11-09' },
@@ -157,6 +162,18 @@ test('owner Store view renders verified Indonesian prices and regional-only rows
     'only ordinary Raid Passes may use verified ordinary Raid Pass art');
   assert.match(cardFor('Elite Fast TM'), /src="\/ico\/g\/elite-fast-tm\.webp"/);
   assert.match(cardFor('Elite Charged TM'), /src="\/ico\/g\/elite-charged-tm\.webp"/);
+  for (const [name, path, token] of [
+    ['Incense ×3', '/ico/incense.webp', 'INS'],
+    ['Max Potion ×3', '/ico/i/max-potion.webp', 'HP'],
+    ['Max Revive ×3', '/ico/i/max-revive.webp', 'REV'],
+    ['Golden Razz Berry ×3', '/ico/i/golden-razz.webp', 'GR'],
+    ['Silver Pinap Berry ×3', '/ico/i/silver-pinap.webp', 'SPB']
+  ]) {
+    const card = cardFor(name);
+    assert.ok(card, 'quantity-labelled exact item present: ' + name);
+    assert.ok(card.includes('src="' + path + '"'), 'exact artwork used for ' + name);
+    assert.ok(card.includes('data-sp-fallback="' + token + '"'), 'specific error fallback for ' + name);
+  }
   for (const label of ['Remote Raid Pass', 'Premium Battle Pass', 'Elite Charged TM Box']) {
     const card = cardFor(label);
     assert.ok(card, 'source-labelled product is displayed: ' + label);
