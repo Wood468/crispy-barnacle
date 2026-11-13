@@ -102,19 +102,36 @@ test("future source trust values remain unknown and cannot inject badge markup",
   }
 });
 
-test("curated event source fallbacks evaluate domain legitimacy correctly and respect overrides", () => {
-  const isOfficialMatch = detail.match(/function isOfficialUrl\(u\) \{([\s\S]*?)\n  \}/);
-  assert.ok(isOfficialMatch, "isOfficialUrl exists");
-  const isOfficialUrl = new Function("u", isOfficialMatch[1]);
-  const safeUrlMatch = detail.match(/function safeUrl\(u\) \{([\s\S]*?)\n  \}/);
-  assert.ok(safeUrlMatch, "safeUrl exists");
-  const safeUrl = new Function("u", safeUrlMatch[1]);
-  const checkUrl = (u) => isOfficialUrl(safeUrl(u));
-  assert.equal(checkUrl("https://pokemongo.com/news"), true);
-  assert.equal(checkUrl("https://www.pokemongo.com/news"), true);
-  assert.equal(checkUrl("https://leekduck.com/events"), false);
-  assert.equal(checkUrl("https://fake-pokemongo.com/news"), false);
-  assert.equal(checkUrl("http://pokemongo.com/news"), false);
-  assert.equal(checkUrl(""), false);
-  assert.equal(checkUrl(null), false);
+test("curated event attribution uses actual guarded fallback expressions and preserves overrides", () => {
+  const dash = fs.readFileSync(new URL("../public/dash.js", import.meta.url), "utf8");
+  const lines = dash.split("\n");
+  const officialLine = lines.find(line => line.includes("function isOfficialUrl(u) {"));
+  const safeLine = lines.find(line => line.includes("function safeUrl(u) {"));
+  assert.ok(officialLine && safeLine, "dashboard contains both URL validators");
+  const body = line => line.slice(line.indexOf("{") + 1, line.lastIndexOf("}"));
+  const isOfficialUrl = new Function("u", body(officialLine));
+  const actualSafe = new Function("u", "window", body(safeLine));
+  const safeUrl = u => actualSafe(u, { GOLIB: { isPrivateLink: () => false } });
+  const anchor = "highlights: Array.isArray(x.highlights) ? x.highlights : [],";
+  const offset = dash.indexOf(anchor);
+  assert.ok(offset >= 0, "curated event default attribution exists");
+  const section = dash.slice(offset, offset + 650);
+  const fields = section.match(/\n\s*status:\s*([^\n]+),\n\s*source:\s*([^\n]+),\n\s*link:/);
+  assert.ok(fields, "actual curated status and source expressions are adjacent");
+  const status = new Function("x", "safeUrl", "isOfficialUrl", "return (" + fields[1] + ");");
+  const source = new Function("x", "safeUrl", "isOfficialUrl", "return (" + fields[2] + ");");
+  const infer = x => [status(x, safeUrl, isOfficialUrl), source(x, safeUrl, isOfficialUrl)];
+  const official = ["official_confirmed", "Official Pokémon GO announcement"];
+  const community = ["community_reported", "Curated community calendar"];
+  for (const url of ["https://pokemongo.com/news", "https://www.pokemongo.com/news"])
+    assert.deepEqual(infer({ sourceUrl: url }), official);
+  for (const url of [
+    "https://leekduck.com/events", "https://pokemongo.com.evil.example/news",
+    "https://fake-pokemongo.com/news", "http://pokemongo.com/news", "", null
+  ])
+    assert.deepEqual(infer({ sourceUrl: url }), community);
+  assert.deepEqual(infer({
+    sourceUrl: "https://pokemongo.com/news",
+    status: "community_reported", source: "Owner-supplied source"
+  }), ["community_reported", "Owner-supplied source"], "explicit attribution takes precedence");
 });
