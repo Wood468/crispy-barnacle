@@ -83,3 +83,15 @@ test('signed release cannot be reused across environment, commit, or expired win
   await assert.rejects(preflightFacetPromotion(m,sig,{...opts,trustedCommitSha:'b'.repeat(40)}),/trusted environment/);
   await assert.rejects(preflightFacetPromotion(m,sig,{...opts,now:m.expiresAt}),/validity window/);
 }));
+
+test('release preflight never accepts prototype-inherited private receipts',async()=>sandbox(async rootDir=>{
+  const {sha,opts,doc}=await setup(rootDir),m=manifest(sha);
+  const inherited=Object.create({[doc.eventId]:{
+    sha256:sha,reviewFingerprint:doc.reviewFingerprint}});
+  await assert.rejects(preflightFacetPromotion(m,signIt(m),{
+    ...opts,trustedPrivateReceipts:inherited}),/private writer receipt/);
+  await assert.rejects(preflightFacetPromotion(m,signIt(m),{
+    ...opts,trustedCanonicalEventIds:[]}),/Trusted canonical/);
+  await assert.rejects(preflightFacetPromotion(m,signIt(m),{
+    ...opts,usedReleaseIds:['x'.repeat(101)]}),/Trusted canonical/);
+}));
