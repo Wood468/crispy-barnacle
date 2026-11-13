@@ -222,3 +222,74 @@ test('source order, duplicate records and omitted optional fields do not affect 
  assert.throws(()=>normalizeEventSourceFacets('',[]),/eventId/);
  assert.throws(()=>normalizeEventSourceFacets('event',{}),/array/);
 });
+
+test('ticket research preserves exact per-source medal effects, claim and completion evidence',()=>{
+ const research=(url,medal)=>({
+   kind:'special',title:'Special Research — Ticket Holders',
+   storyTitle:'GO Wild Area: Mexico City – The Suspense Is Building',
+   access:'ticket',onceOnly:true,paths:[],
+   claimInstructionsText:'Claim Special Research during your ticketed session.',
+   bonusActivationText:'Bonuses begin when you claim each medal and last through November 15, 2026.',
+   completionRewardText:'Completing the event Special Research awards an avatar pose.',
+   medalEffects:[{medalLabel:'Steel Scholar medal',effectText:medal}],
+   steps:[{step:1,outOf:6,title:'Stage 1/6'}],
+   source:source(url,'Special Research — Ticket Holders')
+ });
+ const input=[
+   mk('leekduck',duck,{researchPrograms:[research(duck,'Earn 1 extra Candy XL for mighty Steel Pokémon.')]}),
+   mk('official',official,{researchPrograms:[research(official,'Extra Candy XL from mighty Steel catches.')]})
+ ];
+ const forward=normalizeEventSourceFacets('wild-mexico',input);
+ const reverse=normalizeEventSourceFacets('wild-mexico',input.slice().reverse());
+ assert.deepEqual(forward,reverse);
+ assert.equal(forward.researchPrograms.length,1);
+ const program=forward.researchPrograms[0];
+ assert.equal(program.storyTitle,'GO Wild Area: Mexico City – The Suspense Is Building');
+ assert.equal(program.onceOnly,true);
+ assert.equal(program.status,'corroborated');
+ assert.equal(program.sourceResearchEvidence.length,2);
+ assert.deepEqual(program.sourceResearchEvidence.map(x=>x.sourceId),['leekduck','official']);
+ assert.deepEqual(program.sourceResearchEvidence.map(x=>x.medalEffects[0].effectText),[
+   'Earn 1 extra Candy XL for mighty Steel Pokémon.',
+   'Extra Candy XL from mighty Steel catches.'
+ ]);
+ assert.ok(program.sourceResearchEvidence.every(x=>x.claimInstructionsText.includes('ticketed session')));
+ assert.ok(program.sourceResearchEvidence.every(x=>x.bonusActivationText.includes('claim each medal')));
+ assert.ok(program.sourceResearchEvidence.every(x=>x.completionRewardText.includes('avatar pose')));
+ assert.equal(program.steps[0].taskRewardEvidence,'not-extracted');
+ assert.equal(forward.publication,'staging-only');
+});
+
+test('distinct Special Research story names do not silently merge their paid stages',()=>{
+ const base={kind:'special',title:'Special Research — Ticket Holders',access:'ticket',
+   paths:[],steps:[{step:1,outOf:6,title:'Stage 1/6'}],source:source(duck,'Special Research')};
+ const result=normalizeEventSourceFacets('wild-2026',[
+   mk('leekduck',duck,{researchPrograms:[
+     {...base,storyTitle:'Global Dragon Research'},
+     {...base,storyTitle:'Mexico City Dragon Research'}
+   ]})
+ ]);
+ assert.equal(result.researchPrograms.length,2);
+ assert.equal(new Set(result.researchPrograms.map(x=>x.id)).size,2);
+ assert.ok(result.researchPrograms.every(x=>x.status==='source-claimed'));
+});
+
+test('research source excerpts remain sanitized and missing deadlines are not invented',()=>{
+ const research={kind:'timed',title:'City Timed Research',access:'ticket',
+   storyTitle:'<b>Ticket</b> day',paths:[],
+   claimInstructionsText:'<script>bad()</script> Claim research on your selected day.\u0000',
+   completionDeadlineText:null,
+   medalEffects:[{medalLabel:'<span>Steel Scholar medal</span>',
+       effectText:'Gain bonuses only <strong>after medal claim</strong>.'}],
+   source:source(duck,'Timed Research')
+ };
+ const d=normalizeEventSourceFacets('wild-mexico',[mk('leekduck',duck,{researchPrograms:[research]})]);
+ const item=d.researchPrograms[0].sourceResearchEvidence[0];
+ assert.equal(item.storyTitle,'Ticket day');
+ assert.equal(item.claimInstructionsText,'bad() Claim research on your selected day.');
+ assert.equal(item.completionDeadlineText,null);
+ assert.equal(item.medalEffects[0].medalLabel,'Steel Scholar medal');
+ assert.equal(item.medalEffects[0].effectText,'Gain bonuses only after medal claim.');
+ assert.equal(d.researchPrograms[0].onceOnly,null);
+ assert.equal(d.publication,'staging-only');
+});

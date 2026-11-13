@@ -38,6 +38,25 @@ const audience = raw => {
   return ACCESS.has(access)?access:'unknown';
 };
 const safe = (x,max=500) => trim(x).slice(0,max);
+const safeEvidence = (value,max=400) => safe(value,max*2)
+  .replace(/<[^>]*>/g,' ').replace(/[\u0000-\u001f\u007f]/g,' ')
+  .replace(/\s+/g,' ').trim().replace(/\s+([.,;:!?])/g,'$1').slice(0,max)||null;
+function researchSourceEvidence(raw,source,section){
+  const medalEffects=[];
+  for(const entry of (Array.isArray(raw.medalEffects)?raw.medalEffects:[]).slice(0,8)){
+    const medalLabel=safeEvidence(entry?.medalLabel,100),effectText=safeEvidence(entry?.effectText,400);
+    if(medalLabel&&effectText&&!medalEffects.some(x=>x.medalLabel===medalLabel&&x.effectText===effectText))
+      medalEffects.push({medalLabel,effectText});
+  }
+  medalEffects.sort((a,b)=>(a.medalLabel+'|'+a.effectText).localeCompare(b.medalLabel+'|'+b.effectText));
+  return {sourceId:source.sourceId,url:source.url,section,
+    storyTitle:safeEvidence(raw.storyTitle,180),
+    claimInstructionsText:safeEvidence(raw.claimInstructionsText,400),
+    completionDeadlineText:safeEvidence(raw.completionDeadlineText,400),
+    bonusActivationText:safeEvidence(raw.bonusActivationText,400),
+    completionRewardText:safeEvidence(raw.completionRewardText,400),
+    medalEffects};
+}
 const cleanMoveMethods = methods => {
   const values=Array.isArray(methods)?methods.filter(x=>ACQUIRE.has(x)):[];
   return values.length?unique(values):['unknown'];
@@ -100,10 +119,12 @@ function normalizeClaim(type,raw,source){
       Number.isInteger(s?.step)&&Number.isInteger(s?.outOf)&&s.step>0&&s.outOf<=100&&s.step<=s.outOf
     ).slice(0,100).map(s=>({step:s.step,outOf:s.outOf,title:safe(s.title,160),taskRewardEvidence:'not-extracted'}));
     const onceOnly=typeof raw.onceOnly==='boolean'?raw.onceOnly:null;
-    return {...core,id:atom(['research',kind,title,access,paths.join(',')].join('|')),
-      kind,title,paths,steps,onceOnly,
+    const storyTitle=safeEvidence(raw.storyTitle,180)||null;
+    return {...core,id:atom(['research',kind,title,storyTitle,access,paths.join(',')].join('|')),
+      kind,title,storyTitle,paths,steps,onceOnly,
+      sourceResearchEvidence:[researchSourceEvidence(raw,source,section)],
       _onceStates:onceOnly===null?[]:[onceOnly],_disputes:[],
-      _key:fmtKey([kind,title,access,paths.join(',')])};
+      _key:fmtKey([kind,title,storyTitle,access,paths.join(',')])};
   }
   return null;
 }
@@ -147,6 +168,12 @@ export function normalizeEventSourceFacets(eventId,sourceRecords){
           }
         }
         if(type==='researchPrograms'){
+          // Keep exact source statements independent: don't silently replace
+          // a paid medal activation or claim deadline with another summary.
+          for(const evidence of claim.sourceResearchEvidence){
+            if(!old.sourceResearchEvidence.some(x=>JSON.stringify(x)===JSON.stringify(evidence)))
+              old.sourceResearchEvidence.push(evidence);
+          }
           // "One time" and "repeatable on extra days" are not equivalent.
           old._onceStates=unique([...old._onceStates,...claim._onceStates]);
           if(old._onceStates.length>1){
@@ -179,7 +206,11 @@ export function normalizeEventSourceFacets(eventId,sourceRecords){
       ...visible,
       status:(record._disputes||[]).length?'disputed':record.status,
       sourceRefs:visible.sourceRefs.sort((a,b)=>
-        (a.sourceId+'|'+a.url+'|'+a.section).localeCompare(b.sourceId+'|'+b.url+'|'+b.section))
+        (a.sourceId+'|'+a.url+'|'+a.section).localeCompare(b.sourceId+'|'+b.url+'|'+b.section)),
+      ...(type==='researchPrograms'?{
+        sourceResearchEvidence:visible.sourceResearchEvidence.sort((a,b)=>
+          JSON.stringify(a).localeCompare(JSON.stringify(b)))
+      }:{})
     };
   }).sort((a,b)=>a.id.localeCompare(b.id));
   out.warnings=warnings.sort((a,b)=>JSON.stringify(a).localeCompare(JSON.stringify(b))).slice(0,30);
