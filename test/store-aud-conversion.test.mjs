@@ -58,7 +58,7 @@ test('owner Store shows one AUD placeholder before each local price without wait
   assert.doesNotMatch(el.innerHTML,/undefined|NaN/);
   // Some catalogue products legitimately have no Indonesian observation.
   // Assert against the specific sourced market cell, not the first product.
-  const idCells = [...el.innerHTML.matchAll(/Indonesia <small>Web<\/small><\/span>([\s\S]*?)<\/div>/g)]
+  const idCells = [...el.innerHTML.matchAll(/(?:<span aria-hidden="true">🇮🇩<\/span> )?Indonesia <small>Web<\/small><\/span>([\s\S]*?)<\/div>/g)]
     .map(match => match[1]);
   const pricedCell = idCells.find(cell => cell.includes('Rp 76,000'));
   assert.ok(pricedCell, 'expected an observed Indonesian market cell');
@@ -70,7 +70,7 @@ test('owner Store shows one AUD placeholder before each local price without wait
   assert.match(pricedCell,/A\$ rate unavailable/);
   assert.ok(idCells.some(cell => cell.includes('Not observed')),
     'unobserved regional prices remain explicitly labelled');
-  const inCells=[...el.innerHTML.matchAll(/(?:<span aria-hidden="true">🇮🇳<\\/span> )?India <small>in-app<\\/small><\\/span>([\\s\\S]*?)<\\/div>/g)].map(x=>x[1]);
+  const inCells=[...el.innerHTML.matchAll(/(?:<span aria-hidden="true">🇮🇳<\/span> )?India <small>in-app<\/small><\/span>([\s\S]*?)<\/div>/g)].map(x=>x[1]);
   const inPriced=inCells.find(x=>x.includes('₹'));
   assert.ok(inPriced,'expected an observed Indian local price');
   assert.doesNotMatch(inPriced,/<span class="sp-regional-value sp-ver" aria-label=/,
@@ -80,7 +80,7 @@ test('owner Store shows one AUD placeholder before each local price without wait
   resolveFx({ok:true,json:async()=>({result:'success',base_code:'AUD',
     time_last_update_unix:Date.parse('2026-11-12')/1000,rates:{IDR:11000,INR:60}})});
   await new Promise(resolve=>setTimeout(resolve,20));
-  assert.match(audNode.textContent,/≈ A\\$6\\.91/,'fresh IDR FX fills the AUD reference');
+  assert.match(audNode.textContent,/≈ A\$6\.91/,'fresh IDR FX fills the AUD reference');
   assert.equal(audNode.notes.length,1,'one dated source note');
   assert.equal(audNode.notes[0].textContent,'FX · 12 Nov 2026');
   assert.match(el.innerHTML,/Rp 76,000/,'original price is preserved after conversion');
