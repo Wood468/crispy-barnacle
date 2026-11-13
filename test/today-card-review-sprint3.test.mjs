@@ -34,5 +34,5 @@ test('changed UI files are versioned consistently for online and offline clients
  }
  const review=dash.match(/review\.js\?v=([\w-]+)/)?.[1];
  assert.ok(review);assert.ok(sw.includes('/review.js?v='+review));
- assert.match(sw,/gofn-shell-v348/);
+ assert.match(sw,/gofn-shell-v349/);
 });
