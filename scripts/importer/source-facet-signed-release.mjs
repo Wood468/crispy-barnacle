@@ -45,11 +45,14 @@ export function facetReleaseAttestationMessage({eventId,candidateSha256,acknowle
  * A caller may use this only after it has independently authenticated the
  * two public keys and confirmed latest-head CI, exact canonical linking, and
  * a release lock. This function verifies cryptographic signatures only.
+ * Trusted public keys must be a separate controller-owned parameter, not part
+ * of the review decision submitted by an untrusted party.
  */
 export function authorizeFacetSnapshot(reviewPlan,{
   reviewSignature,releaseSignature,acknowledgeMassRemoval=false,verifiedAt
 }={},trustedKeys={}){
-  // Public keys are pinned independently by the release controller.
+  // Public keys are trusted release-controller configuration, NEVER supplied
+  // as part of an untrusted review decision or external source document.
   const {reviewPublicKey,releasePublicKey}=trustedKeys;
   if(!reviewPlan||reviewPlan.schemaVersion!==1||
     reviewPlan.publication!=='audit-only'||reviewPlan.requiresIndependentReview!==true||
@@ -94,3 +97,4 @@ export function authorizeFacetSnapshot(reviewPlan,{
   // Serialize into an independent object to avoid post-authorization mutation.
   return JSON.parse(JSON.stringify(output));
 }
+
