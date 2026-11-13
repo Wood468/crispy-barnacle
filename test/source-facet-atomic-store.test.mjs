@@ -78,3 +78,14 @@ test('invalid event IDs and invalid roots cannot escape private snapshot directo
   }
   await assert.rejects(persistSignedFacetSnapshot(plan,authorization(plan),{rootDir:''}),/Trusted root/);
 }));
+
+test('safe colon and dotted canonical aliases can be stored without path traversal',async()=>sandbox(async rootDir=>{
+  const id='leekduck:global.wild-area-2026';
+  const normalized={...stage([benefit]),eventId:id};
+  const chosen={...manifest(['a']),eventId:id};
+  const plan=buildFacetReviewPlan(normalized,chosen);
+  const output=await persistSignedFacetSnapshot(plan,authorization(plan),{rootDir});
+  assert.equal(output.eventId,id);
+  assert.equal(JSON.parse(await readFile(join(rootDir,output.file))).eventId,id);
+  assert.ok(output.file.startsWith('data/verified-event-facets/'));
+}));
