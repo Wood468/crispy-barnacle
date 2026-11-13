@@ -282,8 +282,7 @@
          fresh source snapshot may classify a missing offer as removed. */
       if (past.length === 1 && sourceFresh) {
         var goneTime = Date.parse(row.goneAt || '');
-        if (Number.isFinite(goneTime) && goneTime <= checkTime &&
-            checkTime - goneTime <= 7 * DAY)
+        if (Number.isFinite(goneTime) && goneTime <= checkTime)
           return {status:'archived',image:artwork,lastSeen:row.lastSeen||null,goneAt:row.goneAt,endAt:row.endsAt||null,note:'Removed from the observed Store listing'};
       }
       return {status:'unconfirmed',image:artwork,lastSeen:row&&row.lastSeen||null,goneAt:row&&row.goneAt||null,endAt:row&&row.endsAt||null,note:'Current Store availability not confirmed'};
