@@ -56,9 +56,10 @@ function normalizeClaim(type,raw,source){
     const windowText=safe(raw.windowText,400)||null;
     const dayScope=DAY_SCOPE.has(raw.dayScope)?raw.dayScope:null;
     const addonLabel=access==='addon'?safe(raw.addonLabel,140)||null:null;
-    return { ...core,id:atom(['benefit',kind,access,addonLabel,dayScope,windowText,label].join('|')),
-      label,kind,dayScope,windowText,addonLabel,replacesFreeLimit:raw.replacesFreeLimit===true&&(kind==='raid-passes'||kind==='max-particles'),
-      _key:fmtKey([kind,access,addonLabel,dayScope,windowText,label,raw.replacesFreeLimit===true])};
+    const replacesFreeLimit=raw.replacesFreeLimit===true&&(kind==='raid-passes'||kind==='max-particles');
+    return { ...core,id:atom(['benefit',kind,access,addonLabel,dayScope,windowText,label,replacesFreeLimit].join('|')),
+      label,kind,dayScope,windowText,addonLabel,replacesFreeLimit,
+      _key:fmtKey([kind,access,addonLabel,dayScope,windowText,label,replacesFreeLimit])};
   }
   if(type==='featuredMoves'){
     const pokemonLabel=safe(raw.pokemonLabel,100),move=safe(raw.move,90),moveKind=trim(raw.moveKind);
