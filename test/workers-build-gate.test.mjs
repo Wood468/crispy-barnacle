@@ -207,6 +207,30 @@ test("productionServesCommit reports HTTP errors and network failures as no matc
 });
 
 
+test("production build gate refuses forged Cloudflare build links", async () => {
+  const forgedUrls = [
+    "https://dash.cloudflare.com.evil.example/123/workers/services/view/go-field-notes/production/builds/build-123",
+    "http://dash.cloudflare.com/123/workers/services/view/go-field-notes/production/builds/build-123",
+    "https://dash.cloudflare.com/123/workers/services/view/other-worker/production/builds/build-123",
+    "https://dash.cloudflare.com/123/workers/services/view/go-field-notes/production/builds/build-123/extra"
+  ];
+  for (const forgedUrl of forgedUrls) {
+    let now = 0;
+    await assert.rejects(
+      waitForWorkersBuild(context({
+        timeoutMs: 20,
+        fetchImpl: async url => {
+          assert.ok(isApi(url));
+          return response([check("completed", "success", forgedUrl)]);
+        },
+        sleep: async ms => { now += ms; },
+        now: () => now
+      })),
+      /Workers build check does/
+    );
+  }
+});
+
 test("productionServesCommit requires both the service worker and shell to match", async () => {
   const local = {
     "public/sw.js": Buffer.from("local service worker"),
