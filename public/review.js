@@ -345,7 +345,7 @@
     var un = e.target.closest('[data-ig-unlink]');
     if (un) { var L = linkedOf(it.id), gone = L[Number(un.getAttribute('data-ig-unlink'))]; return setLinks(it, L.filter(function (x) { return x !== gone; })); }
     if (e.target.closest('[data-ig-add]')) {
-      var s2 = card.querySelector('select'), o2 = s2 && s2.options[s2.selectedIndex];
+      var s2 = card.querySelector('select[aria-label="Link to another event"]'), o2 = s2 && s2.options[s2.selectedIndex];
       if (!o2 || !o2.value) { msg = 'Choose an event first.'; return render(); }
       var L2 = linkedOf(it.id); picks(o2).forEach(function (pk) { if (!L2.some(function (x) { return x.id === pk.id; })) L2.push(pk); });
       return setLinks(it, L2);
@@ -355,7 +355,7 @@
     var no = e.target.closest('[data-ig-no]');
     if (no) { if (pendingDiscard[it.id]) return; no.disabled = true; return send(it, 'rejected'); }
     if (e.target.closest('[data-ig-pick]')) {
-      var sel = card.querySelector('select'), o = sel && sel.options[sel.selectedIndex];
+      var sel = card.querySelector('select[aria-label="Choose another event"]'), o = sel && sel.options[sel.selectedIndex];
       if (!o || !o.value) { msg = 'Choose an event first.'; return render(); }
       var pk = picks(o); send(it, 'approved', pk.map(function (x) { return x.id; }).join(','), pk.map(function (x) { return x.title; }).join(' | '));
     }
