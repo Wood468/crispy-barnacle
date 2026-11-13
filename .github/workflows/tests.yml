@@ -97,6 +97,9 @@ jobs:
           done
           cat /tmp/go-field-notes-http.log
           exit 1
+      - name: Verify Today compact artwork geometry in Chromium
+        if: matrix.shard == 'a'
+        run: python test/test_today_compact_art_geometry.py
       - name: Run browser regression tests
         if: contains(fromJSON('["a","b","c"]'), matrix.shard)
         shell: bash
@@ -239,6 +242,10 @@ jobs:
             sleep 1
           done
           exit 1
+      - name: Verify Today compact artwork geometry in WebKit
+        env:
+          TODAY_ART_WEBKIT_ONLY: '1'
+        run: python test/test_today_compact_art_geometry.py
       - name: Verify Collection planner and Research in WebKit
         shell: bash
         run: |
