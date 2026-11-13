@@ -10,9 +10,12 @@
  * Interrupted / failed promotion leaves a durable PENDING intent and fails
  * closed on subsequent calls until a human/operator reconciles the disk and
  * replay ledger. NEVER automatically clear an uncertain release.
+ * Operators must pre-provision a persistent directory and a verified ledger
+ * JSON {schemaVersion:1,publication:'promotion-ledger',releases:[],pending:null};
+ * never initialize that ledger automatically on first release or after loss.
  */
-import {mkdir,open,readFile,rename,unlink} from 'node:fs/promises';
-import {resolve,join,sep} from 'node:path';
+import {open,readFile,rename,unlink,realpath} from 'node:fs/promises';
+import {resolve,join,sep,dirname} from 'node:path';
 import {createHash,randomBytes} from 'node:crypto';
 import {facetPromotionManifestMessage} from './source-facet-promotion-manifest.mjs';
 import {preflightFacetPromotion} from './source-facet-promotion-preflight.mjs';
@@ -24,8 +27,7 @@ const sha256=value=>createHash('sha256').update(value).digest('hex');
 const plain=value=>value!==null&&typeof value==='object'&&!Array.isArray(value);
 const validIso=value=>typeof value==='string'&&Number.isFinite(Date.parse(value))&&
   new Date(value).toISOString()===value;
-const freshLedger=()=>({schemaVersion:1,publication:'promotion-ledger',
-  releases:[],pending:null});
+// A durable ledger must be explicitly provisioned, never inferred as empty.
 function validateLedger(ledger){
   if(!plain(ledger)||ledger.schemaVersion!==1||
      ledger.publication!=='promotion-ledger'||!Array.isArray(ledger.releases)||
@@ -57,7 +59,8 @@ async function readLedger(path){
     if(bytes.length>2*1024*1024)throw new TypeError('Promotion ledger exceeds size limit');
     return validateLedger(JSON.parse(bytes.toString('utf8')));
   }catch(e){
-    if(e?.code==='ENOENT')return freshLedger();
+    if(e?.code==='ENOENT')
+      throw new TypeError('Missing durable promotion ledger: operator provisioning required');
     throw e;
   }
 }
@@ -73,6 +76,11 @@ async function writeLedger(path,ledger){
     try{await f.writeFile(bytes,'utf8');await f.sync()}
     finally{await f.close()}
     await rename(temp,path);
+    // Durability includes the directory entry containing the rename, not
+    // just the file's data. A lost pending marker must never allow replay.
+    const directory=await open(dirname(path),'r');
+    try{await directory.sync()}
+    finally{await directory.close()}
     done=true;
   }finally{
     if(!done)try{await unlink(temp)}catch{}
@@ -97,9 +105,19 @@ export async function commitFacetPromotion(manifest,signature,{
   // A transient checkout cannot be the replay authority. Production callers
   // must mount this state path on genuinely durable shared storage and also
   // hold a distributed deployment lock outside this local filesystem module.
-  if(dir===root||dir.startsWith(root+sep))
+  // Missing or re-created storage must NOT silently reset anti-replay history.
+  // An operator must explicitly provision a persistent ledger before the
+  // first release and must reconcile/restore it after any storage loss.
+  let canonicalRoot,canonicalDir;
+  try{[canonicalRoot,canonicalDir]=await Promise.all([realpath(root),realpath(dir)])}
+  catch(e){
+    if(e?.code==='ENOENT')
+      throw new TypeError('Durable release state directory must be pre-provisioned');
+    throw e;
+  }
+  if(dir===root||dir.startsWith(root+sep)||
+     canonicalDir===canonicalRoot||canonicalDir.startsWith(canonicalRoot+sep))
     throw new TypeError('Durable release state must live outside the checkout');
-  await mkdir(dir,{recursive:true,mode:0o700});
   const lockPath=join(dir,'promotion-controller.lock');
   const ledgerPath=join(dir,'promotion-ledger.json');
   let lock=null;
