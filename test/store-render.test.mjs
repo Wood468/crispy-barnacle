@@ -13,6 +13,11 @@ test('owner Store view renders verified Indonesian prices and regional-only rows
   const host = { parentNode: { insertBefore: (n) => { Object.assign(el, n); } } };
   const prices = { prices: [
     { product: 'store-x', label: 'Lucky Egg x8', group: 'Items', currency: 'AUD', amount: 7.99, region: 'AU', verified: true, observed: '2026-10-12' },
+    { product: 'store-max-mushroom-x3', label: 'Max Mushroom x3', group: 'Items', currency: 'AUD', amount: 14.99, region: 'AU', verified: true, observed: '2026-11-09' },
+    { product: 'store-link-charge', label: '600 Link Charge', group: 'Items', currency: 'AUD', amount: 4.49, region: 'AU', verified: true, observed: '2026-11-09' },
+    { product: 'store-super-incubator', label: 'Super Incubator x2', group: 'Items', currency: 'AUD', amount: 4.49, region: 'AU', verified: true, observed: '2026-11-09' },
+    { product: 'store-mixed-max-item', label: 'Max Particle Pack + Remote Raid Pass', group: 'Items', currency: 'AUD', amount: 4.49, region: 'AU', verified: true, observed: '2026-11-09' },
+    { product: 'store-unmapped', label: 'Future Unmapped Item', group: 'Items', currency: 'AUD', amount: 5.49, region: 'AU', verified: true, observed: '2026-11-09' },
     { product: 'store-box-test', label: 'Ultra Training Box', group: 'Boxes', currency: 'AUD', amount: 46.99, region: 'AU', verified: true, observed: '2026-10-12' },
     { product: 'store-idr-legacy', label: 'GO Pass Deluxe', group: 'Tickets', currency: 'IDR', amount: 76000, region: 'ID', verified: true, observed: '2026-11-09' },
     { product: 'go-pass-oct-deluxe', currency: 'AUD', region: 'AU', amount: 12.99,
@@ -160,6 +165,20 @@ test('owner Store view renders verified Indonesian prices and regional-only rows
   }
   assert.match(cardFor('Remote Raid Pass'), /sp-i-token"[^>]*>PASS<\/span>/);
   assert.match(cardFor('Premium Battle Pass'), /sp-i-token"[^>]*>PASS<\/span>/);
+  // New Store products must not show a different item's purported exact art.
+  for (const [name, token] of [
+    ['Max Mushroom x3', 'MM'], ['600 Link Charge', 'LC'],
+    ['Super Incubator x2', 'SINC'],
+    ['Max Particle Pack + Remote Raid Pass', '▣'],
+    ['Future Unmapped Item', '·']
+  ]) {
+    const card = cardFor(name);
+    assert.ok(card, 'visible Store product ' + name);
+    assert.ok(card.includes('data-sp-art="category-token">' + token + '</span>'),
+      'neutral source-accurate fallback for ' + name);
+    assert.doesNotMatch(card, /<img class="sp-i"/,
+      'do not use unrelated in-game artwork for ' + name);
+  }
   assert.equal(typeof eventHandlers.error, 'function',
     'Store handles broken exact-item icons without a browser broken-image box');
   let fallback = null;
