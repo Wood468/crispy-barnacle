@@ -104,3 +104,13 @@ test('Guide library uses readable exact form labels and source-matched inline bu
   const viewer=readFileSync(new URL('../public/pokemon-guides.js',import.meta.url),'utf8');
   assert.match(viewer,/picker\.matchesTarget\(raw, mode, g, dex\)/);
 });
+
+test('standalone Mega/Primal/Gigantamax form names resolve exactly',()=>{
+  const data={rotation:[{s:'2026-11-14T10:00',e:'2026-11-20T10:00',
+    mega:'Mega Banette',five:'Primal Kyogre'}],
+    events:[{raidDays:[{date:'2026-11-14',max:['Gigantamax Duraludon']}]}]};
+  const selected=choices(data,'2026-11-14T12:00');
+  assert.equal(target('Mega Banette',selected).formId,'mega');
+  assert.equal(target('Primal Kyogre',selected).formId,'primal');
+  assert.equal(target('Gigantamax Duraludon',selected).formId,'gmax');
+});
