@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {fileURLToPath} from 'node:url';
 import {dirname,resolve} from 'node:path';
-import {auditStoreArtwork,remoteAsset,iconPaths,validateIcon}
+import {auditStoreArtwork,remoteAsset,iconPaths,validateIcon,snapshotArtworkRows}
   from '../scripts/store-artwork-coverage.mjs';
 
 const root=resolve(dirname(fileURLToPath(import.meta.url)),'..');
@@ -70,4 +70,33 @@ test('spoofed or disconnected remote images are excluded from the review ledger'
   assert.equal(audit.counts.duplicateImageGroups,0);
   assert.equal(audit.invalid.length,2);
   assert.equal(audit.remoteListings[1].image,null);
+});
+
+test('fresh Store snapshot includes every SKU, not only tickets and bundles',()=>{
+  const base='https://assets.pgo.webstore.nianticlabs.com/pgo/image_variants/v1/sku_assets/';
+  const snapshot={fetched:'2026-11-13T07:00:00Z',items:[
+    {name:'Max Mushroom',href:'/purchase/item/max-mushroom',imgs:[base+'max-mushroom/w128.webp']},
+    {name:'Link Charge',href:'/purchase/item/link-charge',imgs:[base+'link-charge/w128.webp']},
+    {name:'Remote Raid Pass',href:'/purchase/item/remote-raid-pass',imgs:[]},
+    {name:'PokéCoins',href:'/purchase/item/pokecoins',imgs:['https://spoofed.example/w128.webp']}
+  ]};
+  const rows=snapshotArtworkRows(snapshot);
+  assert.equal(rows.length,4,'standalone Max items, raid passes and coin packs are retained');
+  assert.equal(rows[0].imageStatus,'unverified-snapshot');
+  assert.equal(rows[0].lastSeen,snapshot.fetched);
+  const audit=auditStoreArtwork({source:store,items:rows});
+  assert.equal(audit.counts.listings,4);
+  assert.equal(audit.counts.remoteCandidates,2);
+  assert.equal(audit.counts.missingOrRejected,2);
+  assert.equal(audit.invalid.length,1);
+  assert.equal(audit.invalid[0].name,'PokéCoins');
+  assert.ok(audit.remoteListings.every(row=>row.status!=='verified'));
+});
+
+test('malformed snapshots are rejected instead of claiming complete SKU coverage',()=>{
+  assert.throws(()=>snapshotArtworkRows(null),/No usable Store snapshot/);
+  assert.throws(()=>snapshotArtworkRows({items:[]}),/No usable Store snapshot/);
+  assert.throws(()=>snapshotArtworkRows({items:[{name:'One'},{name:'Two'}]}),/No usable Store snapshot/);
+  assert.throws(()=>snapshotArtworkRows({items:[{name:'Max Mushroom'},null,{name:'Link Charge'}]}),/Malformed Store snapshot item #2/);
+  assert.throws(()=>snapshotArtworkRows({items:[{name:'Max Mushroom'},{name:' '},{name:'Link Charge'}]}),/missing name/);
 });
