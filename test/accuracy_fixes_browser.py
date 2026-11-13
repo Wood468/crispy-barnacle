@@ -144,8 +144,15 @@ with sync_playwright() as p:
         page.evaluate('window.scrollBy(0, -110)')
         shot(page, f'accuracy-research-count-{width}')
         if SHOTS:
-            # Capture the complete panel, not merely the visible first screen.
-            page.locator('#evd-s-research').screenshot(path=f'{SHOTS}/accuracy-research-panel-{width}.png')
+            # The whole research section is taller than the clipped dialog viewport.
+            # Element screenshots of that full section incorrectly include Today behind
+            # the clipping boundary. Scroll each task into view and capture only its
+            # actual visible row so all seven rewards are independently inspectable.
+            for index in range(all_rows.count()):
+                task_row = all_rows.nth(index)
+                task_row.scroll_into_view_if_needed()
+                assert task_row.is_visible(), (width, 'research row not visible', index)
+                task_row.screenshot(path=f'{SHOTS}/accuracy-research-task-{width}-{index + 1:02d}.png')
         page.locator('#evd .evd-nav-link[data-sec="passes"]').click()
         page.locator('#evd .ue-pass-count').first.scroll_into_view_if_needed()
         page.evaluate('window.scrollBy(0, -110)')
