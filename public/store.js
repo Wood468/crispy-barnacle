@@ -17,25 +17,36 @@
     [/^elite charged tm(?:s)?(?:\s*[×x]\s*\d+)?$/i, '/ico/g/elite-charged-tm.webp'],
     [/^raid pass(?:es)?(?:\s*[×x]\s*\d+)?$/i, '/ico/g/raidpass.webp']
   ];
+  /* Neutral type symbols are not in-game item art: never substitute a
+     different item image. Every future SKU has a visible honest fallback. */
   function kindToken(label) {
-    if (/pok[eé]coins?/i.test(label)) return '◎';
-    if (/storage|item bag|bag upgrade|capacity/i.test(label)) return '↑';
-    if (/^(?:remote )?raid pass(?:es)?(?:\s*[×x]\s*\d+)?$|^premium battle pass(?:es)?(?:\s*[×x]\s*\d+)?$/i.test(label)) return 'PASS';
-    if (/^elite (?:fast|charged) tm(?:s)?(?:\s*[×x]\s*\d+)?$/i.test(label)) return 'TM';
-    if (/^go[- ]pass|monthly.*pass|(?:event|admission).*ticket/i.test(label)) return 'PASS';
-    if (/lucky eggs?/i.test(label)) return 'LE';
-    if (/star pieces?/i.test(label)) return 'SP';
-    if (/incubator/i.test(label)) return 'INC';
-    if (/max particle/i.test(label)) return 'MP';
-    if (/\bbox\b|\bbundle\b|\bpack\b/i.test(label)) return '▣';
-    return '';
+    var name = String(label || '');
+    if (/pok[eé]coins?/i.test(name)) return '◎';
+    if (/storage|item bag|bag upgrade|capacity/i.test(name)) return '↑';
+    if (/^go[- ]pass|monthly.*pass|(?:event|admission).*ticket/i.test(name)) return 'PASS';
+    if (/\s\+\s/.test(name) || /\b(?:boxes?|bundles?)\b/i.test(name)) return '▣';
+    if (/^(?:remote )?raid pass(?:es)?(?:\s*[×x]\s*\d+)?$|^premium battle pass(?:es)?(?:\s*[×x]\s*\d+)?$/i.test(name)) return 'PASS';
+    if (/^elite (?:fast|charged) tm(?:s)?(?:\s*[×x]\s*\d+)?$/i.test(name)) return 'TM';
+    if (/lucky eggs?/i.test(name)) return 'LE';
+    if (/star pieces?/i.test(name)) return 'SP';
+    if (/super incubator/i.test(name)) return 'SINC';
+    if (/incubator/i.test(name)) return 'INC';
+    if (/max particle/i.test(name)) return 'MP';
+    if (/max mushrooms?/i.test(name)) return 'MM';
+    if (/link charge/i.test(name)) return 'LC';
+    if (/poffin/i.test(name)) return 'PF';
+    if (/rare candy xl/i.test(name)) return 'XL';
+    if (/rare candy/i.test(name)) return 'RC';
+    if (/pok[eé] balls?/i.test(name)) return 'BALL';
+    if (/\bpack\b/i.test(name)) return '▣';
+    return '·';
   }
   function icon(label) {
     var token = kindToken(label);
     for (var i = 0; i < ICO.length; i++) if (ICO[i][0].test(label)) {
       return '<img class="sp-i" src="' + esc(ICO[i][1]) + '" alt="" width="28" height="28" loading="lazy" decoding="async" data-sp-fallback="' + esc(token || '·') + '">';
     }
-    return token ? '<span class="sp-i-token" aria-hidden="true">' + esc(token) + '</span>' : '';
+    return '<span class="sp-i-token" aria-hidden="true" data-sp-art="category-token">' + esc(token) + '</span>';
   }
   function priority(p) {
     var label = String(p.label || ''), group = String(p.group || ''), kind = String(p.kind || '');
