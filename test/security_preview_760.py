@@ -1,5 +1,6 @@
 import os
 from urllib.request import Request, urlopen
+from urllib.error import HTTPError
 from playwright.sync_api import sync_playwright
 
 base = os.environ["PREVIEW"].rstrip("/")
@@ -11,7 +12,15 @@ expected = {
     "strict-transport-security": "max-age=31536000",
 }
 for path in ("/", "/index.html"):
-    with urlopen(Request(base + path, headers={"User-Agent": "GOFN-preview-security-acceptance"}), timeout=25) as response:
+    try:
+        response = urlopen(Request(base + path, headers={"User-Agent": "GOFN-preview-security-acceptance"}), timeout=25)
+    except HTTPError as error:
+        print("PREVIEW_HTTP_DIAGNOSTIC", "path=", path, "status=", error.code,
+              "final_url=", error.url, "server=", error.headers.get("server"),
+              "cf-ray-present=", bool(error.headers.get("cf-ray")),
+              "content-type=", error.headers.get("content-type"), flush=True)
+        raise
+    with response:
         assert response.status == 200, (path, response.status)
         headers = response.headers
         for key, value in expected.items():
