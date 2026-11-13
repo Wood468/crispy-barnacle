@@ -69,3 +69,28 @@ test('safe art requires the exact official asset URL host; no tracking or inject
   assert.equal(R.sourceArt('javascript:alert(1)'),false);
   assert.equal(R.sourceArt('https://assets.pgo.webstore.nianticlabs.com.evil.com/a/w256.webp'),false);
 });
+
+test('owner baseline supports only labelled same-tier pass models for newly announced offers', async () => {
+  const { OBSERVATIONS } = await import('../src/regional-observations.js');
+  const offers = require('../public/store-offer-identities.js');
+  const rows = R.catalogue([], OBSERVATIONS, NOW, offers);
+  const november = rows.find(x => x.label === 'GO Pass Deluxe: November');
+  assert.ok(november && november.unpricedOfficial);
+  assert.equal(november.indonesia?.basis,'estimate');
+  assert.equal(november.indonesia?.currency,'IDR');
+  assert.equal(november.indonesia?.confidence,'low');
+  assert.ok(november.indonesia.min > 0 && november.indonesia.max > november.indonesia.min);
+  assert.equal(november.india,null,'a different in-app event-pass tier must not price the monthly tier');
+  const ranks = rows.find(x => x.label === 'GO Pass Deluxe: November + 10 Ranks');
+  assert.equal(ranks.indonesia,null,'no matching monthly rank-tier observation exists');
+});
+
+test('India in-app coin packs are recorded separately from AU Web packs and never invented as matching SKU', async () => {
+  const { OBSERVATIONS } = await import('../src/regional-observations.js');
+  const indian = OBSERVATIONS.filter(x => x.region === 'IN' && x.kind === 'coins');
+  assert.deepEqual(indian.map(x => x.amount),[29,149,289,589,1169,2899]);
+  assert.ok(indian.every(x => x.channel === 'in-app' && x.status === 'recorded'));
+  assert.ok(indian.every(x => /\+ \d+ in-app bonus/.test(x.product)));
+  assert.equal(OBSERVATIONS.find(x => x.id === 'in-itw-ticket')?.amount,349);
+  assert.equal(OBSERVATIONS.find(x => x.id === 'in-itw-deluxe')?.amount,439);
+});
