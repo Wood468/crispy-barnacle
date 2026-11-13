@@ -2361,3 +2361,12 @@ button.rc-chip:focus-visible{outline:2px solid var(--color-link);outline-offset:
 .ig-boss-controls .pill{justify-self:start;min-height:44px}
 .ig-boss-controls .pill:disabled{opacity:.48;cursor:not-allowed}
 .ig-boss-controls small{font-size:var(--type-meta-compact);line-height:1.5;color:var(--color-text-muted,#9ba6b8)}
+
+
+/* In the owner review queue, Pokémon approval is primary. Event guesses are
+   optional and collapsed by default to keep narrow iPhone cards readable. */
+.igr-event-suggestions{min-width:0;border:1px solid var(--color-border);border-radius:var(--radius-md);background:var(--color-surface-raised)}
+.igr-event-suggestions>summary{cursor:pointer;display:list-item;min-height:44px;box-sizing:border-box;padding:var(--space-3);color:var(--color-text);font-size:var(--type-body-sm);font-weight:700;line-height:1.5}
+.igr-event-suggestions>summary:focus-visible{outline:2px solid var(--color-accent);outline-offset:2px}
+.igr-event-suggestions .igr-g{padding:0 var(--space-3) var(--space-3);gap:var(--space-2)}
+.igr-event-suggestions .igr-g .pill{box-sizing:border-box;width:100%;min-height:44px;font-size:var(--type-body-sm);overflow-wrap:anywhere}

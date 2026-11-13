@@ -167,14 +167,6 @@
     var ids = o.getAttribute('data-ids'); if (!ids) return [{ id: o.value, title: o.getAttribute('data-t') }];
     var ts = o.getAttribute('data-t').split(' | '); return ids.split(',').map(function (x, i) { return { id: x, title: ts[i] || x }; });
   }
-  /* Only bosses actually published on the current/upcoming Battle schedule.
-     The full Dex remains available to resolve exact IDs, never to offer arbitrary choices. */
-  function currentBossChoices() {
-    var picker = window.GOINFOGRAPHICRAIDPICKER;
-    var data = window.GO && window.GO.D;
-    return picker && data && window.GOLIB && window.GOLIB.raidBossNames
-      ? picker.options(data, pokemonCatalogue, Date.now(), window.GOLIB.raidBossNames, window.GOEventClock && window.GOEventClock.parseDate) : [];
-  }
   function bossTargets(id) {
     var d = decs[id];
     return d && d.status === 'approved' && Array.isArray(d.targets)
@@ -194,8 +186,7 @@
           Date.now(), window.GOLIB.raidBossNames,
           window.GOEventClock && window.GOEventClock.parseDate) : [];
   }
-  function bossControls(it) {
-    var choices = exactScheduledChoices();
+  function bossControls(it, choices) {
     var options = choices.map(function (row) {
       var label = (row.phase === 'live' ? 'Live · ' : 'Upcoming · ') + row.name +
         ' · ' + (row.battleMode === 'normal' ? 'Raid' : row.battleMode);
@@ -209,32 +200,23 @@
         ? 'Only published live and upcoming bosses are offered. Pokémon forms and battle types are fixed to the schedule.'
         : 'No exact scheduled boss choices available. Check the raid schedule or retry loading the source data.') + '</small></div>';
   }
-  function bossFormCompatible(row, mode) {
-    var kind = row[3];
-    // forms.json classifies Primal Kyogre/Groudon in its broader 'mega'
-    // family. The exact formId, not category alone, separates these modes.
-    if (mode === 'mega') return kind === 'mega' && row[1] !== 'primal';
-    if (mode === 'primal') return kind === 'mega' && row[1] === 'primal';
-    if (mode === 'gigantamax') return kind === 'gmax';
-    return kind !== 'mega' && kind !== 'primal' && kind !== 'gmax';
-  }
   function linkedOf(id) {
     var d = decs[id]; if (!d || d.status !== 'approved' || !d.eventId) return [];
     var ids = String(d.eventId).split(','), ts = String(d.eventTitle || '').split(' | ');
     return ids.map(function (x, i) { return { id: x, title: ts[i] || x }; });
   }
-  function linkedCard(it) {
+  function linkedCard(it, choices, eventOptionsHtml) {
     var L = linkedOf(it.id);
     return '<article class="igr" data-id="' + esc(it.id) + '">'
       + '<a class="igr-img" href="' + esc(it.image) + '" target="_blank" rel="noopener"><img src="' + esc(it.image) + '" alt="' + esc(it.title || 'Infographic') + '" loading="lazy" decoding="async"></a>'
       + '<div class="igr-b"><b>' + esc(it.title || 'Untitled graphic') + '</b>'
       + '<div class="igr-g">' + bossTargets(it.id).map(function (t,n) { return '<button type="button" class="pill all" data-ig-boss-unlink="' + n + '" aria-label="Unlink ' + esc(bossLabel(t)) + '">' + esc(bossLabel(t)) + ' ✕</button>'; }).join('') + L.map(function (l, n) { return '<button type="button" class="pill all" data-ig-unlink="' + n + '" aria-label="Unlink from ' + esc(l.title) + '">' + esc(l.title) + ' ✕</button>'; }).join('') + '</div>'
-      + '<div class="igr-o"><select aria-label="Link to another event"><option value="">Also link to…</option>' + eventOptions() + '</select><button type="button" class="pill" data-ig-add aria-label="Add event: ' + esc(it.title || 'Untitled graphic') + '">Add</button><button type="button" class="pill" data-ig-no aria-label="Discard: ' + esc(it.title || 'Untitled graphic') + '">Discard</button></div>'
-      + bossControls(it)
+      + bossControls(it, choices)
+      + '<div class="igr-o"><select aria-label="Link to another event"><option value="">Also link to…</option>' + eventOptionsHtml + '</select><button type="button" class="pill" data-ig-add aria-label="Add event: ' + esc(it.title || 'Untitled graphic') + '">Add</button><button type="button" class="pill" data-ig-no aria-label="Discard: ' + esc(it.title || 'Untitled graphic') + '">Discard</button></div>'
       + '<div class="igr-o"><button type="button" class="pill" data-ig-ov="week">📅 This week\'s picture</button><button type="button" class="pill" data-ig-ov="month">🗓 Month overview</button></div>'
       + '</div></article>';
   }
-  function card(it) {
+  function card(it, choices, eventOptionsHtml) {
     var live = {}, liveN = {}; if (window.GODASH) GODASH.events().concat(GODASH.raidSlots ? GODASH.raidSlots() : [], GODASH.worldEvents ? GODASH.worldEvents() : [], GODASH.regionalEvents ? GODASH.regionalEvents() : []).forEach(function (e) { if (e.end.getTime() > Date.now()) { live[e.id] = 1; live[String(e.id).replace(/^[a-z]+:/, '')] = 1; liveN[String(e.name).toLowerCase()] = 1; } });
     /* Events that have already finished are not offered. */
     var g = (it.guesses || []).filter(function (x) { return x.eventId && (!window.GODASH || live[x.eventId] || live[String(x.eventId).replace(/^[a-z]+:/, '')] || liveN[String(x.eventTitle || '').toLowerCase()]); }).slice(0, 3);
@@ -244,9 +226,9 @@
       + (it.note ? '<small>' + esc(it.note) + '</small>' : '')
       + (it.text ? '<details class="igr-ocr"><summary>Read image text</summary><p>' + esc(it.text) + '</p></details>' : '')
       + (it.signals && it.signals.length ? '<div class="igr-s">' + it.signals.map(function (s) { return '<span>' + esc(s) + '</span>'; }).join('') + '</div>' : '')
-      + '<div class="igr-g">' + (g.length ? g.map(function (x) { return '<button type="button" class="pill all" data-ig-ok="' + esc(x.eventId) + '" data-t="' + esc(x.eventTitle) + '">Approve: ' + esc(x.eventTitle) + '</button>'; }).join('') : '<small>No likely event found.</small>') + '</div>'
-      + '<div class="igr-o"><select aria-label="Choose another event"><option value="">Another event…</option>' + eventOptions() + '</select><button type="button" class="pill" data-ig-pick aria-label="Approve: ' + esc(it.title || 'Untitled graphic') + '">Approve</button><button type="button" class="pill" data-ig-no aria-label="Discard: ' + esc(it.title || 'Untitled graphic') + '">Discard</button></div>'
-      + bossControls(it)
+      + bossControls(it, choices)
+      + (g.length ? '<details class="igr-event-suggestions"><summary>Suggested event links (' + g.length + ')</summary><div class="igr-g">' + g.map(function (x) { return '<button type="button" class="pill all" data-ig-ok="' + esc(x.eventId) + '" data-t="' + esc(x.eventTitle) + '" aria-label="Approve event link: ' + esc(x.eventTitle) + '">' + esc(x.eventTitle) + '</button>'; }).join('') + '</div></details>' : '')
+      + '<div class="igr-o"><select aria-label="Choose another event"><option value="">Another event…</option>' + eventOptionsHtml + '</select><button type="button" class="pill" data-ig-pick aria-label="Approve: ' + esc(it.title || 'Untitled graphic') + '">Approve</button><button type="button" class="pill" data-ig-no aria-label="Discard: ' + esc(it.title || 'Untitled graphic') + '">Discard</button></div>'
       + '<div class="igr-o"><button type="button" class="pill" data-ig-ov="week">📅 This week\'s picture</button><button type="button" class="pill" data-ig-ov="month">🗓 Month overview</button></div>'
       + (safeUrl(it.post) ? '<small><a href="' + esc(it.post) + '" target="_blank" rel="noopener noreferrer">' + (window.GOLIB.isPrivateLink(it.post) ? 'Open in Discord (owner only)' : 'Original post') + '</a>' + (it.creator ? ' · ' + esc(it.creator) : '') + '</small>' : '')
       + '</div></article>';
@@ -268,11 +250,14 @@
     }
     if (!open.length && !msg && !capped && !linked.length) { host.hidden = true; host.innerHTML = ''; return; }
     host.hidden = false;
+    /* Reuse the same exact schedule and event choices across all cards in this
+       render; saving revalidates fresh source data before sending. */
+    var eligibleBosses = exactScheduledChoices(), eligibleEvents = eventOptions();
     var kl = document.getElementById('iglinked'), keepLinked = !!(kl && kl.open);
     host.innerHTML = '<details class="dd" open><summary>Infographic review <span class="cnt">' + open.length + '</span></summary><div class="body">'
       + '<p class="note" style="margin:0 0 8px">Discord and Telegram pictures appear here until you link them. Check the image text and date before approving; nothing appears on an event or Pokémon until you approve it.</p>'
-      + capNote + (msg ? '<p class="igr-msg" role="status">' + esc(msg) + '</p>' : '') + open.slice(0, shown).map(card).join('') + (open.length > shown ? '<button type="button" class="pill all" data-ig-more="1">Show 10 more (' + (open.length - shown) + ' left)</button>' : '') + queueRetry + '</div></details>'
-      + (linked.length ? '<details class="dd"' + (keepLinked ? ' open' : '') + ' id="iglinked"><summary>Linked infographics <span class="cnt">' + linked.length + '</span></summary><div class="body"><p class="note" style="margin:0 0 8px">Tap ✕ to unlink from one event, add more events, or discard. Changes reach the event within a few hours.</p>' + linked.map(linkedCard).join('') + '</div></details>' : '');
+      + capNote + (msg ? '<p class="igr-msg" role="status">' + esc(msg) + '</p>' : '') + open.slice(0, shown).map(function (it) { return card(it, eligibleBosses, eligibleEvents); }).join('') + (open.length > shown ? '<button type="button" class="pill all" data-ig-more="1">Show 10 more (' + (open.length - shown) + ' left)</button>' : '') + queueRetry + '</div></details>'
+      + (linked.length ? '<details class="dd"' + (keepLinked ? ' open' : '') + ' id="iglinked"><summary>Linked infographics <span class="cnt">' + linked.length + '</span></summary><div class="body"><p class="note" style="margin:0 0 8px">Tap ✕ to unlink from one event, add more events, or discard. Changes reach the event within a few hours.</p>' + linked.map(function (it) { return linkedCard(it, eligibleBosses, eligibleEvents); }).join('') + '</div></details>' : '');
   }
   function send(it, status, eventId, title, note, specifiedBossTargets) {
     if (!isOwner()) { hideOwnerUi(); return; }
@@ -360,7 +345,7 @@
     var un = e.target.closest('[data-ig-unlink]');
     if (un) { var L = linkedOf(it.id), gone = L[Number(un.getAttribute('data-ig-unlink'))]; return setLinks(it, L.filter(function (x) { return x !== gone; })); }
     if (e.target.closest('[data-ig-add]')) {
-      var s2 = card.querySelector('select'), o2 = s2 && s2.options[s2.selectedIndex];
+      var s2 = card.querySelector('select[aria-label="Link to another event"]'), o2 = s2 && s2.options[s2.selectedIndex];
       if (!o2 || !o2.value) { msg = 'Choose an event first.'; return render(); }
       var L2 = linkedOf(it.id); picks(o2).forEach(function (pk) { if (!L2.some(function (x) { return x.id === pk.id; })) L2.push(pk); });
       return setLinks(it, L2);
@@ -370,7 +355,7 @@
     var no = e.target.closest('[data-ig-no]');
     if (no) { if (pendingDiscard[it.id]) return; no.disabled = true; return send(it, 'rejected'); }
     if (e.target.closest('[data-ig-pick]')) {
-      var sel = card.querySelector('select'), o = sel && sel.options[sel.selectedIndex];
+      var sel = card.querySelector('select[aria-label="Choose another event"]'), o = sel && sel.options[sel.selectedIndex];
       if (!o || !o.value) { msg = 'Choose an event first.'; return render(); }
       var pk = picks(o); send(it, 'approved', pk.map(function (x) { return x.id; }).join(','), pk.map(function (x) { return x.title; }).join(' | '));
     }

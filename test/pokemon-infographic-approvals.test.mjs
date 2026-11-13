@@ -91,26 +91,28 @@ test('form labels remain distinct and source links are never leaked',()=>{
  assert.equal(info.pokemonGuides[0].infographics[0].sourceUrl,undefined);
 });
 
-test('Primal modes use the catalogued primal form ID, not the broader mega family', async () => {
+test('source-backed exact selector keeps Primal, Mega X/Y and Gigantamax forms isolated', async () => {
   const {readFileSync} = await import('node:fs');
-  const source = readFileSync(new URL('../public/review.js', import.meta.url), 'utf8');
-  const match = source.match(/function bossFormCompatible\(row, mode\) \{([\s\S]*?)\n  \}/);
-  assert.ok(match, 'actual owner form picker helper is present');
-  const accepts = new Function('row','mode', match[1]);
+  const picker = await import('../public/infographic-raid-schedule.js');
+  const lib = await import('../public/lib.js');
   const forms = JSON.parse(readFileSync(new URL('../public/forms.json', import.meta.url), 'utf8')).f;
-  for (const dex of [382,383]) {
-    const primal = forms.find(f => f[0] === dex && f[1] === 'primal');
-    assert.ok(primal, 'Primal Kyogre/Groudon exists in canonical forms');
-    assert.equal(primal[3], 'mega', 'catalogue places Primal in broader mega family');
-    assert.equal(accepts(primal, 'primal'), true);
-    assert.equal(accepts(primal, 'mega'), false);
+  const dex = [[382,'Kyogre'],[383,'Groudon'],[6,'Charizard']];
+  const data = {rotation:[{
+    s:'2026-11-14T00:00', e:'2026-11-19T00:00',
+    five:'Primal Kyogre and Primal Groudon', mega:'Mega Charizard X and Y'
+  }],events:[{raidDays:[{date:'2026-11-15',max:['Gigantamax Charizard']}]}]};
+  const api = picker.default || picker;
+  const names = (lib.default || lib).raidBossNames;
+  const choices = api.targetChoices(data,dex,forms,null,Date.parse('2026-11-14T12:00'),names);
+  const got = new Set(choices.map(x => x.value));
+  for (const id of ['382|primal|primal','383|primal|primal',
+     '006|mega-x|mega','006|mega-y|mega','006|gmax|gigantamax']) {
+    assert.ok(got.has(id), 'exact published mode/form: ' + id);
   }
-  const megaX = forms.find(f=>f[0]===6 && f[1]==='mega-x');
-  const gmax = forms.find(f=>f[0]===6 && f[1]==='gmax');
-  assert.equal(accepts(megaX,'mega'),true);
-  assert.equal(accepts(megaX,'primal'),false);
-  assert.equal(accepts(gmax,'gigantamax'),true);
-  assert.equal(accepts(gmax,'mega'),false);
+  for (const wrong of ['382|primal|mega','383|primal|mega','006|mega-x|primal',
+    '006|gmax|mega','006|mega-y|normal']) {
+    assert.ok(!got.has(wrong), 'unpublished crossover excluded: ' + wrong);
+  }
 });
 
 test('approved boss guide labels match the real Raid/Max row names without form crossovers',()=>{
