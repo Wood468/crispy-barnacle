@@ -150,3 +150,20 @@ test('nonstandard HTTPS ports cannot masquerade as exact official source origins
     /Invalid source provenance/);
   await assert.rejects(readFile(join(rootDir,'public','verified-event-facets.json')),/ENOENT/);
 }));
+
+test('add-on access remains explicit while unsupported universal grants fail closed',async()=>sandbox(async rootDir=>{
+  let next={...verified(),benefits:[{...benefit,access:'addon'}]};
+  const hash=await seed(rootDir,next);
+  const written=await publishApprovedFacetFeed({rootDir,
+    expectedSha256ByEvent:{'synthetic:global.2026':hash}});
+  const exported=JSON.parse(await readFile(join(rootDir,written.path)));
+  assert.equal(exported.events[0].benefits[0].access,'addon');
+  next={...verified(),benefits:[{...benefit,access:'all'}]};
+  const invalidHash=await seed(rootDir,next);
+  await assert.rejects(publishApprovedFacetFeed({rootDir,
+    expectedPreviousFeedSha256:written.sha256,
+    expectedSha256ByEvent:{'synthetic:global.2026':invalidHash}}),
+    /Invalid verified facet claim/);
+  assert.equal((JSON.parse(await readFile(join(rootDir,written.path))))
+    .events[0].benefits[0].access,'addon');
+}));
