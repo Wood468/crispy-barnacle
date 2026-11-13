@@ -101,3 +101,37 @@ test("future source trust values remain unknown and cannot inject badge markup",
     assert.equal(renderTrust(val), '<span class="st st-u">Trust not labelled</span>');
   }
 });
+
+test("curated event attribution uses actual guarded fallback expressions and preserves overrides", () => {
+  const dash = fs.readFileSync(new URL("../public/dash.js", import.meta.url), "utf8");
+  const lines = dash.split("\n");
+  const officialLine = lines.find(line => line.includes("function isOfficialUrl(u) {"));
+  const safeLine = lines.find(line => line.includes("function safeUrl(u) {"));
+  assert.ok(officialLine && safeLine, "dashboard contains both URL validators");
+  const body = line => line.slice(line.indexOf("{") + 1, line.lastIndexOf("}"));
+  const isOfficialUrl = new Function("u", body(officialLine));
+  const actualSafe = new Function("u", "window", body(safeLine));
+  const safeUrl = u => actualSafe(u, { GOLIB: { isPrivateLink: () => false } });
+  const anchor = "highlights: Array.isArray(x.highlights) ? x.highlights : [],";
+  const offset = dash.indexOf(anchor);
+  assert.ok(offset >= 0, "curated event default attribution exists");
+  const section = dash.slice(offset, offset + 650);
+  const fields = section.match(/\n\s*status:\s*([^\n]+),\n\s*source:\s*([^\n]+),\n\s*link:/);
+  assert.ok(fields, "actual curated status and source expressions are adjacent");
+  const status = new Function("x", "safeUrl", "isOfficialUrl", "return (" + fields[1] + ");");
+  const source = new Function("x", "safeUrl", "isOfficialUrl", "return (" + fields[2] + ");");
+  const infer = x => [status(x, safeUrl, isOfficialUrl), source(x, safeUrl, isOfficialUrl)];
+  const official = ["official_confirmed", "Official Pokémon GO announcement"];
+  const community = ["community_reported", "Curated community calendar"];
+  for (const url of ["https://pokemongo.com/news", "https://www.pokemongo.com/news"])
+    assert.deepEqual(infer({ sourceUrl: url }), official);
+  for (const url of [
+    "https://leekduck.com/events", "https://pokemongo.com.evil.example/news",
+    "https://fake-pokemongo.com/news", "http://pokemongo.com/news", "", null
+  ])
+    assert.deepEqual(infer({ sourceUrl: url }), community);
+  assert.deepEqual(infer({
+    sourceUrl: "https://pokemongo.com/news",
+    status: "community_reported", source: "Owner-supplied source"
+  }), ["community_reported", "Owner-supplied source"], "explicit attribution takes precedence");
+});

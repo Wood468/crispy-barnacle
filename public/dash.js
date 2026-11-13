@@ -180,8 +180,8 @@
       out.push(mkEvent({ id: 'cur:' + x.id, detailIds: x.detailIds || [], name: x.t, kind: scopedKind(k, x.t, x.scope, x.region || x.location, x.attendance === 'in-person' || x.inPerson === true || tags.indexOf('In person') > -1), img: x.img || '', artPageUrl: x.artSourceUrl || '', s: x.s, e: x.e, utc: x.utc === true || x.tzMode === 'utc', region: x.region || x.location || '', scope: x.scope || '', tags: signalTags({ name:x.t, kind:k, tags:tags, notes:x.p, bonuses:x.bonuses, featured:(x.art||[]).map(function(a){return typeof a==='string'?{name:a}:a;}) }), notes: x.p, bonuses: x.bonuses,
         featured: (x.art || []).map(function (a) { a = typeof a === 'string' ? { n: a } : a; return { name: a.n, costume: !!a.costume, shiny: !!a.shiny, label: a.label, asset: a.asset, role: 'featured' }; }),
         highlights: Array.isArray(x.highlights) ? x.highlights : [],
-        status: x.status || (x.sourceUrl ? 'official_confirmed' : 'community_reported'),
-        source: x.source || (x.sourceUrl ? 'Official Pokémon GO announcement' : 'Curated community calendar'),
+        status: x.status || (isOfficialUrl(safeUrl(x.sourceUrl)) ? 'official_confirmed' : 'community_reported'),
+        source: x.source || (isOfficialUrl(safeUrl(x.sourceUrl)) ? 'Official Pokémon GO announcement' : 'Curated community calendar'),
         link: x.sourceUrl || '', infographicUrl: x.infographicUrl || x.infographic || '' }));
     });
     (D.spotlight || []).forEach(function (x) {
