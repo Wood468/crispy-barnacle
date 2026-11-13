@@ -12,7 +12,7 @@
  * replay ledger. NEVER automatically clear an uncertain release.
  */
 import {mkdir,open,readFile,rename,unlink} from 'node:fs/promises';
-import {resolve,join} from 'node:path';
+import {resolve,join,sep} from 'node:path';
 import {createHash,randomBytes} from 'node:crypto';
 import {facetPromotionManifestMessage} from './source-facet-promotion-manifest.mjs';
 import {preflightFacetPromotion} from './source-facet-promotion-preflight.mjs';
@@ -87,14 +87,19 @@ async function writeLedger(path,ledger){
  * public JSON + replay ledger were written, NOT that a site was deployed.
  */
 export async function commitFacetPromotion(manifest,signature,{
-  rootDir,allowLocalWrite=false,trustedReleasePublicKey,environment,
+  rootDir,durableStateDir,allowLocalWrite=false,trustedReleasePublicKey,environment,
   trustedCommitSha,now,trustedCanonicalEventIds,trustedPrivateReceipts
 }={}){
-  if(allowLocalWrite!==true||typeof rootDir!=='string'||!rootDir.trim())
-    throw new TypeError('Explicit trusted local publish authorization required');
-  const root=resolve(rootDir);
-  const dir=join(root,'data','verified-event-facets');
-  await mkdir(dir,{recursive:true});
+  if(allowLocalWrite!==true||typeof rootDir!=='string'||!rootDir.trim()||
+     typeof durableStateDir!=='string'||!durableStateDir.trim())
+    throw new TypeError('Explicit trusted local publish and persistent state directory required');
+  const root=resolve(rootDir),dir=resolve(durableStateDir);
+  // A transient checkout cannot be the replay authority. Production callers
+  // must mount this state path on genuinely durable shared storage and also
+  // hold a distributed deployment lock outside this local filesystem module.
+  if(dir===root||dir.startsWith(root+sep))
+    throw new TypeError('Durable release state must live outside the checkout');
+  await mkdir(dir,{recursive:true,mode:0o700});
   const lockPath=join(dir,'promotion-controller.lock');
   const ledgerPath=join(dir,'promotion-ledger.json');
   let lock=null;
