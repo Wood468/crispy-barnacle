@@ -237,3 +237,22 @@ test('fallback without optional item-art mapper never borrows remote or premium 
   else globalThis.GOGoPassRewardArt = previous;
  }
 });
+
+test('agreeing inline and structured reward quantities display once with exact semantic artwork', () => withSemantic(() => {
+ const html=UI.render(model([{rank:8,
+  free:[{name:'Raid Pass x2',quantity:2,type:'item'},{name:'Poké Ball ×3',quantity:3,type:'item'}],
+  rewards:[{name:'Raid Pass',quantity:2,type:'item'},{name:'Poké Ball',quantity:3,type:'item'},
+   {name:'Poké Ball',quantity:4,type:'item'}]
+ }]),{});
+ const row=html.match(/<li class="ue-pass-rank" data-rank="8">([\s\S]*?)<\/li>/)[1];
+ assert.equal((row.match(/<b>Raid Pass<\/b>/g)||[]).length,1);
+ assert.equal((row.match(/<b>Poké Ball<\/b>/g)||[]).length,2,
+  'an agreed inline ×3 is the same reward; a genuinely distinct ×4 remains');
+ assert.doesNotMatch(row,/<b>(?:Raid Pass x2|Poké Ball ×3)<\/b>/,
+  'quantities in the name are displayed once instead of repeated');
+ assert.match(row,/src="\/ico\/g\/raidpass\.webp"/,
+  'the exact item resolver can recognise a named reward after normalisation');
+ assert.match(row,/×2 · Item/);
+ assert.match(row,/×3 · Item/);
+ assert.match(row,/×4 · Item/);
+}));
