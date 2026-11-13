@@ -46,7 +46,7 @@ with sync_playwright() as p:
         # Only synthetic data is rendered or saved to the artifact.
         page.evaluate("""fixture => {
             window.GOLIB.loadPrices = async () => fixture;
-            // Deterministic synthetic dated FX: no network, no private values.
+            // Deterministic synthetic FX, no private prices or network.
             window.GOStoreFX.retrieve = async () => window.GOStoreFX.fromApi({
                 result: 'success', base_code: 'AUD',
                 time_last_update_unix: Date.parse('2026-11-12T00:00:00Z') / 1000,
@@ -75,7 +75,8 @@ with sync_playwright() as p:
         page.wait_for_function("""selector => {
             const cells = [...document.querySelector(selector).querySelectorAll('.sp-market')];
             return cells.length === 3 && cells.slice(1).every(cell =>
-                cell.querySelector('.sp-aud-equivalent')?.textContent.includes('≈ A
+                cell.querySelector('.sp-aud-equivalent')?.textContent.includes('≈ A$'));
+        }""", target)
         metrics = page.evaluate("""selector => {
             const card = document.querySelector(selector);
             if (!card || !card.getClientRects().length) throw new Error("Synthetic Store card is not visible");
@@ -134,48 +135,6 @@ with sync_playwright() as p:
             assert market["audBeforeLocal"], f"{width}px AUD must precede local checkout price: {market}"
             assert not market["localOnlyAriaLabel"], f"{width}px parent label masks AUD for VoiceOver: {market}"
             assert market["fxProvenance"] == "FX · 12 Nov 2026", f"{width}px dated FX provenance: {market}"
-        print(f"PASS Store synthetic owner layout {width}px: {json.dumps(metrics)}", flush=True)
-        context.close()
-    browser.close()
-));
-        }""", target)
-        metrics = page.evaluate("""selector => {
-            const card = document.querySelector(selector);
-            if (!card || !card.getClientRects().length) throw new Error("Synthetic Store card is not visible");
-            const grid = card.querySelector('.sp-market-grid');
-            const cells = [...grid.querySelectorAll(':scope > .sp-market')];
-            const bounds = cells.map(c => {
-                const r = c.getBoundingClientRect();
-                return {left:r.left,right:r.right,width:r.width};
-            });
-            return {
-                viewport: window.innerWidth,
-                scrollWidth: document.documentElement.scrollWidth,
-                clientWidth: document.documentElement.clientWidth,
-                cardWidth: card.getBoundingClientRect().width,
-                gridColumns: getComputedStyle(grid).gridTemplateColumns,
-                cellCount: cells.length,
-                bounds,
-                labels: cells.map(c => c.querySelector('.sp-market-label')?.textContent.trim()),
-                channelsVisible: cells.map(c => {
-                    const channel = c.querySelector('.sp-market-label small');
-                    return !!channel && getComputedStyle(channel).display !== 'none';
-                }),
-                localPrice: cells[1].querySelector('.sp-local-price')?.textContent.trim() || null
-            };
-        }""", target)
-        (OUT / f"store-{width}.json").write_text(json.dumps(metrics, indent=2))
-        page.screenshot(path=str(OUT / f"store-{width}.png"), full_page=True)
-        assert metrics["scrollWidth"] <= width, f"{width}px document overflow: {metrics}"
-        assert metrics["clientWidth"] <= width, f"{width}px client overflow: {metrics}"
-        assert metrics["cellCount"] == 3, f"{width}px expected three regions: {metrics}"
-        assert all(x["width"] > 0 for x in metrics["bounds"]), f"{width}px zero-width column"
-        assert all(x["right"] <= width + 1 and x["left"] >= -1 for x in metrics["bounds"]), f"{width}px columns overflow"
-        assert all(abs(metrics["bounds"][i]["left"] - metrics["bounds"][0]["left"]) > 1
-                   for i in (1, 2)), f"{width}px columns stacked rather than aligned"
-        assert all(x in " ".join(metrics["labels"]) for x in ("Australia", "Indonesia", "India"))
-        assert all(metrics["channelsVisible"]), f"{width}px purchase channels must remain visible: {metrics}"
-        assert all(x in " ".join(metrics["labels"]) for x in ("Web", "in-app"))
         print(f"PASS Store synthetic owner layout {width}px: {json.dumps(metrics)}", flush=True)
         context.close()
     browser.close()
