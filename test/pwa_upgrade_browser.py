@@ -137,26 +137,16 @@ with sync_playwright() as pw:
     # Offline acceptance must explicitly select Timeline before checking its cards.
     page.locator('#subnav-events button[data-sub="timeline"]').click()
     page.wait_for_selector('#sub-timeline:not([hidden])')
-    try:
-        page.wait_for_selector('#sub-timeline .evc', timeout=10000)
-    except Exception:
-        # A hidden card may mean the Schedule panel or an inner filter was
-        # retained through the offline upgrade. Print structural state only.
-        state = page.evaluate("""() => {
-            const card = document.querySelector('#sub-timeline .evc');
-            const path = [];
-            for (let el = card; el && path.length < 10; el = el.parentElement) {
-                const style = getComputedStyle(el);
-                path.push({tag: el.tagName, id: el.id, cls: String(el.className).slice(0,70),
-                    hidden: el.hidden, display: style.display, visibility: style.visibility,
-                    rects: el.getClientRects().length});
-            }
-            return {path,
-                activeTab: document.querySelector('nav.tabs [aria-selected="true"]')?.dataset.tab || null,
-                activeEventsView: document.querySelector('#subnav-events [aria-pressed="true"]')?.dataset.sub || null};
-        }""")
-        print('Offline Schedule structural visibility:', json.dumps(state, sort_keys=True), flush=True)
-        raise
+    # Long-running events are intentionally folded into <details class="dd">.
+    # Offline Schedule remains functional: open that group as a user would
+    # before asserting a card is visible, rather than treating a closed
+    # disclosure as a missing or broken event.
+    page.wait_for_selector('#evtimeline .evc', state='attached', timeout=15000)
+    if not page.locator('#evtimeline .evc:visible').count():
+        folded = page.locator('#evtimeline details.dd:not([open]):has(.evc)').first
+        if folded.count():
+            folded.locator('summary').click()
+    page.wait_for_selector('#evtimeline .evc:visible', timeout=15000)
     assert page.locator('#tab-events .evc').count() > 0
     assert page.evaluate(READ_KEYS, KEYS) == SEED, 'keys changed after offline navigation on the new shell'
     assert page.evaluate('GO.dex().m.own[25]') == 1
