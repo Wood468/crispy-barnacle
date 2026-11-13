@@ -184,9 +184,9 @@ const handler = {
   },
 };
 
-// Browser security headers on every response. script-src allows only our own files (no inline scripts or handlers); inline styles are still allowed. The rest of the policy still stops framing, plugins, form hijacking and calls to other sites (so a stolen PIN has nowhere to go).
+// Browser security headers on every response. script-src allows only our own files (no inline scripts or handlers); inline styles are still allowed. The only cross-origin connect-src exception is the fixed, public AUD-reference FX GET endpoint (no cookies or user data). Framing, plugins, form hijacking and all other cross-origin connections stay blocked.
 export const SECURITY_HEADERS = {
-  "content-security-policy": `default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob: ${IMAGE_CSP_HOSTS.join(" ")}; connect-src 'self'; worker-src 'self'; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'`,
+  "content-security-policy": `default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob: ${IMAGE_CSP_HOSTS.join(" ")}; connect-src 'self' https://open.er-api.com/v6/latest/AUD; worker-src 'self'; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'`,
   "x-frame-options": "DENY",
   "x-content-type-options": "nosniff",
   "referrer-policy": "strict-origin-when-cross-origin",
