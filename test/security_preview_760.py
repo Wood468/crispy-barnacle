@@ -18,7 +18,8 @@ for path in ("/", "/index.html"):
         print("PREVIEW_HTTP_DIAGNOSTIC", "path=", path, "status=", error.code,
               "final_url=", error.url, "server=", error.headers.get("server"),
               "cf-ray-present=", bool(error.headers.get("cf-ray")),
-              "content-type=", error.headers.get("content-type"), flush=True)
+              "content-type=", error.headers.get("content-type"),
+              "body-prefix=", error.read(300).decode("utf-8", "replace").replace("\\n", " "), flush=True)
         raise
     with response:
         assert response.status == 200, (path, response.status)
