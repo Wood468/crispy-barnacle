@@ -175,18 +175,34 @@ test("official-source inference rejects non-HTTPS and credentialed URLs", () => 
 
 test("cpRows safely handles missing or malformed rosters and renders properly", () => {
   const dash = fs.readFileSync(new URL("../public/dash.js", import.meta.url), "utf8");
-  const line = dash.split("\n").find(l => l.includes("function cpRows(ev) {"));
-  assert.ok(line, "cpRows function exists");
-  const body = dash.slice(dash.indexOf("function cpRows(ev) {"));
-  const endIdx = body.indexOf("  /* ---------- kinds:");
-  assert.ok(endIdx >= 0, "cpRows extent found");
-  const cpRowsFn = new Function("hundoLabels", "esc", body.slice(0, endIdx) + "\n  return cpRows(ev);\n");
-  const hundo = (ev, f) => "<span>" + f.name + "</span>";
-  const esc = s => s;
+  const start = dash.indexOf("  function cpRows(ev) {");
+  assert.ok(start >= 0, "cpRows function exists");
+  const end = dash.indexOf("  /* ---------- kinds:", start);
+  assert.ok(end > start, "cpRows extent found");
+  const calls = [];
+  const hundo = (ev, f) => {
+    assert.ok(ev.featured.includes(f), "renderer receives the original event and member");
+    assert.equal(typeof f.name, "string", "malformed members never reach renderer");
+    calls.push(f.name);
+    return '<span>123 CP · 100% IV</span>';
+  };
+  const esc = s => s.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+  const cpRows = new Function("hundoLabels", "esc", dash.slice(start, end) + "\nreturn cpRows;")(hundo, esc);
 
-  assert.equal(cpRowsFn(hundo, esc, null), "");
-  assert.equal(cpRowsFn(hundo, esc, {}), "");
-  assert.equal(cpRowsFn(hundo, esc, { featured: null }), "");
-  assert.equal(cpRowsFn(hundo, esc, { featured: "not-an-array" }), "");
-  assert.equal(cpRowsFn(hundo, esc, { featured: [null, {}, { name: "Pikachu" }, { name: "Pikachu" }] }), '<div class="cp-rows"><div class="cp-row"><b>Catch CP</b><span>Pikachu</span></div></div>');
+  for (const ev of [undefined, null, {}, ...[null, "invalid", {}, 42, true].map(featured => ({ featured }))]) {
+    assert.equal(cpRows(ev), "", "absent or non-array roster is empty");
+  }
+  assert.deepEqual(calls, [], "empty rosters never call renderer");
+  assert.equal(cpRows({ featured: [null, undefined, {}, 42, "bad", { name: null }, { name: 7 }, ,
+    { name: "Pikachu" }, { name: "PIKACHU" }] }),
+    '<div class="cp-rows"><div class="cp-row"><b>Catch CP</b><span>123 CP · 100% IV</span></div></div>');
+  assert.deepEqual(calls, ["Pikachu"], "sparse members are skipped and names deduplicate ignoring case");
+
+  calls.length = 0;
+  const html = cpRows({ featured: [{ name: "<Pikachu>&" }, { name: "<PIKACHU>&" },
+    { name: "Bulbasaur" }, { name: "Charmander" }, { name: "Squirtle" }] });
+  assert.deepEqual(calls, ["<Pikachu>&", "Bulbasaur", "Charmander", "Squirtle"], "roster order is preserved");
+  assert.deepEqual([...html.matchAll(/<b>(.*?)<\/b>/g)].map(m => m[1]),
+    ["&lt;Pikachu&gt;&amp;", "Bulbasaur", "Charmander"], "only the first three escaped names render");
+  assert.equal((html.match(/100% IV/g) || []).length, 3, "each visible row retains the CP renderer output");
 });
