@@ -26,7 +26,7 @@ function citations(claim){
        typeof ref.url!=='string')
       throw new TypeError('Unrecognized verified facet provenance');
     const u=new URL(ref.url);
-    if(u.protocol!=='https:'||u.username||u.password||u.search||u.hash||
+    if(u.protocol!=='https:'||u.username||u.password||u.search||u.hash||u.port||
        !PROVIDERS[ref.sourceId].includes(u.hostname.toLowerCase()))
       throw new TypeError('Unsafe verified facet citation');
     return {sourceId:ref.sourceId,url:u.toString(),
@@ -36,7 +36,7 @@ function citations(claim){
 function checkedClaim(claim){
   if(!plain(claim)||!ID.test(claim.id||'')||
      !['free','ticket','unknown','all'].includes(claim.access)||
-     typeof claim.status!=='string')
+     claim.status!=='source-claimed')
     throw new TypeError('Invalid verified facet claim identity');
   return citations(claim);
 }
@@ -120,6 +120,9 @@ export function withVerifiedFacetPanels(model,feed){
     throw new TypeError('Normalized canonical event model required');
   const section=verifiedFacetPanelsForEvent(feed,model.eventId);
   const next=copy(model);
+  // A previous verified section is never retained when the current complete
+  // feed no longer contains this exact canonical event.
+  delete next.verifiedFacets;
   if(section)next.verifiedFacets=section;
   return next;
 }
