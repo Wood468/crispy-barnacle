@@ -176,11 +176,30 @@
       return false;
     return true;
   }
+  /* Retired dated passes are historical audit records, not active Store inventory.
+     Only explicit expiration or a past month/year in a pass title is decisive;
+     undated offers still require a live source audit before claiming availability. */
+  function retiredPass(p, now) {
+    var label = String((p && (p.label || p.product)) || '');
+    if (!/pass|ticket/i.test(label)) return false;
+    var today = new Date(now == null ? Date.now() : now);
+    if (!Number.isFinite(today.getTime())) return false;
+    var expiry = p && (p.availableUntil || p.endDate || p.expiresAt);
+    if (typeof expiry === 'string' && /^\\d{4}-\\d{2}-\\d{2}(?:T|$)/.test(expiry)) {
+      var deadline = Date.parse(expiry.slice(0, 10) + 'T23:59:59Z');
+      if (Number.isFinite(deadline) && deadline < today.getTime()) return true;
+    }
+    var months = 'january february march april may june july august september october november december'.split(' ');
+    var match = label.toLowerCase().match(/\\b(january|february|march|april|may|june|july|august|september|october|november|december)\\s+(20\\d{2})\\b/);
+    if (!match) return false;
+    var month = months.indexOf(match[1]), year = Number(match[2]);
+    return year < today.getUTCFullYear() || (year === today.getUTCFullYear() && month < today.getUTCMonth());
+  }
   function catalogue(prices, obs, now, officialOffers) {
     var latest = {}, all = {}, auByLabel = {};
     obs = Array.isArray(obs) ? obs : [];
     (prices || []).forEach(function (p) {
-      if (!sourcedAuWebOffer(p)) return;
+      if (!sourcedAuWebOffer(p) || retiredPass(p, now)) return;
       if (!latest[p.product] || String(p.observed) > String(latest[p.product].observed)) latest[p.product] = p;
     });
     // The SKU, not the display label, is an Australian Store offer's identity.
@@ -199,7 +218,7 @@
       (auByLabel[labelKey] || (auByLabel[labelKey] = [])).push(id);
     });
     obs.forEach(function (o, index) {
-      if (!usable(o) || !o.product) return;
+      if (!usable(o) || !o.product || retiredPass(o, now)) return;
       var key = norm(o.product), owners = auByLabel[key] || [];
       if (owners.length === 1 && sameStoreIdentity(all[owners[0]], o)) return;
       /* Ambiguous boxes, promotions and source-SKU observations are retained
@@ -223,7 +242,7 @@
         || typeof offer.label !== 'string' || !offer.label.trim()
         || typeof offer.sourceUrl !== 'string'
         || !/^https:\/\/pokemongo\.com\/news\/[a-z0-9-]+$/.test(offer.sourceUrl)
-        || !Array.isArray(offer.contents)) return;
+        || !Array.isArray(offer.contents) || retiredPass(offer, now)) return;
       var key = 'source-only:' + offer.id;
       if (all[key]) return;
       all[key] = {product:offer.id,label:offer.label,group:offer.group || 'Passes & tickets',
@@ -289,5 +308,5 @@
     return result;
   }
   function fmt(v, cur) { var sym = cur === 'IDR' ? 'Rp ' : cur === 'INR' ? '₹' : cur === 'AUD' ? 'A$' : ''; return sym + Number(v).toLocaleString('en-AU', cur === 'AUD' ? { minimumFractionDigits: 2, maximumFractionDigits: 2 } : { maximumFractionDigits: 0 }); }
-  return { kindOf: kindOf, exact: exact, estimate: estimate, reference: reference, cheapest: cheapest, review: review, catalogue: catalogue, coverage: coverage, channels: channels, confidence: confidence, fmt: fmt, ageDays: ageDays, REGIONS: REGIONS, CHANNELS: CHANNELS };
+  return { kindOf: kindOf, retiredPass: retiredPass, exact: exact, estimate: estimate, reference: reference, cheapest: cheapest, review: review, catalogue: catalogue, coverage: coverage, channels: channels, confidence: confidence, fmt: fmt, ageDays: ageDays, REGIONS: REGIONS, CHANNELS: CHANNELS };
 });
