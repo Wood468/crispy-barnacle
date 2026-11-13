@@ -83,6 +83,61 @@ with sync_playwright() as p:
             page.screenshot(path=f'{SHOTS}/polish-{width}.png')
         page.context.close()
 
+    # The weekly infographic is an aria-modal dialog: keyboard Tab must not escape
+    # to the underlying app. Exercise both single-control and linked versions.
+    for width in (320, 390, 430):
+        ctx = ctx_for(browser, width)
+        weekly_item = {'kind': 'week', 'image': '/infographics/test-week.png',
+                       'title': 'Weekly source-backed preview', 'publishedAt': '2026-11-09T00:00:00Z'}
+        if width != 320:
+            weekly_item['post'] = 'https://leekduck.com/events/'
+        fixture_json = json.dumps({'items': [weekly_item]})
+        ctx.route('**/weekly.json*', lambda r: r.fulfill(
+            content_type='application/json', body=fixture_json))
+        ctx.route('**/infographics/test-week.png', lambda r: r.fulfill(
+            content_type='image/png', body=bytes.fromhex(
+                '89504e470d0a1a0a0000000d49484452000000010000000108060000001f15c489'
+                '0000000d49444154789c636460f87f00020801028011fa650000000049454e44ae426082')))
+        page = open_page(ctx)
+        errors = []
+        page.on('pageerror', lambda e: errors.append(str(e)))
+        opener = page.locator('#weekly .weekly-card').first
+        opener.wait_for()
+        opener.focus()
+        page.keyboard.press('Enter')
+        dialog = page.locator('#weekly-box[role="dialog"][aria-modal="true"]')
+        dialog.wait_for()
+        close_button = dialog.locator('.weekly-x')
+        check(f'{width}: weekly dialog opens focused on Close', close_button.evaluate(
+            '(el) => document.activeElement === el'))
+        link = dialog.locator('.weekly-bar a[href]')
+        if width == 320:
+            check('320: no optional link when source post absent', link.count() == 0)
+            page.keyboard.press('Tab')
+            check('320: Tab wraps onto the only dialog control', close_button.evaluate(
+                '(el) => document.activeElement === el'))
+            page.keyboard.press('Shift+Tab')
+            check('320: reverse Tab also stays inside dialog', close_button.evaluate(
+                '(el) => document.activeElement === el'))
+        else:
+            check(f'{width}: original post link available', link.count() == 1)
+            page.keyboard.press('Tab')
+            check(f'{width}: Tab wraps Close to first dialog link', link.evaluate(
+                '(el) => document.activeElement === el'))
+            page.keyboard.press('Shift+Tab')
+            check(f'{width}: Shift+Tab wraps link to Close', close_button.evaluate(
+                '(el) => document.activeElement === el'))
+        check(f'{width}: weekly modal has no horizontal overflow',
+              page.evaluate('document.documentElement.scrollWidth <= innerWidth'))
+        if SHOTS:
+            page.screenshot(path=f'{SHOTS}/weekly-modal-keyboard-{width}.png')
+        page.keyboard.press('Escape')
+        check(f'{width}: Escape closes infographic dialog', dialog.count() == 0)
+        check(f'{width}: Escape returns focus to initiating card', opener.evaluate(
+            '(el) => document.activeElement === el'))
+        check(f'{width}: weekly modal causes no browser errors', not errors, errors)
+        ctx.close()
+
     # A weekly picture published last week is labelled as such, not presented as this week's.
     ctx = ctx_for(browser, 390)
     ctx.route('**/weekly.json*', lambda r: r.fulfill(content_type='application/json', body=json.dumps({'items': [
