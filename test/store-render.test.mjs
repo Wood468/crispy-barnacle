@@ -75,8 +75,13 @@ test('owner Store view renders verified Indonesian prices and regional-only rows
   for(const card of novCards){
     assert.match(card,/regional availability not verified/);
     assert.match(card,/Not observed/);
-    assert.doesNotMatch(card,/sp-local-price/,
-      'official announcement alone must never invent an Australian, Indian or Indonesian price');
+    assert.doesNotMatch(card,/sp-regional-value sp-ver/,
+      'a publisher announcement must not be mistaken for an observed regional checkout quote');
+    if (card.includes('sp-local-price')) {
+      assert.match(card,/sp-regional-value sp-est/);
+      assert.match(card,/confidence · not a checkout price/,
+        'a supported comparable estimate must be visibly modelled, not a live price');
+    }
   }
 
   assert.ok(el.innerHTML.includes('sp-offer-contents'), 'verified official offer breakdown can be expanded');
