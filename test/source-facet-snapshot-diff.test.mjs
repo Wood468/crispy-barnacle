@@ -52,3 +52,35 @@ test('bad snapshots and duplicate IDs cannot become apparently safe changes',()=
   assert.throws(()=>compare(previous,{...next,benefits:[claim('a','1'),claim('a','2')]}),/Unique valid/);
   assert.throws(()=>compare(previous,{...next,featuredMoves:null}),/Facet arrays/);
 });
+
+test('partial provider loss cannot silently remove half the last-known-good claims',()=>{
+  const old=mk('verified',[
+    claim('a','One'),claim('b','Two'),claim('c','Three'),claim('d','Four')
+  ]);
+  const partial=mk('review-candidate',[claim('a','One'),claim('b','Two')]);
+  const result=compare(old,partial);
+  assert.deepEqual(result.changes.benefits.removed,['c','d']);
+  assert.equal(result.requiresRemovalReview,true);
+  assert.deepEqual(result.massRemovalTypes,['benefits']);
+  assert.equal(result.publication,'audit-only');
+});
+
+test('total source outage must flag all proposed removals for independent review',()=>{
+  const old=mk('verified',[claim('a','One'),claim('b','Two')]);
+  const result=compare(old,mk('review-candidate'));
+  assert.equal(result.requiresRemovalReview,true);
+  assert.deepEqual(result.massRemovalTypes,['benefits']);
+  assert.deepEqual(result.changes.benefits.removed,['a','b']);
+  assert.ok(!Object.hasOwn(result,'verifiedAt'));
+});
+
+test('minor and first-time changes do not imply mass deletion',()=>{
+  const old=mk('verified',[
+    claim('a','One'),claim('b','Two'),claim('c','Three')
+  ]);
+  const next=mk('review-candidate',[claim('a','One'),claim('b','Two')]);
+  const result=compare(old,next);
+  assert.equal(result.requiresRemovalReview,false);
+  assert.deepEqual(result.massRemovalTypes,[]);
+  assert.equal(compare(null,next).requiresRemovalReview,false);
+});
