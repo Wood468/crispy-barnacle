@@ -136,6 +136,29 @@ export function storeLog(state) {
   return { watchStart: state.watchStart || null, updated: state.updated, items: items.filter(i => isTicketOrPass(i.name) || /box|bundle/i.test(i.name)) };
 }
 
+/* Public, price-free storefront evidence for the owner catalogue. Always
+   distinguish the current snapshot from retired listings; no owner checkout
+   prices, tokens, receipts or personalised account details may enter here. */
+export function storeCurrentSnapshot(state) {
+  const safeImage = url => typeof url === "string" &&
+    /^https:\/\/assets\.pgo\.webstore\.nianticlabs\.com\/pgo\/image_variants\/v1\/sku_assets\/[a-z0-9_.%()\-]+\/w(?:64|128|256|512)\.webp$/i.test(url)
+    ? url : null;
+  const clean = (key, entry, retired) => ({
+    name: String(entry.name || "").slice(0, 160),
+    href: /^\/purchase\/item\/[a-z0-9_.-]+$/i.test(key) ? key : null,
+    image: safeImage((entry.images || [])[0]),
+    lastSeen: entry.lastSeen || null,
+    endsAt: entry.endsAt || null,
+    goneAt: retired ? entry.goneAt || null : null
+  });
+  return {
+    version: 1,
+    updated: state.updated || null,
+    items: Object.entries(state.items || {}).map(([k,v]) => clean(k,v,false)),
+    gone: Object.entries(state.gone || {}).map(([k,v]) => clean(k,v,true))
+  };
+}
+
 async function tg(token, method, body) {
   const r = await fetch("https://api.telegram.org/bot" + token + "/" + method, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(body) });
   return r.ok;
@@ -194,6 +217,8 @@ async function main() {
   if (process.env.DRY_RUN !== "true") {
     await writeFile(STATE, JSON.stringify(d.state, null, 1) + "\n");
     await writeFile(process.env.STORE_LOG || "public/store-log.json", JSON.stringify(storeLog(d.state), null, 1) + "\n");
+    await writeFile(process.env.STORE_CURRENT_SNAPSHOT || "public/store-current-snapshot.json",
+      JSON.stringify(storeCurrentSnapshot(d.state), null, 1) + "\n");
   }
 }
 if (import.meta.url === "file://" + process.argv[1]) main().catch(e => { console.error(e.message); process.exit(1); });

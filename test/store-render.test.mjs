@@ -65,6 +65,10 @@ test('owner Store view renders verified Indonesian prices and regional-only rows
   assert.ok(!el.innerHTML.includes('Indonesia vs Australia'),
     'old legacy IDR summary must not repeat the regional price observations');
   assert.ok(el.innerHTML.includes('Not observed'), 'missing source prices should not look like zero or a calibration failure');
+  assert.match(el.innerHTML, /Recently listed offers appear in the main list; stable items with historical prices may also appear clearly marked unconfirmed\./,
+    'Store copy must not imply that every stable historical item is currently listed');
+  assert.doesNotMatch(el.innerHTML, /Only offers seen in the recent official Web Store snapshot appear in the main list/,
+    'avoid falsely claiming the main list contains only live observed SKUs');
   assert.ok(el.innerHTML.includes('data-sp-search'), 'search appears ahead of the product cards');
   assert.ok(el.innerHTML.includes('data-sp-coverage'), 'owner can inspect source completeness without another pricing panel');
   assert.match(el.innerHTML,/Official listings awaiting regional prices: 3/,
@@ -75,8 +79,13 @@ test('owner Store view renders verified Indonesian prices and regional-only rows
   for(const card of novCards){
     assert.match(card,/regional availability not verified/);
     assert.match(card,/Not observed/);
-    assert.doesNotMatch(card,/sp-local-price/,
-      'official announcement alone must never invent an Australian, Indian or Indonesian price');
+    assert.doesNotMatch(card,/sp-regional-value sp-ver/,
+      'a publisher announcement must not be mistaken for an observed regional checkout quote');
+    if (card.includes('sp-local-price')) {
+      assert.match(card,/sp-regional-value sp-est/);
+      assert.match(card,/confidence · not a checkout price/,
+        'a supported comparable estimate must be visibly modelled, not a live price');
+    }
   }
 
   assert.ok(el.innerHTML.includes('sp-offer-contents'), 'verified official offer breakdown can be expanded');
@@ -365,4 +374,42 @@ test('Store product search accepts unaccented and composed/decomposed Pokémon n
     'clearing the query restores the original open category state');
   assert.equal(groups.find(g=>g.id==='items').open,false,
     'clearing search keeps secondary categories collapsed');
+});
+
+
+test('Store counters separate fresh listings from visible unconfirmed and archived historical offers', async () => {
+  const R = createRequire(import.meta.url)('../public/regional-prices.js');
+  const source = fs.readFileSync(new URL('../public/store.js', import.meta.url), 'utf8');
+  const now = new Date().toISOString();
+  const prices = [
+    {product:'store-current-pass',label:'Current Fixture Pass',group:'Tickets',currency:'AUD',amount:8.99,region:'AU',verified:true,observed:'2026-11-13'},
+    {product:'store-storage-upgrade',label:'Item Bag Upgrade',group:'Storage',currency:'AUD',amount:3.99,region:'AU',verified:true,observed:'2026-11-13'},
+    {product:'store-old-pass',label:'Previous Fixture Pass',group:'Tickets',currency:'AUD',amount:6.99,region:'AU',verified:true,observed:'2026-10-12'}
+  ];
+  const snapshot = {version:1,updated:now,items:[{name:'Current Fixture Pass',lastSeen:now}],
+    gone:[{name:'Previous Fixture Pass',lastSeen:'2026-10-12',goneAt:now}]};
+  assert.equal(R.catalogue(prices, [], undefined, []).length, 3, 'synthetic AU Store rows must satisfy the real source-identity gate');
+  const data = {owner:true,prices,regional:[],storeSnapshot:snapshot};
+  const root = {innerHTML:'',addEventListener(){},querySelector:()=>null};
+  const host = {parentNode:{insertBefore(node){Object.assign(root,node);}}};
+  const doc = {readyState:'complete',getElementById:id=>id==='evsource'?host:null,
+    createElement:()=>root,addEventListener(){}};
+  const win = {GORegionalPrices:R,
+    GOLIB:{esc:s=>String(s),loadPrices:()=>Promise.resolve(data),
+      priceView:()=>({sub:'',save:'',main:''})},document:doc,
+    localStorage:{getItem:()=>null,setItem(){}},console};
+  win.window=win;
+  vm.runInNewContext(source,win);
+  await new Promise(resolve=>setTimeout(resolve,30));
+  assert.match(root.innerHTML,/1 recently listed · 1 visible unconfirmed · 1 previous\/unconfirmed/,
+    'summary and live-region must count only source-listed offers as recently listed');
+  assert.equal((root.innerHTML.match(/1 recently listed · 1 visible unconfirmed · 1 previous\/unconfirmed/g)||[]).length,2,
+    'summary and accessible results must agree');
+  assert.match(root.innerHTML,/data-sp-listing="listed"/);
+  assert.match(root.innerHTML,/data-sp-listing="unconfirmed"/);
+  assert.match(root.innerHTML,/data-sp-listing="archived"/);
+  assert.match(root.innerHTML,/Item Bag Upgrade/);
+  assert.match(root.innerHTML,/A\$3\.99/,'historical storage price remains visible');
+  assert.match(root.innerHTML,/data-sp-group="earlier"/,'retired pass remains in archive');
+  assert.match(root.innerHTML,/data-sp-search/,'search remains available for all product cards');
 });

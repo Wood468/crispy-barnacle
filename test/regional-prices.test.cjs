@@ -411,8 +411,14 @@ test('official current November pass listings remain unpriced and preserve exact
     const item=sourceOnly.find(p=>p.label===label);
     assert.ok(item,'missing official listing: '+label);
     assert.equal(item.aud,null,'US public product descriptions are not an AU checkout price');
-    assert.equal(item.indonesia,null);
-    assert.equal(item.india,null);
+    if (label === 'GO Pass Deluxe: November + 10 Ranks') {
+      assert.equal(item.indonesia,null,'unobserved rank tier must stay unknown');
+    } else {
+      assert.equal(item.indonesia?.basis,'estimate','matching tier can show low-confidence model');
+      assert.equal(item.indonesia?.confidence,'low');
+      assert.ok(item.indonesia.min < item.indonesia.max);
+    }
+    assert.equal(item.india,null,'unrelated in-app event pass cannot price the monthly tier');
     assert.equal(item.contentsSource,'https://pokemongo.com/news/go-pass-november-2026');
     assert.equal(item.contents.find(x=>x.item==='Bonus Ranks')?.quantity||0,ranks);
     assert.equal(item.contents.find(x=>x.item==='Premium Battle Pass').quantity,passes);
@@ -420,7 +426,8 @@ test('official current November pass listings remain unpriced and preserve exact
   const aggregate=R.coverage(rows,NOW);
   assert.equal(aggregate.sourceOnly.length,3);
   assert.ok(aggregate.missingAu.includes('GO Pass Deluxe: November Ultra Box'));
-  assert.ok(aggregate.missingId.includes('GO Pass Deluxe: November Ultra Box'));
+  assert.ok(aggregate.unverifiedId.includes('GO Pass Deluxe: November Ultra Box'),
+    'only a labelled estimate exists, not a checkout quote');
   assert.ok(aggregate.missingIn.includes('GO Pass Deluxe: November Ultra Box'));
 
   const regional=[id('GO Pass Deluxe: November','monthly-pass',41000,{sourceSku:'regional-unmatched',id:'regional-november'})];

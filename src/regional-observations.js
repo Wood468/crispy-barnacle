@@ -24,5 +24,20 @@ export const OBSERVATIONS = [
     ["Egg Incubator x3", "item", 15000], ["Premium Battle Pass x3", "item", 15000], ["Max Particle Pack x6", "item", 41000], ["Max Mushroom x3", "item", 50000],
     ["Silver Pinap Berries x10", "item", 10000], ["Golden Razz Berries x15", "item", 10000], ["Max Potions x10", "item", 10000], ["Max Revive x15", "item", 10000]]
     .map(([product, kind, amount]) => ({ ...ID, status: "recorded", source: "Indonesian Web Store (PR #374 baseline; original image not retained)", id: "id-" + product.toLowerCase().replace(/[^a-z0-9]+/g, "-"), product, kind, amount })),
-  { id: "in-itw-deluxe", region: "IN", channel: "in-app", currency: "INR", observed: "2026-11-09", source: "India in-app shop (PR #374 baseline; original image not retained)", status: "recorded", product: "GO Pass Deluxe: Into the Wild", kind: "event-pass", amount: 439 }
+  { id: "in-itw-deluxe", region: "IN", channel: "in-app", currency: "INR", observed: "2026-11-09", source: "India in-app shop (PR #374 baseline; original image not retained)", status: "recorded", product: "GO Pass Deluxe: Into the Wild", kind: "event-pass", amount: 439 },
+  /* 9 Nov in-app shop values transcribed in the earlier Store review chat.
+     The coin bonus sizes differ from the Australian WEB packs, so these
+     records remain distinct and MUST NOT authorize cross-region SKU joins. */
+  ...[[100,5,29],[550,30,149],[1200,60,289],[2500,120,589],[5200,240,1169],[14500,600,2899]]
+    .map(([base,bonus,amount]) => ({
+      id: "in-coins-" + base + "-bonus-" + bonus,
+      region: "IN", channel: "in-app", currency: "INR",
+      observed: "2026-11-09",
+      source: "India in-app shop (9 Nov owner screenshot transcription; original image not retained)",
+      status: "recorded", product: base.toLocaleString("en-US") + " PokéCoins + " + bonus + " in-app bonus",
+      kind: "coins", coins: base + bonus, amount
+    })),
+  { id: "in-itw-ticket", region: "IN", channel: "in-app", currency: "INR",
+    observed: "2026-11-09", source: "India in-app shop (9 Nov owner screenshot transcription; original image not retained)",
+    status: "recorded", product: "Into the Wild ticket", kind: "research-ticket", amount: 349 }
 ];
