@@ -43,7 +43,10 @@ test('owner Store view renders verified Indonesian prices and regional-only rows
     id: 'id-raid-day-test', product: 'Raid Day Box', kind: 'bundle', region: 'ID', channel: 'web',
     currency: 'IDR', amount: 50000, observed: '2026-11-09', source: 'fixture', status: 'verified'
   }]), owner: true };
-  const win = { GORegionalPrices: R, GOLIB: { esc: s => String(s).replace(/[&<>"']/g, c => '&#' + c.charCodeAt(0) + ';'), loadPrices: () => Promise.resolve(prices), priceView: () => ({ sub: '', save: '', main: '' }) }, GODASH: {} };
+  const win = { GORegionalPrices: R,
+    GOStoreOfferIdentities: createRequire(import.meta.url)('../public/store-offer-identities.js'),
+    GOLIB: { esc: s => String(s).replace(/[&<>"']/g, c => '&#' + c.charCodeAt(0) + ';'),
+      loadPrices: () => Promise.resolve(prices), priceView: () => ({ sub: '', save: '', main: '' }) }, GODASH: {} };
   const doc = { readyState: 'complete', getElementById: id => id === 'evsource' ? host : id === 'storep-host' ? null : null,
     createElement: tag => tag === 'span' ? { className: '', textContent: '', setAttribute() {} } : el, addEventListener() {} };
   Object.assign(win, { document: doc, localStorage: { getItem: () => null, setItem() {} }, console }); win.window = win;
@@ -59,6 +62,18 @@ test('owner Store view renders verified Indonesian prices and regional-only rows
   assert.ok(el.innerHTML.includes('Not observed'), 'missing source prices should not look like zero or a calibration failure');
   assert.ok(el.innerHTML.includes('data-sp-search'), 'search appears ahead of the product cards');
   assert.ok(el.innerHTML.includes('data-sp-coverage'), 'owner can inspect source completeness without another pricing panel');
+  assert.match(el.innerHTML,/Official listings awaiting regional prices: 3/,
+    'source-only November SKUs are counted separately from checkout observations');
+  const novCards=(el.innerHTML.match(/<article class="sp-product"[\s\S]*?<\/article>/g)||[])
+    .filter(card=>card.includes('GO Pass Deluxe: November'));
+  assert.equal(novCards.length,3,'official November passes are shown without hiding historical AU records');
+  for(const card of novCards){
+    assert.match(card,/regional availability not verified/);
+    assert.match(card,/Not observed/);
+    assert.doesNotMatch(card,/sp-local-price/,
+      'official announcement alone must never invent an Australian, Indian or Indonesian price');
+  }
+
   assert.ok(el.innerHTML.includes('sp-offer-contents'), 'verified official offer breakdown can be expanded');
   assert.ok(el.innerHTML.includes('Ultra Ball ×20') && el.innerHTML.includes('Premium Battle Pass ×5'),
     'published item quantities appear without replacing regional prices');
