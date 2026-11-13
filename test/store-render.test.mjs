@@ -117,10 +117,13 @@ test('owner Store view renders verified Indonesian prices and regional-only rows
   const mobileCss = storeCss.slice(storeCss.lastIndexOf('/* Mobile Store QA: three tall'));
   assert.match(mobileCss, /@media\(max-width:659px\)/,
     'compact Store rows must apply at phone widths');
-  assert.match(mobileCss, /\.storep-regional \.sp-market-grid\{display:grid;grid-template-columns:minmax\(0,1fr\);gap:0\}/,
-    'phone catalogue must use stacked independent country rows, not equal-height three-column tiles');
-  assert.match(mobileCss, /\.sp-market\+\.sp-market\{border-top:/,
-    'country rows must have a visible separator without losing source-backed missing prices');
+  const ownerColumns = storeCss.slice(storeCss.lastIndexOf('/* Sprint 2 owner-approved AUD-first'));
+  assert.match(ownerColumns, /grid-template-columns:repeat\(3,minmax\(0,1fr\)\)/,
+    'phone layout shows three aligned regional columns');
+  assert.match(ownerColumns, /\.sp-market\+\.sp-market\{border-top:/,
+    'country columns retain boundaries');
+  for (const flag of ['🇦🇺', '🇮🇩', '🇮🇳']) assert.ok(el.innerHTML.includes(flag));
+
 
   assert.ok(el.innerHTML.includes('Advanced comparison'), 'cash/coin optimisation is disclosed only when requested');
   assert.ok(el.innerHTML.includes('Verified regional purchase options'));
