@@ -22,7 +22,7 @@ function worldLeekDuckKey(value){
     const u=new URL(value);
     if(u.protocol!=='https:'||u.username||u.password||u.search||u.hash||u.port||
        !['leekduck.com','www.leekduck.com'].includes(u.hostname.toLowerCase())||
-       !/^\\/events\\/[a-z0-9_-]+\\/?$/i.test(u.pathname))return null;
+       !/^\/events\/[a-z0-9_-]+\/?$/i.test(u.pathname))return null;
     return 'leekduck.com'+u.pathname.replace(/\\/$/,'');
   }catch{return null}
 }
