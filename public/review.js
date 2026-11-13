@@ -188,8 +188,10 @@
   }
   function bossFormCompatible(row, mode) {
     var kind = row[3];
-    if (mode === 'mega') return kind === 'mega';
-    if (mode === 'primal') return kind === 'primal';
+    // forms.json classifies Primal Kyogre/Groudon in its broader 'mega'
+    // family. The exact formId, not category alone, separates these modes.
+    if (mode === 'mega') return kind === 'mega' && row[1] !== 'primal';
+    if (mode === 'primal') return kind === 'mega' && row[1] === 'primal';
     if (mode === 'gigantamax') return kind === 'gmax';
     return kind !== 'mega' && kind !== 'primal' && kind !== 'gmax';
   }
