@@ -94,6 +94,10 @@
         if (!tier || !Array.isArray(tier.names)) return;
         var s = tier.day ? tier.day + 'T00:00' : r.s;
         var e = tier.day && nextDay(tier.day) ? nextDay(tier.day) + 'T00:00' : r.e;
+        /* A daily boss ends no later than its parent event; do not display
+           a 5-star Max roster after the event's published closing hour. */
+        if (tier.day && Number.isFinite(dateMs(r.s)) && dateMs(r.s) > dateMs(s)) s = r.s;
+        if (tier.day && Number.isFinite(dateMs(r.e)) && dateMs(r.e) < dateMs(e)) e = r.e;
         tier.names.forEach(function (name) { add(name, 'dynamax', s, e); });
       });
     });
