@@ -98,8 +98,8 @@
       + '<small>' + esc(state + ' · ' + when(p.observed)) + '</small></span>';
   }
   /* A source-verified channel ledger for EVERY known regional product.
-     Only claim a cheapest option when two or more channels sell that exact
-     named product in the same currency; one recorded channel is not a win. */
+     Only claim a cheapest option when two or more channels share an explicit
+     source SKU, exact package/bonus identity and currency; one channel is not a win. */
   function verifiedOptionsHtml(obs) {
     var R = window.GORegionalPrices, rows = Array.isArray(obs) ? obs : [];
     var observed = rows.filter(function (o) {
@@ -115,8 +115,11 @@
     observed.forEach(function (o) {
       var sku = typeof o.sourceSku === 'string' && /^[a-z0-9_.:-]{2,100}$/i.test(o.sourceSku)
         ? o.sourceSku.toLowerCase() : '';
-      var key = o.region + '|' + (sku ? 'sku:' + sku
-        : 'obs:' + String(o.id || (o.channel + '|' + o.currency + '|' + o.product)));
+      var labelKey = String(o.product).trim().toLowerCase().replace(/\s+/g, ' ');
+      var key = o.region + '|' + (sku
+        ? 'sku:' + sku + '|product:' + labelKey + '|promo:' + !!o.oneTime
+        : 'obs:' + String(o.id || 'unidentified') + '|product:' + labelKey
+          + '|channel:' + o.channel + '|currency:' + o.currency);
       if (!groups.has(key)) groups.set(key, []);
       groups.get(key).push(o);
     });
