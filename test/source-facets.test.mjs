@@ -198,3 +198,43 @@ test('Generic bonus headings with no published audience do not grant free access
   const x=extractEventSourceFacets(html,{sourceUrl:'https://leekduck.com/events/synthetic-unannounced/'});
   assert.deepEqual(x.benefits,[]);
 });
+
+test('ticketed replacement caps retain the exact source excerpt and do not apply to trading',()=>{
+  const html='<main><h2>Additional Ticket Holder Bonuses</h2>'+
+    '<p>The ticketed Raid Pass and Max Particle limits replace the free limits.</p>'+
+    '<img alt="Up to six free Raid Passes each day">'+
+    '<img alt="Daily Max Particle limit increased to 3,200">'+
+    '<h3>Trading Bonuses</h3>'+
+    '<p>Ticket holders have more trades between 12:00 a.m. and 11:59 p.m.</p>'+
+    '<img alt="Up to six Special Trades per day"></main>';
+  const result=extractEventSourceFacets(html,{sourceUrl:'https://leekduck.com/events/synthetic-global/'});
+  assert.equal(result.benefits.length,3);
+  const passes=result.benefits.find(x=>x.kind==='raid-passes');
+  const particles=result.benefits.find(x=>x.kind==='max-particles');
+  const trade=result.benefits.find(x=>x.kind==='trading');
+  assert.equal(passes.replacesFreeLimit,true);
+  assert.equal(particles.replacesFreeLimit,true);
+  assert.match(passes.replacementEvidence,/limits replace the free limits/);
+  assert.match(particles.replacementEvidence,/limits replace the free limits/);
+  assert.equal(trade.replacementEvidence,null);
+  assert.equal(trade.replacesFreeLimit,false);
+});
+
+test('ticket cap amounts alone are not evidence that they replace free limits',()=>{
+  const html='<main><h2>Additional Ticket Holder Bonuses</h2>'+
+    '<img alt="Up to six free Raid Passes per day from Gyms"></main>';
+  const result=extractEventSourceFacets(html,{sourceUrl:'https://leekduck.com/events/synthetic/'});
+  assert.equal(result.benefits.length,1);
+  assert.equal(result.benefits[0].replacesFreeLimit,false);
+  assert.equal(result.benefits[0].replacementEvidence,null);
+});
+
+test('speculative replacement prose cannot establish a paid-ticket override',()=>{
+  const html='<main><h2>Additional Ticket Holder Bonuses</h2>'+
+    '<p>Ticketed Raid Pass limits replace the free limits; not yet confirmed.</p>'+
+    '<img alt="Up to six free Raid Passes per day from Gyms"></main>';
+  const result=extractEventSourceFacets(html,{sourceUrl:'https://leekduck.com/events/synthetic/'});
+  assert.equal(result.benefits.length,1);
+  assert.equal(result.benefits[0].replacesFreeLimit,false);
+  assert.equal(result.benefits[0].replacementEvidence,null);
+});
