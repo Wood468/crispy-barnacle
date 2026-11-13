@@ -7,6 +7,7 @@
 })(typeof window !== 'undefined' ? window : null, function () {
   'use strict';
   var ENDPOINT = 'https://open.er-api.com/v6/latest/AUD';
+  var CACHE_KEY = 'gofn-store-fx-reference-v1';
   var DAY = 86400000;
   function observedDate(value) {
     var t = typeof value === 'number' ? value * 1000 : Date.parse(value);
@@ -25,6 +26,7 @@
   }
   function fromApi(body, now) {
     if (!body || body.result !== 'success' || body.base_code !== 'AUD'
+      || !Number.isFinite(body.time_last_update_unix)
       || !recent(body.time_last_update_unix, now) || !body.rates) return null;
     var out = {}, date = observedDate(body.time_last_update_unix);
     ['IDR', 'INR'].forEach(function (currency) {
@@ -53,18 +55,57 @@
     return { text: maximum != null ? '≈ ' + money(minimum) + '–' + money(maximum)
         : '≈ ' + money(minimum), observed: quote.observed, source: quote.source };
   }
-  function retrieve(fetchImpl, ownerFx, now) {
-    var fallback = owner(ownerFx, now);
+  /* Only reference exchange rates and their provider timestamp are cached.
+     No purchases, regional prices, player details or account information. */
+  function stored(now) {
+    try {
+      if (typeof localStorage === 'undefined') return null;
+      var raw = localStorage.getItem(CACHE_KEY);
+      return raw ? fromApi(JSON.parse(raw), now) : null;
+    } catch (_) { return null; }
+  }
+  function remember(body, now) {
+    if (!fromApi(body, now)) return;
+    try {
+      if (typeof localStorage === 'undefined') return;
+      localStorage.setItem(CACHE_KEY, JSON.stringify({
+        result: 'success', base_code: 'AUD',
+        time_last_update_unix: body.time_last_update_unix,
+        rates: { IDR: Number(body.rates.IDR), INR: Number(body.rates.INR) }
+      }));
+    } catch (_) { /* Storage disabled, full or private: do not affect display. */ }
+  }
+  function fallbackQuotes(ownerFx, now) {
+    var result = owner(ownerFx, now), saved = stored(now);
+    if (saved) ['IDR', 'INR'].forEach(function (currency) {
+      /* Prefer the most recent source, not a fabricated blended conversion. */
+      if (!result[currency] || Date.parse(saved[currency].observed) >= Date.parse(result[currency].observed))
+        result[currency] = saved[currency];
+    });
+    return result;
+  }
+  /* Never let a blocked third-party FX request hold the AUD references
+     indefinitely. A timeout retains only independently dated, fresh proof. */
+  function retrieve(fetchImpl, ownerFx, now, maxWaitMs) {
+    var fallback = fallbackQuotes(ownerFx, now);
     if (typeof fetchImpl !== 'function') return Promise.resolve(fallback);
-    return Promise.resolve().then(function () {
+    var wait = Number.isFinite(maxWaitMs) && maxWaitMs >= 0
+      ? Math.min(3000, maxWaitMs) : 3000;
+    var timer;
+    var live = Promise.resolve().then(function () {
       return fetchImpl(ENDPOINT, { mode: 'cors', credentials: 'omit', cache: 'force-cache' });
     }).then(function (response) {
       if (!response || !response.ok) throw new Error('FX provider unavailable');
       return response.json();
     }).then(function (json) {
-      return fromApi(json, now) || fallback;
+      var verified = fromApi(json, now);
+      if (verified) remember(json, now);
+      return verified || fallback;
     }).catch(function () { return fallback; });
+    return Promise.race([live, new Promise(function (resolve) {
+      timer = setTimeout(function () { resolve(fallback); }, wait);
+    })]).finally(function () { clearTimeout(timer); });
   }
-  return { ENDPOINT: ENDPOINT, owner: owner, fromApi: fromApi, amount: amount,
-    display: display, retrieve: retrieve };
+  return { ENDPOINT: ENDPOINT, CACHE_KEY: CACHE_KEY, owner: owner, fromApi: fromApi,
+    amount: amount, display: display, retrieve: retrieve };
 });
