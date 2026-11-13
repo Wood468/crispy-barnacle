@@ -1,5 +1,5 @@
 {
- "runAt": "2026-11-13T18:08:31.502Z",
+ "runAt": "2026-11-13T23:43:26.815Z",
  "artworkCoverage": {
   "selected": 27,
   "missing": 75,
@@ -689,7 +689,7 @@
    "error": ""
   },
   "es_mx": {
-   "listed": 27,
+   "listed": 28,
    "error": ""
   },
   "it": {
@@ -1134,7 +1134,9 @@
    ]
   }
  ],
- "errors": [],
+ "errors": [
+  "https://leekduck.com/events/dynamax-trails-2026/: GO Pass parser: GO Pass source exceeds the 512 KiB safety limit"
+ ],
  "sourceFacetStaging": {
   "schemaVersion": 1,
   "publication": "audit-only",
@@ -1146,7 +1148,7 @@
   "counts": {
    "benefits": 69,
    "featuredMoves": 11,
-   "researchPrograms": 17,
+   "researchPrograms": 19,
    "unconfirmed": 1
   },
   "examples": [
@@ -1172,7 +1174,7 @@
     "sourceUrl": "https://leekduck.com/events/pokemon-go-wild-area-2026-global/",
     "benefitCount": 19,
     "featuredMoveCount": 7,
-    "researchProgramCount": 2
+    "researchProgramCount": 4
    },
    {
     "sourceUrl": "https://leekduck.com/events/go-wild-area-gigantamax-machamp-power-up-timed-research/",
@@ -1402,7 +1404,7 @@
     "events": 44,
     "benefits": 69,
     "featuredMoves": 11,
-    "researchPrograms": 17,
+    "researchPrograms": 19,
     "disputed": 0,
     "unconfirmed": 1,
     "warnings": 0
