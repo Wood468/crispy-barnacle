@@ -45,9 +45,21 @@ with sync_playwright() as p:
             }
         }""", FIXTURE)
         page.add_script_tag(url="/store.js?v=20261113o-store770")
-        page.wait_for_selector(".storep-regional .sp-product .sp-market-grid")
-        metrics = page.evaluate("""() => {
-            const card = document.querySelector('.storep-regional .sp-product');
+        # Wait for attachment first: the product may live in a collapsed category.
+        target = ".storep-regional [data-sp-name*='synthetic test ticket']"
+        page.wait_for_selector(target, state="attached")
+        page.evaluate("""selector => {
+            const card = document.querySelector(selector);
+            if (!card) throw new Error("Synthetic Store fixture card was not rendered");
+            const regional = card.closest("details.storep-regional");
+            const group = card.closest("details[data-sp-group]");
+            if (regional) regional.open = true;
+            if (group) group.open = true;
+        }""", target)
+        page.wait_for_selector(target + " .sp-market-grid", state="visible")
+        metrics = page.evaluate("""selector => {
+            const card = document.querySelector(selector);
+            if (!card || !card.getClientRects().length) throw new Error("Synthetic Store card is not visible");
             const grid = card.querySelector('.sp-market-grid');
             const cells = [...grid.querySelectorAll(':scope > .sp-market')];
             const bounds = cells.map(c => {
@@ -65,7 +77,7 @@ with sync_playwright() as p:
                 labels: cells.map(c => c.querySelector('.sp-market-label')?.textContent.trim()),
                 localPrice: cells[1].querySelector('.sp-local-price')?.textContent.trim() || null
             };
-        }""")
+        }""", target)
         (OUT / f"store-{width}.json").write_text(json.dumps(metrics, indent=2))
         page.screenshot(path=str(OUT / f"store-{width}.png"), full_page=True)
         assert metrics["scrollWidth"] <= width, f"{width}px document overflow: {metrics}"
