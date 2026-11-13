@@ -1,5 +1,5 @@
 {
- "runAt": "2026-11-12T21:54:48.642Z",
+ "runAt": "2026-11-13T00:04:07.671Z",
  "artworkCoverage": {
   "selected": 27,
   "missing": 75,
@@ -562,7 +562,7 @@
  },
  "pagesRead": 80,
  "events": 104,
- "worldEvents": 71,
+ "worldEvents": 70,
  "worldUndated": [
   "GO Wild Area Stamp Rally"
  ],
@@ -1139,5 +1139,83 @@
    ]
   }
  ],
- "errors": []
+ "errors": [],
+ "sourceFacetStaging": {
+  "schemaVersion": 1,
+  "publication": "audit-only",
+  "sourceId": "leekduck",
+  "eligiblePages": 44,
+  "pagesWithFacets": 10,
+  "duplicates": 0,
+  "skippedLarge": 0,
+  "counts": {
+   "benefits": 69,
+   "featuredMoves": 11,
+   "researchPrograms": 18,
+   "unconfirmed": 1
+  },
+  "examples": [
+   {
+    "sourceUrl": "https://leekduck.com/events/pokemon-go-wild-area-2026-mexico-city/",
+    "benefitCount": 31,
+    "featuredMoveCount": 0,
+    "researchProgramCount": 3
+   },
+   {
+    "sourceUrl": "https://leekduck.com/events/pokemon-go-wild-area-2026-sendai-japan/",
+    "benefitCount": 19,
+    "featuredMoveCount": 0,
+    "researchProgramCount": 3
+   },
+   {
+    "sourceUrl": "https://leekduck.com/events/pokemon-night-out-london-2026/",
+    "benefitCount": 0,
+    "featuredMoveCount": 0,
+    "researchProgramCount": 1
+   },
+   {
+    "sourceUrl": "https://leekduck.com/events/into-the-wild-2026/",
+    "benefitCount": 0,
+    "featuredMoveCount": 4,
+    "researchProgramCount": 1
+   },
+   {
+    "sourceUrl": "https://leekduck.com/events/pokemon-go-wild-area-2026-global/",
+    "benefitCount": 19,
+    "featuredMoveCount": 7,
+    "researchProgramCount": 2
+   },
+   {
+    "sourceUrl": "https://leekduck.com/events/go-wild-area-gigantamax-machamp-power-up-timed-research/",
+    "benefitCount": 0,
+    "featuredMoveCount": 0,
+    "researchProgramCount": 2
+   },
+   {
+    "sourceUrl": "https://leekduck.com/events/november-communityday2026/",
+    "benefitCount": 0,
+    "featuredMoveCount": 0,
+    "researchProgramCount": 2
+   },
+   {
+    "sourceUrl": "https://leekduck.com/events/dynamax-trails-2026/",
+    "benefitCount": 0,
+    "featuredMoveCount": 0,
+    "researchProgramCount": 1
+   },
+   {
+    "sourceUrl": "https://leekduck.com/events/twilight-wishes-2026/",
+    "benefitCount": 0,
+    "featuredMoveCount": 0,
+    "researchProgramCount": 1
+   },
+   {
+    "sourceUrl": "https://leekduck.com/events/pokemon-x-adidas-2026/",
+    "benefitCount": 0,
+    "featuredMoveCount": 0,
+    "researchProgramCount": 2
+   }
+  ],
+  "errors": []
+ }
 }
