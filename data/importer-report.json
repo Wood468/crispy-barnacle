@@ -1,5 +1,5 @@
 {
- "runAt": "2026-11-13T00:54:36.163Z",
+ "runAt": "2026-11-13T01:13:38.251Z",
  "artworkCoverage": {
   "selected": 27,
   "missing": 75,
@@ -670,7 +670,7 @@
  ],
  "intl": {
   "ja": {
-   "listed": 28,
+   "listed": 27,
    "error": ""
   },
   "ko": {
